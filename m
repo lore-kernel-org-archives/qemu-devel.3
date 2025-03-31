@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9833FC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3747C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzLA3-0005J7-CW; Mon, 31 Mar 2025 15:51:15 -0400
+	id 1tzL96-0003c4-TS; Mon, 31 Mar 2025 15:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL9O-0004Yq-NS
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:50:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL8p-0002hz-N9
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:49:52 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL9L-0003iq-Jl
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:50:26 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43d0359b1fcso31318665e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:50:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL8n-0003SH-UP
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:49:51 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43d0c18e84eso21920015e9.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743450621; x=1744055421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743450588; x=1744055388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/wI1i9qpwMZwJME1QE61gTcf1pbGJNg+cm1Z2vgD76Q=;
- b=at/lwAQuNeQijkZqMXxiqhZ78AeNh15PjqolIIqBFf0UiuKrleISX1h2R+AcWf/iOC
- J8R15JZdFehGcGK0WsC4WfyjSl9yu9thqCAaPWpD0LtIjMXPNasNgSCNbw1miUvNWVcP
- UNq2wQkcA+mUzUS/WOPAfZdvkMMy1QhPo/9+2cD7a6aD4PM/jSZn9LLnrOzKT+qf43cw
- 8cAA5oZ5kBORN33jiivTGAJ582vQX+pUKA6RmNIrD1p8857LVZ06XXeOb8x0MJGCEB8q
- JGEPARW8rJRztC2jSVKhLrOMbD/dPhqaY/1CCyDRIQ9Elmo1wT8UmgjNJ/iJlvd2lUWV
- hT7A==
+ bh=b1rAoFw8FyG6NwD6es9o9iWAe5ykbL1RM+kN37mtk4M=;
+ b=hJ4u3E6uyxbvRjd0UHvEkeIYiR1E/13EaW+veqoKHkaiGucdtDYX8Ft28WzubQrulO
+ v5wSPpQvFsrGJ+2Y9SYmwzAJ3OgWQDMlZq01Nc6aw1vJ5UHvJk1kzh95lTvBf37jN6jy
+ Pzm5q03eaK/xTkMM/4x54765lfPMstR8hpQBZR5uHaDRUnsVUOWWKEDG8sBVN/RgJiAr
+ SymdsKJKNoCPBKkBEEF2nirsTxCR6Hcmv2T5e1NlPyHv5FJ5NuL3djR+9nQvHetl/TPr
+ ij0horQ8xODIBaV/o94yfHbr6ylXaIJPLIZ+WeMNIZ9eYMwnmqYa4plyk4nQLqlybcN8
+ 16Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743450621; x=1744055421;
+ d=1e100.net; s=20230601; t=1743450588; x=1744055388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/wI1i9qpwMZwJME1QE61gTcf1pbGJNg+cm1Z2vgD76Q=;
- b=k6Elka3AhSmJHFHZWwHm9NLIhtyZjj6C2oezK+xg/zYop/3sNjgFgRkyollsZnuTZW
- hOHDtwrot5sz34amXZRkhreWUniyDbuYVnYhVn8i9vRGFTa9wzdjUxCrk9xNS/49AZaq
- DpCVGPOgnwtlRtQz1pPN+nZfXDUkdNuP4Rz78ydf4CaoIVzx7XYa0zIRgwhwEbcBK4wY
- 1MmygioUBt2PxmnHCJv/RvP8Ip2mo//Q47hrkAdxnZKizrjcQNXBLns4vApph+n3bPjM
- OUnHQl+ep/Qsu/dwDc/x86Ittwi78SZbAcnB3BmTiU1fDaww4Ut2x5/3Dj3xm6T9Bjzh
- giZg==
-X-Gm-Message-State: AOJu0Yyi2nTlIyaXkGSESmBjvcr/GAZmbxrYHOCE6NZtkWJ5HD0MMimf
- HIK3dWUlnf+Gf0WWdYseDGOTMfbqboHhHqgyf7hhS64XY9Er64B1jx+Zvcxc+uGbRBTZYu4otHY
- y
-X-Gm-Gg: ASbGncujgDAUuOQESZchk/5Z4wRzfQFgn4OvCcdCAz1qrl13pYKEnNf5566FEST7zSd
- 8Hhew9J1pppJh6MqgFgYw7vxPjpjWuibr6tQv5gfAXHi+7334D3mKfAjMvdXd6mrA9gpsWxHdWE
- k87ho/KM5K5WvDsH9SrJtrg36OpA8TUY+mXvKNp072YGXVRRtsV/QPJJ94rKicF1yErNu/XsUqz
- b9iPKc327sLoW8OIOIfv74N3FJQ4r0/t1L+63MNNiD0XTz8LwGIPJ7BUHvysAWXRvYfKw2OcSmC
- 4clJjNr4rrktzYYCOnQsgKgQdbOwzbDPav1u0bmT1ZrdrooFeH0pKXZhH18LsDiZSkxwsKWjBs7
- QlQnZAU6iwWjyG34RGFs=
-X-Google-Smtp-Source: AGHT+IH/6ioiQ+IBxm9F17dyjdEXlDooM3tvzLjD3PL1B46O1X0RV2C8cV4UalCDPQgAq89TQMvjkA==
-X-Received: by 2002:a05:600c:c08:b0:439:8e95:796a with SMTP id
- 5b1f17b1804b1-43db62bda6cmr82389415e9.13.1743450620791; 
- Mon, 31 Mar 2025 12:50:20 -0700 (PDT)
+ bh=b1rAoFw8FyG6NwD6es9o9iWAe5ykbL1RM+kN37mtk4M=;
+ b=qglBz2Wy5TF6gAUOcElTlwjCfXCrxJ4ogliiG3uGoo525phsVvuYa/zDVWBxxO/9it
+ ORjSqiGOg/DGp56Rarl572eJ1nQ1mA17yfuODLYVEbv2tpKM63014ct5N78BLb5MT92v
+ jz+v3PVoiNXYYt+VU/XShlgsPr6OW5PTZATWEY9MLMztx+QTlnxBpdnGcnHzdm3GRTDb
+ F3io0gdPJ599nqxs8oNGWis0SgOuNvxczyNYRMFvs9PBpFVhExlNsInLSHP4JTUv07Za
+ aFTUXoRCwsqq4llD5noTP8GL/WAUXjniv941o3JmxfPWD+jHxuSnRpL455wXez+QsR96
+ /RpA==
+X-Gm-Message-State: AOJu0YyoCpCawqfKT1rTNFpPMpMbaiefJ7qIihmnP+nMYZFvS9JAtoqI
+ cQcYMghW/lPj2VyFqH1JNodoYxXzSujDMnqrXrtz2+24Ux1+owDj9D1MW1HOIIMkaFxsZKdeGXY
+ S
+X-Gm-Gg: ASbGncv1u5PPOZJ1OL7C2E1ByQxATnbU3/W7RSz4qR5mbkmZ4XDAxAf3etIV6ytV9fL
+ T7KboVGGUMQQZQmAFHHFg9PIabbdldounHI5vOuGYEMZKDASKEwVv+fLp7A1mBV0cnfZk5+/Csy
+ jHRsHSuZqA3rgp8eCT+ZZ0+9FYGkVCWXq9ThBkv1W7oC+EiDfb2oEtAYjhOJQXdz+REJY87j9bt
+ V1lAFhUxbwljghxk05+OHOuy4ALN5QFwO/pKciMtpeZzv1iIAkGhWhmtDrwntI2ThMaNlOuziXg
+ vRzpzHu0X7popepfOmrVR2RrTMu6Fiv9Qe13vSVvEZH5o3XJdP85ZLuRyKFpAkcwHKM4Y/2o7RI
+ PhYWQ46r7I5cOUVFwU44=
+X-Google-Smtp-Source: AGHT+IE+fSoHtmGLpdKLJSche7MhHuCLx8vQsi/hHC5wJFbsGh7ORDYphg0LlhjFxNjUgMF/dDj7zA==
+X-Received: by 2002:a05:600c:138d:b0:43c:f44c:72b7 with SMTP id
+ 5b1f17b1804b1-43db61ff68bmr106197175e9.14.1743450588152; 
+ Mon, 31 Mar 2025 12:49:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d82dedd03sm174803455e9.3.2025.03.31.12.50.19
+ 5b1f17b1804b1-43d8fbc10f7sm132920615e9.14.2025.03.31.12.49.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 12:50:19 -0700 (PDT)
+ Mon, 31 Mar 2025 12:49:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PULL 23/23] target/mips: Simplify and fix update_pagemask
-Date: Mon, 31 Mar 2025 21:48:21 +0200
-Message-ID: <20250331194822.77309-24-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Joey <jeundery@gmail.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PULL 17/23] hw/pci-host/designware: Fix ATU_UPPER_TARGET register
+ access
+Date: Mon, 31 Mar 2025 21:48:15 +0200
+Message-ID: <20250331194822.77309-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250331194822.77309-1-philmd@linaro.org>
 References: <20250331194822.77309-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,89 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Fix copy/paste error writing to the ATU_UPPER_TARGET
+register, we want to update the upper 32 bits.
 
-When update_pagemask was split from helper_mtc0_pagemask,
-we failed to actually write to the new parameter but continue
-to write to env->CP0_PageMask.  Thus the use within
-page_table_walk_refill modifies cpu state and not the local
-variable as expected.
-
-Simplify by renaming to compute_pagemask and returning the
-value directly.  No need for either env or pointer return.
-
-Fixes: 074cfcb4dae ("target/mips: Implement hardware page table walker for MIPS32")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250328175526.368121-4-richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Cc: qemu-stable@nongnu.org
+Reported-by: Joey <jeundery@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2861
+Fixes: d64e5eabc4c ("pci: Add support for Designware IP block")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-Id: <20250331152041.74533-2-philmd@linaro.org>
 ---
- target/mips/tcg/tcg-internal.h      |  2 +-
- target/mips/tcg/system/cp0_helper.c | 10 +++++-----
- target/mips/tcg/system/tlb_helper.c |  2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ hw/pci-host/designware.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
-index 74fc1309a71..950e6afc3f2 100644
---- a/target/mips/tcg/tcg-internal.h
-+++ b/target/mips/tcg/tcg-internal.h
-@@ -47,7 +47,7 @@ bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index c07740bfaa4..5598d18f478 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -371,7 +371,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
  
- void mmu_init(CPUMIPSState *env, const mips_def_t *def);
+     case DESIGNWARE_PCIE_ATU_UPPER_TARGET:
+         viewport->target &= 0x00000000FFFFFFFFULL;
+-        viewport->target |= val;
++        viewport->target |= (uint64_t)val << 32;
+         break;
  
--void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask);
-+uint32_t compute_pagemask(uint32_t val);
- 
- void r4k_invalidate_tlb(CPUMIPSState *env, int idx, int use_extra);
- uint32_t cpu_mips_get_random(CPUMIPSState *env);
-diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
-index 5db8166d452..78e422b0caf 100644
---- a/target/mips/tcg/system/cp0_helper.c
-+++ b/target/mips/tcg/system/cp0_helper.c
-@@ -864,24 +864,24 @@ void helper_mtc0_memorymapid(CPUMIPSState *env, target_ulong arg1)
-     }
- }
- 
--void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask)
-+uint32_t compute_pagemask(uint32_t val)
- {
-     /* Don't care MASKX as we don't support 1KB page */
--    uint32_t mask = extract32((uint32_t)arg1, CP0PM_MASK, 16);
-+    uint32_t mask = extract32(val, CP0PM_MASK, 16);
-     int maskbits = cto32(mask);
- 
-     /* Ensure no more set bit after first zero, and maskbits even. */
-     if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
--        env->CP0_PageMask = mask << CP0PM_MASK;
-+        return mask << CP0PM_MASK;
-     } else {
-         /* When invalid, set to default target page size. */
--        env->CP0_PageMask = 0;
-+        return 0;
-     }
- }
- 
- void helper_mtc0_pagemask(CPUMIPSState *env, target_ulong arg1)
- {
--    update_pagemask(env, arg1, &env->CP0_PageMask);
-+    env->CP0_PageMask = compute_pagemask(arg1);
- }
- 
- void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 123639fa18e..df80301a412 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -876,7 +876,7 @@ refill:
-         }
-     }
-     pw_pagemask = m >> TARGET_PAGE_BITS;
--    update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
-+    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
-     pw_entryhi = (address & ~0x1fff) | (env->CP0_EntryHi & 0xFF);
-     {
-         target_ulong tmp_entryhi = env->CP0_EntryHi;
+     case DESIGNWARE_PCIE_ATU_LIMIT:
 -- 
 2.47.1
 
