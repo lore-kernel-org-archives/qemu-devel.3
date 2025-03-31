@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C58BC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:49:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C76C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzL7h-00023m-WA; Mon, 31 Mar 2025 15:48:42 -0400
+	id 1tzL89-0002Aw-C5; Mon, 31 Mar 2025 15:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7V-00023U-JT
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:30 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL81-00029b-Op
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:49:03 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7T-0003I3-Ht
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:29 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso32447345e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:48:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL80-0003MT-7X
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:49:01 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43d0618746bso33165785e9.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743450504; x=1744055304; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oO1HSoKRpR65JVeTOlCEoMbWXvPhzf031J5G7i2xFyc=;
- b=t5ncRQRYZ69tvOzamoxoQjj542FekrfcP71p9YtucAJb7u5UYNAkNxpaLNgiMaRyKs
- T1WVrmGWLO/BIQNbTX1ix6CAXLdWE6UgTcGT4ApIJm53/gIWM6a6eo2C37PxC/ydnyRC
- XGvNCOCSu8anyHkJgAsLPguD8fcFKes+s+FDDy7F+jS/81OtPVhSqbIWZbS2H6+tz5xa
- uOtMtGmB+zfbMyrdAB/hl0XtsIRtwBZf0wQiNTmkeW2bKqnWf6oWlS1oG7WbXnhmNPwX
- 953/OxAigsmsICphrxQGObI+ERAyV4YHxF/3HycZ8tEeacRfz7U9F9ua/vpcjOzQ0Qwf
- Ax1w==
+ d=linaro.org; s=google; t=1743450537; x=1744055337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ia8Kw97DGhP1r9MtPxxlIU481UcVxEFaeD8v9v4GxU4=;
+ b=o0Y2MlNhEuEOPIbXfb1P+1qwO0roIjf5kX/E5gG54XCpcvL92utXGK/vjIGC2mbSJO
+ ExYKPvja944tDOVCRjl0JrLVP0kKOWQi1GWT4b3vI7HtjQuiiqWZx6BQdxJlaKMOYzYO
+ Q6HYFrq5iEKArjilaC7Q7x9K3704IoJcSZpMgimTd6pvZIlQo+7DBcoN1LMaA5sg0lM3
+ Z5jwNVpkQIXdibozZwC4lzk0mGCTyVU0ZwIyqHDTIqP+6asPOXCgOYGWnYwm0p4SAPvB
+ KdbvW0BwefEZIhI89C0IKZcbdmSemuOUdOHlybzk0jfRRAOVMYxjftLOHXwCjLxCSl2X
+ N2bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743450504; x=1744055304;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oO1HSoKRpR65JVeTOlCEoMbWXvPhzf031J5G7i2xFyc=;
- b=tg/M1Tm48Yt6/OOvPBG4gbcOqll5RhtA8DF1ndZqmP9gOfCGXLo9pvtPU00GT7YV7M
- +OpG9myatc39RN0aUunKuU7DJya0ceSUp/Cf58svnSz9ButkIGWQNNRW/qzq1vu+moEN
- gAMZ+3I9xXRbgH1LeeMBZJBwhtw4ksI7fatAbHq9JXTYPijGKLhEB056M+f8OqZqpEfp
- B/YURLE2Y++/e4uzBlt05MWFfUXvxFBhDx8DnERq5CO/SJVlf9MmgJN75cIQLPFo9FVL
- zWpbW+sBaQXjiz6XVbJzv2oEMUPb7lQnx/d+5tk7XZ5RoxenayzxC7nJ9RPKAWIuWT6I
- 9iiw==
-X-Gm-Message-State: AOJu0YyYNgLhn3ZCmup1Tq9K/pRRkTylkD9FHhkW7hapNw6pdmBae6JT
- pBY6EtUaWvEvVkwdq16UBOx/i803Wt9hOpYnZbOp1II1U/aJC1efHWh+diX14hqZmLnOulOQWTD
- p
-X-Gm-Gg: ASbGnctiFiW/O1AQTXBG5MN9kU838wONlIXbuGSfE4N79vfQE9nlDkjRNqfEb7pHoVn
- vfr1K9ffcql7rRF0ajRtRz5u07q7K183RZ7EqDb120R0ycFTwMcI42EpiNCrwxO1ZCnln5nUJdB
- NL9FkWQqHILmdhdJvFOlUcI8RfGUCTy13sMkQtvHTROw7UQejusF2K/yBE2gY7MSDNJO+Tb2T1Z
- uS2RW+wqwCFmQg+TzMoxXmI5e+Rc5c3hob0tN+UxEUN+af9w65asBXw5kVVO1XWsFv5yZ0iR5vD
- jAn9M/qz+2uSF93Ml0iDAKSeDQK65roeDxqdVwcqI8+YUlM0ta2KZ6GFIwNeK3OESlAhDJgKwjq
- SBfDEyZi31USsj2+dvqg=
-X-Google-Smtp-Source: AGHT+IG21HYk/gUo1qk7hWH+mlT/X2Ikg6+UiQOzLeRLVuEvkQdAA5y4k6bviW39DfZhPXnIYaXDMA==
-X-Received: by 2002:a05:6000:2512:b0:39c:1efc:b02 with SMTP id
- ffacd0b85a97d-39c1efc0b5amr3264120f8f.28.1743450503837; 
- Mon, 31 Mar 2025 12:48:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743450537; x=1744055337;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ia8Kw97DGhP1r9MtPxxlIU481UcVxEFaeD8v9v4GxU4=;
+ b=e4GvrM3Gv5yfUVJsyLd3XcMRn3xglUOLFdUq7fADXLDBIUsRj0r0QkDoRVCe3LOc8z
+ h6BN90ZrwxGpNoBRvEEiSKLxB3m1KMD957V1U5NhEx3wMncU0IyaG3RWP8CxI7sDENyT
+ uZSiRl03deak1OHCy27/42K+4C9gYiSJEgx1oiBOux08KllyOxOE98arwAivTSKf7My1
+ AqAkoC/cj5oBjMaMhvWh5xOB8NVMNp+ElIFyPnpoM8IfBLqlpUCJ7MnfzQZQkT9YeDS/
+ kj6Y/1p4bxh6Yw0Ev9s0I924Phj3vYG60qsNDrjZiR9ffPYrTg35SHlxUTW8LO93D1Rj
+ Dphw==
+X-Gm-Message-State: AOJu0Ywj6zcDP2oQfObmkCIVjXxU1NJcKfrxDTXZK9UeHd3sm8A+qhGv
+ 0ooArhE6KtvcpURfFHO693lo5RRMbAPkrAshk8p/NHcHGFSeOPNrAV6BMIKgFTvMdFC6ZKw+vG4
+ +
+X-Gm-Gg: ASbGnctOAlOibmemvPH/GEDR6WHTqwqKW0vlHhZc30Ccqx2EbjcpCBUdl0eOHoswUNN
+ kE+wKQ3Kpqlan7cRyZSrTwl9ad371Armspmu4J30tX99vCGZqe7TQwFJedQNhZgEjdcn/kAbe65
+ BljSZXaS38SyC5ZfLTUtrS0WMIUBb84LHBxdm7VVtdVdA/Rq67vTwuybvQA/xWNBHG+LT12Ph2c
+ SNcOvKW3gKFR+PUKg9hrT+fKEEw9MOFytL5pnqMPTaQhNizEyE+yOoJmMdTEhnciN1Uc7zVkBZ2
+ 7xOKCXkvpTDI6RKDzahI1lvsg+0jkVCqBZZgeuWI0i9EWKtc6ZY9WPpv3Ysl0eCNqjej3QMm9un
+ JI9sSOS0VtaYGGsywmAQ=
+X-Google-Smtp-Source: AGHT+IFdFLIC4+Fdk3qiWvS70Q4uzB8lCh62s4rsYgR1ENjis9i3lv06H8kt/QMYkBGgeOp3Bmbn8g==
+X-Received: by 2002:a05:600c:4744:b0:43c:fb36:d296 with SMTP id
+ 5b1f17b1804b1-43db62bded3mr88499355e9.25.1743450537538; 
+ Mon, 31 Mar 2025 12:48:57 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b6588e9sm12405402f8f.14.2025.03.31.12.48.23
+ 5b1f17b1804b1-43ea8df934esm263705e9.2.2025.03.31.12.48.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 12:48:23 -0700 (PDT)
+ Mon, 31 Mar 2025 12:48:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/23] Misc HW fixes for 2025-03-31
-Date: Mon, 31 Mar 2025 21:47:58 +0200
-Message-ID: <20250331194822.77309-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 07/23] hw/display/dm163: Add description
+Date: Mon, 31 Mar 2025 21:48:05 +0200
+Message-ID: <20250331194822.77309-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250331194822.77309-1-philmd@linaro.org>
+References: <20250331194822.77309-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,106 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0f15892acaf3f50ecc20c6dad4b3ebdd701aa93e:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20250325224310.8785-4-philmd@linaro.org>
+---
+ hw/display/dm163.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  Merge tag 'pull-riscv-to-apply-20250328' of https://github.com/alistair23/qemu into staging (2025-03-28 08:06:53 -0400)
-
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20250331
-
-for you to fetch changes up to 256ba7715b109c080c0c77a3923df9e69736ba17:
-
-  target/mips: Simplify and fix update_pagemask (2025-03-31 21:32:43 +0200)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Expose v7M System Control Space as little endian (Philippe)
-- Deprecate MipsSim machine (Thomas)
-- Improve some devices categories / descriptions (Philippe)
-- Correct memory_rw_debug() prototype (Richard)
-- Do not expose i.MX 8M SoC as user-creatable (Bernhard)
-- Do not expose some PLL & eFuse devices as user-creatable (Philippe)
-- Do not reset Goldfish RTC time on machine reset (Heinrich)
-- Fix incorrect BCM2835 AUX interrupt ID when RX disabled (Chung-Yi)
-- Fix DesignWare PCI host bridge ATU_UPPER_TARGET register access (Philippe)
-- Memory leak fixes (Bernhard & Zheng Huang)
-- Prevent out-of-bound access in avr_print_insn (Richard)
-- Fixes around MIPS page mask (Richard)
-
-----------------------------------------------------------------
-
-Bernhard Beschow (3):
-  hw/arm/imx8mp-evk: Fix reference count of SoC object
-  hw/arm/fsl-imx8mp: Derive struct FslImx8mpState from
-    TYPE_SYS_BUS_DEVICE
-  hw/arm/fsl-imx8mp: Remove unused define
-
-Chung-Yi Chen (1):
-  hw/char/bcm2835_aux: Fix incorrect interrupt ID when RX disabled
-
-Heinrich Schuchardt (1):
-  hw/rtc/goldfish: keep time offset when resetting
-
-Philippe Mathieu-Daudé (9):
-  hw/arm/armv7m: Expose and access System Control Space as little endian
-  hw/block/m25p80: Categorize and add description
-  hw/display/dm163: Add description
-  hw/dma/i82374: Categorize and add description
-  hw/misc/pll: Do not expose as user-creatable
-  hw/nvram/xlnx-efuse: Do not expose as user-creatable
-  hw/pci-host/designware: Fix ATU_UPPER_TARGET register access
-  target/hppa: Remove duplicated CPU_RESOLVING_TYPE definition
-  target/sparc: Log unimplemented ASI load/store accesses
-
-Richard Henderson (5):
-  hw/core/cpu: Use size_t for memory_rw_debug len argument
-  target/avr: Fix buffer read in avr_print_insn
-  target/mips: Revert TARGET_PAGE_BITS_VARY
-  target/mips: Require even maskbits in update_pagemask
-  target/mips: Simplify and fix update_pagemask
-
-Thomas Huth (1):
-  hw/mips: Mark the "mipssim" machine as deprecated
-
-Zheng Huang (3):
-  hw/scsi/lsi53c895a: fix memory leak in lsi_scsi_realize()
-  hw/sd/sdhci: free irq on exit
-  hw/ufs: free irq on exit
-
- docs/about/deprecated.rst           | 13 ++++++++++++
- include/hw/arm/fsl-imx8mp.h         |  4 ++--
- include/hw/core/cpu.h               |  2 +-
- target/hppa/cpu.h                   |  2 --
- target/mips/cpu-param.h             |  5 -----
- target/mips/tcg/tcg-internal.h      |  2 +-
- target/sparc/cpu.h                  |  2 +-
- hw/arm/armv7m.c                     | 14 ++++++-------
- hw/arm/fsl-imx8mp.c                 |  2 +-
- hw/arm/imx8mp-evk.c                 |  2 +-
- hw/block/m25p80.c                   |  2 ++
- hw/char/bcm2835_aux.c               |  2 +-
- hw/display/dm163.c                  |  2 +-
- hw/dma/i82374.c                     |  2 ++
- hw/mips/fuloong2e.c                 |  1 -
- hw/mips/loongson3_virt.c            |  1 -
- hw/misc/bcm2835_cprman.c            |  8 ++++++++
- hw/misc/npcm_clk.c                  |  6 ++++++
- hw/misc/stm32l4x5_rcc.c             |  4 ++++
- hw/nvram/xlnx-efuse.c               |  2 ++
- hw/pci-host/designware.c            |  2 +-
- hw/rtc/goldfish_rtc.c               | 13 ++++++------
- hw/scsi/lsi53c895a.c                |  2 +-
- hw/sd/sdhci-pci.c                   |  2 ++
- hw/ufs/ufs.c                        |  3 +++
- target/avr/disas.c                  | 21 ++++++++++++-------
- target/mips/tcg/system/cp0_helper.c | 32 +++++++++--------------------
- target/mips/tcg/system/tlb_helper.c |  4 ++--
- target/sparc/ldst_helper.c          |  6 ++++++
- target/sparc/mmu_helper.c           |  2 +-
- 30 files changed, 99 insertions(+), 66 deletions(-)
-
+diff --git a/hw/display/dm163.c b/hw/display/dm163.c
+index 75a91f62bd3..f6f0ec0c632 100644
+--- a/hw/display/dm163.c
++++ b/hw/display/dm163.c
+@@ -330,7 +330,7 @@ static void dm163_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+-    dc->desc = "DM163";
++    dc->desc = "DM163 8x3-channel constant current LED driver";
+     dc->vmsd = &vmstate_dm163;
+     dc->realize = dm163_realize;
+     rc->phases.hold = dm163_reset_hold;
 -- 
 2.47.1
 
