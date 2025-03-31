@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 339B6C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 22:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 087DAC3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 22:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzNls-00085l-3T; Mon, 31 Mar 2025 18:38:20 -0400
+	id 1tzNwx-0002gA-2O; Mon, 31 Mar 2025 18:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tzNlq-00085E-MW
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:38:18 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNww-0002fn-4e
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:49:46 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tzNlo-0001tT-IH
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:38:18 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-72c173211feso1692762a34.1
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 15:38:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNwu-0003WY-5h
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:49:45 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43d0c18e84eso22420475e9.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 15:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743460694; x=1744065494; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743461382; x=1744066182; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JFmeFNv5b+sarSdFqM1KTgUiqCF+rgnpm9YmSX1XlyA=;
- b=Y66G5axT0122mXddGeI10oLCBPckkyOed2p5go5C7jXbyRsFSj8HgEvz+B1oaMOC4s
- K3DH1CREQGGmMyS7h2xslr4BzKkDW0IkneS0tjKJ5ghcj8ZQ4XA1iJyhjWgkSu6eP4DH
- RaNKeP7ycxCwXUe/eu61G9g0GrtRsYU7etG4TeFIsQIRRJCIK7i78GKsRRjKSoD+dY6c
- wxyeHn/6BQrKoTEi7RdPrkmx2/KuLEwzT8b5ey7sXcYv0YQJ0wZJpCd61CpdV4gGHOxA
- 8gCepzXjUdYNxp4PlwDIiK3DGMGr5svhQ4wGKXa7lsfbtVVEnYk+3sdYGU+dZFOeCqNg
- NXYA==
+ bh=dIgofOQ16FfHrqCR+n2/TXJ8ZAXHvNpoy3xWYKJ8Uns=;
+ b=htahq61ZL0zMXNQ+GO5q6NClgw4EOpC22v+IT+QOtkRvbx1YB09r0ie5zpN2HST81J
+ QNOWtuJypyXNLcbRFi9719xf8CXqr3RYOQzQl1CeYIvdNg1dtA2Zn27isPw1RecjpT+9
+ 5PrKTrXa//Yj2yaUZA21c2BKs4z+b3MQOmkcEESwD0Py5YX1hpQ3VNWxfBLdng97BQA5
+ YceW8nZ/Pu1B4gMitSjH8cyLKJY4Fw/tVT2LNLcQ1rypohBwZpaqdibmoR0xtkGZKxlh
+ TKY6Q3i8/Lfp4+x1dm+HcCQXuzDkJk3qu0QVUFyIgIPUdGSQuUKjv8cLZqrdN3lS5/s6
+ hxTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743460694; x=1744065494;
+ d=1e100.net; s=20230601; t=1743461382; x=1744066182;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JFmeFNv5b+sarSdFqM1KTgUiqCF+rgnpm9YmSX1XlyA=;
- b=dzwTBzVtTIjieFKq/pJkgt3zQ8ZylGFqbetg///b0y0yjsNvfKIgsZ4F6Jq6eZouF8
- 38FZo3ZR498+lk8UmF+Ci1x4WOsaCvWNg4rAdQ4FPCMTNYd6SqueSZgEud4Kos71NCzZ
- unWgguWQ3TYDvKV/cRzKjL74j60ty0ds6p6PoiXEtVn8gNyfvYGP5gcgW2OtEf67QGUf
- Xk5ITjuvYPAbyVWsVDriX7aASfJQM4yYM/gixqY00HVwhJjx/Y65XOf96sWJT+LlRhTc
- 3WrAi01kQEgjLaRENJsdg8FIPw7PFAqeTuEWK5P1pBk2C0n9i0u/G//sZUdEWQV0mB5z
- vtPA==
+ bh=dIgofOQ16FfHrqCR+n2/TXJ8ZAXHvNpoy3xWYKJ8Uns=;
+ b=d4GpWBByfLr+bcJ+f0Np4RY6SkchUbPqxY1NHltFcJftgmKCebpvr/HNori91dSsNk
+ RbTCk7OfWEbwMEeg5iCZsl+3SwN95qGNQB6ZpStUqdEkza0lznbGGnBNeG53siYC+6Br
+ IHgQGemF9RXV8WTYe/XLo4dSnSdm4JicoV+EXZip3h+uhbJyQ2QIeNRkNHl09s3iNPH1
+ a8vbWMyZdH/TwyUF6kJcBWplSX2xdXmJjtv67Jfio3Uah/77krp//lzupEyGsrk4xarz
+ rmXF/Rp5wdxSha9gQfMyVULSkAiZQKsUG8ji6uTsVCG3HwxEEQL3Gx5gAhFyeAKer8Cn
+ z9hA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpaHTnMSlGbakEup5onHPw9Zm5hLHZ+OgKBf8lmNDWl5VnzKaYDjLNn1U6CZfsNHbWFiHsPq/eaz4R@nongnu.org
-X-Gm-Message-State: AOJu0YwPM3oNqLV6pdFGEReYXMhWNBhDXgRUa/OuZ9Jz4RElpxZKzRGK
- yE47YdOzpOeuHYwTTkCLVBjNmPAbngLYaM9Q6fiCkUWKWwQnMarUuT+KyPkM3FE=
-X-Gm-Gg: ASbGncvWsuATNuxIt9U2Jt2qjtZk2+63rReDs29/79FdjsCxT3FcEOT8t0MrZs2BXbm
- 2mY9UFJRX7sl1BfLx8lk+3Yo3g6vdmq5tY/a3mKnwW68m7OrD/CRDaZcVM2nZj0iWw1c5YvM1Ba
- 3sTVXlh40HX2MPor3No5q92V2L6oRRuTw+I7QhRCRBJP5b/PXo4upLy/JwDu7xG0FNDXSQffkNx
- QPAnA2wSO2pZ/DCM7tW/UmrDU4IuLY0ATs+vMNAfXxHgEVZVEN9qRXLUNriEdGgP7i+SVuycgOb
- qqynT/fj0hOd2kqrg78l9SI47mvGuczHEoKMuXY/JxJNHvAarkraHV+0GkK4VI5shXWmtfmlPgC
- PkKJCoDW6Ereduxg//KyEcg==
-X-Google-Smtp-Source: AGHT+IFp4S0sxIEStKUL2jwfRULRLxxT9HOP1p+IccXKEUBs1mtFo8GXdZCPU0pP0z9l1XZXK8r0rg==
-X-Received: by 2002:a05:6830:6105:b0:72b:9e3b:82bc with SMTP id
- 46e09a7af769-72c637a4ccamr6064468a34.11.1743460693940; 
- Mon, 31 Mar 2025 15:38:13 -0700 (PDT)
-Received: from [172.20.102.85] (syn-071-042-197-003.biz.spectrum.com.
- [71.42.197.3]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-72c5828ae93sm1634203a34.63.2025.03.31.15.38.12
+ AJvYcCWad7WA+adpDPPbGqipJCxS7rd1K+5rPcLmNyikBR0AJfDMA6babX33LgU/XwowX4JzQbyGxgIYAyaK@nongnu.org
+X-Gm-Message-State: AOJu0YxoF0RRbQ9XiLFkSbuiDuTPe4tlOy4AgOEYM1qItOInpfgdLO5S
+ FoK3qzkEsR48k2YkY4b2kx1pLHpzKpUWG64adMvK5k9Qu8ud2pOoZanW7NgiknI=
+X-Gm-Gg: ASbGncuCONik1IKW32axISH+a8a7ShWG4w3OOTL6jqF8AsK/7+i9lt4lJk3fhn8M07S
+ +Wq9wXnngciIg+aRo909D1TmeHitHMr+a793aWaGTxdgw5c1bTHikBD60v0SiQlE+KHoO5vGs5W
+ o+9TAApLie1osZASEnWH5pbWj/zCMbJOkgQSVrsmR+GYMY12OKU9lORjb0h5fZaOnKXMA/IETTI
+ 1nRHz0d5f6t4CyRb+MZo8Sv39HhJmD34j/SQnzDIgqjRZ/J4XBPRSfQeP6P2wTJjxUpcVoX+Gaw
+ d/W6JXjOJutIix27eK1/c8LbWTlTga0j9ukIRtw4taA0kYwzQsxm6NQKKt3mZ2YM3cEkSgmia3n
+ WQh7DzBgxQOkTUWVxSJCwfCY=
+X-Google-Smtp-Source: AGHT+IENDPrhSDfLKqzeRw9DXXqKY8mot5Mqinpy0x8EmBrUPBYtm34RbJAcXX7gNePYesocMEOY2g==
+X-Received: by 2002:a05:600c:468c:b0:43c:fa3f:8e5d with SMTP id
+ 5b1f17b1804b1-43db61b52e5mr111621165e9.2.1743461381918; 
+ Mon, 31 Mar 2025 15:49:41 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c0b7a4239sm12614094f8f.94.2025.03.31.15.49.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 15:38:13 -0700 (PDT)
-Message-ID: <22353929-7c53-4c96-b751-90cbaff82d7c@linaro.org>
-Date: Mon, 31 Mar 2025 17:38:10 -0500
+ Mon, 31 Mar 2025 15:49:41 -0700 (PDT)
+Message-ID: <0b6fc8e8-e3a8-42a7-a38e-1008bac0ab42@linaro.org>
+Date: Tue, 1 Apr 2025 00:49:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/29] single-binary: start make hw/arm/ common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kvm@vger.kernel.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250325045915.994760-1-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] hw/aspeed: Correct minimum access size for all models
+To: Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ BMC-SW@aspeedtech.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20241118021820.4928-1-joel@jms.id.au>
+ <CAFEAcA9tPhbjnJ6XjMcZq6iWS4i1BdrTB+=391L5UgaVSMkCLQ@mail.gmail.com>
+ <CACPK8XeFP+fmws+tcG-qgz1WXyKAtMicpfcgDG-pd_jp8PLXwQ@mail.gmail.com>
+ <CAFEAcA_+YvS7zTuosAxK8zMgBTD01SRheAat7WbHsfLHCCFGcA@mail.gmail.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250325045915.994760-1-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_+YvS7zTuosAxK8zMgBTD01SRheAat7WbHsfLHCCFGcA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,49 +108,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/24/25 23:58, Pierrick Bouvier wrote:
-> This series focuses on removing compilation units duplication in hw/arm. We
-> start with this architecture because it should not be too hard to transform it,
-> and should give us some good hints on the difficulties we'll meet later.
-> 
-> We first start by making changes in global headers to be able to not rely on
-> specific target defines. In particular, we completely remove cpu-all.h.
-> We then focus on removing those defines from target/arm/cpu.h.
-> 
->  From there, we modify build system to create a new hw common library (per base
-> architecture, "arm" in this case), instead of compiling the same files for every
-> target.
-> 
-> Finally, we can declare hw/arm/boot.c, and most of the boards as common as a
-> first step for this part.
-> 
-> - Based-on:20250317183417.285700-1-pierrick.bouvier@linaro.org
-> ("[PATCH v6 00/18] make system memory API available for common code")
-> https://lore.kernel.org/qemu-devel/20250317183417.285700-1-pierrick.bouvier@linaro.org/
-> - Based-on:20250318213209.2579218-1-richard.henderson@linaro.org
-> ("[PATCH v2 00/42] accel/tcg, codebase: Build once patches")
-> https://lore.kernel.org/qemu-devel/20250318213209.2579218-1-richard.henderson@linaro.org
-> 
-> v2:
-> - rebase on top of Richard series
-> - add target include in hw_common lib
-> - hw_common_lib uses -DCOMPILE_SYSTEM_VS_USER introduced by Richard series
-> - remove cpu-all header
-> - remove BSWAP_NEEDED define
-> - new tlb-flags header
-> - Cleanup i386 KVM_HAVE_MCE_INJECTION definition + move KVM_HAVE_MCE_INJECTION
-> - remove comment about cs_base in target/arm/cpu.h
-> - updated commit message about registers visibility between aarch32/aarch64
-> - tried remove ifdefs in target/arm/helper.c but this resulted in more a ugly
->    result. So just comment calls for now, as we'll clean this file later.
-> - make most of the boards in hw/arm common
-> 
-> v3:
-> - rebase on top of Richard series and master
-> - BSWAP_NEEDED commit was already merged
-> - Update description for commits removing kvm related headers
+Hi Joel,
 
-Thanks.  Queued to tcg-next.
+On 19/11/24 11:29, Peter Maydell wrote:
+> On Tue, 19 Nov 2024 at 02:53, Joel Stanley <joel@jms.id.au> wrote:
+>>
+>> On Mon, 18 Nov 2024 at 20:40, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>> Have you reviewed all the device read/write function
+>>> implementations for these devices to check whether
+>>> (a) changing the .valid value does the right thing, or
+>>
+>> I read the implementation of the read/write memory ops and I believe
+>> it does the right thing. We want devices to accept reads that are of
+>> any size, instead of returning an error.
+>>
+>>> (b) whether there are cases where we should instead
+>>> be updating the implementation and setting the .impl
+>>> min access size ?
+>>
+>> Reading the documentation for impl vs valid, we definitely want to set
+>> valid to 1. There should be no machine check when performing byte
+>> reads.
+>>
+>> I don't think we want to change .impl.min from the default of 1.
+>>
+>> I'm not sure if I've missed something that you're trying to point out.
+>> Are there gotchas about setting valid.min=1 that I should know about?
+> 
+> The "gotcha" is that the memory system's implementation of the
+> size 1 and 2 reads when .impl.min is 4 and .valid.min is 1
+> (as for instance with aspeed_apb2opb_ops after this patch)
+> is "read 4 bytes, return the relevant portion"
+> and the implementation of size 1 and 2 writes is "pad the
+> small value with zeroes at either end appropriately so it is
+> 4 bytes and write that". That is often the right thing for
+> the required behaviour of the device registers, but it is
+> also quite common that it is the wrong behaviour. For instance
+> for some devices the write of a byte is supposed to only modify
+> that byte, and leave the other bytes of a 4-byte register alone.
+> Or if the device has bit-clears-on-read behaviour for a register
+> then the default handling will incorrectly do that for bits
+> that the guest didn't actually read.
+> 
+> Conversely if the device leaves the .impl.min at its default 1
+> and moves .valid.min from 4 to 1 (as with eg ftgmac100_ops)
+> the device will now be called for byte reads and writes at any
+> address in its range. If a write to, say, byte 3 of a 32-bit
+> register is supposed to update bits [31:24], that won't happen
+> unless the write function is changed (usually if there's a switch
+> on offset the write to something that's not at a multiple-of-4
+> will end up in the default "log an error" code path).
+> 
+> What this adds up to is that it's a bit misleading to have
+> a single patch which changes the minimum access size for lots
+> of devices at once, because for each device you need to look
+> at QEMU's implementation of the read and write functions
+> together with the spec of the device, and confirm that the
+> right way to implement "byte writes are supported" for this
+> particular device is to change .valid.min, and that you don't
+> also need to make changes to the read or write function code
+> at the same time or adjust .impl.min. Putting them all in one
+> patch with no discussion in the commit message of the device
+> behaviour and implementation was just a bit of a yellow flag
+> to me that maybe this complexity wasn't considered.
+> 
+> If we get this wrong for one of these devices, it's also likely
+> to be rather easier to bisect the problem if bisection
+> can track it down to "we made this change to aspeed_timer"
+> rather than "we made this change to a dozen devices all at once".
 
-r~
+Could you respin splitting 1 device per patch?
 
