@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5926C36014
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:55:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B859C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzHTq-0001LC-Hm; Mon, 31 Mar 2025 11:55:18 -0400
+	id 1tzHTW-0001Ao-SH; Mon, 31 Mar 2025 11:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzHTI-00019i-9Y; Mon, 31 Mar 2025 11:54:51 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1tzHTE-00018e-Ps; Mon, 31 Mar 2025 11:54:41 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzHTG-0005II-JC; Mon, 31 Mar 2025 11:54:44 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-225477548e1so82097865ad.0; 
- Mon, 31 Mar 2025 08:54:41 -0700 (PDT)
+ id 1tzHTD-0005Hj-0t; Mon, 31 Mar 2025 11:54:40 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-224191d92e4so84740685ad.3; 
+ Mon, 31 Mar 2025 08:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743436480; x=1744041280; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743436477; x=1744041277; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E2wJNuH1xvXGk6SXFgIvKU6voGjgibA+BiurgRrjWX4=;
- b=NYcDULHoegxOPCLTnHh7fUDSLuz4jql4hqLe5uf+8xVU6lDiE3lfJbFCQ+PzN/SFrs
- /wV3BzGCeOaXK3kFQ+OdGZDfTbnjZLqBF1kzvJk1SHWDm14M8MBYUFHjRKUCzHpheydG
- BbY8rbghI5rTND+k8V5H+pa2l8/jmvwjLOmABejeoqbxQb1OJYMQyXNGSPCWz9V5qqau
- JFFpa6y9qIUUvwWE+lkRxXsRVotNzBd6EySTYzhucVzaxnLPIKUo0szOXe9bDxHi7TPw
- 9QgsFqBG0J2+ZWFlrb8HKIgakc61gYu0Ozii9DJXJOOM8QqHwU0r90JCXte8ArLyJXhM
- rgqQ==
+ bh=MBHNz0EIVz4BEQsRbPAif07dRvGcEYobdMBSDY/GLH0=;
+ b=VYEauDfi8r3Kc/ORSputuWKn4f6ClPfvyumAhWWUt/X0liAYgNADJmrvRejhFjHWFY
+ oVgj6OFq/4cSDjCjajoHyvUsO76avEjlU+8WwEp6Z4+Sf+c4eWy5GtBrfuOgE4xksGCj
+ oQs5Yxii75FZ4h2zWS6I/JkswUiJwgfhIR6sb7R1VTVGW4uClQBlD+mOVYn/hFb7t1ju
+ 7dZ2UuyTVgQh9KXPhIrz3L4igRCwN9TdY32g+aGPlQ9R3/BQBvRWvCGxC/U/1bZ4Ii8c
+ AA7cIAAqpTimPutWE5rBQs0XLYdxDykXyGanZK8D8ZPnZy38gR8LiPV6VuWYy5/AOMrq
+ Gj1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743436480; x=1744041280;
+ d=1e100.net; s=20230601; t=1743436477; x=1744041277;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E2wJNuH1xvXGk6SXFgIvKU6voGjgibA+BiurgRrjWX4=;
- b=QLJCL9ANyUdo9E0LNYC1O90WYxEA0zjdZkg0iGn7RV2Im22cZGvR1Bd8S8gacRKdXl
- ZlXk9lC0iUB76zEq1bBIi+iuvtuoAeI5yyZXqpaAvA4FDZyn7yObaCA05qXcygU/nTiE
- RO+83Jl3x27bLxhnw6sDVZWlobIjnWQ3vvUmyfwm6V/espgnzpji0nImtzm7uaZuPmYZ
- Son87Qz7vabojoXfDUGEx3gRolnaYW4jhSGekpDdLc9I2dwIKCPIPYGS9XPWE2scPrpK
- +bpAhLY59DARNvQ1xd5lv/UBKWfpIq6w3IUBK6cUrSl2dgZWQM+D9y4SsNSP7ioXyweX
- zkMQ==
+ bh=MBHNz0EIVz4BEQsRbPAif07dRvGcEYobdMBSDY/GLH0=;
+ b=oPJoGd65czKvhqy14EnbzHctVJPl/IQEX7goP771gihwO6V1xoTon1cu1S13RFiJLz
+ TrLSQ3RUWhY+ANTs8a/Ps1RKD6vqvxXHL3QstEvRqSpqo9oSqe5A2/20i1gqtQOUWizW
+ Fjq/vXke7ULRqW5MvnGL6Z07HXu/hjGXMNFijLsrjyXJ6emwb5eKmd+puoK3FdJjr9YL
+ 6r2+jIDyBTT6IGt+pjPtq2T+8GcWOJSTb8XRxFyH50j1w2xsX7UGwTf5BKXxKSDNqbel
+ Wm72cv6H0YKUR1GEoPy8oGFWWudIo6LiW9wSvx0OG+k1WTFfYQsHoWBYeol7Ryj6H2vs
+ J/lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmxfhfb5umAzT3mIDqXWvCKnHBwM1Xh8hDaJRh7sZOnr7sH6jZ/okSiG51QoX7w+XJQg6nWVT5E+r9@nongnu.org
-X-Gm-Message-State: AOJu0Yzw8iFkiJz53tnmShC9PN2AFSET96ihZCZBo5lOO8fml/2L8pla
- c1T8g1NzCNi+8nxaqE+Bv9gK8v1DvtwTyyFs/cbWVBMcGQFeFJF+MJXXJw==
-X-Gm-Gg: ASbGnct70qxwFABwc3gkZSYgwkkxEJExGha8zGC67GJUtnn9X29mZwLH1KUkAQk5b36
- 2nTvA5XH44eda/PKXJvVjZ99Jtqb6n16Xfg+QT/wMOzziFWUNlLQuF1s3C1zZo1LIYXp5Y4rvo3
- TAfhmjtpRvNieMaAieBoUPd3ct621aBxLy3DnQ5EasrDovEm4Vi2uWkUlnAHbXrTqqK2iq1CNNs
- 70JeoqDoHfNVh/7LM1vXTKUv/gZvS8crgyX0SxlXuzfqD37SMtl0I/AhP/co1TShC7bAMjrJZ5k
- 5vLjkQcpiv9ukXsvXshAWWlQhxk0VI56VM05qlqs88/4DcQXtNqpRr7ahlmE
-X-Google-Smtp-Source: AGHT+IFPwjmdtsDi+Hhcd9WYDfHCxdeq8qqYiXZQO4HGYtHXFirK6H+drc41cFzl33p0qUbeXQBNEQ==
-X-Received: by 2002:a17:902:d489:b0:224:256e:5e4e with SMTP id
- d9443c01a7336-2292f961168mr134784455ad.16.1743436479899; 
- Mon, 31 Mar 2025 08:54:39 -0700 (PDT)
+ AJvYcCWyNSWNN9yI34YCpNb/V/aXVxA0w5U6idTmer8x1Zj/wzVwUTwLoH1asnVVJm9xuOLulEYyIvFz8dlL@nongnu.org
+X-Gm-Message-State: AOJu0YyuJ02HMX8quZ5OQVXIRZDwopWLZZ9hSSLlqEp+W01X0CLgZ7I9
+ lJ9+Chd0Ihj7KDg/Lx+OYfgkpY5SBfRsG7BV/+Vwm6ZKrTlPWWyN7+gRww==
+X-Gm-Gg: ASbGncvaKBpUQIanEz7LoUu8H1bXxOwWU9t4uw9BCUkRUrnFwzhJV77uSh+0pD4+YfW
+ iXoprlunutorM2s4j4PiAJVbQxv7mln+44mliwBPpN5SzofCPRRKc85ynyy++okJuO9rlYJiYrc
+ FLP4c8LCrtzzO6xt0zvZwHmOf0GDxaEw/v6RBD5CiPoxrA14d2PZ4qpc7t81XGQARQBsWdLYHXv
+ NtodFbvDkdEacv2FSJqLEqO4AxCqT3qrcbmwm/IisMYkWSW5dWiRaRINSzggINQg4gsIc1WBRqQ
+ od8ZSz84PFZsRvc72xTJCiq18E7pchxOW448nkxRfjrEmqanbg==
+X-Google-Smtp-Source: AGHT+IFzjAx+vbs9ylkPhmFiJtc3D/W3P+Bp1FUDRAqk487bB7ARegtB/kPZnRN3LduR+tlGK6ap1g==
+X-Received: by 2002:a17:902:e852:b0:215:8d49:e2a7 with SMTP id
+ d9443c01a7336-2292fa0cf9bmr140713685ad.50.1743436476921; 
+ Mon, 31 Mar 2025 08:54:36 -0700 (PDT)
 Received: from wheely.local0.net ([203.185.207.94])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eec6fbdsm70742045ad.16.2025.03.31.08.54.37
+ d9443c01a7336-2291eec6fbdsm70742045ad.16.2025.03.31.08.54.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Mar 2025 08:54:39 -0700 (PDT)
+ Mon, 31 Mar 2025 08:54:36 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC PATCH 3/3] target/ppc: Allow goto-tb on fixed real mode
- translations
-Date: Tue,  1 Apr 2025 01:54:23 +1000
-Message-ID: <20250331155423.619451-4-npiggin@gmail.com>
+Subject: [RFC PATCH 2/3] target/ppc: define TARGET_HAS_LAZY_ICACHE
+Date: Tue,  1 Apr 2025 01:54:22 +1000
+Message-ID: <20250331155423.619451-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250331155423.619451-1-npiggin@gmail.com>
 References: <20250331155423.619451-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,68 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixed translations (mapping and protections unchanged) do not have
-to restrict TB chaining to within a target page.
+Use the new incoherent icache (incoherent TB) feature in the ppc target.
 
-Hypervisor-real mode is a fixed translation.
+Performance problems with notdirty write accesses have been encountered
+in two places now. One is where a large number of executable pages have
+been freed (typically in KVM when a guest exits) and are being cleared
+for reuse, most stores in a page will take the notdirty slowpath, which
+can cause such s slowdown that the OS reports lockups. The other case is
+PowerVM boot firmware which has real-mode interrupt handler code that
+stores to memory in the same page-sized region as interrupt handler code
+which causes significant slowdowns.
 
-TODO: Supervisor-real mode in spapr should also be a fixed translation.
+ppc implements TARGET_HAS_LAZY_ICACHE by calling tb_flush_incoherent()
+from the ICBI instruction, which should conform to the ISA's CMODX (aka
+SMC) requirement.
 ---
- target/ppc/translate.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ target/ppc/cpu.h        | 16 ++++++++++++++++
+ target/ppc/mem_helper.c |  2 ++
+ target/ppc/translate.c  |  1 +
+ 3 files changed, 19 insertions(+)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 5e610bf29a5..4b4440c8a16 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -183,6 +183,7 @@ struct DisasContext {
-     bool sf_mode;
-     bool has_cfar;
-     bool has_bhrb;
-+    bool ifetch_fixed_xlate;
- #endif
-     bool fpu_enabled;
-     bool altivec_enabled;
-@@ -3656,6 +3657,18 @@ static inline bool use_goto_tb(DisasContext *ctx, target_ulong dest)
-     if (unlikely(ctx->singlestep_enabled)) {
-         return false;
-     }
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 74ed28c8dac..de274d29637 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -34,6 +34,22 @@
+ #define TARGET_PAGE_BITS_64K 16
+ #define TARGET_PAGE_BITS_16M 24
+ 
++/* icaches are not kept coherent with dcaches. target is to call
++ * tb_flush_incoherent() to bring them into coherency */
++#define TARGET_HAS_LAZY_ICACHE
++/*
++ * Note that this does not model implementation specific behaviour of all
++ * CPUs, notably recent Power CPUs do keep i/d coherent, and only require
++ * context synchronization after code modification to ensure CPU pipeline
++ * is coherent. The ISA and User Manuals do say that icbi (to any address) ;
++ * isync should be used even for these CPUs, so tb_flush_incoherent() in
++ * icbi should work reasonably. The ppc target should continue to work without
++ * TARGET_HAS_LAZY_ICACHE, but some performance corner cases benefit (e.g.,
++ * KVM when clearing a lot of memory freed from a guest that has a lot of exec
++ * pages; PowerVM PFW/boot firmware that stores to globals in the same page as
++ * it executes from).
++ */
 +
-+#if defined(TARGET_PPC64)
-+    /* XXX: make translator_use_goto_tb take a 'fixed map' bool */
-+    /* Suppress goto_tb if requested. */
-+    if (ctx->ifetch_fixed_xlate) {
-+        if (tb_cflags(ctx->base.tb) & CF_NO_GOTO_TB) {
-+            return false;
-+        }
-+        return true;
-+    }
-+#endif
-+
-     return translator_use_goto_tb(&ctx->base, dest);
+ #if defined(TARGET_PPC64)
+ #define PPC_ELF_MACHINE     EM_PPC64
+ #else
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 51b137febd6..647d37195dd 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/helper-proto.h"
+ #include "helper_regs.h"
+ #include "exec/cpu_ldst.h"
++#include "exec/tb-flush.h"
+ #include "internal.h"
+ #include "qemu/atomic128.h"
+ 
+@@ -335,6 +336,7 @@ void helper_icbi(CPUPPCState *env, target_ulong addr)
+      * do the load "by hand".
+      */
+     cpu_ldl_data_ra(env, addr, GETPC());
++    tb_flush_incoherent(env_cpu(env));
  }
  
-@@ -6545,6 +6558,7 @@ static void ppc_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->sf_mode = (hflags >> HFLAGS_64) & 1;
-     ctx->has_cfar = !!(env->flags & POWERPC_FLAG_CFAR);
-     ctx->has_bhrb = !!(env->flags & POWERPC_FLAG_BHRB);
-+    ctx->ifetch_fixed_xlate = ((hflags >> HFLAGS_IMMU_IDX) & 7) == 3;
- #endif
-     ctx->lazy_tlb_flush = env->mmu_model == POWERPC_MMU_32B
-         || env->mmu_model & POWERPC_MMU_64;
-@@ -6627,6 +6641,12 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-         gen_invalid(ctx);
-     }
- 
-+#if defined(TARGET_PPC64)
-+    if (ctx->ifetch_fixed_xlate) {
-+        return;
-+    }
-+#endif
-+
-     /* End the TB when crossing a page boundary. */
-     if (ctx->base.is_jmp == DISAS_NEXT && !(pc & ~TARGET_PAGE_MASK)) {
-         ctx->base.is_jmp = DISAS_TOO_MANY;
+ void helper_icbiep(CPUPPCState *env, target_ulong addr)
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 7f933537aaa..5e610bf29a5 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -4565,6 +4565,7 @@ static void gen_dss(DisasContext *ctx)
+ static void gen_icbi(DisasContext *ctx)
+ {
+     TCGv t0;
++    translator_io_start(&ctx->base);
+     gen_set_access_type(ctx, ACCESS_CACHE);
+     t0 = tcg_temp_new();
+     gen_addr_reg_index(ctx, t0);
 -- 
 2.47.1
 
