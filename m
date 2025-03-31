@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C567C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7422BC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDCU-0004UL-Np; Mon, 31 Mar 2025 07:21:06 -0400
+	id 1tzDCC-0003yI-EN; Mon, 31 Mar 2025 07:20:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDCQ-0004Jm-MX
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:21:02 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDCA-0003y3-JD
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:46 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDCP-0005Zk-6a
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:21:02 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3913b539aabso2460491f8f.2
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:21:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDC8-0005WK-Vc
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:46 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4393dc02b78so27037075e9.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:20:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743420059; x=1744024859; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743420043; x=1744024843; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=19QQKGK0k/Vn5NqbyH+tqJ21Kn6WG9tfDwjmE3CyB+8=;
- b=K9OoHEjB6ujHbd5dM+WH/ezsc9ZWh9uN4OTq4OrW+A0iSySggJALee8rthccbEMfNW
- Mrb7oPTseAlRFgsgqpJEDboceTr+fRWQVn3Wil7g8OOFD6QSnbXXfX3YZcuY1kV1fzDx
- DsmHnTgsUeSLK/RdACtPQaR04UwAzZfdbYTCIF4eFoWKCMNWI1ru4+5SIWbraE/vdYSM
- ZWto/V1L/zh79QJZdlipxGV83PkjzU+cA6qJqFX5jBI6cKdpnEUBFrg/z6db+7iJRm/L
- n0QOs1Kap8X/61iiIE5R6Lkr3cMzfq4qufY/GiyvXcOUkdMexRotlM+7Xm1xU+6zwXaU
- sQEQ==
+ bh=w3y5HdCfApOj2BAeh4w248vwX3FXmLG55TM8DM6uuak=;
+ b=OrMKXQUm6IRijKJjKyAQLt+llpQqFf81Ts3HcOoAeEbgpZVplMo8OkkUuBIyj2LEzZ
+ EZ0vEnQuAncloGB/LAmp7+AVyA8Qqnsl/A1Tml4kgnMdzJ2bv8vAQmx+2GsFyycSsNHm
+ KIKWRtkGm33TsBSUxKQrQRM2VjLJLZYfT395at5c4WY/PM10hgOdPTKZIZAa/JXhzkgi
+ F0c28M5EpTd1Wa0bl8Nyo/eOsZqx+7ZnpU8oMPuF7ZzFiMcAuWB0CLDiZFAJP+cZqlI0
+ rbtFhJbPkvQx81ZrTkZEMCnU9zO2ijGLBJsa6jnjwbkIlmrTEfR+daDCgTgZg3W9hMnx
+ P3NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743420059; x=1744024859;
+ d=1e100.net; s=20230601; t=1743420043; x=1744024843;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=19QQKGK0k/Vn5NqbyH+tqJ21Kn6WG9tfDwjmE3CyB+8=;
- b=f7OHJaH+D4Wpn2sg53nygpn0SlhayoB0Bq+zEGA/H5hNGNdTSewXOyidE3uKnO3mFX
- Cu6r4jXDVFEflexgvy4s+KZmZFduvLYQgSKa6OpnwgXUJFHbqkxMy4FfMjuBbfI/g7FD
- OhugAcZQoh9uoSjavFPc3q93oRBpL5zF1qC8s71lF97Hh4N4JgE7a48dnbAYVA7JTvNG
- UH712PQ8m34oe2+RniNKdMvhiaRJHSCz2h/VwrN3Cyt+74KYkW83tg72DBmBjhiulTOT
- YK9fIQSBTm+k17K4yy9e4azA57BPqERw5xiTgUfAYDILeq3t4zOJciM7usJIsZ3UC55h
- E6gA==
+ bh=w3y5HdCfApOj2BAeh4w248vwX3FXmLG55TM8DM6uuak=;
+ b=Owe6XuOAam6zd02ndtUuoc+ANclIuDMSKj9Eo87DI7EAc4VxR/MMbOzEPaOUTBXQef
+ vY9t6sCuJyCaWnRfhaXqdUU7OGx5f7f3h75ZMew3cFEbOkJofrdd+cqhhYxuzYaQHIQq
+ QhqEtS7gns0CEiLDZZbb7y+QaFqx7gpBd+vcXYDT7kBijrZtznD6lwXE8/Xj2BoGYcI/
+ 15KXChy0fw81FZWGdNcmvS1yS8KkmYQMT25a3ThtObY/GvMdSaYdWLM/cwsaq2fuLQYp
+ w6sImAVxl/lHxsrMfyMXKROLw0JfAsgMF7xrmbwUnTUtHtEdCRiaEgrdgi7mpsWHDnVe
+ +kmQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU45x+BeAxcVN591hStkiDU0KrW6/xkj3Sr5GZvzDj0qEEzvSU6jnlO2FwajsiuADapPlXn6+pFD2QQ@nongnu.org
-X-Gm-Message-State: AOJu0Ywq8WDEbEU4QSc0j9p4F07Etu+g3OvmOoxrMvT7OQwvjY/EOfkR
- d8EYymZvSQ3/MQlk1sRxBIdMX5CTQQyAtORpM3rXy2x1Sjv5nYpnoez8hISbPAWnW5wKeYxywDE
- g
-X-Gm-Gg: ASbGncsokq62qg/BgUSW5OmonR2RLg55jdGns59Z10oxDvcN9z1UuOGGbHx3ENzVUp9
- tDgpVdZHfTTtTobedcF7BoQFvNKAm8yXUcRmajdbDe8ASNXLFr2eeDu0sfCm35On5srMUM8C8f8
- sL7nvdjlvyUJYrcB7pmuNjHRLueGBJA5puMU1cdLEEOvDG0XO9jRVMBkCzbly1EfpEE49Z7+xUV
- WVBid52QweFhiY63Aixky8l5g/ny8J+FneH344kp8xjYUDnCUt3x1y6P7NrUqVxTHP6fPm3LSSz
- mMmSka+UaMptSzFEo6plyH84+/CLSN8NrQRhWvowUOUspa4DrNJqrX34EV/UlcXH4+h7G9CrcNX
- TIa+KdfFGhw3xlRKXlqP4iXY=
-X-Google-Smtp-Source: AGHT+IF4Sl7+vRkx7ltuIIwjKStn4k6MTbLnS3RJgCGmMsyUldT+O/0/bpg5KspAaJYhBFzkuSqiJA==
-X-Received: by 2002:a05:6000:4287:b0:39c:1a86:e473 with SMTP id
- ffacd0b85a97d-39c1a86e5d3mr3031636f8f.56.1743420059229; 
- Mon, 31 Mar 2025 04:20:59 -0700 (PDT)
+ AJvYcCXtlFEJi3Ul61CDCtCtZPxly53oJVuhO3sriMiSnpFipROlCYi5ZjJczkbglpmDT2Jg3AUkpDAF861N@nongnu.org
+X-Gm-Message-State: AOJu0YyAFhx4rB8gwLY1s6qZ4qK/cdzkjIIhlUD1p4vb9afQMI0qm/8h
+ dcQZ9mHiCBQ8mlQQ7bxGKQDVt1mKfRpuJZCTjzBmivuBCQV7r5OprVZPMs7iUyn80vHIXtZ0vKB
+ 6
+X-Gm-Gg: ASbGncuwLh6BTRKOfpfSQuC1aZeMxsXmcjheIx3vaLtIYtFqh7TIoMZDKQC+rSlWGIq
+ AnKGGOjRj6qsrbuDCNrXIKjtPwEU5/9fZmTexMCAvJxOhv05GESUGs3qMlo1m6Dm+tbc8T4lfQZ
+ RDhvVh7QwSkvkZMsaULsemGDFXkFDh8J20xej58xBJVXusMSbj5nZG9sh7bBEDyiCIfX7twnG4a
+ 2xhANbtQaFtYtjkTrKZmQEVbsJrBVuOEAlWysL+KKayRWDIe80DkGRNZPT52plhyotjhOEEsns8
+ B5dumGU/PPwwzS81oILPjziSFw0NaStRii1CZnOjFTeG2WtH6YCh9Q48+xKZU4ytECVNBbWvOVr
+ nk90qDjU9lYfk
+X-Google-Smtp-Source: AGHT+IFHC4TXxtvlk93gEfhmxF9h0fTb5e0S+rwoE6asebrtxfUoDd+VMZ4Mg0G/TnIBzEmmzqgEbA==
+X-Received: by 2002:a05:600c:4fd4:b0:43c:fbba:41ba with SMTP id
+ 5b1f17b1804b1-43db62b583fmr60042965e9.28.1743420043336; 
+ Mon, 31 Mar 2025 04:20:43 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a4200sm11137825f8f.96.2025.03.31.04.20.58
+ 5b1f17b1804b1-43d8ff02e75sm118637395e9.30.2025.03.31.04.20.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 04:20:58 -0700 (PDT)
-Message-ID: <d4f8ce06-932b-4a77-8301-32975737d88b@linaro.org>
-Date: Mon, 31 Mar 2025 13:20:58 +0200
+ Mon, 31 Mar 2025 04:20:42 -0700 (PDT)
+Message-ID: <cbd18e0d-e230-4a88-b097-0248948362dd@linaro.org>
+Date: Mon, 31 Mar 2025 13:20:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sd/sdhci: free irq on exit
+Subject: Re: [PATCH] hw/scsi/lsi53c895a: fix memory leak in lsi_scsi_realize()
 To: Zheng Huang <hz1624917200@gmail.com>, qemu-devel@nongnu.org
-References: <09ddf42b-a6db-42d5-954b-148d09d8d6cc@gmail.com>
+References: <73cd69f9-ff9b-4cd4-b8aa-265f9d6067b9@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <09ddf42b-a6db-42d5-954b-148d09d8d6cc@gmail.com>
+In-Reply-To: <73cd69f9-ff9b-4cd4-b8aa-265f9d6067b9@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,17 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/25 10:49, Zheng Huang wrote:
+On 28/3/25 04:21, Zheng Huang wrote:
 > Hi,
+> This patch addresses a memory leak bug in the usages of `timer_del()`.
+> The issue arisesfrom the incorrect use of the ambiguous timer API
+> `timer_del()`, which does not free the timer object. The LeakSanitizer
+> report this issue during fuzzing. The correct API `timer_free()` freed
+> the timer object instead.
 > 
-> This patch fixes a memory leak bug in `sdhci_pci_realize()`. `s->irq` is
-> not freed in `sdhci_pci_exit()`.
+> =================================================================
+> ==2586273==ERROR: LeakSanitizer: detected memory leaks
 > 
-> Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
+> Direct leak of 48 byte(s) in 1 object(s) allocated from:
+>      #0 0x55f2afd89879 in calloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:75:3
+>      #1 0x7f443b93ac50 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5ec50) (BuildId: 224ac2a88b72bc8e2fe8566ee28fae789fc69241)
+>      #2 0x55f2b053962e in timer_new /root/qemu/include/qemu/timer.h:542:12
+>      #3 0x55f2b0514771 in timer_new_us /root/qemu/include/qemu/timer.h:582:12
+>      #4 0x55f2b0514288 in lsi_scsi_realize /root/qemu/build-fuzz/../hw/scsi/lsi53c895a.c:2350:24
+>      #5 0x55f2b0452d26 in pci_qdev_realize /root/qemu/build-fuzz/../hw/pci/pci.c:2174:9
+> 
+> 
+> Signed-off-by: Zheng Huang <hz1624917200@outlook.com>
 > 
 > ---
->   hw/sd/sdhci-pci.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   hw/scsi/lsi53c895a.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Queued to hw-misc, thanks!
 
