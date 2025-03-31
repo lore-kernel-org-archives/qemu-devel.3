@@ -4,107 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE70CC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E7EC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzGlS-0002Cy-26; Mon, 31 Mar 2025 11:09:26 -0400
+	id 1tzGv6-0006OV-UO; Mon, 31 Mar 2025 11:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzGlO-0002Cb-Dw
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:09:22 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzGur-0006L2-8n
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:19:19 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzGlM-0004Up-KK
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:09:22 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzGum-0006qv-Qd
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:19:07 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 75BAD211F2;
- Mon, 31 Mar 2025 15:09:17 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 51FF31F452;
+ Mon, 31 Mar 2025 15:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1743433757; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1743434341; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AdGFrr8FdFpnm7hVmucX75RCpvqrsI8fjHCEGLyXRqQ=;
- b=WnbDt8cyNQdSZsalh4MSq4vDQ3HwX8rgTFcq+qc1iqlSmxNGHyPwEE90SvpEGKTsAbY8Io
- SoA4JiNWYp5Gv6Pe02B1Gr/kJF54ry1wt16MO7NPWVsihwewX1+DtKFfxmM2usI0sFI2TV
- WGPf/FE/w8jvL9UvW/rs28Zn0fo/0zU=
+ bh=ysoJEtUlkwj3bmSNPu5ussTeXpVEyqYmS23kBOCMNmM=;
+ b=JUeC6vbKJXfzdvXxe1lHc+VJf4Wx42qu+R6Woc8DJtGVq2jLsNDD3IKVCCzBoXfJ6HpIbm
+ G21hsk+pBQYT4YuFY6Ib4xqdD96pDV2HcxDIbzSmxW9lIbepODWqFAhobbp2i2WLrjFm+o
+ pMnYyASQ7FPVHXbNPRgxaDYo7MSb1SA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1743433757;
+ s=susede2_ed25519; t=1743434341;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AdGFrr8FdFpnm7hVmucX75RCpvqrsI8fjHCEGLyXRqQ=;
- b=/N4rsXr/a6R+yHNQYx97KNuJ8kdKrtOteYPiFrzqFzPyEgeXd3QKJK0YEk7hfRULKFsWzx
- MyGfRo9CCLl4tfCw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WnbDt8cy;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="/N4rsXr/"
+ bh=ysoJEtUlkwj3bmSNPu5ussTeXpVEyqYmS23kBOCMNmM=;
+ b=AhpXnkXkhdeVL5Y9hGV2WQcUiWQbRpyggIuBfaWqbCTZhTTAp5TSaYO3rcuqVNpkY0QG+n
+ bWI5sJmlw9nwcHBw==
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1743433757; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1743434341; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AdGFrr8FdFpnm7hVmucX75RCpvqrsI8fjHCEGLyXRqQ=;
- b=WnbDt8cyNQdSZsalh4MSq4vDQ3HwX8rgTFcq+qc1iqlSmxNGHyPwEE90SvpEGKTsAbY8Io
- SoA4JiNWYp5Gv6Pe02B1Gr/kJF54ry1wt16MO7NPWVsihwewX1+DtKFfxmM2usI0sFI2TV
- WGPf/FE/w8jvL9UvW/rs28Zn0fo/0zU=
+ bh=ysoJEtUlkwj3bmSNPu5ussTeXpVEyqYmS23kBOCMNmM=;
+ b=JUeC6vbKJXfzdvXxe1lHc+VJf4Wx42qu+R6Woc8DJtGVq2jLsNDD3IKVCCzBoXfJ6HpIbm
+ G21hsk+pBQYT4YuFY6Ib4xqdD96pDV2HcxDIbzSmxW9lIbepODWqFAhobbp2i2WLrjFm+o
+ pMnYyASQ7FPVHXbNPRgxaDYo7MSb1SA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1743433757;
+ s=susede2_ed25519; t=1743434341;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AdGFrr8FdFpnm7hVmucX75RCpvqrsI8fjHCEGLyXRqQ=;
- b=/N4rsXr/a6R+yHNQYx97KNuJ8kdKrtOteYPiFrzqFzPyEgeXd3QKJK0YEk7hfRULKFsWzx
- MyGfRo9CCLl4tfCw==
+ bh=ysoJEtUlkwj3bmSNPu5ussTeXpVEyqYmS23kBOCMNmM=;
+ b=AhpXnkXkhdeVL5Y9hGV2WQcUiWQbRpyggIuBfaWqbCTZhTTAp5TSaYO3rcuqVNpkY0QG+n
+ bWI5sJmlw9nwcHBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DB305139A1;
- Mon, 31 Mar 2025 15:09:16 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B9DEA13A1F;
+ Mon, 31 Mar 2025 15:19:00 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QTIeJhyw6mcHRQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 31 Mar 2025 15:09:16 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id TAyqHWSy6mdtSAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 31 Mar 2025 15:19:00 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com, berrange@redhat.com
-Subject: Re: [PATCH v8 6/7] migration: Add save_postcopy_prepare() savevm
- handler
-In-Reply-To: <20250318123846.1370312-7-ppandit@redhat.com>
+Subject: Re: [PATCH v8 7/7] migration/ram: Implement save_postcopy_prepare()
+In-Reply-To: <20250318123846.1370312-8-ppandit@redhat.com>
 References: <20250318123846.1370312-1-ppandit@redhat.com>
- <20250318123846.1370312-7-ppandit@redhat.com>
-Date: Mon, 31 Mar 2025 12:08:58 -0300
-Message-ID: <87v7rpkzjp.fsf@suse.de>
+ <20250318123846.1370312-8-ppandit@redhat.com>
+Date: Mon, 31 Mar 2025 12:18:57 -0300
+Message-ID: <87semtkz32.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 75BAD211F2
-X-Spamd-Result: default: False [-2.87 / 50.00]; BAYES_HAM(-1.36)[90.56%];
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -130,6 +117,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Prasad Pandit <ppandit@redhat.com> writes:
 
-This patch and the next one need to come before 3/7.
+> From: Peter Xu <peterx@redhat.com>
+>
+> Implement save_postcopy_prepare(), preparing for the enablement of both
+> multifd and postcopy.
+>
+> Please see the rich comment for the rationals.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> ---
+>  migration/ram.c | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>
+> v8:
+> - New patch
+>
+> v7:
+> - https://lore.kernel.org/qemu-devel/20250228121749.553184-1-ppandit@redhat.com/T/#t
+>
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 6fd88cbf2a..04fde7ba6b 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -4419,6 +4419,42 @@ static int ram_resume_prepare(MigrationState *s, void *opaque)
+>      return 0;
+>  }
+>  
+> +static bool ram_save_postcopy_prepare(QEMUFile *f, void *opaque, Error **errp)
+> +{
+> +    int ret;
+> +
+> +    if (migrate_multifd()) {
+> +        /*
+> +         * When multifd is enabled, source QEMU needs to make sure all the
+> +         * pages queued before postcopy starts to be flushed.
 
+s/to be/have been/
+
+> +         *
+> +         * Meanwhile, the load of these pages must happen before switching
+
+s/Meanwhile,//
+
+> +         * to postcopy.  It's because loading of guest pages (so far) in
+> +         * multifd recv threads is still non-atomic, so the load cannot
+> +         * happen with vCPUs running on destination side.
+> +         *
+> +         * This flush and sync will guarantee those pages loaded _before_
+
+s/loaded/are loaded/
+
+> +         * postcopy starts on destination. The rational is, this happens
+
+s/rational/rationale/
+
+> +         * before VM stops (and before source QEMU sends all the rest of
+> +         * the postcopy messages).  So when the destination QEMU received
+> +         * the postcopy messages, it must have received the sync message on
+> +         * the main channel (either RAM_SAVE_FLAG_MULTIFD_FLUSH, or
+> +         * RAM_SAVE_FLAG_EOS), and such message should have guaranteed all
+> +         * previous guest pages queued in the multifd channels to be
+> +         * completely loaded.
+> +         */
+> +        ret = multifd_ram_flush_and_sync(f);
+> +        if (ret < 0) {
+> +            error_setg(errp, "%s: multifd flush and sync failed", __func__);
+> +            return false;
+> +        }
+> +    }
+> +
+> +    qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
+> +
+> +    return true;
+> +}
+> +
+>  void postcopy_preempt_shutdown_file(MigrationState *s)
+>  {
+>      qemu_put_be64(s->postcopy_qemufile_src, RAM_SAVE_FLAG_EOS);
+> @@ -4438,6 +4474,7 @@ static SaveVMHandlers savevm_ram_handlers = {
+>      .load_setup = ram_load_setup,
+>      .load_cleanup = ram_load_cleanup,
+>      .resume_prepare = ram_resume_prepare,
+> +    .save_postcopy_prepare = ram_save_postcopy_prepare,
+>  };
+>  
+>  static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
 
