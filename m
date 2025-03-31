@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BA51C36010
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4915EC3600B
 	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDBf-0003tI-OL; Mon, 31 Mar 2025 07:20:15 -0400
+	id 1tzDC0-0003vS-At; Mon, 31 Mar 2025 07:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDBd-0003su-Es
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:13 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDBq-0003up-R9
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:27 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDBb-0005Pt-MP
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:13 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39ac8e7688aso3479132f8f.2
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:20:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDBp-0005Tv-8y
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:26 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43cf05f0c3eso29132275e9.0
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:20:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743420009; x=1744024809; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743420024; x=1744024824; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FMVHqsTPretwWz7FUkx1jwwFQduMUsmy4P/isUnCU/c=;
- b=xVEcvzke8PRAoW4JtX67Far7ieY82+u/iGAJ2PgBv2qp1lNcgbUVWIMSnYh1If85Wc
- n5lUJTkFaPtRBAXZDlQ2kQIn6TmIweAe230MwmQ7jD1RWxMPf+oHoXBonnM7CYwijl91
- eeurKigVH6DTsYlgTpnYnuvja/5h6xGCuGIjAdR815iaj0yTmvNjPxcAzwrXcQB0ZAcd
- yviaYcKn2LyCsApq+pg3NoEHc37c8vU+4fOT1Ak2DtGwVmZvM6X3iWgXXYizaJ5FsEJD
- ZHSv3M0AbojKYPl2v2xvAxFkCRm7CO0FAOyXGYGI4GDsGbumoyx4qvcLFOErQ+QoxvLa
- K5Ow==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ADiOwvi8t7PtXI2mn1Glpzt7hwB5BN/6QAN5l5+l+No=;
+ b=pBjp+x90wTLNpYPoHS4aY9M9Zr/TWk6HmOr6BGaC6/9Mt3tcTQoSD0p9nQysRZolvq
+ ZTWYHkoWIbiFpGXDWzkkNcLozwlsPc1rvF2CFssn1nxhpq2pdyYkiJfIdKExybUaS0/5
+ 7n14TW26/fMeA27Nk0yj2/aaztXo7KBfDwe80ON9ax+3qEzn3pwJHlfDejC9iyJ9/C79
+ Fuueg1C14KsPi7UO2CS0OK6BgqCMI3kEmMch1FwEhyQjGekWmy8HdZe/BanmkAL1yF8I
+ imgLyFfRovifyaMKBtqA6J296IMan8EQF1dbjR96bMtdcR/kqLoqrl/2lbd/jNptZ/UW
+ PA5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743420009; x=1744024809;
+ d=1e100.net; s=20230601; t=1743420024; x=1744024824;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FMVHqsTPretwWz7FUkx1jwwFQduMUsmy4P/isUnCU/c=;
- b=nKkhlAGYOHJ2Lm7wq6zxSmk/vMlDQeKu73ltx8crZTJPVNwR+ZeFMbc9aqjsagadIY
- 1JXQRi1Tz0Jdb2vtu/PPXLkJ+G9X50LlELTGZH9+teqG7LbF0h0/Ce/KphwG9pBl5GaP
- ee4AB33idZ1080IzenK+IuadjJlG19G1NY1adBFxXiXPQomF5xoZBeAtxv/T7LHpRItt
- rUDFORng2bUclElePO1YI78YwOFgIO/yen4kUtX0J8pjAPdF81f/NvRfaa5mOnPqdM9s
- Ogha04grL+ws2G9xR6n+taX/Pir/WTrtYKFBWMiYLijN7wIAKcRS4PRQnFK02gj8K1wS
- G3yA==
+ bh=ADiOwvi8t7PtXI2mn1Glpzt7hwB5BN/6QAN5l5+l+No=;
+ b=X9zbt7ycgOItBPpjTOfZc8VVU5ZiZU/mHvKjoMwGqpQPMhjkXblyPrahBUJRNUQb8l
+ 5+zqnh+SSBb2zkX0l5WKD2/+hX9Hcf/m0S+oNazjatU9Qmi2ER+KlKOSyQrRaLMkr4Uh
+ 5ZuLYNWqMtAsAAUBiN5h2FF56Pjgd8CKwoxPa8u50m4ByfFUbhqGTO9xxF/ZhESDbWsR
+ Sl/UIZNMmQh2RBsroD0FR2z9+Ng4Pba4HmT4Zt86Zuf/UL6Ad1kZbt9eJFPkmJ43pb60
+ YBCb0ENtR/QJZhxAw/v5YNVbyNzVzB6djpLackTcuUO72OWwtpYkaQ6n54/6nS1Cderc
+ Y24w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXkyQCgDj4CQHg81O5IFJxwgI11QsNKSpkxmfEXtqvIFJnccY2w/kq0TI4UV51ovQdiiMIvZkjFt1pL@nongnu.org
-X-Gm-Message-State: AOJu0YyzHzMhT1z6kzUJmUHjdk3ee5dJg6voY78gMMTIdlKCVBHBGl0S
- tqQnYfZ3ywNsXe37xXhLEQIjr16zNSSySbeycO+wa3b2ZnKr+D9Pt1RgxiMaHzM=
-X-Gm-Gg: ASbGncstZjQM47W9iKZXs9/jmByNhqhkrSPIFMtP0SkUcNBKF0bCZeDDXrxy5u95B5H
- NadpX1ofWO4X7+gnNIlC6ohpOYD3Ybt1dwB7PatNRLYvSx+nDRsxSeakRh/g++SJa76Z9gvhwRH
- i2oYpeMtFQXLv/dvZLxJ1hcy/A5/huwSNfcNAeq4x96yZzLqBPItHA+DRyqq6iwcN6WzT81wQf3
- dxZmjmqeHRepL4ntWNrv+4pzpfh5NAfKp+MPVvoqsldcKiZzlVUaRHcJ+urwJJLR+ThpK6FRJ0C
- oLdeVJj4Yy6KkVyT3MewTulqfVga6K854RbCO5maXaXucvSHrn2pG9jQMhDylCMGhnKZtZ0qw05
- DPV+a0ORs9vF2
-X-Google-Smtp-Source: AGHT+IEkYKxq9DzwMd8BIQKTr74mGlBqQB+2xlMQkBMavHzehd5zuUXoZqyV/kbUBkRnZJcO6NNLFQ==
-X-Received: by 2002:a5d:59a5:0:b0:391:4743:6dc2 with SMTP id
- ffacd0b85a97d-39c120e3bd7mr6316117f8f.25.1743420008844; 
- Mon, 31 Mar 2025 04:20:08 -0700 (PDT)
+ AJvYcCWyq4UxIhUZO4Zq4/ocl6bJGDh2fRMt3MMfhKcY70r5WqprBfHXqAUqTrXfhYZWddtIvvlzYZ4zi0YK@nongnu.org
+X-Gm-Message-State: AOJu0Yx8SQlHZlmOwP+lv2wsBqfZRwhPNvT7NUcsr3znxVLdAWBOzzLy
+ EirFGbEJsdP5lmigmou+pDo9xTfOHOLF7ME2wHN55lziaqGJuNqtCj/lPEltH8g=
+X-Gm-Gg: ASbGnctMBsVI8oYFsZWaTEkjJcIp8rcZO6seIlAUqqN5gg0qgstZNyDYc1S/DBVZy/f
+ TxiLrB20gFenKdJEkYnSdqXJgJQmtSIQuEq5VqiPE512KSu9EY04m3LrqygF2NqiISBTLQpDhci
+ TDoTAgktZF3i0aseJ1ds/7DrVdL2nH86R49wsHZBXVRUo6IG479qt+eePulnomDaGmHLB+/rwDD
+ 2bEcPGuzf8rM//kWhOMlGcyBH8nWkjPSAzD0dMDX5YRyCBpPblvgBG5xrxpl5D3p1ud+jcA8chl
+ EJPSlTq8oa4aLWvLGT6vtaqxdIyRydyt+ALAWT+4IxaY8WgdTXs9jqo/aImSvwevVDlqbZIdQmJ
+ w+ZEpDRfTY6yU
+X-Google-Smtp-Source: AGHT+IGsJeAPKZz0PR5mHTymId34kuq3Varf4IgqwBjSrHHq8MKpMctT2vzgVPK6HA//hhd6pPtADQ==
+X-Received: by 2002:a05:600c:1e23:b0:434:fa55:eb56 with SMTP id
+ 5b1f17b1804b1-43db61cebecmr84973695e9.7.1743420023683; 
+ Mon, 31 Mar 2025 04:20:23 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b662736sm10812996f8f.22.2025.03.31.04.20.07
+ 5b1f17b1804b1-43d8fbc12bbsm118587955e9.13.2025.03.31.04.20.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 04:20:08 -0700 (PDT)
-Message-ID: <7c4beda4-7f0f-46fa-98bc-52d6abe21ab4@linaro.org>
-Date: Mon, 31 Mar 2025 13:20:07 +0200
+ Mon, 31 Mar 2025 04:20:23 -0700 (PDT)
+Message-ID: <a9348ea5-ed0c-4420-89e3-aa9224bfbb68@linaro.org>
+Date: Mon, 31 Mar 2025 13:20:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char/bcm2835_aux: Fix incorrect interrupt ID when RX
- disabled
-To: Chung-Yi Chen <yeechen0207@gmail.com>, qemu-arm@nongnu.org
-Cc: peter.maydell@linaro.org, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org
-References: <20250328123725.94176-1-yeechen0207@gmail.com>
+Subject: Re: [PATCH] hw/ufs: free irq on exit
+To: Zheng Huang <hz1624917200@gmail.com>, qemu-devel@nongnu.org
+References: <43ceb427-87aa-44ee-9007-dbaecc499bba@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250328123725.94176-1-yeechen0207@gmail.com>
+In-Reply-To: <43ceb427-87aa-44ee-9007-dbaecc499bba@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,43 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/3/25 13:37, Chung-Yi Chen wrote:
-> This patch fixes a misconfiguration issue in the read implementation of
-> the AUX_MU_IIR_REG register. This issue can lead to a transmit interrupt
-> being incorrectly interpreted as a receive interrupt when the receive
-> interrupt is disabled and the receive FIFO holds valid bytes.
+On 29/3/25 12:47, Zheng Huang wrote:
+> Hi,
 > 
-> The AUX_MU_IIR_REG register (interrupt ID bits [2:1]) indicates the
-> status of mini UART interrupts:
+> This patch fixes a memory leak bug in `ufs_init_pci()`. `u->irq` is
+> not freed in `ufs_exit()`.
 > 
->      - 00: No interrupts
->      - 01: Transmit FIFO is empty
->      - 10: Receive FIFO is not empty
->      - 11: <Not possible>
+> Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
 > 
-> When the transmit interrupt is enabled and the receive interrupt is
-> disabled, the original code incorrectly sets the interrupt ID bits.
-> Specifically:
-> 
->      1. Transmit FIFO empty, receive FIFO empty
->          - Expected 0b01, returned 0b01 (correct)
->      2. Transmit FIFO empty, receive FIFO not empty
->          - Expected 0b01, returned 0b10 (incorrect)
-> 
-> In the second case, the code sets the interrupt ID to 0b10 (receive FIFO
-> is not empty) even if the receive interrupt is disabled.
-> 
-> To fix this, the patch adds additional condition for setting the
-> interrupt ID bits to also check if the receive interrupt is enabled.
-> 
-> Reference: BCM2835 ARM Peripherals, page 13. Available on
-> https://datasheets.raspberrypi.com/bcm2835/bcm2835-peripherals.pdf
-> 
-> Signed-off-by: Chung-Yi Chen <yeechen0207@gmail.com>
 > ---
->   hw/char/bcm2835_aux.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/ufs/ufs.c | 3 +++
+>   1 file changed, 3 insertions(+)
 
 Queued to hw-misc, thanks!
-
 
