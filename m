@@ -4,109 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6639C36017
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 06:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F0DC36017
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 06:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tz8h9-0007Zj-SL; Mon, 31 Mar 2025 02:32:28 -0400
+	id 1tz8kz-0000RF-7s; Mon, 31 Mar 2025 02:36:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1tz8h6-0007XZ-HF
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 02:32:24 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tz8hb-0007fX-Mj
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 02:33:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shahuang@redhat.com>)
- id 1tz8h4-0001V6-DX
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 02:32:24 -0400
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tz8hZ-0001Yi-IF
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 02:32:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743402739;
+ s=mimecast20190719; t=1743402772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bj+uPbhdX2jDRRq2LjcQpDcOcEDf1LjkYUr8tDy3SUs=;
- b=K3t52V6GgwMir4w8TLltn9pS0wcSF/KwFEa9kCM3ioE0V80I62bTCtzwzSrX7iZUgsUAoZ
- E72HpT09SZLiXqSOJwGYRyQJ92RDHoIO6wFah3H9lQ8pDu6HKx8GDwRFEafYJh3n4Gpsf6
- 0Fek2afsQfecUhKf7bNrpwH4zDTPMe4=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7Hxlgzz3JSC/uBaonRIFh5RxuyRz5eu2v4XANZpb9S8=;
+ b=WOQvXqgjKb50yTTxwes/7MyL38VaZbXA28u+IPqqElvTrj+iI8KthbYanU7xu+F0ZkzjmF
+ lDmfuzHw8UR6JuL6B+x+klrhkNKKx34V6xggOI0m0QWEEPL7jjJVoBRAcv9LAc+paNoLwE
+ VPbUWPHwECgxrBLeBjDq3nKkEd7Lbns=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-186-cBcJmDOnP9uVaf3RVnA5Sg-1; Mon, 31 Mar 2025 02:32:16 -0400
-X-MC-Unique: cBcJmDOnP9uVaf3RVnA5Sg-1
-X-Mimecast-MFC-AGG-ID: cBcJmDOnP9uVaf3RVnA5Sg_1743402735
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-223f3357064so65776005ad.3
- for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 23:32:16 -0700 (PDT)
+ us-mta-468-UiNuhubkPNyI6SXWC8l-2g-1; Mon, 31 Mar 2025 02:32:51 -0400
+X-MC-Unique: UiNuhubkPNyI6SXWC8l-2g-1
+X-Mimecast-MFC-AGG-ID: UiNuhubkPNyI6SXWC8l-2g_1743402770
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5e6136633b1so3283486a12.0
+ for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 23:32:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743402735; x=1744007535;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Bj+uPbhdX2jDRRq2LjcQpDcOcEDf1LjkYUr8tDy3SUs=;
- b=cGxqiFlmlfGUtwkXXtKLc7BeI2Z01QCkJSm/lsWlp/pZw6bNOLbCYVyJu60cw9+3uU
- 8EJn1DhhOx0lABMWe9OcDSct9lDLxXwAbdgaxmkjtU72kP/6bExnL6MfGWdcgsuW9GSK
- 6PddzfYrPAAxcYhNEZy+GJvilmOQmlE1Fe9TGT9cnP3yR5iVR0cE/zCDXgR2hS0KkaSw
- dFTPMrnWB9IxyruiqW7GzPViTEkWfsMlnxM0g+4DuwRI6swEJtjNmfgDmB7I68jytBbe
- dagh6o6tCh06KAevoKf2mhjweVJ099/8+8HUeskiiz65OeP1c8G4oFWhWFbDop9ZrR8k
- nAjw==
+ d=1e100.net; s=20230601; t=1743402769; x=1744007569;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7Hxlgzz3JSC/uBaonRIFh5RxuyRz5eu2v4XANZpb9S8=;
+ b=qnz6qLPdp5aQq6cypHJEjY4iq0U/QV8q9Q7OA44zSAdaXQiTeSyHwp8df4fY/i6fIc
+ FH+L8gqb3Qp8Qp0HljnQhaoWPTmijxKJpC6eRLDy7dOK/RmUZHImOcu5sCtfP7Q42zK3
+ u2pB4T7D8soBGUPTXC/N1kF+N7cgaXaCYfMkeVRlZIPbCkbCfFGdQotlbYuQ2e/gfSYU
+ 4gWpzL1lnX9HAPwk+/UU38TcB3BsKAR2P4i9zg/xsHHaDDXWDtHIgZmY5tUJ5yp0lZ1L
+ GihNoXIqZAFN4g8uRBX7+NLC67ow0ze1+5wYFWpA0Xb8oq2mduSYPCmvAD/dq43gBkmY
+ k3kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrz6ItQFdjBGa0PxMjmOWQ2Za2IXZ1cCpzEAKCKJ8Lu3pEkMmdrbrn69i5ok05KAtjhQCXpr0pg2Zv@nongnu.org
-X-Gm-Message-State: AOJu0YxMQDesUQk9T+DqLWZafCML4j5uvw/2affhpGd+grMKjsFJRZOH
- sECxUrewj+wGF+Qvco5+psyvy0K6t/x8QmkE2Bv1VOC6O6DasCRm5eFVsJjmIOR0cs7c1X180HH
- 8ABJ+sXtan/c7imwKm+u9stN8sFQsn0BoSDi3ZNWaNlEizGOd+hqw
-X-Gm-Gg: ASbGncvQyWwzWyh7THV2Oh9oI756+faxk9SOq0PIkBPOL97g2EhLLiyeEUAxk+b4M0c
- sCr6bR39xtJsGuNjOC8bbP2z3ic6WW0HXjvIsiXi7ekNGlJqcdPgkOALM49yDH9XYilpdY7/PI+
- AJFZeFJguJSxD6FktJXmXi75OOdCIaXYDUel5Jlf/zk8k+K3twoQPew+obtHFd2yHSxQ+bVY4+V
- Arx84cBarFWjnvn7PTAnAgrAp05bV0Vfu5++9U9ZRZ7My3v8YlT/MdAWpk+2rh+9xbcBSqrFGLa
- 6NhPGuGnp7BqU2XS9VKb
-X-Received: by 2002:a05:6a00:3d12:b0:736:32d2:aa93 with SMTP id
- d2e1a72fcca58-73980461abfmr14103503b3a.20.1743402735290; 
- Sun, 30 Mar 2025 23:32:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEs8k4qoYwtrF9LTELImaMqZINP524FfVy0bAGagmIfVaPAyGZB2LAMS2lms6/Ug9jADcTQYQ==
-X-Received: by 2002:a05:6a00:3d12:b0:736:32d2:aa93 with SMTP id
- d2e1a72fcca58-73980461abfmr14103450b3a.20.1743402734861; 
- Sun, 30 Mar 2025 23:32:14 -0700 (PDT)
-Received: from [10.72.116.144] ([43.228.180.230])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739710dd3d4sm6451950b3a.177.2025.03.30.23.32.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 30 Mar 2025 23:32:14 -0700 (PDT)
-Message-ID: <44dcac55-62d1-4092-9b75-5c26b6d4abed@redhat.com>
-Date: Mon, 31 Mar 2025 14:32:06 +0800
+ AJvYcCUxvt6LsVaDVkheZhxRBotgqt1iA4yovnKBM3d2p4z960hBk2UarnZ+Bj7b3kmV+dsMSdABphmPxpve@nongnu.org
+X-Gm-Message-State: AOJu0YzCAmK+Kh9KHvPw/IBiQyUN/Q4HDInTPH16Qxzon5id8X09Hgzj
+ 4+q10dQDguMdv1dVwZ5M3SYV4bvYHx7IcScrQu+fnWomO42JB147vKloRqXuBCuMNtxJa3kwI6t
+ AbY7wfwUFoRM4fVa8Nt/cQIXmJaD2w04pYS2uT8l/LUtu5O0110AWBGYGjsZaPgMyaUtvViU7Id
+ tmAtTr0rKUQLg8ieI/5q+Lk+D87P7p+LeMitx9Mw==
+X-Gm-Gg: ASbGncvITwwlHbVpq6DV7Rx+gOrCvfyxuKimpFMQl1AyYXQ/9JR5QhLt+fqkQejbYn8
+ Ca9K4Csyq8UqZcI3unHGeSjtNv8P8tnYIg3VtYBnA6OhFan1c8JQjvUTYae4u7tkDATGNukEuQQ
+ ==
+X-Received: by 2002:a05:6402:5243:b0:5dc:7643:4f3d with SMTP id
+ 4fb4d7f45d1cf-5edfcc3c249mr5479651a12.1.1743402768706; 
+ Sun, 30 Mar 2025 23:32:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE79tzshFK9CxC6AGR1JxBt6XEPUAKGYSDrqk5v2ymPNXppKhAF4jBmGABAVVzhfcgjA6NPYnn626bNaPFXmyk=
+X-Received: by 2002:a05:6402:5243:b0:5dc:7643:4f3d with SMTP id
+ 4fb4d7f45d1cf-5edfcc3c249mr5479638a12.1.1743402768340; Sun, 30 Mar 2025
+ 23:32:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 0/5] accel/kvm: Support KVM PMU filter
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti
- <mtosatti@redhat.com>, Eric Auger <eauger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
-References: <20250122090517.294083-1-zhao1.liu@intel.com>
- <2fe2a98d-f70f-4996-b04e-d81f66d5863f@redhat.com>
- <Z9zgVKtZyEx3MKuf@intel.com>
-Content-Language: en-US
-From: Shaoqin Huang <shahuang@redhat.com>
-In-Reply-To: <Z9zgVKtZyEx3MKuf@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=shahuang@redhat.com;
+References: <20250326132021.1215568-1-lulu@redhat.com>
+ <20250326132021.1215568-3-lulu@redhat.com>
+In-Reply-To: <20250326132021.1215568-3-lulu@redhat.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Mon, 31 Mar 2025 14:32:11 +0800
+X-Gm-Features: AQ5f1JrcezyWamO3DTpZ42b6hgD7yt31kObLfCyJDJ_t-WERcH9xGgJt3aYnHJo
+Message-ID: <CAPpAL=x8Rqd4n9+x0FwvyreugZSufsd=tQ_KKWQG=bpzpJUUBg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] virtio_net: Add the check for vdpa's mac address
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000b5302c06319d962a"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.077,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,76 +103,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+--000000000000b5302c06319d962a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 3/21/25 11:43 AM, Zhao Liu wrote:
-> Hi Shaoqin,
-> 
-> Thank you very much for testing!
-> 
->> I tried your series on ARM64, but it reports error at compile time, here is
->> the error output:
->>
->> qapi/kvm.json:59:Unexpected indentation.
-> 
-> I guess this is caused by my invalid format and sphinx complains that,
-> as Markus figured out :-(
-> 
-> What about the following change?
-> 
-> diff --git a/qapi/kvm.json b/qapi/kvm.json
-> index 31447dfeffb0..b383dfd9a788 100644
-> --- a/qapi/kvm.json
-> +++ b/qapi/kvm.json
-> @@ -54,11 +54,6 @@
->   ##
->   # @KVMPMUX86DefalutEvent:
->   #
-> -# x86 PMU event encoding with select and umask.
-> -# raw_event = ((select & 0xf00UL) << 24) | \
-> -#              (select) & 0xff) | \
-> -#              ((umask) & 0xff) << 8)
-> -#
->   # @select: x86 PMU event select field, which is a 12-bit unsigned
->   #     number.
->   #
-> 
+QE tested this series of patches with virtio-net regression tests,
+everything works fine.
 
-This doesn't work for me.
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-But this works on ARM:
+On Wed, Mar 26, 2025 at 9:21=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
 
--#              (select) & 0xff) | \
--#              ((umask) & 0xff) << 8)
-+# (select) & 0xff) | \
-+# ((umask) & 0xff) << 8)
+> When using a VDPA device, it is important to ensure that the MAC
+> address is correctly set. The MAC address in the hardware should
+> match the MAC address from the QEMU command line. This is a recommended
+> configuration and will allow the system to boot.
+>
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> ---
+>  hw/net/virtio-net.c | 40 +++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 39 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index de87cfadff..a3b431e000 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3749,12 +3749,43 @@ static bool
+> failover_hide_primary_device(DeviceListener *listener,
+>      /* failover_primary_hidden is set during feature negotiation */
+>      return qatomic_read(&n->failover_primary_hidden);
+>  }
+> +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
+> +                                      MACAddr *cmdline_mac, Error **errp=
+)
+> +{
+> +    struct virtio_net_config hwcfg =3D {};
+> +    static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 } };
+> +
+> +    vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg,
+> ETH_ALEN);
+> +
+> +    /*For VDPA device following situations are acceptable:*/
+> +
+> +    if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
+> +        /*
+> +         * 1.The hardware MAC address is the same as the QEMU command
+> line MAC
+> +         *   address, and both of them are not 0.
+> +         */
+> +        if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) =3D=3D 0))=
+ {
+> +            return true;
+> +        }
+> +    }
+>
+> +    error_setg(errp,
+> +               "vDPA device's mac %02x:%02x:%02x:%02x:%02x:%02x"
+> +               "not same with the cmdline's mac
+> %02x:%02x:%02x:%02x:%02x:%02x,"
+> +               "Please check.",
+> +               hwcfg.mac[0], hwcfg.mac[1], hwcfg.mac[2], hwcfg.mac[3],
+> +               hwcfg.mac[4], hwcfg.mac[5], cmdline_mac->a[0],
+> cmdline_mac->a[1],
+> +               cmdline_mac->a[2], cmdline_mac->a[3], cmdline_mac->a[4],
+> +               cmdline_mac->a[5]);
+> +
+> +    return false;
+> +}
+>  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>  {
+>      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+>      VirtIONet *n =3D VIRTIO_NET(dev);
+>      NetClientState *nc;
+> +    MACAddr macaddr_cmdline;
+>      int i;
+>
+>      if (n->net_conf.mtu) {
+> @@ -3862,6 +3893,7 @@ static void virtio_net_device_realize(DeviceState
+> *dev, Error **errp)
+>      virtio_net_add_queue(n, 0);
+>
+>      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+> +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
+>      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+>      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+>      n->status =3D VIRTIO_NET_S_LINK_UP;
+> @@ -3908,7 +3940,13 @@ static void virtio_net_device_realize(DeviceState
+> *dev, Error **errp)
+>      nc =3D qemu_get_queue(n->nic);
+>      nc->rxfilter_notify_enabled =3D 1;
+>
+> -   if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_V=
+DPA) {
+> +    if (nc->peer && (nc->peer->info->type =3D=3D
+> NET_CLIENT_DRIVER_VHOST_VDPA)) {
+> +        if (nc->peer->check_mac) {
+> +            if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline,
+> errp)) {
+> +                virtio_cleanup(vdev);
+> +                return;
+> +            }
+> +        }
+>          struct virtio_net_config netcfg =3D {};
+>          memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+>          vhost_net_set_config(get_vhost_net(nc->peer),
+> --
+> 2.45.0
+>
+>
+>
 
+--000000000000b5302c06319d962a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> While I compiled it on x86, everything is ok. Could you please check why it
->> failed on ARM64?
-> 
-> Maybe your Arm64 environment doesn't have sphinx_rtd_theme?
-> 
-> You can check it by:
-> 
-> python3 -m pip show sphinx_rtd_theme
-> 
->> By the mean time, I will review and test this series.
-> 
-> Thank you again! I also plan to refresh v3, in maybe 1 or 2 weeks.
+<div dir=3D"ltr">QE tested this series of patches with virtio-net regressio=
+n tests, everything works fine.<div><br></div><div>Tested-by: Lei Yang &lt;=
+<a href=3D"mailto:leiyang@redhat.com">leiyang@redhat.com</a>&gt;</div></div=
+><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" clas=
+s=3D"gmail_attr">On Wed, Mar 26, 2025 at 9:21=E2=80=AFPM Cindy Lu &lt;<a hr=
+ef=3D"mailto:lulu@redhat.com">lulu@redhat.com</a>&gt; wrote:<br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">When using a VDPA device, it i=
+s important to ensure that the MAC<br>
+address is correctly set. The MAC address in the hardware should<br>
+match the MAC address from the QEMU command line. This is a recommended<br>
+configuration and will allow the system to boot.<br>
+<br>
+Signed-off-by: Cindy Lu &lt;<a href=3D"mailto:lulu@redhat.com" target=3D"_b=
+lank">lulu@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0hw/net/virtio-net.c | 40 +++++++++++++++++++++++++++++++++++++++-<br>
+=C2=A01 file changed, 39 insertions(+), 1 deletion(-)<br>
+<br>
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c<br>
+index de87cfadff..a3b431e000 100644<br>
+--- a/hw/net/virtio-net.c<br>
++++ b/hw/net/virtio-net.c<br>
+@@ -3749,12 +3749,43 @@ static bool failover_hide_primary_device(DeviceList=
+ener *listener,<br>
+=C2=A0 =C2=A0 =C2=A0/* failover_primary_hidden is set during feature negoti=
+ation */<br>
+=C2=A0 =C2=A0 =C2=A0return qatomic_read(&amp;n-&gt;failover_primary_hidden)=
+;<br>
+=C2=A0}<br>
++static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 MACAddr *cmdlin=
+e_mac, Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 struct virtio_net_config hwcfg =3D {};<br>
++=C2=A0 =C2=A0 static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 } =
+};<br>
++<br>
++=C2=A0 =C2=A0 vhost_net_get_config(get_vhost_net(nc-&gt;peer), (uint8_t *)=
+&amp;hwcfg, ETH_ALEN);<br>
++<br>
++=C2=A0 =C2=A0 /*For VDPA device following situations are acceptable:*/<br>
++<br>
++=C2=A0 =C2=A0 if (memcmp(&amp;hwcfg.mac, &amp;zero, sizeof(MACAddr)) !=3D =
+0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* 1.The hardware MAC address is the same=
+ as the QEMU command line MAC<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*=C2=A0 =C2=A0address, and both of them =
+are not 0.<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((memcmp(&amp;hwcfg.mac, cmdline_mac, sizeo=
+f(MACAddr)) =3D=3D 0)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
+<br>
++=C2=A0 =C2=A0 error_setg(errp,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;vDPA device&#=
+39;s mac %02x:%02x:%02x:%02x:%02x:%02x&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;not same with=
+ the cmdline&#39;s mac %02x:%02x:%02x:%02x:%02x:%02x,&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;Please check.=
+&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0hwcfg.mac[0], hwcfg=
+.mac[1], hwcfg.mac[2], hwcfg.mac[3],<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0hwcfg.mac[4], hwcfg=
+.mac[5], cmdline_mac-&gt;a[0], cmdline_mac-&gt;a[1],<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmdline_mac-&gt;a[2=
+], cmdline_mac-&gt;a[3], cmdline_mac-&gt;a[4],<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmdline_mac-&gt;a[5=
+]);<br>
++<br>
++=C2=A0 =C2=A0 return false;<br>
++}<br>
+=C2=A0static void virtio_net_device_realize(DeviceState *dev, Error **errp)=
+<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);<br>
+=C2=A0 =C2=A0 =C2=A0VirtIONet *n =3D VIRTIO_NET(dev);<br>
+=C2=A0 =C2=A0 =C2=A0NetClientState *nc;<br>
++=C2=A0 =C2=A0 MACAddr macaddr_cmdline;<br>
+=C2=A0 =C2=A0 =C2=A0int i;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (n-&gt;net_conf.mtu) {<br>
+@@ -3862,6 +3893,7 @@ static void virtio_net_device_realize(DeviceState *de=
+v, Error **errp)<br>
+=C2=A0 =C2=A0 =C2=A0virtio_net_add_queue(n, 0);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0n-&gt;ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net=
+_handle_ctrl);<br>
++=C2=A0 =C2=A0 memcpy(&amp;macaddr_cmdline, &amp;n-&gt;nic_conf.macaddr, si=
+zeof(n-&gt;mac));<br>
+=C2=A0 =C2=A0 =C2=A0qemu_macaddr_default_if_unset(&amp;n-&gt;nic_conf.macad=
+dr);<br>
+=C2=A0 =C2=A0 =C2=A0memcpy(&amp;n-&gt;mac[0], &amp;n-&gt;nic_conf.macaddr, =
+sizeof(n-&gt;mac));<br>
+=C2=A0 =C2=A0 =C2=A0n-&gt;status =3D VIRTIO_NET_S_LINK_UP;<br>
+@@ -3908,7 +3940,13 @@ static void virtio_net_device_realize(DeviceState *d=
+ev, Error **errp)<br>
+=C2=A0 =C2=A0 =C2=A0nc =3D qemu_get_queue(n-&gt;nic);<br>
+=C2=A0 =C2=A0 =C2=A0nc-&gt;rxfilter_notify_enabled =3D 1;<br>
+<br>
+-=C2=A0 =C2=A0if (nc-&gt;peer &amp;&amp; nc-&gt;peer-&gt;info-&gt;type =3D=
+=3D NET_CLIENT_DRIVER_VHOST_VDPA) {<br>
++=C2=A0 =C2=A0 if (nc-&gt;peer &amp;&amp; (nc-&gt;peer-&gt;info-&gt;type =
+=3D=3D NET_CLIENT_DRIVER_VHOST_VDPA)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (nc-&gt;peer-&gt;check_mac) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!virtio_net_check_vdpa_mac(n=
+c, n, &amp;macaddr_cmdline, errp)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_cleanup(vde=
+v);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct virtio_net_config netcfg =3D {};<b=
+r>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memcpy(&amp;netcfg.mac, &amp;n-&gt;nic_co=
+nf.macaddr, ETH_ALEN);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vhost_net_set_config(get_vhost_net(nc-&gt=
+;peer),<br>
+-- <br>
+2.45.0<br>
+<br>
+<br>
+</blockquote></div>
 
-Ok, Waiting for your new respin. :)
-
-Thanks,
-Shaoqin
-
-> 
-> Best Regards,
-> Zhao
-> 
-> 
-
--- 
-Shaoqin
+--000000000000b5302c06319d962a--
 
 
