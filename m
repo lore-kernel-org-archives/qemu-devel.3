@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4915EC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C567C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDC0-0003vS-At; Mon, 31 Mar 2025 07:20:36 -0400
+	id 1tzDCU-0004UL-Np; Mon, 31 Mar 2025 07:21:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDBq-0003up-R9
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:27 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDCQ-0004Jm-MX
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:21:02 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDBp-0005Tv-8y
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:20:26 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso29132275e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:20:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDCP-0005Zk-6a
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:21:02 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso2460491f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:21:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743420024; x=1744024824; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743420059; x=1744024859; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ADiOwvi8t7PtXI2mn1Glpzt7hwB5BN/6QAN5l5+l+No=;
- b=pBjp+x90wTLNpYPoHS4aY9M9Zr/TWk6HmOr6BGaC6/9Mt3tcTQoSD0p9nQysRZolvq
- ZTWYHkoWIbiFpGXDWzkkNcLozwlsPc1rvF2CFssn1nxhpq2pdyYkiJfIdKExybUaS0/5
- 7n14TW26/fMeA27Nk0yj2/aaztXo7KBfDwe80ON9ax+3qEzn3pwJHlfDejC9iyJ9/C79
- Fuueg1C14KsPi7UO2CS0OK6BgqCMI3kEmMch1FwEhyQjGekWmy8HdZe/BanmkAL1yF8I
- imgLyFfRovifyaMKBtqA6J296IMan8EQF1dbjR96bMtdcR/kqLoqrl/2lbd/jNptZ/UW
- PA5A==
+ bh=19QQKGK0k/Vn5NqbyH+tqJ21Kn6WG9tfDwjmE3CyB+8=;
+ b=K9OoHEjB6ujHbd5dM+WH/ezsc9ZWh9uN4OTq4OrW+A0iSySggJALee8rthccbEMfNW
+ Mrb7oPTseAlRFgsgqpJEDboceTr+fRWQVn3Wil7g8OOFD6QSnbXXfX3YZcuY1kV1fzDx
+ DsmHnTgsUeSLK/RdACtPQaR04UwAzZfdbYTCIF4eFoWKCMNWI1ru4+5SIWbraE/vdYSM
+ ZWto/V1L/zh79QJZdlipxGV83PkjzU+cA6qJqFX5jBI6cKdpnEUBFrg/z6db+7iJRm/L
+ n0QOs1Kap8X/61iiIE5R6Lkr3cMzfq4qufY/GiyvXcOUkdMexRotlM+7Xm1xU+6zwXaU
+ sQEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743420024; x=1744024824;
+ d=1e100.net; s=20230601; t=1743420059; x=1744024859;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ADiOwvi8t7PtXI2mn1Glpzt7hwB5BN/6QAN5l5+l+No=;
- b=X9zbt7ycgOItBPpjTOfZc8VVU5ZiZU/mHvKjoMwGqpQPMhjkXblyPrahBUJRNUQb8l
- 5+zqnh+SSBb2zkX0l5WKD2/+hX9Hcf/m0S+oNazjatU9Qmi2ER+KlKOSyQrRaLMkr4Uh
- 5ZuLYNWqMtAsAAUBiN5h2FF56Pjgd8CKwoxPa8u50m4ByfFUbhqGTO9xxF/ZhESDbWsR
- Sl/UIZNMmQh2RBsroD0FR2z9+Ng4Pba4HmT4Zt86Zuf/UL6Ad1kZbt9eJFPkmJ43pb60
- YBCb0ENtR/QJZhxAw/v5YNVbyNzVzB6djpLackTcuUO72OWwtpYkaQ6n54/6nS1Cderc
- Y24w==
+ bh=19QQKGK0k/Vn5NqbyH+tqJ21Kn6WG9tfDwjmE3CyB+8=;
+ b=f7OHJaH+D4Wpn2sg53nygpn0SlhayoB0Bq+zEGA/H5hNGNdTSewXOyidE3uKnO3mFX
+ Cu6r4jXDVFEflexgvy4s+KZmZFduvLYQgSKa6OpnwgXUJFHbqkxMy4FfMjuBbfI/g7FD
+ OhugAcZQoh9uoSjavFPc3q93oRBpL5zF1qC8s71lF97Hh4N4JgE7a48dnbAYVA7JTvNG
+ UH712PQ8m34oe2+RniNKdMvhiaRJHSCz2h/VwrN3Cyt+74KYkW83tg72DBmBjhiulTOT
+ YK9fIQSBTm+k17K4yy9e4azA57BPqERw5xiTgUfAYDILeq3t4zOJciM7usJIsZ3UC55h
+ E6gA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyq4UxIhUZO4Zq4/ocl6bJGDh2fRMt3MMfhKcY70r5WqprBfHXqAUqTrXfhYZWddtIvvlzYZ4zi0YK@nongnu.org
-X-Gm-Message-State: AOJu0Yx8SQlHZlmOwP+lv2wsBqfZRwhPNvT7NUcsr3znxVLdAWBOzzLy
- EirFGbEJsdP5lmigmou+pDo9xTfOHOLF7ME2wHN55lziaqGJuNqtCj/lPEltH8g=
-X-Gm-Gg: ASbGnctMBsVI8oYFsZWaTEkjJcIp8rcZO6seIlAUqqN5gg0qgstZNyDYc1S/DBVZy/f
- TxiLrB20gFenKdJEkYnSdqXJgJQmtSIQuEq5VqiPE512KSu9EY04m3LrqygF2NqiISBTLQpDhci
- TDoTAgktZF3i0aseJ1ds/7DrVdL2nH86R49wsHZBXVRUo6IG479qt+eePulnomDaGmHLB+/rwDD
- 2bEcPGuzf8rM//kWhOMlGcyBH8nWkjPSAzD0dMDX5YRyCBpPblvgBG5xrxpl5D3p1ud+jcA8chl
- EJPSlTq8oa4aLWvLGT6vtaqxdIyRydyt+ALAWT+4IxaY8WgdTXs9jqo/aImSvwevVDlqbZIdQmJ
- w+ZEpDRfTY6yU
-X-Google-Smtp-Source: AGHT+IGsJeAPKZz0PR5mHTymId34kuq3Varf4IgqwBjSrHHq8MKpMctT2vzgVPK6HA//hhd6pPtADQ==
-X-Received: by 2002:a05:600c:1e23:b0:434:fa55:eb56 with SMTP id
- 5b1f17b1804b1-43db61cebecmr84973695e9.7.1743420023683; 
- Mon, 31 Mar 2025 04:20:23 -0700 (PDT)
+ AJvYcCU45x+BeAxcVN591hStkiDU0KrW6/xkj3Sr5GZvzDj0qEEzvSU6jnlO2FwajsiuADapPlXn6+pFD2QQ@nongnu.org
+X-Gm-Message-State: AOJu0Ywq8WDEbEU4QSc0j9p4F07Etu+g3OvmOoxrMvT7OQwvjY/EOfkR
+ d8EYymZvSQ3/MQlk1sRxBIdMX5CTQQyAtORpM3rXy2x1Sjv5nYpnoez8hISbPAWnW5wKeYxywDE
+ g
+X-Gm-Gg: ASbGncsokq62qg/BgUSW5OmonR2RLg55jdGns59Z10oxDvcN9z1UuOGGbHx3ENzVUp9
+ tDgpVdZHfTTtTobedcF7BoQFvNKAm8yXUcRmajdbDe8ASNXLFr2eeDu0sfCm35On5srMUM8C8f8
+ sL7nvdjlvyUJYrcB7pmuNjHRLueGBJA5puMU1cdLEEOvDG0XO9jRVMBkCzbly1EfpEE49Z7+xUV
+ WVBid52QweFhiY63Aixky8l5g/ny8J+FneH344kp8xjYUDnCUt3x1y6P7NrUqVxTHP6fPm3LSSz
+ mMmSka+UaMptSzFEo6plyH84+/CLSN8NrQRhWvowUOUspa4DrNJqrX34EV/UlcXH4+h7G9CrcNX
+ TIa+KdfFGhw3xlRKXlqP4iXY=
+X-Google-Smtp-Source: AGHT+IF4Sl7+vRkx7ltuIIwjKStn4k6MTbLnS3RJgCGmMsyUldT+O/0/bpg5KspAaJYhBFzkuSqiJA==
+X-Received: by 2002:a05:6000:4287:b0:39c:1a86:e473 with SMTP id
+ ffacd0b85a97d-39c1a86e5d3mr3031636f8f.56.1743420059229; 
+ Mon, 31 Mar 2025 04:20:59 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8fbc12bbsm118587955e9.13.2025.03.31.04.20.22
+ ffacd0b85a97d-39c0b7a4200sm11137825f8f.96.2025.03.31.04.20.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 04:20:23 -0700 (PDT)
-Message-ID: <a9348ea5-ed0c-4420-89e3-aa9224bfbb68@linaro.org>
-Date: Mon, 31 Mar 2025 13:20:22 +0200
+ Mon, 31 Mar 2025 04:20:58 -0700 (PDT)
+Message-ID: <d4f8ce06-932b-4a77-8301-32975737d88b@linaro.org>
+Date: Mon, 31 Mar 2025 13:20:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ufs: free irq on exit
+Subject: Re: [PATCH] hw/sd/sdhci: free irq on exit
 To: Zheng Huang <hz1624917200@gmail.com>, qemu-devel@nongnu.org
-References: <43ceb427-87aa-44ee-9007-dbaecc499bba@gmail.com>
+References: <09ddf42b-a6db-42d5-954b-148d09d8d6cc@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <43ceb427-87aa-44ee-9007-dbaecc499bba@gmail.com>
+In-Reply-To: <09ddf42b-a6db-42d5-954b-148d09d8d6cc@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/3/25 12:47, Zheng Huang wrote:
+On 28/3/25 10:49, Zheng Huang wrote:
 > Hi,
 > 
-> This patch fixes a memory leak bug in `ufs_init_pci()`. `u->irq` is
-> not freed in `ufs_exit()`.
+> This patch fixes a memory leak bug in `sdhci_pci_realize()`. `s->irq` is
+> not freed in `sdhci_pci_exit()`.
 > 
 > Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
 > 
 > ---
->   hw/ufs/ufs.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   hw/sd/sdhci-pci.c | 2 ++
+>   1 file changed, 2 insertions(+)
 
 Queued to hw-misc, thanks!
 
