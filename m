@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E56C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E5DC36011
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzL7n-00026w-Dc; Mon, 31 Mar 2025 15:48:47 -0400
+	id 1tzL8J-0002FP-N2; Mon, 31 Mar 2025 15:49:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7c-00024t-Mb
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:41 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL8I-0002DL-89
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:49:18 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7b-0003JV-5w
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:36 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3996af42857so3830181f8f.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:48:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL8F-0003Oa-5h
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:49:17 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-39ac8e7688aso3835018f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743450513; x=1744055313; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743450553; x=1744055353; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dNjcGIacRf9GBqLFNdn+7xavPFEAK8T6dq58lm39+Ws=;
- b=M2xNUzbSu0FvvI1HotFgjhngGSxgG/BhMZ38L2PAPG7JANMnGL3eVyz3xBUj8CRz1z
- uXWZz55jp43PH2PY8sk/RjabNsACyIBOivbqYxe+Ftq0p+v5fV6f04Q6P9MiRVArda77
- MFHpSr/Wm5QQ7I32SxEk7p84zRwaR1PilN0rPKRtj5odMDDc40oRSDzd89JDc1KD8gSR
- nUW820I64yLXReYByoXcBHQLX2IS1FPKi9SVIAxjg8WUA1UdKIR8fSNdi8W94H2jFWE/
- /7i7cNwkKypDn72qAwvEKYBWq+r1DJjlj0q0S+HOu6xtewExyiy+meKi4lqMEATP0r+9
- pTGg==
+ bh=mD0e9eaGkTJvGMcL9mwV8iKKrD2iOxihpH1h0trc4fc=;
+ b=Ei8XRNFETqeH1A392YQZiVuoU7MqOuJ3VdvFKE4ra8aFvus1t1Lq95kdzAEsySFFtW
+ 8qKHFS6JPXBhSyy28d2eAoN4G4X8QHcAYsaYyjEmrNQFx8IhLoYrXWQSAPpOUuH5RD26
+ JWNLUlZmXxdEVDG9BDrcXeAUdfPKi9thoZqSnFeb7044iiYX2SqgCcHT2Hyn+H6yAujQ
+ 0PdH9UTuAoV8AK9V5fSlDKB6tNwKRFUkbU+bbi5eqycgQjVnz5fpwhFjHQQI3g19yf5f
+ +63U9swgPGtqp+HnChnxnFN4Jgr7rrDmtwwJvQXfBMpiXad0c3h5FXA1ZxdmdqxJRA/3
+ cBbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743450513; x=1744055313;
+ d=1e100.net; s=20230601; t=1743450553; x=1744055353;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dNjcGIacRf9GBqLFNdn+7xavPFEAK8T6dq58lm39+Ws=;
- b=c/cOvU0Wt2PA7GyPG2M8r5b2L+xFgwYkpt6/c7/6pai67Yzmy8ZaMjU6lMpLHyNGUj
- XAYwIL9q+hgTGrp/uIYqsWEGGzTr8giNUGuWgZvts7HZh+ro2s1CXGb+gEDc4vkj50FV
- u3V/exmU1uGugRdAU38RoxBg9dZjbzOB06kLv3GMbjXVt0P4+Rxq8XTi6Nu6kAKou4/C
- NXBZN9IoU1sQrXXtVpjYPizqRIPNYKGhGUKDZEhLHmwcktHINoNh0obq/mzAEufpLOb2
- n8fNbsVD7EDy8RDggTxzVjF07NhZt+4PMYZdIohvMWJDA/M7ZDF/LyD39w8fZnIigHuI
- BkWQ==
-X-Gm-Message-State: AOJu0Yx3P6ZqvEHNCcJnIzM4XcEISH0AXP68SwCpUv5k92blbOA0Eiod
- 7HDLrd6awzoMCWmFsqzh2gCb+SVTjAX9VyU/n/7qglCmQYd/u0EtdDw6IOae9yjJdQhtWSZfnlU
- z
-X-Gm-Gg: ASbGncvIdbek7d+PA1pDiLSOr8blt4CDun/1WzMeE9rNj/K7GTYhRcgdNa/OyfFUFPt
- cWnGsBF264NYH81ahQOOi0SESA245vL+ZBm7siQQa8iMCcZoG6s1QDO6N+L0uV8cGE7txjSIaD+
- Bwzt/2/GUaNBOb0G3nbYog54ZINEbkojGZtEV9ooWlYlnnN9hhOJ7kuFfeqGxHiyCdLOMgbZLD8
- pPej3bPIOrAJTGYjPb9zYW/rq9LVD+0DwpG1ldTpavxolH0ltqn/CF7lEktgK++d1hK2l2pGM5X
- MWTFkFfaxR2eY3PAB4WJAs5438Scs85F86MXNcf1EIQfXLxDT/8ysmk6jeiFhhW3OI8QWLgNWLi
- kc19woqilZg5MrHtXGQk=
-X-Google-Smtp-Source: AGHT+IH8DOsqdvvORZihplizucZpE8iA82IR3GrQ6/4R3B5Vvg8JHB+fn9qgoEFNE8K5nB7yhbv5EA==
-X-Received: by 2002:a05:6000:4010:b0:38d:df15:2770 with SMTP id
- ffacd0b85a97d-39c0beb9889mr11670908f8f.0.1743450513334; 
- Mon, 31 Mar 2025 12:48:33 -0700 (PDT)
+ bh=mD0e9eaGkTJvGMcL9mwV8iKKrD2iOxihpH1h0trc4fc=;
+ b=oBP1wRW/YlEy6plL3057Xo/dVj2z9wYE7X25t2XV4Q9kwIPYwxCzLgw8eBIfleEmDC
+ dQrotX2AzjIbEELDSGbaMUbadpsVnnmFNzt6gma7OU7FYBmyDBOkGzQV1FxmUp00JTZj
+ RInWiSsXieUZeao+4FUajaMci8FfD26caLKAXQgeehbaYnUjUxbjSQTFpvF1IK8nouNc
+ krMXJr5IloiLkcbQ5NBWiDP6GXvzzhQF2X7+YVTnd7GnN7cxf979/oXUO1dUQhoQnRqI
+ Zkd44rhjyDwTtRJhAyA0QKbEjxkmajMqiWl6Nl96ZtVQNqzplCn6Afo4ux4qZpUWr5+V
+ DmSg==
+X-Gm-Message-State: AOJu0YyKnO//UCQqxaxuWOuxKbUjBFm120m4NzZHeiB2z0eqHKLUYxsJ
+ KInWnsnIIzySPayxy3Oe1XYa6gJ6qeTy7F1UmdQyk7yykz1vEbv5Z4L9ffYpofHL1H15YZa7rQ7
+ +
+X-Gm-Gg: ASbGncvJscd/rWZ5Ey+qOTI4Jd4Q4XFdh0CvKaK5u2b8p5ISPboZunXdzdg7Cji9Ecd
+ yyaXnY/iDY/KW9OEsdFQR70l0Ap705eZN3VYKqopGtgZ4NDs40JmA5SXymeG1YooAh5uVa8qL9h
+ vgNmVUDA+q6bUbwJ0AFc06zRf41YX1b+WLhjmYgMi5Qn06eW4WRqny37soSO5hKuUCWQuazO/1A
+ UtV8qpgutxLc3tpFdoVA2dmsKVvH2PcHMYinx/mrru1Wvl0p+VAZ69hiOPOOoNwyfP5BJDKXgHJ
+ lTyzcWvW/Ke/ha+2Dzi/UBl3rdD/oL6fsJCHgNRy9UzhPL+1GA8ula2B42lYtgbIPXKVcbZXQqn
+ E5wAKoLFvYDzT88q9IVs=
+X-Google-Smtp-Source: AGHT+IFXROkSkKz3JCfCd33F3RKZJxbLX7Wq5cUlH7iZqRTSZM/w7DJ9aGwNUgWT7xxlILsoabgmPg==
+X-Received: by 2002:a05:6000:2a12:b0:39c:1258:2dca with SMTP id
+ ffacd0b85a97d-39c12582df9mr4812112f8f.59.1743450553193; 
+ Mon, 31 Mar 2025 12:49:13 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d90000a09sm130314525e9.35.2025.03.31.12.48.32
+ ffacd0b85a97d-39c0b79e097sm11895081f8f.80.2025.03.31.12.49.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 12:48:32 -0700 (PDT)
+ Mon, 31 Mar 2025 12:49:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ qemu-stable@nongnu.org,
+ Frederik Du Toit Lotter <fred.lotter@canonical.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/23] hw/arm/imx8mp-evk: Fix reference count of SoC object
-Date: Mon, 31 Mar 2025 21:48:00 +0200
-Message-ID: <20250331194822.77309-3-philmd@linaro.org>
+Subject: [PULL 10/23] hw/rtc/goldfish: keep time offset when resetting
+Date: Mon, 31 Mar 2025 21:48:08 +0200
+Message-ID: <20250331194822.77309-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250331194822.77309-1-philmd@linaro.org>
 References: <20250331194822.77309-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,33 +102,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-TYPE_FSL_IMX8MP is created using object_new(), so must be realized with
-qdev_realize_and_unref() to keep the reference counting intact.
+Currently resetting the leads to resynchronizing the Goldfish RTC
+with the system clock of the host. In real hardware an RTC reset
+would not change the wall time. Other RTCs like pl031 do not show
+this behavior.
 
-Fixes: a4eefc69b237 "hw/arm: Add i.MX 8M Plus EVK board"
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20250318205709.28862-2-shentey@gmail.com>
+Move the synchronization of the RTC with the system clock to the
+instance realization.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Frederik Du Toit Lotter <fred.lotter@canonical.com>
+Fixes: 9a5b40b8427 ("hw: rtc: Add Goldfish RTC device")
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250321221248.17764-1-heinrich.schuchardt@canonical.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/imx8mp-evk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/rtc/goldfish_rtc.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index e1a7892fd7c..e1a21e52f96 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -37,7 +37,7 @@ static void imx8mp_evk_init(MachineState *machine)
-     s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
-     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
--    qdev_realize(DEVICE(s), NULL, &error_fatal);
-+    qdev_realize_and_unref(DEVICE(s), NULL, &error_fatal);
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index 0f1b53e0e4d..d83cc264814 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -239,15 +239,8 @@ static const VMStateDescription goldfish_rtc_vmstate = {
+ static void goldfish_rtc_reset(DeviceState *dev)
+ {
+     GoldfishRTCState *s = GOLDFISH_RTC(dev);
+-    struct tm tm;
  
-     memory_region_add_subregion(get_system_memory(), FSL_IMX8MP_RAM_START,
-                                 machine->ram);
+     timer_del(s->timer);
+-
+-    qemu_get_timedate(&tm, 0);
+-    s->tick_offset = mktimegm(&tm);
+-    s->tick_offset *= NANOSECONDS_PER_SECOND;
+-    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
+-    s->tick_offset_vmstate = 0;
+     s->alarm_next = 0;
+     s->alarm_running = 0;
+     s->irq_pending = 0;
+@@ -258,6 +251,7 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
+ {
+     SysBusDevice *dev = SYS_BUS_DEVICE(d);
+     GoldfishRTCState *s = GOLDFISH_RTC(d);
++    struct tm tm;
+ 
+     memory_region_init_io(&s->iomem, OBJECT(s),
+                           &goldfish_rtc_ops[s->big_endian], s,
+@@ -267,6 +261,11 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
+     sysbus_init_irq(dev, &s->irq);
+ 
+     s->timer = timer_new_ns(rtc_clock, goldfish_rtc_interrupt, s);
++
++    qemu_get_timedate(&tm, 0);
++    s->tick_offset = mktimegm(&tm);
++    s->tick_offset *= NANOSECONDS_PER_SECOND;
++    s->tick_offset -= qemu_clock_get_ns(rtc_clock);
+ }
+ 
+ static const Property goldfish_rtc_properties[] = {
 -- 
 2.47.1
 
