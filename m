@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8473C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 22:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21D2C3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 22:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzNSw-0005Qa-Gx; Mon, 31 Mar 2025 18:18:46 -0400
+	id 1tzNl6-0007yk-CD; Mon, 31 Mar 2025 18:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNSp-0005PW-My
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:18:43 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tzNl4-0007yY-Ob
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:37:30 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNSn-0007xU-3s
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:18:38 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43d0782d787so32242915e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 15:18:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tzNkz-0001lf-Mt
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:37:30 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22423adf751so90890725ad.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 15:37:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743459514; x=1744064314; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=37QQe3DP3hg1Pjvf09jYWhj2GFKwO4sbTp0yz2un5Vk=;
- b=Jewb6dloAyPjv7W6u/e48e0YVxY3cCcd9GtGYomPdsb0I6Dq/Xx553jErvpyIHI5qA
- 7p/fTIvP+OyjIutW857D1xSr5o2UEBabx0GXuGgTlOxNr1QRHFJM1ksjd9Y06k9PAXrx
- o0z9QZOMRf30STkbExm3/fICJkxH9Q1oqlsz+yrnR1+4QMbd9/Q5sANKx0uIeWPUNd2v
- GFnXlTI0aRGiIgvIIsP0/zSiArQVLb21a1cTiQ/mY/qNxVD3gKdrndEQXJ+YQ+w8H51U
- 5hyrxIURflNSmWkyaPw+c6OXUkGWNpB965elmHWgtfyv8Wd7MvO9K8HrQnKGuKi2n2xT
- KSIg==
+ d=gmail.com; s=20230601; t=1743460644; x=1744065444; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Pzy7fPM0LimBKejIk0gWbTSWYIijATYbtNBneOuSju8=;
+ b=YOl/mFujnfJbIYp8CGbxcyf4IbRTUSBcmBdqOKTB40fww1iCEtdKZ37IsbC51hxyA7
+ QUY4z1sHwDzxZW5ur4qbmgQwy48btUjh8XoacAThUiIVHHXEeNXk8iXFZVhfYzMPcMY5
+ iUNtDjGfcvEYnnTpV7XmJAWuNjhOSVdtCZjJhQ9vD6RNusoJ8RK/kn7uNljJ5U00g8N6
+ yWPtXwuaer4V1ns07jibPdYgkTaodKO1h+bNAvGRxdBDlGA6wUx1AxAoKZ5WlhbI1rmI
+ FTpUfinFtzHhc8lbBCj6ut7Hh5oI6SKGz8Q80Q1dU/SHGu/FDiYd9Ga45vz8wc+YSK1G
+ XJOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743459514; x=1744064314;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=37QQe3DP3hg1Pjvf09jYWhj2GFKwO4sbTp0yz2un5Vk=;
- b=uaeJ2yBBIvT7+ozDoAw0WKNtlWn9dxEurvb106TGlU5IqYJD+sPu97PCyEWGDAVCwC
- HGwB+Tl+OpmGyInLUPCi9Aby+Am76TOLDs7inGzhEZp634kf1J90dg3nMlR0kX0Tt1Jm
- s+DcPUFGFjQ2Z++TpYJHxdVvERWGsLE5xIuNYNh6Rt+VXTMyatfLABAJC4IeNTUf8gxX
- RYl7r3/fsPbkHKhuAgNJ5OBs2qDrt2bzReeMFkJYGatNKBZyli5nh4zYZ+M3w3KvPkPY
- 8lyR6se4YhMXOL8ZDG3qkN4KREmYsSbdQdDc6Qo5OTm08tJeLIaLqWm9FB/IUFUutTzs
- jRHw==
+ d=1e100.net; s=20230601; t=1743460644; x=1744065444;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Pzy7fPM0LimBKejIk0gWbTSWYIijATYbtNBneOuSju8=;
+ b=vHek6JcwtUCjx+Aie6Q0gXMYrb70AEp687TXp3LLX4H5TywZDXyu1sqk2QapVzEYZA
+ sn1l3Hc6DKdjXb6dK7AdWtkQYMHDLYGPigaDn9ejTw/Hs7i22vqoVBQYHkkUTR2PwDk0
+ bHVjVpO2Htu8lNPrmnHbhPt4kt3ajZLu48bLjokqr+YawVuBiNnxuDcT/Pw7prCkzXWM
+ DEYVuJorf6fXgPy4IKrU+bXhKE6z9zDktGhxF5ITL3n/23IDwEEkPacDICSenwfI25LP
+ caKzcVQvrx55aE7VE8yOQZ9GSRn9GQQEy+iy5IGux7+YwQLRsy7SHOJZvbNQI4V5ms9L
+ 8gQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWl0opqk4TaKKlbBB30F5ivAL8+ugFTLD7Q39PS3JrcmIS40nIMrpcg+NOcJiuJSQ40M2EKsd4+cYF@nongnu.org
-X-Gm-Message-State: AOJu0Yy/tS9fFUsBZeTaZovHwrFl2qMS2bwm6nBDMu6YN+dPaCKTy9sI
- wbEEJm1RiDA5//5M9s321R5ErTOpPhXebNo82NmuqYOqPQ5L4Hsvi5eotTsiYYw=
-X-Gm-Gg: ASbGncu0lvkxwLpvlUTu8018wJ+OxvTI/PX4g/F9dd5NyolavcFQK7CoWTImB2Fx4T5
- +xFfSLAskYCpGFLDDKiWQT7vsyLzzF+q/U+PRDfP4o9f0fomGVhDnMTOF/OZyV7YES8CJ4Volco
- VaGR7QCZdU4cZlWlcAAuBGNSMyeaTmebPMEWZJeLAnBR7NB1gpLTSgEvKzIZe9Qf/DjX6y78qds
- WnZU7ROY24pjhwlep+SSfs/fqt2RYzcG8EFBw+IYfsbffz07PCVEsS7bCjsMHB248DbncPGcMPE
- fA46ohBkNAAHakLxLxQYi4bHaH57U+CFSL24NFWcBqNWF5xF2vV482+jVLJgGKBAr6KzJgdtaSM
- F6uTKejaDmdH8
-X-Google-Smtp-Source: AGHT+IENiE/0s7ea8R/qeCuPCbYXAuv5IWyI0IJtbhIJur6s94LuUWWo1hUcYdOu7FCgJ8MW83k6Dg==
-X-Received: by 2002:a05:600c:1382:b0:43d:b32:40aa with SMTP id
- 5b1f17b1804b1-43db61dc79bmr89216185e9.3.1743459514131; 
- Mon, 31 Mar 2025 15:18:34 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d82efdffdsm176469675e9.18.2025.03.31.15.18.32
+ AJvYcCUbqU8f9YB7D6I3flRxgsKO3U5bYPAhW4tLGLYlgP2fb1R6B0+Ac5fvgSvW6Ql0iBJiU44F8joiAzkQ@nongnu.org
+X-Gm-Message-State: AOJu0Yy8ag/UAgwT+KxcQl/T+D+mHxy2HiKhRQpHO9ZA2766tAOWP1Pe
+ jWLQVBgu3ld8He3T8zQ1GhsLMlGTS1p5+fPKvuNPUU/CZwR+iO43
+X-Gm-Gg: ASbGncuRJIt1vJUZ1/5nJtfgf134q+3QC6asZLkUgMh41uU09lw90Z++sFx6hrCrs8Y
+ QRxN9NJLIF98tq4yyLkfLRz4ZAO3b/vzt83YpMP5CLE9uwrnN3kNicYdMMV+hTcfgG6GRW7IX1m
+ rBeXwPMXPz8q0TGtm4UIHlFhd0obtEdKFEk4QSDftyN9kpeeQKGzsQj+HmpaoMgg8hqIacqW5TJ
+ aR8r6ez2WzHJWzOwMdiTOhOWMKiKGJsrLB7a/3IOu05+KsnIgdnqoodyQF5B4x4r60lLgUONl81
+ 59ELr/2Q73U4orSRFFMsE5t/TXQXHjxZrhTrRKA=
+X-Google-Smtp-Source: AGHT+IEFtBgDYpYWLl7uWCHyxR4XbwgNXHfW+EwbZLKPzU8otsHYnz1jqTI0b9TEkgdS7uhJ0NxAAg==
+X-Received: by 2002:a05:6a00:80e:b0:736:a540:c9b5 with SMTP id
+ d2e1a72fcca58-739b611984amr990479b3a.22.1743460643858; 
+ Mon, 31 Mar 2025 15:37:23 -0700 (PDT)
+Received: from localhost ([203.185.207.94]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73970deec96sm7550803b3a.34.2025.03.31.15.37.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 15:18:32 -0700 (PDT)
-Message-ID: <0cf698de-f8e3-48ac-9707-3d3ac5e6d6ad@linaro.org>
-Date: Tue, 1 Apr 2025 00:18:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] smbios: Fix buffer overrun when using path= option
-To: Daan De Meyer <daan.j.demeyer@gmail.com>, qemu-devel@nongnu.org,
- Valentin David <valentin.david@canonical.com>
-References: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+ Mon, 31 Mar 2025 15:37:23 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 01 Apr 2025 08:37:19 +1000
+Message-Id: <D8UT7SKP9L19.126NYIT8BU3AI@gmail.com>
+Cc: "Corey Minyard" <minyard@acm.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 1/3] ipmi/bmc-sim: implement watchdog dont log flag
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: <corey@minyard.net>
+X-Mailer: aerc 0.19.0
+References: <20250331125724.607355-1-npiggin@gmail.com>
+ <20250331125724.607355-2-npiggin@gmail.com>
+ <Z-qU_5RWxK-qpGTn@mail.minyard.net>
+In-Reply-To: <Z-qU_5RWxK-qpGTn@mail.minyard.net>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,33 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Valentin
+On Mon Mar 31, 2025 at 11:13 PM AEST, Corey Minyard wrote:
+> On Mon, Mar 31, 2025 at 10:57:22PM +1000, Nicholas Piggin wrote:
+>> If the dont-log flag is set in the 'timer use' field for the
+>> 'set watchdog' command, a watchdog timeout will not get logged as
+>> a timer use expiration.
+>>=20
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>  hw/ipmi/ipmi_bmc_sim.c | 7 ++++++-
+>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+>> index 6157ac71201..32161044c0b 100644
+>> --- a/hw/ipmi/ipmi_bmc_sim.c
+>> +++ b/hw/ipmi/ipmi_bmc_sim.c
+>> @@ -733,7 +733,12 @@ static void ipmi_sim_handle_timeout(IPMIBmcSim *ibs=
+)
+>> =20
+>>   do_full_expiry:
+>>      ibs->watchdog_running =3D 0; /* Stop the watchdog on a timeout */
+>> -    ibs->watchdog_expired |=3D (1 << IPMI_BMC_WATCHDOG_GET_USE(ibs));
+>> +
+>> +    /* Log the expiry if the don't log bit is clear */
+>> +    if (!IPMI_BMC_WATCHDOG_GET_DONT_LOG(ibs)) {
+>> +        ibs->watchdog_expired |=3D (1 << IPMI_BMC_WATCHDOG_GET_USE(ibs)=
+);
+>> +    }
+>> +
+>
+> Are you sure this is correct?  The spec doesn't say what this means, but
+> I would assume this means "Don't add a system log" not "Don't set the
+> expiry happened bit".
 
-On 23/3/25 22:35, Daan De Meyer wrote:
-> We have to make sure the array of bytes read from the path= file
-> is null-terminated, otherwise we run into a buffer overrun later on.
-> 
-> Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
-> 
-> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-> ---
->   hw/smbios/smbios.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> index 02a09eb9cd..ad4cd6721e 100644
-> --- a/hw/smbios/smbios.c
-> +++ b/hw/smbios/smbios.c
-> @@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
->               g_byte_array_append(data, (guint8 *)buf, ret);
->           }
->   
-> +        buf[0] = '\0';
-> +        g_byte_array_append(data, (guint8 *)buf, 1);
-> +
->           qemu_close(fd);
->   
->           *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
+From IPMI spec, Set Watchdog Timer command timer use field of byte 1
+says "timer use (logged on expiration when =E2=80=9Cdon=E2=80=99t log=E2=80=
+=9D bit =3D 0b)".
+But it also says it should disable the timeout sensor event logging.
+I missed that part, I will see if I can make that work.
 
+Thanks,
+Nick
 
