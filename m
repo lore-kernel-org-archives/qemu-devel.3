@@ -4,82 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E6CC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 09:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98911C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 09:54:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzBhB-00089m-WF; Mon, 31 Mar 2025 05:44:43 -0400
+	id 1tzBq8-0001Xu-9R; Mon, 31 Mar 2025 05:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tzBh3-00088n-Ec
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 05:44:34 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <loic@rivosinc.com>) id 1tzBh0-0001oq-VT
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 05:44:32 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5eb5ecf3217so7949723a12.3
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 02:44:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1743414267; x=1744019067;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6WTvO7rp9XgapHjvxSmIjn3k+NKEuBzbaRfRdVRMOog=;
- b=cX7/cpn5WAGp0oFk1d3m3rhbMiXyiquwC/nnZl/CMOai7IvuwXnHDEEap8osr8xARj
- YhxbCE8tZ3MZN1fnQbYkmOjzpGTkzixSY8Ko9vJ7YwsvQx0su3tffY5crNks9tzaAi7G
- wiPfl/AOZMmpTvpcurClOh8hTTVSD+7ADqeDskAl38w/1xc++XIaRxbeXytE18lgqdJZ
- qcSTsU5ro4fHojD0Fn6oAHNq+50kWF3ODvPn5kmmBKUp0eZQ1at9Sl3YYqw9rmLqZHIC
- bsql6Itq7a4SDpInZmm0+8OkiP+o5MT96KV3NYsU3Bonr4WIfS4P7i+f6bLkLnyiqXDj
- i7tg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tzBq6-0001Xa-6x
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 05:53:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tzBq4-00035W-Ea
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 05:53:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743414831;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=DhRlw/JorWCG2usrxkcJLBjOSMPNwSlHe5azF2Kxgi4=;
+ b=MvKXKvp+IJNFCqxnIuNzhd81W02/CTinuNsqWevoUbbzIRj/YKX5m9clkjMiY0uuBVdbWp
+ 5aEBKsSwv9JPXNNY0EgSnsQFWAmWO3fWQilfWPhUsC6+vjTTbVOIlWl8/47JhJCWwhoo7p
+ 8/MFgK+Lt+gxUMK7nydbOEy+X0qGlis=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-85-zLpKeV-nO9-IQi0McevqIg-1; Mon, 31 Mar 2025 05:53:44 -0400
+X-MC-Unique: zLpKeV-nO9-IQi0McevqIg-1
+X-Mimecast-MFC-AGG-ID: zLpKeV-nO9-IQi0McevqIg_1743414823
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43bd0586a73so34576945e9.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 02:53:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743414267; x=1744019067;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1743414823; x=1744019623;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6WTvO7rp9XgapHjvxSmIjn3k+NKEuBzbaRfRdVRMOog=;
- b=lVlgHmedybnwKxsoxkAeMkQHu7PPolPufWI1ao18Ba8TL61vpTeEGL+kfrd+rSP+2M
- vtqaUCSEg/kjBdagugpkZH8in0KRADPGKFrE7lrq1hZQRSu4phemr5X+nMI76NoVGktk
- o5j4Ix2qo3OlbnxiKGT9suhlurSeXpGZuChzYyLaxvfs8q08CrCdSmBDLUca1YdFm9+N
- FlGcKFSp44rk5Caa9NSgE93tvPrPnaKRLNQVOPBhnIz/W2HsqImwLbc6Z7mNRggb7xIM
- 3S9GBkcdsYJFMQBZ4a79hATuc39AkAHb5Zu/JV9dH+mNp/Z0PnjJ9CTbn7y9cbv5mdxb
- K4Mw==
-X-Gm-Message-State: AOJu0YxmNpetzfM2MKNJD6Y3fzi6GWgVhr0dwtMH5J/P/je+WtrentVI
- IDxTO/e0NEaVd1oTZNYPkl7Namd9aL1I1lmIVPQiN9bHOdhezNQQ3Rg+DvNRY+oBXjuTe8VXQWK
- KSD5kMNUTyM/ydEaGMwgbx2SQc4DuelRTxR0DmA==
-X-Gm-Gg: ASbGncsfS46KjaUbT55BjqOo3SxJBMNtJ/XxHposr/E9PUQ1igyslj8b3aQeMMf7O77
- De3rmPsBplHeFqjpY29FTqMTBKWIhvFrteUP4CBM6bdCW5JvxVAkezf81bHaBcnKs7cNVjgok9n
- /XHrx3jeIaReEiYLn0bz1Fk/m0
-X-Google-Smtp-Source: AGHT+IHyD/DjNHvN+uC2XXbqIOggbio/jdhZRPkfPBk7W9esmMkAZrrycc6OwU9Ab5jKpedriI4rh+BnHduKXkrX2+0=
-X-Received: by 2002:a17:906:7955:b0:ac3:3f11:b49d with SMTP id
- a640c23a62f3a-ac7386300f8mr769943666b.0.1743414267166; Mon, 31 Mar 2025
- 02:44:27 -0700 (PDT)
+ bh=DhRlw/JorWCG2usrxkcJLBjOSMPNwSlHe5azF2Kxgi4=;
+ b=bW9a5QaDQ4T+FjPtW6cYbxOwa0rqcPKG78yBSTsK3/QPd8PAnE0X/dxIseDoepZrEF
+ M95orljJYEgZbYFT/lKGVUDc8+0w9A3F4VNmRFcg6pnPoeHN7ta7327bSW5MTi3u5rF7
+ mbXvRKXAFf7goxI/dpEKUnVQCIIaBW81QAGWMmDsM90OWvNdEztAUEq3K1PdHX7MQPPy
+ QWk45M+Be+Q8IXNFdzpR9imRcaChSeGyQuoOrCsLy+OG+EdHf3K50Z21WGPXEWR4fAC/
+ O//y06FQOQh92KHd6d9fVnHYLVlQizn2lILbwxnPaCRT9CA5qWH8XBzVpGL5DmCbs0At
+ g8tA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+/0iNzqdKGlUhKHS54m/0VEzsCdV0ZIFUkN3ACf2C0PzphXy/yNHkyfrhrqTNQnJHDF0LJXYfAjMQ@nongnu.org
+X-Gm-Message-State: AOJu0YwSvMNJKpo6T4BfoVwUJ30WMbsmFUTECjX0UAO7bDqhcy0I56zA
+ 6Bx402QK7xRnBKhcPbFBfaXMDNfeD4fcqkJPLviVdrKtVCrdgUXMO1/1IHMzcVIx8sM1tBGzqYf
+ /+hR4tyH6UaFB0ewXNDeUcbF60xR7/KRlGWOhCw8NxpSeOJLmBXF4
+X-Gm-Gg: ASbGncuBdW+XcfHVQyfiB5IMvR0ic2XTgiYC5Z3+PDP8eHATi3XVBvrX4e9mNbYqDUL
+ uPgmKKnOX+sUf7ocDZGY8KJ2JLvwVAuZ+FRJ2d6oj+Iid+ubc1AnpqnX6iiJQlZ93F9qORcGGPt
+ CcOQhNXH5qNqEnfGT62qNDFz+w39RVdzD5UYnLb1EG0KMJiMxEsImwVb+kPvpkCIMoKTLWSlYd9
+ qBML9uYeS5zmA0uhjfNTnKUJt4YuHQjfxzRX5gGnFIe0RILnaRoLTIST2JJU0wRMYsiIklOBV43
+ +st+5nxy1SS7MXPDkA==
+X-Received: by 2002:a05:600c:1c9e:b0:43d:3df:42d8 with SMTP id
+ 5b1f17b1804b1-43db61e0723mr65346705e9.6.1743414822954; 
+ Mon, 31 Mar 2025 02:53:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyrOQBArby7PU57iJ5lhHC8MqFdbyaOn4tTNKhhGnKey6J9zvX94ATopiFs5SChc4XBKOv7g==
+X-Received: by 2002:a05:600c:1c9e:b0:43d:3df:42d8 with SMTP id
+ 5b1f17b1804b1-43db61e0723mr65346535e9.6.1743414822531; 
+ Mon, 31 Mar 2025 02:53:42 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.105.0])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43d914f1561sm77988005e9.1.2025.03.31.02.53.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Mar 2025 02:53:42 -0700 (PDT)
+Message-ID: <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
+Date: Mon, 31 Mar 2025 11:53:41 +0200
 MIME-Version: 1.0
-References: <20250313193011.720075-1-loic@rivosinc.com>
- <20250313193011.720075-5-loic@rivosinc.com>
- <3d3cf6a5-7ec2-427f-8f02-dc1e5a370996@linux.alibaba.com>
-In-Reply-To: <3d3cf6a5-7ec2-427f-8f02-dc1e5a370996@linux.alibaba.com>
-From: =?UTF-8?B?TG/Dr2MgTGVmb3J0?= <loic@rivosinc.com>
-Date: Mon, 31 Mar 2025 11:44:15 +0200
-X-Gm-Features: AQ5f1Jp8q6Rlh2x1oolTlkqnY_PJ9OgGkd4TROXsmpY3gQQ5BqSqPFQA-6afblQ
-Message-ID: <CAGKm2N+t4NH6vEswyGEmi3O_fCVvQ8p4qqReNu9rbD9x=wnCtQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] target/riscv: pmp: exit csr writes early if value
- was not changed
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Type: multipart/alternative; boundary="000000000000175d2d0631a044b3"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=loic@rivosinc.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] rust/qemu-api: Add initial logging support based on C
+ API
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+References: <20250330205857.1615-1-shentey@gmail.com>
+ <20250330205857.1615-2-shentey@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250330205857.1615-2-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.077,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,198 +149,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000175d2d0631a044b3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/30/25 22:58, Bernhard Beschow wrote:
+> A qemu_log_mask!() macro is provided which expects similar arguments as the C
+> version. However, the formatting works as one would expect from Rust.
+> 
+> To maximize code reuse the macro is just a thin wrapper around qemu_log().
+> Also, just the bare minimum of logging masks is provided which should suffice
+> for the current use case of Rust in QEMU.
 
-On Sat, Mar 29, 2025 at 10:03=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.aliba=
-ba.com>
-wrote:
+It's probably better to use an enum for this.  One possibility is also 
+to change the #defines to a C enum, and see which enum translation of 
+the several allowed by bindgen is best.
 
->
-> On 2025/3/14 03:30, Lo=C3=AFc Lefort wrote:
-> > Signed-off-by: Lo=C3=AFc Lefort <loic@rivosinc.com>
-> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > ---
-> >   target/riscv/pmp.c | 22 +++++++++++++++-------
-> >   1 file changed, 15 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> > index c5f6cdaccb..845915e0c8 100644
-> > --- a/target/riscv/pmp.c
-> > +++ b/target/riscv/pmp.c
-> > @@ -141,6 +141,11 @@ static inline uint8_t pmp_read_cfg(CPURISCVState
-> *env, uint32_t pmp_index)
-> >   static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index,
-> uint8_t val)
-> >   {
-> >       if (pmp_index < MAX_RISCV_PMPS) {
-> > +        if (env->pmp_state.pmp[pmp_index].cfg_reg =3D=3D val) {
-> > +            /* no change */
-> > +            return false;
-> > +        }
-> > +
-> >           if (pmp_is_readonly(env, pmp_index)) {
-> >               qemu_log_mask(LOG_GUEST_ERROR,
-> >                             "ignoring pmpcfg write - read only\n");
-> > @@ -528,6 +533,11 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_=
-t
-> addr_index,
-> >       bool is_next_cfg_tor =3D false;
-> >
-> >       if (addr_index < MAX_RISCV_PMPS) {
-> > +        if (env->pmp_state.pmp[addr_index].addr_reg =3D=3D val) {
-> > +            /* no change */
-> > +            return;
-> > +        }
-> > +
-> >           /*
-> >            * In TOR mode, need to check the lock bit of the next pmp
-> >            * (if there is a next).
-> > @@ -544,14 +554,12 @@ void pmpaddr_csr_write(CPURISCVState *env,
-> uint32_t addr_index,
-> >           }
-> >
-> >           if (!pmp_is_readonly(env, addr_index)) {
-> > -            if (env->pmp_state.pmp[addr_index].addr_reg !=3D val) {
->
-> Is there some benefit removing this if sentence?
->
->
-> The if is not removed, it's moved to the top of the function. The goal is
-to skip processing and warnings when the write would not change the value
-already present in the register.For pmp_write_cfg, each pmpcfg register
-contains 4 config values and some of them might be locked so we want to
-avoid warnings when writing with unchanged values.
-As you noted, the similar change in pmpaddr_csr_write has less benefit:
-it's only a minor optimization and is done for symmetry with pmp_write_cfg.
+Also, while this is good for now, later on we probably want to 
+reimplement logging at a lower level via the std::fmt::Write trait.  But 
+that's just for efficiency and your macro is indeed good enough to 
+define what the API would look like.  Right now I have a project for 
+GSoC that will look at that, and the student can look into it later on.
 
-Lo=C3=AFc.
+This means answering the following two questions:
 
->
-> > -                env->pmp_state.pmp[addr_index].addr_reg =3D val;
-> > -                pmp_update_rule_addr(env, addr_index);
-> > -                if (is_next_cfg_tor) {
-> > -                    pmp_update_rule_addr(env, addr_index + 1);
-> > -                }
-> > -                tlb_flush(env_cpu(env));
-> > +            env->pmp_state.pmp[addr_index].addr_reg =3D val;
-> > +            pmp_update_rule_addr(env, addr_index);
-> > +            if (is_next_cfg_tor) {
-> > +                pmp_update_rule_addr(env, addr_index + 1);
-> >               }
-> > +            tlb_flush(env_cpu(env));
-> >           } else {
-> >               qemu_log_mask(LOG_GUEST_ERROR,
-> >                             "ignoring pmpaddr write - read only\n");
->
+- the mapping the LOG_* constants into Rust
 
---000000000000175d2d0631a044b3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+- whether to keep the "qemu" prefix for the API (personal opinion: no)
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 29,=
- 2025 at 10:03=E2=80=AFAM LIU Zhiwei &lt;<a href=3D"mailto:zhiwei_liu@linux=
-.alibaba.com">zhiwei_liu@linux.alibaba.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex"><br>
-On 2025/3/14 03:30, Lo=C3=AFc Lefort wrote:<br>
-&gt; Signed-off-by: Lo=C3=AFc Lefort &lt;<a href=3D"mailto:loic@rivosinc.co=
-m" target=3D"_blank">loic@rivosinc.com</a>&gt;<br>
-&gt; Reviewed-by: Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboza@ve=
-ntanamicro.com" target=3D"_blank">dbarboza@ventanamicro.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/riscv/pmp.c | 22 +++++++++++++++-------<br>
-&gt;=C2=A0 =C2=A01 file changed, 15 insertions(+), 7 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c<br>
-&gt; index c5f6cdaccb..845915e0c8 100644<br>
-&gt; --- a/target/riscv/pmp.c<br>
-&gt; +++ b/target/riscv/pmp.c<br>
-&gt; @@ -141,6 +141,11 @@ static inline uint8_t pmp_read_cfg(CPURISCVState =
-*env, uint32_t pmp_index)<br>
-&gt;=C2=A0 =C2=A0static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp=
-_index, uint8_t val)<br>
-&gt;=C2=A0 =C2=A0{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (pmp_index &lt; MAX_RISCV_PMPS) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (env-&gt;pmp_state.pmp[pmp_index].cfg_=
-reg =3D=3D val) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* no change */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (pmp_is_readonly(env, pmp_i=
-ndex)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_log_mask(LO=
-G_GUEST_ERROR,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;ignoring pmpcfg write - read only\n=
-&quot;);<br>
-&gt; @@ -528,6 +533,11 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32=
-_t addr_index,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool is_next_cfg_tor =3D false;<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (addr_index &lt; MAX_RISCV_PMPS) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (env-&gt;pmp_state.pmp[addr_index].add=
-r_reg =3D=3D val) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* no change */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * In TOR mode, need to check =
-the lock bit of the next pmp<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * (if there is a next).<br>
-&gt; @@ -544,14 +554,12 @@ void pmpaddr_csr_write(CPURISCVState *env, uint3=
-2_t addr_index,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!pmp_is_readonly(env, addr=
-_index)) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (env-&gt;pmp_state.pmp[a=
-ddr_index].addr_reg !=3D val) {<br>
-<br>
-Is there some benefit removing this if sentence?<br>
-<br><br></blockquote><div>The if is not removed, it&#39;s moved to the top =
-of the function. The goal is to skip processing and warnings when the write=
- would not change the value already present in the register.For pmp_write_c=
-fg, each pmpcfg register contains 4 config values and some of them might be=
- locked so we want to avoid warnings when writing with unchanged values.</d=
-iv><div>As you noted, the similar change in pmpaddr_csr_write has less bene=
-fit: it&#39;s only a minor optimization and is done for symmetry with pmp_w=
-rite_cfg.</div><div><br></div><div>Lo=C3=AFc.</div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">
-<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pmp_s=
-tate.pmp[addr_index].addr_reg =3D val;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmp_update_ru=
-le_addr(env, addr_index);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_next_c=
-fg_tor) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- pmp_update_rule_addr(env, addr_index + 1);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tlb_flush(env=
-_cpu(env));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pmp_state.pmp[addr_=
-index].addr_reg =3D val;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmp_update_rule_addr(env, a=
-ddr_index);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_next_cfg_tor) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmp_update_ru=
-le_addr(env, addr_index + 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tlb_flush(env_cpu(env));<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_log_mask(LO=
-G_GUEST_ERROR,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;ignoring pmpaddr write - read only\=
-n&quot;);<br>
-</blockquote></div></div>
+- whether it makes sense to add more macros such as log_guest_error! or 
+log_unimp! for the most common LOG_* values
 
---000000000000175d2d0631a044b3--
+> +#[macro_export]
+> +macro_rules! qemu_log_mask {
+> +    ($mask:expr, $fmt:expr $(, $args:expr)*) => {{
+
+Looking at https://doc.rust-lang.org/std/macro.write.html they just use 
+$($arg:tt)* for what is passed to format_args! (or in your case 
+format!), so we can do the same here too. The main advantage is that it 
+allows giving a trailing comma to qemu_log_mask!.
+
+Paolo
+
+> +        if unsafe {
+> +            (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::raw::c_int)) != 0
+> +        } {
+> +            let formatted_string = format!($fmt, $($args),*);
+> +            let c_string = std::ffi::CString::new(formatted_string).unwrap();
+> +
+> +            unsafe {
+> +                ::qemu_api::bindings::qemu_log(c_string.as_ptr());
+> +            }
+> +        }
+> +    }};
+> +}
+
 
