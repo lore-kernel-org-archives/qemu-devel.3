@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC3F5C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:21:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4C9C3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzGwc-0007FJ-Im; Mon, 31 Mar 2025 11:20:58 -0400
+	id 1tzGwZ-0007Ec-U8; Mon, 31 Mar 2025 11:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzGwX-0007DB-5o
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:20:54 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzGwU-0007BA-6b
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:20:51 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzGwU-0007Om-L0
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:20:52 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cec5cd73bso29524475e9.3
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 08:20:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzGwQ-0007NQ-CR
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:20:49 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so3922304f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 08:20:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743434448; x=1744039248; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tHDVcIHyei1/5z2v4ais2OKqYJbZicKYgClVfwcyY94=;
- b=t+wR9wa7ZiGNA5yHpWw3ooleDvDbDBaT90hVLmD1vfPmw3pFkhyVlo6jcSmFum3VEP
- Yg6NhlXLKUT4e3FlDQBUlQvwTTifg6lmEvtWDT5EKn/nDZLEJwh5v4vICcgdPAy2YXkM
- vnWag8i1lIuyAvgDeDyGhyU6fCYWncbB5PTnW2cmAIj83Wi4XI2NnqZuFgI4KfMnzESj
- i9I0/HlXaiykjV4WjhhrIWvT3msToD5KVuvlR8N0IJjI3wsYG/ogOLvyuFi6Z3YrgOfb
- PEK2xxJ99sIxlEH9k6r9dNSG6hvV+UKfTL7wNccpv1u1yr0Y9A9BiRpfIUWRhBxytR+d
- WlYQ==
+ d=linaro.org; s=google; t=1743434443; x=1744039243; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8fZQ/jWuVgumxwu0tM3Cq9QmlHQyh2uem8M+GBR9J8Y=;
+ b=dtwv2VyhZeCSLplD3Qs4+G+vif0ug49JRPKbhH5yZF1IfEHPC8PzEBFfCCTlrBsmXo
+ XLYtOOfLXbTsy0Ft9DD5trDKlcet5PSoU7hokFfuPy4h5m0dSAzCnQM9NM++u7ZAnS5i
+ uLuWnX7B83VNw5uhdIYqvmgzUo5G4WP4icJTjPmx0ITIABMZUcpmcUkN/rRl83CUjRy5
+ EKXlqSvk8td2b1eSr8vxLH0Gn3X5lDFPw0wkaHRfwj1JEj9Lx5HFia8nbonCV8vTqlzz
+ 5cNYgxTMj+c5phllKaUF1GyBm9NkOKjWEW8QHURsAqaM4zkOiMCm/zDTbbyzfwaZ/LXe
+ zuvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743434448; x=1744039248;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tHDVcIHyei1/5z2v4ais2OKqYJbZicKYgClVfwcyY94=;
- b=UuhoFN5oWhKqnHWmwbdJfS3qHQR9YcaqYb0j+fO/slbvhIlgPv3oS+zkdZUkCJSd8J
- f5N+YkZx6EVSojGawjGtiEn8tjzqSmZvuKpbmw+kN2hJtxdkL8NQ6iDg5s121OAn7I5b
- Y3xYk79zwI+LKeA71hfhLFD+TdekJjuKSuJBX+lnckg/P5Bm0nwbXoDJBXeN1bb4rOqH
- 55xKefH/DLu7XoxT9JryHoyEVJaseF0M2wSUNMtlRjfBDBfpkp5DpcJlLeC5rs1Xy3wR
- 0XolfnKPMEdNek8Y7qTMoAf4Cuwpxg8LskQzNW91Wxatxt7f8eDmy6/FJue2qrSFd9bn
- 6m1w==
-X-Gm-Message-State: AOJu0YzS2aE5rvkMRQoOvw5AcQMs512/6ZYQjglHNXmrlXSsUm4Dxv+8
- GTD2iB4VLJTcfHBxxzw0Tl105BEJYe+fm8pdgZUsKVTlA/tOxtY2LvhKcwOujKGYGlIjhqMr5nC
- H
-X-Gm-Gg: ASbGncsX3b6cZ76MaWpS0Wh/FKuRs673XF7h0jBDHvlqgDfgltYRHkOIUzVCA1AqXOo
- rxOaiZKeRFC6874afB5y+jGc+OzTgm4AX1uSZYmNT+8hz0ctGzuHzbvorV9YHBNOTGoOjDUp4/d
- IzgYduhCv9pDAicqSve/TwnV4bWvPa8ui2pnL9wqFeL3eR0L4TUoOkt6t2lfTqfaRD2hBIHQpgV
- OeFajHg4IV/5IVgo5zf+OZhQjrbXXZDqR5ZK9L0ZJV7VFfR+nUXsuaLy5Hzyc+MAuOqR1Qb0gyo
- MDqBdi0pnZ6d6258G1yl6F5k3sPl2VjNA1RXcmsRrnNFwlyZBnJpyPZ5hn5P/gNfqXrZrghN4QV
- PBLcEbF44YneGHEBTcPg=
-X-Google-Smtp-Source: AGHT+IFR8R4zvqHZ9xfh5Dx+rgNvydvh+UWi0MCgxYnxv1zzhiYEy517pjzzA0dky3IiTdIIDQBLcg==
-X-Received: by 2002:a05:600c:34d0:b0:43c:f5e4:895e with SMTP id
- 5b1f17b1804b1-43db61d7785mr73395325e9.1.1743434448530; 
- Mon, 31 Mar 2025 08:20:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743434443; x=1744039243;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8fZQ/jWuVgumxwu0tM3Cq9QmlHQyh2uem8M+GBR9J8Y=;
+ b=XgiQQfNbBqYSgJWV6XMZNuRJwJyzlJdjMMXJJzbP9viWR9hU2FwQmd4sFdHGgxlZz4
+ tDMYbgDwkAB9cuSjdG+HwYKeCTEPll38wXbQC0uUd+u2aoKBE+eq9mLjfKzWI2arqaSl
+ 70/iUG+wZEdowC/YsYDtRiMzB947DibtM1W6aMJ+Wtbd7o04YcSZN6raYQ6rz/LkNydC
+ LnN5lNQ86t6/yOpA3SKIMXRU8F2gQWmGcvbKcQl+aObR1XaCdCFR9G0VqyTmmHrlq+JZ
+ tDkQ1XuWaZhDrzcbM7hM3Fx6uwU2lpAMigNQwbcwqeDPS8jIp5+kei5fVDF2p8Uhlut7
+ 9Ekw==
+X-Gm-Message-State: AOJu0YxykEmPB9llvUpKIeTL+rERc148iqk9GwkOTuNxooiFOFbX/HnU
+ gaby/E4iADAF7BFjAfnGBoGtG3aA5m4XHcOnXpDWwH+cwmMYembnVO3JaDiR0Ribq04nPCEUkU0
+ y
+X-Gm-Gg: ASbGncuy+QqChKpAEZUCKe6tFhc6lYF6mQiRL5jGBe0nAc6TwopEV/iTnNJY3xUUSWw
+ buujXTgik2T6/qw9EugSYgIbZ7bo0nO/oEHUbD7rQXBzXharRxRpUVpLhtQv+eXEb58UaEPNgOV
+ MBbXpeTJbVJ2qFXFHxhNacZ3jrdGsVb49kZjdOk5bKhlhNeSjsgIWdAke+XkxN2ZR0Logq/xGCN
+ pqmqa7kt5tpqz/lLqm3PfaIxsl01HMoIWbscW+Z0QEW7G733R0rAXvG0gm5eC9RMYbNo0lTsPq6
+ erMtUIUgohLELULcmXfLAO7T3fpnfWY1WT9zuxSZQc1X/deELXdjUGXH0uS4d/TXWdgs0pF/45L
+ hyYaZ7ONJkgU6Y+76Uoc=
+X-Google-Smtp-Source: AGHT+IG7avYraxYq0Sb2IDtToM/Wsawr8fDiwA/RJjqxW5rjncAL5sCmFHRQadvyNkFNd8QG1y9dKw==
+X-Received: by 2002:a5d:5f48:0:b0:391:47d8:de2d with SMTP id
+ ffacd0b85a97d-39c120e3585mr7717333f8f.23.1743434443014; 
+ Mon, 31 Mar 2025 08:20:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d914f1561sm82919785e9.1.2025.03.31.08.20.46
+ ffacd0b85a97d-39c0b7a4498sm11816188f8f.99.2025.03.31.08.20.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 08:20:47 -0700 (PDT)
+ Mon, 31 Mar 2025 08:20:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>, Joey <jeundery@gmail.com>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Andrey Smirnov <andrew.smirnov@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH-for-10.0 1/2] hw/pci-host/designware: Fix access to
- ATU_UPPER_TARGET register
-Date: Mon, 31 Mar 2025 17:20:40 +0200
-Message-ID: <20250331152041.74533-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.0 0/2] hw/pci-host/designware: Fix ATU_UPPER_TARGET
+ register access
+Date: Mon, 31 Mar 2025 17:20:39 +0200
+Message-ID: <20250331152041.74533-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250331152041.74533-1-philmd@linaro.org>
-References: <20250331152041.74533-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +100,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix copy/paste error writing to the ATU_UPPER_TARGET
-register, we want to update the upper 32 bits.
+Trivial fix for issue #2861.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Joey <jeundery@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2861
-Fixes: d64e5eabc4c ("pci: Add support for Designware IP block")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/pci-host/designware.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Philippe Mathieu-Daudé (2):
+  hw/pci-host/designware: Fix access to ATU_UPPER_TARGET register
+  hw/pci-host/designware: Use deposit/extract API
 
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index c07740bfaa4..5598d18f478 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -371,7 +371,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
- 
-     case DESIGNWARE_PCIE_ATU_UPPER_TARGET:
-         viewport->target &= 0x00000000FFFFFFFFULL;
--        viewport->target |= val;
-+        viewport->target |= (uint64_t)val << 32;
-         break;
- 
-     case DESIGNWARE_PCIE_ATU_LIMIT:
+ hw/pci-host/designware.c | 47 ++++++++++++++--------------------------
+ 1 file changed, 16 insertions(+), 31 deletions(-)
+
 -- 
 2.47.1
 
