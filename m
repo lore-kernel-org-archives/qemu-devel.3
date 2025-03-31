@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C49C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92536C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzENu-0000Pj-Sy; Mon, 31 Mar 2025 08:36:58 -0400
+	id 1tzEXg-0002Qt-UI; Mon, 31 Mar 2025 08:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tzENs-0000P2-J7
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:36:56 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzEXU-0002Pr-Uc
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:46:54 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tzENq-0007I5-Eb
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:36:56 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso41271565e9.2
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:36:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzEXN-0008UQ-MS
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:46:50 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43cfe574976so30282935e9.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743424612; x=1744029412; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ise6kFs+Bk9HvZp8Y/NAwr6k28qs0LjsdtQM3/5aZRs=;
- b=YI4g999ldOwv2pi1XL9S5nO3vKW+C0tcK8WaYfv2mS0C04G2JtbC7mse6oK/cR5RUn
- Mk7txVuw2ZNZ9EyA5Y6QCwFYb8tIxxdxqentO3R0tw5TUBWVW6uX/Cj7Zj0NETmaFlcG
- F2rnGPEPXOYLPHNJTg1xKoEk7IYsa9CcWxF9EEaNFm35xHc9s5IyPbYCpapSXS4jYumf
- 2LuCcQCL0yp7rbY/0Bbo22zpDh8iqF+1hTcMOy4X6j72UWnoZVo+1MTokXyi8Ra2WYfg
- fYwCQS2HBnep/AXicEnbeX5RidBZmE95CteCujkKFtZtqcdMO5DnKzHJysqgJlQ6PEYM
- sH6g==
+ d=linaro.org; s=google; t=1743425202; x=1744030002; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=i/aglC2YOHntbhaqIo25e9bN1l83NTsJkSapPgjChFE=;
+ b=lrP+Z0++dXRwHEvYZA2kTXALIYsI2Z5HbHh2gE0nns9L+ocbwGwQlkp/YimwspsK7s
+ Y6xxiO30olf3EArYwAl8Ac1t5ox51VIIUT+xzG8bwTJu2bqLBDu3maAEeNGbH+h+cN/p
+ JspL/O3X2+MtIrW0bnfflguSqZ2wdjWrDyRmfMGW+xhIrPu++h8TqX848u7uPLMxG971
+ WpfnKIkcmwu43DbBxJMLwfCRoh3CKeMYK/6we1zGWWIQc3+phmn3ZEsjWRHn8IToabTG
+ +PEWnsNEg/ESoy3Osr3x0H/fR6Aw61WFo2yQwcEuSYLXLpNCZkX9RXD5W/dyMn8SqMgK
+ uGkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743424612; x=1744029412;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ise6kFs+Bk9HvZp8Y/NAwr6k28qs0LjsdtQM3/5aZRs=;
- b=ZquzFlG8Y7ybVe4aE2DAMIJBtYYkXRWTsThw0L0fj8DT2l5w0M5K/inCDg0KIS80hd
- JsXqkYN91UeJWcVi3RmdmzFINwIp+YR9Tv+nkBYw29LWBpb03d1V/TXe1deyLVFc2j3/
- wqu+8nku7QS1dPpG6SoAi/msxZDJQuCxwpQM7oylhlv3QkDTj+80hMV9oW/kVmoBEWX1
- IFmfKeM70CjUxSGDNxwtijxLWcSOf+FEy1f1CETR1/jHY3lmfA7xCAuzu1T9sDGwttw9
- bwS59WZ8v82/QIhkTLQuju8PRM6Q0tV4lM2a+P7ilxT+CXHr7URPFRydbpMKEuKcPMPo
- yEKA==
+ d=1e100.net; s=20230601; t=1743425202; x=1744030002;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=i/aglC2YOHntbhaqIo25e9bN1l83NTsJkSapPgjChFE=;
+ b=OzkHw1OIx/vI6gsKd6uEwp3UQGYo5USES4++r3eqLbNuB0czc17J2awdwallf79tQU
+ /bF1hODpPP2sj9QqX7tOCgxyfMV4eH8C60J8O9dbN+Ev4cr+kxszIheaU6UKliT4T121
+ LnDSX8fSA3xLjzFgEv3BDMPpa5k9vR/avSNiZPJXOdXRiHSeZGOPDpeNyTxnAQPvpHAj
+ WlxQ4GiXkq6Uo4KOnaH+tzRVtBs4Uc/VyLvUsBpoKpIBu1TVZAY/IML5HN6Dc4o6NbxR
+ L9Yn9afyQQ9EiES/vvNoRqC+5FmWmKv/a4xhdebfCgkf0T8qnqIZSvl5HzmjEXxErt9e
+ zHbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbAq3cCBAWmAvTiA/1PgChocxQcFNHS5Qe7OoQTk0NJuJa976gDovEwMaYUctaOhdElorr3rJVnDVc@nongnu.org
-X-Gm-Message-State: AOJu0Yyec4bbDkV0v+8om8R3UoEWsJ9JzlEnMtaWHAHs3VsgVpW8/osC
- MKNIigEv9v1pUs7v8ZBWnQQ75sUQoiuhe92P8RvYpTsGdyMz9/NhU70+H7LfwpA=
-X-Gm-Gg: ASbGncteKFnd5PJZebJtKl4bHpZ+XoHTgGtw/4DoWOf2NgEw6T/cSBe5f4RBuWYnWIu
- atAwXbbR45Dfx6nXsAo/pOOaiHMJq3H3FjNLrBVrLT5awNtKCxQIjQZWQlVAp0/u4Ei9TXZ9CK3
- jWVFY5tHQN/Tby7WdLUJ0ilCraajh6Lz6uN8TULbM8krWH5mWJtcZb+wkWNoEzrL4FoXy985lgl
- we7aAc5oLqsKv8Fi7mVQaG135Ehp6j2gQIxjSi6NB1dCnytjNV9BT9qsbOlPBN4ABOFwBapEokf
- bI8XPfqPKecCxQce8aSEF7eWwsxQQNqEoeU8i0BO2bNvLB0=
-X-Google-Smtp-Source: AGHT+IGISowd1iMuLNmrzCa8B/xCpLWjevxA2URko9uRdlwBGYeLcU6CR4bEnHadtTGpS4ZA1/RFWA==
-X-Received: by 2002:a05:600c:4593:b0:43d:23fe:e8a6 with SMTP id
- 5b1f17b1804b1-43db61e037emr74333555e9.5.1743424612045; 
- Mon, 31 Mar 2025 05:36:52 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8ff042bcsm119988695e9.28.2025.03.31.05.36.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Mar 2025 05:36:50 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BBD5D5F88A;
- Mon, 31 Mar 2025 13:36:49 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Rust VMM <rust-vmm@lists.opendev.org>,  QEMU Devel
- <qemu-devel@nongnu.org>,  virtio-comment@lists.linux.dev,  VirtIO Dev List
- <virtio-dev@lists.linux.dev>,  Bill Mills <bill.mills@linaro.org>,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  David Hildenbrand <david@redhat.com>,  Stefan Hajnoczi
- <stefanha@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,  Dmitry
- Osipenko <dmitry.osipenko@collabora.com>,  Matias Vara Larsen
- <mvaralar@redhat.com>,  Sergio Lopez <slp@redhat.com>
-Subject: Re: Central repo for VirtIO conformance tests?
-In-Reply-To: <CAJSP0QW6=SvLwkuTsZTKqCH9OQJdH8XV32hDZ9Z4o6AbCbOqiA@mail.gmail.com>
- (Stefan Hajnoczi's message of "Mon, 31 Mar 2025 07:58:22 -0400")
-References: <87semtpjrt.fsf@draig.linaro.org>
- <CAJSP0QW6=SvLwkuTsZTKqCH9OQJdH8XV32hDZ9Z4o6AbCbOqiA@mail.gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 31 Mar 2025 13:36:49 +0100
-Message-ID: <87msd1peam.fsf@draig.linaro.org>
+ AJvYcCVfLYW3M2xj7R6JPf1O/LDAmVSqrcC/zg+SLXM/EgjQK9YaQ6LmTCN4xv0z1bSIXrSo2i4xDS7sCPMy@nongnu.org
+X-Gm-Message-State: AOJu0Yy8znEZ/6p6tRCXUEZqcr+NBU7buO+PT8ENq171xT/77AeYaQ0x
+ TacgwROyiYQ/9ji+d5TeH2Zr00xGADmNxP3XfNrAsw71dmCqiLsVstBQV7C23AE=
+X-Gm-Gg: ASbGncuh7Rm+Ci6Ap5twrKw7Ony3niKtT1MiB/J6JylaaB1mlKuPj33BjblOqIOFAPG
+ xSghc2dM1D7JYfZ1XDTqKZfwKICqpKoFk7FLgiYYgHCwuEtioawQ2hgFQb50L1wb1cKlpaS5s2v
+ uYXs3APAXhyO293+zshismCmTetPQ+fsJ6Dfp+R4Quc4mAPNQVC77KlF4bdNKZh9Dpz9gszvb17
+ LCsaAoHV5N9yZMFyltE3V80jpieGtOGFDzjJCcAP5yy7jmguXyI90V6IdkdftzwSsLTatcIm886
+ JPccKdNK/REevkYZBSBUaTyHI5jwZGW0Sa4dt4ihejZi3kWzUrJ3h6ThXK/X6df7X5pNZrKq/38
+ afbkSnsiARFsG
+X-Google-Smtp-Source: AGHT+IG6hK2a5kdhXYxFQrjxC/j/Y+8rEAZfG//VhpcKLbpRg8uvUiI6mIQDPt4G1X7im42TW8YoYA==
+X-Received: by 2002:a7b:cb04:0:b0:43b:cb12:ba6d with SMTP id
+ 5b1f17b1804b1-43ddcc68c4bmr61646675e9.3.1743425202431; 
+ Mon, 31 Mar 2025 05:46:42 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d90000a09sm120059435e9.35.2025.03.31.05.46.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Mar 2025 05:46:41 -0700 (PDT)
+Message-ID: <313a1ccc-18e1-4d2e-8eb2-1d36f820ba15@linaro.org>
+Date: Mon, 31 Mar 2025 14:46:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/mips: Revert TARGET_PAGE_BITS_VARY
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: chenhuacai@kernel.org, jiaxun.yang@flygoat.com, arikalo@gmail.com
+References: <20250328175526.368121-1-richard.henderson@linaro.org>
+ <20250328175526.368121-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250328175526.368121-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,47 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Hajnoczi <stefanha@gmail.com> writes:
+On 28/3/25 18:55, Richard Henderson wrote:
+> Revert ee3863b9d41 and a08d60bc6c2b.  The logic behind changing
+> the system page size because of what the Loongson kernel "prefers"
+> is flawed.
+> 
+> In the Loongson-2E manual, section 5.5, it is clear that the cpu
+> supports a 4k page size (along with many others).  Therefore we
+> must continue to support a 4k page size.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/mips/cpu-param.h             | 5 -----
+>   hw/mips/fuloong2e.c                 | 1 -
+>   hw/mips/loongson3_virt.c            | 1 -
+>   target/mips/tcg/system/cp0_helper.c | 7 +------
+>   target/mips/tcg/system/tlb_helper.c | 2 +-
+>   5 files changed, 2 insertions(+), 14 deletions(-)
 
-> On Mon, Mar 31, 2025 at 6:39=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
-aro.org> wrote:
->> The unikernel utilizes rcore-os's no_std VirtIO drivers to discover and
->> initialize a range of VirtIO devices.
->
-> https://github.com/rcore-os/virtio-drivers
->
-> I noticed that VIRTIO_F_VERSION_1, VIRTIO_F_RING_PACKED, and hardware
-> device support are missing according to the readme. Those are
-> important features for real-world test coverage.
 
-At the moment most of the testing is around feature negotiation so we
-don't get to the point that we are need packed virtqs. However it would
-be useful to upstream such support for their use generally - I know
-there are some downstream projects that have stuff to upstream in due
-course.
+> diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+> index 646044e274..2a8507b8b0 100644
+> --- a/hw/mips/fuloong2e.c
+> +++ b/hw/mips/fuloong2e.c
+> @@ -334,7 +334,6 @@ static void mips_fuloong2e_machine_init(MachineClass *mc)
+>       mc->default_cpu_type = MIPS_CPU_TYPE_NAME("Loongson-2E");
+>       mc->default_ram_size = 256 * MiB;
+>       mc->default_ram_id = "fuloong2e.ram";
+> -    mc->minimum_page_bits = 14;
+>       machine_add_audiodev_property(mc);
+>   }
 
-The original idea for the feature bit tests was to utilise the kernels
-kunit framework. However that was outside the scope of what kunit which
-is really focused on testing kernel internals rather than the HW
-interface.
+fuloong2e machine uses a Loongson-2E CPU, which as the manual you
+pointed out mentions, supports 4K pages.
 
-We did consider expanding the kvm-unit-test uni-kernels but that would
-either involve importing kernel bits or a fairly big C re-implementation
-of it. At least by expanding the rcore-os drivers we will have two
-different driver stacks in two different languages.
+>   
+> diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+> index db1cc51314..1da20dccec 100644
+> --- a/hw/mips/loongson3_virt.c
+> +++ b/hw/mips/loongson3_virt.c
+> @@ -677,7 +677,6 @@ static void loongson3v_machine_class_init(ObjectClass *oc, void *data)
+>       mc->max_cpus = LOONGSON_MAX_VCPUS;
+>       mc->default_ram_id = "loongson3.highram";
+>       mc->default_ram_size = 1600 * MiB;
+> -    mc->minimum_page_bits = 14;
+>       mc->default_nic = "virtio-net-pci";
+>   }
 
-> Or is the idea to use the unikernel for low-level device
-> initialization and the Linux image for tests that do I/O?
+loongson3v machine uses Loongson-3 series CPUs with TCG, or
+Loongson-3A4000 with KVM.
 
-So far the rootfs images get by far the largest coverage because they
-can more easily trigger a whole range of conditions. While VirtIO is
-intended to be OS and hypervisor agnostic Linux remains the system with
-the widest and most functional coverage of the interfaces.
+The Loongson-3A1000 is based on a GS464 core, which does support
+4K (chapter 3.5: PageMask register).
 
->
-> Stefan
+The Loongson-3A2000 and 3A3000 are based on a GS464E core, which
+also supports 4K (chapter 7.7 PageMask Register).
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+   Address page Mask. The address mask is used to control the size
+   of the page table stored in the page table entry. GS464E supports
+   4KB to 1GB page size increments of 4.
+
+The Loongson-3A4000 is based on a GS464V core, for which I couldn't
+find the full manual. Being a GS464 with vector capabilities ("The
+memory functional unit of GS464V is similar with GS464") I'll assume
+4K is also OK there.
+
+(I'll amend that information to the commit description)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
