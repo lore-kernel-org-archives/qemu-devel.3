@@ -4,103 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B9ABC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 14:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00301C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 14:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzGEh-0000nn-VC; Mon, 31 Mar 2025 10:35:36 -0400
+	id 1tzGTz-0005Di-FT; Mon, 31 Mar 2025 10:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzGER-0000kg-VD
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 10:35:23 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tzGTp-0005Cc-Ig; Mon, 31 Mar 2025 10:51:13 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzGEL-0007mk-8L
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 10:35:18 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-39c1efc4577so334855f8f.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 07:35:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tzGTn-0001U8-EW; Mon, 31 Mar 2025 10:51:13 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-301e05b90caso7905598a91.2; 
+ Mon, 31 Mar 2025 07:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743431711; x=1744036511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yxoeJvnNk0SvKNd0N3DxwbMRQkbxBphdBurkZSyhJuc=;
- b=tgEWWykpEcTwIFCip/2DWz1oADgT6XiR05W3v5GwFJtTAWLzE3H2A2QTq3MsdboMwX
- YjocktqW4+DPKJgWRP6+YR8Im43HY19zR1wHdwcNdrg4u4CT7xDOqZy54U8kFmUtfqmg
- IkLToYRmnJDeIUHOZEd+Zc5x6bB7qbG5m2zgDgzj5KDRjJrzQGsNMfU4T/j+z1ZvGNhs
- qjZZ1mhmBiyxJ7ONfw8ZEcYm205FKflBvsIouMZ62EmNV9KsSbkvJEhQHVeJker4pBqo
- DWGWZA0bnTJtzfe7JerPcIHsgmQHokZCDWleuGi98Mbl3II+C2CvVMBACMX3gT5ayqJv
- aPFQ==
+ d=gmail.com; s=20230601; t=1743432669; x=1744037469; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wx1e8TJLFx3SMD6ixJqL/KCNmj54ZolT8Vf2+oBfH6A=;
+ b=c23Ukg8jvWhiIS/zZfC5Olx1z79dzZezM4xfwM4p6Usnbljpy+wkljPMBKnq6W6Lqk
+ /SUS59j+jz6lScfiJ65EtCefVFIzfJDz3TArMmVkoRjCM8vn+ElWVgS1Y+SomCGKgW/S
+ 1KzmGsbgRkZQdk+MNPjqE1OyxHDNYxr0t5kI3pObs0cBx6oKIB3uzNJTiEBanl6VGL0I
+ tuLAxPUHcUnbcTbu3nH0vqtEpc0jb2N6r2ofSndlfiTNShwaREaOyTr8BfGDNxKF+pGC
+ xTvMPVsgZKrjFNP2VSO2HajAUyYjdwpxNTjCDrpGNRDjXvRV0XPUHFJIst/ZibGTdufW
+ lNjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743431711; x=1744036511;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yxoeJvnNk0SvKNd0N3DxwbMRQkbxBphdBurkZSyhJuc=;
- b=hJFzCdxR+QGYPMfwNhee36BQyY03CLO0ubnb7+MOOvD1o2DhzC+0tE7235qfYJTMoU
- 7+t7BRb/W6xmVJD3oJrVnqkWZesp1Sl5bH3XpR8jPvUMw89L4Wko40JmGqSrZqSN4a5X
- pvu0BcNGFsvrfaBiCquUyFqzh+t2/W5/QdBxV/xcjkg257jxlUH6nDAB+VJZunX5jTfM
- ODr4c8JDMppCwrfijZRLP6GaNoSnQVSm56LBusCJqKgAIyBc4FN/yZV0/A0nyy8oP9uP
- yq5hEO+53ubJMQil1D5Fd7mwYab+VtN4f42IQZgtaxtB+JmaRqdBkwGVomN5nsk+6ts5
- Ea7Q==
+ d=1e100.net; s=20230601; t=1743432669; x=1744037469;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wx1e8TJLFx3SMD6ixJqL/KCNmj54ZolT8Vf2+oBfH6A=;
+ b=uDGOUGHqSXRM8w/GbU+vJaOWpiIkZ9qhtSnTkWq0VLYO6/ogz0l9OyMGR/djfHna7Z
+ Xk3YJRZojQYltgsbakXIwDqKhFCBES69hNQDE8UC4i7FOz/0i0GYJcNMjw1hibGnFCYI
+ lRaBe6MMtsArUhAIj+LYOaMsUDYsgvsT2yZtAF7t0IqXkqhSeZGecUiwmlWUUtla5s9a
+ cn7YIN6MX93voFlQ7ADYngJNOaBLiBpEYIf+Nm1Q6WPSi2tdm8dByCJp+3pc/RBYqpo8
+ 9/zMfapXLFFm64SdBz7YbTKUyOb4JwcYZ8osC+gWz2Vp5K/+W0xp/4SUQDLLZrnYmwkJ
+ EXgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVRzYDvLIXjE88wK9xibfDdjiuQk5oiFHIZISoS0ttHf0qBs1T3LfZqjdSU632OWobGT6ar4seYYqD@nongnu.org
-X-Gm-Message-State: AOJu0YzyMA8Inr0DiQ4cdAg3zHcOA1+GqkkpO+v3wcnxF9QbfoaA+iW/
- sQo09UVOLfkA5OiIo7H/c8Y12lItvLnHqf7oOLOIARieBBgYu/zZ/6V5mbCuZ9I=
-X-Gm-Gg: ASbGncvv22Y76TviYu1WhdEuDsAzn3TI6agtsjxD4+XCBgD5SMjOBNzCRaYrKnYMtGT
- FTs7vb3glQjmwPTHFCyuKlQG1kYZxIOAystFJZL40w/kWr91ZqW2Mdm5VGzeoQRa1KrrE9vJ/mu
- HPgOA0dTXEecN9HhP/NbMbchwjY+eHnZrLJ6yaQvSzJ9gr2VxSlTGGfcbUdi1oyhr9/dLBFTSkw
- 9iDDXT9c9+Y5fNxtOuiYHqgGbvM5RdP0uI1BpHP1aLK9W65zK6nY40Ksrb6sjAyC4RhPMkFNOPs
- ocXVvhaWtT1wAE4tM/e/sG3Za1tvTSaaEUtD1gmT+HbQMU1/zOv9zvO9dvsq0U05NyrrmFGCbfF
- vbor6c3uMFh9r
-X-Google-Smtp-Source: AGHT+IHC2Qxdse5s7XWkCmdEI92ShcHniGDPOLUPSxr25Rr7/HMQkbrFswtP4+fWibK4/XHijwVkgA==
-X-Received: by 2002:a05:6000:2a3:b0:38d:cf33:31d6 with SMTP id
- ffacd0b85a97d-39c120ca789mr5718341f8f.3.1743431711119; 
- Mon, 31 Mar 2025 07:35:11 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d900013afsm123996805e9.36.2025.03.31.07.35.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 07:35:09 -0700 (PDT)
-Message-ID: <62cf875f-6a33-477d-8b35-7f130e4887d2@linaro.org>
-Date: Mon, 31 Mar 2025 16:35:08 +0200
+ AJvYcCXrVqlLRtC36en5sLieUdiMHxe/aXBVWWW1q903cqS0W3PKCSpTceqGQmg6K9Rp/r9MLG7DuRW8ItIl@nongnu.org
+X-Gm-Message-State: AOJu0YwbS69kAF5tciA9aBlDETL1C50KVch4TPaTK3TEtqdH5DBkfWMa
+ RzakpWDzHWLmWHv8EPwwVEiDf9h3ot1RU/gy5Vr7rpPe5z2q7FjTTEMbEQ==
+X-Gm-Gg: ASbGncvt4CONit8SLXT0Z+/yzg8cQeLt9C2Nd4S8tE6pXheJA5PAJxbbHJiw7at1iEA
+ vCJM4P5H4ljFiBfdbWO/+dagPMDQ183e5cKVMxb7PAuPpoOinpTiSCYiSNw3wuqNjOsd3xLpd+m
+ GnEfpwZb2dJvJuBb92lm6ZM+/S/wf2GCtA3k8zBNRcRJd2xvmJPLd7NRm83SAAwLNmzxk2jDIXE
+ CCh7eOuBdZn3GX/dvtAqjXqFoNsqVlc4SVBUhIxrbBu6uvWT8vpdLoEHHOUe1sPdxYZEBMtm4/v
+ ajjDiLf6vCjd9BodU9rHNsjji2qK2ad+FNSGZTHvFmfbI2CBWg==
+X-Google-Smtp-Source: AGHT+IGdEh4j07FmVNGdkb+X3l7ra+TnIUE/116qO1Q6NZuxneidW9iq7BYNDOrb5RVB6STLtw8ncQ==
+X-Received: by 2002:a17:90b:2dc2:b0:2f9:cf97:56a6 with SMTP id
+ 98e67ed59e1d1-30531fa18b7mr17048590a91.14.1743432669230; 
+ Mon, 31 Mar 2025 07:51:09 -0700 (PDT)
+Received: from wheely.local0.net ([203.185.207.94])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30516d5786dsm8102171a91.11.2025.03.31.07.51.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 31 Mar 2025 07:51:08 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] ppc: Implement print_info interface function for the CPU class
+Date: Tue,  1 Apr 2025 00:51:01 +1000
+Message-ID: <20250331145101.617232-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 00/12] hw: Categorize few devices and add their
- descriptions
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, BALATON Zoltan
- <balaton@eik.bme.hu>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Glenn Miles <milesg@linux.ibm.com>,
- Samuel Tardieu <sam@rfc1149.net>, qemu-block@nongnu.org,
- Patrick Leis <venture@google.com>, David Hildenbrand <david@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Tyrone Ting <kfting@nuvoton.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Bernhard Beschow <shentey@gmail.com>, Hanna Reitz <hreitz@redhat.com>,
- Hao Wu <wuhaotsh@google.com>, qemu-s390x@nongnu.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20250325224310.8785-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250325224310.8785-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,16 +96,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/25 23:42, Philippe Mathieu-Daudé wrote:
+PPC CPU has TYPE_INTERRUPT_STATS_PROVIDER interface but it does not
+implement the print_info function. This causes 'info pic' to print
+a line like:
 
-> Philippe Mathieu-Daudé (12):
+    Interrupt controller information not available for
+    power10_v2.0-powerpc64-cpu.
 
->    hw/block/m25p80: Categorize and add description
->    hw/display/dm163: Add description
->    hw/dma/i82374: Categorize and add description
+Add a print_info panel for CPUs with irq delivery status.
 
->    hw/misc/pll: Do not expose as user-creatable
->    hw/nvram/xlnx-efuse: Do not expose as user-creatable
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/cpu.h         |   3 +
+ target/ppc/cpu_init.c    |   1 +
+ target/ppc/excp_helper.c | 116 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 120 insertions(+)
 
-Patches 2-4 and 8-9 queued.
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index ff14f5b8a7f..dca84ca23cd 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -27,6 +27,7 @@
+ #include "cpu-qom.h"
+ #include "qom/object.h"
+ #include "hw/registerfields.h"
++#include "hw/intc/intc.h"
+ 
+ #define CPU_RESOLVING_TYPE TYPE_POWERPC_CPU
+ 
+@@ -1604,6 +1605,7 @@ int ppc32_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+ void ppc_maybe_interrupt(CPUPPCState *env);
+ void ppc_cpu_do_interrupt(CPUState *cpu);
+ bool ppc_cpu_exec_interrupt(CPUState *cpu, int int_req);
++void ppc_cpu_irq_print_info(InterruptStatsProvider *obj, GString *buf);
+ void ppc_cpu_do_system_reset(CPUState *cs);
+ void ppc_cpu_do_fwnmi_machine_check(CPUState *cs, target_ulong vector);
+ extern const VMStateDescription vmstate_ppc_cpu;
+@@ -2686,6 +2688,7 @@ enum {
+ #endif
+ 
+ /* Hardware exceptions definitions */
++/* Keep powerpc_intr_name in sync */
+ enum {
+     /* External hardware exception sources */
+     PPC_INTERRUPT_RESET     = 0x00001,  /* Reset exception                    */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index b3d6599abd2..36742136309 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7527,6 +7527,7 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+ #ifndef CONFIG_USER_ONLY
+     cc->sysemu_ops = &ppc_sysemu_ops;
+     INTERRUPT_STATS_PROVIDER_CLASS(oc)->get_statistics = ppc_get_irq_stats;
++    INTERRUPT_STATS_PROVIDER_CLASS(oc)->print_info = ppc_cpu_irq_print_info;
+ 
+     /* check_prot_access_type relies on MMU access and PAGE bits relations */
+     qemu_build_assert(MMU_DATA_LOAD == 0 && MMU_DATA_STORE == 1 &&
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 1890ec9ccb6..7ea5798e95b 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -104,6 +104,49 @@ static const char *powerpc_excp_name(int excp)
+     }
+ }
+ 
++static const char *powerpc_intr_name(uint32_t intr)
++{
++    switch (intr) {
++    case PPC_INTERRUPT_RESET:      return "RSET";
++    case PPC_INTERRUPT_WAKEUP:     return "WAKE";
++    case PPC_INTERRUPT_MCK:        return "MCHK";
++    case PPC_INTERRUPT_EXT:        return "EXTN";
++    case PPC_INTERRUPT_SMI:        return "SMI";
++    case PPC_INTERRUPT_CEXT:       return "CEXT";
++    case PPC_INTERRUPT_DEBUG:      return "DEBG";
++    case PPC_INTERRUPT_THERM:      return "THRM";
++    case PPC_INTERRUPT_DECR:       return "DECR";
++    case PPC_INTERRUPT_HDECR:      return "HDEC";
++    case PPC_INTERRUPT_PIT:        return "PIT";
++    case PPC_INTERRUPT_FIT:        return "FIT";
++    case PPC_INTERRUPT_WDT:        return "WDT";
++    case PPC_INTERRUPT_CDOORBELL:  return "CDBL";
++    case PPC_INTERRUPT_DOORBELL:   return "DBL";
++    case PPC_INTERRUPT_PERFM:      return "PMU";
++    case PPC_INTERRUPT_HMI:        return "HMI";
++    case PPC_INTERRUPT_HDOORBELL:  return "HDBL";
++    case PPC_INTERRUPT_HVIRT:      return "HVRT";
++    case PPC_INTERRUPT_EBB:        return "EBB";
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static bool powerpc_is_hv_intr(uint32_t intr)
++{
++    switch (intr) {
++    case PPC_INTERRUPT_RESET:
++    case PPC_INTERRUPT_MCK:
++    case PPC_INTERRUPT_HDECR:
++    case PPC_INTERRUPT_HMI:
++    case PPC_INTERRUPT_HDOORBELL:
++    case PPC_INTERRUPT_HVIRT:
++        return true;
++    default:
++        return false;
++    }
++}
++
+ static void dump_syscall(CPUPPCState *env)
+ {
+     qemu_log_mask(CPU_LOG_INT, "syscall r0=%016" PRIx64
+@@ -2438,6 +2481,79 @@ static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+     }
+ }
+ 
++void ppc_cpu_irq_print_info(InterruptStatsProvider *obj, GString *buf)
++{
++    PowerPCCPU *cpu = POWERPC_CPU(obj);
++    CPUPPCState *env = &cpu->env;
++    CPUState *cs = CPU(cpu);
++    const char *priv1 = "";
++    const char *priv2;
++    bool none;
++    int i;
++
++    g_string_append_printf(buf, "CPU[%x] interrupt info\n", cs->cpu_index);
++
++    g_string_append_printf(buf, "    state:%s",
++                           cs->halted ? "stopped" : "running");
++    if (env->resume_as_sreset) {
++        g_string_append_printf(buf, "(wake with sreset)");
++    }
++
++    if (FIELD_EX64(env->msr, MSR, PR)) {
++        priv2 = "user";
++    } else {
++        priv2 = "privileged";
++    }
++    if (env->has_hv_mode) {
++        if (FIELD_EX64_HV(env->msr)) {
++            priv1 = "host-";
++        } else {
++            priv1 = "guest-";
++        }
++    }
++    g_string_append_printf(buf, " mode:%s%s\n", priv1, priv2);
++
++    if (env->has_hv_mode) {
++        g_string_append_printf(buf, "    hypervisor irqs:%s\n",
++                !FIELD_EX64_HV(env->msr) || FIELD_EX64(env->msr, MSR, EE) ?
++                    "enabled" : "disabled");
++    }
++    g_string_append_printf(buf, "    supervisor irqs:%s\n",
++            FIELD_EX64(env->msr, MSR, EE) ? "enabled" : "disabled");
++
++    if (env->has_hv_mode) {
++        none = true;
++        g_string_append_printf(buf, "    pending hypervisor interrupts: ");
++        for (i = 0; i < 32; i++) {
++            uint32_t intr = (1U << i);
++            if (powerpc_is_hv_intr(intr) && (env->pending_interrupts & intr)) {
++                none = false;
++                g_string_append_printf(buf, "%s ", powerpc_intr_name(intr));
++            }
++        }
++        if (none) {
++            g_string_append_printf(buf, "none\n");
++        } else {
++            g_string_append_printf(buf, "\n");
++        }
++    }
++
++    none = true;
++    g_string_append_printf(buf, "    pending supervisor interrupts: ");
++    for (i = 0; i < 32; i++) {
++        uint32_t intr = (1U << i);
++        if (!powerpc_is_hv_intr(intr) && (env->pending_interrupts & intr)) {
++            none = false;
++            g_string_append_printf(buf, "%s ", powerpc_intr_name(intr));
++        }
++    }
++    if (none) {
++        g_string_append_printf(buf, "none\n");
++    } else {
++        g_string_append_printf(buf, "\n");
++    }
++}
++
+ /*
+  * system reset is not delivered via normal irq method, so have to set
+  * halted = 0 to resume CPU running if it was halted. Possibly we should
+-- 
+2.47.1
+
 
