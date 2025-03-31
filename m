@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E508C36013
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB30C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzL9S-0004QR-8E; Mon, 31 Mar 2025 15:50:32 -0400
+	id 1tzL9i-0004v0-8q; Mon, 31 Mar 2025 15:50:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL90-0003NB-7S
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:50:03 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL96-0003d3-GL
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:50:08 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL8y-0003TZ-6t
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:50:01 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39141ffa9fcso4634068f8f.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:49:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL94-0003UQ-Gt
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:50:08 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cfe574976so33391145e9.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743450598; x=1744055398; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743450604; x=1744055404; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uHP3dfOw1csrD92NzXd1LjCikF/T0hdIj+cLpHi1vWc=;
- b=ihDOYyvFvBc7023UkZOcmVnuDoOixGZi15cKyogedQOlW58yvxyu2SduOPHt6XdHub
- StOZxmznlhhGFunxWX2K26T+E48TFlFADSE/RB3hytq5koh2JANRtNeqp3xuvs22rmr9
- WfcMze2fZJtGS2j6+NrFoW0cr6tVIjBq8wcgZ0goyC3EKuK9ARiQH3mOaBmfkiG1Wyqo
- bZq1a3SjST1txcMXrhe3bQpQJD8jY2VmxKTOV4W7UIE8KxOzyyM01qNk7ILBGxqfoWhu
- 9Pn14kuEwvSbTfELoeyXUTLPuEfGMaw4rHF82a4PDWajltRNVlnHMFl2XMuCnRtsgEuk
- ccGw==
+ bh=p5ZHjqmLDaEsy6AfHhvBBwdmYQrv+nX9DlxuV6Wd4ws=;
+ b=CrKa71OCf4qF3PHdRFLFbzYB+JlfP39bg45Ge/1Bn6ixCep9rd1EfVHQ8n7u2dym8y
+ FGeUXtXDXIeevoykdQEsjWzJpKfhupnemzHRkHEyYAf3RFpAhJuBK6h52208dIopv3zQ
+ /G99DM+EB/tsbWavkTINC8XGgdnwjlGXYvFKiTS1lpYlSa4cBxKJvz4T8di2p+b3gSib
+ nkfiS1jTi2M1N7Z6BJapcwL3+owIILWAoipDvHa+p6bSGu/JjzcibGeraNFtCtP1XICM
+ dBBoGBMYtA5CgdQG1KcrjptpwBsMmYj2rj5cif96jKJf6A2LSuQ/szgJQbYDsIeRU9xK
+ Uj8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743450598; x=1744055398;
+ d=1e100.net; s=20230601; t=1743450604; x=1744055404;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uHP3dfOw1csrD92NzXd1LjCikF/T0hdIj+cLpHi1vWc=;
- b=WzUI0emp3FN7L5Tlk4etDsfpVxPyGCjFB8Ol8AWyBRuIQRmXZq2zf3tbjtUT9NNtfu
- 5FipT/s5WEZ86su+plNi/JuKHNfyed4jVnhRXh9EFw17eQa9tEBsNTy7nULOok0Qd0bQ
- k0zJWhD5WeGcTp1xTmk8s/26MTUAdSxaOLSS8tXFye+Nnf1SmJmnR/uhjUlhkIYvnyKZ
- xVg2Bx/ofn7RKXN7RPUgkG3+D3OQtQNlmBerB6ejnfdPAwiOfxmC97BGEeiphyaKPjmI
- QYTGszTZdtdSE0DkoSrICo3cL2wQybPR4R/xtyvopU+tNUKGjcI6W6f64w9epWQsbCpy
- I3KA==
-X-Gm-Message-State: AOJu0YwAq3JCjBNoygZMcJVtB8549NrOHlVIDgoMSEDaPj0Oi/eMqxuw
- tNdD2mzaE1g8MVQ2RkK8YmqeoCDN8aMOjx7PYAk0AcrUPHx15O8spIBjqr4OZ1dC8P5zkYTXCbf
- O
-X-Gm-Gg: ASbGncsRHw1+C7jUNQ0LdLubZ2f485/Yvd5ZDB/OOCrlTaoqYs0PN8fPnDDH7wW3Ptk
- 9FLRzs10hhlTU1iCSssfD0Mf0txqm0wowWviW/ITbPZkw+VUxtwx8CzbWRQahIxd8Y/8itWEaPK
- Ludb5rZRf8M70rop7bQh+QeQuO8PRMIWxSrxlbVowv7clKlXhLdwX5w1TLZxyeJmV91zWnGZjbd
- pkU+NVXwUU3byTrP+EF/0EuTCoxs2911PsUE5Q5vhlLLFbAwxfcJ0Z4x8Rs1u0N4MNLuyGqRmJz
- pvdcBHWq6IlircltuszX/pc6LCvhr15RjhAAQLF+SYe7cgz5RhL03RA0UdnI9+meRRMFGzVOTdp
- OPv0YDb0ZCudfjLW8HOE=
-X-Google-Smtp-Source: AGHT+IHbWHYcSESUv3iuc4AkjfGh0xvKEzr5euY3wAA/wv/EBECiXUtqKs5rtXbmoKMko6+WkxQHzg==
-X-Received: by 2002:a5d:584a:0:b0:390:fbdd:994d with SMTP id
- ffacd0b85a97d-39c120e3cd6mr8539689f8f.27.1743450598206; 
- Mon, 31 Mar 2025 12:49:58 -0700 (PDT)
+ bh=p5ZHjqmLDaEsy6AfHhvBBwdmYQrv+nX9DlxuV6Wd4ws=;
+ b=X5l2Ru3n3iDZh9KVJv1VsFfBVgmVOoImRCuZKprWP8q2CmYO5PUvt6EPZbGks//fcp
+ b8WmvRM7JHnNcZ7ItUlXE0bPiqX7Yq7o/c70yW88VvjidJXhrUxoZLRkKFXhW3+k9mPP
+ lFokLcKdfskhC/aJlxpl7s7t0HqlDwD4fL98g05rGbFlh+u2G/JVZbta49f0lOYREx7i
+ Dd5GCB/WyZRaEL+LB7vSo4EpIa7wLULd9i1aWI3uAtw2hMjF/wkZnN3D/TuLZ438xBnV
+ j5Ipb7suR8zSIX+iGrZzfpv14vvnUyhkNXqa3sHfYvw0PGoOBJuQL8tpxxr7DCaenJM5
+ rrwA==
+X-Gm-Message-State: AOJu0Yz2LXIypz1uINe1jS/trhp6nnZ11qUN0iTdPzkrTIIPNY0nm0no
+ glugssjsKffRIF2mKMh2VT5DUZKhO9saoyFstFCRoup0GyqW/NC7nQdv8dCeHJvbCMdQGe1PPJA
+ 9
+X-Gm-Gg: ASbGncsliEykFWr9Ys/J5T/RaHRitMfOT0UfKxrrWEWSqmvKtFU1nLArNQZhgPZhuDb
+ jzhjrV54yIz09FpNzgpfRbuhb76BC1a1TY4U2STLYAMQ1VWrJdH/DHTL7puVUEWP9ocUCAAXLLp
+ XxtADll+Pqw7NQVw7CCmShdgUYNI/pcrtQ/MAnH7smNGAbRdEXa/fh5/3SISqzhwcEqKYGg0OL3
+ X5qgqg3ctrpm7Rm9+TjSSA/WACx/s4rr2GSeWzmJJKKcf1F4kqIaIIMzFmOPrnt/PWFfokEP3n9
+ mmoDHBWOI/lQUuuI/Pyx5QICJ4RAgCa+DPBRRDJUwlbdSMQoiBBYRClMUyCdTVPqUWeUBt7U/F5
+ roHnuieHG3+4QomhfR+o=
+X-Google-Smtp-Source: AGHT+IH2Dsz2O/HyegmMzYX6SMS8/upMl5C4BT42F6CaD0c9wA50VYlh4PHDqDG8TyUp449d2sGKpQ==
+X-Received: by 2002:a05:600c:3b0d:b0:43c:e478:889 with SMTP id
+ 5b1f17b1804b1-43ea7bf5717mr6007835e9.0.1743450604564; 
+ Mon, 31 Mar 2025 12:50:04 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8314bbf1sm172587425e9.38.2025.03.31.12.49.56
+ 5b1f17b1804b1-43d8314f5c6sm179823485e9.40.2025.03.31.12.50.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 12:49:57 -0700 (PDT)
+ Mon, 31 Mar 2025 12:50:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 19/23] target/avr: Fix buffer read in avr_print_insn
-Date: Mon, 31 Mar 2025 21:48:17 +0200
-Message-ID: <20250331194822.77309-20-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+Subject: [PULL 20/23] target/sparc: Log unimplemented ASI load/store accesses
+Date: Mon, 31 Mar 2025 21:48:18 +0200
+Message-ID: <20250331194822.77309-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250331194822.77309-1-philmd@linaro.org>
 References: <20250331194822.77309-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,67 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+When the cache-controller feature is not implemented,
+log potential ASI access as unimplemented.
 
-Do not unconditionally attempt to read 4 bytes, as there
-may only be 2 bytes remaining in the translator cache.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250325224403.4011975-2-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Clément Chigot <chigot@adacore.com>
+Message-Id: <20250325123927.74939-4-philmd@linaro.org>
 ---
- target/avr/disas.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ target/sparc/ldst_helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/avr/disas.c b/target/avr/disas.c
-index b7689e8d7cd..d341030174f 100644
---- a/target/avr/disas.c
-+++ b/target/avr/disas.c
-@@ -68,28 +68,35 @@ static bool decode_insn(DisasContext *ctx, uint16_t insn);
- 
- int avr_print_insn(bfd_vma addr, disassemble_info *info)
- {
--    DisasContext ctx;
-+    DisasContext ctx = { info };
-     DisasContext *pctx = &ctx;
-     bfd_byte buffer[4];
-     uint16_t insn;
-     int status;
- 
--    ctx.info = info;
--
--    status = info->read_memory_func(addr, buffer, 4, info);
-+    status = info->read_memory_func(addr, buffer, 2, info);
-     if (status != 0) {
-         info->memory_error_func(status, addr, info);
-         return -1;
-     }
-     insn = bfd_getl16(buffer);
--    ctx.next_word = bfd_getl16(buffer + 2);
--    ctx.next_word_used = false;
-+
-+    status = info->read_memory_func(addr + 2, buffer + 2, 2, info);
-+    if (status == 0) {
-+        ctx.next_word = bfd_getl16(buffer + 2);
-+    }
- 
-     if (!decode_insn(&ctx, insn)) {
-         output(".db", "0x%02x, 0x%02x", buffer[0], buffer[1]);
-     }
- 
--    return ctx.next_word_used ? 4 : 2;
-+    if (!ctx.next_word_used) {
-+        return 2;
-+    } else if (status == 0) {
-+        return 4;
-+    }
-+    info->memory_error_func(status, addr + 2, info);
-+    return -1;
- }
- 
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index b559afc9a94..45882e25db1 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -600,6 +600,9 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
+         case 0x0C:          /* Leon3 Date Cache config */
+             if (env->def.features & CPU_FEATURE_CACHE_CTRL) {
+                 ret = leon3_cache_control_ld(env, addr, size);
++            } else {
++                qemu_log_mask(LOG_UNIMP, "0x" TARGET_FMT_lx ": unimplemented"
++                                         " address, size: %d\n", addr, size);
+             }
+             break;
+         case 0x01c00a00: /* MXCC control register */
+@@ -816,6 +819,9 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
+         case 0x0C:          /* Leon3 Date Cache config */
+             if (env->def.features & CPU_FEATURE_CACHE_CTRL) {
+                 leon3_cache_control_st(env, addr, val, size);
++            } else {
++                qemu_log_mask(LOG_UNIMP, "0x" TARGET_FMT_lx ": unimplemented"
++                                         " address, size: %d\n", addr, size);
+             }
+             break;
  
 -- 
 2.47.1
