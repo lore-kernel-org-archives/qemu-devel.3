@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00301C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 14:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B92E2C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 14:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzGTz-0005Di-FT; Mon, 31 Mar 2025 10:51:23 -0400
+	id 1tzGXQ-000693-5O; Mon, 31 Mar 2025 10:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzGTp-0005Cc-Ig; Mon, 31 Mar 2025 10:51:13 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1tzGXN-00068k-LX; Mon, 31 Mar 2025 10:54:53 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzGTn-0001U8-EW; Mon, 31 Mar 2025 10:51:13 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-301e05b90caso7905598a91.2; 
- Mon, 31 Mar 2025 07:51:10 -0700 (PDT)
+ id 1tzGXL-0001wH-LZ; Mon, 31 Mar 2025 10:54:53 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-227aaa82fafso86610765ad.2; 
+ Mon, 31 Mar 2025 07:54:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743432669; x=1744037469; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743432889; x=1744037689; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wx1e8TJLFx3SMD6ixJqL/KCNmj54ZolT8Vf2+oBfH6A=;
- b=c23Ukg8jvWhiIS/zZfC5Olx1z79dzZezM4xfwM4p6Usnbljpy+wkljPMBKnq6W6Lqk
- /SUS59j+jz6lScfiJ65EtCefVFIzfJDz3TArMmVkoRjCM8vn+ElWVgS1Y+SomCGKgW/S
- 1KzmGsbgRkZQdk+MNPjqE1OyxHDNYxr0t5kI3pObs0cBx6oKIB3uzNJTiEBanl6VGL0I
- tuLAxPUHcUnbcTbu3nH0vqtEpc0jb2N6r2ofSndlfiTNShwaREaOyTr8BfGDNxKF+pGC
- xTvMPVsgZKrjFNP2VSO2HajAUyYjdwpxNTjCDrpGNRDjXvRV0XPUHFJIst/ZibGTdufW
- lNjw==
+ bh=spIhDUx0q4yvuNUpJjFMn7D07djGjIMK54t7neF/TXQ=;
+ b=ITdZDKG+ZKt7NKfR4ONMaEl+NpsnVcG0Wdl8Qs9KRMHfV/0VB9Q68RVDoy+39sW/A1
+ aoCf0TVvRs/5grHXvc61DdToLgygbWoA0K85CCAZwuZZ2sdljHKtmSCxCthAElR/Z5/x
+ 4tgsZow9+ihS642kbtLdsMkMqmeXscXuGsTDruDss8oLDuTYjNUcOVWg88R87LsB6sSe
+ hCNit+gIwVZ/nv0V7mHj1pLNpia/GSvf5klmMXvsSRlrEUMzSFwZE8ogoDjyZvHFelB/
+ BURASiNxmdH7sKYiPiVGSfieD3yJTyDtSy21LMG8sMopG7v7r7oEDVuSRCvh3LIp8z8P
+ dpxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743432669; x=1744037469;
+ d=1e100.net; s=20230601; t=1743432889; x=1744037689;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wx1e8TJLFx3SMD6ixJqL/KCNmj54ZolT8Vf2+oBfH6A=;
- b=uDGOUGHqSXRM8w/GbU+vJaOWpiIkZ9qhtSnTkWq0VLYO6/ogz0l9OyMGR/djfHna7Z
- Xk3YJRZojQYltgsbakXIwDqKhFCBES69hNQDE8UC4i7FOz/0i0GYJcNMjw1hibGnFCYI
- lRaBe6MMtsArUhAIj+LYOaMsUDYsgvsT2yZtAF7t0IqXkqhSeZGecUiwmlWUUtla5s9a
- cn7YIN6MX93voFlQ7ADYngJNOaBLiBpEYIf+Nm1Q6WPSi2tdm8dByCJp+3pc/RBYqpo8
- 9/zMfapXLFFm64SdBz7YbTKUyOb4JwcYZ8osC+gWz2Vp5K/+W0xp/4SUQDLLZrnYmwkJ
- EXgA==
+ bh=spIhDUx0q4yvuNUpJjFMn7D07djGjIMK54t7neF/TXQ=;
+ b=hhuH8PNrQxkjEB9XlBIEEkebE3fvG32aVsR5qHgshByOZh0zipxcguMOV1ZrqT74Mj
+ yxE0fXdl1s0iz1MuL/GRHIs0i4xN0D8aLI16mSPXv/wKFksYbep/Z5z6iWvfmRvVojHi
+ 8BM/8q/r/ADgmVIxrFzBtiSzVjNzxvEfUh+ugYTOxOPYkg1WEzPoDkocHbtvluwSCLtb
+ LGDUcGzuQcrwc/yYEz/XregXfYywEoOYRShhipaaVd1jDydrl9YV6YARFonOR4EyUXM4
+ SsnitCKTIEY9GR085PelEel1B/SgUc9PXOINZ/DQzxrPm+VCnyHtgiPnQV8hsbSf2DAE
+ tJ9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrVqlLRtC36en5sLieUdiMHxe/aXBVWWW1q903cqS0W3PKCSpTceqGQmg6K9Rp/r9MLG7DuRW8ItIl@nongnu.org
-X-Gm-Message-State: AOJu0YwbS69kAF5tciA9aBlDETL1C50KVch4TPaTK3TEtqdH5DBkfWMa
- RzakpWDzHWLmWHv8EPwwVEiDf9h3ot1RU/gy5Vr7rpPe5z2q7FjTTEMbEQ==
-X-Gm-Gg: ASbGncvt4CONit8SLXT0Z+/yzg8cQeLt9C2Nd4S8tE6pXheJA5PAJxbbHJiw7at1iEA
- vCJM4P5H4ljFiBfdbWO/+dagPMDQ183e5cKVMxb7PAuPpoOinpTiSCYiSNw3wuqNjOsd3xLpd+m
- GnEfpwZb2dJvJuBb92lm6ZM+/S/wf2GCtA3k8zBNRcRJd2xvmJPLd7NRm83SAAwLNmzxk2jDIXE
- CCh7eOuBdZn3GX/dvtAqjXqFoNsqVlc4SVBUhIxrbBu6uvWT8vpdLoEHHOUe1sPdxYZEBMtm4/v
- ajjDiLf6vCjd9BodU9rHNsjji2qK2ad+FNSGZTHvFmfbI2CBWg==
-X-Google-Smtp-Source: AGHT+IGdEh4j07FmVNGdkb+X3l7ra+TnIUE/116qO1Q6NZuxneidW9iq7BYNDOrb5RVB6STLtw8ncQ==
-X-Received: by 2002:a17:90b:2dc2:b0:2f9:cf97:56a6 with SMTP id
- 98e67ed59e1d1-30531fa18b7mr17048590a91.14.1743432669230; 
- Mon, 31 Mar 2025 07:51:09 -0700 (PDT)
+ AJvYcCVrpNsWYWf6Dvgk/e0CljX7uRC8w6KETwwN7E4+Nc3wKdZ1ctr+5mCsykjfYeX7u/rWi/tK69uOHqAH@nongnu.org
+X-Gm-Message-State: AOJu0YzgpCXIwqYStvPfmCFdFumaQTY4NXH/SMBRt1AFu99+KMOodLF5
+ 0qP8lj2bkwZIrhTCz5Lj3jP67CgpHSAN6QSI6NsegteaEvFTlB5LXcgmJg==
+X-Gm-Gg: ASbGncsQZDdraYf14Nab6gEn+gVZIj2GbYRciYxBqNkG55g+J9n4V7GabSZk0gk7sXR
+ 90e41xO7HdUKGw2gPMLnLk7sgN1or82Be9kDzuzgi0IFW5HZezIBIVr3XFeuvTvgLu0A9HKk9RH
+ Gt0nAhPqpDfJsQC5H28MnceP4/+JIv4U3lAWaDwYw75VslZZ00r5tHEaJ+NZ4mTTDk02XfgyX9d
+ ZtQG6PHJ1tZgjk9n7BoBs0SkMY96cXp8lFt5asbyFmonLPt1x65/o1QsClnGbp0qsyigUJGY0JT
+ 2/Z1iy2SwVEEeSePqfHvUe04WL6Zk/TlWCkcGR73rhnPi70NgQ==
+X-Google-Smtp-Source: AGHT+IHxC6AZc5ShcmSc3xebePukNIHhA9tKadw10FrtHhj+KOBMAVv/l06SzuVkYeQ8CLmWm7TDwg==
+X-Received: by 2002:a05:6a00:1395:b0:736:5725:59b4 with SMTP id
+ d2e1a72fcca58-7398034e500mr14617089b3a.3.1743432889417; 
+ Mon, 31 Mar 2025 07:54:49 -0700 (PDT)
 Received: from wheely.local0.net ([203.185.207.94])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30516d5786dsm8102171a91.11.2025.03.31.07.51.07
+ d2e1a72fcca58-73970deecbfsm7033913b3a.33.2025.03.31.07.54.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Mar 2025 07:51:08 -0700 (PDT)
+ Mon, 31 Mar 2025 07:54:49 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH] ppc: Implement print_info interface function for the CPU class
-Date: Tue,  1 Apr 2025 00:51:01 +1000
-Message-ID: <20250331145101.617232-1-npiggin@gmail.com>
+Subject: [PATCH] target/ppc: Improve PSSCR SPR modelling
+Date: Tue,  1 Apr 2025 00:54:41 +1000
+Message-ID: <20250331145442.617678-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,196 +96,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PPC CPU has TYPE_INTERRUPT_STATS_PROVIDER interface but it does not
-implement the print_info function. This causes 'info pic' to print
-a line like:
-
-    Interrupt controller information not available for
-    power10_v2.0-powerpc64-cpu.
-
-Add a print_info panel for CPUs with irq delivery status.
+PSSCR aliases to two SPR numbers, one HV only and one where some fields
+are available to supervisor. Supervisor also has some restrictions on
+where it can execute 'stop' instruction, based on PSSCR field values.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h         |   3 +
- target/ppc/cpu_init.c    |   1 +
- target/ppc/excp_helper.c | 116 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 120 insertions(+)
+ target/ppc/cpu.h             |  9 ++++++++-
+ target/ppc/helper.h          |  2 ++
+ target/ppc/spr_common.h      |  2 ++
+ target/ppc/cpu_init.c        | 12 +++++++++---
+ target/ppc/misc_helper.c     | 34 ++++++++++++++++++++++++++++++++++
+ target/ppc/tcg-excp_helper.c | 27 ++++++++++++++++++++++++---
+ target/ppc/translate.c       | 10 ++++++++++
+ 7 files changed, 89 insertions(+), 7 deletions(-)
 
 diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index ff14f5b8a7f..dca84ca23cd 100644
+index dca84ca23cd..74ed28c8dac 100644
 --- a/target/ppc/cpu.h
 +++ b/target/ppc/cpu.h
-@@ -27,6 +27,7 @@
- #include "cpu-qom.h"
- #include "qom/object.h"
- #include "hw/registerfields.h"
-+#include "hw/intc/intc.h"
+@@ -651,12 +651,16 @@ FIELD(MSR, LE, MSR_LE, 1)
+                           LPCR_HR |                \
+                           LPCR_TC)
+ /* PSSCR bits */
++#define PSSCR_HV_PRIV     PPC_BITMASK(41, 47) /* Hypervisor-only fields */
++#define PSSCR_PLS         PPC_BITMASK(0, 3) /* Power-Saving Level Status */
++#define PSSCR_SD          PPC_BIT(41) /* Status Disable */
+ #define PSSCR_ESL         PPC_BIT(42) /* Enable State Loss */
+ #define PSSCR_EC          PPC_BIT(43) /* Exit Criterion */
  
- #define CPU_RESOLVING_TYPE TYPE_POWERPC_CPU
+ /* HFSCR bits */
+ #define HFSCR_MSGP     PPC_BIT_NR(53) /* Privileged Message Send Facilities */
+ #define HFSCR_BHRB     PPC_BIT_NR(59) /* BHRB Instructions */
++#define HFSCR_IC_STOP  0x9
+ #define HFSCR_IC_MSGP  0xA
  
-@@ -1604,6 +1605,7 @@ int ppc32_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
- void ppc_maybe_interrupt(CPUPPCState *env);
- void ppc_cpu_do_interrupt(CPUState *cpu);
- bool ppc_cpu_exec_interrupt(CPUState *cpu, int int_req);
-+void ppc_cpu_irq_print_info(InterruptStatsProvider *obj, GString *buf);
- void ppc_cpu_do_system_reset(CPUState *cs);
- void ppc_cpu_do_fwnmi_machine_check(CPUState *cs, target_ulong vector);
- extern const VMStateDescription vmstate_ppc_cpu;
-@@ -2686,6 +2688,7 @@ enum {
+ #define DBCR0_ICMP (1 << 27)
+@@ -1675,6 +1679,8 @@ bool slb_lookup_rmap(CPUPPCState *env, target_ulong va, bool is_1tb,
  #endif
  
- /* Hardware exceptions definitions */
-+/* Keep powerpc_intr_name in sync */
- enum {
-     /* External hardware exception sources */
-     PPC_INTERRUPT_RESET     = 0x00001,  /* Reset exception                    */
+ void ppc_store_fpscr(CPUPPCState *env, target_ulong val);
++void helper_raise_hv_fu_exception(CPUPPCState *env, const char *caller,
++                                  uint32_t cause);
+ void helper_hfscr_facility_check(CPUPPCState *env, uint32_t bit,
+                                  const char *caller, uint32_t cause);
+ 
+@@ -2127,13 +2133,14 @@ void ppc_compat_add_property(Object *obj, const char *name,
+ #define SPR_UDEXCR            (0x32C)
+ #define SPR_TAR               (0x32F)
+ #define SPR_ASDR              (0x330)
++#define SPR_PSSCR             (0x337)
+ #define SPR_DEXCR             (0x33C)
+ #define SPR_IC                (0x350)
+ #define SPR_VTB               (0x351)
+ #define SPR_LDBAR             (0x352)
+ #define SPR_MMCRC             (0x353)
+ #define SPR_PMSR              (0x355)
+-#define SPR_PSSCR             (0x357)
++#define SPR_HPSSCR            (0x357)
+ #define SPR_440_INV0          (0x370)
+ #define SPR_440_INV1          (0x371)
+ #define SPR_TRIG1             (0x371)
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 53d74a67ffa..3e2a4a46823 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -736,6 +736,8 @@ DEF_HELPER_2(store_tfmr, void, env, tl)
+ DEF_HELPER_FLAGS_2(store_sprc, TCG_CALL_NO_RWG, void, env, tl)
+ DEF_HELPER_FLAGS_1(load_sprd, TCG_CALL_NO_RWG_SE, tl, env)
+ DEF_HELPER_FLAGS_2(store_sprd, TCG_CALL_NO_RWG, void, env, tl)
++DEF_HELPER_FLAGS_1(load_psscr, TCG_CALL_NO_RWG_SE, tl, env)
++DEF_HELPER_FLAGS_2(store_psscr, TCG_CALL_NO_RWG, void, env, tl)
+ DEF_HELPER_FLAGS_1(load_pmsr, TCG_CALL_NO_RWG_SE, tl, env)
+ DEF_HELPER_FLAGS_2(store_pmcr, TCG_CALL_NO_RWG, void, env, tl)
+ #endif
+diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
+index b57533dfd8e..fcbdf44cb9e 100644
+--- a/target/ppc/spr_common.h
++++ b/target/ppc/spr_common.h
+@@ -207,6 +207,8 @@ void spr_write_hmer(DisasContext *ctx, int sprn, int gprn);
+ void spr_read_tfmr(DisasContext *ctx, int gprn, int sprn);
+ void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
+ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
++void spr_read_psscr(DisasContext *ctx, int gprn, int sprn);
++void spr_write_psscr(DisasContext *ctx, int sprn, int gprn);
+ void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn);
+ void spr_write_pmcr(DisasContext *ctx, int sprn, int gprn);
+ void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
 diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index b3d6599abd2..36742136309 100644
+index 36742136309..1eb6cc10478 100644
 --- a/target/ppc/cpu_init.c
 +++ b/target/ppc/cpu_init.c
-@@ -7527,6 +7527,7 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
- #ifndef CONFIG_USER_ONLY
-     cc->sysemu_ops = &ppc_sysemu_ops;
-     INTERRUPT_STATS_PROVIDER_CLASS(oc)->get_statistics = ppc_get_irq_stats;
-+    INTERRUPT_STATS_PROVIDER_CLASS(oc)->print_info = ppc_cpu_irq_print_info;
+@@ -6475,10 +6475,16 @@ static void register_power9_common_sprs(CPUPPCState *env)
+     register_power8_rpr_sprs(env);
+     register_power9_mmu_sprs(env);
  
-     /* check_prot_access_type relies on MMU access and PAGE bits relations */
-     qemu_build_assert(MMU_DATA_LOAD == 0 && MMU_DATA_STORE == 1 &&
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 1890ec9ccb6..7ea5798e95b 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -104,6 +104,49 @@ static const char *powerpc_excp_name(int excp)
-     }
+-    /* FIXME: Filter fields properly based on privilege level */
+-    spr_register_kvm_hv(env, SPR_PSSCR, "PSSCR", NULL, NULL, NULL, NULL,
+-                        spr_read_generic, spr_write_generic,
++    spr_register_kvm_hv(env, SPR_PSSCR, "PSSCR",
++                        SPR_NOACCESS, SPR_NOACCESS,
++                        &spr_read_psscr, &spr_write_psscr,
++                        &spr_read_psscr, &spr_write_psscr,
+                         KVM_REG_PPC_PSSCR, 0);
++    spr_register_hv(env, SPR_HPSSCR, "HPSSCR",
++                        SPR_NOACCESS, SPR_NOACCESS,
++                        SPR_NOACCESS, SPR_NOACCESS,
++                        &spr_read_psscr, &spr_write_psscr,
++                        0);
+ 
+     spr_register_hv(env, SPR_PMSR, "PMSR",
+                     SPR_NOACCESS, SPR_NOACCESS,
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 641f07eeb7e..d335db1180f 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -113,6 +113,14 @@ static void raise_fu_exception(CPUPPCState *env, uint32_t bit,
  }
+ #endif
  
-+static const char *powerpc_intr_name(uint32_t intr)
++void helper_raise_hv_fu_exception(CPUPPCState *env, const char *caller,
++                                  uint32_t cause)
 +{
-+    switch (intr) {
-+    case PPC_INTERRUPT_RESET:      return "RSET";
-+    case PPC_INTERRUPT_WAKEUP:     return "WAKE";
-+    case PPC_INTERRUPT_MCK:        return "MCHK";
-+    case PPC_INTERRUPT_EXT:        return "EXTN";
-+    case PPC_INTERRUPT_SMI:        return "SMI";
-+    case PPC_INTERRUPT_CEXT:       return "CEXT";
-+    case PPC_INTERRUPT_DEBUG:      return "DEBG";
-+    case PPC_INTERRUPT_THERM:      return "THRM";
-+    case PPC_INTERRUPT_DECR:       return "DECR";
-+    case PPC_INTERRUPT_HDECR:      return "HDEC";
-+    case PPC_INTERRUPT_PIT:        return "PIT";
-+    case PPC_INTERRUPT_FIT:        return "FIT";
-+    case PPC_INTERRUPT_WDT:        return "WDT";
-+    case PPC_INTERRUPT_CDOORBELL:  return "CDBL";
-+    case PPC_INTERRUPT_DOORBELL:   return "DBL";
-+    case PPC_INTERRUPT_PERFM:      return "PMU";
-+    case PPC_INTERRUPT_HMI:        return "HMI";
-+    case PPC_INTERRUPT_HDOORBELL:  return "HDBL";
-+    case PPC_INTERRUPT_HVIRT:      return "HVRT";
-+    case PPC_INTERRUPT_EBB:        return "EBB";
-+    default:
-+        g_assert_not_reached();
-+    }
++#ifdef TARGET_PPC64
++    raise_hv_fu_exception(env, cause, caller, cause, GETPC());
++#endif
 +}
 +
-+static bool powerpc_is_hv_intr(uint32_t intr)
-+{
-+    switch (intr) {
-+    case PPC_INTERRUPT_RESET:
-+    case PPC_INTERRUPT_MCK:
-+    case PPC_INTERRUPT_HDECR:
-+    case PPC_INTERRUPT_HMI:
-+    case PPC_INTERRUPT_HDOORBELL:
-+    case PPC_INTERRUPT_HVIRT:
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
-+
- static void dump_syscall(CPUPPCState *env)
+ void helper_hfscr_facility_check(CPUPPCState *env, uint32_t bit,
+                                  const char *caller, uint32_t cause)
  {
-     qemu_log_mask(CPU_LOG_INT, "syscall r0=%016" PRIx64
-@@ -2438,6 +2481,79 @@ static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+@@ -418,6 +426,32 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
      }
  }
  
-+void ppc_cpu_irq_print_info(InterruptStatsProvider *obj, GString *buf)
++target_ulong helper_load_psscr(CPUPPCState *env)
 +{
-+    PowerPCCPU *cpu = POWERPC_CPU(obj);
-+    CPUPPCState *env = &cpu->env;
-+    CPUState *cs = CPU(cpu);
-+    const char *priv1 = "";
-+    const char *priv2;
-+    bool none;
-+    int i;
++    target_ulong val = env->spr[SPR_PSSCR];
 +
-+    g_string_append_printf(buf, "CPU[%x] interrupt info\n", cs->cpu_index);
-+
-+    g_string_append_printf(buf, "    state:%s",
-+                           cs->halted ? "stopped" : "running");
-+    if (env->resume_as_sreset) {
-+        g_string_append_printf(buf, "(wake with sreset)");
++    if (val & PSSCR_SD) { /* Status Disable field */
++        val &= ~PSSCR_PLS; /* Mask Power-Saving Level Status field */
 +    }
 +
-+    if (FIELD_EX64(env->msr, MSR, PR)) {
-+        priv2 = "user";
-+    } else {
-+        priv2 = "privileged";
++    if (!FIELD_EX64(env->msr, MSR, HV)) {
++        val &= ~PSSCR_HV_PRIV;
 +    }
-+    if (env->has_hv_mode) {
-+        if (FIELD_EX64_HV(env->msr)) {
-+            priv1 = "host-";
-+        } else {
-+            priv1 = "guest-";
-+        }
-+    }
-+    g_string_append_printf(buf, " mode:%s%s\n", priv1, priv2);
 +
-+    if (env->has_hv_mode) {
-+        g_string_append_printf(buf, "    hypervisor irqs:%s\n",
-+                !FIELD_EX64_HV(env->msr) || FIELD_EX64(env->msr, MSR, EE) ?
-+                    "enabled" : "disabled");
-+    }
-+    g_string_append_printf(buf, "    supervisor irqs:%s\n",
-+            FIELD_EX64(env->msr, MSR, EE) ? "enabled" : "disabled");
++    return val;
++}
 +
-+    if (env->has_hv_mode) {
-+        none = true;
-+        g_string_append_printf(buf, "    pending hypervisor interrupts: ");
-+        for (i = 0; i < 32; i++) {
-+            uint32_t intr = (1U << i);
-+            if (powerpc_is_hv_intr(intr) && (env->pending_interrupts & intr)) {
-+                none = false;
-+                g_string_append_printf(buf, "%s ", powerpc_intr_name(intr));
++void helper_store_psscr(CPUPPCState *env, target_ulong val)
++{
++    if (!FIELD_EX64(env->msr, MSR, HV)) {
++        val &= ~PSSCR_HV_PRIV;
++        val |= env->spr[SPR_PSSCR] & PSSCR_HV_PRIV;
++    }
++
++    env->spr[SPR_PSSCR] = val;
++}
++
++
+ target_ulong helper_load_pmsr(CPUPPCState *env)
+ {
+     target_ulong lowerps = extract64(env->spr[SPR_PMCR], PPC_BIT_NR(15), 8);
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index 5a189dc3d70..a0e5669c669 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -457,9 +457,30 @@ void helper_pminsn(CPUPPCState *env, uint32_t insn)
+ 
+     cs->halted = 1;
+ 
+-    /* Condition for waking up at 0x100 */
+-    env->resume_as_sreset = (insn != PPC_PM_STOP) ||
+-        (env->spr[SPR_PSSCR] & PSSCR_EC);
++    if (insn == PPC_PM_STOP) {
++        target_ulong psscr = env->spr[SPR_PSSCR];
++
++#ifdef TARGET_PPC64
++        if ((env->msr_mask & MSR_HVB) && !FIELD_EX64(env->msr, MSR, HV)) {
++            target_ulong psll = extract64(psscr, PPC_BIT_NR(47), 4);
++            target_ulong mtl = extract64(psscr, PPC_BIT_NR(59), 4);
++            target_ulong rl = extract64(psscr, PPC_BIT_NR(63), 4);
++
++            /* Supervisor-mode facility check */
++            if ((psscr & PSSCR_EC) || (psscr & PSSCR_ESL) ||
++                (mtl > psll) || (rl > psll)) {
++                helper_raise_hv_fu_exception(env, "STOP insn", HFSCR_IC_STOP);
 +            }
 +        }
-+        if (none) {
-+            g_string_append_printf(buf, "none\n");
-+        } else {
-+            g_string_append_printf(buf, "\n");
-+        }
-+    }
++#endif
++        /* We don't model any power saving levels above 0 */
++        env->spr[SPR_PSSCR] &= ~PSSCR_PLS;
 +
-+    none = true;
-+    g_string_append_printf(buf, "    pending supervisor interrupts: ");
-+    for (i = 0; i < 32; i++) {
-+        uint32_t intr = (1U << i);
-+        if (!powerpc_is_hv_intr(intr) && (env->pending_interrupts & intr)) {
-+            none = false;
-+            g_string_append_printf(buf, "%s ", powerpc_intr_name(intr));
-+        }
-+    }
-+    if (none) {
-+        g_string_append_printf(buf, "none\n");
++        /* Condition for waking up at 0x100 */
++        env->resume_as_sreset = psscr & PSSCR_EC;
 +    } else {
-+        g_string_append_printf(buf, "\n");
++        env->resume_as_sreset = true;
 +    }
+ 
+     /* HDECR is not to wake from PM state, it may have already fired */
+     if (env->resume_as_sreset) {
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 31446dcd78d..7f933537aaa 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -1349,6 +1349,16 @@ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn)
+     gen_helper_store_lpcr(tcg_env, cpu_gpr[gprn]);
+ }
+ 
++void spr_read_psscr(DisasContext *ctx, int gprn, int sprn)
++{
++    gen_helper_load_psscr(cpu_gpr[gprn], tcg_env);
 +}
 +
- /*
-  * system reset is not delivered via normal irq method, so have to set
-  * halted = 0 to resume CPU running if it was halted. Possibly we should
++void spr_write_psscr(DisasContext *ctx, int sprn, int gprn)
++{
++    gen_helper_store_psscr(tcg_env, cpu_gpr[gprn]);
++}
++
+ void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn)
+ {
+     translator_io_start(&ctx->base);
 -- 
 2.47.1
 
