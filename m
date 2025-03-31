@@ -4,82 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B92E2C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 14:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8804BC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 15:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzGXQ-000693-5O; Mon, 31 Mar 2025 10:54:56 -0400
+	id 1tzGeE-0008R8-72; Mon, 31 Mar 2025 11:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzGXN-00068k-LX; Mon, 31 Mar 2025 10:54:53 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzGe9-0008Qd-9r
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:01:54 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzGXL-0001wH-LZ; Mon, 31 Mar 2025 10:54:53 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-227aaa82fafso86610765ad.2; 
- Mon, 31 Mar 2025 07:54:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743432889; x=1744037689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=spIhDUx0q4yvuNUpJjFMn7D07djGjIMK54t7neF/TXQ=;
- b=ITdZDKG+ZKt7NKfR4ONMaEl+NpsnVcG0Wdl8Qs9KRMHfV/0VB9Q68RVDoy+39sW/A1
- aoCf0TVvRs/5grHXvc61DdToLgygbWoA0K85CCAZwuZZ2sdljHKtmSCxCthAElR/Z5/x
- 4tgsZow9+ihS642kbtLdsMkMqmeXscXuGsTDruDss8oLDuTYjNUcOVWg88R87LsB6sSe
- hCNit+gIwVZ/nv0V7mHj1pLNpia/GSvf5klmMXvsSRlrEUMzSFwZE8ogoDjyZvHFelB/
- BURASiNxmdH7sKYiPiVGSfieD3yJTyDtSy21LMG8sMopG7v7r7oEDVuSRCvh3LIp8z8P
- dpxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743432889; x=1744037689;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=spIhDUx0q4yvuNUpJjFMn7D07djGjIMK54t7neF/TXQ=;
- b=hhuH8PNrQxkjEB9XlBIEEkebE3fvG32aVsR5qHgshByOZh0zipxcguMOV1ZrqT74Mj
- yxE0fXdl1s0iz1MuL/GRHIs0i4xN0D8aLI16mSPXv/wKFksYbep/Z5z6iWvfmRvVojHi
- 8BM/8q/r/ADgmVIxrFzBtiSzVjNzxvEfUh+ugYTOxOPYkg1WEzPoDkocHbtvluwSCLtb
- LGDUcGzuQcrwc/yYEz/XregXfYywEoOYRShhipaaVd1jDydrl9YV6YARFonOR4EyUXM4
- SsnitCKTIEY9GR085PelEel1B/SgUc9PXOINZ/DQzxrPm+VCnyHtgiPnQV8hsbSf2DAE
- tJ9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrpNsWYWf6Dvgk/e0CljX7uRC8w6KETwwN7E4+Nc3wKdZ1ctr+5mCsykjfYeX7u/rWi/tK69uOHqAH@nongnu.org
-X-Gm-Message-State: AOJu0YzgpCXIwqYStvPfmCFdFumaQTY4NXH/SMBRt1AFu99+KMOodLF5
- 0qP8lj2bkwZIrhTCz5Lj3jP67CgpHSAN6QSI6NsegteaEvFTlB5LXcgmJg==
-X-Gm-Gg: ASbGncsQZDdraYf14Nab6gEn+gVZIj2GbYRciYxBqNkG55g+J9n4V7GabSZk0gk7sXR
- 90e41xO7HdUKGw2gPMLnLk7sgN1or82Be9kDzuzgi0IFW5HZezIBIVr3XFeuvTvgLu0A9HKk9RH
- Gt0nAhPqpDfJsQC5H28MnceP4/+JIv4U3lAWaDwYw75VslZZ00r5tHEaJ+NZ4mTTDk02XfgyX9d
- ZtQG6PHJ1tZgjk9n7BoBs0SkMY96cXp8lFt5asbyFmonLPt1x65/o1QsClnGbp0qsyigUJGY0JT
- 2/Z1iy2SwVEEeSePqfHvUe04WL6Zk/TlWCkcGR73rhnPi70NgQ==
-X-Google-Smtp-Source: AGHT+IHxC6AZc5ShcmSc3xebePukNIHhA9tKadw10FrtHhj+KOBMAVv/l06SzuVkYeQ8CLmWm7TDwg==
-X-Received: by 2002:a05:6a00:1395:b0:736:5725:59b4 with SMTP id
- d2e1a72fcca58-7398034e500mr14617089b3a.3.1743432889417; 
- Mon, 31 Mar 2025 07:54:49 -0700 (PDT)
-Received: from wheely.local0.net ([203.185.207.94])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73970deecbfsm7033913b3a.33.2025.03.31.07.54.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Mar 2025 07:54:49 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] target/ppc: Improve PSSCR SPR modelling
-Date: Tue,  1 Apr 2025 00:54:41 +1000
-Message-ID: <20250331145442.617678-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzGe6-0003FR-NG
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 11:01:53 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3EC541F452;
+ Mon, 31 Mar 2025 15:01:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743433307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vj1k/H6i1zDgj50HY2eC0c9rOivtRvYHZHIcGcwozzI=;
+ b=PQv6ahiMPGPmLIElU5+ZwMc0usXqf4cK+3QjnRngzaqL2YqQ3omZjzxJBClowKDCB971Ds
+ gkBQAjPY9yOu30pCzhQj9cVE93dIhsdj8CgPlCzC4WfZJj7AahSOfNJjoBaa014VGJtuul
+ y1c0XNqtEDc6ohAmoLlAq8cHVRu4alc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743433307;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vj1k/H6i1zDgj50HY2eC0c9rOivtRvYHZHIcGcwozzI=;
+ b=H7uFbwGKKjOtQokRmxvc87QTDSwZCOu4l3Dr8YO6KpqICtVfVsBnCsb0z81HV1tBC7dUeI
+ 0d2uktZVrqHH4XAA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PQv6ahiM;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=H7uFbwGK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743433307; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vj1k/H6i1zDgj50HY2eC0c9rOivtRvYHZHIcGcwozzI=;
+ b=PQv6ahiMPGPmLIElU5+ZwMc0usXqf4cK+3QjnRngzaqL2YqQ3omZjzxJBClowKDCB971Ds
+ gkBQAjPY9yOu30pCzhQj9cVE93dIhsdj8CgPlCzC4WfZJj7AahSOfNJjoBaa014VGJtuul
+ y1c0XNqtEDc6ohAmoLlAq8cHVRu4alc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743433307;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vj1k/H6i1zDgj50HY2eC0c9rOivtRvYHZHIcGcwozzI=;
+ b=H7uFbwGKKjOtQokRmxvc87QTDSwZCOu4l3Dr8YO6KpqICtVfVsBnCsb0z81HV1tBC7dUeI
+ 0d2uktZVrqHH4XAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ABAFD139A1;
+ Mon, 31 Mar 2025 15:01:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4pxyGlqu6mfQQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 31 Mar 2025 15:01:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, berrange@redhat.com, Prasad Pandit
+ <pjp@fedoraproject.org>
+Subject: Re: [PATCH v8 2/7] migration: Refactor channel discovery mechanism
+In-Reply-To: <20250318123846.1370312-3-ppandit@redhat.com>
+References: <20250318123846.1370312-1-ppandit@redhat.com>
+ <20250318123846.1370312-3-ppandit@redhat.com>
+Date: Mon, 31 Mar 2025 12:01:43 -0300
+Message-ID: <87y0wlkzvs.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 3EC541F452
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,229 +127,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PSSCR aliases to two SPR numbers, one HV only and one where some fields
-are available to supervisor. Supervisor also has some restrictions on
-where it can execute 'stop' instruction, based on PSSCR field values.
+Prasad Pandit <ppandit@redhat.com> writes:
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/cpu.h             |  9 ++++++++-
- target/ppc/helper.h          |  2 ++
- target/ppc/spr_common.h      |  2 ++
- target/ppc/cpu_init.c        | 12 +++++++++---
- target/ppc/misc_helper.c     | 34 ++++++++++++++++++++++++++++++++++
- target/ppc/tcg-excp_helper.c | 27 ++++++++++++++++++++++++---
- target/ppc/translate.c       | 10 ++++++++++
- 7 files changed, 89 insertions(+), 7 deletions(-)
+> From: Prasad Pandit <pjp@fedoraproject.org>
+>
+> The various logical migration channels don't have a
+> standardized way of advertising themselves and their
+> connections may be seen out of order by the migration
+> destination. When a new connection arrives, the incoming
+> migration currently make use of heuristics to determine
+> which channel it belongs to.
+>
+> The next few patches will need to change how the multifd
+> and postcopy capabilities interact and that affects the
+> channel discovery heuristic.
+>
+> Refactor the channel discovery heuristic to make it less
+> opaque and simplify the subsequent patches.
+>
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> ---
+>  migration/migration.c | 124 +++++++++++++++++++++++-------------------
+>  1 file changed, 69 insertions(+), 55 deletions(-)
+>
+> v8:
+>  - Separate this patch out from earlier patch-2
+>
+> v7:
+> - https://lore.kernel.org/qemu-devel/20250228121749.553184-1-ppandit@redhat.com/T/#t
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index d46e776e24..f97bb2777f 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -95,6 +95,9 @@ enum mig_rp_message_type {
+>      MIG_RP_MSG_MAX
+>  };
+>  
+> +/* Migration channel types */
+> +enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
+> +
+>  /* When we add fault tolerance, we could have several
+>     migrations at once.  For now we don't need to add
+>     dynamic creation of migration */
+> @@ -985,28 +988,19 @@ void migration_fd_process_incoming(QEMUFile *f)
+>      migration_incoming_process();
+>  }
+>  
+> -/*
+> - * Returns true when we want to start a new incoming migration process,
+> - * false otherwise.
+> - */
+> -static bool migration_should_start_incoming(bool main_channel)
+> +static bool migration_has_main_and_multifd_channels(void)
+>  {
+> -    /* Multifd doesn't start unless all channels are established */
+> -    if (migrate_multifd()) {
+> -        return migration_has_all_channels();
+> +    MigrationIncomingState *mis = migration_incoming_get_current();
+> +    if (!mis->from_src_file) {
+> +        /* main channel not established */
+> +        return false;
+>      }
+>  
+> -    /* Preempt channel only starts when the main channel is created */
+> -    if (migrate_postcopy_preempt()) {
+> -        return main_channel;
+> +    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
+> +        return false;
+>      }
+>  
+> -    /*
+> -     * For all the rest types of migration, we should only reach here when
+> -     * it's the main channel that's being created, and we should always
+> -     * proceed with this channel.
+> -     */
+> -    assert(main_channel);
+> +    /* main and all multifd channels are established */
+>      return true;
+>  }
+>  
+> @@ -1015,59 +1009,84 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+>      Error *local_err = NULL;
+>      QEMUFile *f;
+> -    bool default_channel = true;
+> +    uint8_t channel;
+>      uint32_t channel_magic = 0;
+>      int ret = 0;
+>  
+> -    if (migrate_multifd() && !migrate_mapped_ram() &&
+> -        !migrate_postcopy_ram() &&
+> -        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
+> -        /*
+> -         * With multiple channels, it is possible that we receive channels
+> -         * out of order on destination side, causing incorrect mapping of
+> -         * source channels on destination side. Check channel MAGIC to
+> -         * decide type of channel. Please note this is best effort, postcopy
+> -         * preempt channel does not send any magic number so avoid it for
+> -         * postcopy live migration. Also tls live migration already does
+> -         * tls handshake while initializing main channel so with tls this
+> -         * issue is not possible.
+> -         */
+> -        ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+> -                                          sizeof(channel_magic), errp);
+> +    if (!migration_has_main_and_multifd_channels()) {
+> +        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
+> +            /*
+> +             * With multiple channels, it is possible that we receive channels
+> +             * out of order on destination side, causing incorrect mapping of
+> +             * source channels on destination side. Check channel MAGIC to
+> +             * decide type of channel. Please note this is best effort,
+> +             * postcopy preempt channel does not send any magic number so
+> +             * avoid it for postcopy live migration. Also tls live migration
+> +             * already does tls handshake while initializing main channel so
+> +             * with tls this issue is not possible.
+> +             */
+> +            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+> +                                              sizeof(channel_magic), errp);
+> +            if (ret != 0) {
+> +                return;
+> +            }
+>  
+> -        if (ret != 0) {
+> +            channel_magic = be32_to_cpu(channel_magic);
+> +            if (channel_magic == QEMU_VM_FILE_MAGIC) {
+> +                channel = CH_MAIN;
+> +            } else if (channel_magic == MULTIFD_MAGIC) {
+> +                channel = CH_MULTIFD;
+> +            } else if (!mis->from_src_file &&
+> +                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> +                /* reconnect main channel for postcopy recovery */
+> +                channel = CH_MAIN;
+> +            } else {
+> +                error_setg(errp, "unknown channel magic: %u", channel_magic);
+> +                return;
+> +            }
+> +        } else if (mis->from_src_file && migrate_multifd()) {
+> +            /*
+> +             * Non-peekable channels like tls/file are processed as
+> +             * multifd channels when multifd is enabled.
+> +             */
+> +            channel = CH_MULTIFD;
+> +        } else if (!mis->from_src_file) {
+> +            channel = CH_MAIN;
+> +        } else {
+> +            error_setg(errp, "non-peekable channel used without multifd");
+>              return;
+>          }
+> -
+> -        default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
+> +    } else if (mis->from_src_file) {
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index dca84ca23cd..74ed28c8dac 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -651,12 +651,16 @@ FIELD(MSR, LE, MSR_LE, 1)
-                           LPCR_HR |                \
-                           LPCR_TC)
- /* PSSCR bits */
-+#define PSSCR_HV_PRIV     PPC_BITMASK(41, 47) /* Hypervisor-only fields */
-+#define PSSCR_PLS         PPC_BITMASK(0, 3) /* Power-Saving Level Status */
-+#define PSSCR_SD          PPC_BIT(41) /* Status Disable */
- #define PSSCR_ESL         PPC_BIT(42) /* Enable State Loss */
- #define PSSCR_EC          PPC_BIT(43) /* Exit Criterion */
- 
- /* HFSCR bits */
- #define HFSCR_MSGP     PPC_BIT_NR(53) /* Privileged Message Send Facilities */
- #define HFSCR_BHRB     PPC_BIT_NR(59) /* BHRB Instructions */
-+#define HFSCR_IC_STOP  0x9
- #define HFSCR_IC_MSGP  0xA
- 
- #define DBCR0_ICMP (1 << 27)
-@@ -1675,6 +1679,8 @@ bool slb_lookup_rmap(CPUPPCState *env, target_ulong va, bool is_1tb,
- #endif
- 
- void ppc_store_fpscr(CPUPPCState *env, target_ulong val);
-+void helper_raise_hv_fu_exception(CPUPPCState *env, const char *caller,
-+                                  uint32_t cause);
- void helper_hfscr_facility_check(CPUPPCState *env, uint32_t bit,
-                                  const char *caller, uint32_t cause);
- 
-@@ -2127,13 +2133,14 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_UDEXCR            (0x32C)
- #define SPR_TAR               (0x32F)
- #define SPR_ASDR              (0x330)
-+#define SPR_PSSCR             (0x337)
- #define SPR_DEXCR             (0x33C)
- #define SPR_IC                (0x350)
- #define SPR_VTB               (0x351)
- #define SPR_LDBAR             (0x352)
- #define SPR_MMCRC             (0x353)
- #define SPR_PMSR              (0x355)
--#define SPR_PSSCR             (0x357)
-+#define SPR_HPSSCR            (0x357)
- #define SPR_440_INV0          (0x370)
- #define SPR_440_INV1          (0x371)
- #define SPR_TRIG1             (0x371)
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 53d74a67ffa..3e2a4a46823 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -736,6 +736,8 @@ DEF_HELPER_2(store_tfmr, void, env, tl)
- DEF_HELPER_FLAGS_2(store_sprc, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_1(load_sprd, TCG_CALL_NO_RWG_SE, tl, env)
- DEF_HELPER_FLAGS_2(store_sprd, TCG_CALL_NO_RWG, void, env, tl)
-+DEF_HELPER_FLAGS_1(load_psscr, TCG_CALL_NO_RWG_SE, tl, env)
-+DEF_HELPER_FLAGS_2(store_psscr, TCG_CALL_NO_RWG, void, env, tl)
- DEF_HELPER_FLAGS_1(load_pmsr, TCG_CALL_NO_RWG_SE, tl, env)
- DEF_HELPER_FLAGS_2(store_pmcr, TCG_CALL_NO_RWG, void, env, tl)
- #endif
-diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
-index b57533dfd8e..fcbdf44cb9e 100644
---- a/target/ppc/spr_common.h
-+++ b/target/ppc/spr_common.h
-@@ -207,6 +207,8 @@ void spr_write_hmer(DisasContext *ctx, int sprn, int gprn);
- void spr_read_tfmr(DisasContext *ctx, int gprn, int sprn);
- void spr_write_tfmr(DisasContext *ctx, int sprn, int gprn);
- void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn);
-+void spr_read_psscr(DisasContext *ctx, int gprn, int sprn);
-+void spr_write_psscr(DisasContext *ctx, int sprn, int gprn);
- void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn);
- void spr_write_pmcr(DisasContext *ctx, int sprn, int gprn);
- void spr_read_dexcr_ureg(DisasContext *ctx, int gprn, int sprn);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 36742136309..1eb6cc10478 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6475,10 +6475,16 @@ static void register_power9_common_sprs(CPUPPCState *env)
-     register_power8_rpr_sprs(env);
-     register_power9_mmu_sprs(env);
- 
--    /* FIXME: Filter fields properly based on privilege level */
--    spr_register_kvm_hv(env, SPR_PSSCR, "PSSCR", NULL, NULL, NULL, NULL,
--                        spr_read_generic, spr_write_generic,
-+    spr_register_kvm_hv(env, SPR_PSSCR, "PSSCR",
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        &spr_read_psscr, &spr_write_psscr,
-+                        &spr_read_psscr, &spr_write_psscr,
-                         KVM_REG_PPC_PSSCR, 0);
-+    spr_register_hv(env, SPR_HPSSCR, "HPSSCR",
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        SPR_NOACCESS, SPR_NOACCESS,
-+                        &spr_read_psscr, &spr_write_psscr,
-+                        0);
- 
-     spr_register_hv(env, SPR_PMSR, "PMSR",
-                     SPR_NOACCESS, SPR_NOACCESS,
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 641f07eeb7e..d335db1180f 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -113,6 +113,14 @@ static void raise_fu_exception(CPUPPCState *env, uint32_t bit,
- }
- #endif
- 
-+void helper_raise_hv_fu_exception(CPUPPCState *env, const char *caller,
-+                                  uint32_t cause)
-+{
-+#ifdef TARGET_PPC64
-+    raise_hv_fu_exception(env, cause, caller, cause, GETPC());
-+#endif
-+}
-+
- void helper_hfscr_facility_check(CPUPPCState *env, uint32_t bit,
-                                  const char *caller, uint32_t cause)
- {
-@@ -418,6 +426,32 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
-     }
- }
- 
-+target_ulong helper_load_psscr(CPUPPCState *env)
-+{
-+    target_ulong val = env->spr[SPR_PSSCR];
-+
-+    if (val & PSSCR_SD) { /* Status Disable field */
-+        val &= ~PSSCR_PLS; /* Mask Power-Saving Level Status field */
-+    }
-+
-+    if (!FIELD_EX64(env->msr, MSR, HV)) {
-+        val &= ~PSSCR_HV_PRIV;
-+    }
-+
-+    return val;
-+}
-+
-+void helper_store_psscr(CPUPPCState *env, target_ulong val)
-+{
-+    if (!FIELD_EX64(env->msr, MSR, HV)) {
-+        val &= ~PSSCR_HV_PRIV;
-+        val |= env->spr[SPR_PSSCR] & PSSCR_HV_PRIV;
-+    }
-+
-+    env->spr[SPR_PSSCR] = val;
-+}
-+
-+
- target_ulong helper_load_pmsr(CPUPPCState *env)
- {
-     target_ulong lowerps = extract64(env->spr[SPR_PMCR], PPC_BIT_NR(15), 8);
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 5a189dc3d70..a0e5669c669 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -457,9 +457,30 @@ void helper_pminsn(CPUPPCState *env, uint32_t insn)
- 
-     cs->halted = 1;
- 
--    /* Condition for waking up at 0x100 */
--    env->resume_as_sreset = (insn != PPC_PM_STOP) ||
--        (env->spr[SPR_PSSCR] & PSSCR_EC);
-+    if (insn == PPC_PM_STOP) {
-+        target_ulong psscr = env->spr[SPR_PSSCR];
-+
-+#ifdef TARGET_PPC64
-+        if ((env->msr_mask & MSR_HVB) && !FIELD_EX64(env->msr, MSR, HV)) {
-+            target_ulong psll = extract64(psscr, PPC_BIT_NR(47), 4);
-+            target_ulong mtl = extract64(psscr, PPC_BIT_NR(59), 4);
-+            target_ulong rl = extract64(psscr, PPC_BIT_NR(63), 4);
-+
-+            /* Supervisor-mode facility check */
-+            if ((psscr & PSSCR_EC) || (psscr & PSSCR_ESL) ||
-+                (mtl > psll) || (rl > psll)) {
-+                helper_raise_hv_fu_exception(env, "STOP insn", HFSCR_IC_STOP);
-+            }
-+        }
-+#endif
-+        /* We don't model any power saving levels above 0 */
-+        env->spr[SPR_PSSCR] &= ~PSSCR_PLS;
-+
-+        /* Condition for waking up at 0x100 */
-+        env->resume_as_sreset = psscr & PSSCR_EC;
-+    } else {
-+        env->resume_as_sreset = true;
-+    }
- 
-     /* HDECR is not to wake from PM state, it may have already fired */
-     if (env->resume_as_sreset) {
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 31446dcd78d..7f933537aaa 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -1349,6 +1349,16 @@ void spr_write_lpcr(DisasContext *ctx, int sprn, int gprn)
-     gen_helper_store_lpcr(tcg_env, cpu_gpr[gprn]);
- }
- 
-+void spr_read_psscr(DisasContext *ctx, int gprn, int sprn)
-+{
-+    gen_helper_load_psscr(cpu_gpr[gprn], tcg_env);
-+}
-+
-+void spr_write_psscr(DisasContext *ctx, int sprn, int gprn)
-+{
-+    gen_helper_store_psscr(tcg_env, cpu_gpr[gprn]);
-+}
-+
- void spr_read_pmsr(DisasContext *ctx, int gprn, int sprn)
- {
-     translator_io_start(&ctx->base);
--- 
-2.47.1
+This is redundant.
 
+> +        channel = CH_POSTCOPY;
+>      } else {
+> -        default_channel = !mis->from_src_file;
+> +        channel = CH_MAIN;
+
+And this is impossible.
+
+>      }
+>  
+>      if (multifd_recv_setup(errp) != 0) {
+>          return;
+>      }
+>  
+> -    if (default_channel) {
+> +    if (channel == CH_MAIN) {
+>          f = qemu_file_new_input(ioc);
+>          migration_incoming_setup(f);
+
+We should probably expand migration_incoming_setup() to make it clear
+that mis->from_src_file is set at this point. And
+assert(!mis->from_src_file). I can send a patch on top later.
+
+> -    } else {
+> +    } else if (channel == CH_MULTIFD) {
+>          /* Multiple connections */
+> -        assert(migration_needs_multiple_sockets());
+>          if (migrate_multifd()) {
+
+This should be an assert.
+
+>              multifd_recv_new_channel(ioc, &local_err);
+> -        } else {
+> -            assert(migrate_postcopy_preempt());
+> -            f = qemu_file_new_input(ioc);
+> -            postcopy_preempt_new_channel(mis, f);
+>          }
+>          if (local_err) {
+>              error_propagate(errp, local_err);
+>              return;
+>          }
+> +    } else if (channel == CH_POSTCOPY) {
+> +        assert(migrate_postcopy_preempt());
+> +        assert(!mis->postcopy_qemufile_dst);
+> +        f = qemu_file_new_input(ioc);
+> +        postcopy_preempt_new_channel(mis, f);
+> +        return;
+>      }
+>  
+> -    if (migration_should_start_incoming(default_channel)) {
+> +    if (migration_has_main_and_multifd_channels()) {
+
+I think there's a bug here. Excluding multifd from the picture, if only
+the main channel needs to be setup, then it's possible to start postcopy
+recovery twice, once when the main channel appears and another time when
+the preempt channel appears.
+
+The previous code worked differently because it did:
+
+if (migrate_postcopy_preempt()) {
+    return main_channel;
+
+which would return false when preempt arrived after main.
+
+We could use migration_has_all_channels() instead, that would look more
+logically correct, but it would also change the current behavior that
+postcopy recovery can start before the preempt channel is in place. I'm
+not even sure if that's actually part of the design of the feature.
+
+>          /* If it's a recovery, we're done */
+>          if (postcopy_try_recover()) {
+>              return;
+> @@ -1084,20 +1103,15 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>   */
+>  bool migration_has_all_channels(void)
+>  {
+> +    if (!migration_has_main_and_multifd_channels()) {
+> +        return false;
+> +    }
+> +
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+> -
+> -    if (!mis->from_src_file) {
+> +    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
+>          return false;
+>      }
+>  
+> -    if (migrate_multifd()) {
+> -        return multifd_recv_all_channels_created();
+> -    }
+> -
+> -    if (migrate_postcopy_preempt()) {
+> -        return mis->postcopy_qemufile_dst != NULL;
+> -    }
+> -
+>      return true;
+>  }
 
