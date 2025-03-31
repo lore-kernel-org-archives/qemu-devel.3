@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED936C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 22:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6118EC3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 22:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzNNE-0000Vs-NW; Mon, 31 Mar 2025 18:12:52 -0400
+	id 1tzNNb-0000j3-5F; Mon, 31 Mar 2025 18:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNNC-0000Tv-PM
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:12:50 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNNZ-0000hQ-3R
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:13:13 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNNB-00075N-29
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:12:50 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso46322385e9.3
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 15:12:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzNNX-000782-9K
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 18:13:12 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso33117215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 15:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743459167; x=1744063967; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743459189; x=1744063989; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=obHKoIEOzkL/pFU0m16gFeNK6bbRhAdAffgtXHxHseE=;
- b=BXN7QIqt45YswU09uZsYJI5tS6nK5zSpoKyl8M+l5FOazBRPOysvok7NQRASjY1fWj
- VKj6fok/NfNDij2EaHe/EgPDLhbp85GDYROKnXmfj7GvvRlHlzFn7cJpGcShLMmJXo5A
- o1wgivurTPqWTc/trT79TGFaNvgyXftwmZDGfBO87EQ9hhIj2tg1zRCNKN+dqb3p3AlG
- AN/3Imow0ZPXqIRV2PJ199YBf/M1uVDTrunymlNydOKbMLXqCKbiJ+SNuDjEK0VrP+MJ
- dnyeb0wzZgiZfM2wDXbjPTlPwr+I+KlqaF7SQvn0u34cgDIVgFlDHBzeHdo8wwHpBJEW
- 6B6A==
+ bh=YOLUfD1F1xE/t9Kpw+vUCexBlPtvjXU3F4WVgeXz17k=;
+ b=DRRtsb4UZqCZEyliBcoFJyQq+sV2ddUGZbvubLy6XeKcYuoB5dZEGrHhROfJmSVMg5
+ Ww9tBc7CdPVCs/aRHTE+NmTauaViQ65NJGSQ+XT97BqcewNmkxMdigisVMu+j3Qqaexc
+ jEykcs4+xdmEkT75d932/gKpLBTHFeX53KMwFfe+QSxW6slkmWVHBktCw05RViTGrTc9
+ R2YhnjNg/FbStfoAyeqm4bl0B7GJ0yL/SCk1gGWdLV5QBwPmwFu7P9xDLyCUoCNyzXBE
+ RfXiKoK9s80ZUyj+IG+L18z0RGDBrXcLmjiTc5NTu2Xt7l5lqe3CyMyS39k9Q5Nz6mDR
+ Bsww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743459167; x=1744063967;
+ d=1e100.net; s=20230601; t=1743459189; x=1744063989;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=obHKoIEOzkL/pFU0m16gFeNK6bbRhAdAffgtXHxHseE=;
- b=dJy7H08iDVmbXoaDNmVcuZvEIbLx75/fMLZqh2Rj2507T6JtQYk718n0dCjic885Mz
- 59SgV2rwMvl1jaChMVut6ZTk6AfVDDEFD8b701CKrVweL3RA6pnuqr1cFwCdBcVzz0V3
- L/NZC7ItXt1SE6G6YUUE+qfihRJlciveLtcEUM6JsZwstfKtPOp+5A/ae77je0U1rJxN
- QKcstFiaHMFwf3uur3YHGB/iGrQqf2LW7gqi8pg65JgtLrTZ6HAfVjSbmqduHYHZo7ag
- MtK5i2bXLiymlJORQlevq6lC+CDNlrFZm8RiCrIJ0sp9pOYqa0CpBZJF2e8QvT9M4XI0
- Bugw==
-X-Gm-Message-State: AOJu0YxPGQoKoXPikY/O1Bc32XG6s5S0CO7je2u8bpJh7O9iS1ZLErPJ
- 4TaQYpaeyl0JFABMaEVrNDtJuZitAM8GM/JYWAEK6Vftotx/eBy3ULX0fiWo4xNgCFYMTsE50dC
- 4
-X-Gm-Gg: ASbGncuonDifn6PD8FLWGDtXGD96jbpfdl3WN5xgDXtmPXmF4KyevJ7V2Fdw1gEi5Mq
- deKCWo4o85BVeSuDJArMHWHmJE6MR/EKs+8EG2BggFMHqLW9GvcEze0RLIKTupa1oQxsd5dHuL4
- m68og39nfJc2nwRkpTWMUiH6K5kD5xHoF4dTtQJjiU9S8KaxhMo/vuLg5k4CxACj64gdmwK9jzb
- ig3SITKBAVpWGNAsUi9Gk56+8p/E8ELhF2yNEbPZRWcekse+TIxRtRck9PRKTH5c3vKZBhq3RhA
- UoEFd8IzGnQoaaZ/46+Q26iNOc3ULZ0syFj+7cuuxwujAvw0+4u34OYBr0j0vLVrREPwICOogp1
- p4oJHoti7dJZn3jRIsec=
-X-Google-Smtp-Source: AGHT+IFLWZeXaFFwycXElWHhvS80gvUXEOoZE4AWcLxqrZ0KsBxZ0m5GNE2o1IrSo7UvodHtYCCZFQ==
-X-Received: by 2002:a05:6000:1862:b0:390:f6aa:4e7c with SMTP id
- ffacd0b85a97d-39c120e0bc1mr8515397f8f.28.1743459167214; 
- Mon, 31 Mar 2025 15:12:47 -0700 (PDT)
+ bh=YOLUfD1F1xE/t9Kpw+vUCexBlPtvjXU3F4WVgeXz17k=;
+ b=VrcOsSo1vMOW8yxrYd7A6s8M213CbC09oFgGWVAqd9Nl17T2HeXvhKcY5rblDgGUNM
+ 75cCua3dWfNfYL5lBKUVuV163X3s8CXsg1GqrJ3Ih++nZfFVlHK9DNx6oaF2zJzJzVOL
+ +Tyy8Rox3+KlhId/ob9JtrYYDfcX9ApXiRu2br2vzOAwCfyMFqDzXfqYCZ+IrzmyUbaU
+ KJpYEOxhJab9FDuSC8o4NyA7TLM6tSBEMkWh5oXo/nHyKCGGWF+4evj9G7NwvfdYzwW0
+ mDdCyDdpt15xI/YYV6V/Qew9j/hxb+niHWdkzQRtXgj3SSRwTdGHzNRR/+uuPdfZshb/
+ ZBXw==
+X-Gm-Message-State: AOJu0Yw28v7MxmGSauPdGurIWFc1QYZyqFfgYKebyCXpFBDORWuXEeFY
+ QvCIcRHnHOHXfR3sroA1e8vQX1hhY6slX7zmfC1ZnlWsGTLbnqu2Fd+CX6hJnoRVcbgrKvLh4mp
+ x
+X-Gm-Gg: ASbGncuI3jfHTw8aclCZ9c2WqQ8+RYgYX5d500sUDDn/rz7kKM2AL7jLRCkQpCq/XEU
+ QMlvXvfEwMOh8A+eLIzqApk1OfdJ8Q5zqT1/vlwBQLMONAjfwLen32JQYY0WonXLri/fSavOBnB
+ R8gODpzb8RcW5/TWVVdekHyY17ut725QQwXIxJA2obt57C5W6oXeqNdER/wXKmiiLqOmmcO8q9N
+ EG6T3RoyURQu99Kh0aryLC86nP0YDL9frbPXxdbn4ka3fjpq9P45bA/cCnnxZsscrW89JctNrcd
+ cABPAw5knYM4gbWRhnZ5aTo5SXOVu0nAFNMQRR51mhLbA6fX4HfT9g2rc+zNjSGMf7PK4+Hsuww
+ GlTX4QypyWpMPfu55Fno=
+X-Google-Smtp-Source: AGHT+IHzDg7FfFOhx7o+pOCX/cTjM+fnzVAvlGQW0i3mMlD5ipQ3sNQmtpWe6IM4Zu4HyHE87YqhDw==
+X-Received: by 2002:a05:6000:2ae:b0:391:2e6a:30de with SMTP id
+ ffacd0b85a97d-39c120db4b2mr8556010f8f.19.1743459189344; 
+ Mon, 31 Mar 2025 15:13:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a4200sm12533268f8f.96.2025.03.31.15.12.45
+ ffacd0b85a97d-39c0b7a8e0asm12267209f8f.101.2025.03.31.15.13.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 15:12:46 -0700 (PDT)
+ Mon, 31 Mar 2025 15:13:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
@@ -71,18 +71,18 @@ Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
  Gustavo Romero <gustavo.romero@linaro.org>,
  Ani Sinha <anisinha@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.0 1/5] qtest/bios-tables-test: Add test for -M virt,
- its=off
-Date: Tue,  1 Apr 2025 00:12:35 +0200
-Message-ID: <20250331221239.87150-2-philmd@linaro.org>
+Subject: [PATCH-for-10.0 5/5] qtest/bios-tables-test: Update
+ aarch64/virt/APIC.its_off blob
+Date: Tue,  1 Apr 2025 00:12:39 +0200
+Message-ID: <20250331221239.87150-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250331221239.87150-1-philmd@linaro.org>
 References: <20250331221239.87150-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,90 +105,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Changes in the tables:
+
+  @@ -1,32 +1,32 @@
+   /*
+    * Intel ACPI Component Architecture
+    * AML/ASL+ Disassembler version 20240927 (64-bit version)
+    * Copyright (c) 2000 - 2023 Intel Corporation
+    *
+    * Disassembly of tests/data/acpi/aarch64/virt/APIC.its_off
+    *
+    * ACPI Data Table [APIC]
+    *
+    * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+    */
+
+   [000h 0000 004h]                   Signature : "APIC"    [Multiple APIC Description Table (MADT)]
+  -[004h 0004 004h]                Table Length : 000000B8
+  +[004h 0004 004h]                Table Length : 000000A4
+   [008h 0008 001h]                    Revision : 04
+  -[009h 0009 001h]                    Checksum : A7
+  +[009h 0009 001h]                    Checksum : EE
+   [00Ah 0010 006h]                      Oem ID : "BOCHS "
+   [010h 0016 008h]                Oem Table ID : "BXPC    "
+   [018h 0024 004h]                Oem Revision : 00000001
+   [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+   [020h 0032 004h]       Asl Compiler Revision : 00000001
+
+   [024h 0036 004h]          Local Apic Address : 00000000
+   [028h 0040 004h]       Flags (decoded below) : 00000000
+                            PC-AT Compatibility : 0
+
+   [02Ch 0044 001h]               Subtable Type : 0C [Generic Interrupt Distributor]
+   [02Dh 0045 001h]                      Length : 18
+   [02Eh 0046 002h]                    Reserved : 0000
+   [030h 0048 004h]       Local GIC Hardware ID : 00000000
+   [034h 0052 008h]                Base Address : 0000000008000000
+   [03Ch 0060 004h]              Interrupt Base : 00000000
+  @@ -49,37 +49,29 @@
+   [06Ch 0108 008h]    Virtual GIC Base Address : 0000000000000000
+   [074h 0116 008h] Hypervisor GIC Base Address : 0000000000000000
+   [07Ch 0124 004h]       Virtual GIC Interrupt : 00000019
+   [080h 0128 008h]  Redistributor Base Address : 0000000000000000
+   [088h 0136 008h]                   ARM MPIDR : 0000000000000000
+   [090h 0144 001h]            Efficiency Class : 00
+   [091h 0145 001h]                    Reserved : 00
+   [092h 0146 002h]      SPE Overflow Interrupt : 0000
+   [094h 0148 002h]              TRBE Interrupt : 100E
+
+   [094h 0148 001h]               Subtable Type : 0E [Generic Interrupt Redistributor]
+   [095h 0149 001h]                      Length : 10
+   [097h 0151 002h]                    Reserved : 0000
+   [098h 0152 008h]                Base Address : 00000000080A0000
+   [0A0h 0160 004h]                      Length : 00F60000
+
+  -[0A4h 0164 001h]               Subtable Type : 0F [Generic Interrupt Translator]
+  -[0A5h 0165 001h]                      Length : 14
+  -[0A7h 0167 002h]                    Reserved : 0000
+  -[0A8h 0168 004h]              Translation ID : 00000000
+  -[0ACh 0172 008h]                Base Address : 0000000008080000
+  -[0B4h 0180 004h]                    Reserved : 00000000
+  +Raw Table Data: Length 164 (0xA4)
+
+  -Raw Table Data: Length 184 (0xB8)
+  -
+  -    0000: 41 50 49 43 B8 00 00 00 04 A7 42 4F 43 48 53 20  // APIC......BOCHS
+  +    0000: 41 50 49 43 A4 00 00 00 04 EE 42 4F 43 48 53 20  // APIC......BOCHS
+       0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+       0020: 01 00 00 00 00 00 00 00 00 00 00 00 0C 18 00 00  // ................
+       0030: 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00  // ................
+       0040: 04 00 00 00 0B 50 00 00 00 00 00 00 00 00 00 00  // .....P..........
+       0050: 01 00 00 00 00 00 00 00 17 00 00 00 00 00 00 00  // ................
+       0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+       0070: 00 00 00 00 00 00 00 00 00 00 00 00 19 00 00 00  // ................
+       0080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+       0090: 00 00 00 00 0E 10 00 00 00 00 0A 08 00 00 00 00  // ................
+  -    00A0: 00 00 F6 00 0F 14 00 00 00 00 00 00 00 00 08 08  // ................
+  -    00B0: 00 00 00 00 00 00 00 00                          // ........
+  +    00A0: 00 00 F6 00                                      // ....
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/qtest/bios-tables-test.c            |  22 ++++++++++++++++++++++
- tests/data/acpi/aarch64/virt/APIC.its_off | Bin 0 -> 184 bytes
- tests/data/acpi/aarch64/virt/FACP.its_off | Bin 0 -> 276 bytes
- tests/data/acpi/aarch64/virt/IORT.its_off | Bin 0 -> 236 bytes
- 4 files changed, 22 insertions(+)
- create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
- create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 184 -> 164 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 0a333ec4353..55366bf4956 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2146,6 +2146,26 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
-     free_test_data(&data);
- }
- 
-+static void test_acpi_aarch64_virt_tcg_its_off(void)
-+{
-+    test_data data = {
-+        .machine = "virt",
-+        .arch = "aarch64",
-+        .variant = ".its_off",
-+        .tcg_only = true,
-+        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-+        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-+        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-+        .ram_start = 0x40000000ULL,
-+        .scan_len = 128ULL * 1024 * 1024,
-+    };
-+
-+    test_acpi_one("-cpu cortex-a57 "
-+                  "-M virtualization=on,secure=off "
-+                  "-M gic-version=max,its=off,iommu=smmuv3", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_acpi_q35_viot(void)
- {
-     test_data data = {
-@@ -2577,6 +2597,8 @@ int main(int argc, char *argv[])
-                            test_acpi_aarch64_virt_tcg_acpi_hmat);
-             qtest_add_func("acpi/virt/topology",
-                            test_acpi_aarch64_virt_tcg_topology);
-+            qtest_add_func("acpi/virt/its_off",
-+                           test_acpi_aarch64_virt_tcg_its_off);
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_aarch64_virt_tcg_numamem);
-             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index bfc4d601243..dfb8523c8bf 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/APIC.its_off",
 diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/acpi/aarch64/virt/APIC.its_off
-new file mode 100644
-index 0000000000000000000000000000000000000000..c37d05d6e05805304f10afe73eb7cb9100fcccfa
+index c37d05d6e05805304f10afe73eb7cb9100fcccfa..f24ac8fbff5261a52434abcfcff96dbdc7709de4 100644
 GIT binary patch
-literal 184
-zcmZ<^@O0k6z`($=+{xeBBUr&HBEVSz2pEB4AU24G0Uik$i-7~iVgWL^17JJ`2AFzr
-bgb+@aBn}xq0gwb2)Q)cq{30-g9B_L93G4|0
+delta 18
+ZcmdnNxP+0*F~HM#2?GNI%e#qOvj8xy1yKM1
 
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/FACP.its_off b/tests/data/acpi/aarch64/virt/FACP.its_off
-new file mode 100644
-index 0000000000000000000000000000000000000000..606dac3fe4b55c31fd68b25d3a4127eeef227434
-GIT binary patch
-literal 276
-zcmZ>BbPf<<WME(uaq@Te2v%^42yj*a0-z8Bhz+8t3j|P&V`N}P6&N^PpsQ~v$aVnZ
-CVg~^L
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/acpi/aarch64/virt/IORT.its_off
-new file mode 100644
-index 0000000000000000000000000000000000000000..0fceb820d509e852ca0849baf568a8e93e426738
-GIT binary patch
-literal 236
-zcmebD4+?q1z`(#9?&R<65v<@85#X!<1dKp25F11@1F-=RgMkDCNC*yK9F_<M77!bR
-zUBI%eoFED&4;F$FSwK1)h;xBB2Py`m{{M%tVD>TjFfcO#g+N#Zh@s|zoCF3AP#UU@
-R!2`+%Dg6Hr$N|zYvjDIZ5CH%H
-
-literal 0
-HcmV?d00001
+delta 39
+jcmZ3&xPy_)F~HM#2Ll5G%kqg_vqbnsfJ`vp;DE6Jpmzmj
 
 -- 
 2.47.1
