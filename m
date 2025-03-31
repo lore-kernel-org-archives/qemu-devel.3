@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B01C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C471BC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzL7n-00026h-9A; Mon, 31 Mar 2025 15:48:47 -0400
+	id 1tzL80-00028s-9a; Mon, 31 Mar 2025 15:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7Z-00024g-OC
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:41 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7r-00028N-MT
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:51 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7W-0003It-GZ
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:32 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-39c1efc4577so477431f8f.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:48:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzL7q-0003LN-3L
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:48:51 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so4283946f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743450509; x=1744055309; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743450528; x=1744055328; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DM3m/dEg3svZtH8DDUxxaSWK9mVWBX/raHjBoGs/Nt0=;
- b=Utpm2mnckF08eG6b9wZtp0BLiUpVacbLcQcClLTk8OJEZtoGCKSE0K+5X7oO/JCF0G
- ef2rGcaALgydJWvwFl153F/z1OOS9n/uCM4MlsFdLlZnJ+WuEQwe+DOUJjizJ3I6AQWV
- IBS23WzKZXXHj+Qseh9z4M0OxLKCr04BSuX//FzuJT9OJA5162WkA1Yc9jtxfQ78tscQ
- 4XZHi5GM+qwSFWqzWcrVTf70Aq1gglTS78Oy2z6RXx1uZBqRpdo4kQk0C3I4YsXahV06
- 9hRDbZzjVAWarvyEsyoikzSggnq8NGNa1acM6j7FvHi3yCd1YQSEo8h9sLaxkyOcwpFd
- BuhA==
+ bh=bjfZMqY7kEtNVcowX1vqYv9wJwb4LYxFTdGWnR4E878=;
+ b=zY/r19jOqiekSPTxVN998fKv9+qk2Im7py0eYIpkwioNd175VGcPKsirv+6uc7ciNp
+ Kjtv4j22e/BAT8q5W+2RLI5wXyXRChBA2xB+3O2h1NVpziduvNc4VkIO93fpyAeWAdGz
+ VFeNew4HeC1jdSEhGqbMAPJJIoGXml1P69sZOzcmLR/jWKU/SAyzDWdsDlSkKuZi36Yi
+ YRzd5DiV7vxFCuf9DZTD6FMC96kKaqaPkn2u8zWexfioj5dJpK63TD+yVFPs0CGKN7II
+ mIcgBBmQ4q0uf7YLgHbAp8SaXNLT+GeuVjrxp2FxIoJe4ZWbsUEZ5EOy9cKmmHLaMV9l
+ p2hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743450509; x=1744055309;
+ d=1e100.net; s=20230601; t=1743450528; x=1744055328;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DM3m/dEg3svZtH8DDUxxaSWK9mVWBX/raHjBoGs/Nt0=;
- b=XzRKsjxvR40z3ar4UPyffmR/2TYDH06zWhDUVQWUUnnM5zwyKuwlQFQdbaOp2Xj310
- EqrvFjZNEKTwkx197+vU3S3UQBOcKGfPWg4s86k3KwhCbu2IEj9AeZTenIJKHTeAti3M
- OVWq0DJ5wvtVKIhpqjAuaOcTkn8LUdeZOdewU1NQQ7jEitKDeYZMVG/8YcbJ5tf96oPR
- xHuSpKBqxsaVHdPZBokfE/VtaI7lL7dGv9Nuu25ML9hquQ2JqTJ/Uxd8Fqu9DHdReP1H
- s/p5a8kusGvudiy7k1nhe/7/UNxNbq+vag3rZlVxXplw9R3uSWZFlTXYT5TUz0dcM/I1
- 3qgg==
-X-Gm-Message-State: AOJu0YyrjKEuBwU3Nm2zc1W4iG+27rkY0AxJSwvmTqNTg997KY9N6tCE
- +bG4KMWBdx9amf2uVjp8YZqYqIW3ma0rxRj8SUPUptuNaOksh0XXKUhSKabsm7xoj3VzU7yAlnG
- S
-X-Gm-Gg: ASbGnctl6fnlmyVQZ54YS/K91OZ87hsiKFdCmbkH1GuY/3cduo6dzkdcKdFqzkvtx3A
- 03tNsSR+qsHysW29aNaMRwyIhdkvWL9lXw52o/GV1HTiERmOcnKjSLCRhUkKdHyUxxOrSIXz36L
- O/xPifeTxLxOBKHx9yx3RMyIvJxjCa2mzQkRYEWObKC4hpfdu5lHTxQhf9cPqgEe19ccm5OOx6G
- tTAXuNyDs+zgrgQmPB9c8I7FOwTImsBomN+Z6WzIDazZyoYXe8q8LAF/r/g/eYkMJO314Inv8/y
- Hc3iJiowUew8s9yvYBw6/ldHjD+yPfSW7h/l6d1IW9EKzEh10O7W7g8w6Ct37n+fpazYL/OTv41
- gZqS1qaHBpVZzbWWrlgg=
-X-Google-Smtp-Source: AGHT+IFL0VZaCDMHcWYmXwgvkf0hiWkfezNNf0xlJUFZn+yi/98aQBChz2/ZNkkc79gpRKj1UWC3nw==
-X-Received: by 2002:a05:6000:2910:b0:390:ea34:7d83 with SMTP id
- ffacd0b85a97d-39c23650080mr217350f8f.31.1743450508648; 
- Mon, 31 Mar 2025 12:48:28 -0700 (PDT)
+ bh=bjfZMqY7kEtNVcowX1vqYv9wJwb4LYxFTdGWnR4E878=;
+ b=Ymsg2kUTi024Csw78WAupgivgV4YeM2Ir4Q8LYFHEJAMnbCoq3cEzd/5QWeOyr3QkR
+ qns39TlWNDf5HMnlYfxjQ5ah3pdyfnwP6UdbvAxav1w269Rnu00Q+nOkE6rOfUNth4+W
+ 9I/ABYkqd7Ax+7LrAJIxFNm5ycGXxkvwNYYPVi8m9PsxlDcYLeuNdfTlTY+j5FFleQd8
+ +1PHbvIf4PTTo2kXeQaafwvmFNpX0ZF/3tClN44trT/19lkoNIqnZCeE3mfREJFV/jGY
+ VhEEGRxhLrLKRa7yrAbCKbqCyDGmX1vpm0ke2pAuPiXl3nDb7nNUz4dOQgHSU4yOSr3j
+ 5Gwg==
+X-Gm-Message-State: AOJu0YxLxCaKpjjuSO9A9PQdG1P9PyH/ZHLhiQWIX62VChaTBlWiTMY+
+ G4of8FGtuKTbhbc/B+Uinpk43hMElNS0P5M9pi2f2y1GJM5IUEX8MuIbbV6UfmHtaWWG0TwEUtO
+ t
+X-Gm-Gg: ASbGncvDYfBlcePfg/ECNNysflEjMiZqsfmdO87pIkMPQaqsW/+B/GcZ/Uon01Q180m
+ ZbaKQ7VYoVHnpGwu4xnJSQxSJpLuw6ZhzpG4Ldsd3+rjvljnS+1PLCxac2JlshxOkQqmCihZQQX
+ z2axBDlsFwV0dPBBGKJPw/UUwAZgF7770JR5SETj24kFUZTf3AL0gYG2bFxhEcvlvZkAIxE2Oom
+ 6+9wrktTFRE8m7MZIaMEgWq2miamt3rgh6Sl31mMfLYYR12YyQ7YT9CZXnvq2SyC/1Oancb95CU
+ 5mqCg8dpr8+tUL6P7/9D68sh8mSbLewRXb1G6FeXm//hWZZmxi3QhZUNwlUVmEQgnjNm6PFYLTq
+ OcRwAMgNUwpqi1D/mwbk=
+X-Google-Smtp-Source: AGHT+IFVuRh6Z/n/bKcSOD4C6xxd7+fLXpm/gtS8wqzn2/xKTUCDamnCqfbuUE5kjN4LxV5jlTMavA==
+X-Received: by 2002:a5d:64ee:0:b0:391:2fe4:de0a with SMTP id
+ ffacd0b85a97d-39c120ccabfmr9021886f8f.2.1743450528197; 
+ Mon, 31 Mar 2025 12:48:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b79e33asm12254361f8f.66.2025.03.31.12.48.27
+ ffacd0b85a97d-39c0b79e393sm12252633f8f.72.2025.03.31.12.48.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 31 Mar 2025 12:48:28 -0700 (PDT)
+ Mon, 31 Mar 2025 12:48:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/23] hw/arm/armv7m: Expose and access System Control Space as
- little endian
-Date: Mon, 31 Mar 2025 21:47:59 +0200
-Message-ID: <20250331194822.77309-2-philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 05/23] hw/core/cpu: Use size_t for memory_rw_debug len argument
+Date: Mon, 31 Mar 2025 21:48:03 +0200
+Message-ID: <20250331194822.77309-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250331194822.77309-1-philmd@linaro.org>
 References: <20250331194822.77309-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,86 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build ARM system emulators using little
-endianness, so the MO_TE definition always expands to
-MO_LE, and DEVICE_TARGET_ENDIAN to DEVICE_LITTLE_ENDIAN.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Replace the definitions by their expanded value, making
-it closer to the Armv7-M Architecture Reference Manual
-(ARM DDI 0403E) description:
+Match the prototype of cpu_memory_rw_debug().
 
-  The System Control Space (SCS, address range 0xE000E000 to
-  0xE000EFFF) is a memory-mapped 4KB address space that provides
-  32-bit registers for configuration, status reporting and control.
-  All accesses to the SCS are little endian.
-
-Fixes: d5d680cacc ("memory: Access MemoryRegion with endianness")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250325224403.4011975-4-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250312104821.1012-1-philmd@linaro.org>
 ---
- hw/arm/armv7m.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/hw/core/cpu.h     | 2 +-
+ target/sparc/cpu.h        | 2 +-
+ target/sparc/mmu_helper.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-index 98a69846119..64009174b97 100644
---- a/hw/arm/armv7m.c
-+++ b/hw/arm/armv7m.c
-@@ -140,7 +140,7 @@ static MemTxResult v7m_sysreg_ns_write(void *opaque, hwaddr addr,
-         /* S accesses to the alias act like NS accesses to the real region */
-         attrs.secure = 0;
-         return memory_region_dispatch_write(mr, addr, value,
--                                            size_memop(size) | MO_TE, attrs);
-+                                            size_memop(size) | MO_LE, attrs);
-     } else {
-         /* NS attrs are RAZ/WI for privileged, and BusFault for user */
-         if (attrs.user) {
-@@ -160,7 +160,7 @@ static MemTxResult v7m_sysreg_ns_read(void *opaque, hwaddr addr,
-         /* S accesses to the alias act like NS accesses to the real region */
-         attrs.secure = 0;
-         return memory_region_dispatch_read(mr, addr, data,
--                                           size_memop(size) | MO_TE, attrs);
-+                                           size_memop(size) | MO_LE, attrs);
-     } else {
-         /* NS attrs are RAZ/WI for privileged, and BusFault for user */
-         if (attrs.user) {
-@@ -174,7 +174,7 @@ static MemTxResult v7m_sysreg_ns_read(void *opaque, hwaddr addr,
- static const MemoryRegionOps v7m_sysreg_ns_ops = {
-     .read_with_attrs = v7m_sysreg_ns_read,
-     .write_with_attrs = v7m_sysreg_ns_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 5d11d26556a..abd8764e834 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -154,7 +154,7 @@ struct CPUClass {
  
- static MemTxResult v7m_systick_write(void *opaque, hwaddr addr,
-@@ -187,7 +187,7 @@ static MemTxResult v7m_systick_write(void *opaque, hwaddr addr,
-     /* Direct the access to the correct systick */
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->systick[attrs.secure]), 0);
-     return memory_region_dispatch_write(mr, addr, value,
--                                        size_memop(size) | MO_TE, attrs);
-+                                        size_memop(size) | MO_LE, attrs);
- }
+     int (*mmu_index)(CPUState *cpu, bool ifetch);
+     int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
+-                           uint8_t *buf, int len, bool is_write);
++                           uint8_t *buf, size_t len, bool is_write);
+     void (*dump_state)(CPUState *cpu, FILE *, int flags);
+     void (*query_cpu_fast)(CPUState *cpu, CpuInfoFast *value);
+     int64_t (*get_arch_id)(CPUState *cpu);
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 462bcb6c0e6..68f8c21e7cb 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -604,7 +604,7 @@ void dump_mmu(CPUSPARCState *env);
  
- static MemTxResult v7m_systick_read(void *opaque, hwaddr addr,
-@@ -199,14 +199,14 @@ static MemTxResult v7m_systick_read(void *opaque, hwaddr addr,
+ #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
+ int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+-                              uint8_t *buf, int len, bool is_write);
++                              uint8_t *buf, size_t len, bool is_write);
+ #endif
  
-     /* Direct the access to the correct systick */
-     mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->systick[attrs.secure]), 0);
--    return memory_region_dispatch_read(mr, addr, data, size_memop(size) | MO_TE,
--                                       attrs);
-+    return memory_region_dispatch_read(mr, addr, data,
-+                                       size_memop(size) | MO_LE, attrs);
- }
- 
- static const MemoryRegionOps v7m_systick_ops = {
-     .read_with_attrs = v7m_systick_read,
-     .write_with_attrs = v7m_systick_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- /*
+ /* translate.c */
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 7548d01777c..3821cd91ec7 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -389,7 +389,7 @@ void dump_mmu(CPUSPARCState *env)
+  * that the sparc ABI is followed.
+  */
+ int sparc_cpu_memory_rw_debug(CPUState *cs, vaddr address,
+-                              uint8_t *buf, int len, bool is_write)
++                              uint8_t *buf, size_t len, bool is_write)
+ {
+     CPUSPARCState *env = cpu_env(cs);
+     target_ulong addr = address;
 -- 
 2.47.1
 
