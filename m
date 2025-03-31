@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05BF1C3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C57C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDmy-0005Mp-6g; Mon, 31 Mar 2025 07:58:48 -0400
+	id 1tzDqB-0006w0-TP; Mon, 31 Mar 2025 08:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tzDmo-0005MS-Bx
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:58:38 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDq8-0006uC-82
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:02:05 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tzDmm-0001i9-Sl
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:58:38 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5ed43460d6bso7237265a12.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:58:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDq6-0002Pg-Jc
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:02:03 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so3741957f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743422315; x=1744027115; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X9Q7+iUbtcz4D8sgeN/GGFaG6En9fHJBF79dOt02J4w=;
- b=g+o56oIzgE5Zh/fETWmWjma2okMFXbrshcDVcIpj9iphe06Yc1sWE0crUsKZVVErIy
- swR3GnCH9PmZomHpohjI7q6QybVnBSPlqsX8OV3jbFYS6sHVZheOSIczWPhywxX7UoAu
- ivc0OJT/pL1BtvdfjBWvKnxEq3OMhESjZ/di9zxKfHxFf+VsIeHBj/A09H21X/no38tP
- rTPXktx0BLVoDGnez8ERmuwTSnk1DL1Ff7sKhP3w+8JmuFA9Y7Scsc9iTcKADkTFaRAc
- wOllzdhdaAM6w37+Q+FLlIWxGui9HTi1/sDrvN+cCieLRXZYPY2y2n+R9XcpCCr830kR
- 9QBg==
+ d=linaro.org; s=google; t=1743422521; x=1744027321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qNPCBpFT2EhA0nbHtjBf0iW/Tgvg0WmVeqDMG30u8v4=;
+ b=saQXzPRF1wbRlct7raJE8lE3gu82IYQ0Bwblr4ByDyH/ZDcMOD0D6SUXa3rtn4hEv0
+ cqFiB2k/T4NhQcOSXLbybY7x5RieTl4bJu5kKbCAjSFt6wJ4zGzXMpzwYXOmYqOtONEB
+ OU0I2qLZ/jKUaEphiJPFkSZkS3tXJ0vIwFLuFRZvNjtDZ/qu30pft8vXw+oiewM/dGv0
+ j+R++eZ4zgW5EH/LVYGHv9x8thCba6fLxOjF0GTfCfRupXwYH4eWB21vM3ncNbAEfKIi
+ wrCW53mlCW+SNcwgrfLliZ6gHXGHcLEB9i/ESGa1LIROUcjO46rR10p2P5XJXyH1LKxg
+ 2oRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743422315; x=1744027115;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=X9Q7+iUbtcz4D8sgeN/GGFaG6En9fHJBF79dOt02J4w=;
- b=mcrrV+E4WSC3ISKV1PvZdN7Kd+rD53bC5pc1QGjnu+RUD2F/oUGqSiNzUO52iJXk8Z
- xOKfVgZVHXIpHtlyBmG0QS+iD4hx4M7hLagcTEQE2X3/5sD7tmDl1bH7Zel0eHUO+5sK
- e2HSEO1+obKzjRbVIBRq4Ssv4tsYonE48uiVIvbDxnfRtr3zuMPRVFCsh2oy+2wH7iFC
- 4U9w4+RZgu6Axb/rVONDF9CqWxMv6Orl0ifnCVjrP1sd++QyPF5OzEqbpSxfrrxX6BZI
- OzXelPI7pEjhDt40zFPQLF6VJqzW97Smt/ivBmD6z+IEP3M73THCUH8ySyma3IXfiVXo
- CwIw==
+ d=1e100.net; s=20230601; t=1743422521; x=1744027321;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qNPCBpFT2EhA0nbHtjBf0iW/Tgvg0WmVeqDMG30u8v4=;
+ b=tDpsC7TB3ry6vJi7dKPFgF+ADUfJf7qO3NJZY1lNxj6GuAKuv39+JiGtMQdemKtKaa
+ DwWqjyisms0ZiZ37hc8MFqvk69tMVBYAs2pGZylazHjNA+o4e+d/Cmq4OlRulVFEl2UK
+ ogqbiozAZla3HWyvNsqOFjrQPCeeg25xJvbTDXkpInjsRB+7TnnEEOBCMHJftsdljbH+
+ nf8pDtXfpKw6nHRi1oBiQD76YLdIpMCER+CiWO8GoD5miFIZ1LlBPukFVavfhggrJjYP
+ 7LMWaJYSagM6tVB2fg8lYA910LCPnZHBKB/UEA4u9RlGUZ1r0vUfP9LJGFCTw8ddJe9B
+ t2Zw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtHvTuwPHJ0SGeRkNLzhXP/IrGLIJlwNqoosGRX6WMbhvTITP1HCDNAES2Hn4+/OkNEn+Y6w4ClJPS@nongnu.org
-X-Gm-Message-State: AOJu0YwvkZmJce3t5AdadKCMxuVkqWr0BZbgtODzLohrDmxp3eBW6m2q
- 7PY9oxslapmrwKF0AhVVxS4CuUx9cm/wGxEQGiSEDdisBjM9LBnNh70Vbt7LVCZnMmxBPldTDqH
- aycLEKPSk2k10B63R3NQs9HNJZAQ=
-X-Gm-Gg: ASbGncsUqLtCA6NQyqK9GDujd3GlDvMJud0WyZNroVVIBNzxfa13mof7DSPm+m15SHY
- Cia8gWqZYZFDrzj9thDX4uwzkF9Xatnx/6Qd/Hv14vzN4iEDABcvKWjRwW8HXqH0fzAbXt2UPxE
- Zj1+YGVLeTQrAmex71ZwKc1ZXD
-X-Google-Smtp-Source: AGHT+IGy7Xu6Anpk2z1hi3r7BFyjZr5WkbkZ7E1zWPgd3Xn7tT0ysnhJgmUhtpYj2Rdcdmo0ylQvFkgCjJdMe5YpsGk=
-X-Received: by 2002:a05:6402:550c:b0:5e6:1996:7902 with SMTP id
- 4fb4d7f45d1cf-5edfdf202acmr7177157a12.32.1743422315112; Mon, 31 Mar 2025
- 04:58:35 -0700 (PDT)
+ AJvYcCUYt7G16z5ib8Qb6leZrUchGosMEYVjj8O3RfNGd+48404QTHJgxJSlxI9PbC3t8Sdvl7AwvqMarmIV@nongnu.org
+X-Gm-Message-State: AOJu0YzRb14jIWE7+7hAx7fmyLYakbHPJF1MG6EYvMnOpFz3g8bBnicI
+ BhfqCNz93PGsOqbTcenOoxpxOSx7aWnKCwo4MhTacaZkFwX/+AyVBNkAzFkvTWI=
+X-Gm-Gg: ASbGncusd5kBIzwGP9xmNqmQ3ybU+VU72tqeqbqoKMlaQTP7trIbdeKL+pBPr12w/oH
+ 9jLGrYwt36fqxsXyMM9O5lrDkiFeewlB3NKDdg+3dUUNM7TDEKCH4v/9gO+JNq+hnpqAjmLHwYl
+ xk6JCpsov/TMV6GZIcdekdTVw081pcukP9vNPj9NixZn1ib1AQO06sipEILCkqC8kD4qtEqHWVP
+ oEQgO6zd9/fIKWhDGTKOLMBGhpMIn8lZPuPzkB7R00jOufX9pyMWHKHQXwMs9RYfdazjypFRkrc
+ LxoIYzIhGirS+WsrzxUxUNU1+/3waFNSoqOOleFwiUI1jgw+ZJ2AKx1S38jXrseOfR1+VgPK2mU
+ DvcwDYJofrYw9
+X-Google-Smtp-Source: AGHT+IEzKWllmprsunc5g5WVfCy73xoW/wFch8rg6vEdqCJNzCGd3Gg1i9BuYzE1Pl6HcUwRHcYbyw==
+X-Received: by 2002:a5d:584f:0:b0:391:13d6:c9e5 with SMTP id
+ ffacd0b85a97d-39c120dec41mr5239560f8f.19.1743422520700; 
+ Mon, 31 Mar 2025 05:02:00 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d82e6a532sm162112235e9.9.2025.03.31.05.01.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Mar 2025 05:02:00 -0700 (PDT)
+Message-ID: <9caad0db-7886-46fe-ba8a-c2532b56c2ce@linaro.org>
+Date: Mon, 31 Mar 2025 14:01:58 +0200
 MIME-Version: 1.0
-References: <87semtpjrt.fsf@draig.linaro.org>
-In-Reply-To: <87semtpjrt.fsf@draig.linaro.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 31 Mar 2025 07:58:22 -0400
-X-Gm-Features: AQ5f1Jrh7cJ41M7IZDFLhZnOnEyKOHsHEvoy67545u1aYg910saCB7EF4uInz3k
-Message-ID: <CAJSP0QW6=SvLwkuTsZTKqCH9OQJdH8XV32hDZ9Z4o6AbCbOqiA@mail.gmail.com>
-Subject: Re: Central repo for VirtIO conformance tests?
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Rust VMM <rust-vmm@lists.opendev.org>, QEMU Devel <qemu-devel@nongnu.org>, 
- virtio-comment@lists.linux.dev,
- VirtIO Dev List <virtio-dev@lists.linux.dev>, 
- Bill Mills <bill.mills@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Matias Vara Larsen <mvaralar@redhat.com>, Sergio Lopez <slp@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mips: Mark the "mipssim" machine as deprecated
+To: Thomas Huth <thuth@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ QEMU devel <qemu-devel@nongnu.org>, Aleksandar Rikalo <arikalo@gmail.com>
+References: <20250121103655.1285596-1-thuth@redhat.com>
+ <b0accbae-b9ca-4fb2-a842-f08ac947ef0a@app.fastmail.com>
+ <1e2fc164-0721-435f-a29c-43d54539eb74@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1e2fc164-0721-435f-a29c-43d54539eb74@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,19 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 31, 2025 at 6:39=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
-> The unikernel utilizes rcore-os's no_std VirtIO drivers to discover and
-> initialize a range of VirtIO devices.
+Hi Jiaxun,
 
-https://github.com/rcore-os/virtio-drivers
+On 21/1/25 13:16, Thomas Huth wrote:
+> On 21/01/2025 13.07, Jiaxun Yang wrote:
+>>
+>>
+>> 在2025年1月21日一月 上午10:36，Thomas Huth写道：
+>>> We are not aware of anybody still using this machine, support for it
+>>> has been withdrawn from the Linux kernel (i.e. there also won't be
+>>> any future development anymore), and we are not aware of any binaries
+>>> online that could be used for regression testing to avoid that the
+>>> machine bitrots ... thus let's mark it as deprecated now.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   If anybody is still using this machine, please speak up now!
+>>
+>>
+>> FYI I'm using it to run MIPS AVP (Architecture Verification Programs)
+>> time by time to check TCG's compliance.
 
-I noticed that VIRTIO_F_VERSION_1, VIRTIO_F_RING_PACKED, and hardware
-device support are missing according to the readme. Those are
-important features for real-world test coverage.
+Is MIPS AVP accessible somewhere?
 
-Or is the idea to use the unikernel for low-level device
-initialization and the Linux image for tests that do I/O?
+> 
+> Ok, if you're still using it, we can certainly keep it around... but it 
+> would be really good to have an old Linux kernel or something similar 
+> available online somewhere that we could use for a CI test for this 
+> machine, so we can make sure that it does not bitrot... do you happen to 
+> know whether such a kernel is available somewhere?
 
-Stefan
+Otherwise what can we use to test this machine?
+
+> 
+> Also, please consider volunteering for becoming the maintainer of the 
+> machine in the MAINTAINERS file ... currently it's marked as "Orphan" 
+> there which was also a strong indication that nobody really cares for 
+> this machine anymore.
+> 
+>   Thomas
+> 
+
 
