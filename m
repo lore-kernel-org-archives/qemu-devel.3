@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCDAC3600C
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 13:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6342C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 13:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzF9S-0000r6-6M; Mon, 31 Mar 2025 09:26:07 -0400
+	id 1tzFUA-0004gS-Jq; Mon, 31 Mar 2025 09:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tzF9L-0000qY-AF
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:26:00 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tzF9I-0006Le-4k
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:25:58 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-2c7e5f7f0e3so1199519fac.3
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 06:25:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1743427555; x=1744032355;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hc7M5T1RbeXSxeGRh3KQFlWKqApoAGTisYvoo/yzzD4=;
- b=AFIcSeTYlbRv1vLHIby9ZQfpFsR6jXUhsCWiZ9OPh2rDMQnfDf718B6YT35JgL8hzH
- is23Z8ryX6onPXh24j6Qeo/OphrCQ+9yorrhSk5Hn2oVRzWHaGeud7xGpPqtqXA34GRY
- bjis2P0+JjiFf5IkDTgMFkKv8PxKfxkNiC06hnaolGnAz0plyz0KHL2Z4LFYMc2v0f0N
- cYSCXkKGwEKwp7WNtziVw/EuHzm4hGi/hLC+mgW7L6vMWQ+IIibPW3d8+UmXdOvaKySn
- 6KKi/2nBDM39/+goUjQuxPu/pp3tku0IL/2gCrPGhOMfXvDJ9WpHteZXYAU+g2fH/ooE
- xiZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743427555; x=1744032355;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hc7M5T1RbeXSxeGRh3KQFlWKqApoAGTisYvoo/yzzD4=;
- b=SZ2SbIEy0mzQPo3R7PGwYrB4sC2B5fwg55g8J2MqyhvxAVDnvEgYfxPFtbfBVPxF1Z
- SdOQ6OXAnBqdhc5SP6ic0Cqknz6HoIY8aDWsH/9tcubgLP5kVrBl4Sbqd7UZOY5g30aY
- ODfwu4G1UI/klEzJGLlo+PlzcLZdaeF9sHusO8UA3NThSy3dI2ztj96YSDw5RfIUYX0E
- IUqlvqZOej9jHqOdO1RZUplHeiLZfnLKCiBtAUJn2oJ/3ni54uIHZL7GUd4Dy4pWyWnS
- BVUXm3CWJwQyWm+KfreH2I32kyCUU5DvJt1DeoachYtSt+cx2dkFXQtYD6RZ5cyv/tXs
- U2mA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVu/LB4uIpc0XYLJppowwaFX3paZMccoyayZpBGMze3J0S40xV2m8D6mxmNytl3Sdem6Sdt3gGhtZJG@nongnu.org
-X-Gm-Message-State: AOJu0Yxfi753hyVQb3NT5ioZjqIwq6Z2/ATg+U8ShYCJ2Axqk5DPFB4b
- vNN1k6vP92Q0HOIW+8MBYSeuX3XithcTdgcsuurjtgZZVwk5pHnG32OWTkDgcApnaWOj56TFoS0
- B
-X-Gm-Gg: ASbGncsrP5TgF1eXoX7XGeroW4iVd+1P8t2HVgYtEXKikPXfyEV6SnuPuDtBVmQ7IF1
- 39geme3TBlGH7xruaRDPggUJnr8o2StYTF3nkHXkzWvHI8OOLviaBMY5RVtSoWWOyZnyEPJPafP
- PZ0E9pZfh5xH9t03YF3vTIrtahzCT9x9S0PZrq5xg6HTWBL3CtpEnHJbRX7Ai5ZJ6HnyLml310Z
- 8EEY4QyYPSACACw3h24sTl7c9grZrO8muKb0mO1Yyz7vUMjmVM5o3ZvV0CqUuw6779P68ASQ+zh
- DegTjfHCOyW3imSHAKzaL82LY2PV5DvmVqjhZjVO1kDD+Odn
-X-Google-Smtp-Source: AGHT+IHPc6xzfva5xOSpG5/wAryPHX7/iHPeLkv0aHM4Qr3phmwR8YXIHdzDNZLg/hU9cSK3i8XmHA==
-X-Received: by 2002:a05:6870:5308:b0:2c3:1680:d1a9 with SMTP id
- 586e51a60fabf-2cbcf576c76mr4993645fac.22.1743427554652; 
- Mon, 31 Mar 2025 06:25:54 -0700 (PDT)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:da64:426e:c0da:b180])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2c86a48d7efsm1834155fac.14.2025.03.31.06.25.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 31 Mar 2025 06:25:52 -0700 (PDT)
-Date: Mon, 31 Mar 2025 08:25:45 -0500
-From: Corey Minyard <corey@minyard.net>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Corey Minyard <minyard@acm.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] ipmi/bmc-sim: Add 'Get Channel Info' command
-Message-ID: <Z-qX2R9o-kpby24z@mail.minyard.net>
-References: <20250331125724.607355-1-npiggin@gmail.com>
- <20250331125724.607355-4-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzFTx-0004fB-P3
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:47:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzFTu-00015n-20
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 09:47:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743428830;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ryzNhrfeki9G2uOfkinWL8llLZe4Cg4Q2i67J4a28Ws=;
+ b=hX7O2wXRjtxqkupzroPyQvF//nDQTVjokl47PRJq4PhpkoYHlHTBJ+LoGA+sSekoI6/b4A
+ ndlWAlEcO9Nwrg3PR97bozUf/uriLa08xka9lLhehTsd6sMdagCnrCBqMle+GpEHRpYjF1
+ XOhI9SLYxFpRbGRcFvMpiWFriOCXVxI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-V9gr6DP4NW6IsXB4hGysig-1; Mon,
+ 31 Mar 2025 09:47:05 -0400
+X-MC-Unique: V9gr6DP4NW6IsXB4hGysig-1
+X-Mimecast-MFC-AGG-ID: V9gr6DP4NW6IsXB4hGysig_1743428824
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05F15195608A; Mon, 31 Mar 2025 13:46:59 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.29])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 67D7B1801752; Mon, 31 Mar 2025 13:46:57 +0000 (UTC)
+Date: Mon, 31 Mar 2025 09:46:56 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Farhan Ali <alifm@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, fam@euphon.net,
+ philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com
+Subject: Re: [PATCH v2 2/3] include: Add a header to define PCI MMIO functions
+Message-ID: <20250331134656.GC190936@fedora>
+References: <20250328190627.3025-1-alifm@linux.ibm.com>
+ <20250328190627.3025-3-alifm@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="+zMIgSSGKgDsimyF"
 Content-Disposition: inline
-In-Reply-To: <20250331125724.607355-4-npiggin@gmail.com>
-Received-SPF: none client-ip=2001:4860:4864:20::2d;
- envelope-from=corey@minyard.net; helo=mail-oa1-x2d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250328190627.3025-3-alifm@linux.ibm.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.198,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,183 +84,179 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 31, 2025 at 10:57:24PM +1000, Nicholas Piggin wrote:
-> Linux issues this command when booting a powernv machine.
 
-This is good, just a couple of nits.
+--+zMIgSSGKgDsimyF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+On Fri, Mar 28, 2025 at 12:06:26PM -0700, Farhan Ali wrote:
+> Add a generic QEMU API for PCI MMIO reads/writes.
+> The functions access little endian memory and returns
+> the result in host cpu endianness.
+>=20
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
->  include/hw/ipmi/ipmi.h | 14 +++++++++++
->  hw/ipmi/ipmi_bmc_sim.c | 56 ++++++++++++++++++++++++++++++++++++++++--
->  hw/ipmi/ipmi_bt.c      |  2 ++
->  hw/ipmi/ipmi_kcs.c     |  1 +
->  4 files changed, 71 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
-> index 77a7213ed93..5f01a50cd86 100644
-> --- a/include/hw/ipmi/ipmi.h
-> +++ b/include/hw/ipmi/ipmi.h
-> @@ -41,6 +41,15 @@ enum ipmi_op {
->      IPMI_SEND_NMI
->  };
->  
-> +/* Channel properties */
-> +#define IPMI_CHANNEL_IPMB                0x00
-> +#define IPMI_CHANNEL_SYSTEM              0x0f
-> +#define IPMI_CH_MEDIUM_IPMB              0x01
-> +#define IPMI_CH_MEDIUM_SYSTEM            0x0c
-> +#define IPMI_CH_PROTOCOL_IPMB            0x01
-> +#define IPMI_CH_PROTOCOL_KCS             0x05
-> +#define IPMI_CH_PROTOCOL_BT_15           0x08
+>  include/qemu/pci-mmio.h | 116 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 116 insertions(+)
+>  create mode 100644 include/qemu/pci-mmio.h
+>=20
+> diff --git a/include/qemu/pci-mmio.h b/include/qemu/pci-mmio.h
+> new file mode 100644
+> index 0000000000..2ef92455b1
+> --- /dev/null
+> +++ b/include/qemu/pci-mmio.h
+> @@ -0,0 +1,116 @@
+> +/*
+> + * QEMU PCI MMIO API
 
-I know it's picky, but could you spell out CHANNEL here?
+QEMU also emulates PCI devices that handle MMIO accesses. It is easy to
+get confused between host PCI MMIO accesses and emulated guest PCI MMIO
+accesses if the name is just "PCI MMIO API".
 
+Please update the commit message, filenames, function names, and doc
+comments to make it clear that this is only for host PCI MMIO accesses
+(e.g. Linux VFIO BAR accesses).
+
+For example "qemu/host-pci-mmio.h", "API for host PCI MMIO accesses
+(e.g. Linux VFIO BARs)", and host_pci_mmio_read_8().
+
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
->  #define IPMI_CC_INVALID_CMD                              0xc1
->  #define IPMI_CC_COMMAND_INVALID_FOR_LUN                  0xc2
->  #define IPMI_CC_TIMEOUT                                  0xc3
-> @@ -170,6 +179,11 @@ struct IPMIInterfaceClass {
->       * Return the firmware info for a device.
->       */
->      void (*get_fwinfo)(struct IPMIInterface *s, IPMIFwInfo *info);
+> +#ifndef QEMU_PCI_MMIO_H
+> +#define QEMU_PCI_MMIO_H
 > +
-> +    /*
-> +     * IPMI channel protocol type number.
-> +     */
-> +    uint8_t protocol;
->  };
->  
->  /*
-> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-> index 8c3313aa65f..9198f854bd9 100644
-> --- a/hw/ipmi/ipmi_bmc_sim.c
-> +++ b/hw/ipmi/ipmi_bmc_sim.c
-> @@ -70,6 +70,7 @@
->  #define IPMI_CMD_GET_MSG                  0x33
->  #define IPMI_CMD_SEND_MSG                 0x34
->  #define IPMI_CMD_READ_EVT_MSG_BUF         0x35
-> +#define IPMI_CMD_GET_CHANNEL_INFO         0x42
->  
->  #define IPMI_NETFN_STORAGE            0x0a
->  
-> @@ -1033,8 +1034,8 @@ static void send_msg(IPMIBmcSim *ibs,
->      uint8_t *buf;
->      uint8_t netfn, rqLun, rsLun, rqSeq;
->  
-> -    if (cmd[2] != 0) {
-> -        /* We only handle channel 0 with no options */
-> +    if (cmd[2] != IPMI_CHANNEL_IPMB) {
-> +        /* We only handle channel 0h (IPMB) with no options */
->          rsp_buffer_set_error(rsp, IPMI_CC_INVALID_DATA_FIELD);
->          return;
->      }
-> @@ -1232,6 +1233,56 @@ static void get_watchdog_timer(IPMIBmcSim *ibs,
->      }
->  }
->  
-> +static void get_channel_info(IPMIBmcSim *ibs,
-> +                             uint8_t *cmd, unsigned int cmd_len,
-> +                             RspBuffer *rsp)
+> +#ifdef __s390x__
+> +#include "s390x_pci_mmio.h"
+> +#endif
+> +
+> +static inline uint8_t qemu_pci_mmio_read_8(const void *ioaddr)
 > +{
-> +    IPMIInterface *s = ibs->parent.intf;
-> +    IPMIInterfaceClass *k = IPMI_INTERFACE_GET_CLASS(s);
-> +    uint8_t ch = cmd[1] & 0x0f;
+> +    uint8_t ret =3D 0;
+> +#ifdef __s390x__
+> +    ret =3D s390x_pci_mmio_read_8(ioaddr);
+> +#else
+> +    /* Prevent the compiler from optimizing away the load */
+> +    ret =3D *((volatile uint8_t *)ioaddr);
+> +#endif
 > +
-> +    /* Only define channel 0h (IPMB) and Fh (system interface) */
-> +
-> +    if (ch == 0x0e) { /* "This channel" */
-> +        ch = IPMI_CHANNEL_SYSTEM;
-> +    }
-> +    rsp_buffer_push(rsp, ch);
-> +
-> +    if (ch != IPMI_CHANNEL_IPMB && ch != IPMI_CHANNEL_SYSTEM) {
-> +        /* Not supported */
-
-I think that an all zero response is a valid response.  I think you
-should return a IPMI_CC_INVALID_DATA_FIELD instead, right?
-
-> +        int i;
-> +        for (i = 0; i < 8; i++) {
-> +            rsp_buffer_push(rsp, 0x00);
-> +        }
-> +        return;
-> +    }
-> +
-> +    if (ch == IPMI_CHANNEL_IPMB) {
-> +        rsp_buffer_push(rsp, IPMI_CH_MEDIUM_IPMB);
-> +        rsp_buffer_push(rsp, IPMI_CH_PROTOCOL_IPMB);
-> +    } else { /* IPMI_CHANNEL_SYSTEM */
-> +        rsp_buffer_push(rsp, IPMI_CH_MEDIUM_SYSTEM);
-> +        rsp_buffer_push(rsp, k->protocol);
-> +    }
-> +
-> +    rsp_buffer_push(rsp, 0x00); /* Session-less */
-> +
-> +    /* IPMI Vendor ID */
-> +    rsp_buffer_push(rsp, 0xf2);
-> +    rsp_buffer_push(rsp, 0x1b);
-> +    rsp_buffer_push(rsp, 0x00);
-
-Where does this come from?
-
-> +
-> +    if (ch == IPMI_CHANNEL_SYSTEM) {
-> +        /* IRQ assigned by ACPI/PnP (XXX?) */
-> +        rsp_buffer_push(rsp, 0x60);
-> +        rsp_buffer_push(rsp, 0x60);
-
-The interrupt should be available.  For the isa versions there is a
-get_fwinfo function pointer that you can fetch this with.  For PCI it's
-more complicated, unfortunately.
-
--corey
-
-> +    } else {
-> +        /* Reserved */
-> +        rsp_buffer_push(rsp, 0x00);
-> +        rsp_buffer_push(rsp, 0x00);
-> +    }
+> +    return ret;
 > +}
 > +
->  static void get_sdr_rep_info(IPMIBmcSim *ibs,
->                               uint8_t *cmd, unsigned int cmd_len,
->                               RspBuffer *rsp)
-> @@ -2028,6 +2079,7 @@ static const IPMICmdHandler app_cmds[] = {
->      [IPMI_CMD_RESET_WATCHDOG_TIMER] = { reset_watchdog_timer },
->      [IPMI_CMD_SET_WATCHDOG_TIMER] = { set_watchdog_timer, 8 },
->      [IPMI_CMD_GET_WATCHDOG_TIMER] = { get_watchdog_timer },
-> +    [IPMI_CMD_GET_CHANNEL_INFO] = { get_channel_info, 3 },
->  };
->  static const IPMINetfn app_netfn = {
->      .cmd_nums = ARRAY_SIZE(app_cmds),
-> diff --git a/hw/ipmi/ipmi_bt.c b/hw/ipmi/ipmi_bt.c
-> index 583fc64730c..d639c151c4d 100644
-> --- a/hw/ipmi/ipmi_bt.c
-> +++ b/hw/ipmi/ipmi_bt.c
-> @@ -434,4 +434,6 @@ void ipmi_bt_class_init(IPMIInterfaceClass *iic)
->      iic->handle_if_event = ipmi_bt_handle_event;
->      iic->set_irq_enable = ipmi_bt_set_irq_enable;
->      iic->reset = ipmi_bt_handle_reset;
-> +    /* BT System Interface Format, IPMI v1.5 */
-> +    iic->protocol = IPMI_CH_PROTOCOL_BT_15;
->  }
-> diff --git a/hw/ipmi/ipmi_kcs.c b/hw/ipmi/ipmi_kcs.c
-> index c15977cab4c..8af7698286d 100644
-> --- a/hw/ipmi/ipmi_kcs.c
-> +++ b/hw/ipmi/ipmi_kcs.c
-> @@ -420,4 +420,5 @@ void ipmi_kcs_class_init(IPMIInterfaceClass *iic)
->      iic->handle_rsp = ipmi_kcs_handle_rsp;
->      iic->handle_if_event = ipmi_kcs_handle_event;
->      iic->set_irq_enable = ipmi_kcs_set_irq_enable;
-> +    iic->protocol = IPMI_CH_PROTOCOL_KCS;
->  }
-> -- 
-> 2.47.1
-> 
+> +static inline uint16_t qemu_pci_mmio_read_16(const void *ioaddr)
+> +{
+> +    uint16_t ret =3D 0;
+> +#ifdef __s390x__
+> +    ret =3D s390x_pci_mmio_read_16(ioaddr);
+> +#else
+> +    /* Prevent the compiler from optimizing away the load */
+> +    ret =3D *((volatile uint16_t *)ioaddr);
+> +#endif
+> +
+> +    return le16_to_cpu(ret);
+> +}
+> +
+> +static inline uint32_t qemu_pci_mmio_read_32(const void *ioaddr)
+> +{
+> +    uint32_t ret =3D 0;
+> +#ifdef __s390x__
+> +    ret =3D s390x_pci_mmio_read_32(ioaddr);
+> +#else
+> +    /* Prevent the compiler from optimizing away the load */
+> +    ret =3D *((volatile uint32_t *)ioaddr);
+> +#endif
+> +
+> +    return le32_to_cpu(ret);
+> +}
+> +
+> +static inline uint64_t qemu_pci_mmio_read_64(const void *ioaddr)
+> +{
+> +    uint64_t ret =3D 0;
+> +#ifdef __s390x__
+> +    ret =3D s390x_pci_mmio_read_64(ioaddr);
+> +#else
+> +    /* Prevent the compiler from optimizing away the load */
+> +    ret =3D *((volatile uint64_t *)ioaddr);
+> +#endif
+> +
+> +    return le64_to_cpu(ret);
+> +}
+> +
+> +static inline void qemu_pci_mmio_write_8(void *ioaddr, uint8_t val)
+> +{
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_8(ioaddr, val);
+> +#else
+> +    /* Prevent the compiler from optimizing away the store */
+> +    *((volatile uint8_t *)ioaddr) =3D val;
+> +#endif
+> +}
+> +
+> +static inline void qemu_pci_mmio_write_16(void *ioaddr, uint16_t val)
+> +{
+> +    val =3D cpu_to_le16(val);
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_16(ioaddr, val);
+> +#else
+> +    /* Prevent the compiler from optimizing away the store */
+> +    *((volatile uint16_t *)ioaddr) =3D val;
+> +#endif
+> +}
+> +
+> +static inline void qemu_pci_mmio_write_32(void *ioaddr, uint32_t val)
+> +{
+> +    val =3D cpu_to_le32(val);
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_32(ioaddr, val);
+> +#else
+> +    /* Prevent the compiler from optimizing away the store */
+> +    *((volatile uint32_t *)ioaddr) =3D val;
+> +#endif
+> +}
+> +
+> +static inline void qemu_pci_mmio_write_64(void *ioaddr, uint64_t val)
+> +{
+> +    val =3D cpu_to_le64(val);
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_64(ioaddr, val);
+> +#else
+> +    /* Prevent the compiler from optimizing away the store */
+> +    *((volatile uint64_t *)ioaddr) =3D val;
+> +#endif
+> +}
+> +
+> +#endif
+> --=20
+> 2.43.0
+>=20
+
+--+zMIgSSGKgDsimyF
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfqnM8ACgkQnKSrs4Gr
+c8jhJwf+LFiDyrfjCOHzUJ3Jtzaqn4gbZuMJ9ilVlbxg7QDAUXE2FEfJBO9KqLNQ
+lQyhkdeQHTb7EkcLxh+IcoD4r3lIGh1xhPHSekrOKqHAyRZ/cRzYb0VKBuwvHl/6
+cgva6u/joD7TNwNehoLBk5Vpha5i/4zBLv25ks9VWel7M2kfUl5emQ9UUrMpiPvD
+DAmIqThPx1yDa2Iw8EQ9UIsrN92D76JRv8shmYTNfdcObagmAD6OgKhs4IItn4YU
+jsp/O6Gd29arDcZrwQmaM1we98x4hb6m+3VdR+sr0tHWSdlROMAu1H+6C0GJk2Eo
+EImvZLyzzgi1B2ZVvD8MxJEvEHNDdg==
+=IS8k
+-----END PGP SIGNATURE-----
+
+--+zMIgSSGKgDsimyF--
+
 
