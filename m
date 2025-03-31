@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF13C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 18:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A075C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 18:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzKBv-0002LK-QW; Mon, 31 Mar 2025 14:49:00 -0400
+	id 1tzKE5-0004m1-0n; Mon, 31 Mar 2025 14:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzKBt-0002L6-Lq
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 14:48:57 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzKE2-0004lT-Jt
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 14:51:10 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzKBs-0001mB-2v
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 14:48:57 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso32114205e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 11:48:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzKE0-00026M-OT
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 14:51:10 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39143200ddaso3099785f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 11:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743446934; x=1744051734; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=er6pDxh8XIqvAoPkH06hhDErlAezot/dtgnUBaxh+vA=;
- b=kvMumHUISOj19Yb3a4wuPSFz/TYxMb786SmvCGra2zUs8fSukk35at4I7oFcqWStwE
- p9jR+KN0qjTk2t9LU3nbVJjkBog8t/sCPdsXPHG2TZv8L2QTwk3K7zgHIkYTArx8V+Fn
- Ze0k0Bf0BtvJcLz+Xtpc6xciO0tcqJV0xTOwncPWbW7U3u78SykpC24V5N/L9ehSktFj
- XGIBLd3sbdrjoMpZdf49dLnhqb4g2vlPHXzsHqpPGmqrRknm/NnZIxZ8OUzJnq8Rm1Jt
- RQpvgPyjn2hOv3w+AnQofWDowggjW+hpEBzOYbRDCSP6XZGLIuqhGJv6sISAxqgoXHVk
- x2Kg==
+ d=linaro.org; s=google; t=1743447067; x=1744051867; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=naE33U8HSZMhWwdQT39B6qgLc9o1VbOmE2DUUvbAx8I=;
+ b=DsuonvOayz5X+Ucvh8hmZ22Jl0od+E2FKAviJvms7f7Kyia6mcrvMg7L59xePDfx+O
+ akz/wTBYlsBpo6RGeKkwlZbbNqmIVS48HUsWHbOkfY67x5kHs3eroXlUkFp3TkMNWEd7
+ zhcT29mYZYHuMm5Uir2SliPhaWZNHzLzifSUufHPXXwlyvgPjRF0ahKPnAwrKA6SlAc/
+ C4gojZKKx93vtY7le4BCTbzkvSaIIpJrLD6zOOc6JEhHciTgDJ43Nf7xc1qwz+kgGVuC
+ HA4l42B7A4WvhY/924vjPLid2lXlSzvaL1UijIXTzZDrSrC6xWBVC9Czk9gkOAccSHCa
+ j9Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743446934; x=1744051734;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743447067; x=1744051867;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=er6pDxh8XIqvAoPkH06hhDErlAezot/dtgnUBaxh+vA=;
- b=vyL6ViIC5s8K1E8Bgt4Qu/4oEoVC/J2CatxUAr2bzcgt4jJ7O6JaUOPztKTjZGi6r3
- EJAOICaspznzW9NaFh0Z2F474zVt0Gg2wrRrBej+52dRqJMGco6LcKRT9IycfM0fvlK1
- av4LQTw+kcBpTBNijFJTBJChl+WZa+L7vkzKdBGwTx7McWQ0d04l4xJ8RTVavhJYl6sG
- qkSuRF0ZY3YPE5/p77K2MFwpJ4Dl1EzPV4wlDFFsiJ0+eJMeWe2/Av//+5WQEDP96XID
- LwKpv/8FMgChaUT8JwJSccHrL4N0dxd6i7DhKhiY5gQ63ldn/RIYgXlqKUBcBivUTtSq
- ejhw==
+ bh=naE33U8HSZMhWwdQT39B6qgLc9o1VbOmE2DUUvbAx8I=;
+ b=elkOsuWw5DP8wdayQ4n6rdyIm6nSsjNECOjW5zyFj+BecfN2L1GZZ1Wr2jmTv/pW0Q
+ XPK1jlLQAmeyPgBZubVv1CswgFaULASZiFjZXiFzOgoV7PCZSLlCtq9cRwBDN2T11Vug
+ ompSUiDXSqtxDHs9jIVsFl98gsHHAJhpXMl68pcJjwLzMH7E0fpX0OUJIewbD9UlL385
+ MhrDr1qCH5QYKgYKN1f8qwjwp3KouOlSB0ZvJGB69KwJUX4CxOyOSKJu+6ET2xyEJqSN
+ ervz9l62sgX8RTVej15o5MD+giAJPRiwTTFRQf9QGSbO/fhFj/UASyVwICFO4Rqr1WHu
+ 8PUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWaC2Q6ajEYDABN2FZ1wg9XpISgXhcicj5kVkrw62P6cD0UqG9Z5SffvlHFxE67cbFR3pkNTYEhjn6L@nongnu.org
-X-Gm-Message-State: AOJu0YzKZeD7PGgSu2kyZx+WSYxN9wapVejpbQLYTmigNw5zTW7flxN+
- DJSDQQYffLhUS7e2N/xfJYwBisyC4lGt01oQt1cYfKkxMi+ceNwLu28kNCDzOD0=
-X-Gm-Gg: ASbGncvhShl5Rj5uMdziuWpvYvc9kAKTUMK250JWveb93BYoMwgo2WLIL9O+KWKVrq8
- 09tumUuyHe+5fv8RAMeP8LmcRYUoQ/HyHlNXLHxsPMqC66T+t5k/GY7im+wRF9F34rbCUuciNR9
- PBTMuTVd48Rt/rc+eYSXPDM0y8CLsf2viOgWv1PgokznG3rk4g6+j2CEuNPC84m8CHNmyVYGUG/
- ZXp3odNxh9mjR+sSEkRv72X7U24iR20njUylMd05a1YrDXFN22n2iiCmT9af1ZN+75/KB9VoZFe
- lfCd01FqD9eP64xUpTE/M3Q1vgPmg/ZscMnN8S0GyzA1w7RllTbMK+15WBhH/JvaQWqedXk7FIO
- N8ViU1I/XPozp
-X-Google-Smtp-Source: AGHT+IHTXxaUU3mPE4R4w1BUKCG1Lu/OwIUh8GZt8oBsaReHx8V9B62SXUG8Iq+Xu7ugIT90mJEI7w==
-X-Received: by 2002:a05:600c:4e91:b0:43c:e7a7:1e76 with SMTP id
- 5b1f17b1804b1-43e94a410ebmr63500765e9.1.1743446934179; 
- Mon, 31 Mar 2025 11:48:54 -0700 (PDT)
+ AJvYcCV4B/pgKK3X6v6MsJZP5quetKTpq9MjfhAuOOd5BPLc2lNNrQlHCjyqSTleLgcfMAejU0SE4u/2KAtA@nongnu.org
+X-Gm-Message-State: AOJu0YwSHpUUO5K4sW82gqcwe5KsoP+qFxIMTYogQIEvByMRGbPqZTTP
+ 63mnDP4BYiYmRxcZTEj5ZaMVtIsvcYiv68Z6+xfOMrBHwOic/rQFv5mTZ6ljTTc=
+X-Gm-Gg: ASbGncvqNjmMItyyZoL2Z8HP+EU/7fDg9TfoPUiDtfGRppd6nXIdDsShlmb8911I55T
+ zmLY6ZhEj4nXlHvbsdNASlZkygAJlpBGulnZTuWzyzoWntdML8ZJAVcb4ZXdj3/YcrSOT+QNcdE
+ 0b24LZ3p4qxFMWBWdroW/ZobzU0PvCJP+euoDh/+FnIiIxgzAlKcgxFYplkf1KYOIX0Oe6qv4h6
+ 5RXHlGiH9cHph8rKSdyAU0qp+xlXk+xNmrnOCQWUbhO80z7OqGfOPX+jkrcrKsP6uYZNroT3cFp
+ jV1zgmomB6tpOnXQEb1ekku3vK+WUAutj00nVN3g03CO93DEOyPrbBjDZiZODi+rARs0gKJePVO
+ nwkoiCH2GQvTY
+X-Google-Smtp-Source: AGHT+IGNwaqhqujwCCGJ1Pm0MXvrKCySXu8m0NAAz+h+5IOFCKLVmsTj9OZXk9ppXIRDP4eaAPaYjw==
+X-Received: by 2002:a05:6000:2910:b0:390:ea34:7d83 with SMTP id
+ ffacd0b85a97d-39c23650080mr113841f8f.31.1743447066708; 
+ Mon, 31 Mar 2025 11:51:06 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8314f5c6sm178267595e9.40.2025.03.31.11.48.53
+ ffacd0b85a97d-39c0b663860sm12129546f8f.39.2025.03.31.11.51.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 11:48:53 -0700 (PDT)
-Message-ID: <a4823d77-9182-4b92-8ef4-a894e25b0b9b@linaro.org>
-Date: Mon, 31 Mar 2025 20:48:52 +0200
+ Mon, 31 Mar 2025 11:51:05 -0700 (PDT)
+Message-ID: <f8cad6b4-def8-484e-9ef8-dd850027f004@linaro.org>
+Date: Mon, 31 Mar 2025 20:51:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 00/11] target/avr: Increase page size
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: mrolnik@gmail.com, pierrick.bouvier@linaro.org
 References: <20250325224403.4011975-1-richard.henderson@linaro.org>
+ <a4823d77-9182-4b92-8ef4-a894e25b0b9b@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250325224403.4011975-1-richard.henderson@linaro.org>
+In-Reply-To: <a4823d77-9182-4b92-8ef4-a894e25b0b9b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,10 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/25 23:43, Richard Henderson wrote:
+On 31/3/25 20:48, Philippe Mathieu-Daudé wrote:
+> On 25/3/25 23:43, Richard Henderson wrote:
+> 
+>> Richard Henderson (11):
+>>    target/avr: Fix buffer read in avr_print_insn
 
-> Richard Henderson (11):
->    target/avr: Fix buffer read in avr_print_insn
+ >>    hw/core/cpu: Use size_t for memory_rw_debug len argument
 
-Patch 1 queued for 10.1, thanks!
+> Patch 1 queued for 10.1, thanks!
+
+Also patch 3 ;)
 
