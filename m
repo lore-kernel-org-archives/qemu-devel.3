@@ -4,105 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E00C36017
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 06:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AAFC36018
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 06:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tz8n8-00019Q-Vh; Mon, 31 Mar 2025 02:38:46 -0400
+	id 1tz8rr-0002XI-Un; Mon, 31 Mar 2025 02:43:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tz8mt-0000yo-I4
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 02:38:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=N63T=WS=kaod.org=clg@ozlabs.org>)
+ id 1tz8q0-0002Mz-HP; Mon, 31 Mar 2025 02:41:36 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tz8mr-0002MY-GM
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 02:38:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743403100;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gVEYp2KPkhkVTUdFzdP7nTbmE1NDjUYm5VB1hsaY2Z8=;
- b=JrBm2NLObV7tSgxFXKcIk5qio1pyZLFBPWQoAXieDmAaVHa4FNH00duXuWzauryJUeW2o5
- 8rDpiXPY9trrIK7YY/XLtBvcMg+sgMnyV+migPhyU4zamNJw9EI8Xn85eWqdkIkJgKRPQp
- CP2Jvb/qEwNnYB8CWwqmMozRqP+ylHY=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-Be6MY6nrPjWon_LX0GQCGA-1; Mon, 31 Mar 2025 02:38:16 -0400
-X-MC-Unique: Be6MY6nrPjWon_LX0GQCGA-1
-X-Mimecast-MFC-AGG-ID: Be6MY6nrPjWon_LX0GQCGA_1743403095
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5e6a64bd1ecso3054817a12.2
- for <qemu-devel@nongnu.org>; Sun, 30 Mar 2025 23:38:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743403095; x=1744007895;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gVEYp2KPkhkVTUdFzdP7nTbmE1NDjUYm5VB1hsaY2Z8=;
- b=cflZM+rX6tL1JWfwfsI6xXq6GjOa+QuhmSVsVxS2buZenCCmL4EylDv20jfQtJYBHq
- BKR8MkjGHEFROyEcQwfGVgU0lt9fi706Y+1cWgScOhGOiF4Z3HekWlAUqkTD5IC8syhV
- 1MIUyinRuBio+qA8EGWBql6tq1i8YHoI4KdRhm/6wZ1joU43ul9RvelxyPMngaQetIIr
- czfoAJHrxID1l9g/5x57At5z5cc8uRZmyvr7+6JoFuu2rNfZBAkfe0NLJGIxn69UoWFu
- r1CqvQDuXFUB7FuXpjZnKB52ePOUv4bUJfRd96R15NApwuTNGqVA6VWlmPbiUF30Ydcu
- 5J8w==
-X-Gm-Message-State: AOJu0YxaVS1z60zuQydV2WwSLnlUaycnYOlIW2Y5RP6NRM5ucDalMf2i
- 4g3l6g28w/LR0G9UXiHYNblBhJDGDzCfUe+osqJMoM30+qdGZzV0Dy4wDl2yezri9BotQsNNthe
- Kf891wpeax5WKMuRdT0nAxcJp086a4W7Ylv/yYhvDg97YAbxyG7t40ApuX1m/NSSuPUE20Qtax8
- 0vqgzZWNkFeWdrdDi1jP4dVng1EgM=
-X-Gm-Gg: ASbGncs4NN2JGqenXF2JX+7ooPRNnyxObc1w8cg/FthTk+o42M2tdA0NDCP9ZTxG0aZ
- fHd3Lg24We2ffFWEMkkeO4I+GNiFHaBXNZEaW9WodU2024VanSk+tXn+6JqW3BgMj244Qo6p/Og
- ==
-X-Received: by 2002:a05:6402:13cb:b0:5db:f5bc:f696 with SMTP id
- 4fb4d7f45d1cf-5edfcbe9380mr5887615a12.5.1743403095523; 
- Sun, 30 Mar 2025 23:38:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEh4uO81pZec8IoyICf8FTxAkV2EZzXXZDSDh1sADZBPeizZnw4um/LHz5yOrKEdmtcV67AFtSTyBbIf9kO6Hg=
-X-Received: by 2002:a05:6402:13cb:b0:5db:f5bc:f696 with SMTP id
- 4fb4d7f45d1cf-5edfcbe9380mr5887595a12.5.1743403095171; Sun, 30 Mar 2025
- 23:38:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=N63T=WS=kaod.org=clg@ozlabs.org>)
+ id 1tz8pw-0002uK-Sf; Mon, 31 Mar 2025 02:41:36 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZR1kC6K7Mz4wnp;
+ Mon, 31 Mar 2025 17:41:23 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZR1k90fjgz4wcn;
+ Mon, 31 Mar 2025 17:41:20 +1100 (AEDT)
+Message-ID: <9eca6d79-7910-43df-850a-bc55a701d964@kaod.org>
+Date: Mon, 31 Mar 2025 08:41:16 +0200
 MIME-Version: 1.0
-References: <20250314101535.1059308-1-haoqian.he@smartx.com>
- <20250327064348.3595732-1-haoqian.he@smartx.com>
-In-Reply-To: <20250327064348.3595732-1-haoqian.he@smartx.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Mon, 31 Mar 2025 14:37:37 +0800
-X-Gm-Features: AQ5f1Jq8hZ1oJEhTI71BHJTxQSv30T24lHNgCBSenyaVxR05Y5AVTG3AKKKvW9c
-Message-ID: <CAPpAL=yYvdBuepyLV2xKKiUoSot8mrkd6W5QM=asSZTKVVn4cQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] vhost: fix the IO error after live migration
-To: Haoqian He <haoqian.he@smartx.com>
-Cc: qemu-devel@nongnu.org, sgarzare@redhat.com, mst@redhat.com, 
- raphael@enfabrica.net, fengli@smartx.com, yuhua@smartx.com, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Amit Shah <amit@kernel.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "reviewer:vhost-user-scmi" <mzamazal@redhat.com>,
- David Hildenbrand <david@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, Eric Auger <eric.auger@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- "open list:Block layer core" <qemu-block@nongnu.org>,
- "open list:virtiofs" <virtio-fs@lists.linux.dev>
-Content-Type: multipart/alternative; boundary="0000000000003038e206319daae1"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/ppc: Deprecate Power8E and Power8NVL
+To: Aditya Gupta <adityag@linux.ibm.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20250329142641.2502003-1-adityag@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250329142641.2502003-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=N63T=WS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,207 +109,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003038e206319daae1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/29/25 15:26, Aditya Gupta wrote:
+> Power8E and Power8NVL variants are not of much use in QEMU now, and not
+> being maintained either.
+> 
+> Newer skiboot might not be able to boot Power8NVL since skiboot v7.0
+> 
 
-QE tested this series v3 with virtio-net regression tests, everything works
-fine.
+It is worth mentioning commit c5424f683ee3 ("Remove support for
+POWER8 DD1") too. In fact, I prefer the cover letter section below
+for a commit log.
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+This commit log is not mentioning the introduction of POWERPC_DEPRECATED_CPU.
+I suggest adding an extra patch for it.
 
-On Thu, Mar 27, 2025 at 2:46=E2=80=AFPM Haoqian He <haoqian.he@smartx.com> =
-wrote:
+> Deprecate the 8E and 8NVL variants.
+> 
+> After deprecation, QEMU will print a warning like below when the
+> CPU/Chips are used:
+> 
+>      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
+>      qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
+>      ...
+>      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8e -nographic
+>      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
+>      ...
+>      $ ./build/qemu-system-ppc64 -M pseries --cpu power8e -nographic
+>      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
+>      ...
 
-> At the end of the VM live migration, the vhost device will be stopped.
-> Currently, if the vhost-user backend crashes, vhost device's set_status()
-> would not return failure, live migration won't perceive the disconnection
-> with the backend. After the live migration is successful, the stale
-> inflight
-> IO will be submitted to the migration target host, which may be leading t=
-o
-> the IO error.
->
-> The following patch series fixes the issue by making the live migration
-> aware of the loss of connection with the vhost-user backend and aborting
-> the live migration.
->
+This is not very useful and it belongs to a patch adding
+POWERPC_DEPRECATED_CPU.
+
+  
+> Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
+> --cpu ?':
+> 
+>      $ ./build/qemu-system-ppc64 --cpu help
+>        ...
+>        power8e_v2.1     PVR 004b0201 (deprecated)
+>        power8e          (alias for power8e_v2.1)
+>        power8nvl_v1.0   PVR 004c0100 (deprecated)
+>        power8nvl        (alias for power8nvl_v1.0)
+>        power8_v2.0      PVR 004d0200
+>        power8           (alias for power8_v2.0)
+>        power9_v2.0      PVR 004e1200
+>        power9_v2.2      PVR 004e1202
+
+
+ditto.
+
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> 
 > ---
->   v1 ... v2
->     1. Fix some grammar issues in commit message.
->     2. Remove assert in vhost_scsi_common_stop and return error upwards.
->
->   v2 ... v3
->     1. Added more detailed comments and commit message.
->     2. Change the newly added type name and parameter name.
->     3. Remove set_status_ext, change the return type of set_status to int=
-.
->
-> Haoqian He (3):
->   system/runstate: add VM state change cb with return value
->   vhost: return failure if stop virtqueue failed in vhost_dev_stop
->   vhost-user: return failure if backend crash when live migration
->
->  backends/vhost-user.c                  | 20 +++++++--------
->  hw/block/vhost-user-blk.c              | 27 +++++++++++---------
->  hw/block/virtio-blk.c                  |  7 +++---
->  hw/char/virtio-serial-bus.c            |  3 ++-
->  hw/core/vm-change-state-handler.c      | 18 ++++++++-----
->  hw/display/vhost-user-gpu.c            | 12 ++++++---
->  hw/input/virtio-input.c                |  3 ++-
->  hw/net/virtio-net.c                    |  3 ++-
->  hw/scsi/scsi-bus.c                     |  2 +-
->  hw/scsi/vhost-scsi-common.c            | 13 +++++-----
->  hw/scsi/vhost-scsi.c                   |  5 ++--
->  hw/scsi/vhost-user-scsi.c              | 18 +++++++------
->  hw/vfio/migration.c                    |  2 +-
->  hw/virtio/vdpa-dev.c                   |  5 ++--
->  hw/virtio/vhost-user-base.c            | 23 ++++++++++-------
->  hw/virtio/vhost-user-fs.c              | 23 ++++++++++-------
->  hw/virtio/vhost-user-scmi.c            | 27 ++++++++++++--------
->  hw/virtio/vhost-user-vsock.c           | 15 +++++++----
->  hw/virtio/vhost-vsock-common.c         | 12 ++++-----
->  hw/virtio/vhost-vsock.c                | 11 ++++----
->  hw/virtio/vhost.c                      | 23 +++++++++--------
->  hw/virtio/virtio-balloon.c             |  3 ++-
->  hw/virtio/virtio-crypto.c              |  3 ++-
->  hw/virtio/virtio-iommu.c               |  3 ++-
->  hw/virtio/virtio-rng.c                 |  5 ++--
->  hw/virtio/virtio.c                     | 23 +++++++++++------
->  include/hw/virtio/vhost-scsi-common.h  |  2 +-
->  include/hw/virtio/vhost-vsock-common.h |  2 +-
->  include/hw/virtio/vhost.h              |  8 +++---
->  include/hw/virtio/virtio.h             |  2 +-
->  include/system/runstate.h              | 13 +++++++---
->  include/system/vhost-user-backend.h    |  2 +-
->  system/cpus.c                          |  8 ++++--
->  system/runstate.c                      | 35 ++++++++++++++++++++++----
->  34 files changed, 239 insertions(+), 142 deletions(-)
->
-> --
-> 2.44.0
->
->
->
+> Cover Letter
+> ============
 
---0000000000003038e206319daae1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">QE tested this series v3 with virtio-net regression tests,=
- everything=C2=A0works fine.<div><br></div><div>Tested-by: Lei Yang &lt;<a =
-href=3D"mailto:leiyang@redhat.com">leiyang@redhat.com</a>&gt;</div></div><b=
-r><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Thu, Mar 27, 2025 at 2:46=E2=80=AFPM Haoqian He &lt;<a h=
-ref=3D"mailto:haoqian.he@smartx.com">haoqian.he@smartx.com</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex">At the end of the=
- VM live migration, the vhost device will be stopped.<br>
-Currently, if the vhost-user backend crashes, vhost device&#39;s set_status=
-()<br>
-would not return failure, live migration won&#39;t perceive the disconnecti=
-on<br>
-with the backend. After the live migration is successful, the stale infligh=
-t<br>
-IO will be submitted to the migration target host, which may be leading to<=
-br>
-the IO error.<br>
-<br>
-The following patch series fixes the issue by making the live migration<br>
-aware of the loss of connection with the vhost-user backend and aborting<br=
->
-the live migration.<br>
-<br>
----<br>
-=C2=A0 v1 ... v2<br>
-=C2=A0 =C2=A0 1. Fix some grammar issues in commit message.<br>
-=C2=A0 =C2=A0 2. Remove assert in vhost_scsi_common_stop and return error u=
-pwards.<br>
-<br>
-=C2=A0 v2 ... v3<br>
-=C2=A0 =C2=A0 1. Added more detailed comments and commit message.<br>
-=C2=A0 =C2=A0 2. Change the newly added type name and parameter name.<br>
-=C2=A0 =C2=A0 3. Remove set_status_ext, change the return type of set_statu=
-s to int.<br>
-<br>
-Haoqian He (3):<br>
-=C2=A0 system/runstate: add VM state change cb with return value<br>
-=C2=A0 vhost: return failure if stop virtqueue failed in vhost_dev_stop<br>
-=C2=A0 vhost-user: return failure if backend crash when live migration<br>
-<br>
-=C2=A0backends/vhost-user.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 | 20 +++++++--------<br>
-=C2=A0hw/block/vhost-user-blk.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | 27 +++++++++++---------<br>
-=C2=A0hw/block/virtio-blk.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 |=C2=A0 7 +++---<br>
-=C2=A0hw/char/virtio-serial-bus.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-|=C2=A0 3 ++-<br>
-=C2=A0hw/core/vm-change-state-handler.c=C2=A0 =C2=A0 =C2=A0 | 18 ++++++++--=
----<br>
-=C2=A0hw/display/vhost-user-gpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-| 12 ++++++---<br>
-=C2=A0hw/input/virtio-input.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 |=C2=A0 3 ++-<br>
-=C2=A0hw/net/virtio-net.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ++-<br>
-=C2=A0hw/scsi/scsi-bus.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A0hw/scsi/vhost-scsi-common.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-| 13 +++++-----<br>
-=C2=A0hw/scsi/vhost-scsi.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0|=C2=A0 5 ++--<br>
-=C2=A0hw/scsi/vhost-user-scsi.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | 18 +++++++------<br>
-=C2=A0hw/vfio/migration.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0hw/virtio/vdpa-dev.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0|=C2=A0 5 ++--<br>
-=C2=A0hw/virtio/vhost-user-base.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-| 23 ++++++++++-------<br>
-=C2=A0hw/virtio/vhost-user-fs.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | 23 ++++++++++-------<br>
-=C2=A0hw/virtio/vhost-user-scmi.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-| 27 ++++++++++++--------<br>
-=C2=A0hw/virtio/vhost-user-vsock.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-| 15 +++++++----<br>
-=C2=A0hw/virtio/vhost-vsock-common.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 12 =
-++++-----<br>
-=C2=A0hw/virtio/vhost-vsock.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 | 11 ++++----<br>
-=C2=A0hw/virtio/vhost.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 | 23 +++++++++--------<br>
-=C2=A0hw/virtio/virtio-balloon.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0|=C2=A0 3 ++-<br>
-=C2=A0hw/virtio/virtio-crypto.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 |=C2=A0 3 ++-<br>
-=C2=A0hw/virtio/virtio-iommu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0|=C2=A0 3 ++-<br>
-=C2=A0hw/virtio/virtio-rng.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|=C2=A0 5 ++--<br>
-=C2=A0hw/virtio/virtio.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| 23 +++++++++++------<br>
-=C2=A0include/hw/virtio/vhost-scsi-common.h=C2=A0 |=C2=A0 2 +-<br>
-=C2=A0include/hw/virtio/vhost-vsock-common.h |=C2=A0 2 +-<br>
-=C2=A0include/hw/virtio/vhost.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 |=C2=A0 8 +++---<br>
-=C2=A0include/hw/virtio/virtio.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0|=C2=A0 2 +-<br>
-=C2=A0include/system/runstate.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 | 13 +++++++---<br>
-=C2=A0include/system/vhost-user-backend.h=C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0system/cpus.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 8 ++++--<br>
-=C2=A0system/runstate.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 | 35 ++++++++++++++++++++++----<br>
-=C2=A034 files changed, 239 insertions(+), 142 deletions(-)<br>
-<br>
--- <br>
-2.44.0<br>
-<br>
-<br>
-</blockquote></div>
+Why don't you use --cover-letter instead ? The rational would be at
+the beginning.
 
---0000000000003038e206319daae1--
+> Power8E and Power8NVL are not maintained, and not useful to qemu, and
+> upstream skiboot also has removed support till Power8 DD1.
+> Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
+> to be exact:
+> 
+>      commit c5424f683ee3 ("Remove support for POWER8 DD1")
+> 
+> No direct way to deprecate the pnv chips, a field like deprecation_note
+> could be added, but felt not needed as the chip will only get used if
+> the user requests corresponding 8E / 8NVL CPU, which will print
+> deprecation warning.
+> 
+> Also, no separate pnv machine for 8E and 8NVL, user has to pass --cpu,
+> which will throw the deprecation warning. So just deprecating CPUs should
+> be enough.
+
+Please separate the changes, one patch for POWERPC_DEPRECATED_CPU,
+another for PowerNV deprecation. More CPUs could be deprecated.
+
+Also, we have time : the QEMU 10.1 development phase has not started
+and the soft freeze should be around July. No rush needed.
+
+Thanks,
+
+C.
+
+
+> 
+> Changelog
+> =========
+> v2:
+>    + add mention to docs/about/deprecated.rst
+>    + add '(deprecated)' in output of qemu-system-ppc64 --cpu help
+> ---
+> ---
+>   docs/about/deprecated.rst |  9 +++++++++
+>   target/ppc/cpu-models.c   | 17 ++++++++++++++---
+>   target/ppc/cpu_init.c     |  7 ++++++-
+>   3 files changed, 29 insertions(+), 4 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index e2b4f077d453..d6b39db2aaca 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -275,6 +275,15 @@ embedded 405 for power management (OCC) and other internal tasks, it
+>   is theoretically possible to use QEMU to model them. Let's keep the
+>   CPU implementation for a while before removing all support.
+>   
+> +Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.0)
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +The Power8E and Power8NVL variants of Power8 are not really useful anymore
+> +in qemu, and are old and unmaintained now.
+> +
+> +The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
+> +be considered deprecated.
+> +
+>   System emulator machines
+>   ------------------------
+>   
+> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+> index ece348178188..6f2062e2c484 100644
+> --- a/target/ppc/cpu-models.c
+> +++ b/target/ppc/cpu-models.c
+> @@ -32,17 +32,22 @@
+>   /* PowerPC CPU definitions                                                 */
+>   #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
+>       glue(glue(glue(glue(pvr, _), svr), _), type)
+> -#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
+> +#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _is_deprecated) \
+>       static void                                                             \
+>       glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
+>       (ObjectClass *oc, void *data)                                           \
+>       {                                                                       \
+>           DeviceClass *dc = DEVICE_CLASS(oc);                                 \
+> +        CPUClass *cc    = CPU_CLASS(oc);                                    \
+>           PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
+>                                                                               \
+>           pcc->pvr          = _pvr;                                           \
+>           pcc->svr          = _svr;                                           \
+>           dc->desc          = _desc;                                          \
+> +                                                                            \
+> +        if (_is_deprecated) {                                               \
+> +            cc->deprecation_note = "CPU is unmaintained.";                  \
+> +        }                                                                   \
+>       }                                                                       \
+>                                                                               \
+>       static const TypeInfo                                                   \
+> @@ -63,6 +68,12 @@
+>       type_init(                                                              \
+>           glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
+>   
+> +#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
+> +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, false)
+> +
+> +#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc)                   \
+> +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type, true)
+> +
+>   #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
+>       POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
+>   
+> @@ -722,11 +733,11 @@
+>                   "POWER7 v2.3")
+>       POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
+>                   "POWER7+ v2.1")
+> -    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
+> +    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
+>                   "POWER8E v2.1")
+>       POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
+>                   "POWER8 v2.0")
+> -    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
+> +    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
+>                   "POWER8NVL v1.0")
+>       POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+>                   "POWER9 v2.0")
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 7decc09aec8f..fade53f7e2d6 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -7143,6 +7143,7 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+>   {
+>       ObjectClass *oc = data;
+>       PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
+> +    CPUClass *cc = CPU_CLASS(oc);
+>       DeviceClass *family = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
+>       const char *typename = object_class_get_name(oc);
+>       char *name;
+> @@ -7153,7 +7154,11 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+>       }
+>   
+>       name = cpu_model_from_type(typename);
+> -    qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
+> +    if (cc->deprecation_note) {
+> +        qemu_printf("  %-16s PVR %08x (deprecated)\n", name, pcc->pvr);
+> +    } else {
+> +        qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
+> +    }
+>       for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
+>           PowerPCCPUAlias *alias = &ppc_cpu_aliases[i];
+>           ObjectClass *alias_oc = ppc_cpu_class_by_name(alias->model);
 
 
