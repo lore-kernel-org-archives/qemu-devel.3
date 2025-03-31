@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BD8C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1810EC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 19:39:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzKrH-00067B-Ap; Mon, 31 Mar 2025 15:31:43 -0400
+	id 1tzKyF-0007Yy-VU; Mon, 31 Mar 2025 15:38:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzKrF-000670-2P
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:31:41 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1tzKyE-0007Yl-Mt
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:38:55 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzKrC-0000rm-Uw
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:31:40 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-39ac9aea656so3967080f8f.3
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:31:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1tzKyC-0001f9-U8
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 15:38:54 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-227a8cdd241so5658555ad.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 12:38:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743449497; x=1744054297; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PgKjDx16cMbHOU/aeCfkDN8fgf0i7WI7ytkAvB4TVOc=;
- b=YYiPZkr8cdIby8m5fXc95y9VmE1nOD8nLCanWUAmFHxT6aftn6tnHkMaNVS/Srkr2T
- kZJ5ookdmb8b115ZW4lr+t3PPmx33L4Y7XU3xm2S99QL5/up53nUmDW4yvuQNzSTsShb
- m53TiSEOkHou9b98++GVcnQdqWnJ+RjDQZbfuxrJK4dwIEO7LHLpjF9zcvKOQXo/DvFR
- GQS14ZToa6kXEMzi6Ae6VfTB1Ho7lI1+rcehSX2bjsM3yvwOzZNYMos0SZ7EMxqdJWgj
- QZd6XsztoBLbSxkwtu1pHLvZsL4Fy2csiMkKRha2nIVjnZHU5CY9L3XUmNK8lrYllrjN
- 0/iw==
+ d=gmail.com; s=20230601; t=1743449928; x=1744054728; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=y+iRYX/xQalMboqQgAbV2dXOcQ1A27wFDzT4V4vO6Vg=;
+ b=AqIltYBoEqEdd1zQLRALR5rB9KKTRwbmvDA8fpzoDE84NNUaIXacXf1/2j1zN1UPvE
+ ky2EVpnsb9owxuJQ6YCKLkHHK0k9WV0+crdmQ7lwkvG29akIn8BAbtrJWiPEoRs5HY03
+ Ia+T9bD74+PNHMxIdw1D3FYyDLtj7oQfW9QCpdzwKnid/jhi73GCPL/aOOtAh+14ig8E
+ yV4bMmSXwBc5qsy7ItRgI8yu77kKv7/S45xZyjh3mVQygEJkZO9d3nagQWlWvffSUCpt
+ 4b5pEdjl8Uz6GdnXI6CbTXgEoqAmqYe6arnTeL7Iwgk8dAu2HXLla4ak/BM9X7BwHDvn
+ 91kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743449497; x=1744054297;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PgKjDx16cMbHOU/aeCfkDN8fgf0i7WI7ytkAvB4TVOc=;
- b=YK23pyRiJ4VHxWW/BKB/qMM7RXWIlwtBvDgW3Lo6MXFz53BUT+qdONtXWhIeYo1Syv
- C8vs6FWZPHwK9jyjJsM7kg/k/kTgANFENylFhgkE3End35leGMmchxtv6ItE3vHGR93w
- Wh+3+xmQeq9cwZvgE7uKaqtrtlRFtAAYcg06QvcX0S9VddWrw+P8593Ilvs3ZhHS4P0N
- Q22WD3A7y4yoJD65WUoWO6oSmZFNClZ3rKyTrkvCTvUGBo4lON1SeRDJlmlmoiZ8WHB0
- IGmuCzPInwVBd643B8ssbywvcG4O4UYvLH80jY+h2pPrh4pg3o8P/0LU0VuYwe5fE/e5
- c9fQ==
+ d=1e100.net; s=20230601; t=1743449928; x=1744054728;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y+iRYX/xQalMboqQgAbV2dXOcQ1A27wFDzT4V4vO6Vg=;
+ b=Ehr6HNdGc7nLs+LfcnuZphckQncQJe0xk//Z43iAU825YdInP43cOhBOaulS38XAOy
+ 7ZuoF01UXtHMVS35xfyZZry8ZvwMJVf3hwuwQxnwgab5xTCrMpBbErSkdgDcxqPizuU+
+ mS8JOJCKqqwLyncsZdq9aVk92dChdE/Z/5lWEp5wZgNplaoMFTM0jYpxeWAqTTW+r+6T
+ XHDMKZKyZFUTjLzPzgY9R/Zx+F/xgA/y8C3COiDjD2NeqpUAxBgnb/4fxyPhdKhqDcXs
+ 0WSFwaAHl6RY+bzcfV/JeOeLXXVNUwEqBtfl8vTNXlnD/b++sstx0yYCFPEmob0qLYQA
+ /1Mg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsJ8DYLxDLpqSsz286D/nXxeCQIwKVzhHHOAbvnUd1JNNNwp3g2T8tPcFT6v6bYSdT27nO0jtWUnPs@nongnu.org
-X-Gm-Message-State: AOJu0YxHFEqjdG8rSO+Gv7bIQGwrjisUTmNJMjVR3l0VtC0Hrs2tjvGe
- 1nE+S0S4F6v+CbWDzS8I6JaFvaM1AhKd9p2ZRcZRTKnkf2p9vY9XlTkeuMEYaw0=
-X-Gm-Gg: ASbGncvJWBBouzYD+IHKky3S/lNB3Be/Snt1kJ/jqgcFuWoKkGVITP/5eQTMBULsfW9
- GObM4sPxgdWAiAA3c3B9uDOOnfjo2oCLWYv+DxYTb9gxpFxgLIB2ROdgOtJzCW2NusXWtBmifIR
- o+3rCbOnuYtOjlnPmRwWS8fDmOOCMjf9UDjbkKAWraempAMAEx6CeCui81JdYZCuXQyAz6+N6xv
- N/R6bUw9Fx9HYMTt7J20sL32kI8+qc+vqMdcufVNyWGI52anie5vmFWs7eGRwU0YxtXBU7ohOjX
- lD3XU+zVFPdYQFoa0RSbtfThm86YseQJavH6tH4vDHvX8KnmcPQmzuIn6Wtu45mPLvU2DEyLgza
- PO3aaYD0SFezkqubuCMPemAI=
-X-Google-Smtp-Source: AGHT+IH6hoNg+uBy4GlJdlvokmvWf2x+cLQNg5fB2X365X8UcNX3hVlCc/sQ2ufo7nI869uFgcyAVA==
-X-Received: by 2002:a05:6000:1aca:b0:391:1458:2233 with SMTP id
- ffacd0b85a97d-39c120cb5b1mr6927742f8f.11.1743449496712; 
- Mon, 31 Mar 2025 12:31:36 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b66ab6dsm11809744f8f.48.2025.03.31.12.31.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 12:31:36 -0700 (PDT)
-Message-ID: <c9616706-3c10-439e-98be-0b026343abf4@linaro.org>
-Date: Mon, 31 Mar 2025 21:31:34 +0200
+ AJvYcCUoNpLw8pvy9Mnt43Y4JdkwNuTc1XSJW+++4HKJNrgow/Db4AT0eoLbXPxwFxGD8bnpqaf3jEsEnDC6@nongnu.org
+X-Gm-Message-State: AOJu0YxILLb/1fzBlgM+l4ycdpRYqqJ0PEMXW6oJPHIVRbgdJB8cWyVa
+ RNTEfgC9shXGwxcjIEwEsyaKhRnsWStDAppKwQnrJSQYAV3o9SJq
+X-Gm-Gg: ASbGncsGnDhc8QpNXqPebVd74M+6+09FvFiEHKIbte4eD/v3IFEiQwT4488A/gffFyd
+ XJiCM2b8VtCWGE9giIpmtvHPTOpRwVMLi9AzDYYgiqmUs1j9aYJvx+J+p+hR8HAGZWjaCLCewn1
+ OMcT5y7jgC2afrg4jep+z7lq5SstrfFdCEAD+zDmMsmSN+HYeGRMMFglvZEJmOOIeLi9v6Ne2zE
+ 6E/CDv6kIMqppDtmoNuAMPrTXPqUDoW+5ZAesjuHUjSCAmAAM3Dw8wsznPE3WTf5N6krIfdYOR5
+ NOqxVDVE+5+EY2wkmNGqzSVZUpRiuyA/WDxCJiQ9XBwBw8EbhFwic3GtRq0XrUb9OJvN4EU=
+X-Google-Smtp-Source: AGHT+IFwubbp+TUYm6LnGYSydAKGp+TxnqDtCNA8OFUZSc/zaXMKhfdTyYAENma4WqGllcOIM9jtHw==
+X-Received: by 2002:a17:902:f54c:b0:224:1ec0:8a1a with SMTP id
+ d9443c01a7336-2292fa09394mr124859875ad.51.1743449928273; 
+ Mon, 31 Mar 2025 12:38:48 -0700 (PDT)
+Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2291eec6fb2sm73360115ad.26.2025.03.31.12.38.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 31 Mar 2025 12:38:47 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Mon, 31 Mar 2025 19:38:45 +0000
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: anisa.su887@gmail.com, qemu-devel@nongnu.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 2/9] cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
+Message-ID: <Z-rvRZUTUpT2Kv-S@deb-101020-bm01.eng.stellus.in>
+References: <20250317164204.2299371-1-anisa.su887@gmail.com>
+ <20250317164204.2299371-3-anisa.su887@gmail.com>
+ <20250318155624.00006410@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] pc-bios: Move device tree files in their own subdir
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- Stefan Weil <sw@weilnetz.de>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <cover.1743262839.git.balaton@eik.bme.hu>
- <bb208aab670cc59bdb1f7ea67239e2b72884f317.1743262839.git.balaton@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bb208aab670cc59bdb1f7ea67239e2b72884f317.1743262839.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250318155624.00006410@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,183 +104,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Stefan
-
-On 29/3/25 16:43, BALATON Zoltan wrote:
-> We have several device tree files already and may have more in the
-> future so add a new dtb subdirectory and move device tree files there
-> so they are not mixed with ROM binaries.
+On Tue, Mar 18, 2025 at 03:56:24PM +0000, Jonathan Cameron wrote:
+> On Mon, 17 Mar 2025 16:31:29 +0000
+> anisa.su887@gmail.com wrote:
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   MAINTAINERS                                |   2 +-
->   pc-bios/{ => dtb}/bamboo.dtb               | Bin
->   pc-bios/{ => dtb}/bamboo.dts               |   0
->   pc-bios/{ => dtb}/canyonlands.dtb          | Bin
->   pc-bios/{ => dtb}/canyonlands.dts          |   0
->   pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
->   pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
->   pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
->   pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
->   pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
->   pc-bios/meson.build                        |  23 +--------------------
->   system/datadir.c                           |   4 +++-
->   12 files changed, 28 insertions(+), 24 deletions(-)
->   rename pc-bios/{ => dtb}/bamboo.dtb (100%)
->   rename pc-bios/{ => dtb}/bamboo.dts (100%)
->   rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
->   rename pc-bios/{ => dtb}/canyonlands.dts (100%)
->   create mode 100644 pc-bios/dtb/meson.build
->   rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
->   rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
->   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
->   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
+> > From: Anisa Su <anisa.su@samsung.com>
+> > 
+> > FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section 7.6.7.6.1
+> > 
+> > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> > --- a/hw/cxl/i2c_mctp_cxl.c
+> > +++ b/hw/cxl/i2c_mctp_cxl.c
+> > @@ -46,6 +46,9 @@
+> >  /* Implementation choice - may make this configurable */
+> >  #define MCTP_CXL_MAILBOX_BYTES 512
+> >  
+> > +/* Supported FMAPI Cmds */
+> > +#define FMAPI_CMD_MAX_OPCODE 0x57
+> > +
+> >  typedef struct CXLMCTPMessage {
+> >      /*
+> >       * DSP0236 (MCTP Base) Integrity Check + Message Type
+> > @@ -200,7 +203,8 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
+> >          if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
+> >                msg->command_set < 0x51) &&
+> >              !(msg->message_type == MCTP_MT_CXL_FMAPI &&
+> > -              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
+> > +              msg->command_set >= 0x51 &&
+> > +              msg->command_set < FMAPI_CMD_MAX_OPCODE)) {
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index d54b5578f8..9349950527 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1569,7 +1569,7 @@ F: hw/pci-host/ppc440_pcix.c
->   F: hw/display/sm501*
->   F: hw/ide/sii3112.c
->   F: hw/rtc/m41t80.c
-> -F: pc-bios/canyonlands.dt[sb]
-> +F: pc-bios/dtb/canyonlands.dt[sb]
->   F: pc-bios/u-boot-sam460ex-20100605.bin
->   F: roms/u-boot-sam460ex
->   F: docs/system/ppc/amigang.rst
-> diff --git a/pc-bios/bamboo.dtb b/pc-bios/dtb/bamboo.dtb
-> similarity index 100%
-> rename from pc-bios/bamboo.dtb
-> rename to pc-bios/dtb/bamboo.dtb
-> diff --git a/pc-bios/bamboo.dts b/pc-bios/dtb/bamboo.dts
-> similarity index 100%
-> rename from pc-bios/bamboo.dts
-> rename to pc-bios/dtb/bamboo.dts
-> diff --git a/pc-bios/canyonlands.dtb b/pc-bios/dtb/canyonlands.dtb
-> similarity index 100%
-> rename from pc-bios/canyonlands.dtb
-> rename to pc-bios/dtb/canyonlands.dtb
-> diff --git a/pc-bios/canyonlands.dts b/pc-bios/dtb/canyonlands.dts
-> similarity index 100%
-> rename from pc-bios/canyonlands.dts
-> rename to pc-bios/dtb/canyonlands.dts
-> diff --git a/pc-bios/dtb/meson.build b/pc-bios/dtb/meson.build
-> new file mode 100644
-> index 0000000000..7a71835bca
-> --- /dev/null
-> +++ b/pc-bios/dtb/meson.build
-> @@ -0,0 +1,23 @@
-> +dtbs = [
-> +  'bamboo.dtb',
-> +  'canyonlands.dtb',
-> +  'petalogix-ml605.dtb',
-> +  'petalogix-s3adsp1800.dtb',
-> +]
-> +
-> +dtc = find_program('dtc', required: false)
-> +if dtc.found()
-> +  foreach out : dtbs
-> +    f = fs.replace_suffix(out, '.dts')
-> +    custom_target(f,
-> +        build_by_default: have_system,
-> +        input: files(f),
-> +        output: out,
-> +        install: get_option('install_blobs'),
-> +        install_dir: qemu_datadir / 'dtb',
-> +        command: [ dtc, '-q', '-I', 'dts', '-O', 'dtb',
-> +                        '-o', '@OUTPUT@', '@INPUT0@' ])
-> +  endforeach
-> +else
-> +    install_data(dtbs, install_dir: qemu_datadir / 'dtb')
-> +endif
-> diff --git a/pc-bios/petalogix-ml605.dtb b/pc-bios/dtb/petalogix-ml605.dtb
-> similarity index 100%
-> rename from pc-bios/petalogix-ml605.dtb
-> rename to pc-bios/dtb/petalogix-ml605.dtb
-> diff --git a/pc-bios/petalogix-ml605.dts b/pc-bios/dtb/petalogix-ml605.dts
-> similarity index 100%
-> rename from pc-bios/petalogix-ml605.dts
-> rename to pc-bios/dtb/petalogix-ml605.dts
-> diff --git a/pc-bios/petalogix-s3adsp1800.dtb b/pc-bios/dtb/petalogix-s3adsp1800.dtb
-> similarity index 100%
-> rename from pc-bios/petalogix-s3adsp1800.dtb
-> rename to pc-bios/dtb/petalogix-s3adsp1800.dtb
-> diff --git a/pc-bios/petalogix-s3adsp1800.dts b/pc-bios/dtb/petalogix-s3adsp1800.dts
-> similarity index 100%
-> rename from pc-bios/petalogix-s3adsp1800.dts
-> rename to pc-bios/dtb/petalogix-s3adsp1800.dts
-> diff --git a/pc-bios/meson.build b/pc-bios/meson.build
-> index 34d6616c32..34d8cc4f33 100644
-> --- a/pc-bios/meson.build
-> +++ b/pc-bios/meson.build
-> @@ -86,31 +86,10 @@ blobs = [
->     'vof-nvram.bin',
->   ]
->   
-> -dtc = find_program('dtc', required: false)
-> -foreach f : [
-> -  'bamboo.dts',
-> -  'canyonlands.dts',
-> -  'petalogix-s3adsp1800.dts',
-> -  'petalogix-ml605.dts',
-> -]
-> -  out = fs.replace_suffix(f, '.dtb')
-> -  if dtc.found()
-> -    custom_target(f,
-> -        build_by_default: have_system,
-> -        input: files(f),
-> -        output: out,
-> -        install: get_option('install_blobs'),
-> -        install_dir: qemu_datadir,
-> -        command: [ dtc, '-q', '-I', 'dts', '-O', 'dtb',
-> -                        '-o', '@OUTPUT@', '@INPUT0@' ])
-> -  else
-> -    blobs += out
-> -  endif
-> -endforeach
-> -
->   if get_option('install_blobs')
->     install_data(blobs, install_dir: qemu_datadir)
->   endif
->   
->   subdir('descriptors')
-> +subdir('dtb')
->   subdir('keymaps')
-> diff --git a/system/datadir.c b/system/datadir.c
-> index e450b84ce9..f96f8fc264 100644
-> --- a/system/datadir.c
-> +++ b/system/datadir.c
-> @@ -44,9 +44,11 @@ char *qemu_find_file(QemuFileType type, const char *name)
->   
->       switch (type) {
->       case QEMU_FILE_TYPE_BIOS:
-> -    case QEMU_FILE_TYPE_DTB:
->           subdir = "";
->           break;
-> +    case QEMU_FILE_TYPE_DTB:
-> +        subdir = "dtb/";
-> +        break;
->       case QEMU_FILE_TYPE_KEYMAP:
->           subdir = "keymaps/";
->           break;
+> Hmm. There is a visibility problem here we should address but probably not
+> by introducing a new define.  Maybe we should move the enum from
+> cxl-mailbox-utils.c in a precursor patch.
+> 
+> Jonathan
+Thanks for the feedback and review Jonathan.
 
-Apparently we also need:
+According to the comment above this condition, "Any command forming part
+of the CXL FM-API command set... is valid only with the CXL Fabric
+Manager API over MCTP binding (DSP0234)."
 
--- >8 --
-diff --git a/qemu.nsi b/qemu.nsi
-index b186f223e14..d419986ca06 100644
---- a/qemu.nsi
-+++ b/qemu.nsi
-@@ -206,3 +206,2 @@ Section "Uninstall"
-      Delete "$INSTDIR\*.dll"
--    Delete "$INSTDIR\*.dtb"
-      Delete "$INSTDIR\*.fd"
-@@ -217,2 +216,3 @@ Section "Uninstall"
-      Delete "$INSTDIR\qemu-system-*.exe"
-+    RMDir /r "$INSTDIR\dtb"
-      RMDir /r "$INSTDIR\doc"
----
+From my understanding, this check is to ensure that any message
+sent from the FM API command set (0x51 - 0x59) has the MCTP_MT_CXL_FMAPI
+binding and all other commands (opcode < 0x51) are are sent with the
+MCTP_MT_CXL_TYPE3 binding.
 
-Stefan, WDYT?
+Although I see from r3.2 Table 8-230 CXL Defined FM API Command Opcodes
+that commands from sets 0x57-0x59 are prohibited from being implemented
+in the MCTP CCI, would it be more correct to change the condition for
+FMAPI commands  to msg->command_set < 0x59? Then if/when commands from sets
+0x57-0x59 are implemented, if they are implemented according to the spec, they
+should not be added to the FM MCTP CCI.
+
+Please correct my understanding if this is incorrect.
+
+Regarding the visibility problem, I intend to move the enum defining all the
+opcodes in cxl-mailbox.utils.c to cxl-mailbox.h and including cxl-mailbox.h
+in i2c_mctp_cxl.c
+
+Let me know if that is what you intended.
+
+Other than that, I have removed the extraneous TO-DO's from the other
+patches and plan to send out v2 with relevant corrections soon.
+Hopefully that makes the remaining patches easier for you to review.
+
+Thanks,
+Anisa
+
+ 
+> 
+> 
+> >              buf->rc = CXL_MBOX_UNSUPPORTED;
+> >              st24_le_p(buf->pl_length, len_out);
+> >              s->len = s->pos;
+> 
 
