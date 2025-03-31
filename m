@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD1DC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B4AC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDv8-0002ZJ-Os; Mon, 31 Mar 2025 08:07:16 -0400
+	id 1tzDwf-0003JG-0W; Mon, 31 Mar 2025 08:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDv5-0002Yp-CJ
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:07:11 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDwY-0003Hw-OY
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:08:43 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDv3-0003Ie-HR
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:07:11 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-391342fc0b5so3259754f8f.3
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:07:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDwV-0003S0-VX
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:08:42 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43cfdc2c8c9so24616275e9.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743422827; x=1744027627; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0YU2OLsvo/qtutzo+RPIOTWZ+6IuK1AZJ5y8/j1H11I=;
- b=nGYuB0p2+IqyiBJRBIyK39gdyP00vvLEEmE8+5HUHJG5puUpClSHYnWAFs6PO82nhm
- CZP4p01f8vHt7fb/PeqvRJtwKIMRf41rMvQZOyl2vrFH2XoFGEY6j2XFLEfJWaamwzA4
- HDrR3tQEHnNTEIRu119dZEbncZ2GukcQ/+7J1vvmyFg5wN4aPxfqp5zeG0oA/ls+8wGf
- Mh82xyB3E5swfxt8cC6I92kmqzITwOH//XfgN/e0HjUt2cUT+JVVhX0tDVtVzYct3WMW
- zL5YFLvCkqU6H3CqPXxfgRM6Zjf01Amx8X8Dsae61SyifC7E9utXexitWeouMku0jnEg
- +YaA==
+ d=linaro.org; s=google; t=1743422918; x=1744027718; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7K/4GPWGIZEu2YallF2JHPPsSY3vBicgLVyIy98Zowg=;
+ b=wq5iJZBxdqRAT0o6reP2UtXgZd6KWZWfr4aQwyG1oHpTsSXyjNmS1ZZ+7sT43zF9a6
+ OEp1kqX6tkapnDb+MvuHCoFr/AZ7hfuxqdb08A++t/OKt0psT0y26kiuIJUyKDnm8FPd
+ sSEHfy2bxNEILT2Q8W834+hUzoi9Lw4L9uGTSyMiqLYtPEFUlySFOs1/YzKlO/g5trMD
+ EwLsshQ92f2Lfd6j4mmJNGWm2z64QU426k/3yDPYxAfoNfJt51Ez96jJnfKLWVQaJ2tE
+ G2YexYZTpNWheJIHJWtUarvTX9om/TiQD4mahe/labMt6nRWiJv+Wifo1mVSUCYB+8EB
+ s6VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743422827; x=1744027627;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743422918; x=1744027718;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0YU2OLsvo/qtutzo+RPIOTWZ+6IuK1AZJ5y8/j1H11I=;
- b=F7C27hTgvr4SIjMZqmfHvHa4vK/msyY16zWNB8QrIh6zP5tCasjLi7Jfj7J6QcpbnD
- RB7zPJcxcqmLF1+as9WiLOX0HvgXpGMh1GsSim831rhyJPMEGxzj0vNdelpSaCBBOx98
- 4DBnHwSzXpuqNy9mrHsnAsGqhzGBsrUy3fE7q4+L229iFAmVymGwnvv3i4a1NBhNHuVf
- tOn28H2i50qTsXQtRT1wuCfQd0CLbe1UJ8efSOA669P9EvA0xnxlgUcv45OL2eaS7Dli
- VRDHWuYyNQ9bf+zE0K/bnNpsYiRGBNkBfTL3fuy67sAkNfWwQtD9DZ6pzSmBooO3Hu/w
- LcWA==
+ bh=7K/4GPWGIZEu2YallF2JHPPsSY3vBicgLVyIy98Zowg=;
+ b=fZMQYaOYazRwh9om1mCb0fTtPY6HJgpXH9qmPmybUE4MNbdp60MX4qmTJToJZiRPvm
+ 9qwmKi9kTtKBI0oTwoItVpI1gzB/IoGUPju2f6+SlVXLotI5QjqSf9SWcgGL8G8I4mGJ
+ +dN+dsipRTrkLgBSMHId8/v00D89Kd5IbiOHLybxmtNGaUeTMpzmtSulyTvzpPAuHPBc
+ d0nVKEoL6q4s6zPHrjFLjSs9GfCYg5g/xGYqob+bFGY5oumzJkIelCqM9B6x4FtIObLl
+ 3qGeV3YP6EEpGBd/mjNeBJAHBPlv/XqmuDIUhWDKKlXJmFxn2/ew3PtucUtOfpD3n5B/
+ DSgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWc87/kc61TvaK5SmhYRPZ3IU2lBwX7K9t7hh66P5pkkbqLzUjxqOEUGEtsFKfNuFwGBFpkWGpaQb5v@nongnu.org
-X-Gm-Message-State: AOJu0YwM+kvMT6yimGqp2UU0kkKAIn3eDnclMFyGNexw+zQRTvIDhu5g
- cDaVBXDPVolEtSzo5yl8DhSxVKIwlFqVocqoLQeCA7Kqv8rHdt1eSAqW8wNiM7Jibt0QzDhRAmJ
- b
-X-Gm-Gg: ASbGnctJDlgw69/P7cd8oT1vY4VS9NFrjYaYsTIeFg/ahCXWn2KTw4Msrd47gIAgZT3
- z52vgqrZvnqg6a9buWow1ZWiLbaeTNMfIN29HjVm5vOrc4cjNXjAgTj0KxxtC+tY5kaqOdJrMPc
- ppSlSTQmMB/wED7s2H0NspPiQVJ1ovxXE/o6tES2PY+erzPeTF+nK+ZT23AvdV7qOKnJOf6BKEG
- rO3tNBIxwszeY29TL/S5vJr+ejASp1PXrWqYZsnMS0OrAiS6JmE0rqbyCMZbs+PmNUohnG3JQyU
- L9CeGFAuXQDs99ZIldEEzDIYiHNLmfR0Ha/rGsZ5/kL2SZFOkhO5HzVGtYl5UNAF5jcOcFV0d3H
- 8na+M+AYa9DSS
-X-Google-Smtp-Source: AGHT+IE5jw0q4rvHJsWNjdlUZ1QE2yQ1oPtKw8EiQfms8LhxbxOAAlzK1GrEwsUtEdav8eqYimEqxQ==
-X-Received: by 2002:a5d:5982:0:b0:390:e9b5:d69c with SMTP id
- ffacd0b85a97d-39c120e3873mr7349636f8f.25.1743422827529; 
- Mon, 31 Mar 2025 05:07:07 -0700 (PDT)
+ AJvYcCWWiUHPxiW6sXWrOXKRCeDgMYj/13b+lrqd9DRYeBfWnGyWOsHJTqY0RQky0W9Y7LM0qIT6nlpXPXvc@nongnu.org
+X-Gm-Message-State: AOJu0Yy9Ayk0l53K0Rx6r0zEXU+DC/6sU/aR9G3GDZoot6a81O1GIIe5
+ eqcF40/zXYEMK7UiKtZ8FGzJH52cTuwi0hpI5GmpJ6PYciXri11Jc9lkiWnnGgY=
+X-Gm-Gg: ASbGncuaJt3ADHt7Pe2/CJy+R6oc3rrOSZhBNR7n5mlw/y3+ol/t056PssES0DyunRB
+ pNk5aszSwmbPuXwkk5a3121Si89R8O9AiDgMasZcc6l3kFjoBdXuPBQUn5db9eb7C3Ip8TMjOoY
+ rB7IGmwZmNpNgSrYXiBU0gjHV4GAZTLhqEv4UQSK12TsMA4cWqInbNzd3ZLGpMJXbH6YjZTFOEj
+ 2xMV0bUgb46cKz4Qk9RlrdVE078gs52Xq4xZr6Vj0k8cJbUTPB85RhyutAekKpcREjQeYY3V0dq
+ hUQCkfaToI+mNfchYpTg4MZlb0Lbaj6Zer/3mwtzMvsYN3ydaCfRBGo5Y+lVr01GPju6btPai4Y
+ Y78INbMyFzK8a
+X-Google-Smtp-Source: AGHT+IERudE0c3MqkTsupD9wPvwN97BbjuKs07vZOHd7x9shbaN87Z2dQ1h0wlK/AWVuZTLQe0E9VQ==
+X-Received: by 2002:a05:600c:83cc:b0:43d:cc9:b09d with SMTP id
+ 5b1f17b1804b1-43db62bc26fmr66069065e9.20.1743422917793; 
+ Mon, 31 Mar 2025 05:08:37 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d914f1561sm79866055e9.1.2025.03.31.05.07.06
+ ffacd0b85a97d-39c0b79e393sm11262945f8f.72.2025.03.31.05.08.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 05:07:07 -0700 (PDT)
-Message-ID: <430d8a07-903d-4fc5-b8e3-04946b2e26d0@linaro.org>
-Date: Mon, 31 Mar 2025 14:07:06 +0200
+ Mon, 31 Mar 2025 05:08:37 -0700 (PDT)
+Message-ID: <c8657538-9ab6-4b6b-9198-2339a37fdb56@linaro.org>
+Date: Mon, 31 Mar 2025 14:08:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mips: Mark the "mipssim" machine as deprecated
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Thomas Huth <thuth@redhat.com>,
- QEMU devel <qemu-devel@nongnu.org>, Aleksandar Rikalo <arikalo@gmail.com>
-References: <20250121103655.1285596-1-thuth@redhat.com>
- <b0accbae-b9ca-4fb2-a842-f08ac947ef0a@app.fastmail.com>
- <f96de148-67e2-41ab-ad5e-23d68af25f85@app.fastmail.com>
- <bfe9e233-bcaa-4c27-9c8b-7540dc2795ef@linaro.org>
+Subject: Re: [PATCH 2/2] target/ppc: Fix SPRC/SPRD SPRs for P9/10
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20250331120357.584561-1-npiggin@gmail.com>
+ <20250331120357.584561-3-npiggin@gmail.com>
 Content-Language: en-US
-In-Reply-To: <bfe9e233-bcaa-4c27-9c8b-7540dc2795ef@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250331120357.584561-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/3/25 14:03, Philippe Mathieu-Daudé wrote:
-> On 21/1/25 13:09, Jiaxun Yang wrote:
->> 在2025年1月21日一月 下午12:07，Jiaxun Yang写道：
->>> 在2025年1月21日一月 上午10:36，Thomas Huth写道：
->>>> We are not aware of anybody still using this machine, support for it
->>>> has been withdrawn from the Linux kernel (i.e. there also won't be
->>>> any future development anymore), and we are not aware of any binaries
->>>> online that could be used for regression testing to avoid that the
->>>> machine bitrots ... thus let's mark it as deprecated now.
->>>>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   If anybody is still using this machine, please speak up now!
->>>
->>>
->>> FYI I'm using it to run MIPS AVP (Architecture Verification Programs)
->>> time by time to check TCG's compliance.
->>>
->>> It is a proprietary software so unfortunately no binary available
->>> to public :-(
->>>
->>> AVP has two supported platforms, the first is plain old MIPSSIM
->>> here, the second is OVPSim MIPS, which is compatible with my previous
->>> MIPS virt machine effort.
->>>
->>> Maybe I should bring MIPSSIM work back?
->>                          ^ Oops I meant MIPS VIRT.
+On 31/3/25 14:03, Nicholas Piggin wrote:
+> Commit 60d30cff847 ("target/ppc: Move SPR indirect registers into
+> PnvCore") was mismerged and moved the SPRs to power8-only, instead
+> of power9/10-only.
 > 
-> IIRC I didn't finished to review the previous version?
-> 
-> Is it this series?
-> https://lore.kernel.org/qemu-devel/20221124212916.723490-1- 
-> jiaxun.yang@flygoat.com/
+> Fixes: 60d30cff847 ("target/ppc: Move SPR indirect registers into PnvCore")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   target/ppc/cpu_init.c | 23 ++++++++++++-----------
+>   1 file changed, 12 insertions(+), 11 deletions(-)
 
-As the 'MIPS VirtIO Machine' looks quite easy, I can see it being
-merged within 2 releases, so it seems safe to deprecate the MipsSim
-one meanwhile.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
