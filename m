@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F55CC3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B848CC3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzEc8-0004OD-ET; Mon, 31 Mar 2025 08:51:40 -0400
+	id 1tzEeh-0005Bz-38; Mon, 31 Mar 2025 08:54:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzEc5-0004Ng-Bl
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:51:38 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzEee-0005Bk-JC
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:54:17 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzEc3-0000Wc-TE
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:51:37 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso29322455e9.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:51:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzEec-0000ly-5o
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:54:15 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-38f2f391864so2654635f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743425493; x=1744030293; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743425652; x=1744030452; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4k9y3zoPhxwIjkLfasmIyVn6tGX+TjQOdHwLDepng1A=;
- b=IJO2ugG4yhyazLC0suMad68lnQ1tRMliSvgeEiw+HUGFNn98On5Gx7Z6H3mj6Q3JM3
- +rS8jOIFQVkaEj/TaY5fjxYJWNb0n0/92P9je5SrHsDOHffcjvxeBOmvxIntlaCbJd7l
- Mvu+IrBULjvxuTIQqoMDRcMZ/cbwy9bv5+jej4ttzj3HasXhRwvJMS+LxBRyEoiG1+dn
- F3+u+0VdUzMdFaUZQEcRA8vFy0Spm2n/Ss5fTem4NvVYevH4/ulDSN7cTrk6HDdbYkH0
- Us1+ZVWKw1uK+Liclp+6gSMi7VShEVQLaP7YWP+5UbgGyLn3vLDnaYyFkFXnCH1+NN4+
- yV6g==
+ bh=gkiEEZMJm99j/mZOjo/cuNWyPY8AU+8kAzHuEAHfD/A=;
+ b=V5zRtWsF/uxA8FrrK0phCQtXeGAmaEkHMls6QhX7ozGenom+WZGijNuE3eYGrV7KUH
+ AltdNrrdg7IX+1Os9AHR4G8ZXz7kOea+RFFbovyA1hCAomJczWjSm/1qMbyz3Lui+bnT
+ oL4dnrR1WVpxuyP4kja6ZCmL1uhs+o6lnfVueReHKclXq1rHywkDD+iyUxuKrrVp8pjz
+ mUiqOoaEr/lelBT9f9gj1a4R0xO1HeB9ojYE9OUc0bNryz3AUe50MgbHPO1vVFavFB6q
+ bwM7PO8BZzMvgJmsHWiO3aXY1Qlt2qbUtSSoDYXP2NOo23d/rhkfwDZgWbGwWKmEz1u1
+ TKrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743425493; x=1744030293;
+ d=1e100.net; s=20230601; t=1743425652; x=1744030452;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4k9y3zoPhxwIjkLfasmIyVn6tGX+TjQOdHwLDepng1A=;
- b=IrfZ2iU6Tpr3t2buoJ+tu2z7/RlVOAw9NUIw7SDMi9YdHRmin/cUB/f+5F5P/xQAsW
- Lvcg/orQ3lGAU7FNiooiyXtr98zGSb6U4FmEFBFXoe/pt52+xjtH/K+rwLF2O2NPHBp4
- Q7c8WGmw0FuKBztpXj2lTrnISKXSgN9PhNs7n+/PguUoescNwqKP+sxsQWuGHXNvg0RU
- VbW8aeElUU+rqtwWpC03aDgyaCGA60uFWD/bLJWqjbBSr4364qJCNMyXvg2xKXNw+hwX
- avEQ/bxh20cbejYDkQUipEDm7XCfqCCXJbWIb4qxTNYyWZ+yx/MMY76Q0X9UxBKmSmkG
- hMDA==
+ bh=gkiEEZMJm99j/mZOjo/cuNWyPY8AU+8kAzHuEAHfD/A=;
+ b=vRjjB9hCXhvaPDjhSv2fuc4ud3ozrHrbC0LUKI8zyUDg4bbZgwpFG6QuCXQsnZdSfZ
+ nJi15dE073S5BWHbZOvQy0gm7Bw20bt3PxG3DLuQGRuWJbPnmxkCRb7u9ZkkahguIX5h
+ iCqyFMnssnalWlfoNDoqmJrsufMwPClWqqzwp8KuoO88uP6S3CtWGYHihPOfxEbx861h
+ myVWWpd83cSMShvWrdmJ4Ug7IYgnMLvUy9skeGGDBZs7NR0myv80rwwdAXl+hJtaHH32
+ G6K79RvY5BRHriMwWKitt5PcIHMY44AKhgDkcFsCwhY/BX5VLIu0SZGH25FsBqEDQGjE
+ XnoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+kJt+T1cVATvqKkL0Y3mGzhFR76HIYB5K8fyaVyTubjFsa7xt5/f1gZ6y7Azn2W2r42CbXI9Jqii1@nongnu.org
-X-Gm-Message-State: AOJu0YyLfe5nEU3j8WerXrO8KZpYw8YA06IFnvABGW8t9FL3oCvEvzfj
- 1O4Szm98tXKlvGvkmzBUo/xauDrloisOD9jJ7cF0hV2fW8B37mGwOriX+b0wDOk=
-X-Gm-Gg: ASbGncsAHY5hWeTiOBrBkHzTShmykb0qymi2q7JyyFrHz8uPshhwUw/qw/dHXavos47
- Abj4xrvV3VWXOX1fRGsuWcfwsu4LnnpE5CTLqP1OAzJDFi+PIikelejebHgWQT8juVBH6YkRTvf
- AljJfZ94suuVy0RlNrpllKotMguMwC1O9A77RWtY19lNHzgPlowSkZpR7jKFTvv/ff4jpWKdunk
- pLkcd0ZcIB3bJcwp6XXujOO9csOrG6jb6UNChRqY52x4P5xbY2OxJmUR87BSGIda9g9iqxEHNTI
- TAhWHE1E+1vvGScLPNCa4il/IXDdEtOZpGUmvpsC85RZkPSa1vn2S07oXqCaCFrbrkip1YjHVv8
- SV+B0a/Ba0Uc6
-X-Google-Smtp-Source: AGHT+IGkte/wY6nUvORNxtgXDZ2zbKLE8M8k3P3pgunjgOpUk6RH9Oqbx+VEo4tQrG6YX37CXDplHw==
-X-Received: by 2002:a05:600c:3d9b:b0:43d:10c:2f60 with SMTP id
- 5b1f17b1804b1-43db62b763dmr80091195e9.24.1743425493628; 
- Mon, 31 Mar 2025 05:51:33 -0700 (PDT)
+ AJvYcCVMThNeSLPn+i6FtWz7AiyLjN6X9w78+hsYpLxMJEmg1/3RUG0keR/aDg4TV1FmPPrMo/JjK9SN5iMZ@nongnu.org
+X-Gm-Message-State: AOJu0YzQrZKY6/CWC2aWFOdNKgMrZkIK1vhD7EKj1VpsrGpv30+oF14q
+ zl+JNelHtzoMyab8jVq8D5eBjJ7xJwR98KB+QeGtkGqw6SV6EOuB9cjwwpV7DiQ=
+X-Gm-Gg: ASbGncsf9ooxUIcPhwqem62HR/7id7mVrKAhGIvwiNBnk5AcdfU/RA6V44ZuSLMCBs9
+ 4Gq8fsMn638VxkGS+TvQXUl0Ci9M7N4/S7Y8se+Mnfg6/kClexPD1A3XHSl9eOKKMrCjc8RuqYf
+ u5qrm3N585AdIQ3G13MPT8dDGvNAwCWK1F0BlyXOproF+MWJTZ03kkaugpzMaAj2SJiCqjihjVF
+ 6E4Nue8wIxgM90xbE0wSQpDVBgn+PXM16WfBjSUfvFLsTsbU0ToLX/X44A/SwYDgFl032BCQw3Q
+ fvZ+yW3vUgm70fHkOXBse6OFVccEab9bymu2eAslD29ejzHnfB21apupRtF+N1A35S8BnavuY4o
+ bhHiIRu0MewWy
+X-Google-Smtp-Source: AGHT+IGV1OWZYTOn6Uq7B23VgyczCx4kyTd4iuqJlQwJsrWLwVE8IfU145nSrcwYo4gPEcVEJ0Bnrg==
+X-Received: by 2002:a05:6000:1789:b0:391:4999:778b with SMTP id
+ ffacd0b85a97d-39c120e1bedmr7126015f8f.28.1743425652124; 
+ Mon, 31 Mar 2025 05:54:12 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d82dede98sm163822425e9.6.2025.03.31.05.51.32
+ ffacd0b85a97d-39c0b65b4fcsm11425406f8f.11.2025.03.31.05.54.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 05:51:33 -0700 (PDT)
-Message-ID: <063b3942-1803-4aa2-a93d-8753fa7dc9a9@linaro.org>
-Date: Mon, 31 Mar 2025 14:51:32 +0200
+ Mon, 31 Mar 2025 05:54:11 -0700 (PDT)
+Message-ID: <9de1212d-966c-4cc5-ab11-843e6b40d8e9@linaro.org>
+Date: Mon, 31 Mar 2025 14:54:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/mips: Require even maskbits in update_pagemask
+Subject: Re: [PATCH 3/3] target/mips: Simplify and fix update_pagemask
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: chenhuacai@kernel.org, jiaxun.yang@flygoat.com, arikalo@gmail.com
 References: <20250328175526.368121-1-richard.henderson@linaro.org>
- <20250328175526.368121-3-richard.henderson@linaro.org>
+ <20250328175526.368121-4-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250328175526.368121-3-richard.henderson@linaro.org>
+In-Reply-To: <20250328175526.368121-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,13 +103,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/3/25 18:55, Richard Henderson wrote:
-> The number of bits set in PageMask must be even.
+> When update_pagemask was split from helper_mtc0_pagemask,
+> we failed to actually write to the new parameter but continue
+> to write to env->CP0_PageMask.  Thus the use within
+> page_table_walk_refill modifies cpu state and not the local
+> variable as expected.
 > 
-> Fixes: d40b55bc1b86 ("target/mips: Fix PageMask with variable page size")
+> Simplify by renaming to compute_pagemask and returning the
+> value directly.  No need for either env or pointer return.
+> 
+> Fixes: 074cfcb4dae ("target/mips: Implement hardware page table walker for MIPS32")
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/mips/tcg/system/cp0_helper.c | 23 ++++++++---------------
->   1 file changed, 8 insertions(+), 15 deletions(-)
+>   target/mips/tcg/tcg-internal.h      |  2 +-
+>   target/mips/tcg/system/cp0_helper.c | 10 +++++-----
+>   target/mips/tcg/system/tlb_helper.c |  2 +-
+>   3 files changed, 7 insertions(+), 7 deletions(-)
+
+
+>   void helper_mtc0_pagegrain(CPUMIPSState *env, target_ulong arg1)
+> diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+> index 123639fa18..df80301a41 100644
+> --- a/target/mips/tcg/system/tlb_helper.c
+> +++ b/target/mips/tcg/system/tlb_helper.c
+> @@ -876,7 +876,7 @@ refill:
+>           }
+>       }
+>       pw_pagemask = m >> TARGET_PAGE_BITS;
+> -    update_pagemask(env, pw_pagemask << CP0PM_MASK, &pw_pagemask);
+> +    pw_pagemask = compute_pagemask(pw_pagemask << CP0PM_MASK);
+
+Nice catch.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
