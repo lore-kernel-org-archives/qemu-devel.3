@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AC80C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05BF1C3600C
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 11:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDhF-00045O-4p; Mon, 31 Mar 2025 07:52:53 -0400
+	id 1tzDmy-0005Mp-6g; Mon, 31 Mar 2025 07:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tzDhA-000454-RK
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:52:49 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1tzDmo-0005MS-Bx
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:58:38 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tzDh9-0000i6-5L
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:52:48 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5ed43460d6bso7228681a12.0
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:52:46 -0700 (PDT)
+ id 1tzDmm-0001i9-Sl
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 07:58:38 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5ed43460d6bso7237265a12.0
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 04:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743421965; x=1744026765; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743422315; x=1744027115; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s/G950E4iUD7P22iYcY1O+KKVXQiUvh2OUJBF7gOlhc=;
- b=bDncC6L8ldW+kSl33kEpx599OHcmxxd6oaGU2t2Q6sRH4RLP+WjkLL699AA2DPOgvz
- ONVHDH2jO0dAC/sUXYP9sTT04yMd1KcI2HESynwhkXljB9GDHMf0ofUcdboewswymSTE
- 1jiwFC26oJY4r5W9pmcwAgS9qytcp6iqAJHoOM/8vNIReTng6lE/GFDIH+3pIRoIyip5
- gdZjLkiGU5Lmud6LeaKjajiwTGxC+O2eIrqBcxgftrsE/fo0DlUdaAgI9FIXL2huAH+d
- wbwXJZA2KxsSZwOq3jTYIkVKQ7i6Vj8Jg/tYKMqClXwoLWl62OyXrdRGsJ7Ac0eSUYRf
- 7b0g==
+ bh=X9Q7+iUbtcz4D8sgeN/GGFaG6En9fHJBF79dOt02J4w=;
+ b=g+o56oIzgE5Zh/fETWmWjma2okMFXbrshcDVcIpj9iphe06Yc1sWE0crUsKZVVErIy
+ swR3GnCH9PmZomHpohjI7q6QybVnBSPlqsX8OV3jbFYS6sHVZheOSIczWPhywxX7UoAu
+ ivc0OJT/pL1BtvdfjBWvKnxEq3OMhESjZ/di9zxKfHxFf+VsIeHBj/A09H21X/no38tP
+ rTPXktx0BLVoDGnez8ERmuwTSnk1DL1Ff7sKhP3w+8JmuFA9Y7Scsc9iTcKADkTFaRAc
+ wOllzdhdaAM6w37+Q+FLlIWxGui9HTi1/sDrvN+cCieLRXZYPY2y2n+R9XcpCCr830kR
+ 9QBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743421965; x=1744026765;
+ d=1e100.net; s=20230601; t=1743422315; x=1744027115;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s/G950E4iUD7P22iYcY1O+KKVXQiUvh2OUJBF7gOlhc=;
- b=gHdCmi8Ep+ywuabPcJ4R8m2EWzZ5zsZlCmiAoFT8vkK//WnTgZN/xeSLE+3CnpbGcr
- LXwyEdU3B3BFRZBNT/hqjmIlWYYQym1OGvwvVy1g1YKzflK1NAUcA6ovMlzLrso8pc0s
- hM/lRIvg039JC7eQlkPFwyVHCjiU6ToBsSQLQdx2wXvVMMQ/5HluwDxad2d7GffbaxbI
- YLka/iqBRXeSDdEmyO/jHJFzYlK49xbtkh/6z6GZpo8Y29RjJgAJ3FUBvHRyTWttc2gw
- IVfHxioQ7JlTM0/50J5DKmt14fBdytAoF/zqIQQe77jupKzjC+0UDuc9xBZ0Qt2Xw9ML
- LyQQ==
+ bh=X9Q7+iUbtcz4D8sgeN/GGFaG6En9fHJBF79dOt02J4w=;
+ b=mcrrV+E4WSC3ISKV1PvZdN7Kd+rD53bC5pc1QGjnu+RUD2F/oUGqSiNzUO52iJXk8Z
+ xOKfVgZVHXIpHtlyBmG0QS+iD4hx4M7hLagcTEQE2X3/5sD7tmDl1bH7Zel0eHUO+5sK
+ e2HSEO1+obKzjRbVIBRq4Ssv4tsYonE48uiVIvbDxnfRtr3zuMPRVFCsh2oy+2wH7iFC
+ 4U9w4+RZgu6Axb/rVONDF9CqWxMv6Orl0ifnCVjrP1sd++QyPF5OzEqbpSxfrrxX6BZI
+ OzXelPI7pEjhDt40zFPQLF6VJqzW97Smt/ivBmD6z+IEP3M73THCUH8ySyma3IXfiVXo
+ CwIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEwTFIjyvlI2MqYG3DBBlyhIversCUgkvhNkQE6mrFLEH0YpLYTE7iKbm+aGb7GjtsxHPOrrPYN8fS@nongnu.org
-X-Gm-Message-State: AOJu0YxwADojd9rU5H7csqLS8rMKqc5jkqEL9eltItRj+1gdnfHOSoiY
- zvcbSh9q+H9dJ91dGwkN8yWpXns24ZE1i7aPXdwoLmpJlZmSg5NkSt4rvRKx4im58g1Nzr/z3aW
- clG2zBxa9rpex6Ux5uYJDyDm1GTo=
-X-Gm-Gg: ASbGncvNG5ZMwlNzbHveEjg1f//W//h3mW9Ek6aV5VNsojyRqKilWUKTGr56MutUpaQ
- /yXzKeH4bQ7FJjc6NBBt9EZxHdZpg3aS+YNIX78kY0xosGausty87XUXzTsNvmPCem5xbbQCjDR
- pjBKTFaTIWGKAKW3cHCTQ0sK6Z
-X-Google-Smtp-Source: AGHT+IHOrbPkbxgomn6Y+2zZLrB8tIiuu6p3PN58MiFeCvs+JPDdFCqU+2M7cjlk2IA/yHfECxpphkuq7EWXpx4ezvM=
-X-Received: by 2002:a05:6402:4408:b0:5de:cbed:c955 with SMTP id
- 4fb4d7f45d1cf-5edfd13cf32mr6865080a12.17.1743421965108; Mon, 31 Mar 2025
- 04:52:45 -0700 (PDT)
+ AJvYcCVtHvTuwPHJ0SGeRkNLzhXP/IrGLIJlwNqoosGRX6WMbhvTITP1HCDNAES2Hn4+/OkNEn+Y6w4ClJPS@nongnu.org
+X-Gm-Message-State: AOJu0YwvkZmJce3t5AdadKCMxuVkqWr0BZbgtODzLohrDmxp3eBW6m2q
+ 7PY9oxslapmrwKF0AhVVxS4CuUx9cm/wGxEQGiSEDdisBjM9LBnNh70Vbt7LVCZnMmxBPldTDqH
+ aycLEKPSk2k10B63R3NQs9HNJZAQ=
+X-Gm-Gg: ASbGncsUqLtCA6NQyqK9GDujd3GlDvMJud0WyZNroVVIBNzxfa13mof7DSPm+m15SHY
+ Cia8gWqZYZFDrzj9thDX4uwzkF9Xatnx/6Qd/Hv14vzN4iEDABcvKWjRwW8HXqH0fzAbXt2UPxE
+ Zj1+YGVLeTQrAmex71ZwKc1ZXD
+X-Google-Smtp-Source: AGHT+IGy7Xu6Anpk2z1hi3r7BFyjZr5WkbkZ7E1zWPgd3Xn7tT0ysnhJgmUhtpYj2Rdcdmo0ylQvFkgCjJdMe5YpsGk=
+X-Received: by 2002:a05:6402:550c:b0:5e6:1996:7902 with SMTP id
+ 4fb4d7f45d1cf-5edfdf202acmr7177157a12.32.1743422315112; Mon, 31 Mar 2025
+ 04:58:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <87semtpjrt.fsf@draig.linaro.org>
 In-Reply-To: <87semtpjrt.fsf@draig.linaro.org>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 31 Mar 2025 07:52:33 -0400
-X-Gm-Features: AQ5f1JoNUr2f9qRRayGY4AUInfDfArDciuLHO5VI_yHaTZ_LFyrfTuqkkH5rixQ
-Message-ID: <CAJSP0QXX-hpOJ_E1oaR6NcyvBnC2mVAwfd8NYUWTDqPrtctAuQ@mail.gmail.com>
+Date: Mon, 31 Mar 2025 07:58:22 -0400
+X-Gm-Features: AQ5f1Jrh7cJ41M7IZDFLhZnOnEyKOHsHEvoy67545u1aYg910saCB7EF4uInz3k
+Message-ID: <CAJSP0QW6=SvLwkuTsZTKqCH9OQJdH8XV32hDZ9Z4o6AbCbOqiA@mail.gmail.com>
 Subject: Re: Central repo for VirtIO conformance tests?
 To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Cc: Rust VMM <rust-vmm@lists.opendev.org>, QEMU Devel <qemu-devel@nongnu.org>, 
@@ -80,8 +80,8 @@ Cc: Rust VMM <rust-vmm@lists.opendev.org>, QEMU Devel <qemu-devel@nongnu.org>,
  Matias Vara Larsen <mvaralar@redhat.com>, Sergio Lopez <slp@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,22 +106,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, Mar 31, 2025 at 6:39=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
 o.org> wrote:
-> So what do people think? Where would be a good place for common test
-> repository to live?
+> The unikernel utilizes rcore-os's no_std VirtIO drivers to discover and
+> initialize a range of VirtIO devices.
 
-Maintaining the tests alongside the VIRTIO spec seems like a good fit
-to me. Here is information on how to create a GitHub repo under the
-OASIS VIRTIO Technical Committee:
-https://www.oasis-open.org/open-repositories/
+https://github.com/rcore-os/virtio-drivers
 
-I don't see a reason to maintain the tests under QEMU or rust-vmm
-unless they provide some unique project infrastructure that an
-independent project would lack or need to reinvent.
+I noticed that VIRTIO_F_VERSION_1, VIRTIO_F_RING_PACKED, and hardware
+device support are missing according to the readme. Those are
+important features for real-world test coverage.
 
-If it is not possible to host the tests under OASIS then they could be
-hosted independently (as a separate organization on Codeberg, GitLab,
-GitHub, etc) and not on any contributor company's infrastructure to
-make them more sustainable and neutral for the long term.
+Or is the idea to use the unikernel for low-level device
+initialization and the Linux image for tests that do I/O?
 
 Stefan
 
