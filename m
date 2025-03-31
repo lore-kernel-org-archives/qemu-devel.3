@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C57C3600B
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88030C3600B
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 12:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzDqB-0006w0-TP; Mon, 31 Mar 2025 08:02:08 -0400
+	id 1tzDrv-0007xc-U0; Mon, 31 Mar 2025 08:03:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDq8-0006uC-82
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:02:05 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDrh-0007wQ-P8
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:03:43 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDq6-0002Pg-Jc
- for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:02:03 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39ac56756f6so3741957f8f.2
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:02:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzDrc-0002dx-RZ
+ for qemu-devel@nongnu.org; Mon, 31 Mar 2025 08:03:39 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43d0618746bso29876815e9.2
+ for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 05:03:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743422521; x=1744027321; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743422614; x=1744027414; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qNPCBpFT2EhA0nbHtjBf0iW/Tgvg0WmVeqDMG30u8v4=;
- b=saQXzPRF1wbRlct7raJE8lE3gu82IYQ0Bwblr4ByDyH/ZDcMOD0D6SUXa3rtn4hEv0
- cqFiB2k/T4NhQcOSXLbybY7x5RieTl4bJu5kKbCAjSFt6wJ4zGzXMpzwYXOmYqOtONEB
- OU0I2qLZ/jKUaEphiJPFkSZkS3tXJ0vIwFLuFRZvNjtDZ/qu30pft8vXw+oiewM/dGv0
- j+R++eZ4zgW5EH/LVYGHv9x8thCba6fLxOjF0GTfCfRupXwYH4eWB21vM3ncNbAEfKIi
- wrCW53mlCW+SNcwgrfLliZ6gHXGHcLEB9i/ESGa1LIROUcjO46rR10p2P5XJXyH1LKxg
- 2oRQ==
+ bh=cEk3jO9GTHWeddzAWGtgrx0xbF/oiL5qddsxWmnJo6I=;
+ b=NvMKAHpjp2YdAfrFLjsQ6aFdx0s6/anjbQ4KMPF9LaIB7iE+AGCWFczny9sKhD9xNM
+ 9RnLMHhxGQIbNsv7r/m4CVXE6kAPYoQcfqPXEOPF9+jOEfDYS5CY/wHHqufd/Z+y118t
+ i7hSaW8XDg1eji0aPt9QagqFmRsvk9eQcRGv8HYH4Sg3mgZT6/XyVuGqMjsJURBwMJVK
+ NuxIDTUHFtelkje6VTODyy4HPdxmdEtqET7FQJCqmHhp+DcSi5rlu6Q6gftxCJC9KYr0
+ Wdy1YU+Kn/B3mt82wgCxso8XRdqh0uN2p49twiL4ZlLnY93nguXcErG3hpkd/Hi7zjnr
+ VwCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743422521; x=1744027321;
+ d=1e100.net; s=20230601; t=1743422614; x=1744027414;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qNPCBpFT2EhA0nbHtjBf0iW/Tgvg0WmVeqDMG30u8v4=;
- b=tDpsC7TB3ry6vJi7dKPFgF+ADUfJf7qO3NJZY1lNxj6GuAKuv39+JiGtMQdemKtKaa
- DwWqjyisms0ZiZ37hc8MFqvk69tMVBYAs2pGZylazHjNA+o4e+d/Cmq4OlRulVFEl2UK
- ogqbiozAZla3HWyvNsqOFjrQPCeeg25xJvbTDXkpInjsRB+7TnnEEOBCMHJftsdljbH+
- nf8pDtXfpKw6nHRi1oBiQD76YLdIpMCER+CiWO8GoD5miFIZ1LlBPukFVavfhggrJjYP
- 7LMWaJYSagM6tVB2fg8lYA910LCPnZHBKB/UEA4u9RlGUZ1r0vUfP9LJGFCTw8ddJe9B
- t2Zw==
+ bh=cEk3jO9GTHWeddzAWGtgrx0xbF/oiL5qddsxWmnJo6I=;
+ b=snafqpXtJu48DpKeUefYebTUgaELZq2uzn06CCZyqAWaGBda/eoNkaa4KL2s1IYM5Q
+ LdK5qJOPhlDx1Kpct0/zoiagKDH1gNhjrECMp8UQidxkpEklqS4axebVVKPPAo1t6Yq6
+ hJnMYYvjiD8Yi9ET9QHjO1DSTwvtIlnKecGu4yfZsc/Z0jsCAMapybLgRAuQzlKwER8r
+ e5nEeOcoL35fjYJ70rHKJU9xDiX9hqSHZCUew58wGbzM4n/DtUuxb4qeuGfVKdpL3aB6
+ r4LoKWBT6cZgQZ5+05We59vUi0t3YT+X+rmR6R1uS7v/h2g90BvesEnTdEf+H0Qk143C
+ ht5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYt7G16z5ib8Qb6leZrUchGosMEYVjj8O3RfNGd+48404QTHJgxJSlxI9PbC3t8Sdvl7AwvqMarmIV@nongnu.org
-X-Gm-Message-State: AOJu0YzRb14jIWE7+7hAx7fmyLYakbHPJF1MG6EYvMnOpFz3g8bBnicI
- BhfqCNz93PGsOqbTcenOoxpxOSx7aWnKCwo4MhTacaZkFwX/+AyVBNkAzFkvTWI=
-X-Gm-Gg: ASbGncusd5kBIzwGP9xmNqmQ3ybU+VU72tqeqbqoKMlaQTP7trIbdeKL+pBPr12w/oH
- 9jLGrYwt36fqxsXyMM9O5lrDkiFeewlB3NKDdg+3dUUNM7TDEKCH4v/9gO+JNq+hnpqAjmLHwYl
- xk6JCpsov/TMV6GZIcdekdTVw081pcukP9vNPj9NixZn1ib1AQO06sipEILCkqC8kD4qtEqHWVP
- oEQgO6zd9/fIKWhDGTKOLMBGhpMIn8lZPuPzkB7R00jOufX9pyMWHKHQXwMs9RYfdazjypFRkrc
- LxoIYzIhGirS+WsrzxUxUNU1+/3waFNSoqOOleFwiUI1jgw+ZJ2AKx1S38jXrseOfR1+VgPK2mU
- DvcwDYJofrYw9
-X-Google-Smtp-Source: AGHT+IEzKWllmprsunc5g5WVfCy73xoW/wFch8rg6vEdqCJNzCGd3Gg1i9BuYzE1Pl6HcUwRHcYbyw==
-X-Received: by 2002:a5d:584f:0:b0:391:13d6:c9e5 with SMTP id
- ffacd0b85a97d-39c120dec41mr5239560f8f.19.1743422520700; 
- Mon, 31 Mar 2025 05:02:00 -0700 (PDT)
+ AJvYcCVyfb3oohKf55bmgzsDV0IUSLwVeXlXxPyCZ35Kme51I3hxYCjXqtoZEwtmWhXBFwscSeFUGr60pc5d@nongnu.org
+X-Gm-Message-State: AOJu0YxdEsqgoa22MWrNYCJX9r7aXsvfVTNAJsY2YHYT8SzcCrwjBhIC
+ /lsqtdqVFXdGIUwjfvv8mDpEOv17DBc307EpPDHkhm3yi/W+sbVcBks66sOGNqQ=
+X-Gm-Gg: ASbGncuFba2KOLLnVZxoI/VNuppzHlI0Kyqf55lQeAYhkGsZHSbTE3diPvDW5H5AguK
+ HkspklHtIqhZ4dMA00J1Dnvb9mAcb3sNBMenjjKETzDapymsnasf8H9lVa0g6/grqZNh0pULbU5
+ KIjnkR7LLmA2+mC/HO1GTjU5wBoKtZHE0ResJRAfNwVI/ZqoJ/wq3gcSk5uGyvAVmddBSEWIhgs
+ QdfrzCZ7K2s4dvgD3RkAxZIKvNVIWXoWvYgwEUeMtM3phDvsCwPtuPw/tHmu5ZrWwzw4nRZBzV0
+ TjUQ4P1nb8gzG790CzeRGJSoVmClU9FxIfohYU+JJoXdzYBj1JdGlOPz3pHaple5Gx4FLAEga9q
+ ZXF+E4EhPVeUt
+X-Google-Smtp-Source: AGHT+IFcLYhmRgHVt+W7gFZQTIxL437kdCSYkdJn7QmSKbEPj9Gns298tnEPSYHgJXzXnndGDfT7xw==
+X-Received: by 2002:a05:600c:501f:b0:43c:efed:732c with SMTP id
+ 5b1f17b1804b1-43db62bf0acmr67100615e9.28.1743422614549; 
+ Mon, 31 Mar 2025 05:03:34 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d82e6a532sm162112235e9.9.2025.03.31.05.01.59
+ 5b1f17b1804b1-43d82dede2csm162435215e9.5.2025.03.31.05.03.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 05:02:00 -0700 (PDT)
-Message-ID: <9caad0db-7886-46fe-ba8a-c2532b56c2ce@linaro.org>
-Date: Mon, 31 Mar 2025 14:01:58 +0200
+ Mon, 31 Mar 2025 05:03:34 -0700 (PDT)
+Message-ID: <bfe9e233-bcaa-4c27-9c8b-7540dc2795ef@linaro.org>
+Date: Mon, 31 Mar 2025 14:03:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] mips: Mark the "mipssim" machine as deprecated
-To: Thomas Huth <thuth@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Thomas Huth <thuth@redhat.com>,
  QEMU devel <qemu-devel@nongnu.org>, Aleksandar Rikalo <arikalo@gmail.com>
 References: <20250121103655.1285596-1-thuth@redhat.com>
  <b0accbae-b9ca-4fb2-a842-f08ac947ef0a@app.fastmail.com>
- <1e2fc164-0721-435f-a29c-43d54539eb74@redhat.com>
+ <f96de148-67e2-41ab-ad5e-23d68af25f85@app.fastmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1e2fc164-0721-435f-a29c-43d54539eb74@redhat.com>
+In-Reply-To: <f96de148-67e2-41ab-ad5e-23d68af25f85@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +103,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jiaxun,
-
-On 21/1/25 13:16, Thomas Huth wrote:
-> On 21/01/2025 13.07, Jiaxun Yang wrote:
->>
->>
+On 21/1/25 13:09, Jiaxun Yang wrote:
+> 
+> 
+> 在2025年1月21日一月 下午12:07，Jiaxun Yang写道：
 >> 在2025年1月21日一月 上午10:36，Thomas Huth写道：
 >>> We are not aware of anybody still using this machine, support for it
 >>> has been withdrawn from the Linux kernel (i.e. there also won't be
@@ -118,30 +116,24 @@ On 21/1/25 13:16, Thomas Huth wrote:
 >>>
 >>> Signed-off-by: Thomas Huth <thuth@redhat.com>
 >>> ---
->>>   If anybody is still using this machine, please speak up now!
+>>>   If anybody is still using this machine, please speak up now!
 >>
 >>
 >> FYI I'm using it to run MIPS AVP (Architecture Verification Programs)
 >> time by time to check TCG's compliance.
+>>
+>> It is a proprietary software so unfortunately no binary available
+>> to public :-(
+>>
+>> AVP has two supported platforms, the first is plain old MIPSSIM
+>> here, the second is OVPSim MIPS, which is compatible with my previous
+>> MIPS virt machine effort.
+>>
+>> Maybe I should bring MIPSSIM work back?
+>                          ^ Oops I meant MIPS VIRT.
 
-Is MIPS AVP accessible somewhere?
+IIRC I didn't finished to review the previous version?
 
-> 
-> Ok, if you're still using it, we can certainly keep it around... but it 
-> would be really good to have an old Linux kernel or something similar 
-> available online somewhere that we could use for a CI test for this 
-> machine, so we can make sure that it does not bitrot... do you happen to 
-> know whether such a kernel is available somewhere?
-
-Otherwise what can we use to test this machine?
-
-> 
-> Also, please consider volunteering for becoming the maintainer of the 
-> machine in the MAINTAINERS file ... currently it's marked as "Orphan" 
-> there which was also a strong indication that nobody really cares for 
-> this machine anymore.
-> 
->   Thomas
-> 
-
+Is it this series?
+https://lore.kernel.org/qemu-devel/20221124212916.723490-1-jiaxun.yang@flygoat.com/
 
