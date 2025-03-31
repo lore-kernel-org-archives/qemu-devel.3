@@ -4,96 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9AAFC36018
-	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 06:43:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D1CC36019
+	for <qemu-devel@archiver.kernel.org>; Mon, 31 Mar 2025 07:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tz8rr-0002XI-Un; Mon, 31 Mar 2025 02:43:32 -0400
+	id 1tz9gJ-0000Wq-SN; Mon, 31 Mar 2025 03:35:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=N63T=WS=kaod.org=clg@ozlabs.org>)
- id 1tz8q0-0002Mz-HP; Mon, 31 Mar 2025 02:41:36 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <schnelle@linux.ibm.com>)
+ id 1tz9fV-0000OK-5A; Mon, 31 Mar 2025 03:34:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=N63T=WS=kaod.org=clg@ozlabs.org>)
- id 1tz8pw-0002uK-Sf; Mon, 31 Mar 2025 02:41:36 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZR1kC6K7Mz4wnp;
- Mon, 31 Mar 2025 17:41:23 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZR1k90fjgz4wcn;
- Mon, 31 Mar 2025 17:41:20 +1100 (AEDT)
-Message-ID: <9eca6d79-7910-43df-850a-bc55a701d964@kaod.org>
-Date: Mon, 31 Mar 2025 08:41:16 +0200
+ (Exim 4.90_1) (envelope-from <schnelle@linux.ibm.com>)
+ id 1tz9fS-0001Uk-Gu; Mon, 31 Mar 2025 03:34:48 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 52UKdDk2012078;
+ Mon, 31 Mar 2025 07:34:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ag1gpn
+ JGNOWgpD/GU4I5+3ROiYl6WAhVWkeQzMNCG60=; b=YiOkxzdX4AMrsHHT6C/BSK
+ xj/ouTs8lkK++AvuvUYaG4hTE1jPl5pbbqFemzMY7MGF1eqFDGMlrkms2pAVh44D
+ WbQeepxwUSWByDRKpkgaGY0HIKNNVg8au9Bnrfnt+zoVAT761cDuMv25973RHglu
+ fqpqpQLQpz7ecf45My9xOTEVe2zTxHeW7JGvjeWHKEf4WuGJuctgG9YlCvmAWDcM
+ o9lOmDhhJoWHgBo8VVJSzlX2gljWmg/QqH9AsUtlXviw8yjxLJBBTjaKVAp3hWNv
+ djL8dTALGXdKmC035A3UhoZKxj7iOhraVXHy6x7u+2vjRFPSldOUHtFwVJPA8sTg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45qd601vms-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 31 Mar 2025 07:34:37 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 52V63d6d006609;
+ Mon, 31 Mar 2025 07:34:36 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45pwdk4ms3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 31 Mar 2025 07:34:36 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 52V7YZl330737104
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 31 Mar 2025 07:34:35 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 616A258054;
+ Mon, 31 Mar 2025 07:34:35 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E561C58050;
+ Mon, 31 Mar 2025 07:34:32 +0000 (GMT)
+Received: from [9.171.48.16] (unknown [9.171.48.16])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 31 Mar 2025 07:34:32 +0000 (GMT)
+Message-ID: <f71a386140675de941f363bfcf85d63fdc41f506.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 1/3] util: Add functions for s390x mmio read/write
+From: Niklas Schnelle <schnelle@linux.ibm.com>
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: mjrosato@linux.ibm.com, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
+ stefanha@redhat.com, fam@euphon.net, philmd@linaro.org,
+ kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com
+Date: Mon, 31 Mar 2025 09:34:32 +0200
+In-Reply-To: <20250328190627.3025-2-alifm@linux.ibm.com>
+References: <20250328190627.3025-1-alifm@linux.ibm.com>
+ <20250328190627.3025-2-alifm@linux.ibm.com>
+Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/ppc: Deprecate Power8E and Power8NVL
-To: Aditya Gupta <adityag@linux.ibm.com>, Nicholas Piggin
- <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20250329142641.2502003-1-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250329142641.2502003-1-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=N63T=WS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nE73p8REtNh3977-960YfXOa1ZUXHOz8
+X-Proofpoint-GUID: nE73p8REtNh3977-960YfXOa1ZUXHOz8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-03-31_03,2025-03-27_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ lowpriorityscore=0 priorityscore=1501 mlxlogscore=999 impostorscore=0
+ clxscore=1011 malwarescore=0 suspectscore=0 phishscore=0 adultscore=0
+ mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2503310052
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=schnelle@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,206 +165,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/29/25 15:26, Aditya Gupta wrote:
-> Power8E and Power8NVL variants are not of much use in QEMU now, and not
-> being maintained either.
-> 
-> Newer skiboot might not be able to boot Power8NVL since skiboot v7.0
-> 
-
-It is worth mentioning commit c5424f683ee3 ("Remove support for
-POWER8 DD1") too. In fact, I prefer the cover letter section below
-for a commit log.
-
-This commit log is not mentioning the introduction of POWERPC_DEPRECATED_CPU.
-I suggest adding an extra patch for it.
-
-> Deprecate the 8E and 8NVL variants.
-> 
-> After deprecation, QEMU will print a warning like below when the
-> CPU/Chips are used:
-> 
->      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
->      qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
->      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8e -nographic
->      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
->      $ ./build/qemu-system-ppc64 -M pseries --cpu power8e -nographic
->      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
-
-This is not very useful and it belongs to a patch adding
-POWERPC_DEPRECATED_CPU.
-
-  
-> Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
-> --cpu ?':
-> 
->      $ ./build/qemu-system-ppc64 --cpu help
->        ...
->        power8e_v2.1     PVR 004b0201 (deprecated)
->        power8e          (alias for power8e_v2.1)
->        power8nvl_v1.0   PVR 004c0100 (deprecated)
->        power8nvl        (alias for power8nvl_v1.0)
->        power8_v2.0      PVR 004d0200
->        power8           (alias for power8_v2.0)
->        power9_v2.0      PVR 004e1200
->        power9_v2.2      PVR 004e1202
-
-
-ditto.
-
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> 
+On Fri, 2025-03-28 at 12:06 -0700, Farhan Ali wrote:
+> Starting with z15 (or newer) we can execute mmio
+> instructions from userspace. On older platforms
+> where we don't have these instructions available
+> we can fallback to using system calls to access
+> the PCI mapped resources.
+>=20
+> This patch adds helper functions for mmio reads
+> and writes for s390x.
+>=20
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
-> Cover Letter
-> ============
-
-
-Why don't you use --cover-letter instead ? The rational would be at
-the beginning.
-
-> Power8E and Power8NVL are not maintained, and not useful to qemu, and
-> upstream skiboot also has removed support till Power8 DD1.
-> Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
-> to be exact:
-> 
->      commit c5424f683ee3 ("Remove support for POWER8 DD1")
-> 
-> No direct way to deprecate the pnv chips, a field like deprecation_note
-> could be added, but felt not needed as the chip will only get used if
-> the user requests corresponding 8E / 8NVL CPU, which will print
-> deprecation warning.
-> 
-> Also, no separate pnv machine for 8E and 8NVL, user has to pass --cpu,
-> which will throw the deprecation warning. So just deprecating CPUs should
-> be enough.
-
-Please separate the changes, one patch for POWERPC_DEPRECATED_CPU,
-another for PowerNV deprecation. More CPUs could be deprecated.
-
-Also, we have time : the QEMU 10.1 development phase has not started
-and the soft freeze should be around July. No rush needed.
-
-Thanks,
-
-C.
-
-
-> 
-> Changelog
-> =========
-> v2:
->    + add mention to docs/about/deprecated.rst
->    + add '(deprecated)' in output of qemu-system-ppc64 --cpu help
-> ---
-> ---
->   docs/about/deprecated.rst |  9 +++++++++
->   target/ppc/cpu-models.c   | 17 ++++++++++++++---
->   target/ppc/cpu_init.c     |  7 ++++++-
->   3 files changed, 29 insertions(+), 4 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index e2b4f077d453..d6b39db2aaca 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -275,6 +275,15 @@ embedded 405 for power management (OCC) and other internal tasks, it
->   is theoretically possible to use QEMU to model them. Let's keep the
->   CPU implementation for a while before removing all support.
->   
-> +Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.0)
-> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>  include/qemu/s390x_pci_mmio.h |  23 ++++++
+>  util/meson.build              |   2 +
+>  util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 173 insertions(+)
+>  create mode 100644 include/qemu/s390x_pci_mmio.h
+>  create mode 100644 util/s390x_pci_mmio.c
+>=20
+> diff --git a/include/qemu/s390x_pci_mmio.h b/include/qemu/s390x_pci_mmio.=
+h
+> new file mode 100644
+> index 0000000000..aead791475
+> --- /dev/null
+> +++ b/include/qemu/s390x_pci_mmio.h
+> @@ -0,0 +1,23 @@
+> +/*
+> + * s390x PCI MMIO definitions
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef S390X_PCI_MMIO_H
+> +#define S390X_PCI_MMIO_H
 > +
-> +The Power8E and Power8NVL variants of Power8 are not really useful anymore
-> +in qemu, and are old and unmaintained now.
+> +uint8_t s390x_pci_mmio_read_8(const void *ioaddr);
+> +uint16_t s390x_pci_mmio_read_16(const void *ioaddr);
+> +uint32_t s390x_pci_mmio_read_32(const void *ioaddr);
+> +uint64_t s390x_pci_mmio_read_64(const void *ioaddr);
 > +
-> +The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
-> +be considered deprecated.
+> +void s390x_pci_mmio_write_8(void *ioaddr, uint8_t val);
+> +void s390x_pci_mmio_write_16(void *ioaddr, uint16_t val);
+> +void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val);
+> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val);
 > +
->   System emulator machines
->   ------------------------
->   
-> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> index ece348178188..6f2062e2c484 100644
-> --- a/target/ppc/cpu-models.c
-> +++ b/target/ppc/cpu-models.c
-> @@ -32,17 +32,22 @@
->   /* PowerPC CPU definitions                                                 */
->   #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
->       glue(glue(glue(glue(pvr, _), svr), _), type)
-> -#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-> +#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _is_deprecated) \
->       static void                                                             \
->       glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
->       (ObjectClass *oc, void *data)                                           \
->       {                                                                       \
->           DeviceClass *dc = DEVICE_CLASS(oc);                                 \
-> +        CPUClass *cc    = CPU_CLASS(oc);                                    \
->           PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
->                                                                               \
->           pcc->pvr          = _pvr;                                           \
->           pcc->svr          = _svr;                                           \
->           dc->desc          = _desc;                                          \
-> +                                                                            \
-> +        if (_is_deprecated) {                                               \
-> +            cc->deprecation_note = "CPU is unmaintained.";                  \
-> +        }                                                                   \
->       }                                                                       \
->                                                                               \
->       static const TypeInfo                                                   \
-> @@ -63,6 +68,12 @@
->       type_init(                                                              \
->           glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
->   
-> +#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-> +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, false)
 > +
-> +#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc)                   \
-> +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type, true)
+> +#endif
+> diff --git a/util/meson.build b/util/meson.build
+> index 780b5977a8..acb21592f9 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -131,4 +131,6 @@ elif cpu in ['ppc', 'ppc64']
+>    util_ss.add(files('cpuinfo-ppc.c'))
+>  elif cpu in ['riscv32', 'riscv64']
+>    util_ss.add(files('cpuinfo-riscv.c'))
+> +elif cpu =3D=3D 's390x'
+> +  util_ss.add(files('s390x_pci_mmio.c'))
+>  endif
+> diff --git a/util/s390x_pci_mmio.c b/util/s390x_pci_mmio.c
+> new file mode 100644
+> index 0000000000..820458a026
+> --- /dev/null
+> +++ b/util/s390x_pci_mmio.c
+> @@ -0,0 +1,148 @@
+> +/*
+> + * s390x PCI MMIO definitions
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
->   #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
->       POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
->   
-> @@ -722,11 +733,11 @@
->                   "POWER7 v2.3")
->       POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
->                   "POWER7+ v2.1")
-> -    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
-> +    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
->                   "POWER8E v2.1")
->       POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
->                   "POWER8 v2.0")
-> -    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
-> +    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
->                   "POWER8NVL v1.0")
->       POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
->                   "POWER9 v2.0")
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 7decc09aec8f..fade53f7e2d6 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -7143,6 +7143,7 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
->   {
->       ObjectClass *oc = data;
->       PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-> +    CPUClass *cc = CPU_CLASS(oc);
->       DeviceClass *family = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
->       const char *typename = object_class_get_name(oc);
->       char *name;
-> @@ -7153,7 +7154,11 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
->       }
->   
->       name = cpu_model_from_type(typename);
-> -    qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
-> +    if (cc->deprecation_note) {
-> +        qemu_printf("  %-16s PVR %08x (deprecated)\n", name, pcc->pvr);
-> +    } else {
-> +        qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
+> +#include "qemu/osdep.h"
+> +#include <unistd.h>
+> +#include <sys/syscall.h>
+> +#include "qemu/s390x_pci_mmio.h"
+> +#include "elf.h"
+> +
+> +union register_pair {
+> +    unsigned __int128 pair;
+> +    struct {
+> +        uint64_t even;
+> +        uint64_t odd;
+> +    };
+> +};
+> +
+> +static bool is_mio_supported;
+> +
+> +static __attribute__((constructor)) void check_is_mio_supported(void)
+> +{
+> +    is_mio_supported =3D !!(qemu_getauxval(AT_HWCAP) & HWCAP_S390_PCI_MI=
+O);
+> +}
+> +
+> +static uint64_t s390x_pcilgi(const void *ioaddr, size_t len)
+> +{
+> +    union register_pair ioaddr_len =3D { .even =3D (uint64_t)ioaddr,
+> +                                       .odd =3D len };
+> +    uint64_t val;
+> +    int cc;
+> +
+> +    asm volatile(
+> +        /* pcilgi */
+> +        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
+> +        "ipm     %[cc]\n"
+> +        "srl     %[cc],28\n"
+> +        : [cc] "=3Dd"(cc), [val] "=3Dd"(val),
+> +        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
+> +
+> +    if (cc) {
+> +        val =3D -1ULL;
 > +    }
->       for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
->           PowerPCCPUAlias *alias = &ppc_cpu_aliases[i];
->           ObjectClass *alias_oc = ppc_cpu_class_by_name(alias->model);
+> +
+> +    return val;
+> +}
+> +
+> +static void s390x_pcistgi(void *ioaddr, uint64_t val, size_t len)
+> +{
+> +    union register_pair ioaddr_len =3D {.even =3D (uint64_t)ioaddr, .odd=
+ =3D len};
+> +
+> +    asm volatile (
+> +        /* pcistgi */
+> +        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
+> +        : [ioaddr_len] "+&d" (ioaddr_len.pair)
+> +        : [val] "d" (val)
+> +        : "cc", "memory");
+> +}
+
+I can confirm that the PCI MIO inline assembly looks good to me.
+Pretty much exactly matches what I did for rdma-core a while back.
+
+> +
+> +uint8_t s390x_pci_mmio_read_8(const void *ioaddr)
+> +{
+> +    uint8_t val =3D 0;
+> +
+> +    if (is_mio_supported) {
+> +        val =3D s390x_pcilgi(ioaddr, sizeof(val));
+> +    } else {
+> +        syscall(__NR_s390_pci_mmio_read, ioaddr, &val, sizeof(val));
+> +    }
+> +    return val;
+> +}
+> +
+>=20
+--- snip ---
+> +
+> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val)
+> +{
+> +    if (is_mio_supported) {
+> +        s390x_pcistgi(ioaddr, val, sizeof(val));
+> +    } else {
+> +        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
+> +    }
+> +}
+> +
+
+Thanks for the great work!
+
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 
 
