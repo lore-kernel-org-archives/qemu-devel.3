@@ -4,99 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFF0C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C8BC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzc1e-0000du-Gz; Tue, 01 Apr 2025 09:51:35 -0400
+	id 1tzbvS-00026q-4E; Tue, 01 Apr 2025 09:45:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tzc0p-0008Th-0B
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:50:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbuK-0000Yz-Di
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:06 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tzc0n-0007Xh-82
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:50:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743515440;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FimNuAvNHPXMUfJfSY+a3FqUY0CSnbtGI00gSyxpzSE=;
- b=K36a6ihW+I6m/S/HTzOyg818eRC+fM/2VxSFFMjq3rhU0O8iYMyp0kzZe6Dmu160TKWktd
- /yErOrz0S/RCyHiHR54M0IFRnZ4B+iYNrjT9ZkC+mSytVgLdwYfksavEZgnEvmgW+2uYM1
- D11SOpMKB4iUH5IASe9ImX9fJQKExWk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-8xz4aiwDP4a8Sijpc1QhMQ-1; Tue, 01 Apr 2025 09:50:37 -0400
-X-MC-Unique: 8xz4aiwDP4a8Sijpc1QhMQ-1
-X-Mimecast-MFC-AGG-ID: 8xz4aiwDP4a8Sijpc1QhMQ_1743515436
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43cf172ff63so36512105e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 06:50:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743515436; x=1744120236;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FimNuAvNHPXMUfJfSY+a3FqUY0CSnbtGI00gSyxpzSE=;
- b=GaL62hRoWHpXqad6CfeyT92T6GbX7S8nO7w9OnXjXwD8+t9LRabzPLFXnr+aAF7cWK
- E8oUMbEdrvnvxmG3Sqdkj9wWgjQ6vhCxf3Oq1Pl6ES4URTlOJLAQGQJyqpNQjmtwBspA
- 3Vq9185YClLqEi+R1FYoTdGKhum/dsji2ENml3Gllhc2i2vzmioct/8F77OB4D+uH4AD
- Y45VEoWTw2/8/rRwj2nYD6tNU5wV1BSzI2u+6skfY0lACtHePUlShcTOBi3XD+YeWLDe
- u5NbytsV61bxCoUk8lV+1XzpgL5iJ93V59mf8rOd6OBszmLqwiMNgcaCaOOAJfzqFrqg
- Igbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZtCs7IXu6oAbqwD0VXtWYFAkWOUSyjpQM8ULlX02dxQzHJEK5tSUwW1Q3YBaOFRVisE46hU8lOF7B@nongnu.org
-X-Gm-Message-State: AOJu0Yygtn6zXPM+EfPyTKbie+Ak9TEn4OH1TbeINDxDX7MmWBCgIaqv
- XBUUo10fzz7cjjVL0F3SZCfr9zej2K/woU41rVnVCjoO2wkl72iwbl3GcYzXWoI2h441c6/5yd6
- SLQOJluPzuvZb1AI2qjr47tTaIDw/7CnJwvUe5VQ/C5cfzjjCuBf5
-X-Gm-Gg: ASbGncsGI3B62G4ynokPqSYdmgWi5OeD2uYRaWduHq21Eq0N8KL6t5kVKuwV3wAsP+Z
- yAkgrqvXT7VJfyF9anREnmq21LiBp44H8oInJpdbUiYTGbXYYo58vuAm+1D9ef6Jd2jzCCGFY0M
- 16umk2jB6F7386+0zn4eJIU61rSgV3h+bJAzAfmQWKIq8zBuD3Lkse3yclpdHWUGfRkLaXmKKOl
- KSHcOdHkxbcpubfgJzZxhvMdDApjijZnV+6ixxyOd8nMD3+Imx+uac9AzXQ5R7li8iqpwY3SD/Z
- gDK7S6cozo7YJuzu7PMsdxEBZeI6NYGgCCll
-X-Received: by 2002:a05:600c:4fce:b0:43b:cc42:c54f with SMTP id
- 5b1f17b1804b1-43ea7c71a97mr33129005e9.14.1743515436019; 
- Tue, 01 Apr 2025 06:50:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEB7vA9Nbv2xo+w4fCuBVjMa5Xv9r7t/3qIGoFfzgAxsj9lRaW3zq3YTwAezJtSRhZhpUckpg==
-X-Received: by 2002:a05:600c:4fce:b0:43b:cc42:c54f with SMTP id
- 5b1f17b1804b1-43ea7c71a97mr33128675e9.14.1743515435634; 
- Tue, 01 Apr 2025 06:50:35 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b66ab86sm14580909f8f.51.2025.04.01.06.50.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 06:50:35 -0700 (PDT)
-Date: Tue, 1 Apr 2025 15:50:34 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/6] Add bios-tables-test for LoongArch64 system
-Message-ID: <20250401155034.528b35a8@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250228092729.543097-1-maobibo@loongson.cn>
-References: <20250228092729.543097-1-maobibo@loongson.cn>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbuI-0006XQ-K5
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743515038; x=1775051038;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=VD5cLhhOxm2rY5XZ6+nf6tMgf/SKVeJGzlvaWHkLI9U=;
+ b=hRMHFNZEFy/V5tFapzLwT3tDnSyfg1hkbYNV/dQOqS24Laf8lH0fAviH
+ +jcZqh/257Ako0UF9aoUc17orZtNxqv9DO/1IveI7rRRgUbHVyh20lBWV
+ I5J6rb/EVb406Sx1SvMj1gWsEhjzWxr4WzgTvHnOwL4qjZmIw3ETWwAN/
+ zGZ3j9FkyI8rFonNuRv10GH9SKLA77UXQDU2xoAfAdwetDQSapl7ZZz1D
+ EJMouAfiCbIDtv/CLOTlbgj9PTC9wLJfB6KBJ5V25pAFGWbVLZE5B9ENc
+ iOrOeCDm5Zat/3HSOSCs9jJp1rylR035R7KNj8zNw7EebZinp7++W76+r A==;
+X-CSE-ConnectionGUID: ysdbOeWAR9eCH1BfQnr2Ng==
+X-CSE-MsgGUID: BVAStVxiRX+R5wBGUnK+SQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433490"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433490"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2025 06:42:50 -0700
+X-CSE-ConnectionGUID: eHzSK8AcS9SW3O5F+CDu4g==
+X-CSE-MsgGUID: KuK8mVWiTDa1Wj3/LjYC2Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640158"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:42:48 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH v8 39/55] i386/tdx: Don't synchronize guest tsc for TDs
+Date: Tue,  1 Apr 2025 09:01:49 -0400
+Message-Id: <20250401130205.2198253-40-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,68 +88,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Feb 2025 17:27:23 +0800
-Bibo Mao <maobibo@loongson.cn> wrote:
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-> This patchset add bios-tables-test for LoongArch64 virt machine
-> system. It works with UEFI bios, with uefi-test-tools LoongArch64
-> support is added to build bios-tables-test.loongarch64.iso.
-> 
-> Also with test case bios-tables-test, LoongArch64 support is added
-> and some basic ACPI tables is added here. It passes with command
-> make check-qtest-loongarch64 with the result:
->  qtest-loongarch64/bios-tables-test OK 29.52s 4 subtests passed
-> 
-> Bibo Mao (6):
->   uefi-test-tools:: Add LoongArch64 support
->   tests/data/uefi-boot-images: Add ISO image for LoongArch system
->   tests/qtest/bios-tables-test: Add basic testing for LoongArch64
->   tests/acpi: Add empty ACPI data files for LoongArch64
->   tests/acpi: Fill acpi table data for LoongArch
+TSC of TDs is not accessible and KVM doesn't allow access of
+MSR_IA32_TSC for TDs. To avoid the assert() in kvm_get_tsc, make
+kvm_synchronize_all_tsc() noop for TDs,
 
-blobs no longer match (since cpu hotplug was merged after this series)
-so blobs need to be updated and series needs to be re-spun
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Reviewed-by: Connor Kuehl <ckuehl@redhat.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ target/i386/kvm/kvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->   tests/qtest: Enable bios-tables-test for LoongArch
-> 
->  tests/data/acpi/loongarch64/virt/APIC         | Bin 0 -> 108 bytes
->  .../data/acpi/loongarch64/virt/APIC.topology  | Bin 0 -> 213 bytes
->  tests/data/acpi/loongarch64/virt/DSDT         | Bin 0 -> 3614 bytes
->  tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 0 -> 4951 bytes
->  tests/data/acpi/loongarch64/virt/FACP         | Bin 0 -> 268 bytes
->  tests/data/acpi/loongarch64/virt/MCFG         | Bin 0 -> 60 bytes
->  tests/data/acpi/loongarch64/virt/PPTT         | Bin 0 -> 76 bytes
->  .../data/acpi/loongarch64/virt/PPTT.topology  | Bin 0 -> 296 bytes
->  tests/data/acpi/loongarch64/virt/SLIT         |   0
->  tests/data/acpi/loongarch64/virt/SLIT.memhp   | Bin 0 -> 48 bytes
->  tests/data/acpi/loongarch64/virt/SPCR         | Bin 0 -> 80 bytes
->  tests/data/acpi/loongarch64/virt/SRAT         | Bin 0 -> 104 bytes
->  tests/data/acpi/loongarch64/virt/SRAT.memhp   | Bin 0 -> 184 bytes
->  .../data/acpi/loongarch64/virt/SRAT.topology  | Bin 0 -> 216 bytes
->  .../bios-tables-test.loongarch64.iso.qcow2    | Bin 0 -> 12800 bytes
->  tests/qtest/bios-tables-test.c                |  62 ++++++++++++++++++
->  tests/qtest/meson.build                       |   3 +-
->  tests/uefi-test-tools/Makefile                |   5 +-
->  .../UefiTestToolsPkg/UefiTestToolsPkg.dsc     |   6 +-
->  tests/uefi-test-tools/uefi-test-build.config  |  10 +++
->  20 files changed, 82 insertions(+), 4 deletions(-)
->  create mode 100644 tests/data/acpi/loongarch64/virt/APIC
->  create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
->  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
->  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
->  create mode 100644 tests/data/acpi/loongarch64/virt/FACP
->  create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
->  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
->  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
->  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
->  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.memhp
->  create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
->  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
->  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
->  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
->  create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
-> 
-> 
-> base-commit: b69801dd6b1eb4d107f7c2f643adf0a4e3ec9124
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 741b50181ed9..ead1d0263385 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -327,7 +327,7 @@ void kvm_synchronize_all_tsc(void)
+ {
+     CPUState *cpu;
+ 
+-    if (kvm_enabled()) {
++    if (kvm_enabled() && !is_tdx_vm()) {
+         CPU_FOREACH(cpu) {
+             run_on_cpu(cpu, do_kvm_synchronize_tsc, RUN_ON_CPU_NULL);
+         }
+-- 
+2.34.1
 
 
