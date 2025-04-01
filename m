@@ -4,101 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4BEC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC947C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbsz-0005uv-DH; Tue, 01 Apr 2025 09:42:37 -0400
+	id 1tzbt0-0005xu-0E; Tue, 01 Apr 2025 09:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tzbsk-0005dK-4U
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbsi-0005ZS-EX
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:25 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tzbsi-0006ca-Ew
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743514936;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kwRyqMwxv8nN6Tke/csvG/5mcfX4Br5ZXB2uKVLFZbA=;
- b=c8Fxjhti0bl+dsbE6QNIql900uEA3/9197zJ18U1QUho4zfqSjgLD7miqk2F7UhWSdbzSo
- o0U8oPf5rA44OrCb/EsJoWqga1t1CCsNRyFf+d3uNqkRSJ+TP1Hu5EonBLDU24daH+zzGS
- 6cOBRVpn2GUeWizsoomp+jUUtph+cIk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-vB28ulZMMMqpsiEZycxd6Q-1; Tue, 01 Apr 2025 09:41:07 -0400
-X-MC-Unique: vB28ulZMMMqpsiEZycxd6Q-1
-X-Mimecast-MFC-AGG-ID: vB28ulZMMMqpsiEZycxd6Q_1743514866
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso34345125e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 06:41:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743514866; x=1744119666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kwRyqMwxv8nN6Tke/csvG/5mcfX4Br5ZXB2uKVLFZbA=;
- b=bigoIfBwU1quL+BiK2MAA3mkA2yNinoLKZL5jzcYzEhpf0ekXDeicltmOKTlphQTSp
- Q0hRSzUOz/C35dYSIr9dDUfkscKDk2NwYqcd6zHr8IBVyVmP7PpRUlIpTN+uiZMUVgLN
- ZfkuvUbFQd1w+j1yORtL52syRm6Yhfu2fndcowhu/Y5mvURWo6H47i5VpCUSWHIFaeVE
- Mbsc0NtZoVXAl6pkWzslRX6710FHtw+b5302sHJdVn3nlpss2U5tvWOXdpmhJKRIET/g
- PVbQ9TQbbpmRN3hEA3CiwvUu65aSaZexwIh4EiqYK8S0+qbvBmS2O2siKP3L+xPZUkc5
- k/HQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiGFYVcGr9XgU2q+PZlROlw3Kj/yKKBv481d7H5GuUAGQlEsM45PZVhZQxC3VVtUIgqfCqTLkrSWEB@nongnu.org
-X-Gm-Message-State: AOJu0Yx20/jYDzjnlzGK3tihwFQwV/jR9gTkAgj6o/eIW0g/kqdIffY4
- mYqnaSF7hL8ka43dtBI6XEXqhXDT4kN1z0m32uPR8zbTzDb8IorDGNNqQ6EWrKIx2373c21ZcW9
- u0jbGhinN4+OjxyelqZrc4upA2EYLU9j5rSUm0+Fq4RJBg9MlxRpI
-X-Gm-Gg: ASbGncteYipSeSGP0xgaXkeFUzPYzVR28BeRqP1RFKSQ+mqfAPpBw8qEMuF18h5RPMb
- GmRXz2FlO9wY13AZlR/rZJBSvUJ/Vc0Qqg7IS+FK7lGFzpLU3ffoFlfE0S/J4VXuibgTm4oqBGQ
- U43FxNAHsiNjXBPMss/LL/F/Is6C5cwZFuMVDBzUcBmOr/+r4zO8TZskbcFcd3zL0HIDZw26eB7
- aq1BSKmQ01IBb57+VvgI/wW5DMgDk6gIS+dR+Pg0JxBxKtWXvzjcuBvIT9GhLCQx/nDtSZUiKdD
- dNwF4Q71PR/2DLDWg4pjDSfze/ku1/ahUE8J
-X-Received: by 2002:a05:6000:1a8b:b0:39a:c9c1:5453 with SMTP id
- ffacd0b85a97d-39c2367439dmr2445203f8f.49.1743514866069; 
- Tue, 01 Apr 2025 06:41:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuFVvFmBqjjixsV+Ao2C2VU+PL/Qs96vKJVmOn2BAbk+TKkmuwCn1dqtPhUe7M7fRpYJk/xg==
-X-Received: by 2002:a05:6000:1a8b:b0:39a:c9c1:5453 with SMTP id
- ffacd0b85a97d-39c2367439dmr2445181f8f.49.1743514865668; 
- Tue, 01 Apr 2025 06:41:05 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d82dede21sm199490445e9.4.2025.04.01.06.41.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 06:41:04 -0700 (PDT)
-Date: Tue, 1 Apr 2025 15:41:04 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/6] tests/qtest/bios-tables-test: Add basic testing for
- LoongArch64
-Message-ID: <20250401154104.13219e16@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250228092729.543097-4-maobibo@loongson.cn>
-References: <20250228092729.543097-1-maobibo@loongson.cn>
- <20250228092729.543097-4-maobibo@loongson.cn>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbsd-0006Zf-Fo
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743514935; x=1775050935;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=WrS7jNmZVgX3aZUWUQDY4IKZ0gq+uAjxSyzLOz1cHZM=;
+ b=HULDQljmwIDxmzwJbFfW28hg2ERtA/HPuWABzBY2r56m+Pg7FU/9NfE7
+ +Dkoa0aLIxaBhkWKTCyOPKEWlsgeHiRx1IeQ4KnpFyiNWAsyLvjfsuiIg
+ 8SJsPJCYhDWDhhsDLNNk/EAI6n6WjAS5yirk8gBjqodouQl60HkTFcwes
+ Q4b8sknW0yR5oYMNXbUMKJmpBVBLyW5uoXclyKd4m6rjNgyFPbC8bML0S
+ kapzwBD3Fdq8He88kM+zUveDkRuI/h8KUrI6lBcR0UMhrVz0FywEnt3+v
+ QTkK15ou+QBnKLpNaPwXKSc4B6xjgbFFL4dtC7STLgLVzGER0C2BAGY8I Q==;
+X-CSE-ConnectionGUID: cTqmQLTcTtGWmk57vehj2g==
+X-CSE-MsgGUID: 3SN2sKDmR9mPvwOSW2bo9w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433268"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433268"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2025 06:41:52 -0700
+X-CSE-ConnectionGUID: GUv/yLtqTOS1hcggsvnYIQ==
+X-CSE-MsgGUID: 5J8v+jkDSgOOjAwtgOrylg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639981"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:49 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH v8 16/55] i386/tdx: load TDVF for TD guest
+Date: Tue,  1 Apr 2025 09:01:26 -0400
+Message-Id: <20250401130205.2198253-17-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,110 +88,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Feb 2025 17:27:26 +0800
-Bibo Mao <maobibo@loongson.cn> wrote:
+From: Chao Peng <chao.p.peng@linux.intel.com>
 
-> Add basic ACPI table test case for LoongArch64.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->  tests/qtest/bios-tables-test.c | 62 ++++++++++++++++++++++++++++++++++
->  1 file changed, 62 insertions(+)
-> 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 0a333ec435..008d7a0497 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -2420,6 +2420,59 @@ static void test_acpi_aarch64_virt_oem_fields(void)
->      g_free(args);
->  }
->  
-> +#define LOONGARCH64_INIT_TEST_DATA(data)                          \
-> +    test_data data = {                                            \
-> +        .machine = "virt",                                        \
-> +        .arch    = "loongarch64",                                 \
-> +        .tcg_only = true,                                         \
-> +        .uefi_fl1 = "pc-bios/edk2-loongarch64-code.fd",           \
-> +        .uefi_fl2 = "pc-bios/edk2-loongarch64-vars.fd",           \
-> +        .cd = "tests/data/uefi-boot-images/"                      \
-> +              "bios-tables-test.loongarch64.iso.qcow2",           \
-> +        .ram_start = 0,                                           \
-> +        .scan_len = 128ULL * 1024 * 1024,                         \
+TDVF(OVMF) needs to run at private memory for TD guest. TDX cannot
+support pflash device since it doesn't support read-only private memory.
+Thus load TDVF(OVMF) with -bios option for TDs.
 
-while it consistent with other test, we should switch to using MiB macro
-so I'd like to ask
- * 1st convert all similar places in bios-tables-test.c 'x * MiB' style
- * fix up this patch to use that as well
+Use memory_region_init_ram_guest_memfd() to allocate the MemoryRegion
+for TDVF because it needs to be located at private memory.
 
-> +    }
-> +
-> +static void test_acpi_loongarch64_virt(void)
-> +{
-> +    LOONGARCH64_INIT_TEST_DATA(data);
-> +
-> +    test_acpi_one("-cpu la464 ", &data);
-> +    free_test_data(&data);
-> +}
-> +
-> +static void test_acpi_loongarch64_virt_topology(void)
-> +{
-> +    LOONGARCH64_INIT_TEST_DATA(data);
-> +
-> +    data.variant = ".topology";
-> +    test_acpi_one("-cpu la464 -smp sockets=1,cores=4,threads=2", &data);
-> +    free_test_data(&data);
-> +}
-> +
-> +static void test_acpi_loongarch64_virt_numamem(void)
-> +{
-> +    LOONGARCH64_INIT_TEST_DATA(data);
-> +
-> +    data.variant = ".numamem";
-> +    test_acpi_one(" -cpu la464 -object memory-backend-ram,id=ram0,size=128M"
-> +                  " -numa node,memdev=ram0", &data);
-> +    free_test_data(&data);
-> +}
-> +
+Also store the MemoryRegion pointer of TDVF since the shared ramblock of
+it can be discared after it gets copied to private ramblock.
 
-> +static void test_acpi_loongarch64_virt_memhp(void)
-> +{
-> +    LOONGARCH64_INIT_TEST_DATA(data);
-> +
-> +    data.variant = ".memhp";
-> +    test_acpi_one(" -cpu la464 -m 128,slots=3,maxmem=1G"
+Signed-off-by: Chao Peng <chao.p.peng@linux.intel.com>
+Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ hw/i386/x86-common.c  | 6 +++++-
+ target/i386/kvm/tdx.c | 6 ++++++
+ target/i386/kvm/tdx.h | 3 +++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-> +                  " -object memory-backend-ram,id=ram0,size=64M"
-> +                  " -object memory-backend-ram,id=ram1,size=64M"
-> +                  " -numa node,memdev=ram0 -numa node,memdev=ram1"
-> +                  " -numa dist,src=0,dst=1,val=21",
-I'd test numa specific stuff in test_acpi_loongarch64_virt_numamem()
-and simplify this test case.
-
-> +                  &data);
-> +    free_test_data(&data);
-> +}
->  
->  int main(int argc, char *argv[])
->  {
-> @@ -2593,6 +2646,15 @@ int main(int argc, char *argv[])
->              qtest_add_func("acpi/virt/numamem",
->                             test_acpi_riscv64_virt_tcg_numamem);
->          }
-> +    } else if (strcmp(arch, "loongarch64") == 0) {
-> +        if (has_tcg && qtest_has_device("virtio-blk-pci")) {
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-is it necessary?
-if yes, then add explanation to commit message, why it's need.
-
-> +            qtest_add_func("acpi/virt", test_acpi_loongarch64_virt);
-> +            qtest_add_func("acpi/virt/topology",
-> +                           test_acpi_loongarch64_virt_topology);
-> +            qtest_add_func("acpi/virt/numamem",
-> +                           test_acpi_loongarch64_virt_numamem);
-> +            qtest_add_func("acpi/virt/memhp", test_acpi_loongarch64_virt_memhp);
-> +        }
->      }
->      ret = g_test_run();
->      boot_sector_cleanup(disk);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 1b0671c52397..b1b5f11e7396 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -44,6 +44,7 @@
+ #include "standard-headers/asm-x86/bootparam.h"
+ #include CONFIG_DEVICES
+ #include "kvm/kvm_i386.h"
++#include "kvm/tdx.h"
+ 
+ #ifdef CONFIG_XEN_EMU
+ #include "hw/xen/xen.h"
+@@ -1035,11 +1036,14 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+     if (machine_require_guest_memfd(MACHINE(x86ms))) {
+         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+                                            bios_size, &error_fatal);
++        if (is_tdx_vm()) {
++            tdx_set_tdvf_region(&x86ms->bios);
++        }
+     } else {
+         memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
+                                bios_size, &error_fatal);
+     }
+-    if (sev_enabled()) {
++    if (sev_enabled() || is_tdx_vm()) {
+         /*
+          * The concept of a "reset" simply doesn't exist for
+          * confidential computing guests, we have to destroy and
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index d9e49b7444f8..b7f6f3b708b0 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -137,6 +137,12 @@ static int get_tdx_capabilities(Error **errp)
+     return 0;
+ }
+ 
++void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
++{
++    assert(!tdx_guest->tdvf_mr);
++    tdx_guest->tdvf_mr = tdvf_mr;
++}
++
+ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(cgs);
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index d39e733d9fcc..b73461b8d8a3 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -30,6 +30,8 @@ typedef struct TdxGuest {
+     char *mrconfigid;       /* base64 encoded sha348 digest */
+     char *mrowner;          /* base64 encoded sha348 digest */
+     char *mrownerconfig;    /* base64 encoded sha348 digest */
++
++    MemoryRegion *tdvf_mr;
+ } TdxGuest;
+ 
+ #ifdef CONFIG_TDX
+@@ -39,5 +41,6 @@ bool is_tdx_vm(void);
+ #endif /* CONFIG_TDX */
+ 
+ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
++void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
+ 
+ #endif /* QEMU_I386_TDX_H */
+-- 
+2.34.1
 
 
