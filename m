@@ -4,100 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A87C36014
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99063C36010
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbtZ-00089D-BT; Tue, 01 Apr 2025 09:43:13 -0400
+	id 1tzbt6-0006Lv-RI; Tue, 01 Apr 2025 09:42:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tzbtO-0007PZ-Oj
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:43:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbsw-0005sH-9H
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:36 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tzbtM-0006gW-Ui
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:43:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743514980;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7tnjkpzqpRW4hX7h9+mlM+/8i9Q3XeE+RY2fIOmtnGk=;
- b=HLeSgDMjxLLw58ZG5hUpSF3XCpuw2WdwjTrG9UcoHQ5PKJQhYKjlnxydfgr9faDLvWi6vM
- sFnuy9efrvJLYrMLeUBEr620H2yzaCNJ5COAtvuQUeOPt0mBg3CYEsdSfPpSlGMLhrfm1D
- Troh1Ud8hY456EyQDhQCs2v123qQ04s=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-y2xV2wn-Ok6V_-4CSxDcag-1; Tue, 01 Apr 2025 09:42:58 -0400
-X-MC-Unique: y2xV2wn-Ok6V_-4CSxDcag-1
-X-Mimecast-MFC-AGG-ID: y2xV2wn-Ok6V_-4CSxDcag_1743514978
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912b54611dso2984195f8f.1
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 06:42:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743514977; x=1744119777;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7tnjkpzqpRW4hX7h9+mlM+/8i9Q3XeE+RY2fIOmtnGk=;
- b=SrCPwEGRdq0UvDJddFOUr/ORL3Bo68fh7f5BsB/qUnc0tfL5haY3PZlt4wUjdPyvQ4
- oEMlutyfgDhke6o/4zJhIfWqoalM7HQP9P4s2IZMt03KJ25kBz9bz0nGmEWQW2rX1yLX
- lO6Fa0j+t2I1hbYKKHtuFR04iVTjwmzHbnArvwsKryFwYgJGqg+LI1rTsVw19qNJ9zDi
- CgOuqg3PqsUHkjDi6uppS3iCPC52a5D2YrRAHpqwPGBnUJbRZPiZdEal0SUucgShxJEq
- 8ceSoP46TzvJgqMd5K5dBOvJQZHQgbs6xcRrEZIFSfpZx4PKLVq8qQsCboLP9CpAK355
- npfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkmAvpe0agdVuMU31zF/c+gq0hNXPbXHkv+l9NU+LGkkhdBjVcvc3OVPtKA57EdyNqrK+0xbNtiOH4@nongnu.org
-X-Gm-Message-State: AOJu0YzGfn1UXKKaGTOuHDOcvKyDZKgZu90lOPTdd1hFe5fZRCPTXrMj
- gc3UvrUpPaZO3GQQ4h/owsc2Pg6K75Qaf0CgiDWg2z1fksPWeXd/U9JyWdzf4egJ5KNtHHUOq51
- pZrYRKueZOCFrKXfnCt9CH9RDfbZH7EDU5S+U6Q83AB63ZNEc9YyrKDWGECDw9dg=
-X-Gm-Gg: ASbGncuP2l0jfKpWZwuYU3Bj0iLgTh+WgSRVropLAndc2p6qW++YgQcb6xDvQXCGLU7
- mDPvED+4HPsF32cgioER9OlBmxR7pH+tJ1yyRbIRLfkvHvVUGGOFWe7ICQU1uKnxqdzKTnsDGi7
- aYMRCI2J7SkGPjF/gfHY4xsKX3r+Xp1AtX0Z9DRx3rembtO0VofyoCgJznmkn4ygJENSE+Dz9J7
- vhFrn86iNKiA+KM3udZBm8UFdDdoC07QNreGPsl0zxhTl6UeoLFUV0Ri6Vs4mogGOGqMp5RGk51
- qevKPbP/PEV8Cp3Utl2b5cORlg6AVOAB/B0J
-X-Received: by 2002:a05:6000:1888:b0:39a:c9ed:8657 with SMTP id
- ffacd0b85a97d-39c120dbb06mr9206920f8f.17.1743514976836; 
- Tue, 01 Apr 2025 06:42:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRr3P81bjCiStnDLOiolqnmcwQDjZnisZ5UqYKR/nxr0lZqSe4UdhTQ3foLyVbYp2N0OD1Ig==
-X-Received: by 2002:a05:6000:1888:b0:39a:c9ed:8657 with SMTP id
- ffacd0b85a97d-39c120dbb06mr9206898f8f.17.1743514976536; 
- Tue, 01 Apr 2025 06:42:56 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b663860sm14337975f8f.39.2025.04.01.06.42.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 06:42:56 -0700 (PDT)
-Date: Tue, 1 Apr 2025 15:42:55 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 6/6] tests/qtest: Enable bios-tables-test for LoongArch
-Message-ID: <20250401154255.138cffc2@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250228092729.543097-7-maobibo@loongson.cn>
-References: <20250228092729.543097-1-maobibo@loongson.cn>
- <20250228092729.543097-7-maobibo@loongson.cn>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbss-0006XQ-PA
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743514950; x=1775050950;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=CKmX1iaFP6SFm1inEVYYWN5LaTESmg2ki/cn9rJWKX0=;
+ b=EZOy69ylAYqEcGyEZ61bDF62X07ddyZJkLRXSOw5CUds635bR+zBAqXM
+ A3JZo+J5c6c8qsRvh8fP9X7r3hyA/gPIUJid/7s6Vks692ZyZJRgv+Dnt
+ a4asyqm1HTZTKd64whMn8vcP3+K46/tPuPjSYywgMtQe/Oz9nX9ReTpqr
+ 31f4CLNpXhT3iMVtDhVELp6K3A1mhdYHdFMEwB1lYoOVK1E6dcCMlKPXO
+ WVT7+F9pVaWs3bZ8WxeMTCOKyTUE+nulODk0h532lu1TuRrELKFXUuQPR
+ DZ/FC3dPPCuJ82PzzvTexvtzDiWvG1e2QUz9RtaPpMuWE0L/h07KT+y5D Q==;
+X-CSE-ConnectionGUID: lhm+XYu3TVq496/A87ZPzA==
+X-CSE-MsgGUID: UpeAL9QeTECtUCd2SuvTtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433317"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433317"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2025 06:42:03 -0700
+X-CSE-ConnectionGUID: JbfrkW+TTPKtMnBVcZWjjw==
+X-CSE-MsgGUID: wgWx1SAIQeWj6hi9zmUjgg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640028"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:42:00 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH v8 20/55] i386/tdx: Track mem_ptr for each firmware entry of
+ TDVF
+Date: Tue,  1 Apr 2025 09:01:30 -0400
+Message-Id: <20250401130205.2198253-21-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,33 +89,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Feb 2025 17:27:29 +0800
-Bibo Mao <maobibo@loongson.cn> wrote:
+For each TDVF sections, QEMU needs to copy the content to guest
+private memory via KVM API (KVM_TDX_INIT_MEM_REGION).
 
-> Enable bios-tables-test for LoongArch virt machine, it passes to run
-> with command "make check-qtest-loongarch64".
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Introduce a field @mem_ptr for TdxFirmwareEntry to track the memory
+pointer of each TDVF sections. So that QEMU can add/copy them to guest
+private memory later.
 
-I suggest merging it into of 3/6
+TDVF sections can be classified into two groups:
+ - Firmware itself, e.g., TDVF BFV and CFV, that located separately from
+   guest RAM. Its memory pointer is the bios pointer.
 
-> ---
->  tests/qtest/meson.build | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 8a6243382a..8628eebfbc 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -149,7 +149,8 @@ qtests_hppa = \
->  
->  qtests_loongarch64 = qtests_filter + \
->    (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
-> -  ['boot-serial-test']
-> +  ['boot-serial-test'] + \
-> +  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
->  
->  qtests_m68k = ['boot-serial-test'] + \
->    qtests_filter
+ - Sections located at guest RAM, e.g., TEMP_MEM and TD_HOB.
+   mmap a new memory range for them.
+
+Register a machine_init_done callback to do the stuff.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+Changes in v8:
+- Remove the duplicated header include;
+- Add error handling for qemu_ram_mmap() failure;
+---
+ hw/i386/tdvf.c         |  1 +
+ include/hw/i386/tdvf.h |  7 +++++++
+ target/i386/kvm/tdx.c  | 37 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+)
+
+diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
+index 328d1b7ffdf8..840c392c44ab 100644
+--- a/hw/i386/tdvf.c
++++ b/hw/i386/tdvf.c
+@@ -174,6 +174,7 @@ int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size)
+         }
+     }
+ 
++    fw->mem_ptr = flash_ptr;
+     return 0;
+ 
+ err:
+diff --git a/include/hw/i386/tdvf.h b/include/hw/i386/tdvf.h
+index 7ebcac42a36c..e75c8d1acc68 100644
+--- a/include/hw/i386/tdvf.h
++++ b/include/hw/i386/tdvf.h
+@@ -26,13 +26,20 @@ typedef struct TdxFirmwareEntry {
+     uint64_t size;
+     uint32_t type;
+     uint32_t attributes;
++
++    void *mem_ptr;
+ } TdxFirmwareEntry;
+ 
+ typedef struct TdxFirmware {
++    void *mem_ptr;
++
+     uint32_t nr_entries;
+     TdxFirmwareEntry *entries;
+ } TdxFirmware;
+ 
++#define for_each_tdx_fw_entry(fw, e)    \
++    for (e = (fw)->entries; e != (fw)->entries + (fw)->nr_entries; e++)
++
+ int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size);
+ 
+ #endif /* HW_I386_TDVF_H */
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 8d3475c6752c..0885b99cfb88 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -12,10 +12,13 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/base64.h"
++#include "qemu/mmap-alloc.h"
+ #include "qapi/error.h"
+ #include "qom/object_interfaces.h"
+ #include "crypto/hash.h"
++#include "system/system.h"
+ 
++#include "hw/i386/tdvf.h"
+ #include "hw/i386/x86.h"
+ #include "kvm_i386.h"
+ #include "tdx.h"
+@@ -143,6 +146,38 @@ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
+     tdx_guest->tdvf_mr = tdvf_mr;
+ }
+ 
++static void tdx_finalize_vm(Notifier *notifier, void *unused)
++{
++    TdxFirmware *tdvf = &tdx_guest->tdvf;
++    TdxFirmwareEntry *entry;
++
++    for_each_tdx_fw_entry(tdvf, entry) {
++        switch (entry->type) {
++        case TDVF_SECTION_TYPE_BFV:
++        case TDVF_SECTION_TYPE_CFV:
++            entry->mem_ptr = tdvf->mem_ptr + entry->data_offset;
++            break;
++        case TDVF_SECTION_TYPE_TD_HOB:
++        case TDVF_SECTION_TYPE_TEMP_MEM:
++            entry->mem_ptr = qemu_ram_mmap(-1, entry->size,
++                                           qemu_real_host_page_size(), 0, 0);
++            if (entry->mem_ptr == MAP_FAILED) {
++                error_report("Failed to mmap memory for TDVF section %d",
++                             entry->type);
++                exit(1);
++            }
++            break;
++        default:
++            error_report("Unsupported TDVF section %d", entry->type);
++            exit(1);
++        }
++    }
++}
++
++static Notifier tdx_machine_done_notify = {
++    .notify = tdx_finalize_vm,
++};
++
+ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(cgs);
+@@ -157,6 +192,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         }
+     }
+ 
++    qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
++
+     tdx_guest = tdx;
+     return 0;
+ }
+-- 
+2.34.1
 
 
