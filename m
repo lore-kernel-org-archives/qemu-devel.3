@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9B6C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55241C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzcrZ-0006qO-3G; Tue, 01 Apr 2025 10:45:16 -0400
+	id 1tzd1T-0002MA-VF; Tue, 01 Apr 2025 10:55:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzcrG-0006kY-7Y
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:54 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzd1R-0002Ld-KV
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:55:25 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzcrE-0007P5-HA
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:53 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-39c0dfad22aso2534630f8f.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 07:44:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzd1P-0001xf-K6
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:55:25 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-391342fc1f6so5043598f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 07:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743518689; x=1744123489; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743519321; x=1744124121; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ro3FAJfYM4sVjFmJ48owJm586vBhmRdfy9DHaw3s8Es=;
- b=GXwfJRBXxcS3TFYAQMzl+ata6nhLt2Bx0KDUtXT7uo6nREHavPFM2hg/n4Be3AoLuM
- I6Lyahaunc1u4ZvyCDmvl/9fl91z3PL/tJmdR1pVoNfM1NCXgs78VJKb+14k8oojGvTW
- RdrV06mKdInIx9a9fGUyjIgsBlIhb3M3/ct7eBZ4YU8DtVIiy55aN9fKrGFVrRUEIPrd
- cDL1MbEEpuVZrxVbJUZBVMrVPsgOzdHfx4uZllXKhU8Br9YC3TClGFV+WUWkyBCBbP3q
- XyXQ0sOQPzl9HsPYx5PDz1DQK1cGAMqp9fnQoh1izS8gMkBGML4PHntNixUHLAA5Y4jm
- C87Q==
+ bh=w/v6av2c5ZeAr/TtPiOGClVJAp7oQh5/1ysF0gu629U=;
+ b=zj1XEA1cO18XJhU8damJcftQkl/0uqWLZBvrKzsQDx3MnoJlaVknYlhDaLzIfZKdYR
+ Xhka4BDTFFPgm29tm+nGd6iuUJzJPTursF6/eihqnKJQ406DlKQv3etVLUPCXRwL9Eyz
+ 4Qu25OfuB8BwN4jBPR2wMtYwVXpUnWbxJtDsV7w8bGQ3tIfXYQIQ9NpWg3e1QH0U0l7Q
+ z/FruzZiukQQADajBIJ+JKsW/HLs01kUebwV21xj703Oto1pvCML7PcNVMyuS9ggc+3s
+ eSljyoEKIujRj59ZGtxvPCAe4ZILpOMO/1uNH/hbRD3o85SZQdYurHLNs5LiGe+a3nit
+ EsIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743518689; x=1744123489;
+ d=1e100.net; s=20230601; t=1743519321; x=1744124121;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ro3FAJfYM4sVjFmJ48owJm586vBhmRdfy9DHaw3s8Es=;
- b=RE95w4ByX9/kdCA2PW87yG4czYGL+Ya93sAjUvqdZz+Vymyha2DH3TJs0W145Kiu86
- Qh1+UNqD5RgzJIGU3JSVuFHtwJAqNOkoB1RABu9woMXdoRIMyFXVUtZM2WhzWAGmWWTD
- obbv5GaxvZTRKgD2BCkk0N7Ux9Hffrt1Mk5Q/DvhSZzHyCxDJhK0JuY3wnKWSonHKD5v
- tyaWHjhGDRww6qz7f74FzQfLQWndFX+7Cdoq5Z/bd139iCnNt02LFq8/W8F+UWAsCXXd
- AII9MubFQRCZAJQ/Hyg/Umti8qqWBO8thue6ISFc3dbtk3C8SM3BQdJtFBlZ20Rct6X3
- jgZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVC7Ta2H513POM33t/myfaN4uhM+WOP/PwvnSM2Us5fU00TVMr53F0XCgFpPlsoWfxjgBhbaRAm+kGj@nongnu.org
-X-Gm-Message-State: AOJu0Yx+KaGMPuiyBYLsfKYvf3tp770Y7+oFULz3CVnRjCYVN3fbKDPa
- 4xDbDLtGXnSW6h8ltOVCFyHJb1/Sa5x5AHLhEx9WuPQ1ZHEet4RfcHhHEMWj87Y=
-X-Gm-Gg: ASbGncttQ+6fTDs6mS9lDfIvIBGLNkBTQ1ibfqdGdGbyq1yvXxasVj85IM6onoAfd1l
- jixxdt2VTSm3wrzEALOMdAb4o2V2n0mAJkmPy6oIc4uOVyzcFB0SObDt5kwJCIDKT+UHBEu2LrF
- 3mhXTzRJhJQ2j+QJisjrTIKwIuozcnJTofrGkstoKaSaDw/mc9dJzRSUbsPOP8qp3hfEnoCGYjB
- 7HFnFhuAJEJs59Yleu612VOg+jDWjZGGrp/UjGHpAViftWY5EDeMWpCAjp9Mkfd/7vMsXIswkwl
- j4rnMuL7GWdnosC8uD7pOAQgzMfnxYIDwsdTn+KHn7xhwMcX9DInFYl/UjR9i0ITdQRUnHOw5Fu
- 53wlO+yIgal6z
-X-Google-Smtp-Source: AGHT+IFi1oRY77BW5kcTSCc0DC1xPGcCFnB8+VfkAXX1CNmT7KgEOCvRvo/OwlCc7wo8R0K75WIVLg==
-X-Received: by 2002:a05:6000:4025:b0:39a:c9ae:9efe with SMTP id
- ffacd0b85a97d-39c2364b4a5mr2913431f8f.18.1743518689149; 
- Tue, 01 Apr 2025 07:44:49 -0700 (PDT)
+ bh=w/v6av2c5ZeAr/TtPiOGClVJAp7oQh5/1ysF0gu629U=;
+ b=oOuTVnJCVLjUS6bObgsXnF1lYnvYiV0j4Wx/ovzNDsoVyHYuhrwTDkqZyUxDWKuGx8
+ BkLRduP6jFJ9RYd3FBgj55F4+5RnmMr5IGuoEhV+7pWha9Ou5GL3lXevAaN+CmFAARkG
+ jx4AsPSpNl1GwpUqsDPU1P4GPilwBn30qsZl19SEgVTNEO986voCNoMkKv4egJe2Frv2
+ azyaPy+k4pUOtpwVsaecKRM+IaFDsVd9YZABsIof2sHR3GnQNQX5aphV5kFw/Uqxb5zQ
+ Jm916ToXtgj6MC1Yh591ts8PTOfD65fAEUGE2bHDnn+xtRm1l6deyIdzITXZWdd/Nepm
+ 4TPA==
+X-Gm-Message-State: AOJu0YxGMP3qcg+hpxb+LfDfsHiZrFgxmXzm1K+IUZqNMLHpm9i4+/nV
+ ZHy20fitVGpZgSUplq4742/JBDJ8VCHzM8xK5b3jpU280yoqeo0yWmdy8CDrFqw=
+X-Gm-Gg: ASbGnctxcYilY0AytqoamgWCNyIc3au/GSK/LyGXjtPTNLEiwZI9uzS4RVrCkiJWujv
+ kGIhtWzU+Hy0uWuwVQVWJYUtwR6BPlimOYKR/UNzQ0V+YLSAiUpjFLakhPsqWr2YmwH2imkm7H4
+ ollk3sVehYNt+YlOAhXrvvevgaGAdDV9OP+XIR5XAJWsQF6jduELCV02ECQBpTQhAwy6sBmC4I6
+ ljuOU1J0sL/4aQgpPfLzsGGf15knso2K1zrcEME5bYGQS6HEzblC07awLDDzA6xcOXH9onUQUOD
+ 0MN3ZK8r97JXQ1Tuqro1aJduc2gYUQlZ0A0i5E+grFQjAYfzPZxqc4Qy6GYQT5l5ZBnrl7uL9/V
+ vmACTGsPuW4F3
+X-Google-Smtp-Source: AGHT+IG/Sxd6JlQJJy5pfpnKOEQJigAtum31eD9VgvDtdr7xDZx0yNB0gRgSWZbeKu0Xr0tHmTV5dA==
+X-Received: by 2002:a5d:588a:0:b0:394:ef93:9afc with SMTP id
+ ffacd0b85a97d-39c120dc1aamr10176337f8f.18.1743519321153; 
+ Tue, 01 Apr 2025 07:55:21 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8ff02e84sm157604095e9.32.2025.04.01.07.44.48
+ ffacd0b85a97d-39c0b7a41a9sm14696333f8f.90.2025.04.01.07.55.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 07:44:48 -0700 (PDT)
-Message-ID: <5f5f280c-34a5-4961-a9c0-74df5e0b0387@linaro.org>
-Date: Tue, 1 Apr 2025 16:44:47 +0200
+ Tue, 01 Apr 2025 07:55:20 -0700 (PDT)
+Message-ID: <a5872e83-7007-4ade-94cd-221437da30e1@linaro.org>
+Date: Tue, 1 Apr 2025 16:55:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bsd-user: add option to enable plugins
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
- alex.bennee@linaro.org, Kyle Evans <kevans@freebsd.org>
-References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
- <a2907212-feef-407f-bc2d-03667aaae174@linaro.org>
- <c474f845-3d3b-4060-94c2-0d7b5f044d82@linaro.org>
+Subject: Re: [PATCH v2 2/5] ipmi: add fwinfo to pci ipmi devices
+To: Nicholas Piggin <npiggin@gmail.com>, Corey Minyard <minyard@acm.org>
+Cc: qemu-devel@nongnu.org
+References: <20250401114412.676636-1-npiggin@gmail.com>
+ <20250401114412.676636-3-npiggin@gmail.com>
+ <b0842a9c-dac4-4433-b69a-054ac65d8735@linaro.org>
+ <D8VC57XK27CZ.1W6DLSB9MBN1D@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c474f845-3d3b-4060-94c2-0d7b5f044d82@linaro.org>
+In-Reply-To: <D8VC57XK27CZ.1W6DLSB9MBN1D@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,56 +102,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/25 16:33, Pierrick Bouvier wrote:
-> On 3/31/25 23:15, Philippe Mathieu-Daudé wrote:
->> Hi Pierrick,
+On 1/4/25 15:27, Nicholas Piggin wrote:
+> On Tue Apr 1, 2025 at 9:57 PM AEST, Philippe Mathieu-Daudé wrote:
+>> Hi Nick,
 >>
->> On 1/4/25 01:42, Pierrick Bouvier wrote:
->>> Nothing prevent plugins to be enabled on this platform for user
->>> binaries, only the option in the driver is missing.
->>
->> Per commit 903e870f245 ("plugins/api: split out binary
->> path/start/end/entry code") this is deliberate:
->>
->>       The BSD user-mode command line is still missing -plugin.
->>       This can be enabled once we have reliable check-tcg tests
->>       working for the BSDs.
->>
->> Should we enable this without test harnessing?
->>
-> 
-> Thanks for pointing this.
-> 
-> However, I don't get the argument, as the same could be said about 
-> system mode, which runs on BSD also, and already has plugins enabled.
-> The coupling between user related code and plugins is very low (just 
-> options parsing and init code), so I don't see why we could have a bug 
-> related to a specific platform only for user binaries.
-> 
-> So either we deactivate plugins completely for bsd binaries, or we take 
-> a leap of faith that it works for them.
-> 
-> @Alex, any further insight on this?
-> 
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> On 1/4/25 13:44, Nicholas Piggin wrote:
+>>> This requires some adjustments to callers to avoid possible behaviour
+>>> changes for PCI devices.
+>>>
+>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 >>> ---
->>>    bsd-user/main.c | 12 ++++++++++++
->>>    1 file changed, 12 insertions(+)
+>>>    include/hw/ipmi/ipmi.h     |  5 +++++
+>>>    hw/acpi/ipmi.c             |  2 +-
+>>>    hw/ipmi/isa_ipmi_bt.c      |  1 +
+>>>    hw/ipmi/isa_ipmi_kcs.c     |  1 +
+>>>    hw/ipmi/pci_ipmi_bt.c      | 12 ++++++++++++
+>>>    hw/ipmi/pci_ipmi_kcs.c     | 11 +++++++++++
+>>>    hw/smbios/smbios_type_38.c |  6 +++++-
+>>>    7 files changed, 36 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
+>>> index 77a7213ed93..71c4efac8cd 100644
+>>> --- a/include/hw/ipmi/ipmi.h
+>>> +++ b/include/hw/ipmi/ipmi.h
+>>> @@ -90,6 +90,11 @@ typedef struct IPMIFwInfo {
+>>>        } memspace;
+>>>    
+>>>        int interrupt_number;
+>>> +    enum {
+>>> +        IPMI_NO_IRQ = 0,
+>>> +        IPMI_ISA_IRQ,
+>>> +        IPMI_PCI_IRQ,
+>>> +    } irq;
+>>>        enum {
+>>>            IPMI_LEVEL_IRQ,
+>>>            IPMI_EDGE_IRQ
+>>> diff --git a/hw/acpi/ipmi.c b/hw/acpi/ipmi.c
+>>> index a20e57d465c..c81cbd2f158 100644
+>>> --- a/hw/acpi/ipmi.c
+>>> +++ b/hw/acpi/ipmi.c
+>>> @@ -55,7 +55,7 @@ static Aml *aml_ipmi_crs(IPMIFwInfo *info)
+>>>            abort();
+>>>        }
+>>>    
+>>> -    if (info->interrupt_number) {
+>>> +    if (info->irq == IPMI_ISA_IRQ && info->interrupt_number) {
+>>>            aml_append(crs, aml_irq_no_flags(info->interrupt_number));
+>>>        }
+>>>    
+>>> diff --git a/hw/ipmi/isa_ipmi_bt.c b/hw/ipmi/isa_ipmi_bt.c
+>>> index a1b66d5ee82..b5556436b82 100644
+>>> --- a/hw/ipmi/isa_ipmi_bt.c
+>>> +++ b/hw/ipmi/isa_ipmi_bt.c
+>>> @@ -49,6 +49,7 @@ static void isa_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
+>>>        ISAIPMIBTDevice *iib = ISA_IPMI_BT(ii);
+>>>    
+>>>        ipmi_bt_get_fwinfo(&iib->bt, info);
+>>> +    info->irq = IPMI_ISA_IRQ;
+>>>        info->interrupt_number = iib->isairq;
+>>>        info->i2c_slave_address = iib->bt.bmc->slave_addr;
+>>>        info->uuid = iib->uuid;
+>>> diff --git a/hw/ipmi/isa_ipmi_kcs.c b/hw/ipmi/isa_ipmi_kcs.c
+>>> index d9ebdd5371f..326115f51bb 100644
+>>> --- a/hw/ipmi/isa_ipmi_kcs.c
+>>> +++ b/hw/ipmi/isa_ipmi_kcs.c
+>>> @@ -49,6 +49,7 @@ static void isa_ipmi_kcs_get_fwinfo(IPMIInterface *ii, IPMIFwInfo *info)
+>>>        ISAIPMIKCSDevice *iik = ISA_IPMI_KCS(ii);
+>>>    
+>>>        ipmi_kcs_get_fwinfo(&iik->kcs, info);
+>>> +    info->irq = IPMI_ISA_IRQ;
+>>>        info->interrupt_number = iik->isairq;
+>>>        info->uuid = iik->uuid;
+>>>    }
+>>> diff --git a/hw/ipmi/pci_ipmi_bt.c b/hw/ipmi/pci_ipmi_bt.c
+>>> index a3b742d22c9..33ff7190ee8 100644
+>>> --- a/hw/ipmi/pci_ipmi_bt.c
+>>> +++ b/hw/ipmi/pci_ipmi_bt.c
+>>> @@ -38,6 +38,17 @@ struct PCIIPMIBTDevice {
+>>>        uint32_t uuid;
+>>>    };
+>>>    
+>>> +static void pci_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
+>>> +{
+>>> +    PCIIPMIBTDevice *pib = PCI_IPMI_BT(ii);
+>>> +
+>>> +    ipmi_bt_get_fwinfo(&pib->bt, info);
+>>> +    info->irq = IPMI_PCI_IRQ;
+>>> +    info->interrupt_number = pci_intx(&pib->dev);
+>>> +    info->i2c_slave_address = pib->bt.bmc->slave_addr;
+>>> +    info->uuid = pib->uuid;
+>>> +}
+>>> +
+>>>    static void pci_ipmi_raise_irq(IPMIBT *ib)
+>>>    {
+>>>        PCIIPMIBTDevice *pib = ib->opaque;
+>>> @@ -125,6 +136,7 @@ static void pci_ipmi_bt_class_init(ObjectClass *oc, void *data)
+>>>    
+>>>        iic->get_backend_data = pci_ipmi_bt_get_backend_data;
+>>>        ipmi_bt_class_init(iic);
+>>> +    iic->get_fwinfo = pci_ipmi_bt_get_fwinfo;
+>>>    }
+>>>    
+>>>    static const TypeInfo pci_ipmi_bt_info = {
+>>> diff --git a/hw/ipmi/pci_ipmi_kcs.c b/hw/ipmi/pci_ipmi_kcs.c
+>>> index 05ba97ec58f..6673b2088ef 100644
+>>> --- a/hw/ipmi/pci_ipmi_kcs.c
+>>> +++ b/hw/ipmi/pci_ipmi_kcs.c
+>>> @@ -38,6 +38,16 @@ struct PCIIPMIKCSDevice {
+>>>        uint32_t uuid;
+>>>    };
+>>>    
+>>> +static void pci_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
+>>> +{
+>>> +    PCIIPMIKCSDevice *pik = PCI_IPMI_KCS(ii);
+>>> +
+>>> +    ipmi_kcs_get_fwinfo(&pik->kcs, info);
+>>> +    info->irq = IPMI_PCI_IRQ;
+>>> +    info->interrupt_number = pci_intx(&pik->dev);
+>>> +    info->uuid = pik->uuid;
+>>> +}
+>>> +
+>>>    static void pci_ipmi_raise_irq(IPMIKCS *ik)
+>>>    {
+>>>        PCIIPMIKCSDevice *pik = ik->opaque;
+>>> @@ -125,6 +135,7 @@ static void pci_ipmi_kcs_class_init(ObjectClass *oc, void *data)
+>>>    
+>>>        iic->get_backend_data = pci_ipmi_kcs_get_backend_data;
+>>>        ipmi_kcs_class_init(iic);
+>>> +    iic->get_fwinfo = pci_ipmi_kcs_get_fwinfo;
+>>>    }
+>>>    
+>>>    static const TypeInfo pci_ipmi_kcs_info = {
+>>> diff --git a/hw/smbios/smbios_type_38.c b/hw/smbios/smbios_type_38.c
+>>> index 168b886647d..2823929c258 100644
+>>> --- a/hw/smbios/smbios_type_38.c
+>>> +++ b/hw/smbios/smbios_type_38.c
+>>> @@ -72,7 +72,11 @@ static void smbios_build_one_type_38(IPMIFwInfo *info)
+>>>                         " SMBIOS, ignoring this entry.", info->register_spacing);
+>>>            return;
+>>>        }
+>>> -    t->interrupt_number = info->interrupt_number;
+>>> +    if (info->irq == IPMI_ISA_IRQ) {
+>>> +        t->interrupt_number = info->interrupt_number;
+>>> +    } else {
+>>> +        t->interrupt_number = 0;
 >>
->> Ideally we'd have helpers for common user code in common-user/...
->>
+>> Can you explain why use 0 for PCI?
 > 
-> Everything is already common for plugins, except adding the call to 
-> plugin command line option parsing function.
+> To avoid changes to other callers after this patch. Previously PCI
+> devices would leave interrupt_number as 0, not sure if such devices
+> are relevant here. If there is a better approach I would take it.
 
-Yeah, I mean the rest of main() ;)
-
->> Anyway, since this patch does what it says:
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
-> 
-> Thanks,
-> Pierrick
-> 
-
+OK, this is what I thought but I felt I could have missed something.
+Thanks!
 
