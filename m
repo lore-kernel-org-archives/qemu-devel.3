@@ -4,73 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A803FC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:02:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A06C36018
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbvU-0002Da-O0; Tue, 01 Apr 2025 09:45:13 -0400
+	id 1tzc5X-0007lj-WC; Tue, 01 Apr 2025 09:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbu7-0000Us-Ke
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:00 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzc5C-0007H4-R3
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:55:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbtz-0006ZP-Uo
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:43:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743515020; x=1775051020;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=m2lenDu9bW+75Eq/1SrtcTJxjbE4TtBg2fjTNckDDXI=;
- b=WR0raWR+n+saTmeX5r1PxOGEP9P7uwnfgftuZx+na1sckB5lIl5rnBXN
- Du9zNskUw/QhFfUna2TBwxPVTMF1QrrPzXoyEKmlGZozXMvO1PKcvJS/N
- ez1nhDlBplsl5fLEZg84U4oapvpQOIoWa/Xe1IBPompog58qT4DRj33CU
- XQ21uCIuq7cBm86PilXKSsDYGMqk5dY16y3Kc00InUU19hFl4N718XPj1
- W43uZGjajWT+v/gRFP66NcNw2Hw5LVTdK2dR1PxQ97Db8hijIGnlFqf4o
- Apxv8ulCPEFDZCDe1ouQi04/ZIiNksNNfQmKc++5KuH/537iVjlAbyJPU Q==;
-X-CSE-ConnectionGUID: zlxCR1usRb61QeHvWIQX3Q==
-X-CSE-MsgGUID: xm1lJvkBRFKcgvUvC1Z6kA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433454"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433454"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:42:38 -0700
-X-CSE-ConnectionGUID: CuHhDGo4STK41z4uWKR32g==
-X-CSE-MsgGUID: k1cFb/oQSt6lOreAfVcxFw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640123"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:42:35 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 34/55] i386/tdx: Force exposing CPUID 0x1f
-Date: Tue,  1 Apr 2025 09:01:44 -0400
-Message-Id: <20250401130205.2198253-35-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzc5B-000881-7e
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:55:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743515712;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PpdbFjnXGFVorHPIhRi0HdIOl3Gya0Cf916d/PyEfrM=;
+ b=QgPDcGA0wH5Vgbc0LNykgAtwfpcCophY5rHckBZq05atehPmMk/ub5aK66XqkH9f/NZtPx
+ jSggeC9AlvwLdNH3HnW4cmS33imc4ktDRjiCGL2NIeelKkAIl4131E6DPceUrYA1cdFdYI
+ rFbgWhDcFGt9Ad7wyKTEP3qCs/+mXwA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-n33EaAFCPGOqJJjAh2kcNw-1; Tue,
+ 01 Apr 2025 09:55:08 -0400
+X-MC-Unique: n33EaAFCPGOqJJjAh2kcNw-1
+X-Mimecast-MFC-AGG-ID: n33EaAFCPGOqJJjAh2kcNw_1743515707
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AAC41955DAC; Tue,  1 Apr 2025 13:55:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.88])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDF69180B48B; Tue,  1 Apr 2025 13:55:05 +0000 (UTC)
+Date: Tue, 1 Apr 2025 08:55:03 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 08/15] fuse: Introduce fuse_{at,de}tach_handlers()
+Message-ID: <4r7vggv7jwq376focbc2mhad2b3cfs7eowsgge2ppwtd47c33u@cw3vd3tqxy3x>
+References: <20250325160529.117543-1-hreitz@redhat.com>
+ <20250325160655.119407-7-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250325160655.119407-7-hreitz@redhat.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,31 +84,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX uses CPUID 0x1f to configure TD guest's CPU topology. So set
-enable_cpuid_0x1f for TDs.
+On Tue, Mar 25, 2025 at 05:06:48PM +0100, Hanna Czenczek wrote:
+> Pull setting up and tearing down the AIO context handlers into two
+> dedicated functions.
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  block/export/fuse.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
+> 
+> diff --git a/block/export/fuse.c b/block/export/fuse.c
+> index 2df6297d61..bd98809d71 100644
+> --- a/block/export/fuse.c
+> +++ b/block/export/fuse.c
+> @@ -78,27 +78,34 @@ static void read_from_fuse_export(void *opaque);
+>  static bool is_regular_file(const char *path, Error **errp);
+>  
+>  
+> -static void fuse_export_drained_begin(void *opaque)
+> +static void fuse_attach_handlers(FuseExport *exp)
+>  {
+> -    FuseExport *exp = opaque;
+> +    aio_set_fd_handler(exp->common.ctx,
+> +                       fuse_session_fd(exp->fuse_session),
+> +                       read_from_fuse_export, NULL, NULL, NULL, exp);
+> +    exp->fd_handler_set_up = true;
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- target/i386/kvm/tdx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+I found this name mildly confusing (does "set_up=true" mean that I
+still need to set up, or that I am already set up); would it be better
+as s/fd_handler_set_up/fd_handler_armed/g ?
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 49e748af3949..b0616eb3d371 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -402,7 +402,11 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
- 
- static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
- {
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+
-     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
-+
-+    x86cpu->enable_cpuid_0x1f = true;
- }
- 
- static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
 -- 
-2.34.1
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
