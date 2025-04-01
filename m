@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43ABEC3601B
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA813C36018
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:10:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzWgv-0006ce-NY; Tue, 01 Apr 2025 04:09:49 -0400
+	id 1tzWhS-0006nA-5p; Tue, 01 Apr 2025 04:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzWgt-0006cS-Ka
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:09:47 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzWhP-0006mh-24
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:10:19 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzWgq-0005hP-11
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:09:46 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cfecdd8b2so41333725e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 01:09:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzWhM-0005wI-AX
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:10:18 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39727fe912cso1913581f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 01:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743494981; x=1744099781; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=onlaOa0wLpR489FRvJtJWd94e66LthZJ01DW6X1kQEU=;
- b=OI5PQgVwBIqD/FxPka4GFq7W1yT+QMKdDDBWlH1kZfZY/3lkxRoGBb/nkDDdZHJUrR
- VUB1lLG4lA9OeZyJc5FFIDyv3iz7E5N1DubgZ4WhULFecjE0ahSCMhXJEGVNeQWbyCgE
- cVdclzgNOlgD5r1SBhO0E1GihqiqcS987lgfYEiW4E5PWoqir1sc2tRV/DpI/JtBOcQ8
- elWdvdg8NtmCAgxSEEhvXBwbz+GvfhFC4wlRFu7hKXVXAMUsO5GFNfymiXKY3F0TWBRi
- goI753SeJJ0Er+cPAyysXyFvHIj5UyP4NCCZDED+sJhh9EI0dNAPmXm9hAl1GXFCWTHI
- YMLw==
+ d=linaro.org; s=google; t=1743495014; x=1744099814; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fOHYuFnp4koozIqx1uCsPrUxKvA8s1qXFiegecsD2JY=;
+ b=GKE3MOv8doAdvbWUDdV+pCxRzVt3L4HvMQ22iEYyp//akfn5TnA6V7jckO7eJgSail
+ yEYYtMiVxEtJXqlIBr6g0f3VY6Hq5oIQ5pl/AeR6hbAoj3KUaTo9AWLJ2aqnh4RRD12x
+ 4kiCKhf7zeL7MF2Le1KGFTCMzHAJ6nAjqLiFS8xRnRDGjIMAEHnvf2pDC8GT8THVyiwr
+ OiuYYznOlwrgX1a+lFPH/GKDCPB1TGTqt3fikI+Mx0tktfuSLZoXT++E+pIhfIR068NY
+ 1bwBQJMN9XJN6TtRJqZUoewATWEDXeoP1mPL1rDnZvxmaXihJr/3zld5/5tt10XaQK/h
+ WSOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743494981; x=1744099781;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=onlaOa0wLpR489FRvJtJWd94e66LthZJ01DW6X1kQEU=;
- b=VZcozcg6oj4hgOB4FVjZhXxS/ppP/GevWrd9YSvNogkbWk1ZxJPbXO5mZUaMCasvC2
- lJAbUetd6jL0aMoaw6POoj5qWoJ9sj4HmtRYD+dpm76LItfDSGaVcbgF2RQ+DB5aCEcL
- o0PEfT86KIS1JC6pbD2D/dastHiPaAPuUNGaII0Q6DqiDy0FOicc6l+QzRaZrbqEmjUf
- KbsXhFRnaWN0RNiBlxP0sPV8/NvTWs1DsJCKtWHFKUfv+PrFGbs+6AQV82wdmsJJ8quj
- 1/RlLy91sGTKzVAgqN29lJdNm1Uy7MKHDkB+qwZTHr36Ael61Q5tC3tslGYPzKakyoBN
- sGrA==
-X-Gm-Message-State: AOJu0YwtWjBUXWMV3kiV9XytqkTBXR3Kg/HMZ+eo7N8cmcltt3WUZaai
- cDIyAsflrj0tQelm6DB03wJFARRfOF3dOaQEFYzTMGa2Hjaqk4dnYqXO+0gPBpq4G35RmM380bt
- g
-X-Gm-Gg: ASbGncvBBiE6eMr3wqBpEegnWQf/K7XCBirYnWKSN/dNcr5hNPblrIAt7KB1UjCVp0w
- vZB1JCDNXWfgHzgyiCQQZPS7JwQ+tsSU8CRNbGNsjqkrftQ/4QVLaDybAqzJitKpzUq4+/fQCRL
- EmitQt8QMPiSz6Sb7gqz1sIhpHqrU6Pyjkkh+H66nQnImI2v3dnsIfT/uvoSkp9SD/wOy7dR/oB
- Pjq07WED3onS0z72S6YmcXxK2HzK4OMrgbTaA9aAW1YTaq2dB7BtpeLvMxub7yPAqC8ewAfy0LQ
- y30EQKYo2If1eL6A8ojkUSKepYjHaJNgieSfNNJ7f91p1hjM4qWQFNciH+QOKNfW/L/UvhcJzr8
- MRjfY+xf3bwWLmIuS2eo=
-X-Google-Smtp-Source: AGHT+IH5npJpSEKMJq9Ss21Hz5FXYnnBfPAZ3klsq9M4W1gtBYivQonOvkPQCVUrrqQTcaN5wBNkJw==
-X-Received: by 2002:a05:6000:2a83:b0:39c:1257:cd3e with SMTP id
- ffacd0b85a97d-39c1257d4damr7260448f8f.56.1743494980771; 
- Tue, 01 Apr 2025 01:09:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743495014; x=1744099814;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fOHYuFnp4koozIqx1uCsPrUxKvA8s1qXFiegecsD2JY=;
+ b=BKvHNBgbF+auqC9jzny+en4aZlvD5SQ+uZeRhhR7ofzqO8i29sHGUBOOPl/HWJFuhX
+ OdZjMYBMOgCTksnBmfaYt6JHXHejz6VGWsp/nwX8m4WBAszpXrh+abgZTHdcqPMt4M4X
+ 8aw6EyHD3P25JxCIYENLmmvoouahLVGjReRTEPkPLE2s6nrAXQGVMkU5y12F1nrffD1b
+ FIBiJfnQ+8D94ofUFb8ogF5V1PV9nKB/3xiZoicxkJo/lHeMONKSFG376cnsy8v397YE
+ Qc7wmOnwRK7cfyMKtWjKhEnbdQ70l/W+XKx5qxNRJ6ZPXOIyXTjNtONCkvZV6rFwZrzd
+ mZOA==
+X-Gm-Message-State: AOJu0YxaA46A/yGuGoycfdfx50Z0rUi3bkRbY+eTv3lAzv6sH0JbcXpS
+ oKtBgNEHF+zs9SPBccmUySSfWOXvBx/+WQMtRey6lAYYDrbRJZYUB/ObwcmACwZ8Atv+2ShuOlt
+ e
+X-Gm-Gg: ASbGncsWHThCsw98nM8yoxKRxvozXVo3WzV1g0Qp1mIVeV+uKmjKuhi0gzx+g6mox1Y
+ LmFaV7ytFI5cd5Aro1TFqDcPZYCLBjNyit3A6QUHzvBElwHQcaTTCXENfVI3tjWVFCrQ59VIDq/
+ 6Pm30F8gVMfp8IeZ3nEyyjRE9hjSNJyRtNYqaWuKwCvcZIBhpotxlRittY9M5fCYbtQzujXN5KJ
+ FHv6OpXeAlJIhn525K/ASYBHhD1e3my6+SxX4yDHSsJ4LgU7dUD13pQl0tH+fEb1nJxNkGGrpOG
+ tvGXZ1ZZbMl0T09z3Yb09+xTQnVkduJD3/p8HrrjoZL5dWWEeTy7FuBxwpMyjLmyL5hEB8CHuBn
+ iWeuNAmjNc3MEefgAvp87KRkgFVIrrA==
+X-Google-Smtp-Source: AGHT+IEwUpblceau/VUwUlPvpZgXaZdYfCSm7xoYW6y3V8ZLS0wVVIgmt0WvN9sSGHcbIvi57EyiIA==
+X-Received: by 2002:a05:6000:1a8f:b0:391:43cb:43e6 with SMTP id
+ ffacd0b85a97d-39c1211cfd6mr8560797f8f.51.1743495014350; 
+ Tue, 01 Apr 2025 01:10:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8fcd78bdsm146514415e9.24.2025.04.01.01.09.39
+ 5b1f17b1804b1-43d82dedc2dsm190349835e9.2.2025.04.01.01.10.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Apr 2025 01:09:40 -0700 (PDT)
+ Tue, 01 Apr 2025 01:10:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>,
@@ -69,15 +70,18 @@ Cc: Gustavo Romero <gustavo.romero@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 00/24] cpus: Restrict SoftMMU mmu_index() to TCG
-Date: Tue,  1 Apr 2025 10:09:13 +0200
-Message-ID: <20250401080938.32278-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 07/24] target/i386: Remove unused cpu_(ldub,
+ stb)_kernel macros
+Date: Tue,  1 Apr 2025 10:09:20 +0200
+Message-ID: <20250401080938.32278-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250401080938.32278-1-philmd@linaro.org>
+References: <20250401080938.32278-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,78 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mmu_index() is specific to TCG SoftMMU,
-move CPUClass::mmu_index() to TCGCPUOps::mmu_index().
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/i386/tcg/seg_helper.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-Philippe Mathieu-Daudé (24):
-  hw/core/cpu: Update CPUClass::mmu_index docstring
-  accel/tcg: Introduce TCGCPUOps::mmu_index() callback
-  target/alpha: Restrict SoftMMU mmu_index() to TCG
-  target/arm: Restrict SoftMMU mmu_index() to TCG
-  target/avr: Restrict SoftMMU mmu_index() to TCG
-  target/hppa: Restrict SoftMMU mmu_index() to TCG
-  target/i386: Remove unused cpu_(ldub,stb)_kernel macros
-  target/i386: Restrict cpu_mmu_index_kernel() to TCG
-  target/i386: Restrict SoftMMU mmu_index() to TCG
-  target/loongarch: Restrict SoftMMU mmu_index() to TCG
-  target/m68k: Restrict SoftMMU mmu_index() to TCG
-  target/microblaze: Restrict SoftMMU mmu_index() to TCG
-  target/mips: Restrict SoftMMU mmu_index() to TCG
-  target/openrisc: Restrict SoftMMU mmu_index() to TCG
-  target/ppc: Restrict SoftMMU mmu_index() to TCG
-  target/riscv: Restrict SoftMMU mmu_index() to TCG
-  target/rx: Restrict SoftMMU mmu_index() to TCG
-  target/s390x: Restrict SoftMMU mmu_index() to TCG
-  target/sh4: Restrict SoftMMU mmu_index() to TCG
-  target/sparc: Restrict SoftMMU mmu_index() to TCG
-  target/tricore: Restrict SoftMMU mmu_index() to TCG
-  target/xtensa: Restrict SoftMMU mmu_index() to TCG
-  hw/core/cpu: Remove CPUClass::mmu_index()
-  exec: Restrict cpu-mmu-index.h to accel/tcg/
-
- include/{exec => accel/tcg}/cpu-mmu-index.h |  9 +++---
- include/accel/tcg/cpu-ops.h                 |  3 ++
- include/exec/cpu_ldst.h                     |  2 +-
- include/hw/core/cpu.h                       |  3 --
- target/i386/cpu.h                           |  3 --
- target/i386/tcg/seg_helper.h                | 10 +++---
- target/i386/tcg/tcg-cpu.h                   |  2 ++
- accel/tcg/translator.c                      |  2 +-
- semihosting/uaccess.c                       |  2 +-
- target/alpha/cpu.c                          |  2 +-
- target/arm/cpu.c                            | 13 ++++----
- target/arm/gdbstub64.c                      |  2 +-
- target/avr/cpu.c                            |  2 +-
- target/hppa/cpu.c                           |  2 +-
- target/hppa/mem_helper.c                    |  2 +-
- target/i386/cpu.c                           | 34 ---------------------
- target/i386/tcg/seg_helper.c                | 17 +++++++++++
- target/i386/tcg/tcg-cpu.c                   | 18 +++++++++++
- target/i386/tcg/translate.c                 |  2 +-
- target/loongarch/cpu.c                      |  2 +-
- target/loongarch/cpu_helper.c               |  2 +-
- target/m68k/cpu.c                           |  2 +-
- target/microblaze/cpu.c                     |  2 +-
- target/microblaze/helper.c                  |  2 +-
- target/microblaze/mmu.c                     |  2 +-
- target/mips/cpu.c                           |  2 +-
- target/openrisc/cpu.c                       |  2 +-
- target/openrisc/translate.c                 |  2 +-
- target/ppc/cpu_init.c                       |  2 +-
- target/riscv/cpu.c                          |  6 ----
- target/riscv/tcg/tcg-cpu.c                  |  6 ++++
- target/rx/cpu.c                             |  2 +-
- target/s390x/cpu.c                          |  2 +-
- target/sh4/cpu.c                            |  2 +-
- target/sparc/cpu.c                          |  4 +--
- target/sparc/mmu_helper.c                   |  2 +-
- target/tricore/cpu.c                        |  2 +-
- target/tricore/helper.c                     |  2 +-
- target/xtensa/cpu.c                         |  2 +-
- target/xtensa/mmu_helper.c                  |  2 +-
- 40 files changed, 91 insertions(+), 91 deletions(-)
- rename include/{exec => accel/tcg}/cpu-mmu-index.h (78%)
-
+diff --git a/target/i386/tcg/seg_helper.h b/target/i386/tcg/seg_helper.h
+index ebf10352778..6b8606cd6d8 100644
+--- a/target/i386/tcg/seg_helper.h
++++ b/target/i386/tcg/seg_helper.h
+@@ -35,8 +35,6 @@
+  * TODO: Convert callers to compute cpu_mmu_index_kernel once
+  * and use *_mmuidx_ra directly.
+  */
+-#define cpu_ldub_kernel_ra(e, p, r) \
+-    cpu_ldub_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ #define cpu_lduw_kernel_ra(e, p, r) \
+     cpu_lduw_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ #define cpu_ldl_kernel_ra(e, p, r) \
+@@ -44,8 +42,6 @@
+ #define cpu_ldq_kernel_ra(e, p, r) \
+     cpu_ldq_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ 
+-#define cpu_stb_kernel_ra(e, p, v, r) \
+-    cpu_stb_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ #define cpu_stw_kernel_ra(e, p, v, r) \
+     cpu_stw_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ #define cpu_stl_kernel_ra(e, p, v, r) \
+@@ -53,12 +49,10 @@
+ #define cpu_stq_kernel_ra(e, p, v, r) \
+     cpu_stq_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ 
+-#define cpu_ldub_kernel(e, p)    cpu_ldub_kernel_ra(e, p, 0)
+ #define cpu_lduw_kernel(e, p)    cpu_lduw_kernel_ra(e, p, 0)
+ #define cpu_ldl_kernel(e, p)     cpu_ldl_kernel_ra(e, p, 0)
+ #define cpu_ldq_kernel(e, p)     cpu_ldq_kernel_ra(e, p, 0)
+ 
+-#define cpu_stb_kernel(e, p, v)  cpu_stb_kernel_ra(e, p, v, 0)
+ #define cpu_stw_kernel(e, p, v)  cpu_stw_kernel_ra(e, p, v, 0)
+ #define cpu_stl_kernel(e, p, v)  cpu_stl_kernel_ra(e, p, v, 0)
+ #define cpu_stq_kernel(e, p, v)  cpu_stq_kernel_ra(e, p, v, 0)
 -- 
 2.47.1
 
