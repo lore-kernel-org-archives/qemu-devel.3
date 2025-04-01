@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D902FC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 17:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FCFC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 18:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzfqn-0006p8-PF; Tue, 01 Apr 2025 13:56:37 -0400
+	id 1tzghF-00065L-1u; Tue, 01 Apr 2025 14:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tzfql-0006ng-8W
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 13:56:35 -0400
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzghB-00064k-72
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 14:50:45 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tzfqi-0002Ya-Kp
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 13:56:34 -0400
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-72c7336ed99so741944a34.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 10:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzgh9-0000wI-B3
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 14:50:44 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43948f77f1aso42203965e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 11:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743530191; x=1744134991; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743533441; x=1744138241; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Q5+pSJ2I8gzg/67q+Dz+K47cz4hCqoWoArZnbWgiRpE=;
- b=FhQmE+nRsakSe8JfirAzpbVxAE9xHj97a/HQsN8cmgCfOI5lKlJDWmJwPk/TUG0H0L
- VJnmeAdhHTiZAh4MefqaRCXDQqkfbXaAWmmtZXwNFAAec11ohH/7SmJ0jwGbLoX0BCkF
- +Vhg5duB+xLMhPbRc6bmkO90W0dEfMg5SxEC6WOPLIRkHL74fSuIb/c+6kNz3A02H9+w
- yAEVuFMwWrojH6rlf8WjbzBBr3XiLcI216nj9v7jOovWAyb6/RAHaQjM2TZ8Tf1Qz1MN
- XVphabgjgKPILK7F6Mh6B8mms8L28+DI6tBIiTpqJ9ysD24wCVxBpdXvMjtQKjtV/Ifr
- 8r4w==
+ bh=6VHqokpx1vIQYgxOWg50Ci4We9wDar49ny6vi8XyG34=;
+ b=TlKttE5dVSmTkRWzFvKaIlxAc9ZAaNGEvitSJt+oSJpN3CZH41p/q8I1N8scffQseR
+ eVAIJrpzoMJ8Zyosd3wqAPdFCMEgvKZEFCSbTB2ZmU00ptOzzrfKhj/zkdo3zqkn3TH+
+ sRr5Pc+IRFqR9E1f3YkdJVCMgqlSkqfgDQfP1LLkRn/FGZHHpPH1i0tpRODPWsrL24dw
+ e8OQ3pHZxNc2Q8yLfHbECRnyZJokZvXc8jyJjqkRCU9rNsjGmIlqpa6FUiRvflZyUZGS
+ UfyuMbtMWtAiGaZothbS1qvrjGjrJmsPIGqn1AZS8dlXJr4WfFpFfZtoLYnma7GSPhg9
+ 2mFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743530191; x=1744134991;
+ d=1e100.net; s=20230601; t=1743533441; x=1744138241;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q5+pSJ2I8gzg/67q+Dz+K47cz4hCqoWoArZnbWgiRpE=;
- b=YWQdsQVKSSDsXM1JurkT0fmbuRn7PX83P2gQWdUx/aS3eOHiatyH2eMYrPh1Ohl5j1
- XNFdtl/Lbcbkd3DkZrMtX3/vdIU6sk7vxPLxFGlvswu+VDwulJPevPHvt/T+fBSLcVKG
- n4R+F9QOP9fuj08Dk5Uf0X+sOJmcldT/BnX2C35VNBibmPoKh9zn/fvEkfqdY/FikDz6
- 4DqK32+MYt6cyzjDyPyUfbWuU6hN0QHsRGzP8dvGJmlcQdktwXLQEagg0N1YFYJ9H8OH
- tgSNnWIxKGA/woE6gNI6i1t81z62CH0yH7iO/pjTfujry1vsL179rsU//zhO/BZP8zpw
- JlDA==
+ bh=6VHqokpx1vIQYgxOWg50Ci4We9wDar49ny6vi8XyG34=;
+ b=rTNDiZ3tSfWl5GJ0GAvIdOLXVGUfGtH86kkwo5PX2NpRd4xpTWCZjM4bB28/QAryON
+ Ec+8ZJuuDKu6RdqvJ6WCYm5drl0cRH0z+oD3u63pLLn+NjcJELc+zr33pf+9b15zOS3B
+ S71H8LsJ4iAcbUwVvfQLTLzDgd9Doa5rOy86q5+L2MnlHQo7ybBMzKWoLoQelFt32kcL
+ i+X2jTGmVPMaU5WQyHIiydTwdhUYy4I5rfubdIHiFiFNGGLnL96VkQC+9nvtG0bGwREN
+ ijq1d/xRJ0LQXtx0vrNKktjaJ2vK8O+24tLm3qTfEXJ6MGjA9ZcRlsM3DGz/ux2m0vgD
+ iiFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtPTcok09B4cWxY+e2wI2MofAOCi3kswmBLbyOIybUryPDckOyCWxWBr7MIhz+9u9Mmh96gZdNo7HG@nongnu.org
-X-Gm-Message-State: AOJu0YxgWqrSE7RNFwPupFCFJ/8vxfIAw34dornOi26wVl+Cw20UacLE
- l3KPFy4XYwVzUB8f94y220pZSlp9htggg+IJa3U2gS1lWOpkM4Y3JXZo7wsLNNqcIo7RCYmuH6t
- c
-X-Gm-Gg: ASbGnctL8BMjn802NNUxWvmrhnGBPA0uX9mWLHIi7OleVPeagTsSd2hyp14wFfo9Ll9
- L5DdPpvgMSZIP1EwrnJxrmQmpD3rVVjde/6K0ErBZuISOr/jQDRUvLBg3zOTX3WX7uYE9qv0A72
- S2j4ACbIKTuXv8Wp7oUGjqnPpLf2yk6c65sPQkf95tF8VXc2gNf4sdCbmGjwdGlDvs91M/3GH5z
- 099AonOnZRU4Y+QZEmNY2SmttjZz3sLozwTejAN1nSXSHvWECqGqvS4P9Z8L4quaQ+XWbY1DLS4
- 8VIZawlCyRsfNquVJR2ay5bwjq71br31vUekAx5npJQk0nvplh+NdmcfiZ3fLfqyYCKSAXXCb7J
- mZIoDXs92eSnQFMth5CZ2rVrhU8oc/UlF
-X-Google-Smtp-Source: AGHT+IFYCG3RiZsnM369ahTH1FzGZJ7mZxhUAsNgNwbnG7Waw5PRuxGjB9om7U0y5lvovWhrdQvwWA==
-X-Received: by 2002:a05:6830:6584:b0:727:3a2e:2132 with SMTP id
- 46e09a7af769-72c6382f0f1mr11616924a34.21.1743530190904; 
- Tue, 01 Apr 2025 10:56:30 -0700 (PDT)
-Received: from [172.20.102.85] (syn-071-042-197-003.biz.spectrum.com.
- [71.42.197.3]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-72c580fa72fsm1947169a34.41.2025.04.01.10.56.30
+ AJvYcCVMNtJFKkLWADsAZRF24rwAopg0Qif4OMZEVjxAcWcrlzjLCCajLms8SiIt1kX7hWnuogof2ZK/SlDE@nongnu.org
+X-Gm-Message-State: AOJu0Yy5jc9GhoEd2xibdTp5F1vm7iFWcWn6uZPzWiBSnl0O6w16Q8xk
+ Jb4jzLFByOOa+kLti/g/BoStfaSX2sNFM/ylwMezZHK7axmWg2Ov6HmKuKrUdtM=
+X-Gm-Gg: ASbGncscLjikWtfixeXMtYwS69f7iht5OxDNPL/4UVA+LFFMKAHDLYDJkDQyJ7nj5/V
+ P1nnh4nLDPkAZEyDJ/qZKXARQNyzM/E3HMPZ8XOp9jXeeWFsVCozz9CzXgihiujnfEp+Pkh2z+N
+ 54tGUfJFQNmUgYyBDG1Y8AZCh/nfCGLWHbXTY6UT1kk51gubrMcB8kbsFBgUF0TKps42pVG3brY
+ 1hJ38inWQ4+UBlkdyYmwdUqb2XvRwF2Xck+OKqSiVInBLZk4JDq/1X5P85I7FLytA+nBdl0EWzU
+ 7pR/EL17vVjtoOFnLVUBT+UuA2UJUzdkR8d8wL66wPenZXjTpcaue2SJNkfrsGPN+pvcU4fkVpw
+ 6Arv4FrQjUiOPfxvMav7Cma0=
+X-Google-Smtp-Source: AGHT+IEFdcVan1Ual+1jUQV0IpPKM4MCpGCqkzK2zO+YaD0GIf8Rlb+PxQTullc4FUL28Q+4u+iVKg==
+X-Received: by 2002:a05:600c:310c:b0:43d:db5:7b1a with SMTP id
+ 5b1f17b1804b1-43db6228049mr110128375e9.12.1743533441499; 
+ Tue, 01 Apr 2025 11:50:41 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d8fbbfebasm163422815e9.10.2025.04.01.11.50.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 10:56:30 -0700 (PDT)
-Message-ID: <1205914e-b344-4f64-826e-416b5e491cc4@linaro.org>
-Date: Tue, 1 Apr 2025 12:56:28 -0500
+ Tue, 01 Apr 2025 11:50:40 -0700 (PDT)
+Message-ID: <44720e82-808c-4749-917b-bcc0d1c92d1d@linaro.org>
+Date: Tue, 1 Apr 2025 20:50:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/42] include/exec: Inline *_data memory operations
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-10-richard.henderson@linaro.org>
- <7b57e8c0-076b-44dc-859a-2829a68cf669@linaro.org>
+Subject: Re: [PATCH] bsd-user: add option to enable plugins
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, Kyle Evans <kevans@freebsd.org>
+References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
+ <a2907212-feef-407f-bc2d-03667aaae174@linaro.org>
+ <c474f845-3d3b-4060-94c2-0d7b5f044d82@linaro.org>
+ <5f5f280c-34a5-4961-a9c0-74df5e0b0387@linaro.org>
+ <0c042bd1-7ff9-4ac9-8c75-0f0c63d43132@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <7b57e8c0-076b-44dc-859a-2829a68cf669@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0c042bd1-7ff9-4ac9-8c75-0f0c63d43132@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,63 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/25 01:24, Philippe Mathieu-Daudé wrote:
-> On 18/3/25 22:31, Richard Henderson wrote:
->> These need to be per-target for 'abi_ptr'.  Expand inline to
->> the *_data_ra api with ra == 0.
+On 1/4/25 16:59, Pierrick Bouvier wrote:
+> On 4/1/25 07:44, Philippe Mathieu-Daudé wrote:
+>> On 1/4/25 16:33, Pierrick Bouvier wrote:
+>>> On 3/31/25 23:15, Philippe Mathieu-Daudé wrote:
+>>>> Hi Pierrick,
+>>>>
+>>>> On 1/4/25 01:42, Pierrick Bouvier wrote:
+>>>>> Nothing prevent plugins to be enabled on this platform for user
+>>>>> binaries, only the option in the driver is missing.
+>>>>
+>>>> Per commit 903e870f245 ("plugins/api: split out binary
+>>>> path/start/end/entry code") this is deliberate:
+>>>>
+>>>>        The BSD user-mode command line is still missing -plugin.
+>>>>        This can be enabled once we have reliable check-tcg tests
+>>>>        working for the BSDs.
+>>>>
+>>>> Should we enable this without test harnessing?
+>>>>
+>>>
+>>> Thanks for pointing this.
+>>>
+>>> However, I don't get the argument, as the same could be said about
+>>> system mode, which runs on BSD also, and already has plugins enabled.
+>>> The coupling between user related code and plugins is very low (just
+>>> options parsing and init code), so I don't see why we could have a bug
+>>> related to a specific platform only for user binaries.
+>>>
+>>> So either we deactivate plugins completely for bsd binaries, or we take
+>>> a leap of faith that it works for them.
+>>>
+>>> @Alex, any further insight on this?
+>>>
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>> ---
+>>>>>     bsd-user/main.c | 12 ++++++++++++
+>>>>>     1 file changed, 12 insertions(+)
+>>>>
+>>>> Ideally we'd have helpers for common user code in common-user/...
+>>>>
+>>>
+>>> Everything is already common for plugins, except adding the call to
+>>> plugin command line option parsing function.
 >>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/exec/cpu_ldst.h     | 123 ++++++++++++++++++++++++++++++------
->>   accel/tcg/ldst_common.c.inc |  89 --------------------------
->>   2 files changed, 104 insertions(+), 108 deletions(-)
+>> Yeah, I mean the rest of main() ;)
 >>
->> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
->> index a2a90c7554..d084da0b5f 100644
->> --- a/include/exec/cpu_ldst.h
->> +++ b/include/exec/cpu_ldst.h
->> @@ -74,25 +74,6 @@
->>   #include "user/guest-host.h"
->>   #endif /* CONFIG_USER_ONLY */
->> -uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr ptr);
->> -int cpu_ldsb_data(CPUArchState *env, abi_ptr ptr);
->> -uint32_t cpu_lduw_be_data(CPUArchState *env, abi_ptr ptr);
->> -int cpu_ldsw_be_data(CPUArchState *env, abi_ptr ptr);
->> -uint32_t cpu_ldl_be_data(CPUArchState *env, abi_ptr ptr);
->> -uint64_t cpu_ldq_be_data(CPUArchState *env, abi_ptr ptr);
->> -uint32_t cpu_lduw_le_data(CPUArchState *env, abi_ptr ptr);
->> -int cpu_ldsw_le_data(CPUArchState *env, abi_ptr ptr);
->> -uint32_t cpu_ldl_le_data(CPUArchState *env, abi_ptr ptr);
->> -uint64_t cpu_ldq_le_data(CPUArchState *env, abi_ptr ptr);
->> -
->> -void cpu_stb_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->> -void cpu_stw_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->> -void cpu_stl_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->> -void cpu_stq_be_data(CPUArchState *env, abi_ptr ptr, uint64_t val);
->> -void cpu_stw_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->> -void cpu_stl_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
->> -void cpu_stq_le_data(CPUArchState *env, abi_ptr ptr, uint64_t val);
->> -
->>   static inline uint32_t
->>   cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
->>   {
->> @@ -342,6 +323,110 @@ cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr, uint64_t val, 
->> uintptr_t ra)
->>       cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
->>   }
->> +/*--------------------------*/
->> +
->> +static inline uint32_t
 > 
-> Pre-existing, but why don't we use 'unsigned int' like for the signed
-> variants, or the plain int8_t type?
+> It's not a priority at the moment, and not blocking anything on our 
+> path, but yes, it would be nice to share more ideally.
 
-It's the original type used by the api.
+Just to be clear, I was not asking you to do that suggestion.
 
-You'd never change this.  If you want to audit all of the uses vs the api change, you'd 
-update to one of the newer function groups.
+>>>> Anyway, since this patch does what it says:
+>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>
+>>>
+>>> Thanks,
+>>> Pierrick
+>>>
+>>
+> 
 
-
-r~
 
