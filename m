@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEFE8C3601E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 145B4C36018
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbxy-0004Cq-T6; Tue, 01 Apr 2025 09:47:55 -0400
+	id 1tzbwG-00035O-OT; Tue, 01 Apr 2025 09:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbv7-0001Vj-3q
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:51 -0400
+ id 1tzbuY-0000jM-2X
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:18 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbv4-0006Zf-Ll
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:48 -0400
+ id 1tzbuW-0006ZP-2B
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743515086; x=1775051086;
+ t=1743515052; x=1775051052;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qc403tQtaS3XiL+U4JspzsP2n45u6luhwv6QZO33vJA=;
- b=S/yMYiQAS5immoflM1bt4dOcsws23Pz8HATHdHf7DcIJfx5J09H422BE
- s++r90D4yxV1bf7FjJ5TJ+5Ds+Ii6/Z016RzCH1Apa42HXPkuXjLBOk95
- 276kbe6IvgsjZXqz9Sa/kBMKyiQljS6nvbFADYzfAuJDxcVoJgWvGBZ7C
- U+EPOCXkx26JPQHPvkPjmKbWNMBNT84K0E1mwKSs5dev5kYl2dCn4ds9F
- VCB/TzOLmXYJVPN3dkTZv+SOlPw/Z9m7I0/9Y+z3EJTZeFoZLHvFZ+Uej
- aPlqV9Btie7tU85YHEs2VM3TBY0JdHjK2Qy1kFWW6sWX45X1pWRei+kOR Q==;
-X-CSE-ConnectionGUID: cM1BaQyDQrC3RmQ4VM38uQ==
-X-CSE-MsgGUID: bvQ32rW6Taq5E+d6O5lOfg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433563"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433563"
+ bh=GpbiAevDOu7dBEajhCo3Fos/R3B4WgEf7uAd71HM9uI=;
+ b=NReaV5hg0XphAAa3bbn8oj8uZlcTon3Kql7ktWm8aqdIXUg3Tvxy6wP3
+ XqAH2nk33BbIi+np0HSn/adrj57qrtq+P5RCBh/AyIB8hDDD/Ka+Cz8oZ
+ RFQTEEZ7ahP5rzTSQ/3b8sluuc1SXQl6VzyHR8b/1fNoB5E1cBDjRNUpU
+ UYyA/59A7nuqNbtWWI5GXdbjgsS7CpoKKMVZcjeI39EiDerYviNgj2BzM
+ kNT2Y4ss7ocHobIbY2n9g7N2w3WdK5DtZUXiBVawbmXEFaBHjygbBCyOA
+ nD4HQqX8ItCX93+9Vzt4uuUbUXduEVxk7d2v/vCu7po+skgV9Xz0XhQ2v w==;
+X-CSE-ConnectionGUID: agh/lOzoTOu5jWkdDJefFg==
+X-CSE-MsgGUID: LPZTZNDNS0eevMFDP52N5A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433509"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433509"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:43:15 -0700
-X-CSE-ConnectionGUID: +uwqTifORuKREla3jCcJTg==
-X-CSE-MsgGUID: IZsjWTFaQH6RWn1mjDXSqg==
+ 01 Apr 2025 06:42:57 -0700
+X-CSE-ConnectionGUID: GdIZvIZeQ4azEMUoy6dnpg==
+X-CSE-MsgGUID: ZMAkU/4dR6S9PizJhF3uHA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640264"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640177"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:43:12 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:42:55 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -55,9 +55,9 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 49/55] i386/tdx: Define supported KVM features for TDX
-Date: Tue,  1 Apr 2025 09:01:59 -0400
-Message-Id: <20250401130205.2198253-50-xiaoyao.li@intel.com>
+Subject: [PATCH v8 42/55] cpu: Don't set vcpu_dirty when guest_state_protected
+Date: Tue,  1 Apr 2025 09:01:52 -0400
+Message-Id: <20250401130205.2198253-43-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
@@ -88,65 +88,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For TDX, only limited KVM PV features are supported.
+QEMU calls kvm_arch_put_registers() when vcpu_dirty is true in
+kvm_vcpu_exec(). However, for confidential guest, like TDX, putting
+registers is disallowed due to guest state is protected.
+
+Only set vcpu_dirty to true with guest state is not protected when
+creating the vcpu.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/kvm/tdx.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Changes in v7:
+ - new patch to replace "i386/tdx: Don't get/put guest state for TDX VMs"
+   in v6;
+---
+ accel/kvm/kvm-all.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e07cd9a1ee15..7382b53fcc51 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -32,6 +32,8 @@
- #include "kvm_i386.h"
- #include "tdx.h"
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 5835d840f3ad..9862d8ff1d38 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -466,7 +466,9 @@ int kvm_create_vcpu(CPUState *cpu)
  
-+#include "standard-headers/asm-x86/kvm_para.h"
-+
- #define TDX_MIN_TSC_FREQUENCY_KHZ   (100 * 1000)
- #define TDX_MAX_TSC_FREQUENCY_KHZ   (10 * 1000 * 1000)
+     cpu->kvm_fd = kvm_fd;
+     cpu->kvm_state = s;
+-    cpu->vcpu_dirty = true;
++    if (!s->guest_state_protected) {
++        cpu->vcpu_dirty = true;
++    }
+     cpu->dirty_pages = 0;
+     cpu->throttle_us_per_full = 0;
  
-@@ -44,6 +46,14 @@
-                                  TDX_TD_ATTRIBUTES_PKS | \
-                                  TDX_TD_ATTRIBUTES_PERFMON)
- 
-+#define TDX_SUPPORTED_KVM_FEATURES  ((1U << KVM_FEATURE_NOP_IO_DELAY) | \
-+                                     (1U << KVM_FEATURE_PV_UNHALT) | \
-+                                     (1U << KVM_FEATURE_PV_TLB_FLUSH) | \
-+                                     (1U << KVM_FEATURE_PV_SEND_IPI) | \
-+                                     (1U << KVM_FEATURE_POLL_CONTROL) | \
-+                                     (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
-+                                     (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
-+
- static TdxGuest *tdx_guest;
- 
- static struct kvm_tdx_capabilities *tdx_caps;
-@@ -629,6 +639,14 @@ static void tdx_add_supported_cpuid_by_xfam(void)
-     e->edx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XSS_MASK) >> 32;
- }
- 
-+static void tdx_add_supported_kvm_features(void)
-+{
-+    struct kvm_cpuid_entry2 *e;
-+
-+    e = find_in_supported_entry(0x40000001, 0);
-+    e->eax = TDX_SUPPORTED_KVM_FEATURES;
-+}
-+
- static void tdx_setup_supported_cpuid(void)
- {
-     if (tdx_supported_cpuid) {
-@@ -645,6 +663,8 @@ static void tdx_setup_supported_cpuid(void)
-     tdx_add_supported_cpuid_by_fixed1_bits();
-     tdx_add_supported_cpuid_by_attrs();
-     tdx_add_supported_cpuid_by_xfam();
-+
-+    tdx_add_supported_kvm_features();
- }
- 
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
 -- 
 2.34.1
 
