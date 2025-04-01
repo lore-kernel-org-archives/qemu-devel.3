@@ -4,85 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D2F9C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 19:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B863C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 19:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzh81-00039p-Ox; Tue, 01 Apr 2025 15:18:31 -0400
+	id 1tzhM9-00077t-Kh; Tue, 01 Apr 2025 15:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tzh7e-00039U-DX
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 15:18:06 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzhM8-00077e-OM
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 15:33:04 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tzh7c-0006P5-4b
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 15:18:05 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-2c7e5fb8c38so3915515fac.1
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 12:18:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1743535081; x=1744139881;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/7dnWhW1NxnMLtyZwkdeWqjwokpD7PP+2M+FdflFbhM=;
- b=sW86kqhVu5+LvsmEftUdnAhMTO+GZhWywbD/KwApQjc5dNPu/JgE94Zkt6LXJP99r3
- JhYUw9EKjAd4W09TAOWGCvQbIxpivmvcHuEzaBqt68ixPR60IBpl7XAnN7Z3qikRoM/K
- luq5uhm/RDpo42oHBzh+shte+qWELqWqmf1lhE4PX7J5aVp+m5lRP6bcqGYepL9r+MjI
- y4uW4XzbrO5vbqdMul1b1jUoCrBHhx+eUHtt1ykF1jU/ZOPJgaeFmyb3Jcf1kq8CxLmM
- 4gJMlY/PgpZDxZ99NjF+Y9hotvQEybyT4/L0z/2xdd1ri4QwfTG0Wa8Fe5PFA3KD/Tdh
- 1QLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743535081; x=1744139881;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/7dnWhW1NxnMLtyZwkdeWqjwokpD7PP+2M+FdflFbhM=;
- b=IHAkyIjXel3h+w6NQAZjHf6bPOlsvSUzNzQCoWkIVMx9qSD4KJqy78TXiSGtyNZ/cx
- duMVMC+oI5DtiQ4rEr3xud575Sdlblil7+TAN60CaOltGHBe/bJNqE/yS1trIAiwHkk6
- zuonOT0jNaTOgclfdD1G9i9cVALfD5xW6TCT25jHiapYfUtfnerPzR/T0BUOblMZgLAe
- kaWRTZG2+Xbvdk9xIf/YucJpeASQfozlhYjX6LQrtOiaf3O4/xORIOHZew1rOq/E5dSP
- C4q3F21btmZd6xFSzGzBWkLeGwqNFN8gIOIcFAQt/A9lPyQriBRVaYhkVFUfHGOg8eoq
- MF8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFjd0PPa9bnJVqOGgGo53t4B56+Ks25RhngIrR/QAMEUKRLWI8cyyjVbXbd5KA2xHHr3rprkDAdMll@nongnu.org
-X-Gm-Message-State: AOJu0Yy7qbJz4Vldsg6WvZNIes1x5lkvPec3MyZDxYm3U0dhb9nc+J2l
- mEA6InMcbaZTPfTVnliQayaYuwhYqlU1UFFn+6IrSA1CerC4NW5NgSNz8+b2D4U=
-X-Gm-Gg: ASbGncsM7OT6MHE36JtQJqwZHSqhoKFTNNBKLxw6QtuzBtIqLwv5aEUNs04oROGDcuR
- yiISUh/vN4b00ES7OcgX+fRMOTcxay/4S9K2Q+OQITDW6CqQk5gYsv/MLA5yU3PCu8LAhf+9UnB
- aE1oRgj3jM0p8f8I3nq9JaIJU68zwsGcOiigMBnx0Knd2HTY6J0gjI1GbJTaMNsdlunNsKYaiig
- LY7HX4Mis2T6lPa8YqXeWu3JIJJOugWO0dnqaPSX81GFOfwOr7GCCmYjHVa3iQTDqNqf+MMT2We
- H2abLE1VGIXAzr077Gmdzp9BO8VVIPaPcL8+SJgo4ldinS32
-X-Google-Smtp-Source: AGHT+IHveiQH1kjz1WP08m2q9YJWvnZicb78s7nThDc91B3luky96Ji31KHFZeGo5RWr6Oyq0JwDpA==
-X-Received: by 2002:a05:6870:2885:b0:29e:559b:d694 with SMTP id
- 586e51a60fabf-2cbcf813d67mr9674668fac.32.1743535081141; 
- Tue, 01 Apr 2025 12:18:01 -0700 (PDT)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:706c:e036:e51a:c377])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2c86a856de7sm2465935fac.39.2025.04.01.12.17.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 12:17:59 -0700 (PDT)
-Date: Tue, 1 Apr 2025 14:17:56 -0500
-From: Corey Minyard <corey@minyard.net>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Corey Minyard <minyard@acm.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/5] ipmi: bmc-sim improvements
-Message-ID: <Z-w75P6iav82W5Qr@mail.minyard.net>
-References: <20250401140153.685523-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tzhM6-0000wj-BP
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 15:33:04 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 98DE51F38E;
+ Tue,  1 Apr 2025 19:32:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743535978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AqD+qdpv6islwITlr4suJBsdNlkf1+/1uY8htIMnyE=;
+ b=Um+/7vstzCfwO/FEh5gdH6LV5MKEpVBgNSotP1JxVvhn99LtDUswIyyU+tjQVqzzqGjwvh
+ 37dP7gqrhEn+mK1RQYEWl3T910Ik2w4j0YzkfP8r0QjDJIl/xrNb8mNmKfILKZ35b5fVMe
+ +GTSEgyivw2JvHqUadorRucpsmHBtSI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743535978;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AqD+qdpv6islwITlr4suJBsdNlkf1+/1uY8htIMnyE=;
+ b=5Hd9TpZaHa/HD9qg0AstxQaN6ybTNvMEW9DUIyUy374ZuPrcxLS6xFJLxf7tVF8gkHaxbl
+ ki88YypH+O8Xn1Cw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Um+/7vst";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5Hd9TpZa
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743535978; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AqD+qdpv6islwITlr4suJBsdNlkf1+/1uY8htIMnyE=;
+ b=Um+/7vstzCfwO/FEh5gdH6LV5MKEpVBgNSotP1JxVvhn99LtDUswIyyU+tjQVqzzqGjwvh
+ 37dP7gqrhEn+mK1RQYEWl3T910Ik2w4j0YzkfP8r0QjDJIl/xrNb8mNmKfILKZ35b5fVMe
+ +GTSEgyivw2JvHqUadorRucpsmHBtSI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743535978;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AqD+qdpv6islwITlr4suJBsdNlkf1+/1uY8htIMnyE=;
+ b=5Hd9TpZaHa/HD9qg0AstxQaN6ybTNvMEW9DUIyUy374ZuPrcxLS6xFJLxf7tVF8gkHaxbl
+ ki88YypH+O8Xn1Cw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0F58613691;
+ Tue,  1 Apr 2025 19:32:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2yoeL2k/7GfbQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 01 Apr 2025 19:32:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Jack Wang <jinpu.wang@ionos.com>, qemu-devel@nongnu.org, peterx@redhat.com
+Cc: Li Zhijian <lizhijian@fujitsu.com>, Yu Zhang <yu.zhang@ionos.com>,
+ linux-rdma@vger.kernel.org, michael@flatgalaxy.com, Michael Galaxy
+ <mrgalaxy@nvidia.com>
+Subject: Re: [PATCH] migration/rdma: Remove qemu_rdma_broken_ipv6_kernel
+In-Reply-To: <20250327061123.14453-1-jinpu.wang@ionos.com>
+References: <20250327061123.14453-1-jinpu.wang@ionos.com>
+Date: Tue, 01 Apr 2025 16:32:55 -0300
+Message-ID: <87cydvllso.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401140153.685523-1-npiggin@gmail.com>
-Received-SPF: none client-ip=2001:4860:4864:20::35;
- envelope-from=corey@minyard.net; helo=mail-oa1-x35.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 98DE51F38E
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:email]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,69 +124,255 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 02, 2025 at 12:01:47AM +1000, Nicholas Piggin wrote:
-> These little things came up when looking at behaviour of IPMI with
-> the bmc-sim implementation running the ppc powernv machine, and
-> trying to clean up error messages and missing features.
+Jack Wang <jinpu.wang@ionos.com> writes:
 
-This all looks good to me.  Thanks to Philippe for reviewing, too.
+> I hit following error which testing migration in pure RoCE env:
+> "-incoming rdma:[::]:8089: RDMA ERROR: You only have RoCE / iWARP devices in your
+> systems and your management software has specified '[::]', but IPv6 over RoCE /
+> iWARP is not supported in Linux.#012'."
+>
+> In our setup, we use rdma bind on ipv6 on target host, while connect from source
+> with ipv4, remove the qemu_rdma_broken_ipv6_kernel, migration just work
+> fine.
+>
+> Checking the git history, the function was added since introducing of
+> rdma migration, which is more than 10 years ago. linux-rdma has
+> improved support on RoCE/iWARP for ipv6 over past years. There are a few fixes
+> back in 2016 seems related to the issue, eg:
+> aeb76df46d11 ("IB/core: Set routable RoCE gid type for ipv4/ipv6 networks")
+>
+> other fixes back in 2018, eg:
+> 052eac6eeb56 RDMA/cma: Update RoCE multicast routines to use net namespace
+> 8d20a1f0ecd5 RDMA/cma: Fix rdma_cm raw IB path setting for RoCE
+> 9327c7afdce3 RDMA/cma: Provide a function to set RoCE path record L2 parameters
+> 5c181bda77f4 RDMA/cma: Set default GID type as RoCE when resolving RoCE route
+> 3c7f67d1880d IB/cma: Fix default RoCE type setting
+> be1d325a3358 IB/core: Set RoCEv2 MGID according to spec
+> 63a5f483af0e IB/cma: Set default gid type to RoCEv2
+>
+> So remove the outdated function and it's usage.
+>
+> Cc: Peter Xu <peterx@redhat.com>
+> Cc: Li Zhijian <lizhijian@fujitsu.com>
+> Cc: Yu Zhang <yu.zhang@ionos.com>
+> Cc: qemu-devel@nongnu.org
+> Cc: linux-rdma@vger.kernel.org
+> Cc: michael@flatgalaxy.com
+> Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+> Tested-by: Li zhijian <lizhijian@fujitsu.com>
+> Reviewed-by: Michael Galaxy <mrgalaxy@nvidia.com>
+> ---
+> v1: drop RFC, fix build error (zhijian), collect Reviewed-by and Tested-by
+>
+>  migration/rdma.c | 159 -----------------------------------------------
+>  1 file changed, 159 deletions(-)
+>
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 76fb0349238a..e228520b8e01 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -767,149 +767,6 @@ static void qemu_rdma_dump_gid(const char *who, struct rdma_cm_id *id)
+>      trace_qemu_rdma_dump_gid(who, sgid, dgid);
+>  }
+>  
+> -/*
+> - * As of now, IPv6 over RoCE / iWARP is not supported by linux.
+> - * We will try the next addrinfo struct, and fail if there are
+> - * no other valid addresses to bind against.
+> - *
+> - * If user is listening on '[::]', then we will not have a opened a device
+> - * yet and have no way of verifying if the device is RoCE or not.
+> - *
+> - * In this case, the source VM will throw an error for ALL types of
+> - * connections (both IPv4 and IPv6) if the destination machine does not have
+> - * a regular infiniband network available for use.
+> - *
+> - * The only way to guarantee that an error is thrown for broken kernels is
+> - * for the management software to choose a *specific* interface at bind time
+> - * and validate what time of hardware it is.
+> - *
+> - * Unfortunately, this puts the user in a fix:
+> - *
+> - *  If the source VM connects with an IPv4 address without knowing that the
+> - *  destination has bound to '[::]' the migration will unconditionally fail
+> - *  unless the management software is explicitly listening on the IPv4
+> - *  address while using a RoCE-based device.
+> - *
+> - *  If the source VM connects with an IPv6 address, then we're OK because we can
+> - *  throw an error on the source (and similarly on the destination).
+> - *
+> - *  But in mixed environments, this will be broken for a while until it is fixed
+> - *  inside linux.
+> - *
+> - * We do provide a *tiny* bit of help in this function: We can list all of the
+> - * devices in the system and check to see if all the devices are RoCE or
+> - * Infiniband.
+> - *
+> - * If we detect that we have a *pure* RoCE environment, then we can safely
+> - * thrown an error even if the management software has specified '[::]' as the
+> - * bind address.
+> - *
+> - * However, if there is are multiple hetergeneous devices, then we cannot make
+> - * this assumption and the user just has to be sure they know what they are
+> - * doing.
+> - *
+> - * Patches are being reviewed on linux-rdma.
+> - */
+> -static int qemu_rdma_broken_ipv6_kernel(struct ibv_context *verbs, Error **errp)
+> -{
+> -    /* This bug only exists in linux, to our knowledge. */
+> -#ifdef CONFIG_LINUX
+> -    struct ibv_port_attr port_attr;
+> -
+> -    /*
+> -     * Verbs are only NULL if management has bound to '[::]'.
+> -     *
+> -     * Let's iterate through all the devices and see if there any pure IB
+> -     * devices (non-ethernet).
+> -     *
+> -     * If not, then we can safely proceed with the migration.
+> -     * Otherwise, there are no guarantees until the bug is fixed in linux.
+> -     */
+> -    if (!verbs) {
+> -        int num_devices;
+> -        struct ibv_device **dev_list = ibv_get_device_list(&num_devices);
+> -        bool roce_found = false;
+> -        bool ib_found = false;
+> -
+> -        for (int x = 0; x < num_devices; x++) {
+> -            verbs = ibv_open_device(dev_list[x]);
+> -            /*
+> -             * ibv_open_device() is not documented to set errno.  If
+> -             * it does, it's somebody else's doc bug.  If it doesn't,
+> -             * the use of errno below is wrong.
+> -             * TODO Find out whether ibv_open_device() sets errno.
+> -             */
+> -            if (!verbs) {
+> -                if (errno == EPERM) {
+> -                    continue;
+> -                } else {
+> -                    error_setg_errno(errp, errno,
+> -                                     "could not open RDMA device context");
+> -                    return -1;
+> -                }
+> -            }
+> -
+> -            if (ibv_query_port(verbs, 1, &port_attr)) {
+> -                ibv_close_device(verbs);
+> -                error_setg(errp,
+> -                           "RDMA ERROR: Could not query initial IB port");
+> -                return -1;
+> -            }
+> -
+> -            if (port_attr.link_layer == IBV_LINK_LAYER_INFINIBAND) {
+> -                ib_found = true;
+> -            } else if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
+> -                roce_found = true;
+> -            }
+> -
+> -            ibv_close_device(verbs);
+> -
+> -        }
+> -
+> -        if (roce_found) {
+> -            if (ib_found) {
+> -                warn_report("migrations may fail:"
+> -                            " IPv6 over RoCE / iWARP in linux"
+> -                            " is broken. But since you appear to have a"
+> -                            " mixed RoCE / IB environment, be sure to only"
+> -                            " migrate over the IB fabric until the kernel "
+> -                            " fixes the bug.");
+> -            } else {
+> -                error_setg(errp, "RDMA ERROR: "
+> -                           "You only have RoCE / iWARP devices in your systems"
+> -                           " and your management software has specified '[::]'"
+> -                           ", but IPv6 over RoCE / iWARP is not supported in Linux.");
+> -                return -1;
+> -            }
+> -        }
+> -
+> -        return 0;
+> -    }
+> -
+> -    /*
+> -     * If we have a verbs context, that means that some other than '[::]' was
+> -     * used by the management software for binding. In which case we can
+> -     * actually warn the user about a potentially broken kernel.
+> -     */
+> -
+> -    /* IB ports start with 1, not 0 */
+> -    if (ibv_query_port(verbs, 1, &port_attr)) {
+> -        error_setg(errp, "RDMA ERROR: Could not query initial IB port");
+> -        return -1;
+> -    }
+> -
+> -    if (port_attr.link_layer == IBV_LINK_LAYER_ETHERNET) {
+> -        error_setg(errp, "RDMA ERROR: "
+> -                   "Linux kernel's RoCE / iWARP does not support IPv6 "
+> -                   "(but patches on linux-rdma in progress)");
+> -        return -1;
+> -    }
+> -
+> -#endif
+> -
+> -    return 0;
+> -}
+> -
+>  /*
+>   * Figure out which RDMA device corresponds to the requested IP hostname
+>   * Also create the initial connection manager identifiers for opening
+> @@ -955,7 +812,6 @@ static int qemu_rdma_resolve_host(RDMAContext *rdma, Error **errp)
+>  
+>      /* Try all addresses, saving the first error in @err */
+>      for (struct rdma_addrinfo *e = res; e != NULL; e = e->ai_next) {
+> -        Error **local_errp = err ? NULL : &err;
+>  
+>          inet_ntop(e->ai_family,
+>              &((struct sockaddr_in *) e->ai_dst_addr)->sin_addr, ip, sizeof ip);
+> @@ -964,13 +820,6 @@ static int qemu_rdma_resolve_host(RDMAContext *rdma, Error **errp)
+>          ret = rdma_resolve_addr(rdma->cm_id, NULL, e->ai_dst_addr,
+>                  RDMA_RESOLVE_TIMEOUT_MS);
+>          if (ret >= 0) {
+> -            if (e->ai_family == AF_INET6) {
+> -                ret = qemu_rdma_broken_ipv6_kernel(rdma->cm_id->verbs,
+> -                                                   local_errp);
+> -                if (ret < 0) {
+> -                    continue;
+> -                }
+> -            }
+>              error_free(err);
 
-I can give you an
+err is now unused and should be removed entirely. The comment before the
+loop needs touching up as well.
 
-Acked-by: Corey Minyard <cminyard@mvista.com>
+>              goto route;
+>          }
+> @@ -2663,7 +2512,6 @@ static int qemu_rdma_dest_init(RDMAContext *rdma, Error **errp)
+>  
+>      /* Try all addresses, saving the first error in @err */
+>      for (e = res; e != NULL; e = e->ai_next) {
+> -        Error **local_errp = err ? NULL : &err;
+>  
+>          inet_ntop(e->ai_family,
+>              &((struct sockaddr_in *) e->ai_dst_addr)->sin_addr, ip, sizeof ip);
+> @@ -2672,13 +2520,6 @@ static int qemu_rdma_dest_init(RDMAContext *rdma, Error **errp)
+>          if (ret < 0) {
+>              continue;
+>          }
+> -        if (e->ai_family == AF_INET6) {
+> -            ret = qemu_rdma_broken_ipv6_kernel(listen_id->verbs,
+> -                                               local_errp);
+> -            if (ret < 0) {
+> -                continue;
+> -            }
+> -        }
+>          error_free(err);
 
-if you are working on this for your own tree, or I can take it into
-mine.
+Same here.
 
--corey
-
-> 
-> Since v1 (thanks to Corey for review and suggestions):
-> - Added fwinfo to PCI devices
-> - Report interrupt number in Get Channel Info for ISA, PCI, and
->   unknown/unassigned.
-> - Fix error reporting for Get Channel Info unsupported channels.
->   Verify it is the correct error code that ipmitool looks for
->   https://github.com/ipmitool/ipmitool/blob/master/lib/ipmi_channel.c#L256C16-L256C45
-> - Change _CH_ to _CHANNEL_ in some defines names.
-> - Also avoid adding event logs with watchdog don't log flag.
-> 
-> Since v2:
-> - Don't log watchog flag should not apply to watchdog expiry
->   field.
-> - Moved protocol type field from class to IPMIFwInfo.
-> - Rename new FwInfo member irq to irq_source.
-> - Add comments about handling PCI devices to  existing callers
->   of ->fwinfo
-> 
-> Thanks,
-> Nick
-> 
-> 
-> Nicholas Piggin (5):
->   ipmi/pci-ipmi-bt: Rename copy-paste variables
->   ipmi: add fwinfo to pci ipmi devices
->   ipmi/bmc-sim: Add 'Get Channel Info' command
->   ipmi/bmc-sim: implement watchdog dont log flag
->   ipmi/bmc-sim: add error handling for 'Set BMC Global Enables' command
-> 
->  include/hw/ipmi/ipmi.h     |  15 ++++++
->  hw/acpi/ipmi.c             |   3 +-
->  hw/ipmi/ipmi_bmc_sim.c     | 104 ++++++++++++++++++++++++++++++++-----
->  hw/ipmi/ipmi_bt.c          |   2 +
->  hw/ipmi/ipmi_kcs.c         |   1 +
->  hw/ipmi/isa_ipmi_bt.c      |   1 +
->  hw/ipmi/isa_ipmi_kcs.c     |   1 +
->  hw/ipmi/pci_ipmi_bt.c      |  50 +++++++++++-------
->  hw/ipmi/pci_ipmi_kcs.c     |  11 ++++
->  hw/smbios/smbios_type_38.c |   7 ++-
->  10 files changed, 162 insertions(+), 33 deletions(-)
-> 
-> -- 
-> 2.47.1
-> 
+>          break;
+>      }
 
