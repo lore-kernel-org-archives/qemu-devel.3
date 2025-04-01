@@ -4,104 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05296C36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 15:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40160C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 15:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzdOc-0006E2-Tm; Tue, 01 Apr 2025 11:19:23 -0400
+	id 1tze0j-0000vD-8x; Tue, 01 Apr 2025 11:58:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1tzdO7-0005yn-Cl
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:18:55 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1tzdO4-0005Aa-4t
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:18:51 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-300fefb8e06so9269324a91.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 08:18:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1743520726; x=1744125526;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4NXX1X4hRiRNZUknx8LsP9b/fPPtl0kWy3TtPAhKCeU=;
- b=THshtjMS56Ub/nZ829BiNQIPs1F+ArYlAkmLEinZOzLTwM5OHZ5TsI7NhtdhkmlLde
- OlzEjL+UB+pJsZj/nAWwUQwpN9RLxfzU71vvm5jVJp5seH/WL14UqUswJdo03dJ3McaL
- zM+QNtFfQFg4fHzm9z4nn7/CyzyGega6WsscuyCt91NLh2EJHKYF/Jo8qp6NFjHtYj+Z
- FnrWM82eDW4xGlEqWQRfyW77bDGVhA4NxwbeihpuhkzteL7U9Fqppu7vc3oHFboD/BJW
- f0PnxuoVutpUKVbUMz0CHpiJuSDCmF18TudJdHjsJ8nWxgDRi+jFwORd41yzagSEct/H
- 6a9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743520726; x=1744125526;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4NXX1X4hRiRNZUknx8LsP9b/fPPtl0kWy3TtPAhKCeU=;
- b=gsLFxpXcnWz8//E5Zb+mLNoNydSScVK1EYLhOfG3yUOSoerT/GpGvRkWiGQCwfQc+Y
- +A0ZBtLzBTJ8NPlRRGA+9c7N8Rv2XYXvhBZZiV9w/joc+iL7YdgkK5+lA6I13EzqRhFG
- r4HnnokEzBmSkiVOQKtvMzak+Fi2m307tzDXfm4wuzCtcHwfn8VMBqeT9MBEhlX0kJJB
- bCDzh30BXHS/Ikem2jM2y7Oot82+Kg+OYZXe0izIfpD0vMuMOD0zdQCWIB4FwlVhzHmR
- rAeHwidpAuV+XxuWDmN7ARb8V4s8BEhtDy6tJxApOpkZtQJ15W7NDYHfQfmT2q3c9uCL
- DSKQ==
-X-Gm-Message-State: AOJu0YwwJRPu9MV6exuglx7SwV1VkLx0+zyo6COxy9oxf2A2wP2rmkI2
- TYzpguW39vTUnsZbEbS73Q7oz0RKXDLXdEmfgccWoYyWSoAbIvbBRncpZKQVQYskMFd1PrVVgHZ
- /vmvFJQ==
-X-Gm-Gg: ASbGncuKXxTK2oQjhRMzjtu9PdbqgcNetmoHsc1I8C12dD1BX+YfS55OhLinVofS6MS
- NCvkjrdF/16XlhHpVcVotGlx987dGt+bzE21V18YBUkUATP6PkjQm+H/xid5jC3HxV/NDz5ss03
- Vq6v6WaG1Mrg8DZhGHqhW0bKEcWmEwhauwnzODUKDf68FLWF9OR91hUA/T+7d8Y2eVXFDqgfHF8
- 3nS2/z7ub0JGvPXoJJPbC5AZNqBpCAGUbcLWOO4+IbnfLjVs8Zc8aoENlnTX7xMmk4/ANzR0kQ1
- SJnI3+Glrdp+irQVq1xvGCAY9WQ3ZMI=
-X-Google-Smtp-Source: AGHT+IFtnBfm3iEUuKkmkY4Wgfbu6YeM2h6VlJT3NVowOQMfk4p479pWxi+aoJAGqxAnh7LQT7UBvw==
-X-Received: by 2002:a17:90b:5446:b0:2f9:c139:b61f with SMTP id
- 98e67ed59e1d1-305608793e6mr6498428a91.14.1743520726364; 
- Tue, 01 Apr 2025 08:18:46 -0700 (PDT)
-Received: from fedora.smartx.com ([2001:df0:a640:1::4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eee029bsm90172195ad.62.2025.04.01.08.18.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 08:18:45 -0700 (PDT)
-From: Haoqian He <haoqian.he@smartx.com>
-To: qemu-devel@nongnu.org, sgarzare@redhat.com, mst@redhat.com,
- raphael@enfabrica.net
-Cc: fengli@smartx.com, yuhua@smartx.com, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- mzamazal@redhat.com (reviewer:vhost-user-scmi),
- David Hildenbrand <david@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Eric Auger <eric.auger@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-block@nongnu.org (open list:Block layer core),
- virtio-fs@lists.linux.dev (open list:virtiofs)
-Subject: [PATCH v4 2/3] vhost: return failure if stop virtqueue failed in
- vhost_dev_stop
-Date: Tue,  1 Apr 2025 11:18:16 -0400
-Message-ID: <20250401151819.1526461-3-haoqian.he@smartx.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20250401151819.1526461-1-haoqian.he@smartx.com>
-References: <20250327064348.3595732-1-haoqian.he@smartx.com>
- <20250401151819.1526461-1-haoqian.he@smartx.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tze0g-0000tj-8X; Tue, 01 Apr 2025 11:58:42 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1tze0d-0003Vw-E4; Tue, 01 Apr 2025 11:58:42 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:4c7:0:640:d178:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0B1A260CC7;
+ Tue,  1 Apr 2025 18:58:31 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:1225::1:31])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id YvYBgB0FXiE0-s8c21Eaj; Tue, 01 Apr 2025 18:58:30 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1743523110;
+ bh=Q8SoDfgja2U3rtpiEQGVU5h/G2sHUbP2eigbgPgc6Hw=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=vOSzksdkqyDIgmUKNFuW8sNbRkhj9Fn65rSJQict/LSfonXpq5j/VuDHepsZOAjyv
+ cDEZCooB5OmDVysj9QYyUcTYvznPqyiXHdH/L+hXOxK4v4+rxz+2a0EVEdTW4vuOuh
+ SamXqCJIuBwEWoOzJqVn74mdRb+i1RNQU5ZnZdWo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ armbru@redhat.com, eblake@redhat.com, jsnow@redhat.com,
+ devel@lists.libvirt.org, pkrempa@redhat.com, michael.roth@amd.com,
+ pbonzini@redhat.com, vsementsov@yandex-team.ru
+Subject: [PATCH] [for-10.1] qapi/block-core: derpecate some block-job- APIs
+Date: Tue,  1 Apr 2025 18:57:30 +0300
+Message-ID: <20250401155730.103718-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=haoqian.he@smartx.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,126 +72,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch captures the error of vhost_virtqueue_stop() in vhost_dev_stop()
-and returns the error upward.
+For change, pause, resume, complete, dismiss and finalize actions
+corresponding job- and block-job commands are almost equal. The
+difference is in find_block_job_locked() vs find_job_locked()
+functions. What's different?
 
-Specifically, if QEMU is disconnected from the vhost backend, some actions
-in vhost_dev_stop() will fail, such as sending vhost-user messages to the
-backend (GET_VRING_BASE, SET_VRING_ENABLE) and vhost_reset_status.
+1. find_block_job_locked() do check, is found job a block-job. This OK
+   when moving to more generic API, no needs to document this change.
 
-Considering that both set_vring_enable and vhost_reset_status require setting
-the specific virtio feature bit, we can capture vhost_virtqueue_stop()'s
-error to indicate that QEMU has lost connection with the backend.
+2. find_block_job_locked() reports DeviceNotActive on failure, when
+   find_job_locked() reports GenericError. So, lets document this
+   difference in deprecated.txt. Still, for dismiss and finalize errors
+   are not documented at all, so be silent in deprecated.txt as well.
 
-This patch is the pre patch for 'vhost-user: return failure if backend crashes
-when live migration', which makes the live migration aware of the loss of
-connection with the vhost-user backend and aborts the live migration.
-
-Signed-off-by: Haoqian He <haoqian.he@smartx.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost.c         | 23 +++++++++++++----------
- include/hw/virtio/vhost.h |  8 +++++---
- 2 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6aa72fd434..bdd945c18d 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1368,10 +1368,10 @@ fail_alloc_desc:
-     return r;
- }
+Hi all!
+
+That's a continuation of my "[RFC 00/15] block job API"[1], exactly, the
+simplest part of it - deprecating block-job-* commands which simply
+duplicate job-* ones.
+
+Note that the old series was started with trying to introduce job-change
+command as substitution to both block-job-change (which only can change
+mirror copy-mode parameter), and block-job-set-speed. It was rather
+complicated and controversial attempt, which latest implemenation was
+"[PATCH v3 0/7] introduce job-change qmp command"[2].
+
+In [2] Kevin noted, that we'd better follow existing blockdev-reopen
+approach of changing options (i.e. specify all options) than introduce a
+new one. But, on the other hand, now I'm afraid, that rewriting in
+third tools simple call to (old good) block-job-set-speed into
+job-change(_all_options_ + changed speed) is too much work just for
+"having nice interface". And too much for the only two options we want
+to change.
+
+So, let's just start from something more obvious. Finally,
+we can simple keep block-job-set-speed and block-job-change as is,
+as they (unlike other block-job-* commands) are not duplicated by
+similar job-* commands.
+
+[1] https://patchew.org/QEMU/20240313150907.623462-1-vsementsov@yandex-team.ru/
+[2] https://patchew.org/QEMU/20241002140616.561652-1-vsementsov@yandex-team.ru/
+
+ docs/about/deprecated.rst | 31 +++++++++++++++++++++++++++++++
+ qapi/block-core.json      | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index e2b4f077d4..eed3356359 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -148,6 +148,37 @@ options are removed in favor of using explicit ``blockdev-create`` and
+ ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
+ details.
  
--void vhost_virtqueue_stop(struct vhost_dev *dev,
--                          struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq,
--                          unsigned idx)
-+int vhost_virtqueue_stop(struct vhost_dev *dev,
-+                         struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq,
-+                         unsigned idx)
- {
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
-     struct vhost_vring_state state = {
-@@ -1381,7 +1381,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
++``block-job-pause`` (since 10.1)
++'''''''''''''''''''''''''''''''
++
++Use ``job-pause`` instead. The only difference is that ``job-pause``
++always reports GenericError on failure when ``block-job-pause`` reports
++DeviceNotActive when block-job is not found.
++
++``block-job-resume`` (since 10.1)
++''''''''''''''''''''''''''''''''
++
++Use ``job-resume`` instead. The only difference is that ``job-resume``
++always reports GenericError on failure when ``block-job-resume`` reports
++DeviceNotActive when block-job is not found.
++
++``block-job-complete`` (since 10.1)
++''''''''''''''''''''''''''''''''''
++
++Use ``job-complete`` instead. The only difference is that ``job-complete``
++always reports GenericError on failure when ``block-job-complete`` reports
++DeviceNotActive when block-job is not found.
++
++``block-job-dismiss`` (since 10.1)
++'''''''''''''''''''''''''''''''''
++
++Use ``job-dismiss`` instead.
++
++``block-job-finalize`` (since 10.1)
++''''''''''''''''''''''''''''''''''
++
++Use ``job-finalize`` instead.
++
+ ``query-migrationthreads`` (since 9.2)
+ ''''''''''''''''''''''''''''''''''''''
  
-     if (virtio_queue_get_desc_addr(vdev, idx) == 0) {
-         /* Don't stop the virtqueue which might have not been started */
--        return;
-+        return 0;
-     }
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b1937780e1..264be8413b 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -2968,6 +2968,11 @@
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+ #     values.
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use @job-pause
++#     instead.
++#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -2975,6 +2980,7 @@
+ # Since: 1.3
+ ##
+ { 'command': 'block-job-pause', 'data': { 'device': 'str' },
++  'features': ['deprecated'],
+   'allow-preconfig': true }
  
-     r = dev->vhost_ops->vhost_get_vring_base(dev, &state);
-@@ -1412,6 +1412,7 @@ void vhost_virtqueue_stop(struct vhost_dev *dev,
-                        0, virtio_queue_get_avail_size(vdev, idx));
-     vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
-                        0, virtio_queue_get_desc_size(vdev, idx));
-+    return r;
- }
+ ##
+@@ -2992,6 +2998,11 @@
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+ #     values.
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use @job-resume
++#     instead.
++#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -2999,6 +3010,7 @@
+ # Since: 1.3
+ ##
+ { 'command': 'block-job-resume', 'data': { 'device': 'str' },
++  'features': ['deprecated'],
+   'allow-preconfig': true }
  
- static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
-@@ -2136,9 +2137,10 @@ fail_features:
- }
+ ##
+@@ -3023,6 +3035,11 @@
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+ #     values.
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use @job-complete
++#     instead.
++#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -3030,6 +3047,7 @@
+ # Since: 1.3
+ ##
+ { 'command': 'block-job-complete', 'data': { 'device': 'str' },
++  'features': ['deprecated'],
+   'allow-preconfig': true }
  
- /* Host notifiers must be enabled at this point. */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
- {
-     int i;
-+    int rc = 0;
+ ##
+@@ -3047,9 +3065,15 @@
+ #
+ # @id: The job identifier.
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use @job-dismiss
++#     instead.
++#
+ # Since: 2.12
+ ##
+ { 'command': 'block-job-dismiss', 'data': { 'id': 'str' },
++  'features': ['deprecated'],
+   'allow-preconfig': true }
  
-     /* should only be called after backend is connected */
-     assert(hdev->vhost_ops);
-@@ -2157,10 +2159,10 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         vhost_dev_set_vring_enable(hdev, false);
-     }
-     for (i = 0; i < hdev->nvqs; ++i) {
--        vhost_virtqueue_stop(hdev,
--                             vdev,
--                             hdev->vqs + i,
--                             hdev->vq_index + i);
-+        rc |= vhost_virtqueue_stop(hdev,
-+                                   vdev,
-+                                   hdev->vqs + i,
-+                                   hdev->vq_index + i);
-     }
-     if (hdev->vhost_ops->vhost_reset_status) {
-         hdev->vhost_ops->vhost_reset_status(hdev);
-@@ -2177,6 +2179,7 @@ void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-     hdev->started = false;
-     vdev->vhost_started = false;
-     hdev->vdev = NULL;
-+    return rc;
- }
+ ##
+@@ -3064,9 +3088,15 @@
+ #
+ # @id: The job identifier.
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use @job-finalize
++#     instead.
++#
+ # Since: 2.12
+ ##
+ { 'command': 'block-job-finalize', 'data': { 'id': 'str' },
++  'features': ['deprecated'],
+   'allow-preconfig': true }
  
- int vhost_net_set_backend(struct vhost_dev *hdev,
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index a9469d50bc..fd96ec9c39 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -232,8 +232,10 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-  * Stop the vhost device. After the device is stopped the notifiers
-  * can be disabled (@vhost_dev_disable_notifiers) and the device can
-  * be torn down (@vhost_dev_cleanup).
-+ *
-+ * Return: 0 on success, != 0 on error when stopping dev.
-  */
--void vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
-+int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings);
- 
- /**
-  * DOC: vhost device configuration handling
-@@ -333,8 +335,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write);
- 
- int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vdev,
-                           struct vhost_virtqueue *vq, unsigned idx);
--void vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
--                          struct vhost_virtqueue *vq, unsigned idx);
-+int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vdev,
-+                         struct vhost_virtqueue *vq, unsigned idx);
- 
- void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
- void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+ ##
 -- 
-2.44.0
+2.48.1
 
 
