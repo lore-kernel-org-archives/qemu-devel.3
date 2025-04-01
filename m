@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26EE2C36017
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85CE9C36014
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzYwz-0008TN-Vg; Tue, 01 Apr 2025 06:34:34 -0400
+	id 1tzYx2-0008TU-E4; Tue, 01 Apr 2025 06:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1tzYwk-0008S3-0L
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:34:25 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1tzYwl-0008SD-Ty
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:34:26 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1tzYwh-0003q5-G0
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:34:17 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22423adf751so99147705ad.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:34:13 -0700 (PDT)
+ id 1tzYwj-0003qZ-EF
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:34:19 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-223fb0f619dso100883635ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:34:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1743503651; x=1744108451; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0edgTYoWHKRu92ltgEpm8dVjfH0ldEKXvt5V/yx46BU=;
- b=hIIbjz1jl9SQvI6EMwEYhsy8vF13aBvzcn8zelPUEi12TxFfo36ttXT4gvBFHsySXU
- TETWX0lZLhBE0Rrb/XZUaPPS0AeQJHzzfzuCA3lDcecPZDM/nME/VGaMLJHJY8unT6zH
- NlpKM4hY22oo72QWxK3vveoGPKqU4S+dBz7bbGabHFb05gTPzJ/B7zDCZjGJeqPWk6CP
- 24rQ5OIUe783OT8xv0GYGXhoXX1z33xL1VXtwx5fxqxnWvLtaRBxs45/D+7Hyhn/h66P
- 96EUOeh2bN/KL3zjjmwk7LFiIfreiGXbR8+C6CmX27eaIDgOxkSSCNnwp0GR7r36tHht
- BuRA==
+ d=sifive.com; s=google; t=1743503656; x=1744108456; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7NbUSum+DgGcGwGBoxVvU4PaK5B642fZ4CQdeAwgUjQ=;
+ b=lLqyjg1VNaT+Wq0Vn3n5wpwDIGZXN7+9YmJ0vbiXqUbsxs6NS3yCCuzD4E/8Ldsjyz
+ POFFvuDFO2TMXsRepJxmZtnSv89TK2wLpkGaI6EGEW7dxG8S4wDck+YfchpEiWDRSryZ
+ ssVmUQCLOAjIwFQoI8vzl1fc8HJWcRu5cv/p5w7LPKfTH5AAxVSEq3QwYHAjETC+P0lP
+ 0bLyuxT62/fDry0OfXMAo8Xz/pniQh7KDvRP8YjBD0WnvtIWvyvgFRIr7vNeXk8R9FEe
+ vr0pl1Qwmq82lGh9XL6xbykaiJklhA5Bv/KaoFcljl+2cRVzL+UDZPCp5/2XqmNU/CwM
+ eNpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743503651; x=1744108451;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0edgTYoWHKRu92ltgEpm8dVjfH0ldEKXvt5V/yx46BU=;
- b=sAbkfU3NrId8KgOPeYxG8pFZoiHLzhfsweWAbLplAg7EHbe1KZdx4GY0FuZq8jt0xA
- L7uJHxIlfAJJsHy89ZS/9WxyWdwlzyrAFIPrxT3TBjJwLxBeK7lIFhR1MIl4URwSgTV5
- Ugpsfr8Cx3kFmGxA72D8njbtrAn9DTkIMJiWvqrdhsm+RbBpJEX2S8oXFwK5ZVs6Jxk1
- TvJTiQUnBtnqohpQQT1nYwVXc0MdLZwGjXufE9dOUwUB7z1aNs7XolgFY79YA0sZ1bZl
- DGf7REnKISJiZCg1hff1pWnKa2i93g4oOhHQEAANgK0dex48Cq7do8hUrTUxTS63LCvI
- x8yA==
-X-Gm-Message-State: AOJu0Yys+lgOtK0490cbctT1Mo9+FMslwgHISRJ/0XZNEMyyyfeR3rWk
- 8Aq2gd2TYpRmZogxtpuHaszCnlqKztugfqk8e8CHOEsxIhPEmc2UojsSLQqycyOhSN8uWDtucEb
- aYL19qVgo/qtm8n7SW++f83fxwD3gj4sFLlxqPjRzJz2yE3HgusU2KfDFxqjXjG7stDzd1ijtgl
- KpKghbCwa4bxpi6r4Edg8zhcTfktMUuRSaoOQT
-X-Gm-Gg: ASbGncuPWumPbHvnecq9LvaBPJLKGOIFdxJ9tBg3zsI8WwI74+/zqhk6Dq5revQRw70
- UPR40J2DMK/fwfn28QTU/FbT3E3td3bQMOifz9MCeoo55SY4shJ9y2dXKtOFGN8Fnvb+btNKHLx
- kt1fs/CzTc0XBJBZfeYY6xFk6UEpJWhRU9yCxnXxgk2O9ASwnJaz89BPwDqMXaFWUvOCnIAYjmj
- SRmYNPC3bowiM2Ub13P8hjDx55Vp2TspbOZDHo222NaPOCj5+YFxqjuwh8B/DMjUVV40BgzN526
- m0e3IbJXoPysRqBFdKke1t6MUIYg0GdPczeMboVVwFVi7w7eAVrldZXsU2zHYXXg2+D0aCao7qb
- Wzz7ZmYaL4MBqtwXZfA8=
-X-Google-Smtp-Source: AGHT+IFx73hADwyBHytLjOTTwy5RRB6FDicjyUgmPVy7yswo23nRaMQ52Ur3vBtT93/iLrCXlw1EaA==
-X-Received: by 2002:a17:902:e54e:b0:21a:8300:b9ce with SMTP id
- d9443c01a7336-2295c12e596mr40803515ad.49.1743503651219; 
- Tue, 01 Apr 2025 03:34:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743503656; x=1744108456;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7NbUSum+DgGcGwGBoxVvU4PaK5B642fZ4CQdeAwgUjQ=;
+ b=aS0sKCcTikK5u8Cl+WLsw+stQ5dBH+YHAW71b1GZfOAEfl4pP1HLs3tTxx3zNpBir+
+ ge213EnVNkmSR1afQGywX8L0G+4tkOWa69qMBpNLTHBOMg5hlFMb4x/kFDB86a78zADL
+ 3Lqs4yLlWhDLfx/oj8FlcV7Og7lOAWSyTR0d+iNn5emfEwFxTz6KVRRlG3/B0/d4H/tl
+ coZUq+Sak3WOX/5rkJrhzSv/+wP42anyH+3bevvwDiyt7Non1uxm44rDZCdg4NL+JdMY
+ RfEz62Q7L8XxiZuvtHPZjGF7b6hGNwIHq1q4TbsQUgKUSlGiixD7YOlr5pnD16PJpllL
+ jCkQ==
+X-Gm-Message-State: AOJu0Yw5PYZxB3t4YtFYceDS+QbtzpGwZjOlm1t/qJk/h7if9o3whgPA
+ xRPv8FxTk5qOCmHJ5eo0s6bF1kOdiW5p5XPOoZqBrMwd7WNGPDOLZdiqNCawwzFa5J0pjw0RN3o
+ hsvfIA1d/JQbeO6NF5gj/YGgcKxO4ADBXxjNmh6ahJX4cJC9a4l45SPweLUm7VnTaIq8paKKcxH
+ CYnHX56MBs2vyLeo2w1Q1Myoo69ewGEQUcoSdp
+X-Gm-Gg: ASbGncu6udSDg+vPVkgynN9djOACSOVu+IReGWA8US8BBEXdaBOffTlVG2jiEY1usGk
+ kIuXw24hCpKohx8D8ZnYPQ94RZ2Fc2AX4AYxeQl0vEU9mee/RicR/zc+9hVU9WipKr6hEhuK6Bk
+ /yajKx1vSQcqT43nR/DOcwlyiDyidkHz3PELsttY4V6YXozheADgbQhJzCp/qB+p5GYH1dBMAf6
+ NCGr81WOY1cUh7nLeMX+l+lTcbjFDMkNHUKYWbL3WlvA7D4Z2gRyIIY+Tt7fJXzN6hKrbMYvMNb
+ XEGRQl029N/nuEpuoE0HzZefdoV88SU/E0JSOX6n5LUVdCFnFxwcCEmSJHjPirlGvQoAgDPnAET
+ KUNheN/Bj
+X-Google-Smtp-Source: AGHT+IGcr34i6AKbI+z9OGINU7yuSyTLNd3DA591DW7R+T34QYVNUnJih2Q7SrHaBVrEHkx52UeBHg==
+X-Received: by 2002:a17:902:cec4:b0:223:501c:7576 with SMTP id
+ d9443c01a7336-2295be64dacmr43550085ad.12.1743503655561; 
+ Tue, 01 Apr 2025 03:34:15 -0700 (PDT)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.172])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291f1ded6asm85211795ad.184.2025.04.01.03.34.09
+ d9443c01a7336-2291f1ded6asm85211795ad.184.2025.04.01.03.34.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Apr 2025 03:34:10 -0700 (PDT)
+ Tue, 01 Apr 2025 03:34:15 -0700 (PDT)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -74,15 +75,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v2 1/2] target/riscv: Restrict mideleg/medeleg/medelegh access
- to S-mode harts
-Date: Tue,  1 Apr 2025 18:33:43 +0800
-Message-ID: <20250401103344.84257-1-jay.chang@sifive.com>
+Subject: [PATCH v2 2/2] target/riscv: Restrict midelegh access to S-mode harts
+Date: Tue,  1 Apr 2025 18:33:44 +0800
+Message-ID: <20250401103344.84257-2-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250401103344.84257-1-jay.chang@sifive.com>
+References: <20250401103344.84257-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=jay.chang@sifive.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=jay.chang@sifive.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,46 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V Privileged Spec states:
-"In harts with S-mode, the medeleg and mideleg registers must exist, and
-setting a bit in medeleg or mideleg will delegate the corresponding trap
-, when occurring in S-mode or U-mode, to the S-mode trap handler. In
-harts without S-mode, the medeleg and mideleg registers should not
-exist."
+RISC-V AIA Spec states:
+"For a machine-level environment, extension Smaia encompasses all added
+CSRs and all modifications to interrupt response behavior that the AIA
+specifies for a hart, over all privilege levels. For a supervisor-level
+environment, extension Ssaia is essentially the same as Smaia except
+excluding the machine-level CSRs and behavior not directly visible to
+supervisor level."
 
-Add smode predicate to ensure these CSRs are only accessible when S-mode
-is supported.
+Since midelegh is an AIA machine-mode CSR, add Smaia extension check in
+aia_smode32 predicate.
 
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Signed-off-by: Jay Chang <jay.chang@sifive.com>
 ---
- target/riscv/csr.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/riscv/csr.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 7948188356..975d6e307f 100644
+index 975d6e307f..81a57249bf 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -5783,8 +5783,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-                           NULL,                read_mstatus_i128           },
-     [CSR_MISA]        = { "misa",       any,   read_misa,    write_misa,
-                           NULL,                read_misa_i128              },
--    [CSR_MIDELEG]     = { "mideleg",    any,   NULL, NULL,   rmw_mideleg   },
--    [CSR_MEDELEG]     = { "medeleg",    any,   read_medeleg, write_medeleg },
-+    [CSR_MIDELEG]     = { "mideleg",    smode,   NULL, NULL,   rmw_mideleg   },
-+    [CSR_MEDELEG]     = { "medeleg",    smode,   read_medeleg, write_medeleg },
-     [CSR_MIE]         = { "mie",        any,   NULL, NULL,   rmw_mie       },
-     [CSR_MTVEC]       = { "mtvec",      any,   read_mtvec,   write_mtvec   },
-     [CSR_MCOUNTEREN]  = { "mcounteren", umode, read_mcounteren,
-@@ -5792,7 +5792,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+@@ -372,8 +372,11 @@ static RISCVException aia_smode(CPURISCVState *env, int csrno)
+ static RISCVException aia_smode32(CPURISCVState *env, int csrno)
+ {
+     int ret;
++    int csr_priv = get_field(csrno, 0x300);
  
-     [CSR_MSTATUSH]    = { "mstatush",   any32, read_mstatush,
-                           write_mstatush                                   },
--    [CSR_MEDELEGH]    = { "medelegh",   any32, read_zero, write_ignore,
-+    [CSR_MEDELEGH]    = { "medelegh",   smode32, read_zero, write_ignore,
-                           .min_priv_ver = PRIV_VERSION_1_13_0              },
-     [CSR_HEDELEGH]    = { "hedelegh",   hmode32, read_hedelegh, write_hedelegh,
-                           .min_priv_ver = PRIV_VERSION_1_13_0              },
+-    if (!riscv_cpu_cfg(env)->ext_ssaia) {
++    if (csr_priv == PRV_M && !riscv_cpu_cfg(env)->ext_smaia) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    } else if (!riscv_cpu_cfg(env)->ext_ssaia) {
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
+ 
+@@ -5832,7 +5835,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_MVIP]     = { "mvip",     aia_any, NULL, NULL, rmw_mvip    },
+ 
+     /* Machine-Level High-Half CSRs (AIA) */
+-    [CSR_MIDELEGH] = { "midelegh", aia_any32, NULL, NULL, rmw_midelegh },
++    [CSR_MIDELEGH] = { "midelegh", aia_smode32, NULL, NULL, rmw_midelegh },
+     [CSR_MIEH]     = { "mieh",     aia_any32, NULL, NULL, rmw_mieh     },
+     [CSR_MVIENH]   = { "mvienh",   aia_any32, NULL, NULL, rmw_mvienh   },
+     [CSR_MVIPH]    = { "mviph",    aia_any32, NULL, NULL, rmw_mviph    },
 -- 
 2.48.1
 
