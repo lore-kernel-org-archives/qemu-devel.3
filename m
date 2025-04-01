@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E46A2C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 11:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03C7C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 11:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzaEv-0000tO-Ae; Tue, 01 Apr 2025 07:57:09 -0400
+	id 1tzaHB-00022W-Gg; Tue, 01 Apr 2025 07:59:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzaEs-0000t9-O2
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:57:06 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzaGZ-00020R-Sk
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:58:52 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzaEq-0005kB-K8
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:57:06 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cf3192f3bso55337745e9.1
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 04:57:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzaGX-0005xQ-TV
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:58:51 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cfe63c592so55945735e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 04:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743508622; x=1744113422; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743508728; x=1744113528; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nO/9GIWR1eUdDzreXzOiJZXm8p+Xh8DpUVcEmpP/YPA=;
- b=cUuA6M3XVT0gAycnyaL+tqtx0gBjn+Bm15xctcP/H8TYSPpLqXndPeqzi9R/ZBP+er
- mC0b2sMzpmSRLaI8l4NXm/pXoMMY1xWCdXDMC8TuMfqL980/rdwptUEWTqin4yjjVdVG
- 1OYbg97EsRNX4FTOcOpiUVO+bf9uWnS1xcPXGdYnUgtTNrEtO1ul0BK5kyN7juvObUxI
- 7s/CKxHxgQpa6zaZP/GyX0FJ3zhWiGVu8xL0z8Y4pZQDUSetphgeqtuOYFZwxTIlhP28
- UFsAq/h5zAdudD61rA/G8eSkco8F5yvWiGlKO6Jj5N8IiapXjbrG97AlKXUUEItRFla4
- hgzQ==
+ bh=tTsG+pYddH1wx1MjNuH5x48pHhcIB9quAniQeSORezI=;
+ b=Y43IftPMqfyjh+L7rU/QMK4Hepz3TgvESgTHL06i0D92pVC3d+HS8HYOe6wSwev7+A
+ D4YSY0dYaD3dBptC9Oq61FllJL7QvGJQ8iTRYayw2nqXBvaZPoGT99I18gFmINgyTPUp
+ ge4tBWIVaSyyYuzqgFhGRN5+xz+kfNEthqf/rXGcbmQVqloEyWwsJ1vv+tPbkUP2Fw6U
+ WunSNoLrZiDv1P4HLK/OEKLdN2C0DVJjrq5wcHrg0SzBQG1E2tRrz591nthlsB7SQLwo
+ 49xxU55lhmdYo/iSQRlzCYsLUN82AETy2sh4ZU7BJlt+jIHph9ta1/Gx4nbk7ZtrkCIo
+ htOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743508622; x=1744113422;
+ d=1e100.net; s=20230601; t=1743508728; x=1744113528;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nO/9GIWR1eUdDzreXzOiJZXm8p+Xh8DpUVcEmpP/YPA=;
- b=v5F9YVQpba+FOShw4shSAIs51nwTzJVq5hnf8/QqOe1ihLofbMlVTpuIjWaTKwEow6
- UabcMmwKJzb4y/VIcthAwxg0M0E5bQeJ1G+hkdUsXTeSdEkpjFACm03AsQdfPSNQiUsn
- qinpJTmQwbrhuNZTwikONntRWfiuQF6UqEjpC5yoaRb5q5vhWl+whodbDaK+OiveifwK
- NVqqGfs6XDiG5rk6r4pSY7irO0AAgdvIuBnYmoTExBMHLUntq0Lq4lxJVuCCSz5Nn5p7
- Z8sN5mQSxq/kS4QFYJshdAaBdtp9jByBNw4vJKZQiUtgwsok49Us/JBHxXbRJChH0Nn1
- B6nw==
-X-Gm-Message-State: AOJu0Yz2AC+WOtXCFNdY1fSnSuMvcHsIwbf7X7sSD9L3h9gqGAyDl0n+
- si2V56dNNWv7DwQNZXos8LHbsO5AnSlCifBRWh9PUcVtvZeXWpV7uPMmMjmeNKG3esXN7bkaM8Q
- j
-X-Gm-Gg: ASbGncu6aM7LJucLhdx8z0z3P7Y+sl6Q4rWb4quyCwgw24O7fPcMsbW1UvCdigUZJxx
- SVK3kjAmkgccXMPtFuL5MUKeehkGEguTLTO5QW6y0RPDG1yOXYtDfmaKEVJJ8c+cUWAKt88RZdD
- PlehtKQ0v5LssB1eNBJitW0sTdDgLOWnj67s1WuWfp2XTLPPf57ko9B1i2UOuRzZMMRs8c66atp
- 8bxY2l214JCeA2IOrauWuMHjWWNS5hx/jEKe1H2WgFuEXTZlffkDA1v+sYmGKraG/RDQskCsGZ8
- ZeEXSRHjk8gjljdRLAGuK8GQVtT5P2Vt7KIxGpIZh+5A+IZDK9Ibn/WK2nlI9Qpim/1K8gQ0WyK
- QWhz2vGrbsMxuRaJ36VlrDkY=
-X-Google-Smtp-Source: AGHT+IHTPqqHvVQwaRIitGkq7ws6VkbC04Ck2/WWpCDx76LK5IzZzUb72jJHnc+TzfRdDyxecTmDbQ==
-X-Received: by 2002:a05:600c:1f17:b0:439:643a:c8d5 with SMTP id
- 5b1f17b1804b1-43e99ab533cmr92558875e9.0.1743508622372; 
- Tue, 01 Apr 2025 04:57:02 -0700 (PDT)
+ bh=tTsG+pYddH1wx1MjNuH5x48pHhcIB9quAniQeSORezI=;
+ b=VvuMf1NBI3ybcdWdP+BpE3xpTeGWEK31WBO8VxjvKMGybjU5mVWQhCGHpZR6G8wBCz
+ dPWmq+hU1S15dJYx2nAjvb03cAAAbhmoNlaBJDHIS56iE11Ot80RpKl8RC9mZC/73+yk
+ U+YLwNXCXD0sYqYVeXHku1d/z/EUXjOSDyx2Er470OOuQjFSZtumb4mUqgp2uXTeY1bU
+ SW1t0PvLLji6AyGmChOeUs5IAW5oLIS43V28fn1jVp7fTBB3OJ2sXD59gNjuR67ZnbV2
+ AdERj9o/cOgc1EXqwfCksnkNxifWuFwUqKC6QAob+uEIsejerA75+Awuk9r69hDcPyvY
+ K/xw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVw2G0USBzwM1E73Tmnztry4vLLqkSemndG0TB1ObbhCC92SmDjO7AfvaQPHYBpPB3f1oUO41ZSKb4C@nongnu.org
+X-Gm-Message-State: AOJu0YzZc/F7uqbxTDR1cdG4tl1u38mgiKsqvSjCtXKibVNMACxFNnMF
+ OK7/pKbqMPoaeTXBH6QhaMDeSIXq9zz97rC3BnFmnZY1gE9RNeaBcw+1G93PGZg=
+X-Gm-Gg: ASbGncvQNe/YhntKAzgP1TmrPjaE9fau7SjufYcgTeqXFNy/YjyOdZ96G+3Wdt503vS
+ 0fG4Q9QnXRzrQGlTgPazYLtXfSUHwyS1lf840m0716AJXILmZJVucv93PDgDabl8D5G2XcticVZ
+ H3WSIonqdVYrGJPld3J60rXA1voA/cIcbtiQ6Mo8ueKLljzTDzmhb5Ub2DPdubHF/zuYY4TcE00
+ 89xMlKnVnOYmwPABQi/+LgqexEaf5wwIYHx51voOeXNZaJafvnZE85tTkLxZ33tTNx968O0HGDQ
+ Th61GG1MbsmlrJfSmI9CJ5WSOgHeXsHMzHSiVjELI6ma7Ds5c+E4/eNHn4S7vNHtWEaGbmJf4Yx
+ F3cMZSu23v056
+X-Google-Smtp-Source: AGHT+IGS6aGb+xvOChK72MrxAfSTSN7WEBtwtV7fqj9p0hSVoI4X/xqDFoDOqGga8Ylb1kWOWps17g==
+X-Received: by 2002:a5d:59ae:0:b0:38d:e584:81ea with SMTP id
+ ffacd0b85a97d-39c1211abe5mr10725814f8f.45.1743508727589; 
+ Tue, 01 Apr 2025 04:58:47 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a8e0asm13806929f8f.101.2025.04.01.04.57.01
+ ffacd0b85a97d-39c0b79e12bsm14153967f8f.62.2025.04.01.04.58.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 04:57:01 -0700 (PDT)
-Message-ID: <b0842a9c-dac4-4433-b69a-054ac65d8735@linaro.org>
-Date: Tue, 1 Apr 2025 13:57:01 +0200
+ Tue, 01 Apr 2025 04:58:47 -0700 (PDT)
+Message-ID: <9ae8882b-35d1-489a-9f5c-579bd9ae89df@linaro.org>
+Date: Tue, 1 Apr 2025 13:58:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] ipmi: add fwinfo to pci ipmi devices
-To: Nicholas Piggin <npiggin@gmail.com>, Corey Minyard <minyard@acm.org>
-Cc: qemu-devel@nongnu.org
-References: <20250401114412.676636-1-npiggin@gmail.com>
- <20250401114412.676636-3-npiggin@gmail.com>
+Subject: Re: [PULL 23/29] ui & main loop: Redesign of system-specific main
+ thread event handling
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20241231202228.28819-1-philmd@linaro.org>
+ <20241231202228.28819-24-philmd@linaro.org>
+ <61ae31ca4643b2caf703a36cebe5ed4f2abbf324.camel@infradead.org>
+ <3e8e7649-2ee3-4e72-9cd6-17db0551ea66@linaro.org>
+ <24a30054-eef8-4ce0-971d-0b50d28154f1@linaro.org>
+ <aedc72a0e5dabe190427dd536b2882f0ca8713c4.camel@infradead.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250401114412.676636-3-npiggin@gmail.com>
+In-Reply-To: <aedc72a0e5dabe190427dd536b2882f0ca8713c4.camel@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,154 +108,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nick,
-
-On 1/4/25 13:44, Nicholas Piggin wrote:
-> This requires some adjustments to callers to avoid possible behaviour
-> changes for PCI devices.
+On 1/4/25 13:43, David Woodhouse wrote:
+> On Tue, 2025-04-01 at 13:30 +0200, Philippe Mathieu-Daudé wrote:
+>> On 1/4/25 13:18, Philippe Mathieu-Daudé wrote:
+>>> Hi David,
+>>>
+>>> On 8/1/25 14:51, David Woodhouse wrote:
+>>>> On Tue, 2024-12-31 at 21:22 +0100, Philippe Mathieu-Daudé wrote:
+>>>>>
+>>>>> This change tidies up main thread management to be more
+>>>>> flexible.
+>>>>>
+>>>>>    * The qemu_main global function pointer is a custom function
+>>>>> for the
+>>>>>      main thread, and it may now be NULL. When it is, the main
+>>>>> thread
+>>>>>      runs the main Qemu loop. This represents the traditional
+>>>>> setup.
+>>>>>    * When non-null, spawning the main Qemu event loop on a
+>>>>> separate
+>>>>>      thread is now done centrally rather than inside the Cocoa
+>>>>> UI code.
+>>>>>    * For most platforms, qemu_main is indeed NULL by default,
+>>>>> but on
+>>>>>      Darwin, it defaults to a function that runs the CFRunLoop.
+>>>>>    * The Cocoa UI sets qemu_main to a function which runs the
+>>>>>      NSApplication event handling runloop, as is usual for a
+>>>>> Cocoa app.
+>>>>>    * The SDL UI overrides the qemu_main function to NULL, thus
+>>>>>      specifying that Qemu's main loop must run on the main
+>>>>>      thread.
+>>>>>    * The GTK UI also overrides the qemu_main function to NULL.
+>>>>>    * For other UIs, or in the absence of UIs, the platform's
+>>>>> default
+>>>>>      behaviour is followed.
+>>>>
+>>>> When exiting an emulated Xen guest with <Ctrl-a x> on the
+>>>> console, I
+>>>> now see:
+>>>>
+>>>> (gdb) run
+>>>> Starting program: /home/dwmw2/git/qemu/ball/qemu-system-x86_64 -
+>>>> display none -vga none -serial mon:stdio -machine q35 -accel
+>>>> kvm,xen-
+>>>> version=0x4000a,kernel-irqchip=split -smp 2 -kernel /home/dwmw2/
+>>>> avocado/data/cache/by_name/bzImage -append printk.time=0\
+>>>> root=/dev/
+>>>> xvda\ console=ttyS0\ xen_emul_unplug=ide-disks\
+>>>> xen_no_vector_callback\ noapic\ loglevel=0 -drive
+>>>> file=/home/dwmw2/
+>>>> avocado/data/cache/by_name/
+>>>> rootfs.ext4,if=none,snapshot=on,format=raw,id=drv0 -device xen-
+>>>> disk,drive=drv0,vdev=xvda -device virtio-net-pci,netdev=unet -
+>>>> netdev
+>>>> user,id=unet,hostfwd=:127.0.0.1:0-:22
+>>>>
+>>>> Starting syslogd: OK
+>>>> Starting klogd: OK
+>>>> Running sysctl: OK
+>>>> Saving 256 bits of non-creditable seed for next boot
+>>>> Starting network: OK
+>>>> Starting dhcpcd...
+>>>> no such user dhcpcd
+>>>> dhcpcd-9.4.1 starting
+>>>> no interfaces have a carrier
+>>>> forked to background, child pid 111
+>>>> Starting dropbear sshd: OK
+>>>> #
+>>>> QEMU: Terminated
+>>>> qemu-system-x86_64: ../block/block-backend.c:1290: blk_in_drain:
+>>>> Assertion `qemu_in_main_thread()' failed.
+>>>>
+>>>> Thread 1 "qemu-system-x86" received signal SIGABRT, Aborted.
+>>>> 0x00007ffff5ffc724 in __pthread_kill_implementation () from
+>>>> /lib64/
+>>>> libc.so.6
+>>>> (gdb) bt
+>>>> #0  0x00007ffff5ffc724 in __pthread_kill_implementation () at
+>>>> /lib64/
+>>>> libc.so.6
+>>>> #1  0x00007ffff5fa3d1e in raise () at /lib64/libc.so.6
+>>>> #2  0x00007ffff5f8b942 in abort () at /lib64/libc.so.6
+>>>> #3  0x00007ffff5f8b85e in __assert_fail_base.cold () at
+>>>> /lib64/libc.so.6
+>>>> #4  0x00007ffff5f9be47 in __assert_fail () at /lib64/libc.so.6
+>>>> #5  0x0000555555abf911 in blk_in_drain (blk=0x555557ca6680)
+>>>>       at ../block/block-backend.c:1290
+>>>> #6  0x000055555593410c in xen_block_dataplane_stop
+>>>> (dataplane=0x555558982950)
+>>>>       at ../hw/block/dataplane/xen-block.c:695
+>>>> #7  0x000055555593441a in xen_block_dataplane_stop
+>>>> (dataplane=<optimized out>)
+>>>>       at ../hw/block/dataplane/xen-block.c:689
+>>>> #8  0x00005555555dfd5e in xen_block_disconnect
+>>>>       (xendev=xendev@entry=0x55555880aa60, errp=<optimized out>)
+>>>>       at ../hw/block/xen-block.c:172
+>>>> #9  0x00005555555dfeca in xen_block_unrealize
+>>>> (xendev=0x55555880aa60)
+>>>>       at ../hw/block/xen-block.c:282
+>>>> #10 0x000055555578ef71 in xen_device_unrealize (dev=<optimized
+>>>> out>)
+>>>>       at ../hw/xen/xen-bus.c:978
+>>>> #11 0x0000555555bfe65f in notifier_list_notify (list=<optimized
+>>>> out>,
+>>>> data=0x0)
+>>>>       at ../util/notify.c:39
+>>>> #12 0x00007ffff5fa6461 in __run_exit_handlers () at
+>>>> /lib64/libc.so.6
+>>>> #13 0x00007ffff5fa652e in exit () at /lib64/libc.so.6
+>>>> #14 0x0000555555b523dc in qemu_default_main
+>>>> (opaque=opaque@entry=0x0)
+>>>> #15 0x00005555555609c0 in main (argc=<optimized out>,
+>>>> argv=<optimized
+>>>> out>) at ../system/main.c:76
+>>>>
+>>>
+>>> Is this still an issue?
+>>
+>> Likely fixed by commit e7bc0204 ("system/runstate:
+>> Fix regression, clarify BQL status of exit notifiers"), so
+>> I'm closing https://gitlab.com/qemu-project/qemu/-/issues/2771.
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   include/hw/ipmi/ipmi.h     |  5 +++++
->   hw/acpi/ipmi.c             |  2 +-
->   hw/ipmi/isa_ipmi_bt.c      |  1 +
->   hw/ipmi/isa_ipmi_kcs.c     |  1 +
->   hw/ipmi/pci_ipmi_bt.c      | 12 ++++++++++++
->   hw/ipmi/pci_ipmi_kcs.c     | 11 +++++++++++
->   hw/smbios/smbios_type_38.c |  6 +++++-
->   7 files changed, 36 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
-> index 77a7213ed93..71c4efac8cd 100644
-> --- a/include/hw/ipmi/ipmi.h
-> +++ b/include/hw/ipmi/ipmi.h
-> @@ -90,6 +90,11 @@ typedef struct IPMIFwInfo {
->       } memspace;
->   
->       int interrupt_number;
-> +    enum {
-> +        IPMI_NO_IRQ = 0,
-> +        IPMI_ISA_IRQ,
-> +        IPMI_PCI_IRQ,
-> +    } irq;
->       enum {
->           IPMI_LEVEL_IRQ,
->           IPMI_EDGE_IRQ
-> diff --git a/hw/acpi/ipmi.c b/hw/acpi/ipmi.c
-> index a20e57d465c..c81cbd2f158 100644
-> --- a/hw/acpi/ipmi.c
-> +++ b/hw/acpi/ipmi.c
-> @@ -55,7 +55,7 @@ static Aml *aml_ipmi_crs(IPMIFwInfo *info)
->           abort();
->       }
->   
-> -    if (info->interrupt_number) {
-> +    if (info->irq == IPMI_ISA_IRQ && info->interrupt_number) {
->           aml_append(crs, aml_irq_no_flags(info->interrupt_number));
->       }
->   
-> diff --git a/hw/ipmi/isa_ipmi_bt.c b/hw/ipmi/isa_ipmi_bt.c
-> index a1b66d5ee82..b5556436b82 100644
-> --- a/hw/ipmi/isa_ipmi_bt.c
-> +++ b/hw/ipmi/isa_ipmi_bt.c
-> @@ -49,6 +49,7 @@ static void isa_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
->       ISAIPMIBTDevice *iib = ISA_IPMI_BT(ii);
->   
->       ipmi_bt_get_fwinfo(&iib->bt, info);
-> +    info->irq = IPMI_ISA_IRQ;
->       info->interrupt_number = iib->isairq;
->       info->i2c_slave_address = iib->bt.bmc->slave_addr;
->       info->uuid = iib->uuid;
-> diff --git a/hw/ipmi/isa_ipmi_kcs.c b/hw/ipmi/isa_ipmi_kcs.c
-> index d9ebdd5371f..326115f51bb 100644
-> --- a/hw/ipmi/isa_ipmi_kcs.c
-> +++ b/hw/ipmi/isa_ipmi_kcs.c
-> @@ -49,6 +49,7 @@ static void isa_ipmi_kcs_get_fwinfo(IPMIInterface *ii, IPMIFwInfo *info)
->       ISAIPMIKCSDevice *iik = ISA_IPMI_KCS(ii);
->   
->       ipmi_kcs_get_fwinfo(&iik->kcs, info);
-> +    info->irq = IPMI_ISA_IRQ;
->       info->interrupt_number = iik->isairq;
->       info->uuid = iik->uuid;
->   }
-> diff --git a/hw/ipmi/pci_ipmi_bt.c b/hw/ipmi/pci_ipmi_bt.c
-> index a3b742d22c9..33ff7190ee8 100644
-> --- a/hw/ipmi/pci_ipmi_bt.c
-> +++ b/hw/ipmi/pci_ipmi_bt.c
-> @@ -38,6 +38,17 @@ struct PCIIPMIBTDevice {
->       uint32_t uuid;
->   };
->   
-> +static void pci_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
-> +{
-> +    PCIIPMIBTDevice *pib = PCI_IPMI_BT(ii);
-> +
-> +    ipmi_bt_get_fwinfo(&pib->bt, info);
-> +    info->irq = IPMI_PCI_IRQ;
-> +    info->interrupt_number = pci_intx(&pib->dev);
-> +    info->i2c_slave_address = pib->bt.bmc->slave_addr;
-> +    info->uuid = pib->uuid;
-> +}
-> +
->   static void pci_ipmi_raise_irq(IPMIBT *ib)
->   {
->       PCIIPMIBTDevice *pib = ib->opaque;
-> @@ -125,6 +136,7 @@ static void pci_ipmi_bt_class_init(ObjectClass *oc, void *data)
->   
->       iic->get_backend_data = pci_ipmi_bt_get_backend_data;
->       ipmi_bt_class_init(iic);
-> +    iic->get_fwinfo = pci_ipmi_bt_get_fwinfo;
->   }
->   
->   static const TypeInfo pci_ipmi_bt_info = {
-> diff --git a/hw/ipmi/pci_ipmi_kcs.c b/hw/ipmi/pci_ipmi_kcs.c
-> index 05ba97ec58f..6673b2088ef 100644
-> --- a/hw/ipmi/pci_ipmi_kcs.c
-> +++ b/hw/ipmi/pci_ipmi_kcs.c
-> @@ -38,6 +38,16 @@ struct PCIIPMIKCSDevice {
->       uint32_t uuid;
->   };
->   
-> +static void pci_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
-> +{
-> +    PCIIPMIKCSDevice *pik = PCI_IPMI_KCS(ii);
-> +
-> +    ipmi_kcs_get_fwinfo(&pik->kcs, info);
-> +    info->irq = IPMI_PCI_IRQ;
-> +    info->interrupt_number = pci_intx(&pik->dev);
-> +    info->uuid = pik->uuid;
-> +}
-> +
->   static void pci_ipmi_raise_irq(IPMIKCS *ik)
->   {
->       PCIIPMIKCSDevice *pik = ik->opaque;
-> @@ -125,6 +135,7 @@ static void pci_ipmi_kcs_class_init(ObjectClass *oc, void *data)
->   
->       iic->get_backend_data = pci_ipmi_kcs_get_backend_data;
->       ipmi_kcs_class_init(iic);
-> +    iic->get_fwinfo = pci_ipmi_kcs_get_fwinfo;
->   }
->   
->   static const TypeInfo pci_ipmi_kcs_info = {
-> diff --git a/hw/smbios/smbios_type_38.c b/hw/smbios/smbios_type_38.c
-> index 168b886647d..2823929c258 100644
-> --- a/hw/smbios/smbios_type_38.c
-> +++ b/hw/smbios/smbios_type_38.c
-> @@ -72,7 +72,11 @@ static void smbios_build_one_type_38(IPMIFwInfo *info)
->                        " SMBIOS, ignoring this entry.", info->register_spacing);
->           return;
->       }
-> -    t->interrupt_number = info->interrupt_number;
-> +    if (info->irq == IPMI_ISA_IRQ) {
-> +        t->interrupt_number = info->interrupt_number;
-> +    } else {
-> +        t->interrupt_number = 0;
+> Indeed. I think I was assuming the explicit Resolves: tag in that
+> commit was going to magically close the issue when it was merged.
+> Should I have closed it manually?
 
-Can you explain why use 0 for PCI?
-
-> +    }
->   
->       SMBIOS_BUILD_TABLE_POST;
->   }
-
+It should have been closed automatically. Maybe some transient
+problem on GitLab side ¯\_(ツ)_/¯
 
