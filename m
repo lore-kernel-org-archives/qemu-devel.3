@@ -4,87 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F66C36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC9FC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbgq-00014O-IS; Tue, 01 Apr 2025 09:30:04 -0400
+	id 1tzbn1-0002se-Mq; Tue, 01 Apr 2025 09:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tzbgd-0000yo-Iz
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:29:54 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tzbga-0004Y1-8D
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:29:50 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-227d6b530d8so100004235ad.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 06:29:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743514187; x=1744118987; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qoNMMfSSUKhpI6pB0JgIIhYjik2yHZOiDZC7hnbJbH8=;
- b=AGrsqe7pLAFjFr8rcXjZgCj8oZD6yUM7YmYLgD+TS2PVjB6haVESD2dpVyOgTGUYE/
- HsjGR/RYUPsEMBYFk5NgyMxvwegIuOOc23DGGefwnfUs2p7w//bcjr6MhQKw+41v/A/x
- o9rMtjHVqVn97y3KAoz1MIt0mQAO4YdmUJfNZcU8sQRVrGx7x64Gx/zjOpBWTGkkaKXW
- xnnJSS4hy6oLbt601IssiaHBzG0m2myPC3U3lBk/vHOQN6Gmb04SK4KfR/AmQjBxCXJC
- gF9w7MkDZ+KG1+GD1Pz9Pp/e+HKG6h0QW3eZgZKGGcccEiFQGkWwLrlORxwtf/vQZQUq
- KQwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743514187; x=1744118987;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=qoNMMfSSUKhpI6pB0JgIIhYjik2yHZOiDZC7hnbJbH8=;
- b=AMONxFpqaOkBCE3bz7vatbMB5PB7IccAPC/RPtifpIk9y18ym/n+dNixw+JLf+x4cY
- BEcylqZwJQZ4TJr+GkDhCe2xOCFDKfM4yHLUlFVlWCmyUCEa1NN6y+YIzZ2XDiQZRicN
- duUCb8ToDJUGBqqmhhMlpvGCOMGYwOxP/q06Zv9EhqhhSfzhQXFs6ECAhYKOdNb/UXtJ
- i8o1BUS19THxNOhlUODB72JPwrwcaUQhq0uYNkvUdxbV9aywDS4/ONnUrjBTOlBYLfFO
- ZI8M0Wov8JezCyaRY422MIDwrEioLa3cnQdTKe5esaMDdP+mPVmga387FZVSPvZGGcMU
- 7FkQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYbIgze5iE/NJlHGZGNYaR9kAjF1f3SqS/S4etb2H9+5rIqcC1dleRbKxgs72HXmzkzlo3GibwOyW2@nongnu.org
-X-Gm-Message-State: AOJu0Yy3MQEgxkn23a4VDehrLJDZU64M9jep2ApgTrtRKkqbVNMUFf8R
- l4rBkdtrjikvVBAs3TM6hm5iaXYha9Fz95Jr1PX0LkdMhxaeDdnF
-X-Gm-Gg: ASbGncvi85ZRVaHUY9iamD7JnyMcaj8la3FK4xCQPxwuH6ytwIbc7TlaMTmVq1OcGj0
- zm9hMl7U+UwOeBvR60FnYizrM5AMKvNGLXoB5nFDL2BA6AOnNQS1cMYr38HGGIr5OMx7p5m30+d
- 4N3N8v4Bh6AnSSudhZhI+oT0jPjxYWq3r4G1X6std22eRqkdZr77d+cEH1DLJlb6FhLP8+p/EpX
- 906jWT0wTqvv239ZvadCvDWfiiVIjUOnlQIx4T8D1kXiWOfgEWJKRgHa708K5jASXB0qmEZdtSc
- CTmafRISsOa3F1B5lo9Hd6r3BM2SBQqsYzAmZdw=
-X-Google-Smtp-Source: AGHT+IE3TFwBHo6aIvS1/FAPnG/jouNRMBrH3rN3fwhx1tK9kxY/dFjmFblqeURcqp3WdQvWf4Csug==
-X-Received: by 2002:a17:902:e88f:b0:221:78a1:27fb with SMTP id
- d9443c01a7336-2295be31744mr46817655ad.11.1743514186642; 
- Tue, 01 Apr 2025 06:29:46 -0700 (PDT)
-Received: from localhost ([203.185.207.94]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291f1dd292sm87902575ad.185.2025.04.01.06.29.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 06:29:46 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 01 Apr 2025 23:29:42 +1000
-Message-Id: <D8VC722J57KG.1HJIR72IRFBPL@gmail.com>
-Cc: "Corey Minyard" <minyard@acm.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 2/5] ipmi: add fwinfo to pci ipmi devices
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: <corey@minyard.net>
-X-Mailer: aerc 0.19.0
-References: <20250401114412.676636-1-npiggin@gmail.com>
- <20250401114412.676636-3-npiggin@gmail.com>
- <Z-vljw1_-im7VR-l@mail.minyard.net>
-In-Reply-To: <Z-vljw1_-im7VR-l@mail.minyard.net>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzbn0-0002sH-JY
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:36:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzbmz-0005o6-1a
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:36:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743514582;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MSKYI/QuJnno4ev30uAYJ8aAdNUornLUeYeD20Q4EYY=;
+ b=TptCZ+Eb7Qj0du9I/53PTsjSNg+d9Dm1pMvkYaKjLR83zYqfHBIngHhE4Y7ellHWUdKryf
+ ikUFUpBOHFHDG7Ub+wDvJd3dLNTrvxKt+xInQ1Z+b/dWIYZdCbPlgSkkBU9Ej6raLk482I
+ +heysVjscK+ZF9762lmn5bVQKYf/4jM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-sg-JbnOENiqZIJbie8D3Wg-1; Tue,
+ 01 Apr 2025 09:36:19 -0400
+X-MC-Unique: sg-JbnOENiqZIJbie8D3Wg-1
+X-Mimecast-MFC-AGG-ID: sg-JbnOENiqZIJbie8D3Wg_1743514578
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A370E19560A1; Tue,  1 Apr 2025 13:36:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.88])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA98F180B492; Tue,  1 Apr 2025 13:36:14 +0000 (UTC)
+Date: Tue, 1 Apr 2025 08:36:11 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH v2] Revert "iotests: Stop NBD server in test 162 before
+ starting the next one"
+Message-ID: <7t4y74r752exqwppjlcowmlkqbegpufhmcvi4wpnjjhtfoogyu@oo6hvgvvzda2>
+References: <20250326143533.932899-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250326143533.932899-1-thuth@redhat.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,44 +84,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Apr 1, 2025 at 11:09 PM AEST, Corey Minyard wrote:
-> On Tue, Apr 01, 2025 at 09:44:09PM +1000, Nicholas Piggin wrote:
->> This requires some adjustments to callers to avoid possible behaviour
->> changes for PCI devices.
->>=20
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>  include/hw/ipmi/ipmi.h     |  5 +++++
->>  hw/acpi/ipmi.c             |  2 +-
->>  hw/ipmi/isa_ipmi_bt.c      |  1 +
->>  hw/ipmi/isa_ipmi_kcs.c     |  1 +
->>  hw/ipmi/pci_ipmi_bt.c      | 12 ++++++++++++
->>  hw/ipmi/pci_ipmi_kcs.c     | 11 +++++++++++
->>  hw/smbios/smbios_type_38.c |  6 +++++-
->>  7 files changed, 36 insertions(+), 2 deletions(-)
->>=20
->> diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
->> index 77a7213ed93..71c4efac8cd 100644
->> --- a/include/hw/ipmi/ipmi.h
->> +++ b/include/hw/ipmi/ipmi.h
->> @@ -90,6 +90,11 @@ typedef struct IPMIFwInfo {
->>      } memspace;
->> =20
->>      int interrupt_number;
->> +    enum {
->> +        IPMI_NO_IRQ =3D 0,
->> +        IPMI_ISA_IRQ,
->> +        IPMI_PCI_IRQ,
->> +    } irq;
->
-> In addition to Phillippe's comment, can you name this "irq_source" to
-> make it clear what it is?
+On Wed, Mar 26, 2025 at 03:35:33PM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> This reverts commit e2668ba1ed44ad56f2f1653ff5f53b277d534fac.
+> 
+> This commit made test 162 fail occasionally with:
+> 
+>  162   fail      [13:06:40] [13:06:40]   0.2s   (last: 0.2s)  output mismatch
+>  --- tests/qemu-iotests/162.out
+>  +++ tests/qemu-iotests/scratch/qcow2-file-162/162.out.bad
+>  @@ -3,6 +3,7 @@
+>   === NBD ===
+>   qemu-img: Could not open 'json:{"driver": "nbd", "host": -1}': address
+>    resolution failed for -1:10809: Name or service not known
+>   image: nbd://localhost:PORT
+>  +./common.rc: line 371: kill: (891116) - No such process
+>   image: nbd+unix://?socket=42
+> 
+> The nbd server should normally terminate automatically, so trying to
+> kill it here now seems to cause a race that will cause a test failure
+> when the server terminated before the kill command has been executed.
+> 
+> The "Stop NBD server" patch has originally been written to solve another
+> problem with a hanging nbd server, but since that problem has been properly
+> solved by commit 3e1683485656, we now don't need the "_stop_nbd_server" here
+> anymore.
+> 
+> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
 
-Sure.
+Added to the NBD queue.
 
-I wonder now looking at fwinfo if I should put protocol in there
-too instead of in the class.
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
-Thanks,
-Nick
 
