@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F20FBC3601B
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 11:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72403C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 11:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tza2a-0002CV-BG; Tue, 01 Apr 2025 07:44:24 -0400
+	id 1tza3P-00031h-KV; Tue, 01 Apr 2025 07:45:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tza2X-00029w-UA
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:44:22 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tza3H-0002c5-0e; Tue, 01 Apr 2025 07:45:07 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tza2W-0003g8-3i
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:44:21 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22403cbb47fso112603005ad.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 04:44:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tza3E-0003kq-MN; Tue, 01 Apr 2025 07:45:06 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5deb6482cso11575152a12.1; 
+ Tue, 01 Apr 2025 04:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743507858; x=1744112658; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iiqMLQDqNdYF3NLpp4fJvMQ29Jg+v2cfv8TSKQO8xA8=;
- b=RM0k/xCmWCVwgdh08QkTY1JXtVUlMWCf4n/GWUxy9o3xm406KQ3FyC8fTHfhNcqD0y
- Xq6KFGBeicpuAF/oewV91RaSty884TEg9CRUR6rR8EU8pRFoqmF4jxTc/3lPZggObbJW
- eZsIJnraJqYvJagDe9AEqEmFP5pmUw+PQ3QkxYci2BrjsAa5PbdmLuDAugWw0s8FzvKk
- 9r9wNZhJWjNHCmdQzfypli/D/uEFXTc6HIYxYXoelNrxh6x53Jlot91xZERXrHsCYSKz
- It3KLoGNUGImnb7p63KUlz0rBusVV85TVHHsIpr79sQC2ynZ7yOiC8eBJwQDh/NsmwUd
- xrSA==
+ d=gmail.com; s=20230601; t=1743507901; x=1744112701; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xkjqRIowxFnTqYWsqxNLtB4fGkcNFUW57Tm2wP1HwOA=;
+ b=N+WZwHE9RUYSLzjZzxMSHmEIkViaoWLohO81uBAelc2QF/WMtBYuOBHZV6pXJBEmml
+ R0335FIwOtKY4BAuinNytiiLtfzdHzuAGA2dBdhajS4kAXj2CsArLs6WTWKFmcuNcKCH
+ eaWtPti6/rQKaoAF2/1j/GiVSgDd+23Xdv/Yri0tGDjxgxNZxC9HgZGBPhMy0sOKIduB
+ Av38dZ3M3UnEXdAHWI3nbuV1aoaen9Iux4n5CbQNieu4BXj3B4eEOsiiV8G6ZEgDVPNJ
+ BsKY2MxWJESxrtZr6ooI1d4g7C1LN8LzWy+juNrljl0eKST8pm6FyrDTlRcjfC4B2/xy
+ pn2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743507858; x=1744112658;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iiqMLQDqNdYF3NLpp4fJvMQ29Jg+v2cfv8TSKQO8xA8=;
- b=aL8nxzSyPBpv0US3Fr6UskqjdGG5Bz+y8sKYda3K6E3DQ43Kp26yPXVrVIBygEY4c9
- BNKCYAOET5zTp65dM7av1kjASYUVWcs9I15YOHuhvc+M44cUN34CyaaMsnjKncUWQKrP
- 3Hu2cXdr5dbQWrfWi2HZQfrx/hO5pI22B+QVHeMKHPqDhGt86+IuzgesfJAv8m3AUoiR
- XpAgHKNuBe3NWA41cMNcXYzSN2whp9R4aa1atmU9xE13Khe/R6qhAg5Q3TsvmQDsT2lQ
- h8RvV6NtOzt7WprJsza6f8beZ5NwmCsupQPcUSfchYp9zG58OCSj7vdMg6JKNRlAvKRu
- pm2Q==
+ d=1e100.net; s=20230601; t=1743507901; x=1744112701;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xkjqRIowxFnTqYWsqxNLtB4fGkcNFUW57Tm2wP1HwOA=;
+ b=Z1cwKwlQk0vc6HMA641I0grAmwj2S8C8i756XmRjNfOr/OTMVxo7TyihtUAFc39U6W
+ uYM49Awh7ynyU5l60BbPnud/mbFMB51CnYunmoB/wtq+dxLBhXwAEhHivsCvR89nyR+W
+ 05TFp31jTNxB2duQInZlPkENKBkWm0UFd3lKfTWDjw1Ato4WZWKlNKBFxYXrclcDj+8L
+ TAoLaYNVVaJfrmsLFWB1Dlpkhd6C48i4Yd468gaPX5a6O+szB8cDzuR0N8WZpaf317qE
+ dAzX71zSMSA4qi8FE4ytJr3IO4DcrOlmiJWaxRJQODXqDbTfQfxzvEcUA/YU5Cnu1gh9
+ 6Ulg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnVDkEAqn7Gm8Vvc/AbJPhWELmV2yltB4fWDVuPNJxuoABLkxC22eJ8gJQmgm6+r+R3Xfec5O9toUh@nongnu.org
-X-Gm-Message-State: AOJu0Yye2qPlaEKP6jwo/1MvqT6a2clQmjbqF+dEZbfQzr1ow31tsQAl
- eFcSCvgpZyiYy0Xg9ciwxnFL2ABrz9WuGElvBX2K7nw+U4ehOrEx
-X-Gm-Gg: ASbGncuVBa0m9GyA3+siSWJowPUhUsgXdfSF4S2ivH+jUdE8y2uZDmZjSz6+fSFD0F9
- HhmOd1KXAv8foZDvzMB5wJ0EfP+WOeDPiCH3ljFz3NkQNjItaQBPyGcMQs7DEa08ELh0P4eyXju
- 8zTFI+RbREPgj8matzzrpZT7gmVcOo2uRIeWcb44vEr1KFtb1LAasEWyxTjhBJEHgEepBN1KwTB
- CvhlpKDHtLVnIC2HdW5JsVSh2aijlN4dPPjfnVNsl/yeVtILJUhv4BhpqASZa0LYRiWF0LNaBR5
- q40CdS6luFWMZk5MoyioRM/aqk/k9d1PFZlmCo/TkqEHJrIe0w==
-X-Google-Smtp-Source: AGHT+IHel31UK9qyt3J8MTh4yGODRRnaVrBaIAplkkUQ+/e8CGy49/oaNCbTx9MwbPKC+M3bDtCKhQ==
-X-Received: by 2002:a17:902:f542:b0:21f:8453:7484 with SMTP id
- d9443c01a7336-2292f975694mr172435115ad.30.1743507858424; 
- Tue, 01 Apr 2025 04:44:18 -0700 (PDT)
-Received: from wheely.local0.net ([203.185.207.94])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eee11b7sm86408135ad.86.2025.04.01.04.44.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 04:44:18 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Corey Minyard <minyard@acm.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 0/5] ipmi: bmc-sim improvements
-Date: Tue,  1 Apr 2025 21:44:07 +1000
-Message-ID: <20250401114412.676636-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
+ AJvYcCVPjam1i5OdwFODxCwH+uHeWr2e/vBH2b8t2AxhaTGLZ8K6f5M7z0I8SWP7ca9ZyWBZieSqLhzqaIpg@nongnu.org,
+ AJvYcCWkJzjW1f2TQTMtavJfkFjJg6a/nrlNZV03c3GvgJQOgbz7D3/gW8ebacFQWXx90j6tsKuXbyLcrkEl@nongnu.org
+X-Gm-Message-State: AOJu0YwoPOV0N7eD2DW08+JwpMnGy/3BW1QNzuNDdSqrUcVetPXMtKbQ
+ IntF/z4B0i/Qj7bc9DOyx2ZpPB461bU1WcZMGnHdpiJDNznAUb3s
+X-Gm-Gg: ASbGncuiAUb1BCX67Kl63poHJkAvavNTaDLFEDGblzXiKWvRl6cBHTwJoGNkLfJRdO/
+ exNMQiBm3zQDFi6u7nqkebiR73TFORZGgdfGdfJVZgb57ZiGtm3M8A9ZzXKkCFIgev+pLteEEPO
+ nvnGFk2Aq1F2eyypVdxgvlNRZJq3cYH2LZS79l/PFd0ytLrd/bqnMRCxhpiwuDwqJDeYE3brRlp
+ ZJ+coquB4z6C1/GwnTra/+LY3fXehOHSY7pIhM3SeoG6OSnG+chrPdUMCxmP/KIU8R5EcR12iAx
+ kk0ZDchiMGlaqv5ErPY6hl1ypzT+X52mXyxDKUkS
+X-Google-Smtp-Source: AGHT+IHiedffj/SqKwpxqtaZ6rV/M49KooBe+OYB0KXRjJ5whYSY3LK9aNzukVhDCtvBzkiixZnsUw==
+X-Received: by 2002:a05:6402:35ca:b0:5ec:cb95:c3ce with SMTP id
+ 4fb4d7f45d1cf-5edf5321d0dmr10770071a12.1.1743507900947; 
+ Tue, 01 Apr 2025 04:45:00 -0700 (PDT)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5edc16f02bdsm7009754a12.43.2025.04.01.04.45.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Apr 2025 04:45:00 -0700 (PDT)
+Date: Tue, 01 Apr 2025 10:51:06 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+CC: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_rust/qemu-api=3A_Add_i?=
+ =?US-ASCII?Q?nitial_logging_support_based_on_C_API?=
+In-Reply-To: <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
+References: <20250330205857.1615-1-shentey@gmail.com>
+ <20250330205857.1615-2-shentey@gmail.com>
+ <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
+Message-ID: <540905F9-7DF7-436F-905C-A7F225F5E156@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,43 +102,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These little things came up when looking at behaviour of IPMI with
-the bmc-sim implementation running the ppc powernv machine, and
-trying to clean up error messages and missing features.
 
-Since v1 (thanks to Corey for review and suggestions):
-- Added fwinfo to PCI devices
-- Report interrupt number in Get Channel Info for ISA, PCI, and
-  unknown/unassigned.
-- Fix error reporting for Get Channel Info unsupported channels.
-  Verify it is the correct error code that ipmitool looks for
-  https://github.com/ipmitool/ipmitool/blob/master/lib/ipmi_channel.c#L256C16-L256C45
-- Change _CH_ to _CHANNEL_ in some defines names.
-- Also avoid adding event logs with watchdog don't log flag.
 
-Thanks,
-Nick
+Am 31=2E M=C3=A4rz 2025 09:53:41 UTC schrieb Paolo Bonzini <pbonzini@redha=
+t=2Ecom>:
+>On 3/30/25 22:58, Bernhard Beschow wrote:
+>> A qemu_log_mask!() macro is provided which expects similar arguments as=
+ the C
+>> version=2E However, the formatting works as one would expect from Rust=
+=2E
+>>=20
+>> To maximize code reuse the macro is just a thin wrapper around qemu_log=
+()=2E
+>> Also, just the bare minimum of logging masks is provided which should s=
+uffice
+>> for the current use case of Rust in QEMU=2E
+>
+>It's probably better to use an enum for this=2E  One possibility is also =
+to change the #defines to a C enum, and see which enum translation of the s=
+everal allowed by bindgen is best=2E
 
-Nicholas Piggin (5):
-  ipmi/pci-ipmi-bt: Rename copy-paste variables
-  ipmi: add fwinfo to pci ipmi devices
-  ipmi/bmc-sim: Add 'Get Channel Info' command
-  ipmi/bmc-sim: implement watchdog dont log flag
-  ipmi/bmc-sim: add error handling for 'Set BMC Global Enables' command
+Currently the #defines contain some holes for "private" mask bits=2E Turni=
+ng these into an enum without exposing all publicly, and changing the type =
+of qemu_loglevel for consistency, would result in undefined behavior=2E Or =
+do you suggest to convert just the public #defines into an enum to expose t=
+hem to Rust, and keep the rest of the C API including the type of qemu_logl=
+evel as is?
 
- include/hw/ipmi/ipmi.h     |  19 +++++++
- hw/acpi/ipmi.c             |   2 +-
- hw/ipmi/ipmi_bmc_sim.c     | 107 ++++++++++++++++++++++++++++++++-----
- hw/ipmi/ipmi_bt.c          |   2 +
- hw/ipmi/ipmi_kcs.c         |   1 +
- hw/ipmi/isa_ipmi_bt.c      |   1 +
- hw/ipmi/isa_ipmi_kcs.c     |   1 +
- hw/ipmi/pci_ipmi_bt.c      |  50 ++++++++++-------
- hw/ipmi/pci_ipmi_kcs.c     |  11 ++++
- hw/smbios/smbios_type_38.c |   6 ++-
- 10 files changed, 166 insertions(+), 34 deletions(-)
+There are surely several tradeoffs and/or cleanups possible here, but that=
+'s way beyond for what I wanted to achieve -- which is closing a gap betwee=
+n C and Rust=2E My main goal is just to get my feet wet with Rust=2E
 
--- 
-2.47.1
+>
+>Also, while this is good for now, later on we probably want to reimplemen=
+t logging at a lower level via the std::fmt::Write trait=2E  But that's jus=
+t for efficiency and your macro is indeed good enough to define what the AP=
+I would look like=2E
 
+Can we live with an easy solution then for now? As you suggest below, furt=
+her abstractions like log_guest_error! can be built on top which further in=
+sulates client code from implementation details such as the representation =
+of the mask bits=2E
+
+> Right now I have a project for GSoC that will look at that, and the stud=
+ent can look into it later on=2E
+
+Whoops, I didn't intend to spoil the project=2E
+
+>
+>This means answering the following two questions:
+>
+>- the mapping the LOG_* constants into Rust
+>
+>- whether to keep the "qemu" prefix for the API (personal opinion: no)
+>
+>- whether it makes sense to add more macros such as log_guest_error! or l=
+og_unimp! for the most common LOG_* values
+>
+>> +#[macro_export]
+>> +macro_rules! qemu_log_mask {
+>> +    ($mask:expr, $fmt:expr $(, $args:expr)*) =3D> {{
+>
+>Looking at https://doc=2Erust-lang=2Eorg/std/macro=2Ewrite=2Ehtml they ju=
+st use $($arg:tt)* for what is passed to format_args! (or in your case form=
+at!), so we can do the same here too=2E The main advantage is that it allow=
+s giving a trailing comma to qemu_log_mask!=2E
+
+Easy to fix=2E Before proceeding I'd like to see a solution for the topic =
+above=2E
+
+Best regards,
+Bernhard
+
+>
+>Paolo
+>
+>> +        if unsafe {
+>> +            (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::=
+raw::c_int)) !=3D 0
+>> +        } {
+>> +            let formatted_string =3D format!($fmt, $($args),*);
+>> +            let c_string =3D std::ffi::CString::new(formatted_string)=
+=2Eunwrap();
+>> +
+>> +            unsafe {
+>> +                ::qemu_api::bindings::qemu_log(c_string=2Eas_ptr());
+>> +            }
+>> +        }
+>> +    }};
+>> +}
+>
 
