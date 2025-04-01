@@ -4,69 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE30CC36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B5CC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbvE-0001Va-Ha; Tue, 01 Apr 2025 09:44:56 -0400
+	id 1tzbv9-0001SP-Nt; Tue, 01 Apr 2025 09:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzbua-0000ma-Fx
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbtm-0000PT-T7
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:43:35 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzbuY-0006mu-2V
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743515053;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uStuQa0FmcOdgtFM3GEHpttxtdUK9V+iHWCzAJHKHqs=;
- b=Fvo0IHEgrsiZEUyuquTMluFpn0SnLvBZyNNT1OVGKb8cojB7pDqreLbgTDtajHEMSvu5FV
- NNSNOsDUVP0QaPGmO7SnvD2Lt2SJS3a6I6lXmzZLaKK+VJVB6xoESDfZ6OUzRy9DS1NxET
- /IkNkKHqthicFQzVZhiNAZZvZDUQfVk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-_SunuaUHNPODiTz4FT48fg-1; Tue,
- 01 Apr 2025 09:44:10 -0400
-X-MC-Unique: _SunuaUHNPODiTz4FT48fg-1
-X-Mimecast-MFC-AGG-ID: _SunuaUHNPODiTz4FT48fg_1743515049
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A9F71809CA3; Tue,  1 Apr 2025 13:44:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.88])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 951191955D81; Tue,  1 Apr 2025 13:44:06 +0000 (UTC)
-Date: Tue, 1 Apr 2025 08:44:03 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH 01/15] fuse: Copy write buffer content before polling
-Message-ID: <re2wbm3hv4tqymmyan2rovwvxvfayh4rkyzn6ckjuoqlysmyjb@iscof2qe4fvg>
-References: <20250325160529.117543-1-hreitz@redhat.com>
- <20250325160635.118812-1-hreitz@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzbtj-0006ZP-Uu
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:43:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743515004; x=1775051004;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=SDnDEZ+HemTXUXZSKbpixVjsM4Gefo8sgbEfX5qG/N0=;
+ b=gAnNtXae9bll6JPzoujvfXcpRJWqnHQQSKrMZBTXN32smDkBFj4Vacbb
+ f3mgFa/NBtlikNey81dVl6ntTVwHf5MVffHSq7hANCY5kGDo+JjKlntlQ
+ 5ShQm9y2Kli7Aogde4zSJ80ippP5kiqC9RTkVMn1XwZxgVDdRICmKQFy8
+ nrvr59PumU+BP+A0jZEmu6s6n+pWNl2QA788nyaaENH7rWOHvlNe4WGNI
+ OS1QN6wxIqbUguM+GpsuplIgKpzsK42fbCXOxT7SC2QzCsyKTrFaG7imu
+ CP/KCqm9QYDlj1KZkThUgnsx9Z8EIum0WJa2h4aIarSovEi9eQAnRmX4X g==;
+X-CSE-ConnectionGUID: AC0a8speSM6CNVT/ABshcA==
+X-CSE-MsgGUID: eeb92/dDT+KNULV0vfMe9A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433435"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433435"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2025 06:42:33 -0700
+X-CSE-ConnectionGUID: wFXhjZwiTBa/hM3OoZqZZw==
+X-CSE-MsgGUID: T32O+k1vQHqU1eaUlNSZgg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640107"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:42:30 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PATCH v8 32/55] i386/tdx: implement tdx_cpu_instance_init()
+Date: Tue,  1 Apr 2025 09:01:42 -0400
+Message-Id: <20250401130205.2198253-33-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250325160635.118812-1-hreitz@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,58 +88,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 25, 2025 at 05:06:35PM +0100, Hanna Czenczek wrote:
-> Polling in I/O functions can lead to nested read_from_fuse_export()
-> calls, overwriting the request buffer's content.  The only function
-> affected by this is fuse_write(), which therefore must use a bounce
-> buffer or corruption may occur.
-> 
-> Note that in addition we do not know whether libfuse-internal structures
-> can cope with this nesting, and even if we did, we probably cannot rely
-> on it in the future.  This is the main reason why we want to remove
-> libfuse from the I/O path.
-> 
+Currently, pmu is not supported for TDX by KVM.
 
-> @@ -624,6 +630,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
->                         size_t size, off_t offset, struct fuse_file_info *fi)
->  {
->      FuseExport *exp = fuse_req_userdata(req);
-> +    void *copied;
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+chanegs in v6:
+ - new patch;
+---
+ target/i386/kvm/tdx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Do we have a good way to annotate variables that require qemu_vfree()
-if non-NULL for automatic cleanup?  If so, should this be annotated
-and set to NULL here,...
-
->      int64_t length;
->      int ret;
->  
-> @@ -638,6 +645,14 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
->          return;
->      }
->  
-> +    /*
-> +     * Heed the note on read_from_fuse_export(): If we poll (which any blk_*()
-> +     * I/O function may do), read_from_fuse_export() may be nested, overwriting
-> +     * the request buffer content.  Therefore, we must copy it here.
-> +     */
-> +    copied = blk_blockalign(exp->common.blk, size);
-> +    memcpy(copied, buf, size);
-> +
->      /**
->       * Clients will expect short writes at EOF, so we have to limit
->       * offset+size to the image length.
-> @@ -645,7 +660,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
->      length = blk_getlength(exp->common.blk);
->      if (length < 0) {
->          fuse_reply_err(req, -length);
-> -        return;
-> +        goto free_buffer;
-
-...so that this and similar hunks are not needed?
-
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 282cdbd775c5..49e748af3949 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -400,6 +400,11 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+     return KVM_X86_TDX_VM;
+ }
+ 
++static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
++{
++    object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
++}
++
+ static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+ {
+     if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+@@ -781,4 +786,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
+ 
+     klass->kvm_init = tdx_kvm_init;
+     x86_klass->kvm_type = tdx_kvm_type;
++    x86_klass->cpu_instance_init = tdx_cpu_instance_init;
+ }
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.34.1
 
 
