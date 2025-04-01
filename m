@@ -4,75 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71EBEC36014
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D60C3601C
 	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbyy-00069S-P0; Tue, 01 Apr 2025 09:48:48 -0400
+	id 1tzcC7-00009M-TX; Tue, 01 Apr 2025 10:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbul-00014c-Lt
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:29 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbui-0006XQ-J0
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:44:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743515064; x=1775051064;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=cZBW6+bWAvYI3eaiq1KLwD7+rkeaAgANzXrfYjRXdeo=;
- b=BxSnDoT2DxWP9zl8qbbXqhnIQPTOLLj17Nqn7+DiGmaE1ejY9YrwRhg7
- oEsJmBsZ6/s8KZbcyn+ajzfWOcYyIbMGBGLAVqP3bLHTuc8XFWxleaXyE
- J6yjKYWCUhJXm2bcITqbt70voQNkScj5kKORYC6J6wPr59YYv9Wdi+Pd8
- OzTSX9A1q6SJe3YWhfcXOBETbLUhersrtn6hBJ8Xc92ldl4sbgJzaqnVP
- puvzal0ZK7ys2tCYJc/WNQtTRu+7qInaW2b1Q/W1kZxjQXjTmIE4lV4zX
- lbJN2DpyR34vkQt7IA4sTlbH3rxX4ZkOrdIW241daWFM4g+d/ms0NDpBW w==;
-X-CSE-ConnectionGUID: 5WK/OK81QJ2ku5tK5L6HnQ==
-X-CSE-MsgGUID: 12xOG4+BTs+NLNLO64GS2w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433522"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433522"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:43:02 -0700
-X-CSE-ConnectionGUID: wXDH2ZBjR0KuVUl77bSgxw==
-X-CSE-MsgGUID: g+f3eYfgQfaKQsw3/ZeVPQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640218"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:43:00 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 44/55] i386/tdx: Implement adjust_cpuid_features() for TDX
-Date: Tue,  1 Apr 2025 09:01:54 -0400
-Message-Id: <20250401130205.2198253-45-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tzcBt-000801-QO
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:02:13 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tzcBq-0000Op-Sv
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:02:08 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2260c915749so77006985ad.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 07:02:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1743516125; x=1744120925; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TVKM3029lMeTcWku9SWqhpQOq5EOsKo0n1lE7JWTaOQ=;
+ b=G8jwHpQkG6dUS+Kr3ryUtBPJv8ml2dM+DzFyaWM65PRPCBca5mZu9VuTsru4YSdvIX
+ PJatv02ZTCHqckpHBk/UnfIjWHIKBZuMlJNpaUtPq+sP/cypzpE/VZ1bTHO5kJ3mUlXu
+ O+Yw5uNWhUjtm1vxx9SFAzysJyL2UoQTRJQalZLrzMkyeYtiGzj7BaWvoznQWcIKa0sV
+ U+8Sxu9fcV5wHnSwJ/EXuFBEFwCHxshPSQbJRNiQBlwoZpj4zH0qZDv+ONEIO9cvQjqG
+ Ne6171cNBfUddfRWcVUY7vfG4XhX9q6gcQ1SYf1upcGQAY2jOOUMjEoWrIY2CtPKv58d
+ JuAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743516125; x=1744120925;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TVKM3029lMeTcWku9SWqhpQOq5EOsKo0n1lE7JWTaOQ=;
+ b=QsWzqAwWYv+8r2OINENUiZqCty8kqo3+B0G3ci5Ba9aq2tWVjX/UzoYoOF7I2b+iIf
+ 8+v/0ioxcI2pwQrgD7aBTvnm/Nd3mrlL3GY8VWE92ElpS8LdUyM3hkDpCSNiyLpwxmZV
+ KUloOKIxvx/61Ec3jKPTNDQbbp1J3x8kJRpjAfDlQ4io4nC0wDJ1NU26bvwAEhhnbRYU
+ Qd/ng+PGbWoKueadATB3EICYTP2ARgCLD8ITOrBSQKqB+HmauViDYJDYPZN9au8lPh0v
+ 1H2p2iqzKaMtOmeWPKZVZx932q7JhoDIgl3gdtZNCkKrth66C1ysammTbb3ocvM+DwDW
+ +m7Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEH6vbLch1F1QUwLc3JcX0HXCNoknrFZBulXsYcfLJHV2O0ynanosv7BhnP2DXmTp7jT0wNe5qmi9U@nongnu.org
+X-Gm-Message-State: AOJu0YyVtAuK7vljla4qHaIc0UTbstgcJfo+fbDp4wJJyBB8sm45gppX
+ xLIJWMe6zXDd0iOHbSq93j8t7Piqn4sZQ9vbT4jjikRgZnoFgHXS2La0zw==
+X-Gm-Gg: ASbGncvv8RYbKy6lGQyrMeG0D3VUGqHBvaG8iLdi1hXIpQsmN3M8xYfvSux8PMBQ4dr
+ JHvY9ab99AkZAOEYqWyO7ctnIX25t9bDIkGnFSFTS0tf5X9FU9RPPw1GZSwnQMD7k4zrWhqTD0w
+ A+J6FN3N5FdGMBMqEk3VF0Fp9oRMkrPWOMircDNjpgb04tJfkAyMeb3p1lt3ou/pqo+9akizNa5
+ 8Bs79SnPMdlEdNnaGxtPxp/Y1hZr+teTN2grcEjxr7BRO4O5JHhvbfsyeNNjh6baHIhCzFyBGh8
+ 2rPuGdiHUU6ICzGb0Er30CSSh9Aq6Fqy8CFdl9oK2+dYh7xB5g==
+X-Google-Smtp-Source: AGHT+IFYlCwYRaT6oTo903I6HHFJBFZ9/Dp4yHbL8L5s3Dn0GiHFu/NgLGr6VQrUhtQLb8+GkBsGlw==
+X-Received: by 2002:a17:903:1b27:b0:224:78e:4eb4 with SMTP id
+ d9443c01a7336-2292f9f0a70mr190854285ad.39.1743516125554; 
+ Tue, 01 Apr 2025 07:02:05 -0700 (PDT)
+Received: from wheely.local0.net ([203.185.207.94])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2291f1f5774sm87768455ad.214.2025.04.01.07.02.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Apr 2025 07:02:04 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Corey Minyard <minyard@acm.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v3 2/5] ipmi: add fwinfo to pci ipmi devices
+Date: Wed,  2 Apr 2025 00:01:49 +1000
+Message-ID: <20250401140153.685523-3-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250401140153.685523-1-npiggin@gmail.com>
+References: <20250401140153.685523-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,167 +99,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Maintain a TDX specific supported CPUID set, and use it to mask the
-common supported CPUID value of KVM. It can avoid newly added supported
-features (reported via KVM_GET_SUPPORTED_CPUID) for common VMs being
-falsely reported as supported for TDX.
+This requires some adjustments to callers to avoid possible behaviour
+changes for PCI devices.
 
-As the first step, initialize the TDX supported CPUID set with all the
-configurable CPUID bits. It's not complete because there are other CPUID
-bits are supported for TDX but not reported as directly configurable.
-E.g. the XFAM related bits, attribute related bits and fixed-1 bits.
-They will be handled in the future.
-
-Also, what matters are the CPUID bits related to QEMU's feature word.
-Only mask the CPUID leafs which are feature word leaf.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/i386/cpu.c          | 18 ++++++++++++++++++
- target/i386/cpu.h          |  1 +
- target/i386/kvm/kvm.c      |  2 +-
- target/i386/kvm/kvm_i386.h |  1 +
- target/i386/kvm/tdx.c      | 34 ++++++++++++++++++++++++++++++++++
- 5 files changed, 55 insertions(+), 1 deletion(-)
+ include/hw/ipmi/ipmi.h     |  5 +++++
+ hw/acpi/ipmi.c             |  3 ++-
+ hw/ipmi/isa_ipmi_bt.c      |  1 +
+ hw/ipmi/isa_ipmi_kcs.c     |  1 +
+ hw/ipmi/pci_ipmi_bt.c      | 12 ++++++++++++
+ hw/ipmi/pci_ipmi_kcs.c     | 11 +++++++++++
+ hw/smbios/smbios_type_38.c |  7 ++++++-
+ 7 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f219961b62cd..4061d38d3fbe 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1655,6 +1655,24 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     },
- };
+diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
+index 77a7213ed93..c8ef04856e1 100644
+--- a/include/hw/ipmi/ipmi.h
++++ b/include/hw/ipmi/ipmi.h
+@@ -90,6 +90,11 @@ typedef struct IPMIFwInfo {
+     } memspace;
  
-+bool is_feature_word_cpuid(uint32_t feature, uint32_t index, int reg)
-+{
-+    FeatureWordInfo *wi;
-+    FeatureWord w;
-+
-+    for (w = 0; w < FEATURE_WORDS; w++)
-+    {
-+        wi = &feature_word_info[w];
-+        if (wi->type == CPUID_FEATURE_WORD && wi->cpuid.eax == feature &&
-+            (!wi->cpuid.needs_ecx || wi->cpuid.ecx == index) &&
-+            wi->cpuid.reg == reg)
-+        {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
- typedef struct FeatureMask {
-     FeatureWord index;
-     uint64_t mask;
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 3910b488f775..42ef77789ded 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2515,6 +2515,7 @@ void cpu_set_apic_feature(CPUX86State *env);
- void host_cpuid(uint32_t function, uint32_t count,
-                 uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx);
- bool cpu_has_x2apic_feature(CPUX86State *env);
-+bool is_feature_word_cpuid(uint32_t feature, uint32_t index, int reg);
- 
- static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
- {
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index fa46edaeac8d..17d7bf6ae9aa 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -393,7 +393,7 @@ static bool host_tsx_broken(void)
- 
- /* Returns the value for a specific register on the cpuid entry
-  */
--static uint32_t cpuid_entry_get_reg(struct kvm_cpuid_entry2 *entry, int reg)
-+uint32_t cpuid_entry_get_reg(struct kvm_cpuid_entry2 *entry, int reg)
- {
-     uint32_t ret = 0;
-     switch (reg) {
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index dc696cb7238a..484a1de84d51 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -62,6 +62,7 @@ void kvm_update_msi_routes_all(void *private, bool global,
- struct kvm_cpuid_entry2 *cpuid_find_entry(struct kvm_cpuid2 *cpuid,
-                                           uint32_t function,
-                                           uint32_t index);
-+uint32_t cpuid_entry_get_reg(struct kvm_cpuid_entry2 *entry, int reg);
- uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
-                              uint32_t cpuid_i);
- #endif /* CONFIG_KVM */
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 4128f27d6b64..b9a96c2e392d 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -45,6 +45,7 @@
- static TdxGuest *tdx_guest;
- 
- static struct kvm_tdx_capabilities *tdx_caps;
-+static struct kvm_cpuid2 *tdx_supported_cpuid;
- 
- /* Valid after kvm_arch_init()->confidential_guest_kvm_init()->tdx_kvm_init() */
- bool is_tdx_vm(void)
-@@ -368,6 +369,20 @@ static Notifier tdx_machine_done_notify = {
-     .notify = tdx_finalize_vm,
- };
- 
-+static void tdx_setup_supported_cpuid(void)
-+{
-+    if (tdx_supported_cpuid) {
-+        return;
-+    }
-+
-+    tdx_supported_cpuid = g_malloc0(sizeof(*tdx_supported_cpuid) +
-+                    KVM_MAX_CPUID_ENTRIES * sizeof(struct kvm_cpuid_entry2));
-+
-+    memcpy(tdx_supported_cpuid->entries, tdx_caps->cpuid.entries,
-+           tdx_caps->cpuid.nent * sizeof(struct kvm_cpuid_entry2));
-+    tdx_supported_cpuid->nent = tdx_caps->cpuid.nent;
-+}
-+
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
-@@ -405,6 +420,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         }
+     int interrupt_number;
++    enum {
++        IPMI_NO_IRQ = 0,
++        IPMI_ISA_IRQ,
++        IPMI_PCI_IRQ,
++    } irq_source;
+     enum {
+         IPMI_LEVEL_IRQ,
+         IPMI_EDGE_IRQ
+diff --git a/hw/acpi/ipmi.c b/hw/acpi/ipmi.c
+index a20e57d465c..39f8f2f6d68 100644
+--- a/hw/acpi/ipmi.c
++++ b/hw/acpi/ipmi.c
+@@ -55,7 +55,8 @@ static Aml *aml_ipmi_crs(IPMIFwInfo *info)
+         abort();
      }
  
-+    tdx_setup_supported_cpuid();
-+
-     /* TDX relies on KVM_HC_MAP_GPA_RANGE to handle TDG.VP.VMCALL<MapGPA> */
-     if (!kvm_enable_hypercall(BIT_ULL(KVM_HC_MAP_GPA_RANGE))) {
-         return -EOPNOTSUPP;
-@@ -442,6 +459,22 @@ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
-     x86cpu->enable_cpuid_0x1f = true;
- }
+-    if (info->interrupt_number) {
++    /* Should PCI interrupts also be appended? */
++    if (info->irq_source == IPMI_ISA_IRQ && info->interrupt_number) {
+         aml_append(crs, aml_irq_no_flags(info->interrupt_number));
+     }
  
-+static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
-+                                          uint32_t feature, uint32_t index,
-+                                          int reg, uint32_t value)
+diff --git a/hw/ipmi/isa_ipmi_bt.c b/hw/ipmi/isa_ipmi_bt.c
+index a1b66d5ee82..4a6496b5980 100644
+--- a/hw/ipmi/isa_ipmi_bt.c
++++ b/hw/ipmi/isa_ipmi_bt.c
+@@ -49,6 +49,7 @@ static void isa_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
+     ISAIPMIBTDevice *iib = ISA_IPMI_BT(ii);
+ 
+     ipmi_bt_get_fwinfo(&iib->bt, info);
++    info->irq_source = IPMI_ISA_IRQ;
+     info->interrupt_number = iib->isairq;
+     info->i2c_slave_address = iib->bt.bmc->slave_addr;
+     info->uuid = iib->uuid;
+diff --git a/hw/ipmi/isa_ipmi_kcs.c b/hw/ipmi/isa_ipmi_kcs.c
+index d9ebdd5371f..31d16aba74e 100644
+--- a/hw/ipmi/isa_ipmi_kcs.c
++++ b/hw/ipmi/isa_ipmi_kcs.c
+@@ -49,6 +49,7 @@ static void isa_ipmi_kcs_get_fwinfo(IPMIInterface *ii, IPMIFwInfo *info)
+     ISAIPMIKCSDevice *iik = ISA_IPMI_KCS(ii);
+ 
+     ipmi_kcs_get_fwinfo(&iik->kcs, info);
++    info->irq_source = IPMI_ISA_IRQ;
+     info->interrupt_number = iik->isairq;
+     info->uuid = iik->uuid;
+ }
+diff --git a/hw/ipmi/pci_ipmi_bt.c b/hw/ipmi/pci_ipmi_bt.c
+index a3b742d22c9..7ba8b3ab965 100644
+--- a/hw/ipmi/pci_ipmi_bt.c
++++ b/hw/ipmi/pci_ipmi_bt.c
+@@ -38,6 +38,17 @@ struct PCIIPMIBTDevice {
+     uint32_t uuid;
+ };
+ 
++static void pci_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
 +{
-+    struct kvm_cpuid_entry2 *e;
++    PCIIPMIBTDevice *pib = PCI_IPMI_BT(ii);
 +
-+    if (is_feature_word_cpuid(feature, index, reg)) {
-+        e = cpuid_find_entry(tdx_supported_cpuid, feature, index);
-+        if (e) {
-+            value &= cpuid_entry_get_reg(e, reg);
-+        }
-+    }
-+
-+    return value;
++    ipmi_bt_get_fwinfo(&pib->bt, info);
++    info->irq_source = IPMI_PCI_IRQ;
++    info->interrupt_number = pci_intx(&pib->dev);
++    info->i2c_slave_address = pib->bt.bmc->slave_addr;
++    info->uuid = pib->uuid;
 +}
 +
- static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+ static void pci_ipmi_raise_irq(IPMIBT *ib)
  {
-     if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
-@@ -824,4 +857,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
-     klass->kvm_init = tdx_kvm_init;
-     x86_klass->kvm_type = tdx_kvm_type;
-     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
-+    x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
+     PCIIPMIBTDevice *pib = ib->opaque;
+@@ -125,6 +136,7 @@ static void pci_ipmi_bt_class_init(ObjectClass *oc, void *data)
+ 
+     iic->get_backend_data = pci_ipmi_bt_get_backend_data;
+     ipmi_bt_class_init(iic);
++    iic->get_fwinfo = pci_ipmi_bt_get_fwinfo;
+ }
+ 
+ static const TypeInfo pci_ipmi_bt_info = {
+diff --git a/hw/ipmi/pci_ipmi_kcs.c b/hw/ipmi/pci_ipmi_kcs.c
+index 05ba97ec58f..c817f1e8808 100644
+--- a/hw/ipmi/pci_ipmi_kcs.c
++++ b/hw/ipmi/pci_ipmi_kcs.c
+@@ -38,6 +38,16 @@ struct PCIIPMIKCSDevice {
+     uint32_t uuid;
+ };
+ 
++static void pci_ipmi_bt_get_fwinfo(struct IPMIInterface *ii, IPMIFwInfo *info)
++{
++    PCIIPMIKCSDevice *pik = PCI_IPMI_KCS(ii);
++
++    ipmi_kcs_get_fwinfo(&pik->kcs, info);
++    info->irq_source = IPMI_PCI_IRQ;
++    info->interrupt_number = pci_intx(&pik->dev);
++    info->uuid = pik->uuid;
++}
++
+ static void pci_ipmi_raise_irq(IPMIKCS *ik)
+ {
+     PCIIPMIKCSDevice *pik = ik->opaque;
+@@ -125,6 +135,7 @@ static void pci_ipmi_kcs_class_init(ObjectClass *oc, void *data)
+ 
+     iic->get_backend_data = pci_ipmi_kcs_get_backend_data;
+     ipmi_kcs_class_init(iic);
++    iic->get_fwinfo = pci_ipmi_kcs_get_fwinfo;
+ }
+ 
+ static const TypeInfo pci_ipmi_kcs_info = {
+diff --git a/hw/smbios/smbios_type_38.c b/hw/smbios/smbios_type_38.c
+index 168b886647d..e9b856fcd96 100644
+--- a/hw/smbios/smbios_type_38.c
++++ b/hw/smbios/smbios_type_38.c
+@@ -72,7 +72,12 @@ static void smbios_build_one_type_38(IPMIFwInfo *info)
+                      " SMBIOS, ignoring this entry.", info->register_spacing);
+         return;
+     }
+-    t->interrupt_number = info->interrupt_number;
++    if (info->irq_source == IPMI_ISA_IRQ) {
++        t->interrupt_number = info->interrupt_number;
++    } else {
++        /* TODO: How to handle PCI? */
++        t->interrupt_number = 0;
++    }
+ 
+     SMBIOS_BUILD_TABLE_POST;
  }
 -- 
-2.34.1
+2.47.1
 
 
