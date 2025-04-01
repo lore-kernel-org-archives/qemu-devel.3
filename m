@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803F9C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 15:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF5FC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 15:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzdBu-0000bP-It; Tue, 01 Apr 2025 11:06:14 -0400
+	id 1tzdDA-0001GP-BP; Tue, 01 Apr 2025 11:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tzdBq-0000aa-FU
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:06:11 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tzdBo-0003Rs-Cq
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:06:10 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-30185d00446so7908266a91.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 08:06:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743519966; x=1744124766; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6qIarq8ewJ8oxyAYUGJH62nu4jp5qDGl1AsytYoD0us=;
- b=n4cWsWz8HJfk/0SRX+4ZnL9e7WWOI71NXEFnWwiyDfOgls0qH/rKC5Bn8gBL5ypiLP
- jVM1p2wvkaRv3ZlrIz6A8HFKRe3HzMi0Fo23axmUnx/IAGDU+bNeN+SUA7Gg7DVq/NrU
- ICmL4Po0bHF6W2sy7zCInS0zjhccZWT2uCkFJ+UPnR164Z60HDHnQxIVh2yKc/yfSTZz
- BUWIdTpEexe1Z359BD5jHP62ziPQBTmlEs9/QLVcUNqLph/7hSoKtdAt5snxhJhrTm9L
- P8907tgKjsYk/LT8XtD5D+E8xHM3Vaqj1vPe4yUuHjT/OetOY2DHsUun3im+zPsSW8fd
- rCTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743519966; x=1744124766;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6qIarq8ewJ8oxyAYUGJH62nu4jp5qDGl1AsytYoD0us=;
- b=sTXs6QfwUZ1W93lEDPt8DTNhk/Yaill9JkPxDeykfol8aKsLHg9dCB+4v6AnIBQYqT
- uWE3FEUO3VIPNrtPYeyvvTEVNxS4Qsjj/Eu5CjofIpgfOefGGIIqVrpO4MOBikwKoAR3
- DZYIjdpmG9J5U/V0JHM3S/WZlNfXZugNWFU8Tq1XquAh5OWy6AFSKFX578G4cNSi1dhD
- sTHkBWQyDLCXyEu1ZoMrRLtJmChFgLfr0bRt1woGIRIVC6stcEe5xYkhLQunRupr0YF4
- VvyHtNk0Rp4EcApoe9TKq+8/kLVHNdxaLppg+lZMRgQ/hHWDqiG72V86ILbkcdFcgJOu
- jbTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV280q68VGfG3SwBzxdiIC2liQZ5tnUky7Y1C7U1vX7wlgnceBEXk1SkKX8VufsxH1pp9TMm19x2GdI@nongnu.org
-X-Gm-Message-State: AOJu0YyJQFfZLjZlIY68rr9//4eChkcq3hUd/oZJKU9iR0XZMEsONoLG
- P9MnUkh+CGotcDF+XT33YK7QXwQI4u1npH35DntgeKrLCjBJCwZGd1QWuNHhwLX5q6Y80yZ0xZp
- T
-X-Gm-Gg: ASbGnctGFGoBGaZ+tSEP3I3v4hNy6Zy5GZWCOFPrVpaxsJ1e9kPtfEsLs7ThfEzyTW3
- mETQ1FB7P0G3otL6VV/ZIMpDkUnLPIDAjsMjeEn0Ga4PaoGEn2EN0EixG4dxtn3L1S6jnq4n4fO
- TkWG11Tux9lGh/hfhtysgMjvfgEjBzU/69QGcB5Eafbax7CLiubv8HR9Umn16E3gvyFoCrYr3VW
- V4XcW7hz/w+qjahnVVOfQ/NQBhLEQDb2W5SEwvv7J9fo8/xfU/PXmEWgGmeZhufA3vyO5yYGrVE
- tlnOn4fQe7N+klRORqtWdSte8+JRPOsZ2tPighpl0DNHKt5QhQfxxJLL8g7ckdkuq+67
-X-Google-Smtp-Source: AGHT+IEPt+zXJTy3JLL0LqNHJGzn+Mp0yQT9zBJV0Jqix+KiNZVSagi4g7skQXYcEnLNM33kV557ew==
-X-Received: by 2002:a17:90b:4984:b0:2ea:8aac:6ac1 with SMTP id
- 98e67ed59e1d1-3056b79c0e7mr427485a91.15.1743519966149; 
- Tue, 01 Apr 2025 08:06:06 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3039e10b783sm11702336a91.22.2025.04.01.08.06.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 08:06:05 -0700 (PDT)
-Message-ID: <c9bb3d4d-8f89-4345-8568-e142016c98f9@linaro.org>
-Date: Tue, 1 Apr 2025 08:06:04 -0700
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tzdD7-0001EF-JJ
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:07:30 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tzdD5-0003aY-3c
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:07:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743520047; x=1775056047;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=fnxSm2rjINX8p7vfLwjq9x+kwyj3BOORuHqRgi0hp8c=;
+ b=di8Saithh/zSQOwiSTB8WOB1Zcz3zq+NErxCbrbFENnXh88EroSmzCXv
+ qVm5BP1PTBN3drQme/8mUme5tB+dq6Mj40SNA/WEWDLTxRvi+P55srPqA
+ FQuuGpbpfzMa86YOSjqKvBiEfnkPgsIQcwUqUoqBUht5XeR3YqKT/9HGo
+ 29ReLYTJvok2hMULmMp+LNZCnKxBa4TDaPOEfKeL2BC8r3JbW1WtpjCA6
+ urxlTxw9Bjb17KXqI6mTWu7EfFJNGiH/02OSXClfwGXXEW5UtsGHXuzdN
+ 9A9letSCnOsN1ZoKkFmQggqSqLl9CJCqbDqqsoF5SxjVvAe2ChL/KbaMl Q==;
+X-CSE-ConnectionGUID: eV9QBHgRSl2aB2hxglKpdQ==
+X-CSE-MsgGUID: 1KRHTcw/RW2sHdUBDpnIYA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="44759042"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="44759042"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2025 08:07:24 -0700
+X-CSE-ConnectionGUID: 2rgC88DFRlijT5Py2Zdq3Q==
+X-CSE-MsgGUID: +TbYT693SDat9cwitpKYIA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="131137322"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 01 Apr 2025 08:07:22 -0700
+Date: Tue, 1 Apr 2025 23:27:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/i386: Fix model number of Zhaoxin YongFeng vCPU
+ template
+Message-ID: <Z+wF7patYaAgaF4V@intel.com>
+References: <20250331080356.1596655-1-ewanhai-oc@zhaoxin.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/3] exec: Restrict 'cpu-ldst-common.h' to
- accel/tcg/
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250401083232.33773-1-philmd@linaro.org>
- <20250401083232.33773-2-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250401083232.33773-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250331080356.1596655-1-ewanhai-oc@zhaoxin.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,13 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8xLzI1IDAxOjMyLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gU2ln
-bmVkLW9mZi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3Jn
-Pg0KPiAtLS0NCj4gICBpbmNsdWRlL3tleGVjID0+IGFjY2VsL3RjZ30vY3B1LWxkc3QtY29t
-bW9uLmggfCA2ICsrKy0tLQ0KPiAgIGluY2x1ZGUvZXhlYy9jcHVfbGRzdC5oICAgICAgICAg
-ICAgICAgICAgICAgICB8IDIgKy0NCj4gICBhY2NlbC90Y2cvdHJhbnNsYXRvci5jICAgICAg
-ICAgICAgICAgICAgICAgICAgfCAyICstDQo+ICAgMyBmaWxlcyBjaGFuZ2VkLCA1IGluc2Vy
-dGlvbnMoKyksIDUgZGVsZXRpb25zKC0pDQo+ICAgcmVuYW1lIGluY2x1ZGUve2V4ZWMgPT4g
-YWNjZWwvdGNnfS9jcHUtbGRzdC1jb21tb24uaCAoOTclKQ0KPiANCg0KUmV2aWV3ZWQtYnk6
-IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCg0K
+On Mon, Mar 31, 2025 at 04:03:56AM -0400, Ewan Hai wrote:
+> Date: Mon, 31 Mar 2025 04:03:56 -0400
+> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+> Subject: [PATCH] target/i386: Fix model number of Zhaoxin YongFeng vCPU
+>  template
+> X-Mailer: git-send-email 2.34.1
+> 
+> The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
+> The correct value is 0x5b. This mistake occurred because the extended
+> model bits in cpuid[eax=0x1].eax were overlooked, and only the base
+> model was used.
+> 
+> This patch corrects the model field.
+
+It's better to add:
+
+Fixes: ff04bc1ac4 ("target/i386: Introduce Zhaoxin Yongfeng CPU model")
+
+> Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+> ---
+>  target/i386/cpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
