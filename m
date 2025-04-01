@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E51C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 11:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5172AC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 11:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tza2q-0002IG-CF; Tue, 01 Apr 2025 07:44:41 -0400
+	id 1tza2t-0002Jp-7J; Tue, 01 Apr 2025 07:44:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tza2h-0002FX-48
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:44:31 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tza2m-0002Gu-41
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:44:36 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tza2f-0003hf-CJ
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:44:30 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22622ddcc35so29354045ad.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 04:44:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tza2h-0003i3-QQ
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 07:44:35 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22438c356c8so105525575ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 04:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743507868; x=1744112668; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743507870; x=1744112670; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YfSxfoPJes1VEH5r0b3g31jznF6Yt9hKoGOVvi6NHvo=;
- b=NLIQcTOi/wHUpW5wMclBZvxzPzsDES5dyU2QJyGjsmY95/wdHbeoXN1XYf4kjLxyKn
- krMFhES8Ia4FIpKp0Yr0vQD2gzriIbIeQEoUHpqXCNXBXfh+puKbfYt+nDgXLYRk4IlV
- i8wNscy4lhwYHCzQBOD2bKpLuwZktyQKZN29rWcZOYaMLII9pDVlHMSJbqBrITiZBGp6
- dIs0EmuOCBx/r7KvrFXptS6QpN398cp67v9r+SgRMkJP5zDvbVUzPBZJ6odyNHiBie5h
- At0/RDw5aE0vHmRxZqh3q0x1w66MbCQfWP0foIresXfE4iZVkY4jPBOYjYSj8nPZFYa1
- 5Evw==
+ bh=0+EaAZxew1nTxO+VCpXNprDV9pUEDQL8oSwkWG7MVV4=;
+ b=T0o4Ils7SXKpc9B4a4mdjw71TwOcRGYf5vaNN+6LmnzoZ4jBi/tooTtlsj5xaTkX9z
+ Q5C6QUiO0MfhGbS3eW4TXW3od8XcnwRzFQJXnxgt3lzxuVkwBTaJokHMy2L/wmpDcJ1Z
+ BUp13SCT0Bw20xATy8OGhA7N7HOVQMbtjUth8NVCv8r6o9ynh+UgKLReG9rwG4Kc4bL6
+ wuMBZHzL7Ly8ea0yBPY0mQhMYe/i3yKAflAWUZZSqkvqdh3SM7G/PAlD6jlTokN1f5cu
+ XaSalBy5si9FUUNPCSTYgXQPlhzYM8FrC+kuvc13Z1cvlKvfb/eYUDH34nYA2AcudqvY
+ v3Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743507868; x=1744112668;
+ d=1e100.net; s=20230601; t=1743507870; x=1744112670;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YfSxfoPJes1VEH5r0b3g31jznF6Yt9hKoGOVvi6NHvo=;
- b=pN7mrNvql4ixD599M3fQODc3/7Fb46HtHzwVYI6VG7WeqQmWX3Bs9fW+S1nMMyrTZY
- QFPB9PlpOvt71AXlyFV6g+FxpsFpReU96yLSH5Z5mpJwBXO2sym9JP5d6BJ+e/2Bd2QG
- lXkBGUAmHTzvc+rAt0OLs9JFzXROU5L/wu55MPs925Nk7ZcTXplBmA7lArx9U0xM51Uj
- +rpf0rXkCZlSugIu7qDM/SrzBouj2keFlf3uWFf+VsQ5EDoLS5K4YywxMwdiBS31/YNy
- DKAPqPYolaOzH3nc8AZtMajPg+0jiSjEC4PidvRbuznlOEvflMcluER0Lm8rYCnp9b/z
- 4Udg==
+ bh=0+EaAZxew1nTxO+VCpXNprDV9pUEDQL8oSwkWG7MVV4=;
+ b=LwbjanmrIXEPVJtEilucAQijl1YpBkOSL1J6bZPYrFO3+l4aip4bwIOWYSIdSXokq9
+ 10uFU74cy9CJKzLO/gSwH8bX6yLcaVVuDcY1J7AwK2mpiUs1CuzMEgRoIKI75PyNELDN
+ FTJzSD+j4ihpKZiBojhQBzce8Afbhq9CgGlOZ8xc01CvpVvfpOubwWsIlU18dnmLG/9j
+ xASwRq0nOtQGASwjGvTk2e8aUv+6G9+539I89giGSD5DV5ODR03w5adrcCbYhYEWYiT2
+ jX5twof+A2htPeU6RUKduYuWyEpJO/e2m17KOswdfMzVQQThKyid4Slgbdewt1fzBLkf
+ CazQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVflrlKDYZFLxhuY8dthXsJcHzk7lWufygb8pxYJlW5OoLY9qbTgOncY9KZ5zvYBaQJpw+9em52uMqE@nongnu.org
-X-Gm-Message-State: AOJu0YwSSghsqQS1sVL2gM5EEqQW7BhBUNKFeSkXEsi3pczZmmkwQv0s
- Y8C0eGBe1t7S4twGYzG9juUTlKZF1nhD2qzZn7WupXNOtyqvlapD
-X-Gm-Gg: ASbGncs7pSzeYhy/0rGxYqd1R6PIia5mmwovzwdJLnpbQqEriHfnCm4gEZM8Mfo/Q3d
- k5l50H7AZiG6+odv84qNHuRAs4hUJNc52qX+UYs3lj6B/C9z4ijQ2Qt0RF1MXPD0zZIB4bq/puX
- i5hR0bwUUEhWv0bP9SidaM7sY9/6Yz/lhvyDjviacw2npI9tdsxyKvmOzjSFPi5xnTPwyU1PCrM
- oSC+/nnzyfs4d+ea8bGbzMKy4h+WZqpCVus2coyQOzoX1zH0uhitqdiCKQQ+IS+K1ZJfV3ACbrf
- fzlRfW5GYNeE9iItw37RVVxbbRxQBrVZAkP8a7CSW3OhJXBeUfLgEyo6ciXC
-X-Google-Smtp-Source: AGHT+IHe7pAbnq33036z2YU4NAvEiOXePCQBPNT2k1FYV5rp5D9+EWjxJYhkSRIDXgk+6twGzEUjSw==
-X-Received: by 2002:a17:902:8a87:b0:223:517a:d2a3 with SMTP id
- d9443c01a7336-2292f95d884mr151445935ad.17.1743507867923; 
- Tue, 01 Apr 2025 04:44:27 -0700 (PDT)
+ AJvYcCWca056+Pmf+1VKfWBNWdRjwU+OxoQSDYgsEXJji6rkv+oCX/DkMQH3OABfkb22AbwKb8VTpXQNpIq6@nongnu.org
+X-Gm-Message-State: AOJu0YxMg4lsVvxSF2Pnss+bSZ5GroiYaQE37b1I3wbCOVuzAen4OZV7
+ C52X9i4XbCzeMJzJEWfhaJhD0Sj32+Q6JGpKhiFC9jBdljHe4zGlOHslVw==
+X-Gm-Gg: ASbGncuknXtJ3w4sy1vG6NT23GP3zTsADrr8U3wV7bl5r8WR41Eh6tXyMGodaq/6kGh
+ Pi5FYqobZP7UkdTHL/Cdkxr1w4Y2yRs1uPd4ap0KsWSHhbZIfzWBCdNWPSemqs7T8+0bssqOhFJ
+ wp2sx63LLvt7rjsdMTOdVuZMNNAEqC/aXrquSU796mx0rBuAf0gv2eU2qJE6JCwowFrQGGc+Fcw
+ L8r3ymBkLdK4UEbxSamtWHYSZPTTyCTXWVOu8nm1zuJKOmC9LhUwFWY6ElPvHNY2Jf0D3nQ/ckW
+ aIzOglUqqGwX9zVbN+4AhnXvLR7y55SjfjB48Ag2Vz3JIvm/iBTKefUinwuV
+X-Google-Smtp-Source: AGHT+IEtx8aLnyc3hYv3yxf8F83hmALSzm8jYzr9nWWklv7m2W9Rlcks9Ac9GIP+LxsKhY0SX1GTxg==
+X-Received: by 2002:a17:903:19f0:b0:224:1e7a:43fe with SMTP id
+ d9443c01a7336-2292fa01904mr198497315ad.46.1743507870296; 
+ Tue, 01 Apr 2025 04:44:30 -0700 (PDT)
 Received: from wheely.local0.net ([203.185.207.94])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eee11b7sm86408135ad.86.2025.04.01.04.44.26
+ d9443c01a7336-2291eee11b7sm86408135ad.86.2025.04.01.04.44.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 04:44:27 -0700 (PDT)
+ Tue, 01 Apr 2025 04:44:29 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Corey Minyard <minyard@acm.org>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 4/5] ipmi/bmc-sim: implement watchdog dont log flag
-Date: Tue,  1 Apr 2025 21:44:11 +1000
-Message-ID: <20250401114412.676636-5-npiggin@gmail.com>
+Subject: [PATCH v2 5/5] ipmi/bmc-sim: add error handling for 'Set BMC Global
+ Enables' command
+Date: Tue,  1 Apr 2025 21:44:12 +1000
+Message-ID: <20250401114412.676636-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250401114412.676636-1-npiggin@gmail.com>
 References: <20250401114412.676636-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,116 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the dont-log flag is set in the 'timer use' field for the
-'set watchdog' command, a watchdog timeout will not get logged as
-a timer use expiration.
+Mask out unsupported bits and return failure if attempting to set
+any. This is not required by the IPMI spec, but it does require that
+system software not change bits it isn't aware of.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ipmi/ipmi_bmc_sim.c | 32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ hw/ipmi/ipmi_bmc_sim.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-index 216bf8ff7f0..3cefc69f8a8 100644
+index 3cefc69f8a8..794b9ed5b12 100644
 --- a/hw/ipmi/ipmi_bmc_sim.c
 +++ b/hw/ipmi/ipmi_bmc_sim.c
-@@ -514,7 +514,8 @@ static void gen_event(IPMIBmcSim *ibs, unsigned int sens_num, uint8_t deassert,
+@@ -235,6 +235,7 @@ struct IPMIBmcSim {
+ #define IPMI_BMC_MSG_FLAG_RCV_MSG_QUEUE_SET(s) \
+     (IPMI_BMC_MSG_FLAG_RCV_MSG_QUEUE & (s)->msg_flags)
  
- static void sensor_set_discrete_bit(IPMIBmcSim *ibs, unsigned int sensor,
-                                     unsigned int bit, unsigned int val,
--                                    uint8_t evd1, uint8_t evd2, uint8_t evd3)
-+                                    uint8_t evd1, uint8_t evd2, uint8_t evd3,
-+                                    bool do_log)
++#define IPMI_BMC_GLOBAL_ENABLES_SUPPORTED 0x0f
+ #define IPMI_BMC_RCV_MSG_QUEUE_INT_BIT    0
+ #define IPMI_BMC_EVBUF_FULL_INT_BIT       1
+ #define IPMI_BMC_EVENT_MSG_BUF_BIT        2
+@@ -938,7 +939,14 @@ static void set_bmc_global_enables(IPMIBmcSim *ibs,
+                                    uint8_t *cmd, unsigned int cmd_len,
+                                    RspBuffer *rsp)
  {
-     IPMISensor *sens;
-     uint16_t mask;
-@@ -534,7 +535,7 @@ static void sensor_set_discrete_bit(IPMIBmcSim *ibs, unsigned int sensor,
-             return; /* Already asserted */
-         }
-         sens->assert_states |= mask & sens->assert_suppt;
--        if (sens->assert_enable & mask & sens->assert_states) {
-+        if (do_log && (sens->assert_enable & mask & sens->assert_states)) {
-             /* Send an event on assert */
-             gen_event(ibs, sensor, 0, evd1, evd2, evd3);
-         }
-@@ -544,7 +545,7 @@ static void sensor_set_discrete_bit(IPMIBmcSim *ibs, unsigned int sensor,
-             return; /* Already deasserted */
-         }
-         sens->deassert_states |= mask & sens->deassert_suppt;
--        if (sens->deassert_enable & mask & sens->deassert_states) {
-+        if (do_log && (sens->deassert_enable & mask & sens->deassert_states)) {
-             /* Send an event on deassert */
-             gen_event(ibs, sensor, 1, evd1, evd2, evd3);
-         }
-@@ -700,6 +701,7 @@ static void ipmi_sim_handle_timeout(IPMIBmcSim *ibs)
- {
-     IPMIInterface *s = ibs->parent.intf;
-     IPMIInterfaceClass *k = IPMI_INTERFACE_GET_CLASS(s);
-+    bool do_log = !IPMI_BMC_WATCHDOG_GET_DONT_LOG(ibs);
- 
-     if (!ibs->watchdog_running) {
-         goto out;
-@@ -711,14 +713,16 @@ static void ipmi_sim_handle_timeout(IPMIBmcSim *ibs)
-             ibs->msg_flags |= IPMI_BMC_MSG_FLAG_WATCHDOG_TIMEOUT_MASK;
-             k->do_hw_op(s, IPMI_SEND_NMI, 0);
-             sensor_set_discrete_bit(ibs, IPMI_WATCHDOG_SENSOR, 8, 1,
--                                    0xc8, (2 << 4) | 0xf, 0xff);
-+                                    0xc8, (2 << 4) | 0xf, 0xff,
-+                                    do_log);
-             break;
- 
-         case IPMI_BMC_WATCHDOG_PRE_MSG_INT:
-             ibs->msg_flags |= IPMI_BMC_MSG_FLAG_WATCHDOG_TIMEOUT_MASK;
-             k->set_atn(s, 1, attn_irq_enabled(ibs));
-             sensor_set_discrete_bit(ibs, IPMI_WATCHDOG_SENSOR, 8, 1,
--                                    0xc8, (3 << 4) | 0xf, 0xff);
-+                                    0xc8, (3 << 4) | 0xf, 0xff,
-+                                    do_log);
-             break;
- 
-         default:
-@@ -734,28 +738,36 @@ static void ipmi_sim_handle_timeout(IPMIBmcSim *ibs)
- 
-  do_full_expiry:
-     ibs->watchdog_running = 0; /* Stop the watchdog on a timeout */
--    ibs->watchdog_expired |= (1 << IPMI_BMC_WATCHDOG_GET_USE(ibs));
+-    set_global_enables(ibs, cmd[2]);
++    uint8_t val = cmd[2];
 +
-+    if (do_log) {
-+        ibs->watchdog_expired |= (1 << IPMI_BMC_WATCHDOG_GET_USE(ibs));
++    if (val & ~IPMI_BMC_GLOBAL_ENABLES_SUPPORTED) {
++        rsp_buffer_set_error(rsp, IPMI_CC_INVALID_DATA_FIELD);
++        return;
 +    }
 +
-     switch (IPMI_BMC_WATCHDOG_GET_ACTION(ibs)) {
-     case IPMI_BMC_WATCHDOG_ACTION_NONE:
-         sensor_set_discrete_bit(ibs, IPMI_WATCHDOG_SENSOR, 0, 1,
--                                0xc0, ibs->watchdog_use & 0xf, 0xff);
-+                                0xc0, ibs->watchdog_use & 0xf, 0xff,
-+                                do_log);
-         break;
++    set_global_enables(ibs, val);
+ }
  
-     case IPMI_BMC_WATCHDOG_ACTION_RESET:
-         sensor_set_discrete_bit(ibs, IPMI_WATCHDOG_SENSOR, 1, 1,
--                                0xc1, ibs->watchdog_use & 0xf, 0xff);
-+                                0xc1, ibs->watchdog_use & 0xf, 0xff,
-+                                do_log);
-         k->do_hw_op(s, IPMI_RESET_CHASSIS, 0);
-         break;
- 
-     case IPMI_BMC_WATCHDOG_ACTION_POWER_DOWN:
-         sensor_set_discrete_bit(ibs, IPMI_WATCHDOG_SENSOR, 2, 1,
--                                0xc2, ibs->watchdog_use & 0xf, 0xff);
-+                                0xc2, ibs->watchdog_use & 0xf, 0xff,
-+                                do_log);
-         k->do_hw_op(s, IPMI_POWEROFF_CHASSIS, 0);
-         break;
- 
-     case IPMI_BMC_WATCHDOG_ACTION_POWER_CYCLE:
-         sensor_set_discrete_bit(ibs, IPMI_WATCHDOG_SENSOR, 2, 1,
--                                0xc3, ibs->watchdog_use & 0xf, 0xff);
-+                                0xc3, ibs->watchdog_use & 0xf, 0xff,
-+                                do_log);
-         k->do_hw_op(s, IPMI_POWERCYCLE_CHASSIS, 0);
-         break;
-     }
+ static void get_bmc_global_enables(IPMIBmcSim *ibs,
 -- 
 2.47.1
 
