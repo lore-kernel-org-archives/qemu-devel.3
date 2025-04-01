@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4103C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 17:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D902FC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 17:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzfmf-00054J-Lf; Tue, 01 Apr 2025 13:52:21 -0400
+	id 1tzfqn-0006p8-PF; Tue, 01 Apr 2025 13:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tzfme-00054B-UX
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 13:52:20 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1tzfql-0006ng-8W
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 13:56:35 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tzfmd-00025s-Cu
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 13:52:20 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-72c1425fbfcso3184123a34.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 10:52:18 -0700 (PDT)
+ id 1tzfqi-0002Ya-Kp
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 13:56:34 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-72c7336ed99so741944a34.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 10:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743529937; x=1744134737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743530191; x=1744134991; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ea7HQfB3TRM5FsV8gbWuYrmQQgdPEoKxx0tDATpiUiw=;
- b=EfDLboBwrCQFwbMw7dz5aTltfbMqFHxsF4LwyDwUj+4FqRkDz5qwSETNs5CPE2BUvU
- oABTl80YE/5wMsPYSNsYsF7zzLW04e+hxlEc+FCN9zB7ROoKa/XuS1Wggw9j0/zZQ9On
- Wp0m+Aw2+JxpI14nsGn9qFU07KPkq3mN9AoK9w65uiLXx1drKB1Yke/4AuWzxrKsIKe3
- Izpr8Lp8mMsC3rncsq3z2dOX5ELZQ4c+waLyuq1H030OWerU8ZcbHRiJAfEgr3q6a7Cl
- w+8U3/BxJdYdc5TSyX4jZxnL2GUJaX7a5Qb4RwWhStzm45RbRLKkwsteyQ2tg+FOcwHM
- HX5w==
+ bh=Q5+pSJ2I8gzg/67q+Dz+K47cz4hCqoWoArZnbWgiRpE=;
+ b=FhQmE+nRsakSe8JfirAzpbVxAE9xHj97a/HQsN8cmgCfOI5lKlJDWmJwPk/TUG0H0L
+ VJnmeAdhHTiZAh4MefqaRCXDQqkfbXaAWmmtZXwNFAAec11ohH/7SmJ0jwGbLoX0BCkF
+ +Vhg5duB+xLMhPbRc6bmkO90W0dEfMg5SxEC6WOPLIRkHL74fSuIb/c+6kNz3A02H9+w
+ yAEVuFMwWrojH6rlf8WjbzBBr3XiLcI216nj9v7jOovWAyb6/RAHaQjM2TZ8Tf1Qz1MN
+ XVphabgjgKPILK7F6Mh6B8mms8L28+DI6tBIiTpqJ9ysD24wCVxBpdXvMjtQKjtV/Ifr
+ 8r4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743529937; x=1744134737;
+ d=1e100.net; s=20230601; t=1743530191; x=1744134991;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ea7HQfB3TRM5FsV8gbWuYrmQQgdPEoKxx0tDATpiUiw=;
- b=Wa9n1poHFeoDvfbHXbYVXXV6qvUhsoVSw8X8dCfh4GxoZvV/1mcE+6iivl0e5vtvea
- zYnH8LmbrgQf50kyAe/Dis+X+L/seU2Mrl1W86sMJ/dv+PUpo/7YcgOTMZfex+FfcNIV
- A1Z5f4uB+VA9m4nJOM8vxnhMwZzVuY1jqNMVccHM1iqikuRIkRaFTAiZwypVT1FmZBwZ
- r4jveAw5yZ+JsFbmw2pi5I70OBi1biEt1CU0cQl+1cWHJlQxQUeQxeHxUR3XXWEizjSx
- nkrOhYQBSAcM4F6SdhqRcPDTa+Nt109uzxYp0H4L+4OcBfs0MPLKtQyQ3hHLA9WrORbq
- xDzg==
+ bh=Q5+pSJ2I8gzg/67q+Dz+K47cz4hCqoWoArZnbWgiRpE=;
+ b=YWQdsQVKSSDsXM1JurkT0fmbuRn7PX83P2gQWdUx/aS3eOHiatyH2eMYrPh1Ohl5j1
+ XNFdtl/Lbcbkd3DkZrMtX3/vdIU6sk7vxPLxFGlvswu+VDwulJPevPHvt/T+fBSLcVKG
+ n4R+F9QOP9fuj08Dk5Uf0X+sOJmcldT/BnX2C35VNBibmPoKh9zn/fvEkfqdY/FikDz6
+ 4DqK32+MYt6cyzjDyPyUfbWuU6hN0QHsRGzP8dvGJmlcQdktwXLQEagg0N1YFYJ9H8OH
+ tgSNnWIxKGA/woE6gNI6i1t81z62CH0yH7iO/pjTfujry1vsL179rsU//zhO/BZP8zpw
+ JlDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzl8gGertmDBVcGT6fgwcRlU6RydmtnBUksqTrGVXMkTIZlN//p0fOs1b9oWcSDdW+TnOp3JUwab+2@nongnu.org
-X-Gm-Message-State: AOJu0Yx4uVW/KMSGUw+k8IJdoP78Ysm470FRZHeZ8J8vATqygMNoDdB1
- DtGjkaq1s2H/Gl2cYcra/xamquJbWnkiHni8STgMvQzYC+0CpCGVNjoL/gn/ues=
-X-Gm-Gg: ASbGnctv9TqksOQ9zm4gCVbYvUdHxUZp6BzOvr9Q5SHmlIGgo+EtHAz6p3aRRlnLXBE
- GULRx5s7xnxR3tPw0jj2UoNvR9UOoMebOOWIpWoQLG6j+ND7AFcl/Cxes4nSs9EVJhV2BrqSTUL
- j1Y+4bXfyKYXjmKAQYVxrTVG84EOWBTkaJOYO5EANDUxeQ6FAbsr+Fz0uIpYZKWhEYcNxoBiq1n
- mql71fYxBDhHFPZU4gblrYD+Rge6jNyNWJNrvCHjjO57Kpt5o0XWCP3j4wRYqr1s58w2VIWaLQK
- Y5vWYZlSKYtJTn+jtyMNbK8rOwFh+ZWL83nlnB7OlEQe66BkG8YYgcV16BXl9UvpVMM+p9o1bSo
- +B+nSqdmzVLhZJ7QHOIaJNA==
-X-Google-Smtp-Source: AGHT+IHh1bOuVYaxaN8B/KhIe49M7h39yhikvYgwHpKWn/f56Prr6KhHAN7zDc59zqNtfB5Awb579g==
-X-Received: by 2002:a05:6871:728d:b0:2c2:544d:e140 with SMTP id
- 586e51a60fabf-2cbcf4d7d6cmr8043177fac.11.1743529937432; 
- Tue, 01 Apr 2025 10:52:17 -0700 (PDT)
+ AJvYcCUtPTcok09B4cWxY+e2wI2MofAOCi3kswmBLbyOIybUryPDckOyCWxWBr7MIhz+9u9Mmh96gZdNo7HG@nongnu.org
+X-Gm-Message-State: AOJu0YxgWqrSE7RNFwPupFCFJ/8vxfIAw34dornOi26wVl+Cw20UacLE
+ l3KPFy4XYwVzUB8f94y220pZSlp9htggg+IJa3U2gS1lWOpkM4Y3JXZo7wsLNNqcIo7RCYmuH6t
+ c
+X-Gm-Gg: ASbGnctL8BMjn802NNUxWvmrhnGBPA0uX9mWLHIi7OleVPeagTsSd2hyp14wFfo9Ll9
+ L5DdPpvgMSZIP1EwrnJxrmQmpD3rVVjde/6K0ErBZuISOr/jQDRUvLBg3zOTX3WX7uYE9qv0A72
+ S2j4ACbIKTuXv8Wp7oUGjqnPpLf2yk6c65sPQkf95tF8VXc2gNf4sdCbmGjwdGlDvs91M/3GH5z
+ 099AonOnZRU4Y+QZEmNY2SmttjZz3sLozwTejAN1nSXSHvWECqGqvS4P9Z8L4quaQ+XWbY1DLS4
+ 8VIZawlCyRsfNquVJR2ay5bwjq71br31vUekAx5npJQk0nvplh+NdmcfiZ3fLfqyYCKSAXXCb7J
+ mZIoDXs92eSnQFMth5CZ2rVrhU8oc/UlF
+X-Google-Smtp-Source: AGHT+IFYCG3RiZsnM369ahTH1FzGZJ7mZxhUAsNgNwbnG7Waw5PRuxGjB9om7U0y5lvovWhrdQvwWA==
+X-Received: by 2002:a05:6830:6584:b0:727:3a2e:2132 with SMTP id
+ 46e09a7af769-72c6382f0f1mr11616924a34.21.1743530190904; 
+ Tue, 01 Apr 2025 10:56:30 -0700 (PDT)
 Received: from [172.20.102.85] (syn-071-042-197-003.biz.spectrum.com.
  [71.42.197.3]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-72c580ccec9sm1969979a34.31.2025.04.01.10.52.16
+ 46e09a7af769-72c580fa72fsm1947169a34.41.2025.04.01.10.56.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 10:52:17 -0700 (PDT)
-Message-ID: <e27f3a93-66e0-4555-9ec2-b6d9e0cc5077@linaro.org>
-Date: Tue, 1 Apr 2025 12:52:15 -0500
+ Tue, 01 Apr 2025 10:56:30 -0700 (PDT)
+Message-ID: <1205914e-b344-4f64-826e-416b5e491cc4@linaro.org>
+Date: Tue, 1 Apr 2025 12:56:28 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 00/24] cpus: Restrict SoftMMU mmu_index() to TCG
+Subject: Re: [PATCH v2 09/42] include/exec: Inline *_data memory operations
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250401080938.32278-1-philmd@linaro.org>
+Cc: pierrick.bouvier@linaro.org
+References: <20250318213209.2579218-1-richard.henderson@linaro.org>
+ <20250318213209.2579218-10-richard.henderson@linaro.org>
+ <7b57e8c0-076b-44dc-859a-2829a68cf669@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250401080938.32278-1-philmd@linaro.org>
+In-Reply-To: <7b57e8c0-076b-44dc-859a-2829a68cf669@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,37 +107,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/25 03:09, Philippe Mathieu-Daudé wrote:
-> mmu_index() is specific to TCG SoftMMU,
-> moveCPUClass::mmu_index() toTCGCPUOps::mmu_index().
+On 4/1/25 01:24, Philippe Mathieu-Daudé wrote:
+> On 18/3/25 22:31, Richard Henderson wrote:
+>> These need to be per-target for 'abi_ptr'.  Expand inline to
+>> the *_data_ra api with ra == 0.
+>>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/exec/cpu_ldst.h     | 123 ++++++++++++++++++++++++++++++------
+>>   accel/tcg/ldst_common.c.inc |  89 --------------------------
+>>   2 files changed, 104 insertions(+), 108 deletions(-)
+>>
+>> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+>> index a2a90c7554..d084da0b5f 100644
+>> --- a/include/exec/cpu_ldst.h
+>> +++ b/include/exec/cpu_ldst.h
+>> @@ -74,25 +74,6 @@
+>>   #include "user/guest-host.h"
+>>   #endif /* CONFIG_USER_ONLY */
+>> -uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr ptr);
+>> -int cpu_ldsb_data(CPUArchState *env, abi_ptr ptr);
+>> -uint32_t cpu_lduw_be_data(CPUArchState *env, abi_ptr ptr);
+>> -int cpu_ldsw_be_data(CPUArchState *env, abi_ptr ptr);
+>> -uint32_t cpu_ldl_be_data(CPUArchState *env, abi_ptr ptr);
+>> -uint64_t cpu_ldq_be_data(CPUArchState *env, abi_ptr ptr);
+>> -uint32_t cpu_lduw_le_data(CPUArchState *env, abi_ptr ptr);
+>> -int cpu_ldsw_le_data(CPUArchState *env, abi_ptr ptr);
+>> -uint32_t cpu_ldl_le_data(CPUArchState *env, abi_ptr ptr);
+>> -uint64_t cpu_ldq_le_data(CPUArchState *env, abi_ptr ptr);
+>> -
+>> -void cpu_stb_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
+>> -void cpu_stw_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
+>> -void cpu_stl_be_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
+>> -void cpu_stq_be_data(CPUArchState *env, abi_ptr ptr, uint64_t val);
+>> -void cpu_stw_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
+>> -void cpu_stl_le_data(CPUArchState *env, abi_ptr ptr, uint32_t val);
+>> -void cpu_stq_le_data(CPUArchState *env, abi_ptr ptr, uint64_t val);
+>> -
+>>   static inline uint32_t
+>>   cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
+>>   {
+>> @@ -342,6 +323,110 @@ cpu_stq_le_data_ra(CPUArchState *env, abi_ptr addr, uint64_t val, 
+>> uintptr_t ra)
+>>       cpu_stq_le_mmuidx_ra(env, addr, val, mmu_index, ra);
+>>   }
+>> +/*--------------------------*/
+>> +
+>> +static inline uint32_t
 > 
-> Philippe Mathieu-Daudé (24):
->    hw/core/cpu: UpdateCPUClass::mmu_index docstring
->    accel/tcg: IntroduceTCGCPUOps::mmu_index() callback
->    target/alpha: Restrict SoftMMU mmu_index() to TCG
->    target/arm: Restrict SoftMMU mmu_index() to TCG
->    target/avr: Restrict SoftMMU mmu_index() to TCG
->    target/hppa: Restrict SoftMMU mmu_index() to TCG
->    target/i386: Remove unused cpu_(ldub,stb)_kernel macros
->    target/i386: Restrict cpu_mmu_index_kernel() to TCG
->    target/i386: Restrict SoftMMU mmu_index() to TCG
->    target/loongarch: Restrict SoftMMU mmu_index() to TCG
->    target/m68k: Restrict SoftMMU mmu_index() to TCG
->    target/microblaze: Restrict SoftMMU mmu_index() to TCG
->    target/mips: Restrict SoftMMU mmu_index() to TCG
->    target/openrisc: Restrict SoftMMU mmu_index() to TCG
->    target/ppc: Restrict SoftMMU mmu_index() to TCG
->    target/riscv: Restrict SoftMMU mmu_index() to TCG
->    target/rx: Restrict SoftMMU mmu_index() to TCG
->    target/s390x: Restrict SoftMMU mmu_index() to TCG
->    target/sh4: Restrict SoftMMU mmu_index() to TCG
->    target/sparc: Restrict SoftMMU mmu_index() to TCG
->    target/tricore: Restrict SoftMMU mmu_index() to TCG
->    target/xtensa: Restrict SoftMMU mmu_index() to TCG
->    hw/core/cpu: RemoveCPUClass::mmu_index()
->    exec: Restrict cpu-mmu-index.h to accel/tcg/
+> Pre-existing, but why don't we use 'unsigned int' like for the signed
+> variants, or the plain int8_t type?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+It's the original type used by the api.
+
+You'd never change this.  If you want to audit all of the uses vs the api change, you'd 
+update to one of the newer function groups.
+
 
 r~
 
