@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D8C2C36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095A3C36014
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzX3x-0002QF-14; Tue, 01 Apr 2025 04:33:37 -0400
+	id 1tzX5h-0004dh-BX; Tue, 01 Apr 2025 04:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzX3o-00027y-9E; Tue, 01 Apr 2025 04:33:28 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tzX5G-0004bD-7O; Tue, 01 Apr 2025 04:34:58 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tzX3m-000158-6D; Tue, 01 Apr 2025 04:33:27 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22401f4d35aso103121775ad.2; 
- Tue, 01 Apr 2025 01:33:25 -0700 (PDT)
+ id 1tzX5E-0001Bq-Le; Tue, 01 Apr 2025 04:34:57 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2243803b776so29115355ad.0; 
+ Tue, 01 Apr 2025 01:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743496404; x=1744101204; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743496495; x=1744101295; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JLVE40W/XGAQOr1jx4pd9tNsIM2lcVMwDaZ/6pQHw7M=;
- b=cL0AUYPGvSqZn+rmBnsWCuFcEyprm6wdevr6yb9qMAqt6r3GMVrLmHyMYKzGJBdbU3
- hDNir2yDwlRlnf88BxHkQLq2pFzAGKzJyTZmB25nN5EqCdM/BzujCH6OrIjk2DTCflIr
- PV7P8qoBT8QjWq/zDEX3/lVfrqj4JBW4ecySF4AxE4rMA+sLQ27ghz55IHZLeOCWPUEP
- l0ViLCp2NwE5uMbzxQk6kOXb41nIab8tpIOhURKtbtTJd1anDiq/24TmpQ8/EC5YIl1A
- GT0IAjCon3bjFSeBtDbdRJR2JVkEzVMsEoi6/bX05unWA9ViCmdwSvIUzTWLs7le9Vg7
- 5hcQ==
+ bh=KjoTC0DBrzX6Zpx4diqskJW96XJ1RiID2DuCpOlPHnc=;
+ b=PnS7BmZQG35McJPI++zzN43ksoTxo5YFZ+cE4sCEPNGIuDc2hjg6V/Vkkrdf1i3FUb
+ dMtqj5T8N+FwEIYuBve+cweRMGUpx3C5L+oYnCT+vu9XxnteROPG6Aq5/Lf7uC7SlLBe
+ qJW9hDOazg6Xfwe2nM+Fg900FOaCjpBpSuVfIQ6V7nO8bX/9ciDRmNf2ZYVddAfPeTPA
+ EEJN4EntK68FxhAjRv2xZPzAT3dDGDmkZN0KnyXSVdPYC7kpS99GRMgep44LmoPSX/zT
+ ISfKd+zkHbDfhyaGJrKvkIDSllUVOUugJ6EhnxRuXvRyQLUQMGvIB+Eqb3VCfgfLgb3l
+ pLgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743496404; x=1744101204;
+ d=1e100.net; s=20230601; t=1743496495; x=1744101295;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JLVE40W/XGAQOr1jx4pd9tNsIM2lcVMwDaZ/6pQHw7M=;
- b=EjQzwxdKkU5AMh4LkTbve2hyn6i+WXo1GRecdcXtPZhRhKsCvKtQuE9evcjj+KnEa/
- 80g2oPt1GeHU/OpmSVkiadO506+FQe86Z1PxNfmBhO84ehiQruDeJEdTK4dGN2jooGf1
- jlImFj1v9LbPG/ao67VOnB85JfvkLGHuDToA8TTzyH7DkCg8+OnqVszombHH5iSvWraB
- KGKq/hZR1Ab/43hucPCV7C0aKwrQ488n+cUBEGbTKT8Cx04ePKcyfFmPes9lt71Giz3u
- olsK1QgWudDjSWiRsxMwZYGcXfkkSHlEjw2X3uNWNFJp69Usy2hfAhYcldtEg0Ix75Tc
- mmHw==
+ bh=KjoTC0DBrzX6Zpx4diqskJW96XJ1RiID2DuCpOlPHnc=;
+ b=N+mHnskeJgz8WIUKTSJKGdqSEq88SCufaUU8MTFof//57K29Vs1IcVZvxtyAiEI553
+ ySWelTOGLOKauxABuzH9z+sgAFJFdVpa2n3pxSPhqizFNEvuCdJ6cGenHrjNGuWoijvS
+ DlARUVeSJEzZu4Bq4YEMbZv8EcOkG3MwRIttYyLG2bnXDfUcx9c2DysBmCCyhqJekPzU
+ RNJ+RoFrZAAqXMyfjmx3jJF8aTjiUzve9WMgY6pS+kTRH1me6sV7oNSvSBxkJ/gJ/nDz
+ V8mppBsbnetdbAVckbEoK8LsCU4oSqwrhkgtFB1/EQz5cbD5DY9xuDpTrx6QuoYRXZky
+ xOnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQ3UPYEN9muJlIYdXE9qx2zd6+a3xg4O0g1aQ2c1uzMrq0v9PN9BohGYuUR/3qw+AR1ClMyGgkyg==@nongnu.org
-X-Gm-Message-State: AOJu0YypCPT7fY9CqEvx5eaTKAVx14scuhs/7E0EyiX3SVy62yQOH7SZ
- L6KHqecB13vGQ5BOGrFzCYW6rE/f4o/qBnD0kswNKxFv2WzcFhoYsORxwQ==
-X-Gm-Gg: ASbGncsggC27vfL2pG0rKXGGKViweJW6xIP+ZcS20nUcFzGnQhL2irQz9jkn7HJozzF
- i2ZV0GMVZKGOshCwCIOMiLzdf//lgvOPDc+YcXAc3VZUo5VmF0GCzb8YIkKnTqSd/dzqF/iB531
- 7vqLxqyKeyrsk3iqcNzoE/Fpixls08sh45s92z5C+cgHKGAa5kAXHVcOKoUTgIOiBlaOEcp72R1
- nPzZGnzIGzc/iMzBO0nlXDUV5Cq51WqwkY4u7T/Wm9MHSziR64qoeyc8BgggHjP3Say8uPXdFHe
- 7PzdAAE7iV3hGuYJMF5lLZBY9/m5V2a9+sGSMdU=
-X-Google-Smtp-Source: AGHT+IGFrpxEeEP+/r8JVY9uDZOUQIt+Lg5IEjpTv/hLRlKRWB4k95ae0Ccz4gLdU88efGCAYfx9bw==
-X-Received: by 2002:a05:6a21:3408:b0:1f5:8754:324d with SMTP id
- adf61e73a8af0-2009f5bbf98mr22861094637.9.1743496403871; 
- Tue, 01 Apr 2025 01:33:23 -0700 (PDT)
+ AJvYcCUWTKHjwmjZ+OYff63sPr0yKdVJNEqD1zD+TsCIMILljO/eUfYPa92dYwlqkiwGLHEhUYj5yYeAYQ==@nongnu.org
+X-Gm-Message-State: AOJu0Yxf4HaqEI0iTVJEHY4IGTXvO5rSwcYxcbT1Zg6DW7/BbmxuEsLj
+ kBaLADfy6/x3hgMgSGGRUgl/8/UNIax5q9G3+SOAXc+IGog+bNKAYkQo1A==
+X-Gm-Gg: ASbGncuH9bVkWPr8VbhBptlY23eWqLIsYxIQY1zP/cCvvhGPbGEU9mSpO8ln54KxWC2
+ Z9ryb7bUnS7tXrkrCWsaO/VuL6zEaGC4lZQ9dXPvJoDNKrau9E12ssVw6owEqwnS/9jwjyazr/Q
+ Q53T0CV1Qg66nVkAIkNVjJ9HM8IgwMj8evyS3EuAC3lZBpWxcdt/IN0drQsdzcsE+uKc9rM9ATD
+ d1ZnwU1eYKK83fFDuDlUkAt5/SR1tgC3ls7XmZCUf6w9iJ+e/dePxGFNr2b7LJ1VtLJsTLKGPvV
+ J9mDOlNkai0b7EpF+1WZCHQWJk0JFxmsyTRoSyk=
+X-Google-Smtp-Source: AGHT+IFa/n5nE6vf5dsxq7msqn5LEEwT4q8lldIBZ7mHXMJhf97okmrryk8DS/ro2id4bQ32DDa9Tw==
+X-Received: by 2002:a05:6a00:4b05:b0:736:4830:68a6 with SMTP id
+ d2e1a72fcca58-739803359e7mr20250988b3a.4.1743496494600; 
+ Tue, 01 Apr 2025 01:34:54 -0700 (PDT)
 Received: from localhost ([203.185.207.94]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af93b679f0csm7587258a12.3.2025.04.01.01.33.21
+ d2e1a72fcca58-73971091cadsm8321826b3a.126.2025.04.01.01.34.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 01:33:23 -0700 (PDT)
+ Tue, 01 Apr 2025 01:34:54 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 01 Apr 2025 18:33:19 +1000
-Message-Id: <D8V5W4N51IMU.3GNZNC0FK5KKN@gmail.com>
+Date: Tue, 01 Apr 2025 18:34:50 +1000
+Message-Id: <D8V5XAKJ9ZYN.12HHKNW227769@gmail.com>
 Cc: <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH 0/3] translation performance improvements
+Subject: Re: [RFC PATCH 1/3] accel/tcg: Option to permit incoherent
+ translation block cache vs stores
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.19.0
 References: <20250331155423.619451-1-npiggin@gmail.com>
- <6e647368-9fde-4c7f-ac17-d4c4e46fab3a@linaro.org>
-In-Reply-To: <6e647368-9fde-4c7f-ac17-d4c4e46fab3a@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
+ <20250331155423.619451-2-npiggin@gmail.com>
+ <baa70d58-d599-4b81-9333-7982b82f1167@linaro.org>
+In-Reply-To: <baa70d58-d599-4b81-9333-7982b82f1167@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,45 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Apr 1, 2025 at 5:40 AM AEST, Richard Henderson wrote:
+On Tue Apr 1, 2025 at 5:51 AM AEST, Richard Henderson wrote:
 > On 3/31/25 10:54, Nicholas Piggin wrote:
->> I've been struggling with these couple of performance issues with
->> TB coherency. I almost thought deferring flush to icbi would be
->> workable, buta note in the docs says that exceptions require TB
->> to be coherent... I don't know what requires that, maybe it could
->> be worked around?
+>> Add an option TARGET_HAS_LAZY_ICACHE that does not invalidate TBs upon
+>> store, but instead tracks that the icache has become incoherent, and
+>> provides a tb_flush_incoherent() function that the target may call to
+>> bring the TB back to coherency.
 >
-> Which note?  Anyway, qemu implements accurate tb invalidation for x86 and=
- s390x, which=20
-> means we don't really need to do anything special for other targets.
+> We're not going to add another target specific ifdef, as we're working on=
+ removing all of=20
+> them.  If we were to add a feature like this, it would need to be done an=
+other way --=20
+> probably via TCGCPUOps.
 
-In docs/devel/tcg.rst
+Sure.
 
-On RISC targets, correctly written software uses memory barriers and
-cache flushes, so some of the protection above would not be
-necessary. However, QEMU still requires that the generated code always
-matches the target instructions in memory in order to handle
-exceptions correctly.
+> How much benefit did you measure for ppc for this?
 
+It's noticable, I'll get some numbers.=20
+
+>> XXX: docs/devel/tcg.rst says that this is not permitted because TB must
+>> be coherent with memory to handle exceptions correctly... I'm not sure
+>> where this is, maybe it can be worked around and is not a showstopper?
 >
-> Compare aarch64 "IC_IVAU" which (at least for system mode) is implemented=
- as a nop.
+> I presume that note was for x86.
 
-I'll take a look at it.
-
-
->> Another thing is PowerVM runtime firmware runs with MMU disabled
->> for ifetch. This means a fixed linear map with no memory protection.
->> Is it possible we can enable goto tb across TARGET_PAGE_SIZE for
->> ifetches in this mode?
->
-> No, there are several things that assume nothing jumps across TARGET_PAGE=
-_SIZE, including=20
-> breakpoints.
-
-I see. It did actually work and run fine, so I wonder how much effort
-it would take to cater for these issues. I guess for this rather niche
-"real mode" it may not be worth bending over backward.
+It is actually for RISC it says. But it is very old so may not apply
+any more.
 
 Thanks,
 Nick
