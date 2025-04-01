@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79CBCC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD11C36014
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzd4D-0003VJ-L8; Tue, 01 Apr 2025 10:58:17 -0400
+	id 1tzd4t-00049L-Co; Tue, 01 Apr 2025 10:58:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzd4B-0003UT-EO
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:58:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzd49-0002D4-QW
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:58:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743519492;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3aRXAmlXu4lZAao6GRB4cP8pg2LMaYeg7G/UcmpTO3w=;
- b=HDV+X/N9SRIPyJB5P2WkLxJEIGZP5kHbBWbGqabSqAkmyOM0Q6ZQ6h7lKIzaD0njcYPILg
- BFQeun96JzjHLZK7Kjnlhj2hmoLYzA2qcADYxB+jmVraLS9pTscIUeFJWAxKQfBC+Jm9XA
- h0zWd4r3cWwNlUtMSYtmmSMnTnYIqIY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-6SPPtnf8MBus3rDUg9Ponw-1; Tue,
- 01 Apr 2025 10:58:11 -0400
-X-MC-Unique: 6SPPtnf8MBus3rDUg9Ponw-1
-X-Mimecast-MFC-AGG-ID: 6SPPtnf8MBus3rDUg9Ponw_1743519490
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6865A1800259; Tue,  1 Apr 2025 14:58:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.88])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D114E180094A; Tue,  1 Apr 2025 14:58:07 +0000 (UTC)
-Date: Tue, 1 Apr 2025 09:58:05 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH 14/15] fuse: Implement multi-threading
-Message-ID: <hyoxwmiw77g7cb2eckuypqyltpn4xj6ysttg5mhzzyj6x4yfam@6uqm75alnm66>
-References: <20250325160529.117543-1-hreitz@redhat.com>
- <20250325160655.119407-13-hreitz@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzd4r-00045O-9U
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:58:57 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzd4p-0002GV-Ok
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:58:57 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43d0782d787so37631805e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 07:58:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743519534; x=1744124334; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=toT9Kq3dfWbeRgyKVjLXGdFzEnTEuvx6JtUR5SXoHr0=;
+ b=lXgvqEAJkY5dWerOu2kbj3tllkkHUzcSQ20sYaDhMjWC57HsUi3zIeFN0R1peVYcrs
+ khy02c3X1SpqRY3s4FHz+B0MrwC1qd5B2iYrWjzzCERiUUrA2x3cN5LoCAxKyx+DyqWZ
+ sBEVAtuP0iGNcGAXueh0kZnbJPpPnAVqcS60KHrBBAaAJcPje4q0MSrPJ9WjTemQVV9W
+ 30eRG004+SouNCpW1z2wfpoJ51NwcYjO0+t38NWjIyrzksMVkpfuwEav9QCZuZN5HVQK
+ 3IYD6POajFkoYCb4/BM+6HICPySqo4qCva79BAZoSHQFFdLYyt/eBILB80fNwEQIoS3S
+ zcog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743519534; x=1744124334;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=toT9Kq3dfWbeRgyKVjLXGdFzEnTEuvx6JtUR5SXoHr0=;
+ b=fDN0poeydrAMFLG1psBPFADrxj8qFWY+CNQ2KqhNe1TAtK7SIhUK448hzRhQI7L/dL
+ mS2PpLPwXe+TC9yzApRPaH//loMB17qT233eTeI+0sKjbOrvMqEYIT1NIjw5BzXtcRYA
+ OoddCk6Sq4H9g8v1x7MFYMz1jDFZunhaO0qylfqwgEVFMmmrGgUvD9Aee8omAdP5r2HP
+ JPuAnXCzUSHqF38v8I/CsenQKdYkoUiEbjSRgKzcxTM6SiaCpIDCeS6Gbh9qxD+uvizf
+ N0UKUjYjeM4Y/VceM3NdLdeP66arKuW3XxqFd1bzmfnu4HNWjvz56CN5A4t+ThHtrfG8
+ DZUg==
+X-Gm-Message-State: AOJu0YySaumAgxXikds9L+lDp63rmbOhv7ktmJIGNKja2RZYljdth9tw
+ SdgPAyzJ3EP2rSkcrCd7+LJuHD+X4/VvV2Na/i4iLAWOJEnze2Ya4hPCiSQHL79YWa1zIH0YSbr
+ X
+X-Gm-Gg: ASbGncvaMhB11DZWPQSS7X1ZOji0o3KDoiVV2kNpwEOEO6hIZVNSo7WAvfh7sCmXJ76
+ juEelGsEC8jBtB6h9hSr+lK7fqKij68ZNOj8ApKC0QtzqbYRU04QNSpo142ZmijsS4yR+ZN+iX/
+ ZTocX2zGvcPzQMOSJHdyUxwpAXZink7dBTZeku/nq47z9dHiEXmm/voz4EJXX07gtemyavP49r7
+ atimiUb1sUlbciGQbUZws9Bj5NUuzw4mNUONdMXqMfyE/hnjqD6VXR0u6/IZfV4gBfzmVowtc2i
+ z33WbJh51QdXnVJskVeuuKiZ8RayYrBEZKBxzhndGHr2L8UYd0Y0VVeD3prYhdxhUwqAhu7T1p1
+ 2GOkfwhMjv23yH0CUW8cDsQU=
+X-Google-Smtp-Source: AGHT+IEYeQ6dVuk3LE/OuKgmBliZY2rtbaCBvY/2WA1z325S682kYp0dO/tSUgX6qoggH5oMRnHzBw==
+X-Received: by 2002:a05:600c:5486:b0:43c:f895:cb4e with SMTP id
+ 5b1f17b1804b1-43db6249aefmr113422725e9.17.1743519533528; 
+ Tue, 01 Apr 2025 07:58:53 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d8ff02f84sm158227405e9.25.2025.04.01.07.58.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Apr 2025 07:58:53 -0700 (PDT)
+Message-ID: <ac856040-f400-4dfb-9322-02a2880b40f9@linaro.org>
+Date: Tue, 1 Apr 2025 16:58:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250325160655.119407-13-hreitz@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/5] ipmi: add fwinfo to pci ipmi devices
+To: Nicholas Piggin <npiggin@gmail.com>, Corey Minyard <minyard@acm.org>
+Cc: qemu-devel@nongnu.org
+References: <20250401140153.685523-1-npiggin@gmail.com>
+ <20250401140153.685523-3-npiggin@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250401140153.685523-3-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,39 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 25, 2025 at 05:06:54PM +0100, Hanna Czenczek wrote:
-> FUSE allows creating multiple request queues by "cloning" /dev/fuse FDs
-> (via open("/dev/fuse") + ioctl(FUSE_DEV_IOC_CLONE)).
+On 1/4/25 16:01, Nicholas Piggin wrote:
+> This requires some adjustments to callers to avoid possible behaviour
+> changes for PCI devices.
 > 
-> We can use this to implement multi-threading.
-> 
-> Note that the interface presented here differs from the multi-queue
-> interface of virtio-blk: The latter maps virtqueues to iothreads, which
-> allows processing multiple virtqueues in a single iothread.  The
-> equivalent (processing multiple FDs in a single iothread) would not make
-> sense for FUSE because those FDs are used in a round-robin fashion by
-> the FUSE kernel driver.  Putting two of them into a single iothread will
-> just create a bottleneck.
-> 
-> Therefore, all we need is an array of iothreads, and we will create one
-> "queue" (FD) per thread.
-> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   include/hw/ipmi/ipmi.h     |  5 +++++
+>   hw/acpi/ipmi.c             |  3 ++-
+>   hw/ipmi/isa_ipmi_bt.c      |  1 +
+>   hw/ipmi/isa_ipmi_kcs.c     |  1 +
+>   hw/ipmi/pci_ipmi_bt.c      | 12 ++++++++++++
+>   hw/ipmi/pci_ipmi_kcs.c     | 11 +++++++++++
+>   hw/smbios/smbios_type_38.c |  7 ++++++-
+>   7 files changed, 38 insertions(+), 2 deletions(-)
 
-> @@ -275,14 +351,24 @@ static int fuse_export_create(BlockExport *blk_exp,
->  
->      g_hash_table_insert(exports, g_strdup(exp->mountpoint), NULL);
->  
-> -    exp->fuse_fd = fuse_session_fd(exp->fuse_session);
-> -    ret = fcntl(exp->fuse_fd, F_SETFL, O_NONBLOCK);
-> +    assert(exp->num_queues >= 1);
-> +    exp->queues[0].fuse_fd = fuse_session_fd(exp->fuse_session);
-> +    ret = fcntl(exp->queues[0].fuse_fd, F_SETFL, O_NONBLOCK);
-
-As mentioned before, F_SETFL should be set by read-modify-write.
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
