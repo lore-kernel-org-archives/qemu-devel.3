@@ -4,73 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C12EC36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5B1C36014
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzWxx-0007h4-DF; Tue, 01 Apr 2025 04:27:25 -0400
+	id 1tzX1t-0000dW-M7; Tue, 01 Apr 2025 04:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzWxv-0007gv-3i
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:27:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzWxs-0000LX-OB
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:27:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743496038;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3fkN1pYjHsU9EtxFPbRwl9Y3AHoEMyPFV1fhUPfcGF0=;
- b=O9Na2uBzLrdGg/FBWzRYt2BqPvSErg0oza/fD6AKRF2//HXeODdoAfCUiiAv6REEdu48zu
- a0uSslUUUWxp00yGKUCnvAX51C6o0CQrdy9PW0jlkaJ7lpm62YM6huHBZ5lLCL702mwpsy
- ndqoTxe7pe1WYUKPjNZJk8d2dbtFV8M=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-0bJHg54-O-Gckbp6piClhA-1; Tue,
- 01 Apr 2025 04:27:17 -0400
-X-MC-Unique: 0bJHg54-O-Gckbp6piClhA-1
-X-Mimecast-MFC-AGG-ID: 0bJHg54-O-Gckbp6piClhA_1743496036
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81D351955DC6; Tue,  1 Apr 2025 08:27:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0A1D1956094; Tue,  1 Apr 2025 08:27:11 +0000 (UTC)
-Date: Tue, 1 Apr 2025 09:27:08 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: saman <saman@enumclass.cc>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-rust@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH] Rust: Add tracing and logging support for Rust code
-Message-ID: <Z-ujXI126OC9lZpi@redhat.com>
-References: <20250401002633.738345-1-saman@enumclass.cc>
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1tzX1j-0000aS-Mp; Tue, 01 Apr 2025 04:31:20 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1tzX1f-0000wU-1F; Tue, 01 Apr 2025 04:31:17 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2279915e06eso107945485ad.1; 
+ Tue, 01 Apr 2025 01:31:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1743496268; x=1744101068; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NXJzMkbHeNL7hvhp7UIYqNGKaUhKAfMEt68Iz/x8HeI=;
+ b=Yy7DunYrSD0aeQ/7az0LUS89ZHnyW2QVV9tkqJ/9ybZ+fumTxad0Kp1SiJmqozhQ2+
+ IV/RLkDJZB9MgJK2/sc1uK1QbBI6eXFl5bQv2CmP6J4ra62NrEuLmHaRiON+Mtjpq+3S
+ cCxdgSVZRG4lPSTttFsmopNtWyPy6zSicI7qM2pDvzwgDfMlWuFvWrK9fe9jTspBWDk4
+ cuYGRBdJhWlSnwIDXe5bSXu2J2FCRVxqxkyybqtVnap0H3OgWnrBcUKA7YYHSGPzfGv6
+ yltRp6yqVmY7gTcDZPMSrvkKglf6wD9AEaAhvK48EapXUHzp8m7PdhOXcYZpOwGy6KdL
+ zI2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743496268; x=1744101068;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NXJzMkbHeNL7hvhp7UIYqNGKaUhKAfMEt68Iz/x8HeI=;
+ b=p17oSCmwp1aubZdOoy30PdBcRaA/HDysZ7HlqBupjtvf2DGXyUkvQGdBVgazX8uiv8
+ GC34PkKmR26IpufxvL6Qkno6ZZpK07TJsdDKsLs9BgOa5bo/OTOaZ/f3unIfRgx2sL+d
+ qUn8ATzdVFZmqyj9SSrtfXLqWSCYJ+TfsTD1DymKKtz71sSKsXWB6GFThgAJji71ibx6
+ k2CPPUxcqgKP779yDTj0NjY87kukwZSs4LqW7sD+v0B0UxiRqx72IpnhJkzjsYV75Bsi
+ ib/ugqBbuFtLTKIYBidO4tuo0+C+mHAkKnua6P1O95Mbep8OLEktY+j6+9UEStDOROMI
+ VjeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUbvYNECsrQ4KCvzUONf1+0wMsWMpALoo+pFaaWbA2e9aFZGRQER2khUBEUQbDb85GUH6HYdFyM+Q==@nongnu.org,
+ AJvYcCW3rEuCYm3KeqC2TQRkwXvNaj+4xB75yTqpOV/U+0Q4ybsiuDZ6WDlJ/yTgkSF03imkwg82Ssy/Kl/EBEpV@nongnu.org
+X-Gm-Message-State: AOJu0Yz7G4hbiOX8iVbkIhRP10BSoxzNMWq+HzgWJmAivZFlTvtpCZ76
+ 4UEVIxhP7K7zMMtlQDPdMU93ah1r+GrxCGE2sN/8jD7qJ/KUE4HLIcYXsQh9680=
+X-Gm-Gg: ASbGnctuKvqqNDcz20iHE5sFBlrDILGHYbY7qRoTvRccCHzOSp8yu1JY07P5ayA7FUS
+ BchL5uhkRrxqY7aT4Z21+sLSuDIssPiOyEUoMwGpb4xMxSKRJ1sF1H1x12sZRqd7nyitTtgWZ6v
+ GH1AemikLvgvB1r2lHejZTR21tTqUKff+FjIM3w/ZJDWnaKmUqLbzwOnyNK0woa5sBAdDIFGdpj
+ FBUDlSm8zoK3NOL3ehH4f9m3Iq43euuWGQhao0Mbc09+baeJ2KwQgPcvkJ74P2sRALvkEaEdepv
+ pJCbA5ETj+fh3T09rBSoj/C659iFkOjFtSvEyuSbbSvL+w==
+X-Google-Smtp-Source: AGHT+IHNZv3Kv6gKN1/cHshYekmdNNUAEylUSMAv2yFeBPwTzTziDQ78mwe3dTwNzYJ8unNXlHmUoA==
+X-Received: by 2002:a05:6a00:4f8d:b0:736:476b:fccf with SMTP id
+ d2e1a72fcca58-739804397f9mr19522271b3a.18.1743496268177; 
+ Tue, 01 Apr 2025 01:31:08 -0700 (PDT)
+Received: from localhost.localdomain ([129.227.63.233])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7397106aea5sm8574597b3a.100.2025.04.01.01.31.06
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 01 Apr 2025 01:31:07 -0700 (PDT)
+From: Zhang Chen <zhangckid@gmail.com>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Zhang Chen <zhangckid@gmail.com>,
+	qemu-trivial@nongnu.org
+Subject: [PATCH] docs/arm: Add apple HVF host for supported guest CPU type
+Date: Tue,  1 Apr 2025 16:31:02 +0800
+Message-ID: <20250401083102.72845-1-zhangckid@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250401002633.738345-1-saman@enumclass.cc>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.198,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,107 +95,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 31, 2025 at 07:26:33PM -0500, saman wrote:
-> This change introduces initial support for tracing and logging in Rust-based
-> QEMU code. As an example, tracing and logging have been implemented in the
-> pl011 device, which is written in Rust.
-> 
-> - Updated `rust/wrapper.h` to include the `qemu/log.h` and `hw/char/trace.h` header.
-> - Added log.rs to wrap `qemu_log_mask` and `qemu_log_mask_and_addr`
-> - Modified `tracetool` scripts to move C function implementation from
->   header to .c
-> - Added log and trace in rust version of PL011 device
-> 
-> Future enhancements could include generating idiomatic Rust APIs for tracing
-> using the tracetool scripts
-> 
-> Signed-off-by: saman <saman@enumclass.cc>
-> ---
->  include/qemu/log-for-trace.h        |  5 +--
->  rust/hw/char/pl011/src/device.rs    | 34 +++++++++++++++---
->  rust/hw/char/pl011/src/registers.rs | 20 +++++++++++
->  rust/qemu-api/meson.build           |  1 +
->  rust/qemu-api/src/lib.rs            |  1 +
->  rust/qemu-api/src/log.rs            | 54 +++++++++++++++++++++++++++++
->  rust/wrapper.h                      |  2 ++
->  scripts/tracetool/format/c.py       | 16 +++++++++
->  scripts/tracetool/format/h.py       | 11 ++----
->  util/log.c                          |  5 +++
->  10 files changed, 131 insertions(+), 18 deletions(-)
->  create mode 100644 rust/qemu-api/src/log.rs
-> 
-> diff --git a/scripts/tracetool/format/c.py b/scripts/tracetool/format/c.py
-> index 69edf0d588..f2d383f89c 100644
-> --- a/scripts/tracetool/format/c.py
-> +++ b/scripts/tracetool/format/c.py
-> @@ -43,6 +43,22 @@ def generate(events, backend, group):
->              sstate = "TRACE_%s_ENABLED" % e.name.upper(),
->              dstate = e.api(e.QEMU_DSTATE))
->  
-> +        cond = "true"
-> +
-> +        out('',
-> +            'void %(api)s(%(args)s)',
-> +            '{',
-> +            '    if (%(cond)s) {',
-> +            '        %(api_nocheck)s(%(names)s);',
-> +            '    }',
-> +            '}',
-> +            api=e.api(),
-> +            api_nocheck=e.api(e.QEMU_TRACE_NOCHECK),
-> +            args=e.args,
-> +            names=", ".join(e.args.names()),
-> +            cond=cond
-> +            )
-> +
->      out('TraceEvent *%(group)s_trace_events[] = {',
->          group = group.lower())
->  
-> diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-> index ea126b07ea..16b360ae49 100644
-> --- a/scripts/tracetool/format/h.py
-> +++ b/scripts/tracetool/format/h.py
-> @@ -74,17 +74,10 @@ def generate(events, backend, group):
->          cond = "true"
->  
->          out('',
-> -            'static inline void %(api)s(%(args)s)',
-> -            '{',
-> -            '    if (%(cond)s) {',
-> -            '        %(api_nocheck)s(%(names)s);',
-> -            '    }',
-> -            '}',
-> +            'void %(api)s(%(args)s);',
->              api=e.api(),
-> -            api_nocheck=e.api(e.QEMU_TRACE_NOCHECK),
->              args=e.args,
-> -            names=", ".join(e.args.names()),
-> -            cond=cond)
-> +            )
->  
->      backend.generate_end(events, group)
->
+In my test, latest QEMU already support Apple HVF for -cpu host and max.
 
-This is a non-trivial degradation for the tracing code. The code is
-generated in an inline function in the header so that when a probe
-point is not active, it has as little overhead as possible - with
-some backends it will just a 'nop' instruction.  With this change
-every probe is turned into a function call with no possiblity to
-optimize away this overhead.
+From guest VM lscpu:
 
-IMHO tracing in Rust needs to be done by generating native Rust
-code for the (sub)set of trace  backends that we care about, and
-not attempt to wrap the C trace code from Rust.
+Architecture:             aarch64
+  CPU op-mode(s):         64-bit
+  Byte Order:             Little Endian
+CPU(s):                   11
+  On-line CPU(s) list:    0-10
+Vendor ID:                Apple
+  Model name:             -
+    Model:                0
+    Thread(s) per core:   1
+    Core(s) per socket:   11
+    Socket(s):            1
+    Stepping:             0x0
+    BogoMIPS:             48.00
+    Flags:                fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asim
+                          dfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint
 
-With regards,
-Daniel
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+---
+ docs/system/arm/virt.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+index adf446c0a2..6a719b9586 100644
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -70,11 +70,11 @@ Supported guest CPU types:
+ - ``cortex-a76`` (64-bit)
+ - ``cortex-a710`` (64-bit)
+ - ``a64fx`` (64-bit)
+-- ``host`` (with KVM only)
++- ``host`` (with KVM and HVF only)
+ - ``neoverse-n1`` (64-bit)
+ - ``neoverse-v1`` (64-bit)
+ - ``neoverse-n2`` (64-bit)
+-- ``max`` (same as ``host`` for KVM; best possible emulation with TCG)
++- ``max`` (same as ``host`` for KVM and HVF; best possible emulation with TCG)
+ 
+ Note that the default is ``cortex-a15``, so for an AArch64 guest you must
+ specify a CPU type.
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.49.0
 
 
