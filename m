@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF261C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8475FC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbsH-0005Dq-3Q; Tue, 01 Apr 2025 09:41:53 -0400
+	id 1tzbsa-0005Uk-32; Tue, 01 Apr 2025 09:42:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbro-00058N-Ia
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:41:26 -0400
+ id 1tzbsT-0005L2-5o
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:05 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbrl-0006Wn-5G
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:41:23 -0400
+ id 1tzbsR-0006Zf-K0
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743514881; x=1775050881;
+ t=1743514923; x=1775050923;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BZUvfQp9mnJI50UJFjmIm2ZYfyW4FPAxqgosh1xyGt4=;
- b=Pacc2zY8mL577lkqmFmfroJ+iEx4GouBG3uMT9cjhdW5L/MjniwZPzR/
- EztFRlgc8U4d88oDXVWI7mbGfhklV285C9w0+hrP/xW8GNtwe+OU4iMeb
- 7qb3DKYvf1OZK4o1hTPG6JYTRaNyF7cSKEDYkbi7Q3j51KUL6eO1zSrfE
- T5EBTlSJIDuGzrpUPwR+JT02wIVtGdVj+7zC/zdxUKna2DkLSrKPITZyv
- 9nHXil6YnuZTWsgQA7FVCgDju66LxwdqUDKTpRBR8nlLqnB5LmcT1/oAB
- Xgw6y7WvmGzoGyzjte8vmY6Z07+0L+qLz4pg0ZHc7FOn8Lja+85OUweMT g==;
-X-CSE-ConnectionGUID: x55ozo+pTvGDKjSj6XqG8g==
-X-CSE-MsgGUID: SfTS2qV7Rl+ZK9LsnAsJbg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433150"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433150"
+ bh=jj65KKNKTnmksAnaDvoY5h2mRN3IOIbJ7P4DuI4Zdgw=;
+ b=QBn9bqWuDd7zVfvRqz4o0OnREoNd/BiU2AV25qeaeW46GPgFcElvvbtS
+ efPJJ1XWD9hWux9u4FjWkF/s/dJvHKWV+4M2jbRtL/v72dRDak5QB5bs/
+ n/nKqMyWsCkaUBDvdTF2yxUpB8f1o/OVjn/K2CfC5rwvoqE20R1ssfU09
+ cqSsMF3IfuD7arttTtp79KBYewCnPIHgvIBta/r8eI1gtbYE7MdYckJnE
+ Y3szU3L1vrWoz7Iy2iPCBhTADhPx0HT1x+tVz/wmOdnXaTHGOQaTdEUyN
+ OTr8203GH3uXZXJnLXwJXI58Y9ZKaWdXixxgCoX3oBJO1Fb+YHNmLV+ua Q==;
+X-CSE-ConnectionGUID: 7686ZTpySHawNIOVjqJvEg==
+X-CSE-MsgGUID: AsPwLgRIT/++AD+CgJbbtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433253"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433253"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:41:18 -0700
-X-CSE-ConnectionGUID: e4qxD9c2TTq+94kJhYaflw==
-X-CSE-MsgGUID: 7aba2GflQK62g0VD8JVVoA==
+ 01 Apr 2025 06:41:47 -0700
+X-CSE-ConnectionGUID: RwrVdtcmRu2CEFta/INxAg==
+X-CSE-MsgGUID: a8oJgQWoRd2uKFhbq2NC5g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639866"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639973"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:16 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:44 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -55,9 +55,10 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 03/55] i386/tdx: Implement tdx_kvm_type() for TDX
-Date: Tue,  1 Apr 2025 09:01:13 -0400
-Message-Id: <20250401130205.2198253-4-xiaoyao.li@intel.com>
+Subject: [PATCH v8 14/55] i386/tdx: Set APIC bus rate to match with what TDX
+ module enforces
+Date: Tue,  1 Apr 2025 09:01:24 -0400
+Message-Id: <20250401130205.2198253-15-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
@@ -88,60 +89,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX VM requires VM type to be KVM_X86_TDX_VM. Implement tdx_kvm_type()
-as X86ConfidentialGuestClass->kvm_type.
+TDX advertises core crystal clock with cpuid[0x15] as 25MHz for TD
+guests and it's unchangeable from VMM. As a result, TDX guest reads
+the APIC timer as the same frequency, 25MHz.
+
+While KVM's default emulated frequency for APIC bus is 1GHz, set the
+APIC bus rate to match with TDX explicitly to ensure KVM provide correct
+emulated APIC timer for TD guest.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
 Changes in v6:
- - new added patch;
+ - new patch;
 ---
- target/i386/kvm/kvm.c |  1 +
- target/i386/kvm/tdx.c | 12 ++++++++++++
- 2 files changed, 13 insertions(+)
+ target/i386/kvm/tdx.c | 13 +++++++++++++
+ target/i386/kvm/tdx.h |  3 +++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6c749d4ee812..4f1cfb529c19 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -191,6 +191,7 @@ static const char *vm_type_name[] = {
-     [KVM_X86_SEV_VM] = "SEV",
-     [KVM_X86_SEV_ES_VM] = "SEV-ES",
-     [KVM_X86_SNP_VM] = "SEV-SNP",
-+    [KVM_X86_TDX_VM] = "TDX",
- };
- 
- bool kvm_is_vm_type_supported(int type)
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index ec84ae2947bb..d785c1f6d173 100644
+index 77ddb2655c53..1a99b677686e 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -12,8 +12,17 @@
- #include "qemu/osdep.h"
- #include "qom/object_interfaces.h"
+@@ -253,6 +253,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+                         sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
  
-+#include "kvm_i386.h"
- #include "tdx.h"
++    if (!kvm_check_extension(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS)) {
++        error_setg(errp, "KVM doesn't support KVM_CAP_X86_APIC_BUS_CYCLES_NS");
++        return -EOPNOTSUPP;
++    }
++
++    r = kvm_vm_enable_cap(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS,
++                          0, TDX_APIC_BUS_CYCLES_NS);
++    if (r < 0) {
++        error_setg_errno(errp, -r,
++                         "Unable to set core crystal clock frequency to 25MHz");
++        return r;
++    }
++
+     if (tdx_guest->mrconfigid) {
+         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
+                               strlen(tdx_guest->mrconfigid), &data_len, errp);
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index e472b11fb0dd..d39e733d9fcc 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -16,6 +16,9 @@ typedef struct TdxGuestClass {
+     X86ConfidentialGuestClass parent_class;
+ } TdxGuestClass;
  
-+static int tdx_kvm_type(X86ConfidentialGuest *cg)
-+{
-+    /* Do the object check */
-+    TDX_GUEST(cg);
++/* TDX requires bus frequency 25MHz */
++#define TDX_APIC_BUS_CYCLES_NS 40
 +
-+    return KVM_X86_TDX_VM;
-+}
-+
- /* tdx guest */
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
-                                    tdx_guest,
-@@ -40,4 +49,7 @@ static void tdx_guest_finalize(Object *obj)
+ typedef struct TdxGuest {
+     X86ConfidentialGuest parent_obj;
  
- static void tdx_guest_class_init(ObjectClass *oc, void *data)
- {
-+    X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
-+
-+    x86_klass->kvm_type = tdx_kvm_type;
- }
 -- 
 2.34.1
 
