@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F9FAC36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99BE0C36018
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 08:33:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzX39-0001Di-MK; Tue, 01 Apr 2025 04:32:47 -0400
+	id 1tzX3K-0001SJ-19; Tue, 01 Apr 2025 04:32:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzX34-00019E-C7
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:32:43 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzX3D-0001Mc-3F
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:32:51 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzX32-00011l-L4
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:32:42 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso49705035e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 01:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzX3B-00012w-E9
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 04:32:50 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43cebe06e9eso40389125e9.3
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 01:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743496358; x=1744101158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743496367; x=1744101167; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XS0/MV5U2fkQq7CgKOLpKd+Dfbe6P48Fmqa21p93QGc=;
- b=F54sy2eBBjeT9X/vSxM6qwm845q/lA1bc7T9ewGyTyhcPVeMVgqJ3R7FkCgmaE3ZTa
- +TEEBzIwsSXAuRaXXg3NiKjklq3hlEiQ4pnDbRnW5APnPVQ6ayQCC+pbUvPn4suqS5Vz
- B7Kp3e5wL0aShudB/Ybex6MpvqQPFGtHnruviK0okmepDMD4joPVSXvTuWja/ZNfK5th
- Mju9rj4SMfujCBJO0oF5s4h0yC2RB0VwTRyEG+CUPaw3WEv2M7QptMqpVDHfvGebezIU
- iZ16Y/Blil1dNa10Sl0NjahtAupvugA1gb/EuRDNjaCycw+hY+WzQcUkOumvPdvHASoN
- IRHg==
+ bh=2hqxnb6HRgZx4zMBcClLax+N04cp1fAmMIfTPJWgUr0=;
+ b=oiwQc0DdeFREHSFMUbvm4hA2756LIT3ut5eEhGlz8rm45AKHLMd9/Nox9YkbX89X5s
+ vtHQkTl9oMrApaUUNKhrRIuonOvUrsGvDdAlkFVbB0Xq0wePFJNBzuqvQw7XazGuSDWk
+ S5EeZdfjmBtWs3k+wKziwIZWFFguilYD6E692CG4NUIGM41bxPcjb4zbpLAm4XyqdEwc
+ w8xynJJWyaLo0PC5PX5aiQoL80bIeQiBgevEnaJpzyw1kZXBJCvelSLCJZupobZUebZ3
+ k+ZN6DIWCwgvVi5AIPieiop/CLgQOPeB941NuKBD0L80VUBYtj9zyw+ezTrHEeo2Nj3M
+ QQWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743496358; x=1744101158;
+ d=1e100.net; s=20230601; t=1743496367; x=1744101167;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XS0/MV5U2fkQq7CgKOLpKd+Dfbe6P48Fmqa21p93QGc=;
- b=guf32UoxD1q9wRst4/vlZyhueNq3/mBe44Si+ubPbcowL2/oqqtrQ+VvBc1TJn4I1I
- 0boqmenVY1pJduSxtq7+uEvLtyvvPMG7M2qFBgCMpfK4AU+849rQOqcACHRA2pP/TRPd
- LP+X4LPy1qcXgfAHgfd1leEIbd0Xy+t110lvK0CBjLLhhBr0qXxej/qIJgyZ1z9EysQv
- 2Xfs7uyp4OTmwcjGtsWpSVmHSQ7CKCZBCZ0R59jbv9cNdrrP2RYizB9bDjF8nP94PIow
- 1K2oN0DHeC7OoahIznlLaiHegJ2ro234KCgRRunA5nUnwBssNg4yIaP1skWaZAlO4six
- M43A==
-X-Gm-Message-State: AOJu0YxF4q7K8vLJLW7I36+kSEzLf+X7NFwOUfFly0xrc5q53GvoG775
- QgXCqAd2g2yVqOsWwz6L8uXQ1H8KFd3dpp87ECXr1ID3XHAdylUbFb9fviIN2eeUFYkQq2Rb79w
- F
-X-Gm-Gg: ASbGncvz1HPfbmSViWxJ5aV61+RTicMfY/zY/uFi0XwMCRCKObUPN3SiluY32g0egm4
- fHkkKs0tZxcGkQaB9N57egLjb92udS4ldq3xASKd21/bU/H81wZfsZkHkpBhqNs41G/We6ngCtD
- 7YEkT27rp5iKhMt0ZQvGT4hvvdoS3EwEZE2+gUMHadTFzcZ68DXNfA5xXiGQuGnooANj5k719yg
- ozeGgSQwQvnb6cbEG2rMfgCOF8m6zpO+9klqg2Ltrg/v1iHHMAn0YT0iKzCMtjoysp5JU/yKqXV
- iA61OZAFLXH9ixiX8/pcA6BYvBXJeDg0gkhnbzbSQ4mk93DhlsNyvPVKc4Hlvi+TDDiNnzqhFhh
- 6NMpnoqhNuU6uYniZqwg=
-X-Google-Smtp-Source: AGHT+IG/rT0h+fH/XKSZjJkcakb49KbMAaDZzoxtSvAbjub2aMmS/TZApebIsgR+dQ5C9bMMOhHVbA==
-X-Received: by 2002:a05:6000:2910:b0:391:3d12:9afa with SMTP id
- ffacd0b85a97d-39c120dc50emr9963334f8f.21.1743496358204; 
- Tue, 01 Apr 2025 01:32:38 -0700 (PDT)
+ bh=2hqxnb6HRgZx4zMBcClLax+N04cp1fAmMIfTPJWgUr0=;
+ b=hXAJF34OhDnr5d+NeGo9o6HNNg0+LBDUqC7jh4Wj+rrD3jcu4C2vjqZugH55oM1M1V
+ 3VXwv7P+AM2L7y7eY/XtL/kMcNWqwI5wC/H3Ngiq1WWwNuTfm+PhVgqnap7uhSs4HP7N
+ lf+0eWJRvSKHL1Qn4m56665ZSVwRZIVo9Kr3t4eqDCNoUwSrEQ0vijvIjOu78IJeepHk
+ I0ZYdSXY2KsMhVHE5iB4sesHyUSnBcSnIzi+qkO8K4ONWIjzyRWdCQXBIPRoJjtibTTV
+ og2vGCizy0e8G6pdPvbyTFezGCLZ2R8K/PlLU7EFzUSzeNeW28J+2O7ah9T7x3KkjWWJ
+ pGDw==
+X-Gm-Message-State: AOJu0Yzd0sN1jmnlq334pbjwfrPBXMa54B44kzSt5VrvI40laCEGGi9F
+ wM/vYe/g8238ztW8iw1OOht8YZSXUOopx3oAmnxnu6O9dZYV5QymujJ1kXkVIZE5lHXEgImpW12
+ 4
+X-Gm-Gg: ASbGncu4HxZ26oGJQyVFBcyEbP1L1BxPWLw/7KcqO6XB4BI2z3kN8oHG4r1ogY76dZu
+ v8G/gLEv7iBchq3WStST/C3Vwggd7ZoYJIH7KyMYeiCpYw5SViXrwGmRnpqEa8j9xiNAMXMS8P/
+ gYezHsCjxm84msY7IGOcCqwl//KaNZbFFhaXklrDFfH3A4HQZdAotmhw0NRbCQSEjYSQsQRZUQM
+ S+01WvLiJKHEnXrawjnO7Zmznz2Wt/sZN7Q47t47qQCEfQaYGmVdWVG0sBru9KiMUCPm/Wlzk/C
+ +C7hM3TBxwZVwrZTrpBeF3XEjH5UNsEgU5JVfz6fKyGxo4CHBX8AWS9r4rSJBUNo4rNK/6lpfze
+ cpuy4YfcPSiPYEqX7BCU=
+X-Google-Smtp-Source: AGHT+IHGOURURP1beKwRoF7gU8FCjJsNnPQEnCWFihYh6MQq+ifMcOgvbQwgsWvSS0/q6iXyHGkbUw==
+X-Received: by 2002:a05:600c:34c7:b0:43d:26e3:f2f6 with SMTP id
+ 5b1f17b1804b1-43db61d6ac0mr124099915e9.5.1743496367479; 
+ Tue, 01 Apr 2025 01:32:47 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b658a1csm13821863f8f.17.2025.04.01.01.32.37
+ 5b1f17b1804b1-43d8fbc12bbsm148735865e9.13.2025.04.01.01.32.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Apr 2025 01:32:37 -0700 (PDT)
+ Tue, 01 Apr 2025 01:32:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 1/3] exec: Restrict 'cpu-ldst-common.h' to accel/tcg/
-Date: Tue,  1 Apr 2025 10:32:30 +0200
-Message-ID: <20250401083232.33773-2-philmd@linaro.org>
+Subject: [PATCH-for-10.1 3/3] exec: Do not include 'accel/tcg/cpu-ldst.h' in
+ 'exec-all.h'
+Date: Tue,  1 Apr 2025 10:32:32 +0200
+Message-ID: <20250401083232.33773-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250401083232.33773-1-philmd@linaro.org>
 References: <20250401083232.33773-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,64 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Only 2 files requiring "accel/tcg/cpu-ldst.h" API do not
+include it:
+- accel/tcg/cpu-exec.c
+- target/arm/tcg/sve_helper.c
+Include it there and remove it from "exec/exec-all.h".
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/{exec => accel/tcg}/cpu-ldst-common.h | 6 +++---
- include/exec/cpu_ldst.h                       | 2 +-
- accel/tcg/translator.c                        | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
- rename include/{exec => accel/tcg}/cpu-ldst-common.h (97%)
+ include/exec/exec-all.h     | 3 ---
+ accel/tcg/cpu-exec.c        | 1 +
+ target/arm/tcg/sve_helper.c | 1 +
+ 3 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/cpu-ldst-common.h b/include/accel/tcg/cpu-ldst-common.h
-similarity index 97%
-rename from include/exec/cpu-ldst-common.h
-rename to include/accel/tcg/cpu-ldst-common.h
-index c46a6ade5db..8bf17c2fab0 100644
---- a/include/exec/cpu-ldst-common.h
-+++ b/include/accel/tcg/cpu-ldst-common.h
-@@ -4,8 +4,8 @@
-  * SPDX-License-Identifier: LGPL-2.1-or-later
-  */
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 70608a11b60..944b579d91c 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -20,9 +20,6 @@
+ #ifndef EXEC_ALL_H
+ #define EXEC_ALL_H
  
--#ifndef CPU_LDST_COMMON_H
--#define CPU_LDST_COMMON_H
-+#ifndef ACCEL_TCG_CPU_LDST_COMMON_H
-+#define ACCEL_TCG_CPU_LDST_COMMON_H
+-#if defined(CONFIG_USER_ONLY)
+-#include "accel/tcg/cpu-ldst.h"
+-#endif
+ #include "exec/mmu-access-type.h"
+ #include "exec/translation-block.h"
  
- #ifndef CONFIG_TCG
- #error Can only include this header with TCG
-@@ -119,4 +119,4 @@ uint32_t cpu_ldl_code_mmu(CPUArchState *env, vaddr addr,
- uint64_t cpu_ldq_code_mmu(CPUArchState *env, vaddr addr,
-                           MemOpIdx oi, uintptr_t ra);
- 
--#endif /* CPU_LDST_COMMON_H */
-+#endif /* ACCEL_TCG_CPU_LDST_COMMON_H */
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 63847f6e618..74761ba5f30 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -67,7 +67,7 @@
- #endif
- 
- #include "exec/cpu-common.h"
--#include "exec/cpu-ldst-common.h"
-+#include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/abi_ptr.h"
- 
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index c53bbdef99f..034f2f359ef 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -11,7 +11,7 @@
- #include "qemu/bswap.h"
- #include "qemu/log.h"
- #include "qemu/error-report.h"
--#include "exec/cpu-ldst-common.h"
-+#include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/target_page.h"
- #include "exec/translator.h"
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 6c6098955f0..8057a5a0ce8 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -22,6 +22,7 @@
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+ #include "hw/core/cpu.h"
++#include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "trace.h"
+ #include "disas/disas.h"
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 9b0d40c9e18..87b6b4b3e64 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -30,6 +30,7 @@
+ #include "tcg/tcg.h"
+ #include "vec_internal.h"
+ #include "sve_ldst_internal.h"
++#include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/cpu-ops.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "user/page-protection.h"
 -- 
 2.47.1
 
