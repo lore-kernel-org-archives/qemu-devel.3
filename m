@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51598C36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF50AC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzcq6-00063b-E8; Tue, 01 Apr 2025 10:43:42 -0400
+	id 1tzcr9-0006gi-Un; Tue, 01 Apr 2025 10:44:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzcq2-00062l-Jn
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:43:38 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzcq0-0007JR-TM
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:43:38 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cfdc2c8c9so32157225e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 07:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743518614; x=1744123414; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=S8mflKXKpWk8z4I1ix0nqw4ZYOxugViLuZPJy2kngHM=;
- b=fp+DxSAb+Y+wDj8JuryQzaLxl5REy2cnUolY93sV5ecfqLNihHe5ym9gauJt4DqRHn
- LmED9hEEg3fHJCaGdUCaqNgB2ZNiq42Svdxj4Vi/o5mBvxrq6Pa4GkxsKxtPZ4I0IlnL
- t/dPD90QPQejBrR/7kmDD7WDYTZ4Qr27bUFMXLzM09vumKabJb8VLuN9A3tUtUxgUblC
- rDfwjxEDX435NncFn7wcXFHaIrYzEVLw+It9cO3On3SOaHLy0SLBqUzcfzp7QtJUOLZO
- 5+mrTkg4tiywA1vnKAiLgYqmPKpPpXL96Ljo7RT1S29aGGSd0WlTJNlCqPtVosTbSwLf
- A7mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743518614; x=1744123414;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S8mflKXKpWk8z4I1ix0nqw4ZYOxugViLuZPJy2kngHM=;
- b=h10VXB4np9j1MaCx+lnxc/es0x2OVJ4Xrxo3y13JO4dcPLOVUnxul5lFFoLd9RR5Zs
- Sx7ltUXQ98W0S2ob1wrpHGHQ8dt0QLyZeFj9s2GH59GogPnSOuGYx0KZimovOFhkgq5U
- 6ap4RiEb1rqPT72QXmLNcc0urREujRXPNAyD8gxX7eLtztX+Xu6Aia5IKCQLxoFUo1Yz
- lpvfXZwJo2OB/5vFbMJLuSTUxI+N7ObPEakhst/71SMPkN9D/CBF6eoWXaGzuKZQ1j2l
- /zCpcTV7pS3q6HfO3xbzGXksvgJdpEZ+NwkUljWsILboXjBsN3xCQFvJWP9owMRFUf9Z
- FUrA==
-X-Gm-Message-State: AOJu0YwrtOASDd4hjDHjyzTj/vObPvmKIOjB+4MoHkEisWNl02OaUaYO
- BE6zRjDfIc0YKJAdY5zEmFW1v9mHWRqX/HOitr/rMOwVlZ//JLXwkdc3CU3XxVMgZVVA9ROrY8d
- e
-X-Gm-Gg: ASbGncsESRQyXJ832bllnuqHQnTp3TOvDmxj/1YjDsXQf+Z86RUV/xpKja/LsAU8Wyn
- mnH1dbRMUD2CwWsXcZXKa2/cqobjTz+Ct9zZcC+Jzy3Y1kfY58ay5/O1gh30v3IfuyYUgNJebLr
- F7AdoXEMP1+aYUoIjFRU9UuNBsrGJaw91XF4kbYoHmzcmI5J5XHeiw407z8zVWNSk3dn6G06ogO
- jqV0ALkOlwhOjlVmJhbqUZSB5DB3yEXuA6Z1iLdctCFA2IXrSqfdbqQUCWVhcFT+72EvA4anFnp
- wzyfmFI8sg7ds+GCEiGvZSDOjotlffbU/6wrfMd2cptnmoUymCGdljj63yJj1jQY/sOpYBdJ+nG
- gpXd/1MK/o6b84gJvFVU=
-X-Google-Smtp-Source: AGHT+IFTb4/cPwJxF9myit659O0dSPOvY4ecQuy9BoOLJwcIXnEScRFZFdBAmBIhuuY0gD52iZHLpw==
-X-Received: by 2002:a05:600c:154a:b0:43c:e467:d6ce with SMTP id
- 5b1f17b1804b1-43db61d75b1mr121470845e9.4.1743518614336; 
- Tue, 01 Apr 2025 07:43:34 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a4294sm14004763f8f.89.2025.04.01.07.43.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Apr 2025 07:43:33 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Emilio G . Cota" <cota@braap.org>, Stefan Weil <sw@weilnetz.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Helge Konetzka <hk@zapateado.de>
-Subject: [PATCH-for-10.0] tcg: Allocate TEMP_VAL_MEM frame in temp_load()
-Date: Tue,  1 Apr 2025 16:43:32 +0200
-Message-ID: <20250401144332.41615-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzcr2-0006dJ-RG
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzcr1-0007OD-2X
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743518677;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oRfi7+aOO90UlCp+zMuuVC/PfEnq+pSP3PfBa4bDqOk=;
+ b=LwAGKVrMOczaVrtzj5qduBQDVwH9DYjWjDN0wFEgQFIvcR6JFUVgcX0Jl/bkzDlBBFOkfA
+ kTdHhuOVs2FRCNFs5r4VOVvkoL80hMLYQOca3BKh0i5mK+jNZMxGFIITTfb+10Z3tT8FCW
+ WHdu0P/K4WLTcLuM6qthGB+WE+zkBRU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-7hW_8cIPMJq9gp3HnAjWvg-1; Tue,
+ 01 Apr 2025 10:44:34 -0400
+X-MC-Unique: 7hW_8cIPMJq9gp3HnAjWvg-1
+X-Mimecast-MFC-AGG-ID: 7hW_8cIPMJq9gp3HnAjWvg_1743518674
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B01619560AB; Tue,  1 Apr 2025 14:44:33 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.38])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 22F1B1955BEF; Tue,  1 Apr 2025 14:44:32 +0000 (UTC)
+Date: Tue, 1 Apr 2025 10:44:31 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: ~h0lyalg0rithm <surajshirvankar@gmail.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH qemu 1/1] Add IOURING_SETUP_SINGLE_ISSUER flag to improve
+ iouring performance
+Message-ID: <20250401144431.GC277986@fedora>
+References: <174293621917.22751.11381319865102029969-0@git.sr.ht>
+ <174293621917.22751.11381319865102029969-1@git.sr.ht>
+ <Z-Q1yDqmS3gniW4X@redhat.com> <20250326174629.GA909841@fedora>
+ <Z-VPMWmneXR69C8P@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="559c3d6BVJuAIZ6+"
+Content-Disposition: inline
+In-Reply-To: <Z-VPMWmneXR69C8P@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,33 +89,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Be sure to allocate the temp frame if it wasn't.
 
-Fixes: c896fe29d6c ("TCG code generator")
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-Reported-by: Helge Konetzka <hk@zapateado.de>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2891
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2899
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tcg/tcg.c | 3 +++
- 1 file changed, 3 insertions(+)
+--559c3d6BVJuAIZ6+
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index e8950df2ad3..dfd48b82642 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -4671,6 +4671,9 @@ static void temp_load(TCGContext *s, TCGTemp *ts, TCGRegSet desired_regs,
-         ts->mem_coherent = 0;
-         break;
-     case TEMP_VAL_MEM:
-+        if (!ts->mem_allocated) {
-+            temp_allocate_frame(s, ts);
-+        }
-         reg = tcg_reg_alloc(s, desired_regs, allocated_regs,
-                             preferred_regs, ts->indirect_base);
-         tcg_out_ld(s, ts->type, reg, ts->mem_base->reg, ts->mem_offset);
--- 
-2.47.1
+On Thu, Mar 27, 2025 at 02:14:25PM +0100, Kevin Wolf wrote:
+> Am 26.03.2025 um 18:46 hat Stefan Hajnoczi geschrieben:
+> > On Wed, Mar 26, 2025 at 06:13:44PM +0100, Kevin Wolf wrote:
+> > > Am 25.03.2025 um 21:49 hat ~h0lyalg0rithm geschrieben:
+> > > > From: Suraj Shirvankar <surajshirvankar@gmail.com>
+> > > >=20
+> > > > Signed-off-by: Suraj Shirvankar <surajshirvankar@gmail.com>
+> > > > ---
+> > > >  util/fdmon-io_uring.c | 8 +++++++-
+> > > >  1 file changed, 7 insertions(+), 1 deletion(-)
+> > >=20
+> > > As Stefan already mentioned, the commit message should say why we want
+> > > to set this flag and why it is correct to do so.
+> > >=20
+> > > Is there a reason why you change the io_uring_queue_init() call in
+> > > util/fdmon-io_uring.c, but not the one in block/io_uring.c?
+> >=20
+> > I only asked Suraj to look at util/fdmon-io_uring.c because I expect
+> > block/io_uring.c's io_uring context to go away soon.
+> >=20
+> > In my local io_uring branches I have prepared commits that replace the
+> > io_uring context in block/io_uring.c with aio_add_sqe() calls that use
+> > the AioContext's fdmon-io_uring.c io_uring context.
+>=20
+> Then we should either document this intention in the commit message or
+> make this one Based-on your changes.
+
+Hi Suraj,
+Please rebase your patch on my branch here:
+https://gitlab.com/stefanha/qemu/-/tree/aio_add_sqe
+
+My series removes the io_uring context from block/io_uring.c, unifying
+it with util/fdmon-io_uring.c. That way there's no need to duplicate
+io_uring context setup and your SINGLE_ISSUER change only needs to be
+done in util/fdmon-io_uring.c.
+
+The email thread for my series is here:
+https://lore.kernel.org/qemu-devel/20250401142721.280287-1-stefanha@redhat.=
+com/T/#t
+
+You can add "Based-on: 20250401142721.280287-1-stefanha@redhat.com" to
+the cover letter of your patch to indicate that this does not apply to
+qemu.git/master but on top of my patch series.
+
+Stefan
+
+--559c3d6BVJuAIZ6+
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfr+88ACgkQnKSrs4Gr
+c8h4dgf+O57JFah1j0QFQWoU4+5HfNVhm6lHTVUN75ieelrd3yVTgl69Ld11vNBo
+3CRIC+nRK1MBpNmxqcTSTYo/6B0X1A7TIKYVqWG+je1O0d8oUOLOWgdm34BVmi0R
+MouEHvxJlDg3zWjZucGS3gAzenZ98yjMYp1n+W4qMQdSMvnS6B/eF7MjaCGenx+g
+5I1XsPKF8AUYre3T27hjBZFCl8N5m99agVijOa3vhkpdytMx9LJgJnoUW/V7PWrb
+TTTl1jLBgpr9y4+jYnZb89juUaCD0L7nc15kkKU5m77phc+xVub/VEJjdfAPqpnn
+jFpucFSfzd3IWQI6oM+yK4yosU9+vg==
+=PFlw
+-----END PGP SIGNATURE-----
+
+--559c3d6BVJuAIZ6+--
 
 
