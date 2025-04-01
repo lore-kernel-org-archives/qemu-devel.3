@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CD0C36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFEC5C36014
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzYRS-0001W3-3T; Tue, 01 Apr 2025 06:01:58 -0400
+	id 1tzYsg-0007D0-W0; Tue, 01 Apr 2025 06:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tzYRO-0001VW-Js; Tue, 01 Apr 2025 06:01:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1tzYRL-0004rG-MF; Tue, 01 Apr 2025 06:01:53 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5319lmZt012220;
- Tue, 1 Apr 2025 10:01:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kGumWv
- hrzQ7/TGFbJdH5Lnz6XqQizoK1UIIjgaDDUig=; b=g2h4F3Yn27PVomJ8wARCpi
- lNEVNOnm14/G5rgEsbvJBY9PQlt12KDEgyq9Znx/Gwrqeq23IVAdW4qBO1ZvKnbg
- HswE6nkRE0/uXkMhNRGknos13VPX1P9HYjXGReUvPpFlRjwfE076GbHwE5CosgrI
- pE0os0WFemzn5cxtXixt/b9PMncN6704z1ghKmLtn5bu9T9LBL2gxcVdzpd0NXp1
- QBiTu8Ko0Zs7Biojp9wRrgm5JJYeyypDiPiJfJeGOtmnbBqbBELe2JYIl7slKCSV
- MICV7C63CuLoJ4Fx4ZIXHrfO6bOLvDDZtlgHKvLv7QWzx1+3buLkzQuPqJPZjxtg
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45r290jvag-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Apr 2025 10:01:42 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 531A0tsX008076;
- Tue, 1 Apr 2025 10:01:41 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45r290jva6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Apr 2025 10:01:41 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5317GJGC019392;
- Tue, 1 Apr 2025 10:01:40 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45pu6t26h8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Apr 2025 10:01:40 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 531A1b4945875600
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 1 Apr 2025 10:01:37 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44E862005A;
- Tue,  1 Apr 2025 10:01:37 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94D6B2004F;
- Tue,  1 Apr 2025 10:01:35 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.109.199.128])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue,  1 Apr 2025 10:01:35 +0000 (GMT)
-Date: Tue, 1 Apr 2025 15:31:29 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2] target/ppc: Deprecate Power8E and Power8NVL
-Message-ID: <fk3bm7neihwf2dkvgpw3xjdjdvds7ajxl5xy5t5ve23czxuzgm@6sh5sqglvf6z>
-References: <20250329142641.2502003-1-adityag@linux.ibm.com>
- <9eca6d79-7910-43df-850a-bc55a701d964@kaod.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tzYse-0007C7-Mc
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:30:04 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tzYsb-0002tW-OI
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:30:04 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43cf257158fso37997235e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:30:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743503399; x=1744108199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=exM0qDUXriN627sYJi8hnsjMqODQyivFPPjPhdDB09s=;
+ b=Wb0VppCo60UHlRXlexvCom4lyRtc5FiZVAdywbQi3umKM6pv18xenyUUrfT+Sx/FPs
+ gMr4MRkfPtqURoodju4v0rAK727d0tIYpyIBwzW2oYmM+kYdE08iePp+3Gsx2pHPCRu9
+ Q3Jpj1kedkr5GWqfLcOXPOWlsW3q3WGTa53WJMxefXn4J3twnenxWWQCxtdhqHyx5fpY
+ Gx7VIJPra540AmuRvqB0gGLK5db709BKbbDdRO0Xpbz7rrB7x918Uixx0ykhEXd2WLZ8
+ kgVhkqm5cmiGD1cDblZ2FLuNNmk0BAmk+BXF29twVEKe3lzLiHRJXRvXrMcSCRlTVzOz
+ Uz7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743503399; x=1744108199;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=exM0qDUXriN627sYJi8hnsjMqODQyivFPPjPhdDB09s=;
+ b=ME9zxZAQHQQrb+ZcDu0GCNcJK1iMu+7Tw60OGD+WKjnEJXDBCnX1fxpVVUjs6QBD2M
+ 1Wwx4Kc+lYhuI7Tl4fwR7KHfwh8Yh08cAGOZ9CPHUuMOjDnab6LnS7FAxztlX9nCww47
+ bfP+xXluRtkGy9t0Xe4WI4WyzViv37Tvkmh7KlDl5DxrRXxM0+sMCSt/dSKhu0wMRwym
+ z1+DCegjnhyiecTMcc3cLBRQh0Ygbkyud2WIPrXhN1pOxyKW740KC87+sVRbyqdvcBCo
+ +9Fm4cNPdniJv2e8QS9Hm4iV38LltzlDsvqkQ7IcgHCDVNMpgW1xhHEr7tah8eMWB7UF
+ 0vzQ==
+X-Gm-Message-State: AOJu0YywTL605T+pi4wcC9TfQUI39LZ28bOes6C5fwDJsYwmQKkGzP9m
+ npBrnaJtQqpr4l8c07VrIOM1PSgoeas3NqWYcFsmvYqS59J7cUykAkpJjE/74sI=
+X-Gm-Gg: ASbGncsG53pN3P+75lYzVkR79YDagC4LkLgsr6fVz6998dfnopUoIavrnyDxMu7K2Qq
+ gzAbcMDBjxQ74LKkv7XfhyworG99TAA7h6tRRUfPRullsxMWKCjJXi5b+Bw7VoDKqcZgycAliug
+ 9i+tuK0+M3XCnt51Zs+3GJoWusVv68PiOtzDAnumb2oz/gr3TGYOJC1UjP5K6q1gmmldWA2QQvw
+ gvFBi2DJs9e3wlOtX+O0lyZTqRdbmxSBnhWTIbaIwhxYUdjOdpNQdYGT27gMoVw6VPvG+A5O4wV
+ repv8GkBTTwyl3VQnkq+JA/iBcE37T49znKCbvW75bRF4bg=
+X-Google-Smtp-Source: AGHT+IHZd2gStGxa6cxCvJvgB2RYzQ2eSGI66GiYHsc/pYxwn4Q1PAczcpovJVRcNJXIx8fIFYgkyA==
+X-Received: by 2002:a05:600c:46d0:b0:43d:7588:667b with SMTP id
+ 5b1f17b1804b1-43db62264d4mr135591365e9.10.1743503399634; 
+ Tue, 01 Apr 2025 03:29:59 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d8fba4c29sm157175245e9.5.2025.04.01.03.29.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Apr 2025 03:29:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3FEAC5F8B9;
+ Tue,  1 Apr 2025 11:29:58 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-trivial@nongnu.org
+Subject: Re: [PATCH] docs/arm: Add apple HVF host for supported guest CPU type
+In-Reply-To: <20250401083102.72845-1-zhangckid@gmail.com> (Zhang Chen's
+ message of "Tue, 1 Apr 2025 16:31:02 +0800")
+References: <20250401083102.72845-1-zhangckid@gmail.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Tue, 01 Apr 2025 11:29:58 +0100
+Message-ID: <87zfh0npi1.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9eca6d79-7910-43df-850a-bc55a701d964@kaod.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: oh66ZhJ6OC4pcoCkTuyy1hm9l-0v8iTx
-X-Proofpoint-GUID: oBhOraIg2capL7Mms5-66qLPF3xCFvMe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-01_04,2025-03-27_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2502280000 definitions=main-2504010063
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,119 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/03/31 08:41AM, Cédric Le Goater wrote:
-> On 3/29/25 15:26, Aditya Gupta wrote:
-> > Power8E and Power8NVL variants are not of much use in QEMU now, and not
-> > being maintained either.
-> > 
-> > Newer skiboot might not be able to boot Power8NVL since skiboot v7.0
-> > 
-> 
-> It is worth mentioning commit c5424f683ee3 ("Remove support for
-> POWER8 DD1") too. In fact, I prefer the cover letter section below
-> for a commit log.
-> 
-> This commit log is not mentioning the introduction of POWERPC_DEPRECATED_CPU.
-> I suggest adding an extra patch for it.
+Zhang Chen <zhangckid@gmail.com> writes:
 
-Got it. Sure will include that mention in patch deprecating 8e/8nvl.
+> In my test, latest QEMU already support Apple HVF for -cpu host and max.
+>
+> From guest VM lscpu:
+>
+> Architecture:             aarch64
+>   CPU op-mode(s):         64-bit
+>   Byte Order:             Little Endian
+> CPU(s):                   11
+>   On-line CPU(s) list:    0-10
+> Vendor ID:                Apple
+>   Model name:             -
+>     Model:                0
+>     Thread(s) per core:   1
+>     Core(s) per socket:   11
+>     Socket(s):            1
+>     Stepping:             0x0
+>     BogoMIPS:             48.00
+>     Flags:                fp asimd evtstrm aes pmull sha1 sha2 crc32 atom=
+ics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 =
+asim
+>                           dfhm dit uscat ilrcpc flagm ssbs sb paca pacg d=
+cpodp flagm2 frint
+>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 
-> 
-> > Deprecate the 8E and 8NVL variants.
-> > 
-> > After deprecation, QEMU will print a warning like below when the
-> > CPU/Chips are used:
-> > 
-> >      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
-> >      qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
-> >      ...
-> >      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8e -nographic
-> >      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
-> >      ...
-> >      $ ./build/qemu-system-ppc64 -M pseries --cpu power8e -nographic
-> >      qemu-system-ppc64: warning: CPU model power8e_v2.1-powerpc64-cpu is deprecated -- CPU is unmaintained.
-> >      ...
-> 
-> This is not very useful and it belongs to a patch adding
-> POWERPC_DEPRECATED_CPU.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Got it.
-
-> 
-> > Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
-> > --cpu ?':
-> > 
-> >      $ ./build/qemu-system-ppc64 --cpu help
-> >        ...
-> >        power8e_v2.1     PVR 004b0201 (deprecated)
-> >        power8e          (alias for power8e_v2.1)
-> >        power8nvl_v1.0   PVR 004c0100 (deprecated)
-> >        power8nvl        (alias for power8nvl_v1.0)
-> >        power8_v2.0      PVR 004d0200
-> >        power8           (alias for power8_v2.0)
-> >        power9_v2.0      PVR 004e1200
-> >        power9_v2.2      PVR 004e1202
-> 
-> 
-> ditto.
-
-Got it.
-
-> 
-> > Suggested-by: Cédric Le Goater <clg@kaod.org>
-> > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> > 
-> > ---
-> > Cover Letter
-> > ============
-> 
-> 
-> Why don't you use --cover-letter instead ? The rational would be at
-> the beginning.
-
-Sure, I will from next time. I generally write a small cover letter with
-the patch for single patches, and use --cover-letter for multiple patch
-series.
-
-> 
-> > Power8E and Power8NVL are not maintained, and not useful to qemu, and
-> > upstream skiboot also has removed support till Power8 DD1.
-> > Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
-> > to be exact:
-> > 
-> >      commit c5424f683ee3 ("Remove support for POWER8 DD1")
-> > 
-> > No direct way to deprecate the pnv chips, a field like deprecation_note
-> > could be added, but felt not needed as the chip will only get used if
-> > the user requests corresponding 8E / 8NVL CPU, which will print
-> > deprecation warning.
-> > 
-> > Also, no separate pnv machine for 8E and 8NVL, user has to pass --cpu,
-> > which will throw the deprecation warning. So just deprecating CPUs should
-> > be enough.
-> 
-> Please separate the changes, one patch for POWERPC_DEPRECATED_CPU,
-> another for PowerNV deprecation. More CPUs could be deprecated.
-
-By PowerNV deprecation, you mean Power8E/8NVL CPUs right ?
-
-Like there's no powernv8e machine as such, and powernv8e chip doesn't
-have a way to deprecate. I can add a 'deprecation_note' kind of field,
-but feel that is unnecessary, as it only gets used when power8e CPU is
-used, which will show one deprecation warning already.
-
-> 
-> Also, we have time : the QEMU 10.1 development phase has not started
-> and the soft freeze should be around July. No rush needed.
-
-Sure, thanks for the detail
-
-Thanks,
-- Aditya G
-
-> 
-> Thanks,
-> 
-> C.
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
