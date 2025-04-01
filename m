@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8475FC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3D4C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbsa-0005Uk-32; Tue, 01 Apr 2025 09:42:12 -0400
+	id 1tzbtF-0006s0-1Y; Tue, 01 Apr 2025 09:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbsT-0005L2-5o
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:05 -0400
+ id 1tzbt8-0006Xu-PX
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:46 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbsR-0006Zf-K0
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:04 -0400
+ id 1tzbt6-0006Zf-Ju
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743514923; x=1775050923;
+ t=1743514964; x=1775050964;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=jj65KKNKTnmksAnaDvoY5h2mRN3IOIbJ7P4DuI4Zdgw=;
- b=QBn9bqWuDd7zVfvRqz4o0OnREoNd/BiU2AV25qeaeW46GPgFcElvvbtS
- efPJJ1XWD9hWux9u4FjWkF/s/dJvHKWV+4M2jbRtL/v72dRDak5QB5bs/
- n/nKqMyWsCkaUBDvdTF2yxUpB8f1o/OVjn/K2CfC5rwvoqE20R1ssfU09
- cqSsMF3IfuD7arttTtp79KBYewCnPIHgvIBta/r8eI1gtbYE7MdYckJnE
- Y3szU3L1vrWoz7Iy2iPCBhTADhPx0HT1x+tVz/wmOdnXaTHGOQaTdEUyN
- OTr8203GH3uXZXJnLXwJXI58Y9ZKaWdXixxgCoX3oBJO1Fb+YHNmLV+ua Q==;
-X-CSE-ConnectionGUID: 7686ZTpySHawNIOVjqJvEg==
-X-CSE-MsgGUID: AsPwLgRIT/++AD+CgJbbtA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433253"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433253"
+ bh=Wy4mU6UR8WVVuqbOX/KmcENylel9vpkIgY0KjcfNSaU=;
+ b=aLvwLwcTS/39Tg5Dqj1gs/ZXttJ/XJwsli/sox48cEKJyXLiJ7t4oKyO
+ zoS2fZ7oqgVqBiyBaUjRQ9Zw2388eeTy0NDk5POaG5etlezORd6VsTChK
+ yqB+RRg2bAyw1gKKrNn/MA4WJBKgY/EySDpU/w8SKioFrmimLAnWesmke
+ DYTLMU6y9aMlCh+4RcpHtigQM6QlNlkkVRRL38Icv64dgSCRLmgh6rjmW
+ evw/og/ylseO3xQz2wuq92oI1dO24sdquxnbS93G7N498PaprJBnQeVet
+ QpZo/tY0q44M5XHsnUJ+k2bemOfL4xP/rVsA31NlZ3CYhuVKrF5LPlidy w==;
+X-CSE-ConnectionGUID: MGlsQdLURquXPrRCXq6lFg==
+X-CSE-MsgGUID: /HTmWNAVRn+qZ0k63ZYFGg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433347"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433347"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:41:47 -0700
-X-CSE-ConnectionGUID: RwrVdtcmRu2CEFta/INxAg==
-X-CSE-MsgGUID: a8oJgQWoRd2uKFhbq2NC5g==
+ 01 Apr 2025 06:42:10 -0700
+X-CSE-ConnectionGUID: kWDuF69gSgqvfVqKOPgsww==
+X-CSE-MsgGUID: PGPQnId2TQ6lSy7+zk5xGA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639973"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640055"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:44 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:42:08 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -55,10 +55,9 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 14/55] i386/tdx: Set APIC bus rate to match with what TDX
- module enforces
-Date: Tue,  1 Apr 2025 09:01:24 -0400
-Message-Id: <20250401130205.2198253-15-xiaoyao.li@intel.com>
+Subject: [PATCH v8 23/55] i386/tdx: Setup the TD HOB list
+Date: Tue,  1 Apr 2025 09:01:33 -0400
+Message-Id: <20250401130205.2198253-24-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
@@ -89,61 +88,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX advertises core crystal clock with cpuid[0x15] as 25MHz for TD
-guests and it's unchangeable from VMM. As a result, TDX guest reads
-the APIC timer as the same frequency, 25MHz.
+The TD HOB list is used to pass the information from VMM to TDVF. The TD
+HOB must include PHIT HOB and Resource Descriptor HOB. More details can
+be found in TDVF specification and PI specification.
 
-While KVM's default emulated frequency for APIC bus is 1GHz, set the
-APIC bus rate to match with TDX explicitly to ensure KVM provide correct
-emulated APIC timer for TD guest.
+Build the TD HOB in TDX's machine_init_done callback.
 
+Co-developed-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Co-developed-by: Sean Christopherson <sean.j.christopherson@intel.com>
+Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
-Changes in v6:
- - new patch;
----
- target/i386/kvm/tdx.c | 13 +++++++++++++
- target/i386/kvm/tdx.h |  3 +++
- 2 files changed, 16 insertions(+)
+Changes in v7:
+ - use SPDX tag for license info;
+ - clean up the included headers;
 
+Changes in v1:
+ - drop the code of adding mmio resources since OVMF prepares all the
+   MMIO hob itself.
+---
+ hw/i386/meson.build   |   2 +-
+ hw/i386/tdvf-hob.c    | 130 ++++++++++++++++++++++++++++++++++++++++++
+ hw/i386/tdvf-hob.h    |  26 +++++++++
+ target/i386/kvm/tdx.c |  16 ++++++
+ 4 files changed, 173 insertions(+), 1 deletion(-)
+ create mode 100644 hw/i386/tdvf-hob.c
+ create mode 100644 hw/i386/tdvf-hob.h
+
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 3bc1da2b6eb4..7896f348cff8 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -32,7 +32,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+   'port92.c'))
+ i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
+                                         if_false: files('pc_sysfw_ovmf-stubs.c'))
+-i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c'))
++i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c', 'tdvf-hob.c'))
+ 
+ subdir('kvm')
+ subdir('xen')
+diff --git a/hw/i386/tdvf-hob.c b/hw/i386/tdvf-hob.c
+new file mode 100644
+index 000000000000..782b3d157879
+--- /dev/null
++++ b/hw/i386/tdvf-hob.c
+@@ -0,0 +1,130 @@
++/*
++ * Copyright (c) 2025 Intel Corporation
++ * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
++ *                        <isaku.yamahata at intel.com>
++ *         Xiaoyao Li <xiaoyao.li@intel.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "standard-headers/uefi/uefi.h"
++#include "hw/pci/pcie_host.h"
++#include "tdvf-hob.h"
++
++typedef struct TdvfHob {
++    hwaddr hob_addr;
++    void *ptr;
++    int size;
++
++    /* working area */
++    void *current;
++    void *end;
++} TdvfHob;
++
++static uint64_t tdvf_current_guest_addr(const TdvfHob *hob)
++{
++    return hob->hob_addr + (hob->current - hob->ptr);
++}
++
++static void tdvf_align(TdvfHob *hob, size_t align)
++{
++    hob->current = QEMU_ALIGN_PTR_UP(hob->current, align);
++}
++
++static void *tdvf_get_area(TdvfHob *hob, uint64_t size)
++{
++    void *ret;
++
++    if (hob->current + size > hob->end) {
++        error_report("TD_HOB overrun, size = 0x%" PRIx64, size);
++        exit(1);
++    }
++
++    ret = hob->current;
++    hob->current += size;
++    tdvf_align(hob, 8);
++    return ret;
++}
++
++static void tdvf_hob_add_memory_resources(TdxGuest *tdx, TdvfHob *hob)
++{
++    EFI_HOB_RESOURCE_DESCRIPTOR *region;
++    EFI_RESOURCE_ATTRIBUTE_TYPE attr;
++    EFI_RESOURCE_TYPE resource_type;
++
++    TdxRamEntry *e;
++    int i;
++
++    for (i = 0; i < tdx->nr_ram_entries; i++) {
++        e = &tdx->ram_entries[i];
++
++        if (e->type == TDX_RAM_UNACCEPTED) {
++            resource_type = EFI_RESOURCE_MEMORY_UNACCEPTED;
++            attr = EFI_RESOURCE_ATTRIBUTE_TDVF_UNACCEPTED;
++        } else if (e->type == TDX_RAM_ADDED) {
++            resource_type = EFI_RESOURCE_SYSTEM_MEMORY;
++            attr = EFI_RESOURCE_ATTRIBUTE_TDVF_PRIVATE;
++        } else {
++            error_report("unknown TDX_RAM_ENTRY type %d", e->type);
++            exit(1);
++        }
++
++        region = tdvf_get_area(hob, sizeof(*region));
++        *region = (EFI_HOB_RESOURCE_DESCRIPTOR) {
++            .Header = {
++                .HobType = EFI_HOB_TYPE_RESOURCE_DESCRIPTOR,
++                .HobLength = cpu_to_le16(sizeof(*region)),
++                .Reserved = cpu_to_le32(0),
++            },
++            .Owner = EFI_HOB_OWNER_ZERO,
++            .ResourceType = cpu_to_le32(resource_type),
++            .ResourceAttribute = cpu_to_le32(attr),
++            .PhysicalStart = cpu_to_le64(e->address),
++            .ResourceLength = cpu_to_le64(e->length),
++        };
++    }
++}
++
++void tdvf_hob_create(TdxGuest *tdx, TdxFirmwareEntry *td_hob)
++{
++    TdvfHob hob = {
++        .hob_addr = td_hob->address,
++        .size = td_hob->size,
++        .ptr = td_hob->mem_ptr,
++
++        .current = td_hob->mem_ptr,
++        .end = td_hob->mem_ptr + td_hob->size,
++    };
++
++    EFI_HOB_GENERIC_HEADER *last_hob;
++    EFI_HOB_HANDOFF_INFO_TABLE *hit;
++
++    /* Note, Efi{Free}Memory{Bottom,Top} are ignored, leave 'em zeroed. */
++    hit = tdvf_get_area(&hob, sizeof(*hit));
++    *hit = (EFI_HOB_HANDOFF_INFO_TABLE) {
++        .Header = {
++            .HobType = EFI_HOB_TYPE_HANDOFF,
++            .HobLength = cpu_to_le16(sizeof(*hit)),
++            .Reserved = cpu_to_le32(0),
++        },
++        .Version = cpu_to_le32(EFI_HOB_HANDOFF_TABLE_VERSION),
++        .BootMode = cpu_to_le32(0),
++        .EfiMemoryTop = cpu_to_le64(0),
++        .EfiMemoryBottom = cpu_to_le64(0),
++        .EfiFreeMemoryTop = cpu_to_le64(0),
++        .EfiFreeMemoryBottom = cpu_to_le64(0),
++        .EfiEndOfHobList = cpu_to_le64(0), /* initialized later */
++    };
++
++    tdvf_hob_add_memory_resources(tdx, &hob);
++
++    last_hob = tdvf_get_area(&hob, sizeof(*last_hob));
++    *last_hob =  (EFI_HOB_GENERIC_HEADER) {
++        .HobType = EFI_HOB_TYPE_END_OF_HOB_LIST,
++        .HobLength = cpu_to_le16(sizeof(*last_hob)),
++        .Reserved = cpu_to_le32(0),
++    };
++    hit->EfiEndOfHobList = tdvf_current_guest_addr(&hob);
++}
+diff --git a/hw/i386/tdvf-hob.h b/hw/i386/tdvf-hob.h
+new file mode 100644
+index 000000000000..4fc6a3740a57
+--- /dev/null
++++ b/hw/i386/tdvf-hob.h
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef HW_I386_TD_HOB_H
++#define HW_I386_TD_HOB_H
++
++#include "hw/i386/tdvf.h"
++#include "target/i386/kvm/tdx.h"
++
++void tdvf_hob_create(TdxGuest *tdx, TdxFirmwareEntry *td_hob);
++
++#define EFI_RESOURCE_ATTRIBUTE_TDVF_PRIVATE     \
++    (EFI_RESOURCE_ATTRIBUTE_PRESENT |           \
++     EFI_RESOURCE_ATTRIBUTE_INITIALIZED |       \
++     EFI_RESOURCE_ATTRIBUTE_TESTED)
++
++#define EFI_RESOURCE_ATTRIBUTE_TDVF_UNACCEPTED  \
++    (EFI_RESOURCE_ATTRIBUTE_PRESENT |           \
++     EFI_RESOURCE_ATTRIBUTE_INITIALIZED |       \
++     EFI_RESOURCE_ATTRIBUTE_TESTED)
++
++#define EFI_RESOURCE_ATTRIBUTE_TDVF_MMIO        \
++    (EFI_RESOURCE_ATTRIBUTE_PRESENT     |       \
++     EFI_RESOURCE_ATTRIBUTE_INITIALIZED |       \
++     EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE)
++
++#endif
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 77ddb2655c53..1a99b677686e 100644
+index 072ffcdfb41d..2e8d32285d9a 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -253,6 +253,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-     init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
-                         sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+@@ -21,6 +21,7 @@
+ #include "hw/i386/e820_memory_layout.h"
+ #include "hw/i386/tdvf.h"
+ #include "hw/i386/x86.h"
++#include "hw/i386/tdvf-hob.h"
+ #include "kvm_i386.h"
+ #include "tdx.h"
  
-+    if (!kvm_check_extension(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS)) {
-+        error_setg(errp, "KVM doesn't support KVM_CAP_X86_APIC_BUS_CYCLES_NS");
-+        return -EOPNOTSUPP;
+@@ -147,6 +148,19 @@ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
+     tdx_guest->tdvf_mr = tdvf_mr;
+ }
+ 
++static TdxFirmwareEntry *tdx_get_hob_entry(TdxGuest *tdx)
++{
++    TdxFirmwareEntry *entry;
++
++    for_each_tdx_fw_entry(&tdx->tdvf, entry) {
++        if (entry->type == TDVF_SECTION_TYPE_TD_HOB) {
++            return entry;
++        }
 +    }
++    error_report("TDVF metadata doesn't specify TD_HOB location.");
++    exit(1);
++}
 +
-+    r = kvm_vm_enable_cap(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS,
-+                          0, TDX_APIC_BUS_CYCLES_NS);
-+    if (r < 0) {
-+        error_setg_errno(errp, -r,
-+                         "Unable to set core crystal clock frequency to 25MHz");
-+        return r;
-+    }
-+
-     if (tdx_guest->mrconfigid) {
-         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
-                               strlen(tdx_guest->mrconfigid), &data_len, errp);
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index e472b11fb0dd..d39e733d9fcc 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -16,6 +16,9 @@ typedef struct TdxGuestClass {
-     X86ConfidentialGuestClass parent_class;
- } TdxGuestClass;
+ static void tdx_add_ram_entry(uint64_t address, uint64_t length,
+                               enum TdxRamType type)
+ {
+@@ -283,6 +297,8 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
  
-+/* TDX requires bus frequency 25MHz */
-+#define TDX_APIC_BUS_CYCLES_NS 40
+     qsort(tdx_guest->ram_entries, tdx_guest->nr_ram_entries,
+           sizeof(TdxRamEntry), &tdx_ram_entry_compare);
 +
- typedef struct TdxGuest {
-     X86ConfidentialGuest parent_obj;
++    tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
+ }
  
+ static Notifier tdx_machine_done_notify = {
 -- 
 2.34.1
 
