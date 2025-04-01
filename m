@@ -4,76 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF50AC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9B6C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 14:45:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzcr9-0006gi-Un; Tue, 01 Apr 2025 10:44:47 -0400
+	id 1tzcrZ-0006qO-3G; Tue, 01 Apr 2025 10:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tzcr2-0006dJ-RG
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tzcr1-0007OD-2X
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743518677;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oRfi7+aOO90UlCp+zMuuVC/PfEnq+pSP3PfBa4bDqOk=;
- b=LwAGKVrMOczaVrtzj5qduBQDVwH9DYjWjDN0wFEgQFIvcR6JFUVgcX0Jl/bkzDlBBFOkfA
- kTdHhuOVs2FRCNFs5r4VOVvkoL80hMLYQOca3BKh0i5mK+jNZMxGFIITTfb+10Z3tT8FCW
- WHdu0P/K4WLTcLuM6qthGB+WE+zkBRU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-7hW_8cIPMJq9gp3HnAjWvg-1; Tue,
- 01 Apr 2025 10:44:34 -0400
-X-MC-Unique: 7hW_8cIPMJq9gp3HnAjWvg-1
-X-Mimecast-MFC-AGG-ID: 7hW_8cIPMJq9gp3HnAjWvg_1743518674
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B01619560AB; Tue,  1 Apr 2025 14:44:33 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.38])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 22F1B1955BEF; Tue,  1 Apr 2025 14:44:32 +0000 (UTC)
-Date: Tue, 1 Apr 2025 10:44:31 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: ~h0lyalg0rithm <surajshirvankar@gmail.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH qemu 1/1] Add IOURING_SETUP_SINGLE_ISSUER flag to improve
- iouring performance
-Message-ID: <20250401144431.GC277986@fedora>
-References: <174293621917.22751.11381319865102029969-0@git.sr.ht>
- <174293621917.22751.11381319865102029969-1@git.sr.ht>
- <Z-Q1yDqmS3gniW4X@redhat.com> <20250326174629.GA909841@fedora>
- <Z-VPMWmneXR69C8P@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzcrG-0006kY-7Y
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:54 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzcrE-0007P5-HA
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 10:44:53 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39c0dfad22aso2534630f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 07:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743518689; x=1744123489; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ro3FAJfYM4sVjFmJ48owJm586vBhmRdfy9DHaw3s8Es=;
+ b=GXwfJRBXxcS3TFYAQMzl+ata6nhLt2Bx0KDUtXT7uo6nREHavPFM2hg/n4Be3AoLuM
+ I6Lyahaunc1u4ZvyCDmvl/9fl91z3PL/tJmdR1pVoNfM1NCXgs78VJKb+14k8oojGvTW
+ RdrV06mKdInIx9a9fGUyjIgsBlIhb3M3/ct7eBZ4YU8DtVIiy55aN9fKrGFVrRUEIPrd
+ cDL1MbEEpuVZrxVbJUZBVMrVPsgOzdHfx4uZllXKhU8Br9YC3TClGFV+WUWkyBCBbP3q
+ XyXQ0sOQPzl9HsPYx5PDz1DQK1cGAMqp9fnQoh1izS8gMkBGML4PHntNixUHLAA5Y4jm
+ C87Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743518689; x=1744123489;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ro3FAJfYM4sVjFmJ48owJm586vBhmRdfy9DHaw3s8Es=;
+ b=RE95w4ByX9/kdCA2PW87yG4czYGL+Ya93sAjUvqdZz+Vymyha2DH3TJs0W145Kiu86
+ Qh1+UNqD5RgzJIGU3JSVuFHtwJAqNOkoB1RABu9woMXdoRIMyFXVUtZM2WhzWAGmWWTD
+ obbv5GaxvZTRKgD2BCkk0N7Ux9Hffrt1Mk5Q/DvhSZzHyCxDJhK0JuY3wnKWSonHKD5v
+ tyaWHjhGDRww6qz7f74FzQfLQWndFX+7Cdoq5Z/bd139iCnNt02LFq8/W8F+UWAsCXXd
+ AII9MubFQRCZAJQ/Hyg/Umti8qqWBO8thue6ISFc3dbtk3C8SM3BQdJtFBlZ20Rct6X3
+ jgZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVC7Ta2H513POM33t/myfaN4uhM+WOP/PwvnSM2Us5fU00TVMr53F0XCgFpPlsoWfxjgBhbaRAm+kGj@nongnu.org
+X-Gm-Message-State: AOJu0Yx+KaGMPuiyBYLsfKYvf3tp770Y7+oFULz3CVnRjCYVN3fbKDPa
+ 4xDbDLtGXnSW6h8ltOVCFyHJb1/Sa5x5AHLhEx9WuPQ1ZHEet4RfcHhHEMWj87Y=
+X-Gm-Gg: ASbGncttQ+6fTDs6mS9lDfIvIBGLNkBTQ1ibfqdGdGbyq1yvXxasVj85IM6onoAfd1l
+ jixxdt2VTSm3wrzEALOMdAb4o2V2n0mAJkmPy6oIc4uOVyzcFB0SObDt5kwJCIDKT+UHBEu2LrF
+ 3mhXTzRJhJQ2j+QJisjrTIKwIuozcnJTofrGkstoKaSaDw/mc9dJzRSUbsPOP8qp3hfEnoCGYjB
+ 7HFnFhuAJEJs59Yleu612VOg+jDWjZGGrp/UjGHpAViftWY5EDeMWpCAjp9Mkfd/7vMsXIswkwl
+ j4rnMuL7GWdnosC8uD7pOAQgzMfnxYIDwsdTn+KHn7xhwMcX9DInFYl/UjR9i0ITdQRUnHOw5Fu
+ 53wlO+yIgal6z
+X-Google-Smtp-Source: AGHT+IFi1oRY77BW5kcTSCc0DC1xPGcCFnB8+VfkAXX1CNmT7KgEOCvRvo/OwlCc7wo8R0K75WIVLg==
+X-Received: by 2002:a05:6000:4025:b0:39a:c9ae:9efe with SMTP id
+ ffacd0b85a97d-39c2364b4a5mr2913431f8f.18.1743518689149; 
+ Tue, 01 Apr 2025 07:44:49 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d8ff02e84sm157604095e9.32.2025.04.01.07.44.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Apr 2025 07:44:48 -0700 (PDT)
+Message-ID: <5f5f280c-34a5-4961-a9c0-74df5e0b0387@linaro.org>
+Date: Tue, 1 Apr 2025 16:44:47 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="559c3d6BVJuAIZ6+"
-Content-Disposition: inline
-In-Reply-To: <Z-VPMWmneXR69C8P@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] bsd-user: add option to enable plugins
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, Kyle Evans <kevans@freebsd.org>
+References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
+ <a2907212-feef-407f-bc2d-03667aaae174@linaro.org>
+ <c474f845-3d3b-4060-94c2-0d7b5f044d82@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c474f845-3d3b-4060-94c2-0d7b5f044d82@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,73 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 1/4/25 16:33, Pierrick Bouvier wrote:
+> On 3/31/25 23:15, Philippe Mathieu-Daudé wrote:
+>> Hi Pierrick,
+>>
+>> On 1/4/25 01:42, Pierrick Bouvier wrote:
+>>> Nothing prevent plugins to be enabled on this platform for user
+>>> binaries, only the option in the driver is missing.
+>>
+>> Per commit 903e870f245 ("plugins/api: split out binary
+>> path/start/end/entry code") this is deliberate:
+>>
+>>       The BSD user-mode command line is still missing -plugin.
+>>       This can be enabled once we have reliable check-tcg tests
+>>       working for the BSDs.
+>>
+>> Should we enable this without test harnessing?
+>>
+> 
+> Thanks for pointing this.
+> 
+> However, I don't get the argument, as the same could be said about 
+> system mode, which runs on BSD also, and already has plugins enabled.
+> The coupling between user related code and plugins is very low (just 
+> options parsing and init code), so I don't see why we could have a bug 
+> related to a specific platform only for user binaries.
+> 
+> So either we deactivate plugins completely for bsd binaries, or we take 
+> a leap of faith that it works for them.
+> 
+> @Alex, any further insight on this?
+> 
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    bsd-user/main.c | 12 ++++++++++++
+>>>    1 file changed, 12 insertions(+)
+>>
+>> Ideally we'd have helpers for common user code in common-user/...
+>>
+> 
+> Everything is already common for plugins, except adding the call to 
+> plugin command line option parsing function.
 
---559c3d6BVJuAIZ6+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah, I mean the rest of main() ;)
 
-On Thu, Mar 27, 2025 at 02:14:25PM +0100, Kevin Wolf wrote:
-> Am 26.03.2025 um 18:46 hat Stefan Hajnoczi geschrieben:
-> > On Wed, Mar 26, 2025 at 06:13:44PM +0100, Kevin Wolf wrote:
-> > > Am 25.03.2025 um 21:49 hat ~h0lyalg0rithm geschrieben:
-> > > > From: Suraj Shirvankar <surajshirvankar@gmail.com>
-> > > >=20
-> > > > Signed-off-by: Suraj Shirvankar <surajshirvankar@gmail.com>
-> > > > ---
-> > > >  util/fdmon-io_uring.c | 8 +++++++-
-> > > >  1 file changed, 7 insertions(+), 1 deletion(-)
-> > >=20
-> > > As Stefan already mentioned, the commit message should say why we want
-> > > to set this flag and why it is correct to do so.
-> > >=20
-> > > Is there a reason why you change the io_uring_queue_init() call in
-> > > util/fdmon-io_uring.c, but not the one in block/io_uring.c?
-> >=20
-> > I only asked Suraj to look at util/fdmon-io_uring.c because I expect
-> > block/io_uring.c's io_uring context to go away soon.
-> >=20
-> > In my local io_uring branches I have prepared commits that replace the
-> > io_uring context in block/io_uring.c with aio_add_sqe() calls that use
-> > the AioContext's fdmon-io_uring.c io_uring context.
->=20
-> Then we should either document this intention in the commit message or
-> make this one Based-on your changes.
-
-Hi Suraj,
-Please rebase your patch on my branch here:
-https://gitlab.com/stefanha/qemu/-/tree/aio_add_sqe
-
-My series removes the io_uring context from block/io_uring.c, unifying
-it with util/fdmon-io_uring.c. That way there's no need to duplicate
-io_uring context setup and your SINGLE_ISSUER change only needs to be
-done in util/fdmon-io_uring.c.
-
-The email thread for my series is here:
-https://lore.kernel.org/qemu-devel/20250401142721.280287-1-stefanha@redhat.=
-com/T/#t
-
-You can add "Based-on: 20250401142721.280287-1-stefanha@redhat.com" to
-the cover letter of your patch to indicate that this does not apply to
-qemu.git/master but on top of my patch series.
-
-Stefan
-
---559c3d6BVJuAIZ6+
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfr+88ACgkQnKSrs4Gr
-c8h4dgf+O57JFah1j0QFQWoU4+5HfNVhm6lHTVUN75ieelrd3yVTgl69Ld11vNBo
-3CRIC+nRK1MBpNmxqcTSTYo/6B0X1A7TIKYVqWG+je1O0d8oUOLOWgdm34BVmi0R
-MouEHvxJlDg3zWjZucGS3gAzenZ98yjMYp1n+W4qMQdSMvnS6B/eF7MjaCGenx+g
-5I1XsPKF8AUYre3T27hjBZFCl8N5m99agVijOa3vhkpdytMx9LJgJnoUW/V7PWrb
-TTTl1jLBgpr9y4+jYnZb89juUaCD0L7nc15kkKU5m77phc+xVub/VEJjdfAPqpnn
-jFpucFSfzd3IWQI6oM+yK4yosU9+vg==
-=PFlw
------END PGP SIGNATURE-----
-
---559c3d6BVJuAIZ6+--
+>> Anyway, since this patch does what it says:
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+> 
+> Thanks,
+> Pierrick
+> 
 
 
