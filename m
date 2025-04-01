@@ -4,71 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC9FC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF20AC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbn1-0002se-Mq; Tue, 01 Apr 2025 09:36:27 -0400
+	id 1tzbpo-0004CQ-1t; Tue, 01 Apr 2025 09:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzbn0-0002sH-JY
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:36:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1tzbmz-0005o6-1a
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:36:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743514582;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MSKYI/QuJnno4ev30uAYJ8aAdNUornLUeYeD20Q4EYY=;
- b=TptCZ+Eb7Qj0du9I/53PTsjSNg+d9Dm1pMvkYaKjLR83zYqfHBIngHhE4Y7ellHWUdKryf
- ikUFUpBOHFHDG7Ub+wDvJd3dLNTrvxKt+xInQ1Z+b/dWIYZdCbPlgSkkBU9Ej6raLk482I
- +heysVjscK+ZF9762lmn5bVQKYf/4jM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-sg-JbnOENiqZIJbie8D3Wg-1; Tue,
- 01 Apr 2025 09:36:19 -0400
-X-MC-Unique: sg-JbnOENiqZIJbie8D3Wg-1
-X-Mimecast-MFC-AGG-ID: sg-JbnOENiqZIJbie8D3Wg_1743514578
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A370E19560A1; Tue,  1 Apr 2025 13:36:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.88])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA98F180B492; Tue,  1 Apr 2025 13:36:14 +0000 (UTC)
-Date: Tue, 1 Apr 2025 08:36:11 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2] Revert "iotests: Stop NBD server in test 162 before
- starting the next one"
-Message-ID: <7t4y74r752exqwppjlcowmlkqbegpufhmcvi4wpnjjhtfoogyu@oo6hvgvvzda2>
-References: <20250326143533.932899-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tzbpk-0004C5-QH
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:39:17 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tzbph-00062x-Kv
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:39:15 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3feb3f54339so4022025b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 06:39:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743514752; x=1744119552; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kPERHJFUFyleu0dAP1JdT3S6nuEczWRq36KVnIeLPyE=;
+ b=P/o9ZCPFFMAl2xhPozJqUpROo7lBmhoXnUtNLrCUox0nnUsIYUpmgNwQdTp5PJl2LH
+ kr8Mk0PQUpsCjxLHD39k3bTMJ9dAbni4YQUYzQiq2b8Czdq9nwqe+uqcXn1z8z1JLrx0
+ kTgE32GRLD40aATzyRHMBsEPh1/hxZO/JTaZ263dCrkrSvAopGM3dVdHutsWfcg+nUlj
+ VlfR4OnJSdj2+iqntI69qEA+GUFgE77X631t/6B29XI6hBKrdG3V0pLqTm8w8EITPGp8
+ VZcwR698vH4w06mIZlErLhm1T3wQxuwWda9St+9XSvX/roZr2zWuZXPaUc1qoD6K4l7y
+ iFcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743514752; x=1744119552;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kPERHJFUFyleu0dAP1JdT3S6nuEczWRq36KVnIeLPyE=;
+ b=oDROmLyNLwcwl/HWbuKrW904DaF+Nb1nT2/+ZPbWMAMh+s/NhCvrZVPwpVmJHnxA8E
+ t9D6xzkN18xye0WxazpZrlk2+pgXkjOGOQjnz7c1UI3TfRuJUfEUmewEgFtJITdk98Ac
+ IvV0d90QE0rbFz+BtMoAOa7+wOiBaWtissuOKzIBSljZ/IuyGyWViipEK709kXeO0hkp
+ Nn6izEs4xhLpEyodgODI3uXcWKG7ElkKwp+0k+uFOMqAeduF0coiJG3QXdovm3QN7ktp
+ khCSd7K1bEn+ZnHwnMu8a5zzLxPyCjejorc7MACGDNzvQTQeYWqtBJZ3xe71h6SqAdip
+ AVIQ==
+X-Gm-Message-State: AOJu0YydZ78+rEFVHPmjhee9mfqdXAPWMVP3vrrM5reGjmFSd8K7Ht6s
+ NRkLU6eot3b7kPM8yZicNSfNDE+oF1WEosDzvYiRBOC4Bbg8XCwBI9wXD6lWF9s=
+X-Gm-Gg: ASbGncsgsgTzMzwO8hTTheuvYxqPV4YzbU/DBuxkyHUyzz+ZNAMXy0e4BYtV65Gt/Uc
+ K8Fm02PMayGzDEFVyDXX0lmhB9tjUurDrRCca0mDZhODWwZHdjBJxHjoHIaH1KkA1PoY864soc1
+ TJljjTsXxub+tGxaCXGvqobPQe7QViKS0bs6sDHbxHYo0edGsOl52NJhkeKT8lapHWtUiyquLRo
+ TBJSgOoL5qgBPMPAZQlpW+yFp5rk2l1d6B2vyIHwvf62fiA5k8A8CeUVCifgKFPBbYDg9pUKPxF
+ n01HIzCFR6rUk6kTI7eqOxR4PPdHuqhFlOqRMFad65ssLb9Qj13a/MMbHimDjTG2GXHcdbj7NA3
+ N3YNgso4x1SbPp9PrUDRkeOHl4KE0Anzw
+X-Google-Smtp-Source: AGHT+IGb1IPP9W+ybDYldBSZJ1A+5GYn9RlN0gTwjqL1S5Izwr1yGJzsX2k8a9abAg1r3PXfxPrTwA==
+X-Received: by 2002:a05:6808:168a:b0:3f7:d16c:e283 with SMTP id
+ 5614622812f47-3ff0f50fa36mr7279768b6e.11.1743514751913; 
+ Tue, 01 Apr 2025 06:39:11 -0700 (PDT)
+Received: from [172.20.102.85] (syn-071-042-197-003.biz.spectrum.com.
+ [71.42.197.3]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3ff05279bb3sm1952762b6e.31.2025.04.01.06.39.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Apr 2025 06:39:11 -0700 (PDT)
+Message-ID: <b17663bc-40c3-4501-be88-065363138038@linaro.org>
+Date: Tue, 1 Apr 2025 08:39:08 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250326143533.932899-1-thuth@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/mips: Revert TARGET_PAGE_BITS_VARY
+To: Huacai Chen <chenhuacai@kernel.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
+ arikalo@gmail.com
+References: <20250328175526.368121-1-richard.henderson@linaro.org>
+ <20250328175526.368121-2-richard.henderson@linaro.org>
+ <CAAhV-H6=iZOBfxF=_DXqc5M9GjTiXJ7nxotLAJ-0Eb7=zVd0bQ@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAAhV-H6=iZOBfxF=_DXqc5M9GjTiXJ7nxotLAJ-0Eb7=zVd0bQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,42 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 26, 2025 at 03:35:33PM +0100, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 3/31/25 20:15, Huacai Chen wrote:
+>>   #  define TARGET_VIRT_ADDR_SPACE_BITS 32
+>>   #endif
+>>   #endif
+>> -#ifdef CONFIG_USER_ONLY
+>>   #define TARGET_PAGE_BITS 12
+>> -#else
+>> -#define TARGET_PAGE_BITS_VARY
+>> -#define TARGET_PAGE_BITS_MIN 12
+>> -#endif
+> I'm a bit confused about TARGET_PAGE_BITS and other macros.
 > 
-> This reverts commit e2668ba1ed44ad56f2f1653ff5f53b277d534fac.
+> In my opinion, if we define TARGET_PAGE_BITS as 12, that means we only
+> support 4K pages. And if we define TARGET_PAGE_BITS_VARY and
+> TARGET_PAGE_BITS_MIN as 12, that means we support the minimum page as
+> 4K, but we also support larger pages.
 > 
-> This commit made test 162 fail occasionally with:
-> 
->  162   fail      [13:06:40] [13:06:40]   0.2s   (last: 0.2s)  output mismatch
->  --- tests/qemu-iotests/162.out
->  +++ tests/qemu-iotests/scratch/qcow2-file-162/162.out.bad
->  @@ -3,6 +3,7 @@
->   === NBD ===
->   qemu-img: Could not open 'json:{"driver": "nbd", "host": -1}': address
->    resolution failed for -1:10809: Name or service not known
->   image: nbd://localhost:PORT
->  +./common.rc: line 371: kill: (891116) - No such process
->   image: nbd+unix://?socket=42
-> 
-> The nbd server should normally terminate automatically, so trying to
-> kill it here now seems to cause a race that will cause a test failure
-> when the server terminated before the kill command has been executed.
-> 
-> The "Stop NBD server" patch has originally been written to solve another
-> problem with a hanging nbd server, but since that problem has been properly
-> solved by commit 3e1683485656, we now don't need the "_stop_nbd_server" here
-> anymore.
-> 
-> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
+> Am I wrong?
+Yes.
 
-Added to the NBD queue.
+TARGET_PAGE_BITS is a minimum value that is used by the memory subsystem for managing ram 
+and i/o.  If variable, via TARGET_PAGE_BITS_VARY, this is set very early in qemu startup 
+and cannot be changed.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+The page size for the mips cpu, like many others, may be changed at runtime.  The page 
+size used at that point is reported to softmmu during tlb_fill.
 
+The value of TARGET_PAGE_BITS must be the minimum supported by the cpu.
+
+For Arm, the minimum for armv6 was 1k, then armv7 dropped support for tiny pages so the 
+minimum is 4k.  At runtime, armv8 supports page sizes of 4k, 16k, and 64k.
+
+For MIPS, ignoring those cpus which support 1k pages, the minimum is 4k.
+
+
+r~
 
