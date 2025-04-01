@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9E6C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 15:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5F0C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 15:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzd7Z-0005ss-B8; Tue, 01 Apr 2025 11:01:45 -0400
+	id 1tzd8E-0007G9-45; Tue, 01 Apr 2025 11:02:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tzd7V-0005qO-Qt
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:01:43 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tzd8C-0007FR-TY
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:02:24 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tzd7T-0002fG-SA
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:01:41 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-227b650504fso113430635ad.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 08:01:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tzd8A-0002kf-RA
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 11:02:24 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-2c764f2c223so1425223fac.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 08:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743519698; x=1744124498; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1743519741; x=1744124541; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=osmL5wMTTWDcqwzddhIm/8/omA3sFi+E3B0Vpb5cAE4=;
- b=fEkl1OXKUVnfSTIOy2LSnXW2TkVXubHtRAa+xJm/4XtIby/jLjhYsrLoiobW9S869y
- /9qjhYNCBW8+k7aM+Uto7O4+0+RQeiWy1T3jzvAZEoAdvtoYJTy0qm9FJ7NnhOcX7a8m
- hBvXnepGHZDLES8WGaTZ8JyNJllT2aMqC623wT27PFvh7eLoGIzlvGbwT0CgbUMpNOA7
- ccUtR1VSraeQqRwp7f+Rc6DJgbkwr1ztU9l+QVOIZ6xhLZP+GA70HQ5flfA5mBu7SdvM
- okBMQglODS8LT0lStGZf7ouBPCr5q7+5fhcvSEtRb9G8oTa0QnESsOSsiy+oGe8uo6gg
- 5gwQ==
+ bh=SUPsPwGxfHLY5jNpys9gEFxOkP860CdegHkTsUnC8r8=;
+ b=wcfFfKb+m/bmbsbruqyE9TsmKnXGwoKpnLITcCjXw5mMQBTPHhdOz0iDnBJhuBr22e
+ gAcB0WarMAauiWQQiGfepHXSKtO8MJzxW0ws5kzhYlP5bVvV5exhlVqeLvBZRuxrNxsQ
+ 0IvqaImf6dsCS/2dUqc+fdLp+S3gybJYxz94Na9Zyn5gkcOvs/rq3d7Q+bQmUh00akOC
+ QnKlN1zarr4pgZuCocBGdlmwzGKNI64XtGK4YQYBch34OdJCJnQI9AH3hkJkIMTn7ArV
+ 2MxJmuV09pz5ppWleWeFolzJjZDVvp51KWXmgwnfNNia4W0ek3tJwG5d9jQs+2wClHKs
+ fbRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743519698; x=1744124498;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743519741; x=1744124541;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=osmL5wMTTWDcqwzddhIm/8/omA3sFi+E3B0Vpb5cAE4=;
- b=SS6ZjbSx8b9B88WbDdZ7UdixNrQXnwLKEoGazq/fr2B6U078CsrB3EOApoexf33R61
- 3YOM2QVd0EfVioGvky39IlhHImH0cd+03bpuG4be55pCoA8dZa/X7Is5hCHjoqNggcTC
- ROv8Zp6Twn0f3ElhF1RbIeDAntwQKL4W0xMh7NH0SPtE1r7t9g3AyFp9v/P/NmZ1MXPH
- sPXW5w0vZfpkTWkzjAjRe8HJOwT7Utsz24bybthGJpNzb35gEpxjlxAiDhoSdPbxI7Za
- dakQuT9aRFFTSLS+/OROUMFSxEY66B138qqDUp2weODbIl/A6cRL4t3XoiAiq6L0aqPm
- qDeA==
+ bh=SUPsPwGxfHLY5jNpys9gEFxOkP860CdegHkTsUnC8r8=;
+ b=UAKNEs8ODkZ6D9nisXbqt64+eFsLTqcu5qAZ1CgHa+6Go3IkA7wxUG9223U/hlSm8P
+ +N9A2mmVWE9zdHTOTQedF3tYFlkHxTdOXKg8UnL4viWEyKlT4z8ir9rsSiaiiufqszp8
+ 6dIyP4F8S8z6IxljfZlfD+Dy0s/Q3NBm9XUfvFDcxzgPF9vKLTzvfQBajYs3+rKyPFqg
+ d//ovLKH/NK2D3gnfwRKJfxWez9nJPmCQN9TcJLTWlXWX1vvGerPG94Hazyw5zm6GUXp
+ HiS/CX0z3NVd81ZbPjvmgOeekyl3YwEXGhPsiiTqGzh0QG029TxHYx+AIv+iPENOyBMH
+ 0nLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVinE/w9MHebsM2df9b5puH4XbUjT4yhO6SYCzVf1lBk5O+g6ISJvPfmjE5eHNvpCxpOC6x96VC8NhF@nongnu.org
-X-Gm-Message-State: AOJu0Yyxar+f2N1X9StJSYfVHI5bl9MVJY9V397eCWfHeUBjBO89gQER
- RaxI34ZyKKVqdj2LAcPtZaRTTtANdSLRjVlyGIVam+Iu2bN1DR9NGk30V8RJFSc=
-X-Gm-Gg: ASbGncvsrQ55ZM3Co1Zkp7XakvTijDRMMXfxubdHw/xx2ZN6NuC6/iGj5AePOT4LGVT
- PNUp556Z/l9PghCa9nKz9EMxZmXnAk8Aan+eAQ2grQ7GzY+ADecjNgu+i424ZiO/JDRHEhdP2LE
- TIJ7ONNNXxFmRIVtqGt58Ai2oUG+3ZXKr+k0ctb1IjaPjp7myqhJDS/UzF6G8UaHHd+M9mc+GSP
- od5WtAFM+5dIDeTUg3SRo/p/oL0u7MqP+v1k7xxTb4/L6J2kHEtDYslaVaG+5qtFXBjJ2y4h8jy
- RgquzAPiBxOETw+1inhfeeAxKPTosMMniJJe9tJgbZbWCkKr+DmMoM9pkQ==
-X-Google-Smtp-Source: AGHT+IE2ZLbtNkE1NDVU0GwwYFuKudPWkXTYw/C/1qYaoii7UDyO52MNAL5Bc/crvH/twpB7BENCfg==
-X-Received: by 2002:a17:902:d2d1:b0:223:f9a4:3fa8 with SMTP id
- d9443c01a7336-2292f95d8bdmr212634265ad.19.1743519697941; 
- Tue, 01 Apr 2025 08:01:37 -0700 (PDT)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eee0d37sm89769595ad.91.2025.04.01.08.01.37
+ AJvYcCX4HeaXLl7wtVyCvHM8qVt0tnF/E0AQFoipeP+m11EDGnMgOvszgkp34q82T6i2DJYwB41WsxjQVnZg@nongnu.org
+X-Gm-Message-State: AOJu0YxyFYXw6IK9BCP5Fuzi115WFcr4x73jhpuuQTaxv3PkR13yQ1IB
+ 5EIJv3y+OJZtLnJ2bZ37gkyOoJPtv7USR0sw69B/8r7AA2aZQtQFfzQgRP5Z6eU=
+X-Gm-Gg: ASbGncsv4qh68eXTilfGVJL37kLoDTLgNCEwtmdgXPJUnK5cvsHuDDcOnWqBQ8JD8nY
+ J9mOU+Z5YSQv0N207PnW55QyND0B0LUmYibkuAaZcBVfcPVcHuo1QmQeb0aHClMXLK4sv+E0vQD
+ Vv83jsxz5ytb5mZd0Ujk0lczWKM8QGE4cWa8ZbOintgS9VDat+4mYBH5ugg4kEO5Ztkrp2CCSNI
+ um0gnryXe1lXxFIAhH8LeVqCR0A/CbhVAb3mmAM5kZ8txz8uOtROuRZponDp1vg8T8EAdRW+590
+ 92Q98AmUgYltJnZEnwZwHDQFcgDb/wT+bqCdx7uwYEm++QdAww2AqIvbtg+A7QOfB1p1lZovgzA
+ VkpWcL0QeVMM0ZjkEMTLg2w==
+X-Google-Smtp-Source: AGHT+IF9u0FGX551DEI1DSkEqx2UEg4co/ms3icW1X0Kic8HpfgaAE6XjC7bwEHhw+aUYrjfZDDyKg==
+X-Received: by 2002:a05:6870:8a09:b0:29e:6f32:6d91 with SMTP id
+ 586e51a60fabf-2cbcf8060c7mr7685073fac.33.1743519740863; 
+ Tue, 01 Apr 2025 08:02:20 -0700 (PDT)
+Received: from [172.20.102.85] (syn-071-042-197-003.biz.spectrum.com.
+ [71.42.197.3]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2c86a3f3dc8sm2333691fac.8.2025.04.01.08.02.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 08:01:37 -0700 (PDT)
-Message-ID: <93474fce-4774-4835-969b-2a791b2293ed@linaro.org>
-Date: Tue, 1 Apr 2025 08:01:36 -0700
+ Tue, 01 Apr 2025 08:02:20 -0700 (PDT)
+Message-ID: <3d1e544c-5e26-4690-b8d0-d25a34c0c7fe@linaro.org>
+Date: Tue, 1 Apr 2025 10:02:18 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 2/3] exec: Restrict 'cpu_ldst.h' to accel/tcg/
-Content-Language: en-US
+Subject: Re: [PATCH-for-10.0] tcg: Allocate TEMP_VAL_MEM frame in temp_load()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20250401083232.33773-1-philmd@linaro.org>
- <20250401083232.33773-3-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250401083232.33773-3-philmd@linaro.org>
+Cc: "Emilio G . Cota" <cota@braap.org>, Stefan Weil <sw@weilnetz.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Helge Konetzka <hk@zapateado.de>
+References: <20250401144332.41615-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250401144332.41615-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,10 +106,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8xLzI1IDAxOjMyLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gTWVj
-aGFuaWNhbCBjaGFuZ2UgdXNpbmc6DQo+IA0KPiAgICAkIHNlZCAtaSAtZSAncyxleGVjL2Nw
-dV9sZHN0LGFjY2VsL3RjZy9jcHUtbGRzdCwnIFwNCj4gICAgICAgICAgJChnaXQgZ3JlcCAt
-bCBleGVjL2NwdV9sZHN0LmgpDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRo
-aWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQoNClJldmlld2VkLWJ5OiBQaWVycmlj
-ayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQoNCg==
+On 4/1/25 09:43, Philippe Mathieu-Daudé wrote:
+> Be sure to allocate the temp frame if it wasn't.
+> 
+> Fixes: c896fe29d6c ("TCG code generator")
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Reported-by: Helge Konetzka <hk@zapateado.de>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2891
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2899
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tcg/tcg.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index e8950df2ad3..dfd48b82642 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -4671,6 +4671,9 @@ static void temp_load(TCGContext *s, TCGTemp *ts, TCGRegSet desired_regs,
+>           ts->mem_coherent = 0;
+>           break;
+>       case TEMP_VAL_MEM:
+> +        if (!ts->mem_allocated) {
+> +            temp_allocate_frame(s, ts);
+> +        }
+>           reg = tcg_reg_alloc(s, desired_regs, allocated_regs,
+>                               preferred_regs, ts->indirect_base);
+>           tcg_out_ld(s, ts->type, reg, ts->mem_base->reg, ts->mem_offset);
+
+I suspect this is a read from a temporary that is uninitialized.  Ordinarily the stack 
+slot would have been allocated by the store.
+
+I guess I should have a look at the testcase...
+
+
+r~
+
 
