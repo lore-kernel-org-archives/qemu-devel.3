@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12266C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B8AC36014
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbsa-0005V5-FA; Tue, 01 Apr 2025 09:42:14 -0400
+	id 1tzbs7-0005A1-DF; Tue, 01 Apr 2025 09:41:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbsU-0005LY-GL
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:09 -0400
+ id 1tzbrk-00057z-QN
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:41:22 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbsQ-0006ZP-4o
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:06 -0400
+ id 1tzbrg-0006Wn-TP
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:41:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743514922; x=1775050922;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=mdbz9OkSTyNbzZFyMfnp3iGYyHMQ3poqcVGKHQ1jteI=;
- b=CFO9APRq3bHK+PNjXw/gE+E2hwGAtD+O5V4ZMZFx7UualgbbB7M1az8c
- zti9D0/BVsTnJtH0BIySlDQiHSTCgL5hJPAH3deMBBH4YkCAiSkyhAgSo
- zelSVaCLQOdxciV8CyUWL2olBU4SNccJUIMEnXz3ufl+5U0aW5SKhF/PZ
- gxdx9PuqStK8TRtxkxbVIhHxpZsECLkcgfyTLKiEDfcdVVvIurpMx49/K
- DY0tqKyVl1FiQQLn37r9fHkI1mfame9dhPHZQf3vDEIYwJ/eFiaxf3KUY
- PaAFq8DKV3Wr+hiGDUCrfhgM1XvOQZPL4KlnK3ZB0Y2i0K/uio6POLSEr g==;
-X-CSE-ConnectionGUID: TcTuJG47TWGQqTuRQiY2XA==
-X-CSE-MsgGUID: yFpCtJoJThulL/x4bwicLQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433242"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433242"
+ t=1743514877; x=1775050877;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=7tRJxnr6+P/XTLyo1Qa4ZKqinrVzK624PTeR8ybQ1fI=;
+ b=dnJt+p112iQevFgPJmcJNdQNXe9K7FbL7pABZwaikTQY9DEWTFT9Troz
+ jLrTpyTKYT4dkJQ84ktF38zgvIbzM4IwQWeDf/ia/TtzyBTMZIMcXYG70
+ sayLcxWzwrZMP41xSnqohaJVBX5+J6DZfI6650A+mm2OyKtxnsmSW739k
+ FO3sQikpoyoEOSm6ST1IF/HZUxtxbhI0jwrjg1PkfECQf/oP3Ije/123d
+ AtFupGjiDxL/DQpFS3gqCTEnS/wt6rTlfvA3ZeBatFXrfFDC/QnwEZTz5
+ 2D43geqJo7/KZ0qPM4ErIqHcQPGRrM95CoDj1OHxjcZf+nEvjSipsMePW g==;
+X-CSE-ConnectionGUID: b2lryNygQD2g/q2SGbYIAg==
+X-CSE-MsgGUID: pI027Ie4TDi6CfkebhqYNQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433115"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433115"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:41:44 -0700
-X-CSE-ConnectionGUID: A0AQrzaqS0WPhyaEHfnD4w==
-X-CSE-MsgGUID: 0SxOCk8DT4yBrDvAENgsPA==
+ 01 Apr 2025 06:41:10 -0700
+X-CSE-ConnectionGUID: Pc+Gb4WzQx6VF0V0mXNedQ==
+X-CSE-MsgGUID: D7tvkbbOQtS3gI8CvxqcLw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639969"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639834"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:42 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:08 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -55,13 +55,10 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 13/55] i386/tdx: Support user configurable
- mrconfigid/mrowner/mrownerconfig
-Date: Tue,  1 Apr 2025 09:01:23 -0400
-Message-Id: <20250401130205.2198253-14-xiaoyao.li@intel.com>
+Subject: [PATCH for 10.1 v8 00/55] QEMU TDX support
+Date: Tue,  1 Apr 2025 09:01:10 -0400
+Message-Id: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,220 +87,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
+This is the v8 series of TDX QEMU enabling and the series is also available
+at github:
+https://github.com/intel-staging/qemu-tdx/tree/tdx-qemu-upstream-v8
 
-Three sha384 hash values, mrconfigid, mrowner and mrownerconfig, of a TD
-can be provided for TDX attestation. Detailed meaning of them can be
-found: https://lore.kernel.org/qemu-devel/31d6dbc1-f453-4cef-ab08-4813f4e0ff92@intel.com/
+To boot TD guest, please always use the latest TDX module (1.5) and OVMF
+available.
 
-Allow user to specify those values via property mrconfigid, mrowner and
-mrownerconfig. They are all in base64 format.
+Note, this series has a dependency on
+https://lore.kernel.org/qemu-devel/20241217123932.948789-1-xiaoyao.li@intel.com/
 
-example
--object tdx-guest, \
-  mrconfigid=ASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq83v,\
-  mrowner=ASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq83v,\
-  mrownerconfig=ASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq83v
+=============
+Changes in v8
 
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
-Changes in v8:
- - it gets squashed into previous patch in v7. So split it out in v8;
+- Address the comments from Francesco Lavra;
+- Add a patch to check KVM_CAP_MAX_VCPUS at vm level;
+- Make the default kernel_irqchip to split mode for TDX and refuse to
+  boot when other mode requested; (Daniel)
+- Drop the manually adjustment of supported CPUID for TDX, which turns
+  to be not forward compatible since any newly enabled feature for common KVM
+  will automatically be treated as supported for TDX as well. Instead,
+  implement TDX's supported CPUID by combining the information from
+  directly configurable bits, fixed1 bits, XFAM controlled bits and
+  attributes controlled bits. 
 
-Changes in v6:
- - refine the doc comment of QAPI properties;
+===========
+future work
 
-Changes in v5:
- - refine the description of QAPI properties and add description of
-   default value when not specified;
+- CPU model
 
-Changes in v4:
- - describe more of there fields in qom.json
- - free the old value before set new value to avoid memory leak in
-   _setter(); (Daniel)
+  It now only supports booting TD VM with "-cpu host". It is the only
+  case that not supposed to hit any warning/error.
 
-Changes in v3:
- - use base64 encoding instread of hex-string;
----
- qapi/qom.json         | 16 +++++++-
- target/i386/kvm/tdx.c | 86 +++++++++++++++++++++++++++++++++++++++++++
- target/i386/kvm/tdx.h |  3 ++
- 3 files changed, 104 insertions(+), 1 deletion(-)
+  When using named CPU model, even the same model as host, it likely
+  hits warning like some feature not supported or some feature enforced
+  on. It's a future work to decide if needs to introduce TDX specific
+  named CPU models.
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index f229bb07aaec..a8379bac1719 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1060,11 +1060,25 @@
- #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
- #     be set, otherwise they refuse to boot.
- #
-+# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
-+#     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
-+#     Defaults to all zeros.
-+#
-+# @mrowner: ID for the guest TD’s owner (base64 encoded SHA384 digest).
-+#     Defaults to all zeros.
-+#
-+# @mrownerconfig: ID for owner-defined configuration of the guest TD,
-+#     e.g., specific to the workload rather than the run-time or OS
-+#     (base64 encoded SHA384 digest).  Defaults to all zeros.
-+#
- # Since: 10.1
- ##
- { 'struct': 'TdxGuestProperties',
-   'data': { '*attributes': 'uint64',
--            '*sept-ve-disable': 'bool' } }
-+            '*sept-ve-disable': 'bool',
-+            '*mrconfigid': 'str',
-+            '*mrowner': 'str',
-+            '*mrownerconfig': 'str' } }
- 
- ##
- # @ThreadContextProperties:
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index aa043acb1a88..77ddb2655c53 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -11,8 +11,10 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/base64.h"
- #include "qapi/error.h"
- #include "qom/object_interfaces.h"
-+#include "crypto/hash.h"
- 
- #include "hw/i386/x86.h"
- #include "kvm_i386.h"
-@@ -239,6 +241,7 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-     CPUX86State *env = &x86cpu->env;
-     g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
-     Error *local_err = NULL;
-+    size_t data_len;
-     int retry = 10000;
-     int r = 0;
- 
-@@ -250,6 +253,36 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-     init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
-                         sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
- 
-+    if (tdx_guest->mrconfigid) {
-+        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
-+                              strlen(tdx_guest->mrconfigid), &data_len, errp);
-+        if (!data || data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
-+            error_setg(errp, "TDX: failed to decode mrconfigid");
-+            return -1;
-+        }
-+        memcpy(init_vm->mrconfigid, data, data_len);
-+    }
-+
-+    if (tdx_guest->mrowner) {
-+        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrowner,
-+                              strlen(tdx_guest->mrowner), &data_len, errp);
-+        if (!data || data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
-+            error_setg(errp, "TDX: failed to decode mrowner");
-+            return -1;
-+        }
-+        memcpy(init_vm->mrowner, data, data_len);
-+    }
-+
-+    if (tdx_guest->mrownerconfig) {
-+        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrownerconfig,
-+                            strlen(tdx_guest->mrownerconfig), &data_len, errp);
-+        if (!data || data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
-+            error_setg(errp, "TDX: failed to decode mrownerconfig");
-+            return -1;
-+        }
-+        memcpy(init_vm->mrownerconfig, data, data_len);
-+    }
-+
-     r = setup_td_guest_attributes(x86cpu, errp);
-     if (r) {
-         return r;
-@@ -313,6 +346,51 @@ static void tdx_guest_set_sept_ve_disable(Object *obj, bool value, Error **errp)
-     }
- }
- 
-+static char *tdx_guest_get_mrconfigid(Object *obj, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    return g_strdup(tdx->mrconfigid);
-+}
-+
-+static void tdx_guest_set_mrconfigid(Object *obj, const char *value, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    g_free(tdx->mrconfigid);
-+    tdx->mrconfigid = g_strdup(value);
-+}
-+
-+static char *tdx_guest_get_mrowner(Object *obj, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    return g_strdup(tdx->mrowner);
-+}
-+
-+static void tdx_guest_set_mrowner(Object *obj, const char *value, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    g_free(tdx->mrowner);
-+    tdx->mrowner = g_strdup(value);
-+}
-+
-+static char *tdx_guest_get_mrownerconfig(Object *obj, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    return g_strdup(tdx->mrownerconfig);
-+}
-+
-+static void tdx_guest_set_mrownerconfig(Object *obj, const char *value, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    g_free(tdx->mrownerconfig);
-+    tdx->mrownerconfig = g_strdup(value);
-+}
-+
- /* tdx guest */
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
-                                    tdx_guest,
-@@ -336,6 +414,14 @@ static void tdx_guest_init(Object *obj)
-     object_property_add_bool(obj, "sept-ve-disable",
-                              tdx_guest_get_sept_ve_disable,
-                              tdx_guest_set_sept_ve_disable);
-+    object_property_add_str(obj, "mrconfigid",
-+                            tdx_guest_get_mrconfigid,
-+                            tdx_guest_set_mrconfigid);
-+    object_property_add_str(obj, "mrowner",
-+                            tdx_guest_get_mrowner, tdx_guest_set_mrowner);
-+    object_property_add_str(obj, "mrownerconfig",
-+                            tdx_guest_get_mrownerconfig,
-+                            tdx_guest_set_mrownerconfig);
- }
- 
- static void tdx_guest_finalize(Object *obj)
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index 4e2b5c61ff5b..e472b11fb0dd 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -24,6 +24,9 @@ typedef struct TdxGuest {
-     bool initialized;
-     uint64_t attributes;    /* TD attributes */
-     uint64_t xfam;
-+    char *mrconfigid;       /* base64 encoded sha348 digest */
-+    char *mrowner;          /* base64 encoded sha348 digest */
-+    char *mrownerconfig;    /* base64 encoded sha348 digest */
- } TdxGuest;
- 
- #ifdef CONFIG_TDX
+- Attestation support
+
+  Atttestation support will be submitted separately after KVM side
+  patches being submitted.
+
+- gdb support
+
+  gdb support to debug a TD in off-debug mode is left as future work.
+
+=======
+history
+
+v7: https://lore.kernel.org/qemu-devel/20250124132048.3229049-1-xiaoyao.li@intel.com/
+
+v6: https://lore.kernel.org/qemu-devel/20241105062408.3533704-1-xiaoyao.li@intel.com/
+
+Chao Peng (1):
+  i386/tdx: load TDVF for TD guest
+
+Isaku Yamahata (5):
+  i386/tdx: Make sept_ve_disable set by default
+  i386/tdx: Support user configurable mrconfigid/mrowner/mrownerconfig
+  i386/tdvf: Introduce function to parse TDVF metadata
+  i386/tdx: Add TDVF memory via KVM_TDX_INIT_MEM_REGION
+  i386/tdx: Don't synchronize guest tsc for TDs
+
+Xiaoyao Li (49):
+  *** HACK *** linux-headers: Update headers to pull in TDX API changes
+  i386: Introduce tdx-guest object
+  i386/tdx: Implement tdx_kvm_type() for TDX
+  i386/tdx: Implement tdx_kvm_init() to initialize TDX VM context
+  i386/tdx: Get tdx_capabilities via KVM_TDX_CAPABILITIES
+  i386/tdx: Introduce is_tdx_vm() helper and cache tdx_guest object
+  kvm: Introduce kvm_arch_pre_create_vcpu()
+  i386/tdx: Initialize TDX before creating TD vcpus
+  i386/tdx: Add property sept-ve-disable for tdx-guest object
+  i386/tdx: Wire CPU features up with attributes of TD guest
+  i386/tdx: Validate TD attributes
+  i386/tdx: Set APIC bus rate to match with what TDX module enforces
+  i386/tdx: Implement user specified tsc frequency
+  i386/tdx: Parse TDVF metadata for TDX VM
+  i386/tdx: Don't initialize pc.rom for TDX VMs
+  i386/tdx: Track mem_ptr for each firmware entry of TDVF
+  i386/tdx: Track RAM entries for TDX VM
+  headers: Add definitions from UEFI spec for volumes, resources, etc...
+  i386/tdx: Setup the TD HOB list
+  i386/tdx: Call KVM_TDX_INIT_VCPU to initialize TDX vcpu
+  i386/tdx: Finalize TDX VM
+  i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
+  i386/tdx: Handle KVM_SYSTEM_EVENT_TDX_FATAL
+  i386/tdx: Wire TDX_REPORT_FATAL_ERROR with GuestPanic facility
+  kvm: Check KVM_CAP_MAX_VCPUS at vm level
+  i386/cpu: introduce x86_confidential_guest_cpu_instance_init()
+  i386/tdx: implement tdx_cpu_instance_init()
+  i386/cpu: Introduce enable_cpuid_0x1f to force exposing CPUID 0x1f
+  i386/tdx: Force exposing CPUID 0x1f
+  i386/tdx: Set kvm_readonly_mem_enabled to false for TDX VM
+  i386/tdx: Disable SMM for TDX VMs
+  i386/tdx: Disable PIC for TDX VMs
+  i386/tdx: Set and check kernel_irqchip mode for TDX
+  i386/tdx: Only configure MSR_IA32_UCODE_REV in kvm_init_msrs() for TDs
+  i386/apic: Skip kvm_apic_put() for TDX
+  cpu: Don't set vcpu_dirty when guest_state_protected
+  i386/cgs: Rename *mask_cpuid_features() to *adjust_cpuid_features()
+  i386/tdx: Implement adjust_cpuid_features() for TDX
+  i386/tdx: Add TDX fixed1 bits to supported CPUIDs
+  i386/tdx: Add supported CPUID bits related to TD Attributes
+  i386/tdx: Add supported CPUID bits relates to XFAM
+  i386/tdx: Add XFD to supported bit of TDX
+  i386/tdx: Define supported KVM features for TDX
+  i386/cgs: Introduce x86_confidential_guest_check_features()
+  i386/tdx: Fetch and validate CPUID of TD guest
+  i386/tdx: Don't treat SYSCALL as unavailable
+  i386/tdx: Make invtsc default on
+  i386/tdx: Validate phys_bits against host value
+  docs: Add TDX documentation
+
+ accel/kvm/kvm-all.c                        |   11 +-
+ configs/devices/i386-softmmu/default.mak   |    1 +
+ docs/system/confidential-guest-support.rst |    1 +
+ docs/system/i386/tdx.rst                   |  156 +++
+ docs/system/target-i386.rst                |    1 +
+ hw/i386/Kconfig                            |    6 +
+ hw/i386/kvm/apic.c                         |    5 +
+ hw/i386/meson.build                        |    1 +
+ hw/i386/pc.c                               |   29 +-
+ hw/i386/pc_sysfw.c                         |    7 +
+ hw/i386/tdvf-hob.c                         |  130 ++
+ hw/i386/tdvf-hob.h                         |   26 +
+ hw/i386/tdvf.c                             |  184 +++
+ hw/i386/x86-common.c                       |    6 +-
+ include/hw/i386/tdvf.h                     |   45 +
+ include/standard-headers/uefi/uefi.h       |  187 +++
+ include/system/kvm.h                       |    1 +
+ linux-headers/asm-x86/kvm.h                |   69 ++
+ linux-headers/linux/kvm.h                  |    1 +
+ qapi/qom.json                              |   35 +
+ qapi/run-state.json                        |   31 +-
+ system/runstate.c                          |   65 +
+ target/arm/kvm.c                           |    5 +
+ target/i386/confidential-guest.h           |   44 +-
+ target/i386/cpu.c                          |   73 +-
+ target/i386/cpu.h                          |   40 +
+ target/i386/host-cpu.c                     |    2 +-
+ target/i386/host-cpu.h                     |    1 +
+ target/i386/kvm/kvm.c                      |  114 +-
+ target/i386/kvm/kvm_i386.h                 |   15 +
+ target/i386/kvm/meson.build                |    2 +
+ target/i386/kvm/tdx-stub.c                 |   20 +
+ target/i386/kvm/tdx.c                      | 1273 ++++++++++++++++++++
+ target/i386/kvm/tdx.h                      |   65 +
+ target/i386/sev.c                          |    9 +-
+ target/loongarch/kvm/kvm.c                 |    4 +
+ target/mips/kvm.c                          |    5 +
+ target/ppc/kvm.c                           |    5 +
+ target/riscv/kvm/kvm-cpu.c                 |    5 +
+ target/s390x/kvm/kvm.c                     |    5 +
+ 40 files changed, 2592 insertions(+), 93 deletions(-)
+ create mode 100644 docs/system/i386/tdx.rst
+ create mode 100644 hw/i386/tdvf-hob.c
+ create mode 100644 hw/i386/tdvf-hob.h
+ create mode 100644 hw/i386/tdvf.c
+ create mode 100644 include/hw/i386/tdvf.h
+ create mode 100644 include/standard-headers/uefi/uefi.h
+ create mode 100644 target/i386/kvm/tdx-stub.c
+ create mode 100644 target/i386/kvm/tdx.c
+ create mode 100644 target/i386/kvm/tdx.h
+
 -- 
 2.34.1
 
