@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E90CBC36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 09:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA4DC36018
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 09:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzXb3-0005BH-1R; Tue, 01 Apr 2025 05:07:49 -0400
+	id 1tzYAC-0004z0-No; Tue, 01 Apr 2025 05:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzXZW-0004bq-98
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 05:06:15 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzXZT-0005Xp-7Q
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 05:06:14 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43d04dc73b7so59105545e9.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 02:06:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743498369; x=1744103169; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ModoBwl9WODpWJ7/22XSJxgnbrp5F28A+dseEzQypeA=;
- b=f+Fvc3EXrLImyHFBsAR3/Hy8HIoIqaDZfjGyyFGTBGkuoc2LLnjJw/ugNpRWyCJ5uM
- xRhSdZDFN2emqzbRJonoIJ/VnUV+Kkx10oyTfCiqqp2nzxyo9VMbOGWZgWoXy9qSxcVY
- 1XrXGZIgA7La17hpaRfqsiajYTavuYdUXwB5T/dyzGQagWSP/DdHBr7abBS/Iue8YJEv
- nBsJHcNG7pMj2zhnmZh5NSwJ/xkkDDj5u6/X4ZXCpnWC4E37zC2wlh72vXFWC8gKE0ta
- svE8M0tvDAXKpYPaqGG3wrWFkn0zlAymfBjhb6QHeSFJtiRBvWt1Al7Ye57MOkBqzjP9
- mSsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743498369; x=1744103169;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ModoBwl9WODpWJ7/22XSJxgnbrp5F28A+dseEzQypeA=;
- b=lOQOEgirWWCe/avqPqIAPPwGSFF5U3Ll/2YoOQPn9JqqZTcNtrHB9CruQtLH1/EwGp
- yRnPda9t9xKBNehSvNTLnOYQZ7bXWZk0wtGTRiifGJWgtvb1VWx8rubmN7Zccbv3SOkV
- +JslRcllSCnV6E9tCeranoMRtO16dbLwIx9ZNJQGDUHZ0OYSdrWCcoCBDzlEZqp4ANMg
- SJqIx7klWAl1YVgApaoqZDXjqCMMjwoEPDgr/+HjfMBPc52XQL24zaANmp8asrVn4sOC
- eWe1sW/UOzITKyDTYRCvc0ZcF+2tzbAr2POeZ7taHRSZiO3Z2jBkgN7ua+WXHoPmi1V4
- E9Ww==
-X-Gm-Message-State: AOJu0YyqiDgok36Y0dZigRfahbfxVMTNafLnRXtRkXDppnLMOkIxKvVA
- adYUW0Q+u/IK+nygwgiPttCFYzeSgHkqQqiz9k6LiUR0R43h4dqCVnohGGnTMVll2AnGbMgEl71
- q
-X-Gm-Gg: ASbGnctZmuXvopzZ3h8j7+mme8HuKdbFgHPzflE7LrBEQuikHm66sw0ng5KxM+oUBnz
- T2n5Jl9zPhAQjrQzVQRoSb4SG+WjFDADFvD/a/QRcY9bP0A04kjhdNz44PpQQziFglhugnJqXjO
- tD5XFbXuU+Or2y3wnPo6LIlHRQMLhw7zwo9fxrHqcKxxNAh+avpqLkWZuB4gIyfm6nUnChATbBn
- g2SWqgC0tMfIoF0ZYns3FqnlpMt70z1hSefHVQJxEbNvY0wppcCKaYQnwu/U6JO9v6+TrhL8pVZ
- 6kqqyAgkI7yyxvCVdd3DWvAy65w4MIjPfA62RQ/HlOPHfAxBysSUItHyTIU+ukzjAr7r1Cyeuok
- AeZkqWR9yMRshmJwAUcI=
-X-Google-Smtp-Source: AGHT+IF/ZqUEWEJcY9uABjrIwHvEfJTa4nnJCcDSw1OY6DlmufwPYcxadGO4sbqhRkuGNHeHSpRtnQ==
-X-Received: by 2002:a5d:6d84:0:b0:39b:fa24:9519 with SMTP id
- ffacd0b85a97d-39c12117ddemr8727460f8f.35.1743498369011; 
- Tue, 01 Apr 2025 02:06:09 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d830f5b41sm198104025e9.27.2025.04.01.02.06.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 01 Apr 2025 02:06:08 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-10.0] hw/vmapple: Allow running QTest framework on
- macOS
-Date: Tue,  1 Apr 2025 11:06:07 +0200
-Message-ID: <20250401090607.36375-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <SRS0=ooSu=WT=kaod.org=clg@ozlabs.org>)
+ id 1tzYAA-0004yQ-OX; Tue, 01 Apr 2025 05:44:06 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ooSu=WT=kaod.org=clg@ozlabs.org>)
+ id 1tzYA8-0002Z3-Ee; Tue, 01 Apr 2025 05:44:06 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZRjkK398fz4x8Z;
+ Tue,  1 Apr 2025 20:43:53 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZRjkC3GWrz4wcD;
+ Tue,  1 Apr 2025 20:43:46 +1100 (AEDT)
+Message-ID: <862875c7-3e40-4c2e-95c5-2f8b480d10be@kaod.org>
+Date: Tue, 1 Apr 2025 11:43:43 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.0 0/2] hw/misc/aspeed_scu: Correct minimum access
+ size for AST2500 / AST2600
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>
+References: <20250331230444.88295-1-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250331230444.88295-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=ooSu=WT=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,94 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-First, the VMapple machine only works with the ARM 'host' CPU
-type, which isn't accepted for QTest:
+On 4/1/25 01:04, Philippe Mathieu-Daudé wrote:
+> Mark SCU MemoryRegionOps read/write handler implementations
+> as 32-bit, then allow down to 8-bit accesses.
+> 
+> Joel Stanley (1):
+>    hw/misc/aspeed_scu: Correct minimum access size for AST2500 / AST2600
+> 
+> Philippe Mathieu-Daudé (1):
+>    hw/misc/aspeed_scu: Set MemoryRegionOps::impl::access_size to 32-bit
+> 
+>   hw/misc/aspeed_scu.c | 16 ++++++++++++++--
+>   1 file changed, 14 insertions(+), 2 deletions(-)
+> 
+Applied to aspeed-next.
 
-  $ qemu-system-aarch64 -M vmapple -accel qtest
-  qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
+Thanks,
 
-Second, the QTest framework expects machines to be createable
-without specifying optional arguments, however the VMapple
-machine requires few of them:
+C.
 
-  $ qemu-system-aarch64 -M vmapple -accel qtest
-  qemu-system-aarch64: No firmware specified
-
-  $ qemu-system-aarch64 -M vmapple -accel qtest -bios /dev/null
-  qemu-system-aarch64: No AUX device. Please specify one as pflash drive.
-
-Restrict some code path to QTest so we can at least run check-qtest,
-otherwise we get:
-
-  $ make check-qtest-aarch64
-  qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
-  Broken pipe
-  ../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
-  ...
-   7/26 qemu:qtest+qtest-aarch64 / qtest-aarch64/test-hmp     ERROR      24.71s   killed by signal 6 SIGABRT
-   2/26 qemu:qtest+qtest-aarch64 / qtest-aarch64/qom-test     ERROR      71.23s   killed by signal 6 SIGABRT
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/vmapple/vmapple.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index fa117bf1511..e16c0c72fe5 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -48,6 +48,7 @@
- #include "qobject/qlist.h"
- #include "standard-headers/linux/input.h"
- #include "system/hvf.h"
-+#include "system/qtest.h"
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/system.h"
-@@ -494,7 +495,9 @@ static void mach_vmapple_init(MachineState *machine)
-                                 machine->ram);
- 
-     create_gic(vms, sysmem);
--    create_bdif(vms, sysmem);
-+    if (!qtest_enabled()) {
-+        create_bdif(vms, sysmem);
-+    }
-     create_pvpanic(vms, sysmem);
-     create_aes(vms, sysmem);
-     create_gfx(vms, sysmem);
-@@ -504,7 +507,9 @@ static void mach_vmapple_init(MachineState *machine)
- 
-     create_gpio_devices(vms, VMAPPLE_GPIO, sysmem);
- 
--    vmapple_firmware_init(vms, sysmem);
-+    if (!qtest_enabled()) {
-+        vmapple_firmware_init(vms, sysmem);
-+    }
-     create_cfg(vms, sysmem, &error_fatal);
- 
-     /* connect powerdown request */
-@@ -541,17 +546,19 @@ static const CPUArchIdList *vmapple_possible_cpu_arch_ids(MachineState *ms)
- {
-     int n;
-     unsigned int max_cpus = ms->smp.max_cpus;
-+    const char *cpu_type;
- 
-     if (ms->possible_cpus) {
-         assert(ms->possible_cpus->len == max_cpus);
-         return ms->possible_cpus;
-     }
- 
-+    cpu_type = qtest_enabled() ? ARM_CPU_TYPE_NAME("max") : ms->cpu_type;
-     ms->possible_cpus = g_malloc0(sizeof(CPUArchIdList) +
-                                   sizeof(CPUArchId) * max_cpus);
-     ms->possible_cpus->len = max_cpus;
-     for (n = 0; n < ms->possible_cpus->len; n++) {
--        ms->possible_cpus->cpus[n].type = ms->cpu_type;
-+        ms->possible_cpus->cpus[n].type = cpu_type;
-         ms->possible_cpus->cpus[n].arch_id =
-             arm_build_mp_affinity(n, GICV3_TARGETLIST_BITS);
-         ms->possible_cpus->cpus[n].props.has_thread_id = true;
--- 
-2.47.1
 
 
