@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4776C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB698C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 13:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzbsP-0005KE-J9; Tue, 01 Apr 2025 09:42:01 -0400
+	id 1tzbt8-0006Wp-M9; Tue, 01 Apr 2025 09:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbsF-0005EH-2T
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:41:53 -0400
+ id 1tzbsw-0005sJ-Ar
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:36 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tzbsC-0006Zf-8M
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:41:50 -0400
+ id 1tzbss-0006Zf-S2
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 09:42:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1743514908; x=1775050908;
+ t=1743514951; x=1775050951;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=d51UYtQR74/wrHTLkrhxOXXIgmZSkfJnc0YFaHchExE=;
- b=I1dKk9ULKLSXm1YBto2BToSJtrdnaEcu8KNCKXK1kf8hCcicCJa5DzeD
- wJrg3vcAUxBf5rwqfVvticGZPvwBBns4jexlTrh4jNog1CEy2e4NXUT1/
- hyxzwg5qM0oHPyDp0P3IFISH97ViPVY785SqKpLmQJkUEZWnljSjQKqR5
- wOE/d9DtZP9z7W4sle8fzBxLe15HNRn8j2CH9bLRcCYnbzMlg7FtYp0hR
- y6IqxyEGi4q+dYR1/G38Fkv0XnSxOnbGqlmPwKT2zJoBc9BN2s1Jc11dR
- wx73uCCvRWLomsjgIxcPcL/pyM5XpBPLGxc27QDA4Kxis6zrX2/S+vU6p w==;
-X-CSE-ConnectionGUID: mV04mo1nRiOycBIHa1kMpQ==
-X-CSE-MsgGUID: wKn6qe+tSaiSjsP4escSeg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433205"
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433205"
+ bh=nlAe9WpERrXUlGfHAoVGpLsg+Xj3YjTCOkA2zr+Kkfg=;
+ b=Z4QLeOdtZXgcQYbrJHXiP4WY+dcg8C0Zxj8jXizGrKWr8xbDRZWeALIq
+ jEAxDp4IhzX52dMpCrbXoAooNq4BaezfvtMVopZv/3shx4e8z26Byn1WW
+ p5NuoRtkBHt397w2TITqX2tnaZUGp4r3UckAxosGrNgHVZopq/Qf0lZI+
+ MGPHs6lAmpfqsckzobwrB4uisiFyMfcLv1i3bdiMuuUBfyuD07MKpbqjo
+ jM0PKHgkKIVopM30YIA8N0cQlQl3ozA/uuNoE2/U6oBeRCEaPTnIkPwTx
+ NznCfSyabc/I6bjkBHEjqziWJmsyca9+5ms1bROTrcxDjvbatM2TyBtAd g==;
+X-CSE-ConnectionGUID: ma9VuIJCQLmXGkoigC77qA==
+X-CSE-MsgGUID: byWRbXSFRk2TDgmm5y89nw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11391"; a="32433304"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="32433304"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2025 06:41:34 -0700
-X-CSE-ConnectionGUID: 9/CmWpQ8RRasNSq7aRv4rw==
-X-CSE-MsgGUID: OmdxE0KVThCIFhtM5FHEWQ==
+ 01 Apr 2025 06:42:00 -0700
+X-CSE-ConnectionGUID: Z9lq0syESzaQSrUYYJUqTA==
+X-CSE-MsgGUID: OBFd8pIrQ1yyIJQIep3UJA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126639942"
+X-IronPort-AV: E=Sophos;i="6.14,293,1736841600"; d="scan'208";a="126640001"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:31 -0700
+ by fmviesa008.fm.intel.com with ESMTP; 01 Apr 2025 06:41:57 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -55,10 +55,9 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v8 09/55] i386/tdx: Add property sept-ve-disable for tdx-guest
- object
-Date: Tue,  1 Apr 2025 09:01:19 -0400
-Message-Id: <20250401130205.2198253-10-xiaoyao.li@intel.com>
+Subject: [PATCH v8 19/55] i386/tdx: Don't initialize pc.rom for TDX VMs
+Date: Tue,  1 Apr 2025 09:01:29 -0400
+Message-Id: <20250401130205.2198253-20-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250401130205.2198253-1-xiaoyao.li@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
@@ -89,100 +88,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bit 28 of TD attribute, named SEPT_VE_DISABLE. When set to 1, it disables
-EPT violation conversion to #VE on guest TD access of PENDING pages.
-
-Some guest OS (e.g., Linux TD guest) may require this bit as 1.
-Otherwise refuse to boot.
-
-Add sept-ve-disable property for tdx-guest object, for user to configure
-this bit.
+For TDX, the address below 1MB are entirely general RAM. No need to
+initialize pc.rom memory region for TDs.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
-Changes in v4:
-- collect Acked-by from Markus
-
-Changes in v3:
-- update the comment of property @sept-ve-disable to make it more
-  descriptive and use new format. (Daniel and Markus)
+This is more as a workaround of the issue that for q35 machine type, the
+real memslot update (which requires memslot deletion )for pc.rom happens
+after tdx_init_memory_region. It leads to the private memory ADD'ed
+before get lost. I haven't work out a good solution to resolve the
+order issue. So just skip the pc.rom setup to avoid memslot deletion.
 ---
- qapi/qom.json         |  8 +++++++-
- target/i386/kvm/tdx.c | 23 +++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ hw/i386/pc.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index c0b61df964ef..f229bb07aaec 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1055,10 +1055,16 @@
- # @attributes: The 'attributes' of a TD guest that is passed to
- #     KVM_TDX_INIT_VM
- #
-+# @sept-ve-disable: toggle bit 28 of TD attributes to control disabling
-+#     of EPT violation conversion to #VE on guest TD access of PENDING
-+#     pages.  Some guest OS (e.g., Linux TD guest) may require this to
-+#     be set, otherwise they refuse to boot.
-+#
- # Since: 10.1
- ##
- { 'struct': 'TdxGuestProperties',
--  'data': { '*attributes': 'uint64' } }
-+  'data': { '*attributes': 'uint64',
-+            '*sept-ve-disable': 'bool' } }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 01d0581f62a3..bcbbea235645 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -43,6 +43,7 @@
+ #include "system/xen.h"
+ #include "system/reset.h"
+ #include "kvm/kvm_i386.h"
++#include "kvm/tdx.h"
+ #include "hw/xen/xen.h"
+ #include "qobject/qlist.h"
+ #include "qemu/error-report.h"
+@@ -972,21 +973,23 @@ void pc_memory_init(PCMachineState *pcms,
+     /* Initialize PC system firmware */
+     pc_system_firmware_init(pcms, rom_memory);
  
- ##
- # @ThreadContextProperties:
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 0afaf739c09f..081094ae29db 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -18,6 +18,8 @@
- #include "kvm_i386.h"
- #include "tdx.h"
+-    option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+-    if (machine_require_guest_memfd(machine)) {
+-        memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
+-                                           PC_ROM_SIZE, &error_fatal);
+-    } else {
+-        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+-                               &error_fatal);
+-        if (pcmc->pci_enabled) {
+-            memory_region_set_readonly(option_rom_mr, true);
++    if (!is_tdx_vm()) {
++        option_rom_mr = g_malloc(sizeof(*option_rom_mr));
++        if (machine_require_guest_memfd(machine)) {
++            memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
++                                            PC_ROM_SIZE, &error_fatal);
++        } else {
++            memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
++                                &error_fatal);
++            if (pcmc->pci_enabled) {
++                memory_region_set_readonly(option_rom_mr, true);
++            }
+         }
++        memory_region_add_subregion_overlap(rom_memory,
++                                            PC_ROM_MIN_VGA,
++                                            option_rom_mr,
++                                            1);
+     }
+-    memory_region_add_subregion_overlap(rom_memory,
+-                                        PC_ROM_MIN_VGA,
+-                                        option_rom_mr,
+-                                        1);
  
-+#define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
-+
- static TdxGuest *tdx_guest;
- 
- static struct kvm_tdx_capabilities *tdx_caps;
-@@ -252,6 +254,24 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
-+static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    return !!(tdx->attributes & TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE);
-+}
-+
-+static void tdx_guest_set_sept_ve_disable(Object *obj, bool value, Error **errp)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+
-+    if (value) {
-+        tdx->attributes |= TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
-+    } else {
-+        tdx->attributes &= ~TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
-+    }
-+}
-+
- /* tdx guest */
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
-                                    tdx_guest,
-@@ -272,6 +292,9 @@ static void tdx_guest_init(Object *obj)
- 
-     object_property_add_uint64_ptr(obj, "attributes", &tdx->attributes,
-                                    OBJ_PROP_FLAG_READWRITE);
-+    object_property_add_bool(obj, "sept-ve-disable",
-+                             tdx_guest_get_sept_ve_disable,
-+                             tdx_guest_set_sept_ve_disable);
- }
- 
- static void tdx_guest_finalize(Object *obj)
+     fw_cfg = fw_cfg_arch_create(machine,
+                                 x86ms->boot_cpus, x86ms->apic_id_limit);
 -- 
 2.34.1
 
