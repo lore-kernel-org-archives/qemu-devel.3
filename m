@@ -4,53 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E265C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 12:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADCE8C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 12:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzafC-0003Yw-A7; Tue, 01 Apr 2025 08:24:20 -0400
+	id 1tzai9-0004i6-LN; Tue, 01 Apr 2025 08:27:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tzaf4-0003YE-W1; Tue, 01 Apr 2025 08:24:12 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tzai7-0004hL-8w
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 08:27:19 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tzaez-0001dg-So; Tue, 01 Apr 2025 08:24:10 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DED684E6005;
- Tue, 01 Apr 2025 14:24:01 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id MXsGBs65XN8B; Tue,  1 Apr 2025 14:23:59 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D6EA14E600E; Tue, 01 Apr 2025 14:23:59 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D4F1674577C;
- Tue, 01 Apr 2025 14:23:59 +0200 (CEST)
-Date: Tue, 1 Apr 2025 14:23:59 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Nicholas Piggin <npiggin@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>
-Subject: Re: [PATCH v2] ppc/vof: Make nextprop behave more like Open Firmware
-In-Reply-To: <D8UZF6NLQG6W.3IBC5MPZBFZ1J@gmail.com>
-Message-ID: <7903877c-d442-fb9b-2233-2b848b114d73@eik.bme.hu>
-References: <20250331142627.BAA2F4E6029@zero.eik.bme.hu>
- <D8UZF6NLQG6W.3IBC5MPZBFZ1J@gmail.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tzai4-00025P-I9
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 08:27:18 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tzahm-00000000lbl-3uOv; Tue, 01 Apr 2025 14:26:58 +0200
+Message-ID: <f18c4158-b2e8-4be0-80e2-0808f22f027c@maciej.szmigiero.name>
+Date: Tue, 1 Apr 2025 14:26:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] vfio/migration: Add also max in-flight VFIO device
+ state buffers size limit
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1741124640.git.maciej.szmigiero@oracle.com>
+ <2b2469939198c2f31dba33b284576d2df22697b7.1741344976.git.maciej.szmigiero@oracle.com>
+ <abc049f2-3497-4557-89c8-74bcfaea221c@redhat.com>
+ <3826d47f-d79b-4db2-9719-35f48f582bf0@maciej.szmigiero.name>
+ <fc547687-b313-404c-a6a6-dd599b0a9dbc@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <fc547687-b313-404c-a6a6-dd599b0a9dbc@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,83 +112,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 1 Apr 2025, Nicholas Piggin wrote:
-> On Tue Apr 1, 2025 at 12:26 AM AEST, BALATON Zoltan wrote:
->> The FDT does not normally store name properties but reconstructs it
->> from path but each node in Open Firmware should at least have this
->> property. This is correctly handled in getprop but nextprop should
->> also return it even if not present as a property. This patch fixes
->> that and also skips phandle which does not appear in Open Firmware
->> and only added for internal use by VOF.
+On 11.03.2025 14:04, Cédric Le Goater wrote:
+> On 3/7/25 14:45, Maciej S. Szmigiero wrote:
+>> On 7.03.2025 13:03, Cédric Le Goater wrote:
+>>> On 3/7/25 11:57, Maciej S. Szmigiero wrote:
+>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>
+>>>> There's already a max in-flight VFIO device state buffers *count* limit,
+>>>
+>>> no. there isn't. Do we need both ?
 >>
->> Explicit name properties are still allowed because they are needed
->> e.g. on the root node that guests expect to have specific names as
->> seen on real machines instead of being empty so sometimes the node
->> name may need to be overriden.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->> I've tested this with pegasos2 but don't know how to test spapr.
->
-> Boot a pseries machine with pseries (book3s 64-bit) Linux kernel
-> with x-vof=on option.
->
-> AFAIKS the two places Linux calls nextprop look like this
->
->               if (call_prom("nextprop", 3, 1, node, prev_name,
->                              pname) != 1)
->                        break;
->
->                /* skip "name" */
->                if (prom_strcmp(pname, "name") == 0) {
->                        prev_name = "name";
->                        continue;
->                }
->
-> So, seems like skipping name is okay?
+>> This is on a top of the remaining patches (x-migration-load-config-after-iter
+>> and x-migration-max-queued-buffers) - I thought we were supposed to work
+>> on these after the main series was merged as they are relatively non-critical.
+> 
+> yes. we don't need both count and size limits though, a size limit is enough.
+> 
+>> I would also give x-migration-load-config-after-iter priority over
+>> x-migration-max-queued-buffers{,-size} as the former is correctness fix
+>> while the later are just additional functionalities.
+> 
+> ok. I have kept both patches in my tree with the doc updates.
+> 
 
-For Linux maybe OK to not have name but other OSes use it to identify 
-devices so we need it. I tried to match what the real pegasos firmware 
-returns but likely SLOF does the same if you do .properties in a node, I 
-have not tried SLOF but I can try if that helps. I've seen some 
-OpenFirmware output from Macs which also have name in property list and OF 
-specification says each node should have a name property so I think it's 
-not OK to skip it and not returning it from nextprop does not work for 
-pegasos which now has to add explicit name properties in pegasos2.c to fix 
-this.
+I don't see the x-migration-load-config-after-iter patch in upstream QEMU
+anywhere.
+That's a bit concerning since it's a correctness fix - without it the
+multifd VFIO migration on ARM64 can fail.
 
-> After iterating through properties it also has this:
->
->        /* Add a "phandle" property if none already exist */
->        if (!has_phandle) {
->                soff = dt_find_string("phandle");
->                if (soff == 0)
->                        prom_printf("WARNING: Can't find string index for <phandle> node %s\n", path);
->
-> That warning does not seem to fire after your patch.
+The existing patch still applies, but requires changing
+"#if defined(TARGET_ARM)" to "strcmp(target_name(), "aarch64") == 0" due to
+recent commit 5731baee6c3c ("hw/vfio: Compile some common objects once").
 
-Is that good or bad? Was it firing before? If so, getting rid of it may be 
-good but I can leave phandle there if it helps Linux. Other OSes don't 
-seem to care but it does not seem to appear on real OF results that's why 
-I also removed it but I could leave it in if you think it's better that 
-way.
+I can submit an updated patch if you like.
 
-> spapr *seems* to be okay booting, but I would not be inclined to
-> take this for 10.0 at least without review from someone who knows
-> more than I do about OF since there can be subtle breakage.
->
-> What actual problem is it causing for pegasos?
+Thanks,
+Maciej
 
-Sorry I did not make it clear this is for 10.1 not 10.0, that's why it 
-does not say what does it fix. I want to clean up pegasos2.c a bit after 
-the freeze and this allows me to remove all the explicit name properties 
-which are now only needed because while the name property works with 
-getprop, it is not queried due to missing from nextprop. I've just 
-submitted this patch in advance to get it reviewed and hopefully merged 
-after the freeze so I can submit the patches that depend on it later. I 
-don't have any fixes for 10.0 so that should be fine for now, these are 
-for after the freeze.
-
-Regards,
-BALATON Zoltan
 
