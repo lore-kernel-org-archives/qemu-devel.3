@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EDCC36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:50:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D4F3C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzZBc-0003dM-Px; Tue, 01 Apr 2025 06:49:42 -0400
+	id 1tzZKl-0006Pj-5V; Tue, 01 Apr 2025 06:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tzZBL-0003bT-1L
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:49:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1tzZBH-00067v-La
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:49:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743504557;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Sw2toYEwlZpJRKO0e+Cf2aDAvTiJI909oZbTAdo38Hc=;
- b=CZsPpRjUPfa2GunSiNvfbMWaIGbV9Jwe7wTecTNRlkzVY+iARjvPhUFgizG+x2nLcolCGk
- IaXiDA9g+UBZ85mhFjA2vWokSyGc2pCIEKRMMU3O3KwNiwohZ5j12mfmfCNhBwM7AYsGoV
- gujo1QkrPvY3nATkM4vr594vXuxlHNU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-q9qV8DoENSaPMeeCz6YuFQ-1; Tue, 01 Apr 2025 06:49:16 -0400
-X-MC-Unique: q9qV8DoENSaPMeeCz6YuFQ-1
-X-Mimecast-MFC-AGG-ID: q9qV8DoENSaPMeeCz6YuFQ_1743504555
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39131f2bbe5so2150943f8f.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:49:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzZKX-0006IU-6T
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:58:56 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzZKU-0008JH-H2
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:58:52 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cf848528aso47006035e9.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:58:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743505128; x=1744109928; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B7kxli4tgFHp0Cs3y1KNEmWTsT52dCDoUETSH4GjUe8=;
+ b=Fk/oRtloplncDfPSctyyrXKXWcI1swwE1+HpoNFkUWUeOYF3mNLP2KHYvQ4RbgvfZC
+ u1Bkntg8WarjQTfIwoLShjujWINqgDBxzqj8RJ7X+O61+CSDPS7iTCruFXD3KvJNDYSl
+ em3Sx/fb8c9MqWiSe8ZfgidpvhXYTHBIKyyF/Fq7UiVLe/i+/4Y5iH3WHUAGXpcJ3ndf
+ R2PLkIKec7G8qFhLr2yJBa3xCve8wh+Eop1xaJH+EEDOuvAo+5JgLA3cuJP4AuQaCeHI
+ B1eob/97JQ7GwK+oYdNwRunpSU/ru/uCfwSD8MUp1f2g97T0lIRD7mN+jRKM7BwynXnZ
+ vjoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743504554; x=1744109354;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Sw2toYEwlZpJRKO0e+Cf2aDAvTiJI909oZbTAdo38Hc=;
- b=g6DIwxQnOD9K0jN4mudMmAuT8OPzGHgF3wtBrUCAMD5t303GViJJAVSP4KPRdmfzX8
- c/qtvczUde+NIPeuncfajB7nmdhHZZuKf6xJBQ/0hDC5rDK/9vCJ9adJrYgGPinFYAZi
- y+ouyq16EWOqizWsr+dIf6e8DoHNmC0rjjUuKG0GARdWVHuYyoK7NxDAoOgFp5BAnAFa
- 3+16Nwcq9Irm6gQMFjucutX2nxoWNvUXPHBwf1FaFdwnICiI+5Q97Qc3Uec8U4R6KEBt
- IIJ15teHLzXr0l3YdJAHRU50szCkP0EM/tB3gg/kJjFklqDN6XsxgBiZKgg3jcp61GMg
- UR5A==
+ d=1e100.net; s=20230601; t=1743505128; x=1744109928;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B7kxli4tgFHp0Cs3y1KNEmWTsT52dCDoUETSH4GjUe8=;
+ b=Emt4EtPeHc/dZDmAFjPKEy04aXkmCpdIfa8Muhydf3MWss00YTCuPVg9hRXE7i5ROR
+ m1dCEF+da3/3CnIizYooYZFWUA+DYZ3owFDMq+JjwlI+AW4iSuXQ7UxNtS48p/WI02Js
+ B1ftNPXTPW3aXhGhyRITfRim0vZkr1FgFVtENJvX2T0YXoWAP71kmYJAxUsnRv8ep7SZ
+ GeAYumlq45/sm4n6OJPt0uFqAoglNDia7U6uU0W5cYMM9RqW5SFsyQYwLPdi9FUmcVbq
+ 7oE3suwIFDnOGeb2GcsuqFer4tMft3Pt22V/TLH9zhLJQYdzTBc9r8lT12W9Ik7Di/ok
+ sa7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAOtrF1+5W6aPIycHclzYkj9iTYNJvnCMgwITyeRiXp1mlL09EZ7J7AOHXH68gLpH1hRfE3qFhPW9A@nongnu.org
-X-Gm-Message-State: AOJu0YwWwyXWn2CtZPHNMjL4qnTHtQu2UWV4vWHonNJTb+NZMsrBud5X
- Toj5Vz5m10lIPWR1dhTvquV+75kbCTJ1N/HrYKnsp6UTzug4FvkNn6/26jSKQzG3yRDZNCKlbfd
- xzOJdoupvUrJwUTVM5++0PSLhX87qhV3zfpxc2m7LAmtg0iXmdsP6
-X-Gm-Gg: ASbGncsByx3+9ynpZbHH4JSUQjRdY8bAhIW3+r4TOwg0E05d4l7pTZ4fo/+mm3TriGy
- 1Yqx3PuSzkiwg2PHUJLiPVDERdlmyLrzUJ5cKbBq2rGXZh30tXllNos9qz6RHjMT9JanfT11WGr
- YVtTQ4auNMqpQ1/u2ZAUcXRa4uY1gmfk0VLIGexK6sf2g7yeskFtuAHJYlNjKJMtFcwd2YQ6k46
- 2vRu0xzFl7qblsNNIwAZGOOavgIdLK782w2qpISnAUVxHsyekbW/1mDgcQxJmS6WBqn5v73g6BN
- rTl0yS4yzYTUevcTlVOlk1fbgJKHFY+J5w5rYkm/G3+syYv3O1ElAKPyU38=
-X-Received: by 2002:a05:6000:1a85:b0:391:40b8:e890 with SMTP id
- ffacd0b85a97d-39c120dd0d3mr7864549f8f.22.1743504554062; 
- Tue, 01 Apr 2025 03:49:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOIQCpR0FWPwUhMWEPllvx/Shqg0EJLeIv+/u9YOZ+7pCB5GSDRnj3ZKvFxRFEiVJQvXyOnA==
-X-Received: by 2002:a05:6000:1a85:b0:391:40b8:e890 with SMTP id
- ffacd0b85a97d-39c120dd0d3mr7864519f8f.22.1743504553524; 
- Tue, 01 Apr 2025 03:49:13 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-11-6-59.retail.telecomitalia.it.
- [87.11.6.59]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b66a8c9sm13618325f8f.47.2025.04.01.03.49.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 03:49:12 -0700 (PDT)
-Date: Tue, 1 Apr 2025 12:49:01 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: oenhan@gmail.com
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
- pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
- leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Huaitong Han <hanht2@chinatelecom.cn>,
- Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
- Jidong Xia <xiajd@chinatelecom.cn>
-Subject: Re: [PATCH] vhost: Don't set vring call if guest notifier is unused
-Message-ID: <rqx2ixzzd3vnxirsyone67udq6xjztpp2jihwa7r44ffmdtjol@lpao7euzvcvj>
-References: <20250326082537.379977-1-hanht2@chinatelecom.cn>
+ AJvYcCWCieeQV/Mw8rcO5cZMagPGHAjqgCmcfR8EUHyO8QuGkSmp/Ckx+XACZVumm/7HIt630JHeNfCZKXbe@nongnu.org
+X-Gm-Message-State: AOJu0Yx8ikGWHYVaBhweHQXzKsM8l9D6I1+QfPRUiU50c7rAlokowlsY
+ ocRExhYYVtt1JQWu0lwga6x6es2rF7ZI+cBADGLDwnCFTCGafZeR1Ji71Fs5Z64=
+X-Gm-Gg: ASbGncsn/wqztD8h+kEZ9ycDg6qDRMNucqYvvQrJdMmXROn87qV9zWbXrxQe12QspI1
+ hhsiE1ux8G2ptfzePhsPYcw3bYNt2WNDOZ8YZSj2D/sxuRFpUIFUag5GmEfTCEhyZWMYxRqo5n2
+ oA0s5fLIDmd9HtBuW8i1iIU/j+Fuq3HJEbjxzyuXzmIveFgSAXgxTyrdhrbc/fRcv6Lz9xnpsZw
+ noRRd2Eta494BSrvyQy9KVl+EdNvB2qugpTRK+ulFmEUCDQ1Z+jmMIKQluEZ63blOEnRyekIfzu
+ xP19XwaeBFxN4el5dj59yIw+0UHGLQcmQbhuaVUYTaZs9JnDv9Ow4OoRroCFAjl4m0C2X3ENJOe
+ DGgi0a325UkmU
+X-Google-Smtp-Source: AGHT+IHVUBiBPLs1yReZGAeHgSa7vquc86IUvneq7dC6TMb5ITdogd/h8+J6mIq9SszMNdra6aEzLA==
+X-Received: by 2002:a05:6000:2913:b0:39a:ca59:a626 with SMTP id
+ ffacd0b85a97d-39c120e3e5cmr10394801f8f.28.1743505128038; 
+ Tue, 01 Apr 2025 03:58:48 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43d8314b5e7sm197209115e9.35.2025.04.01.03.58.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Apr 2025 03:58:47 -0700 (PDT)
+Message-ID: <f9a3fc79-220e-41a3-b626-91d2de958690@linaro.org>
+Date: Tue, 1 Apr 2025 12:58:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250326082537.379977-1-hanht2@chinatelecom.cn>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.198,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] target/ppc: Deprecate Power8E and Power8NVL
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+References: <20250330211012.2932258-1-adityag@linux.ibm.com>
+ <805a75a4-07c9-41f2-9456-d74b414ddf89@linaro.org>
+ <k3ick2ilcc3h4nkq46uavibuw5zg7otanutr7syhyynpakcteh@uu4ia2nmm633>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <k3ick2ilcc3h4nkq46uavibuw5zg7otanutr7syhyynpakcteh@uu4ia2nmm633>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,193 +108,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 26, 2025 at 04:25:37PM +0800, oenhan@gmail.com wrote:
->From: Huaitong Han <hanht2@chinatelecom.cn>
->
->The vring call fd is set even when the guest does not use msix (e.g., in the
->case of virtio pmd), leading to unnecessary CPU overhead for processing
->interrupts. The previous patch optimized the condition where msix is 
+On 1/4/25 11:54, Aditya Gupta wrote:
+> On 25/03/31 01:37PM, Philippe Mathieu-Daudé wrote:
+>> On 30/3/25 23:10, Aditya Gupta wrote:
+>>> <...snip...>
+>>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Thanks for the tag, Philippe !
+> 
+> I will be posting a v5 with this patch split into 2 as suggested by
+> Cedric (one introducing the POWERPC_DEF_SVR_DEPR, and another marking
+> power8e/8nvl as deprecated).
+> 
+> Should I keep your Reviewed-by in both patches ?
 
-What would be the previous patch?
-
-If you're referencing a patch already merged, please add them in the 
-same form you used in Fixes, for example:
-Commit XXXXX ("vhost: ...") optimized the condition ...
-
->enabled
->but the queue vector is unset. However, there is a additional case where the
->guest interrupt notifier is effectively unused and the vring call fd should
->also be cleared: the guest does not use msix and the INTX_DISABLED bit in the PCI
->config is set.
-
-I don't know this code very well, can you explain better what you are 
-changing with this patch and why change the name of 
-query_guest_notifiers?
-
->
->Fixes: 96a3d98d2c ("vhost: don't set vring call if no vector")
->
->Test result:
->https://raw.githubusercontent.com/oenhan/build_log/refs/heads/main/qemu/2503261015/build/meson-logs/testlog.txt
-
-Does it make sense to have this link in the commit, will it always be 
-accessible?
-
->
->Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
->Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
->Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
->---
-> hw/pci/pci.c                   |  2 +-
-> hw/s390x/virtio-ccw.c          |  9 ++++++---
-> hw/virtio/vhost.c              |  5 ++---
-> hw/virtio/virtio-pci.c         | 15 ++++++++++-----
-> include/hw/pci/pci.h           |  1 +
-> include/hw/virtio/virtio-bus.h |  2 +-
-> 6 files changed, 21 insertions(+), 13 deletions(-)
->
->diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->index 2844ec5556..503a897528 100644
->--- a/hw/pci/pci.c
->+++ b/hw/pci/pci.c
->@@ -1719,7 +1719,7 @@ static void pci_update_mappings(PCIDevice *d)
->     pci_update_vga(d);
-> }
->
->-static inline int pci_irq_disabled(PCIDevice *d)
->+int pci_irq_disabled(PCIDevice *d)
-> {
->     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
-> }
->diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
->index 43f3b162c8..af482a22cd 100644
->--- a/hw/s390x/virtio-ccw.c
->+++ b/hw/s390x/virtio-ccw.c
->@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
->     }
-> }
->
->-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
->+static bool virtio_ccw_query_guest_notifiers_used(DeviceState *d, int n)
-> {
->     CcwDevice *dev = CCW_DEVICE(d);
->+    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
->+    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
->
->-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
->+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
->+            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
-> }
->
-> static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
->@@ -1270,7 +1273,7 @@ static void virtio_ccw_bus_class_init(ObjectClass *klass, void *data)
->     bus_class->max_dev = 1;
->     k->notify = virtio_ccw_notify;
->     k->vmstate_change = virtio_ccw_vmstate_change;
->-    k->query_guest_notifiers = virtio_ccw_query_guest_notifiers;
->+    k->query_guest_notifiers_used = virtio_ccw_query_guest_notifiers_used;
->     k->set_guest_notifiers = virtio_ccw_set_guest_notifiers;
->     k->save_queue = virtio_ccw_save_queue;
->     k->load_queue = virtio_ccw_load_queue;
->diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->index 6aa72fd434..32634da836 100644
->--- a/hw/virtio/vhost.c
->+++ b/hw/virtio/vhost.c
->@@ -1341,9 +1341,8 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
->         vhost_virtqueue_mask(dev, vdev, idx, false);
->     }
->
->-    if (k->query_guest_notifiers &&
->-        k->query_guest_notifiers(qbus->parent) &&
->-        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
->+    if (k->query_guest_notifiers_used &&
->+        !k->query_guest_notifiers_used(qbus->parent, idx)) {
->         file.fd = -1;
->         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
->         if (r) {
->diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
->index 3ca3f849d3..25ff869618 100644
->--- a/hw/virtio/virtio-pci.c
->+++ b/hw/virtio/virtio-pci.c
->@@ -30,6 +30,7 @@
-> #include "qemu/error-report.h"
-> #include "qemu/log.h"
-> #include "qemu/module.h"
->+#include "hw/pci/pci.h"
-> #include "hw/pci/msi.h"
-> #include "hw/pci/msix.h"
-> #include "hw/loader.h"
->@@ -1031,7 +1032,7 @@ static void virtio_pci_one_vector_mask(VirtIOPCIProxy *proxy,
->
->     /* If guest supports masking, keep irqfd but mask it.
->      * Otherwise, clean it up now.
->-     */
->+     */
-
-Unrelated change.
-
->     if (vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
->         k->guest_notifier_mask(vdev, queue_no, true);
->     } else {
->@@ -1212,10 +1213,15 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
->     return 0;
-> }
->
->-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
->+static bool virtio_pci_query_guest_notifiers_used(DeviceState *d, int n)
-> {
->     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
->-    return msix_enabled(&proxy->pci_dev);
->+    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
->+
->+    if (msix_enabled(&proxy->pci_dev))
->+        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
->+    else
->+        return !pci_irq_disabled(&proxy->pci_dev);
-> }
->
-> static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
->@@ -2599,7 +2605,7 @@ static void virtio_pci_bus_class_init(ObjectClass *klass, void *data)
->     k->save_extra_state = virtio_pci_save_extra_state;
->     k->load_extra_state = virtio_pci_load_extra_state;
->     k->has_extra_state = virtio_pci_has_extra_state;
->-    k->query_guest_notifiers = virtio_pci_query_guest_notifiers;
->+    k->query_guest_notifiers_used = virtio_pci_query_guest_notifiers_used;
->     k->set_guest_notifiers = virtio_pci_set_guest_notifiers;
->     k->set_host_notifier_mr = virtio_pci_set_host_notifier_mr;
->     k->vmstate_change = virtio_pci_vmstate_change;
->@@ -2630,4 +2636,3 @@ static void virtio_pci_register_types(void)
-> }
->
-> type_init(virtio_pci_register_types)
->-
->diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
->index 822fbacdf0..de4ab28046 100644
->--- a/include/hw/pci/pci.h
->+++ b/include/hw/pci/pci.h
->@@ -256,6 +256,7 @@ void pci_del_capability(PCIDevice *pci_dev, uint8_t cap_id, uint8_t cap_size);
->
-> uint8_t pci_find_capability(PCIDevice *pci_dev, uint8_t cap_id);
->
->+int pci_irq_disabled(PCIDevice *d);
->
-> uint32_t pci_default_read_config(PCIDevice *d,
->                                  uint32_t address, int len);
->diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
->index 7ab8c9dab0..de75a44895 100644
->--- a/include/hw/virtio/virtio-bus.h
->+++ b/include/hw/virtio/virtio-bus.h
->@@ -48,7 +48,7 @@ struct VirtioBusClass {
->     int (*load_done)(DeviceState *d, QEMUFile *f);
->     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
->     bool (*has_extra_state)(DeviceState *d);
->-    bool (*query_guest_notifiers)(DeviceState *d);
->+    bool (*query_guest_notifiers_used)(DeviceState *d, int n);
->     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
->     int (*set_host_notifier_mr)(DeviceState *d, int n,
->                                 MemoryRegion *mr, bool assign);
->-- 
->2.43.5
->
-
+Fine by me!
 
