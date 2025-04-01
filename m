@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09D0AC36008
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 06:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E748BC36008
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 06:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzUjV-0005Vu-St; Tue, 01 Apr 2025 02:04:21 -0400
+	id 1tzUnB-0006Rd-FK; Tue, 01 Apr 2025 02:08:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzUjU-0005VX-Eh
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 02:04:20 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzUjS-0007K3-RQ
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 02:04:20 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4394a0c65fcso49067145e9.1
- for <qemu-devel@nongnu.org>; Mon, 31 Mar 2025 23:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743487457; x=1744092257; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YYQZPKrin10s1SzM4YPppgefqBxNl0fndOtyNy2BPLI=;
- b=sy0/aZDfGbIZ2LWwx1Ir1slQamXGUH2QqP+oy/HZfFl/RWODkqKda7/yoGgg30MUMA
- jMUsVJHLYb5J00DfAChrS8I8SOvHTvesALMuRsWrJyxAgnQ6WuRHWkRCDVQHBB1tzFDD
- HVntT2lDyCEBnKGbioRTKGbn8x7wIKhEuwOrr6nTUXv1UphtchkzP18YzBfNbV/mgubF
- sGgR8GyaQFU/sUy0LJI4d8ai/m1mhBZjvCBzTsv1NViOiJ6matGDM9j3cAwy8zLw0nKC
- Cz7qZ6uZw4XDHkFmNvHkzxmPFodaDHYuYSfUwKFh3+LBySbWNQ4zmsospeDMTeo3jBm3
- kwpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743487457; x=1744092257;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YYQZPKrin10s1SzM4YPppgefqBxNl0fndOtyNy2BPLI=;
- b=dvU6Zb18OcsOuBD2LBK6bUKRwoydp1u5O7eiwcHqapPjGCY4i2BR5U/R7Oou8qwL2f
- GLIo4EsAiOb6wCixH30JV3C2FAOgfZAsXs83jTs9Cqb5CmR5kaXS7iM+wn8WjLlY7zMy
- qE5BkEczo4jyYMzXZX8YBnm20LqFUIG0OuWv+1mVK8s/bv8gTayEOZhnIgEWo708l6pj
- zwY/Z6oc3vA9c8N9DYt0TNEG9sNHloeR4bxFGxGkL4/yKNSAHUQulS8aBYC8UPiR4cBt
- b73quZS3UB4f9xgwGTge+njo+JAUYjSBlcFXAEJDSbQwWlR9YydS2Dsvn+3qGUo9Yykl
- tpSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJiIkpZYJJYjlKSEbIesngG9jlBkiUgSf8RnQLowMdYYTI17M/2fmYS6Z6oWW7FqVPfPhhMFHYP+Ei@nongnu.org
-X-Gm-Message-State: AOJu0YyuL278qN/zpUooChz1JEK+u3YH3X+QDcc2QA7MrHgBBQIPm/ye
- 7urAZgT/5RnoA+hkJf6sVjOtW6+7Ye6nuuMfChuaqJ9f73gW8KJYtUEaWaxZ8/Y=
-X-Gm-Gg: ASbGncuDO9txtHxdyVhdK1wxe40KKw+YELxzCO1CMRq7DG3qR/DOrAx6x5EdGIafXF+
- azOL5lGs2S0TuApQ0Q7qXuIIoUOv5fdzV4A9kV1FLoSUW7oUiBJVSXhFdneMEtIMp0NguAQKZKS
- 3KPpP7+Jjtqr8b71bwig6sJ2OgFmbyx+IKjNiHJM6F7Vl/Y5MnDKgHiClU5iEfYkP4ZR6/ObqJL
- QdVRYZdPqhsXwrpDNb+ucEPj/Rkr72AX2Xq1goUUX9VRLydoCRjPvPvxRPRdFbP6dSW2pkAtbf/
- rvHLW3lU7gDGYZP9twt/8hll3/nPkXR3DG9zJWtgeeGcPgDRULMqIT2TWsjuGlJKPmLbsVxFthU
- yQvlPazQHG537
-X-Google-Smtp-Source: AGHT+IHllcB/2dsKVjZDcvLxmBkDjZ8uyuaake6PXKKuPR6MSLYF+PjP4pq7S8PKh75TyRAiXIaw/g==
-X-Received: by 2002:a05:600c:4705:b0:43c:fffc:7855 with SMTP id
- 5b1f17b1804b1-43db6249861mr105285445e9.15.1743487457029; 
- Mon, 31 Mar 2025 23:04:17 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8fbc1889sm144364965e9.16.2025.03.31.23.04.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 31 Mar 2025 23:04:16 -0700 (PDT)
-Message-ID: <261d4adb-c497-460e-9050-ed15a252ec9a@linaro.org>
-Date: Tue, 1 Apr 2025 08:04:15 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tzUn3-0006Qj-BU
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 02:08:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tzUn0-0007jv-64
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 02:08:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743487673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I/KLLi23gZ4QOQsGPjDcjGznbKTl55e5dJc1Lg7XaGE=;
+ b=Q8GowF2lvZvHIYipK7fGg0lHSzrA1YHUhckZ5krMOaS5jJYHyxr4PFn3BZXaaUoUnzOfjf
+ ZyL+GriY+wK9S1DgVr/wA+4tvooJEoMmovjRzKu+wVs/6ubKlapQ5bbUD/U1gR8nJvQMFj
+ SKx1AmsLHVZPs9i6WN7VQ8T9YdnEl3A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-410-eanJGHPMNZODn8wKWLFA7g-1; Tue,
+ 01 Apr 2025 02:07:47 -0400
+X-MC-Unique: eanJGHPMNZODn8wKWLFA7g-1
+X-Mimecast-MFC-AGG-ID: eanJGHPMNZODn8wKWLFA7g_1743487665
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9336180025E; Tue,  1 Apr 2025 06:07:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3396180174E; Tue,  1 Apr 2025 06:07:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1DFB821E66C5; Tue, 01 Apr 2025 08:07:37 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Jason Wang <jasowang@redhat.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Fabiano Rosas <farosas@suse.de>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Hanna Reitz
+ <hreitz@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  "Michael S.
+ Tsirkin" <mst@redhat.com>,  qemu-trivial@nongnu.org,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Yanan Wang <wangyanan55@huawei.com>,
+ qemu-block@nongnu.org,  Lukas Straub <lukasstraub2@web.de>,  Jiri Pirko
+ <jiri@resnulli.us>,  Stefan Berger <stefanb@linux.vnet.ibm.com>,  Gerd
+ Hoffmann <kraxel@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Michael
+ Tokarev <mjt@tls.msk.ru>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Laurent
+ Vivier <laurent@vivier.eu>,  Zhenwei Pi <pizhenwei@bytedance.com>,  Eric
+ Blake <eblake@redhat.com>,  Peter Xu <peterx@redhat.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Kevin Wolf
+ <kwolf@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: Re: [PATCH v2 2/4] docs, qapi: generate undocumented return sections
+In-Reply-To: <CAFn=p-bwhzosvS8v7q1sKhYaa39LkPKAoYkog14jEg_S_s0jHg@mail.gmail.com>
+ (John Snow's message of "Mon, 31 Mar 2025 14:30:36 -0400")
+References: <20250326195756.330817-1-jsnow@redhat.com>
+ <20250326195756.330817-3-jsnow@redhat.com>
+ <87zfh6yh1o.fsf@pond.sub.org>
+ <CAFn=p-bwhzosvS8v7q1sKhYaa39LkPKAoYkog14jEg_S_s0jHg@mail.gmail.com>
+Date: Tue, 01 Apr 2025 08:07:37 +0200
+Message-ID: <877c445s9i.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0] hw/core/machine.c: Fix -machine dumpdtb=file.dtb
-To: Joel Stanley <joel@jms.id.au>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
-References: <20250401041509.719153-1-joel@jms.id.au>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250401041509.719153-1-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.198,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,25 +107,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/25 06:15, Joel Stanley wrote:
-> In commit 8fd2518ef2f8 ("hw: Centralize handling of -machine dumpdtb
-> option") the call to dump was moved with respect to the init of the
-> machine.  This resulted in the device tree missing parts of the machine
-> description, depending on how they construct their device tree.
-> 
-> The arm virt machine is missing some PSCI nodes, while the riscv one
-> is missing most of its content.
-> 
-> Move the dump to after the notifiers have been run, allowing
-> virt_machine_done to be called and the device tree to be fully
-> populated.
-> 
-> Fixes: 8fd2518ef2f8 ("hw: Centralize handling of -machine dumpdtb option")
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->   hw/core/machine.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
+John Snow <jsnow@redhat.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> On Thu, Mar 27, 2025 at 5:11=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > This patch changes the qapidoc transmogrifier to generate Return value
+>> > documentation for any command that has a return value but hasn't
+>> > explicitly documented that return value.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>>
+>> Might want to briefly explain placement of the auto-generated return
+>> value documentation.  But before we discuss that any further, let's
+>> review the actual changes the the generated docs.
+>>
+>> This patch adds auto-generated return value documentation where we have
+>> none.
+>>
+>> The next patch replaces handwritten by auto-generated return value
+>> documentation where these are at least as good.  Moves the return value
+>> docs in some cases.
+>>
+>> First the additions:
+>>
+>> * x-debug-query-block-graph
+>>
+>>   Title, intro, features, return
+>>
+>> * query-tpm
+>>
+>>   Title, intro, return, example
+>>
+>> * query-dirty-rate
+>>
+>>   Title, intro, arguments, return, examples
+>>
+>> * query-vcpu-dirty-limit
+>>
+>>   Title, intro, return, example
+>>
+>> * query-vm-generation-id
+>>
+>>   Title, return
+>>
+>> * query-memory-size-summary
+>>
+>>   Title, intro, example, return
+>>
+>> * query-memory-devices
+>>
+>>   Title, intro, return, example
+>>
+>> * query-acpi-ospm-status
+>>
+>>   Title, intro, return, example
+>>
+>> * query-stats-schemas
+>>
+>>   Title, intro, arguments, note, return
+>>
+>> Undesirable:
+>>
+>> * query-memory-size-summary has returns after the example instead of
+>>   before.  I figure it needs the TODO hack to separate intro and example
+>>   (see announce-self).
+>>
+>
+> Yes
+>
+>
+>>
+>> * query-stats-schemas has a note between arguments and return.  I think
+>>   this demonstrates that the placement algorithm is too simplistic.
+>>
+>
+> Yeah ... It's just that *glances at length of email* it's been a sensitive
+> topic without a lot of certainty in desire, so I've tried to keep things =
+on
+> the stupid/simple side ...
+
+When the best solution is unclear, starting discussion with a simplistic
+solution is smart.  Beats starting with a complicated solution that gets
+shot down.
+
+>> Debatable:
+>>
+>> * x-debug-query-block-graph has returns after features.  I'd prefer
+>>   returns before features.  No need to debate this now.
+>>
+>
+> Willing to do this for you if you'd like to enforce it globally. I'd be
+> happy with any mandated order of sections, really.
+
+Could a more rigid order help the inliner, too?
+
+>> Next the movements:
+>>
+>> * x-debug-block-dirty-bitmap-sha256
+>>
+>>   From right before errors to right after
+>>
+>> * blockdev-snapshot-delete-internal-sync
+>>
+>>   From right before errors to right after
+>>
+>> * query-xen-replication-status
+>>
+>>   From between intro and example to the end
+>>
+>> * query-colo-status
+>>
+>>   From between intro and example to the end
+>>
+>> * query-balloon
+>>
+>>   From right before errors to right after
+>>
+>> * query-hv-balloon-status-report
+>>
+>>   From right before errors to right after
+>>
+>> * query-yank
+>>
+>>   From between intro and example to the end
+>>
+>> * add-fd
+>>
+>>   From between arguments and errors to between last note and example
+>>
+>> I don't like any of these :)
+>>
+>
+> So it goes ...
+>
+>
+>>
+>> Undesirable:
+>>
+>> * query-xen-replication-status, query-yank, and query-colo-status now
+>>   have return after the example instead of before.  I figure they now
+>>   need the TODO hack to separate intro and example.
+>>
+>
+> Yes
+>
+>
+>>
+>> * add-fd now has a note between arguments and return.  Same placement
+>>   weakness as for query-stats above.
+>>
+>> Debatable:
+>>
+>> * x-debug-block-dirty-bitmap-sha256,
+>>   blockdev-snapshot-delete-internal-sync, query-colo-status, and
+>>   query-hv-balloon-status-report now have return after errors instead of
+>>   before.  I'd prefer before.
+>>
+>> What's the stupidest acceptable placement algorithm?  Maybe this one:
+>>
+>> 1. If we have arguments, return goes right after them.
+>>
+>> 2. Else if we have errors, return goes right before them.
+>>
+>> 3. Else if we have features, return goes right before them.
+>>
+>> 4. Else return goes right after the intro (to make this work, we need
+>>    a few more TODO hacks).
+>>
+>> Would you be willing to give this a try?
+>>
+>
+> Probably ...
+>
+> So this algorithm seems to imply a preference for this ordering:
+>
+> 1. Intro
+> 2. Arguments
+> 3. Return
+> 4. Errors
+> 5. Features
+> 6. Details
+>
+> Do I have that correct?
+
+Yes, with
+
+  7. Since
+
+although a case could also be made for
+
+  1. Intro
+  2. Arguments
+  3. Return
+  4. Errors
+  5. Features
+  6. Since
+  7. Details
 
 
