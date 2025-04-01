@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFEC5C36014
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:30:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26EE2C36017
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 10:34:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzYsg-0007D0-W0; Tue, 01 Apr 2025 06:30:07 -0400
+	id 1tzYwz-0008TN-Vg; Tue, 01 Apr 2025 06:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tzYse-0007C7-Mc
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:30:04 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1tzYwk-0008S3-0L
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:34:25 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tzYsb-0002tW-OI
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:30:04 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cf257158fso37997235e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:30:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1tzYwh-0003q5-G0
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 06:34:17 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22423adf751so99147705ad.2
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 03:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743503399; x=1744108199; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=exM0qDUXriN627sYJi8hnsjMqODQyivFPPjPhdDB09s=;
- b=Wb0VppCo60UHlRXlexvCom4lyRtc5FiZVAdywbQi3umKM6pv18xenyUUrfT+Sx/FPs
- gMr4MRkfPtqURoodju4v0rAK727d0tIYpyIBwzW2oYmM+kYdE08iePp+3Gsx2pHPCRu9
- Q3Jpj1kedkr5GWqfLcOXPOWlsW3q3WGTa53WJMxefXn4J3twnenxWWQCxtdhqHyx5fpY
- Gx7VIJPra540AmuRvqB0gGLK5db709BKbbDdRO0Xpbz7rrB7x918Uixx0ykhEXd2WLZ8
- kgVhkqm5cmiGD1cDblZ2FLuNNmk0BAmk+BXF29twVEKe3lzLiHRJXRvXrMcSCRlTVzOz
- Uz7Q==
+ d=sifive.com; s=google; t=1743503651; x=1744108451; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0edgTYoWHKRu92ltgEpm8dVjfH0ldEKXvt5V/yx46BU=;
+ b=hIIbjz1jl9SQvI6EMwEYhsy8vF13aBvzcn8zelPUEi12TxFfo36ttXT4gvBFHsySXU
+ TETWX0lZLhBE0Rrb/XZUaPPS0AeQJHzzfzuCA3lDcecPZDM/nME/VGaMLJHJY8unT6zH
+ NlpKM4hY22oo72QWxK3vveoGPKqU4S+dBz7bbGabHFb05gTPzJ/B7zDCZjGJeqPWk6CP
+ 24rQ5OIUe783OT8xv0GYGXhoXX1z33xL1VXtwx5fxqxnWvLtaRBxs45/D+7Hyhn/h66P
+ 96EUOeh2bN/KL3zjjmwk7LFiIfreiGXbR8+C6CmX27eaIDgOxkSSCNnwp0GR7r36tHht
+ BuRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743503399; x=1744108199;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=exM0qDUXriN627sYJi8hnsjMqODQyivFPPjPhdDB09s=;
- b=ME9zxZAQHQQrb+ZcDu0GCNcJK1iMu+7Tw60OGD+WKjnEJXDBCnX1fxpVVUjs6QBD2M
- 1Wwx4Kc+lYhuI7Tl4fwR7KHfwh8Yh08cAGOZ9CPHUuMOjDnab6LnS7FAxztlX9nCww47
- bfP+xXluRtkGy9t0Xe4WI4WyzViv37Tvkmh7KlDl5DxrRXxM0+sMCSt/dSKhu0wMRwym
- z1+DCegjnhyiecTMcc3cLBRQh0Ygbkyud2WIPrXhN1pOxyKW740KC87+sVRbyqdvcBCo
- +9Fm4cNPdniJv2e8QS9Hm4iV38LltzlDsvqkQ7IcgHCDVNMpgW1xhHEr7tah8eMWB7UF
- 0vzQ==
-X-Gm-Message-State: AOJu0YywTL605T+pi4wcC9TfQUI39LZ28bOes6C5fwDJsYwmQKkGzP9m
- npBrnaJtQqpr4l8c07VrIOM1PSgoeas3NqWYcFsmvYqS59J7cUykAkpJjE/74sI=
-X-Gm-Gg: ASbGncsG53pN3P+75lYzVkR79YDagC4LkLgsr6fVz6998dfnopUoIavrnyDxMu7K2Qq
- gzAbcMDBjxQ74LKkv7XfhyworG99TAA7h6tRRUfPRullsxMWKCjJXi5b+Bw7VoDKqcZgycAliug
- 9i+tuK0+M3XCnt51Zs+3GJoWusVv68PiOtzDAnumb2oz/gr3TGYOJC1UjP5K6q1gmmldWA2QQvw
- gvFBi2DJs9e3wlOtX+O0lyZTqRdbmxSBnhWTIbaIwhxYUdjOdpNQdYGT27gMoVw6VPvG+A5O4wV
- repv8GkBTTwyl3VQnkq+JA/iBcE37T49znKCbvW75bRF4bg=
-X-Google-Smtp-Source: AGHT+IHZd2gStGxa6cxCvJvgB2RYzQ2eSGI66GiYHsc/pYxwn4Q1PAczcpovJVRcNJXIx8fIFYgkyA==
-X-Received: by 2002:a05:600c:46d0:b0:43d:7588:667b with SMTP id
- 5b1f17b1804b1-43db62264d4mr135591365e9.10.1743503399634; 
- Tue, 01 Apr 2025 03:29:59 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8fba4c29sm157175245e9.5.2025.04.01.03.29.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 01 Apr 2025 03:29:59 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3FEAC5F8B9;
- Tue,  1 Apr 2025 11:29:58 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  qemu-trivial@nongnu.org
-Subject: Re: [PATCH] docs/arm: Add apple HVF host for supported guest CPU type
-In-Reply-To: <20250401083102.72845-1-zhangckid@gmail.com> (Zhang Chen's
- message of "Tue, 1 Apr 2025 16:31:02 +0800")
-References: <20250401083102.72845-1-zhangckid@gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 01 Apr 2025 11:29:58 +0100
-Message-ID: <87zfh0npi1.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1743503651; x=1744108451;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0edgTYoWHKRu92ltgEpm8dVjfH0ldEKXvt5V/yx46BU=;
+ b=sAbkfU3NrId8KgOPeYxG8pFZoiHLzhfsweWAbLplAg7EHbe1KZdx4GY0FuZq8jt0xA
+ L7uJHxIlfAJJsHy89ZS/9WxyWdwlzyrAFIPrxT3TBjJwLxBeK7lIFhR1MIl4URwSgTV5
+ Ugpsfr8Cx3kFmGxA72D8njbtrAn9DTkIMJiWvqrdhsm+RbBpJEX2S8oXFwK5ZVs6Jxk1
+ TvJTiQUnBtnqohpQQT1nYwVXc0MdLZwGjXufE9dOUwUB7z1aNs7XolgFY79YA0sZ1bZl
+ DGf7REnKISJiZCg1hff1pWnKa2i93g4oOhHQEAANgK0dex48Cq7do8hUrTUxTS63LCvI
+ x8yA==
+X-Gm-Message-State: AOJu0Yys+lgOtK0490cbctT1Mo9+FMslwgHISRJ/0XZNEMyyyfeR3rWk
+ 8Aq2gd2TYpRmZogxtpuHaszCnlqKztugfqk8e8CHOEsxIhPEmc2UojsSLQqycyOhSN8uWDtucEb
+ aYL19qVgo/qtm8n7SW++f83fxwD3gj4sFLlxqPjRzJz2yE3HgusU2KfDFxqjXjG7stDzd1ijtgl
+ KpKghbCwa4bxpi6r4Edg8zhcTfktMUuRSaoOQT
+X-Gm-Gg: ASbGncuPWumPbHvnecq9LvaBPJLKGOIFdxJ9tBg3zsI8WwI74+/zqhk6Dq5revQRw70
+ UPR40J2DMK/fwfn28QTU/FbT3E3td3bQMOifz9MCeoo55SY4shJ9y2dXKtOFGN8Fnvb+btNKHLx
+ kt1fs/CzTc0XBJBZfeYY6xFk6UEpJWhRU9yCxnXxgk2O9ASwnJaz89BPwDqMXaFWUvOCnIAYjmj
+ SRmYNPC3bowiM2Ub13P8hjDx55Vp2TspbOZDHo222NaPOCj5+YFxqjuwh8B/DMjUVV40BgzN526
+ m0e3IbJXoPysRqBFdKke1t6MUIYg0GdPczeMboVVwFVi7w7eAVrldZXsU2zHYXXg2+D0aCao7qb
+ Wzz7ZmYaL4MBqtwXZfA8=
+X-Google-Smtp-Source: AGHT+IFx73hADwyBHytLjOTTwy5RRB6FDicjyUgmPVy7yswo23nRaMQ52Ur3vBtT93/iLrCXlw1EaA==
+X-Received: by 2002:a17:902:e54e:b0:21a:8300:b9ce with SMTP id
+ d9443c01a7336-2295c12e596mr40803515ad.49.1743503651219; 
+ Tue, 01 Apr 2025 03:34:11 -0700 (PDT)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.172])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2291f1ded6asm85211795ad.184.2025.04.01.03.34.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 01 Apr 2025 03:34:10 -0700 (PDT)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v2 1/2] target/riscv: Restrict mideleg/medeleg/medelegh access
+ to S-mode harts
+Date: Tue,  1 Apr 2025 18:33:43 +0800
+Message-ID: <20250401103344.84257-1-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=jay.chang@sifive.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+RISC-V Privileged Spec states:
+"In harts with S-mode, the medeleg and mideleg registers must exist, and
+setting a bit in medeleg or mideleg will delegate the corresponding trap
+, when occurring in S-mode or U-mode, to the S-mode trap handler. In
+harts without S-mode, the medeleg and mideleg registers should not
+exist."
 
-> In my test, latest QEMU already support Apple HVF for -cpu host and max.
->
-> From guest VM lscpu:
->
-> Architecture:             aarch64
->   CPU op-mode(s):         64-bit
->   Byte Order:             Little Endian
-> CPU(s):                   11
->   On-line CPU(s) list:    0-10
-> Vendor ID:                Apple
->   Model name:             -
->     Model:                0
->     Thread(s) per core:   1
->     Core(s) per socket:   11
->     Socket(s):            1
->     Stepping:             0x0
->     BogoMIPS:             48.00
->     Flags:                fp asimd evtstrm aes pmull sha1 sha2 crc32 atom=
-ics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 =
-asim
->                           dfhm dit uscat ilrcpc flagm ssbs sb paca pacg d=
-cpodp flagm2 frint
->
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+Add smode predicate to ensure these CSRs are only accessible when S-mode
+is supported.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+---
+ target/riscv/csr.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 7948188356..975d6e307f 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5783,8 +5783,8 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+                           NULL,                read_mstatus_i128           },
+     [CSR_MISA]        = { "misa",       any,   read_misa,    write_misa,
+                           NULL,                read_misa_i128              },
+-    [CSR_MIDELEG]     = { "mideleg",    any,   NULL, NULL,   rmw_mideleg   },
+-    [CSR_MEDELEG]     = { "medeleg",    any,   read_medeleg, write_medeleg },
++    [CSR_MIDELEG]     = { "mideleg",    smode,   NULL, NULL,   rmw_mideleg   },
++    [CSR_MEDELEG]     = { "medeleg",    smode,   read_medeleg, write_medeleg },
+     [CSR_MIE]         = { "mie",        any,   NULL, NULL,   rmw_mie       },
+     [CSR_MTVEC]       = { "mtvec",      any,   read_mtvec,   write_mtvec   },
+     [CSR_MCOUNTEREN]  = { "mcounteren", umode, read_mcounteren,
+@@ -5792,7 +5792,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+ 
+     [CSR_MSTATUSH]    = { "mstatush",   any32, read_mstatush,
+                           write_mstatush                                   },
+-    [CSR_MEDELEGH]    = { "medelegh",   any32, read_zero, write_ignore,
++    [CSR_MEDELEGH]    = { "medelegh",   smode32, read_zero, write_ignore,
+                           .min_priv_ver = PRIV_VERSION_1_13_0              },
+     [CSR_HEDELEGH]    = { "hedelegh",   hmode32, read_hedelegh, write_hedelegh,
+                           .min_priv_ver = PRIV_VERSION_1_13_0              },
+-- 
+2.48.1
+
 
