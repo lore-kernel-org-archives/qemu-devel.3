@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FCFC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 18:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D2F9C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  1 Apr 2025 19:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzghF-00065L-1u; Tue, 01 Apr 2025 14:50:49 -0400
+	id 1tzh81-00039p-Ox; Tue, 01 Apr 2025 15:18:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzghB-00064k-72
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 14:50:45 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tzh7e-00039U-DX
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 15:18:06 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzgh9-0000wI-B3
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 14:50:44 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43948f77f1aso42203965e9.0
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 11:50:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tzh7c-0006P5-4b
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 15:18:05 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-2c7e5fb8c38so3915515fac.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 12:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743533441; x=1744138241; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6VHqokpx1vIQYgxOWg50Ci4We9wDar49ny6vi8XyG34=;
- b=TlKttE5dVSmTkRWzFvKaIlxAc9ZAaNGEvitSJt+oSJpN3CZH41p/q8I1N8scffQseR
- eVAIJrpzoMJ8Zyosd3wqAPdFCMEgvKZEFCSbTB2ZmU00ptOzzrfKhj/zkdo3zqkn3TH+
- sRr5Pc+IRFqR9E1f3YkdJVCMgqlSkqfgDQfP1LLkRn/FGZHHpPH1i0tpRODPWsrL24dw
- e8OQ3pHZxNc2Q8yLfHbECRnyZJokZvXc8jyJjqkRCU9rNsjGmIlqpa6FUiRvflZyUZGS
- UfyuMbtMWtAiGaZothbS1qvrjGjrJmsPIGqn1AZS8dlXJr4WfFpFfZtoLYnma7GSPhg9
- 2mFQ==
+ d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1743535081; x=1744139881;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/7dnWhW1NxnMLtyZwkdeWqjwokpD7PP+2M+FdflFbhM=;
+ b=sW86kqhVu5+LvsmEftUdnAhMTO+GZhWywbD/KwApQjc5dNPu/JgE94Zkt6LXJP99r3
+ JhYUw9EKjAd4W09TAOWGCvQbIxpivmvcHuEzaBqt68ixPR60IBpl7XAnN7Z3qikRoM/K
+ luq5uhm/RDpo42oHBzh+shte+qWELqWqmf1lhE4PX7J5aVp+m5lRP6bcqGYepL9r+MjI
+ y4uW4XzbrO5vbqdMul1b1jUoCrBHhx+eUHtt1ykF1jU/ZOPJgaeFmyb3Jcf1kq8CxLmM
+ 4gJMlY/PgpZDxZ99NjF+Y9hotvQEybyT4/L0z/2xdd1ri4QwfTG0Wa8Fe5PFA3KD/Tdh
+ 1QLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743533441; x=1744138241;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6VHqokpx1vIQYgxOWg50Ci4We9wDar49ny6vi8XyG34=;
- b=rTNDiZ3tSfWl5GJ0GAvIdOLXVGUfGtH86kkwo5PX2NpRd4xpTWCZjM4bB28/QAryON
- Ec+8ZJuuDKu6RdqvJ6WCYm5drl0cRH0z+oD3u63pLLn+NjcJELc+zr33pf+9b15zOS3B
- S71H8LsJ4iAcbUwVvfQLTLzDgd9Doa5rOy86q5+L2MnlHQo7ybBMzKWoLoQelFt32kcL
- i+X2jTGmVPMaU5WQyHIiydTwdhUYy4I5rfubdIHiFiFNGGLnL96VkQC+9nvtG0bGwREN
- ijq1d/xRJ0LQXtx0vrNKktjaJ2vK8O+24tLm3qTfEXJ6MGjA9ZcRlsM3DGz/ux2m0vgD
- iiFw==
+ d=1e100.net; s=20230601; t=1743535081; x=1744139881;
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/7dnWhW1NxnMLtyZwkdeWqjwokpD7PP+2M+FdflFbhM=;
+ b=IHAkyIjXel3h+w6NQAZjHf6bPOlsvSUzNzQCoWkIVMx9qSD4KJqy78TXiSGtyNZ/cx
+ duMVMC+oI5DtiQ4rEr3xud575Sdlblil7+TAN60CaOltGHBe/bJNqE/yS1trIAiwHkk6
+ zuonOT0jNaTOgclfdD1G9i9cVALfD5xW6TCT25jHiapYfUtfnerPzR/T0BUOblMZgLAe
+ kaWRTZG2+Xbvdk9xIf/YucJpeASQfozlhYjX6LQrtOiaf3O4/xORIOHZew1rOq/E5dSP
+ C4q3F21btmZd6xFSzGzBWkLeGwqNFN8gIOIcFAQt/A9lPyQriBRVaYhkVFUfHGOg8eoq
+ MF8w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMNtJFKkLWADsAZRF24rwAopg0Qif4OMZEVjxAcWcrlzjLCCajLms8SiIt1kX7hWnuogof2ZK/SlDE@nongnu.org
-X-Gm-Message-State: AOJu0Yy5jc9GhoEd2xibdTp5F1vm7iFWcWn6uZPzWiBSnl0O6w16Q8xk
- Jb4jzLFByOOa+kLti/g/BoStfaSX2sNFM/ylwMezZHK7axmWg2Ov6HmKuKrUdtM=
-X-Gm-Gg: ASbGncscLjikWtfixeXMtYwS69f7iht5OxDNPL/4UVA+LFFMKAHDLYDJkDQyJ7nj5/V
- P1nnh4nLDPkAZEyDJ/qZKXARQNyzM/E3HMPZ8XOp9jXeeWFsVCozz9CzXgihiujnfEp+Pkh2z+N
- 54tGUfJFQNmUgYyBDG1Y8AZCh/nfCGLWHbXTY6UT1kk51gubrMcB8kbsFBgUF0TKps42pVG3brY
- 1hJ38inWQ4+UBlkdyYmwdUqb2XvRwF2Xck+OKqSiVInBLZk4JDq/1X5P85I7FLytA+nBdl0EWzU
- 7pR/EL17vVjtoOFnLVUBT+UuA2UJUzdkR8d8wL66wPenZXjTpcaue2SJNkfrsGPN+pvcU4fkVpw
- 6Arv4FrQjUiOPfxvMav7Cma0=
-X-Google-Smtp-Source: AGHT+IEFdcVan1Ual+1jUQV0IpPKM4MCpGCqkzK2zO+YaD0GIf8Rlb+PxQTullc4FUL28Q+4u+iVKg==
-X-Received: by 2002:a05:600c:310c:b0:43d:db5:7b1a with SMTP id
- 5b1f17b1804b1-43db6228049mr110128375e9.12.1743533441499; 
- Tue, 01 Apr 2025 11:50:41 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43d8fbbfebasm163422815e9.10.2025.04.01.11.50.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 11:50:40 -0700 (PDT)
-Message-ID: <44720e82-808c-4749-917b-bcc0d1c92d1d@linaro.org>
-Date: Tue, 1 Apr 2025 20:50:40 +0200
+ AJvYcCUFjd0PPa9bnJVqOGgGo53t4B56+Ks25RhngIrR/QAMEUKRLWI8cyyjVbXbd5KA2xHHr3rprkDAdMll@nongnu.org
+X-Gm-Message-State: AOJu0Yy7qbJz4Vldsg6WvZNIes1x5lkvPec3MyZDxYm3U0dhb9nc+J2l
+ mEA6InMcbaZTPfTVnliQayaYuwhYqlU1UFFn+6IrSA1CerC4NW5NgSNz8+b2D4U=
+X-Gm-Gg: ASbGncsM7OT6MHE36JtQJqwZHSqhoKFTNNBKLxw6QtuzBtIqLwv5aEUNs04oROGDcuR
+ yiISUh/vN4b00ES7OcgX+fRMOTcxay/4S9K2Q+OQITDW6CqQk5gYsv/MLA5yU3PCu8LAhf+9UnB
+ aE1oRgj3jM0p8f8I3nq9JaIJU68zwsGcOiigMBnx0Knd2HTY6J0gjI1GbJTaMNsdlunNsKYaiig
+ LY7HX4Mis2T6lPa8YqXeWu3JIJJOugWO0dnqaPSX81GFOfwOr7GCCmYjHVa3iQTDqNqf+MMT2We
+ H2abLE1VGIXAzr077Gmdzp9BO8VVIPaPcL8+SJgo4ldinS32
+X-Google-Smtp-Source: AGHT+IHveiQH1kjz1WP08m2q9YJWvnZicb78s7nThDc91B3luky96Ji31KHFZeGo5RWr6Oyq0JwDpA==
+X-Received: by 2002:a05:6870:2885:b0:29e:559b:d694 with SMTP id
+ 586e51a60fabf-2cbcf813d67mr9674668fac.32.1743535081141; 
+ Tue, 01 Apr 2025 12:18:01 -0700 (PDT)
+Received: from mail.minyard.net ([2001:470:b8f6:1b:706c:e036:e51a:c377])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2c86a856de7sm2465935fac.39.2025.04.01.12.17.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 01 Apr 2025 12:17:59 -0700 (PDT)
+Date: Tue, 1 Apr 2025 14:17:56 -0500
+From: Corey Minyard <corey@minyard.net>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Corey Minyard <minyard@acm.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 0/5] ipmi: bmc-sim improvements
+Message-ID: <Z-w75P6iav82W5Qr@mail.minyard.net>
+References: <20250401140153.685523-1-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bsd-user: add option to enable plugins
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
- alex.bennee@linaro.org, Kyle Evans <kevans@freebsd.org>
-References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
- <a2907212-feef-407f-bc2d-03667aaae174@linaro.org>
- <c474f845-3d3b-4060-94c2-0d7b5f044d82@linaro.org>
- <5f5f280c-34a5-4961-a9c0-74df5e0b0387@linaro.org>
- <0c042bd1-7ff9-4ac9-8c75-0f0c63d43132@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0c042bd1-7ff9-4ac9-8c75-0f0c63d43132@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401140153.685523-1-npiggin@gmail.com>
+Received-SPF: none client-ip=2001:4860:4864:20::35;
+ envelope-from=corey@minyard.net; helo=mail-oa1-x35.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,69 +95,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/25 16:59, Pierrick Bouvier wrote:
-> On 4/1/25 07:44, Philippe Mathieu-Daudé wrote:
->> On 1/4/25 16:33, Pierrick Bouvier wrote:
->>> On 3/31/25 23:15, Philippe Mathieu-Daudé wrote:
->>>> Hi Pierrick,
->>>>
->>>> On 1/4/25 01:42, Pierrick Bouvier wrote:
->>>>> Nothing prevent plugins to be enabled on this platform for user
->>>>> binaries, only the option in the driver is missing.
->>>>
->>>> Per commit 903e870f245 ("plugins/api: split out binary
->>>> path/start/end/entry code") this is deliberate:
->>>>
->>>>        The BSD user-mode command line is still missing -plugin.
->>>>        This can be enabled once we have reliable check-tcg tests
->>>>        working for the BSDs.
->>>>
->>>> Should we enable this without test harnessing?
->>>>
->>>
->>> Thanks for pointing this.
->>>
->>> However, I don't get the argument, as the same could be said about
->>> system mode, which runs on BSD also, and already has plugins enabled.
->>> The coupling between user related code and plugins is very low (just
->>> options parsing and init code), so I don't see why we could have a bug
->>> related to a specific platform only for user binaries.
->>>
->>> So either we deactivate plugins completely for bsd binaries, or we take
->>> a leap of faith that it works for them.
->>>
->>> @Alex, any further insight on this?
->>>
->>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>> ---
->>>>>     bsd-user/main.c | 12 ++++++++++++
->>>>>     1 file changed, 12 insertions(+)
->>>>
->>>> Ideally we'd have helpers for common user code in common-user/...
->>>>
->>>
->>> Everything is already common for plugins, except adding the call to
->>> plugin command line option parsing function.
->>
->> Yeah, I mean the rest of main() ;)
->>
+On Wed, Apr 02, 2025 at 12:01:47AM +1000, Nicholas Piggin wrote:
+> These little things came up when looking at behaviour of IPMI with
+> the bmc-sim implementation running the ppc powernv machine, and
+> trying to clean up error messages and missing features.
+
+This all looks good to me.  Thanks to Philippe for reviewing, too.
+
+I can give you an
+
+Acked-by: Corey Minyard <cminyard@mvista.com>
+
+if you are working on this for your own tree, or I can take it into
+mine.
+
+-corey
+
 > 
-> It's not a priority at the moment, and not blocking anything on our 
-> path, but yes, it would be nice to share more ideally.
-
-Just to be clear, I was not asking you to do that suggestion.
-
->>>> Anyway, since this patch does what it says:
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>
->>>
->>> Thanks,
->>> Pierrick
->>>
->>
+> Since v1 (thanks to Corey for review and suggestions):
+> - Added fwinfo to PCI devices
+> - Report interrupt number in Get Channel Info for ISA, PCI, and
+>   unknown/unassigned.
+> - Fix error reporting for Get Channel Info unsupported channels.
+>   Verify it is the correct error code that ipmitool looks for
+>   https://github.com/ipmitool/ipmitool/blob/master/lib/ipmi_channel.c#L256C16-L256C45
+> - Change _CH_ to _CHANNEL_ in some defines names.
+> - Also avoid adding event logs with watchdog don't log flag.
 > 
-
+> Since v2:
+> - Don't log watchog flag should not apply to watchdog expiry
+>   field.
+> - Moved protocol type field from class to IPMIFwInfo.
+> - Rename new FwInfo member irq to irq_source.
+> - Add comments about handling PCI devices to  existing callers
+>   of ->fwinfo
+> 
+> Thanks,
+> Nick
+> 
+> 
+> Nicholas Piggin (5):
+>   ipmi/pci-ipmi-bt: Rename copy-paste variables
+>   ipmi: add fwinfo to pci ipmi devices
+>   ipmi/bmc-sim: Add 'Get Channel Info' command
+>   ipmi/bmc-sim: implement watchdog dont log flag
+>   ipmi/bmc-sim: add error handling for 'Set BMC Global Enables' command
+> 
+>  include/hw/ipmi/ipmi.h     |  15 ++++++
+>  hw/acpi/ipmi.c             |   3 +-
+>  hw/ipmi/ipmi_bmc_sim.c     | 104 ++++++++++++++++++++++++++++++++-----
+>  hw/ipmi/ipmi_bt.c          |   2 +
+>  hw/ipmi/ipmi_kcs.c         |   1 +
+>  hw/ipmi/isa_ipmi_bt.c      |   1 +
+>  hw/ipmi/isa_ipmi_kcs.c     |   1 +
+>  hw/ipmi/pci_ipmi_bt.c      |  50 +++++++++++-------
+>  hw/ipmi/pci_ipmi_kcs.c     |  11 ++++
+>  hw/smbios/smbios_type_38.c |   7 ++-
+>  10 files changed, 162 insertions(+), 33 deletions(-)
+> 
+> -- 
+> 2.47.1
+> 
 
