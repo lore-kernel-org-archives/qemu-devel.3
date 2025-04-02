@@ -4,102 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB76C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9C5C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzu35-0007pV-2j; Wed, 02 Apr 2025 05:06:15 -0400
+	id 1tzu3Z-00084H-Ei; Wed, 02 Apr 2025 05:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tzu32-0007oo-M0; Wed, 02 Apr 2025 05:06:12 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tzu3X-00082R-6A; Wed, 02 Apr 2025 05:06:43 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tzu2y-0005tB-Nq; Wed, 02 Apr 2025 05:06:11 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSJrD18p9z4x21;
- Wed,  2 Apr 2025 20:06:04 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSJr75fyYz4wby;
- Wed,  2 Apr 2025 20:05:59 +1100 (AEDT)
-Message-ID: <618c6b0b-845b-4229-90eb-a6fe31d2435d@kaod.org>
-Date: Wed, 2 Apr 2025 11:05:57 +0200
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1tzu3V-00066H-4S; Wed, 02 Apr 2025 05:06:42 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5322xqVo032389;
+ Wed, 2 Apr 2025 09:06:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=AzJxKGIHRba4kdlMiqUFZmdqx5N1
+ 08hhHtUc969g+YI=; b=XbangdkK+LVCL76oLC7vn2WdrSbRzkIhH9k+CKw8EMFS
+ M02mh97uBptjVfmCC69KGwrzTuy1pxbU9FENUaTTB1dFSvGht+dR4WjqHLGAyEmh
+ JGNZUADsxFrveTnI4juxDSYiNnMwFn4OYESbSUYGywOennR1VASWaEscYxkRglma
+ 1PQ93LUxB5f3njMYfvaj0HczmPhS0iaMXsBj+xNYE6v+iumsxlKwep6D5zJVkI92
+ oBeeO4ocPegnyoz2aD2xEBSqsJa2aq18ZPbSebdrM/yP1GI0cWdn8qCUyGfKHPwj
+ VzrnQGa4wbm3pUEDAZznXdX8ASFKQ35JTGnzFoFnFQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45rg67nhxv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Apr 2025 09:06:38 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5328KIdJ004829;
+ Wed, 2 Apr 2025 09:06:37 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45pujyy6fu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 02 Apr 2025 09:06:37 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53296aTQ31523418
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 2 Apr 2025 09:06:36 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 956F758055;
+ Wed,  2 Apr 2025 09:06:36 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4A00158043;
+ Wed,  2 Apr 2025 09:06:36 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  2 Apr 2025 09:06:36 +0000 (GMT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 18/22] test/qtest/hace: Update source data and digest
- data type to 64-bit
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
- <20250321092623.2097234-19-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250321092623.2097234-19-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=yfRC=WU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Date: Wed, 02 Apr 2025 11:06:36 +0200
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
+ <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>
+Subject: Re: [PATCH v3 2/4] hw/s390x: add Control-Program Identification to QOM
+Message-ID: <bd0f521e58c4c2bb42a3b25882b1cd80@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: KPhLaDD2kWPJxM7YNuuL862od8RoeRZ0
+X-Proofpoint-GUID: KPhLaDD2kWPJxM7YNuuL862od8RoeRZ0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-02_03,2025-04-01_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 mlxlogscore=999
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ malwarescore=0 phishscore=0 adultscore=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504020053
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,307 +109,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/25 10:26, Jamin Lin wrote:
-> Currently, the hash data source and digest result buffer addresses are set to
-> 32-bit. However, the AST2700 CPU is a 64-bit Cortex-A35 architecture, and its
-> DRAM base address is also 64-bit.
+On 2025-04-02 07:58, Thomas Huth wrote:
+> On 31/03/2025 16.00, Shalini Chellathurai Saroja wrote:
+>> Add Control-Program Identification data to the QEMU Object
+>> Model (QOM), along with the timestamp in which the data was received.
+>> 
+>> Example:
+>> virsh # qemu-monitor-command vm --pretty '{
+>> "execute": "qom-get",
+>> "arguments": {
+>> "path": "/machine/sclp/s390-sclp-event-facility/sclpcpi",
+>> "property": "control-program-id" }}'
+>> {
+>>    "return": {
+>>      "timestamp": 1742390410685762000,
+>>      "system-level": 74872343805430528,
+>>      "sysplex-name": "PLEX ",
+>>      "system-name": "TESTVM  ",
+>>      "system-type": "LINUX   "
+>>    },
+>>    "id": "libvirt-15"
+>> }
+>> 
+>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+>> ---
+>>   hw/s390x/sclpcpi.c                | 38 ++++++++++++++++++++
+>>   include/hw/s390x/event-facility.h |  9 +++++
+>>   qapi/machine.json                 | 58 
+>> +++++++++++++++++++++++++++++++
+>>   3 files changed, 105 insertions(+)
+>> 
+>> diff --git a/include/hw/s390x/event-facility.h 
+>> b/include/hw/s390x/event-facility.h
+>> index f445d2f9f5..39e589ed44 100644
+>> --- a/include/hw/s390x/event-facility.h
+>> +++ b/include/hw/s390x/event-facility.h
+>> @@ -169,10 +169,19 @@ typedef struct ReadEventData {
+>>       };
+>>   } QEMU_PACKED ReadEventData;
+>>   +typedef struct ControlProgramId {
+>> +    uint8_t system_type[8];
+>> +    uint8_t system_name[8];
+>> +    uint64_t system_level;
+>> +    uint8_t sysplex_name[8];
+>> +    uint64_t timestamp;
+>> +} QEMU_PACKED ControlProgramId;
 > 
-> To support AST2700, update the hash data source address and digest result buffer
-> address to use 64-bit addressing.
+> Do we need the QEMU_PACKED here? The members seem naturally aligned,
+> and the struct does not seem to be involved in the communication with
+> the guest directly, so if you don't need it, please drop the
+> QEMU_PACKED here.
+> (without PACKED, the compiler can optimize the code in a better way,
+> and this causes less trouble on exotic platforms like SPARC that
+> cannot access unaligned memory addresses)
+
+Hello Thomas,
+
+Thank you for the explanation. I will drop the QEMU_PACKED.
+
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   tests/qtest/aspeed-hace-utils.h | 20 +++----
->   tests/qtest/aspeed-hace-utils.c | 96 ++++++++++++++++-----------------
->   2 files changed, 58 insertions(+), 58 deletions(-)
+>>   struct SCLPEvent {
+>>       DeviceState qdev;
+>>       bool event_pending;
+>>       char *name;
+>> +    ControlProgramId cpi;
+>>   };
+>>     struct SCLPEventClass {
+>> diff --git a/qapi/machine.json b/qapi/machine.json
+>> index a6b8795b09..cd2bcd2d13 100644
+>> --- a/qapi/machine.json
+>> +++ b/qapi/machine.json
+>> @@ -1898,3 +1898,61 @@
+>>   { 'command': 'x-query-interrupt-controllers',
+>>     'returns': 'HumanReadableText',
+>>     'features': [ 'unstable' ]}
+>> +
+>> +##
+>> +# @S390ControlProgramId:
+>> +#
+>> +# Control-program identifiers provide data about the guest operating 
+>> system.
+>> +# The control-program identifiers are: system type, system name, 
+>> system level
+>> +# and sysplex name.
+>> +#
+>> +# In Linux, all the control-program identifiers are user 
+>> configurable. The
+>> +# system type, system name, and sysplex name use EBCDIC characters 
+>> from
+>> +# this set: capital A-Z, 0-9, $, @, #, and blank.  In Linux, the 
+>> system type,
+>> +# system name and sysplex name are arbitrary free-form texts.
+>> +#
+>> +# In Linux, the 8-byte hexadecimal system-level has the format
+>> +# 0x<a><b><cc><dd><eeee><ff><gg><hh>, where:
+>> +# <a>: is one hexadecimal byte, its most significant bit indicates 
+>> hypervisor
+>> +# use
+>> +# <b>: is one digit that represents Linux distributions as follows
+>> +# 0: generic Linux
+>> +# 1: Red Hat Enterprise Linux
+>> +# 2: SUSE Linux Enterprise Server
+>> +# 3: Canonical Ubuntu
+>> +# 4: Fedora
+>> +# 5: openSUSE Leap
+>> +# 6: Debian GNU/Linux
+>> +# 7: Red Hat Enterprise Linux CoreOS
+>> +# <cc>: are two digits for a distribution-specific encoding of the 
+>> major version
+>> +# of the distribution
+>> +# <dd>: are two digits for a distribution-specific encoding of the 
+>> minor version
+>> +# of the distribution
+>> +# <eeee>: are four digits for the patch level of the distribution
+>> +# <ff>: are two digits for the major version of the kernel
+>> +# <gg>: are two digits for the minor version of the kernel
+>> +# <hh>: are two digits for the stable version of the kernel
+>> +# (e.g. 74872343805430528, when converted to hex is 
+>> 0x010a000000060b00). On
+>> +# machines prior to z16, some of the values are not available to 
+>> display.
 > 
-> diff --git a/tests/qtest/aspeed-hace-utils.h b/tests/qtest/aspeed-hace-utils.h
-> index f4440561de..0382570fa2 100644
-> --- a/tests/qtest/aspeed-hace-utils.h
-> +++ b/tests/qtest/aspeed-hace-utils.h
-> @@ -51,25 +51,25 @@ struct AspeedMasks {
->   };
->   
->   void aspeed_test_md5(const char *machine, const uint32_t base,
-> -                     const uint32_t src_addr);
-> +                     const uint64_t src_addr);
->   void aspeed_test_sha256(const char *machine, const uint32_t base,
-> -                        const uint32_t src_addr);
-> +                        const uint64_t src_addr);
->   void aspeed_test_sha384(const char *machine, const uint32_t base,
-> -                        const uint32_t src_addr);
-> +                        const uint64_t src_addr);
->   void aspeed_test_sha512(const char *machine, const uint32_t base,
-> -                        const uint32_t src_addr);
-> +                        const uint64_t src_addr);
->   void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
-> -                           const uint32_t src_addr);
-> +                           const uint64_t src_addr);
->   void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
-> -                           const uint32_t src_addr);
-> +                           const uint64_t src_addr);
->   void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
-> -                           const uint32_t src_addr);
-> +                           const uint64_t src_addr);
->   void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
-> -                              const uint32_t src_addr);
-> +                              const uint64_t src_addr);
->   void aspeed_test_sha384_accum(const char *machine, const uint32_t base,
-> -                              const uint32_t src_addr);
-> +                              const uint64_t src_addr);
->   void aspeed_test_sha512_accum(const char *machine, const uint32_t base,
-> -                              const uint32_t src_addr);
-> +                              const uint64_t src_addr);
->   void aspeed_test_addresses(const char *machine, const uint32_t base,
->                              const struct AspeedMasks *expected);
->   
-> diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
-> index d3146898c2..f39bb8ea48 100644
-> --- a/tests/qtest/aspeed-hace-utils.c
-> +++ b/tests/qtest/aspeed-hace-utils.c
-> @@ -153,22 +153,22 @@ static const uint8_t test_result_accum_sha256[] = {
->       0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17, 0x7a, 0x9c,
->       0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad};
->   
-> -static void write_regs(QTestState *s, uint32_t base, uint32_t src,
-> -                       uint32_t length, uint32_t out, uint32_t method)
-> +static void write_regs(QTestState *s, uint32_t base, uint64_t src,
-> +                       uint32_t length, uint64_t out, uint32_t method)
->   {
-> -        qtest_writel(s, base + HACE_HASH_SRC, src);
-> -        qtest_writel(s, base + HACE_HASH_DIGEST, out);
-> +        qtest_writel(s, base + HACE_HASH_SRC, extract64(src, 0, 32));
-> +        qtest_writel(s, base + HACE_HASH_DIGEST, extract64(out, 0, 32));
->           qtest_writel(s, base + HACE_HASH_DATA_LEN, length);
->           qtest_writel(s, base + HACE_HASH_CMD, HACE_SHA_BE_EN | method);
->   }
->   
->   void aspeed_test_md5(const char *machine, const uint32_t base,
-> -                     const uint32_t src_addr)
-> +                     const uint64_t src_addr)
->   
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    uint32_t digest_addr = src_addr + 0x010000;
-> +    uint64_t digest_addr = src_addr + 0x010000;
->       uint8_t digest[16] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -198,11 +198,11 @@ void aspeed_test_md5(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha256(const char *machine, const uint32_t base,
-> -                        const uint32_t src_addr)
-> +                        const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t digest_addr = src_addr + 0x10000;
-> +    const uint64_t digest_addr = src_addr + 0x10000;
->       uint8_t digest[32] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -232,11 +232,11 @@ void aspeed_test_sha256(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha384(const char *machine, const uint32_t base,
-> -                        const uint32_t src_addr)
-> +                        const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t digest_addr = src_addr + 0x10000;
-> +    const uint64_t digest_addr = src_addr + 0x10000;
->       uint8_t digest[32] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -266,11 +266,11 @@ void aspeed_test_sha384(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha512(const char *machine, const uint32_t base,
-> -                        const uint32_t src_addr)
-> +                        const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t digest_addr = src_addr + 0x10000;
-> +    const uint64_t digest_addr = src_addr + 0x10000;
->       uint8_t digest[64] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -300,22 +300,22 @@ void aspeed_test_sha512(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
-> -                           const uint32_t src_addr)
-> +                           const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t src_addr_1 = src_addr + 0x10000;
-> -    const uint32_t src_addr_2 = src_addr + 0x20000;
-> -    const uint32_t src_addr_3 = src_addr + 0x30000;
-> -    const uint32_t digest_addr = src_addr + 0x40000;
-> +    const uint64_t src_addr_1 = src_addr + 0x10000;
-> +    const uint64_t src_addr_2 = src_addr + 0x20000;
-> +    const uint64_t src_addr_3 = src_addr + 0x30000;
-> +    const uint64_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[32] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_sg1)),
-> -           cpu_to_le32(src_addr_1) },
-> +           cpu_to_le64(src_addr_1) },
+> You've got the same information in the comment at the beginning of the
+> sclpcpi.c file already ... maybe it would be good to have it in one
+> place only to avoid double maintenance in case it needs to be changed
+> in the future. I'd suggest to change the comment at the beginning of
+> sclpcpi.c to say something like "for a detailed description of the
+> contents of the CPI, please see the S390ControlProgramId QOM-type
+> description." or something similar?
 
+ok, I will do that.
 
-This looks broken to me. The addr field is in the scatter-gather list entry
-is 32bit :
+> 
+>  Thomas
 
-   struct AspeedSgList {
-           uint32_t len;
-           uint32_t addr;
-   } __attribute__ ((__packed__));
-
-
-
-Thanks,
-
-C.
-
-
->           {  cpu_to_le32(sizeof(test_vector_sg2)),
-> -           cpu_to_le32(src_addr_2) },
-> +           cpu_to_le64(src_addr_2) },
->           {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
-> -           cpu_to_le32(src_addr_3) },
-> +           cpu_to_le64(src_addr_3) },
->       };
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -351,22 +351,22 @@ void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
-> -                           const uint32_t src_addr)
-> +                           const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t src_addr_1 = src_addr + 0x10000;
-> -    const uint32_t src_addr_2 = src_addr + 0x20000;
-> -    const uint32_t src_addr_3 = src_addr + 0x30000;
-> -    const uint32_t digest_addr = src_addr + 0x40000;
-> +    const uint64_t src_addr_1 = src_addr + 0x10000;
-> +    const uint64_t src_addr_2 = src_addr + 0x20000;
-> +    const uint64_t src_addr_3 = src_addr + 0x30000;
-> +    const uint64_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[64] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_sg1)),
-> -           cpu_to_le32(src_addr_1) },
-> +           cpu_to_le64(src_addr_1) },
->           {  cpu_to_le32(sizeof(test_vector_sg2)),
-> -           cpu_to_le32(src_addr_2) },
-> +           cpu_to_le64(src_addr_2) },
->           {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
-> -           cpu_to_le32(src_addr_3) },
-> +           cpu_to_le64(src_addr_3) },
->       };
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -402,22 +402,22 @@ void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
-> -                           const uint32_t src_addr)
-> +                           const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t src_addr_1 = src_addr + 0x10000;
-> -    const uint32_t src_addr_2 = src_addr + 0x20000;
-> -    const uint32_t src_addr_3 = src_addr + 0x30000;
-> -    const uint32_t digest_addr = src_addr + 0x40000;
-> +    const uint64_t src_addr_1 = src_addr + 0x10000;
-> +    const uint64_t src_addr_2 = src_addr + 0x20000;
-> +    const uint64_t src_addr_3 = src_addr + 0x30000;
-> +    const uint64_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[64] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_sg1)),
-> -           cpu_to_le32(src_addr_1) },
-> +           cpu_to_le64(src_addr_1) },
->           {  cpu_to_le32(sizeof(test_vector_sg2)),
-> -           cpu_to_le32(src_addr_2) },
-> +           cpu_to_le64(src_addr_2) },
->           {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
-> -           cpu_to_le32(src_addr_3) },
-> +           cpu_to_le64(src_addr_3) },
->       };
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -453,16 +453,16 @@ void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
-> -                              const uint32_t src_addr)
-> +                              const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t buffer_addr = src_addr + 0x10000;
-> -    const uint32_t digest_addr = src_addr + 0x40000;
-> +    const uint64_t buffer_addr = src_addr + 0x10000;
-> +    const uint64_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[32] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_accum_256) | SG_LIST_LEN_LAST),
-> -           cpu_to_le32(buffer_addr) },
-> +           cpu_to_le64(buffer_addr) },
->       };
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -494,16 +494,16 @@ void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha384_accum(const char *machine, const uint32_t base,
-> -                              const uint32_t src_addr)
-> +                              const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t buffer_addr = src_addr + 0x10000;
-> -    const uint32_t digest_addr = src_addr + 0x40000;
-> +    const uint64_t buffer_addr = src_addr + 0x10000;
-> +    const uint64_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[64] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_accum_384) | SG_LIST_LEN_LAST),
-> -           cpu_to_le32(buffer_addr) },
-> +           cpu_to_le64(buffer_addr) },
->       };
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -535,16 +535,16 @@ void aspeed_test_sha384_accum(const char *machine, const uint32_t base,
->   }
->   
->   void aspeed_test_sha512_accum(const char *machine, const uint32_t base,
-> -                              const uint32_t src_addr)
-> +                              const uint64_t src_addr)
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t buffer_addr = src_addr + 0x10000;
-> -    const uint32_t digest_addr = src_addr + 0x40000;
-> +    const uint64_t buffer_addr = src_addr + 0x10000;
-> +    const uint64_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[64] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_accum_512) | SG_LIST_LEN_LAST),
-> -           cpu_to_le32(buffer_addr) },
-> +           cpu_to_le64(buffer_addr) },
->       };
->   
->       /* Check engine is idle, no busy or irq bits set */
-
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
