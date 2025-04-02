@@ -4,61 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1BDC3601E
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 20:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C5DC3601B
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 20:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u04HT-00008q-88; Wed, 02 Apr 2025 16:01:47 -0400
+	id 1u04Gt-0008KZ-79; Wed, 02 Apr 2025 16:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1u02cs-0004Ks-D6; Wed, 02 Apr 2025 14:15:46 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1u02cq-0003Pz-A9; Wed, 02 Apr 2025 14:15:46 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id F090D434E4;
- Wed,  2 Apr 2025 18:15:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BFAC4CEDD;
- Wed,  2 Apr 2025 18:15:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1743617731;
- bh=plB+3vOFjT5WCk4owIOmSgL2ZPFj0kfRhk3LH8hLZjc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=X6XK+qHhSIFFg0nn8XO4MdCP71cU83YSLtrGL9TSe6hO5y/YavESU7gZeNcD/keea
- zA1lMpTyBAJF6QivH9zIgQBpSgs7strOBIlzL8faqKmV1uQIeQnCyK3BBJKTjZoauC
- NNlKsKKYos8VeqwkYMnPo4+W+vO+EgTZlGa+f5MeIZRnb5SSFiCv/ySA2lZJI6bn8c
- HVHMAs+IyhQ/j2pOirSGSZ60eMRrcQ4/LKPltkKgmMbBPk3+F6lFpKVLK8I5Iy4Uej
- BLRRGgsuFhDpKf0X1SqwkytbRm2QVx0GTUGp/AEnQsk/Nqh4Z0nn98kD3n1lcYKmoQ
- wTUISQr2nzcfQ==
-Date: Wed, 2 Apr 2025 20:15:28 +0200
-From: Daniel Gomez <da.gomez@kernel.org>
-To: Mads Ynddal <mads@ynddal.dk>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Cameron Esfahani <dirty@apple.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Peter Maydell <peter.maydell@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <m.ynddal@samsung.com>, 
- Daniel Gomez <da.gomez@samsung.com>
-Subject: Re: [PATCH 1/2] hvf: avoid repeatedly setting trap debug for each cpu
-Message-ID: <enffkbdotdb4z2yggxxciyouprg64xcm4cybz72i4ryl5jqwzm@u2wnlphszxwv>
-References: <20250402135229.28143-1-mads@ynddal.dk>
- <20250402135229.28143-2-mads@ynddal.dk>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u04Gk-0008I7-UB
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 16:01:03 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u04Gj-0003rh-1E
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 16:01:02 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-736ad42dfd6so120673b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 13:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743624059; x=1744228859; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZM8Fn99xepfey2zNJx6f4InsedmMIKCWo3l6nvk8erA=;
+ b=zjPV4j4QaSX5k5cuLljpw4DjE9Co8eJVYGFQL4DYhLlk/IOQzmD8p7EqGx6KlQJ4u5
+ IZUnBzNmclnmFUem9XMqvwkHoN6JHgYTGZj1JTnD2AMBP1d2eTKSwfFuctzkhuGpIrIM
+ YN6qx0NLKVGf051VjLowgRjdSbDYgEJzYraVmYbYX+eHj5XomVnK+GyqtKxi/7bmFjfk
+ QJZ+eSkfl8y9f42bNSnOIhG2CLlwHYbr88bA/vEbgL3kQqIUnH01hA2QQbffO4Ge8BY+
+ vcAflRlaqcm7Ix6WquzmsbjFZ3n/fi2gcfjZoNOYw1886+Ei/j8T+MwKAz/IPA2k7Oj5
+ wkqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743624059; x=1744228859;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZM8Fn99xepfey2zNJx6f4InsedmMIKCWo3l6nvk8erA=;
+ b=MkGfVynCFmCM2slV95gDEio0wMVhT6ipUcTtcl130h6jnvaI1gquEUEiQUj9V8tHuF
+ 2cA7oQPXHAJW6hqCH8eJuX+YaZKag6wbJZKh2dplSjyjfAtH9hWyFWYkIUX2P5K4gOsX
+ Uf3EIQMrad+7tN24Ngf5WgiwgWghokiQj+Mg0+dYtz+eNtGNwwGh8nZbqhXxnG31AidO
+ euV5nie8s1cIVrV4vxqNTKBxzm7IHXLVb1Srb8S7jr286YuHNMjTrJ7b3EAhrCkyWIX+
+ e0YaTnky41xQ3ga4Dkoj3lAW2NmQtl+Fg9CcvRCiKydKmPeuWI0eexd2SmOIBazut3DT
+ isEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfHH0/qfpJtJqeh3T25noPFvgzIXOMpb61Xw/CRv6X9fgZJ/HaKmVKyT0aVgEG6isDyLe596cxJRCg@nongnu.org
+X-Gm-Message-State: AOJu0YysJLcRHhcwuc4zKaicZsdO6VncnsMLeCnHP5/s09m0BqEuggH6
+ TRjsCJUY5U9haIKjxKvWZFthl3wq9xys9X/1MxYiX45erPb5smgBEYrg5Bg87Tg=
+X-Gm-Gg: ASbGncsvZTEaaojLxG/6CCnPDc/ma6nxqljj+wSUZ/P7rSWC131bJZzQdBWs9ZTVqjb
+ rZvx0ZquXZPNh7FK8yTKw6oAIjZLHZJjwH/vkBFcaSKE+NlrHP7nE150PmgOSpPS1T/WPK63igy
+ 9AeamzswmjREi+tloRjKUxhKx0c/GKaRY8XtA+hKEnnOfX0QdhLw5imsDGgP0V2p+Y7mmQhvABM
+ gayDRuXRIwV0Qoup4rGpoVlpkoIY5JGJZWFE50tU3krTv61VnVgeIiHFYdsUeHM1wTBTVwlGZh/
+ rx2Qv8X+SIzjiZni814gWY1tEPb62Y8o2UCb7G8BEPcKe8FHnXn3WOwTO4f+RTX/7BdGn9Jad/2
+ WmwEmF5ci
+X-Google-Smtp-Source: AGHT+IEgf0gzah/M7sSI3bHtfyai/iyoz0PgRVm2PKvyk181GHgt+aWWyOGodKWjzMN8fNSn+F0stQ==
+X-Received: by 2002:a05:6a00:398f:b0:736:ab48:5b0 with SMTP id
+ d2e1a72fcca58-739c78430demr4047765b3a.2.1743624059376; 
+ Wed, 02 Apr 2025 13:00:59 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7397106ba79sm11776609b3a.104.2025.04.02.13.00.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Apr 2025 13:00:58 -0700 (PDT)
+Message-ID: <90135439-b3a0-4e31-84e2-ce29b90db593@linaro.org>
+Date: Wed, 2 Apr 2025 13:00:57 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250402135229.28143-2-mads@ynddal.dk>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=da.gomez@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-10.1 v2 0/7] tcg: Move TCG_GUEST_DEFAULT_MO ->
+ TCGCPUOps::guest_default_memory_order
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20250321181549.3331-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250321181549.3331-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 02 Apr 2025 16:01:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,79 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 02, 2025 at 03:52:28PM +0100, Mads Ynddal wrote:
-> From: Mads Ynddal <m.ynddal@samsung.com>
+On 3/21/25 11:15, Philippe Mathieu-Daudé wrote:
+> Since v1:
+> - Do not use tcg_ctx in tcg_req_mo (rth)
 > 
-> hvf_arch_set_traps is already called from a context of a specific
-> CPUState, so we don't need to do a nested CPU_FOREACH.
+> Hi,
 > 
-> It also results in an error from hv_vcpu_set_sys_reg, as it may only be
-> called from the thread owning the vCPU.
+> In this series we replace the TCG_GUEST_DEFAULT_MO definition
+> from "cpu-param.h" by a 'guest_default_memory_order' field in
+> TCGCPUOps.
 > 
+> Since tcg_req_mo() now accesses tcg_ctx, this impact the
+> cpu_req_mo() calls in accel/tcg/{cputlb,user-exec}.c.
+> 
+> The long term goal is to be able to use targets with distinct
+> guest memory order restrictions.
+> 
+> Philippe Mathieu-Daudé (7):
+>    tcg: Always define TCG_GUEST_DEFAULT_MO
+>    tcg: Simplify tcg_req_mo() macro
+>    tcg: Define guest_default_memory_order in TCGCPUOps
+>    tcg: Remove use of TCG_GUEST_DEFAULT_MO in tb_gen_code()
+>    tcg: Propagate CPUState argument to cpu_req_mo()
+>    tcg: Have tcg_req_mo() useTCGCPUOps::guest_default_memory_order
+>    tcg: Remove the TCG_GUEST_DEFAULT_MO definition globally
 
-Reported-by: Daniel Gomez <da.gomez@samsung.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2895
+Queued to tcg-next, thanks.
 
-> Tested-by: Daniel Gomez <da.gomez@samsung.com>
-> Signed-off-by: Mads Ynddal <m.ynddal@samsung.com>
-> ---
->  target/arm/hvf/hvf.c | 27 +++++++++++----------------
->  1 file changed, 11 insertions(+), 16 deletions(-)
-> 
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 2439af63a0..48e4b12725 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -2277,28 +2277,23 @@ static inline bool hvf_arm_hw_debug_active(CPUState *cpu)
->      return ((cur_hw_wps > 0) || (cur_hw_bps > 0));
->  }
->  
-> -static void hvf_arch_set_traps(void)
-> +static void hvf_arch_set_traps(CPUState *cpu)
->  {
-> -    CPUState *cpu;
->      bool should_enable_traps = false;
->      hv_return_t r = HV_SUCCESS;
->  
->      /* Check whether guest debugging is enabled for at least one vCPU; if it
->       * is, enable exiting the guest on all vCPUs */
-> -    CPU_FOREACH(cpu) {
-> -        should_enable_traps |= cpu->accel->guest_debug_enabled;
-> -    }
-> -    CPU_FOREACH(cpu) {
-> -        /* Set whether debug exceptions exit the guest */
-> -        r = hv_vcpu_set_trap_debug_exceptions(cpu->accel->fd,
-> -                                              should_enable_traps);
-> -        assert_hvf_ok(r);
-> +    should_enable_traps |= cpu->accel->guest_debug_enabled;
-> +    /* Set whether debug exceptions exit the guest */
-> +    r = hv_vcpu_set_trap_debug_exceptions(cpu->accel->fd,
-> +                                            should_enable_traps);
-> +    assert_hvf_ok(r);
->  
-> -        /* Set whether accesses to debug registers exit the guest */
-> -        r = hv_vcpu_set_trap_debug_reg_accesses(cpu->accel->fd,
-> -                                                should_enable_traps);
-> -        assert_hvf_ok(r);
-> -    }
-> +    /* Set whether accesses to debug registers exit the guest */
-> +    r = hv_vcpu_set_trap_debug_reg_accesses(cpu->accel->fd,
-> +                                            should_enable_traps);
-> +    assert_hvf_ok(r);
->  }
->  
->  void hvf_arch_update_guest_debug(CPUState *cpu)
-> @@ -2339,7 +2334,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
->              deposit64(env->cp15.mdscr_el1, MDSCR_EL1_MDE_SHIFT, 1, 0);
->      }
->  
-> -    hvf_arch_set_traps();
-> +    hvf_arch_set_traps(cpu);
->  }
->  
->  bool hvf_arch_supports_guest_debug(void)
-> -- 
-> 2.48.1
-> 
-> 
+
+r~
 
