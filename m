@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69053C3601B
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 21:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01006C36018
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 21:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u05Hy-0000Bo-4r; Wed, 02 Apr 2025 17:06:22 -0400
+	id 1u05Hq-0007lV-8F; Wed, 02 Apr 2025 17:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Hi-0007Fy-1R
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:06:07 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Hc-00070o-6G
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:06:03 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Hf-0006iM-Sp
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:06:05 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so1686855e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 14:06:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Ha-0006bO-4W
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:05:59 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cfba466b2so1582075e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 14:05:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743627962; x=1744232762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743627957; x=1744232757; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9MO7LV0/gXNfytPX25lgbZnxOJWCw84WsDrMRmk30ac=;
- b=bI4ATBe26Dr9iep86zw5IPjUc90bVQdygh6nWT0Im8jKefRhnFarsqA6Kv5Si+p3LQ
- AcxuE8LJ5NlD8zSOk2owHIpglpccZGgshEo8phtqXyiRUJS0bs4JaPl52kEORW556uv6
- zGXgUwEajTNXheJrLwE5V1Hjo8cIpbb7GIoYJTpHF28UZ/N3nOSMfVNfmYezWy9ul+56
- CvGHMMkGouYo5WwuqcFtNiD2tQnq8rK/uuplqtSUzZ6MP9LYefKiC/l646q2XjfbAud5
- jDZbFEJqvWEO8ChF90xaG5f/D78NT4HSg4CCqp7lIi4Cv6Z36ufsHt34yUONpeXm9D2h
- 9AqA==
+ :reply-to; bh=2CuFRMF8tGsrdfqJ5EAiHOu7bINkhnIQDSuUKCH5uiE=;
+ b=Z61Wg0dIHWC34F4/1Wc6I4Wn4JnuN6PEdCo/rgvgYYhPLLu0Tt4Iw8tSdgKOsYahyw
+ ZCMlZyNgc+dJ/PTd7j5+CVIHLGZcRpkFUs8s3FMRypcD7Cmdp+FLLpkaVhRY+90CcsAl
+ ydK7z3Usr6wWVzoUvBefB6f/ZhDU7b3os52vsVHn+TbygQZzjaWXtVZi6QtB8PBj98GO
+ xWFNnHTZZXZBidhHnYvXSFda0xdRXm7Ljbc+m3dKbReho6arKQ1za/CSPbZqp2uZzJtm
+ G5cRr8VsD9KlHDm31M5UShCUaGXrUhFDyVwB5Fa3gtGL7N119MpJuSvmw/Y6cobaM6So
+ P1tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743627962; x=1744232762;
+ d=1e100.net; s=20230601; t=1743627957; x=1744232757;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9MO7LV0/gXNfytPX25lgbZnxOJWCw84WsDrMRmk30ac=;
- b=CG6J0PASxo0b9uPYgxgJ1b8xkX/AzI+7vfIeyMbBowv0c6kwQqf+cegIDKxUqzig68
- U9d0Jk7BCtzsDPR4cCXz+iJhuWulyGCT+gj0qd0x68pPRMAhyxhYa9JRVyBhWK1N4yPI
- nuBwGohSXOHjGCc78+sBTSWZlPyU/OFluNBYj7tQloq8K/t/lpTFg4pvHT4NQRkMq5K8
- TlLeup065uQKxEGL891ZPQDDBdPwwjtLK6xMUoq8ZO9tbtc7B02wM3ZEpk1NilZAQiXY
- 782epYsa/ocAfkcYf/u7zzW+2BepJtiQA1lJoUy4kcJ0UNVHMEqA3qSP/2v7eBfFLFPU
- 2NwA==
+ bh=2CuFRMF8tGsrdfqJ5EAiHOu7bINkhnIQDSuUKCH5uiE=;
+ b=n6eRCUir2zrf/3lmC5x8sf2uRUqfxBPwoEP7oBHf161o+lE7RemAPzjT8TpImrcOja
+ Tjq/WbfvFRqYMd6wuEaZk/anEwlaUXRAKUr65xoPIaqgLPIcTMJVaHLCp/5zwWdUvE5c
+ HlgZnvciq10NBviWktDSOi4fLLBQ/8X5PXPdpWgvcCebc31KiaBvX38HzPxwIl3APalh
+ z0nLtTNGIoOOP/zBw4O4+c/IYVGh+7Tw/+yhBkp8DbWSm5GuzAWBlo/eUWxJXFriXJMw
+ smAjfT7KZBZnsJHZdi+uq58FP1gZN87K0gBfg+NTohTOkynprEHUgjhhQk8jqenOAcCP
+ kZ6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZrohvicdZhuDJ1HSGnLKCQL4yCk5GlPqlLcXk0WrmpNt7Acu9BUV/tf0IjuxBYRbq/2BzHIP+z/Oi@nongnu.org
-X-Gm-Message-State: AOJu0Ywir4KoGnrydYcSC41A8OnWOyA2yn11wKLUt0WCvf1WBFGegOKT
- xjxBlt0FzoHXqCOab6zHeYzReF836qejv2SwP39P4oKeWAkp2JGuGp0NzTLsnW0=
-X-Gm-Gg: ASbGnctzYw2aW1WEWgNHWayf+synFY9yuIJs5m4PwPkbRgFCdYPjD/C7whsCOmT9CpG
- kFnPVFdmLoSovbv1l5QPKC+9RVdjmpbRErU3RBIGhNk93NnFFGfirj1hh5pqQ6KcsDVvgeIv88f
- HR5mN0AHL9YLfQ8zhOTimSHug/n2SHejrYQmgBSu/nQ7r5AZDt/e7AbBh06F30l83QQ+iOQ6Vpo
- 5tQLVO7XU70Bv5JyGURxXYTXmGWMyr+CZCQXUye8Dg7jlNqfi01ZxeUpOkd5bwsV2IWAu56WEI+
- +ly1agAG+phQZv1+6v1M7Ed6k67C6UVOPDGXSS2deRZu7uVH+cIIKiuWgnY1V3kOUAeAECv7Shy
- 0Rd3Umlc7D629Ps38f98=
-X-Google-Smtp-Source: AGHT+IGHB9VHwIFsdSrHADmcG7EBVXRGq0ohOrC1Cb24MLX9wwVHmFOuD93TroYIPKrE/DP8Tv0w6w==
-X-Received: by 2002:a05:600c:1f17:b0:439:643a:c8d5 with SMTP id
- 5b1f17b1804b1-43e99ab533cmr159971185e9.0.1743627962155; 
- Wed, 02 Apr 2025 14:06:02 -0700 (PDT)
+ AJvYcCU8okZ9A34jn3ru0SRp8hUhEFtmP9NfkY4QPmU7J1gIiRE2oDVHTxvezxUtHn7whR1UIso1rrqt1KgB@nongnu.org
+X-Gm-Message-State: AOJu0Yz3SHcgOVIx283Xvug/ah8vvc6WcvadNg//aCE2xIOwe3lNtKeu
+ pIALs/DDj87uKKVurRxUh1M0K/UgdttNBUq6fpUDQeQgx3s95TlVoCa84Bmx2I+U85lwmyI14cO
+ u
+X-Gm-Gg: ASbGncvg9DAZuhpBR6dx8hXJkmQQfckZ5SrHYStQ9EhYq+terQGYUUa3xI+u4MRAZOZ
+ bycFAy2zlSYvKLkKrAt5cMjZSos8aj5u8dEi4ZUyKzupSNCE/IHeYAlZXn4hE6w9P3VODV7y4kH
+ cERXUltsmXjlBF7bvnu/CkBglKhVNd2ENBOZcorVnNXk4GSU49aVLSsoJVDpI5jTkrOF6/yIXOE
+ Guwk4/WO7pS8T4Jqxdvayol74XkwNzSXgixU2zw+SGlazZWKc+E2J28ENfCz9NTjR4sinn20XVR
+ l3kTswChSmg2tr40U7cthaMut0DY/yC5CBpczmN9Ed5FotwMQql1SYDXJ26xGtj2gs8ChZd/Gjd
+ G4iY+fabWmaY+lq9YU/c=
+X-Google-Smtp-Source: AGHT+IFmVNF8ZLRNUURTrGxrJDg3M6ixisV63EIroyyYYd26NwDZyJMkanAaTgBDMI5XOtopsRG7vw==
+X-Received: by 2002:a5d:6191:0:b0:391:3915:cffb with SMTP id
+ ffacd0b85a97d-39c2f94bed8mr83463f8f.43.1743627956818; 
+ Wed, 02 Apr 2025 14:05:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec24b22a0sm135735e9.6.2025.04.02.14.06.00
+ 5b1f17b1804b1-43ec16a3aefsm2075535e9.21.2025.04.02.14.05.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Apr 2025 14:06:00 -0700 (PDT)
+ Wed, 02 Apr 2025 14:05:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
-Subject: [PATCH-for-10.1 31/43] tcg: Always define TCG_GUEST_DEFAULT_MO
-Date: Wed,  2 Apr 2025 23:03:16 +0200
-Message-ID: <20250402210328.52897-32-philmd@linaro.org>
+Subject: [PATCH-for-10.1 30/43] exec: Do not include 'accel/tcg/cpu-ldst.h' in
+ 'exec-all.h'
+Date: Wed,  2 Apr 2025 23:03:15 +0200
+Message-ID: <20250402210328.52897-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250402210328.52897-1-philmd@linaro.org>
 References: <20250402210328.52897-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,101 +101,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only require the TCG_GUEST_DEFAULT_MO for MTTCG-enabled
-frontends, otherwise we use a default value of TCG_MO_ALL.
-
-In order to simplify, require the definition for all targets,
-defining it for hexagon, m68k, rx, sh4 and tricore.
+Only 2 files requiring "accel/tcg/cpu-ldst.h" API do not
+include it:
+- accel/tcg/cpu-exec.c
+- target/arm/tcg/sve_helper.c
+Include it there and remove it from "exec/exec-all.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hexagon/cpu-param.h | 3 +++
- target/m68k/cpu-param.h    | 3 +++
- target/rx/cpu-param.h      | 3 +++
- target/sh4/cpu-param.h     | 3 +++
- target/tricore/cpu-param.h | 3 +++
- accel/tcg/translate-all.c  | 4 ----
- 6 files changed, 15 insertions(+), 4 deletions(-)
+ include/exec/exec-all.h     | 3 ---
+ accel/tcg/cpu-exec.c        | 1 +
+ target/arm/tcg/sve_helper.c | 1 +
+ 3 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
-index 635d509e743..7cc63a01d4b 100644
---- a/target/hexagon/cpu-param.h
-+++ b/target/hexagon/cpu-param.h
-@@ -25,4 +25,7 @@
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index 70608a11b60..944b579d91c 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -20,9 +20,6 @@
+ #ifndef EXEC_ALL_H
+ #define EXEC_ALL_H
  
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
-index 256a2b5f8b2..10a8d74bfa9 100644
---- a/target/m68k/cpu-param.h
-+++ b/target/m68k/cpu-param.h
-@@ -19,4 +19,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
-index 84934f3bcaf..fe39a77ca38 100644
---- a/target/rx/cpu-param.h
-+++ b/target/rx/cpu-param.h
-@@ -26,4 +26,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index f328715ee86..acdf2397495 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -18,4 +18,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
-index eb33a67c419..45fde756b6a 100644
---- a/target/tricore/cpu-param.h
-+++ b/target/tricore/cpu-param.h
-@@ -14,4 +14,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index ed41fc5d0cc..cb1cf270888 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -352,11 +352,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
-     tcg_ctx->tlb_dyn_max_bits = CPU_TLB_DYN_MAX_BITS;
- #endif
-     tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
--#ifdef TCG_GUEST_DEFAULT_MO
-     tcg_ctx->guest_mo = TCG_GUEST_DEFAULT_MO;
--#else
--    tcg_ctx->guest_mo = TCG_MO_ALL;
+-#if defined(CONFIG_USER_ONLY)
+-#include "accel/tcg/cpu-ldst.h"
 -#endif
+ #include "exec/mmu-access-type.h"
+ #include "exec/translation-block.h"
  
-  restart_translate:
-     trace_translate_block(tb, pc, tb->tc.ptr);
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 5ced3879ac4..b00f046b29f 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -22,6 +22,7 @@
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+ #include "hw/core/cpu.h"
++#include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "trace.h"
+ #include "disas/disas.h"
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 9b0d40c9e18..87b6b4b3e64 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -30,6 +30,7 @@
+ #include "tcg/tcg.h"
+ #include "vec_internal.h"
+ #include "sve_ldst_internal.h"
++#include "accel/tcg/cpu-ldst.h"
+ #include "accel/tcg/cpu-ops.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "user/page-protection.h"
 -- 
 2.47.1
 
