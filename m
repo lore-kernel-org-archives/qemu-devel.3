@@ -4,83 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D254C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0702FC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 15:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzzUa-0001ik-1i; Wed, 02 Apr 2025 10:55:00 -0400
+	id 1tzzgC-0006Gv-AK; Wed, 02 Apr 2025 11:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzzUY-0001iR-OF
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:54:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzzUW-00013j-I4
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:54:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743605694;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zFQFFt3eYGni+Iy/Ebc0glNqyUlJyXnj5Hi35jIZM2Y=;
- b=Ve4qkvkmJgi0oXeJYEdssrAcMmdbmuF8eT6bgcKs2hEP/eCUB18CrL+HWVzDyNEb81YtTj
- mJmvf7HnNkFKQ0291RgBbAraDRAPeTVo3eHBsgYHERtKSD78gvXt/PtquE0A3PlrYt6Wmg
- C4HfR7u9h8hAXE9z00lbhgsHkJZUsU4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-V12LjXPwMK2OYocQQUao6w-1; Wed,
- 02 Apr 2025 10:54:49 -0400
-X-MC-Unique: V12LjXPwMK2OYocQQUao6w-1
-X-Mimecast-MFC-AGG-ID: V12LjXPwMK2OYocQQUao6w_1743605688
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 684701955DCD; Wed,  2 Apr 2025 14:54:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.12])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B11221955BC2; Wed,  2 Apr 2025 14:54:45 +0000 (UTC)
-Date: Wed, 2 Apr 2025 15:54:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 05/55] i386/tdx: Get tdx_capabilities via
- KVM_TDX_CAPABILITIES
-Message-ID: <Z-1PslaL5IL_qjVJ@redhat.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-6-xiaoyao.li@intel.com>
- <Z-0YzauBkAl8pyIP@redhat.com>
- <b1586891-6446-474e-8950-8dbc9ac6e607@intel.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tzzfo-0006Ev-JL
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 11:06:39 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tzzfm-0004Qz-JF
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 11:06:36 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so288992b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 08:06:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743606392; x=1744211192; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+suyxI6UtimLYmX9HGZ6Yx3RjITGhRsYKZALhU8U+ig=;
+ b=p6j2KE4DvQj7kjNVkN5xjuAxl9YuCsxOC/jjRh0VENlz5fdtoxGHsV7vVKVNvmXf7c
+ GWiSovHq5pGcMl08U92slOcMUTWiGittnvwRTVnZOxd6neEsdbr9QAPM9F8W0z/FaJbp
+ 2i5m4KzowhSD3eHnrc/266fvHP8uG84hDh8Syc+IwNULuwJkHVJZIlGMoWLrEeKHZh8f
+ NU7PUWBrlmlGR1Mfm5ELXCvUhdPRRDsgL0pb4lWIjO2UvK0s/pgPWoSpelZ4buqqzU3A
+ vV16YulwrM/6dAlODs3OFocnbwGwNIuA1JzCIFMQ1N4WzldfPW4rNNYxUnJyxJhlFcO6
+ U6gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743606392; x=1744211192;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+suyxI6UtimLYmX9HGZ6Yx3RjITGhRsYKZALhU8U+ig=;
+ b=fPqld6sgdcUzxD/oeY+6HMLNSqqQDZwpRAE7IzVawGoxoWC2GEQ2QUW+xtiQb0dapj
+ i7pSNqpQWwsA0WweL/TLKNba9ejXz08z3IVs5orWCnsoKEiOBBDqpUSFDh8b5nUMKLms
+ gkW4LGkVAhrTnTOxsf4lYcCT4/DDIc43aWrM9+MH2GijAIwvmTko5sdXIML0JfzqkSEF
+ OgiTJJ/E5Y58BoKNv8BOokawH9xO8NXpZf1bc3E/hNiNgIKiBgR+ml+b+gmXLQtM1euj
+ eNT89gthQ1W3rZCExVKrZjv2AEDzJ7wMVArdg98F7FbkkIk1YXB8HkyuPE8n5I/XEep+
+ qFyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxPVtTK+eH/6wkFc30R8oyOOl1Jd2iNdOIgTOHXGoD02HxRkpaqTk5E3T/Fz03AQDPUx1/KoD+9oUa@nongnu.org
+X-Gm-Message-State: AOJu0YyKJISFi0+fDvK5KALaKWSCkc6kiQWH8CmsTHRFfL1Pew2SenuS
+ 2KUB7U9+HGhwiBXmelV0z1YLpzFR+H62bztq5Xpsz4/suWfvnbahNxDbNvOV7os=
+X-Gm-Gg: ASbGncv+fxBDrdO34CanARweWJhy2hMNr1kFNr5GEfQjisCym+6dGKo3KnfCUQx2Iak
+ sWeIFFVXJ9ZQlfp8ClC0O1eoek+FBvA1F6W3THlKq3rCmdC9eEf1yIDy7G+D3mHwum8GRP4cGZ6
+ tHNGGOt0aT75QIKeeh3opxXglCF2KEKp8ZDU/OurV+5mYCfRPDT6hjXES9nbBOjHLGw0r388Dqy
+ 0aHBuxcDKZOG/A6baOd5pihIRn1IGUZpiatus3IL3/KKLHFXgsEqK2ZC4m0IBfBOSo33cBsJH4r
+ MmiHepjvNrV8MgjX17MsgLIpFBKQ0mAZVhDNx97QsoYD0oJODIpl8mIerA==
+X-Google-Smtp-Source: AGHT+IE2WfizvIScfv6TpCwQcsyk99JyjHPhECR5f2dEFmILSKSO5YDax5Dfjn0t/XU0VwHf2cA1JQ==
+X-Received: by 2002:a05:6a20:3952:b0:1f5:535c:82dc with SMTP id
+ adf61e73a8af0-2009f79c626mr28021630637.42.1743606392389; 
+ Wed, 02 Apr 2025 08:06:32 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af93b8b48e3sm10001437a12.58.2025.04.02.08.06.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Apr 2025 08:06:31 -0700 (PDT)
+Message-ID: <10759233-e73b-49e2-870b-c7687c9cfd1e@linaro.org>
+Date: Wed, 2 Apr 2025 08:06:31 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b1586891-6446-474e-8950-8dbc9ac6e607@intel.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 20/30] target/arm/cpu: always define kvm related
+ registers
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Cc: kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20250320223002.2915728-1-pierrick.bouvier@linaro.org>
+ <20250320223002.2915728-21-pierrick.bouvier@linaro.org>
+ <1109fe22-9008-47c6-b14d-7323f9888822@linaro.org>
+ <11b5441f-c7c0-4b4c-8061-471a49e8465a@linaro.org>
+ <428e6fdb-24b9-47a2-9d3f-4ef5c2e1a0ae@linaro.org>
+ <ca52ecb4-6c1d-4299-9764-5839db2d013e@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <ca52ecb4-6c1d-4299-9764-5839db2d013e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,211 +109,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 02, 2025 at 10:52:38PM +0800, Xiaoyao Li wrote:
-> On 4/2/2025 7:00 PM, Daniel P. Berrangé wrote:
-> > On Tue, Apr 01, 2025 at 09:01:15AM -0400, Xiaoyao Li wrote:
-> > > KVM provides TDX capabilities via sub command KVM_TDX_CAPABILITIES of
-> > > IOCTL(KVM_MEMORY_ENCRYPT_OP). Get the capabilities when initializing
-> > > TDX context. It will be used to validate user's setting later.
-> > > 
-> > > Since there is no interface reporting how many cpuid configs contains in
-> > > KVM_TDX_CAPABILITIES, QEMU chooses to try starting with a known number
-> > > and abort when it exceeds KVM_MAX_CPUID_ENTRIES.
-> > > 
-> > > Besides, introduce the interfaces to invoke TDX "ioctls" at VCPU scope
-> > > in preparation.
-> > > 
-> > > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > > ---
-> > > Changes in v7:
-> > > - refine and unifiy the error handling; (Daniel)
-> > > 
-> > > Changes in v6:
-> > > - Pass CPUState * to tdx_vcpu_ioctl();
-> > > - update commit message to remove platform scope thing;
-> > > - dump hw_error when it's non-zero to help debug;
-> > > 
-> > > Changes in v4:
-> > > - use {} to initialize struct kvm_tdx_cmd, to avoid memset();
-> > > - remove tdx_platform_ioctl() because no user;
-> > > 
-> > > Changes in v3:
-> > > - rename __tdx_ioctl() to tdx_ioctl_internal()
-> > > - Pass errp in get_tdx_capabilities();
-> > > 
-> > > changes in v2:
-> > >    - Make the error message more clear;
-> > > 
-> > > changes in v1:
-> > >    - start from nr_cpuid_configs = 6 for the loop;
-> > >    - stop the loop when nr_cpuid_configs exceeds KVM_MAX_CPUID_ENTRIES;
-> > > ---
-> > >   target/i386/kvm/kvm.c      |   2 -
-> > >   target/i386/kvm/kvm_i386.h |   2 +
-> > >   target/i386/kvm/tdx.c      | 107 ++++++++++++++++++++++++++++++++++++-
-> > >   3 files changed, 108 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> > > index 1af4710556ad..b4fa35405fe1 100644
-> > > --- a/target/i386/kvm/kvm.c
-> > > +++ b/target/i386/kvm/kvm.c
-> > > @@ -1779,8 +1779,6 @@ static int hyperv_init_vcpu(X86CPU *cpu)
-> > >   static Error *invtsc_mig_blocker;
-> > > -#define KVM_MAX_CPUID_ENTRIES  100
-> > > -
-> > >   static void kvm_init_xsave(CPUX86State *env)
-> > >   {
-> > >       if (has_xsave2) {
-> > > diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> > > index 88565e8dbac1..ed1e61fb8ba9 100644
-> > > --- a/target/i386/kvm/kvm_i386.h
-> > > +++ b/target/i386/kvm/kvm_i386.h
-> > > @@ -13,6 +13,8 @@
-> > >   #include "system/kvm.h"
-> > > +#define KVM_MAX_CPUID_ENTRIES  100
-> > > +
-> > >   /* always false if !CONFIG_KVM */
-> > >   #define kvm_pit_in_kernel() \
-> > >       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-> > > diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> > > index 4ff94860815d..c67be5e618e2 100644
-> > > --- a/target/i386/kvm/tdx.c
-> > > +++ b/target/i386/kvm/tdx.c
-> > > @@ -10,17 +10,122 @@
-> > >    */
-> > >   #include "qemu/osdep.h"
-> > > +#include "qemu/error-report.h"
-> > > +#include "qapi/error.h"
-> > >   #include "qom/object_interfaces.h"
-> > >   #include "hw/i386/x86.h"
-> > >   #include "kvm_i386.h"
-> > >   #include "tdx.h"
-> > > +static struct kvm_tdx_capabilities *tdx_caps;
-> > > +
-> > > +enum tdx_ioctl_level {
-> > > +    TDX_VM_IOCTL,
-> > > +    TDX_VCPU_IOCTL,
-> > > +};
-> > > +
-> > > +static int tdx_ioctl_internal(enum tdx_ioctl_level level, void *state,
-> > > +                              int cmd_id, __u32 flags, void *data,
-> > > +                              Error **errp)
-> > > +{
-> > > +    struct kvm_tdx_cmd tdx_cmd = {};
-> > > +    int r;
-> > > +
-> > > +    const char *tdx_ioctl_name[] = {
-> > > +        [KVM_TDX_CAPABILITIES] = "KVM_TDX_CAPABILITIES",
-> > > +        [KVM_TDX_INIT_VM] = "KVM_TDX_INIT_VM",
-> > > +        [KVM_TDX_INIT_VCPU] = "KVM_TDX_INIT_VCPU",
-> > > +        [KVM_TDX_INIT_MEM_REGION] = "KVM_TDX_INIT_MEM_REGION",
-> > > +        [KVM_TDX_FINALIZE_VM] = "KVM_TDX_FINALIZE_VM",
-> > > +        [KVM_TDX_GET_CPUID] = "KVM_TDX_GET_CPUID",
-> > > +    };
-> > > +
-> > > +    tdx_cmd.id = cmd_id;
-> > > +    tdx_cmd.flags = flags;
-> > > +    tdx_cmd.data = (__u64)(unsigned long)data;
-> > > +
-> > > +    switch (level) {
-> > > +    case TDX_VM_IOCTL:
-> > > +        r = kvm_vm_ioctl(kvm_state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
-> > > +        break;
-> > > +    case TDX_VCPU_IOCTL:
-> > > +        r = kvm_vcpu_ioctl(state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
-> > > +        break;
-> > > +    default:
-> > > +        error_setg(errp, "Invalid tdx_ioctl_level %d", level);
-> > > +        return -EINVAL;
-> > > +    }
-> > > +
-> > > +    if (r < 0) {
-> > > +        error_setg_errno(errp, -r, "TDX ioctl %s failed, hw_errors: 0x%llx",
-> > > +                         tdx_ioctl_name[cmd_id], tdx_cmd.hw_error);
-> > > +    }
-> > > +    return r;
-> > > +}
-> > > +
-> > > +static inline int tdx_vm_ioctl(int cmd_id, __u32 flags, void *data,
-> > > +                               Error **errp)
-> > > +{
-> > > +    return tdx_ioctl_internal(TDX_VM_IOCTL, NULL, cmd_id, flags, data, errp);
-> > > +}
-> > > +
-> > > +static inline int tdx_vcpu_ioctl(CPUState *cpu, int cmd_id, __u32 flags,
-> > > +                                 void *data, Error **errp)
-> > > +{
-> > > +    return  tdx_ioctl_internal(TDX_VCPU_IOCTL, cpu, cmd_id, flags, data, errp);
-> > > +}
-> > > +
-> > > +static int get_tdx_capabilities(Error **errp)
-> > > +{
-> > > +    struct kvm_tdx_capabilities *caps;
-> > > +    /* 1st generation of TDX reports 6 cpuid configs */
-> > > +    int nr_cpuid_configs = 6;
-> > > +    size_t size;
-> > > +    int r;
-> > > +
-> > > +    do {
-> > > +        Error *local_err = NULL;
-> > > +        size = sizeof(struct kvm_tdx_capabilities) +
-> > > +                      nr_cpuid_configs * sizeof(struct kvm_cpuid_entry2);
-> > > +        caps = g_malloc0(size);
-> > > +        caps->cpuid.nent = nr_cpuid_configs;
-> > > +
-> > > +        r = tdx_vm_ioctl(KVM_TDX_CAPABILITIES, 0, caps, &local_err);
-> > > +        if (r == -E2BIG) {
-> > > +            g_free(caps);
-> > > +            nr_cpuid_configs *= 2;
-> > > +            if (nr_cpuid_configs > KVM_MAX_CPUID_ENTRIES) {
-> > > +                error_report("KVM TDX seems broken that number of CPUID entries"
-> > > +                             " in kvm_tdx_capabilities exceeds limit: %d",
-> > > +                             KVM_MAX_CPUID_ENTRIES);
-> > > +                error_propagate(errp, local_err);
-> > > +                return r;
-> > > +            }
-> > > +            error_free(local_err);
-> > 
-> > IIRC, you'll need  'local_err = NULL' here, otherwise next time around
-> > the loop 'local_err' will be pointing to a free'd error object which
-> > 'error_setg' will think is still valid & won't overwrite.
-> 
-> it's set to NULL at the beginning of the do loop.
-
-Oh yes, i missed that, your code is fine as is then.
-
-> (It looks I need to declare Error *local_err outside the do loop.)
-
-Nah, it is fine within the loop given nothing outside needs it.
-
-> 
-> > > +        } else if (r < 0) {
-> > > +            g_free(caps);
-> > > +            error_propagate(errp, local_err);
-> > > +            return r;
-> > > +        }
-> > > +    } while (r == -E2BIG);
-> > > +
-> > > +    tdx_caps = caps;
-> > > +
-> > > +    return 0;
-> > > +}
-> > > +
-> > 
-> > 
-> > With regards,
-> > Daniel
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+T24gNC8yLzI1IDA2OjM2LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gT24g
+MjUvMy8yNSAwMjoyNCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+PiBPbiAzLzI0LzI1
+IDE0OjExLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4+IE9uIDMvMjMvMjUgMTI6Mzcs
+IFJpY2hhcmQgSGVuZGVyc29uIHdyb3RlOg0KPj4+PiBPbiAzLzIwLzI1IDE1OjI5LCBQaWVy
+cmljayBCb3V2aWVyIHdyb3RlOg0KPj4+Pj4gVGhpcyBkb2VzIG5vdCBodXJ0LCBldmVuIGlm
+IHRoZXkgYXJlIG5vdCB1c2VkLg0KPj4+Pj4NCj4+Pj4+IFNpZ25lZC1vZmYtYnk6IFBpZXJy
+aWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+Pj4+IC0tLQ0K
+Pj4+Pj4gIMKgwqAgdGFyZ2V0L2FybS9jcHUuaCB8IDIgLS0NCj4+Pj4+ICDCoMKgIDEgZmls
+ZSBjaGFuZ2VkLCAyIGRlbGV0aW9ucygtKQ0KPj4+Pj4NCj4+Pj4+IGRpZmYgLS1naXQgYS90
+YXJnZXQvYXJtL2NwdS5oIGIvdGFyZ2V0L2FybS9jcHUuaA0KPj4+Pj4gaW5kZXggYThhMWE4
+ZmFmNmIuLmFiNzQxMjc3MmJjIDEwMDY0NA0KPj4+Pj4gLS0tIGEvdGFyZ2V0L2FybS9jcHUu
+aA0KPj4+Pj4gKysrIGIvdGFyZ2V0L2FybS9jcHUuaA0KPj4+Pj4gQEAgLTk3MSw3ICs5NzEs
+NiBAQCBzdHJ1Y3QgQXJjaENQVSB7DQo+Pj4+PiAgwqDCoMKgwqDCoMKgwqAgKi8NCj4+Pj4+
+ICDCoMKgwqDCoMKgwqAgdWludDMyX3Qga3ZtX3RhcmdldDsNCj4+Pj4+IC0jaWZkZWYgQ09O
+RklHX0tWTQ0KPj4+Pj4gIMKgwqDCoMKgwqDCoCAvKiBLVk0gaW5pdCBmZWF0dXJlcyBmb3Ig
+dGhpcyBDUFUgKi8NCj4+Pj4+ICDCoMKgwqDCoMKgwqAgdWludDMyX3Qga3ZtX2luaXRfZmVh
+dHVyZXNbN107DQo+Pj4+PiBAQCAtOTg0LDcgKzk4Myw2IEBAIHN0cnVjdCBBcmNoQ1BVIHsN
+Cj4+Pj4+ICDCoMKgwqDCoMKgwqAgLyogS1ZNIHN0ZWFsIHRpbWUgKi8NCj4+Pj4+ICDCoMKg
+wqDCoMKgwqAgT25PZmZBdXRvIGt2bV9zdGVhbF90aW1lOw0KPj4+Pj4gLSNlbmRpZiAvKiBD
+T05GSUdfS1ZNICovDQo+Pj4+PiAgwqDCoMKgwqDCoMKgIC8qIFVuaXByb2Nlc3NvciBzeXN0
+ZW0gd2l0aCBNUCBleHRlbnNpb25zICovDQo+Pj4+PiAgwqDCoMKgwqDCoMKgIGJvb2wgbXBf
+aXNfdXA7DQo+Pj4+DQo+Pj4+IEknbSBub3Qgc3VyZSB3aGF0IHRoaXMgYWNoaWV2ZXM/wqDC
+oCBDT05GSUdfS1ZNIGlzIGEgY29uZmlndXJlLXRpbWUNCj4+Pj4gc2VsZWN0aW9uLg0KPj4+
+Pg0KPj4+DQo+Pj4gQ09ORklHX0tWTSBpcyBhIHBvaXNvbmVkIGlkZW50aWZpZXIuDQo+Pj4g
+SXQncyBpbmNsdWRlZCB2aWEgY29uZmlnLXRhcmdldC5oLCBhbmQgbm90IGNvbmZpZy1ob3N0
+LmguDQo+Pg0KPj4gV2hvb3BzLCB5ZXMuDQo+IA0KPiBJZiB3ZSBnbyB0aGlzIHdheSwgY2Fu
+IHdlIGNvbnNpc3RlbnRseSBhbGxvdyBDT05GSUdfJHtIV19BQ0NFTH0NCj4gKHJlYWQgInJl
+bW92ZSBwb2lzb25lZCBkZWZzIGluIGNvbmZpZy1wb2lzb24uaCk/DQoNCkl0IHdvdWxkIGJl
+IHNhZmUgdG8gZG8gdGhpcyBmb3IgQ09ORklHX1RDRywgd2hpY2ggaXMgYXBwbGllZCB0byBh
+bGwgDQpjb21waWxhdGlvbiB1bml0cyAodGhyb3VnaCBjb25maWdfaG9zdCkuIEFuZCB3ZSds
+bCBkbyBpdCB3aGVuIHdlIG1lZXQgYSANCmNhc2UgdGhhdCByZWFsbHkgbmVlZHMgaXQsIG5v
+dCBiZWZvcmUuIEFzIGxvbmcgYXMgdGhlIGNvZGUgY2FuIGJlIA0KY2xlYW5lZCB1cCBmcm9t
+IHRob3NlIGlmZGVmcywgaXQncyBiZXR0ZXIuDQoNCkhvd2V2ZXIsIGl0J3Mgbm90IHNhZmUg
+Zm9yIGFsbCBvdGhlciBDT05GSUdfJHtIV19BQ0NFTH0sIHdoaWNoIGFyZSANCmFwcGxpZWQg
+c2VsZWN0aXZlbHkgb24gc29tZSB0YXJnZXRzIChiYXNpY2FsbHksIGZvciB0aGUgcGFpciB7
+aG9zdCA9PSANCnRhcmdldH0sIHdoZW4gaG9zdCBzdXBwb3J0cyB0aGlzIGFjY2VsZXJhdGlv
+bikuDQpGb3IgdGhlbSwgdGhlIHJpZ2h0IGZpeCBpcyB0byBtYWtlIHN1cmUgd2UgY2FsbCAi
+e2FjY2VsfV9lbmFibGVkKCkiLCANCmV4cG9zZSB0aGUgYXNzb2NpYXRlZCBjb2RlLCBhbmQg
+ZXZlbnR1YWxseSBkZWFsIHdpdGggbWlzc2luZyBzeW1ib2xzIGF0IA0KbGluay4NCg==
 
