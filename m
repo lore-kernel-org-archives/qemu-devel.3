@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 411A8C3601B
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 22:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC18C36018
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 22:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u06Uv-0004cr-MR; Wed, 02 Apr 2025 18:23:49 -0400
+	id 1u06VM-0004hx-K6; Wed, 02 Apr 2025 18:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u06Us-0004bp-O7
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 18:23:46 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u06VF-0004h2-MC
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 18:24:12 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u06Um-0002Lb-E0
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 18:23:46 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so2140465e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 15:23:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u06VE-0002Rm-1N
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 18:24:09 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so1299155e9.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 15:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743632616; x=1744237416; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=o3yDZx0SYYuYZC9VlbBBkMM4s3bJRYFJ9WPnZkWGKps=;
- b=wJRu1K57eCwbO2GxHQX4aYpu0HYpbuwH7CmGlKuCApa3jPvm7lXlal46u9Iu5d2FE4
- agtcRQmMsflNjKSihJGna845ueDnSOH6sPvRIpWFx5WY7QSub9P+Z/kPmaJvI0TuZaFd
- DUJxSXFTIb5O8w5lI6R6JW4s4tw9RV3159+7PJYZ9gutviHDfzBJzZZQA9yL4GAJzbUI
- NvekfyuGD72Cv5fni9CB2G+5vwKaQB1ihe7b5d4xhkWFAtdYDVczKLoitL5W5YbD4t+J
- LMqjtFgvzF7VsegbJMbK8KGE82ACZFZUzYF2k9cnvrHq5kGLX3sCwj1Bodat2UrTIVVC
- mwXA==
+ d=linaro.org; s=google; t=1743632645; x=1744237445; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CDr/ul5OFsiETmBtqo4fJS+9II8rXl1Dlp4n7ItAQxI=;
+ b=Yu0B65ToQ2zlm82Z5lJR/8Gl6DTZBD3aXuWBmQfLhpsoFdeUmqK5e0XReNQsIMhF7t
+ ezVZYg6NLPX169cFkJ7d0UGyy9JaUuXfVyp9SThNxOaOS5MXoV3LsxQkaA4raTTuqQSq
+ ZEf/FIhc045veFcg8N7pI4Lb43pPdos2V0VGhSv8Zt4yc4trXONWxSBorbf+taNO+ScN
+ b/3dyYkm0ye74+t2AcRIwLHqvKadmT4XjXEHA2Agkex39Z2v0OafZNFWM5iFRqvcCg9X
+ iPg8IXxUORvocfGZqZTR6DdCvZUBs0Q798vBDe00f+Lq8CaVGf1mM6rqjRvIHo/lh23Y
+ +wfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743632616; x=1744237416;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o3yDZx0SYYuYZC9VlbBBkMM4s3bJRYFJ9WPnZkWGKps=;
- b=YFw+RuXerPWhh26jWtGhxOK+e5ZonmNGsFnWN4gGVCUSvzCXzVGnUrVPoF70tFsKML
- nl+oKnX9LdBldZRtZNa5N3DOQXFgZeQ6fc4u+KiImHPhvnX0xqCvz3Yha68dlLrcx6u+
- CU+kSRigxomLjAbAMznmovbBJk6eY1Dyr1ZfgQrz8uvtkrp6XkGLdW19LDQ973F/LRAy
- E17VVreJyNun1qADc4Juj5mNY3jyBw+2epPpXdJKHe1aFk+vLeCKzsaWDXGezQQKaMCf
- tseUmSUuK2ipKCkLmcQtGB9sac0fNpgwh9yw+URZkZ25H+jaOReZmydUiZr7vpUplxyN
- OsUw==
-X-Gm-Message-State: AOJu0Yyv4gwBERAfKTcavhpwHzkkAtocIxv7XX/xDxnDhKhxi9mRMKbp
- CqAZkTMg8kJKZHIkwHGClVYFDHqzIJX+FTgD0Dr06ZN3aeJxRGCVgpvG+ByNF3Mn9VQ7Tst5H+T
- L
-X-Gm-Gg: ASbGncv0/Bhbn9qtcVQl9/MEeYIUkBGWo8ibT3Gm08TuRHJHMFRCUN5URUZoTzHNsW+
- 34HA3YlSTzjGkaMBhkqa34ueeLyjzH7fIdS9gdunfXIjPmfcQuvT0+v82uG1qnvu9xM6BtYrBqN
- CmdlILBziV69ZLAT5yICqy6YmAhENe0p5jZKs1HSE5lrqvq7rLzjHcnPexcjSqhEieqjU5RLuff
- BaNZfz3JVQc4yr9tEYIrJLFBCvieRmfvGul1kiKLkPad+8xPVqHAnLsSLJQqSCLZZpKJnO0fwGr
- 8aiDoZ04fcinLn99TnhJlfye0rjfGfao2HnxToI6biE81bjYDnxxY9vhfc5zgLQwy1twKM25GQk
- xmreRQj7UgP46EjCW1L4=
-X-Google-Smtp-Source: AGHT+IHjd8gAhFja6rFX/KovvcdC5rUXrW9YnXsd77qQiSjm9paqW5b1S/ZrTEQgBuYR7LNgpx+cgw==
-X-Received: by 2002:a05:600c:45c8:b0:43c:f513:9585 with SMTP id
- 5b1f17b1804b1-43db6247b2cmr169912365e9.13.1743632616610; 
- Wed, 02 Apr 2025 15:23:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743632645; x=1744237445;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CDr/ul5OFsiETmBtqo4fJS+9II8rXl1Dlp4n7ItAQxI=;
+ b=fZ50l25hqGofsivdvSBR6PuL5apxP0ILM7Gb2Sz8xyMHze819sI1bWFc6j82lXwYoO
+ gJdCsqsSoE1o/k2J6Ch6IL4E4FL5XkL85ZOocl1Il5LDpGdBJr8bxDOo3bh21AhhUEHX
+ gf4MBx7jceK0cFNK99iwBXBVvyKf+yHautNuE90mOiaIoPz8Yv40V7WX6cbVTbUJYVOg
+ bdTbz2RHyp4vLLwJQomvTUTtlaiQYXFPLjeTxnUDq6cUR5vzdGbGO5JwTA0WFpg/I64Z
+ ElY1Tzgm1FRR4PpUQu+JPaDvYziB2KsSlhcDWzbv8baeyi/Lsq1SfLesc1fC2OFA6wwt
+ r8Ew==
+X-Gm-Message-State: AOJu0YwkLsEhMKE8fCDJq52UfgSwkEBL+m/52cJXS/8w7NigMSv3DCuA
+ ZOc5xW+/S3feNF23bHoVvj1vdMvXcaESL0F40AbnR0dJx3mih72j9UJUBdz+eXDIW/nQTf34zfZ
+ 6
+X-Gm-Gg: ASbGncsFoDE8rcauYVjo7h815yyaV0HP9wE4Ktb6LUpOYOmMCuQMG0ZFqZYbjd70KZa
+ 7apsobhNAiKniFNcY4f0a4edINA2kf/dKiM5z0kCWgzJMlx+jPTXKDti8qzaJRs7v5+xBb4qHIW
+ bedXLN0HHlxxxx6NtmioT4+uWlI3wC06k5Jha1ofFjfoYEoN6+hSsNQv6+FZfA+6r+TfqW8269N
+ 3j/pUg8XMwH0cEcGMaH2M2JY8iyTz+A0W+mnlmJOdod6gs6wVQkT8KdAD6/Cg9R/Bg/Eqf8eYpv
+ O21gXsXP0SE+QdmqZBy2yGFl/7YHTFqIDDCapV+RnBZhGAlhgf+gneqh1N86nEuf+uI6ayFDvj5
+ qrb2Vx6RbWDT6BFDwGUM=
+X-Google-Smtp-Source: AGHT+IEQh1IR2rRhcYtEp4t13dNvzL5n0vkmGz0oHoU3/ZxOr1lLpEDdGxxiKRHiWZf3fkMXsnuEuA==
+X-Received: by 2002:a05:600c:3591:b0:43c:f70a:2af0 with SMTP id
+ 5b1f17b1804b1-43db61ffdb0mr145204595e9.16.1743632644836; 
+ Wed, 02 Apr 2025 15:24:04 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec342a1fesm444175e9.3.2025.04.02.15.23.34
+ 5b1f17b1804b1-43ec34a895fsm412665e9.13.2025.04.02.15.24.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Apr 2025 15:23:36 -0700 (PDT)
+ Wed, 02 Apr 2025 15:24:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 00/13] arm: Spring header cleanups
-Date: Thu,  3 Apr 2025 00:23:20 +0200
-Message-ID: <20250402222334.66511-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 06/13] target/arm: Restrict inclusion of
+ 'multiprocessing.h'
+Date: Thu,  3 Apr 2025 00:23:26 +0200
+Message-ID: <20250402222334.66511-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250402222334.66511-1-philmd@linaro.org>
+References: <20250402222334.66511-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,68 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is more useful for heterogeneous emulation preparation
-than single binary, because it allows non-ARM hw/ code to configure
-ARM cores, so not using target-specific APIs. I figured some
-patches could be useful to Pierrick "build hw/arm once" series (in
-particular arm_cpu_has_feature).
+Only cpu.c requires "multiprocessing.h" definitions so far.
 
-Philippe Mathieu-Daudé (13):
-  target/arm/cpu-features: Include missing 'cpu.h' header
-  target/arm/qmp: Include missing 'cpu.h' header
-  target/arm/kvm: Include missing 'cpu-qom.h' header
-  target/arm/hvf: Include missing 'cpu-qom.h' header
-  hw/arm: Remove unnecessary 'cpu.h' header
-  target/arm: Restrict inclusion of 'multiprocessing.h'
-  target/arm: Move some definitions from 'cpu.h' to 'multiprocessing.h'
-  hw/arm: Include missing 'target/arm/gtimer.h' header
-  target/arm: Extract PSCI definitions to 'psci.h'
-  target/arm: Extract feature definitions to 'cpu_has_feature.h' header
-  target/arm: Add arm_cpu_has_feature() helper
-  hw/arm/realview: Replace arm_feature() -> arm_cpu_has_feature()
-  hw/arm/virt-acpi: Replace arm_feature() -> arm_cpu_has_feature()
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/arm/cpu.h | 1 -
+ target/arm/cpu.c | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
- include/hw/arm/boot.h        |  3 +-
- target/arm/cpu-features.h    |  1 +
- target/arm/cpu.h             | 78 +-----------------------------------
- target/arm/cpu_has_feature.h | 67 +++++++++++++++++++++++++++++++
- target/arm/hvf_arm.h         |  2 +-
- target/arm/kvm_arm.h         |  1 +
- target/arm/multiprocessing.h | 18 +++++++++
- target/arm/psci.h            | 18 +++++++++
- hw/arm/aspeed_ast2600.c      |  1 +
- hw/arm/aspeed_ast27x0.c      |  2 +
- hw/arm/bananapi_m2u.c        |  1 +
- hw/arm/bcm2838.c             |  1 +
- hw/arm/boot.c                |  1 +
- hw/arm/exynos4210.c          |  3 +-
- hw/arm/fsl-imx8mp.c          |  1 +
- hw/arm/highbank.c            |  2 +-
- hw/arm/imx8mp-evk.c          |  1 +
- hw/arm/mcimx6ul-evk.c        |  1 +
- hw/arm/mcimx7d-sabre.c       |  1 +
- hw/arm/mps3r.c               |  2 +-
- hw/arm/npcm8xx.c             |  2 +
- hw/arm/orangepi.c            |  1 +
- hw/arm/realview.c            | 10 ++---
- hw/arm/sbsa-ref.c            |  2 +
- hw/arm/smmuv3.c              |  1 -
- hw/arm/virt-acpi-build.c     |  4 +-
- hw/arm/virt.c                |  1 +
- hw/arm/xlnx-versal-virt.c    |  1 +
- hw/arm/xlnx-zcu102.c         |  1 +
- hw/vmapple/vmapple.c         |  3 ++
- target/arm/arm-qmp-cmds.c    |  1 +
- target/arm/cpu.c             |  8 ++++
- target/arm/helper.c          |  1 +
- target/arm/hvf/hvf.c         |  1 +
- target/arm/kvm.c             |  1 +
- target/arm/tcg/op_helper.c   |  2 +
- target/arm/tcg/psci.c        |  1 +
- 37 files changed, 156 insertions(+), 90 deletions(-)
- create mode 100644 target/arm/cpu_has_feature.h
- create mode 100644 target/arm/psci.h
-
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 88ed06987f3..768e784c3e9 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -30,7 +30,6 @@
+ #include "exec/gdbstub.h"
+ #include "exec/page-protection.h"
+ #include "qapi/qapi-types-common.h"
+-#include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
+ 
+ #define EXCP_UDEF            1   /* undefined instruction */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index b1aa482c726..6f62745d7f6 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -53,6 +53,7 @@
+ #include "qemu/target_info-qom.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/gtimer.h"
++#include "target/arm/multiprocessing.h"
+ 
+ static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+ {
 -- 
 2.47.1
 
