@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7220C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9954BC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzz2m-0002Su-EG; Wed, 02 Apr 2025 10:26:23 -0400
+	id 1tzzGr-0006Pa-3d; Wed, 02 Apr 2025 10:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzz2J-0002R6-D0
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:25:47 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzzGe-0006O3-QX
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:40:38 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzz2B-0006bl-SD
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:25:45 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39149bccb69so5987427f8f.2
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 07:25:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzzGa-00040O-Fh
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:40:35 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43cf0d787eeso64974635e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 07:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743603937; x=1744208737; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aVfP5vQagloycdbrJi94vMQgixg8z85JM0ycrLK/NEw=;
- b=ojFjgOJtBkaCwhR8mQ6FAkXkWzLLj8OXLVpnfX7oHVENyEfgKMP6OjFA9eklrGJBjB
- PoB1P70fshyHM6MiXISYKn8KUUZNCzYgLfGc+FtwgoKGAwJG/taOBIYyAw6bi9tY7nfU
- oEXY+CdzHAc5oAstFRFAAXqPgbNqxITAaW79NAdhHwZcjVdy5P/mRyS1Dare2j78XAED
- G9jh+UuioYJPyV+kRau6eAoAS/LRES0V395lCAv6SsdF9xldMa0jxJErB7naldSJOoJu
- O2vnNUwMISyKePVg+ojkA1jJ5uBVtGXo66XECgjpL6yvbTX2GFVcsB6OrNAi5q2hjwGR
- tOmA==
+ d=linaro.org; s=google; t=1743604829; x=1744209629; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tvMjyOyyNNwjTWNo1fk6qGXnG8fPKOLFq2Z6zXy8Ma4=;
+ b=LkSD+7ZXysa9xoNdpN97gMxGmqVa8ApI48RGl6iU8VvraG+m2lk5FPsx2/rOZ2IC1X
+ 6Vx7Z//e22POyd71g+duSA5v1MLv4GriKt/3LnM8iUd/MTY26dDBsxV+I4HqnRUsW5Lg
+ vgFCWOKW6cJnXkWt/XnmSvOJLPRGjbZjTDVvNv+YD9wMQu51gk44Upydl9F2NQUDfiAH
+ FMXimCzo17A7ZmqlpkKFA+N4mouMxNbeAE2xcQr1oFkHuvfWBgJ4buMHkL7Igdv6FLN2
+ g0uJfaM8eEWue0cs9gOP1Q1KzGaHiUs6pVMUwv57ZE2KvuN0SgoEDarArRoZ7AR9rOsj
+ yR4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743603937; x=1744208737;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743604829; x=1744209629;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aVfP5vQagloycdbrJi94vMQgixg8z85JM0ycrLK/NEw=;
- b=eB8RRpMKyVBGdogVXNHRnQzxQoRQSMybqgGI6aUbvoTDf+9UFojuxU3Skqqu6ZAxve
- LnAG4seUkhzGOMcRH8GiBQ60YRg6INlxWd7cTJkP7JGPK+hGLBC3pWGSZEZx8murt9z+
- e3ZTQxiShe43po0K15Z1G1yskEbhZXhAkjPbOvxZSuAg8RrVO/5nQnR1NJdQ1VpRDcIE
- 5TVV6Xxo3hfy3TcakybQQdfLtJbwRNQb9rK8F/y2CazADTTshd7eO1OZU2vacqQvJmVi
- LY7wvnFbEPG/rO3tWm0uYHE1cCZ/Bi/SSrvTaRa99heyjOlCP9DKOpu8wC4QmVnG0qXA
- E24A==
+ bh=tvMjyOyyNNwjTWNo1fk6qGXnG8fPKOLFq2Z6zXy8Ma4=;
+ b=I2fRYmQ0csGnruOyL8Xdd2VaSd4C0ok4xeEAkjjG/e8fysESMN3nIa3mdOG7hJV2ha
+ Mz5/KgrTAH2oKD4xiK4NZWIlpbvTzxpP8l3rpYe/MVEsNsoTVkjGiyiELySVTqe7ekB6
+ Guo6X90MRDqszte2PUXG3O3R0ozvqexLX+a32B2ql62P3njbsjvWOTDP2+ELzijNMVCo
+ 6PsT6NTMjjoMCzoaarqKzv+L5tdMbH7n8YqP9C3UiZIH+KSG9iuCaBpuQh/giEVlTEwp
+ Y/PO46/wZiH1McR0skOI074/7J/KYZcC6/+BTzk5tGUhCVmeeEmT8UB9NblAOrJH7UkN
+ /i+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUl0mgcy/RBC65WUzOpWpPJDtQ995mPg29GpDgC9CHOra1tuTQl75Fa3+K0/mwBYLUlW+OfGgR8YdD7@nongnu.org
-X-Gm-Message-State: AOJu0Yy5HJWpU4DDIKS2SgqNnj6NzEdfyd8WXFpaZ5eQa3lWwJ4uCV/9
- lnxj0TZTLFvuWF/djkaecQgy+M6VmmI/Hh7ZX6/VTd2tMMxM9N8EZBMPdlYTdCg=
-X-Gm-Gg: ASbGncvYXUFcdT6zhp/YlK8rfxZ22Td5TwA5mk/kyIRurmmnl1B4DX5gzc1lsoeNNZc
- HLG4OhgEzPp+V2yUfS89wO+szELuVdCoNFv7JQae/u3zRI3FCP+TU2PBVFg6ZkWRNOk/w905XKw
- EfgyFAipzX+KDSjtNPIzccJ7PZoeK4uK7rzlVKaHwRhASezJG0cTIf9+sQlDPEpjMIFTubdR4FN
- U5uaLrY/IcnBSM7nCuxKcJJ+/sIyi+l9sLK6pcnqbYAMaUuZy9y+3GC04CL6XVbCx1xOj58T3Hy
- jJA1crO9uRl03NX3V/EmSNA9XOgcbnGrHj9m8AeA23kDFvieyAgLX4MqZAQ3klP9AazSHq09AZu
- WnuLP/URuYQRpSuxCxWpeMVA=
-X-Google-Smtp-Source: AGHT+IFxW5+8rD2QX8PIoO2bG/PGlri1/BUHwL28htfp/qXi8y4TuaW5IDpu8wotklfyI0LbO4/t3g==
-X-Received: by 2002:a05:6000:480d:b0:391:4231:414 with SMTP id
- ffacd0b85a97d-39c297e3f85mr2048249f8f.40.1743603936692; 
- Wed, 02 Apr 2025 07:25:36 -0700 (PDT)
+ AJvYcCVCNrq0D1SD9rknxzMMWWXF4UIT5GLoqDL0zK4cTf7tko6Z83vXtXP5J0NncN05i69S18fTJ85PFgYj@nongnu.org
+X-Gm-Message-State: AOJu0YwPjktviuT2yPVhIyWRg1ua/EXEaaHIfET8b8N4GugevMO1CUjL
+ CHy9eeeWk1q5A4oiOswQmX3aOi0v/u8rn6r1Gdhi6jT2DgnLs4yH+bE5QqF3e4s=
+X-Gm-Gg: ASbGncvNJXrhuEIiWl9Z4CNt80Cq78z+NAT162MUL5cIO3ROPqyawAHPZJBFviZW9vx
+ gyckgEgaMCHXhggPNWVh3S5k18et8eeVB/7ZtkbwzGG1H2qlg7GC8ma9jB04Dp1Rxf2j7IkDVr3
+ VgvUEF2XMsYzemc9qq37OILmoB9VXjSs1FMEzUrpQKowTsiGY0NSQ7dvx1QzO3CN3/5JaXQjMfr
+ H65xRsXDNTGiAJB2i6ceop73f9iV3I+eChCYURQ0jkPA+8I2ddnr1bPC7mHNuhZqWen0z3IFXGc
+ 3oq5mFb8WVoQEcxHqTNlsO0ZprJvvcGWHankCWKROaSaR7TkHzpQu3QMOw5ViiCpcpOBfttChv1
+ +28uRj5vl6xjf
+X-Google-Smtp-Source: AGHT+IGsM2J2ZUE+TigT5GPiigBXYlUgFMk1vexz/bFmC1Pl4cDpkzJXrYz+Lj1hWeY5oIBeIt7Tjg==
+X-Received: by 2002:a05:600c:4f43:b0:43c:fad6:fa5a with SMTP id
+ 5b1f17b1804b1-43db62b77acmr156577125e9.24.1743604829386; 
+ Wed, 02 Apr 2025 07:40:29 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b663860sm17340281f8f.39.2025.04.02.07.25.35
+ 5b1f17b1804b1-43eb60eae85sm22764335e9.26.2025.04.02.07.40.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 07:25:36 -0700 (PDT)
-Message-ID: <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
-Date: Wed, 2 Apr 2025 16:25:35 +0200
+ Wed, 02 Apr 2025 07:40:28 -0700 (PDT)
+Message-ID: <90049822-b71a-4120-9537-7d43caf44f83@linaro.org>
+Date: Wed, 2 Apr 2025 16:40:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-10.1 1/4] target/riscv: Restrict RV128 MTTCG check on
  system emulation
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Alexandre Ghiti <alexghiti@rivosinc.com>
 Cc: Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv <qemu-riscv@nongnu.org>
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv <qemu-riscv@nongnu.org>,
+ Frank Chang <frank.chang@sifive.com>, Bin Meng <bmeng@tinylab.org>,
+ Andrew Jones <ajones@ventanamicro.com>, Palmer Dabbelt <palmer@rivosinc.com>
 References: <20250321155925.96626-1-philmd@linaro.org>
  <20250321155925.96626-2-philmd@linaro.org>
  <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
+ <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
+In-Reply-To: <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,26 +110,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/3/25 19:08, Richard Henderson wrote:
-> On 3/21/25 08:59, Philippe Mathieu-Daudé wrote:
->> Multi-threaded TCG only concerns system emulation.
+On 2/4/25 16:25, Philippe Mathieu-Daudé wrote:
+> On 23/3/25 19:08, Richard Henderson wrote:
+>> On 3/21/25 08:59, Philippe Mathieu-Daudé wrote:
+>>> Multi-threaded TCG only concerns system emulation.
+>>
+>> That's not really true.  User emulation simply has no option to
+>> run in a single-threaded context.
+>>
+>> I really don't think we should allow RV128 in user-mode at all.
+>> Certainly not until there's a kernel abi for it.
 > 
-> That's not really true.  User emulation simply has no option to
-> run in a single-threaded context.
+> It seems to be safe since commit 905b9fcde1f ("target/riscv: Replace
+> is_32bit with get_xl/get_xlen"):
 > 
-> I really don't think we should allow RV128 in user-mode at all.
-> Certainly not until there's a kernel abi for it.
+>   #ifdef TARGET_RISCV32
+>   #define get_xl(ctx)    MXL_RV32
+>   #elif defined(CONFIG_USER_ONLY)
+>   #define get_xl(ctx)    MXL_RV64
+>   #else
+>   #define get_xl(ctx)    ((ctx)->xl)
+>   #endif
+> 
+> Should we undefine MXL_RV128 on user-mode?
 
-It seems to be safe since commit 905b9fcde1f ("target/riscv: Replace
-is_32bit with get_xl/get_xlen"):
+Indeed the CPU is exposed on user-mode...
 
-  #ifdef TARGET_RISCV32
-  #define get_xl(ctx)    MXL_RV32
-  #elif defined(CONFIG_USER_ONLY)
-  #define get_xl(ctx)    MXL_RV64
-  #else
-  #define get_xl(ctx)    ((ctx)->xl)
-  #endif
+$ qemu-riscv64 -cpu help
+Available CPUs:
+   max
+   rv64
+   rv64e
+   rv64i
+   rva22s64
+   rva22u64
+   rva23s64
+   rva23u64
+   shakti-c
+   sifive-e51
+   sifive-u54
+   thead-c906
+   tt-ascalon
+   veyron-v1
+   x-rv128           <---------
+   xiangshan-nanhu
 
-Should we undefine MXL_RV128 on user-mode?
+Per commit 6df3747a274 ("riscv: Introduce satp mode hw
+capabilities") I wonder if this is expected.
+
+Anyhow, I'll post a patch disabling it as:
+
+-- >8 --
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 430b02d2a58..33abcef0073 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -699,3 +699,3 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
+
+-#ifdef CONFIG_TCG
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+  static void rv128_base_cpu_init(Object *obj)
+@@ -710,7 +710,6 @@ static void rv128_base_cpu_init(Object *obj)
+      env->priv_ver = PRIV_VERSION_LATEST;
+-#ifndef CONFIG_USER_ONLY
++
+      set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
+-#endif
+  }
+-#endif /* CONFIG_TCG */
++#endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
+
+@@ -3257,3 +3256,3 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+                                                   MXL_RV64, 
+rv64_xiangshan_nanhu_cpu_init),
+-#ifdef CONFIG_TCG
++#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+      DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, 
+rv128_base_cpu_init),
+
+---
 
