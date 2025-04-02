@@ -4,142 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8788AC28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 06:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D76C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 06:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzrFv-0001YX-Go; Wed, 02 Apr 2025 02:07:25 -0400
+	id 1tzrnc-0000tP-Kh; Wed, 02 Apr 2025 02:42:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tzrEm-0001OL-KW
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 02:06:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tzrEi-0007NQ-03
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 02:06:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743573962;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=a4F0VrESKazgENRW6Q4vcHJz5GqcJjMC2LKRuI98eG8=;
- b=acDld+oT6CoxkEcSBbNIUl/SbrUn7ppHXtxIrImID+3PiITdZsrLtCuWN1/HeN5asLrvQK
- G90RkguHTx2jxoaOhKNQk4RTEOZHoJm9HRxO+hGkPKXT4v0G9TmQrgbXXFzWUuk7vPAQWc
- roKWBQcpZvG3c0EkqBm5vnyDbRANxQo=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-rpym-H5cOmWT9Dq19hX4Xw-1; Wed, 02 Apr 2025 02:06:00 -0400
-X-MC-Unique: rpym-H5cOmWT9Dq19hX4Xw-1
-X-Mimecast-MFC-AGG-ID: rpym-H5cOmWT9Dq19hX4Xw_1743573959
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ac710ace217so462911266b.1
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 23:06:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1tzrnR-0000sU-Vv
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 02:41:58 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1tzrnP-0000bk-Uu
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 02:41:57 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2241053582dso109411215ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 23:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743576113; x=1744180913; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x7pJ4OreKxuvubcq6/pAVF2x2fq5dkngHiRNniaYiZ0=;
+ b=M5xEeqmIs6tQr7C5dKNFLGObCkkcELZ9qDsmk6TUuXGBZyA2sbpeTLOTz4R9x98+Sh
+ DjNpbciUaan9OkVS1VSoP9ZpkNq6+zqtZFV9dol0Ym8qnHZEXOksOJXwFNyc9NjEaVym
+ 5wqR2Hmv+GPcdMcc3m2FP1T2KE2NYJhQ3erwm6VEAuE5WKs8o2FyhHYoxuWRd+vqPW4X
+ T1GClN5kOn1y7j2D10RLm0AaQPh00llcl5la36Ozre0aOovbnwEC/hWBfs6mmO9WAoOz
+ XuB6giKdNi/dlwJriwf3t0yHqd9BfaslPiguJPGcLJOCgWkuv3niygyESPnAc/mFJPQo
+ 5s5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743573959; x=1744178759;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=a4F0VrESKazgENRW6Q4vcHJz5GqcJjMC2LKRuI98eG8=;
- b=VxnjiUu+7CSM8T6PYEoRLkHMvzBb1sqNCD9wfpmJ/Vsqr37/pCIJPNQS+8VyZkVdpH
- TyPrACBd6i+hB2KRSW31lADFAu9NSrezYnqqg6rkMkD5ZvWjNu1nYj+5KuV6RCzH+V3a
- WovRsawAntimb8ogPZxCnRlDWoJ//T9a5s0qZqYIdsz0YVEMm5s15J/S+f1U0ZqeGaPF
- Tcf2FeDXFlYk7iKB8YyzAzjfESnek6xx21bmkNpIJy5YgatzY7LvGo6guBDVNNMemYRK
- q6V4+71sh0myVtbOXIXV5DEasX7sJWw1Xf3PAM8BlC56x1LGbtwlbsQp0Qky6V1oy+sW
- 7bGA==
-X-Gm-Message-State: AOJu0YxMCa4m7xyA3UXRCtLPHFB2pZaCbdPK0TxwMrofkh2y1PWM4DxV
- 1zvzvFp3syRtPdN6zCdekJb80DxYAHMjfqqrIyK1mkavGxSnlqK9t2+IlvWQv/RMAvX9+b9CCCw
- wHxiMUdBXyo57Bb6xt1luTxx1Fykjl9Lqw/pC2+nptGM6q2wZ93zT
-X-Gm-Gg: ASbGncsj6V299m5u9q2CObSL5y81kG9aRnVc2ETaCPJzHFJ/foHhlYPhxIR2KlBaYd/
- l00iZk2Xx8s187lPvZahxSBqvIfYqyUcp4SQzn54Je4bqwMEsRCBUi2Wd/vlxUtdDTjNgXjWzYj
- sYcbDlQdko0Qh1cg+6hjKREkGOJk8tB+ndsZpTnrOwxWptZ3uA2zl6qg2S9tolpzv5iKwcvtTlq
- sDukCrGMeo6RJ/sMaee91Qq8tuGZQRmkBJg0eWVWtnO+zhollQ7Q8DHoFTedSuoxyXdVFqykO17
- jp9qvPuZPb5s9aBcvZEv5HKvu4EDFChkTbNi9CveShFX
-X-Received: by 2002:a17:907:1b10:b0:ac2:a42a:999b with SMTP id
- a640c23a62f3a-ac738c262bbmr1294799266b.52.1743573959000; 
- Tue, 01 Apr 2025 23:05:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE68rT9in/Ld6YvGdZZHolBRc/B93DbgPS2P/uqFzLA32jHWXPXjlwMIJ7ocCspb85tfubdVQ==
-X-Received: by 2002:a17:907:1b10:b0:ac2:a42a:999b with SMTP id
- a640c23a62f3a-ac738c262bbmr1294796666b.52.1743573958619; 
- Tue, 01 Apr 2025 23:05:58 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-76.web.vodafone.de. [109.42.51.76])
+ d=1e100.net; s=20230601; t=1743576113; x=1744180913;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x7pJ4OreKxuvubcq6/pAVF2x2fq5dkngHiRNniaYiZ0=;
+ b=oE/mtAQOGAeOW54ZFAwF3I+qWs6KvrJ4xtShiocIsFpRpN61w+IQoeYaQV/eCcK1uG
+ rvS6VhSQczVHe1hpZ0nDU4CdHOejCO1VIeLe3FLh0rO6YFTsNTgXbxLQEk8giLTtsPHI
+ ySQkaLXHvblcHbEDDwP6lOfeSsFcR5l1zL+Y/65YERdmCgx7VwQt4Rsa6U4c1cmXGBH2
+ hEXAzvQ5EC9EZRVy2+ogtU8BARVTyNrme/0t8/Qq5Mc/1QkPq5iwRIMszxwRsDh7XZPk
+ pkJh54VV/pLNh3PdIkd71b1BhbHYzTUmou6u1D0v8N5dmLsN4dUmK8wZmfhMZzS7PJu5
+ hlTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1bZtHbrIq7y0OnKGl1OqAis9I0+hh9s/24zLvcouJOuUQmxmZIMkJ9KW8eo68Ly1rmqRIY90X4CC1@nongnu.org
+X-Gm-Message-State: AOJu0YyHXEcrf1yaHUg/N3I7hvItLBTTni9d5YqRJiR08gIxnIGefGfR
+ cl30fT4bjMJLwApDikj9h5pHvLgqXPkmXF1RhhlHH0Nvhd5DWB62XIxerjF1AxM=
+X-Gm-Gg: ASbGncu1ygGP9iLsXYdWa365CumxYhkHwjn3Lx+lksUd54QnllD8e+xGoLi7VuHt2aa
+ R+tiUFJy2i8sYaSVhUSZDUWanRkv41q4jT1IAb732C/j9L5Tya2zBz/rIUo00d6x3SqtPexIwLA
+ zvOqQHzwtrUchdjhjaIrZfJaOhlQRD1Q2m+k3QJtzhlCMQ/I62T5HYDiTXvJta3BH7twJTRP7+e
+ SVu/yvZ+QaOu123MnDCqLh7DWxO1mxIwDElHSmQUAoLBTs8XfIuVo0aTCaOcub+sMXaAQvjMdWC
+ 0Psj2YL++hbXdPJhsAofHWcrh0utUBIz5/XbGmMyDsXt36MwilSNe/wS
+X-Google-Smtp-Source: AGHT+IH1/X8Jo9AwJVQiJOKoI6tdmyyCWlEfzEyUohjQjwLhtXu1ifuqXbdFj5I+V8pxgFKC9VGwaQ==
+X-Received: by 2002:a05:6a20:3d90:b0:1f5:9024:3254 with SMTP id
+ adf61e73a8af0-2009f5bce21mr28443917637.6.1743576113603; 
+ Tue, 01 Apr 2025 23:41:53 -0700 (PDT)
+Received: from [192.168.0.102] ([186.215.49.46])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7196d7fffsm862242166b.154.2025.04.01.23.05.57
+ d2e1a72fcca58-739710db4cfsm10432371b3a.176.2025.04.01.23.41.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 23:05:58 -0700 (PDT)
-Message-ID: <6da8fc30-c951-43dc-a3b3-903fa54237dd@redhat.com>
-Date: Wed, 2 Apr 2025 08:05:56 +0200
+ Tue, 01 Apr 2025 23:41:53 -0700 (PDT)
+Message-ID: <1d1362a0-b544-476c-a305-a7d2212db423@linaro.org>
+Date: Wed, 2 Apr 2025 03:41:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] hw/s390x: support migration of CPI data
-To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
- qemu-s390x mailing list <qemu-s390x@nongnu.org>,
- Daniel Berrange <berrange@redhat.com>
-Cc: qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-References: <20250331140041.3133621-1-shalini@linux.ibm.com>
- <20250331140041.3133621-4-shalini@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH-for-10.0 1/5] qtest/bios-tables-test: Add test for -M
+ virt,its=off
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250331221239.87150-1-philmd@linaro.org>
+ <20250331221239.87150-2-philmd@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250331140041.3133621-4-shalini@linux.ibm.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250331221239.87150-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.997,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,63 +108,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/03/2025 16.00, Shalini Chellathurai Saroja wrote:
-> Register Control-Program Identification data with the live
-> migration infrastructure.
-> 
-> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Hi Phil,
+
+On 3/31/25 19:12, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Please, put commit message (body) into the commits.
+
+For example, the commit message here could quickly explain that the FACP table
+changed because virtualization=on (due to PSCI conduit). I'm assuming
+virtualization is set to on because gic-version=max and so GICv4 is selected for
+testing. It also could be that  we want to exercise its=off when Arm Virtualization
+Extensions are enabled, which is the common use case (I understand that ITS
+can be used also with virtualization=off).
+
+Finally, the commit message could mention at the end which struct
+vanishes in APIC table and why IO remapping table is affected by
+ITS on/off.
+
+A good commit message always help in code spelunking :)
+
+
 > ---
->   hw/s390x/sclpcpi.c | 27 +++++++++++++++++++++++++++
->   1 file changed, 27 insertions(+)
+>   tests/qtest/bios-tables-test.c            |  22 ++++++++++++++++++++++
+>   tests/data/acpi/aarch64/virt/APIC.its_off | Bin 0 -> 184 bytes
+>   tests/data/acpi/aarch64/virt/FACP.its_off | Bin 0 -> 276 bytes
+>   tests/data/acpi/aarch64/virt/IORT.its_off | Bin 0 -> 236 bytes
+>   4 files changed, 22 insertions(+)
+>   create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
+>   create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
+>   create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
 > 
-> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-> index 969c15e43d..0b1b5293ea 100644
-> --- a/hw/s390x/sclpcpi.c
-> +++ b/hw/s390x/sclpcpi.c
-> @@ -62,6 +62,7 @@
->   #include "hw/s390x/event-facility.h"
->   #include "hw/s390x/ebcdic.h"
->   #include "qapi/qapi-visit-machine.h"
-> +#include "migration/vmstate.h"
->   
->   typedef struct Data {
->       uint8_t id_format;
-> @@ -133,12 +134,38 @@ static void get_control_program_id(Object *obj, Visitor *v,
->       visit_type_S390ControlProgramId(v, name, &cpi, errp);
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> index 0a333ec4353..55366bf4956 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -2146,6 +2146,26 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+>       free_test_data(&data);
 >   }
 >   
-> +static const VMStateDescription vmstate_control_program_id = {
-> +    .name = "s390_control_program_id",
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-
-Nit: As long as it is 0, I think you could simply omit the 
-minimum_version_id field here.
-
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT8_ARRAY(system_type, ControlProgramId, 8),
-> +        VMSTATE_UINT8_ARRAY(system_name, ControlProgramId, 8),
-> +        VMSTATE_UINT64(system_level, ControlProgramId),
-> +        VMSTATE_UINT8_ARRAY(sysplex_name, ControlProgramId, 8),
-> +        VMSTATE_UINT64(timestamp, ControlProgramId),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
+> +static void test_acpi_aarch64_virt_tcg_its_off(void)
+> +{
+> +    test_data data = {
+> +        .machine = "virt",
+> +        .arch = "aarch64",
+> +        .variant = ".its_off",
+> +        .tcg_only = true,
+> +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+> +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
+> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+> +        .ram_start = 0x40000000ULL,
+> +        .scan_len = 128ULL * 1024 * 1024,
+> +    };
 > +
-> +static const VMStateDescription vmstate_sclpcpi = {
-> +    .name = "s390_sclpcpi",
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
+> +    test_acpi_one("-cpu cortex-a57 "
+> +                  "-M virtualization=on,secure=off "
+> +                  "-M gic-version=max,its=off,iommu=smmuv3", &data);
+> +    free_test_data(&data);
+> +}
+> +
+>   static void test_acpi_q35_viot(void)
+>   {
+>       test_data data = {
+> @@ -2577,6 +2597,8 @@ int main(int argc, char *argv[])
+>                              test_acpi_aarch64_virt_tcg_acpi_hmat);
+>               qtest_add_func("acpi/virt/topology",
+>                              test_acpi_aarch64_virt_tcg_topology);
+> +            qtest_add_func("acpi/virt/its_off",
+> +                           test_acpi_aarch64_virt_tcg_its_off);
+>               qtest_add_func("acpi/virt/numamem",
+>                              test_acpi_aarch64_virt_tcg_numamem);
+>               qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
+> diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/acpi/aarch64/virt/APIC.its_off
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..c37d05d6e05805304f10afe73eb7cb9100fcccfa
+> GIT binary patch
+> literal 184
+> zcmZ<^@O0k6z`($=+{xeBBUr&HBEVSz2pEB4AU24G0Uik$i-7~iVgWL^17JJ`2AFzr
+> bgb+@aBn}xq0gwb2)Q)cq{30-g9B_L93G4|0
+> 
+> literal 0
+> HcmV?d00001
+> 
+> diff --git a/tests/data/acpi/aarch64/virt/FACP.its_off b/tests/data/acpi/aarch64/virt/FACP.its_off
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..606dac3fe4b55c31fd68b25d3a4127eeef227434
+> GIT binary patch
+> literal 276
+> zcmZ>BbPf<<WME(uaq@Te2v%^42yj*a0-z8Bhz+8t3j|P&V`N}P6&N^PpsQ~v$aVnZ
+> CVg~^L
+> 
+> literal 0
+> HcmV?d00001
+> 
+> diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/acpi/aarch64/virt/IORT.its_off
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..0fceb820d509e852ca0849baf568a8e93e426738
+> GIT binary patch
+> literal 236
+> zcmebD4+?q1z`(#9?&R<65v<@85#X!<1dKp25F11@1F-=RgMkDCNC*yK9F_<M77!bR
+> zUBI%eoFED&4;F$FSwK1)h;xBB2Py`m{{M%tVD>TjFfcO#g+N#Zh@s|zoCF3AP#UU@
+> R!2`+%Dg6Hr$N|zYvjDIZ5CH%H
+> 
+> literal 0
+> HcmV?d00001
+> 
 
-dito
+I think the prescription for the acrobatics to update the ACPI expected
+tables says the blobs here should be empty (blob files are added empty)
+and at the same time they are listed in tests/qtest/bios-tables-test-allowed-diff.h:
 
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_STRUCT(cpi, SCLPEvent, 0, vmstate_control_program_id,
-> +                       ControlProgramId),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-  Thomas
+  * 1. add empty files for new tables, if any, under tests/data/acpi
+  * 2. list any changed files in tests/qtest/bios-tables-test-allowed-diff.h
+  * 3. commit the above *before* making changes that affect the tables
 
+(from tests/qtest/bios-tables-test.c header)
+
+If that's correct, this patch should be merged with the following one (2/5) and
+IORT.its_off and FACP.its_off should also be listed in
+tests/qtest/bios-tables-test-allowed-diff.h so the empty blobs won't trigger
+a test failure.
+
+Then patch 5/5 should add the expected/updated blobs and drop the *.its_off from
+bios-tables-test-allowed-diff.h. Patches 3/5 and 4/5 are sandwiched
+between (1/5 + 2/5) and (5/5).
+
+At least that's what I get from:
+
+  * The resulting patchset/pull request then looks like this:
+  * - patch 1: list changed files in tests/qtest/bios-tables-test-allowed-diff.h.
+  * - patches 2 - n: real changes, may contain multiple patches.
+  * - patch n + 1: update golden master binaries and empty tests/qtest/bios-tables-test-allowed-diff.h
+
+Otherwise the change looks good.
+
+
+Cheers,
+Gustavo
 
