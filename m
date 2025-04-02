@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A347EC28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 13:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F45C3601A
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 13:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzxzQ-00047j-VT; Wed, 02 Apr 2025 09:18:45 -0400
+	id 1tzy1T-0004v9-Qx; Wed, 02 Apr 2025 09:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tzxzG-00046n-RE; Wed, 02 Apr 2025 09:18:35 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1tzxzF-0000fl-3L; Wed, 02 Apr 2025 09:18:34 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-ac2a81e41e3so1322052066b.1; 
- Wed, 02 Apr 2025 06:18:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743599910; x=1744204710; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PniuRpRB3lsKZaqg5iyLGjNtbCDutpffIWPoRHHmSzQ=;
- b=D/A9grjMsQzuEYGiu0lCoIOgTtRkNp2HKbxQkVzKWnq9VxWEd1fqYLuSmJ/Zv37+fz
- zFgQXIjkRdveM0cn23PThCtgbx+5mgupQXlNK9mwPSXQ8hEXo7h+mweFljAm9XuMwXMh
- F1+vlpSjYTjsIJYp21tY4lttYuwars0GNUCHYxqisfw+oRtk/YZe2nlyGHnQIqOOTQVb
- 2WvsG3E+LrLKRG1+TTK5Gl2+VliWZp05lUk5vPQRUnWRX9kY1m1w3hjYFgDlNcpeIG7K
- LTMq5XmmJNPmVswscL3mc5vZiDWLqc93XUfShxqTcSECkzCrFyszwbPWs4sa3pgPIVi5
- CJdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743599910; x=1744204710;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PniuRpRB3lsKZaqg5iyLGjNtbCDutpffIWPoRHHmSzQ=;
- b=pSegeLRcaYVDccKx494JNCCQ6FJAL1mf/WzWYDCWbSmrXXelO3ZyLFzxTatLsa6tGv
- FSb5/aUljn1xAIfJQyoKpaXgUkzZWOpw7NHZp4VqViRDLXc9IJ4WjOguY+h9LusLBXYO
- sXIHJEmnVJgEXuci64F3t5Er+TXBX7VQs+XAUyh/m1ReODRp91vLl8Zp5EcUeL4eOq4J
- 61q5CtywKA5AQkxEj5se+dEAFyG7HJ4DxFDeNmOpIMyaAcqg12I/kfkXOZr9QL3QFgX4
- DOGPOHMVH2bJK9NoglNHKexsIeFamyJAO6Pu7JakVXKttYl8MBnVcHenLHo/50/1OX4/
- ANXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWX79zyGzaRj0aYZbKAyJOPj+z0ET+Uas6+m049dRcDDXDZoQVOQ6l7auPxxxZ5yrp43yn61qGe97Y=@nongnu.org
-X-Gm-Message-State: AOJu0Yz1zxiZQEr3IAQ9vWOVUbH01kcVoxYM2IF3RL2BMhDptyX2gKqS
- +rJ0ZFMX7DseQ/IVgmKrvdExw0Bhkxtkml09ajDRceHBcLCcYxq6
-X-Gm-Gg: ASbGncvZ8Gedg+X69Lt0iGGL1MF8MQGT5B3c7M41Szt1dEK/0nRpPlTg1UesB6DNp1b
- Nzcz+RWTqbOiFc/c/Jl5A87VVn46hl3y9qtt4gy0UFxZVWbwOQibIXr7lEuVMJloebYEnruhWF5
- s8c2UTmui+zcWuK6bybeLOP2PDB1ppS+6H7sQz3D+iGUbZcX4ec+wPji0a0HvgB9Ceex4AO20zn
- OUXRTEUa8+nMdG2dE42D5edOdASOWoGJxioF4SMkkBp+kHs4WgIPE/0u8IHVNjVWrFQSSqNgDL9
- dwlrSXd1mSQXbKGrs/WR9DzRhNOnW3m3KmqmAAkyp8KE947TaIg=
-X-Google-Smtp-Source: AGHT+IGIWodzYrySrwCCxpJeovrU3XZFGledIeLz7tiu+4DPV7qJP5b5DURRll49gaQXY6Fi2p8Cxg==
-X-Received: by 2002:a17:906:c109:b0:ac2:d6d1:fe65 with SMTP id
- a640c23a62f3a-ac7a1a45387mr191439466b.41.1743599909907; 
- Wed, 02 Apr 2025 06:18:29 -0700 (PDT)
-Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac71967fc5fsm923701666b.141.2025.04.02.06.18.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 06:18:29 -0700 (PDT)
-Date: Wed, 02 Apr 2025 09:33:16 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-CC: qemu-devel@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-rust@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 2/2] rust/hw/char/pl011/src/device: Implement logging
-In-Reply-To: <Z-pdzUBa4CrBourR@redhat.com>
-References: <20250330205857.1615-1-shentey@gmail.com>
- <20250330205857.1615-3-shentey@gmail.com> <Z-pdzUBa4CrBourR@redhat.com>
-Message-ID: <318E2A13-A163-434B-B18A-8A260CD3BC27@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzy1Q-0004uS-7H
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 09:20:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzy1O-0001KY-FF
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 09:20:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743600044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wrbYu/6m/yQgT/rLDPyd9sxal+2ETNvihbenNPduwHE=;
+ b=cd+SPQvm/EezBN0mTNi1G/0RSnQM5ebV9NdHpPAB3asls6lNtw9osfv+3MxYsoATXFMZpe
+ 9fNLEoaDQ8MBCosyi0qj2emS9n7OVqvEFTKO0jmGJc5oFF49Vr4vgmSWs8qCtwd6jMxqJo
+ lZt6qTMXVjy+OjvfHzXQdHcxfl/+BNI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-zcSQpY5APyuxlZOnJuv-CQ-1; Wed,
+ 02 Apr 2025 09:20:41 -0400
+X-MC-Unique: zcSQpY5APyuxlZOnJuv-CQ-1
+X-Mimecast-MFC-AGG-ID: zcSQpY5APyuxlZOnJuv-CQ_1743600040
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A84D1956048; Wed,  2 Apr 2025 13:20:40 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DBE919560AD; Wed,  2 Apr 2025 13:20:39 +0000 (UTC)
+Date: Wed, 2 Apr 2025 09:20:33 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 14/15] fuse: Implement multi-threading
+Message-ID: <20250402132033.GA304512@fedora>
+References: <20250325160529.117543-1-hreitz@redhat.com>
+ <20250325160655.119407-13-hreitz@redhat.com>
+ <20250327155557.GN37458@fedora>
+ <hd3fxmjcwp5nvaqtv6sgxftkmlvvrobgvyd5w25jlklimjvdja@gboyi4q4ggks>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="PB4aLiG9iaEv2z2s"
+Content-Disposition: inline
+In-Reply-To: <hd3fxmjcwp5nvaqtv6sgxftkmlvvrobgvyd5w25jlklimjvdja@gboyi4q4ggks>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,99 +89,92 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--PB4aLiG9iaEv2z2s
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Am 31=2E M=C3=A4rz 2025 09:18:05 UTC schrieb "Daniel P=2E Berrang=C3=A9" <=
-berrange@redhat=2Ecom>:
->On Sun, Mar 30, 2025 at 10:58:57PM +0200, Bernhard Beschow wrote:
->> Now that there is logging support in Rust for QEMU, use it in the pl011=
- device=2E
->>=20
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>  rust/hw/char/pl011/src/device=2Ers | 12 ++++++++----
->>  1 file changed, 8 insertions(+), 4 deletions(-)
->>=20
->> diff --git a/rust/hw/char/pl011/src/device=2Ers b/rust/hw/char/pl011/sr=
-c/device=2Ers
->> index bf88e0b00a=2E=2Ed5470fae11 100644
->> --- a/rust/hw/char/pl011/src/device=2Ers
->> +++ b/rust/hw/char/pl011/src/device=2Ers
->> @@ -8,9 +8,11 @@
->>      chardev::{CharBackend, Chardev, Event},
->>      impl_vmstate_forward,
->>      irq::{IRQState, InterruptSource},
->> +    log::{LOG_GUEST_ERROR, LOG_UNIMP},
->>      memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBui=
-lder},
->>      prelude::*,
->>      qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, Reset=
-Type, ResettablePhasesImpl},
->> +    qemu_log_mask,
->>      qom::{ObjectImpl, Owned, ParentField},
->>      static_assert,
->>      sysbus::{SysBusDevice, SysBusDeviceImpl},
->> @@ -298,8 +300,7 @@ pub(self) fn write(
->>              DMACR =3D> {
->>                  self=2Edmacr =3D value;
->>                  if value & 3 > 0 {
->> -                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implem=
-ented\n");
->> -                    eprintln!("pl011: DMA not implemented");
->> +                    qemu_log_mask!(LOG_UNIMP, "pl011: DMA not implemen=
-ted\n");
->>                  }
->>              }
->>          }
->> @@ -535,7 +536,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
->>                  u64::from(device_id[(offset - 0xfe0) >> 2])
->>              }
->>              Err(_) =3D> {
->> -                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad off=
-set 0x%x\n", (int)offset);
->> +                qemu_log_mask!(LOG_GUEST_ERROR, "pl011_read: Bad offse=
-t {offset}\n");
->>                  0
->>              }
->>              Ok(field) =3D> {
->> @@ -567,7 +568,10 @@ fn write(&self, offset: hwaddr, value: u64, _size:=
- u32) {
->>                  =2Eborrow_mut()
->>                  =2Ewrite(field, value as u32, &self=2Echar_backend);
->>          } else {
->> -            eprintln!("write bad offset {offset} value {value}");
->> +            qemu_log_mask!(
->> +                LOG_GUEST_ERROR,
->> +                "pl011_write: Bad offset {offset} value {value}\n"
->> +            );
->>          }
->
->General conceptual question =2E=2E=2E=2E=2E  I've never understood what t=
-he dividing
->line is between use of 'qemu_log_mask' and trace points=2E
+On Tue, Apr 01, 2025 at 03:36:40PM -0500, Eric Blake wrote:
+> On Thu, Mar 27, 2025 at 11:55:57AM -0400, Stefan Hajnoczi wrote:
+> > On Tue, Mar 25, 2025 at 05:06:54PM +0100, Hanna Czenczek wrote:
+> > > FUSE allows creating multiple request queues by "cloning" /dev/fuse F=
+Ds
+> > > (via open("/dev/fuse") + ioctl(FUSE_DEV_IOC_CLONE)).
+> > >=20
+> > > We can use this to implement multi-threading.
+> > >=20
+> > > Note that the interface presented here differs from the multi-queue
+> > > interface of virtio-blk: The latter maps virtqueues to iothreads, whi=
+ch
+> > > allows processing multiple virtqueues in a single iothread.  The
+> > > equivalent (processing multiple FDs in a single iothread) would not m=
+ake
+> > > sense for FUSE because those FDs are used in a round-robin fashion by
+> > > the FUSE kernel driver.  Putting two of them into a single iothread w=
+ill
+> > > just create a bottleneck.
+> >=20
+> > This text might be outdated. virtio-blk's new iothread-vq-mapping
+> > parameter provides the "array of iothreads" mentioned below and a way to
+> > assign virtqueues to those IOThreads.
+> >=20
+>=20
+> > > +++ b/qapi/block-export.json
+> > > @@ -179,12 +179,18 @@
+> > >  #     mount the export with allow_other, and if that fails, try again
+> > >  #     without.  (since 6.1; default: auto)
+> > >  #
+> > > +# @iothreads: Enables multi-threading: Handle requests in each of the
+> > > +#     given iothreads (instead of the block device's iothread, or the
+> > > +#     export's "main" iothread).  For this, the FUSE FD is duplicate=
+d so
+> > > +#     there is one FD per iothread.  (since 10.1)
+> >=20
+> > This option isn't FUSE-specific but FUSE is the first export type to
+> > support it. Please add it to BlockExportOptions instead and refuse
+> > export creation when the export type only supports 1 IOThread.
+> >=20
+> > Eric: Are you interested in implementing support for multiple IOThreads
+> > in the NBD export? I remember some time ago we talked about NBD
+> > multi-conn support, although maybe that was for the client rather than
+> > the server.
+>=20
+> The NBD server already supports clients that make requests through
+> multiple TCP sockets, but right now, that server is not taking
+> advantage of iothreads to spread the TCP load.
+>=20
+> And yes, I am in the middle of working on adding client NBD multi-conn
+> support (reviving Rich Jones' preliminary patches on what it would
+> take to have qemu open parallel TCP sockets to a supporting NBD
+> server), which also will use a round-robin approach (but here, the
+> round-robin is something we would code up in qemu, rather than the
+> behavior handed to us by the FUSE kernel layer).  Pinning specific
+> iothreads to a specific TCP socket may or may not make sense, but I
+> definitely want to have support for handing a pool of iothreads to an
+> NBD client that will be using multi-conn.
 
-I *think* it's the perspective: If you want to see any issues, regardless =
-of which device, use the -l option, i=2Ee=2E qemu_log_mask()=2E If, however=
-, you want to see what a particular device does, use tracepoints=2E
+Here I'm asking Hanna to make the "iothreads" export parameter generic
+for all export types (not just for FUSE). Do you think that the NBD
+export will be able to use the generic parameter or would you prefer an
+NBD-specific export parameter?
 
->The latter can be
->optionally built to feed into qemu log, as well as the other dynamic trac=
-e
->backends=2E
+Stefan
 
-The use of qemu_log() in qemu_log_mask() seems like an implementation deta=
-il to me=2E Theoretically, qemu_log_mask() could use a different backend if=
- this got implemented, and wouldn't require code changes throughout QEMU=2E
+--PB4aLiG9iaEv2z2s
+Content-Type: application/pgp-signature; name=signature.asc
 
-Best regards,
-Bernhard
+-----BEGIN PGP SIGNATURE-----
 
->
->Is there a compelling reason to use 'qemu_log', that isn't acceptable for
->trace probe points ?
->
->This is an indirect way of asking whether qemu_log_mask should be exposed
->to rust, or would exposing tracing be sufficient ?
->
->With regards,
->Daniel
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmftOaEACgkQnKSrs4Gr
+c8imzggAx3c2cHttyuLEfmFhCLEPIkGNRltURb7pUOYduk7iI8zpqh3UlpM5Axu0
+xjHh5pgv+pcqxG9+hQF/1zKhZzYL17I2TUAiqtDQ/zFQk3wyYrclHnEJk+Pe56qC
+pZ/dOkWamEUH97WY+pXhej3u02IVJ7ZO+g0GW5KLynAdwgPKfSrAEcmmWuF/7aaV
+FGMT0ParZ+ctVkcaf5BHsJjwywnfU5oZCuUC1oA0jcgFQUqybHYBhGq5AFQRgAjS
+q6XznI5i+4+HD1d0SgcmEJcQ9aT48UfEo/3mIMYsfySYKaEsMc9WTSna+1ebqU7h
+zuTvYiDAxjfStYRBlKYW/LlLVAEx2A==
+=tqDk
+-----END PGP SIGNATURE-----
+
+--PB4aLiG9iaEv2z2s--
+
 
