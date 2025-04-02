@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9D54C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 03:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CDFC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 04:07:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzp7R-0004Hp-Rg; Tue, 01 Apr 2025 23:50:26 -0400
+	id 1tzpN5-0006X4-B4; Wed, 02 Apr 2025 00:06:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzp7P-0004Hd-PH
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 23:50:24 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzpMx-0006WY-II
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 00:06:29 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzp7N-0000OD-KX
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 23:50:23 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cfecdd8b2so48972775e9.2
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 20:50:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzpMt-0006rp-K6
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 00:06:26 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so2073825e9.0
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 21:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743565819; x=1744170619; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1743566781; x=1744171581; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cLOfLQRoHi6vDjUliJwHTmYl3A0je/AL5pPCYQgwYe0=;
- b=OEZ0FDB97hEvWnf+vL+HwsBoivbmpjR60a8LaCAae4xec6yacS8LrEm2Gtau6B8nCY
- Lh60dndk+AkCoKCyj041DlxTplWsXA8vfEsMxR/XhYWquk02O9xhNUStEsNmxJvu7ESA
- ebJGNgJMj1X0U3MKmsHrwnZH8CrLW6rSatA+4rf7c5bKmFz/U0xgsD6P4byy2Vos7179
- ngmQ7K9i6ZZeskhJF+VOJhTT1bus2WAiwE2lz1RsjefGArmtl02PsdJ4gefVMku1IRRR
- /EIn8CNRpbf6u5CBHd/k2ZqqL9GxThXvdi7NTiIgAll528GQbnYjqBVyexXQyfIYifXR
- y0sw==
+ bh=0dcLhlw2Az8zls6DdVR5sQAQf1Ur0qS0XvZZXBd8Wd8=;
+ b=N81Jb/frvgWsmwctxrFh/7k5ddajPHY/Sgm0BCeoiiNxvOiZp4Jaxfq836GhZOvLCO
+ x6JAhetmYxSDyWdsxMIEVJKyo/1FrQaHq+BN9eTQkr04gEiEAkVLb+EzM6TCPdkisL13
+ Polk1bwB05ohyWv0l+zMsKg6wHUt/bsr+KkfeotjlccogX+UQaFb6IHA2YthDyQ3rcVc
+ K+R6C15h2wRI64TrlwxhlPNUXd1PnTD+JEos4tOvyA8plRLaeXma7vRCPt9ZZaArANVS
+ 1C43PRx3REsBx2JE/WYeMztmEX7XU/FGPvDXQB5nSJ2u7Sv+kkUYtvizWRkUI7FSU7rI
+ yqJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743565819; x=1744170619;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743566781; x=1744171581;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cLOfLQRoHi6vDjUliJwHTmYl3A0je/AL5pPCYQgwYe0=;
- b=WX1PBklWf2RwhSBbGGe7tj0MyO7/XMJUOjTOhM7rgOwrbpKyhEjDblcC5fuCjuxp3X
- /4N6rYQZClytxdqJQ2SHXwrotVsX+yR+q/NMhsc0Iz+e5+3eTcHV20Cay9nzlr52H7wJ
- cRqVJfEreYRo6admzDiJ9ZdUs5yCxd6gOzW/LvRvBwpnmob0UTPNo8uVjcCV6uh6bdtp
- R/MGqoSStVNVTJWZqGRiM03ZdkZLlsC9fNSEsol7gxBxwq/9hCqA5stpd8Pwh19Zj3iC
- g4IsRPMWxt0ldspwbDLGyXcDuo1ImMRZVbI50QfVIcx/AbbTz16Vrn/xJJ/VrY90YBm3
- YoIA==
-X-Gm-Message-State: AOJu0Yx8LA7WbEiQkxwJFQiP1qX7hDvv/nJtvxvEh13oSC+FTEq2kGvY
- wQJaBoQgZ04zqCYvoWhh+jQqLswLyhKEezmmlkZ8+7fzbkRrZ5GD+/CawGJIbml8phm3wQKzixb
- /
-X-Gm-Gg: ASbGncseagePHmeBHMiTW/7K5Hydb4TATX5+ADi83ZlI1qiRIUWnLHaATw0Mmj5t4Ay
- 787dmxIROrzLSnYfUOo0lEaB6+CaHn3NRKa4SYKZUhRYctv/hCcs4iRwaF+5mCSc1dLFU0qIW28
- Z8SuzPCMd72fMp04Wrwt1VMw8IWtLFmll8IUOsljwgV0HdxigH1ojA80CjP3i7mylL27zcGzDTe
- w48dyIB3W39VSaWtEbcGE2UmEAlIcYUHAYz8E4DI4wXryyN3nk0cE8rz9G7zNfZXX9RC5V3XOk8
- 2Tdo3HNhm9+mcXoLDMCMAdcogCuZn+enoHtyU+OrJ7AGIce6P/GgyAJpbfRQDGzDPMTPF0H8bJL
- b/cYWkSfxJ69G
-X-Google-Smtp-Source: AGHT+IH8m2Y1ybXUp+14HcSs2CBqLseTIiM2nStlewzF36/iX9Rpjj6lpQQyBWSvOL1vVlKBNTiKLQ==
-X-Received: by 2002:a05:600c:45c7:b0:43c:fb95:c76f with SMTP id
- 5b1f17b1804b1-43db62264c7mr146896135e9.9.1743565819013; 
- Tue, 01 Apr 2025 20:50:19 -0700 (PDT)
+ bh=0dcLhlw2Az8zls6DdVR5sQAQf1Ur0qS0XvZZXBd8Wd8=;
+ b=Js8p4y3EfRv8Gwd4lqlKKjXyrPxxwK27dvz4TlU7sM6DU1Z9VN3PMryRsQ+kDg1Tju
+ RwbWCdPAoIRm8RT1+oCyDH3/ZdpL+cAoz/5YBbeB608xDzNIc7NU5IoRni+yeq/acgRZ
+ GuMFSxT0Rrw8iEJQ9Fdd91zeVK4yBWY9FawvhhgHO3fZ7E/+CdBex6hzaR9TVmVREQT1
+ eKYse17NBYk+8pT+Zj7SEbsPSTL62Rl4tF1N9BsYjKBVu/fYjy+6Vsp2YyI6yCqD7EPg
+ qsnPm4yCzA2/fKoOYoisEyN0ngGYMslju3mwd8vfwJWdkjL6d0l4L2+NI3Cqo/Gtn5Zw
+ ujtg==
+X-Gm-Message-State: AOJu0YytZNePhJdToD4fje63BX/HoxkxV7kEvQEltldsyS8QqMqwSlmj
+ I91q11WhXaxg12rlJOFTaGclJiav2sLF0srH7/OE6mc7PlLpvs7TxHK4auqJLxzOCr8IjR9ssHF
+ n
+X-Gm-Gg: ASbGnctwWH7k+KVhRgiOYptys4VLYL2jCj3IDLpaxO/SqWjSiCQ0awJ4GI6jrwjhoxp
+ MNb048GxydHtwXlB+33mitH5UEEvuBhKD1YWCXVElvPnqdGqgrppWKr/u9cNjktoZ4jO/FMNySw
+ FDQs81scHspiVS8VX+IUe6PN9HvLvmE1TiS+/WFr3tyWOeyIiGx8afSGl49E2nUD7HEbQuIuLQX
+ +AUbIcgtpPPZjP3DGIq51HB6W97+9rTYc+yhy7pcg5rzy5kwV3UzzzSV+UtTXo6xzkyPSKHHuvf
+ ScsRR/aOVx1idRM7upq9ZuAiy1VFFqf16XAbALmVw2SPslFlBjYmr1nkUpIwAI4Qc1agEpY2I4M
+ EfyifDVnG3gX4D9H5WUumsuQ=
+X-Google-Smtp-Source: AGHT+IE8hVfxApRLPh3TmGhqw2QtQfLdKwA5JHtgCYuBZ5C4PW702a2q2r31JhB9vbG9jlEfq/gsKA==
+X-Received: by 2002:a05:600c:350f:b0:439:9737:675b with SMTP id
+ 5b1f17b1804b1-43eb7191d78mr2785595e9.7.1743566781267; 
+ Tue, 01 Apr 2025 21:06:21 -0700 (PDT)
 Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b66363fsm16294530f8f.36.2025.04.01.20.50.17
+ 5b1f17b1804b1-43eb6190bb9sm7828315e9.29.2025.04.01.21.06.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 20:50:18 -0700 (PDT)
-Message-ID: <03556e83-472c-4ac1-910d-bff29fa3ba58@linaro.org>
-Date: Wed, 2 Apr 2025 05:50:17 +0200
+ Tue, 01 Apr 2025 21:06:20 -0700 (PDT)
+Message-ID: <6ea2ab5a-47fd-45d3-85c9-36a8ac3c8b18@linaro.org>
+Date: Wed, 2 Apr 2025 06:06:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 23/24] hw/core/cpu: Remove CPUClass::mmu_index()
-To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250401080938.32278-1-philmd@linaro.org>
- <20250401080938.32278-24-philmd@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH 05/18] target/arm: Move CPU QOM type definitions to
+ "hw/arm/cpu.h"
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250401080938.32278-24-philmd@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20230110164406.94366-1-philmd@linaro.org>
+ <20230110164406.94366-6-philmd@linaro.org>
+ <325310d0-aad6-fc39-748a-80762d644dd8@linaro.org>
+ <b91019e8-1a75-d968-c842-1d040b32a431@linaro.org>
+Content-Language: en-US
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <b91019e8-1a75-d968-c842-1d040b32a431@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,66 +105,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/4/25 10:09, Philippe Mathieu-Daudé wrote:
-> All targets have been converted to TCGCPUOps::mmu_index(),
-> remove the now unused CPUClass::mmu_index().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/cpu-mmu-index.h | 4 +---
->   include/hw/core/cpu.h        | 2 --
->   2 files changed, 1 insertion(+), 5 deletions(-)
-> 
-> diff --git a/include/exec/cpu-mmu-index.h b/include/exec/cpu-mmu-index.h
-> index 651526e9f97..a87b6f7c4b7 100644
-> --- a/include/exec/cpu-mmu-index.h
-> +++ b/include/exec/cpu-mmu-index.h
-> @@ -32,9 +32,7 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
->   # endif
->   #endif
->   
-> -    const TCGCPUOps *tcg_ops = cs->cc->tcg_ops;
-> -    int ret = tcg_ops->mmu_index ? tcg_ops->mmu_index(cs, ifetch)
-> -                                 : cs->cc->mmu_index(cs, ifetch);
-> +    int ret = cs->cc->tcg_ops->mmu_index(cs, ifetch);
->       tcg_debug_assert(ret >= 0 && ret < NB_MMU_MODES);
->       return ret;
->   }
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 60b7abaf49b..10b6b25b344 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -104,7 +104,6 @@ struct SysemuCPUOps;
->    *                 instantiatable CPU type.
->    * @parse_features: Callback to parse command line arguments.
->    * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
-> - * @mmu_index: Callback for choosing softmmu mmu index.
->    * @memory_rw_debug: Callback for GDB memory access.
->    * @dump_state: Callback for dumping state.
->    * @query_cpu_fast:
-> @@ -151,7 +150,6 @@ struct CPUClass {
->       ObjectClass *(*class_by_name)(const char *cpu_model);
->       void (*parse_features)(const char *typename, char *str, Error **errp);
->   
-> -    int (*mmu_index)(CPUState *cpu, bool ifetch);
->       int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
->                              uint8_t *buf, size_t len, bool is_write);
->       void (*dump_state)(CPUState *cpu, FILE *, int flags);
+Cc'ing Pierrick
 
-And I'll squash:
+On 12/1/23 08:17, Philippe Mathieu-Daudé wrote:
+> On 11/1/23 21:02, Richard Henderson wrote:
+>> On 1/10/23 08:43, Philippe Mathieu-Daudé wrote:
+>>> +++ b/target/arm/cpu.h
+>>> @@ -26,6 +26,7 @@
+>>>   #include "cpu-qom.h"
+>>>   #include "exec/cpu-defs.h"
+>>>   #include "qapi/qapi-types-common.h"
+>>> +#include "hw/arm/cpu.h"
+>>
+>> I'm not a fan of this.
+>>
+>> If you want a smaller version of cpu-qom.h here in target/arm/, for 
+>> use by hw/, that's one thing.  But target/ should not be reaching back 
+>> into hw/, IMO.
+> 
+> I concur, but currently we have:
+> 
+> $ git grep '#include "hw' target | wc -l
+>       220
+> 
+> $ git grep -h '#include "hw' target | sort | uniq -c
+>     1 #include "hw/acpi/acpi.h"
+>     1 #include "hw/acpi/ghes.h"
+>     1 #include "hw/arm/boot.h"
+>     1 #include "hw/arm/virt.h"
+>    19 #include "hw/boards.h"
+>     2 #include "hw/clock.h"
+>     3 #include "hw/core/accel-cpu.h"
+>    24 #include "hw/core/cpu.h"
+>    20 #include "hw/core/sysemu-cpu-ops.h"
+>    24 #include "hw/core/tcg-cpu-ops.h"
+>     1 #include "hw/hppa/hppa_hardware.h"
+>     3 #include "hw/hw.h"
+>     1 #include "hw/hyperv/hyperv-proto.h"
+>     2 #include "hw/hyperv/hyperv.h"
+>     2 #include "hw/i386/apic-msidef.h"
+>     2 #include "hw/i386/apic.h"
+>     8 #include "hw/i386/apic_internal.h"
+>     1 #include "hw/i386/e820_memory_layout.h"
+>     1 #include "hw/i386/intel_iommu.h"
+>     1 #include "hw/i386/ioapic.h"
+>     2 #include "hw/i386/pc.h"
+>     1 #include "hw/i386/sgx-epc.h"
+>     1 #include "hw/i386/topology.h"
+>     1 #include "hw/i386/x86-iommu.h"
+>     2 #include "hw/i386/x86.h"
+>     1 #include "hw/intc/riscv_aclint.h"
+>     8 #include "hw/irq.h"
+>     1 #include "hw/isa/isa.h"
+>     5 #include "hw/loader.h"
+>     1 #include "hw/loongarch/virt.h"
+>     2 #include "hw/mips/cpudevs.h"
+>     2 #include "hw/pci/msi.h"
+>     1 #include "hw/pci/msix.h"
+>     3 #include "hw/pci/pci.h"
+>     1 #include "hw/ppc/openpic_kvm.h"
+>     5 #include "hw/ppc/ppc.h"
+>     2 #include "hw/ppc/spapr.h"
+>     1 #include "hw/ppc/spapr_cpu_core.h"
+>     2 #include "hw/qdev-clock.h"
+>    12 #include "hw/qdev-properties.h"
+>    11 #include "hw/registerfields.h"
+>     2 #include "hw/s390x/ebcdic.h"
+>     5 #include "hw/s390x/ioinst.h"
+>     2 #include "hw/s390x/ipl.h"
+>     8 #include "hw/s390x/pv.h"
+>     2 #include "hw/s390x/s390-pci-bus.h"
+>     2 #include "hw/s390x/s390-pci-inst.h"
+>     2 #include "hw/s390x/s390-virtio-ccw.h"
+>     2 #include "hw/s390x/s390-virtio-hcall.h"
+>     3 #include "hw/s390x/s390_flic.h"
+>     1 #include "hw/s390x/sclp.h"
+>     2 #include "hw/s390x/storage-keys.h"
+>     1 #include "hw/s390x/tod.h"
+>     1 #include "hw/sh4/sh_intc.h"
+>     2 #include "hw/sysbus.h"
+>     1 #include "hw/watchdog/wdt_diag288.h"
+>     1 #include "hw/xtensa/xtensa-isa.h"
+> 
+> Assuming we want to have a self-contained libtarget$arch, how can we
+> deal with HW tied to the arch such CPU timers or NVIC?
 
--- >8 --
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 8057a5a0ce8..b00f046b29f 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -1077,6 +1077,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-          assert(tcg_ops->cpu_exec_interrupt);
-  #endif /* !CONFIG_USER_ONLY */
-          assert(tcg_ops->translate_code);
-+        assert(tcg_ops->mmu_index);
-          tcg_ops->initialize();
-          tcg_target_initialized = true;
-      }
----
 
