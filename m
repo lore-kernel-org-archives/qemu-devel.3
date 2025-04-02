@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A140C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 18:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E81BC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 18:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u02Yr-0003N8-PY; Wed, 02 Apr 2025 14:11:38 -0400
+	id 1u02ty-0006sI-04; Wed, 02 Apr 2025 14:33:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u02Yg-0003M4-Ov
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 14:11:28 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1u02tv-0006s1-9z
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 14:33:23 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u02Yd-0002Om-Cu
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 14:11:25 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-226185948ffso1561345ad.0
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 11:11:22 -0700 (PDT)
+ id 1u02tt-00025C-EH
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 14:33:23 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso1483575ad.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 11:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743617481; x=1744222281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743618799; x=1744223599; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Qfgdw4kaeGTPriUB8nti+BFMqadk8NUrM4ya7NdN4SI=;
- b=yPx+a5RaOVa55hhFmbkmjogKOEnRxl3Gt8oWMkYdhd13hYoLjKT+VhvwMYYWEnBQrs
- r9B9u/5GSjlz6S6WzoR9NR6RW69V1WL2+2sMc+Smwd+9lKSJbutLNMM2Cyigdl/0CzN3
- sbepx5b9upkNm5yhvBYhR6q9UXcco6/j3j7+u3QubR3lFJpppq367xgq0SPef7FPRZyy
- JRyJl37vvhQE2ZHMKu114U13k8QYjGqvgGIG8szN3ExgAXUECgMD9gaeRKL7sLwQ1/6q
- VTmLm71UibjCtN/S/WhUTa6Aqap9wt8Vb7F+NSIdRTvInvquKpQrJ2VeZtWahOx0ag7I
- 6coQ==
+ bh=ECUTKnZAfuBkcvEoF+NZCdNB5CHjfGag8e8Z5V7vu2w=;
+ b=SdgyZoWL2okzigpIDaPMKsLF257O4xuPLj+2L5i4dBn75C5k0hsKGA1HLi5AByRBV4
+ XQuwLCCOvdgl1ifKhREpTchloE6VOGTtBQQydlkBtB3dxYIZ/FSaEieIqvhhss/PawTp
+ M63FgPSsehw/H0bFn1eGYBxWG7pyiiUx+X7ouTjhzhmiumBjbIpGHqrkjDBYqjYMw3MA
+ eKW9kzSzfcqTF6giFvTaZA65pHBoD2aW84VZPZss3DPNOjIa7sKnUvaNkWkztvUX4q24
+ 0fFUIqczs84kupjce2QilkT1sw2Iv6jkbHr7N0a/ZJQE51Prl1bW5aCBgoeR5ZRINayq
+ Y9PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743617481; x=1744222281;
+ d=1e100.net; s=20230601; t=1743618799; x=1744223599;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qfgdw4kaeGTPriUB8nti+BFMqadk8NUrM4ya7NdN4SI=;
- b=xQAEF4yh5aX9Op0naz3KUQft+SHM8BD2OWSJWHyxYt0QlY4ffrAioe+Pho4Jqfh7X1
- 0J6p2TaOX0byZnNEBMtxQDL+d/5DefuAGzYXFfy0IyI4+FnxACDxSxOAXYTNPJbhGBFm
- 9rfU1EBMXjDrqvED9JOCjnUZEFMPrbZrYqQHv79pzSOLEqFfHJ5VyMg7WchLpE6OafD7
- njXwbIFg2TfQ9bFZUybGiiLivYEHuQaiAKk6GuFoFvYk0v+jMot6KjkDeUfLY0EhhYsJ
- ovSenQ+Il0akp39eers3UlOyA/W5koZimX7uYjvYSJYJLxn7MVFkgp0uqdRN5V3oxsHw
- lYSA==
-X-Gm-Message-State: AOJu0Yxy3evsQpCiowSgMaudkcG0tURm0rMcZ8iQgIKE7U/m69q93oE4
- 0icqsA45O1Pt1ctXHmhxsO9R2n8T31pPZ/ADOz1neq8m1WZFdraimB0jQ3IfQU0=
-X-Gm-Gg: ASbGncsPEJokb+JKF80lxe20resykh9/cukzXxqUG+TYhvClrgtk1jdaEX+OPhxRMah
- 6vxUK838zGfsgYL1Ah8Xei6p2WBeCPVV2RydY8jOI+rKqleBJUib8PKxQCrz+O03PTU3CQCt8FM
- ywzLuvJqrBlQ269/6S9c7RKYugM1t879KqtDtdhuB2wTu10euGuBzl1fnvroL8XozxGfqUB0lLy
- qZCOA/+XxXYY8w8z5lSBe992FZO4cAfPfnsC5z2Nc3hs+DeEjSjXM/2eyyCAtYSJ+Vile4pxW/2
- zU26GiKpcq6wHS41eSZ9FRhCi8TqrC2MsqGSBDnRd3HWyTH0RJA9iExA3vfURvf6y10P1fqLMX9
- dYWd5pcRe
-X-Google-Smtp-Source: AGHT+IF5tEGHev0xHtnBM5vNqMuDNBFvWLRIN8wbPFaD/sft8mJUNteDPutCjz2CTNc5iErVrcPoOg==
-X-Received: by 2002:a17:903:2b04:b0:224:1c1:4aba with SMTP id
- d9443c01a7336-2296c86c83bmr43919375ad.50.1743617481022; 
- Wed, 02 Apr 2025 11:11:21 -0700 (PDT)
+ bh=ECUTKnZAfuBkcvEoF+NZCdNB5CHjfGag8e8Z5V7vu2w=;
+ b=C/s9PGlgnf4YNRQWz/p5Bmu73BN9hXfc8y+c4QRoXel2pYiIk0rm20VMG04PRTk2u/
+ 7NX3pz+VVvsMkzJ8498vv0W79+QC0l3q/nZbUN/LVwsD+DxfWv9durZ+ReSMgpDz2QCt
+ Tp7qs7lKvMhCN6cIFvsPLgEbq/UCUbVcHvVoQ524S8CRYNVWMjDBhwggPkCgh1xT8Slb
+ y5J5hsfLNgdLJrYABImKEV1GWt5k0Nfd8aASlLYcuKhXIWbPLi/kkxs2Idwam4JV6Ic2
+ dJRvgmv3B0JgdtFipTPRv7JgLheruKgUverwX2wdcgC4JLLaaAfQS0riCVXVKAR4zEj7
+ obZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWA2tPLW0/ma5F4iCjBCAFEjta3WcY7zqTHnlgs4vSDqte7Dirb6wZf8jcrxaXVvLTDlOELCOLB838p@nongnu.org
+X-Gm-Message-State: AOJu0YyKEntCxGtBl0Z4egAay4d5XY8LNS2BX9bhXABm5fnkUG5gFOKe
+ txSZGCtthCxmqSsJY7vLzIrZosnsTamjrM71HisjeOHM6i8Iv0khJi5eVrZhT8g91pZi2zU2beH
+ Y
+X-Gm-Gg: ASbGncvz9bJ4Fgigufb9dbL5NSUaVpynO9hxg+kQsGlwiM2kB0Dge0rM8G5JZOWOBhS
+ /qwEKrwccQgldACuTSSCbqK4qxK+slo4gCwfndfWBgE7YVebZBTYQAC3oV/fsR8SfVcWMVvmZQ1
+ 9KWTOQ1m96ycaGPqXUKoNEofv9HdLpEbrdG0vEI6T0tcY7EXt78LWuon+tdQ0hCJQdd2Pt/HczY
+ 3LnPo+rqV0mqTwxZyH9x6oIjVvQNAqVSBpEW9mL8qMd4qM+2zRHwnvWCugkBU3sdrKup2G5kxEb
+ u4/KY8uzN/vDuv1C+igP9Br3aWpWFa+VUj3GHnVn01xVwKerAYrqZdUyBiYzVaChKgDxEq0/ZfH
+ VsoXmjDAm
+X-Google-Smtp-Source: AGHT+IH3wmFQnRbc+oeHX4uihYf7F1LMTUJanO5N+CvISdeQkyc3qz6KVSu5Mtgz+un4EEP2sI5c4w==
+X-Received: by 2002:a17:902:e74f:b0:224:3c9:19ae with SMTP id
+ d9443c01a7336-2292f9de650mr309158315ad.34.1743618799214; 
+ Wed, 02 Apr 2025 11:33:19 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291f1ce133sm111712395ad.112.2025.04.02.11.11.20
+ d9443c01a7336-2291f1f9240sm111563615ad.236.2025.04.02.11.33.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 11:11:20 -0700 (PDT)
-Message-ID: <8d897be6-24b6-4fe3-8201-59f0bd08763d@linaro.org>
-Date: Wed, 2 Apr 2025 11:11:17 -0700
+ Wed, 02 Apr 2025 11:33:18 -0700 (PDT)
+Message-ID: <d6a62a7c-b857-45bf-b7f4-5a8863ce5b6c@linaro.org>
+Date: Wed, 2 Apr 2025 11:33:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/mips: Revert TARGET_PAGE_BITS_VARY
-To: Huacai Chen <chenhuacai@kernel.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
- arikalo@gmail.com
-References: <20250328175526.368121-1-richard.henderson@linaro.org>
- <20250328175526.368121-2-richard.henderson@linaro.org>
- <CAAhV-H6=iZOBfxF=_DXqc5M9GjTiXJ7nxotLAJ-0Eb7=zVd0bQ@mail.gmail.com>
- <b17663bc-40c3-4501-be88-065363138038@linaro.org>
- <CAAhV-H4mmKvJ75uSm_LCFrCFYM0QG=4oh0ZLVTGXdKX+svs5eA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/42] include/exec: Split out cpu-mmu-index.h
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250318213209.2579218-1-richard.henderson@linaro.org>
+ <20250318213209.2579218-7-richard.henderson@linaro.org>
+ <7fbd71b6-8642-4374-a573-c9cc693e381c@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAAhV-H4mmKvJ75uSm_LCFrCFYM0QG=4oh0ZLVTGXdKX+svs5eA@mail.gmail.com>
+In-Reply-To: <7fbd71b6-8642-4374-a573-c9cc693e381c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,55 +107,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/25 20:04, Huacai Chen wrote:
-> Hi, Richard,
+On 4/2/25 04:26, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
-> On Tue, Apr 1, 2025 at 9:39 PM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
+> On 18/3/25 22:31, Richard Henderson wrote:
+>> The implementation of cpu_mmu_index was split between cpu-common.h
+>> and cpu-all.h, depending on CONFIG_USER_ONLY.  We already have the
+>> plumbing common to user and system mode.  Using MMU_USER_IDX
+>> requires the cpu.h for a specific target, and so is restricted to
+>> when we're compiling per-target.
 >>
->> On 3/31/25 20:15, Huacai Chen wrote:
->>>>    #  define TARGET_VIRT_ADDR_SPACE_BITS 32
->>>>    #endif
->>>>    #endif
->>>> -#ifdef CONFIG_USER_ONLY
->>>>    #define TARGET_PAGE_BITS 12
->>>> -#else
->>>> -#define TARGET_PAGE_BITS_VARY
->>>> -#define TARGET_PAGE_BITS_MIN 12
->>>> -#endif
->>> I'm a bit confused about TARGET_PAGE_BITS and other macros.
->>>
->>> In my opinion, if we define TARGET_PAGE_BITS as 12, that means we only
->>> support 4K pages. And if we define TARGET_PAGE_BITS_VARY and
->>> TARGET_PAGE_BITS_MIN as 12, that means we support the minimum page as
->>> 4K, but we also support larger pages.
->>>
->>> Am I wrong?
->> Yes.
+>> Include the new header only where needed.
 >>
->> TARGET_PAGE_BITS is a minimum value that is used by the memory subsystem for managing ram
->> and i/o.  If variable, via TARGET_PAGE_BITS_VARY, this is set very early in qemu startup
->> and cannot be changed.
->>
->> The page size for the mips cpu, like many others, may be changed at runtime.  The page
->> size used at that point is reported to softmmu during tlb_fill.
->>
->> The value of TARGET_PAGE_BITS must be the minimum supported by the cpu.
->>
->> For Arm, the minimum for armv6 was 1k, then armv7 dropped support for tiny pages so the
->> minimum is 4k.  At runtime, armv8 supports page sizes of 4k, 16k, and 64k.
->>
->> For MIPS, ignoring those cpus which support 1k pages, the minimum is 4k.
-> If all types of cpus of the target arch has the same minimum supported
-> page size, we only need to define TARGET_PAGE_BITS; otherwise we need
-> to define TARGET_PAGE_BITS_VARY, and TARGET_PAGE_BITS_MIN means the
-> minimum supported page size of the smallest supported page's cpu type.
-> Here we remove TARGET_PAGE_BITS_VARY because we just ignore the 1K
-> pages.
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   include/exec/cpu-all.h        |  6 ------
+>>   include/exec/cpu-common.h     | 20 ------------------
+>>   include/exec/cpu-mmu-index.h  | 39 +++++++++++++++++++++++++++++++++++
+>>   include/exec/cpu_ldst.h       |  1 +
+>>   semihosting/uaccess.c         |  1 +
+>>   target/arm/gdbstub64.c        |  3 +++
+>>   target/hppa/mem_helper.c      |  1 +
+>>   target/i386/tcg/translate.c   |  1 +
+>>   target/loongarch/cpu_helper.c |  1 +
+>>   target/microblaze/helper.c    |  1 +
+>>   target/microblaze/mmu.c       |  1 +
+>>   target/openrisc/translate.c   |  1 +
+>>   target/sparc/cpu.c            |  1 +
+>>   target/sparc/mmu_helper.c     |  1 +
+>>   target/tricore/helper.c       |  1 +
+>>   target/xtensa/mmu_helper.c    |  1 +
+>>   16 files changed, 54 insertions(+), 26 deletions(-)
+>>   create mode 100644 include/exec/cpu-mmu-index.h
 > 
-> Am I right now?
+> 
+>> diff --git a/include/exec/cpu-mmu-index.h b/include/exec/cpu-mmu-index.h
+>> new file mode 100644
+>> index 0000000000..b46e622048
+>> --- /dev/null
+>> +++ b/include/exec/cpu-mmu-index.h
+>> @@ -0,0 +1,39 @@
+>> +/*
+>> + * cpu_mmu_index()
+>> + *
+>> + *  Copyright (c) 2003 Fabrice Bellard
+>> + *
+>> + * SPDX-License-Identifier: LGPL-2.1+
+>> + */
+>> +
+>> +#ifndef EXEC_CPU_MMU_INDEX_H
+>> +#define EXEC_CPU_MMU_INDEX_H
+>> +
+>> +#include "hw/core/cpu.h"
+>> +#include "tcg/debug-assert.h"
+>> +#ifdef COMPILING_PER_TARGET
+>> +#include "cpu.h"
+> 
+> IIUC we only need "cpu.h" on user emulation. Maybe use:
+> 
+>    #if defined(COMPILING_PER_TARGET) && defined(CONFIG_USER_ONLY)
 
-Yes.
+Can't.
+
+>> +#ifdef COMPILING_PER_TARGET
+>> +# ifdef CONFIG_USER_ONLY
+
+It would have to be this nesting, for the poisoning.
 
 
 r~
