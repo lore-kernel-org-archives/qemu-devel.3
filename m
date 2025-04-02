@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01006C36018
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 21:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE76C3601E
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 21:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u05Hq-0007lV-8F; Wed, 02 Apr 2025 17:06:14 -0400
+	id 1u05Im-0004lt-3k; Wed, 02 Apr 2025 17:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Hc-00070o-6G
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:06:03 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Id-00049n-7q
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:07:05 -0400
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Ha-0006bO-4W
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:05:59 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05Ib-0007SW-Q4
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:07:02 -0400
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cfba466b2so1582075e9.3
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 14:05:57 -0700 (PDT)
+ 5b1f17b1804b1-43d04ea9d9aso856805e9.3
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 14:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743627957; x=1744232757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743628020; x=1744232820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2CuFRMF8tGsrdfqJ5EAiHOu7bINkhnIQDSuUKCH5uiE=;
- b=Z61Wg0dIHWC34F4/1Wc6I4Wn4JnuN6PEdCo/rgvgYYhPLLu0Tt4Iw8tSdgKOsYahyw
- ZCMlZyNgc+dJ/PTd7j5+CVIHLGZcRpkFUs8s3FMRypcD7Cmdp+FLLpkaVhRY+90CcsAl
- ydK7z3Usr6wWVzoUvBefB6f/ZhDU7b3os52vsVHn+TbygQZzjaWXtVZi6QtB8PBj98GO
- xWFNnHTZZXZBidhHnYvXSFda0xdRXm7Ljbc+m3dKbReho6arKQ1za/CSPbZqp2uZzJtm
- G5cRr8VsD9KlHDm31M5UShCUaGXrUhFDyVwB5Fa3gtGL7N119MpJuSvmw/Y6cobaM6So
- P1tw==
+ :reply-to; bh=ybuOT5iHPjheG8AHEncXZPqzQ8VYLAi18PseEWSYhQk=;
+ b=VikV8kYEfBzzUsyrniXgqqFEeK/JnQqjiO6+DtaGkjJvfORSZWSvmE6lHZBP7/9qBh
+ jh4GRzA/8iPWwC0ju7r/KpJhgcNBHZsqQe4lmBVk7msc0nm1yWJlU5fD7oOauGpXlI6h
+ h2kLJPVE1FX06s4XstDChfNcK+AZd9nTm1PlzjPg/Le2vc3z4K0515Vdj9Q3gaVVKb0z
+ BIsS5ae+AJnArDvYwqKaCWRnuoQo/ovEvy356jasp5cBY1gApsNrzMYFjss5w2yhmkNm
+ ZM8mnQuHuEAFjQBq4gR7zMd+u8xRPwavkAzYXjHdBEGzBE/Jsmt43ThwB0MbUsKXgMCF
+ Z3Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743627957; x=1744232757;
+ d=1e100.net; s=20230601; t=1743628020; x=1744232820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2CuFRMF8tGsrdfqJ5EAiHOu7bINkhnIQDSuUKCH5uiE=;
- b=n6eRCUir2zrf/3lmC5x8sf2uRUqfxBPwoEP7oBHf161o+lE7RemAPzjT8TpImrcOja
- Tjq/WbfvFRqYMd6wuEaZk/anEwlaUXRAKUr65xoPIaqgLPIcTMJVaHLCp/5zwWdUvE5c
- HlgZnvciq10NBviWktDSOi4fLLBQ/8X5PXPdpWgvcCebc31KiaBvX38HzPxwIl3APalh
- z0nLtTNGIoOOP/zBw4O4+c/IYVGh+7Tw/+yhBkp8DbWSm5GuzAWBlo/eUWxJXFriXJMw
- smAjfT7KZBZnsJHZdi+uq58FP1gZN87K0gBfg+NTohTOkynprEHUgjhhQk8jqenOAcCP
- kZ6w==
+ bh=ybuOT5iHPjheG8AHEncXZPqzQ8VYLAi18PseEWSYhQk=;
+ b=RImHmnRhvnkqOvUDyvm5n8zlG/GFCfc0j8KRgG9ocD5m0maZVb0xGIk+qzHgAGfxHn
+ 71B58twC0+Tbn3tum4j6edlWwTsTQf6hW1Csb5Ihd/6QtHD5DTtMGFa4YUd4Z1fH5CMP
+ q3cYwpYer1BnT4JIsTOn6im3Zu62lJwCXUO7EBZhNmlbzBmPf0omW8e0FTywzD7Brqrm
+ FYbA9T7KALGAjKzEbxIcASTLFx71pxBuLAkDGNhpJP5wlGL7LnipsLyj4uhyInzSUXdc
+ Ft0ZD5Cmbf567uO8OmTVODiZxHnuKmAsf75VdoMty7yDFGe3yZT3sXCtwXIKf6OV6D5j
+ I4Sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8okZ9A34jn3ru0SRp8hUhEFtmP9NfkY4QPmU7J1gIiRE2oDVHTxvezxUtHn7whR1UIso1rrqt1KgB@nongnu.org
-X-Gm-Message-State: AOJu0Yz3SHcgOVIx283Xvug/ah8vvc6WcvadNg//aCE2xIOwe3lNtKeu
- pIALs/DDj87uKKVurRxUh1M0K/UgdttNBUq6fpUDQeQgx3s95TlVoCa84Bmx2I+U85lwmyI14cO
- u
-X-Gm-Gg: ASbGncvg9DAZuhpBR6dx8hXJkmQQfckZ5SrHYStQ9EhYq+terQGYUUa3xI+u4MRAZOZ
- bycFAy2zlSYvKLkKrAt5cMjZSos8aj5u8dEi4ZUyKzupSNCE/IHeYAlZXn4hE6w9P3VODV7y4kH
- cERXUltsmXjlBF7bvnu/CkBglKhVNd2ENBOZcorVnNXk4GSU49aVLSsoJVDpI5jTkrOF6/yIXOE
- Guwk4/WO7pS8T4Jqxdvayol74XkwNzSXgixU2zw+SGlazZWKc+E2J28ENfCz9NTjR4sinn20XVR
- l3kTswChSmg2tr40U7cthaMut0DY/yC5CBpczmN9Ed5FotwMQql1SYDXJ26xGtj2gs8ChZd/Gjd
- G4iY+fabWmaY+lq9YU/c=
-X-Google-Smtp-Source: AGHT+IFmVNF8ZLRNUURTrGxrJDg3M6ixisV63EIroyyYYd26NwDZyJMkanAaTgBDMI5XOtopsRG7vw==
-X-Received: by 2002:a5d:6191:0:b0:391:3915:cffb with SMTP id
- ffacd0b85a97d-39c2f94bed8mr83463f8f.43.1743627956818; 
- Wed, 02 Apr 2025 14:05:56 -0700 (PDT)
+ AJvYcCW7OsNNz2BlnG0aCu7tEC4vFZRd636BnUiPc6eSeohnnpf9Qf0sHgcTiHm/qxuFtLY9Ndtlb81rscQy@nongnu.org
+X-Gm-Message-State: AOJu0YxyOmc5VjEQoQkilrvOFsDXKnBdvEMfU/RoX2pPFWdaYFHAxRvC
+ H0eXncVLNc9vonc/avKGLo1CRnmjlJXLyzhnGoSratm2FZL/uBWBg4aMs5grs7hgj51AWLabwcv
+ g
+X-Gm-Gg: ASbGncui5KQ3hY30aY6fvOvPCTREubBn/fTs+B0JihjViPhbkgmTjyUrSBffuGIrRYZ
+ OKKLmpWELixfrkLY7KEIGaG4hLDhmPiN8P9pOvqL3WOuq08eY+Ntxb3UzVPjvLs158XHBtPPz1W
+ VIIxU8//MyQsLkgFNbitbL0w8eZEEUszCDvOojfab2cVYAXq6klws6PQcYx+ycYboeTq6CQKyqC
+ DfOrSPdFIhdK4Swb86/Kqib27L7/K2m3lJ1ZenBv+Auw8B9PiLQKBJeB5tNV7jl5MR87v8tLGA3
+ ht6HIi7EpaFBXo2g/NQs+F24zGb1DbnQVxgnH+DkFp6ZU+VMEepxGq/oyq/XqCHLr5Ll1VxA3TR
+ p46fNf7VFpddTENhn9YyuhktiD41O5Q==
+X-Google-Smtp-Source: AGHT+IEJ8G/KsHkTjIjBlJWdG/BUBQ1k2G9prN5U50H00O0yDpMf45I1s9HcttBC5VH2fgvWcyGvyQ==
+X-Received: by 2002:a05:6000:1863:b0:39a:ca05:5232 with SMTP id
+ ffacd0b85a97d-39c2f8c77d5mr117983f8f.5.1743628020464; 
+ Wed, 02 Apr 2025 14:07:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec16a3aefsm2075535e9.21.2025.04.02.14.05.55
+ ffacd0b85a97d-39c0b66a9d2sm17930101f8f.43.2025.04.02.14.06.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Apr 2025 14:05:56 -0700 (PDT)
+ Wed, 02 Apr 2025 14:06:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
-Subject: [PATCH-for-10.1 30/43] exec: Do not include 'accel/tcg/cpu-ldst.h' in
- 'exec-all.h'
-Date: Wed,  2 Apr 2025 23:03:15 +0200
-Message-ID: <20250402210328.52897-31-philmd@linaro.org>
+Subject: [PATCH-for-10.1 43/43] target/arm: Update comment around
+ cpu_untagged_addr()
+Date: Wed,  2 Apr 2025 23:03:28 +0200
+Message-ID: <20250402210328.52897-44-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250402210328.52897-1-philmd@linaro.org>
 References: <20250402210328.52897-1-philmd@linaro.org>
@@ -101,59 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only 2 files requiring "accel/tcg/cpu-ldst.h" API do not
-include it:
-- accel/tcg/cpu-exec.c
-- target/arm/tcg/sve_helper.c
-Include it there and remove it from "exec/exec-all.h".
+Since commit f9ba56a03c2 ("user: Introduce 'user/guest-host.h' header")
+cpu_untagged_addr() is only needed in "user/guest-host.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/exec-all.h     | 3 ---
- accel/tcg/cpu-exec.c        | 1 +
- target/arm/tcg/sve_helper.c | 1 +
- 3 files changed, 2 insertions(+), 3 deletions(-)
+ target/arm/cpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 70608a11b60..944b579d91c 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -20,9 +20,6 @@
- #ifndef EXEC_ALL_H
- #define EXEC_ALL_H
- 
--#if defined(CONFIG_USER_ONLY)
--#include "accel/tcg/cpu-ldst.h"
--#endif
- #include "exec/mmu-access-type.h"
- #include "exec/translation-block.h"
- 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 5ced3879ac4..b00f046b29f 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -22,6 +22,7 @@
- #include "qapi/error.h"
- #include "qapi/type-helpers.h"
- #include "hw/core/cpu.h"
-+#include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/cpu-ops.h"
- #include "trace.h"
- #include "disas/disas.h"
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 9b0d40c9e18..87b6b4b3e64 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -30,6 +30,7 @@
- #include "tcg/tcg.h"
- #include "vec_internal.h"
- #include "sve_ldst_internal.h"
-+#include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/cpu-ops.h"
- #ifdef CONFIG_USER_ONLY
- #include "user/page-protection.h"
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 3705b34285b..88ed06987f3 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -3233,7 +3233,7 @@ extern const uint64_t pred_esz_masks[5];
+  * linux syscall TIF_TAGGED_ADDR setting, not TBI in general.
+  *
+  * There should be a better place to put this, but we need this in
+- * include/exec/cpu_ldst.h, and not some place linux-user specific.
++ * include/user/guest-host.h, and not some place linux-user specific.
+  */
+ static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
+ {
 -- 
 2.47.1
 
