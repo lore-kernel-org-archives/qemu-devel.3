@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51890C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 10:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4661FC36014
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 10:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzvlZ-0005nF-4P; Wed, 02 Apr 2025 06:56:17 -0400
+	id 1tzvma-0006d8-5p; Wed, 02 Apr 2025 06:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzvlX-0005n0-04
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 06:56:15 -0400
+ id 1tzvmW-0006cC-Up
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 06:57:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzvlU-00075p-3j
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 06:56:13 -0400
+ id 1tzvmU-0007AV-2r
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 06:57:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743591370;
+ s=mimecast20190719; t=1743591432;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m4gJXWpnzIifzMPt+q7PL8+rbF8ua/gZVJiMmkAfMDc=;
- b=GuiKzhNyTPOq9iReIz2JtjWy7L4p0M2RqWVlkqja8d5ZoGWse7GB5Wk/DTVV4iyXXlDxbV
- XOEQ4Kz5U5MAoyRvV444088k4XSSkCBNAndtXgEhryxhuSLxDYukFi1Cd6ghijeCQj6Xm8
- kEUQLBjOY7YE9S4yPo2u70bipQAQIno=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=M5iLZwLS0HCrt4haW1ICBpnYsWkWvGbdZFxu7hgz0cg=;
+ b=YxM1+Hw/i4RnKoJsmZbTp5NWxnaKskpcDvSf/c5/ivPU9ts8c44phByk6ceZT2ZWY2RwuL
+ pWHGWcHEfOzQ8svz1WxsWixdVZN3ToL+UtlximotK/2tYkaQ4dDL4XoLQhP6X4QATli7aM
+ BEae8eYqeaGBllZALAYQouw2skcy91s=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-99-gFKgWwOWNNSMbC1WKvrAsA-1; Wed,
- 02 Apr 2025 06:56:07 -0400
-X-MC-Unique: gFKgWwOWNNSMbC1WKvrAsA-1
-X-Mimecast-MFC-AGG-ID: gFKgWwOWNNSMbC1WKvrAsA_1743591366
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-wg09CGSKOFeL6d3qOj5_kA-1; Wed,
+ 02 Apr 2025 06:57:09 -0400
+X-MC-Unique: wg09CGSKOFeL6d3qOj5_kA-1
+X-Mimecast-MFC-AGG-ID: wg09CGSKOFeL6d3qOj5_kA_1743591428
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B26551955DC5; Wed,  2 Apr 2025 10:56:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A4DE119560B3; Wed,  2 Apr 2025 10:57:08 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D26B3001D0E; Wed,  2 Apr 2025 10:56:02 +0000 (UTC)
-Date: Wed, 2 Apr 2025 11:55:59 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3BFE1955BEF; Wed,  2 Apr 2025 10:57:04 +0000 (UTC)
+Date: Wed, 2 Apr 2025 11:57:01 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -57,17 +57,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 03/55] i386/tdx: Implement tdx_kvm_type() for TDX
-Message-ID: <Z-0Xv1BYIM2PRxMt@redhat.com>
+Subject: Re: [PATCH v8 04/55] i386/tdx: Implement tdx_kvm_init() to
+ initialize TDX VM context
+Message-ID: <Z-0X_W14PD5NsMiS@redhat.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-4-xiaoyao.li@intel.com>
+ <20250401130205.2198253-5-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250401130205.2198253-4-xiaoyao.li@intel.com>
+In-Reply-To: <20250401130205.2198253-5-xiaoyao.li@intel.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -94,18 +95,22 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:13AM -0400, Xiaoyao Li wrote:
-> TDX VM requires VM type to be KVM_X86_TDX_VM. Implement tdx_kvm_type()
-> as X86ConfidentialGuestClass->kvm_type.
+On Tue, Apr 01, 2025 at 09:01:14AM -0400, Xiaoyao Li wrote:
+> Implement TDX specific ConfidentialGuestSupportClass::kvm_init()
+> callback, tdx_kvm_init().
+> 
+> Mark guest state is proctected for TDX VM.  More TDX specific
+> initialization will be added later.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
 > Changes in v6:
->  - new added patch;
+>  - remove Acked-by from Gerd since the patch changed due to use
+>    ConfidentialGuestSupportClass::kvm_init();
 > ---
->  target/i386/kvm/kvm.c |  1 +
->  target/i386/kvm/tdx.c | 12 ++++++++++++
->  2 files changed, 13 insertions(+)
+>  target/i386/kvm/kvm.c | 11 +----------
+>  target/i386/kvm/tdx.c | 10 ++++++++++
+>  2 files changed, 11 insertions(+), 10 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
