@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 522FAC3601C
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58FA6C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzvq1-0007jB-V8; Wed, 02 Apr 2025 07:00:53 -0400
+	id 1tzwFL-0004bL-OU; Wed, 02 Apr 2025 07:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzvpx-0007io-15
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:00:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzvpv-0007fx-1q
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:00:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743591646;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=MAWPQMpOnVx5qwX5CyrR1VRG5taAe6YKiSp7ZYQWrVw=;
- b=icCfrKtp11RN4ljeQ5uMYq9chhA8BMb0Lm3cyzaVJNtFAUouZHs742aHbaDZvCA6g1ruWs
- dKAxB277u2bTETR/Sw9BsXkPIl24slJr70apfeMvkFDiDIb0Nr0TLB3ksaXGZPdAElGk1n
- 5iH2hC9hUqMuj2If2BWzLlqceboZtJo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-SrHFmk2NMkahpTnNH5m2BQ-1; Wed,
- 02 Apr 2025 07:00:41 -0400
-X-MC-Unique: SrHFmk2NMkahpTnNH5m2BQ-1
-X-Mimecast-MFC-AGG-ID: SrHFmk2NMkahpTnNH5m2BQ_1743591639
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CAE6B19560B7; Wed,  2 Apr 2025 11:00:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 844E83001D0E; Wed,  2 Apr 2025 11:00:36 +0000 (UTC)
-Date: Wed, 2 Apr 2025 12:00:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 05/55] i386/tdx: Get tdx_capabilities via
- KVM_TDX_CAPABILITIES
-Message-ID: <Z-0YzauBkAl8pyIP@redhat.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-6-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzwFI-0004b2-Je
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:27:00 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzwFG-00088G-Ux
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:27:00 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43cf05f0c3eso43474105e9.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 04:26:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743593216; x=1744198016; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=exwzt5Cxt3d77Pf9jsdg6r4vvhKTKMZ8rWGz2yPAl3c=;
+ b=iCKmFgAxaJrw8oLeYvIHtBFqVu2S7Aj9XTxXniLJOLP64yoN0AQ4sqCYorX2kHDZgS
+ o2dNZS3K7yWH33iJ3ld5J7PhTkfW65A0KkhhFVUYo6M1sIG1ghy2QVq/vSySaJ9iLx/c
+ mjDG5qxXbT470gEboTaYCyvTmJzXXNHgU0qMIb3AtKvMbA9NFpg6xHfOINcOzpS2hRdL
+ sJ7FiMV88LPOkTpWvSQBAaB19P2LGMc8vyJD4OrCkaqJ4Y1WA5U/bUd1BF586WYQE0oA
+ I+JV+aR2EjZkNjcLQIYReCcswK7uK7pPbQqi1eNN4CA3/0/+Z6Hcmiqw5eEx589t8X+q
+ sNMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743593216; x=1744198016;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=exwzt5Cxt3d77Pf9jsdg6r4vvhKTKMZ8rWGz2yPAl3c=;
+ b=cx/OASrZVsIUNcz8dU75Ty+rLLxe+G07/VLp+YOzr+ZOfddidFRNx00qCTC8vxNLdJ
+ Y0dmwl9nRRb4SFD79d4e05ozk8tUyBxIYgOINJR9ATUHQt/Wj3/ROjXUSMltii1J3j+z
+ XL/8E0YHNkVOUaSWl8zSipzk52F0gebB4yITrPkeApBDXxhuN3x7uulr14H9qgauiuYP
+ 6UeBVKlkbwqJL7PTvU+uNiKSaG5ILs2OlF4DhQXo43960GMIeiTAP4a2N4VS4zkZH4Dq
+ 024a21o+i5T5erC0j9z/KrauwpQJTp384IqXVuUkW/Uz6yOaWaesO0dISvXSHilAWMJq
+ WqBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXPzHjx4xim5mPvWVgEw94/ombGo5glh3P0NefhWGyxtvRK2u1cZmDto1fAP1C90VcNK/WoxLSMcpL@nongnu.org
+X-Gm-Message-State: AOJu0YwZFCCymqkW+qkoZy7hoYp1yzLbRJCZdo7RAngj8fyHML6ZyVVU
+ XP/lt1ZEhIpxMhgy6Jp8J1Hi6vSzj/GokO+DI+Esj88m1gYgJTghBt9yGX22UQ8=
+X-Gm-Gg: ASbGncu7/hXxmwReDBf5DYgqyHYDTGfej9OZjfm4/QtzoRYQLRJN4CFKcmJsFM1z+Na
+ +4KrKjufIXtEbYzs3gjCwTqMdEVvrlID5bgIM4q3FfeB3XXOoNdgrux3rUk+DqZIZ3qfsLzvh7b
+ siWTt5eJE/XRbqWJI66nd9KB8I5m4YNbTGjff+WUJfp2Mfg/Ac1s4/NjyRU33oCBX3XRdbBdrgx
+ 3ucqyTzlcv5sgGQ3JLLpWdshrMPCfq3FzUIjowtIPXwOkHcFdl6AlwbzhIzgMx0ZCIVnwVebuua
+ j2AmDavCCVVzB0IieC7Ux+Dwb2fV1YGE5DNV36wrOz6g4mBLA8TtHjvI6Em+vjGdqzcH1dhM7aA
+ 5vAFmEXriIE06
+X-Google-Smtp-Source: AGHT+IEKcqCUyp2DKh4ii+cbAd+S7xQoEbdhDwkvSSGQQ+6NLoGjnYg7Wi3jnDHWXM5Q9M5e4S75Xw==
+X-Received: by 2002:a05:600c:8705:b0:43d:2313:7b4a with SMTP id
+ 5b1f17b1804b1-43db61b33b9mr186376655e9.3.1743593216527; 
+ Wed, 02 Apr 2025 04:26:56 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43eb5fd144csm17581165e9.15.2025.04.02.04.26.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Apr 2025 04:26:55 -0700 (PDT)
+Message-ID: <7fbd71b6-8642-4374-a573-c9cc693e381c@linaro.org>
+Date: Wed, 2 Apr 2025 13:26:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-6-xiaoyao.li@intel.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/42] include/exec: Split out cpu-mmu-index.h
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org
+References: <20250318213209.2579218-1-richard.henderson@linaro.org>
+ <20250318213209.2579218-7-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250318213209.2579218-7-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,203 +99,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:15AM -0400, Xiaoyao Li wrote:
-> KVM provides TDX capabilities via sub command KVM_TDX_CAPABILITIES of
-> IOCTL(KVM_MEMORY_ENCRYPT_OP). Get the capabilities when initializing
-> TDX context. It will be used to validate user's setting later.
+Hi Richard,
+
+On 18/3/25 22:31, Richard Henderson wrote:
+> The implementation of cpu_mmu_index was split between cpu-common.h
+> and cpu-all.h, depending on CONFIG_USER_ONLY.  We already have the
+> plumbing common to user and system mode.  Using MMU_USER_IDX
+> requires the cpu.h for a specific target, and so is restricted to
+> when we're compiling per-target.
 > 
-> Since there is no interface reporting how many cpuid configs contains in
-> KVM_TDX_CAPABILITIES, QEMU chooses to try starting with a known number
-> and abort when it exceeds KVM_MAX_CPUID_ENTRIES.
+> Include the new header only where needed.
 > 
-> Besides, introduce the interfaces to invoke TDX "ioctls" at VCPU scope
-> in preparation.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> Changes in v7:
-> - refine and unifiy the error handling; (Daniel)
-> 
-> Changes in v6:
-> - Pass CPUState * to tdx_vcpu_ioctl();
-> - update commit message to remove platform scope thing;
-> - dump hw_error when it's non-zero to help debug;
-> 
-> Changes in v4:
-> - use {} to initialize struct kvm_tdx_cmd, to avoid memset();
-> - remove tdx_platform_ioctl() because no user;
-> 
-> Changes in v3:
-> - rename __tdx_ioctl() to tdx_ioctl_internal()
-> - Pass errp in get_tdx_capabilities();
-> 
-> changes in v2:
->   - Make the error message more clear;
-> 
-> changes in v1:
->   - start from nr_cpuid_configs = 6 for the loop;
->   - stop the loop when nr_cpuid_configs exceeds KVM_MAX_CPUID_ENTRIES;
-> ---
->  target/i386/kvm/kvm.c      |   2 -
->  target/i386/kvm/kvm_i386.h |   2 +
->  target/i386/kvm/tdx.c      | 107 ++++++++++++++++++++++++++++++++++++-
->  3 files changed, 108 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 1af4710556ad..b4fa35405fe1 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -1779,8 +1779,6 @@ static int hyperv_init_vcpu(X86CPU *cpu)
->  
->  static Error *invtsc_mig_blocker;
->  
-> -#define KVM_MAX_CPUID_ENTRIES  100
-> -
->  static void kvm_init_xsave(CPUX86State *env)
->  {
->      if (has_xsave2) {
-> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> index 88565e8dbac1..ed1e61fb8ba9 100644
-> --- a/target/i386/kvm/kvm_i386.h
-> +++ b/target/i386/kvm/kvm_i386.h
-> @@ -13,6 +13,8 @@
->  
->  #include "system/kvm.h"
->  
-> +#define KVM_MAX_CPUID_ENTRIES  100
-> +
->  /* always false if !CONFIG_KVM */
->  #define kvm_pit_in_kernel() \
->      (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index 4ff94860815d..c67be5e618e2 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -10,17 +10,122 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "qapi/error.h"
->  #include "qom/object_interfaces.h"
->  
->  #include "hw/i386/x86.h"
->  #include "kvm_i386.h"
->  #include "tdx.h"
->  
-> +static struct kvm_tdx_capabilities *tdx_caps;
-> +
-> +enum tdx_ioctl_level {
-> +    TDX_VM_IOCTL,
-> +    TDX_VCPU_IOCTL,
-> +};
-> +
-> +static int tdx_ioctl_internal(enum tdx_ioctl_level level, void *state,
-> +                              int cmd_id, __u32 flags, void *data,
-> +                              Error **errp)
-> +{
-> +    struct kvm_tdx_cmd tdx_cmd = {};
-> +    int r;
-> +
-> +    const char *tdx_ioctl_name[] = {
-> +        [KVM_TDX_CAPABILITIES] = "KVM_TDX_CAPABILITIES",
-> +        [KVM_TDX_INIT_VM] = "KVM_TDX_INIT_VM",
-> +        [KVM_TDX_INIT_VCPU] = "KVM_TDX_INIT_VCPU",
-> +        [KVM_TDX_INIT_MEM_REGION] = "KVM_TDX_INIT_MEM_REGION",
-> +        [KVM_TDX_FINALIZE_VM] = "KVM_TDX_FINALIZE_VM",
-> +        [KVM_TDX_GET_CPUID] = "KVM_TDX_GET_CPUID",
-> +    };
-> +
-> +    tdx_cmd.id = cmd_id;
-> +    tdx_cmd.flags = flags;
-> +    tdx_cmd.data = (__u64)(unsigned long)data;
-> +
-> +    switch (level) {
-> +    case TDX_VM_IOCTL:
-> +        r = kvm_vm_ioctl(kvm_state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
-> +        break;
-> +    case TDX_VCPU_IOCTL:
-> +        r = kvm_vcpu_ioctl(state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
-> +        break;
-> +    default:
-> +        error_setg(errp, "Invalid tdx_ioctl_level %d", level);
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (r < 0) {
-> +        error_setg_errno(errp, -r, "TDX ioctl %s failed, hw_errors: 0x%llx",
-> +                         tdx_ioctl_name[cmd_id], tdx_cmd.hw_error);
-> +    }
-> +    return r;
-> +}
-> +
-> +static inline int tdx_vm_ioctl(int cmd_id, __u32 flags, void *data,
-> +                               Error **errp)
-> +{
-> +    return tdx_ioctl_internal(TDX_VM_IOCTL, NULL, cmd_id, flags, data, errp);
-> +}
-> +
-> +static inline int tdx_vcpu_ioctl(CPUState *cpu, int cmd_id, __u32 flags,
-> +                                 void *data, Error **errp)
-> +{
-> +    return  tdx_ioctl_internal(TDX_VCPU_IOCTL, cpu, cmd_id, flags, data, errp);
-> +}
-> +
-> +static int get_tdx_capabilities(Error **errp)
-> +{
-> +    struct kvm_tdx_capabilities *caps;
-> +    /* 1st generation of TDX reports 6 cpuid configs */
-> +    int nr_cpuid_configs = 6;
-> +    size_t size;
-> +    int r;
-> +
-> +    do {
-> +        Error *local_err = NULL;
-> +        size = sizeof(struct kvm_tdx_capabilities) +
-> +                      nr_cpuid_configs * sizeof(struct kvm_cpuid_entry2);
-> +        caps = g_malloc0(size);
-> +        caps->cpuid.nent = nr_cpuid_configs;
-> +
-> +        r = tdx_vm_ioctl(KVM_TDX_CAPABILITIES, 0, caps, &local_err);
-> +        if (r == -E2BIG) {
-> +            g_free(caps);
-> +            nr_cpuid_configs *= 2;
-> +            if (nr_cpuid_configs > KVM_MAX_CPUID_ENTRIES) {
-> +                error_report("KVM TDX seems broken that number of CPUID entries"
-> +                             " in kvm_tdx_capabilities exceeds limit: %d",
-> +                             KVM_MAX_CPUID_ENTRIES);
-> +                error_propagate(errp, local_err);
-> +                return r;
-> +            }
-> +            error_free(local_err);
-
-IIRC, you'll need  'local_err = NULL' here, otherwise next time around
-the loop 'local_err' will be pointing to a free'd error object which
-'error_setg' will think is still valid & won't overwrite.
-
-> +        } else if (r < 0) {
-> +            g_free(caps);
-> +            error_propagate(errp, local_err);
-> +            return r;
-> +        }
-> +    } while (r == -E2BIG);
-> +
-> +    tdx_caps = caps;
-> +
-> +    return 0;
-> +}
-> +
+>   include/exec/cpu-all.h        |  6 ------
+>   include/exec/cpu-common.h     | 20 ------------------
+>   include/exec/cpu-mmu-index.h  | 39 +++++++++++++++++++++++++++++++++++
+>   include/exec/cpu_ldst.h       |  1 +
+>   semihosting/uaccess.c         |  1 +
+>   target/arm/gdbstub64.c        |  3 +++
+>   target/hppa/mem_helper.c      |  1 +
+>   target/i386/tcg/translate.c   |  1 +
+>   target/loongarch/cpu_helper.c |  1 +
+>   target/microblaze/helper.c    |  1 +
+>   target/microblaze/mmu.c       |  1 +
+>   target/openrisc/translate.c   |  1 +
+>   target/sparc/cpu.c            |  1 +
+>   target/sparc/mmu_helper.c     |  1 +
+>   target/tricore/helper.c       |  1 +
+>   target/xtensa/mmu_helper.c    |  1 +
+>   16 files changed, 54 insertions(+), 26 deletions(-)
+>   create mode 100644 include/exec/cpu-mmu-index.h
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/include/exec/cpu-mmu-index.h b/include/exec/cpu-mmu-index.h
+> new file mode 100644
+> index 0000000000..b46e622048
+> --- /dev/null
+> +++ b/include/exec/cpu-mmu-index.h
+> @@ -0,0 +1,39 @@
+> +/*
+> + * cpu_mmu_index()
+> + *
+> + *  Copyright (c) 2003 Fabrice Bellard
+> + *
+> + * SPDX-License-Identifier: LGPL-2.1+
+> + */
+> +
+> +#ifndef EXEC_CPU_MMU_INDEX_H
+> +#define EXEC_CPU_MMU_INDEX_H
+> +
+> +#include "hw/core/cpu.h"
+> +#include "tcg/debug-assert.h"
+> +#ifdef COMPILING_PER_TARGET
+> +#include "cpu.h"
+
+IIUC we only need "cpu.h" on user emulation. Maybe use:
+
+   #if defined(COMPILING_PER_TARGET) && defined(CONFIG_USER_ONLY)
+
+?
+
+> +#endif
+> +
+> +/**
+> + * cpu_mmu_index:
+> + * @env: The cpu environment
+> + * @ifetch: True for code access, false for data access.
+> + *
+> + * Return the core mmu index for the current translation regime.
+> + * This function is used by generic TCG code paths.
+> + */
+> +static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
+> +{
+> +#ifdef COMPILING_PER_TARGET
+> +# ifdef CONFIG_USER_ONLY
+> +    return MMU_USER_IDX;
+> +# endif
+> +#endif
+> +
+> +    int ret = cs->cc->mmu_index(cs, ifetch);
+> +    tcg_debug_assert(ret >= 0 && ret < NB_MMU_MODES);
+> +    return ret;
+> +}
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
