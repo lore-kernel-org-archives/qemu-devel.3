@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE6DC36014
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 205A3C3601A
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzudj-0002lf-6Y; Wed, 02 Apr 2025 05:44:07 -0400
+	id 1tzuhh-0004oS-LX; Wed, 02 Apr 2025 05:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tzudg-0002kx-F4; Wed, 02 Apr 2025 05:44:04 -0400
+ id 1tzuhe-0004ne-Ds; Wed, 02 Apr 2025 05:48:10 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tzudd-00025r-UZ; Wed, 02 Apr 2025 05:44:04 -0400
+ id 1tzuhb-0002eM-LR; Wed, 02 Apr 2025 05:48:10 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSKgv59sLz4x3p;
- Wed,  2 Apr 2025 20:43:55 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSKmj0F7fz4x3p;
+ Wed,  2 Apr 2025 20:48:05 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSKgq4qvgz4wbc;
- Wed,  2 Apr 2025 20:43:51 +1100 (AEDT)
-Message-ID: <43581924-e627-427c-b290-05f473877c41@kaod.org>
-Date: Wed, 2 Apr 2025 11:43:49 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSKmd0Dxrz4w2H;
+ Wed,  2 Apr 2025 20:48:00 +1100 (AEDT)
+Message-ID: <3a9dcfc4-f14e-4e97-a4e4-1d4183957759@kaod.org>
+Date: Wed, 2 Apr 2025 11:47:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 14/22] test/qtest/hace: Adjust test address range for
- AST1030 due to SRAM limitations
+Subject: Re: [PATCH v1 00/22] Fix incorrect hash results on AST2700
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -43,7 +42,6 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
- <20250321092623.2097234-15-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250321092623.2097234-15-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -115,137 +113,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/25 10:26, Jamin Lin wrote:
-> The digest_addr is set to "src_addr + 0x1000000", where src_addr is the DRAM
-> base address. However, the value 0x1000000 (16MB) is too large because the
-> AST1030 does not support DRAM, and its SRAM size is only 768KB.
-> 
-> A range size of 0x1000 (64KB) is sufficient for HACE test cases, as the test
-> vector size does not exceed 64KB.
-> 
-> Updates:
-> 1. Direct Access Mode
-> Update digest_addr to "src_addr + 0x1000" in the following functions:
+Hello Jamin,
 
-The change does src_addr + 0x10000. Can you please adjust the commit log
-or the code ?
+On 3/21/25 10:25, Jamin Lin wrote:
+> v1:
+>   1. Added support for 64-bit DMA in the HACE model
+>   2. Refactored the do_hash operation in the HACE model
+>   3. Fixed a crash caused by out-of-bound memory access in HACE
+>   4. Added more trace events and implemented dumping of source hash data and
+>      resulting digests to improve debugging
+>   5. Refactored the HACE QTest framework to support both AST1030 and AST2700
+>   6. Added a test case for SHA384
+> 
+> This patchset resolves incorrect hash results reported on the AST2700 platform.
+> This update addresses the following kernel warnings and test failures related to
+> the crypto self-test framework:
+> 
+> aspeed-hmac-sha512 test failed (incorrect result)
+> aspeed-hmac-sha384 test failed (incorrect result)
+> aspeed-sha512 test failed (incorrect result)
+> aspeed-sha384 test failed (incorrect result)
+> aspeed-hmac-sha256 test failed (incorrect result)
+> aspeed-hmac-sha224 test failed (incorrect result)
+> aspeed-hmac-sha1 test failed (incorrect result)
+> aspeed-sha224 test failed (incorrect result)
+> aspeed-sha256 test failed (incorrect result)
+> aspeed-sha1 test failed (incorrect result)
+> 
+> How to test it
+> 
+> Use the following command to dump information about the supported digest methods
+> via the afalg hardware engine:
+> 
+> root@ast2700-default:~# openssl engine -pre DUMP_INFO afalg
+> 
+> Digest SHA1, NID=64, AF_ALG info: name=sha1ALG_ERR: , driver=aspeed-sha1 (hw accelerated)
+> Digest SHA224, NID=675, AF_ALG info: name=sha224ALG_ERR: , driver=aspeed-sha224 (hw accelerated)
+> Digest SHA256, NID=672, AF_ALG info: name=sha256ALG_ERR: , driver=aspeed-sha256 (hw accelerated)
+> Digest SHA384, NID=673, AF_ALG info: name=sha384ALG_ERR: , driver=aspeed-sha384 (hw accelerated)
+> Digest SHA512, NID=674, AF_ALG info: name=sha512ALG_ERR: , driver=aspeed-sha512 (hw accelerated)
+> 
+> The status of SHA1, SHA224, SHA256, SHA384, and SHA512 should be marked as
+> hw accelerated, indicating that these algorithms are supported by hardware
+> acceleration via the aspeed drivers.
+> 
+> Create a test file on the host machine and compute its HASH value as the
+> expected result
+> 
+> Create a 256MB test file
+> 
+> $ dd if=/dev/random of=/tmp/256M bs=1M count=256
+> Generate Hash Values Using SHA1, SHA224, SHA256, SHA384, and SHA512
+> 
+> Use the following commands to generate HASH values for a 256MB file using
+> different SHA algorithms:
+> 
+> $ sha1sum /tmp/256M
+> 7fc628811a31ab87b0502dab3ed8d3ef07565885  /tmp/256M
+> 
+> $ sha224sum /tmp/256M
+> 2d261c11ba05b3a62e0efeab51c307d9933426c7e18204683ef3da54  /tmp/256M
+> 
+> $ sha256sum /tmp/256M
+> 5716d1700ee35c92ca5ca5b466639e9c36eed3f1447c1aec27f16d0fe113f94d  /tmp/256M
+> 
+> $ sha384sum /tmp/256M
+> fb6bc62afa1096dcd3b870e7d2546b7a5a177b5f2bbd5c9759218182454709e0c504a2d9c26404e04aa8010a291b7f1c  /tmp/256M
+> 
+> $ sha512sum /tmp/256M
+> fbceda7be34836fe857781656318ecd5b457a833a24c8736d5b8ef8d07e1950eebcdb140eebe4f12b5ff59586f7eb1c64fa95869c63dd9e4703d91261093c5c9  /tmp/256M
+> 
+> Generate HASH Values Using the Hardware Engine
+> 
+> Use the following commands to generate HASH values for a 256MB file using
+> various SHA algorithms with the afalg hardware engine:
+> 
+> 
+> root@ast2700-default:~# openssl dgst -sha1 -engine afalg /tmp/256M
+> Engine "afalg" set.
+> SHA1(/tmp/256M)= 7fc628811a31ab87b0502dab3ed8d3ef07565885
+> 
+> root@ast2700-default:~# openssl dgst -sha224 -engine ast_crypto_engine /tmp/256M
+> Engine "afalg" set.
+> SHA2-224(/tmp/256M)= 2d261c11ba05b3a62e0efeab51c307d9933426c7e18204683ef3da54
+> 
+> root@ast2700-default:~# openssl dgst -sha256 -engine afalg /tmp/256M
+> Engine "afalg" set.
+> SHA2-256(/tmp/256M)= 5716d1700ee35c92ca5ca5b466639e9c36eed3f1447c1aec27f16d0fe113f94d
+> 
+> root@ast2700-default:~# openssl dgst -sha384 -engine afalg /tmp/256M
+> Engine "afalg" set.
+> SHA2-384(/tmp/256M)= fb6bc62afa1096dcd3b870e7d2546b7a5a177b5f2bbd5c9759218182454709e0c504a2d9c26404e04aa8010a291b7f1c
+> 
+> root@ast2700-default:~# openssl dgst -sha512 -engine afalg /tmp/256M
+> Engine "afalg" set.
+> SHA2-512(/tmp/256M)= fbceda7be34836fe857781656318ecd5b457a833a24c8736d5b8ef8d07e1950eebcdb140eebe4f12b5ff59586f7eb1c64fa95869c63dd9e4703d91261093c5c9
+> 
+> 
+> The HASH values generated here should exactly match those computed on the host
+> machine using software-based OpenSSL, verifying both the correctness of the
+> hardware-accelerated results and the functionality of the afalg.
+> 
+> 
+> Jamin Lin (22):
+>    hw/misc/aspeed_hace: Remove unused code for better readability
+>    hw/misc/aspeed_hace: Fix buffer overflow in has_padding function
+>    hw/misc/aspeed_hace: Improve readability and consistency in variable
+>      naming
+>    hw/misc/aspeed_hace: Update hash source address handling to 64-bit for
+>      AST2700
+>    hw/misc/aspeed_hace: Introduce 64-bit digest_addr variable for AST2700
+>    hw/misc/aspeed_hace: Support accumulative mode for direct access mode
+>    hw/misc/aspeed_hace: Add support for source, digest, key buffer 64 bit
+>      addresses
+>    hw/misc/aspeed_hace: Support DMA 64 bits dram address.
+>    hw/misc/aspeed_hace: Ensure HASH_IRQ is always set to prevent firmware
+>      hang
+>    hw/misc/aspeed_hace:: Support setting different memory size
+>    hw/misc/aspeed_hace: Add trace-events for better debugging
+>    hw/misc/aspeed_hace Support to dump plaintext and digest for better
+>      debugging
+>    test/qtest: Introduce a new aspeed-hace-utils.c to place common
+>      testcases
+>    test/qtest/hace: Adjust test address range for AST1030 due to SRAM
+>      limitations
+>    test/qtest/hace: Add SHA-384 test cases for ASPEED HACE model
+>    test/qtest/hace: Add SHA-384 tests for AST2600
+>    test/qtest/hace: Add tests for AST1030
+>    test/qtest/hace: Update source data and digest data type to 64-bit
+>    test/qtest/hace: Support 64-bit source and digest addresses for
+>      AST2700
+>    test/qtest/hace: Support to test upper 32 bits of digest and source
+>      addresses
+>    test/qtest/hace: Support to validate 64-bit hmac key buffer addresses
+>    test/qtest/hace: Add tests for AST2700
+> 
+>   include/hw/misc/aspeed_hace.h   |   9 +-
+>   tests/qtest/aspeed-hace-utils.h |  84 +++++
+>   hw/misc/aspeed_hace.c           | 194 ++++++----
+>   tests/qtest/aspeed-hace-utils.c | 646 ++++++++++++++++++++++++++++++++
+>   tests/qtest/aspeed_hace-test.c  | 577 +++++-----------------------
+>   tests/qtest/ast2700-hace-test.c |  98 +++++
+>   hw/misc/trace-events            |   6 +
+>   tests/qtest/meson.build         |   5 +-
+>   8 files changed, 1074 insertions(+), 545 deletions(-)
+>   create mode 100644 tests/qtest/aspeed-hace-utils.h
+>   create mode 100644 tests/qtest/aspeed-hace-utils.c
+>   create mode 100644 tests/qtest/ast2700-hace-test.c
+> 
+
+It looks good overall. There are a couple of issues in the tests to fix
+and I think we should take this opportunity to rework do_hash_operation()
+and make it simpler by cutting it in smaller pieces, one for each mode.
 
 
 Thanks,
 
 C.
 
-
-
-> aspeed_test_md5
-> aspeed_test_sha256
-> aspeed_test_sha512
-> 
-> 2. Scatter-Gather (SG) Mode
-> Update source address for different SG buffer addresses in the following
-> functions:
-> src_addr1 = src_addr + 0x1000
-> src_addr2 = src_addr + 0x2000
-> src_addr3 = src_addr + 0x3000
-> digest_addr = src_addr + 0x4000
-> 
-> aspeed_test_sha256_sg
-> aspeed_test_sha512_sg
-> 
-> 3. ACC Mode Update
-> Update the SG List start address: src_addr + 0x10000
-> Update the SG List buffer size to 0x3000 (192KB).
-> 
-> buffer_addr = src_addr + 0x10000
-> digest_addr = src_addr + 0x40000
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   tests/qtest/aspeed-hace-utils.c | 30 +++++++++++++++---------------
->   1 file changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
-> index 8582847945..8fbbba49c1 100644
-> --- a/tests/qtest/aspeed-hace-utils.c
-> +++ b/tests/qtest/aspeed-hace-utils.c
-> @@ -132,7 +132,7 @@ void aspeed_test_md5(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    uint32_t digest_addr = src_addr + 0x01000000;
-> +    uint32_t digest_addr = src_addr + 0x010000;
->       uint8_t digest[16] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -166,7 +166,7 @@ void aspeed_test_sha256(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t digest_addr = src_addr + 0x1000000;
-> +    const uint32_t digest_addr = src_addr + 0x10000;
->       uint8_t digest[32] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -200,7 +200,7 @@ void aspeed_test_sha512(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t digest_addr = src_addr + 0x1000000;
-> +    const uint32_t digest_addr = src_addr + 0x10000;
->       uint8_t digest[64] = {0};
->   
->       /* Check engine is idle, no busy or irq bits set */
-> @@ -234,10 +234,10 @@ void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t src_addr_1 = src_addr + 0x1000000;
-> -    const uint32_t src_addr_2 = src_addr + 0x2000000;
-> -    const uint32_t src_addr_3 = src_addr + 0x3000000;
-> -    const uint32_t digest_addr = src_addr + 0x4000000;
-> +    const uint32_t src_addr_1 = src_addr + 0x10000;
-> +    const uint32_t src_addr_2 = src_addr + 0x20000;
-> +    const uint32_t src_addr_3 = src_addr + 0x30000;
-> +    const uint32_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[32] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_sg1)),
-> @@ -285,10 +285,10 @@ void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t src_addr_1 = src_addr + 0x1000000;
-> -    const uint32_t src_addr_2 = src_addr + 0x2000000;
-> -    const uint32_t src_addr_3 = src_addr + 0x3000000;
-> -    const uint32_t digest_addr = src_addr + 0x4000000;
-> +    const uint32_t src_addr_1 = src_addr + 0x10000;
-> +    const uint32_t src_addr_2 = src_addr + 0x20000;
-> +    const uint32_t src_addr_3 = src_addr + 0x30000;
-> +    const uint32_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[64] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_sg1)),
-> @@ -336,8 +336,8 @@ void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t buffer_addr = src_addr + 0x1000000;
-> -    const uint32_t digest_addr = src_addr + 0x4000000;
-> +    const uint32_t buffer_addr = src_addr + 0x10000;
-> +    const uint32_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[32] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_accum_256) | SG_LIST_LEN_LAST),
-> @@ -377,8 +377,8 @@ void aspeed_test_sha512_accum(const char *machine, const uint32_t base,
->   {
->       QTestState *s = qtest_init(machine);
->   
-> -    const uint32_t buffer_addr = src_addr + 0x1000000;
-> -    const uint32_t digest_addr = src_addr + 0x4000000;
-> +    const uint32_t buffer_addr = src_addr + 0x10000;
-> +    const uint32_t digest_addr = src_addr + 0x40000;
->       uint8_t digest[64] = {0};
->       struct AspeedSgList array[] = {
->           {  cpu_to_le32(sizeof(test_vector_accum_512) | SG_LIST_LEN_LAST),
 
 
