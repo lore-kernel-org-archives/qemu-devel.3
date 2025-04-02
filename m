@@ -4,73 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13759C36010
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 00:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DA7C36010
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 01:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzlng-0001kP-Bg; Tue, 01 Apr 2025 20:17:48 -0400
+	id 1tzmZl-0007i1-Ci; Tue, 01 Apr 2025 21:07:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tzlnd-0001jd-0d
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 20:17:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tzmZj-0007hj-G7
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 21:07:27 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tzlna-0002zk-TW
- for qemu-devel@nongnu.org; Tue, 01 Apr 2025 20:17:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743553059;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GhT2bJaH8j4meBFfXz9ZI15r2hy18/03nb00p8MvWJU=;
- b=DVMQqhae/lskMSi1Nye3OISUuGZYwWy9+YzB0wfs0JVYgS0fAODLA2jSfsBzWonV6f1rBI
- eilfERavWqIJsfvJbgVtWTF8p7rVoZFsuM3GrXkYHfG77CnHY2cUq5qd/42CD6JT+9gMzr
- 9SPGicdWSU/bXjtxovFz06I2oqsJOhg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-xPNpqlbSNxWnkQNlAcsz7w-1; Tue,
- 01 Apr 2025 20:17:34 -0400
-X-MC-Unique: xPNpqlbSNxWnkQNlAcsz7w-1
-X-Mimecast-MFC-AGG-ID: xPNpqlbSNxWnkQNlAcsz7w_1743553053
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA24619560BC; Wed,  2 Apr 2025 00:17:32 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.38])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F24D0195609D; Wed,  2 Apr 2025 00:17:31 +0000 (UTC)
-Date: Tue, 1 Apr 2025 15:21:42 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: saman <saman@enumclass.cc>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH] Rust: Add tracing and logging support for Rust code
-Message-ID: <20250401192142.GD277986@fedora>
-References: <20250401002633.738345-1-saman@enumclass.cc>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tzmZh-0000ux-Gr
+ for qemu-devel@nongnu.org; Tue, 01 Apr 2025 21:07:27 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5320Zm7a000399
+ for <qemu-devel@nongnu.org>; Wed, 2 Apr 2025 01:07:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 7p/255aLCkhaJYy6wJJUtuOHgtcM/qDOdpKSHl8h9t4=; b=HUgmgSitj6O1OU6q
+ G5GJGuAt67Pl2XzQ9dkPzZ8KDgCYG8pYhMynn3mbOecRp+6fHAuY0zBQ9RFaYmhn
+ w4czMTKJgVmA06DmmAYKMoipi3JDwNt/jtIDsGKQHMnMhIP3+ClpRICVRYDJ+Xm0
+ QIUxHAhzL7TTty6yJ6HDuGQmxOiD6vQI93+NR3r4/I2s/FCpDHEGIy6Is9TBSqfL
+ HGaqzDISkcGzJ9X1iZxPrxlzmuHpQ5ZDdKdv3qqrYXFv6DA2PwvGa7nG+FmAoytO
+ CuoLhDaE4lbgQKUyuzILwzTDP6vk3ftEs0FNSI5sE+5X/8T8y4AAXiFXNo8o1U5Z
+ GoOvaA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p67qhydh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 01:07:19 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2254bdd4982so157021705ad.1
+ for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 18:07:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743556037; x=1744160837;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7p/255aLCkhaJYy6wJJUtuOHgtcM/qDOdpKSHl8h9t4=;
+ b=cGaJzskpzYtE3UNXSjsPJlluyMvnwtBLksv3KGBSS5H0wnBf8n155kmfSCmnr+ePbS
+ 61cKFVOxfWn9DtYgCp3uNPquZQt6HpJEe+bC4PbyiEYKTJfItJhQoKxiGL5CC3durTju
+ VB7UHWCne3iYg3j5jDrwxBiM9SfbAhw9G/e8LRhCMP3mzevZWg7QjFRAhnBy0Z0LzoAT
+ eeH7t16IkiyWuxHuNTjJur2KoPKm16RIBfOh0SgH2szJEZDKJpwCWSDu7Dh/LnL7sdh5
+ KUVtNbjESTeYHN2VnHT8Bj8SdWrzrb+U5O1Sob48kMLrvZuT+sIjEt1wNkW6aK7SDofX
+ D/nQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPso63vB3ZbsYmjyo8N6fW2iAxZQ27qBhAinqba54faFUYBpiJLLVSiUP5q6EXX2bx+rdDkwC+U6OL@nongnu.org
+X-Gm-Message-State: AOJu0YyCKRECBHGj9C3e/AYGkJpeU47TVW04j3XjN2+6CKg2A/Z9OHv2
+ dWoihM59LC9Uw/OYManYDKJUVZEtpr5848iqjDWxKUn75iveW9gmLoWXco7uw/iOMam7yYtV9KL
+ UjqjU6nWikqkseB2VnZDHExCPvvrOg23mfB+mTha3YF6MG8+vYaQ84w==
+X-Gm-Gg: ASbGncvKJ/J2TCUcB9fphET6vZwLzGED2zli2esSjxh6olAZmF5heg4mCgHINyCHXe2
+ wWnJKNXOO8F1uUBrTgj35edd9QO6jhKysQlpcP2bePIhpaQ9gK9YPO1HJbFPRn7vP2DRY/TZ6pd
+ ab6sW5AjUhnZZX1fEuQoKExka6n83wTne7WoxS4FNOG4XfFOmHpRRxbznY30VFeov1ufEKmFASC
+ P9afZN9WWgsol56Oe6QNlW7iDN6zUgZyMShiv9iUxzKhrwMc37UAov8FEFBlTcGSof99wJrQYbJ
+ upagPbpMuM8EdzGuJAOLuRBTf3PMmOU+mWr9HMFs+++Kfz7X7vuElqw4ecXuh/znPSI3907dlbW
+ US5fg4YQlh92EZAE8
+X-Received: by 2002:a05:6a00:244b:b0:736:43d6:f008 with SMTP id
+ d2e1a72fcca58-739c78c0ef0mr867675b3a.12.1743556037367; 
+ Tue, 01 Apr 2025 18:07:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0c1Qlc1Rqst6PUuHwc7eRkY0lHU9VXeIixA95oog9i4v14m00cLH8BRo/6pRhhST002SA1g==
+X-Received: by 2002:a05:6a00:244b:b0:736:43d6:f008 with SMTP id
+ d2e1a72fcca58-739c78c0ef0mr867640b3a.12.1743556036897; 
+ Tue, 01 Apr 2025 18:07:16 -0700 (PDT)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739710ace02sm9683770b3a.150.2025.04.01.18.07.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 01 Apr 2025 18:07:16 -0700 (PDT)
+Message-ID: <6ea7476a-1544-4921-a385-e0d2eff6dcef@oss.qualcomm.com>
+Date: Tue, 1 Apr 2025 20:07:14 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="LopqBG/p4LWDt1ee"
-Content-Disposition: inline
-In-Reply-To: <20250401002633.738345-1-saman@enumclass.cc>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.997, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] hw/intc: Add l2vic interrupt controller
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250301172045.1295412-1-brian.cain@oss.qualcomm.com>
+ <20250301172045.1295412-2-brian.cain@oss.qualcomm.com>
+ <3029782c-8d16-4428-9d6b-1c2fa8a7e755@linaro.org>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <3029782c-8d16-4428-9d6b-1c2fa8a7e755@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=fMI53Yae c=1 sm=1 tr=0 ts=67ec8dc8 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=ABNU-bO0iG1_zgacNiEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: AMncwz4DhkK6yd3PiN79zF8w8p6StMsE
+X-Proofpoint-GUID: AMncwz4DhkK6yd3PiN79zF8w8p6StMsE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-02_01,2025-04-01_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 impostorscore=0 clxscore=1015
+ mlxlogscore=999 bulkscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504020006
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,154 +137,173 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---LopqBG/p4LWDt1ee
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 3/3/2025 6:26 AM, Philippe Mathieu-Daudé wrote:
+> Hi Brian and Sid,
+>
+> On 1/3/25 18:20, Brian Cain wrote:
+>> From: Sid Manning <sidneym@quicinc.com>
+>>
+>> Co-authored-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+>> Co-authored-by: Damien Hedde <damien.hedde@dahe.fr>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   MAINTAINERS                    |   2 +
+>>   docs/devel/hexagon-l2vic.rst   |  59 +++++
+>>   docs/devel/index-internals.rst |   1 +
+>>   include/hw/intc/l2vic.h        |  37 +++
+>>   hw/intc/l2vic.c                | 417 +++++++++++++++++++++++++++++++++
+>>   hw/intc/Kconfig                |   3 +
+>>   hw/intc/meson.build            |   2 +
+>>   hw/intc/trace-events           |   4 +
+>>   8 files changed, 525 insertions(+)
+>>   create mode 100644 docs/devel/hexagon-l2vic.rst
+>>   create mode 100644 include/hw/intc/l2vic.h
+>>   create mode 100644 hw/intc/l2vic.c
+>
+>
+>> diff --git a/hw/intc/l2vic.c b/hw/intc/l2vic.c
+>> new file mode 100644
+>> index 0000000000..9df6575214
+>> --- /dev/null
+>> +++ b/hw/intc/l2vic.c
+>> @@ -0,0 +1,417 @@
+>> +/*
+>> + * QEMU L2VIC Interrupt Controller
+>> + *
+>> + * Arm PrimeCell PL190 Vector Interrupt Controller was used as a 
+>> reference.
+>> + * Copyright(c) 2020-2025 Qualcomm Innovation Center, Inc. All 
+>> Rights Reserved.
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "hw/irq.h"
+>> +#include "hw/sysbus.h"
+>> +#include "migration/vmstate.h"
+>> +#include "qemu/log.h"
+>> +#include "qemu/module.h"
+>> +#include "hw/intc/l2vic.h"
+>> +#include "trace.h"
+>> +
+>> +#define L2VICA(s, n) (s[(n) >> 2])
+>> +
+>> +#define TYPE_L2VIC "l2vic"
+>> +#define L2VIC(obj) OBJECT_CHECK(L2VICState, (obj), TYPE_L2VIC)
+>
+> Why not use OBJECT_DECLARE_SIMPLE_TYPE()?
+>
 
-On Mon, Mar 31, 2025 at 07:26:33PM -0500, saman wrote:
-> This change introduces initial support for tracing and logging in Rust-ba=
-sed
-> QEMU code. As an example, tracing and logging have been implemented in the
-> pl011 device, which is written in Rust.
->=20
-> - Updated `rust/wrapper.h` to include the `qemu/log.h` and `hw/char/trace=
-=2Eh` header.
-> - Added log.rs to wrap `qemu_log_mask` and `qemu_log_mask_and_addr`
-> - Modified `tracetool` scripts to move C function implementation from
->   header to .c
-> - Added log and trace in rust version of PL011 device
->=20
-> Future enhancements could include generating idiomatic Rust APIs for trac=
-ing
-> using the tracetool scripts
->=20
-> Signed-off-by: saman <saman@enumclass.cc>
-> ---
->  include/qemu/log-for-trace.h        |  5 +--
->  rust/hw/char/pl011/src/device.rs    | 34 +++++++++++++++---
->  rust/hw/char/pl011/src/registers.rs | 20 +++++++++++
->  rust/qemu-api/meson.build           |  1 +
->  rust/qemu-api/src/lib.rs            |  1 +
->  rust/qemu-api/src/log.rs            | 54 +++++++++++++++++++++++++++++
->  rust/wrapper.h                      |  2 ++
->  scripts/tracetool/format/c.py       | 16 +++++++++
->  scripts/tracetool/format/h.py       | 11 ++----
->  util/log.c                          |  5 +++
->  10 files changed, 131 insertions(+), 18 deletions(-)
->  create mode 100644 rust/qemu-api/src/log.rs
->=20
-> diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
-> index d47c9cd446..ad5cd0dd24 100644
-> --- a/include/qemu/log-for-trace.h
-> +++ b/include/qemu/log-for-trace.h
-> @@ -24,10 +24,7 @@ extern int qemu_loglevel;
->  #define LOG_TRACE          (1 << 15)
-> =20
->  /* Returns true if a bit is set in the current loglevel mask */
-> -static inline bool qemu_loglevel_mask(int mask)
-> -{
-> -    return (qemu_loglevel & mask) !=3D 0;
-> -}
-> +bool qemu_loglevel_mask(int mask);
-> =20
->  /* main logging function */
->  void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
-> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/de=
-vice.rs
-> index bf88e0b00a..42385a7bf6 100644
-> --- a/rust/hw/char/pl011/src/device.rs
-> +++ b/rust/hw/char/pl011/src/device.rs
-> @@ -2,15 +2,21 @@
->  // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->  // SPDX-License-Identifier: GPL-2.0-or-later
-> =20
-> -use std::{ffi::CStr, mem::size_of, ptr::addr_of_mut};
-> +use std::{
-> +    ffi::{CStr, CString},
-> +    mem::size_of,
-> +    ptr::addr_of_mut,
-> +};
-> =20
->  use qemu_api::{
->      chardev::{CharBackend, Chardev, Event},
->      impl_vmstate_forward,
->      irq::{IRQState, InterruptSource},
-> +    log::Mask,
->      memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuild=
-er},
->      prelude::*,
->      qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetTy=
-pe, ResettablePhasesImpl},
-> +    qemu_log_mask,
->      qom::{ObjectImpl, Owned, ParentField},
->      static_assert,
->      sysbus::{SysBusDevice, SysBusDeviceImpl},
-> @@ -298,7 +304,7 @@ pub(self) fn write(
->              DMACR =3D> {
->                  self.dmacr =3D value;
->                  if value & 3 > 0 {
-> -                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemen=
-ted\n");
-> +                    qemu_log_mask!(Mask::log_unimp, "pl011: DMA not impl=
-emented\n");
->                      eprintln!("pl011: DMA not implemented");
->                  }
->              }
-> @@ -535,11 +541,21 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
->                  u64::from(device_id[(offset - 0xfe0) >> 2])
->              }
->              Err(_) =3D> {
-> -                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offse=
-t 0x%x\n", (int)offset);
-> +                qemu_log_mask!(
-> +                    Mask::log_guest_error,
-> +                    "pl011_read: Bad offset 0x%x\n",
-> +                    offset as i32
-> +                );
->                  0
->              }
->              Ok(field) =3D> {
-> +                let regname =3D field.as_str();
->                  let (update_irq, result) =3D self.regs.borrow_mut().read=
-(field);
-> +                let c_string =3D CString::new(regname).expect("CString::=
-new failed");
-> +                let name_ptr =3D c_string.as_ptr();
-> +                unsafe {
-> +                    qemu_api::bindings::trace_pl011_read(offset as u32, =
-result, name_ptr);
-> +                }
+Will do, thanks.
 
-I didn't look closely to see whether CString::new(field.as_str()) boils
-down to allocating a new string or just pointing to a NUL-terminated
-string constant in the .rodata section of the binary, but this looks
-suspicious.
 
-It has the pattern:
+>> +
+>> +#define SLICE_MAX (L2VIC_INTERRUPT_MAX / 32)
+>> +
+>> +typedef struct L2VICState {
+>> +    SysBusDevice parent_obj;
+>> +
+>> +    QemuMutex active;
+>> +    MemoryRegion iomem;
+>> +    MemoryRegion fast_iomem;
+>> +    uint32_t level;
+>> +    /*
+>> +     * offset 0:vid group 0 etc, 10 bits in each group
+>> +     * are used:
+>> +     */
+>> +    uint32_t vid_group[4];
+>> +    uint32_t vid0;
+>> +    /* Clear Status of Active Edge interrupt, not used: */
+>> +    uint32_t int_clear[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Enable interrupt source */
+>> +    uint32_t int_enable[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Clear (set to 0) corresponding bit in int_enable */
+>> +    uint32_t int_enable_clear;
+>> +    /* Set (to 1) corresponding bit in int_enable */
+>> +    uint32_t int_enable_set;
+>> +    /* Present for debugging, not used */
+>> +    uint32_t int_pending[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Generate an interrupt */
+>> +    uint32_t int_soft;
+>> +    /* Which enabled interrupt is active */
+>> +    uint32_t int_status[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Edge or Level interrupt */
+>> +    uint32_t int_type[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* L2 interrupt group 0-3 0x600-0x7FF */
+>> +    uint32_t int_group_n0[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    uint32_t int_group_n1[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    uint32_t int_group_n2[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    uint32_t int_group_n3[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    qemu_irq irq[8];
+>> +} L2VICState;
+>
+> OBJECT_DECLARE_SIMPLE_TYPE(L2VICState, L2VIC)
+>
+>
+>> +static inline bool vid_active(L2VICState *s)
+>> +
+>> +{
+>> +    /* scan all 1024 bits in int_status arrary */
+>> +    const int size = sizeof(s->int_status) * CHAR_BIT;
+>> +    const int active_irq = find_first_bit((unsigned long 
+>> *)s->int_status, size);
+>
+> Maybe this file could leverage the 32-bit bitops.h API:
+>
+> $ git grep bit32\( include/qemu/bitops.h
+> include/qemu/bitops.h:38: * - Bits stored in an array of 'uint32_t': 
+> set_bit32(), clear_bit32(), etc
+> include/qemu/bitops.h:270:static inline void set_bit32(long nr, 
+> uint32_t *addr)
+> include/qemu/bitops.h:296:static inline void clear_bit32(long nr, 
+> uint32_t *addr)
+> include/qemu/bitops.h:322:static inline void change_bit32(long nr, 
+> uint32_t *addr)
+> include/qemu/bitops.h:335:static inline int test_and_set_bit32(long 
+> nr, uint32_t *addr)
+> include/qemu/bitops.h:350:static inline int test_and_clear_bit32(long 
+> nr, uint32_t *addr)
+> include/qemu/bitops.h:365:static inline int test_and_change_bit32(long 
+> nr, uint32_t *addr)
+> include/qemu/bitops.h:380:static inline int test_bit32(long nr, const 
+> uint32_t *addr)
+>
 
-  ...do work to produce trace event arguments...
-  trace_foo(arg1, arg2, arg3);
+I think your suggestion is based on the fact the state to hold the 
+interrupt status (et al) were declared as uint32_t arrays. But in fact 
+it might be clearer to take Taylor's suggestion from this thread and use 
+DECLARE_BITMAP() instead?
 
-Tracing is intended to be as low-overhead as possible when trace events
-are disabled but compiled in. The work to produce event arguments must
-be done only when the trace event is enabled.
+In which case, perhaps the call to find_first_bit() could remain?
 
---LopqBG/p4LWDt1ee
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfsPMUACgkQnKSrs4Gr
-c8gCiwf+JLMo2CC3ET7B+3e2/u9s6RDBDQg5vBQFMwGJntWplp+vq3i5KW8NgmUY
-ToPifGnVf/Qe68LzepcXB1gXX5O764VciPmCjWvHkpPJKKE4vR1VoNuMWOrrru1P
-RElhPATLuEqueAtASzoTGIVbubaQjy0fAanQL8qUPCbZDRoueWdB5G1jCy8u9fZN
-Gh1vrYotgDVNaYGthX+kst8aP9u+dIBXJIuDfc64wYV8O8lUIysFByyV+PbgmzYa
-/HHRO62q14f2JAbBm9IcKKQ1yD5iNZCC1hypJtdx5+f6Ne2WLRPoDV5T861d23Nq
-lscnGgIfvMwOau/PjpnMT04RW1lLNA==
-=FGKn
------END PGP SIGNATURE-----
-
---LopqBG/p4LWDt1ee--
-
+>> +    return ((active_irq != size)) ? true : false;
+>> +}
+>> +
+>> +static bool l2vic_update(L2VICState *s, int irq)
+>> +{
+>> +    if (vid_active(s)) {
+>> +        return true;
+>> +    }
+>> +
+>> +    bool pending = test_bit(irq, (unsigned long *)s->int_pending);
+>> +    bool enable = test_bit(irq, (unsigned long *)s->int_enable);
+>> +    if (pending && enable) {
+>> +        int vid = get_vid(s, irq);
+>> +        set_bit(irq, (unsigned long *)s->int_status);
+>> +        clear_bit(irq, (unsigned long *)s->int_pending);
+>> +        clear_bit(irq, (unsigned long *)s->int_enable);
+>> +        /* ensure the irq line goes low after going high */
+>> +        s->vid0 = irq;
+>> +        s->vid_group[get_vid(s, irq)] = irq;
+>> +
+>> +        /* already low: now call pulse */
+>> +        /*     pulse: calls qemu_upper() and then qemu_lower()) */
+>> +        qemu_irq_pulse(s->irq[vid + 2]);
+>> +        trace_l2vic_delivered(irq, vid);
+>> +        return true;
+>> +    }
+>> +    return false;
+>> +}
+>
 
