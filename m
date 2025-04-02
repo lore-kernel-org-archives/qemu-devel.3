@@ -4,36 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB43C3601A
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7F6C36018
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzwUI-0008FS-Ce; Wed, 02 Apr 2025 07:42:32 -0400
+	id 1tzwUS-0008Lu-Nj; Wed, 02 Apr 2025 07:42:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tzwU5-0008AO-ES
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:42:18 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tzwU7-0008An-0l
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:42:25 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tzwU2-0005CD-Vg
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:42:16 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1tzwU2-0005Dy-Vm
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:42:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
- To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=rmA/iDgZG2KDzRjHQxXGD3MxppFSKuxeIqHRzZn3ZPw=; b=qz9TFPqJ8xPJfnZ
- b52ZJGCctpdIxVT+JF1lZGgiAUzo51OOeeiuArqyRANBurQjfcfVWnooCa6reN6Pl3v14bcIKO/z9
- ciB4m6NEl9ZuyJA+xdC8SZ27FHnGfck69imSDn3G/PRZQoofcVCpKuBFbVbGVEdVjB7WPCTk3ec6K
- 7Q=;
+ List-Help; bh=TkmJZhsSi74lZwu9MFW+yrXJo83Y2kmA0AiGBYRj5po=; b=aGUMvFtMDxuBMBb
+ H+/nQppL69RyGiUwOAntejYPLEeW7Pajfzr4uJWukwr3vKeV9oGvDHDHJWiwlbwxdP2YxxGvMQH8E
+ 9BRyI3LDT+lptkzMLzRSF1vw1FFYQaRTOz2AexuICQo8/XCZtVGabE1DJsyfqBpZacZ/BajwNCvS4
+ EQ=;
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, brian.cain@oss.qualcomm.com,
  philmd@linaro.org
-Subject: [PATCH v2 0/2] target/hexagon: Fix macOS build
-Date: Wed,  2 Apr 2025 13:42:57 +0200
-Message-ID: <20250402114259.21953-1-anjo@rev.ng>
+Subject: [PATCH v2 2/2] target/hexagon: Only indent on linux
+Date: Wed,  2 Apr 2025 13:42:59 +0200
+Message-ID: <20250402114259.21953-3-anjo@rev.ng>
+In-Reply-To: <20250402114259.21953-1-anjo@rev.ng>
+References: <20250402114259.21953-1-anjo@rev.ng>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -62,34 +64,27 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A default macOS build with xcode cli tools installed lacks the `indent`
-program needed by the idef-parser postprocess step. If `indent` is
-installed through homebrew it doesn't support the `-linux` flag.
-Conditionally run `indent` only on linux hosts.
+indent on macOS, installed via homebrew, doesn't support -linux. Only
+run indent on linux hosts.
 
-Additionally `cpp` used by the idef-parser preprocess step expands into
-`clang ... -traditional-cpp` and doesn't support macro concatenation
-among other things, replace it with a meson custom_target running
-`${compiler} -E`.
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/hexagon/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-fixes: https://lore.kernel.org/qemu-devel/d95ebf5d-c1f6-42c5-8aeb-65764fa87125@linaro.org/
-
-Note: default bison on macOS is still too old (v2.3 vs v3.0) and a newer
-version needs to be installed via homebrew. I'll take a look at
-supporting v2.3.
-
-Changes in v2:
-  * Don't remove the indent step but only run on linux hosts.
-
-Anton Johansson (2):
-  target/hexagon: Replace `prepare` script with meson target
-  target/hexagon: Only indent on linux
-
- target/hexagon/idef-parser/prepare | 24 ------------------------
- target/hexagon/meson.build         |  5 +++--
- 2 files changed, 3 insertions(+), 26 deletions(-)
- delete mode 100755 target/hexagon/idef-parser/prepare
-
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index abcf00ca1f..d26787a9b9 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -324,7 +324,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+     )
+ 
+     indent = find_program('indent', required: false)
+-    if indent.found()
++    if indent.found() and host_os == 'linux'
+         idef_generated_tcg_c = custom_target(
+             'indent',
+             input: idef_generated_tcg[0],
 -- 
 2.47.1
 
