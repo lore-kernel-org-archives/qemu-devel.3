@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EECCC36018
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 20:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E84C36018
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 20:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u04Sw-0003RJ-K9; Wed, 02 Apr 2025 16:13:38 -0400
+	id 1u04Tm-0003iz-E1; Wed, 02 Apr 2025 16:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u04Sv-0003Qx-BE
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 16:13:37 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u04Tk-0003fN-QN
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 16:14:28 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u04St-0001cX-4y
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 16:13:36 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so1289735e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 13:13:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u04Ti-000262-P2
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 16:14:28 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43d0618746bso930075e9.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 13:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743624812; x=1744229612; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743624864; x=1744229664; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hyJHGJVM0y7gQtDe2UrYLgglTL6Yr+pC5jHcpInzBG4=;
- b=kdRZFDVCCwKR7Fj5MUZwbXOfQamhdtJChKOvNeGyWG/zvVyyeNObthdEwff8kOEhLL
- OgWxNmEi2a7xR9RGbi4rarzC54zI5d8/6tInwzGj2cYR8J4MZKzVSD7UdRGshWk6qQ/W
- M/lTHYAeS+mK/JitMprkKPELLXp3sDIrz8ELX7CWQZ3Nos/8ET96kNa54r6pFmFCAUfb
- sshAAV/spT31s3ST4YH+Vqi6K5tTRLnYiYZuybezMG+sEZhIUq+Wi4i7imOmGtVRZJMg
- Wc5M6KtIuKoLgEssqaSNkNyn5z/5LU0497WcSMlgIkEKTtIOr6Wtgkpgsd1bnMOjtoAV
- HWeA==
+ bh=yC+mNmtcpqdQdPqKkwgfAIKQoD1oxndOetvKGzyvIOo=;
+ b=UnKZo7tr0cS7HiSFc1JTKtnL2fh5D6yXzY5a/gNf1rMls4FnProLzy1GWqyXVx70Mg
+ 6fjDENMz5/CELvO4GUelxyqmkw22yM8TaAUy1QOe1lKU0Nl/ikSnH6sCtTj9/1buTJXb
+ sKaVTaXIu4ccT74vEruxm+Xci6wRbuR3ymBAf84anNyGi76nvDxWXHvzohtG1PWtMufU
+ SzMaFtVmTZA0jYDTmnvpfPkwAMaqu9jRlBXlYG4os+ueKwJ+UcFCp22TS4rMwcZ6mhOm
+ 9/MOCu8+CIqeELmRV7JYLLKFQRAa+c/DbuE+su55la3nYT5mqQvpigGb54ggZDjTrjQW
+ HT6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743624812; x=1744229612;
+ d=1e100.net; s=20230601; t=1743624864; x=1744229664;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hyJHGJVM0y7gQtDe2UrYLgglTL6Yr+pC5jHcpInzBG4=;
- b=EgYVc4yJ2Rid04DQ5E1xg+A5CHGOird5l1h3gepazEopWyJ/y4WXrx5N/yCIHEtUIS
- kN+nZE+kkmtH9muYPsT3rXpjLZa2mygfMIIZPddzTZf0cYKiye5OJK61u3n3Kf6cqkI7
- i+G67ojLj0zBHe/nwMHqirDipx7RGriwnW1tgZ/R7FCW5IKmlu21bBA9mjmUB5zifCrH
- mQnhZ7ZufhQP5uC35tdz9vUCFeX81Xi41xhkcTkJsyxwxpfD+02iZvN8Y3b8u5xz9PeO
- HBErl+/YqLypxMCLpNIkEt20zxKraDD53ykgUvG51DGwmMIUDtSEef4hYBylHuLDAff3
- 8/+g==
+ bh=yC+mNmtcpqdQdPqKkwgfAIKQoD1oxndOetvKGzyvIOo=;
+ b=jV3E5gPA0wud0thwj6jyQYxpsR6mO7baB9GueTvncQBp8XhPp6aQ/vHlKIvZoE1KbB
+ bzHIR8jOg0MHi1u9PS6FnrYA/IcvZaBNKXAYc/W7Iqb1saKJojm0dncYweI3cXYoSliZ
+ Bd+JEaawatjqzQILfkMj8yWncQDtBMnkgrTjB4JoOPCWfsrhHeFkTzjMhICqsKPjPPf8
+ FkQtI6miboT890D7kMDaTw/tFsUM8LWCgTHzU+TX1rcqL2DToUjS7c6k02lATpz00IJ3
+ 5aICBc3JO/7VIzzeY7HN4tle+5nHkXlmeUvo/vW8+AeqOpC8jH9mUB0Tqkedis7cyI66
+ fAtA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW340A7ubri20TQvYB9iw3wx1mW/+xAY3/heL0Q3M44nSWRNO3xL9WJOUidQotP6+seZOfRVLWsOOXK@nongnu.org
-X-Gm-Message-State: AOJu0YzNiyTLpQi0PxBDmG1ZEvOBw7tgvZQkgadIxO695QY2uUIrHmr/
- TQ6plqEFIK0UqM5kfzgpUYeFXcpwtLhlJ12NKwu17bT+bVm2PPZPYulY8GFcyNs=
-X-Gm-Gg: ASbGncuf4mSA0dSvwauN0wx70wZE0+9fLXgv/nJnPV5nAFR9hjycc/L++7WpAzivDEp
- DisbWhE3jWhtni5qrft/jIvzxrrAfn7vTo14ztPtdImkE5zOnzeiIlaToZqv0KYNlRHASo5139J
- AuENJ/4v+hJ0aqDRBdA86rRUsLGo4UDdLd0WGUf/PhqFdVuU60pY9jesnFQx4yX7wiQPBL30aV4
- p8pROhFfuZEnWNG5Vw0N9t07RmgH6BcvpTPSRPcLonFLZ75KXisMGp2g1W9bBGon7bt3E9t3kWX
- X2H3G8C5j3GwDKJRGn+MnmK/7W38ZPBBTZy+R5BpLY/vh242tLB41R/xwGqSXsPO5w9af4pdGPj
- Bl1LBGSJZBZjp
-X-Google-Smtp-Source: AGHT+IGPXaidrTdE20mCq+0ZNBWQx/srl+TgezuFycnADxGQ4SEJF3YQgodedKriJXY7vllnW5Xzsw==
-X-Received: by 2002:a05:600c:4fd1:b0:43c:f6b0:e807 with SMTP id
- 5b1f17b1804b1-43db8527142mr191723025e9.31.1743624812015; 
- Wed, 02 Apr 2025 13:13:32 -0700 (PDT)
+ AJvYcCVPyahiVp36/liblV+PPHYJVH9iHnnWQ3m9tf+Z+vfDx9TvHLFBC7ZudPQmZACLpbKOCtCC9S8XIh4U@nongnu.org
+X-Gm-Message-State: AOJu0YzgoptKs3Sqggpcl3GXpubAwCOCEp5AezdRBzcCuQF4vidYlah+
+ lXeyZM3uo4cftwSwRkFwPeotfdPP+l1BBt4tFtOfSQse6Jmn/R0eIdX1/zThePA=
+X-Gm-Gg: ASbGncvkv/QpVt3q202JX+qphjFTQ3Uz2FZyPv2S20mAo1QuZO55oDTkA1WMW91IBHh
+ HkbchzRAJNWVoFcV3vxTk6GmpYyV1dycT7mdAGi4y/yb42JjCfBhBm8wMX4FFqPknA1zJrxfKIh
+ yg3YgxEtZ6b2WIBxokv6pLAvYfW9R181cXYFhU0uaFfQFeOlcXYoYrYwozUIbYPNH0/0fsxILrV
+ MvCFihRwZ2qhKlbASoNL2m3/GrO7zWqPCc80U9ve0vfHj15AD9gjA/3Tu7gBL+l/HVF9u0jLju2
+ 5UCAxKU6C262Uuh5O9nhkXrvlla6j5xFuMcghcWNPxuHlrruRf0TwoQEFbpkLdI43PKYmZoYQcC
+ DNvPz8o1ATial
+X-Google-Smtp-Source: AGHT+IFsRAGtOLcXuaKfj4zoOC8lMC94oTgqbz2C3/avdtxxkmYWpjP/v1hh3LD97kXq6cAqRWMxaw==
+X-Received: by 2002:a05:600c:3d0a:b0:43c:f597:d584 with SMTP id
+ 5b1f17b1804b1-43ec1532085mr1127305e9.29.1743624864321; 
+ Wed, 02 Apr 2025 13:14:24 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a422dsm18110862f8f.93.2025.04.02.13.13.31
+ 5b1f17b1804b1-43eb5fc57e9sm31209765e9.3.2025.04.02.13.14.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 13:13:31 -0700 (PDT)
-Message-ID: <aae2c395-4649-4281-bf08-4104917aa3c6@linaro.org>
-Date: Wed, 2 Apr 2025 22:13:30 +0200
+ Wed, 02 Apr 2025 13:14:23 -0700 (PDT)
+Message-ID: <f239d840-19e9-4493-b4a0-1530a9b49713@linaro.org>
+Date: Wed, 2 Apr 2025 22:14:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 04/23] include/exec: Split out exec/cpu-interrupt.h
+Subject: Re: [PATCH v2 06/42] include/exec: Split out cpu-mmu-index.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250308225902.1208237-1-richard.henderson@linaro.org>
- <20250308225902.1208237-6-richard.henderson@linaro.org>
- <b240dea4-082c-4bdd-8dfb-45d444ae12ef@linaro.org>
- <6b3e4490-781f-4337-837c-3ed38483332a@linaro.org>
+Cc: pierrick.bouvier@linaro.org
+References: <20250318213209.2579218-1-richard.henderson@linaro.org>
+ <20250318213209.2579218-7-richard.henderson@linaro.org>
+ <7fbd71b6-8642-4374-a573-c9cc693e381c@linaro.org>
+ <d6a62a7c-b857-45bf-b7f4-5a8863ce5b6c@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6b3e4490-781f-4337-837c-3ed38483332a@linaro.org>
+In-Reply-To: <d6a62a7c-b857-45bf-b7f4-5a8863ce5b6c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,55 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/25 20:46, Richard Henderson wrote:
-> On 4/2/25 03:17, Philippe Mathieu-Daudé wrote:
+On 2/4/25 20:33, Richard Henderson wrote:
+> On 4/2/25 04:26, Philippe Mathieu-Daudé wrote:
 >> Hi Richard,
 >>
->> On 8/3/25 23:58, Richard Henderson wrote:
->>> Some of these bits are actually common to all cpus; while the
->>> reset have common reservations for target-specific usage.
->>> While generic code cannot know what the target-specific usage is,
->>> common code can know what to do with the bits, e.g. single-step.
+>> On 18/3/25 22:31, Richard Henderson wrote:
+>>> The implementation of cpu_mmu_index was split between cpu-common.h
+>>> and cpu-all.h, depending on CONFIG_USER_ONLY.  We already have the
+>>> plumbing common to user and system mode.  Using MMU_USER_IDX
+>>> requires the cpu.h for a specific target, and so is restricted to
+>>> when we're compiling per-target.
 >>>
->>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> Include the new header only where needed.
+>>>
 >>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 >>> ---
->>>   include/exec/cpu-all.h       | 53 +--------------------------
->>>   include/exec/cpu-interrupt.h | 70 ++++++++++++++++++++++++++++++++++++
->>>   include/exec/poison.h        | 13 -------
->>>   3 files changed, 71 insertions(+), 65 deletions(-)
->>>   create mode 100644 include/exec/cpu-interrupt.h
+>>>   include/exec/cpu-all.h        |  6 ------
+>>>   include/exec/cpu-common.h     | 20 ------------------
+>>>   include/exec/cpu-mmu-index.h  | 39 +++++++++++++++++++++++++++++++++++
+>>>   include/exec/cpu_ldst.h       |  1 +
+>>>   semihosting/uaccess.c         |  1 +
+>>>   target/arm/gdbstub64.c        |  3 +++
+>>>   target/hppa/mem_helper.c      |  1 +
+>>>   target/i386/tcg/translate.c   |  1 +
+>>>   target/loongarch/cpu_helper.c |  1 +
+>>>   target/microblaze/helper.c    |  1 +
+>>>   target/microblaze/mmu.c       |  1 +
+>>>   target/openrisc/translate.c   |  1 +
+>>>   target/sparc/cpu.c            |  1 +
+>>>   target/sparc/mmu_helper.c     |  1 +
+>>>   target/tricore/helper.c       |  1 +
+>>>   target/xtensa/mmu_helper.c    |  1 +
+>>>   16 files changed, 54 insertions(+), 26 deletions(-)
+>>>   create mode 100644 include/exec/cpu-mmu-index.h
 >>
 >>
->>> diff --git a/include/exec/poison.h b/include/exec/poison.h
->>> index 35721366d7..8ed04b3108 100644
->>> --- a/include/exec/poison.h
->>> +++ b/include/exec/poison.h
->>> @@ -46,19 +46,6 @@
->>>   #pragma GCC poison TARGET_PHYS_ADDR_SPACE_BITS
->>> -#pragma GCC poison CPU_INTERRUPT_HARD
->>> -#pragma GCC poison CPU_INTERRUPT_EXITTB
->>> -#pragma GCC poison CPU_INTERRUPT_HALT
->>> -#pragma GCC poison CPU_INTERRUPT_DEBUG
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_0
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_1
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_2
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_3
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_EXT_4
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_INT_0
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_INT_1
->>> -#pragma GCC poison CPU_INTERRUPT_TGT_INT_2
+>>> diff --git a/include/exec/cpu-mmu-index.h b/include/exec/cpu-mmu-index.h
+>>> new file mode 100644
+>>> index 0000000000..b46e622048
+>>> --- /dev/null
+>>> +++ b/include/exec/cpu-mmu-index.h
+>>> @@ -0,0 +1,39 @@
+>>> +/*
+>>> + * cpu_mmu_index()
+>>> + *
+>>> + *  Copyright (c) 2003 Fabrice Bellard
+>>> + *
+>>> + * SPDX-License-Identifier: LGPL-2.1+
+>>> + */
+>>> +
+>>> +#ifndef EXEC_CPU_MMU_INDEX_H
+>>> +#define EXEC_CPU_MMU_INDEX_H
+>>> +
+>>> +#include "hw/core/cpu.h"
+>>> +#include "tcg/debug-assert.h"
+>>> +#ifdef COMPILING_PER_TARGET
+>>> +#include "cpu.h"
 >>
->> If I understood correctly yesterday's discussion, these
->> definitions are internal to target/ and shouldn't be used
->> by hw/ at all. If this is right, then we need to keep them
->> poisoned for hw/ code.
+>> IIUC we only need "cpu.h" on user emulation. Maybe use:
+>>
+>>    #if defined(COMPILING_PER_TARGET) && defined(CONFIG_USER_ONLY)
 > 
-> No.  They are used by generic code to mask CPU_INTERRUPT_TGT_EXT_* 
-> during single-stepping.  We don't know what they mean, but they're all 
-> external interrupts.
+> Can't.
+> 
+>>> +#ifdef COMPILING_PER_TARGET
+>>> +# ifdef CONFIG_USER_ONLY
+> 
+> It would have to be this nesting, for the poisoning.
 
-I'm wondering about CPU_INTERRUPT_HARD ... CPU_INTERRUPT_DEBUG.
+Fine then, so we avoid including the huge "cpu.h" when not necessary.
+
 
