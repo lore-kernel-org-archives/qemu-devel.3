@@ -4,74 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B5AC28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 15:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98877C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 15:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u00Nq-0003wt-BC; Wed, 02 Apr 2025 11:52:06 -0400
+	id 1u00R4-0005RY-Dv; Wed, 02 Apr 2025 11:55:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u00No-0003wF-9y
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 11:52:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1u00R1-0005RJ-Pc
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 11:55:24 -0400
+Received: from mail-dm6nam12on2072.outbound.protection.outlook.com
+ ([40.107.243.72] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u00Nm-0001xY-Lm
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 11:52:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743609121;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IIr8q62LoRIyviTx/pdZhEXZBPu89FdOIxFcN4LTFXc=;
- b=FuqbqXymw2u/JmdOfJKsM6+pCfboO4yLv43Zu5uDIJbb81f1RrgyxwmVxIkLbYKVwQc/vf
- AqjBCqrOFPiPOAp4Iek99QRGKkQPo+EoeBw48KOHsXhIlgyNQegeI1YCQgmuZYOpKmF8Hc
- RYNsj4cq1pR1E0jrbKqtj5lKwdH1f10=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-lzhqgkWsMT-DoKHHa1XaUQ-1; Wed,
- 02 Apr 2025 11:51:58 -0400
-X-MC-Unique: lzhqgkWsMT-DoKHHa1XaUQ-1
-X-Mimecast-MFC-AGG-ID: lzhqgkWsMT-DoKHHa1XaUQ_1743609117
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0577D19560B7; Wed,  2 Apr 2025 15:51:57 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.101])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 55E55195609D; Wed,  2 Apr 2025 15:51:53 +0000 (UTC)
-Date: Wed, 2 Apr 2025 11:51:52 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
- fam@euphon.net, philmd@linaro.org, kwolf@redhat.com,
- hreitz@redhat.com, thuth@redhat.com, mjrosato@linux.ibm.com,
- schnelle@linux.ibm.com, Farhan Ali <alifm@linux.ibm.com>
-Subject: Re: [PATCH v3 0/3] Enable QEMU NVMe userspace driver on s390x
-Message-ID: <20250402155152.GE304512@fedora>
-References: <20250401172246.2688-1-alifm@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1u00Qz-0004mS-Ah
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 11:55:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pWzUEuQMDgSJbOP/nUszR0uMS18QmDSDawgp3IVb8oL4l16V0Vpn48p3jaDsEX191VLsp70cijZV4y/WNOSY8WZDAXhLhq1uZd6t8AO6maruugQdAdR6El5IcQBC+PjFtShKOQAnu/svtwzPRYvI20S82FpskxDM7ZtfnZ68FZLuA0AxE7gVM1iLaQe71f2mU5ODpGlH4wsOqF3whnYZwjfmG0x8rM+MpBmXVhabk7BaKhFU5ehEpg4dj1yFG1ZUP4gFPHZhoGP+SclAPiTmIDWCgJ+YAyng7RfMBftGj5Ip0qE8esqzaWwSlFj68rtAoDvhogPGPko5Hhb1NzbuPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d+mvkcMlTtimDfxr3wsdR0sUI7IoIIiT9X8ODR327Zg=;
+ b=iYr78HHaRmyTuXdJVVYqEQkaq2I/OibMa/TpMwAo2PBZ2XTHKo/6GE0XwhDY/3ME4S8+/6XcvpBcSzOb21UqsgsAskXqDkrrkoF7EagabDCvyftEWQEdaSEJc0rsY5fMZhc20dkv6O2AWlC6rvSNLwIlQvPaSOhYIf4hSSymWiFj0E3IGR8yo342gWEUYmLXG3/iwg/IGkk5dE6fHBFlOPhfp/4DDu0enV1zGxhwErwTh5O352EJ02uQ9qdmElBdQR5y3dKxY+5VX5SQc1iOnOMOatSZ7odra6nt8A4gmpOsCfc3apLAFgz64TQlOEQwvrAfkQTxv57MPnBHof214g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d+mvkcMlTtimDfxr3wsdR0sUI7IoIIiT9X8ODR327Zg=;
+ b=LP3JvX+GvbMRl5LgQvbdSP69jPROiWJpo8nBi0fhFfAc1wu3SnamHORMFoM4mQUv1F6BPbiyGzVHll388WBqT8w1f3rwN0IsDhwU70wGNzo0Ph+okRmsz6GII/Sw+N+6rA8TcrM7kjClzroLD+6iFxqgLzTeoUZDQ7Oz4kvWn7o=
+Received: from BL1PR13CA0012.namprd13.prod.outlook.com (2603:10b6:208:256::17)
+ by SA3PR12MB7805.namprd12.prod.outlook.com (2603:10b6:806:319::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8583.41; Wed, 2 Apr
+ 2025 15:50:13 +0000
+Received: from MN1PEPF0000F0E3.namprd04.prod.outlook.com
+ (2603:10b6:208:256:cafe::72) by BL1PR13CA0012.outlook.office365.com
+ (2603:10b6:208:256::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8606.22 via Frontend Transport; Wed,
+ 2 Apr 2025 15:50:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ MN1PEPF0000F0E3.mail.protection.outlook.com (10.167.242.41) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8606.22 via Frontend Transport; Wed, 2 Apr 2025 15:50:12 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 2 Apr
+ 2025 10:50:12 -0500
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="cljUvCXO0cOjgEvH"
-Content-Disposition: inline
-In-Reply-To: <20250401172246.2688-1-alifm@linux.ibm.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 10.0.0-rc2 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+Date: Wed, 2 Apr 2025 10:49:57 -0500
+Message-ID: <174360899767.2652907.11077257925426395819@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0E3:EE_|SA3PR12MB7805:EE_
+X-MS-Office365-Filtering-Correlation-Id: 19e4f49d-8fda-4dd7-f9ad-08dd71fe0dff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|82310400026|376014|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UW1SUHlhSW51YklCNEEwNDFMekZBbFJkUFVoY0lnK1BLOUVBanAzc0dOcE1W?=
+ =?utf-8?B?ZUh1UUpRMzltTUpiL2NPNVhyNmdrSUQ3SWRxSXFsM1FvQWwvSDFLbUdNVGJ4?=
+ =?utf-8?B?RzByYktLaTVsUk5BdG5melJqWlFJY1hlTnVNM05FTFpYbU9BVENkK2hyQkFB?=
+ =?utf-8?B?UTBlRlhqWWJ2TWs1VDVMVDhXdXQ2YkhqNjBoTTZMOEhObEdWMFRnTzNsaTJ3?=
+ =?utf-8?B?dXpsQWpuajdlN2RPbktnS0YrejdLS1VDZ2tQTUs3OHF5NGFFU29rZnpHWnVm?=
+ =?utf-8?B?ckNvQ0JPYW5QSmxqbDdKMmFzV0FFZFJzMnROQnBGTm9IdXRkWHlDSTI1MTBB?=
+ =?utf-8?B?NEdCdFJWcTc5S0VPMHdJTWxNWWo4ZlRyNG82TWdwMzlRcDZlVzhHa3pINVdl?=
+ =?utf-8?B?cloxOENoWFR4UkxNd3JjVnNYMnJRLzZ0S1VIdnI3M2NxVmlYYzNmSWQzaDhZ?=
+ =?utf-8?B?TFpQTkdKQmFsbWIrWmg3OVRiVldLUkl4NGxsdURVZHo3c3FUaW9LUzFnVk5T?=
+ =?utf-8?B?cW1oeVAyaWI1RXNkSUVGYkJsLzdwZ0daU1BhMDB4UkU4TjBjTmtIdTczUEpz?=
+ =?utf-8?B?ai85UUYxVmxSWVVxc1daY1VDRVVEeEdqWGhtOFVZa2hWbm5hWHNnQm1mMjNn?=
+ =?utf-8?B?a1VINUhXaTVEZ2hCOVFtMm1rMlU1cmdZbkVOMy9CcFpyZWIweGpGSG52THh2?=
+ =?utf-8?B?NS80Q2R1UGFUSm80UThxMTFsUEhPc0NPeHdEYTdFUG5DdnFrR0VJUXY4SlNj?=
+ =?utf-8?B?ZkVnelQwZ1kwN2dtSmJET29zTENHZzVJd3U2VG5JcG0yaWZ1U21lcjhQZGVQ?=
+ =?utf-8?B?Q2UxdFhaQlFvcXFKWmtIQy9HRFVEZlFpSGlMR21CQ21ZQ1NRR0RJbm5wdlFV?=
+ =?utf-8?B?UlE1RjVSOGE5Vnl5d3BRK1ZtM1BhYXJEMGQ3ckZpcUJCZlNVTTlaNWhvcFhi?=
+ =?utf-8?B?OGZvQkV5OUd6N3NYRHc0ZXd2ZENvcTJvTnlpREZFQ1dudTc5SUJXeUo4bmlL?=
+ =?utf-8?B?VmJ6YTliSmNtOWQvQmVxRVd1OE4vZElDRUE0QzBITmVQbFJHektkYTVnc3Rq?=
+ =?utf-8?B?Yk0yYTcxbytGYi8zOUdUKytTWjFZUXhUT21FdjhEeG54VTdhdVJlZEpPRXJk?=
+ =?utf-8?B?Q3B6Z3hqdzZVdFovUGF4UzZwM3BDVkh4RGQyNDNDb0ZMRFoyVGJIcTE5dDVJ?=
+ =?utf-8?B?MUQxK1RYSlVnYm81WlBoV3QxWUs3VDFqUDJ2ZFRCNFUwZW5VUlYzY0VRaWJM?=
+ =?utf-8?B?eU1BRTJySmxEdGNlcXRGb3FLRnRhQ1RpOHJmQkZHaUFXaVdhdHlhQ3hsWCtR?=
+ =?utf-8?B?TTltOGZCdjBCVzMzOHVXSW9nSktOL2luZzBzWGJBTHdSdmZKWmdZbFNLaHhI?=
+ =?utf-8?B?WkhYL0x3K0ZJeXdVb2ZXRDVxd2FjZ1hYaFBmNElBcWM1Tkp6c3YyNVZUL3do?=
+ =?utf-8?B?N2dVVjJaL2NhV2lFU3pZOVIzT2pnV1E0dmVjZHpoWW1yTG5DbFlNaTdxMVF4?=
+ =?utf-8?B?dzI5VzVkVzNXOUdCYktHb2RnZXFkR0VHMGdQdEN4aDVnTkY3WFJTcHhRV0pQ?=
+ =?utf-8?B?aEROS0t3WEozSzRFZlJ0NGVkeEZaMlU4cTRFZWhQK0RCcHNRbGJYcm1Pb040?=
+ =?utf-8?B?a1JoZHdrUjZQZVp5S1hBdk1nSUJudWwyVzZja1pFeDJiTU5IWVlmeWphL3hl?=
+ =?utf-8?B?RzV3eElKV2xNMDQrWVYwSHY1Rng4QndiNis5akFnWlpCRGJMaVVuZ0Y4VTdk?=
+ =?utf-8?B?dnVNMWEwdlQ4VGNTL3pITnM5VWd4UW1ITXlCRHRZM3Vmc3YwK1FTTEc4eWky?=
+ =?utf-8?B?dnFGd3ZJdkQ4VHRXQ1VMbko2SkFMNUhWVERkck0wd1p3bDl1UGYzZDBMZXFa?=
+ =?utf-8?B?OFF6SHUrUlZFZE95bkVyM2NNZkZOSGFSakRNV1Y4QlcvL3BWY2JKYkd6eWRD?=
+ =?utf-8?B?M2tkREtUN29kbDZJYWtOOTJUNDlaQnFkakVHZDd5T0Vueks3NERRdkduMDUz?=
+ =?utf-8?B?TXhDMWhydERnPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Apr 2025 15:50:12.6677 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19e4f49d-8fda-4dd7-f9ad-08dd71fe0dff
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0E3.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7805
+Received-SPF: permerror client-ip=40.107.243.72;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,102 +155,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello,
 
---cljUvCXO0cOjgEvH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On behalf of the QEMU Team, I'd like to announce the availability of the
+third release candidate for the QEMU 10.0 release. This release is meant
+for testing purposes and should not be used in a production environment.
 
-On Tue, Apr 01, 2025 at 10:22:43AM -0700, Farhan Ali wrote:
-> Hi,
->=20
-> Recently on s390x we have enabled mmap support for vfio-pci devices [1].
+  http://download.qemu.org/qemu-10.0.0-rc2.tar.xz
+  http://download.qemu.org/qemu-10.0.0-rc2.tar.xz.sig
 
-Hi Alex,
-I wanted to bring this to your attention. Feel free to merge it through
-the VFIO tree, otherwise I will merge it once you have taken a look.
+You can help improve the quality of the QEMU 10.0 release by testing this
+release and reporting bugs using our GitLab issue tracker:
 
-Thanks,
-Stefan
+  https://gitlab.com/qemu-project/qemu/-/milestones/15
 
-> This allows us to take advantage and use userspace drivers on s390x. Howe=
-ver,
-> on s390x we have special instructions for MMIO access. Starting with z15=
-=20
-> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which=
-=20
-> operate on virtually mapped PCI memory spaces, and can be used from users=
-pace.
-> On older platforms we would fallback to using existing system calls for M=
-MIO access.
->=20
-> This patch series introduces support the PCI MIO instructions, and enable=
-s s390x
-> support for the userspace NVMe driver on s390x. I would appreciate any re=
-view/feedback
-> on the patches.
->=20
-> Thanks
-> Farhan
->=20
-> [1] https://lore.kernel.org/linux-s390/20250226-vfio_pci_mmap-v7-0-c5c0f1=
-d26efd@linux.ibm.com/
->=20
-> ChangeLog
-> ---------
-> v2 series https://mail.gnu.org/archive/html/qemu-devel/2025-03/msg06847.h=
-tml
-> v2 -> v3
->     - Update the PCI MMIO APIs to reflect that its PCI MMIO access on hos=
-t=20
-> as suggested by Stefan(patch 2)
->     - Move s390x ifdef check to s390x_pci_mmio.h as suggested by Philippe=
- (patch 1)
->     - Add R-bs for the respective patches.
->=20
-> v1 series https://mail.gnu.org/archive/html/qemu-devel/2025-03/msg06596.h=
-tml
-> v1 -> v2
->     - Add 8 and 16 bit reads/writes for completeness (patch 1)
->     - Introduce new QEMU PCI MMIO read/write API as suggested by Stefan (=
-patch 2)
->     - Update NVMe userspace driver to use QEMU PCI MMIO functions (patch =
-3)
->=20
-> Farhan Ali (3):
->   util: Add functions for s390x mmio read/write
->   include: Add a header to define host PCI MMIO functions
->   block/nvme: Use host PCI MMIO API
->=20
->  block/nvme.c                  |  37 +++++----
->  include/qemu/host-pci-mmio.h  | 116 ++++++++++++++++++++++++++
->  include/qemu/s390x_pci_mmio.h |  24 ++++++
->  util/meson.build              |   2 +
->  util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
->  5 files changed, 311 insertions(+), 16 deletions(-)
->  create mode 100644 include/qemu/host-pci-mmio.h
->  create mode 100644 include/qemu/s390x_pci_mmio.h
->  create mode 100644 util/s390x_pci_mmio.c
->=20
-> --=20
-> 2.43.0
->=20
+The release plan, as well a documented known issues for release
+candidates, are available at:
 
---cljUvCXO0cOjgEvH
-Content-Type: application/pgp-signature; name=signature.asc
+  http://wiki.qemu.org/Planning/10.0
 
------BEGIN PGP SIGNATURE-----
+Please add entries to the ChangeLog for the 10.0 release below:
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmftXRgACgkQnKSrs4Gr
-c8hDkAf/Yst62QgRHVggfEY46uDPa9/J/rWPgTTcHaEAMNEyB59mlvDKqFqbL1c6
-NA5eRSjyFNXhFO8OaiGjBnybRgW59sRXlPRwkei+RFybi35AQgXMZLijWn9Hq4ve
-1UOdz+h9HcPMuPc6PdhoMS4EPSXHSrpdau3o/uQl0YE8hsm75S+bWTkYGmGrCJR/
-uhzssvefWROcjiILxNeJrZsOVYlQPvu38gRWbvC6juimntJPPZVvVWTMM3Im3trF
-4d8jli3zr64IeWgqi6zU73oE5sJvfIcyeen+uaf5kj1VEBV6dSo+r+f/C0T2GRLi
-nNavlHkI7Rc7W0D57A/BnewXo8YwmA==
-=Fv6j
------END PGP SIGNATURE-----
+  http://wiki.qemu.org/ChangeLog/10.0
 
---cljUvCXO0cOjgEvH--
+Thank you to everyone involved!
 
+Changes since rc1:
+
+0adf626718: Update version for v10.0.0-rc2 release (Stefan Hajnoczi)
+20ab88a906: hw/misc/aspeed_scu: Correct minimum access size for AST2500 / A=
+ST2600 (Joel Stanley)
+f0095c8ad9: hw/misc/aspeed_scu: Set MemoryRegionOps::impl::access_size to 3=
+2-bit (Philippe Mathieu-Daud=C3=A9)
+256ba7715b: target/mips: Simplify and fix update_pagemask (Richard Henderso=
+n)
+d89b9899ba: target/mips: Require even maskbits in update_pagemask (Richard =
+Henderson)
+fca2817fdc: target/mips: Revert TARGET_PAGE_BITS_VARY (Richard Henderson)
+8001d22b0c: target/sparc: Log unimplemented ASI load/store accesses (Philip=
+pe Mathieu-Daud=C3=A9)
+070a500cc0: target/avr: Fix buffer read in avr_print_insn (Richard Henderso=
+n)
+fb5bc76cae: target/hppa: Remove duplicated CPU_RESOLVING_TYPE definition (P=
+hilippe Mathieu-Daud=C3=A9)
+04e99f9eb7: hw/pci-host/designware: Fix ATU_UPPER_TARGET register access (P=
+hilippe Mathieu-Daud=C3=A9)
+c458f9474d: hw/ufs: free irq on exit (Zheng Huang)
+70fe5ae121: hw/char/bcm2835_aux: Fix incorrect interrupt ID when RX disable=
+d (Chung-Yi Chen)
+1c2d03bb08: hw/sd/sdhci: free irq on exit (Zheng Huang)
+48ca224250: hw/scsi/lsi53c895a: fix memory leak in lsi_scsi_realize() (Zhen=
+g Huang)
+b2e72fadc8: hw/nvram/xlnx-efuse: Do not expose as user-creatable (Philippe =
+Mathieu-Daud=C3=A9)
+490aaae935: hw/misc/pll: Do not expose as user-creatable (Philippe Mathieu-=
+Daud=C3=A9)
+2542d5cf47: hw/rtc/goldfish: keep time offset when resetting (Heinrich Schu=
+chardt)
+facfc943cb: hw/mips: Mark the "mipssim" machine as deprecated (Thomas Huth)
+c0a1dabd0b: hw/dma/i82374: Categorize and add description (Philippe Mathieu=
+-Daud=C3=A9)
+43b815eae1: hw/display/dm163: Add description (Philippe Mathieu-Daud=C3=A9)
+82bdce7b94: hw/block/m25p80: Categorize and add description (Philippe Mathi=
+eu-Daud=C3=A9)
+581ca58246: hw/core/cpu: Use size_t for memory_rw_debug len argument (Richa=
+rd Henderson)
+f32d678252: hw/arm/fsl-imx8mp: Remove unused define (Bernhard Beschow)
+26c1c41e8c: hw/arm/fsl-imx8mp: Derive struct FslImx8mpState from TYPE_SYS_B=
+US_DEVICE (Bernhard Beschow)
+02e5214624: hw/arm/imx8mp-evk: Fix reference count of SoC object (Bernhard =
+Beschow)
+8dcfb54090: hw/arm/armv7m: Expose and access System Control Space as little=
+ endian (Philippe Mathieu-Daud=C3=A9)
+897c68fb79: Revert "target/riscv/kvm: add missing KVM CSRs" (Daniel Henriqu=
+e Barboza)
+e768f0246c: docs/specs/riscv-iommu: Fixed broken link to external risv iomm=
+u document (hemanshu.khilari.foss)
+4a7b8c3f5c: docs: Added docs/specs/riscv-iommu.rst in MAINTAINERS file. (he=
+manshu.khilari.foss)
+694b5a913d: migration: Avoid SNP guest crash due to duplicate cpr blocker (=
+Steve Sistare)
+0c346576e4: target/loongarch: Fix the cpu unplug resource leak (Xianglai Li)
+5a8d024f8d: tests/functional/test_vnc: Skip test if VNC support is not avai=
+lable (Thomas Huth)
+c3612d0b6a: tests/functional/test_aarch64_virt_gpu: Skip if "dbus" display =
+isn't available (Thomas Huth)
+6a93b1c7b4: target/s390x: Fix a typo in s390_cpu_class_init() (Philippe Mat=
+hieu-Daud=C3=A9)
+dba0752f2c: tests/functional: Add missing require_netdev('user') statements=
+ (Thomas Huth)
+f0a6b3ec6d: tests/functional/meson.build: Bump arm_aspeed_bletchley timeout=
+ (Peter Maydell)
+3b9731020d: tests/functional/test_ppc64_replay: Mark the e500 test as flaky=
+ (Thomas Huth)
 
