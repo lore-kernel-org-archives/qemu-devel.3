@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58FA6C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF1DC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzwFL-0004bL-OU; Wed, 02 Apr 2025 07:27:03 -0400
+	id 1tzwTM-0007yn-Fw; Wed, 02 Apr 2025 07:41:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzwFI-0004b2-Je
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:27:00 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzwFG-00088G-Ux
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:27:00 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso43474105e9.0
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 04:26:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743593216; x=1744198016; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=exwzt5Cxt3d77Pf9jsdg6r4vvhKTKMZ8rWGz2yPAl3c=;
- b=iCKmFgAxaJrw8oLeYvIHtBFqVu2S7Aj9XTxXniLJOLP64yoN0AQ4sqCYorX2kHDZgS
- o2dNZS3K7yWH33iJ3ld5J7PhTkfW65A0KkhhFVUYo6M1sIG1ghy2QVq/vSySaJ9iLx/c
- mjDG5qxXbT470gEboTaYCyvTmJzXXNHgU0qMIb3AtKvMbA9NFpg6xHfOINcOzpS2hRdL
- sJ7FiMV88LPOkTpWvSQBAaB19P2LGMc8vyJD4OrCkaqJ4Y1WA5U/bUd1BF586WYQE0oA
- I+JV+aR2EjZkNjcLQIYReCcswK7uK7pPbQqi1eNN4CA3/0/+Z6Hcmiqw5eEx589t8X+q
- sNMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743593216; x=1744198016;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=exwzt5Cxt3d77Pf9jsdg6r4vvhKTKMZ8rWGz2yPAl3c=;
- b=cx/OASrZVsIUNcz8dU75Ty+rLLxe+G07/VLp+YOzr+ZOfddidFRNx00qCTC8vxNLdJ
- Y0dmwl9nRRb4SFD79d4e05ozk8tUyBxIYgOINJR9ATUHQt/Wj3/ROjXUSMltii1J3j+z
- XL/8E0YHNkVOUaSWl8zSipzk52F0gebB4yITrPkeApBDXxhuN3x7uulr14H9qgauiuYP
- 6UeBVKlkbwqJL7PTvU+uNiKSaG5ILs2OlF4DhQXo43960GMIeiTAP4a2N4VS4zkZH4Dq
- 024a21o+i5T5erC0j9z/KrauwpQJTp384IqXVuUkW/Uz6yOaWaesO0dISvXSHilAWMJq
- WqBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXPzHjx4xim5mPvWVgEw94/ombGo5glh3P0NefhWGyxtvRK2u1cZmDto1fAP1C90VcNK/WoxLSMcpL@nongnu.org
-X-Gm-Message-State: AOJu0YwZFCCymqkW+qkoZy7hoYp1yzLbRJCZdo7RAngj8fyHML6ZyVVU
- XP/lt1ZEhIpxMhgy6Jp8J1Hi6vSzj/GokO+DI+Esj88m1gYgJTghBt9yGX22UQ8=
-X-Gm-Gg: ASbGncu7/hXxmwReDBf5DYgqyHYDTGfej9OZjfm4/QtzoRYQLRJN4CFKcmJsFM1z+Na
- +4KrKjufIXtEbYzs3gjCwTqMdEVvrlID5bgIM4q3FfeB3XXOoNdgrux3rUk+DqZIZ3qfsLzvh7b
- siWTt5eJE/XRbqWJI66nd9KB8I5m4YNbTGjff+WUJfp2Mfg/Ac1s4/NjyRU33oCBX3XRdbBdrgx
- 3ucqyTzlcv5sgGQ3JLLpWdshrMPCfq3FzUIjowtIPXwOkHcFdl6AlwbzhIzgMx0ZCIVnwVebuua
- j2AmDavCCVVzB0IieC7Ux+Dwb2fV1YGE5DNV36wrOz6g4mBLA8TtHjvI6Em+vjGdqzcH1dhM7aA
- 5vAFmEXriIE06
-X-Google-Smtp-Source: AGHT+IEKcqCUyp2DKh4ii+cbAd+S7xQoEbdhDwkvSSGQQ+6NLoGjnYg7Wi3jnDHWXM5Q9M5e4S75Xw==
-X-Received: by 2002:a05:600c:8705:b0:43d:2313:7b4a with SMTP id
- 5b1f17b1804b1-43db61b33b9mr186376655e9.3.1743593216527; 
- Wed, 02 Apr 2025 04:26:56 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43eb5fd144csm17581165e9.15.2025.04.02.04.26.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 04:26:55 -0700 (PDT)
-Message-ID: <7fbd71b6-8642-4374-a573-c9cc693e381c@linaro.org>
-Date: Wed, 2 Apr 2025 13:26:55 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tzwTJ-0007xJ-7B
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:41:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tzwTG-00049R-SO
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:41:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743594084;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=F26kejczB0IcvMC9uwew5ia4bJQR9YG97iffe6dCF9k=;
+ b=GaH+BbAigB6Onp/wRSEamEnOISlUews2G/bzuO8HMdB6R3vAva0U69l+36tbEV5r2i3KhD
+ DTZi6gTt2BOjbEO6bltoyd4r7pgPtEGB8bUwgVyGCklm9FwZHwcDFY6xfsffKFuIM/x1n6
+ XvkyNrvnwS1AmQEfML+AwlPlk7Pm8oc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-oV5Y6yZePlyefDgH-YTdIQ-1; Wed,
+ 02 Apr 2025 07:41:22 -0400
+X-MC-Unique: oV5Y6yZePlyefDgH-YTdIQ-1
+X-Mimecast-MFC-AGG-ID: oV5Y6yZePlyefDgH-YTdIQ_1743594081
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E6AE91800EC5; Wed,  2 Apr 2025 11:41:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.12])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 618471956094; Wed,  2 Apr 2025 11:41:14 +0000 (UTC)
+Date: Wed, 2 Apr 2025 12:41:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 08/55] i386/tdx: Initialize TDX before creating TD vcpus
+Message-ID: <Z-0iV-xIeu0hoaaC@redhat.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-9-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/42] include/exec: Split out cpu-mmu-index.h
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org
-References: <20250318213209.2579218-1-richard.henderson@linaro.org>
- <20250318213209.2579218-7-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250318213209.2579218-7-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250401130205.2198253-9-xiaoyao.li@intel.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,94 +87,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
-
-On 18/3/25 22:31, Richard Henderson wrote:
-> The implementation of cpu_mmu_index was split between cpu-common.h
-> and cpu-all.h, depending on CONFIG_USER_ONLY.  We already have the
-> plumbing common to user and system mode.  Using MMU_USER_IDX
-> requires the cpu.h for a specific target, and so is restricted to
-> when we're compiling per-target.
+On Tue, Apr 01, 2025 at 09:01:18AM -0400, Xiaoyao Li wrote:
+> Invoke KVM_TDX_INIT_VM in kvm_arch_pre_create_vcpu() that
+> KVM_TDX_INIT_VM configures global TD configurations, e.g. the canonical
+> CPUID config, and must be executed prior to creating vCPUs.
 > 
-> Include the new header only where needed.
+> Use kvm_x86_arch_cpuid() to setup the CPUID settings for TDX VM.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Note, this doesn't address the fact that QEMU may change the CPUID
+> configuration when creating vCPUs, i.e. punts on refactoring QEMU to
+> provide a stable CPUID config prior to kvm_arch_init().
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   include/exec/cpu-all.h        |  6 ------
->   include/exec/cpu-common.h     | 20 ------------------
->   include/exec/cpu-mmu-index.h  | 39 +++++++++++++++++++++++++++++++++++
->   include/exec/cpu_ldst.h       |  1 +
->   semihosting/uaccess.c         |  1 +
->   target/arm/gdbstub64.c        |  3 +++
->   target/hppa/mem_helper.c      |  1 +
->   target/i386/tcg/translate.c   |  1 +
->   target/loongarch/cpu_helper.c |  1 +
->   target/microblaze/helper.c    |  1 +
->   target/microblaze/mmu.c       |  1 +
->   target/openrisc/translate.c   |  1 +
->   target/sparc/cpu.c            |  1 +
->   target/sparc/mmu_helper.c     |  1 +
->   target/tricore/helper.c       |  1 +
->   target/xtensa/mmu_helper.c    |  1 +
->   16 files changed, 54 insertions(+), 26 deletions(-)
->   create mode 100644 include/exec/cpu-mmu-index.h
+> Changes in v8:
+> - Drop the code that initializes cpu->kvm_state before
+>   kvm_arch_pre_create_vcpu() because it's not needed anymore.
+> 
+> Changes in v7:
+> - Add comments to explain why KVM_TDX_INIT_VM should retry on -EAGAIN;
+> - Add retry limit of 10000 times for -EAGAIN on KVM_TDX_INIT_VM;
+> 
+> Changes in v6:
+> - setup xfam explicitly to fit with new uapi;
+> - use tdx_caps->cpuid to filter the input of cpuids because now KVM only
+>   allows the leafs that reported via KVM_TDX_GET_CAPABILITIES;
+> 
+> Changes in v4:
+> - mark init_vm with g_autofree() and use QEMU_LOCK_GUARD() to eliminate
+>   the goto labels; (Daniel)
+> Changes in v3:
+> - Pass @errp in tdx_pre_create_vcpu() and pass error info to it. (Daniel)
+> ---
+>  target/i386/kvm/kvm.c       |  16 +++---
+>  target/i386/kvm/kvm_i386.h  |   5 ++
+>  target/i386/kvm/meson.build |   2 +-
+>  target/i386/kvm/tdx-stub.c  |  10 ++++
+>  target/i386/kvm/tdx.c       | 105 ++++++++++++++++++++++++++++++++++++
+>  target/i386/kvm/tdx.h       |   6 +++
+>  6 files changed, 137 insertions(+), 7 deletions(-)
+>  create mode 100644 target/i386/kvm/tdx-stub.c
 
 
-> diff --git a/include/exec/cpu-mmu-index.h b/include/exec/cpu-mmu-index.h
-> new file mode 100644
-> index 0000000000..b46e622048
-> --- /dev/null
-> +++ b/include/exec/cpu-mmu-index.h
-> @@ -0,0 +1,39 @@
-> +/*
-> + * cpu_mmu_index()
-> + *
-> + *  Copyright (c) 2003 Fabrice Bellard
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1+
-> + */
-> +
-> +#ifndef EXEC_CPU_MMU_INDEX_H
-> +#define EXEC_CPU_MMU_INDEX_H
-> +
-> +#include "hw/core/cpu.h"
-> +#include "tcg/debug-assert.h"
-> +#ifdef COMPILING_PER_TARGET
-> +#include "cpu.h"
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 16f67e18ae78..0afaf739c09f 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
 
-IIUC we only need "cpu.h" on user emulation. Maybe use:
-
-   #if defined(COMPILING_PER_TARGET) && defined(CONFIG_USER_ONLY)
-
-?
-
-> +#endif
-> +
-> +/**
-> + * cpu_mmu_index:
-> + * @env: The cpu environment
-> + * @ifetch: True for code access, false for data access.
-> + *
-> + * Return the core mmu index for the current translation regime.
-> + * This function is used by generic TCG code paths.
-> + */
-> +static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
+> +int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
 > +{
-> +#ifdef COMPILING_PER_TARGET
-> +# ifdef CONFIG_USER_ONLY
-> +    return MMU_USER_IDX;
-> +# endif
-> +#endif
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
+> +    g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
+> +    Error *local_err = NULL;
+> +    int retry = 10000;
+> +    int r = 0;
 > +
-> +    int ret = cs->cc->mmu_index(cs, ifetch);
-> +    tcg_debug_assert(ret >= 0 && ret < NB_MMU_MODES);
-> +    return ret;
+> +    QEMU_LOCK_GUARD(&tdx_guest->lock);
+> +    if (tdx_guest->initialized) {
+> +        return r;
+> +    }
+> +
+> +    init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+> +                        sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+> +
+> +    r = setup_td_xfam(x86cpu, errp);
+> +    if (r) {
+> +        return r;
+> +    }
+> +
+> +    init_vm->cpuid.nent = kvm_x86_build_cpuid(env, init_vm->cpuid.entries, 0);
+> +    tdx_filter_cpuid(&init_vm->cpuid);
+> +
+> +    init_vm->attributes = tdx_guest->attributes;
+> +    init_vm->xfam = tdx_guest->xfam;
+> +
+> +    /*
+> +     * KVM_TDX_INIT_VM gets -EAGAIN when KVM side SEAMCALL(TDH_MNG_CREATE)
+> +     * gets TDX_RND_NO_ENTROPY due to Random number generation (e.g., RDRAND or
+> +     * RDSEED) is busy.
+> +     *
+> +     * Retry for the case.
+> +     */
+> +    do {
+> +        error_free(local_err);
+> +        local_err = NULL;
+> +        r = tdx_vm_ioctl(KVM_TDX_INIT_VM, 0, init_vm, &local_err);
+> +    } while (r == -EAGAIN && --retry);
+> +
+> +    if (r < 0) {
+> +        if (!retry) {
+> +            error_report("Hardware RNG (Random Number Generator) is busy "
+> +                         "occupied by someone (via RDRAND/RDSEED) maliciously, "
+> +                         "which leads to KVM_TDX_INIT_VM keeping failure "
+> +                         "due to lack of entropy.");
+
+This needs to be
+
+     error_append_hint(local_err, ....);
+
+so that this message gets associated with the error object that
+is propagated, and the top level will print it all at once.
+
+> +        }
+> +        error_propagate(errp, local_err);
+> +        return r;
+> +    }
+> +
+> +    tdx_guest->initialized = true;
+> +
+> +    return 0;
 > +}
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
