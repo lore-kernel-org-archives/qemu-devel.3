@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1322C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 13:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A53AC3601A
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzyXx-0002Kk-KP; Wed, 02 Apr 2025 09:54:26 -0400
+	id 1tzymr-0007Vs-DN; Wed, 02 Apr 2025 10:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1tzyXs-0002G6-DP; Wed, 02 Apr 2025 09:54:21 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1tzyXq-0004uY-Fc; Wed, 02 Apr 2025 09:54:19 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-225df540edcso15695625ad.0; 
- Wed, 02 Apr 2025 06:54:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743602055; x=1744206855; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=G9PZV4WZkVFc5r3WtXw+MuqZv9ug6Jw0HtjL9BKEMkQ=;
- b=FhZTc0ncRG+dEh04a5jtJi73TOohVY4C5S0k/HLagWDRPVF0mBpVNTe2kDP5LoFr/2
- nSMJrWAaCT/5Rs/qgSssVYuBuD1yfcKbTq6/tXl3mNKaBSJ2n+DoFIvIXLiKiVdz+TOB
- g2MOjIT3yVruNM8oF4Pe1Rwms31p/puq0U/JqQ5tV/DctX7J64Va4oxRSdn5EDPl+r8m
- 6hmknU2eh540sdm1lyFkx/zR4ToqJTnWwNbrY4H0gFSSR1Sq91sy9Puv+hc+K92acUUL
- s5PVd6aNVFPt4PZhT7tDbBsU7gpxmkIcQz1IlhkpatrwytCKiB5E8fMKpCoT2mdzXNXW
- ohHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743602055; x=1744206855;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=G9PZV4WZkVFc5r3WtXw+MuqZv9ug6Jw0HtjL9BKEMkQ=;
- b=eyc5ReVLtLOeiGzpTHCzj6HVoMifwAreYuTPoK6RepAn2PQ0Poi3o4DC8V7/E7jmnV
- OIWp/kFuq3IOo9vR29H/lxFoE6BVCt2ohJSPFMvEw9RCEQfxLYSXKIKx4mJwPeSZGF+/
- Tv3Pl+p27IgnPoXMv/+aa06/yYWs7K3LP/7UHAHWNhGm7/7QirwEBS03VB9s1G2b2IoI
- 4pEB8v/LCrLU9MdbuWgCpnzq8yrMQB95VCYtMI6ZX+625BihkQlhOcIPg9CaS/zjmQAt
- 8ar+Jcv0bTKkQ+4cg3IJOaLqEQQZ89lQ6Ff2uC7nmoXBPN4k1JNR8ferJPdP2PzD3YLC
- hdaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3XvvpEEOpy0RyIh0f8LjsjVgS1k7SEKCkimZkCF0+ZQ+RmFJ3GGOfS3vPIcauVpSbhPsbbyF4zg==@nongnu.org
-X-Gm-Message-State: AOJu0YxZwmaWCiwwvncsCnGYrXe3dc0qMXjZtoF1IIW5A8dnjrLPMR/y
- mFWKedJj1Zu4w5AicW1ymxlF66zCDHTKCeXiT32qZALOSgcv9BO9Vy6inxC6LQM=
-X-Gm-Gg: ASbGncsrsXyQMzywZBm2qbg30TYyB3PgGD3theU9DiA2TGVxgJ5utVA/M7UU8V8VwBM
- v4KmXaFysYD2dK3K4uXarvJoqkXP8hOVelQL4knkJ+VvKaMpcWRK4GWk4nBWrdCgzOwEcy1o7Y0
- Vi6kxPDtTFbPZQLhVCPR3pKJTHU+6J47nInwFErOtt8HecSG9efvnrZCEsRw8TmGtJYybW7q1ic
- 0q+78KNmY/0qZGJ4yClEbrCIceQ+1soF5XTzDB79QJ9dSNyF86IhU5QCgUJnpA0yfSjxadKA/0G
- WoQ1ZPqRkW26bN2iqBcnv1jhUunQU+C1bt4X2xC0dPPN3w==
-X-Google-Smtp-Source: AGHT+IFDdnO+E19g7oa5KwRfSwHB2kK908Iky0AS8ZPRNU5n7V49F9QJLOYvpuI4hrgyB45tI5DgnA==
-X-Received: by 2002:a17:902:d4c9:b0:221:1356:10c5 with SMTP id
- d9443c01a7336-2296def2cc3mr26378025ad.9.1743602055173; 
- Wed, 02 Apr 2025 06:54:15 -0700 (PDT)
-Received: from localhost.localdomain ([129.227.63.233])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eedcc5csm108439025ad.66.2025.04.02.06.54.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Apr 2025 06:54:14 -0700 (PDT)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH] hw/arm/virt.c: Fix wrong default cpu type in AARCH64
-Date: Wed,  2 Apr 2025 21:54:02 +0800
-Message-ID: <20250402135402.14526-1-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzyml-0007VI-Pl
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:09:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tzymY-0002iq-47
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:09:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743602965;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9P8tBaTrmLhvJG0L5YAlEij5nhtkZUTzuQDaONHqN3k=;
+ b=FNq7ZZtN0LaWwrz5SdqQnXC1UPITY6vfkZqfKoD/VURj+ijimFzmDuzW+uwVQ3bR1f/zES
+ cPn0W0Quz10Q4YSS9jLkshzQazgexy9S78IwZodD9qMDSLbeuulQc7JcG8a3dN4IdJ4gym
+ LPAF3SPBV7RnPMMqpZbmBBsrKBH8UCg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-RCoVC1TDP_OlYffiWRP7VQ-1; Wed,
+ 02 Apr 2025 10:09:21 -0400
+X-MC-Unique: RCoVC1TDP_OlYffiWRP7VQ-1
+X-Mimecast-MFC-AGG-ID: RCoVC1TDP_OlYffiWRP7VQ_1743602959
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 561101828B98; Wed,  2 Apr 2025 14:09:16 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.101])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 853651955BF1; Wed,  2 Apr 2025 14:09:15 +0000 (UTC)
+Date: Wed, 2 Apr 2025 10:09:14 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Farhan Ali <alifm@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
+ fam@euphon.net, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, thuth@redhat.com, mjrosato@linux.ibm.com,
+ schnelle@linux.ibm.com
+Subject: Re: [PATCH v3 2/3] include: Add a header to define host PCI MMIO
+ functions
+Message-ID: <20250402140914.GD304512@fedora>
+References: <20250401172246.2688-1-alifm@linux.ibm.com>
+ <20250401172246.2688-3-alifm@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ET9m3FK9isD1suj2"
+Content-Disposition: inline
+In-Reply-To: <20250401172246.2688-3-alifm@linux.ibm.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,32 +90,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because of the CONFIG_TCG auto enabled, the cpu type "cortex-a15"
-is mistakenly set to the default AARCH64 target.
 
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
----
- hw/arm/virt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+--ET9m3FK9isD1suj2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a96452f17a..63649e9543 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3178,9 +3178,10 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-     mc->cpu_index_to_instance_props = virt_cpu_index_to_props;
- #ifdef CONFIG_TCG
-     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
--#else
-+#ifdef TARGET_AARCH64
-     mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
--#endif
-+#endif /* TARGET_AARCH64 */
-+#endif /* CONFIG_TCG */
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
-     mc->kvm_type = virt_kvm_type;
--- 
-2.49.0
+On Tue, Apr 01, 2025 at 10:22:45AM -0700, Farhan Ali wrote:
+> Add a generic API for host PCI MMIO reads/writes
+> (e.g. Linux VFIO BAR accesses). The functions access
+> little endian memory and returns the result in
+> host cpu endianness.
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> ---
+>  include/qemu/host-pci-mmio.h | 116 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 116 insertions(+)
+>  create mode 100644 include/qemu/host-pci-mmio.h
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--ET9m3FK9isD1suj2
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmftRQoACgkQnKSrs4Gr
+c8gNeAgAuqCrUnKJaaGJSy+Vil7Wfz8JwYop8HPart6TXriOKG/We/6kY1Rl3Xkx
+S/qRRIX3iSfv59MgyAkvUHJE1tEFi1iVK6bh7pDr6zWrYe8oXtfyqQzWjzsNRkdl
+w37EfcgjmlWgaZ4FwCNYYfPJR20iFVoQXN1w/DWvpEJbvR5SwWiLb+3Tm3CegUK4
+YpdWfjVFH7XvuXGSo63q0FxUA0kKZEJAwYOTF4lZhwzZo5v4Ccap0Zzj6wrdrF+G
+rR6WMvSsBKoobrekIzBjtb8F7hQY1p1n7zSZ5ICyyPGpyVYs0cBbFKJfnTVETc71
+WoLKFok6NpoSx8PZ8vSmIV9seFAIDw==
+=1YrC
+-----END PGP SIGNATURE-----
+
+--ET9m3FK9isD1suj2--
 
 
