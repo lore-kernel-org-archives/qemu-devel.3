@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1E5C36014
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 06:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D81CC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 07:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzrs0-0003VP-H0; Wed, 02 Apr 2025 02:46:47 -0400
+	id 1tzsjh-0003IM-6k; Wed, 02 Apr 2025 03:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1tzrrF-0003JO-Hi
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 02:45:55 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1tzrrB-0002aI-HP
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 02:45:51 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-224191d92e4so120267755ad.3
- for <qemu-devel@nongnu.org>; Tue, 01 Apr 2025 23:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743576348; x=1744181148; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uZ9TCxXEOfEZ46lvaP3HUm7kq3aji0So982HnOP88eU=;
- b=zTkH+PibP80T432/EL984WUVXoi7WqfMMdg2taTh9zrjv99EEkxnAo7MyR7fb7t8av
- Uo2he8WMTzMMl0KcYmZMWFxyvMhv1AA9b6dgoDdLZyCvBUH9QJNk0lcdaIMfLINPY/BL
- A8wzbQfocZf6rTozVvDhiNmMpb+vwuCrsbXJM6Jap2MnMIp7/JrAgth58XG03s2Ee0Ll
- TBLTUyRVPpkPIvARhVAmRKR+FEjETrB3+pAQSOk8jg5sVYa/RfowI2irP1MTFI4fTbbk
- JLH27JoeGhTcmamd+/vQnVnPOYj02V5Ri+U9s6lwTlLbbiqLDk22LDjhPoIht7tRUveo
- ymCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743576348; x=1744181148;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uZ9TCxXEOfEZ46lvaP3HUm7kq3aji0So982HnOP88eU=;
- b=RcpSsHTnRTg9x06p5piEh7mIIyr/SPqtQcMitAsM2MjKoY9wxUQPHq9SMkz2rG/gFm
- qRHRGAEST/tTXmC6SGUHeqsvcpNDxNUTdaY1YN8m5YaJgBAMw6S7Y3fU7ciBfCK2PftU
- l6/Wx0nSnZku6ir5a/61gc7D4QZdVEdWfFrNPSin3ECy4pGcC4QKXF8VSul0hFYGTgrg
- 6fCZ8//RQYTnAfxa9C2WBCGl/O4cWA64ZFH3OUNtUfVF0WL92H0APRKkDgmVWpeUsO2a
- HT4bg9RDZXKvkHcZU2zWFShtg6omXBbrr5KI8LAFbkgA9GCmTOdCwoP1LW7yTy7+xJ7U
- GDHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUu+HHxUSWNC8mbJ0Bg6hKbEyyZvtx/98pdNZAYbaflytKaQwxhiuf2gYwOA4+JFuGY91Edm+86BWAQ@nongnu.org
-X-Gm-Message-State: AOJu0YxBHJHugtYyDO7PlZCnMdan6SEwYwUT04FPTav78i/fjkYUJ8A+
- TZipMknFgaVkL7/r9dJ8nZ8dwaOjrNUiGjjr9CPN++4h+KHHoJSIFkmRgL7MfaE=
-X-Gm-Gg: ASbGncvxcCaRTN/dSF+5crg9yjbm0+yoQWJBU1pKE1ykuHUPCyNmqm9bJUbnUp16t7V
- k52AlK1SMOxHc7CA2Nj4F0986oawkCBS0zy7bq/LtgvxV8vlueWWxxAGLrdJ0eor4/q41IvKagR
- Ut0oQF5sAZU1T5SurqOPy64P3VBuyHMyAYgKNZ//IC5nKuwwAJcLnV+mbh5EeIlu0p525fK/6yh
- Kd5Dzhu0TM9wmuLk/SJJrCHw6x6YKnQKwQcnjoydNz7fa6+PGQmfPhe4eue6EQ0suLlHHLVUCmz
- /Hygafj35o3myAOuycMR9fBqrCLI8E8GMSPbwrErGq2MwXbmHRHx6Diw
-X-Google-Smtp-Source: AGHT+IHrYfwSCpFVxJfZzM6hGYqiMEgSY7RehPzDDohmBzvaMnDtkkWGkGVcaB7UIeQtGLqtEgQPrw==
-X-Received: by 2002:a17:902:f551:b0:21f:6a36:7bf3 with SMTP id
- d9443c01a7336-2292f95f3dbmr233050095ad.12.1743576348108; 
- Tue, 01 Apr 2025 23:45:48 -0700 (PDT)
-Received: from [192.168.0.102] ([186.215.49.46])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2291eede9fbsm100591695ad.63.2025.04.01.23.45.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Apr 2025 23:45:47 -0700 (PDT)
-Message-ID: <98b286c5-f48f-4dec-b6c7-3e1ca2156735@linaro.org>
-Date: Wed, 2 Apr 2025 03:45:44 -0300
+ (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
+ id 1tzsjc-0003HR-4N; Wed, 02 Apr 2025 03:42:04 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
+ id 1tzsjW-0005S4-Mg; Wed, 02 Apr 2025 03:42:01 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSGyz3l8hz4x1w;
+ Wed,  2 Apr 2025 18:41:47 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSGyt3PCrz4x1t;
+ Wed,  2 Apr 2025 18:41:41 +1100 (AEDT)
+Message-ID: <ff5e84c5-4714-4897-90b6-40df76746443@kaod.org>
+Date: Wed, 2 Apr 2025 09:41:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 5/5] qtest/bios-tables-test: Update
- aarch64/virt/APIC.its_off blob
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250331221239.87150-1-philmd@linaro.org>
- <20250331221239.87150-6-philmd@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250331221239.87150-6-philmd@linaro.org>
+Subject: Re: [PATCH v1 08/22] hw/misc/aspeed_hace: Support DMA 64 bits dram
+ address.
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
+ <20250321092623.2097234-9-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250321092623.2097234-9-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=yfRC=WU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,117 +115,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+On 3/21/25 10:26, Jamin Lin wrote:
+> According to the AST2700 design, the data source address is 64-bit, with
+> R_HASH_SRC_HI storing bits [63:32] and R_HASH_SRC storing bits [31:0].
+> 
+> Similarly, the digest address is 64-bit, with R_HASH_DEST_HI storing bits
+> [63:32] and R_HASH_DEST storing bits [31:0].
+> 
+> Ideally, sg_addr should be 64-bit for the AST2700, using the following program
+> to obtain the 64-bit sg_addr and convert it to a DRAM offset:
+> 
+> ```
+> sg_addr = deposit64(sg_addr, 32, 32,
+>                      address_space_ldl_le(&s->dram_as, src + SG_LIST_ADDR_SIZE,
+>                                           MEMTXATTRS_UNSPECIFIED, NULL);
+> sg_addr -= 0x400000000;
+> ```
 
-On 3/31/25 19:12, Philippe Mathieu-Daudé wrote:
-> Changes in the tables:
+I don't think the code extract above is useful.
+
+> To maintain compatibility with older SoCs such as the AST2600, the AST2700 HW
+> HACE controllers automatically set bit 34 of the 64-bit sg_addr. 
+
+I suppose that's what bits [30:28] of the first word of the scatter-gather entry
+are for ?
+
+> As a result,
+> the firmware only needs to provide a 32-bit sg_addr containing bits [31:0].
+> This is sufficient for the AST2700, as it uses a DRAM offset rather than a DRAM
+> address.
+
+yes the HACE model can use a relative address because the DRAM memory
+region is directly available. There is no need to construct a physical
+address.
+
+> Introduce a has_dma64 class attribute and set it to true for the AST2700.
 > 
->    @@ -1,32 +1,32 @@
->     /*
->      * Intel ACPI Component Architecture
->      * AML/ASL+ Disassembler version 20240927 (64-bit version)
->      * Copyright (c) 2000 - 2023 Intel Corporation
->      *
->      * Disassembly of tests/data/acpi/aarch64/virt/APIC.its_off
->      *
->      * ACPI Data Table [APIC]
->      *
->      * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
->      */
-> 
->     [000h 0000 004h]                   Signature : "APIC"    [Multiple APIC Description Table (MADT)]
->    -[004h 0004 004h]                Table Length : 000000B8
->    +[004h 0004 004h]                Table Length : 000000A4
->     [008h 0008 001h]                    Revision : 04
->    -[009h 0009 001h]                    Checksum : A7
->    +[009h 0009 001h]                    Checksum : EE
->     [00Ah 0010 006h]                      Oem ID : "BOCHS "
->     [010h 0016 008h]                Oem Table ID : "BXPC    "
->     [018h 0024 004h]                Oem Revision : 00000001
->     [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
->     [020h 0032 004h]       Asl Compiler Revision : 00000001
-> 
->     [024h 0036 004h]          Local Apic Address : 00000000
->     [028h 0040 004h]       Flags (decoded below) : 00000000
->                              PC-AT Compatibility : 0
-> 
->     [02Ch 0044 001h]               Subtable Type : 0C [Generic Interrupt Distributor]
->     [02Dh 0045 001h]                      Length : 18
->     [02Eh 0046 002h]                    Reserved : 0000
->     [030h 0048 004h]       Local GIC Hardware ID : 00000000
->     [034h 0052 008h]                Base Address : 0000000008000000
->     [03Ch 0060 004h]              Interrupt Base : 00000000
->    @@ -49,37 +49,29 @@
->     [06Ch 0108 008h]    Virtual GIC Base Address : 0000000000000000
->     [074h 0116 008h] Hypervisor GIC Base Address : 0000000000000000
->     [07Ch 0124 004h]       Virtual GIC Interrupt : 00000019
->     [080h 0128 008h]  Redistributor Base Address : 0000000000000000
->     [088h 0136 008h]                   ARM MPIDR : 0000000000000000
->     [090h 0144 001h]            Efficiency Class : 00
->     [091h 0145 001h]                    Reserved : 00
->     [092h 0146 002h]      SPE Overflow Interrupt : 0000
->     [094h 0148 002h]              TRBE Interrupt : 100E
-> 
->     [094h 0148 001h]               Subtable Type : 0E [Generic Interrupt Redistributor]
->     [095h 0149 001h]                      Length : 10
->     [097h 0151 002h]                    Reserved : 0000
->     [098h 0152 008h]                Base Address : 00000000080A0000
->     [0A0h 0160 004h]                      Length : 00F60000
-> 
->    -[0A4h 0164 001h]               Subtable Type : 0F [Generic Interrupt Translator]
->    -[0A5h 0165 001h]                      Length : 14
->    -[0A7h 0167 002h]                    Reserved : 0000
->    -[0A8h 0168 004h]              Translation ID : 00000000
->    -[0ACh 0172 008h]                Base Address : 0000000008080000
->    -[0B4h 0180 004h]                    Reserved : 00000000
->    +Raw Table Data: Length 164 (0xA4)
-> 
->    -Raw Table Data: Length 184 (0xB8)
->    -
->    -    0000: 41 50 49 43 B8 00 00 00 04 A7 42 4F 43 48 53 20  // APIC......BOCHS
->    +    0000: 41 50 49 43 A4 00 00 00 04 EE 42 4F 43 48 53 20  // APIC......BOCHS
->         0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
->         0020: 01 00 00 00 00 00 00 00 00 00 00 00 0C 18 00 00  // ................
->         0030: 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00  // ................
->         0040: 04 00 00 00 0B 50 00 00 00 00 00 00 00 00 00 00  // .....P..........
->         0050: 01 00 00 00 00 00 00 00 17 00 00 00 00 00 00 00  // ................
->         0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0070: 00 00 00 00 00 00 00 00 00 00 00 00 19 00 00 00  // ................
->         0080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0090: 00 00 00 00 0E 10 00 00 00 00 0A 08 00 00 00 00  // ................
->    -    00A0: 00 00 F6 00 0F 14 00 00 00 00 00 00 00 00 08 08  // ................
->    -    00B0: 00 00 00 00 00 00 00 00                          // ........
->    +    00A0: 00 00 F6 00                                      // ....
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   tests/qtest/bios-tables-test-allowed-diff.h |   1 -
->   tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 184 -> 164 bytes
->   2 files changed, 1 deletion(-)
+>   include/hw/misc/aspeed_hace.h |  1 +
+>   hw/misc/aspeed_hace.c         | 27 ++++++++++++++++++++++++++-
+>   2 files changed, 27 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index bfc4d601243..dfb8523c8bf 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1,2 +1 @@
->   /* List of comma-separated changed AML files to ignore */
-> -"tests/data/acpi/aarch64/virt/APIC.its_off",
-> diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/acpi/aarch64/virt/APIC.its_off
-> index c37d05d6e05805304f10afe73eb7cb9100fcccfa..f24ac8fbff5261a52434abcfcff96dbdc7709de4 100644
-> GIT binary patch
-> delta 18
-> ZcmdnNxP+0*F~HM#2?GNI%e#qOvj8xy1yKM1
-> 
-> delta 39
-> jcmZ3&xPy_)F~HM#2Ll5G%kqg_vqbnsfJ`vp;DE6Jpmzmj
+> diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
+> index a4479bd383..58fb66009a 100644
+> --- a/include/hw/misc/aspeed_hace.h
+> +++ b/include/hw/misc/aspeed_hace.h
+> @@ -52,6 +52,7 @@ struct AspeedHACEClass {
+>       uint32_t src_hi_mask;
+>       uint32_t dest_hi_mask;
+>       uint32_t key_hi_mask;
+> +    bool has_dma64;
+>   };
+>   
+>   #endif /* ASPEED_HACE_H */
+> diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+> index 51c6523fab..8f333fc97e 100644
+> --- a/hw/misc/aspeed_hace.c
+> +++ b/hw/misc/aspeed_hace.c
+> @@ -148,6 +148,7 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+>   static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>                                 bool acc_mode)
+>   {
+> +    AspeedHACEClass *ahc = ASPEED_HACE_GET_CLASS(s);
+>       bool sg_acc_mode_final_request = false;
+>       g_autofree uint8_t *digest_buf = NULL;
+>       struct iovec iov[ASPEED_HACE_MAX_SG];
+> @@ -182,6 +183,9 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>               }
+>   
+>               src = deposit64(src, 0, 32, s->regs[R_HASH_SRC]);
+> +            if (ahc->has_dma64) {
+> +                src = deposit64(src, 32, 32, s->regs[R_HASH_SRC_HI]);
+> +            }
 
-If the change affects other tables besides APIC (IORT and FACP in this series),
-then I think that's the moment to update all the correct blobs (final versions)
-and drop the list of blobs in bios-tables-test-allowed-diff.h. I also think it's
-better to list all the table diffs in the commit message, not only the diff for
-the APIC table.
+That's where a little helper would be nice to have.
+
+>               src += i * SG_LIST_ENTRY_SIZE;
+>   
+>               len = address_space_ldl_le(&s->dram_as, src,
+> @@ -190,6 +194,21 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>               sg_addr = address_space_ldl_le(&s->dram_as, src + SG_LIST_LEN_SIZE,
+>                                              MEMTXATTRS_UNSPECIFIED, NULL);
+>               sg_addr &= SG_LIST_ADDR_MASK;
+> +            /*
+> +             * Ideally, sg_addr should be 64-bit for the AST2700, using the
+> +             * following program to obtain the 64-bit sg_addr and convert it
+> +             * to a DRAM offset:
+> +             * sg_addr = deposit64(sg_addr, 32, 32,
+> +             *      address_space_ldl_le(&s->dram_as, src + SG_ADDR_LEN_SIZE,
+> +             *                           MEMTXATTRS_UNSPECIFIED, NULL);
+> +             * sg_addr -= 0x400000000;
+> +             *
+
+I don't think the above comment is useful. Please keep the one below.
+
+> +             * To maintain compatibility with older SoCs such as the AST2600,
+> +             * the AST2700 HW automatically set bit 34 of the 64-bit sg_addr.
+> +             * As a result, the firmware only needs to provide a 32-bit sg_addr
+> +             * containing bits [31:0]. This is sufficient for the AST2700, as
+> +             * it uses a DRAM offset rather than a DRAM address.
+> +             */
+
+The SG_LIST_ADDR_MASK needs an update though. AFAICT, it's bigger on AST2700.
 
 
-Cheers,
-Gustavo
+Thanks,
+
+C.
+
+
+
+>               plen = len & SG_LIST_LEN_MASK;
+>               haddr = address_space_map(&s->dram_as, sg_addr, &plen, false,
+> @@ -218,7 +237,9 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>       } else {
+>           plen = s->regs[R_HASH_SRC_LEN];
+>           src = deposit64(src, 0, 32, s->regs[R_HASH_SRC]);
+> -
+> +        if (ahc->has_dma64) {
+> +            src = deposit64(src, 32, 32, s->regs[R_HASH_SRC_HI]);
+> +        }
+>           haddr = address_space_map(&s->dram_as, src,
+>                                     &plen, false, MEMTXATTRS_UNSPECIFIED);
+>           if (haddr == NULL) {
+> @@ -275,6 +296,9 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+>       }
+>   
+>       digest_addr = deposit64(digest_addr, 0, 32, s->regs[R_HASH_DEST]);
+> +    if (ahc->has_dma64) {
+> +        digest_addr = deposit64(digest_addr, 32, 32, s->regs[R_HASH_DEST_HI]);
+> +    }
+>       if (address_space_write(&s->dram_as, digest_addr,
+>                               MEMTXATTRS_UNSPECIFIED,
+>                               digest_buf, digest_len)) {
+> @@ -601,6 +625,7 @@ static void aspeed_ast2700_hace_class_init(ObjectClass *klass, void *data)
+>        * has completed. It is a temporary workaround.
+>        */
+>       ahc->raise_crypt_interrupt_workaround = true;
+> +    ahc->has_dma64 = true;
+>   }
+>   
+>   static const TypeInfo aspeed_ast2700_hace_info = {
+
 
