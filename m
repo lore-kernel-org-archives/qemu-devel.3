@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41B4C36018
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 23:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C05C3601B
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 23:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u07Cl-0003b5-CV; Wed, 02 Apr 2025 19:09:07 -0400
+	id 1u07FH-0004Vg-Or; Wed, 02 Apr 2025 19:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u07Ci-0003an-GD
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 19:09:05 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u07FG-0004VM-9k
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 19:11:42 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u07Cf-0005KL-4Q
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 19:09:03 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so2403635e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 16:09:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u07FE-0005pV-Ln
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 19:11:42 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43d0782d787so1710325e9.0
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 16:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743635339; x=1744240139; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743635498; x=1744240298; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Nqpdw1BCzuNpleOvMU7KwIa7fQDl8K7+/9/Q4enNusI=;
- b=zUqGgtIJpmq46c4EU2Nt2dzqKSKPugBS24kkpHaLIxA21kqNXnGlMfz2ul+hzKD68p
- MqGJ/v/3SWeJvnMbYm/nQKjtzMawMQ+LMAWvFQ1+W8yyGhdk7uRE4HV91deI3UrHvQ0r
- Y1pfiiTfnwN5o6M6A+wu3mnII02CQJI0tJJ6FipTFGMkVYQtI8TJI+fQ5Ep7WPlFT1fc
- bNPzG/YGEnPzkPKV/9ZHuPGQFrmjXjAAv6riMjiKQBgocsLwhVaJU7t2MrdttHwD4SXf
- s6Y4YDZcn4OzqSr9WvpJTts8T1Me57heh+U57SKxyGbl3L2C0r7HdJhiB5GO/taaQ/YH
- CS4g==
+ bh=SCuuyED5vv978zd8stIQgFW8xErmGOTaeFOafHOtSeQ=;
+ b=td67V2hv2H16Ukgd95GCWIlDN0/usFtQQ2HU+pPqTLlli9qFNmLWnMMDLE7tvyKTaD
+ /jZdf3U7kBV9pYvbIm+zQhNaIu2t7npzuZMrYRhkKFq3mLlVUe91oPSjSyzIYCJ1++cp
+ X+VsWgpIM0/vXK/6h51aOX9ykvUoXTxVOF/ijKmeg9ls+9kHPaqODxskK2QtR6CDF0S3
+ vwfyquNaI1d3P++eOVx1SHHE5SnrGdidKqbwt6DJcXqt4WsTzDji/+Gu9gd9cOO/XUJr
+ a7S8F/1SQV8AxxRDRpV8lQcx5Ai5STfKGuOMukEQzpn69h1NI30LMx3Vq/WMT7DWGaa4
+ xwtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743635339; x=1744240139;
+ d=1e100.net; s=20230601; t=1743635498; x=1744240298;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Nqpdw1BCzuNpleOvMU7KwIa7fQDl8K7+/9/Q4enNusI=;
- b=HGSfoQJpwNrXXhwM1oQ4MX2C5N2X2kY7T8lWDp57mqoVUzYImHZZ9LlRSI04pEQZmk
- I8wbXykzVBe3KLPx7tfAjiFACXBkc+l11Q0NvGcgJTqdlAhCcNQFdX9qGqn4sp53At0V
- PfQ6/m2vWmIUqEUxROoY4eRAa7J+AvMYuGm7Iqh31ghxy4qln9Zpajo7J5dVe3yWgBT+
- SKy/giC8AftNhriHLKdkYGGn5HtYETD7WHoQ1C+IvZXbDCo3xTXII53vGDf0bDgxP1Re
- MG/w0iTsBvoWD1tnb8+FLVYGQZwTApTZZw9YuxSG7z45+85MBMKmrR1q6Gu4tgfVlvlz
- Z8kA==
+ bh=SCuuyED5vv978zd8stIQgFW8xErmGOTaeFOafHOtSeQ=;
+ b=UuCoj8RkUdso3Bso1WhPHnJGPj5YwJPaYpUjphfwyDb7+mfdXDEYTSVR5ujldK3acg
+ f4K3eZfj05tlKy3K8Obs1ElWU0e1h5qIhLD0i1Ssjs1dAcHPYO+nTnnaT+OBxm8u5eww
+ kQ0Df5Bw/Kp2t/WGWwomwSXWEgg1K3C247CgfptwnhkY0iazVhJltIFmyrq0HB3pgzsj
+ eS3CLh95PjI679ZB9snLcPpOr48+EznCnnhyKCInwN7EcnXIUceUXY4oDnp4HHHIvrX4
+ y/EoyMb2Vc8xZGE4AvfNQ+hGYwB9nssVsC3wCTdClpHqMJyXlE5TkzB5oL6B3chPlG8N
+ svXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQrrsWF3vKZXymvVOVNN6UHODg6UnZWVTk3beU9RqSxO65QGxyDwuV/GHK41WvAtmuCI7UH2tvf//P@nongnu.org
-X-Gm-Message-State: AOJu0Yxam7bYbh9Z4XYA9nd0JDg3FcAk+J1EAyAsIyhRtPezGRZChLTU
- bNiaU8t3DC6wtuPRaAQCcEWd6257pLAyAaAUWhq/GZoIRzG5GiIUvo/fDUMy8ywHtxiK/8m7hzp
- Q
-X-Gm-Gg: ASbGncu2h71guiN85/OZM5d6GQc0sQrJeR9wOY3ufSIEn82M2yskOT285q+gxWX5bVJ
- i0pgtCp9+oejoiCeNV+Ad8s5zXuvA0jPguwO0xx1VPZb4ubRB0PvvciskEi4Nh60aC5hgTT0q1q
- XOz873atdG6oOh38RCK0qTFq6Vr04XJcIVKFwCuWIqXqyduXOFQEBpX69p0JTlXsUpCDqFR2WZ8
- xgP+Vj3G8+UAYTJwOK2X7AXZt3+MeQY8SFEMPcWJC334oLWfzNiDkcgJH2dBwwH22axvH/OCEFP
- nZGCawZBrvkHVGSWiaRL1SM2Ypq2dI64SYsJIUYZjpvjuHLY6kAyJqOLfyXkkfgt0MC6RPkRSVt
- 7y6ICML0Mfi7H9Fqq0L/LDkU=
-X-Google-Smtp-Source: AGHT+IFsVBvVrOBoowgFQM9zr0aFphzh43W6xuFcVW6Kdls4nIPuCNGjluuhemCdg+BAcUR+wxEgDg==
-X-Received: by 2002:a05:600c:1e0d:b0:43d:2313:7b54 with SMTP id
- 5b1f17b1804b1-43db61d78c9mr178770795e9.3.1743635338975; 
- Wed, 02 Apr 2025 16:08:58 -0700 (PDT)
+ AJvYcCXN3+E2a4aMWn35gHXw2qjMo40KHNf7oJnlwjJcvJUi9RTXJGhsgkJEej7eHfpI652ZFP/96JjR/mlo@nongnu.org
+X-Gm-Message-State: AOJu0YzVj8nTAaP8Kf2QVu6BFYD/or+6dEn35FWVhGojz09wACx8+mRc
+ UNNDD7jRSnfKylwD1E8u3VPguCwLhtv5Ao8tb3R5Q5JjUEAEycQh4/7Ff+a4TP0=
+X-Gm-Gg: ASbGncvxBnN8ftS1aLhmPLd7gZqghYWHLXari/NPW36mtZSwBU87Ns047h9qQoZFwn4
+ 9c2shZhAOvyz96etU1zAeESFpw8VWMtKTPpLoC9S1Z40bymlOFvnhz8n7V8KHlgJv/RwgmxtpAC
+ SwNcDepWtfcJ96fA/YRbuPFhNJ6dwIi9phyDZHbP2Phq6DeL2Iu3SCSO/gtLcG8iH/emyuJr6Om
+ SElgJmeuy6sdTOtUk3Us9Uv4T4X2bG+troKyp2ZVjicF69KzBcw1m68X9K4nTOtbGaFJzbYLW1s
+ 9eUTN2xOr+aQGunTFOsJorHf99olYtFTz3awVIzEJtl95Z2uHAXXGckVeYzmfZfLL3ztsOmGHR7
+ nR8ZPyAnZaM9K
+X-Google-Smtp-Source: AGHT+IG0STEvBx8a3foQvVzQCkaIUE+7I6MC2jXyuJzOrlewzlqDB0h+N52QttC38PzIQxq6kgaGOw==
+X-Received: by 2002:a05:600c:1c90:b0:43c:f63c:babb with SMTP id
+ 5b1f17b1804b1-43e9d4edc28mr107000025e9.1.1743635498595; 
+ Wed, 02 Apr 2025 16:11:38 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b7dedsm136824f8f.52.2025.04.02.16.08.58
+ 5b1f17b1804b1-43ec1630de9sm4805245e9.1.2025.04.02.16.11.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 16:08:58 -0700 (PDT)
-Message-ID: <a7b866ed-20a6-474a-9bec-27f6decff0b8@linaro.org>
-Date: Thu, 3 Apr 2025 01:08:57 +0200
+ Wed, 02 Apr 2025 16:11:38 -0700 (PDT)
+Message-ID: <4e17734f-2f63-41e6-9bed-d7613d9723e2@linaro.org>
+Date: Thu, 3 Apr 2025 01:11:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 17/43] target/ppc: Restrict SoftMMU mmu_index()
+Subject: Re: [PATCH-for-10.1 21/43] target/s390x: Restrict SoftMMU mmu_index()
  to TCG
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250402210328.52897-1-philmd@linaro.org>
- <20250402210328.52897-18-philmd@linaro.org>
+ <20250402210328.52897-22-philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250402210328.52897-18-philmd@linaro.org>
+In-Reply-To: <20250402210328.52897-22-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,59 +106,61 @@ On 2/4/25 23:03, Philippe Mathieu-Daudé wrote:
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/ppc/cpu_init.c | 2 +-
+>   target/s390x/cpu.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 3686bbc9380..30238e9a223 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -7481,6 +7481,7 @@ static const TCGCPUOps ppc_tcg_ops = {
->     .initialize = ppc_translate_init,
->     .translate_code = ppc_translate_code,
->     .restore_state_to_opc = ppc_restore_state_to_opc,
-> +  .mmu_index = ppc_cpu_mmu_index,
+> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+> index 1f75629ddc2..320ace67198 100644
+> --- a/target/s390x/cpu.c
+> +++ b/target/s390x/cpu.c
+> @@ -348,6 +348,7 @@ static const TCGCPUOps s390_tcg_ops = {
+>       .initialize = s390x_translate_init,
+>       .translate_code = s390x_translate_code,
+>       .restore_state_to_opc = s390x_restore_state_to_opc,
+> +    .mmu_index = s390x_cpu_mmu_index,
 >   
 >   #ifdef CONFIG_USER_ONLY
->     .record_sigsegv = ppc_cpu_record_sigsegv,
-> @@ -7517,7 +7518,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
->                                          &pcc->parent_phases);
+>       .record_sigsegv = s390_cpu_record_sigsegv,
+> @@ -378,7 +379,6 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
+>                                          &scc->parent_phases);
 >   
->       cc->class_by_name = ppc_cpu_class_by_name;
-> -    cc->mmu_index = ppc_cpu_mmu_index;
->       cc->dump_state = ppc_cpu_dump_state;
->       cc->set_pc = ppc_cpu_set_pc;
->       cc->get_pc = ppc_cpu_get_pc;
+>       cc->class_by_name = s390_cpu_class_by_name;
+> -    cc->mmu_index = s390x_cpu_mmu_index;
+>       cc->dump_state = s390_cpu_dump_state;
+>       cc->query_cpu_fast = s390_query_cpu_fast;
+>       cc->set_pc = s390_cpu_set_pc;
 
 Missing:
 
 -- >8 --
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 4963816e1f..ae5d034bd4 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7217,2 +7217,7 @@ static void ppc_restore_state_to_opc(CPUState *cs,
-  }
-+
-+static int ppc_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    return ppc_env_mmu_index(cpu_env(cs), ifetch);
-+}
-  #endif /* CONFIG_TCG */
-@@ -7226,7 +7231,2 @@ static bool ppc_cpu_has_work(CPUState *cs)
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 9efa4ef735..43fc3194bc 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -128,7 +128,2 @@ static vaddr s390_cpu_get_pc(CPUState *cs)
 
--static int ppc_cpu_mmu_index(CPUState *cs, bool ifetch)
+-static int s390x_cpu_mmu_index(CPUState *cs, bool ifetch)
 -{
--    return ppc_env_mmu_index(cpu_env(cs), ifetch);
+-    return s390x_env_mmu_index(cpu_env(cs), ifetch);
 -}
 -
-  static void ppc_cpu_reset_hold(Object *obj, ResetType type)
+  static void s390_query_cpu_fast(CPUState *cpu, CpuInfoFast *value)
+@@ -310,2 +305,7 @@ static const Property s390x_cpu_properties[] = {
+
++static int s390x_cpu_mmu_index(CPUState *cs, bool ifetch)
++{
++    return s390x_env_mmu_index(cpu_env(cs), ifetch);
++}
++
+  void cpu_get_tb_cpu_state(CPUS390XState *env, vaddr *pc,
+
 ---
 
 With following description:
 
 ---
 Convert CPUClass::mmu_index() to TCGCPUOps::mmu_index(),
-restricting ppc_cpu_mmu_index() to TCG #ifdef.
+restricting s390x_cpu_mmu_index() to TCG #ifdef.
 ---
+
 
