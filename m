@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80361C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 16:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE327C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 16:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u00wm-0007jj-9R; Wed, 02 Apr 2025 12:28:12 -0400
+	id 1u0131-0000wT-IE; Wed, 02 Apr 2025 12:34:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u00wk-0007jK-VH
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:28:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u012u-0000uV-Tq
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:34:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u00wi-0005t1-Uv
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:28:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u012t-0007k6-6y
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:34:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743611286;
+ s=mimecast20190719; t=1743611669;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SB9zXy6Vx2D4wO34LFzHetxtO1oIJgMdiBSQ+VGuCzs=;
- b=Gf8wyUHk1xdTtUiocniWo5jrXPRHoSvZ/1NKc4KZrPGhw7PUfw5lRwEuORtzQI9S/xGjPl
- +xifRrm1Zv1SN64yl/7ZYw3rnoHIyVDNlMZM0AaU2JLAfBCCjsEFMQ2J5JeNYPzDfBKRD7
- klz3J1VqAHUT/tQfrGksq7Zr+jHatn8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M8qUN/rJOe4i6clAhR6DcT05Kj3wBL+CIVhZflKqWA0=;
+ b=UGZJS15pIMA28KTDoeakK9H0KHztLTmXyCFJwohz0Mth9caAoh01zjaiDxsO2vZ+Oel4Ki
+ zxAbyUiNHJOTjlKMF7yPmDN4tvvwm7F+nQbXMXNq1Z9CLhKrSgOS8TPJZOjTpiC5cCzAFo
+ mOvgmB7mYhhFBFYr4SdiCSNURp7C6fA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-Nh2zivWRPsSfo9eNvmn4Nw-1; Wed, 02 Apr 2025 12:28:05 -0400
-X-MC-Unique: Nh2zivWRPsSfo9eNvmn4Nw-1
-X-Mimecast-MFC-AGG-ID: Nh2zivWRPsSfo9eNvmn4Nw_1743611284
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43cf446681cso43254325e9.1
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 09:28:04 -0700 (PDT)
+ us-mta-552-fg1_MFlSPuqWsj8WrBMcEA-1; Wed, 02 Apr 2025 12:34:27 -0400
+X-MC-Unique: fg1_MFlSPuqWsj8WrBMcEA-1
+X-Mimecast-MFC-AGG-ID: fg1_MFlSPuqWsj8WrBMcEA_1743611666
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3912539665cso585689f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 09:34:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743611283; x=1744216083;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SB9zXy6Vx2D4wO34LFzHetxtO1oIJgMdiBSQ+VGuCzs=;
- b=cboJ/CHSWYNyfqdkckbpd62aa6RsInclVCJLdcKVDpokTIyn3mLNYyR0CmhZ2ebqXS
- hS4jisjuEhxLR9NdjuzVwmorg0Hnv6QvswhfTFPJGS79Sp6l9POFNVFcjJY6xXzCzw7L
- XAvRodTPNI3Z9VCz9hlNbukZ2J+hzRxtoeKU5dGc9sq7ifAcGn9Mnv8Qhr6GKqLnkjop
- qGnY8ibrzAvP4Sbh0+s7tWlQaaNKyYNN2UzfXXdHrwmuDYacByhjBApvZVizhsyD9oSh
- 4Mr4Hwk8IqeczMaYwyehbLXX5XMFeOOf4FZa5aqfQMblIFjgSLU+EvoWp6Ie0otRQ0uq
- PmCA==
-X-Gm-Message-State: AOJu0Yy1jmzb76fIa6zASyISToSMnEcYf4QNEQIcRfLwmMWmYuqZKdJm
- 86d0+tkJfHxbfpdSXe7XuTUBiPqnIUjR9tpxMnzzkwugCAflbupNTykeCdabLxiQJErxlFByGp5
- kmJqIQvXeCjTCzmtrwh6MyVxBy5VkRtpmh1u/fxT2uhKyqseYzTfI
-X-Gm-Gg: ASbGncvY3zCrXpizZDGKSP+37U/ayL0mD8ixppH1oB9kiTF4+4AewzKb+b2pC7R+o4r
- uTk2Oj9GPQi78rixqaErkUCKR6WLoNrQln7s5TriYNmnLWNH5b9BPE67jf9O0tkKjPFP5F4wYiB
- GvAG4m5w4KgJl01x1N/OqZ2kaiTRe3RcCZg9reRW0S+kzpZku9i+vZRXitJiccQGYiJJiLetmQF
- MMfqOJhPy9u/K6Ql3aQ7sURu9AIHjug6rsMRn7B6cUr4U01abFgOYWG8i9CG4j6PNpviks8P+IH
- FwsPMjcZPg==
-X-Received: by 2002:a05:6000:184e:b0:39c:12ce:1052 with SMTP id
- ffacd0b85a97d-39c12ce10fbmr14634924f8f.7.1743611283588; 
- Wed, 02 Apr 2025 09:28:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqDro/09BBTX4/dT0m+8UGXGlY89ttkpFcpAow6cGdxAMTYRmKdSk+x8JLW8YRlAl8qOHBxw==
-X-Received: by 2002:a05:6000:184e:b0:39c:12ce:1052 with SMTP id
- ffacd0b85a97d-39c12ce10fbmr14634900f8f.7.1743611283192; 
- Wed, 02 Apr 2025 09:28:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743611666; x=1744216466;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M8qUN/rJOe4i6clAhR6DcT05Kj3wBL+CIVhZflKqWA0=;
+ b=Qqbkx5UhsdwcYG52lyuT5eV6qHO9n3oLn5Qmq5iRMyvWg/CcaCO9npBZSyF0ijMG93
+ NDPIj2Pvf3QtneeqFO7vaF5MtS4yDwgw6fAuR6Lv8dk9TnkKf6BNaD8zhi6/Pp2I/W4U
+ MhlcOb/zqFgDB+NwffyFiE7KqUqFHVONEQckxXpCKocywxiAgAOC65j351B8J2jVDNlB
+ aCHiH4erMorCOT9jbXK7th1Be/pZxExoD9z2Iyjoy/YrIXZUdfu1/9Muknf5AxjUQiYF
+ Z6Im+fH8NOn131TKbP8Jc81bnuo6waC5F4lRwo2T7u/2aDaZ7TCtZOXClapEIYdywRLe
+ 5WXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNo/sD7x2R2ZYCXqaTDbJ/bA5WZITxbX36vBNvwJinfxldfey21vnN7p3Fmvd8ztGYHgxxtS/JlJjm@nongnu.org
+X-Gm-Message-State: AOJu0YxUyYR+w7MheqkAu52pOmj4bEgfE8ZN3R+Q3IIo5HDofXFqGNox
+ 1q3mUUe8CgvyTSOflqoxdTdsxe8Uq3+USgeexRJhGAcSASS6qFD13EbRxiOcFEzPcHD5AKi4UWV
+ uKarda71VbWeeO9KZKdLT96V/Ba+EO3PMEmyc2rcEEd+26S++Rkl7
+X-Gm-Gg: ASbGncuRu1gr3YZLXb7E9OPLkB1eXGU4SdyIFwFSbU9aCIJhKvgTc5FQygt1xMM70RT
+ 8I/1ApybhAJa584xLo4HHYTHVOgSVwskuabtOep2ntSbtGELWVCakx2j4jjURkPe4c3a2z1KI7K
+ kja2uzp10YRGXSjOTvwwMWeYpum9dv76Xzvt4HQnv78czxGKNw5WGtzhXK1rrIOfYtUCq5/oacT
+ Ge4gUNWmkgy2gfspU0X3VD88V7oq7iYf9y2m9YI0XexH96LmhG81l8N8+Ij7P5Up2PBI/hsdI7t
+ Rt1OLryaLg==
+X-Received: by 2002:a05:6000:4387:b0:391:2a79:a110 with SMTP id
+ ffacd0b85a97d-39c2e637f56mr168444f8f.29.1743611666323; 
+ Wed, 02 Apr 2025 09:34:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7muzYCjesFXXyRd/2qO506uYcDBV6+BtI7nbFiME/cAieNgNdWvZHHvknPtTBmblMoP9yBg==
+X-Received: by 2002:a05:6000:4387:b0:391:2a79:a110 with SMTP id
+ ffacd0b85a97d-39c2e637f56mr168429f8f.29.1743611665999; 
+ Wed, 02 Apr 2025 09:34:25 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b66a991sm17345908f8f.49.2025.04.02.09.28.00
+ ffacd0b85a97d-39c0b79e304sm17527085f8f.73.2025.04.02.09.34.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 02 Apr 2025 09:28:02 -0700 (PDT)
-Date: Wed, 2 Apr 2025 12:27:59 -0400
+ Wed, 02 Apr 2025 09:34:25 -0700 (PDT)
+Date: Wed, 2 Apr 2025 12:34:22 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH] tests/functional: fix race in virtio balloon test
-Message-ID: <20250402122751-mutt-send-email-mst@kernel.org>
-References: <20250304183340.3749797-1-berrange@redhat.com>
+To: Cindy Lu <lulu@redhat.com>
+Cc: jasowang@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 2/4] virtio_net: Add the check for vdpa's mac address
+Message-ID: <20250402123150-mutt-send-email-mst@kernel.org>
+References: <20250326132021.1215568-1-lulu@redhat.com>
+ <20250326132021.1215568-3-lulu@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250304183340.3749797-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250326132021.1215568-3-lulu@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -107,81 +107,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 04, 2025 at 06:33:40PM +0000, Daniel P. Berrangé wrote:
-> There are two race conditions in the recently added virtio balloon
-> test
+On Wed, Mar 26, 2025 at 09:19:31PM +0800, Cindy Lu wrote:
+> When using a VDPA device, it is important to ensure that the MAC
+> address is correctly set. The MAC address in the hardware should
+> match the MAC address from the QEMU command line. This is a recommended
+> configuration and will allow the system to boot.
 > 
->  * The /dev/vda device node is not ready
->  * The virtio-balloon driver has not issued the first stats refresh
-> 
-> To fix the former, monitor dmesg for a line about 'vda'.
-> 
-> To fix the latter, retry the stats query until seeing fresh data.
-> 
-> Adding 'quiet' to the kernel command line reduces serial output
-> which otherwise slows boot, making it less likely to hit the former
-> race too.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-
-ok
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
 > ---
->  tests/functional/test_virtio_balloon.py | 24 +++++++++++++++++++-----
->  1 file changed, 19 insertions(+), 5 deletions(-)
+>  hw/net/virtio-net.c | 40 +++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 39 insertions(+), 1 deletion(-)
 > 
-> diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
-> index 67b48e1b4e..308d197eb3 100755
-> --- a/tests/functional/test_virtio_balloon.py
-> +++ b/tests/functional/test_virtio_balloon.py
-> @@ -32,7 +32,7 @@ class VirtioBalloonx86(QemuSystemTest):
->          'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
->  
->      DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
-> -                             'rd.rescue')
-> +                             'rd.rescue quiet')
->  
->      def wait_for_console_pattern(self, success_message, vm=None):
->          wait_for_console_pattern(
-> @@ -47,6 +47,9 @@ def mount_root(self):
->          prompt = '# '
->          self.wait_for_console_pattern(prompt)
->  
-> +        # Synchronize on virtio-block driver creating the root device
-> +        exec_command_and_wait_for_pattern(self, "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done", "vda1")
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index de87cfadff..a3b431e000 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3749,12 +3749,43 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+>      /* failover_primary_hidden is set during feature negotiation */
+>      return qatomic_read(&n->failover_primary_hidden);
+>  }
+> +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n,
+> +                                      MACAddr *cmdline_mac, Error **errp)
+> +{
+> +    struct virtio_net_config hwcfg = {};
+> +    static const MACAddr zero = { .a = { 0, 0, 0, 0, 0, 0 } };
 > +
->          exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
->                                            prompt)
->          exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
-> @@ -65,10 +68,21 @@ def assert_initial_stats(self):
->              assert val == UNSET_STATS_VALUE
->  
->      def assert_running_stats(self, then):
-> -        ret = self.vm.qmp('qom-get',
-> -                          {'path': '/machine/peripheral/balloon',
-> -                           'property': 'guest-stats'})['return']
-> -        when = ret.get('last-update')
-> +        # We told the QEMU to refresh stats every 100ms, but
-> +        # there can be a delay between virtio-ballon driver
-> +        # being modprobed and seeing the first stats refresh
-> +        # Retry a few times for robustness under heavy load
-> +        retries = 10
-> +        when = 0
-> +        while when == 0 and retries:
-> +            ret = self.vm.qmp('qom-get',
-> +                              {'path': '/machine/peripheral/balloon',
-> +                               'property': 'guest-stats'})['return']
-> +            when = ret.get('last-update')
-> +            if when == 0:
-> +                retries = retries - 1
-> +                time.sleep(0.5)
+> +    vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH_ALEN);
 > +
->          now = time.time()
+> +    /*For VDPA device following situations are acceptable:*/
+
+
+/* This is how you format comments in QEMU */
+
+
+
+/*Never like this*/
+
+> +    if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) != 0) {
+> +        /*
+> +         * 1.The hardware MAC address is the same as the QEMU command line MAC
+
+space after .
+
+> +         *   address, and both of them are not 0.
+> +         */
+> +        if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) == 0)) {
+> +            return true;
+> +        }
+> +    }
 >  
->          assert when > then and when < now
+> +    error_setg(errp,
+> +               "vDPA device's mac %02x:%02x:%02x:%02x:%02x:%02x"
+> +               "not same with the cmdline's mac %02x:%02x:%02x:%02x:%02x:%02x,"
+
+the same with the command line mac (avoid abbreviation)
+
+> +               "Please check.",
+
+space after , and no uppercase
+
+> +               hwcfg.mac[0], hwcfg.mac[1], hwcfg.mac[2], hwcfg.mac[3],
+> +               hwcfg.mac[4], hwcfg.mac[5], cmdline_mac->a[0], cmdline_mac->a[1],
+> +               cmdline_mac->a[2], cmdline_mac->a[3], cmdline_mac->a[4],
+> +               cmdline_mac->a[5]);
+
+
+check what?  maybe "initialization failed"?
+
+> +
+> +    return false;
+> +}
+>  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>  {
+>      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>      VirtIONet *n = VIRTIO_NET(dev);
+>      NetClientState *nc;
+> +    MACAddr macaddr_cmdline;
+>      int i;
+>  
+>      if (n->net_conf.mtu) {
+> @@ -3862,6 +3893,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>      virtio_net_add_queue(n, 0);
+>  
+>      n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+> +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
+>      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+>      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+>      n->status = VIRTIO_NET_S_LINK_UP;
+> @@ -3908,7 +3940,13 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>      nc = qemu_get_queue(n->nic);
+>      nc->rxfilter_notify_enabled = 1;
+>  
+> -   if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
+> +    if (nc->peer && (nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA)) {
+> +        if (nc->peer->check_mac) {
+> +            if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp)) {
+> +                virtio_cleanup(vdev);
+> +                return;
+> +            }
+> +        }
+>          struct virtio_net_config netcfg = {};
+>          memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+>          vhost_net_set_config(get_vhost_net(nc->peer),
 > -- 
-> 2.48.1
+> 2.45.0
 
 
