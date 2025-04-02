@@ -4,63 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 650C3C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 12:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CC6C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 12:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzxKI-0002HZ-OE; Wed, 02 Apr 2025 08:36:14 -0400
+	id 1tzxMH-0002yf-OC; Wed, 02 Apr 2025 08:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierre-samuel.le-stang@ovhcloud.com>)
- id 1tzxKG-0002HQ-KI
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:36:12 -0400
-Received: from 1.mo301.mail-out.ovh.net ([137.74.110.64])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tzxMB-0002xv-RD
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:38:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierre-samuel.le-stang@ovhcloud.com>)
- id 1tzxKB-0004CB-T1
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:36:12 -0400
-Received: from DAGFR10EX2.OVH.local (gw.corp.ovh.com [51.255.55.251])
- by mo301.mail-out.ovh.net (Postfix) with ESMTPS id 4ZSPVX1rLjzht
- for <qemu-devel@nongnu.org>; Wed,  2 Apr 2025 12:36:04 +0000 (UTC)
-Received: from localhost (109.190.254.5) by DAGFR10EX2.OVH.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1748.10; Wed, 2 Apr
- 2025 14:36:03 +0200
-Date: Wed, 2 Apr 2025 14:36:01 +0200
-From: Pierre-Samuel LE STANG <pierre-samuel.le-stang@ovhcloud.com>
-To: <qemu-devel@nongnu.org>
-Subject: smbios entry point auto on pc-i440fx
-Message-ID: <20250402123601.4nfw6bxk6apphpvw@corp.ovh.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tzxM8-0004Nq-KI
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:38:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743597485;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZDGjXDmP6aX6mRMloLq72jUOhmBLhmLpQRSnCrY4N7k=;
+ b=HiQrRXQXGbgbQG8wivK5kUtbx5tHRZzzWJ/hf/AFPKFeI3uBC86eQgoUVfqnW2ZuYzZD8T
+ zf9zpQSkmI21vm1gYINXZNvxK1Di+cHeKa9j/ZQXhA7Mvp4SCO8wMxyNNEnIi2a23lR0fe
+ 9EOajsYIIrrNNfgeglg6ydyD4lWkmW4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-aTA8LPo3PlWHSS6QFUdBew-1; Wed,
+ 02 Apr 2025 08:38:02 -0400
+X-MC-Unique: aTA8LPo3PlWHSS6QFUdBew-1
+X-Mimecast-MFC-AGG-ID: aTA8LPo3PlWHSS6QFUdBew_1743597481
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83979180AF78; Wed,  2 Apr 2025 12:38:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.12])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CA9B19560AD; Wed,  2 Apr 2025 12:37:58 +0000 (UTC)
+Date: Wed, 2 Apr 2025 13:37:55 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 54/55] i386/tdx: Validate phys_bits against host value
+Message-ID: <Z-0vo831j42HZ9GF@redhat.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-55-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: NeoMutt/20180716-1616-ec38bf
-X-Originating-IP: [109.190.254.5]
-X-ClientProxiedBy: CAS2.OVH.local (172.16.1.2) To DAGFR10EX2.OVH.local
- (172.16.2.31)
-X-OVH-CORPLIMIT-SKIP: true
-X-Ovh-Tracer-Id: 3401343622468820351
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeehieelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkrhggtggufghisehttdertddtredvnecuhfhrohhmpefrihgvrhhrvgdqufgrmhhuvghlucfngfcuuffvtefpifcuoehpihgvrhhrvgdqshgrmhhuvghlrdhlvgdqshhtrghnghesohhvhhgtlhhouhgurdgtohhmqeenucggtffrrghtthgvrhhnpedvleduffeuudefieduieejgfetleegjeetjefffeekleehfeeiueevfeffvdehgfenucffohhmrghinhepghhithhlrggsrdgtohhmnecukfhppeduvdejrddtrddtrddupddutdelrdduledtrddvheegrdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehpihgvrhhrvgdqshgrmhhuvghlrdhlvgdqshhtrghnghesohhvhhgtlhhouhgurdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdpoffvtefjohhsthepmhhofedtudgmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=oPX2LSP567RpHdeYcJoJZhuMhWaXbmelSoacGsTbUUs=; 
- c=relaxed/relaxed; d=ovhcloud.com; h=From; s=mailout;
- t=1743597364; v=1; 
- b=p5h6JWqnzoSJW7OU6ycIn3MLhl3TWpXvttZt2JJTUi8kqqL2CfSDvPH+kgWcTALVYMLIfwxI
- Zd+y3N5vFV31ODR8ymjVgSlFqXp15PEwgtbw27uRWcrseMMktmC+wE1IpOzb96sjZq6IkAqfzVp
- 8Wj+3LcfyzvvK6m/xlnRH2wo=
-Received-SPF: pass client-ip=137.74.110.64;
- envelope-from=pierre-samuel.le-stang@ovhcloud.com;
- helo=1.mo301.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250401130205.2198253-55-xiaoyao.li@intel.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,33 +90,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Pierre-Samuel LE STANG <pierre-samuel.le-stang@ovhcloud.com>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello team, 
+On Tue, Apr 01, 2025 at 09:02:04AM -0400, Xiaoyao Li wrote:
+> For TDX guest, the phys_bits is not configurable and can only be
+> host/native value.
+> 
+> Validate phys_bits inside tdx_check_features().
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  target/i386/host-cpu.c | 2 +-
+>  target/i386/host-cpu.h | 1 +
+>  target/i386/kvm/tdx.c  | 8 ++++++++
+>  3 files changed, 10 insertions(+), 1 deletion(-)
 
-I'm facing the issue of windows instances not beeing able of retrieving
-the uuid because of smbios 3.0 (qemu 8.2 on debian openstack/libvirt).
-The instances are of pc-i440fx-8.2 machine type.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-If I understand well since 8.1 qemu use a 64bit format for the smbios
-v3 which is not handle by windows OS.
 
-I also found some commit about handling automatically the format by qemu
-on q35 machine type to resolve this bug startting to 9.0.0 version
-https://gitlab.com/qemu-project/qemu/-/issues/2008 
-
-It seems forced to 64 bit on pc-i440fx-8.1 and above while forced to 32
-under.
-
-Is there a reason to not handle it automatically on pc-i440fx machine
-type?
-
-Is it safe to keep it to 32 for machine type pc-i440fx-8.1 and above?
-
-Cheers!
-
+With regards,
+Daniel
 -- 
-PS Le Stang
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
