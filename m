@@ -4,110 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D9EBC28B20
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B77C3601A
 	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 16:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u00qz-0004N7-Nh; Wed, 02 Apr 2025 12:22:13 -0400
+	id 1u00qo-0004MG-02; Wed, 02 Apr 2025 12:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1u00qx-0004Mx-SH
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:22:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1u00ql-0004Ln-Ti
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:22:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1u00qu-0004Bn-U6
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:22:10 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 532AtCAt032650
- for <qemu-devel@nongnu.org>; Wed, 2 Apr 2025 16:22:07 GMT
+ id 1u00qj-0004A6-Ki
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 12:21:59 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 532AuAP7014503
+ for <qemu-devel@nongnu.org>; Wed, 2 Apr 2025 16:21:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- wweRBBnlanTkT3JY/i3GH8wc+I/XSFhUcAg07aET+Xw=; b=dZoItik5wdOTRXQu
- LqlR1Xi4M2MdC2Fl4ba7cv9i8nWObYx3hUD9gtvGeR4PqFrbMpH4xLjV0bzubzQQ
- 0UIT5Cd9uKnKISf6RPCm4hd3r16JZghJ6k1DHT58O6H9yKuBRlsQ5O1KERQvuEJY
- sS+jgGz9DZjoR/04rqlvNC+A0MMnz86E8buRt/UDpRl5i6r6KlSy2jNRqNo1e9sw
- 28ObVJ1wleSQ+pDP8rWQqpoO7dqXPShyagrpdWaBzp3/szZrTtDESJzCSejdM+Gc
- Xvkzwc6HPp6z413CgVSiL2u2zo5GE+UYWSPiwvGT2Q1s4ap0luNd+08ScpHG67dh
- 9fcqZw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p67qmbmx-1
+ kgWH8l6GJsM4fRmXzwmaAo997BgYviF8pZKPYiOIaEs=; b=h+ak1RfSzbUaA6No
+ +2XkGicZiZNsJThnkfnKCXiWbf+AguMfahk0oQ44tXdPSpgwm9FFcgeaOtv5ma78
+ Xa7sDVO76epJOUCh61QDpHq31ffi/Oa04+0zoY83TjAZ83NdrPmOfcJQMhir9x+v
+ FcMxLSe22Sj7NKHEBq930pbT0IJ+79dKeMtYbxWl0MTW/KZe10s85SlDUB7mbeqZ
+ mevL26KTMKrwedKDlSviJvc8G38AluDgRRV0iPGSRrsLiUXxtBxe5j2rDBPgUrWo
+ VpD6SAWLxb4926Gn2iIjRfjvYsGDegFnnPuiLpRYz9bqBkBaGETYoZm+EHPNp3GX
+ cfQX6g==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45p7tvm2gb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 16:22:07 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-7369b559169so194498b3a.1
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 09:22:06 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 16:21:54 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-7375e2642b4so209492b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 09:21:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743610925; x=1744215725;
+ d=1e100.net; s=20230601; t=1743610913; x=1744215713;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wweRBBnlanTkT3JY/i3GH8wc+I/XSFhUcAg07aET+Xw=;
- b=wmLNg45ZqfutSqN4vUpEtjI483VXa5CGGYm2DuqbQHKjr75D8+A1sMMdpFW0SyEpOi
- ZWF9YzXeyh/Anszcuxqv7n0U1iUQzY4nc6fn6ocH2XBXeE8kJ9bIiIuek+tcJIXrAF8J
- 3o6DuB5WNxGnWqeMTDcF5r7tbeF+JDj0GM2UOilBKOqZdkLHTw4xeoVyeluyCSPYKJLG
- KHOdfZHKGAGIxUUPgKpiHuvjgoc500imIFfDYgj3R38xftPo87Fz8wQ7ozt4gL0f/YF1
- 2sAiA+qtUhF5DEkoPMjThEziJIIK/Kj3bhthGMJZvOEoMu06d7g4k/qLRBC/ZortqPtc
- Miqg==
+ bh=kgWH8l6GJsM4fRmXzwmaAo997BgYviF8pZKPYiOIaEs=;
+ b=sflnAodHjjgGF+b2G2BUmkJH4Jsevz6MjqRRkQC2IsNXhUfpWKDgZIKo75NkDXDc2J
+ 7SZB6bXbaCOie/8qymxBSubNhNs7AlP3aA3Ie4IW3h5195f3aFU5h8FfrbD2Lvtg/Lhp
+ Sv1Hikb42KO8cAM9FdhItln6RlcxhY2EbfzK7YEmNd+z/M6LNh5bPgFXkTLYWaEQx0au
+ FRjSSui2CJyBnYsWGfan7Ugg9PXBpcNet0jjm7T4ziXAWwNoBpm8LtEhx+34QRlUJFws
+ H0lusqNl5Y61VGTiIkJ8PRm8m+ui1vC9QoiBMG+7WafaZp6Xja2HLfg35GYCHtbwbtg0
+ 9ecg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVl+we3OnGI6Ik8H05+MNQ2SPUTEWNBe13CzLA8XVCe5OBRPIsiKSsa1Rpyv98Dw9KunbRYIFA34ytF@nongnu.org
-X-Gm-Message-State: AOJu0Yzxmtf48b34JWMerfA2365fu+WB5L5nQXPnxAc5HtFmXdGPGy6T
- AWD0SivsY5HyFkSdeRjqoe2r/i+pdI4MfkUPx/1JBn6TEBQLyb2Y3k8qrEUvz90Ox+m+TpEP50M
- lR4DbTGBbJIRuSCZa3J5sLGPJAHjLF3pDT26G/2onNvy25w+xCXm1nw==
-X-Gm-Gg: ASbGncv91GYcDVEWgoZGVE2ljPItZ4jUTFtjsMdcSzRlj3HXpSobj0NR4eW9JC2P1W4
- FIFb7SDEmFQXQyHbGfq2pxK7mnIntEvRH1fAhidwLb3LHTQd3/aynG94ZLEdmHuFyVRElUt4j4D
- jxdSBbFxChX24LiyUc6/bhc0uU2GJgdw64gH4tdxVIEAD9lDHVMcLQGch8AW1rFVlEoPPLNt1E9
- W2hyTpsjZxzp9yAiM/5tZT2UJFmDjxpuupTKE+d0dof1dmsYHT9yrBOdoYMncMI33R9rYj/SlFj
- 9ruWAS329NeXu+mNQGMHfSxyPvfjtqgUmigejyp1e4hLB/qjQax/1UjyU+kix6u4PeOU9+R+bQ=
+ AJvYcCUsh4F/1Nf61PmyimcEsnWzvci0+dOK9mAHfrM5++MHX4qhUK/CYkWTtZBuFfuZpL5KlUVaNQNZUuzI@nongnu.org
+X-Gm-Message-State: AOJu0YzNVpwxVvnsPzJepldEtcgiIXBwORMjszXCsz6Zl5eZXmRRUvFG
+ qflV81Z7q9yl6V5mTw1mLrWfUTDlJiBFeKgnpkBhznboTfDjeMByR+ld1ECN4ACiquj7Q086iHR
+ CICBUBuTFpAt96eIb7aXMuWrRV20dArgCm9xmtTZiVYZYjEuVnnIE5w==
+X-Gm-Gg: ASbGnctD+BDAx6aKHvbTsZvOyjhBjXdjCThjR5xts1DiTH3bx/bTrXMcuiNr4JJdg/h
+ kYnn9gLh7ZRHkCOH8w6xAyyw2mI+Pv7lqKFW+MD9pQYty3ll9VgtJAOA89CuPmXHYDqUMdfyQCU
+ q1flApvA9Z9M4VspT/ny/aVG8YY8z5A0LD3ggpp1HT/Vilya3lWD/U8RHjfDZy7IhcfhhRGVYDb
+ 6VozvL1s91o3BNCObwYrcPqSfEG8P4sqpBbcchEkQQI+PqZC15Aidp1dwKvsfXGoXaQ2rXRQOkC
+ DAC73TCmoLagRafHcYE5/lBOjbZT712yTe4ikE6EFe9Y6ELCblTIedvEYtRkm1scyto/vFVQaA=
  =
-X-Received: by 2002:a05:6a21:9007:b0:1f5:9098:e42e with SMTP id
- adf61e73a8af0-2009f5c4aabmr31110499637.7.1743610925523; 
- Wed, 02 Apr 2025 09:22:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQtv/8OHXV/CL0NecOk821Ojkj/hRyroyWhEFXye1XFE+qRTfttwtTYmD31V9XPidX+9twHQ==
-X-Received: by 2002:a05:6a21:9007:b0:1f5:9098:e42e with SMTP id
- adf61e73a8af0-2009f5c4aabmr31110469637.7.1743610925184; 
- Wed, 02 Apr 2025 09:22:05 -0700 (PDT)
+X-Received: by 2002:a05:6a21:c8f:b0:1f5:7eb5:72c7 with SMTP id
+ adf61e73a8af0-200d155f5c6mr12423475637.29.1743610913160; 
+ Wed, 02 Apr 2025 09:21:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHK6qbCbhErJv38Lt7o/uAmM0RI4zsFLXs6RiJU1Gsc1ONOMiQoZh9DShfFX3uErFsPWRJyyA==
+X-Received: by 2002:a05:6a21:c8f:b0:1f5:7eb5:72c7 with SMTP id
+ adf61e73a8af0-200d155f5c6mr12423447637.29.1743610912755; 
+ Wed, 02 Apr 2025 09:21:52 -0700 (PDT)
 Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
  [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af93b67e754sm10115510a12.6.2025.04.02.09.22.03
+ d2e1a72fcca58-739710920adsm11138469b3a.122.2025.04.02.09.21.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 09:22:04 -0700 (PDT)
-Message-ID: <008c502b-149c-4e2d-aae9-662972252ab4@oss.qualcomm.com>
-Date: Wed, 2 Apr 2025 11:22:02 -0500
+ Wed, 02 Apr 2025 09:21:52 -0700 (PDT)
+Message-ID: <9a96af7b-4ee7-424f-9934-ecd37cff5a31@oss.qualcomm.com>
+Date: Wed, 2 Apr 2025 11:21:50 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] target/hexagon: Only indent on linux
+Subject: Re: [PATCH v2 1/2] target/hexagon: Replace `prepare` script with
+ meson target
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: ale@rev.ng, ltaylorsimpson@gmail.com, philmd@linaro.org
 References: <20250402114259.21953-1-anjo@rev.ng>
- <20250402114259.21953-3-anjo@rev.ng>
+ <20250402114259.21953-2-anjo@rev.ng>
 Content-Language: en-US
 From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250402114259.21953-3-anjo@rev.ng>
+In-Reply-To: <20250402114259.21953-2-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=fMI53Yae c=1 sm=1 tr=0 ts=67ed642f cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=ROwaXN-vyRnR6IyvWhYA:9
- a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: IaDxjky87L3BvoevKFB4sz4Dr9qfRSSi
-X-Proofpoint-GUID: IaDxjky87L3BvoevKFB4sz4Dr9qfRSSi
+X-Authority-Analysis: v=2.4 cv=OIon3TaB c=1 sm=1 tr=0 ts=67ed6422 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=mDV3o1hIAAAA:8 a=EUspDBNiAAAA:8
+ a=_8qmwitvIyZaJUrpDDIA:9 a=QEXdDO2ut3YA:10
+ a=RVmHIydaz68A:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: jWqwWtLy9wGsKpdvbRs0s6140pm-J-p5
+X-Proofpoint-GUID: jWqwWtLy9wGsKpdvbRs0s6140pm-J-p5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-02_06,2025-04-02_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0
- priorityscore=1501 phishscore=0 spamscore=0 impostorscore=0 clxscore=1015
- mlxlogscore=999 bulkscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ priorityscore=1501
+ mlxlogscore=999 lowpriorityscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+ adultscore=0 bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
  definitions=main-2504020104
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -132,8 +134,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 4/2/2025 6:42 AM, Anton Johansson wrote:
-> indent on macOS, installed via homebrew, doesn't support -linux. Only
-> run indent on linux hosts.
+> The purpose of the prepare script is to invoke `cpp` to preprocess input
+> to idef-parser by expanding a few select macros.  On macOS `cpp`
+> expands into `clang ... -traditional-cpp` which breaks macro
+> concatenation.  Replace `cpp` with `${compiler} -E`
+> and replace the script with a meson custom_target.
 >
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
@@ -142,20 +147,58 @@ On 4/2/2025 6:42 AM, Anton Johansson wrote:
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
 
->   target/hexagon/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/hexagon/idef-parser/prepare | 24 ------------------------
+>   target/hexagon/meson.build         |  3 ++-
+>   2 files changed, 2 insertions(+), 25 deletions(-)
+>   delete mode 100755 target/hexagon/idef-parser/prepare
 >
+> diff --git a/target/hexagon/idef-parser/prepare b/target/hexagon/idef-parser/prepare
+> deleted file mode 100755
+> index cb3622d4f8..0000000000
+> --- a/target/hexagon/idef-parser/prepare
+> +++ /dev/null
+> @@ -1,24 +0,0 @@
+> -#!/usr/bin/env bash
+> -
+> -#
+> -#  Copyright(c) 2019-2021 rev.ng Labs Srl. All Rights Reserved.
+> -#
+> -#  This program is free software; you can redistribute it and/or modify
+> -#  it under the terms of the GNU General Public License as published by
+> -#  the Free Software Foundation; either version 2 of the License, or
+> -#  (at your option) any later version.
+> -#
+> -#  This program is distributed in the hope that it will be useful,
+> -#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+> -#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> -#  GNU General Public License for more details.
+> -#
+> -#  You should have received a copy of the GNU General Public License
+> -#  along with this program; if not, see <http://www.gnu.org/licenses/>.
+> -#
+> -
+> -set -e
+> -set -o pipefail
+> -
+> -# Run the preprocessor and drop comments
+> -cpp "$@"
 > diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-> index abcf00ca1f..d26787a9b9 100644
+> index bb4ebaae81..abcf00ca1f 100644
 > --- a/target/hexagon/meson.build
 > +++ b/target/hexagon/meson.build
-> @@ -324,7 +324,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+> @@ -280,12 +280,13 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+>           command: [python, files('gen_idef_parser_funcs.py'), semantics_generated, '@OUTPUT@'],
 >       )
 >   
->       indent = find_program('indent', required: false)
-> -    if indent.found()
-> +    if indent.found() and host_os == 'linux'
->           idef_generated_tcg_c = custom_target(
->               'indent',
->               input: idef_generated_tcg[0],
+> +    compiler = meson.get_compiler('c').get_id()
+>       preprocessed_idef_parser_input_generated = custom_target(
+>           'idef_parser_input.preprocessed.h.inc',
+>           output: 'idef_parser_input.preprocessed.h.inc',
+>           input: idef_parser_input_generated,
+>           depend_files: [idef_parser_dir / 'macros.h.inc'],
+> -        command: [idef_parser_dir / 'prepare', '@INPUT@', '-I' + idef_parser_dir, '-o', '@OUTPUT@'],
+> +        command: [compiler, '-x', 'c', '-E', '-I', idef_parser_dir, '-o', '@OUTPUT@', '@INPUT@'],
+>       )
+>   
+>       flex = generator(
 
