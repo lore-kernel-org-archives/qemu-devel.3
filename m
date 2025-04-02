@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C2EC36018
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 21:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E0CC36018
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 22:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u05mi-0005tC-1X; Wed, 02 Apr 2025 17:38:08 -0400
+	id 1u06Uu-0004cY-37; Wed, 02 Apr 2025 18:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05mh-0005t1-3Y
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:38:07 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u06Us-0004bl-HR
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 18:23:46 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u05mf-0007ba-Cm
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 17:38:06 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4394036c0efso1280805e9.2
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 14:38:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u06Uq-0002MG-4p
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 18:23:46 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so252526f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 15:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743629882; x=1744234682; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BJQTSCHQrb2RlU2HrCmbH5Umg4qlaYSReFutvUFFf74=;
- b=vYxgEINLXGYAa1Q+KFfN/1xkVuHCIbRfaI1TlFJwK5dmgkQj6GQ5H5vcajfv+Ne3ry
- Xn/e7mhXbXUHo/+x0NknN2t/W/bGEuFrh+HMX9+FtieDUJBMB9IH/H7WoOAgO7RxFN9c
- 2WWLyrDDeXZceBBl6XLJY2wEaj0TAF+ywqLXkv7r5C3B2e39eZmSKQ2JDXrs2kAdz4Pa
- 5WRMLlteyHBjicTBopKc/jnVP07RO9MUHFyut0VzW5yjmcoDfBBLHx/9htq+8zRhAWCO
- /ITj23WQfts5aoz/wB0KLIqbhg8PPK2ib8WzBOk39xE0Gg+pOTkct8LX84sb8sf+FB2A
- Qxlg==
+ d=linaro.org; s=google; t=1743632622; x=1744237422; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yBN+/AU+C8lcLjoSEIUWiNE5OcwuaZEeoY9tnHiYWlE=;
+ b=Z5yj+F/hxZ3uL/cF7VEvlYGa5xtPFCjCKhrVfou0p7J0o//M1kCjTbYciEN4WDZK2+
+ IFM6t16hFBtC+cY3ZkRE9pUdyqq/HGY2V1nCTdbkUnqoLJVT7VyHokKvYIkpX1JE83Kw
+ epwi1m+01ttfxcH7PHoRHoqOwGqxzVrTV64nwKRcazw5H+dRsdjso+XqXDlVPTJivPql
+ 9+tITSgbsk7i58BxbrSmbGP6tCOgKauO8hNCk7T2ttFArnLcPz2MI1lDVGTFvuMqazoU
+ 0ZPmyPXOL7Lmf91lqBpkyNwr5GsCrmhfS+OOywlJZ+6JMamet39j+j8/pPGvXOCZTc8n
+ lXPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743629882; x=1744234682;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BJQTSCHQrb2RlU2HrCmbH5Umg4qlaYSReFutvUFFf74=;
- b=ogZCOniFy+CNDOWP5k2IgwjNWSh+N2SKzxkGlBb9YnJ3Hf1jjl1dVU9k5fAVMBu4l3
- HOHzc1yDdWuo4QVHrZKw9/u3JnroXLJbRQROxgntQV5Xs1anmk5aqgx4z0y2SxoXGDNI
- K0X+yzt7JPqEG7eXG8zOnKfsLme2B9ug3QN6l1Ls53cg/G2WIdUVyh9bJe94SIP9nEsM
- PrOcbfPCGNbwfrAnNUdU6xJrTDkM5q8wUXMeSDdi5UXYRn4AhgJGFCaNMC2gjF5VCBx2
- lhepi8bDDMjHIumNDnJR3MMjUlDLDcIk4nBVHnxYL79gsFYpMbI+I3xgM0QoXGynCk05
- og7A==
-X-Gm-Message-State: AOJu0YwLoPhcInbcoRMjBvQrKGNG1ZRiVvOcaNfIT8DUoWd1LR/r3D+T
- /ZgvkIO2g8RYP0SlAz7ZGgdMA3wLsVjVL2XM628KtjzEVNQIUu3oSVclVDgr6erv3SvQHUtZokT
- S
-X-Gm-Gg: ASbGncuh+Jwk1JHiYlRhmatSqt09GJXwcUZfcIJPlPHXZ0ykvTe+herR96xvlVAkRVG
- UzXbDVVyXAxlAEYzlvQqH9bhar5E2T3IQ8yo08eFze/UD/yH9woKweuv1SCbSvMohVQnvkY5xRR
- /L9RLExbpabLlExLXUvOVteXH21HB5Kk71KZLDouHXmee4VEcqZb5/c6J65C9et3AHvcaDQYBZH
- p7lBCdIuGcY48XBRPq8TVnydI+sQfkjeylIBqXwmFSoslme5ozv6hJEW4BmNeYr02RYx81GwzBE
- 6POs1rpiQSSPPMSAUhxI46ZaigDtRrhUF+ydcmQV0u7u24QZIoF0FpmrSGUyZy1rPEmLai+IGJR
- 4+vEVeU2DVyZJbHyBZ/zt6xgdSN2Sig==
-X-Google-Smtp-Source: AGHT+IFQbCO/fW3x0zcv1BZ2L1klr1PJ9+VJ8EPpYk/sFOl1O7q2/L2ZpfbHMYZu1afyOGP4BWBHaA==
-X-Received: by 2002:a05:600c:138d:b0:43c:f44c:72b7 with SMTP id
- 5b1f17b1804b1-43db61ff68bmr182922145e9.14.1743629882341; 
- Wed, 02 Apr 2025 14:38:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743632622; x=1744237422;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yBN+/AU+C8lcLjoSEIUWiNE5OcwuaZEeoY9tnHiYWlE=;
+ b=XZI066lfUaWbo2HqA11iroJrZiEYn67IIwsQfmACa5betRePq3uGP2m/DlUx7vcoZo
+ C1yNL73mdCL4N1NzJUCjutFDnw2thdsgMQUNNwEUFvT8505FCVnPTEpO2PfCprWcNQpI
+ gJMnRx4YnWPRpoP8bQD5BC5SXdKWg6sLhV0fFXrqSJRQA/hEeGaI08dwHRdkthgRgCH8
+ aOVeOMxqhYij9IVs682uA74t7z3OCcgbLXnzvV/ghsTbOrOA4x452HcUbSnCpfCJSsGZ
+ 4hb4BW12ZaWHDg3c2g5HeHoHWOYjgMb6QuYOs5XeaFQDFDVR/fzsCdw4ameb3FiB38Ty
+ X/yw==
+X-Gm-Message-State: AOJu0YzQ1TfvttjsmiQtGcOCR3xYqU9OFN5hVh3jUYPerm3Nb9A1Eg+V
+ QbOFVwKAN8+W+MvIqRaGQGOQ0zgx4orHd3X2uoPW0KHHK4fYaqEShDvDx2O4/BSewi/prUagNfU
+ T
+X-Gm-Gg: ASbGnctlVw7M7c769YoxYBEscqu7Nxyjd4EIZa52VPLcTrpDZw3gljXlvatLVNkH9vi
+ IWOlOKFngWMvheuOt1GA/uyxri/7epqYPXDRKQVJ9JMVzmeLrPbuQP9qa33GNYv2bxHmqJOkjkL
+ M8z84ONHpe5bIBW8y9jej+x+DnOBoFwUnwBdMsqXI2u9xSDVn+etbLW80ZWEDOwN7csnrXSuLDw
+ 3sVjNso5B02sEtZBtOK9JWDDw7l7QbHduCU6RpiHLN6FpNSt8KYcCXCD4eELGBE7p1CBvSA51zC
+ S/RrN2PEK3u97Z0fc7VrFvKkm0fJi4RcPhrfJ69S/VaZaUC1GlAgxlLusR9ZiU1ftb7fccqoCrc
+ 5qLWOCK+yTeFi3h65uU8=
+X-Google-Smtp-Source: AGHT+IEqgae2JBqukAJGDwEF3FSdjPaaXHH3wuALxpsmlCOx3ZciS1IRkfbliTL8lfHJ+FnHsGNELg==
+X-Received: by 2002:a05:6000:430b:b0:38f:4d20:4a17 with SMTP id
+ ffacd0b85a97d-39c29752af5mr4072831f8f.13.1743632621975; 
+ Wed, 02 Apr 2025 15:23:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c0b7a4346sm18302360f8f.95.2025.04.02.14.38.01
+ ffacd0b85a97d-39c30226cf6sm38142f8f.87.2025.04.02.15.23.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 02 Apr 2025 14:38:01 -0700 (PDT)
+ Wed, 02 Apr 2025 15:23:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
+Cc: qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1] hw/intc: Build TYPE_M68K_IRQC with common system
- objects
-Date: Wed,  2 Apr 2025 23:38:00 +0200
-Message-ID: <20250402213800.61803-1-philmd@linaro.org>
+Subject: [PATCH-for-10.1 01/13] target/arm/cpu-features: Include missing
+ 'cpu.h' header
+Date: Thu,  3 Apr 2025 00:23:21 +0200
+Message-ID: <20250402222334.66511-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250402222334.66511-1-philmd@linaro.org>
+References: <20250402222334.66511-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,74 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-m68k_set_irq_level() prototype doesn't use target-specific
-types, move its declaration from target-specific "cpu.h"
-to target-agnostic "cpu-qom.h". Doing so we can remove the
-"cpu.h" header in m68k_irqc.c, making it target-agnostic,
-which can be build as part of the system_ss[] source set.
+"target/arm/cpu-features.h" dereferences the ARMISARegisters
+structure, which is defined in "cpu.h". Include the latter to
+avoid when refactoring unrelated headers:
+
+  In file included from target/arm/internals.h:33:
+  target/arm/cpu-features.h:45:54: error: unknown type name 'ARMISARegisters'
+     45 | static inline bool isar_feature_aa32_thumb_div(const ARMISARegisters *id)
+        |                                                      ^
+  target/arm/cpu-features.h:47:12: error: use of undeclared identifier 'R_ID_ISAR0_DIVIDE_SHIFT'
+     47 |     return FIELD_EX32(id->id_isar0, ID_ISAR0, DIVIDE) != 0;
+        |            ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/cpu-qom.h | 2 ++
- target/m68k/cpu.h     | 1 -
- hw/intc/m68k_irqc.c   | 2 +-
- hw/intc/meson.build   | 2 +-
- 4 files changed, 4 insertions(+), 3 deletions(-)
+ target/arm/cpu-features.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/m68k/cpu-qom.h b/target/m68k/cpu-qom.h
-index 273e8eae417..fa048c05a69 100644
---- a/target/m68k/cpu-qom.h
-+++ b/target/m68k/cpu-qom.h
-@@ -29,4 +29,6 @@ OBJECT_DECLARE_CPU_TYPE(M68kCPU, M68kCPUClass, M68K_CPU)
- #define M68K_CPU_TYPE_SUFFIX "-" TYPE_M68K_CPU
- #define M68K_CPU_TYPE_NAME(model) model M68K_CPU_TYPE_SUFFIX
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 525e4cee12f..4452e7c21e3 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -22,6 +22,7 @@
  
-+void m68k_set_irq_level(M68kCPU *cpu, int level, uint8_t vector);
-+
- #endif
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index 39d0b9d6d73..f35db0afd05 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -472,7 +472,6 @@ typedef enum {
- #define MACSR_V     0x002
- #define MACSR_EV    0x001
+ #include "hw/registerfields.h"
+ #include "qemu/host-utils.h"
++#include "cpu.h"
  
--void m68k_set_irq_level(M68kCPU *cpu, int level, uint8_t vector);
- void m68k_switch_sp(CPUM68KState *env);
- 
- void do_m68k_semihosting(CPUM68KState *env, int nr);
-diff --git a/hw/intc/m68k_irqc.c b/hw/intc/m68k_irqc.c
-index a82b80f5c6f..ab85bf7412b 100644
---- a/hw/intc/m68k_irqc.c
-+++ b/hw/intc/m68k_irqc.c
-@@ -8,12 +8,12 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "cpu.h"
- #include "migration/vmstate.h"
- #include "hw/qdev-properties.h"
- #include "hw/nmi.h"
- #include "hw/intc/intc.h"
- #include "hw/intc/m68k_irqc.h"
-+#include "target/m68k/cpu-qom.h"
- 
- 
- static bool m68k_irqc_get_statistics(InterruptStatsProvider *obj,
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 602da304b02..92c4565c598 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -67,7 +67,7 @@ specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('xics_spapr.c', 'spapr_xi
- specific_ss.add(when: 'CONFIG_XIVE', if_true: files('xive.c'))
- specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_XIVE'],
- 		if_true: files('spapr_xive_kvm.c'))
--specific_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
-+system_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI_COMMON', if_true: files('loongson_ipi_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
+ /*
+  * Naming convention for isar_feature functions:
 -- 
 2.47.1
 
