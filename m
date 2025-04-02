@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9EBC28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB76C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tztzx-0005m1-Cn; Wed, 02 Apr 2025 05:03:01 -0400
+	id 1tzu35-0007pV-2j; Wed, 02 Apr 2025 05:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tztzu-0005jh-U6; Wed, 02 Apr 2025 05:02:59 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1tzu32-0007oo-M0; Wed, 02 Apr 2025 05:06:12 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tztzr-000462-Lx; Wed, 02 Apr 2025 05:02:58 -0400
+ id 1tzu2y-0005tB-Nq; Wed, 02 Apr 2025 05:06:11 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSJmX38k7z4x21;
- Wed,  2 Apr 2025 20:02:52 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSJrD18p9z4x21;
+ Wed,  2 Apr 2025 20:06:04 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSJmS3CmZz4wyk;
- Wed,  2 Apr 2025 20:02:48 +1100 (AEDT)
-Message-ID: <dde12161-1e98-4878-8ff9-5011630b65bc@kaod.org>
-Date: Wed, 2 Apr 2025 11:02:46 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSJr75fyYz4wby;
+ Wed,  2 Apr 2025 20:05:59 +1100 (AEDT)
+Message-ID: <618c6b0b-845b-4229-90eb-a6fe31d2435d@kaod.org>
+Date: Wed, 2 Apr 2025 11:05:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 16/22] test/qtest/hace: Add SHA-384 tests for AST2600
+Subject: Re: [PATCH v1 18/22] test/qtest/hace: Update source data and digest
+ data type to 64-bit
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -42,7 +43,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
- <20250321092623.2097234-17-jamin_lin@aspeedtech.com>
+ <20250321092623.2097234-19-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,16 +88,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250321092623.2097234-17-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250321092623.2097234-19-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=yfRC=WU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,74 +116,306 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/21/25 10:26, Jamin Lin wrote:
-> Introduced "test_sha384_ast2600" to validate SHA-384 hashing.
-> Added "test_sha384_sg_ast2600" for scatter-gather SHA-384 verification.
-> Implemented "test_sha384_accum_ast2600" to test SHA-384 accumulation.
-> Registered new test cases in "main" to ensure execution.
+> Currently, the hash data source and digest result buffer addresses are set to
+> 32-bit. However, the AST2700 CPU is a 64-bit Cortex-A35 architecture, and its
+> DRAM base address is also 64-bit.
+> 
+> To support AST2700, update the hash data source address and digest result buffer
+> address to use 64-bit addressing.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/qtest/aspeed-hace-utils.h | 20 +++----
+>   tests/qtest/aspeed-hace-utils.c | 96 ++++++++++++++++-----------------
+>   2 files changed, 58 insertions(+), 58 deletions(-)
+> 
+> diff --git a/tests/qtest/aspeed-hace-utils.h b/tests/qtest/aspeed-hace-utils.h
+> index f4440561de..0382570fa2 100644
+> --- a/tests/qtest/aspeed-hace-utils.h
+> +++ b/tests/qtest/aspeed-hace-utils.h
+> @@ -51,25 +51,25 @@ struct AspeedMasks {
+>   };
+>   
+>   void aspeed_test_md5(const char *machine, const uint32_t base,
+> -                     const uint32_t src_addr);
+> +                     const uint64_t src_addr);
+>   void aspeed_test_sha256(const char *machine, const uint32_t base,
+> -                        const uint32_t src_addr);
+> +                        const uint64_t src_addr);
+>   void aspeed_test_sha384(const char *machine, const uint32_t base,
+> -                        const uint32_t src_addr);
+> +                        const uint64_t src_addr);
+>   void aspeed_test_sha512(const char *machine, const uint32_t base,
+> -                        const uint32_t src_addr);
+> +                        const uint64_t src_addr);
+>   void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
+> -                           const uint32_t src_addr);
+> +                           const uint64_t src_addr);
+>   void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
+> -                           const uint32_t src_addr);
+> +                           const uint64_t src_addr);
+>   void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
+> -                           const uint32_t src_addr);
+> +                           const uint64_t src_addr);
+>   void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
+> -                              const uint32_t src_addr);
+> +                              const uint64_t src_addr);
+>   void aspeed_test_sha384_accum(const char *machine, const uint32_t base,
+> -                              const uint32_t src_addr);
+> +                              const uint64_t src_addr);
+>   void aspeed_test_sha512_accum(const char *machine, const uint32_t base,
+> -                              const uint32_t src_addr);
+> +                              const uint64_t src_addr);
+>   void aspeed_test_addresses(const char *machine, const uint32_t base,
+>                              const struct AspeedMasks *expected);
+>   
+> diff --git a/tests/qtest/aspeed-hace-utils.c b/tests/qtest/aspeed-hace-utils.c
+> index d3146898c2..f39bb8ea48 100644
+> --- a/tests/qtest/aspeed-hace-utils.c
+> +++ b/tests/qtest/aspeed-hace-utils.c
+> @@ -153,22 +153,22 @@ static const uint8_t test_result_accum_sha256[] = {
+>       0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17, 0x7a, 0x9c,
+>       0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad};
+>   
+> -static void write_regs(QTestState *s, uint32_t base, uint32_t src,
+> -                       uint32_t length, uint32_t out, uint32_t method)
+> +static void write_regs(QTestState *s, uint32_t base, uint64_t src,
+> +                       uint32_t length, uint64_t out, uint32_t method)
+>   {
+> -        qtest_writel(s, base + HACE_HASH_SRC, src);
+> -        qtest_writel(s, base + HACE_HASH_DIGEST, out);
+> +        qtest_writel(s, base + HACE_HASH_SRC, extract64(src, 0, 32));
+> +        qtest_writel(s, base + HACE_HASH_DIGEST, extract64(out, 0, 32));
+>           qtest_writel(s, base + HACE_HASH_DATA_LEN, length);
+>           qtest_writel(s, base + HACE_HASH_CMD, HACE_SHA_BE_EN | method);
+>   }
+>   
+>   void aspeed_test_md5(const char *machine, const uint32_t base,
+> -                     const uint32_t src_addr)
+> +                     const uint64_t src_addr)
+>   
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    uint32_t digest_addr = src_addr + 0x010000;
+> +    uint64_t digest_addr = src_addr + 0x010000;
+>       uint8_t digest[16] = {0};
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -198,11 +198,11 @@ void aspeed_test_md5(const char *machine, const uint32_t base,
+>   }
+>   
+>   void aspeed_test_sha256(const char *machine, const uint32_t base,
+> -                        const uint32_t src_addr)
+> +                        const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t digest_addr = src_addr + 0x10000;
+> +    const uint64_t digest_addr = src_addr + 0x10000;
+>       uint8_t digest[32] = {0};
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -232,11 +232,11 @@ void aspeed_test_sha256(const char *machine, const uint32_t base,
+>   }
+>   
+>   void aspeed_test_sha384(const char *machine, const uint32_t base,
+> -                        const uint32_t src_addr)
+> +                        const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t digest_addr = src_addr + 0x10000;
+> +    const uint64_t digest_addr = src_addr + 0x10000;
+>       uint8_t digest[32] = {0};
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -266,11 +266,11 @@ void aspeed_test_sha384(const char *machine, const uint32_t base,
+>   }
+>   
+>   void aspeed_test_sha512(const char *machine, const uint32_t base,
+> -                        const uint32_t src_addr)
+> +                        const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t digest_addr = src_addr + 0x10000;
+> +    const uint64_t digest_addr = src_addr + 0x10000;
+>       uint8_t digest[64] = {0};
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -300,22 +300,22 @@ void aspeed_test_sha512(const char *machine, const uint32_t base,
+>   }
+>   
+>   void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
+> -                           const uint32_t src_addr)
+> +                           const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t src_addr_1 = src_addr + 0x10000;
+> -    const uint32_t src_addr_2 = src_addr + 0x20000;
+> -    const uint32_t src_addr_3 = src_addr + 0x30000;
+> -    const uint32_t digest_addr = src_addr + 0x40000;
+> +    const uint64_t src_addr_1 = src_addr + 0x10000;
+> +    const uint64_t src_addr_2 = src_addr + 0x20000;
+> +    const uint64_t src_addr_3 = src_addr + 0x30000;
+> +    const uint64_t digest_addr = src_addr + 0x40000;
+>       uint8_t digest[32] = {0};
+>       struct AspeedSgList array[] = {
+>           {  cpu_to_le32(sizeof(test_vector_sg1)),
+> -           cpu_to_le32(src_addr_1) },
+> +           cpu_to_le64(src_addr_1) },
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+This looks broken to me. The addr field is in the scatter-gather list entry
+is 32bit :
+
+   struct AspeedSgList {
+           uint32_t len;
+           uint32_t addr;
+   } __attribute__ ((__packed__));
+
+
 
 Thanks,
 
 C.
 
 
-> ---
->   tests/qtest/aspeed_hace-test.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
-> 
-> diff --git a/tests/qtest/aspeed_hace-test.c b/tests/qtest/aspeed_hace-test.c
-> index 42a306af2a..ab0c98330e 100644
-> --- a/tests/qtest/aspeed_hace-test.c
-> +++ b/tests/qtest/aspeed_hace-test.c
-> @@ -44,6 +44,16 @@ static void test_sha256_sg_ast2600(void)
->       aspeed_test_sha256_sg("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
+>           {  cpu_to_le32(sizeof(test_vector_sg2)),
+> -           cpu_to_le32(src_addr_2) },
+> +           cpu_to_le64(src_addr_2) },
+>           {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
+> -           cpu_to_le32(src_addr_3) },
+> +           cpu_to_le64(src_addr_3) },
+>       };
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -351,22 +351,22 @@ void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
 >   }
 >   
-> +static void test_sha384_ast2600(void)
-> +{
-> +    aspeed_test_sha384("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
-> +}
-> +
-> +static void test_sha384_sg_ast2600(void)
-> +{
-> +    aspeed_test_sha384_sg("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
-> +}
-> +
->   static void test_sha512_ast2600(void)
+>   void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
+> -                           const uint32_t src_addr)
+> +                           const uint64_t src_addr)
 >   {
->       aspeed_test_sha512("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
-> @@ -59,6 +69,11 @@ static void test_sha256_accum_ast2600(void)
->       aspeed_test_sha256_accum("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t src_addr_1 = src_addr + 0x10000;
+> -    const uint32_t src_addr_2 = src_addr + 0x20000;
+> -    const uint32_t src_addr_3 = src_addr + 0x30000;
+> -    const uint32_t digest_addr = src_addr + 0x40000;
+> +    const uint64_t src_addr_1 = src_addr + 0x10000;
+> +    const uint64_t src_addr_2 = src_addr + 0x20000;
+> +    const uint64_t src_addr_3 = src_addr + 0x30000;
+> +    const uint64_t digest_addr = src_addr + 0x40000;
+>       uint8_t digest[64] = {0};
+>       struct AspeedSgList array[] = {
+>           {  cpu_to_le32(sizeof(test_vector_sg1)),
+> -           cpu_to_le32(src_addr_1) },
+> +           cpu_to_le64(src_addr_1) },
+>           {  cpu_to_le32(sizeof(test_vector_sg2)),
+> -           cpu_to_le32(src_addr_2) },
+> +           cpu_to_le64(src_addr_2) },
+>           {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
+> -           cpu_to_le32(src_addr_3) },
+> +           cpu_to_le64(src_addr_3) },
+>       };
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -402,22 +402,22 @@ void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
 >   }
 >   
-> +static void test_sha384_accum_ast2600(void)
-> +{
-> +    aspeed_test_sha384_accum("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
-> +}
-> +
->   static void test_sha512_accum_ast2600(void)
+>   void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
+> -                           const uint32_t src_addr)
+> +                           const uint64_t src_addr)
 >   {
->       aspeed_test_sha512_accum("-machine ast2600-evb", 0x1e6d0000, 0x80000000);
-> @@ -117,13 +132,16 @@ int main(int argc, char **argv)
+>       QTestState *s = qtest_init(machine);
 >   
->       qtest_add_func("ast2600/hace/addresses", test_addresses_ast2600);
->       qtest_add_func("ast2600/hace/sha512", test_sha512_ast2600);
-> +    qtest_add_func("ast2600/hace/sha384", test_sha384_ast2600);
->       qtest_add_func("ast2600/hace/sha256", test_sha256_ast2600);
->       qtest_add_func("ast2600/hace/md5", test_md5_ast2600);
+> -    const uint32_t src_addr_1 = src_addr + 0x10000;
+> -    const uint32_t src_addr_2 = src_addr + 0x20000;
+> -    const uint32_t src_addr_3 = src_addr + 0x30000;
+> -    const uint32_t digest_addr = src_addr + 0x40000;
+> +    const uint64_t src_addr_1 = src_addr + 0x10000;
+> +    const uint64_t src_addr_2 = src_addr + 0x20000;
+> +    const uint64_t src_addr_3 = src_addr + 0x30000;
+> +    const uint64_t digest_addr = src_addr + 0x40000;
+>       uint8_t digest[64] = {0};
+>       struct AspeedSgList array[] = {
+>           {  cpu_to_le32(sizeof(test_vector_sg1)),
+> -           cpu_to_le32(src_addr_1) },
+> +           cpu_to_le64(src_addr_1) },
+>           {  cpu_to_le32(sizeof(test_vector_sg2)),
+> -           cpu_to_le32(src_addr_2) },
+> +           cpu_to_le64(src_addr_2) },
+>           {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
+> -           cpu_to_le32(src_addr_3) },
+> +           cpu_to_le64(src_addr_3) },
+>       };
 >   
->       qtest_add_func("ast2600/hace/sha512_sg", test_sha512_sg_ast2600);
-> +    qtest_add_func("ast2600/hace/sha384_sg", test_sha384_sg_ast2600);
->       qtest_add_func("ast2600/hace/sha256_sg", test_sha256_sg_ast2600);
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -453,16 +453,16 @@ void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
+>   }
 >   
->       qtest_add_func("ast2600/hace/sha512_accum", test_sha512_accum_ast2600);
-> +    qtest_add_func("ast2600/hace/sha384_accum", test_sha384_accum_ast2600);
->       qtest_add_func("ast2600/hace/sha256_accum", test_sha256_accum_ast2600);
+>   void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
+> -                              const uint32_t src_addr)
+> +                              const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
 >   
->       qtest_add_func("ast2500/hace/addresses", test_addresses_ast2500);
+> -    const uint32_t buffer_addr = src_addr + 0x10000;
+> -    const uint32_t digest_addr = src_addr + 0x40000;
+> +    const uint64_t buffer_addr = src_addr + 0x10000;
+> +    const uint64_t digest_addr = src_addr + 0x40000;
+>       uint8_t digest[32] = {0};
+>       struct AspeedSgList array[] = {
+>           {  cpu_to_le32(sizeof(test_vector_accum_256) | SG_LIST_LEN_LAST),
+> -           cpu_to_le32(buffer_addr) },
+> +           cpu_to_le64(buffer_addr) },
+>       };
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -494,16 +494,16 @@ void aspeed_test_sha256_accum(const char *machine, const uint32_t base,
+>   }
+>   
+>   void aspeed_test_sha384_accum(const char *machine, const uint32_t base,
+> -                              const uint32_t src_addr)
+> +                              const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t buffer_addr = src_addr + 0x10000;
+> -    const uint32_t digest_addr = src_addr + 0x40000;
+> +    const uint64_t buffer_addr = src_addr + 0x10000;
+> +    const uint64_t digest_addr = src_addr + 0x40000;
+>       uint8_t digest[64] = {0};
+>       struct AspeedSgList array[] = {
+>           {  cpu_to_le32(sizeof(test_vector_accum_384) | SG_LIST_LEN_LAST),
+> -           cpu_to_le32(buffer_addr) },
+> +           cpu_to_le64(buffer_addr) },
+>       };
+>   
+>       /* Check engine is idle, no busy or irq bits set */
+> @@ -535,16 +535,16 @@ void aspeed_test_sha384_accum(const char *machine, const uint32_t base,
+>   }
+>   
+>   void aspeed_test_sha512_accum(const char *machine, const uint32_t base,
+> -                              const uint32_t src_addr)
+> +                              const uint64_t src_addr)
+>   {
+>       QTestState *s = qtest_init(machine);
+>   
+> -    const uint32_t buffer_addr = src_addr + 0x10000;
+> -    const uint32_t digest_addr = src_addr + 0x40000;
+> +    const uint64_t buffer_addr = src_addr + 0x10000;
+> +    const uint64_t digest_addr = src_addr + 0x40000;
+>       uint8_t digest[64] = {0};
+>       struct AspeedSgList array[] = {
+>           {  cpu_to_le32(sizeof(test_vector_accum_512) | SG_LIST_LEN_LAST),
+> -           cpu_to_le32(buffer_addr) },
+> +           cpu_to_le64(buffer_addr) },
+>       };
+>   
+>       /* Check engine is idle, no busy or irq bits set */
 
 
