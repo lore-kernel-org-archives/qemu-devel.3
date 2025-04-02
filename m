@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77776C36018
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D66C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 11:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzwVP-0000yx-0l; Wed, 02 Apr 2025 07:43:39 -0400
+	id 1tzwX3-0002qd-Sq; Wed, 02 Apr 2025 07:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzwVN-0000oD-0r
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:43:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tzwX0-0002p4-Dn
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:45:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzwVL-00067i-5w
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:43:36 -0400
+ id 1tzwWy-0006QY-LW
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 07:45:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743594214;
+ s=mimecast20190719; t=1743594315;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UKTSl61mfWKb6Fxd4OIpo9jSdYRP0CnikxleNalvSfc=;
- b=SRfjrMhgy7+jDciQUNLd8atocsfJy4PUpJ2E83/afWUhFVnENxBcteiEGF2X3T9bWv+eQl
- WcYCo9UbcON8a6aNNtTmg8BV4mqGuMJIuffJD2HvLH2Jpnki3+kB3l+K5g6SR+cdJ65Seq
- pGB33sxjQz2JLWT8ZhHiAks4m+KHb2o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=khxrnRPULoi4x7BAv/eOOKcKpcB5+1rBPCr4uhVa5Hs=;
+ b=OfaiSCXOkqr2w0PboXs07diJ9azXZtRMbo7C/f39OQ0JlDS44f+yh+0Gt3z2kyYeniHNuf
+ qAsQnkMrQZgWQzZy9fo5Xpv7UVn/5zHlbZuA8Pw5jOfAncrLnYYaVYvCFxivlQvtKIQXqJ
+ PxZ7E1QP4YF8yyWPVof1w6dH4lWFUh4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-VE4_n74YOIKC_G5u9MMIxw-1; Wed,
- 02 Apr 2025 07:43:30 -0400
-X-MC-Unique: VE4_n74YOIKC_G5u9MMIxw-1
-X-Mimecast-MFC-AGG-ID: VE4_n74YOIKC_G5u9MMIxw_1743594209
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-H8dY3L5DM1uPrnO1UJTq2A-1; Wed,
+ 02 Apr 2025 07:45:14 -0400
+X-MC-Unique: H8dY3L5DM1uPrnO1UJTq2A-1
+X-Mimecast-MFC-AGG-ID: H8dY3L5DM1uPrnO1UJTq2A_1743594313
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DDA76195605A; Wed,  2 Apr 2025 11:43:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E766419560B6; Wed,  2 Apr 2025 11:45:12 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A29E4180B487; Wed,  2 Apr 2025 11:43:25 +0000 (UTC)
-Date: Wed, 2 Apr 2025 12:43:22 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E91B19560AD; Wed,  2 Apr 2025 11:45:09 +0000 (UTC)
+Date: Wed, 2 Apr 2025 12:45:07 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -57,18 +57,19 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 07/55] kvm: Introduce kvm_arch_pre_create_vcpu()
-Message-ID: <Z-0i2o8hS5awh93r@redhat.com>
+Subject: Re: [PATCH v8 09/55] i386/tdx: Add property sept-ve-disable for
+ tdx-guest object
+Message-ID: <Z-0jQ5iXMmTLjB_P@redhat.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-8-xiaoyao.li@intel.com>
+ <20250401130205.2198253-10-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250401130205.2198253-8-xiaoyao.li@intel.com>
+In-Reply-To: <20250401130205.2198253-10-xiaoyao.li@intel.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -94,38 +95,33 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:17AM -0400, Xiaoyao Li wrote:
-> Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-> work prior to create any vcpu. This is for i386 TDX because it needs
-> call TDX_INIT_VM before creating any vcpu.
+On Tue, Apr 01, 2025 at 09:01:19AM -0400, Xiaoyao Li wrote:
+> Bit 28 of TD attribute, named SEPT_VE_DISABLE. When set to 1, it disables
+> EPT violation conversion to #VE on guest TD access of PENDING pages.
 > 
-> The specific implemnet of i386 will be added in the future patch.
-
-s/implemnet of/implementation for'
-
+> Some guest OS (e.g., Linux TD guest) may require this bit as 1.
+> Otherwise refuse to boot.
+> 
+> Add sept-ve-disable property for tdx-guest object, for user to configure
+> this bit.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
 > ---
-> Changes in v7:
-> - Implement stub for all the ARCHes instead of defining it with weak
->   attribute; (Philippe)
+> Changes in v4:
+> - collect Acked-by from Markus
 > 
 > Changes in v3:
-> - pass @errp to kvm_arch_pre_create_vcpu(); (Per Daniel)
+> - update the comment of property @sept-ve-disable to make it more
+>   descriptive and use new format. (Daniel and Markus)
 > ---
->  accel/kvm/kvm-all.c        | 5 +++++
->  include/system/kvm.h       | 1 +
->  target/arm/kvm.c           | 5 +++++
->  target/i386/kvm/kvm.c      | 5 +++++
->  target/loongarch/kvm/kvm.c | 4 ++++
->  target/mips/kvm.c          | 5 +++++
->  target/ppc/kvm.c           | 5 +++++
->  target/riscv/kvm/kvm-cpu.c | 5 +++++
->  target/s390x/kvm/kvm.c     | 5 +++++
->  9 files changed, 40 insertions(+)
+>  qapi/qom.json         |  8 +++++++-
+>  target/i386/kvm/tdx.c | 23 +++++++++++++++++++++++
+>  2 files changed, 30 insertions(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 
 With regards,
 Daniel
