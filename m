@@ -4,56 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E47C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7220C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzyr8-0000PF-9e; Wed, 02 Apr 2025 10:14:17 -0400
+	id 1tzz2m-0002Su-EG; Wed, 02 Apr 2025 10:26:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tzyqy-0000OM-Q7; Wed, 02 Apr 2025 10:14:05 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tzyqq-0003mV-Q5; Wed, 02 Apr 2025 10:14:03 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 723494E6069;
- Wed, 02 Apr 2025 16:13:53 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id GNMjZdQ41POn; Wed,  2 Apr 2025 16:13:51 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7879F4E6067; Wed, 02 Apr 2025 16:13:51 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 763A074577C;
- Wed, 02 Apr 2025 16:13:51 +0200 (CEST)
-Date: Wed, 2 Apr 2025 16:13:51 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 2/2] rust/hw/char/pl011/src/device: Implement logging
-In-Reply-To: <318E2A13-A163-434B-B18A-8A260CD3BC27@gmail.com>
-Message-ID: <9296d4f2-c23b-e55e-b8d5-7f14f0eb15c1@eik.bme.hu>
-References: <20250330205857.1615-1-shentey@gmail.com>
- <20250330205857.1615-3-shentey@gmail.com> <Z-pdzUBa4CrBourR@redhat.com>
- <318E2A13-A163-434B-B18A-8A260CD3BC27@gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzz2J-0002R6-D0
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:25:47 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzz2B-0006bl-SD
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:25:45 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so5987427f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 07:25:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743603937; x=1744208737; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aVfP5vQagloycdbrJi94vMQgixg8z85JM0ycrLK/NEw=;
+ b=ojFjgOJtBkaCwhR8mQ6FAkXkWzLLj8OXLVpnfX7oHVENyEfgKMP6OjFA9eklrGJBjB
+ PoB1P70fshyHM6MiXISYKn8KUUZNCzYgLfGc+FtwgoKGAwJG/taOBIYyAw6bi9tY7nfU
+ oEXY+CdzHAc5oAstFRFAAXqPgbNqxITAaW79NAdhHwZcjVdy5P/mRyS1Dare2j78XAED
+ G9jh+UuioYJPyV+kRau6eAoAS/LRES0V395lCAv6SsdF9xldMa0jxJErB7naldSJOoJu
+ O2vnNUwMISyKePVg+ojkA1jJ5uBVtGXo66XECgjpL6yvbTX2GFVcsB6OrNAi5q2hjwGR
+ tOmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743603937; x=1744208737;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aVfP5vQagloycdbrJi94vMQgixg8z85JM0ycrLK/NEw=;
+ b=eB8RRpMKyVBGdogVXNHRnQzxQoRQSMybqgGI6aUbvoTDf+9UFojuxU3Skqqu6ZAxve
+ LnAG4seUkhzGOMcRH8GiBQ60YRg6INlxWd7cTJkP7JGPK+hGLBC3pWGSZEZx8murt9z+
+ e3ZTQxiShe43po0K15Z1G1yskEbhZXhAkjPbOvxZSuAg8RrVO/5nQnR1NJdQ1VpRDcIE
+ 5TVV6Xxo3hfy3TcakybQQdfLtJbwRNQb9rK8F/y2CazADTTshd7eO1OZU2vacqQvJmVi
+ LY7wvnFbEPG/rO3tWm0uYHE1cCZ/Bi/SSrvTaRa99heyjOlCP9DKOpu8wC4QmVnG0qXA
+ E24A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUl0mgcy/RBC65WUzOpWpPJDtQ995mPg29GpDgC9CHOra1tuTQl75Fa3+K0/mwBYLUlW+OfGgR8YdD7@nongnu.org
+X-Gm-Message-State: AOJu0Yy5HJWpU4DDIKS2SgqNnj6NzEdfyd8WXFpaZ5eQa3lWwJ4uCV/9
+ lnxj0TZTLFvuWF/djkaecQgy+M6VmmI/Hh7ZX6/VTd2tMMxM9N8EZBMPdlYTdCg=
+X-Gm-Gg: ASbGncvYXUFcdT6zhp/YlK8rfxZ22Td5TwA5mk/kyIRurmmnl1B4DX5gzc1lsoeNNZc
+ HLG4OhgEzPp+V2yUfS89wO+szELuVdCoNFv7JQae/u3zRI3FCP+TU2PBVFg6ZkWRNOk/w905XKw
+ EfgyFAipzX+KDSjtNPIzccJ7PZoeK4uK7rzlVKaHwRhASezJG0cTIf9+sQlDPEpjMIFTubdR4FN
+ U5uaLrY/IcnBSM7nCuxKcJJ+/sIyi+l9sLK6pcnqbYAMaUuZy9y+3GC04CL6XVbCx1xOj58T3Hy
+ jJA1crO9uRl03NX3V/EmSNA9XOgcbnGrHj9m8AeA23kDFvieyAgLX4MqZAQ3klP9AazSHq09AZu
+ WnuLP/URuYQRpSuxCxWpeMVA=
+X-Google-Smtp-Source: AGHT+IFxW5+8rD2QX8PIoO2bG/PGlri1/BUHwL28htfp/qXi8y4TuaW5IDpu8wotklfyI0LbO4/t3g==
+X-Received: by 2002:a05:6000:480d:b0:391:4231:414 with SMTP id
+ ffacd0b85a97d-39c297e3f85mr2048249f8f.40.1743603936692; 
+ Wed, 02 Apr 2025 07:25:36 -0700 (PDT)
+Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c0b663860sm17340281f8f.39.2025.04.02.07.25.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 02 Apr 2025 07:25:36 -0700 (PDT)
+Message-ID: <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
+Date: Wed, 2 Apr 2025 16:25:35 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1695914318-1743603231=:8978"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 1/4] target/riscv: Restrict RV128 MTTCG check on
+ system emulation
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv <qemu-riscv@nongnu.org>
+References: <20250321155925.96626-1-philmd@linaro.org>
+ <20250321155925.96626-2-philmd@linaro.org>
+ <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,57 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 23/3/25 19:08, Richard Henderson wrote:
+> On 3/21/25 08:59, Philippe Mathieu-Daudé wrote:
+>> Multi-threaded TCG only concerns system emulation.
+> 
+> That's not really true.  User emulation simply has no option to
+> run in a single-threaded context.
+> 
+> I really don't think we should allow RV128 in user-mode at all.
+> Certainly not until there's a kernel abi for it.
 
---3866299591-1695914318-1743603231=:8978
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+It seems to be safe since commit 905b9fcde1f ("target/riscv: Replace
+is_32bit with get_xl/get_xlen"):
 
-On Wed, 2 Apr 2025, Bernhard Beschow wrote:
-> Am 31. März 2025 09:18:05 UTC schrieb "Daniel P. Berrangé" <berrange@redhat.com>:
->> General conceptual question .....  I've never understood what the dividing
->> line is between use of 'qemu_log_mask' and trace points.
->
-> I *think* it's the perspective: If you want to see any issues, 
-> regardless of which device, use the -l option, i.e. qemu_log_mask(). If, 
-> however, you want to see what a particular device does, use tracepoints.
+  #ifdef TARGET_RISCV32
+  #define get_xl(ctx)    MXL_RV32
+  #elif defined(CONFIG_USER_ONLY)
+  #define get_xl(ctx)    MXL_RV64
+  #else
+  #define get_xl(ctx)    ((ctx)->xl)
+  #endif
 
-I'd say that traces are like debug printfs that you don't normally want to 
-see but may be interesting for developers for debugging a specific device 
-model or QEMU part so you can enable the relevant ones for that device or 
-part. Logs are something you want to notify the user or admin about and is 
-not tracing internal operation of a device. But there may be some overlap 
-as some logs could be converted to traces but they are under log for 
-historical reasons as previously there were debug printfs controlled by 
-defines in devices that were later converted to traces and logs that could 
-be controlled in run time which were used for some traces before trace 
-points existed. Then were probably kept as logs just to not change the 
-command line because it's easier to type -d in_asm then say -trace 
-enable="tcg_in_asm" or something like that.
-
-Regards,
-BALATON Zoltan
-
->> The latter can be
->> optionally built to feed into qemu log, as well as the other dynamic trace
->> backends.
->
-> The use of qemu_log() in qemu_log_mask() seems like an implementation detail to me. Theoretically, qemu_log_mask() could use a different backend if this got implemented, and wouldn't require code changes throughout QEMU.
->
-> Best regards,
-> Bernhard
->
->>
->> Is there a compelling reason to use 'qemu_log', that isn't acceptable for
->> trace probe points ?
->>
->> This is an indirect way of asking whether qemu_log_mask should be exposed
->> to rust, or would exposing tracing be sufficient ?
->>
->> With regards,
->> Daniel
->
->
---3866299591-1695914318-1743603231=:8978--
+Should we undefine MXL_RV128 on user-mode?
 
