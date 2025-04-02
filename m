@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E79C36017
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 12:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20733C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 12:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzx9x-0006nz-Jc; Wed, 02 Apr 2025 08:25:33 -0400
+	id 1tzxBs-0007UD-SJ; Wed, 02 Apr 2025 08:27:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzx9n-0006nO-7m
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:25:26 -0400
+ id 1tzxBp-0007Tw-EC
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:27:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzx9g-0000gW-DB
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:25:17 -0400
+ id 1tzxBl-0000vQ-Ji
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:27:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743596713;
+ s=mimecast20190719; t=1743596843;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4BoNDeyMSOMuA1+Mx9kxHczDy+7OQfhaea22FZYuW1c=;
- b=hrvIknXGTWr19p38CAcfHW62+JJo0z3gENIAxKMkNoWaBOGSz5pLMbyVFew75wkN82jjD3
- bE8kTQkx1WK+9LMeBCJrQ2Kel8hC4BgFhJAJIXpq5jMXuek2DULVUl4YoCcvoeYaHPJtgP
- Uf5bpHskWj+fqKouz1jfS2gNPpW14Eo=
+ bh=B3UKIRRHMhKzpgO6lXR16oddtd7/LEoWruCgGHMm1Tw=;
+ b=RtW234HSex4qgRobL8Tr7RW/Z9P8MKEuPXcxMfaW2TiKbgs2Z7xuca5hJKaQHA6SWQP7hY
+ H1evHZcoglHJEBR5scAo+1oND5Nq/YAKU0rWlxv2Idh3sqXT8NCaddMqandZRsbIt/J325
+ 5dD4H3ESpkA0r9WL0BQ+XAdZItFwovU=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-Xyz8pcHJMkyq1zbSsjxsBg-1; Wed,
- 02 Apr 2025 08:25:12 -0400
-X-MC-Unique: Xyz8pcHJMkyq1zbSsjxsBg-1
-X-Mimecast-MFC-AGG-ID: Xyz8pcHJMkyq1zbSsjxsBg_1743596711
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-lAb-0zwlNPupZL7-FLPMIw-1; Wed,
+ 02 Apr 2025 08:27:17 -0400
+X-MC-Unique: lAb-0zwlNPupZL7-FLPMIw-1
+X-Mimecast-MFC-AGG-ID: lAb-0zwlNPupZL7-FLPMIw_1743596836
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01424180035C; Wed,  2 Apr 2025 12:25:10 +0000 (UTC)
+ id 858B4180035C; Wed,  2 Apr 2025 12:27:16 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77D41180A803; Wed,  2 Apr 2025 12:25:07 +0000 (UTC)
-Date: Wed, 2 Apr 2025 13:25:04 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0026B180174E; Wed,  2 Apr 2025 12:27:13 +0000 (UTC)
+Date: Wed, 2 Apr 2025 13:27:10 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -57,17 +57,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 36/55] i386/tdx: Disable SMM for TDX VMs
-Message-ID: <Z-0soIRpeHYyekes@redhat.com>
+Subject: Re: [PATCH v8 37/55] i386/tdx: Disable PIC for TDX VMs
+Message-ID: <Z-0tHvM2kXM4ZyTQ@redhat.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-37-xiaoyao.li@intel.com>
+ <20250401130205.2198253-38-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250401130205.2198253-37-xiaoyao.li@intel.com>
+In-Reply-To: <20250401130205.2198253-38-xiaoyao.li@intel.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -94,17 +94,19 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:46AM -0400, Xiaoyao Li wrote:
-> TDX doesn't support SMM and VMM cannot emulate SMM for TDX VMs because
-> VMM cannot manipulate TDX VM's memory.
+On Tue, Apr 01, 2025 at 09:01:47AM -0400, Xiaoyao Li wrote:
+> Legacy PIC (8259) cannot be supported for TDX VMs since TDX module
+> doesn't allow directly interrupt injection.  Using posted interrupts
+> for the PIC is not a viable option as the guest BIOS/kernel will not
+> do EOI for PIC IRQs, i.e. will leave the vIRR bit set.
 > 
-> Disable SMM for TDX VMs and error out if user requests to enable SMM.
+> Hence disable PIC for TDX VMs and error out if user wants PIC.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->  target/i386/kvm/tdx.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  target/i386/kvm/tdx.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
