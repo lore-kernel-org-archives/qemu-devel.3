@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6D5C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 12:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3381C3601A
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 12:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzwmR-0001Kx-JE; Wed, 02 Apr 2025 08:01:17 -0400
+	id 1tzwuH-0003Qm-SX; Wed, 02 Apr 2025 08:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzwmL-0001Jc-0f
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:01:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tzwu4-0003Oj-1V
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:09:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tzwmJ-0001vN-6I
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:01:08 -0400
+ id 1tzwu0-0004mY-Oc
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 08:09:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743595264;
+ s=mimecast20190719; t=1743595741;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2gDHA+iTjnUN9pF+mPtv2945PGXcpM3nikWSv84ZQIg=;
- b=F4bV6lXtX/gaqm/37XD3Se4FtQsfHHETbHaea0SUAYxzql+A/DvHzNateHsRKyAHlABBHo
- s3VuyIGVM8aJjHWGYQlVght971vysfMP5XxgCxGgCOQMYwQI9mko0TMgUWQ733f3ypH4x1
- Evhd1dJDcGzImTOTA6al1VFiGv5skLY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=lednpq/wcodxKFGbWUGqfrNDJL1JACgoI5X2E0pkt8E=;
+ b=clIs3DYfc2OowS1u9tJ/MLZV6alQKndOcLSTlYafc6Q+IEip4xvCOL/yPh3IsokI5Tw1SN
+ 9S2QKaHVK5mawnFnO250T0N9tNfSftR5bae16nHva0Aq6fVWysTf20zGgg2PfCaI6NVkYQ
+ ZFJ9mWrjBF7m3oe9iwKr9xbTguBRF2c=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-ts4RnCYjMMqrTKDO0Axm8A-1; Wed,
- 02 Apr 2025 08:01:01 -0400
-X-MC-Unique: ts4RnCYjMMqrTKDO0Axm8A-1
-X-Mimecast-MFC-AGG-ID: ts4RnCYjMMqrTKDO0Axm8A_1743595260
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-jXbv36IfP429GAhY6x7jbQ-1; Wed,
+ 02 Apr 2025 08:08:57 -0400
+X-MC-Unique: jXbv36IfP429GAhY6x7jbQ-1
+X-Mimecast-MFC-AGG-ID: jXbv36IfP429GAhY6x7jbQ_1743595736
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 320AD180AF6D; Wed,  2 Apr 2025 12:01:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 544B018001F8; Wed,  2 Apr 2025 12:08:56 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.12])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A486F180174E; Wed,  2 Apr 2025 12:00:56 +0000 (UTC)
-Date: Wed, 2 Apr 2025 13:00:53 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 861B0180B489; Wed,  2 Apr 2025 12:08:53 +0000 (UTC)
+Date: Wed, 2 Apr 2025 13:08:50 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -57,18 +55,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 15/55] i386/tdx: Implement user specified tsc frequency
-Message-ID: <Z-0m9X7zsiwd3KMW@redhat.com>
+Subject: Re: [PATCH v8 17/55] i386/tdvf: Introduce function to parse TDVF
+ metadata
+Message-ID: <Z-0o0sYJcnqI23aX@redhat.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-16-xiaoyao.li@intel.com>
+ <20250401130205.2198253-18-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250401130205.2198253-16-xiaoyao.li@intel.com>
+In-Reply-To: <20250401130205.2198253-18-xiaoyao.li@intel.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -94,29 +92,133 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:25AM -0400, Xiaoyao Li wrote:
-> Reuse "-cpu,tsc-frequency=" to get user wanted tsc frequency and call VM
-> scope VM_SET_TSC_KHZ to set the tsc frequency of TD before KVM_TDX_INIT_VM.
+On Tue, Apr 01, 2025 at 09:01:27AM -0400, Xiaoyao Li wrote:
+> From: Isaku Yamahata <isaku.yamahata@intel.com>
 > 
-> Besides, sanity check the tsc frequency to be in the legal range and
-> legal granularity (required by TDX module).
+> TDX VM needs to boot with its specialized firmware, Trusted Domain
+> Virtual Firmware (TDVF). QEMU needs to parse TDVF and map it in TD
+> guest memory prior to running the TDX VM.
 > 
+> A TDVF Metadata in TDVF image describes the structure of firmware.
+> QEMU refers to it to setup memory for TDVF. Introduce function
+> tdvf_parse_metadata() to parse the metadata from TDVF image and store
+> the info of each TDVF section.
+> 
+> TDX metadata is located by a TDX metadata offset block, which is a
+> GUID-ed structure. The data portion of the GUID structure contains
+> only an 4-byte field that is the offset of TDX metadata to the end
+> of firmware file.
+> 
+> Select X86_FW_OVMF when TDX is enable to leverage existing functions
+> to parse and search OVMF's GUID-ed structures.
+> 
+> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
-> Changes in v3:
-> - use @errp to report error info; (Daniel)
+> Changes in v8:
+>  - Drop the failure handling of memcpy() since it cannot fail;
+> 
+> Changes in v7:
+>  - Update license info to only use SPDX tag;
+>  - use g_autofree to avoid manually free;
+> 
+> Changes in v6:
+>  - Drop the the data endianness change for metadata->Length;
 > 
 > Changes in v1:
-> - Use VM scope VM_SET_TSC_KHZ to set the TSC frequency of TD since KVM
->   side drop the @tsc_khz field in struct kvm_tdx_init_vm
+>  - rename tdvf_parse_section_entry() to
+>    tdvf_parse_and_check_section_entry()
+> 
+> Changes in RFC v4:
+>  - rename TDX_METADATA_GUID to TDX_METADATA_OFFSET_GUID
 > ---
->  target/i386/kvm/kvm.c |  9 +++++++++
->  target/i386/kvm/tdx.c | 25 +++++++++++++++++++++++++
->  2 files changed, 34 insertions(+)
+>  hw/i386/Kconfig        |   1 +
+>  hw/i386/meson.build    |   1 +
+>  hw/i386/tdvf.c         | 183 +++++++++++++++++++++++++++++++++++++++++
+>  include/hw/i386/tdvf.h |  38 +++++++++
+>  4 files changed, 223 insertions(+)
+>  create mode 100644 hw/i386/tdvf.c
+>  create mode 100644 include/hw/i386/tdvf.h
+> 
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index cce9521ba934..eb65bda6e071 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -12,6 +12,7 @@ config SGX
+>  
+>  config TDX
+>      bool
+> +    select X86_FW_OVMF
+>      depends on KVM
+>  
+>  config PC
+> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+> index 10bdfde27c69..3bc1da2b6eb4 100644
+> --- a/hw/i386/meson.build
+> +++ b/hw/i386/meson.build
+> @@ -32,6 +32,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+>    'port92.c'))
+>  i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
+>                                          if_false: files('pc_sysfw_ovmf-stubs.c'))
+> +i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c'))
+>  
+>  subdir('kvm')
+>  subdir('xen')
+> diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
+> new file mode 100644
+> index 000000000000..328d1b7ffdf8
+> --- /dev/null
+> +++ b/hw/i386/tdvf.c
+> @@ -0,0 +1,183 @@
+> +/*
+> + * Copyright (c) 2025 Intel Corporation
+> + * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
+> + *                        <isaku.yamahata at intel.com>
+> + *         Xiaoyao Li <xiaoyao.li@intel.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+> +
+> +#include "hw/i386/pc.h"
+> +#include "hw/i386/tdvf.h"
+> +#include "system/kvm.h"
+> +
+> +#define TDX_METADATA_OFFSET_GUID    "e47a6535-984a-4798-865e-4685a7bf8ec2"
+> +#define TDX_METADATA_VERSION        1
+> +#define TDVF_SIGNATURE              0x46564454 /* TDVF as little endian */
+> +
+> +typedef struct {
+> +    uint32_t DataOffset;
+> +    uint32_t RawDataSize;
+> +    uint64_t MemoryAddress;
+> +    uint64_t MemoryDataSize;
+> +    uint32_t Type;
+> +    uint32_t Attributes;
+> +} TdvfSectionEntry;
+> +
+> +typedef struct {
+> +    uint32_t Signature;
+> +    uint32_t Length;
+> +    uint32_t Version;
+> +    uint32_t NumberOfSectionEntries;
+> +    TdvfSectionEntry SectionEntries[];
+> +} TdvfMetadata;
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+struct field names starting with an initial capital is
+not the usual QEMU code style. Can this be all initial
+lowercase, with capital just for word separation.
 
+
+> +
+> +struct tdx_metadata_offset {
+> +    uint32_t offset;
+> +};
+> +
 
 With regards,
 Daniel
