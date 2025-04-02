@@ -4,97 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9954BC28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD77C28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 14:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzzGr-0006Pa-3d; Wed, 02 Apr 2025 10:40:49 -0400
+	id 1tzzSw-0000iK-OX; Wed, 02 Apr 2025 10:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzzGe-0006O3-QX
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:40:38 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tzzGa-00040O-Fh
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:40:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso64974635e9.3
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 07:40:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743604829; x=1744209629; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=tvMjyOyyNNwjTWNo1fk6qGXnG8fPKOLFq2Z6zXy8Ma4=;
- b=LkSD+7ZXysa9xoNdpN97gMxGmqVa8ApI48RGl6iU8VvraG+m2lk5FPsx2/rOZ2IC1X
- 6Vx7Z//e22POyd71g+duSA5v1MLv4GriKt/3LnM8iUd/MTY26dDBsxV+I4HqnRUsW5Lg
- vgFCWOKW6cJnXkWt/XnmSvOJLPRGjbZjTDVvNv+YD9wMQu51gk44Upydl9F2NQUDfiAH
- FMXimCzo17A7ZmqlpkKFA+N4mouMxNbeAE2xcQr1oFkHuvfWBgJ4buMHkL7Igdv6FLN2
- g0uJfaM8eEWue0cs9gOP1Q1KzGaHiUs6pVMUwv57ZE2KvuN0SgoEDarArRoZ7AR9rOsj
- yR4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743604829; x=1744209629;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tvMjyOyyNNwjTWNo1fk6qGXnG8fPKOLFq2Z6zXy8Ma4=;
- b=I2fRYmQ0csGnruOyL8Xdd2VaSd4C0ok4xeEAkjjG/e8fysESMN3nIa3mdOG7hJV2ha
- Mz5/KgrTAH2oKD4xiK4NZWIlpbvTzxpP8l3rpYe/MVEsNsoTVkjGiyiELySVTqe7ekB6
- Guo6X90MRDqszte2PUXG3O3R0ozvqexLX+a32B2ql62P3njbsjvWOTDP2+ELzijNMVCo
- 6PsT6NTMjjoMCzoaarqKzv+L5tdMbH7n8YqP9C3UiZIH+KSG9iuCaBpuQh/giEVlTEwp
- Y/PO46/wZiH1McR0skOI074/7J/KYZcC6/+BTzk5tGUhCVmeeEmT8UB9NblAOrJH7UkN
- /i+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCNrq0D1SD9rknxzMMWWXF4UIT5GLoqDL0zK4cTf7tko6Z83vXtXP5J0NncN05i69S18fTJ85PFgYj@nongnu.org
-X-Gm-Message-State: AOJu0YwPjktviuT2yPVhIyWRg1ua/EXEaaHIfET8b8N4GugevMO1CUjL
- CHy9eeeWk1q5A4oiOswQmX3aOi0v/u8rn6r1Gdhi6jT2DgnLs4yH+bE5QqF3e4s=
-X-Gm-Gg: ASbGncvNJXrhuEIiWl9Z4CNt80Cq78z+NAT162MUL5cIO3ROPqyawAHPZJBFviZW9vx
- gyckgEgaMCHXhggPNWVh3S5k18et8eeVB/7ZtkbwzGG1H2qlg7GC8ma9jB04Dp1Rxf2j7IkDVr3
- VgvUEF2XMsYzemc9qq37OILmoB9VXjSs1FMEzUrpQKowTsiGY0NSQ7dvx1QzO3CN3/5JaXQjMfr
- H65xRsXDNTGiAJB2i6ceop73f9iV3I+eChCYURQ0jkPA+8I2ddnr1bPC7mHNuhZqWen0z3IFXGc
- 3oq5mFb8WVoQEcxHqTNlsO0ZprJvvcGWHankCWKROaSaR7TkHzpQu3QMOw5ViiCpcpOBfttChv1
- +28uRj5vl6xjf
-X-Google-Smtp-Source: AGHT+IGsM2J2ZUE+TigT5GPiigBXYlUgFMk1vexz/bFmC1Pl4cDpkzJXrYz+Lj1hWeY5oIBeIt7Tjg==
-X-Received: by 2002:a05:600c:4f43:b0:43c:fad6:fa5a with SMTP id
- 5b1f17b1804b1-43db62b77acmr156577125e9.24.1743604829386; 
- Wed, 02 Apr 2025 07:40:29 -0700 (PDT)
-Received: from [192.168.69.235] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43eb60eae85sm22764335e9.26.2025.04.02.07.40.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 07:40:28 -0700 (PDT)
-Message-ID: <90049822-b71a-4120-9537-7d43caf44f83@linaro.org>
-Date: Wed, 2 Apr 2025 16:40:27 +0200
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzzSZ-0000dn-6b
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:53:00 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tzzSV-0007Fv-PV
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 10:52:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743605572; x=1775141572;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=K0o1JTiEWaixuWj9DI5lvZfg6bRSR7DGpeT+4zB3n88=;
+ b=Nb0etvZIpcmR1gOZtLEjRdDvHJWqPRcHXAPJj8xTD1P2i0bR7Rp2i7MP
+ gkaeEPTKpvtQmoPdRnfpNGB5DF6uP3XI+4l4lcfXM3QhCRYBP6AH1lOoX
+ jiNqz8Yl3Vtm4MrF2ISTI50/+u4h7He442KY4Y6iSxsVXxsOSyNEGkJx2
+ A5JaWSyumMbcMUaudzItg7fXIPQilQXvozgkeoGYUPhuyniJOa2q5GdIb
+ i2NXxHH5DZCO82pi++CpNYZ50Ip+rdAWaWij+Q4hpwUXNeXYWKcXkK4Ep
+ 54Cgvx/NW47esGinBKAyCGd6KaL00OHocaAUacopnx8+sNli2S5LEKr3x A==;
+X-CSE-ConnectionGUID: f0IRZhVRT4uSqmTO9/Lo2A==
+X-CSE-MsgGUID: qrbVQ0SHRGOOVls394C5yw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11392"; a="45148934"
+X-IronPort-AV: E=Sophos;i="6.15,182,1739865600"; d="scan'208";a="45148934"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Apr 2025 07:52:47 -0700
+X-CSE-ConnectionGUID: 8MX3m+afSuC3EHt/CO1X0g==
+X-CSE-MsgGUID: rTBbGihjRaCJq/xKNBKH6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,182,1739865600"; d="scan'208";a="131593880"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Apr 2025 07:52:44 -0700
+Message-ID: <b1586891-6446-474e-8950-8dbc9ac6e607@intel.com>
+Date: Wed, 2 Apr 2025 22:52:38 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 1/4] target/riscv: Restrict RV128 MTTCG check on
- system emulation
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv <qemu-riscv@nongnu.org>,
- Frank Chang <frank.chang@sifive.com>, Bin Meng <bmeng@tinylab.org>,
- Andrew Jones <ajones@ventanamicro.com>, Palmer Dabbelt <palmer@rivosinc.com>
-References: <20250321155925.96626-1-philmd@linaro.org>
- <20250321155925.96626-2-philmd@linaro.org>
- <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
- <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
+Subject: Re: [PATCH v8 05/55] i386/tdx: Get tdx_capabilities via
+ KVM_TDX_CAPABILITIES
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-6-xiaoyao.li@intel.com> <Z-0YzauBkAl8pyIP@redhat.com>
 Content-Language: en-US
-In-Reply-To: <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z-0YzauBkAl8pyIP@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,83 +92,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/25 16:25, Philippe Mathieu-Daudé wrote:
-> On 23/3/25 19:08, Richard Henderson wrote:
->> On 3/21/25 08:59, Philippe Mathieu-Daudé wrote:
->>> Multi-threaded TCG only concerns system emulation.
+On 4/2/2025 7:00 PM, Daniel P. Berrangé wrote:
+> On Tue, Apr 01, 2025 at 09:01:15AM -0400, Xiaoyao Li wrote:
+>> KVM provides TDX capabilities via sub command KVM_TDX_CAPABILITIES of
+>> IOCTL(KVM_MEMORY_ENCRYPT_OP). Get the capabilities when initializing
+>> TDX context. It will be used to validate user's setting later.
 >>
->> That's not really true.  User emulation simply has no option to
->> run in a single-threaded context.
+>> Since there is no interface reporting how many cpuid configs contains in
+>> KVM_TDX_CAPABILITIES, QEMU chooses to try starting with a known number
+>> and abort when it exceeds KVM_MAX_CPUID_ENTRIES.
 >>
->> I really don't think we should allow RV128 in user-mode at all.
->> Certainly not until there's a kernel abi for it.
+>> Besides, introduce the interfaces to invoke TDX "ioctls" at VCPU scope
+>> in preparation.
+>>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>> Changes in v7:
+>> - refine and unifiy the error handling; (Daniel)
+>>
+>> Changes in v6:
+>> - Pass CPUState * to tdx_vcpu_ioctl();
+>> - update commit message to remove platform scope thing;
+>> - dump hw_error when it's non-zero to help debug;
+>>
+>> Changes in v4:
+>> - use {} to initialize struct kvm_tdx_cmd, to avoid memset();
+>> - remove tdx_platform_ioctl() because no user;
+>>
+>> Changes in v3:
+>> - rename __tdx_ioctl() to tdx_ioctl_internal()
+>> - Pass errp in get_tdx_capabilities();
+>>
+>> changes in v2:
+>>    - Make the error message more clear;
+>>
+>> changes in v1:
+>>    - start from nr_cpuid_configs = 6 for the loop;
+>>    - stop the loop when nr_cpuid_configs exceeds KVM_MAX_CPUID_ENTRIES;
+>> ---
+>>   target/i386/kvm/kvm.c      |   2 -
+>>   target/i386/kvm/kvm_i386.h |   2 +
+>>   target/i386/kvm/tdx.c      | 107 ++++++++++++++++++++++++++++++++++++-
+>>   3 files changed, 108 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+>> index 1af4710556ad..b4fa35405fe1 100644
+>> --- a/target/i386/kvm/kvm.c
+>> +++ b/target/i386/kvm/kvm.c
+>> @@ -1779,8 +1779,6 @@ static int hyperv_init_vcpu(X86CPU *cpu)
+>>   
+>>   static Error *invtsc_mig_blocker;
+>>   
+>> -#define KVM_MAX_CPUID_ENTRIES  100
+>> -
+>>   static void kvm_init_xsave(CPUX86State *env)
+>>   {
+>>       if (has_xsave2) {
+>> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+>> index 88565e8dbac1..ed1e61fb8ba9 100644
+>> --- a/target/i386/kvm/kvm_i386.h
+>> +++ b/target/i386/kvm/kvm_i386.h
+>> @@ -13,6 +13,8 @@
+>>   
+>>   #include "system/kvm.h"
+>>   
+>> +#define KVM_MAX_CPUID_ENTRIES  100
+>> +
+>>   /* always false if !CONFIG_KVM */
+>>   #define kvm_pit_in_kernel() \
+>>       (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
+>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>> index 4ff94860815d..c67be5e618e2 100644
+>> --- a/target/i386/kvm/tdx.c
+>> +++ b/target/i386/kvm/tdx.c
+>> @@ -10,17 +10,122 @@
+>>    */
+>>   
+>>   #include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>> +#include "qapi/error.h"
+>>   #include "qom/object_interfaces.h"
+>>   
+>>   #include "hw/i386/x86.h"
+>>   #include "kvm_i386.h"
+>>   #include "tdx.h"
+>>   
+>> +static struct kvm_tdx_capabilities *tdx_caps;
+>> +
+>> +enum tdx_ioctl_level {
+>> +    TDX_VM_IOCTL,
+>> +    TDX_VCPU_IOCTL,
+>> +};
+>> +
+>> +static int tdx_ioctl_internal(enum tdx_ioctl_level level, void *state,
+>> +                              int cmd_id, __u32 flags, void *data,
+>> +                              Error **errp)
+>> +{
+>> +    struct kvm_tdx_cmd tdx_cmd = {};
+>> +    int r;
+>> +
+>> +    const char *tdx_ioctl_name[] = {
+>> +        [KVM_TDX_CAPABILITIES] = "KVM_TDX_CAPABILITIES",
+>> +        [KVM_TDX_INIT_VM] = "KVM_TDX_INIT_VM",
+>> +        [KVM_TDX_INIT_VCPU] = "KVM_TDX_INIT_VCPU",
+>> +        [KVM_TDX_INIT_MEM_REGION] = "KVM_TDX_INIT_MEM_REGION",
+>> +        [KVM_TDX_FINALIZE_VM] = "KVM_TDX_FINALIZE_VM",
+>> +        [KVM_TDX_GET_CPUID] = "KVM_TDX_GET_CPUID",
+>> +    };
+>> +
+>> +    tdx_cmd.id = cmd_id;
+>> +    tdx_cmd.flags = flags;
+>> +    tdx_cmd.data = (__u64)(unsigned long)data;
+>> +
+>> +    switch (level) {
+>> +    case TDX_VM_IOCTL:
+>> +        r = kvm_vm_ioctl(kvm_state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
+>> +        break;
+>> +    case TDX_VCPU_IOCTL:
+>> +        r = kvm_vcpu_ioctl(state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
+>> +        break;
+>> +    default:
+>> +        error_setg(errp, "Invalid tdx_ioctl_level %d", level);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    if (r < 0) {
+>> +        error_setg_errno(errp, -r, "TDX ioctl %s failed, hw_errors: 0x%llx",
+>> +                         tdx_ioctl_name[cmd_id], tdx_cmd.hw_error);
+>> +    }
+>> +    return r;
+>> +}
+>> +
+>> +static inline int tdx_vm_ioctl(int cmd_id, __u32 flags, void *data,
+>> +                               Error **errp)
+>> +{
+>> +    return tdx_ioctl_internal(TDX_VM_IOCTL, NULL, cmd_id, flags, data, errp);
+>> +}
+>> +
+>> +static inline int tdx_vcpu_ioctl(CPUState *cpu, int cmd_id, __u32 flags,
+>> +                                 void *data, Error **errp)
+>> +{
+>> +    return  tdx_ioctl_internal(TDX_VCPU_IOCTL, cpu, cmd_id, flags, data, errp);
+>> +}
+>> +
+>> +static int get_tdx_capabilities(Error **errp)
+>> +{
+>> +    struct kvm_tdx_capabilities *caps;
+>> +    /* 1st generation of TDX reports 6 cpuid configs */
+>> +    int nr_cpuid_configs = 6;
+>> +    size_t size;
+>> +    int r;
+>> +
+>> +    do {
+>> +        Error *local_err = NULL;
+>> +        size = sizeof(struct kvm_tdx_capabilities) +
+>> +                      nr_cpuid_configs * sizeof(struct kvm_cpuid_entry2);
+>> +        caps = g_malloc0(size);
+>> +        caps->cpuid.nent = nr_cpuid_configs;
+>> +
+>> +        r = tdx_vm_ioctl(KVM_TDX_CAPABILITIES, 0, caps, &local_err);
+>> +        if (r == -E2BIG) {
+>> +            g_free(caps);
+>> +            nr_cpuid_configs *= 2;
+>> +            if (nr_cpuid_configs > KVM_MAX_CPUID_ENTRIES) {
+>> +                error_report("KVM TDX seems broken that number of CPUID entries"
+>> +                             " in kvm_tdx_capabilities exceeds limit: %d",
+>> +                             KVM_MAX_CPUID_ENTRIES);
+>> +                error_propagate(errp, local_err);
+>> +                return r;
+>> +            }
+>> +            error_free(local_err);
 > 
-> It seems to be safe since commit 905b9fcde1f ("target/riscv: Replace
-> is_32bit with get_xl/get_xlen"):
+> IIRC, you'll need  'local_err = NULL' here, otherwise next time around
+> the loop 'local_err' will be pointing to a free'd error object which
+> 'error_setg' will think is still valid & won't overwrite.
+
+it's set to NULL at the beginning of the do loop.
+
+(It looks I need to declare Error *local_err outside the do loop.)
+
+>> +        } else if (r < 0) {
+>> +            g_free(caps);
+>> +            error_propagate(errp, local_err);
+>> +            return r;
+>> +        }
+>> +    } while (r == -E2BIG);
+>> +
+>> +    tdx_caps = caps;
+>> +
+>> +    return 0;
+>> +}
+>> +
 > 
->   #ifdef TARGET_RISCV32
->   #define get_xl(ctx)    MXL_RV32
->   #elif defined(CONFIG_USER_ONLY)
->   #define get_xl(ctx)    MXL_RV64
->   #else
->   #define get_xl(ctx)    ((ctx)->xl)
->   #endif
 > 
-> Should we undefine MXL_RV128 on user-mode?
+> With regards,
+> Daniel
 
-Indeed the CPU is exposed on user-mode...
-
-$ qemu-riscv64 -cpu help
-Available CPUs:
-   max
-   rv64
-   rv64e
-   rv64i
-   rva22s64
-   rva22u64
-   rva23s64
-   rva23u64
-   shakti-c
-   sifive-e51
-   sifive-u54
-   thead-c906
-   tt-ascalon
-   veyron-v1
-   x-rv128           <---------
-   xiangshan-nanhu
-
-Per commit 6df3747a274 ("riscv: Introduce satp mode hw
-capabilities") I wonder if this is expected.
-
-Anyhow, I'll post a patch disabling it as:
-
--- >8 --
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 430b02d2a58..33abcef0073 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -699,3 +699,3 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
-
--#ifdef CONFIG_TCG
-+#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-  static void rv128_base_cpu_init(Object *obj)
-@@ -710,7 +710,6 @@ static void rv128_base_cpu_init(Object *obj)
-      env->priv_ver = PRIV_VERSION_LATEST;
--#ifndef CONFIG_USER_ONLY
-+
-      set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
--#endif
-  }
--#endif /* CONFIG_TCG */
-+#endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
-
-@@ -3257,3 +3256,3 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-                                                   MXL_RV64, 
-rv64_xiangshan_nanhu_cpu_init),
--#ifdef CONFIG_TCG
-+#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-      DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, 
-rv128_base_cpu_init),
-
----
 
