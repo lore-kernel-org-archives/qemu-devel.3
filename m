@@ -4,101 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F09C28B20
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB2DC28B20
+	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 09:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tzuE2-0004l1-IE; Wed, 02 Apr 2025 05:17:35 -0400
+	id 1tzuGY-0005gw-Lj; Wed, 02 Apr 2025 05:20:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tzuDK-0004iN-H9; Wed, 02 Apr 2025 05:16:54 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1tzuGV-0005fh-QF; Wed, 02 Apr 2025 05:20:07 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=yfRC=WU=kaod.org=clg@ozlabs.org>)
- id 1tzuDF-0000x4-48; Wed, 02 Apr 2025 05:16:50 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZSK4S6qvdz4x3p;
- Wed,  2 Apr 2025 20:16:40 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZSK4N6nYwz4wyk;
- Wed,  2 Apr 2025 20:16:36 +1100 (AEDT)
-Message-ID: <ae835cce-399f-4df9-830a-b96a70948420@kaod.org>
-Date: Wed, 2 Apr 2025 11:16:34 +0200
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1tzuGT-0001EE-G6; Wed, 02 Apr 2025 05:20:07 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 2 Apr
+ 2025 17:14:47 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Wed, 2 Apr 2025 17:14:47 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>
+Subject: [PATCH v1 1/1] hw/misc/aspeed_sbc: Implement OTP memory and controller
+Date: Wed, 2 Apr 2025 17:14:47 +0800
+Message-ID: <20250402091447.3381734-2-kane_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
+References: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 22/22] test/qtest/hace: Add tests for AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
- <20250321092623.2097234-23-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250321092623.2097234-23-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=yfRC=WU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, FORGED_SPF_HELO=1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,164 +61,408 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Kane-Chen-AS <kane_chen@aspeedtech.com>
+From:  Kane-Chen-AS via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/25 10:26, Jamin Lin wrote:
-> The HACE models in AST2600 and AST2700 are nearly identical. Based on the
-> AST2600 test cases, new tests have been added for AST2700.
-> 
-> Implemented test functions for SHA-256, SHA-384, SHA-512, and MD5.
-> Added scatter-gather and accumulation test variants.
-> For AST2700, the HACE controller base address starts at "0x12070000", and
-> the DRAM start address is "0x4_00000000".
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   tests/qtest/ast2700-hace-test.c | 98 +++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build         |  4 +-
->   2 files changed, 101 insertions(+), 1 deletion(-)
->   create mode 100644 tests/qtest/ast2700-hace-test.c
-> 
-> diff --git a/tests/qtest/ast2700-hace-test.c b/tests/qtest/ast2700-hace-test.c
-> new file mode 100644
-> index 0000000000..a400e2962b
-> --- /dev/null
-> +++ b/tests/qtest/ast2700-hace-test.c
-> @@ -0,0 +1,98 @@
-> +/*
-> + * QTest testcase for the ASPEED Hash and Crypto Engine
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + * Copyright (C) 2025 ASPEED Technology Inc.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "qemu/bitops.h"
-> +#include "aspeed-hace-utils.h"
-> +
-> +static const struct AspeedMasks as2700_masks = {
-> +    .src  = 0x7fffffff,
-> +    .dest = 0x7ffffff8,
-> +    .key = 0x7ffffff8,
-> +    .len  = 0x0fffffff,
-> +    .src_hi  = 0x00000003,
-> +    .dest_hi = 0x00000003,
-> +    .key_hi = 0x00000003,
-> +};
-> +
-> +/* ast2700 */
-> +static void test_md5_ast2700(void)
-> +{
-> +    aspeed_test_md5("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha256_ast2700(void)
-> +{
-> +    aspeed_test_sha256("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha256_sg_ast2700(void)
-> +{
-> +    aspeed_test_sha256_sg("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha384_ast2700(void)
-> +{
-> +    aspeed_test_sha384("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha384_sg_ast2700(void)
-> +{
-> +    aspeed_test_sha384_sg("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha512_ast2700(void)
-> +{
-> +    aspeed_test_sha512("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha512_sg_ast2700(void)
-> +{
-> +    aspeed_test_sha512_sg("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha256_accum_ast2700(void)
-> +{
-> +    aspeed_test_sha256_accum("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha384_accum_ast2700(void)
-> +{
-> +    aspeed_test_sha384_accum("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_sha512_accum_ast2700(void)
-> +{
-> +    aspeed_test_sha512_accum("-machine ast2700a1-evb", 0x12070000, 0x400000000);
-> +}
-> +
-> +static void test_addresses_ast2700(void)
-> +{
-> +    aspeed_test_addresses("-machine ast2700a1-evb", 0x12070000, &as2700_masks);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    qtest_add_func("ast2700/hace/addresses", test_addresses_ast2700);
-> +    qtest_add_func("ast2700/hace/sha512", test_sha512_ast2700);
-> +    qtest_add_func("ast2700/hace/sha384", test_sha384_ast2700);
-> +    qtest_add_func("ast2700/hace/sha256", test_sha256_ast2700);
-> +    qtest_add_func("ast2700/hace/md5", test_md5_ast2700);
-> +
-> +    qtest_add_func("ast2700/hace/sha512_sg", test_sha512_sg_ast2700);
-> +    qtest_add_func("ast2700/hace/sha384_sg", test_sha384_sg_ast2700);
-> +    qtest_add_func("ast2700/hace/sha256_sg", test_sha256_sg_ast2700);
-> +
-> +    qtest_add_func("ast2700/hace/sha512_accum", test_sha512_accum_ast2700);
-> +    qtest_add_func("ast2700/hace/sha384_accum", test_sha384_accum_ast2700);
-> +    qtest_add_func("ast2700/hace/sha256_accum", test_sha256_accum_ast2700);
-> +
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 62fc8f9868..253d37f7bd 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -218,7 +218,8 @@ qtests_aspeed = \
->      'aspeed_gpio-test']
->   qtests_aspeed64 = \
->     ['ast2700-gpio-test',
-> -   'ast2700-smc-test']
-> +   'ast2700-smc-test',
-> +   'ast2700-hace-test']
+This patch adds the OTP memory and its controller as part of the
+Secure Boot Controller (SBC) device model. The OTP memory content is
+persisted to a file named 'otpmem', which is created if it does not
+already exist.
 
-I would keep the alphabetical order.
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+---
+ hw/misc/aspeed_sbc.c         | 304 +++++++++++++++++++++++++++++++++++
+ include/hw/misc/aspeed_sbc.h |  14 ++
+ 2 files changed, 318 insertions(+)
 
-Anyhow,
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-
->   
->   qtests_stm32l4x5 = \
->     ['stm32l4x5_exti-test',
-> @@ -384,6 +385,7 @@ qtests = {
->     'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
->     'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
->     'aspeed_hace-test': files('aspeed-hace-utils.c', 'aspeed_hace-test.c'),
-> +  'ast2700-hace-test': files('aspeed-hace-utils.c', 'ast2700-hace-test.c'),
->   }
->   
->   if vnc.found()
+diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+index e4a6bd1581..5d77fd45d7 100644
+--- a/hw/misc/aspeed_sbc.c
++++ b/hw/misc/aspeed_sbc.c
+@@ -15,9 +15,15 @@
+ #include "hw/misc/aspeed_sbc.h"
+ #include "qapi/error.h"
+ #include "migration/vmstate.h"
++#include "system/block-backend.h"
++#include "qobject/qdict.h"
+ 
+ #define R_PROT          (0x000 / 4)
++#define R_CMD           (0x004 / 4)
++#define R_ADDR          (0x010 / 4)
+ #define R_STATUS        (0x014 / 4)
++#define R_CAMP1         (0x020 / 4)
++#define R_CAMP2         (0x024 / 4)
+ #define R_QSR           (0x040 / 4)
+ 
+ /* R_STATUS */
+@@ -41,6 +47,18 @@
+ #define QSR_RSA_MASK           (0x3 << 12)
+ #define QSR_HASH_MASK          (0x3 << 10)
+ 
++#define OTP_FILE_PATH "otpmem"
++
++#define BLK_VALID(s) \
++    do { \
++        if (s->blk == NULL) { \
++            qemu_log_mask(LOG_GUEST_ERROR, \
++                          "%s: blk is not initialized\n", \
++                          __func__); \
++            return; \
++        } \
++    } while (0)
++
+ static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
+ {
+     AspeedSBCState *s = ASPEED_SBC(opaque);
+@@ -57,6 +75,196 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
+     return s->regs[addr];
+ }
+ 
++static void aspeed_sbc_otpmem_read(void *opaque)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    uint32_t otp_addr, data, otp_offset;
++    bool is_data = false;
++
++    BLK_VALID(s);
++    otp_addr = s->regs[R_ADDR];
++    if (otp_addr < OTP_DATA_DWORD_COUNT) {
++        is_data = true;
++    } else if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid OTP addr 0x%x\n",
++                      __func__, otp_addr);
++        return;
++    }
++    otp_offset = otp_addr << 2;
++
++    if (blk_pread(s->blk, (int64_t)otp_offset, sizeof(data), &data, 0) < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to read data 0x%x\n",
++                      __func__, otp_offset);
++        return;
++    }
++    s->regs[R_CAMP1] = data;
++
++    if (is_data) {
++        if (blk_pread(s->blk, (int64_t)otp_offset + 4,
++                      sizeof(data), &data, 0) < 0) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: Failed to read data 0x%x\n",
++                          __func__, otp_offset);
++            return;
++        }
++        s->regs[R_CAMP2] = data;
++    }
++}
++
++static bool check_bit_conditions(uint32_t otp_addr,
++                                 uint32_t value, uint32_t prog_bit)
++{
++    uint32_t programed_bits, pass;
++    bool is_odd = otp_addr & 1;
++
++    if (is_odd) {
++        programed_bits = ~value & prog_bit;
++    } else {
++        programed_bits = value & (~prog_bit);
++    }
++
++    pass = value ^ (~prog_bit);
++
++    if (programed_bits) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Found programed bits in addr %x\n",
++                      __func__, otp_addr);
++        for (int i = 0; i < 32; ++i) {
++            if (programed_bits & (1U << i)) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "  Programed bit %d\n",
++                              i);
++            }
++        }
++    }
++
++    return pass != 0;
++}
++
++static bool program_otp_data(void *opaque, uint32_t otp_addr,
++                             uint32_t prog_bit, uint32_t *value)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    bool is_odd = otp_addr & 1;
++    uint32_t otp_offset = otp_addr << 2;
++
++    if (blk_pread(s->blk, (int64_t)otp_offset,
++                  sizeof(uint32_t), value, 0) < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to read data 0x%x\n",
++                      __func__, otp_offset);
++        return false;
++    }
++
++    if (check_bit_conditions(otp_addr, *value, prog_bit) == false) {
++        return false;
++    }
++
++    if (is_odd) {
++        *value &= ~prog_bit;
++    } else {
++        *value |= ~prog_bit;
++    }
++
++    return true;
++}
++
++static void mr_handler(uint32_t otp_addr, uint32_t data)
++{
++    switch (otp_addr) {
++    case MODE_REGISTER:
++    case MODE_REGISTER_A:
++    case MODE_REGISTER_B:
++        /* HW behavior, do nothing here */
++        break;
++    default:
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "%s: Unsupported address 0x%x\n",
++                  __func__, otp_addr);
++        return;
++    }
++}
++
++static void aspeed_sbc_otpmem_write(void *opaque)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    uint32_t otp_addr, data;
++
++    otp_addr = s->regs[R_ADDR];
++    data = s->regs[R_CAMP1];
++
++    if (otp_addr == 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignore write program bit request\n",
++                      __func__);
++    } else if (otp_addr >= MODE_REGISTER) {
++        mr_handler(otp_addr, data);
++    } else {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unhandled OTP write address 0x%x\n",
++                      __func__, otp_addr);
++    }
++}
++
++static void aspeed_sbc_otpmem_prog(void *opaque)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    uint32_t otp_addr, value, otp_offset;
++
++    BLK_VALID(s);
++    otp_addr = s->regs[R_ADDR];
++    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid OTP addr 0x%x\n",
++                      __func__, otp_addr);
++        return;
++    }
++
++    otp_offset = otp_addr << 2;
++    if (program_otp_data(opaque, otp_addr,
++                         s->regs[R_CAMP1], &value) == false) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                       "%s: Failed to program data 0x%x to 0x%x\n",
++                      __func__, s->regs[R_CAMP1], otp_offset);
++        return;
++    }
++
++    if (blk_pwrite(s->blk, (int64_t)otp_offset,
++                   sizeof(value), &value, 0) < 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to write data 0x%x to 0x%x\n",
++                      __func__, value, otp_offset);
++    }
++}
++
++static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++
++    s->regs[R_STATUS] &= ~(OTP_MEM_IDLE | OTP_IDLE);
++
++    switch (cmd) {
++    case READ_CMD:
++        aspeed_sbc_otpmem_read(s);
++        break;
++    case WRITE_CMD:
++        aspeed_sbc_otpmem_write(s);
++        break;
++    case PROG_CMD:
++        aspeed_sbc_otpmem_prog(s);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unknown command 0x%x\n",
++                      __func__, cmd);
++        break;
++    }
++
++    s->regs[R_STATUS] |= (OTP_MEM_IDLE | OTP_IDLE);
++}
++
+ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
+                               unsigned int size)
+ {
+@@ -78,6 +286,9 @@ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
+                       "%s: write to read only register 0x%" HWADDR_PRIx "\n",
+                       __func__, addr << 2);
+         return;
++    case R_CMD:
++        aspeed_sbc_handle_command(opaque, data);
++        return;
+     default:
+         break;
+     }
+@@ -113,6 +324,92 @@ static void aspeed_sbc_reset(DeviceState *dev)
+     }
+ 
+     s->regs[R_QSR] = s->signing_settings;
++
++    if (!s->blk) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: blk not initialized!\n",
++                      __func__);
++        return;
++    }
++}
++
++static BlockBackend *init_otpmem(int64_t size_bytes)
++{
++    Error *local_err = NULL;
++    BlockDriverState *bs = NULL;
++    BlockBackend *blk = NULL;
++    bool image_created = false;
++    QDict *options;
++    uint32_t i, odd_def = 0xffffffff, even_def = 0, *def;
++
++    if (!g_file_test(OTP_FILE_PATH, G_FILE_TEST_EXISTS)) {
++        bdrv_img_create(OTP_FILE_PATH, "raw", NULL, NULL,
++                        NULL, size_bytes, 0, true, &local_err);
++        if (local_err) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: Failed to create image %s: %s\n",
++                          __func__, OTP_FILE_PATH,
++                          error_get_pretty(local_err));
++            error_free(local_err);
++            return NULL;
++        }
++        image_created = true;
++    }
++
++    blk = blk_new(qemu_get_aio_context(),
++                  BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
++                  0);
++    if (!blk) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to create BlockBackend\n",
++                      __func__);
++        return NULL;
++    }
++
++    options =  qdict_new();
++    qdict_put_str(options, "driver", "raw");
++    bs = bdrv_open(OTP_FILE_PATH, NULL, options, BDRV_O_RDWR, &local_err);
++    if (local_err) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to create OTP memory, err = %s\n",
++                      __func__, error_get_pretty(local_err));
++        blk_unref(blk);
++        error_free(local_err);
++        return NULL;
++    }
++
++    blk_insert_bs(blk, bs, &local_err);
++    if (local_err) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to insert OTP memory to SBC, err = %s\n",
++                      __func__, error_get_pretty(local_err));
++        bdrv_unref(bs);
++        blk_unref(blk);
++        error_free(local_err);
++        return NULL;
++    }
++    bdrv_unref(bs);
++
++    if (image_created) {
++        /* init otp memory data */
++        for (i = 0; i < OTP_TOTAL_DWORD_COUNT; i++) {
++            if (i & 1) {
++                def = &odd_def;
++            } else {
++                def = &even_def;
++            }
++
++            if (blk_pwrite(blk, i << 2, sizeof(uint32_t), def, 0) < 0) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: Failed to init OTP memory file\n",
++                              __func__);
++                blk_unref(blk);
++                return NULL;
++            }
++        }
++    }
++
++    return blk;
+ }
+ 
+ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
+@@ -124,6 +421,13 @@ static void aspeed_sbc_realize(DeviceState *dev, Error **errp)
+             TYPE_ASPEED_SBC, 0x1000);
+ 
+     sysbus_init_mmio(sbd, &s->iomem);
++
++    s->blk = init_otpmem(OTP_FILE_SIZE);
++    if (s->blk == NULL) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to attach otpmem\n",
++                      __func__);
++    }
+ }
+ 
+ static const VMStateDescription vmstate_aspeed_sbc = {
+diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
+index 405e6782b9..fbdef86a63 100644
+--- a/include/hw/misc/aspeed_sbc.h
++++ b/include/hw/misc/aspeed_sbc.h
+@@ -27,6 +27,18 @@ OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
+ #define QSR_SHA384                  (0x2 << 10)
+ #define QSR_SHA512                  (0x3 << 10)
+ 
++#define READ_CMD                    (0x23b1e361)
++#define WRITE_CMD                   (0x23b1e362)
++#define PROG_CMD                    (0x23b1e364)
++
++#define OTP_DATA_DWORD_COUNT        (0x800)
++#define OTP_TOTAL_DWORD_COUNT       (0x1000)
++#define OTP_FILE_SIZE               (OTP_TOTAL_DWORD_COUNT * sizeof(uint32_t))
++
++#define MODE_REGISTER               (0x1000)
++#define MODE_REGISTER_A             (0x3000)
++#define MODE_REGISTER_B             (0x5000)
++
+ struct AspeedSBCState {
+     SysBusDevice parent;
+ 
+@@ -36,6 +48,8 @@ struct AspeedSBCState {
+     MemoryRegion iomem;
+ 
+     uint32_t regs[ASPEED_SBC_NR_REGS];
++
++    BlockBackend *blk;
+ };
+ 
+ struct AspeedSBCClass {
+-- 
+2.43.0
 
 
