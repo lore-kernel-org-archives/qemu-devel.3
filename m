@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D246C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B93FC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0TkB-0001M6-Lk; Thu, 03 Apr 2025 19:13:07 -0400
+	id 1u0U4U-0005aO-Vh; Thu, 03 Apr 2025 19:34:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0Tk9-0001Lq-Tg
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:13:05 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0U4T-0005a8-8P
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:34:05 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0Tk7-0003wj-SV
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:13:05 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7376dd56f8fso1740350b3a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:13:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0U4R-0007G4-JJ
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:34:05 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-86d6ac4d5a9so762749241.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:34:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743721982; x=1744326782; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vSRh9ciLiZERRTYJ6zqimg5jbJldjzZEngTZ7OexjA8=;
- b=lXOzkokURLpDfAGfeIXO8fAWjcRSUsUyxXSWElx/wB7M8ZN4/FFNkIYgAWiBHao5Yg
- 7dKd+Yxj8alOA2F1czNMpM59OZYEjWzqcCMhGkEoOBMmEGk0lFw6jaPvjCsZH1xwk+Y3
- 67r/sXxRUzmGTFAHjqy/5jb6Y3qPfGthIns5LZnC7p6Ev9hbY+yv10XiH/h1f74NHdFv
- TUbZBqz4rKn39IDbcxvpBitQWkhlXziNaAEbnhuW701UqvgU1u/y/Mf4o3fy3fuLVLW6
- bqwusmCljlWZSxfbC4mwotKLH/mwFcaAypxRrthNaQOz9P+peaYoxDfBDbso3QeEdPu4
- +G7w==
+ d=gmail.com; s=20230601; t=1743723242; x=1744328042; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jhgG92tkk7tvDYMRR5rEuWW399GqhuKHFVFPAjY9GS0=;
+ b=Pyyk1VMUPqLgZPvXKUvFKPMjQcOvxn57TZjdhplH0i/5mGg8tqaZP85o6tLxBIHvmD
+ aWA1NZbINbzoqXX6bIDdgP3hIruq2P+EkX0B4YQbFt/AR07HFvwXGyw+rnoefCdqgwl/
+ hOp7ccroR4xQQb3XhhHnWD1+OqJDSf9p9cF/L8xNWF2jvMcVnzblSVPABmAwcCBUwg7E
+ VNs6vm9MgN488CbnlyoReyTuS3SQaFDBxxgvHh5udLmc2BEps+k3DhjnKqLJylwLBl3Y
+ UhG/DLkfwy00kE/GP+okatwrRz5OINsdVTkX+DWx3w9BdVB+cj1Q1YHhlBr+fU+Nd7yT
+ 1hLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743721982; x=1744326782;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vSRh9ciLiZERRTYJ6zqimg5jbJldjzZEngTZ7OexjA8=;
- b=UltIEk3UyC72R6xO9jgpuOv+9H4DoagE/uqfL+AHZC4iH2+VfNuf3Y4iGu+TyXKTSU
- OQQUPwMHe4MrgabFL/CdeJRuaRW6qgFBcgNuXgsC6CX1PP2isE2VzmYrc8zLvFURhFvP
- ObGv+kUHI9I0BZRnku8zdPScNipxM4Ya9/6Sg5e8bggEAgXJFu5nMX5k2X4CK2z2XKAr
- CPZXLLms/uVlarhEuahXf46QnZMkBrv6hge00cWRPoPqbUFnDN5ktCWclyPtyHkTyWOi
- MdyAxIX4AWO68/eMZKp76Db46u/cIfg/joJj4VgFH96/U8z73eUsECsMMgH3CrvgY99l
- lCeQ==
-X-Gm-Message-State: AOJu0Yzg+SVswcvGfChqUrdX5bqd3hn9GTAejEqCYBVhTdSjJD53nuxT
- narVABfghSu4bmEHbIZ/yvTKw3r4QW6Mf/CqBf+4CmMw4RF9PVOHJlBln093VhRq8hbA3KeQ/aw
- b
-X-Gm-Gg: ASbGncvvtEgwonxvrcK8qDS0Qj9t3eaGJHV98uSySDFmsiPORafR0qn17QHtx8ys0Nw
- GIdxjuDD7oBLXRkYXxcEagUNx3HigDbHxTTYzVsQLFVKo+uUSW5sshcwj80deqMW3HJaAn92Ddy
- VxeZ2QIDGVRstTcFWANuky1Jm59J2NzfzkyNr90CtEipZgT0Z8iS21XBWs1pmYIk0Dn7OkMOrNx
- SafxMVszlAsR+8PqnxoHxtK2rB8ewdl6nMhfV1vVWS0uyEMnvuFR1MCLniWeUN5OrB2hINjy7cm
- MRx1X6q+hJZAjPJ7JtX5O8+OGIRC82JDeXzAhHcUnQAWTrPoXsFie4/MszrLHHVp
-X-Google-Smtp-Source: AGHT+IEnlOzYlpKKkofQeVPc5S2tS52aD9kZJHUm/d9njoKdGoQxHtJBvX42MDs61ohLhaSGjOaWqg==
-X-Received: by 2002:a05:6a00:181e:b0:736:4e02:c543 with SMTP id
- d2e1a72fcca58-739e4b49bbcmr1682310b3a.9.1743721981756; 
- Thu, 03 Apr 2025 16:13:01 -0700 (PDT)
-Received: from [192.168.101.134] ([75.147.178.105])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739da0e7013sm2134234b3a.171.2025.04.03.16.13.01
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 16:13:01 -0700 (PDT)
-Message-ID: <78000846-b224-4b7f-b95b-bcfcfd700dd2@linaro.org>
-Date: Thu, 3 Apr 2025 16:12:59 -0700
+ d=1e100.net; s=20230601; t=1743723242; x=1744328042;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jhgG92tkk7tvDYMRR5rEuWW399GqhuKHFVFPAjY9GS0=;
+ b=T6DMcAtH+FaiDiP6Ft31mTG6XEjFZlcXeZyJvzor+WR5Ew0iEZN7VbgDOiL3ReT/fX
+ NiOYJywS+2FlnDKqBf5wS4jBlgl/XGSAnJqaHJUAkJR7SGaVmJie1lCQHoOIisGnuJ/4
+ 0mlQMuki5+DOuAdK7pKWp8f4hK+qL9CgAbI2KhlKlXGNLUEtmm3yig80O/FOcWJ0FX8n
+ kVBbREdsm0VT8IwS7kdzRuDjPq8ZbjvJs1VwJvvBBsafOQsabDqJt9q8ImOcegs5IKmm
+ +3JOt9uliChEe/hWIF2/5yWs23PkctV0NbtCrYNUCf/7uZAT+m0esvY4a5ZWSD76hTar
+ UOTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+FFBgzSWCmMTSnZvBgt11MqBUeGdqoT89faGIPD7bcDTLrAY1a1ZXRrR32DKcffPdbM4DbRlmRm8l@nongnu.org
+X-Gm-Message-State: AOJu0Yx0eU8g39pOCRoHBjnvdqP+EB0EdnN1tTlP0Xt1vBJrHGnGYMr6
+ CsBTKz6bUK8qwiPRFD8oQrVd0r7u+Jf+s/brG7J+yf9fUeq2t7ie3Iu+DooAhrK4DCt1NQPch2M
+ MLaBgz1edLDlC9a5lWMOyfm09yvQ=
+X-Gm-Gg: ASbGncukZoXkqqlXw/FPTzRwJENCdGRv0zYhm7FHCmuk1/XqjmtU+RjwsE8MpWhn18d
+ 02SO2pNNwRo/IPaygIE/lrD97bNnIgBCahq5UTDehOTvdiNyNZtMvnfpVQMF4MOFWUTgOE49cVG
+ dztOQqjfrWpap2IMBZ66+dW2eJQh8KQRlf/2vCQnDfxRytl4EZaLA/S/9JASh3oA4r3Dk=
+X-Google-Smtp-Source: AGHT+IGsvbEt9ajI5HzSt3G9I0lpeTVuqWEdmrfufBP31Gch8BuQZSnftmwGFgRTIG1/+AezfRQhuHdR9ZbqKG7jEkM=
+X-Received: by 2002:a05:6102:334d:b0:4c3:6979:2ec with SMTP id
+ ada2fe7eead31-4c8568e59dcmr528495137.11.1743723242159; Thu, 03 Apr 2025
+ 16:34:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/emulate: remove flags_mask
-To: qemu-devel@nongnu.org
-References: <20250403194838.103531-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250403194838.103531-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250401041509.719153-1-joel@jms.id.au>
+In-Reply-To: <20250401041509.719153-1-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 4 Apr 2025 09:33:35 +1000
+X-Gm-Features: ATxdqUGtHV-7iCyHouX4XYGaVCAVP3RwtRX8lP9BZwQdTjgSi1kPFy7D4l1BGnM
+Message-ID: <CAKmqyKNkESJ_BfrCVteXrgdrfEK9Ku7WG1RtS+3ispaYxC7rYg@mail.gmail.com>
+Subject: Re: [PATCH-for-10.0] hw/core/machine.c: Fix -machine dumpdtb=file.dtb
+To: Joel Stanley <joel@jms.id.au>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,17 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/25 12:48, Paolo Bonzini wrote:
-> The field is written but never read.
-> 
-> Cc: Wei Liu<liuwe@linux.microsoft.com>
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+On Tue, Apr 1, 2025 at 2:16=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote:
+>
+> In commit 8fd2518ef2f8 ("hw: Centralize handling of -machine dumpdtb
+> option") the call to dump was moved with respect to the init of the
+> machine.  This resulted in the device tree missing parts of the machine
+> description, depending on how they construct their device tree.
+>
+> The arm virt machine is missing some PSCI nodes, while the riscv one
+> is missing most of its content.
+>
+> Move the dump to after the notifiers have been run, allowing
+> virt_machine_done to be called and the device tree to be fully
+> populated.
+>
+> Fixes: 8fd2518ef2f8 ("hw: Centralize handling of -machine dumpdtb option"=
+)
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   target/i386/emulate/x86_decode.h |   2 -
->   target/i386/emulate/x86_decode.c | 864 +++++++++++++++----------------
->   2 files changed, 424 insertions(+), 442 deletions(-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+>  hw/core/machine.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index f52a4f2273b2..63c6ef93d296 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -1731,12 +1731,6 @@ void qdev_machine_creation_done(void)
+>      phase_advance(PHASE_MACHINE_READY);
+>      qdev_assert_realized_properly();
+>
+> -    /*
+> -     * If the user used -machine dumpdtb=3Dfile.dtb to request that we
+> -     * dump the DTB to a file,  do it now, and exit.
+> -     */
+> -    handle_machine_dumpdtb(current_machine);
+> -
+>      /* TODO: once all bus devices are qdevified, this should be done
+>       * when bus is created by qdev.c */
+>      /*
+> @@ -1750,6 +1744,12 @@ void qdev_machine_creation_done(void)
+>
+>      notifier_list_notify(&machine_init_done_notifiers, NULL);
+>
+> +    /*
+> +     * If the user used -machine dumpdtb=3Dfile.dtb to request that we
+> +     * dump the DTB to a file, do it now, and exit.
+> +     */
+> +    handle_machine_dumpdtb(current_machine);
+> +
+>      if (rom_check_and_register_reset() !=3D 0) {
+>          exit(1);
+>      }
+> --
+> 2.47.2
+>
+>
 
