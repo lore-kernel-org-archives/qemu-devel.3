@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10C4EC3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 06:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF0A3C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 06:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0E4S-00046J-Gh; Thu, 03 Apr 2025 02:29:00 -0400
+	id 1u0E7n-0005x9-HM; Thu, 03 Apr 2025 02:32:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0E4D-00042B-Nz
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:28:51 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1u0E7P-0005uj-FY
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:32:07 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0E4A-0007tt-VD
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:28:45 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-3035858c687so415020a91.2
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 23:28:42 -0700 (PDT)
+ id 1u0E7N-0008Kn-G2
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:32:03 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-22423adf751so5448865ad.2
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 23:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743661721; x=1744266521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743661919; x=1744266719; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ffoophbJESeM8f0YIXk8eS3wdaHWmbN4vUcMJl8QIS4=;
- b=A857n0OCVzbzB8owBKTPx1XtBd4kXWSQTGQRlTnbYu0r50baoC+SA6/2u/HpXFe2qk
- xCKy/ye8XLXf44lLQDU7ZdrA8/dOYxFIpF2FDHmCv5usJPDuFk4QtgGYT+ch+CfAKAHT
- 9K7II3AJn7unU9pyr7HpmzriHm+FUN2ZrzSxdjjWXt6lbi3AoYaM8lDCSsvHqyFNmF1i
- B2Wc4qoXXWxIUHPxb4vwi7MS7vxSkcwJ9TxoNO1o/1RVjyR+e79QSgauDPJKt93XMEKT
- 4nhK8jPj0JtPQJ2G+EwM/ZSD6Z9ViYuraoXxWTkDlxZ00QdfArghxFU+QIFCY659BhS1
- 8ceQ==
+ bh=rhAyJkOpi68aEAQQTv65+9X/E2pd+e9U9MdxH77h+LE=;
+ b=PFmLmtfhjq6gASKW7VqyAcp5WoVYkkweR8992Coid6BYgkULATprcGIIjlTVDfkuS5
+ nw9pG7i4IL2Wo4Cm3CUM3AikTryhD8Yxxv3onTek2n5pJyHy3MaD4O1YhIosc5MjnLWz
+ 9ZNdRIXSCKuRCHGeR0C3d0c/uE9cbdplmhN6jYNuQhA9tGtbk91DWU2cd8Bl2MTEfVJ1
+ GaoMxohqgB9fLlsLtFZOhsVch+5bkvcAzShaHVxz4aFe15GCdT5NRMzRuADG59F3CUZ4
+ qpKfJRyRGnQPV+q3G+WKFZZhSPnLrRtsqZX/V0F2Y8DNVrQ2LsVQPhqRxBI3iyU/pXHD
+ LCig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743661721; x=1744266521;
+ d=1e100.net; s=20230601; t=1743661919; x=1744266719;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ffoophbJESeM8f0YIXk8eS3wdaHWmbN4vUcMJl8QIS4=;
- b=b8cfBvxu3oMyEYpHXVzm1ojqq3K3yLf8qI+S8HSc1b8HEgv8ZATnHKQmKbdcW/lQQw
- gqSOHgAT6osKdvGYJODaht0xhEPyoLp/6TPGMMYSKW8lC/Ahu4LnoyMUrqPaOInvZYcC
- /m6xpL5aAqZzPserf3/HLvptf6PnAtPK7naOjzYur056hE0aE5L+NiNPKGnBuBmOtCzn
- AjqYEPg1CdI7Gd9FtFb57UfRJr0htIcatMydPUS9/WAI9u4L+SAEYwAXurFodHEIaBt+
- 4VxvUF3Bie9Mq0bX0x5qrQGljbX3SAz2rMXnrz4P4e+pzN/5s2Ly74h0C8mBHtyMOVQY
- leTQ==
+ bh=rhAyJkOpi68aEAQQTv65+9X/E2pd+e9U9MdxH77h+LE=;
+ b=j5e+KGnCr90QFoseYo85dC/0VFs4bs9n4px+UB3AnAewch1Hyb3xfIKZt7YZaPgPNo
+ oBbDdqcum8ejNsfHsEY7vBjy++kisFifs8i/UpPMCj2kpLppdHL4riIR4UT+/lccVMZY
+ VUi88xLSctY/co5oTyCZlD3zbM3a5vB+ZlMw7+IJLHuZB88Rak6wklkNMc0nIGwuF72l
+ onhLeJxpK4+mVmXaUUBzTMdU8NPPjz8HQx4yQe0/Qr3Oe3yoKXJszMydMAmU1YvmYP+1
+ 0kERR2AZuXK+ZshuPFGNPyV3CNn4DMNCh9oP+w7h8ylivYkyMqJ9FhvpAJFd7cd5DUif
+ Jqag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU7YsVINpgXrM5Ud8Ns/6a0ob45yi0a7yGyrIlStIVR6ThuVyfWZGZx524+4Vabb1ZPbhhf6fsdVQVS@nongnu.org
-X-Gm-Message-State: AOJu0YzY2aUsysgAZGJ3SWtgW/25o6MRhzRVbUtyHzcqKTEuLXK/W1js
- HmlDwaewr3v6FFHcmPEaNriIXLLuIHgCjMzHBf8cX99MwEczdVd8pfgy5x+AKBQ=
-X-Gm-Gg: ASbGncs5nxRy6ayMSZdv3RR5lPtvrUWyyQoKlgvzlkqmBB5eLhH8wRhFe3x0DGNxKKE
- W0s2a5M/VyGNJm8K5qMQPOuDVfV7adAhZzPaG66AnasW//joehg+ayyBe1veOHmqzIFqF7AA2Jk
- K8zw3/UQm7I9AMqJ9PH57QSxphVx9n4+onLzCNWR6F1Z3mToyXBrDJ14qlVmQ2WSrt48CFUtbM6
- O9rItCHEcYhuoG5Aqhww6CO9YMmUBkMQRz82Me5PC589GUpozY4Ok3uquYcpqCK2M7JT/od1jGl
- PC305/mIHGLtYDWShGxgpHHvLsjjVAq+pM9bl0fygkkOZySBdlCMVE/TVK2BCJapjWU=
-X-Google-Smtp-Source: AGHT+IH5wKH484PKV5l5tHmzs9t0G4cxvxW3zoYUCKsATmihfRI9VB4upYQE3lkoVgdaQSXaiuEZDw==
-X-Received: by 2002:a17:90b:3c4f:b0:2ee:f550:3848 with SMTP id
- 98e67ed59e1d1-30531f7c573mr25683034a91.5.1743661721371; 
- Wed, 02 Apr 2025 23:28:41 -0700 (PDT)
+ AJvYcCX3PiY8sn3kCVOSgrQbOthGCqcwpAJuiP+wW3+YDmrVVMaD0dfkbcSWSm/93gOLKx8hgZ/HFHjCNC/2@nongnu.org
+X-Gm-Message-State: AOJu0YyRpFSlGISbbao0yJLk6ZvMVF6fJlJKqBWZPt5yV5MIsGfR7fJ3
+ lV47SDiyPQ5Ux16kNzQrSEfl5LpSr8FOo/f7qEeOVSWsCKqCZYoKrSSVM+mcljg=
+X-Gm-Gg: ASbGncv2VEXjFHca91VEI+1UNLR1Slc+x9vlgggYhpohJfMDWnUVsChMBU1VbuXID2D
+ CG1lY5nWS7JAz/GGe+pZOgDrFxXJ1tEinPLhmhucYiC5j5CxHt86Dtm/vWTXULzMT+Qp2Fxa1mQ
+ LuzUbg7NKsNYSCr2k+d2a0SWQYMVSzXKyIjqv37FJogUgThDYLTEvsfDrEPK1j2X4DTiHXhrS4O
+ Jkme3W+8UTYJueORoymQG1G01Xz2SzwMIoKlDmrWVbXvJlBy6uqnnYIHpvzULUoC3n7lhXNSPg4
+ SMop4zX02dXTK60z0Fzr7jQpNpEMeipioyQGoUoUZSojilvcmeTU19Ab
+X-Google-Smtp-Source: AGHT+IG+A0/FB94IIs8HImgSe0/O3BqEuLMtbc9zhDOxx0lnkc6atNMqD4JN9uWgtIafFyc52trllg==
+X-Received: by 2002:a17:903:2a90:b0:224:76f:9e4a with SMTP id
+ d9443c01a7336-22993c0ddd4mr16027665ad.14.1743661918776; 
+ Wed, 02 Apr 2025 23:31:58 -0700 (PDT)
 Received: from [192.168.0.102] ([186.215.49.46])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-305983bce79sm626029a91.37.2025.04.02.23.28.38
+ d9443c01a7336-2297866080csm6656195ad.125.2025.04.02.23.31.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 23:28:40 -0700 (PDT)
-Message-ID: <bae6e29a-7290-47d2-8caf-14702ee091f0@linaro.org>
-Date: Thu, 3 Apr 2025 03:28:36 -0300
+ Wed, 02 Apr 2025 23:31:58 -0700 (PDT)
+Message-ID: <192fd8e8-c1fb-4537-b773-6b2548881d7f@linaro.org>
+Date: Thu, 3 Apr 2025 03:31:54 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 3/5] hw/arm/virt-acpi: Factor its_enabled()
- helper out
+Subject: Re: [PATCH-for-10.0 5/5] qtest/bios-tables-test: Update
+ aarch64/virt/APIC.its_off blob
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+ qemu-devel@nongnu.org
 Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
 References: <20250331221239.87150-1-philmd@linaro.org>
- <20250331221239.87150-4-philmd@linaro.org>
- <80dd971a-2a45-44a5-9454-43257ead30a5@linaro.org>
- <ef0f90c8-c87a-4833-a590-6370cd03ea2d@linaro.org>
+ <20250331221239.87150-6-philmd@linaro.org>
+ <98b286c5-f48f-4dec-b6c7-3e1ca2156735@linaro.org>
+ <b34b6ab3-ac42-4d94-a30d-0d8ebed960f5@linaro.org>
 Content-Language: en-US
 From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <ef0f90c8-c87a-4833-a590-6370cd03ea2d@linaro.org>
+In-Reply-To: <b34b6ab3-ac42-4d94-a30d-0d8ebed960f5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,119 +112,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Phil,
 
-On 4/2/25 07:27, Philippe Mathieu-Daudé wrote:
-> On 2/4/25 08:43, Gustavo Romero wrote:
+On 4/2/25 07:34, Philippe Mathieu-Daudé wrote:
+> On 2/4/25 08:45, Gustavo Romero wrote:
 >> Hi Phil,
 >>
 >> On 3/31/25 19:12, Philippe Mathieu-Daudé wrote:
->>> GIC ITS is checked for the MADT and IORT tables.
->>> Factor the checks out to the its_enabled() helper.
+>>> Changes in the tables:
+>>>
+>>>    @@ -1,32 +1,32 @@
+>>>     /*
+>>>      * Intel ACPI Component Architecture
+>>>      * AML/ASL+ Disassembler version 20240927 (64-bit version)
+>>>      * Copyright (c) 2000 - 2023 Intel Corporation
+>>>      *
+>>>      * Disassembly of tests/data/acpi/aarch64/virt/APIC.its_off
+>>>      *
+>>>      * ACPI Data Table [APIC]
+>>>      *
+>>>      * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+>>>      */
+>>>
+>>>     [000h 0000 004h]                   Signature : "APIC"    [Multiple APIC Description Table (MADT)]
+>>>    -[004h 0004 004h]                Table Length : 000000B8
+>>>    +[004h 0004 004h]                Table Length : 000000A4
+>>>     [008h 0008 001h]                    Revision : 04
+>>>    -[009h 0009 001h]                    Checksum : A7
+>>>    +[009h 0009 001h]                    Checksum : EE
+>>>     [00Ah 0010 006h]                      Oem ID : "BOCHS "
+>>>     [010h 0016 008h]                Oem Table ID : "BXPC    "
+>>>     [018h 0024 004h]                Oem Revision : 00000001
+>>>     [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+>>>     [020h 0032 004h]       Asl Compiler Revision : 00000001
+>>>
+>>>     [024h 0036 004h]          Local Apic Address : 00000000
+>>>     [028h 0040 004h]       Flags (decoded below) : 00000000
+>>>                              PC-AT Compatibility : 0
+>>>
+>>>     [02Ch 0044 001h]               Subtable Type : 0C [Generic Interrupt Distributor]
+>>>     [02Dh 0045 001h]                      Length : 18
+>>>     [02Eh 0046 002h]                    Reserved : 0000
+>>>     [030h 0048 004h]       Local GIC Hardware ID : 00000000
+>>>     [034h 0052 008h]                Base Address : 0000000008000000
+>>>     [03Ch 0060 004h]              Interrupt Base : 00000000
+>>>    @@ -49,37 +49,29 @@
+>>>     [06Ch 0108 008h]    Virtual GIC Base Address : 0000000000000000
+>>>     [074h 0116 008h] Hypervisor GIC Base Address : 0000000000000000
+>>>     [07Ch 0124 004h]       Virtual GIC Interrupt : 00000019
+>>>     [080h 0128 008h]  Redistributor Base Address : 0000000000000000
+>>>     [088h 0136 008h]                   ARM MPIDR : 0000000000000000
+>>>     [090h 0144 001h]            Efficiency Class : 00
+>>>     [091h 0145 001h]                    Reserved : 00
+>>>     [092h 0146 002h]      SPE Overflow Interrupt : 0000
+>>>     [094h 0148 002h]              TRBE Interrupt : 100E
+>>>
+>>>     [094h 0148 001h]               Subtable Type : 0E [Generic Interrupt Redistributor]
+>>>     [095h 0149 001h]                      Length : 10
+>>>     [097h 0151 002h]                    Reserved : 0000
+>>>     [098h 0152 008h]                Base Address : 00000000080A0000
+>>>     [0A0h 0160 004h]                      Length : 00F60000
+>>>
+>>>    -[0A4h 0164 001h]               Subtable Type : 0F [Generic Interrupt Translator]
+>>>    -[0A5h 0165 001h]                      Length : 14
+>>>    -[0A7h 0167 002h]                    Reserved : 0000
+>>>    -[0A8h 0168 004h]              Translation ID : 00000000
+>>>    -[0ACh 0172 008h]                Base Address : 0000000008080000
+>>>    -[0B4h 0180 004h]                    Reserved : 00000000
+>>>    +Raw Table Data: Length 164 (0xA4)
+>>>
+>>>    -Raw Table Data: Length 184 (0xB8)
+>>>    -
+>>>    -    0000: 41 50 49 43 B8 00 00 00 04 A7 42 4F 43 48 53 20  // APIC......BOCHS
+>>>    +    0000: 41 50 49 43 A4 00 00 00 04 EE 42 4F 43 48 53 20  // APIC......BOCHS
+>>>         0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+>>>         0020: 01 00 00 00 00 00 00 00 00 00 00 00 0C 18 00 00  // ................
+>>>         0030: 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00  // ................
+>>>         0040: 04 00 00 00 0B 50 00 00 00 00 00 00 00 00 00 00  // .....P..........
+>>>         0050: 01 00 00 00 00 00 00 00 17 00 00 00 00 00 00 00  // ................
+>>>         0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+>>>         0070: 00 00 00 00 00 00 00 00 00 00 00 00 19 00 00 00  // ................
+>>>         0080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+>>>         0090: 00 00 00 00 0E 10 00 00 00 00 0A 08 00 00 00 00  // ................
+>>>    -    00A0: 00 00 F6 00 0F 14 00 00 00 00 00 00 00 00 08 08  // ................
+>>>    -    00B0: 00 00 00 00 00 00 00 00                          // ........
+>>>    +    00A0: 00 00 F6 00                                      // ....
 >>>
 >>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >>> ---
->>>   hw/arm/virt-acpi-build.c | 12 +++++++++---
->>>   1 file changed, 9 insertions(+), 3 deletions(-)
+>>>   tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+>>>   tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 184 -> 164 bytes
+>>>   2 files changed, 1 deletion(-)
 >>>
->>> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->>> index 3ac8f8e1786..fdc08b40883 100644
->>> --- a/hw/arm/virt-acpi-build.c
->>> +++ b/hw/arm/virt-acpi-build.c
->>> @@ -208,6 +208,13 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
->>>   #define ROOT_COMPLEX_ENTRY_SIZE 36
->>>   #define IORT_NODE_OFFSET 48
->>> +static bool its_enabled(VirtMachineState *vms)
->>> +{
->>> +    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>> +
->>> +    return its_class_name() && !vmc->no_its;
->>> +}
->>> +
+>>> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/ qtest/bios-tables-test-allowed-diff.h
+>>> index bfc4d601243..dfb8523c8bf 100644
+>>> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+>>> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+>>> @@ -1,2 +1 @@
+>>>   /* List of comma-separated changed AML files to ignore */
+>>> -"tests/data/acpi/aarch64/virt/APIC.its_off",
+>>> diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/ acpi/aarch64/virt/APIC.its_off
+>>> index c37d05d6e05805304f10afe73eb7cb9100fcccfa..f24ac8fbff5261a52434abcfcff96dbdc7709de4 100644
+>>> GIT binary patch
+>>> delta 18
+>>> ZcmdnNxP+0*F~HM#2?GNI%e#qOvj8xy1yKM1
+>>>
+>>> delta 39
+>>> jcmZ3&xPy_)F~HM#2Ll5G%kqg_vqbnsfJ`vp;DE6Jpmzmj
 >>
->> Isn't its_class_name() always "true"?
+>> If the change affects other tables besides APIC (IORT and FACP in this series),
+>> then I think that's the moment to update all the correct blobs (final versions)
+>> and drop the list of blobs in bios-tables-test-allowed-diff.h. I also think it's
+>> better to list all the table diffs in the commit message, not only the diff for
+>> the APIC table.
 > 
-> The method signature is described as:
-> 
->   /**
->    * its_class_name:
->    *
->    * Return the ITS class name to use depending on whether
->    * KVM acceleration  and KVM CAP_SIGNAL_MSI are supported
->    *
->    * Returns: class name to use or NULL
->    */
->   const char *its_class_name(void);
-> 
-> So I'd say no.
-> 
-> Indeed since commit cc5e719e2c8 ("kvm: require KVM_CAP_SIGNAL_MSI")
-> the single implementation doesn't return NULL anymore.
-> 
-> Paolo, can we update the signature and clean code path?
+> When following the script steps with V=2, I only see diff change in the
+> MADT table.
 
-Updating the signature won't solve the redundancy here. Using its_class_name()
-for gating the generation of GIC ITS-related ACPI data is still moot.
+I was thinking of the case if empty blobs were added to 1/5. Indeed, FACP table does
+not change, sorry for the confusion.
 
+After the fix just APIC table changes, so the patch is correctly listing it in the
+commit message and removing it from the "ignore list".
 
-> Anyhow Gustavo, while well noticed, this is pre-exising and unrelated
-> to the code movement in this patch.
-
-hmm I think the fix is kind simple: just remove its_class_name() from
-the predicate in its_enabled(). Is that what you meant by "clean code path"
-above?
-
-This seems correct to me because we always have ITS present if
-(vmc->no_its == false and vms->its == true). If TCG is used and option
-its=on is given ITS is created in create_its(). If KVM accel is used
-it's as in the commit message from Paolo you pointed out:
-
-     ARM uses it to detect the presence of the ITS emulation in the kernel,
-     introduced in Linux 4.8.  **Assume that it's there and possibly fail when
-     realizing the arm-its-kvm device.**
-
-So if kernel does not support in-kernel ITS kvm_arm_its_realize() will
-bail out with "error creating in-kernel ITS".
-
-It's up to you if you want to fix it in this series or not :)
-
-
->>>   /*
->>>    * Append an ID mapping entry as described by "Table 4 ID mapping format" in
->>>    * "IO Remapping Table System Software on ARM Platforms", Chapter 3.
->>> @@ -670,7 +677,6 @@ static void
->>>   build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>>   {
->>>       int i;
->>> -    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>>       const MemMapEntry *memmap = vms->memmap;
->>>       AcpiTable table = { .sig = "APIC", .rev = 4, .oem_id = vms->oem_id,
->>>                           .oem_table_id = vms->oem_table_id };
->>> @@ -741,7 +747,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->>> memmap[VIRT_HIGH_GIC_REDIST2].size);
->>>           }
->>> -        if (its_class_name() && !vmc->no_its) {
->>> +        if (its_enabled(vms)) {
->>>               /*
->>>                * ACPI spec, Revision 6.0 Errata A
->>>                * (original 6.0 definition has invalid Length)
->>> @@ -973,7 +979,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->>>                             vms->oem_table_id);
->>>       }
->>> -    if (its_class_name() && !vmc->no_its) {
->>> +    if (its_enabled(vms)) {
->>>           acpi_add_table(table_offsets, tables_blob);
->>>           build_iort(tables_blob, tables->linker, vms);
->>>       }
-
-I can't see how that's right. Gating IORT table generation entirely based
-on the presence of ITS looks wrong because IORT table has data beyond GIC ITS,
-like for SMMUv3 etc.. Maybe open an issue to investigate it later?
-
-
-FWIW,
-
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+However, as I mentioned in 3/5, the IORT table is being gated as well by its_enabled(),
+so after the fix no IORT table is generated by QEMU, hence tests/qtest/bios-tables-test.c
+never sees/loads any IORT table to compare against IORT.its_off added in 1/5. There are
+no test failures but IORT.its_off is a "dead blob". I think it should be removed in this
+patch just like APIC table blob is updated, for consistence.
 
 
 Cheers,
 Gustavo
+  
+> Igor, am I missing something?
+> 
+>>
+>> Cheers,
+>> Gustavo
+> 
+
 
