@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C05C3601B
-	for <qemu-devel@archiver.kernel.org>; Wed,  2 Apr 2025 23:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED326C36014
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 02:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u07FH-0004Vg-Or; Wed, 02 Apr 2025 19:11:43 -0400
+	id 1u0AFL-0007Kc-Ou; Wed, 02 Apr 2025 22:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u07FG-0004VM-9k
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 19:11:42 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1u0AFK-0007KU-JX
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 22:23:58 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u07FE-0005pV-Ln
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 19:11:42 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43d0782d787so1710325e9.0
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 16:11:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1u0AFJ-0007pT-2r
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 22:23:58 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ac339f53df9so70294266b.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 19:23:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743635498; x=1744240298; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SCuuyED5vv978zd8stIQgFW8xErmGOTaeFOafHOtSeQ=;
- b=td67V2hv2H16Ukgd95GCWIlDN0/usFtQQ2HU+pPqTLlli9qFNmLWnMMDLE7tvyKTaD
- /jZdf3U7kBV9pYvbIm+zQhNaIu2t7npzuZMrYRhkKFq3mLlVUe91oPSjSyzIYCJ1++cp
- X+VsWgpIM0/vXK/6h51aOX9ykvUoXTxVOF/ijKmeg9ls+9kHPaqODxskK2QtR6CDF0S3
- vwfyquNaI1d3P++eOVx1SHHE5SnrGdidKqbwt6DJcXqt4WsTzDji/+Gu9gd9cOO/XUJr
- a7S8F/1SQV8AxxRDRpV8lQcx5Ai5STfKGuOMukEQzpn69h1NI30LMx3Vq/WMT7DWGaa4
- xwtQ==
+ d=gmail.com; s=20230601; t=1743647035; x=1744251835; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UwYvqZubT95wB55iqEL+orSxR2/hZ6ceYcxdu3NlnmU=;
+ b=MG2etgZ5lHrQ15ZO/TFaBdsq82eAG8jPcP1t8dF2idMEH1tab8GVdM4NxuyARTpHN8
+ UKqs4gbm4n1fxyRUPx+JKl69E1jyhF1rO7ciyELu0tgE2D50a9wkc0xqY4ZS26D+OCXg
+ 2naqRv9jtUG90BbwVXx+9J+46hvPNcI0JU5pQu/8hQRbzQaQtVk1bJr3OJ/4cM/VU+jO
+ 5OT4zvfvbtyJU7Gc2OZCUKWleKSQBQyDNNrrOD1fZmThjdWX7MEAmSaiWRoLIBHSgb4Z
+ zU5waQ1xr4nB6G3jCrzkVdGd0PZ8RTcpS98ma650gHj6XvtExy5RqkKwWLhNHROfNywG
+ i6MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743635498; x=1744240298;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SCuuyED5vv978zd8stIQgFW8xErmGOTaeFOafHOtSeQ=;
- b=UuCoj8RkUdso3Bso1WhPHnJGPj5YwJPaYpUjphfwyDb7+mfdXDEYTSVR5ujldK3acg
- f4K3eZfj05tlKy3K8Obs1ElWU0e1h5qIhLD0i1Ssjs1dAcHPYO+nTnnaT+OBxm8u5eww
- kQ0Df5Bw/Kp2t/WGWwomwSXWEgg1K3C247CgfptwnhkY0iazVhJltIFmyrq0HB3pgzsj
- eS3CLh95PjI679ZB9snLcPpOr48+EznCnnhyKCInwN7EcnXIUceUXY4oDnp4HHHIvrX4
- y/EoyMb2Vc8xZGE4AvfNQ+hGYwB9nssVsC3wCTdClpHqMJyXlE5TkzB5oL6B3chPlG8N
- svXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXN3+E2a4aMWn35gHXw2qjMo40KHNf7oJnlwjJcvJUi9RTXJGhsgkJEej7eHfpI652ZFP/96JjR/mlo@nongnu.org
-X-Gm-Message-State: AOJu0YzVj8nTAaP8Kf2QVu6BFYD/or+6dEn35FWVhGojz09wACx8+mRc
- UNNDD7jRSnfKylwD1E8u3VPguCwLhtv5Ao8tb3R5Q5JjUEAEycQh4/7Ff+a4TP0=
-X-Gm-Gg: ASbGncvxBnN8ftS1aLhmPLd7gZqghYWHLXari/NPW36mtZSwBU87Ns047h9qQoZFwn4
- 9c2shZhAOvyz96etU1zAeESFpw8VWMtKTPpLoC9S1Z40bymlOFvnhz8n7V8KHlgJv/RwgmxtpAC
- SwNcDepWtfcJ96fA/YRbuPFhNJ6dwIi9phyDZHbP2Phq6DeL2Iu3SCSO/gtLcG8iH/emyuJr6Om
- SElgJmeuy6sdTOtUk3Us9Uv4T4X2bG+troKyp2ZVjicF69KzBcw1m68X9K4nTOtbGaFJzbYLW1s
- 9eUTN2xOr+aQGunTFOsJorHf99olYtFTz3awVIzEJtl95Z2uHAXXGckVeYzmfZfLL3ztsOmGHR7
- nR8ZPyAnZaM9K
-X-Google-Smtp-Source: AGHT+IG0STEvBx8a3foQvVzQCkaIUE+7I6MC2jXyuJzOrlewzlqDB0h+N52QttC38PzIQxq6kgaGOw==
-X-Received: by 2002:a05:600c:1c90:b0:43c:f63c:babb with SMTP id
- 5b1f17b1804b1-43e9d4edc28mr107000025e9.1.1743635498595; 
- Wed, 02 Apr 2025 16:11:38 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1630de9sm4805245e9.1.2025.04.02.16.11.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 16:11:38 -0700 (PDT)
-Message-ID: <4e17734f-2f63-41e6-9bed-d7613d9723e2@linaro.org>
-Date: Thu, 3 Apr 2025 01:11:36 +0200
+ d=1e100.net; s=20230601; t=1743647035; x=1744251835;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UwYvqZubT95wB55iqEL+orSxR2/hZ6ceYcxdu3NlnmU=;
+ b=KYE3wB8J4jhgBH7iwIOCpSD2xFKBNQ8hGbv0XRvARbws0LKQGURFarrcCOlVvOZo8w
+ n78aN/D8w50Rt0CXkaYBZWXYUCym9iHUNY7MD/FZtk5tpwrwEG13ABBr9DHq14QXv9F6
+ nbD2qAjRU4sIVMjR+Nu0dKsDzi65N9YB4Zan+uwSvm1NvpDp/HCHlpyFEYTPA4dhcunC
+ y4PIzIEyCepGnR+oey5nBL1E9nel0JZVD3zCRZ1QIgArbV6M42YBBfXs5C1X7T9Hh2gh
+ gBr89A0hhjTzp0O1VKWSw9tGO/WPRtD7tcuGQjhYgPt6Hfdd9EE5m2gensrgpwP1d/DJ
+ qqew==
+X-Gm-Message-State: AOJu0YwHuuENK8rC4f84g4ZJyar6GaqBZ9T9Edoqm7ZZrcVwbv6dl649
+ BSjXCjYfKKxZ7C3LcGuIIhZ/y+536qvu3bbqDlXzERE7WgqyYIUsqAnsuXn+CzlYFPN/KuHfjYe
+ w5WwOqj9tBO1xBZn9jpLvEnnFymh2bFSHSv7L3g==
+X-Gm-Gg: ASbGnct+aXVvvU1Sbpg6uTCoA+UOv8/RwFcUzHpSGV+IRZvs4Gwln5+IgGfnXA+aTng
+ GdptD4VM8EUHwTARbmfezaYyDufZPbtIY2eG/mGkzjQAIyl0PYLGNUUtbeZebHYDqU9aYVzSB/f
+ T4RxfAXLiBGAsOGEmozE09ZM8SeIM=
+X-Google-Smtp-Source: AGHT+IGexXGXXx7xDw8ZR6tzwRHzI7egiyBLYvla0R6vRv5Iyw1qLmRQAf3dt2AQkf+HgHgOKWxcFos38Dv4Tbk/XQQ=
+X-Received: by 2002:a17:907:3d89:b0:ac3:9587:f2ac with SMTP id
+ a640c23a62f3a-ac7bc15f2f4mr77881466b.33.1743647034710; Wed, 02 Apr 2025
+ 19:23:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 21/43] target/s390x: Restrict SoftMMU mmu_index()
- to TCG
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250402210328.52897-1-philmd@linaro.org>
- <20250402210328.52897-22-philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250402210328.52897-22-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+References: <20250402135402.14526-1-zhangckid@gmail.com>
+ <d39ed054-d99b-46a8-afc8-1a2981d919e1@linaro.org>
+In-Reply-To: <d39ed054-d99b-46a8-afc8-1a2981d919e1@linaro.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Thu, 3 Apr 2025 10:23:18 +0800
+X-Gm-Features: AQ5f1JqNca12j6S48RKJAZMiwQBpljqJ1ueqHHSRnYHtO2tumMum8JKfb2Vz8_4
+Message-ID: <CAK3tnvLqGLzQffAi=dk_VzXgH_k_r_z2xNTN3tVE-G+xjpPWcw@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/virt.c: Fix wrong default cpu type in AARCH64
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,65 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/25 23:03, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/s390x/cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-> index 1f75629ddc2..320ace67198 100644
-> --- a/target/s390x/cpu.c
-> +++ b/target/s390x/cpu.c
-> @@ -348,6 +348,7 @@ static const TCGCPUOps s390_tcg_ops = {
->       .initialize = s390x_translate_init,
->       .translate_code = s390x_translate_code,
->       .restore_state_to_opc = s390x_restore_state_to_opc,
-> +    .mmu_index = s390x_cpu_mmu_index,
->   
->   #ifdef CONFIG_USER_ONLY
->       .record_sigsegv = s390_cpu_record_sigsegv,
-> @@ -378,7 +379,6 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
->                                          &scc->parent_phases);
->   
->       cc->class_by_name = s390_cpu_class_by_name;
-> -    cc->mmu_index = s390x_cpu_mmu_index;
->       cc->dump_state = s390_cpu_dump_state;
->       cc->query_cpu_fast = s390_query_cpu_fast;
->       cc->set_pc = s390_cpu_set_pc;
+On Thu, Apr 3, 2025 at 2:43=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 4/2/25 06:54, Zhang Chen wrote:
+> > Because of the CONFIG_TCG auto enabled, the cpu type "cortex-a15"
+> > is mistakenly set to the default AARCH64 target.
+>
+> This is the correct backward compatible setting.
+> In essence, it means that you *must* supply a -cpu argument.
+>
+>
 
-Missing:
+If the "-cpu" is required, the VM should not be started without this argume=
+nt.
+If yes, I will skip this patch and submit another one to make QEMU
+refuse to start without this parameter.
 
--- >8 --
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index 9efa4ef735..43fc3194bc 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -128,7 +128,2 @@ static vaddr s390_cpu_get_pc(CPUState *cs)
+Thanks
+Chen
 
--static int s390x_cpu_mmu_index(CPUState *cs, bool ifetch)
--{
--    return s390x_env_mmu_index(cpu_env(cs), ifetch);
--}
--
-  static void s390_query_cpu_fast(CPUState *cpu, CpuInfoFast *value)
-@@ -310,2 +305,7 @@ static const Property s390x_cpu_properties[] = {
-
-+static int s390x_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    return s390x_env_mmu_index(cpu_env(cs), ifetch);
-+}
-+
-  void cpu_get_tb_cpu_state(CPUS390XState *env, vaddr *pc,
-
----
-
-With following description:
-
----
-Convert CPUClass::mmu_index() to TCGCPUOps::mmu_index(),
-restricting s390x_cpu_mmu_index() to TCG #ifdef.
----
-
+> r~
+>
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >   hw/arm/virt.c | 5 +++--
+> >   1 file changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > index a96452f17a..63649e9543 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -3178,9 +3178,10 @@ static void virt_machine_class_init(ObjectClass =
+*oc, void *data)
+> >       mc->cpu_index_to_instance_props =3D virt_cpu_index_to_props;
+> >   #ifdef CONFIG_TCG
+> >       mc->default_cpu_type =3D ARM_CPU_TYPE_NAME("cortex-a15");
+> > -#else
+> > +#ifdef TARGET_AARCH64
+> >       mc->default_cpu_type =3D ARM_CPU_TYPE_NAME("max");
+> > -#endif
+> > +#endif /* TARGET_AARCH64 */
+> > +#endif /* CONFIG_TCG */
+> >       mc->valid_cpu_types =3D valid_cpu_types;
+> >       mc->get_default_cpu_node_id =3D virt_get_default_cpu_node_id;
+> >       mc->kvm_type =3D virt_kvm_type;
+>
+>
 
