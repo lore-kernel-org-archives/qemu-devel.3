@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF26C36014
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1975C3600C
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:52:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UJc-0000cu-1O; Thu, 03 Apr 2025 19:49:44 -0400
+	id 1u0UL3-0003KW-OE; Thu, 03 Apr 2025 19:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJY-0000cg-OG
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:40 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UKz-000336-RC
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:51:10 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJX-0000Qx-3k
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:40 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cfb6e9031so12473295e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:49:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UKx-0000pM-L8
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:51:09 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so14689145e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724177; x=1744328977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724265; x=1744329065; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C0ep8yRGHXOIWXj4vAOUVPYwAcqcNEFgoSYnOV75PYE=;
- b=pSTaIbcbzl9ZKMqyGykW6fIguwkOOE5HdT3IianBvUQKLRAZD6AMAhpacxKP/8BKYU
- qIDS7xsTCjicYAywtHwfZKVISB+cGKLs2VwXIZ4s7lAFCYhNkELDuijmCseYuc5pAqlw
- 8J1Pt9kcFG7ERZ+GV/DOzg9UiKTUmREg6IxgsaNBA6IVQCMGLKdb8ishlNsJ6Nn6NdcX
- c/PH6g+wahxPUzfkmySGA7FCCvAI1N+wgDS5uToKYM2sOsfRHKOJ6unTDYFUkWGglOuC
- 4VHl8TIfqeX05PH8dnBrC7TOzlTN28+dBeyCmPDZC2/P+QmN9C5osFnkuiCzSnP1Xkjg
- XeAA==
+ bh=LHI9FfBHfNNt6d2GHyCNA9IUMx30aclMNhMOJHynnN4=;
+ b=Gg18yEAH7e877bX9WGbqlPTrywrNlOSjPjEvmcvh7VQ28VUZD8uC1WHzjw+QVZ7PgI
+ 0w3QAwO53HIYIRH0b0+jhcoX8xqHoJi3czymQGLPpvP4BEbcDwwuQp7HV0dUIJTo6Ftg
+ H4BgWfeeMTz+xA+0/BPgdXopqBtwhvQ+plFJPYg/YNeFLcXGJVjK767u/5HbgxxxR8sI
+ wgv0F82qfjR7s6HhEAn9E3rKEtQB5TNz7ENjB1ZBTahTwnOC72PzsjKOrXdg3csNBCrB
+ 8Ycv4AFhY1SAGUptzOWZGZvIkgfv8cPRDLVUkPOG6vPetWVrLF7bobB+HNXhuJ64vodV
+ MRHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724177; x=1744328977;
+ d=1e100.net; s=20230601; t=1743724265; x=1744329065;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C0ep8yRGHXOIWXj4vAOUVPYwAcqcNEFgoSYnOV75PYE=;
- b=ANp2CQxzmejMtLFDUR+vJQ/IG9cPmt6Dx9qy2Rm9vubIH9Po5JCpLXBy/F3M08Myrw
- eYUw+WCunDMvulZDoIuze1iFMrw9QGimr70XTkMlIvioPejJlxJ9FEN8rAnL09scGAZz
- CeJlLLuTccT0hJk3xBhQO4yZI4JZmTDyRQlQBPSRHFqryz1QPiPzs/36xGSNtbWuIf6q
- PLM7o3KQm10qT6peBqK69j5g+TwnPd8QkbyONXZEhvdxuF2nR4KhXFgAjGYPapj2otZt
- THmw3mRtU5uk2PJAP7f51K/6zVWnzh7K9PF+MirwEgw4uWL4Y3WNuyg+NZXxW8269Tqa
- 39ig==
-X-Gm-Message-State: AOJu0YyuzGNiXpkMdLkOrrx8RVuDkg50GWEiTasmNHD8tNRqUuICEmHy
- why6YjKhnI0LPEsDd6Wq9SBmAR7bFGXGlFKIn6fRv84TyamSvpveEUJ1JX/PNSJ3aDHJRRgNtpQ
- E
-X-Gm-Gg: ASbGnctOc3hv3JAqBZyrrG5FFMyuYFLMrRrkG2i5+mhpdJ2LmwUc1eO8L+yfM98m61j
- QD1R/ZH2L6sQZsOhFu6UkTTe5LW2w5yk9GaTpL0ls2bMkupypMisQ9eeqfEsmLbnkMpFE5QVyIs
- KK9fr1UlT3dkYJuR8OtGuGyE6nou91yipnmo8u7vU1aNNQMg+NEHVMGP69UxpsXcq2wLYBWyobY
- sbc6H9vTz3PUu+e8/ioVsUo2ocIY/SXC7OKKJ6cEPQLr6QfJv/hOCCDpePLpv85rncej5V/9P5z
- dlRCZhaZkTJ4F1NblbbSavF5+3Pbz2dG4+oDq4KGTokqJbRdE66zyQJfIlYss4ieRD1aofD0rqY
- qELW/m7FphtTPKPoUFxY=
-X-Google-Smtp-Source: AGHT+IECrfbvudhCb0PsPXvzL5GgXBfXlHKDKK1yYhWZfxUJgBCsodMcZioGLnrhayFw/j8Eb/QNsw==
-X-Received: by 2002:a05:600c:1d29:b0:43c:fbe2:df3c with SMTP id
- 5b1f17b1804b1-43ecf9c7c26mr6622225e9.26.1743724177281; 
- Thu, 03 Apr 2025 16:49:37 -0700 (PDT)
+ bh=LHI9FfBHfNNt6d2GHyCNA9IUMx30aclMNhMOJHynnN4=;
+ b=rLxmdzITISvwDuoFKh7eiZ4YZJE/Wr2mvjVFn4VHQEOewN1KJLpBC6v4ZtvRjN9dTB
+ LGzzaUI9GepO3+2anv/avMZGiLDEQW+8jYrMxweJnLvL6xFYqabVE3DvYx5Wy1qIDLV8
+ l4TUNpi2F8PkIVF6l6ebYo95IR+484yghj1n4mBFxlKcE5LrADdWo4CgueSphU5iysLg
+ GQMmTsLXElis3uFU9/xKimKYTi8ICKfnDPdKahnvm/jUiKMyrtyCCRMz3v5AbshFr8jD
+ wXs0qqHXOplYw7EDG/OnwNYsV0M+s7Gf2Ud2EMAeqazAZMnWDaSjUoydq1ty00Fyz6Oc
+ btoA==
+X-Gm-Message-State: AOJu0YyE3OPuT99e4aQwR8vEN9n0WSjXWJRfNtJvJIQQ1QHROk6cikBe
+ aW50vgfVhjMPeTM74POamshM9jVHLK3tR++ciaUix542bWTaTK3tHqi3A2SPMXoNqqLYb+wYBF/
+ i
+X-Gm-Gg: ASbGncsiH1H4/7MyRGBsjnpCMg8hsH0A70yxAOY3atjP6vpHLT4VdoiyFkfAUKzTGRN
+ Kv2dv9oCvvd9glHYveJ9s6UNMwJpFo4LTlFj8lNMHmrhsFfDRerb/c9qcnzwDbcaer6bWmedqPa
+ h8LMwtmAzPphncpO0FPkLBWw0EYB5LrBm+rCOlgYXPdSEgGeXUjGSeVKVH34C1RSmak77pxq3ST
+ jRgK0TkpDS0WsUqI5y4KUuRx/W+CTBHS3u1lTS7w6cRoomcnvesOZt64GKWu/uouA7kmp20vEbQ
+ 6YjQjlrkSWBNuVFtBVmLJMQePi37vqlC/9aQsLs8aMPB2UZ/DrRkgGehNuNDx/q5cHocMb5ua91
+ XpOmrwq3dL2p3oOKRacc=
+X-Google-Smtp-Source: AGHT+IFwmBjwvR4D+ddltqDgiwC4CAXPCcL4AGk7x55yazsi16N0uPNlsRWM9mN5zrgpebnpDsQTPw==
+X-Received: by 2002:a05:6000:2211:b0:391:952:c74a with SMTP id
+ ffacd0b85a97d-39c2e610f88mr4784201f8f.8.1743724265173; 
+ Thu, 03 Apr 2025 16:51:05 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a9da1sm2903124f8f.22.2025.04.03.16.49.36
+ ffacd0b85a97d-39c300968c4sm2999981f8f.9.2025.04.03.16.51.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:49:36 -0700 (PDT)
+ Thu, 03 Apr 2025 16:51:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH-for-10.1 03/19] qemu: Factor target_system_arch() out
-Date: Fri,  4 Apr 2025 01:48:58 +0200
-Message-ID: <20250403234914.9154-4-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 17/19] accel: Move target-agnostic code from
+ accel-target.c -> accel-common.c
+Date: Fri,  4 Apr 2025 01:49:12 +0200
+Message-ID: <20250403234914.9154-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403234914.9154-1-philmd@linaro.org>
 References: <20250403234914.9154-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,118 +105,317 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qemu/target_info-impl.h |  4 ++++
- include/qemu/target_info.h      |  4 ++++
- hw/core/machine-qmp-cmds.c      |  6 ++----
- target_info-stub.c              |  1 +
- target_info.c                   | 12 ++++++++++++
- 5 files changed, 23 insertions(+), 4 deletions(-)
+ accel/accel-common.c | 142 +++++++++++++++++++++++++++++++++++++++++++
+ accel/accel-target.c | 129 ---------------------------------------
+ accel/meson.build    |   1 +
+ 3 files changed, 143 insertions(+), 129 deletions(-)
+ create mode 100644 accel/accel-common.c
 
-diff --git a/include/qemu/target_info-impl.h b/include/qemu/target_info-impl.h
-index 00bb746572b..0cec211e362 100644
---- a/include/qemu/target_info-impl.h
-+++ b/include/qemu/target_info-impl.h
-@@ -10,6 +10,7 @@
- #define QEMU_TARGET_INFO_IMPL_H
- 
- #include "qemu/target_info.h"
-+#include "qapi/qapi-types-machine.h"
- 
- struct BinaryTargetInfo {
- 
-@@ -19,6 +20,9 @@ struct BinaryTargetInfo {
-     /* runtime equivalent of TARGET_NAME definition */
-     const char *const name;
- 
-+    /* related to TARGET_ARCH definition */
-+    SysEmuTarget system_arch;
+diff --git a/accel/accel-common.c b/accel/accel-common.c
+new file mode 100644
+index 00000000000..f505461fc88
+--- /dev/null
++++ b/accel/accel-common.c
+@@ -0,0 +1,142 @@
++/*
++ * QEMU accel class, components common to system emulation and user mode
++ *
++ * Copyright (c) 2003-2008 Fabrice Bellard
++ * Copyright (c) 2014 Red Hat Inc.
++ *
++ * SPDX-License-Identifier: MIT
++ */
 +
- };
- 
- #endif
-diff --git a/include/qemu/target_info.h b/include/qemu/target_info.h
-index 5b8f17a15a3..6ca36dae8a3 100644
---- a/include/qemu/target_info.h
-+++ b/include/qemu/target_info.h
-@@ -9,6 +9,8 @@
- #ifndef QEMU_TARGET_INFO_H
- #define QEMU_TARGET_INFO_H
- 
-+#include "qapi/qapi-types-machine.h"
++#include "qemu/osdep.h"
++#include "qemu/accel.h"
++#include "qemu/target_info.h"
++#include "accel/accel-cpu.h"
++#include "accel-internal.h"
 +
- typedef struct BinaryTargetInfo BinaryTargetInfo;
- 
- const BinaryTargetInfo *target_info(void);
-@@ -17,4 +19,6 @@ bool target_info_is_stub(void);
- 
- const char *target_name(void);
- 
-+SysEmuTarget target_system_arch(void);
-+
- #endif
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 6701e210f54..9e2dd348c06 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -36,8 +36,7 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
-     MachineState *ms = MACHINE(qdev_get_machine());
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     CpuInfoFastList *head = NULL, **tail = &head;
--    SysEmuTarget target = qapi_enum_parse(&SysEmuTarget_lookup, target_name(),
--                                          -1, &error_abort);
-+    SysEmuTarget target = target_system_arch();
-     CPUState *cpu;
- 
-     CPU_FOREACH(cpu) {
-@@ -137,8 +136,7 @@ TargetInfo *qmp_query_target(Error **errp)
- {
-     TargetInfo *info = g_malloc0(sizeof(*info));
- 
--    info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
--                                 &error_abort);
-+    info->arch = target_system_arch();
- 
-     return info;
- }
-diff --git a/target_info-stub.c b/target_info-stub.c
-index db61a335908..46a240ac66a 100644
---- a/target_info-stub.c
-+++ b/target_info-stub.c
-@@ -14,6 +14,7 @@
- static const BinaryTargetInfo target_info_stub = {
-     .is_stub = true,
-     .name = TARGET_NAME,
-+    .system_arch = -1,
- };
- 
- const BinaryTargetInfo *target_info(void)
-diff --git a/target_info.c b/target_info.c
-index 6b44ea9fc0e..be4f19009b3 100644
---- a/target_info.c
-+++ b/target_info.c
-@@ -9,6 +9,7 @@
- #include "qemu/osdep.h"
- #include "qemu/target_info-impl.h"
- #include "qemu/target_info.h"
-+#include "qapi/error.h"
- 
- bool target_info_is_stub(void)
- {
-@@ -19,3 +20,14 @@ const char *target_name(void)
- {
-     return target_info()->name;
- }
-+
-+SysEmuTarget target_system_arch(void)
++/* Lookup AccelClass from opt_name. Returns NULL if not found */
++AccelClass *accel_find(const char *opt_name)
 +{
-+    SysEmuTarget system_arch = target_info()->system_arch;
-+
-+    if (system_arch >= SYS_EMU_TARGET__MAX) {
-+        system_arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
-+                                      &error_abort);
-+    }
-+    return system_arch;
++    char *class_name = g_strdup_printf(ACCEL_CLASS_NAME("%s"), opt_name);
++    AccelClass *ac = ACCEL_CLASS(module_object_class_by_name(class_name));
++    g_free(class_name);
++    return ac;
 +}
++
++/* Return the name of the current accelerator */
++const char *current_accel_name(void)
++{
++    AccelClass *ac = ACCEL_GET_CLASS(current_accel());
++
++    return ac->name;
++}
++
++static void accel_init_cpu_int_aux(ObjectClass *klass, void *opaque)
++{
++    CPUClass *cc = CPU_CLASS(klass);
++    AccelCPUClass *accel_cpu = opaque;
++
++    /*
++     * The first callback allows accel-cpu to run initializations
++     * for the CPU, customizing CPU behavior according to the accelerator.
++     *
++     * The second one allows the CPU to customize the accel-cpu
++     * behavior according to the CPU.
++     *
++     * The second is currently only used by TCG, to specialize the
++     * TCGCPUOps depending on the CPU type.
++     */
++    cc->accel_cpu = accel_cpu;
++    if (accel_cpu->cpu_class_init) {
++        accel_cpu->cpu_class_init(cc);
++    }
++    if (cc->init_accel_cpu) {
++        cc->init_accel_cpu(accel_cpu, cc);
++    }
++}
++
++/* initialize the arch-specific accel CpuClass interfaces */
++static void accel_init_cpu_interfaces(AccelClass *ac)
++{
++    const char *ac_name; /* AccelClass name */
++    char *acc_name;      /* AccelCPUClass name */
++    ObjectClass *acc;    /* AccelCPUClass */
++    const char *cpu_resolving_type = target_cpu_type();
++
++    ac_name = object_class_get_name(OBJECT_CLASS(ac));
++    g_assert(ac_name != NULL);
++
++    acc_name = g_strdup_printf("%s-%s", ac_name, cpu_resolving_type);
++    acc = object_class_by_name(acc_name);
++    g_free(acc_name);
++
++    if (acc) {
++        object_class_foreach(accel_init_cpu_int_aux,
++                             cpu_resolving_type, false, acc);
++    }
++}
++
++void accel_init_interfaces(AccelClass *ac)
++{
++    accel_init_ops_interfaces(ac);
++    accel_init_cpu_interfaces(ac);
++}
++
++void accel_cpu_instance_init(CPUState *cpu)
++{
++    if (cpu->cc->accel_cpu && cpu->cc->accel_cpu->cpu_instance_init) {
++        cpu->cc->accel_cpu->cpu_instance_init(cpu);
++    }
++}
++
++bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
++{
++    AccelState *accel = current_accel();
++    AccelClass *acc = ACCEL_GET_CLASS(accel);
++
++    /* target specific realization */
++    if (cpu->cc->accel_cpu
++        && cpu->cc->accel_cpu->cpu_target_realize
++        && !cpu->cc->accel_cpu->cpu_target_realize(cpu, errp)) {
++        return false;
++    }
++
++    /* generic realization */
++    if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
++        return false;
++    }
++
++    return true;
++}
++
++void accel_cpu_common_unrealize(CPUState *cpu)
++{
++    AccelState *accel = current_accel();
++    AccelClass *acc = ACCEL_GET_CLASS(accel);
++
++    /* generic unrealization */
++    if (acc->cpu_common_unrealize) {
++        acc->cpu_common_unrealize(cpu);
++    }
++}
++
++int accel_supported_gdbstub_sstep_flags(void)
++{
++    AccelState *accel = current_accel();
++    AccelClass *acc = ACCEL_GET_CLASS(accel);
++    if (acc->gdbstub_supported_sstep_flags) {
++        return acc->gdbstub_supported_sstep_flags();
++    }
++    return 0;
++}
++
++static const TypeInfo accel_types[] = {
++    {
++        .name           = TYPE_ACCEL,
++        .parent         = TYPE_OBJECT,
++        .class_size     = sizeof(AccelClass),
++        .instance_size  = sizeof(AccelState),
++        .abstract       = true,
++    },
++};
++
++DEFINE_TYPES(accel_types)
+diff --git a/accel/accel-target.c b/accel/accel-target.c
+index 769a90230bf..7fd392fbc4a 100644
+--- a/accel/accel-target.c
++++ b/accel/accel-target.c
+@@ -24,135 +24,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/accel.h"
+-#include "qemu/target_info.h"
+-
+ #include "accel/accel-cpu-target.h"
+-#include "accel-internal.h"
+-
+-static const TypeInfo accel_type = {
+-    .name = TYPE_ACCEL,
+-    .parent = TYPE_OBJECT,
+-    .class_size = sizeof(AccelClass),
+-    .instance_size = sizeof(AccelState),
+-    .abstract = true,
+-};
+-
+-/* Lookup AccelClass from opt_name. Returns NULL if not found */
+-AccelClass *accel_find(const char *opt_name)
+-{
+-    char *class_name = g_strdup_printf(ACCEL_CLASS_NAME("%s"), opt_name);
+-    AccelClass *ac = ACCEL_CLASS(module_object_class_by_name(class_name));
+-    g_free(class_name);
+-    return ac;
+-}
+-
+-/* Return the name of the current accelerator */
+-const char *current_accel_name(void)
+-{
+-    AccelClass *ac = ACCEL_GET_CLASS(current_accel());
+-
+-    return ac->name;
+-}
+-
+-static void accel_init_cpu_int_aux(ObjectClass *klass, void *opaque)
+-{
+-    CPUClass *cc = CPU_CLASS(klass);
+-    AccelCPUClass *accel_cpu = opaque;
+-
+-    /*
+-     * The first callback allows accel-cpu to run initializations
+-     * for the CPU, customizing CPU behavior according to the accelerator.
+-     *
+-     * The second one allows the CPU to customize the accel-cpu
+-     * behavior according to the CPU.
+-     *
+-     * The second is currently only used by TCG, to specialize the
+-     * TCGCPUOps depending on the CPU type.
+-     */
+-    cc->accel_cpu = accel_cpu;
+-    if (accel_cpu->cpu_class_init) {
+-        accel_cpu->cpu_class_init(cc);
+-    }
+-    if (cc->init_accel_cpu) {
+-        cc->init_accel_cpu(accel_cpu, cc);
+-    }
+-}
+-
+-/* initialize the arch-specific accel CpuClass interfaces */
+-static void accel_init_cpu_interfaces(AccelClass *ac)
+-{
+-    const char *ac_name; /* AccelClass name */
+-    char *acc_name;      /* AccelCPUClass name */
+-    ObjectClass *acc;    /* AccelCPUClass */
+-    const char *cpu_resolving_type = target_cpu_type();
+-
+-    ac_name = object_class_get_name(OBJECT_CLASS(ac));
+-    g_assert(ac_name != NULL);
+-
+-    acc_name = g_strdup_printf("%s-%s", ac_name, cpu_resolving_type);
+-    acc = object_class_by_name(acc_name);
+-    g_free(acc_name);
+-
+-    if (acc) {
+-        object_class_foreach(accel_init_cpu_int_aux,
+-                             cpu_resolving_type, false, acc);
+-    }
+-}
+-
+-void accel_init_interfaces(AccelClass *ac)
+-{
+-    accel_init_ops_interfaces(ac);
+-    accel_init_cpu_interfaces(ac);
+-}
+-
+-void accel_cpu_instance_init(CPUState *cpu)
+-{
+-    if (cpu->cc->accel_cpu && cpu->cc->accel_cpu->cpu_instance_init) {
+-        cpu->cc->accel_cpu->cpu_instance_init(cpu);
+-    }
+-}
+-
+-bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
+-{
+-    AccelState *accel = current_accel();
+-    AccelClass *acc = ACCEL_GET_CLASS(accel);
+-
+-    /* target specific realization */
+-    if (cpu->cc->accel_cpu
+-        && cpu->cc->accel_cpu->cpu_target_realize
+-        && !cpu->cc->accel_cpu->cpu_target_realize(cpu, errp)) {
+-        return false;
+-    }
+-
+-    /* generic realization */
+-    if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
+-        return false;
+-    }
+-
+-    return true;
+-}
+-
+-void accel_cpu_common_unrealize(CPUState *cpu)
+-{
+-    AccelState *accel = current_accel();
+-    AccelClass *acc = ACCEL_GET_CLASS(accel);
+-
+-    /* generic unrealization */
+-    if (acc->cpu_common_unrealize) {
+-        acc->cpu_common_unrealize(cpu);
+-    }
+-}
+-
+-int accel_supported_gdbstub_sstep_flags(void)
+-{
+-    AccelState *accel = current_accel();
+-    AccelClass *acc = ACCEL_GET_CLASS(accel);
+-    if (acc->gdbstub_supported_sstep_flags) {
+-        return acc->gdbstub_supported_sstep_flags();
+-    }
+-    return 0;
+-}
+ 
+ static const TypeInfo accel_cpu_type = {
+     .name = TYPE_ACCEL_CPU,
+@@ -163,7 +35,6 @@ static const TypeInfo accel_cpu_type = {
+ 
+ static void register_accel_types(void)
+ {
+-    type_register_static(&accel_type);
+     type_register_static(&accel_cpu_type);
+ }
+ 
+diff --git a/accel/meson.build b/accel/meson.build
+index 5eaeb683385..52909314bfa 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -1,3 +1,4 @@
++common_ss.add(files('accel-common.c'))
+ specific_ss.add(files('accel-target.c'))
+ system_ss.add(files('accel-system.c', 'accel-blocker.c'))
+ user_ss.add(files('accel-user.c'))
 -- 
 2.47.1
 
