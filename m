@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 495E5C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF877C36014
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UK8-0001Cy-Gx; Thu, 03 Apr 2025 19:50:16 -0400
+	id 1u0UL7-0003fd-3L; Thu, 03 Apr 2025 19:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UK5-00014F-In
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:50:13 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UL4-0003SJ-AI
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:51:14 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UK3-0000gr-Mx
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:50:13 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-39c1ee0fd43so1243951f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:50:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UL2-0000q7-HH
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:51:14 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-39141ffa9fcso1691082f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:51:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724209; x=1744329009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724271; x=1744329071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F4hQtsRqLsOAfmfIygYHr5yTvJJXu3lpTgjRUryOvbU=;
- b=vWhmwXnBRb9XRw9XPjZoe1l0ymrDprgPxL0lGn/bJ2+1YlGygL7AfEqJ4/uJboTHNJ
- hmw/A6/hW+7d7YRSstBBTeau4rAHkT8XGX1sw/fH+f7U30BmxCjZAVkjVL/RgNYDPrTV
- ryHgewR48Yiu5KadCmLNd99M/eNVkkusJDERMOaA545BigF8PkmFfg3pVeuxDYocNI/V
- d0WHHdZKQrU31DeRymyYopAUuTyKgRa0mDuKQLVeVr4stHjqQSrdlo5J6/d1QPCdIAfe
- 11K6muiIf/Fv1tJtpJIxZ1RwOkueYH+ueVYLKzSe2TRUIlYe/TsKRaLMFNbvpYKnqr2/
- tOSQ==
+ bh=jKGy8JhI6ob8SfyVJdxSCkVoOViZwD5dSl2Ral6vICI=;
+ b=fCj6JkODrrWg6U3mAdAb/2LVvYNSZndTloORReq2PoHcyrTMLbVv+H/BAsR3AzqzpT
+ hF3KVZm+00Jyo96zSm7Kd+fZS7jAjt6GwLDktgwFL6OfIs8GOjyoVcZUFDGGVNiX7PYV
+ EnQwFG1tiVX5XZNiD+eIDoxNHTxNvhAMjVeDDFiGRceDlHJWUhORMifKxBaq7a0vaqx/
+ flTsI5xmasPRH+18LbWsXob72wdpa/BRPRYLmL61Dr+w4lm2NJFgYRnfibZgKtJbTH0Z
+ KYhCzjsfC8W3nI77TtNeo7fZSqKxrAC21nkAwL2rflpRY4KTNLhFSGNNiS2JbptsxnIw
+ Z2aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724209; x=1744329009;
+ d=1e100.net; s=20230601; t=1743724271; x=1744329071;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F4hQtsRqLsOAfmfIygYHr5yTvJJXu3lpTgjRUryOvbU=;
- b=aO1BdO2mpAvhGrII/fq295QW4zMzzFC+uSxwbiwvCde38qo0/meBh/fi/cEE0YA/f9
- tV/sqjWXVbaX4AfL2pIazxgFE08NNicZT9WQXxsH1xt+0tPkeY6QDQ6mGutfAfE4XmUY
- z8bEthzioWHnTh05MuqZLkICHKtX8YdgW/JBbgJB+ERkwMH847f2uldjYUguoiL8tPzu
- TbjeVYjNHtte9VTlR5VgTyWg0VLcuwk+ugjTaOzWn5/aibwTfjYmwsJlsSMeKCOwYw+5
- am7doio/OK6cn9+E2AqKEXqEtJdIlOuN45CFHRT2ro99yctePTtzv32GRkbtRejYX27/
- Huog==
-X-Gm-Message-State: AOJu0YwQMgIY1b1cgfFAGBLNxa2FDKTXqUUEGp9GtZ6UiuQEkC8o2C5j
- nDLUBEt6WX9yDXYbdr+Mc59eVMhmxvm0wmaQdgQof1UcaAa3D/31TexAM/UbJkCJ+fec4MFuWwq
- s
-X-Gm-Gg: ASbGnctU3oBRpb8W7um+Ufl5rT2uoIrVtiDSFr+/ovWuUZU6f4IjKqhkNG4EHKwAiJ4
- utatLKeOc7GVwva7EcdnG/LXr0oGUurq0Ar5pyo6OTl1bh80JwoJaJTkSk0Wbf6tdORF13IcBwh
- QM8VFODA4JQj4yJpgCBTkosOF6Mk70uTs8utzDyc+f3QPR60XJkwXVetLs2KDXG1V20VuFw+Kh+
- iH2uBT8tojaGtI82olhYlcrR8S7+SFwKZsh6qyibykSVZKWo9eEoDyN/4WgXLtNcLQ3TT8NFXv4
- /wg7UfiOQZ14vIlA2QfjWRhtZwbs1Wa7mbudr2ratyT/guwyNO0fVNg+Dxo9zr+S3CeEvtF19Lu
- 8C1MsWDNqPEJixKvtRwlXhREaR/OIKA==
-X-Google-Smtp-Source: AGHT+IHgo84CqX39MHLOljzDfCIs/gYPnZSVlSftyCKU3RiHgkB0JxR2VO2oTfQ4WXzOz6k2V9ziyA==
-X-Received: by 2002:a05:6000:40c7:b0:391:40bd:621e with SMTP id
- ffacd0b85a97d-39cba9827c6mr852409f8f.44.1743724209677; 
- Thu, 03 Apr 2025 16:50:09 -0700 (PDT)
+ bh=jKGy8JhI6ob8SfyVJdxSCkVoOViZwD5dSl2Ral6vICI=;
+ b=NKSwmOKTjoBK78ckuRnb44IW0dg7zHJj7EnSB3RZPgvxhPYyhiuBMerEU43cU+iUEl
+ V3mlw39fG4j2xHALi0pVIRe4QG+4uNoFdOAEPoqiIxh6Jq+J5MqPJaCNCdu1xbDCg1a6
+ zvb2UVoAMDsK1+R59/ip+UE+PyMAhcPObyfTybbBy5qCas3k9iU2cQW2IGmQLwuwZjmM
+ 7VmdT2ZAZClqbNGNvmy2VlV5OP28JvxMK8qa0Zf9RksrjusT0/bywmb2i5nTQGOkKK5x
+ isfBpdwfN+wU13hGiCOqIcoN8H3l7QruEILLOexpbmvWE/46HTpvB9y5w5L0dFuATKlg
+ Zk/Q==
+X-Gm-Message-State: AOJu0YxD/OMfu6vRxJXEp8p8s/638weisjObHZDzSNFwaoBSImqhoVfl
+ hGK2fmRXVxoOdCqbyZGpWpF8dZNfQZLcMxaHwlgeSu5NQPsgOVJm56Mt6Qh1BS0S671Ay6xsww3
+ N
+X-Gm-Gg: ASbGncuSEfuYn1atMmJdVWfx2FILaFR4j9lWTtWHzeFzaHiEZYHqgMz2VS24KpqiWr0
+ 3imXCJE+9LSxHKj5pZqfDYfOg/ayviv3krnpgZf2BTHyE9DNkLVKyycMZirnC7tTnbTTS8pYuO0
+ HUZiftY3l2/+R/YuRkCxXKmTDn4noVLCEW45MOxOi+e8em5c4xxL+K0oktoh4cmXkZVRjAfDcmX
+ yoNAF7+fjOvUCq3bDxyheetRkhx4S4p80nC3scoX4jwI7rRGsXr8nqb/+zlnqXqW/7XUTZ0l9+G
+ xExAb03Y+POgzJhbgPC9nowmZUAPPUrSlDS0KoRDQjE1bHilzaiLGNa7A0HLep2MkOpijQSruua
+ tFtk3V33uZyGwC92tL7A=
+X-Google-Smtp-Source: AGHT+IH9pYQ/eycg0+3qeoIp0S8wBU4sHQanJq6spe9WlrHk4bgELL3vuGU3HHdx6sMTYfmyeV8ebA==
+X-Received: by 2002:a05:6000:40c9:b0:391:48d4:bd02 with SMTP id
+ ffacd0b85a97d-39cb35ac875mr821882f8f.29.1743724270746; 
+ Thu, 03 Apr 2025 16:51:10 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b816csm2968052f8f.57.2025.04.03.16.50.08
+ ffacd0b85a97d-39c3009680dsm2926099f8f.7.2025.04.03.16.51.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:50:09 -0700 (PDT)
+ Thu, 03 Apr 2025 16:51:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH-for-10.1 08/19] target/riscv: Replace TARGET_LONG_BITS ->
- target_long_bits()
-Date: Fri,  4 Apr 2025 01:49:03 +0200
-Message-ID: <20250403234914.9154-9-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 18/19] qemu: Prepare per-binary QOM filter via
+ TYPE_BINARY_PREFIX
+Date: Fri,  4 Apr 2025 01:49:13 +0200
+Message-ID: <20250403234914.9154-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403234914.9154-1-philmd@linaro.org>
 References: <20250403234914.9154-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,52 +105,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/riscv/riscv-iommu.c | 3 ++-
- hw/riscv/riscv_hart.c  | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ meson.build                    |  1 +
+ include/hw/boards.h            |  1 +
+ include/qemu/target_info-qom.h | 14 ++++++++++++++
+ target_info-qom.c              | 15 +++++++++++++++
+ 4 files changed, 31 insertions(+)
+ create mode 100644 include/qemu/target_info-qom.h
+ create mode 100644 target_info-qom.c
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 65411b3e4c0..37563b2102f 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -26,6 +26,7 @@
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/timer.h"
-+#include "qemu/target_info.h"
+diff --git a/meson.build b/meson.build
+index de9c9dacd35..b93253166c8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3815,6 +3815,7 @@ specific_ss.add(files('page-target.c', 'page-vary-target.c'))
  
- #include "cpu_bits.h"
- #include "riscv-iommu.h"
-@@ -393,7 +394,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             if (pass == S_STAGE && va_len > 32) {
-                 target_ulong mask, masked_msbs;
+ specific_ss.add(files('target_info-stub.c'))
+ common_ss.add(files('target_info.c'))
++system_ss.add(files('target_info-qom.c'))
  
--                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
-+                mask = (1L << (target_long_bits() - (va_len - 1))) - 1;
-                 masked_msbs = (addr >> (va_len - 1)) & mask;
- 
-                 if (masked_msbs != 0 && masked_msbs != mask) {
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index a55d1566687..667d3b0a507 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
+ subdir('backends')
+ subdir('disas')
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 02f43ac5d4d..b1bbf3c34d4 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -7,6 +7,7 @@
+ #include "system/hostmem.h"
+ #include "system/blockdev.h"
+ #include "qapi/qapi-types-machine.h"
++#include "qemu/target_info-qom.h"
  #include "qemu/module.h"
-+#include "qemu/target_info.h"
- #include "system/reset.h"
- #include "system/qtest.h"
- #include "qemu/cutils.h"
-@@ -72,7 +73,7 @@ static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
-         ret = riscv_csrr(env, csrno, (target_ulong *)val);
-     } else if (strcmp(cmd, "set_csr") == 0) {
-         ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
--                MAKE_64BIT_MASK(0, TARGET_LONG_BITS));
-+                MAKE_64BIT_MASK(0, target_long_bits()));
-     }
- 
-     g_assert(ret == RISCV_EXCP_NONE);
+ #include "qom/object.h"
+ #include "hw/core/cpu.h"
+diff --git a/include/qemu/target_info-qom.h b/include/qemu/target_info-qom.h
+new file mode 100644
+index 00000000000..c87d47acf66
+--- /dev/null
++++ b/include/qemu/target_info-qom.h
+@@ -0,0 +1,14 @@
++/*
++ * QEMU binary helpers
++ *
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_TARGET_INFO_QOM_H
++#define QEMU_TARGET_INFO_QOM_H
++
++#define TYPE_LEGACY_BINARY_PREFIX "legacy-binary-"
++
++#endif
+diff --git a/target_info-qom.c b/target_info-qom.c
+new file mode 100644
+index 00000000000..6970b95ee0b
+--- /dev/null
++++ b/target_info-qom.c
+@@ -0,0 +1,15 @@
++/*
++ * QEMU legacy binary helpers
++ *
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target_info-qom.h"
++
++static const TypeInfo target_info_types[] = {
++};
++
++DEFINE_TYPES(target_info_types)
 -- 
 2.47.1
 
