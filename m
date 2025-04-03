@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494F8C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA71C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0M56-0004Ut-8V; Thu, 03 Apr 2025 11:02:12 -0400
+	id 1u0ML9-0007d2-06; Thu, 03 Apr 2025 11:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0M4w-0004Ti-Dz
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:02:03 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0ML5-0007cX-U8
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:18:43 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0M4u-0005gC-Lk
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:02:02 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-739be717eddso826058b3a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:02:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0ML3-0000Pd-JM
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:18:43 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43d2d952eb1so7229455e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:18:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743692519; x=1744297319; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GLqmtjJoaHhsZ4jNgAepZtxQ4kkdDDoWQ9NcxzjffzM=;
- b=hKCAxhvD648wduwkMhNWR/Uv3y8GzN6cvWdipniOBff6gdIR9ajE+XKR++JxlqHS+I
- ftp6TytULGqmLI3xVHEDWJ43wqdI66Hjoh+zzmx0+Hm+jD2es1y5HVqX5yH3SaSmJZGe
- NKHHhDUDBarSA+/l3xmcuBZkeuz1GT9VSkA6zSMmCtUsbWIA+InOCn6vSRVMl0Ip7rtq
- Xc198rtzrchfVznfq8+DrXXxzxRDL6N2EjpmzTQCJWrEAmsv0vv84X8C6CTT2cvurwVf
- lJUuKxaDYdMNIZy3I03ioRd/UKMUAK/SrNEnfSRGUp4ZSj8/e/ixamLjpf/9IBusioW+
- gevw==
+ d=linaro.org; s=google; t=1743693519; x=1744298319; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fuei3baK1sdFDft7gXrQyidqUa02cv4ewmtE/kL3GxQ=;
+ b=tGLOwhStTQbMRa2oZvHCS3gH4M96IzmNHlbRvLSAN1tSrJtl/odls7c2NeD79A1lQr
+ 7GfckOyO5xwEqSUSSnfWr7+9DPLBydzj+6NVHoJTFyWxlYa1rWSr69Te/2la/PE9lPZZ
+ uzp4RJGlz2pzHTbxlZgamHbt4yYqfA6hnktsjeMB6WysqzUzOU3G/8FTUSUzDz3wLAb0
+ X/hB29uynfK/zKV16G7sjkngFJAryj3UVOe84zE4M8Pf7sDg8yt+py6Tc02dFYCLrqmV
+ sDGuc0kbT7PAZswY0E5YogwCohKtfE26hLG88OXOlktci0mIT/4zJBI5f825QoLHmrTY
+ ezng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743692519; x=1744297319;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GLqmtjJoaHhsZ4jNgAepZtxQ4kkdDDoWQ9NcxzjffzM=;
- b=k/cLx3+wtD2Ddnfgq/DvuFPsglOSyW5Q8L29U05S6pZtuCHAOKgjfAaR0eKeBSkBN/
- uRAMtJd4QCp6BDQjRY0tKZOo1pkECmJ0Kywv8EDkDOos3LfYkbPclTjsPqh+5nWoyESm
- 6vPYRJiQWqVPkizP6FQa2gsOvJYkx2rsBVpsoekNqeVWr9R2ISw4JA2m3HS39ktRmowx
- S79Hx2tZSXd+gwmowAKaVWzFhabcquColupdQiltcSqfJYkmLVkayMA1iph5TKcfvk69
- AG1zfhj97Q4+/BekayiAS2syAP7eUUeh2T1PJcaSgN7lgZv+Vi6mp2EOtqiLit8OomXP
- EdPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXN+zDz+Zpx4iQgPRWl3GDehtafV2eG6XbV6SXjoehB9PRWtwzOH4V6sqsev8ahIHNlMXQUZIF+gShU@nongnu.org
-X-Gm-Message-State: AOJu0Yzj11g0Fe8QYzS7FtXJ7ONPLweATmCFEeVWjJ4GQd0NXRcZ/zCO
- xtr7OA6a5Kucm/t6emM6E6SjEdBccXVvuGNQBOCpthXv6iVwtnXLKsxf1vOEN6wYzAkGqQhM3Iv
- e
-X-Gm-Gg: ASbGncupnZZcNIoKRUU8qyhEuzckkQ917ab5aoBYWQddl7sWLnE803FV/wL8Z/QXC9e
- GgLtYv/kr3x4Duk9QtIAu05z4Id+oXV4qFLDuwOOxTOKyV7vDZKWJJc1VegkZMfWqWKU3LeIzjk
- pylUFNNJvF8rQyBasx5p2Tf/Cs5bAGnVgaD+XQ6cbNujQsIZF1sAkz21id75IgsIKauo8EDk72C
- jfZdfga0HCKL+1tBKlmBa41sIbsmAAPDbCybjSyNn52mVDElnIZDUkTadJ+m3xW0OjnfUp37yhY
- rX7657xwvCZNmd+3jqPh3np6miHq/1xOVv6TYPWBvTVSk2GCJmKIxBu9b0/IvJX42ECPQMBeqzo
- WWeMtnOFq
-X-Google-Smtp-Source: AGHT+IE/DqZWxsDEgZxnl9zye6qto7ZzprgAvA6AnI0DLXvE1hhjy8nD6KHXuw2jh1XTNjUDqMrNfA==
-X-Received: by 2002:a05:6a20:9c88:b0:1f3:345e:4054 with SMTP id
- adf61e73a8af0-200e4c1be0dmr9625272637.14.1743692518750; 
- Thu, 03 Apr 2025 08:01:58 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af9bc31c3d6sm1305424a12.25.2025.04.03.08.01.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 08:01:58 -0700 (PDT)
-Message-ID: <648132eb-30a9-41e8-90c9-8b1317e79499@linaro.org>
-Date: Thu, 3 Apr 2025 08:01:56 -0700
+ d=1e100.net; s=20230601; t=1743693519; x=1744298319;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Fuei3baK1sdFDft7gXrQyidqUa02cv4ewmtE/kL3GxQ=;
+ b=KODoXvqx2XRSDGx/kHwLPfcgzKZeh/B0iyLRTsNFieB52TXWix/MziTjPL5+QkBeBu
+ Jsk2zTjUHq8elhGrB09Sjle4WTQrwver8R3Svg/apuqvP7w9xQ8z05+pU7G3kGc6tphm
+ GCxe3jDy6DeuE2c0tbsJ2ZfRCveeDgg20vOprhAO57ypS6H11FbeyC6ujyYEKQXb3omD
+ nj+CP9OyeiHWLhaZjoWYwWIPS66BndTAsdlMyJxF8KWqK6GLRLD8MM8DsQaOdGBeN5l2
+ 1JVFsmKO4y6h3oJSqs1MZjTB7gWfhjhYlTy8ATdngRMWsbKmK30235Eqn1gYzGeLjwN/
+ echQ==
+X-Gm-Message-State: AOJu0YxULhductbSPuz3ygMaWdfQ0SuPOLj4Xl8GWhUv/alPcq2aAwIe
+ WEjHw17fErFTfnuhv9tlLy7OwHf1Kpga1HnbHhD68dMbkLf0oW80/pxu2ppiqvcfk7iLz+UcEAm
+ x
+X-Gm-Gg: ASbGnctJeqt1ZyyhYg3bZxzh7Oo9nNPrRPJJHbcFiL5ZouocNzNKcGqX5z71lvAVvOs
+ OD580MfwY7NFpOmAO/gZwuVPByZ4xBb+hesXfprFMGO45lXbGFBYvWUpFxzZNGyE7Py7CSrTfMm
+ dm2wSs2wS3rJB/mx3xl7XV9CcRPHltOP9A2vRnRqi+5QWFCm9ZzxXp8jnkIvRS7FryJh9dtoFCj
+ OBPf/YR1NxMznr92ztp0ZSLbkmOkj4MZ/jrZhURd36oOsOrxGd9uBlz3DGUWdEy852czvVcYxB0
+ bMM24MVDRipIwtk3xj0JkXhmMbamDMm0Wvmu+7kfFI8Y4O6zlFlfS5tt+Yg20g+JgOPQZZ/+kxa
+ 7iqLcez4IhcRHn7qeHRYddGN5isY+pg==
+X-Google-Smtp-Source: AGHT+IEnm1d5jqQclVVh0+L43ZL/ydHkKrGZBsMRZ386WjgQW7Nmg/Rga4Nq4MA7R+Vd0OPKzFvQ9Q==
+X-Received: by 2002:a05:600c:8707:b0:43c:fe15:41d4 with SMTP id
+ 5b1f17b1804b1-43eb5c2167bmr71212425e9.18.1743693519299; 
+ Thu, 03 Apr 2025 08:18:39 -0700 (PDT)
+Received: from localhost.localdomain (145.171.88.92.rev.sfr.net.
+ [92.88.171.145]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ec1660bcesm24437595e9.10.2025.04.03.08.18.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 03 Apr 2025 08:18:38 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Udo Steinberg <udo@hypervisor.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH-for-10.0 v2 01/14] tests/functional/test_aarch64_rme_virt: fix
+ sporadic failure
+Date: Thu,  3 Apr 2025 17:18:16 +0200
+Message-ID: <20250403151829.44858-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250403151829.44858-1-philmd@linaro.org>
+References: <20250403151829.44858-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v2 39/43] tcg: Move qemu_tcg_mttcg_enabled() to
- 'system/tcg.h'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250402212319.58349-1-philmd@linaro.org>
- <20250402212319.58349-3-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250402212319.58349-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,23 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 14:23, Philippe Mathieu-Daudé wrote:
-> qemu_tcg_mttcg_enabled() is specific to 1/ TCG and
-> 2/ system emulation. Move the prototype declaration
-> to "system/tcg.h", reducing 'mttcg_enabled' variable
-> scope.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   include/hw/core/cpu.h      |  9 ---------
->   include/system/tcg.h       |  8 ++++++++
->   accel/tcg/tcg-all.c        | 16 ++++++++++++++--
->   target/riscv/tcg/tcg-cpu.c |  1 +
->   tcg/region.c               |  4 +++-
->   5 files changed, 26 insertions(+), 12 deletions(-)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+This test was randomly failing on our CI, and on dev machines,
+especially with QEMU debug builds.
+
+From the information collected, it's related to an implementation choice
+in edk2 QEMU virt support. The workaround is to disable KASLR, to avoid
+accessing protected memory.
+Note: this is *not* needed for the similar test_aarch64_rme_sbsaref.
+
+More information is available on the associated GitLab issue.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2823
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250328183816.2687925-1-pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/functional/test_aarch64_rme_virt.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-r~
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
+index f4ad4d33d58..a1abf584f0e 100755
+--- a/tests/functional/test_aarch64_rme_virt.py
++++ b/tests/functional/test_aarch64_rme_virt.py
+@@ -87,7 +87,9 @@ def test_aarch64_rme_virt(self):
+         self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
+         self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
+         self.vm.add_args('-netdev', 'user,id=net0')
+-        self.vm.add_args('-append', 'root=/dev/vda')
++        # We need to add nokaslr to avoid triggering this sporadic bug:
++        # https://gitlab.com/qemu-project/qemu/-/issues/2823
++        self.vm.add_args('-append', 'root=/dev/vda nokaslr')
+ 
+         self.vm.launch()
+         # Wait for host VM boot to complete.
+-- 
+2.47.1
+
 
