@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86003C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 19:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293D9C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 19:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0QGf-0007lu-J7; Thu, 03 Apr 2025 15:30:27 -0400
+	id 1u0QHu-0008Ve-F6; Thu, 03 Apr 2025 15:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1u0QGV-0007ky-P0
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:30:17 -0400
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0QHt-0008Un-4z
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:31:41 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1u0QGT-0004P6-V0
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:30:15 -0400
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-3f9a7cbc8f1so381944b6e.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 12:30:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0QHr-0004ar-Bv
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:31:40 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39c0e0bc733so1074564f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 12:31:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743708611; x=1744313411; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Pu1Fyhvs9X8jA14NDAXZPHekZZLe3gtvclvJpLpc2sc=;
- b=f3JTsnvHom02hJ8K8QvKK3p8P7gMQ4dJE8+AQFPbYCNjZGf622wbW9ndOwDOtSPCYw
- Qovi3kE5S3H3CAhb0LWw9cVUeoWWMsDSvfPknMl8gep7c2qgfPMDNlAHaeI+m3w6JMBG
- 0osGBc24441r/q9jOsXEIHxGKJxXY628ypHmlsUYRDg6XI1eLBHKYiQ9gqIWo49baHAO
- Kt5W/kj7AMsn75Hwke5hyKnNryp/IZy2InuCpaLCC4H/Cninl6ZpiAZ2pV2OvMVs9WZN
- 4cLXtC/+vX/LagP1OBfI1WJ3tlSEYSsTJPuTlPD5MtV/HN0uvC0WQRWZM/6MwzjhOD2d
- bRjQ==
+ d=linaro.org; s=google; t=1743708697; x=1744313497; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9g7eG4ybf9Oeu2+Xs4DMroYWMhfhe3xlvcVpLg8lncg=;
+ b=Wtm7W/dp/C8U0pNOYKSVzYhy+sV0buHPl11BEjfbMkMkqlJOc86cEanVqz7t4xE3k5
+ b4D0QK+5WYgpNATfsi4p+jL2XjvVv5nuK7uoFOyhC0wt7mge0SVzp7Yz+WH1wwgp7PL3
+ pk1zDJHN2M4cL/mSYkrYiCxe0l1cxLlJHRf67ceTTkyeAi1TOVKF3nn9eB6oB78BpEMF
+ IeOC2HcRvYHbT9FzD5qGtnOEeDDR0NXZdtjGJfoG3QX/ABvSawJ0q3X/qAGVkj1VWhox
+ MEWq2m081I8Q/8bZ+882gmgF4yDqfGjVqSJvZ9HD2XiF6zrOoXzbipb2Lf0BKyHToGb+
+ bFEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743708611; x=1744313411;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Pu1Fyhvs9X8jA14NDAXZPHekZZLe3gtvclvJpLpc2sc=;
- b=jRSz3qwF7wMp+lSNWGDepkkm9xRgmrk1y7DJJEXDdD/Jd7xt3EN2hg3132DGEsOo7p
- SI5HaLis+f4nqznyy5WEvHlDHMgaMEv1qoh9RuLGTZV+edyoH1oZmak+HUsAML2aPHt4
- fY0eLCO5xSm7KHAewTNJCU9qXvKWISOcJzt206vFu1Bq7NLcUqAtYYjeDto7/Zx6mysz
- xHoCzSLlQmHAneIRsSMf0t4yrQ1FXCYdI+PcrQADvCDbgWvgw5njGS1ye8iVX/KvUHgj
- 32G+i6h1qAUJit+7eJ4RuRxHQwwBXogaQb5uD3v7EgyokiFkfxH1wJ3vF7rhxpkbl0lt
- WHhQ==
-X-Gm-Message-State: AOJu0YwIVgapkzL72iazQ4XnUiD4d7gKb87+8//ZS/ek2MZ6PaM26WKL
- 2NN40DPqouIPIHIhabb0rQQxX57PIkdzGWutjk3/2kIrCQVfYz5zddTlYwyljdcLzZMrtUETCbS
- 4FAk0se2gH6AHeS9DpHvMYXcIqOMP7LQy
-X-Gm-Gg: ASbGnctbdzLrXX8iz07nYk6OHzSJWBzDDPL6T5H+xu1kDSrzGliG9Nx+CL5rrZ7rJ7y
- ABHhtXnFZd2Y9JAejLLpR6en7QpHdDMZjmNIzi8tFGXQGANQAEHaSbEnEQ6Ji3shejDfb4nZzCK
- XdtJ/zwY4wwVtXHxmjYq6WdAE6YCEh+W0v42XyDjEUczzadp6tYaENcR3Qlepw
-X-Google-Smtp-Source: AGHT+IGoJe+9oDSvfNS1UOhMz3S4KLJT9hu62HIZQ1JA5afzFTw9zPaA0xmy7zf3RS9Z1SmdOBO7Tmxt+KRW5yhxEks=
-X-Received: by 2002:a05:6808:144c:b0:3f4:bc5:d478 with SMTP id
- 5614622812f47-4004567ed22mr284764b6e.25.1743708610917; Thu, 03 Apr 2025
- 12:30:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743708697; x=1744313497;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9g7eG4ybf9Oeu2+Xs4DMroYWMhfhe3xlvcVpLg8lncg=;
+ b=b188MQzS1zI1teobKBZh1f7+/7gOz5L8+COfZ6FswtKw3Y+1pkRujotBj4mYy+DiMM
+ XJXUSl5AIPYeD5eOq7NRyH+9HYeAy65gqAPfq7v5LZTNq0cSsfTSPojSacgyBPjbHW9Q
+ IP07OrNQpy3AITDoQGufCLvXkyd5+A9E+o4qlPvWBQq9OKYJ2z4bxJaSK4vtdUnr/r0+
+ vZyyuPkuOkm+lbW/TOl9bli8bw325dA67vNzo/3Ofn16dc9PhjkBmW+vBxTfQTTqVOPc
+ Nqn0HUFlJ+heUP+ph0Jj9EnFa+SfNkylFEk6eFP/SxU+lAwqcC+UwA5d1f9TVuB1FoSN
+ z5Hw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvqbAqHxxwnfl4Ty4PYpp0DHREK7aV+lSTUObJQWEl6nNes2t2xFD4dET+NXRHbCX+HVz730xo418X@nongnu.org
+X-Gm-Message-State: AOJu0Yyz9DQjVbLIvCzz11gt2zdbU7RHpd5udMycbYa4Dm+kKtTyKWZc
+ b8A2RWcGBnaoOdeSqsSFeizUIy6RSoNt+lDFEqSHb46IukJL8HidTky/4p0qcyI=
+X-Gm-Gg: ASbGncvYCPLqwbTVvT+c8TuUWfzAWBfYhOYP8u7Zekhp8zDuR80T9iBHQMLhyS2CcEq
+ 8V7wIT29wBx8qJEUsHvnwzzS9fmG9tHy3wOutcIJCaXyP9KNw7NxqeBNBnY/sh4SS4vOjx12Owt
+ 3wRarTcv1wJdR/uKL3JHpoSZPekR/NXZHPS6LIMk+/upDy8ENw3JxS2HQwonisMWsVQAowyrCNb
+ Fz3vVhqI1/DdzQIekVLR2IAo6prWiGhCgQoKqgRgdt9KWKC6thUq/3RJpmyC7Iuee9voO/CMPil
+ j1q990OTQVzXagXyjeu8Bxyc6vDQX/XJ1lNWyGuDp6SYuVy7+Yn6QoSpt0oQEd2QPJHxmzM7UR3
+ 4noxwxkMPoTGXJXmn1Q==
+X-Google-Smtp-Source: AGHT+IFCPlo+tTL9NTpLgWX7MIIzaHPIEo0e/smlUP9LfQE4KxP7qetx/p0eTHqZpe++e9yMdd+pMQ==
+X-Received: by 2002:a05:6000:4401:b0:39c:1f10:c74c with SMTP id
+ ffacd0b85a97d-39cba93d069mr297130f8f.35.1743708697343; 
+ Thu, 03 Apr 2025 12:31:37 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ec1630de9sm29596965e9.1.2025.04.03.12.31.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Apr 2025 12:31:36 -0700 (PDT)
+Message-ID: <0ddb4f55-853b-4f52-935c-51ebed73d38b@linaro.org>
+Date: Thu, 3 Apr 2025 21:31:36 +0200
 MIME-Version: 1.0
-References: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
-In-Reply-To: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
-From: Daan De Meyer <daan.j.demeyer@gmail.com>
-Date: Thu, 3 Apr 2025 21:29:59 +0200
-X-Gm-Features: ATxdqUGh3kLZPThUX8A48JMktz4CSKPVATpPyHX8Sr3XGS5plfRuzjt2UF243UM
-Message-ID: <CAO8sHckT2Ko8TTJjzUsX0znafaL_4jp97QCtSxoZDnHow0bEAQ@mail.gmail.com>
-Subject: Re: [PATCH] smbios: Fix buffer overrun when using path= option
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=daan.j.demeyer@gmail.com; helo=mail-oi1-x232.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 00/13] arm: Spring header cleanups
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20250402222334.66511-1-philmd@linaro.org>
+ <cecbab0f-56f2-434a-8508-8a4df2992259@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <cecbab0f-56f2-434a-8508-8a4df2992259@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,43 +102,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 3/4/25 20:22, Pierrick Bouvier wrote:
+> On 4/2/25 15:23, Philippe Mathieu-Daudé wrote:
+>> This series is more useful for heterogeneous emulation preparation
+>> than single binary, because it allows non-ARM hw/ code to configure
+>> ARM cores, so not using target-specific APIs. I figured some
+>> patches could be useful to Pierrick "build hw/arm once" series (in
+>> particular arm_cpu_has_feature).
+>>
+> 
+> I'm ok with the cleanup part, as I sent a reviewed-by.
+> 
+> However, I'm not sure in which context non-ARM hw/ code will really need 
+> to do it. It would be better if we stick to mandatory changes for now, 
+> instead of anticipating future needs, which might be real or not.
+> We can implement those changes only as part of a series that really 
+> needs it.
 
-Unless I'm missing something, I don't think the patch has been merged
-yet. Any chance it might have been missed?
+I understand your view. I had to rebase these now old patches, and
+figured it will cost me less if I get them merged, rather than
+keeping rebasing them for 4 or 5 releases.
 
-Cheers,
-
-Daan
-
-On Sun, 23 Mar 2025 at 22:36, Daan De Meyer <daan.j.demeyer@gmail.com> wrote:
->
-> We have to make sure the array of bytes read from the path= file
-> is null-terminated, otherwise we run into a buffer overrun later on.
->
-> Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
->
-> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-> ---
->  hw/smbios/smbios.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> index 02a09eb9cd..ad4cd6721e 100644
-> --- a/hw/smbios/smbios.c
-> +++ b/hw/smbios/smbios.c
-> @@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
->              g_byte_array_append(data, (guint8 *)buf, ret);
->          }
->
-> +        buf[0] = '\0';
-> +        g_byte_array_append(data, (guint8 *)buf, 1);
-> +
->          qemu_close(fd);
->
->          *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
-> --
-> 2.49.0
->
+Single binary effort is just a milestone toward heterogeneous emulation.
 
