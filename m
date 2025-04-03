@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C565C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEB2C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0QvA-0000Cp-A7; Thu, 03 Apr 2025 16:12:16 -0400
+	id 1u0R6n-0001m8-Lk; Thu, 03 Apr 2025 16:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0Qv9-0000CR-78
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:12:15 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0R6l-0001lr-SJ
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:24:15 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0Qv7-0001DC-Ff
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:12:14 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so12898415e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:12:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0R6k-0002xK-72
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:24:15 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39c0e0bc733so1107728f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:24:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743711131; x=1744315931; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743711851; x=1744316651; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=laMCqX+EXB5z2rpnk/b0GZ4oiQrnw6iJxhPH7Wa8cJ8=;
- b=P724panNWiT1NjZfgD7Fu10/HdH9i+p4szqk0DBDkjt91n6a/YShtKd2PLWezpy5D2
- bKOp0ybjr1bLWnw8JSM3GzmGpG7hAWdz+tynzrYMcUZGIYX/eBr0Aa2oC6mICC0gDE4g
- vNmfFyl/s/gkVuT6aCrxS0mgQXKqnqjPySKe1mCi5LB5t/ObdIeIW4ub4EfAFGCVixuH
- xKhd3xHdiBp93oZqBykb97Bue+AwiDIbP51olQPf1G8pBJGGT50JmEbK1l2iqdx3pGys
- /spzdvDKXx//NBjW8Du/4pXHbrjPuyAW+bnIUImQjM460E9cXQJMe6vaPxGTsjBRkIQc
- 0gZA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xni7N/yLix8QDGRYeZeYSl/Y46YkM3M4BhZnSJDZ7CQ=;
+ b=i89XR4urcK1OaM5LwkOOIruzThsJB+yzoV+kvZuIpkp5bjDXQ3q5gQVJ5X2apJdlON
+ HsvRVJZ/mjL2J0D/7hqxVmI/yBma9LdRsxSN9wFut3W5uO58xsJBVvOlfUxKybOMP8tE
+ Et0WlA/BUf3UKul0Ms/tCXM2lZFihrtY8wYwEoMum0XqAI+sJDcVTC8RFgOYMQkO0G6L
+ 1hu6TWLFdgBb+CVQqG+fzLPmMA5wE/2b9vr6nLYxWHZ2h99/NeRTzwFAvFRfzivcgiUO
+ mrc6WYjWQtvFxqHiqMW5R6huVRpx8lftLeNmivCpvy2iEosvFcr6hOD98/9dq28qFfrw
+ KULQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743711131; x=1744315931;
+ d=1e100.net; s=20230601; t=1743711851; x=1744316651;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=laMCqX+EXB5z2rpnk/b0GZ4oiQrnw6iJxhPH7Wa8cJ8=;
- b=rRINzhAMKNFGll/IzdHzwrB1SV4BXFF01S6X4fFzUL34WE2rPFhAsFuhWsgxizAAqt
- AYnu4EakPraYmeZEqeAb1gPYoAvl6c1kI8PjENHSrnBhtvlQf+YZBwkXTNLRwKfRUDXc
- QUPbwSDoBvQhKyzhLCYO6H40UBJOL2sY9xlTBzB8sD6F+jxOPvZ67nADEmKKcQjSPhQT
- N6c2wxfU4tAykyNx4C745KrhwjzXy5FhARhhA802W6iP9+nIlgwGhOt3JBXKLvdDzkRE
- LO2jaCMnJi4DJlFVqwC/qhP0e/aM5NnUekeK7GZgdRWAwHdKDmZ3UF7uefXZEwkeflUY
- SAXA==
+ bh=xni7N/yLix8QDGRYeZeYSl/Y46YkM3M4BhZnSJDZ7CQ=;
+ b=tBQ6zAv1FksDW4gvVG1N8cFh4cI3oOqNA7o382IEt/3SWcMVIWcHO1xVl1v350qoB2
+ vMZn7bPS3PQBZp/XIgsyOefvui26mzgSp0HaJAoPfI9oRpiZd02T+oIIGmbwqnNbZXZY
+ BD4afN3A6Ypve19HY8e9cmBWhMxWVuSqopbe+jQFxelZ1HGkyppXbUBIvwk6mUOoVVV9
+ dbue6yVePQAbJfqZBQpihkI88esuhcpyvBDBZECBQjzPoptEBdJwOafVglxDtfyKwfs6
+ ExgUoL2DM9MQFZdiTK1wCyskfvCucxiCXKYavKWr6yp6+RaIinRiwDS0tjY1Ip2/frE9
+ M9vA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUM9vbw0U7QAaQuZDzWlk++0PbKopWx4c6jchGbi7TCKMPjjHGPaE7eCUmaTc3WCMqlQgJRjSoE7nfn@nongnu.org
-X-Gm-Message-State: AOJu0Yy3uVsUwXWa45amxRW1cu44Rgzyy+Fi4qKPG+l0vDqASrrsY5sc
- VEq+H43JJ0UMzPG114iNysL8N4D3wa05w3/5Zg8hEZQl6qboQA7pcFk9Yw+oEag=
-X-Gm-Gg: ASbGncu0HFelz2JFThud1BG71DHmOa1aYqqsPN0NiqQrHOOA8lRNMpH4qwyb7fOOaOm
- yNsgVfyOiGGt7vDjVB0h0x0GvPeOS20InV3Kj5kD3BccVxUl7vaJbdUMKPHkKh6O0YUQC7xSkYD
- Cb3vNR99afHldHojx+B27Rc4e5f5MSZyHiUQ2SzPWRfZzPr44xklkvBNNGAOR+qVc8hVt3YKyBn
- 3LdGKpW2qU0fbOUPkaqZ113f4+RznOiDaOEvNRFwroRMb9kkR7ban4j69/ZOFRNoK1KD/wQRsFV
- KeImgZdvwZPVut+gSfM47W2pEUsIZVJMM424l6C9kVB/pQkc3acjmWZMaZee0aaVVf/ijwBn+ss
- HNDjgjdwOKYPigP2TRQ==
-X-Google-Smtp-Source: AGHT+IFvRF/YE8zcTl54isoBV9V3vOprW2d5OHPYusU3ZZVAm43uXdDMKW1yFNalJAzWFpTQbTOsfw==
-X-Received: by 2002:a05:600c:5246:b0:43c:f64c:447f with SMTP id
- 5b1f17b1804b1-43ed0db363bmr978585e9.29.1743711130967; 
- Thu, 03 Apr 2025 13:12:10 -0700 (PDT)
+ AJvYcCVftJn7cKuJ/7qLk2gN9QOZEMb3NgmjfNcoHZ1ycTFPh+6G+yPWiauESGOGLI9OJr59mazs001OczbW@nongnu.org
+X-Gm-Message-State: AOJu0YwiYP7mdPwmnlat8Bq+Su8YTGeb2/J1BNj46H0URJotcRMr2Pvy
+ tGrT9eMI2tiwrgBpFgDYnHbBr6xMD0enGEef9TiVLFxZG3eOhpQnn6nxKk+uy30=
+X-Gm-Gg: ASbGncvK35O/qgKsZhNOGckKte+Ak5AEgz0u3KzLJ0f2Q7vEcqJfUkneHQ5ky0GnoZZ
+ SrbxEdA3MRFBVz1Ds5kXe+Bbpg15q6qohZN6RYUxW6fC+bMG1cgkJkiMi7KHqT20xdsdN/Jk9uB
+ IZilRnoWzLumMk/LeL/oB6Ao38fkhWxRXNubmTtah71AiTQwybFXN6QZoXfHb7LLxz9TBVW6Ttn
+ yrvOAeHyGkYudIJ/ZtuWtPdET8KMA3McGcaZJQXUbLmQ34CIqmxbQpsPNdQAaduk5PObNJ4gUky
+ oW91cIvbBi8jr1my1h38T5mAalBgazUeuCMb4iehbz5FoHr03NH64OPpsrycXBndheP1ET6sJqd
+ 6iLk9pF81lX9CvyrztQ==
+X-Google-Smtp-Source: AGHT+IFv4SQv7wzMuYU8SmOGJL4AK6Ob6q5MVY6jDpbZmEUWVco1or4MZpxb7Nk2vuBDv40rDo5EmQ==
+X-Received: by 2002:a05:6000:40c7:b0:391:40bd:621e with SMTP id
+ ffacd0b85a97d-39cba9827c6mr524282f8f.44.1743711850858; 
+ Thu, 03 Apr 2025 13:24:10 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec17b0d06sm30804185e9.35.2025.04.03.13.12.10
+ ffacd0b85a97d-39c301a6796sm2685806f8f.31.2025.04.03.13.24.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 13:12:10 -0700 (PDT)
-Message-ID: <4ec2d770-67e6-4d07-baa4-db056c47b26a@linaro.org>
-Date: Thu, 3 Apr 2025 22:12:09 +0200
+ Thu, 03 Apr 2025 13:24:10 -0700 (PDT)
+Message-ID: <5e032473-6b6b-4169-bc3d-325b35536de6@linaro.org>
+Date: Thu, 3 Apr 2025 22:24:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: hvf: fix lflags_to_rflags
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>, qemu-stable@nongnu.org
-References: <20250403194752.103264-1-pbonzini@redhat.com>
+Subject: Re: [PATCH-for-10.0? v2 06/14] hw/arm/virt: Remove pointless
+ VirtMachineState::tcg_its field
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250403151829.44858-1-philmd@linaro.org>
+ <20250403151829.44858-7-philmd@linaro.org>
+ <291a5458-4859-47f1-a9f1-c0daf8205784@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250403194752.103264-1-pbonzini@redhat.com>
+In-Reply-To: <291a5458-4859-47f1-a9f1-c0daf8205784@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,31 +103,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 21:47, Paolo Bonzini wrote:
-> Clear the flags before adding in the ones computed from lflags.
+On 3/4/25 19:36, Richard Henderson wrote:
+> On 4/3/25 08:18, Philippe Mathieu-Daudé wrote:
+>> VirtMachineState::tcg_its has the same value of
+>> VirtMachineClass::no_tcg_its. Directly use the latter,
+>> removing the former.
 > 
-> Cc: Wei Liu <liuwe@linux.microsoft.com>
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/hvf/x86_flags.c | 1 +
->   1 file changed, 1 insertion(+)
+> No it doesn't.
 > 
-> diff --git a/target/i386/hvf/x86_flags.c b/target/i386/hvf/x86_flags.c
-> index 32772c359e9..31d76c067bf 100644
-> --- a/target/i386/hvf/x86_flags.c
-> +++ b/target/i386/hvf/x86_flags.c
-> @@ -284,6 +284,7 @@ void set_SF(CPUX86State *env, bool val)
->   
->   void lflags_to_rflags(CPUX86State *env)
->   {
-> +    env->eflags &= ~(CC_C|CC_P|CC_A|CC_P|CC_Z|CC_S|CC_O);
+>> -        if (vmc->no_tcg_its) {
+>> -            vms->tcg_its = false;
+>> -        } else {
+>> -            vms->tcg_its = true;
+>> -        }
+> 
+> This is a stupidly verbose not.
+> But at least the names had correct logic.
+> Therefore all of the uses you replace need inversion.
 
-CC_P is twice, otherwise:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       env->eflags |= get_CF(env) ? CC_C : 0;
->       env->eflags |= get_PF(env) ? CC_P : 0;
->       env->eflags |= get_AF(env) ? CC_A : 0;
+Oops, thanks.
 
 
