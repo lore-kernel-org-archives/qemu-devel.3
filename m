@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07978C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7AB9C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0MOo-0002nJ-Bk; Thu, 03 Apr 2025 11:22:34 -0400
+	id 1u0MOT-0002RP-8p; Thu, 03 Apr 2025 11:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MMB-0008AK-HW
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:55 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MM1-000807-IC
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:45 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MM7-0000c6-2Z
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:49 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cf58eea0fso5408745e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:19:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLz-0000ag-Mn
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:41 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cf848528aso7857865e9.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743693584; x=1744298384; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743693578; x=1744298378; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MLYRdVVgThynsCkkZUPojC5QmxuF1gOqeLFrpCloSHE=;
- b=U2rOJQ2LC5f3ixNLxE+nspJtkWChVRlxMmSwJoM6r2nVJPuILGowLa+BxzugG/PMAh
- v+We1TqEirCoxWLliqfR9J/ddmKwX3DVZtvh0zWZq6FHQ3Y5tW3NMh8lVdEYb9V5vcsR
- RNHXfpnB2UuBpt0AD7NgjGd0fe2lWY/VmmA/mhnBY6NkBDmeRyvPRUkI/DDP4KzA6GHC
- Hyr2BNd6dkrj/7S+6kUzE8fpZqW2iqiHI/oyqafbzDUybZoSsfnQC2WICiyyIfPUbRmo
- wHWa9OhCWr6MZN6Um+cVM8IA3MngzbioPZyCAjRmETQlmwhrLcKUYrjw19jfp0tyiAXV
- 3D5A==
+ bh=877Ft8S2r+Y3e5owHO3tHYlDGhoIjLwtX0511Fk5+so=;
+ b=bMH6ZeojYfJUxZnwDbKvB3IB4B8N4TEJ8pTVWSGr3QPTeEQxkPt2dj0NAsHcEYvSaY
+ dwPpCOTPlBWR30HRtCXhMKNW/+NiY7n/Jf+H7Bt9szR3p3mpnLXc7fTJsY8q4gz9WReN
+ k0gtbyi8snFFDSkv+3Dm0gMoNLc9ySEELscAKPfn1iCiedl39mgncBeRnSk4pC3pIF/i
+ CTvtnGGnmlKbn3PVPSf9OJBoNjthPIeYCxCFM1E6RFIUiZsZ3L5C5MpR+0cwmzwKotnB
+ rO+WbkG2+kJ467zi5ovITMUsZoyOoyX9sTdYaD4SQRW7TZ3p9LipCMIQWRBCOGUgVSVq
+ YwmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743693584; x=1744298384;
+ d=1e100.net; s=20230601; t=1743693578; x=1744298378;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MLYRdVVgThynsCkkZUPojC5QmxuF1gOqeLFrpCloSHE=;
- b=pUsEXYwwkVwpjMljVw7wGEFCX4sPm6GxZnVmphq7lXttUs3WDiCbz7De+TJ5UZhKZx
- E6thmbKlPz+22RfxUmf9Rj38rRefa/i1vAvohm16uwSqUvnAjNflR31H/QaQ/TeTyNbP
- c9M+C6UzXrtJWydblYaIPi2X+wWZLu7NCowrlT6uEn/jvPW72KPMp0diZJXTniEyupXt
- cSluLsaLbqLn+q3E6idU/WA+opiJU5xvlLdaV4iDASEXTE6hy7+rPFsB0dtOyR6XC1nz
- WNztnzhVzRflFi7Jc0w2k3PR/ynBU0SUs30MXl5EPRD33z0tvevHOvjM0vAORmWsErmb
- Vn2A==
-X-Gm-Message-State: AOJu0YwIFya9KLGISk0kpCZlNYisoX5n6bO0vazaxOoU9lOTvigGw3F5
- WpkFbHToNWW9bGR1xr/AFMZg/WNgHPJHV00qA7nu7y4GBoq8Kxdwee4+2psgncE8PHoZu776Z/V
- P
-X-Gm-Gg: ASbGncsore3tIyqIpzPb5HpAn3OuD92pK4s2kMx8I/huTzEYagA4PJkKe9hPLT6U0kY
- VjssHtT9ZuUk+v7tpO+VueVRvfN+D9r6e8S0ioySEmeZzAsWnnBm4eS1MZSEQek5DBvGYsxANBa
- QEtH6FiszXlMGSolGsvQdvUuomde0WCDAKCjLNVGOVGVSFXTT5pwIkycG7N6yJlKJo7lKPr3H0a
- ecv/oqaZAE6LO91X1vI0MVnynWxjakYYfjLaCSHwTUkyl9oLXzCCUdyLftTXJj1SIVpx1a6654m
- ffoyjfGWvc82/nMhG+1C7Ey51s3pvS7mf2lJdUgot2QjeN956eHuSsIzfkJuN/P0/6DHrem1ACd
- jgQ9RnYqIF/fjfVgE2DM=
-X-Google-Smtp-Source: AGHT+IENZTVyKkRY1W/b+AkkGyWGuqGp4yOMjd8Bjsjt2DdngZ1luNGpYjMfCIJLIyGZmX/C5Virpw==
-X-Received: by 2002:a05:6000:4010:b0:391:2a9f:2fcb with SMTP id
- ffacd0b85a97d-39c30387633mr2572096f8f.36.1743693583885; 
- Thu, 03 Apr 2025 08:19:43 -0700 (PDT)
+ bh=877Ft8S2r+Y3e5owHO3tHYlDGhoIjLwtX0511Fk5+so=;
+ b=bvx6FLXWKnz/jqjN+XeaWLxLDGBXxSmjxfT8QrbN8RuErn3sp2fyYQBJ3rzmWJ1Lon
+ VrW9qVSC6NDlvezgBuIe309X7EBu2U46/jeWvYVYKOV0HjLf0aiPYvNgFXyXbSP79k4l
+ 8LVfz48SE9TroEwCzlUfBnE6afAA8YsAs+TYnelTCcXhrwlVyw22PnefV3b7CL3DRJty
+ 6iyK74wIOFv+xHOp64/fxSXyOOnI8IaZxJDkMqzs0e3xqaGdMhP7wgr/2VA9cnB/9EdD
+ nXet3uT345KVG3Xngx+NCb0xPWvWcCLmLxxCD84qrHQa0wtZ7QYT9xJXgk8E7BV1PCZS
+ t4VQ==
+X-Gm-Message-State: AOJu0YxeXOd6d6V8H0JGkmUIHEWBOvo/2rMqKdPKh1za+CyfAIfZLBm6
+ bw48ENhmSFxq664Kj4cozaSPJoGeKKtCv6QKCH+vE0XPZEvPm1oMqrN4Uq1DheiAko8EADIfDI1
+ z
+X-Gm-Gg: ASbGncuLE3YXEwghECYxwO3OAZAo0uMgxdkg5WCllZU2WhiM9gR1HJ54D/pJI7jcE0s
+ IHJmXFjDAoLtr/cge/ituGHs6XuRRZZGC0TTDI37Oc9XdE97L7hwdTP0W7tWCm5DdcKpYWcQx8c
+ 29JTci0swLrPMQsqya4mBsxgTIzO9H2/EPJLNRssUiEKCXyUzuXhUWHldJonaqcH0/hH4qN/t83
+ daY/OmxJpPwt+DjPawpI7kZEe0dxpMzS/6I8PjT5r8E12w+koOj4gupVavzuGN8wIs8DDu1xVn3
+ RgPBOH3Mt8qLxgWhm1wp5QOa3FyvGL5YQ5pGrmkkDAD2C586miGa2SQUn9wXVGz6ax7QHYtbIPm
+ mJxnYp2oAWTdIxUy+Xig=
+X-Google-Smtp-Source: AGHT+IGDUdyJ7Y8Jlqpb4UolknqM0gQl0QwhPEtcpspj4SROqYp5bu7UpbwJqlHMRdCbPezOjVIzzg==
+X-Received: by 2002:a05:600c:4f85:b0:43c:e7a7:aea0 with SMTP id
+ 5b1f17b1804b1-43eb5c95ab8mr67541505e9.26.1743693577813; 
+ Thu, 03 Apr 2025 08:19:37 -0700 (PDT)
 Received: from localhost.localdomain (145.171.88.92.rev.sfr.net.
  [92.88.171.145]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c30096b9csm2088473f8f.13.2025.04.03.08.19.42
+ 5b1f17b1804b1-43ec1663053sm24538415e9.15.2025.04.03.08.19.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 08:19:43 -0700 (PDT)
+ Thu, 03 Apr 2025 08:19:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Shannon Zhao <shannon.zhaosl@gmail.com>
-Subject: [PATCH-for-10.0? v2 11/14] qtest/bios-tables-test: Whitelist
- aarch64/virt 'its_off' variant blobs
-Date: Thu,  3 Apr 2025 17:18:26 +0200
-Message-ID: <20250403151829.44858-12-philmd@linaro.org>
+Subject: [PATCH-for-10.0? v2 10/14] qtest/bios-tables-test: Add test for -M
+ virt, its=off
+Date: Thu,  3 Apr 2025 17:18:25 +0200
+Message-ID: <20250403151829.44858-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403151829.44858-1-philmd@linaro.org>
 References: <20250403151829.44858-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,78 +112,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to fix the test_acpi_aarch64_virt_tcg_its_off()
-test. In preparation, copy the ACPI tables which will be
-altered as 'its_off' variants, and whitelist them.
+Add the use case reported as issue #2886 [*]. The test
+passes while it shouldn't. We are going to fix that in
+the following commits.
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+[*] https://gitlab.com/qemu-project/qemu/-/issues/2886
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   3 +++
- tests/qtest/bios-tables-test.c              |   1 +
- tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 0 -> 184 bytes
- tests/data/acpi/aarch64/virt/FACP.its_off   | Bin 0 -> 276 bytes
- tests/data/acpi/aarch64/virt/IORT.its_off   | Bin 0 -> 236 bytes
- 5 files changed, 4 insertions(+)
- create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
- create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
+ tests/qtest/bios-tables-test.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8bf..3421dd5adf3 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,4 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/APIC.its_off",
-+"tests/data/acpi/aarch64/virt/FACP.its_off",
-+"tests/data/acpi/aarch64/virt/IORT.its_off",
 diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index baaf199e01c..55366bf4956 100644
+index 0a333ec4353..baaf199e01c 100644
 --- a/tests/qtest/bios-tables-test.c
 +++ b/tests/qtest/bios-tables-test.c
-@@ -2151,6 +2151,7 @@ static void test_acpi_aarch64_virt_tcg_its_off(void)
+@@ -2146,6 +2146,25 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+     free_test_data(&data);
+ }
+ 
++static void test_acpi_aarch64_virt_tcg_its_off(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .arch = "aarch64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
++        .ram_start = 0x40000000ULL,
++        .scan_len = 128ULL * 1024 * 1024,
++    };
++
++    test_acpi_one("-cpu cortex-a57 "
++                  "-M virtualization=on,secure=off "
++                  "-M gic-version=max,its=off,iommu=smmuv3", &data);
++    free_test_data(&data);
++}
++
+ static void test_acpi_q35_viot(void)
+ {
      test_data data = {
-         .machine = "virt",
-         .arch = "aarch64",
-+        .variant = ".its_off",
-         .tcg_only = true,
-         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-         .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/acpi/aarch64/virt/APIC.its_off
-new file mode 100644
-index 0000000000000000000000000000000000000000..c37d05d6e05805304f10afe73eb7cb9100fcccfa
-GIT binary patch
-literal 184
-zcmZ<^@O0k6z`($=+{xeBBUr&HBEVSz2pEB4AU24G0Uik$i-7~iVgWL^17JJ`2AFzr
-bgb+@aBn}xq0gwb2)Q)cq{30-g9B_L93G4|0
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/FACP.its_off b/tests/data/acpi/aarch64/virt/FACP.its_off
-new file mode 100644
-index 0000000000000000000000000000000000000000..606dac3fe4b55c31fd68b25d3a4127eeef227434
-GIT binary patch
-literal 276
-zcmZ>BbPf<<WME(uaq@Te2v%^42yj*a0-z8Bhz+8t3j|P&V`N}P6&N^PpsQ~v$aVnZ
-CVg~^L
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/acpi/aarch64/virt/IORT.its_off
-new file mode 100644
-index 0000000000000000000000000000000000000000..0fceb820d509e852ca0849baf568a8e93e426738
-GIT binary patch
-literal 236
-zcmebD4+?q1z`(#9?&R<65v<@85#X!<1dKp25F11@1F-=RgMkDCNC*yK9F_<M77!bR
-zUBI%eoFED&4;F$FSwK1)h;xBB2Py`m{{M%tVD>TjFfcO#g+N#Zh@s|zoCF3AP#UU@
-R!2`+%Dg6Hr$N|zYvjDIZ5CH%H
-
-literal 0
-HcmV?d00001
-
+@@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
+                            test_acpi_aarch64_virt_tcg_acpi_hmat);
+             qtest_add_func("acpi/virt/topology",
+                            test_acpi_aarch64_virt_tcg_topology);
++            qtest_add_func("acpi/virt/its_off",
++                           test_acpi_aarch64_virt_tcg_its_off);
+             qtest_add_func("acpi/virt/numamem",
+                            test_acpi_aarch64_virt_tcg_numamem);
+             qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
 -- 
 2.47.1
 
