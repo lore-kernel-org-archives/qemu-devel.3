@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42E1C36014
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16510C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UUi-0005t6-A3; Thu, 03 Apr 2025 20:01:12 -0400
+	id 1u0UUt-0006qJ-TW; Thu, 03 Apr 2025 20:01:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UUW-0005QF-13
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:01:02 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UUo-0006cc-JR
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:01:19 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UUU-00034i-EM
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:59 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso14790655e9.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UUm-00037M-Hi
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:01:18 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso10274005e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724856; x=1744329656; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724875; x=1744329675; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cdt0hEBhBGBOeVvjrYC1cczHi2xnkVQcQE65ySBiFwY=;
- b=ShBQnjBwxUKy/8+CmC//p+Dj6h5WDUXtIWmObLxHv5h44GMqyyvaZygtHpSEJQniXp
- 30eDZUIqLkFAjlSdFTaPWSzqLvWFcQx6bdm9gvepcOBIHPMkmHtaHYoWdJZSTKjWjbej
- fzPRuJOanxonssZxp0kckf8h8h9WRbgOaFzjzaeY9WpK6zdlWHAohgq5/ie8FW3kCbQK
- m4eBllBAD2crIyr1sk2zgab8jE69NI1k5V/8cPa1fjzKdY83LaQIz6iEpuPnNFb5BgNd
- CTwCdCS1wFqWnamYPTXwNn0WlTO2la/htKK2OgUaySQMHeb1E0qk8xuCZ+bBHf1KOhVt
- ztaQ==
+ bh=HWPNe4+0o3jNGntGTD/pqvwzUx9TsuQYTh/1799akw8=;
+ b=c56lhAZg3en+4gKw4ZlKwG/8Sde1uafQTK8QldJwQ0S77QlgYynjspBa8DQQ2sMuCi
+ Z/6qjDUFKo4A8YGkd6ijRvzj6POOxID8HVRIi2zLil9LEVh/MZRMplS0zg64KtBRl6Hi
+ 8lAklcitrWQsBjgpV74GLnpKjnOXhbRYjxGJ7LgwKX3dtkVb9H/xwGQZrrKZ22YFPUxx
+ 4CuEa1dfFXP90AjWMBOF0qEwywnSFGa2FlKMt7H2fUxP+K26QxJQ3nJVmUY3klRllJI9
+ N9OBkGeTBVo79Uqn5+FjEaT9LQn5h3/9tBuTdMIowKYJbK0RF3/oOqUWqsJ66ov7Vg6B
+ UVDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724856; x=1744329656;
+ d=1e100.net; s=20230601; t=1743724875; x=1744329675;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Cdt0hEBhBGBOeVvjrYC1cczHi2xnkVQcQE65ySBiFwY=;
- b=fmK9giOyKt/PDV6O8gWx3CWAz3kqns41VgYbQ8aF2QX7OigWcW7aSvDCx7FIX/fZKi
- Pd3aR8emcEcFSX+WFXBgmuBgDXYi3KQup0VqtigdbuXHKKU65065L6ZKLSEIzDgFe8FS
- n9iqbmQUNfy5aT77+vwNo0DDHd0ZXzTTeZAIrFYA1nEahsbk5mZvjrQCBbg7AMsJMzW7
- t+fcV+o3Qs6qjNFmpcdF0OB0w5xLGLZcl2nQZEivPJkFi7O76q4F0KcBHEbC91yLhnjc
- e8LbSTL/V/JfFwWUPuUp4mS3vBUPUL5WTu8AQaIHRFCcn2VRO5SYcsO0OU6aPuLyHQ1Y
- LBEQ==
-X-Gm-Message-State: AOJu0Yw5GrJd48e+UwDIm5FeUITUVHSf3IHO3hzNzBl/A3dInINxwT+i
- UodvoWrobu0ZIBpQ6Q5ObMdqyabnieyRsB+xos/x02mO7s/AuWFHMGn5fbsuu+fmwbTlsXw1yOH
- Q
-X-Gm-Gg: ASbGncvsjKNNu5FAVxwulmJN4OSn5ACAnOJeM86HjApCt1TysP/4/7XXIApAyC8ytkj
- MnbqLlfK2IR6v2sRaB7YrBe8rfesCoHEV4mI0d2UHYlddYu7EhUTc6H0n72aGz9k2DI9wu8oC6S
- /P0EFNAAGiWByLbYMZV+/7PO6DhDwLcw3Xx+7cNkn63ykNhbqQKrepdsLjKL5fLkdWrx/wn0rsH
- 5FUb65L9OsMuFJseVGmraEevhw4+MgDryeQgcEzdY9Fm2u9pLJgH6MyeDcf0nXQWVb7Gmr4SEL6
- IIDcK14AmI19XuWJTJOjGOMkQns0FR+TQN+TkE8lRHtgjCgUfjeYqR0RnS2XrLAvD8MdT7lruL4
- BVan7uzKpow08Ml1CCw0=
-X-Google-Smtp-Source: AGHT+IEqZyd9GIfN/fyi7zrWJCxEgusjwLJRf5dLfiHsYEpiwpt851kiIrU0p1MzYWj2d1pmP3cn3g==
-X-Received: by 2002:a5d:5f83:0:b0:390:ee01:68fa with SMTP id
- ffacd0b85a97d-39d0de2564cmr576097f8f.24.1743724856425; 
- Thu, 03 Apr 2025 17:00:56 -0700 (PDT)
+ bh=HWPNe4+0o3jNGntGTD/pqvwzUx9TsuQYTh/1799akw8=;
+ b=M4/5eNA7Ms3zGMpZ/7hd4qVTnE/eqqvQWI53lomZZNN3UsDJ9WoSZ2bnib7qNyWqvG
+ Zl0Zz1i6U9POlRB4bTwVp3TZxixzAM7Yeu5PLoUBSTOPziI+Kyb+hHPDIcuaIS+mS/E+
+ 0yAOo6a4jdBq5SnHq4UaafrpT+mUeyIP9p0ohetmdbqCvxrky+VJ7X55dbuaQNYmLxnD
+ scEuVT5g1sec6acCVDxHou5m8bfTnBY6ePESx8zSL+0wQhBXykqpeq7UxsdkPIQ87uWf
+ iS+HyCrGLrUyHqSHQIDSjPPYhFdcglCV8EYPoq7qcpjh6vOrz+grBIakdaFUHN6PsHg2
+ oVIg==
+X-Gm-Message-State: AOJu0YwrIEt2fb5nrTR9tCP7bZcJvNobWWymLwVBZ7yx5RPp9VAsQFBX
+ mfkUHHqKvdeAJLARREZ5PpDakSi8hgLVn+aDng2on/LVwgToEG9rcrHM18zFi/VuHz4SsGVxFSQ
+ v
+X-Gm-Gg: ASbGncu3KuKBIzkxHc0W69j6G+GrSHwGGVEILaTOcaAPTpBcdiMlZfJvObtEzg0V+H9
+ Phbcyk0sQy3ohnB35QilMb7vnnTsuAaTV1tW/zOLYecp5Rce6QdWVzlCBrGP0Gb1ObIIE4tzavl
+ 9JCvyHQcPOTnjrkfYGcJI28EuxsTOpPwr4BSADdxPyJK09rNQM0FaZ/5BfjzNSANlq4bL3Ki2y9
+ D2hei6Ya3Mplz60+/hymRJS9Jv3GMRevvH3ERWbW0wbT7FqZCzMY00SN2ZbkjDUT7IurQINUveK
+ ocQZhFIG3qEMlKBEPgeHWrHumVBBWfAUFHUz0BL4k0rLkcMACzxahuaKDro6mVHISbpWQDp/oiw
+ pahwkvjG1wIA2Nj82NLkf2u2kbE7fhA==
+X-Google-Smtp-Source: AGHT+IF/zRKYnBNIIkfCINSCIQ0U4uDAq1IY8mpKDphwFHO5m+SyAMnh2nl9+pv5shFPKaRuuFoORw==
+X-Received: by 2002:a05:600c:4f0e:b0:43c:eeee:b70a with SMTP id
+ 5b1f17b1804b1-43ecf9c3e53mr5270745e9.22.1743724874635; 
+ Thu, 03 Apr 2025 17:01:14 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec3669d0fsm31250975e9.36.2025.04.03.17.00.53
+ ffacd0b85a97d-39c3020d943sm3004749f8f.74.2025.04.03.17.01.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 17:00:54 -0700 (PDT)
+ Thu, 03 Apr 2025 17:01:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 23/39] hw/arm/realview: Replace arm_feature() ->
- arm_cpu_has_feature()
-Date: Fri,  4 Apr 2025 01:58:05 +0200
-Message-ID: <20250403235821.9909-24-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 26/39] system/hvf: Avoid including 'cpu.h'
+Date: Fri,  4 Apr 2025 01:58:08 +0200
+Message-ID: <20250403235821.9909-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,63 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By using arm_cpu_has_feature() instead of arm_feature()
-we don't need to include "cpu.h" anymore.
+"system/hvf.h" doesn't need to include a full "cpu.h",
+only "exec/vaddr.h" and "qemu/queue.h" are required.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/realview.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ include/system/hvf.h     | 3 ++-
+ include/system/hvf_int.h | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index f81d084eb80..48cfe05add0 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -9,7 +9,6 @@
+diff --git a/include/system/hvf.h b/include/system/hvf.h
+index 730f927f034..d50049e1a1a 100644
+--- a/include/system/hvf.h
++++ b/include/system/hvf.h
+@@ -14,10 +14,11 @@
+ #define HVF_H
  
- #include "qemu/osdep.h"
- #include "qapi/error.h"
+ #include "qemu/accel.h"
++#include "qemu/queue.h"
++#include "exec/vaddr.h"
+ #include "qom/object.h"
+ 
+ #ifdef COMPILING_PER_TARGET
 -#include "cpu.h"
- #include "hw/sysbus.h"
- #include "hw/arm/boot.h"
- #include "hw/arm/primecell.h"
-@@ -31,6 +30,7 @@
- #include "hw/sd/sd.h"
- #include "audio/audio.h"
- #include "target/arm/cpu-qom.h"
-+#include "target/arm/cpu_has_feature.h"
  
- #define SMP_BOOT_ADDR 0xe0000000
- #define SMP_BOOTREG_ADDR 0x10000030
-@@ -77,7 +77,6 @@ static void realview_init(MachineState *machine,
-                           enum realview_board_type board_type)
- {
-     ARMCPU *cpu = NULL;
--    CPUARMState *env;
-     MemoryRegion *sysmem = get_system_memory();
-     MemoryRegion *ram_lo;
-     MemoryRegion *ram_hi = g_new(MemoryRegion, 1);
-@@ -138,16 +137,15 @@ static void realview_init(MachineState *machine,
-         cpu_irq[n] = qdev_get_gpio_in(DEVICE(cpuobj), ARM_CPU_IRQ);
-     }
-     cpu = ARM_CPU(first_cpu);
--    env = &cpu->env;
--    if (arm_feature(env, ARM_FEATURE_V7)) {
-+    if (arm_cpu_has_feature(cpu, ARM_FEATURE_V7)) {
-         if (is_mpcore) {
-             proc_id = 0x0c000000;
-         } else {
-             proc_id = 0x0e000000;
-         }
--    } else if (arm_feature(env, ARM_FEATURE_V6K)) {
-+    } else if (arm_cpu_has_feature(cpu, ARM_FEATURE_V6K)) {
-         proc_id = 0x06000000;
--    } else if (arm_feature(env, ARM_FEATURE_V6)) {
-+    } else if (arm_cpu_has_feature(cpu, ARM_FEATURE_V6)) {
-         proc_id = 0x04000000;
-     } else {
-         proc_id = 0x02000000;
+ #ifdef CONFIG_HVF
+ extern bool hvf_allowed;
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 42ae18433f0..8c8b84012d9 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -11,6 +11,8 @@
+ #ifndef HVF_INT_H
+ #define HVF_INT_H
+ 
++#include "qemu/queue.h"
++
+ #ifdef __aarch64__
+ #include <Hypervisor/Hypervisor.h>
+ typedef hv_vcpu_t hvf_vcpuid;
 -- 
 2.47.1
 
