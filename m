@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE23C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 21:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8406C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 21:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0S8C-0002Kt-16; Thu, 03 Apr 2025 17:29:48 -0400
+	id 1u0SLx-0005gZ-Lt; Thu, 03 Apr 2025 17:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0S8A-0002Ki-CM
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:29:46 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0SLr-0005g3-TB
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:43:56 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0S88-00064j-Ly
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:29:46 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cfa7e7f54so8627415e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 14:29:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0SLp-0000Sk-Ri
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:43:55 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43cf05f0c3eso8864275e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 14:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743715782; x=1744320582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743716632; x=1744321432; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l59CEhJjlxttIe0DcZTj29ufVf6X0Qo02KjrxnfaGes=;
- b=hW6ReQengJCDMnt7ahpExl4UsyIdEp26rKImhOMsYAXk9v2lKVXnP1imWHh+l8V7vR
- K1nFjwAEvxMW/4g8tiipmLnpjU6ZSMYpt53l3CpadvwxYAEHdp9tl5W6V70R4yYjqot7
- O0aKNh2Su0E6zjPPKXFrvzyIaYvVaqCTrpmLve3+AzA1lt46smtf9qHUhOwZFIPwFJi6
- i1W+ebqBla+tUcNGOFdKdTrlaE5xv5EDhq6w7meYMIOyHcFuSPTdxcCbWRR9rVyjO9bz
- MN8HJybLb3AUyvr+lSfJCGuYKMpEzsU+Cm961rHInjM3cXiGdjoDAfXrOKXI7VliG/Vc
- uNHw==
+ bh=8RV4MR7iMwe9PqKqVMkdH7xZ/qR8Q6INkcrGwtU7bQw=;
+ b=euNO1YqbI0eywQhm/gLQ4s4LBk54lF6D1RCGD+jzNiiFvVYNklr74SajxzOhLo597q
+ mUDSExtk3rO0RvZOMIjK6rhUWz+5MS7F/kGVq2NHYRPnWgqKbeWQR6YjCJ3AaQcVIfvs
+ gjylpECVemwmezdtCFpj3ftkdqTM7Fiiwmvf4zMopKbCKdSG6/AZszxu2OvpNh6sNZYe
+ qoeaAg88LxepJAd7IiczeCr5TVjfK0ZH+X69eLCGHo8aPTaF1/tceBk4OU5zNQmffbyL
+ 7enPHSkSdFdLkxQzqtg321MFWkdNdgYOTninL25aQOl7Rj8iBhfW6A1Mms3vE0Zu9VcL
+ c7eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743715782; x=1744320582;
+ d=1e100.net; s=20230601; t=1743716632; x=1744321432;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l59CEhJjlxttIe0DcZTj29ufVf6X0Qo02KjrxnfaGes=;
- b=t283HOEjMp26QNpiywMs+Sh1D+ivseaM1mQMCP2td6ocDroRarD70KAcjSlhD/e9V+
- 9eDqzIDqoI7TeI0cFhq4WTQ8TfXIHm5lFHEZ6ZtI4ZnSIv7DJym3oHGos9/pgqXLyUNP
- QNTiJGjaLd7nasdRxdWXXRnMM/XOPR4BT4uyo0HUgmZJidm0T+NLHuf+bXd/OttRyPEP
- VCRkHQZztQtE9b1IPy+X6SIVTiQq6LGhnPiC/HRbnN5X7CDugsY+lGeCpGeLt34j9Tkt
- 4B84HDqOxpuJVcSum5twuQElz7HVQpt11JhSVqTi9DZdSHsn2TCdjDGqm45LAvD2XQ60
- XzuQ==
+ bh=8RV4MR7iMwe9PqKqVMkdH7xZ/qR8Q6INkcrGwtU7bQw=;
+ b=Vf48g0fuvdxB6pwJ3SwX73Shdeq00PoB8/WSWQoOL/LjrG5j9eq0vvXkkpq7rGj5Ye
+ pnz3YHm20IDsFpQuDuwktcr7ayV6NCcBdCPytt9QlJNawGp7v6gHecpYxsxG2ri6M/xN
+ 9lyQ9YVBJyj9T5+42bEN/4VuXb1g9gcr+DDe6xyefxYuL1J4rL11tdskd0Krukgbe2N9
+ 5ZD1jUmP+ZzGF8Gv8KKYKcIM33fCvGlsYqbQq0/IrY0s248TZ3Kwq+/B1UnNXu5cIlth
+ HH4SAk8NA9IRqipFGqNoDooq8D47GwYwK2iM3xv2076E2Emid85kjq412UMz2obW4S5L
+ cexA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXkYQIGf8MwY5Ds4eW6E8Gb8RGNIaqRswiA0BsTrShoazbcOIU7yjCySZkfLDdTCU2mpaRyiW8CexpQ@nongnu.org
-X-Gm-Message-State: AOJu0YwWm2koEEBAwxx1uI4IUcFpAn9fZff/UIWvQR+QMqrqED7jlmK3
- d5KY9nM9FxNMef2VN3VNeL1q/fPykamFIuizfUK5Qx7s0ZPbdd6fdf1kOslX+S8VwNocJYT2628
- z
-X-Gm-Gg: ASbGncul1fKEXcacOa5Nd9Y8EHqOHyD+juXs2OOgv56asjt068Qd1jZgaGVo2JigYFz
- Z/WA2+69z/DMjuQLdIOiumSEmViFnP31PAYsqzwgfeQAi5TXrjPXLNOk/fxTTUFQKxrmac68D3n
- cqQXrfmqfV9ad0L/qaJWcZXiXzhKonvkI81mC3n7KvM9ugJ8QJOtcNJG8O9Lbexb766uBuWiRQT
- xG6bvzcmgruTalAjyFV6pO+l7y9buA1o570C/haGvHkR2Fi4s3y1tVFqa6rJsG0pAlRwSP367xJ
- uf5gDgznN6VCbjgwfwY4AFrxmuQ+9fLl8btunzoMkaZ8nozcD1/WA29SLXWRxqQuSD9yqoQUqGe
- cRNHuCmIUjB0HRN3pEBebG12sbNjb
-X-Google-Smtp-Source: AGHT+IFPTiTPA3ACKsD4gFLZ6KmKC601HuXRTD3jHmbOKO1gCVT7N0Rpivp0DHc7Bo1OjAvw0VGf4g==
-X-Received: by 2002:a05:600c:4454:b0:43b:c857:e9d7 with SMTP id
- 5b1f17b1804b1-43eced9a665mr5916935e9.5.1743715782434; 
- Thu, 03 Apr 2025 14:29:42 -0700 (PDT)
+ AJvYcCWnCStj/1Mg1yeT/Tam1TXAdZLJfEDt42IsKi1ghoND/UhmKKuME0cv5KnIJrv4oIbhhcnlM6yLczsU@nongnu.org
+X-Gm-Message-State: AOJu0YyX+Bf6I3/OTeOzIW01PWxZcJXHCwAEwxtBOACfD4HERXX13YBy
+ ciG72g2H3zGlxBdFrtKDGzWXB/2RnuG/PznGWBsJxBqlKA6HSBgu/vW5vXPCQ5+71qSot6uEthA
+ o
+X-Gm-Gg: ASbGnctynrm7IrPLtFwEdrhDH7vwp5ZrvQHIbdlJc/p0C6PonQUox6D2T0nyzhLyy6+
+ lAPoh8O7Q0VW+A7ECSht7WD5SQO1NsRw502iZUwXfDKq+tISok+JqwomjW3c/LRNehrSVHJcF41
+ 9uxfuSNMB+o368+dy0wwQPYgEejd3yp12ZYvcAwFkxPTszaZOnWkAxaF9hEiWFpNBghN30ohx7t
+ l9DSZcjKjS7JG/NJ6tcFO7Iae2PNcU+GF/P+qeVYl7c6raydFpibfQa6E0gPyinuAAgburGglyk
+ x/bMFcBKa74VYL++UWLSsnNnDIJm/Jw4wZo+euoAiGb28r4GGAwcph/kIEBRyAIYD6w5pit2OOY
+ kupi/MTlxFtP/0NsNT4GE+zMJhptp
+X-Google-Smtp-Source: AGHT+IGY8+9GsNA3LlTSDSKl3xZhusZpRBQM11RBGf7bI+a16FxbbY/jv0U4LRytColAiJ1x1A5XEQ==
+X-Received: by 2002:a05:600c:698c:b0:43c:eec7:eabb with SMTP id
+ 5b1f17b1804b1-43ed0bc790dmr3388125e9.8.1743716631972; 
+ Thu, 03 Apr 2025 14:43:51 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1663060sm32408305e9.14.2025.04.03.14.29.40
+ 5b1f17b1804b1-43ec17b33c2sm33533515e9.40.2025.04.03.14.43.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 14:29:41 -0700 (PDT)
-Message-ID: <74e250b5-3fb2-4688-ac20-18be6b6173f1@linaro.org>
-Date: Thu, 3 Apr 2025 23:29:40 +0200
+ Thu, 03 Apr 2025 14:43:51 -0700 (PDT)
+Message-ID: <59307712-0b18-4120-a35e-1a60ffceb2b8@linaro.org>
+Date: Thu, 3 Apr 2025 23:43:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-10.1 01/43] tcg: Declare TARGET_INSN_START_EXTRA_WORDS
@@ -75,12 +75,13 @@ From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250402210328.52897-1-philmd@linaro.org>
  <20250402210328.52897-2-philmd@linaro.org>
+ <74e250b5-3fb2-4688-ac20-18be6b6173f1@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250402210328.52897-2-philmd@linaro.org>
+In-Reply-To: <74e250b5-3fb2-4688-ac20-18be6b6173f1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,69 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/4/25 23:02, Philippe Mathieu-Daudé wrote:
-> To avoid including the huge "cpu.h" for a simple definition,
-> move TARGET_INSN_START_EXTRA_WORDS to "cpu-param.h".
+On 3/4/25 23:29, Philippe Mathieu-Daudé wrote:
+> On 2/4/25 23:02, Philippe Mathieu-Daudé wrote:
+>> To avoid including the huge "cpu.h" for a simple definition,
+>> move TARGET_INSN_START_EXTRA_WORDS to "cpu-param.h".
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/arm/cpu-param.h        | 7 +++++++
+>>   target/arm/cpu.h              | 6 ------
+>>   target/hppa/cpu-param.h       | 2 ++
+>>   target/hppa/cpu.h             | 2 --
+>>   target/i386/cpu-param.h       | 2 ++
+>>   target/i386/cpu.h             | 2 --
+>>   target/m68k/cpu-param.h       | 2 ++
+>>   target/m68k/cpu.h             | 2 --
+>>   target/microblaze/cpu-param.h | 2 ++
+>>   target/microblaze/cpu.h       | 2 --
+>>   target/mips/cpu-param.h       | 2 ++
+>>   target/mips/cpu.h             | 2 --
+>>   target/openrisc/cpu-param.h   | 2 ++
+>>   target/openrisc/cpu.h         | 2 --
+>>   target/riscv/cpu-param.h      | 8 ++++++++
+>>   target/riscv/cpu.h            | 6 ------
+>>   target/s390x/cpu-param.h      | 2 ++
+>>   target/s390x/cpu.h            | 2 --
+>>   target/sh4/cpu-param.h        | 2 ++
+>>   target/sh4/cpu.h              | 2 --
+>>   target/sparc/cpu-param.h      | 2 ++
+>>   target/sparc/cpu.h            | 1 -
+>>   22 files changed, 33 insertions(+), 29 deletions(-)
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Missing:
+> 
+> -- >8 --
+> diff --git a/include/tcg/insn-start-words.h b/include/tcg/insn-start- 
+> words.h
+> index 394c191da8d..d416d19bcf9 100644
+> --- a/include/tcg/insn-start-words.h
+> +++ b/include/tcg/insn-start-words.h
+> @@ -8,3 +8,3 @@
+> 
+> -#include "cpu.h"
+> +#include "cpu-param.h"
+> 
 > ---
->   target/arm/cpu-param.h        | 7 +++++++
->   target/arm/cpu.h              | 6 ------
->   target/hppa/cpu-param.h       | 2 ++
->   target/hppa/cpu.h             | 2 --
->   target/i386/cpu-param.h       | 2 ++
->   target/i386/cpu.h             | 2 --
->   target/m68k/cpu-param.h       | 2 ++
->   target/m68k/cpu.h             | 2 --
->   target/microblaze/cpu-param.h | 2 ++
->   target/microblaze/cpu.h       | 2 --
->   target/mips/cpu-param.h       | 2 ++
->   target/mips/cpu.h             | 2 --
->   target/openrisc/cpu-param.h   | 2 ++
->   target/openrisc/cpu.h         | 2 --
->   target/riscv/cpu-param.h      | 8 ++++++++
->   target/riscv/cpu.h            | 6 ------
->   target/s390x/cpu-param.h      | 2 ++
->   target/s390x/cpu.h            | 2 --
->   target/sh4/cpu-param.h        | 2 ++
->   target/sh4/cpu.h              | 2 --
->   target/sparc/cpu-param.h      | 2 ++
->   target/sparc/cpu.h            | 1 -
->   22 files changed, 33 insertions(+), 29 deletions(-)
 
-Missing:
+Thus we also need to add another commit before:
 
 -- >8 --
-diff --git a/include/tcg/insn-start-words.h b/include/tcg/insn-start-words.h
-index 394c191da8d..d416d19bcf9 100644
---- a/include/tcg/insn-start-words.h
-+++ b/include/tcg/insn-start-words.h
-@@ -8,3 +8,3 @@
+Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+Date:   Thu Apr 3 23:37:54 2025 +0200
 
--#include "cpu.h"
-+#include "cpu-param.h"
+     tcg: Include missing 'cpu.h' in translate-all.c
+
+     tb_check_watchpoint() calls cpu_get_tb_cpu_state(),
+     which is declared in each "cpu.h" header. It is indirectly
+     included via "tcg/insn-start-words.h". Since we want to
+     rework "tcg/insn-start-words.h", removing "cpu.h" in the
+     next commit, add the missing header now, otherwise we'd
+     get:
+
+       accel/tcg/translate-all.c:598:9: error: call to undeclared 
+function 'cpu_get_tb_cpu_state' [-Wimplicit-function-declaration]
+       598 |         cpu_get_tb_cpu_state(env, &pc, &cs_base, &flags);
+           |         ^
+
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index ed41fc5d0cc..c5590eb6955 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -71,2 +71,3 @@
+  #include "tcg/insn-start-words.h"
++#include "cpu.h"
 
 ---
 
-> 
-> diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-> index a7ae42d17dc..2cee4be6938 100644
-> --- a/target/arm/cpu-param.h
-> +++ b/target/arm/cpu-param.h
-> @@ -37,6 +37,13 @@
->   # define TARGET_PAGE_BITS_LEGACY 10
->   #endif /* !CONFIG_USER_ONLY */
->   
-> +/*
-> + * ARM-specific extra insn start words:
-> + * 1: Conditional execution bits
-> + * 2: Partial exception syndrome for data aborts
-> + */
-> +#define TARGET_INSN_START_EXTRA_WORDS 2
-> +
->   /* ARM processors have a weak memory model */
->   #define TCG_GUEST_DEFAULT_MO      (0)
->   
-...
 
