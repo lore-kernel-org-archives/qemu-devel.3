@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C976C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 06:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E140C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 06:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0E1o-0002QA-TD; Thu, 03 Apr 2025 02:26:16 -0400
+	id 1u0E3S-0003LG-0k; Thu, 03 Apr 2025 02:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0E1b-0002Mg-Bb
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:26:09 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1u0E3P-0003KZ-Vy
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:27:56 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0E1Y-0006sC-Vf
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:26:03 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-223fd89d036so6497005ad.1
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 23:26:00 -0700 (PDT)
+ id 1u0E3O-0007OO-7e
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 02:27:55 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-227b828de00so5609365ad.1
+ for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 23:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743661559; x=1744266359; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743661673; x=1744266473; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YvY/v9GlBbYEJQOv16O//o+YskB9tnAd+h+Ku5MXHJI=;
- b=l6GKYv9mOoH3/UsfmqHMp0svRNL/xDVOk2k7te30622yzPJcJzrFXnlXM1Oykt1Cfl
- kPpHMGhuAUu2EZpT/0xJm9pwsx12TBgCuB5J6SDikwacZQRZYYj7GE/fputv21oBQLyn
- JuKu4nDCCb9QXBBh5dm/S6ApLuStfF0UQLfZT06V7IaKuhj+TG33c+i0LdJiIf5Od5I9
- QY9Z6KnRFuSf8DJXNSn7vKzMQg5Cy93nSnSSFD6l+msjwjE9FcD7b2FqFNATUyQeO9UD
- bzypu/y40h63B7x6FTTaXBhTDcU7EKlvu7BBzUdmi3pvXVl+Kev7j6X3MW0EE/in1rJD
- 1E5w==
+ bh=t9XCw/hGZx53ePP4u3QzEuyWB3/JZzErX8wnWHAT89s=;
+ b=fZSXSPTAAhz3hH7jxGJb8w7G/xXoFkukPC9eIuXRvZViXDTVyHt2lXcVbS5dHHA63y
+ TIe+zwPZXSoVucAiRJfwnFbD/LmwsYGLmp+OycCd5dtyHUcIKA8DuZmmJMydEyJCLrTH
+ MVeVBJ8G24I9Sqs3yFUyoCxbTUd1iUDCFZfqMAthQxjaktPRy5Q64+GL3AEgBvz9il+W
+ H3Sos7cL5n8V0kPVEn+xfGlilxO83wn59jWvqQtc3IXGykuRUNR5o9V9TIs+yvb5gDE7
+ tlMmsIEMn7KufldDdif4nTX2o7XclvEqTNw1BQsfe0pEng8rS5+wM4YJO3ORr5L8WoYf
+ /iZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743661559; x=1744266359;
+ d=1e100.net; s=20230601; t=1743661673; x=1744266473;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YvY/v9GlBbYEJQOv16O//o+YskB9tnAd+h+Ku5MXHJI=;
- b=G8MOQ5CtbQGx16dZjpY0Rn+0YfUzqRsAu/GXeDEvTQUZpmCbY9Vext7YjUPTzFY8ii
- Pd8m3lGEwx/SivMbhFPSK0mF2gA6mMZb9Ft3eYRjDsY1N1s4u9++Ks3Dmd8+8BFKNCu9
- zxFHO12kBcXs/OiKpEXeV/tMJ66MdrWaa9kbKZJiTwBe3vR2hanJscFHMv3KFrfY82EU
- 6pT5QOdQHhaYUsBE2WBn0Odml2dMG3vMiaxq2rH+gMcov7YkXGAw2OySCkHCyxUGumhl
- /DeT2KRtS4/OOoMFQYzx/4/PHZ0IVPvazVxOpgrkXWmK4DetKnhDqR+NpJ/b6RV4U0vh
- bMGg==
+ bh=t9XCw/hGZx53ePP4u3QzEuyWB3/JZzErX8wnWHAT89s=;
+ b=fs/Ac94rzZ6C0AkHxAfC6B/ut1n9RqK3vDsjSIakAUL+/OqupHWEJiFdnFLlUhq54g
+ nXEWSgP1IVHyCiaWKdUbJQnzkPqlPZX/2P5rmGkQNmPh4iGsFCABnH+ldUH7FK+VFj8D
+ N1jrR5nnsidqDWH/nlrCza7myNA2adOQijqiaM1L8sAiYUoARSs61yj5Xw/0eTteBOhA
+ 9LOvoOoSVlfo3P2jokAkegNgqTRPEJfc2m0cYSLGu4FXsQy0eRLsHftnEoYALJDJZzuk
+ UZTKKbago060TVnk+OyORJlzy7VuL2m3kEAgiLIhAhlphHAOUTwb57fq24ueoeZh0NLD
+ Tk1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFVkHaTkFuog8YAyNHnk0mahqQrpeKemAeUdx7VMdAaYbVHmu3bcOAsBqbEw0uHYculeP0xV/om203@nongnu.org
-X-Gm-Message-State: AOJu0YyYXtzrcSMgbrqKTYSfYjnSrQ9zh13qaypMC7IG3uyalJw+t4/c
- DMY2SAPO+rJkKrX3/HpeUg3OFifVTH5oAC5LYq9LuPr2k2LVxgIcdiRprC+7MPQ=
-X-Gm-Gg: ASbGncsUPWR203H1oTJy9AuWM7ISvn5KjfLLZYU99jY/bS7uz5HmwOHTOJtbEpS8MiY
- MUkpWIPt+plYNwDyfffESWsPrSTV3Ipz9RRud5vpAm47OgBZOblNeX1LN0IfWbQVcdkbU1Slufq
- 4FpdKupNPiSpppYaGintmDcIlsQGHakVp3/orLSnvK6FM3wasAKrfQ+22zgu+rhU9nApxmnYfh3
- uATzw/T0AkWlCn2zLXbhFRie2vtQZfb3TKX5LyNgHapbzDaRJs+CuSCt6gKpJbnnFy4eEYYGnE7
- HrxXwx/qk8Y1GLkpfiWBUfl3q/ZuAO0y8gaB+rBogdJwwFia7h7vKob3
-X-Google-Smtp-Source: AGHT+IFtlXtOko+BE5bANmHZLBb6ybVEYIMyyP9BFNQw6DDDrEJ5l2uG/W3t+zuBjyMraoBmp8NGBQ==
-X-Received: by 2002:a17:902:f686:b0:223:88af:2c30 with SMTP id
- d9443c01a7336-22977d8bd1amr19298655ad.16.1743661559151; 
- Wed, 02 Apr 2025 23:25:59 -0700 (PDT)
+ AJvYcCUeok11I8/ZhTMDV9UTLPnYjpj5UP1VetP6wlAMwOKfg7vqDkwVhY+CKRvORNPMNzTBvglPnIW+4LIl@nongnu.org
+X-Gm-Message-State: AOJu0YzQDR1cVXOMu7UZD1MRPo44UmY6y0v6D3SsF0zk5VQa0L8asaot
+ M71wCZpsEDm53bDV70M7AnoJTABjn7evTCcIf0268VBdZS2yAvIJC1vxotCwxmM=
+X-Gm-Gg: ASbGncuHm7X0HqF83nvi5n4cuAf+smGKaenPCd0GtaKuwfxZ/AYOs5V9HHLtAmff4oU
+ kN+pnRZj9azoySEh9AUSgq/cT4h47IeUJMTIatGJxlNcnt65VGqMGuchWsJovoGajsomRs9ABOQ
+ ZICdwrCyU/IgRO0iOkF4wvuKataiT+NtP518q3SBcQMhZdj0K+1u79yI8w2CgzsUJ3AEK5EQFxi
+ 0zV3PKJ+zOvKIN344lsto7G+WRq2gNdWurrU0w91xYJ7dTkyMhVjdMlD66IhwV+s4nh8esb3rJo
+ sB9SXmll3On9DArzynQQKYdK0XL4g6vLG6HnHhDOqXhmTLMqynAe2B/M
+X-Google-Smtp-Source: AGHT+IETkOi5fNsC7HaX11W8yM+4/X7f3h1d17E6ybMJ5n4W5KhOakj1Innft7pjTllVZr4Q0oTiEg==
+X-Received: by 2002:a17:902:e746:b0:220:ff3f:6cc0 with SMTP id
+ d9443c01a7336-2296c829906mr82948745ad.38.1743661672596; 
+ Wed, 02 Apr 2025 23:27:52 -0700 (PDT)
 Received: from [192.168.0.102] ([186.215.49.46])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22978772816sm6525865ad.225.2025.04.02.23.25.56
+ d9443c01a7336-229785bfffasm6716315ad.61.2025.04.02.23.27.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 02 Apr 2025 23:25:58 -0700 (PDT)
-Message-ID: <62bbeff2-f892-44d1-b190-8c4541acf16d@linaro.org>
-Date: Thu, 3 Apr 2025 03:25:54 -0300
+ Wed, 02 Apr 2025 23:27:52 -0700 (PDT)
+Message-ID: <5eb3e23f-2d82-48b1-abd8-68dbfc1f5b6b@linaro.org>
+Date: Thu, 3 Apr 2025 03:27:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 1/5] qtest/bios-tables-test: Add test for -M
- virt,its=off
+Subject: Re: [PATCH-for-10.0 2/5] qtest/bios-tables-test: Whitelist
+ aarch64/virt/APIC.its_off blob
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
@@ -78,23 +78,23 @@ Cc: Udo Steinberg <udo@hypervisor.org>, qemu-arm@nongnu.org,
  Shannon Zhao <shannon.zhaosl@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
 References: <20250331221239.87150-1-philmd@linaro.org>
- <20250331221239.87150-2-philmd@linaro.org>
- <1d1362a0-b544-476c-a305-a7d2212db423@linaro.org>
- <d3059aa1-952b-46b9-bb96-dace60664f49@linaro.org>
+ <20250331221239.87150-3-philmd@linaro.org>
+ <957f0d3e-0c25-4d88-b935-ddfe7cc75776@linaro.org>
+ <dffb0578-e449-4984-9a86-d675eff93485@linaro.org>
 Content-Language: en-US
 From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <d3059aa1-952b-46b9-bb96-dace60664f49@linaro.org>
+In-Reply-To: <dffb0578-e449-4984-9a86-d675eff93485@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,202 +112,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Phil,
 
-On 4/2/25 07:30, Philippe Mathieu-Daudé wrote:
-> On 2/4/25 08:41, Gustavo Romero wrote:
+On 4/2/25 07:31, Philippe Mathieu-Daudé wrote:
+> On 2/4/25 08:43, Gustavo Romero wrote:
 >> Hi Phil,
 >>
 >> On 3/31/25 19:12, Philippe Mathieu-Daudé wrote:
+>>> Prepare for ACPI table change in aarch64/virt/APIC.its_off.
+>>
+>> The comment could be smth like:
+>>
+>> Ignore APIC.its_off expected table (blob) for now until
+>> we update it later, after fixing the code that generates
+>> this table correctly.
+>>
+>> ?
+>>
+>>
 >>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> Please, put commit message (body) into the commits.
->>
->> For example, the commit message here could quickly explain that the FACP table
->> changed because virtualization=on (due to PSCI conduit). I'm assuming
->> virtualization is set to on because gic-version=max and so GICv4 is selected for
->> testing. It also could be that  we want to exercise its=off when Arm Virtualization
->> Extensions are enabled, which is the common use case (I understand that ITS
->> can be used also with virtualization=off).
->>
->> Finally, the commit message could mention at the end which struct
->> vanishes in APIC table and why IO remapping table is affected by
->> ITS on/off.
->>
->> A good commit message always help in code spelunking :)
-> 
-> I simply copied the reproducer from the issue, so I'll mention that.
-> (https://gitlab.com/qemu-project/qemu/-/issues/2886)
-> 
->>
->>
 >>> ---
->>>   tests/qtest/bios-tables-test.c            |  22 ++++++++++++++++++++++
->>>   tests/data/acpi/aarch64/virt/APIC.its_off | Bin 0 -> 184 bytes
->>>   tests/data/acpi/aarch64/virt/FACP.its_off | Bin 0 -> 276 bytes
->>>   tests/data/acpi/aarch64/virt/IORT.its_off | Bin 0 -> 236 bytes
->>>   4 files changed, 22 insertions(+)
->>>   create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
->>>   create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
->>>   create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
+>>>   tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+>>>   1 file changed, 1 insertion(+)
 >>>
->>> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables- test.c
->>> index 0a333ec4353..55366bf4956 100644
->>> --- a/tests/qtest/bios-tables-test.c
->>> +++ b/tests/qtest/bios-tables-test.c
->>> @@ -2146,6 +2146,26 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
->>>       free_test_data(&data);
->>>   }
->>> +static void test_acpi_aarch64_virt_tcg_its_off(void)
->>> +{
->>> +    test_data data = {
->>> +        .machine = "virt",
->>> +        .arch = "aarch64",
->>> +        .variant = ".its_off",
->>> +        .tcg_only = true,
->>> +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->>> +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
->>> +        .cd = "tests/data/uefi-boot-images/bios-tables- test.aarch64.iso.qcow2",
->>> +        .ram_start = 0x40000000ULL,
->>> +        .scan_len = 128ULL * 1024 * 1024,
->>> +    };
->>> +
->>> +    test_acpi_one("-cpu cortex-a57 "
->>> +                  "-M virtualization=on,secure=off "
->>> +                  "-M gic-version=max,its=off,iommu=smmuv3", &data);
->>> +    free_test_data(&data);
->>> +}
->>> +
->>>   static void test_acpi_q35_viot(void)
->>>   {
->>>       test_data data = {
->>> @@ -2577,6 +2597,8 @@ int main(int argc, char *argv[])
->>>                              test_acpi_aarch64_virt_tcg_acpi_hmat);
->>>               qtest_add_func("acpi/virt/topology",
->>>                              test_acpi_aarch64_virt_tcg_topology);
->>> +            qtest_add_func("acpi/virt/its_off",
->>> +                           test_acpi_aarch64_virt_tcg_its_off);
->>>               qtest_add_func("acpi/virt/numamem",
->>>                              test_acpi_aarch64_virt_tcg_numamem);
->>>               qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
->>> diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/ acpi/aarch64/virt/APIC.its_off
->>> new file mode 100644
->>> index 0000000000000000000000000000000000000000..c37d05d6e05805304f10afe73eb7cb9100fcccfa
->>> GIT binary patch
->>> literal 184
->>> zcmZ<^@O0k6z`($=+{xeBBUr&HBEVSz2pEB4AU24G0Uik$i-7~iVgWL^17JJ`2AFzr
->>> bgb+@aBn}xq0gwb2)Q)cq{30-g9B_L93G4|0
->>>
->>> literal 0
->>> HcmV?d00001
->>>
->>> diff --git a/tests/data/acpi/aarch64/virt/FACP.its_off b/tests/data/ acpi/aarch64/virt/FACP.its_off
->>> new file mode 100644
->>> index 0000000000000000000000000000000000000000..606dac3fe4b55c31fd68b25d3a4127eeef227434
->>> GIT binary patch
->>> literal 276
->>> zcmZ>BbPf<<WME(uaq@Te2v%^42yj*a0-z8Bhz+8t3j|P&V`N}P6&N^PpsQ~v$aVnZ
->>> CVg~^L
->>>
->>> literal 0
->>> HcmV?d00001
->>>
->>> diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/ acpi/aarch64/virt/IORT.its_off
->>> new file mode 100644
->>> index 0000000000000000000000000000000000000000..0fceb820d509e852ca0849baf568a8e93e426738
->>> GIT binary patch
->>> literal 236
->>> zcmebD4+?q1z`(#9?&R<65v<@85#X!<1dKp25F11@1F-=RgMkDCNC*yK9F_<M77!bR
->>> zUBI%eoFED&4;F$FSwK1)h;xBB2Py`m{{M%tVD>TjFfcO#g+N#Zh@s|zoCF3AP#UU@
->>> R!2`+%Dg6Hr$N|zYvjDIZ5CH%H
->>>
->>> literal 0
->>> HcmV?d00001
->>>
+>>> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/ qtest/bios-tables-test-allowed-diff.h
+>>> index dfb8523c8bf..bfc4d601243 100644
+>>> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+>>> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+>>> @@ -1 +1,2 @@
+>>>   /* List of comma-separated changed AML files to ignore */
+>>> +"tests/data/acpi/aarch64/virt/APIC.its_off",
 >>
->> I think the prescription for the acrobatics to update the ACPI expected
->> tables says the blobs here should be empty (blob files are added empty)
->> and at the same time they are listed in tests/qtest/bios-tables-test- allowed-diff.h:
->>
->>   * 1. add empty files for new tables, if any, under tests/data/acpi
->>   * 2. list any changed files in tests/qtest/bios-tables-test-allowed- diff.h
->>   * 3. commit the above *before* making changes that affect the tables
->>
->> (from tests/qtest/bios-tables-test.c header)
->>
->> If that's correct, this patch should be merged with the following one (2/5) and
->> IORT.its_off and FACP.its_off should also be listed in
->> tests/qtest/bios-tables-test-allowed-diff.h so the empty blobs won't trigger
->> a test failure.
+>> I think this patch should be merged into 1/2, accordingly to my
+>> comment in 1/5. FACP and IORT .its_off files should be added to the
+>> list as well.
 > 
-> I shouldn't have included the ACPI data in this patch but in the
-> following. IIUC, if no data/$TABLE.$variant, then the generic
-> data/$TABLE is used.
+> No, otherwise the test added in previous patch fails.
 
-Yeah, it's correct that if no data/$TABLE.$variant is found then data/$TABLE is
-used as a fallback. But my point actually was that in the first patch you should
-create the blob .its_off variants for tables affected by the main change but
-they must be empty, as per Step 1. in the prescription; and add them to the
-"ignore list" (tests/qtest/bios-tables-test-allowed-diff.h) so they don't fail
-the test, as per Step 2.
+I can't see how adding the tests to the list in
+tests/qtest/bios-tables-test-allowed-diff.h can cause any failure.
+The list in this header file works as a "ignore list", so even if
+the .its_off blobs in 1/5 were empty (for instance) the test would
+pass if they are in this list.
 
-But on second thoughts I think Step 1. in prescription is confusing. Anyways,
-what you're doing here is sensible.
-
-Here (1/5), you're adding a new test, with new VM options. The new VM options
-(different in comparison to the ¨baseline" data/$TABLE) cause changes to three
-ACPI tables: APIC, FACP, and IORT, because:
-
-- APIC: GICv2 is update to GICv4 due to gic-version=max + virtualization=on => GICv4
-         and the addition of Subtable type 0xF for GIC ITS Structure (even tho its=off
-         in the VM option, since that's the bug to be fixed down the road)
-
-- FACP: Change of PSCI conduit due to virtualization=on option:
--                       Must use HVC for PSCI : 1
-+                       Must use HVC for PSCI : 0 (use SMC instead)
-because of logic in machvirt_init():
-[...]
-     } else if (vms->virt) { /* vms->virt is true is virtualization=on */
-         vms->psci_conduit = QEMU_PSCI_CONDUIT_SMC;
-     } else {
-         vms->psci_conduit = QEMU_PSCI_CONDUIT_HVC;
-     }
-
-- IORT: A new node is added for SMMUv3 due to option iommu=smmuv3.
-
-
-I think it's correct to add the blobs for .its_off to this patch, otherwise the test will
-fail and, moreover, they are the results of the options being used for the new test.
-As an alternative, you could add the *.its_off to tests/qtest/bios-tables-test-allowed-diff.h
-so the differences would be ignored and the test passes, but really I think it makes
-more sense as you're doing here.
-
-The next patch (2/5) becomes, as you said in the commit message, a preparation for the
-real changes (the fix), which will break temporarily the test, hence in 2/5 you add it
-to the "ignore list", which is actually what Step 2. in the prescription recommends.
-
-Thus:
+That said, as per my comments in 1/5, this preparation is correct
+to me: the fix will cause changes to APIC table so the current
+expected blob (committed) needs to be ignored until it gets updated
+later, in 5/5.
 
 Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
 
 Cheers,
 Gustavo
-
->> Then patch 5/5 should add the expected/updated blobs and drop the *.its_off from
->> bios-tables-test-allowed-diff.h. Patches 3/5 and 4/5 are sandwiched
->> between (1/5 + 2/5) and (5/5).
->>
->> At least that's what I get from:
->>
->>   * The resulting patchset/pull request then looks like this:
->>   * - patch 1: list changed files in tests/qtest/bios-tables-test- allowed-diff.h.
->>   * - patches 2 - n: real changes, may contain multiple patches.
->>   * - patch n + 1: update golden master binaries and empty tests/qtest/ bios-tables-test-allowed-diff.h
->>
->> Otherwise the change looks good.
->>
->>
->> Cheers,
->> Gustavo
-> 
-
 
