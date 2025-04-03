@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 155D7C36014
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 21:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6988CC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 21:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Rw5-0007EG-NZ; Thu, 03 Apr 2025 17:17:17 -0400
+	id 1u0RwB-0007FE-2J; Thu, 03 Apr 2025 17:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u0Rw3-0007Di-Mv
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:17:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u0Rw8-0007Em-Dd
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:17:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u0Rw2-0003Wk-5C
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:17:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u0Rw6-0003Xq-LF
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 17:17:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743715033;
+ s=mimecast20190719; t=1743715038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=M4rWdzZMTs4pl8C+b44mNvuaFQz+JR0KPqTo+/6C3LE=;
- b=LZ8YwUllQJ0phFhdTBhzoF3SE0jVri27+kJLUFdFNyyUzBaNdj5ezEGtStOIB4KiNRrrFH
- hWAal0exE/TPwYYSWeLfW9orDfGQU/1SuIZysXj00cGuarBftIKqOjPqUcg3eEvkE6F2rz
- wP3zs5iFmA2kwi5MUdxj2zdVg1RaX0s=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLE/rOljhYcKkee5KfpUVAXzzbJsE070XYVR86PaEbw=;
+ b=PQe4aSgMyFbxSC73o6cSKVO87kGdSxnTSDuPEJQnqc1BHlUKD4C5hIA5a3sJXBLEMpR8B+
+ 1wweIiGXrCncQdqyPAwzv3NH6jaav39/RlrX08dWc37a1tjiJcC6+IxHlW1hE8yg2har3U
+ pza9VJ7S8fzELw3Ia6S6j0pMZqvVTPA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-l_KihmyfPu6-EUHqIHLi9A-1; Thu, 03 Apr 2025 17:17:11 -0400
-X-MC-Unique: l_KihmyfPu6-EUHqIHLi9A-1
-X-Mimecast-MFC-AGG-ID: l_KihmyfPu6-EUHqIHLi9A_1743715030
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43ce245c5acso15685905e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 14:17:11 -0700 (PDT)
+ us-mta-114-eapQg3TmNha7deCH6SAvOA-1; Thu, 03 Apr 2025 17:17:16 -0400
+X-MC-Unique: eapQg3TmNha7deCH6SAvOA-1
+X-Mimecast-MFC-AGG-ID: eapQg3TmNha7deCH6SAvOA_1743715036
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39abdadb0f0so794628f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 14:17:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743715030; x=1744319830;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1743715035; x=1744319835;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M4rWdzZMTs4pl8C+b44mNvuaFQz+JR0KPqTo+/6C3LE=;
- b=h+smg3Gl0VQCubY/UdBbvUP3nttzgh+Y/79BVx3QBn5A9QltgvPteFnF2Wot8i53av
- t3zMK2KFmUZwsNP6frcPdjSYwlJRhUO8rra7EtGMTQQSP6Gmuli9m+Q9kBtE2iy5XqUh
- tYfKMBP/3KKSrjskTiqVTOOAmBLVJTC0U0CBw/3hfy/iTGF24rt6d3scch71t21tnOoq
- 4f6/fKBRJ04Ldh3TyIzDqBIH6bvk9sC7X0uNQbH9bycv9fggK0GM0S7dUvwl2MsCrgGn
- 5j20OxcerNIynVtATOxOumSBiIsdXWdfATu5OxVrKlNx6Xphqe1YK4xaDf4unrJCizLU
- lC4Q==
-X-Gm-Message-State: AOJu0Yw+faAU1PRCGpmJEBSg2KqEGv16pPumsWJb+nlbilTgv3NP9WAB
- A8pXsJViXQbw55e+9ozr4j3S9YzcwUoaMUpDSCmH1k6TKi6PGYRkfGV2HyVglj9FTabPeSdubb5
- 2/gjyox6U6gKiamdJYoHqZ8C0OpEwSonadi6TNYXaN+8MUmlTBQ+BLjk8wNavPtd8yUcNyF0Ydo
- F61vdB+omw5NajQ5qGhG6FRm1llfxVPw==
-X-Gm-Gg: ASbGncsquB1TiVKlGPwBTs/gtX1oUa+sFm4FRCknycq3WH+O6BJcYwyxr7B67WV9ciw
- aiS0s9CRr7NAqnqAaR6PXWI2OHhnfmOePfI1yZd8zIpVvz6gTAs8Kkpfia/bHmeSh0PJjRtJfJY
- T8jIzzu7cTDf8wGcm+DRPgtlu0wFbUOhaYP0f8b8WS3Cg9d9USj7PQeR+o8QzBt2zosc8XLgMRo
- CILlYH5T+9MAlIrnR7t1+tZGd+3KR4/gWBN+nV6uNMiQj8Rx9a0WYlBNhal9XNp+MnFPFPL3ZrF
- uQ39EBy9dQ==
-X-Received: by 2002:a05:600c:34c8:b0:43e:a7c9:8d2b with SMTP id
- 5b1f17b1804b1-43ed0d6b106mr2210095e9.24.1743715030253; 
- Thu, 03 Apr 2025 14:17:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkw+uoMmqR8DXfG7r80ZUGFrSjwJmneldKC7CjpsLxWiybhW31J+1+fvLCfhNZvON/z7RdWg==
-X-Received: by 2002:a05:600c:34c8:b0:43e:a7c9:8d2b with SMTP id
- 5b1f17b1804b1-43ed0d6b106mr2209975e9.24.1743715029872; 
- Thu, 03 Apr 2025 14:17:09 -0700 (PDT)
+ bh=ZLE/rOljhYcKkee5KfpUVAXzzbJsE070XYVR86PaEbw=;
+ b=e4utJpUje1QVaeeYOtDW4IS8KrXv2NzfN6PQOwhyDbriyErPCfb1mFROb8hTO3h2sT
+ R0fbfuoShKCgKAW3fNMr/gD1J5pKfYUw/iFMyA33B0cFyyQZC2qBOA1qMlpDZUzZFlED
+ jh2uarO0aOxg2UckxdqwHLpCyRaiQpgyPZwRuhtKOlf5SMRMM2lYiPJ38FlPuDvveP9H
+ 5WFMS7hWvEtfqjPoectzZFXcE6sxNkK74wz9/7v8/P4beDeswpdnvGkujA+JfgSW0xtE
+ hTuWf2ZdKe4p/vi5L61wOmkMZv5ZI0XJLCR+U3p7dlJnwSUWj2ZG4HdsbPHlkJUtnJqU
+ Bf4A==
+X-Gm-Message-State: AOJu0YwG/7AC6lqOjx6rp8gDL+7y2X4CU94icN+VVIX127QDmIxD3rBx
+ Y3DczDYp6tIKLSYfK7KVsaz3fJ2leVEHkwUCsNJdrEtf4RfTQRQxeHYfMSddpZyqV1NVSrjszCl
+ CHb9fZXUXIJfxEceTZfhvnLWyUNomQfohBkmVaFHUtugRk9Ib2C0jCq3fJbKqJ1JEynfXrm4Fjh
+ m7zGeVmbZq2hrV1Kurxenv25YqU/dDBg==
+X-Gm-Gg: ASbGnct8ku3105wPlSHCAxcH+HWTwKAo06h+F41JvoyJ2rbr4rkurAPA/cNoCsoMqmd
+ rM2lTt8uk/dP/krRilC0I7n5cUkLnJG4akpITcWxMx0kQ9q6fkmFs42bSFHyA4FGKDo2skqVPL6
+ ai9VxcAcAe/SELB1/0lg9m95/VKsUVFn5bnCaCiw2tbbpHqdDkTr5fK99pIDxp3fB+M1TM9m8gG
+ ZOrHn03Pmb43M4FvChuT5X2Qb20nF2eAFn6aQrAS+JdctOfgHDXOwkg63VuNh/VXqFsEVZV0KBG
+ rF74vo5Obg==
+X-Received: by 2002:a05:6000:4284:b0:39b:ede7:8906 with SMTP id
+ ffacd0b85a97d-39cb359572bmr692277f8f.19.1743715035044; 
+ Thu, 03 Apr 2025 14:17:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAE5MciQRbH9GYgGD8Vmmt42G3z0anH2luj4MxhpsfTwoIeCcxT4oJ1ZhIKzSENk0JBMTrDA==
+X-Received: by 2002:a05:6000:4284:b0:39b:ede7:8906 with SMTP id
+ ffacd0b85a97d-39cb359572bmr692255f8f.19.1743715034615; 
+ Thu, 03 Apr 2025 14:17:14 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec364d07csm27738355e9.28.2025.04.03.14.17.08
+ ffacd0b85a97d-39c3009674bsm2728931f8f.3.2025.04.03.14.17.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Apr 2025 14:17:09 -0700 (PDT)
-Date: Thu, 3 Apr 2025 17:17:07 -0400
+ Thu, 03 Apr 2025 14:17:13 -0700 (PDT)
+Date: Thu, 3 Apr 2025 17:17:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 0/2] virtio,pc: fixes
-Message-ID: <cover.1743715021.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Yan Vugenfirer <yvugenfi@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 2/2] hw/i386/amd_iommu: Assign pci-id 0x1419 for the AMD IOMMU
+ device
+Message-ID: <719255486df2fcbe1b8599786b37f4bb80272f1a.1743715021.git.mst@redhat.com>
+References: <cover.1743715021.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1743715021.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -103,34 +117,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b876e721f1c939f3e83ac85bd3c1c2821e12b3fa:
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-  Update version for v10.0.0-rc1 release (2025-03-25 13:58:14 -0400)
+Currently, the QEMU-emulated AMD IOMMU device use PCI vendor id 0x1022
+(AMD) with device id zero (undefined). Eventhough this does not cause any
+functional issue for AMD IOMMU driver since it normally uses information
+in the ACPI IVRS table to probe and initialize the device per
+recommendation in the AMD IOMMU specification, the device id zero causes
+the Windows Device Manager utility to show the device as an unknown device.
 
-are available in the Git repository at:
+Since Windows only recognizes AMD IOMMU device with device id 0x1419 as
+listed in the machine.inf file, modify the QEMU AMD IOMMU model to use
+the id 0x1419 to avoid the issue. This advertise the IOMMU as the AMD
+IOMMU device for Family 15h (Models 10h-1fh).
 
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-
-for you to fetch changes up to 719255486df2fcbe1b8599786b37f4bb80272f1a:
-
-  hw/i386/amd_iommu: Assign pci-id 0x1419 for the AMD IOMMU device (2025-04-02 12:44:47 -0400)
-
-----------------------------------------------------------------
-virtio,pc: fixes
-
-A couple of fixes for 10.0.
-
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Message-Id: <20250325021140.5676-1-suravee.suthikulpanit@amd.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      virtio-net: Fix num_buffers for version 1
-
-Suravee Suthikulpanit (1):
-      hw/i386/amd_iommu: Assign pci-id 0x1419 for the AMD IOMMU device
-
+---
  hw/i386/amd_iommu.c | 1 +
- hw/net/virtio-net.c | 2 ++
- 2 files changed, 3 insertions(+)
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 5b21cf134a..5f9b952799 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1706,6 +1706,7 @@ static void amdvi_pci_class_init(ObjectClass *klass, void *data)
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+ 
+     k->vendor_id = PCI_VENDOR_ID_AMD;
++    k->device_id = 0x1419;
+     k->class_id = 0x0806;
+     k->realize = amdvi_pci_realize;
+ 
+-- 
+MST
 
 
