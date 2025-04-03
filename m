@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F45CC3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C71C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0OGM-0001mZ-If; Thu, 03 Apr 2025 13:21:58 -0400
+	id 1u0OQB-0003YF-D2; Thu, 03 Apr 2025 13:32:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0OGL-0001mP-H7
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:21:57 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1u0OQ8-0003XR-J3
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:32:04 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0OGJ-0005l0-Py
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:21:57 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2255003f4c6so12135065ad.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:21:54 -0700 (PDT)
+ id 1u0OQ6-0007D2-Qi
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:32:04 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-736c1cf75e4so985778b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:32:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743700914; x=1744305714; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743701521; x=1744306321; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zOHzce89H5d9MLVZt5g59EpME4w7sz8Zoyc5MAMKMik=;
- b=ldoovLxm/31mCw+oNSh3S8F08jBLK8dBxubGtdnmrD7oBS3xz/4fOFL4+L3tVMl5TM
- 8iivfEFzr6m8A0pFj8lOYhYhi85RX9kCoCOwTp9MH8V33K71SvZPykU4z3OsTFG6PjFm
- MJGin+vzSGeyDQKL8ofge+ZjYPkkstizZUxQYNSdA5GctT3k1mVFxyPQuueTb/OBQXwm
- FYgrq7NyB6gJbFT3XafnFRUIp+yY8lih61z2RwGDcASP8M+4bCq+Z3GLzMfyEjNZAjlO
- 2anJvv41uYT9XiKvnYKm7kPTKkJSiXob7ULTN1c7gzRpRkGrwdi5o269iL5PKyvuOQ66
- L1QA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=I9t72SvxHJHwR7VXXENUvyeoxFJMEGXR3JFXvAvha2g=;
+ b=AAzGEkgs5WvL3XmTKA5EAmplVaKdep9slcWntVxMJYKe/Xtq2UrjzLXtW/7RLAi1wC
+ vL6PtVbQVp8DGhmezrlua9ys9oT6+Of1HgN4HIFN8CgTNOAGf/v0PXl153w4u4yIX5EG
+ rvNav1AEhjGvy0SxfrCf0kzO+qTtei8smge0tdb09w2B5Dczl5L7+G6iXACp/AQxs8yh
+ +V8j/bx9MiQEJjDMEI5m8Dmw6DpC6ocd/LB34PIQEihVu6L51yIx/OpBpJSM/LPFTLuu
+ qXpqo8QqBnFnN0oF+Fvm1bkMyDdad1eBnu8cc7sjHKkLM0bTe8qHN6ia5vtK42+dGY7A
+ DGOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743700914; x=1744305714;
+ d=1e100.net; s=20230601; t=1743701521; x=1744306321;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zOHzce89H5d9MLVZt5g59EpME4w7sz8Zoyc5MAMKMik=;
- b=V0ktbYUIB/Xn7B1rL+rS3LzfJGsctNc86c79JwtYtvOK9LG73J+9wY62is6TXmJqXF
- dTWYCmGP8tsEE/+f0kkbI1m7J9yyGla918dYxUzLoyDd84vL+FL7bQGT/pEvCEeJHbIp
- bri/Nz8oXhwfIujWTkPTehM2WCId8zjinvb13V4/ok7GEPbCoAMfOFgVMEtTg5D24xLz
- BAsqFgWdeJZJhO4HYjEnCpUDnhReQhDdMA1+g3IjZuAZaiFpo+sAMJicO1hEbUJbkOmO
- TTiM7AMJl4517sb8CKDxcef1+29f1AmrXlcOQBl1bmmAqYeT5xRmKHpdWem/nmKheHBq
- VDqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU28F9nhrn18mf9KGYuXyUogyomKgfBdqeDWY78Y+fTa6CUKMLytW0IAW7LemUVj5jE52JAlFxrMv0f@nongnu.org
-X-Gm-Message-State: AOJu0YzvGQkxsR61tziSY+w1P/IMu7C+ZId8zAfC7txUxbeOrungpHEQ
- ySbcAYNZbKJae2tKRSiWOS5hPmZfFjWWG0hXL63GAbX1v+P7Up8SaBhJ3GOiSKk=
-X-Gm-Gg: ASbGncvvTnR5MN6uK4TlRltLb1IuirFxC6uK5HfFCKkQOXwTcEDQaBAAY43IB2iQ/wH
- JpUxrUe3OwkZbPwdN84Al23BdDBEDcyyj7gN9koFmcnTsVNpO2HFVUaIQb4+hB9Pzr2dh1YAwe6
- xkDuwFVFSKUcShPR4j8uZOD1VOZUXoi4ZdO8z9PRs0kHB0Agtlapj1M1FwLjTYip9SEyYrT5vLg
- MBVT7ex0LVWVX69xjJTcEbs1xCUKoSV+ciu966Gh2qb6zJiCItPrFUzVNsnL+tQcXXjw+Taa+Yi
- 4LCuYunZ3ptWURRZzTVYHw3L5eEPbDRDwBZS9FUjz/UNOR87+fmxwejKghd90OqzCCu1XSzVPbh
- LpMNe5Onf
-X-Google-Smtp-Source: AGHT+IEv3UGhXGWo7JyQIcbl7h0cwssQ4+1ecvhTUDe/kdznsZiO2nJliFS2Vo/EqRoCWg8LqMsw2Q==
-X-Received: by 2002:a17:903:2302:b0:219:e4b0:4286 with SMTP id
- d9443c01a7336-22993c20215mr43836815ad.29.1743700913437; 
- Thu, 03 Apr 2025 10:21:53 -0700 (PDT)
+ bh=I9t72SvxHJHwR7VXXENUvyeoxFJMEGXR3JFXvAvha2g=;
+ b=HOiZO9pRS//6Ucx4Jmt5ZIvsffXS0bGymOmn1IwZj7Jjw7Uhgd22TJhlYebFUpVazH
+ 3ujikuMsX9kSpnub2k+GPru7psbtB5tPI7MJbHpYJaIIJ7NDDWu4bWPmgGb4uerWC8Rb
+ O+n57WNQUPb7ODbDAO5xej6JuVOaHMPaDc+O0pAITLBif1fKLB+KRrdBWThDTUzSLmcQ
+ /l6yRKC34DiIo9fsQcnSN4s1j/BfgUztxcPyu38IfNMh/ufUTLWY+gduL/wYm9R5wO8H
+ e9iBNhuY3SHnUmXwdSJQDhzL1Iz8jviDsS455KjFg3X+deHHwFwEmloOzkyWj5sRS1is
+ mrSQ==
+X-Gm-Message-State: AOJu0YwcIq3Vey5XyWr1ijG+pK9uOcgrHCuxKPiWJd4kq6EVH0jh0Ybb
+ 5wBcCaDla0Z9n+wE9ENZ0+GJlK7nWIim6wS+qF9uQ1jHHE1A3LTSgdiHT4rOflJR5BaHJqslNSw
+ u
+X-Gm-Gg: ASbGncvVXw4iTrb5rEqTVq1pyc9eS0LziRK3PX0tqITsWAcVfM9qNBVJ4+INQ3xBB8B
+ I8rVZ/hM6TIvI0j8jqSFuUSMiYLpbSSeaNabyzm2lPZ6hlMsGivOH+GUgg/Fb1pG1asRm/rbyOA
+ NGag/3PlAmhpmPM6qA9y7TyK3AzrzgmrAQ0yXzZOmCZiVYwDhsQFto6Xy9vdsQG4ONwtKPWi9fm
+ iNYGVy/gBU/eX19TsLAGpKBy787Qw5zOAeIxCXbmE2B+EMg4BjODDBY3ZXSH5xGSM69XL6ahAw0
+ 1LXiYkG4ApTaVG0q8fZkkc48SWjOcf0n1wLcZM4xl1iIQzLA1KHWXUlgjtJRHIUPe90DW21HvvR
+ VeQs/Uvg5
+X-Google-Smtp-Source: AGHT+IEEcKWUPK6OLUtrLOXPDvab+5It1IFbTf104yF/3TRjPn1k70uo4A4hSHKiSdSi3Ug12hI+iQ==
+X-Received: by 2002:a05:6a00:2343:b0:728:e2cc:bfd6 with SMTP id
+ d2e1a72fcca58-739e4c15233mr508135b3a.18.1743701520851; 
+ Thu, 03 Apr 2025 10:32:00 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739da0e7d3fsm1766626b3a.180.2025.04.03.10.21.51
+ d2e1a72fcca58-739d97d1befsm1773971b3a.30.2025.04.03.10.32.00
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 10:21:53 -0700 (PDT)
-Message-ID: <a90e5b30-1992-4460-86fa-f7e447dbdcfb@linaro.org>
-Date: Thu, 3 Apr 2025 10:21:49 -0700
+ Thu, 03 Apr 2025 10:32:00 -0700 (PDT)
+Message-ID: <24b7fa86-611a-464a-934b-186df86ba31a@linaro.org>
+Date: Thu, 3 Apr 2025 10:31:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 00/24] cpus: Restrict SoftMMU mmu_index() to TCG
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250401080938.32278-1-philmd@linaro.org>
+Subject: Re: [PATCH-for-10.0 v2 03/14] tests/functional: Skip aarch64_replay
+ test on macOS
+To: qemu-devel@nongnu.org
+References: <20250403151829.44858-1-philmd@linaro.org>
+ <20250403151829.44858-4-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250401080938.32278-1-philmd@linaro.org>
+In-Reply-To: <20250403151829.44858-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,38 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/1/25 01:09, Philippe Mathieu-Daudé wrote:
-> mmu_index() is specific to TCG SoftMMU,
-> moveCPUClass::mmu_index() toTCGCPUOps::mmu_index().
+On 4/3/25 08:18, Philippe Mathieu-Daudé wrote:
+> As of v10.0.0-rc2 this test is still failing on macos:
 > 
-> Philippe Mathieu-Daudé (24):
->    hw/core/cpu: UpdateCPUClass::mmu_index docstring
->    accel/tcg: IntroduceTCGCPUOps::mmu_index() callback
->    target/alpha: Restrict SoftMMU mmu_index() to TCG
->    target/arm: Restrict SoftMMU mmu_index() to TCG
->    target/avr: Restrict SoftMMU mmu_index() to TCG
->    target/hppa: Restrict SoftMMU mmu_index() to TCG
->    target/i386: Remove unused cpu_(ldub,stb)_kernel macros
->    target/i386: Restrict cpu_mmu_index_kernel() to TCG
->    target/i386: Restrict SoftMMU mmu_index() to TCG
->    target/loongarch: Restrict SoftMMU mmu_index() to TCG
->    target/m68k: Restrict SoftMMU mmu_index() to TCG
->    target/microblaze: Restrict SoftMMU mmu_index() to TCG
->    target/mips: Restrict SoftMMU mmu_index() to TCG
->    target/openrisc: Restrict SoftMMU mmu_index() to TCG
->    target/ppc: Restrict SoftMMU mmu_index() to TCG
->    target/riscv: Restrict SoftMMU mmu_index() to TCG
->    target/rx: Restrict SoftMMU mmu_index() to TCG
->    target/s390x: Restrict SoftMMU mmu_index() to TCG
->    target/sh4: Restrict SoftMMU mmu_index() to TCG
->    target/sparc: Restrict SoftMMU mmu_index() to TCG
->    target/tricore: Restrict SoftMMU mmu_index() to TCG
->    target/xtensa: Restrict SoftMMU mmu_index() to TCG
->    hw/core/cpu: RemoveCPUClass::mmu_index()
->    exec: Restrict cpu-mmu-index.h to accel/tcg/
+>    $ make check-functional-aarch64 V=1
+>    ...
+>    ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
+>    Bail out! ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
+> 
+> This is tracked as https://gitlab.com/qemu-project/qemu/-/issues/2907
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/functional/test_aarch64_replay.py | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 
-Queued to tcg-next, including the addition of the assert.
-
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
+> index 04cde433bcf..029fef3cbf8 100755
+> --- a/tests/functional/test_aarch64_replay.py
+> +++ b/tests/functional/test_aarch64_replay.py
+> @@ -5,7 +5,7 @@
+>   #
+>   # SPDX-License-Identifier: GPL-2.0-or-later
+>   
+> -from qemu_test import Asset
+> +from qemu_test import Asset, skipIfOperatingSystem
+>   from replay_kernel import ReplayKernelBase
+>   
+>   
+> @@ -16,6 +16,8 @@ class Aarch64Replay(ReplayKernelBase):
+>            'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+>           '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+>   
+> +    # Failing on Darwin: https://gitlab.com/qemu-project/qemu/-/issues/2907
+> +    @skipIfOperatingSystem('Darwin')
+>       def test_aarch64_virt(self):
+>           self.set_machine('virt')
+>           self.cpu = 'cortex-a53'
+
 
