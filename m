@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5252C3601A
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B1CC36014
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UJU-0000bw-00; Thu, 03 Apr 2025 19:49:36 -0400
+	id 1u0UKq-0002Fx-4Y; Thu, 03 Apr 2025 19:51:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJR-0000bV-Vm
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:33 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UKS-0001lA-1q
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:50:40 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJM-0000PH-VO
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:30 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43cf848528aso10991845e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:49:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UKP-0000k0-Tt
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:50:35 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3913958ebf2so1047868f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724165; x=1744328965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724232; x=1744329032; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dx4NIP+q6gK1PYGs8UG7pypdnmjUfZxa4IekdB6BGgc=;
- b=NF6zbHKDyPPBVCYsbfWUhZA7grba/DnEr0WsaLlg+zogqvweXJFNi9NyfCckEZs2UB
- 0WMqolRXfPtdyWdTUGykbznBlJPTQrglmwDeCM9ydp7u0Pg9MAHW365iPEPS0R2SiJCn
- Ob3W4KkdcCK0E+c6ASGKyEL0ZXf21HPOr1GzStVt/anJntAJ1f+RaC9z3swcg7ZHlqp4
- /o6g6FtywvEivrQSpWbe4p/oOmg40HfmUdl3lr7esFxxrImYSnjthNjWiiKPux0Ni6Ck
- dtIWGuLPDLQ6s+3M/rhiknP1cDq6Ma3efEL3+wX+rgPVwscX99C4rrE6b610P27EzJWs
- x+sA==
+ bh=PjLhp4LZOvkpDq4jQIYUOR+57wmLdvndO6f3N6bUc2k=;
+ b=T3N3FYBC8v8lz0bcjwSeKUBsDHTwoLHz27f4XLXoVdRrowUPEx45fyU2pYn/zyAzF9
+ 5HyHm/Oz3xWxQE2ANMeV8fUFT3TmnZVlHUkO2EgKPT07ymJqf2EHlCcRY/T9nzgS1q9M
+ yN2Qibn2svcG6a2SqPlmUu4mkOspU4exwQ3kvd08Pk0pxW8OAc5ESafdElU0XHwgFdWy
+ zdVvKfDuKnsLU2WThD/5Os7Ns0qUrTVhLclbUCz923jLIR9uvg2kFzqkrKbk4XWoJG5X
+ feiTIqk3IE1ESX3IEw/jQYhtYP34KnDLxSVkXqcSYjdluTgtN0KCkgvyrtAAaJV5gH/x
+ GVmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724165; x=1744328965;
+ d=1e100.net; s=20230601; t=1743724232; x=1744329032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dx4NIP+q6gK1PYGs8UG7pypdnmjUfZxa4IekdB6BGgc=;
- b=UEv33pWFR+B3Fvt/oFP41tynEkKcFja/fL62A7PGudhlRpDyQ3aUHbL5wT8PTvx0vL
- YgOloPbT8ufpJla4UCIXL0+bSjJJe9M48x5R53EA+adoYzI0ik8o7D/IDP5wMN4VKw0s
- 81WU7gYfreh++0ytpzUolbr1uTIn29h4xX3afIYnGUNW1+ochuNGoiljDqijRJfS3Nxb
- vtxf4lUjTT/p9X/alakf1GdmnLgK/ApzDYY868hOm7XU4d2RhWEaNvhQu6iVkY0n0Hvw
- rNGzJZ07JmHOg/FkG1XII0G6+K8LHBJj3Ufb3QDMMsAp7w8fbmX1B4igJYELIy0bb+F6
- U1og==
-X-Gm-Message-State: AOJu0YwX9P6xLbanMWNTO2rW0sUo/FNLPzCfcNgWKMNldFGji4+ic1Ul
- rjuSHJ7crMyrFio+/aLtKc5aSQrg9f6YKvURsYht2mpukoAKt48AvBT2oUXtuKnm0KLjKM3dmaW
- K
-X-Gm-Gg: ASbGnctJGTNVp12sTXOxP/yZrn8S/W5Im9PkFZ2otwnhi4wwjQ320Kj8Zyk8wa/wzzW
- B5LuVRdaE2jx3QYzQFdjnaw3sZOLPdnVDKWcGIEO7VJiggRafMpZK5eU3x2tN2uCJ3fg/fGXZET
- Av2dztWFFm7kpWra0Xto2PUgsnmS4UnIi4PUOGmXyYf/fAfbnBgTNWwEhoMLl3yLWegFyrg/ATS
- pZvi4jre4mdE+E+uUQKA5J7miEKZOGNb3atpaSlRYpJCnvr0IRKRfW/Tj4kpnO1b+74P0qDYLj6
- fApSC2qYScQOTKUWKSZn31pcD0sCnwnnMF91ymC2MVIjwcpBKOJP236Of7cDGydf7m6uT/5iygj
- mu/ZnrJN2dR1yXcMaJ6s=
-X-Google-Smtp-Source: AGHT+IEDEkkt/TosMfwTARFIzEOm7d8erqQBc8FSCNXwXHdU0PFAxSnP4+0M4Bh9g9wY50uot8/UxA==
-X-Received: by 2002:a05:600c:4503:b0:43c:f78d:82eb with SMTP id
- 5b1f17b1804b1-43ecf8eb2bbmr7242435e9.15.1743724165091; 
- Thu, 03 Apr 2025 16:49:25 -0700 (PDT)
+ bh=PjLhp4LZOvkpDq4jQIYUOR+57wmLdvndO6f3N6bUc2k=;
+ b=o21CVDmZOr928ro9xrxyOl1Khlhfe1qJTuXB5ZxAkzwSKKgxgxSDUIkjymsDGJPhMQ
+ omcGuDuIIF6reQnIbhm3LOz/8M30V6P/nLrzL3Psy2mkCS9XOCZetyyiYX+IayObIvlk
+ 6ql1wYEQA8geB5nBL+4l5MKuiSmtNVY+ybJjTX9IpCAwTy52n7JeVWSLZnk7eorXYpyz
+ XAU2kXat/CjgwYKYFIsKDGJnSbLJaCjSowUiMTuFyVVZq2y4fMoiG1OeCNzBtQvcPHYz
+ Oj33albN8MWC8zlFpgyN/7YEUa2nsXNnjUBMxk8/i9mCSmeOA+wNqgl4qDyUcXKzgvCL
+ Dhkw==
+X-Gm-Message-State: AOJu0YwZH/Vm44K/tFVs+fSYI+v1iRx3s/m0DiHRQX9+a9scsGDdVpGk
+ iUdrax0tqjSTEJHJ2pUs9akVLE+KnJyhQSmazLFqltspUzTqofM6bcRAk0G+CmtsoPCDXXKsqle
+ a
+X-Gm-Gg: ASbGncui4UqnoH+eb6aHzQbtSHvvGLBU+of4o7Gf7BILOftWW2PglVukyVJ7B1gLzLE
+ SzdnFGfjTeffxcdItm1DWZ+zlzRk4ee6RFgmMl0ly/j8p30p4kiNoD8gvHVpzyS4Fy2ShWbeQNZ
+ 5p+Xl6LyTF+hyaInOBSqYu6hBkTkeisb+is9Zp5a7RV5gQiv2ahcxvcOx3e0d5CR/6uHkQYAmWH
+ BO2uGXT6kiUvbUuI3aTw/1sqCg4GHTPFH4TVhACvM2CQ34BpjNJYsB02xpR53sziktfmeR23L4N
+ XnolPrBJAjAClIMo9ZPkFwaG7z7poQLeTOQ6Y4PWkDvnhGvtZKOszSXu7JQqhqJF9it9P3dCahl
+ o3a4hru2wlCatRWoiphM=
+X-Google-Smtp-Source: AGHT+IEhDmIXlSSU4qni49h/F5hbufBNGdD4meJb1tkY+fSvV2h3tueGAzbi2uDh0Px9KuP7byNiUw==
+X-Received: by 2002:a05:6000:2481:b0:39c:f0d:9146 with SMTP id
+ ffacd0b85a97d-39cba9368b5mr855120f8f.45.1743724231967; 
+ Thu, 03 Apr 2025 16:50:31 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a76cesm2969306f8f.37.2025.04.03.16.49.23
+ ffacd0b85a97d-39c301a7225sm2963060f8f.26.2025.04.03.16.50.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:49:24 -0700 (PDT)
+ Thu, 03 Apr 2025 16:50:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH-for-10.1 01/19] qemu: Introduce TargetInfo API in
- 'target_info.h'
-Date: Fri,  4 Apr 2025 01:48:56 +0200
-Message-ID: <20250403234914.9154-2-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 12/19] cpus: Move target-agnostic methods out of
+ cpu-target.c
+Date: Fri,  4 Apr 2025 01:49:07 +0200
+Message-ID: <20250403234914.9154-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403234914.9154-1-philmd@linaro.org>
 References: <20250403234914.9154-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,165 +105,212 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- meson.build                     |  9 +++++++++
- include/exec/poison.h           |  1 +
- include/qemu/target_info-impl.h | 21 +++++++++++++++++++++
- include/qemu/target_info.h      | 18 ++++++++++++++++++
- target_info-stub.c              | 23 +++++++++++++++++++++++
- target_info.c                   | 16 ++++++++++++++++
- 6 files changed, 88 insertions(+)
- create mode 100644 include/qemu/target_info-impl.h
- create mode 100644 include/qemu/target_info.h
- create mode 100644 target_info-stub.c
- create mode 100644 target_info.c
+ cpu-target.c         | 78 +-------------------------------------------
+ hw/core/cpu-common.c | 74 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 75 insertions(+), 77 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index bcb9d39a387..de9c9dacd35 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3262,6 +3262,9 @@ host_kconfig = \
+diff --git a/cpu-target.c b/cpu-target.c
+index 01b0064b91f..20db5ff3108 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -19,94 +19,18 @@
  
- ignored = [ 'TARGET_XML_FILES', 'TARGET_ABI_DIR', 'TARGET_ARCH' ]
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "qapi/error.h"
+-#include "qemu/error-report.h"
+-#include "qemu/qemu-print.h"
+-#include "qemu/target_info.h"
+ #include "system/accel-ops.h"
+ #include "system/cpus.h"
+ #include "exec/cpu-common.h"
+-#include "exec/tswap.h"
+ #include "exec/replay-core.h"
+ #include "exec/log.h"
+-#include "accel/accel-cpu-target.h"
++#include "hw/core/cpu.h"
+ #include "trace/trace-root.h"
  
-+target_info = [
-+]
-+
- default_targets = 'CONFIG_DEFAULT_TARGETS' in config_host
- actual_target_dirs = []
- fdt_required = []
-@@ -3368,6 +3371,9 @@ foreach target : target_dirs
-       config_target_data.set(k, v)
-     endif
-   endforeach
-+  if target not in target_info
-+    config_target_data.set('TARGET_INFO_STUB_NEEDED', 1)
-+  endif
-   config_target_data.set('QEMU_ARCH',
-                          'QEMU_ARCH_' + config_target['TARGET_BASE_ARCH'].to_upper())
-   config_target_h += {target: configure_file(output: target + '-config-target.h',
-@@ -3807,6 +3813,9 @@ endif
- common_ss.add(pagevary)
- specific_ss.add(files('page-target.c', 'page-vary-target.c'))
+ /* Validate correct placement of CPUArchState. */
+ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
+ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
  
-+specific_ss.add(files('target_info-stub.c'))
-+common_ss.add(files('target_info.c'))
-+
- subdir('backends')
- subdir('disas')
- subdir('migration')
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index bc422719d80..00aedc41d82 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -38,6 +38,7 @@
- #pragma GCC poison TARGET_BIG_ENDIAN
- #pragma GCC poison TCG_GUEST_DEFAULT_MO
- #pragma GCC poison TARGET_HAS_PRECISE_SMC
-+#pragma GCC poison TARGET_INFO_STUB_NEEDED
- 
- #pragma GCC poison TARGET_LONG_BITS
- #pragma GCC poison TARGET_FMT_lx
-diff --git a/include/qemu/target_info-impl.h b/include/qemu/target_info-impl.h
-new file mode 100644
-index 00000000000..b340e192fce
---- /dev/null
-+++ b/include/qemu/target_info-impl.h
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU binary helpers
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QEMU_TARGET_INFO_IMPL_H
-+#define QEMU_TARGET_INFO_IMPL_H
-+
+-char *cpu_model_from_type(const char *typename)
+-{
+-    g_autofree char *suffix = g_strdup_printf("-%s", target_cpu_type());
+-
+-    if (!object_class_by_name(typename)) {
+-        return NULL;
+-    }
+-
+-    if (g_str_has_suffix(typename, suffix)) {
+-        return g_strndup(typename, strlen(typename) - strlen(suffix));
+-    }
+-
+-    return g_strdup(typename);
+-}
+-
+-const char *parse_cpu_option(const char *cpu_option)
+-{
+-    ObjectClass *oc;
+-    CPUClass *cc;
+-    gchar **model_pieces;
+-    const char *cpu_type;
+-
+-    model_pieces = g_strsplit(cpu_option, ",", 2);
+-    if (!model_pieces[0]) {
+-        error_report("-cpu option cannot be empty");
+-        exit(1);
+-    }
+-
+-    oc = cpu_class_by_name(target_cpu_type(), model_pieces[0]);
+-    if (oc == NULL) {
+-        error_report("unable to find CPU model '%s'", model_pieces[0]);
+-        g_strfreev(model_pieces);
+-        exit(EXIT_FAILURE);
+-    }
+-
+-    cpu_type = object_class_get_name(oc);
+-    cc = CPU_CLASS(oc);
+-    cc->parse_features(cpu_type, model_pieces[1], &error_fatal);
+-    g_strfreev(model_pieces);
+-    return cpu_type;
+-}
+-
+-static void cpu_list_entry(gpointer data, gpointer user_data)
+-{
+-    CPUClass *cc = CPU_CLASS(OBJECT_CLASS(data));
+-    const char *typename = object_class_get_name(OBJECT_CLASS(data));
+-    g_autofree char *model = cpu_model_from_type(typename);
+-
+-    if (cc->deprecation_note) {
+-        qemu_printf("  %s (deprecated)\n", model);
+-    } else {
+-        qemu_printf("  %s\n", model);
+-    }
+-}
+-
+-void list_cpus(void)
+-{
+-    CPUClass *cc = CPU_CLASS(object_class_by_name(target_cpu_type()));
+-
+-    if (cc->list_cpus) {
+-        cc->list_cpus();
+-    } else {
+-        GSList *list;
+-
+-        list = object_class_get_list_sorted(TYPE_CPU, false);
+-        qemu_printf("Available CPUs:\n");
+-        g_slist_foreach(list, cpu_list_entry, NULL);
+-        g_slist_free(list);
+-    }
+-}
+-
+ /* enable or disable single step mode. EXCP_DEBUG is returned by the
+    CPU loop after each instruction */
+ void cpu_single_step(CPUState *cpu, int enabled)
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 9064dd24f82..6d0788331c7 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -25,6 +25,9 @@
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/lockcnt.h"
++#include "qemu/error-report.h"
++#include "qemu/qemu-print.h"
 +#include "qemu/target_info.h"
-+
-+struct BinaryTargetInfo {
-+
-+    /* runtime equivalent of TARGET_INFO_STUB_NEEDED definition */
-+    bool is_stub;
-+
-+};
-+
-+#endif
-diff --git a/include/qemu/target_info.h b/include/qemu/target_info.h
-new file mode 100644
-index 00000000000..fab3f3153ea
---- /dev/null
-+++ b/include/qemu/target_info.h
-@@ -0,0 +1,18 @@
-+/*
-+ * QEMU binary helpers
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QEMU_TARGET_INFO_H
-+#define QEMU_TARGET_INFO_H
-+
-+typedef struct BinaryTargetInfo BinaryTargetInfo;
-+
-+const BinaryTargetInfo *target_info(void);
-+
-+bool target_info_is_stub(void);
-+
-+#endif
-diff --git a/target_info-stub.c b/target_info-stub.c
-new file mode 100644
-index 00000000000..d683a05977d
---- /dev/null
-+++ b/target_info-stub.c
-@@ -0,0 +1,23 @@
-+/*
-+ * QEMU target info stubs
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/target_info-impl.h"
-+
-+#ifdef TARGET_INFO_STUB_NEEDED
-+
-+static const BinaryTargetInfo target_info_stub = {
-+    .is_stub = true,
-+};
-+
-+const BinaryTargetInfo *target_info(void)
+ #include "exec/log.h"
+ #include "exec/gdbstub.h"
+ #include "system/tcg.h"
+@@ -152,6 +155,21 @@ ObjectClass *cpu_class_by_name(const char *typename, const char *cpu_model)
+     return NULL;
+ }
+ 
++char *cpu_model_from_type(const char *typename)
 +{
-+    return &target_info_stub;
++    g_autofree char *suffix = g_strdup_printf("-%s", target_cpu_type());
++
++    if (!object_class_by_name(typename)) {
++        return NULL;
++    }
++
++    if (g_str_has_suffix(typename, suffix)) {
++        return g_strndup(typename, strlen(typename) - strlen(suffix));
++    }
++
++    return g_strdup(typename);
 +}
 +
-+#endif /* TARGET_INFO_STUB_NEEDED */
-diff --git a/target_info.c b/target_info.c
-new file mode 100644
-index 00000000000..cb17d29b86d
---- /dev/null
-+++ b/target_info.c
-@@ -0,0 +1,16 @@
-+/*
-+ * QEMU legacy binary helpers
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/target_info-impl.h"
-+#include "qemu/target_info.h"
-+
-+bool target_info_is_stub(void)
+ static void cpu_common_parse_features(const char *typename, char *features,
+                                       Error **errp)
+ {
+@@ -183,6 +201,33 @@ static void cpu_common_parse_features(const char *typename, char *features,
+     }
+ }
+ 
++const char *parse_cpu_option(const char *cpu_option)
 +{
-+    return target_info()->is_stub;
++    ObjectClass *oc;
++    CPUClass *cc;
++    gchar **model_pieces;
++    const char *cpu_type;
++
++    model_pieces = g_strsplit(cpu_option, ",", 2);
++    if (!model_pieces[0]) {
++        error_report("-cpu option cannot be empty");
++        exit(1);
++    }
++
++    oc = cpu_class_by_name(target_cpu_type(), model_pieces[0]);
++    if (oc == NULL) {
++        error_report("unable to find CPU model '%s'", model_pieces[0]);
++        g_strfreev(model_pieces);
++        exit(EXIT_FAILURE);
++    }
++
++    cpu_type = object_class_get_name(oc);
++    cc = CPU_CLASS(oc);
++    cc->parse_features(cpu_type, model_pieces[1], &error_fatal);
++    g_strfreev(model_pieces);
++    return cpu_type;
++}
++
+ bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+ {
+     if (!accel_cpu_common_realize(cpu, errp)) {
+@@ -359,3 +404,32 @@ static void cpu_register_types(void)
+ }
+ 
+ type_init(cpu_register_types)
++
++static void cpu_list_entry(gpointer data, gpointer user_data)
++{
++    CPUClass *cc = CPU_CLASS(OBJECT_CLASS(data));
++    const char *typename = object_class_get_name(OBJECT_CLASS(data));
++    g_autofree char *model = cpu_model_from_type(typename);
++
++    if (cc->deprecation_note) {
++        qemu_printf("  %s (deprecated)\n", model);
++    } else {
++        qemu_printf("  %s\n", model);
++    }
++}
++
++void list_cpus(void)
++{
++    CPUClass *cc = CPU_CLASS(object_class_by_name(target_cpu_type()));
++
++    if (cc->list_cpus) {
++        cc->list_cpus();
++    } else {
++        GSList *list;
++
++        list = object_class_get_list_sorted(TYPE_CPU, false);
++        qemu_printf("Available CPUs:\n");
++        g_slist_foreach(list, cpu_list_entry, NULL);
++        g_slist_free(list);
++    }
 +}
 -- 
 2.47.1
