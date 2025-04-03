@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC4AC3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8861BC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0R9i-0002j1-J3; Thu, 03 Apr 2025 16:27:18 -0400
+	id 1u0RFI-00040E-MI; Thu, 03 Apr 2025 16:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0R9e-0002i7-Hx
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:27:15 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RFG-0003ze-BS
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:33:02 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0R9c-0003Qj-26
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:27:14 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso9310115e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:27:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RFE-00043p-DK
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:33:02 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3914bc3e01aso876727f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743712030; x=1744316830; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yMdxd7fjIjihh9SvmEj50b94nf5OcoxMUT8JuDjtX0w=;
- b=uplcUUgy63iZ2XFm44l3f/CvxTsHifU/NroszozUPy+T2xbXx4hNedFKM2fo114m8o
- 3CkOMkg/iOBTBvCoNerwHLFeoCVYyKN1MTpudCQmMHISmEBgNmqEfTFc/gsz3nGnFi+2
- LjeBS94D5VVC4cUkBDTuCHcCtQN69XYzkXwJMByeZKYKQ/D4MOgKxl7x1TG6zDqZEbew
- wpjz97RCSbmR8wk1yaWszdFFXZCfSFxuuim+glrZ50Q6mp+Ymk42PG+DDV6DUdiJRcjO
- uPjfTr8IJK0jitgNtzupqCfIbelT/7/7EP9AfXKoez8HkTxTq9YCmQbCMgEklDVxwA/J
- cpgw==
+ d=linaro.org; s=google; t=1743712378; x=1744317178; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VUYVIflGesDLaaMP/ur2j2JEaJvbIDtPIxL00Q+AXXI=;
+ b=icqd3iAkO2LDQm4JW82e5i04PFlHoxB3gDl8VdEGpBq/VCNasoZBX2jjEa9UXmhj2b
+ h8WsRgTSMiG1QcrzKZg27SV7PEZYWZBBQLUN6wwkR4cm3uYsweOABH0CjADd8/ItD6DD
+ 5/EIDe0tlboP0MrPfIGxEzevlIw5AMUhiuXUhyJyz9Holziax1/B3ZNihiE7Exwi8au/
+ 7dWLMp5Ee6xLc8LAqBHDdFCGWcsxuksyZuuEK27XEdtmaj9yrKmChDKvVT3EUTTI3PA3
+ wjXS7ddQZJrO2MRLiJzS4h4S8cbp3N5RWem0T6aWJRu33AsI9It9ccNVhiO6wo4z4/3d
+ rILA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743712030; x=1744316830;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yMdxd7fjIjihh9SvmEj50b94nf5OcoxMUT8JuDjtX0w=;
- b=cxAToA2SsurQe7REpPFmMTDX1xDYrmqnBmQyxFPriOv9aymNGSi3B4XqPUg/izZAwd
- 3fjLPdFCzvmgwzkn4AsWPGFtCJCoJ7DDsMS0PZGMyiKN8G0oQFfVQb+DvnZFXplrVSvk
- wZvNT/P99eNHsXPOi3tuc9ZUo2NhK+e4TxQJmGpWUCsWojjG/I7/DILVLRPba8IlJ8yV
- u6bbipajcRtWSWZ59DpKtpfb39pXA9fATQt2Sr0F6MnTsTT2dlCXwnjbOJ36olmwWvT+
- b8XrbI7h32z7kpjEVfDOpJ3I2jUttxIz8SeXLBrsGqimVS0TIcf/eZfiOZU11126LxXh
- 45Ug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuaMQav3CxZCYKU9gmBnASjGP28Ia7cV1Ps6OiUx+4EhFsdm6ZiZAlodPNdNNlRlBidKSzbqdm6/W5@nongnu.org
-X-Gm-Message-State: AOJu0YyvNZyP49Nbhlffk7UMdXtOdL6XAdLoX+8n+wdENmwW9w5306If
- 6XB/F5BtYU1LP/HghjtV/zYGo8GwlohHKkebuxXQ9MYBfETYilrItOq011v6kb0=
-X-Gm-Gg: ASbGncuFZ2jQ8ckyVzoKmPGuGnw/8bKBJ/PtnvQsRE7Dtc4iRibUAf/ehd7qdotWn4/
- ku2mu857Ov9UhfQzdDegR3VOj+fG/V2ZW9a/Gc48/TVSpVkkuJRiSLPCyX7qV7/3B0KUJDEhjvW
- jIu5qEJfdArvhLBtK/1rV0hSO5jFfea65+VYkxk4jAYnRcdAxw9NxT7m7cvZw42aZPw5iJ0Zo4R
- 50QN3/2iMXOPZGdJLN3ANvwCt1gxUqBnrSbIeRbrpgpQaH17KbDsn1/VoXzx/YIJweoS3dNQzT8
- ouiX/I4Q7taiLInUaPV+Fa3fSog1kBOhhWVixXxmpB/yTFHmLFsuD4zEmGTc/qiwkeJo5UHe56z
- 4+5msNJEMf1c9T6HQ0JMPgIITslcD
-X-Google-Smtp-Source: AGHT+IG6q2NbvrftZycWiIt3unU0xEkB4OU/iwKufzZaVzSyKXino8Oy1aPrQLr9ZbGdUbfk6udRYg==
-X-Received: by 2002:a05:600c:3ecb:b0:43d:7588:66a5 with SMTP id
- 5b1f17b1804b1-43ecfa06563mr4594095e9.31.1743712030167; 
- Thu, 03 Apr 2025 13:27:10 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1743712378; x=1744317178;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VUYVIflGesDLaaMP/ur2j2JEaJvbIDtPIxL00Q+AXXI=;
+ b=ERAtXEI638SdX7UxE9RCwOGc4Vx2EKyOb0VlQiYGj3B4+kEwn+bdjV2141yJ5HxLdO
+ yStJ153qXO/eUzNpIqNHaJr8QsVa5D4/n0AL3bY9jbF4V8jMmYXmOh27zPg6RexOM+WB
+ d/bneiUMWK6JYdcIBjNLjFyNqLBK2ejJ4FWuJwMOhXx/aM/zE+u3zYw9jA6mwOF0ODwF
+ ZMkVakMX7MgH/lBaFMgHR0ymzcI3l4VxkwALGoPCBwEsAtLUrLd7n6HHhB2hIdgNB3l6
+ 5Fjrmx8cYWfKbxGjKM0I+KlbHAvlDxfMWmJM/9qOgzS9Rr247zFrVuQnsnzoPXcCAP9C
+ Po/A==
+X-Gm-Message-State: AOJu0YzeehLLqUfrXnkZbJc76IX0fabVNVO1zNKHczemRJFBDN07gOMj
+ 1Iw2oZ7DuB3j1IMVKf4wkJkMOf/ZIbnZrJydBhPxNEEw9FqlQHRxw4jAUssW+nEcTVujtWNRls0
+ o
+X-Gm-Gg: ASbGncuii+ILu6TxidxTDJW61JxCkwVfbJflo7cZTHE6ImPSVTAJ1RC78StgBTJRefd
+ pSMA4W+YqhggBrIbxIU/bDnkungc6SUvv42jvf+1FZTq5mII+92IqHeWAkUNNNqt3bHOKnU9p2U
+ Zggo4+8XdbxsOvhvzsDCCOO60w5Drua1kqU66B8gg7WGsh+YQQT9nsvwswM9VmXdXSd2DaL+Zd1
+ a3K4OkJARicgIcdnUGgXw5Y3X5Vok71+JQwtloVENljuG2v/b9G8WO7rbkJi3nZ07y4YBCLWPHP
+ /WzCdVqUdaDT2PUfbkwyT73QRNU0vZTi/mA886pXMVMKHrLEf0RTCdHU4Ai/MwivAZnujnoomSm
+ /hJAsWe3UFDbkORWUuqJjplky
+X-Google-Smtp-Source: AGHT+IFuMDYU5C4vra/zISd63w4g/6Hipaj94TsmKScrBLHLx9GhSPj20bLnrPFVU3VA9q+RLjaQxA==
+X-Received: by 2002:a05:6000:4304:b0:39c:12ce:1052 with SMTP id
+ ffacd0b85a97d-39d07bcd00dmr154832f8f.7.1743712378220; 
+ Thu, 03 Apr 2025 13:32:58 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec342a1fesm27825145e9.3.2025.04.03.13.27.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 13:27:09 -0700 (PDT)
-Message-ID: <ba70bea2-46b7-4abc-b1cf-dbfe68d56143@linaro.org>
-Date: Thu, 3 Apr 2025 22:27:08 +0200
+ ffacd0b85a97d-39c301acec9sm2634257f8f.40.2025.04.03.13.32.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 03 Apr 2025 13:32:57 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH-for-10.0 v3 3/5] tests/functional: Skip aarch64_replay test on
+ macOS
+Date: Thu,  3 Apr 2025 22:32:39 +0200
+Message-ID: <20250403203241.46692-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250403203241.46692-1-philmd@linaro.org>
+References: <20250403203241.46692-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 v2 02/14] tests/functional: Add a decorator for
- skipping tests on particular OS
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Udo Steinberg <udo@hypervisor.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>
-References: <20250403151829.44858-1-philmd@linaro.org>
- <20250403151829.44858-3-philmd@linaro.org>
- <7c417483-7d5d-456f-8187-56b5264f539e@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <7c417483-7d5d-456f-8187-56b5264f539e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,55 +108,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 20:04, Thomas Huth wrote:
-> On 03/04/2025 17.18, Philippe Mathieu-Daudé wrote:
->> Since tests might be failing on some operating systems,
->> introduce the skipIfOperatingSystem() decorator.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/functional/qemu_test/__init__.py   |  2 +-
->>   tests/functional/qemu_test/decorators.py | 15 ++++++++++++++-
->>   2 files changed, 15 insertions(+), 2 deletions(-)
+As of v10.0.0-rc2 this test is still failing on macos:
 
+  $ make check-functional-aarch64 V=1
+  ...
+  ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
+  Bail out! ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
 
->> diff --git a/tests/functional/qemu_test/decorators.py b/tests/ 
->> functional/qemu_test/decorators.py
->> index 1651eb739a7..b6a1d41c55c 100644
->> --- a/tests/functional/qemu_test/decorators.py
->> +++ b/tests/functional/qemu_test/decorators.py
->> @@ -5,7 +5,7 @@
->>   import importlib
->>   import os
->>   import platform
->> -from unittest import skipUnless
->> +from unittest import skipIf, skipUnless
->>   from .cmd import which
->> @@ -26,6 +26,19 @@ def skipIfMissingCommands(*args):
->>       return skipUnless(has_cmds, 'required command(s) "%s" not 
->> installed' %
->>                                   ", ".join(args))
->> +'''
->> +Decorator to skip execution of a test if the current
->> +host operating system does not match one of the permitted
->> +ones.
-> 
-> "permitted ones" sounds like you'd need to specify the ones that are 
-> allowed to run the test, but it's rather the other way round, you have 
-> to specify the ones that are not able to run the test. I'd suggest to 
-> rewrite the comment accordingly.
-> 
->> +Example
->> +
->> +  @skipIfOperatingSystem("Linux", "Darwin")
->> +'''
->> +def skipIfOperatingSystem(*args):
->> +    return skipIf(platform.system() in args,
->> +                  'not running on one of the required OS(s) "%s"' %
-> 
-> Same here, maybe rather: "running on an OS (%s) that is not able to run 
-> this test" ?
+This is tracked as https://gitlab.com/qemu-project/qemu/-/issues/2907
 
-Yes indeed, thanks!
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tests/functional/test_aarch64_replay.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
+index 04cde433bcf..029fef3cbf8 100755
+--- a/tests/functional/test_aarch64_replay.py
++++ b/tests/functional/test_aarch64_replay.py
+@@ -5,7 +5,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset
++from qemu_test import Asset, skipIfOperatingSystem
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+@@ -16,6 +16,8 @@ class Aarch64Replay(ReplayKernelBase):
+          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+         '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+ 
++    # Failing on Darwin: https://gitlab.com/qemu-project/qemu/-/issues/2907
++    @skipIfOperatingSystem('Darwin')
+     def test_aarch64_virt(self):
+         self.set_machine('virt')
+         self.cpu = 'cortex-a53'
+-- 
+2.47.1
 
 
