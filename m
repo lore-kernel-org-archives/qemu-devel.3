@@ -4,101 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102E6C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 12:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B37C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 13:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0K0y-0005js-6X; Thu, 03 Apr 2025 08:49:48 -0400
+	id 1u0KAe-0007VM-QC; Thu, 03 Apr 2025 08:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u0K0u-0005jD-89; Thu, 03 Apr 2025 08:49:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u0K0q-0001Dq-6W; Thu, 03 Apr 2025 08:49:43 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5333lDLB008475;
- Thu, 3 Apr 2025 12:49:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qB0HrG
- MXym8Lorh0LqKGXANvc8OH00/GaMjRU7JDr2c=; b=JBH9Cvu8bkRgCeQMsRAPCH
- JDjjKWgDPCaCNIMBXQayyyijRDUdJ6YAUyrV2EW8/yRUBij7GgCRGcff7YMag78m
- opud7LOCYTS02Jggj1z/HDBP3eaklOQi/6xyikIX3aNLOqs4DY8gnKHGAHELEcPo
- tyzy18yWK+2UopyA/XL+WRACa4VN1D/Ib8WFDa1xvEIOIOwRSxS7NcRXo9kmEtFs
- PZRLorrEeI6CZRhs5ZiHZQvHzRMaTixJlmxkAjadkjxYF2ylmQC7II03wJNsCrHo
- y8A2XD6S/icaD3q+KeokF7abmENfU2vyCEvL4bBBTZcKsrhPQPvvpBDrreSudg8w
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45sjq9t91b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Apr 2025 12:49:34 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5339ajD6004829;
- Thu, 3 Apr 2025 12:49:33 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45puk0501v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Apr 2025 12:49:33 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 533CnWxw32703060
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 3 Apr 2025 12:49:32 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2536A5805C;
- Thu,  3 Apr 2025 12:49:32 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C71B45805E;
- Thu,  3 Apr 2025 12:49:31 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  3 Apr 2025 12:49:31 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u0KAc-0007V7-94
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 08:59:47 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u0KAa-0003KR-2A
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 08:59:46 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2695C211AD;
+ Thu,  3 Apr 2025 12:59:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743685178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kUTJRJE0WGzkpNa4S7MCQYpdpK1riCenJC02j4PL1fE=;
+ b=rnlrao3BeE15E4G//YrLefOIt9ajwYbmhvWl+8mqi5OFSLEjWcz9AtRuELYRhhwJIhSsZ3
+ gsvQ0yt03yL1KNcn/OzFG7UyGqP5TmslJxOKcjqP5ilahQ5OQz9xI36F8sxaHACv8BAtw/
+ H9OED6MiVF9YKV/nayx/wdxvlV7jz8E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743685178;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kUTJRJE0WGzkpNa4S7MCQYpdpK1riCenJC02j4PL1fE=;
+ b=DgE5cmIeGcJ5xweZ41CvRG/8f/+vm1ATk8cPVfmbfhgbQo/S5nXsO97i/54PAg2yOGp+ZB
+ cA7JqQi84avcR6DA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rnlrao3B;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=DgE5cmIe
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743685178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kUTJRJE0WGzkpNa4S7MCQYpdpK1riCenJC02j4PL1fE=;
+ b=rnlrao3BeE15E4G//YrLefOIt9ajwYbmhvWl+8mqi5OFSLEjWcz9AtRuELYRhhwJIhSsZ3
+ gsvQ0yt03yL1KNcn/OzFG7UyGqP5TmslJxOKcjqP5ilahQ5OQz9xI36F8sxaHACv8BAtw/
+ H9OED6MiVF9YKV/nayx/wdxvlV7jz8E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743685178;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kUTJRJE0WGzkpNa4S7MCQYpdpK1riCenJC02j4PL1fE=;
+ b=DgE5cmIeGcJ5xweZ41CvRG/8f/+vm1ATk8cPVfmbfhgbQo/S5nXsO97i/54PAg2yOGp+ZB
+ cA7JqQi84avcR6DA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 912761392A;
+ Thu,  3 Apr 2025 12:59:37 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id a0fnEzmG7md3OAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 03 Apr 2025 12:59:37 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, Prasad
+ Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v8 2/7] migration: Refactor channel discovery mechanism
+In-Reply-To: <CAE8KmOzASSXE9FRmiFQ6Q4fxaGFh_8VWKXgnugjEs+egFuQPpA@mail.gmail.com>
+References: <20250318123846.1370312-1-ppandit@redhat.com>
+ <20250318123846.1370312-3-ppandit@redhat.com> <87y0wlkzvs.fsf@suse.de>
+ <CAE8KmOzASSXE9FRmiFQ6Q4fxaGFh_8VWKXgnugjEs+egFuQPpA@mail.gmail.com>
+Date: Thu, 03 Apr 2025 09:59:34 -0300
+Message-ID: <878qohl7t5.fsf@suse.de>
 MIME-Version: 1.0
-Date: Thu, 03 Apr 2025 14:49:31 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
- <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
- <brueckner@linux.ibm.com>
-Subject: Re: [PATCH v3 4/4] hw/s390x: compat handling for backward migration
-In-Reply-To: <1584a6d0-63b8-459b-9f4b-84192a9256e1@redhat.com>
-References: <20250331140041.3133621-1-shalini@linux.ibm.com>
- <20250331140041.3133621-5-shalini@linux.ibm.com>
- <1584a6d0-63b8-459b-9f4b-84192a9256e1@redhat.com>
-Message-ID: <688c719a1942615ada3e438670b8fb29@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VpdScj0LDj50NqI8Ad6f24H70eE_D7WN
-X-Proofpoint-ORIG-GUID: VpdScj0LDj50NqI8Ad6f24H70eE_D7WN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-03_05,2025-04-02_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- malwarescore=0 mlxlogscore=999 clxscore=1015 impostorscore=0 mlxscore=0
- suspectscore=0 phishscore=0 spamscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504030053
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 2695C211AD
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[5];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,228 +128,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-04-02 09:52, Thomas Huth wrote:
-> On 31/03/2025 16.00, Shalini Chellathurai Saroja wrote:
->> Add Control-Program Identification (CPI) device to QOM only when the 
->> virtual
->> machine supports CPI. CPI is supported from "s390-ccw-virtio-10.0" 
->> machine
->> and higher.
->> 
->> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->> ---
->>   hw/s390x/event-facility.c  | 27 ++++++++++++++++++++++-----
->>   hw/s390x/s390-virtio-ccw.c |  1 +
->>   2 files changed, 23 insertions(+), 5 deletions(-)
->> 
->> diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
->> index c0fb6e098c..cb23bbc54b 100644
->> --- a/hw/s390x/event-facility.c
->> +++ b/hw/s390x/event-facility.c
->> @@ -22,6 +22,7 @@
->>   #include "hw/s390x/sclp.h"
->>   #include "migration/vmstate.h"
->>   #include "hw/s390x/event-facility.h"
->> +#include "hw/qdev-properties.h"
->>     typedef struct SCLPEventsBus {
->>       BusState qbus;
->> @@ -54,6 +55,7 @@ struct SCLPEventFacility {
->>       bool allow_all_mask_sizes;
->>       /* length of the receive mask */
->>       uint16_t mask_length;
->> +    bool use_cpi;
->>   };
->>     /* return true if any child has event pending set */
->> @@ -455,11 +457,20 @@ static void realize_event_facility(DeviceState 
->> *dev, Error **errp)
->>           qdev_unrealize(DEVICE(&event_facility->quiesce));
->>           return;
->>       }
->> -    if (!qdev_realize(DEVICE(&event_facility->cpi),
->> -                      BUS(&event_facility->sbus), errp)) {
->> -        qdev_unrealize(DEVICE(&event_facility->quiesce));
->> -        qdev_unrealize(DEVICE(&event_facility->cpu_hotplug));
->> -        return;
->> +    /*
->> +     * Add sclpcpi device to QOM only when the virtual machine 
->> supports
->> +     * Control-Program Identification. It is supported by 
->> "s390-ccw-virtio-10.0"
->> +     * machine and higher.
->> +     */
->> +    if (!event_facility->use_cpi) {
->> +        object_unparent(OBJECT(&event_facility->cpi));
->> +    } else {
->> +        if (!qdev_realize(DEVICE(&event_facility->cpi),
->> +                          BUS(&event_facility->sbus), errp)) {
->> +            qdev_unrealize(DEVICE(&event_facility->quiesce));
->> +            qdev_unrealize(DEVICE(&event_facility->cpu_hotplug));
->> +            return;
->> +        }
-> 
-> Hmm, first doing object_initialize_child() in init_event_facility()
-> and then unparenting it here again in case we are running with an
-> older machine type is a little bit ugly. I wonder whether it would be
-> nicer to add the QOM object from ccw_init() init instead, similar to
-> what we do with the SCLP-console in s390_create_sclpconsole() ? If
-> you've got some spare minutes, could you please give it a try whether
-> that looks nicer?
-> 
+Prasad Pandit <ppandit@redhat.com> writes:
 
-Hello Thomas,
+> Hello Fabiano,
+>
+> On Mon, 31 Mar 2025 at 20:31, Fabiano Rosas <farosas@suse.de> wrote:
+>> > +    } else if (mis->from_src_file) {
+>> This is redundant.
+>
+> * This was to ensure (double check) that when the Postcopy connection
+> comes in, the main channel is established. Also a couple of versions
+> back migration qtest was failing without this check. Nonetheless,
+> qtests do work now without this check. I'll remove it if we must.
+>
 
-Sure. Did you mean like the code below?, if yes, the use_cpi is always 
-true when adding the sclpcpi device from ccw_init(). The use_cpi is set 
-to false at a later point, when the machine type is 9.2 or older. This 
-means the sclpcpi device is always added, the output and the code are 
-provided below. Please let me know how to proceed, thank you very much.
+Yes, there's no point. if we already have main and multifd channels,
+what's left must be postcopy.
 
-virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get", 
-"arguments":{"path":"/machine/sclp/s390-sclp-event-facility", 
-"property":"use-cpi"}}'
-{
-   "return": false,
-   "id": "libvirt-16"
-}
-virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get", 
-"arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi", 
-"property":"control-program-id"}}'
-{
-   "return": {
-     "timestamp": 1743681889538425000,
-     "system-level": 74872343805430528,
-     "sysplex-name": "        ",
-     "system-name": "        ",
-     "system-type": "LINUX   "
-   },
-   "id": "libvirt-17"
+>> > +        channel = CH_POSTCOPY;
+>> >      } else {
+>> > -        default_channel = !mis->from_src_file;
+>> > +        channel = CH_MAIN;
+>>
+>> And this is impossible.
+>
+>     -> https://lore.kernel.org/qemu-devel/20250215123119.814345-1-ppandit@redhat.com/T/#m18b6bf30e877f9eafaa67bba6a209b47782f6eac
+>
+> * Yes, but a couple of revisions back you suggested adding it saying
+> CH_MAIN assignment at the top was doing some heavy lifting and it's
+> more clear this way.
+>
+
+Well, but don't add it blindly if it doesn't make sense. The point was
+to not end the conditional at 'else if' because that makes the reader
+have to go look around the code to see what was already assigned. Here
+we want just a plain:
+
+else {
+    channel = CH_POSTCOPY; 
 }
 
-diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
-index cb23bbc54b..15d9f94845 100644
---- a/hw/s390x/event-facility.c
-+++ b/hw/s390x/event-facility.c
-@@ -76,6 +76,11 @@ static bool event_pending(SCLPEventFacility *ef)
-      return false;
-  }
+>> We should probably expand migration_incoming_setup() to make it clear
+>> that mis->from_src_file is set at this point. And
+>> assert(!mis->from_src_file). I can send a patch on top later.
+>
+> * migration_incoming_setup uses the QEMUFile object only when
+> mis->from_src_file is not set. I'm wondering if we really need an
+> assert(!mis->from_src_file) check? Because it'll reach here only when
+> channel == CH_MAIN and channel is set to CH_MAIN only when
+> mis->from_src_file is NULL.
+>
+>
 
-+static bool use_cpi(SCLPEventFacility *ef)
-+{
-+    return ef->use_cpi;
-+}
-+
-  static sccb_mask_t get_host_send_mask(SCLPEventFacility *ef)
-  {
-      sccb_mask_t mask;
-@@ -438,10 +443,6 @@ static void init_event_facility(Object *obj)
-      object_initialize_child(obj, TYPE_SCLP_CPU_HOTPLUG,
-                              &event_facility->cpu_hotplug,
-                              TYPE_SCLP_CPU_HOTPLUG);
--
--    object_initialize_child(obj, TYPE_SCLP_CPI,
--                            &event_facility->cpi,
--                            TYPE_SCLP_CPI);
-  }
+Given the:
 
-  static void realize_event_facility(DeviceState *dev, Error **errp)
-@@ -457,21 +458,6 @@ static void realize_event_facility(DeviceState 
-*dev, Error **errp)
-          qdev_unrealize(DEVICE(&event_facility->quiesce));
-          return;
-      }
--    /*
--     * Add sclpcpi device to QOM only when the virtual machine supports
--     * Control-Program Identification. It is supported by 
-"s390-ccw-virtio-10.0"
--     * machine and higher.
--     */
--    if (!event_facility->use_cpi) {
--        object_unparent(OBJECT(&event_facility->cpi));
--    } else {
--        if (!qdev_realize(DEVICE(&event_facility->cpi),
--                          BUS(&event_facility->sbus), errp)) {
--            qdev_unrealize(DEVICE(&event_facility->quiesce));
--            qdev_unrealize(DEVICE(&event_facility->cpu_hotplug));
--            return;
--        }
-  }
+if (!mis->from_src_file) {
 
-  static void reset_event_facility(DeviceState *dev)
-@@ -499,6 +485,7 @@ static void init_event_facility_class(ObjectClass 
-*klass, void *data)
-      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-      k->command_handler = command_handler;
-      k->event_pending = event_pending;
-+    k->use_cpi = use_cpi;
-  }
+I think someone (back in 2017) thought it was possible to reach there
+with from_src_file already set. I don't know whether that applied to
+this path. In any case, for this function I believe the correct is
+assert because we shouldn't have two channels arriving as main.
 
-  static const TypeInfo sclp_event_facility_info = {
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index c1001322e0..f077ecaee1 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -260,6 +260,21 @@ static void s390_create_sclpconsole(SCLPDevice 
-*sclp,
-      qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
-  }
+>> > -    } else {
+>> > +    } else if (channel == CH_MULTIFD) {
+>> >          /* Multiple connections */
+>> > -        assert(migration_needs_multiple_sockets());
+>> >          if (migrate_multifd()) {
+>>
+>> This should be an assert.
+>
+> Same, 'channel' is set to CH_MULTIFD,  only when migrate_multifd() is
+> enabled. Do we need another assert(migrate_multifd()) check?
+>
 
-+static void s390_create_sclpcpi(SCLPDevice *sclp)
-+{
-+    SCLPEventFacility *ef = sclp->event_facility;
-+    SCLPEventFacilityClass *efc = EVENT_FACILITY_GET_CLASS(ef);
-+    BusState *ev_fac_bus = sclp_get_event_facility_bus(ef);
-+    DeviceState *dev;
-+
-+    if(efc->use_cpi) {
-+        dev = qdev_new(TYPE_SCLP_CPI);
-+        object_property_add_child(OBJECT(ef), "sclpcpi", OBJECT(dev));
-+        object_unref(OBJECT(dev));
-+        qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
-+    }
-+}
-+
-  static void ccw_init(MachineState *machine)
-  {
-      MachineClass *mc = MACHINE_GET_CLASS(machine);
-@@ -323,6 +338,10 @@ static void ccw_init(MachineState *machine)
+Maybe not, but we definitely cannot just ignore if it happens and we
+also should not have an empty check that is always known to be true. So
+either assert or remove the if entirely.
 
-      /* init the TOD clock */
-      s390_init_tod();
-+
-+    /* init SCLP event Control-Program Identification */
-+    s390_create_sclpcpi(ms->sclp);
-+
-  }
+>> > +    } else if (channel == CH_POSTCOPY) {
+>> > +        assert(migrate_postcopy_preempt());
+>> > +        assert(!mis->postcopy_qemufile_dst);
+>> > +        f = qemu_file_new_input(ioc);
+>> > +        postcopy_preempt_new_channel(mis, f);
+>> > +        return;
+>> >      }
+>> >
+>> > -    if (migration_should_start_incoming(default_channel)) {
+>> > +    if (migration_has_main_and_multifd_channels()) {
+>>
+>> I think there's a bug here. Excluding multifd from the picture, if only
+>> the main channel needs to be setup, then it's possible to start postcopy
+>> recovery twice, once when the main channel appears and another time when
+>> the preempt channel appears.
+>
+> * When the preempt channel appears 'channel' is set to CH_POSTCOPY, so
+> it shall 'return' before reaching here, right?
+>
 
-  static void s390_cpu_plug(HotplugHandler *hotplug_dev,
-diff --git a/include/hw/s390x/event-facility.h 
-b/include/hw/s390x/event-facility.h
-index f445d2f9f5..ba20161023 100644
---- a/include/hw/s390x/event-facility.h
-+++ b/include/hw/s390x/event-facility.h
-@@ -204,6 +204,7 @@ struct SCLPEventFacilityClass {
-      SysBusDeviceClass parent_class;
-      void (*command_handler)(SCLPEventFacility *ef, SCCB *sccb, uint64_t 
-code);
-      bool (*event_pending)(SCLPEventFacility *ef);
-+    bool (*use_cpi)(SCLPEventFacility *ef);
-  };
+You're right, I missed the return statement.
 
-  BusState *sclp_get_event_facility_bus(SCLPEventFacility *ef);
-
-
->  Thanks,
->   Thomas
-
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
+> ===
+>         } else if (!mis->from_src_file &&
+>                         mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>                 /* reconnect main channel for postcopy recovery */
+>                 channel = CH_MAIN;
+>         } else {
+> ===
+> * When 'main' channel connection arrives for postcopy recovery,
+> 'channel' shall be set to CH_MAIN.
+>
+>> The previous code worked differently because it did:
+>>
+>> if (migrate_postcopy_preempt()) {
+>>     return main_channel;
+>>
+>> which would return false when preempt arrived after main.
+>
+> * Yes.
+>
+>> We could use migration_has_all_channels() instead, that would look more
+>> logically correct, but it would also change the current behavior that
+>> postcopy recovery can start before the preempt channel is in place. I'm
+>> not even sure if that's actually part of the design of the feature.
+>
+> * Not sure if we need this.
+>
+> Thank you.
+> ---
+>   - Prasad
 
