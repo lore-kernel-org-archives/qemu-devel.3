@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE4BC3601B
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE5AC3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UTv-0002Li-61; Thu, 03 Apr 2025 20:00:23 -0400
+	id 1u0UUA-0003zg-Ix; Thu, 03 Apr 2025 20:00:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UTs-00027k-MO
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:20 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UU5-0003cX-SZ
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:34 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UTq-0002xA-Fr
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:19 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43948021a45so13750165e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UU3-0002zT-11
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:33 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cf034d4abso15510545e9.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724816; x=1744329616; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724829; x=1744329629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SwOev6P4Yow8Jn5q9PsEhT1CQP4v/3jic2jASXzU5CU=;
- b=Tyn9QVV5jN8XQCO9xVOy4obhcmN7eAsP0iO2zIjP41VtqUanQTTXVGaO7mjOM+0RxD
- aVKr0y9lcQ9qLpnIj020EK3sclpcqcguvdQrtBD49OOW9SeOeuGkkFwGha8u9I3bfD4j
- zpDdjFdEV8RobuUtOwn6RJl9oJPNHGSibnCCxRUZUHIT/u6XSDsZz3Fe4iO2UtkfMUOl
- j9AKVFVYiJ7cQYsAklyZ9La60VLCrEY++8C7h3DVB8VaT3stPaIFFxHV356ZwUltB6U3
- MlniadNlDM23iviSnC0YkDhle7LrsM9rnzis1kHOVyarvrCCh6vzyuYtroGil4s1eQ7d
- tU3A==
+ bh=qWzncIlD/jPDOChfnrDcKNqYdRNXnmA3myNJZtWNdQo=;
+ b=RAf1QEd6y4EmPzQW5alBRJhZA9hS00J3OS3cXfiZ4qtNFdLcdgyNF/PnxXAhAC87go
+ Fpcy7HpKVBbpz0ney/gY4vIg0OFuc70HtaES0hss+GsZ0XXJdsUEQp+Wx/9bS+GVIO6w
+ 23TgdooopUrj2BOsppaw1gGGYM/xqEu5PugrMzOSOxSZoRZKuycs2FDx0znIINvJo9Ce
+ MMIXUjCRH9Hq3If7vEj7hD/ZkU+UWSY9vNtT++BWbtG4qzaxAZjvEOFQJCEXYeIsBV98
+ XiDBZ1VxYRsjzpufQF+C6g/TKZFdYZH8wkWGdKU3+PTKVvYzmElPS4bkBMiJwQoceGrv
+ ryyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724816; x=1744329616;
+ d=1e100.net; s=20230601; t=1743724829; x=1744329629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SwOev6P4Yow8Jn5q9PsEhT1CQP4v/3jic2jASXzU5CU=;
- b=Q5xkvL+jyiej7Dgg0xdfXX1jAE7PVOqHMyLtm3JpAFULth4gFohsQ2/E2z49vFCWSA
- ZzoEJgHySs0wf7YhA28sdTzeHO2E0WKquUl+1c1ND3gYlNHOFn2eggHRd7Y9+NgpPFMR
- rXLl8aX/WfEBOT5aSM1TFfEUnk4V+QZTohWPCe2npy3g3A777Sw8Da8zJh+IUtFfTbvz
- 6U/L23p7nHSN6k4Y2PweYJGwspAuCtd1Zq6KHa0ulxs2bEvCqV0cr15sgzAleHWYht5p
- xpxZWwE2mhegg/kBcjkuoCy42mBboTYKZsKMe44wkcGrZLJN8QxYREEET2pQ3Z0N83/W
- tT4Q==
-X-Gm-Message-State: AOJu0YzGRw4Ado9GKwk4LxD2sFkU7vOEwYLqgIpO7GvEfItCVLVVE62Z
- LFXA6e9onDUsYbR2jt5PDy+6L/65Add0hPhI9Z49F2zDQO4euh3RZDvc64Qe8ERlMqHO7ssNu5K
- g
-X-Gm-Gg: ASbGncvjfh5Y9ml82zavfYqHfDlf6RQLDwZ9n7rQr7wqhFgZQdp8nGOsOFBDynmvEA6
- 8Ut5ZWSGl4uAXh6KWBnWE3YwUG1P3A8C6kFHRzIcQtLzSROywLzP1kfGr8jZI9J12/F0hay+ybL
- N+GIJAKhjM48E4Ln3RHP9FwWd5R5cL9Dbnfh77ILgQmKD5i4ySPg95j51bgW4RAtk+qtxVaxybV
- 9QOr+BBMvSpncZ69LxbABlg3wCMZEicivX5+O7fXsnPSYqFDsQRQQezzsLOBrkmQ6pXhACAi6fT
- mG1lO3My3EU6+CeEkzIkjtmiJMpxfXWfR0/lEsjt7RVM+f0VcT148OdNRDfisjkKjoIvlMKItXb
- +hYTD4LkgI/dgz5LDvK4=
-X-Google-Smtp-Source: AGHT+IH/k8vX4W3YTcxTJkf5HmxAYk5wm4jnsFhfY84cUbVn3ObVkQeK18YQU35AnRD64PuDGPcphA==
-X-Received: by 2002:a05:600c:500a:b0:43b:ce3c:19d0 with SMTP id
- 5b1f17b1804b1-43ed0da06f1mr4398285e9.29.1743724816532; 
- Thu, 03 Apr 2025 17:00:16 -0700 (PDT)
+ bh=qWzncIlD/jPDOChfnrDcKNqYdRNXnmA3myNJZtWNdQo=;
+ b=JHTOMvzREm7Nq8QdKz4+/XfqMPeEmIa2a7aPb97MZ8oWNCNoUFCG6xBFn8az4qbMBp
+ 2qcQ3JAWTuR2jiTNefpF0dXPB2a6uKLAaQm79S7MQjU5umx+Lqlrmgqo8MjeAalg6FmG
+ MQnHED2LDMMt4kJu5YfFNyy/jXILout1Tx90Q4YiPVGVnEIPhStiEPNq4dP7SFOda4Wu
+ R6KvEQ8PCCbJ/rpo9xNzIZ50r0/1sX48MCRhRVMKBKeyOcf8z2Ohrko+2N+kYDoW/nQS
+ G1lvCUxyt9qJBiBtGpK+I5+38QNYmhJkNs+irbMkpSOkDSogO5JDiard67hE/hpw1tYt
+ lVWA==
+X-Gm-Message-State: AOJu0YwLM+ULLg7JQlvvsFSCbfpBB7i7VVMeqx29IskteIaHwAXLF8pm
+ 045fk2SEvhRokeEI3ISr6Q3ihyk1Y3iHcw+I9HSK9bX8+jz/1pCr2Lvz6++lk2V2Bp44N7Q1OC2
+ a
+X-Gm-Gg: ASbGncsCUOBg8cwqaETId9El3uS/1HnXsRvHOfhTMkNGoMqYGe99Rr2LH3YYI1hognb
+ 6cnBnPuhp5tpbtZ6zdIe25CdH5yF0wBv7p8jFf2+hMpGIYKDZR8WJpPB8Yo0/GpIXUAXFwYFntt
+ 2Y88zKdC1h1nty3D6La+Yj7je8GN5jips05pDio4yswxLUoanGto61EQ8vrj1NUrXBuBWNmDBez
+ 4O7NeiOVo6hgvfuGJnlOIp3q4yoz+ER0SF7ah/X1Rzye9EcNmoyUEDEb2nLHOndcf2dZdb6rlou
+ TeM12BDew+nn/alXVSyCtZcs+uT72GXnQSd0uSf8wA1maicTF/54n3ExLU+8ML1oojkxbda7XZF
+ Q9lU6EEcN5dRm4YJ+juk=
+X-Google-Smtp-Source: AGHT+IFG64zDHb5Pvt4t+IvngcBkXhgLKZqlZzqyNCO8ncDN8ez/4L/iNIdQDA3mtzXh0vsdwzBiTQ==
+X-Received: by 2002:a05:600c:4503:b0:43c:f78d:82eb with SMTP id
+ 5b1f17b1804b1-43ecf8eb2bbmr7344195e9.15.1743724829228; 
+ Thu, 03 Apr 2025 17:00:29 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1630de9sm34052135e9.1.2025.04.03.17.00.14
+ 5b1f17b1804b1-43ea8d16049sm61437675e9.0.2025.04.03.17.00.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 17:00:16 -0700 (PDT)
+ Thu, 03 Apr 2025 17:00:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 17/39] target/arm: Restrict inclusion of
- 'multiprocessing.h'
-Date: Fri,  4 Apr 2025 01:57:59 +0200
-Message-ID: <20250403235821.9909-18-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 19/39] hw/arm: Include missing
+ 'target/arm/gtimer.h' header
+Date: Fri,  4 Apr 2025 01:58:01 +0200
+Message-ID: <20250403235821.9909-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,39 +103,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only cpu.c requires "multiprocessing.h" definitions so far.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.h | 1 -
- target/arm/cpu.c | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/aspeed_ast27x0.c    | 1 +
+ hw/arm/bcm2838.c           | 1 +
+ hw/arm/exynos4210.c        | 1 +
+ hw/arm/fsl-imx8mp.c        | 1 +
+ hw/arm/mps3r.c             | 1 +
+ hw/arm/npcm8xx.c           | 1 +
+ hw/vmapple/vmapple.c       | 1 +
+ target/arm/tcg/op_helper.c | 1 +
+ 8 files changed, 8 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 3705b34285b..1a1ae229e1d 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -30,7 +30,6 @@
- #include "exec/gdbstub.h"
- #include "exec/page-protection.h"
- #include "qapi/qapi-types-common.h"
--#include "target/arm/multiprocessing.h"
- #include "target/arm/gtimer.h"
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 37bfeef304d..5c2481225dd 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -22,6 +22,7 @@
+ #include "hw/intc/arm_gicv3.h"
+ #include "qobject/qlist.h"
+ #include "qemu/log.h"
++#include "target/arm/gtimer.h"
+ #include "target/arm/multiprocessing.h"
  
- #define EXCP_UDEF            1   /* undefined instruction */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index b1aa482c726..6f62745d7f6 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -53,6 +53,7 @@
- #include "qemu/target_info-qom.h"
+ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
+index ddb7c5f757a..38d9b785a75 100644
+--- a/hw/arm/bcm2838.c
++++ b/hw/arm/bcm2838.c
+@@ -12,6 +12,7 @@
+ #include "hw/arm/raspi_platform.h"
+ #include "hw/sysbus.h"
+ #include "hw/arm/bcm2838.h"
++#include "target/arm/gtimer.h"
+ #include "trace.h"
+ 
+ #define GIC400_MAINTENANCE_IRQ      9
+diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
+index 01e6e2fb052..ca40df3db75 100644
+--- a/hw/arm/exynos4210.c
++++ b/hw/arm/exynos4210.c
+@@ -36,6 +36,7 @@
+ #include "hw/sd/sdhci.h"
+ #include "hw/usb/hcd-ehci.h"
  #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
-+#include "target/arm/multiprocessing.h"
++#include "target/arm/gtimer.h"
+ #include "target/arm/multiprocessing.h"
  
- static void arm_cpu_set_pc(CPUState *cs, vaddr value)
- {
+ #define EXYNOS4210_CHIPID_ADDR         0x10000000
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index 2cf5eeaf313..180feca9d80 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -17,6 +17,7 @@
+ #include "hw/boards.h"
+ #include "system/system.h"
+ #include "target/arm/cpu-qom.h"
++#include "target/arm/gtimer.h"
+ #include "qapi/error.h"
+ #include "qobject/qlist.h"
+ 
+diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
+index 604f6845fde..37c0de28a92 100644
+--- a/hw/arm/mps3r.c
++++ b/hw/arm/mps3r.c
+@@ -47,6 +47,7 @@
+ #include "hw/ssi/pl022.h"
+ #include "hw/timer/cmsdk-apb-dualtimer.h"
+ #include "hw/watchdog/cmsdk-apb-watchdog.h"
++#include "target/arm/gtimer.h"
+ 
+ /* Define the layout of RAM and ROM in a board */
+ typedef struct RAMInfo {
+diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+index 3987e55355b..2f11bc53a86 100644
+--- a/hw/arm/npcm8xx.c
++++ b/hw/arm/npcm8xx.c
+@@ -29,6 +29,7 @@
+ #include "qapi/error.h"
+ #include "qemu/units.h"
+ #include "system/system.h"
++#include "target/arm/gtimer.h"
+ #include "target/arm/multiprocessing.h"
+ 
+ /*
+diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
+index 9bb5b0553a2..25652b16f0c 100644
+--- a/hw/vmapple/vmapple.c
++++ b/hw/vmapple/vmapple.c
+@@ -51,6 +51,7 @@
+ #include "system/reset.h"
+ #include "system/runstate.h"
+ #include "system/system.h"
++#include "target/arm/gtimer.h"
+ #include "target/arm/multiprocessing.h"
+ 
+ struct VMAppleMachineState {
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 38d49cbb9d8..005f84082af 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -25,6 +25,7 @@
+ #include "cpu-features.h"
+ #include "exec/exec-all.h"
+ #include "accel/tcg/cpu-ldst.h"
++#include "target/arm/gtimer.h"
+ #include "cpregs.h"
+ 
+ #define SIGNBIT (uint32_t)0x80000000
 -- 
 2.47.1
 
