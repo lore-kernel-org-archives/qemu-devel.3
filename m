@@ -4,95 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A07C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 13:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE6FC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 14:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0KzF-0007FJ-Fw; Thu, 03 Apr 2025 09:52:06 -0400
+	id 1u0LBr-0001Lr-GF; Thu, 03 Apr 2025 10:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0KzD-0007El-ET
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 09:52:03 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0Kz7-000730-2d
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 09:52:03 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-227aaa82fafso9304485ad.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 06:51:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743688314; x=1744293114; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hD33rTP5aBpfkvusMasn2VQ375F+ooya8piv33mHdUs=;
- b=gAr++rOVjUwBTWJcizxHZjXI3qK5sK4//e8i9ommTgEeNkh/kS2Y4xWI+qSCMDlIUV
- 9aQkqtdbf+eTrGDKUHO7iqoM3hcEXyBDz96aRbeK7kiTdcQa+Yt8d/DxMRoKg4hfv4PN
- gW+a/xI/kkG/kRGyPtddIbF442p2/SzbKFjQyqXmwfagcpwBqadT0EDhYB/4kl0Hw1ED
- LVswSKlL8MxFL+IYan9ZdGauDumRF2PZOSUab2p3tBA8sRgjCKSTw1/cgSaVRZ2x0aM6
- RsCQDfGeGkIlcgSQS0+SlRC7ZE3Lmaj1FFc/0NztWC+uvnsyP/R2xmfObDF/RpreCajE
- vYfA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u0LBp-0001L0-F7
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 10:05:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u0LBn-0001LT-LQ
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 10:05:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743689100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XLXdAS4trprj29nGaRI5aZfZ+sIl3J+uLzGKL5gCqOo=;
+ b=M95kQ4PhJFZrBq4e0RTTxKUqhfAQRiPJFtpA1bGNSj8RTMopgZcyGNeyQ4axp4VDIT7nb8
+ fP0MUnf2aFQsFbdEnrZNjlGloofGfiGvFmSA2cusZdEAlT6FqaCXy1wnEbohQH4NvzrD52
+ 7mPSs0870efta/8eBJxnA82R3lYpip8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-33-elD0HpeKP9uRHxL2SrzWMQ-1; Thu, 03 Apr 2025 10:04:57 -0400
+X-MC-Unique: elD0HpeKP9uRHxL2SrzWMQ-1
+X-Mimecast-MFC-AGG-ID: elD0HpeKP9uRHxL2SrzWMQ_1743689096
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d6c65dc52so8144755e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 07:04:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743688314; x=1744293114;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743689096; x=1744293896;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hD33rTP5aBpfkvusMasn2VQ375F+ooya8piv33mHdUs=;
- b=ZGet9l33fBRdPygHNaaYkwp1YezB8SBvrld8g8Om5EfVW8+kMobN0whOF9jbKJnhu9
- d5BS0foR7AN+Z5rcyeKBR1urKvyhPPMr/03bWGiHNKJetuSA7kM8wBwXOqqfXBPbJSF5
- a7laRFG/grVJRT6gbCV7iTXvaslu9erlGTJI57D2bpdhxK5nwg/Iye0rfHj9eNFL3qyD
- 0K0tpfoq3amlzG/tIG1v6LCJCDqso3J785+N6qPTQ6OJz2fh3FWOsn2zw71ept+BP///
- hgo31Dv8dFGLKz5wcjiCySXLr8lTLOUe8gyJZij9dVew/Tjrc/R2UOn8Ygt3cr2KPwHV
- O6dg==
-X-Gm-Message-State: AOJu0YxGJxecf4Gk+Rf77QVbPicMOOaFgwqh4XMdxS6sl8AOWjwHT6iE
- Zftr7sK5wqYD9QLfIauXmHU6U9koCrrQme+PZFqm1icIkcY0/rm1zEDg25xObO8=
-X-Gm-Gg: ASbGncuwfYRNjyfucc4EkJOmFRudBQx9Tqi3P4AAA72dlzz9webRV+nEMN5R4h1nAtC
- eKRP86Mr/zLocDdgmcZhQi0yFm0yMwKZwsFhdU6zByepCCNEvwDgqiFukIRbBV1U6hOaUzGQ90u
- eoDAUKc6OfI//xmHvw7P3JrhOQN78co299BmCrezz9z/jukh7sMR02uYwicjfttYbjusjODSk8g
- iqzgGr24HcJg7fEvjQcaZhNxsmufCK1HWOlfDeSl5d9L7jj4KdqOLQyvvixgYOZsFnUx81flJKV
- UZXXsmyX0G1wk/qCKLcO/EyvBVVa8s2NPQ4sVC4i4ypIlFxIq/9u7raZxz5/toQo6ZNqquKvt0h
- aiwAnpk47u9sGPgmxurA=
-X-Google-Smtp-Source: AGHT+IHoG5ugTf4B1m8tuSZ/CxaEQzW4WADkXK2sj6sFcJQU0gHR3t1v1TxSHM26g3vljv17fGjECg==
-X-Received: by 2002:a17:903:11ce:b0:224:1157:6d26 with SMTP id
- d9443c01a7336-22977d7df4bmr42868785ad.4.1743688314586; 
- Thu, 03 Apr 2025 06:51:54 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
+ bh=XLXdAS4trprj29nGaRI5aZfZ+sIl3J+uLzGKL5gCqOo=;
+ b=ZhLBiWmEjeTvpAz67VDZSzlFfGrPgrmIDJxN8CgHR9qSpdj+g5/NynFJAI/tHAysYx
+ XKOekIfoTpCe/KkSk99P93VLvlb6MakIywrxxWjdRZSip9dzh6WHchVzMiStrN6qAZzJ
+ zruQ3vmKmrufWzlGz4hhQfmEZZQMzWikg0nWRTPhvEu1jBh4Ho+ttJDV3Y5mvpdZihKe
+ vKdGqaFYGm8FGyZmOY45gEYUCVWLHf46NMfeWthh6Az2wdwsLQGfJvsihm8KxgvvR9UB
+ QzGPJlAY10EmXqUd2VxfN+p6onSlBvNfbbitBntYDs62W4GgeUCVBWuCjZBo6WdR5rLP
+ zmMg==
+X-Gm-Message-State: AOJu0YzQUd1FlFZViKEyrDTFKTof/Ql2TshYz7MI7Qixb6r54+NHdV5K
+ VDhqNYLMUtTX4MqZCDSomKnvIdhGINGBQnFzkN3JkvDj+20dl93dLCNvoHXWOsVDo3eDBYYbdd7
+ mam3d4IMu6aKxAMeovaaAojKxDhcjYJTmmB/FBozz3yI1DwzYCtjn
+X-Gm-Gg: ASbGncvYQc1Jex5I5+G/gbU2nvR/nZoHsi/iQn4vsOSsXfVXUG8uVefBeK9IYApy+VO
+ W3NbaB0M34u66XypwlNQVlT96W6ba34f+shc3CUcEHZJHIu9aPbasfOlno/J0dgwT+IdpEShL7K
+ JxPMoWKAnRlzu8FfgwPUqU2/zZMtVDZhFSN5E4VK9dwLoJahg/QIgPiE3xj8nWOFiy7anJuhvyM
+ SUDTjn1JfBY+Fb5lEUCdCOZa86UV/Z7Ll5pZd6llJSgywnIVmd2N+RsXnxQlV6wVvuI7qJtk3ZW
+ 9a3g2DAYIQ==
+X-Received: by 2002:a05:600c:4e56:b0:43c:fa24:873e with SMTP id
+ 5b1f17b1804b1-43eb5c20fdemr78918115e9.13.1743689095990; 
+ Thu, 03 Apr 2025 07:04:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBm6IjOOJ0eeaG2lCMlWhltHQtL/7V5RchboCq/SVw34zUxkQ6s33c1iEqwpq25dWQxCKsUg==
+X-Received: by 2002:a05:600c:4e56:b0:43c:fa24:873e with SMTP id
+ 5b1f17b1804b1-43eb5c20fdemr78917605e9.13.1743689095667; 
+ Thu, 03 Apr 2025 07:04:55 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-229785c098dsm14374765ad.86.2025.04.03.06.51.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 06:51:54 -0700 (PDT)
-Message-ID: <9861ee91-419c-414c-aeaf-ae2d4a17ea5f@linaro.org>
-Date: Thu, 3 Apr 2025 06:51:52 -0700
+ 5b1f17b1804b1-43ec364d071sm19166145e9.32.2025.04.03.07.04.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Apr 2025 07:04:54 -0700 (PDT)
+Date: Thu, 3 Apr 2025 10:04:52 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Udo Steinberg <udo@hypervisor.org>,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH-for-10.0 0/5] hw/arm/virt-acpi: Do not advertise disabled
+ GIC ITS in MADT table
+Message-ID: <20250403100406-mutt-send-email-mst@kernel.org>
+References: <20250331221239.87150-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/mips: Revert TARGET_PAGE_BITS_VARY
-To: Huacai Chen <chenhuacai@kernel.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
- arikalo@gmail.com
-References: <20250328175526.368121-1-richard.henderson@linaro.org>
- <20250328175526.368121-2-richard.henderson@linaro.org>
- <CAAhV-H6=iZOBfxF=_DXqc5M9GjTiXJ7nxotLAJ-0Eb7=zVd0bQ@mail.gmail.com>
- <b17663bc-40c3-4501-be88-065363138038@linaro.org>
- <CAAhV-H4mmKvJ75uSm_LCFrCFYM0QG=4oh0ZLVTGXdKX+svs5eA@mail.gmail.com>
- <8d897be6-24b6-4fe3-8201-59f0bd08763d@linaro.org>
- <CAAhV-H6BFRRg_4ZS9S50kgE+ZEJWRMwgm45zBWLwqVP1JLwE_Q@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAAhV-H6BFRRg_4ZS9S50kgE+ZEJWRMwgm45zBWLwqVP1JLwE_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20250331221239.87150-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.649,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,69 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 20:05, Huacai Chen wrote:
-> On Thu, Apr 3, 2025 at 2:11â€¯AM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 4/1/25 20:04, Huacai Chen wrote:
->>> Hi, Richard,
->>>
->>> On Tue, Apr 1, 2025 at 9:39â€¯PM Richard Henderson
->>> <richard.henderson@linaro.org> wrote:
->>>>
->>>> On 3/31/25 20:15, Huacai Chen wrote:
->>>>>>     #  define TARGET_VIRT_ADDR_SPACE_BITS 32
->>>>>>     #endif
->>>>>>     #endif
->>>>>> -#ifdef CONFIG_USER_ONLY
->>>>>>     #define TARGET_PAGE_BITS 12
->>>>>> -#else
->>>>>> -#define TARGET_PAGE_BITS_VARY
->>>>>> -#define TARGET_PAGE_BITS_MIN 12
->>>>>> -#endif
->>>>> I'm a bit confused about TARGET_PAGE_BITS and other macros.
->>>>>
->>>>> In my opinion, if we define TARGET_PAGE_BITS as 12, that means we only
->>>>> support 4K pages. And if we define TARGET_PAGE_BITS_VARY and
->>>>> TARGET_PAGE_BITS_MIN as 12, that means we support the minimum page as
->>>>> 4K, but we also support larger pages.
->>>>>
->>>>> Am I wrong?
->>>> Yes.
->>>>
->>>> TARGET_PAGE_BITS is a minimum value that is used by the memory subsystem for managing ram
->>>> and i/o.  If variable, via TARGET_PAGE_BITS_VARY, this is set very early in qemu startup
->>>> and cannot be changed.
->>>>
->>>> The page size for the mips cpu, like many others, may be changed at runtime.  The page
->>>> size used at that point is reported to softmmu during tlb_fill.
->>>>
->>>> The value of TARGET_PAGE_BITS must be the minimum supported by the cpu.
->>>>
->>>> For Arm, the minimum for armv6 was 1k, then armv7 dropped support for tiny pages so the
->>>> minimum is 4k.  At runtime, armv8 supports page sizes of 4k, 16k, and 64k.
->>>>
->>>> For MIPS, ignoring those cpus which support 1k pages, the minimum is 4k.
->>> If all types of cpus of the target arch has the same minimum supported
->>> page size, we only need to define TARGET_PAGE_BITS; otherwise we need
->>> to define TARGET_PAGE_BITS_VARY, and TARGET_PAGE_BITS_MIN means the
->>> minimum supported page size of the smallest supported page's cpu type.
->>> Here we remove TARGET_PAGE_BITS_VARY because we just ignore the 1K
->>> pages.
->>>
->>> Am I right now?
->>
->> Yes.
-> OK, then it is fine to remove the TARGET_PAGE_BITS_VARY and
-> TARGET_PAGE_BITS_MIN definition. But Loongson still prefers 16K pages
-> (4K pages cause cache alias on Loongson), so I want to keep
-> mc->minimum_page_bits = 14.
+On Tue, Apr 01, 2025 at 12:12:34AM +0200, Philippe Mathieu-Daudé wrote:
+> GIC ITS can be disabled using '-M its=off'.
+> When that occurs, it shouldn't be advertised in ACPI tables.
 
-You can't set minimum_page_size = 14, because TARGET_PAGE_BITS_VARY is unset.
+I doubt this is 10.0 material. How common is its=off that we
+urgently need to fix it?
 
-However, the Loongson kernel will continue to correctly program 16k pages at runtime, and 
-we will continue to correctly provide 16k pages to softmmu during tlb_fill.  All is well.
+> Philippe Mathieu-Daudé (5):
+>   qtest/bios-tables-test: Add test for -M virt,its=off
+>   qtest/bios-tables-test: Whitelist aarch64/virt/APIC.its_off blob
+>   hw/arm/virt-acpi: Factor its_enabled() helper out
+>   hw/arm/virt-acpi: Do not advertise disabled GIC ITS
+>   qtest/bios-tables-test: Update aarch64/virt/APIC.its_off blob
+> 
+>  hw/arm/virt-acpi-build.c                  |  12 +++++++++---
+>  tests/qtest/bios-tables-test.c            |  22 ++++++++++++++++++++++
+>  tests/data/acpi/aarch64/virt/APIC.its_off | Bin 0 -> 164 bytes
+>  tests/data/acpi/aarch64/virt/FACP.its_off | Bin 0 -> 276 bytes
+>  tests/data/acpi/aarch64/virt/IORT.its_off | Bin 0 -> 236 bytes
+>  5 files changed, 31 insertions(+), 3 deletions(-)
+>  create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
+>  create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
+>  create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
+> 
+> -- 
+> 2.47.1
 
-
-r~
 
