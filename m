@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389F3C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F3F7C36014
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:00:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UU0-00030E-UF; Thu, 03 Apr 2025 20:00:29 -0400
+	id 1u0USr-0005Au-4b; Thu, 03 Apr 2025 19:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UTy-0002km-O2
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:26 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0USo-0004zT-F1
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:14 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UTw-0002yE-KZ
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:26 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39c0e0bc733so1224932f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0USm-0002Wr-Ot
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:14 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43d0782d787so9568595e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724822; x=1744329622; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724751; x=1744329551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=32V1HojRNsh/T5N/dXOEuwUaz3gtbYi6NWT44YAtRCI=;
- b=e0ZAfoRk3rLy+n5YUJjuSkWWgmfyx2GJWnmyg4SBNloS4RzPwo2oFilH7fohcxLmd2
- weeyvAvPCkfJQoPT5BCFhrwUsehnxBciiBUl5iNVbTl0WXiZwu3pStvm/S3v/tXjdwjS
- VL+5DzvL9YJ8ggLW6jmHYl55uu5BakpDe46UA791QqgboXhzXL3qZbrCbkZ7FuYTI1YG
- rlomLsHfgUdgue2cU4t4Jjrvnd9vNINJBmyw2QvS0dsQV9fggBAeApNmW4PCO0DoxsLh
- MhWrDZ5vOqEnX/GvOexV7uOFiVFg4XkhfTrgZZCDmrloLJqREWnCdhJH7XePvwjFALCi
- n6Zw==
+ bh=Nk82sPbCU65CifIvDQtlnTBY33DI4NNrcma392a9X2I=;
+ b=EpY5f3QKztiMzv1OrBUkqE4oJ4K/JXnFh9618xZdoiozzghAHw+Kv+BMRBftXQLBev
+ su2B74bS0pGt80iIciyOGxfbpA4n9bYK53vT+U76tMAzGukBCJiAoSzrcn1+3WRmGYCn
+ 92F8zhM86KHj/9jCN9nulcPaGUbV+9Vxj6pX7yy8OLRL2fAUC90nSw7zZWBpKQBq0K1I
+ SoYn/1UVhzsLWt/2sVXq1a1jgIl9m+6UttdGLiYCcdSBM+OPtrmKrkTKCpla2+meZNot
+ IVnco3VlVFZCaVomgy9xuTp862KO1LWUL57JHTO5PfiZlKj53Fk5AW2Xpky5wKadX8G8
+ kchg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724822; x=1744329622;
+ d=1e100.net; s=20230601; t=1743724751; x=1744329551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=32V1HojRNsh/T5N/dXOEuwUaz3gtbYi6NWT44YAtRCI=;
- b=sLCxnPibVKIz/uznOs9ZnOz17QMt9vdcd/bwCFE2AjZPqnEGdtuGyB6bX9QDFm8BaM
- Iq5HJsjKuVq3a2GXeNnS/IOm1KKNoMe/4/bVOTSPRkGIcHO1OAjadsbkCUJyBJzouVu7
- mjMftJwW7xsYplQ7U1DjOgsWkiMWtYefw1OQiV6wSRWyPuIp6OeM7w14KPp3vBpdf5J+
- U3m7CVPw9txK9VsGJxglWG70GcLOOkiSfSFStldkFjW6bQ54gpdN2a7SLYak5kAw+7GO
- +IkgrhUnJMMMCclvnxgZYjo9vLTbAoyp2KTWiubkai5a9UyyGd9HR4bnKGXAQtYAR+uF
- fI9Q==
-X-Gm-Message-State: AOJu0YwPJCrYdrGBYpDtlIdLeJXpjCfPi5DpKJCGcGHCi4bZ24iHQxbr
- mD3yXKm6Gd9sgsIhLUATOSaHFxkX7zhMPPwaCJ2TRp4I05xHCCttVfc+LFwkm8atbBDbNYKVT1m
- s
-X-Gm-Gg: ASbGncvUhDI9EWhhEGnrucRAJFhLwX+ZcD86cdZ9WT6P0SNcOkLDxoirHrVoCbszS8L
- geZt5xKj7EGkcLB91EsVMh4vOJ4d+EexWRLa/JojrInTOTdyYuqEYnoehHPfPo3cCNhLvpvyhjR
- jMJaDclzZ9BXjoCOsup2yU1aAJSplWrxXG8+xmurSGvvjjBbyY6tf9VjF4VXpy+ipkBcXgch6Os
- R2YqfUC4zCBpBphf48zifWqPEbQjiuyY/HlEHDo5hHYhu8qFwa4ZtxinSXZUTjvZdw/sM3GI4B2
- 0Bczi06LRrVtRMYYxdJrF/p6dKWOJL1auaBjIQTdhvpxsFSTV50IbDTF4lqwmgIZMVQBfeRsbtx
- KI1CRG405VveHlanpOlg=
-X-Google-Smtp-Source: AGHT+IF9RcpNw8afbE4Br0wvMrHGjZYCmODuHqwekIhOM1V90rPXGNTMYD/OsZYaUKOHitLAS39AiQ==
-X-Received: by 2002:a5d:64aa:0:b0:39c:dfa:d347 with SMTP id
- ffacd0b85a97d-39cb36b2afemr845667f8f.2.1743724822630; 
- Thu, 03 Apr 2025 17:00:22 -0700 (PDT)
+ bh=Nk82sPbCU65CifIvDQtlnTBY33DI4NNrcma392a9X2I=;
+ b=NHo0XUTieRqYCDcNOgKM5pnCuwpwwfg5QEMwJLXUQfBv9payknkqTptwZgsrz/HZzZ
+ 1wRzCEPITNDHq/BsXLRtDhJ2sthGeu098BfTxQaeQh5cmc39craWRUAF/cZnbaTc8rA6
+ xA/hhkNs0U6jqppPJe4Ay7g6dtNvD3TH9IG1iD+FmuOWabxjkNE7/S1+riDQpvhePXq/
+ p9fzmKUhczZAtG8gu4N4RtiUx0DA5pxocmSJn85x7Aym61lvWm3Ri7K0QNrTvgSOOOSR
+ FBTz8a8a8k/Tca5JmeNDn3gvHqfbeyIhoktHaB4PtnhFKhClG1eWwqae3I4NDYEFuHnQ
+ VzYg==
+X-Gm-Message-State: AOJu0YzY0FsevxcPEt/K+HSdTNWRtK+Z7fO0qW9/ZhBb1EgBtxl6+kfh
+ zq9rsEmminTZARxDH4AcLKSQRsF79Rhj+X1tC7VIaGuzNJvPxnR/RsrpRYSe1ytKy2bCBHYpSAm
+ T
+X-Gm-Gg: ASbGnctIOkX3/GFGdByAA/sM1iAHSymPg1uFr7HThDHHQneD/g3o0MjOR5HsSeXu8Bz
+ J6sgS/EjXRewBmaNakdw6YIF1AGlW8vM9n7v6ymbfiMQ7iqwDvHZARQUFkWtqG3tVXKfZ4yszZM
+ ua7SOIxAsB18djsRxzrDPna9T81RgTq3ivIaheglxnIpoPXIio5c6lFQu42Vp2V/ZD+ho40d+7X
+ Kq5t0p4md/3zSWjA1liWMcxaTH2FYeTwbKr/W8WHOlmgLj1qhdtAPaCb7EvFw9lUi2SgzBp1I8e
+ X9gZ/1UgC4L3u5aChCxsgy7rgfkd9A7ZPk8NE6rMHwNTPT4QSLbPhexqSZC2uRv9cj4G3qyk/eL
+ YN7NyKJad5OpYG9VKNKI=
+X-Google-Smtp-Source: AGHT+IEGZvrxJykkSwIdunXj+T/NlWrZAKhyYGBgipK/+Idqxz2mL3v78Fr9HlnnxbXWC7ZEFcqCSg==
+X-Received: by 2002:a05:600c:5843:b0:43c:ea1a:720c with SMTP id
+ 5b1f17b1804b1-43ed0f87ebfmr4271615e9.18.1743724750878; 
+ Thu, 03 Apr 2025 16:59:10 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a67a1sm2931343f8f.24.2025.04.03.17.00.21
+ 5b1f17b1804b1-43ec36691b3sm31259035e9.34.2025.04.03.16.59.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 17:00:22 -0700 (PDT)
+ Thu, 03 Apr 2025 16:59:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 18/39] target/arm: Move some definitions from
- 'cpu.h' to 'multiprocessing.h'
-Date: Fri,  4 Apr 2025 01:58:00 +0200
-Message-ID: <20250403235821.9909-19-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 07/39] hw/arm/raspi: Filter machine types for
+ binary
+Date: Fri,  4 Apr 2025 01:57:49 +0200
+Message-ID: <20250403235821.9909-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,165 +103,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-arm_build_mp_affinity() and affinity mask definitionss are
-related to multiprocessing. Move them to "multiprocessing.h",
-including this header when necessary.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.h             | 17 -----------------
- target/arm/multiprocessing.h | 18 ++++++++++++++++++
- hw/arm/aspeed_ast2600.c      |  1 +
- hw/arm/aspeed_ast27x0.c      |  1 +
- hw/arm/exynos4210.c          |  1 +
- hw/arm/npcm8xx.c             |  1 +
- hw/arm/sbsa-ref.c            |  1 +
- hw/vmapple/vmapple.c         |  1 +
- target/arm/kvm.c             |  1 +
- 9 files changed, 25 insertions(+), 17 deletions(-)
+ hw/arm/bcm2836.c | 4 ----
+ hw/arm/raspi.c   | 9 +++++----
+ hw/arm/raspi4b.c | 1 +
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 1a1ae229e1d..0db7292698c 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1158,23 +1158,6 @@ void gt_rme_post_el_change(ARMCPU *cpu, void *opaque);
+diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+index 95e16806fa1..7dd81e8e0f9 100644
+--- a/hw/arm/bcm2836.c
++++ b/hw/arm/bcm2836.c
+@@ -195,7 +195,6 @@ static void bcm2836_class_init(ObjectClass *oc, void *data)
+     dc->realize = bcm2836_realize;
+ };
  
- void arm_cpu_post_init(Object *obj);
+-#ifdef TARGET_AARCH64
+ static void bcm2837_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -208,7 +207,6 @@ static void bcm2837_class_init(ObjectClass *oc, void *data)
+     bc->clusterid = 0x0;
+     dc->realize = bcm2836_realize;
+ };
+-#endif
  
--#define ARM_AFF0_SHIFT 0
--#define ARM_AFF0_MASK  (0xFFULL << ARM_AFF0_SHIFT)
--#define ARM_AFF1_SHIFT 8
--#define ARM_AFF1_MASK  (0xFFULL << ARM_AFF1_SHIFT)
--#define ARM_AFF2_SHIFT 16
--#define ARM_AFF2_MASK  (0xFFULL << ARM_AFF2_SHIFT)
--#define ARM_AFF3_SHIFT 32
--#define ARM_AFF3_MASK  (0xFFULL << ARM_AFF3_SHIFT)
--#define ARM_DEFAULT_CPUS_PER_CLUSTER 8
--
--#define ARM32_AFFINITY_MASK (ARM_AFF0_MASK | ARM_AFF1_MASK | ARM_AFF2_MASK)
--#define ARM64_AFFINITY_MASK \
--    (ARM_AFF0_MASK | ARM_AFF1_MASK | ARM_AFF2_MASK | ARM_AFF3_MASK)
--#define ARM64_AFFINITY_INVALID (~ARM64_AFFINITY_MASK)
--
--uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz);
--
- #ifndef CONFIG_USER_ONLY
- extern const VMStateDescription vmstate_arm_cpu;
+ static const TypeInfo bcm283x_types[] = {
+     {
+@@ -219,12 +217,10 @@ static const TypeInfo bcm283x_types[] = {
+         .name           = TYPE_BCM2836,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2836_class_init,
+-#ifdef TARGET_AARCH64
+     }, {
+         .name           = TYPE_BCM2837,
+         .parent         = TYPE_BCM283X,
+         .class_init     = bcm2837_class_init,
+-#endif
+     }, {
+         .name           = TYPE_BCM283X,
+         .parent         = TYPE_BCM283X_BASE,
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index dce35ca11aa..b049c6035d4 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -367,7 +367,6 @@ static void raspi2b_machine_class_init(ObjectClass *oc, void *data)
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
  
-diff --git a/target/arm/multiprocessing.h b/target/arm/multiprocessing.h
-index 81715d345c2..8eec79b11d8 100644
---- a/target/arm/multiprocessing.h
-+++ b/target/arm/multiprocessing.h
-@@ -11,6 +11,24 @@
+-#ifdef TARGET_AARCH64
+ static void raspi3ap_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -387,31 +386,33 @@ static void raspi3b_machine_class_init(ObjectClass *oc, void *data)
+     rmc->board_rev = 0xa02082;
+     raspi_machine_class_init(mc, rmc->board_rev);
+ };
+-#endif /* TARGET_AARCH64 */
  
- #include "target/arm/cpu-qom.h"
+ static const TypeInfo raspi_machine_types[] = {
+     {
+         .name           = MACHINE_TYPE_NAME("raspi0"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi0_machine_class_init,
++        .interfaces     = LEGACY_BINARY_QEMU_SYSTEM_ARM_INTERFACE,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi1ap"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi1ap_machine_class_init,
++        .interfaces     = LEGACY_BINARY_QEMU_SYSTEM_ARM_INTERFACE,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi2b"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi2b_machine_class_init,
+-#ifdef TARGET_AARCH64
++        .interfaces     = LEGACY_BINARY_QEMU_SYSTEM_ARM_INTERFACE,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3ap"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3ap_machine_class_init,
++        .interfaces     = LEGACY_BINARY_QEMU_SYSTEM_AARCH64_INTERFACE,
+     }, {
+         .name           = MACHINE_TYPE_NAME("raspi3b"),
+         .parent         = TYPE_RASPI_MACHINE,
+         .class_init     = raspi3b_machine_class_init,
+-#endif
++        .interfaces     = LEGACY_BINARY_QEMU_SYSTEM_AARCH64_INTERFACE,
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+         .parent         = TYPE_RASPI_BASE_MACHINE,
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index f6de103a3e1..12c7ed42ced 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -127,6 +127,7 @@ static const TypeInfo raspi4b_machine_type = {
+     .parent         = TYPE_RASPI_BASE_MACHINE,
+     .instance_size  = sizeof(Raspi4bMachineState),
+     .class_init     = raspi4b_machine_class_init,
++    .interfaces     = LEGACY_BINARY_QEMU_SYSTEM_AARCH64_INTERFACE,
+ };
  
-+#define ARM_AFF0_SHIFT 0
-+#define ARM_AFF0_MASK  (0xFFULL << ARM_AFF0_SHIFT)
-+#define ARM_AFF1_SHIFT 8
-+#define ARM_AFF1_MASK  (0xFFULL << ARM_AFF1_SHIFT)
-+#define ARM_AFF2_SHIFT 16
-+#define ARM_AFF2_MASK  (0xFFULL << ARM_AFF2_SHIFT)
-+#define ARM_AFF3_SHIFT 32
-+#define ARM_AFF3_MASK  (0xFFULL << ARM_AFF3_SHIFT)
-+#define ARM_DEFAULT_CPUS_PER_CLUSTER 8
-+
-+#define ARM32_AFFINITY_MASK \
-+            (ARM_AFF0_MASK|ARM_AFF1_MASK|ARM_AFF2_MASK)
-+#define ARM64_AFFINITY_MASK \
-+            (ARM_AFF0_MASK|ARM_AFF1_MASK|ARM_AFF2_MASK|ARM_AFF3_MASK)
-+#define ARM64_AFFINITY_INVALID (~ARM64_AFFINITY_MASK)
-+
-+uint64_t arm_build_mp_affinity(int idx, uint8_t clustersz);
-+
- uint64_t arm_cpu_mp_affinity(ARMCPU *cpu);
- 
- #endif
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 1f994ba26c6..4438402340b 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -17,6 +17,7 @@
- #include "net/net.h"
- #include "system/system.h"
- #include "target/arm/cpu-qom.h"
-+#include "target/arm/multiprocessing.h"
- 
- #define ASPEED_SOC_IOMEM_SIZE       0x00200000
- #define ASPEED_SOC_DPMCU_SIZE       0x00040000
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index dce7255a2c0..37bfeef304d 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -22,6 +22,7 @@
- #include "hw/intc/arm_gicv3.h"
- #include "qobject/qlist.h"
- #include "qemu/log.h"
-+#include "target/arm/multiprocessing.h"
- 
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_SRAM]      =  0x10000000,
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 04439364370..01e6e2fb052 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -36,6 +36,7 @@
- #include "hw/sd/sdhci.h"
- #include "hw/usb/hcd-ehci.h"
- #include "target/arm/cpu-qom.h"
-+#include "target/arm/multiprocessing.h"
- 
- #define EXYNOS4210_CHIPID_ADDR         0x10000000
- 
-diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-index f182accc47c..3987e55355b 100644
---- a/hw/arm/npcm8xx.c
-+++ b/hw/arm/npcm8xx.c
-@@ -29,6 +29,7 @@
- #include "qapi/error.h"
- #include "qemu/units.h"
- #include "system/system.h"
-+#include "target/arm/multiprocessing.h"
- 
- /*
-  * This covers the whole MMIO space. We'll use this to catch any MMIO accesses
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index 112cbbf29e6..90fbb56ba7a 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -52,6 +52,7 @@
- #include "qom/object.h"
- #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
-+#include "target/arm/multiprocessing.h"
- 
- #define RAMLIMIT_GB 8192
- #define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index fa117bf1511..9bb5b0553a2 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -51,6 +51,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/system.h"
-+#include "target/arm/multiprocessing.h"
- 
- struct VMAppleMachineState {
-     MachineState parent;
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 97de8c7e939..a28acdecf3e 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -39,6 +39,7 @@
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/ghes.h"
- #include "target/arm/gtimer.h"
-+#include "target/arm/multiprocessing.h"
- #include "migration/blocker.h"
- 
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+ static void raspi4b_machine_register_type(void)
 -- 
 2.47.1
 
