@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15508C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C3DC3601A
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0MLx-0007nU-3G; Thu, 03 Apr 2025 11:19:38 -0400
+	id 1u0MLL-0007fR-3D; Thu, 03 Apr 2025 11:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLW-0007iF-Pd
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:12 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLI-0007f4-0b
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:18:56 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLU-0000U3-Iy
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:10 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-39c31e4c3e5so464166f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:19:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLG-0000R9-5S
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:18:55 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso7518265e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:18:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743693546; x=1744298346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743693532; x=1744298332; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tqcs/vjgWLBfW1Dulxq85k2YfPnbkRu1MyFMZFId7I0=;
- b=neEa2zC9Bn3KBmki588AAoRo9zJLvC4EMjP7kyYHothOaLNbmd7YNfE9sjq/A1D26l
- NPX2q3XfarvVOr+R4+cF+ZwqaFst9lJIhB7jUzd8alNn0USHYyvy7lo8q2qL3NLnJgsO
- gFyGSDdvi/W420Oc1j79mauwGpCSnnUdDNFIdooiB8QdzjI4fgjNu+vLyaVbTX4YeDZD
- r6se2gc58z2joHuVmqEaFiVa3rmroXRg4WOz1Nla1TXdqxVQf7Rwp8tuJc95KKmkxf9W
- w6wOH7HMAFitmXSr+e8LoBrem15AwryQ0WS/NjzH3GBIyeExDnh8eHfaVNi3KBnQ/qr6
- 0Q/Q==
+ bh=SL1deZbZrQCTs4masaMY+2Uy3IE2KzJVlJp7tx88rA0=;
+ b=yXlY0JzgJcGqddVTxcRNgEkyCaP4sH/gZNj9XZkvP+OpYT7Yvo+StWnQE43c2FxRvu
+ VhQ/waq/UAqOC297RISh6656wYAAsJMzDOIgNWlGYs6qry8HcDRoqeNdbQE6Dx9zozI/
+ eEtW1Zrk7oEgcnfXbo6bVeVXPefUBX9gJLt+2RKe/3Ao7RirodNcKtJeI34XhxIatAgn
+ jgQ3TFXw0izRojGvU/ChZj86xXJTpeNXOix3Vn/aPbuTzd/fH22S56Evn167GTPkVYfc
+ CwUozwNzsF6+JNQYZJd8v+hGZ8xx57j0zg1NszPiJMO6yqkGMjXUULC2NugymtdQ6e35
+ OAlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743693546; x=1744298346;
+ d=1e100.net; s=20230601; t=1743693532; x=1744298332;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tqcs/vjgWLBfW1Dulxq85k2YfPnbkRu1MyFMZFId7I0=;
- b=hWEhCsPCzqxTGt1NqEqWIM7+3sN+kBvSdv3MGLaH2jfvC91J/LFyCwuPx4k7JQ54Mn
- 1SJFDvGJJKGCvCn1MV0gzbXYSnOWDPcu7ml1EKSmIWB4ydOT2nM6bNWKhTymkJbEK483
- BrAp+IevqiRh6zNF9cusT9QTNN/HnV37APDVQLSkqymT5UeKCzegTiQ6zaKIr3828xqK
- MUUPOlA2CiIh3zbApKTRPkLB+nLLZ/MhkYfCtHevu/CwEECv4BnW09ex7yk/7iUZIhwl
- JmdXNUhkj7ark61sqcKqieS4x8AB7DoQLcjeBICDMfQty0wBYerle4DT9x/LOn57xe8+
- d7ug==
-X-Gm-Message-State: AOJu0YxI0DxzdmRmH86m30ivPkbVjP2Clo6HszssK9y66RwweEr5CObS
- 564Z6nEj92uerPi/YMwaO345yFXiLvH3eyxlCgY5t+O11E2JNssZInSMpP3wRqRUoWdRWlF5ZTK
- n
-X-Gm-Gg: ASbGncukU/EWQ7nBO+DCR9MbAl1TI1Zrve9kNH25oZmuVpbJG1nOj5zzg7SAPu0VZoD
- fLkZ1h2VSI51TNH+cyEV9taqjfNvLEOVzXeQvforz10hI0MW6qJa7OA9sSnviUWeBNWVC7gLSAY
- 5ZLpJAuKgvvwdXBxeaQZUO8Hl0KWZRYKdTIVV36O/e6ylBy0Jn32bRZgorXRtomRK5zNyPBMe1Q
- 2JBKztdIDRD1yo7rsy9w46078yKUr/DsSU3dQCJdWuEZpnGWO7PtC/sEhpgRSOQbukVBWWVWwBr
- lRAfT6JpctWk3faYRTgN3/acHXsa0s4BNAkuYV+NVSzZspmaCHNBCCsZK1qL6kmHDBD1HUKt603
- F3T6AVlHYb8+mdNRdEsI=
-X-Google-Smtp-Source: AGHT+IHM79vtkBMKrwSvTmbPoS3xdbBc/Ee74rmGb2o5mNZRfJz4rqKPJA31jHQP6Eldgb+r8LRRLw==
-X-Received: by 2002:a5d:5886:0:b0:391:43cb:43fa with SMTP id
- ffacd0b85a97d-39c2f958db2mr2877374f8f.51.1743693545912; 
- Thu, 03 Apr 2025 08:19:05 -0700 (PDT)
+ bh=SL1deZbZrQCTs4masaMY+2Uy3IE2KzJVlJp7tx88rA0=;
+ b=ealr59vqKnwDgwP5q5Tc9MbbidbakZqfFoPB67W6iusjmnWdzWhVRDE+t4Sw33z92O
+ j/Sskt3QAqTlV9x6VMIfUM4lqjtpKbfNgNHy2AyUw8Z2UHq+BiqLY0rfp9d7tJaYELNW
+ Tcm0qbFFd/EG82nYYll5Wfwqtdr0eaLXCPMRRPoeB8DvIibWCPSTHfXi/qaLMGqkwHmy
+ A3fhlCaNbcgkM66EZwUXig3BhE84/ny/mFNrycgYo2g+G/vSMulFjuDPZtZefpGkritH
+ E0Mw3lqm4yj6lX+BKYE3akPilfRXoXhExM/iEaXyQl8coaaG5PAqaicIlWL4tB8Rk44e
+ 6D7w==
+X-Gm-Message-State: AOJu0YxAXDdsJy2jWNVlS/57ELFk3kcm4kW8KxW6tOKItzNvlrCEN9H3
+ qzHwcA53nfsAuq3ArhOqYW/Kb4Wj3+3/+V3HYfGmnkkxcKHxS5tfDH2Dvk65aemJcbY2h/llv/0
+ W
+X-Gm-Gg: ASbGncs51ywDnl1b2yk02sgWP0zbxjpdd/H9yCDEENfAajPVQtPn98zKOiJsmVCjJO4
+ 7Yg6Xgu4AK2NlE7WT7H/kcdaP/cErK62gtFEA01FofXyTO7QK0co5hx8Kv030gAM/A47EtPJEdv
+ KldUa0LhuGeToETk16kfI5d/nlPv4rVdUOQ8uGdEndFwKhU/ClboJGZd6BSNCacGd38Cf2UOf2k
+ BIcA67cQEn60qGouoQ52nyfGajp3xxVfpqss/FIuOOlSd9zsEOSyHlE4INX/AHnlnxqAHh7gtNN
+ kBKhiOVlEUPuEkE7k87gVEodhAAVgD30LinxmssYKkP067ocj8jouQ3Lsg4RMpw5KhiCWtmhivN
+ SBgF8RqzcGo0b8mS2O+KNDbs65NeVBA==
+X-Google-Smtp-Source: AGHT+IHLdb/KwzDYEzMPQ8tCsN6KanjpCnJ40l6AkElsJ7H4X9AR7REyWlw92creuZIMat1lQjU28A==
+X-Received: by 2002:a05:600c:3d0a:b0:43c:f597:d584 with SMTP id
+ 5b1f17b1804b1-43ec1532085mr35629655e9.29.1743693532113; 
+ Thu, 03 Apr 2025 08:18:52 -0700 (PDT)
 Received: from localhost.localdomain (145.171.88.92.rev.sfr.net.
  [92.88.171.145]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b69c4sm2040603f8f.43.2025.04.03.08.19.03
+ 5b1f17b1804b1-43ec34a92desm20988475e9.14.2025.04.03.08.18.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 08:19:05 -0700 (PDT)
+ Thu, 03 Apr 2025 08:18:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Shannon Zhao <shannon.zhaosl@gmail.com>
-Subject: [PATCH-for-10.0 v2 05/14] hw/arm: Do not build VMapple machine by
- default
-Date: Thu,  3 Apr 2025 17:18:20 +0200
-Message-ID: <20250403151829.44858-6-philmd@linaro.org>
+Subject: [PATCH-for-10.0 v2 03/14] tests/functional: Skip aarch64_replay test
+ on macOS
+Date: Thu,  3 Apr 2025 17:18:18 +0200
+Message-ID: <20250403151829.44858-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403151829.44858-1-philmd@linaro.org>
 References: <20250403151829.44858-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,53 +112,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unfortunately as of v10.0.0-rc2 the VMapple machine is unusable:
+As of v10.0.0-rc2 this test is still failing on macos:
 
-  $ qemu-system-aarch64 -M vmapple [...]
-  *** Terminating app due to uncaught exception 'NSInvalidArgumentException',
-      reason: '-[PGIOSurfaceHostDeviceDescriptor setMapMemory:]: unrecognized selector sent to instance 0x600001ede820'
-  *** First throw call stack:
-  (
-    0   CoreFoundation          0x000000019c759df0 __exceptionPreprocess + 176
-    1   libobjc.A.dylib         0x000000019c21eb60 objc_exception_throw + 88
-    2   CoreFoundation          0x000000019c816ce0 -[NSObject(NSObject) __retain_OA] + 0
-    3   CoreFoundation          0x000000019c6c7efc ___forwarding___ + 1500
-    4   CoreFoundation          0x000000019c6c7860 _CF_forwarding_prep_0 + 96
-    5   qemu-system-aarch64     0x000000010486dbd0 apple_gfx_mmio_realize + 200
-    6   qemu-system-aarch64     0x0000000104e6ab5c device_set_realized + 352
-    7   qemu-system-aarch64     0x0000000104e7250c property_set_bool + 100
-    8   qemu-system-aarch64     0x0000000104e7023c object_property_set + 136
-    9   qemu-system-aarch64     0x0000000104e74870 object_property_set_qobject + 60
-    10  qemu-system-aarch64     0x0000000104e70748 object_property_set_bool + 60
-    11  qemu-system-aarch64     0x0000000104e69bd8 qdev_realize_and_unref + 20
-    12  qemu-system-aarch64     0x0000000104e258e0 mach_vmapple_init + 1728
-    13  qemu-system-aarch64     0x000000010481b0ac machine_run_board_init + 1892
-    14  qemu-system-aarch64     0x0000000104a4def8 qmp_x_exit_preconfig + 260
-    15  qemu-system-aarch64     0x0000000104a51ba8 qemu_init + 14460
-    16  qemu-system-aarch64     0x0000000104f7cef8 main + 36
-    17  dyld                    0x000000019c25eb4c start + 6000
-  )
-  libc++abi: terminating due to uncaught exception of type NSException
-  Abort trap: 6
+  $ make check-functional-aarch64 V=1
+  ...
+  ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
+  Bail out! ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
 
-Disable the machine so it isn't built by default.
-
-This is tracked as https://gitlab.com/qemu-project/qemu/-/issues/2913
+This is tracked as https://gitlab.com/qemu-project/qemu/-/issues/2907
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configs/devices/aarch64-softmmu/default.mak | 1 +
- 1 file changed, 1 insertion(+)
+ tests/functional/test_aarch64_replay.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/configs/devices/aarch64-softmmu/default.mak b/configs/devices/aarch64-softmmu/default.mak
-index 93f4022ad62..ad8028cfd48 100644
---- a/configs/devices/aarch64-softmmu/default.mak
-+++ b/configs/devices/aarch64-softmmu/default.mak
-@@ -9,3 +9,4 @@ include ../arm-softmmu/default.mak
- # CONFIG_XLNX_VERSAL=n
- # CONFIG_SBSA_REF=n
- # CONFIG_NPCM8XX=n
-+CONFIG_VMAPPLE=n
+diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
+index 04cde433bcf..029fef3cbf8 100755
+--- a/tests/functional/test_aarch64_replay.py
++++ b/tests/functional/test_aarch64_replay.py
+@@ -5,7 +5,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset
++from qemu_test import Asset, skipIfOperatingSystem
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+@@ -16,6 +16,8 @@ class Aarch64Replay(ReplayKernelBase):
+          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+         '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+ 
++    # Failing on Darwin: https://gitlab.com/qemu-project/qemu/-/issues/2907
++    @skipIfOperatingSystem('Darwin')
+     def test_aarch64_virt(self):
+         self.set_machine('virt')
+         self.cpu = 'cortex-a53'
 -- 
 2.47.1
 
