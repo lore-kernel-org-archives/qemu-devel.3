@@ -4,70 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76696C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D246C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0ThE-00008n-Vv; Thu, 03 Apr 2025 19:10:05 -0400
+	id 1u0TkB-0001M6-Lk; Thu, 03 Apr 2025 19:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u0ThD-00007E-5b
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:10:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u0Th5-0003UN-Jc
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:10:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743721789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PoJmaLl9SEIUX9mXHkppvj2mmWHNNlmk5+NNU5MPTcM=;
- b=fg/7Bm+Dn6vdRmaRkbTml1xrXWUrz0OFxVv10DyBFLtpZL/y72NFbStzBPPFaOHubYPZyP
- aFvFc5RfPR16xjKOQBibJcS0CerJalSbsX3KFrQRC99SS97Hj4bz45zbGtKBItBwJRXC2K
- KDrhmkVWkm3OeRuog1jIRAVAxKAQ5SY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-158-eAAHzxMpOiysPTNoKw6Z0A-1; Thu,
- 03 Apr 2025 19:09:46 -0400
-X-MC-Unique: eAAHzxMpOiysPTNoKw6Z0A-1
-X-Mimecast-MFC-AGG-ID: eAAHzxMpOiysPTNoKw6Z0A_1743721786
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E31D219560B6
- for <qemu-devel@nongnu.org>; Thu,  3 Apr 2025 23:09:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.8])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B979E1955BC2
- for <qemu-devel@nongnu.org>; Thu,  3 Apr 2025 23:09:44 +0000 (UTC)
-Date: Thu, 3 Apr 2025 18:09:41 -0500
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: Re: [PULL -rce 0/1] NBD patches for 2025-04-03
-Message-ID: <mp4mlqlec57v2dkghoijt3rs5yzva2cx7xkgyvn565sorq4hk2@z5nb6p4pyguk>
-References: <20250403222139.1317475-3-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u0Tk9-0001Lq-Tg
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:13:05 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u0Tk7-0003wj-SV
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:13:05 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7376dd56f8fso1740350b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743721982; x=1744326782; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vSRh9ciLiZERRTYJ6zqimg5jbJldjzZEngTZ7OexjA8=;
+ b=lXOzkokURLpDfAGfeIXO8fAWjcRSUsUyxXSWElx/wB7M8ZN4/FFNkIYgAWiBHao5Yg
+ 7dKd+Yxj8alOA2F1czNMpM59OZYEjWzqcCMhGkEoOBMmEGk0lFw6jaPvjCsZH1xwk+Y3
+ 67r/sXxRUzmGTFAHjqy/5jb6Y3qPfGthIns5LZnC7p6Ev9hbY+yv10XiH/h1f74NHdFv
+ TUbZBqz4rKn39IDbcxvpBitQWkhlXziNaAEbnhuW701UqvgU1u/y/Mf4o3fy3fuLVLW6
+ bqwusmCljlWZSxfbC4mwotKLH/mwFcaAypxRrthNaQOz9P+peaYoxDfBDbso3QeEdPu4
+ +G7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743721982; x=1744326782;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vSRh9ciLiZERRTYJ6zqimg5jbJldjzZEngTZ7OexjA8=;
+ b=UltIEk3UyC72R6xO9jgpuOv+9H4DoagE/uqfL+AHZC4iH2+VfNuf3Y4iGu+TyXKTSU
+ OQQUPwMHe4MrgabFL/CdeJRuaRW6qgFBcgNuXgsC6CX1PP2isE2VzmYrc8zLvFURhFvP
+ ObGv+kUHI9I0BZRnku8zdPScNipxM4Ya9/6Sg5e8bggEAgXJFu5nMX5k2X4CK2z2XKAr
+ CPZXLLms/uVlarhEuahXf46QnZMkBrv6hge00cWRPoPqbUFnDN5ktCWclyPtyHkTyWOi
+ MdyAxIX4AWO68/eMZKp76Db46u/cIfg/joJj4VgFH96/U8z73eUsECsMMgH3CrvgY99l
+ lCeQ==
+X-Gm-Message-State: AOJu0Yzg+SVswcvGfChqUrdX5bqd3hn9GTAejEqCYBVhTdSjJD53nuxT
+ narVABfghSu4bmEHbIZ/yvTKw3r4QW6Mf/CqBf+4CmMw4RF9PVOHJlBln093VhRq8hbA3KeQ/aw
+ b
+X-Gm-Gg: ASbGncvvtEgwonxvrcK8qDS0Qj9t3eaGJHV98uSySDFmsiPORafR0qn17QHtx8ys0Nw
+ GIdxjuDD7oBLXRkYXxcEagUNx3HigDbHxTTYzVsQLFVKo+uUSW5sshcwj80deqMW3HJaAn92Ddy
+ VxeZ2QIDGVRstTcFWANuky1Jm59J2NzfzkyNr90CtEipZgT0Z8iS21XBWs1pmYIk0Dn7OkMOrNx
+ SafxMVszlAsR+8PqnxoHxtK2rB8ewdl6nMhfV1vVWS0uyEMnvuFR1MCLniWeUN5OrB2hINjy7cm
+ MRx1X6q+hJZAjPJ7JtX5O8+OGIRC82JDeXzAhHcUnQAWTrPoXsFie4/MszrLHHVp
+X-Google-Smtp-Source: AGHT+IEnlOzYlpKKkofQeVPc5S2tS52aD9kZJHUm/d9njoKdGoQxHtJBvX42MDs61ohLhaSGjOaWqg==
+X-Received: by 2002:a05:6a00:181e:b0:736:4e02:c543 with SMTP id
+ d2e1a72fcca58-739e4b49bbcmr1682310b3a.9.1743721981756; 
+ Thu, 03 Apr 2025 16:13:01 -0700 (PDT)
+Received: from [192.168.101.134] ([75.147.178.105])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739da0e7013sm2134234b3a.171.2025.04.03.16.13.01
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Apr 2025 16:13:01 -0700 (PDT)
+Message-ID: <78000846-b224-4b7f-b95b-bcfcfd700dd2@linaro.org>
+Date: Thu, 3 Apr 2025 16:12:59 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250403222139.1317475-3-eblake@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386/emulate: remove flags_mask
+To: qemu-devel@nongnu.org
+References: <20250403194838.103531-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250403194838.103531-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.649,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,17 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry for the typo in the subject line; that should be -rc3 (and not
-rce - this is not an exploit).
-
-On Thu, Apr 03, 2025 at 05:19:26PM -0500, Eric Blake wrote:
-> The following changes since commit 0adf626718bc0ca9c46550249a76047f8e45da15:
+On 4/3/25 12:48, Paolo Bonzini wrote:
+> The field is written but never read.
 > 
->   Update version for v10.0.0-rc2 release (2025-04-01 13:15:45 -0400)
+> Cc: Wei Liu<liuwe@linux.microsoft.com>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/emulate/x86_decode.h |   2 -
+>   target/i386/emulate/x86_decode.c | 864 +++++++++++++++----------------
+>   2 files changed, 424 insertions(+), 442 deletions(-)
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
