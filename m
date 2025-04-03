@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0B0C3601A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BB0C3601B
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UTB-0006QR-5n; Thu, 03 Apr 2025 19:59:37 -0400
+	id 1u0UT1-0005Tn-2m; Thu, 03 Apr 2025 19:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UT9-0006C8-Ba
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:35 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0USu-0005K0-RT
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:22 -0400
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UT7-0002bK-K2
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:35 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0USt-0002YD-DC
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:20 -0400
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4394036c0efso10283495e9.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:59:33 -0700 (PDT)
+ 5b1f17b1804b1-43cebe06e9eso9328725e9.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724772; x=1744329572; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724757; x=1744329557; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FlgmqWinD7NQwKFSRiJub8ZlgVYRN5tlN02/pnlcz3E=;
- b=fjjV1REmAkE1mGQxGCUgyfu0FsZxFQAFLHr0ZGzywRmqGkSXvlVSzti66bmb3PYhDc
- qJCo628v+nZ6fKd8sWYsFY1WyKNVjL12LlM53in37wq5iHKORbDNqcC14yP4l9G0ESbb
- MKFsEDO5w51kdswwIssqjSm8R8hpmSW19qNuQTxPFdnYNvUx1wRAl28Ho1crAgU+QpyU
- z0++uV9NViPYPZH6NYYTd71p2FRdLJRayvLB/14px8/5TREbUC11PA7VmCFlhcVYthu1
- G0Dzoen2gPd3iTWnTqjjydWINvkMaKa3MWq8NtJLFtszCW3UaEZHztdXhoGokU2oB5DR
- 4DRQ==
+ bh=MCDIwE5yiT5/YaudRHiQiWyT+TmWH+fJEge5GlDyh2k=;
+ b=kBHaxrD4rxnJG5eJr19MWuAqd06lQJmES3VbvCCljXhMObCh8rbrrVdBlEZlWnehwb
+ 5mYDaLr2SFw1In8Pb5GMUGMlmQ4eiinveYVW+sC8MRHQOC/L45HP+Y/rLw2o98g8vp3U
+ yeFmXeN1/3uRREp2EaR8jO+kNAfTHyQmXLZpDA8WBnoz3lpgBYnnmQUgtJBirM8A2T/l
+ zbsKR0QCBmmRChcp5tc1+q9ytG1Em4GwaLYne1aNNvQ5LUGKSEURTiZg7vBXQ+hb46Dg
+ ABlMH2MqWnYCPRXwp05e5tM1aPvVxFtlVE7WBKuHoptCfejDM9k15qG1nVsIr/oZtALu
+ Q0DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724772; x=1744329572;
+ d=1e100.net; s=20230601; t=1743724757; x=1744329557;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FlgmqWinD7NQwKFSRiJub8ZlgVYRN5tlN02/pnlcz3E=;
- b=If2SELc7F//YYaqdkfGxoptAKZSsSqe+yyLWmlkckj768cvh5saHetPkoy6AU4HJXw
- GKeIYVTMBgSRrH95hiEM5FGyBuBOsA1rOFIir86D1cfIh/55zWJRO8eq2Swu00k8Go/C
- Lx2m2totYf2U2zaCM7GC59lg7oZkbRa1dnOxpxK5oOT/tZ6FoMI1wNa1cUQq/GUW8udK
- Iu/wz+AEYla+wGVnETtjNLYqITfAX7FFyM3PnJLPRKmv6Q4lqnzHN6l3aTe+l7EJtnCz
- ofEY6plBSy9o026OXycXCuBcGFF5ZlnhTC6UHG9CcIscO7hSMFQSoxhvdSPEroc+JrBn
- /EQA==
-X-Gm-Message-State: AOJu0Yw/4XaQe0iY2iJP+myv3DMWInc12HE1+j6SA+dMDyaIS6TK1+OC
- hdE1C7SfnDVeNaHy1BrzlYUoTpWpRtTGkhP43OoFw25zGFceh7GuCgO8A+6Hmqct3KUR88msTcP
- K
-X-Gm-Gg: ASbGncvuFLw5IOLfskQFYqw2As0m2JQGWgsVDmNzokGmY1wsg1y3dXnKxeSO0131vFv
- +YSVuc5Fs1E1s+V2fXA2J5h+ncbr8VMRMPj5Nq/933gUZjaivHoQs/uTNybE/LhMkZhPe9w22on
- 3jM/OGMB7e8C/HANHuU+Sc9WIFycBaI/7UcTsy45dpzTeSwtESPpaqapt+fEToY9JNACIrFxKQO
- cV0KgmIq9HfD+NXhffCnJuMHEto+vghD0fwQaxs+9H70Ci6vez+DV0Tz1jGaWiWNF5wQgzal8MR
- G9VCnPHKKchc4FfRC3/LoiDcp55kFCuceOSKw2FT1vDR+oR7q4c6Kk6LqNF4kLmXhHTMGI75ga4
- p2j+U/vKCaGEDXfSg7oc=
-X-Google-Smtp-Source: AGHT+IF09BhASywjAX5ZsiulAo4Rauvhlxk95gVgwmib999VxaYGlJ0y16uTLFiJbPYYkf/me8Z9LA==
-X-Received: by 2002:a05:600c:3548:b0:43d:77c5:9c1a with SMTP id
- 5b1f17b1804b1-43ed0b5e285mr4975835e9.4.1743724771664; 
- Thu, 03 Apr 2025 16:59:31 -0700 (PDT)
+ bh=MCDIwE5yiT5/YaudRHiQiWyT+TmWH+fJEge5GlDyh2k=;
+ b=PqHwYSR8qKNzd5atJQbc/h0p2aGvncHUs584NowlYIPX3pmQGscWD9EAf+1kXA5ySn
+ qmag4fIEDwg8zFpo6hCXNLkirYMhnuSYu6IMdeYwwdo8Q7sWb3DRsaQvRsf0BoGpYcQ1
+ mM/+2+OesBOHbfG6tcfX4fgbR+69N6YFqkkHDgBrKtNzBhQPBuGEO9nUZeZCt1Qxb+fb
+ lU7NUQ4mtTnfqRf6Wxw4+OWe9hOejivQqI9R9on4QBP9y+Fl4P8qRz7aFWYcnhJBSVO0
+ EqDzxqlFTODt7816XhCZnzwwsRKB1sofBPhjZ6NSiThZYMaVqfdez8mOk59Ff5c0Ta4a
+ QyEg==
+X-Gm-Message-State: AOJu0YwdFcvmBqJGtNqNf43DGPkMv0saaWuY9zbRHiAeL+9b0Ar4NZ/A
+ Ja369nmDXcfO67IcQGhm87lrmmkbGAJZniezxN9Oy6ZjBN+4F37/HU2jZBtRo40QvPgVPWoXHfd
+ Y
+X-Gm-Gg: ASbGnctVLMZCjH9SJiKCjdqJWv013FEph3YynoU+yqBFXs71MO79wZGMtk35NYslQJp
+ hX/lHjYvawSQ/ZTtOQDbx6mKQhHvoZEjh8qv2YtI9SMeoECb32FAx+Wgy6yxSNdtefAbReCMzpi
+ o0yXDS34E5z7ghXben76sWESuZo/1i6VqBEXb3PrtH+vlLNOYyD58loFmVNUi+apWE5B+mBQqX4
+ 6wqq34ft+1/e6qGNt7qiUHuXQvvLEP0hjNr284F2xOS6z0/gb+a8sPwGfhDDwLP9KV8S5rNQwwg
+ QslSarG3X0401lUeUe8YxfwIM6wGtImtsubYKncoVm49zPaaG25eXxDmQ0r14FarjKDPkNDaF0O
+ U1i3FRFjI8Cf1X7ROPCc=
+X-Google-Smtp-Source: AGHT+IHVkd8k/wNmjZAWLJUcLA0poKGBSPgk0nN4+HT7fbyw1978bs9JLLV19Gh9IutZYmK2yNE+dw==
+X-Received: by 2002:a05:6000:2406:b0:39c:12f2:4b7e with SMTP id
+ ffacd0b85a97d-39cb357588emr865665f8f.9.1743724757538; 
+ Thu, 03 Apr 2025 16:59:17 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec34bf258sm30610115e9.23.2025.04.03.16.59.29
+ 5b1f17b1804b1-43ec34bf258sm30605645e9.23.2025.04.03.16.59.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:59:31 -0700 (PDT)
+ Thu, 03 Apr 2025 16:59:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 10/39] hw/arm/boot: Include missing
- 'system/memory.h' header
-Date: Fri,  4 Apr 2025 01:57:52 +0200
-Message-ID: <20250403235821.9909-11-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 08/39] hw/arm/raspi: Build objects once
+Date: Fri,  4 Apr 2025 01:57:50 +0200
+Message-ID: <20250403235821.9909-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
@@ -103,32 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-default_reset_secondary() uses address_space_stl_notdirty(),
-itself declared in "system/memory.h". Include this header in
-order to avoid when refactoring headers:
-
-  ../hw/arm/boot.c:281:5: error: implicit declaration of function 'address_space_stl_notdirty' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
-    address_space_stl_notdirty(as, info->smp_bootreg_addr,
-    ^
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/boot.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/meson.build | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index f94b940bc31..79afb51b8a5 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -19,6 +19,7 @@
- #include "system/kvm.h"
- #include "system/tcg.h"
- #include "system/system.h"
-+#include "system/memory.h"
- #include "system/numa.h"
- #include "hw/boards.h"
- #include "system/reset.h"
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index f76e7fb229f..f52034ff6a2 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -27,8 +27,12 @@ arm_common_ss.add(when: 'CONFIG_OMAP', if_true: files('omap1.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubieboard.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
+ arm_common_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
+-arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
+-arm_common_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
++arm_common_ss.add(when: 'CONFIG_RASPI', if_true: files(
++  'bcm2836.c',
++  'bcm2838.c',
++  'raspi.c',
++  'raspi4b.c',
++))
+ arm_common_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
 -- 
 2.47.1
 
