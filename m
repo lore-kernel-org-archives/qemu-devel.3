@@ -4,88 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 694E1C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93CD8C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0MrA-0002lU-7R; Thu, 03 Apr 2025 11:51:52 -0400
+	id 1u0Mxl-0004QL-0D; Thu, 03 Apr 2025 11:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0Mr6-0002WK-GU
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:51:48 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0Mr3-0008Vm-UN
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:51:47 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-39c14016868so970128f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:51:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743695503; x=1744300303; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SkY5UM/4CCkGhRyJxu98u2QWX+GTGQqT2AnuFmve6/8=;
- b=dYriH6NQ/YRfRlByeBGadglnUEj0/iO4qriJB6i7HWKKfKg6blCpXtvLQDZ4R+eQhG
- goDtXkJNFzx/ltAAkds4BdgY0iehaE9NhmSj20NkAECiYtk2uIk5HyIYQ28EvlfCstgL
- YgRVSsfYCP6xgHHmv+Wu19NJ7uQFmR/60LXBQykMIeIK2focGgIxcXD/ts250Et/LeTt
- ESqIZPNSQ819yLts3bsmpd2t9g5T/4dje9ZwjfBg8iHJyGY8UWfm7TK+/3g9pR7HflUP
- NT1U8aq7vCm5z/NOl/GaycUBaL9cirKN83o0kw7ZLi5pg9RfWD3plT5vbFW0/DXOijVK
- s7cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743695503; x=1744300303;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SkY5UM/4CCkGhRyJxu98u2QWX+GTGQqT2AnuFmve6/8=;
- b=qbdz6TN8zZafpPx6OJAX9dz/JfKyr66RpPHV8nbPerhw38OObZz2oUhJMPFerESi4I
- lHy+Edu9k0TiupjcLKcBOcgmdMag7GM+3kK4t/iZPrWCtGwThBB3bNd5SpvdsOy0gXPe
- TT434UC9NjeyeAhinDe0Glrg+r68lHxIZXiZdwjiDKsXuIDC9BikmX0BlF9pEmySQ4KS
- G6Fc9RUesWA1MHihovWY2xJYHnxizTsUbMltIUQEl+EHAUKBPpISJ6+JYJnmV7N8Qfba
- I1ggoOdu82Is/ougQIayezuabMJbiBTqav5Aaemo7TMZJ5lbXAPC+5TJSyIpPXLZ6OdJ
- eLXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUENakJngIfMjcy4cPvYP/1jZ6TGcu0lKMGXMDED2r8Mzq+DaPP63UYkDr0XiqDfuo/OtbZzirODERD@nongnu.org
-X-Gm-Message-State: AOJu0YwofFfN+SQQ+nSgmfe504UAPWp67seTxFeztGD0th40/l3pDb1W
- +gz3Sy7488Ejw1QMsORxWAAET9tvSVA/MTXMDqHR+iZzpkLzfSY+33kGRN/0WZQ=
-X-Gm-Gg: ASbGnctK1ZXL7HI3v/Do8L77pjyAQepFPqbOHU4Hxu/qPd2+zr+G/tMY247DhrB5FlK
- DpyyerRO/xKkETjx0GsAiHj1pr5hSLkKmQ88L1TyLizcgKTZnXxwfBe4vH2hFljvY5XI3W62ZXc
- NYz9edhyrnb7Z8gcPX3ytHgGtYtIGP1kR/4BOOCHEZAUN8ogwe+Lsw9MfJh0jy8Y82r/89d2ORs
- tgDRiKTusDDvXF1TySpk/L980Y2yZmFoY5KG0ttZ39ZqKFTn57wH7NyVILD3vW4Uo8QV8b8F37S
- 9JDs+iZ79Ma9b4EcYwlzsQBV0tTFfPaiPvN6oYPh8t2relxUauBr8Uj1pkJnGkVptNeuheNRX8X
- Gzu//TEnYkiQbVoEdy9yjnVcPIzpHl1p51bo=
-X-Google-Smtp-Source: AGHT+IHmdMM+6V0Hjl8VTTp5Yf/0mClFSjscjN80exbrqvKPsHUJekSJVaFGzwhv55ipv9iLPKuWSA==
-X-Received: by 2002:a05:6000:2907:b0:39c:30d9:2ad9 with SMTP id
- ffacd0b85a97d-39c30d92c1amr2426460f8f.10.1743695503005; 
- Thu, 03 Apr 2025 08:51:43 -0700 (PDT)
-Received: from [192.168.1.17] (lputeaux-658-1-173-28.w92-154.abo.wanadoo.fr.
- [92.154.108.28]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c3020d980sm2157550f8f.61.2025.04.03.08.51.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 08:51:42 -0700 (PDT)
-Message-ID: <64bed460-8b81-4b42-958b-d8947d1541d5@linaro.org>
-Date: Thu, 3 Apr 2025 17:51:41 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u0Mxj-0004Q3-ON
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:58:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u0Mxh-00018u-Rc
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:58:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743695914;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ckT0hAZjJ0/c2SquW/HW/f+YyTXGWHtGN/3dbDhN3gg=;
+ b=A0rSGYNNuQh3Dm4uUSzTWiFasNejJpoQJLjH6tgEBtexvg7V9YBqKJQqvCWHc+PhTqP28I
+ O+VqBGSMPcK6uQuRA03JIjtkgQe+DUjrwHiIfN8pt2rJyTpFoZ370ZHerbU5/9ijNO/vBG
+ 4grbSIUtnWth3oaMy9xZbfe+FvcFqAs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-smEE7O-3MR2nQXNYeebNDQ-1; Thu,
+ 03 Apr 2025 11:58:33 -0400
+X-MC-Unique: smEE7O-3MR2nQXNYeebNDQ-1
+X-Mimecast-MFC-AGG-ID: smEE7O-3MR2nQXNYeebNDQ_1743695912
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80FAF1800259; Thu,  3 Apr 2025 15:58:27 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.203])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8E7D51955BC2; Thu,  3 Apr 2025 15:58:26 +0000 (UTC)
+Date: Thu, 3 Apr 2025 11:58:25 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Pinku Deb Nath <prantoran@gmail.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 2/2] [PATCH] block/file-posix.c: Use pwritev2() with
+ RWF_DSYNC for FUA - update
+Message-ID: <20250403155825.GB349582@fedora>
+References: <20250403081633.158591-1-prantoran@gmail.com>
+ <20250403081633.158591-3-prantoran@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hexagon: Implement CPUState.mmu_index
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@nongnu.org
-References: <20250403154956.791976-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250403154956.791976-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="PBZkFY/niZ4cJHJs"
+Content-Disposition: inline
+In-Reply-To: <20250403081633.158591-3-prantoran@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.649,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,40 +86,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 17:49, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+--PBZkFY/niZ4cJHJs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Apr 03, 2025 at 01:16:33AM -0700, Pinku Deb Nath wrote:
+> The testing with "-t writeback" works for turning on enable_write_cache.
+> I renamed the function to qemu_pwritev_fua() and fixed any typos.
+>=20
+> I moved the handle_aiocb_flush() into the qemu_pwritev_fua() and
+> removed from the previously todo seciont. Initially I thought
+> of only passing aiocb, but then I was not sure whethe I could
+> derive buf from aiocb, so I added arguments for iovec and iovcnt
+> into qemu_pwritev_fua().
+>=20
+> For handling buf in handle_aiocb_rw_linear(), I created iovec
+> and passed its reference. I assumed that there will be only one
+> buffer/iovec, so I passed 1 for iovcnt.
+>=20
+> Signed-off-by: Pinku Deb Nath <prantoran@gmail.com>
 > ---
->   target/hexagon/cpu.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index 766b678651..59fc9ed698 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -313,6 +313,11 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
->       mcc->parent_realize(dev, errp);
->   }
->   
-> +static int hexagon_cpu_mmu_index(CPUState *cs, bool ifetch)
-> +{
-> +    return MMU_USER_IDX;
+>  block/file-posix.c | 38 +++++++++++++++++++++-----------------
+>  1 file changed, 21 insertions(+), 17 deletions(-)
+>=20
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 34de816eab..4fffd49318 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -1676,12 +1676,24 @@ qemu_pwritev(int fd, const struct iovec *iov, int=
+ nr_iov, off_t offset)
+>  }
+> =20
+>  static ssize_t
+> -qemu_pwrite_fua(int fd, const struct iovec *iov, int nr_iov, off_t offse=
+t)
+> +qemu_pwritev_fua(const RawPosixAIOData *aiocb, struct iovec *iov, int io=
+vcnt)
+>  {
+>  #ifdef RWF_DSYNC
+> -    return pwritev2(fd, iov, nr_iov, offset, RWF_DSYNC);
+> +    return pwritev2(aiocb->aio_fildes,
+> +                    iov,
+> +                    iovcnt,
+> +                    aiocb->aio_offset,
+> +                    RWF_DSYNC);
+>  #else
+> -    return pwritev2(fd, iov, nr_iov, offset, 0);
+> +    ssize_t len =3D pwritev2(aiocb->aio_fildes,
+> +                        iov,
+> +                        iovcnt,
+> +                        aiocb->aio_offset,
+> +                        0);
 
-Easy ;)
+On a non-Linux host pwritev2(2) will not exist. Please take a look at
+how qemu_preadv() is integrated (including the !CONFIG_PREADV case) and
+decide on a solution that works on non-Linux hosts.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +    if (len =3D=3D 0) {
+> +        len =3D handle_aiocb_flush(aiocb);
+> +    }
+> +    return len;
+>  #endif
+>  }
+> =20
+> @@ -1710,10 +1722,7 @@ static ssize_t handle_aiocb_rw_vector(RawPosixAIOD=
+ata *aiocb)
+>      len =3D RETRY_ON_EINTR(
+>          (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) ?
+>              (aiocb->flags &  BDRV_REQ_FUA) ?
+> -                qemu_pwrite_fua(aiocb->aio_fildes,
+> -                                aiocb->io.iov,
+> -                                aiocb->io.niov,
+> -                                aiocb->aio_offset) :
+> +                qemu_pwritev_fua(aiocb, aiocb->io.iov, aiocb->io.niov) :
+>                  qemu_pwritev(aiocb->aio_fildes,
+>                              aiocb->io.iov,
+>                              aiocb->io.niov,
+> @@ -1744,10 +1753,11 @@ static ssize_t handle_aiocb_rw_linear(RawPosixAIO=
+Data *aiocb, char *buf)
+>      while (offset < aiocb->aio_nbytes) {
+>          if (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) {
+>              if (aiocb->flags & BDRV_REQ_FUA) {
+> -                len =3D qemu_pwrite_fua(aiocb->aio_fildes,
+> -                                    aiocb->io.iov,
+> -                                    aiocb->io.niov,
+> -                                    aiocb->aio_offset);
+> +                struct iovec iov =3D {
+> +                    .iov_base =3D buf,
+> +                    .iov_len =3D aiocb->aio_nbytes - offset,
+> +                };
+> +                len =3D qemu_pwritev_fua(aiocb, &iov, 1);
 
-> +}
-> +
->   static void hexagon_cpu_init(Object *obj)
->   {
->   }
-> @@ -341,6 +346,7 @@ static void hexagon_cpu_class_init(ObjectClass *c, void *data)
->                                          &mcc->parent_phases);
->   
->       cc->class_by_name = hexagon_cpu_class_by_name;
-> +    cc->mmu_index = hexagon_cpu_mmu_index;
->       cc->dump_state = hexagon_dump_state;
->       cc->set_pc = hexagon_cpu_set_pc;
->       cc->get_pc = hexagon_cpu_get_pc;
+The else branch takes offset into account. Here aiocb is passed in
+assuming it's the first iteration of the while (offset <
+aiocb->aio_nbytes) loop. On subsequent iterations the wrong values will
+be used because offset has changed.
+
+Perhaps it's easier to pass in the individual parameters (fd, offset,
+etc) instead of passing in aiocb.
+
+>              } else {
+>                  len =3D pwrite(aiocb->aio_fildes,
+>                              (const char *)buf + offset,
+> @@ -2567,12 +2577,6 @@ static int coroutine_fn raw_co_prw(BlockDriverStat=
+e *bs, int64_t *offset_ptr,
+> =20
+>      assert(qiov->size =3D=3D bytes);
+>      ret =3D raw_thread_pool_submit(handle_aiocb_rw, &acb);
+> -#ifndef RWD_DSYNC
+> -    if (ret =3D=3D 0 && (flags & BDRV_REQ_FUA)) {
+> -        /* TODO Use pwritev2() instead if it's available */
+> -        ret =3D raw_co_flush_to_disk(bs);
+> -    }
+> -#endif
+>      goto out; /* Avoid the compiler err of unused label */
+> =20
+>  out:
+> --=20
+> 2.43.0
+>=20
+
+--PBZkFY/niZ4cJHJs
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfusCEACgkQnKSrs4Gr
+c8iIlAf+NCzmvj4LRnkgQDzQIRwnaRlkTyQVU+OFvOktnh6mKXiqLUqewPT3cHUs
+53dxBEWPvTogM4n98gxSHtjTG+TBy9o/7HKIulPrdLvbtSEQjLnQWYBxkrNz/+uh
+EAVzTox5dm0/my0Ol0Yn2aXYdvLIBICT8rqrv36PtbPkTrxyUXynWkE98JJJf1Ub
+zecXl+VvdssEvWxpecxN+xt06gJ1D4mKNJBOe431+SB4fu5BTnf/W8k0SOxaf1vQ
+sQas0SOIcR6EpTa1q/9wQMhZq9HGbLu6efucGwy7fVbFnLKnqOpzBRw+GPASTzrJ
+R+zyJvWnFfEJiXRcFjKOIw9YesZrOQ==
+=F2FZ
+-----END PGP SIGNATURE-----
+
+--PBZkFY/niZ4cJHJs--
 
 
