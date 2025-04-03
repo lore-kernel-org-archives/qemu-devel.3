@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91740C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F68FC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0OPl-0003Tg-IA; Thu, 03 Apr 2025 13:31:41 -0400
+	id 1u0ORU-0004pY-F6; Thu, 03 Apr 2025 13:33:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0OPg-0003T8-MA
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:31:37 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1u0ORT-0004ok-4L
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:33:27 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0OPe-0007AW-Gb
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:31:36 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7376dd56f8fso1453790b3a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:31:33 -0700 (PDT)
+ id 1u0ORR-0007Rl-Af
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:33:26 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7359aca7ef2so1436616b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:33:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743701492; x=1744306292; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743701604; x=1744306404; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZTaDmVjioQOvHiurialnVJTfakcHBh91bAWdCG+QtCk=;
- b=OAdWmFUh1l0F4WnVhXlmJDLbACywtsNHViA8bVcnpyfDnCkcfwF/HXP3NLBPG6/1Lo
- TRwZ4uqg/RXGGjFA6mBciU224k68bXpDOlhnIYFWFNdN1B39anS7hF2cr18lP3W+i7TZ
- KwnUTvF4OyEYjAKY90pT1uDFM5IIJJhA8z/dnKjKwmsDHgpyddgEGJBAEfF2OsGGHuql
- ygvNKV5YiisfpR17mUd87gjJaXKPw/41b51hTpqM++zzccFqHltScH+v+3TvzdlbOKWP
- 1ebtlVWJRbPMvCufqDXXguPYJGYyuxecZSmhGniAQQINssjX2cKFvP4CBEWf0bJD4dby
- whkg==
+ bh=muBPTjYt3KMh4Cr3cxDcAhIlTFkT5C3V+LLPY/a3I8w=;
+ b=sRq3jsL3TtF2d6MGpyNPsVrf8W0g5ZbpDNLONHGHRBIULc+H12HGe9MkAOryfEDWgK
+ BssWNRg7IKlQ3jIabOuRF5Q9vgdkGDrBW666GXfV4BM8bf8dd5204pprBEh0UB1HEUKp
+ r5p7PBFb/KiW6CRt64yfyJVjaVLuDOs+EGAvdYteo+gloNrLuLoL92yUEJBiK59jXwcv
+ yMwq+9C3asuR6vy/pzPGIBeqCeXZEKkMpfogO2fcGlVes8e0WCMnw5ImukbkcagdMOOr
+ F8W4YVEm/yOO2SOrJnZxU2tsx8lfLSAEVnLSKCDatTFFngzPCg9CLxR1OoVNuICTnlMo
+ TuTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743701492; x=1744306292;
+ d=1e100.net; s=20230601; t=1743701604; x=1744306404;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZTaDmVjioQOvHiurialnVJTfakcHBh91bAWdCG+QtCk=;
- b=KrZUm0287f0bPJXUhIvqPjW6eWxgaToxIh5KGui1+cOZqzT66Zi4ZUfZ3Pi+Yl+otH
- nLe5fhJX+vPhauA+xANa04uXCqWb+rGDEWjHlRAC0CLbuXqBsNgKmtdaLe/JbTxm0aaU
- 8Pf2AFUTeE9/fDUgvbUH31o2+weINjVtuudwtwwvQMqYkn+c+f36sHS+wRgOrxi2+ovg
- ymnHVEjOZbSYkdrGmGy5zH8EiaM/WZW5+XXzZJ5dZ3YT6LEucCyS4BFBYW5VQ/5kmCiS
- uQNp3AMLLYYf90oz8GELvRWlTaw9ovisOaz2MmkqQb1b15nzswza0nV2CGMEbVFH7cPQ
- xcnw==
-X-Gm-Message-State: AOJu0Yy24Pef1MBUeKmtrdQ8S/dJpiGwn2ifhoOmy6FZ/A4xFwC4iKRW
- 68OvQ6w0pEHrNXwL1dSdvZuFe2jHQ4Hs8pFcIkVXn2m12+qMJxFZbNcsjy6qFpGniVjPRORUhsV
- X
-X-Gm-Gg: ASbGncvYx6b5kzcmqB2IUvu8fqFF2VLdsc+mZ/ZPH4rW+FBBLZDQFo54eejfseGeAGf
- e4SAVAgQ/uYCLiEOk78+d4ulTtrk93axWHMseHIJm89ZKGkks8v8V31n0xRnzI4ZYkkX/R+Q2XE
- a34PBfD9YUTXZVmnXrsKZSg1Lo+xJVZS+1h5NsKZ7roWWSnVqK0dmytQO20jYnBYKgmApQMWx4h
- NHwbJEibTNn15lLr2SLAyq5Srud15wI0q4F8jNuf/HcLiDtjTkd+HuiWT5GPCutdxap5DedhVTp
- 2LheRBzITJMA3Ik9PrI2Yj3KX8VErz2MUDEYot/o9NLG8/7/2OJgP60MLyw8UBXd7Mm4SXonRxu
- yT6acjkFn
-X-Google-Smtp-Source: AGHT+IEtcZVwUGJGegEBE1hIFgOstTTSqhON1IUNk+5gIL468J5lcagMSJpMLWId7J+Cf31j0l7GpA==
-X-Received: by 2002:a05:6a20:c88b:b0:1f5:8748:76b0 with SMTP id
- adf61e73a8af0-20104720fecmr418461637.29.1743701491930; 
- Thu, 03 Apr 2025 10:31:31 -0700 (PDT)
+ bh=muBPTjYt3KMh4Cr3cxDcAhIlTFkT5C3V+LLPY/a3I8w=;
+ b=C8Q0ZmryDXSAZDS2GWet1zgF7r0HXsYhj2R3WX8GfeOusxQ9nN2Aeh8ppsrLVyXDTF
+ /8xmt1Zdh2qPmy0c2C4kHWX4eB9s0TuxRYLOAWe8aXeMksVNjejM8EfHnmsb01K0GeQO
+ k0M20Zkz7xc4hmY16HXK8MktBywC0/erseBuGIcorxKR4yprTZDtK3jBwRBo8ra7S0Zs
+ CzwJt716hyMkiHhi8MJCWX6RhWREBJUs2IX+DGZhU5WvT3HyysDHJ/qRFQJH6OhJqWh6
+ MkqnWqOZ/lpvQRBedl2gXRtEFIPQZbZ62rKaCMXAMi3V8K2OE/qD1ipy4ZvEEUYFZIwD
+ x7kg==
+X-Gm-Message-State: AOJu0YyZqXfCT+etRZZjDY49krqDn3Bn6zTXzF86l2udzcKupVjkzWer
+ YUUIzoeD4KNyslPQwN6Gf0foXmn81eWLEFql7rkc9LeoVat5TmW0hGOROr3JAnNsGk76N01MrW6
+ p
+X-Gm-Gg: ASbGnctDy/Q4D7Xa0R2lYqBPxAbJeIhZx5nz7ZOr0DKY7GDnusrX0r6l3eR/o5MTTUM
+ d4QCyYMrjksOUR6WGAJHMidMwYlQWO01e9D6bL1Wq661obQLCprNmIYx1YK5vvD18FRZTGspoO2
+ qQXmV1caCZLvuW0qfG2V/5MjYRuFFmFIHBpMKFI+ZLcY3W9kI3uTXKKuxjJ6pp2MbZpOfScB/Pt
+ xiNV6Sb9AxnCw+6DpejidUH5yx5oBtuk1k0e7s1hkGgK9Xt6vMO4tcqMWTlnb93afMD95q/jxgi
+ Dle9kqyNsuwHp2gJPaJkxSF9Lx+T1xd8eyh5lBYjMaw4dJ3I7j1G4KAQygR24GI3Mw06avCS0aZ
+ p//uklQTgwJoHJHRXCNk=
+X-Google-Smtp-Source: AGHT+IGZ8hyhv07dR7aSplnTY6CLIYTLP4g5vyZdhZKME4bcp5IQWQbygkxngicLWHL1uLDQolO5vQ==
+X-Received: by 2002:a05:6a00:3317:b0:736:5dc6:a14f with SMTP id
+ d2e1a72fcca58-739e4c26381mr516362b3a.23.1743701603273; 
+ Thu, 03 Apr 2025 10:33:23 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97ee713sm1822049b3a.51.2025.04.03.10.31.31
+ 41be03b00d2f7-af9bc10dea2sm1507271a12.0.2025.04.03.10.33.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 10:31:31 -0700 (PDT)
-Message-ID: <c68cd058-851d-4eec-8edd-b6294c3ad362@linaro.org>
-Date: Thu, 3 Apr 2025 10:31:29 -0700
+ Thu, 03 Apr 2025 10:33:22 -0700 (PDT)
+Message-ID: <c5865e7f-67ab-4b63-90b3-b96083a9c661@linaro.org>
+Date: Thu, 3 Apr 2025 10:33:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 v2 02/14] tests/functional: Add a decorator for
- skipping tests on particular OS
+Subject: Re: [PATCH-for-10.0 v2 04/14] tests/qtest: Skip Aarch64 VMapple
+ machine
 To: qemu-devel@nongnu.org
 References: <20250403151829.44858-1-philmd@linaro.org>
- <20250403151829.44858-3-philmd@linaro.org>
+ <20250403151829.44858-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250403151829.44858-3-philmd@linaro.org>
+In-Reply-To: <20250403151829.44858-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +105,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/3/25 08:18, Philippe Mathieu-Daudé wrote:
-> +Decorator to skip execution of a test if the current
-> +host operating system does not match one of the permitted
-> +ones.
-> +Example
-> +
-> +  @skipIfOperatingSystem("Linux", "Darwin")
-> +'''
-> +def skipIfOperatingSystem(*args):
-> +    return skipIf(platform.system() in args,
-> +                  'not running on one of the required OS(s) "%s"' %
+> First, the VMapple machine only works with the ARM 'host' CPU
+> type, which isn't accepted for QTest:
+> 
+>    $ qemu-system-aarch64 -M vmapple -accel qtest
+>    qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
+> 
+> Second, the QTest framework expects machines to be createable
+> without specifying optional arguments, however the VMapple
+> machine requires few of them:
+> 
+>    $ qemu-system-aarch64 -M vmapple -accel qtest
+>    qemu-system-aarch64: No firmware specified
+> 
+>    $ qemu-system-aarch64 -M vmapple -accel qtest -bios /dev/null
+>    qemu-system-aarch64: No AUX device. Please specify one as pflash drive.
+> 
+> Restrict this machine with QTest so we can at least run check-qtest,
+> otherwise we get:
+> 
+>    $ make check-qtest-aarch64
+>    qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
+>    Broken pipe
+>    ../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
+>    ...
+>     7/26 qemu:qtest+qtest-aarch64 / qtest-aarch64/test-hmp     ERROR      24.71s   killed by signal 6 SIGABRT
+>     2/26 qemu:qtest+qtest-aarch64 / qtest-aarch64/qom-test     ERROR      71.23s   killed by signal 6 SIGABRT
+> 
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/qtest/libqtest.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-s/required/prohibited/ ?
 
-With that, or similar wording,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
 r~
+
+> 
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 2750067861e..fad307d125a 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -1788,6 +1788,7 @@ void qtest_cb_for_every_machine(void (*cb)(const char *machine),
+>           if (!strncmp("xenfv", machines[i].name, 5) ||
+>               g_str_equal("xenpv", machines[i].name) ||
+>               g_str_equal("xenpvh", machines[i].name) ||
+> +            g_str_equal("vmapple", machines[i].name) ||
+>               g_str_equal("nitro-enclave", machines[i].name)) {
+>               continue;
+>           }
+
 
