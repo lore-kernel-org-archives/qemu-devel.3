@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7D0C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37BD3C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UJV-0000cD-Rv; Thu, 03 Apr 2025 19:49:37 -0400
+	id 1u0UJi-0000dV-IX; Thu, 03 Apr 2025 19:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJU-0000c4-5E
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:36 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJg-0000dI-W9
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:49 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJR-0000Pu-P4
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:35 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3913d129c1aso1009832f8f.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:49:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UJe-0000RY-PS
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:49:48 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39c1ee0fd43so1243767f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724171; x=1744328971; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724185; x=1744328985; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dr1ajPlH6JN6hTaMKguRfw4hYb+PXW8/xQ7f19VH6vQ=;
- b=ybjZSfaAwHgTReE0hqs/O/Ug9MVE3WHMJMIJMPFJseiDp5pJKViLE8aimOmNsbzxNg
- TQoAggxuRnMoI423HxH+Xhbia8cuxN1HpinnYIQpWN1ZOy5kvIWsuw/12Ppy9pCURyMV
- UVHXsdiTrH3qA8Yafv/ctVaaG9v2P9irBnbbKS9jS5UF/w5/Vzpnm/yGTztUVgk0yvPj
- XOsK18zUNyJL8fisoC9dd2dOxpe9prbgJdd9EXVoaADzUs2CZ8fLduP6NbTyi4g3synP
- gQjIJM4vwsUHpgvyJEytNJcT4rBdWPOrMsDlwU/IxmuIijUtOPZZyOa5Ce0zL67ovTKD
- a8UA==
+ bh=HvXkZVqpNEcQWld4uLHZD0xKtvIdCPqnGqYsj+ky1fo=;
+ b=slI8isWncJywNxK8y4BI2RjTd5p0xiiXIFoAZnpJ1Vp3Qk7+ZnhLwBSCkWQKapifUY
+ hrYOg1ZPXPtMVwtI4+E/Rn92MfFUwbu+qMp2EZbqQLpeC7KpOHBlKOAeu2rDPu8ldztZ
+ mSuZ9QrkkLc/uwDrPlO7ua0yIaicta6VK+2R3Q1g+TAcQ9zWNmMLKXSYJndRxs+ueGVS
+ IgW1x7rL5s+9+MIdlEFuzV7xXv+7MLTNVh7yvQm8yJ78c6jS0DPH7d1qvcJF/LwEsSPl
+ Pe6rn7Vk2HYFTAFlG2IUvGYPBFb/h6ZgxLwVycd39PDLa0irCWX5z2A8bFNnTTLjRjUT
+ 6MkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724171; x=1744328971;
+ d=1e100.net; s=20230601; t=1743724185; x=1744328985;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dr1ajPlH6JN6hTaMKguRfw4hYb+PXW8/xQ7f19VH6vQ=;
- b=UfBd8OPS96xWH7OxAV+QwixN0fDyFQM2tXylpoPFBN9IOTig2mGPa8Qq/CLQvjEQp9
- VilNks5tYYwjNyDJpv7pGeMR5raKnE/JNOUahXlsuP81cNKy4Q5nA93HQ8kKuin/9lMC
- Gn++B1BsLyBWU79ViQp7e5FNwBfGhgXVZedXVAosLiwIkdjnbXi5dSQzvSXQsxVPy6ZT
- 4r0tdwGUHslir95v5Z4gM93BHhAEHN0DcZHXoxEMojj1UBu+2Gm5wMjetIRob8+l3ijT
- qiao1EZfZRp1WOmKEMsOZ57o6xed5w/WTo8P6dOZfWygHC2TUevqe4nh1HsOrrJ8cb01
- rKfQ==
-X-Gm-Message-State: AOJu0YzQQAZ9KVZt/+7Ul3uPqz62MZbugmrgeZVlDhGYEBneXhKv99Pj
- bUAB28HpOl/H+B8SfqCRJa0omOpnmEbmXaclzLFQEbq0I1u+zCd3T6I5i3qzhx4V0IW1X7dP8g6
+ bh=HvXkZVqpNEcQWld4uLHZD0xKtvIdCPqnGqYsj+ky1fo=;
+ b=QjsvSfNf6vDA2LJziSMc+CmedgIBqz9V1pJx9pDRRv8JoWV6j/o0kOtZs+DGX1rWWv
+ mEqYdLFKj+zbHR9oCxly9zm9o8HsQhzHsOP+4owqJEunHZt2JcMUFkdCBiNuxNgSS9y2
+ MmVtj0zkdoWxq1EBZVGBLZxiEaq9Ch5hC0hQKDK1v1yVto5FL/ktOZFyeQMjBMqo3UhX
+ R63wxSyGLZUCwqbKEHQVhdhc7j4U9UT+nOXsbwN3DPRSY1q48nWzBJH0fl7nU9lKoY8C
+ 0uEp2ZYirmlHjcQRQ7Xq+K3ENgw55IwP5tkG4QS28N2sca9L0nJVHuDkV4xlMSrZOVHC
+ mw4A==
+X-Gm-Message-State: AOJu0YwaOoaHSHHy87ZVeP34dHpWc0cEa3TxCYhUkQpibX6V8XwAJSq5
+ DiD1SnjYEuPpqik0tTQuwnvIhak/QEs+2I68RfaId0zSdtiJfuNYwHB4pdVk13YR274L6/blSMS
  x
-X-Gm-Gg: ASbGncuPeUlmJQryAkzozHB1x0zus0o8OUBuKbk6eFgIXARIv5DhrhYCGkRXLFyqM/e
- BECVrHPcjlWant/AtPuq/8x9+6hD9vdIVnjeG2C6aybQLKcDG+sA0BszAoERbEiBIlZa8Q/hs9/
- CEMgddLKHcfmiMcH0a0KMdU92xHtIeYR1XF/dlFxLUUoqIHriqtcRwQEhDvYH1ZJHgB2glsh1K6
- nsk2g7AmYGda7AxLHwMoYMPiojrEVkBOOYhwDUU1MYOOVvPvShRl1gq8OGQtxuD4XJqML98dJF8
- wISNENdPXt9Hf3zDJjC2fxXDhkqOsafdj7RTkr49YN4BxPtBabcXbZJg5WV4p4rDMGaIPLsIkiH
- NT1seXMthMZ3GlLGiYT5d7cpjBr7ZyQ==
-X-Google-Smtp-Source: AGHT+IEJdc/oUH88yGHT8LqEBHVAe0pCN/7RQh88SANiYQxIYFQ3+DnMRvR49xggiIkExgwvV8DS1Q==
-X-Received: by 2002:a5d:6da6:0:b0:39c:2673:4f10 with SMTP id
- ffacd0b85a97d-39c2e651726mr5597399f8f.23.1743724171656; 
- Thu, 03 Apr 2025 16:49:31 -0700 (PDT)
+X-Gm-Gg: ASbGnctQ9veEWgiTd7EMxlfXurvYDgkUKKabY0a9u6+5xXv6M48S0Q9LLUENn1TiqVr
+ 57ZO9K+nwfKx1ov0kDJokfV77nkyXY1sPttGd42PO0qlQ2WJrB+TZnP5y5KOwg9EHdUnGAPga2S
+ rj/bqkaGtOEkvwFpsKxl+6L8VGfC+fm3yeZE3D9/y1aWxewnkTmpy0jlfKwURZm0WhLjf1lZgvd
+ wllJM5gE2PivPcsbHHPGZQDcZvQCdqS/kNHVzqEf+M1ko7yeGQAAAK5y3mixUWFqMJ123vmSzPU
+ CmunsBfKjn499c4b/Oi4JSFFggPfLsC1ZJMSXOtz/SZ1Z9yHlj6OwhePGTmB1WasRq1AaQMVvBx
+ 89rZfnAIuOPzFQfnsmrw=
+X-Google-Smtp-Source: AGHT+IGG1bpNcdwMMI9/IGjSjrA5MHp+h6IIbhprKWNSzJT9VI1jHpT4EYZa7e3tm4/PDAdtnDlNjQ==
+X-Received: by 2002:a05:6000:1848:b0:39c:16a0:fef4 with SMTP id
+ ffacd0b85a97d-39cba9337ffmr954721f8f.24.1743724184660; 
+ Thu, 03 Apr 2025 16:49:44 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c30226bbfsm3015600f8f.90.2025.04.03.16.49.29
+ ffacd0b85a97d-39c30226cf6sm2917081f8f.87.2025.04.03.16.49.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:49:30 -0700 (PDT)
+ Thu, 03 Apr 2025 16:49:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH-for-10.1 02/19] qemu: Convert target_name() to TargetInfo
- API
-Date: Fri,  4 Apr 2025 01:48:57 +0200
-Message-ID: <20250403234914.9154-3-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 04/19] qemu: Convert target_words_bigendian() to
+ TargetInfo API
+Date: Fri,  4 Apr 2025 01:48:59 +0200
+Message-ID: <20250403234914.9154-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403234914.9154-1-philmd@linaro.org>
 References: <20250403234914.9154-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,137 +105,173 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h           | 2 --
- include/qemu/target_info-impl.h | 3 +++
- include/qemu/target_info.h      | 2 ++
- cpu-target.c                    | 5 -----
- hw/core/machine-qmp-cmds.c      | 1 +
- plugins/loader.c                | 2 +-
- system/vl.c                     | 2 +-
- target_info-stub.c              | 1 +
- target_info.c                   | 5 +++++
- 9 files changed, 14 insertions(+), 9 deletions(-)
+ include/exec/tswap.h            | 13 +------------
+ include/qemu/target_info-impl.h |  4 ++++
+ include/qemu/target_info.h      | 11 +++++++++++
+ cpu-target.c                    |  6 ------
+ hw/core/cpu-system.c            |  2 +-
+ hw/display/vga.c                |  2 +-
+ hw/virtio/virtio.c              |  2 +-
+ system/qtest.c                  |  1 +
+ target_info-stub.c              |  1 +
+ target_info.c                   |  5 +++++
+ 10 files changed, 26 insertions(+), 21 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5b645df59f5..9d9448341d1 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -1115,8 +1115,6 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
- void cpu_exec_unrealizefn(CPUState *cpu);
- void cpu_exec_reset_hold(CPUState *cpu);
+diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+index 84060a49994..415781b2bcc 100644
+--- a/include/exec/tswap.h
++++ b/include/exec/tswap.h
+@@ -9,18 +9,7 @@
+ #define TSWAP_H
  
--const char *target_name(void);
+ #include "qemu/bswap.h"
 -
- #ifdef COMPILING_PER_TARGET
+-/**
+- * target_words_bigendian:
+- * Returns true if the (default) endianness of the target is big endian,
+- * false otherwise. Common code should normally never need to know about the
+- * endianness of the target, so please do *not* use this function unless you
+- * know very well what you are doing!
+- */
+-bool target_words_bigendian(void);
+-#ifdef COMPILING_PER_TARGET
+-#define target_words_bigendian()  TARGET_BIG_ENDIAN
+-#endif
++#include "qemu/target_info.h"
  
- extern const VMStateDescription vmstate_cpu_common;
+ /*
+  * If we're in target-specific code, we can hard-code the swapping
 diff --git a/include/qemu/target_info-impl.h b/include/qemu/target_info-impl.h
-index b340e192fce..00bb746572b 100644
+index 0cec211e362..14566e4a913 100644
 --- a/include/qemu/target_info-impl.h
 +++ b/include/qemu/target_info-impl.h
-@@ -16,6 +16,9 @@ struct BinaryTargetInfo {
-     /* runtime equivalent of TARGET_INFO_STUB_NEEDED definition */
-     bool is_stub;
+@@ -10,6 +10,7 @@
+ #define QEMU_TARGET_INFO_IMPL_H
  
-+    /* runtime equivalent of TARGET_NAME definition */
-+    const char *const name;
+ #include "qemu/target_info.h"
++#include "qapi/qapi-types-common.h"
+ #include "qapi/qapi-types-machine.h"
+ 
+ struct BinaryTargetInfo {
+@@ -23,6 +24,9 @@ struct BinaryTargetInfo {
+     /* related to TARGET_ARCH definition */
+     SysEmuTarget system_arch;
+ 
++    /* related to TARGET_BIG_ENDIAN definition */
++    EndianMode endianness;
 +
  };
  
  #endif
 diff --git a/include/qemu/target_info.h b/include/qemu/target_info.h
-index fab3f3153ea..5b8f17a15a3 100644
+index 6ca36dae8a3..e84f16d1034 100644
 --- a/include/qemu/target_info.h
 +++ b/include/qemu/target_info.h
-@@ -15,4 +15,6 @@ const BinaryTargetInfo *target_info(void);
+@@ -21,4 +21,15 @@ const char *target_name(void);
  
- bool target_info_is_stub(void);
+ SysEmuTarget target_system_arch(void);
  
-+const char *target_name(void);
++/**
++ * target_words_bigendian:
++ * Returns true if the (default) endianness of the target is big endian,
++ * false otherwise. Note that in target-specific code, you can use
++ * TARGET_BIG_ENDIAN directly instead. On the other hand, common
++ * code should normally never need to know about the endianness of the
++ * target, so please do *not* use this function unless you know very well
++ * what you are doing!
++ */
++bool target_words_bigendian(void);
 +
  #endif
 diff --git a/cpu-target.c b/cpu-target.c
-index c99d208a7c4..3f82d3ea444 100644
+index 3f82d3ea444..761c2d28645 100644
 --- a/cpu-target.c
 +++ b/cpu-target.c
-@@ -165,8 +165,3 @@ bool target_words_bigendian(void)
- {
-     return TARGET_BIG_ENDIAN;
+@@ -159,9 +159,3 @@ void cpu_abort(CPUState *cpu, const char *fmt, ...)
+ #endif
+     abort();
  }
 -
--const char *target_name(void)
+-#undef target_words_bigendian
+-bool target_words_bigendian(void)
 -{
--    return TARGET_NAME;
+-    return TARGET_BIG_ENDIAN;
 -}
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3130c5cd456..6701e210f54 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -19,6 +19,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
-+#include "qemu/target_info.h"
- #include "qom/qom-qobject.h"
- #include "system/hostmem.h"
- #include "system/hw_accel.h"
-diff --git a/plugins/loader.c b/plugins/loader.c
-index 7523d554f03..36a4e88d4db 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -29,7 +29,7 @@
- #include "qemu/xxhash.h"
- #include "qemu/plugin.h"
- #include "qemu/memalign.h"
--#include "hw/core/cpu.h"
-+#include "qemu/target_info.h"
+diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
+index 82b68b8927d..32700c49b43 100644
+--- a/hw/core/cpu-system.c
++++ b/hw/core/cpu-system.c
+@@ -24,7 +24,7 @@
+ #include "exec/cputlb.h"
+ #include "system/memory.h"
  #include "exec/tb-flush.h"
- 
- #include "plugin.h"
-diff --git a/system/vl.c b/system/vl.c
-index c17945c4939..d8a0fe713c9 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -40,6 +40,7 @@
- #include "qemu/help_option.h"
- #include "qemu/hw-version.h"
- #include "qemu/uuid.h"
+-#include "exec/tswap.h"
 +#include "qemu/target_info.h"
+ #include "hw/qdev-core.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/core/sysemu-cpu-ops.h"
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index b01f67c65fb..1883e03d3d8 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -26,7 +26,7 @@
+ #include "qemu/units.h"
  #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/runstate-action.h"
-@@ -79,7 +80,6 @@
- #include "hw/block/block.h"
+ #include "qapi/error.h"
+-#include "exec/tswap.h"
++#include "qemu/target_info.h"
+ #include "hw/display/vga.h"
  #include "hw/i386/x86.h"
- #include "hw/i386/pc.h"
--#include "hw/core/cpu.h"
- #include "migration/cpr.h"
- #include "migration/misc.h"
- #include "migration/snapshot.h"
+ #include "hw/pci/pci.h"
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 85110bce374..4ef56c183b2 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -20,7 +20,7 @@
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+-#include "exec/tswap.h"
++#include "qemu/target_info.h"
+ #include "qom/object_interfaces.h"
+ #include "hw/core/cpu.h"
+ #include "hw/virtio/virtio.h"
+diff --git a/system/qtest.c b/system/qtest.c
+index 523a0479959..6146a7bfdc0 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -29,6 +29,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "qemu/cutils.h"
++#include "qemu/target_info.h"
+ #include "qom/object_interfaces.h"
+ 
+ #define MAX_IRQ 256
 diff --git a/target_info-stub.c b/target_info-stub.c
-index d683a05977d..db61a335908 100644
+index 46a240ac66a..c1a15f5cc12 100644
 --- a/target_info-stub.c
 +++ b/target_info-stub.c
-@@ -13,6 +13,7 @@
- 
- static const BinaryTargetInfo target_info_stub = {
+@@ -15,6 +15,7 @@ static const BinaryTargetInfo target_info_stub = {
      .is_stub = true,
-+    .name = TARGET_NAME,
+     .name = TARGET_NAME,
+     .system_arch = -1,
++    .endianness = TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,
  };
  
  const BinaryTargetInfo *target_info(void)
 diff --git a/target_info.c b/target_info.c
-index cb17d29b86d..6b44ea9fc0e 100644
+index be4f19009b3..22796dda543 100644
 --- a/target_info.c
 +++ b/target_info.c
-@@ -14,3 +14,8 @@ bool target_info_is_stub(void)
- {
-     return target_info()->is_stub;
+@@ -31,3 +31,8 @@ SysEmuTarget target_system_arch(void)
+     }
+     return system_arch;
  }
 +
-+const char *target_name(void)
++bool target_words_bigendian(void)
 +{
-+    return target_info()->name;
++    return target_info()->endianness == ENDIAN_MODE_BIG;
 +}
 -- 
 2.47.1
