@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E42C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F206C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UT5-0005kA-Rw; Thu, 03 Apr 2025 19:59:32 -0400
+	id 1u0UTk-0001Tk-Vt; Thu, 03 Apr 2025 20:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UT3-0005am-6n
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:29 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UTh-0001Hl-NK
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:10 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UT1-0002Zk-8U
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:59:28 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39149bccb69so1289865f8f.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:59:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UTf-0002ix-P6
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:09 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3914bc3e01aso937828f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724765; x=1744329565; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724803; x=1744329603; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fZ+iRFzlsz++4RFD9fl5KNYh6wELAyZ06jqDq2TXAd8=;
- b=wtHBVSDB8Ig+oxRV2b2bCTyaHdzDVvFzQ4KTQpJse/U0Tb4uOG+vdoXvwqV/SnETkY
- rOLWoUvlVR+KMaDHtNtwOuBgYdcdz1lbnD1ClBAymOyTgcm32t9Dsp+H2JYgSCJ23WVX
- vOK1vNJV2hLKhf4i/qp21ewGOPwxtIn3o9JAxvzHSYGsLtdEt1Uo/mXwS3n6Hm5GW9Hy
- JNvzDk3kB7JvSGaQagjhQAg12pzVCDeT3nhbultAmfMiRdhPFBDEwzy/tIL7Fto0i918
- b6T0bJsgf+VSyxR/m8weuHzkTo9isX2+VE6bt15iu/CMnxg8vul2u1gl20rSRnxOpryu
- VXnw==
+ bh=x/hYdhB/qBclFHB0dhTATnM1BEowxhG26HVaZBLKHNI=;
+ b=S2F0UDsbralmicgewmsCM8p6IW7gvnOU0KBjLYC3zgonowdBDmEhoUvyLJkWzUJGDy
+ 362KgGNWJE7zJOLo1JLhv3XCSQ6e9FkFkaWAn/w/lUS8aXUDjzU1URXVqezU/5moRSlV
+ eWIfrdqSC54ptt/0uoAvvRMXCVra6XXkbS2vk0uPKAzpYHYIdsCixPFDq/DdvgkIPG29
+ nNFi6AD/Kw66KQyF3vQ3bj+noqCEv3p/ymyN1gUND9edrQtja00pOUr72E+yKo2Ct6FO
+ 3fE5A0sjfBmVpN7m11d6pBq//tHKH0PD6OmzRZiuBIbP5YBZGOiDPM5ubchoe94lw7oR
+ NVQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724765; x=1744329565;
+ d=1e100.net; s=20230601; t=1743724803; x=1744329603;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fZ+iRFzlsz++4RFD9fl5KNYh6wELAyZ06jqDq2TXAd8=;
- b=sD77EtNsvlgR/PGD3Lc9vnpLb6gTiOeTU53KqSHtD2zjMGSLhJblhIbhL74wZOJ2Yh
- LkVpbm2NlY/BML7BT8OyMMt8KFfIJ+aK6tct5zk2zmiKZtOB15ngcPZrmBeNXCIQFxE9
- HDUL8NKkGouP365PohA54dZ3TEdcnkusbs7xTT+sq971xqiKJvUMkECHg9L/tivL0HSi
- 0epHDIHGCa//3SMN04Kp9RR4io1SIU/SWhHhUWyM7CIKA/K6Aw1iNF3YFt3EO/7QnW+s
- i0tKDdFkBfSh9qNCVuXswsVb4Urzh98XQxx1E+y47S7lioxwhK2mUE0lKRFdXyAfD5qM
- qtVQ==
-X-Gm-Message-State: AOJu0YzTRRQB3grvQiU/1Z/iSc2bDjj/tbUX1Hi01dFEANKykMe0I4eW
- t5f0oLdZaAossmr9YvSSn75C/P8TcatSuLoAAFGxc5GdnVfm72JpJS0ucosDZjctHutjnX/axEZ
- Q
-X-Gm-Gg: ASbGncvRP16LrU38WTNE00yrv+oozalk3u5TBrKf1/KeMj5Taqo8J4trUfpdEIVs1Z1
- RaOtYynsbBXjddkGYAn8EpBEzVGDxHXwejIP8N//MqC/Fl2QZ9IgBufvAb0FLYQy/pXTuBHBmJk
- NmWZPJ/jG/ePP5LIqUVIv3ztm/hNdOO6KlgKnsF3zuDirgacQxppRetAr3BUCG1RGjmXQXDnVEh
- mPziMukTfO6FgKMc5zPvH/6Uyw6pFpzJeVBH7/SqeKaTkEB3MefQa4F492md9oWJbv4kB0ybDKZ
- 2FUA5Gig9pTw3lL/6E1kbnkBBkdJ7/+bqLk+fMWhtuzXP4DseM2CD+TlIaAeLx7eb+WqIC6MO34
- H6g4s/okyQ4MyZFA1sAI=
-X-Google-Smtp-Source: AGHT+IFDi4N6v091m/aVxYSW+ih2q0MZgSTv1p+Z1fu0gkZqLgTfx2YLZMDBMupadXdY9Hqwny6vyA==
-X-Received: by 2002:a5d:648d:0:b0:39c:13fa:3eb with SMTP id
- ffacd0b85a97d-39cba9369bbmr904227f8f.39.1743724764991; 
- Thu, 03 Apr 2025 16:59:24 -0700 (PDT)
+ bh=x/hYdhB/qBclFHB0dhTATnM1BEowxhG26HVaZBLKHNI=;
+ b=V3WmDBevcXVhi+wKcBBfvWVK5ITTTZMvCXTke8p2XYjf3SVpnXDhqhzXd+ulSRbeLW
+ hlzIWOHj2/uGCW7+TeYCDNcLef2vn3VTdnCikvKYS4cPQHcZ+Ma5BVhE4L9fPzMXjw+/
+ plkqRkKt7An39eFA+MYCykP13wR1gtwAgmwmcsYmefWxJtNIz57McvuOk6lxaO/nMVI5
+ zTt0aP9e5Gf4LoulfZZBKr5XxKvtJ9Aw/H/JXudnflzBv7omQiN4NfZudJYG5OZrDh7y
+ 5fzg9kVGwRNf0gqEOm7C6rF9/MDTXsvVTFKroLOQe0zaLdIEBUr7ue6JRvj2UV8cJwE9
+ ZkYQ==
+X-Gm-Message-State: AOJu0YzIJ7fvbvUQzeKPWBXc5YjTOD19bXPb5RyLdFmv3ls1DqYwlXjg
+ BflgIP5AI+UkRofvkPY6fbLAlm/POHf2srci8GXtEl2sX+sqy0TKwAh/12CIUGN5XnLgI9kVZiq
+ g
+X-Gm-Gg: ASbGncv3ks/sZHQiGB7CP8aKiqglzDWfmWmNoEC2IefxlgwIMFS4leA8kldnFVGMnJD
+ fMC8sPXLw34D1zJXEKdP90+A449jhgCdRUQP0WDTjtuU9TDI+XsbVo3y1rtWZdLgb+AxxPfWjlZ
+ pIGhUzbXo7tMdDF06bS+nMv0IkF8qoz9KCmQUmm3lzRlyQ8BJhlHS8GCyyasgMjPuGiKH1tNDhW
+ sZoqnrhRlhT0QZ3hiwLGsfaDCvemsnfxdAVPfOVT7axnnW3Y7UKeQj1KkX+VrB9r94cRAP5/WxW
+ Dtchvmc3g8KM3mmUqSbezMSTNv6yduR/7SNcx81lPFCFW7phG8+mn6YbHdwRXu5/Z/iM5Kj6bOq
+ YEOB6CzvoN8dI1zyE5io=
+X-Google-Smtp-Source: AGHT+IHrCZUfK51c0Csq0xsrVSRro/RsfmTfFbp1yd57fBdVtfnQzNYtY5sfV/V4mbppUIDArGNMZA==
+X-Received: by 2002:a05:6000:2d0c:b0:39c:1257:dbab with SMTP id
+ ffacd0b85a97d-39d1476309fmr283778f8f.59.1743724803393; 
+ Thu, 03 Apr 2025 17:00:03 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1660bcesm34148735e9.10.2025.04.03.16.59.21
+ ffacd0b85a97d-39c300968c4sm3012877f8f.9.2025.04.03.17.00.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:59:23 -0700 (PDT)
+ Thu, 03 Apr 2025 17:00:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 09/39] target/arm/cpregs: Include missing
- 'target/arm/cpu.h' header
-Date: Fri,  4 Apr 2025 01:57:51 +0200
-Message-ID: <20250403235821.9909-10-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 15/39] target/arm/hvf: Include missing
+ 'cpu-qom.h' header
+Date: Fri,  4 Apr 2025 01:57:57 +0200
+Message-ID: <20250403235821.9909-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPReadFn type definitions use the CPUARMState type, itself
-declared in "cpu.h". Include this file in order to avoid when
-refactoring headers:
+ARMCPU typedef is declared in "cpu-qom.h". Include it in
+order to avoid when refactoring unrelated headers:
 
-  ../target/arm/cpregs.h:241:27: error: unknown type name 'CPUARMState'
-  typedef uint64_t CPReadFn(CPUARMState *env, const ARMCPRegInfo *opaque);
-                            ^
+  target/arm/hvf_arm.h:23:41: error: unknown type name 'ARMCPU'
+     23 | void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
+        |                                         ^
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpregs.h | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/hvf_arm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 2183de8eda6..c1a7ae37356 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -23,6 +23,7 @@
+diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
+index 26c717b3826..ee5545f2d10 100644
+--- a/target/arm/hvf_arm.h
++++ b/target/arm/hvf_arm.h
+@@ -11,7 +11,7 @@
+ #ifndef QEMU_HVF_ARM_H
+ #define QEMU_HVF_ARM_H
  
- #include "hw/registerfields.h"
- #include "target/arm/kvm-consts.h"
-+#include "cpu.h"
+-#include "cpu.h"
++#include "target/arm/cpu-qom.h"
  
- /*
-  * ARMCPRegInfo type field bits:
+ /**
+  * hvf_arm_init_debug() - initialize guest debug capabilities
 -- 
 2.47.1
 
