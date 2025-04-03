@@ -4,141 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6890C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 18:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A5BC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 18:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0OsT-0003m5-Cn; Thu, 03 Apr 2025 14:01:21 -0400
+	id 1u0OwJ-0005OK-Ru; Thu, 03 Apr 2025 14:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u0Ort-0003QQ-Ub
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 14:00:53 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1u0OwE-0005M4-W2
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 14:05:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u0Orr-0006AP-5W
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 14:00:44 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1u0OwB-0006tA-L9
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 14:05:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743703240;
+ s=mimecast20190719; t=1743703510;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tDhXga8I+eW/Cyg6XZ6X7k/EkQpsb8wB/HingNiAwaM=;
- b=KK3IGbldhDioMDE2jYDJS0LuzXn11BrR00KHD3kxjFXGHzYuDDbqvGQfAC4fX6G48Dh5v3
- phnMWIBDfjRfTBInZ8I5THLvbTIIyZH4pOZ7c8BhIZA8WypCK+7DGMnZfMdEzYIXqoKOeJ
- kowaCqktvXgNu6WK74prI75AjOlLmXY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=H3ILeFiZ0Gnr22wpV5Hdg22mygGi1e/PkrI5XMuPU6s=;
+ b=TABDs7/dcdxwiLBOjnTha6HAcG4LZge6M8XGU3ikSqNmcjydrkgoeBzxwSALxvOh5GEYPp
+ kKrY9qqq4umKdFrvO5db+YVUwE+gJ6JQER4UrWxXej2Ts8EvO8rZqUsWKkNrJWnwZYFQgg
+ 2b3CRUu9tM33yZaLNCrcMIXPAsHWl1k=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-59AORO9tPIi7zN_tm4VLKg-1; Thu, 03 Apr 2025 14:00:37 -0400
-X-MC-Unique: 59AORO9tPIi7zN_tm4VLKg-1
-X-Mimecast-MFC-AGG-ID: 59AORO9tPIi7zN_tm4VLKg_1743703236
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3912b54611dso771805f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 11:00:37 -0700 (PDT)
+ us-mta-621-gh02RlXbPhq8C3eID_k7jg-1; Thu, 03 Apr 2025 14:05:09 -0400
+X-MC-Unique: gh02RlXbPhq8C3eID_k7jg-1
+X-Mimecast-MFC-AGG-ID: gh02RlXbPhq8C3eID_k7jg_1743703509
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-85e80e2fbcdso22254239f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 11:05:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743703236; x=1744308036;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tDhXga8I+eW/Cyg6XZ6X7k/EkQpsb8wB/HingNiAwaM=;
- b=d49UGifn+CrhTr1gLnYITLLtawdTBDdp1mgyJ9ETqgVBfTEt/qRoJeC7ercmWaZm6f
- KPGzwySqg/pfFGZr+vcUalx8G8KL6FjBWl5/Em4nHE2tJ6nbcWU3yFfcPN+M3AYsjgVa
- 0+IAcTaXQGjKqeesWrNwvlMMtEk24JxdH9Eo+JZ6FP4FOT2F18w/57X/+5FOLFdH6/Vr
- tkutzBqgP434MAPpKDKDl+8e/W57zle5I5USbftTp+ph7pXOYgQMnX/zp4GbdgLwa0wb
- uP3OALfamQMuHuTsdgblzmC9LtR92vDuNsO9kD+wLph54xXNgfekg1JN19bqTsZ2Hpd4
- 11Rw==
+ d=1e100.net; s=20230601; t=1743703509; x=1744308309;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H3ILeFiZ0Gnr22wpV5Hdg22mygGi1e/PkrI5XMuPU6s=;
+ b=w3ZkG+8WkbmI++PAG3HubR4NqbdSnGERJv7FcMbZgKGtNMfzocq2/hbzCsFp3/6O3K
+ bjaPi4e2bPT+yzBLlRBYnBoQwMGwj08lQJR54BjlUi3v6maL7qqZmLmMdzUVpQYxSinv
+ 1gn99zo8pyfwslY7ddZDfMJWhHFSH/ZMWE+bwqapJteqBKnuuKcwD2Ij7ZStJRxzOXjf
+ 4Bdovrie4rdVriiEQpV7vlqDNra1RuciRPWwr9x3rz/vdEBC4H2tvZ0o685BZSAQevgN
+ yp8Fhxe57hPGtPdyJ9/XPKrh44mkjt61MouFmc9W7VeAYpTwVTDZiuFiegeSZXmz5Uln
+ BNSw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfs10upKMSRVnF96gMJa68MUG2ldHUkPZy4cHnKarlNmO2EnOgF7X4SeJwAEG+y3tW2d30eb0S1bRK@nongnu.org
-X-Gm-Message-State: AOJu0Yy2+jUrGiMh66uzy7XnoHCRLOTftzZ6LjTxJXbCg+44zKCN2gqP
- A84l+IM0KiWkKqW/jAYneTZmcCaNAHeKdaRedpQ9HddJTie0L+GhQl8+9tDn8VzC8iIlToVQJBW
- S819Ldb8alhKbMZEKFaijWRIMW5A0OQ9vp/wAMutyejAJnJw/eg/7
-X-Gm-Gg: ASbGnctutYv0XZ0i0ktp2VxcGsPGnT4JhLLbzAv2Vdf6VaIhpTpvQOK3DeRgcXigYwA
- DAYzVuW4iXErBVECwWKK17jNAPrxRA5HMwTCvZwlTSF1uKjr7rj+TjSu8AWvHofUBkO9S18HVNU
- MyMAlQbAmVtDjjXyUWvf18I8naVPV4T6Bc4Fuy/VLXTvItxlya7uvzoK3nNj5kyz6ddSN8B/1XG
- iWn5U8wiuWwtAfGYQV7ekVKly5pvOB+/z4su2A80+ebVui39uBNeTObUr8kNCupVLay0WqiJ7Ye
- 0VzE2g3kDcB4BTve+/dywsAxf40hdpz4Z7JUMl9MnwjP
-X-Received: by 2002:a05:6000:1acb:b0:390:f6aa:4e7c with SMTP id
- ffacd0b85a97d-39cba93534emr210756f8f.28.1743703236566; 
- Thu, 03 Apr 2025 11:00:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7qVT3JKr2cqd/7LysPSGmIymxSbpXL0i9rRBvpGZ/0B6ghb/HJkGUFBTE+ZB+ozjE87szxg==
-X-Received: by 2002:a05:6000:1acb:b0:390:f6aa:4e7c with SMTP id
- ffacd0b85a97d-39cba93534emr210718f8f.28.1743703236189; 
- Thu, 03 Apr 2025 11:00:36 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-76.web.vodafone.de. [109.42.51.76])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301ba2dfsm2396422f8f.60.2025.04.03.11.00.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 11:00:35 -0700 (PDT)
-Message-ID: <4bd6f358-3de7-44f9-9cf2-7c2086a87fca@redhat.com>
-Date: Thu, 3 Apr 2025 20:00:33 +0200
+ AJvYcCU1ylgXxODiEgSwd78jfh+eGHofkwdTXvAlc+L8ZL20NNNDgQU2lzM+MxFz/HnIX3ZFAN5WJZieNngu@nongnu.org
+X-Gm-Message-State: AOJu0Yzsj/0RQDxW/g/1BNGJ7nmYq482FTzIZAWH2mhs+tfHF34Jtkuq
+ +S3LUvfWiP2e5RdfwuNAHMnq5rcQNLYJ8FlboHWoG/IuX7aSMg0g/99TmYbjG0Q6y3/zP/g0Tzn
+ 278PPwU1zv2LcmrbW6HRHS1nE0S1yMtzfR4lUo9yz1KKfTfFpHmon
+X-Gm-Gg: ASbGncv9jk+8IyAf0aMBFIIlggsOKTQ9T7kOWrvUiMk+hjdpkH2L8XfMPmItrZHT0CP
+ Kj3vLJeKT5LR/m7osE7eReY2Jj3Fzmv2lANUI6TbsOizMAIs9eGzSZCfJlcEWmtatpTa8w+0AIp
+ UpNkFpj748v/EKdS9bqaHi0Ja9jBjrxgxE3/OtRx2SAJqQ2/X+y5HUGyHVJEDKN53an4BjxcHDt
+ Jetv8wgXQpE/+B/fh1yGMOvafnvgdJrH++ujHCz9gDGYpOJ15JCM+kBOtgBOBG1ODxOZpic9Ujz
+ 4Lx+72FQ3PJLI4C/hv8=
+X-Received: by 2002:a92:cdae:0:b0:3d4:3c21:ba67 with SMTP id
+ e9e14a558f8ab-3d6e3f759b7mr1280425ab.3.1743703508702; 
+ Thu, 03 Apr 2025 11:05:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHZ1SerGhcgqf92YoyascdKHfEvmYBcD+Vgi2F+6hW3oCy44FFAFI6uR4mmnaeGlOhJGPO0xQ==
+X-Received: by 2002:a92:cdae:0:b0:3d4:3c21:ba67 with SMTP id
+ e9e14a558f8ab-3d6e3f759b7mr1280235ab.3.1743703508341; 
+ Thu, 03 Apr 2025 11:05:08 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3d6de79ef3esm4008255ab.10.2025.04.03.11.05.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Apr 2025 11:05:06 -0700 (PDT)
+Date: Thu, 3 Apr 2025 12:05:04 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Farhan Ali <alifm@linux.ibm.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Niklas Schnelle
+ <schnelle@linux.ibm.com>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ qemu-s390x@nongnu.org, fam@euphon.net, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, thuth@redhat.com, mjrosato@linux.ibm.com,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH v3 0/3] Enable QEMU NVMe userspace driver on s390x
+Message-ID: <20250403120504.2f660171.alex.williamson@redhat.com>
+In-Reply-To: <2c244588-b37b-4e86-863e-ef462343edad@linux.ibm.com>
+References: <20250401172246.2688-1-alifm@linux.ibm.com>
+ <20250402155152.GE304512@fedora>
+ <2c11a602415f0780030d4e68a28eee7ffcdd8cb7.camel@linux.ibm.com>
+ <20250403154442.GA349582@fedora>
+ <20250403102704.7e1f4452.alex.williamson@redhat.com>
+ <2c244588-b37b-4e86-863e-ef462343edad@linux.ibm.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 v2 04/14] tests/qtest: Skip Aarch64 VMapple
- machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Udo Steinberg <udo@hypervisor.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>
-References: <20250403151829.44858-1-philmd@linaro.org>
- <20250403151829.44858-5-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250403151829.44858-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -163,53 +119,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/04/2025 17.18, Philippe Mathieu-Daudé wrote:
-> First, the VMapple machine only works with the ARM 'host' CPU
-> type, which isn't accepted for QTest:
-> 
->    $ qemu-system-aarch64 -M vmapple -accel qtest
->    qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
-> 
-> Second, the QTest framework expects machines to be createable
-> without specifying optional arguments, however the VMapple
-> machine requires few of them:
-> 
->    $ qemu-system-aarch64 -M vmapple -accel qtest
->    qemu-system-aarch64: No firmware specified
-> 
->    $ qemu-system-aarch64 -M vmapple -accel qtest -bios /dev/null
->    qemu-system-aarch64: No AUX device. Please specify one as pflash drive.
-> 
-> Restrict this machine with QTest so we can at least run check-qtest,
-> otherwise we get:
-> 
->    $ make check-qtest-aarch64
->    qemu-system-aarch64: The 'host' CPU type can only be used with KVM or HVF
->    Broken pipe
->    ../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
->    ...
->     7/26 qemu:qtest+qtest-aarch64 / qtest-aarch64/test-hmp     ERROR      24.71s   killed by signal 6 SIGABRT
->     2/26 qemu:qtest+qtest-aarch64 / qtest-aarch64/qom-test     ERROR      71.23s   killed by signal 6 SIGABRT
-> 
-> Suggested-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   tests/qtest/libqtest.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 2750067861e..fad307d125a 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -1788,6 +1788,7 @@ void qtest_cb_for_every_machine(void (*cb)(const char *machine),
->           if (!strncmp("xenfv", machines[i].name, 5) ||
->               g_str_equal("xenpv", machines[i].name) ||
->               g_str_equal("xenpvh", machines[i].name) ||
-> +            g_str_equal("vmapple", machines[i].name) ||
->               g_str_equal("nitro-enclave", machines[i].name)) {
->               continue;
->           }
+On Thu, 3 Apr 2025 10:33:52 -0700
+Farhan Ali <alifm@linux.ibm.com> wrote:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> On 4/3/2025 9:27 AM, Alex Williamson wrote:
+> > On Thu, 3 Apr 2025 11:44:42 -0400
+> > Stefan Hajnoczi <stefanha@redhat.com> wrote:
+> >  
+> >> On Thu, Apr 03, 2025 at 09:47:26AM +0200, Niklas Schnelle wrote:  
+> >>> On Wed, 2025-04-02 at 11:51 -0400, Stefan Hajnoczi wrote:  
+> >>>> On Tue, Apr 01, 2025 at 10:22:43AM -0700, Farhan Ali wrote:  
+> >>>>> Hi,
+> >>>>>
+> >>>>> Recently on s390x we have enabled mmap support for vfio-pci devices [1].  
+> >>>> Hi Alex,
+> >>>> I wanted to bring this to your attention. Feel free to merge it through
+> >>>> the VFIO tree, otherwise I will merge it once you have taken a look.
+> >>>>
+> >>>> Thanks,
+> >>>> Stefan
+> >>>>      
+> >>>>> This allows us to take advantage and use userspace drivers on s390x. However,
+> >>>>> on s390x we have special instructions for MMIO access. Starting with z15
+> >>>>> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
+> >>>>> operate on virtually mapped PCI memory spaces, and can be used from userspace.
+> >>>>> On older platforms we would fallback to using existing system calls for MMIO access.
+> >>>>>
+> >>>>> This patch series introduces support the PCI MIO instructions, and enables s390x
+> >>>>> support for the userspace NVMe driver on s390x. I would appreciate any review/feedback
+> >>>>> on the patches.
+> >>>>>
+> >>>>> Thanks
+> >>>>> Farhan  
+> >>> Hi Stefan,
+> >>>
+> >>> the kernel patch actually made it into Linus' tree for v6.15 already as
+> >>> commit aa9f168d55dc ("s390/pci: Support mmap() of PCI resources except
+> >>> for ISM devices") plus prerequisites. This went via the PCI tree
+> >>> because they included a change to struct pci_dev and also enabled
+> >>> mmap() on PCI resource files. Alex reviewed an earlier version and was
+> >>> the one who suggested to also enable mmap() on PCI resources.  
+> >> The introduction of a new QEMU API for accessing MMIO BARs in this
+> >> series is something Alex might be interested in as QEMU VFIO maintainer.
+> >> That wouldn't have been part of the kernel patch review.
+> >>
+> >> If he's aware of the new API he can encourage other VFIO users to use it
+> >> in the future so that you won't need to convert them to work on s390x
+> >> again.  
+> > I don't claim any jurisdiction over the vfio-nvme driver.  In general
+> > vfio users should be using either vfio_region_ops, ram_device_mem_ops,
+> > or directly mapping MMIO into the VM address space.  The first uses
+> > pread/write through the region offset, irrespective of the type of
+> > memory, the second provides the type of access used here where we're
+> > dereferencing into an mmap, and the last if of course the preferred
+> > mechanism where available.
+> >
+> > It is curious that the proposal here doesn't include any changes to
+> > ram_device_mem_ops for more generically enabling MMIO access on s390x.
+> > Thanks,
+> >
+> > Alex  
+> 
+> 
+> Hi Alex,
+>  From my understanding the ram_device_mem_ops sets up the BAR access for 
+> a guest passthrough device. Unfortunately today an s390x KVM guest 
+> doesn't use and have support for these MIO instructions. We wanted to 
+> use this series as an initial test vehicle of the mmap support.
+
+Right, ram_device_mem_ops is what we'll use to access a BAR that
+supports mmap but for whatever reason we're accessing it directly
+through the mmap.  For instance if an overlapping quirk prevents the
+page from being mapped to the VM or we have some back channel mechanism
+where the VMM is interacting with the BAR.
+
+I bring it up here because it's effectively the same kind of access
+you're adding with these helpers and would need to be addressed if this
+were generically enabling vfio mmap access on s390x.
+
+Prior to commit 2b8fe81b3c2e ("system/memory: use ldn_he_p/stn_he_p")
+the mmio helpers here might have been a drop-in replacement for the
+dereferencing of mmap offsets, but something would need to be done
+about the explicit PCI assumption introduced here and the possibility
+of unaligned accesses that the noted commit tries to resolve.  Thanks,
+
+Alex
 
 
