@@ -4,24 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73903C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 09:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A29C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 09:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0GyG-0004jQ-7E; Thu, 03 Apr 2025 05:34:48 -0400
+	id 1u0H8R-0006E4-7d; Thu, 03 Apr 2025 05:45:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1u0GyE-0004j0-GD; Thu, 03 Apr 2025 05:34:46 -0400
+ id 1u0H8H-00068g-Rz; Thu, 03 Apr 2025 05:45:10 -0400
 Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1u0GyC-0001ZN-Q4; Thu, 03 Apr 2025 05:34:46 -0400
+ id 1u0H7u-0001x5-KU; Thu, 03 Apr 2025 05:45:09 -0400
 Received: from movement by movementarian.org with local (Exim 4.95)
- (envelope-from <movement@movementarian.org>) id 1u0Gy6-005pGz-Tt;
- Thu, 03 Apr 2025 10:34:38 +0100
-Date: Thu, 3 Apr 2025 10:34:38 +0100
+ (envelope-from <movement@movementarian.org>) id 1u0H2F-005pNP-5W;
+ Thu, 03 Apr 2025 10:38:55 +0100
+Date: Thu, 3 Apr 2025 10:38:55 +0100
 From: John Levon <levon@movementarian.org>
 To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
 Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
@@ -38,16 +38,16 @@ Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
  David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v8 05/28] vfio: add vfio_prepare_device()
-Message-ID: <Z+5WLqQRqrxSpNBV@movementarian.org>
+Subject: Re: [PATCH v8 06/28] vfio: refactor out vfio_interrupt_setup()
+Message-ID: <Z+5XL1Ou7iZ+TS/R@movementarian.org>
 References: <20250219144858.266455-1-john.levon@nutanix.com>
- <20250219144858.266455-6-john.levon@nutanix.com>
- <3369ecab-21ea-4198-9ffa-73307a795f69@redhat.com>
+ <20250219144858.266455-7-john.levon@nutanix.com>
+ <d68a6f8a-9c8e-41e2-9290-ef041c0e10d2@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3369ecab-21ea-4198-9ffa-73307a795f69@redhat.com>
+In-Reply-To: <d68a6f8a-9c8e-41e2-9290-ef041c0e10d2@redhat.com>
 X-Url: http://www.movementarian.org/
 Received-SPF: pass client-ip=139.162.205.133;
  envelope-from=movement@movementarian.org; helo=movementarian.org
@@ -72,42 +72,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 03, 2025 at 11:19:34AM +0200, Cédric Le Goater wrote:
+On Thu, Apr 03, 2025 at 11:23:09AM +0200, Cédric Le Goater wrote:
 
 > On 2/19/25 15:48, John Levon wrote:
-> > Commonize some initialization code shared by the legacy and iommufd vfio
-> > implementations (and later by vfio-user).
+> > Refactor the interrupt setup code out of vfio_realize(), as we will
+> > later need this for vfio-user too.
 > > 
 > > Signed-off-by: John Levon <john.levon@nutanix.com>
-> > ---
-> >   hw/vfio/common.c              | 19 +++++++++++++++++++
-> >   hw/vfio/container.c           | 14 +-------------
-> >   hw/vfio/iommufd.c             |  9 +--------
-> >   include/hw/vfio/vfio-common.h |  2 ++
-> >   4 files changed, 23 insertions(+), 21 deletions(-)
-> > 
-> > diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> > index eefd735bc6..4434e0a0a2 100644
-> > --- a/hw/vfio/common.c
-> > +++ b/hw/vfio/common.c
-> > @@ -1569,6 +1569,25 @@ retry:
-> >       return info;
-> >   }
-> > +void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-> > +                         VFIOGroup *group, struct vfio_device_info *info)
+> >   static void vfio_realize(PCIDevice *pdev, Error **errp)
+> >   {
+> >       ERRP_GUARD();
+> > @@ -3157,27 +3188,8 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
+> >           }
+> >       }
+> > -    /* QEMU emulates all of MSI & MSIX */
+> > -    if (pdev->cap_present & QEMU_PCI_CAP_MSIX) {
+> > -        memset(vdev->emulated_config_bits + pdev->msix_cap, 0xff,
+> > -               MSIX_CAP_LENGTH);
+> > -    }
+> > -
+> > -    if (pdev->cap_present & QEMU_PCI_CAP_MSI) {
+> > -        memset(vdev->emulated_config_bits + pdev->msi_cap, 0xff,
+> > -               vdev->msi_cap_size);
+> > -    }
+> > -
+> > -    if (vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1)) {
+> > -        vdev->intx.mmap_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+> > -                                                  vfio_intx_mmap_enable, vdev);
+> > -        pci_device_set_intx_routing_notifier(&vdev->pdev,
+> > -                                             vfio_intx_routing_notifier);
+> > -        vdev->irqchip_change_notifier.notify = vfio_irqchip_change;
+> > -        kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
+> > -        if (!vfio_intx_enable(vdev, errp)) {
+> > -            goto out_deregister;
+> > -        }
+> > +    if (!vfio_interrupt_setup(vdev, errp)) {
+> > +        goto out_teardown;
 > 
-> I would prefer that the first version did not have a 'group' parameter.
-> Let's add it when needed.
+> is that the correct exit label ?
 
-I think you mean something like this in hw/vfio/container.c:
+Thanks, missed during rebase, it should be out_unset_idev
 
-vfio_prepare_device(vbasedev, &group->container->bcontainer, info);
+There is also a bug in the self-cleanup of vfio_interrupt_setup(): it's not
+doing timer_free(vdev->intx.mmap_timer);
 
-vbasedev->group = group;
-QLIST_INSERT_HEAD(&group->device_list, vbasedev, next);
-
-As it's the only consumer that actually wants a group.
-
-thanks
+regards
 john
 
