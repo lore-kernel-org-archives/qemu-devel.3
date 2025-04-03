@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE35AC3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948A9C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 23:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UKx-0002mU-QZ; Thu, 03 Apr 2025 19:51:07 -0400
+	id 1u0US8-0004O9-Ny; Thu, 03 Apr 2025 19:58:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UKs-0002NY-3e
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:51:02 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0US6-0004Nn-16
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:58:30 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UKq-0000oJ-DH
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:51:01 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso14216065e9.3
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:50:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0US3-0002P5-SZ
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 19:58:29 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cfe574976so10042005e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 16:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724258; x=1744329058; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tt83rZuXJ2P2CGUhlOB2w3nk8Oq8J5HbWrTGgOM9cNo=;
- b=zwr9tp/PaGONxw6Mgf2kGo51aSTxa9VqP56S9eNgpJzIN+ylBG2/HpFXbot/zTK+mw
- 6XA/Cbs7S7Bfft4vu0C6HAVTTIfoJCL1jPebEdipsIr95Ic5ScjgiPjKl3jkuNd37miY
- uBKVyESGo1tImsWC8A40vC9QWpBh68sjHH2mlX63Utabe7m1bmZCYBd4MDJabvPQbrVZ
- p1a31TYw2PdEWwcD0Luey2NcIeH/9nd78VVn8P7MSBIZzS6g5OKqFNfLu6DsvdQ7zuVJ
- oWdPzHWICN9MQFBMLriAlorgOGHq3tpXweCmznEwDbpS5OoVBEjnA5fH6QpKDAzAGlrz
- Cbkg==
+ d=linaro.org; s=google; t=1743724706; x=1744329506; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=m8iJ/OcuqmCG4PWk4V4uwr/6V05cUR6OFiELOu5Xl3k=;
+ b=RgN1QNLUeWtaQpGteIbDYdsDVQP2zuIG58xI0dGGWC6ek4dmW3ibvqUS95OvH7CxlJ
+ uPL/39oVMmd8B/F2P5Tr+fsDBvb26VLIcQ9j1ODSJznZ3KkyXKACVcESjloSpecGVlwd
+ zDwGwvuVkwtHxbAMnUUj7UFItoQwVa9CEYG+k4tzewpJxY7ynKsVq2VPst9GT1hBMbsE
+ enopPwfT3E2KKPMonRFjZTTJvld8mDrSsWaj89kvju+1FZf3wKAc4Sm1ORb2QTVCLZri
+ YkN7RnngW45CELR9sIqGG7O+qFddY5We8Y+9DpqQc+Ilu/7dpiO6UneooAlWBs3O8EZb
+ DUag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724258; x=1744329058;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tt83rZuXJ2P2CGUhlOB2w3nk8Oq8J5HbWrTGgOM9cNo=;
- b=eTAuPouwIb4V0KHsKc9XDdA2mC3+mvFhqdtcta6jmKMaN3avo5Ue5Hw2gFyoM78N5i
- MUaooMDfq3FYfmrvJO5W8br244T5MjFgHl8P4U0OrdaqdUKIqtQIZX+I70KmdbE5KTsZ
- JH1HmfjJzL4BJS4GmT5Vj3qbybx5bkKkiBivjcymBINytO92uPs2swz8RzWIhC0P4Q65
- WA7I0FcjO5ZrC4rV4E5x8vnUsRA0itxFVwT7Aore3myBaw6GHPvvko9FFt9RKkaPmuid
- NjHhnzynGqGPvt/d0K5btuNfTFj5QGwfGhgBKn06AyRTve/hPiF1yOr06q4DVVEjjdCs
- xQOw==
-X-Gm-Message-State: AOJu0YwLIIPfpZvzqQauKcLZ/pHunLyqiIWumuQzUeRfYdx66Wy/IFie
- sZV6kaCVv5zJztLLSx0duvGJg45Mv9dVnmyPT7I+vQYZxIwfbj8ihOsRzZyKHGiy+XWo6yPKb9d
- K
-X-Gm-Gg: ASbGncsztbuMNgNJYFuRH4HQMHtXd5ioPQXkNmF4ilEAyJYJPSFFnLjG00Joh46nzF5
- FjIaOaYji02lz9cJ8qxeGi5F/hlMgaMHP4Yab1cMUPUr0jqJqusKPgN9hq5PCgfiaaAajqNE48P
- M2Hxa4DdpPvtT/XAOOtFo3TE10Wvv8q2N39ZXdociE45iKU5OEtP66B8c3+CdPjmW60uLGAmuUC
- dB0Unjs0K0/OkNv/ssqMXxiG0jRozINWk/8keeQizsCjicQrPy4lFETUbDhEK0Y+KOR0WcnA2uJ
- J3XPT9LGOtbskNHozvSzg6wvL41AKNqEiKMzuceWVW2LcZ/QM4EZQ3ePS19QI/aZEkjeSLOHqhC
- GAiUONjg5KMeR4Yb+uBI=
-X-Google-Smtp-Source: AGHT+IEeBTRAIwOV8EHnXBMSLabygT1G9AHFpz9wef62Ze7/gbASL9kWKhLYbuM3hQjk22xXEFayKQ==
-X-Received: by 2002:a05:600c:4f0c:b0:43d:aed:f7de with SMTP id
- 5b1f17b1804b1-43ed0d98ffbmr3255405e9.21.1743724258408; 
- Thu, 03 Apr 2025 16:50:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743724706; x=1744329506;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m8iJ/OcuqmCG4PWk4V4uwr/6V05cUR6OFiELOu5Xl3k=;
+ b=p3s7+daxBMmXW+dBjr495XrubgeWFbWedgPRLIACPhvskhzmgq6/JJhvMShIixlI1P
+ SsyZrO9RiiM91cgCAAdo/yczPrdDg9uR7Ro43jL1oLzYZfJ3bRnZSpiUKnz7cDiBBlzl
+ Ox1QIvFGOhk6f4z12d3TN1SBfPSbYukDPNuStbyrgSKt+G4uGNd4CFVjtbKAMnOSfmJL
+ NBVJk+qAlKeA6w5AuqsD6uS7dlFpoo66RzcAac4u4XdNaW5WETsqCup7QcqWD8vExzOY
+ iDVYZjKaWKc2ZgWS7ksVv9ZJ2RDNzS42eSr32jK7P2Pux0a7ZW8B+ml4BSTts93QghOd
+ 9GBg==
+X-Gm-Message-State: AOJu0YxiIbbXsXVHDqjgj2fPqqot9kvG5hqeT74EwdE8Akj04mM1Hmpk
+ gdGUHlZFSTUbODF9Oxgg3nE1A2ebjkt9hN4AsxNNkyEVFaKETP7yKiePRn+V7dtciYAU+AnIQRS
+ V
+X-Gm-Gg: ASbGnctqcfgPGOXTfR71S0ZMAht1WWemXyl22K5zBafV6tsI+UQViusk7esPq6Ng8nX
+ CyI4Q6jmGijWovtxzlPlf3ZaSlVc6FaXYE6ouuaq3mL5dDMrVYfbnmp2gMARO+nUYJlr626xHT/
+ nnTZdiMXWSH5/cIF/s/5m4qbW9TAM3JzcBZ5x3NpaI/kBbSJP6wN3i1VGEFYR7bDCE77cs4jTWN
+ xyaTLEvE5PsanX8HXq+Ph3EfJi8JdTzn45ymOrkurTS1qgb5oVSNJF++gjJIx3aF953slEaDt2N
+ oDAzr5jrWsXhALD5LywINF/VXf2XNXQDVnjw67qztnr2uIkGba6mTuFz4dPWmHWQ0OGxeYTvimd
+ NOY3aDHz9KLuiwz1KOWM=
+X-Google-Smtp-Source: AGHT+IEnspoWg3KK8imldwHfqGG3jiWBONBZZ+AxPZgAxtUxO/PMX2UmRCxx4XvZnSlhelfC3QzpBQ==
+X-Received: by 2002:a05:600c:198b:b0:43c:f1b8:16ad with SMTP id
+ 5b1f17b1804b1-43ecfa0572cmr9234125e9.30.1743724705739; 
+ Thu, 03 Apr 2025 16:58:25 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c30096889sm2927727f8f.2.2025.04.03.16.50.55
+ 5b1f17b1804b1-43ec17b1352sm33729525e9.37.2025.04.03.16.58.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 16:50:57 -0700 (PDT)
+ Thu, 03 Apr 2025 16:58:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH-for-10.1 16/19] accel: Make AccelCPUClass structure
- target-agnostic
-Date: Fri,  4 Apr 2025 01:49:11 +0200
-Message-ID: <20250403234914.9154-17-philmd@linaro.org>
+ Markus Armbruster <armbru@redhat.com>
+Subject: [RFC PATCH-for-10.1 00/39] single-binary: Make hw/arm/ common
+Date: Fri,  4 Apr 2025 01:57:42 +0200
+Message-ID: <20250403235821.9909-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250403234914.9154-1-philmd@linaro.org>
-References: <20250403234914.9154-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,88 +99,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include missing "hw/core/cpu.h" header in "accel/accel-cpu.h" to avoid:
+Hi,
 
-include/accel/accel-cpu-target.h:39:28: error: unknown type name 'CPUClass'
-   39 |     void (*cpu_class_init)(CPUClass *cc);
-      |                            ^
+At this point this series is mostly a draft for Pierrick.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/accel/accel-cpu-target.h | 12 +-----------
- include/accel/accel-cpu.h        | 23 +++++++++++++++++++++++
- accel/accel-target.c             |  1 -
- 3 files changed, 24 insertions(+), 12 deletions(-)
- create mode 100644 include/accel/accel-cpu.h
+After introducing the generic TargetInfo API [*], we implement
+the ARM variants, then use the API to remove target-specific code,
+allowing to eventually remove the target-specific arm_ss[] source
+set in meson.build, having all objects in arm_common_ss[].
+Various header cleanups are necessary before getting there.
 
-diff --git a/include/accel/accel-cpu-target.h b/include/accel/accel-cpu-target.h
-index 37dde7fae3e..6feb344e29b 100644
---- a/include/accel/accel-cpu-target.h
-+++ b/include/accel/accel-cpu-target.h
-@@ -21,21 +21,11 @@
-  */
- 
- #include "qom/object.h"
-+#include "accel/accel-cpu.h"
- #include "cpu.h"
- 
- #define TYPE_ACCEL_CPU "accel-" CPU_RESOLVING_TYPE
- #define ACCEL_CPU_NAME(name) (name "-" TYPE_ACCEL_CPU)
--typedef struct AccelCPUClass AccelCPUClass;
- DECLARE_CLASS_CHECKERS(AccelCPUClass, ACCEL_CPU, TYPE_ACCEL_CPU)
- 
--typedef struct AccelCPUClass {
--    /*< private >*/
--    ObjectClass parent_class;
--    /*< public >*/
--
--    void (*cpu_class_init)(CPUClass *cc);
--    void (*cpu_instance_init)(CPUState *cpu);
--    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
--} AccelCPUClass;
--
- #endif /* ACCEL_CPU_H */
-diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
-new file mode 100644
-index 00000000000..9e7eede7c3c
---- /dev/null
-+++ b/include/accel/accel-cpu.h
-@@ -0,0 +1,23 @@
-+/*
-+ * Accelerator interface, specializes CPUClass
-+ *
-+ * Copyright 2021 SUSE LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ACCEL_CPU_H
-+#define ACCEL_CPU_H
-+
-+#include "qom/object.h"
-+#include "hw/core/cpu.h"
-+
-+typedef struct AccelCPUClass {
-+    ObjectClass parent_class;
-+
-+    void (*cpu_class_init)(CPUClass *cc);
-+    void (*cpu_instance_init)(CPUState *cpu);
-+    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
-+} AccelCPUClass;
-+
-+#endif /* ACCEL_CPU_H */
-diff --git a/accel/accel-target.c b/accel/accel-target.c
-index 6fa5c3ef04e..769a90230bf 100644
---- a/accel/accel-target.c
-+++ b/accel/accel-target.c
-@@ -27,7 +27,6 @@
- #include "qemu/accel.h"
- #include "qemu/target_info.h"
- 
--#include "cpu.h"
- #include "accel/accel-cpu-target.h"
- #include "accel-internal.h"
- 
+Regards,
+
+Phil.
+
+Available here, based on tcg-next:
+https://gitlab.com/philmd/qemu/-/tags/single-binary-hw-arm-rfc-v1
+
+[*] https://lore.kernel.org/qemu-devel/20250403234914.9154-1-philmd@linaro.org/
+
+Philippe Mathieu-Daudé (39):
+  target/arm: Implement per-binary TargetInfo structures
+  target/arm: Register TYPE_BINARY_QEMU_SYSTEM_ARM/AARCH64 interfaces
+  target/arm: Filter CPU types for binary
+  hw/arm: Filter machine types for binary
+  hw/arm/aspeed: Filter machine types for binary
+  hw/arm/aspeed: Build objects once
+  hw/arm/raspi: Filter machine types for binary
+  hw/arm/raspi: Build objects once
+  target/arm/cpregs: Include missing 'target/arm/cpu.h' header
+  hw/arm/boot: Include missing 'system/memory.h' header
+  hw/arm: Use full "target/arm/cpu.h" path to include target's "cpu.h"
+  target/arm/cpu-features: Include missing 'cpu.h' header
+  target/arm/qmp: Include missing 'cpu.h' header
+  target/arm/kvm: Include missing 'cpu-qom.h' header
+  target/arm/hvf: Include missing 'cpu-qom.h' header
+  hw/arm: Remove unnecessary 'cpu.h' header
+  target/arm: Restrict inclusion of 'multiprocessing.h'
+  target/arm: Move some definitions from 'cpu.h' to 'multiprocessing.h'
+  hw/arm: Include missing 'target/arm/gtimer.h' header
+  target/arm: Extract PSCI definitions to 'psci.h'
+  target/arm: Extract feature definitions to 'cpu_has_feature.h' header
+  target/arm: Add arm_cpu_has_feature() helper
+  hw/arm/realview: Replace arm_feature() -> arm_cpu_has_feature()
+  hw/arm/virt-acpi: Replace arm_feature() -> arm_cpu_has_feature()
+  hw/arm: Build virt-acpi-build.c once
+  system/hvf: Avoid including 'cpu.h'
+  system/hvf: Expose hvf_enabled() to common code
+  exec: Do not poison hardware accelerators
+  hw/arm: Build sbsa-ref.c once
+  target/arm: Replace target_ulong -> hwaddr in ARMMMUFaultInfo
+  target/arm: Replace target_ulong -> uint64_t for HWBreakpoint
+  target/arm: Replace target_ulong -> vaddr for CPUWatchpoint
+  hw/core/machine: Allow dynamic registration of valid CPU types
+  hw/arm/virt: Register valid CPU types dynamically
+  hw/arm/virt: Replace TARGET_AARCH64 -> target_long_bits()
+  target/arm: Expose Aarch64 helpers indistinctly
+  hw/arm: Build virt.c once
+  hw/arm: Move xen files to arm_common_ss[]
+  hw/arm/meson: Remove arm_ss[] source set
+
+ MAINTAINERS                              |  1 +
+ meson.build                              |  1 +
+ include/exec/poison.h                    |  4 --
+ include/hw/arm/boot.h                    |  3 +-
+ include/hw/arm/digic.h                   |  2 +-
+ include/hw/arm/fsl-imx6.h                |  2 +-
+ include/hw/arm/fsl-imx6ul.h              |  2 +-
+ include/hw/arm/fsl-imx7.h                |  2 +-
+ include/hw/arm/fsl-imx8mp.h              |  2 +-
+ include/hw/boards.h                      |  8 +++
+ include/qemu/target_info-qom.h           | 20 ++++++
+ include/system/hvf.h                     | 17 ++++--
+ include/system/hvf_int.h                 |  2 +
+ target/arm/cpregs.h                      |  1 +
+ target/arm/cpu-features.h                |  1 +
+ target/arm/cpu.h                         | 78 +-----------------------
+ target/arm/cpu_has_feature.h             | 67 ++++++++++++++++++++
+ target/arm/hvf_arm.h                     |  2 +-
+ target/arm/internals.h                   | 22 +++----
+ target/arm/kvm_arm.h                     |  1 +
+ target/arm/multiprocessing.h             | 18 ++++++
+ target/arm/psci.h                        | 18 ++++++
+ accel/stubs/hvf-stub.c                   | 12 ++++
+ hw/arm/aspeed.c                          | 30 ++++++---
+ hw/arm/aspeed_ast2600.c                  |  1 +
+ hw/arm/aspeed_ast27x0.c                  |  2 +
+ hw/arm/b-l475e-iot01a.c                  |  1 +
+ hw/arm/bananapi_m2u.c                    |  1 +
+ hw/arm/bcm2836.c                         |  4 --
+ hw/arm/bcm2838.c                         |  1 +
+ hw/arm/boot.c                            |  2 +
+ hw/arm/collie.c                          |  1 +
+ hw/arm/exynos4210.c                      |  3 +-
+ hw/arm/exynos4_boards.c                  |  1 +
+ hw/arm/fby35.c                           |  1 +
+ hw/arm/fsl-imx8mp.c                      |  1 +
+ hw/arm/highbank.c                        |  4 +-
+ hw/arm/imx8mp-evk.c                      |  1 +
+ hw/arm/mcimx6ul-evk.c                    |  1 +
+ hw/arm/mcimx7d-sabre.c                   |  1 +
+ hw/arm/microbit.c                        |  1 +
+ hw/arm/mps2-tz.c                         |  4 ++
+ hw/arm/mps2.c                            |  4 ++
+ hw/arm/mps3r.c                           |  3 +-
+ hw/arm/musca.c                           |  2 +
+ hw/arm/npcm8xx.c                         |  2 +
+ hw/arm/omap_sx1.c                        |  2 +
+ hw/arm/orangepi.c                        |  1 +
+ hw/arm/raspi.c                           |  9 +--
+ hw/arm/raspi4b.c                         |  1 +
+ hw/arm/realview.c                        | 14 +++--
+ hw/arm/sbsa-ref.c                        |  3 +
+ hw/arm/smmuv3.c                          |  1 -
+ hw/arm/stellaris.c                       |  3 +
+ hw/arm/versatilepb.c                     |  1 +
+ hw/arm/vexpress.c                        |  2 +
+ hw/arm/virt-acpi-build.c                 |  4 +-
+ hw/arm/virt.c                            | 44 +++++++------
+ hw/arm/xilinx_zynq.c                     |  1 +
+ hw/arm/xlnx-versal-virt.c                |  2 +
+ hw/arm/xlnx-zcu102.c                     |  2 +
+ hw/core/machine.c                        | 28 +++++++++
+ hw/vmapple/vmapple.c                     |  3 +
+ target/arm/arm-qmp-cmds.c                |  1 +
+ target/arm/cpu.c                         | 10 +++
+ target/arm/cpu64.c                       |  2 +
+ target/arm/helper.c                      |  1 +
+ target/arm/hvf/hvf.c                     |  1 +
+ target/arm/hyp_gdbstub.c                 | 14 ++---
+ target/arm/kvm.c                         |  1 +
+ target/arm/target_info-aarch64-softmmu.c | 24 ++++++++
+ target/arm/target_info-arm-softmmu.c     | 24 ++++++++
+ target/arm/tcg/op_helper.c               |  2 +
+ target/arm/tcg/psci.c                    |  1 +
+ target_info-qom.c                        |  8 +++
+ accel/stubs/meson.build                  |  1 +
+ hw/arm/meson.build                       | 22 ++++---
+ scripts/make-config-poison.sh            |  4 ++
+ target/arm/meson.build                   |  5 ++
+ 79 files changed, 429 insertions(+), 171 deletions(-)
+ create mode 100644 target/arm/cpu_has_feature.h
+ create mode 100644 target/arm/psci.h
+ create mode 100644 accel/stubs/hvf-stub.c
+ create mode 100644 target/arm/target_info-aarch64-softmmu.c
+ create mode 100644 target/arm/target_info-arm-softmmu.c
+
 -- 
 2.47.1
 
