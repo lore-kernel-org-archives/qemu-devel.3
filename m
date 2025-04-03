@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29834C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:20:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F7B2C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 15:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0MMX-0000NG-KA; Thu, 03 Apr 2025 11:20:13 -0400
+	id 1u0MMw-0000mW-9L; Thu, 03 Apr 2025 11:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLv-0007oZ-Gd
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:38 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLj-0007lk-S1
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:30 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLt-0000Z5-MZ
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:35 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43ea40a6e98so8666465e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:19:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0MLh-0000WI-5y
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:19:22 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3914a5def6bso690741f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743693572; x=1744298372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743693559; x=1744298359; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oEde1hNJ4ybKOdNMShnxkmNSbB2tItcMj9l8T50o98M=;
- b=bVVFFccNz+Em/4r8Sn/+/Bs6AqQ/ImF4ubhavyvpTBLuU52bbrG11HJXYsKGKkhdBO
- 2f0Yi2sZssh0mLmqrJpN1w/PLIGfASKHO1rlkXjz5+3JzurHFzR/IzZVavsm6oOWSmOv
- IGKX9y1gUlJThKB6eWxC1S41RomaKvalwI+g9EDSDO7s6+TWvr5LDbua1oXAQdIxO/3H
- cmYQMjl8n2GGXCW5c6aguoxo1VugtoV1KhbHJJHEJdyuSesloEuEgxiNeTTs/vcVRpoT
- a0KEW3B6DTGiWSznCvJTnhPE7JeuN7akRFAsOteBUgvFkUQRV2+EbMLvg0VaVVytH3bx
- 1GfA==
+ bh=TkNWzS/5Q0X1wok5s6TRzd+7v9TwGIUutsDTBjTDsAk=;
+ b=koCTxZ3du0y0CvksF7OGuQUac6tVNY6BHfLs3imR6iQKaU8yDoe26Eve+uBz+nYjdQ
+ E5ENUZzf2CnpA0X99UHJTSlZ1YMFWAj80swxGlday6CqKJO33ysIVDGM8k2eGYyOztj8
+ fIOWk1KqMELKZ3bvRNXsXIXr2ho7JNhyXtah6a1kE6Sl9LCQ5B16s9oaVram3q/OBeBH
+ eccncIsOYTaTXe/Dx1Hr4Z7CDgI4lSubnyEvzoxLKiCfjmHrMZjXvKJy/BqmZ0KfTJ/N
+ FAcl6hFPuYeZwCucjJuqcXpRYUgGOfZt5Px6VlGEu+t0++/MFWcfuISNgNbLDK+4ZGLV
+ 7DZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743693572; x=1744298372;
+ d=1e100.net; s=20230601; t=1743693559; x=1744298359;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oEde1hNJ4ybKOdNMShnxkmNSbB2tItcMj9l8T50o98M=;
- b=NWt3YoxzBOrsTaK4KTcrQ4aZHmRGN3j/uE+yAlQLEUBTnFHd9jXhePuiNiXqjeSwvx
- 0McKIVC50yjlWc2RzcXPhqkv6peqME3/+kSVMeIBaxtaU6iEfz4XSdovPQul/adACmRw
- JLk+UDzYamYzgY0Hy+fTjLzt+DKZQzGv11VwyfvS3pk4z5XTzEXDLs9rY+5zaURhtZO7
- kBceERTtLKcGp5ytCyxMzxb6Wifio5FjGRd9vn5Fn5mPVZzYwYynqqaSenwuj3zzKMiE
- AyPT/BIINj7/1lkTxYzcfIF/cdnKyGcNj16OtqlBTvzCH0W1u2qcO/dPWT2hCMjtNAek
- K+4Q==
-X-Gm-Message-State: AOJu0Yxu5+GlV6kjG7YCa7awxzqGJJvUnKXn7XFxT8KQIw+GITVPFKMU
- Da7f+mQn9ZxAWvqT1erC4lYH5WLWFxx+VGYAJTTY2FyYxEzjWH4h6biN7RtgAOHJ/RaKKXSwkzm
- 3
-X-Gm-Gg: ASbGncs3GsK4Yr3JSSj1dL+lMAJv7a+2U3Ce8Qn51ROK7CFO8qTMcTnCGaDG8WGul8x
- ga22BNg6TNLXcaqCA3e6DUlNsVPb8DtTnDSRuoVRZcuF8FnFoIn1KlUcu5q/dEWCDqg2fkYHt3f
- RNkV+qZisFCGXPNnpIJZbx5NnV+6bSvp7+y1fRwhA/UKwdua+qqgySl8q3RH/Y/jv5JjMTxx3IG
- pDKmMmyx8oofsdFDbtDKVgfZLTcDRB5iP96wHsaLOVWiVyxo0/NAI3wNa5O3nEgiLQFnAVL6hZi
- 5tcNfPx4crPKDM2aCyFOAiYI/ArmwX0gi8JmHxr6/wrVp8sIlqDOBBSYT7P5ym6It80jV19vnbb
- u5enwO/5JYsonrBZ7ank=
-X-Google-Smtp-Source: AGHT+IGHak1E3ibrDVZ9cscoOWpyVwW1ZMFS7IyXWRHqtfLC3ggjOh+OvJZg5UyqHqPgNcMeL0Xf/A==
-X-Received: by 2002:a5d:6dad:0:b0:38d:e304:7470 with SMTP id
- ffacd0b85a97d-39c297675dbmr5712414f8f.25.1743693571608; 
- Thu, 03 Apr 2025 08:19:31 -0700 (PDT)
+ bh=TkNWzS/5Q0X1wok5s6TRzd+7v9TwGIUutsDTBjTDsAk=;
+ b=V28KwF5Xma8J8djhvopMH9BXH2VDSrij5jK+A8lSILNvFBOO4h7QqI7rxovnGJFsAL
+ mrQD2gbin34Mwk8QZmhrhOYO765Sbas83iBt+KyBIZ1kn1uDrzAnY/Ds9ZCFjfYD5FHY
+ O98lQFwJ9BV+TkWngpVhkUHWosEwspZJQkF1OYF2QzC/g8CTM77u6Vx3esUXMTyluq66
+ DuEnbLnJEoULo/otE+/lZMu9cfohHSa6yFeSlP4amkLO2GTckGezVAM1wb21rBNmHbLr
+ z1n/drCcsu0HF/cfjkwZ1dd6LE0X5l0tXMoSI7lHtSZzax30DD881juPSASrYboLHsT6
+ X0DA==
+X-Gm-Message-State: AOJu0YyjDPOzqxaFHcuWfCkvNon8IKSjkkSxGPNwaVk9D1sHxCTHGwKA
+ +lPSg4D3xjogoFQnVKyjtXMUdis+LXelJBihoiUui4pBY+1nl5jOCVCRk94vz72oz8O8don6IOB
+ e
+X-Gm-Gg: ASbGncumKodZhJzoU5UUQTrIibFW45JSjmv7JwwiNEqRXox21d7gtGGQ7wzaD+2GHLI
+ O86eAg1Fi2NDDlmTDcZ2bOxAiV0alcTTyasZzTC2YyRWzJkeIkKangJ5tAh6J774vtmC2sF1Koa
+ 2fgVuzDa9gGCZWCBAXYowYu6csHgTVcWdLkTMGfmV+za4blQeBzpXZlF2lQ2BREeDWTdNz2VxBF
+ D5DXlFkc7ws36huJI39PhWFrbWOO6GypXUf3zgpESup9qyInqGNFJ0UPK7CnricoEpinBnnfKKK
+ efQqMv3rC25xVX25a5AAWUxQ5H+CaPwbAbqbomNZBj4c8uMG9aPlPDGbegryBOBYo1v1yoXe6Vf
+ zaLp97TZTlukNvA7X/65xGJ4a89haNw==
+X-Google-Smtp-Source: AGHT+IH9Gt8qY01Hxqjy+L8vfzdPwKRObYb9XyNG+k0b+HEZ0c+CExk2RCPwjhCk7SDaHusGD8ysFg==
+X-Received: by 2002:a05:6000:4211:b0:39c:1f04:a646 with SMTP id
+ ffacd0b85a97d-39c2f8cfe62mr2784406f8f.13.1743693559057; 
+ Thu, 03 Apr 2025 08:19:19 -0700 (PDT)
 Received: from localhost.localdomain (145.171.88.92.rev.sfr.net.
  [92.88.171.145]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c30227e3bsm2042053f8f.100.2025.04.03.08.19.29
+ ffacd0b85a97d-39c301a7225sm2065828f8f.26.2025.04.03.08.19.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 08:19:30 -0700 (PDT)
+ Thu, 03 Apr 2025 08:19:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Thomas Huth <thuth@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Shannon Zhao <shannon.zhaosl@gmail.com>
-Subject: [PATCH-for-10.0? v2 09/14] hw/arm/virt-acpi: Factor its_enabled()
- helper out
-Date: Thu,  3 Apr 2025 17:18:24 +0200
-Message-ID: <20250403151829.44858-10-philmd@linaro.org>
+Subject: [PATCH-for-10.0? v2 07/14] hw/intc/gicv3_its: Do not check
+ its_class_name() for NULL
+Date: Thu,  3 Apr 2025 17:18:22 +0200
+Message-ID: <20250403151829.44858-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403151829.44858-1-philmd@linaro.org>
 References: <20250403151829.44858-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,56 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GIC ITS is checked for the MADT and IORT tables.
-Factor the checks out to the its_enabled() helper.
+Since commit cc5e719e2c8 ("kvm: require KVM_CAP_SIGNAL_MSI"),
+its_class_name() single implementation doesn't return NULL
+anymore. Update the prototype docstring, and remove the
+pointless checks.
 
+Reported-by: Gustavo Romero <gustavo.romero@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/arm/virt-acpi-build.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/hw/intc/arm_gicv3_its_common.h | 2 +-
+ hw/arm/virt-acpi-build.c               | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/include/hw/intc/arm_gicv3_its_common.h b/include/hw/intc/arm_gicv3_its_common.h
+index 7dc712b38d2..3c7b543b018 100644
+--- a/include/hw/intc/arm_gicv3_its_common.h
++++ b/include/hw/intc/arm_gicv3_its_common.h
+@@ -128,7 +128,7 @@ struct GICv3ITSCommonClass {
+  * Return the ITS class name to use depending on whether KVM acceleration
+  * and KVM CAP_SIGNAL_MSI are supported
+  *
+- * Returns: class name to use or NULL
++ * Returns: class name to use
+  */
+ const char *its_class_name(void);
+ 
 diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 9b7fc99f170..1c389ef5cdb 100644
+index 3ac8f8e1786..9b7fc99f170 100644
 --- a/hw/arm/virt-acpi-build.c
 +++ b/hw/arm/virt-acpi-build.c
-@@ -208,6 +208,13 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
- #define ROOT_COMPLEX_ENTRY_SIZE 36
- #define IORT_NODE_OFFSET 48
- 
-+static bool its_enabled(VirtMachineState *vms)
-+{
-+    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-+
-+    return !vmc->no_its;
-+}
-+
- /*
-  * Append an ID mapping entry as described by "Table 4 ID mapping format" in
-  * "IO Remapping Table System Software on ARM Platforms", Chapter 3.
-@@ -670,7 +677,6 @@ static void
- build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- {
-     int i;
--    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-     const MemMapEntry *memmap = vms->memmap;
-     AcpiTable table = { .sig = "APIC", .rev = 4, .oem_id = vms->oem_id,
-                         .oem_table_id = vms->oem_table_id };
-@@ -741,7 +747,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+@@ -741,7 +741,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
                                            memmap[VIRT_HIGH_GIC_REDIST2].size);
          }
  
--        if (!vmc->no_its) {
-+        if (its_enabled(vms)) {
+-        if (its_class_name() && !vmc->no_its) {
++        if (!vmc->no_its) {
              /*
               * ACPI spec, Revision 6.0 Errata A
               * (original 6.0 definition has invalid Length)
-@@ -973,7 +979,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+@@ -973,7 +973,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
                            vms->oem_table_id);
      }
  
--    if (!vmc->no_its) {
-+    if (its_enabled(vms)) {
+-    if (its_class_name() && !vmc->no_its) {
++    if (!vmc->no_its) {
          acpi_add_table(table_offsets, tables_blob);
          build_iort(tables_blob, tables->linker, vms);
      }
