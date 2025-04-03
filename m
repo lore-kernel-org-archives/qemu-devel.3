@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE5AC3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5820BC3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UUA-0003zg-Ix; Thu, 03 Apr 2025 20:00:39 -0400
+	id 1u0UUR-0005I5-On; Thu, 03 Apr 2025 20:00:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UU5-0003cX-SZ
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:34 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UUJ-0004yL-80
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:47 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UU3-0002zT-11
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:33 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cf034d4abso15510545e9.3
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UUH-00032J-13
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:00:46 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so1201676f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724829; x=1744329629; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724843; x=1744329643; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qWzncIlD/jPDOChfnrDcKNqYdRNXnmA3myNJZtWNdQo=;
- b=RAf1QEd6y4EmPzQW5alBRJhZA9hS00J3OS3cXfiZ4qtNFdLcdgyNF/PnxXAhAC87go
- Fpcy7HpKVBbpz0ney/gY4vIg0OFuc70HtaES0hss+GsZ0XXJdsUEQp+Wx/9bS+GVIO6w
- 23TgdooopUrj2BOsppaw1gGGYM/xqEu5PugrMzOSOxSZoRZKuycs2FDx0znIINvJo9Ce
- MMIXUjCRH9Hq3If7vEj7hD/ZkU+UWSY9vNtT++BWbtG4qzaxAZjvEOFQJCEXYeIsBV98
- XiDBZ1VxYRsjzpufQF+C6g/TKZFdYZH8wkWGdKU3+PTKVvYzmElPS4bkBMiJwQoceGrv
- ryyQ==
+ bh=Wr+KhDAwxc2q6VRSwbOelX+XVOHTzw66xSd8DPCtE8A=;
+ b=j3JiLh240+BmGH5ottVe6WNFJO9tr9SE12SY7z/3hoXRnED0WVd+SgAgKmy8LqXYWo
+ t+wGAxTFaQU+6U1E7tMZqR0Pz1fJVzFt2QOX6rVS+O/SMu1S9V0hrHT466kDK/JVpIwi
+ mbS4ZFLIBhCjtaT7ZkWCQMRNW2k7zpOf1n8It/VhRt8deWLtLGTNHnwwtQdSqGoQTQMR
+ wFnQi/zbneerig6aiVnkwsR/8T4ULPvEGH8QR5A7lldz7yrCC3V9wfMaKlRwbsS67XPq
+ Wk/UDoj2jBHNdNvsl3GGdZwUEFEagmeJmAPoiI2bzC5NUcqGIShcU0lnwfy0m70YqZSF
+ iahg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724829; x=1744329629;
+ d=1e100.net; s=20230601; t=1743724843; x=1744329643;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qWzncIlD/jPDOChfnrDcKNqYdRNXnmA3myNJZtWNdQo=;
- b=JHTOMvzREm7Nq8QdKz4+/XfqMPeEmIa2a7aPb97MZ8oWNCNoUFCG6xBFn8az4qbMBp
- 2qcQ3JAWTuR2jiTNefpF0dXPB2a6uKLAaQm79S7MQjU5umx+Lqlrmgqo8MjeAalg6FmG
- MQnHED2LDMMt4kJu5YfFNyy/jXILout1Tx90Q4YiPVGVnEIPhStiEPNq4dP7SFOda4Wu
- R6KvEQ8PCCbJ/rpo9xNzIZ50r0/1sX48MCRhRVMKBKeyOcf8z2Ohrko+2N+kYDoW/nQS
- G1lvCUxyt9qJBiBtGpK+I5+38QNYmhJkNs+irbMkpSOkDSogO5JDiard67hE/hpw1tYt
- lVWA==
-X-Gm-Message-State: AOJu0YwLM+ULLg7JQlvvsFSCbfpBB7i7VVMeqx29IskteIaHwAXLF8pm
- 045fk2SEvhRokeEI3ISr6Q3ihyk1Y3iHcw+I9HSK9bX8+jz/1pCr2Lvz6++lk2V2Bp44N7Q1OC2
- a
-X-Gm-Gg: ASbGncsCUOBg8cwqaETId9El3uS/1HnXsRvHOfhTMkNGoMqYGe99Rr2LH3YYI1hognb
- 6cnBnPuhp5tpbtZ6zdIe25CdH5yF0wBv7p8jFf2+hMpGIYKDZR8WJpPB8Yo0/GpIXUAXFwYFntt
- 2Y88zKdC1h1nty3D6La+Yj7je8GN5jips05pDio4yswxLUoanGto61EQ8vrj1NUrXBuBWNmDBez
- 4O7NeiOVo6hgvfuGJnlOIp3q4yoz+ER0SF7ah/X1Rzye9EcNmoyUEDEb2nLHOndcf2dZdb6rlou
- TeM12BDew+nn/alXVSyCtZcs+uT72GXnQSd0uSf8wA1maicTF/54n3ExLU+8ML1oojkxbda7XZF
- Q9lU6EEcN5dRm4YJ+juk=
-X-Google-Smtp-Source: AGHT+IFG64zDHb5Pvt4t+IvngcBkXhgLKZqlZzqyNCO8ncDN8ez/4L/iNIdQDA3mtzXh0vsdwzBiTQ==
-X-Received: by 2002:a05:600c:4503:b0:43c:f78d:82eb with SMTP id
- 5b1f17b1804b1-43ecf8eb2bbmr7344195e9.15.1743724829228; 
- Thu, 03 Apr 2025 17:00:29 -0700 (PDT)
+ bh=Wr+KhDAwxc2q6VRSwbOelX+XVOHTzw66xSd8DPCtE8A=;
+ b=ZGW5GMSRFHvd8efQ/FHtxXX71owqJZ5ryhZ29lnEkekh0gx5I+SEXBmOqRY643E4C6
+ XUcsdkzFEPLMuQKRkQpnQc1h+lKaN9cKLury4s2giv1QAKNPkxvqdLz1ElDQc9naxQl0
+ Ix1LsyZXdf5TENV7IMuOxEPfQyjhOjluKtDFIuRl+gXAkOpYotsSc930jYC26QeOrtVd
+ a90jr1K5wD6gynn0ksYk9QCSi8zBhqEz4S4F/Y2wUW0hbXvzdZJ1KlX/ysGXh4+NPDBP
+ o0UO5pUcSZ1DyyljI+uyDIrGqAiMTJlrL2CryXn77BqIYUw7l4DIgh1FBS+u5CoDPPH7
+ ALpQ==
+X-Gm-Message-State: AOJu0YxvOsouudE4OO3CfBFzGf7HFeNAgwj7NQ0Sk/Z/L/C5lvBENrOZ
+ 29ZdqdjqbZotTiRPdW9yjRL2GlP2rSgdZsMokfDVTgG5Ojc/vggucnrWGDra10YZjwm5hbHjK4s
+ 3
+X-Gm-Gg: ASbGncsGI8hDC63hirA3VcfwUblluD1Asl++wAwdrIIxPC0b1PNyRdIRdQmsobXtzNA
+ JfYHt5AfsDRmrkmLj5HH///45ymhCBeg4+nz/0ZsiJuTXUgNepjgTK4OweZkfhNcqS2tRztWp3a
+ QmyxLTPV9UZ4Kyq+GxOJisJCGSTZ+LBXQ7wgblfCgaY60nJqAaW4GAyo/pIZpg1idLhMyaW48HM
+ s3epGx1fIR7kQ1wruDZjhwCaqxig36qbOhH0NWqB0A1VTyD7shWXf0R+yCJL1xtLrUkwiVQtR3r
+ 3PuS+zy/l4z/xV5RySKwcf6am3glP/TTA49MuKM0bCv1gc0mcwNqsB5apBiniAoJZsyYVQasYWb
+ 8svewbcxOmYy03MzhVoE=
+X-Google-Smtp-Source: AGHT+IEyLLAekZB96mGGMUVu9jARVEOvn1JrtBZY4VJZhc3qD8yRpoPLANeR6oTWo0XW2gyaDvBC0g==
+X-Received: by 2002:a05:6000:1887:b0:391:13d6:c9e5 with SMTP id
+ ffacd0b85a97d-39cba9333bemr760470f8f.19.1743724842825; 
+ Thu, 03 Apr 2025 17:00:42 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ea8d16049sm61437675e9.0.2025.04.03.17.00.27
+ ffacd0b85a97d-39c301b42besm2945277f8f.41.2025.04.03.17.00.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 17:00:28 -0700 (PDT)
+ Thu, 03 Apr 2025 17:00:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 19/39] hw/arm: Include missing
- 'target/arm/gtimer.h' header
-Date: Fri,  4 Apr 2025 01:58:01 +0200
-Message-ID: <20250403235821.9909-20-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 21/39] target/arm: Extract feature definitions to
+ 'cpu_has_feature.h' header
+Date: Fri,  4 Apr 2025 01:58:03 +0200
+Message-ID: <20250403235821.9909-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,112 +106,154 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/aspeed_ast27x0.c    | 1 +
- hw/arm/bcm2838.c           | 1 +
- hw/arm/exynos4210.c        | 1 +
- hw/arm/fsl-imx8mp.c        | 1 +
- hw/arm/mps3r.c             | 1 +
- hw/arm/npcm8xx.c           | 1 +
- hw/vmapple/vmapple.c       | 1 +
- target/arm/tcg/op_helper.c | 1 +
- 8 files changed, 8 insertions(+)
+ target/arm/cpu.h             | 54 +-----------------------------
+ target/arm/cpu_has_feature.h | 65 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 53 deletions(-)
+ create mode 100644 target/arm/cpu_has_feature.h
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 37bfeef304d..5c2481225dd 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -22,6 +22,7 @@
- #include "hw/intc/arm_gicv3.h"
- #include "qobject/qlist.h"
- #include "qemu/log.h"
-+#include "target/arm/gtimer.h"
- #include "target/arm/multiprocessing.h"
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 930c5366029..fd8beb8bcb1 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -30,6 +30,7 @@
+ #include "exec/gdbstub.h"
+ #include "exec/page-protection.h"
+ #include "qapi/qapi-types-common.h"
++#include "target/arm/cpu_has_feature.h"
+ #include "target/arm/gtimer.h"
  
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index ddb7c5f757a..38d9b785a75 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -12,6 +12,7 @@
- #include "hw/arm/raspi_platform.h"
- #include "hw/sysbus.h"
- #include "hw/arm/bcm2838.h"
-+#include "target/arm/gtimer.h"
- #include "trace.h"
+ #define EXCP_UDEF            1   /* undefined instruction */
+@@ -2379,59 +2380,6 @@ FIELD(MFAR, NS, 63, 1)
  
- #define GIC400_MAINTENANCE_IRQ      9
-diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
-index 01e6e2fb052..ca40df3db75 100644
---- a/hw/arm/exynos4210.c
-+++ b/hw/arm/exynos4210.c
-@@ -36,6 +36,7 @@
- #include "hw/sd/sdhci.h"
- #include "hw/usb/hcd-ehci.h"
- #include "target/arm/cpu-qom.h"
-+#include "target/arm/gtimer.h"
- #include "target/arm/multiprocessing.h"
+ QEMU_BUILD_BUG_ON(ARRAY_SIZE(((ARMCPU *)0)->ccsidr) <= R_V7M_CSSELR_INDEX_MASK);
  
- #define EXYNOS4210_CHIPID_ADDR         0x10000000
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 2cf5eeaf313..180feca9d80 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -17,6 +17,7 @@
- #include "hw/boards.h"
- #include "system/system.h"
- #include "target/arm/cpu-qom.h"
-+#include "target/arm/gtimer.h"
- #include "qapi/error.h"
- #include "qobject/qlist.h"
- 
-diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
-index 604f6845fde..37c0de28a92 100644
---- a/hw/arm/mps3r.c
-+++ b/hw/arm/mps3r.c
-@@ -47,6 +47,7 @@
- #include "hw/ssi/pl022.h"
- #include "hw/timer/cmsdk-apb-dualtimer.h"
- #include "hw/watchdog/cmsdk-apb-watchdog.h"
-+#include "target/arm/gtimer.h"
- 
- /* Define the layout of RAM and ROM in a board */
- typedef struct RAMInfo {
-diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-index 3987e55355b..2f11bc53a86 100644
---- a/hw/arm/npcm8xx.c
-+++ b/hw/arm/npcm8xx.c
-@@ -29,6 +29,7 @@
- #include "qapi/error.h"
- #include "qemu/units.h"
- #include "system/system.h"
-+#include "target/arm/gtimer.h"
- #include "target/arm/multiprocessing.h"
- 
- /*
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index 9bb5b0553a2..25652b16f0c 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -51,6 +51,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/system.h"
-+#include "target/arm/gtimer.h"
- #include "target/arm/multiprocessing.h"
- 
- struct VMAppleMachineState {
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 38d49cbb9d8..005f84082af 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -25,6 +25,7 @@
- #include "cpu-features.h"
- #include "exec/exec-all.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "target/arm/gtimer.h"
- #include "cpregs.h"
- 
- #define SIGNBIT (uint32_t)0x80000000
+-/* If adding a feature bit which corresponds to a Linux ELF
+- * HWCAP bit, remember to update the feature-bit-to-hwcap
+- * mapping in linux-user/elfload.c:get_elf_hwcap().
+- */
+-enum arm_features {
+-    ARM_FEATURE_AUXCR,  /* ARM1026 Auxiliary control register.  */
+-    ARM_FEATURE_XSCALE, /* Intel XScale extensions.  */
+-    ARM_FEATURE_IWMMXT, /* Intel iwMMXt extension.  */
+-    ARM_FEATURE_V6,
+-    ARM_FEATURE_V6K,
+-    ARM_FEATURE_V7,
+-    ARM_FEATURE_THUMB2,
+-    ARM_FEATURE_PMSA,   /* no MMU; may have Memory Protection Unit */
+-    ARM_FEATURE_NEON,
+-    ARM_FEATURE_M, /* Microcontroller profile.  */
+-    ARM_FEATURE_OMAPCP, /* OMAP specific CP15 ops handling.  */
+-    ARM_FEATURE_THUMB2EE,
+-    ARM_FEATURE_V7MP,    /* v7 Multiprocessing Extensions */
+-    ARM_FEATURE_V7VE, /* v7 Virtualization Extensions (non-EL2 parts) */
+-    ARM_FEATURE_V4T,
+-    ARM_FEATURE_V5,
+-    ARM_FEATURE_STRONGARM,
+-    ARM_FEATURE_VAPA, /* cp15 VA to PA lookups */
+-    ARM_FEATURE_GENERIC_TIMER,
+-    ARM_FEATURE_MVFR, /* Media and VFP Feature Registers 0 and 1 */
+-    ARM_FEATURE_DUMMY_C15_REGS, /* RAZ/WI all of cp15 crn=15 */
+-    ARM_FEATURE_CACHE_TEST_CLEAN, /* 926/1026 style test-and-clean ops */
+-    ARM_FEATURE_CACHE_DIRTY_REG, /* 1136/1176 cache dirty status register */
+-    ARM_FEATURE_CACHE_BLOCK_OPS, /* v6 optional cache block operations */
+-    ARM_FEATURE_MPIDR, /* has cp15 MPIDR */
+-    ARM_FEATURE_LPAE, /* has Large Physical Address Extension */
+-    ARM_FEATURE_V8,
+-    ARM_FEATURE_AARCH64, /* supports 64 bit mode */
+-    ARM_FEATURE_CBAR, /* has cp15 CBAR */
+-    ARM_FEATURE_CBAR_RO, /* has cp15 CBAR and it is read-only */
+-    ARM_FEATURE_EL2, /* has EL2 Virtualization support */
+-    ARM_FEATURE_EL3, /* has EL3 Secure monitor support */
+-    ARM_FEATURE_THUMB_DSP, /* DSP insns supported in the Thumb encodings */
+-    ARM_FEATURE_PMU, /* has PMU support */
+-    ARM_FEATURE_VBAR, /* has cp15 VBAR */
+-    ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
+-    ARM_FEATURE_M_MAIN, /* M profile Main Extension */
+-    ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
+-    /*
+-     * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
+-     * if the board doesn't set a value, instead of 1GHz. It is for backwards
+-     * compatibility and used only with CPU definitions that were already
+-     * in QEMU before we changed the default. It should not be set on any
+-     * CPU types added in future.
+-     */
+-    ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
+-};
+-
+ static inline int arm_feature(CPUARMState *env, int feature)
+ {
+     return (env->features & (1ULL << feature)) != 0;
+diff --git a/target/arm/cpu_has_feature.h b/target/arm/cpu_has_feature.h
+new file mode 100644
+index 00000000000..2adfccd9208
+--- /dev/null
++++ b/target/arm/cpu_has_feature.h
+@@ -0,0 +1,65 @@
++/*
++ * Helper to check ARM CPU has features
++ *
++ *  Copyright (c) 2003 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++#ifndef TARGET_ARM_CPU_HAS_FEATURE_H
++#define TARGET_ARM_CPU_HAS_FEATURE_H
++
++/*
++ * If adding a feature bit which corresponds to a Linux ELF
++ * HWCAP bit, remember to update the feature-bit-to-hwcap
++ * mapping in linux-user/elfload.c:get_elf_hwcap().
++ */
++typedef enum arm_features {
++    ARM_FEATURE_AUXCR,  /* ARM1026 Auxiliary control register.  */
++    ARM_FEATURE_XSCALE, /* Intel XScale extensions.  */
++    ARM_FEATURE_IWMMXT, /* Intel iwMMXt extension.  */
++    ARM_FEATURE_V6,
++    ARM_FEATURE_V6K,
++    ARM_FEATURE_V7,
++    ARM_FEATURE_THUMB2,
++    ARM_FEATURE_PMSA,   /* no MMU; may have Memory Protection Unit */
++    ARM_FEATURE_NEON,
++    ARM_FEATURE_M, /* Microcontroller profile.  */
++    ARM_FEATURE_OMAPCP, /* OMAP specific CP15 ops handling.  */
++    ARM_FEATURE_THUMB2EE,
++    ARM_FEATURE_V7MP,    /* v7 Multiprocessing Extensions */
++    ARM_FEATURE_V7VE, /* v7 Virtualization Extensions (non-EL2 parts) */
++    ARM_FEATURE_V4T,
++    ARM_FEATURE_V5,
++    ARM_FEATURE_STRONGARM,
++    ARM_FEATURE_VAPA, /* cp15 VA to PA lookups */
++    ARM_FEATURE_GENERIC_TIMER,
++    ARM_FEATURE_MVFR, /* Media and VFP Feature Registers 0 and 1 */
++    ARM_FEATURE_DUMMY_C15_REGS, /* RAZ/WI all of cp15 crn=15 */
++    ARM_FEATURE_CACHE_TEST_CLEAN, /* 926/1026 style test-and-clean ops */
++    ARM_FEATURE_CACHE_DIRTY_REG, /* 1136/1176 cache dirty status register */
++    ARM_FEATURE_CACHE_BLOCK_OPS, /* v6 optional cache block operations */
++    ARM_FEATURE_MPIDR, /* has cp15 MPIDR */
++    ARM_FEATURE_LPAE, /* has Large Physical Address Extension */
++    ARM_FEATURE_V8,
++    ARM_FEATURE_AARCH64, /* supports 64 bit mode */
++    ARM_FEATURE_CBAR, /* has cp15 CBAR */
++    ARM_FEATURE_CBAR_RO, /* has cp15 CBAR and it is read-only */
++    ARM_FEATURE_EL2, /* has EL2 Virtualization support */
++    ARM_FEATURE_EL3, /* has EL3 Secure monitor support */
++    ARM_FEATURE_THUMB_DSP, /* DSP insns supported in the Thumb encodings */
++    ARM_FEATURE_PMU, /* has PMU support */
++    ARM_FEATURE_VBAR, /* has cp15 VBAR */
++    ARM_FEATURE_M_SECURITY, /* M profile Security Extension */
++    ARM_FEATURE_M_MAIN, /* M profile Main Extension */
++    ARM_FEATURE_V8_1M, /* M profile extras only in v8.1M and later */
++    /*
++     * ARM_FEATURE_BACKCOMPAT_CNTFRQ makes the CPU default cntfrq be 62.5MHz
++     * if the board doesn't set a value, instead of 1GHz. It is for backwards
++     * compatibility and used only with CPU definitions that were already
++     * in QEMU before we changed the default. It should not be set on any
++     * CPU types added in future.
++     */
++    ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
++} ArmCpuFeature;
++
++#endif
 -- 
 2.47.1
 
