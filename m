@@ -4,154 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6D4C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 09:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73903C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 09:35:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Gu9-0003Wb-Ig; Thu, 03 Apr 2025 05:30:34 -0400
+	id 1u0GyG-0004jQ-7E; Thu, 03 Apr 2025 05:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0Gu2-0003R0-M7
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 05:30:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
+ id 1u0GyE-0004j0-GD; Thu, 03 Apr 2025 05:34:46 -0400
+Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0Gtz-00011X-Sx
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 05:30:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743672622;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=kbBDFW79wsyAMb930eg0fwGDYvhglN8b78rB9VYB2QA=;
- b=eHLjcgDptgS+GDdgW0fhnUrQAwAiiH6bDKA709f7J6JPpWa2ot82C4lzCXdlL9m7It+fB6
- 4ne/1H7lDpMh7EnUrYmulLXcYaQqsPMd7BdqmrEH/0nd6tUJLtQHt8dvP1+TE97iMtnjKo
- 9AYN0R9teEus1V4MDz37c2f5jij2rHM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-9iNrj4hHPpCXL4q0vIDLbQ-1; Thu, 03 Apr 2025 05:30:21 -0400
-X-MC-Unique: 9iNrj4hHPpCXL4q0vIDLbQ-1
-X-Mimecast-MFC-AGG-ID: 9iNrj4hHPpCXL4q0vIDLbQ_1743672619
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4394c489babso3278355e9.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 02:30:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743672618; x=1744277418;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kbBDFW79wsyAMb930eg0fwGDYvhglN8b78rB9VYB2QA=;
- b=lknj/lNPFYVIeTyJ3AB6Mlupt6jWMB/hfJaG9mU3yJOq6jMfSs6hTXd+Chb8V9j6G0
- LGG0o3Y4d9FHA4Wk4oC2ndV1iS4U8qlKanLSchiWUkEF1d9+y/1lnCdanaWDz5Ys2UUL
- algQFnqhYnXW3F/6iauR1h2oIS6Mh+S80gfoZ0zLSlEREUMqm+8mtX7NccETDw9tYke+
- tb9+1xTG30BgGDmgQ8qae+uyFpklkb50kJrO7aFocaxNmDoQgnKXCycTNUmv08W7/B/c
- nsL1jqwIdeBnrUjk4/cEqUxCWNoEPnmqyHV5V5m84xaZOnfWMjB9varE5e0xyq+CcLMv
- 3vfg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUixZ49AMB85yMKohhcpEI7Ve3pzyiqz7TyR10JXk/tz3/H5jmzbXe2Li3NTunjcv/tQFR5klJhB/KR@nongnu.org
-X-Gm-Message-State: AOJu0YzBECUrPZ0VM8vj4+/CQrXaSYNHMVhG7kVSJVsYoU63su87M1Q/
- vdJZ73dN2CD0ouL0tcJ2JxO4YdqaGFkV8T+YnYyqmqlVDiF1qrIqN8zvYBt9lLDV/KX2iL+wZMT
- L+O5vkKowXQ2kLGwwgAVl4ojoI9ufLdTwYmyDA3oM20hHf/LFomlPy4SS1xd5
-X-Gm-Gg: ASbGncspT8Si5Cw33paLJhvgMnLW2bvdQMtPAH1UhTxzhjoVL9YWbv9Mbqfbm94hcTa
- wvpg6WyiEObgXcK6VLKkx7kVvaEFtZECsARoFEQveWtgNXqR1UAtZBBqwSp/ditrz3pLRsLenxY
- lp0tptm1CgXNh4+C+gprod+KMXhLaiQuJW1ILCW7uOyBvGo57zw9leiddqZTpEKGQx2MvSZ5nv7
- mAzMmnejfnEYpbj2qiKgHy5odypDYK5WVpzF6WKMhJ0lmAz4gxY33aVRnodld+OEa5DpTlhicK5
- Ii4n/nbwyz3uWZwxsDpUNj+cK2Zz4Fgj08x0Y4pNquiE/CcO45mqvg==
-X-Received: by 2002:a5d:5f8a:0:b0:392:c64:9aef with SMTP id
- ffacd0b85a97d-39c2f8d33b8mr1598340f8f.20.1743672618497; 
- Thu, 03 Apr 2025 02:30:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEstCoIw/U8CrIbrn0FARE9BMMs6gLM94UO4sSg5IbzY9PWNnUP8vuVU0mymaJugmDwhfWFww==
-X-Received: by 2002:a5d:5f8a:0:b0:392:c64:9aef with SMTP id
- ffacd0b85a97d-39c2f8d33b8mr1598291f8f.20.1743672617912; 
- Thu, 03 Apr 2025 02:30:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ea8d16d35sm55668755e9.0.2025.04.03.02.30.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 02:30:17 -0700 (PDT)
-Message-ID: <bff90a4a-3668-4be0-ab6b-5ee7bf5e169b@redhat.com>
-Date: Thu, 3 Apr 2025 11:30:16 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 07/28] vfio: refactor out vfio_pci_config_setup()
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Jason Herne <jjherne@linux.ibm.com>,
+ (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
+ id 1u0GyC-0001ZN-Q4; Thu, 03 Apr 2025 05:34:46 -0400
+Received: from movement by movementarian.org with local (Exim 4.95)
+ (envelope-from <movement@movementarian.org>) id 1u0Gy6-005pGz-Tt;
+ Thu, 03 Apr 2025 10:34:38 +0100
+Date: Thu, 3 Apr 2025 10:34:38 +0100
+From: John Levon <levon@movementarian.org>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
- Halil Pasic <pasic@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Tony Krowiak <akrowiak@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v8 05/28] vfio: add vfio_prepare_device()
+Message-ID: <Z+5WLqQRqrxSpNBV@movementarian.org>
 References: <20250219144858.266455-1-john.levon@nutanix.com>
- <20250219144858.266455-8-john.levon@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250219144858.266455-8-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20250219144858.266455-6-john.levon@nutanix.com>
+ <3369ecab-21ea-4198-9ffa-73307a795f69@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <3369ecab-21ea-4198-9ffa-73307a795f69@redhat.com>
+X-Url: http://www.movementarian.org/
+Received-SPF: pass client-ip=139.162.205.133;
+ envelope-from=movement@movementarian.org; helo=movementarian.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,224 +72,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/25 15:48, John Levon wrote:
-> Refactor the PCI config setup code out of vfio_realize(), as we will
-> later need this for vfio-user too.
+On Thu, Apr 03, 2025 at 11:19:34AM +0200, Cédric Le Goater wrote:
+
+> On 2/19/25 15:48, John Levon wrote:
+> > Commonize some initialization code shared by the legacy and iommufd vfio
+> > implementations (and later by vfio-user).
+> > 
+> > Signed-off-by: John Levon <john.levon@nutanix.com>
+> > ---
+> >   hw/vfio/common.c              | 19 +++++++++++++++++++
+> >   hw/vfio/container.c           | 14 +-------------
+> >   hw/vfio/iommufd.c             |  9 +--------
+> >   include/hw/vfio/vfio-common.h |  2 ++
+> >   4 files changed, 23 insertions(+), 21 deletions(-)
+> > 
+> > diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> > index eefd735bc6..4434e0a0a2 100644
+> > --- a/hw/vfio/common.c
+> > +++ b/hw/vfio/common.c
+> > @@ -1569,6 +1569,25 @@ retry:
+> >       return info;
+> >   }
+> > +void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+> > +                         VFIOGroup *group, struct vfio_device_info *info)
 > 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+> I would prefer that the first version did not have a 'group' parameter.
+> Let's add it when needed.
 
-We should have more of these routines to reduce vfio_realize(). It's
-way too big.
+I think you mean something like this in hw/vfio/container.c:
 
-This can be merged now.
+vfio_prepare_device(vbasedev, &group->container->bcontainer, info);
 
-Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
+vbasedev->group = group;
+QLIST_INSERT_HEAD(&group->device_list, vbasedev, next);
 
-Thanks,
+As it's the only consumer that actually wants a group.
 
-C.
-
-
-> ---
->   hw/vfio/pci.c | 176 +++++++++++++++++++++++++++-----------------------
->   1 file changed, 94 insertions(+), 82 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 5fb6c4c4c6..83fe329474 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2957,6 +2957,99 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
->       vdev->req_enabled = false;
->   }
->   
-> +static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
-> +{
-> +    PCIDevice *pdev = &vdev->pdev;
-> +    VFIODevice *vbasedev = &vdev->vbasedev;
-> +
-> +    /* vfio emulates a lot for us, but some bits need extra love */
-> +    vdev->emulated_config_bits = g_malloc0(vdev->config_size);
-> +
-> +    /* QEMU can choose to expose the ROM or not */
-> +    memset(vdev->emulated_config_bits + PCI_ROM_ADDRESS, 0xff, 4);
-> +    /* QEMU can also add or extend BARs */
-> +    memset(vdev->emulated_config_bits + PCI_BASE_ADDRESS_0, 0xff, 6 * 4);
-> +
-> +    /*
-> +     * The PCI spec reserves vendor ID 0xffff as an invalid value.  The
-> +     * device ID is managed by the vendor and need only be a 16-bit value.
-> +     * Allow any 16-bit value for subsystem so they can be hidden or changed.
-> +     */
-> +    if (vdev->vendor_id != PCI_ANY_ID) {
-> +        if (vdev->vendor_id >= 0xffff) {
-> +            error_setg(errp, "invalid PCI vendor ID provided");
-> +            return false;
-> +        }
-> +        vfio_add_emulated_word(vdev, PCI_VENDOR_ID, vdev->vendor_id, ~0);
-> +        trace_vfio_pci_emulated_vendor_id(vbasedev->name, vdev->vendor_id);
-> +    } else {
-> +        vdev->vendor_id = pci_get_word(pdev->config + PCI_VENDOR_ID);
-> +    }
-> +
-> +    if (vdev->device_id != PCI_ANY_ID) {
-> +        if (vdev->device_id > 0xffff) {
-> +            error_setg(errp, "invalid PCI device ID provided");
-> +            return false;
-> +        }
-> +        vfio_add_emulated_word(vdev, PCI_DEVICE_ID, vdev->device_id, ~0);
-> +        trace_vfio_pci_emulated_device_id(vbasedev->name, vdev->device_id);
-> +    } else {
-> +        vdev->device_id = pci_get_word(pdev->config + PCI_DEVICE_ID);
-> +    }
-> +
-> +    if (vdev->sub_vendor_id != PCI_ANY_ID) {
-> +        if (vdev->sub_vendor_id > 0xffff) {
-> +            error_setg(errp, "invalid PCI subsystem vendor ID provided");
-> +            return false;
-> +        }
-> +        vfio_add_emulated_word(vdev, PCI_SUBSYSTEM_VENDOR_ID,
-> +                               vdev->sub_vendor_id, ~0);
-> +        trace_vfio_pci_emulated_sub_vendor_id(vbasedev->name,
-> +                                              vdev->sub_vendor_id);
-> +    }
-> +
-> +    if (vdev->sub_device_id != PCI_ANY_ID) {
-> +        if (vdev->sub_device_id > 0xffff) {
-> +            error_setg(errp, "invalid PCI subsystem device ID provided");
-> +            return false;
-> +        }
-> +        vfio_add_emulated_word(vdev, PCI_SUBSYSTEM_ID, vdev->sub_device_id, ~0);
-> +        trace_vfio_pci_emulated_sub_device_id(vbasedev->name,
-> +                                              vdev->sub_device_id);
-> +    }
-> +
-> +    /* QEMU can change multi-function devices to single function, or reverse */
-> +    vdev->emulated_config_bits[PCI_HEADER_TYPE] =
-> +                                              PCI_HEADER_TYPE_MULTI_FUNCTION;
-> +
-> +    /* Restore or clear multifunction, this is always controlled by QEMU */
-> +    if (vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> +        vdev->pdev.config[PCI_HEADER_TYPE] |= PCI_HEADER_TYPE_MULTI_FUNCTION;
-> +    } else {
-> +        vdev->pdev.config[PCI_HEADER_TYPE] &= ~PCI_HEADER_TYPE_MULTI_FUNCTION;
-> +    }
-> +
-> +    /*
-> +     * Clear host resource mapping info.  If we choose not to register a
-> +     * BAR, such as might be the case with the option ROM, we can get
-> +     * confusing, unwritable, residual addresses from the host here.
-> +     */
-> +    memset(&vdev->pdev.config[PCI_BASE_ADDRESS_0], 0, 24);
-> +    memset(&vdev->pdev.config[PCI_ROM_ADDRESS], 0, 4);
-> +
-> +    vfio_pci_size_rom(vdev);
-> +
-> +    vfio_bars_prepare(vdev);
-> +
-> +    if (!vfio_msix_early_setup(vdev, errp)) {
-> +        return false;
-> +    }
-> +
-> +    vfio_bars_register(vdev);
-> +
-> +    return true;
-> +}
-> +
->   static bool vfio_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
->   {
->       PCIDevice *pdev = &vdev->pdev;
-> @@ -3060,91 +3153,10 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->           goto error;
->       }
->   
-> -    /* vfio emulates a lot for us, but some bits need extra love */
-> -    vdev->emulated_config_bits = g_malloc0(vdev->config_size);
-> -
-> -    /* QEMU can choose to expose the ROM or not */
-> -    memset(vdev->emulated_config_bits + PCI_ROM_ADDRESS, 0xff, 4);
-> -    /* QEMU can also add or extend BARs */
-> -    memset(vdev->emulated_config_bits + PCI_BASE_ADDRESS_0, 0xff, 6 * 4);
-> -
-> -    /*
-> -     * The PCI spec reserves vendor ID 0xffff as an invalid value.  The
-> -     * device ID is managed by the vendor and need only be a 16-bit value.
-> -     * Allow any 16-bit value for subsystem so they can be hidden or changed.
-> -     */
-> -    if (vdev->vendor_id != PCI_ANY_ID) {
-> -        if (vdev->vendor_id >= 0xffff) {
-> -            error_setg(errp, "invalid PCI vendor ID provided");
-> -            goto error;
-> -        }
-> -        vfio_add_emulated_word(vdev, PCI_VENDOR_ID, vdev->vendor_id, ~0);
-> -        trace_vfio_pci_emulated_vendor_id(vbasedev->name, vdev->vendor_id);
-> -    } else {
-> -        vdev->vendor_id = pci_get_word(pdev->config + PCI_VENDOR_ID);
-> -    }
-> -
-> -    if (vdev->device_id != PCI_ANY_ID) {
-> -        if (vdev->device_id > 0xffff) {
-> -            error_setg(errp, "invalid PCI device ID provided");
-> -            goto error;
-> -        }
-> -        vfio_add_emulated_word(vdev, PCI_DEVICE_ID, vdev->device_id, ~0);
-> -        trace_vfio_pci_emulated_device_id(vbasedev->name, vdev->device_id);
-> -    } else {
-> -        vdev->device_id = pci_get_word(pdev->config + PCI_DEVICE_ID);
-> -    }
-> -
-> -    if (vdev->sub_vendor_id != PCI_ANY_ID) {
-> -        if (vdev->sub_vendor_id > 0xffff) {
-> -            error_setg(errp, "invalid PCI subsystem vendor ID provided");
-> -            goto error;
-> -        }
-> -        vfio_add_emulated_word(vdev, PCI_SUBSYSTEM_VENDOR_ID,
-> -                               vdev->sub_vendor_id, ~0);
-> -        trace_vfio_pci_emulated_sub_vendor_id(vbasedev->name,
-> -                                              vdev->sub_vendor_id);
-> -    }
-> -
-> -    if (vdev->sub_device_id != PCI_ANY_ID) {
-> -        if (vdev->sub_device_id > 0xffff) {
-> -            error_setg(errp, "invalid PCI subsystem device ID provided");
-> -            goto error;
-> -        }
-> -        vfio_add_emulated_word(vdev, PCI_SUBSYSTEM_ID, vdev->sub_device_id, ~0);
-> -        trace_vfio_pci_emulated_sub_device_id(vbasedev->name,
-> -                                              vdev->sub_device_id);
-> -    }
-> -
-> -    /* QEMU can change multi-function devices to single function, or reverse */
-> -    vdev->emulated_config_bits[PCI_HEADER_TYPE] =
-> -                                              PCI_HEADER_TYPE_MULTI_FUNCTION;
-> -
-> -    /* Restore or clear multifunction, this is always controlled by QEMU */
-> -    if (vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> -        vdev->pdev.config[PCI_HEADER_TYPE] |= PCI_HEADER_TYPE_MULTI_FUNCTION;
-> -    } else {
-> -        vdev->pdev.config[PCI_HEADER_TYPE] &= ~PCI_HEADER_TYPE_MULTI_FUNCTION;
-> -    }
-> -
-> -    /*
-> -     * Clear host resource mapping info.  If we choose not to register a
-> -     * BAR, such as might be the case with the option ROM, we can get
-> -     * confusing, unwritable, residual addresses from the host here.
-> -     */
-> -    memset(&vdev->pdev.config[PCI_BASE_ADDRESS_0], 0, 24);
-> -    memset(&vdev->pdev.config[PCI_ROM_ADDRESS], 0, 4);
-> -
-> -    vfio_pci_size_rom(vdev);
-> -
-> -    vfio_bars_prepare(vdev);
-> -
-> -    if (!vfio_msix_early_setup(vdev, errp)) {
-> +    if (!vfio_pci_config_setup(vdev, errp)) {
->           goto error;
->       }
->   
-> -    vfio_bars_register(vdev);
-> -
->       if (!vbasedev->mdev &&
->           !pci_device_set_iommu_device(pdev, vbasedev->hiod, errp)) {
->           error_prepend(errp, "Failed to set vIOMMU: ");
-
+thanks
+john
 
