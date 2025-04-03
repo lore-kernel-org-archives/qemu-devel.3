@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F0DC3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5A8C36014
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 00:05:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0UVi-0001sQ-Qf; Thu, 03 Apr 2025 20:02:15 -0400
+	id 1u0UVq-0002S7-Kb; Thu, 03 Apr 2025 20:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UVK-0001ZI-PH
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:01:53 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UVd-0001sT-4q
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:02:13 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UVI-0003D7-TI
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:01:50 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-38f2f391864so802387f8f.3
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:01:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0UVX-0003GA-Bb
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 20:02:06 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39c0e0bc733so1226243f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743724907; x=1744329707; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743724920; x=1744329720; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yvplpfWyToxlMcaiW33GsKxUhgmpqpXgGdwTbAzyNHc=;
- b=CYu/BATgayAuDYYofooAUO/EDTXW70J8TG0onXheXvTsPv5lX8/mAnmXcoBeh1Whby
- cA+xLDrJI0O/HwAYAgdNwEiNobq7ihPkKJnDQnmD9W65xVPRwyVIE6vpZkn3W0ZvvlRL
- Ly+3sn2drS22gqlkb21Fk2Uv7bA0KXouy8smb3J/8JKyFCznv5D/EnIAmSdVYf86B72h
- du8r0KLNU/VtCWUkiX7Yj10mKpOvAF6Ju4amkH892JEk8kou0s7Sqj9iNVdkKiyiUAIR
- BeIDaCJUh23epr5FO0XKU8Xd2ozRkqZN+acWzABoFUnXaa1KNDVwtYdBz8wZckQ1ovs6
- cARA==
+ bh=pEQ4caRuUm17bqEdIOfMLiQw9DDP+11LU+Cj2r4W6Vc=;
+ b=DiDhqPnUaC4SRbYNlQmpQg9VqleterL4nzs2cFNnINdG9TROxwQguuoQFsFnL7DFOi
+ +5Bs1Hw7JhhBhXXoOdIeJjgitntj/SRkDLJAqJUL6AEu+txd5tZtjpjOtkqfPhhQNf1j
+ GrCUHnue/X4Df67wMjoAtlJL4pQL9DNPTPglBfbfO2xYfhE2+uTszB1rsOVX6g0JUwa5
+ Gw4Zx0j4TcxSj5sh5VoLcA8OoB6GOu2p/PILA+uVfIAN+0wSgXfAmvlAQgyi5vh9Fq4Q
+ 4WZXMPSrutGrJpa/GTKbZSeM04yUllTKuVUHWZ6qxLDzJ4I4L/77O2jWK7bgeIm3YTjX
+ PpGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743724907; x=1744329707;
+ d=1e100.net; s=20230601; t=1743724920; x=1744329720;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yvplpfWyToxlMcaiW33GsKxUhgmpqpXgGdwTbAzyNHc=;
- b=WpTtX5vhcSt9MADYiH4nOrc7P/ES+oN/TWQtN6UcsMvBl1LlgpdmQYre9MqtLuPuPH
- /drtrMX6xHB0laM2J3ZbQtqG02EJ0VLr7S4nTfbrbrDkx8kIbJAm+IqqqiVxf9blFij/
- m0Pp5Sv1o9FH6PWCZKxKNEl6zY20go8MHbxhrve48fwvq8XmJFOMHeG3/pw8t0mUSlAh
- Nur81AQSrsWqE64eEYAB5yQKmCbKIkjm4sH5Ng0RlPwCFEXpFMUJQBeSUraPdG0JQaZB
- aw/URhqWz9FvvJ+vxi4ZDj5vq/BElpIF1s8g47XcRvNn8qPgLynUhB1jVwYQN2IrF/Xy
- b+Mg==
-X-Gm-Message-State: AOJu0Yw32Oc5z8T1mjfAurpqarWwIvyqco24R9aU1IbT/rxP2AIWe6jd
- fMRJa1QK2JRE/8zFTYJTsavwAbcxnuEKieFS+cIAXgSFGGTE7PIQwO1n0bfwxZVCmoLE/fR+map
- M
-X-Gm-Gg: ASbGncvcjQzt0dBQHFxEJcCIOgesQyLpHhtZOqBI1h58IyhdYvEct65rrwwmHt5wBx+
- /agi6AC0yfHAOs6r4BfvLjLapWHrB4/+JFCusrmxE2hLVXInBZGENkyR81CBSEdrR2kHm+rv/y5
- zIpHeZTuSJbgDNrfI0hGY+5bkq8zPtZZDnCDhNzjCu67U/XXfv3t79+CzIaZO1bySL20pGttt+5
- VFRDjLh3VAT1JwsLEtX2n78seg5vzB+ZrySaR/Jk2oMcorYSQHsLVelsKoWKKZybf8BaKyCyS3l
- FAdkXAHZHTKhjB6MbJUad5uvlJr9WBt0K3JoTeh5/m93y1/33uPkd6IASq24vrKO3H/LUVbrlvb
- DFRy+Z68yzwdNO+KVvgjBpCse+UBrEA==
-X-Google-Smtp-Source: AGHT+IHxrTYTWXVGBPfsHgtuKoCUsimt7uVv3YSmHOTE/x0r5cix+QUcvXoaVXQSGR4TWzyzMq1gOg==
-X-Received: by 2002:a5d:5f94:0:b0:390:fb37:1bd with SMTP id
- ffacd0b85a97d-39d0de61c04mr466263f8f.46.1743724907054; 
- Thu, 03 Apr 2025 17:01:47 -0700 (PDT)
+ bh=pEQ4caRuUm17bqEdIOfMLiQw9DDP+11LU+Cj2r4W6Vc=;
+ b=QQD/0QgDuMJNvBhNpCWPYaD0l2RR2GIuTn1rSenvm+mqoh8uDkpqrhuYy3HUBr2T55
+ 3qAfxlUhWNLMtvgMkGS7Bz3xmHS77rS8JyZTpfxh7jUi3J8nOnarDJW/19qFbMXfExwU
+ bZ9RzMKxAohiGPTk289lif6Z7vu0oapInsKvaH5BeYuccCJ1FzaPdyLy0vlfbFCAk8bR
+ fgCloUzVq8RiszqDqoelOViVOafnfenugRb++El6uLacbD+ZqTP1rl2CsAaw7fi8plYs
+ mQRid6xkIzKYhpwQIn+Vg3//if1GJW0F0WHNvzenRDBB96V2n62C4xHFKeOC11aRNFUS
+ EBaw==
+X-Gm-Message-State: AOJu0YwCI9LSixap2QBHrCnDC5aLl2j/LM6S/nM7yLGPtUbCkl48DK7w
+ a2e2ovopiWxtJHemFJc+hm+a2H1vexyXKVi9Cxf6+BYVg83OwP81uoJQo+WovtXHKTeHr7dZQEV
+ J
+X-Gm-Gg: ASbGncuK2XW+oWZynYlxeGCGA2FyLmcNeTV07NGpICy0azbJenpXiBCXpUlPoQIyb4x
+ zxH7rBgLWq6ezj57SjYsXdm/BVOIT9CZ7yzJh1BrjBke5RnZSbySUbk1vq+YyAimXG3efuD2+n9
+ cDbJoBH+WG+doUH286RoXlwYUKPdKfa2muENSAHAUNoUPQSAm8m1n1xVnXzg8y/dlqd6KxE8AH8
+ yIfJuN3U3vUv6diqqwmsmG/ZByFdSHU9zChOL65ajhwXLF7LPXp+zVM6loUUFp4XM08/1Z6VhUm
+ RqCNhGdY3zBjINYa/Als7BDMLZNwMPrIeCNSEL4XyMh1FBuPuIxmulQU6GU2rlDF6ilJdoEs5bt
+ gjY/vePsZkYPlyhYGJq4=
+X-Google-Smtp-Source: AGHT+IGMYDZ9BiUVKCWLsZyqPKwlwfLqqm7cKvIQLVdU8TrrcadW1B86XNq4q+uriYiyXYW3pzA9OA==
+X-Received: by 2002:a05:6000:1ac5:b0:390:de33:b0ef with SMTP id
+ ffacd0b85a97d-39cba93c429mr785050f8f.30.1743724920555; 
+ Thu, 03 Apr 2025 17:02:00 -0700 (PDT)
 Received: from localhost.localdomain (184.170.88.92.rev.sfr.net.
  [92.88.170.184]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c3020da22sm3029543f8f.68.2025.04.03.17.01.45
+ 5b1f17b1804b1-43ec163107csm35041975e9.3.2025.04.03.17.01.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 17:01:46 -0700 (PDT)
+ Thu, 03 Apr 2025 17:02:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH-for-10.1 31/39] target/arm: Replace target_ulong ->
- uint64_t for HWBreakpoint
-Date: Fri,  4 Apr 2025 01:58:13 +0200
-Message-ID: <20250403235821.9909-32-philmd@linaro.org>
+Subject: [RFC PATCH-for-10.1 33/39] hw/core/machine: Allow dynamic
+ registration of valid CPU types
+Date: Fri,  4 Apr 2025 01:58:15 +0200
+Message-ID: <20250403235821.9909-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403235821.9909-1-philmd@linaro.org>
 References: <20250403235821.9909-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,62 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUARMState::pc is of type uint64_t.
+Add MachineClass::valid_cpu_types_list, a dynamic list of strings.
 
+CPU types can be registered with machine_class_add_valid_cpu_type().
+
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/internals.h   | 6 +++---
- target/arm/hyp_gdbstub.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ include/hw/boards.h |  8 ++++++++
+ hw/core/machine.c   | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index d6ac00be0f2..ce60aee41d8 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1944,9 +1944,9 @@ extern GArray *hw_breakpoints, *hw_watchpoints;
- #define get_hw_bp(i)    (&g_array_index(hw_breakpoints, HWBreakpoint, i))
- #define get_hw_wp(i)    (&g_array_index(hw_watchpoints, HWWatchpoint, i))
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index b1bbf3c34d4..92a13b0dc32 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -57,6 +57,13 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
+ bool machine_check_smp_cache(const MachineState *ms, Error **errp);
+ void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
  
--bool find_hw_breakpoint(CPUState *cpu, target_ulong pc);
--int insert_hw_breakpoint(target_ulong pc);
--int delete_hw_breakpoint(target_ulong pc);
-+bool find_hw_breakpoint(CPUState *cpu, uint64_t pc);
-+int insert_hw_breakpoint(uint64_t pc);
-+int delete_hw_breakpoint(uint64_t pc);
- 
- bool check_watchpoint_in_range(int i, target_ulong addr);
- CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, target_ulong addr);
-diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
-index 1e861263b3d..4e52d37ed80 100644
---- a/target/arm/hyp_gdbstub.c
-+++ b/target/arm/hyp_gdbstub.c
-@@ -54,7 +54,7 @@ GArray *hw_breakpoints, *hw_watchpoints;
-  * here so future PC comparisons will work properly.
-  */
- 
--int insert_hw_breakpoint(target_ulong addr)
-+int insert_hw_breakpoint(uint64_t addr)
- {
-     HWBreakpoint brk = {
-         .bcr = 0x1,                             /* BCR E=1, enable */
-@@ -80,7 +80,7 @@ int insert_hw_breakpoint(target_ulong addr)
-  * Delete a breakpoint and shuffle any above down
-  */
- 
--int delete_hw_breakpoint(target_ulong pc)
-+int delete_hw_breakpoint(uint64_t pc)
- {
-     int i;
-     for (i = 0; i < hw_breakpoints->len; i++) {
-@@ -226,7 +226,7 @@ int delete_hw_watchpoint(target_ulong addr, target_ulong len, int type)
-     return -ENOENT;
++/**
++ * machine_class_add_valid_cpu_type: Add type to list of valid CPUs
++ * @mc: Machine class
++ * @type: CPU type to allow (should be a subtype of TYPE_CPU)
++ */
++void machine_class_add_valid_cpu_type(MachineClass *mc, const char *type);
++
+ /**
+  * machine_class_allow_dynamic_sysbus_dev: Add type to list of valid devices
+  * @mc: Machine class
+@@ -307,6 +314,7 @@ struct MachineClass {
+     bool ignore_memory_transaction_failures;
+     int numa_mem_align_shift;
+     const char * const *valid_cpu_types;
++    strList *valid_cpu_types_list;
+     strList *allowed_dynamic_sysbus_devices;
+     bool auto_enable_numa_with_memhp;
+     bool auto_enable_numa_with_memdev;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index f52a4f2273b..5993c6e38d5 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1538,6 +1538,11 @@ const char *machine_class_default_cpu_type(MachineClass *mc)
+     return mc->default_cpu_type;
  }
  
--bool find_hw_breakpoint(CPUState *cpu, target_ulong pc)
-+bool find_hw_breakpoint(CPUState *cpu, uint64_t pc)
++void machine_class_add_valid_cpu_type(MachineClass *mc, const char *type)
++{
++    QAPI_LIST_PREPEND(mc->valid_cpu_types_list, g_strdup(type));
++}
++
+ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
  {
-     int i;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+@@ -1581,6 +1586,29 @@ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
+             return false;
+         }
+     }
++    if (mc->valid_cpu_types_list) {
++        bool valid = false;
++        unsigned count = 0;
++        strList *wl;
++
++        for (wl = mc->valid_cpu_types_list; !valid && wl; wl = wl->next) {
++            valid |= !!object_class_dynamic_cast(oc, wl->value);
++            count++;
++        }
++
++        if (!valid) {
++            g_autofree char *requested = cpu_model_from_type(machine->cpu_type);
++            error_setg(errp, "Invalid CPU model: %s", requested);
++            error_append_hint(errp, "The valid models are: ");
++            for (wl = mc->valid_cpu_types_list; wl; wl = wl->next) {
++                g_autofree char *model = cpu_model_from_type(wl->value);
++                error_append_hint(errp, "%s%s", model, --count ? ", " : "");
++            }
++            error_append_hint(errp, "\n");
++
++            return false;
++        }
++    }
  
+     /* Check if CPU type is deprecated and warn if so */
+     cc = CPU_CLASS(oc);
 -- 
 2.47.1
 
