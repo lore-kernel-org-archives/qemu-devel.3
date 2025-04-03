@@ -4,75 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF9F7C36014
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 03:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96415C3601A
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 03:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Atc-00040G-LN; Wed, 02 Apr 2025 23:05:36 -0400
+	id 1u0BeN-0000Ox-NP; Wed, 02 Apr 2025 23:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1u0AtY-000402-HH
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 23:05:32 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ (Exim 4.90_1) (envelope-from <purplearmadillo77@proton.me>)
+ id 1u0947-0000pD-BK
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 21:08:20 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1u0AtW-0000QY-VI
- for qemu-devel@nongnu.org; Wed, 02 Apr 2025 23:05:32 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 19BF2A41F4B
- for <qemu-devel@nongnu.org>; Thu,  3 Apr 2025 02:59:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8FDC4CEEA
- for <qemu-devel@nongnu.org>; Thu,  3 Apr 2025 03:05:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1743649524;
- bh=7e4LFV1wQFPG/QhKz5c5IUmh9QjSXNG5yMM5Z9j21Sg=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=tyBQpI/64kukcTOol+unhQUE5QuphuHhcTrM6NKiTBpcvcwVtEj+ZbBPX60xhm59J
- +s7IhlQOsldOpB3MA2yEp1Vvb0UvZvaPDwdnJqHpt/8+kdPjXs+wUZCxBIY32O2xrM
- sDorcVVgUXkE8X77WEf/hfXN/RAWZNVKKhvLnjbU2KMv9hXzIji3v5ExLYbrANMMaj
- lx4mtnhvi37svxe8zzMAHqAj6DNUGP9wSR1uoBdUau3waYlroNQq2tZKxsj5xeknjj
- qeT1kFdyPRgqYkHynMXySoWf3STwEox0hJ/o2i1ecZuLXiXhL3DY/dXvRVstiTDt3J
- 0Fsvz8kTnTrUw==
-Received: by mail-ej1-f48.google.com with SMTP id
- a640c23a62f3a-ac2bfcd2a70so56435766b.0
- for <qemu-devel@nongnu.org>; Wed, 02 Apr 2025 20:05:24 -0700 (PDT)
-X-Gm-Message-State: AOJu0Yxw4ypDATbNx9Ri0RgGHyeokvLOZCF27evMB9EzbnvTnsyZx1LQ
- izbAGXD/Hu7/K7FMenFbzpn4digw5DAmCCsZQKMF2kPjN4TCbvN9NLaGRYpvKpexDLUP6EJq1MA
- og7aTS0gIL3h+KZTmAFKcy8NZWXk=
-X-Google-Smtp-Source: AGHT+IEKENLCYrgqkyp5/MaHl0sM8p7PV01z60kX+TZUndRC5U2CwcKa/SOKggtmI/nW+cWNym64BSvBiCCOTednllY=
-X-Received: by 2002:a17:907:9710:b0:ac2:cf0b:b806 with SMTP id
- a640c23a62f3a-ac7bc26ec1cmr93589166b.56.1743649522871; Wed, 02 Apr 2025
- 20:05:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <purplearmadillo77@proton.me>)
+ id 1u0943-0007hM-Fp
+ for qemu-devel@nongnu.org; Wed, 02 Apr 2025 21:08:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1743642481; x=1743901681;
+ bh=IuIxDV9ZU7dW/T6L0RPb9jN3ZKTUoLiK+7IPUZdw5nQ=;
+ h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+ List-Unsubscribe:List-Unsubscribe-Post;
+ b=ZF2s1+Z20pXQJts5nSu8B1lzn+3SdIAa9OPvFXWIH2aljAClqffMOmRCn0motMxnu
+ VhaS+LRJ2cWAzgcj4J/Lo/xI5PfSsFfScyQhcvMGWUXt4umzdI3olq6jlvFUzlS+iD
+ rnprVEkyGvgM/g5Z+3QSAXWROBu3bEXZeIdHYi3BXzoeR0eP0rqDOpWcpUMOx5CcTY
+ IuWo+SahrNb6eZS0Ku3jbpQFaBiGUSwP8al3ZObvZGcxHdcEAiRbZ0vUNKij0xdExX
+ qEjw0b7emIZUjnrZ51HRpIytaV+jyhPBwl6UNUFBv7flhcaV4SK9j9iInnAynj/dHC
+ df+dNdrUNhF1g==
+Date: Thu, 03 Apr 2025 01:07:56 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: [PATCH] ui/curses: Fix infinite loop on windows
+Message-ID: <tSO5to8--iex6QMThG3Z8ElfnNOUahK_yitw2G2tEVRPoMKV936CBdrpyfbeNpVEpziKqeQ1ShBwPOoDkofgApM8YWwnPKJR_JrPDThV8Bc=@proton.me>
+Feedback-ID: 51238035:user:proton
+X-Pm-Message-ID: 1a0ed4ef1e55ba72f73976a7ad9b638932a48003
 MIME-Version: 1.0
-References: <20250328175526.368121-1-richard.henderson@linaro.org>
- <20250328175526.368121-2-richard.henderson@linaro.org>
- <CAAhV-H6=iZOBfxF=_DXqc5M9GjTiXJ7nxotLAJ-0Eb7=zVd0bQ@mail.gmail.com>
- <b17663bc-40c3-4501-be88-065363138038@linaro.org>
- <CAAhV-H4mmKvJ75uSm_LCFrCFYM0QG=4oh0ZLVTGXdKX+svs5eA@mail.gmail.com>
- <8d897be6-24b6-4fe3-8201-59f0bd08763d@linaro.org>
-In-Reply-To: <8d897be6-24b6-4fe3-8201-59f0bd08763d@linaro.org>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Thu, 3 Apr 2025 11:05:12 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H6BFRRg_4ZS9S50kgE+ZEJWRMwgm45zBWLwqVP1JLwE_Q@mail.gmail.com>
-X-Gm-Features: ATxdqUG3p9bPBYD41twDeVj-hWkaftU6hoPi38PskN7osywj3Qotjv7ZjdE_h_E
-Message-ID: <CAAhV-H6BFRRg_4ZS9S50kgE+ZEJWRMwgm45zBWLwqVP1JLwE_Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/mips: Revert TARGET_PAGE_BITS_VARY
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com, 
- arikalo@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=chenhuacai@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=51.77.79.158;
+ envelope-from=purplearmadillo77@proton.me; helo=mail-0201.mail-europe.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 02 Apr 2025 23:53:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,77 +64,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  William Hu <purplearmadillo77@proton.me>
+From:  William Hu via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 3, 2025 at 2:11=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 4/1/25 20:04, Huacai Chen wrote:
-> > Hi, Richard,
-> >
-> > On Tue, Apr 1, 2025 at 9:39=E2=80=AFPM Richard Henderson
-> > <richard.henderson@linaro.org> wrote:
-> >>
-> >> On 3/31/25 20:15, Huacai Chen wrote:
-> >>>>    #  define TARGET_VIRT_ADDR_SPACE_BITS 32
-> >>>>    #endif
-> >>>>    #endif
-> >>>> -#ifdef CONFIG_USER_ONLY
-> >>>>    #define TARGET_PAGE_BITS 12
-> >>>> -#else
-> >>>> -#define TARGET_PAGE_BITS_VARY
-> >>>> -#define TARGET_PAGE_BITS_MIN 12
-> >>>> -#endif
-> >>> I'm a bit confused about TARGET_PAGE_BITS and other macros.
-> >>>
-> >>> In my opinion, if we define TARGET_PAGE_BITS as 12, that means we onl=
-y
-> >>> support 4K pages. And if we define TARGET_PAGE_BITS_VARY and
-> >>> TARGET_PAGE_BITS_MIN as 12, that means we support the minimum page as
-> >>> 4K, but we also support larger pages.
-> >>>
-> >>> Am I wrong?
-> >> Yes.
-> >>
-> >> TARGET_PAGE_BITS is a minimum value that is used by the memory subsyst=
-em for managing ram
-> >> and i/o.  If variable, via TARGET_PAGE_BITS_VARY, this is set very ear=
-ly in qemu startup
-> >> and cannot be changed.
-> >>
-> >> The page size for the mips cpu, like many others, may be changed at ru=
-ntime.  The page
-> >> size used at that point is reported to softmmu during tlb_fill.
-> >>
-> >> The value of TARGET_PAGE_BITS must be the minimum supported by the cpu=
-.
-> >>
-> >> For Arm, the minimum for armv6 was 1k, then armv7 dropped support for =
-tiny pages so the
-> >> minimum is 4k.  At runtime, armv8 supports page sizes of 4k, 16k, and =
-64k.
-> >>
-> >> For MIPS, ignoring those cpus which support 1k pages, the minimum is 4=
-k.
-> > If all types of cpus of the target arch has the same minimum supported
-> > page size, we only need to define TARGET_PAGE_BITS; otherwise we need
-> > to define TARGET_PAGE_BITS_VARY, and TARGET_PAGE_BITS_MIN means the
-> > minimum supported page size of the smallest supported page's cpu type.
-> > Here we remove TARGET_PAGE_BITS_VARY because we just ignore the 1K
-> > pages.
-> >
-> > Am I right now?
->
-> Yes.
-OK, then it is fine to remove the TARGET_PAGE_BITS_VARY and
-TARGET_PAGE_BITS_MIN definition. But Loongson still prefers 16K pages
-(4K pages cause cache alias on Loongson), so I want to keep
-mc->minimum_page_bits =3D 14.
+From a42046272f0544dd18ed58661e53ea17d1584c2c Mon Sep 17 00:00:00 2001
+From: William Hu <purplearmadillo77@proton.me>
+Date: Wed, 2 Apr 2025 12:00:00 -0400
+Subject: [PATCH] ui/curses: Fix infinite loop on windows
 
-Huacai
+Replace -1 comparisons for wint_t with WEOF to fix infinite loop caused by =
+a
+65535 =3D=3D -1 comparison.
 
->
->
-> r~
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2905
+Signed-off-by: William Hu <purplearmadillo77@proton.me>
+---
+ ui/curses.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/ui/curses.c b/ui/curses.c
+index a39aee8762..3f5c5adf78 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -265,7 +265,12 @@ static int curses2foo(const int _curses2foo[], const i=
+nt _curseskey2foo[],
+=20
+ static void curses_refresh(DisplayChangeListener *dcl)
+ {
+-    int chr, keysym, keycode, keycode_alt;
++    /*
++     * DO NOT MAKE chr AN INT:
++     * Causes silent conversion errors on Windows where wint_t is unsigned=
+ short.
++     */
++    wint_t chr =3D 0;
++    int keysym, keycode, keycode_alt;
+     enum maybe_keycode maybe_keycode =3D CURSES_KEYCODE;
+=20
+     curses_winch_check();
+@@ -284,8 +289,9 @@ static void curses_refresh(DisplayChangeListener *dcl)
+         /* while there are any pending key strokes to process */
+         chr =3D console_getch(&maybe_keycode);
+=20
+-        if (chr =3D=3D -1)
++        if (chr =3D=3D WEOF) {
+             break;
++        }
+=20
+ #ifdef KEY_RESIZE
+         /* this shouldn't occur when we use a custom SIGWINCH handler */
+--=20
+2.47.0
+
 
