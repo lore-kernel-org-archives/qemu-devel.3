@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293D9C3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 19:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C604FC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 19:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0QHu-0008Ve-F6; Thu, 03 Apr 2025 15:31:42 -0400
+	id 1u0QNB-0001gj-4F; Thu, 03 Apr 2025 15:37:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0QHt-0008Un-4z
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:31:41 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0QNA-0001gb-0S
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:37:08 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0QHr-0004ar-Bv
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:31:40 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39c0e0bc733so1074564f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 12:31:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0QN7-0005HC-9a
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:37:07 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so13827045e9.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 12:37:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743708697; x=1744313497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743709023; x=1744313823; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9g7eG4ybf9Oeu2+Xs4DMroYWMhfhe3xlvcVpLg8lncg=;
- b=Wtm7W/dp/C8U0pNOYKSVzYhy+sV0buHPl11BEjfbMkMkqlJOc86cEanVqz7t4xE3k5
- b4D0QK+5WYgpNATfsi4p+jL2XjvVv5nuK7uoFOyhC0wt7mge0SVzp7Yz+WH1wwgp7PL3
- pk1zDJHN2M4cL/mSYkrYiCxe0l1cxLlJHRf67ceTTkyeAi1TOVKF3nn9eB6oB78BpEMF
- IeOC2HcRvYHbT9FzD5qGtnOEeDDR0NXZdtjGJfoG3QX/ABvSawJ0q3X/qAGVkj1VWhox
- MEWq2m081I8Q/8bZ+882gmgF4yDqfGjVqSJvZ9HD2XiF6zrOoXzbipb2Lf0BKyHToGb+
- bFEw==
+ bh=Iw7o1l6EX8Y24QagulapS9anktq+wi+PgML/ekb7Y0Y=;
+ b=cdOwRhmxi8eSKMN9wR5EYPYH42T21s3TapANUjlSbnY3vIZm66rtLkuosKwzCkws9G
+ 1r8x3lc9spjVlPUcfCZu1KDEPEh8kS45tgsOp7w9ASKmQIiavPDIR6j4IRXaa2Sz3Ib1
+ L9BVO4zzjk3MAWQH1tuyU2uaWQFEaiGdio+Hl7+Bdn8OOKrO2wCl8zspRdBn+YhA78RT
+ r0rL6d1hWcwAnNgqSTrIDUzqvkatG3kx2h5oyVz5q4MN2XTOVQbrImDNNJ/Yxu5U14GH
+ hboStU9cojjOBy9B0HWpvPIEnd6OwIrGjPDbq3lduiFyWIx2GSgn8AwCykc5M6BRmFkN
+ zXiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743708697; x=1744313497;
+ d=1e100.net; s=20230601; t=1743709023; x=1744313823;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9g7eG4ybf9Oeu2+Xs4DMroYWMhfhe3xlvcVpLg8lncg=;
- b=b188MQzS1zI1teobKBZh1f7+/7gOz5L8+COfZ6FswtKw3Y+1pkRujotBj4mYy+DiMM
- XJXUSl5AIPYeD5eOq7NRyH+9HYeAy65gqAPfq7v5LZTNq0cSsfTSPojSacgyBPjbHW9Q
- IP07OrNQpy3AITDoQGufCLvXkyd5+A9E+o4qlPvWBQq9OKYJ2z4bxJaSK4vtdUnr/r0+
- vZyyuPkuOkm+lbW/TOl9bli8bw325dA67vNzo/3Ofn16dc9PhjkBmW+vBxTfQTTqVOPc
- Nqn0HUFlJ+heUP+ph0Jj9EnFa+SfNkylFEk6eFP/SxU+lAwqcC+UwA5d1f9TVuB1FoSN
- z5Hw==
+ bh=Iw7o1l6EX8Y24QagulapS9anktq+wi+PgML/ekb7Y0Y=;
+ b=ZYx5bx9ayRhVZI2780tY/2xGrrOqXozkAl6A1ciBkfXBszWG/G0nsdIZ1ofszNlB/9
+ maPDTLwYTCXqf8DfSR7hR177nzMchl6YwwxyP99khSEZGMdGwLzIqHwEjy+V39I3PQHq
+ n1aEtP38Ye67jF7y4R1FYF3cnVWGoilj4r4D0c7XYSCNrCXYIUCiC1OkSTuUi/NHaw7K
+ 5JLlcshaUWKRRxylZogHTfyNfwyk9OpxsPptvkemNhQGFHurzA9ZQ/4psvhJ4rPq03iT
+ 72aTBMHiD4Z6KNrsDi7Ye6aE1USlZTz3fYrsnRefgkXZUtv31qmhGrO7aYZ9ePKw8emn
+ t8Sw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvqbAqHxxwnfl4Ty4PYpp0DHREK7aV+lSTUObJQWEl6nNes2t2xFD4dET+NXRHbCX+HVz730xo418X@nongnu.org
-X-Gm-Message-State: AOJu0Yyz9DQjVbLIvCzz11gt2zdbU7RHpd5udMycbYa4Dm+kKtTyKWZc
- b8A2RWcGBnaoOdeSqsSFeizUIy6RSoNt+lDFEqSHb46IukJL8HidTky/4p0qcyI=
-X-Gm-Gg: ASbGncvYCPLqwbTVvT+c8TuUWfzAWBfYhOYP8u7Zekhp8zDuR80T9iBHQMLhyS2CcEq
- 8V7wIT29wBx8qJEUsHvnwzzS9fmG9tHy3wOutcIJCaXyP9KNw7NxqeBNBnY/sh4SS4vOjx12Owt
- 3wRarTcv1wJdR/uKL3JHpoSZPekR/NXZHPS6LIMk+/upDy8ENw3JxS2HQwonisMWsVQAowyrCNb
- Fz3vVhqI1/DdzQIekVLR2IAo6prWiGhCgQoKqgRgdt9KWKC6thUq/3RJpmyC7Iuee9voO/CMPil
- j1q990OTQVzXagXyjeu8Bxyc6vDQX/XJ1lNWyGuDp6SYuVy7+Yn6QoSpt0oQEd2QPJHxmzM7UR3
- 4noxwxkMPoTGXJXmn1Q==
-X-Google-Smtp-Source: AGHT+IFCPlo+tTL9NTpLgWX7MIIzaHPIEo0e/smlUP9LfQE4KxP7qetx/p0eTHqZpe++e9yMdd+pMQ==
-X-Received: by 2002:a05:6000:4401:b0:39c:1f10:c74c with SMTP id
- ffacd0b85a97d-39cba93d069mr297130f8f.35.1743708697343; 
- Thu, 03 Apr 2025 12:31:37 -0700 (PDT)
+ AJvYcCXFxdGJuTXA/VQ3PYkryj6+gU3j+Y98Ynre4IWohI98FImCbRRZMWoOqO2kMeE93Xyj1KzRsHbVFgzP@nongnu.org
+X-Gm-Message-State: AOJu0YxmAMB8n88Wns/vEMWEzC4DaULDsw8aIOHipcv/U8/hRzddbU3q
+ Cen7dgJ99EKYSL7ed+8Xh1ppk0kO/wnDSeEDGR7AJJ8ecd5Xd13bJjrdCAzoDm4=
+X-Gm-Gg: ASbGncsmO6Gw2ZCiiS2b0konQEETYb5PBQN3x77dL23fQViPq7RzEukL7zvIEODcWk7
+ GyIRmMUKd+KcunJzGBDVzoNquE+pDeQRKOTdPzbo6L0MFMaPHOhCAhTDq1lAY0dN6t/csUYYFTQ
+ 0sUm+RU0u/3Z/g8eyKTgVVF4x1r1zNhJRqOfSKFbp3DRZsZjDST5sHSjw3Wie7K4L/AyQWliAqL
+ vzcml7DHWqXR7dqCNKBMtxFnNTU+OVERCrJZcJd4dS60fYYXLRugVpLayjQdA+Cwryf2hT96oQa
+ BjGo3KBJzKnc7lc18n/X2gDuwp8aWSsleGPUbAxSlMIIbeL8I1e9tyx39FXzqxSh/2EQAQj9Mrq
+ ZWE6zY/FuultFmIKHVg==
+X-Google-Smtp-Source: AGHT+IFfuM3eDe7OpAupR3FR5md1d6yfeJ/I1NVNIkLo7x/RVNBSa3bV3qeD/tNjk2FalTAAnu0wkQ==
+X-Received: by 2002:a7b:c84e:0:b0:43c:f680:5c2e with SMTP id
+ 5b1f17b1804b1-43ebefb7c20mr45533205e9.13.1743709023086; 
+ Thu, 03 Apr 2025 12:37:03 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1630de9sm29596965e9.1.2025.04.03.12.31.36
+ ffacd0b85a97d-39c301a7064sm2637128f8f.34.2025.04.03.12.37.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 12:31:36 -0700 (PDT)
-Message-ID: <0ddb4f55-853b-4f52-935c-51ebed73d38b@linaro.org>
-Date: Thu, 3 Apr 2025 21:31:36 +0200
+ Thu, 03 Apr 2025 12:37:02 -0700 (PDT)
+Message-ID: <aabb0497-016a-4cdf-9098-dbbaa92b781d@linaro.org>
+Date: Thu, 3 Apr 2025 21:37:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 00/13] arm: Spring header cleanups
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20250402222334.66511-1-philmd@linaro.org>
- <cecbab0f-56f2-434a-8508-8a4df2992259@linaro.org>
+Subject: Re: [PATCH] smbios: Fix buffer overrun when using path= option
+To: Daan De Meyer <daan.j.demeyer@gmail.com>, qemu-devel@nongnu.org,
+ Valentin David <valentin.david@canonical.com>
+Cc: thuth@redhat.com, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
+ <CAO8sHckT2Ko8TTJjzUsX0znafaL_4jp97QCtSxoZDnHow0bEAQ@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cecbab0f-56f2-434a-8508-8a4df2992259@linaro.org>
+In-Reply-To: <CAO8sHckT2Ko8TTJjzUsX0znafaL_4jp97QCtSxoZDnHow0bEAQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,26 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 20:22, Pierrick Bouvier wrote:
-> On 4/2/25 15:23, Philippe Mathieu-Daudé wrote:
->> This series is more useful for heterogeneous emulation preparation
->> than single binary, because it allows non-ARM hw/ code to configure
->> ARM cores, so not using target-specific APIs. I figured some
->> patches could be useful to Pierrick "build hw/arm once" series (in
->> particular arm_cpu_has_feature).
+Hi Daan,
+
+On 3/4/25 21:29, Daan De Meyer wrote:
+> Hi,
+> 
+> Unless I'm missing something, I don't think the patch has been merged
+> yet. Any chance it might have been missed?
+
+I have it tagged, as sensible enough, in case nobody else takes it.
+IIRC it was sent the same day I posted my latest pull request, so
+it'd go in the next one, due before next Tuesday. Also I was hoping I
+could get feedback from Valentin.
+
+> 
+> Cheers,
+> 
+> Daan
+> 
+> On Sun, 23 Mar 2025 at 22:36, Daan De Meyer <daan.j.demeyer@gmail.com> wrote:
+>>
+>> We have to make sure the array of bytes read from the path= file
+>> is null-terminated, otherwise we run into a buffer overrun later on.
+>>
+>> Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
+>>
+>> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+>> ---
+>>   hw/smbios/smbios.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+>> index 02a09eb9cd..ad4cd6721e 100644
+>> --- a/hw/smbios/smbios.c
+>> +++ b/hw/smbios/smbios.c
+>> @@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
+>>               g_byte_array_append(data, (guint8 *)buf, ret);
+>>           }
+>>
+>> +        buf[0] = '\0';
+>> +        g_byte_array_append(data, (guint8 *)buf, 1);
+>> +
+>>           qemu_close(fd);
+>>
+>>           *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
+>> --
+>> 2.49.0
 >>
 > 
-> I'm ok with the cleanup part, as I sent a reviewed-by.
-> 
-> However, I'm not sure in which context non-ARM hw/ code will really need 
-> to do it. It would be better if we stick to mandatory changes for now, 
-> instead of anticipating future needs, which might be real or not.
-> We can implement those changes only as part of a series that really 
-> needs it.
 
-I understand your view. I had to rebase these now old patches, and
-figured it will cost me less if I get them merged, rather than
-keeping rebasing them for 4 or 5 releases.
-
-Single binary effort is just a milestone toward heterogeneous emulation.
 
