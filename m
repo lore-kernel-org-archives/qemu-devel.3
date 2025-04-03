@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8861BC3600C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5DEC36014
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0RFI-00040E-MI; Thu, 03 Apr 2025 16:33:04 -0400
+	id 1u0RF7-0003yT-1E; Thu, 03 Apr 2025 16:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RFG-0003ze-BS
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:33:02 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RF6-0003yI-0n
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:32:52 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RFE-00043p-DK
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:33:02 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3914bc3e01aso876727f8f.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:32:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RF4-00042g-5u
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:32:51 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43cfa7e7f54so8424185e9.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743712378; x=1744317178; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743712368; x=1744317168; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VUYVIflGesDLaaMP/ur2j2JEaJvbIDtPIxL00Q+AXXI=;
- b=icqd3iAkO2LDQm4JW82e5i04PFlHoxB3gDl8VdEGpBq/VCNasoZBX2jjEa9UXmhj2b
- h8WsRgTSMiG1QcrzKZg27SV7PEZYWZBBQLUN6wwkR4cm3uYsweOABH0CjADd8/ItD6DD
- 5/EIDe0tlboP0MrPfIGxEzevlIw5AMUhiuXUhyJyz9Holziax1/B3ZNihiE7Exwi8au/
- 7dWLMp5Ee6xLc8LAqBHDdFCGWcsxuksyZuuEK27XEdtmaj9yrKmChDKvVT3EUTTI3PA3
- wjXS7ddQZJrO2MRLiJzS4h4S8cbp3N5RWem0T6aWJRu33AsI9It9ccNVhiO6wo4z4/3d
- rILA==
+ bh=VGswViVnnb77pop0AHAfmo4nHoQCnlrKr2lNkpeHI/g=;
+ b=Y3FXd3MpOBD2xUC4hMS3N7an1JUPIjCdWo2arIB0xNseED/Ol3LGpUtt7UU7g1/ZLI
+ LibpJWaBL1JgkqZdlNTn3iJLnTf7Yslmx4c39McWP0036evjcQEN6e+z/PKX1RF+9fAD
+ 5YjrGIDeYxQmIi3WXgaN/qFo7CKVBl9aaVy+Jd/17/lTArcpGsX7iZRSfQu2APEscz8q
+ h9b76pSWA9arfJalshQLa3QvtwOorbKK/zWBfcWcAhLrgNSoQdmJt8AN7swGYeLsCr2o
+ N0tTkdc668fgBV9a0Bb3p1KrTQN5u7a7ku1jgJajwnd73AoAPjpywxNt8P6apAz2Qwrl
+ uFKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743712378; x=1744317178;
+ d=1e100.net; s=20230601; t=1743712368; x=1744317168;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VUYVIflGesDLaaMP/ur2j2JEaJvbIDtPIxL00Q+AXXI=;
- b=ERAtXEI638SdX7UxE9RCwOGc4Vx2EKyOb0VlQiYGj3B4+kEwn+bdjV2141yJ5HxLdO
- yStJ153qXO/eUzNpIqNHaJr8QsVa5D4/n0AL3bY9jbF4V8jMmYXmOh27zPg6RexOM+WB
- d/bneiUMWK6JYdcIBjNLjFyNqLBK2ejJ4FWuJwMOhXx/aM/zE+u3zYw9jA6mwOF0ODwF
- ZMkVakMX7MgH/lBaFMgHR0ymzcI3l4VxkwALGoPCBwEsAtLUrLd7n6HHhB2hIdgNB3l6
- 5Fjrmx8cYWfKbxGjKM0I+KlbHAvlDxfMWmJM/9qOgzS9Rr247zFrVuQnsnzoPXcCAP9C
- Po/A==
-X-Gm-Message-State: AOJu0YzeehLLqUfrXnkZbJc76IX0fabVNVO1zNKHczemRJFBDN07gOMj
- 1Iw2oZ7DuB3j1IMVKf4wkJkMOf/ZIbnZrJydBhPxNEEw9FqlQHRxw4jAUssW+nEcTVujtWNRls0
- o
-X-Gm-Gg: ASbGncuii+ILu6TxidxTDJW61JxCkwVfbJflo7cZTHE6ImPSVTAJ1RC78StgBTJRefd
- pSMA4W+YqhggBrIbxIU/bDnkungc6SUvv42jvf+1FZTq5mII+92IqHeWAkUNNNqt3bHOKnU9p2U
- Zggo4+8XdbxsOvhvzsDCCOO60w5Drua1kqU66B8gg7WGsh+YQQT9nsvwswM9VmXdXSd2DaL+Zd1
- a3K4OkJARicgIcdnUGgXw5Y3X5Vok71+JQwtloVENljuG2v/b9G8WO7rbkJi3nZ07y4YBCLWPHP
- /WzCdVqUdaDT2PUfbkwyT73QRNU0vZTi/mA886pXMVMKHrLEf0RTCdHU4Ai/MwivAZnujnoomSm
- /hJAsWe3UFDbkORWUuqJjplky
-X-Google-Smtp-Source: AGHT+IFuMDYU5C4vra/zISd63w4g/6Hipaj94TsmKScrBLHLx9GhSPj20bLnrPFVU3VA9q+RLjaQxA==
-X-Received: by 2002:a05:6000:4304:b0:39c:12ce:1052 with SMTP id
- ffacd0b85a97d-39d07bcd00dmr154832f8f.7.1743712378220; 
- Thu, 03 Apr 2025 13:32:58 -0700 (PDT)
+ bh=VGswViVnnb77pop0AHAfmo4nHoQCnlrKr2lNkpeHI/g=;
+ b=wZKEFD+3Yu8pSxasOyULqNJ5+WiYUBUBkFrR2NBux5m0HbRo2GjwosyuK4wLTdE1oV
+ uKjbU+291UYx7YkKTHe+ZEojDHh3RZ0ImZTzmOndtDkzhskx6NScVaqKAxEUJg4/x26W
+ Jr4s+JYTw6+txsM/mSRYSDztQJmJVYJejB2UevD6ikr5oKrWvfqcQz/kNdz7YWkIZj0Z
+ itLynAiTDFLyYRcGgM4ka7WwxshFX97mFwLuFUzAj8wV1gc0zjxFOJzCuRzhwt+QGlg6
+ JrUQ0ZzRnm4TEpib8Sa2HDSfcYbZ4pfFvdWezuNBVonvqE97exFv8SCr8qfwZzo8RHzd
+ tidA==
+X-Gm-Message-State: AOJu0YyMnls58NMeaq0zWJ942YXh/wPFcz5Uw9aQyHrGzON5plXbIcFs
+ hK7HECZlGSNx00U3BczV8W9kRW0HSeAhZ6MGXxatQTR5HNue7gtvO85F7DnmhH4ehfg5wvhqjU7
+ 8
+X-Gm-Gg: ASbGncvtN+qv+ATCJbf83iC2s4sansKBvaRb1bC4zd2gFCuUg3wCAvIJ6bevCaRloO8
+ OATpYbKKlL0ReZlw7tFF1y0b5lCA9ehwGXg/tLtfgFPjOpX8h2FQjreyMrqZ39kTN4usgdDQG8t
+ n2ae4KXa5DKoUzmY2glQ+K5Ptb/W4nOA49YjaR7ufri4u34kgBp6pqS1WlpMbcU3Fo4chWJD9IW
+ FxS9QDItkEKrzNu3YBMmoEeAhJQACakNZ2SUwrR+/H8LFgUnvzv6fBozYpIaFWkDjbGzXH5PJFc
+ rd0XE/HV1c/QbWBc8SWpWURPp8/aP60DaMUDkwxheuZ1k7J5HqjuXDfa53RaMNsHhZVQqGDoFnQ
+ BZlXO5oq79Fm/0Hiy4UExIPUO
+X-Google-Smtp-Source: AGHT+IE5/ZI6EM+luxv3kFtX1kBmoAZ6GZYPFB9qVadZ5lGZn+NLX9l/VUj1PqYTg0FxXNA2sfv/Rg==
+X-Received: by 2002:a05:600c:1827:b0:43d:174:2668 with SMTP id
+ 5b1f17b1804b1-43ebeda3c57mr33607555e9.0.1743712368451; 
+ Thu, 03 Apr 2025 13:32:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301acec9sm2634257f8f.40.2025.04.03.13.32.57
+ ffacd0b85a97d-39c301b6778sm2581591f8f.46.2025.04.03.13.32.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 03 Apr 2025 13:32:57 -0700 (PDT)
+ Thu, 03 Apr 2025 13:32:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -72,20 +72,21 @@ Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH-for-10.0 v3 3/5] tests/functional: Skip aarch64_replay test on
- macOS
-Date: Thu,  3 Apr 2025 22:32:39 +0200
-Message-ID: <20250403203241.46692-4-philmd@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH-for-10.0 v3 1/5] tests/functional/test_aarch64_rme_virt: fix
+ sporadic failure
+Date: Thu,  3 Apr 2025 22:32:37 +0200
+Message-ID: <20250403203241.46692-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250403203241.46692-1-philmd@linaro.org>
 References: <20250403203241.46692-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,44 +109,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As of v10.0.0-rc2 this test is still failing on macos:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-  $ make check-functional-aarch64 V=1
-  ...
-  ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
-  Bail out! ERROR:../../replay/replay-internal.c:235:replay_mutex_unlock: assertion failed: (replay_mutex_locked())
+This test was randomly failing on our CI, and on dev machines,
+especially with QEMU debug builds.
 
-This is tracked as https://gitlab.com/qemu-project/qemu/-/issues/2907
+From the information collected, it's related to an implementation choice
+in edk2 QEMU virt support. The workaround is to disable KASLR, to avoid
+accessing protected memory.
+Note: this is *not* needed for the similar test_aarch64_rme_sbsaref.
 
+More information is available on the associated GitLab issue.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2823
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250328183816.2687925-1-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/functional/test_aarch64_replay.py | 4 +++-
+ tests/functional/test_aarch64_rme_virt.py | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
-index 04cde433bcf..029fef3cbf8 100755
---- a/tests/functional/test_aarch64_replay.py
-+++ b/tests/functional/test_aarch64_replay.py
-@@ -5,7 +5,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
+index f4ad4d33d58..a1abf584f0e 100755
+--- a/tests/functional/test_aarch64_rme_virt.py
++++ b/tests/functional/test_aarch64_rme_virt.py
+@@ -87,7 +87,9 @@ def test_aarch64_rme_virt(self):
+         self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
+         self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
+         self.vm.add_args('-netdev', 'user,id=net0')
+-        self.vm.add_args('-append', 'root=/dev/vda')
++        # We need to add nokaslr to avoid triggering this sporadic bug:
++        # https://gitlab.com/qemu-project/qemu/-/issues/2823
++        self.vm.add_args('-append', 'root=/dev/vda nokaslr')
  
--from qemu_test import Asset
-+from qemu_test import Asset, skipIfOperatingSystem
- from replay_kernel import ReplayKernelBase
- 
- 
-@@ -16,6 +16,8 @@ class Aarch64Replay(ReplayKernelBase):
-          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
-         '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
- 
-+    # Failing on Darwin: https://gitlab.com/qemu-project/qemu/-/issues/2907
-+    @skipIfOperatingSystem('Darwin')
-     def test_aarch64_virt(self):
-         self.set_machine('virt')
-         self.cpu = 'cortex-a53'
+         self.vm.launch()
+         # Wait for host VM boot to complete.
 -- 
 2.47.1
 
