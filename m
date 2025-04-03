@@ -4,84 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E74C3601A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB55DC3600C
 	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0OZZ-0006sI-KA; Thu, 03 Apr 2025 13:41:50 -0400
+	id 1u0OZc-00071u-Tv; Thu, 03 Apr 2025 13:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiangxueqian@gmail.com>)
- id 1u0Msm-0003nM-1V
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:53:32 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jiangxueqian@gmail.com>)
- id 1u0Msk-0000Ms-Db
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 11:53:31 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22435603572so11050685ad.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 08:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743695607; x=1744300407; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=REwPsuC/Zo+NZ1xL2bWVm+fPOTfIvVA3rA4SqfRMqiM=;
- b=G6rT5ijwB8I2X+4rMbPx/2So1xkFODBzr7xaPwTAVFbVRuPh6kgzry0dHvh+LamooR
- cgob7FrFAavC125w0rVMqWEPotmU2UHMeD96FDvpk694RoHMiOWZqEXwaWzdsK0IAeCf
- T3N+LU5dal5bn8W7Hr4CuRWRXh7OZfpSm3jSTawHz6obENIYcrRAMp08+IEIzoYIEDvQ
- SpYfyiG/9/zaMeVVhOkb+Jh090pdI0uobltcBApjrHcKs4AIUGvcD4CHGQ7+AvX5GZqq
- xWed69mxdpEW/D+PkCU1FsroOJnvzqDpV2TS5jszIwZuNkWqzsGhAglbzGUgjzZjGEzs
- H+tA==
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u0OZV-0006tB-JD
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:41:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u0OZT-0001zy-Bp
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:41:45 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 533FV2p8023220
+ for <qemu-devel@nongnu.org>; Thu, 3 Apr 2025 17:41:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ aXWrm3WjeGmEoBJiNQW4tZxJmXIIkHQGAxb9fM2F4Uk=; b=kTASrjy+quFAOoFH
+ oojnMRX5cfWFAXd+Oscxeh7yUlt4c7Tk2nrV4R/OuOrDmm1iNk6OkzGgGA44OT4v
+ gNVUJEscMlTViHtE9NjJ8H2l1Pyt+XTJPnnN/FMImuEANwuzqeUpNoSvFwtlW6CT
+ 39RnWE6kIKfyal4/g02UJrsfo2/HYRsyumGn8/ByjUqciNad1cvJXGKWKj7fwlAy
+ 0DMWUNjC8+NvUT7n8UNvkV1iKWrVtZ5SYRzMd2Urulj1xVU2T7KwpbKpAhvkraAn
+ 2QPNocgeYXNcQYE7ApufUiSxwTACxeZkALxA5aRODexUfiVXOEnUCiCVjkOgooqm
+ zrEVjA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45sc2ytu6f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 17:41:36 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ff7aecba07so1148785a91.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:41:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743695607; x=1744300407;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=REwPsuC/Zo+NZ1xL2bWVm+fPOTfIvVA3rA4SqfRMqiM=;
- b=V1sRGwYKYD6XQfwPPtLE7586v/dXL+MAf8ftz0I9NIkejrYQYSEiOAeie1JpDgMXmn
- Q3MMQZ6HYLwxNtxs67yfDNbr1x/bNL+uUY4WgpPgSkxiDW7lYDRV58iPlsUqhQtWqgIf
- Kg/tpRdbdPHhnKFzGdVHhYi4ePUXZAd+YmpUce/wToeAtdyCx3fKn23+1b9vFcy0r7H+
- UwTxam+6DC87oPsl1I4SZv6kOMCIrX904uyNN+cKC8KMPzcfPSd3DPJGLnZtbGXNkQsN
- hM6SclJILhxAl4qOA4oakCujbgbxKJx4jxcgXtJl6fmo2ed1SYgVDuGZ0Cy1PWdM4VCP
- kM/w==
-X-Gm-Message-State: AOJu0YyMMTeodOfq4uXkaLicmpZyMo5C30QWWNjJJ0PxmO9uSFu94+v8
- Mru9pJ6OLmdpyxuD/CJmGT5WBAd1HyieMypGpBAVBXmtXzaG9rTAzNfdhikTbZI=
-X-Gm-Gg: ASbGncuca8TH4IVVNis6bFbFyf1r0E5HPGRNPdpyWLhMGuNo2YV0hDY1RwSYM3T8D8o
- o9+ZCVPhz29XO1swm54VmOgoX1YFS/n+p0CdcoybWd8DLRrobtdqMQEAyIsNuBmv1i3Lvf7qRS8
- GrZTU6tosg/omdeswLaFP8cA5y7PlhwoMENQBtnsB/yO1GtT9+pMhpwno82aVoFAgqYHKk/M6n0
- Yq2Z0B2LkrNdyLyXuTwrZVNqCqyGQfWpSClmP7KpiReqcpYPrlLXJ5/2NDtlyHKkPRKv1B2ykN+
- jXaXKGxWJIOafVzEHEgHXZjQ9UZblTENjRTa04g/pCL/ZDDl3BTHcbD0TQ==
-X-Google-Smtp-Source: AGHT+IG9gH2hGcbB5UsFFVVR5XvABwb8V37MV2soiPH2zx4dvR+kkN/JZCAa9SuT0sXauud0z7AoPg==
-X-Received: by 2002:a17:903:19ef:b0:223:33cb:335f with SMTP id
- d9443c01a7336-2292f9493e3mr327512825ad.3.1743695607136; 
- Thu, 03 Apr 2025 08:53:27 -0700 (PDT)
-Received: from desktop.lan ([112.32.32.142]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97f36besm1664772b3a.72.2025.04.03.08.53.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Apr 2025 08:53:26 -0700 (PDT)
-From: Jiang XueQian <jiangxueqian@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Jiang XueQian <jiangxueqian@gmail.com>
-Subject: [PATCH] virtio-gpu-gl: Add 'serverfd' property
-Date: Thu,  3 Apr 2025 23:51:29 +0800
-Message-ID: <20250403155129.3396821-1-jiangxueqian@gmail.com>
-X-Mailer: git-send-email 2.49.0
+ d=1e100.net; s=20230601; t=1743702092; x=1744306892;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aXWrm3WjeGmEoBJiNQW4tZxJmXIIkHQGAxb9fM2F4Uk=;
+ b=SteHu8jvGEmbsmvk57PZl8MgTE1d4Y6fgRAAsWF/gdUrRH7pP7XBjLsggR7jUP8fLX
+ Vhsqt4VgMI+dz/jgr2sGjQzQ98dSyZfQj9yqHXk0ScDGuzwiqcy+OEdeiAYQS8WxcTuJ
+ cXMCoiof+t/ryZSgDZniBOhGuddK3p3INp6Mb3E6IXKcy9D9hHvCHI7e5SMk8NZTAwAP
+ +doPl9yrXwVPP88O0DJgBjHK/h3Vb3tohhsdDCT3f4fqSwms8O/piwnrOgPbAkOOrizW
+ Fve3qWzCGJVnMAUA0gwhYpbBWtvTJ5EFdoc4IQr24Sl9jFPAAxNXa6McV1M4SvoOwqxk
+ j91g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPppvdTIUH8EC94PCIn6iCyryIfBwOk6NemNGlw2vWeLQ/xTqh9spl0ugWAReDdz9PRbPwjH7yX3kT@nongnu.org
+X-Gm-Message-State: AOJu0YxyXrdho+tuKR3h6CbUQ8zQJunIcFiWqHC7WW/8F3/sIAHSH+7E
+ k9C2Gupxe9M2Lm3a7cNzStNUzx4LRbhEbmZwyJ/Ncc69jarqxwAvGvzvtf1mBj+DE1KzbZRDKCW
+ kEvaHpMR/+zSO98DwxaBmGoZSM2WlS+2a3h/fNP2Pc2wGYguMd45FvA==
+X-Gm-Gg: ASbGncueSWXfGKf7ti6YPU9w1r2U7SbMQnSPK4F8fRcLC2qvFV0sRrpdjYuKPslBf9i
+ uoqbFJcUyXWus9Qj7DyqGSuDmB2pDCQlFK4n3kMCCbdSC6IMJ+fYSp1Lz1nkQWjST+7h8dbv34j
+ zlQRwJaDAuBGJT3vNr961n1wbzAH0ARrFj+UNYp1d3Mlir74sRwKpT7Z7ponozNi94LijpBh3KY
+ 7of8CZ3NaUa10nsmG8nPdm5nrZjaFoWAUSLOkylLcUSutVk7c2fcJbj4Fcvwi3gI9AEeDsIu/BN
+ Yy7cO593FVAucUhDGwdjODNBDkITxWBTlU65g8+A48HcUjiWrI4076pwYzeY7zYWDqQgaGLaUA=
+ =
+X-Received: by 2002:a17:90b:2f10:b0:2ff:5a9d:9390 with SMTP id
+ 98e67ed59e1d1-306a487e35dmr503058a91.8.1743702092308; 
+ Thu, 03 Apr 2025 10:41:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvmN2LOoMwzuy6TnwxYr6v8EbBm8Apzm9LFLHeMO9FK2iA56E3gv/n6B9S9e8Lkw1p8C8mYw==
+X-Received: by 2002:a17:90b:2f10:b0:2ff:5a9d:9390 with SMTP id
+ 98e67ed59e1d1-306a487e35dmr503022a91.8.1743702091861; 
+ Thu, 03 Apr 2025 10:41:31 -0700 (PDT)
+Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3057ca4b200sm2008237a91.20.2025.04.03.10.41.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Apr 2025 10:41:31 -0700 (PDT)
+Message-ID: <dbb8c1b8-a1b9-4b14-8418-602ccda5bb9d@oss.qualcomm.com>
+Date: Thu, 3 Apr 2025 12:41:27 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] hw/intc: Add l2vic interrupt controller
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, quic_mathbern@quicinc.com, ale@rev.ng,
+ anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ Damien Hedde <damien.hedde@dahe.fr>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250301172045.1295412-1-brian.cain@oss.qualcomm.com>
+ <20250301172045.1295412-2-brian.cain@oss.qualcomm.com>
+ <3029782c-8d16-4428-9d6b-1c2fa8a7e755@linaro.org>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <3029782c-8d16-4428-9d6b-1c2fa8a7e755@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=jiangxueqian@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=AMoviu7M c=1 sm=1 tr=0 ts=67eec850 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=ABNU-bO0iG1_zgacNiEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: thM_D69Zyxe64qM83En69Es2krOMCxWm
+X-Proofpoint-ORIG-GUID: thM_D69Zyxe64qM83En69Es2krOMCxWm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-03_08,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 mlxscore=0 impostorscore=0
+ clxscore=1015 spamscore=0 phishscore=0 mlxlogscore=999 adultscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504030089
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 03 Apr 2025 13:41:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,107 +136,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This property passes socket of a externally started virgl_render_server
-to virglrenderer, so that it won't try to spawn new process and get
-killed by seccomp, allowing virtio-gpu-gl venus and sandbox to enable
-at the same time.
 
-Signed-off-by: Jiang XueQian <jiangxueqian@gmail.com>
----
- hw/display/virtio-gpu-gl.c     | 15 +++++++++++++++
- hw/display/virtio-gpu-virgl.c  | 17 +++++++++++++++++
- include/hw/virtio/virtio-gpu.h |  2 ++
- 3 files changed, 34 insertions(+)
+On 3/3/2025 6:26 AM, Philippe Mathieu-Daudé wrote:
+> Hi Brian and Sid,
+>
+> On 1/3/25 18:20, Brian Cain wrote:
+>> From: Sid Manning <sidneym@quicinc.com>
+>>
+>> Co-authored-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+>> Co-authored-by: Damien Hedde <damien.hedde@dahe.fr>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   MAINTAINERS                    |   2 +
+>>   docs/devel/hexagon-l2vic.rst   |  59 +++++
+>>   docs/devel/index-internals.rst |   1 +
+>>   include/hw/intc/l2vic.h        |  37 +++
+>>   hw/intc/l2vic.c                | 417 +++++++++++++++++++++++++++++++++
+>>   hw/intc/Kconfig                |   3 +
+>>   hw/intc/meson.build            |   2 +
+>>   hw/intc/trace-events           |   4 +
+>>   8 files changed, 525 insertions(+)
+>>   create mode 100644 docs/devel/hexagon-l2vic.rst
+>>   create mode 100644 include/hw/intc/l2vic.h
+>>   create mode 100644 hw/intc/l2vic.c
+>
+>
+>> diff --git a/hw/intc/l2vic.c b/hw/intc/l2vic.c
+>> new file mode 100644
+>> index 0000000000..9df6575214
+>> --- /dev/null
+>> +++ b/hw/intc/l2vic.c
+>> @@ -0,0 +1,417 @@
+>> +/*
+>> + * QEMU L2VIC Interrupt Controller
+>> + *
+>> + * Arm PrimeCell PL190 Vector Interrupt Controller was used as a 
+>> reference.
+>> + * Copyright(c) 2020-2025 Qualcomm Innovation Center, Inc. All 
+>> Rights Reserved.
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "hw/irq.h"
+>> +#include "hw/sysbus.h"
+>> +#include "migration/vmstate.h"
+>> +#include "qemu/log.h"
+>> +#include "qemu/module.h"
+>> +#include "hw/intc/l2vic.h"
+>> +#include "trace.h"
+>> +
+>> +#define L2VICA(s, n) (s[(n) >> 2])
+>> +
+>> +#define TYPE_L2VIC "l2vic"
+>> +#define L2VIC(obj) OBJECT_CHECK(L2VICState, (obj), TYPE_L2VIC)
+>
+> Why not use OBJECT_DECLARE_SIMPLE_TYPE()?
+>
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 683fad3bf8..e7c89f7c29 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -22,6 +22,7 @@
- #include "hw/virtio/virtio-gpu-bswap.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "hw/qdev-properties.h"
-+#include "monitor/monitor.h"
- 
- #include <virglrenderer.h>
- 
-@@ -143,6 +144,17 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-         return;
-     }
- 
-+#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
-+    if (g->parent_obj.conf.serverfd) {
-+        g->parent_obj.conf.serverfd_parsed =
-+            monitor_fd_param(monitor_cur(), g->parent_obj.conf.serverfd, errp);
-+        if (g->parent_obj.conf.serverfd_parsed < 0) {
-+            error_prepend(errp, "unable to parse serverfd: ");
-+            return;
-+        }
-+    }
-+#endif
-+
-     g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
-     g->capset_ids = virtio_gpu_virgl_get_capsets(g);
-     VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
-@@ -159,6 +171,9 @@ static const Property virtio_gpu_gl_properties[] = {
-                     VIRTIO_GPU_FLAG_STATS_ENABLED, false),
-     DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
-+#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
-+    DEFINE_PROP_STRING("serverfd", VirtIOGPU, parent_obj.conf.serverfd),
-+#endif
- };
- 
- static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 145a0b3879..420aae3b05 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -1030,6 +1030,19 @@ static int virgl_make_context_current(void *opaque, int scanout_idx,
-                                    qctx);
- }
- 
-+#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
-+static int virgl_get_server_fd(void *opaque, uint32_t version)
-+{
-+    VirtIOGPU *g = opaque;
-+
-+    if (g->parent_obj.conf.serverfd) {
-+        return g->parent_obj.conf.serverfd_parsed;
-+    }
-+
-+    return -1;
-+}
-+#endif
-+
- static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
-     .version             = 1,
-     .write_fence         = virgl_write_fence,
-@@ -1097,6 +1110,10 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     uint32_t flags = 0;
-     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
- 
-+#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
-+    virtio_gpu_3d_cbs.version = 3;
-+    virtio_gpu_3d_cbs.get_server_fd = virgl_get_server_fd;
-+#endif
- #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
-     if (qemu_egl_display) {
-         virtio_gpu_3d_cbs.version = 4;
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index a42957c4e2..40a81f500c 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -128,6 +128,8 @@ struct virtio_gpu_base_conf {
-     uint32_t xres;
-     uint32_t yres;
-     uint64_t hostmem;
-+    char *serverfd;
-+    int serverfd_parsed;
- };
- 
- struct virtio_gpu_ctrl_command {
--- 
-2.49.0
+Great suggestion, ty.  Will do.
 
+
+>> +
+>> +#define SLICE_MAX (L2VIC_INTERRUPT_MAX / 32)
+>> +
+>> +typedef struct L2VICState {
+>> +    SysBusDevice parent_obj;
+>> +
+>> +    QemuMutex active;
+>> +    MemoryRegion iomem;
+>> +    MemoryRegion fast_iomem;
+>> +    uint32_t level;
+>> +    /*
+>> +     * offset 0:vid group 0 etc, 10 bits in each group
+>> +     * are used:
+>> +     */
+>> +    uint32_t vid_group[4];
+>> +    uint32_t vid0;
+>> +    /* Clear Status of Active Edge interrupt, not used: */
+>> +    uint32_t int_clear[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Enable interrupt source */
+>> +    uint32_t int_enable[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Clear (set to 0) corresponding bit in int_enable */
+>> +    uint32_t int_enable_clear;
+>> +    /* Set (to 1) corresponding bit in int_enable */
+>> +    uint32_t int_enable_set;
+>> +    /* Present for debugging, not used */
+>> +    uint32_t int_pending[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Generate an interrupt */
+>> +    uint32_t int_soft;
+>> +    /* Which enabled interrupt is active */
+>> +    uint32_t int_status[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* Edge or Level interrupt */
+>> +    uint32_t int_type[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    /* L2 interrupt group 0-3 0x600-0x7FF */
+>> +    uint32_t int_group_n0[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    uint32_t int_group_n1[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    uint32_t int_group_n2[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    uint32_t int_group_n3[SLICE_MAX] QEMU_ALIGNED(16);
+>> +    qemu_irq irq[8];
+>> +} L2VICState;
+>
+> OBJECT_DECLARE_SIMPLE_TYPE(L2VICState, L2VIC)
+>
+>
+>> +static inline bool vid_active(L2VICState *s)
+>> +
+>> +{
+>> +    /* scan all 1024 bits in int_status arrary */
+>> +    const int size = sizeof(s->int_status) * CHAR_BIT;
+>> +    const int active_irq = find_first_bit((unsigned long 
+>> *)s->int_status, size);
+>
+> Maybe this file could leverage the 32-bit bitops.h API:
+>
+> $ git grep bit32\( include/qemu/bitops.h
+> include/qemu/bitops.h:38: * - Bits stored in an array of 'uint32_t': 
+> set_bit32(), clear_bit32(), etc
+> include/qemu/bitops.h:270:static inline void set_bit32(long nr, 
+> uint32_t *addr)
+> include/qemu/bitops.h:296:static inline void clear_bit32(long nr, 
+> uint32_t *addr)
+> include/qemu/bitops.h:322:static inline void change_bit32(long nr, 
+> uint32_t *addr)
+> include/qemu/bitops.h:335:static inline int test_and_set_bit32(long 
+> nr, uint32_t *addr)
+> include/qemu/bitops.h:350:static inline int test_and_clear_bit32(long 
+> nr, uint32_t *addr)
+> include/qemu/bitops.h:365:static inline int test_and_change_bit32(long 
+> nr, uint32_t *addr)
+> include/qemu/bitops.h:380:static inline int test_bit32(long nr, const 
+> uint32_t *addr)
+>
+
+Okay - I will make this change.
+
+
+There's several places in the code today where we do this L2VICA() macro 
+to assign all of the bits to/from a single uint32_t word.  And if we 
+take your and Taylor's suggestion to use the DECLARE_BITMAP32, we can 
+probably change these to use bitmap_copy_with_{src,dst}_offset() 
+instead, I think?
+
+
+>> +    return ((active_irq != size)) ? true : false;
+>> +}
+>> +
+>> +static bool l2vic_update(L2VICState *s, int irq)
+>> +{
+>> +    if (vid_active(s)) {
+>> +        return true;
+>> +    }
+>> +
+>> +    bool pending = test_bit(irq, (unsigned long *)s->int_pending);
+>> +    bool enable = test_bit(irq, (unsigned long *)s->int_enable);
+>> +    if (pending && enable) {
+>> +        int vid = get_vid(s, irq);
+>> +        set_bit(irq, (unsigned long *)s->int_status);
+>> +        clear_bit(irq, (unsigned long *)s->int_pending);
+>> +        clear_bit(irq, (unsigned long *)s->int_enable);
+>> +        /* ensure the irq line goes low after going high */
+>> +        s->vid0 = irq;
+>> +        s->vid_group[get_vid(s, irq)] = irq;
+>> +
+>> +        /* already low: now call pulse */
+>> +        /*     pulse: calls qemu_upper() and then qemu_lower()) */
+>> +        qemu_irq_pulse(s->irq[vid + 2]);
+>> +        trace_l2vic_delivered(irq, vid);
+>> +        return true;
+>> +    }
+>> +    return false;
+>> +}
+>
 
