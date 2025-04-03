@@ -4,80 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5754C3601B
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 19:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86003C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 19:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Q0d-0005FX-CH; Thu, 03 Apr 2025 15:13:51 -0400
+	id 1u0QGf-0007lu-J7; Thu, 03 Apr 2025 15:30:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1u0Q0b-0005FD-5L
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:13:50 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
+ id 1u0QGV-0007ky-P0
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:30:17 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1u0Q0Y-0001pz-UX
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:13:48 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-ac345bd8e13so208451766b.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 12:13:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
+ id 1u0QGT-0004P6-V0
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 15:30:15 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3f9a7cbc8f1so381944b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 12:30:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743707624; x=1744312424; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gYlqM+2ohIBKDbf4n/yezGPD8nTmC4pswZRG7zg8r/k=;
- b=LgRpCbcZDUgceJnYiMRF88Q+qjR4EqgwGVBDqVdDnYatnOYDDz1bs2H50stZiJpCuL
- hbbplNjR9n6KYtxabkurRaf8syxgmo/YzwZzBmcUknUCUrulb0EqxpXcX4ZthQGLR2nR
- LecLif/Qz1hzBf8RTDmgdlVWOjCafHVTRaTy8aX0LCxIHAPJMl9FJIvUnUQQNNYlkLAb
- KMTcIzGhVsov2WOzbIx0r22Id2JvpqJy5/JdW2+ur2LYMtRgAuRc35gqVRAnxphIDHPy
- m80zQK7Q5dQJw5mgYgqieZp6EN8bCqtIZEp4Hyv723foPtNLC5qjl5ktZ6fCmEgKnSFw
- 8CoQ==
+ d=gmail.com; s=20230601; t=1743708611; x=1744313411; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Pu1Fyhvs9X8jA14NDAXZPHekZZLe3gtvclvJpLpc2sc=;
+ b=f3JTsnvHom02hJ8K8QvKK3p8P7gMQ4dJE8+AQFPbYCNjZGf622wbW9ndOwDOtSPCYw
+ Qovi3kE5S3H3CAhb0LWw9cVUeoWWMsDSvfPknMl8gep7c2qgfPMDNlAHaeI+m3w6JMBG
+ 0osGBc24441r/q9jOsXEIHxGKJxXY628ypHmlsUYRDg6XI1eLBHKYiQ9gqIWo49baHAO
+ Kt5W/kj7AMsn75Hwke5hyKnNryp/IZy2InuCpaLCC4H/Cninl6ZpiAZ2pV2OvMVs9WZN
+ 4cLXtC/+vX/LagP1OBfI1WJ3tlSEYSsTJPuTlPD5MtV/HN0uvC0WQRWZM/6MwzjhOD2d
+ bRjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743707624; x=1744312424;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1743708611; x=1744313411;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gYlqM+2ohIBKDbf4n/yezGPD8nTmC4pswZRG7zg8r/k=;
- b=IExn6l9vPxvsILvSJ5ayVjiFJjCCmFiCq03eKy0jfPvd6zfCnTvTb0suo8y5TLGEFP
- oLDu1ozjVyRZsp2CEwlPx+EQJPP3Vn1EfKJLX+p+N14qIPUw+ef3GLT4xA98f4h0Qb3q
- ceZcOleDAMKnPd3c4RGzM6hr02w297BnO3uQvyLeHMgnVpbOW2tZjtQnDbeC6nS1f/cs
- nTa7MGu2VmO7tcrRf2CfJA2Qt26akJe2glibWW3W1AkU9wJNedGmAIvuHkXCgAPmwBzv
- LU6GMSRz+sOJ65Ob4CJlpU0itd12HaePVOlxLmqMHFoAK/UQWGtjYELHrfH1NtFsqAL/
- L80Q==
-X-Gm-Message-State: AOJu0Ywm5jx6yWCxhaSJbezKhG4kL269eQF3WD9bRv3B/Pq4tKkHrd9l
- raRytTUjEFmAdekG3VeSmQdEUb3PjC5SmLi2rEOnxs1+/yES1P28Rr5qJFIKH7E=
-X-Gm-Gg: ASbGncsm485GZtq7YZtTg9LyAY7ME9KLYovmVu08loMZSwQpSmAKK4y5khlzdn2cGbw
- iVUJ5AEgo8JBaFOz9xkyIfXprnCT2gLC/LXB+bkhsYOkK3O796IXCY9Y3d5yThR0qO9H6D3O8bS
- Z+w2UNEg7BfMtAqSItmA0U2EmdE731GlAAKGfJSpA9naGkT7L3suJ1y7rhlFWic2GVW3iLOl9E2
- HY/L7Ln7tCCMEVZmibHyugdT2zes+C06bQHvieq3QizknUCrrJ+Q6rsvjvWMeuJM9NXLOFlOFsd
- 3AwWqzLFarOX926ASH7T3ueX054QEheZKSXbgPEtotww/SHM0xEr3cm0TSi5JoXEBew7C/tlOC0
- 9DU8=
-X-Google-Smtp-Source: AGHT+IFTzoZCS4098ZwiT9zeQBsVrUthmZE5vle+srStk33ZazxI6RskfsOiI40wFT24+KE65AMbBg==
-X-Received: by 2002:a17:907:971d:b0:ac7:3918:752e with SMTP id
- a640c23a62f3a-ac7d19a15fdmr58271066b.59.1743707624245; 
- Thu, 03 Apr 2025 12:13:44 -0700 (PDT)
-Received: from localhost.localdomain ([84.40.153.146])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7bfe99b3bsm135962866b.51.2025.04.03.12.13.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Apr 2025 12:13:43 -0700 (PDT)
-From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, gustavo.romero@linaro.org,
- richard.henderson@linaro.org, philmd@linaro.org,
- manos.pitsidianakis@linaro.org,
- Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
- Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-Subject: [PATCH] gdbstub: Implement qGDBServerVersion packet
-Date: Thu,  3 Apr 2025 21:13:40 +0200
-Message-Id: <20250403191340.53343-1-dominik.b.czarnota@gmail.com>
-X-Mailer: git-send-email 2.30.2
+ bh=Pu1Fyhvs9X8jA14NDAXZPHekZZLe3gtvclvJpLpc2sc=;
+ b=jRSz3qwF7wMp+lSNWGDepkkm9xRgmrk1y7DJJEXDdD/Jd7xt3EN2hg3132DGEsOo7p
+ SI5HaLis+f4nqznyy5WEvHlDHMgaMEv1qoh9RuLGTZV+edyoH1oZmak+HUsAML2aPHt4
+ fY0eLCO5xSm7KHAewTNJCU9qXvKWISOcJzt206vFu1Bq7NLcUqAtYYjeDto7/Zx6mysz
+ xHoCzSLlQmHAneIRsSMf0t4yrQ1FXCYdI+PcrQADvCDbgWvgw5njGS1ye8iVX/KvUHgj
+ 32G+i6h1qAUJit+7eJ4RuRxHQwwBXogaQb5uD3v7EgyokiFkfxH1wJ3vF7rhxpkbl0lt
+ WHhQ==
+X-Gm-Message-State: AOJu0YwIVgapkzL72iazQ4XnUiD4d7gKb87+8//ZS/ek2MZ6PaM26WKL
+ 2NN40DPqouIPIHIhabb0rQQxX57PIkdzGWutjk3/2kIrCQVfYz5zddTlYwyljdcLzZMrtUETCbS
+ 4FAk0se2gH6AHeS9DpHvMYXcIqOMP7LQy
+X-Gm-Gg: ASbGnctbdzLrXX8iz07nYk6OHzSJWBzDDPL6T5H+xu1kDSrzGliG9Nx+CL5rrZ7rJ7y
+ ABHhtXnFZd2Y9JAejLLpR6en7QpHdDMZjmNIzi8tFGXQGANQAEHaSbEnEQ6Ji3shejDfb4nZzCK
+ XdtJ/zwY4wwVtXHxmjYq6WdAE6YCEh+W0v42XyDjEUczzadp6tYaENcR3Qlepw
+X-Google-Smtp-Source: AGHT+IGoJe+9oDSvfNS1UOhMz3S4KLJT9hu62HIZQ1JA5afzFTw9zPaA0xmy7zf3RS9Z1SmdOBO7Tmxt+KRW5yhxEks=
+X-Received: by 2002:a05:6808:144c:b0:3f4:bc5:d478 with SMTP id
+ 5614622812f47-4004567ed22mr284764b6e.25.1743708610917; Thu, 03 Apr 2025
+ 12:30:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=dominik.b.czarnota@gmail.com; helo=mail-ej1-x62a.google.com
+References: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
+In-Reply-To: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
+From: Daan De Meyer <daan.j.demeyer@gmail.com>
+Date: Thu, 3 Apr 2025 21:29:59 +0200
+X-Gm-Features: ATxdqUGh3kLZPThUX8A48JMktz4CSKPVATpPyHX8Sr3XGS5plfRuzjt2UF243UM
+Message-ID: <CAO8sHckT2Ko8TTJjzUsX0znafaL_4jp97QCtSxoZDnHow0bEAQ@mail.gmail.com>
+Subject: Re: [PATCH] smbios: Fix buffer overrun when using path= option
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=daan.j.demeyer@gmail.com; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,58 +92,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds support for the `qGDBServerVersion` packet to the qemu
-gdbstub  which could be used by clients to detect the QEMU version
-(and, e.g., use a workaround for known bugs).
+Hi,
 
-This packet is not documented/standarized by GDB but it was implemented
-by LLDB gdbstub [0] and is helpful for projects like Pwndbg [1].
+Unless I'm missing something, I don't think the patch has been merged
+yet. Any chance it might have been missed?
 
-This has been implemented by Patryk, who I included in Co-authored-by
-and who asked me to send the patch.
+Cheers,
 
-[0] https://lldb.llvm.org/resources/lldbgdbremote.html#qgdbserverversion
-[1] https://github.com/pwndbg/pwndbg/issues/2648
+Daan
 
-Co-authored-by: Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
----
- gdbstub/gdbstub.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 282e13e163..8d616a7f52 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1582,6 +1582,16 @@ static void handle_query_threads(GArray *params, void *user_ctx)
-     gdbserver_state.query_cpu = gdb_next_attached_cpu(gdbserver_state.query_cpu);
- }
- 
-+static void handle_query_gdb_server_version(GArray *params, void *user_ctx)
-+{
-+#if defined(CONFIG_USER_ONLY)
-+    g_string_printf(gdbserver_state.str_buf, "name:qemu-%s;version:%s;", target_name(), QEMU_VERSION);
-+#else
-+    g_string_printf(gdbserver_state.str_buf, "name:qemu-system-%s;version:%s;", target_name(), QEMU_VERSION);
-+#endif
-+    gdb_put_strbuf();
-+}
-+
- static void handle_query_first_threads(GArray *params, void *user_ctx)
- {
-     gdbserver_state.query_cpu = gdb_first_attached_cpu();
-@@ -1827,6 +1837,10 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
-         .handler = handle_query_threads,
-         .cmd = "sThreadInfo",
-     },
-+    {
-+        .handler = handle_query_gdb_server_version,
-+        .cmd = "GDBServerVersion",
-+    },
-     {
-         .handler = handle_query_first_threads,
-         .cmd = "fThreadInfo",
--- 
-2.30.2
-
+On Sun, 23 Mar 2025 at 22:36, Daan De Meyer <daan.j.demeyer@gmail.com> wrote:
+>
+> We have to make sure the array of bytes read from the path= file
+> is null-terminated, otherwise we run into a buffer overrun later on.
+>
+> Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support loading OEM strings values from a file")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
+>
+> Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+> ---
+>  hw/smbios/smbios.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> index 02a09eb9cd..ad4cd6721e 100644
+> --- a/hw/smbios/smbios.c
+> +++ b/hw/smbios/smbios.c
+> @@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
+>              g_byte_array_append(data, (guint8 *)buf, ret);
+>          }
+>
+> +        buf[0] = '\0';
+> +        g_byte_array_append(data, (guint8 *)buf, 1);
+> +
+>          qemu_close(fd);
+>
+>          *opt->dest = g_renew(char *, *opt->dest, (*opt->ndest) + 1);
+> --
+> 2.49.0
+>
 
