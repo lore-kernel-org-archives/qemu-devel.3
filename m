@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E18DC3600C
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE14AC3601A
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 17:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0OV5-0002LC-3n; Thu, 03 Apr 2025 13:37:11 -0400
+	id 1u0OVE-0002hi-H4; Thu, 03 Apr 2025 13:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0OUb-0001uD-73
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:36:42 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1u0OVC-0002d9-5r
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:37:18 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0OUY-0000Zs-JJ
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:36:40 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-736b34a71a1so1444432b3a.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:36:37 -0700 (PDT)
+ id 1u0OVA-0000n2-KN
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 13:37:17 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so1029448b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 10:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743701797; x=1744306597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743701835; x=1744306635; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nkmIbvR42ogv/r7XYwhe/QIpus4FDXCzdMRMUhgzI40=;
- b=RWed2FKUGEamU8KiW5Rn/Ui5AEtYxVCAAJ5Js2IOk0KpkdUKbT/RW5bnvv+Zxe8UfY
- Q2EJz/CH2UfQWMBHw7SBZhMMfCxyMlRlvfDi/INCqqlTAynCmWATLA6FPuZdxQpQ/KEL
- xOj8+59neJFe27Dg3RKoctgNS9leHZQqs5IfROGQ4kthFgdrW/Wn9q2cEsNIz9CbRmLZ
- wVa9lhm+8Ofs+gLd9BFrfJd8mxTnF6fLOUEMqh2h9DtLgRuzN2aYXJ8d1Uk8i1Rii9kU
- xD7XZrvVZLCn6xdecFBylMSL599ERiz2VMpvqMSbFYQhZ0RK+2Bf2BNDUKwmZ1mWYxga
- Hcyw==
+ bh=Z/SZP1JYTNRzNvenVX+iu8JQFP9ipaPCSD5exP5G678=;
+ b=b/fERY7Bgq5DS6uthmaJHc15ewmiu6IM3jxWvlm3ivy9twD4Ut9t6zOoVu2bUo3caw
+ t8HDOCPsjp5N4eNeovwFw3eD0PC8jMqhaUhHcBDJq6gsbsCcmrhgGB4UiGbBbtj2Ck2e
+ yXFnxOtjk5MDbdDUKmBZydlcfncIzLrmztmahNsI1C6NJMahmGm5xu9u8+G9zyMxHhBo
+ axMB+jW3a5+XlYMjKxMM41PV+XXEUtrm8kJhtWfaAkPlKZCaLzFxbJyXYrAmWBZXocti
+ zWT4lCeHKjQFO9Sm0LVk83sCIrIdZQy7QfC7PfwLGFVc0oXc4J/DZzaz31Qc9hHWbf6f
+ fV6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743701797; x=1744306597;
+ d=1e100.net; s=20230601; t=1743701835; x=1744306635;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nkmIbvR42ogv/r7XYwhe/QIpus4FDXCzdMRMUhgzI40=;
- b=ttD9ONKCIIWKrTprCzwtj8C7bJeaFHySajORD1pobvQ98XilTjT+pkb0Ayp53H/HRZ
- yH2rVP4VxmMWDj/WjHSy0j6GmdSE/FREJ7tuu1YmJzh7QSMMq8YtjV3WVOZZnwr2551J
- Cc/0wEwnwda0hg4AQExG2ZayzVeR9dOoCJIGH45SKCQd0bS1pwqEyOVkIUF8YaczMBAY
- MTJAGb3Dz61H2FCTjrjNUB0k05UgOsxuJSUuPpRJjUSPV2DEBdd/LQZtlHBv8ewufEXf
- HYORKhztIveXJusJ6KiCrMSwL9KvCImh8DCMoexb3Hnm5wwohGvdCQFqKtrpZjH5d8sU
- vm7Q==
-X-Gm-Message-State: AOJu0Yysyq8LJoh+/j78iWHGdiG3fozOdpsMSoOgLE/nTsKUje2dGkV8
- IgvbCMs3zeaCidm7i6PynXPKNYvXo6frGw/h5s4rrasFEr42Jb+KtOHAs3SW46lOEE1YjtPRvaW
- k
-X-Gm-Gg: ASbGncu1twu5Xzkd5T2a6eih++y0F1SsWs6o2WbXai8bGhOduUk1dBUDL8ip4oI6+Wy
- Fx9Ardsh/S8Gt7CjZDtSpwUNBGgCCDlB/ItaFI3KDacThwGU9bb+DqOYlKoqwNE7i25MEzL4kJv
- nA2IK+kSKu69W7+cA2BWP/56YNRs4ZEJw+kx92Cl8+vDWhLKVASmJxEKnmF59mtOuK0IwPCadlU
- +dYikIZMpz/14clSIAsHQBhf2g8OnlYikD4cSljGbim6LCG0zR6v/7PgGAy+5jjF5s+CkF2dSMc
- cmRICI13OjxxQeERPcTRELESTUYDtyDhpzSwQ4MPIRXRqUDA3fUw0xyMVSBKcLNo1rNC1yyTFRk
- cs+QW3M8E
-X-Google-Smtp-Source: AGHT+IEqQ4D1KvheGBMDFVr9ZldZBQXEH6+aSje79RukGu1hZyLh33fEAafA/yHm/7o9Baq9xr7z8g==
-X-Received: by 2002:a05:6a00:aca:b0:736:34a2:8a18 with SMTP id
- d2e1a72fcca58-739e4f7a0a5mr425852b3a.24.1743701796704; 
- Thu, 03 Apr 2025 10:36:36 -0700 (PDT)
+ bh=Z/SZP1JYTNRzNvenVX+iu8JQFP9ipaPCSD5exP5G678=;
+ b=RSRB6SOlHVgwuNJ4NsdjFkLOVlaVOt/Eza1niHoxYN3oUSLYpfNvu7SF/fYAloYk43
+ FofjtzfUWtesa9HxUfsw8fdGwKzednePpCdCERCjcCG/uw8T4GkxvDvjZ9ubIIV+b1dA
+ gcxRjVvZE2Gbo3j7oTkKJzCq4qYeYmYP9N7qNab4NByHUem/PuSvSoDF7rDk3qb6XO04
+ vwQYCeiE0Ij27P+4gMPeg8TUvZcCNnHSIYQd2wSYqcmkKmZa2RB3P1gaHl55UuemcjNK
+ D4MaH6vIsQuPAaHOGH/Y0TdoNwwThshp2wvXqfIMhZQRHiYuISq3DsLj7MLnI4M/WP4N
+ NuoQ==
+X-Gm-Message-State: AOJu0YwfeubuAhx7m1aOg3O9qF+AGogi3oddKVXtkQD24U6vrJcir01G
+ OW37sSyOYoPGCXV9HvehtH11CdCtPNtGT8URWQ2SHc5Qqr/nJhBxxZk7333/TBfrPl/uqY7PgJs
+ 9
+X-Gm-Gg: ASbGncsNwA3ICfUZItOqTQADmLBIwFxHRo8a74XNs3N+UdjBjVFzO2U3UYXixHXoZTS
+ 9su8WxwVjq3u24H7dwbF4rtPWQmImCnsRlJVYSsQ9H1FLmB4A9FCy+rjXvZ81p4RAs91eNv2gys
+ Py1lpypiL14KMz0Wcki2tiseEnNpnkYw2vpDDpWaruDIenuR+X6Fgxtf11HlhYI05ME81nxdZPl
+ gF6WwU+DPiGfkpD/xnbHuJ0/LE69u+mpUNOEqOgCMvAN93fnMtPV4yMBIaILtpTdG2CCawo4kje
+ cuFiMLM3V/rQ9GukTlziIW6g0kPZcP6lRcWHMwt9ASTO1LYdv7w2Z7g4NGVgn8ymqoThasA+4i3
+ F+m0+D3brsbkWzb+QHVM=
+X-Google-Smtp-Source: AGHT+IEFqRRkKjlIMpJq6y+Sa1GaonA72jDtLhGPSUP0uZg1AVav54sK3UC8OgWJ7k4UbtPxFOvsag==
+X-Received: by 2002:a05:6a00:124d:b0:736:491b:536d with SMTP id
+ d2e1a72fcca58-739e4b73951mr560158b3a.20.1743701834974; 
+ Thu, 03 Apr 2025 10:37:14 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-74-48.tukw.qwest.net. [174.21.74.48])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d9ea152fsm1784314b3a.116.2025.04.03.10.36.36
+ d2e1a72fcca58-739da0deddfsm1780416b3a.162.2025.04.03.10.37.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 10:36:36 -0700 (PDT)
-Message-ID: <291a5458-4859-47f1-a9f1-c0daf8205784@linaro.org>
-Date: Thu, 3 Apr 2025 10:36:34 -0700
+ Thu, 03 Apr 2025 10:37:14 -0700 (PDT)
+Message-ID: <12f30c39-53b0-4ca3-a823-48412ca380b8@linaro.org>
+Date: Thu, 3 Apr 2025 10:37:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0? v2 06/14] hw/arm/virt: Remove pointless
- VirtMachineState::tcg_its field
+Subject: Re: [PATCH-for-10.0? v2 07/14] hw/intc/gicv3_its: Do not check
+ its_class_name() for NULL
 To: qemu-devel@nongnu.org
 References: <20250403151829.44858-1-philmd@linaro.org>
- <20250403151829.44858-7-philmd@linaro.org>
+ <20250403151829.44858-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250403151829.44858-7-philmd@linaro.org>
+In-Reply-To: <20250403151829.44858-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +105,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/3/25 08:18, Philippe Mathieu-Daudé wrote:
-> VirtMachineState::tcg_its has the same value of
-> VirtMachineClass::no_tcg_its. Directly use the latter,
-> removing the former.
+> Since commit cc5e719e2c8 ("kvm: require KVM_CAP_SIGNAL_MSI"),
+> its_class_name() single implementation doesn't return NULL
+> anymore. Update the prototype docstring, and remove the
+> pointless checks.
+> 
+> Reported-by: Gustavo Romero<gustavo.romero@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   include/hw/intc/arm_gicv3_its_common.h | 2 +-
+>   hw/arm/virt-acpi-build.c               | 4 ++--
+>   2 files changed, 3 insertions(+), 3 deletions(-)
 
-No it doesn't.
 
-> -        if (vmc->no_tcg_its) {
-> -            vms->tcg_its = false;
-> -        } else {
-> -            vms->tcg_its = true;
-> -        }
-
-This is a stupidly verbose not.
-But at least the names had correct logic.
-Therefore all of the uses you replace need inversion.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
