@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 761F7C3601B
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 07:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35D9C3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 07:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Ewb-0000B5-5s; Thu, 03 Apr 2025 03:24:57 -0400
+	id 1u0F0f-0001P3-UE; Thu, 03 Apr 2025 03:29:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u0EwY-0000Af-Ub
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 03:24:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u0F0U-0001OF-Sq
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 03:29:00 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u0EwW-0008TS-Ug
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 03:24:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743665091;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QwUEY0bct/zmBxi9h/Rsmg1Phrg0cbyuoTNpG+MFCjI=;
- b=iXjMgQ2/GgrgerVFEOGako+R525cOWmkGbDqbat3IeKgRYR7Iv+5OVoVA/Lyl+cnlXN7uB
- V3YS/jesZcoGknczXAxs23g9WIEctFW5VTMWIWPokkaJnXPTHKKSKzJhz1LZS2qxSr6xb7
- DhbtuieFWDF3VWdZxzkfC9CZZjqnhA8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-BrQdxS8ANNCjd9kztnzvZQ-1; Thu, 03 Apr 2025 03:24:49 -0400
-X-MC-Unique: BrQdxS8ANNCjd9kztnzvZQ-1
-X-Mimecast-MFC-AGG-ID: BrQdxS8ANNCjd9kztnzvZQ_1743665088
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3912b54611dso366285f8f.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 00:24:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743665088; x=1744269888;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QwUEY0bct/zmBxi9h/Rsmg1Phrg0cbyuoTNpG+MFCjI=;
- b=ejk7rCmh0pBD5A5oRrbz39WWXJAMBTp1CQos+m/65gko/3CQTJreerMBr1v1i2J9Ph
- KS3Ke/4hnfUONfQJGlPPO+jsizDNB5Ryq0Ot7zzTmMZkMGIm8UohhqssIWLIu32DU+0B
- Jh9YYArQ6ohhMyp6nT48SmLP4B0rHvXCTYXXuHNpRCAzPXqXfGmC1fmYnGWLjQlgMrxg
- 4dV/aYtKXZNMEwKtClKhBZXrmebzM4dfb9eo+HY7+tCHJ5DVeOwHMsJ8lTxqrFumpQHM
- 9XhWDUCuYD0egeM+81nSgB9yuhhEu8zwsW4ogU1X3i2Kt6BXQpGXcmYBO48TzZQbP2ZE
- RUzw==
-X-Gm-Message-State: AOJu0YzVufZFnbQWhYS9Irrfl4zOm4DuTMW7LnzPZ8ZyQb7N9EWFK/aD
- m3QmX1fR6EizkvVDzJ+YM544enHYs15XMV4AuujQ2oDigPEFhYzslk9EMeeZC+g3rJWJAmhO/gb
- FpiNbn6h3f8Uq0P12l+v1e/SMxctxzgom0C3r2wReuFRBMIFCJuS2aJd5F9sWhY5wTRRsXVuR+y
- oz8tv88pc05l4/pq+pGCzqbC5KKSE=
-X-Gm-Gg: ASbGnctpN2eYYH7/1rrfQLHNu7kvm3ff3lHsMKs/Icu+aJ5u4n9BxN6lE4B1Ns/lBBV
- xkH97/dO9Q2XRU3mjD4bqdkx41fAshl0scaE34BD0lhlxHBppvBUz46iSe8PyyeJWXmDseGmAs/
- A=
-X-Received: by 2002:a5d:64c5:0:b0:38f:2413:2622 with SMTP id
- ffacd0b85a97d-39c1211b51cmr16998745f8f.47.1743665087992; 
- Thu, 03 Apr 2025 00:24:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHqs/UFhbEMba4qZZuopls69abuWulFLXSuxipeWvLjI1/ThMkGsGHfs1qwzGuZS++//ElRS0Pfhe7c75729k=
-X-Received: by 2002:a5d:64c5:0:b0:38f:2413:2622 with SMTP id
- ffacd0b85a97d-39c1211b51cmr16998724f8f.47.1743665087568; Thu, 03 Apr 2025
- 00:24:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u0F0R-0001mD-Lw
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 03:28:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1743665336; x=1775201336;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=GrCfaQFUC54J0kOTNsitpfCgrWLlREmRQDOWxJ1CPHo=;
+ b=i9G6HJLKq7iFYEF1b17dnDJjleyJlknSBzEugvL3hVaqzdSPYGQw/Xw8
+ rJeeH5mwR3gJODrpnSugvBNePc9UMQyKyh89W/FGPeuCubWR4wyA+TneM
+ a6ZUanE6dxn6O4IAS72Fa8DVva50KdcbNiB6CxJ2lfEUu+p0owl8p7eZR
+ TvQEHz/h9Ul3H8sNnT07XSMmnmQaVq/Vlts4rlijxUDN72hzVUDuIwHh9
+ h7VBG64up9be4Xu3cWw8/Ul9IXOgWpJWbPykDQClkfADOR19ATemZQytS
+ Ns4O7QkN6zImNRgMc7m+KMkw82BCfakfAAhsVrRx69KGz5MTJOYM2eViz w==;
+X-CSE-ConnectionGUID: sx1fOeNPSMKhsn8v+2QZHg==
+X-CSE-MsgGUID: OGaVFL9hSauuDYV6Jva7kQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11392"; a="44968582"
+X-IronPort-AV: E=Sophos;i="6.15,184,1739865600"; d="scan'208";a="44968582"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Apr 2025 00:28:53 -0700
+X-CSE-ConnectionGUID: 5T8DoO9USCmOPs6tGU8Hfg==
+X-CSE-MsgGUID: pk/bJ9amTOWMhdlfa9uW7g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,184,1739865600"; d="scan'208";a="157880579"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Apr 2025 00:28:46 -0700
+Message-ID: <a3a8ed8d-9994-42c9-ba3b-ef59d6977ce6@intel.com>
+Date: Thu, 3 Apr 2025 15:28:43 +0800
 MIME-Version: 1.0
-References: <20250318123846.1370312-1-ppandit@redhat.com>
- <87plhwgbu6.fsf@suse.de>
-In-Reply-To: <87plhwgbu6.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 3 Apr 2025 12:54:31 +0530
-X-Gm-Features: ATxdqUFIBi2fZj6G-XYCtMoVW0GTacCon38qWwP5CwtY724yu_5rvj9dDWwyyZg
-Message-ID: <CAE8KmOyS+nPexU_NbF0yhK_=ubnGgKs5Lv+j7bH=xowgqQ2zkA@mail.gmail.com>
-Subject: Re: [PATCH v8 0/7] Allow to enable multifd and postcopy migration
- together
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 49/65] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, kvm@vger.kernel.org, qemu-devel@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Claudio Fontana <cfontana@suse.de>,
+ Gerd Hoffmann <kraxel@redhat.com>, Isaku Yamahata
+ <isaku.yamahata@gmail.com>, Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20240229063726.610065-1-xiaoyao.li@intel.com>
+ <20240229063726.610065-50-xiaoyao.li@intel.com> <Zv7dtghi20DZ9ozz@redhat.com>
+ <0e15f14b-cd63-4ec4-8232-a5c0a96ba31d@intel.com>
+ <Z-1cm6cEwNGs9NEu@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z-1cm6cEwNGs9NEu@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.153,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,94 +101,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 1 Apr 2025 at 02:24, Fabiano Rosas <farosas@suse.de> wrote:
-> The postcopy/multifd/plain test is still hanging from time to time. I
-> see a vmstate load function trying to access guest memory and the
-> postcopy-listen thread already finished, waiting for that
-> qemu_loadvm_state() (frame #18) to return and set the
-> main_thread_load_event.
->
-> Thread 1 (Thread 0x7fbc4849df80 (LWP 7487) "qemu-system-x86"):
-> #0  __memcpy_evex_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:274
-> #1  0x0000560b135103aa in flatview_read_continue_step (attrs=..., buf=0x560b168a5930 "U\252\022\006\016\a1\300\271", len=9216, mr_addr=831488, l=0x7fbc465ff980, mr=0x560b166c5070) at ../system/physmem.c:3056
-> #2  0x0000560b1351042e in flatview_read_continue (fv=0x560b16c606a0, addr=831488, attrs=..., ptr=0x560b168a5930, len=9216, mr_addr=831488, l=9216, mr=0x560b166c5070) at ../system/physmem.c:3073
-> #3  0x0000560b13510533 in flatview_read (fv=0x560b16c606a0, addr=831488, attrs=..., buf=0x560b168a5930, len=9216) at ../system/physmem.c:3103
-> #4  0x0000560b135105be in address_space_read_full (as=0x560b14970fc0 <address_space_memory>, addr=831488, attrs=..., buf=0x560b168a5930, len=9216) at ../system/physmem.c:3116
-> #5  0x0000560b135106e7 in address_space_rw (as=0x560b14970fc0 <address_space_memory>, addr=831488, attrs=..., buf=0x560b168a5930, len=9216, is_write=false) at ../system/physmem.c:3144
-> #6  0x0000560b13510848 in cpu_physical_memory_rw (addr=831488, buf=0x560b168a5930, len=9216, is_write=false) at ../system/physmem.c:3170
-> #7  0x0000560b1338f5a5 in cpu_physical_memory_read (addr=831488, buf=0x560b168a5930, len=9216) at qemu/include/exec/cpu-common.h:148
-> #8  0x0000560b1339063c in patch_hypercalls (s=0x560b168840c0) at ../hw/i386/vapic.c:547
-> #9  0x0000560b1339096d in vapic_prepare (s=0x560b168840c0) at ../hw/i386/vapic.c:629
-> #10 0x0000560b13390e8b in vapic_post_load (opaque=0x560b168840c0, version_id=1) at ../hw/i386/vapic.c:789
-> #11 0x0000560b135b4924 in vmstate_load_state (f=0x560b16c53400, vmsd=0x560b147c6cc0 <vmstate_vapic>, opaque=0x560b168840c0, version_id=1) at ../migration/vmstate.c:234
-> #12 0x0000560b132a15b8 in vmstate_load (f=0x560b16c53400, se=0x560b16893390) at ../migration/savevm.c:972
-> #13 0x0000560b132a4f28 in qemu_loadvm_section_start_full (f=0x560b16c53400, type=4 '\004') at ../migration/savevm.c:2746
-> #14 0x0000560b132a5ae8 in qemu_loadvm_state_main (f=0x560b16c53400, mis=0x560b16877f20) at ../migration/savevm.c:3058
-> #15 0x0000560b132a45d0 in loadvm_handle_cmd_packaged (mis=0x560b16877f20) at ../migration/savevm.c:2451
-> #16 0x0000560b132a4b36 in loadvm_process_command (f=0x560b168c3b60) at ../migration/savevm.c:2614
-> #17 0x0000560b132a5b96 in qemu_loadvm_state_main (f=0x560b168c3b60, mis=0x560b16877f20) at ../migration/savevm.c:3073
-> #18 0x0000560b132a5db7 in qemu_loadvm_state (f=0x560b168c3b60) at ../migration/savevm.c:3150
-> #19 0x0000560b13286271 in process_incoming_migration_co (opaque=0x0) at ../migration/migration.c:892
-> #20 0x0000560b137cb6d4 in coroutine_trampoline (i0=377836416, i1=22027) at ../util/coroutine-ucontext.c:175
-> #21 0x00007fbc4786a79e in ??? () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:103
->
->
-> Thread 10 (Thread 0x7fffce7fc700 (LWP 11778) "mig/dst/listen"):
-> #0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
-> #1  0x000055555614e33f in qemu_futex_wait (f=0x5555576f6fc0, val=4294967295) at qemu/include/qemu/futex.h:29
-> #2  0x000055555614e505 in qemu_event_wait (ev=0x5555576f6fc0) at ../util/qemu-thread-posix.c:464
-> #3  0x0000555555c44eb1 in postcopy_ram_listen_thread (opaque=0x5555576f6f20) at ../migration/savevm.c:2135
-> #4  0x000055555614e6b8 in qemu_thread_start (args=0x5555582c8480) at ../util/qemu-thread-posix.c:541
-> #5  0x00007ffff72626ea in start_thread (arg=0x7fffce7fc700) at pthread_create.c:477
-> #6  0x00007ffff532158f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
->
-> Thread 9 (Thread 0x7fffceffd700 (LWP 11777) "mig/dst/fault"):
-> #0  0x00007ffff5314a89 in __GI___poll (fds=0x7fffc0000b60, nfds=2, timeout=-1) at ../sysdeps/unix/sysv/linux/poll.c:29
-> #1  0x0000555555c3be3f in postcopy_ram_fault_thread (opaque=0x5555576f6f20) at ../migration/postcopy-ram.c:999
-> #2  0x000055555614e6b8 in qemu_thread_start (args=0x555557735be0) at ../util/qemu-thread-posix.c:541
-> #3  0x00007ffff72626ea in start_thread (arg=0x7fffceffd700) at pthread_create.c:477
-> #4  0x00007ffff532158f in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:95
->
-> Breaking with gdb and stepping through the memcpy code generates a
-> request for a page that's seemingly already in the receivedmap:
->
-> (gdb) x/i $pc
-> => 0x7ffff5399d14 <__memcpy_evex_unaligned_erms+86>:    rep movsb %ds:(%rsi),%es:(%rdi)
-> (gdb) p/x $rsi
-> $1 = 0x7fffd68cc000
-> (gdb) si
-> postcopy_ram_fault_thread_request Request for HVA=0x7fffd68cc000 rb=pc.ram offset=0xcc000 pid=11754
-> // these are my printfs:
-> postcopy_request_page:
-> migrate_send_rp_req_pages:
-> migrate_send_rp_req_pages: mutex
-> migrate_send_rp_req_pages: received
->
-> // gdb hangs here, it looks like the page wasn't populated?
->
-> I've had my share of postcopy for the day. Hopefully you'll be able to
-> figure out what the issue is.
->
-> - reproducer (2nd iter already hangs for me):
->
-> $ for i in $(seq 1 9999); do echo "$i ============="; \
-> QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test \
-> --full -r /x86_64/migration/postcopy/multifd/plain || break ; done
->
-> - reproducer with traces and gdb:
->
-> $ for i in $(seq 1 9999); do echo "$i ============="; \
-> QTEST_TRACE="multifd_* -trace source_* -trace postcopy_* -trace savevm_* \
-> -trace loadvm_*" QTEST_QEMU_BINARY_DST='gdb --ex "handle SIGUSR1 \
-> noprint" --ex "run" --args ./qemu-system-x86_64' \
-> QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test \
-> --full -r /x86_64/migration/postcopy/multifd/plain || break ; done
+On 4/2/2025 11:49 PM, Daniel P. Berrangé wrote:
+> On Wed, Apr 02, 2025 at 11:26:11PM +0800, Xiaoyao Li wrote:
+>> Sorry for the late response.
+>>
+>> KVM part of TDX attestation support is submitting again. QEMU part will
+>> follow and we need to settle dowm this topic before QEMU patches submission.
+>>
+>> On 10/4/2024 2:08 AM, Daniel P. Berrangé wrote:
+>>> On Thu, Feb 29, 2024 at 01:37:10AM -0500, Xiaoyao Li wrote:
+>>>> From: Isaku Yamahata <isaku.yamahata@intel.com>
+>>>>
+>>>> Add property "quote-generation-socket" to tdx-guest, which is a property
+>>>> of type SocketAddress to specify Quote Generation Service(QGS).
+>>>>
+>>>> On request of GetQuote, it connects to the QGS socket, read request
+>>>> data from shared guest memory, send the request data to the QGS,
+>>>> and store the response into shared guest memory, at last notify
+>>>> TD guest by interrupt.
+>>>>
+>>>> command line example:
+>>>>     qemu-system-x86_64 \
+>>>>       -object '{"qom-type":"tdx-guest","id":"tdx0","quote-generation-socket":{"type": "vsock", "cid":"1","port":"1234"}}' \
+>>>>       -machine confidential-guest-support=tdx0
+>>>>
+>>>> Note, above example uses vsock type socket because the QGS we used
+>>>> implements the vsock socket. It can be other types, like UNIX socket,
+>>>> which depends on the implementation of QGS.
+>>>>
+>>>> To avoid no response from QGS server, setup a timer for the transaction.
+>>>> If timeout, make it an error and interrupt guest. Define the threshold of
+>>>> time to 30s at present, maybe change to other value if not appropriate.
+>>>>
+>>>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+>>>> Codeveloped-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>>>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+>>>> Codeveloped-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>
+>>>
+>>>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>>>> index 49f94d9d46f4..7dfda507cc8c 100644
+>>>> --- a/target/i386/kvm/tdx.c
+>>>> +++ b/target/i386/kvm/tdx.c
+>>>
+>>>> +static int tdx_handle_get_quote(X86CPU *cpu, struct kvm_tdx_vmcall *vmcall)
+>>>> +{
+>>>> +    struct tdx_generate_quote_task *task;
+>>>> +    struct tdx_get_quote_header hdr;
+>>>> +    hwaddr buf_gpa = vmcall->in_r12;
+>>>> +    uint64_t buf_len = vmcall->in_r13;
+>>>> +
+>>>> +    QEMU_BUILD_BUG_ON(sizeof(struct tdx_get_quote_header) != TDX_GET_QUOTE_HDR_SIZE);
+>>>> +
+>>>> +    vmcall->status_code = TDG_VP_VMCALL_INVALID_OPERAND;
+>>>> +
+>>>> +    if (buf_len == 0) {
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    /* GPA must be shared. */
+>>>> +    if (!(buf_gpa & tdx_shared_bit(cpu))) {
+>>>> +        return 0;
+>>>> +    }
+>>>> +    buf_gpa &= ~tdx_shared_bit(cpu);
+>>>> +
+>>>> +    if (!QEMU_IS_ALIGNED(buf_gpa, 4096) || !QEMU_IS_ALIGNED(buf_len, 4096)) {
+>>>> +        vmcall->status_code = TDG_VP_VMCALL_ALIGN_ERROR;
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    if (address_space_read(&address_space_memory, buf_gpa, MEMTXATTRS_UNSPECIFIED,
+>>>> +                           &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
+>>>> +        error_report("TDX: get-quote: failed to read GetQuote header.\n");
+>>>> +        return -1;
+>>>> +    }
+>>>> +
+>>>> +    if (le64_to_cpu(hdr.structure_version) != TDX_GET_QUOTE_STRUCTURE_VERSION) {
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    /*
+>>>> +     * Paranoid: Guest should clear error_code and out_len to avoid information
+>>>> +     * leak.  Enforce it.  The initial value of them doesn't matter for qemu to
+>>>> +     * process the request.
+>>>> +     */
+>>>> +    if (le64_to_cpu(hdr.error_code) != TDX_VP_GET_QUOTE_SUCCESS ||
+>>>> +        le32_to_cpu(hdr.out_len) != 0) {
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    /* Only safe-guard check to avoid too large buffer size. */
+>>>> +    if (buf_len > TDX_GET_QUOTE_MAX_BUF_LEN ||
+>>>> +        le32_to_cpu(hdr.in_len) > buf_len - TDX_GET_QUOTE_HDR_SIZE) {
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    vmcall->status_code = TDG_VP_VMCALL_SUCCESS;
+>>>> +    if (!tdx_guest->quote_generator) {
+>>>> +        hdr.error_code = cpu_to_le64(TDX_VP_GET_QUOTE_QGS_UNAVAILABLE);
+>>>> +        if (address_space_write(&address_space_memory, buf_gpa,
+>>>> +                                MEMTXATTRS_UNSPECIFIED,
+>>>> +                                &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
+>>>> +            error_report("TDX: failed to update GetQuote header.\n");
+>>>> +            return -1;
+>>>> +        }
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    qemu_mutex_lock(&tdx_guest->quote_generator->lock);
+>>>> +    if (tdx_guest->quote_generator->num >= TDX_MAX_GET_QUOTE_REQUEST) {
+>>>> +        qemu_mutex_unlock(&tdx_guest->quote_generator->lock);
+>>>> +        vmcall->status_code = TDG_VP_VMCALL_RETRY;
+>>>> +        return 0;
+>>>> +    }
+>>>> +    tdx_guest->quote_generator->num++;
+>>>> +    qemu_mutex_unlock(&tdx_guest->quote_generator->lock);
+>>>> +
+>>>> +    /* Mark the buffer in-flight. */
+>>>> +    hdr.error_code = cpu_to_le64(TDX_VP_GET_QUOTE_IN_FLIGHT);
+>>>> +    if (address_space_write(&address_space_memory, buf_gpa,
+>>>> +                            MEMTXATTRS_UNSPECIFIED,
+>>>> +                            &hdr, TDX_GET_QUOTE_HDR_SIZE) != MEMTX_OK) {
+>>>> +        error_report("TDX: failed to update GetQuote header.\n");
+>>>> +        return -1;
+>>>> +    }
+>>>> +
+>>>> +    task = g_malloc(sizeof(*task));
+>>>> +    task->buf_gpa = buf_gpa;
+>>>> +    task->payload_gpa = buf_gpa + TDX_GET_QUOTE_HDR_SIZE;
+>>>> +    task->payload_len = buf_len - TDX_GET_QUOTE_HDR_SIZE;
+>>>> +    task->hdr = hdr;
+>>>> +    task->quote_gen = tdx_guest->quote_generator;
+>>>> +    task->completion = tdx_get_quote_completion;
+>>>> +
+>>>> +    task->send_data_size = le32_to_cpu(hdr.in_len);
+>>>> +    task->send_data = g_malloc(task->send_data_size);
+>>>> +    task->send_data_sent = 0;
+>>>> +
+>>>> +    if (address_space_read(&address_space_memory, task->payload_gpa,
+>>>> +                           MEMTXATTRS_UNSPECIFIED, task->send_data,
+>>>> +                           task->send_data_size) != MEMTX_OK) {
+>>>> +        g_free(task->send_data);
+>>>> +        return -1;
+>>>> +    }
+>>>
+>>> In this method we've received "struct tdx_get_quote_header" from
+>>> the guest OS, and the 'hdr.in_len' field in that struct tells us
+>>> the payload to read from guest memory. This payload is treated as
+>>> opaque by QEMU and sent over the UNIX socket directly to QGS with
+>>> no validation of the payload.
+>>>
+>>> The payload is supposed to be a raw TDX report, that QGS will turn
+>>> into a quote.
+>>>
+>>> Nothing guarantees that the guest OS has actually given QEMU a
+>>> payload that represents a TDX report.
+>>>
+>>> The only validation done in this patch is to check the 'hdr.in_len'
+>>> was not ridiculously huge:
+>>>
+>>>        #define TDX_GET_QUOTE_MAX_BUF_LEN       (128 * 1024)
+>>>
+>>>        #define TDX_GET_QUOTE_HDR_SIZE          24
+>>>
+>>>        ...
+>>>        /* Only safe-guard check to avoid too large buffer size. */
+>>>        if (buf_len > TDX_GET_QUOTE_MAX_BUF_LEN ||
+>>>            le32_to_cpu(hdr.in_len) > buf_len - TDX_GET_QUOTE_HDR_SIZE) {
+>>>            return 0;
+>>>        }
+>>>
+>>> IOW, hdr.in_len can be any value between 0 and 131048, and
+>>> the payload data read can contain arbitrary bytes.
+>>>
+>>>
+>>> Over in the QGS code, QGS historically had a socket protocol
+>>> taking various messages from the libtdxattest library which
+>>> were defined in this:
+>>>
+>>>     https://github.com/intel/SGXDataCenterAttestationPrimitives/blob/main/QuoteGeneration/quote_wrapper/qgs_msg_lib/inc/qgs_msg_lib.h
+>>>
+>>>     typedef enum _qgs_msg_type_t {
+>>>       GET_QUOTE_REQ = 0,
+>>>       GET_QUOTE_RESP = 1,
+>>>       GET_COLLATERAL_REQ = 2,
+>>>       GET_COLLATERAL_RESP = 3,
+>>>       GET_PLATFORM_INFO_REQ = 4,
+>>>       GET_PLATFORM_INFO_RESP = 5,
+>>>       QGS_MSG_TYPE_MAX
+>>>     } qgs_msg_type_t;
+>>>
+>>>     typedef struct _qgs_msg_header_t {
+>>>       uint16_t major_version;
+>>>       uint16_t minor_version;
+>>>       uint32_t type;
+>>>       uint32_t size;              // size of the whole message, include this header, in byte
+>>>       uint32_t error_code;        // used in response only
+>>>     } qgs_msg_header_t;
+>>>
+>>> such messages are processed by the 'get_resp' method in QGS:
+>>>
+>>>     https://github.com/intel/SGXDataCenterAttestationPrimitives/blob/main/QuoteGeneration/quote_wrapper/qgs/qgs_ql_logic.cpp#L78
+>>>
+>>> The 1.21 release of DCAP introduced a new "raw" mode in QGS which
+>>> just receives the raw 1024 byte packet from the client which is
+>>> supposed to be a raw TDX report.  This is what this QEMU patch
+>>> is relying on IIUC.
+>>>
+>>>
+>>> The QGS daemon decides whether a client is speaking the formal
+>>> protocol, or "raw" mode, by trying to interpret the incoming
+>>> data as a 'qgs_msg_header_t' struct. If the header size looks
+>>> wrong & it has exactly 1024 bytes, then QGS assumes it has got
+>>> a raw TDX report:
+>>>
+>>>     https://github.com/intel/SGXDataCenterAttestationPrimitives/blob/main/QuoteGeneration/quote_wrapper/qgs/qgs_server.cpp#L165
+>>>
+>>> This all works if the data QEMU gets from the guest is indeed a
+>>> 1024 byte raw TDX report, but what happens if we face a malicious
+>>> guest ?
+>>>
+>>> AFAICT, the guest OS is able to send a "qgs_msg_header_t" packet
+>>> to QEMU, which QEMU blindly passes on to QGS. This allows the
+>>> guest OS to invoke any of the three QGS commands - GET_QUOTE_REQ,
+>>> GET_COLLATERAL_REQ, or GET_PLATFORM_INFO_REQ. Fortunately I think
+>>> those three messages are all safe to invoke, but none the less,
+>>> this should not be permitted, as it leaves a wide open door for
+>>> possible future exploits.
+>>>
+>>> As mentioned before, I don't know why this raw mode was invented
+>>> for QGS, when QEMU itself could just take the guest report and
+>>> pack it into the 'GET_QUOTE_REQ' message format and send it to
+>>> QGS. This prevents the guest OS from being able to exploit QEMU
+>>> to invoke arbirtary QGS messages.
+>>
+>> I guess the raw mode was introduced due to the design was changed to let
+>> guest kernel to forward to TD report to host QGS via TDVMCALL instead of
+>> guest application communicates with host QGS via vsock, and Linux TD guest
+>> driver doesn't integrate any QGS protocol but just forward the raw TD report
+>> data to KVM.
+>>
+>>> IMHO, QEMU should be made to pack & unpack the TDX report from
+>>> the guest into the GET_QUOTE_REQ / GET_QUOTE_RESP messages, and
+>>> this "raw" mode should be removed to QGS as it is inherantly
+>>> dangerous to have this magic protocol overloading.
+>>
+>> There is no enforcement that the input data of TDVMCALL.GetQuote is the raw
+>> data of TD report. It is just the current Linux tdx-guest driver of tsm
+>> implementation send the raw data. For other TDX OS, or third-party driver,
+>> they might encapsulate the raw TD report data with QGS message header. For
+>> such cases, if QEMU adds another layer of package, it leads to the wrong
+>> result.
+> 
+> If I look at the GHCI spec
+> 
+>    https://cdrdv2-public.intel.com/726790/TDX%20Guest-Hypervisor%20Communication%20Interface_1.0_344426_006%20-%2020230311.pdf
+> 
+> In "3.3 TDG.VP.VMCALL<GetQuote>", it indicates the parameter is a
+> "TDREPORT_STRUCT". IOW, it doesn't look valid to allow the guest to
+> send arbitrary other data as QGS protocol messages.
 
-* Thank you for the reproducer and traces. I'll try to check more and
-see if I'm able to reproduce it on my side.
+In table 3-7, the description of R12 is
 
-Thank you.
----
-  - Prasad
+   Shared GPA as input - the memory contains a TDREPORT_STRUCT.
+   The same buffer is used as output - the memory contains a TD Quote.
+
+table 3-10, describes the detailed format of the shared GPA:
+
+starting from offset 24 bytes, it is the "Data"
+
+   On input, the data filled by TD with input length. The data should
+   include TDREPORT_STRUCT. TD should zeroize the remaining buffer to
+   avoid information leak if size of shared GPA (R13) > Input Length.
+
+It uses the word "contains" and "include", but without "only". So it is 
+not clear to me.
+
+I will work with internal attestation folks to make it clearer that who 
+(TD guest or host VMM) is responsible to encapsulate the raw 
+TDERPORT_STRCUT with QGS MSG protocol, and update the spec accordingly.
+
+>> If we are going to pack the input data of GETQUOTE in QEMU, it becomes a
+>> hard requirement from QEMU that the input data of GETQUOTE must be raw data
+>> of TD report.
+> 
+> AFAICT it must be a raw TDREPORT_STRUCT per the spec and thus QEMU must not
+> allow anything different, as that exposes a significantly larger security
+> attack surface on the QGS daemon.
+> 
+> With regards,
+> Daniel
 
 
