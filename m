@@ -4,106 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2600C3601B
-	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:34:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2950EC3600C
+	for <qemu-devel@archiver.kernel.org>; Thu,  3 Apr 2025 20:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0RFq-0004Zo-10; Thu, 03 Apr 2025 16:33:39 -0400
+	id 1u0RFE-0003zL-RC; Thu, 03 Apr 2025 16:33:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1u0RFj-0004SY-9g; Thu, 03 Apr 2025 16:33:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1u0RFh-00045h-25; Thu, 03 Apr 2025 16:33:30 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 533HBcJa007394;
- Thu, 3 Apr 2025 20:33:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Ad5X7i
- yZcdKdfZDZgzgC3EvVAEElX+tmxjwceYlrqxc=; b=S8JS8/tAmiC04UWhctFiUL
- yfdcJw5yaIMNEnOb7/z+hxRIbD30P1kUAAYMoPeFfdbt+q0y5XsTDlt31NfJRjQY
- 9dV8TcqSDXDa94u5JHiRdCPa01LpDvQQfviLcaCqKudFzK2EjxVH9AchL1T0LcDR
- UnxIBbdju5atXFIu6AmrABl2qLKSNj9JB6kJEHxDEYz7ocP5cIh/KshGjwPCtZZt
- URVXo601pO/TPpjrtuAQba9+zwfQbvshRhaFayIQYW6VAEsEuwFZwLiRKPgGz8Xg
- QCwceqw3Wy0wqlV4MRDzNpBRTRK0o0JeGjrZsj21ZsvfEExfu5kmgB18hHI7XO1Q
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45sxgxgxv9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Apr 2025 20:33:22 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 533KLx6M019413;
- Thu, 3 Apr 2025 20:33:21 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45pu6texw2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 03 Apr 2025 20:33:21 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 533KXK5F27263506
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 3 Apr 2025 20:33:20 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 077CC5805C;
- Thu,  3 Apr 2025 20:33:20 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A431658054;
- Thu,  3 Apr 2025 20:33:18 +0000 (GMT)
-Received: from [9.61.240.223] (unknown [9.61.240.223])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  3 Apr 2025 20:33:18 +0000 (GMT)
-Message-ID: <d9e4feb3-351c-4c0b-8c8e-a5141e80ed5e@linux.ibm.com>
-Date: Thu, 3 Apr 2025 13:33:17 -0700
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RFC-0003z1-9H
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:32:58 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0RF9-00043E-7Z
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 16:32:56 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3913958ebf2so963043f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 13:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743712373; x=1744317173; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=A6+6tP0FDiD90XBJa6S5dJ//D1whWgsc0bfGPime3dk=;
+ b=WdJsw10kcAtx2pl0+Kv6rdoaSX+pyOt6a/bLlprdrdDP10qy0IfxRYFa8Cz+dPOA2k
+ 29GBzSxqd3ni9Fq7pNR5UC2dTWy5sCjMO45ikAtJlVwmvEJNgXfcFfWxFcCj8DK+euH5
+ qFVbfw/fUP16MGcDiF2Wbo5dHZH+26DSx2nJzG7OR654sqoEGrFaaX2yOrs5L2fiLKDe
+ LSPeVBftYa7lQU6sU1KurhRA4UPCfS4TUGLGHa3tng2LN2O6b2g4FR4V/7DZwoRQEYo2
+ T9ooDlKQlL0iAf114hIoQMSWyh+79z8+dYv0TKLIMPG8pLN8i2vQihE82L00TimkYS/J
+ R2Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743712373; x=1744317173;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=A6+6tP0FDiD90XBJa6S5dJ//D1whWgsc0bfGPime3dk=;
+ b=XeR3E76sXlot+MnA047sBuympN0PPyEB6MZy5ksS1qtarj6Xg1VnmcuZSePE0bYIoB
+ sgdOPOX/KqXZzaQG6JPtp+8LXcg5iZOGop5HqVtCOyOi8Xyoaa0WDG9t1GogBU+MO89G
+ drN3fMIvU+hw0b3YkIVuqAq3JfJTFqVRjbPhnH3A/K+RF7u2skakKRw+BvYEq4agmgfC
+ TRHF73hwZxfJ+m+T6S+OACcI3nxbCXz8ZJt8ZGc5hO07dRV8zkn0UuPKehx3jrBhDLtJ
+ tHtQFQOKRLQd5IVC1hJi3K6PL1CaU/wpjMvnBuxzo+NPv8KjGWIieHvm+WUMLXHSRgfw
+ dGmw==
+X-Gm-Message-State: AOJu0YyudKRFOEq1pkn/UekMfD8Hgo1Qu16TYX38uoS66TFmHys97ZHj
+ dKD//9KFEE832MQbQNP3egtSFDxPR7DtJ/s/LRzBJLUCFDlq5SxeH/J5x5PbLzhreMlsxLmWc0x
+ Y
+X-Gm-Gg: ASbGnctLO8P1DpOZXX6xhXv3/+TmMI0a0ZhNSbNHtcTqw+VfRW+BU5B1DPSjV9avTEH
+ 7bMUp19JAyEJ1vhv9rmIpCG5MIRZUfe04b+fHyWuv8+6YYItIGhVyrpLZn+yUwMLHKefZk7y3jl
+ wp7VtLkEjLYcC0KfYPs+xj31QU5ztS6LXyKYDgKHSeFqtbIf1DCjvpy3jNk4KJFWDK2xDWRSqc7
+ N7DBsNvV2rMhfB0VkGYlrJX3jD7TgylpnNCVzyvYxIaQHYCNWSyFTjxDB+qiucggcvftwS8rWuu
+ 2AYqJoVN0S1yHaUoML7cvp6W0xOyT3zlqXlj3BBP1Ij2okSTwh3O3HscEavQNNduQJ9RrxKsZzs
+ Yk0RGtaiagtB1Kn5WDJMG2FftFHObitS3+ls=
+X-Google-Smtp-Source: AGHT+IGWDmr/Jg9vuJcsGn9SC40GCpkw35f6RHeYWix9nSxFU5dnPplOgOjeQ9Yv3qFw5Nsnm5msbA==
+X-Received: by 2002:a5d:5d13:0:b0:39c:1f0b:8f6f with SMTP id
+ ffacd0b85a97d-39cb35a1821mr554968f8f.24.1743712373310; 
+ Thu, 03 Apr 2025 13:32:53 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c30226f1fsm2703680f8f.95.2025.04.03.13.32.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 03 Apr 2025 13:32:52 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH-for-10.0 v3 2/5] tests/functional: Add a decorator for
+ skipping tests on particular OS
+Date: Thu,  3 Apr 2025 22:32:38 +0200
+Message-ID: <20250403203241.46692-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250403203241.46692-1-philmd@linaro.org>
+References: <20250403203241.46692-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] Enable QEMU NVMe userspace driver on s390x
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Niklas Schnelle <schnelle@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, fam@euphon.net,
- philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com,
- thuth@redhat.com, mjrosato@linux.ibm.com,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20250401172246.2688-1-alifm@linux.ibm.com>
- <20250402155152.GE304512@fedora>
- <2c11a602415f0780030d4e68a28eee7ffcdd8cb7.camel@linux.ibm.com>
- <20250403154442.GA349582@fedora>
- <20250403102704.7e1f4452.alex.williamson@redhat.com>
- <2c244588-b37b-4e86-863e-ef462343edad@linux.ibm.com>
- <20250403120504.2f660171.alex.williamson@redhat.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20250403120504.2f660171.alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: z8WtcjLwPxUtDZ0V0D-1UM7IdkWM7qHa
-X-Proofpoint-GUID: z8WtcjLwPxUtDZ0V0D-1UM7IdkWM7qHa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-03_09,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 suspectscore=0 clxscore=1015
- adultscore=0 phishscore=0 bulkscore=0 impostorscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504030108
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,108 +108,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Since tests might be failing on some operating systems,
+introduce the skipIfOperatingSystem() decorator.
 
-On 4/3/2025 11:05 AM, Alex Williamson wrote:
-> On Thu, 3 Apr 2025 10:33:52 -0700
-> Farhan Ali <alifm@linux.ibm.com> wrote:
->
->> On 4/3/2025 9:27 AM, Alex Williamson wrote:
->>> On Thu, 3 Apr 2025 11:44:42 -0400
->>> Stefan Hajnoczi <stefanha@redhat.com> wrote:
->>>   
->>>> On Thu, Apr 03, 2025 at 09:47:26AM +0200, Niklas Schnelle wrote:
->>>>> On Wed, 2025-04-02 at 11:51 -0400, Stefan Hajnoczi wrote:
->>>>>> On Tue, Apr 01, 2025 at 10:22:43AM -0700, Farhan Ali wrote:
->>>>>>> Hi,
->>>>>>>
->>>>>>> Recently on s390x we have enabled mmap support for vfio-pci devices [1].
->>>>>> Hi Alex,
->>>>>> I wanted to bring this to your attention. Feel free to merge it through
->>>>>> the VFIO tree, otherwise I will merge it once you have taken a look.
->>>>>>
->>>>>> Thanks,
->>>>>> Stefan
->>>>>>       
->>>>>>> This allows us to take advantage and use userspace drivers on s390x. However,
->>>>>>> on s390x we have special instructions for MMIO access. Starting with z15
->>>>>>> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
->>>>>>> operate on virtually mapped PCI memory spaces, and can be used from userspace.
->>>>>>> On older platforms we would fallback to using existing system calls for MMIO access.
->>>>>>>
->>>>>>> This patch series introduces support the PCI MIO instructions, and enables s390x
->>>>>>> support for the userspace NVMe driver on s390x. I would appreciate any review/feedback
->>>>>>> on the patches.
->>>>>>>
->>>>>>> Thanks
->>>>>>> Farhan
->>>>> Hi Stefan,
->>>>>
->>>>> the kernel patch actually made it into Linus' tree for v6.15 already as
->>>>> commit aa9f168d55dc ("s390/pci: Support mmap() of PCI resources except
->>>>> for ISM devices") plus prerequisites. This went via the PCI tree
->>>>> because they included a change to struct pci_dev and also enabled
->>>>> mmap() on PCI resource files. Alex reviewed an earlier version and was
->>>>> the one who suggested to also enable mmap() on PCI resources.
->>>> The introduction of a new QEMU API for accessing MMIO BARs in this
->>>> series is something Alex might be interested in as QEMU VFIO maintainer.
->>>> That wouldn't have been part of the kernel patch review.
->>>>
->>>> If he's aware of the new API he can encourage other VFIO users to use it
->>>> in the future so that you won't need to convert them to work on s390x
->>>> again.
->>> I don't claim any jurisdiction over the vfio-nvme driver.  In general
->>> vfio users should be using either vfio_region_ops, ram_device_mem_ops,
->>> or directly mapping MMIO into the VM address space.  The first uses
->>> pread/write through the region offset, irrespective of the type of
->>> memory, the second provides the type of access used here where we're
->>> dereferencing into an mmap, and the last if of course the preferred
->>> mechanism where available.
->>>
->>> It is curious that the proposal here doesn't include any changes to
->>> ram_device_mem_ops for more generically enabling MMIO access on s390x.
->>> Thanks,
->>>
->>> Alex
->>
->> Hi Alex,
->>   From my understanding the ram_device_mem_ops sets up the BAR access for
->> a guest passthrough device. Unfortunately today an s390x KVM guest
->> doesn't use and have support for these MIO instructions. We wanted to
->> use this series as an initial test vehicle of the mmap support.
-> Right, ram_device_mem_ops is what we'll use to access a BAR that
-> supports mmap but for whatever reason we're accessing it directly
-> through the mmap.  For instance if an overlapping quirk prevents the
-> page from being mapped to the VM or we have some back channel mechanism
-> where the VMM is interacting with the BAR.
->
-> I bring it up here because it's effectively the same kind of access
-> you're adding with these helpers and would need to be addressed if this
-> were generically enabling vfio mmap access on s390x.
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/functional/qemu_test/__init__.py   |  2 +-
+ tests/functional/qemu_test/decorators.py | 15 ++++++++++++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-On s390x the use of the MIO instructions is limited to only PCI access. 
-So i am not sure if we should generically apply this to all vfio mmap 
-access (for non PCI devices).
-
-
->
-> Prior to commit 2b8fe81b3c2e ("system/memory: use ldn_he_p/stn_he_p")
-> the mmio helpers here might have been a drop-in replacement for the
-> dereferencing of mmap offsets, but something would need to be done
-> about the explicit PCI assumption introduced here and the possibility
-> of unaligned accesses that the noted commit tries to resolve.  Thanks,
->
-> Alex
-
-AFAICT in qemu today the ram_device_mem_ops is used for non PCI vfio 
-mmap cases. For s390x these helpers should be restricted to PCI 
-accesses. For the unaligned accesses (thanks for pointing out that 
-commmit!), are you suggesting we use the ld*_he_p/st*_he_p functions in 
-the helpers i defined? Though those functions don't seem to be doing 
-volatile accesses.
-
-Thanks
-
-Farhan
-
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+index 45f7befa374..af41c2c6a22 100644
+--- a/tests/functional/qemu_test/__init__.py
++++ b/tests/functional/qemu_test/__init__.py
+@@ -15,6 +15,6 @@
+ from .linuxkernel import LinuxKernelTest
+ from .decorators import skipIfMissingCommands, skipIfNotMachine, \
+     skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
+-    skipIfMissingImports
++    skipIfMissingImports, skipIfOperatingSystem
+ from .archive import archive_extract
+ from .uncompress import uncompress
+diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
+index 1651eb739a7..50d29de533d 100644
+--- a/tests/functional/qemu_test/decorators.py
++++ b/tests/functional/qemu_test/decorators.py
+@@ -5,7 +5,7 @@
+ import importlib
+ import os
+ import platform
+-from unittest import skipUnless
++from unittest import skipIf, skipUnless
+ 
+ from .cmd import which
+ 
+@@ -26,6 +26,19 @@ def skipIfMissingCommands(*args):
+     return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
+                                 ", ".join(args))
+ 
++'''
++Decorator to skip execution of a test if the current
++host operating system does match one of the prohibited
++ones.
++Example
++
++  @skipIfOperatingSystem("Linux", "Darwin")
++'''
++def skipIfOperatingSystem(*args):
++    return skipIf(platform.system() in args,
++                  'running on an OS (%s) that is not able to run this test' %
++                  ", ".join(args))
++
+ '''
+ Decorator to skip execution of a test if the current
+ host machine does not match one of the permitted
+-- 
+2.47.1
 
 
