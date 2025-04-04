@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDB2C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EE32C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0W5t-0001nd-0b; Thu, 03 Apr 2025 21:43:41 -0400
+	id 1u0W9M-0002h7-AS; Thu, 03 Apr 2025 21:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0W5s-0001nR-AH; Thu, 03 Apr 2025 21:43:40 -0400
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ id 1u0W9K-0002go-CL; Thu, 03 Apr 2025 21:47:14 -0400
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0W5q-0005i7-Fh; Thu, 03 Apr 2025 21:43:39 -0400
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-86fea8329cdso1422442241.1; 
- Thu, 03 Apr 2025 18:43:37 -0700 (PDT)
+ id 1u0W9I-00061G-5o; Thu, 03 Apr 2025 21:47:13 -0400
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-86d6fd581f4so2231774241.1; 
+ Thu, 03 Apr 2025 18:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743731017; x=1744335817; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743731231; x=1744336031; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ehxx99rmBnlEk9OR1sdpI1+1VPwZPvgYZq1iMISYvbU=;
- b=PBDkdSUopgBlnWJR/uQRC10n+AiIl8imifD3akKX9NtRgoo0XDvNOfUFNPxvTluWgx
- 6nwCPH/4uJVV5fRW7zBZZ0pX7lRQw480y5W56acTqYxAh9Oil287NNhChyTWfo9yS6IF
- qXsgd91Hw2G/jScP5kurv8STm3COhCIQ3kcdeX51JVzBG3j8vNOwRYhRLvpY29B82aZD
- P3kvHm7bkXto+81IMxhUqJcO+ePsdVIroMp2jiG2XQM1LRA1zx9/hUknKCQfCz2NsSDY
- o+I/EWWJ0pIbpmMLbDpghALru8sOi/HhoLpmT/mowFaBGGd1Hca2xjDPjqToPcjBEaOS
- MlPQ==
+ bh=Kzvgtvlzoow10HY5mV55hqeVI6sqbm+j+bfoLPR/5mQ=;
+ b=LBlNjOb8oQc6rB7R/nwciBtitqXWjOZA/CFkbSkxIUqkBdsa2KBQCOC0HQTZSWjz7N
+ PsmwuMwYKXFde0moo/sG46Ay2vyrta6fSn4EYs0ErgjEYVDjmKIgIpea+9cDs4WsTNxU
+ 9EJMWHeylXsBAESeay/LAjOctk7CCbFAdG0hnRSGeny/u89184YTKA6u/uR0fIyYl264
+ tlDXgdQQ/3PkOTF4mg5oRyb4s9PVsBy5lTVmuC8tZAHypdNj8wQ2RNk1N+zaE89ERml8
+ CDUTKA/Yxw66YYjnrT0Ziw5gVGdKcepUqFV2XpjQTjmWH/GpCMhSPZqDpaJ46oh9DA+R
+ /3SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743731017; x=1744335817;
+ d=1e100.net; s=20230601; t=1743731231; x=1744336031;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ehxx99rmBnlEk9OR1sdpI1+1VPwZPvgYZq1iMISYvbU=;
- b=YHuFWbn2l3tMtZc0jbpZTJZb07cT2whO3ykvMiY84CHesoLUm6sxdlzaO73pbmbnJI
- HA9N8Mvf9cumMshqlSbq9gQJHsbxxiE9uRFEfEo5akNo/E/bxmXh1KkA2eI6kPKfOXLF
- 7wCkdY2fmWApjPV5uqhUMeg/gJSw92//7eVbcbfF1YSev4HsPHvjdhJnVR2MDdDuyfER
- dkrBdXVCgHZVtFwYRWEfYE+VP4jTapzMuUFeLjmsTuDHt4K+2nES6kQFS1nlrD+Lpmcw
- bOX6pjwHQe9+dawjxN6iaeLZYuwTELH1VkLaH08gwFrF25WmXybS8Rc43dJSu1wUBGIA
- Axaw==
+ bh=Kzvgtvlzoow10HY5mV55hqeVI6sqbm+j+bfoLPR/5mQ=;
+ b=SXhCb1ciSkfkXESLUztGCxPRJDsEEABDE5JfppCvGUFzMzctwYZgz/Ivu/o7pFkWOM
+ RWiTX5aVpHZeY8OMOsky+it1PxJbc3Zz8GjkTeBYjGblUhbLNZDp5JrtejSieNPCdIB+
+ xDhQfVuqUgURj8ikN0OzHcWyKeWnnFec2QwoIlZsdTj+NF+KTg1Q9roVP7ty4nt/ceeY
+ w5IE/9pTt7U9XkRzonUaw922wJG3QBUPZx8+zrul100VX5H7oYJIinZK6OBrki9sxJsL
+ cLR9onjh0SkRFnfduzK1wGTWMubH7PkLllVV/BwHZDkgVyzp+TPh5C4b6GE3fW6TnQQZ
+ 9gmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3D/jmDnEZuAot0L7SIy4ivwsE7tiXey79w7hwsAPXJMSJC0u5gpowlOa6w55f4FpFmafl0ObYh+zl@nongnu.org
-X-Gm-Message-State: AOJu0YwYiBPEVPBzyZRPwyrf8T+gv3UGCk+0ERXjBwv/dtpbQLaEE8Wi
- 8zrkdpWizTgChn6wt9tGwSY5E2yBzSt4yugCMxlFtdVUruqG8sHhDJJIkTeFHxME4UGRq8j08NZ
- sZcJy+ocVrZmxiExhyvq0bwc0MHI=
-X-Gm-Gg: ASbGncuObG4RERmfDpbVYn9YHvY2T4o1PquQBubjMUuewRaB9we7/yFq5IrFbWRk6AE
- RtvJ3oe3M+1v+jfyj7EUx/cJ98wCahzaDV8OsmyIGuvLVnV1KS84HvXkVj/vw72H+eXC0sX2PcV
- 4qTQOAY1/yFIDlA72Prklg++zi2RDqM6wwsqrr4bvj0fxUVVPWG0zLf+VI
-X-Google-Smtp-Source: AGHT+IGF3Fff2y+WZjK7CUQaZc9LJATfCELIOMF/vIQhQBxSrDF3/T+NTirapLYwCyGSQjM80TWQhiJYHV01dbC2vVc=
-X-Received: by 2002:a05:6102:38ce:b0:4c1:94df:9aea with SMTP id
- ada2fe7eead31-4c8553e5196mr1465011137.15.1743731016727; Thu, 03 Apr 2025
- 18:43:36 -0700 (PDT)
+ AJvYcCXTqzZZroj8DMTel4LqHau7TepB4poWIJ731zjq4GjL2xD8gXFT/zu0LtwSOpgkj6xqbVNw4pqmFAX5@nongnu.org
+X-Gm-Message-State: AOJu0YxdwjKkLvRSwUH53FwW5UmgRHSqPuos5GP/nO5UxHM+UX0DetZL
+ 7dbJQkFkP/BpVmusM2ZbFSMPLcUf7M44wuG+PqJdIZvu8BkymRyhxj9pijXmZwl5Pby7xM8K1xv
+ QbUkG2aXzt/oW9g8roBYtuGh8HJk=
+X-Gm-Gg: ASbGncut+JPFiY7Majl96QEDOea92yJ1jOljoKFbN+wKhewFPFEVh8af+iyAydtjHPo
+ AJUpRetSR/63M6mLIDU/+AanM+14IxSt7ZHOKvAuGajKo40BpFnohbDBi6PcJ5R7YH32jZWOnFL
+ 0HiRhmCV7GNk9oA8QezHEe37cGntJr0RJoLMFbQNRUH47xDzPw8uTOnGoj
+X-Google-Smtp-Source: AGHT+IEAxhkjolzRzVboc93m3Hj5HAmEleiMhHbKL1v8tBUuzmGxYWNt6ZtGTQVm175VVcm7CLpVOOf6VD18G1297UU=
+X-Received: by 2002:a67:e953:0:b0:4c3:64c0:8b14 with SMTP id
+ ada2fe7eead31-4c8459ee36cmr4298890137.3.1743731230711; Thu, 03 Apr 2025
+ 18:47:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250302091209.20063-1-jason.chien@sifive.com>
- <20250302091209.20063-4-jason.chien@sifive.com>
-In-Reply-To: <20250302091209.20063-4-jason.chien@sifive.com>
+References: <20250312155547.289642-1-paolo.savini@embecosm.com>
+In-Reply-To: <20250312155547.289642-1-paolo.savini@embecosm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Apr 2025 11:43:10 +1000
-X-Gm-Features: ATxdqUEZCKLyknhgF0NaocRD9zfv-w5OLWYH6d-0tAs3QmWvsFP9TAF1HSlKZKM
-Message-ID: <CAKmqyKO3iqjru7hd9d87LC-Qaeg5Wqb3Q5+_6oL55Y+Noy9a0A@mail.gmail.com>
-Subject: Re: [PATCH 3/3] hw/riscv/riscv_iommu: Remove the "bus" property
-To: Jason Chien <jason.chien@sifive.com>
+Date: Fri, 4 Apr 2025 11:46:44 +1000
+X-Gm-Features: ATxdqUE5b6UJywlwqlK-1XcMc2XyBxqKvsPSyXdy8Bf6dgSuZ3LglhLp659ZF6Y
+Message-ID: <CAKmqyKPQHkzNiR9rWn+6P-qsqE4ApB7epA2=t0C8NvwUdfLPmg@mail.gmail.com>
+Subject: Re: [PATCH 0/1 v2] [RISCV/RVV] Generate strided vector loads/stores
+ with tcg nodes.
+To: Paolo Savini <paolo.savini@embecosm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
+ Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ Helene Chelin <helene.chelin@embecosm.com>, 
+ Nathan Egge <negge@google.com>, Max Chou <max.chou@sifive.com>, 
+ Jeremy Bennett <jeremy.bennett@embecosm.com>, 
+ Craig Blackmore <craig.blackmore@embecosm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,78 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 2, 2025 at 7:13=E2=80=AFPM Jason Chien <jason.chien@sifive.com>=
- wrote:
+On Thu, Mar 13, 2025 at 1:57=E2=80=AFAM Paolo Savini <paolo.savini@embecosm=
+.com> wrote:
 >
-> This property was originally intended to set the bus number for non-root
-> endpoints. However, since the PCIe bus number is assigned and modified
-> at runtime, setting this property before software execution is incorrect.
-> Additionally, the property incorrectly assumes that all endpoints share
-> the same bus, whereas no such restriction exists.
+> Previous version:
 >
-> With the IOMMU now retrieving the latest device IDs from memory attribute=
-s,
-> there is no longer a need to set or update device IDs.
+> - PATCH v1: https://lore.kernel.org/all/20250211182056.412867-1-paolo.sav=
+ini@embecosm.com/
 >
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> Follwing the suggestion in the following review by Daniel Barboza:
+>
+> https://lore.kernel.org/all/9be2ecc4-fed3-4774-a921-259f36e23b1b@ventanam=
+icro.com/
+>
+> we simplified the emulation by tcg nodes of such a complex operation as s=
+trided
+> loads/stores by breaking it into two separate functions.
+> One function implements the loop that performs the main load/store operat=
+ion
+> with the supporting logic to address the vector elements with the right s=
+tride
+> and to fill with ones the inactive elements in the case of a load.
+> The second function implements the loop that sets to 1 the tail bytes if =
+we
+> are in a tail agnostic regime.
+>
+> Cc: Richard Handerson <richard.henderson@linaro.org>
+> Cc: Palmer Dabbelt <palmer@dabbelt.com>
+> Cc: Alistair Francis <alistair.francis@wdc.com>
+> Cc: Bin Meng <bmeng.cn@gmail.com>
+> Cc: Weiwei Li <liwei1518@gmail.com>
+> Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Cc: Helene Chelin <helene.chelin@embecosm.com>
+> Cc: Nathan Egge <negge@google.com>
+> Cc: Max Chou <max.chou@sifive.com>
+> Cc: Jeremy Bennett <jeremy.bennett@embecosm.com>
+> Cc: Craig Blackmore <craig.blackmore@embecosm.com>
+>
+>
+> Paolo Savini (1):
+>   [RISC-V/RVV] Generate strided vector loads/stores with tcg nodes.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  hw/riscv/riscv-iommu.c | 7 -------
->  hw/riscv/riscv-iommu.h | 1 -
->  2 files changed, 8 deletions(-)
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index b72ce8e6d0..1ca85b95ac 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1197,9 +1197,6 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUSt=
-ate *s, uint32_t devid)
->  {
->      RISCVIOMMUSpace *as;
+>  target/riscv/insn_trans/trans_rvv.c.inc | 323 ++++++++++++++++++++----
+>  1 file changed, 273 insertions(+), 50 deletions(-)
 >
-> -    /* FIXME: PCIe bus remapping for attached endpoints. */
-> -    devid |=3D s->bus << 8;
-> -
->      QLIST_FOREACH(as, &s->spaces, list) {
->          if (as->devid =3D=3D devid) {
->              break;
-> @@ -2261,9 +2258,6 @@ static MemTxResult riscv_iommu_trap_write(void *opa=
-que, hwaddr addr,
->          return MEMTX_ACCESS_ERROR;
->      }
->
-> -    /* FIXME: PCIe bus remapping for attached endpoints. */
-> -    devid |=3D s->bus << 8;
-> -
->      ctx =3D riscv_iommu_ctx(s, devid, 0, &ref);
->      if (ctx =3D=3D NULL) {
->          res =3D MEMTX_ACCESS_ERROR;
-> @@ -2498,7 +2492,6 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
->  static const Property riscv_iommu_properties[] =3D {
->      DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
->          RISCV_IOMMU_SPEC_DOT_VER),
-> -    DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
->      DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
->          LIMIT_CACHE_IOT),
->      DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index a31aa62144..655c0e71a8 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -34,7 +34,6 @@ struct RISCVIOMMUState {
->      /*< public >*/
->      uint32_t version;     /* Reported interface version number */
->      uint32_t pid_bits;    /* process identifier width */
-> -    uint32_t bus;         /* PCI bus mapping for non-root endpoints */
->
->      uint64_t cap;         /* IOMMU supported capabilities */
->      uint64_t fctl;        /* IOMMU enabled features */
 > --
-> 2.43.2
->
+> 2.34.1
 >
 
