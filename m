@@ -4,61 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B840DC369A2
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 19:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB82C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 20:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0mmN-0003SG-P9; Fri, 04 Apr 2025 15:32:39 -0400
+	id 1u0ncX-0003jP-Hy; Fri, 04 Apr 2025 16:26:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u0mmI-0003RE-GF; Fri, 04 Apr 2025 15:32:34 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u0mmB-0001Pv-KA; Fri, 04 Apr 2025 15:32:32 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:600c:0:640:a431:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4A481619F0;
- Fri,  4 Apr 2025 22:32:22 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:1220::1:20])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uVf6w50Fh0U0-R333O6RN; Fri, 04 Apr 2025 22:32:21 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1743795141;
- bh=f0V3XeMcHbP6wNnUYP6C9Mgw1A0isphy7SLWabfQjyg=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ClVLy7Oxi4DVfhHG8yTBmS2oU6pSHfASuzFDeflQxi7NDemhfkgId3KfAwAavOpgg
- 0+HFDl5mQ0rjgyu16CGYda7CCxVZy0sQ+6d6gCAxD2PgUCv3e43rvUzzPkjz5cFO9a
- qsiZkR7AAJLpqWbXMyzeUBPCq+q2kXU+purwif04=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- armbru@redhat.com, eblake@redhat.com, jsnow@redhat.com,
- devel@lists.libvirt.org, pkrempa@redhat.com, michael.roth@amd.com,
- pbonzini@redhat.com, vsementsov@yandex-team.ru
-Subject: [PATCH v2 1/2] qapi: synchronize jobs and block-jobs documentation
-Date: Fri,  4 Apr 2025 22:31:53 +0300
-Message-ID: <20250404193154.707145-2-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250404193154.707145-1-vsementsov@yandex-team.ru>
-References: <20250404193154.707145-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u0ncV-0003ix-PH
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 16:26:31 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u0ncO-0007m4-Uw
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 16:26:31 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C860B1F385;
+ Fri,  4 Apr 2025 20:26:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743798379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=81DisTSNMAFPiUwB6tyb2VFUV+gb/wlkzdSznIfbMbI=;
+ b=nigxdKPiVzPhRTYy7jQmkLyfcmITac21SLTHTrw+4s2BGa+ttQ2RhxMWZEgLUyA5lPdsxc
+ vGXZz/eH1jZCp//mrxGFPr+NSYIjBK/nrVYUTDRPcr3nMBWeGBj3fz8sNCvXwWDawPvlwI
+ TJLXGx8HjmUD5FsVonlxLiwuSf5hCRM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743798379;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=81DisTSNMAFPiUwB6tyb2VFUV+gb/wlkzdSznIfbMbI=;
+ b=8MISIcNVL/b7PLjP0jebttc/b/71QehNhEeK4vnPBbniqqzZ7utAwAjrDgIqFEf+jVBH8+
+ ioxEaScXTqEyUrCA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1743798379; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=81DisTSNMAFPiUwB6tyb2VFUV+gb/wlkzdSznIfbMbI=;
+ b=nigxdKPiVzPhRTYy7jQmkLyfcmITac21SLTHTrw+4s2BGa+ttQ2RhxMWZEgLUyA5lPdsxc
+ vGXZz/eH1jZCp//mrxGFPr+NSYIjBK/nrVYUTDRPcr3nMBWeGBj3fz8sNCvXwWDawPvlwI
+ TJLXGx8HjmUD5FsVonlxLiwuSf5hCRM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1743798379;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=81DisTSNMAFPiUwB6tyb2VFUV+gb/wlkzdSznIfbMbI=;
+ b=8MISIcNVL/b7PLjP0jebttc/b/71QehNhEeK4vnPBbniqqzZ7utAwAjrDgIqFEf+jVBH8+
+ ioxEaScXTqEyUrCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3AEC01364F;
+ Fri,  4 Apr 2025 20:26:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8G1dOmpA8GdpTQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 04 Apr 2025 20:26:18 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Prasad Pandit
+ <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, Marco Cavenati
+ <Marco.Cavenati@eurecom.fr>
+Subject: Re: [PATCH 1/4] migration/savevm: Add a compatibility check for
+ capabilities
+In-Reply-To: <875xjua4pe.fsf@suse.de>
+References: <20250327143934.7935-1-farosas@suse.de>
+ <20250327143934.7935-2-farosas@suse.de> <Z-Vms2l4jZ_eV-aa@redhat.com>
+ <875xjua4pe.fsf@suse.de>
+Date: Fri, 04 Apr 2025 17:26:16 -0300
+Message-ID: <87semnk713.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,183 +124,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Actualize documentation and synchronize it for commands which actually
-call the same functions internally.
+Fabiano Rosas <farosas@suse.de> writes:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- qapi/block-core.json | 59 +++++++++++++++++++++++++-------------------
- qapi/job.json        | 29 ++++++++++++++++++++--
- 2 files changed, 61 insertions(+), 27 deletions(-)
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>
+>> On Thu, Mar 27, 2025 at 11:39:31AM -0300, Fabiano Rosas wrote:
+>>> It has always been possible to enable arbitrary migration capabilities
+>>> and attempt to take a snapshot of the VM with the savevm/loadvm
+>>> commands as well as their QMP counterparts
+>>> snapshot-save/snapshot-load.
+>>>=20
+>>> Most migration capabilities are not meant to be used with snapshots
+>>> and there's a risk of crashing QEMU or producing incorrect
+>>> behavior. Ideally, every migration capability would either be
+>>> implemented for savevm or explicitly rejected.
+>>
+>> IMHO, this a prime example of why migration config shouldn't be held
+>> as global state, and instead passed as parameters to the commands
+>> that need them.  The snapshot-save/load commands would then only
+>> be able to accept what few settings are actually relevant, instead
+>> of inheriting any/all global migration state.
+>>
+>
+> Right, I remember we got caught around the fact that some migration
+> options are needed during runtime as well... but I don't remember the
+> details, let try to find that thread.
+>
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b1937780e1..d74a1f8b8b 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2956,13 +2956,14 @@
- #
- # Pause an active background block operation.
- #
--# This command returns immediately after marking the active background
--# block operation for pausing.  It is an error to call this command if
--# no operation is in progress or if the job is already paused.
-+# This command returns immediately after marking the active job for
-+# pausing.  Pausing an already paused job is an error.
-+#
-+# The job will pause as soon as possible, which means transitioning
-+# into the PAUSED state if it was RUNNING, or into STANDBY if it was
-+# READY.  The corresponding JOB_STATUS_CHANGE event will be emitted.
- #
--# The operation will pause as soon as possible.  No event is emitted
--# when the operation is actually paused.  Cancelling a paused job
--# automatically resumes it.
-+# Cancelling a paused job automatically resumes it.
- #
- # @device: The job identifier.  This used to be a device name (hence
- #     the name of the parameter), but since QEMU 2.7 it can have other
-@@ -2982,9 +2983,8 @@
- #
- # Resume an active background block operation.
- #
--# This command returns immediately after resuming a paused background
--# block operation.  It is an error to call this command if no
--# operation is in progress or if the job is not paused.
-+# This command returns immediately after resuming a paused job.
-+# Resuming an already running job is an error.
- #
- # This command also clears the error status of the job.
- #
-@@ -3004,10 +3004,14 @@
- ##
- # @block-job-complete:
- #
--# Manually trigger completion of an active background block operation.
--# This is supported for drive mirroring, where it also switches the
--# device to write to the target path only.  The ability to complete is
--# signaled with a BLOCK_JOB_READY event.
-+# Manually trigger completion of an active job in the READY or STANDBY
-+# state.  Completing the job in any other state is an error.
-+#
-+# This is supported only for drive mirroring (which includes
-+# drive-mirror, blockdev-mirror and block-commit job (only in case of
-+# "active commit", when the node being commited is used by the guest)),
-+# where it also switches the device to write to the target path only.
-+# The ability to complete is signaled with a BLOCK_JOB_READY event.
- #
- # This command completes an active background block operation
- # synchronously.  The ordering of this command's return with the
-@@ -3017,8 +3021,6 @@
- # rerror/werror arguments that were specified when starting the
- # operation.
- #
--# A cancelled or paused job cannot be completed.
--#
- # @device: The job identifier.  This used to be a device name (hence
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
-@@ -3035,10 +3037,12 @@
- ##
- # @block-job-dismiss:
- #
--# For jobs that have already concluded, remove them from the
--# block-job-query list.  This command only needs to be run for jobs
--# which were started with QEMU 2.12+ job lifetime management
--# semantics.
-+# Deletes a job that is in the CONCLUDED state.  This command only
-+# needs to be run explicitly for jobs that don't have automatic
-+# dismiss enabled. In turn, automatic dismiss may be enabled only
-+# for jobs that have @auto-dismiss option, which are drive-backup,
-+# blockdev-backup, drive-mirror, blockdev-mirror, block-commit and
-+# block-stream.
- #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, JOB_STATUS_CONCLUDED.  For jobs that
-@@ -3055,12 +3059,17 @@
- ##
- # @block-job-finalize:
- #
--# Once a job that has manual=true reaches the pending state, it can be
--# instructed to finalize any graph changes and do any necessary
--# cleanup via this command.  For jobs in a transaction, instructing
--# one job to finalize will force ALL jobs in the transaction to
--# finalize, so it is only necessary to instruct a single member job to
--# finalize.
-+# Instructs all jobs in a transaction (or a single job if it is not
-+# part of any transaction) to finalize any graph changes and do any
-+# necessary cleanup.  This command requires that all involved jobs are
-+# in the PENDING state.
-+#
-+# For jobs in a transaction, instructing one job to finalize will
-+# force ALL jobs in the transaction to finalize, so it is only
-+# necessary to instruct a single member job to finalize.
-+#
-+# The command is applicable only to jobs which have @auto-finalize option
-+# and only when this option is set to false.
- #
- # @id: The job identifier.
- #
-diff --git a/qapi/job.json b/qapi/job.json
-index cfc3beedd2..c8736f2a05 100644
---- a/qapi/job.json
-+++ b/qapi/job.json
-@@ -156,6 +156,9 @@
- # This command returns immediately after resuming a paused job.
- # Resuming an already running job is an error.
- #
-+# This command also clears the error status for block-jobs (stream,
-+# commit, mirror, backup).
-+#
- # @id: The job identifier.
- #
- # Since: 3.0
-@@ -184,7 +187,22 @@
- ##
- # @job-complete:
- #
--# Manually trigger completion of an active job in the READY state.
-+# Manually trigger completion of an active job in the READY or STANDBY
-+# state.  Completing the job in any other state is an error.
-+#
-+# This is supported only for drive mirroring (which includes
-+# drive-mirror, blockdev-mirror and block-commit job (only in case of
-+# "active commit", when the node being commited is used by the guest)),
-+# where it also switches the device to write to the target path only.
-+# The ability to complete is signaled with a BLOCK_JOB_READY event.
-+#
-+# This command completes an active background block operation
-+# synchronously.  The ordering of this command's return with the
-+# BLOCK_JOB_COMPLETED event is not defined.  Note that if an I/O error
-+# occurs during the processing of this command: 1) the command itself
-+# will fail; 2) the error will be processed according to the
-+# rerror/werror arguments that were specified when starting the
-+# operation.
- #
- # @id: The job identifier.
- #
-@@ -197,7 +215,11 @@
- #
- # Deletes a job that is in the CONCLUDED state.  This command only
- # needs to be run explicitly for jobs that don't have automatic
--# dismiss enabled.
-+# dismiss enabled. In turn, automatic dismiss may be enabled only
-+# for jobs that have @auto-dismiss option, which are drive-backup,
-+# blockdev-backup, drive-mirror, blockdev-mirror, block-commit and
-+# block-stream. And historically it's enabled by default for these
-+# jobs.
- #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, JOB_STATUS_CONCLUDED.  For jobs that
-@@ -222,6 +244,9 @@
- # force ALL jobs in the transaction to finalize, so it is only
- # necessary to instruct a single member job to finalize.
- #
-+# The command is applicable only to jobs which have @auto-finalize option
-+# and only when this option is set to false.
-+#
- # @id: The identifier of any job in the transaction, or of a job that
- #     is not part of any transaction.
- #
--- 
-2.48.1
+Found it: https://lore.kernel.org/r/ZVM5xmsaE41WJYgb@redhat.com
 
+I don't think it's *too* hard to start passing the configuration to
+qmp_migrate & friends. We just need to figure out a path for the
+compatibility.
+
+I'm thiking of:
+
+1) Unifying capabilities and parameters in a MigrationConfig
+structure. We take the opportunity to fix the tls options to 'str'
+instead of StrOrNull.
+
+2) Deprecate migrate-set-capabilities. There are no capabilities
+anymore.
+
+3) Deprecate migate-set-parameters. There are no parameters
+anymore. Alternatively, reuse the existing command, but have it take the
+additional capabilities as optional (everything else is already
+optional).
+
+4) Depending on what we do on (3), add a new migrate-set-config command
+that sets every option. All as optional. This would be nice because we
+wouldn't need to worry about breaking compat on the tls options, we just
+define the new command in the correct way.
+
+5) Add a {'*config': MigrationConfig} entry to qmp_migrate and
+migrate_set_{config|parameters}. Here is where I have questions, because
+ideally we'd have a way to limit the migrate_set_config command to only
+the options that can be set at runtime. But I can't see a way of doing
+that without the duplication of the options in the QAPI .json file. I'm
+inclined to allow the whole set of options and do some tracking on the
+side in options.c in the migration code.
+
+(same issue for savevm really. To allow it to (say) work with
+mapped-ram, we'd need a duplicate mapped-ram entry in migration.json)
+
+About (2) and (3). If we use this unified MigrationConfig, I can keep
+the old commands working (along with the query_* variants), by defining
+a compat function that converts from those commands specific format into
+the new format. But then there's the question of what do we do when a
+new capability/parameter comes along? Can we declare that the old
+commands will not see the new data and that's it? If there's no
+distinction between caps and params anymore, there isn't even a way to
+decide which command to use.
+
+>>> Add a compatibility check routine and reject the snapshot command if
+>>> an incompatible capability is enabled. For now only act on the the
+>>> two that actually cause a crash: multifd and mapped-ram.
+>>>=20
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2818
+>>
+>> Issue is 2881 not 2818                                   ^^^^^^^
+>>
+>
+> It seem that was your own C-t =3D)
+>
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>  migration/options.c | 26 ++++++++++++++++++++++++++
+>>>  migration/options.h |  1 +
+>>>  migration/savevm.c  |  8 ++++++++
+>>>  3 files changed, 35 insertions(+)
+>>
+>> With regards,
+>> Daniel
 
