@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB449C3601A
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E40C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0VVz-0006zB-Pm; Thu, 03 Apr 2025 21:06:35 -0400
+	id 1u0VYw-0008IC-KB; Thu, 03 Apr 2025 21:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0VVy-0006yW-H2; Thu, 03 Apr 2025 21:06:34 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u0VYv-0008Hu-Ea
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 21:09:37 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0VVx-0007g7-0Q; Thu, 03 Apr 2025 21:06:34 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-5242f137a1eso693527e0c.1; 
- Thu, 03 Apr 2025 18:06:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u0VYs-000815-UB
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 21:09:37 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-72d3b48d2ffso1654677b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 18:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743728791; x=1744333591; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1743728973; x=1744333773; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pTI2P2GLe9F/0v6fBX9O/GFysCKIWZ/L46PcvjWJJ4U=;
- b=Ix/Q969VRxMMiNCp+KrUTQKnEZuDuqDqDfZsGq6Mee1IUI4XyAGnGdB0JYwVafABpC
- 5Ykzh5khC5xqZjJz/S+etmFKNGufAgyOeaqHQLr4UFT94N11avfMra8TYdzrvQ9ddtaO
- CdJQJcD7JSFG/Mzbn1QzsxKuSUeMVPxkZxOoKr3VOcFy0SKKhbrXwNTNwwE9ac8b5MUQ
- pa9hdGxV0ytFo1Pb/381zqUFgoIXpKiWLJRQucmABAi+d0jOXwqeD2tlMWAOjta3XeOe
- 0LQAtYAy6nv7LJnR0eFzAowUpKKK9bc7fREDg+q7WhzbjWQWpCIen/pZQ4N3Vtk8jG//
- CddA==
+ bh=diH6J4hofBmrfzs6sIeDZ95DC3OrtgE6crTHghEG7+s=;
+ b=ABzPzSOXmfE4BFkJC8Cof5GE8klzGF4axLSMMviLuP/7yF63XE86fB0IzXxvyqGsp6
+ ZBUf5nmoa2VA2PqUeKHC1lZcHpRZuMvSS3Uqj7/m4GuTvWrXXUHKAjeKEoHCEr4va+6Q
+ l9BNgHDjdkZi4FFkdnhTgbbaRgZ5fCAvk7FxPIkmkSnKkX9/jePWYbTtDrcFugi2csjA
+ UTgsgbg9flpSw/79S8ddA0rYb7qcOhIwJ/MSp08rm4N1xfVapsMUaNshNCU+ZcMyxX2d
+ Fg7jN8kRnYZq93twHmm73cuNCF3bdo58w3UMU+4QblOqEpuyorSs2kzmR4SmOOLGR4qE
+ fajQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743728791; x=1744333591;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1743728973; x=1744333773;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pTI2P2GLe9F/0v6fBX9O/GFysCKIWZ/L46PcvjWJJ4U=;
- b=gUcayfd0oEETLUZUnPTyAk2F2ncVwPFk6zUPpfIerwRtUok4+fBXGiYBR/B0xzKB9H
- H/i61XIft3ZXoKLOMiqmSy+ZlZllVvlUOg6XVlnSsGe53iwS2rEd0eGpV3DZmu+8b5Zo
- oP1TDFUg0HdJQyQYNr2GkH2mpfqgvEjiji86qBP07OfraC+P/DjHV2mzqxu93uLHE0+f
- nFiHdo4U/73d8A9XYO/A/VEbbbZpEaLUD0gh1AoEYN6uuxHVUnu2vHzyOS9tM/X+LoBQ
- 1jbR8TmtWLD9mjNZSpQymz+g+cz2evrrwg6HWZSXAZ87dSl5EZxTARBFEcofGZQ1mHxt
- Quyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVikP24do5EqCj+vFKOg7p+y471s9BhzBLFYJVopIrZl5FoVtRms/8DBLIAbmAgnKXc00r5bPxBlKbd@nongnu.org
-X-Gm-Message-State: AOJu0YxEMZuNiAp23Q8vFrY/JIGVUU/wv2PUG/Fgg5K/x4Cv4D9saPhu
- zXb2/6n83QpWzxpeCpDottU8ssRFfVRsUmmY2QiAPwDDW+GRmvwxG1G458PA3tINUbLpoEMKmV2
- j4BrB0Nj2fCbUKafIlU5/sD3B0g3+xw==
-X-Gm-Gg: ASbGncsM4LKO3gxkS8fNE7/xz5yUXsQdGKXqoqkDOV0kTr0bCiRfLmE5SXocgbDKWEW
- Mv8M19uX7XJ7q4z4HbPo00ZVyKMXohmOs7qyZcCpK6RhOJfXFDviv9ysSEEIrHu1pDaHkhigrZl
- miT1OyXXip3tJcAeyx/BfyUzhUwCKsjRPKKOwKGUwiRMbz37js6dbJtOIC
-X-Google-Smtp-Source: AGHT+IGdxmybhTAvvjHlK7qBiyK3DI1X5QI8h7rf69sflbd3WQwexW3OtVr/xbUhTyrjmmz452PtH1ojWuOFgs3P84Y=
-X-Received: by 2002:a05:6122:659c:b0:520:3987:ce0b with SMTP id
- 71dfb90a1353d-5276443fba4mr1649440e0c.2.1743728790837; Thu, 03 Apr 2025
- 18:06:30 -0700 (PDT)
+ bh=diH6J4hofBmrfzs6sIeDZ95DC3OrtgE6crTHghEG7+s=;
+ b=MS1+N8FzMzrdD65sKxgZNqrjCt4sSFyH9YitaYh4x1kqJNCuUL79bqDtngh2jparii
+ ah7TEDs+hm0YNrVlXhls3fXiAHWupXHO5N5fAihcJjb3RUsHcvOtUQUOhse3bFJ/9u1H
+ pSowQyNN0Job0v55yW3MVIw9kHePAbfxw1KNdIqAUzeHRh/51/VZ486jYo4JVNjGYf94
+ IavBLaGdW5yLSXL7KjZRqMq4hThvsJXxvuSzSHXUduZRoki86yWuZTz9wXLrDpkChbBr
+ hwyB7ODdt/kUuyZVts2cq7n3dRiUWXmiaU/xnHT+NodIBCpFU0hTBRRs8Wa7PEiC7yl8
+ jh4A==
+X-Gm-Message-State: AOJu0YwJ6/Sc2sI3/7V9zXbjF8pHHabdXqnb3fterX0Q18Y6rvHMUk6E
+ +fHDGNskfxawbGCQQwGzUzicLUO9oEox8L3DeyQc0BnbHUNKm/4xU11bagY1AeIwVi1MQWym3ez
+ k
+X-Gm-Gg: ASbGncvWTAF76ic3HGZQFk5Yc0X8VwsU5GM/cxVsfgmCkLzWTn5/8C6ye7j7mu4/2mK
+ iKEreX7CD1IlSvU7+WLji8YU0yQki1kIjvXrw0ew9GkM74JmRb0nhkPmzxTXQBdx5xQntn52caU
+ 52lButRaFK1LOXyatDmcIKXggCtv6x1QMKbK9RikFT7tPw3caYhyJ9jdAd4IkO0X412mcMmsaZS
+ qzUhKSUsirCQoy9MQzhpoWFJuXCt6dDdsgvU6FD4ZGw6kaY/Jo3CIr+wd3gkUk4IVeXChn7mbVT
+ A9oxfI4Kkt3WVffgP9984vL0tiAXJxa1y7tu+Yjwlug1AiqtGzg=
+X-Google-Smtp-Source: AGHT+IFHAJWsn0/232DMzmabORd90A1qyfzVFI0jo9fJEJ23sQJaR/n1PYuoo1Jprzp67CAbrIXHcQ==
+X-Received: by 2002:a05:6a00:228e:b0:736:62a8:e52d with SMTP id
+ d2e1a72fcca58-739e4b5c16fmr2348934b3a.12.1743728973165; 
+ Thu, 03 Apr 2025 18:09:33 -0700 (PDT)
+Received: from stoup.. ([75.147.178.105]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d97ee2d9sm2171755b3a.39.2025.04.03.18.09.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Apr 2025 18:09:32 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Helge Konetzka <hk@zapateado.de>
+Subject: [PULL 1/6] tcg: Allocate TEMP_VAL_MEM frame in temp_load()
+Date: Thu,  3 Apr 2025 18:09:25 -0700
+Message-ID: <20250404010930.164329-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250404010930.164329-1-richard.henderson@linaro.org>
+References: <20250404010930.164329-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20250313193011.720075-1-loic@rivosinc.com>
- <20250313193011.720075-6-loic@rivosinc.com>
-In-Reply-To: <20250313193011.720075-6-loic@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Apr 2025 11:06:04 +1000
-X-Gm-Features: ATxdqUHRylB0up0p1FsrDmDLBZZxAZDtoWBEWgCvPle0NKaPxXVAsO4Wue9hWAM
-Message-ID: <CAKmqyKPmu4D+_mbsG7U8yHtmH79ZoBuzkpTGBYVhUQ=QprJ_gg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] target/riscv: pmp: remove redundant check in
- pmp_is_locked
-To: =?UTF-8?B?TG/Dr2MgTGVmb3J0?= <loic@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,43 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 14, 2025 at 5:35=E2=80=AFAM Lo=C3=AFc Lefort <loic@rivosinc.com=
-> wrote:
->
-> Remove useless check in pmp_is_locked, the function will return 0 in eith=
-er
-> case.
->
-> Signed-off-by: Lo=C3=AFc Lefort <loic@rivosinc.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Be sure to allocate the temp frame if it wasn't.
 
-Alistair
+In the resolved issues, incomplete dead code elimination left a load
+at the top of an unreachable loop.  We simply need to allocate the
+stack slot to avoid crashing.
 
-> ---
->  target/riscv/pmp.c | 5 -----
->  1 file changed, 5 deletions(-)
->
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index 845915e0c8..c685f7f2c5 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -58,11 +58,6 @@ static inline int pmp_is_locked(CPURISCVState *env, ui=
-nt32_t pmp_index)
->          return 1;
->      }
->
-> -    /* Top PMP has no 'next' to check */
-> -    if ((pmp_index + 1u) >=3D MAX_RISCV_PMPS) {
-> -        return 0;
-> -    }
-> -
->      return 0;
->  }
->
-> --
-> 2.47.2
->
->
+Fixes: c896fe29d6c ("TCG code generator")
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Reported-by: Helge Konetzka <hk@zapateado.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2891
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2899
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250401144332.41615-1-philmd@linaro.org>
+---
+ tcg/tcg.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index e8950df2ad..dfd48b8264 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -4671,6 +4671,9 @@ static void temp_load(TCGContext *s, TCGTemp *ts, TCGRegSet desired_regs,
+         ts->mem_coherent = 0;
+         break;
+     case TEMP_VAL_MEM:
++        if (!ts->mem_allocated) {
++            temp_allocate_frame(s, ts);
++        }
+         reg = tcg_reg_alloc(s, desired_regs, allocated_regs,
+                             preferred_regs, ts->indirect_base);
+         tcg_out_ld(s, ts->type, reg, ts->mem_base->reg, ts->mem_offset);
+-- 
+2.43.0
+
 
