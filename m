@@ -4,109 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127D6C3601A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EACF7C36014
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0hBy-0000pn-8A; Fri, 04 Apr 2025 09:34:42 -0400
+	id 1u0hBT-0000ZQ-N8; Fri, 04 Apr 2025 09:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1u0h3a-0007by-6Y
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:26:02 -0400
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u0hBQ-0000Y2-W3
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:34:09 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1u0h3Y-0006ne-56
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:26:01 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433wiT012515
- for <qemu-devel@nongnu.org>; Fri, 4 Apr 2025 13:25:56 GMT
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u0hBO-0008PZ-Gn
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:34:08 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 534899EP006483
+ for <qemu-devel@nongnu.org>; Fri, 4 Apr 2025 13:34:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=bDuzMjiRfhY
- 8qqWwbxci97RbTv25bs4o+U0P5+qscwA=; b=Sy8sPAn4B6C5Hr55psIBJbM+aZp
- CIGcJ7aAEIuz1rH+99r6kXxygdfolFhFRNb1y1gWRVYGXgjBoYbxWwwBQJxtN7SD
- jdJpElMzk1ItC8pzVHMuVII1ACl9KNqHgKV8m9PSS+AytP/qeOp+gYF/oWC6asXb
- PDskowYBEAuE6MlpImFehaT/WjRVtoTfvZ/ZwShG1M9oeOsAK7ozAzjRPoyetErJ
- vaino5jNFHKdvXw5YK6IYmJkj9MEEQXv8lQHFXPj6sDQ6gAzgZIg6cwNiw6EhD93
- DXkXt6yS84utemXLeRx80yCGBU3ZJbyCdB4avf9rhTKlNB7sJWAB8v0sfSA==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d51w0h-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ kSrs90+dbGeVXwtoRu+wVayI6xNrjNLn/Ow05ZVxcmk=; b=ma3zgp/QQUhtMYBc
+ TH1NBW7Sld7hj01J9HtcI76396KdjsWfQKUMqZdZ61LjhA+l1rvO9dPMmTN+es/c
+ snnSqsfR+0QKcKyH2VFxhwK0Bv2I4xEmoGecIQ6yxQpJ+8WYI+/lubw1/nmnrFun
+ khmzilf9WivHe9FJ8GntVcrsWI4/wgIXIspu2UGNxFwdiTPB0WKnod9gxxyJPJdQ
+ K6EP7UuaCcxzodsxoF02m80AY4QRxykl2Wc3sjRH9BJyRv6o5mkj6P9ZM9yXt5yB
+ 44e90u6sIMkQ0WaE8S1h6Z0K3Ag1UnNG922P1R/BJLSsQ1hnlxqnLczFIXPck6Sr
+ 9fq7Sg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45tbnkrsmc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 13:25:56 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-af972dd0cd6so1450486a12.1
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:25:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 13:34:04 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-73691c75863so2581525b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:34:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743773155; x=1744377955;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bDuzMjiRfhY8qqWwbxci97RbTv25bs4o+U0P5+qscwA=;
- b=eNJI5TZigpcFUx4uoqyoHAWjuYM2yoABUNSeD7QdCYmKf1zpk//K32TVAeAMfD2jVb
- un9tTNsIDQzeqvcGxzFS8rBG3qwRqTdW3U1fNjZg9qB85YRwSuujnUnFvZLLgIMB9Teu
- jvKjfz84UbLYulyqpoAy8akXDHi4TIxfIu06UFWrLR7X1yznzLoaG4D5xXLcZjbku8VJ
- gdW0z85s/HWbI/CWdpg9pKhe+NGP+Kmwpdx6elTCT+GvPfAcOatBr92k7ppFP1SEpfHL
- aOwluRA41/425TmpCNk/kq4aNaL9OXdZCG7pVoZEsvHZCZ4Wvdr9epdnX4fUrUggy/lG
- 0dDw==
-X-Gm-Message-State: AOJu0Yx1BLdkfil6zRX1B559dRECat/6AXxBqGZPZR8ttpFPPEOPmAlN
- +4pKrVE2cibskTPZ5R6KJaBesw9LouyYbQRpPntyyHhxYTSul1v+YyqCf3gqYMpo0KeXFnpT6Bl
- 2SWO1n2oOUIwmCO/oEDSEkOYWvD71J1a2MBfKLf9k/ga6nGww1Pj8qw==
-X-Gm-Gg: ASbGncuy8rGYNiTWq/Cb75UjEi9nzAjg3xuYSw8Z2jSfe4JQG2GeWtMEzZ3CO7lW1YW
- 4OEDhZccRyk+MHpFtsgldjE74sD/kXjHHPLUnyDJ+F3e78Jc2cfux/gShF/u9gHgHr7pTg1pCWQ
- KnbEjrDCqNyBwTkmjV1eGzqzTsWZBSIAtq5jxJKHm0P026b6Ey15opskJe0M1a5diV953QR46IF
- m4eSmUgf2Yc9DHLTOyyzHsePXNZpx+nnBLWRfPs49Y8T0EIVfHRloMV2IBzwCV643VCNVBhcutY
- XJaZ2hWJkGKJbLrzUOpaOTPom7coL/qx1ICt0Ht6hI672KMoPtr5yD4UaVSUhtQDe4d1jn8/HvB
- 2oo8=
-X-Received: by 2002:a17:903:3c66:b0:224:191d:8a87 with SMTP id
- d9443c01a7336-22a8a8739e2mr39647325ad.26.1743773154820; 
- Fri, 04 Apr 2025 06:25:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsfLvZzBno19442BX2raPkOVbE8JS0b17gvfWJq6vtH16DlOjPZRk8OV/aw7gQSs1/BjphLw==
-X-Received: by 2002:a17:903:3c66:b0:224:191d:8a87 with SMTP id
- d9443c01a7336-22a8a8739e2mr39646985ad.26.1743773154422; 
- Fri, 04 Apr 2025 06:25:54 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-229785adae3sm31788875ad.16.2025.04.04.06.25.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Apr 2025 06:25:54 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-To: brian.cain@oss.qualcomm.com
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org,
- matheus.bernardino@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
- marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
- bcain@quicinc.com
-Subject: Re: [PATCH 1/6] target/hexagon: handle .new values
-Date: Fri,  4 Apr 2025 06:25:51 -0700
-Message-Id: <20250404132551.3677006-1-matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20250404025203.335025-2-brian.cain@oss.qualcomm.com>
-References: <20250404025203.335025-2-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20230601; t=1743773643; x=1744378443;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kSrs90+dbGeVXwtoRu+wVayI6xNrjNLn/Ow05ZVxcmk=;
+ b=qregEWFfPtTh1jBZc1dooM9kR2VDvkJ1jRG3X2AIm4V6vXGBcs24H1g8NjusZ85lbV
+ 5HwAZJPexxDu7+fI75fgMWqIThHKd24kz1f/QFlm6scqynnT2gSptZPIdKYk5Avelnkw
+ dyDFpo1ZhaAyj80bjQrKGL9aVlFyXBqZLaVvdNu2wl+r4hVpjhbz4i18mYzDqQ9CuK1t
+ 3BL3pUSv4WzXSHxRgEyVZZZH3UTwQ+1iaZ0z9IQa3gOidL8ad3nY+8vZZyUOV//eNI+Q
+ xl1pLcmRYJG01FK4SRUicWANDVW7rQ+M+mIkr/lhTB1JaiCOuOB0oHKuR7Jd2jRhT7EG
+ 2J+Q==
+X-Gm-Message-State: AOJu0YyXmShJXeuJkOhcKhtWtjHsLFMgmALoBIQyw7LnsEA8QIITJTQ1
+ NDqBw9CV9WosewH8MpD/cvVup49nFRJdlixXGzSrfVVLM3GbGtEAaR5FFegQekTW+wuVxLDYqy8
+ 4OMaD3o2q6tCbL3ZN2XZchXTrtLGwE6r5tPR7u5bdvvemlmm9L3Zh8w==
+X-Gm-Gg: ASbGncvyPWJBDRuJP0eRUQAdgkRL84paFuujGTGkK/Am9rz73qiS150618U01+SE0o3
+ ZOKKNwD01561KOTM1R5QAyQL9HUjcEIf/4azYUMXIMHd8Mmcst48E4fhlkp0nzw2+0i/2GXpyW8
+ 2k7lJ2tvyz6E6PPhZSjurC3v1q1zJOy6qOw0nd0pddgvQrUdHB5WShOcNsZHZ9TUKNWatIa1QW7
+ JXdN7GjqBDNiIlFI/RbaYzIX451T8j9LZUsYXAtMjlkVGbnT0+Adi3zI1jsW7qArvvjzWDUCt93
+ plxrrQvAMk/JwpVxvNVam7vmKlOxHO+79YCv1cXagDANhJON2yFWyfQD3TJ5X+nD+fySQbKe4Kz
+ 4Cby/88ESXe7Ed9Lv
+X-Received: by 2002:a05:6a20:6f96:b0:1f5:8eb1:d5d2 with SMTP id
+ adf61e73a8af0-20107ef74f7mr4348806637.13.1743773643161; 
+ Fri, 04 Apr 2025 06:34:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFZhM1whU1ZxNkhas/+qvvQV+J/yNQTwULt9FgBovFcqKHL58wPMItceWL8npcco7rlJN5E6g==
+X-Received: by 2002:a05:6a20:6f96:b0:1f5:8eb1:d5d2 with SMTP id
+ adf61e73a8af0-20107ef74f7mr4348755637.13.1743773642688; 
+ Fri, 04 Apr 2025 06:34:02 -0700 (PDT)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d97d188dsm3331785b3a.7.2025.04.04.06.34.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Apr 2025 06:34:02 -0700 (PDT)
+Message-ID: <ba70f317-36db-400a-a528-00320f478c08@oss.qualcomm.com>
+Date: Fri, 4 Apr 2025 08:34:00 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: o89pGTN042XQG0wjDXq8bgDFxa-OUISk
-X-Proofpoint-GUID: o89pGTN042XQG0wjDXq8bgDFxa-OUISk
-X-Authority-Analysis: v=2.4 cv=Cvu/cm4D c=1 sm=1 tr=0 ts=67efdde4 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=5Ev2Aso3rA0ZF-ehJDsA:9
- a=_Vgx9l1VpLgwpw_dHYaR:22 a=TjNXssC_j7lpFel5tvFf:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] target/hexagon: handle .new values
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org,
+ ale@rev.ng, anjo@rev.ng, marco.liebel@oss.qualcomm.com,
+ ltaylorsimpson@gmail.com, alex.bennee@linaro.org,
+ quic_mburton@quicinc.com, sidneym@quicinc.com, bcain@quicinc.com
+References: <20250404025203.335025-2-brian.cain@oss.qualcomm.com>
+ <20250404132551.3677006-1-matheus.bernardino@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250404132551.3677006-1-matheus.bernardino@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 3op-omrCld-tj4gGwmxAxjssas9XGgEw
+X-Proofpoint-GUID: 3op-omrCld-tj4gGwmxAxjssas9XGgEw
+X-Authority-Analysis: v=2.4 cv=X9xSKHTe c=1 sm=1 tr=0 ts=67efdfcc cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=dl8oikHrIOYbeGwnjpUA:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-04_05,2025-04-03_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0
- bulkscore=0 suspectscore=0 mlxlogscore=479 malwarescore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
- clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
+ lowpriorityscore=0
+ phishscore=0 mlxlogscore=635 impostorscore=0 malwarescore=0 suspectscore=0
+ spamscore=0 adultscore=0 bulkscore=0 mlxscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504040093
+ definitions=main-2504040094
 Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -115,7 +118,6 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 04 Apr 2025 09:34:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,35 +132,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  3 Apr 2025 19:51:58 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> From: Brian Cain <bcain@quicinc.com>
 
-Perhaps it would be best to reset the autorship here to
-brian.cain@oss.qualcomm.com?
+On 4/4/2025 8:25 AM, Matheus Tavares Bernardino wrote:
+> On Thu,  3 Apr 2025 19:51:58 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> From: Brian Cain <bcain@quicinc.com>
+> Perhaps it would be best to reset the autorship here to
+> brian.cain@oss.qualcomm.com?
 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_common.py | 27 ++++++++++++++++++++++-----
->  1 file changed, 22 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index 758e5fd12d..242dee3731 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -349,6 +349,12 @@ def helper_arg(self):
->              self.reg_tcg(),
->              f"{self.helper_arg_type()} {self.helper_arg_name()}"
->          )
-> +    def from_subtype(self, subtype):
-> +        if subtype == "":
-> +            return self
-> +        raise Exception(
-> +            f"unknown subtype '{subtype}' on generic Register class")
-> +
 
-We use this method for other reg types downstream (HVX). Since, in this patch
-series, we are not really using from_subtype (get_register is always called
-with subtype == ""), I think we could either exclude it from this series or
-evaluate how to also upstream its use for HVX.
+Good catch -- will do.
+
+
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/hex_common.py | 27 ++++++++++++++++++++++-----
+>>   1 file changed, 22 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+>> index 758e5fd12d..242dee3731 100755
+>> --- a/target/hexagon/hex_common.py
+>> +++ b/target/hexagon/hex_common.py
+>> @@ -349,6 +349,12 @@ def helper_arg(self):
+>>               self.reg_tcg(),
+>>               f"{self.helper_arg_type()} {self.helper_arg_name()}"
+>>           )
+>> +    def from_subtype(self, subtype):
+>> +        if subtype == "":
+>> +            return self
+>> +        raise Exception(
+>> +            f"unknown subtype '{subtype}' on generic Register class")
+>> +
+> We use this method for other reg types downstream (HVX). Since, in this patch
+> series, we are not really using from_subtype (get_register is always called
+> with subtype == ""), I think we could either exclude it from this series or
+> evaluate how to also upstream its use for HVX.
 
