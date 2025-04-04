@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F89CC3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8EAC3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:02:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0XIg-00042j-Ny; Thu, 03 Apr 2025 23:00:58 -0400
+	id 1u0XJ1-00045I-Im; Thu, 03 Apr 2025 23:01:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1u0XIe-00042S-AW; Thu, 03 Apr 2025 23:00:56 -0400
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1u0XIc-0007uL-2S; Thu, 03 Apr 2025 23:00:56 -0400
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal
- [10.202.2.50])
- by mailfout.phl.internal (Postfix) with ESMTP id A36781380313;
- Thu,  3 Apr 2025 23:00:48 -0400 (EDT)
-Received: from phl-imap-13 ([10.202.2.103])
- by phl-compute-10.internal (MEProxy); Thu, 03 Apr 2025 23:00:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.ru; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1743735648;
- x=1743822048; bh=gZcrbTD0T3tHxBcdnUQFYI78WED0Sfi5eHy1PIJaBAs=; b=
- XMNyo73SG0V6wYmFtFNQLYDQaNNmQNmhr/YTiE6xUDMawrIM1wmOuf3alrTItfUo
- uWD0l1LvcpVx5NVqeQaz+d8Wv3waRUBPicWNI/fE897O4w3BH1M4RdnmymWJXNTc
- x4RZNy4cN6zh0gwYztaU1NiIilgpBTeSluegWi0WsXloEFPruOh5ziVaoTR5DkiF
- 2+FDEWvl/zYuA9szNXgFrqzXOF9O+/+ra/dSauQSwYZ03z1Z7b4gUnOrCbDAAY2q
- ZxvWmtGuRKiVyh+Nz/D8NeXBZC8SHLYRyG8xyPJmAKfdlKapmvDKX9mLXq4ckdID
- A1/c+N8DWWRzdxw4lb6/wg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1743735648; x=
- 1743822048; bh=gZcrbTD0T3tHxBcdnUQFYI78WED0Sfi5eHy1PIJaBAs=; b=X
- o7yFRG06hDRpS1sYoRtvXZIszRNk2CKaoOsW57hKd4dv6sUxgMYi1Q67vpQXa7AQ
- oKaH3gI0RAQuNOOHczaF3Qn2uO9/gr06XHbelDYbTKbZq/VTRprtqMO1gDY23Z0k
- GpZmWoLTp5oJHScggCSk7sy/PrU1ij8m0XNdBjgQWmFkKrgEV3s1v/PmrF1HwPqr
- 5yQ02XVh1bYY77/sG3kx05D1aL5AKDMG+IkyaJlp9cuTtVUIW36SUAW7nIQu/Noa
- xyR2wIn8ttEgAEFuX/VVX9W6EeDYl+puizLhybWdYYpS5D8gwvzjxdPbY4RfDARq
- wS/vrt/1S7nVBpvuzokSg==
-X-ME-Sender: <xms:XkvvZ4m_XWjokrNxCp3Mcn7DeHsNUFZcjqjmTon5Hvt5XFbJXYVTWw>
- <xme:XkvvZ32_QVI82qjjasEuSpHH_uhppD2OFDg6cP_T0YXtLoM9oqkD70dQ9-I8U5kdc
- Chot0D1V7RUdvNESvw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledtfedtucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
- pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertder
- tddtnecuhfhrohhmpedftehlvgigvgihucfmrghruggrshhhvghvshhkihihfdcuoegrih
- hksehoiihlrggsshdrrhhuqeenucggtffrrghtthgvrhhnpeefvdeikeegkeeiieevleeh
- feejgfetveetvddvhfeuleeuhfduieelieelieehieenucevlhhushhtvghrufhiiigvpe
- dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrihhksehoiihlrggsshdrrhhupdhnsggp
- rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrghtoh
- hnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopegurghnihgvlhhhsgegudefsehgmhgr
- ihhlrdgtohhmpdhrtghpthhtohepnhhpihhgghhinhesghhmrghilhdrtghomhdprhgtph
- htthhopehhrghrshhhphgssehlihhnuhigrdhisghmrdgtohhmpdhrtghpthhtohepqhgv
- mhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqphhptg
- esnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:X0vvZ2oupfyXuNPmLY7cDV9pg71IBN2oe8L80ZtwywEC_gxLJWoBRA>
- <xmx:X0vvZ0lro_SuFDLvesM-lnR5DvLaJh8difffsBihQPgsmFly7D6PlA>
- <xmx:X0vvZ20IiG3bcPXi8KKlduHXnqdMl2sngWSb1rNP5IL32faR80ShAg>
- <xmx:X0vvZ7sg4KUCE0DLi09IFeK2tJq65ovPjwn2wLBI2DSAAvNOA3mrmg>
- <xmx:YEvvZyg3HGL0Xlr5_2kqwS7bk39Zgg9f08wyFVLyYOKCGAL-YazRKVf->
-Feedback-ID: i6e394913:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id E3A571F00073; Thu,  3 Apr 2025 23:00:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1u0XIs-00044U-BJ
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:01:11 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1u0XIo-0007zD-Ly
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:01:10 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so1321034b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 20:01:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743735664; x=1744340464; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=02Kv6Dc9UvpP0MB5UIsl4ucf+GEBoG4rYzTStdL35xQ=;
+ b=YrRWrAvwhSv9CnXML4hvAFzEKq47ZFl8ZqJsThuJjpjmWBp3vvkGXnafI8CTHq5MJ1
+ DJ6beDBwt9r9hRVL9dNhvGus9iFjDUPTwM6c+hRNuZvjrfhOVuvBZNb3wzt0jqCyt2rF
+ f4oXQfgI0U7EU5ShV0Br+clp/LnofuatPZA4NtpJPH5854ar7VBf3N1T+DHmGYSJ6YRm
+ y6iOe2sDSN3bSikcwksiPl+b38pFbjAvcSA1bkGS3culHjbb68goGVcBRBAbnVP3b58S
+ buW2j+yVZn3SIjboTQOPjdnkm5Bc/sZYQn/LDkb+OYB0ye0RZu/K4hY/QQOEw2jnYPTK
+ 0g5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743735664; x=1744340464;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=02Kv6Dc9UvpP0MB5UIsl4ucf+GEBoG4rYzTStdL35xQ=;
+ b=fPvi/bHjy9td5XU5AY47voP5cd33n20o3lTlGUapOzZVps0eL61MLWyCl8OZ8xt10k
+ FZup9mWOdhK/cbzV8NbVMxKCKM9TOj3BPAUe5ACQNqS0iPYl2bhrvoBO+QnsCIWnEQ/m
+ M282975GEzDYJqyECAPJYjHyzuHyOVKLSkR9q28QaBdZUo+NbN/WrTDgpJ7kBJ2WQxCt
+ iR2KpCRIqFcGlKSc0d2Bjfzj2W7Ovl3UQj4DckodwYXfOM+4ut9MKHyrlqGVf+OI1tYv
+ xOEZ+BfCqEHiWPgqTcwc/yyzBMAUVfvBAqN4ZOHWsPqZE9+WXiuK2JkQrSKscJJrlg7o
+ dVTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyr9DzMdMzuD67pKu6Ire1DdGq5UwULwUgARokKrC6Mpn9StSqKf82n2/gO3KJMN/rnt5QHUezqqln@nongnu.org
+X-Gm-Message-State: AOJu0YwC6PNQ1JhkSL8SjLYjtYILxrqKMBSt2xRVj50RJIkEc/shN/kY
+ dkdMgLZDyy1ICNa5Q4Gu09JJaHKurrF9TOGfGZ9YH6ZZ1IMEqZ2SeYvvaFUai2M=
+X-Gm-Gg: ASbGncuiho1GyK1j4Iy0PNnw/UNKoFzLPt3KWtvNOF9ZchF8AF7PzPldhlMc7bqmSNr
+ GbDWRWMINA/vPnk+95HeYd6GNacvpS9gEcBKWFhwO2Qboiu+vHYPrtCw/YFRoQApb47e9XrW4Sa
+ hRqWUKDrEJMi3YpmJvzItm/So9wamD74EPDXZLvv9KoG/ViEM+6cMPsSIs7LH6Wqrt/g02/mCD2
+ 2bbjNNgluJMBhOBR1BofzHAWG6X8YHHvqupUAQkDdCLVp4O/S30mO5KFxliYQOWDmLuo78RkWhY
+ ZzxoNteaR3YAtpVletDEfi/eLLVBUvVfjZlf5uQIzsl9NKMpo5CLzC4G
+X-Google-Smtp-Source: AGHT+IE7Gty54AIPLEBgHuz8LTBUMYwGhCMGP2bzHzsHAFX/QqGRI/1hDL4Wvq+D12SY/NsDKY4Xxw==
+X-Received: by 2002:a05:6a00:3901:b0:736:3c77:31fd with SMTP id
+ d2e1a72fcca58-739e4b7af8amr2440338b3a.23.1743735664013; 
+ Thu, 03 Apr 2025 20:01:04 -0700 (PDT)
+Received: from [192.168.0.102] ([186.215.49.46])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d9e9dcc6sm2340080b3a.99.2025.04.03.20.01.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Apr 2025 20:01:03 -0700 (PDT)
+Message-ID: <b905164a-e613-466a-9094-bac225cc96fc@linaro.org>
+Date: Fri, 4 Apr 2025 00:00:59 -0300
 MIME-Version: 1.0
-X-ThreadId: Tc8f811213d1a6613
-Date: Fri, 04 Apr 2025 14:00:26 +1100
-From: "Alexey Kardashevskiy" <aik@ozlabs.ru>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: "Nicholas Piggin" <npiggin@gmail.com>,
- "Daniel Henrique Barboza" <danielhb413@gmail.com>,
- "Harsh Prateek Bora" <harshpb@linux.ibm.com>
-Message-Id: <d8d883c3-afcd-44bd-aa71-6ca23d1dd9c3@app.fastmail.com>
-In-Reply-To: <20250331142627.BAA2F4E6029@zero.eik.bme.hu>
-References: <20250331142627.BAA2F4E6029@zero.eik.bme.hu>
-Subject: Re: [PATCH v2] ppc/vof: Make nextprop behave more like Open Firmware
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=aik@ozlabs.ru;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v3 5/9] qtest/bios-tables-test: Add test for -M
+ virt,its=off
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
+ Udo Steinberg <udo@hypervisor.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>
+References: <20250403204029.47958-1-philmd@linaro.org>
+ <20250403204029.47958-6-philmd@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250403204029.47958-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,115 +110,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Phil,
+
+On 4/3/25 17:40, Philippe Mathieu-Daudé wrote:
+> Add the use case reported as issue #2886 [*]. The test
+> passes while it shouldn't. We are going to fix that in
+> the following commits.
+
+I think this organization is not ideal. I like better your first
+version, i.e., adding the correct blobs that make the new test pass,
+as you did in:
+
+[PATCH-for-10.0 1/5] qtest/bios-tables-test: Add test for -M virt, its=o
+https://mail.gnu.org/archive/html/qemu-devel/2025-03/msg07081.html
+
+The way it is here if you checkout this commit and run the test
+(make check) the acpi test will _not pass_ because of the other changes
+in the APIC, FADT, and IORT tables caused by the other VM options
+(virtualization, gic-version, and iommu), as I pointed out in [0], even
+tho the bug is present and its=off does not take effect.
 
 
-On Tue, 1 Apr 2025, at 01:26, BALATON Zoltan wrote:
-> The FDT does not normally store name properties but reconstructs it
-> from path but each node in Open Firmware should at least have this
-> property. This is correctly handled in getprop but nextprop should
-> also return it even if not present as a property. This patch fixes
-> that and also skips phandle which does not appear in Open Firmware
-> and only added for internal use by VOF.
+Cheers,
+Gustavo
+
+[0] https://mail.gnu.org/archive/html/qemu-devel/2025-04/msg00438.html
+
+
+> [*] https://gitlab.com/qemu-project/qemu/-/issues/2886
 > 
-> Explicit name properties are still allowed because they are needed
-> e.g. on the root node that guests expect to have specific names as
-> seen on real machines instead of being empty so sometimes the node
-> name may need to be overriden.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> I've tested this with pegasos2 but don't know how to test spapr.
-> v2:
-> Fixed a typo in commit message
-> Simplified loop to get next property name
+>   tests/qtest/bios-tables-test.c | 21 +++++++++++++++++++++
+>   1 file changed, 21 insertions(+)
 > 
-> hw/ppc/vof.c | 51 ++++++++++++++++++++++++++++++++++-----------------
-> 1 file changed, 34 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> index 09cb77de93..790d67c096 100644
-> --- a/hw/ppc/vof.c
-> +++ b/hw/ppc/vof.c
-> @@ -353,34 +353,51 @@ static uint32_t vof_nextprop(const void *fdt, uint32_t phandle,
-> {
->      int offset, nodeoff = fdt_node_offset_by_phandle(fdt, phandle);
->      char prev[OF_PROPNAME_LEN_MAX + 1];
-> -    const char *tmp;
-> +    const char *tmp = NULL;
-> +    bool match = false;
->  
->      if (readstr(prevaddr, prev, sizeof(prev))) {
->          return PROM_ERROR;
->      }
-> -
-> -    fdt_for_each_property_offset(offset, fdt, nodeoff) {
-> -        if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
-> -            return 0;
-> +    /*
-> +     * "name" may or may not be present in fdt but we should still return it.
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> index 0a333ec4353..baaf199e01c 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -2146,6 +2146,25 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+>       free_test_data(&data);
+>   }
+>   
+> +static void test_acpi_aarch64_virt_tcg_its_off(void)
+> +{
+> +    test_data data = {
+> +        .machine = "virt",
+> +        .arch = "aarch64",
+> +        .tcg_only = true,
+> +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+> +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
+> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+> +        .ram_start = 0x40000000ULL,
+> +        .scan_len = 128ULL * 1024 * 1024,
+> +    };
+> +
+> +    test_acpi_one("-cpu cortex-a57 "
+> +                  "-M virtualization=on,secure=off "
+> +                  "-M gic-version=max,its=off,iommu=smmuv3", &data);
+> +    free_test_data(&data);
+> +}
+> +
+>   static void test_acpi_q35_viot(void)
+>   {
+>       test_data data = {
+> @@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
+>                              test_acpi_aarch64_virt_tcg_acpi_hmat);
+>               qtest_add_func("acpi/virt/topology",
+>                              test_acpi_aarch64_virt_tcg_topology);
+> +            qtest_add_func("acpi/virt/its_off",
+> +                           test_acpi_aarch64_virt_tcg_its_off);
+>               qtest_add_func("acpi/virt/numamem",
+>                              test_acpi_aarch64_virt_tcg_numamem);
+>               qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
 
-yeah we should, at least, to match "getprop". I also wonder if VOF does not add "name", then what would do so, do we really expect to see such properties anywhere? Because if not, then we do not need to skip it as we won't find it.
-
-> +     * Do that first and then skip it if seen later. Also skip phandle which is
-
-(a nit) appears to me that if handling of a missing "name" was done after the last property, the patch would look simpler, but not sure and do not insist.
-
-> +     * an internal value we added in vof_build_dt but should not appear here.
-
-I would not hide anything though, unless it breaks something. Thanks,
-
-> +     */
-> +    if (prev[0] == '\0') {
-> +        tmp = "name";
-> +    } else {
-> +        if (strcmp(prev, "name") == 0) {
-> +            prev[0] = '\0';
->          }
-> -        if (prev[0] == '\0' || strcmp(prev, tmp) == 0) {
-> -            if (prev[0] != '\0') {
-> -                offset = fdt_next_property_offset(fdt, offset);
-> -                if (offset < 0) {
-> -                    return 0;
-> -                }
-> -            }
-> +        fdt_for_each_property_offset(offset, fdt, nodeoff) {
->              if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
->                  return 0;
->              }
-> -
-> -            if (VOF_MEM_WRITE(nameaddr, tmp, strlen(tmp) + 1) != MEMTX_OK) {
-> -                return PROM_ERROR;
-> +            if (strcmp(tmp, "name") == 0 || strcmp(tmp, "phandle") == 0) {
-> +                continue;
-> +            }
-> +            if (match) {
-> +                break;
->              }
-> -            return 1;
-> +            if (strcmp(prev, tmp) == 0) {
-> +                match = true;
-> +                continue;
-> +            }
-> +            if (prev[0] == '\0') {
-> +                break;
-> +            }
-> +        }
-> +        if (offset < 0) {
-> +            return 0;
->          }
->      }
-> -
-> +    if (tmp) {
-> +        if (VOF_MEM_WRITE(nameaddr, tmp, strlen(tmp) + 1) != MEMTX_OK) {
-> +            return PROM_ERROR;
-> +        }
-> +        return 1;
-> +    }
->      return 0;
-> }
->  
-> -- 
-> 2.41.3
-> 
-> 
 
