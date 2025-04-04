@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D5F0C3601E
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 22:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD2AC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 22:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0pdV-0000gK-FG; Fri, 04 Apr 2025 18:35:42 -0400
+	id 1u0pdt-0000lk-8y; Fri, 04 Apr 2025 18:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0pdR-0000fQ-Vt
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 18:35:38 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0pdi-0000iC-2G
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 18:35:54 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0pdO-0007xO-5Q
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 18:35:36 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso26816905e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 15:35:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0pdg-0007zi-8W
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 18:35:53 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43d04ea9d9aso12393075e9.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 15:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743806129; x=1744410929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743806149; x=1744410949; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vxlCfJu/ghlRwJtFNdG3a/Et1O+b4mI9O6ETIO8F/ks=;
- b=U0Jj16oSh7JtVnmhMD+xC/NEkHh1Stwg3SI4b8YZfJN1lCh7OL2XWCAAv37iN0DrTT
- lD+c0CFmNdF+PWr/bp+3WK5ooOtds6yZRqfgDoMjhx3Fx/4oFlZEQ2BW8UEMsdPxPZjn
- WOwUmUdBwogHdvAXGWAIanlLJIbRZhNSpONCr0JVF0jLRYikv8hPvpV1FPRJYhJ0SqCD
- 4siDVtsfsAlLpeJr34X3m3b9R3V8tF4Wc90kmnpO03SW19tVXzVjEWgs9Hdv8ZrWiJAS
- dTVKY7wDd2tWP8ATovOc6dAJQpTxt0kGwsGAWv8rWWn90L7VYAeuArLo7BbVo2VF1Ioh
- ziOg==
+ bh=aIKjbL/Q/KXdvXQSiletYLg6oVeSYWM09NCAwSNeYqY=;
+ b=psLiHy6rfNpl6bNdgBs6ZcXVJAnt4AmdbkHxLG3utYw+5oytTHBJKtRaBBFoVJ8DC7
+ dqm1ixAK9Q+4wP8D9mnnqaSWrMWlm7tCDsMMknonftGTiTebhvgr6zMl9bs4f6o+j9Lg
+ rJrScyAOkIBUajUu1z9Q5kwG72FuBMIIFThVDNxHxO5jr+V2WiU1XrIqsZnHTdk3dD+8
+ PPEwUHAmrp0BD5oEzoIL1lpj5vKmLvbbzze6WxszsU2Etcg3VVnNs+omJcFmT4bLUfJb
+ whaumcbuX74nPwplrTpnyYALKmqEh4O+YUk5BMAPJ+WB0LjOH5SZKvyp658TCgGu7171
+ Qrsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743806129; x=1744410929;
+ d=1e100.net; s=20230601; t=1743806149; x=1744410949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vxlCfJu/ghlRwJtFNdG3a/Et1O+b4mI9O6ETIO8F/ks=;
- b=taN6sXINGCSG/AnIh9lqu9mA+ULZF2yPrTvjvRISm1RiOmcjXoBpgHD9T9n7B/N8ac
- GUJh4AALdK0YA2kAbtg54ezX+NxhICV/j1cy3ngIfZr7+4rqDUpkl+5IEsgwMB7978bx
- ce+Yc5SSH1k5YnVBdMPNzJsW6DffmgLh6reKoqU1pJHvIQIm9CgKHDS0c48utK3FFDOX
- FVWujgoGbL7Q4VXRviS0G6mJwxTI3d4eEy9Ug0180jdlT61/NLEhW21QUxbT9J/5GMvP
- Am+mf39iE7qPTVRvejESexkR9b7KfBkR12qd7CvibA0fa3wSTPXIIPD6ftbcvNPOfn9O
- t4Ig==
-X-Gm-Message-State: AOJu0YxsSMg1I5TNM9mC8qdnGvk2QMgdZTh5Xmu09yrtw+KGYIEdna5B
- LX6shSHMGehNAuHQ8pmS95zt6GuimJhJE8EewlkCo/DPNTXoFAw2rIktFiJedtyFm++2ZNJ8ASh
- 4
-X-Gm-Gg: ASbGncu4rELR4S3iNJ1XVcCCWH6UClukj1TQyY+pklBUFs6jykesAjd2OpV9n1PgLgC
- GKmNc5P1WP4hmoALB9Jarfo4lEPtKwShrDWMTJNoDH56e/UNCkuL15q7SrTyiBZic7M4Q5BM+gZ
- VlJoXgROVw32v+IfJaia/UdQ/y4tcCtwU66XIzKpxADrfuqrw+jWU3HZ/w1yQh4OAr+aRpI8CnJ
- tu57/cg8XcIm85hD9OpRGjxNl2Rlzt34g1INjVaDJntiNzgWkn3vnuEAOCzJC7P8lXxKwqXfThw
- PX30GA3wA1CIpIBenGhnYlDNF7whbJzoYJfrdlSMQzPkE1+eLn35HThrwqHVAp3L4c5muZwmjjp
- 0nH/VtxXNW6K1O6jN9q5y4Pgf
-X-Google-Smtp-Source: AGHT+IHULMFoU9I6lSJs4fhIrGNL405naq7zzUhGfdPr8FgjDMFs3ympFUW5t1hQ2vzvZdeZXgAcFA==
-X-Received: by 2002:a05:600c:4ec6:b0:43d:fa59:a685 with SMTP id
- 5b1f17b1804b1-43ed0db4025mr38379115e9.33.1743806129342; 
- Fri, 04 Apr 2025 15:35:29 -0700 (PDT)
+ bh=aIKjbL/Q/KXdvXQSiletYLg6oVeSYWM09NCAwSNeYqY=;
+ b=vjtECBeABYrCNI4yodhcDiAi7MigFLlb1NnO5k1ifLGO9DGcyWd8KpTBnFJE5H/4Gj
+ 9z2kmTOrGG2P4HD35kQsJMMy7tb0ikwzKz7hMaMuQw67mYz14SUUNmrLu8SkE64mGsth
+ 9g/uI0jDdSStpLGNyVKjE37dZuz2fJInbPxbuR6cn1gbcgV+4Lczu1E6yQDHukykCAhH
+ qCR3Jw9LvXMGaKQzHKqDDGW/1rtAN9unrzU4oS6V1cnA1CWJf9ec6qhBJkbR7qaIcaYT
+ 9/HpBtNevM7yweWD2HEN9otW42neZUch0BMnz6LoOLKMgQE5WfJcqdwXRTPHI+5O9HZv
+ TmBA==
+X-Gm-Message-State: AOJu0Yw/GtUkE2CKoWqBf/8GMh/l7/Tj7mgesvHpUI1Hhr1VYox+9mXG
+ eKQWKxc8WF6s0ODJ+U6bb0j5XtLcllMNloxUYvGYWui61h4/aq63INvOHcrlxec99WqejY9FkdG
+ E
+X-Gm-Gg: ASbGnctd8yeVkPw+FTQLBDR4zjx1fzGm7SMWNelbhlTg7MJ9OLt70wvDhfEmhHBQp9I
+ IKpOzq6CQVAn3++8+Xv2trFmpYKgtHaW00lLwZxbxoKfC/c2Yi2t5KXwt3PaupQFhAfg4mcOixC
+ cBl5prokrSURS3em52TkMSY8UXHuHXSIPkKNVLAygwj/ahupvjseLME1ubQMmg5JU6E1OitXwwL
+ tVKxrItOy98jpgJr1+2P/vmdmGwr1YMPuWTDJ/cZi6cSTqcPFpdMFj0WP0E1Xugbxx/F+4AVGti
+ CBJyqHcVTqQNF/BM7OmfsvZqq6tSopLSgLaN98ZboNsBUAvEjn3fFHDt19gzQLrAHajUma9uY+A
+ oP/HIkiHmCWhCGR+3oAIvgyaoWj5oro22zGI=
+X-Google-Smtp-Source: AGHT+IFPlJvU8WnmjqubHKWN7Lh+e2t99UD8VqTnax85RvFEZd3MI9E02BmGLnIEMArSsoBlpJqxlg==
+X-Received: by 2002:a05:600c:6c11:b0:43d:10c:2f60 with SMTP id
+ 5b1f17b1804b1-43edd3bd68bmr12589795e9.24.1743806148873; 
+ Fri, 04 Apr 2025 15:35:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b76f2sm5404476f8f.53.2025.04.04.15.35.28
+ 5b1f17b1804b1-43ec3429f67sm58989755e9.7.2025.04.04.15.35.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 04 Apr 2025 15:35:28 -0700 (PDT)
+ Fri, 04 Apr 2025 15:35:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
@@ -70,25 +70,25 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Gustavo Romero <gustavo.romero@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.1 1/9] target/arm: Remove uses of TARGET_AARCH64 in
- arch_dump.c
-Date: Sat,  5 Apr 2025 00:35:13 +0200
-Message-ID: <20250404223521.38781-2-philmd@linaro.org>
+Subject: [PATCH-for-10.1 5/9] target/arm/mte: Reduce
+ address_with_allocation_tag() scope
+Date: Sat,  5 Apr 2025 00:35:17 +0200
+Message-ID: <20250404223521.38781-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250404223521.38781-1-philmd@linaro.org>
 References: <20250404223521.38781-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,59 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is safe to remove TARGET_AARCH64 #ifdef'ry for code
-guarded by runtime check on aa64_sve ISA feature, which
-is only available for Aarch64 CPUs.
+address_with_allocation_tag() is only used in mte_helper.c,
+move it there.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/arch_dump.c | 6 ------
- 1 file changed, 6 deletions(-)
+ target/arm/internals.h      | 5 -----
+ target/arm/tcg/mte_helper.c | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/arch_dump.c b/target/arm/arch_dump.c
-index c40df4e7fd7..1dd79849c13 100644
---- a/target/arm/arch_dump.c
-+++ b/target/arm/arch_dump.c
-@@ -143,7 +143,6 @@ static int aarch64_write_elf64_prfpreg(WriteCoreDumpFunction f,
-     return 0;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 01408e40a34..0728e5c5348 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1701,11 +1701,6 @@ static inline int allocation_tag_from_addr(uint64_t ptr)
+     return extract64(ptr, 56, 4);
  }
  
--#ifdef TARGET_AARCH64
- static off_t sve_zreg_offset(uint32_t vq, int n)
+-static inline uint64_t address_with_allocation_tag(uint64_t ptr, int rtag)
+-{
+-    return deposit64(ptr, 56, 4, rtag);
+-}
+-
+ /* Return true if tbi bits mean that the access is checked.  */
+ static inline bool tbi_check(uint32_t desc, int bit55)
  {
-     off_t off = sizeof(struct aarch64_user_sve_header);
-@@ -231,7 +230,6 @@ static int aarch64_write_elf64_sve(WriteCoreDumpFunction f,
- 
-     return 0;
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index 9dcdc1d91c1..8a6e6e4719d 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -205,6 +205,11 @@ static uint8_t *allocation_tag_mem(CPUARMState *env, int ptr_mmu_idx,
+                                     ptr_size, tag_access, false, ra);
  }
--#endif
  
- int arm_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-                              int cpuid, DumpState *s)
-@@ -273,11 +271,9 @@ int arm_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-         return ret;
-     }
- 
--#ifdef TARGET_AARCH64
-     if (cpu_isar_feature(aa64_sve, cpu)) {
-         ret = aarch64_write_elf64_sve(f, env, cpuid, s);
-     }
--#endif
- 
-     return ret;
- }
-@@ -451,11 +447,9 @@ ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
-     if (class == ELFCLASS64) {
-         note_size = AARCH64_PRSTATUS_NOTE_SIZE;
-         note_size += AARCH64_PRFPREG_NOTE_SIZE;
--#ifdef TARGET_AARCH64
-         if (cpu_isar_feature(aa64_sve, cpu)) {
-             note_size += AARCH64_SVE_NOTE_SIZE(&cpu->env);
-         }
--#endif
-     } else {
-         note_size = ARM_PRSTATUS_NOTE_SIZE;
-         if (cpu_isar_feature(aa32_vfp_simd, cpu)) {
++static inline uint64_t address_with_allocation_tag(uint64_t ptr, int rtag)
++{
++    return deposit64(ptr, 56, 4, rtag);
++}
++
+ uint64_t HELPER(irg)(CPUARMState *env, uint64_t rn, uint64_t rm)
+ {
+     uint16_t exclude = extract32(rm | env->cp15.gcr_el1, 0, 16);
 -- 
 2.47.1
 
