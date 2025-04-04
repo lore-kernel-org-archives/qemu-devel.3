@@ -4,144 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF813C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 07:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9880DC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 07:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0b7q-0005JI-75; Fri, 04 Apr 2025 03:06:02 -0400
+	id 1u0bVQ-0002Ox-N5; Fri, 04 Apr 2025 03:30:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0b7o-0005IZ-Ll
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 03:06:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1u0bVO-0002OB-2i
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 03:30:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0b7m-000830-ID
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 03:06:00 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1u0bVM-0003Z4-7Y
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 03:30:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743750355;
+ s=mimecast20190719; t=1743751817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=as7gkhlLlh+FOTGhb/cv0Uta24eTZhW2eO5ky7vgHhM=;
- b=Qh3NapxJdlnu334KvpIg+7XRudezIJn9NFEJgTvn9g/0hE5dMde8YkAdmtAKgHsBQYcT4F
- CnrrG3eQL+g0XcvQrx2a8QZNwQ56u4IDCcR7A3naNiZYUCQkuwIT5Ct0u1Ht7iXy1vWnKk
- T+iSPsmPt1WcE5vIuvQ7pGzxb4PqvBg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=iK2BpwJPugw7oUMus62tydRQh3i/YWRvEIrybuuNB6Q=;
+ b=CoFh9FZg/mmNRES5HuW0Od4Q8fOFo+zAvngDUrEoDtueLoE1oxZ7TMl8a2LPbjsL9OOAhi
+ plN4Qokk6jlfa2mGHMGWZJ7NTNIZYpWcz4rGzHu545TGKAuHKFN+mDzf1j/qGltKoRKAi/
+ MIlUvex+W/VYv1jBr3YnpkxvtQA/OBw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-IkHJ67iJPKa_pcu_z0-Qag-1; Fri, 04 Apr 2025 03:05:53 -0400
-X-MC-Unique: IkHJ67iJPKa_pcu_z0-Qag-1
-X-Mimecast-MFC-AGG-ID: IkHJ67iJPKa_pcu_z0-Qag_1743750352
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d209dc2d3so9567765e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 00:05:53 -0700 (PDT)
+ us-mta-556-IV8NwFqSNsaEhmWY4qyQJQ-1; Fri, 04 Apr 2025 03:30:15 -0400
+X-MC-Unique: IV8NwFqSNsaEhmWY4qyQJQ-1
+X-Mimecast-MFC-AGG-ID: IV8NwFqSNsaEhmWY4qyQJQ_1743751815
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac2aa3513ccso146184866b.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 00:30:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743750352; x=1744355152;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=as7gkhlLlh+FOTGhb/cv0Uta24eTZhW2eO5ky7vgHhM=;
- b=Q7HGJpx1DbUhjrntIj9PqQoiIeXULvJ6ODYQoipDm9ODLT/HVXzWSPwMMZ6o5WBK6d
- SC48KzeWRaVqmC53RZmQJbyBC766eCygFFo1UxOHviDmcOLpLzgmbVfXCi7j5ZX1XsRl
- xhR2BGf7ertvWdg38bTNH9UikpD8TaZe+b0V+XCV4UKKU8TiUqewafDaupA5JssewA9P
- Qa+Hz92d6UZrewygNDkeOrpniyfIqIGAlZ+cyyLrbItqbjzCuBzypTPeX0kFaVXuyTM+
- 6/j8MVtd8/Jmuco5dUsi7cbb2DddwZ1PungWWbC6LNOy5reJH59UKgtV8Yl+dTO/PpMV
- 1gow==
+ d=1e100.net; s=20230601; t=1743751815; x=1744356615;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iK2BpwJPugw7oUMus62tydRQh3i/YWRvEIrybuuNB6Q=;
+ b=JDH3wU+ZNGJid8ItXUm1uIdxmeA6+y/V7s/66/sTFA9bwm7JbNOCtFlR+cCQ8txCfz
+ BYHhILWRSRB18FW9CHN44/8IYynT9CyXF0XxNDnoCaMDa2zNZ4vEU+b2rYu3hlFzWFO9
+ x6RvdNW6AzijPUA6/4LcFGSDk8VYwQWguq4TiMe9zRNirAp4AnkToLPESpTWYL7sYY4g
+ Gn3kii++nhd2FB4crej5lQuPoDKAN94xR7KvXOomKmKZZVIgJFG143zjh9zAgXL7Jjoy
+ i0aFPlNhgKW61DRHC3/AybP+MabRa/elKWuHhabftWzFTV6gXp6lq/TxE8VaxbRA9MIx
+ p8dw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK7DfyfyuS9iK4+YIO4wJC6g1asgGsQqqvEmwlI7vMa1gmUU2J4svP8CDCqXxahfLtSPvqFCrYA8x7@nongnu.org
-X-Gm-Message-State: AOJu0YymxCfnP/dgm1sO01lRL6Z7ueJh/PrVfGWSJb/LW/6vJ9CaUYZB
- aDbpx/TojbgL1YvIKx4Lw2Ydvi7BuWAci8sjhasHUP5MeTk5hpJ3fQcuAhjGXC8RuuL69LvBbOx
- 4/aSSqDnn43m4hHsiOrzn0ZYOczWch0p52S66Y9YrqA/CrLgySGkp
-X-Gm-Gg: ASbGnctxyTVIlkzcVq8+fiXBMfh7X9ZerBsoreOeafvmAF/sAoeOTgflezZvZ/CYfn0
- IBhnIkUkQyI5KI/Xf0p/MvrGwyaHb0pps79nI2dU5GaSGHrm2PJBym9NWgLXbBwGgQarJxGo+nt
- TG6bW+2FkcQwWqXrq6AbJ76SYGw2j7yY9YwjOpfPjmbmlRZfCuRS00l1E22bWV8K8PqYOJO85eL
- 6W9yEVXIUOdBaez3SyzCOpoBEqQEJ65QvA2iYk8K3WwjCJKlEv2shy8r5W6mZ+D/R4jRs92FGWt
- wTZ4D/4jAdomgY8C+257lM++tTv7x18KLM25arLruP6H9ZHaz9LgEw==
-X-Received: by 2002:a05:600c:3c9a:b0:43d:172:50b1 with SMTP id
- 5b1f17b1804b1-43ecfa18703mr12399945e9.29.1743750352283; 
- Fri, 04 Apr 2025 00:05:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETetlvKyj19eV4J8JG3srze/L8z1v752o0JCsESiIDdUNLbue3Rmea7KKx54TbguG0CW9b3w==
-X-Received: by 2002:a05:600c:3c9a:b0:43d:172:50b1 with SMTP id
- 5b1f17b1804b1-43ecfa18703mr12399645e9.29.1743750351828; 
- Fri, 04 Apr 2025 00:05:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec17b18easm40761125e9.38.2025.04.04.00.05.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 00:05:51 -0700 (PDT)
-Message-ID: <f0bee41e-a3d2-44a2-b28c-2a02cfe2989f@redhat.com>
-Date: Fri, 4 Apr 2025 09:05:50 +0200
+ AJvYcCXolGw5+hMsXHwgVb6qz6WfXuxDKmxVPE70Xmusp/JYSVgNvej/0BtqZ0jLq8rmA9mCJzN7kg+g3upf@nongnu.org
+X-Gm-Message-State: AOJu0YxwpoDqnA5up3XWwmw/K8Eyr70uQumG8+fzZ4lt/eUptHvkT/3N
+ gdYqW8eFgvRQMdPhCitGvIarL1ODhjZx9NfswaLUJitUMvcZnzz1xRPGGM73HIF3D3fg0a3fh9t
+ etXWG/InYEqCjgsz2goNE+R9IGisLaXWhglzQyZk3UvNMuKtYqW5X
+X-Gm-Gg: ASbGncv0n2i/vbLx6BeezY/lSUoZ1teu/Jq5heDbcDXpgk/LfUwCOVsSh7zQiz342/l
+ H/jFF2Onai/MjHONSywHpbEjF2UA0vGsI/vz0OHnOfhTj4WM7THJPctDjKtAhe9N3EHpFVCNOC4
+ R/2Cx5zM/5vmOgXaroLULqW1pKFu5Qg5ib7VuIuI9nwzH8TShVq17bp30mXTuQjXaRoXj4f5pEh
+ r4VRCL1QjbQzSMEAAy56dz9sqIj+Uf6hxYbkA5/dtpJbv9CYr8c0Jda5THf/LlHP8YzID9QVUQG
+ ikNXcma+OJrm3Qplr8jb3ouDGCCggjHGNxImri3vHO2/7RX1udHt2kNZ7wU=
+X-Received: by 2002:a17:907:94cf:b0:ac3:cff:80e1 with SMTP id
+ a640c23a62f3a-ac7d19a160bmr198780266b.56.1743751814661; 
+ Fri, 04 Apr 2025 00:30:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEK7c9HZ1skdAB8VCURT+IDpaLHHzUn7zXPsfcy0+5c/L0s5fMCxKpqVx36ZOpPYjHfR+mUTA==
+X-Received: by 2002:a17:907:94cf:b0:ac3:cff:80e1 with SMTP id
+ a640c23a62f3a-ac7d19a160bmr198777266b.56.1743751814091; 
+ Fri, 04 Apr 2025 00:30:14 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-11-6-59.retail.telecomitalia.it.
+ [87.11.6.59]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5f0880a3ae1sm1939068a12.68.2025.04.04.00.30.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Apr 2025 00:30:13 -0700 (PDT)
+Date: Fri, 4 Apr 2025 09:30:09 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Haoqian He <haoqian.he@smartx.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org, 
+ Li Feng <fengli@smartx.com>, yuhua@smartx.com,
+ Raphael Norwitz <raphael@enfabrica.net>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v2 3/3] vhost-user: return failure if backend crash when
+ live migration
+Message-ID: <kesiax2fftxxkzydpbmzsn2gmgbknctcekskupug6jyhr5f4ii@wdrojsvhdfee>
+References: <20250309090708.3928953-1-haoqian.he@smartx.com>
+ <20250314101535.1059308-1-haoqian.he@smartx.com>
+ <20250314101535.1059308-4-haoqian.he@smartx.com>
+ <5wblbg4qq7lmfrycksxo45ynh566gbzocwtim6yy6hiibus66a@fb75vbwpz5r5>
+ <C1643EB1-EBA7-4627-A1E9-BB4F8CC688A2@smartx.com>
+ <scj244d5eifrvxe7qgz4aszeg7wbjxzhh6tdccuzxkj5k3jxvi@ujonxzfmd3tb>
+ <4DC039FB-6711-4FAC-9FCF-FB59E6B1151E@smartx.com>
+ <hoq242tlgchxwzm3ukckyunkqpppiq4zfzpqrauhjdy7wbdiaq@wr26zlpznr5s>
+ <8E231839-A758-4F80-B517-EDF0A780C6A0@smartx.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] Enable QEMU NVMe userspace driver on s390x
-To: Farhan Ali <alifm@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Niklas Schnelle <schnelle@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, fam@euphon.net,
- philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com,
- mjrosato@linux.ibm.com
-References: <20250401172246.2688-1-alifm@linux.ibm.com>
- <20250402155152.GE304512@fedora>
- <2c11a602415f0780030d4e68a28eee7ffcdd8cb7.camel@linux.ibm.com>
- <20250403154442.GA349582@fedora>
- <20250403102704.7e1f4452.alex.williamson@redhat.com>
- <2c244588-b37b-4e86-863e-ef462343edad@linux.ibm.com>
- <20250403120504.2f660171.alex.williamson@redhat.com>
- <d9e4feb3-351c-4c0b-8c8e-a5141e80ed5e@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <d9e4feb3-351c-4c0b-8c8e-a5141e80ed5e@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+In-Reply-To: <8E231839-A758-4F80-B517-EDF0A780C6A0@smartx.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -166,102 +127,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/25 22:33, Farhan Ali wrote:
-> 
-> On 4/3/2025 11:05 AM, Alex Williamson wrote:
->> On Thu, 3 Apr 2025 10:33:52 -0700
->> Farhan Ali <alifm@linux.ibm.com> wrote:
+On Thu, Mar 27, 2025 at 02:53:24PM +0800, Haoqian He wrote:
+>
+>> 2025年3月25日 17:51，Stefano Garzarella <sgarzare@redhat.com> 写道：
 >>
->>> On 4/3/2025 9:27 AM, Alex Williamson wrote:
->>>> On Thu, 3 Apr 2025 11:44:42 -0400
->>>> Stefan Hajnoczi <stefanha@redhat.com> wrote:
->>>>> On Thu, Apr 03, 2025 at 09:47:26AM +0200, Niklas Schnelle wrote:
->>>>>> On Wed, 2025-04-02 at 11:51 -0400, Stefan Hajnoczi wrote:
->>>>>>> On Tue, Apr 01, 2025 at 10:22:43AM -0700, Farhan Ali wrote:
->>>>>>>> Hi,
->>>>>>>>
->>>>>>>> Recently on s390x we have enabled mmap support for vfio-pci devices [1].
->>>>>>> Hi Alex,
->>>>>>> I wanted to bring this to your attention. Feel free to merge it through
->>>>>>> the VFIO tree, otherwise I will merge it once you have taken a look.
->>>>>>>
->>>>>>> Thanks,
->>>>>>> Stefan
->>>>>>>> This allows us to take advantage and use userspace drivers on s390x. However,
->>>>>>>> on s390x we have special instructions for MMIO access. Starting with z15
->>>>>>>> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
->>>>>>>> operate on virtually mapped PCI memory spaces, and can be used from userspace.
->>>>>>>> On older platforms we would fallback to using existing system calls for MMIO access.
->>>>>>>>
->>>>>>>> This patch series introduces support the PCI MIO instructions, and enables s390x
->>>>>>>> support for the userspace NVMe driver on s390x. I would appreciate any review/feedback
->>>>>>>> on the patches.
->>>>>>>>
->>>>>>>> Thanks
->>>>>>>> Farhan
->>>>>> Hi Stefan,
+>> On Tue, Mar 25, 2025 at 04:39:46PM +0800, Haoqian He wrote:
+>>>> 2025年3月24日 22:31，Stefano Garzarella <sgarzare@redhat.com> 写道：
+>>>> On Thu, Mar 20, 2025 at 08:21:30PM +0800, Haoqian He wrote:
+>>>>>> 2025年3月19日 23:20，Stefano Garzarella <sgarzare@redhat.com> 写道：
+>>>>>> On Fri, Mar 14, 2025 at 06:15:34AM -0400, Haoqian He wrote:
+>>
+>> [...]
+>>
+>>>>>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>>>>>>> index 6386910280..c99d56f519 100644
+>>>>>>> --- a/include/hw/virtio/virtio.h
+>>>>>>> +++ b/include/hw/virtio/virtio.h
+>>>>>>> @@ -187,6 +187,7 @@ struct VirtioDeviceClass {
+>>>>>>> void (*set_config)(VirtIODevice *vdev, const uint8_t *config);
+>>>>>>> void (*reset)(VirtIODevice *vdev);
+>>>>>>> void (*set_status)(VirtIODevice *vdev, uint8_t val);
+>>>>>>> +    int (*set_status_ext)(VirtIODevice *vdev, uint8_t val);
 >>>>>>
->>>>>> the kernel patch actually made it into Linus' tree for v6.15 already as
->>>>>> commit aa9f168d55dc ("s390/pci: Support mmap() of PCI resources except
->>>>>> for ISM devices") plus prerequisites. This went via the PCI tree
->>>>>> because they included a change to struct pci_dev and also enabled
->>>>>> mmap() on PCI resource files. Alex reviewed an earlier version and was
->>>>>> the one who suggested to also enable mmap() on PCI resources.
->>>>> The introduction of a new QEMU API for accessing MMIO BARs in this
->>>>> series is something Alex might be interested in as QEMU VFIO maintainer.
->>>>> That wouldn't have been part of the kernel patch review.
+>>>>>> Why we need a new callback instead having `set_status` returning int ?
 >>>>>
->>>>> If he's aware of the new API he can encourage other VFIO users to use it
->>>>> in the future so that you won't need to convert them to work on s390x
->>>>> again.
->>>> I don't claim any jurisdiction over the vfio-nvme driver.  In general
->>>> vfio users should be using either vfio_region_ops, ram_device_mem_ops,
->>>> or directly mapping MMIO into the VM address space.  The first uses
->>>> pread/write through the region offset, irrespective of the type of
->>>> memory, the second provides the type of access used here where we're
->>>> dereferencing into an mmap, and the last if of course the preferred
->>>> mechanism where available.
+>>>>> Because there are other devices such as virtio-net, virtio-ballon, etc.,
+>>>>> we only focus on vhost-user-blk/scsi when live migration.
 >>>>
->>>> It is curious that the proposal here doesn't include any changes to
->>>> ram_device_mem_ops for more generically enabling MMIO access on s390x.
->>>> Thanks,
+>>>> Why only them?
 >>>>
->>>> Alex
+>>>> What I mean, is why in devices where it's not important, don't we just return 0?
+>>>> It seems more complicated to maintain and confusing for new devices to have 2 callbacks for the same thing.
+>>>>
+>>>> Stefano
 >>>
->>> Hi Alex,
->>>   From my understanding the ram_device_mem_ops sets up the BAR access for
->>> a guest passthrough device. Unfortunately today an s390x KVM guest
->>> doesn't use and have support for these MIO instructions. We wanted to
->>> use this series as an initial test vehicle of the mmap support.
->> Right, ram_device_mem_ops is what we'll use to access a BAR that
->> supports mmap but for whatever reason we're accessing it directly
->> through the mmap.  For instance if an overlapping quirk prevents the
->> page from being mapped to the VM or we have some back channel mechanism
->> where the VMM is interacting with the BAR.
+>>> The series of these patches only want to fix that the inflight IO can't be
+>>> completed due to the disconnection between and the vhost-user backend for
+>>> vhost-user-blk / scsi devices during live migration. For other virito devices
+>>> the issue does not exist, and `vm_state_notify` cannot distinguish specific
+>>> devices, it's better not to return error.
 >>
->> I bring it up here because it's effectively the same kind of access
->> you're adding with these helpers and would need to be addressed if this
->> were generically enabling vfio mmap access on s390x.
-> 
-> On s390x the use of the MIO instructions is limited to only PCI access. So i am not sure if we should generically apply this to all vfio mmap access (for non PCI devices).
-> 
-> 
+>> Why for example for vhost-user-fs it doesn't exist?
 >>
->> Prior to commit 2b8fe81b3c2e ("system/memory: use ldn_he_p/stn_he_p")
->> the mmio helpers here might have been a drop-in replacement for the
->> dereferencing of mmap offsets, but something would need to be done
->> about the explicit PCI assumption introduced here and the possibility
->> of unaligned accesses that the noted commit tries to resolve.  Thanks,
+>>>
+>>> I try to list the virtio sub-devices as follows:
+>>>
+>>> hw/virtio/virtio-iommu.c:    vdc->set_status = virtio_iommu_set_status;
+>>> hw/virtio/virtio-balloon.c:    vdc->set_status = virtio_balloon_set_status;
+>>> hw/virtio/virtio-rng.c:    vdc->set_status = virtio_rng_set_status;
+>>> hw/virtio/virtio-crypto.c:    vdc->set_status = virtio_crypto_set_status;
+>>> hw/virtio/vhost-vsock.c:    vdc->set_status = vhost_vsock_set_status;
+>>> hw/virtio/vhost-user-vsock.c:    vdc->set_status = vuv_set_status;
+>>> hw/virtio/vhost-user-scmi.c:    vdc->set_status = vu_scmi_set_status;
+>>> hw/virtio/vhost-user-fs.c:    vdc->set_status = vuf_set_status;
+>>> hw/virtio/vhost-user-base.c:    vdc->set_status = vub_set_status;
+>>> hw/virtio/vdpa-dev.c:    vdc->set_status = vhost_vdpa_device_set_status;
+>>> tests/qtest/libqos/virtio-pci.c:    .set_status = qvirtio_pci_set_status,
+>>> tests/qtest/libqos/virtio-pci-modern.c:    .set_status = set_status,
+>>> tests/qtest/libqos/virtio-mmio.c:    .set_status = qvirtio_mmio_set_status,
+>>> hw/scsi/vhost-user-scsi.c:    vdc->set_status = vhost_user_scsi_set_status;
+>>> hw/scsi/vhost-scsi.c:    vdc->set_status = vhost_scsi_set_status;
+>>> hw/net/virtio-net.c:    vdc->set_status = virtio_net_set_status;
+>>> hw/char/virtio-serial-bus.c:    vdc->set_status = set_status;
+>>> hw/block/vhost-user-blk.c:    vdc->set_status = vhost_user_blk_set_status;
+>>> hw/block/virtio-blk.c:    vdc->set_status = virtio_blk_set_status;
+>>>
+>>> If the new function pointer type is not added, the number of functions affected
+>>> will be very huge. Although it may seem a bit complicated to use two callbacks,
+>>> it's much safer.
 >>
->> Alex
-> 
-> AFAICT in qemu today the ram_device_mem_ops is used for non PCI vfio mmap cases. For s390x these helpers should be restricted to PCI accesses. For the unaligned accesses (thanks for pointing out that commmit!), are you suggesting we use the ld*_he_p/st*_he_p functions in the helpers i defined? Though those functions don't seem to be doing volatile accesses.
+>> I can understand that it requires more change, but I don't understand why it's safer, can you elaborate?
+>>
+>> Anyway let's see what Michael says, if it's okay for him to have 2 callbacks for the same thing but differing only by the return value, no objection for me.
+>>
+>> Thanks,
+>> Stefano
+>>
+>
+>Hi Stefano, I removed set_status_ext in patch v3, and only changed the return
+>type of set_status to int. The new changes were applied to all vhost-user
+>devices, and virtio returned 0 for other devices.
+>
+>Could you please review patch v3 is reasonable?
 
-I think that's fine. We had the same problem to deal with the XIVE
-ESB MMIO pages. See xive_esb_rw() in hw/intc/spapr_xive_kvm.c.
+
+There are still questions like those a few lines above that I haven't 
+received answers to, please don't send new versions if we haven't 
+cleared up doubts about the current one first.
+
+I still don't understand why we are only considering vhost-user-blk and 
+vhost-user-scsi, can you elaborate?
 
 Thanks,
-
-C.
+Stefano
 
 
