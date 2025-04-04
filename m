@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F22DC3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA2EC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 04:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Xhg-0007fK-0Q; Thu, 03 Apr 2025 23:26:48 -0400
+	id 1u0Ys7-0008Ag-PJ; Fri, 04 Apr 2025 00:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0Xhc-0007eb-8f; Thu, 03 Apr 2025 23:26:44 -0400
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1u0Ys5-0008AJ-Vi; Fri, 04 Apr 2025 00:41:38 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0XhY-0003Ko-El; Thu, 03 Apr 2025 23:26:43 -0400
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-5240764f7c1so717646e0c.2; 
- Thu, 03 Apr 2025 20:26:39 -0700 (PDT)
+ id 1u0Ys4-0005ML-6i; Fri, 04 Apr 2025 00:41:37 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-86d377306ddso769690241.2; 
+ Thu, 03 Apr 2025 21:41:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743737198; x=1744341998; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743741694; x=1744346494; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5jjrTxghcQq2uJDWSvxXb3m1Wu9m74hQjWTjWNOzuV8=;
- b=YBJ0R22TYMmRC1Zdtec6An1A505n8GsyJyTkwTDhnwoLeOeu3HB3TxXz4B8FlhgSaK
- eWe8LVOXIeIlzKj2tAmq351REIFPx4enjuNIbskkmuAPZ1eZE5eAq9d9nMDMc2AIZfSv
- QmOitcpXqvgpaAFsNaQyczQIzSpTg8/NgOtt0+1qu82rvizdDkJ3hyEbeBC1xFdMNNxO
- ob3OkaC6rj+bnjztzi+7O7xyIaYX33X3zENSxOsR4bDwp1HvdxDvLYmLEI11FZYODKts
- FF3Gq4haItWHY139mhNpnXgLnm7iYI2u+SRA5ZZy9LE8GqAC7OV79/YscbvoZZbGxCfb
- yEZw==
+ bh=g4UdtbtLUxvFSxPl6L3AVlYcdszBUWtCmPHWPS5yH5U=;
+ b=d0WOASFyGUUisYjasC0Ho+s/c7MRgaw3C98DzCGrxeQs0qvuzUQhWJPPfXz8JuqKL/
+ 1EgEUct1yan8jcQIFnpMM2tLumwzPWOlSoKd7K/4xeE93BL8ySqc9bXJeG9pLp3Hbw5M
+ bLCFh62JzT9He94wZs8SzbXccuCSI+h0PudrE4nMxHgtu77iB/q3NPD9ZKvfSnTLLF68
+ bfvnbHH21gCegRC7wLyNjQOczxRhB0eTXMcNh7rT7RF5MX8qfJrNZF6XH2zgnDIckrno
+ y6A9+fsAAdu/EDh+ok5wuRpRYVttjbTXKhBYc50FnHHC0PJ6AOaGO6HJ2+ScJZ1AIPzk
+ ynoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743737198; x=1744341998;
+ d=1e100.net; s=20230601; t=1743741694; x=1744346494;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5jjrTxghcQq2uJDWSvxXb3m1Wu9m74hQjWTjWNOzuV8=;
- b=vHH3PT5iLU7NpWfwKYKa4lnm/k1JpOEUMfvfhMFwiiRLAR9vB3mA5pn8vtyajqpeB1
- 8Md3EkHzPI+d+vKBjsXdUy9qplEyyo4sqm5ycolHqDuQOvWS/hwURUTTo/bE689F1W5W
- 7J4ko0s1D6AJJH9m4pZkbZwgdxE1CHnEbHqSy3mOTAEs2TF9VXLKuYDtvJFKes+SKc39
- m8XUdXspH72hR1XGjwCNfy6aTjeE21ei+zRKDd+9Bb0+0IHIrtCclilOLUphpNKkFQLp
- RZImmzoY1Jq5McAvr4n9dsIUd06cLKFqqaathKp0kzwhXTUJ8ky+NG204lAl90O4LZcB
- nELw==
+ bh=g4UdtbtLUxvFSxPl6L3AVlYcdszBUWtCmPHWPS5yH5U=;
+ b=kFLfGUlHzenqBAYPhhacHsqf/7mKqJ/HWgZwKmkmERWZBJiK+lsc5rUXCx9KWXJMZQ
+ 27qOu57PHbap7/6ZxVgyHlSBQFawLTGMhl+Pn/ZJAZGeYR+BOml1F3faiPB5o1GZxmb5
+ mq/kiUPNBRs52S2Fi/irN36flsDdPBpJc84oybgFjDXvNxffdAVWRdonRL2UqMdehmD4
+ JlkH4fgLLtzKE+fYKuQvFZLcEQYUN/BUlUSh19pUcAbw2V1+ZlD5sBMQtDcuc7vMbp0C
+ 0bNH2B391Iekeh48yHun8Shr7iMUHRCO8NoAHb9FfkL5AS29cSYi6U0RYMXwqJLifAXZ
+ wEBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVZjZa2zaandTEgDBYjqe+rbZa+mFlsL0GYKnQ9kIxDNkjDuKhfr7zUfP3GdTqIymnPaNHF6uIqbLBxOg==@nongnu.org,
- AJvYcCXmQ0u5Nw8/U7+Pd7c6qcoLc385KiUzRPwPHHTmJYcE3w4bTv8+aYP5dSaROjjczK2UGJ9YnNE4Djg8@nongnu.org
-X-Gm-Message-State: AOJu0YwHRBdZEd+xPDJdhZE09Q5fEsJx8y2xF5OdDrwV9ik/wRCcYmF8
- Z5SYcmy3DXcMphro6QWjnhIWNf4jOoutX36qAOQTqgcNTcHdedUNuqkC+JY/scMr7YeXbKyhJq3
- npznfNE52nwuuFAisS8I2M6mj4mc=
-X-Gm-Gg: ASbGncsdPOIDyDt1r1tyYPAA1eAs+UamsCQuKaQf0jXiw75H+ftQQ7XXs5IqTmJUd/B
- pr/QCxXALOdNOLBl5FzDnT7B2Sb6eBP0O2krICz+FtMQBktw0+OxCIuxV0uvdc5edcsqggfwMlL
- A+iG3Q1iohfGkniFiwZh1Gys6kIQacSsplZkrh3nB2BLJRRnzI6tF/Ghwb
-X-Google-Smtp-Source: AGHT+IF/lbf5MR8zhDsBwppFIKoI8y+wJ9MvSkHgMxkJWyiw62OEUAk7CdwN8HgQKI3NW6ySNtwwQfzS/6m+rufSJfc=
-X-Received: by 2002:a05:6122:130b:b0:520:af9c:c058 with SMTP id
- 71dfb90a1353d-5276447946cmr1693387e0c.5.1743737198168; Thu, 03 Apr 2025
- 20:26:38 -0700 (PDT)
+ AJvYcCXGSfu/qhHqA+or0I0CMTloevAwTppz82mOGLyRCLWqZ/l1YFnQA6KCpSPHsB48y22ZhApwcCTRkA9C@nongnu.org
+X-Gm-Message-State: AOJu0Yz9EuTgcRcEMJelKx9hcTqnOcugfJxubqWlDilyqEiv8TmCHhHO
+ 8/wTaF8vknRsrxP6ER6WqVar4aRAn6xH736vTNSitCRh1zJrZR52+nr22LxTmwFy1gFSx1DJoKz
+ tz6X8+ZQwhjFpXvrruYuxYnClvcY=
+X-Gm-Gg: ASbGnctXeggki6ugSJvPs1/Fk7oaLxjXMLjbjFJoWJ89cUYvMnfvc/FG6e0UV8JLMwi
+ +WH7qDxy3699d4mUaq3ImmZ6B3DVwOVWe4JftrLcQ3N3INovyTa8tIg5a0BLnAgJGQ6lNXTcdz/
+ RP7LoLpRXCnXCO69YBGd3prR2jgpEDFBsldJ1WKh6aNXg3hVKFBm97Kvpi
+X-Google-Smtp-Source: AGHT+IHFX8AQ58FOCheXW7gCG4upm8oazZcOtR2qVEHi3UrKlG0543soPu72e4RbqNesgXYdwX4L3YoTzgB2xIAK9dc=
+X-Received: by 2002:a05:6102:3f93:b0:4c5:78ae:1e3a with SMTP id
+ ada2fe7eead31-4c8554b42f7mr1584716137.23.1743741693793; Thu, 03 Apr 2025
+ 21:41:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220106210108.138226-1-frederic.petrot@univ-grenoble-alpes.fr>
- <c5c8566a-fd0d-48d1-8ed1-e52f0bb4f210@linaro.org>
-In-Reply-To: <c5c8566a-fd0d-48d1-8ed1-e52f0bb4f210@linaro.org>
+References: <20240607101403.1109-1-jim.shu@sifive.com>
+In-Reply-To: <20240607101403.1109-1-jim.shu@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Apr 2025 13:26:12 +1000
-X-Gm-Features: ATxdqUFi_s08qpPjeDa2HqRslWhZjGXAdyGYozjZWl5By3Wn4lbaITwTiifLhoU
-Message-ID: <CAKmqyKN51+jriKkSL8V5EFc9hBSFoEHYKp-70uP6RvO_K6a=pg@mail.gmail.com>
-Subject: Re: [PATCH v8 00/18] Adding partial support for 128-bit riscv target
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, bin.meng@windriver.com, 
- richard.henderson@linaro.org, palmer@dabbelt.com, 
- fabien.portas@grenoble-inp.org, alistair.francis@wdc.com, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>
+Date: Fri, 4 Apr 2025 14:41:07 +1000
+X-Gm-Features: ATxdqUGRI6CCesvZH3Heq_aXnqbI7Wr6vl7YPQdkxhGXAEAILJPO3xROYzrzIyk
+Message-ID: <CAKmqyKN4EwPHP0d=kBnk8DL9oZcr6gx_+VBveno947+2z6Cj=A@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: support atomic instruction fetch (Ziccif)
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,66 +99,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 22, 2025 at 1:09=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On Fri, Jun 7, 2024 at 8:15=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
 >
-> Hi,
+> Support 4-byte atomic instruction fetch when instruction is natural
+> aligned.
 >
-> On 6/1/22 22:00, Fr=C3=A9d=C3=A9ric P=C3=A9trot wrote:
-> > This series of patches provides partial 128-bit support for the riscv
-> > target architecture, namely RVI and RVM, with minimal csr support.
+> Current implementation is not atomic because it loads instruction twice
+> for first and last 2 bytes. We load 4 bytes at once to keep the
+> atomicity. This instruction preload method only applys when instruction
+> is 4-byte aligned. If instruction is unaligned, it could be across pages
+> so that preload will trigger additional page fault.
 >
+> We encounter this issue when doing pressure test of enabling & disabling
+> Linux kernel ftrace. Ftrace with kernel preemption requires concurrent
+> modification and execution of instruction, so non-atomic instruction
+> fetch will cause the race condition. We may fetch the wrong instruction
+> which is the mixing of 2 instructions.
 >
-> > Fr=C3=A9d=C3=A9ric P=C3=A9trot (18):
-> >    exec/memop: Adding signedness to quad definitions
-> >    exec/memop: Adding signed quad and octo defines
-> >    qemu/int128: addition of div/rem 128-bit operations
-> >    target/riscv: additional macros to check instruction support
-> >    target/riscv: separation of bitwise logic and arithmetic helpers
-> >    target/riscv: array for the 64 upper bits of 128-bit registers
-> >    target/riscv: setup everything for rv64 to support rv128 execution
+> Also, RISC-V Profile wants to provide this feature by HW. RVA20U64
+> Ziccif protects the atomicity of instruction fetch when it is
+> natural aligned.
 >
->
-> I see this series has been merged as commit afe33262585, with
-> 332dab68785b describing:
->
->      This patch adds the support of the '-cpu rv128' option to
->      qemu-system-riscv64 so that we can indicate that we want to
->      run rv128 executables.
->
->      Still, there is no support for 128-bit insns at that stage
->      so qemu fails miserably (as expected) if launched with this
->      option.
->
-> Is this code tested? 3 years passed so I wonder about possible
-> code bitrot here.
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
 
-From memory at the time there was some momentum for RV128. So this was
-merged with the expectation that it would continue to improve.
-
-That doesn't seem to have happened, either software or spec wise though.
-
->
-> (I reached this code by looking at targets not supporting MTTCG).
-
-I'm happy to remove the CPU if it's blocking you, it's experimental so
-it doesn't need to be deprecated or anything fancy.
+Once https://patchwork.kernel.org/project/qemu-devel/list/?series=3D945333
+(specifically https://patchwork.kernel.org/project/qemu-devel/patch/2025031=
+8213209.2579218-12-richard.henderson@linaro.org/)
+is merged this should be good to go in as well.
 
 Alistair
 
+> ---
+>  target/riscv/translate.c | 45 ++++++++++++++++++++++++++++++----------
+>  1 file changed, 34 insertions(+), 11 deletions(-)
 >
-> >    target/riscv: moving some insns close to similar insns
-> >    target/riscv: accessors to registers upper part and 128-bit load/sto=
-re
-> >    target/riscv: support for 128-bit bitwise instructions
-> >    target/riscv: support for 128-bit U-type instructions
-> >    target/riscv: support for 128-bit shift instructions
-> >    target/riscv: support for 128-bit arithmetic instructions
-> >    target/riscv: support for 128-bit M extension
-> >    target/riscv: adding high part of some csrs
-> >    target/riscv: helper functions to wrap calls to 128-bit csr insns
-> >    target/riscv: modification of the trans_csrxx for 128-bit support
-> >    target/riscv: actual functions to realize crs 128-bit insns
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 0569224e53..2be8ef63e6 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1133,13 +1133,37 @@ const RISCVDecoder decoder_table[] =3D {
+>
+>  const size_t decoder_table_size =3D ARRAY_SIZE(decoder_table);
+>
+> -static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t o=
+pcode)
+> +static void decode_opc(CPURISCVState *env, DisasContext *ctx)
+>  {
+>      ctx->virt_inst_excp =3D false;
+> +
+> +    uint32_t opcode;
+> +    bool is_4byte_align =3D false;
+> +
+> +    if ((ctx->base.pc_next % 4) =3D=3D 0) {
+> +        /*
+> +         * Load 4 bytes at once to make instruction fetch atomically.
+> +         *
+> +         * Note: When pc is 4-byte aligned, 4-byte instruction wouldn't =
+be
+> +         * across pages. We could preload 4 bytes instruction no matter
+> +         * real one is 2 or 4 bytes. Instruction preload wouldn't trigge=
+r
+> +         * additional page fault.
+> +         */
+> +        opcode =3D translator_ldl(env, &ctx->base, ctx->base.pc_next);
+> +        is_4byte_align =3D true;
+> +    } else {
+> +        /*
+> +         * For unaligned pc, instruction preload may trigger additional
+> +         * page fault so we only load 2 bytes here.
+> +         */
+> +        opcode =3D (uint32_t) translator_lduw(env, &ctx->base, ctx->base=
+.pc_next);
+> +    }
+> +    ctx->ol =3D ctx->xl;
+> +
+>      ctx->cur_insn_len =3D insn_len(opcode);
+>      /* Check for compressed insn */
+>      if (ctx->cur_insn_len =3D=3D 2) {
+> -        ctx->opcode =3D opcode;
+> +        ctx->opcode =3D (uint16_t)opcode;
+>          /*
+>           * The Zca extension is added as way to refer to instructions in=
+ the C
+>           * extension that do not include the floating-point loads and st=
+ores
+> @@ -1149,15 +1173,16 @@ static void decode_opc(CPURISCVState *env, DisasC=
+ontext *ctx, uint16_t opcode)
+>              return;
+>          }
+>      } else {
+> -        uint32_t opcode32 =3D opcode;
+> -        opcode32 =3D deposit32(opcode32, 16, 16,
+> -                             translator_lduw(env, &ctx->base,
+> -                                             ctx->base.pc_next + 2));
+> -        ctx->opcode =3D opcode32;
+> +        if (!is_4byte_align) {
+> +            /* Load last 2 bytes of instruction here */
+> +            opcode =3D deposit32(opcode, 16, 16,
+> +                               translator_lduw(env, &ctx->base,
+> +                                               ctx->base.pc_next + 2));
+> +        }
+>
+>          for (guint i =3D 0; i < ctx->decoders->len; ++i) {
+>              riscv_cpu_decode_fn func =3D g_ptr_array_index(ctx->decoders=
+, i);
+> -            if (func(ctx, opcode32)) {
+> +            if (func(ctx, opcode)) {
+>                  return;
+>              }
+>          }
+> @@ -1226,10 +1251,8 @@ static void riscv_tr_translate_insn(DisasContextBa=
+se *dcbase, CPUState *cpu)
+>  {
+>      DisasContext *ctx =3D container_of(dcbase, DisasContext, base);
+>      CPURISCVState *env =3D cpu_env(cpu);
+> -    uint16_t opcode16 =3D translator_lduw(env, &ctx->base, ctx->base.pc_=
+next);
+>
+> -    ctx->ol =3D ctx->xl;
+> -    decode_opc(env, ctx, opcode16);
+> +    decode_opc(env, ctx);
+>      ctx->base.pc_next +=3D ctx->cur_insn_len;
+>
+>      /* Only the first insn within a TB is allowed to cross a page bounda=
+ry. */
+> --
+> 2.17.1
 >
 >
 
