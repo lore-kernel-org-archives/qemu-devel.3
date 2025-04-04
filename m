@@ -4,91 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5FFC3601E
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 12:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8767BC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 12:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0gU6-0004v4-MV; Fri, 04 Apr 2025 08:49:22 -0400
+	id 1u0gUY-00052r-HC; Fri, 04 Apr 2025 08:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u0gU3-0004uO-Hk
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:49:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0gUW-00052J-D1
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:49:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u0gTy-0001j4-Mv
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:49:19 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0gUU-0001kj-FF
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:49:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743770953;
+ s=mimecast20190719; t=1743770985;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w+L807oY1LoYwis4mVa576wX+wUmhV2gszFfi6UhrxQ=;
- b=YoHRb2qtsVMTql55AWxUrHr79ZLxMxe673UsRrE8M+jWgInUq6JFBlCfS2FfTsnZEeoido
- owZzLXdqPVTwkINFsCXvjE2vrwfLYDVMQKgceWmeVNIlipUsl22w21/GxybUkdsjvwb2dz
- uqn3DOQqDZHBqDzM93LKXg1o+xYwTKo=
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sVP9pI31859A6fgG2Q/nG68EM72h0IC7+i60Ncl9Dl4=;
+ b=DKDvc8q3295DtKSk72qGpwapndHnOF+xHzh8s4YHUgvKwGdKU3gAk75uxXYzYdDxTQvOru
+ uRG6+qLXk4tZHTuB4BbOsZFLa7I891HoIVIYEz0+M+SAIhJWZ+6ncio2u4ift67CBmH4jK
+ NCS5CAxXlW9tpYf5jW+strWai6w1RLk=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-E-bQmSocPXmUiPIjnu4pbg-1; Fri, 04 Apr 2025 08:49:11 -0400
-X-MC-Unique: E-bQmSocPXmUiPIjnu4pbg-1
-X-Mimecast-MFC-AGG-ID: E-bQmSocPXmUiPIjnu4pbg_1743770950
+ us-mta-684-wor5K1FWM5eIHZl8L5HVQw-1; Fri, 04 Apr 2025 08:49:43 -0400
+X-MC-Unique: wor5K1FWM5eIHZl8L5HVQw-1
+X-Mimecast-MFC-AGG-ID: wor5K1FWM5eIHZl8L5HVQw_1743770982
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43cec217977so13116515e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 05:49:11 -0700 (PDT)
+ 5b1f17b1804b1-43e9a3d2977so14737065e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 05:49:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743770950; x=1744375750;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w+L807oY1LoYwis4mVa576wX+wUmhV2gszFfi6UhrxQ=;
- b=jHNU+FLVC42wts27/D96FqOyt+hJ4aHLUvp1Z5sLjZQyHJ4MZsHMlf1BeE1VaF/X9M
- 8Eqd/C8/HsgnS/WOX4ALD9t0N++t9n0tshgsnUm3TSYdaCNeF2kU/0vvg9DjFv1SoKex
- ewcnMv/4u3IYo73b32pNwKhkHw7WkZPv5BUmwkL0BlfSUFVcZ3uMgXT1VceQ85jejq92
- yrM419aP7ulPjqbPktmrEkthMQbxAE69+e3ypHDDxzcAM6fw4HvYgzWLdszKK20Y+4RL
- RXUUNhEA7oCcniPHCy6Q3EOwtmwprUwbZNC9qQs7VkGQ03agi6qnOGzA0RCJntby3Uj0
- tuUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQIexNALMTQgWB7F1NzH8CnuRipqA3w7/nVp5CfzjhSMLVwabH748xndRKgo0rOqEsWpmGB9Olpa/o@nongnu.org
-X-Gm-Message-State: AOJu0YymI0LG5b/PW/2mbLg3y9WO8+C5Vw9mHnDxpNhnjUO1sTm3UH2Q
- cExXDOR9wHTypPxWYP0rjQxKRhaQCdatTE7OfvWtfaJKB1GZkskW5LfoJyYcFI19YIGS4J+uw9+
- cBM3Bn1oeqgujT2v4ns5CAaGdr1h0ft/yp5YgZ5lDCYVMTd7GuGPi
-X-Gm-Gg: ASbGncvyuKHiHgRbaJBMA/hyUMauw11E2qpb+s5E6ieYj1w72CFxT7/ExAU2UtC7CuL
- hwVJF5wh3kl4V/VW8Viqlf0DnotntxDJ2yD8bcEIIxMG016re6glsTPR9rdFJGIyHbjFoa73Tzj
- L38H2hzKBS37nfDsahg8dAY5w2lp8fwApqO3m6ONw5ik2vAqq4hnE6LAovwkGhhV3noaaGN8X/a
- wu1A9vSGJfPYwGuEWk0yqIoYrgKCZBxbnUgpJuyuF+hGmhhAKS9N4u9RCDqmJ2qiYp66dIef304
- g04ptPaUipp1iX0MB76MbygprAfPVYP7hmnZmSWr6hQUoQH4bfF7k176h3t3vTj5hsLB/6stcT4
- EFmvnw2f7ZFMhV4TjOZIx4pNKUIU430XCEI2EtKD0VDZW
-X-Received: by 2002:a05:600c:c1a:b0:43d:45a:8fca with SMTP id
- 5b1f17b1804b1-43ecfa06fd2mr36194475e9.30.1743770950516; 
- Fri, 04 Apr 2025 05:49:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFprqGacxIa+2rsFn6Gq4fNsof5ZMg8wZIe9z8h2PQ4v013RnlS9TKBj3qzTrwHCS+ABrO4/w==
-X-Received: by 2002:a05:600c:c1a:b0:43d:45a:8fca with SMTP id
- 5b1f17b1804b1-43ecfa06fd2mr36194125e9.30.1743770950030; 
- Fri, 04 Apr 2025 05:49:10 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d74f:9d66:d61a:f3cf:3494:9981?
- (p200300cfd74f9d66d61af3cf34949981.dip0.t-ipconnect.de.
- [2003:cf:d74f:9d66:d61a:f3cf:3494:9981])
+ d=1e100.net; s=20230601; t=1743770982; x=1744375782;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sVP9pI31859A6fgG2Q/nG68EM72h0IC7+i60Ncl9Dl4=;
+ b=TA9Ee8LhL1YHpVY+TW0H4gFHKfdTZ571jZ/7w7MtaRr6SpmZycZWDcsvj4rlFJE79z
+ TGW6w3ADclFD0FemdN6qWm8xpbwSNGTr8nuux9sAwvSGU4NAc6ImHZ+6LmQHk5TAi0JZ
+ k/pfgbclKJHXUI6rgkOxK73Jgpl2rmLZM9y6Dk3KqdjMbtUgcdhCvQaUtMkQxjgyVBmG
+ dFT+zgSE/MipdP527gAY1NLQkbZknnSHECclPKwCbvBuzkTRPe4qGpoJj5R802djzo+L
+ EVM3RmaFgbQkMvwZo+noFrWH+8Quqq7ppTlmU2eVupEe2f/CykTLrvMtAWr31dxBCs+2
+ ap7A==
+X-Gm-Message-State: AOJu0Yy2Z6sUBdwFBg6TTCgS/RegClSntc60I59bP4IbVNlbjaKB5hjV
+ Y4zyDiVpBPTdZmrp4ZC8WrOSz3X1jEuLzXypZ2kdsjpxlySmHjCtWculZ/vgA+n5Wx1T82cZsVw
+ 2gi1nOrRtKU+sT2HusGl+lOffihq3pIfj9dZ2erYdjOtao+dDnmK3
+X-Gm-Gg: ASbGnctkKPJS/AqJ7fHO2fUvisvN6Mg0gXuKOFv63MG3maMeurqdpzvyncEdidvVsU+
+ DV//vGn5EeWaY/puG4NxivpGOB9n1bUVmt0ZjKeoolOILi5EnNS/WAqcBA7QN4GnoXKXkBHHYgA
+ mFcOvnWx2pf9JRFrtD4/kPmbgMzACZn6ObZY9KHT0pnsTVdYrM/B82M/wA5NS6+ZNCxEBlgtq26
+ r8dNwSA/foTzLKykg+eh0GR4KBUKkd/Ivh9PtF49DSnDWpaHPVeqvzn9262KgkUIo9b4RLUInfe
+ PHyvJG+YgIcrkaEr1P07/gZ6NnebJgVVxyv8Aw3FWzAd/jtmbop9iA==
+X-Received: by 2002:a05:600c:b90:b0:43c:ee3f:2c3 with SMTP id
+ 5b1f17b1804b1-43ed0b76672mr26446895e9.7.1743770982504; 
+ Fri, 04 Apr 2025 05:49:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7hbm+mk69Kx6nuSdUcYy8JhSoZLo4nUm2iCssfe6k4vGDBuBdttBPGi2hrjqbM7Pnq6RBAA==
+X-Received: by 2002:a05:600c:b90:b0:43c:ee3f:2c3 with SMTP id
+ 5b1f17b1804b1-43ed0b76672mr26446565e9.7.1743770982151; 
+ Fri, 04 Apr 2025 05:49:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a9bcfsm4367008f8f.33.2025.04.04.05.49.08
+ 5b1f17b1804b1-43ec17b3572sm48493735e9.39.2025.04.04.05.49.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 05:49:09 -0700 (PDT)
-Message-ID: <c3f70137-afd2-448b-8aa9-de14bef25224@redhat.com>
-Date: Fri, 4 Apr 2025 14:49:08 +0200
+ Fri, 04 Apr 2025 05:49:41 -0700 (PDT)
+Message-ID: <137a1646-0bb2-4d79-bb6d-272167140bd3@redhat.com>
+Date: Fri, 4 Apr 2025 14:49:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/15] fuse: Implement multi-threading
-To: Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-References: <20250325160529.117543-1-hreitz@redhat.com>
- <20250325160655.119407-13-hreitz@redhat.com> <20250327155557.GN37458@fedora>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20250327155557.GN37458@fedora>
+Subject: Re: [PATCH v8 09/28] vfio: split out VFIOKernelPCIDevice
+To: John Levon <levon@movementarian.org>
+Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Halil Pasic <pasic@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+References: <20250219144858.266455-1-john.levon@nutanix.com>
+ <20250219144858.266455-10-john.levon@nutanix.com>
+ <52ecc629-4138-4436-bc38-b5f427dd3d7f@redhat.com>
+ <Z+7Oif+ZTFRYBqXa@movementarian.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <Z+7Oif+ZTFRYBqXa@movementarian.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -97,7 +154,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.028,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,75 +170,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.03.25 16:55, Stefan Hajnoczi wrote:
-> On Tue, Mar 25, 2025 at 05:06:54PM +0100, Hanna Czenczek wrote:
->> FUSE allows creating multiple request queues by "cloning" /dev/fuse FDs
->> (via open("/dev/fuse") + ioctl(FUSE_DEV_IOC_CLONE)).
+On 4/3/25 20:08, John Levon wrote:
+> On Thu, Apr 03, 2025 at 07:13:30PM +0200, Cédric Le Goater wrote:
+> 
+>> On 2/19/25 15:48, John Levon wrote:
+>>> From: Jagannathan Raman <jag.raman@oracle.com>
+>>>
+>>> Split out code specific to the kernel-side vfio implementation from the
+>>> VFIOPCIDevice class into a VFIOKernelPCIDevice. The forthcoming
+>>> VFIOUserPCIDevice will share the base VFIOPCIDevice class.
 >>
->> We can use this to implement multi-threading.
->>
->> Note that the interface presented here differs from the multi-queue
->> interface of virtio-blk: The latter maps virtqueues to iothreads, which
->> allows processing multiple virtqueues in a single iothread.  The
->> equivalent (processing multiple FDs in a single iothread) would not make
->> sense for FUSE because those FDs are used in a round-robin fashion by
->> the FUSE kernel driver.  Putting two of them into a single iothread will
->> just create a bottleneck.
-> This text might be outdated. virtio-blk's new iothread-vq-mapping
-> parameter provides the "array of iothreads" mentioned below and a way to
-> assign virtqueues to those IOThreads.
+>> The new VFIOKernelPCIDevice struct is not needed. Please drop it.
+> 
+> I presume the idea was if something was ever needed in the struct that was
+> kernel vfio specific, it could go there. But sure.
+> >> I am not sure the new TYPE_VFIO_PCI_BASE class is needed too.
+>> Are the properties the only difference ?
+> 
+> I'm not sure if you're talking about the type specifically (a bit sketchy on how
+> qemu's klass/type system works) or the existence of the base/kernel/user
+> separation at all.
 
-Ah, yes.  The difference is still that with FUSE, there is no such 
-assignment, because it wouldn’t make sense.  But I can change s/maps 
-virtqueues/allows mapping virtqueues/, and s/differs from/is only a 
-subset of/, if that’s alright.
+I am talking about the base/kernel/user separation.
 
->> Therefore, all we need is an array of iothreads, and we will create one
->> "queue" (FD) per thread.
->>
->> These are the benchmark results when using four threads (compared to a
->> single thread); note that fio still only uses a single job, but
->> performance can still be improved because of said round-robin usage for
->> the queues.  (Not in the sync case, though, in which case I guess it
->> just adds overhead.)
-> Interesting. FUSE-over-io_uring seems to be different from
-> FUSE_DEV_IOC_CLONE here. It doesn't do round-robin. It uses CPU affinity
-> instead, handing requests to the io_uring context associated with the
-> current CPU when possible.
+> If it's possible to set up vfio_user_pci_dev_info and its callbacks without
+> needing a sub-type then maybe not? 
 
-Do you think that should have implications for the QAPI interface?
+I think the vfio-user-device could inherit directly from vfio-pci
+and override the io ops callbacks. It would minimize the changes.
 
-[...]
+> Honestly I'm not really sure why we have sub-classes and inheritance like this.
 
->>   qapi/block-export.json |   8 +-
->>   block/export/fuse.c    | 214 +++++++++++++++++++++++++++++++++--------
->>   2 files changed, 179 insertions(+), 43 deletions(-)
->>
->> diff --git a/qapi/block-export.json b/qapi/block-export.json
->> index c783e01a53..0bdd5992eb 100644
->> --- a/qapi/block-export.json
->> +++ b/qapi/block-export.json
->> @@ -179,12 +179,18 @@
->>   #     mount the export with allow_other, and if that fails, try again
->>   #     without.  (since 6.1; default: auto)
->>   #
->> +# @iothreads: Enables multi-threading: Handle requests in each of the
->> +#     given iothreads (instead of the block device's iothread, or the
->> +#     export's "main" iothread).  For this, the FUSE FD is duplicated so
->> +#     there is one FD per iothread.  (since 10.1)
-> This option isn't FUSE-specific but FUSE is the first export type to
-> support it. Please add it to BlockExportOptions instead and refuse
-> export creation when the export type only supports 1 IOThread.
+The VFIO Devices have a double nature : VFIO and a bus device
+nature (PCI, AP, etc) and multi-inheritance is not (well)
+supported by QOM. We have interfaces but they are stateless.
 
-Makes sense.  I’ll try to go with what Kevin suggested, i.e. have 
-@iothread be an alternate type.
 
-Hanna
+Thanks,
 
->
-> Eric: Are you interested in implementing support for multiple IOThreads
-> in the NBD export? I remember some time ago we talked about NBD
-> multi-conn support, although maybe that was for the client rather than
-> the server.
+C.
 
 
