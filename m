@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E40C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B817C3601A
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0VYw-0008IC-KB; Thu, 03 Apr 2025 21:09:39 -0400
+	id 1u0VYz-0008Iw-Pf; Thu, 03 Apr 2025 21:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0VYv-0008Hu-Ea
+ id 1u0VYu-0008Hi-2N
  for qemu-devel@nongnu.org; Thu, 03 Apr 2025 21:09:37 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0VYs-000815-UB
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 21:09:37 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-72d3b48d2ffso1654677b3a.2
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 18:09:34 -0700 (PDT)
+ id 1u0VYs-00080r-87
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 21:09:35 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-223f4c06e9fso14349865ad.1
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 18:09:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743728973; x=1744333773; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=diH6J4hofBmrfzs6sIeDZ95DC3OrtgE6crTHghEG7+s=;
- b=ABzPzSOXmfE4BFkJC8Cof5GE8klzGF4axLSMMviLuP/7yF63XE86fB0IzXxvyqGsp6
- ZBUf5nmoa2VA2PqUeKHC1lZcHpRZuMvSS3Uqj7/m4GuTvWrXXUHKAjeKEoHCEr4va+6Q
- l9BNgHDjdkZi4FFkdnhTgbbaRgZ5fCAvk7FxPIkmkSnKkX9/jePWYbTtDrcFugi2csjA
- UTgsgbg9flpSw/79S8ddA0rYb7qcOhIwJ/MSp08rm4N1xfVapsMUaNshNCU+ZcMyxX2d
- Fg7jN8kRnYZq93twHmm73cuNCF3bdo58w3UMU+4QblOqEpuyorSs2kzmR4SmOOLGR4qE
- fajQ==
+ d=linaro.org; s=google; t=1743728972; x=1744333772; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=C4xj9W/m0emR2vWhShdJHt3VdmhHRfyY0vRRgxPa7GM=;
+ b=j+I6hSXkII/8GcmG7egGNR5ROuZ7M6h+ORlG2lpywad3E9cY1FzAWWDFV8v3F2jfEx
+ 3juACM5KLJeK9sde1M2x4vgsNGq8Cz9sciTOYwXtUw+e0s3dwiV2bvThoTOqxoeDd9fl
+ o8p15I8Ywkbb6+wG9NxPxkXut8ys7R1vfZr4sHIG2gYUf6Hf3nLn5lndY0krxhnRtx7b
+ IKI2dux9ydxVWsdMXvnykKTYDVit9LkIYAmicfngBw7LDMzdXDamMKcjfWOfOfR4h/Ia
+ oxrDy8RgEBCLA5LBz/Oqp0YNFb/AaSqU+XSFOlU9E051ZqeGu7Jtu4UQJ2uw5g99ukRI
+ wjBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743728973; x=1744333773;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=diH6J4hofBmrfzs6sIeDZ95DC3OrtgE6crTHghEG7+s=;
- b=MS1+N8FzMzrdD65sKxgZNqrjCt4sSFyH9YitaYh4x1kqJNCuUL79bqDtngh2jparii
- ah7TEDs+hm0YNrVlXhls3fXiAHWupXHO5N5fAihcJjb3RUsHcvOtUQUOhse3bFJ/9u1H
- pSowQyNN0Job0v55yW3MVIw9kHePAbfxw1KNdIqAUzeHRh/51/VZ486jYo4JVNjGYf94
- IavBLaGdW5yLSXL7KjZRqMq4hThvsJXxvuSzSHXUduZRoki86yWuZTz9wXLrDpkChbBr
- hwyB7ODdt/kUuyZVts2cq7n3dRiUWXmiaU/xnHT+NodIBCpFU0hTBRRs8Wa7PEiC7yl8
- jh4A==
-X-Gm-Message-State: AOJu0YwJ6/Sc2sI3/7V9zXbjF8pHHabdXqnb3fterX0Q18Y6rvHMUk6E
- +fHDGNskfxawbGCQQwGzUzicLUO9oEox8L3DeyQc0BnbHUNKm/4xU11bagY1AeIwVi1MQWym3ez
- k
-X-Gm-Gg: ASbGncvWTAF76ic3HGZQFk5Yc0X8VwsU5GM/cxVsfgmCkLzWTn5/8C6ye7j7mu4/2mK
- iKEreX7CD1IlSvU7+WLji8YU0yQki1kIjvXrw0ew9GkM74JmRb0nhkPmzxTXQBdx5xQntn52caU
- 52lButRaFK1LOXyatDmcIKXggCtv6x1QMKbK9RikFT7tPw3caYhyJ9jdAd4IkO0X412mcMmsaZS
- qzUhKSUsirCQoy9MQzhpoWFJuXCt6dDdsgvU6FD4ZGw6kaY/Jo3CIr+wd3gkUk4IVeXChn7mbVT
- A9oxfI4Kkt3WVffgP9984vL0tiAXJxa1y7tu+Yjwlug1AiqtGzg=
-X-Google-Smtp-Source: AGHT+IFHAJWsn0/232DMzmabORd90A1qyfzVFI0jo9fJEJ23sQJaR/n1PYuoo1Jprzp67CAbrIXHcQ==
-X-Received: by 2002:a05:6a00:228e:b0:736:62a8:e52d with SMTP id
- d2e1a72fcca58-739e4b5c16fmr2348934b3a.12.1743728973165; 
- Thu, 03 Apr 2025 18:09:33 -0700 (PDT)
-Received: from stoup.. ([75.147.178.105]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97ee2d9sm2171755b3a.39.2025.04.03.18.09.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20230601; t=1743728972; x=1744333772;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C4xj9W/m0emR2vWhShdJHt3VdmhHRfyY0vRRgxPa7GM=;
+ b=NeQMEQIrMU33kte8dO5G+CH3A/79MCAmMCm1r7Se2VDuivnO5jDIfv+5yG4wacPtT/
+ xbdSyTAo+LojTXE/va/e1Y9hNM5i2WwrVMwf9ohNRSIN0idxhkLR7g8mqtL9Cp4rBQ/7
+ LNGC2zKL1+yhnh0vN2y4DtZhQV09wb3vu2FzNAxH+NCXvbnco+L+cTj2xJjxfSUBZpo4
+ ix6f+Zx3L7Wn0mxiSM1m4phbZ5SdlaAihckYPo5cjYTg2rdodCipiWORqOe6kL7za+DG
+ JQw1UhGsjqBab1xxhnqNsyezOVTHXP+eJJSJyawE4W73b74bGTSRFUbXLUwAcl525qMt
+ DVvg==
+X-Gm-Message-State: AOJu0YwLWRBHEUfhwUawkXVyMYNKpUriQjyrozxoK9+tEgRm4NHyskBG
+ Nl9HIRKJdcOmpCyThvX/Re9iovTzWLG8UiYGDic/jaD2WPYJ0iQI4HC8Q0akwQ2orunv4FEAOgv
+ T
+X-Gm-Gg: ASbGncvdT6dUjORbamDVGkjC5lcsaguZh/HKGNiTf1yEIPdlBmpLm6MiuMyQ1lAzWZD
+ 8nIqsQIGfbbw+pE6EG/if7Y0LmYXGbwqB61Jbaq130vS+nUaHJpCtRAy2YQciAMM/FLiNDS5h7B
+ DRH1HBb4BtCHIY6UpuzCwTN1aKKNP7n6TbgqzKeVoo1+f7c62kowZxkprw6WoLiW7cGqIJy40ku
+ Bbo0524/5/Ijr2FqWlkLVVGawxt+CmaMP/zaYBijsMIFS0zUrTkA4WnWdgBp9eVGPG49nBtJR8Q
+ 2m5KS+yLYs68N9yKrvQL8NC+x2F30ejBnhblDubrchK1n+4tmYI=
+X-Google-Smtp-Source: AGHT+IFTeV+vn336/jmQlVn5Ol2UXtdoiL3QVbj2cZ72m+OvMqSF3E7/rn6GI8tKg+bYHJHL+5NXWQ==
+X-Received: by 2002:a17:902:d2cc:b0:21f:98fc:8414 with SMTP id
+ d9443c01a7336-2297673f624mr69883555ad.26.1743728972260; 
  Thu, 03 Apr 2025 18:09:32 -0700 (PDT)
+Received: from stoup.. ([75.147.178.105]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d97ee2d9sm2171755b3a.39.2025.04.03.18.09.31
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Apr 2025 18:09:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Helge Konetzka <hk@zapateado.de>
-Subject: [PULL 1/6] tcg: Allocate TEMP_VAL_MEM frame in temp_load()
-Date: Thu,  3 Apr 2025 18:09:25 -0700
-Message-ID: <20250404010930.164329-2-richard.henderson@linaro.org>
+Subject: [PULL 0/6] tcg patch queue for 10.0-rc3
+Date: Thu,  3 Apr 2025 18:09:24 -0700
+Message-ID: <20250404010930.164329-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250404010930.164329-1-richard.henderson@linaro.org>
-References: <20250404010930.164329-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,42 +95,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following changes since commit 0adf626718bc0ca9c46550249a76047f8e45da15:
 
-Be sure to allocate the temp frame if it wasn't.
+  Update version for v10.0.0-rc2 release (2025-04-01 13:15:45 -0400)
 
-In the resolved issues, incomplete dead code elimination left a load
-at the top of an unreachable loop.  We simply need to allocate the
-stack slot to avoid crashing.
+are available in the Git repository at:
 
-Fixes: c896fe29d6c ("TCG code generator")
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-Reported-by: Helge Konetzka <hk@zapateado.de>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2891
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2899
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250401144332.41615-1-philmd@linaro.org>
----
- tcg/tcg.c | 3 +++
- 1 file changed, 3 insertions(+)
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20250403
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index e8950df2ad..dfd48b8264 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -4671,6 +4671,9 @@ static void temp_load(TCGContext *s, TCGTemp *ts, TCGRegSet desired_regs,
-         ts->mem_coherent = 0;
-         break;
-     case TEMP_VAL_MEM:
-+        if (!ts->mem_allocated) {
-+            temp_allocate_frame(s, ts);
-+        }
-         reg = tcg_reg_alloc(s, desired_regs, allocated_regs,
-                             preferred_regs, ts->indirect_base);
-         tcg_out_ld(s, ts->type, reg, ts->mem_base->reg, ts->mem_offset);
--- 
-2.43.0
+for you to fetch changes up to 49551752e860f5e403cdacac11ee1d218141fd3d:
 
+  hw/arm: Do not build VMapple machine by default (2025-04-03 16:11:09 -0700)
+
+----------------------------------------------------------------
+tcg: Allocate TEMP_VAL_MEM frame in temp_load()
+tests/functional: Skip aarch64_replay test on macOS
+hw/arm: Do not build VMapple machine by default
+tests/functional/test_aarch64_rme_virt: fix sporadic failure
+
+----------------------------------------------------------------
+Philippe Mathieu-Daudé (5):
+      tcg: Allocate TEMP_VAL_MEM frame in temp_load()
+      tests/functional: Add a decorator for skipping tests on particular OS
+      tests/functional: Skip aarch64_replay test on macOS
+      tests/qtest: Skip Aarch64 VMapple machine
+      hw/arm: Do not build VMapple machine by default
+
+Pierrick Bouvier (1):
+      tests/functional/test_aarch64_rme_virt: fix sporadic failure
+
+ tcg/tcg.c                                   |  3 +++
+ tests/qtest/libqtest.c                      |  1 +
+ configs/devices/aarch64-softmmu/default.mak |  1 +
+ tests/functional/qemu_test/__init__.py      |  2 +-
+ tests/functional/qemu_test/decorators.py    | 15 ++++++++++++++-
+ tests/functional/test_aarch64_replay.py     |  4 +++-
+ tests/functional/test_aarch64_rme_virt.py   |  4 +++-
+ 7 files changed, 26 insertions(+), 4 deletions(-)
 
