@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2980C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 12:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B7FC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0gUd-00054D-NH; Fri, 04 Apr 2025 08:49:55 -0400
+	id 1u0geh-0008Cx-Gq; Fri, 04 Apr 2025 09:00:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gUb-00053f-01
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:49:53 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gee-0008Bk-FJ
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:00:16 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gUY-0001kr-EN
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:49:52 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cf628cb14so21635055e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 05:49:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gec-0002zD-L8
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:00:16 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so1672039f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743770988; x=1744375788; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743771613; x=1744376413; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PHz6QRFKgtp/Y368ONgTwaOUzYTDmLXSDiIxMvjKI0M=;
- b=nmpCtjEGvmYKmgtn5R+DnkRNejRxf0y3pw+Vxtz4+4WlwH0/DTAGaY2BEpXWCh8+Zn
- wkphVLLnLte8ICv7Dm4NTSgCg/RBS7GAi/cI1TA3w1n1RnjMwRb8H98pJyO7Uy3va8LR
- WJ6yjmCeo81LoX2oq6mWWWqImEToSjEI2V9RdU/kwNptpk3twHxnwyQup0nXQWXt60RD
- VHwIejrMA6cyJXOY8VWkPPZ0OUnKGmx9zX6nngMIxa7mb7fTLL1oxxMTKrRflSJwixB9
- KYvYLsIweGgEmzXRVpgZmJlNg6DU9+f+bqOSsGKuUSX2KH3Jz5h57g4wGXqkQ88gJVEY
- 0SQQ==
+ bh=40jQKBMJ/aNzNcyAYEcfx8nB+/5raxxsr0RnBg+r3F4=;
+ b=B7+TYdxYZV2YWZCPFFvdStxT2yxm9zxER8OT1Zs9w5/sAB9qdB+B26YRaelPThQ5of
+ ltRnowZ4iM0h2H9xL1Nv8rj6N08RVRmuT+OZVdy3bT2okHJBLjMvX7LqXtp6lfXW5lHV
+ MioyR/zIwtwnwJr40+XT73uvM6PMIR0roUxYfWgRoski8XN64Dxk1XJCcnEG8EBYIaIe
+ vO2mkvWjFJUMMMOBnOd/CJBmlwd0gu6mUMScyrAFpHtnFwYy86FDZUGV1Npt7rX+Ylwi
+ AjX/wvknmXQccw6huFAUKi6n6zVgaU4akEv1QqBQOwRjLXxfk0HNqNhJ+apTpvKil/nS
+ RSag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743770988; x=1744375788;
+ d=1e100.net; s=20230601; t=1743771613; x=1744376413;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PHz6QRFKgtp/Y368ONgTwaOUzYTDmLXSDiIxMvjKI0M=;
- b=oe9iGLvzEheqGqzd2zjUh8Hx/HxddKeM3T2PY/eA507xMOx2L1BwGsnwQj4eDzSZvX
- CvjU6h09M//D+doPByhjrr1VSAeIT2QAZ9p4E0Hy5KnqUH+K7zC0eydpUZ1v+dwo9V3K
- pcNwJG7HXZ8Z+74YwT3V54n9hG1/a3hvptBblZl63eYOF9pWiAaCbXOHkpmDs/mVlKuv
- yPcJXUi1ocUrXaDD7ImwC7R+mvm5gR+3kfsZCrzLF8wPkX/szQ2Z4e6pqCdkdwYeD9jn
- p6z3Ye8NM5bWHFOKWWQcrw4kyqRbgbAgPSdbbQydF5Ll8hcIb2g2v19owk1sw5+lcN1Q
- 8IOw==
-X-Gm-Message-State: AOJu0Yxfc2ooFh2ANkRApIl5poUaw5irihEs8Ou1q87GodtrnnkajRZJ
- vMec+Onf1t13IxdkiMaiRxpa2r/x4YfTqJ+kcWepIPgXe/dzpmEohiMYn/queFs=
-X-Gm-Gg: ASbGncuytFC+XtthL/Rn8WdtaW/AiQzHvTULKB/e60V5JzAdPkVA7Nk0oZgjzjyAufj
- iRCQVxQTAQrDoOA3DWN+Ut1r6LidOCB9hGkTr5BvzbSUX1Wv03Lglj2fHRSp5loX4+389RWfiUK
- lKDsuHn7gODAxCTFLdHqycybrhsgi+sB7zDEH6v7oAS7PGiXSY//iO0Z7XXc7ox1vKkpJzJrjlY
- V4fl6jF87ZvPu5FvPa/jJOGzsH23Bw83YZJ2GATzuJPSU/qYDi5IFXEmdHePLp58wVhm8BjOSea
- lhUdmHoO59EBVAGIGt2uDPNCKOIBvTPb1zMIam1AaKc8MkQWYVGnUfeBLSwYBDkG86erH5p7H2y
- jvBpsL2dsGhdN
-X-Google-Smtp-Source: AGHT+IHQMvCvIZAswZgDXYftO25U5IsTcaLWf9G/LfTu2jUpD0e6YsK5TRdiTaas6lhcoPhV5VlhoA==
-X-Received: by 2002:a05:6000:186e:b0:391:21e2:ec3b with SMTP id
- ffacd0b85a97d-39cb35a0d4fmr2577194f8f.3.1743770987582; 
- Fri, 04 Apr 2025 05:49:47 -0700 (PDT)
+ bh=40jQKBMJ/aNzNcyAYEcfx8nB+/5raxxsr0RnBg+r3F4=;
+ b=N8xA2/SVdBwRQs0kZjaUTqyTunxZfkpM4AqHyMkI2JfErazvFt1oWLy83xbvjBzG3k
+ bhwe3ub8RfJ+dQrb+Xd+TaMR6zBfm8Lqf3E2VGmJ2xLRiGLIEphI3x50yCeLYEiQLvkn
+ 8uXbRH3PMgb69UT+I/fBQs/zndqYwLDqvir1PfjxRp/eCrOLg+a3KpLhaLjOqjrwGReJ
+ pqP+MvqkSNv8TRksNFSF5i9NpY9S1/GIi71Bh3H6KMoLOkfFTlVNerAoTn9bc1SpoMHy
+ xcS7U71XIO4fj0FDECb9CF3kKQLDNuxiU7s6Z9h4G9/hC4XTyxTqN2iAnI9zat9N4tot
+ yX7Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+B4o9T41sbwFLH4de7EynN0wP4bg8QwJ2JOzhyy4Ot2rKicQiB1suu2uHHEm6OhQRjmgU0zSzpvOZ@nongnu.org
+X-Gm-Message-State: AOJu0Yyb+sL9ckWK6unZNHlxq+MrB2xnQtd6FkX9HQqt3Rn0AtnCS43k
+ pjTnJ20LhyDwadSYeWvLq1/Vkimw5EeVp9J6LWTo9P/nPciaYxOtSlMrdhdr7/o=
+X-Gm-Gg: ASbGncsiayCmmc4VAnij1/n+S1klhMkaG55jlxVdNlmlhd4mLObHyw5pjoVu2rXjt/I
+ Pg5r7fpusKBRsD3AU6Wg16p+FlOSguUhvO9z81FKHkCrdlH39OMgap39RKHFJpE5o8dF1bYEkx0
+ rDAO5LI3PSfoT2rdxVR6ZTqxtGAs9gWoR4YHdU5t7KRaCwny6aIc2WRjB+ZtI7j9+hNfdJwzRAF
+ ar986D4IoyKCVXrUrdvyvEUTpI9zPgDWKa6ovX1s7TX7hV0KwBaQzwxMwHGtBObrXMaFuHy1STU
+ /r/CFjA/7+mmozvAHby1VYRGq95MaetHbTASeH+nmfnzHZJtUR9k1rtjTkINiABuhMffTK17Hh8
+ XNMutj6frnidP
+X-Google-Smtp-Source: AGHT+IEcEpnJbw62Uqt3/H6Xs434Hx7FEVhon8NZRLMyj07Npu3aaolj9MDygA2BaOQMINaTAsBgaA==
+X-Received: by 2002:a5d:64ce:0:b0:391:3915:cffb with SMTP id
+ ffacd0b85a97d-39cba9825d3mr2583810f8f.43.1743771612659; 
+ Fri, 04 Apr 2025 06:00:12 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a9da1sm4208847f8f.22.2025.04.04.05.49.46
+ ffacd0b85a97d-39c301a732asm4351047f8f.30.2025.04.04.06.00.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 05:49:46 -0700 (PDT)
-Message-ID: <6b64af93-f542-4a0e-8e55-5bb235f42c83@linaro.org>
-Date: Fri, 4 Apr 2025 14:49:45 +0200
+ Fri, 04 Apr 2025 06:00:12 -0700 (PDT)
+Message-ID: <99497c16-cee4-4098-9971-f61ef7174412@linaro.org>
+Date: Fri, 4 Apr 2025 15:00:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0? v2 13/14] hw/arm/virt-acpi: Do not advertise
- disabled GIC ITS
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Udo Steinberg <udo@hypervisor.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>
-References: <20250403151829.44858-1-philmd@linaro.org>
- <20250403151829.44858-14-philmd@linaro.org>
- <20250404124110.59c59dc3@imammedo.users.ipa.redhat.com>
+Subject: Re: [PATCH v1 0/1] hw/misc/aspeed_sbc: Implement OTP memory and
+ controller
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Kane-Chen-AS <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ qemu-block <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
+ <9171629d-a386-4971-802b-cd26cc42e194@kaod.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250404124110.59c59dc3@imammedo.users.ipa.redhat.com>
+In-Reply-To: <9171629d-a386-4971-802b-cd26cc42e194@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,39 +111,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 12:41, Igor Mammedov wrote:
-> On Thu,  3 Apr 2025 17:18:28 +0200
-> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
++qemu-block@
+
+On 4/4/25 14:06, Cédric Le Goater wrote:
+> Hello,
 > 
->> GIC ITS can be disabled at runtime using '-M its=off',
->> which sets VirtMachineState::its = false. Check this
->> field to avoid advertising the ITS in the MADT table.
+> On 4/2/25 11:14, Kane-Chen-AS wrote:
+>> This patch introduces part of the Secure Boot Controller device,
+>> which consists of several sub-components, including an OTP memory,
+>> OTP controller, cryptographic engine, and boot controller.
 >>
->> Reported-by: Udo Steinberg <udo@hypervisor.org>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2886
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   hw/arm/virt-acpi-build.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->> index e7e27951cb9..38a9e6fe0c5 100644
->> --- a/hw/arm/virt-acpi-build.c
->> +++ b/hw/arm/virt-acpi-build.c
->> @@ -212,7 +212,7 @@ static bool its_enabled(VirtMachineState *vms)
->>   {
->>       VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>   
->> -    return !vmc->no_its;
->> +    return !vmc->no_its && vms->its;
+>> In this version, the implementation includes the OTP memory and its
+>> controller. The OTP memory can be programmed from within the guest
+>> OS via a software utility.
 > 
-> It's confusing have both no_its and its,
-> it would be better to lean this mess up (i.e dedup or rename if something is poorly named)
+> 
+> What is the OTP memory ? An external flash device or built-in SRAM ?
+> If the latter, I suggest using an allocated buffer under the SBC model
+> and avoid the complexity of the BlockBackend implementation and
+> the definition of a drive on the command line for it. The
+> proposal is bypassing a lot of QEMU layers for this purpose.
 
-What about:
+More of the former, a built-in eFuse behaving more like flash. So using
+block backend for the storage seems correct to me. However I don't think
+the implementation belongs to hw/misc/aspeed_sbc; ideally we'd have some
+abstract (or interface) implementation in hw/block/otp.c -- with methods
+such program_otp_data() --, completed by hw/block/aspeed_otc.c.
 
-class: s/no_its/!its_createable/ or !its_usable
-state: s/its/its_created/ or its_used or its_in_use
+Current patch might be good enough to start with IMHO.
 
+Regards,
+
+Phil.
 
