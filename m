@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A01B3C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D79C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:21:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0XUf-0002j3-DC; Thu, 03 Apr 2025 23:13:21 -0400
+	id 1u0Xbr-0004Uj-Ek; Thu, 03 Apr 2025 23:20:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0XUe-0002ig-6J; Thu, 03 Apr 2025 23:13:20 -0400
-Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u0Xbp-0004UC-G7
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:20:45 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0XUc-000177-Ok; Thu, 03 Apr 2025 23:13:19 -0400
-Received: by mail-ua1-x931.google.com with SMTP id
- a1e0cc1a2514c-86fab198f8eso803586241.1; 
- Thu, 03 Apr 2025 20:13:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u0Xbm-0002Ji-ND
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:20:45 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-af51596da56so1448180a12.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 20:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743736397; x=1744341197; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BkJeFs3c3FNz7rdOmEO17L32lm8wVWF4b5VQYEJL4Ps=;
- b=gtgaDxYqlbCqAwwqWNs48wjoKFRbp2jU2NP7VRChbU9FfTYENUl0t8qfAO6lgPbrcQ
- ez4qmlP4W+59VrFVrHzp0yS/u7lydGtVtF/glAIFc+mlfSd1PoaT9CW8p1z+0Tt6qLe4
- BOvHr0ooOabXtRw/0vffiDkwX4kwIPfcQKVraxz4wbXoLW+5RAoqBstCNFlNQKdGdpns
- qkahH6bNXLHnH3oEj+nYYoBqgIPtpfC5t6iGHec6RMXHI/QaSpieZIGSuKigvQpCvhBN
- TofAd5oYADR1mDuyQw6Mfp/1TimGgfGI0YZU4RZYrr85YOt2Aj5XImdSzFCcF+XtLFr9
- PYjQ==
+ d=linaro.org; s=google; t=1743736840; x=1744341640; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yzLkzx/c5x8giPX3f5sJFHV+lc5v+GH1cpH1SFX12t0=;
+ b=YlfYVXqs+8ro+CJyb3oKJdoNnuxflFLBVe4yEQN/CCaHasCWXmCOp+FGRAa9izRoqA
+ fRHHFthA/78ipRjK5dIU3UfggjomrZ7+v46ysbgGtQlHnLNv1VBitJK8FbYJhX+Gv6bm
+ y38+dKLbl47WbxR4UiGR6AogMEfrdpmVQ82BdAeeBO62Yn6cfY5FnHzuPPWH1LWyR1br
+ 9vm1+Qf5/XIIwdPB8ieoc0eNL40bbkO/rdYd7HzcPn6ijBmD6Yad5WUyiU+TDucAe+Va
+ I+BeWv8alPD1mayKiZ4lPFXEe+Wat2Mdtk/pmCjzVBUcwv99HHknH3vf7lJN8AKXnL31
+ 0XpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743736397; x=1744341197;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BkJeFs3c3FNz7rdOmEO17L32lm8wVWF4b5VQYEJL4Ps=;
- b=Xm5su3U2TTN2oFLBpZh3Dp/rhX1FkIcha2NnA/XtRjZvVYH8XUW7DoWJNtmHH7LXW8
- MWU8TYX7c3JQ7IuwwTQFOLbbTMVaFpevBXJUGlegOrtk8Dgf9cKAcn6e18mhOjmv666v
- +lsFNjAgdrD8+lGaPitpHzmmYMfStba2T8QBugsnOv0ybwoGFDyA1ZPFhbkt6yj2TNTK
- +jqhdHQfsYYF8ORc8sQSv+i2gN7JVAVsFzAry8I1u8hmvj782EC1S6bcYo1SohCo1W5C
- vUOfqKdez+IVXRaVIyeghyMIQYp2uRXn+d6Ahy84Pv0PxFlDMCZiwlCnRnnV4iB+QAD4
- XT0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXWGekpoOsPFtVW2w0C4PXOQdUYXLrePh6qhQLsVhdNc8DYuKbyaVg08VZW1QVdZyIiyVTDhOJwwBs3@nongnu.org
-X-Gm-Message-State: AOJu0YzIvJ2DN0uuvwV1lvsy5JVwqQxD7TFlKd9JdAaSYWtURAuBKKxa
- RcU3V8tfiipl/RM+O+v56KmXGCad1cYbR/un5BL6NditBmidUdt0gbpQoZ2X/Fq7hjKYuBfSuV0
- H4wak52oFBfS30s2uPwqZT4ioI3k=
-X-Gm-Gg: ASbGncuFTycKydVImB2K6hvqfbFTrh5vdb7KjuJLIjKvKneamWYlQLVylptqmgytCp+
- cGjsX4WpazH7mlhOk6LPVsdJXhFujaoEBiVl/BLD1JI7WBgNtqYGB0KYHL2YcGutLTnzCIcTd6s
- vXAsx9I+jBMwNhQODPHpTX08hI+/ryYZvK6//Ky3EGeYZ8I5n0ozAUl4/C
-X-Google-Smtp-Source: AGHT+IFFIFdSpq9BQLJdPXBKqPIO8GO1ZoSe9bxYFnaK/mu7a4nziKlU/xkgljcd0iR8Q/G5r2CFBUCxPeCmnt1J5MQ=
-X-Received: by 2002:a05:6102:1528:b0:4bb:9b46:3f8a with SMTP id
- ada2fe7eead31-4c8553821b7mr1762485137.2.1743736397300; Thu, 03 Apr 2025
- 20:13:17 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1743736840; x=1744341640;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yzLkzx/c5x8giPX3f5sJFHV+lc5v+GH1cpH1SFX12t0=;
+ b=jODt2HX6/VI//WSUAno2CodRwjPbSmsMNhLWHs9EkKFtqXmtl14egSLAXsnhK/XRoo
+ 5GW5wHdRBl/+rL6BjU14FoGMnhtLm5QFrdaU8xsw1dEOsZX1rORtuHT4O63fCAl5E+Cq
+ YgZ4vuUGPkNPeQrC0s9AViVP+5Qdr0h1++TIMuGXG3L0/3dqHCTDYw1/+9ZXDKb/T70Z
+ 0UGBScYXPGmpGV2uxHw2qbiGzTGOFpR2hMZPdK4DRSpTwkReKCaVULtZ46NAdelVs5Jh
+ QZ75NA4wHdjKih/rJvu7NpgFT6tB8zk7kCi2cbuAiXkgWGdaNw8sy4KVnWn5CnA6vCfn
+ 9xbQ==
+X-Gm-Message-State: AOJu0YwxZkXyMXEZoaV4F3Tt/2rfQ3zY7TFnHjK73NL/0A2j3kBPlTda
+ CaBpD81dZ3xpqDkAhXARHWHQUkKqfdcO/43/75+efVVyF3ahVEwLHuajC5JAE0S7zCPV6tK2C29
+ G
+X-Gm-Gg: ASbGnctkiGNutBMzrQOUpeli7wB9uoEyA0aZNSGAPtHSLKLa8xzRL3IQn5JB/IPLMM+
+ lEJZe2dPJHxATPcemp2uP7KE8uzlTxogFT7pdo74HqpPZoNwMmlICeXM8QiJaTCHBdamGFWkDqq
+ bveVLB+QllYCxoovusTHgOKJo/qdf1u8KKZw43YIWXWBhzg4v9jd8NVTtdE0imkQ/HdTiEcKcH/
+ bzMkx0Vn/kE+XWObY9SyrMuDFaxxodhor4WQlltwVacmtoTDIFbRA8AmtHrIrHoXznJaUdMRJsa
+ Glj5PKER3KLyOfln4nNKvP8hVqLuHCK/D8R6rMcCkqYn
+X-Google-Smtp-Source: AGHT+IH6gYNCDwC8lSyY6xV33ATe5GZbNc6CBv4xR/CLee6Yb658IGb9p9O61HzUIkhYZt8p/oMVqw==
+X-Received: by 2002:a17:902:ec92:b0:220:f140:f7be with SMTP id
+ d9443c01a7336-22a8a8ceda8mr20401535ad.41.1743736839992; 
+ Thu, 03 Apr 2025 20:20:39 -0700 (PDT)
+Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-229785ad943sm22325945ad.23.2025.04.03.20.20.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 03 Apr 2025 20:20:39 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, philmd@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PATCH 0/2] fix deadlock with plugins reset/uninstall
+Date: Thu,  3 Apr 2025 20:20:25 -0700
+Message-Id: <20250404032027.430575-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20250319192153.28549-1-jim.shu@sifive.com>
- <20250319192153.28549-4-jim.shu@sifive.com>
-In-Reply-To: <20250319192153.28549-4-jim.shu@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Apr 2025 13:12:51 +1000
-X-Gm-Features: ATxdqUEchudNCT-jA5FFA_JgorlSD256ZKccd47jPDhk7w1vY4jvw0SFQ-En0tQ
-Message-ID: <CAKmqyKMtOVgn7gtX3j24bkS2iHARyHF41Se1zfMnNLyoSKs9Wg@mail.gmail.com>
-Subject: Re: [PATCH 3/4] target/riscv: Fix VSTIP bit in sstc extension.
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,45 +99,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 20, 2025 at 5:24=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote:
->
-> VSTIP is only writable when both [mh]envcfg.STCE is enabled, or it will
-> revert it's defined behavior as if sstc extension is not implemented.
->
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+We first fix the issue reported in [1].
+We then add a test plugin making sure we don't regress in the future.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2901
 
-Alistair
+Pierrick Bouvier (2):
+  plugins/loader: fix deadlock when resetting/uninstalling a plugin
+  tests/tcg/plugins: add plugin to test reset and uninstall
 
-> ---
->  target/riscv/csr.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 49566d3c08..ba026dfc8e 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3630,7 +3630,14 @@ static RISCVException rmw_mip64(CPURISCVState *env=
-, int csrno,
->      if (riscv_cpu_cfg(env)->ext_sstc && (env->priv =3D=3D PRV_M) &&
->          get_field(env->menvcfg, MENVCFG_STCE)) {
->          /* sstc extension forbids STIP & VSTIP to be writeable in mip */
-> -        mask =3D mask & ~(MIP_STIP | MIP_VSTIP);
-> +
-> +        /* STIP is not writable when menvcfg.STCE is enabled. */
-> +        mask =3D mask & ~MIP_STIP;
-> +
-> +        /* VSTIP is not writable when both [mh]envcfg.STCE are enabled. =
-*/
-> +        if (get_field(env->henvcfg, HENVCFG_STCE)) {
-> +            mask =3D mask & ~MIP_VSTIP;
-> +        }
->      }
->
->      if (mask) {
-> --
-> 2.17.1
->
->
+ plugins/loader.c              |  2 +-
+ tests/tcg/plugins/reset.c     | 73 +++++++++++++++++++++++++++++++++++
+ tests/tcg/plugins/meson.build |  2 +-
+ 3 files changed, 75 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/plugins/reset.c
+
+-- 
+2.39.5
+
 
