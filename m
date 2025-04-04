@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06ECCC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 15:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F4EC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 15:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0jBF-0003in-Hl; Fri, 04 Apr 2025 11:42:05 -0400
+	id 1u0jCd-0004MT-MR; Fri, 04 Apr 2025 11:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0jBD-0003iA-MS
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 11:42:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0jCc-0004MB-9s
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 11:43:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0jBC-0008RY-9d
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 11:42:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0jCW-0000I9-7d
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 11:43:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743781321;
+ s=mimecast20190719; t=1743781402;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4OhEFMF5Wa7rkUkrJ8Kpb5bATogJewk7UQWmx7eVG+Q=;
- b=VSBs4SVyE+L8fYp6Da5kOsEdrCpVoTkcl1i4sHu84SzeDXeLLzIJrF/CqUl6ea24E7QF/6
- I8oi75Q0LMX8Y/G8xO3EQYvcL+JRmCmQqEKA8bOw+B9ZyBta70l6woNtqnnRUCjy6PAyiC
- XaFOO5D3Hbq6+5FNiyhQZx1pLhWTrrI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=x60PhJeVB8ZRgaD/4LcS0cwBT57GlAHhGqnfhqWHyO8=;
+ b=C0lSDs4O2gQwoKWJ/sR2pLQvx9Siq5EtRnJ3Hmvj36aOpjAtXKF9CZWR8rHDOx7wod3hDj
+ cmoEoz26Shc3+e9fwzDcJHA1Z8X8tui/jwwhchQg0exsSXUDr/jkzNS3J8XRsznQooYSZK
+ fBXILOjMpMX3yzVczcgRH1yMQcwygIU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-oL0enqgFP-iv1uUfKxLF9A-1; Fri, 04 Apr 2025 11:41:57 -0400
-X-MC-Unique: oL0enqgFP-iv1uUfKxLF9A-1
-X-Mimecast-MFC-AGG-ID: oL0enqgFP-iv1uUfKxLF9A_1743781317
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43bd0586a73so14684175e9.2
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 08:41:57 -0700 (PDT)
+ us-mta-307-Bwy3FyvvPEubx0g4Gbud3g-1; Fri, 04 Apr 2025 11:43:19 -0400
+X-MC-Unique: Bwy3FyvvPEubx0g4Gbud3g-1
+X-Mimecast-MFC-AGG-ID: Bwy3FyvvPEubx0g4Gbud3g_1743781398
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d3b211d0eso17259275e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 08:43:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743781316; x=1744386116;
+ d=1e100.net; s=20230601; t=1743781398; x=1744386198;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4OhEFMF5Wa7rkUkrJ8Kpb5bATogJewk7UQWmx7eVG+Q=;
- b=iE9Jduj1BmCxSBpukU8iOuf8gEiazL/TqlyWYPL2qZ4wC7SuidRaG4e+GwQj4hAFRE
- 10G3fzdMJtWhCqQGYgnKFMpkgy1HA6qgzhwuLcwlfcHKVsHE3al0/lc54Fu8UGRZWE0z
- 1g21dGcSjNxXciI4Au64QGpzPOn7wUFq+iTYDyIKQqh0C/TY8s/7N1l/Dp6qeBll82D+
- fiqcDP+XkVWvh4Z6WiyMCJNZwVoqqeVS2kEMDbHOp0qmLl9e9oJ8z6tYCwt9d2mUD8Q/
- 4XZaFkuIe7yZ0sSF0p7ctq8o4qvjR4rr5YAqT38RmMSfIWj2qqEXuIOPS1p1QXBg5Ce5
- cB/g==
-X-Gm-Message-State: AOJu0YyhDmb8Gc4PPqPYTX89UMTyPW/EabTjR0MKDWOcnByXQe+PFpNn
- gZN++r6PqHR5VbZILNrRYf6MudRpyfLG392izdSFdpbPlaDW3269kgeW6Ka06BToRkal+/Ryab/
- RMNLBmpIVHafpaX7w9eUMa+j1TMsDhe0gb8O8/mhH7NAyMnkXiUaF
-X-Gm-Gg: ASbGncvGgR/dSBMMVb5bMucm3rysc99MmUB6gKUF5LtTS1Z3zZeyP1H3yvx8Fi3I0ZL
- +rHvvvBAPMzDRNte8mrDxfOU1bmRgzqUR7SbEjPboVHMKTEdsntgXoGfhv1KRrGALn2NBgjUlxk
- uE7jxWQ074J4zcZdcOFDcANUnGKU6dLSWkfrLGrkr2UBgPCvw996SXaMRq5gq9Q4Z/naWyXxibV
- y+vM5ETPvo3fhGo7RFvnFe6b2XwP7zzQeFZQCLMwO9XRe+gdSUsY1YlV0C2ze+4R+OjkZSw4H8+
- xRf5RGg63rb2iNxIMtJd+fph7esdIRS9rR8RjmVNGSbDKD40QbY+ZQ==
-X-Received: by 2002:a7b:cc83:0:b0:43c:f8fe:dd82 with SMTP id
- 5b1f17b1804b1-43ed6615607mr21141385e9.18.1743781316594; 
- Fri, 04 Apr 2025 08:41:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEojZjhXf7t34g1YrzMTFtdzRlGole4sJN4TnyheekF2X9sFWy5KV9B7XsNwl61og8Qgx/ooQ==
-X-Received: by 2002:a7b:cc83:0:b0:43c:f8fe:dd82 with SMTP id
- 5b1f17b1804b1-43ed6615607mr21141035e9.18.1743781316237; 
- Fri, 04 Apr 2025 08:41:56 -0700 (PDT)
+ bh=x60PhJeVB8ZRgaD/4LcS0cwBT57GlAHhGqnfhqWHyO8=;
+ b=g8xfBJsgVqaD8NQ2BN9uvko1Yr8wG6w9xFlnpNh31/UAuejJ6T4r9jBbimV2p7uWnK
+ EhVVZiWTyHM40fJC04yu2crArUDW9ARQYnb9jLLQq23a33XSiLCrrjudWb9wI5a4uM5r
+ LSlrWv3JVpE+uigVCmK+1405bQIMz2TaDcTV2WE8ScJ1K1FMp7H6U+xUGh7/eP3de48b
+ F+LCaMqOhcR/8x8djInTf+ENrvJyUYsnAB35EpFOwefJDfjcJKmFCytRL9j0zIv0Zw2w
+ rgBJXBhSa0poIOWQl0iM9rPpLkX1DKqTC8VbCvWqRkqfiDdEcNS/ZX1C9rKc8kNzf/bR
+ RI5g==
+X-Gm-Message-State: AOJu0YwkiGU7UbbTsWs/O0vCe4qiSOaVQda6ooQdeY5a4AXp9s0jxMua
+ Mttbnr6bO1gsD0AYg4/9CFJsz/dl/988mRyPMK7gOl0SBbNzLaS0O8ny+eu+peM0U3ZW+jGBbS0
+ 0mE8ewaTxmCQqAC1R4+jrogOwLW0UGJlf7xuVhjOL2DxZD6R6yCAD
+X-Gm-Gg: ASbGncuoao7wkmhVWy4n86Fr1aqcXIKQ+XZjQmkJcuidN+GTtW50AvEJTQNHNkZd976
+ C8QvvY+p4UAGZHOVqefNjpQfv10cXhNqAWujGLdexV9plqpIojV6PB7SyPR8KxNqTEqqGbO00zq
+ ulI4jib/pOL3KmdRY0SqpeOHVXtDnREPvzI29t48lTR30vjuhYWz5j0AVMOMYMPR53T5uxgzLLa
+ tzahW++mhFMPEspHD7rud2hHEsA1o9/oE1k3py8AiNleFrneDFglq1F4yz+VgOa0fmQIPmK4Q3H
+ CDyxwmn3IAV/qFCt0NCXGVt9b30r2Dnpt3RiQox4cXyjrYDSU81FRg==
+X-Received: by 2002:a05:6000:1aca:b0:39c:30f7:b6ad with SMTP id
+ ffacd0b85a97d-39cba942a77mr2891054f8f.18.1743781398428; 
+ Fri, 04 Apr 2025 08:43:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyzzOiLkmHukLdsN2aKedhEBtiIdFaY1SdNHtoJ1HcZcJDtlpXch1i0qSvry145pfrQS96gg==
+X-Received: by 2002:a05:6000:1aca:b0:39c:30f7:b6ad with SMTP id
+ ffacd0b85a97d-39cba942a77mr2891034f8f.18.1743781398080; 
+ Fri, 04 Apr 2025 08:43:18 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec364a0c7sm48750855e9.29.2025.04.04.08.41.55
+ ffacd0b85a97d-39c300968cfsm4721145f8f.16.2025.04.04.08.43.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 08:41:55 -0700 (PDT)
-Message-ID: <46d85400-7073-463e-b61a-73731270a6c0@redhat.com>
-Date: Fri, 4 Apr 2025 17:41:54 +0200
+ Fri, 04 Apr 2025 08:43:17 -0700 (PDT)
+Message-ID: <e1655b70-64d7-4757-9106-f23dd2391633@redhat.com>
+Date: Fri, 4 Apr 2025 17:43:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 05/28] vfio: add vfio_prepare_device()
+Subject: Re: [PATCH v8 03/28] vfio/container: support VFIO_DMA_UNMAP_FLAG_ALL
 To: John Levon <levon@movementarian.org>
 Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -89,11 +89,14 @@ Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
 References: <20250219144858.266455-1-john.levon@nutanix.com>
- <20250219144858.266455-6-john.levon@nutanix.com>
- <3369ecab-21ea-4198-9ffa-73307a795f69@redhat.com>
- <Z+5WLqQRqrxSpNBV@movementarian.org>
+ <20250219144858.266455-4-john.levon@nutanix.com>
+ <7aee0391-256c-40dc-a2a1-328065d6dd08@redhat.com>
+ <Z+5YsQ0kWIuMpMic@movementarian.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -139,7 +142,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <Z+5WLqQRqrxSpNBV@movementarian.org>
+In-Reply-To: <Z+5YsQ0kWIuMpMic@movementarian.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -167,50 +170,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/25 11:34, John Levon wrote:
-> On Thu, Apr 03, 2025 at 11:19:34AM +0200, Cédric Le Goater wrote:
+On 4/3/25 11:45, John Levon wrote:
+> On Wed, Apr 02, 2025 at 06:49:50PM +0200, Cédric Le Goater wrote:
 > 
 >> On 2/19/25 15:48, John Levon wrote:
->>> Commonize some initialization code shared by the legacy and iommufd vfio
->>> implementations (and later by vfio-user).
+>>> Some containers can directly implement unmapping all regions;
+>>> add a new flag to support this.
 >>>
+>>> Originally-by: John Johnson <john.g.johnson@oracle.com>
+>>> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+>>> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 >>> Signed-off-by: John Levon <john.levon@nutanix.com>
 >>> ---
->>>    hw/vfio/common.c              | 19 +++++++++++++++++++
->>>    hw/vfio/container.c           | 14 +-------------
->>>    hw/vfio/iommufd.c             |  9 +--------
->>>    include/hw/vfio/vfio-common.h |  2 ++
->>>    4 files changed, 23 insertions(+), 21 deletions(-)
->>>
->>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>> index eefd735bc6..4434e0a0a2 100644
->>> --- a/hw/vfio/common.c
->>> +++ b/hw/vfio/common.c
->>> @@ -1569,6 +1569,25 @@ retry:
->>>        return info;
->>>    }
->>> +void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
->>> +                         VFIOGroup *group, struct vfio_device_info *info)
+>>>    hw/vfio/common.c                      | 24 +++++++----------
+>>>    hw/vfio/container-base.c              |  4 +--
+>>>    hw/vfio/container.c                   | 38 +++++++++++++++++++++++++--
+>>>    hw/vfio/iommufd.c                     | 19 +++++++++++++-
+>>>    include/hw/vfio/vfio-common.h         |  1 +
+>>>    include/hw/vfio/vfio-container-base.h |  4 +--
+>>>    6 files changed, 68 insertions(+), 22 deletions(-)
 >>
->> I would prefer that the first version did not have a 'group' parameter.
->> Let's add it when needed.
+>> This is difficult to understand. There are no functional changes right ?
 > 
-> I think you mean something like this in hw/vfio/container.c:
+> +    ret = ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL);
 > 
-> vfio_prepare_device(vbasedev, &group->container->bcontainer, info);
+> This is new, we previously never even tried to use this.
 > 
-> vbasedev->group = group;
-> QLIST_INSERT_HEAD(&group->device_list, vbasedev, next);
+>> I think it should be broken down further to clarify the changes.
 > 
-> As it's the only consumer that actually wants a group.
-yes. It's a vfio legacy only construct. We will see what to do
-if vfio-user needs it.
+> patch 1: add a flags param to the callbacks, always zero
+> patch 2: pass through unmap all flag to callbacks
+> patch 3: check for unmap_all extension and use it
+> 
+> That sound better?
 
+yes. Let's see at next respin.
 
 Thanks,
 
 C.
-
-
 
 
