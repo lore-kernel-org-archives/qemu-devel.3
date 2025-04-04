@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253F6C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98F5EC3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0XJt-0004kX-Q6; Thu, 03 Apr 2025 23:02:14 -0400
+	id 1u0XKH-0005yX-Ux; Thu, 03 Apr 2025 23:02:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0XJq-0004bC-7B
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:02:11 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0XKD-0005rJ-S7; Thu, 03 Apr 2025 23:02:34 -0400
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0XJn-00084n-9f
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:02:09 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-30362ee1312so1574774a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 20:02:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0XKB-00086y-Vx; Thu, 03 Apr 2025 23:02:33 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-520847ad493so1501652e0c.1; 
+ Thu, 03 Apr 2025 20:02:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743735725; x=1744340525; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vw8QvdfLBmSPkoH0GrKgyqq86qhGTDGrJmvgU2pUblw=;
- b=ETj0DEfXD2Sl3dcoaC+t8d0Ym0NOdCZRc2q92VS3oP4mT7VG13S4Lat76Z0ZEFeqFQ
- U/t8iZyZuuCJ1tPJwWj2g0hzMZom6Fo16V7PyLSCFGx5n28Nv4Zq+VnQ6hDwP6kRLZBv
- kLKUL4E5ze89i6KLiQcOEbg+uRJYVT/Gx4tnxx0X+zIykDn/CEN5xDyrwZLdTW2gDtIY
- 1oMhOQNADfHW3D9El0dbpvXUEmrRr9VDEtbOLiQLx15H6Z8lUWGq4xYEwSvRCemWOzSq
- 5AX2zvqm2ApPQZAjaRsBw/fid+F1Yne0pZKJEZhwYz1I5z7WiFcBBSzJwMwWFrH75bKm
- H1hQ==
+ d=gmail.com; s=20230601; t=1743735750; x=1744340550; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YfSmNMORF6/3TZL75u4GLWRY7K/RKERTN16F2b7owKQ=;
+ b=lC/P0lPB6kj6r77ZVLhKdpn2WES/x6K12cz6zDUFxfJ0/hkmyj2I8JHlPlqyb73gkE
+ VJWxjlBepetCd9YOpjj9gSIyx8C5+aAISLZOhjuZupe2STBD2fTAeqLlyhJCrTsVgaGQ
+ 3SJXlc6LNa/0r1TOHz1CdXdFz+O8xwgGL9xn7lVta72l/JxPRu20cecUYr4VPCL5C6eb
+ zG54SJ3UST6WnRSEXHXyxenwarblorOvWE5ypfByTj6ykYrZXmxvjqjNdaNbxWt+CjC6
+ 49vZ9tuoFwoyWbRMH6ZFyDVqKI1lr71QzEiKQ5X4/ciU7mHWN6EnvkSY1a13RFAP+2yk
+ 4odQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743735725; x=1744340525;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vw8QvdfLBmSPkoH0GrKgyqq86qhGTDGrJmvgU2pUblw=;
- b=nyxd7DcmZaRM6fgg/bMlmzFx84m1jaZh3kZXMS/LYMMJclUiOzvTkuFsBrmY/OgyU/
- nPtmJf4XX+msgY7R3XSzP673dmVN5mv7LdtmXtxxzv1+3WqgESutB2O1s55n3FMIMZtb
- gJsFrckiXFhVCX+aNEinMbKLm6TPQsiPdmCNVxn84EKBNXEkItU0Mf/RgEjNlTqX1Aaf
- M8MmyJ2gYHoUbrTa6v2wPiMrfsZEtNwBZjupwswq4fFEC0XahIvvRxBARo5VGW8t6f3e
- ZNZScQzTChHHBRpkpc4pIfBTVMQ45vcVSxALa5EWsGWemdfH+WRlmVI5rpeqspyY9Fvh
- FKNA==
+ d=1e100.net; s=20230601; t=1743735750; x=1744340550;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YfSmNMORF6/3TZL75u4GLWRY7K/RKERTN16F2b7owKQ=;
+ b=mukm4ZZXJ5i8VC81q30vK8b5eodY5ATOsBBiJ585F/oaVM82hPHpTEaZcFpXTEOX0W
+ CcymGWkai6uDHGl71nfWWIKrs2ytRJTuQZ5c+z1w4ab5PSXKWm8Zjbo5f+59Glu0D3cX
+ 0diPL1JdCPdcYgClSJW3vXf5hMD5rgSm7Z5FksbzPr+IuqF6c0l5DhYlvUnyc66vPVvQ
+ sk3HhwsY/jBVpWY2QQyXFpcnQqsrnaaymLvFDzknE4gq0NdGjVMfX0wVPQxc1Ec4QyiO
+ PRIoOqXvOwjjlgIS1SOeBm/RzEoLKMYnC4PoRzaXB4ZFzqFA3IO59AA5/7isEF0VNKqj
+ rEjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/U5IHT4nfLVYrvj26+gRl/4eGsiYc62LTSVItLVNpMAMLHAJj0o+h80+V0zxMKUPYlVsLYzAki4Zi@nongnu.org
-X-Gm-Message-State: AOJu0YwGfI6OBsFCkEiDuZQGwWToMubHtgZs8wA39UXrnd+uaKwQYZNc
- 0ZFF7A1uW/3I0P0CKlsKiQQslbySmtBgV2lTS5irX9peJGOUzWGg5DYV9/WDTlA=
-X-Gm-Gg: ASbGncv+9NcIEmVVp6fbGgp20huePiA8mmFTZ42P9O2YC+iF72MCNxKUqYKkyR2eMd8
- k0/opm+38KtuxxV1WArWuSsCcnjt75YTEGeT3a3kQRwLUoxlkkbEUffbeY4JsWRhaxCBZDw77iU
- tMRffpXBBVKfLLTmt0T9zyYFncSkJ7FRQXpzDNxv2PYKR5rLT/lIMGLSSGrAW/CDg7w+paiQD2a
- Dn/rH3p3s2kpcPCAuPxXSPOcVaP1PWjXCCTG1r6Z7wkmT4uVwqbCTIH7nWx1/IdmDtlidPes8E5
- pxbf25vvthWNNF4XgC18Dqzrk/X6wJyWIMM0Bo5oZviW7DNlNtETONLe
-X-Google-Smtp-Source: AGHT+IGSJFAuAEwpv4fnhACcbtVeO+XMW+8oDDEM/WpYpcSZSytUy6Z0Qx1Fb6boId3dwJX6CS8s3A==
-X-Received: by 2002:a17:90a:d604:b0:2ff:64a0:4a58 with SMTP id
- 98e67ed59e1d1-306a4970dcdmr2167089a91.22.1743735725670; 
- Thu, 03 Apr 2025 20:02:05 -0700 (PDT)
-Received: from [192.168.0.102] ([186.215.49.46])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3057cb90bedsm2494408a91.43.2025.04.03.20.02.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 20:02:05 -0700 (PDT)
-Message-ID: <ecf79fce-9406-4889-91a8-0e0fdf52eb4b@linaro.org>
-Date: Fri, 4 Apr 2025 00:02:01 -0300
+ AJvYcCUnUaJXFLFWtvFioiz7e+CMUcwDw5bAkDUqslw4HLxUxNqiPpiix6xoiskDhu8ZqQldmvYeSy5YthiT@nongnu.org
+X-Gm-Message-State: AOJu0Yw6xWzFFw7Np6M0JuHB5J1GUf4ceEiwObqCZJgR1WA4HisUiOqg
+ YPuZRqqldjLYfo3ibE3sGgjLN41i6hG6dbcBzJQ+7SiyTfrLQiAJVCSIXpXzqxUzCRDkQjwYrIA
+ BXdvrg42gdlFSvwlJkBiMLF/gwZs=
+X-Gm-Gg: ASbGncvzZIEcEaQ3WK5r0sNe833vipeZFjH/A/IiWXn3iG/Li7JAoWCToGKiVuf4DWY
+ lnLk1q5lo4ztpjX2+qq8Odu6Y2HF2WH6Z9BNVzgd9BfLbvvTMajZLHlHQEeaJqSruPkGZz6wadD
+ 0ddt4BC4MlVU0j913QkPr7mlatl4lflbTmegnmyxPfPapAOjaHRH7CgxLq
+X-Google-Smtp-Source: AGHT+IFI0HRtewG/hOMFmnXCBqlt2+2oXTE2IqC2HcHSH9Q4pIq6iIHNUWxlypLslzePg6cRSEMvAc7N/uqQa16XmSI=
+X-Received: by 2002:a05:6122:909:b0:520:62ce:98ed with SMTP id
+ 71dfb90a1353d-52764542ce4mr1612846e0c.6.1743735750482; Thu, 03 Apr 2025
+ 20:02:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v3 7/9] hw/arm/virt-acpi: Always build IORT table
- (even with GIC ITS disabled)
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
- Udo Steinberg <udo@hypervisor.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>
-References: <20250403204029.47958-1-philmd@linaro.org>
- <20250403204029.47958-8-philmd@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250403204029.47958-8-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250313152330.398396-1-paolo.savini@embecosm.com>
+In-Reply-To: <20250313152330.398396-1-paolo.savini@embecosm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 4 Apr 2025 13:02:04 +1000
+X-Gm-Features: ATxdqUEfx4wb8EWqlvop383VcUBcmN6AE2I2a-nu10NFJQhragGhKziAoYtVUII
+Message-ID: <CAKmqyKO4qUL484ndaGSfWX3Rcbhx0zDaGbvt3noJ49-BPCfD2w@mail.gmail.com>
+Subject: Re: [PATCH 0/1 v4] target/riscv: use tcg ops generation to emulate
+ whole reg rvv loads/stores.
+To: Paolo Savini <paolo.savini@embecosm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, 
+ Nathan Egge <negge@google.com>, Max Chou <max.chou@sifive.com>, 
+ Jeremy Bennett <jeremy.bennett@embecosm.com>, 
+ Craig Blackmore <craig.blackmore@embecosm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,115 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+On Fri, Mar 14, 2025 at 1:24=E2=80=AFAM Paolo Savini <paolo.savini@embecosm=
+.com> wrote:
+>
+> Previous versions:
+>
+> - RFC v1: https://lore.kernel.org/all/20241218170840.1090473-1-paolo.savi=
+ni@embecosm.com/
+> - RFC v2: https://lore.kernel.org/all/20241220153834.16302-1-paolo.savini=
+@embecosm.com/
+> - RFC v3: https://lore.kernel.org/all/20250122164905.13615-1-paolo.savini=
+@embecosm.com/
+>
+> Version v4 of this patch brings the following changes:
+>
+> - removed the host specific conditions so that the behaviour of the emula=
+tion
+>   doesn't depend on the host we are running on.
+>   The intruduction of this extra complexity is not worth the very margina=
+l
+>   performance improvement, when the overall performance improves anyway
+>   considerably without.
+> - added reviewers contacts (thanks all for reviewing the work).
+> - changed the header from RFC to PATCH.
+>
+> Cc: Richard Handerson <richard.henderson@linaro.org>
+> Cc: Palmer Dabbelt <palmer@dabbelt.com>
+> Cc: Alistair Francis <alistair.francis@wdc.com>
+> Cc: Bin Meng <bmeng.cn@gmail.com>
+> Cc: Weiwei Li <liwei1518@gmail.com>
+> Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Cc: Helene Chelin <helene.chelin@embecosm.com>
+> Cc: Nathan Egge <negge@google.com>
+> Cc: Max Chou <max.chou@sifive.com>
+> Cc: Jeremy Bennett <jeremy.bennett@embecosm.com>
+> Cc: Craig Blackmore <craig.blackmore@embecosm.com>
+>
+>
+> Paolo Savini (1):
+>   target/riscv: use tcg ops generation to emulate whole reg rvv
+>     loads/stores.
 
-On 4/3/25 17:40, Philippe Mathieu-Daudé wrote:
-> Citing Gustavo [*]:
-> 
->    Gating IORT table generation entirely based on the presence
->    of ITS looks wrong because IORT table has data beyond GIC ITS,
->    like for SMMUv3 etc..
-> 
-> [*] https://lore.kernel.org/qemu-devel/bae6e29a-7290-47d2-8caf-14702ee091f0@linaro.org/
-> 
-> Reported-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks!
 
-Maybe it's worth to cite the "IO Remapping Table Platform Design Document",
-in particular page 10, which reads:
+Applied to riscv-to-apply.next
 
-"the IORT provides an ACPI description for IO topology, SMMUs, and GIC ITSs"
+Alistair
 
-https://developer.arm.com/documentation/den0049/latest/
-
-Now that the target is 10.1, let me thing a bit more about it.
-
-
-Cheers,
-Gustavo
-
-> ---
->   hw/arm/virt-acpi-build.c | 38 +++++++++++++++++++++-----------------
->   1 file changed, 21 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 1c389ef5cdb..e7e27951cb9 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -287,6 +287,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->       uint32_t id = 0;
->       GArray *smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
->       GArray *its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
-> +    bool has_its = its_enabled(vms);
->   
->       AcpiTable table = { .sig = "IORT", .rev = 3, .oem_id = vms->oem_id,
->                           .oem_table_id = vms->oem_table_id };
-> @@ -325,9 +326,12 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->   
->           nb_nodes = 3; /* RC, ITS, SMMUv3 */
->           rc_mapping_count = smmu_idmaps->len + its_idmaps->len;
-> -    } else {
-> +    } else if (has_its) {
->           nb_nodes = 2; /* RC, ITS */
->           rc_mapping_count = 1;
-> +    } else {
-> +        nb_nodes = 1; /* RC */
-> +        rc_mapping_count = 1;
->       }
->       /* Number of IORT Nodes */
->       build_append_int_noprefix(table_data, nb_nodes, 4);
-> @@ -336,17 +340,19 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->       build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
->       build_append_int_noprefix(table_data, 0, 4); /* Reserved */
->   
-> -    /* Table 12 ITS Group Format */
-> -    build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
-> -    node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-> -    build_append_int_noprefix(table_data, node_size, 2); /* Length */
-> -    build_append_int_noprefix(table_data, 1, 1); /* Revision */
-> -    build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-> -    build_append_int_noprefix(table_data, 0, 4); /* Number of ID mappings */
-> -    build_append_int_noprefix(table_data, 0, 4); /* Reference to ID Array */
-> -    build_append_int_noprefix(table_data, 1, 4); /* Number of ITSs */
-> -    /* GIC ITS Identifier Array */
-> -    build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
-> +    if (has_its) {
-> +        /* Table 12 ITS Group Format */
-> +        build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */ //
-> +        node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-> +        build_append_int_noprefix(table_data, node_size, 2); /* Length */
-> +        build_append_int_noprefix(table_data, 1, 1); /* Revision */
-> +        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-> +        build_append_int_noprefix(table_data, 0, 4); /* Number of ID mappings */
-> +        build_append_int_noprefix(table_data, 0, 4); /* Reference to ID Array */
-> +        build_append_int_noprefix(table_data, 1, 4); /* Number of ITSs */
-> +        /* GIC ITS Identifier Array */
-> +        build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
-> +    }
->   
->       if (vms->iommu == VIRT_IOMMU_SMMUV3) {
->           int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
-> @@ -429,7 +435,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->               build_iort_id_mapping(table_data, range->input_base,
->                                     range->id_count, IORT_NODE_OFFSET);
->           }
-> -    } else {
-> +    } else if (has_its) {
->           /* output IORT node is the ITS group node (the first node) */
->           build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
->       }
-> @@ -979,10 +985,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->                             vms->oem_table_id);
->       }
->   
-> -    if (its_enabled(vms)) {
-> -        acpi_add_table(table_offsets, tables_blob);
-> -        build_iort(tables_blob, tables->linker, vms);
-> -    }
-> +    acpi_add_table(table_offsets, tables_blob);
-> +    build_iort(tables_blob, tables->linker, vms);
->   
->   #ifdef CONFIG_TPM
->       if (tpm_get_version(tpm_find()) == TPM_VERSION_2_0) {
-
+>
+>  target/riscv/insn_trans/trans_rvv.c.inc | 155 +++++++++++++++++-------
+>  1 file changed, 108 insertions(+), 47 deletions(-)
+>
+> --
+> 2.34.1
+>
 
