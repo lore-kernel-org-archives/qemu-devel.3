@@ -4,91 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAA4C36014
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127D6C3601A
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0gz1-0006TJ-E6; Fri, 04 Apr 2025 09:21:19 -0400
+	id 1u0hBy-0000pn-8A; Fri, 04 Apr 2025 09:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gz0-0006Ss-1j
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:21:18 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gyx-00065f-Bz
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:21:17 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cfb6e9031so18154835e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743772872; x=1744377672; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n+yY4zHMpzonncGp0PG2YOqpZf6vw5c75RcGQuFG3hg=;
- b=dj+4XSAz70dKVGJRlA6foI+TUjFMiZcHTnYT/5BVONE9RqJ1DEcJyeE5+QZ7vPYDzZ
- P94NT7uGXgJ4LgznSdfPqR7xgVv+QZJ7VrbQoJabY+qDLxzgvDyk3sTTJEUM82ta66hE
- 1UF1sFG6Si3O04zB142N2G8kJ3liRyjvI9KIydZHYEGZ+/DS4o3ZJenkuoWctxgcCwI3
- 0DjbpNwEBrPvej5GkpCWK7GQdGQpliZ3pxhnJV1zxr14P1ZScZZSF95Nj1qpL2uTULHe
- tA0tdLLz6hey/gHPSEMCGq+E4aVzMStMVB5xSIQ1TGLsIGs6edT/j2weGtyzWTGdcU4K
- AwCg==
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1u0h3a-0007by-6Y
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:26:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1u0h3Y-0006ne-56
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:26:01 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433wiT012515
+ for <qemu-devel@nongnu.org>; Fri, 4 Apr 2025 13:25:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=bDuzMjiRfhY
+ 8qqWwbxci97RbTv25bs4o+U0P5+qscwA=; b=Sy8sPAn4B6C5Hr55psIBJbM+aZp
+ CIGcJ7aAEIuz1rH+99r6kXxygdfolFhFRNb1y1gWRVYGXgjBoYbxWwwBQJxtN7SD
+ jdJpElMzk1ItC8pzVHMuVII1ACl9KNqHgKV8m9PSS+AytP/qeOp+gYF/oWC6asXb
+ PDskowYBEAuE6MlpImFehaT/WjRVtoTfvZ/ZwShG1M9oeOsAK7ozAzjRPoyetErJ
+ vaino5jNFHKdvXw5YK6IYmJkj9MEEQXv8lQHFXPj6sDQ6gAzgZIg6cwNiw6EhD93
+ DXkXt6yS84utemXLeRx80yCGBU3ZJbyCdB4avf9rhTKlNB7sJWAB8v0sfSA==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d51w0h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 13:25:56 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-af972dd0cd6so1450486a12.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:25:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743772872; x=1744377672;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n+yY4zHMpzonncGp0PG2YOqpZf6vw5c75RcGQuFG3hg=;
- b=ba0yMZ7BNUy5KclVJJiWyWOlFOCD9WHolHaDXjrtm1HJI7daXDbUlufDR6Rg7DmksS
- Yse/KrucQxQtL0UFfKIq1dpDXtwF538j4lzp2SfYZRl76I4Cro+mOHaN8my/folUDP/Q
- MUKcpZrdBFriewf2f5BfRa6Vz3XsHt/BmwQht61ACSuHaIEzx9N8j/um4Wio3PvHjkt5
- C58z69DWDKQ/7qO4tuHXhUnpc1e3asYsa28LNSKTsKEs0CJwY4Cpn99zSM5U9GviBCVh
- Yg7rdtcSqtlMf93/tN+vmozBUXmPK5ScQwh1dEi0H8rhbL/NPi//Fh7dZkF6oM/hiiL9
- IQcA==
-X-Gm-Message-State: AOJu0Ywzeo79/gY3rcZn+hJiPuVpvZmnLhbUn70QI9urNyLPxGer9sa0
- YumRYmORNg8ooviiWuRSC9nfxNpWySTj/DC0PsduPxn3i4hEs/QF7Z5YQgLZclY=
-X-Gm-Gg: ASbGncs+nVgfR1lvDZP6GDn/NyInpQFktnvuEBzKf7FAhTcY3RLFS+8OXqaJmaUnrFI
- 5TYY06fvuC0HK751lZphBqxRqTlFC25Sc0CcMJQ9IzEmzgES8u15hvnIkbxMChfoy8JKDdaHkaU
- OP8Q/gHNDcMbwav133QI+Qf6pwzxXrntw/QqfSBT0+z1BO4I4tuAqn9m1mvwCV5/7Pqm4hXzGq0
- 9PKs7XWdXtYVaAfx93+h259G9mYzkmrCatoKpy0aF+xEFuAFK+xzc/qddpXP2gGXK+RNweT7NzK
- pZzUzoqnsM4iOBN9VbrGXmYxl0ADOFq0zybTEh7piaHq0tKwTYYn+3vVo3UPgxWZCKZDiOf/sSR
- 8fk5R1R421oVQtO4bHQ==
-X-Google-Smtp-Source: AGHT+IEOrjPJAEW/PIVPR4c039TWO+D04Onh6lM3gMg4YjxWeqjujxk6UuYgWX4FycblqoRYtaAStg==
-X-Received: by 2002:a7b:cc83:0:b0:43c:f8fe:dd82 with SMTP id
- 5b1f17b1804b1-43ed6615607mr16418945e9.18.1743772872362; 
- Fri, 04 Apr 2025 06:21:12 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec17b1352sm48581965e9.37.2025.04.04.06.21.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 06:21:11 -0700 (PDT)
-Message-ID: <e4181e5f-5393-4345-9dab-8bf1a6dcdd91@linaro.org>
-Date: Fri, 4 Apr 2025 15:21:09 +0200
+ d=1e100.net; s=20230601; t=1743773155; x=1744377955;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bDuzMjiRfhY8qqWwbxci97RbTv25bs4o+U0P5+qscwA=;
+ b=eNJI5TZigpcFUx4uoqyoHAWjuYM2yoABUNSeD7QdCYmKf1zpk//K32TVAeAMfD2jVb
+ un9tTNsIDQzeqvcGxzFS8rBG3qwRqTdW3U1fNjZg9qB85YRwSuujnUnFvZLLgIMB9Teu
+ jvKjfz84UbLYulyqpoAy8akXDHi4TIxfIu06UFWrLR7X1yznzLoaG4D5xXLcZjbku8VJ
+ gdW0z85s/HWbI/CWdpg9pKhe+NGP+Kmwpdx6elTCT+GvPfAcOatBr92k7ppFP1SEpfHL
+ aOwluRA41/425TmpCNk/kq4aNaL9OXdZCG7pVoZEsvHZCZ4Wvdr9epdnX4fUrUggy/lG
+ 0dDw==
+X-Gm-Message-State: AOJu0Yx1BLdkfil6zRX1B559dRECat/6AXxBqGZPZR8ttpFPPEOPmAlN
+ +4pKrVE2cibskTPZ5R6KJaBesw9LouyYbQRpPntyyHhxYTSul1v+YyqCf3gqYMpo0KeXFnpT6Bl
+ 2SWO1n2oOUIwmCO/oEDSEkOYWvD71J1a2MBfKLf9k/ga6nGww1Pj8qw==
+X-Gm-Gg: ASbGncuy8rGYNiTWq/Cb75UjEi9nzAjg3xuYSw8Z2jSfe4JQG2GeWtMEzZ3CO7lW1YW
+ 4OEDhZccRyk+MHpFtsgldjE74sD/kXjHHPLUnyDJ+F3e78Jc2cfux/gShF/u9gHgHr7pTg1pCWQ
+ KnbEjrDCqNyBwTkmjV1eGzqzTsWZBSIAtq5jxJKHm0P026b6Ey15opskJe0M1a5diV953QR46IF
+ m4eSmUgf2Yc9DHLTOyyzHsePXNZpx+nnBLWRfPs49Y8T0EIVfHRloMV2IBzwCV643VCNVBhcutY
+ XJaZ2hWJkGKJbLrzUOpaOTPom7coL/qx1ICt0Ht6hI672KMoPtr5yD4UaVSUhtQDe4d1jn8/HvB
+ 2oo8=
+X-Received: by 2002:a17:903:3c66:b0:224:191d:8a87 with SMTP id
+ d9443c01a7336-22a8a8739e2mr39647325ad.26.1743773154820; 
+ Fri, 04 Apr 2025 06:25:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsfLvZzBno19442BX2raPkOVbE8JS0b17gvfWJq6vtH16DlOjPZRk8OV/aw7gQSs1/BjphLw==
+X-Received: by 2002:a17:903:3c66:b0:224:191d:8a87 with SMTP id
+ d9443c01a7336-22a8a8739e2mr39646985ad.26.1743773154422; 
+ Fri, 04 Apr 2025 06:25:54 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-229785adae3sm31788875ad.16.2025.04.04.06.25.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Apr 2025 06:25:54 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: brian.cain@oss.qualcomm.com
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org,
+ matheus.bernardino@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ bcain@quicinc.com
+Subject: Re: [PATCH 1/6] target/hexagon: handle .new values
+Date: Fri,  4 Apr 2025 06:25:51 -0700
+Message-Id: <20250404132551.3677006-1-matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20250404025203.335025-2-brian.cain@oss.qualcomm.com>
+References: <20250404025203.335025-2-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ipmi: Allow multiple BMC instances
-To: corey@minyard.net
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>
-References: <Z-8ujYWA8yBATtYK@mail.minyard.net>
- <438cb87a-cfa2-4392-92f4-bbb05f7a2ec2@linaro.org>
- <Z-_Y3VJ49yYyZmE4@mail.minyard.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z-_Y3VJ49yYyZmE4@mail.minyard.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: o89pGTN042XQG0wjDXq8bgDFxa-OUISk
+X-Proofpoint-GUID: o89pGTN042XQG0wjDXq8bgDFxa-OUISk
+X-Authority-Analysis: v=2.4 cv=Cvu/cm4D c=1 sm=1 tr=0 ts=67efdde4 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=XR8D0OoHHMoA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=5Ev2Aso3rA0ZF-ehJDsA:9
+ a=_Vgx9l1VpLgwpw_dHYaR:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-04_05,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0
+ bulkscore=0 suspectscore=0 mlxlogscore=479 malwarescore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ clxscore=1011 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504040093
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 04 Apr 2025 09:34:39 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,144 +130,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 15:04, Corey Minyard wrote:
-> On Fri, Apr 04, 2025 at 02:41:46PM +0200, Philippe Mathieu-Daudé wrote:
->> Hi Corey,
->>
->> On 4/4/25 02:57, Corey Minyard wrote:
->>> Allow a system to have multiple BMC connections to the same BMC and
->>> multiple different BMCs.  This can happen on real systems, and is
->>> useful for testing the IPMI driver on Linux.
->>>
->>> Signed-off-by: Corey Minyard <corey@minyard.net>
->>> ---
->>> I'm working on a fairly extensive test suite for IPMI, the Linux
->>> driver and qemu, and this is necessary for some driver tests.
->>>
->>>    hw/ipmi/ipmi.c            | 1 +
->>>    hw/ipmi/ipmi_bmc_extern.c | 5 +++--
->>>    hw/ipmi/ipmi_bmc_sim.c    | 2 +-
->>>    include/hw/ipmi/ipmi.h    | 1 +
->>>    qemu-options.hx           | 9 ++++++++-
->>>    5 files changed, 14 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
->>> index fdeaa5269f..ffd972f78b 100644
->>> --- a/hw/ipmi/ipmi.c
->>> +++ b/hw/ipmi/ipmi.c
->>> @@ -110,6 +110,7 @@ void ipmi_bmc_find_and_link(Object *obj, Object **bmc)
->>>    static const Property ipmi_bmc_properties[] = {
->>>        DEFINE_PROP_UINT8("slave_addr",  IPMIBmc, slave_addr, 0x20),
->>> +    DEFINE_PROP_UINT8("instance",    IPMIBmc, instance, 0),
->>
->> Can we use "id" instead of "instance"? The latter confuses me, but
->> maybe a matter of taste.
+On Thu,  3 Apr 2025 19:51:58 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>
+> From: Brian Cain <bcain@quicinc.com>
+
+Perhaps it would be best to reset the autorship here to
+brian.cain@oss.qualcomm.com?
+
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/hex_common.py | 27 ++++++++++++++++++++++-----
+>  1 file changed, 22 insertions(+), 5 deletions(-)
 > 
-> "id" means "identifier", not "instance".  The error log mentions
-> "instance", that that is what is passed to vmstate_register().
+> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+> index 758e5fd12d..242dee3731 100755
+> --- a/target/hexagon/hex_common.py
+> +++ b/target/hexagon/hex_common.py
+> @@ -349,6 +349,12 @@ def helper_arg(self):
+>              self.reg_tcg(),
+>              f"{self.helper_arg_type()} {self.helper_arg_name()}"
+>          )
+> +    def from_subtype(self, subtype):
+> +        if subtype == "":
+> +            return self
+> +        raise Exception(
+> +            f"unknown subtype '{subtype}' on generic Register class")
+> +
 
-Note, vmstate_register() is a legacy API, with only 20 cases left to
-update. See commit 6caf1571a97 ("include/migration: mark
-vmstate_register() as a legacy function"):
-
-     /**
-      * vmstate_register() - legacy function to register state
-      * serialisation description
-      *
-      * New code shouldn't be using this function as QOM-ified devices
-      * have dc->vmsd to store the serialisation description.
-      *
-      * Returns: 0 on success, -1 on failure
-      */
-
-> Maybe it's better to just have a global variable that increments and not
-> pass it in?  That way it would work automatically.
-
-Global variables often hide suble problems. We have a list of some used
-in qdev / qbus / pci that we plan to remove, because it makes command
-line not reproducible.
-
-See this thread:
-https://lore.kernel.org/qemu-devel/87czq0l2mn.fsf@dusky.pond.sub.org/
-
-> 
-> -corey
-> 
->>
->> Preferably s/instance/id/:
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->>>    };
->>>    static void bmc_class_init(ObjectClass *oc, void *data)
->>> diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
->>> index d015500254..11c28d03ab 100644
->>> --- a/hw/ipmi/ipmi_bmc_extern.c
->>> +++ b/hw/ipmi/ipmi_bmc_extern.c
->>> @@ -488,7 +488,8 @@ static const VMStateDescription vmstate_ipmi_bmc_extern = {
->>>    static void ipmi_bmc_extern_realize(DeviceState *dev, Error **errp)
->>>    {
->>> -    IPMIBmcExtern *ibe = IPMI_BMC_EXTERN(dev);
->>> +    IPMIBmc *b = IPMI_BMC(dev);
->>> +    IPMIBmcExtern *ibe = IPMI_BMC_EXTERN(b);
->>>        if (!qemu_chr_fe_backend_connected(&ibe->chr)) {
->>>            error_setg(errp, "IPMI external bmc requires chardev attribute");
->>> @@ -498,7 +499,7 @@ static void ipmi_bmc_extern_realize(DeviceState *dev, Error **errp)
->>>        qemu_chr_fe_set_handlers(&ibe->chr, can_receive, receive,
->>>                                 chr_event, NULL, ibe, NULL, true);
->>> -    vmstate_register(NULL, 0, &vmstate_ipmi_bmc_extern, ibe);
->>> +    vmstate_register(NULL, b->instance, &vmstate_ipmi_bmc_extern, ibe);
->>>    }
->>>    static void ipmi_bmc_extern_init(Object *obj)
->>> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
->>> index 6157ac7120..c1b39dbdc5 100644
->>> --- a/hw/ipmi/ipmi_bmc_sim.c
->>> +++ b/hw/ipmi/ipmi_bmc_sim.c
->>> @@ -2188,7 +2188,7 @@ static void ipmi_sim_realize(DeviceState *dev, Error **errp)
->>>        ibs->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ipmi_timeout, ibs);
->>> -    vmstate_register(NULL, 0, &vmstate_ipmi_sim, ibs);
->>> +    vmstate_register(NULL, b->instance, &vmstate_ipmi_sim, ibs);
->>>    }
->>>    static const Property ipmi_sim_properties[] = {
->>> diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
->>> index 77a7213ed9..4436d70842 100644
->>> --- a/include/hw/ipmi/ipmi.h
->>> +++ b/include/hw/ipmi/ipmi.h
->>> @@ -183,6 +183,7 @@ struct IPMIBmc {
->>>        DeviceState parent;
->>>        uint8_t slave_addr;
->>> +    uint8_t instance;
->>>        IPMIInterface *intf;
->>>    };
->>> diff --git a/qemu-options.hx b/qemu-options.hx
->>> index dc694a99a3..186433ac13 100644
->>> --- a/qemu-options.hx
->>> +++ b/qemu-options.hx
->>> @@ -1120,6 +1120,10 @@ SRST
->>>        ``slave_addr=val``
->>>            Define slave address to use for the BMC. The default is 0x20.
->>> +    ``instance=val``
->>> +        For more than one BMC on the same system, each instance needs
->>> +	a unique number.  The default is 0.
->>> +
->>>        ``sdrfile=file``
->>>            file containing raw Sensor Data Records (SDR) data. The default
->>>            is none.
->>> @@ -1137,7 +1141,7 @@ SRST
->>>            is set, get "Get GUID" command to the BMC will return it.
->>>            Otherwise "Get GUID" will return an error.
->>> -``-device ipmi-bmc-extern,id=id,chardev=id[,slave_addr=val]``
->>> +``-device ipmi-bmc-extern,id=id,chardev=id[,slave_addr=val][,instance=id]``
->>>        Add a connection to an external IPMI BMC simulator. Instead of
->>>        locally emulating the BMC like the above item, instead connect to an
->>>        external entity that provides the IPMI services.
->>> @@ -1151,6 +1155,9 @@ SRST
->>>        simulator running on a secure port on localhost, so neither the
->>>        simulator nor QEMU is exposed to any outside network.
->>> +    You can have more than one external BMC connection with this, but
->>> +    you must set a unique instance for each BMC.
->>> +
->>>        See the "lanserv/README.vm" file in the OpenIPMI library for more
->>>        details on the external interface.
->>
-
+We use this method for other reg types downstream (HVX). Since, in this patch
+series, we are not really using from_subtype (get_register is always called
+with subtype == ""), I think we could either exclude it from this series or
+evaluate how to also upstream its use for HVX.
 
