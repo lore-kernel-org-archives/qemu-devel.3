@@ -4,147 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E643C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 05:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51241C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 05:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0ZZU-0004LG-7t; Fri, 04 Apr 2025 01:26:28 -0400
+	id 1u0ZxA-0007e8-PF; Fri, 04 Apr 2025 01:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u0ZZS-0004Kz-5N
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 01:26:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u0ZZQ-0003Gp-Jc
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 01:26:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743744382;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Y7Nbv5uop0UuAgVMI/0eRBllvFPXC9t4RwioDV37Aq4=;
- b=bDvVkoPkbnMBESye8GPJPETKdAoTolHXDFwjFgsqt7dtSYjKDTy9DOv1ZXnImqp9ZmR3d8
- NV5krx48re4uuR2SAsE/xViVxmUpPcBTNU3mMFJmH4hWXpnCDIluD8tJmFUFklLeOEMYXH
- AKTLSd3ikqx2Nim2q7LkTWOKtLuXKWQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-34R7D5aWNaiqi6lIBLe9_g-1; Fri, 04 Apr 2025 01:26:20 -0400
-X-MC-Unique: 34R7D5aWNaiqi6lIBLe9_g-1
-X-Mimecast-MFC-AGG-ID: 34R7D5aWNaiqi6lIBLe9_g_1743744379
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5e5d9682f1fso1554268a12.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 22:26:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0Zx8-0007dn-D5; Fri, 04 Apr 2025 01:50:54 -0400
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0Zx5-00066D-8Z; Fri, 04 Apr 2025 01:50:53 -0400
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-86d5a786c7cso800414241.2; 
+ Thu, 03 Apr 2025 22:50:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1743745849; x=1744350649; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2WtapgEIMKAfUTHOqTamO2rJh5a/YNNNWDh0+/jvBVU=;
+ b=YjwrR8BVWOQdS8qaMNCyU3bJRUEZSxhIY1utNZp4Df9cJj9E+e0xB/2jeoVvYpBGru
+ zB0CFSnFJ5X3bySjN57EpX7PS5wQPGIauGytWbbEVzMXXCkNNhMhrHUw2Tycg9J+myCi
+ lIHT+O8taKLk13Pkq1Jtlzau40oiBDPavvKyzMuDQj8Gbqg4lHqi95kGhCza003Pu0l3
+ jQWEw0Q5vDM8ZnWl7E+QcD5MR6sjTh3gDkBb+tQ9JsCH5GBZplverjDICjcrcFWvMikY
+ m//21B9tqV+hPmT2yWCuRJHk/Q3RNdv9ww/jE4GyQ3ukUno4Ijt3g+nIyOiz+AHz+amU
+ daug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743744379; x=1744349179;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y7Nbv5uop0UuAgVMI/0eRBllvFPXC9t4RwioDV37Aq4=;
- b=toQCRJrVCo9kGDQ2C/hI8kRKYbVOfzvH+8cS5VGrTKRDGm3T9Q2Ulx3Mjbd74F++rr
- V76kY3Rmfm84jG7e7Kef+nnl/KDe1K/8ODKf3beLZFQu/mP+oYUwNv1vg4L5kqNgpzkP
- wLUhjnCgRUf2TrZjRLraKZvmDk9x/Jv60Q5HSGTF73p5fkp9+YN2itxEPRlZqUBMH4qq
- qwg1fCnJPGnh5zxUO0e+96ouknswf4Mk5KERQ9PTaXFGgT160TSW2eGXPGyJfpyWggjs
- EXJUgKiJwMlsHolFjk6tni7MvB5fGzg8Hbji8BQ+N8Ue8Rp6Pm64zF0zuRKG465WHPKr
- XZDQ==
+ d=1e100.net; s=20230601; t=1743745849; x=1744350649;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2WtapgEIMKAfUTHOqTamO2rJh5a/YNNNWDh0+/jvBVU=;
+ b=mKV3raG0Y/wZa7qOpHEi68D5UaFS9OZkf9OdD8P+ZAYTRfV7TR7RRwsZ1wlZ0hmTr1
+ AbSn/FTKjpaqwRQYoCAbo905rR9pYM3x43tjNjryCCE8D4r/SryHqUZDCpTyT+ln7KTa
+ fwNzeYNzQQF/TA9yzhL+a8lKu3SrR6A76Zz/HVOBA4l7Z8E8Cuz1OFn3m8iom1NjS6Us
+ p245Fhm4aYfX+EzrcluwdjO22nKJ/4HMuei+8fbdTPjzB9/YfaUncyIRHjnswllZFWrr
+ 655FCs+5RF7VogZ8DMW/ZxSwlv19lSUEKq2Y7WUlt6s0XWO4FgTLFJD9UTWdKAY0+PQ9
+ CIdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0TNjGCS2u/CCIiRbZCRnf2LmtBmUVLdZvmg+VCq8RZyOkyPmoNnsTyicBfmvgglEXxph7jBXpLuZ0@nongnu.org
-X-Gm-Message-State: AOJu0YzoV+Grgqc2rpB2WpcPhb0nIxCY1Ljn3cZf7pjt2cyfI162xeHU
- 3G+G8wa90m/SObJgRzlOX5zYESC4MjWetEZ2JCFJJ5uBYjXf18e+bv8H3VtdsnNcCieulO6ChkM
- VhbyEkFca7Vyp0WEB95GBNah7sZ/3J6LKGn+am6iV4YaJZs5FZbT0
-X-Gm-Gg: ASbGncu+k+78KW4I/whDkGKWDvtGIaH1XKYZWHt6g9BBkKy1MZjHW6xkPG2MJhZmr/r
- l7ZTIaRX7le+aC5P4IurOHOjlxTVA4QN29j5QpLMpduTqfhEQFYrQWBZZgI/75yvEUgl6n9vD49
- N/uJzWk/xsL6WSXI0jcqi/lJ72QuGsaaAZko5jz60iLwI55GRPqjRBrqVu5DJ0KJOhpNckMhurz
- 3q7Lu6ukhkpy9XGjbwox0FPwW1NLFwQD6dF/uSxIiDj+0XqRkvt9Cp9FivDOf2iLwbWfLYaXjue
- 4j0PXQF3fMqHOyq+SH3IVAu+ET3Re7L3OUHvnJQWHstG
-X-Received: by 2002:a05:6402:3492:b0:5e6:bba0:6778 with SMTP id
- 4fb4d7f45d1cf-5f0b660694fmr1062636a12.23.1743744379380; 
- Thu, 03 Apr 2025 22:26:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHs1p9Cg+sY0O/d8arqFQQ8P2oCn6M8kMjIailhM2/72CEdrERxz2e1DiGQIQtDZoO98dkX+g==
-X-Received: by 2002:a05:6402:3492:b0:5e6:bba0:6778 with SMTP id
- 4fb4d7f45d1cf-5f0b660694fmr1062617a12.23.1743744379040; 
- Thu, 03 Apr 2025 22:26:19 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-51-76.web.vodafone.de. [109.42.51.76])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f0880a5204sm1829396a12.66.2025.04.03.22.26.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 22:26:18 -0700 (PDT)
-Message-ID: <e92f7d01-8def-4a5c-8910-49197386b63c@redhat.com>
-Date: Fri, 4 Apr 2025 07:26:16 +0200
+ AJvYcCVaXYk8A3YT+z9xjNOs1PVLdAQ8f6Lzz6Odddo9PREQOZAa7DCNlL/DyeCTrMwvv7oR2URZo33gFTmv@nongnu.org,
+ AJvYcCWA85C3PSvtvwIEi4TaUlNCXs5+AnIs1LwVDBpkg4MbX+PwRXbB7GgEVGkUwuT0iawcx6I6im0D1b+AQw==@nongnu.org
+X-Gm-Message-State: AOJu0YxrVytPXZR7vc5M55LRm53Zyu3DODbEtXb0m/s1cnfHQV7t8x/M
+ umSF83KVoiI39PhGz/lrg5sI8nM0OcTLZGZW+oiSpDeHjSsKICHL1gYm9bsFNlRz0vLobgK/aEX
+ ieLWnwK2Rwv12fyfe3LqmIY32yJg=
+X-Gm-Gg: ASbGncv2gfarkiK/ViqcU5Iko6qABh8lds2PmzOirDBSJ7XBWZJ/pWY0oN4iNasuhCS
+ h7FRMfrGEm8tE/h267NfLRZhl47HA85M4XXQbLEhEXzfEJWW2AkKhP+dctQY87OoBrYzSGVEfSv
+ zHbiI9jWieKAZZftJOee8Cu27xssnqxsl7mmxoK5mKCR97uHEBO3WDwq4j
+X-Google-Smtp-Source: AGHT+IFPFkNdmDiKFS+m4/HrqBbOXrN0PilZ8235jYZXEXe/ZjptKeMBc9t5Pm4oykeBntM8yL5sp2W58PdSYc6Wl0U=
+X-Received: by 2002:a05:6102:504c:b0:4b6:20a5:8a11 with SMTP id
+ ada2fe7eead31-4c8553714eamr1395868137.1.1743745849472; Thu, 03 Apr 2025
+ 22:50:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.0 v3 2/5] tests/functional: Add a decorator for
- skipping tests on particular OS
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250403203241.46692-1-philmd@linaro.org>
- <20250403203241.46692-3-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250403203241.46692-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.649,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250327130256.653357-1-dbarboza@ventanamicro.com>
+ <19d7409d-35a0-486f-a626-9d382fb8a6bf@linaro.org>
+In-Reply-To: <19d7409d-35a0-486f-a626-9d382fb8a6bf@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 4 Apr 2025 15:50:23 +1000
+X-Gm-Features: ATxdqUEnGno7frQwunVmNAoPrlM5NNfrq1RL-QvLjfm2QjuPJ6H1tVMREjICLnI
+Message-ID: <CAKmqyKPsRvaVztUdPRwf5h90rVdT9MOrvQz_=WvoEj-bWoTWVg@mail.gmail.com>
+Subject: Re: [PATCH for-10.1] hw/riscv: do not mark any machine as default
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,64 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/04/2025 22.32, Philippe Mathieu-Daudé wrote:
-> Since tests might be failing on some operating systems,
-> introduce the skipIfOperatingSystem() decorator.
-> 
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   tests/functional/qemu_test/__init__.py   |  2 +-
->   tests/functional/qemu_test/decorators.py | 15 ++++++++++++++-
->   2 files changed, 15 insertions(+), 2 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-> index 45f7befa374..af41c2c6a22 100644
-> --- a/tests/functional/qemu_test/__init__.py
-> +++ b/tests/functional/qemu_test/__init__.py
-> @@ -15,6 +15,6 @@
->   from .linuxkernel import LinuxKernelTest
->   from .decorators import skipIfMissingCommands, skipIfNotMachine, \
->       skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
-> -    skipIfMissingImports
-> +    skipIfMissingImports, skipIfOperatingSystem
->   from .archive import archive_extract
->   from .uncompress import uncompress
-> diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-> index 1651eb739a7..50d29de533d 100644
-> --- a/tests/functional/qemu_test/decorators.py
-> +++ b/tests/functional/qemu_test/decorators.py
-> @@ -5,7 +5,7 @@
->   import importlib
->   import os
->   import platform
-> -from unittest import skipUnless
-> +from unittest import skipIf, skipUnless
->   
->   from .cmd import which
->   
-> @@ -26,6 +26,19 @@ def skipIfMissingCommands(*args):
->       return skipUnless(has_cmds, 'required command(s) "%s" not installed' %
->                                   ", ".join(args))
->   
-> +'''
-> +Decorator to skip execution of a test if the current
-> +host operating system does match one of the prohibited
-> +ones.
-> +Example
-> +
-> +  @skipIfOperatingSystem("Linux", "Darwin")
-> +'''
-> +def skipIfOperatingSystem(*args):
-> +    return skipIf(platform.system() in args,
-> +                  'running on an OS (%s) that is not able to run this test' %
-> +                  ", ".join(args))
-> +
->   '''
->   Decorator to skip execution of a test if the current
->   host machine does not match one of the permitted
+On Fri, Mar 28, 2025 at 2:16=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 27/3/25 14:02, Daniel Henrique Barboza wrote:
+> > Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
+> > made it default for qemu-system-riscv32/64. It was the first RISC-V
+> > machine added in QEMU so setting it as default was sensible.
+> >
+> > Today we have 7 risc64 and 6 riscv32 machines and having 'spike' as
+> > default machine is not intuitive. For example, [1] is a bug that was
+> > opened with the 'virt' board in mind, but given that the user didn't
+> > pass a '-machine' option, the user was using 'spike' without knowing.
+> >
+> > The QEMU archs that defines a default machine usually defines it as the
+> > most used machine, e.g. PowerPC uses 'pseries' as default. So in theory
+> > we could change the default to the 'virt' machine, but that would make
+> > existing command lines that don't specify a machine option to act
+> > weird: they would silently use 'virt' instead of 'spike'.
+> >
+> > Being explicit in the command line is desirable when we have a handful
+> > of boards available, so remove the default machine setting from RISC-V
+> > and make it obligatory to specify the board.
+> >
+> > After this patch we'll throw an error if no machine is specified:
+> >
+> > $ ./build/qemu-system-riscv64 --nographic qemu-system-riscv64: No
+> > machine specified, and there is no default Use -machine help to list
+> > supported machines
+> >
+> > 'spike' users that aren't specifying their machines in the command line
+> > will be impacted and will need to add '-M spike' in their scripts.
+> >
+> > [1] https://gitlab.com/qemu-project/qemu/-/issues/2467
+> >
+> > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > ---
+> >   hw/riscv/spike.c | 1 -
+> >   1 file changed, 1 deletion(-)
+>
+> I'm in favor of this change, which I believe is the correct way to
+> go, so:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Agreed
 
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> but I'd rather we follow the deprecation process. Up to the maintainer.
+
+I agree, it is a breaking change, it would be nice to go through the
+deprecation process in case people are expecting Spike to be the
+default.
+
+Alistair
+
+>
+>
+>
 
