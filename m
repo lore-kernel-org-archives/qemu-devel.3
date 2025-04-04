@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67355C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 18:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE68C3601A
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 18:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0lOy-0003XU-AZ; Fri, 04 Apr 2025 14:04:24 -0400
+	id 1u0lPT-0003j1-Gm; Fri, 04 Apr 2025 14:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u0lOw-0003XF-M9
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 14:04:22 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0lPQ-0003fx-77
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 14:04:53 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u0lOu-0005gu-5I
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 14:04:22 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-736c1cf75e4so1949468b3a.2
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 11:04:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0lPO-0005jX-7U
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 14:04:51 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39c0dfad22aso1458389f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 11:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743789858; x=1744394658; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1743789888; x=1744394688; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r68WooAav6eQw/N7a9ACaNN/oWgc/yd2zfdOvrR64Xw=;
- b=hojBKICH89dka3jXxjKLID4Fc+o9Ti25zdW+QSn/BG4FSrC+tafgtbDPq+dqLitJmR
- eNsXV1gApRe9bGSviVQDirRu8eH0qiiPOdG24etkV/bJ++Nx9pri+GWYqX7++ijRpPKP
- t3pAyJV7abwmYmUXntHQbhDiIFLdHwDHMb8hl/hcSMnutTa+66EjPI3qwFeFTiKw1joP
- G67A09VLzxe9hJMc4bYhWjx0u8i3o2aeHNCC0YFVAtSZrlkDjHL4u1kSve3+bCMmgwrY
- BQoi27C+j1n/HYwVMBzzY1ryi1JcdCth+jBeIxsLOmj3aYu6c/ykHbB+wVdpzJfZNR6m
- vHSA==
+ bh=PhOvOgV+iEW3Y2/gsk17coF+DjwhEtkXBbD6pNWwevA=;
+ b=B28JBe8Yf11hrAZF7Si7UF6GMMhfugNBFeaubTOqWydHtvlY1mZuvV8YD56x1TWH3t
+ wdbcJ+n6ChuffugjIiP+8lJsZPMC7SRwnQ4TIUheArR+0I862wHbH7fviUvaiOPNmJqm
+ nB8cdfSES4UTIWrPdRx6ebIRfcc4b0jXilHOaq/aHRPngZGcyaTAW3K3DITMBAtyOJ68
+ wsIFIo7gWWgHKct8kpjFJeNZi0Sam5FbGYIeSz677m4ST+7zaNhBTJv1I7Nv17jvwa26
+ Ed27A0Io/Urwx4/bLOa+nr2s/hSUC66JZVpl+ReL/QIN8lA9YLRqJcFbvjP82uVs5DPs
+ bK5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743789858; x=1744394658;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743789888; x=1744394688;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r68WooAav6eQw/N7a9ACaNN/oWgc/yd2zfdOvrR64Xw=;
- b=FIbxPcC7/Lk1FOwMCVPO6ei3x1tAVgh9LjAV+y59zKMt2Uxt6n8oVRXF+A/Oz+NxAq
- jWM+e8csczbuo9IEAEM/4SX+JWSdXFBWhG/eH4qVQO5ANB6y9k4DQVikDqN4tU2uGHis
- 6tVcQoAlAQvKvJXl3Tt4CQm5SsevSsTOeQreH8nwV1PzXQ5zswI4Ex2npAaNaCytPv4s
- 2Y/bKHkJkXTnFq5tMkmREAtK06dRQEOepxIT/dshG/ElK/btyKcDeQQh2l/B4EM1WBFP
- H4HJlLF8frPmfxlhwV1VZgMU6VtXcYHRTfhRWVgRtKn3dlFkqFmfCu8Af28KzTiWO6wh
- oluA==
+ bh=PhOvOgV+iEW3Y2/gsk17coF+DjwhEtkXBbD6pNWwevA=;
+ b=YjUsyQSUDC/NqCmrk3IbV/TECrJyUMvklBu50ZySIMA/G67kzixLK4KfcRq/6ZxdGp
+ Eimq/P42BB+gAjpdSkHTv6NZl2nRn+4O+3kyRQPFpIdamIpyMRlW0AyCJMjW0NhOB+Xy
+ /Kv3jcoH2i9/auCV/VVDbOc9D6LJuZN1pcctdaZrHjAP7CWNGS47ZJ9T/fThPv3ARMAi
+ 1uO9Wcw02mHs8clKSueDRXg6cOXMeHOWDRl0DdlPkWF/uI4JH162QyEcJ+gnBD08kcrw
+ RZeTEgT6TpQMwBM5zIKAYQix3EJBx+J0Wjx6JQh4vmxWAqvb8gw7lbCvsAq+SIr3MOfd
+ RAHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoTfuuJ6oidaGsv20pZly04/fpfsqSv2s0agjKCAA9mbyOJgJ2xGdqltuKK18L4iNp+3c56RN2M5wm@nongnu.org
-X-Gm-Message-State: AOJu0YzWWP6A8EsQeLZ2kh9uU+Agzv65uhXWjItaiEce8mm9hq10appx
- K6eiF3yYrh7PIaMUFbMTJcixnEVhCpZZCIi7zLx2rqIXTRTpP+8L+4zFFaPDEzg=
-X-Gm-Gg: ASbGnctv8FcZXBAbpBtaBQoQ9HFKc1qnhwH/ZRAcQnaQgycTTi66aoQ1PEFyfIOlN5S
- sNDifpnQ8zi2o+QB9P/ZrCSfXf0n+1P1edOchOgO3wntHDMFLu7t7d6s0SqOmlsIZSnJp5S5lU1
- pu8ZmXhOFhFtirn1PtORFXYAi8F9MqrwlC88HfKPc3wlL/IdklGK0+3cViF/HaG/zrxdGt/2OKb
- x7larBU7QMfwRobrTD8IyflKH6qtxN9tSTte0frr9WqgT6Czr+xwL7V25uOelzkkIsyYf5N4rtR
- PFnA1wdLll35wVpM0WHW0e3Zxba1f1OqE2ButoCXamrROx4LswG+OabsTQ==
-X-Google-Smtp-Source: AGHT+IFhWgIzZdYLtfMCLGH0MtNDDkI9JEDJ5hy7t5v3sZAPkGdRaYrxJdSyEEIxEtJexYlE0cyT+A==
-X-Received: by 2002:a05:6a00:c96:b0:737:6d4b:f5f8 with SMTP id
- d2e1a72fcca58-739e7103027mr4469723b3a.17.1743789857846; 
- Fri, 04 Apr 2025 11:04:17 -0700 (PDT)
-Received: from [192.168.1.87] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97d1b9esm3824196b3a.18.2025.04.04.11.04.17
+ AJvYcCUKw8hwBDZVUS5uufWiBOmY7qKEPRFJf/PFipTumpo6VRY18aXwsIhTEvkU/17n7qIfLJ3b2InSf73E@nongnu.org
+X-Gm-Message-State: AOJu0YzwFGmFsiYAmV1qaYD5nB02wHi3Ek6lzzOBAHgCUPaOKHe5UTOX
+ uyJhW39g0xghpN4XnVO4z/70dO9G2u7TNVTYYYS69UpfLhOJApytu8uqZaPlM8o=
+X-Gm-Gg: ASbGncu5Ayif+M/JfrIhvGHpNiEpYL9hNLmG91hi0ujVGV83jDIYNXEiCjZoxcjhAKd
+ kKQ5WLgoXkostOTFut6hxe0nqXss7CEsmd0sMi4zAfTSwhJm2/p4XoiYO9krklv3UfRcy6BcMti
+ PGtznYPo5ktLUeCst82LvRO9CC7y5Lq8Px7M95SxwUznrRo0KT2aHYiQBX9Q0zAH8TxfV2Km1A/
+ oC84k+s3akHbJ2p8/acjlDKPm2WxWe0cFl9epEn8IW5ba3npHn9ZwI7UIgMaMh+rJMX/5IktRAy
+ vTZAZEhEOFaI+Dp7jYROMNxUh27fUk+ASJVGppM1VVjRg5RN/ETv52773UW/tmvi01rdS19GyEu
+ uD9jOAMDgms1F1f7vsA==
+X-Google-Smtp-Source: AGHT+IFqcqgJm8RZ1nQtnEivY8HY4KzSd9IZC9qnpNvS3yaGK4q4ACcGrejdknRqjVDbe3lL0Fhaig==
+X-Received: by 2002:a05:6000:1788:b0:39c:2688:72a0 with SMTP id
+ ffacd0b85a97d-39cb35b251cmr3545117f8f.6.1743789888253; 
+ Fri, 04 Apr 2025 11:04:48 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c3020d68esm4948647f8f.67.2025.04.04.11.04.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 11:04:17 -0700 (PDT)
-Message-ID: <6d5ee93b-844e-4a46-9fae-ae71e99ad1e0@linaro.org>
-Date: Fri, 4 Apr 2025 11:04:16 -0700
+ Fri, 04 Apr 2025 11:04:47 -0700 (PDT)
+Message-ID: <4c9a7757-cb6c-4cbe-a9c8-56e1f97d3988@linaro.org>
+Date: Fri, 4 Apr 2025 20:04:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.1 11/19] accel/tcg: Replace CPU_RESOLVING_TYPE
- -> target_cpu_type()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH-for-10.1 00/39] single-binary: Make hw/arm/ common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250403234914.9154-1-philmd@linaro.org>
- <20250403234914.9154-12-philmd@linaro.org>
- <86fe4d7f-f0cd-42b9-99f0-b802337657b2@linaro.org>
- <45de7f1f-c8d0-44e0-8247-6a928860614e@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <45de7f1f-c8d0-44e0-8247-6a928860614e@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250403235821.9909-1-philmd@linaro.org>
+ <bf47e696-f63f-44b1-8451-5f00c4fa7a1d@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <bf47e696-f63f-44b1-8451-5f00c4fa7a1d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,35 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC80LzI1IDEwOjU2LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gT24g
-NC80LzI1IDE4OjUxLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gT24gNC8zLzI1IDE2
-OjQ5LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4+PiBTaWduZWQtb2ZmLWJ5
-OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQo+Pj4gLS0t
-DQo+Pj4gIMKgIGFjY2VsL3RjZy90Y2ctYWxsLmMgfCA0ICsrLS0NCj4+PiAgwqAgMSBmaWxl
-IGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkNCj4+Pg0KPj4+IGRp
-ZmYgLS1naXQgYS9hY2NlbC90Y2cvdGNnLWFsbC5jIGIvYWNjZWwvdGNnL3RjZy1hbGwuYw0K
-Pj4+IGluZGV4IGJmMjdjNWMwZmIzLi5hMTNjYjM5NjQ0ZiAxMDA2NDQNCj4+PiAtLS0gYS9h
-Y2NlbC90Y2cvdGNnLWFsbC5jDQo+Pj4gKysrIGIvYWNjZWwvdGNnL3RjZy1hbGwuYw0KPj4+
-IEBAIC0zNSw2ICszNSw3IEBADQo+Pj4gIMKgICNpbmNsdWRlICJxYXBpL3FhcGktdHlwZXMt
-Y29tbW9uLmgiDQo+Pj4gIMKgICNpbmNsdWRlICJxYXBpL3FhcGktYnVpbHRpbi12aXNpdC5o
-Ig0KPj4+ICDCoCAjaW5jbHVkZSAicWVtdS91bml0cy5oIg0KPj4+ICsjaW5jbHVkZSAicWVt
-dS90YXJnZXRfaW5mby5oIg0KPj4+ICDCoCAjaWYgZGVmaW5lZChDT05GSUdfVVNFUl9PTkxZ
-KQ0KPj4+ICDCoCAjaW5jbHVkZSAiaHcvcWRldi1jb3JlLmgiDQo+Pj4gIMKgICNlbHNlDQo+
-Pj4gQEAgLTQ0LDcgKzQ1LDYgQEANCj4+PiAgwqAgI2luY2x1ZGUgImFjY2VsL3RjZy9jcHUt
-b3BzLmgiDQo+Pj4gIMKgICNpbmNsdWRlICJpbnRlcm5hbC1jb21tb24uaCINCj4+PiAgwqAg
-I2luY2x1ZGUgImNwdS1wYXJhbS5oIg0KPj4+IC0jaW5jbHVkZSAiY3B1LmgiDQo+Pj4gIMKg
-IHN0cnVjdCBUQ0dTdGF0ZSB7DQo+Pj4gQEAgLTczLDcgKzczLDcgQEAgYm9vbCBxZW11X3Rj
-Z19tdHRjZ19lbmFibGVkKHZvaWQpDQo+Pj4gIMKgIHN0YXRpYyB2b2lkIG10dGNnX2luaXQo
-VENHU3RhdGUgKnMpDQo+Pj4gIMKgIHsNCj4+PiAtwqDCoMKgIENQVUNsYXNzICpjYyA9IENQ
-VV9DTEFTUyhvYmplY3RfY2xhc3NfYnlfbmFtZShDUFVfUkVTT0xWSU5HX1RZUEUpKTsNCj4+
-PiArwqDCoMKgIENQVUNsYXNzICpjYyA9IENQVV9DTEFTUyhvYmplY3RfY2xhc3NfYnlfbmFt
-ZSh0YXJnZXRfY3B1X3R5cGUoKSkpOw0KPj4+ICDCoMKgwqDCoMKgIGJvb2wgbXR0Y2dfc3Vw
-cG9ydGVkID0gY2MtPnRjZ19vcHMtPm10dGNnX3N1cHBvcnRlZDsNCj4+PiAgwqDCoMKgwqDC
-oCBpZiAocy0+bXR0Y2dfZW5hYmxlZCA9PSBPTl9PRkZfQVVUT19BVVRPKSB7DQo+Pg0KPj4g
-SXQgY2FuIGJlIHNxdWFzaGVkIHdpdGggcHJldmlvdXMgY29tbWl0Lg0KPiANCj4gTm90IGV4
-YWN0bHkgdGhlIHNhbWUgc2V0IG9mIG1haW50YWluZXJzLCBidXQgY2FuIGRvLg0KPiANCg0K
-Rm9yIG1lY2hhbmljYWwgY2hhbmdlcyBsaWtlIHRoaXMsIEkgZ3Vlc3MgaXQncyBsZXNzIGlt
-cG9ydGFudCB0aGFuIHdoZW4gDQpyZWFsbHkgdG91Y2hpbmcgYSBzcGVjaWZpYyBzdWJzeXN0
-ZW0uDQoNCj4+IFJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2
-aWVyQGxpbmFyby5vcmc+DQo+IA0KPiBUaGFua3MhDQoNCg==
+On 4/4/25 19:12, Pierrick Bouvier wrote:
+> On 4/3/25 16:57, Philippe Mathieu-Daudé wrote:
+>> Hi,
+>>
+>> At this point this series is mostly a draft for Pierrick.
+>>
+>> After introducing the generic TargetInfo API [*], we implement
+>> the ARM variants, then use the API to remove target-specific code,
+>> allowing to eventually remove the target-specific arm_ss[] source
+>> set in meson.build, having all objects in arm_common_ss[].
+>> Various header cleanups are necessary before getting there.
+>>
+> 
+> As there are some changes asked on this API, I think it's better if we 
+> review this series later.
+
+I think I misunderstood your comments in my series [*] reworking
+arm_cpu_has_feature(), I thought you wanted to see why it was for
+(completing your 'Make hw/arm/ common' effort).
+
+> I'll still comment a few commits here that point some problems in the 
+> approach.
+
+Thanks!
+
+[*] 
+https://lore.kernel.org/qemu-devel/cecbab0f-56f2-434a-8508-8a4df2992259@linaro.org/
+
 
