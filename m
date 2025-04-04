@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B7FC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A126C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0geh-0008Cx-Gq; Fri, 04 Apr 2025 09:00:19 -0400
+	id 1u0gff-0008Tb-QL; Fri, 04 Apr 2025 09:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gee-0008Bk-FJ
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:00:16 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u0gfV-0008Nf-Ih
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:01:13 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gec-0002zD-L8
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:00:16 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-39ac56756f6so1672039f8f.2
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:00:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u0gfS-00037F-5U
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:01:09 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3914a5def6bso1251653f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743771613; x=1744376413; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=40jQKBMJ/aNzNcyAYEcfx8nB+/5raxxsr0RnBg+r3F4=;
- b=B7+TYdxYZV2YWZCPFFvdStxT2yxm9zxER8OT1Zs9w5/sAB9qdB+B26YRaelPThQ5of
- ltRnowZ4iM0h2H9xL1Nv8rj6N08RVRmuT+OZVdy3bT2okHJBLjMvX7LqXtp6lfXW5lHV
- MioyR/zIwtwnwJr40+XT73uvM6PMIR0roUxYfWgRoski8XN64Dxk1XJCcnEG8EBYIaIe
- vO2mkvWjFJUMMMOBnOd/CJBmlwd0gu6mUMScyrAFpHtnFwYy86FDZUGV1Npt7rX+Ylwi
- AjX/wvknmXQccw6huFAUKi6n6zVgaU4akEv1QqBQOwRjLXxfk0HNqNhJ+apTpvKil/nS
- RSag==
+ d=ventanamicro.com; s=google; t=1743771663; x=1744376463; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Q3nlRM217rRS4PnJ/8Qmg/adVq+zK7QrFPF7tsXn14k=;
+ b=i/cwGrIMGsZmWCX/giapMRIxQ3gB7fdWpoF26h43pANDcjkkgnIXAeQPLT2zSudUte
+ ajVaox5eTmgvCghGiuybRjAkme1/nrG3CDIBac1qHYXj9+1ZUxlXwaqV4IRKtELZkLCK
+ vDpt9rZgpFZwVuPL6UIowVG+eZQnjQZ8go6xjROGuI4FAC5iVPiiKVN1PA8C9c63/YgF
+ aAxmaOE3xuCoJR6mygZXYmIL2yljiYWgFyLwS/5qXz7cRaOwyIguHETXGdPvLbB4+F2l
+ 9tW7bXuDkjaGbjVGPpdcLkWyDdUDBMk0Jcb439IIZ9O6Gw0CrJvA0X7BfMwxvShYTX4S
+ MYRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743771613; x=1744376413;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743771663; x=1744376463;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=40jQKBMJ/aNzNcyAYEcfx8nB+/5raxxsr0RnBg+r3F4=;
- b=N8xA2/SVdBwRQs0kZjaUTqyTunxZfkpM4AqHyMkI2JfErazvFt1oWLy83xbvjBzG3k
- bhwe3ub8RfJ+dQrb+Xd+TaMR6zBfm8Lqf3E2VGmJ2xLRiGLIEphI3x50yCeLYEiQLvkn
- 8uXbRH3PMgb69UT+I/fBQs/zndqYwLDqvir1PfjxRp/eCrOLg+a3KpLhaLjOqjrwGReJ
- pqP+MvqkSNv8TRksNFSF5i9NpY9S1/GIi71Bh3H6KMoLOkfFTlVNerAoTn9bc1SpoMHy
- xcS7U71XIO4fj0FDECb9CF3kKQLDNuxiU7s6Z9h4G9/hC4XTyxTqN2iAnI9zat9N4tot
- yX7Q==
+ bh=Q3nlRM217rRS4PnJ/8Qmg/adVq+zK7QrFPF7tsXn14k=;
+ b=Qq4ve6IXM3+lyYs5D3Pc5xF9WTCHgEUqAQZTQ2QocEA3VW24szBvckI898zeo8YW1n
+ ftJRJ0ku39CkCkMamYkm2PCiaN4RRNMDUtY3BgCdDc/j1/1S+tYbt3IkxWjaMenUgiOg
+ EqkKkIwIt6infLwiz3FWhyw9V2ZaIHk956ZwKPeK3X3SqMl1MKM5F8FKZZPI54mVnJvy
+ IccZxAqYDQHJ0C6SpxHuNkdSYQ1H0heLgP9dzfUzrYUyZQhf9HoYcAm3h0d6HAQsYjVh
+ VetG00bxwhrEaxoQl56VR8jXb1UoSLTry46LZ792P4N9ZDGU5dYrWls7knnOJGoIFgaq
+ rUFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+B4o9T41sbwFLH4de7EynN0wP4bg8QwJ2JOzhyy4Ot2rKicQiB1suu2uHHEm6OhQRjmgU0zSzpvOZ@nongnu.org
-X-Gm-Message-State: AOJu0Yyb+sL9ckWK6unZNHlxq+MrB2xnQtd6FkX9HQqt3Rn0AtnCS43k
- pjTnJ20LhyDwadSYeWvLq1/Vkimw5EeVp9J6LWTo9P/nPciaYxOtSlMrdhdr7/o=
-X-Gm-Gg: ASbGncsiayCmmc4VAnij1/n+S1klhMkaG55jlxVdNlmlhd4mLObHyw5pjoVu2rXjt/I
- Pg5r7fpusKBRsD3AU6Wg16p+FlOSguUhvO9z81FKHkCrdlH39OMgap39RKHFJpE5o8dF1bYEkx0
- rDAO5LI3PSfoT2rdxVR6ZTqxtGAs9gWoR4YHdU5t7KRaCwny6aIc2WRjB+ZtI7j9+hNfdJwzRAF
- ar986D4IoyKCVXrUrdvyvEUTpI9zPgDWKa6ovX1s7TX7hV0KwBaQzwxMwHGtBObrXMaFuHy1STU
- /r/CFjA/7+mmozvAHby1VYRGq95MaetHbTASeH+nmfnzHZJtUR9k1rtjTkINiABuhMffTK17Hh8
- XNMutj6frnidP
-X-Google-Smtp-Source: AGHT+IEcEpnJbw62Uqt3/H6Xs434Hx7FEVhon8NZRLMyj07Npu3aaolj9MDygA2BaOQMINaTAsBgaA==
-X-Received: by 2002:a5d:64ce:0:b0:391:3915:cffb with SMTP id
- ffacd0b85a97d-39cba9825d3mr2583810f8f.43.1743771612659; 
- Fri, 04 Apr 2025 06:00:12 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a732asm4351047f8f.30.2025.04.04.06.00.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 06:00:12 -0700 (PDT)
-Message-ID: <99497c16-cee4-4098-9971-f61ef7174412@linaro.org>
-Date: Fri, 4 Apr 2025 15:00:11 +0200
+ AJvYcCU/m3kwxDoF9l3dRmRUGZ6C9NPwvSQlvWZOO8Lvah5xAccvT88RWFzAOM8cMvtOi7t0ZYXbVwuz57gP@nongnu.org
+X-Gm-Message-State: AOJu0Yx/WWVH0l987aOgZygfZl/I993htzMcEIcHYHTCOO2b3+id0lVc
+ Yb1lhg9S3aIJWLjLLG8jzVlaBw1jHpHTF6p/7l9HOgNAuO65IeiF5xfDPGYMuTJ4FeaIn6JBydu
+ X
+X-Gm-Gg: ASbGncvSveouAuqWbyp8ROVtjEBHPOhvjUlgVb+ESq6AM9XckZsVPTMnsJyAMWOUfpw
+ Vyn/LYKgI0+5Wo5FAqGBJTnxTDHHjbkK+il8nBZI1G3d9F+77Ltw/DRK02IQN2o5bxWDq7Ben7R
+ mB7coIqudE0vVBGd6T5oDXVwDseasP3VL1usWJpT1U64Xri7yZZSuU46DGqZP5yFNW3OqUNGmLk
+ H6bMvYng0hlA9Md+gyJCV1k6DS6VZMpjoUkQ33ee7CV0DnuJnVhZrgvE1xsTh65IdyIrH11kOba
+ NtXjgFLxuac4cyGpshMTTIFt4mcV59QNx6/GrF5CBuRxj7TmcFjOBEWxzgwuiG/BL0+WuXi0/w=
+ =
+X-Google-Smtp-Source: AGHT+IHrX3wdWdiaYbCseq8nnB6UkuEqHGUpBvL7QbEr9+GNfd9zyswHzFXFct/QY3cLhjuNrFQBzg==
+X-Received: by 2002:a05:6000:2a06:b0:39c:1257:c96d with SMTP id
+ ffacd0b85a97d-39cba9442bdmr1624467f8f.57.1743771662727; 
+ Fri, 04 Apr 2025 06:01:02 -0700 (PDT)
+Received: from localhost (cst2-173-28.cust.vodafone.cz. [31.30.173.28])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c30226dfesm4356352f8f.97.2025.04.04.06.01.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 04 Apr 2025 06:01:02 -0700 (PDT)
+Date: Fri, 4 Apr 2025 15:01:00 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH for-10.1] hw/riscv: do not mark any machine as default
+Message-ID: <20250404-bb01d18c3e47c6ae57ca3e78@orel>
+References: <20250327130256.653357-1-dbarboza@ventanamicro.com>
+ <19d7409d-35a0-486f-a626-9d382fb8a6bf@linaro.org>
+ <CAKmqyKPsRvaVztUdPRwf5h90rVdT9MOrvQz_=WvoEj-bWoTWVg@mail.gmail.com>
+ <65b3fa18-0f04-4cf8-8d21-ecef180f2fcc@ventanamicro.com>
+ <c8df891c-c0bb-4a19-bc13-ef128ed222ae@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/1] hw/misc/aspeed_sbc: Implement OTP memory and
- controller
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Kane-Chen-AS <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- qemu-block <qemu-block@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
- <9171629d-a386-4971-802b-cd26cc42e194@kaod.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9171629d-a386-4971-802b-cd26cc42e194@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+In-Reply-To: <c8df891c-c0bb-4a19-bc13-ef128ed222ae@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,36 +111,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+qemu-block@
-
-On 4/4/25 14:06, Cédric Le Goater wrote:
-> Hello,
+On Fri, Apr 04, 2025 at 02:37:32PM +0200, Philippe Mathieu-Daudé wrote:
+> On 4/4/25 13:30, Daniel Henrique Barboza wrote:
+> > 
+> > 
+> > On 4/4/25 2:50 AM, Alistair Francis wrote:
+> > > On Fri, Mar 28, 2025 at 2:16 AM Philippe Mathieu-Daudé
+> > > <philmd@linaro.org> wrote:
+> > > > 
+> > > > On 27/3/25 14:02, Daniel Henrique Barboza wrote:
+> > > > > Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
+> > > > > made it default for qemu-system-riscv32/64. It was the first RISC-V
+> > > > > machine added in QEMU so setting it as default was sensible.
+> > > > > 
+> > > > > Today we have 7 risc64 and 6 riscv32 machines and having 'spike' as
+> > > > > default machine is not intuitive. For example, [1] is a bug that was
+> > > > > opened with the 'virt' board in mind, but given that the user didn't
+> > > > > pass a '-machine' option, the user was using 'spike' without knowing.
+> > > > > 
+> > > > > The QEMU archs that defines a default machine usually defines it as the
+> > > > > most used machine, e.g. PowerPC uses 'pseries' as default. So in theory
+> > > > > we could change the default to the 'virt' machine, but that would make
+> > > > > existing command lines that don't specify a machine option to act
+> > > > > weird: they would silently use 'virt' instead of 'spike'.
+> > > > > 
+> > > > > Being explicit in the command line is desirable when we have a handful
+> > > > > of boards available, so remove the default machine setting from RISC-V
+> > > > > and make it obligatory to specify the board.
+> > > > > 
+> > > > > After this patch we'll throw an error if no machine is specified:
+> > > > > 
+> > > > > $ ./build/qemu-system-riscv64 --nographic qemu-system-riscv64: No
+> > > > > machine specified, and there is no default Use -machine help to list
+> > > > > supported machines
+> > > > > 
+> > > > > 'spike' users that aren't specifying their machines in the command line
+> > > > > will be impacted and will need to add '-M spike' in their scripts.
+> > > > > 
+> > > > > [1] https://gitlab.com/qemu-project/qemu/-/issues/2467
+> > > > > 
+> > > > > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > > > > ---
+> > > > >    hw/riscv/spike.c | 1 -
+> > > > >    1 file changed, 1 deletion(-)
+> > > > 
+> > > > I'm in favor of this change, which I believe is the correct way to
+> > > > go, so:
+> > > 
+> > > Agreed
+> > > 
+> > > > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > > but I'd rather we follow the deprecation process. Up to the maintainer.
+> > > 
+> > > I agree, it is a breaking change, it would be nice to go through the
+> > > deprecation process in case people are expecting Spike to be the
+> > > default.
+> > 
+> > I don't mind going through the deprecation process in this case since we're
+> > not just eliminating a default value, we're removing it.
+> > 
+> > What about other default val related changes, e.g. do we have to go
+> > through\
+> > the deprecation process to change the default CPU of a board? And yeah,
+> > spoiler alert :D
 > 
-> On 4/2/25 11:14, Kane-Chen-AS wrote:
->> This patch introduces part of the Secure Boot Controller device,
->> which consists of several sub-components, including an OTP memory,
->> OTP controller, cryptographic engine, and boot controller.
->>
->> In this version, the implementation includes the OTP memory and its
->> controller. The OTP memory can be programmed from within the guest
->> OS via a software utility.
-> 
-> 
-> What is the OTP memory ? An external flash device or built-in SRAM ?
-> If the latter, I suggest using an allocated buffer under the SBC model
-> and avoid the complexity of the BlockBackend implementation and
-> the definition of a drive on the command line for it. The
-> proposal is bypassing a lot of QEMU layers for this purpose.
 
-More of the former, a built-in eFuse behaving more like flash. So using
-block backend for the storage seems correct to me. However I don't think
-the implementation belongs to hw/misc/aspeed_sbc; ideally we'd have some
-abstract (or interface) implementation in hw/block/otp.c -- with methods
-such program_otp_data() --, completed by hw/block/aspeed_otc.c.
+I don't think we need the deprecation process to change a board's default
+cpu type from a generic type which is a strict subset of the type to which
+we change (rv64 -> max). While changing to a superset may change behavior
+(things that didn't work before will suddenly start working) generic cpu
+types have always had the freedom to add new extensions. If we want to
+avoid all behavior changes, then we'll need to start versioning the
+generic cpu types (which might not be such a bad idea).
 
-Current patch might be good enough to start with IMHO.
+> I think so. My preference to avoid this is to remove default values ;)
+>
 
-Regards,
+I personally don't mind not having a default cpu type for the virt board,
+but, if we want one, then I think the max cpu type makes the most sense
+(like arm64 has).
 
-Phil.
+Thanks,
+drew
 
