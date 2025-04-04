@@ -4,88 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33580C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D83C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0XNT-0008PJ-7Z; Thu, 03 Apr 2025 23:05:56 -0400
+	id 1u0XQK-00010U-HU; Thu, 03 Apr 2025 23:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0XNP-0008P0-AP; Thu, 03 Apr 2025 23:05:51 -0400
-Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0XNN-0000H4-R0; Thu, 03 Apr 2025 23:05:51 -0400
-Received: by mail-ua1-x934.google.com with SMTP id
- a1e0cc1a2514c-86b9d1f729eso770413241.3; 
- Thu, 03 Apr 2025 20:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743735948; x=1744340748; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IWmnXqdlB0nFjCg5iRnM4KwJZslYg9snhPDyW07FDOU=;
- b=XHcd06iwThgBdTE02ZuNOPibmE4RmjJXZbK+5bcjyJdVJY7EarEVB+4/KrzDKn3o+b
- Wz2NNBbfkamdPG8Q6O7xItBOsa7nmICuUGPmUle+1kiB5KH6m4sC8+MSZJDxpwcqr+pf
- In+uwQfAP/ysN7VgTcOHmDiOSiStbB9WTM6NK1pMz4SkUwV1OMOHZcnT6QuoJ+0dWCDf
- bzF6j35wPb9c5UTIjupRs1lExLNt0xeqFcXQJnn8iutNvZOzq4z7H8Cht2oGx9SCh1W4
- IJvmUdCk/ExT7CCEbZVVN5b0vnXBk/JlrmOYnWO5KVSeTf0HAatSXQbb909543tmcpE1
- KVZw==
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u0XQJ-00010L-E1
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:08:51 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u0XQH-0000en-8s
+ for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:08:51 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53433q8T023022
+ for <qemu-devel@nongnu.org>; Fri, 4 Apr 2025 03:08:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /0HIS6VEZc7yhvtm2w+O1qKl1p7UgadHXP90SkYc9bY=; b=jVdw0i7w/LbBPl53
+ lOV0IeNF8ouPbjz2OAVuhTs4sn6xGJVz/v3PZ3HxC+ndWK5z76TcbcyV246UZLh4
+ zHKSgTx1T8H1mTd5Te3lhtBKZfzmTR+6eRk7Ww63t3NInauGVlqI5pgDlR5kss5g
+ +QtxFaB60RFHtnOoOoP/S1FS/pUTceucKH+WznRQX4PYuS1ENIf6zpywyJdkSK0I
+ Qesno/t3HYspNVRmmvgstUiQTX0OszLMMO3MlRvSKTJozu0tfvhqf8u9grDVLDyr
+ 56JwcfN+JWoqM9mtYr4e42ZzPXOka5hB4jOxQGenMQ59liJqkIMsbJ9fWHXqJcu6
+ XMdLhA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45t2d8rh2h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 03:08:46 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-af8c34d03a1so1602517a12.0
+ for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 20:08:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743735948; x=1744340748;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IWmnXqdlB0nFjCg5iRnM4KwJZslYg9snhPDyW07FDOU=;
- b=Wb0TRz2CUL40tJ+DTePOF4yl6UwXt0qmOaZ2igRX9o8ozWRjNSMlQ5ub42GbjdmqtY
- 2cOgsK3DcrOZEfbqr+lxQel1R1v3gerPB56N02xol8KyiJsTSPFLObiP2WT+WC/h0tGr
- Tte927yjFFC4Bf8OnRfrFbyWKD1IzQeDiYWbMqGXe585OjgpV/EJUeuBIaaLWVwWJZyG
- R89w65EH3hFupEP5bzFgXR3yFhfYxyfsqQO+s2WlrvPDJViDmZJyddVX3oBzuDbq1YH6
- tq4VMPHKmD2C/PGBojXGONhhaEmpyDqHhdd3gPRahl7T8VO7Yxu+ys6ivFj7GeyjkYJ9
- VSJg==
+ d=1e100.net; s=20230601; t=1743736125; x=1744340925;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/0HIS6VEZc7yhvtm2w+O1qKl1p7UgadHXP90SkYc9bY=;
+ b=ejSZZiMQdaxp5ovuswjEY8fN/kSNPs4jZTB/AnTBofj/XsitchxV2E8CQq2c+SK36+
+ Khf4TyZm18idfHcffalFd1aV3aB7vzWTLp2PjTtxFw7k30Vn/6nLncSqfBokYg8PpUj8
+ woNwpl/yu6SfBWll5Mt/32tSgax04hzfMXMG/EuwXFfyptx9sojAwM+2d3hE/UcbkTj6
+ 8Y5pOb/D4BRykLs/00XIMgcmiTkk/0UBNV/gk8dTkrFnzMEuByQ+WjJqyyh8846EXJx+
+ wJuYmkCwK39EZDz6W0iKHDf+3JMIBAeN3Y9owtW050BKqF6j9pOvFrMfYW4AEAXPzhw9
+ bxiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4qTiuh4xFOiSAjmtNh9ju+ABeLKhSFvZNlBAs0Qx4BakhYFKEfPPAUEYVxLQ3Utq/dcQjBFQvLrvD@nongnu.org
-X-Gm-Message-State: AOJu0Yx35RdPn+jIAjeenU3XlgE4U1/y78oN1NgzeU34csDBRH5fTmIY
- VDH8A03lJ4pHvgMW2BqHkzJGkCvU6ce6zrDrF4kLp9WXg8VfhIf8Jvt7pQ7ikN1IFgZejDLogtG
- DMp852ENSPTBLZTadKbhQHCSkpiMqXA==
-X-Gm-Gg: ASbGncvM1DgxEbg0jB9p9+tib3B4ytov6M/ZGmQF5yRKNlDho6FKoc8mi0MxR0gFgPB
- weLpVXGhH3j9UTmbNLEz7G0LwtTlElqtSiPRdbQtcqy4FYEvEFHFNqM2pcKT0R/yiG12XT9dBeJ
- 2x71RJhnmSCebRM8RsZozP5VHviB8bzAMA0tW2EdqZ8ZP7fQ+9bgWzGz1w
-X-Google-Smtp-Source: AGHT+IGxi7hAhGEEeklXfIkN5yeytNfI9Pxn6+LB1mPa0QPDdDlAJLLE4Dj+sIidTI4QRiVdNLcu7+FxpqSvJQmhM7k=
-X-Received: by 2002:a05:6102:1481:b0:4c4:df5b:330f with SMTP id
- ada2fe7eead31-4c8554696f1mr1511662137.17.1743735948284; Thu, 03 Apr 2025
- 20:05:48 -0700 (PDT)
+ AJvYcCVAqpcozTT+CEjNvMqa6ICOCT1kHrM8V8S5nf6iqm45S0u2Y5t6wRIFlISqIOJ/MBzH1S4CZbogNOoJ@nongnu.org
+X-Gm-Message-State: AOJu0Ywk1IGjfMOmLfJXkf993q/NuARmuTlPh9K0B7BUHX0XZizW+W3r
+ MRpgNAvJrOcSMcH+Tl6Jfn8D22Skootjn5Ue/XuvVE7IKHMKtOnvgxaA6P3OsBq75pk22zwtxzJ
+ AyqXXG3+VXD3nT6eHBpa0SZqWXr6eu4Eu4+qeK49FXB7PMY1707sicvLqrTYKjA==
+X-Gm-Gg: ASbGncsZ19kse5LIQmeSU5hAwehy6LzGQ5VTCXPp+fqBvu//zyNnXG7sbuRKzhfapbO
+ xdsH5biJ+pVVTlenujxtF2KOoEAGld1iMdv9f/5EWMiDqeKsmAxf2X4HM9gxisARHrc+fhLGSrx
+ t7VhOiqA4YKzq5YzGDU9qS9OnJkTaRcZxKP/V8EkhtvexNWdlRR1ryFXvTxsa59z/0/LdFSJ+qY
+ G5JRyh2M0tt9k6nMTDy2Da5G1XgqcjayXn83j1v4UJf6eUHoqALIRr2ywsHziUp1At46U6FHqgB
+ OaynwMPqAc8l4i/I8wiSy3wwzBcFdi5ocY5Qt6z9tu9hcn12LKF8dzbuFD2vcmJPNrguI7K5EBs
+ 9ENXap2H4WITmqB10
+X-Received: by 2002:a05:6a21:b95:b0:1f5:591b:4f7c with SMTP id
+ adf61e73a8af0-20104601feamr2370952637.10.1743736125650; 
+ Thu, 03 Apr 2025 20:08:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyo5SYu9jFE9HaA21LywF0dl9apib+iNCMkXO2n6MCCIle0Nx/Z7Baa/AtHDwY4sLvibu1QA==
+X-Received: by 2002:a05:6a21:b95:b0:1f5:591b:4f7c with SMTP id
+ adf61e73a8af0-20104601feamr2370921637.10.1743736125204; 
+ Thu, 03 Apr 2025 20:08:45 -0700 (PDT)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-af9bc3fd6ebsm1925605a12.49.2025.04.03.20.08.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Apr 2025 20:08:44 -0700 (PDT)
+Message-ID: <0f4f377f-6c43-4b2e-b3a1-6ef09395237b@oss.qualcomm.com>
+Date: Thu, 3 Apr 2025 22:08:43 -0500
 MIME-Version: 1.0
-References: <20250319192153.28549-1-jim.shu@sifive.com>
- <20250319192153.28549-2-jim.shu@sifive.com>
-In-Reply-To: <20250319192153.28549-2-jim.shu@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Apr 2025 13:05:22 +1000
-X-Gm-Features: ATxdqUF-cQF2UYDxTUJi4TeCcUCCoG1eHiq6te7ZJcsm6t6aVxCzkkmULNrSEaI
-Message-ID: <CAKmqyKM5d7JZbkEfNtxGE8yXkgLfxpRkb+Bsn8b=gX_bkAoioQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] target/riscv: Add the checking into stimecmp write
- function.
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] Hexagon (target/hexagon) analyze all reads before
+ writes
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
+Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com
+References: <20250325021440.81386-1-ltaylorsimpson@gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250325021440.81386-1-ltaylorsimpson@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=KcPSsRYD c=1 sm=1 tr=0 ts=67ef4d3e cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=NEAV23lmAAAA:8 a=pGLkceISAAAA:8
+ a=DvPxcWX3HN2qFr1vO_AA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-GUID: mhJFTevQYnwmAr6Ycrt5wXgCEip_lgBL
+X-Proofpoint-ORIG-GUID: mhJFTevQYnwmAr6Ycrt5wXgCEip_lgBL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-04_01,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ malwarescore=0 priorityscore=1501 mlxlogscore=857 mlxscore=0
+ suspectscore=0 clxscore=1015 impostorscore=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504040020
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +131,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 20, 2025 at 5:22=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote:
+
+On 3/24/2025 9:14 PM, Taylor Simpson wrote:
+> I noticed that analyze_packet is marking the implicit pred reads after
+> marking all the writes.  However, the semantics of the instrucion and
+> packet are to do all the reads, then do the operation, then do all the
+> writes.
 >
-> Preparation commit to let aclint timer to use stimecmp write function.
-> Aclint timer doesn't call sstc() predicate so we need to check inside
-> the stimecmp write function.
+> Here is the old code
+> static void analyze_packet(DisasContext *ctx)
+> {
+>      Packet *pkt = ctx->pkt;
+>      ctx->read_after_write = false;
+>      ctx->has_hvx_overlap = false;
+>      for (int i = 0; i < pkt->num_insns; i++) {
+>          Insn *insn = &pkt->insn[i];
+>          ctx->insn = insn;
+>          if (opcode_analyze[insn->opcode]) {
+>              opcode_analyze[insn->opcode](ctx);
+>          }
+>          mark_implicit_reg_writes(ctx);
+>          mark_implicit_pred_writes(ctx);
+>          mark_implicit_pred_reads(ctx);
+>      }
 >
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+>      ctx->need_commit = need_commit(ctx);
+> }
+>
+> Recall that opcode_analyze[insn->opcode](ctx) will mark all the
+> explicit reads then all the explicit writes.
+>
+> To properly handle the semantics, we'll create two new functions
+>      mark_implicit_reads
+>      mark_implicit_writes
+> Then we change gen_analyze_funcs.py to add a call to the former
+> after all the explicit reads and a call to the latter after all
+> the explicit_writes.
+>
+> The reason this is an RFC patch is I can't find any instructions
+> where this distinction makes a difference in ctx->need_commit which
+> determines if the packet commit can be short-circuited.  However, this
+> could change in the future if the architecture introduces an
+> instruction with an implicit read of a register that is also written
+> (either implicit or explicit).  Then, anlayze_packet would detect
+> a read-after-write, and the packet would not short-circuit.  The
+> execution would be correct, but the performance would not be optimal.
+>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > ---
->  target/riscv/time_helper.c | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
+
+
+Thanks: this patch is queued on the "hex-next-express" branch at 
+https://github.com/quic/qemu/
+
+
+>   target/hexagon/translate.c          | 18 +++++++++++++++---
+>   target/hexagon/gen_analyze_funcs.py |  4 ++++
+>   2 files changed, 19 insertions(+), 3 deletions(-)
 >
-> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-> index bc0d9a0c4c..aebf0798d0 100644
-> --- a/target/riscv/time_helper.c
-> +++ b/target/riscv/time_helper.c
-> @@ -46,8 +46,23 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEM=
-UTimer *timer,
->  {
->      uint64_t diff, ns_diff, next;
->      RISCVAclintMTimerState *mtimer =3D env->rdtime_fn_arg;
-> -    uint32_t timebase_freq =3D mtimer->timebase_freq;
-> -    uint64_t rtc_r =3D env->rdtime_fn(env->rdtime_fn_arg) + delta;
-> +    uint32_t timebase_freq;
-> +    uint64_t rtc_r;
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index fe7858703c..5271c4e022 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -37,6 +37,10 @@
+>   #include "exec/helper-info.c.inc"
+>   #undef  HELPER_H
+>   
+> +/* Forward declarations referenced in analyze_funcs_generated.c.inc */
+> +static void mark_implicit_reads(DisasContext *ctx);
+> +static void mark_implicit_writes(DisasContext *ctx);
 > +
-> +    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn ||
-> +        !env->rdtime_fn_arg || !get_field(env->menvcfg, MENVCFG_STCE)) {
-> +        /* S/VS Timer IRQ depends on sstc extension, rdtime_fn(), and ST=
-CE. */
-> +        return;
-> +    }
+>   #include "analyze_funcs_generated.c.inc"
+>   
+>   typedef void (*AnalyzeInsn)(DisasContext *ctx);
+> @@ -378,6 +382,17 @@ static void mark_implicit_pred_reads(DisasContext *ctx)
+>       mark_implicit_pred_read(ctx, A_IMPLICIT_READS_P3, 3);
+>   }
+>   
+> +static void mark_implicit_reads(DisasContext *ctx)
+> +{
+> +    mark_implicit_pred_reads(ctx);
+> +}
 > +
-> +    if (timer_irq =3D=3D MIP_VSTIP &&
-> +        (!riscv_has_ext(env, RVH) || !get_field(env->henvcfg, HENVCFG_ST=
-CE))) {
-> +        /* VS Timer IRQ also depends on RVH and henvcfg.STCE. */
-> +        return;
-> +    }
+> +static void mark_implicit_writes(DisasContext *ctx)
+> +{
+> +    mark_implicit_reg_writes(ctx);
+> +    mark_implicit_pred_writes(ctx);
+> +}
 > +
-> +    timebase_freq =3D mtimer->timebase_freq;
-> +    rtc_r =3D env->rdtime_fn(env->rdtime_fn_arg) + delta;
->
->      if (timecmp <=3D rtc_r) {
->          /*
-> --
-> 2.17.1
->
->
+>   static void analyze_packet(DisasContext *ctx)
+>   {
+>       Packet *pkt = ctx->pkt;
+> @@ -389,9 +404,6 @@ static void analyze_packet(DisasContext *ctx)
+>           if (opcode_analyze[insn->opcode]) {
+>               opcode_analyze[insn->opcode](ctx);
+>           }
+> -        mark_implicit_reg_writes(ctx);
+> -        mark_implicit_pred_writes(ctx);
+> -        mark_implicit_pred_reads(ctx);
+>       }
+>   
+>       ctx->need_commit = need_commit(ctx);
+> diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
+> index 3ac7cc2cfe..fdefd5b4b3 100755
+> --- a/target/hexagon/gen_analyze_funcs.py
+> +++ b/target/hexagon/gen_analyze_funcs.py
+> @@ -67,6 +67,8 @@ def gen_analyze_func(f, tag, regs, imms):
+>           if reg.is_read():
+>               reg.analyze_read(f, regno)
+>   
+> +    f.write("    mark_implicit_reads(ctx);\n")
+> +
+>       ## Analyze the register writes
+>       for regno, register in enumerate(regs):
+>           reg_type, reg_id = register
+> @@ -74,6 +76,8 @@ def gen_analyze_func(f, tag, regs, imms):
+>           if reg.is_written():
+>               reg.analyze_write(f, tag, regno)
+>   
+> +    f.write("    mark_implicit_writes(ctx);\n")
+> +
+>       f.write("}\n\n")
+>   
+>   
 
