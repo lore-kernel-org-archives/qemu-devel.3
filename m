@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB95BC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 12:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691BAC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 12:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0gIr-0001Ss-Kx; Fri, 04 Apr 2025 08:37:45 -0400
+	id 1u0gMs-00032U-90; Fri, 04 Apr 2025 08:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gIk-0001Ii-GU
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:37:39 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gMp-00032I-R2
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:41:51 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gIi-0000U6-BE
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:37:38 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cf3192f3bso19858435e9.1
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 05:37:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0gMn-0001Cx-RC
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:41:51 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3914aba1ce4so1623006f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 05:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743770254; x=1744375054; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743770508; x=1744375308; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Mpn+Mcf9Wk4jyUTuQh/8j/YUnHDY1UQxI8IieAefL8c=;
- b=Y6PAbw2UrvJGcxFa+hDt3x6I8sltJ8NEOdD1jTQJ6oqqM4tnq+SfaJ6SqEyKZEER2e
- X+ZVlcmIAhlAZ70dMe0eK1vagak0R+hdkamryEMuEWepb5cJsMAjFrRTIjiZopmYf4wq
- Qzd6esMEqxjQtx7mmExu/1KcGuBQmspL2hyL4anh9MkxvV9kbG339+5RcU503Dl3e4+Z
- 7K3rW5p5XLEAeHqGNIN8/VdXRiDSWJK/7QmOn3rTm8z99prE/7obhZyys/GAMstYmsiM
- O1zutG7mNRAVWcwzyvBkTyMFBHWmnrXGq1k/OoACY+WaORm9PXC2UlD0m7w1zUOQc7HP
- aMAw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ckYbVXM5y/oHY3AyYUtbqJnHtUAg7+Xu4MIsacAMf/E=;
+ b=tDN8cf5IdGsWqU31n3eB/q3f4JFE7JDYBJe2AlotSUxITTxOwOhL0FFbjKdOXtZcAJ
+ XibZYV9WHzIDBZHhsWD2ibLAps1oiAia9b+mPd2sWlnkO+K4VLj95rVLRP9vgXwnRHXi
+ Dd4JOb653VS5a6Mddk8xZwc2FJQbeRf1SFySRJFK+Dkv4nYGWobFOvbT7U45LQtqVpjY
+ hXhl8NMepoIq3jXP5YOM0vzvufkqlnhpGnpnYV4knN6RZXWuXcaHq+FBzWTuPSAijcIl
+ Cx5IVrPkAstjifJHxZBt+3q1J3pCP4ij+OL7GJyaOx+ayjEVbFo3gOFVV+PBxJ0RXHQw
+ cMNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743770254; x=1744375054;
+ d=1e100.net; s=20230601; t=1743770508; x=1744375308;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mpn+Mcf9Wk4jyUTuQh/8j/YUnHDY1UQxI8IieAefL8c=;
- b=rMFy4mR6a71+1/qLeqZKejNmnwwDt5aUQg2nkKimYcjw3Xs2m94ryxD5blRTxP6Pze
- d1tZOIZLxBZss3WIR/es6qqACLGte7UAD37Wh3FxOtuz5RMi7MxmaTAOGJzav7nmHEQ/
- 43rVr6iLs5JDHvdYa2CO+dlr4xTVyWNFDuRUSc+ZV4ID61/rcPc0zIQpCIa+9r9cfKv4
- CK0G6mTdIfA2/wbStbB/Bd8qq34kNKcUxsXZxxCizXhN/TeUkBymRNAiZpuUAR3LeQwj
- b2s0Vze6lupsQqAXMr9jm1/2l9w5lkGv/D56EO2lVdF+DRtKldsLJBoNk00C2+zyyVIO
- E7Dg==
-X-Gm-Message-State: AOJu0YySuzrmSH7pXAQF6wSM+ouxda4rNMBfqergyI7RyyXc7QJtBebg
- y7RhHMgDQM46Ar5ylxaieoV8nL/xuvou0jRD8yu57zhx0kpcJYJwJqdYz1G6w3A=
-X-Gm-Gg: ASbGncs+zqiH1JEjO3AOes8yf1s+OpAqww5EjU5vHbK0l9d2uBdDpRkwViWuVFP0ErD
- dEQ9Vcdag8NGkWynncfESbw3Yy3F4sxVvQ8xD7Jv/mPS2WkpRMBBkEqq77sweWYe5/8hUvXViMR
- oWt+FbNMgB0MKsKUL4+o7HMcMYdBqhBrtX4J4k+gH51QI8wg7biPA8S3XeF2bW1PHT+Ia1rEnic
- XPaFd0qsEeRr/2H+GbQGyHGLp1+V2HTTEKg1j+qqPYqlZyp96z9YlPFaQ+bPEbDLB4B7toc3uxq
- baE/CuoFfdT815aBJRgeXxfHY0CfMATMn9ladrhS1M4WJ9JA+Uaa0hr6jsAlnhbgd1tFNU4TrQh
- Pz6uI81J4DLKW
-X-Google-Smtp-Source: AGHT+IHaBD9Vm8Ar/MMzO9V+cWg1ihasviumVVtZ6Xv+tkWrpqQVi+T5aH1hgUuXYoXfh9KAiY7/lQ==
-X-Received: by 2002:a05:600c:698c:b0:43c:fa0e:471a with SMTP id
- 5b1f17b1804b1-43ed6615862mr17926115e9.5.1743770254326; 
- Fri, 04 Apr 2025 05:37:34 -0700 (PDT)
+ bh=ckYbVXM5y/oHY3AyYUtbqJnHtUAg7+Xu4MIsacAMf/E=;
+ b=Z/Pt3eqZyC7cNvXJ1cQkl7jC7DtnQkIr3OEjNatWjC8yWmx3RErvYCByNtAiBeMOx2
+ zc0QEKoB7iT0dxUoq5/5I/EVOXGXCvgzC2JDyNayQK6y6PEflcs4zudXUN7Kh1KdUK4I
+ T4uNn436AsbSxeDV1ismGniACC6ZpUvG463bRAlThFkSAEcdKr7rsQiBkAxAZun4nOdx
+ dhrrwC7NL1bhirHXu/pfVUDpx5SqFWhovSb5iMgLZCbwTMfYlzjikl7dZSjJhV1xUkqu
+ NgdqbP4zuhFoFEuNN3jbNp2+tMMY9+13aYs5ngf6hkID4nILbg3DGzBltm4fdVP17kdU
+ vY6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcJVJtubl+mB6CFPEENod7Qxi48u42pxgyPEF9RyD9LRPIFvV5y1nXHOQFmHcjeLyO1aKul7WBIUa0@nongnu.org
+X-Gm-Message-State: AOJu0YxL/pdRoi+xHSoaAorw2eX2ai1x3Zdt1jEgxvFFe2OXKYu0k99F
+ jzDdu42AmekSPf+HoPV2fklzMmzgfaCY3x0VWeMLx45oOgCkj697NBvJCPLrsRG7xeJdpaUloNJ
+ R
+X-Gm-Gg: ASbGnctJKmpxQrd4Uc+ZTCWrvefJX0gex7v8rfRFHDT0xjpqVM9QMYFkRmp+Zw/ler9
+ CoqQv0aRvB2BLrelWeCS2/yk/JHuq8JQpFZt9Rfl8qPvyJ2wxi8ZO+OcIN0ULD/wqn9ut8mLz67
+ kuDJJEmNmIwO/wRbGbORkpcCnAJX9UcbNw804DEkWTfW4sSypESvk1IHeV2Hu5f+ZZeDlOjhF/L
+ QiIedDYKZ6fpHmIZsn6nMkKzx1TgfsZzqlxppYgt5siYI91yFqEmkGlHd3pG3+ds34Pv9t0L4BB
+ FqItj15YxfSXUbTdObZbmFfKKoEchkqFq+NK/4fJCpYjFFVg+aInFwhe1Mg1G7u5HGbpAcs6Zxu
+ eruKFAfB7FKpz
+X-Google-Smtp-Source: AGHT+IFE5N/OUkTIdMiyBkUd2ELV+/WMGowm9MzSUh7xjxzFvOzD0MCJ5owj0GzWN2Roi/axeqIC0A==
+X-Received: by 2002:a05:6000:1843:b0:39a:ca05:54a9 with SMTP id
+ ffacd0b85a97d-39d0de28a5amr2428828f8f.29.1743770507886; 
+ Fri, 04 Apr 2025 05:41:47 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1794e94sm49018925e9.31.2025.04.04.05.37.33
+ ffacd0b85a97d-39c301b69a8sm4241654f8f.49.2025.04.04.05.41.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 05:37:33 -0700 (PDT)
-Message-ID: <c8df891c-c0bb-4a19-bc13-ef128ed222ae@linaro.org>
-Date: Fri, 4 Apr 2025 14:37:32 +0200
+ Fri, 04 Apr 2025 05:41:47 -0700 (PDT)
+Message-ID: <438cb87a-cfa2-4392-92f4-bbb05f7a2ec2@linaro.org>
+Date: Fri, 4 Apr 2025 14:41:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1] hw/riscv: do not mark any machine as default
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20250327130256.653357-1-dbarboza@ventanamicro.com>
- <19d7409d-35a0-486f-a626-9d382fb8a6bf@linaro.org>
- <CAKmqyKPsRvaVztUdPRwf5h90rVdT9MOrvQz_=WvoEj-bWoTWVg@mail.gmail.com>
- <65b3fa18-0f04-4cf8-8d21-ecef180f2fcc@ventanamicro.com>
+Subject: Re: [PATCH] hw/ipmi: Allow multiple BMC instances
+To: corey@minyard.net, qemu-devel@nongnu.org
+References: <Z-8ujYWA8yBATtYK@mail.minyard.net>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <65b3fa18-0f04-4cf8-8d21-ecef180f2fcc@ventanamicro.com>
+In-Reply-To: <Z-8ujYWA8yBATtYK@mail.minyard.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,68 +101,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 13:30, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 4/4/25 2:50 AM, Alistair Francis wrote:
->> On Fri, Mar 28, 2025 at 2:16 AM Philippe Mathieu-Daudé
->> <philmd@linaro.org> wrote:
->>>
->>> On 27/3/25 14:02, Daniel Henrique Barboza wrote:
->>>> Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
->>>> made it default for qemu-system-riscv32/64. It was the first RISC-V
->>>> machine added in QEMU so setting it as default was sensible.
->>>>
->>>> Today we have 7 risc64 and 6 riscv32 machines and having 'spike' as
->>>> default machine is not intuitive. For example, [1] is a bug that was
->>>> opened with the 'virt' board in mind, but given that the user didn't
->>>> pass a '-machine' option, the user was using 'spike' without knowing.
->>>>
->>>> The QEMU archs that defines a default machine usually defines it as the
->>>> most used machine, e.g. PowerPC uses 'pseries' as default. So in theory
->>>> we could change the default to the 'virt' machine, but that would make
->>>> existing command lines that don't specify a machine option to act
->>>> weird: they would silently use 'virt' instead of 'spike'.
->>>>
->>>> Being explicit in the command line is desirable when we have a handful
->>>> of boards available, so remove the default machine setting from RISC-V
->>>> and make it obligatory to specify the board.
->>>>
->>>> After this patch we'll throw an error if no machine is specified:
->>>>
->>>> $ ./build/qemu-system-riscv64 --nographic qemu-system-riscv64: No
->>>> machine specified, and there is no default Use -machine help to list
->>>> supported machines
->>>>
->>>> 'spike' users that aren't specifying their machines in the command line
->>>> will be impacted and will need to add '-M spike' in their scripts.
->>>>
->>>> [1] https://gitlab.com/qemu-project/qemu/-/issues/2467
->>>>
->>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>> ---
->>>>    hw/riscv/spike.c | 1 -
->>>>    1 file changed, 1 deletion(-)
->>>
->>> I'm in favor of this change, which I believe is the correct way to
->>> go, so:
->>
->> Agreed
->>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> but I'd rather we follow the deprecation process. Up to the maintainer.
->>
->> I agree, it is a breaking change, it would be nice to go through the
->> deprecation process in case people are expecting Spike to be the
->> default.
-> 
-> I don't mind going through the deprecation process in this case since we're
-> not just eliminating a default value, we're removing it.
-> 
-> What about other default val related changes, e.g. do we have to go 
-> through\
-> the deprecation process to change the default CPU of a board? And yeah,
-> spoiler alert :D
+Hi Corey,
 
-I think so. My preference to avoid this is to remove default values ;)
+On 4/4/25 02:57, Corey Minyard wrote:
+> Allow a system to have multiple BMC connections to the same BMC and
+> multiple different BMCs.  This can happen on real systems, and is
+> useful for testing the IPMI driver on Linux.
+> 
+> Signed-off-by: Corey Minyard <corey@minyard.net>
+> ---
+> I'm working on a fairly extensive test suite for IPMI, the Linux
+> driver and qemu, and this is necessary for some driver tests.
+> 
+>   hw/ipmi/ipmi.c            | 1 +
+>   hw/ipmi/ipmi_bmc_extern.c | 5 +++--
+>   hw/ipmi/ipmi_bmc_sim.c    | 2 +-
+>   include/hw/ipmi/ipmi.h    | 1 +
+>   qemu-options.hx           | 9 ++++++++-
+>   5 files changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
+> index fdeaa5269f..ffd972f78b 100644
+> --- a/hw/ipmi/ipmi.c
+> +++ b/hw/ipmi/ipmi.c
+> @@ -110,6 +110,7 @@ void ipmi_bmc_find_and_link(Object *obj, Object **bmc)
+>   
+>   static const Property ipmi_bmc_properties[] = {
+>       DEFINE_PROP_UINT8("slave_addr",  IPMIBmc, slave_addr, 0x20),
+> +    DEFINE_PROP_UINT8("instance",    IPMIBmc, instance, 0),
+
+Can we use "id" instead of "instance"? The latter confuses me, but
+maybe a matter of taste.
+
+Preferably s/instance/id/:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>   };
+>   
+>   static void bmc_class_init(ObjectClass *oc, void *data)
+> diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
+> index d015500254..11c28d03ab 100644
+> --- a/hw/ipmi/ipmi_bmc_extern.c
+> +++ b/hw/ipmi/ipmi_bmc_extern.c
+> @@ -488,7 +488,8 @@ static const VMStateDescription vmstate_ipmi_bmc_extern = {
+>   
+>   static void ipmi_bmc_extern_realize(DeviceState *dev, Error **errp)
+>   {
+> -    IPMIBmcExtern *ibe = IPMI_BMC_EXTERN(dev);
+> +    IPMIBmc *b = IPMI_BMC(dev);
+> +    IPMIBmcExtern *ibe = IPMI_BMC_EXTERN(b);
+>   
+>       if (!qemu_chr_fe_backend_connected(&ibe->chr)) {
+>           error_setg(errp, "IPMI external bmc requires chardev attribute");
+> @@ -498,7 +499,7 @@ static void ipmi_bmc_extern_realize(DeviceState *dev, Error **errp)
+>       qemu_chr_fe_set_handlers(&ibe->chr, can_receive, receive,
+>                                chr_event, NULL, ibe, NULL, true);
+>   
+> -    vmstate_register(NULL, 0, &vmstate_ipmi_bmc_extern, ibe);
+> +    vmstate_register(NULL, b->instance, &vmstate_ipmi_bmc_extern, ibe);
+>   }
+>   
+>   static void ipmi_bmc_extern_init(Object *obj)
+> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+> index 6157ac7120..c1b39dbdc5 100644
+> --- a/hw/ipmi/ipmi_bmc_sim.c
+> +++ b/hw/ipmi/ipmi_bmc_sim.c
+> @@ -2188,7 +2188,7 @@ static void ipmi_sim_realize(DeviceState *dev, Error **errp)
+>   
+>       ibs->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ipmi_timeout, ibs);
+>   
+> -    vmstate_register(NULL, 0, &vmstate_ipmi_sim, ibs);
+> +    vmstate_register(NULL, b->instance, &vmstate_ipmi_sim, ibs);
+>   }
+>   
+>   static const Property ipmi_sim_properties[] = {
+> diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
+> index 77a7213ed9..4436d70842 100644
+> --- a/include/hw/ipmi/ipmi.h
+> +++ b/include/hw/ipmi/ipmi.h
+> @@ -183,6 +183,7 @@ struct IPMIBmc {
+>       DeviceState parent;
+>   
+>       uint8_t slave_addr;
+> +    uint8_t instance;
+>   
+>       IPMIInterface *intf;
+>   };
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index dc694a99a3..186433ac13 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -1120,6 +1120,10 @@ SRST
+>       ``slave_addr=val``
+>           Define slave address to use for the BMC. The default is 0x20.
+>   
+> +    ``instance=val``
+> +        For more than one BMC on the same system, each instance needs
+> +	a unique number.  The default is 0.
+> +
+>       ``sdrfile=file``
+>           file containing raw Sensor Data Records (SDR) data. The default
+>           is none.
+> @@ -1137,7 +1141,7 @@ SRST
+>           is set, get "Get GUID" command to the BMC will return it.
+>           Otherwise "Get GUID" will return an error.
+>   
+> -``-device ipmi-bmc-extern,id=id,chardev=id[,slave_addr=val]``
+> +``-device ipmi-bmc-extern,id=id,chardev=id[,slave_addr=val][,instance=id]``
+>       Add a connection to an external IPMI BMC simulator. Instead of
+>       locally emulating the BMC like the above item, instead connect to an
+>       external entity that provides the IPMI services.
+> @@ -1151,6 +1155,9 @@ SRST
+>       simulator running on a secure port on localhost, so neither the
+>       simulator nor QEMU is exposed to any outside network.
+>   
+> +    You can have more than one external BMC connection with this, but
+> +    you must set a unique instance for each BMC.
+> +
+>       See the "lanserv/README.vm" file in the OpenIPMI library for more
+>       details on the external interface.
+>   
+
 
