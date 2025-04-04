@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A604BC3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33580C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0XMG-0007Pm-8B; Thu, 03 Apr 2025 23:04:40 -0400
+	id 1u0XNT-0008PJ-7Z; Thu, 03 Apr 2025 23:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0XMD-0007P9-T3
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:04:37 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0XNP-0008P0-AP; Thu, 03 Apr 2025 23:05:51 -0400
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u0XMA-0008Ru-W3
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:04:37 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-30185d00446so1324909a91.0
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 20:04:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0XNN-0000H4-R0; Thu, 03 Apr 2025 23:05:51 -0400
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-86b9d1f729eso770413241.3; 
+ Thu, 03 Apr 2025 20:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743735873; x=1744340673; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XDeu/kh54Ya+s1AyGCDpV7qRMuBjA4cLtcCEN76BJ0U=;
- b=VJEEbsO30y92TRyajn7ghBP5UKTMFlmprJj2uVTR+NSRLgXMMXpAw18Rnum7u0AkMg
- 5ApHGUFdzdRmn5YAhefkg/fKN43iPdB1YF3Y/x+v/nnT6edUw5M5yUox1dPOp/DQAZwn
- 3YI6rQ/XZUuOa7eTsh+bH3v2MfKxtdCjmXc49gSxLsgUZj4wZFj9fTLWVlXFSDkNd9Zz
- FTfBLGaTllJ6anRCsboVKGOL7Vq7wQhm+KXJj4do5dMYj8mksBIm5Nfnbyeef+HlPKOJ
- 7eRK9KP3aORUe94drK4H7d7WqvAJugvK0kCHH9nm9RAxcPWRC37u7wfLbyta9/F8sGXW
- Yptw==
+ d=gmail.com; s=20230601; t=1743735948; x=1744340748; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IWmnXqdlB0nFjCg5iRnM4KwJZslYg9snhPDyW07FDOU=;
+ b=XHcd06iwThgBdTE02ZuNOPibmE4RmjJXZbK+5bcjyJdVJY7EarEVB+4/KrzDKn3o+b
+ Wz2NNBbfkamdPG8Q6O7xItBOsa7nmICuUGPmUle+1kiB5KH6m4sC8+MSZJDxpwcqr+pf
+ In+uwQfAP/ysN7VgTcOHmDiOSiStbB9WTM6NK1pMz4SkUwV1OMOHZcnT6QuoJ+0dWCDf
+ bzF6j35wPb9c5UTIjupRs1lExLNt0xeqFcXQJnn8iutNvZOzq4z7H8Cht2oGx9SCh1W4
+ IJvmUdCk/ExT7CCEbZVVN5b0vnXBk/JlrmOYnWO5KVSeTf0HAatSXQbb909543tmcpE1
+ KVZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743735873; x=1744340673;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XDeu/kh54Ya+s1AyGCDpV7qRMuBjA4cLtcCEN76BJ0U=;
- b=OAJ3QR9eCU0K631Dh/UOFKmzLsIBxdEvW+GUrpZPE7bUnEuGFXGR9CBEkEy27KjHID
- PBt5T0ixtw6CtSbzAeWVDjqLPhyvY3kOk+yZvoG59HICFNJXIM6O0E+V3vuXNPaSkaGG
- d/+Qf+mQROqYOd/lgzk6hAfdnFcHoo7BiZl5oAXUb4u4e8ZzVvcFgOXyTdWAoRvwo/EA
- NTb22Q9l8DUtrFc0YBQLlbxApPfocRubVklGglvv6fpWSVm6WIgc+7DSwIRirZeVPVFt
- tS9JOsQadQcVShhfAzXd+V0u1iqvWt+2hA/65xho6mwGX1XzKjXR97I5eNarVmcnkEst
- f+TQ==
+ d=1e100.net; s=20230601; t=1743735948; x=1744340748;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IWmnXqdlB0nFjCg5iRnM4KwJZslYg9snhPDyW07FDOU=;
+ b=Wb0TRz2CUL40tJ+DTePOF4yl6UwXt0qmOaZ2igRX9o8ozWRjNSMlQ5ub42GbjdmqtY
+ 2cOgsK3DcrOZEfbqr+lxQel1R1v3gerPB56N02xol8KyiJsTSPFLObiP2WT+WC/h0tGr
+ Tte927yjFFC4Bf8OnRfrFbyWKD1IzQeDiYWbMqGXe585OjgpV/EJUeuBIaaLWVwWJZyG
+ R89w65EH3hFupEP5bzFgXR3yFhfYxyfsqQO+s2WlrvPDJViDmZJyddVX3oBzuDbq1YH6
+ tq4VMPHKmD2C/PGBojXGONhhaEmpyDqHhdd3gPRahl7T8VO7Yxu+ys6ivFj7GeyjkYJ9
+ VSJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYcr9XC3VBQVIrUq/n28/cHd0xXd3wiO7JiAaZUtRDpdW5IMYaTFvUxRaFidmq90c3BZoCD6CxCAAW@nongnu.org
-X-Gm-Message-State: AOJu0Yys9CrLAf5SE+DPkigvIEYYxdKpz2WkzYupZ5q1fcM6QUrt7axr
- JnkXgKLEhYx2+B/eqqTimgrAm2erG8gUljb83o1s0p5JiC+M3h7QHfgWC9HAfck=
-X-Gm-Gg: ASbGnctzGSOdCbiuDyeWFJwIUiz0JnVeX9dxnWweY/Tqg+oJtlvahvpvcf2x4xuHVk3
- 9PWS0U/JaQueKg4XaweTUvHTuk0I1KIBB4UNr9Xcw9396NtEZS5UbeqbltodBCSGUlvHqsCAWCe
- oVSJxU3EKB2lNcc4RHOg2WWy47TqwogKR/zgEA0tnVbMze6L83rJduMk3V71QDNtP8s2uNG7bzp
- NCn4VRO7bi21JldSydsSqGa5Dhg1SK5ntUaErspMBDq77MJPb4291+u5R/x/77uytR817FcISE9
- XZfe3DssVx0uI8dap0MSoOtfQ98Usle8Om/VD3v9hyNocU3r0Mn4JvKk
-X-Google-Smtp-Source: AGHT+IHGUZxoG1NKQJuoV+s58vV6Z4souxWql+BdNqhn534Y/YNn7q7L/33f4qth3ojs4jwwdRXhjg==
-X-Received: by 2002:a17:90b:3e50:b0:2ff:6e58:89f5 with SMTP id
- 98e67ed59e1d1-306a4e73501mr2414029a91.6.1743735872780; 
- Thu, 03 Apr 2025 20:04:32 -0700 (PDT)
-Received: from [192.168.0.102] ([186.215.49.46])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3057ca8f5f7sm2516387a91.29.2025.04.03.20.04.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Apr 2025 20:04:32 -0700 (PDT)
-Message-ID: <97ec8ac6-b1e3-4ea7-a639-b38e6e08fd81@linaro.org>
-Date: Fri, 4 Apr 2025 00:04:28 -0300
+ AJvYcCU4qTiuh4xFOiSAjmtNh9ju+ABeLKhSFvZNlBAs0Qx4BakhYFKEfPPAUEYVxLQ3Utq/dcQjBFQvLrvD@nongnu.org
+X-Gm-Message-State: AOJu0Yx35RdPn+jIAjeenU3XlgE4U1/y78oN1NgzeU34csDBRH5fTmIY
+ VDH8A03lJ4pHvgMW2BqHkzJGkCvU6ce6zrDrF4kLp9WXg8VfhIf8Jvt7pQ7ikN1IFgZejDLogtG
+ DMp852ENSPTBLZTadKbhQHCSkpiMqXA==
+X-Gm-Gg: ASbGncvM1DgxEbg0jB9p9+tib3B4ytov6M/ZGmQF5yRKNlDho6FKoc8mi0MxR0gFgPB
+ weLpVXGhH3j9UTmbNLEz7G0LwtTlElqtSiPRdbQtcqy4FYEvEFHFNqM2pcKT0R/yiG12XT9dBeJ
+ 2x71RJhnmSCebRM8RsZozP5VHviB8bzAMA0tW2EdqZ8ZP7fQ+9bgWzGz1w
+X-Google-Smtp-Source: AGHT+IGxi7hAhGEEeklXfIkN5yeytNfI9Pxn6+LB1mPa0QPDdDlAJLLE4Dj+sIidTI4QRiVdNLcu7+FxpqSvJQmhM7k=
+X-Received: by 2002:a05:6102:1481:b0:4c4:df5b:330f with SMTP id
+ ada2fe7eead31-4c8554696f1mr1511662137.17.1743735948284; Thu, 03 Apr 2025
+ 20:05:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v3 9/9] qtest/bios-tables-test: Update
- aarch64/virt 'its_off' variant blobs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
- Udo Steinberg <udo@hypervisor.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>
-References: <20250403204029.47958-1-philmd@linaro.org>
- <20250403204029.47958-10-philmd@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250403204029.47958-10-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250319192153.28549-1-jim.shu@sifive.com>
+ <20250319192153.28549-2-jim.shu@sifive.com>
+In-Reply-To: <20250319192153.28549-2-jim.shu@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 4 Apr 2025 13:05:22 +1000
+X-Gm-Features: ATxdqUF-cQF2UYDxTUJi4TeCcUCCoG1eHiq6te7ZJcsm6t6aVxCzkkmULNrSEaI
+Message-ID: <CAKmqyKM5d7JZbkEfNtxGE8yXkgLfxpRkb+Bsn8b=gX_bkAoioQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] target/riscv: Add the checking into stimecmp write
+ function.
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,427 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+On Thu, Mar 20, 2025 at 5:22=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote:
+>
+> Preparation commit to let aclint timer to use stimecmp write function.
+> Aclint timer doesn't call sstc() predicate so we need to check inside
+> the stimecmp write function.
+>
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 
-On 4/3/25 17:40, Philippe Mathieu-Daudé wrote:
-> Commit the blobs generated by tests/data/acpi/rebuild-expected-aml.sh.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-In accordance with my comments in 5/9 and 6/9 about the blobs organization,
-after the fix, I think only APIC blob should be updated and removed from
-the "ignore list".
+Alistair
 
-
-Cheers,
-Gustavo
-
-> Changes in the tables:
-> 
->    @@ -1,32 +1,32 @@
->     /*
->      * Intel ACPI Component Architecture
->      * AML/ASL+ Disassembler version 20240927 (64-bit version)
->      * Copyright (c) 2000 - 2023 Intel Corporation
->      *
->      * Disassembly of tests/data/acpi/aarch64/virt/APIC.its_off
->      *
->      * ACPI Data Table [APIC]
->      *
->      * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
->      */
-> 
->     [000h 0000 004h]                   Signature : "APIC"    [Multiple APIC Description Table (MADT)]
->    -[004h 0004 004h]                Table Length : 000000B8
->    +[004h 0004 004h]                Table Length : 000000A4
->     [008h 0008 001h]                    Revision : 04
->    -[009h 0009 001h]                    Checksum : A7
->    +[009h 0009 001h]                    Checksum : EE
->     [00Ah 0010 006h]                      Oem ID : "BOCHS "
->     [010h 0016 008h]                Oem Table ID : "BXPC    "
->     [018h 0024 004h]                Oem Revision : 00000001
->     [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
->     [020h 0032 004h]       Asl Compiler Revision : 00000001
-> 
->     [024h 0036 004h]          Local Apic Address : 00000000
->     [028h 0040 004h]       Flags (decoded below) : 00000000
->                              PC-AT Compatibility : 0
-> 
->     [02Ch 0044 001h]               Subtable Type : 0C [Generic Interrupt Distributor]
->     [02Dh 0045 001h]                      Length : 18
->     [02Eh 0046 002h]                    Reserved : 0000
->     [030h 0048 004h]       Local GIC Hardware ID : 00000000
->     [034h 0052 008h]                Base Address : 0000000008000000
->     [03Ch 0060 004h]              Interrupt Base : 00000000
->    @@ -49,37 +49,29 @@
->     [06Ch 0108 008h]    Virtual GIC Base Address : 0000000000000000
->     [074h 0116 008h] Hypervisor GIC Base Address : 0000000000000000
->     [07Ch 0124 004h]       Virtual GIC Interrupt : 00000019
->     [080h 0128 008h]  Redistributor Base Address : 0000000000000000
->     [088h 0136 008h]                   ARM MPIDR : 0000000000000000
->     [090h 0144 001h]            Efficiency Class : 00
->     [091h 0145 001h]                    Reserved : 00
->     [092h 0146 002h]      SPE Overflow Interrupt : 0000
->     [094h 0148 002h]              TRBE Interrupt : 100E
-> 
->     [094h 0148 001h]               Subtable Type : 0E [Generic Interrupt Redistributor]
->     [095h 0149 001h]                      Length : 10
->     [097h 0151 002h]                    Reserved : 0000
->     [098h 0152 008h]                Base Address : 00000000080A0000
->     [0A0h 0160 004h]                      Length : 00F60000
-> 
->    -[0A4h 0164 001h]               Subtable Type : 0F [Generic Interrupt Translator]
->    -[0A5h 0165 001h]                      Length : 14
->    -[0A7h 0167 002h]                    Reserved : 0000
->    -[0A8h 0168 004h]              Translation ID : 00000000
->    -[0ACh 0172 008h]                Base Address : 0000000008080000
->    -[0B4h 0180 004h]                    Reserved : 00000000
->    +Raw Table Data: Length 164 (0xA4)
-> 
->    -Raw Table Data: Length 184 (0xB8)
->    -
->    -    0000: 41 50 49 43 B8 00 00 00 04 A7 42 4F 43 48 53 20  // APIC......BOCHS
->    +    0000: 41 50 49 43 A4 00 00 00 04 EE 42 4F 43 48 53 20  // APIC......BOCHS
->         0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
->         0020: 01 00 00 00 00 00 00 00 00 00 00 00 0C 18 00 00  // ................
->         0030: 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00  // ................
->         0040: 04 00 00 00 0B 50 00 00 00 00 00 00 00 00 00 00  // .....P..........
->         0050: 01 00 00 00 00 00 00 00 17 00 00 00 00 00 00 00  // ................
->         0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0070: 00 00 00 00 00 00 00 00 00 00 00 00 19 00 00 00  // ................
->         0080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0090: 00 00 00 00 0E 10 00 00 00 00 0A 08 00 00 00 00  // ................
->    -    00A0: 00 00 F6 00 0F 14 00 00 00 00 00 00 00 00 08 08  // ................
->    -    00B0: 00 00 00 00 00 00 00 00                          // ........
->    +    00A0: 00 00 F6 00                                      // ....
-> 
->     /*
->      * Intel ACPI Component Architecture
->      * AML/ASL+ Disassembler version 20240927 (64-bit version)
->      * Copyright (c) 2000 - 2023 Intel Corporation
->      *
->      * Disassembly of tests/data/acpi/aarch64/virt/FACP
->      *
->      * ACPI Data Table [FACP]
->      *
->      * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
->      */
-> 
->     [000h 0000 004h]                   Signature : "FACP"    [Fixed ACPI Description Table (FADT)]
->     [004h 0004 004h]                Table Length : 00000114
->     [008h 0008 001h]                    Revision : 06
->    -[009h 0009 001h]                    Checksum : 12
->    +[009h 0009 001h]                    Checksum : 14
->     [00Ah 0010 006h]                      Oem ID : "BOCHS "
->     [010h 0016 008h]                Oem Table ID : "BXPC    "
->     [018h 0024 004h]                Oem Revision : 00000001
->     [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
->     [020h 0032 004h]       Asl Compiler Revision : 00000001
-> 
->     [024h 0036 004h]                FACS Address : 00000000
->     [028h 0040 004h]                DSDT Address : 00000000
->     [02Ch 0044 001h]                       Model : 00
->     [02Dh 0045 001h]                  PM Profile : 00 [Unspecified]
->     [02Eh 0046 002h]               SCI Interrupt : 0000
->     [030h 0048 004h]            SMI Command Port : 00000000
->     [034h 0052 001h]           ACPI Enable Value : 00
->     [035h 0053 001h]          ACPI Disable Value : 00
->     [036h 0054 001h]              S4BIOS Command : 00
->     [037h 0055 001h]             P-State Control : 00
->    @@ -82,35 +82,35 @@
->                          Use Platform Timer (V4) : 0
->                    RTC_STS valid on S4 wake (V4) : 0
->                     Remote Power-on capable (V4) : 0
->                      Use APIC Cluster Model (V4) : 0
->          Use APIC Physical Destination Mode (V4) : 0
->                            Hardware Reduced (V5) : 1
->                           Low Power S0 Idle (V5) : 0
-> 
->     [074h 0116 00Ch]              Reset Register : [Generic Address Structure]
->     [074h 0116 001h]                    Space ID : 00 [SystemMemory]
->     [075h 0117 001h]                   Bit Width : 00
->     [076h 0118 001h]                  Bit Offset : 00
->     [077h 0119 001h]        Encoded Access Width : 00 [Undefined/Legacy]
->     [078h 0120 008h]                     Address : 0000000000000000
-> 
->     [080h 0128 001h]        Value to cause reset : 00
->    -[081h 0129 002h]   ARM Flags (decoded below) : 0003
->    +[081h 0129 002h]   ARM Flags (decoded below) : 0001
->                                   PSCI Compliant : 1
->    -                       Must use HVC for PSCI : 1
->    +                       Must use HVC for PSCI : 0
-> 
->     [083h 0131 001h]         FADT Minor Revision : 03
->     [084h 0132 008h]                FACS Address : 0000000000000000
->     [08Ch 0140 008h]                DSDT Address : 0000000000000000
->     [094h 0148 00Ch]            PM1A Event Block : [Generic Address Structure]
->     [094h 0148 001h]                    Space ID : 00 [SystemMemory]
->     [095h 0149 001h]                   Bit Width : 00
->     [096h 0150 001h]                  Bit Offset : 00
->     [097h 0151 001h]        Encoded Access Width : 00 [Undefined/Legacy]
->     [098h 0152 008h]                     Address : 0000000000000000
-> 
->     [0A0h 0160 00Ch]            PM1B Event Block : [Generic Address Structure]
->     [0A0h 0160 001h]                    Space ID : 00 [SystemMemory]
->     [0A1h 0161 001h]                   Bit Width : 00
->     [0A2h 0162 001h]                  Bit Offset : 00
->     [0A3h 0163 001h]        Encoded Access Width : 00 [Undefined/Legacy]
->    @@ -164,34 +164,34 @@
->     [0F5h 0245 001h]                   Bit Width : 00
->     [0F6h 0246 001h]                  Bit Offset : 00
->     [0F7h 0247 001h]        Encoded Access Width : 00 [Undefined/Legacy]
->     [0F8h 0248 008h]                     Address : 0000000000000000
-> 
->     [100h 0256 00Ch]       Sleep Status Register : [Generic Address Structure]
->     [100h 0256 001h]                    Space ID : 00 [SystemMemory]
->     [101h 0257 001h]                   Bit Width : 00
->     [102h 0258 001h]                  Bit Offset : 00
->     [103h 0259 001h]        Encoded Access Width : 00 [Undefined/Legacy]
->     [104h 0260 008h]                     Address : 0000000000000000
-> 
->     [10Ch 0268 008h]               Hypervisor ID : 00000000554D4551
-> 
->     Raw Table Data: Length 276 (0x114)
-> 
->    -    0000: 46 41 43 50 14 01 00 00 06 12 42 4F 43 48 53 20  // FACP......BOCHS
->    +    0000: 46 41 43 50 14 01 00 00 06 14 42 4F 43 48 53 20  // FACP......BOCHS
->         0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
->         0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0070: 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->    -    0080: 00 03 00 03 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->    +    0080: 00 01 00 03 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         00A0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         00B0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         00C0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         00D0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         00E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         00F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->         0100: 00 00 00 00 00 00 00 00 00 00 00 00 51 45 4D 55  // ............QEMU
->         0110: 00 00 00 00                                      // ....
-> 
->    @@ -1,122 +1,111 @@
->     /*
->      * Intel ACPI Component Architecture
->      * AML/ASL+ Disassembler version 20240927 (64-bit version)
->      * Copyright (c) 2000 - 2023 Intel Corporation
->      *
->      * Disassembly of tests/data/acpi/aarch64/virt/IORT.its_off
->      *
->      * ACPI Data Table [IORT]
->      *
->      * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
->      */
-> 
->     [000h 0000 004h]                   Signature : "IORT"    [IO Remapping Table]
->    -[004h 0004 004h]                Table Length : 000000EC
->    +[004h 0004 004h]                Table Length : 000000D4
->     [008h 0008 001h]                    Revision : 03
->    -[009h 0009 001h]                    Checksum : 57
->    +[009h 0009 001h]                    Checksum : A3
->     [00Ah 0010 006h]                      Oem ID : "BOCHS "
->     [010h 0016 008h]                Oem Table ID : "BXPC    "
->     [018h 0024 004h]                Oem Revision : 00000001
->     [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
->     [020h 0032 004h]       Asl Compiler Revision : 00000001
-> 
->     [024h 0036 004h]                  Node Count : 00000003
->     [028h 0040 004h]                 Node Offset : 00000030
->     [02Ch 0044 004h]                    Reserved : 00000000
-> 
->    -[030h 0048 001h]                        Type : 00
->    -[031h 0049 002h]                      Length : 0018
->    -[033h 0051 001h]                    Revision : 01
->    +[030h 0048 001h]                        Type : 04
->    +[031h 0049 002h]                      Length : 0058
->    +[033h 0051 001h]                    Revision : 04
->     [034h 0052 004h]                  Identifier : 00000000
->    -[038h 0056 004h]               Mapping Count : 00000000
->    -[03Ch 0060 004h]              Mapping Offset : 00000000
->    +[038h 0056 004h]               Mapping Count : 00000001
->    +[03Ch 0060 004h]              Mapping Offset : 00000044
-> 
->    -[040h 0064 004h]                    ItsCount : 00000001
->    -[044h 0068 004h]                 Identifiers : 00000000
->    -
->    -[048h 0072 001h]                        Type : 04
->    -[049h 0073 002h]                      Length : 0058
->    -[04Bh 0075 001h]                    Revision : 04
->    -[04Ch 0076 004h]                  Identifier : 00000001
->    -[050h 0080 004h]               Mapping Count : 00000001
->    -[054h 0084 004h]              Mapping Offset : 00000044
->    -
->    -[058h 0088 008h]                Base Address : 0000000009050000
->    -[060h 0096 004h]       Flags (decoded below) : 00000001
->    +[040h 0064 008h]                Base Address : 0000000009050000
->    +[048h 0072 004h]       Flags (decoded below) : 00000001
->                                  COHACC Override : 1
->                                    HTTU Override : 0
->                           Proximity Domain Valid : 0
->                                   DeviceID Valid : 0
->    -[064h 0100 004h]                    Reserved : 00000000
->    -[068h 0104 008h]               VATOS Address : 0000000000000000
->    -[070h 0112 004h]                       Model : 00000000
->    -[074h 0116 004h]                  Event GSIV : 0000006A
->    -[078h 0120 004h]                    PRI GSIV : 0000006B
->    -[07Ch 0124 004h]                   GERR GSIV : 0000006D
->    -[080h 0128 004h]                   Sync GSIV : 0000006C
->    -[084h 0132 004h]            Proximity Domain : 00000000
->    -[088h 0136 004h]     Device ID Mapping Index : 00000000
->    +[04Ch 0076 004h]                    Reserved : 00000000
->    +[050h 0080 008h]               VATOS Address : 0000000000000000
->    +[058h 0088 004h]                       Model : 00000000
->    +[05Ch 0092 004h]                  Event GSIV : 0000006A
->    +[060h 0096 004h]                    PRI GSIV : 0000006B
->    +[064h 0100 004h]                   GERR GSIV : 0000006D
->    +[068h 0104 004h]                   Sync GSIV : 0000006C
->    +[06Ch 0108 004h]            Proximity Domain : 00000000
->    +[070h 0112 004h]     Device ID Mapping Index : 00000000
-> 
->    -[08Ch 0140 004h]                  Input base : 00000000
->    -[090h 0144 004h]                    ID Count : 0000FFFF
->    -[094h 0148 004h]                 Output Base : 00000000
->    -[098h 0152 004h]            Output Reference : 00000030
->    -[09Ch 0156 004h]       Flags (decoded below) : 00000000
->    +[074h 0116 004h]                  Input base : 00000000
->    +[078h 0120 004h]                    ID Count : 0000FFFF
->    +[07Ch 0124 004h]                 Output Base : 00000000
->    +[080h 0128 004h]            Output Reference : 00000030
->    +[084h 0132 004h]       Flags (decoded below) : 00000000
->                                   Single Mapping : 0
-> 
->    -[0A0h 0160 001h]                        Type : 02
->    -[0A1h 0161 002h]                      Length : 004C
->    -[0A3h 0163 001h]                    Revision : 03
->    -[0A4h 0164 004h]                  Identifier : 00000002
->    -[0A8h 0168 004h]               Mapping Count : 00000002
->    -[0ACh 0172 004h]              Mapping Offset : 00000024
->    +[088h 0136 001h]                        Type : 02
->    +[089h 0137 002h]                      Length : 004C
->    +[08Bh 0139 001h]                    Revision : 03
->    +[08Ch 0140 004h]                  Identifier : 00000001
->    +[090h 0144 004h]               Mapping Count : 00000002
->    +[094h 0148 004h]              Mapping Offset : 00000024
-> 
->    -[0B0h 0176 008h]           Memory Properties : [IORT Memory Access Properties]
->    -[0B0h 0176 004h]             Cache Coherency : 00000001
->    -[0B4h 0180 001h]       Hints (decoded below) : 00
->    +[098h 0152 008h]           Memory Properties : [IORT Memory Access Properties]
->    +[098h 0152 004h]             Cache Coherency : 00000001
->    +[09Ch 0156 001h]       Hints (decoded below) : 00
->                                        Transient : 0
->                                   Write Allocate : 0
->                                    Read Allocate : 0
->                                         Override : 0
->    -[0B5h 0181 002h]                    Reserved : 0000
->    -[0B7h 0183 001h] Memory Flags (decoded below) : 03
->    +[09Dh 0157 002h]                    Reserved : 0000
->    +[09Fh 0159 001h] Memory Flags (decoded below) : 03
->                                        Coherency : 1
->                                 Device Attribute : 1
->                    Ensured Coherency of Accesses : 0
->    -[0B8h 0184 004h]               ATS Attribute : 00000000
->    -[0BCh 0188 004h]          PCI Segment Number : 00000000
->    -[0C0h 0192 001h]           Memory Size Limit : 40
->    -[0C1h 0193 002h]          PASID Capabilities : 0000
->    -[0C3h 0195 001h]                    Reserved : 00
->    +[0A0h 0160 004h]               ATS Attribute : 00000000
->    +[0A4h 0164 004h]          PCI Segment Number : 00000000
->    +[0A8h 0168 001h]           Memory Size Limit : 40
->    +[0A9h 0169 002h]          PASID Capabilities : 0000
->    +[0ABh 0171 001h]                    Reserved : 00
-> 
->    -[0C4h 0196 004h]                  Input base : 00000000
->    -[0C8h 0200 004h]                    ID Count : 000000FF
->    -[0CCh 0204 004h]                 Output Base : 00000000
->    -[0D0h 0208 004h]            Output Reference : 00000048
->    -[0D4h 0212 004h]       Flags (decoded below) : 00000000
->    +[0ACh 0172 004h]                  Input base : 00000000
->    +[0B0h 0176 004h]                    ID Count : 000000FF
->    +[0B4h 0180 004h]                 Output Base : 00000000
->    +[0B8h 0184 004h]            Output Reference : 00000030
->    +[0BCh 0188 004h]       Flags (decoded below) : 00000000
->                                   Single Mapping : 0
-> 
->    -[0D8h 0216 004h]                  Input base : 00000100
->    -[0DCh 0220 004h]                    ID Count : 0000FEFF
->    -[0E0h 0224 004h]                 Output Base : 00000100
->    -[0E4h 0228 004h]            Output Reference : 00000030
->    -[0E8h 0232 004h]       Flags (decoded below) : 00000000
->    +[0C0h 0192 004h]                  Input base : 00000100
->    +[0C4h 0196 004h]                    ID Count : 0000FEFF
->    +[0C8h 0200 004h]                 Output Base : 00000100
->    +[0CCh 0204 004h]            Output Reference : 00000030
->    +[0D0h 0208 004h]       Flags (decoded below) : 00000000
->                                   Single Mapping : 0
-> 
->    -Raw Table Data: Length 236 (0xEC)
->    +Raw Table Data: Length 212 (0xD4)
-> 
->    -    0000: 49 4F 52 54 EC 00 00 00 03 57 42 4F 43 48 53 20  // IORT.....WBOCHS
->    +    0000: 49 4F 52 54 D4 00 00 00 03 A3 42 4F 43 48 53 20  // IORT......BOCHS
->         0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
->         0020: 01 00 00 00 03 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
->    -    0030: 00 18 00 01 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->    -    0040: 01 00 00 00 00 00 00 00 04 58 00 04 01 00 00 00  // .........X......
->    -    0050: 01 00 00 00 44 00 00 00 00 00 05 09 00 00 00 00  // ....D...........
->    -    0060: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
->    -    0070: 00 00 00 00 6A 00 00 00 6B 00 00 00 6D 00 00 00  // ....j...k...m...
->    -    0080: 6C 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // l...............
->    -    0090: FF FF 00 00 00 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
->    -    00A0: 02 4C 00 03 02 00 00 00 02 00 00 00 24 00 00 00  // .L..........$...
->    -    00B0: 01 00 00 00 00 00 00 03 00 00 00 00 00 00 00 00  // ................
->    -    00C0: 40 00 00 00 00 00 00 00 FF 00 00 00 00 00 00 00  // @...............
->    -    00D0: 48 00 00 00 00 00 00 00 00 01 00 00 FF FE 00 00  // H...............
->    -    00E0: 00 01 00 00 30 00 00 00 00 00 00 00              // ....0.......
->    +    0030: 04 58 00 04 00 00 00 00 01 00 00 00 44 00 00 00  // .X..........D...
->    +    0040: 00 00 05 09 00 00 00 00 01 00 00 00 00 00 00 00  // ................
->    +    0050: 00 00 00 00 00 00 00 00 00 00 00 00 6A 00 00 00  // ............j...
->    +    0060: 6B 00 00 00 6D 00 00 00 6C 00 00 00 00 00 00 00  // k...m...l.......
->    +    0070: 00 00 00 00 00 00 00 00 FF FF 00 00 00 00 00 00  // ................
->    +    0080: 30 00 00 00 00 00 00 00 02 4C 00 03 01 00 00 00  // 0........L......
->    +    0090: 02 00 00 00 24 00 00 00 01 00 00 00 00 00 00 03  // ....$...........
->    +    00A0: 00 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  // ........@.......
->    +    00B0: FF 00 00 00 00 00 00 00 30 00 00 00 00 00 00 00  // ........0.......
->    +    00C0: 00 01 00 00 FF FE 00 00 00 01 00 00 30 00 00 00  // ............0...
->    +    00D0: 00 00 00 00                                      // ....
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   tests/qtest/bios-tables-test-allowed-diff.h |   3 ---
->   tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 184 -> 164 bytes
->   tests/data/acpi/aarch64/virt/IORT.its_off   | Bin 236 -> 212 bytes
->   3 files changed, 3 deletions(-)
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index 3421dd5adf3..dfb8523c8bf 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1,4 +1 @@
->   /* List of comma-separated changed AML files to ignore */
-> -"tests/data/acpi/aarch64/virt/APIC.its_off",
-> -"tests/data/acpi/aarch64/virt/FACP.its_off",
-> -"tests/data/acpi/aarch64/virt/IORT.its_off",
-> diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/acpi/aarch64/virt/APIC.its_off
-> index c37d05d6e05805304f10afe73eb7cb9100fcccfa..f24ac8fbff5261a52434abcfcff96dbdc7709de4 100644
-> GIT binary patch
-> delta 18
-> ZcmdnNxP+0*F~HM#2?GNI%e#qOvj8xy1yKM1
-> 
-> delta 39
-> jcmZ3&xPy_)F~HM#2Ll5G%kqg_vqbnsfJ`vp;DE6Jpmzmj
-> 
-> diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/acpi/aarch64/virt/IORT.its_off
-> index 0fceb820d509e852ca0849baf568a8e93e426738..25f64407c4aac11bda2d1ac24cd8999a1d84c80d 100644
-> GIT binary patch
-> delta 37
-> tcmaFEc!iP6(?2NW3IhWJ^WuqIYOE{~3@i*2eZv_UCoa`yG?;i%8UVn-3Gn~`
-> 
-> delta 61
-> zcmcb@_=b_o(?2NW4FdxMbNECqHCYA;21XzU4qzOX2nH6$iKgL<OcQ&x89gTMlm-Aj
-> CGzq}~
-> 
-
+>  target/riscv/time_helper.c | 19 +++++++++++++++++--
+>  1 file changed, 17 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+> index bc0d9a0c4c..aebf0798d0 100644
+> --- a/target/riscv/time_helper.c
+> +++ b/target/riscv/time_helper.c
+> @@ -46,8 +46,23 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEM=
+UTimer *timer,
+>  {
+>      uint64_t diff, ns_diff, next;
+>      RISCVAclintMTimerState *mtimer =3D env->rdtime_fn_arg;
+> -    uint32_t timebase_freq =3D mtimer->timebase_freq;
+> -    uint64_t rtc_r =3D env->rdtime_fn(env->rdtime_fn_arg) + delta;
+> +    uint32_t timebase_freq;
+> +    uint64_t rtc_r;
+> +
+> +    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn ||
+> +        !env->rdtime_fn_arg || !get_field(env->menvcfg, MENVCFG_STCE)) {
+> +        /* S/VS Timer IRQ depends on sstc extension, rdtime_fn(), and ST=
+CE. */
+> +        return;
+> +    }
+> +
+> +    if (timer_irq =3D=3D MIP_VSTIP &&
+> +        (!riscv_has_ext(env, RVH) || !get_field(env->henvcfg, HENVCFG_ST=
+CE))) {
+> +        /* VS Timer IRQ also depends on RVH and henvcfg.STCE. */
+> +        return;
+> +    }
+> +
+> +    timebase_freq =3D mtimer->timebase_freq;
+> +    rtc_r =3D env->rdtime_fn(env->rdtime_fn_arg) + delta;
+>
+>      if (timecmp <=3D rtc_r) {
+>          /*
+> --
+> 2.17.1
+>
+>
 
