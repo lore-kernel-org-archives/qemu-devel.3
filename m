@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34554C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF80C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 13:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0gj4-0001ye-Gj; Fri, 04 Apr 2025 09:04:50 -0400
+	id 1u0gjf-0002F5-Qq; Fri, 04 Apr 2025 09:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1u0gj2-0001y2-OD
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:04:48 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1u0gir-0003YC-Rq
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:04:48 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-72bd5f25ea6so552038a34.1
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:04:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1743771875; x=1744376675;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
- :from:to:cc:subject:date:message-id:reply-to;
- bh=COWaDmWYVkXuWLud74Qy8icbSOvWeyROngucf7VTnFw=;
- b=idZB5qpPgyAHHhb3tm5Ht9njqJtZoVghj9VMMAdnUEycDXkYGPUwyFxMWcnY1Ckl+X
- G87MYWECKbsuB554Luna5TpO2OFLOvvFrv58mvVvthNAFggoCISDHTvPJndlj1xhuuAg
- V0Lb82fgHMydLCYm4W83xSyeRNmAU777mcjcKfWQMe/f9f08jYoJpXGjseNBzJPxgCtI
- KRsJ1PCSa/C4tu9iVz7XxctyGcaxAQ/ubOe17aaJT8JqqNv9aBECsXG/7Esug6nKn6g+
- i/rHnQS/uv3UrjCsY4VSLsylKpSTnent0Szmt0weiA8om67oS4P3H0Z2SsdhHHCR43QH
- VoLQ==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u0gjZ-0002Ar-RI
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:05:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u0gjX-0003l9-Gn
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 09:05:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743771903;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4jQZLN18CiAvOXa3JKAm5xYViLMgAYKDp0GBZRLJRXg=;
+ b=igHpzLoXgr8z4PJx59SUHjb0yj9gsnspz5TLCpMjujjvwuDapewL+lBNlBgKYa0Jr3sW3R
+ x7lI/dzuyq4vNfFThmu/55sbkKHN3GhxDwHfIz5jpwM2m7qYwtZXwkHou5Oo0lz/bz4p0P
+ uuRU0G8w6JUg2aOAUYzyDoFKDqC6u1w=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-343-DgO-osNFN82uBCY65C_ClQ-1; Fri, 04 Apr 2025 09:05:02 -0400
+X-MC-Unique: DgO-osNFN82uBCY65C_ClQ-1
+X-Mimecast-MFC-AGG-ID: DgO-osNFN82uBCY65C_ClQ_1743771901
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39131851046so1004716f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 06:05:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743771875; x=1744376675;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:reply-to:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1743771901; x=1744376701;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=COWaDmWYVkXuWLud74Qy8icbSOvWeyROngucf7VTnFw=;
- b=p7GOUMfw2ZicCwMmibn2Z42GrZWi6e1f8+zfed4O0Xcoo3YlrP3AIpXviuH5z7252Q
- ax45fbg+u8FuEM3YI1BzvIIGXtwDfD+IM3n9eNEzjZ1rTg4M5nQDNu/kRP9xfAJooMmr
- 2syJH6m6jCFmyf9gFCuL9qgzaAhd90J8U0JdcZJdFPeNFHWWRljNpXQ/wjfsraHa0twX
- 5XDhCrRiD8kIPERrDyOL4kS8mgjJeKgJ0kiVW+YLNQ+94uT53Nh5W6rv+JEJVP6I/d1Y
- SxAehbGjNNzv4SZm7QVMtWRgF0pwWZIJSGm1datx3kW1A/iDBI/3x638kSVjtH2yKtlA
- NA6w==
-X-Gm-Message-State: AOJu0Yy8dLeiO3YlvUb/9bBh0+hGLiW1TTmUV75sm7wUe383JZVTs+HC
- 5P3i84q6IAuMLTmx+VYq5oKu5DPa6F00Dq7nqE4KAUT4XCXRN52BO9ZEhvij74M=
-X-Gm-Gg: ASbGncv8DK32sJ7k4IK7D5yvRWIfkOjmDvPl431Ij8e5sYG9VURhoXFNeQ/d+6fBpAB
- 0hUub359+lyXohxonc2D+MBO4lbjacnQ7uT61FeA88WbT3+18w8njSA1mf2HrCah6sF71ajYMPy
- +w0yMbeYfRBwypRUCsIUCjBiJApMPAIRnUgCHpyZ40SMk7AxL6Cy0h3mWIcwohQ7qvWIf9eooqA
- sPtBKJJo/cRXZ6ML5y+eR71/j+XKrAswAgopAxrXNfZTppF5tDd+RDac+T54P0pnmXklEq1J0TI
- oG5kuJgB+YsqyY1208RaQqh3c+UyRABMtXQWFgD3TvfiVNZj
-X-Google-Smtp-Source: AGHT+IGqy7n785DMH7elMfe5pQlwW2ggSnXMvXewL6XOA+WhCWZI+YiWOOoV/9p6YIxKxInUI29ubw==
-X-Received: by 2002:a05:6830:670c:b0:72b:a61c:cbb2 with SMTP id
- 46e09a7af769-72e366693e1mr2458331a34.10.1743771875386; 
- Fri, 04 Apr 2025 06:04:35 -0700 (PDT)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:5413:2ba6:c80b:5b46])
+ bh=4jQZLN18CiAvOXa3JKAm5xYViLMgAYKDp0GBZRLJRXg=;
+ b=UriU3e8kqMfhiEs2Zi2QOPwBOSf5HM9E1BJTcHTSc82j7OY+Whejw548Hx+xXXZszv
+ im20TUq0pw3947Yuho2xKB39NhOBXa7WlnyEZpIRB7gBNA9o8oNWu0ACAQCumur27MLP
+ 2bqKdHgx548rj4L3klCzGfEXwHfSmMuS7lSFiytnWBLL4/2rEBZujsdfBoij3k+3fP0X
+ 1Y84xqrUuVHan5+mHJYc2Xk9lNbzlMtzDdBg5pcvWqqT6WTJ0qBh8Onzv7CyCD8cSGYp
+ 0QAj3ZBxVaI7dQDjWB2PjtLkdaZm675TJ6thQIxiCnYLEQzj3ywRDDrW1hZ4Fp0iCOip
+ q8zQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrjkTWhnJK8uR2CqZPPFmbYHSR6BoNwbLincPrCy3gADfNo9y3Gp4T8dGZdccb4Yvg62XksFtepllN@nongnu.org
+X-Gm-Message-State: AOJu0YyhtoZvGRp2TSzuGHpeYYW7JrooDP7nvJbe8dkR0ictvoT7NudX
+ 6P/JXpZmyBBeFcBe1ePDmwo8/axtKe2XF69N8vbzhJ2AOGfp1Wf5O2FDZfGCoekonOzsSEnoTYZ
+ tN24i6aTQj0hdVbB2JGjXvR8fZ7N9ebn/QbiXg1dskQ8qi6aM46qh
+X-Gm-Gg: ASbGncsNXMmcBoDGTdx82yj/isztn7yuWZcDoIbzjVMdd1QyCZ8T9unkg3AQoT8ELvd
+ 9mHV1DaY5JDqCzrN/7KAsknaGtAWuhVEUtumf5idQdl94gCYGyGJLzi3QwN7bMngoqK66UK3kQV
+ xZcYCYiAppLCRJrOEum3+MeGyo0X0lA7TGcHJ8YtoVHSVfeexFxTe8XU+j2k9eTD+ybnLn9zIT4
+ +KEKBuUO5c+4YMb57vwSaY+Twd9h5lGv75Lci1P17kmWPNDNetgbwp1SAWoMsasFSVLumpxDI9K
+ QgNfl0bQc17C4oeEpGnrlkPwODHia05nfwAfPspG0mqKvmbIyw8E50kpMwhjYtrUfOdj12khyi0
+ oN0RFe0iGz1VJRsGv8MhiMJfQqzfrV6+vbwr5LeDMq6NR
+X-Received: by 2002:a05:6000:186f:b0:39c:266c:136d with SMTP id
+ ffacd0b85a97d-39d07bcce91mr2526088f8f.12.1743771900316; 
+ Fri, 04 Apr 2025 06:05:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkEVePEhxKHrk6b48yj87syspZVmKQmkRXsRRje7Hci6Xp7UhvX1cSbkDJH2H0QgjmDwlmkg==
+X-Received: by 2002:a05:6000:186f:b0:39c:266c:136d with SMTP id
+ ffacd0b85a97d-39d07bcce91mr2526023f8f.12.1743771899796; 
+ Fri, 04 Apr 2025 06:04:59 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d74f:9d66:d61a:f3cf:3494:9981?
+ (p200300cfd74f9d66d61af3cf34949981.dip0.t-ipconnect.de.
+ [2003:cf:d74f:9d66:d61a:f3cf:3494:9981])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-72e3050177fsm648160a34.9.2025.04.04.06.04.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Apr 2025 06:04:34 -0700 (PDT)
-Date: Fri, 4 Apr 2025 08:04:29 -0500
-From: Corey Minyard <corey@minyard.net>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/ipmi: Allow multiple BMC instances
-Message-ID: <Z-_Y3VJ49yYyZmE4@mail.minyard.net>
-References: <Z-8ujYWA8yBATtYK@mail.minyard.net>
- <438cb87a-cfa2-4392-92f4-bbb05f7a2ec2@linaro.org>
+ ffacd0b85a97d-39c30096bb2sm4370930f8f.12.2025.04.04.06.04.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Apr 2025 06:04:59 -0700 (PDT)
+Message-ID: <0e51c2e8-f15a-4a4d-9a42-52e8475662c8@redhat.com>
+Date: Fri, 4 Apr 2025 15:04:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/15] fuse: Increase MAX_WRITE_SIZE with a second buffer
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+References: <20250325160529.117543-1-hreitz@redhat.com>
+ <20250325160655.119407-14-hreitz@redhat.com>
+ <w3zwzqyhnkkoayjsfj3ozfmipsynwdevl5my4ra4g7gxqlbeni@lesuztmxb5bc>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <w3zwzqyhnkkoayjsfj3ozfmipsynwdevl5my4ra4g7gxqlbeni@lesuztmxb5bc>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <438cb87a-cfa2-4392-92f4-bbb05f7a2ec2@linaro.org>
-Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
- envelope-from=corey@minyard.net; helo=mail-ot1-x32a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.028,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,124 +111,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 04, 2025 at 02:41:46PM +0200, Philippe Mathieu-Daudé wrote:
-> Hi Corey,
-> 
-> On 4/4/25 02:57, Corey Minyard wrote:
-> > Allow a system to have multiple BMC connections to the same BMC and
-> > multiple different BMCs.  This can happen on real systems, and is
-> > useful for testing the IPMI driver on Linux.
-> > 
-> > Signed-off-by: Corey Minyard <corey@minyard.net>
-> > ---
-> > I'm working on a fairly extensive test suite for IPMI, the Linux
-> > driver and qemu, and this is necessary for some driver tests.
-> > 
-> >   hw/ipmi/ipmi.c            | 1 +
-> >   hw/ipmi/ipmi_bmc_extern.c | 5 +++--
-> >   hw/ipmi/ipmi_bmc_sim.c    | 2 +-
-> >   include/hw/ipmi/ipmi.h    | 1 +
-> >   qemu-options.hx           | 9 ++++++++-
-> >   5 files changed, 14 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
-> > index fdeaa5269f..ffd972f78b 100644
-> > --- a/hw/ipmi/ipmi.c
-> > +++ b/hw/ipmi/ipmi.c
-> > @@ -110,6 +110,7 @@ void ipmi_bmc_find_and_link(Object *obj, Object **bmc)
-> >   static const Property ipmi_bmc_properties[] = {
-> >       DEFINE_PROP_UINT8("slave_addr",  IPMIBmc, slave_addr, 0x20),
-> > +    DEFINE_PROP_UINT8("instance",    IPMIBmc, instance, 0),
-> 
-> Can we use "id" instead of "instance"? The latter confuses me, but
-> maybe a matter of taste.
+On 01.04.25 22:24, Eric Blake wrote:
+> On Tue, Mar 25, 2025 at 05:06:55PM +0100, Hanna Czenczek wrote:
+>> We probably want to support larger write sizes than just 4k; 64k seems
+>> nice.  However, we cannot read partial requests from the FUSE FD, we
+>> always have to read requests in full; so our read buffer must be large
+>> enough to accommodate potential 64k writes if we want to support that.
+>>
+>> Always allocating FuseRequest objects with 64k buffers in them seems
+>> wasteful, though.  But we can get around the issue by splitting the
+>> buffer into two and using readv(): One part will hold all normal (up to
+>> 4k) write requests and all other requests, and a second part (the
+>> "spill-over buffer") will be used only for larger write requests.  Each
+>> FuseQueue has its own spill-over buffer, and only if we find it used
+>> when reading a request will we move its ownership into the FuseRequest
+>> object and allocate a new spill-over buffer for the queue.
+>>
+>> This way, we get to support "large" write sizes without having to
+>> allocate big buffers when they aren't used.
+>>
+>> Also, this even reduces the size of the FuseRequest objects because the
+>> read buffer has to have at least FUSE_MIN_READ_BUFFER (8192) bytes; but
+>> the requests we support are not quite so large (except for >4k writes),
+>> so until now, we basically had to have useless padding in there.
+>>
+>> With the spill-over buffer added, the FUSE_MIN_READ_BUFFER requirement
+>> is easily met and we can decrease the size of the buffer portion that is
+>> right inside of FuseRequest.
+>>
+>> As for benchmarks, the benefit of this patch can be shown easily by
+>> writing a 4G image (with qemu-img convert) to a FUSE export:
+>> - Before this patch: Takes 25.6 s (14.4 s with -t none)
+>> - After this patch: Takes 4.5 s (5.5 s with -t none)
+> Hmm - 64k is still small for some tasks; with qcow2, you can have
+> clusters up to 2M, and writing a cluster at a time seems to be a
+> reasonable desire.
 
-"id" means "identifier", not "instance".  The error log mentions
-"instance", that that is what is passed to vmstate_register().
+What do you mean specifically?  Do you think it’s reasonable from a 
+performance point of view, or for potential atomicity, or...?
 
-Maybe it's better to just have a global variable that increments and not
-pass it in?  That way it would work automatically.
+> Or in other storage areas, nbdcopy (from libnbd)
+> defaults to 256k and allows up to 32M, or we can even look at lvm that
+> defaults to extent size of 4M (although with lvm thin volumes,
+> behavior is more like qcow2 with subclusters in that you don't have to
+> allocate the entire extent at once).
 
--corey
+The problem I see is that other back-ends can probably read the request 
+header, figure out how much memory they need, and allocate the buffer.  
+That doesn’t work with FUSE, you got to read the whole request at once.
 
-> 
-> Preferably s/instance/id/:
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> >   };
-> >   static void bmc_class_init(ObjectClass *oc, void *data)
-> > diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
-> > index d015500254..11c28d03ab 100644
-> > --- a/hw/ipmi/ipmi_bmc_extern.c
-> > +++ b/hw/ipmi/ipmi_bmc_extern.c
-> > @@ -488,7 +488,8 @@ static const VMStateDescription vmstate_ipmi_bmc_extern = {
-> >   static void ipmi_bmc_extern_realize(DeviceState *dev, Error **errp)
-> >   {
-> > -    IPMIBmcExtern *ibe = IPMI_BMC_EXTERN(dev);
-> > +    IPMIBmc *b = IPMI_BMC(dev);
-> > +    IPMIBmcExtern *ibe = IPMI_BMC_EXTERN(b);
-> >       if (!qemu_chr_fe_backend_connected(&ibe->chr)) {
-> >           error_setg(errp, "IPMI external bmc requires chardev attribute");
-> > @@ -498,7 +499,7 @@ static void ipmi_bmc_extern_realize(DeviceState *dev, Error **errp)
-> >       qemu_chr_fe_set_handlers(&ibe->chr, can_receive, receive,
-> >                                chr_event, NULL, ibe, NULL, true);
-> > -    vmstate_register(NULL, 0, &vmstate_ipmi_bmc_extern, ibe);
-> > +    vmstate_register(NULL, b->instance, &vmstate_ipmi_bmc_extern, ibe);
-> >   }
-> >   static void ipmi_bmc_extern_init(Object *obj)
-> > diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-> > index 6157ac7120..c1b39dbdc5 100644
-> > --- a/hw/ipmi/ipmi_bmc_sim.c
-> > +++ b/hw/ipmi/ipmi_bmc_sim.c
-> > @@ -2188,7 +2188,7 @@ static void ipmi_sim_realize(DeviceState *dev, Error **errp)
-> >       ibs->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ipmi_timeout, ibs);
-> > -    vmstate_register(NULL, 0, &vmstate_ipmi_sim, ibs);
-> > +    vmstate_register(NULL, b->instance, &vmstate_ipmi_sim, ibs);
-> >   }
-> >   static const Property ipmi_sim_properties[] = {
-> > diff --git a/include/hw/ipmi/ipmi.h b/include/hw/ipmi/ipmi.h
-> > index 77a7213ed9..4436d70842 100644
-> > --- a/include/hw/ipmi/ipmi.h
-> > +++ b/include/hw/ipmi/ipmi.h
-> > @@ -183,6 +183,7 @@ struct IPMIBmc {
-> >       DeviceState parent;
-> >       uint8_t slave_addr;
-> > +    uint8_t instance;
-> >       IPMIInterface *intf;
-> >   };
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index dc694a99a3..186433ac13 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -1120,6 +1120,10 @@ SRST
-> >       ``slave_addr=val``
-> >           Define slave address to use for the BMC. The default is 0x20.
-> > +    ``instance=val``
-> > +        For more than one BMC on the same system, each instance needs
-> > +	a unique number.  The default is 0.
-> > +
-> >       ``sdrfile=file``
-> >           file containing raw Sensor Data Records (SDR) data. The default
-> >           is none.
-> > @@ -1137,7 +1141,7 @@ SRST
-> >           is set, get "Get GUID" command to the BMC will return it.
-> >           Otherwise "Get GUID" will return an error.
-> > -``-device ipmi-bmc-extern,id=id,chardev=id[,slave_addr=val]``
-> > +``-device ipmi-bmc-extern,id=id,chardev=id[,slave_addr=val][,instance=id]``
-> >       Add a connection to an external IPMI BMC simulator. Instead of
-> >       locally emulating the BMC like the above item, instead connect to an
-> >       external entity that provides the IPMI services.
-> > @@ -1151,6 +1155,9 @@ SRST
-> >       simulator running on a secure port on localhost, so neither the
-> >       simulator nor QEMU is exposed to any outside network.
-> > +    You can have more than one external BMC connection with this, but
-> > +    you must set a unique instance for each BMC.
-> > +
-> >       See the "lanserv/README.vm" file in the OpenIPMI library for more
-> >       details on the external interface.
-> 
+> Maybe it makes sense to have this as a hierarchichal spillover (first
+> level spills over to 64k, second level spills over to 2M or whatever
+> ACTUAL maximum you are willing to support)?
+
+Sounds quite complicated, so the question is what we’d want this for, 
+whether it’d be worth it.
+
+I also wonder whether rate-limiting should come into play at some 
+point.  FUSE doesn’t require network, so a user could submit the same 2M 
+buffer many times, and thus, without itself having to allocate a lot of 
+memory, cause big memory allocations in qemu(-storage-daemon)...
+
+>
+> Or you can feel free to ignore my comments on this patch - allowing
+> 64k instead of 4k is ALREADY a nice change.
+>
+>> @@ -501,7 +547,20 @@ static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+>>           goto no_request;
+>>       }
+>>   
+>> -    ret = RETRY_ON_EINTR(read(fuse_fd, q->request_buf, sizeof(q->request_buf)));
+>> +    /*
+>> +     * If handling the last request consumed the spill-over buffer, allocate a
+>> +     * new one.  Align it to the block device's alignment, which admittedly is
+>> +     * only useful if FUSE_IN_PLACE_WRITE_BYTES is aligned, too.
+> What are typical block device minimum alignments?  If 4k is typical,
+> then it should be easy to make FUSE_IN_PLACE_WRITE_BYTES be 4k.
+
+Yes, but no.  We’d have to allocate request_buf such that for WRITE 
+requests, the data in it would be aligned, i.e. after the header. We 
+cannot split it (one part for the FUSE headers, one part for the data), 
+because that might break up non-WRITE requests, which would make them 
+hard to handle.
+
+Locally, I have a version of this series that does introduce a function 
+to allow allocating buffers such that an offset within them is aligned; 
+but in the end I didn’t see much of a performance difference, so I 
+decided to send this simpler version instead.
+
+Hanna
+
+> If
+> 64k is typical, we're already doomed at being aligned.  Is being
+> unaligned going to cause the block layer to add bounce buffers on us,
+> if the block layer has a larger alignment than what we use here?
+>
+>> @@ -915,17 +983,25 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
+>>   }
+>>   
+>>   /**
+>> - * Handle client writes to the exported image.  @buf has the data to be written
+>> - * and will be copied to a bounce buffer before yielding for the first time.
+>> + * Handle client writes to the exported image.  @in_place_buf has the first
+>> + * FUSE_IN_PLACE_WRITE_BYTES bytes of the data to be written, @spillover_buf
+>> + * contains the rest (if any; NULL otherwise).
+>> + * Data in @in_place_buf is assumed to be overwritten after yielding, so will
+>> + * be copied to a bounce buffer beforehand.  @spillover_buf in contrast is
+>> + * assumed to be exclusively owned and will be used as-is.
+> Makes sense, although it leads to some interesting bookkeeping.  (I'm
+> wondering if nbd would benefit from this split-level buffering, since
+> it supports reads and writes up to 32M)
+>
+
 
