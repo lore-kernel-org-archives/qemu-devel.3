@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C32C3601E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12492C36010
 	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 12:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0foy-0002Lh-Ef; Fri, 04 Apr 2025 08:06:52 -0400
+	id 1u0foy-0002N1-Tu; Fri, 04 Apr 2025 08:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1u0fov-0002Jl-Qq
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:06:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=VGIb=WW=kaod.org=clg@ozlabs.org>)
+ id 1u0fov-0002Jm-VJ; Fri, 04 Apr 2025 08:06:50 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1u0fos-00058L-Kp
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 08:06:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743768405;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cliCMCG3vkwg2B6kUktVbTfqwyfmXDpitKOIuRcUsXo=;
- b=NOfq4y82GX3MKOhIXcfEghqXK8xxw+/QJZHfKXzqNtSWESO4lsicTAJs1OvJ3Hlv0f3kMW
- 7NpNsifvogH/N2B1Guh035bLMTDr78Js0oNn5z2wTz1+nSXHa0KZ4e885WdxZKsh5sNdGR
- BUXA6wiaEXXFYSL0+yu4RCb18GFEOro=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-Kz150g_LNiS-uO6YQAcbVg-1; Fri, 04 Apr 2025 08:06:44 -0400
-X-MC-Unique: Kz150g_LNiS-uO6YQAcbVg-1
-X-Mimecast-MFC-AGG-ID: Kz150g_LNiS-uO6YQAcbVg_1743768403
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so15295305e9.2
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 05:06:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743768403; x=1744373203;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cliCMCG3vkwg2B6kUktVbTfqwyfmXDpitKOIuRcUsXo=;
- b=wIfQmbeHk2B7TYgDjx2gS6HffcxHm31IzwAGAlofszX9tv7lugmWdUxC1i/eymqxdi
- zUB1kfV0Qy9AWI3kT9i25NnoLEoIpwyOfgAd3w25rMsBMOwIp7+y0yzc18k9hv6JguAK
- og9lFNsY1LfXDbigwPXgO/tVUtwvPbrbSLpPlT5dl0lQvCxEVFibzm/8UI5d/K3W+JJl
- 8MPE1rtJ9HhRiRNTHU3I8jp7iRjXWcIQFUjKBuc75E5nV5vUwUDGZVp6Q4cyRN2l3lJU
- MJRdNQZDpRW7rEWQDlevKPQb8w5ysd+BX1NMF+rUZ1VZTHEg3f6BBOgeGpD4tYPTbmmq
- kbRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViAnTvf9NVT4oumPhPvgdKvUbTyY1VA+vy5tFw9+nhMbkLVEvGyyj73qw3+ZH157wDjTN5LivrBq9+@nongnu.org
-X-Gm-Message-State: AOJu0YzoWT8VCOw71vzxCHG4rHk24JnBEg8yVEj9iY8aQeJCWMvrlQiu
- sOMCPXyLIPxPZk/NkBmHWVZdb6oH/o4GLlCF2VdmgliHiAQAF9wF4TvgvNIoKzMwI+6km5izC1D
- CWisTYpP02dztfF1gyqXr8IhIDN0PIJgW/cOJI1ZGwlRI6Er/8uz6
-X-Gm-Gg: ASbGncuXhlcxkA5g4K/g1jPeKHmL4aw3dSD5vzTJ/34/5KvpyY6i4Z7gyW2tZHFyQ6k
- W42e1XqUfDWfDvZC1G2A8JvyFttIp3OMyikvhaWMmRP2Aqet5Q8PN7sDBYxISMlj1phfp19n3zT
- ELL5tyYTstb9J3ABM2/CtUESBX+HoT4b/CzWdHL11c/0Y+22boII4qz/cidVt6H3MRvUCxxfui6
- WubHaHF/uQWZ7nZ21glNj2pEZwuASlBIV3W3Fmr+sXgfX4TJy6ZazvB90n8JxXUsIvMWcdkXUYf
- /VseLIwFl/bBR9h2OjBATe/sfNFmURu5pPtw
-X-Received: by 2002:a5d:59ac:0:b0:39a:c80b:8288 with SMTP id
- ffacd0b85a97d-39cb35b388emr2580054f8f.33.1743768402959; 
- Fri, 04 Apr 2025 05:06:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIp+uEMYnrz5LVbGRwvrigkv69ko8g7HNEfGTct995X+cDKuanG2XUUPzVi+s54y54qpidpA==
-X-Received: by 2002:a5d:59ac:0:b0:39a:c80b:8288 with SMTP id
- ffacd0b85a97d-39cb35b388emr2580018f8f.33.1743768402411; 
- Fri, 04 Apr 2025 05:06:42 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec34a8952sm44208695e9.10.2025.04.04.05.06.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Apr 2025 05:06:41 -0700 (PDT)
-Date: Fri, 4 Apr 2025 14:06:41 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>, Markus Armbruster <armbru@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org, Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH v6 2/6] hw/loongarch/virt: Fix error handling in cpu plug
-Message-ID: <20250404140641.4e9493e8@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250321031259.2419842-3-maobibo@loongson.cn>
-References: <20250321031259.2419842-1-maobibo@loongson.cn>
- <20250321031259.2419842-3-maobibo@loongson.cn>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <SRS0=VGIb=WW=kaod.org=clg@ozlabs.org>)
+ id 1u0fos-00057h-HA; Fri, 04 Apr 2025 08:06:49 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZTclc6Dzyz4x4d;
+ Fri,  4 Apr 2025 23:06:36 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZTclY37MWz4x0s;
+ Fri,  4 Apr 2025 23:06:32 +1100 (AEDT)
+Message-ID: <9171629d-a386-4971-802b-cd26cc42e194@kaod.org>
+Date: Fri, 4 Apr 2025 14:06:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/1] hw/misc/aspeed_sbc: Implement OTP memory and
+ controller
+To: Kane-Chen-AS <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com
+References: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.028,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=VGIb=WW=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,81 +113,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Mar 2025 11:12:55 +0800
-Bibo Mao <maobibo@loongson.cn> wrote:
+Hello,
 
-> In function virt_cpu_plug(), it will send cpu plug message to interrupt
-> controller extioi and ipi irqchip. If there is problem in this function,
-> system should continue to run and keep state the same before cpu is
-> added.
+On 4/2/25 11:14, Kane-Chen-AS wrote:
+> This patch introduces part of the Secure Boot Controller device,
+> which consists of several sub-components, including an OTP memory,
+> OTP controller, cryptographic engine, and boot controller.
+> 
+> In this version, the implementation includes the OTP memory and its
+> controller. The OTP memory can be programmed from within the guest
+> OS via a software utility.
 
 
-_plug is not supposed to fail ever,
-hence we are using error_abort.
+What is the OTP memory ? An external flash device or built-in SRAM ?
+If the latter, I suggest using an allocated buffer under the SBC model
+and avoid the complexity of the BlockBackend implementation and
+the definition of a drive on the command line for it. The
+proposal is bypassing a lot of QEMU layers for this purpose.
 
-so I'd drop those chunks 
+Is the support the same for ast1030 and ast2600 SoC?
 
-> Object cpuslot::cpu is set at last only when there is no any error.
-> If there is, send cpu unplug message to extioi and ipi irqchip, and then
-> return immediately.
+Thanks,
 
-it doesn't matter when it's set since you are already in _plug() handler.
-both way are correct.
+C.
 
-(I'd set it as the last if calls to chained handlers do not depend on it)
 
 > 
-> Fixes: ab9935d2991e (hw/loongarch/virt: Implement cpu plug interface)
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->  hw/loongarch/virt.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
+> Kane-Chen-AS (1):
+>    hw/misc/aspeed_sbc: Implement OTP memory and controller
 > 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index a5840ff968..8563967c8b 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -981,8 +981,6 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->      LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(hotplug_dev);
->      Error *err = NULL;
->  
-> -    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> -    cpu_slot->cpu = CPU(dev);
->      if (lvms->ipi) {
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->ipi), dev, &err);
->          if (err) {
-> @@ -995,6 +993,10 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->extioi), dev, &err);
->          if (err) {
->              error_propagate(errp, err);
-> +            if (lvms->ipi) {
-> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev,
-> +                                       &error_abort);
-> +            }
->              return;
->          }
->      }
-> @@ -1003,9 +1005,21 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev,
->          hotplug_handler_plug(HOTPLUG_HANDLER(lvms->acpi_ged), dev, &err);
->          if (err) {
->              error_propagate(errp, err);
-> +            if (lvms->ipi) {
-> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->ipi), dev,
-> +                                       &error_abort);
-> +            }
-> +
-> +            if (lvms->extioi) {
-> +                hotplug_handler_unplug(HOTPLUG_HANDLER(lvms->extioi), dev,
-> +                                       &error_abort);
-> +            }
-> +            return;
->          }
->      }
->  
-> +    cpu_slot = virt_find_cpu_slot(MACHINE(lvms), cpu->phy_id);
-> +    cpu_slot->cpu = CPU(dev);
->      return;
->  }
->  
+>   hw/misc/aspeed_sbc.c         | 304 +++++++++++++++++++++++++++++++++++
+>   include/hw/misc/aspeed_sbc.h |  14 ++
+>   2 files changed, 318 insertions(+)
+> 
 
 
