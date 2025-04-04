@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAE66C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDB2C3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 01:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Vmj-0006rm-0T; Thu, 03 Apr 2025 21:23:53 -0400
+	id 1u0W5t-0001nd-0b; Thu, 03 Apr 2025 21:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0Vmf-0006rH-Kx; Thu, 03 Apr 2025 21:23:49 -0400
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1u0W5s-0001nR-AH; Thu, 03 Apr 2025 21:43:40 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u0Vmd-0003Jb-Ux; Thu, 03 Apr 2025 21:23:49 -0400
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-523f721bc63so2186845e0c.0; 
- Thu, 03 Apr 2025 18:23:47 -0700 (PDT)
+ id 1u0W5q-0005i7-Fh; Thu, 03 Apr 2025 21:43:39 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-86fea8329cdso1422442241.1; 
+ Thu, 03 Apr 2025 18:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743729826; x=1744334626; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743731017; x=1744335817; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5K5pI9EGTaZiO0xDxyiaB79ANZnM1hl171ZvHp0IuCI=;
- b=TYpaNTFQFaZ84A3pxioqAxTzvmjf3ClEb83IN6KpvjBFAIP3/kwarfBT+w6zBWVufx
- //n+AZuO4+21aswVwoUJCaQ5ZORGcUoKi1QU/JFtycTxmD7FY296qK+zx8l254/GB/E4
- tC7JJ2Bl7aLP1W3Di8DbkNaJSLGUxD9S6NVyAE/g3ZBJGD2cmRIP8UXHX4/iWjjkXJUl
- bAv2qAGvCz+Cdlfg6gbxp+nOx0li6e+1Ty6e9Nu+7A3zl6BORdIaqLe9oaOXaUA9Pguc
- 6n/Y1Gr4NGOXGA7FIDL+uYKYDRzg3ni/Pq/sOKMNlyc9vMz9oB3UPyZ5g7DRkoxpDvl5
- QfTg==
+ bh=ehxx99rmBnlEk9OR1sdpI1+1VPwZPvgYZq1iMISYvbU=;
+ b=PBDkdSUopgBlnWJR/uQRC10n+AiIl8imifD3akKX9NtRgoo0XDvNOfUFNPxvTluWgx
+ 6nwCPH/4uJVV5fRW7zBZZ0pX7lRQw480y5W56acTqYxAh9Oil287NNhChyTWfo9yS6IF
+ qXsgd91Hw2G/jScP5kurv8STm3COhCIQ3kcdeX51JVzBG3j8vNOwRYhRLvpY29B82aZD
+ P3kvHm7bkXto+81IMxhUqJcO+ePsdVIroMp2jiG2XQM1LRA1zx9/hUknKCQfCz2NsSDY
+ o+I/EWWJ0pIbpmMLbDpghALru8sOi/HhoLpmT/mowFaBGGd1Hca2xjDPjqToPcjBEaOS
+ MlPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743729826; x=1744334626;
+ d=1e100.net; s=20230601; t=1743731017; x=1744335817;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5K5pI9EGTaZiO0xDxyiaB79ANZnM1hl171ZvHp0IuCI=;
- b=H2MCJS5xbSD5xeIwtadVwKKczqXYrhMFYuRIY1KsNPaFLIFjvkYFMium4edhVxDzhS
- dkRayJ8h/JqOJLjzwzveawMzkYE7xXz7wIrA8WX9PUJgbf5HbcmfNVXjS+qic4Y936Vq
- 0Yss0Sj+oRNzrfQVenejnJcvpQB7UmBOxG0+ZmhlkZgVvWNZa/efuw4luaxpQwnc0mJm
- d3iEkXBlizIjdPBELzmwPVLC2UhcV+CxBQevdLJV2RpXpFuF29pMZZsQzScfScYT3FUi
- edB44Z4G7xCCKS2dkZ/1JmgoqPlC/PNk3E03/KnNiWmRHDo7FOAej9eCqd1eC0qdibyk
- grbw==
+ bh=ehxx99rmBnlEk9OR1sdpI1+1VPwZPvgYZq1iMISYvbU=;
+ b=YHuFWbn2l3tMtZc0jbpZTJZb07cT2whO3ykvMiY84CHesoLUm6sxdlzaO73pbmbnJI
+ HA9N8Mvf9cumMshqlSbq9gQJHsbxxiE9uRFEfEo5akNo/E/bxmXh1KkA2eI6kPKfOXLF
+ 7wCkdY2fmWApjPV5uqhUMeg/gJSw92//7eVbcbfF1YSev4HsPHvjdhJnVR2MDdDuyfER
+ dkrBdXVCgHZVtFwYRWEfYE+VP4jTapzMuUFeLjmsTuDHt4K+2nES6kQFS1nlrD+Lpmcw
+ bOX6pjwHQe9+dawjxN6iaeLZYuwTELH1VkLaH08gwFrF25WmXybS8Rc43dJSu1wUBGIA
+ Axaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpAUPkgU47vXZIVB+ZOGNpd8kzcmQajGz9a2grXuN0Ga43j6yBvDLCRmi03dahzylfNSs7A40vsK2i@nongnu.org
-X-Gm-Message-State: AOJu0YwHQ7ELdG1l5+ZpWf+b0oHz3L54zDwL7bacGBMJwwQ5WqCjw0gS
- AkAsl8lnR7ww91Td5fgz/AzYUgvCYfcw3fPKAX5V4hEikaEyFQlkPiVIJUsaNwR2cW8CIOyqOM0
- LesJCFT7qhOZ9ulCAE5plRv1CTalbQg==
-X-Gm-Gg: ASbGncuwiOwx3DaCIy1amab2vd+NEOK66DJ2HsKfhzLLDMkYyt4eJjnwEMpt/XvX5H6
- THJRotqoy0aMg15VsKzULfDk7/hwqeDWE4YIFjktsAb3bDbBaVYLqVp6mNB7DDSBvlwb770kMPy
- MiRxqfbiZ+91jS5ciBWCpCSFsFcMrznlhNWbEjpmzxOSXdxLBOguOW9mRI
-X-Google-Smtp-Source: AGHT+IEC65zw/mYfZSBl0D3u0zGARRxGyFAPdUw93yAUSaFN6Ko3ELFR/57rZv0mqYn4sd7dgiQIxWVefYxl7m5MztM=
-X-Received: by 2002:a05:6102:514:b0:4c4:ebb1:4f6d with SMTP id
- ada2fe7eead31-4c845b9936amr4706523137.11.1743729826320; Thu, 03 Apr 2025
- 18:23:46 -0700 (PDT)
+ AJvYcCW3D/jmDnEZuAot0L7SIy4ivwsE7tiXey79w7hwsAPXJMSJC0u5gpowlOa6w55f4FpFmafl0ObYh+zl@nongnu.org
+X-Gm-Message-State: AOJu0YwYiBPEVPBzyZRPwyrf8T+gv3UGCk+0ERXjBwv/dtpbQLaEE8Wi
+ 8zrkdpWizTgChn6wt9tGwSY5E2yBzSt4yugCMxlFtdVUruqG8sHhDJJIkTeFHxME4UGRq8j08NZ
+ sZcJy+ocVrZmxiExhyvq0bwc0MHI=
+X-Gm-Gg: ASbGncuObG4RERmfDpbVYn9YHvY2T4o1PquQBubjMUuewRaB9we7/yFq5IrFbWRk6AE
+ RtvJ3oe3M+1v+jfyj7EUx/cJ98wCahzaDV8OsmyIGuvLVnV1KS84HvXkVj/vw72H+eXC0sX2PcV
+ 4qTQOAY1/yFIDlA72Prklg++zi2RDqM6wwsqrr4bvj0fxUVVPWG0zLf+VI
+X-Google-Smtp-Source: AGHT+IGF3Fff2y+WZjK7CUQaZc9LJATfCELIOMF/vIQhQBxSrDF3/T+NTirapLYwCyGSQjM80TWQhiJYHV01dbC2vVc=
+X-Received: by 2002:a05:6102:38ce:b0:4c1:94df:9aea with SMTP id
+ ada2fe7eead31-4c8553e5196mr1465011137.15.1743731016727; Thu, 03 Apr 2025
+ 18:43:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250313193011.720075-1-loic@rivosinc.com>
-In-Reply-To: <20250313193011.720075-1-loic@rivosinc.com>
+References: <20250302091209.20063-1-jason.chien@sifive.com>
+ <20250302091209.20063-4-jason.chien@sifive.com>
+In-Reply-To: <20250302091209.20063-4-jason.chien@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 4 Apr 2025 11:23:20 +1000
-X-Gm-Features: ATxdqUGs5AOADheXfjmg8av1xbIrwcNWQGD3UDqHGQvRE-Ieh8-ckYM55jghCyY
-Message-ID: <CAKmqyKPER5Ab1N01iBDTgL490hW5eBkH4W==RGfJCzthamxUQw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] target/riscv: Smepmp fixes to match specification
-To: =?UTF-8?B?TG/Dr2MgTGVmb3J0?= <loic@rivosinc.com>
-Cc: qemu-devel@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org, 
+Date: Fri, 4 Apr 2025 11:43:10 +1000
+X-Gm-Features: ATxdqUEZCKLyknhgF0NaocRD9zfv-w5OLWYH6d-0tAs3QmWvsFP9TAF1HSlKZKM
+Message-ID: <CAKmqyKO3iqjru7hd9d87LC-Qaeg5Wqb3Q5+_6oL55Y+Noy9a0A@mail.gmail.com>
+Subject: Re: [PATCH 3/3] hw/riscv/riscv_iommu: Remove the "bus" property
+To: Jason Chien <jason.chien@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,50 +102,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 14, 2025 at 5:33=E2=80=AFAM Lo=C3=AFc Lefort <loic@rivosinc.com=
-> wrote:
+On Sun, Mar 2, 2025 at 7:13=E2=80=AFPM Jason Chien <jason.chien@sifive.com>=
+ wrote:
 >
-> These patches fix Smepmp implementation to make it compliant with the spe=
-c.
+> This property was originally intended to set the bus number for non-root
+> endpoints. However, since the PCIe bus number is assigned and modified
+> at runtime, setting this property before software execution is incorrect.
+> Additionally, the property incorrectly assumes that all endpoints share
+> the same bus, whereas no such restriction exists.
 >
-> First patch limits RLB to CSR changes since RLB should not affect privile=
-ge
-> evaluation. Patch 2 extracts some common code into a function (to be used=
- in
-> patch 3). Patch 3 fixes validation of pmpcfg CSR writes in order to match=
- Smepmp
-> specification. Patch 4 is a small optimization and last patch is just rem=
-oving
-> redundant code.
+> With the IOMMU now retrieving the latest device IDs from memory attribute=
+s,
+> there is no longer a need to set or update device IDs.
 >
-> ---
-> Changes in v2:
-> - rebased to latest riscv-to-apply.next
-> - addressed Daniel comments on patch 1
->
-> Link to v1:
-> https://lore.kernel.org/qemu-riscv/20250225160052.39564-1-loic@rivosinc.c=
-om/
->
-> Lo=C3=AFc Lefort (5):
->   target/riscv: pmp: don't allow RLB to bypass rule privileges
->   target/riscv: pmp: move Smepmp operation conversion into a function
->   target/riscv: pmp: fix checks on writes to pmpcfg in Smepmp MML mode
->   target/riscv: pmp: exit csr writes early if value was not changed
->   target/riscv: pmp: remove redundant check in pmp_is_locked
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  hw/riscv/riscv-iommu.c | 7 -------
+>  hw/riscv/riscv-iommu.h | 1 -
+>  2 files changed, 8 deletions(-)
 >
->  target/riscv/pmp.c | 151 +++++++++++++++++++++++++--------------------
->  1 file changed, 83 insertions(+), 68 deletions(-)
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index b72ce8e6d0..1ca85b95ac 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -1197,9 +1197,6 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUSt=
+ate *s, uint32_t devid)
+>  {
+>      RISCVIOMMUSpace *as;
 >
+> -    /* FIXME: PCIe bus remapping for attached endpoints. */
+> -    devid |=3D s->bus << 8;
+> -
+>      QLIST_FOREACH(as, &s->spaces, list) {
+>          if (as->devid =3D=3D devid) {
+>              break;
+> @@ -2261,9 +2258,6 @@ static MemTxResult riscv_iommu_trap_write(void *opa=
+que, hwaddr addr,
+>          return MEMTX_ACCESS_ERROR;
+>      }
+>
+> -    /* FIXME: PCIe bus remapping for attached endpoints. */
+> -    devid |=3D s->bus << 8;
+> -
+>      ctx =3D riscv_iommu_ctx(s, devid, 0, &ref);
+>      if (ctx =3D=3D NULL) {
+>          res =3D MEMTX_ACCESS_ERROR;
+> @@ -2498,7 +2492,6 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
+>  static const Property riscv_iommu_properties[] =3D {
+>      DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+>          RISCV_IOMMU_SPEC_DOT_VER),
+> -    DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+>      DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
+>          LIMIT_CACHE_IOT),
+>      DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> index a31aa62144..655c0e71a8 100644
+> --- a/hw/riscv/riscv-iommu.h
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -34,7 +34,6 @@ struct RISCVIOMMUState {
+>      /*< public >*/
+>      uint32_t version;     /* Reported interface version number */
+>      uint32_t pid_bits;    /* process identifier width */
+> -    uint32_t bus;         /* PCI bus mapping for non-root endpoints */
+>
+>      uint64_t cap;         /* IOMMU supported capabilities */
+>      uint64_t fctl;        /* IOMMU enabled features */
 > --
-> 2.47.2
+> 2.43.2
 >
 >
 
