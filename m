@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2FDC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 23:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8358BC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 23:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0q2U-0002cw-FA; Fri, 04 Apr 2025 19:01:30 -0400
+	id 1u0qmG-0008FM-Pg; Fri, 04 Apr 2025 19:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0q2Q-0002bG-Me
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 19:01:27 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0qmF-0008FD-Eu
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 19:48:47 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0q2N-0002rV-8h
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 19:01:26 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-736c1cf75e4so2113777b3a.2
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 16:01:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0qmD-0007fL-Fg
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 19:48:47 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39ac8e7688aso1934922f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 16:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743807680; x=1744412480; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2lC4RzCqg7I4Szx9S3dVxC7iKAJYJ3G7HjFeFI0Fol4=;
- b=El5GWrV6CQqC+3NoiL81Qd5TxkSJbKckda6xkz5Kru0IYqcbnsy4Qmqe2+PrRj5d/A
- 4SthkOHznTbM9oB2v68+a/0BdD3lsAJ0hzM2+Vm+88iy+GFOaJXlAIRB7yDUKOf4Sjt1
- 07lnyqZ8kdvrC8DdGvrDAlpN1HkPtlU58Xb3H3bt9YBrjgQ4FG5Ad2uiSwLpqCA+o7G2
- 4M626AgOxR7ZHM3Z+TlzaN0WxA8n+ofgeXgWeKKoqcg2QrxGWSZ11Kt2+0FKs7ib8KDC
- vYmuL+Mdf65Ln4P39gf3wOzlN+enlYbyV4c6y0N2oivdbBlF/Iljau5CctaxCva7GLBn
- leDg==
+ d=linaro.org; s=google; t=1743810523; x=1744415323; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Z5Gfb9kc+yhQghP0WWjULJ+Vj02i4BuHgZhJg4h0t44=;
+ b=bt6KM4NaKZSzvCQJLT/SxF7bBJRzKkRl/tzuoi913D63zlmLhphR/xUJb794Guh3px
+ fpIrl+BKlJUQ54SvtyEsUrjd6Pk30LchmsAPSEwUVeCYp2/EEgkFvOpVjzU+qdkJwr/c
+ hYW5bwdIkTYzcBWy0ZCzmle2cu5PMXznWEt65ceiNbUO9vVtM9iH9cBU75HccR56/5Sx
+ d4sGh73LwB6zIgMTPIshWMZtd4jUXZEfmpydWS1esTbSeJcTogxcPslZ5p4MrD6doMg+
+ 8w0Q49dpQWiTzPSjRUtRDOCWHUsO14BDstFQDkaMeGanPifIS/wLvyQ5bC4O1YORNJfE
+ 6CRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743807680; x=1744412480;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1743810523; x=1744415323;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2lC4RzCqg7I4Szx9S3dVxC7iKAJYJ3G7HjFeFI0Fol4=;
- b=RC3vQiEdST7Q9FbMp0q9UVUOi6td0D2ZsDi7UOq87eBKr2sgFw+JmucZGiRm41biD2
- UnHVz49ATKjpXi5+1dMRIeEsEe7R+8Jl8L3QX/oPGb4sZ6evhvnWJKKroixqwITuEzCP
- vrGpRnu//HrgjPoPX3kJiiaMX6WA3Bct2OKQbThDF33Jl7SbbTkiK413d718yH9FQ3rM
- /SJV2n6ZpLP/5OLCLfVQkvRalPp7m3N9NXsUyBqXbtONOlCUc0m8VoHxbu9d3LQAYLOi
- 8OBNkaYAov+aREJBJpkwaO5dL3XL8AG0zfv9XkVG0FvNFsDGDawmVlqrG3qg0vXxeMgp
- GREQ==
-X-Gm-Message-State: AOJu0YwJ0OktTGiaetXDtDZhMKIPEzNMk/8MnXfoww2knJw5Qay7FXOm
- oKGAWqBO/PS/BNrPJoAdD2H3zO/vDtpiB8WFnshrxCVvW2zqOfKwbMrrneQYTuNP9e7wCgdamLN
- n
-X-Gm-Gg: ASbGncvpKEPtXduB5hS1w4fT1vjv1CRBxW8v86jsnHAALBvZxbib8qnzDvLJCzAhPn4
- 7OCqxL0yowFN/9HreiM2nIjWkBPU4TNxk1zOJ/xxdmaFC1LL46mYL9kcewgCLVFZiNBh6yXyRJ9
- yhQQlQB+WIO+PS0IbqcnI/g4QqgqVfFqwfAygi+xUJESAumwrGLJX8h4L99lAaNZ53t1UWKSTfu
- JIm3hY5irbv56N2d+qAZDGMX8I5pJ2n0omysjBXgAqqu5rk2jRJAWb33yjdmjVhKb0CJbq6S2CD
- BeFP4nVkirhFe5WD2pa6L75IpR+/lCVLFyttCvAZRKTNpHYdsoWAR8ybWA3G0t9m
-X-Google-Smtp-Source: AGHT+IHbD8nXfTpzOtWmnLb8mQUAFRc2NNiHUOT3Mb0KXt+bMNCQM1eWIJhraz7LxMY+whvmVlJG2A==
-X-Received: by 2002:a17:90b:3d09:b0:2ee:863e:9ffc with SMTP id
- 98e67ed59e1d1-306a61796c2mr4986069a91.21.1743807679750; 
- Fri, 04 Apr 2025 16:01:19 -0700 (PDT)
-Received: from [192.168.122.15] ([173.164.107.234])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-229785ad9a0sm38250265ad.39.2025.04.04.16.01.18
- for <qemu-devel@nongnu.org>
+ bh=Z5Gfb9kc+yhQghP0WWjULJ+Vj02i4BuHgZhJg4h0t44=;
+ b=ToWA9eDsv3YzgFsPeKknvhmgMKNThke/PBtuQmDLDn+9TkJRVFELc2+YFW1rSx9FAq
+ YrtIW4et0lmOAl4v1gA7ugmrJR74l+Y7i7PkQ3po6IjbsaSD6AbDjdRbW+auIiA5Y6cU
+ RJDxEYG/wvvU/FdoWQ2DxmToyB4XYaTvyEdRPTYqbdPCwBnM7VmZ1o4PXj5zBqSmKlvk
+ 11yywkDfKWcwBXjjIQvBwD6bImSjZXwy/oRGqkzd9JzBwxojQufhjW5H8akmiBSmqeCp
+ QsmnAQfiG/8oL455AfqPS9oI+DRItbsdn4OujV5uNyYfGgP9QmSX/uMi41aoPjJoWSXs
+ bOqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8o+wJlFE4HsCP7oaiZi9uM3vca4sVfWtj95ygQbLvPhzfWQMxpuB/g93AktlCDVRjtWl6uZtrC5EG@nongnu.org
+X-Gm-Message-State: AOJu0YzM6ViAB/rKVR0PbfYqn2O7Ku0Ssp0e+qrvrGeMhoPYpwzZiAuG
+ VdK1teUTgnIuwH7bqMjNAxat4JJ2ZKElMJhg/pSWnrQlKCDw/aTDC82WnZX38JY=
+X-Gm-Gg: ASbGnctzINMi/4vMNtYnVVW27RFZgj1v+Y4VlHJ1gCu6C5nLV0sth+8FsDZ23jHQOD2
+ ElBCZEkc3pp03xfhd9N/dLoWC0fPUDedWnfo6V1fdUYg5wGoucplCV/3jzOBJUmFSZWsmFJ6iFq
+ ekfntrSc/pTBYNQAFTWN1NqKxyonaOeC7HrUcuOSINSCUgH1GDJ3apIytTYb41ojkHjSEQJAW5p
+ CeejhccGj43qrqnmLyxGF6eyUhPEwM4gfmN5l7iZxZ+58mSn01MF9jEG9qV0X2IPdH2eAM/ZK5v
+ syA6qEikUxhSOgVp7S52g2DRJ/jh64S0PIHRDDxUi41B2horq1NtGgn3O0MpxGRZx9mnqWH5l78
+ amd+dW5XOLlHDZ2dV0Q==
+X-Google-Smtp-Source: AGHT+IEbuiCTrKzWSCQCunH69102MBK2CKTjiA44CD2XalNOZy2PnczpjMdDwhMoQvJxL/IbRYm/bg==
+X-Received: by 2002:a5d:584c:0:b0:391:ab2:9e71 with SMTP id
+ ffacd0b85a97d-39d6fc29654mr784904f8f.20.1743810522885; 
+ Fri, 04 Apr 2025 16:48:42 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c301ba2dfsm5516899f8f.60.2025.04.04.16.48.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 16:01:19 -0700 (PDT)
-Message-ID: <debc3677-3282-4064-a34c-0234d0eb7a78@linaro.org>
-Date: Fri, 4 Apr 2025 16:01:16 -0700
+ Fri, 04 Apr 2025 16:48:41 -0700 (PDT)
+Message-ID: <99187f31-f55d-4c39-bd9c-13dbbef321dc@linaro.org>
+Date: Sat, 5 Apr 2025 01:48:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/riscv/virt.c: change default CPU to 'max'
-To: qemu-devel@nongnu.org
-References: <20250404152750.332791-1-dbarboza@ventanamicro.com>
- <20250404152750.332791-3-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH-for-10.1 v3 14/19] tcg: Remove the TCG_GUEST_DEFAULT_MO
+ definition globally
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20250403220420.78937-1-philmd@linaro.org>
+ <20250403220420.78937-15-philmd@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250404152750.332791-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20250403220420.78937-15-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,21 +103,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 08:27, Daniel Henrique Barboza wrote:
-> Using 'max' as
-> default CPU is done by other QEMU archs like aarch64 so we'll be more
-> compatible with everyone else.
+Hi Richard,
 
-This isn't true.  qemu-system-aarch64 -M virt defaults to cortex-a15 (for hysterical 
-raisins), which is completely and totally useless.  Which means that one must always pass 
-a -cpu option to qemu-system-aarch64.
+On 4/4/25 00:04, Philippe Mathieu-Daudé wrote:
+> By directly using TCGCPUOps::guest_default_memory_order,
+> we don't need the TCG_GUEST_DEFAULT_MO definition anymore.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Anton Johansson <anjo@rev.ng>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   docs/devel/multi-thread-tcg.rst |  4 ++--
+>   target/alpha/cpu-param.h        |  3 ---
+>   target/arm/cpu-param.h          |  3 ---
+>   target/avr/cpu-param.h          |  2 --
+>   target/hexagon/cpu-param.h      |  3 ---
+>   target/hppa/cpu-param.h         |  8 --------
+>   target/i386/cpu-param.h         |  3 ---
+>   target/loongarch/cpu-param.h    |  2 --
+>   target/m68k/cpu-param.h         |  3 ---
+>   target/microblaze/cpu-param.h   |  3 ---
+>   target/mips/cpu-param.h         |  2 --
+>   target/openrisc/cpu-param.h     |  2 --
+>   target/ppc/cpu-param.h          |  2 --
+>   target/riscv/cpu-param.h        |  2 --
+>   target/rx/cpu-param.h           |  3 ---
+>   target/s390x/cpu-param.h        |  6 ------
+>   target/sh4/cpu-param.h          |  3 ---
+>   target/sparc/cpu-param.h        | 23 -----------------------
+>   target/tricore/cpu-param.h      |  3 ---
+>   target/xtensa/cpu-param.h       |  3 ---
+>   target/alpha/cpu.c              |  3 ++-
+>   target/arm/cpu.c                |  3 ++-
+>   target/arm/tcg/cpu-v7m.c        |  3 ++-
+>   target/avr/cpu.c                |  2 +-
+>   target/hexagon/cpu.c            |  3 ++-
+>   target/hppa/cpu.c               |  8 +++++++-
+>   target/i386/tcg/tcg-cpu.c       |  5 ++++-
+>   target/loongarch/cpu.c          |  2 +-
+>   target/m68k/cpu.c               |  3 ++-
+>   target/microblaze/cpu.c         |  3 ++-
+>   target/mips/cpu.c               |  2 +-
+>   target/openrisc/cpu.c           |  2 +-
+>   target/ppc/cpu_init.c           |  2 +-
+>   target/riscv/tcg/tcg-cpu.c      |  2 +-
+>   target/rx/cpu.c                 |  3 ++-
+>   target/s390x/cpu.c              |  6 +++++-
+>   target/sh4/cpu.c                |  3 ++-
+>   target/sparc/cpu.c              | 23 ++++++++++++++++++++++-
+>   target/tricore/cpu.c            |  3 ++-
+>   target/xtensa/cpu.c             |  3 ++-
+>   40 files changed, 66 insertions(+), 101 deletions(-)
 
-Moreover, -cpu max has zero migration guarantees, so anyone who wants to be able to 
-reliably migrate is encouraged to use a real cpu model.
+I forgot this:
 
-I suppose, for throwaway VMs, -cpu max is a decent default.  But there's a lot to be said 
-for not specifying a default at all.
+-- >8 --
+diff --git a/include/exec/poison.h b/include/exec/poison.h
+index bc422719d80..413dfd16f24 100644
+--- a/include/exec/poison.h
++++ b/include/exec/poison.h
+@@ -38,3 +38,2 @@
+  #pragma GCC poison TARGET_BIG_ENDIAN
+-#pragma GCC poison TCG_GUEST_DEFAULT_MO
+  #pragma GCC poison TARGET_HAS_PRECISE_SMC
 
+---
 
-r~
+Could you squash it in your tcg-next tree?
+
+Thanks,
+
+Phil.
 
