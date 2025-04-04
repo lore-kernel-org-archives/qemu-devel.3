@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAB7C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 14:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371F7C36014
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 14:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0i3S-0006Yh-Dz; Fri, 04 Apr 2025 10:29:58 -0400
+	id 1u0i7F-0008Ns-TH; Fri, 04 Apr 2025 10:33:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0i3P-0006VX-Rr
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:29:56 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1u0i77-0008Nf-PH
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:33:45 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u0i3O-0000zC-0C
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:29:55 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-3054ef26da3so1685234a91.3
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 07:29:53 -0700 (PDT)
+ id 1u0i75-0001gv-Qy
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:33:45 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-227914acd20so30825105ad.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 07:33:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743776992; x=1744381792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743777222; x=1744382022; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cYF1qDUhcFq5dLZ+xsTSgCSvgM0oB8JIgHyeSZnzA88=;
- b=MdGTxwD1F0M6QRICQgl5YItskBRw3wcWYvRAMMQGBsmY7LmL6eUrpBJiJXNH0UFmy5
- GbYr0Brk5QEQv4rEzKDk2kCR3JJAXp92sykGppUWMdcPjdmP7Twrt6zazPsjt4DQgOWR
- p3+jEuYfgXGSlG+Zxf9rEkLCokSObBjNjgSWIf+R7zcVW3rX5DKUmb2nV9RElhEpIIoo
- IViNKxsf/k/LOWAKAxuPgY6df0q+0kuFm/MPuQ/ozYA0YbrQ2toa3FHy4JszJTypE7M7
- PnBGGZjkdbG9uxLvfxkTZdOWZhGLeNJTfSMQNvwllXY52qGQ9w2Wxkd5EtrYF9AdHde+
- 1h3Q==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8D3mWF9GZKN5Jvv8wQEoblGu7xylnprNzvjb+81LPFw=;
+ b=SHLoNhkO/+fX/tR04Ocq/81xmzO2T8/rnin9EinPyU5Jfb8bvs4xEncpV7h8CfUSsE
+ 4EjtX80B03lU1bwy17jpDHtxMXs54YJCoDSaCt3LMXPWYKsa+lJM1gOFj8Ufoj4iHTOS
+ rjotygiuRNT19WoiRBr3zgtV/9mZbHgwbUENtwDnP5XOmUdsd6Ww7x3U+apOngHe69FU
+ 1VxfKKrP+QGNRBiptTHi0h3MgW4y1PLiL07hHBc2EbRpUg4i5Esqn/oKqh5B1Htda8TV
+ OTDAlEhJ0516ry3JtKHwoWsqqE2iGTXyuJvX9GT0Xc8x3KuVGL6JscgYScs3/w/vjQBj
+ Jycw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743776992; x=1744381792;
+ d=1e100.net; s=20230601; t=1743777222; x=1744382022;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cYF1qDUhcFq5dLZ+xsTSgCSvgM0oB8JIgHyeSZnzA88=;
- b=uh+/KBlduFw5ANiAlTn8blpDU5QwUribw5Q/1M3G6gCgzzvOqLf++oDf6uuAmgOLpT
- z3fSmwnTPimXzkc+k4hdW23KE4QeJEpJLDA7Njara4FaT5uoD2odDlz0/fvAdxjiu2rA
- fXVdVsdhrYEN1LsZaGel36HfT7FddVKISBfsdyNl9REPMv7g3g/wCGe48Nm7gxXHSF2l
- a8+4ZcoLBx2NEGRIpx+YrHxvnTeZuQ17JcveUQiDx83lJfsDufnllQkFZRW1Uq3b5H2u
- 5LQ9q/TlNvUijdYlnc7QNULQWmbGyFUTCMc2ch0r7cuQIIAi9WLdHIqhtwtFlptgWfwz
- 3GPQ==
-X-Gm-Message-State: AOJu0YxbNyTT4+FSx4uv8gkO1652mQTt4wRz00PpoB0E2Gp7kZPuZQCg
- FQfbxZ9DGF1lQDL4mjRekn+7v6+cG8qFdN41X+2IIYpmODtgiI0zyxfPutJ/xbyDuvVWMeX+SJD
- N
-X-Gm-Gg: ASbGnctai0XZf9oDPvQSvxPvIRTVbZoRcmwXPDP8VZEcQxGnWzvEmVRo2hGllV0VlC+
- SV/rdth9I4Jx/ANKXXbBFWOBns/b9dlkMxOMhKGNSgWK2AS28Lp+D7QdeibnZT4tkkf+Xe0iJal
- H+GLdfqpS1OXA183DBwxsLvjtUFAp70HJ0Ma/BBQctwDH7JaUpdVAM+gft7bNtaA/nno58C9XMq
- 7bLY5Q7o3KBzSio24inPWv53a1guPhFty1Fp6lcygvqqBN4a9hZyJxw7SkM9eiUebV044fBR1Gs
- O22iAg78caYcR5sdPgEddlxby/vE68m5prO+mBNYnAIN3mMB/T4Vu55g1W03wtnJ
-X-Google-Smtp-Source: AGHT+IFRsv4R23X//Dqhq2L93oug6ekl0ty5Hg5ChzUXNSoxThWi8pMos0/CrOPHpqgvv47HH3BQXQ==
-X-Received: by 2002:a17:90b:2f08:b0:2fe:68a5:d84b with SMTP id
- 98e67ed59e1d1-306a483066emr4659752a91.1.1743776991822; 
- Fri, 04 Apr 2025 07:29:51 -0700 (PDT)
+ bh=8D3mWF9GZKN5Jvv8wQEoblGu7xylnprNzvjb+81LPFw=;
+ b=ItQ7TbjFhc78SKggT8cznZxAgQ5TzFHLp1WjqherdXP8+ZFNTgGrjRGvA61qfsq5EV
+ ZnlgH/2lfZ4rd9kZc0j7QWhMhW80z+gHXFsTzCLWQx3x7ENVbgrvmpADMOOOx/3l+ppn
+ 7UNbqcds9PPJ+qQXxqdyACgIRQk411924G7KqUrsDA2ax0cIcSrQdY7Q0i1XaQJe/87+
+ 3T77xuZJEKr2m9GNLkjdlop3MALcpn9MsOL2gEbZSlmRfvb46OT1EZMjBsxeTPnOPjse
+ hUDVG/6nErsiZY7aRTa/rDBLWthdl5mCbGnHPAPIYoQDNVCx1kokzxIL2tQgDRekluj2
+ dYDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdEHTtAgAtbQKijn6XBf4sX0V7qCU76Ugfux2BujVRKcvxnWGz5+DJEzNw7P2EnnMd5IdpmJZNR6/l@nongnu.org
+X-Gm-Message-State: AOJu0YxVR1RrXZuYNbuHTOomOW6hiAJl6MWTyTIDEVFN2Xn6ByWRQn1b
+ QjQ66JfbQOaekA+M+/xr6KiG9rvXt/KD8Gg9RnwHUIkXrq42plRTTjaGpezA73Y=
+X-Gm-Gg: ASbGncuqmPehGE5t0mi4PjQrHZxjf+ta6HEXr4DSoVhBH7CVT5kYKuHhMOhvSkQRrTI
+ PTD3DCPr0PY10jhJEf8h9Q0vWTBxmPjVC30BQ8Vt7+rws7ycGyTCO/wfx+Myn5RVt0P7SGZa7Ej
+ lJWJmoFhbaWl9B21K6DHBO7oIJJGgVwsgZ3V3gpwU/Che71OjPIHJcjBB9WuFecdx2ozqrCe0IY
+ GkYYR9swRavHpIHk/N8uvc9bGc4Y2pxHr/gxGkOhwdtg/3h9p8chjq3Bpbn5zL8kEdwFQAEto9P
+ j8fLJUW+P7rbch4Rt0KHtN8dSbgrKvf3ROjDNEajmK767sFtA7GAA5oCJzhSDL5G
+X-Google-Smtp-Source: AGHT+IGL1oZCzkaXgAy1mkChz3IJ0sVD9iUm7sA0Dxb0uJLkrGGs42HdJaX8++GMKPeWkW16PNHN6g==
+X-Received: by 2002:a17:902:ce8f:b0:224:3610:bef4 with SMTP id
+ d9443c01a7336-22976733d1dmr108050815ad.25.1743777221575; 
+ Fri, 04 Apr 2025 07:33:41 -0700 (PDT)
 Received: from [192.168.101.134] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3057ca1f40fsm3715213a91.4.2025.04.04.07.29.51
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2297866e1bfsm32802945ad.168.2025.04.04.07.33.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 07:29:51 -0700 (PDT)
-Message-ID: <bceb2daa-61fa-49c1-8de1-f2162ef39e78@linaro.org>
-Date: Fri, 4 Apr 2025 07:29:49 -0700
+ Fri, 04 Apr 2025 07:33:41 -0700 (PDT)
+Message-ID: <3b0711cc-3747-4cba-a759-8a74de500e0c@linaro.org>
+Date: Fri, 4 Apr 2025 07:33:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/tcg: fix semihosting SYS_EXIT for aarch64 in
- boot.S
-To: qemu-devel@nongnu.org
-References: <20250404115641.258048-1-alex.bennee@linaro.org>
+Subject: Re: [PATCH 6/6] target/hexagon: Add memory order definition
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
+ Brian Cain <bcain@quicinc.com>
+References: <20250404025203.335025-1-brian.cain@oss.qualcomm.com>
+ <20250404025203.335025-7-brian.cain@oss.qualcomm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250404115641.258048-1-alex.bennee@linaro.org>
+In-Reply-To: <20250404025203.335025-7-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 04:56, Alex Bennée wrote:
-> We don't expect to hit exceptions in our testing so currently all the
-> vectors report an un-expected exception and then attempt to exit.
-> However for aarch64 we should always use the extended information
-> block as we do in _exit. Rather than duplicate the code on the error
-> handler just branch to the _exit handler with a failing status code.
+On 4/3/25 19:52, Brian Cain wrote:
+> From: Brian Cain <bcain@quicinc.com>
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   tests/tcg/aarch64/system/boot.S | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+>   target/hexagon/cpu-param.h | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
-> diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
-> index 8fbcba757e..81a60b9c43 100644
-> --- a/tests/tcg/aarch64/system/boot.S
-> +++ b/tests/tcg/aarch64/system/boot.S
-> @@ -73,9 +73,8 @@ lower_a32_serror:
->   	mov	x0, SYS_WRITE0
->   	adr	x1, .error
->   	semihosting_call
-> -	mov	x0, SYS_EXIT
-> -	mov	x1, 1
-> -	semihosting_call
-> +	mov	x0, -1
-> +	bl 	_exit
+> diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+> index 45ee7b4640..ccaf6a9d28 100644
+> --- a/target/hexagon/cpu-param.h
+> +++ b/target/hexagon/cpu-param.h
+> @@ -23,4 +23,9 @@
+>   #define TARGET_PHYS_ADDR_SPACE_BITS 36
+>   #define TARGET_VIRT_ADDR_SPACE_BITS 32
+>   
+> +/*
+> + * Hexagon processors have a strong memory model.
+> + */
+> +#define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL)
+> +
+>   #endif
 
-1 would be EXIT_FAILURE.  Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Excellent, then we have that covered with
+
+https://patchew.org/QEMU/20250321181549.3331-1-philmd@linaro.org/20250321181549.3331-2-philmd@linaro.org/
+
+and the follow-up
+
+https://patchew.org/QEMU/20250321181549.3331-1-philmd@linaro.org/20250321181549.3331-8-philmd@linaro.org/
+
+which moves that macro to a field in TCGCPUOps.
 
 
 r~
