@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE10C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 19:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B840DC369A2
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 19:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0mmX-0003Tw-9y; Fri, 04 Apr 2025 15:32:49 -0400
+	id 1u0mmN-0003SG-P9; Fri, 04 Apr 2025 15:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u0mmM-0003SJ-3p; Fri, 04 Apr 2025 15:32:39 -0400
+ id 1u0mmI-0003RE-GF; Fri, 04 Apr 2025 15:32:34 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u0mmF-0001Q3-Uc; Fri, 04 Apr 2025 15:32:36 -0400
+ id 1u0mmB-0001Pv-KA; Fri, 04 Apr 2025 15:32:32 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c1f:600c:0:640:a431:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 042C461A02;
- Fri,  4 Apr 2025 22:32:23 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4A481619F0;
+ Fri,  4 Apr 2025 22:32:22 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:1220::1:20])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uVf6w50Fh0U0-XROKwORI; Fri, 04 Apr 2025 22:32:22 +0300
+ ESMTPSA id uVf6w50Fh0U0-R333O6RN; Fri, 04 Apr 2025 22:32:21 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1743795142;
- bh=G6rNw37v3c0+h+0j6g23hzcC5gpnF41QnEWw8HdTPcg=;
+ s=default; t=1743795141;
+ bh=f0V3XeMcHbP6wNnUYP6C9Mgw1A0isphy7SLWabfQjyg=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=dtteDE/7sGUaQBEt3L38wqlpcaW6/zIWIg8I9toHPe9UQuNacNW/2FLmWnLIin4Zi
- FF/0g4tkXIEIv/WQnr6wOrYGXvHTmvGTRc4iwTp/jhzXoKzlX04dWpcfGhyiSNrl/f
- YTRkVXcjPjp+PbgIOBrick7yQafAGqqVwGzCIny0=
+ b=ClVLy7Oxi4DVfhHG8yTBmS2oU6pSHfASuzFDeflQxi7NDemhfkgId3KfAwAavOpgg
+ 0+HFDl5mQ0rjgyu16CGYda7CCxVZy0sQ+6d6gCAxD2PgUCv3e43rvUzzPkjz5cFO9a
+ qsiZkR7AAJLpqWbXMyzeUBPCq+q2kXU+purwif04=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -42,9 +42,9 @@ Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  armbru@redhat.com, eblake@redhat.com, jsnow@redhat.com,
  devel@lists.libvirt.org, pkrempa@redhat.com, michael.roth@amd.com,
  pbonzini@redhat.com, vsementsov@yandex-team.ru
-Subject: [PATCH v2 2/2] qapi/block-core: derpecate some block-job- APIs
-Date: Fri,  4 Apr 2025 22:31:54 +0300
-Message-ID: <20250404193154.707145-3-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 1/2] qapi: synchronize jobs and block-jobs documentation
+Date: Fri,  4 Apr 2025 22:31:53 +0300
+Message-ID: <20250404193154.707145-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250404193154.707145-1-vsementsov@yandex-team.ru>
 References: <20250404193154.707145-1-vsementsov@yandex-team.ru>
@@ -57,9 +57,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,164 +74,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For change, pause, resume, complete, dismiss and finalize actions
-corresponding job- and block-job commands are almost equal. The
-difference is in find_block_job_locked() vs find_job_locked()
-functions. What's different?
+Actualize documentation and synchronize it for commands which actually
+call the same functions internally.
 
-1. find_block_job_locked() do check, is found job a block-job. This OK
-   when moving to more generic API, no needs to document this change.
-
-2. find_block_job_locked() reports DeviceNotActive on failure, when
-   find_job_locked() reports GenericError. So, lets document this
-   difference in deprecated.txt. Still, for dismiss and finalize errors
-   are not documented at all, so be silent in deprecated.txt as well.
-
-ACKed-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- docs/about/deprecated.rst | 31 +++++++++++++++++++++++++++++++
- qapi/block-core.json      | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+)
+ qapi/block-core.json | 59 +++++++++++++++++++++++++-------------------
+ qapi/job.json        | 29 ++++++++++++++++++++--
+ 2 files changed, 61 insertions(+), 27 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 76291fdfd6..afa7075051 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -148,6 +148,37 @@ options are removed in favor of using explicit ``blockdev-create`` and
- ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
- details.
- 
-+``block-job-pause`` (since 10.1)
-+''''''''''''''''''''''''''''''''
-+
-+Use ``job-pause`` instead. The only difference is that ``job-pause``
-+always reports GenericError on failure when ``block-job-pause`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-resume`` (since 10.1)
-+'''''''''''''''''''''''''''''''''
-+
-+Use ``job-resume`` instead. The only difference is that ``job-resume``
-+always reports GenericError on failure when ``block-job-resume`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-complete`` (since 10.1)
-+'''''''''''''''''''''''''''''''''''
-+
-+Use ``job-complete`` instead. The only difference is that ``job-complete``
-+always reports GenericError on failure when ``block-job-complete`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-dismiss`` (since 10.1)
-+''''''''''''''''''''''''''''''''''
-+
-+Use ``job-dismiss`` instead.
-+
-+``block-job-finalize`` (since 10.1)
-+'''''''''''''''''''''''''''''''''''
-+
-+Use ``job-finalize`` instead.
-+
- ``query-migrationthreads`` (since 9.2)
- ''''''''''''''''''''''''''''''''''''''
- 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index d74a1f8b8b..aa2288d6fd 100644
+index b1937780e1..d74a1f8b8b 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -2969,6 +2969,11 @@
+@@ -2956,13 +2956,14 @@
+ #
+ # Pause an active background block operation.
+ #
+-# This command returns immediately after marking the active background
+-# block operation for pausing.  It is an error to call this command if
+-# no operation is in progress or if the job is already paused.
++# This command returns immediately after marking the active job for
++# pausing.  Pausing an already paused job is an error.
++#
++# The job will pause as soon as possible, which means transitioning
++# into the PAUSED state if it was RUNNING, or into STANDBY if it was
++# READY.  The corresponding JOB_STATUS_CHANGE event will be emitted.
+ #
+-# The operation will pause as soon as possible.  No event is emitted
+-# when the operation is actually paused.  Cancelling a paused job
+-# automatically resumes it.
++# Cancelling a paused job automatically resumes it.
+ #
+ # @device: The job identifier.  This used to be a device name (hence
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+@@ -2982,9 +2983,8 @@
+ #
+ # Resume an active background block operation.
+ #
+-# This command returns immediately after resuming a paused background
+-# block operation.  It is an error to call this command if no
+-# operation is in progress or if the job is not paused.
++# This command returns immediately after resuming a paused job.
++# Resuming an already running job is an error.
+ #
+ # This command also clears the error status of the job.
+ #
+@@ -3004,10 +3004,14 @@
+ ##
+ # @block-job-complete:
+ #
+-# Manually trigger completion of an active background block operation.
+-# This is supported for drive mirroring, where it also switches the
+-# device to write to the target path only.  The ability to complete is
+-# signaled with a BLOCK_JOB_READY event.
++# Manually trigger completion of an active job in the READY or STANDBY
++# state.  Completing the job in any other state is an error.
++#
++# This is supported only for drive mirroring (which includes
++# drive-mirror, blockdev-mirror and block-commit job (only in case of
++# "active commit", when the node being commited is used by the guest)),
++# where it also switches the device to write to the target path only.
++# The ability to complete is signaled with a BLOCK_JOB_READY event.
+ #
+ # This command completes an active background block operation
+ # synchronously.  The ordering of this command's return with the
+@@ -3017,8 +3021,6 @@
+ # rerror/werror arguments that were specified when starting the
+ # operation.
+ #
+-# A cancelled or paused job cannot be completed.
+-#
+ # @device: The job identifier.  This used to be a device name (hence
  #     the name of the parameter), but since QEMU 2.7 it can have other
  #     values.
+@@ -3035,10 +3037,12 @@
+ ##
+ # @block-job-dismiss:
  #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-pause
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -2976,6 +2981,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-pause', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -2992,6 +2998,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
+-# For jobs that have already concluded, remove them from the
+-# block-job-query list.  This command only needs to be run for jobs
+-# which were started with QEMU 2.12+ job lifetime management
+-# semantics.
++# Deletes a job that is in the CONCLUDED state.  This command only
++# needs to be run explicitly for jobs that don't have automatic
++# dismiss enabled. In turn, automatic dismiss may be enabled only
++# for jobs that have @auto-dismiss option, which are drive-backup,
++# blockdev-backup, drive-mirror, blockdev-mirror, block-commit and
++# block-stream.
  #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-resume
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -2999,6 +3010,7 @@
- # Since: 1.3
+ # This command will refuse to operate on any job that has not yet
+ # reached its terminal state, JOB_STATUS_CONCLUDED.  For jobs that
+@@ -3055,12 +3059,17 @@
  ##
- { 'command': 'block-job-resume', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3025,6 +3037,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
+ # @block-job-finalize:
  #
-+# Features:
+-# Once a job that has manual=true reaches the pending state, it can be
+-# instructed to finalize any graph changes and do any necessary
+-# cleanup via this command.  For jobs in a transaction, instructing
+-# one job to finalize will force ALL jobs in the transaction to
+-# finalize, so it is only necessary to instruct a single member job to
+-# finalize.
++# Instructs all jobs in a transaction (or a single job if it is not
++# part of any transaction) to finalize any graph changes and do any
++# necessary cleanup.  This command requires that all involved jobs are
++# in the PENDING state.
 +#
-+# @deprecated: This command is deprecated.  Use @job-complete
-+#     instead.
++# For jobs in a transaction, instructing one job to finalize will
++# force ALL jobs in the transaction to finalize, so it is only
++# necessary to instruct a single member job to finalize.
 +#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -3032,6 +3049,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-complete', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3051,9 +3069,15 @@
++# The command is applicable only to jobs which have @auto-finalize option
++# and only when this option is set to false.
  #
  # @id: The job identifier.
  #
-+# Features:
+diff --git a/qapi/job.json b/qapi/job.json
+index cfc3beedd2..c8736f2a05 100644
+--- a/qapi/job.json
++++ b/qapi/job.json
+@@ -156,6 +156,9 @@
+ # This command returns immediately after resuming a paused job.
+ # Resuming an already running job is an error.
+ #
++# This command also clears the error status for block-jobs (stream,
++# commit, mirror, backup).
 +#
-+# @deprecated: This command is deprecated.  Use @job-dismiss
-+#     instead.
+ # @id: The job identifier.
+ #
+ # Since: 3.0
+@@ -184,7 +187,22 @@
+ ##
+ # @job-complete:
+ #
+-# Manually trigger completion of an active job in the READY state.
++# Manually trigger completion of an active job in the READY or STANDBY
++# state.  Completing the job in any other state is an error.
 +#
- # Since: 2.12
- ##
- { 'command': 'block-job-dismiss', 'data': { 'id': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3073,9 +3097,15 @@
++# This is supported only for drive mirroring (which includes
++# drive-mirror, blockdev-mirror and block-commit job (only in case of
++# "active commit", when the node being commited is used by the guest)),
++# where it also switches the device to write to the target path only.
++# The ability to complete is signaled with a BLOCK_JOB_READY event.
++#
++# This command completes an active background block operation
++# synchronously.  The ordering of this command's return with the
++# BLOCK_JOB_COMPLETED event is not defined.  Note that if an I/O error
++# occurs during the processing of this command: 1) the command itself
++# will fail; 2) the error will be processed according to the
++# rerror/werror arguments that were specified when starting the
++# operation.
  #
  # @id: The job identifier.
  #
-+# Features:
+@@ -197,7 +215,11 @@
+ #
+ # Deletes a job that is in the CONCLUDED state.  This command only
+ # needs to be run explicitly for jobs that don't have automatic
+-# dismiss enabled.
++# dismiss enabled. In turn, automatic dismiss may be enabled only
++# for jobs that have @auto-dismiss option, which are drive-backup,
++# blockdev-backup, drive-mirror, blockdev-mirror, block-commit and
++# block-stream. And historically it's enabled by default for these
++# jobs.
+ #
+ # This command will refuse to operate on any job that has not yet
+ # reached its terminal state, JOB_STATUS_CONCLUDED.  For jobs that
+@@ -222,6 +244,9 @@
+ # force ALL jobs in the transaction to finalize, so it is only
+ # necessary to instruct a single member job to finalize.
+ #
++# The command is applicable only to jobs which have @auto-finalize option
++# and only when this option is set to false.
 +#
-+# @deprecated: This command is deprecated.  Use @job-finalize
-+#     instead.
-+#
- # Since: 2.12
- ##
- { 'command': 'block-job-finalize', 'data': { 'id': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
+ # @id: The identifier of any job in the transaction, or of a job that
+ #     is not part of any transaction.
+ #
 -- 
 2.48.1
 
