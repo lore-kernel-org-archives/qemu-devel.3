@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE10C3600C
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:21:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE80BC3600C
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 03:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0Xbs-0004VN-0C; Thu, 03 Apr 2025 23:20:48 -0400
+	id 1u0Xdw-0006F7-I3; Thu, 03 Apr 2025 23:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u0Xbp-0004UO-OU
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:20:45 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0Xdu-0006EI-MJ; Thu, 03 Apr 2025 23:22:54 -0400
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u0Xbn-0002KE-6i
- for qemu-devel@nongnu.org; Thu, 03 Apr 2025 23:20:45 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-223fb0f619dso16780355ad.1
- for <qemu-devel@nongnu.org>; Thu, 03 Apr 2025 20:20:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u0Xds-0002cO-TL; Thu, 03 Apr 2025 23:22:54 -0400
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-523fa0df55dso2481053e0c.1; 
+ Thu, 03 Apr 2025 20:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743736842; x=1744341642; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1743736971; x=1744341771; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gavQL3JwiRzypFeNGtc8FI0f417Fp8ofqnic4ezhfa8=;
- b=aZZxlg+xQwgKFeurs+pjkrhkn4Z8fx7cec/sD/mIjk+Y1LjfV/kk8LAfdXzD7Xitr8
- O5g4TOG0aPMDhKn5B7EaAWvjHb+p0lolLR1EKy3SNriWyiT8WwBnAWGbFLOjNOb/nH+n
- 1ehll6nZZIytuYXne1BPxyfZQPqZ11P/isApcYw+zhyDeVs/7DIRdvCSI4bgqNyHksX9
- XcEWXQg/BqLbCvSAKhtnfIBNvmFKRYh3WQq0oNwQvtCRdoKeS+v0hSMY0BBm4HAa1SkT
- hDUAfmQsjt8tcExL+wn1MYUrsVPzMq+y4NbQ/qlFhq52nEmWqprULlxdkkJ1GosD1Jlj
- CA0Q==
+ bh=zZ2t4HJfWMH0saYBzZEBkEVDkW1I3VhyOcuQnNFzTO4=;
+ b=RwqZjFtM1u8nr+UThPB9x1JbC7kqDIW4HHgc0ZRxJgPuTPfHW6T3uyvDMQobY00IBj
+ BMPt9WlZzi/kXThwEAuOX3fqMBKGpNH2ldU+pEqBkaVbtPKenRkTL0oCefJSIGCa4WZ3
+ Shfg75qL7J0jxMmzw87pSwKVu0qIh0tSIMdCljehcAzMwk8VlIZQ3SSmZd3HWj/5QyU6
+ 8EaieY0ePvDUxSo/BwytX3ZKhW9xLhdbwd3Pa2wp8DZ98l8G7KiJj+v8WGJo8g1h8MrH
+ JIp1nUvGZetkMVSS83NVx88X6MK0y8+ObUVCaSF1DGyugwFfNBujk8pBaSSQak8eaaw/
+ ZUMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743736842; x=1744341642;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1743736971; x=1744341771;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gavQL3JwiRzypFeNGtc8FI0f417Fp8ofqnic4ezhfa8=;
- b=Sq1x7LPqQsm2TGNnf2Iwekr3Wy9UF0jNHlaBgDCOPrBwzXMbMNLjjTm8h60eUuRhdN
- Xzp+ndq8V5SZgbHoHUbbV6yPuEk31x7RAr1PFUEt52eiKVFWhUmbM3G260IvrVXbn0yg
- XGEhXbJm19js1i68WM8rTF75ICiiQMD/xHRoijxWoYRjR/+32ss4SukPC4ZBpB3dhRm8
- 4VFJMr75i/rHYTgTn3y4+46+EzPninmV1WHPmc8K3Uow4hlpu9DRO6NLEaNLe4cR5HJV
- slf8cjevJUldMK/RyaLHwnDN2Hyw5qYN7OW9oux96v1uJ2Dc1qCJHMH/nXak+npG4r0X
- QzXw==
-X-Gm-Message-State: AOJu0YyWaWfiT3Ea06N3hQPDqsoDtlwpXoqTEEt/OkMrreie7kj3wcWW
- IEZ2BcPWsbGx6jc2QevPQOQsIhp5kQCFtovxPevZLZ79jlTpcmtVsTVx485X1LG73GXG2eO4BxF
- L
-X-Gm-Gg: ASbGncuMbPauWbvG2v7Yr2jz5ydHSIdrD/QdiRWsJENL6yxHC/i/z7NpR3S7E6FT0kz
- jT417FpvI2PRUiGmSpi+6T4TcWSXvCFeAy9K+dZd+oPEg0Ix4fnX8HTSD05111nh9QMidg55XhO
- zhZN5RQRcZh7v8/HFmXfYYfuT61rMSM6Di75+oqZh5+Wc0MwB3UxR9B3eUmTjBOOwCinqTAK7RZ
- 5ykN2n82he++wbZMhHbWhWJ42mNvhRI6FHCladcHR7GVi/Gz9hMWVR4VlVKFeZJL5ehxQ7HuMLi
- IQoG1WPhK5SUNFCrDDBnqCG7xLFCP9XN2BpLlS0MUJ1y
-X-Google-Smtp-Source: AGHT+IFpRMm2KZNnDI22QKkc7T8fMWQAmxZdSeVhI7LyMiBmcPWJoXhOeNXiwCbCi5pcvkhh39RkaQ==
-X-Received: by 2002:a17:902:f646:b0:229:1717:8826 with SMTP id
- d9443c01a7336-22a8a06d686mr23137615ad.28.1743736841703; 
- Thu, 03 Apr 2025 20:20:41 -0700 (PDT)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-229785ad943sm22325945ad.23.2025.04.03.20.20.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 03 Apr 2025 20:20:41 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, philmd@linaro.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH 2/2] tests/tcg/plugins: add plugin to test reset and uninstall
-Date: Thu,  3 Apr 2025 20:20:27 -0700
-Message-Id: <20250404032027.430575-3-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250404032027.430575-1-pierrick.bouvier@linaro.org>
-References: <20250404032027.430575-1-pierrick.bouvier@linaro.org>
+ bh=zZ2t4HJfWMH0saYBzZEBkEVDkW1I3VhyOcuQnNFzTO4=;
+ b=g6tSqUcCvzOFDtP/aoBo7apE1IQAnuwCuhiykCftg9p1Aksqfbl+/1XSHZAhaE5Jh1
+ KmgURhWbPKSAy87xCEC13dDfWbwb6MvBX4EoxTf4a3pJp2fUc0J3/novVOHBJ+iL7pcJ
+ uta/wYcmKHMSO0GQvm+aItAO7BSxaYt26Y7XQLfoHyBs4bvdETJ4Cg+AkQXtjpKD3Ie8
+ Uww70m96S1GjLWt3h0VlSgCMsHC8Nd2vwq3NkF+s+5PInZX35Nd5k67L/tWK+qMPF0PB
+ D5rUV5xrjuEBjdRRfDPX9V4tUvrL+sguA8bhU9Inrg3LAkSSg17xvLkH/VgcVqiHwYqA
+ gSFQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrRgyeo7q0dARUimaRbDkX37M1AOSgqNSdtI4nTKAbAHH7Naor1Bp2ddL+UFDOUFdvaJFK3ZUJhzHR@nongnu.org,
+ AJvYcCVbq/nm4VB5KLSI6uak+s6LSATfPSqjzMPuIF8la9f6EPkCq/xMu5m4buqJ5hqjaQod+UXKBmHW+FQpMw==@nongnu.org
+X-Gm-Message-State: AOJu0YzdP9SIshIh9f5EsdOspzHEzLql7N2NLT78iy5Z85fd3EL5tvix
+ NxRCX/KGMTUyAeO3JyA4tnIKie1Xm3UZ0pdXGhegdK2ixSAIsiljrr9ItHnJv07/uqLZHG64voi
+ sV5jGBzF04qI92jVvAiQVewhnkC0=
+X-Gm-Gg: ASbGncuXDQctPo4XstDeV9BamrAr31h9ma8UYljVC1dFCRMFrxgaBQiZ9HfSKF8hNfS
+ k1QDAOu64WUovyEAprnmHIPp9Pr/Q2lxU8iVzTvixCcumyBolLYsaqlo6dv6OhRkxBwtT5sWwD5
+ rfZdqz6wy0pE6R1E5WycGeCxYbdq0SfmALwJXATnOOrp0gk7w854D0+WMF
+X-Google-Smtp-Source: AGHT+IESlxFoob8dWGJfZGLDaSwMplRlyGvZ63+SY7GsUc6LRoq0YbWCOSxOieY2bKlLAa7XZDCMD0yQycBSe/HP8os=
+X-Received: by 2002:a05:6122:885:b0:523:771e:8b81 with SMTP id
+ 71dfb90a1353d-52756b6be18mr4904025e0c.7.1743736971355; Thu, 03 Apr 2025
+ 20:22:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250321155925.96626-1-philmd@linaro.org>
+ <20250321155925.96626-2-philmd@linaro.org>
+ <2650b68f-e705-4994-9791-0bf8b2e01d74@linaro.org>
+ <43e170ad-d4e3-489d-a049-22361cd34f13@linaro.org>
+ <90049822-b71a-4120-9537-7d43caf44f83@linaro.org>
+In-Reply-To: <90049822-b71a-4120-9537-7d43caf44f83@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 4 Apr 2025 13:22:25 +1000
+X-Gm-Features: ATxdqUG_8ZIFOQrkqkQx85njyB1WtetoFPJlwcOXe0nQVRI2KqAtwFXtZREabPA
+Message-ID: <CAKmqyKNiCsp5eYLdOuQuSBQ3aWwUEMNEjuimGdBEYjNGcyJS_A@mail.gmail.com>
+Subject: Re: [PATCH-for-10.1 1/4] target/riscv: Restrict RV128 MTTCG check on
+ system emulation
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Alexandre Ghiti <alexghiti@rivosinc.com>, Anton Johansson <anjo@rev.ng>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-riscv <qemu-riscv@nongnu.org>, Frank Chang <frank.chang@sifive.com>, 
+ Bin Meng <bmeng@tinylab.org>, Andrew Jones <ajones@ventanamicro.com>, 
+ Palmer Dabbelt <palmer@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,108 +106,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We perform a plugin reset, uninstall, and make sure we went through
-those steps.
+On Thu, Apr 3, 2025 at 12:41=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 2/4/25 16:25, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 23/3/25 19:08, Richard Henderson wrote:
+> >> On 3/21/25 08:59, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>> Multi-threaded TCG only concerns system emulation.
+> >>
+> >> That's not really true.  User emulation simply has no option to
+> >> run in a single-threaded context.
+> >>
+> >> I really don't think we should allow RV128 in user-mode at all.
+> >> Certainly not until there's a kernel abi for it.
+> >
+> > It seems to be safe since commit 905b9fcde1f ("target/riscv: Replace
+> > is_32bit with get_xl/get_xlen"):
+> >
+> >   #ifdef TARGET_RISCV32
+> >   #define get_xl(ctx)    MXL_RV32
+> >   #elif defined(CONFIG_USER_ONLY)
+> >   #define get_xl(ctx)    MXL_RV64
+> >   #else
+> >   #define get_xl(ctx)    ((ctx)->xl)
+> >   #endif
+> >
+> > Should we undefine MXL_RV128 on user-mode?
+>
+> Indeed the CPU is exposed on user-mode...
+>
+> $ qemu-riscv64 -cpu help
+> Available CPUs:
+>    max
+>    rv64
+>    rv64e
+>    rv64i
+>    rva22s64
+>    rva22u64
+>    rva23s64
+>    rva23u64
+>    shakti-c
+>    sifive-e51
+>    sifive-u54
+>    thead-c906
+>    tt-ascalon
+>    veyron-v1
+>    x-rv128           <---------
+>    xiangshan-nanhu
+>
+> Per commit 6df3747a274 ("riscv: Introduce satp mode hw
+> capabilities") I wonder if this is expected.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- tests/tcg/plugins/reset.c     | 73 +++++++++++++++++++++++++++++++++++
- tests/tcg/plugins/meson.build |  2 +-
- 2 files changed, 74 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/plugins/reset.c
+We probably didn't really think about it at the time.
 
-diff --git a/tests/tcg/plugins/reset.c b/tests/tcg/plugins/reset.c
-new file mode 100644
-index 00000000000..1be8be2a4b2
---- /dev/null
-+++ b/tests/tcg/plugins/reset.c
-@@ -0,0 +1,73 @@
-+/*
-+ * Copyright (c) 2025 Linaro Ltd
-+ *
-+ * Test the reset/uninstall cycle of a plugin.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <glib.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+static qemu_plugin_id_t plugin_id;
-+static bool was_reset;
-+static bool was_uninstalled;
-+
-+static void after_uninstall(qemu_plugin_id_t id)
-+{
-+    g_assert(was_reset && !was_uninstalled);
-+    qemu_plugin_outs("uninstall done\n");
-+    was_uninstalled = true;
-+}
-+
-+static void tb_exec_after_reset(unsigned int vcpu_index, void *userdata)
-+{
-+    g_assert(was_reset && !was_uninstalled);
-+    qemu_plugin_uninstall(plugin_id, after_uninstall);
-+}
-+
-+static void tb_trans_after_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    g_assert(was_reset && !was_uninstalled);
-+    qemu_plugin_register_vcpu_tb_exec_cb(tb, tb_exec_after_reset,
-+                                         QEMU_PLUGIN_CB_NO_REGS, NULL);
-+}
-+
-+static void after_reset(qemu_plugin_id_t id)
-+{
-+    g_assert(!was_reset && !was_uninstalled);
-+    qemu_plugin_outs("reset done\n");
-+    was_reset = true;
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, tb_trans_after_reset);
-+}
-+
-+static void tb_exec_before_reset(unsigned int vcpu_index, void *userdata)
-+{
-+    g_assert(!was_reset && !was_uninstalled);
-+    qemu_plugin_reset(plugin_id, after_reset);
-+}
-+
-+static void tb_trans_before_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    g_assert(!was_reset && !was_uninstalled);
-+    qemu_plugin_register_vcpu_tb_exec_cb(tb, tb_exec_before_reset,
-+                                         QEMU_PLUGIN_CB_NO_REGS, NULL);
-+}
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    plugin_id = id;
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, tb_trans_before_reset);
-+    return 0;
-+}
-+
-+/* Since we uninstall the plugin, we can't use qemu_plugin_register_atexit_cb,
-+ * so we use destructor attribute instead. */
-+static void __attribute__((destructor)) on_plugin_exit(void)
-+{
-+    g_assert(was_reset && was_uninstalled);
-+    qemu_plugin_outs("plugin exit\n");
-+}
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index c8cb0626a6d..41f02f2c7fa 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -1,6 +1,6 @@
- t = []
- if get_option('plugins')
--  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'syscall']
-+  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall']
-     if host_os == 'windows'
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
--- 
-2.39.5
+I agree that we don't need it
 
+>
+> Anyhow, I'll post a patch disabling it as:
+
+Thanks
+
+Alistair
+
+>
+> -- >8 --
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 430b02d2a58..33abcef0073 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -699,3 +699,3 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *obj=
+)
+>
+> -#ifdef CONFIG_TCG
+> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>   static void rv128_base_cpu_init(Object *obj)
+> @@ -710,7 +710,6 @@ static void rv128_base_cpu_init(Object *obj)
+>       env->priv_ver =3D PRIV_VERSION_LATEST;
+> -#ifndef CONFIG_USER_ONLY
+> +
+>       set_satp_mode_max_supported(RISCV_CPU(obj), VM_1_10_SV57);
+> -#endif
+>   }
+> -#endif /* CONFIG_TCG */
+> +#endif /* CONFIG_TCG && !CONFIG_USER_ONLY */
+>
+> @@ -3257,3 +3256,3 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>                                                    MXL_RV64,
+> rv64_xiangshan_nanhu_cpu_init),
+> -#ifdef CONFIG_TCG
+> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+>       DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128,
+> rv128_base_cpu_init),
+>
+> ---
+>
 
