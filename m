@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB8BC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 14:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA617C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 14:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0iC7-0001lG-Ob; Fri, 04 Apr 2025 10:38:56 -0400
+	id 1u0iDW-0002UM-0m; Fri, 04 Apr 2025 10:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1u0iC5-0001kw-L1
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:38:53 -0400
-Received: from 5.mo548.mail-out.ovh.net ([188.165.49.213])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1u0iC3-0002Hm-8k
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:38:53 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.108.2.11])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4ZTh736Qwqzyjb;
- Fri,  4 Apr 2025 14:38:39 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Fri, 4 Apr
- 2025 16:38:39 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S002c48bd4fe-144d-42e7-95f2-6a8062730647,
- 9A3F3E2F2DFB301F83D8F6839EB03D9D77BE1221) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Fri, 4 Apr 2025 16:38:37 +0200
-From: Greg Kurz <groug@kaod.org>
-To: Zheng Huang <hz1624917200@gmail.com>
-CC: <qemu-devel@nongnu.org>, Christian Schoenebeck <qemu_oss@crudebyte.com>
-Subject: Re: [PATCH] hw/9pfs: add cleanup operation for 9p-synth
-Message-ID: <20250404163837.45b0f97e@bahia>
-In-Reply-To: <1998899.hlcO8rIAHV@silver>
-References: <a4e34adc-a425-4183-bb4f-f1b8197125eb@gmail.com>
- <1998899.hlcO8rIAHV@silver>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0iDT-0002U5-Ss
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:40:19 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0iDR-0002vc-MS
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 10:40:19 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so14533675e9.1
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 07:40:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743777615; x=1744382415; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=7TwIoD1PQujucCYAoWo/gLYpE1VYWQRS9mS2q3hGAz0=;
+ b=hH5njUFMJt/YrL6PXTxf0D9I++fHMFbR4fEnc+oWSwk6OHWiAq3lWGi6XoVm+idGmA
+ bihNXxl2d75jVzvi9CyNtchw6hl9pcEC+Lwyg/RXdiHTdzqSnF12gAOY4CIwvFTJ01sj
+ QWw1WcGhsWomicWejSWWXwD4QmmTE706bkktqHcVpSqTMnTmH8wLiYomKOteWCdPGbMS
+ JJb+QIXMDcX0P43FO1jRF1LUv108YQ9a8qB5v/I+tUZuOxTPj7w9JwTG02jiWw67nR1V
+ ccWJZfM02B69EITRYnCmN6PaAsImLVau17rU3dLkvbJOvTAammbi6rj06TorVcSJLh/G
+ /kjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743777615; x=1744382415;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7TwIoD1PQujucCYAoWo/gLYpE1VYWQRS9mS2q3hGAz0=;
+ b=nhpMLACVqtsXgR3HzH/jphtTlJdRgkbB8UlUNw2ArIXkKEV4kpr71fNdO9cSGLKaSC
+ QGjT828aJdB+b2i2/ULSIqKjwxoyxGa2wRxj3MR3KIukA5Q42+0Q2a41PLXfeCnhgad1
+ 9mEIpahuNcCj84yI9edTO+exFf1rDu3DlPdSGKWqKuKE9+hmDiNqJBEjJfYX98ulHkRf
+ bnq4jtVIeReP/DN8tq55SNtdWKK0WlaTST3RXgOqL4tONkI7h6zMbxLkH37SCYX0UTlm
+ s6p9PvgyEn/FJOAGqCD14j7jeXY2Ae7NkuhgT0Q3S93fhgfF9NmFL0Te2glHm1D3UkXr
+ 3EXg==
+X-Gm-Message-State: AOJu0YzD6AXk3Ogx09hvJSzwnsYAjNCK2u+K5HCj2cZUsf5pzVttf6Yg
+ BO4vVkq7E94u9iTKfXNwxYSWhbIHe4xZdFT/ieQfSna32RUHVWHYg5aI7y7ITj+yZWJwVj+GTMz
+ b
+X-Gm-Gg: ASbGncuDltAiC3ZoTAwP9MyuD9MLWxUb6vg1dnRzhuPJHkcbygUdHaNs9B84npWByn0
+ hM5rVEf53Gy36MTG0x9ZQZgrfnZdFQgP3Dl0ma8NjnYDN5ZQCU85XD3Qm+yMIKO7CDVMEcplQ5H
+ ryw8uMTvVM0JPkD/Lcuizuv7lU6AM5hOQEghcsClng8Wn44zMXxgMnZF0078vAjFvhZikcsyx4W
+ ZiRYaWpWlMfksysBQv44pzxvzGO4N82Jxo//LiW74cwB304vfzBWdzl5bJYUVXtgVzIVSsdHI96
+ Dk1XizHyLHGhqU3aPn3YGSvlo5/oWYeNQofVkhxj4o4ECDCAFpvuiVIRtuuyRXUQf5u4L+iok/N
+ xd+g1RAd7hsGdKVrLyq7Wmis=
+X-Google-Smtp-Source: AGHT+IGC0niX1KSne0Hxy6W87yNs9dKj3bpVZd3MaiTQDxQtU2JG61J6x/S6H4oHKMkX4f5W/e4XDQ==
+X-Received: by 2002:a05:600c:3548:b0:43d:77c5:9c1a with SMTP id
+ 5b1f17b1804b1-43ed0b5e285mr28122385e9.4.1743777615394; 
+ Fri, 04 Apr 2025 07:40:15 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ec1630ddesm51096125e9.5.2025.04.04.07.40.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Apr 2025 07:40:14 -0700 (PDT)
+Message-ID: <1f47ee6c-cc71-4b24-85c6-1afe534adf52@linaro.org>
+Date: Fri, 4 Apr 2025 16:40:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: c9c9f601-c3cd-4438-b1d4-c4304d949b31
-X-Ovh-Tracer-Id: 17216979904291707357
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledujeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdekpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeefpdhrtghpthhtohephhiiudeivdegledujedvtddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhgpohhsshestghruhguvggshihtvgdrtghomhdpoffvtefjohhsthepmhhoheegkegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=sDvD/azY6vzYGaKpr/rP8KLDa7ay2mGN/XHM8Dqm8RQ=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1743777520; v=1;
- b=hTCVBu5A8E6tCbrg8bXtfpztjbzrKCzB6hUq9a9svmZuhMTlJql4uKK8TLlIXDDh4W+r37Z6
- 7p89MK+abPLl1cGpvrzZaxmouXGMtsrJB+99ltlVZlgSWR/rDmDvrizXdta+x/A6XJEFA45GLR1
- 0iYps1DkilBJjAOo46Qs6KbsoQceBf1B0sWsqxrXU85SWCicLG4yR3P9b85VEE4l1V6QqUYnuSy
- UiVCSxLKBxLy5e4WZIBP5qa3fays7wIHQ3J1UIGF8aVzn7paaWHB9OzHvnJ8e88ePnG08U6UQAH
- fz0TaRKsF6lthJ1QomtdRBTXxughVM/jmEyBQpUNdOgKg==
-Received-SPF: pass client-ip=188.165.49.213; envelope-from=groug@kaod.org;
- helo=5.mo548.mail-out.ovh.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-10.1 38/39] hw/arm: Move xen files to
+ arm_common_ss[]
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250403235821.9909-1-philmd@linaro.org>
+ <20250403235821.9909-39-philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250403235821.9909-39-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,126 +105,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 04 Apr 2025 15:59:54 +0200
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+On 4/4/25 01:58, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> XXX untested
 
-> On Monday, March 31, 2025 3:52:31 PM CEST Zheng Huang wrote:
-> > Hi,
-> 
-> Hi!
-> 
+Now with Xen setup accessible, so tested. What is missing:
 
-Hi Zheng !
+-- >8 --
+diff --git a/hw/arm/xen-pvh.c b/hw/arm/xen-pvh.c
+index d1509bd235..8e81947c7d 100644
+--- a/hw/arm/xen-pvh.c
++++ b/hw/arm/xen-pvh.c
+@@ -12,3 +12,2 @@
+  #include "hw/xen/xen-pvh-common.h"
+-#include "hw/xen/arch_hvm.h"
 
-We certainly appreciate politeness here but we only want relevant
-details in what will become the commit message. Anything else
-you want to share that doesn't carry useful information about the
-patch itself should go below the '---' after your Signed-off-by.
+diff --git a/hw/arm/xen-stubs.c b/hw/arm/xen-stubs.c
+index 5551584dc2..f3681835d7 100644
+--- a/hw/arm/xen-stubs.c
++++ b/hw/arm/xen-stubs.c
+@@ -11,3 +11,3 @@
+  #include "hw/xen/xen-hvm-common.h"
+-#include "hw/xen/arch_hvm.h"
++#include "hw/arm/xen_arch_hvm.h"
 
-> > This patch adds a cleanup operation for 9p-synth, which fixes a memory
-> > leak bug in synth_init() and other related operations. 
-> 
-> Which other operations?
-> 
-> > All child nodes
-> > of synth_root need to be freed before the entire filesystem exits.
-> 
-> I assume this is a theoretical fix, because I currently don't see how this
-> could result in memory being leaked in practice. The synth fs driver is just
-> used for 9pfs's automated test cases. Shortly after cleanup handler would be
-> called, the entire process is torn down anyway, and with that all memory
-> being freed automatically.
-> 
+---
 
-FWIW it can be considered a good general practice to match every g_new and
-friends with a g_free. This would silent any suspicion of memory leak ;-)
+Otherwise we get:
 
-> > If you have any better ideas for the implementation, please feel free
-> > to share them.
-> 
-> By using two nested loops in synth_cleanup()? One loop for walking vertically
-> (child) and one loop for walking horizontally (sibling). Then you could just
-> open code everything within synth_cleanup() instead.
-> 
-> However I don't see a real reason for this patch in the first place.
-> 
+In file included from ../../hw/arm/xen-pvh.c:13:
+include/hw/xen/arch_hvm.h:1:13: error: attempt to use poisoned "TARGET_I386"
+     1 | #if defined(TARGET_I386) || defined(TARGET_X86_64)
+       |             ^
+include/hw/xen/arch_hvm.h:1:37: error: attempt to use poisoned 
+"TARGET_X86_64"
+     1 | #if defined(TARGET_I386) || defined(TARGET_X86_64)
+       |                                     ^
 
-We can imagine this could be required if we decide to support hot unplug
-of 9p backends but I don't believe this is something we need anytime soon.
+> ---
+>   hw/arm/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index c46e5036722..61f145f901f 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -63,7 +63,7 @@ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+>   arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+>   arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+>   arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+> -arm_ss.add(when: 'CONFIG_XEN', if_true: files(
+> +arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
+>     'xen-stubs.c',
+>     'xen-pvh.c',
+>   ))
 
-> > Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
-> > 
-> > 
-> > ---
-> >  hw/9pfs/9p-synth.c | 28 ++++++++++++++++++++++++++++
-> >  1 file changed, 28 insertions(+)
-> > 
-> > diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-> > index 2abaf3a291..ead8b9e3be 100644
-> > --- a/hw/9pfs/9p-synth.c
-> > +++ b/hw/9pfs/9p-synth.c
-> > @@ -24,6 +24,7 @@
-> >  #include "qemu/rcu.h"
-> >  #include "qemu/rcu_queue.h"
-> >  #include "qemu/cutils.h"
-> > +#include "qobject/qlist.h"
-> >  #include "system/qtest.h"
-> >  
-> >  /* Root node for synth file system */
-> > @@ -136,6 +137,19 @@ int qemu_v9fs_synth_add_file(V9fsSynthNode *parent, int mode,
-> >      return 0;
-> >  }
-> >  
-> > +// Must call after get synth_mutex
-> > +static void v9fs_recursive_free_node(V9fsSynthNode *node)
-> > +{
-> > +    V9fsSynthNode *entry;
-> > +
-> > +    for (entry = QLIST_FIRST(&node->child); entry;) {
-> > +        V9fsSynthNode *next = QLIST_NEXT(entry, sibling);
-> > +        v9fs_recursive_free_node(entry);
-> > +        g_free(entry);
-> > +        entry = next;
-> > +    }
-> > +}
-> > +
-> >  static void synth_fill_statbuf(V9fsSynthNode *node, struct stat *stbuf)
-> >  {
-> >      stbuf->st_dev = 0;
-> > @@ -615,8 +629,22 @@ static int synth_init(FsContext *ctx, Error **errp)
-> >      return 0;
-> >  }
-> >  
-> > +
-> > +static void synth_cleanup(FsContext *ctx)
-> > +{
-> > +    // recursively free all child nodes of synth_root
-> > +    // V9fsSynthNode *tmp;
-> > +    QEMU_LOCK_GUARD(&synth_mutex);
-> > +    v9fs_recursive_free_node(&synth_root);
-> > +    // QLIST_FOREACH(tmp, &synth_root.child, sibling) {
-> > +    //     v9fs_recursive_free_node(tmp);
-> > +    // }
-> 
-> No commented code in patch submissions, please.
-> 
-> /Christian
-> 
-> > +    QLIST_INIT(&synth_root.child);
-> > +}
-> > +
-> >  FileOperations synth_ops = {
-> >      .init         = synth_init,
-> > +    .cleanup      = synth_cleanup,
-> >      .lstat        = synth_lstat,
-> >      .readlink     = synth_readlink,
-> >      .close        = synth_close,
-> > 
-> 
-> 
-
-Cheers,
-
--- 
-Greg
 
