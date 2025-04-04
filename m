@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B517DC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 21:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A75C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 22:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0p2P-0002zL-D3; Fri, 04 Apr 2025 17:57:21 -0400
+	id 1u0p5k-000472-Ln; Fri, 04 Apr 2025 18:00:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0p2F-0002yE-II
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 17:57:13 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0p5h-00046e-ID
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 18:00:46 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0p24-0002vr-7e
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 17:57:03 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43ed8d32a95so7154095e9.3
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 14:56:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u0p5e-0003Sd-0F
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 18:00:45 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3912d2c89ecso2199234f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 15:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743803818; x=1744408618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743804039; x=1744408839; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VfE+dg+AkAWffdkBAwoQoff7vgUtnOEd4/K99r62zaw=;
- b=RFC7cJ8jWcuGy0Y3x84lxfUQtbWy0wWdERTtQraQZysRWqbyFYR450UmP40hH9iT0x
- DdSm7tNViiQUK6WLaMcolinzjxvee3uCJRXnzGfqQukV0OWiooNcoVekrDe0g4OV1vA/
- UG9E+Qgwd/N4JwYx6irTD8RargY/mT/lOOwRSKwyCIM+QOE2p8rid6yAXn/k8UgNUzbv
- NPbzOzGzlzf/h4zW+c8IZxkf/3W6XYmwAdCBr2gWi7snal6dY3zo642orlWj2/Ptj5ad
- O9eFg1wCZ6HH7fPcpZorXL231c13dEMeI2H5eg2pAb8r9prmxFiZWs6BoGh5Ld+pAOAS
- V6gA==
+ bh=Xzm3/8ZpAtTlG40S8NkHD0BockTRLfkI0eLPKSIs8sY=;
+ b=BMA8mINhpJTpRJEPZMXfphn8eL4zwN93HO/ag3Si8wq7NtkOEATl7Iy4PSQjUM/tVD
+ FK1e+k6fdd97hOMbH3GO4epSgnfCoHmXaRF+SfqgyKhXDJvdnumfqeeu+N2RAqiq+4zf
+ H4grII7eNHPDdO773iV5gYi5Ec6kQkHBBQ+DcCHlUQ+pyHVr+UvpIL8QeDdm/VbH4hcT
+ rIyXfCFATOXX76rO9oZ88NBqSuoOGeNxLgrj6Hwf6GuZIIMh8RVsw5w9u302YT2b9TP5
+ pP1pynBpmnQ5YfhfIoxrCtK+GLAR0fyf5RFHuaaANbhxYO2fzG/pwmjUniuz0nd8UnDl
+ XYVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743803818; x=1744408618;
+ d=1e100.net; s=20230601; t=1743804039; x=1744408839;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VfE+dg+AkAWffdkBAwoQoff7vgUtnOEd4/K99r62zaw=;
- b=hD3oBp9JQ8du5JTAyAB+cMc4C5dZW91BJO3NKW46pBtsZqblOV/EtbNM+ZJ9S9HTG7
- CKjaV2+HBrCnGC0buthq4LLMBYfdYaT4FRkGPxol7xz9bc8TUGkvTdApDv+f+G5uVJdw
- yRTaEZtQX5XJlVqp/dEuC1EEjuZ+opJrcujcuv3MWwaP7SLpvGZOFCq4D7xt+Qbm2Ydb
- uMlTtDjNOZvedjmfE/Q/wEZpgzMLOLu2lHgi2UCtBYnvORrmtq2YMt6i0fBO497FB8G0
- dneB/ppzdRrUqj3bWbMPsgfKDDClsrx0LG87qFq0IyN2wLv6b4tS5c9PWkP2MYjyWsY4
- YVag==
+ bh=Xzm3/8ZpAtTlG40S8NkHD0BockTRLfkI0eLPKSIs8sY=;
+ b=roEPQj+GSzj6cQJZbk/wxG0eltdqt+zCa5sCucNyF0Jpn1RXbGzcafjgQMQX6Dyvqx
+ 1vnghXaftMUN9nWfckwqxLaHPjY5iqqoq+H4e1zOplI3mia3zoNGk0OmrSXbu/dS7FnO
+ GWiZVuK+Hr8m0TbZCR7KHFqgI/tDd2OLOGtYBw9yKhzxkccT3MbLAugZH/s2SmiMldIL
+ fj5Anw5xeiTrdDkPzYhD/HinxYrH/mazXW/+eurf0wpCX28/oeM5jlJKVo3Na5BJMWtf
+ iLOmUnHTulHQ9futVK669j5FPLneofsMB6jskqfYyU5T16iq5+hg2im7KSobe9KlYfXp
+ xOKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+PuZ1GkXqTzKqpVfeHFdZ7kmijbYyEpqUp/qtMsGYgQFhCqFmso9okpZ9L6kT4gzxIDEhVtqY1+e4@nongnu.org
-X-Gm-Message-State: AOJu0Yx4y3T+4P6MVcBwNcHtKoPfF3RpaS/KE+hJvLJJKQ5YHUaNnOLU
- nNxdsB5q5Wil6h0fDmTUkoUNgRN/9JS6mBJZYd799u1p6lRS26BnuFVfe9+PMmk=
-X-Gm-Gg: ASbGnctH+Fvv9h3sMt+40xA2lmD4qMnfrTywMEwnInhKdP0pndkawvTN9FTmOXoPRdC
- nM/WUytijERv9WFwQIkEfQJKN5s/yv9tZjrHzSM0BLQWBz5da90t6lqxFKsNr3bVvBUREocalk1
- 8NCln4pN/Ko9iNuIvk8N/AMFssvqr3B8DbQi3kXRt0hggVgQkU5AOkDX5hawq3qEEJJHhu4JEbw
- 9JEsc55v+z1bkc58zUuL+wNgAdIjXo53zI/kxX/Und2U8IQjRj5OD+gX4qrdVmxRQYPDaDHoWXn
- 5T5SqsPBq4kFWd1qmssNn8ZK8kCvQJY+Wt7addM6VLvU8rrqJTiA/xrdJ8m9yPLAJNHEw31YD/R
- OhHDCretMxj4CXym5qL85oPhesW8c
-X-Google-Smtp-Source: AGHT+IHRzz8aleNREBILeW2VVjd7d4oSVvpQUowynT4aEV3Z/GDbtNXPLX+wV6cPtbqZuH995Js8Ww==
-X-Received: by 2002:a05:600c:3ecb:b0:43d:7588:66a5 with SMTP id
- 5b1f17b1804b1-43ecfa06563mr49104265e9.31.1743803818320; 
- Fri, 04 Apr 2025 14:56:58 -0700 (PDT)
+ AJvYcCW5rSGMYKPV9F3OcInf8XDK4JPOiQcPgeea7aBk+Tvg7wCnGKEA34qtqYSaZ2dOZtVPC3aF8uyTpyRH@nongnu.org
+X-Gm-Message-State: AOJu0YxF+IG1VASFZiLL4+vK3gwv0A8YUypNMSJciNm6w1A7QbjJr4/A
+ 3VXofXcq+l3GzN4Ocq4y0a5kn3XdX7NVFz2nC6aHtSBPxWo9+i02u6gFxL5czPM=
+X-Gm-Gg: ASbGnct1aezGgOCRohYV0BwaeLbXMvBoUXEewhVgNhnCeUCl50li0BCeSeWIajMu1kM
+ fw79WfllQldS5rGbZvqTg3n3BdB8D/hSgg9CLtNF4LKpjtfra+ockWQCRSRELu5dJFJBWynwJC/
+ xTTM1Jk741mIQhhSVEahwajUwjA5X43KIO3XyUOxR/9AudzUlMkBHyNwSVoWYCx9hr7MHVIfofR
+ MZGuHlAsAMIGXJBjS+SSq5qLp30wcMd+08tgbLzO0sdjCy0eKfMpXfJxhHdadOAIL3cSLmKPxN1
+ 3gsbEwP1mLYCw/3k2NYaPDSa4pzDEYtVc2ChNQ0aFCNX/A278tPzx+1kIBYdcwMP88Ge4iIj9cY
+ w0nHYjAEddnN44a4kwkIoiQjAB1Q1
+X-Google-Smtp-Source: AGHT+IGwMDM0AZz/tRfsym+w7WzNFceArR6ZVWXt42S2kVk2ijNUlVWWz3hQey1cmeYQ9i5Bc+CT1Q==
+X-Received: by 2002:a05:6000:270e:b0:39b:fa24:9519 with SMTP id
+ ffacd0b85a97d-39d0de2d383mr2921100f8f.35.1743804038994; 
+ Fri, 04 Apr 2025 15:00:38 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1795630sm61461875e9.29.2025.04.04.14.56.57
+ 5b1f17b1804b1-43ea8d1673dsm93931075e9.0.2025.04.04.15.00.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 14:56:57 -0700 (PDT)
-Message-ID: <ed3f2bd6-2628-4d58-b426-c41ec587759a@linaro.org>
-Date: Fri, 4 Apr 2025 23:56:56 +0200
+ Fri, 04 Apr 2025 15:00:38 -0700 (PDT)
+Message-ID: <d7d8590c-424f-43fd-918b-68603720b3dd@linaro.org>
+Date: Sat, 5 Apr 2025 00:00:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.1 27/39] system/hvf: Expose hvf_enabled() to
- common code
+Subject: Re: [RFC PATCH-for-10.1 28/39] exec: Do not poison hardware
+ accelerators
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
 References: <20250403235821.9909-1-philmd@linaro.org>
- <20250403235821.9909-28-philmd@linaro.org>
- <0e88a1ae-f9a3-4a06-9977-e5ce9b1b626e@linaro.org>
+ <20250403235821.9909-29-philmd@linaro.org>
+ <c1418cb6-1c92-4f7d-a4f8-85099fc2f6dc@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0e88a1ae-f9a3-4a06-9977-e5ce9b1b626e@linaro.org>
+In-Reply-To: <c1418cb6-1c92-4f7d-a4f8-85099fc2f6dc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,97 +109,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 +Paolo
 
-On 4/4/25 20:23, Pierrick Bouvier wrote:
+On 4/4/25 20:25, Pierrick Bouvier wrote:
 > On 4/3/25 16:58, Philippe Mathieu-Daudé wrote:
->> Currently hvf_enabled() is restricted to target-specific code.
->> By defining CONFIG_HVF_IS_POSSIBLE we allow its use anywhere.
+>> Hardware accelerators depends on the host, not the guest.
 >>
 > 
-> Instead, we can simply make hvf_enabled present for common and target 
-> specific code, and link correct implementation, based on what we build.
+> While this is true, no we can't unpoison those define.
+> They are applied per target, and not in config-host. So unpoisoining 
+> them opens the possibility to miss something.
 > 
-> I don't think *_IS_POSSIBLE was a good idea to start with.
+> I would stick to clean up those ifdef instead, by exposing interface to 
+> all code, and link appropriate stubs depending on the variant built.
 
-IIUC the point of *_IS_POSSIBLE is to elide code, which we
-aren't interested anymore for host-related configs, so we
-can also remove CONFIG_KVM_IS_POSSIBLE and CONFIG_XEN_IS_POSSIBLE.
-Is that correct?
+OK, so IIUC this is the same reasoning than previous patch comment,
+always declare kvm_enabled() so code elision isn't possible anymore,
+then remove all CONFIG_KVM #ifdef'ry?
 
 > 
+>> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   MAINTAINERS             |  1 +
->>   include/system/hvf.h    | 14 +++++++++-----
->>   accel/stubs/hvf-stub.c  | 12 ++++++++++++
->>   accel/stubs/meson.build |  1 +
->>   4 files changed, 23 insertions(+), 5 deletions(-)
->>   create mode 100644 accel/stubs/hvf-stub.c
+>>   include/exec/poison.h         | 4 ----
+>>   scripts/make-config-p    oison.sh | 4 ++++
+>>   2 files changed, 4 insertions(+), 4 deletions(-)
 >>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index c7083ab1d93..00ef33be0e2 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -525,6 +525,7 @@ R: Phil Dennis-Jordan <phil@philjordan.eu>
->>   W: https://wiki.qemu.org/Features/HVF
->>   S: Maintained
->>   F: accel/hvf/
->> +F: accel/stubs/hvf-stub.c
->>   F: include/system/hvf.h
->>   F: include/system/hvf_int.h
->> diff --git a/include/system/hvf.h b/include/system/hvf.h
->> index d50049e1a1a..7b45a2e1988 100644
->> --- a/include/system/hvf.h
->> +++ b/include/system/hvf.h
->> @@ -19,15 +19,19 @@
->>   #include "qom/object.h"
->>   #ifdef COMPILING_PER_TARGET
->> +# ifdef CONFIG_HVF
->> +#  define CONFIG_HVF_IS_POSSIBLE
->> +# endif /* !CONFIG_HVF */
->> +#else
->> +# define CONFIG_HVF_IS_POSSIBLE
->> +#endif /* COMPILING_PER_TARGET */
->> -#ifdef CONFIG_HVF
->> +#ifdef CONFIG_HVF_IS_POSSIBLE
->>   extern bool hvf_allowed;
->>   #define hvf_enabled() (hvf_allowed)
->> -#else /* !CONFIG_HVF */
->> +#else /* !CONFIG_HVF_IS_POSSIBLE */
->>   #define hvf_enabled() 0
->> -#endif /* !CONFIG_HVF */
->> -
->> -#endif /* COMPILING_PER_TARGET */
->> +#endif /* !CONFIG_HVF_IS_POSSIBLE */
->>   #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
->> diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
->> new file mode 100644
->> index 00000000000..42eadc5ca92
->> --- /dev/null
->> +++ b/accel/stubs/hvf-stub.c
->> @@ -0,0 +1,12 @@
->> +/*
->> + * HVF stubs for QEMU
->> + *
->> + *  Copyright (c) Linaro
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "system/hvf.h"
->> +
->> +bool hvf_allowed;
->> diff --git a/accel/stubs/meson.build b/accel/stubs/meson.build
->> index 91a2d219258..8ca1a4529e2 100644
->> --- a/accel/stubs/meson.build
->> +++ b/accel/stubs/meson.build
->> @@ -2,5 +2,6 @@ system_stubs_ss = ss.source_set()
->>   system_stubs_ss.add(when: 'CONFIG_XEN', if_false: files('xen-stub.c'))
->>   system_stubs_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
->>   system_stubs_ss.add(when: 'CONFIG_TCG', if_false: files('tcg-stub.c'))
->> +system_stubs_ss.add(when: 'CONFIG_HVF', if_false: files('hvf-stub.c'))
->>   specific_ss.add_all(when: ['CONFIG_SYSTEM_ONLY'], if_true: 
->> system_stubs_ss)
+>> diff --git a/include/exec/poison.h b/include/exec/poison.h
+>> index 00aedc41d82..0574d683f6a 100644
+>> --- a/include/exec/poison.h
+>> +++ b/include/exec/poison.h
+>> @@ -62,11 +62,7 @@
+>>   #pragma GCC poison CONFIG_SPARC_DIS
+>>   #pragma GCC poison CONFIG_XTENSA_DIS
+>> -#pragma GCC poison CONFIG_HVF
+>>   #pragma GCC poison CONFIG_LINUX_USER
+>> -#pragma GCC poison CONFIG_KVM
+>> -#pragma GCC poison CONFIG_WHPX
+>> -#pragma GCC poison CONFIG_XEN
+>>   #ifndef COMPILING_SYSTEM_VS_USER
+>>   #pragma GCC poison CONFIG_USER_ONLY
+>> diff --git a/scripts/make-config-poison.sh b/scripts/make-config- 
+>> poison.sh
+>> index 2b36907e239..09d2384745f 100755
+>> --- a/scripts/make-config-poison.sh
+>> +++ b/scripts/make-config-poison.sh
+>> @@ -8,6 +8,10 @@ fi
+>>   # but filter out several which are handled manually.
+>>   exec sed -n \
+>>     -e' /CONFIG_TCG/d' \
+>> +  -e' /CONFIG_HVF/d' \
+>> +  -e' /CONFIG_KVM/d' \
+>> +  -e' /CONFIG_WHPX/d' \
+>> +  -e' /CONFIG_XEN/d' \
+>>     -e '/CONFIG_USER_ONLY/d' \
+>>     -e '/CONFIG_SOFTMMU/d' \
+>>     -e '/^#define / {' \
 > 
 
 
