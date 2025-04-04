@@ -4,148 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0F57C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 16:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFFCC3601A
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 17:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0kMk-0005Tz-Jt; Fri, 04 Apr 2025 12:58:02 -0400
+	id 1u0kWT-0007bE-3b; Fri, 04 Apr 2025 13:08:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0kMi-0005Sk-2H
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 12:58:00 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u0kWQ-0007aL-Pn
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 13:08:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u0kMg-0003GO-EX
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 12:57:59 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u0kWO-0005Bu-Iu
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 13:08:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743785873;
+ s=mimecast20190719; t=1743786479;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EbBkz1OFa3rs8Kj+4HQ4XpBTramOUDYhrWvGuQWQ4fw=;
- b=fROGLC2GGIQB3dEbu82ntXgttC5/9Wxv2zjYZXihFxQO1osEpaV3L+xZ6vHasbEKs3cHOl
- tmeDpTAjkToZVQHdASM84RKiEKaZMQE/gx9dcrWW/LJSYXN2tR7gjQ3YYr63dETgoRUfdD
- NwEgeBAC2msTQzTWvG7XEMh8YDl1/9I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-k_cWY9INM9K3RK4cBQGLcQ-1; Fri, 04 Apr 2025 12:57:50 -0400
-X-MC-Unique: k_cWY9INM9K3RK4cBQGLcQ-1
-X-Mimecast-MFC-AGG-ID: k_cWY9INM9K3RK4cBQGLcQ_1743785870
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43cec217977so14698505e9.0
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 09:57:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743785869; x=1744390669;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EbBkz1OFa3rs8Kj+4HQ4XpBTramOUDYhrWvGuQWQ4fw=;
- b=dJv720ykfQKHnUX8kdpvvDemf7CmsQYFBiVs2kdeIG8YhxWU/AUkKt2tgZdwqzLo8i
- Rpr3Y7in2S4H3/LY4dvsAiGFTDrSFAHlHkNNumlX0tLH2H1s/4DOT5wkUJDUntVtQaUz
- EUCoqZz03m1RP2bqxOuEybPv0tAbK+eRddqFW3+T0uw3eYvyq1ZGWspwG1VPmhAFxCGK
- s8860OUTMouaIURi/vImE5BhOwUcnYbawDkiDygirUd4OnbKkqQjgnCM5sJ+Knqq6CFv
- MBYE/VeGG0TUNRQyuF9Yq7r6oL5pW+H4Nex1lrQs9AshP4kTAKALCLKZYcDUF6DEOhVS
- aWAg==
-X-Gm-Message-State: AOJu0YzicuRpfHwY/3GZc4V16C+ywEcnJpXtgXobyS6fXsSbKiswrJzm
- BxjZ8ERRTceuYNUUis7Os72G5gQZihlnh7z50ALOZM3+wru1VD0QL0KPsxMwsZtCZrrMgMnSKhr
- 0P5k1Xf939C5seaoryZ+LrkyeFH0qPTWJ3QQ1Wv3PaeWytjFSMxEh
-X-Gm-Gg: ASbGnct6l7LwpwpJy9HaesQHu5kSGRN3j028/hbZUQ4hgZdyP9P0N0iaeXkbK16IigY
- GjRlP3flOXBrDpMV7Z9111g/eYA8WpRba/qYXCiJILvqKS/rlVDz2k6E7xOWFQ9WaVs9f/udCJJ
- Bl9udTg0YNgqSxyDLXCkMLUBv8fC4kK44mlwPREK17D1G0S2q06GtEcYrCqYaExjgJ0mzkOf+KZ
- 1duM8H/FfPla85/zmeqiSFvZ1I/t407nhhh3pmEbGumugLHF9zc+TBTNGLgUry6VJ7dK6GuajE0
- DuxN5Xbw4tnQ/M1+5oP0eLKlPgd/PanZH1LGfoumESq4Ho4M6l5SCQ==
-X-Received: by 2002:a05:600c:1384:b0:43c:fffc:7886 with SMTP id
- 5b1f17b1804b1-43ecf85f216mr41605485e9.8.1743785869652; 
- Fri, 04 Apr 2025 09:57:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJTlXj202Hil72lky3EH6bB5rxzH8STwALhDgnIn4VlBiZdpYyCcqih1uHtGU5ILpdQXe/mg==
-X-Received: by 2002:a05:600c:1384:b0:43c:fffc:7886 with SMTP id
- 5b1f17b1804b1-43ecf85f216mr41605205e9.8.1743785869290; 
- Fri, 04 Apr 2025 09:57:49 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec366a699sm50215015e9.38.2025.04.04.09.57.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 04 Apr 2025 09:57:48 -0700 (PDT)
-Message-ID: <33a54cce-c9a3-4724-97ef-64ac6a96e5b7@redhat.com>
-Date: Fri, 4 Apr 2025 18:57:46 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=9v8AXBiz2VbGbNqr98/RiYkEp9OyLy9b8FlbC12ViHI=;
+ b=C+RUzVYiPW+Y44dbN9377xuJ+srRFN6sYuilba/GhROL5PSOL/WYULP+5Ufb8/DecvXS1L
+ OHhAh2JQtjIyMG7ykOx1qhToEx8uEi8CI2Nhn5jJoV34iT7rDdyt3L+eGbnWTIruXnCWLx
+ Hctf/4obZaKULyiFhO5HdeOnv2aHgtc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-K5xrAB1QMkWYsNRb8F_ySg-1; Fri,
+ 04 Apr 2025 13:07:55 -0400
+X-MC-Unique: K5xrAB1QMkWYsNRb8F_ySg-1
+X-Mimecast-MFC-AGG-ID: K5xrAB1QMkWYsNRb8F_ySg_1743786474
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B41C51800361; Fri,  4 Apr 2025 17:07:54 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.156])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 291331801766; Fri,  4 Apr 2025 17:07:52 +0000 (UTC)
+Date: Fri, 4 Apr 2025 11:05:09 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Pinku Deb Nath <prantoran@gmail.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH v4] block/file-posix.c: Use pwritev2() with RWF_DSYNC for
+ FUA
+Message-ID: <20250404150509.GA374072@fedora>
+References: <20250404074233.133365-1-prantoran@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 08/28] vfio: add region cache
-To: John Levon <levon@movementarian.org>
-Cc: qemu-devel@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- Halil Pasic <pasic@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>
-References: <20250219144858.266455-1-john.levon@nutanix.com>
- <20250219144858.266455-9-john.levon@nutanix.com>
- <d0f99d52-4d8d-4b1e-9e83-ec39b5357a44@redhat.com>
- <Z+6wtZAfSayf+CG1@movementarian.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <Z+6wtZAfSayf+CG1@movementarian.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="+g98o3/GyoR6TEqM"
+Content-Disposition: inline
+In-Reply-To: <20250404074233.133365-1-prantoran@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -170,59 +85,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/25 18:00, John Levon wrote:
-> On Thu, Apr 03, 2025 at 05:46:03PM +0200, Cédric Le Goater wrote:
-> 
->>> +static void vfio_get_all_regions(VFIODevice *vbasedev)
->>> +{
->>> +    struct vfio_region_info *info;
->>> +    int i;
->>> +
->>> +    for (i = 0; i < vbasedev->num_regions; i++) {
->>> +        vfio_get_region_info(vbasedev, i, &info);
->>> +    }
->>> +}
->>> +
->>>    void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
->>>                             VFIOGroup *group, struct vfio_device_info *info)
->>>    {
->>> @@ -1586,6 +1596,8 @@ void vfio_prepare_device(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
->>>        }
->>>        QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
->>> +
->>> +    vfio_get_all_regions(vbasedev);
->>>    }
-> 
->>> +    /* check cache */
->>> +    if (vbasedev->regions[index] != NULL) {
->>> +        *info = vbasedev->regions[index];
->>> +        return 0;
->>> +    }
->>> +
->>
->> why not populate vbasedev->regions[index] in vfio_get_all_regions() ?
-> 
-> Good question. I presume it's not possible for us to ever look up a region
-> that has somehow appeared *after* vfio_prepare_device() ?
-> 
-> We'd end up off the end of the array in that case anyway.
 
+--+g98o3/GyoR6TEqM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I was confused. I thought we were caching VFIORegions ...
+On Fri, Apr 04, 2025 at 12:42:33AM -0700, Pinku Deb Nath wrote:
+> Full Unit Access (FUA) is an optimization where a disk write with the
+> flag set will be persisted to disk immediately instead of potentially
+> remaining in the disk's write cache. This commit address the todo task
+> for using pwritev2() with RWF_DSYNC in the thread pool section of
+> raw_co_prw(), if pwritev2 with RWF_DSYNC is available in the host,
+> which is alway for Linux kernel >=3D 4.7. The intent for FUA is indicated
+> with the BDRV_REQ_FUA flag. The old code paths are preserved in case
+> BDRV_REQ_FUA is off or pwritev2() with RWF_DSYNC is not available.
+>=20
+> During testing, I observed that the BDRV_REQ_FUA is always turned on
+> when blk->enable_write_cache is not set in block/block-backend.c, so
+> I commented this section off during testing:
+> https://gitlab.com/qemu-project/qemu/-/blob/master/block/block-backend.c?=
+ref_type=3Dheads#L1432-1434
+>=20
+> Signed-off-by: Pinku Deb Nath <prantoran@gmail.com>
+>=20
+> Update 1:
+>=20
+> The testing with "-t writeback" works for turning on enable_write_cache.
+> I renamed the function to qemu_pwritev_fua() and fixed any typos.
+>=20
+> I moved the handle_aiocb_flush() into the qemu_pwritev_fua() and
+> removed from the previously todo seciont. Initially I thought
+> of only passing aiocb, but then I was not sure whethe I could
+> derive buf from aiocb, so I added arguments for iovec and iovcnt
+> into qemu_pwritev_fua().
+>=20
+> For handling buf in handle_aiocb_rw_linear(), I created iovec
+> and passed its reference. I assumed that there will be only one
+> buffer/iovec, so I passed 1 for iovcnt.
+>=20
+> Signed-off-by: Pinku Deb Nath <prantoran@gmail.com>
+>=20
+> Update 2:
+>=20
+> For non-Linux hosts, I am returning -ENOSYS in the same way for
+> pwritev.
+>=20
+> I changed the signature to add fd, iov, nr_iov, offset separately,
+> with the aiocb pointer at the end. I thought of reconstructing
+> aiocb inside the function but the handle_aiocb_flush() uses
+> (BDRVRawState)aiocb->bs->opaque which I was not sure whether it
+> was used to pass return values upstream.
+> So I decided on passing aiocb pointer as an input argument.
+>=20
+> I was not sure about how git rebase worked with patches, I hope
+> it worked, finger-crossed =F0=9F=98=85
+>=20
+> Signed-off-by: Pinku Deb Nath <prantoran@gmail.com>
+> ---
+>  block/file-posix.c | 59 ++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 47 insertions(+), 12 deletions(-)
 
-Anyway, this is an optimisation and I fail to understand where
-the VFIO_DEVICE_GET_REGION_INFO ioctl is called on a hot path.
+The commit description becomes part of the git log when the commit is
+merged. For the same reasons why changes to patches should be squashed,
+the commit description should also be updated to reflect the latest
+state instead of appending incremental descriptions.
 
-Is it for interrupts ? Please explain.
+In order to indicate what changed since the previous version, you can
+add a changelog below the '---' line. Anything below the '---' line is
+discarded when git-am(1) applies a commit email. For example:
 
-Do you have figures ?
+---
+v3:
+- Changed signature to add fd, iov, nr_iov, ...
 
+v2:
+- Moved handle_aiocb_flush() into qemu_pwritev_fua().
 
-Thanks,
+By doing these things you make it easy for reviewers to see what has
+changed while keeping the git log clean.
 
-C.
+>=20
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 56d1972d15..16e32acedd 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -229,6 +229,7 @@ typedef struct RawPosixAIOData {
+>              unsigned long op;
+>          } zone_mgmt;
+>      };
+> +    BdrvRequestFlags flags;
+>  } RawPosixAIOData;
+> =20
+>  #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+> @@ -1674,6 +1675,20 @@ qemu_pwritev(int fd, const struct iovec *iov, int =
+nr_iov, off_t offset)
+>      return pwritev(fd, iov, nr_iov, offset);
+>  }
+> =20
+> +static ssize_t
+> +qemu_pwritev_fua(int fd, struct iovec *iov, int nr_iov, off_t offset, co=
+nst RawPosixAIOData *aiocb)
+> +{
+> +#ifdef RWF_DSYNC
+> +    return pwritev2(fd, iov, nr_iov, offset, RWF_DSYNC);
+> +#else
+> +    ssize_t len =3D pwritev2(fd, iov, nr_iov, offset, 0);
+> +    if (len =3D=3D 0) {
+> +        len =3D handle_aiocb_flush(aiocb);
+> +    }
+> +    return len;
+> +#endif
+> +}
+> +
+>  #else
+> =20
+>  static bool preadv_present =3D false;
+> @@ -1690,6 +1705,11 @@ qemu_pwritev(int fd, const struct iovec *iov, int =
+nr_iov, off_t offset)
+>      return -ENOSYS;
+>  }
+> =20
+> +static ssize_t
+> +qemu_pwritev_fua(int fd, struct iovec *iov, int nr_iov, off_t offset, co=
+nst RawPosixAIOData *aiocb)
+> +{
+> +    return -ENOSYS;
+> +}
+>  #endif
+> =20
+>  static ssize_t handle_aiocb_rw_vector(RawPosixAIOData *aiocb)
+> @@ -1698,10 +1718,16 @@ static ssize_t handle_aiocb_rw_vector(RawPosixAIO=
+Data *aiocb)
+> =20
+>      len =3D RETRY_ON_EINTR(
+>          (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) ?
+> -            qemu_pwritev(aiocb->aio_fildes,
+> -                           aiocb->io.iov,
+> -                           aiocb->io.niov,
+> -                           aiocb->aio_offset) :
+> +            (aiocb->flags &  BDRV_REQ_FUA) ?
+> +                qemu_pwritev_fua(aiocb->aio_fildes,
+> +                                aiocb->io.iov,
+> +                                aiocb->io.niov,
+> +                                aiocb->aio_offset,
+> +                                aiocb) :
+> +                qemu_pwritev(aiocb->aio_fildes,
+> +                            aiocb->io.iov,
+> +                            aiocb->io.niov,
+> +                            aiocb->aio_offset) :
+>              qemu_preadv(aiocb->aio_fildes,
+>                            aiocb->io.iov,
+>                            aiocb->io.niov,
+> @@ -1727,10 +1753,22 @@ static ssize_t handle_aiocb_rw_linear(RawPosixAIO=
+Data *aiocb, char *buf)
+> =20
+>      while (offset < aiocb->aio_nbytes) {
+>          if (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) {
+> -            len =3D pwrite(aiocb->aio_fildes,
+> -                         (const char *)buf + offset,
+> -                         aiocb->aio_nbytes - offset,
+> -                         aiocb->aio_offset + offset);
+> +            if (aiocb->flags & BDRV_REQ_FUA) {
+> +                struct iovec iov =3D {
+> +                    .iov_base =3D buf,
 
+This should be buf + offset (the same as below)?
 
+> +                    .iov_len =3D aiocb->aio_nbytes - offset,
+> +                };
+> +                len =3D qemu_pwritev_fua(aiocb->aio_fildes,
+> +                                    &iov,
+> +                                    1,
+> +                                    aiocb->aio_offset + offset,
+> +                                    aiocb);
 
+When !CONFIG_PREADV then linear FUA writes will fail because there is no
+-ENOSYS fallback here. Please add a fallback to pwrite() +
+handle_aiocb_flush().
+
+> +            } else {
+> +                len =3D pwrite(aiocb->aio_fildes,
+> +                            (const char *)buf + offset,
+> +                            aiocb->aio_nbytes - offset,
+> +                            aiocb->aio_offset + offset);
+> +            }
+>          } else {
+>              len =3D pread(aiocb->aio_fildes,
+>                          buf + offset,
+> @@ -2539,14 +2577,11 @@ static int coroutine_fn raw_co_prw(BlockDriverSta=
+te *bs, int64_t *offset_ptr,
+>              .iov            =3D qiov->iov,
+>              .niov           =3D qiov->niov,
+>          },
+> +        .flags          =3D flags,
+>      };
+> =20
+>      assert(qiov->size =3D=3D bytes);
+>      ret =3D raw_thread_pool_submit(handle_aiocb_rw, &acb);
+> -    if (ret =3D=3D 0 && (flags & BDRV_REQ_FUA)) {
+> -        /* TODO Use pwritev2() instead if it's available */
+> -        ret =3D raw_co_flush_to_disk(bs);
+> -    }
+>      goto out; /* Avoid the compiler err of unused label */
+> =20
+>  out:
+> --=20
+> 2.43.0
+>=20
+
+--+g98o3/GyoR6TEqM
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEyBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfv9SUACgkQnKSrs4Gr
+c8gQdwf2KO7neAbqlphZrJ38i37xDum10OylHVwfVh76KIbrpU1+IgqUkJL/66T/
+fXPIONlQnJp57+0G9cUKkoCxZJLQuKzHJzIp+9Mf8TBwQSspF2ho7zRLv1Q1M09X
+i11g/d8PNlgQelmPE73m4JeZSZwnGk1eb+O2lemGugN2Xah1jXx6+qq7j0H7pKY2
+T20h/Vn2I6JDDxbwZc11WmgcYcm7xfomLJD6iKBkW5sEBZSM/irkWiaSpqHWIciZ
+O4ERXiu/cj/3bGjiSXeXZxpIXbeyOqYC0sYvWjXWd5NU4pviWmnbC3w9mCnoyNje
+9f1w1fQnymyWB3hfWyJ6Dk83RC1R
+=3Jsm
+-----END PGP SIGNATURE-----
+
+--+g98o3/GyoR6TEqM--
 
 
