@@ -4,85 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D75C36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 10:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EAE8C36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 10:27:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0eFn-0003wv-CV; Fri, 04 Apr 2025 06:26:31 -0400
+	id 1u0eGL-00042K-Ma; Fri, 04 Apr 2025 06:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1u0eFX-0003wD-6J
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 06:26:11 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dominik.b.czarnota@gmail.com>)
- id 1u0eFV-0002E7-2P
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 06:26:10 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-ac2a81e41e3so341962866b.1
- for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 03:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743762367; x=1744367167; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SWG+87yurGrfc0u6pBf7gKgwAYM8PyLICW+shUtPocY=;
- b=NtmrL4H9PZVul0CK5Tw1ihkB4FZCBuMmhoHLFIXcW5c1h9rAhfkCcfAbzi75eZCEcT
- AUFGixEvfXI9MSsOOoTMUWkibvITnXyEVqWmk1ks6vewaA9+TJCb0z9UudCUuaUd8Pl9
- t2nhYst6KcLXB1seYGk2puFYW7pXWlwsSe39/J8+btqxwkdcaHkRVm1dQsHtO3m330ua
- kEUO4k0muBIVr+L2yrbMmQrzuKw+vn9r6luUyuknOLLYBvTOygiUGIWfD9CBlpYZaeei
- 4K7b9ZRTs+h6h0ghTYMv3UBe0q0W+lSeD5r0AIpF9BWodUYuwHrn1VB7fQAGEICO+Muv
- +v/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743762367; x=1744367167;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SWG+87yurGrfc0u6pBf7gKgwAYM8PyLICW+shUtPocY=;
- b=WF09IAdvSDJMJi0Dg0LnnP6udBVA2fxEyPBRiRO479zk7O0Omh1gX5rKe3yFBV6kIP
- UqMeyzUX297GQR8YGsebrvjIGapPOnWdR6Tkvyh5fTnTzOsxSqZvhc0IPS2KdcDbHBRP
- HegMfFlAJBK1TlRRjFHZPJC/XFuPM2xbhqRPg8zfq+x77ptjYBKNc9ZGTGDW9cM3LJOC
- EkYIAk7CJE6HaeeQQtMIM4jzDKRA76ZLohOO/W6t4cEVhVqMgNfgQsCkx9kpf6zbUeXe
- PlseBPXDxL7h++PCw7yOaQg1IhY0Av8ebnPjF9NUFERHE2WYFeM/AbPQwkGrBxpiafuO
- xmyA==
-X-Gm-Message-State: AOJu0YwB1/F0ZRLyc2OTrm4S9qIy/f6LKXSYHflAgNn8z57/FC0miIqg
- jEIQOhFJVFK0HHmMsDK7T/3xS7vxHm5CC+Aq7KNlxNpqefAwNDWDq4Zeaavpn3k=
-X-Gm-Gg: ASbGncsqUulJUMERtf8PWr70P/ao3aJskze7YemdEF1EePwGOl4/hVBPwF+5lQ02OLM
- D1/Ui8BeS//ZAc3G6WM8lk8c7Md+l52OZ5dWsNU4pKgqPwd4+8W4OKyoD0lvPSAK+rZ8omBb11N
- kwo0U11gR0xxxljNOdSJMHX6Z0jcXdIsPBvG/133JDRHpyW06q5dEPA6t/6XOwqP9PHHXr9uotW
- hV9X9F7PkdT1b4rcK+niQjOgnIMVpmyUzWG+O94ujyAaHIctjdpPJRB+LKnpnPEBhAnKEuqj7zz
- XtqRiquXlDZpl7c7rC/A13aXX53hFuxLvRlDIlL/C6iImLgpCr5LQxpMVsZ2fOExfuZAobi3Anc
- AXNU=
-X-Google-Smtp-Source: AGHT+IGBoyLfFXW9J50jXlV0WNnuiyGsTCLlmGEcL+5219Ymwq+h5h6tZPYtY6AFCQ747WUyBhhTyA==
-X-Received: by 2002:a17:907:94cf:b0:abf:7453:1f1a with SMTP id
- a640c23a62f3a-ac7d19a566bmr229188066b.36.1743762366376; 
- Fri, 04 Apr 2025 03:26:06 -0700 (PDT)
-Received: from localhost.localdomain ([91.90.187.210])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7c0186250sm225882066b.155.2025.04.04.03.26.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 04 Apr 2025 03:26:05 -0700 (PDT)
-From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, gustavo.romero@linaro.org,
- richard.henderson@linaro.org, philmd@linaro.org,
- manos.pitsidianakis@linaro.org,
- Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
- Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-Subject: [PATCH] gdbstub: Implement qqemu.Pid packet
-Date: Fri,  4 Apr 2025 12:26:03 +0200
-Message-Id: <20250404102603.59936-1-dominik.b.czarnota@gmail.com>
-X-Mailer: git-send-email 2.30.2
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u0eGF-00041s-5U
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 06:26:56 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u0eGC-0002Fm-Lv
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 06:26:54 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:600c:0:640:a431:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 44F3660C18;
+ Fri,  4 Apr 2025 13:26:44 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:1220::1:20] (unknown
+ [2a02:6b8:b081:1220::1:20])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id gQWr210FaeA0-2nArFBjh; Fri, 04 Apr 2025 13:26:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1743762403;
+ bh=oVZA6stVnbBXVNJ1+8k4f1j+5d/J0Yh6J5nPaX/oEU8=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=lSSHZFpVSV+wL1ja4kuX4FDI1aPjhc1Zl/LTMwMlCgVimHsaXQ+TNYenE+351neA9
+ zyLvTc02b2oKgx6Tt6h/fdGXrIf7VwA/e/TQqysYnIuHAxxTbCwGHIgY7ucvruAXT+
+ eEYJnoae1x0BXFY1X4nHDJ5HvMT137mA/eGHidRI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <18763620-2bd9-47a6-a5d4-ff61663bae9a@yandex-team.ru>
+Date: Fri, 4 Apr 2025 13:26:42 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=dominik.b.czarnota@gmail.com; helo=mail-ej1-x636.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] [for-10.1] virtio: add VIRTQUEUE_ERROR QAPI event
+To: Markus Armbruster <armbru@redhat.com>
+Cc: mst@redhat.com, sgarzare@redhat.com, dave@treblig.org, eblake@redhat.com, 
+ pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ qemu-devel@nongnu.org, Denis Plotnikov <den-plotnikov@yandex-team.ru>
+References: <20250401170731.121336-1-vsementsov@yandex-team.ru>
+ <878qogqv8u.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <878qogqv8u.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,55 +80,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support for the `qqemu.Pid` packet to the qemu
-gdbstub which can be used by clients to get the QEMU process PID.
+On 04.04.25 09:46, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> For now we only log the vhost device error, when virtqueue is actually
+>> stopped. Let's add a QAPI event, which makes possible:
+>>
+>>   - collect statistics of such errors
+>>   - make immediate actions: take core dumps or do some other debugging
+>>   - inform the user through a management API or UI, so that (s)he can
+>>    react somehow, e.g. reset the device driver in the guest or even
+>>    build up some automation to do so
+>>
+>> Note that basically every inconsistency discovered during virtqueue
+>> processing results in a silent virtqueue stop.  The guest then just
+>> sees the requests getting stuck somewhere in the device for no visible
+>> reason.  This event provides a means to inform the management layer of
+>> this situation in a timely fashion.
+>>
+>> The event could be reused for some other virtqueue problems (not only
+>> for vhost devices) in future. For this it gets a generic name and
+>> structure.
+>>
+>> We keep original VHOST_OPS_DEBUG(), to keep original debug output as is
+>> here, it's not the only call to VHOST_OPS_DEBUG in the file.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> Reviewed-by: Denis Plotnikov <den-plotnikov@yandex-team.ru>
+>> ---
+>>
+>> v5: resend, update version in QAPI to 10.1
+>>      drop a-b by Markus (too much time passed, the context could
+>>      changed. Markus, is the patch still OK?)
+> 
+> Happy to take another look :)
+> 
+>>   hw/virtio/vhost.c | 12 +++++++++---
+>>   monitor/monitor.c | 10 ++++++++++
+>>   qapi/qdev.json    | 32 ++++++++++++++++++++++++++++++++
+>>   3 files changed, 51 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> index 6aa72fd434..0b205cef73 100644
+>> --- a/hw/virtio/vhost.c
+>> +++ b/hw/virtio/vhost.c
+>> @@ -15,6 +15,7 @@
+>>   
+>>   #include "qemu/osdep.h"
+>>   #include "qapi/error.h"
+>> +#include "qapi/qapi-events-qdev.h"
+>>   #include "hw/virtio/vhost.h"
+>>   #include "qemu/atomic.h"
+>>   #include "qemu/range.h"
+>> @@ -1442,11 +1443,16 @@ static void vhost_virtqueue_error_notifier(EventNotifier *n)
+>>       struct vhost_virtqueue *vq = container_of(n, struct vhost_virtqueue,
+>>                                                 error_notifier);
+>>       struct vhost_dev *dev = vq->dev;
+>> -    int index = vq - dev->vqs;
+>>   
+>>       if (event_notifier_test_and_clear(n) && dev->vdev) {
+>> -        VHOST_OPS_DEBUG(-EINVAL,  "vhost vring error in virtqueue %d",
+>> -                        dev->vq_index + index);
+>> +        int ind = vq - dev->vqs + dev->vq_index;
+>> +        DeviceState *ds = &dev->vdev->parent_obj;
+>> +
+>> +        VHOST_OPS_DEBUG(-EINVAL,  "vhost vring error in virtqueue %d", ind);
+>> +        qapi_event_send_virtqueue_error(ds->id, ds->canonical_path, ind,
+>> +                                        VIRTQUEUE_ERROR_VHOST_VRING_ERROR,
+>> +                                        "vhost reported failure through vring "
+>> +                                        "error fd");
+>>       }
+>>   }
+>>   
+>> diff --git a/monitor/monitor.c b/monitor/monitor.c
+>> index c5a5d30877..1296a9207e 100644
+>> --- a/monitor/monitor.c
+>> +++ b/monitor/monitor.c
+>> @@ -313,6 +313,7 @@ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+>>       [QAPI_EVENT_BALLOON_CHANGE]    = { 1000 * SCALE_MS },
+>>       [QAPI_EVENT_QUORUM_REPORT_BAD] = { 1000 * SCALE_MS },
+>>       [QAPI_EVENT_QUORUM_FAILURE]    = { 1000 * SCALE_MS },
+>> +    [QAPI_EVENT_VIRTQUEUE_ERROR]   = { 1000 * SCALE_MS },
+>>       [QAPI_EVENT_VSERPORT_CHANGE]   = { 1000 * SCALE_MS },
+>>       [QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE] = { 1000 * SCALE_MS },
+>>       [QAPI_EVENT_HV_BALLOON_STATUS_REPORT] = { 1000 * SCALE_MS },
+>> @@ -499,6 +500,10 @@ static unsigned int qapi_event_throttle_hash(const void *key)
+>>           hash += g_str_hash(qdict_get_str(evstate->data, "qom-path"));
+>>       }
+>>   
+>> +    if (evstate->event == QAPI_EVENT_VIRTQUEUE_ERROR) {
+>> +        hash += g_str_hash(qdict_get_str(evstate->data, "device"));
+> 
+> Isn't @device optional?  Should you use @qom-path instead?
 
-This is useful for plugins like Pwndbg [0] or gdb-pt-dump in order to
-inspect the QEMU process memory through the /proc/self/{maps,mem}
-interfaces. Without this feature, they have to rely on doing an
-unreliable pgrep/ps output processing.
+Yes, I'm thinking about it too. Maybe, drop the "device" field from the event at all, and keep only qom-path? Years passed since movement to use qom paths..
 
-This patch has been developed by Patryk, who I included in the
-Co-authored-by and who asked me to send the patch.
+> 
+>> +    }
+>> +
+>>       return hash;
+>>   }
+>>   
+>> @@ -527,6 +532,11 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
+>>                          qdict_get_str(evb->data, "qom-path"));
+>>       }
+>>   
+>> +    if (eva->event == QAPI_EVENT_VIRTQUEUE_ERROR) {
+>> +        return !strcmp(qdict_get_str(eva->data, "device"),
+>> +                       qdict_get_str(evb->data, "device"));
+> 
+> Likewise.
+> 
+>> +    }
+>> +
+>>       return TRUE;
+>>   }
+>>   
+>> diff --git a/qapi/qdev.json b/qapi/qdev.json
+>> index 25cbcf977b..2d20f4777e 100644
+>> --- a/qapi/qdev.json
+>> +++ b/qapi/qdev.json
+>> @@ -187,3 +187,35 @@
+>>   { 'command': 'device-sync-config',
+>>     'features': [ 'unstable' ],
+>>     'data': {'id': 'str'} }
+>> +
+>> +##
+>> +# @VirtqueueError:
+>> +#
+>> +# @vhost-vring-error: Vhost device reported failure through
+>> +#     through vring error fd.
+> 
+> One "through" too many.
+> 
+> I'm not quite sure I understand what you're trying to express.  Is it
+> "the vhost device has communicated failure via the vring error file
+> descriptor"?
 
-[0] https://github.com/pwndbg/pwndbg
-[1] https://github.com/martinradev/gdb-pt-dump
+Yes. Will use your wording.
 
-Co-authored-by: Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
----
- gdbstub/gdbstub.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+> 
+> I know next to nothing about vhost devices...
+> 
+>> +#
+>> +# Since: 10.1
+>> +##
+>> +{ 'enum': 'VirtqueueError',
+>> +  'data': [ 'vhost-vring-error' ] }
+>> +
+>> +##
+>> +# @VIRTQUEUE_ERROR:
+>> +#
+>> +# Emitted when a device virtqueue fails in runtime.
+> 
+> I think it's "at runtime".
+> 
+> Can a device have more than one virtqueue?
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 282e13e163..a077c2c5ed 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1746,6 +1746,12 @@ static void handle_query_qemu_supported(GArray *params, void *user_ctx)
-     gdb_put_strbuf();
- }
- 
-+static void handle_query_qemu_pid(GArray *params, void *user_ctx)
-+{
-+    g_string_printf(gdbserver_state.str_buf, "F%x", getpid());
-+    gdb_put_strbuf();
-+}
-+
- static const GdbCmdParseEntry gdb_gen_query_set_common_table[] = {
-     /* Order is important if has same prefix */
-     {
-@@ -1902,6 +1908,10 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
-         .handler = handle_query_qemu_supported,
-         .cmd = "qemu.Supported",
-     },
-+    {
-+        .handler = handle_query_qemu_pid,
-+        .cmd = "qemu.Pid",
-+    },
- #ifndef CONFIG_USER_ONLY
-     {
-         .handler = gdb_handle_query_qemu_phy_mem_mode,
+Yes. And event has "virtqueue": "int" for it.
+
+> 
+>> +#
+>> +# @device: the device's ID if it has one
+>> +#
+>> +# @path: the device's QOM path
+> 
+> I agree with your follow-up: name it @qom-path.
+> 
+>> +#
+>> +# @virtqueue: virtqueue index
+> 
+> Bear with me...  What's a virtqueue index?
+
+sequence number of virtqueue of the vhost device
+
+
+> 
+>> +#
+>> +# @error: error identifier
+>> +#
+>> +# @description: human readable description
+>> +#
+>> +# Since: 10.1
+>> +##
+>> +{ 'event': 'VIRTQUEUE_ERROR',
+>> + 'data': { '*device': 'str', 'path': 'str', 'virtqueue': 'int',
+>> +            'error': 'VirtqueueError', 'description': 'str'} }
+> 
+
 -- 
-2.30.2
+Best regards,
+Vladimir
 
 
