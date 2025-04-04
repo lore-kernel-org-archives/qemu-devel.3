@@ -4,56 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8018FC36010
-	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 11:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2143EC36010
+	for <qemu-devel@archiver.kernel.org>; Fri,  4 Apr 2025 11:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0fJu-0004NY-Oe; Fri, 04 Apr 2025 07:34:49 -0400
+	id 1u0fS1-0005vy-Ay; Fri, 04 Apr 2025 07:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u0fJj-0004M4-6H
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 07:34:36 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u0fRy-0005v8-6Z
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 07:43:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u0fJh-00006c-4l
- for qemu-devel@nongnu.org; Fri, 04 Apr 2025 07:34:34 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CD8054E6004;
- Fri, 04 Apr 2025 13:34:29 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id aXytGgZggksN; Fri,  4 Apr 2025 13:34:27 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C0E464E6010; Fri, 04 Apr 2025 13:34:27 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BEADA74577C;
- Fri, 04 Apr 2025 13:34:27 +0200 (CEST)
-Date: Fri, 4 Apr 2025 13:34:27 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-cc: qemu-devel@nongnu.org, Volker Ruemelin <vr_qemu@t-online.de>, 
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH] alsaaudio: Set try-poll to false by default
-In-Reply-To: <37909074.vkC8U9mzk0@silver>
-Message-ID: <abecc55b-f032-03e3-a9f3-628b1f8f7e5d@eik.bme.hu>
-References: <20250316002046.D066A4E6004@zero.eik.bme.hu>
- <2118992.kbFERA6akJ@silver> <alpine.LMD.2.03.2503311503200.6402@eik.bme.hu>
- <37909074.vkC8U9mzk0@silver>
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u0fRw-0001gx-Dw
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 07:43:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743766983;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tEG4skelI4XfkGUXBIylmZjaKJ8YH4MkdNVUF5MA/NU=;
+ b=S5lprv+3jY43/qETxvMIgIuR9RPGWKfdTPP455RuYat9t4qpLHsnXV0YByD6iVTcTSb0db
+ QQrS4MqwdihNHsFE/rwfWSnwmXaVdz1Y3h0CDdmP7byzonkZrtH54/SBx7pIM4mU4CvuNV
+ ATNksWpBI9RopMPX/Wq/CnG2UNyiUhM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-Skth--Q-Me-YWwynuA79Lw-1; Fri, 04 Apr 2025 07:43:00 -0400
+X-MC-Unique: Skth--Q-Me-YWwynuA79Lw-1
+X-Mimecast-MFC-AGG-ID: Skth--Q-Me-YWwynuA79Lw_1743766979
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-391492acb59so1196935f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 04:43:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743766979; x=1744371779;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tEG4skelI4XfkGUXBIylmZjaKJ8YH4MkdNVUF5MA/NU=;
+ b=OyrBqib2dBZk/9akl+X1Vzo3raaanoX0WTJoUT51stgnkzn2IzO6KzGnTHwL3d/wA8
+ SzQJAmZ9qUg+59IVH/YlTDLT9J7aRP1vAVElZQvIsFyMs5/7zfPmJocLSvU6pMH63sbi
+ yEHPCczH1PckbmLn8Xusm5Mv5LHz2YAFfpXukK+Jd4HNSlZCl67qcALRcy7at/GK2ZXH
+ Ru1J1qcy4zeRBxcTAcq0UPw516+tGxsiEuSw806GgF27hliLr/fHtvURJQIJA1aya7zO
+ d0Cbz1MTIvOnmaw1vdNAqvgAyiYOZvVSulPonbo1ZP9DNYqHlemzSq0dUuXb4weRR8No
+ 6rtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1nMiIkiZ6L8G6M5wokU059yXNc7I6ACgRcVLYDoyAWUmSL/Sbuory5wjSEeFiDwAaNdZLhesw1jJT@nongnu.org
+X-Gm-Message-State: AOJu0YzC2aVBeaSOqF4yRqxdhaFNmDWowPjPsPKGeAFzeux9okLy59O4
+ Tg/Ps5MTSV6tbXyf6Bof5GfpaKPMX6CPLBSGHSZdsIumodTKr9ZS7FFB1jXTBqS8duA3UCRDmc0
+ DOcfLphCjNkHnVwYB4H52EiQIPKyHrQ+fzwOYS6tbvxn4jFSeVS0Q
+X-Gm-Gg: ASbGncucN+XLtwi8CUt6LlpyidyTE10CuOs2LR328lpc4Q8hsLZXSnyCqF/X/Pskqm4
+ 29s+io3Irca3Y47RfiTfVcmK5Gc+ZNS4x4Aqjdd3zioyR2OD7BmOPjmO8SIjdLEbFTvyHWhLMKI
+ s7LWYa10jb9gWtLu1fcw7GKZ3R2SyBS1kQiDkU45p469hH2FKIvSGaxQjpIIumRqjHvLqUbCHva
+ FFri6g51byf4LYd/SP8RYrATPNYau+0xW1Nz/rWp0Tt+ecDOmIgZrxhbF6c3gDXdkDReXcFBGDI
+ /gmHLITuIgBbI3vqMfny/NxL+x/RBBuRgq5nGVYBqj/oiwNfmWA4raJL4awx1YaWdy077JKY0N7
+ gE6t2/mTsZ91uZqFmdZB1xkfcCqJCXFLctfKmEH/eGVXC
+X-Received: by 2002:a05:6000:40db:b0:39c:1257:ccae with SMTP id
+ ffacd0b85a97d-39d14765d70mr1939086f8f.57.1743766979297; 
+ Fri, 04 Apr 2025 04:42:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIXppTqUAHqC2gQ44iKxLEfZMABw5JhXa6id6jjP1DMO3K1IBEcCDsv0HZPyLjgNB/btRQUQ==
+X-Received: by 2002:a05:6000:40db:b0:39c:1257:ccae with SMTP id
+ ffacd0b85a97d-39d14765d70mr1939066f8f.57.1743766978941; 
+ Fri, 04 Apr 2025 04:42:58 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d74f:9d66:d61a:f3cf:3494:9981?
+ (p200300cfd74f9d66d61af3cf34949981.dip0.t-ipconnect.de.
+ [2003:cf:d74f:9d66:d61a:f3cf:3494:9981])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c301a7045sm4213410f8f.39.2025.04.04.04.42.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Apr 2025 04:42:58 -0700 (PDT)
+Message-ID: <de744eb3-ed52-4749-95cc-52dd2612b09a@redhat.com>
+Date: Fri, 4 Apr 2025 13:42:57 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1699519478-1743766467=:22764"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/15] fuse: Manually process requests (without libfuse)
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+References: <20250325160529.117543-1-hreitz@redhat.com>
+ <20250325160655.119407-10-hreitz@redhat.com>
+ <pvipn7y6bo63qthkluaxinsz6cnlp4ld5frdhjcuwla2sknq25@sxvxxkhsx4zv>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <pvipn7y6bo63qthkluaxinsz6cnlp4ld5frdhjcuwla2sknq25@sxvxxkhsx4zv>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.028,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,94 +114,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Sorry, replied too early. :)
 
---3866299591-1699519478-1743766467=:22764
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 4 Apr 2025, Christian Schoenebeck wrote:
-> On Monday, March 31, 2025 3:05:24 PM CEST BALATON Zoltan wrote:
->> On Sun, 23 Mar 2025, Christian Schoenebeck wrote:
->>> On Sunday, March 16, 2025 1:20:46 AM CET BALATON Zoltan wrote:
->>>> Quoting Volker Rümelin: "try-poll=on tells the ALSA backend to try to
->>>> use an event loop instead of the audio timer. This works most of the
->>>> time. But the poll event handler in the ALSA backend has a bug. For
->>>> example, if the guest can't provide enough audio frames in time, the
->>>> ALSA buffer is only partly full and the event handler will be called
->>>> again and again on every iteration of the main loop. This increases
->>>> the processor load and the guest has less processor time to provide
->>>> new audio frames in time. I have two examples where a guest can't
->>>> recover from this situation and the guest seems to hang."
->>>>
->>>> One reproducer I've found is booting MorphOS demo iso on
->>>> qemu-system-ppc -machine pegasos2 -audio alsa which should play a
->>>> startup sound but instead it freezes. Even when it does not hang it
->>>> plays choppy sound. Volker suggested using command line to set
->>>> try-poll=off saying: "The try-poll=off arguments are typically
->>>> necessary, because the alsa backend has a design issue with
->>>> try-poll=on. If the guest can't provide enough audio frames, it's
->>>> really unhelpful to ask for new audio frames on every main loop
->>>> iteration until the guest can provide enough audio frames. Timer based
->>>> playback doesn't have that problem."
->>>>
->>>> But users cannot easily find this option and having a non-working
->>>> default is really unhelpful so to make life easier just set it to
->>>> false by default which works until the issue with the alsa backend can
->>>> be fixed.
->>>>
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>> This fixes my issue but if somebody has a better fix I'm open to that
->>>> too.
->>>>
->>>>  audio/alsaaudio.c | 2 +-
->>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
->>>> index cacae1ea59..9b6c01c0ef 100644
->>>> --- a/audio/alsaaudio.c
->>>> +++ b/audio/alsaaudio.c
->>>> @@ -899,7 +899,7 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
->>>>  static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
->>>>  {
->>>>      if (!apdo->has_try_poll) {
->>>> -        apdo->try_poll = true;
->>>> +        apdo->try_poll = false;
->>>>          apdo->has_try_poll = true;
->>>>      }
->>>>  }
->>>>
->>>
->>> Correct me if I am wrong, but AFAICS if polling is not used then no state
->>> changes would be handled, no? At least I don't see any snd_pcm_state() call
->>> outside of alsa_poll_handler().
+On 01.04.25 16:35, Eric Blake wrote:
+> On Tue, Mar 25, 2025 at 05:06:51PM +0100, Hanna Czenczek wrote:
+>> Manually read requests from the /dev/fuse FD and process them, without
+>> using libfuse.  This allows us to safely add parallel request processing
+>> in coroutines later, without having to worry about libfuse internals.
+>> (Technically, we already have exactly that problem with
+>> read_from_fuse_export()/read_from_fuse_fd() nesting.)
 >>
->> I have no idea but this fixes the problem (and does the same that can be
->> also done from command line but nobody can find that command line option)
->> so unless somebody has a better idea could this be merged as a fix for
->> now?
+>> We will continue to use libfuse for mounting the filesystem; fusermount3
+>> is a effectively a helper program of libfuse, so it should know best how
+>> to interact with it.  (Doing it manually without libfuse, while doable,
+>> is a bit of a pain, and it is not clear to me how stable the "protocol"
+>> actually is.)
+>>
+>> @@ -247,6 +268,14 @@ static int fuse_export_create(BlockExport *blk_exp,
+>>   
+>>       g_hash_table_insert(exports, g_strdup(exp->mountpoint), NULL);
+>>   
+>> +    exp->fuse_fd = fuse_session_fd(exp->fuse_session);
+>> +    ret = fcntl(exp->fuse_fd, F_SETFL, O_NONBLOCK);
+> fctnl(F_SETFL) should be used in a read-modify-write pattern with
+> F_GETFL (otherwise, you are nuking any other flags that might have
+> been important).
 >
-> Well, I understand that if fixes the misbehaviour you encountered. But how
-> helpful would it be if it then breaks behaviour for other people instead?
+> See also block/file-posix.c:fcntl_setfl.  Maybe we should hoist that
+> into a common helper in util/osdep.c?
 
-What behaviour would it break and how?
+Sounds good.
 
-> I think it would be better to add a 2nd patch that would handle state changes
-> in callback mode. That would satisfy both groups of people. AFAICS
-> snd_pcm_state() can be called both in polling mode and callback mode.
+>>   /**
+>> - * Handle client reads from the exported image.
+>> + * Handle client reads from the exported image.  Allocates *bufptr and reads
+>> + * data from the block device into that buffer.
+> Worth calling out tht *bufptr must be freed with qemu_vfree...
 
-I can't do that because I don't quite know neither alsa nor audio in QEMU 
-so I have no idea what to do. Can you give more clues?
+Yep, Iâ€™ll add it.
 
-> Just my 2 cents. Of course it's up to Gerd to decide.
+Hanna
 
-If you know it would break something I agree it should be fixed and I can 
-try but I could not reproduce any breakage and most people likely use 
-other audio backends so unlikely to encounter problems with alsa.
-
-Regards,
-BALATON Zoltan
---3866299591-1699519478-1743766467=:22764--
 
