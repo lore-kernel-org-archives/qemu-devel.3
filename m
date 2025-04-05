@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 023E5C3601A
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6347C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u16AG-0001Pw-TJ; Sat, 05 Apr 2025 12:14:36 -0400
+	id 1u16A0-0000l7-HY; Sat, 05 Apr 2025 12:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u16AD-0001Cc-LG
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:14:33 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u169u-0000hZ-Df
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:14:15 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u16AB-0005Is-Se
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:14:33 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cfe574976so20278825e9.1
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:14:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u169s-0005Gq-KN
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:14:13 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-736b0c68092so2367104b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743869670; x=1744474470; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WxLf1qzYlIt55rERNGlTsLbACYfcGvHkqll/jBxBAw0=;
- b=Ez0pbWsaUQeVmAt9Uk40HXZpmgmhQvKn/9W+E3QOOzU7E85awwFswKecp8WdOe3ykF
- fimhQrxZJAjynvs9ebJfUx4VHZQt0QHj7SktMywuMPSRA31iAnX7AkjISByavi16QMbQ
- rDnyIvqyHZFtxQXzFGY77mPv59eO2VNPTfYBTrNbhn+KkxQsuF4Yo8gJ1gyo2nSXWgW9
- hngaviN7jami2TwDSWx15wUErGX73TChkgmrDGj5cm5hDN1cJLN4ZcoB31XayWtUYhzr
- iWipUEeuqc+te+idQGFfMiqjgECGHkRB1jmBRmeBjyall/SLv96lSy8uVIoHqxGkxLct
- oGXg==
+ d=linaro.org; s=google; t=1743869651; x=1744474451; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WUvLIuT68NO5JZeX3ooW0QFo16CIijJ53LzeeHsOfaI=;
+ b=bw+s/m05k0T/EEtqGJEbcjHMmKii+t5uc1hs6BemfliRFrkHmxpDDXwiIbPRV/qL6R
+ sRfwjS7gCFfyogfl7zcHITMgT+WJHQE/WARnLz5kh5gXyJLP81rQqreeKAouZhv9WZY1
+ x//lS0oYH09Yg4HPmpjdTxGcGD1v2QyZtiTPNcfDIpCUDYHq0cHS4gFT+9Cdw/Zjg2xG
+ 74iyMbatwbcsV8jzuRKrVr/oQHSuXfEBJ6F1gNPnFZUcWGdHqDjx3AWNe5F7ym/KDv1G
+ 3ClFAIrgRmXhlnL+bpl50Yx9lGGzRxAVm8WnAOb2r2YcVLtuPAVv2YW93DnXtfOux84Z
+ wTzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743869670; x=1744474470;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WxLf1qzYlIt55rERNGlTsLbACYfcGvHkqll/jBxBAw0=;
- b=VY+Y/pMS/P+dpywdIYy/Z5SrEVBZoq9U0Mdb+hfBUvxH6CO1agv3EXRSrMZSoE8jT7
- 4NiGUaGfJGyQZgz78KzAYSPy8PUvZjonBdnqeX7mUzJECglTOkoBQ0y4vRkk5Ng7W9Tt
- EaEUfqJrQfA6WeKB9k9F70xEx2wOa0X/E2zCrzW/g3B3G11PzRSISe6m/IhEteGuowLP
- TVsvLL9kDS2iyYuElGNX9KYRW2goWR8MS8mpZ0y4Zgx0mY56m4wBTo/J2KbltmpV8kMz
- wcCzoOR2sY3H7G4hydfFwVOI+L/FeEcXqi6gYBvA+4YLOwPjNOo1dudWZvrmTv7qMwRq
- f9Iw==
-X-Gm-Message-State: AOJu0Yxdpoatl3gtJhp1oYLRtJdaVKFtMRCIkpoXIbMYW8/4uvLLy9Yo
- Bl49xqyGGga0nnxBkCzJTCrYScjbkpaPE6LcfCifr0gJT81Zm/X5hYQKUKk54PYI4Eauyf8sxDz
- W
-X-Gm-Gg: ASbGncuzyx++Tns9SFqvXNSSLS7A8OQZOl2SU7MrIktw0B+rW0yVNCT77KqIk++mA/t
- wgzHgGLXXPj1BfgQykRJ6/3TAOqAoNggwjFhjfGSCtkw8A2FHn8pMKu21MVIiQqDlsx4bPdIqzn
- kC0AE9FgWjH1VzKpmbvy2YTkjnDl8HpEJLwsB4eMjutfwxa7iLx8eDPCezKtQVRW2dwhJJgtBlx
- YNHNSJlUHTVNDGirCuKZ7GB3i9oiDYxXQR9vNmCfeTkJ48KN9iV1SBS97Cx8LUIT5TtyGvK4e4H
- NCd/BVkkHsKbvBygbf9ZYIDrSzwnSjIE0qSA57703JcbuSaIvmYO+XGDHBhLAAll98JwJtSjHsS
- 4twYYH8QYnIa8SG+K22B4TumJ
-X-Google-Smtp-Source: AGHT+IHwMl71qxKC7xyYfvRdL+hL2VXjUKCRU0Gacm10ZstFUEus151D3Ek3ipHqZmceQFGwUibwUg==
-X-Received: by 2002:a05:600c:b89:b0:43d:7413:cb3e with SMTP id
- 5b1f17b1804b1-43ecf81bb90mr61366455e9.1.1743869669840; 
- Sat, 05 Apr 2025 09:14:29 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1630de9sm79905905e9.1.2025.04.05.09.14.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 05 Apr 2025 09:14:28 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PATCH-for-10.1 v4 14/16] tcg: Convert TCGState::mttcg_enabled to
- TriState
-Date: Sat,  5 Apr 2025 18:13:18 +0200
-Message-ID: <20250405161320.76854-15-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250405161320.76854-1-philmd@linaro.org>
-References: <20250405161320.76854-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1743869651; x=1744474451;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WUvLIuT68NO5JZeX3ooW0QFo16CIijJ53LzeeHsOfaI=;
+ b=tfNBb+3f8a5qNUOKwo2F3eMqBKxlRjTa19jwVKLb34tEWVGaytNCm+r5NoL6K2DbWb
+ HskAjE/bdUZWJvsHTZrIXC7G+i+Uka/Okq3pnD8Yk/FO2NwQL7BZIE4H1xT/9zsu+xgu
+ Rnsx196qTbQeOlIwAeta6Xaqzz8Gu9uroAuvyPLnH/XEAXT6vaZ6Q8u5nbUTr00ytWmW
+ k5mAzXprhoxrx1CAa734roZZOsMNqrHDwIQal0PXMFZee9QznKvJ5AWw9q2OK8Zk8CQZ
+ CP20nmRfhPp2MD44FmZQhAxxrlGwWxGqCYC2FpgK7IDYr6fpvlxWqVXVJxs1GXYZAYDC
+ y9Aw==
+X-Gm-Message-State: AOJu0YwS7J6ebfCxKyT8z1BRgyeYhiioYeOJAO8iioCnOu6Hxrq8hOQE
+ BrYqo5hbAsxE5mtoYGm1dBRg8espf1dNpt9LsnMN2Hr32+9ikVlDSmtD4ivJ4oeYeBfG+lzHUki
+ D
+X-Gm-Gg: ASbGncuDEqMyxzkFOLtXxFJ5L0koHd+ps6wZqPZqp+uSRIvYaf85tvAvTWcbJJjwQmF
+ FlMewDF/Tg1R8yONgjrDDyG0PAa1um6xq+IKaUbUcSxzLtAQ3LKbXPxJPoQIVw/GoFNRaQiK4oQ
+ AeG9OBmyJ4Bh2DOfehLBQAgmugaCOb16ixOyDNwu5eWZ0UkPlaEV3Yu1w/KhTOGRpK9MGhGuz/Y
+ wyE/99bqL1OYTGklSpptFqTNDB2RW8Rk47Quobh3ON7CR9Cw1nqDGBrECWlB4KYLxoTzEVmy5kd
+ kZ+2w66XwWpmsHkKNs7E64a/nxhP5kolsegGj/sBPI61xQ7F3mOQea0tC2yGskUl
+X-Google-Smtp-Source: AGHT+IGn3KtX1V4nKSTIjFV8DmzpuCo8/1ACJT/vvmU6drjS7+iF4HGOJFh1h8xzXBOh3Zk6CWdqiw==
+X-Received: by 2002:a05:6a21:9201:b0:1f3:36f7:c0d2 with SMTP id
+ adf61e73a8af0-20104769bb7mr11258401637.41.1743869651286; 
+ Sat, 05 Apr 2025 09:14:11 -0700 (PDT)
+Received: from [192.168.122.15] ([173.164.107.234])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d97d1b87sm5605096b3a.16.2025.04.05.09.14.10
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 05 Apr 2025 09:14:10 -0700 (PDT)
+Message-ID: <71f65b7b-0850-4ffe-8efe-1aa15e75ab9e@linaro.org>
+Date: Sat, 5 Apr 2025 09:14:09 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 3/9] target/arm: Remove use of TARGET_AARCH64 in
+ arm_cpu_initfn()
+To: qemu-devel@nongnu.org
+References: <20250404223521.38781-1-philmd@linaro.org>
+ <20250404223521.38781-4-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250404223521.38781-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,139 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the OnOffAuto type as 3-state.
+On 4/4/25 15:35, Philippe Mathieu-Daudé wrote:
+>   static void arm_cpu_initfn(Object *obj)
+>   {
+>       ARMCPU *cpu = ARM_CPU(obj);
+> @@ -1482,16 +1489,16 @@ static void arm_cpu_initfn(Object *obj)
+>       QLIST_INIT(&cpu->el_change_hooks);
+>   
+>   #ifdef CONFIG_USER_ONLY
+> -# ifdef TARGET_AARCH64
+> -    /*
+> -     * The linux kernel defaults to 512-bit for SVE, and 256-bit for SME.
+> -     * These values were chosen to fit within the default signal frame.
+> -     * See documentation for /proc/sys/abi/{sve,sme}_default_vector_length,
+> -     * and our corresponding cpu property.
+> -     */
+> -    cpu->sve_default_vq = 4;
+> -    cpu->sme_default_vq = 2;
+> -# endif
+> +    if (arm_cpu_is_64bit(cpu)) {
 
-Since the TCGState instance is zero-initialized, the
-mttcg_enabled is initialzed as AUTO (ON_OFF_AUTO_AUTO).
+     arm_feature(&cpu->env, ARM_FEATURE_AARCH64)
 
-In tcg_init_machine(), if mttcg_enabled is still AUTO,
-set a default value (effectively inlining the
-default_mttcg_enabled() method content).
+is a better test, but env->features is initialized by the child instance_init.
+We could move this to arm_cpu_post_init, so that features is initialized.
 
-In the tcg_get_thread() getter, consider AUTO / OFF states
-as "single", otherwise ON is "multi".
+Alternately, we could just make this unconditional, since these fields are always present 
+but only read from aarch64 code.
 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- accel/tcg/tcg-all.c | 60 ++++++++++++++++++++++-----------------------
- 1 file changed, 29 insertions(+), 31 deletions(-)
 
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index b8874430d30..15d4e9232ae 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -32,6 +32,7 @@
- #include "qemu/error-report.h"
- #include "qemu/accel.h"
- #include "qemu/atomic.h"
-+#include "qapi/qapi-types-common.h"
- #include "qapi/qapi-builtin-visit.h"
- #include "qemu/units.h"
- #if defined(CONFIG_USER_ONLY)
-@@ -47,7 +48,7 @@
- struct TCGState {
-     AccelState parent_obj;
- 
--    bool mttcg_enabled;
-+    OnOffAuto mttcg_enabled;
-     bool one_insn_per_tb;
-     int splitwx_enabled;
-     unsigned long tb_size;
-@@ -70,37 +71,10 @@ bool qemu_tcg_mttcg_enabled(void)
- 
- #endif /* !CONFIG_USER_ONLY */
- 
--/*
-- * We default to false if we know other options have been enabled
-- * which are currently incompatible with MTTCG. Otherwise when each
-- * guest (target) has been updated to support:
-- *   - atomic instructions
-- *   - memory ordering primitives (barriers)
-- * they can set the appropriate CONFIG flags in ${target}-softmmu.mak
-- *
-- * Once a guest architecture has been converted to the new primitives
-- * there is one remaining limitation to check:
-- *   - The guest can't be oversized (e.g. 64 bit guest on 32 bit host)
-- */
--
--static bool default_mttcg_enabled(void)
--{
--    if (icount_enabled()) {
--        return false;
--    }
--#ifdef TARGET_SUPPORTS_MTTCG
--    return true;
--#else
--    return false;
--#endif
--}
--
- static void tcg_accel_instance_init(Object *obj)
- {
-     TCGState *s = TCG_STATE(obj);
- 
--    s->mttcg_enabled = default_mttcg_enabled();
--
-     /* If debugging enabled, default "auto on", otherwise off. */
- #if defined(CONFIG_DEBUG_TCG) && !defined(CONFIG_USER_ONLY)
-     s->splitwx_enabled = -1;
-@@ -118,7 +92,31 @@ static int tcg_init_machine(MachineState *ms)
-     unsigned max_cpus = 1;
- #else
-     unsigned max_cpus = ms->smp.max_cpus;
-+#ifdef TARGET_SUPPORTS_MTTCG
-+    bool mttcg_supported = true;
-+#else
-+    bool mttcg_supported = false;
-+#endif
- 
-+    if (s->mttcg_enabled == ON_OFF_AUTO_AUTO) {
-+        /*
-+         * We default to false if we know other options have been enabled
-+         * which are currently incompatible with MTTCG. Otherwise when each
-+         * guest (target) has been updated to support:
-+         *   - atomic instructions
-+         *   - memory ordering primitives (barriers)
-+         * they can set the appropriate CONFIG flags in ${target}-softmmu.mak
-+         *
-+         * Once a guest architecture has been converted to the new primitives
-+         * there is one remaining limitation to check:
-+         *   - The guest can't be oversized (e.g. 64 bit guest on 32 bit host)
-+         */
-+        if (icount_enabled()) {
-+            s->mttcg_enabled = ON_OFF_AUTO_OFF;
-+        } else {
-+            s->mttcg_enabled = mttcg_supported;
-+        }
-+    }
-     mttcg_enabled = s->mttcg_enabled;
- #endif
- 
-@@ -147,7 +145,7 @@ static char *tcg_get_thread(Object *obj, Error **errp)
- {
-     TCGState *s = TCG_STATE(obj);
- 
--    return g_strdup(s->mttcg_enabled ? "multi" : "single");
-+    return g_strdup(s->mttcg_enabled == ON_OFF_AUTO_ON ? "multi" : "single");
- }
- 
- static void tcg_set_thread(Object *obj, const char *value, Error **errp)
-@@ -162,10 +160,10 @@ static void tcg_set_thread(Object *obj, const char *value, Error **errp)
-             warn_report("Guest not yet converted to MTTCG - "
-                         "you may get unexpected results");
- #endif
--            s->mttcg_enabled = true;
-+            s->mttcg_enabled = ON_OFF_AUTO_ON;
-         }
-     } else if (strcmp(value, "single") == 0) {
--        s->mttcg_enabled = false;
-+        s->mttcg_enabled = ON_OFF_AUTO_OFF;
-     } else {
-         error_setg(errp, "Invalid 'thread' setting %s", value);
-     }
--- 
-2.47.1
-
+r~
 
