@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A69C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 14:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F15C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 14:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u144E-00027I-1t; Sat, 05 Apr 2025 10:00:14 -0400
+	id 1u14II-0006p1-5C; Sat, 05 Apr 2025 10:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u144A-00025F-UM
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:00:11 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u14IG-0006oY-6e
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:14:44 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u1449-0002Pl-3M
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:00:10 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-736ab1c43c4so2716784b3a.1
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 07:00:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u14IE-0004Ih-Gk
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:14:43 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso19452175e9.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 07:14:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743861607; x=1744466407; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2usuboqUPlKvjXYg/jN9W27aNQUiWnDW2jrzcnUjkSE=;
- b=neUYACTkeA7vtjOSyzHKPj6zvelNdL3fpEQWSZULBceeF3ifAh9lCICFoI4LmKCPmn
- j6NZRKP35N3RPL1+mBDQsQMxleOFnGrPAR3didvhGna73b2aMQnz1chIAqhD5hO5MZFb
- VrV53W9eCxgYtIu+j5mgyW8a183BbJuDgD2F5N60jqQHVjiQN7+3DC/lfpYf8YVh3+hr
- FjbTStbSM3eI3mUnzjd4AJCh4bGWw0BccNgKT3qj20ia8Bu8bu6NYWWUONxIIal/m0QH
- byzBNdM3qD7FyxolyX2KCdBqYK6HQXkCJfIyKa7DWaUicsPTJKBsZe4qoF4TwDoZoalo
- ni3Q==
+ d=linaro.org; s=google; t=1743862480; x=1744467280; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mFOZvrTN5I9L54c5RCctQfy6TWbmrKAeol08PKLOjhs=;
+ b=dAGI6He7K5uGnBd4tU9BU6Qo1PDvv0bj9XyO9w+otlKrKrENGBARqNY0u3wuHTd6Kx
+ 3tLLEt5DlmSZ8QZyy2jqG9JHG5DCInmRvNlBi3QlKxFa0HEE+Z21aSiQ90hMZaJ6FBOC
+ O4vABCHugdJmcQO1SOwmaZClZRyPk/CXQdznPOI/V0yInLK/sbS5zhvGhN4Okgd9UGmL
+ 0KThtmJG438cwM303hpXlAUBhR71kwvWmx1VeX1I6AljSHEeQZ3m8bxrDwgAqE9AsJwt
+ nJhd6luVi3g4d7OzYrnPfcuGTJRuZTq1Ut/GiyyvVZbA//Jk+1QsdJu79sB+J0U2fpNk
+ YUSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743861607; x=1744466407;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2usuboqUPlKvjXYg/jN9W27aNQUiWnDW2jrzcnUjkSE=;
- b=tnYXFE26panTAO+qUvwTZvncrgpZ8pO3joffrhQrmuXi6lE1UCMo4JIs+f6/QEtE3U
- 4reJOo6DrvENVgTJDFftNyMCJlXEJIY2fClhd23TrktEtLCUlbX4UvhLXccUJL88sm/A
- KU0vF7KAl2N7fQKihJ3YDZg7bCKq5t6rWv9c1hPvH1MaMF/COPF+CSy4xXwvhQMlxt9c
- aUo4VoA+LgnkaWzzqjp4pnEDoYLX4oPuvvBO2EW2ORoRBy7/rukioPDcrbDr9sUhKVFP
- VEmKqSi+1q6eAEUJ/SOv9DKgODLZDPk37t4vgbIvbLfzE6lDq378yspFlJTjvoQ+o5E/
- 3SWw==
-X-Gm-Message-State: AOJu0YwbcPZWQaEfAuxbnG1rL5zPHs3apUf2gqt8B5mirRc+5axLWWQ1
- ql0gUNNO/A6xdOB3fA7BQupjgXnZ7p+8Sh8YRH9Qcb1P9lhQ8+znZJCYAA==
-X-Gm-Gg: ASbGncu0XfmQhBi69EPrFNh32oFH28yEoANEdXjHce4v1iPr3Uzug16ZTRETL7hC/fi
- FE02nlTjOjcVYTmEKm0m4651V5fVr9MgZz0kYMBXAMFIBr8rQHx00ZYFhe3A3VPLmAZj1jQ9kH/
- qFHxotXYPMIkY72EZYD4EguMgltX023BsBRkdxMoYZrq7MkdUe8Qi3pXnxbQyDgQOHa0TsDibe2
- Vmc+cX49Omeb6oSVUft6cknH/zfz48pQ7zAaWSsY6RyQikcc/f+3bBqSxgLn3qTtBzH+Kudv+BF
- 90WXLq8zIKFr8j1EdpkkbwO0enzXAjkXY7HhrFKlU1ZHymzPP0heQHAyCw==
-X-Google-Smtp-Source: AGHT+IGPpzPXfOhtoQnbuoKyjUG3P4YhTC98O6IqKZ8713spjC2J61EwwVxP/a96jNdwEmUQfD4SyA==
-X-Received: by 2002:a05:6a20:258e:b0:1f5:8fe3:4e29 with SMTP id
- adf61e73a8af0-2010458cc73mr10103895637.3.1743861607327; 
- Sat, 05 Apr 2025 07:00:07 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af9bc41c626sm3743062a12.78.2025.04.05.07.00.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Apr 2025 07:00:06 -0700 (PDT)
-From: Guenter Roeck <linux@roeck-us.net>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 1/2] hw: usb: xhci: Add property to support writing ERSTBA in
- high-low order
-Date: Sat,  5 Apr 2025 07:00:01 -0700
-Message-ID: <20250405140002.3537411-2-linux@roeck-us.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250405140002.3537411-1-linux@roeck-us.net>
-References: <20250405140002.3537411-1-linux@roeck-us.net>
+ d=1e100.net; s=20230601; t=1743862480; x=1744467280;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mFOZvrTN5I9L54c5RCctQfy6TWbmrKAeol08PKLOjhs=;
+ b=oRkO0Jfrx0mKG3H5ayVdHZtyd376QSUQeoyDkED8z1rUOVw+2KlgQrbhJzTLbjoLIy
+ 0VFEDCFObmhA0kxtSv0thGmFmW3vQf4bDDNQ8XjRU5ziJH0Xn7UMLAPlEMJw/ZlXNitA
+ y+7VFeiEGNRAFWhAqtZbqrAYxHB5pPCYKQhd+5jF+ivmeK0Ar+ZzRHekVOyMsG6j52bs
+ 2hkDUefxEEAK3kFFpRJS33y91Vj50uBoZ9j1pVp+GQ78wCb2Xd754+FGtfnk5MdIdA7h
+ 6Z9ikq3iMwUGUkM3ncwfhtb/Pf9dwu5CUNoFwSwCR9kuh5y5mDhpwstb+j0mlVxDZItd
+ Cy2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpCubd5PwkBazT7/AXooW3gwPLCVYNcoEWJ+X7I9x7UKg/60i4788uW2VUhXXLrtvgggjI2Jrz+54X@nongnu.org
+X-Gm-Message-State: AOJu0YwvTEfyipcbXGisjCS3iOQ+O/UEAg1H5J0Zgl0ml63Rq2SojCmN
+ niowYgUYXD6valoRP6nYIkRE0Q4o/lDV4HDWP5VszKFes0PP+g+RoQS+DqFFBkg=
+X-Gm-Gg: ASbGncurQNNTgh3lUA47SqrMv64HRoBfd8LhbcX4j91XLc5G7viX8qN8+S0XVJorLWp
+ 3H5IIh+EbshKUfYqXDgmNfII/0W+nQP4A7+yTOMY+DWSHCYdz6anQ8obRenhhoyyEVZQrYEVKpa
+ q3d6a+sdostjHg5dD/hUBGW7h82ruc7MEGG/Nfx2Vwv8VVm85xIHHhl0bCJWSFYzRzpF/TrpA3D
+ KMPF34HeBDesbOo+3X4rROfVFzOku6YJ2iFafdbicJXS4V96Qcoy4B5FlpASqs2Mk8EiFh+XzGj
+ eDIzVwI525kGxHTdTcuNwlqKTqMbWpOeiPjEnjqzQlVdK6AXqdIasCaK8qabx1uU4Z11Twe2NyN
+ jm9Z5FBmoIxALGOJbmg==
+X-Google-Smtp-Source: AGHT+IHFG30u/P2jfXB2tFdfPwgj8k/SY8s5q3ZSbN5lgc0T1/e4DwFvJK7Mb7eqDKCFx69pKXNZfw==
+X-Received: by 2002:a05:600c:c1a:b0:43d:45a:8fca with SMTP id
+ 5b1f17b1804b1-43ecfa06fd2mr80293105e9.30.1743862480623; 
+ Sat, 05 Apr 2025 07:14:40 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c3020d6c8sm6937449f8f.73.2025.04.05.07.14.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 05 Apr 2025 07:14:40 -0700 (PDT)
+Message-ID: <946e2f5d-385c-46b5-a2cc-0d8d3166b779@linaro.org>
+Date: Sat, 5 Apr 2025 16:14:39 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v3 19/19] tcg: Convert TARGET_SUPPORTS_MTTCG to
+ TCGCPUOps::mttcg_supported field
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250403220420.78937-1-philmd@linaro.org>
+ <20250403220420.78937-20-philmd@linaro.org>
+ <42750cc0-177c-4939-8832-154c2d2178d8@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <42750cc0-177c-4939-8832-154c2d2178d8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,72 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the XHCI specification, ERSTBA should be written in Low-High
-order. The Linux kernel writes the high word first. This results in an
-initialization failure.
+On 5/4/25 13:29, Richard Henderson wrote:
+> On 4/3/25 15:04, Philippe Mathieu-Daudé wrote:
+>> Instead of having a compile-time TARGET_SUPPORTS_MTTCG definition,
+>> have each target set the 'mttcg_supported' field in the TCGCPUOps
+>> structure.
+>>
+>> Since so far we only emulate one target architecture at a time,
+>> tcg_init_machine() gets whether MTTCG is supported via the
+>> current CPU class (CPU_RESOLVING_TYPE).
+>>
+>> Since TARGET_SUPPORTS_MTTCG isn't available anymore,
+>> instead of emiting a warning when the 'thread' property
+>> is set in tcg_set_thread(), emit it in tcg_init_machine()
+>> where it is consumed.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Anton Johansson <anjo@rev.ng>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> This doesn't work for i386 and riscv, which have both been "updated" to 
+> initialize cc->tcg_ops via ${arch}_tcg_cpu_accel_type_info ...
+> 
+>>   static void mttcg_init(TCGState *s)
+>>   {
+>> -#ifdef TARGET_SUPPORTS_MTTCG
+>> -    bool mttcg_supported = true;
+>> -#else
+>> -    bool mttcg_supported = false;
+>> -#endif
+>> +    CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
+>> +    bool mttcg_supported = cc->tcg_ops->mttcg_supported;
+> 
+> ... which has not yet been called, so NULL pointer dereference.
+> 
+> I'm not sure why the init of tcg_ops was moved from ${arch}_cpu_class_init.
+> Probably it looked nice to remove the #ifdef CONFIG_TCG.
+> 
+> There's a definite ordering problem here, and I'm not sure how to fix it.
 
-The following information is found in the Linux kernel commit log.
+Can you just drop this single patch? I'll see what needs to be done.
 
-[Synopsys]- The host controller was design to support ERST setting
-during the RUN state. But since there is a limitation in controller
-in supporting separate ERSTBA_HI and ERSTBA_LO programming,
-It is supported when the ERSTBA is programmed in 64bit,
-or in 32 bit mode ERSTBA_HI before ERSTBA_LO
+Thanks,
 
-[Synopsys]- The internal initialization of event ring fetches
-the "Event Ring Segment Table Entry" based on the indication of
-ERSTBA_LO written.
-
-Add property to support writing the high word first.
-
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
----
- hw/usb/hcd-xhci.c | 8 +++++++-
- hw/usb/hcd-xhci.h | 1 +
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 64c3a23b9b..8c0ba569c8 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -3107,10 +3107,15 @@ static void xhci_runtime_write(void *ptr, hwaddr reg,
-         } else {
-             intr->erstba_low = val & 0xffffffc0;
-         }
-+        if (xhci->erstba_hi_lo) {
-+            xhci_er_reset(xhci, v);
-+        }
-         break;
-     case 0x14: /* ERSTBA high */
-         intr->erstba_high = val;
--        xhci_er_reset(xhci, v);
-+        if (!xhci->erstba_hi_lo) {
-+            xhci_er_reset(xhci, v);
-+        }
-         break;
-     case 0x18: /* ERDP low */
-         if (val & ERDP_EHB) {
-@@ -3636,6 +3641,7 @@ static const Property xhci_properties[] = {
-     DEFINE_PROP_UINT32("p3",    XHCIState, numports_3, 4),
-     DEFINE_PROP_LINK("host",    XHCIState, hostOpaque, TYPE_DEVICE,
-                      DeviceState *),
-+    DEFINE_PROP_BOOL("erstba-hi-lo", XHCIState, erstba_hi_lo, false),
- };
- 
- static void xhci_class_init(ObjectClass *klass, void *data)
-diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-index 9c3974f148..cf3f074261 100644
---- a/hw/usb/hcd-xhci.h
-+++ b/hw/usb/hcd-xhci.h
-@@ -189,6 +189,7 @@ typedef struct XHCIState {
-     uint32_t numports_3;
-     uint32_t numintrs;
-     uint32_t numslots;
-+    bool erstba_hi_lo;
-     uint32_t flags;
-     uint32_t max_pstreams_mask;
-     void (*intr_update)(XHCIState *s, int n, bool enable);
--- 
-2.45.2
-
+Phil.
 
