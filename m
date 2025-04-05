@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF1A9C369A1
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 21:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB77C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 21:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1BOQ-0003TB-4S; Sat, 05 Apr 2025 17:49:34 -0400
+	id 1u1BON-0003SZ-Ck; Sat, 05 Apr 2025 17:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1u1BOE-0003RL-DU; Sat, 05 Apr 2025 17:49:26 -0400
+ id 1u1BOE-0003RM-Dc; Sat, 05 Apr 2025 17:49:26 -0400
 Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1u1BOA-0004NW-Fm; Sat, 05 Apr 2025 17:49:21 -0400
+ id 1u1BO8-0004NL-Ho; Sat, 05 Apr 2025 17:49:20 -0400
 Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5e61d91a087so5135936a12.0; 
- Sat, 05 Apr 2025 14:49:16 -0700 (PDT)
+ 4fb4d7f45d1cf-5e5e1a38c1aso4334778a12.2; 
+ Sat, 05 Apr 2025 14:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743889755; x=1744494555; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743889754; x=1744494554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vvSf9TCswsvHlHP1HmqYppAppZQUi4irJNJ4qlnuZD8=;
- b=CJh+R3mCbFkp82qMuWiCdPkFXYr7JAJZqKeVCR5SlJ4gKPvIAApoyycWGAw3L1SU8B
- ErGwZm/LVW9RbPNOYaXRaQR0EWixVj9pSLLbU/O/ILrdS3+iJbTqDHG1UmK/aZtP43XA
- E7W8z0zlDmsDU2ni/qvS1YJMV77/XzWeqvbGBDbVSJdtjOLvSsGPtWBYyuPUy7F1ITe1
- K9ixYnyoIkrJK1VppnhWS5uEzWiM/cdwY5vL37CCeS+2c60Y+XbnHzhBMTN5rPE5Ajk8
- OG2t2ruqIzfoVkmPN2SPEldLjAwZFfuqG/dqeS18QJYWNOYZh5Q8a179vQ7WdrAufG4O
- fxKg==
+ bh=E8ZUSX0vQnKDnTWRI/lKtyh5+xAxE0plHkcNE4ORmmM=;
+ b=Ir224LIptKR93RMlFOyKCfILGmrRbJoBrKJk+hc6nIarkH1FXxB8pPvXwWWl+0NweX
+ 4oq2LxJ7PRJ9vcHaXNnYSAbrFRHdWhxplpnw2dQ1mMp3Xals6gaZF2z6D2X6aMCzVAdG
+ cc8f/CgYFlXWkW1GZllJHosWWhjC2MiWaE3Xnq/RKwIfpvWXHjVEcT0SBnCmlJ9S/uwb
+ a49NBw8dVWsxHokEB0LT1JDoOrxRvaTaN06f+TSDKFffBlv4AMHeIVSdcCmPs5ECqNtQ
+ WDigNb/PHMBx4SgHNKHUaXSYMA9RZK1iJUOgdvLdeALZJ9Wqn1rSa/YYvOZLzM+l6sVn
+ MM1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743889755; x=1744494555;
+ d=1e100.net; s=20230601; t=1743889754; x=1744494554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vvSf9TCswsvHlHP1HmqYppAppZQUi4irJNJ4qlnuZD8=;
- b=kmHi25hHVuw5qdxIGRWYUAVZL7UdVLkmxRdqmJUDehfXE85tWtEROZv1O0cARg2B5p
- jhtaCOdO4xGnl+o+tR6Oo1P3zCXn50vu7kYm/4imzCtcvWWa2KWC3x86G1S7dJ0wBWrq
- WQKUDClbpKmlDguYPC0qColfa0XUJO0G7CdSLPXGHkR816UmNpKFXIWnl1QI6xD9mMIE
- s1t9/xxNOh8GW+HbEtUk5hIlsSXV0G2TR1Vf6AxcWqDdUOUizVqlz6UyLbgqYCXOnTiY
- fNCs6YVHbfozFsDMCgqq7YCBfgBoSIiQQ2YxGHst6D8SiwhQ0lNBnEw2htRlIoPjgLvR
- hFjA==
+ bh=E8ZUSX0vQnKDnTWRI/lKtyh5+xAxE0plHkcNE4ORmmM=;
+ b=AZCA8y5ZGmGEkFDCXbjEjAa0oXYLX58O7IvV35oAOvoE5VsffvHgWNRKlvEYfzqCpI
+ CoJ8GczRDnwbpmJtb1fZnsSE/TnaR2j2qwGQsg8/nl7eVKwEw9ruCVHRJEPUwziXuXJs
+ kTlQ82dcQJvDhENl0/rQ52+8EvNgMsGKaRTNBtA1LuogG3Qe7M8jgdAvUObrCUuT/lxu
+ TCgL8Wk9pqwSDHpHnV6n6JaUfM69Drn2zPsgYFwYhmS1a6nOzXT3E4wymUjzo3srq3Y5
+ denGwIADDlbplIgLWsl0/aMMGblDSOyOh2oGAaLKyx4UuxS25cMspojRCGLuca3ErPof
+ vAdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUd7mcke1kgYSBAU+jkHhUSMiEnZVQSeWIkMRGHlsIcZ0TNHnVV4qp8k8KoLB9ZZAttqVPfD6AV6Q==@nongnu.org
-X-Gm-Message-State: AOJu0Yw1gOMQLV2Cn1sKCTS1j9GhDLuM3o16aVqhIMm5dh3ep/MqN+6X
- bGJtqcvUrf7iA0J3QKDT8K1wOQFIzjWYT7Hw7/DCgT16RLB1hVY1JiXdtg==
-X-Gm-Gg: ASbGncsxirxgK9Lf9eEczUXoW7DjkCUkLKO/ymzz7vfYSjkv/IIvcMM8RskcOVoNPcq
- Isd0QNn4hUFNBvSJ7RXfQt3mRlmZLKDEmktN/zvaVY8z253iSbGJjwycHrac13zQan4EONBuqOK
- g9AVOCIr7T14BTLrkL2PJ0k1XdQKxIdaUmDGVz2Es1kqRI1N4vcp/46XghNXaD9jIMXG2D84n6C
- Qcfy5MQR71oV/7ug5oXoAAbC4VodIwpEI3qkDdgSa+SQ2vF6iUGA6mDzSMhbqgsdffeS77ZRrrv
- QjQ8Jnm9jfQdlngMb1PuZuIjd3WXz1yr5WojrrEc+p3dmXkRB4g5UNQSH+4uF6W5DFVNk74HRtq
- B3pmfyCZEOP8EjKk3Hrg0Cv+8XlroorogQ3phcWGEcKRJSFzwBRyjLEZR0GHOtoIU
-X-Google-Smtp-Source: AGHT+IH6ybiIybyjTHTwEfDU/6Cd2anIghJD0Jbj9kTs8WAe6ShbayhUOE/DxKeK4YulFz04VoOeDQ==
-X-Received: by 2002:a05:6402:5187:b0:5e5:c847:1a56 with SMTP id
- 4fb4d7f45d1cf-5f0b3b8f022mr6647717a12.10.1743889754988; 
- Sat, 05 Apr 2025 14:49:14 -0700 (PDT)
+ AJvYcCVbviaj43Exf2uWl0OT9FItvUE9iMYbqeYtBakI2zwRikFb8lIVYysAhltT8PYSY7cnbfbGYirUHQ==@nongnu.org
+X-Gm-Message-State: AOJu0YzNbkmsGVrlwi6xdcAMQSgNnOaJQer6fDOLGLQ3+Nvx9DOwotAH
+ 999SZDXi33Kf0w7obdxM3UX2fUMi2x3JDxaqUKmPcYBtIqlmM0nHkKoHsQ==
+X-Gm-Gg: ASbGncvX3JdumvUwQ9Sb6SyePWzksn3MGSS7HGp5Jd3m1cCkESz3fPOBY4jleraadNm
+ 0sxP8zOT2QUcNtkb8H/PzztLy14WMtKoevyXWuU4vZBKPRSBGg9RnKFeglJVtL+l+77MGGdGKYR
+ Qt2v6qD73jlY+j682funF3zzP7E3+6NDFQbWHp7ByFH139e0+uyswbzU6bu0t9ZlA1YgtYaVFqQ
+ FJEDU7XijIHaRxJ4WgkBmW3hsa2zf/rDt/30m/WqfQGcW7Aor1jrWBHyLhHnXC3KXJo4YJD1/O3
+ pWAZZ5YiXQi9Fdezg7sJD9QmXdlFMW1tN3jOHSddWjHmcXdOhvRczYVVH8k7PKxPGNp98LbkFvn
+ VT4Hh/h2u8C6kz62oBngOk+MglsotI0wIIfqjG0CZPLClrG6aKV4bnpqXbB5iTSC7e0DQt2ekll
+ 4=
+X-Google-Smtp-Source: AGHT+IH1yvmVv8QmUtXj4B5FvU0hYvFwj4CZzUI41X24nRpK+2zAcV1VRyEFSCEropyFuT2kTTdz/A==
+X-Received: by 2002:a05:6402:26ce:b0:5e5:b572:a6d7 with SMTP id
+ 4fb4d7f45d1cf-5f0b3b61e9dmr4997622a12.6.1743889753552; 
+ Sat, 05 Apr 2025 14:49:13 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-1bf0-7700-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1bf0:7700:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f0880a535fsm4382270a12.80.2025.04.05.14.49.13
+ 4fb4d7f45d1cf-5f0880a535fsm4382270a12.80.2025.04.05.14.49.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Apr 2025 14:49:14 -0700 (PDT)
+ Sat, 05 Apr 2025 14:49:11 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
@@ -73,10 +74,10 @@ Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH-for-10.0 3/3] hw/arm/imx8mp-evk: Remove unimplemented nxp,
- imx8mp-fspi node from devicetree
-Date: Sat,  5 Apr 2025 23:49:00 +0200
-Message-ID: <20250405214900.7114-4-shentey@gmail.com>
+Subject: [PATCH-for-10.0 2/3] hw/arm/imx8mp-evk: Remove unimplemented
+ cpu-idle-states properties from devicetree
+Date: Sat,  5 Apr 2025 23:48:59 +0200
+Message-ID: <20250405214900.7114-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250405214900.7114-1-shentey@gmail.com>
 References: <20250405214900.7114-1-shentey@gmail.com>
@@ -108,46 +109,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-The nxp,imx8mp-fspi node triggers a warning backtrace.
-Remove it from the devicetree file.
+The cpu-idle-states property causes a hard boot hang. Rather than documenting
+the workaround, perform the removal from the devicetree automatically.
 
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Inspired-by: commit bf1da4b308 ("hw/arm/raspi4b: Temporarily disable
-unimplemented rpi4b devices")
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-[Bernhard: split patch, adapt commit message]
+[Bernhard: split patch, update documentation, adapt commit message]
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/imx8mp-evk.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ docs/system/arm/imx8mp-evk.rst | 12 ++----------
+ hw/arm/imx8mp-evk.c            | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
+diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+index 00527b0cbe..b2f7d29ade 100644
+--- a/docs/system/arm/imx8mp-evk.rst
++++ b/docs/system/arm/imx8mp-evk.rst
+@@ -35,7 +35,7 @@ Direct Linux Kernel Boot
+ 
+ Probably the easiest way to get started with a whole Linux system on the machine
+ is to generate an image with Buildroot. Version 2024.11.1 is tested at the time
+-of writing and involves three steps. First run the following commands in the
++of writing and involves two steps. First run the following commands in the
+ toplevel directory of the Buildroot source tree:
+ 
+ .. code-block:: bash
+@@ -50,14 +50,6 @@ it and resize the SD card image to a power of two:
+ 
+   $ qemu-img resize sdcard.img 256M
+ 
+-Finally, the device tree needs to be patched with the following commands which
+-will remove the ``cpu-idle-states`` properties from CPU nodes:
+-
+-.. code-block:: bash
+-
+-  $ dtc imx8mp-evk.dtb | sed '/cpu-idle-states/d' > imx8mp-evk-patched.dts
+-  $ dtc imx8mp-evk-patched.dts -o imx8mp-evk-patched.dtb
+-
+ Now that everything is prepared the machine can be started as follows:
+ 
+ .. code-block:: bash
+@@ -65,6 +57,6 @@ Now that everything is prepared the machine can be started as follows:
+   $ qemu-system-aarch64 -M imx8mp-evk -smp 4 -m 3G \
+       -display none -serial null -serial stdio \
+       -kernel Image \
+-      -dtb imx8mp-evk-patched.dtb \
++      -dtb imx8mp-evk.dtb \
+       -append "root=/dev/mmcblk2p2" \
+       -drive file=sdcard.img,if=sd,bus=2,format=raw,id=mmcblk2
 diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 3bbf2bfbea..b5aec06ec5 100644
+index f17d5db466..3bbf2bfbea 100644
 --- a/hw/arm/imx8mp-evk.c
 +++ b/hw/arm/imx8mp-evk.c
-@@ -19,7 +19,22 @@
- 
- static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
- {
--    int offset;
-+    int i, offset;
+@@ -15,6 +15,19 @@
+ #include "system/qtest.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include <libfdt.h>
 +
-+    /* Temporarily disable following nodes until they are implemented */
-+    const char *nodes_to_remove[] = {
-+        "nxp,imx8mp-fspi",
-+    };
++static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
++{
++    int offset;
 +
-+    for (i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
-+        const char *dev_str = nodes_to_remove[i];
-+
-+        offset = fdt_node_offset_by_compatible(fdt, -1, dev_str);
-+        while (offset >= 0) {
-+            fdt_nop_node(fdt, offset);
-+            offset = fdt_node_offset_by_compatible(fdt, offset, dev_str);
-+        }
++    /* Remove cpu-idle-states property from CPU nodes */
++    offset = fdt_node_offset_by_compatible(fdt, -1, "arm,cortex-a53");
++    while (offset >= 0) {
++        fdt_nop_property(fdt, offset, "cpu-idle-states");
++        offset = fdt_node_offset_by_compatible(fdt, offset, "arm,cortex-a53");
 +    }
++}
  
-     /* Remove cpu-idle-states property from CPU nodes */
-     offset = fdt_node_offset_by_compatible(fdt, -1, "arm,cortex-a53");
+ static void imx8mp_evk_init(MachineState *machine)
+ {
+@@ -32,6 +45,7 @@ static void imx8mp_evk_init(MachineState *machine)
+         .board_id = -1,
+         .ram_size = machine->ram_size,
+         .psci_conduit = QEMU_PSCI_CONDUIT_SMC,
++        .modify_dtb = imx8mp_evk_modify_dtb,
+     };
+ 
+     s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
 -- 
 2.49.0
 
