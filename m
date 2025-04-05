@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D58C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD7CC36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u16S1-0001Xk-Vq; Sat, 05 Apr 2025 12:32:58 -0400
+	id 1u16SX-0001uK-SO; Sat, 05 Apr 2025 12:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u16Ry-0001XT-E7
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:32:54 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1u16SV-0001tj-FM
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:33:27 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u16Rw-00009Z-4G
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:32:53 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-736aa9d0f2aso3574980b3a.0
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:32:51 -0700 (PDT)
+ id 1u16ST-0000CZ-TY
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:33:27 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-736b350a22cso2542519b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743870770; x=1744475570; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743870804; x=1744475604; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gm7Bn69nATykFuK/l5JlYYv6YYeCwaCe6gPo5Akukc0=;
- b=bCC401h1HZeazPI6KKf8xf8TVU4pSfuAcNBuJqd18aAUG9+vHbOfcUNq2VTEt0XwCw
- 5zLbyczlkOjVnK574/s/Ol941KeycHn9T+dxiTzgeE/OpmDgrAHvRr6eZn5z/eN2/1fF
- 572wFbXs5R20xaqGfULqaZj58H4o8lyzuezbRpECgDvWC4Vv45Qw8VG+Pb7aCGc2Tut1
- aBFxmRCbQfBuyVC5wstmTL71l35gl/2oQN0eEYNY2/74awmawEPud5rIobXKHxoBcNcO
- ucr2r64B+Vdx9aXof3YvfJ/NV2ghOVO76lA6p8dI8V0ZMMSk2KylEsInoJ4NvjBoxXOO
- nIOw==
+ bh=X/bu1T4kxjZxytYgVV8Tdp/yz80C5H6AUdP131sjjw8=;
+ b=Zj2RkpRi5r95W/ukNMAwVzjGaaGzaK+H6sJhs7zdatiEDcKwk90eQWD6SzPkFcI8Dd
+ Ibg3gNXcpZblFxTsfTkXC2P+DuHXle/qbiWWXNGei274OaCY7W3lcelgqROQ/qhgjBbo
+ 8hkQjI58ESd0XPcKWxJw3n4gAmBNTa98ieAMk7bKsS5Eh5ttEpxwAT/vGDpT28U35FsY
+ m5N1b1eh+wwCdJHC/JYn8/D69Xt8qXtN7Y0dErJZlR8oCJ1gFihVI17BwOEBiHuAMHn1
+ nF3ja/FohkirAQog3U81lpuct/TJwkGyAiMOXl7CwYuwZn3KbMbqDyDtB/ZR7SWaxSGw
+ mWiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743870770; x=1744475570;
+ d=1e100.net; s=20230601; t=1743870804; x=1744475604;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gm7Bn69nATykFuK/l5JlYYv6YYeCwaCe6gPo5Akukc0=;
- b=Kji7+r4cl1CdA/Xnn5cRx54bmd84Z52L0Zmskt+fjZ9NpH4s6jblVk1fo5L5gc0b2W
- BLa6nudVnCHAGqobWsG6TpDHgWDW7vMLR9i0AP5nWldpe7EDE2WZvotC5Qnrr7/uj4sH
- /bcRHrAk59w+o1eMWgKGS8aNpqnwB/jqOI9TokpSbz2wkUU594T066SdUKi2nrzG/615
- 13wOtf/UyQDJTMKb2PIsr/iuEwCylNmjCl35TIEUslKLqXydQE/U9dbORR2bdX7vkwl/
- 0jgS6orMfC1gcXlzR6QTLpWoGp70eCVp8wBk9ejwxLvdhDQ2KLSIKLC76/kzUXB05nob
- 9Ruw==
-X-Gm-Message-State: AOJu0YxVTTwtABJUxtDzO3+7Vg3iE1x8zpc9BgkmL5UBULPGWeqnkxeo
- n0XNfZPB4nY9T4/nwOetaXHToPdZQgPAsIDapnDpCUNU8H/TP9YRBCGKoALxIhkKh1ol3aPOCOr
- m
-X-Gm-Gg: ASbGncujMNMs/cCw+MC5WwdYNmi634n5u7Xdk1ihT16F6Amg8orjtdmzr/LQ4cuzWZQ
- wqmu1DEjRoYY2G52vYMW1ay/mSsr/z7uOgZbOpcMn/JLFkqQ+fcpMrdzIZKTq/YsblnSZvXi30z
- 5W3lWbXLAPUyoEStUuQnn6OsacC0trQDIxZ7IFARdEJyxbFw9bnVo+fUIId7rukksaAqIzjcfH3
- oCNV1GeZBsztb/WuHM9Nfo22lIZeVpRKhbvtwuwDMKv3S32TsZs4G+LK/cUVk8s6U4Hb5Ktf8wX
- Ym7ze1BJYOj0CXzhGSekQxxDi7BZNUqeQKtUzlMwGfx7aYDHbNvMDfqWsNyeiTaI
-X-Google-Smtp-Source: AGHT+IF6zvgMoL5MKiRArMBcBe+gINFNDJkHmX7Wfc9MR3pQ3FDsHT7Ofm+3FX22BUrx0Cx9+Gip1A==
-X-Received: by 2002:a05:6a00:3c83:b0:736:6d4d:ffa6 with SMTP id
- d2e1a72fcca58-73b6b8c11ccmr3668563b3a.15.1743870770103; 
- Sat, 05 Apr 2025 09:32:50 -0700 (PDT)
+ bh=X/bu1T4kxjZxytYgVV8Tdp/yz80C5H6AUdP131sjjw8=;
+ b=wBUR2HslVs9ETyKgaRRUwBg00eZ7coWpz5dzQeTw5oPd4zicIyi3MPjOsH+rYg2KPF
+ 2OsK2bh5AIapJ8Fl+8o711S76P/xBppLUxxxsBq7Rva/s6DxRbcytcM8jrYmBJ5IZU1g
+ NQLx3gMLMRrdpE+Bi87aEsfl/R6Y8DvwbWmTeNf/LJax4nRtimnbZGbg0conjeyuaarO
+ 3Ag2/7T5R0paDfJSSstjR9ZqFcCCmNIM0u6DH8NfqFdf4B6beacqSZ/xOLGvPU2sGLFL
+ y/6jwI1E6izZollZbpRPMDUxINzg45YMgoAh+kC+Qwexxd5SIk7N89eREfNiMZ7yWyZi
+ m7xA==
+X-Gm-Message-State: AOJu0YxEenLbbCDcpuQQkid2zNdRN3QHeeSqu+B7cYyZcSYZaxABSWEk
+ eextCZfuMq2rxBzC0HbI/cbrt0Ym3Tv5VEmFKqnDa7KyYTiYaiohKt0+nVTMUWpfUjEtxDLuW09
+ G
+X-Gm-Gg: ASbGncsyIOiD17X1QcrAjBJpW6kWloRaHe2ByP5pvX5BeOKk8udriwrRLVrDeJFv9yh
+ HLvX47ZCiCTeB4IpsXisHc/3KIvwe9w6ClhdOOdX+d+2XPaLWF/nlpuw99/fCFdSncjogQOSReV
+ ka0AiSuhtH+L96dZWr2FEuNjONZ67rUNVczA2IA/njXMiEVq+nZybhBeTJhK+go2eCcifzUTwaL
+ 5EMhvSBcQiYLff1rks6ELLiQwCD39zYjensCbiF4cqblaNfu3m7QD/2Z8xdL9om7+HWkqJbxGHg
+ VPNGbc24nciesgdZMsSux/Gwwo8RrgbM/rhG+63WT5DtfLp08zrnf4meCJESp2hg
+X-Google-Smtp-Source: AGHT+IHsxqFNX0Hr7aFE2VjL4NxjSpOqoUsxmUvLf46+gmknj0UvE23Bah57j/O/r55arSfByGkh8g==
+X-Received: by 2002:a05:6a21:9201:b0:1f3:36f7:c0d2 with SMTP id
+ adf61e73a8af0-20104769bb7mr11319187637.41.1743870804443; 
+ Sat, 05 Apr 2025 09:33:24 -0700 (PDT)
 Received: from [192.168.122.15] ([173.164.107.234])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d9ea080esm5587045b3a.108.2025.04.05.09.32.49
+ 41be03b00d2f7-af9bc2cfa92sm4686008a12.1.2025.04.05.09.33.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Apr 2025 09:32:49 -0700 (PDT)
-Message-ID: <63f17e19-d71d-4d61-a0bd-3d8a38674fd6@linaro.org>
-Date: Sat, 5 Apr 2025 09:32:47 -0700
+ Sat, 05 Apr 2025 09:33:24 -0700 (PDT)
+Message-ID: <09b4a20d-5345-4b2d-974e-4e7cd71f0596@linaro.org>
+Date: Sat, 5 Apr 2025 09:33:22 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 9/9] target/arm: Build Aarch64 gdbstub helpers
- indistinctly
+Subject: Re: [PATCH-for-10.1 7/9] target/arm/mte: Restrict MTE declarations
 To: qemu-devel@nongnu.org
 References: <20250404223521.38781-1-philmd@linaro.org>
- <20250404223521.38781-10-philmd@linaro.org>
+ <20250404223521.38781-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250404223521.38781-10-philmd@linaro.org>
+In-Reply-To: <20250404223521.38781-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,31 +103,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/4/25 15:35, Philippe Mathieu-Daudé wrote:
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index 3065081d241..503d106b588 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -3,6 +3,7 @@ arm_ss.add(files(
->     'cpu.c',
->     'debug_helper.c',
->     'gdbstub.c',
-> +  'gdbstub64.c',
->     'helper.c',
->     'vfp_fpscr.c',
->   ))
-> @@ -13,7 +14,6 @@ arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
->   
->   arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->     'cpu64.c',
-> -  'gdbstub64.c',
->   ))
-
-This doesn't do what you say is does.  The object file is still in arm_ss, though 
-unconditionally instead of conditionally.  Which causes all of the other follow-on 
-problems you saw.
-
-I'm not fond of either this or the previous patch.  I'm surprised that you're touching 
-anything wrt CONFIG_USER_ONLY.
+> Move MTE declarations out of "internals.h" to TCG "mte.h".
+> Include "mte.h" when necessary.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/arm/internals.h             | 121 --------------------
+>   target/arm/tcg/mte.h               | 124 ++++++++++++++++++++
+>   target/arm/tcg/sve_ldst_internal.h |   1 +
+>   target/arm/tcg/helper-a64.c        |   1 +
+>   target/arm/tcg/mte.c               | 175 +++++++++++++++++++++++++++++
+>   target/arm/tcg/mte_helper.c        | 160 +-------------------------
+This moves more than declarations...
 
 
 r~
