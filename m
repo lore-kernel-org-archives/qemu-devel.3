@@ -4,141 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4C9C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 20:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC722C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 21:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1AIY-0001Yc-Mx; Sat, 05 Apr 2025 16:39:26 -0400
+	id 1u1BON-0003SU-0q; Sat, 05 Apr 2025 17:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u1AIW-0001YK-C6
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 16:39:24 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1u1BOA-0003R3-Df; Sat, 05 Apr 2025 17:49:19 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u1AIU-0001Pq-A0
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 16:39:24 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-301918a4e1bso2191092a91.1
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 13:39:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1u1BO7-0004N7-KJ; Sat, 05 Apr 2025 17:49:17 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e6f4b3ebe5so5586601a12.0; 
+ Sat, 05 Apr 2025 14:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743885560; x=1744490360; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=iZsonS/kOWHIUp+BrZBU1lBdfOTVJjmc9AumjjIRQrE=;
- b=dEYrAZPogcmJPkl/BDXMwLrgCCd9nnjGz4PzZmvMzUdr0zoFNIE9JFu/byatlyHu+7
- 8nN3HtbSavNCI3VL4patdZ4JsvU6ZUFUeUBRWS/Y5xYvdPpbzBp97QrGW241PdXc0qPi
- TSq7e9z8PqPzagZ9uaDhABwgiUY47R8zN1/ui4SmUueiFqZyg1WfRkqfggvdnRbgI7um
- YXiDhYbIh3tZT0D1KOhek0vmtkxnn4kvrUyKRxW7N92t+pw94Qfujx/TnlUwVtZbiLDg
- CoEN1XAHRQ5DjgVMOWGifk84RH7xD745NmHDX9ssmi64FxMqmS3iSGVW0BGreK6kdry9
- 9+XQ==
+ d=gmail.com; s=20230601; t=1743889751; x=1744494551; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1d1BLMUXElgOrmHcKtE/T31W9fD0LUsaqgDKJy8c1to=;
+ b=DySdAS/L7p67ll/k6oxsCy5aFbyUcilG1B9gqm4uo1PPJYrZS6oHP5qN72c866Turz
+ wwzcUgIbTC5UE21pZ0QybWGvPCZGtaW6UPAiwsYkKUOUeMr3dBCQOIgXfv8A7Eq8O9+J
+ L+uE7iz8dsdMWL7B3j0BmSI6ImUSPchGls+0Wy+rYttWP89JM8WQmdGa7Wf4h23iWQFN
+ 8HCSZrzFuNqfRRVND7BFRTXXNz0mBhFQ76iCayQTFI7pOHoBS2CyUoQpjA+icSvOgZ2Q
+ rJJTMLju34IBMVb4SoYZDeMxzXKNj3BDppNncNiJOQGFXac0m0dNyFS9LP4vGKyrPMWO
+ B2Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743885560; x=1744490360;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iZsonS/kOWHIUp+BrZBU1lBdfOTVJjmc9AumjjIRQrE=;
- b=jdFWN8CLxRiaLVrZs8clXxSxZPk3lHNmzUjHMfnmJJiq2pthm/Qe2H7q8EiJYQWLcT
- xSob7dQtm+WyWeYE7fu9t+skkUUrFly0oHSzg8CzzAxjIZv4rz2ojXrZEPsczAB40P2V
- XZ7ztvDN8E9Qpi0cAkfuSHu1v2xU0gngQ+KucllZOeLre+oXSSdObGlXZvMWuzrhTobj
- 9HXT0Po34lvlOp9B3Vjq2AurNkOLjNaZh+vHnDCKkG7Js2lyULgQ6g1sFAoxe6ZHklIF
- jO4soH4Mk/NDG/Jgvpdo0cMlXUuQ+OjLRQjgqbvLgGbcznlm/mmPZt/Rt+fRSr37JB3E
- pY+w==
+ d=1e100.net; s=20230601; t=1743889751; x=1744494551;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1d1BLMUXElgOrmHcKtE/T31W9fD0LUsaqgDKJy8c1to=;
+ b=AjgzNnC9km7i5Dv7SYY53okVxDGoGNTqEf/7jAnN5q2M1jWeMdBSTxj7z4eO8iYD6U
+ tJiGtSqn695RpGTmx0EfuFIcjr4hmfsT24xuLpITxVi0MP2kspR99Z82TaZIqA6zrB/P
+ 9jT1a3f3mqS96YMaxCW5QTEMfL0x2mMC8VoB1CoNgpYr1N8CveQdVNuWHVyVtnj2llPe
+ LNgda7H0M1djYOEXFA8FFPtua9oV8NpoUBHbrpxVTtZnncCBJLphbHSHse4ThaAm4HYN
+ J6r/Yk4104USgR5QBYfYxs5UcIE0IuYtnE6SixrrL3AvE+S+kTX6mwtgQke932KSJBiD
+ TI1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHMry9Mn6Zg2U7wXOWZKcapb7y0PAOkfEh+MW/LtOczcLqcZ0LRI1IaaOtzYNYoOBnAVRHV+pXLDP4@nongnu.org
-X-Gm-Message-State: AOJu0YyLphHOCm+46WdRutQBP2mIQ3cDq1YhsreL0vCTDyJaDuDvjDaf
- aC/Bjo3KH2bPaXxXeq35OEiRxuukOc/8NmXL7c2KhP0OZ/ofO6EU
-X-Gm-Gg: ASbGncuUeNhvmV2yGSk5O/Y4QSRmAr1B2fZms0n38P3QYhOSCxk8zWkbTVW0Q46MQMx
- y3N+Hi7KcfPnG9ZY0ONkTfgQ6ts3wrTJP0ZOjKQ449e1BondtEev0OumcnlUTVtj1NVujr4/YV0
- Wx85/s+uM50TPQNQyn3mMbM+ta6BmVinSXb5NySKgAxpnhAeIBPdFlBeLSAOgrPITcLwFiHdlBX
- 1WqjPNqkojoinOnaEP9e0HU253/hqTh/p07idTbKfilZf7anEbZrNwtoSNGUziHBUQ4LGSjgCRV
- wd4yBE8ytqogSDoIyBfv8DJIu+sEiLoxOgs6LcWEuBzBklU55Ir1CW3hwQqRf/rOAVFxAv5uE8w
- lW41XXL5ISnzNoBgzbQ==
-X-Google-Smtp-Source: AGHT+IFezPDbprZtyR4qSx3uaqScP8CCsHxTbqOVP15yfblZNf42peam3JTETjlKqe1lP1t3aSr5ZQ==
-X-Received: by 2002:a17:90b:5385:b0:2f2:ab09:c256 with SMTP id
- 98e67ed59e1d1-306a621086amr11357660a91.33.1743885559610; 
- Sat, 05 Apr 2025 13:39:19 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
- ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ AJvYcCUhVMnh9R9pbhhOoGUIWwRM0d59RePz5i0mmmzrp+eCjvp7WpO32qIhinoGE9iWcR7TlfO4EpBA0Q==@nongnu.org
+X-Gm-Message-State: AOJu0Yw3m+rVmIu8ULqBCKb6X/2sHlozh9LR3E6eJNjTSgJD3E3+yoIO
+ /uOJPgVw1TZyYXkpXrMXogQSs+F4cEr77PdlTPXG9IfJZbkjUg7qD5PYQw==
+X-Gm-Gg: ASbGncu3vkGmPJYuy3Jhut3NTFwUkNZOXC/E1dQfobaeEW1i5PHDSm2wP916sz9rxIa
+ /0owcS2Jg13MIViyuR8nEzYIEOB560OQCeKUnsHrxb+IwqmZLNo48iYdpDYInAOIOCLQm2MCzDS
+ zmsLlqbUvVwvRl01o3BtLgl61uwy5CZ1YLWzZdejifekTVgc09+4KqT7Oz2dNynMugAw2ccx0zL
+ oY1eJgC2BcKz/5/zMYqaXB+VUwmd4SDFvwJi39XZDZQwgaVh1YSg7hkceTOSjLI4lcS7DtVwMuc
+ uzy1xFn6gWqXhFcQ74O+oOWDiPcJ/JyHZxmcnPmzGJ5cKgTN/mvB/QZY0jFXla8kM/oQ2kAeXrs
+ RWwu/cJvT7fCdKem6HO0r/NAIwhptWdhH3ywLsM/5bC2eDPL9RDgRsfQk7nb8utdA
+X-Google-Smtp-Source: AGHT+IFTethtvZ46YpWyZlait1jQh67AEgF7YEJDWzUGmsywoj3zkgPr8jcrVW4OD6TW/9FqT/m1Qw==
+X-Received: by 2002:a05:6402:2793:b0:5dc:7725:a0c7 with SMTP id
+ 4fb4d7f45d1cf-5f0b3b65995mr6180765a12.3.1743889750813; 
+ Sat, 05 Apr 2025 14:49:10 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-1bf0-7700-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:1bf0:7700:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3057ca1f4b5sm6088926a91.7.2025.04.05.13.39.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Apr 2025 13:39:19 -0700 (PDT)
-Message-ID: <dec6e8a6-ed91-4a93-b1ab-e592062e6f89@roeck-us.net>
-Date: Sat, 5 Apr 2025 13:39:18 -0700
+ 4fb4d7f45d1cf-5f0880a535fsm4382270a12.80.2025.04.05.14.49.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Apr 2025 14:49:10 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ qemu-arm@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH-for-10.0 0/3] More imx8mp-evk improvements
+Date: Sat,  5 Apr 2025 23:48:57 +0200
+Message-ID: <20250405214900.7114-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.49.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Add property to support writing ERSTBA in high-low
- order
-To: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250405140002.3537411-1-linux@roeck-us.net>
- <ae8cd367-8580-4476-9a75-3fa4f7aa2536@linaro.org>
- <7ed5d213-9429-45c8-bbf3-6f3f841a2299@roeck-us.net>
- <7C5A41A1-38EE-4D22-8F84-6A5A3A2BDD82@gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <7C5A41A1-38EE-4D22-8F84-6A5A3A2BDD82@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=groeck7@gmail.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,72 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bernhard,
-
-On 4/5/25 12:28, Bernhard Beschow wrote:
-> 
-> 
-> Am 5. April 2025 17:26:14 UTC schrieb Guenter Roeck <linux@roeck-us.net>:
->> On 4/5/25 07:25, Philippe Mathieu-Daudé wrote:
->>> Hi Guenter,
->>>
->>> On 5/4/25 16:00, Guenter Roeck wrote:
->>>> This series is needed to support the USB interface on imx8mp-evk when
->>>> booting the Linux kernel.
->>>>
->>>> According to the XHCI specification, ERSTBA should be written in Low-High
->>>> order. The Linux kernel writes the high word first. This results in an
->>>> initialization failure.
->>>>
->>>> The following information is found in the Linux kernel commit log.
->>>>
->>>> [Synopsys]- The host controller was design to support ERST setting
->>>> during the RUN state. But since there is a limitation in controller
->>>> in supporting separate ERSTBA_HI and ERSTBA_LO programming,
->>>> It is supported when the ERSTBA is programmed in 64bit,
->>>> or in 32 bit mode ERSTBA_HI before ERSTBA_LO
->>>>
->>>> [Synopsys]- The internal initialization of event ring fetches
->>>> the "Event Ring Segment Table Entry" based on the indication of
->>>> ERSTBA_LO written.
->>>>
->>>> Add property to support writing the high word first. Enable it
->>>> for dwc3.
->>>>
->>>> ----------------------------------------------------------------
->>>> Guenter Roeck (2):
->>>>         hw: usb: xhci: Add property to support writing ERSTBA in high-low order
->>>>         hw/usb/hcd-dwc3: Set erstba-hi-lo property
->>>
->>> What about using .impl.min_access_size = 8 instead?
->>>
->>> Could you try this patch, or provide me with a reproducer?
->>>
->>
->> You should find everything you need to reproduce the problem at
-> 
-> Hi Guenter,
-> 
-> thanks for testing the new board, much appreciated.
-> 
->>
->> http://server.roeck-us.net/qemu/xhci/
-> 
-> I like your approach of pruning the device tree automatically: <http://server.roeck-us.net/qemu/xhci/patches/0002-imx8mp-evk-Remove-unimplemented-properties-and-nodes.patch> Would you mind if I upstream it with a few modifications like in <https://github.com/shentok/qemu/commits/upstream/imx8mp-test/> ? If yes, please let me know if I attribute your work there correctly.
-> 
-
-Please feel free to go ahead. Attribution is fine.
-
-Note that I had submitted a similar patch a couple of years ago; that
-was rejected with the argument that I should not use the dts file
-from the Linux kernel in the first place. That is why I did not bother
-to submit the patch myself.
-
-Anyway, just for reference: the inspiration for this change is from
-commit bf1da4b308 ("hw/arm/raspi4b: Temporarily disable unimplemented
-rpi4b devices").
-
-Thanks,
-Guenter
-
+This series adds a functional test for the imx8mp-evk board with USDHC=0D
+coverage. Thanks to Guenter Roeck the usage of the board gets simplified by=
+ not=0D
+asking the user to remove the cpu-idle-states properties from the devicetre=
+e=0D
+since that is now done automatically. Likewise, a stack trace during boot i=
+s=0D
+resolved by also automatically removing an offending device node.=0D
+=0D
+Supersedes: 20250330094139.11948-1-shentey@gmail.com=0D
+=0D
+Bernhard Beschow (1):=0D
+  tests/functional: Add test for imx8mp-evk board with USDHC coverage=0D
+=0D
+Guenter Roeck (2):=0D
+  hw/arm/imx8mp-evk: Remove unimplemented cpu-idle-states properties=0D
+    from devicetree=0D
+  hw/arm/imx8mp-evk: Remove unimplemented nxp,imx8mp-fspi node from=0D
+    devicetree=0D
+=0D
+ MAINTAINERS                                 |  1 +=0D
+ docs/system/arm/imx8mp-evk.rst              | 12 +---=0D
+ hw/arm/imx8mp-evk.c                         | 29 +++++++++=0D
+ tests/functional/meson.build                |  1 +=0D
+ tests/functional/test_aarch64_imx8mp_evk.py | 69 +++++++++++++++++++++=0D
+ 5 files changed, 102 insertions(+), 10 deletions(-)=0D
+ create mode 100644 tests/functional/test_aarch64_imx8mp_evk.py=0D
+=0D
+-- =0D
+2.49.0=0D
+=0D
 
