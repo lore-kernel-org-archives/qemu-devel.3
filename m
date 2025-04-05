@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BD4C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B51BC36018
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u15xI-000355-Fq; Sat, 05 Apr 2025 12:01:12 -0400
+	id 1u169K-0000VR-Kt; Sat, 05 Apr 2025 12:13:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u15x6-0002we-PA
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:01:05 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u169H-0000V8-8K
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:13:35 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u15x5-0003o3-9A
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:01:00 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-736bfa487c3so2451990b3a.1
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:00:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u169F-0005D1-D5
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:13:35 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3913d129c1aso2084858f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:13:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743868858; x=1744473658; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YcmaZAJ41qN5uUSkcCPQwfPmp8vk4/ZMFtX+6nm5kbA=;
- b=wdHmrzYyvzDQ+NntJNuvMxMj5T4FWYqbHEBJcHHv4DRITAXYPr9om+Jhaz/WjNcW7F
- QriG6xz8NSOZvf2NKSWLhUUNiJfBC+W012bx9s/yjd02UeiaUPHSyzDtE6lw85ZLv8qf
- YC4npYVKJidvDwo72gKQzjKjrw6B9KhUe2tidVbRCxSTUPGIf9AaKm/566nWSDpBYd2O
- 8JuFV7EY35LiBH5m2ZWtfA86mPcU/inYwvcbcEpTctSmFHtfNnAae7DEtGOoaoI5CXPF
- NNZkW0vDcyPFwtxsnJnSpVf8/OWUzgjgy+G7azx+W43ZbhPzZvkd0mz5JMcPSFfUAAku
- pSrA==
+ d=linaro.org; s=google; t=1743869611; x=1744474411; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SfypuBuFqBrJN/RG4a0oTJgQCsI2EHmEmRAR6WvMt9k=;
+ b=vxLHTfg/D4TKtTufBIKTh7tG6LRGwIk033RYo5cGKjIBks1ayPus5i6jdRoGNH3zE6
+ Gz8SgwiNyZAGp9mc0X4FBlDa+6V63op0R2BBMEC7t9q+UjOvzDPZrdGTNrhANWmwLidy
+ V6F5zZeS495+66oM8IeR0MkjIQE/dYPUWoqtnNSA6Gp4O7Q8KFjVxzkxG7QYuFXwPgGW
+ +Od3YKIe3WKm48gtLl/yl+Y7fJ0qLYOxq3kqdOp0wcozmvsm9BeAZQ8ZQ+gU+EZBCE1Q
+ BxONsWILC9zZn8NCSi8sy0MH+Pue5uosl8bJ05i6djOr3Y1ZwmY9foH13QKhEHHXoQWr
+ DDLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743868858; x=1744473658;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YcmaZAJ41qN5uUSkcCPQwfPmp8vk4/ZMFtX+6nm5kbA=;
- b=LFD84lnPPr8CVqadutRPThbd8B8GzNSs8oM2HsQnjhaLGTOxkfO0kxJXDGh5nEJHHb
- XAwfmEgf/Zf/THpvy6Dn6aUj8V4DJo3glFkWq++i07vEZfGM4pZetPeAlt637EPnmeDh
- GpMtbWLKC69MlL6YAl+Ggs2sjreLVDYS0nhKSTtT10cHxL6ywkzhDn5hZWE7uC2H+/U3
- WQK+FEghGSz6fyPS+1akcF9LXD6Xb/vtQw7GuUD+yTLVPzwxyh/8MLvKX6+hmHAB+v5S
- l0aozc7LBzG+Zk5ljzY26k5W9Eaugd/bDO9Y8HGEIS79sGFAfC7cnb9FubSXVoZyiqcL
- 0kKA==
-X-Gm-Message-State: AOJu0YxEWRsPGyA+meIwqYECJQYF0UMH7kLEDG16AkDvgOUgEeZDAoU3
- c4S3q8gbfS3Em312E+nB2I+hiCHmigY8/anFOJ84hwM7JK10p+uQvDIKnzWXDI6YqwS9ubEZ0ZF
- V
-X-Gm-Gg: ASbGncsRp8fwGYVC/vL+K/duUmzFxDyUS4a0+uK+YPR4mkXF+WGOLfI7fogG8h0aI9r
- eAN1OFCkRtQFaPI613bwPA+CL9onK56mXK4j+4+fPLRvwZBHaptyyxJjxFdqHAcvIloZLWM+KPo
- McOLVXvNuW4avmp9snlAu0jKiyy+PXo8wuNJYBB4MZeFHOg9qz02UEUCFjaW0Ca5P+mVMuJMNfA
- xhsqFxIwqiqtaA5CQP3+BbQR2Zdcfyp8I4r7aJ4DuIVATTFYqijs6QwGUPRMmCJiINZ6jjX5H+6
- TecXzBNZz5e/wdAGKn4wluczhCgIudIcN4ALjMy2C7JBr6o4D/Md60S0PutlV02lsFmjLPa0VYE
- =
-X-Google-Smtp-Source: AGHT+IFjrcwKS/64HKNVdbEug9TkQedgILzEWDI1qbFX6y9MhN9BIB9MSeYt9io4vZ3WFNujz93J3Q==
-X-Received: by 2002:a05:6a00:398d:b0:736:34ca:deee with SMTP id
- d2e1a72fcca58-739e492f5b6mr11133780b3a.7.1743868857731; 
- Sat, 05 Apr 2025 09:00:57 -0700 (PDT)
-Received: from [192.168.122.15] ([173.164.107.234])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d95e6e57sm5415151b3a.0.2025.04.05.09.00.56
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Apr 2025 09:00:57 -0700 (PDT)
-Message-ID: <dc06eeb6-6283-47b1-b2c7-a119e366c4dd@linaro.org>
-Date: Sat, 5 Apr 2025 09:00:55 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 2/9] target/arm: Remove use of TARGET_AARCH64 in
- dump.c
+ d=1e100.net; s=20230601; t=1743869611; x=1744474411;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SfypuBuFqBrJN/RG4a0oTJgQCsI2EHmEmRAR6WvMt9k=;
+ b=JbuHdZQMdUgqPPtMIQHdLMx6kNe+g2VilwbXECvsoDhDZnxQ9lFLidE69oP0LL7Yc/
+ clElosp/4EvpMziwDmpIhWhYXoSEBWa6qU9hs9vNDfNDRing6T1u4v17qrF5Y21oi/A3
+ tluC++lfqXw6wO8c5Toe8kaOw5RumDdP/OhQ7b7m+8hrRZUDllvAMMUQaVkKXRMKqHLJ
+ T4X1cPO9VUhhe4Q6/pLL04QPBl6B2w1e70bxHx47cpb0qqFTjHzM25/EV/ffx7HLXn5X
+ B8mvlo3KeFymQklJvt+cVCM0GDbYVcA9U6vza7UoI1xRlxxOVDtichXzdCa4VsudBLmt
+ G4bw==
+X-Gm-Message-State: AOJu0YxCDWKGWoBhtnbnsA4N/d37KTH2JzMJPIuI3aZKEwFg+OMyaNRn
+ Y352mYe13YOdYIpo0fJUkM6XAEvZQW8NFtDS4tPTc8ClaW2rGhonq9u10dAkS+Gy95/abEPZRTC
+ d
+X-Gm-Gg: ASbGnctXIMHXWj/FBxDwyzZEFa5Q4EpuL+MVaJfeRlvaiRMg2ECQChXtdcxmgQnfpvw
+ m27UAA/XEyqDFwt1QzzrRmakqxEe6y2r+4dHRh7n6Iz8X8IOCNaEXZKgz9nGQKqKn7Swh8zaEur
+ PVglkbMwG5lZGxh0W44OBTRy1oi030DbK8tNjFf0Wxsjjx3aDPXfEilmtolbkEIdE6xUVTcD6vS
+ TICyGarq9eVxNfHmlqTjYDScFY6vZxu6SwOM+JuKBzwEzD9ZYppRr9fRJY3QCdpIcK0OtsCvm1r
+ IFIImU7ckYloakm206T5VhQPboD1l8WXgbtELRHa0bOr6UhmNm3EPqVyOmIYTuyodGLeDQsPUwy
+ JlBcBDvXflHleb1LLDSxK5o6e
+X-Google-Smtp-Source: AGHT+IEji6hzt7oIRu2XldisRC52cX4+S9rrdxnid68Q5DfxvJOEnh4R1oFoswk8/IR2bpWiu8TyTw==
+X-Received: by 2002:a5d:5f4b:0:b0:38d:ba8e:7327 with SMTP id
+ ffacd0b85a97d-39cb35aeb5amr6857276f8f.8.1743869611520; 
+ Sat, 05 Apr 2025 09:13:31 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39d75335591sm1134461f8f.1.2025.04.05.09.13.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 05 Apr 2025 09:13:31 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20250404223521.38781-1-philmd@linaro.org>
- <20250404223521.38781-3-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250404223521.38781-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 v4 02/16] target/i386: Remove
+ AccelCPUClass::cpu_class_init need
+Date: Sat,  5 Apr 2025 18:13:06 +0200
+Message-ID: <20250405161320.76854-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250405161320.76854-1-philmd@linaro.org>
+References: <20250405161320.76854-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,17 +101,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 15:35, Philippe Mathieu-Daudé wrote:
-> It is safe to remove TARGET_AARCH64 #ifdef'ry for code
-> guarded by runtime check on aa64_sve ISA feature, which
-> is only available for Aarch64 CPUs.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/arm/cpu.c | 11 -----------
->   1 file changed, 11 deletions(-)
+Expose x86_tcg_ops symbol, then directly set it as
+CPUClass::tcg_ops in TYPE_X86_CPU's class_init(),
+using CONFIG_TCG #ifdef'ry. No need for the
+AccelCPUClass::cpu_class_init() handler anymore.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/i386/tcg/tcg-cpu.h |  4 ++++
+ target/i386/cpu.c         |  4 ++++
+ target/i386/tcg/tcg-cpu.c | 14 +-------------
+ 3 files changed, 9 insertions(+), 13 deletions(-)
 
-r~
+diff --git a/target/i386/tcg/tcg-cpu.h b/target/i386/tcg/tcg-cpu.h
+index 7580f8afb4f..85bcd61678f 100644
+--- a/target/i386/tcg/tcg-cpu.h
++++ b/target/i386/tcg/tcg-cpu.h
+@@ -19,6 +19,8 @@
+ #ifndef TCG_CPU_H
+ #define TCG_CPU_H
+ 
++#include "cpu.h"
++
+ #define XSAVE_FCW_FSW_OFFSET    0x000
+ #define XSAVE_FTW_FOP_OFFSET    0x004
+ #define XSAVE_CWD_RIP_OFFSET    0x008
+@@ -76,6 +78,8 @@ QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, zmm_hi256_state) != XSAVE_ZMM_HI256_OFF
+ QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, hi16_zmm_state) != XSAVE_HI16_ZMM_OFFSET);
+ QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, pkru_state) != XSAVE_PKRU_OFFSET);
+ 
++extern const TCGCPUOps x86_tcg_ops;
++
+ bool tcg_cpu_realizefn(CPUState *cs, Error **errp);
+ 
+ int x86_mmu_index_pl(CPUX86State *env, unsigned pl);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index d930ebd262e..31487f4b282 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -43,6 +43,7 @@
+ #include "hw/boards.h"
+ #include "hw/i386/sgx-epc.h"
+ #endif
++#include "tcg/tcg-cpu.h"
+ 
+ #include "disas/capstone.h"
+ #include "cpu-internal.h"
+@@ -8903,6 +8904,9 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
+ #ifndef CONFIG_USER_ONLY
+     cc->sysemu_ops = &i386_sysemu_ops;
+ #endif /* !CONFIG_USER_ONLY */
++#ifdef CONFIG_TCG
++    cc->tcg_ops = &x86_tcg_ops;
++#endif /* CONFIG_TCG */
+ 
+     cc->gdb_arch_name = x86_gdb_arch_name;
+ #ifdef TARGET_X86_64
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index 35b17f2b183..27c163d17e2 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -124,7 +124,7 @@ static bool x86_debug_check_breakpoint(CPUState *cs)
+ 
+ #include "accel/tcg/cpu-ops.h"
+ 
+-static const TCGCPUOps x86_tcg_ops = {
++const TCGCPUOps x86_tcg_ops = {
+     .initialize = tcg_x86_init,
+     .translate_code = x86_translate_code,
+     .synchronize_from_tb = x86_cpu_synchronize_from_tb,
+@@ -148,17 +148,6 @@ static const TCGCPUOps x86_tcg_ops = {
+ #endif /* !CONFIG_USER_ONLY */
+ };
+ 
+-static void x86_tcg_cpu_init_ops(AccelCPUClass *accel_cpu, CPUClass *cc)
+-{
+-    /* for x86, all cpus use the same set of operations */
+-    cc->tcg_ops = &x86_tcg_ops;
+-}
+-
+-static void x86_tcg_cpu_class_init(CPUClass *cc)
+-{
+-    cc->init_accel_cpu = x86_tcg_cpu_init_ops;
+-}
+-
+ static void x86_tcg_cpu_xsave_init(void)
+ {
+ #define XO(bit, field) \
+@@ -207,7 +196,6 @@ static void x86_tcg_cpu_accel_class_init(ObjectClass *oc, void *data)
+     acc->cpu_target_realize = tcg_cpu_realizefn;
+ #endif /* CONFIG_USER_ONLY */
+ 
+-    acc->cpu_class_init = x86_tcg_cpu_class_init;
+     acc->cpu_instance_init = x86_tcg_cpu_instance_init;
+ }
+ static const TypeInfo x86_tcg_cpu_accel_type_info = {
+-- 
+2.47.1
+
 
