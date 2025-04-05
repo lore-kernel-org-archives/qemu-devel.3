@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CD0C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7260C36018
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 16:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u169W-0000XW-Sf; Sat, 05 Apr 2025 12:13:50 -0400
+	id 1u169x-0000hj-Ny; Sat, 05 Apr 2025 12:14:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u169V-0000X8-5m
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:13:49 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u169s-0000gx-K0
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:14:13 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u169T-0005EL-FW
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:13:48 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cf848528aso24357915e9.2
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:13:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u169q-0005Gh-L9
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 12:14:12 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43690d4605dso19558385e9.0
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 09:14:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743869625; x=1744474425; darn=nongnu.org;
+ d=linaro.org; s=google; t=1743869649; x=1744474449; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=22lxwaDoEwngFmE/+xTqkjd0CAM2fFfU6hC2em0g/bA=;
- b=nOmVKJ4zaATB7GL6dATMvWX7fxkCPbFJlqz4Hm+IEg2326ds8Odw8u5z/5DBUUJ2qo
- rnLz5Pu5PRE7K6N7udqmfYSw7sMq3sDKxFqWGZ4mv8wbJvK23TiqDKNTk4s7TpShu6x+
- qe4YAsy1EXapo1dyA5hEDoKxBy5jmfO6ITJMGA6OxZeLPvphK9aM5IiE7tM/p01A6vQf
- q3LJHrZSpPzQ2lKS2G9dXbmtnCgBpGHQrRfMP/ljOgXt/pUMZhRKg6MoXOjN+il7WlGq
- GjqRL4d8SWiR4dRtD4jKJm/1KUs+gYxpI0S6xUSNAjX+n9qwV1yw713ebediS2ujvu3F
- 2qqg==
+ bh=ZtZrrkt2ntmoiQ4mVP99KUX/c8Ppft+k9zep++rss8s=;
+ b=I46AHA4SouzmJg5Q5XokUgff3TaWwwUm1mtvrksYlf2Hb+g+WG00YVgRtigmykKK4a
+ xkoZsXk0oEZfjvaZsKOLVtUuO4k7nQN8YlLKJdpZE7rgLDTyQitJJgpMNEy5nQAu158g
+ LqBIwnLDCftPYXKCOyWaoHlGHLH68x4xuD8g0gDD4l6ieLYvgx7zUi6V6lCjk1i9BQ5H
+ udUkxNYww+u28zc5uGDWUnAb90v0IVucom9uT7uXV3qY3cs+btffV+B3TZEp5N2xFJwQ
+ /PbM2x1y2pMaDMBC/k9IfbUx7zgdgxd1SeinOCAP6lFae9/EvifKVtgNnXxZbrTool5v
+ 7vVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743869625; x=1744474425;
+ d=1e100.net; s=20230601; t=1743869649; x=1744474449;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=22lxwaDoEwngFmE/+xTqkjd0CAM2fFfU6hC2em0g/bA=;
- b=svl7ektJqBJnKiwYy+UlnN+QvzH2qNv+nToQLKTV7CXNJpfCkWbb4QSCj2yscsM4Qi
- GEgQXJwWmrIxDHMMAyAuUNYkSvDFK5fdKuiJ30RL8b1FtCZ4FIlCKTtRxecFmS/odzVh
- y8nldheeIgVOO+XYBeOc6jTuY4YHPM2V+PkRIhZvn5/cnzeRbzkNPLg6ogs1TbKL3z8J
- spr+8pRGSc9mvKt9ENy0gpKukvO91DkbgV/AiF5bFKh7FgOP1hYVrhPulx2FsIX0Zxro
- DRP1I3LwgnRUhkdTVc8Bsiduno98nN3tP/shd8SUYnoZApXahLyyIgxmU5C3HsIdqTEi
- Sj9Q==
-X-Gm-Message-State: AOJu0YyXzRGxmCK0go5LknvQb1NRfsMWz271hkbH1x9KYPCRpETHoBTC
- bjnUpaAbowiYojbQ9MmFSHqlvL/YuuiZagX+LScgrRU255PZUoI1MvO2gMKkaakakkfsfIETJAO
- +
-X-Gm-Gg: ASbGncvuCnFRa+zj7ZY5RRZhrYBbrBp9mpLNq4cgvutD9rtQ+V/i53elDhOaIFFv9KA
- RRL+9cS2X+/ZeacJeA+qizfvzkbgBpwKl3TlX8YTXRltIWWR6FtuDcLPCjh+8L8BgSJb1Se4qrJ
- 0gxhbpLUvFHbTPSrzL/YJOBH2Nw1DIzdktPJy2l9IkS4Ag7AOYum8Lr8jIwHpCFT0bPZf+5TUPr
- sZTLkitCzr4B6fIg60AdboIYEELTcWGc+gpKapvWSaVPka5qQgFadXq6LBp37j2F0iy+mvytipo
- K5wg93UjFknn6v5fUNeS1tKO2jawZYpVSOjUU649+kRykJQ56wkUKIrJcHBR3WAU0cxb8bAf5NB
- Tv+d7XxGXsNFVGbA0FOKWiy1F
-X-Google-Smtp-Source: AGHT+IGSrm/mb4PJDDqFvoc7hQEWBmgUAFUhSrSe+kLbllRmaM6IX9G01WoRq3TRgZ9QBaUl3UsZRg==
-X-Received: by 2002:a05:600c:c0e:b0:43c:ed61:2c26 with SMTP id
- 5b1f17b1804b1-43ee0694e51mr34531615e9.17.1743869625214; 
- Sat, 05 Apr 2025 09:13:45 -0700 (PDT)
+ bh=ZtZrrkt2ntmoiQ4mVP99KUX/c8Ppft+k9zep++rss8s=;
+ b=D3oR9l8Wh05eN1uausu7Pd5QhI1jLXYhh7iEIXdvUOWeuxNw7CE2ZOyGAJ96YesAJQ
+ TLuC5RzfdYxz4Q43JWeVM+Zx4AKa6aEq6LW/nmJF/3lQy9K3shCx3Hg3ojJjVX6Y5Zw8
+ kNvjNn0BN04OBk1DlQsMuc7tVdP4hsipVmwk3RHvIbIii4gPAA0vC9iBSLQFYy/GLQPD
+ Jbdiz+U1qwSfZoCurCqMwCEtiVyFJeLK9+0t7/otOhqgIzLuKVjB1mpwRcKiXsHRUsWc
+ i1iAg/Z6BSMG3GLMBVQ6LihrKz7q49Kt+P5ixmXWqSFjE66HOg1IN29mBLmXstSZHLjx
+ Eafw==
+X-Gm-Message-State: AOJu0YxMLOiWQ5Z5LfS2St1OPPUz6ATwTmTcHYMmxzwErXt8o+ZnSqU9
+ PhyjcTG8mdQ/H3sfWqMRcHBca9HnpSzGKA5XLhvBl0dXxxvY6YiF6U5+yMAe+EDQQcW7IkE5+tb
+ L
+X-Gm-Gg: ASbGncs4Bip8ykZ+Y1GI6eLmfconuhVB+GAVWbKESWasiwbc31MMta1tQ/3bQI3yAkG
+ Jz9uG+ALZqzRuz2qReC9yHKBwcan4bLemtVR4fCEHybuL4Oud8YAFxcR4QDe/3NADR/YkfQgmTI
+ NmGon4en1LyMqcAvwfF/iDX2kWqUiufciYBnIrOfzL7/rWkw9G+2L0hbIgXRXVBgWiIu49Mi9Ft
+ j0t7t7RYCOy0uVV4HtAExLPMsL+ECHW0hPsCJQMd+4qfwB3tOpM74obFrfSbLS+wkqVCRe3jc9R
+ YOLNKYLHmISLdyvf0SpjBHTaq+aT19PbL6y9qCapwJt0y95LSWDm6ZJNYSQpbQ1ZC6COjiuefOV
+ BswJwDxQG1hM1byjXzYDdFc0G
+X-Google-Smtp-Source: AGHT+IGRxjjryaIQqVRYRdbKj/EpsAJKimNz9sl47phK88XbFx96DIzwGFO4T0fcTj0m+BFwieolhg==
+X-Received: by 2002:a05:600c:35d6:b0:439:91dd:cf9c with SMTP id
+ 5b1f17b1804b1-43ecf85db98mr77995345e9.10.1743869648798; 
+ Sat, 05 Apr 2025 09:14:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec364ec90sm76948075e9.27.2025.04.05.09.13.44
+ 5b1f17b1804b1-43ec34be2ffsm76593335e9.22.2025.04.05.09.14.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 05 Apr 2025 09:13:44 -0700 (PDT)
+ Sat, 05 Apr 2025 09:14:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH-for-10.1 v4 05/16] tcg: Always define TCG_GUEST_DEFAULT_MO
-Date: Sat,  5 Apr 2025 18:13:09 +0200
-Message-ID: <20250405161320.76854-6-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.1 v4 10/16] tcg: Have tcg_req_mo() use
+ TCGCPUOps::guest_default_memory_order
+Date: Sat,  5 Apr 2025 18:13:14 +0200
+Message-ID: <20250405161320.76854-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250405161320.76854-1-philmd@linaro.org>
 References: <20250405161320.76854-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,88 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only require the TCG_GUEST_DEFAULT_MO for MTTCG-enabled
-frontends, otherwise we use a default value of TCG_MO_ALL.
-
-In order to simplify, require the definition for all targets,
-defining it for hexagon, m68k, rx, sh4 and tricore.
+In order to use TCG with multiple targets, replace the
+compile time use of TCG_GUEST_DEFAULT_MO by a runtime access
+to TCGCPUOps::guest_default_memory_order via CPUState.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/m68k/cpu-param.h    | 3 +++
- target/rx/cpu-param.h      | 3 +++
- target/sh4/cpu-param.h     | 3 +++
- target/tricore/cpu-param.h | 3 +++
- accel/tcg/translate-all.c  | 4 ----
- 5 files changed, 12 insertions(+), 4 deletions(-)
+ accel/tcg/internal-target.h | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
-index 256a2b5f8b2..10a8d74bfa9 100644
---- a/target/m68k/cpu-param.h
-+++ b/target/m68k/cpu-param.h
-@@ -19,4 +19,7 @@
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 23aac39b572..f5a3fd7e402 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -46,16 +46,15 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
  
- #define TARGET_INSN_START_EXTRA_WORDS 1
+ /**
+  * tcg_req_mo:
++ * @guest_mo: Guest default memory order
+  * @type: TCGBar
+  *
+  * Filter @type to the barrier that is required for the guest
+  * memory ordering vs the host memory ordering.  A non-zero
+  * result indicates that some barrier is required.
+- *
+- * This is a macro so that it's constant even without optimization.
+  */
+-#define tcg_req_mo(type) \
+-    ((type) & TCG_GUEST_DEFAULT_MO & ~TCG_TARGET_DEFAULT_MO)
++#define tcg_req_mo(guest_mo, type) \
++    ((type) & guest_mo & ~TCG_TARGET_DEFAULT_MO)
  
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
-index 84934f3bcaf..fe39a77ca38 100644
---- a/target/rx/cpu-param.h
-+++ b/target/rx/cpu-param.h
-@@ -26,4 +26,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index f328715ee86..acdf2397495 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -18,4 +18,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
-index eb33a67c419..45fde756b6a 100644
---- a/target/tricore/cpu-param.h
-+++ b/target/tricore/cpu-param.h
-@@ -14,4 +14,7 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
-+/* MTTCG not yet supported: require strict ordering */
-+#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
-+
- #endif
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index c5590eb6955..7467255f6e4 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -353,11 +353,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
-     tcg_ctx->tlb_dyn_max_bits = CPU_TLB_DYN_MAX_BITS;
- #endif
-     tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
--#ifdef TCG_GUEST_DEFAULT_MO
-     tcg_ctx->guest_mo = TCG_GUEST_DEFAULT_MO;
--#else
--    tcg_ctx->guest_mo = TCG_MO_ALL;
--#endif
- 
-  restart_translate:
-     trace_translate_block(tb, pc, tb->tc.ptr);
+ /**
+  * cpu_req_mo:
+@@ -67,7 +66,7 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+  */
+ #define cpu_req_mo(cpu, type)     \
+     do {                          \
+-        if (tcg_req_mo(type)) {   \
++        if (tcg_req_mo(cpu->cc->tcg_ops->guest_default_memory_order, type)) { \
+             smp_mb();             \
+         }                         \
+     } while (0)
 -- 
 2.47.1
 
