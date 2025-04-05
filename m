@@ -4,54 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994C4C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 00:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE434C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 01:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0r7L-0004Fm-Pq; Fri, 04 Apr 2025 20:10:39 -0400
+	id 1u0rwc-0001gI-H4; Fri, 04 Apr 2025 21:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u0r6z-0004E3-TE; Fri, 04 Apr 2025 20:10:19 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u0r6t-0001cJ-WE; Fri, 04 Apr 2025 20:10:13 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5170E4E6010;
- Sat, 05 Apr 2025 02:09:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id vTsKuTI0HdaY; Sat,  5 Apr 2025 02:09:57 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3EF044E6004; Sat, 05 Apr 2025 02:09:57 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3AF3374577D;
- Sat, 05 Apr 2025 02:09:57 +0200 (CEST)
-Date: Sat, 5 Apr 2025 02:09:57 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Alexey Kardashevskiy <aik@ozlabs.ru>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v2] ppc/vof: Make nextprop behave more like Open Firmware
-In-Reply-To: <d8d883c3-afcd-44bd-aa71-6ca23d1dd9c3@app.fastmail.com>
-Message-ID: <e12b9999-d51a-91ec-a778-e1bdfec2404b@eik.bme.hu>
-References: <20250331142627.BAA2F4E6029@zero.eik.bme.hu>
- <d8d883c3-afcd-44bd-aa71-6ca23d1dd9c3@app.fastmail.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u0rwW-0001ft-2e
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 21:03:29 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u0rwU-0008GI-A9
+ for qemu-devel@nongnu.org; Fri, 04 Apr 2025 21:03:27 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2255003f4c6so24942435ad.0
+ for <qemu-devel@nongnu.org>; Fri, 04 Apr 2025 18:03:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1743815003; x=1744419803; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LWIcgOPan3l1oGAxJtplMws7fpZkKRmVobMScX00DTo=;
+ b=dwkycueSNgSlQfCjHcefUj+oQmDZtfpKpJHIe0XZuNGWUsfV4FgQmqy47gq0OUbYzH
+ zYLeqP7DtxyYK2IhGFI08zAMYIfT8nfKJwjg+ZasW3dISUreD5Ip0IWpTU9aR3fqlp8n
+ yX45/atky3OBgrp1H0rWBiVM6LM5TPd+ms64T1GQFjRRTQz1g2keKkVbP7yRD5zkPhgC
+ lFqZb9OpP7Jr4UjBMM4z3mv5tZiX/ovSq4YpP7oBmtnS8hNftYHSyQgSqGvCWNMHMCNF
+ yGNFXOs3gRlPWsFEMeeWMZF7q5yxYAV7zk41Z5cpu9UkQFYuE5lYJ62C5L4ALVk192RN
+ EcEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743815003; x=1744419803;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LWIcgOPan3l1oGAxJtplMws7fpZkKRmVobMScX00DTo=;
+ b=lw7GPZN6jwDrD/smnW4Gx62hUMYAlq0yzDcJ0L7gA21GRZc3Lv8mUc0QzKKMdkGNC4
+ QqqkjzXI/4vegQS7mmQrvdZVUNx5mCknAOtEnFEV0L3Of/lS1Efnf8ko6e3HlgkbTT5r
+ pbKwe2zebmgtuSf4iNym6wZMsqmeLyuCqfXhrGt/X7y/llYO1l00rCCpWg/XcUjYvdbN
+ E4pZ9uCxoqy3UOSEDUofijTS16TkOElraCszcFi82stEdn0ugfENYhJA/S3OTt572ami
+ hqQ5lBB5Se2It+yqap/iXGJNn+fmiC9BgihMQC09ZJPRCiGVKYqbaIbOGKGKG4Qm/N/l
+ Gr6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0kY/cXWmEf6Anb0bpWDC/ri6NJwgCAeRNfulrMyb22oC5ioIoc0HtomuUpVe/VU3G7B8+Zn4MXCII@nongnu.org
+X-Gm-Message-State: AOJu0YzODssHy6kQkLABPMrqSUuDLYh/W83jHo0O7sSMhWVG/jWAdBDe
+ 6H9LV6dKx7VxJgvl/4cvtpxD8A+/wA4o3SNqLiDgFrPA+Xm9NXi1hxrRJnI2zn4=
+X-Gm-Gg: ASbGnctNG6opHWi3Y3wn2y1bW97xlTjo6CxqawBnf2WDSaTIBPTEYhVEzyQoq2kCqB3
+ uyIVdJ+cq9HuZHxfMnoXxoiecB8wGf2Pb0RTwDwCp047YlFx93CowGoXTr9JQkpNjHoO4S4AHVa
+ AW3TcS70HWdcBhcYnqNPUpqWfcsXGn447SgxO+I1XNaH3D+63zAPpB484wgls2gYYrSCp7kiNqd
+ hs3+49o78peQg1lpdkZD3VE0NfFiqwe6bkrHQwI1zOj72jV2STGD1sfaSQIpuX+46uRQTjrCVl9
+ 9K6W56GIdmeaCdOrEpsEKXZhcnSsxywBiAyoddlUnZTqsw5WzaNOp7+a1w==
+X-Google-Smtp-Source: AGHT+IFXFWOhLVME3FhzMWeSFkXh304P/l8r5+HgzbjoqtVvWNdra6CQRhQbxesspne0ZIeE8Zd0Tw==
+X-Received: by 2002:a17:902:cf07:b0:224:1935:fb91 with SMTP id
+ d9443c01a7336-22a8a06cdd8mr66234045ad.27.1743815003006; 
+ Fri, 04 Apr 2025 18:03:23 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-229786600bcsm39214975ad.112.2025.04.04.18.03.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 04 Apr 2025 18:03:22 -0700 (PDT)
+Message-ID: <a61d8331-27ef-489f-8cd3-0374da0b4b1b@linaro.org>
+Date: Fri, 4 Apr 2025 18:03:21 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-10.1 11/39] hw/arm: Use full "target/arm/cpu.h"
+ path to include target's "cpu.h"
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250403235821.9909-1-philmd@linaro.org>
+ <20250403235821.9909-12-philmd@linaro.org>
+ <83a57c49-93fd-4463-81bf-fc0014ff5f3d@linaro.org>
+ <a3d5cd32-4a1f-4753-8536-43180229721f@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <a3d5cd32-4a1f-4753-8536-43180229721f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,148 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 4 Apr 2025, Alexey Kardashevskiy wrote:
-> On Tue, 1 Apr 2025, at 01:26, BALATON Zoltan wrote:
->> The FDT does not normally store name properties but reconstructs it
->> from path but each node in Open Firmware should at least have this
->> property. This is correctly handled in getprop but nextprop should
->> also return it even if not present as a property. This patch fixes
->> that and also skips phandle which does not appear in Open Firmware
->> and only added for internal use by VOF.
->>
->> Explicit name properties are still allowed because they are needed
->> e.g. on the root node that guests expect to have specific names as
->> seen on real machines instead of being empty so sometimes the node
->> name may need to be overriden.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->> I've tested this with pegasos2 but don't know how to test spapr.
->> v2:
->> Fixed a typo in commit message
->> Simplified loop to get next property name
->>
->> hw/ppc/vof.c | 51 ++++++++++++++++++++++++++++++++++-----------------
->> 1 file changed, 34 insertions(+), 17 deletions(-)
->>
->> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
->> index 09cb77de93..790d67c096 100644
->> --- a/hw/ppc/vof.c
->> +++ b/hw/ppc/vof.c
->> @@ -353,34 +353,51 @@ static uint32_t vof_nextprop(const void *fdt, uint32_t phandle,
->> {
->>      int offset, nodeoff = fdt_node_offset_by_phandle(fdt, phandle);
->>      char prev[OF_PROPNAME_LEN_MAX + 1];
->> -    const char *tmp;
->> +    const char *tmp = NULL;
->> +    bool match = false;
->>
->>      if (readstr(prevaddr, prev, sizeof(prev))) {
->>          return PROM_ERROR;
->>      }
->> -
->> -    fdt_for_each_property_offset(offset, fdt, nodeoff) {
->> -        if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
->> -            return 0;
->> +    /*
->> +     * "name" may or may not be present in fdt but we should still return it.
->
-> yeah we should, at least, to match "getprop". I also wonder if VOF does 
-> not add "name", then what would do so, do we really expect to see such 
-> properties anywhere? Because if not, then we do not need to skip it as 
-> we won't find it.
-
-I have to add it to fdt where needed. For example on pegasos MorphOS 
-checks the name of "/" and expects to find bplan,Pegasos2 which is how it 
-identifies the machine. So we need a specific name property there which is 
-one example when there will be explicit name property in the fdt. Maybe 
-it's needed on some other nodes sometimes but normally the default will be 
-sufficient but not always.
-
->> +     * Do that first and then skip it if seen later. Also skip phandle which is
->
-> (a nit) appears to me that if handling of a missing "name" was done 
-> after the last property, the patch would look simpler, but not sure and 
-> do not insist.
-
-I put name first to match what OpenFirmware does which returns name first. 
-SLOF seems to do everything backwards (maybe a result of parsing the fdt 
-to build the device tree) and returns properties with inverted order so 
-name is last on SLOF but even then the order is matched by putting name 
-first when we return properties in the normal order otherwise it would not 
-be in same order when reversed. I don't know if it's significant, some 
-guests may expect to get a name first but most would probably look for the 
-name not its position. The order now matches OpenFirmware and pegasos2 
-SmartFirmware and SLOF backwards so I think name is now where it should be 
-so I'd leave it first. The loop may become simpler if we don't skip 
-phandle only name, the complexity is mostly from sometimes we need to skip 
-both in a row.
-
->> +     * an internal value we added in vof_build_dt but should not appear here.
->
-> I would not hide anything though, unless it breaks something. Thanks,
-
-I did some tests with SLOF. This is what I get from SLOF:
-
-package 0x1e64a890 /vdevice/v-scsi@71000003:
-         slof,from-fdt          0
-         reg                    71000003
-         device_type            "vscsi"
-         compatible             "IBM,v-scsi"
-         interrupts             [0x8 bytes, 2 cells]
-         [000] 00001103 00000000
-         ibm,#dma-address-cells 2
-         ibm,#dma-size-cells    2
-         ibm,my-dma-window      "q"
-         #address-cells         2
-         #size-cells            0
-         name                   "v-scsi"
-
-This is VOF before patch:
-
-package 0x00001122 /vdevice/v-scsi@71000003:
-         phandle                1122
-         #size-cells            0
-         #address-cells         2
-         ibm,my-dma-window      "q"
-         ibm,#dma-size-cells    2
-         ibm,#dma-address-cells 2
-         interrupts             [0x8 bytes, 2 cells]
-         [000] 00001103 00000000
-         compatible             "IBM,v-scsi"
-         device_type            "vscsi"
-         reg                    71000003
-
-and this is VOF after patch:
-
-package 0x00001122 /vdevice/v-scsi@71000003:
-         name                   "v-scsi"
-         #size-cells            0
-         #address-cells         2
-         ibm,my-dma-window      "q"
-         ibm,#dma-size-cells    2
-         ibm,#dma-address-cells 2
-         interrupts             [0x8 bytes, 2 cells]
-         [000] 00001103 00000000
-         compatible             "IBM,v-scsi"
-         device_type            "vscsi"
-         reg                    71000003
-
-Apart from SLOF returning properties backwards this now matches better. 
-SLOF or other Open Firmware implementations don't return phandle property 
-because that's what you pass to nextprop or getprop to get the property in 
-the first place (listed next to package above) and it is returned by 
-finddevice so not normally stored as a property. But if Linux would add it 
-and it helps Linux to have it there already we can keep it, it did not 
-break OSes on pegasos as they only parse properties they need and ignore 
-the rest. So I can skip skipping phandle and add that back if it would be 
-better for Linux but didn't removing it fixed a warning about it too?
-
-By the way, phandle is identifying the node so can't we use the fdt offset 
-for it so we don't have to add phandle properties? Or does offset change 
-when editing the fdt? I think libfdt also uses offsets to identify nodes 
-so maybe these should be somewhat stable.
-
-Regards,
-BALATON Zoltan
+T24gNC80LzI1IDE0OjUzLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gT24g
+NC80LzI1IDIwOjIwLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gT24gNC8zLzI1IDE2
+OjU3LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4+PiBXZSB3b3VsZCBsaWtl
+IHRvIGdldCByaWQgb2YgJy1JIHRhcmdldC8kQVJDSC8nIGluIHRoZSBDUFBGTEFHUy4NCj4+
+DQo+PiBXaGlsZSB0aGlzIGNoYW5nZSBpcyBjb3JyZWN0LCB0aGlzIGlzIG5vdCBzdHJpY3Rs
+eSBuZWVkZWQuDQo+PiBXaXRoIHRoZSBjdXJyZW50IGFwcHJvYWNoLCB1c2luZyBhIHNldCBv
+ZiBjb21tb24gZmlsZXMgcGVyIGFyY2hpdGVjdHVyZSwNCj4+IHdlIGNhbiByZWx5IG9uIHRo
+aXMgaW5jbHVkZSB0byBiZSBwcmVzZW50LCBhbmQgaXQgZG9lcyBub3QgYmxvY2sgZnJvbQ0K
+Pj4gaGF2aW5nIGNvbW1vbiBmaWxlcy4NCj4gDQo+IEluZGVlZCwgSSByZWJhc2VkIHRoaXMg
+Y29tbWl0IGZyb20gbXkgaGV0ZXJvZ2VuZW91cyBicmFuY2guDQo+IA0KPiBJJ2xsIGtlZXBp
+bmcgY2FycnlpbmcgLyByZWJhc2luZyBpdCBmb3IgdmFyaW91cyBtb250aHMsIHRyeWluZyB0
+bw0KPiByZW1lbWJlciB0byBub3Qga2VlcGluZyBwb3N0aW5nIGl0Lg0KPiANCj4gT3IgYWx0
+ZXJuYXRpdmVseSBJJ2xsIHBvc3QgaXQgaW4gYSBzZXBhcmF0ZSAiY2xlYW51cCBzZXJpZXMi
+LCBub3QNCj4gbWVudGlvbmluZyBzaW5nbGUtYmluYXJ5IG9yIGhldGVyb2dlbmVvdXMgZW11
+bGF0aW9uLg0KPiANCg0KTXkgcG9pbnQgd2FzIG5vdCAicGxlYXNlIHBvc3QgdGhhdCBsYXRl
+ciIsIGJ1dCBzaW1wbHkgdG8gc2F5IHRob3NlIA0KY2hhbmdlcyBhcmUgbm90IG5lZWRlZCwg
+bm93IG9yIGluIHRoZSBmdXR1cmUuDQpXZSBjYW4gaGF2ZSBhIHNwZWNpZmljIGluY2x1ZGUg
+cGF0aCBmb3IgdmFyaW91cyBmaWxlcyB3aXRob3V0IA0KY29tcHJvbWlzaW5nIHRoZSBzaW5n
+bGUgYmluYXJ5L2hldGVyb2dlbmVub3VzLCBhcyBsb25nIGFzIHdlIGNvbXBpbGUgaXQgDQpv
+bmx5IG9uY2UuDQoNClNvIHdlIGRvbid0IG5lZWQgdG8gcmVtb3ZlIGNwdS5oIGluY2x1c2lv
+biBpbiB0YXJnZXQgcmVsYXRlZCBjb2RlLg0KDQo+Pj4gVXNlIHRoZSBmdWxsIHBhdGggdG8g
+ImNwdS5oIjogInRhcmdldC9hcm0vY3B1LmgiLg0KPj4+DQo+Pj4gUmV2aWV3ZWQtYnk6IFJp
+Y2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPg0KPj4+IFNp
+Z25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9y
+Zz4NCj4+PiAtLS0NCj4+PiAgwqAgaW5jbHVkZS9ody9hcm0vZGlnaWMuaMKgwqDCoMKgwqAg
+fCAyICstDQo+Pj4gIMKgIGluY2x1ZGUvaHcvYXJtL2ZzbC1pbXg2LmjCoMKgIHwgMiArLQ0K
+Pj4+ICDCoCBpbmNsdWRlL2h3L2FybS9mc2wtaW14NnVsLmggfCAyICstDQo+Pj4gIMKgIGlu
+Y2x1ZGUvaHcvYXJtL2ZzbC1pbXg3LmjCoMKgIHwgMiArLQ0KPj4+ICDCoCBpbmNsdWRlL2h3
+L2FybS9mc2wtaW14OG1wLmggfCAyICstDQo+Pj4gIMKgIDUgZmlsZXMgY2hhbmdlZCwgNSBp
+bnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQ0KPiANCg0K
 
