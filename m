@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F35C36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 14:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A82C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 15:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u14kJ-0000VF-BU; Sat, 05 Apr 2025 10:43:43 -0400
+	id 1u15nX-0006BH-99; Sat, 05 Apr 2025 11:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u14kI-0000UJ-5x
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:43:42 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u15nQ-0006AF-PJ
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 11:51:01 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u14kG-0000NY-CH
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:43:41 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3913b539aabso1711930f8f.2
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 07:43:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u15nP-0002fx-7m
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 11:51:00 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-7376dd56f8fso3633056b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 08:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1743864218; x=1744469018; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XINWtuEyB8nAdjn+nKZgqjpd4oQLnzMy/dAbE5k9dvE=;
- b=xn+RdiMPxjOAGwk0l35It/u5r3bDo6pnNeSvpTfHvLh7WwY2vaAwnj0dEul4ZAV8Kq
- WfnJ3A0bXhGHcL+TM6srwCb6bsjDEW2W1hjTZIt0iK733chnLo+VjCaJt6BrsSfN1nPU
- VEVyaaCBM4Kcylj0BtEGBx6FcGOWb7IalhDenEbJl1inymrkV3chAN+reNcixkKXBu2e
- A4og7II+h3LYjiwPiIJ8YgWjhc5y/Thsh4Scb6dOz/NykjIJ6MomkO3xxbYOYV/HVCUx
- W1/79p9+RAFJH4zEGbRCmlaUMSr9MFdvHePFEs3lUW3l78oCEkSWNj75liMtZ8/74Ye1
- mmSQ==
+ d=linaro.org; s=google; t=1743868256; x=1744473056; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NdYCVDvrgjk5vJpHMjPCvppjcdEfZpZQeiN/B/ja6wI=;
+ b=cRfWgQXmLjweFRbthch4dIrn80qBEqlG37VVIigdEu0SDXRvHG7/x8b3AN8bqJoxBr
+ JzBBD9OUjSPRK5R2nwpDO3sldnmKr84dMtwLHaXYhEY//gAxi+YtrfGYcg6/c3obFURJ
+ DQFXsYkXy3uXbBUYc10QNP84jmcLEo1Xql5MVeHhM6xsgBhyIR9MDCAnVr1zu/w0jl7d
+ D6hh8BwVf711CEi4uCqGFP+QWEeMLR3H/0oaykVb8mebHOmnhmiM6yZkdsJkExGWy5Kh
+ J0ElhO1Y0322tCK/1bCqQnuNUSaGTpSdeXFyVnd4ILDPn0tJfftqahKN8bS2EdN3N1V0
+ xQog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743864218; x=1744469018;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XINWtuEyB8nAdjn+nKZgqjpd4oQLnzMy/dAbE5k9dvE=;
- b=FkUF38e1yB6jrQl7TJ/Uy0U3iZ5XYX54lXe9zqzXwRYh21AIM8VtmipmNLYzigKxhh
- z+UJLy8IN7mAY14xJADuATvjkMQysYtdvJPwK/DK94JdUVU1QqIjZlSCppqn+5mVCXXS
- g5f5K0hoQpEONARyAGLU82+9ZFGH58K69aVagyH80N5frtOwRg80dqbeFQV91X9WNcTU
- NCdNg7W8Zaj5DsHzaFnEo8HVEyNRvQBdIQK2igaA0TEWcVajcBouwoZ2ZanDFOtGLWzR
- 058goVqD153FjAQBiRzgj1EzQKpe9xtWJPZA3GPg0khAlPWSDTH4TFBKR0fl+bQVTN1D
- HbFw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0DeCi1iPHaXmI2vEISsFMkcGphhybfcw8IqvRF0Jfe1P03jA2KCwHslb3Y9FlTbjp9spQb/atW1xP@nongnu.org
-X-Gm-Message-State: AOJu0YxrGbFIVLXv/zzE6neWmXeyVNI5PbxWOSVA1yFiUZbW/p0Ff156
- WujUpmz5N2Bp3pDZNxQ1CA0dN99AQdfMxcioTLytA0Gn2II+EUPf32JHn4PbxIw=
-X-Gm-Gg: ASbGnctLUSsiPsS4kBs7JBkGTogG27jbrcmOFeTbcAIyWyrVadK+751yboCKu+bfZ4k
- vUZcvn/luKFtjTISAqSNTJNnV8siZOwQYIHXa8MTeNNcga1CmPdvqM8+AgsiK0qB/ie1TlUd6T8
- qN8XFDZGOS38QV8Wn74nddQnd2HIgwubA70RCJ9vB6O013SJslcsqwqvAsZclkZfw7K4quban1f
- xZ5UoLHwysbhCrUth5kRLD/89lFx2AAJth7+hW/OWOvGlH0ZhOr7lKb4qrnYhmpJxII1oBJnXuA
- Dx+41yoB7uxesSPoFa23TZeXGcb3jvUDGVn01qzieDkwFKp2bSqk19Iaob2PFfvXt7zxi1SGZiN
- jXu9tTJJFHp7IGmExqw==
-X-Google-Smtp-Source: AGHT+IE3yyxpe0jPJ3qRbQ8sQncVJoqPMfMzGAEKdAUhFZ2QBQSMv8SPW9nHKBxVZ/Mh0gPEltesnQ==
-X-Received: by 2002:a05:6000:381:b0:391:2d97:7d0e with SMTP id
- ffacd0b85a97d-39cba933717mr3970949f8f.42.1743864218543; 
- Sat, 05 Apr 2025 07:43:38 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301ba3c4sm7211841f8f.59.2025.04.05.07.43.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Apr 2025 07:43:37 -0700 (PDT)
-Message-ID: <cdd3bafb-fd69-463f-856b-ad1c95ee6978@linaro.org>
-Date: Sat, 5 Apr 2025 16:43:37 +0200
+ d=1e100.net; s=20230601; t=1743868256; x=1744473056;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NdYCVDvrgjk5vJpHMjPCvppjcdEfZpZQeiN/B/ja6wI=;
+ b=R1I7PKP2mnSvzgJDw5I24xJAxYqUMi/S5nIfI182nhIEFeYQN/FPrwuCAxUhGTYONM
+ aTA2Pst3Wl1iQZl53kSd7YCBawUmsR6GbQ5cLS5dzWzcjH1nQI0oDfs8spKXNZU0ve1T
+ YW0VhFBZvM5Z1YA/I2ZFdV2J77spsGHaINN6sNT4zGoLECLZq9OLUDrzZ/itqgPmYVxo
+ fn9UUSTCfSAY0ZZYJB+caQtZx2exQBnFj5FR2Eug/YKnVfsk93HO4mc08JGMNcc9uqYK
+ /CaEOlHMGGiQfReJiwoPbNIx1j2iq46x9gjQ5w6nrD7QPmMCQrqXrObc9afHJTzfQupL
+ Ja/A==
+X-Gm-Message-State: AOJu0YyoBfB/luf96em+zlrGAkvtyV7p60P+KUcK9yn96AlzAttdd53U
+ CYYsxIEhKkb7lpoojAnp9SZxWlzgp/umxh5NkYkMBIYDrRFrpcuZ2I8tTGX2IwA23UnKWdUAnAW
+ Z
+X-Gm-Gg: ASbGncsa76gN+hfk3ahDzrMq5BSe2v1HMzOggs9x41usdcaUoQ6c4hWGD6cpMZwasA8
+ xDmBn1yqlhBIKalFMsr7A86CPTrqd85fEloHUICjl8hLs9k1BuR5c/a4N0tkOV9MMfsiR6jmBDu
+ Co+7CdQEVy1i11rvV2CBXhek/AHQ/EamESNPkV6RoTDWeqWP6L4+xpI109s/whgyqaafjsBgteC
+ 3NbmQJm2BSuXQaJAS+2JE5XuO+x9pKgyde1zOHvsxrknPgZFrt3sfMGZ7W/gJhyqsd+bVUvhb4I
+ uoUQrVSpc6lhQImK7Mqw/gELgVxwQjbhzBjtdnQwXoFdi6pi/Nck
+X-Google-Smtp-Source: AGHT+IH+8ot0+YPQp3VqTCVWn8DWwGJrDgBz/MeY1fDLVNgcxwj3F1uLY1ojaeXHr93ORaGvCW8D+g==
+X-Received: by 2002:a05:6a00:1251:b0:736:4830:68a6 with SMTP id
+ d2e1a72fcca58-73b6a9e839cmr3851496b3a.4.1743868256009; 
+ Sat, 05 Apr 2025 08:50:56 -0700 (PDT)
+Received: from stoup.. ([173.164.107.234]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739da0b4851sm5554790b3a.146.2025.04.05.08.50.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Apr 2025 08:50:55 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH v2 0/3] tcg: Convert TARGET_HAS_PRECISE_SMC to
+ TCGCPUOps.precise_smc
+Date: Sat,  5 Apr 2025 08:50:50 -0700
+Message-ID: <20250405155054.967307-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.1 20/39] target/arm: Extract PSCI definitions
- to 'psci.h'
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20250403235821.9909-1-philmd@linaro.org>
- <20250403235821.9909-21-philmd@linaro.org>
- <09bd795d-e62d-44fb-b80a-374efee32034@linaro.org>
- <49ff72e2-24ac-41a8-8aee-f923d9b48cee@linaro.org>
- <04e14ec2-dbfc-4c92-b061-dd7108cd66f2@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <04e14ec2-dbfc-4c92-b061-dd7108cd66f2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,56 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/25 03:03, Pierrick Bouvier wrote:
-> On 4/4/25 14:54, Philippe Mathieu-Daudé wrote:
->> On 4/4/25 20:21, Pierrick Bouvier wrote:
->>> On 4/3/25 16:58, Philippe Mathieu-Daudé wrote:
->>>> Extract PSCI definitions (which are not target specific)
->>>> to the new "target/arm/psci.h", so code from hw/arm/ can
->>>> use them without having to include the target specific
->>>> "cpu.h" header.
->>>>
->>>
->>> Including cpu.h is not a problem to have common code (per architecture),
->>> so there is no need to do any change here.
->>
->> Again, this is an old patch from my heterogeneous PoC branch.
->> I'll remove from this series to not distract you.
->>
-> 
-> It's not distracting, but simply not needed.
+Supercedes: 20250404235624.67816-1-philmd@linaro.org
+("[PATCH-for-10.1 0/2] tcg: Convert TARGET_HAS_PRECISE_SMC to TCGCPUOps::has_precise_smc field")
 
-Not needed for single-binary, but needed for heterogeneous emulation,
-as the same HW might use distinct architectures.
+Amusingly, I was already working on this before Phil posted his patch,
+as part of trying to compile tb-maint.c twice.  The major difference
+between our two patches is I don't introduce a global variable; I read
+from cpu->cc->tcg_ops->precice_smc when needed.
 
-> 
->>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> ---
->>>>    include/hw/arm/boot.h      |  3 ++-
->>>>    target/arm/cpu.h           |  6 ------
->>>>    target/arm/psci.h          | 18 ++++++++++++++++++
->>>>    hw/arm/bananapi_m2u.c      |  1 +
->>>>    hw/arm/boot.c              |  1 +
->>>>    hw/arm/highbank.c          |  1 +
->>>>    hw/arm/imx8mp-evk.c        |  1 +
->>>>    hw/arm/mcimx6ul-evk.c      |  1 +
->>>>    hw/arm/mcimx7d-sabre.c     |  1 +
->>>>    hw/arm/orangepi.c          |  1 +
->>>>    hw/arm/sbsa-ref.c          |  1 +
->>>>    hw/arm/virt-acpi-build.c   |  1 +
->>>>    hw/arm/virt.c              |  1 +
->>>>    hw/arm/xlnx-versal-virt.c  |  1 +
->>>>    hw/arm/xlnx-zcu102.c       |  1 +
->>>>    hw/vmapple/vmapple.c       |  1 +
->>>>    target/arm/helper.c        |  1 +
->>>>    target/arm/hvf/hvf.c       |  1 +
->>>>    target/arm/tcg/op_helper.c |  1 +
->>>>    target/arm/tcg/psci.c      |  1 +
->>>>    20 files changed, 37 insertions(+), 7 deletions(-)
->>>>    create mode 100644 target/arm/psci.h
->>
-> 
+
+r~
+
+
+Richard Henderson (3):
+  accel/tcg: Add CPUState argument to page_unprotect
+  accel/tcg: Add CPUState argument to tb_invalidate_phys_page_unwind
+  accel/tcg: Convert TARGET_HAS_PRECISE_SMC to TCGCPUOps.precise_smc
+
+ accel/tcg/tb-internal.h        |  3 ++-
+ include/accel/tcg/cpu-ops.h    |  6 ++++++
+ include/exec/poison.h          |  1 -
+ include/user/page-protection.h |  2 +-
+ target/i386/cpu.h              |  4 ----
+ target/s390x/cpu.h             |  2 --
+ accel/tcg/tb-maint.c           | 34 ++++++++++++++--------------------
+ accel/tcg/user-exec.c          | 13 ++++++++-----
+ linux-user/elfload.c           |  2 +-
+ target/i386/tcg/tcg-cpu.c      |  1 +
+ target/s390x/cpu.c             |  1 +
+ 11 files changed, 34 insertions(+), 35 deletions(-)
+
+-- 
+2.43.0
 
 
