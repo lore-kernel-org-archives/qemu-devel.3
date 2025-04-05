@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5483BC36010
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 14:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A69C36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 14:01:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u144E-00027P-5m; Sat, 05 Apr 2025 10:00:14 -0400
+	id 1u144E-00027I-1t; Sat, 05 Apr 2025 10:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u144B-00025z-SJ
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:00:12 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u144A-0002Q5-Ap
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u144A-00025F-UM
  for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:00:11 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22423adf751so29166275ad.2
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 07:00:09 -0700 (PDT)
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u1449-0002Pl-3M
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 10:00:10 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-736ab1c43c4so2716784b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 07:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743861609; x=1744466409; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743861607; x=1744466407; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jW/nGJ9nhfNLcuNss/qrb1rh1i7PJHIjmtAmxEwu2Mo=;
- b=brsuVotUTSwsJm+s60bWoXUB3LXQp4k6CWVbtHPHudgiaDFy6OpgfO+u283a28GL2p
- VblTQbexi0ezPo0tJEirKyqMtbPArDN6urD2Bs3roTP11V9BBmFNo6fMFXlwF3kVEFyT
- yARrDlvnvu9z67N+lz25sjax/bz1ddFQApk37y+YFQSiwZmb484+Jhqqll6aZaiz/5rK
- frHIMwbrQmQu/EQB+3MngNGXErP+jCudJZmli/aYFR5VPVHl1iCE83yHbJqeN45FO7eu
- JP+sblWcTQQcs2C4w+ItiNxgNFfNU4FkedoLlQcn2cT8HYuOfbGnBdvrxVgMj4/C4PVK
- k8sA==
+ bh=2usuboqUPlKvjXYg/jN9W27aNQUiWnDW2jrzcnUjkSE=;
+ b=neUYACTkeA7vtjOSyzHKPj6zvelNdL3fpEQWSZULBceeF3ifAh9lCICFoI4LmKCPmn
+ j6NZRKP35N3RPL1+mBDQsQMxleOFnGrPAR3didvhGna73b2aMQnz1chIAqhD5hO5MZFb
+ VrV53W9eCxgYtIu+j5mgyW8a183BbJuDgD2F5N60jqQHVjiQN7+3DC/lfpYf8YVh3+hr
+ FjbTStbSM3eI3mUnzjd4AJCh4bGWw0BccNgKT3qj20ia8Bu8bu6NYWWUONxIIal/m0QH
+ byzBNdM3qD7FyxolyX2KCdBqYK6HQXkCJfIyKa7DWaUicsPTJKBsZe4qoF4TwDoZoalo
+ ni3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743861609; x=1744466409;
+ d=1e100.net; s=20230601; t=1743861607; x=1744466407;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jW/nGJ9nhfNLcuNss/qrb1rh1i7PJHIjmtAmxEwu2Mo=;
- b=Dy3Vrc88jHSvpT3IX1SDnUjvgGI52/AEpWXyRpBDyurWn0z2jF0jiKHXU1+oMuk1uZ
- wgFzJ/kIEuMifCuxHvCb0FArUdzxjCTqEUZSzeg2G3qlQgjdlAPFYa0yxR9p90wqSrQO
- HfoNveHwWtPW9zG+QqROjOJn5pHUmUOG6w1kmlHSnOKjquV9JSekIxDuu4P9zX58KXQD
- 3AXj3vQOiU1EZ9uGeEePGj5datE9Qia9qaoQ1VVAPTQV1mWwBP91GJJVSG5qqjkseyIt
- VIZ7OIAXUj8KE2VF/an6PlYhuKbnndMxxPF61bFUQcDUS8Z/JCkJ+WxYcz3A3IMpysIw
- Ee7w==
-X-Gm-Message-State: AOJu0Ywjpv99LK1cPdx1G7/03wIO6J+ba9pDwYCOGl/7otqTJn1onnm2
- MJjBOOd1f4Yo/VYD+YGB8j6nsXPaCSWD0TQQv9mXrGYeUU/FYyjzoZCc8g==
-X-Gm-Gg: ASbGnctuEQ2RkqLWhlwMhsGkUq6tTPz84PHCalDGjJnpC44B1KEtebj7xiGbBw8tsf3
- oWSBuEmMEImjKEjM06IF47ozlrc030auHJRaPcHWigc519Pmhy/2OBMCo3uLCs1UPTrrKMJFFk2
- kZwi1LtbRQuflbUOIuXqeO4PfL2tdDXfBNvQh2qHDOWxgvANVbT6kErCTI0V88xwSRDvAY+635h
- osNn/CImfNlcWgN8TWIcm0ViP/nnqX5zbeZ3tLpN7FHEFxbkqZ34zou5pBfzc1pkxBXdRbGdGkh
- xi5OoU4+049IPXltlTcU2b+OfRJmXn3JvE0YqthtjWhSddWSLQiPHprrrur2gs2U3SPH
-X-Google-Smtp-Source: AGHT+IFJM7vREFBQemnCKwWN0arbTRzkf9ObvimVT7hC6CaCeD8IFNt9TNwYi2Fq4lGcAQ3HZGvVdg==
-X-Received: by 2002:a17:903:94e:b0:215:4a4e:9262 with SMTP id
- d9443c01a7336-22a8a04a780mr72777245ad.8.1743861608701; 
- Sat, 05 Apr 2025 07:00:08 -0700 (PDT)
+ bh=2usuboqUPlKvjXYg/jN9W27aNQUiWnDW2jrzcnUjkSE=;
+ b=tnYXFE26panTAO+qUvwTZvncrgpZ8pO3joffrhQrmuXi6lE1UCMo4JIs+f6/QEtE3U
+ 4reJOo6DrvENVgTJDFftNyMCJlXEJIY2fClhd23TrktEtLCUlbX4UvhLXccUJL88sm/A
+ KU0vF7KAl2N7fQKihJ3YDZg7bCKq5t6rWv9c1hPvH1MaMF/COPF+CSy4xXwvhQMlxt9c
+ aUo4VoA+LgnkaWzzqjp4pnEDoYLX4oPuvvBO2EW2ORoRBy7/rukioPDcrbDr9sUhKVFP
+ VEmKqSi+1q6eAEUJ/SOv9DKgODLZDPk37t4vgbIvbLfzE6lDq378yspFlJTjvoQ+o5E/
+ 3SWw==
+X-Gm-Message-State: AOJu0YwbcPZWQaEfAuxbnG1rL5zPHs3apUf2gqt8B5mirRc+5axLWWQ1
+ ql0gUNNO/A6xdOB3fA7BQupjgXnZ7p+8Sh8YRH9Qcb1P9lhQ8+znZJCYAA==
+X-Gm-Gg: ASbGncu0XfmQhBi69EPrFNh32oFH28yEoANEdXjHce4v1iPr3Uzug16ZTRETL7hC/fi
+ FE02nlTjOjcVYTmEKm0m4651V5fVr9MgZz0kYMBXAMFIBr8rQHx00ZYFhe3A3VPLmAZj1jQ9kH/
+ qFHxotXYPMIkY72EZYD4EguMgltX023BsBRkdxMoYZrq7MkdUe8Qi3pXnxbQyDgQOHa0TsDibe2
+ Vmc+cX49Omeb6oSVUft6cknH/zfz48pQ7zAaWSsY6RyQikcc/f+3bBqSxgLn3qTtBzH+Kudv+BF
+ 90WXLq8zIKFr8j1EdpkkbwO0enzXAjkXY7HhrFKlU1ZHymzPP0heQHAyCw==
+X-Google-Smtp-Source: AGHT+IGPpzPXfOhtoQnbuoKyjUG3P4YhTC98O6IqKZ8713spjC2J61EwwVxP/a96jNdwEmUQfD4SyA==
+X-Received: by 2002:a05:6a20:258e:b0:1f5:8fe3:4e29 with SMTP id
+ adf61e73a8af0-2010458cc73mr10103895637.3.1743861607327; 
+ Sat, 05 Apr 2025 07:00:07 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-229785bfea5sm50149875ad.54.2025.04.05.07.00.08
+ 41be03b00d2f7-af9bc41c626sm3743062a12.78.2025.04.05.07.00.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 05 Apr 2025 07:00:08 -0700 (PDT)
+ Sat, 05 Apr 2025 07:00:06 -0700 (PDT)
 From: Guenter Roeck <linux@roeck-us.net>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>, Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 2/2] hw/usb/hcd-dwc3: Set erstba-hi-lo property
-Date: Sat,  5 Apr 2025 07:00:02 -0700
-Message-ID: <20250405140002.3537411-3-linux@roeck-us.net>
+Subject: [PATCH 1/2] hw: usb: xhci: Add property to support writing ERSTBA in
+ high-low order
+Date: Sat,  5 Apr 2025 07:00:01 -0700
+Message-ID: <20250405140002.3537411-2-linux@roeck-us.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250405140002.3537411-1-linux@roeck-us.net>
 References: <20250405140002.3537411-1-linux@roeck-us.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -99,10 +100,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dwc3 hardware requires the ERSTBA address to be written in
-high-low order.
+According to the XHCI specification, ERSTBA should be written in Low-High
+order. The Linux kernel writes the high word first. This results in an
+initialization failure.
 
-From information found in the Linux kernel:
+The following information is found in the Linux kernel commit log.
 
 [Synopsys]- The host controller was design to support ERST setting
 during the RUN state. But since there is a limitation in controller
@@ -114,25 +116,55 @@ or in 32 bit mode ERSTBA_HI before ERSTBA_LO
 the "Event Ring Segment Table Entry" based on the indication of
 ERSTBA_LO written.
 
-Inform the XHCI core to expect ERSTBA to be written in high-low order.
+Add property to support writing the high word first.
 
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
- hw/usb/hcd-dwc3.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/usb/hcd-xhci.c | 8 +++++++-
+ hw/usb/hcd-xhci.h | 1 +
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-dwc3.c b/hw/usb/hcd-dwc3.c
-index 0bceee2712..6783d55526 100644
---- a/hw/usb/hcd-dwc3.c
-+++ b/hw/usb/hcd-dwc3.c
-@@ -603,6 +603,7 @@ static void usb_dwc3_realize(DeviceState *dev, Error **errp)
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     Error *err = NULL;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 64c3a23b9b..8c0ba569c8 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -3107,10 +3107,15 @@ static void xhci_runtime_write(void *ptr, hwaddr reg,
+         } else {
+             intr->erstba_low = val & 0xffffffc0;
+         }
++        if (xhci->erstba_hi_lo) {
++            xhci_er_reset(xhci, v);
++        }
+         break;
+     case 0x14: /* ERSTBA high */
+         intr->erstba_high = val;
+-        xhci_er_reset(xhci, v);
++        if (!xhci->erstba_hi_lo) {
++            xhci_er_reset(xhci, v);
++        }
+         break;
+     case 0x18: /* ERDP low */
+         if (val & ERDP_EHB) {
+@@ -3636,6 +3641,7 @@ static const Property xhci_properties[] = {
+     DEFINE_PROP_UINT32("p3",    XHCIState, numports_3, 4),
+     DEFINE_PROP_LINK("host",    XHCIState, hostOpaque, TYPE_DEVICE,
+                      DeviceState *),
++    DEFINE_PROP_BOOL("erstba-hi-lo", XHCIState, erstba_hi_lo, false),
+ };
  
-+    qdev_prop_set_bit(DEVICE(&s->sysbus_xhci), "erstba-hi-lo", true);
-     sysbus_realize(SYS_BUS_DEVICE(&s->sysbus_xhci), &err);
-     if (err) {
-         error_propagate(errp, err);
+ static void xhci_class_init(ObjectClass *klass, void *data)
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index 9c3974f148..cf3f074261 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -189,6 +189,7 @@ typedef struct XHCIState {
+     uint32_t numports_3;
+     uint32_t numintrs;
+     uint32_t numslots;
++    bool erstba_hi_lo;
+     uint32_t flags;
+     uint32_t max_pstreams_mask;
+     void (*intr_update)(XHCIState *s, int n, bool enable);
 -- 
 2.45.2
 
