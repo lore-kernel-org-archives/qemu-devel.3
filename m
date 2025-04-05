@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A8EC3601A
-	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 09:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B44DC36010
+	for <qemu-devel@archiver.kernel.org>; Sat,  5 Apr 2025 10:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u0ziY-0006E8-Lw; Sat, 05 Apr 2025 05:21:34 -0400
+	id 1u10Pq-00076G-0b; Sat, 05 Apr 2025 06:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u0ziV-00062N-Tl
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 05:21:31 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u0ziS-0000TQ-Ix
- for qemu-devel@nongnu.org; Sat, 05 Apr 2025 05:21:30 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-30155bbbed9so2063278a91.1
- for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 02:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1743844885; x=1744449685; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=j0Up7UPdKuhOzg6fS9fJPPPMNPyVnrY+sWKD9q1DERg=;
- b=WtLE8VttckxUIYGlxQ1MgqaMRMo6D5nFv+/Jfz+vcEab8Bq03TdcZsPMtra4aKyU8V
- GgpZT/l7IMyzqy9vI1PDUda/OVlSEWY58l5bm/IJfZPQzKFNw8iQgGIbI6YebMQiVR+B
- 6VXGj4o8FdI8Y7GUoGN38iBYO/I1SPd/Kw+ubKdk7mF5n0XJNFZZYc69rOxm1baNjdIK
- scADF8hR7+k5qXPMTmRLbELIwHaiUcaNDpJM8Wyncccp0WEnMZmH58e4SBJ7cs+pFo32
- YDVv74vCWKi3z1wGYWcvULUs2c+MkzT4UTZSUisOcRMUo0Z6kWs+Rc9AVcssublxVztI
- 1jXA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u10Po-00075f-2U
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 06:06:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u10Pk-0005rU-Qc
+ for qemu-devel@nongnu.org; Sat, 05 Apr 2025 06:06:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743847570;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=XoeSoyyJ2F5espFfNi2p9yngvN7wZuvpwxpgTgAMVw8=;
+ b=OBVpMBERKSJkmK3ebOiu0zbq2Pmria7kJ3RmSWeS7vlGe7I3b7Y7r/piP1xUV9ITHUBfMF
+ 1t6R35nSQiany+rTNKZsBPLXVD4deSpLTlIaJ5Rbm/HNRUwbPBcRBVaDAzew7zAA7fLF1c
+ nuxWKvgevZS9hVWsaweGOrLk3qTZFWQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-U4nGLCsNN3uKMAho2jrH0w-1; Sat, 05 Apr 2025 06:06:07 -0400
+X-MC-Unique: U4nGLCsNN3uKMAho2jrH0w-1
+X-Mimecast-MFC-AGG-ID: U4nGLCsNN3uKMAho2jrH0w_1743847567
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d01024089so23544745e9.1
+ for <qemu-devel@nongnu.org>; Sat, 05 Apr 2025 03:06:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743844885; x=1744449685;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j0Up7UPdKuhOzg6fS9fJPPPMNPyVnrY+sWKD9q1DERg=;
- b=gfn7CtGoqykhjg2VB3eOFFSo7+WDYbnMjsKAoDw9tcGH7b7c6T+mRxmsz1RukZ56A7
- OhwdhQl03mdZXz9CHmnN0S32dF5RpzxROkEC9yHVqriGySK57ZmNYKzOFoZWI6EQCmnZ
- VpciSDYm9KuBF3Xn5feD2032CuERhF9lXCCEY/apYjsFqCakmNL0PS20I2t2d8aBoLbb
- EgYXBH1f7dI6V5w3de773gzGBNp1ArxguhkyjGyni9fPrYb7x9vKZUk2WmECi+cnWjjn
- jsHAKt6t/mIZF+vcsgOnzs7NQwWKc6yXgitj9Nnjy1YFsAecj90fUirBnZ0P1q5ZANe6
- ydwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHWZNdZFQg+moEmgcKVr77T2oyIWzE6uATdQ4z6pBPcM7y6KzNF1Nb7QM7WWF7VIbUCue26M66dVNr@nongnu.org
-X-Gm-Message-State: AOJu0YwFVGT9X0KU1IxcTaNOvwm+wLzMG4JwUosRqoRugKCjKKdzUpHf
- a8wQw4+/kYx9ym4DrdQpB6wl6S8XXQEpZveXCSHtfeuM2PeKyYmwRhmc0WbZF5E=
-X-Gm-Gg: ASbGncsQCBn+XNfsYFL0NLUa/i7Yn3s0JZOC6BWxi7oz52viZ76/KSgTDeNcam6udgU
- o+14rEL9xljCjGNmX19zlFZG8Jnj1VJS7Z0PpfJjYpX4f00nBvW0ThoPPnj7QSygsG/KsORbizz
- g/cf/bPacuh2Dg3IX9k3UX1UYo0G0lLT+w++qZ4o9I3y6LppuBqhpLMIN+Ixwnlgoa1yqfrbDmg
- mlrJHE0zghhT9Kvot1jvsKn7nWIvTQXYNCw1L6R1uyl8ESX+fF5ZdoP7cEl1lxPVpIBkEkYS6Jn
- oeY754aprFU3feHYwjwcwZ8bPBZEGOZs4+s4rTG2jThSPnybaU3L26n0tnuu
-X-Google-Smtp-Source: AGHT+IH/kGOPpuJNO2uKxTjIpPuc0YbYxIzW83KOV7zzuE5Anb/9c6CYav+mvN8tsApOzJeh3hbjZw==
-X-Received: by 2002:a17:90b:2dc3:b0:305:5f25:fcf8 with SMTP id
- 98e67ed59e1d1-306a4822fb3mr8386373a91.5.1743844885708; 
- Sat, 05 Apr 2025 02:21:25 -0700 (PDT)
-Received: from [192.168.68.110] ([177.170.227.223])
+ d=1e100.net; s=20230601; t=1743847566; x=1744452366;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XoeSoyyJ2F5espFfNi2p9yngvN7wZuvpwxpgTgAMVw8=;
+ b=GEvEt7FvJtnrZxphcIrClvMRDVQO1NkvAvlZwIOdKkzTx/NyRQnkO9MfFihJ9aDByH
+ tKqVBcS8l9oIvsM9zx/4yH3JA1sD3HoebRezjqHqTIKv4hlxVouDTH5rBZpX/NhoP9f4
+ THA0aDWhJKn7P1AR9r0pUPalOrYUZTCTeWZxUnC7/vIbb6QTuLeEAPYM6f9HnvgIxuOe
+ fLCI34ikEmGns4z8qSC+dHkLrcDksqBQ6AjZdQbnWgsnxrCUZeWNsGh+pCmxUVv+Ije1
+ AX7vmvbcR/R8zer63RLQpBfnFU1ScQTByY6o+wHWbt95xKTrBHQ9GNu35FQTSpb6viRq
+ OYiw==
+X-Gm-Message-State: AOJu0YxciIEvREa645/5JI8abPMEBc9CLHi/vMMqF6HlWbFeeXfANqWm
+ TA9+z4rNYCMg64ahESfZyTZZSK1mqQSisISOqMdE5QarPGxc/MP3jA+pJ4tlb8lIgXzzntmKgqI
+ wWVEBdZPrMyqEFG/aaEnHyHKwzrQZNEhWL/FqnQWeKOBuvrlhLdFVOSI9qcdGQIQD22+kp/tunO
+ NEIb50fCiZeSnBvK9uUjUVH0+b5xG5TUmtloUO
+X-Gm-Gg: ASbGncuc25IArNkW8u50VLsyT191AocehsRQco1556Ss6X1Wk9QUILbuXVBUPU1sxQv
+ VZP59rV9RLe4xDKX9ZxkY0YJHbhns1QPF+ZFUX4hJHXVv+UrtYefzTrfLbDK5ttRNN3Lm7IN81R
+ dasPyfaoDM63P0u2CjLhsUn3GVUM8kSOMPX8AmDmCr70f4gA//ZMYHYrn8NaCwB1qrBU54+seuc
+ VLF/Y0d1pqADqi5fsuabycu1Hm2Afsg2mEXzwtMq3kgjc4nFWjhvGIIHtTrZ9wZb3dolwdAGoN9
+ oQUC2ng4ujwmCk56Bg==
+X-Received: by 2002:a05:600c:32a9:b0:43c:fd72:f039 with SMTP id
+ 5b1f17b1804b1-43ee0aa35bbmr14775225e9.11.1743847566046; 
+ Sat, 05 Apr 2025 03:06:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9II0Z7ayPVeNsrJoPPMb6wgkFA4yqB/JtXUHDYD0K3rGBCCc1d/d4p47DNvpxLCQSd/XXhg==
+X-Received: by 2002:a05:600c:32a9:b0:43c:fd72:f039 with SMTP id
+ 5b1f17b1804b1-43ee0aa35bbmr14775065e9.11.1743847565638; 
+ Sat, 05 Apr 2025 03:06:05 -0700 (PDT)
+Received: from [192.168.122.1] ([151.95.96.77])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-305983da812sm4960991a91.46.2025.04.05.02.21.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 05 Apr 2025 02:21:25 -0700 (PDT)
-Message-ID: <6c3b3613-00a2-4d94-9502-5f87b61d2bd6@ventanamicro.com>
-Date: Sat, 5 Apr 2025 06:21:20 -0300
+ ffacd0b85a97d-39c30226959sm6321158f8f.82.2025.04.05.03.06.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 05 Apr 2025 03:06:04 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH preview 0/3] rust: update build system for Meson 1.8.0
+Date: Sat,  5 Apr 2025 12:06:00 +0200
+Message-ID: <20250405100603.253421-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/12] target/riscv: Fix the rvv reserved encoding of
- unmasked instructions
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- antonb@tenstorrent.com
-References: <20250329144446.2619306-1-max.chou@sifive.com>
- <20250329144446.2619306-13-max.chou@sifive.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250329144446.2619306-13-max.chou@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.028,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,55 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Meson 1.7.0 and 1.8.0 include improved support for Rust, namely:
+* support for "objects" in Rust executables
+* support for doctest targets
 
+Use it to remove BQL-related hacks, fix --enable-modules --enable-rust
+and also simplify the Meson logic for building the qemu-api crate
+(which may help splitting the crate, too).
 
-On 3/29/25 11:44 AM, Max Chou wrote:
-> According to the v spec, the encodings of vcomoress.vm and vector
-> mask-register logical instructions with vm=0 are reserved.
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> ---
+Meson also supports clippy and rustdoc but there are some bugs in the
+prerelease.  I'll try to get them fixed before 1.8.0.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Paolo
 
->   target/riscv/insn32.decode | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
-> 
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index 6d1a13c8260..cd23b1f3a9b 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -703,14 +703,14 @@ vfredmax_vs     000111 . ..... ..... 001 ..... 1010111 @r_vm
->   # Vector widening ordered and unordered float reduction sum
->   vfwredusum_vs   110001 . ..... ..... 001 ..... 1010111 @r_vm
->   vfwredosum_vs   110011 . ..... ..... 001 ..... 1010111 @r_vm
-> -vmand_mm        011001 - ..... ..... 010 ..... 1010111 @r
-> -vmnand_mm       011101 - ..... ..... 010 ..... 1010111 @r
-> -vmandn_mm       011000 - ..... ..... 010 ..... 1010111 @r
-> -vmxor_mm        011011 - ..... ..... 010 ..... 1010111 @r
-> -vmor_mm         011010 - ..... ..... 010 ..... 1010111 @r
-> -vmnor_mm        011110 - ..... ..... 010 ..... 1010111 @r
-> -vmorn_mm        011100 - ..... ..... 010 ..... 1010111 @r
-> -vmxnor_mm       011111 - ..... ..... 010 ..... 1010111 @r
-> +vmand_mm        011001 1 ..... ..... 010 ..... 1010111 @r
-> +vmnand_mm       011101 1 ..... ..... 010 ..... 1010111 @r
-> +vmandn_mm       011000 1 ..... ..... 010 ..... 1010111 @r
-> +vmxor_mm        011011 1 ..... ..... 010 ..... 1010111 @r
-> +vmor_mm         011010 1 ..... ..... 010 ..... 1010111 @r
-> +vmnor_mm        011110 1 ..... ..... 010 ..... 1010111 @r
-> +vmorn_mm        011100 1 ..... ..... 010 ..... 1010111 @r
-> +vmxnor_mm       011111 1 ..... ..... 010 ..... 1010111 @r
->   vcpop_m         010000 . ..... 10000 010 ..... 1010111 @r2_vm
->   vfirst_m        010000 . ..... 10001 010 ..... 1010111 @r2_vm
->   vmsbf_m         010100 . ..... 00001 010 ..... 1010111 @r2_vm
-> @@ -732,7 +732,7 @@ vrgather_vv     001100 . ..... ..... 000 ..... 1010111 @r_vm
->   vrgatherei16_vv 001110 . ..... ..... 000 ..... 1010111 @r_vm
->   vrgather_vx     001100 . ..... ..... 100 ..... 1010111 @r_vm
->   vrgather_vi     001100 . ..... ..... 011 ..... 1010111 @r_vm
-> -vcompress_vm    010111 - ..... ..... 010 ..... 1010111 @r
-> +vcompress_vm    010111 1 ..... ..... 010 ..... 1010111 @r
->   vmv1r_v         100111 1 ..... 00000 011 ..... 1010111 @r2rd
->   vmv2r_v         100111 1 ..... 00001 011 ..... 1010111 @r2rd
->   vmv4r_v         100111 1 ..... 00011 011 ..... 1010111 @r2rd
+Paolo Bonzini (3):
+  rust: use "objects" for Rust executables as well
+  rust: add qemu-api doctests to "meson test"
+  rust: cell: remove support for running doctests with "cargo test --doc"
+
+ docs/devel/rust.rst        |  2 --
+ .gitlab-ci.d/buildtest.yml |  5 -----
+ rust/qemu-api/meson.build  | 35 +++++++++++++++--------------------
+ rust/qemu-api/src/cell.rs  | 22 +++++++++-------------
+ 4 files changed, 24 insertions(+), 40 deletions(-)
+
+-- 
+2.49.0
 
 
