@@ -4,75 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C61C36002
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:23:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7761DC36002
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1ZKt-0006Og-47; Sun, 06 Apr 2025 19:23:31 -0400
+	id 1u1ZNn-0007Oo-OV; Sun, 06 Apr 2025 19:26:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZKr-0006Nz-HI; Sun, 06 Apr 2025 19:23:29 -0400
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
+ id 1u1ZNi-0007OO-Kc; Sun, 06 Apr 2025 19:26:26 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZKp-0002Gd-KG; Sun, 06 Apr 2025 19:23:29 -0400
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-5240a432462so3371640e0c.1; 
- Sun, 06 Apr 2025 16:23:25 -0700 (PDT)
+ id 1u1ZNg-0002p9-NY; Sun, 06 Apr 2025 19:26:26 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-523d8c024dfso1574741e0c.3; 
+ Sun, 06 Apr 2025 16:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743981805; x=1744586605; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743981983; x=1744586783; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hr9EMx8U3JNlx7/IJ5QZ/XgLO/Ufvgly9fazfM9uO3o=;
- b=G8F5PZ4HI4Nc1Vf6ZjsbLAaPhUhfQqbTIUo3nfVA3j3IUh0IY5FR3U6c+c4lOMB7KT
- TB9wlLxxODizRutFgimNGo4qR7gsCQViFO4YeCzNljnHNJVd9hZYa33qDh3NSIkE651g
- CJIQNaCMR32qxSoOiygfKgZRWLaI23XwJv9+qTUgwHoGYGkeOaNUNRMkRJAq/WwFoRLU
- Q8HWDR+0warbmIwnqswY6Zxhy66IcKCAFO3a+soW1MEn6xZrlI93clcXK4C30PuCnuXo
- FkzSlE7VVvarWOdTCr9Rik5ffXFmP9aSay8zcxkT7Y3GpSwp4+UMQQnOmau/ymv00qVA
- fswA==
+ bh=JYgECubPYOZa5IZk7yJ0VadSl7O/pqXfl2qyHdEVDAs=;
+ b=KPRnOCJxKltaS9mGRtMCNP2YQC3SAIMYmp5mMQKUmsxcZvhu2HnN0rmHnZx6vxJ/u8
+ AzZdh+DaU5IxRCglQC1k8QEScMZbciZ2lDlFMUT8ST09/0JgpkwdFmYjKqykNKpTkL1v
+ 3NZYRu93OFfHgUKGcU7gyjY3A/lkcYjNxrNGce30HaeaL4m8WtXd3QsNGUGChbrRdWpl
+ qr2r9uoydyZ4Apzm1YCrrASKMtLYaQjm5iGsfEJdLB7wrGj6bQuWecHmiq5pXpZfVRqS
+ DPiTvVKeE44CHj6Q+tp1CnH2L6lFF5+0EDw0HzcsdYbt/kOGUaSQMeJCiYkGBhgNbT1+
+ zxAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743981805; x=1744586605;
+ d=1e100.net; s=20230601; t=1743981983; x=1744586783;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Hr9EMx8U3JNlx7/IJ5QZ/XgLO/Ufvgly9fazfM9uO3o=;
- b=AEkhVMbKOT1TQeawtt0Qsr5zha0YDma1Qq2lmHfXcstAsYbGA5HpPKu8gUpvYCUV7o
- 9StaW7ztsSXBOCkZFkZ6HLVHQYIxp0vmg9ui7PtXaNv8L5X4kwkcJhe0LDSvZgYHPEYW
- LznJEl4ZaWd7O7JFgExAgFg08v/a9o2DyCBAA0jayju0lr0nC4aQjiQcp646A3EF3nM4
- F7X8JiXUkgjeCWXInS38ba/OUnuTMNtkYZrR3e3ubdMsKK2sPHpU/yLpTQq4Wh7zkunk
- bUjmSeqaVISo37YPS5UrNhO3OhZ3vzZInNzqPUiZu1iFkAE+DjPF07IAxDkOYWtYJADl
- 4THg==
+ bh=JYgECubPYOZa5IZk7yJ0VadSl7O/pqXfl2qyHdEVDAs=;
+ b=mFLZ0epRVnqO8tLXZFuzoSeQ+OA9tg7r/l9pYO9YnR5zGDkqssI437iM3vntBGVyHY
+ jhBqdB0oGtZs2gkzJUzh8CuXEf7m9U/TXdvxH6S0MJjK+dDw2XSjze6ESt+v2DpHo+S7
+ stRmERpm2vLo0c9wCIrw3yViESEjP4Hyq10Qw1Ttr3mwKM9fzdXNV3jNcVsTcVG9eeP+
+ mgAzauTonbZ6AxBlcN46q/6teV6KV+wJP4aNaSeD5TUGekxnkB3xQ6PRqJafjoainqYo
+ oMTQOr5CxeVX/9MKBiXqM4kCvv2tB/nwALsWWajlbN1l7R4EslIatbHlPpNbhKGlCIou
+ rLXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsuZwKZHkp38m44j3Ov4f4cU+bWfmpJ9AY2GV+Ow+eAyOGUdQQmoEhLAb36zPFmS5ZkXtN+8BXOPP7@nongnu.org
-X-Gm-Message-State: AOJu0YwACkiOneNn2ExbwVpOGhzwPq+zpLNpSpziP0h9FaJNlLSHzuJt
- g3Rlrh4kEsleJm0x7WhuAnl+9YXD054HEjCyaiZd6dd47AGpu3q/GMtC4Jy9ov4QvsNX6jo8KVQ
- XzNIV+xlbwgiFQG4A9Tbg6+v/rbc=
-X-Gm-Gg: ASbGncvAxy8ewO704D4S14IjgKYX1B/u2ZAZYYtwY1FkG1DPODFSh8kLgjUf/EtgAeh
- KRPn9WBsB7MnVG65FX7NaczhEFFf1b6Vkv5RG3OTkqwRhRyaNWMm4uel5ChY93Xfzu+Lmb/qqmW
- mdRqIDqk526lUUCQwsRrVe8JzhUZsEk2oNfE1jOQJNPdYMTFX196ODvNwPDweG9spBtEE=
-X-Google-Smtp-Source: AGHT+IEqS5/dJcZGOHV6XXjYU6rBjc+NuB2D4bd50NcDq/wzIoDZ49FWA/5CUbvPFMpYG69UfGFUk4abuTqI5bf0uN0=
-X-Received: by 2002:a05:6122:1c87:b0:523:e4c6:dddb with SMTP id
- 71dfb90a1353d-527568cf121mr11239634e0c.0.1743981804966; Sun, 06 Apr 2025
- 16:23:24 -0700 (PDT)
+ AJvYcCWTrFQjjG5ASXFQrrflMIFZukFgSUEjCFTgi8+LCghMM33BM6sY0uWulx5XFdOyN34CbDeGrRMv3hyMOA==@nongnu.org,
+ AJvYcCWlfVYQ1QvZYqgBk5J2gwglGnzYWrcySMplQ8ImeEUVfENH72rQZoxSbgP8H1dgrqYByX7cC9O26v3z@nongnu.org
+X-Gm-Message-State: AOJu0YxGAluVuyxx7vOSTk7i9sK4703Mw5i1gJn+eEumhAi0nZMAj8RP
+ CEr0mY1CwBJdfQfTV7yxO3emciTo/rVwQu1GtTgOAKpHPQ7HlARthcLkKGno5NI8KAY5nAoWs6z
+ KR3z1hSn8vRXhGrVvDiMeSKFzZKNC/Q==
+X-Gm-Gg: ASbGncuV3cg8jN/pk+OtPo/YSmgjOfR9yFIqRUxhm8pEiEuKEUzKDIXSHF0jdpi/l0Q
+ b2XTThKHs6Wbx39k67ELlKAycDva4Wya/XXdo7zoXjNoO8f0KR/nEf5wHfem106f01VGKRCP6JD
+ bkZQGHQel5oGuJ0J6rirzzC5SdZkbMkBaWTLen00OEddqLzOZo1XJbom/H
+X-Google-Smtp-Source: AGHT+IFA2gXHXTRl/AR7ZFJwgeWSJR46yRQDA7HnAxZYgA+6qg6V2Hqk2XnfBNM0WH6hNZDH3yFZNiuZY1g0D4u6o0s=
+X-Received: by 2002:a05:6122:168c:b0:51f:405e:866e with SMTP id
+ 71dfb90a1353d-5276444bd32mr6967624e0c.1.1743981982824; Sun, 06 Apr 2025
+ 16:26:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250404122858.241598-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250404122858.241598-1-dbarboza@ventanamicro.com>
+References: <20220106210108.138226-1-frederic.petrot@univ-grenoble-alpes.fr>
+ <c5c8566a-fd0d-48d1-8ed1-e52f0bb4f210@linaro.org>
+ <CAKmqyKN51+jriKkSL8V5EFc9hBSFoEHYKp-70uP6RvO_K6a=pg@mail.gmail.com>
+ <9ae32149-fe18-49d3-a689-60ee6752c20d@univ-grenoble-alpes.fr>
+In-Reply-To: <9ae32149-fe18-49d3-a689-60ee6752c20d@univ-grenoble-alpes.fr>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 7 Apr 2025 09:22:58 +1000
-X-Gm-Features: ATxdqUGt94DOF2yYri1Pw6lKv899od1QVQ54ik3wRAyCyixDjYWcqC_FFFQ6l1E
-Message-ID: <CAKmqyKOkCLLENZfdfCrNPsjrQq5WbBz6vgFs=-92zMn_du3iig@mail.gmail.com>
-Subject: Re: [PATCH for-10.0] docs: deprecate RISC-V default machine option
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 7 Apr 2025 09:25:56 +1000
+X-Gm-Features: ATxdqUHbzAg4aR86tj9EmZeF9tNlmTI-51wnUVtaN9Sel8INEA3R6dgRpQWcKxE
+Message-ID: <CAKmqyKO4GYqJ5GcvEc+yL4d01ONzDLR=2Ava7Disw2aSOZVFsg@mail.gmail.com>
+Subject: Re: [PATCH v8 00/18] Adding partial support for 128-bit riscv target
+To: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, bin.meng@windriver.com, 
+ richard.henderson@linaro.org, palmer@dabbelt.com, 
+ fabien.portas@grenoble-inp.org, alistair.francis@wdc.com, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,67 +103,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 4, 2025 at 10:30=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Mon, Apr 7, 2025 at 4:24=E2=80=AFAM Fr=C3=A9d=C3=A9ric P=C3=A9trot
+<frederic.petrot@univ-grenoble-alpes.fr> wrote:
 >
-> Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
-> made it default for qemu-system-riscv32/64. It was the first RISC-V
-> machine added in QEMU so setting it as default was sensible.
->
-> Today we have 7 riscv64 and 6 riscv32 machines and having 'spike' as
-> default machine is not intuitive. For example, [1] is a bug that was
-> opened with the 'virt' board in mind, but given that the user didn't
-> pass a '-machine' option, the user was using 'spike' without knowing.
->
-> Being explicit in the command line is desirable when we have a handful
-> of boards available, so deprecate the default machine setting from
-> RISC-V.
->
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2467
->
-> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Hi Alistair, Phil,
+> well, I'm trying to keep the thing alive, checking from time to time that
+> the current QEMU still runs the 128-bit tests that I have, and on which
+> I continue (slowly) to do stuffs.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+If it's being used then I don't see any issue keeping it
 
 Alistair
 
-> ---
->  docs/about/deprecated.rst | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
+> I hope this can stay upstream for experimental/research purposes, but the
+> 128-bit riscv community is, I follow you on that, scarce for now.
 >
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 76291fdfd6..0f41a99c67 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -304,6 +304,23 @@ online to check that this board did not completely b=
-itrot yet). It is
->  recommended to use another MIPS machine for future MIPS code development
->  instead.
+> So, your call.
+> Cheers,
+> Fr=C3=A9d=C3=A9ric
 >
-> +RISC-V default machine option (since 10.0)
-> +''''''''''''''''''''''''''''''''''''''''''
-> +
-> +RISC-V defines ``spike`` as the default machine if no machine option is
-> +given in the command line.  This happens because ``spike`` is the first
-> +RISC-V machine implemented in QEMU and setting it as default was
-> +convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
-> +and having ``spike`` as a default is no longer justified.  This default
-> +will also promote situations where users think they're running ``virt``
-> +(the most used RISC-V machine type in 10.0) when in fact they're
-> +running ``spike``.
-> +
-> +Removing the default machine option forces users to always set the machi=
-ne
-> +they want to use and avoids confusion.  Existing users of the ``spike``
-> +machine must ensure that they're setting the ``spike`` machine in the
-> +command line (``-M spike``).
-> +
+> Le 04/04/2025 =C3=A0 05:26, Alistair Francis a =C3=A9crit :
+> > On Sat, Mar 22, 2025 at 1:09=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+> > <philmd@linaro.org> wrote:
+> >>
+> >> Hi,
+> >>
+> >> On 6/1/22 22:00, Fr=C3=A9d=C3=A9ric P=C3=A9trot wrote:
+> >>> This series of patches provides partial 128-bit support for the riscv
+> >>> target architecture, namely RVI and RVM, with minimal csr support.
+> >>
+> >>
+> >>> Fr=C3=A9d=C3=A9ric P=C3=A9trot (18):
+> >>>     exec/memop: Adding signedness to quad definitions
+> >>>     exec/memop: Adding signed quad and octo defines
+> >>>     qemu/int128: addition of div/rem 128-bit operations
+> >>>     target/riscv: additional macros to check instruction support
+> >>>     target/riscv: separation of bitwise logic and arithmetic helpers
+> >>>     target/riscv: array for the 64 upper bits of 128-bit registers
+> >>>     target/riscv: setup everything for rv64 to support rv128 executio=
+n
+> >>
+> >>
+> >> I see this series has been merged as commit afe33262585, with
+> >> 332dab68785b describing:
+> >>
+> >>       This patch adds the support of the '-cpu rv128' option to
+> >>       qemu-system-riscv64 so that we can indicate that we want to
+> >>       run rv128 executables.
+> >>
+> >>       Still, there is no support for 128-bit insns at that stage
+> >>       so qemu fails miserably (as expected) if launched with this
+> >>       option.
+> >>
+> >> Is this code tested? 3 years passed so I wonder about possible
+> >> code bitrot here.
+> >
+> >  From memory at the time there was some momentum for RV128. So this was
+> > merged with the expectation that it would continue to improve.
+> >
+> > That doesn't seem to have happened, either software or spec wise though=
+.
+> >
+> >>
+> >> (I reached this code by looking at targets not supporting MTTCG).
+> >
+> > I'm happy to remove the CPU if it's blocking you, it's experimental so
+> > it doesn't need to be deprecated or anything fancy.
+> >
+> > Alistair
+> >
+> >>
+> >>>     target/riscv: moving some insns close to similar insns
+> >>>     target/riscv: accessors to registers upper part and 128-bit load/=
+store
+> >>>     target/riscv: support for 128-bit bitwise instructions
+> >>>     target/riscv: support for 128-bit U-type instructions
+> >>>     target/riscv: support for 128-bit shift instructions
+> >>>     target/riscv: support for 128-bit arithmetic instructions
+> >>>     target/riscv: support for 128-bit M extension
+> >>>     target/riscv: adding high part of some csrs
+> >>>     target/riscv: helper functions to wrap calls to 128-bit csr insns
+> >>>     target/riscv: modification of the trans_csrxx for 128-bit support
+> >>>     target/riscv: actual functions to realize crs 128-bit insns
+> >>
+> >>
 >
->  Backend options
->  ---------------
 > --
-> 2.49.0
->
+> +------------------------------------------------------------------------=
+---+
+> | Fr=C3=A9d=C3=A9ric P=C3=A9trot,                        Pr. Grenoble INP=
+-UGA@Ensimag/TIMA |
+> | Mob/Pho: +33 6 74 57 99 65/+33 4 76 57 48 70      Ad augusta  per angus=
+ta |
+> | http://tima.univ-grenoble-alpes.fr frederic.petrot@univ-grenoble-alpes.=
+fr |
+> +------------------------------------------------------------------------=
+---+
 >
 
