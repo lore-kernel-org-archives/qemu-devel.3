@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7102EC36002
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 859BBC36002
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1ZOJ-0007pt-8T; Sun, 06 Apr 2025 19:27:03 -0400
+	id 1u1ZT6-0001GW-9g; Sun, 06 Apr 2025 19:32:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZOE-0007g6-H8; Sun, 06 Apr 2025 19:26:58 -0400
-Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ id 1u1ZSz-0001Du-Tl
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 19:31:54 -0400
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZOC-0002sw-T3; Sun, 06 Apr 2025 19:26:58 -0400
-Received: by mail-vk1-xa2a.google.com with SMTP id
- 71dfb90a1353d-51eb1a714bfso3990385e0c.3; 
- Sun, 06 Apr 2025 16:26:56 -0700 (PDT)
+ id 1u1ZSy-0003n3-9F
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 19:31:53 -0400
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-86d42f08219so1551428241.0
+ for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 16:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743982015; x=1744586815; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743982311; x=1744587111; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tEo0vczNhLg3tSNl0bNy5WyiU3Cmaih0wihWUGV6FXA=;
- b=SiptiGB7XMsQuXALBAqa2R8E0gzSPlCGlv4lUF5WrKG5dvoRViqX6ghyFURiPM4MlG
- L755bdHWjtaLnJN1uC4QSacwstI6hVV1FHRqmFctD79eGHF/Plq4Dn/wooR+Hm20gZ5F
- TQzeX1TKM72n0KWOlNHgTReSh/UBGR9a8Y+YtnwyoRkUtAP3ijOO9ckhlhEY8njeYbF6
- 9Akv/mn72c0f8VLRoz1mqOaH7g24ioke09VdumN4XzMYpTt5VX0Vi6VnbRMoM0xB+mVR
- v4f7Ief6PEtRXZu++UZsVAUS986GvLiuE/AAcEfmHYADyvuGS8pnC6FIrzMjRRNUoty3
- W/yA==
+ bh=QUaqkTg4jdxcQ97gZFa3a/janMRKcKb4fwWv+HFVvrk=;
+ b=Wz4amf6bs65LnkKQqULlDVoFipHquoNG7zqcezwLToNASQFrcFfTOYU6rSG+noVyhr
+ JfS6JDwHCRJdVQu86vCI0RG6OFGp9Ezg+Bq7+JBAyXsumfhHG/VLMrzivjQWI6igXarK
+ jsM5pM9mXA98NTn8gOWU69xQHZdSkaVHl2hIOn2oEwfeXrGhSEUk7+zY5KSlG+XEutk4
+ Jcmv4F0+U2WIwzw4fnJsl3u5w8RrN7vncNG4z8/FDOr/nwjTxYsoXzi06RBeJ1bF9PUU
+ 8kYgUnNEojwKXYh67R/tcT4HjVwylMygYnYnOY5o3kryNgw6aqqeQd+9WzLJKPFmU4H+
+ wlbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743982015; x=1744586815;
+ d=1e100.net; s=20230601; t=1743982311; x=1744587111;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tEo0vczNhLg3tSNl0bNy5WyiU3Cmaih0wihWUGV6FXA=;
- b=QcNXGA6fCTV0n1z8r8NKmzMSu/Wkpl8wP0sMJxgUYE/7A32qz4hCjlnypvolxlBqEj
- s2JzQ6tN1I5D78HzSPIBxOgwAGiAHq35fzs9KZbGqtHMxfSGVdMcjD64o1pbN6OEk49w
- UTdGvyLfELrBfiYAcGB1XM9u3PnXiJsCxgLwWR1W3PrxiNoNeOYsmChRR0CHAvbDSnX2
- hBUw84Q8bDWoQJDn5EtxvxW3STfcL3P+MAjS9bFDX9a3LKCMjQgcY5Dq1RQPOCQt6NQT
- B4gh273i6bNUewDaEOssw6WZ1T12g7dSBEjq2Wv6h6yrKRZrSPI7gz0BSQXr5LwM6o/3
- 5inA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWU5FEU4qoF3nPBbsJuIg5C7+UuxbD+DTnXWyOIwX9V1dRC7Gd1itGBrt8Y9wlWk9k5F/HgGQzLIkP5@nongnu.org
-X-Gm-Message-State: AOJu0Yz5NNV8lWED2jYGVCRYiw3v2Uax0LvwS9VJWD6ZzVFyoiBwbRl/
- OUc2sTkYRTBm6/aolPYNhdfC3STqYsYv9MTGurXS4lCz5HXx2lbPKSRRq4KaAr4SeXVo/1Yb404
- zMi/Tf6SHsXQ1wsgi2oNClc3+eq0=
-X-Gm-Gg: ASbGncuXdd/tDDQWMKKG9Ms9KXhBZJXVf4ss+WeUQPX8c4WPgqjop36uWpFQOOGKh9y
- KbiA7NVsgYodXsmLB9LXV0wAfNuLh6WS1Jamgf8T607gcAPyRoGMaqv9ZE8L+1/3xvVjAvcCkXJ
- UPWltDJL1I2r0t1k10+YHHTRCGJxzqbDnBevPvv2jUulkdpvqk1IrkK/z7
-X-Google-Smtp-Source: AGHT+IFi8CtqgD2Db5DdF/RoeeUk5BZA3CiWlA9xmp7rXqNJ/ZqProABO1TIYcIEAVltpSDT1JmDWNQveaQ/oOJ2iTw=
-X-Received: by 2002:a05:6122:181b:b0:520:9688:d1bb with SMTP id
- 71dfb90a1353d-52772ede57bmr3972472e0c.2.1743982015305; Sun, 06 Apr 2025
- 16:26:55 -0700 (PDT)
+ bh=QUaqkTg4jdxcQ97gZFa3a/janMRKcKb4fwWv+HFVvrk=;
+ b=KihIaDFIt8UUonvS7QmpuaAP6XTtKsLgyxMuuuswZMaEbR3cCNam/izXV+25MnwhcH
+ RXIjmZzDbO7qIIYbPpRWN7XUKwpo6nHtNKAfLz99fBvFRpqCiPGbojwLY1OIFAa3oRhh
+ SVudeKtDt+wbVKVh2M1NmvCIg3+T3CX2w+PXhhxWvz1wP4qR7LQWLlPK1oVCGkX1404X
+ tc62eYBQJiIPeyC5z8fR0Wdgr1RR0nu9NNBT+UChax9rZLcgeTQaJ738bWUUGWhP4WE0
+ W2t/3DRIFW6brJXLnvYK97tAOBGTVIpOwr19MdnM+BxzZnKdW8q8bVlBSJzcZjN09u5n
+ VbSA==
+X-Gm-Message-State: AOJu0Yzd8fkboTwquT6arFWPpFH/2JxpGcxqAdOAyp5H6GkRGvfEkh7n
+ DJQOvhztTzd5q49HUcXupVvCbDIEGb4IYzO6kQh7smgsG5svWRtsxYLlYIdGAKPfbTwk3g3Uhgp
+ XEEHP3bIVgKxvDgVGsYnTwcjdVsyR0g==
+X-Gm-Gg: ASbGncvJyvd31PY8IEwDNw6KX+RNAafaJNaNHlLiK+JZZlJTbPmru32jMZ8BX1YH3EL
+ wpoDF6bgX0UESE1POGXsTRJZEpas3a7fGaUETXr8sd76wCzf5kk5z/Z2HRaOVqX3GgmYbUXDRVL
+ 9CtUhIr+Z6EXLJSf9JLe0mAilEsUoyiCbsWFUVTenUpwQ3rn6xDt+MQx+f
+X-Google-Smtp-Source: AGHT+IHsiTwMf0tjmSjdCDU+us+EASBXfd3ax2RMZq7pfnV3OoZ/O2tarTuI8w6Oea8NPPtFFYFjN1A4vjrKqVvFDqo=
+X-Received: by 2002:a05:6102:510e:b0:4c3:6215:9f86 with SMTP id
+ ada2fe7eead31-4c85547bf34mr7703156137.19.1743982310806; Sun, 06 Apr 2025
+ 16:31:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250404152750.332791-1-dbarboza@ventanamicro.com>
- <20250404152750.332791-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20250404152750.332791-2-dbarboza@ventanamicro.com>
+ <20250404152750.332791-3-dbarboza@ventanamicro.com>
+ <debc3677-3282-4064-a34c-0234d0eb7a78@linaro.org>
+In-Reply-To: <debc3677-3282-4064-a34c-0234d0eb7a78@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 7 Apr 2025 09:26:29 +1000
-X-Gm-Features: ATxdqUGi2UZyoWy4OXIpo5YPLq85X3YUuUxONVxEiHeZoNKQSK4NcUxyiaWYqBw
-Message-ID: <CAKmqyKMD31SLQeYt0Psi1vDcpK6cvPPtP1JQfh7sUgqqEJfYag@mail.gmail.com>
-Subject: Re: [PATCH 1/2] target/riscv/tcg: make 'max' cpu rva23s64 compliant
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
- ajones@ventanamicro.com
+Date: Mon, 7 Apr 2025 09:31:24 +1000
+X-Gm-Features: ATxdqUFNKzdlpdBzlROVuTkZX3IIZV05bk7-HS_QEvMHe71GUpTAtTbTSzazs_s
+Message-ID: <CAKmqyKNMUU3brR++stxae1VmSW2eJLRGpxOBr4+FJWjde3Yt4A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/riscv/virt.c: change default CPU to 'max'
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,43 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 5, 2025 at 1:29=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Sat, Apr 5, 2025 at 9:02=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> The 'max' CPU includes all available extensions we implement, but at
-> this moment it is not rva23s64 compliant due to missing checks that
-> the parent profile (rva22s64) does.
+> On 4/4/25 08:27, Daniel Henrique Barboza wrote:
+> > Using 'max' as
+> > default CPU is done by other QEMU archs like aarch64 so we'll be more
+> > compatible with everyone else.
 >
-> Users might expect that the a CPU called 'max' CPU will also compatible
-> with our latest S mode profile. Let's make it official.
+> This isn't true.  qemu-system-aarch64 -M virt defaults to cortex-a15 (for=
+ hysterical
+> raisins), which is completely and totally useless.  Which means that one =
+must always pass
+> a -cpu option to qemu-system-aarch64.
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Moreover, -cpu max has zero migration guarantees, so anyone who wants to =
+be able to
+> reliably migrate is encouraged to use a real cpu model.
+>
+> I suppose, for throwaway VMs, -cpu max is a decent default.  But there's =
+a lot to be said
+> for not specifying a default at all.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+I agree. If we aren't going to specify a default machine, why specify
+a default CPU?
+
+It probably makes sense to deprecate the default CPU for non-vendor
+machines and then force users to pick their own CPU. That should start
+in 10.1 so it's a release offset from the removal of the default
+machine.
+
+Then maybe think about even removing rv32/rv64 CPUs and push people to
+the profiles, as it's a lot clearer what they are getting.
 
 Alistair
 
-> ---
->  target/riscv/tcg/tcg-cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
 >
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 5aef9eef36..cd489ae35b 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1486,6 +1486,8 @@ static void riscv_init_max_cpu_extensions(Object *o=
-bj)
->      if (cpu->cfg.ext_smdbltrp) {
->          isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smdbltrp), false)=
-;
->      }
-> +
-> +    object_property_set_bool(obj, "rva23s64", true, NULL);
->  }
 >
->  static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
-> --
-> 2.49.0
->
+> r~
 >
 
