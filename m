@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F20C3600C
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 07:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7F6C3601E
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 07:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1K2q-0002z0-5w; Sun, 06 Apr 2025 03:03:52 -0400
+	id 1u1K32-00039K-Af; Sun, 06 Apr 2025 03:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u1K2Y-0002uf-42
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 03:03:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1u1K2z-00036C-Ed
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 03:04:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u1K2W-00021U-78
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 03:03:33 -0400
+ id 1u1K2x-00024a-Od
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 03:04:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743923011;
+ s=mimecast20190719; t=1743923038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GfDhAMQhD4NlgMEbhoodRDje87HnK0SWSqFwPquaWjw=;
- b=JasJsfHHEXNLBrHq4faBk2irwxcbGbvy4Pf/VxafOP/qK5Hsd820xK4S+J9+WkvDHgamjL
- vaGLLZ9KGSAZPU7WHF421Qz99JHrSfLr9wxK2TCP9mlNcuLqNrOMsM3zg+5O1l+5lxsN/b
- Fkyb4ElpJJZ8uueheMoTSt09TjgZJFA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I0UpZqu1zAQmZnKFsa02rYtYeJCnPD6+pIcGOpa8DmE=;
+ b=aEuJFpCPfzJK727vJgdLx7j1CDIoxd9FlD9w1hTSW7+Wy+5BIYOVUEnGDNOSI2mp2oglsy
+ v706+/WM7Kww6IPfDggG8EVOqoIT0ZYdTOLtqPh8yR+62wJ/tGLOEIcpAOUxvH9JFU75xe
+ IA14ZCDqmlsTzcggnmsIfW602JLmPrY=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-DLeGJMTIOtiFqXfjuMm88w-1; Sun, 06 Apr 2025 03:03:27 -0400
-X-MC-Unique: DLeGJMTIOtiFqXfjuMm88w-1
-X-Mimecast-MFC-AGG-ID: DLeGJMTIOtiFqXfjuMm88w_1743923006
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so3438905e9.1
- for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 00:03:27 -0700 (PDT)
+ us-mta-595-_n613xxgNU2xjmQq6yzVsA-1; Sun, 06 Apr 2025 03:03:56 -0400
+X-MC-Unique: _n613xxgNU2xjmQq6yzVsA-1
+X-Mimecast-MFC-AGG-ID: _n613xxgNU2xjmQq6yzVsA_1743923035
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d733063cdso26630035e9.0
+ for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 00:03:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743923006; x=1744527806;
+ d=1e100.net; s=20230601; t=1743923035; x=1744527835;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GfDhAMQhD4NlgMEbhoodRDje87HnK0SWSqFwPquaWjw=;
- b=K0vS+D9xYy5AsmRMsmaQ4hN6i0mMDzGb9ErlCMn8zpCn7YF5KcnFf1jQz41Uedoa/Z
- JlxY6bseMsWgCdq2vt9UTc7Ge8b0RJks+D85awSluL7MPmNQlTGb/Z2k25V3r8/2hxiN
- cbgMN6u7OwbndqKWzDxPZW6qQ0m0d4KfafREVbx+VVJhGlLmYqMHJRGcsOGpQCf9ptTl
- qCUvwEha+oHEW0DWkYbNCvwyFy5+jWaC5I46bydYfMkBFBsIiPVSsTHPhPMem/JcUurI
- RjQ3B1x6BxvnQ2oviNs0EgUhdk4fll8OvLevlIkExtuCXICL1m1UipH0kxJKumV+KJMH
- bv7A==
-X-Gm-Message-State: AOJu0YzffsLZTsyNc4w1LdTjknkuyI3sT13801MAmj+hvhXrfFSxCGe0
- 22gdrS1h2KejXxFxld2x0GffV3/bVrUX0fMUNesonzxc7tRXbliFlkXy7IutIzdB4xSLCoG/i38
- RLaWWMeRSVsTYjIBYWA2dv0ErMnphUICAPPXrF2jesA2eygrX912/NuMo4qZL4rMvMP3q2dgVqb
- YZMCH9GMozED9ZjVit4q2IdRpBYaxB8Mp6o27X
-X-Gm-Gg: ASbGncv6jZ07ezpQfkQSvWJHZc0lxwVOvaoSLch4AkEbcuVzWleLrYtuGJS/lJQmhp0
- QEl1MZC4V9S9CYS3rZZuUX64V9Kkae9CTcRSYkR//OqjIa12iFpuBsFDXIPA+C16cz/ODz0h7X3
- gBmsoYybswgegdHm7gO1smA7bplVx5qP0fYfvIOx4AjzJq3bA8zvQo9uo2wnOsOtQJZzDpcjAdX
- 8RmkZ24kRjlrqUh6l9CROdZ3Ieqwa2qVoIrqVjJcSseDT5xYLrCYB5Tga/kOe8FDXcWUYIUcNeo
- /Am2TZP1PE3BS5mARA==
-X-Received: by 2002:a05:600c:a0a:b0:43c:f689:dd with SMTP id
- 5b1f17b1804b1-43ecf8d0a37mr67728505e9.19.1743923005691; 
- Sun, 06 Apr 2025 00:03:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLE3psPTDB7OkHF5MNXmZarORqpJ1dcEwGm+qv8yQ+erhNolFTxdeiTAM/4tcX9nPKxNnjJQ==
-X-Received: by 2002:a05:600c:a0a:b0:43c:f689:dd with SMTP id
- 5b1f17b1804b1-43ecf8d0a37mr67728225e9.19.1743923005270; 
- Sun, 06 Apr 2025 00:03:25 -0700 (PDT)
+ bh=I0UpZqu1zAQmZnKFsa02rYtYeJCnPD6+pIcGOpa8DmE=;
+ b=rW8X0tLIBxSyvVlmgzlqS6FuLmPDq8YKwTwSX8YQlX/qCso1PXj6rKMgfDzdYOKae7
+ r7i9sxmx0is9AjaWMHWL2dZDGwAfclbIlQCVVcWEkdMfLHLAiz/RvDI2+LRZonrAiJG7
+ czugfcY0T1sITqDKqGGA3qkMC576x7Ea7v+rTCOS59/k6SlrviWx3jvUsspFmpmYxIRX
+ 37axl+9OOxWYyoTxwMIxsQN1fDUjhSGBFXdhbbidmpwlnGwLbbD8BNXoUQxvrEEoS7mB
+ CGDXCn2L+OD6GQsShrUdVEsCJQrszL/PDXk/T+5POkpfC4nxwJhaMmw2vhiouIaUzEX+
+ OuzQ==
+X-Gm-Message-State: AOJu0YwKiSd5O/AnWt0jjpsrue/YiHgA1A8BqLW8ZJHIAnCTt/6zyLDf
+ t8FGwWAbHfB0d5tj0MddlHuJHk0oz6pWCpF3H+RgAhNVDix69vmk1vtszXTu/lO6XSPBPpN0VAK
+ 0PpPJth8x5DjB2yWBXnkw0GMAgs68m1cbdrwZO9Nl3hc8m8u1V9EMpvH1JxXgCI7wyeEFY+jsJK
+ J7s6s2A0gdr/yu+hyr7+YMGHMLZFKAJ54kwhxr
+X-Gm-Gg: ASbGncsdSBBmpx3GYzFJwmT1jCAaj9tG6VRMi5d1wyOH7ag6rvuB2DKRDZXUq9lDWgW
+ 8+tFk16z0+aaoOLrG24L8Ue51TZ0hGvPWD9pToWqThUYwaVHtU2shyO6kIIfVGlDMAnmbt7Qpof
+ vlcpV0054kt/kFERGBzAHhn92P7/pnHpIbUhk/G44oaHGlzyZdDqOlL/dV/5fP7UgnUW+ETx52A
+ bpDQMakDxmkqZgUQFUaNexPpklVHtzMtUPsBlPW9CLnYl2oglYmgvm5GXoLMAzDSIeh8zqdgPta
+ nu8hUABQ6GDZYDn37Q==
+X-Received: by 2002:a5d:64ee:0:b0:391:487f:2828 with SMTP id
+ ffacd0b85a97d-39d6fc0c2e6mr3843508f8f.10.1743923034793; 
+ Sun, 06 Apr 2025 00:03:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH70w1fLDoL1snr7c6+Tbh9CWS7/PyL8Jqb1+67YWTAazsU7CBd9JWsWTEzOo2vmb5lyDzumQ==
+X-Received: by 2002:a5d:64ee:0:b0:391:487f:2828 with SMTP id
+ ffacd0b85a97d-39d6fc0c2e6mr3843476f8f.10.1743923034328; 
+ Sun, 06 Apr 2025 00:03:54 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.96.77])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301acec9sm8583985f8f.40.2025.04.06.00.03.23
+ ffacd0b85a97d-39c3020d661sm8909430f8f.66.2025.04.06.00.03.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 06 Apr 2025 00:03:23 -0700 (PDT)
+ Sun, 06 Apr 2025 00:03:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 10/27] target/riscv: move RISCVCPUConfig fields to a header
- file
-Date: Sun,  6 Apr 2025 09:02:37 +0200
-Message-ID: <20250406070254.274797-11-pbonzini@redhat.com>
+Cc: alistair23@gmail.com
+Subject: [PATCH 23/27] target/riscv: convert TT C906 to RISCVCPUDef
+Date: Sun,  6 Apr 2025 09:02:50 +0200
+Message-ID: <20250406070254.274797-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250406070254.274797-1-pbonzini@redhat.com>
 References: <20250406070254.274797-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -110,373 +108,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To support merging a subclass's RISCVCPUDef into the superclass, a list
-of all the CPU features is needed.  Put them into a header file that
-can be included multiple times, expanding the macros BOOL_FIELD and
-TYPE_FIELD to different operations.
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/riscv/cpu_cfg.h            | 165 +---------------------------
- target/riscv/cpu_cfg_fields.h.inc | 172 ++++++++++++++++++++++++++++++
- 2 files changed, 175 insertions(+), 162 deletions(-)
- create mode 100644 target/riscv/cpu_cfg_fields.h.inc
+ target/riscv/cpu.c | 61 +++++++++++++++++++++-------------------------
+ 1 file changed, 28 insertions(+), 33 deletions(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 7143c40f625..e9bf75730a6 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -22,168 +22,9 @@
- #define RISCV_CPU_CFG_H
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 9669e9822b2..45bed28ea8a 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -500,38 +500,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
+ #endif
  
- struct RISCVCPUConfig {
--    bool ext_zba;
--    bool ext_zbb;
--    bool ext_zbc;
--    bool ext_zbkb;
--    bool ext_zbkc;
--    bool ext_zbkx;
--    bool ext_zbs;
--    bool ext_zca;
--    bool ext_zcb;
--    bool ext_zcd;
--    bool ext_zce;
--    bool ext_zcf;
--    bool ext_zcmp;
--    bool ext_zcmt;
--    bool ext_zk;
--    bool ext_zkn;
--    bool ext_zknd;
--    bool ext_zkne;
--    bool ext_zknh;
--    bool ext_zkr;
--    bool ext_zks;
--    bool ext_zksed;
--    bool ext_zksh;
--    bool ext_zkt;
--    bool ext_zifencei;
--    bool ext_zicntr;
--    bool ext_zicsr;
--    bool ext_zicbom;
--    bool ext_zicbop;
--    bool ext_zicboz;
--    bool ext_zicfilp;
--    bool ext_zicfiss;
--    bool ext_zicond;
--    bool ext_zihintntl;
--    bool ext_zihintpause;
--    bool ext_zihpm;
--    bool ext_zimop;
--    bool ext_zcmop;
--    bool ext_ztso;
--    bool ext_smstateen;
--    bool ext_sstc;
--    bool ext_smcdeleg;
--    bool ext_ssccfg;
--    bool ext_smcntrpmf;
--    bool ext_smcsrind;
--    bool ext_sscsrind;
--    bool ext_ssdbltrp;
--    bool ext_smdbltrp;
--    bool ext_svadu;
--    bool ext_svinval;
--    bool ext_svnapot;
--    bool ext_svpbmt;
--    bool ext_svvptc;
--    bool ext_svukte;
--    bool ext_zdinx;
--    bool ext_zaamo;
--    bool ext_zacas;
--    bool ext_zama16b;
--    bool ext_zabha;
--    bool ext_zalrsc;
--    bool ext_zawrs;
--    bool ext_zfa;
--    bool ext_zfbfmin;
--    bool ext_zfh;
--    bool ext_zfhmin;
--    bool ext_zfinx;
--    bool ext_zhinx;
--    bool ext_zhinxmin;
--    bool ext_zve32f;
--    bool ext_zve32x;
--    bool ext_zve64f;
--    bool ext_zve64d;
--    bool ext_zve64x;
--    bool ext_zvbb;
--    bool ext_zvbc;
--    bool ext_zvkb;
--    bool ext_zvkg;
--    bool ext_zvkned;
--    bool ext_zvknha;
--    bool ext_zvknhb;
--    bool ext_zvksed;
--    bool ext_zvksh;
--    bool ext_zvkt;
--    bool ext_zvkn;
--    bool ext_zvknc;
--    bool ext_zvkng;
--    bool ext_zvks;
--    bool ext_zvksc;
--    bool ext_zvksg;
--    bool ext_zmmul;
--    bool ext_zvfbfmin;
--    bool ext_zvfbfwma;
--    bool ext_zvfh;
--    bool ext_zvfhmin;
--    bool ext_smaia;
--    bool ext_ssaia;
--    bool ext_smctr;
--    bool ext_ssctr;
--    bool ext_sscofpmf;
--    bool ext_smepmp;
--    bool ext_smrnmi;
--    bool ext_ssnpm;
--    bool ext_smnpm;
--    bool ext_smmpm;
--    bool ext_sspm;
--    bool ext_supm;
--    bool rvv_ta_all_1s;
--    bool rvv_ma_all_1s;
--    bool rvv_vl_half_avl;
+ #if defined(TARGET_RISCV64)
+-static void rv64_thead_c906_cpu_init(Object *obj)
+-{
+-    CPURISCVState *env = &RISCV_CPU(obj)->env;
+-    RISCVCPU *cpu = RISCV_CPU(obj);
 -
--    uint32_t mvendorid;
--    uint64_t marchid;
--    uint64_t mimpid;
+-    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU);
+-    env->priv_ver = PRIV_VERSION_1_11_0;
 -
--    /* Named features  */
--    bool ext_svade;
--    bool ext_zic64b;
--    bool ext_ssstateen;
--    bool ext_sha;
+-    cpu->cfg.ext_zfa = true;
+-    cpu->cfg.ext_zfh = true;
+-    cpu->cfg.mmu = true;
+-    cpu->cfg.ext_xtheadba = true;
+-    cpu->cfg.ext_xtheadbb = true;
+-    cpu->cfg.ext_xtheadbs = true;
+-    cpu->cfg.ext_xtheadcmo = true;
+-    cpu->cfg.ext_xtheadcondmov = true;
+-    cpu->cfg.ext_xtheadfmemidx = true;
+-    cpu->cfg.ext_xtheadmac = true;
+-    cpu->cfg.ext_xtheadmemidx = true;
+-    cpu->cfg.ext_xtheadmempair = true;
+-    cpu->cfg.ext_xtheadsync = true;
 -
--    /*
--     * Always 'true' booleans for named features
--     * TCG always implement/can't be user disabled,
--     * based on spec version.
--     */
--    bool has_priv_1_13;
--    bool has_priv_1_12;
--    bool has_priv_1_11;
--
--    /* Always enabled for TCG if has_priv_1_11 */
--    bool ext_ziccrse;
--
--    /* Vendor-specific custom extensions */
--    bool ext_xtheadba;
--    bool ext_xtheadbb;
--    bool ext_xtheadbs;
--    bool ext_xtheadcmo;
--    bool ext_xtheadcondmov;
--    bool ext_xtheadfmemidx;
--    bool ext_xtheadfmv;
--    bool ext_xtheadmac;
--    bool ext_xtheadmemidx;
--    bool ext_xtheadmempair;
--    bool ext_xtheadsync;
--    bool ext_XVentanaCondOps;
--
--    uint32_t pmu_mask;
--    uint16_t vlenb;
--    uint16_t elen;
--    uint16_t cbom_blocksize;
--    uint16_t cbop_blocksize;
--    uint16_t cboz_blocksize;
--    bool mmu;
--    bool pmp;
--    bool debug;
--    bool misa_w;
--
--    bool short_isa_string;
--
+-    cpu->cfg.mvendorid = THEAD_VENDOR_ID;
 -#ifndef CONFIG_USER_ONLY
--    int8_t max_satp_mode;
+-    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
+-    riscv_register_custom_csrs(cpu, th_csr_list);
 -#endif
-+#define BOOL_FIELD(x) bool x;
-+#define TYPED_FIELD(type, x) type x;
-+#include "cpu_cfg_fields.h.inc"
- };
+-
+-    /* inherited from parent obj via riscv_cpu_init() */
+-    cpu->cfg.pmp = true;
+-}
+-
+ static void rv64_veyron_v1_cpu_init(Object *obj)
+ {
+     CPURISCVState *env = &RISCV_CPU(obj)->env;
+@@ -3221,7 +3189,34 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .misa_mxl_max = MXL_RV64,
+     ),
  
- typedef struct RISCVCPUConfig RISCVCPUConfig;
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-new file mode 100644
-index 00000000000..bbc68276737
---- /dev/null
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -0,0 +1,172 @@
-+/*
-+ * Required definitions before including this file:
-+ *
-+ * #define BOOL_FIELD(x)
-+ * #define TYPED_FIELD(type, x)
-+ */
+-    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c906_cpu_init),
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C906, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV64,
++        .misa_ext = RVG | RVC | RVS | RVU,
++        .priv_spec = PRIV_VERSION_1_11_0,
 +
-+BOOL_FIELD(ext_zba)
-+BOOL_FIELD(ext_zbb)
-+BOOL_FIELD(ext_zbc)
-+BOOL_FIELD(ext_zbkb)
-+BOOL_FIELD(ext_zbkc)
-+BOOL_FIELD(ext_zbkx)
-+BOOL_FIELD(ext_zbs)
-+BOOL_FIELD(ext_zca)
-+BOOL_FIELD(ext_zcb)
-+BOOL_FIELD(ext_zcd)
-+BOOL_FIELD(ext_zce)
-+BOOL_FIELD(ext_zcf)
-+BOOL_FIELD(ext_zcmp)
-+BOOL_FIELD(ext_zcmt)
-+BOOL_FIELD(ext_zk)
-+BOOL_FIELD(ext_zkn)
-+BOOL_FIELD(ext_zknd)
-+BOOL_FIELD(ext_zkne)
-+BOOL_FIELD(ext_zknh)
-+BOOL_FIELD(ext_zkr)
-+BOOL_FIELD(ext_zks)
-+BOOL_FIELD(ext_zksed)
-+BOOL_FIELD(ext_zksh)
-+BOOL_FIELD(ext_zkt)
-+BOOL_FIELD(ext_zifencei)
-+BOOL_FIELD(ext_zicntr)
-+BOOL_FIELD(ext_zicsr)
-+BOOL_FIELD(ext_zicbom)
-+BOOL_FIELD(ext_zicbop)
-+BOOL_FIELD(ext_zicboz)
-+BOOL_FIELD(ext_zicfilp)
-+BOOL_FIELD(ext_zicfiss)
-+BOOL_FIELD(ext_zicond)
-+BOOL_FIELD(ext_zihintntl)
-+BOOL_FIELD(ext_zihintpause)
-+BOOL_FIELD(ext_zihpm)
-+BOOL_FIELD(ext_zimop)
-+BOOL_FIELD(ext_zcmop)
-+BOOL_FIELD(ext_ztso)
-+BOOL_FIELD(ext_smstateen)
-+BOOL_FIELD(ext_sstc)
-+BOOL_FIELD(ext_smcdeleg)
-+BOOL_FIELD(ext_ssccfg)
-+BOOL_FIELD(ext_smcntrpmf)
-+BOOL_FIELD(ext_smcsrind)
-+BOOL_FIELD(ext_sscsrind)
-+BOOL_FIELD(ext_ssdbltrp)
-+BOOL_FIELD(ext_smdbltrp)
-+BOOL_FIELD(ext_svadu)
-+BOOL_FIELD(ext_svinval)
-+BOOL_FIELD(ext_svnapot)
-+BOOL_FIELD(ext_svpbmt)
-+BOOL_FIELD(ext_svvptc)
-+BOOL_FIELD(ext_svukte)
-+BOOL_FIELD(ext_zdinx)
-+BOOL_FIELD(ext_zaamo)
-+BOOL_FIELD(ext_zacas)
-+BOOL_FIELD(ext_zama16b)
-+BOOL_FIELD(ext_zabha)
-+BOOL_FIELD(ext_zalrsc)
-+BOOL_FIELD(ext_zawrs)
-+BOOL_FIELD(ext_zfa)
-+BOOL_FIELD(ext_zfbfmin)
-+BOOL_FIELD(ext_zfh)
-+BOOL_FIELD(ext_zfhmin)
-+BOOL_FIELD(ext_zfinx)
-+BOOL_FIELD(ext_zhinx)
-+BOOL_FIELD(ext_zhinxmin)
-+BOOL_FIELD(ext_zve32f)
-+BOOL_FIELD(ext_zve32x)
-+BOOL_FIELD(ext_zve64f)
-+BOOL_FIELD(ext_zve64d)
-+BOOL_FIELD(ext_zve64x)
-+BOOL_FIELD(ext_zvbb)
-+BOOL_FIELD(ext_zvbc)
-+BOOL_FIELD(ext_zvkb)
-+BOOL_FIELD(ext_zvkg)
-+BOOL_FIELD(ext_zvkned)
-+BOOL_FIELD(ext_zvknha)
-+BOOL_FIELD(ext_zvknhb)
-+BOOL_FIELD(ext_zvksed)
-+BOOL_FIELD(ext_zvksh)
-+BOOL_FIELD(ext_zvkt)
-+BOOL_FIELD(ext_zvkn)
-+BOOL_FIELD(ext_zvknc)
-+BOOL_FIELD(ext_zvkng)
-+BOOL_FIELD(ext_zvks)
-+BOOL_FIELD(ext_zvksc)
-+BOOL_FIELD(ext_zvksg)
-+BOOL_FIELD(ext_zmmul)
-+BOOL_FIELD(ext_zvfbfmin)
-+BOOL_FIELD(ext_zvfbfwma)
-+BOOL_FIELD(ext_zvfh)
-+BOOL_FIELD(ext_zvfhmin)
-+BOOL_FIELD(ext_smaia)
-+BOOL_FIELD(ext_ssaia)
-+BOOL_FIELD(ext_smctr)
-+BOOL_FIELD(ext_ssctr)
-+BOOL_FIELD(ext_sscofpmf)
-+BOOL_FIELD(ext_smepmp)
-+BOOL_FIELD(ext_smrnmi)
-+BOOL_FIELD(ext_ssnpm)
-+BOOL_FIELD(ext_smnpm)
-+BOOL_FIELD(ext_smmpm)
-+BOOL_FIELD(ext_sspm)
-+BOOL_FIELD(ext_supm)
-+BOOL_FIELD(rvv_ta_all_1s)
-+BOOL_FIELD(rvv_ma_all_1s)
-+BOOL_FIELD(rvv_vl_half_avl)
-+/* Named features  */
-+BOOL_FIELD(ext_svade)
-+BOOL_FIELD(ext_zic64b)
-+BOOL_FIELD(ext_ssstateen)
-+BOOL_FIELD(ext_sha)
++        .cfg.ext_zfa = true,
++        .cfg.ext_zfh = true,
++        .cfg.mmu = true,
++        .cfg.ext_xtheadba = true,
++        .cfg.ext_xtheadbb = true,
++        .cfg.ext_xtheadbs = true,
++        .cfg.ext_xtheadcmo = true,
++        .cfg.ext_xtheadcondmov = true,
++        .cfg.ext_xtheadfmemidx = true,
++        .cfg.ext_xtheadmac = true,
++        .cfg.ext_xtheadmemidx = true,
++        .cfg.ext_xtheadmempair = true,
++        .cfg.ext_xtheadsync = true,
++        .cfg.pmp = true,
 +
-+/*
-+ * Always 'true' booleans for named features
-+ * TCG always implement/can't be user disabled,
-+ * based on spec version.
-+ */
-+BOOL_FIELD(has_priv_1_13)
-+BOOL_FIELD(has_priv_1_12)
-+BOOL_FIELD(has_priv_1_11)
++        .cfg.mvendorid = THEAD_VENDOR_ID,
 +
-+/* Always enabled for TCG if has_priv_1_11 */
-+BOOL_FIELD(ext_ziccrse)
-+
-+/* Vendor-specific custom extensions */
-+BOOL_FIELD(ext_xtheadba)
-+BOOL_FIELD(ext_xtheadbb)
-+BOOL_FIELD(ext_xtheadbs)
-+BOOL_FIELD(ext_xtheadcmo)
-+BOOL_FIELD(ext_xtheadcondmov)
-+BOOL_FIELD(ext_xtheadfmemidx)
-+BOOL_FIELD(ext_xtheadfmv)
-+BOOL_FIELD(ext_xtheadmac)
-+BOOL_FIELD(ext_xtheadmemidx)
-+BOOL_FIELD(ext_xtheadmempair)
-+BOOL_FIELD(ext_xtheadsync)
-+BOOL_FIELD(ext_XVentanaCondOps)
-+
-+BOOL_FIELD(mmu)
-+BOOL_FIELD(pmp)
-+BOOL_FIELD(debug)
-+BOOL_FIELD(misa_w)
-+
-+BOOL_FIELD(short_isa_string)
-+
-+TYPED_FIELD(uint32_t, mvendorid)
-+TYPED_FIELD(uint64_t, marchid)
-+TYPED_FIELD(uint64_t, mimpid)
-+
-+TYPED_FIELD(uint32_t, pmu_mask)
-+TYPED_FIELD(uint16_t, vlenb)
-+TYPED_FIELD(uint16_t, elen)
-+TYPED_FIELD(uint16_t, cbom_blocksize)
-+TYPED_FIELD(uint16_t, cbop_blocksize)
-+TYPED_FIELD(uint16_t, cboz_blocksize)
-+
++        .cfg.max_satp_mode = VM_1_10_SV39,
 +#ifndef CONFIG_USER_ONLY
-+TYPED_FIELD(int8_t, max_satp_mode)
++        .custom_csrs = th_csr_list,
 +#endif
++    ),
 +
-+#undef BOOL_FIELD
-+#undef TYPED_FIELD
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_ascalon_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
 -- 
 2.49.0
 
