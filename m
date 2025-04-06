@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7761DC36002
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7102EC36002
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1ZNn-0007Oo-OV; Sun, 06 Apr 2025 19:26:31 -0400
+	id 1u1ZOJ-0007pt-8T; Sun, 06 Apr 2025 19:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZNi-0007OO-Kc; Sun, 06 Apr 2025 19:26:26 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1u1ZOE-0007g6-H8; Sun, 06 Apr 2025 19:26:58 -0400
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZNg-0002p9-NY; Sun, 06 Apr 2025 19:26:26 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-523d8c024dfso1574741e0c.3; 
- Sun, 06 Apr 2025 16:26:23 -0700 (PDT)
+ id 1u1ZOC-0002sw-T3; Sun, 06 Apr 2025 19:26:58 -0400
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-51eb1a714bfso3990385e0c.3; 
+ Sun, 06 Apr 2025 16:26:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743981983; x=1744586783; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743982015; x=1744586815; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JYgECubPYOZa5IZk7yJ0VadSl7O/pqXfl2qyHdEVDAs=;
- b=KPRnOCJxKltaS9mGRtMCNP2YQC3SAIMYmp5mMQKUmsxcZvhu2HnN0rmHnZx6vxJ/u8
- AzZdh+DaU5IxRCglQC1k8QEScMZbciZ2lDlFMUT8ST09/0JgpkwdFmYjKqykNKpTkL1v
- 3NZYRu93OFfHgUKGcU7gyjY3A/lkcYjNxrNGce30HaeaL4m8WtXd3QsNGUGChbrRdWpl
- qr2r9uoydyZ4Apzm1YCrrASKMtLYaQjm5iGsfEJdLB7wrGj6bQuWecHmiq5pXpZfVRqS
- DPiTvVKeE44CHj6Q+tp1CnH2L6lFF5+0EDw0HzcsdYbt/kOGUaSQMeJCiYkGBhgNbT1+
- zxAg==
+ bh=tEo0vczNhLg3tSNl0bNy5WyiU3Cmaih0wihWUGV6FXA=;
+ b=SiptiGB7XMsQuXALBAqa2R8E0gzSPlCGlv4lUF5WrKG5dvoRViqX6ghyFURiPM4MlG
+ L755bdHWjtaLnJN1uC4QSacwstI6hVV1FHRqmFctD79eGHF/Plq4Dn/wooR+Hm20gZ5F
+ TQzeX1TKM72n0KWOlNHgTReSh/UBGR9a8Y+YtnwyoRkUtAP3ijOO9ckhlhEY8njeYbF6
+ 9Akv/mn72c0f8VLRoz1mqOaH7g24ioke09VdumN4XzMYpTt5VX0Vi6VnbRMoM0xB+mVR
+ v4f7Ief6PEtRXZu++UZsVAUS986GvLiuE/AAcEfmHYADyvuGS8pnC6FIrzMjRRNUoty3
+ W/yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743981983; x=1744586783;
+ d=1e100.net; s=20230601; t=1743982015; x=1744586815;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JYgECubPYOZa5IZk7yJ0VadSl7O/pqXfl2qyHdEVDAs=;
- b=mFLZ0epRVnqO8tLXZFuzoSeQ+OA9tg7r/l9pYO9YnR5zGDkqssI437iM3vntBGVyHY
- jhBqdB0oGtZs2gkzJUzh8CuXEf7m9U/TXdvxH6S0MJjK+dDw2XSjze6ESt+v2DpHo+S7
- stRmERpm2vLo0c9wCIrw3yViESEjP4Hyq10Qw1Ttr3mwKM9fzdXNV3jNcVsTcVG9eeP+
- mgAzauTonbZ6AxBlcN46q/6teV6KV+wJP4aNaSeD5TUGekxnkB3xQ6PRqJafjoainqYo
- oMTQOr5CxeVX/9MKBiXqM4kCvv2tB/nwALsWWajlbN1l7R4EslIatbHlPpNbhKGlCIou
- rLXw==
+ bh=tEo0vczNhLg3tSNl0bNy5WyiU3Cmaih0wihWUGV6FXA=;
+ b=QcNXGA6fCTV0n1z8r8NKmzMSu/Wkpl8wP0sMJxgUYE/7A32qz4hCjlnypvolxlBqEj
+ s2JzQ6tN1I5D78HzSPIBxOgwAGiAHq35fzs9KZbGqtHMxfSGVdMcjD64o1pbN6OEk49w
+ UTdGvyLfELrBfiYAcGB1XM9u3PnXiJsCxgLwWR1W3PrxiNoNeOYsmChRR0CHAvbDSnX2
+ hBUw84Q8bDWoQJDn5EtxvxW3STfcL3P+MAjS9bFDX9a3LKCMjQgcY5Dq1RQPOCQt6NQT
+ B4gh273i6bNUewDaEOssw6WZ1T12g7dSBEjq2Wv6h6yrKRZrSPI7gz0BSQXr5LwM6o/3
+ 5inA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTrFQjjG5ASXFQrrflMIFZukFgSUEjCFTgi8+LCghMM33BM6sY0uWulx5XFdOyN34CbDeGrRMv3hyMOA==@nongnu.org,
- AJvYcCWlfVYQ1QvZYqgBk5J2gwglGnzYWrcySMplQ8ImeEUVfENH72rQZoxSbgP8H1dgrqYByX7cC9O26v3z@nongnu.org
-X-Gm-Message-State: AOJu0YxGAluVuyxx7vOSTk7i9sK4703Mw5i1gJn+eEumhAi0nZMAj8RP
- CEr0mY1CwBJdfQfTV7yxO3emciTo/rVwQu1GtTgOAKpHPQ7HlARthcLkKGno5NI8KAY5nAoWs6z
- KR3z1hSn8vRXhGrVvDiMeSKFzZKNC/Q==
-X-Gm-Gg: ASbGncuV3cg8jN/pk+OtPo/YSmgjOfR9yFIqRUxhm8pEiEuKEUzKDIXSHF0jdpi/l0Q
- b2XTThKHs6Wbx39k67ELlKAycDva4Wya/XXdo7zoXjNoO8f0KR/nEf5wHfem106f01VGKRCP6JD
- bkZQGHQel5oGuJ0J6rirzzC5SdZkbMkBaWTLen00OEddqLzOZo1XJbom/H
-X-Google-Smtp-Source: AGHT+IFA2gXHXTRl/AR7ZFJwgeWSJR46yRQDA7HnAxZYgA+6qg6V2Hqk2XnfBNM0WH6hNZDH3yFZNiuZY1g0D4u6o0s=
-X-Received: by 2002:a05:6122:168c:b0:51f:405e:866e with SMTP id
- 71dfb90a1353d-5276444bd32mr6967624e0c.1.1743981982824; Sun, 06 Apr 2025
- 16:26:22 -0700 (PDT)
+ AJvYcCWU5FEU4qoF3nPBbsJuIg5C7+UuxbD+DTnXWyOIwX9V1dRC7Gd1itGBrt8Y9wlWk9k5F/HgGQzLIkP5@nongnu.org
+X-Gm-Message-State: AOJu0Yz5NNV8lWED2jYGVCRYiw3v2Uax0LvwS9VJWD6ZzVFyoiBwbRl/
+ OUc2sTkYRTBm6/aolPYNhdfC3STqYsYv9MTGurXS4lCz5HXx2lbPKSRRq4KaAr4SeXVo/1Yb404
+ zMi/Tf6SHsXQ1wsgi2oNClc3+eq0=
+X-Gm-Gg: ASbGncuXdd/tDDQWMKKG9Ms9KXhBZJXVf4ss+WeUQPX8c4WPgqjop36uWpFQOOGKh9y
+ KbiA7NVsgYodXsmLB9LXV0wAfNuLh6WS1Jamgf8T607gcAPyRoGMaqv9ZE8L+1/3xvVjAvcCkXJ
+ UPWltDJL1I2r0t1k10+YHHTRCGJxzqbDnBevPvv2jUulkdpvqk1IrkK/z7
+X-Google-Smtp-Source: AGHT+IFi8CtqgD2Db5DdF/RoeeUk5BZA3CiWlA9xmp7rXqNJ/ZqProABO1TIYcIEAVltpSDT1JmDWNQveaQ/oOJ2iTw=
+X-Received: by 2002:a05:6122:181b:b0:520:9688:d1bb with SMTP id
+ 71dfb90a1353d-52772ede57bmr3972472e0c.2.1743982015305; Sun, 06 Apr 2025
+ 16:26:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220106210108.138226-1-frederic.petrot@univ-grenoble-alpes.fr>
- <c5c8566a-fd0d-48d1-8ed1-e52f0bb4f210@linaro.org>
- <CAKmqyKN51+jriKkSL8V5EFc9hBSFoEHYKp-70uP6RvO_K6a=pg@mail.gmail.com>
- <9ae32149-fe18-49d3-a689-60ee6752c20d@univ-grenoble-alpes.fr>
-In-Reply-To: <9ae32149-fe18-49d3-a689-60ee6752c20d@univ-grenoble-alpes.fr>
+References: <20250404152750.332791-1-dbarboza@ventanamicro.com>
+ <20250404152750.332791-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250404152750.332791-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 7 Apr 2025 09:25:56 +1000
-X-Gm-Features: ATxdqUHbzAg4aR86tj9EmZeF9tNlmTI-51wnUVtaN9Sel8INEA3R6dgRpQWcKxE
-Message-ID: <CAKmqyKO4GYqJ5GcvEc+yL4d01ONzDLR=2Ava7Disw2aSOZVFsg@mail.gmail.com>
-Subject: Re: [PATCH v8 00/18] Adding partial support for 128-bit riscv target
-To: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, bin.meng@windriver.com, 
- richard.henderson@linaro.org, palmer@dabbelt.com, 
- fabien.portas@grenoble-inp.org, alistair.francis@wdc.com, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Anton Johansson <anjo@rev.ng>
+Date: Mon, 7 Apr 2025 09:26:29 +1000
+X-Gm-Features: ATxdqUGi2UZyoWy4OXIpo5YPLq85X3YUuUxONVxEiHeZoNKQSK4NcUxyiaWYqBw
+Message-ID: <CAKmqyKMD31SLQeYt0Psi1vDcpK6cvPPtP1JQfh7sUgqqEJfYag@mail.gmail.com>
+Subject: Re: [PATCH 1/2] target/riscv/tcg: make 'max' cpu rva23s64 compliant
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,101 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 7, 2025 at 4:24=E2=80=AFAM Fr=C3=A9d=C3=A9ric P=C3=A9trot
-<frederic.petrot@univ-grenoble-alpes.fr> wrote:
+On Sat, Apr 5, 2025 at 1:29=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> Hi Alistair, Phil,
-> well, I'm trying to keep the thing alive, checking from time to time that
-> the current QEMU still runs the 128-bit tests that I have, and on which
-> I continue (slowly) to do stuffs.
+> The 'max' CPU includes all available extensions we implement, but at
+> this moment it is not rva23s64 compliant due to missing checks that
+> the parent profile (rva22s64) does.
+>
+> Users might expect that the a CPU called 'max' CPU will also compatible
+> with our latest S mode profile. Let's make it official.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-If it's being used then I don't see any issue keeping it
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
-> I hope this can stay upstream for experimental/research purposes, but the
-> 128-bit riscv community is, I follow you on that, scarce for now.
+> ---
+>  target/riscv/tcg/tcg-cpu.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> So, your call.
-> Cheers,
-> Fr=C3=A9d=C3=A9ric
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 5aef9eef36..cd489ae35b 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -1486,6 +1486,8 @@ static void riscv_init_max_cpu_extensions(Object *o=
+bj)
+>      if (cpu->cfg.ext_smdbltrp) {
+>          isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smdbltrp), false)=
+;
+>      }
+> +
+> +    object_property_set_bool(obj, "rva23s64", true, NULL);
+>  }
 >
-> Le 04/04/2025 =C3=A0 05:26, Alistair Francis a =C3=A9crit :
-> > On Sat, Mar 22, 2025 at 1:09=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-> > <philmd@linaro.org> wrote:
-> >>
-> >> Hi,
-> >>
-> >> On 6/1/22 22:00, Fr=C3=A9d=C3=A9ric P=C3=A9trot wrote:
-> >>> This series of patches provides partial 128-bit support for the riscv
-> >>> target architecture, namely RVI and RVM, with minimal csr support.
-> >>
-> >>
-> >>> Fr=C3=A9d=C3=A9ric P=C3=A9trot (18):
-> >>>     exec/memop: Adding signedness to quad definitions
-> >>>     exec/memop: Adding signed quad and octo defines
-> >>>     qemu/int128: addition of div/rem 128-bit operations
-> >>>     target/riscv: additional macros to check instruction support
-> >>>     target/riscv: separation of bitwise logic and arithmetic helpers
-> >>>     target/riscv: array for the 64 upper bits of 128-bit registers
-> >>>     target/riscv: setup everything for rv64 to support rv128 executio=
-n
-> >>
-> >>
-> >> I see this series has been merged as commit afe33262585, with
-> >> 332dab68785b describing:
-> >>
-> >>       This patch adds the support of the '-cpu rv128' option to
-> >>       qemu-system-riscv64 so that we can indicate that we want to
-> >>       run rv128 executables.
-> >>
-> >>       Still, there is no support for 128-bit insns at that stage
-> >>       so qemu fails miserably (as expected) if launched with this
-> >>       option.
-> >>
-> >> Is this code tested? 3 years passed so I wonder about possible
-> >> code bitrot here.
-> >
-> >  From memory at the time there was some momentum for RV128. So this was
-> > merged with the expectation that it would continue to improve.
-> >
-> > That doesn't seem to have happened, either software or spec wise though=
-.
-> >
-> >>
-> >> (I reached this code by looking at targets not supporting MTTCG).
-> >
-> > I'm happy to remove the CPU if it's blocking you, it's experimental so
-> > it doesn't need to be deprecated or anything fancy.
-> >
-> > Alistair
-> >
-> >>
-> >>>     target/riscv: moving some insns close to similar insns
-> >>>     target/riscv: accessors to registers upper part and 128-bit load/=
-store
-> >>>     target/riscv: support for 128-bit bitwise instructions
-> >>>     target/riscv: support for 128-bit U-type instructions
-> >>>     target/riscv: support for 128-bit shift instructions
-> >>>     target/riscv: support for 128-bit arithmetic instructions
-> >>>     target/riscv: support for 128-bit M extension
-> >>>     target/riscv: adding high part of some csrs
-> >>>     target/riscv: helper functions to wrap calls to 128-bit csr insns
-> >>>     target/riscv: modification of the trans_csrxx for 128-bit support
-> >>>     target/riscv: actual functions to realize crs 128-bit insns
-> >>
-> >>
->
+>  static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
 > --
-> +------------------------------------------------------------------------=
----+
-> | Fr=C3=A9d=C3=A9ric P=C3=A9trot,                        Pr. Grenoble INP=
--UGA@Ensimag/TIMA |
-> | Mob/Pho: +33 6 74 57 99 65/+33 4 76 57 48 70      Ad augusta  per angus=
-ta |
-> | http://tima.univ-grenoble-alpes.fr frederic.petrot@univ-grenoble-alpes.=
-fr |
-> +------------------------------------------------------------------------=
----+
+> 2.49.0
+>
 >
 
