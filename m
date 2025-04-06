@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 859BBC36002
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52355C3601E
+	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1ZT6-0001GW-9g; Sun, 06 Apr 2025 19:32:00 -0400
+	id 1u1ZUM-0001ud-GK; Sun, 06 Apr 2025 19:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZSz-0001Du-Tl
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 19:31:54 -0400
+ id 1u1ZUC-0001so-Ep; Sun, 06 Apr 2025 19:33:09 -0400
 Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZSy-0003n3-9F
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 19:31:53 -0400
+ id 1u1ZU9-0003yA-Id; Sun, 06 Apr 2025 19:33:07 -0400
 Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-86d42f08219so1551428241.0
- for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 16:31:51 -0700 (PDT)
+ a1e0cc1a2514c-86fea8329cdso3522161241.1; 
+ Sun, 06 Apr 2025 16:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743982311; x=1744587111; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1743982383; x=1744587183; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QUaqkTg4jdxcQ97gZFa3a/janMRKcKb4fwWv+HFVvrk=;
- b=Wz4amf6bs65LnkKQqULlDVoFipHquoNG7zqcezwLToNASQFrcFfTOYU6rSG+noVyhr
- JfS6JDwHCRJdVQu86vCI0RG6OFGp9Ezg+Bq7+JBAyXsumfhHG/VLMrzivjQWI6igXarK
- jsM5pM9mXA98NTn8gOWU69xQHZdSkaVHl2hIOn2oEwfeXrGhSEUk7+zY5KSlG+XEutk4
- Jcmv4F0+U2WIwzw4fnJsl3u5w8RrN7vncNG4z8/FDOr/nwjTxYsoXzi06RBeJ1bF9PUU
- 8kYgUnNEojwKXYh67R/tcT4HjVwylMygYnYnOY5o3kryNgw6aqqeQd+9WzLJKPFmU4H+
- wlbA==
+ bh=xEHpk+uwUJKXYrPGSL2apLgeD0u+rgmq8Nrxew6SfVM=;
+ b=MPeoz/e89X02Lp3V7YfdT8jDa9+URUSKNs9k0QkxUxojI3IBt6LazmJA+duCeEmR3s
+ 7YKMT38yzcEJRYgcT+tidjhyZV+aNKBRDrqFxvfYfiIrm3wAsxIFQm3KBxVIsRAYwIbB
+ rcR8zHGtihBlqgbwCups+3TmN+VsQNY8UAs7FnpglxeuSrFLXh0FKeOmZMkkzw3X0ozB
+ BlgyZQlgeUbUp1z66rF5aymySd42DXMZiEy6pTXtoVdSjU1Szhn2Q1RIfhDyKjVKK5mJ
+ OTgRUdO5YgT06y5o32ueUJziT9svy8BcRa56L6fY+yNJ8v++0nNG546YYGd1+48FUEz1
+ BEZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743982311; x=1744587111;
+ d=1e100.net; s=20230601; t=1743982383; x=1744587183;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QUaqkTg4jdxcQ97gZFa3a/janMRKcKb4fwWv+HFVvrk=;
- b=KihIaDFIt8UUonvS7QmpuaAP6XTtKsLgyxMuuuswZMaEbR3cCNam/izXV+25MnwhcH
- RXIjmZzDbO7qIIYbPpRWN7XUKwpo6nHtNKAfLz99fBvFRpqCiPGbojwLY1OIFAa3oRhh
- SVudeKtDt+wbVKVh2M1NmvCIg3+T3CX2w+PXhhxWvz1wP4qR7LQWLlPK1oVCGkX1404X
- tc62eYBQJiIPeyC5z8fR0Wdgr1RR0nu9NNBT+UChax9rZLcgeTQaJ738bWUUGWhP4WE0
- W2t/3DRIFW6brJXLnvYK97tAOBGTVIpOwr19MdnM+BxzZnKdW8q8bVlBSJzcZjN09u5n
- VbSA==
-X-Gm-Message-State: AOJu0Yzd8fkboTwquT6arFWPpFH/2JxpGcxqAdOAyp5H6GkRGvfEkh7n
- DJQOvhztTzd5q49HUcXupVvCbDIEGb4IYzO6kQh7smgsG5svWRtsxYLlYIdGAKPfbTwk3g3Uhgp
- XEEHP3bIVgKxvDgVGsYnTwcjdVsyR0g==
-X-Gm-Gg: ASbGncvJyvd31PY8IEwDNw6KX+RNAafaJNaNHlLiK+JZZlJTbPmru32jMZ8BX1YH3EL
- wpoDF6bgX0UESE1POGXsTRJZEpas3a7fGaUETXr8sd76wCzf5kk5z/Z2HRaOVqX3GgmYbUXDRVL
- 9CtUhIr+Z6EXLJSf9JLe0mAilEsUoyiCbsWFUVTenUpwQ3rn6xDt+MQx+f
-X-Google-Smtp-Source: AGHT+IHsiTwMf0tjmSjdCDU+us+EASBXfd3ax2RMZq7pfnV3OoZ/O2tarTuI8w6Oea8NPPtFFYFjN1A4vjrKqVvFDqo=
-X-Received: by 2002:a05:6102:510e:b0:4c3:6215:9f86 with SMTP id
- ada2fe7eead31-4c85547bf34mr7703156137.19.1743982310806; Sun, 06 Apr 2025
- 16:31:50 -0700 (PDT)
+ bh=xEHpk+uwUJKXYrPGSL2apLgeD0u+rgmq8Nrxew6SfVM=;
+ b=dp9i6A0n2YvfC5HynKADsk6IFHrlIKU29ZPn9u1KSjHZEDJ9lgxhR8+TbkC1ys4xdm
+ S+TCDVtqUrgbSrDaoJQmpeGw5COjyoY2LNe3I92vVKCGHn5pS9u20gS7/dDC+kjQsTeE
+ Hs/Q2odgtwwcflwNKIQGXkv5xrswoQHp88Vtd7pQTa0XZJV59h3wmuULOdKzslAjbScd
+ GKy+XtfLSXzvOO/NNnSiqEZTfrtED83sC0JPC9ivp0fGH2/l56PIDPS8bAPybtC4VNYz
+ OftOo0JI2DZm2IK4ReHcDxTWTOY51mRKQpS2VbTbqUbCPBBkxe6GelwgUki1V6ZdOEaL
+ cE3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdHEvN5vVR3SKxND3M6DBqb0UL1u9I3V8bL84U1mTHUmujaWgZkHXEBKApb/PAW8LErar1Ns6mJrfM@nongnu.org
+X-Gm-Message-State: AOJu0YzZ9J9rks17eJrC8igLsgO7ynZO3N5pOzDu/Cj8iZ9Q9TSeS/vp
+ Z1aQSt5Xl5XZPAYQcb9jqpj1S+gaUdHfu9kqG7O6lvZrdFNHyL46LigSV4YgW0m9IvEgK/Gc/+s
+ ZkF9ObMssfh2S9EDHrKHoTEvgrIM=
+X-Gm-Gg: ASbGncs3oRFsD1imOF8Gr5Cga5bgZ9bXw4oJg+dQJzZvAgV5qw6ujUAQwh7o0/J6dQr
+ gF43VXDVDp7mD4EDuQ9L9YBSoAv5GUCvFbW5qN+2el1D7qA7GZyL0fKkIztwe2fbXi1TkqldwPc
+ QKtYZ5EeYSCKyBc/9UDtP1KQMdGDwjuYUpYeSA421sb0fndVj5n0XkdRpd
+X-Google-Smtp-Source: AGHT+IHJiARim7fINCtwBz9h8txsxLL+q3WRAPZEFzKCidpYp1PyfVbUvHQRadmGbEKB634W0cOpGVeY/TIzoysyNDc=
+X-Received: by 2002:a05:6102:5719:b0:4bb:9b46:3f71 with SMTP id
+ ada2fe7eead31-4c863687728mr4408705137.8.1743982383482; Sun, 06 Apr 2025
+ 16:33:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250404152750.332791-1-dbarboza@ventanamicro.com>
- <20250404152750.332791-3-dbarboza@ventanamicro.com>
- <debc3677-3282-4064-a34c-0234d0eb7a78@linaro.org>
-In-Reply-To: <debc3677-3282-4064-a34c-0234d0eb7a78@linaro.org>
+References: <20250404122858.241598-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20250404122858.241598-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 7 Apr 2025 09:31:24 +1000
-X-Gm-Features: ATxdqUFNKzdlpdBzlROVuTkZX3IIZV05bk7-HS_QEvMHe71GUpTAtTbTSzazs_s
-Message-ID: <CAKmqyKNMUU3brR++stxae1VmSW2eJLRGpxOBr4+FJWjde3Yt4A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/riscv/virt.c: change default CPU to 'max'
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 7 Apr 2025 09:32:37 +1000
+X-Gm-Features: ATxdqUHbqIJL5xEvbODzO9mtx81KNc3ze_GThkmw4kO4AO-_nm98CsdLsvO3NXI
+Message-ID: <CAKmqyKNMk1bEEPXsj-bQ76mE5T0k9DU0MF2dmTTuWb3rvfekzA@mail.gmail.com>
+Subject: Re: [PATCH for-10.0] docs: deprecate RISC-V default machine option
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
@@ -96,43 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 5, 2025 at 9:02=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, Apr 4, 2025 at 10:30=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> On 4/4/25 08:27, Daniel Henrique Barboza wrote:
-> > Using 'max' as
-> > default CPU is done by other QEMU archs like aarch64 so we'll be more
-> > compatible with everyone else.
+> Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
+> made it default for qemu-system-riscv32/64. It was the first RISC-V
+> machine added in QEMU so setting it as default was sensible.
 >
-> This isn't true.  qemu-system-aarch64 -M virt defaults to cortex-a15 (for=
- hysterical
-> raisins), which is completely and totally useless.  Which means that one =
-must always pass
-> a -cpu option to qemu-system-aarch64.
+> Today we have 7 riscv64 and 6 riscv32 machines and having 'spike' as
+> default machine is not intuitive. For example, [1] is a bug that was
+> opened with the 'virt' board in mind, but given that the user didn't
+> pass a '-machine' option, the user was using 'spike' without knowing.
 >
-> Moreover, -cpu max has zero migration guarantees, so anyone who wants to =
-be able to
-> reliably migrate is encouraged to use a real cpu model.
+> Being explicit in the command line is desirable when we have a handful
+> of boards available, so deprecate the default machine setting from
+> RISC-V.
 >
-> I suppose, for throwaway VMs, -cpu max is a decent default.  But there's =
-a lot to be said
-> for not specifying a default at all.
+> [1] https://gitlab.com/qemu-project/qemu/-/issues/2467
+>
+> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-I agree. If we aren't going to specify a default machine, why specify
-a default CPU?
+Thanks!
 
-It probably makes sense to deprecate the default CPU for non-vendor
-machines and then force users to pick their own CPU. That should start
-in 10.1 so it's a release offset from the removal of the default
-machine.
-
-Then maybe think about even removing rv32/rv64 CPUs and push people to
-the profiles, as it's a lot clearer what they are getting.
+Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+>  docs/about/deprecated.rst | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 >
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 76291fdfd6..0f41a99c67 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -304,6 +304,23 @@ online to check that this board did not completely b=
+itrot yet). It is
+>  recommended to use another MIPS machine for future MIPS code development
+>  instead.
 >
-> r~
+> +RISC-V default machine option (since 10.0)
+> +''''''''''''''''''''''''''''''''''''''''''
+> +
+> +RISC-V defines ``spike`` as the default machine if no machine option is
+> +given in the command line.  This happens because ``spike`` is the first
+> +RISC-V machine implemented in QEMU and setting it as default was
+> +convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
+> +and having ``spike`` as a default is no longer justified.  This default
+> +will also promote situations where users think they're running ``virt``
+> +(the most used RISC-V machine type in 10.0) when in fact they're
+> +running ``spike``.
+> +
+> +Removing the default machine option forces users to always set the machi=
+ne
+> +they want to use and avoids confusion.  Existing users of the ``spike``
+> +machine must ensure that they're setting the ``spike`` machine in the
+> +command line (``-M spike``).
+> +
+>
+>  Backend options
+>  ---------------
+> --
+> 2.49.0
+>
 >
 
