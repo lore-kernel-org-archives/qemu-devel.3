@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68490C3601E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 09:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983D4C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 09:43:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1iwo-00043O-Qe; Mon, 07 Apr 2025 05:39:18 -0400
+	id 1u1j0h-0005Mt-CF; Mon, 07 Apr 2025 05:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u1iwm-00042p-JU
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:39:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u1iwj-00045D-3z
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:39:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744018748;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WPd2KHQ3p7Cec6E+EUzqXE4hYP79ZrxtpZRLiCQxwdM=;
- b=HW8HBiLea68ZHqzA+tE151uFzW/bPH3qNXZh+3mozcM7t3SfIYj15LDbIz8ZrFYOTM27n4
- ZK0MT+ESSQ1LiUyEF4c+8EVX8rBK0n+ZHS52bgmS4fj2UCGD1nS9OPT/QxUNw9k0s1brOm
- TLp3/JayLwNihuurfmyYq6XZH1HN2v4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-ESn24vgqPNyFJLxbl_Omlg-1; Mon, 07 Apr 2025 05:39:07 -0400
-X-MC-Unique: ESn24vgqPNyFJLxbl_Omlg-1
-X-Mimecast-MFC-AGG-ID: ESn24vgqPNyFJLxbl_Omlg_1744018746
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3978ef9a284so1845499f8f.3
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 02:39:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744018746; x=1744623546;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1u1j0e-0005Ln-Ro
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:43:16 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1u1j0c-0004gG-1V
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:43:16 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5e614da8615so2587864a12.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 02:43:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1744018991; x=1744623791; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WPd2KHQ3p7Cec6E+EUzqXE4hYP79ZrxtpZRLiCQxwdM=;
- b=qNB9RsyG2LG9tnR6QeTZWxPtvkf++7LB439b9JtSHfCLuRDYhrAa0/vlYAzXIMVn3C
- k2CKAD2yofWDxSuwSTdhu4mwMy8qcItZQzdkD9bRx1JhSptBW56Gq3iyUpvRN5M1lv0B
- OxGMZxRMWbafjL8TbfvihrsOksRw0Zb8p6roPcsEKMyZCBH9e3XzoMZ05U2NdakTcJq7
- zPpu5Z9j67swSgmAlbVfglenbHr3SE8fFiGpOqVg8ikuryjfNCyEmuO87AzWaZZgUpMp
- d/SBQpD09mRDYBJthe8pjVHtVi9ZMjvDh1kSY9DwIsLi6SGhyfBDgYKs7Yn1g0pJUR6K
- CrMA==
-X-Gm-Message-State: AOJu0YxIkjwNv6k8GrBh86+h2JoOsMKlEEayHS7R2ExlUqw09Ct+i1hs
- GSC8PPYYMpfmDix/TFZZvX4lPNMsDSelDJHYy9CV97VNNVOqIYHbLiUUFAsDUrqn5VY3pKFe+SU
- 6QwVnLGgwnrgbIcUk2nXFdVNyNxqlnaV+C/4OvRWGmQJ8QdQBrSWR
-X-Gm-Gg: ASbGnctzyQRCDc1Mo8tLhKN/vOHeGEllEWRd502iTh56WzQ/Q+pOq9iY9gqCQN1dE8P
- MwvM8gJjpQX/m91QO5uI5aV2cf2Nn4QC5K38TfkMYfbumGWO0YVj2QizlWzvj0i2F7ZyUwDsrur
- /a7wegS8aNGHacR5gjhvvpDpVUT2RAUk4iAvLQ5FevEyJSC5MZHzPvODPyErGaqucZ2XxGudU/d
- lSWAZgY7pnsPX+XA5F9WFR2j3o89hT3bpydx5iNd0Iffh6i2iWry2CxKux51YuXc68I10q0XzkU
- zgoNSm9eHQ==
-X-Received: by 2002:a5d:6da1:0:b0:38f:3224:65ff with SMTP id
- ffacd0b85a97d-39cb357585amr10265964f8f.5.1744018745787; 
- Mon, 07 Apr 2025 02:39:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHeJwwn0+tifGmAOKpbHWT3a2PWV+3qFBF8VGndgFw69+iwfzZfR5CG8eB20coaK0LXa7rXA==
-X-Received: by 2002:a5d:6da1:0:b0:38f:3224:65ff with SMTP id
- ffacd0b85a97d-39cb357585amr10265939f8f.5.1744018745363; 
- Mon, 07 Apr 2025 02:39:05 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b69c4sm11386348f8f.43.2025.04.07.02.39.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Apr 2025 02:39:04 -0700 (PDT)
-Date: Mon, 7 Apr 2025 05:39:01 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "T.J. Alumbaugh" <talumbau@google.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Yuanchu Xie <yuanchu@google.com>, Yu Zhao <yuzhao@google.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [RFC PATCH v2 0/5] virtio-balloon: Working Set Reporting
-Message-ID: <20250407053811-mutt-send-email-mst@kernel.org>
-References: <20230525222016.35333-1-talumbau@google.com>
+ bh=frAdG82IzSpKFdF9BYUPNXFXA1qcYxRah5S2vNxJgmQ=;
+ b=JcD6Tj1yiWReT3OBilrpoScp7rWVVvuC4NIovIS8P6FQMflAanftRcdJhDBJHh7HW9
+ oya0UNbUykCqE6BHmjg89YQRU459YGGnyAcKoN2x3BIv9qtW6GJcnGP/+digDct53w45
+ vpFaHcij8xPYLe5F7DJts+o8Yfi50m+jns9LQrV/xQJz9lB/n9RaXNl8iAEMxAypAqhB
+ 6NARsmc+fQPxM24zv4Q/4oyQdtMLyJHvoYuPFA3XpGTBndPREI6WmC92D/ovRQjbZpFB
+ qcZHroRjx62/cQCy0mJ0OmhwPiFbaTt2dY9AOh8/9nouBHKZX3V0SQWNkJH8BHbrdr+Z
+ AyMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744018991; x=1744623791;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=frAdG82IzSpKFdF9BYUPNXFXA1qcYxRah5S2vNxJgmQ=;
+ b=UpPWxCrq68XlSL9ua6bBF+ZCEQgC+mQQiONaSrJy9gEFFHIRM2dzQmcTHm5EFQiaD1
+ rvEurT+n1gneE7/p9grhZR/nWR6C9toL8wd3iVIVV+1fIbVHK2gmWdYnOrm8VzRi6eFL
+ qiTLMo1Dzua4UrqEyKgFoY1VERgsNe0l8gZbCn7EoThY3f3U1wMtTffeDPhP7aHIku+G
+ 3Y7MaQLhyebQghC28xnlPpmgee7n1Z1fiJMVDextI3JQ37pGTTBckfQdnSncWjDn9pXg
+ DfJEr6nBMVlVQqPiqPjeQ+zlBQmouvEBng0Q/rqLQwY0gvP7UxZ9puqGCAxcMvM7ugNG
+ BWaw==
+X-Gm-Message-State: AOJu0YwXgY4pq9LfYlqu0tIEFjNmG9m5gBXi+4mGjEsMYa72V1bSTD1D
+ u6mSXzpjYKlih/+alObL0BphFfNYouiz680ULyItjt0WUgyiQfuzK8CMPMEkdbukOO8R646X5bk
+ xRgRQ71bBoF2f8UsW++FIrxsRrv/ZSKdXbgMWPA==
+X-Gm-Gg: ASbGncvwTD190qXwmcfW7GhCnQq+kEdg2N3l9PACBVU2a7TkX7NwT0FHXfEywfOrilg
+ GTj+5cJ6uvS4oO78i4RiXmvFuSFmtGXNS4zz256lguAbcOR7Rmt62CZuGrXDDM9SbGaWqsHXXmH
+ xj/8/OmQEAV2roYBz05CblC4djwnpf
+X-Google-Smtp-Source: AGHT+IHBT2QwPW67OF+XinZDo56beTyUPleiOhytNCHpyNHJwV4YB2uhfjjqh1dWzAz/CTjLdiskDXP2lRhwOYpqmkU=
+X-Received: by 2002:a05:6402:1d4e:b0:5e5:4807:545f with SMTP id
+ 4fb4d7f45d1cf-5f0b292ac40mr9554807a12.12.1744018990988; Mon, 07 Apr 2025
+ 02:43:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230525222016.35333-1-talumbau@google.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20250319192153.28549-1-jim.shu@sifive.com>
+ <20250319192153.28549-5-jim.shu@sifive.com>
+ <CAKmqyKPFBaGdEQeLewGyvhNcmzqO0gtRN=4BytoAH7QO5qm_Lw@mail.gmail.com>
+In-Reply-To: <CAKmqyKPFBaGdEQeLewGyvhNcmzqO0gtRN=4BytoAH7QO5qm_Lw@mail.gmail.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Mon, 7 Apr 2025 17:42:59 +0800
+X-Gm-Features: ATxdqUHyOBVd4-RGovufR-Y10_ggCZ6GLHHsjBoOVbwpMa0MZmxCCeaOtycKv6g
+Message-ID: <CALw707ouoGcASSCd1ODHiqVw3XqtrdeRJw2k6b2kZZx8vpbWnQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] target/riscv: Enable/Disable S/VS-mode Timer when
+ STCE bit is changed
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,117 +101,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 25, 2023 at 10:20:11PM +0000, T.J. Alumbaugh wrote:
-> This is the device implementation for the proposed expanded balloon feature
-> described here:
-> 
-> https://lore.kernel.org/linux-mm/20230509185419.1088297-1-yuanchu@google.com/
-> 
-> This series has a fixed number of "bins" for the working set report, but this is
-> not a constraint of the system. The bin number is fixed at device realization
-> time (in other implementations it is specified as a command line argument). Once
-> that number is fixed, this determines the correct number of bin intervals to
-> pass to the QMP/HMP function 'working_set_config'. Any feedback on how to
-> properly construct that function for this use case (passing a variable length
-> list?) would be appreciated.
-
-It's been a while. Is there interest is reviving this? I also note that
-reserving a feature bit is very much recommended to avoid a complete
-mess.
+OK, I will fix it in the v2 patchset.
 
 
-> New in V2:
-> =========
-> 
-> - Patch series is now: header file changes, device changes, QMP changes, HMP
-> chagnes, and migration changes.
-> 
-> - Exmaple usages of QMP and HMP interface are in their respective commit
-> messages.
-> 
-> - "ws" -> "working_set" throughout
-> 
-> Motivation
-> ==========
-> As mentioned in the above message, the use case is a host with overcommitted
-> memory and 1 or more VMs. The goal is to get both timely and accurate
-> information on overall memory utilization in order to drive appropriate
-> reclaim activities, since in some client device use cases a VM might need a
-> significant fraction of the overall memory for a period of time, but then
-> enter a quiet period that results in a large number of cold pages in the
-> guest.
-> 
-> The balloon device now has a number of features to assist in sharing memory
-> resources amongst the guests and host (e.g free page hinting, stats, free page
-> reporting). As mentioned in slide 12 in [1], the balloon doesn't have a good
-> mechanism to drive the reclaim of guest cache. Our use case includes both
-> typical page cache as well as "application caches" with memory that should be
-> discarded in times of system-wide memory pressure. In some cases, virtio-pmem
-> can be a method for host control of guest cache but there are undesirable
-> security implications.
-> 
-> Working Set Reporting
-> =====================
-> The patch series here includes:
-> 
->  - Actual device implementation for VIRTIO_F_WS_REPORTING to standardize the
->    configuration and communication of Working Set reports from the guest. This
->    includes a notification virtqueue for receiving config information and
->    requests for a report (a feature which could be expanded for additional use
->    cases) and a virtqueue for the actual report from the driver.
-> 
->  - QMP changes so that a controller program can use the existing QEMU socket
->    mechanism to configure and request WS reports and then read the reports as
->    a JSON property on the balloon.
-> 
-> Working Set reporting in the balloon provides:
-> 
->  - an accurate picture of current memory utilization in the guest
->  - event driven reporting (with configurable rate limiting) to deliver reports
->    during times of memory pressure.
-> 
-> The reporting mechanism can be combined with a domain-specific balloon policy
-> to drive the separate reclaim activities in a coordinated fashion.
-> 
-> TODOs:
-> ======
->  -  A synchronization mechanism must be added to the functions that send WS
->     Config and WS Request, otherwise concurrent callers (through QMP) can mix
->     messages on the virtqueue sending the data to the driver.
-> 
->  - The device currently has a hard-coded setting of 4 'bins' for a Working Set
->    report, whereas the specification calls for anywhere between 2 and 16.
-> 
->  - A WS_EVENT notification through QMP should include the actual report,
->    whereas right now we query for that information right after a WS_EVENT is
->    received.
-> 
-> References:
-> 
-> [1] https://kvmforum2020.sched.com/event/eE4U/virtio-balloonpmemmem-managing-guest-memory-david-hildenbrand-michael-s-tsirkin-red-hat
-> 
-> T.J. Alumbaugh (5):
->   virtio-balloon: Add Working Set Reporting feature
->   virtio-balloon: device has Working Set Reporting
->   virtio-balloon: Add QMP functions for Working Set
->   virtio-balloon: Add HMP functions for Working Set
->   virtio-balloon: Migration of working set config
-> 
->  hmp-commands.hx                               |  26 ++
->  hw/core/machine-hmp-cmds.c                    |  21 ++
->  hw/virtio/virtio-balloon-pci.c                |   2 +
->  hw/virtio/virtio-balloon.c                    | 239 +++++++++++++++++-
->  include/hw/virtio/virtio-balloon.h            |  13 +-
->  include/monitor/hmp.h                         |   2 +
->  .../standard-headers/linux/virtio_balloon.h   |  20 ++
->  include/sysemu/balloon.h                      |   9 +-
->  monitor/monitor.c                             |   1 +
->  qapi/machine.json                             |  66 +++++
->  qapi/misc.json                                |  26 ++
->  softmmu/balloon.c                             |  31 ++-
->  12 files changed, 449 insertions(+), 7 deletions(-)
-> 
-> -- 
-> 2.41.0.rc0.172.g3f132b7071-goog
+Jim Shu
 
+On Fri, Apr 4, 2025 at 2:03=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Thu, Mar 20, 2025 at 5:24=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrot=
+e:
+> >
+> > Updating STCE will enable/disable SSTC in S-mode or/and VS-mode, so we
+> > also need to update S/VS-mode Timer and S/VSTIP bits in $mip CSR.
+> >
+> > Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> > ---
+> >  target/riscv/csr.c         | 44 ++++++++++++++++++++++++++++++++
+> >  target/riscv/time_helper.c | 51 ++++++++++++++++++++++++++++++++++++++
+> >  target/riscv/time_helper.h |  1 +
+> >  3 files changed, 96 insertions(+)
+> >
+> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> > index ba026dfc8e..c954e49cae 100644
+> > --- a/target/riscv/csr.c
+> > +++ b/target/riscv/csr.c
+> > @@ -3156,6 +3156,7 @@ static RISCVException write_menvcfg(CPURISCVState=
+ *env, int csrno,
+> >      const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
+> >      uint64_t mask =3D MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
+> >                      MENVCFG_CBZE | MENVCFG_CDE;
+> > +    bool stce_changed =3D false;
+> >
+> >      if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+> >          mask |=3D (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+> > @@ -3181,10 +3182,19 @@ static RISCVException write_menvcfg(CPURISCVSta=
+te *env, int csrno,
+> >          if ((val & MENVCFG_DTE) =3D=3D 0) {
+> >              env->mstatus &=3D ~MSTATUS_SDT;
+> >          }
+> > +
+> > +        if (cfg->ext_sstc &&
+> > +            ((env->menvcfg & MENVCFG_STCE) !=3D (val & MENVCFG_STCE)))=
+ {
+> > +            stce_changed =3D true;
+> > +        }
+> >      }
+> >      env->menvcfg =3D (env->menvcfg & ~mask) | (val & mask);
+> >      write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
+> >
+> > +    if (stce_changed) {
+> > +        riscv_timer_stce_changed(env, true, !!(val & MENVCFG_STCE));
+> > +    }
+> > +
+> >      return RISCV_EXCP_NONE;
+> >  }
+> >
+> > @@ -3207,6 +3217,12 @@ static RISCVException write_menvcfgh(CPURISCVSta=
+te *env, int csrno,
+> >                      (cfg->ext_smcdeleg ? MENVCFG_CDE : 0) |
+> >                      (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+> >      uint64_t valh =3D (uint64_t)val << 32;
+> > +    bool stce_changed =3D false;
+> > +
+> > +    if (cfg->ext_sstc &&
+> > +        ((env->menvcfg & MENVCFG_STCE) !=3D (valh & MENVCFG_STCE))) {
+> > +        stce_changed =3D true;
+> > +    }
+> >
+> >      if ((valh & MENVCFG_DTE) =3D=3D 0) {
+> >          env->mstatus &=3D ~MSTATUS_SDT;
+> > @@ -3215,6 +3231,10 @@ static RISCVException write_menvcfgh(CPURISCVSta=
+te *env, int csrno,
+> >      env->menvcfg =3D (env->menvcfg & ~mask) | (valh & mask);
+> >      write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
+> >
+> > +    if (stce_changed) {
+> > +        riscv_timer_stce_changed(env, true, !!(valh & MENVCFG_STCE));
+> > +    }
+> > +
+> >      return RISCV_EXCP_NONE;
+> >  }
+> >
+> > @@ -3292,8 +3312,10 @@ static RISCVException read_henvcfg(CPURISCVState=
+ *env, int csrno,
+> >  static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+> >                                      target_ulong val)
+> >  {
+> > +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
+> >      uint64_t mask =3D HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HE=
+NVCFG_CBZE;
+> >      RISCVException ret;
+> > +    bool stce_changed =3D false;
+> >
+> >      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+> >      if (ret !=3D RISCV_EXCP_NONE) {
+> > @@ -3319,6 +3341,11 @@ static RISCVException write_henvcfg(CPURISCVStat=
+e *env, int csrno,
+> >              get_field(val, HENVCFG_PMM) !=3D PMM_FIELD_RESERVED) {
+> >              mask |=3D HENVCFG_PMM;
+> >          }
+> > +
+> > +        if (cfg->ext_sstc &&
+> > +            ((env->henvcfg & HENVCFG_STCE) !=3D (val & HENVCFG_STCE)))=
+ {
+> > +            stce_changed =3D true;
+> > +        }
+> >      }
+> >
+> >      env->henvcfg =3D val & mask;
+> > @@ -3326,6 +3353,10 @@ static RISCVException write_henvcfg(CPURISCVStat=
+e *env, int csrno,
+> >          env->vsstatus &=3D ~MSTATUS_SDT;
+> >      }
+> >
+> > +    if (stce_changed) {
+> > +        riscv_timer_stce_changed(env, false, !!(val & HENVCFG_STCE));
+> > +    }
+> > +
+> >      return RISCV_EXCP_NONE;
+> >  }
+> >
+> > @@ -3347,19 +3378,32 @@ static RISCVException read_henvcfgh(CPURISCVSta=
+te *env, int csrno,
+> >  static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+> >                                       target_ulong val)
+> >  {
+> > +    const RISCVCPUConfig *cfg =3D riscv_cpu_cfg(env);
+> >      uint64_t mask =3D env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+> >                                      HENVCFG_ADUE | HENVCFG_DTE);
+> >      uint64_t valh =3D (uint64_t)val << 32;
+> >      RISCVException ret;
+> > +    bool stce_changed =3D false;
+> >
+> >      ret =3D smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+> >      if (ret !=3D RISCV_EXCP_NONE) {
+> >          return ret;
+> >      }
+> > +
+> > +    if (cfg->ext_sstc &&
+> > +        ((env->henvcfg & HENVCFG_STCE) !=3D (valh & HENVCFG_STCE))) {
+> > +        stce_changed =3D true;
+> > +    }
+> > +
+> >      env->henvcfg =3D (env->henvcfg & 0xFFFFFFFF) | (valh & mask);
+> >      if ((env->henvcfg & HENVCFG_DTE) =3D=3D 0) {
+> >          env->vsstatus &=3D ~MSTATUS_SDT;
+> >      }
+> > +
+> > +    if (stce_changed) {
+> > +        riscv_timer_stce_changed(env, false, !!(val & HENVCFG_STCE));
+> > +    }
+> > +
+> >      return RISCV_EXCP_NONE;
+> >  }
+> >
+> > diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+> > index aebf0798d0..c648c9fac7 100644
+> > --- a/target/riscv/time_helper.c
+> > +++ b/target/riscv/time_helper.c
+> > @@ -140,6 +140,57 @@ void riscv_timer_write_timecmp(CPURISCVState *env,=
+ QEMUTimer *timer,
+> >      timer_mod(timer, next);
+> >  }
+> >
+> > +/*
+> > + * When disabling xenvcfg.STCE, the S/VS Timer may be disabled at the =
+same time.
+> > + * It is safe to call this function regardless of whether the timer ha=
+s been
+> > + * deleted or not. timer_del() will do nothing if the timer has alread=
+y
+> > + * been deleted.
+> > + */
+> > +static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer =
+*timer,
+> > +                                 uint32_t timer_irq)
+> > +{
+> > +    /* Disable S-mode Timer IRQ and HW-based STIP */
+> > +    if ((timer_irq =3D=3D MIP_STIP) && !get_field(env->menvcfg, MENVCF=
+G_STCE)) {
+> > +        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
+> > +        timer_del(timer);
+> > +        return;
+> > +    }
+> > +
+> > +    /* Disable VS-mode Timer IRQ and HW-based VSTIP */
+> > +    if ((timer_irq =3D=3D MIP_VSTIP) &&
+> > +        (!get_field(env->menvcfg, MENVCFG_STCE) ||
+> > +         !get_field(env->henvcfg, HENVCFG_STCE))) {
+> > +        env->vstime_irq =3D 0;
+> > +        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
+> > +        timer_del(timer);
+> > +        return;
+> > +    }
+> > +}
+> > +
+> > +/* Enable or disable S/VS-mode Timer when xenvcfg.STCE is changed */
+> > +void riscv_timer_stce_changed(CPURISCVState *env, bool is_m_mode, bool=
+ enable)
+> > +{
+> > +    if (is_m_mode) {
+> > +        /* menvcfg.STCE changes */
+> > +        if (enable) {
+> > +            riscv_timer_write_timecmp(env, env->stimer, env->stimecmp,=
+ 0, MIP_STIP);
+> > +            riscv_timer_write_timecmp(env, env->vstimer, env->vstimecm=
+p,
+> > +                                      env->htimedelta, MIP_VSTIP);
+>
+> This line and ...
+>
+> > +        } else {
+> > +            riscv_timer_disable_timecmp(env, env->stimer, MIP_STIP);
+> > +            riscv_timer_disable_timecmp(env, env->vstimer, MIP_VSTIP);
+>
+> This line are duplicated below.
+>
+> > +        }
+> > +    } else {
+>
+> We can remove the else
+>
+> > +        /* henvcfg.STCE changes */
+> > +        if (enable) {
+> > +            riscv_timer_write_timecmp(env, env->vstimer, env->vstimecm=
+p,
+> > +                                      env->htimedelta, MIP_VSTIP);
+> > +        } else {
+> > +            riscv_timer_disable_timecmp(env, env->vstimer, MIP_VSTIP);
+> > +        }
+>
+> and always run this branch to remove the duplicated code above
+>
+> Alistair
+>
+> > +    }
+> > +}
+> > +
+> >  void riscv_timer_init(RISCVCPU *cpu)
+> >  {
+> >      CPURISCVState *env;
+> > diff --git a/target/riscv/time_helper.h b/target/riscv/time_helper.h
+> > index cacd79b80c..af1f634f89 100644
+> > --- a/target/riscv/time_helper.h
+> > +++ b/target/riscv/time_helper.h
+> > @@ -25,6 +25,7 @@
+> >  void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
+> >                                 uint64_t timecmp, uint64_t delta,
+> >                                 uint32_t timer_irq);
+> > +void riscv_timer_stce_changed(CPURISCVState *env, bool is_m_mode, bool=
+ enable);
+> >  void riscv_timer_init(RISCVCPU *cpu);
+> >
+> >  #endif
+> > --
+> > 2.17.1
+> >
+> >
 
