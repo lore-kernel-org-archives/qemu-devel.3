@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D606C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 15:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B443CC3601E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 15:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1oC4-0003wm-PJ; Mon, 07 Apr 2025 11:15:25 -0400
+	id 1u1oAt-00023I-JW; Mon, 07 Apr 2025 11:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u1nmJ-0002LD-7X; Mon, 07 Apr 2025 10:48:47 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1u1nlb-00026l-Pd; Mon, 07 Apr 2025 10:48:05 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u1nmH-0001nZ-AS; Mon, 07 Apr 2025 10:48:46 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-aee773df955so3583430a12.1; 
- Mon, 07 Apr 2025 07:48:44 -0700 (PDT)
+ id 1u1nlY-0001fI-Se; Mon, 07 Apr 2025 10:48:02 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-736bfa487c3so3590748b3a.1; 
+ Mon, 07 Apr 2025 07:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744037323; x=1744642123; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744037278; x=1744642078; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lEH4N/I/i1s5vyVW9hh0H+Bl+rbHvsyMVIl7sWn6eKY=;
- b=JlbYSzSA8aBDar1D3jrtAuJQmrE+kO7C23PLBvqWso35NtvlJcwraT+eEVw/aZ8xYC
- H5E0t0+b28r1EeWm4aWbYoiBgTE2OTDDVs5RYG1gXoSwALLlRQQ2o/Q9v9mu2sZjsgYR
- hWzuvP/wfGFRCJvllr/2j69lw6IbsW4FrlU3agT8fZXprjo5NWSV4oGU9wCTzJcOtfoi
- 6Bf2+2SZ5QbML6OE1GNNj4s4mFwvW0mqjJsCiQjyO5I5Vrp+UPVkdtzF4iF6d6NVa++w
- iHa1x1ZCtq1c2vTV5SGr/m7hzIS/GUvgBtR4ZHG/9cH683QFXLgF9jJQOKg9pnI736pw
- iITg==
+ bh=LeWm4gdwYX7Mpk2+jTOfSOTsV04a2XRASVxxD/NFs3U=;
+ b=E7GuQnqrCdwldobpvMkDfYiE3uyx6UTnZ8LQ94ahtxm+q+w3GDZtXtPglzKGs9GqJt
+ AItUsWC/4p2VbIOCveCcoCeZOg5X0IAQnbJhAeioDt9yOQBq/yGSMEXCaeaNICpf9bus
+ FTmd7DZ17eWdxQiQt40Y/a7s5+YyHrXuhXvDVip/wrqWJ85iRU1du3JECgsbu2UJ5bdx
+ gqJufL0NC/TbZhBC3cLVPHUxOtevM6zJUWGPCYmkHWz1VtBEc53wuS67k5Jm/fVJxGL8
+ OIpRAmoPojDu60i0ZrXc5fYoMHu+BHzZHqnHe5PY1n6WtFVczKDBgLxesXJfCOuus+tN
+ QSFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744037323; x=1744642123;
+ d=1e100.net; s=20230601; t=1744037278; x=1744642078;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lEH4N/I/i1s5vyVW9hh0H+Bl+rbHvsyMVIl7sWn6eKY=;
- b=lDKjNZDCHSYp2wTGuOT7K4hBFHfumn9yz/JkmYWnUkqMMB13sgZO/6EoX/aNuF82Vn
- G0b4eDZUENA/2/WRSFji2ROxbpRD/gk80X+5KePOZhuKPNFGvkvpNxTqnShRbliNomkP
- CVtP9/8WGBiVM99D+d2IKN3D1AThETw7jpO+L2bxzfsLep1gYMyKly0dck/5naylhdEq
- 2K9uPkHMboGpUGbaLRLmUnhWbSkjN8zFzwrOxwj84ZmepXC9l3Ec8tqFw/NbYoW9TYHh
- hLEs8USK89M6f4pUXkptY8pKV0F86yv7NQ8Ouku4D0Sen75tgWdbukGKAPJHJN8kCQ3i
- 9Q6w==
+ bh=LeWm4gdwYX7Mpk2+jTOfSOTsV04a2XRASVxxD/NFs3U=;
+ b=vpmmgE7qDngqrH8qaAKGea2vxxsGTWWy43lP+KzuaP3nnAEXdgtejMMXVpgLPZRymv
+ Lm83nxBO/0r3mW6neiHRInypIlklw5xNtFeVTqpUNqrxj3XX9gQ8S4LIDc+3pEatGtdx
+ JPDkFvDSHYfXgKkbQe5sh7fXvKTh57HyVo58l1jW0g7+KYMq7z21U6Xd9KkvNPRJFM/C
+ zcBtEGlhI2DpQ5hcWTV4tlIP7+7xhazXKY6/rK8ZVuthF0/jxtEndCIreruzmHPLp0dR
+ +TMMj3W69NFsQOypBGvj0Lt6NZrQ5s6eQ6h+hf9BxmeGq4pNvhHt0trwwxjR3G+bwjTv
+ 1lTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgJvsG1196/ARie6K22eIGZBKfMJtMLLi9ER/PR1x911/LC/yi6moo+uNV9N9ih/ipVZTsNhQLL/0Fgw==@nongnu.org,
- AJvYcCVplv/sJM5gLTxqDH+M0mRV/VP2WodJrDq8SxZuLd4j649xfguCjUQUZSXbUB53reWcn4CSapsb0TyyEw==@nongnu.org,
- AJvYcCVzsi0mpGJfYEhNzCUj3eIciQkh2Z4QV/gA0aJModv1HFG+aIC/QT87osbs9VZRBOl/Agx5XmEdHQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yyufsm+vXUbqYqHVrRwTPubN6XPlgyhfFfzXlQzN+zgggbk/7XF
- HmaUTVvO7FEQL584/9gCUkj14G21yG2Hdy6WsSgiV61oBgZcpRIqNZkPvUzS
-X-Gm-Gg: ASbGncusZLwUV9vB4WOZqh8vWaLv8sx+i0sTqfzXvcnSDkUI4jePnqm/wm1Ist2OcKK
- 0uCgaJ96rpWnroJVhig21c/GFLKMw7rxRmn0mgVL4gWVjeH5g/TEuI5HGR/V2Uy/wuEWUOcDPiZ
- lidoxGtiPRsmuo2bbUDNFIqA8HNrc6dMm54xU6orWHWs9nFU9+K7x94dr0ZkV1yOI71HLstERsb
- MKL/vh2Th6tKwNO6ilDJobWNDrifDYf+YYdBng/R7xR6mJIlle13c/PyeGqfFIMkLJbyyMwPgJT
- PfJe7jKuPMbmoAHylHyc6/Ap5ZHq4x/gmYdbchnsqNU3rlX1TpmBjUv9nnSIRA==
-X-Google-Smtp-Source: AGHT+IFVHb0USmbrtgolvVJ002qQw3Dst2XwZdUHXHObbdn3W+d22R0f9QZhrZRZ9w1sgrYEyRLgeg==
-X-Received: by 2002:a17:902:f546:b0:226:194f:48ef with SMTP id
- d9443c01a7336-229765d1ad7mr251187095ad.13.1744037322987; 
- Mon, 07 Apr 2025 07:48:42 -0700 (PDT)
+ AJvYcCU625ZzH1QO6t+jxam0xhfwNKBGj9tKGML+IPBmnKCVhZvH1GH0RlsLBCv9NJLdU4aCtbxOPMnnIEIbog==@nongnu.org,
+ AJvYcCXaYblZh8A8drnrBf0vdrbSsY/UMcVzKunWv0iuHvlFyEpCHaOMQBCHHqngoZNWmuyQL+2mOeBcPQ==@nongnu.org,
+ AJvYcCXpWoQd5UYKBU2z4EhVReARiKiE7Qn/KW+sWj/i8SjciUcUP/jKoZ8AYSjVIvv0tPS468y9eR2t0o83lw==@nongnu.org
+X-Gm-Message-State: AOJu0Yys99BiE4RlmH68PVND3M1TvMCUjp1MFp0TnmjEWHJdGfYfwQ3T
+ BnpDfQQx+vjY4a9TJIkESl529ua2PURxel/qqbxTUxJGMg3KstQAQlwRCVae
+X-Gm-Gg: ASbGncuhjhJDaY6st86z7/QhP35ppMBeFeRD+vSklQnGPGlqaerDkcfv2HSrHwkFBm4
+ +AqTvXmt23WjGwqA7gWwXCraIMA05KP+VnIKWPCOFUFTfnfILZTnYo7X6vV93YlmIf3oWsyk9Wd
+ uprsUqymqGSimemjggWtKHbVqwzPm9UsTC8lPX50nkKYk3hJxYBfRe5nVybivpfaybljlFQXwbL
+ B4a3D8auavo6vlg2r/C4kCLcKlN/pF9/b96BpmYVzTiPsIX/xq4NAar/EoObzDXcHX3Hwbh4nlZ
+ yQk8L/FkWqdjC5pKuuj0IEu7IQojCHSaacn26h87stjucguf5Yff0ZhpaAyMrCAACYC/N0fG
+X-Google-Smtp-Source: AGHT+IFK5Snnwez+9Z1jA55NI18ZTP1BoHatw9I8udhAd9+QfwRAfkorXPb+OzP1TByBPcIzR0wn1A==
+X-Received: by 2002:a05:6a21:788f:b0:1f5:619a:8f73 with SMTP id
+ adf61e73a8af0-20104735fdemr18035606637.26.1744037278135; 
+ Mon, 07 Apr 2025 07:47:58 -0700 (PDT)
 Received: from localhost.localdomain ([240d:1a:3b6:8b00:8768:486:6a8e:e855])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97ef3c2sm8856960b3a.59.2025.04.07.07.48.37
+ d2e1a72fcca58-739d97ef3c2sm8856960b3a.59.2025.04.07.07.47.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Apr 2025 07:48:42 -0700 (PDT)
+ Mon, 07 Apr 2025 07:47:57 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -85,17 +85,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH 10/10] MAINTAINERS: Update MAINTAINERS file for wasm-related
- files
-Date: Mon,  7 Apr 2025 23:46:01 +0900
-Message-Id: <ab804f360d7828dd281c337e897c5817410e075d.1744032780.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 03/10] util/mmap-alloc: Add qemu_ram_mmap implementation for
+ emscripten
+Date: Mon,  7 Apr 2025 23:45:54 +0900
+Message-Id: <8c2b176bd4c499233a88dcd18e62d8cf94e08f56.1744032780.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1744032780.git.ktokunaga.mail@gmail.com>
 References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,31 +121,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- MAINTAINERS | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ util/mmap-alloc.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d54b5578f8..ea5fde475c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3903,6 +3903,17 @@ F: tcg/tci/
- F: tcg/tci.c
- F: disas/tci.c
+diff --git a/util/mmap-alloc.c b/util/mmap-alloc.c
+index ed14f9c64d..91f33682e8 100644
+--- a/util/mmap-alloc.c
++++ b/util/mmap-alloc.c
+@@ -145,6 +145,7 @@ static bool map_noreserve_effective(int fd, uint32_t qemu_map_flags)
+     return false;
+ }
  
-+WebAssembly TCG target
-+M: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-+S: Maintained
-+F: configs/meson/emscripten.txt
-+F: hw/9pfs/9p-util-stub.c
-+F: tcg/wasm32/
-+F: tcg/wasm32.c
-+F: tcg/wasm32.h
-+F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+F: util/coroutine-fiber.c
-+
- Block drivers
- -------------
- VMDK
++#ifndef EMSCRIPTEN
+ /*
+  * Reserve a new memory region of the requested size to be used for mapping
+  * from the given fd (if any).
+@@ -176,6 +177,7 @@ static void *mmap_reserve(size_t size, int fd)
+ 
+     return mmap(0, size, PROT_NONE, flags, fd, 0);
+ }
++#endif
+ 
+ /*
+  * Activate memory in a reserved region from the given fd (if any), to make
+@@ -244,6 +246,21 @@ static inline size_t mmap_guard_pagesize(int fd)
+ #endif
+ }
+ 
++#ifdef EMSCRIPTEN
++void *qemu_ram_mmap(int fd,
++                    size_t size,
++                    size_t align,
++                    uint32_t qemu_map_flags,
++                    off_t map_offset)
++{
++    /*
++     * emscripten doesn't support non-zero first argument for mmap so
++     * mmap a larger region without the hint and return an aligned pointer.
++     */
++    void *ptr = mmap_activate(0, size + align, fd, qemu_map_flags, map_offset);
++    return (void *)QEMU_ALIGN_UP((uintptr_t)ptr, align);
++}
++#else
+ void *qemu_ram_mmap(int fd,
+                     size_t size,
+                     size_t align,
+@@ -293,6 +310,7 @@ void *qemu_ram_mmap(int fd,
+ 
+     return ptr;
+ }
++#endif /* EMSCRIPTEN */
+ 
+ void qemu_ram_munmap(int fd, void *ptr, size_t size)
+ {
 -- 
 2.25.1
 
