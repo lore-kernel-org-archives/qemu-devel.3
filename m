@@ -4,118 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 280CAC36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 15:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF652C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 15:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1odH-0004yk-PS; Mon, 07 Apr 2025 11:43:31 -0400
+	id 1u1ohX-00019q-Kt; Mon, 07 Apr 2025 11:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1u1odG-0004xV-BW
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 11:43:30 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1u1odE-0002fa-M1
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 11:43:30 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5378dqBF013349
- for <qemu-devel@nongnu.org>; Mon, 7 Apr 2025 15:43:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- x7OQYxWqO/Klv3aLxEoeizMJ+O7vvC2qHk9AaZLiBHw=; b=Kv0h4NeZKGCW5wb6
- /P9aueKHl06mazW35XV02kVgFEnDMHgIU97PjjRhVNvqOrP6hkOznJB4WgsARalV
- hzRiMc5qSk23x8vTd6dC3+9KGsLUjI49fbrBNAbZ9c8/JyDszOwPaUzqVLbOtZ5O
- 8QnpCS86an7VsiNi9MCjeCUTi2YqsZjdKSsqzCKPOYJjdgm84Vt+cP7mYXXwZssH
- cOCOnPZsrARQF2MS4JaCP8AuNXVw0bx4GSXIIoio2wbOqIhz5MDFnpm6+WXNhtQW
- /k9+9Aluq1qhaQA67oClzDDdZDifEJw6kydva8yDKRnXIOa1ny88tPm8/MeXNrIS
- I8wmdw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twc1cnma-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 15:43:27 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-736c1ea954fso2373903b3a.3
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 08:43:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <prantoran@gmail.com>)
+ id 1u1ohW-00016v-CQ; Mon, 07 Apr 2025 11:47:54 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <prantoran@gmail.com>)
+ id 1u1ohU-0003L8-8r; Mon, 07 Apr 2025 11:47:53 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7376dd56eccso4912641b3a.0; 
+ Mon, 07 Apr 2025 08:47:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744040868; x=1744645668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8BeD7FRlhSxFj5q4qqPupWTyYaP5bZ/s/rvekPFIBK0=;
+ b=Uf8FUmppb/tIF1pfQPGzbrKTUjT5sVggR5FjiixSoclqERhUYnFqnLAFO6sxV4wbUj
+ 9WHYzLTB4nBgRmNFfx3lG3iti1fRu0WZqEfzW1DPhMix4BRi2ADEk/W5Et7yGCTDlNrO
+ u/NhzbvMvL0E7KyucfDZzSzE95AneI8O6fnXbYyzbx+VMEpUTTI9tYoFiqLi/1xLBwnW
+ zd6iH+BuWTpOJu9xVjipYnZGjr7O7ndP9IY56LY/NVQ3xRWwiPKMIyOGF1qzYJPPUG7h
+ kH7SS41p12l41Mm58DJbnyI6FntjkR+zLFE1O8XmsT1v9BG08654/X51knJs0MRCzEeR
+ Hm+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744040605; x=1744645405;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x7OQYxWqO/Klv3aLxEoeizMJ+O7vvC2qHk9AaZLiBHw=;
- b=AuZy/6ucCsAMGM+ubA8WFcV3CVuByBqZqq2tuAi/Aku1qpYBIKf/rSXwu2RkU7BIn8
- FLZqYOqI9u76AkGuJu76ENlx7Ae9OzQUl5tIhiaED9B8HjOYU5EwPI/sHGWq+exPkKGT
- wEPW3UZLdKYJLV44euCd5MN9Oxl93bkH6Ee37hNlNtf+oabCi6weIHmowAInDVs3fTyX
- 4gUFKZmYceFZ4itfop5ll9DsiJBB+BkjGQGxYR5WAUXG/2M87/L9L8aCzp6nRuLOlVMd
- n0Fbj/gzwEFhzC4kT1rDf5+RQ+Kql/MSok125cz5eKUw++iGyvXG19g5fJYDFaskkmsh
- I9Xg==
-X-Gm-Message-State: AOJu0YxzScDZf7e7cBb3NNJ5PXDI8H5EFmewDjv13XFQFRitwFVaU+rh
- PGdH3DNtmb+1CaSleswrG54qq36LBDHe0MFgeyTkv4QtlfEHPX3ExMbTOupH04FtVjYW14thWmc
- lAX3xzQUDds2j/JkKeJO3NmokVJCY7eXg4Yp4DTNBWplfVxyPvxi0BrkqOMpMSA==
-X-Gm-Gg: ASbGncvudy8OY2OFYWJtYp1CUEdWByFedWso15U2IKkiggBErEkLk1KjESFLdq3RgpZ
- tWAmZ5WRNjkz2697z+GklW9BLELtDLjG3FizbmxzqoFUHLfnktw5IiPlOCPQ8ZfOVayN9AHCB9W
- Vji0SdtCJ5teDRmRwSb0qxIJpRqbmrf/4GfrilYZObVvY4d6dbil/k/OdteiliE+XuM1Py2IuuX
- +APD7nd+l3Gu1YDetdmXp3+1TtpRBiBIxGZvmpkClfbS7EhA2Z4Wq+Ca4AXWgyL6xoxh8JjJ1ru
- FTla6J1scVBGzoqagM/EffAjNK84DxuNW0XBGMdHJzx/OW041xsVeBjwVFWWiO/V
-X-Received: by 2002:a05:6a00:23c8:b0:736:3c6a:be02 with SMTP id
- d2e1a72fcca58-739e4b49c79mr15598939b3a.11.1744040605512; 
- Mon, 07 Apr 2025 08:43:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuOMI2Xcy/nC6srbF6cfYh71RH09U11NZceBRNhbBZdMS89EUXYWBvu/Q/XgRJimIhyB8FHA==
-X-Received: by 2002:a05:6a00:23c8:b0:736:3c6a:be02 with SMTP id
- d2e1a72fcca58-739e4b49c79mr15598897b3a.11.1744040605083; 
- Mon, 07 Apr 2025 08:43:25 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97ee3fesm8681651b3a.37.2025.04.07.08.43.23
+ d=1e100.net; s=20230601; t=1744040868; x=1744645668;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8BeD7FRlhSxFj5q4qqPupWTyYaP5bZ/s/rvekPFIBK0=;
+ b=kbAjI+siYxbk4k8T+UaVBlnIOvPoBcX6h6b+yZpTcMO47BI6brNILX8UOy5lKV9k2V
+ OipBzn2ksmfTuiqdoFW+o6Rlu6xD+lRmgi6ZVj1acX6Zj9lr9W+z4oSu7xk+khpcbBfu
+ 8YQQlb8tssUMbKDVSbm0btiTCne5+SbN9Oar8vhI6yfd9OYwpe4E0ZBpp6F9/XMlUB40
+ 1zoyNpNSOeLQrdpvfbYFFf53d1SCa6SMDFG8mMNrgS/aK28YuawT8nxePlYNrwyrGnLj
+ U05ZvFL38rBPaiScqZdTyKzorPiaskhRPrwXN26MPpVs70zPuHfUL4s6F+7zkUWwfGtp
+ C9Mw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMPf8Qxm7D2IqqOOZk6ybbKCBAh9DKnp7jKnBYXSkpbKxirwxSPZ/cugNjK1fMoXwkKaupL4mPNiXI@nongnu.org
+X-Gm-Message-State: AOJu0YySUkL1QoIfUO4Z38lWHu9fAfOo1RbuHtF798mL09lSyle77ZRI
+ 4KN6ZNfhoaA2JEYZFEoz1bfhu2EAQ+L6WPiWYWrJRZA/sZ0tdtab
+X-Gm-Gg: ASbGncsoI+V6e/k/vMtK3xIwnHfnfH4y2dB478BuE/5/XE6luQNKz6AmllRdaz2lZdw
+ ZZ0EBtwHqTR8ciYfdPV37u2C1V+qSyiS8e27OGzLQZF3dhDC/R//8AjIAwCHKNPREYIGjpyySpi
+ /QVBLE05Hf/rqK/l1nNuN5mZMBeziezHB0W0AQwTJLsv3bHD8noLCpvtFj0W/YTc3KxSJ9Mc4uE
+ cU7i25KHl6fGZnehOhSOJ4uuXWu8x2f2ZIEnAUOhSigC8QBvwYhEeLVCz0DNtMvaotyXtlEYqKh
+ k2kbVUKSkdeGawZ3SWwN2QagX47MDQG4wSDV61tmMzJTwcGT4c8=
+X-Google-Smtp-Source: AGHT+IEIW1BWWJd95o+cMOgG/HBI4PeD93a2E4l3CwixPQJxTNlvzCDjvcCQyswYRmJ93f+OUdeU6Q==
+X-Received: by 2002:a05:6a00:2e08:b0:736:692e:129 with SMTP id
+ d2e1a72fcca58-739e716650fmr20022222b3a.24.1744040868142; 
+ Mon, 07 Apr 2025 08:47:48 -0700 (PDT)
+Received: from queen.. ([2604:3d08:7485:e900:41:4d42:a3db:f9b6])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d97effb7sm8986877b3a.60.2025.04.07.08.47.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Apr 2025 08:43:24 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
- philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
- alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com,
- Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v2 3/5] target/hexagon: Add missing A_CALL attr,
- hintjumpr to multi_cof
-Date: Mon,  7 Apr 2025 08:43:12 -0700
-Message-Id: <20250407154314.2512587-4-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250407154314.2512587-1-brian.cain@oss.qualcomm.com>
-References: <20250407154314.2512587-1-brian.cain@oss.qualcomm.com>
+ Mon, 07 Apr 2025 08:47:47 -0700 (PDT)
+From: Pinku Deb Nath <prantoran@gmail.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+	Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Pinku Deb Nath <prantoran@gmail.com>
+Subject: [PATCH v6] block/file-posix.c: Use pwritev2() with RWF_DSYNC for FUA
+Date: Mon,  7 Apr 2025 08:47:30 -0700
+Message-ID: <20250407154730.23008-1-prantoran@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: doNTtGaEsPGU62-hPjJ-sbc5eccl93gN
-X-Authority-Analysis: v=2.4 cv=KtdN2XWN c=1 sm=1 tr=0 ts=67f3f29f cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=ExrS_PMGiXDxMcIyg5oA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: doNTtGaEsPGU62-hPjJ-sbc5eccl93gN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-07_04,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0
- priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 spamscore=0
- malwarescore=0 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=715 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504070109
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=prantoran@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,18 +97,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQnJpYW4gQ2FpbiA8YmNhaW5AcXVpY2luYy5jb20+CgpTaWduZWQtb2ZmLWJ5OiBCcmlh
-biBDYWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0L2hleGFnb24v
-aGV4X2NvbW1vbi5weSB8IDcgKysrKystLQogMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygr
-KSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9oZXhfY29tbW9u
-LnB5IGIvdGFyZ2V0L2hleGFnb24vaGV4X2NvbW1vbi5weQppbmRleCA2ODAzOTA4NzE4Li5hMmRj
-YjBhYTJlIDEwMDc1NQotLS0gYS90YXJnZXQvaGV4YWdvbi9oZXhfY29tbW9uLnB5CisrKyBiL3Rh
-cmdldC9oZXhhZ29uL2hleF9jb21tb24ucHkKQEAgLTI0Nyw4ICsyNDcsMTEgQEAgZGVmIG5lZWRf
-bmV4dF9QQyh0YWcpOgogCiAKIGRlZiBuZWVkX3BrdF9oYXNfbXVsdGlfY29mKHRhZyk6Ci0gICAg
-cmV0dXJuICJBX0NPRiIgaW4gYXR0cmliZGljdFt0YWddCi0KKyAgICByZXR1cm4gKAorICAgICAg
-ICAiQV9KVU1QIiBpbiBhdHRyaWJkaWN0W3RhZ10KKyAgICAgICAgb3IgIkFfQ0FMTCIgaW4gYXR0
-cmliZGljdFt0YWddCisgICAgICAgIG9yICJKMl9ydGUiID09IHRhZworICAgICkgYW5kIHRhZyAh
-PSAiSjJfaGludGp1bXByIgogCiBkZWYgbmVlZF9wa3RfbmVlZF9jb21taXQodGFnKToKICAgICBy
-ZXR1cm4gJ0FfSU1QTElDSVRfV1JJVEVTX1VTUicgaW4gYXR0cmliZGljdFt0YWddCi0tIAoyLjM0
-LjEKCg==
+Full Unit Access (FUA) is an optimization where a disk write with the
+flag set will be persisted to disk immediately instead of potentially
+remaining in the disk's write cache.
+
+This commit address the todo task
+for using pwritev2() with RWF_DSYNC in the thread pool section of
+raw_co_prw(), if pwritev2() with RWF_DSYNC is available in the host,
+which is always the case for Linux kernel >= 4.7.
+
+The intent for FUA is indicated with the BDRV_REQ_FUA flag.
+The old code paths are preserved in case BDRV_REQ_FUA is off
+or pwritev2() with RWF_DSYNC is not available.
+
+Support for disk writes with FUA is handled in qemu_pwritev_fua(),
+which uses pwritev2() with RWF_DSYNC if available, otherwise falls
+back to pwritev2() with no flags followed by flush using
+handle_aiocb_flush().
+
+If pwritev2() is not implemented, then disk write in the linear FUA
+will fallback to pwrite() + handle_aiocb_flush().
+
+Signed-off-by: Pinku Deb Nath <prantoran@gmail.com>
+
+---
+
+v5:
+- Use pwritev for unsupported OSes
+
+v4:
+- Add fallback when qemu_pwritev_fua() returns ENOSYS
+- Similar fallback was not added for handle_aiocb_rw_vector()
+since there is a preadv_present check in handle_aiocb_rw()
+
+v3:
+- Changed signature to add fd, iov, nr_iov
+- Return -ENOSYS for non-Linux hosts
+
+v2:
+- Moved handle_aiocb_flush() into qemu_pwritev_fua()
+- In handle_aiocb_rw_linear(), iovec with iovcnt=1 is created
+based on the assumption that there will be only one buffer
+---
+ block/file-posix.c | 68 ++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 56 insertions(+), 12 deletions(-)
+
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 56d1972d15..380f709917 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -229,6 +229,7 @@ typedef struct RawPosixAIOData {
+             unsigned long op;
+         } zone_mgmt;
+     };
++    BdrvRequestFlags flags;
+ } RawPosixAIOData;
+ 
+ #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+@@ -1674,6 +1675,20 @@ qemu_pwritev(int fd, const struct iovec *iov, int nr_iov, off_t offset)
+     return pwritev(fd, iov, nr_iov, offset);
+ }
+ 
++static ssize_t
++qemu_pwritev_fua(int fd, struct iovec *iov, int nr_iov, off_t offset, RawPosixAIOData *aiocb)
++{
++#ifdef RWF_DSYNC
++    return pwritev2(fd, iov, nr_iov, offset, RWF_DSYNC);
++#else
++    ssize_t len = pwritev(fd, iov, nr_iov, offset);
++    if (len == 0) {
++        len = handle_aiocb_flush(aiocb);
++    }
++    return len;
++#endif
++}
++
+ #else
+ 
+ static bool preadv_present = false;
+@@ -1690,6 +1705,11 @@ qemu_pwritev(int fd, const struct iovec *iov, int nr_iov, off_t offset)
+     return -ENOSYS;
+ }
+ 
++static ssize_t
++qemu_pwritev_fua(int fd, struct iovec *iov, int nr_iov, off_t offset, const RawPosixAIOData *aiocb)
++{
++    return -ENOSYS;
++}
+ #endif
+ 
+ static ssize_t handle_aiocb_rw_vector(RawPosixAIOData *aiocb)
+@@ -1698,10 +1718,16 @@ static ssize_t handle_aiocb_rw_vector(RawPosixAIOData *aiocb)
+ 
+     len = RETRY_ON_EINTR(
+         (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) ?
+-            qemu_pwritev(aiocb->aio_fildes,
+-                           aiocb->io.iov,
+-                           aiocb->io.niov,
+-                           aiocb->aio_offset) :
++            (aiocb->flags &  BDRV_REQ_FUA) ?
++                qemu_pwritev_fua(aiocb->aio_fildes,
++                                aiocb->io.iov,
++                                aiocb->io.niov,
++                                aiocb->aio_offset,
++                                aiocb) :
++                qemu_pwritev(aiocb->aio_fildes,
++                            aiocb->io.iov,
++                            aiocb->io.niov,
++                            aiocb->aio_offset) :
+             qemu_preadv(aiocb->aio_fildes,
+                           aiocb->io.iov,
+                           aiocb->io.niov,
+@@ -1727,10 +1753,31 @@ static ssize_t handle_aiocb_rw_linear(RawPosixAIOData *aiocb, char *buf)
+ 
+     while (offset < aiocb->aio_nbytes) {
+         if (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) {
+-            len = pwrite(aiocb->aio_fildes,
+-                         (const char *)buf + offset,
+-                         aiocb->aio_nbytes - offset,
+-                         aiocb->aio_offset + offset);
++            if (aiocb->flags & BDRV_REQ_FUA) {
++                struct iovec iov = {
++                    .iov_base = buf + offset,
++                    .iov_len = aiocb->aio_nbytes - offset,
++                };
++                len = qemu_pwritev_fua(aiocb->aio_fildes,
++                                    &iov,
++                                    1,
++                                    aiocb->aio_offset + offset,
++                                    aiocb);
++                if (len == -ENOSYS) {
++                    len = pwrite(aiocb->aio_fildes,
++                                (const char *)buf + offset,
++                                aiocb->aio_nbytes - offset,
++                                aiocb->aio_offset + offset);
++                    if (len == 0) {
++                        len = handle_aiocb_flush(aiocb);
++                    }
++                }
++            } else {
++                len = pwrite(aiocb->aio_fildes,
++                            (const char *)buf + offset,
++                            aiocb->aio_nbytes - offset,
++                            aiocb->aio_offset + offset);
++            }
+         } else {
+             len = pread(aiocb->aio_fildes,
+                         buf + offset,
+@@ -2539,14 +2586,11 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
+             .iov            = qiov->iov,
+             .niov           = qiov->niov,
+         },
++        .flags          = flags,
+     };
+ 
+     assert(qiov->size == bytes);
+     ret = raw_thread_pool_submit(handle_aiocb_rw, &acb);
+-    if (ret == 0 && (flags & BDRV_REQ_FUA)) {
+-        /* TODO Use pwritev2() instead if it's available */
+-        ret = raw_co_flush_to_disk(bs);
+-    }
+     goto out; /* Avoid the compiler err of unused label */
+ 
+ out:
+-- 
+2.43.0
+
 
