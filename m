@@ -4,143 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95CB9C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 08:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C70C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 08:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1i49-0007oC-Ak; Mon, 07 Apr 2025 04:42:49 -0400
+	id 1u1i7R-0000Pf-FP; Mon, 07 Apr 2025 04:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1i45-0007nw-Um
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 04:42:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u1i7N-0000Kp-Df; Mon, 07 Apr 2025 04:46:09 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1i41-0005Hc-Q8
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 04:42:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744015358;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iwdxcm8Lj38ry9qluLCy34wd4Plf1UDelTJyxW2Mrnw=;
- b=ArOW8Q8ZondEbVMPea69Hj78RVo55DGsY2m548lw/GsfHd25sYArUtWMAqXYVBEjAbNCmX
- zDHfV3LN6CKuRw6JlPV+SNQq7OedFimPwnA3UXd6N/9QQzqdwh13Z8Oy7Gt5XNLvbULkhS
- gRUJadI+R62BVq9nKmLJqNrX2w6JAwU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-XIOLLtL1O1emW9BSrhxArQ-1; Mon, 07 Apr 2025 04:42:37 -0400
-X-MC-Unique: XIOLLtL1O1emW9BSrhxArQ-1
-X-Mimecast-MFC-AGG-ID: XIOLLtL1O1emW9BSrhxArQ_1744015356
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d51bd9b45so28400655e9.1
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 01:42:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744015356; x=1744620156;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iwdxcm8Lj38ry9qluLCy34wd4Plf1UDelTJyxW2Mrnw=;
- b=qw9VVuPrmdlsWJhr+v2IFlBllhvouBl/Ne5om3UFfQeBJgvclQF7a5Nn66tghbU19x
- iWVOnTVKU2ifA5IdY/cWwrR5w5aQQPJDtiYTFMffG6IqNdfOxiGdRov7a4QhCWKsT+p2
- lExXjasJ69pX22P9zi6DQU86BhI0tW/p5W1tjkGwsP/KV/LLtxarjCaGtL0Eiz4yPvDR
- Z5zoDdTpTHZ4PtsJZQ56KpKAmuBtLOKM0gszUegBolsRsYTlZ1kl3Z3IOBRjpzShQZgu
- KqoFh1hC0guicOxtl3gAOcLO1KJ3tBD6c3IXUgeOaN82JdbX6S2FAIDK8YtlpkxZJodU
- Lcrg==
-X-Gm-Message-State: AOJu0YwRiqdu9zcFX5mMKlA6R/IYvuEMsG8VKSa8h2DqJ/jpOOhPYT8D
- n0e0+pOC+IlSYCqziYQ0o976NZimAxfoExHpoyIQISN5h+HFhSZ1PSvfJW5AMBTIJfu3OZN4rsF
- CmMEQ0JdqiQnJ/D8SJtz1e0qjK64BT4GaCgQXA2g5eok5lD5l6K9x
-X-Gm-Gg: ASbGncuA252Wl4L4qKAT7y9SKnPRo5FDfghQcWAWgDH/hsJjlPajHnNH47qgW9gYWsU
- /tRsOynBnjhR+SZaB60Ay4klenKH5FqXr+DGcq4qFtEW8puv3r7ZmOfOzXa9EyCC/3MGWAminIq
- zKMOu8+FEkmka0GZt8X8/sNMkFTut7Ur/ZzddHoyqTLWjomTMo0wP9kMoBZdNxlMGRo+yJzu/za
- 4mCt07ElJF3lHIGrDpPdtfcF8ALMTKeYwfKANExzQX2toBNSl6WVNLGV2slidyyCbcv3Rxsz9n4
- 34rFny6R0Ev/db4/MU7HMWtkKhsSktPNBreA+P6YRqbRMATZyvT04w==
-X-Received: by 2002:a05:6000:248a:b0:391:39fb:59c8 with SMTP id
- ffacd0b85a97d-39cba93245dmr9699545f8f.25.1744015355901; 
- Mon, 07 Apr 2025 01:42:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgubFatYnsINV/LjJJvJpKn98TwqnJsxhYyiCD2xhR0i595SbwckZFXf+QHxYO8qVHrmXzmg==
-X-Received: by 2002:a05:6000:248a:b0:391:39fb:59c8 with SMTP id
- ffacd0b85a97d-39cba93245dmr9699521f8f.25.1744015355542; 
- Mon, 07 Apr 2025 01:42:35 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c30226959sm11142253f8f.82.2025.04.07.01.42.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Apr 2025 01:42:35 -0700 (PDT)
-Message-ID: <9a56e0cd-b845-45d8-82c7-1d59018cc7b4@redhat.com>
-Date: Mon, 7 Apr 2025 10:42:34 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u1i7I-0005jt-IG; Mon, 07 Apr 2025 04:46:09 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 536Kdo14022054;
+ Mon, 7 Apr 2025 08:45:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4TyK0Q
+ wJ85lv3M3aLjfQaoBPQgmBi3RE0FIAtvV3sq8=; b=anjVIjFlNAsYY/1LMGPXGK
+ kvZJlU0MjGcQiqhFqura3A/cIUUX/dq0MnYHjQlYZTD/D4SyAINW8BO9+gD44W6/
+ PEPNI6xhIpYRlWjZr3eO/nVZUPKIdMKJ7TACuEDddD1MzBpB/x3SfLB5eWbWObBZ
+ aBr6LOFgOdAMSvX9Zdm701J4//JTgAhyNeAEkPH++Jo9PmVW/uBYD3cEpFaxk8wn
+ 3X/gHiS+rY6xpBeG+CT9btCf9R9RrUmgcQuUMWTchphGHkEkYMWUw0waVJpOnwpt
+ pPNq7yv2cQGU0VS3toAUZeuqXVj3e7klTAEj6vR4Mv7IDxfYaZdieyyBx5P0qD0Q
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45v0u0j95n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Apr 2025 08:45:58 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5378cV24001970;
+ Mon, 7 Apr 2025 08:45:58 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45v0u0j95m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Apr 2025 08:45:58 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5375n4jm025510;
+ Mon, 7 Apr 2025 08:45:57 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ugbkmyjx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Apr 2025 08:45:57 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5378jraM57475360
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 7 Apr 2025 08:45:53 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9923F2004B;
+ Mon,  7 Apr 2025 08:45:53 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8462420040;
+ Mon,  7 Apr 2025 08:45:51 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com (unknown
+ [9.124.220.105])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  7 Apr 2025 08:45:51 +0000 (GMT)
+Date: Mon, 7 Apr 2025 14:15:49 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH] vfio/spapr: Fix L2 crash with PCI device passthrough
+ with L2 guest memory > 128G
+Message-ID: <20250407141331.a3e0c24b-fb-amachhiw@linux.ibm.com>
+Mail-Followup-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, 
+ qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Vaibhav Jain <vaibhav@linux.ibm.com>, 
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250404091721.2653539-1-amachhiw@linux.ibm.com>
+ <1beef03c-ac75-4f25-8b39-0abf01384549@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 v2 35/37] vfio: Rename vfio-common.h to
- vfio-device.h
-To: John Levon <levon@movementarian.org>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Joao Martins <joao.m.martins@oracle.com>
-References: <20250326075122.1299361-1-clg@redhat.com>
- <20250326075122.1299361-36-clg@redhat.com>
- <Z+UgVOy1GbBFkocu@movementarian.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <Z+UgVOy1GbBFkocu@movementarian.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
+In-Reply-To: <1beef03c-ac75-4f25-8b39-0abf01384549@redhat.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: _sXX6R3n_4JtwZSHHehLeEPN1zskN9kt
+X-Proofpoint-GUID: SdpINmdfbP4q43w-TaKw5TjvmpYuphwQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-07_02,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_spam_definite policy=outbound
+ score=100 lowpriorityscore=0
+ clxscore=1015 spamscore=100 priorityscore=1501 mlxscore=100
+ impostorscore=0 phishscore=0 malwarescore=0 mlxlogscore=-999 bulkscore=0
+ adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2502280000 definitions=main-2504070056
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
 X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -158,23 +129,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/25 10:54, John Levon wrote:
-> On Wed, Mar 26, 2025 at 08:51:20AM +0100, CÃ©dric Le Goater wrote:
-> 
->> "hw/vfio/vfio-common.h" has been emptied of most of its declarations
->> by the previous changes and the only declarations left are related to
->> VFIODevice. Rename it to "hw/vfio/vfio-device.h" and make the
->> necessary adjustments.
-> 
-> Sorry if I missed it elsewhere, but wouldn't you still want to update the
-> vfio-device.h header to not say "common header" ?
+Hi Cédric,
 
-oups. I did. Changed to "VFIO Device interface"
+Thanks for looking into this patch. Please find my response inline:
 
+On 2025/04/04 01:29 PM, Cédric Le Goater wrote:
+> On 4/4/25 11:17, Amit Machhiwal wrote:
+> > An L2 KVM guest fails to boot inside a pSeries LPAR when booted with a
+> > memory more than 128 GB and PCI device passthrough. The L2 guest also
+> > crashes when it is booted with a memory greater than 128 GB and a PCI
+> > device is hotplugged later.
+> > 
+> > The issue arises from a conditional check for `levels > 1` in
+> > `spapr_tce_create_table()` within L1 KVM. This check is meant to prevent
+> > multi-level TCEs, which are not supported by the PowerVM hypervisor. As
+> > a result, when QEMU makes a `VFIO_IOMMU_SPAPR_TCE_CREATE` ioctl call
+> > with `levels > 1`, it triggers the conditional check and returns
+> > `EINVAL`, causing the guest to crash with the following errors:
+> > 
+> >   2025-03-04T06:36:36.133117Z qemu-system-ppc64: Failed to create a window, ret = -1 (Invalid argument)
+> >   2025-03-04T06:36:36.133176Z qemu-system-ppc64: Failed to create SPAPR window: Invalid argument
+> >   qemu: hardware error: vfio: DMA mapping failed, unable to continue
+> > 
+> > Fix this by checking the supported DDW "levels" returned by the
+> > VFIO_IOMMU_SPAPR_TCE_GET_INFO ioctl before attempting the TCE create
+> > ioctl in KVM.
+> > 
+> > The patch has been tested on KVM guests with memory configurations of up
+> > to 390GB, and 450GB on PowerVM and bare-metal environments respectively.
+> > > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > ---
+> >   hw/vfio/spapr.c | 35 ++++++++++++++++++++++++++---------
+> >   1 file changed, 26 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+> > index 1a5d1611f2cd..07498218fea9 100644
+> > --- a/hw/vfio/spapr.c
+> > +++ b/hw/vfio/spapr.c
+> > @@ -26,6 +26,7 @@ typedef struct VFIOSpaprContainer {
+> >       VFIOContainer container;
+> >       MemoryListener prereg_listener;
+> >       QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
+> > +    unsigned int levels;
+> >   } VFIOSpaprContainer;
+> >   OBJECT_DECLARE_SIMPLE_TYPE(VFIOSpaprContainer, VFIO_IOMMU_SPAPR);
+> > @@ -236,9 +237,11 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+> >   {
+> >       int ret = 0;
+> >       VFIOContainerBase *bcontainer = &container->bcontainer;
+> > +    VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
+> > +                                                  container);
+> >       IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+> >       uint64_t pagesize = memory_region_iommu_get_min_page_size(iommu_mr), pgmask;
+> > -    unsigned entries, bits_total, bits_per_level, max_levels;
+> > +    unsigned entries, bits_total, bits_per_level, max_levels, ddw_levels;
+> >       struct vfio_iommu_spapr_tce_create create = { .argsz = sizeof(create) };
+> >       long rampagesize = qemu_minrampagesize();
+> > @@ -291,16 +294,28 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+> >        */
+> >       bits_per_level = ctz64(qemu_real_host_page_size()) + 8;
+> >       create.levels = bits_total / bits_per_level;
+> > -    if (bits_total % bits_per_level) {
+> > -        ++create.levels;
+> > -    }
+> > -    max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
+> > -    for ( ; create.levels <= max_levels; ++create.levels) {
+> > -        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
+> > -        if (!ret) {
+> > -            break;
+> > +
+> > +    ddw_levels = scontainer->levels;
+> > +    if (ddw_levels > 1) {
+> > +        if (bits_total % bits_per_level) {
+> > +            ++create.levels;
+> >           }
+> > +        max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
+> > +        for ( ; create.levels <= max_levels; ++create.levels) {
+> > +            ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
+> > +            if (!ret) {
+> > +                break;
+> > +            }
+> > +        }
+> > +    } else { /* ddw_levels == 1 */
+> > +        if (create.levels > ddw_levels) {
+> > +            error_report("Host doesn't support multi-level TCE tables. "
+> > +                         "Use larger IO page size. Supported mask is 0x%lx",
+> > +                         bcontainer->pgsizes);
+> 
+> While at it, please modify vfio_spapr_create_window(), add an 'Error **'
+> parameter to report errors to the caller with error_setg(errp ...)
+
+Sure, I'll include the suggested changes and send a v2 soon.
 
 Thanks,
+Amit
 
-C.
-
-
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> 
+> > +        }
+> > +        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
+> >       }
+> > +
+> >       if (ret) {
+> >           error_report("Failed to create a window, ret = %d (%m)", ret);
+> >           return -errno;
+> > @@ -502,6 +517,8 @@ static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+> >           goto listener_unregister_exit;
+> >       }
+> > +    scontainer->levels = info.ddw.levels;
+> > +
+> >       if (v2) {
+> >           bcontainer->pgsizes = info.ddw.pgsizes;
+> >           /*
+> > 
+> > base-commit: 0adf626718bc0ca9c46550249a76047f8e45da15
+> 
 
