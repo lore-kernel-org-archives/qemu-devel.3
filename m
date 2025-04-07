@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98ABC3601E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E493C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1hFi-0001OI-OH; Mon, 07 Apr 2025 03:50:42 -0400
+	id 1u1hFk-0001OS-1m; Mon, 07 Apr 2025 03:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1u1hFY-0001LZ-Rm
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:32 -0400
+ id 1u1hFc-0001M1-80
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:36 -0400
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1u1hFW-0005SK-JC
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:32 -0400
+ id 1u1hFa-0005SK-3Y
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744012231; x=1775548231;
+ t=1744012234; x=1775548234;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=LMM4jg2KgMvxa59xhZRJFI8Q6LECqUZX8PbGNMlnhmI=;
- b=FvhJt1uf+DYBr48NKZQ+HLjUJ1ZmpShM2EaydUoEZXECaXrCEMbJPWQd
- bOnSCSCBLHXXZhR3H1v5sDXlOxz4UJpXSJhQyWmHj+cC6RQTbFXUTpcwA
- g7x/wcguYQBoYr8UItK2Pw+dcoSBIjyLA7rhJ8Na9XIsY5Bmy6WyXAJcu
- zwRjUs720tCy44l0jtysjsLoPydEw/7pzo/bQHUNonzlLHBAAeAQVNvFe
- JMvYKMbvQ5p7KmcbeqmP7ob6x0kKhbvWVA2jrLjTvRYenH3vDlAg/6crv
- jXYRHECSPGZQC0IPPsIOHfQGNcvCvE5ncSu4WDS0Mtc9fdx1b0Onn6v27 w==;
-X-CSE-ConnectionGUID: pF6NzUaPRjqnLia3D674SA==
-X-CSE-MsgGUID: 4upXTy/8SAWA7k1tkn0osQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="67857595"
-X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="67857595"
+ bh=NXIbQZGPX/IetC+2ATda7+FulTolZHjLHw2CKq3GgXI=;
+ b=BNcMIuzd+yRJxjeLkEjz/vO0Rn+N9wtxdDw3N/z2YXaD1PviepbgRrL0
+ S1FEoz+hW3UXxU7IPAEKawAmISGf4iBrzI9FNgD+KW9jwduzvZeoAyKhf
+ Z4C3DV9bYY2xNNdoj3Cf5w/+7BS3TG1WLaRobLcBKfoZNFPS8LuzntnOD
+ H5stAF0qLzWbSlHLcJB5aqIGnMSWyfSg5JPtG9o+mWHMjeI6kkOJKlQnA
+ E6MiibRX/W7s+vuzzm8c9/Nn6rl1tWn/pJAiGd9CJlZDDWVF2+9HMItVD
+ y1ON2FuxYhTz3lIFIloxJWuiW3X5zPReHUMpWxyGhcnwhofWpZDqQrXsZ w==;
+X-CSE-ConnectionGUID: cVkvzhCrTzyhZVN9nVO/lQ==
+X-CSE-MsgGUID: lKOZngXvTOWvx1410Zh5bw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="67857609"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="67857609"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 00:50:30 -0700
-X-CSE-ConnectionGUID: kzUdn2HcR1SCId2TI2iwPg==
-X-CSE-MsgGUID: DHbBCsbTSEi+NmWP/DDS1w==
+ 07 Apr 2025 00:50:34 -0700
+X-CSE-ConnectionGUID: 7njJYSf+TOOQowEGtCZrXg==
+X-CSE-MsgGUID: Hvft6m07QiGM8/baoKcQdA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128405694"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128405702"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 00:50:25 -0700
+ 07 Apr 2025 00:50:30 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
@@ -56,10 +56,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v4 11/13] KVM: Introduce CVMPrivateSharedListener for
- attribute changes during page conversions
-Date: Mon,  7 Apr 2025 15:49:31 +0800
-Message-ID: <20250407074939.18657-12-chenyi.qiang@intel.com>
+Subject: [PATCH v4 12/13] ram-block-attribute: Add priority listener support
+ for PrivateSharedListener
+Date: Mon,  7 Apr 2025 15:49:32 +0800
+Message-ID: <20250407074939.18657-13-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250407074939.18657-1-chenyi.qiang@intel.com>
 References: <20250407074939.18657-1-chenyi.qiang@intel.com>
@@ -90,263 +90,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the introduction of the RamBlockAttribute object to manage
-RAMBlocks with guest_memfd and the implementation of
-PrivateSharedManager interface to convey page conversion events, it is
-more elegant to move attribute changes into a PrivateSharedListener.
+In-place page conversion requires operations to follow a specific
+sequence: unmap-before-conversion-to-private and
+map-after-conversion-to-shared. Currently, both attribute changes and
+VFIO DMA map/unmap operations are handled by PrivateSharedListeners,
+they need to be invoked in a specific order.
 
-The PrivateSharedListener is reigstered/unregistered for each memory
-region section during kvm_region_add/del(), and listeners are stored in
-a CVMPrivateSharedListener list for easy management. The listener
-handler performs attribute changes upon receiving notifications from
-private_shared_manager_state_change() calls. With this change, the
-state changes operations in kvm_convert_memory() can be removed.
+For private to shared conversion:
+- Change attribute to shared.
+- VFIO populates the shared mappings into the IOMMU.
+- Restore attribute if the operation fails.
 
-Note that after moving attribute changes into a listener, errors can be
-returned in ram_block_attribute_notify_to_private() if attribute changes
-fail in corner cases (e.g. -ENOMEM). Since there is currently no rollback
-operation for the to_private case, an assert is used to prevent the
-guest from continuing with a partially changed attribute state.
+For shared to private conversion:
+- VFIO discards shared mapping from the IOMMU.
+- Change attribute to private.
+
+To faciliate this sequence, priority support is added to
+PrivateSharedListener so that listeners are stored in a determined
+order based on priority. A tail queue is used to store listeners,
+allowing traversal in either direction.
 
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
 Changes in v4:
     - Newly added.
 ---
- accel/kvm/kvm-all.c                         | 73 ++++++++++++++++++---
- include/system/confidential-guest-support.h | 10 +++
- system/ram-block-attribute.c                | 17 ++++-
- target/i386/kvm/tdx.c                       |  1 +
- target/i386/sev.c                           |  1 +
- 5 files changed, 90 insertions(+), 12 deletions(-)
+ accel/kvm/kvm-all.c          |  3 ++-
+ hw/vfio/common.c             |  3 ++-
+ include/exec/memory.h        | 19 +++++++++++++++++--
+ include/exec/ramblock.h      |  2 +-
+ system/ram-block-attribute.c | 23 +++++++++++++++++------
+ 5 files changed, 39 insertions(+), 11 deletions(-)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 546b58b737..aec64d559b 100644
+index aec64d559b..879c61b391 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -48,6 +48,7 @@
- #include "kvm-cpus.h"
- #include "system/dirtylimit.h"
- #include "qemu/range.h"
-+#include "system/confidential-guest-support.h"
- 
- #include "hw/boards.h"
- #include "system/stats.h"
-@@ -1691,28 +1692,91 @@ static int kvm_dirty_ring_init(KVMState *s)
-     return 0;
+@@ -1745,7 +1745,8 @@ static void kvm_region_add(MemoryListener *listener,
+     psl = &cpsl->listener;
+     QLIST_INSERT_HEAD(&cgs->cvm_private_shared_list, cpsl, next);
+     private_shared_listener_init(psl, kvm_private_shared_notify_to_shared,
+-                                 kvm_private_shared_notify_to_private);
++                                 kvm_private_shared_notify_to_private,
++                                 PRIVATE_SHARED_LISTENER_PRIORITY_MIN);
+     generic_state_manager_register_listener(gsm, &psl->scl, section);
  }
  
-+static int kvm_private_shared_notify(StateChangeListener *scl,
-+                                     MemoryRegionSection *section,
-+                                     bool to_private)
-+{
-+    hwaddr start = section->offset_within_address_space;
-+    hwaddr size = section->size;
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 6e49ae597d..a8aacae26c 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -515,7 +515,8 @@ static void vfio_register_private_shared_listener(VFIOContainerBase *bcontainer,
+ 
+     psl = &vpsl->listener;
+     private_shared_listener_init(psl, vfio_private_shared_notify_to_shared,
+-                                 vfio_private_shared_notify_to_private);
++                                 vfio_private_shared_notify_to_private,
++                                 PRIVATE_SHARED_LISTENER_PRIORITY_COMMON);
+     generic_state_manager_register_listener(gsm, &psl->scl, section);
+     QLIST_INSERT_HEAD(&bcontainer->vpsl_list, vpsl, next);
+ }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 9472d9e9b4..3d06cc04a0 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -770,11 +770,24 @@ struct RamDiscardManagerClass {
+     GenericStateManagerClass parent_class;
+ };
+ 
++#define PRIVATE_SHARED_LISTENER_PRIORITY_MIN       0
++#define PRIVATE_SHARED_LISTENER_PRIORITY_COMMON    10
 +
-+    if (to_private) {
-+        return kvm_set_memory_attributes_private(start, size);
-+    } else {
-+        return kvm_set_memory_attributes_shared(start, size);
-+    }
-+}
+ typedef struct PrivateSharedListener PrivateSharedListener;
+ struct PrivateSharedListener {
+     struct StateChangeListener scl;
+ 
+-    QLIST_ENTRY(PrivateSharedListener) next;
++    /*
++     * @priority:
++     *
++     * Govern the order in which ram discard listeners are invoked. Lower priorities
++     * are invoked earlier.
++     * The listener priority can help to undo the effects of previous listeners in
++     * a reverse order in case of a failure callback.
++     */
++    int priority;
 +
-+static int kvm_private_shared_notify_to_shared(StateChangeListener *scl,
-+                                               MemoryRegionSection *section)
-+{
-+    return kvm_private_shared_notify(scl, section, false);
-+}
-+
-+static int kvm_private_shared_notify_to_private(StateChangeListener *scl,
-+                                                MemoryRegionSection *section)
-+{
-+    return kvm_private_shared_notify(scl, section, true);
-+}
-+
- static void kvm_region_add(MemoryListener *listener,
-                            MemoryRegionSection *section)
++    QTAILQ_ENTRY(PrivateSharedListener) next;
+ };
+ 
+ struct PrivateSharedManagerClass {
+@@ -787,9 +800,11 @@ struct PrivateSharedManagerClass {
+ 
+ static inline void private_shared_listener_init(PrivateSharedListener *psl,
+                                                 NotifyStateSet populate_fn,
+-                                                NotifyStateClear discard_fn)
++                                                NotifyStateClear discard_fn,
++                                                int priority)
  {
-     KVMMemoryListener *kml = container_of(listener, KVMMemoryListener, listener);
-+    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-+    GenericStateManager *gsm = memory_region_get_generic_state_manager(section->mr);
-     KVMMemoryUpdate *update;
-+    CVMPrivateSharedListener *cpsl;
-+    PrivateSharedListener *psl;
-+
- 
-     update = g_new0(KVMMemoryUpdate, 1);
-     update->section = *section;
- 
-     QSIMPLEQ_INSERT_TAIL(&kml->transaction_add, update, next);
-+
-+    if (!memory_region_has_guest_memfd(section->mr) || !gsm) {
-+        return;
-+    }
-+
-+    cpsl = g_new0(CVMPrivateSharedListener, 1);
-+    cpsl->mr = section->mr;
-+    cpsl->offset_within_address_space = section->offset_within_address_space;
-+    cpsl->granularity = generic_state_manager_get_min_granularity(gsm, section->mr);
-+    psl = &cpsl->listener;
-+    QLIST_INSERT_HEAD(&cgs->cvm_private_shared_list, cpsl, next);
-+    private_shared_listener_init(psl, kvm_private_shared_notify_to_shared,
-+                                 kvm_private_shared_notify_to_private);
-+    generic_state_manager_register_listener(gsm, &psl->scl, section);
+     state_change_listener_init(&psl->scl, populate_fn, discard_fn);
++    psl->priority = priority;
  }
  
- static void kvm_region_del(MemoryListener *listener,
-                            MemoryRegionSection *section)
- {
-     KVMMemoryListener *kml = container_of(listener, KVMMemoryListener, listener);
-+    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-+    GenericStateManager *gsm = memory_region_get_generic_state_manager(section->mr);
-     KVMMemoryUpdate *update;
-+    CVMPrivateSharedListener *cpsl;
-+    PrivateSharedListener *psl;
+ int private_shared_manager_state_change(PrivateSharedManager *mgr,
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 78eb031819..7a3dd709bb 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -105,7 +105,7 @@ struct RamBlockAttribute {
+     unsigned shared_bitmap_size;
+     unsigned long *shared_bitmap;
  
-     update = g_new0(KVMMemoryUpdate, 1);
-     update->section = *section;
+-    QLIST_HEAD(, PrivateSharedListener) psl_list;
++    QTAILQ_HEAD(, PrivateSharedListener) psl_list;
+ };
  
-     QSIMPLEQ_INSERT_TAIL(&kml->transaction_del, update, next);
-+    if (!memory_region_has_guest_memfd(section->mr) || !gsm) {
-+        return;
-+    }
-+
-+    QLIST_FOREACH(cpsl, &cgs->cvm_private_shared_list, next) {
-+        if (cpsl->mr == section->mr &&
-+            cpsl->offset_within_address_space == section->offset_within_address_space) {
-+            psl = &cpsl->listener;
-+            generic_state_manager_unregister_listener(gsm, &psl->scl);
-+            QLIST_REMOVE(cpsl, next);
-+            g_free(cpsl);
-+            break;
-+        }
-+    }
- }
- 
- static void kvm_region_commit(MemoryListener *listener)
-@@ -3076,15 +3140,6 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-         goto out_unref;
-     }
- 
--    if (to_private) {
--        ret = kvm_set_memory_attributes_private(start, size);
--    } else {
--        ret = kvm_set_memory_attributes_shared(start, size);
--    }
--    if (ret) {
--        goto out_unref;
--    }
--
-     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
-     rb = qemu_ram_block_from_host(addr, false, &offset);
- 
-diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
-index b68c4bebbc..64f67db19a 100644
---- a/include/system/confidential-guest-support.h
-+++ b/include/system/confidential-guest-support.h
-@@ -23,12 +23,20 @@
- #endif
- 
- #include "qom/object.h"
-+#include "exec/memory.h"
- 
- #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
- OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
-                     ConfidentialGuestSupportClass,
-                     CONFIDENTIAL_GUEST_SUPPORT)
- 
-+typedef struct CVMPrivateSharedListener {
-+    MemoryRegion *mr;
-+    hwaddr offset_within_address_space;
-+    uint64_t granularity;
-+    PrivateSharedListener listener;
-+    QLIST_ENTRY(CVMPrivateSharedListener) next;
-+} CVMPrivateSharedListener;
- 
- struct ConfidentialGuestSupport {
-     Object parent;
-@@ -38,6 +46,8 @@ struct ConfidentialGuestSupport {
-      */
-     bool require_guest_memfd;
- 
-+    QLIST_HEAD(, CVMPrivateSharedListener) cvm_private_shared_list;
-+
-     /*
-      * ready: flag set by CGS initialization code once it's ready to
-      *        start executing instructions in a potentially-secure
+ struct RamBlockAttributeClass {
 diff --git a/system/ram-block-attribute.c b/system/ram-block-attribute.c
-index 06ed134cda..15c9aebd09 100644
+index 15c9aebd09..fd041148c7 100644
 --- a/system/ram-block-attribute.c
 +++ b/system/ram-block-attribute.c
-@@ -259,6 +259,7 @@ static void ram_block_attribute_notify_to_private(RamBlockAttribute *attr,
-                                                   uint64_t offset, uint64_t size)
+@@ -158,12 +158,23 @@ static void ram_block_attribute_psm_register_listener(GenericStateManager *gsm,
  {
-     PrivateSharedListener *psl;
-+    int ret;
+     RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
+     PrivateSharedListener *psl = container_of(scl, PrivateSharedListener, scl);
++    PrivateSharedListener *other = NULL;
+     int ret;
  
-     QLIST_FOREACH(psl, &attr->psl_list, next) {
-         StateChangeListener *scl = &psl->scl;
-@@ -267,7 +268,12 @@ static void ram_block_attribute_notify_to_private(RamBlockAttribute *attr,
-         if (!memory_region_section_intersect_range(&tmp, offset, size)) {
-             continue;
-         }
--        scl->notify_to_state_clear(scl, &tmp);
-+        /*
-+         * No undo operation for the state_clear() callback failure at present.
-+         * Expect the state_clear() callback always succeed.
-+         */
-+        ret = scl->notify_to_state_clear(scl, &tmp);
-+        g_assert(!ret);
-     }
+     g_assert(section->mr == attr->mr);
+     scl->section = memory_region_section_new_copy(section);
+ 
+-    QLIST_INSERT_HEAD(&attr->psl_list, psl, next);
++    if (QTAILQ_EMPTY(&attr->psl_list) ||
++        psl->priority >= QTAILQ_LAST(&attr->psl_list)->priority) {
++        QTAILQ_INSERT_TAIL(&attr->psl_list, psl, next);
++    } else {
++        QTAILQ_FOREACH(other, &attr->psl_list, next) {
++            if (psl->priority < other->priority) {
++                break;
++            }
++        }
++        QTAILQ_INSERT_BEFORE(other, psl, next);
++    }
+ 
+     ret = ram_block_attribute_for_each_shared_section(attr, section, scl,
+                                                       ram_block_attribute_notify_shared_cb);
+@@ -192,7 +203,7 @@ static void ram_block_attribute_psm_unregister_listener(GenericStateManager *gsm
+ 
+     memory_region_section_free_copy(scl->section);
+     scl->section = NULL;
+-    QLIST_REMOVE(psl, next);
++    QTAILQ_REMOVE(&attr->psl_list, psl, next);
  }
  
-@@ -275,7 +281,7 @@ static int ram_block_attribute_notify_to_shared(RamBlockAttribute *attr,
-                                                 uint64_t offset, uint64_t size)
- {
-     PrivateSharedListener *psl, *psl2;
--    int ret = 0;
-+    int ret = 0, ret2 = 0;
+ typedef struct RamBlockAttributeReplayData {
+@@ -261,7 +272,7 @@ static void ram_block_attribute_notify_to_private(RamBlockAttribute *attr,
+     PrivateSharedListener *psl;
+     int ret;
  
-     QLIST_FOREACH(psl, &attr->psl_list, next) {
+-    QLIST_FOREACH(psl, &attr->psl_list, next) {
++    QTAILQ_FOREACH_REVERSE(psl, &attr->psl_list, next) {
          StateChangeListener *scl = &psl->scl;
-@@ -302,7 +308,12 @@ static int ram_block_attribute_notify_to_shared(RamBlockAttribute *attr,
-             if (!memory_region_section_intersect_range(&tmp, offset, size)) {
-                 continue;
-             }
--            scl2->notify_to_state_clear(scl2, &tmp);
-+            /*
-+             * No undo operation for the state_clear() callback failure at present.
-+             * Expect the state_clear() callback always succeed.
-+             */
-+            ret2 = scl2->notify_to_state_clear(scl2, &tmp);
-+            g_assert(!ret2);
-         }
-     }
-     return ret;
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index c906a76c4c..718385c8de 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -1179,6 +1179,7 @@ static void tdx_guest_init(Object *obj)
-     qemu_mutex_init(&tdx->lock);
+         MemoryRegionSection tmp = *scl->section;
  
-     cgs->require_guest_memfd = true;
-+    QLIST_INIT(&cgs->cvm_private_shared_list);
-     tdx->attributes = TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
+@@ -283,7 +294,7 @@ static int ram_block_attribute_notify_to_shared(RamBlockAttribute *attr,
+     PrivateSharedListener *psl, *psl2;
+     int ret = 0, ret2 = 0;
  
-     object_property_add_uint64_ptr(obj, "attributes", &tdx->attributes,
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 217b19ad7b..6647727a44 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -2432,6 +2432,7 @@ sev_snp_guest_instance_init(Object *obj)
-     SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
+-    QLIST_FOREACH(psl, &attr->psl_list, next) {
++    QTAILQ_FOREACH(psl, &attr->psl_list, next) {
+         StateChangeListener *scl = &psl->scl;
+         MemoryRegionSection tmp = *scl->section;
  
-     cgs->require_guest_memfd = true;
-+    QLIST_INIT(&cgs->cvm_private_shared_list);
+@@ -298,7 +309,7 @@ static int ram_block_attribute_notify_to_shared(RamBlockAttribute *attr,
  
-     /* default init/start/finish params for kvm */
-     sev_snp_guest->kvm_start_conf.policy = DEFAULT_SEV_SNP_POLICY;
+     if (ret) {
+         /* Notify all already-notified listeners. */
+-        QLIST_FOREACH(psl2, &attr->psl_list, next) {
++        QTAILQ_FOREACH(psl2, &attr->psl_list, next) {
+             StateChangeListener *scl2 = &psl2->scl;
+             MemoryRegionSection tmp = *scl2->section;
+ 
+@@ -462,7 +473,7 @@ static void ram_block_attribute_init(Object *obj)
+ {
+     RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(obj);
+ 
+-    QLIST_INIT(&attr->psl_list);
++    QTAILQ_INIT(&attr->psl_list);
+ }
+ 
+ static void ram_block_attribute_finalize(Object *obj)
 -- 
 2.43.5
 
