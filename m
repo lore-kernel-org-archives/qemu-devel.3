@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD3EC36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7B8C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:12:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1gaX-0007tw-IW; Mon, 07 Apr 2025 03:08:09 -0400
+	id 1u1geC-0000YM-Hu; Mon, 07 Apr 2025 03:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1gaR-0007tY-7X
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:08:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1geA-0000Xy-Fx
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:11:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1gaL-0006Pm-CW
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:08:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1ge7-0006v5-UP
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:11:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744009674;
+ s=mimecast20190719; t=1744009909;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=X+2ZlsgQP501quz2NDdyRoHSdy8xuPxG8x1e3ZZBRss=;
- b=XmA0pdXHHumXiLgrg/ybzpr8LVEDhgHXeQii11v+moEqUq/81T2MC8DKazKPkDM2fNg2Bb
- 6fiX9gb1s5oeyk5QEf4HR+GdRRGASyV72KZNpOLBJKW53ITUXlFrFydtlthaPHt309e5Xi
- 4mm8kNdjn+JzWRJFoJtlIu4lsWDkt1Q=
+ bh=vp7GpaKONen6tggB/fSLLAL2GvzMmOciv3YkRZLmo9I=;
+ b=SLS2DrP2ag5MhwAPLMBoBVYuHZEZ76UglqojJTPlI/PrzqIYbspmDRvNb9qvHSsVBpkEhz
+ NOdJeeOhzI1VQ4SQ2GDBGkBFgFc/kNg0L0NlJfFjnEH0NIPdBrOfMS3yHnntFIcPjfJJeY
+ 5fsArDMn5YodJQGJ4a1zzNA+Xf5YveA=
 Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
  [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-IwlqwvMGNnCut9UP3IxpAQ-1; Mon, 07 Apr 2025 03:07:52 -0400
-X-MC-Unique: IwlqwvMGNnCut9UP3IxpAQ-1
-X-Mimecast-MFC-AGG-ID: IwlqwvMGNnCut9UP3IxpAQ_1744009671
+ us-mta-549-WwQUsAklP1eBex6VAZYl1w-1; Mon, 07 Apr 2025 03:11:44 -0400
+X-MC-Unique: WwQUsAklP1eBex6VAZYl1w-1
+X-Mimecast-MFC-AGG-ID: WwQUsAklP1eBex6VAZYl1w_1744009904
 Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so8032445e9.1
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 00:07:52 -0700 (PDT)
+ 5b1f17b1804b1-43ea256f039so33282275e9.0
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 00:11:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744009671; x=1744614471;
+ d=1e100.net; s=20230601; t=1744009903; x=1744614703;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X+2ZlsgQP501quz2NDdyRoHSdy8xuPxG8x1e3ZZBRss=;
- b=JkYhvmJW/DPsZhMIpW2SSKuMSH4fwN2rsX/yjaiI+hD0nltb8I9neMaNTC/u5bSCOt
- e8w+wmeApZqP6/8KlPoGlNAta6yAvFzmcnIWnjHcgBp7rO1TB+OdyNaYlo1y42k+IrBr
- vfaWCShNbXo9P/uvFYrDgzEhqHdurW42iR+THbYCAXISxKJPWy6vBtPNNJJo5jm1R9Qm
- XtQrXgSH69SbRoXePCip85iY8Zjl0DaZC2/hz/npVCWiJy7A+5Ok9jx18kMnSK2dlPqc
- XIpF+t4un/O/N3gwgh5it5ojrmg+mVmTICXvpsr9TxGfH8BgInKZs882/KIdMxN8sWq1
- ti1g==
+ bh=vp7GpaKONen6tggB/fSLLAL2GvzMmOciv3YkRZLmo9I=;
+ b=kA0OhxlZQ1ZBwedyp85CU825IeiOywReMry/8yPtAUhiIWybfpnPSLjbxJBmw2Q14t
+ GG5bvsi9VH5Eo8GXUd8AMR98rWxyfG7aBqXng0lTSI2GirPe1sZgCKM5PVXwnVikHR1Z
+ DUEt0/hV6wnpU3fMPcvTcm7DQjA+dyRaB+Gkk0xXtr6fbcUXnlFL/tlRt3oUD8qIMURn
+ 3NpGHpZIfgrqCQqNqQ5YMAi7+i2sollGXHuLNzKALoD8afNYKkN1Wz1/I0DVFSA55Scm
+ C+iYIECAVCaNdu01iOIgXcNSvyLLW+pyjKsQD0bcU57htn4ZMjb5abOYSJY429nMD1yc
+ TF7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXONRrCRYLRG0aqILT9tSAOPWldvZ/V9ZWDNfdZTPTxW+ij2dPraYbbQlaEPN2C8XPphql4jvxB9iH+@nongnu.org
-X-Gm-Message-State: AOJu0YwYPGTBuAt2ixveNL663P4XihCkwFlP0DG5iWdE7ksEl6R3Baqp
- 0Wk/LhKX87zVfg2GhdiTYKc+9oKUjiLFWbCNLyV9tqkc3bZ0AebaVAI9k31nqrbxdxpeCjvfRcW
- RYhEdXZEn1k6gx0IqUMCgQNzlwNYC7J8aW37lBNOdsMejA9yT3q1J
-X-Gm-Gg: ASbGnctX/aa7p94/eMVHG0YcqgXaBYovK/soUxfE4RPwVcktdzIcikYYOWTyprhSFOk
- MytfKD6wWGzAYQmdU7M5HD0dZOFlK1XLoDlY/P9plUlmUH4T31rm0+9KOVYRJW4LdYBp4EiA+uw
- HC1YFTEmWwYNdo6gaAAb89J3d6iGElgOJY28UlpnvlKKGKCiT9CUCAOAJsAMG36duepqrtncz37
- VjPhwX0IQSRx/gkrIlm/5k5/+AKu/I/O/vjj+JuTgRExBiSAw+xbQKWWeeUI/K2cXjpVSX0M4ik
- wxmTn0WUywlgnZuJlMzsKhEdx1H2KsMj235l1P2WvhDiwE8jyFDSrg==
-X-Received: by 2002:a05:600c:46d1:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-43ecf85f223mr94195205e9.13.1744009671490; 
- Mon, 07 Apr 2025 00:07:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMXL0m/ZHR+s62ZhdG5nuBE2g8t4cCelyELeOrlzqX/nujkqT4fQUZt/XjzKlWBZrBtWCABA==
-X-Received: by 2002:a05:600c:46d1:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-43ecf85f223mr94194855e9.13.1744009671164; 
- Mon, 07 Apr 2025 00:07:51 -0700 (PDT)
+ AJvYcCUzA6dsYY4BKg10tq+gRlVFGO4plMk1102ljAyHOnd14FMFbO0ePLHLjIKSFFgcxdo3AqGfBt0biauY@nongnu.org
+X-Gm-Message-State: AOJu0YxDGwwXDbioQt2dQpW9KBQPDkXnC8XMIDgl+mpF+Vx5Wr/2DFBP
+ 9y9TUvz1liDAuqzToSIlZHFMOppaU45FGYVG2so8ommwbxrTp7m0u+csuYUrIKgVLRf9GKzILGQ
+ 5/h41ZvkySAmC8ged+qf6Y7PURQgjk8vS0wmHs5zh80FwqDMiOkhM
+X-Gm-Gg: ASbGnctiBtKZux+xXqbbcWfdkVru6e0fob/5oyIsDoNU+9gXsKCB8aXd9QWRH3iH29N
+ IAxqAsj+kblU0qvtuFdjl93HkblOdN2cZ34k1VdeqNlGw/dE7Db2eWjQznw+lsip9CTe+TnIbc1
+ 7GvVQwHqGppXe3y33OtI3BvzO2reg/E3kt9lffdJMi6gza3sDNlobhPTJIqhAkmVLle/acCvoBl
+ H4MEfPqEcQcbFfBKPgT77R0fPskewge146R0/fkMkynK0uzE8fmsB0QwGmyCmsdwpc8UCen2f2k
+ 8FKUrVR4aAylFs3JIhJ1HHJ5TEgJveWU0o9r9wGgn/QRogbjwRjfaQ==
+X-Received: by 2002:a05:600c:3b14:b0:43c:ec97:75db with SMTP id
+ 5b1f17b1804b1-43ed0bf6aeemr103259865e9.11.1744009903604; 
+ Mon, 07 Apr 2025 00:11:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8nsw/L/q9EC2mTJIE6lmRI8GQWSlApQ0UsLOvtYq0C8kAn/FSZjW+n9FXUWuB3JjBrlLDJg==
+X-Received: by 2002:a05:600c:3b14:b0:43c:ec97:75db with SMTP id
+ 5b1f17b1804b1-43ed0bf6aeemr103259635e9.11.1744009903223; 
+ Mon, 07 Apr 2025 00:11:43 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec342827fsm121966355e9.6.2025.04.07.00.07.50
+ 5b1f17b1804b1-43ec16313edsm123959905e9.6.2025.04.07.00.11.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Apr 2025 00:07:50 -0700 (PDT)
-Message-ID: <cde3a719-d048-4d4d-b554-3087372f8cd9@redhat.com>
-Date: Mon, 7 Apr 2025 09:07:49 +0200
+ Mon, 07 Apr 2025 00:11:42 -0700 (PDT)
+Message-ID: <0fc40000-dbe0-4330-8bd7-b9229287d708@redhat.com>
+Date: Mon, 7 Apr 2025 09:11:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH for-10.1 v2 28/37] vfio: Make
  vfio_container_query_dirty_bitmap() static
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
+Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>, Joao Martins <joao.m.martins@oracle.com>
+ John Levon <john.levon@nutanix.com>
 References: <20250326075122.1299361-1-clg@redhat.com>
  <20250326075122.1299361-29-clg@redhat.com>
- <278abea8-5408-4261-8155-24f5f9c75e7d@nvidia.com>
+ <92f88380-3df0-4a64-8544-389199ead6a1@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <278abea8-5408-4261-8155-24f5f9c75e7d@nvidia.com>
+In-Reply-To: <92f88380-3df0-4a64-8544-389199ead6a1@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -160,104 +160,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 15:03, Avihai Horon wrote:
-> 
-> On 26/03/2025 9:51, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
+On 4/2/25 15:34, Joao Martins wrote:
+> On 26/03/2025 07:51, Cédric Le Goater wrote:
 >> vfio_container_query_dirty_bitmap() is only used in "container-base.c".
 >> Also, rename to vfio_container_vioc_query_dirty_bitmap() to reflect it
 >> is using the VFIO IOMMU backend device ->query_dirty_bitmap() handler.
 >>
 >> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > 
-> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+> I would just call it:
+> 
+> 	vfio_container_iommu_query_dirty_bitmap
+> 
+> That holds better as one queries devices the other queries the container iommu
+> backend. 'vioc' sort of leaks type definition unnecessarily which seems to go
+> against the generally naming style
 
-
-Since lore didn't receive the email :
-
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-
+Agree. Done.
 
 > 
-> Two small nits below.
+> With that:
 > 
->> ---
->>   include/hw/vfio/vfio-container-base.h |  2 --
->>   hw/vfio/container-base.c              | 24 ++++++++++++------------
->>   2 files changed, 12 insertions(+), 14 deletions(-)
->>
->> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
->> index 1227771dd896b5917366ef578109b0ad92da2375..04c87fe48bed75aa281a13f75a36e345036a9163 100644
->> --- a/include/hw/vfio/vfio-container-base.h
->> +++ b/include/hw/vfio/vfio-container-base.h
->> @@ -89,8 +89,6 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
->>                                          MemoryRegionSection *section);
->>   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
->>                                              bool start, Error **errp);
->> -int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->> -                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
->>   bool vfio_devices_all_dirty_tracking_started(const VFIOContainerBase *bcontainer);
->>   bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
->>   int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
->> index 4edbd39185375dee42ee6e6410da7b94635b5ab8..7f11aad339e713ea09123f361425370d87762950 100644
->> --- a/hw/vfio/container-base.c
->> +++ b/hw/vfio/container-base.c
->> @@ -141,16 +141,6 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
->>       return ret;
->>   }
->>
->> -int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->> -                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
->> -{
->> -    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
->> -
->> -    g_assert(vioc->query_dirty_bitmap);
->> -    return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
->> -                                               errp);
->> -}
->> -
->>   static bool vfio_devices_all_device_dirty_tracking_started(
->>       const VFIOContainerBase *bcontainer)
->>   {
->> @@ -214,6 +204,16 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
->>       return 0;
->>   }
->>
->> +static int vfio_container_vioc_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->> +                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
-> 
-> Indentation is a bit off here.
-
-yeah. This keeps the line size reasonable and avoids a stack of
-parameters at the end. I think it is more readable.
-
-> 
->> +{
->> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
->> +
->> +    g_assert(vioc->query_dirty_bitmap);
->> +    return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
->> +                                               errp);
->> +}
->> +
->>   static int vfio_container_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->>                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
->>   {
->> @@ -263,8 +263,8 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->>           ret = vfio_container_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
->>                                                           errp);
->>       } else {
->> -        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
->> -                                                errp);
->> +        ret = vfio_container_vioc_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
-> 
-> This line is beyond 80 chars.
-
-yes. this is best effort though. I'd rather keep it that way. 90 chars
-is "ugly" limit.
+> 	Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
 
 
 Thanks,
@@ -266,15 +190,75 @@ C.
 
 
 > 
-> Thanks.
+>    Joao
 > 
->> +                                                     errp);
->>       }
+>> ---
+>>   include/hw/vfio/vfio-container-base.h |  2 --
+>>   hw/vfio/container-base.c              | 24 ++++++++++++------------
+>>   2 files changed, 12 insertions(+), 14 deletions(-)
 >>
->>       if (ret) {
->> -- 
->> 2.49.0
->>
+>> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+>> index 1227771dd896b5917366ef578109b0ad92da2375..04c87fe48bed75aa281a13f75a36e345036a9163 100644
+>> --- a/include/hw/vfio/vfio-container-base.h
+>> +++ b/include/hw/vfio/vfio-container-base.h
+>> @@ -89,8 +89,6 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+>>                                          MemoryRegionSection *section);
+>>   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>>                                              bool start, Error **errp);
+>> -int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>> -                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+>>   bool vfio_devices_all_dirty_tracking_started(const VFIOContainerBase *bcontainer);
+>>   bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
+>>   int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+>> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+>> index 4edbd39185375dee42ee6e6410da7b94635b5ab8..7f11aad339e713ea09123f361425370d87762950 100644
+>> --- a/hw/vfio/container-base.c
+>> +++ b/hw/vfio/container-base.c
+>> @@ -141,16 +141,6 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>>       return ret;
+>>   }
+>>   
+>> -int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>> -                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
+>> -{
+>> -    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+>> -
+>> -    g_assert(vioc->query_dirty_bitmap);
+>> -    return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
+>> -                                               errp);
+>> -}
+>> -
+>>   static bool vfio_devices_all_device_dirty_tracking_started(
+>>       const VFIOContainerBase *bcontainer)
+>>   {
+>> @@ -214,6 +204,16 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+>>       return 0;
+>>   }
+>>   
+>> +static int vfio_container_vioc_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>> +                   VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
+>> +{
+>> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+>> +
+>> +    g_assert(vioc->query_dirty_bitmap);
+>> +    return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
+>> +                                               errp);
+>> +}
+>> +
+>>   static int vfio_container_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>>                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
+>>   {
+>> @@ -263,8 +263,8 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+>>           ret = vfio_container_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
+>>                                                           errp);
+>>       } else {
+>> -        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
+>> -                                                errp);
+>> +        ret = vfio_container_vioc_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
+>> +                                                     errp);
+>>       }
+>>   
+>>       if (ret) {
 > 
 
 
