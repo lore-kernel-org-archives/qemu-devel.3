@@ -4,72 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9155C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 13:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186F2C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 13:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1mwq-00029X-Bn; Mon, 07 Apr 2025 09:55:36 -0400
+	id 1u1myb-0003Cr-Nk; Mon, 07 Apr 2025 09:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u1mwp-00029M-3j
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 09:55:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u1mwn-00020R-9u
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 09:55:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744034130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=w/NSW8dZFl34s2IQ+/lApiWD5Idzh/hJ5nw/W9TQAn0=;
- b=aC7C1l2uftO3L+wzTCgjJguxi7iKuAibKElaUM6B4PbygPJC08t7pzsYyiQkf2STU+lhWW
- YPeI2nEQuXfuH5iLL0aYZLyjdPI3HUjCaiJLMCrXforRdW0jAjMAf6ZTGzIbdIJGHAelYF
- RhsIxPofRXhoZk3iPMUthX6a9nofyEw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-ogOt-kN4NNmgtoi94trzgQ-1; Mon,
- 07 Apr 2025 09:55:26 -0400
-X-MC-Unique: ogOt-kN4NNmgtoi94trzgQ-1
-X-Mimecast-MFC-AGG-ID: ogOt-kN4NNmgtoi94trzgQ_1744034124
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6EEC1195608F; Mon,  7 Apr 2025 13:55:22 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.119])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC7B0192C7C3; Mon,  7 Apr 2025 13:55:20 +0000 (UTC)
-Date: Mon, 7 Apr 2025 09:55:19 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Pinku Deb Nath <prantoran@gmail.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5] block/file-posix.c: Use pwritev2() with RWF_DSYNC for
- FUA
-Message-ID: <20250407135519.GB473226@fedora>
-References: <20250405235229.215582-1-prantoran@gmail.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u1myZ-0003Bk-Fn
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 09:57:23 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u1myX-00025W-9l
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 09:57:23 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-73972a54919so3914670b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 06:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1744034239; x=1744639039; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=G67wC9qHxDdpxR9z8GHg5vvrlbf3CFkhfhpkUIL9s+w=;
+ b=RTxH25OyocfyvDxybYoEBFXRSAitlpJB2xs0aa14lVxj8iCdFd2C3Ebn42hSAOvm4h
+ Yc1vIzGN/xmPqb7S3TFt9q6uGXkMrrTzD16YfzVdNCxVUjLruyr3EWbJCoKxKlCQsqgv
+ P5Mr2HK19izVzApIHTr4o9Qd9GOL3fmg3oNDXCw42Y6i1DoOO1z4MLeAHHC11S8ch5ui
+ c1peiTuv8YzLzqzIHSvBiUlJqxi35IVziTBFiTZgFmIbc/2MbVEKA/LaAkdn24YkeFnH
+ BQLBsXA5lQaPfTyPSC5lWlfM5IS0L5do2GvShsi6B89ZEL6a0fulYfr9rZDTy5XmezTU
+ UHog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744034239; x=1744639039;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=G67wC9qHxDdpxR9z8GHg5vvrlbf3CFkhfhpkUIL9s+w=;
+ b=TcoF/yDkwniswE2EBVUhESNy3M2EJkEIu+3vCy6IYKanglqPz0QviXNTBXKtje0Jy9
+ s74GeH0S35yXlRDHooPI8dtoM+YpABMhsiEBlk/UEkRlGN7x6oJ1JrsGn1IHZyA+bV0g
+ OoN76ez+4pwQcZnr0yknyBV5qpI8foG0E+dyJwGOiZHf34Ovvj35JP5ZbH8mzo5Lsows
+ WQ3vNdswIzOQPmrT0Px5ArSTxhf5RCglBNsZwaiWnW5lxYOtclL7OKEl0Ice9raixAoZ
+ dZhRT/Y3q363mXNZPoP8Q/yOXMOKLw6DZXpR1UqHi32yrNCISgLW3A8LlJXCpybIgZPB
+ CbdQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPYpxWB7iY8ihkxyp701/SyZAHRNUVr54RCKZ8pkwVAk401eqwV4ScBMGkyQSZtrqJZ0mSX+vXfrr3@nongnu.org
+X-Gm-Message-State: AOJu0Yw8rzkQ4jEZ7lenLnZv5S769WW4uxqy/V5WTPqhGXHpNNJzE6W8
+ aCROkcAMgiW2x5ZAwJEdNpV6uLD3ubQAxI+Ilwy+oJIp9i13VT+2BXgYmbYWiHA=
+X-Gm-Gg: ASbGncv51MdokZrPM38l6lL9YU8n0EmXBFP0c5Gh+gAkNbST9kqvuo6t6S1hMNcZ7UW
+ EQRHZrDJ3SmlUZp0c3bvsQ44dlrZFEjFUM6nRTT/vK15Dum9P5qy0cFoEXsL6D8M1apHdr/umEM
+ jf0Z71ijRGP6fOvoKj4s7CNfvK4rXNHBjBaIZH0z5PC1DZq+eOqMVlxrTqtRHMXsRMQ85zqdmUn
+ PwkgylmaA/xhjQEyptsuyLGL9Dg5s1nEDZqU5VmXf/1Ejy99vvBwt7fJdCf4DDDLCc1yOdgsHAF
+ IlGJfa6IKsf20OCSOfsd4be/tT1sCuGmOkP+2pdIK8pu+3mV+KW1Y2xl47Fi++1g5ztKXg==
+X-Google-Smtp-Source: AGHT+IFaxtju1dYKAfEVCxAKlwU4WvbY08Bqa1diSxU8gwf9xlZzHY4y8BbdBUOPK/Vew3noWDlVHg==
+X-Received: by 2002:a05:6a00:2187:b0:736:3fa8:cf7b with SMTP id
+ d2e1a72fcca58-739e7058e6bmr13943735b3a.13.1744034239271; 
+ Mon, 07 Apr 2025 06:57:19 -0700 (PDT)
+Received: from [192.168.68.110] ([177.170.117.33])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739da0b41f1sm8685303b3a.147.2025.04.07.06.57.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Apr 2025 06:57:18 -0700 (PDT)
+Message-ID: <cd9167de-e769-4d3c-98ab-8536df887e85@ventanamicro.com>
+Date: Mon, 7 Apr 2025 10:57:15 -0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="DgF6PKx1Og2FEuy8"
-Content-Disposition: inline
-In-Reply-To: <20250405235229.215582-1-prantoran@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] target/riscv: Add BOSC's Xiangshan Kunminghu CPU
+To: Huang Borong <huangborong@bosc.ac.cn>, qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, wangran@bosc.ac.cn
+References: <20250407091903.274038-1-huangborong@bosc.ac.cn>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250407091903.274038-1-huangborong@bosc.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,205 +104,130 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---DgF6PKx1Og2FEuy8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Apr 05, 2025 at 04:52:29PM -0700, Pinku Deb Nath wrote:
-> Full Unit Access (FUA) is an optimization where a disk write with the
-> flag set will be persisted to disk immediately instead of potentially
-> remaining in the disk's write cache.
->=20
-> This commit address the todo task
-> for using pwritev2() with RWF_DSYNC in the thread pool section of
-> raw_co_prw(), if pwritev2() with RWF_DSYNC is available in the host,
-> which is always the case for Linux kernel >=3D 4.7.
->=20
-> The intent for FUA is indicated with the BDRV_REQ_FUA flag.
-> The old code paths are preserved in case BDRV_REQ_FUA is off
-> or pwritev2() with RWF_DSYNC is not available.
->=20
-> Support for disk writes with FUA is handled in qemu_pwritev_fua(),
-> which uses pwritev2() with RWF_DSYNC if available, otherwise falls
-> back to pwritev2() with no flags followed by flush using
-> handle_aiocb_flush().
->=20
-> If pwritev2() is not implemented, then disk write in the linear FUA
-> will fallback to pwrite() + handle_aiocb_flush().
->=20
-> Signed-off-by: Pinku Deb Nath <prantoran@gmail.com>
->=20
+On 4/7/25 6:19 AM, Huang Borong wrote:
+> Add a CPU entry for the Xiangshan Kunminghu CPU, an open-source,
+> high-performance RISC-V processor. More details can be found at:
+> https://github.com/OpenXiangShan/XiangShan
+> 
+> Note: The ISA extensions supported by the Xiangshan Kunminghu CPU are
+> categorized based on four RISC-V specifications: Volume I: Unprivileged
+> Architecture, Volume II: Privileged Architecture, AIA, and RVA23. The
+> extensions within each category are organized according to the chapter
+> order in the specifications.
+> 
+> Signed-off-by: Yu Hu <huyu@bosc.ac.cn>
+> Signed-off-by: Ran Wang <wangran@bosc.ac.cn>
+> Signed-off-by: Borong Huang <huangborong@bosc.ac.cn>
 > ---
->=20
-> v4:
-> - Add fallback when qemu_pwritev_fua() returns ENOSYS
-> - Similar fallback was not added for handle_aiocb_rw_vector()
-> since there is a preadv_present check in handle_aiocb_rw()
->=20
-> v3:
-> - Changed signature to add fd, iov, nr_iov
-> - Return -ENOSYS for non-Linux hosts
->=20
-> v2:
-> - Moved handle_aiocb_flush() into qemu_pwritev_fua()
-> - In handle_aiocb_rw_linear(), iovec with iovcnt=3D1 is created
-> based on the assumption that there will be only one buffer
-> ---
->  block/file-posix.c | 68 ++++++++++++++++++++++++++++++++++++++--------
->  1 file changed, 56 insertions(+), 12 deletions(-)
->=20
-> diff --git a/block/file-posix.c b/block/file-posix.c
-> index 56d1972d15..59bed7866a 100644
-> --- a/block/file-posix.c
-> +++ b/block/file-posix.c
-> @@ -229,6 +229,7 @@ typedef struct RawPosixAIOData {
->              unsigned long op;
->          } zone_mgmt;
->      };
-> +    BdrvRequestFlags flags;
->  } RawPosixAIOData;
-> =20
->  #if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
-> @@ -1674,6 +1675,20 @@ qemu_pwritev(int fd, const struct iovec *iov, int =
-nr_iov, off_t offset)
->      return pwritev(fd, iov, nr_iov, offset);
->  }
-> =20
-> +static ssize_t
-> +qemu_pwritev_fua(int fd, struct iovec *iov, int nr_iov, off_t offset, co=
-nst RawPosixAIOData *aiocb)
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/cpu-qom.h |  1 +
+>   target/riscv/cpu.c     | 72 ++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 73 insertions(+)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 4cfdb74891..f2908939e7 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -53,6 +53,7 @@
+>   #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
+>   #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+>   #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
+> +#define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
+>   #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+>   
+>   OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 09ded6829a..a076d9dc0c 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -697,6 +697,76 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
+>   #endif
+>   }
+>   
+> +static void rv64_xiangshan_kmh_cpu_init(Object *obj)
 > +{
-> +#ifdef RWF_DSYNC
-> +    return pwritev2(fd, iov, nr_iov, offset, RWF_DSYNC);
-> +#else
-> +    ssize_t len =3D pwritev2(fd, iov, nr_iov, offset, 0);
-
-This will fail to compile on non-Linux OSes that provide preadv(2)
-(CONFIG_PREADV) because they do not have pwritev2(2). This can be fixed
-by using pwritev() since the flags aren't needed:
-
-  ssize_t len =3D pwritev(fd, iov, nr_iov, offset);
-
-> +    if (len =3D=3D 0) {
-> +        len =3D handle_aiocb_flush(aiocb);
-> +    }
-> +    return len;
+> +    CPURISCVState *env = &RISCV_CPU(obj)->env;
+> +    RISCVCPU *cpu = RISCV_CPU(obj);
+> +
+> +    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU | RVH | RVV);
+> +    env->priv_ver = PRIV_VERSION_1_13_0;
+> +
+> +    /* Enable ISA extensions */
+> +    cpu->cfg.mmu = true;
+> +    cpu->cfg.pmp = true;
+> +
+> +    /*
+> +     * The RISC-V Instruction Set Manual: Volume I
+> +     * Unprivileged Architecture
+> +     */
+> +    cpu->cfg.ext_zicntr = true;
+> +    cpu->cfg.ext_zihpm = true;
+> +    cpu->cfg.ext_zihintntl = true;
+> +    cpu->cfg.ext_zihintpause = true;
+> +    cpu->cfg.ext_zimop = true;
+> +    cpu->cfg.ext_zcmop = true;
+> +    cpu->cfg.ext_zicond = true;
+> +    cpu->cfg.ext_zawrs = true;
+> +    cpu->cfg.ext_zacas = true;
+> +    cpu->cfg.ext_zfh = true;
+> +    cpu->cfg.ext_zfa = true;
+> +    cpu->cfg.ext_zcb = true;
+> +    cpu->cfg.ext_zbc = true;
+> +    cpu->cfg.ext_zvfh = true;
+> +    cpu->cfg.ext_zkn = true;
+> +    cpu->cfg.ext_zks = true;
+> +    cpu->cfg.ext_zkt = true;
+> +    cpu->cfg.ext_zvbb = true;
+> +    cpu->cfg.ext_zvkt = true;
+> +
+> +    /*
+> +     * The RISC-V Instruction Set Manual: Volume II
+> +     * Privileged Architecture
+> +     */
+> +    cpu->cfg.ext_smstateen = true;
+> +    cpu->cfg.ext_smcsrind = true;
+> +    cpu->cfg.ext_sscsrind = true;
+> +    cpu->cfg.ext_svnapot = true;
+> +    cpu->cfg.ext_svpbmt = true;
+> +    cpu->cfg.ext_svinval = true;
+> +    cpu->cfg.ext_sstc = true;
+> +    cpu->cfg.ext_sscofpmf = true;
+> +    cpu->cfg.ext_ssdbltrp = true;
+> +    cpu->cfg.ext_ssnpm = true;
+> +    cpu->cfg.ext_smnpm = true;
+> +    cpu->cfg.ext_smmpm = true;
+> +    cpu->cfg.ext_sspm = true;
+> +    cpu->cfg.ext_supm = true;
+> +
+> +    /* The RISC-V Advanced Interrupt Architecture */
+> +    cpu->cfg.ext_smaia = true;
+> +    cpu->cfg.ext_ssaia = true;
+> +
+> +    /* RVA23 Profiles */
+> +    cpu->cfg.ext_zicbom = true;
+> +    cpu->cfg.ext_zicbop = true;
+> +    cpu->cfg.ext_zicboz = true;
+> +    cpu->cfg.ext_svade = true;
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +    set_satp_mode_max_supported(cpu, VM_1_10_SV48);
 > +#endif
 > +}
 > +
->  #else
-> =20
->  static bool preadv_present =3D false;
-> @@ -1690,6 +1705,11 @@ qemu_pwritev(int fd, const struct iovec *iov, int =
-nr_iov, off_t offset)
->      return -ENOSYS;
->  }
-> =20
-> +static ssize_t
-> +qemu_pwritev_fua(int fd, struct iovec *iov, int nr_iov, off_t offset, co=
-nst RawPosixAIOData *aiocb)
-> +{
-> +    return -ENOSYS;
-> +}
->  #endif
-> =20
->  static ssize_t handle_aiocb_rw_vector(RawPosixAIOData *aiocb)
-> @@ -1698,10 +1718,16 @@ static ssize_t handle_aiocb_rw_vector(RawPosixAIO=
-Data *aiocb)
-> =20
->      len =3D RETRY_ON_EINTR(
->          (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) ?
-> -            qemu_pwritev(aiocb->aio_fildes,
-> -                           aiocb->io.iov,
-> -                           aiocb->io.niov,
-> -                           aiocb->aio_offset) :
-> +            (aiocb->flags &  BDRV_REQ_FUA) ?
-> +                qemu_pwritev_fua(aiocb->aio_fildes,
-> +                                aiocb->io.iov,
-> +                                aiocb->io.niov,
-> +                                aiocb->aio_offset,
-> +                                aiocb) :
-> +                qemu_pwritev(aiocb->aio_fildes,
-> +                            aiocb->io.iov,
-> +                            aiocb->io.niov,
-> +                            aiocb->aio_offset) :
->              qemu_preadv(aiocb->aio_fildes,
->                            aiocb->io.iov,
->                            aiocb->io.niov,
-> @@ -1727,10 +1753,31 @@ static ssize_t handle_aiocb_rw_linear(RawPosixAIO=
-Data *aiocb, char *buf)
-> =20
->      while (offset < aiocb->aio_nbytes) {
->          if (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) {
-> -            len =3D pwrite(aiocb->aio_fildes,
-> -                         (const char *)buf + offset,
-> -                         aiocb->aio_nbytes - offset,
-> -                         aiocb->aio_offset + offset);
-> +            if (aiocb->flags & BDRV_REQ_FUA) {
-> +                struct iovec iov =3D {
-> +                    .iov_base =3D buf + offset,
-> +                    .iov_len =3D aiocb->aio_nbytes - offset,
-> +                };
-> +                len =3D qemu_pwritev_fua(aiocb->aio_fildes,
-> +                                    &iov,
-> +                                    1,
-> +                                    aiocb->aio_offset + offset,
-> +                                    aiocb);
-> +                if (len =3D=3D -ENOSYS) {
-> +                    len =3D pwrite(aiocb->aio_fildes,
-> +                                (const char *)buf + offset,
-> +                                aiocb->aio_nbytes - offset,
-> +                                aiocb->aio_offset + offset);
-> +                    if (len =3D=3D 0) {
-> +                        len =3D handle_aiocb_flush(aiocb);
-> +                    }
-> +                }
-> +            } else {
-> +                len =3D pwrite(aiocb->aio_fildes,
-> +                            (const char *)buf + offset,
-> +                            aiocb->aio_nbytes - offset,
-> +                            aiocb->aio_offset + offset);
-> +            }
->          } else {
->              len =3D pread(aiocb->aio_fildes,
->                          buf + offset,
-> @@ -2539,14 +2586,11 @@ static int coroutine_fn raw_co_prw(BlockDriverSta=
-te *bs, int64_t *offset_ptr,
->              .iov            =3D qiov->iov,
->              .niov           =3D qiov->niov,
->          },
-> +        .flags          =3D flags,
->      };
-> =20
->      assert(qiov->size =3D=3D bytes);
->      ret =3D raw_thread_pool_submit(handle_aiocb_rw, &acb);
-> -    if (ret =3D=3D 0 && (flags & BDRV_REQ_FUA)) {
-> -        /* TODO Use pwritev2() instead if it's available */
-> -        ret =3D raw_co_flush_to_disk(bs);
-> -    }
->      goto out; /* Avoid the compiler err of unused label */
-> =20
->  out:
-> --=20
-> 2.43.0
->=20
-
---DgF6PKx1Og2FEuy8
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfz2UcACgkQnKSrs4Gr
-c8jyCQf/Woz+WEbUwRul1UTOK/Q8S9eCdtppwVdWvwneMWpONj2ClocprCDtDQ67
-YUu1PjvtX3qw7ZTbv97iENwaTg2RDWpnlTogqArcuIEFpO5BXbZPvXlfMJNIbOJ4
-1hUbU0tgZQOyFKilThYIiB4EV1J1HXy41PUMXkmjDyxbKsaRXBzYNqXwF4A0PkS4
-aQzYiLO2LmXLFCYv3E9k4IkF2YnpLLgEvmrmzDa/zeYETNOCFnmvUxWXBYZPG1sn
-RqZT+973dbpyTcHCmxhTUu1IjCsh5Eva1QfvWj2Yz/qQ0qPVJsBzt4Ctu4BIjTZZ
-XSY0SDE738dCRGanXMwtSTlESZx6/Q==
-=I12z
------END PGP SIGNATURE-----
-
---DgF6PKx1Og2FEuy8--
+>   #ifdef CONFIG_TCG
+>   static void rv128_base_cpu_init(Object *obj)
+>   {
+> @@ -3261,6 +3331,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>       DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
+>       DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
+>                                                    MXL_RV64, rv64_xiangshan_nanhu_cpu_init),
+> +    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_KMH,
+> +                                                 MXL_RV64,  rv64_xiangshan_kmh_cpu_init),
+>   #ifdef CONFIG_TCG
+>       DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_cpu_init),
+>   #endif /* CONFIG_TCG */
 
 
