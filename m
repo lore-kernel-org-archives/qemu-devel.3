@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2354C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 15:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F6CC3601E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 15:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1oBs-00038k-Q4; Mon, 07 Apr 2025 11:15:13 -0400
+	id 1u1oBs-0003AZ-Ik; Mon, 07 Apr 2025 11:15:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u1nmE-0002J1-EP; Mon, 07 Apr 2025 10:48:43 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u1nmC-0001lR-4X; Mon, 07 Apr 2025 10:48:42 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-736bfa487c3so3591840b3a.1; 
- Mon, 07 Apr 2025 07:48:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744037317; x=1744642117; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xp+Sr4RJiOROIHlK78lOYGm5bAvFScILK0dzc+vFHek=;
- b=Ya0nA9ufViAEp38tO1P4qECsJoHINBKZm0zD4o0NrCLox8AUcv4z/DZUvyjGW8QlDN
- Wic8ngqGwEJ84TNq7Yv0Appzl3t+RA2AIv2XTM6N9d3cnacBquVmLLC+aIxdKsmPO7vC
- FoWvAmJeegrRHI7H7QwRCLgH+6EGdFiJDz2He/gfCSWdQmLMimQbLcE/cXbaZWh+fWOS
- ikTc110VKKkW4joyWbKqR7JVuEtnotqoa9E3LYpMNw2TTrRt3x/nN15fl2aJqOIo+5QG
- x4f9iiGPMkxpPRBRVVDtk4xxVgF/0EDLNjRkXjAGUeTHD3N0faGyi4/toDGOJ/SWNNAe
- 8DNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744037317; x=1744642117;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Xp+Sr4RJiOROIHlK78lOYGm5bAvFScILK0dzc+vFHek=;
- b=Ef6OmwmY4i0xK9tPFsKm9/W58DzvrJbzItScWORsk+VFJYnoMrVDDXc/KpIT9/CWck
- 1IQalIfM7Sbzytv2vYrJaTXYJIfsoIJw/uOjvBUvbPyj1GTRwe4RojC07bIw7vKq538M
- /3ADXOF/dUQ57YsD3PIUjmEBzURYqAogZeFP9w8vFa/Yp6ZxKlH9IHDEXjGlPapQNpdV
- 7jfSSBMCIFGeX2XpaWGSSf/K1x6O7ezRcvvVWSLRiVf6KtWtTzf9L7oVTSaS4xYhuSA3
- yopd9h7SnEgvBwa7p/efB5GNK0AqL4yWGiHQ+qmHo3PSc5MnjtmKsWOwPhC+1Uu0Ytw+
- yM5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUR11lHQTtCWZf0ETBCGgvzernxdsaIjUBwZc2ZRwD+bYg9oB0qi1Y5twOhAJ6iqPpIhwfJ//TENg==@nongnu.org,
- AJvYcCW+bxGXh5uykd484EWzu5+P40vxAYwgG1wSI4toSln6/6RPhUV6XrFPBvYktgQi0yk4oWjoLRTu6a959g==@nongnu.org,
- AJvYcCXubJuDrQsb5ysnqx/A+LNANLa2zUvHFBKmCudmdanQdA+i89cqIDaAK9CjcmR4KNPLPf/VmhUnKXyzvg==@nongnu.org
-X-Gm-Message-State: AOJu0Yx1X979ZAIS8N2Z0jt7tAbExKAwgx9WH82dFoiWexEc4Jdo0VVe
- Ky3tG8TJ1at0X/TtPiJySjXqrNivvvsEY9JbneYidyxQEGIb5gzobv4BRxVY
-X-Gm-Gg: ASbGnctnsEKCzt9j8JJ6tJe0zJkVpxxbsp25PJz8imGxraqDMErhWLeREjsx5Mit2iw
- 3zNJh2Lg3sWTsWI3d2Vkde/T7yZy3EEilEVl4pGZZgBzKJzG7ewMmL6N33TTUqxRgiveFDX/L6i
- VSNi7cRSMFrdrKAReQVja2eJ2Zh5NKCWvuNrRk5WUAbdmUhDL3hO5F+5IfAG+RKpRQpYnmXWiYo
- W0Q/TdHkMkvu1g6I31CU1PjQ1L0VGWuf0iZThntxGAqUkfXp4M7qWQNhKSJ9kjGZUz4dxXz/EIB
- iWWyF5PuWN9fxQ2fwutSohieYt5AyKVWTGacnUGcal8puQWYa8LJ9BKyG+hUMw==
-X-Google-Smtp-Source: AGHT+IHuyyEeZ5PBMHbUyNVYg/55vQ7sPwGRsIy0+EN6C0rI5nS+BO4x/g+mqEDi7yXUA9N7VZAaeA==
-X-Received: by 2002:a05:6a20:d50b:b0:1f5:79c4:5da2 with SMTP id
- adf61e73a8af0-201047368bbmr23154645637.31.1744037316969; 
- Mon, 07 Apr 2025 07:48:36 -0700 (PDT)
-Received: from localhost.localdomain ([240d:1a:3b6:8b00:8768:486:6a8e:e855])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97ef3c2sm8856960b3a.59.2025.04.07.07.48.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 07 Apr 2025 07:48:36 -0700 (PDT)
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH 09/10] gitlab: Enable CI for wasm build
-Date: Mon,  7 Apr 2025 23:46:00 +0900
-Message-Id: <3cf17a9fb1ead58fb8be2d8782c793530cad07e2.1744032780.git.ktokunaga.mail@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <cover.1744032780.git.ktokunaga.mail@gmail.com>
-References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
+ (Exim 4.90_1) (envelope-from <SRS0=CcIW=WZ=kaod.org=clg@ozlabs.org>)
+ id 1u1oBI-0002QL-3y; Mon, 07 Apr 2025 11:14:36 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=CcIW=WZ=kaod.org=clg@ozlabs.org>)
+ id 1u1oBE-0005fz-Jb; Mon, 07 Apr 2025 11:14:35 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZWXmz03fgz4wyk;
+ Tue,  8 Apr 2025 01:14:27 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZWXmv2CV6z4wcn;
+ Tue,  8 Apr 2025 01:14:22 +1000 (AEST)
+Message-ID: <c953bf4b-fbca-40df-859b-54e19f81790c@kaod.org>
+Date: Mon, 7 Apr 2025 17:14:21 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/13] hw/intc/aspeed: Add support for AST2700 TSP INTC
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20250313054020.2583556-1-steven_lee@aspeedtech.com>
+ <20250313054020.2583556-5-steven_lee@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250313054020.2583556-5-steven_lee@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=CcIW=WZ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 07 Apr 2025 11:14:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,236 +112,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GitLab CI job that builds QEMU using emscripten. The build runs in the
-added Dockerfile that contains dependencies (glib, libffi, pixman, zlib)
-compiled by emscripten.
+On 3/13/25 06:40, Steven Lee wrote:
+> - Define new types for ast2700tsp INTC and INTCIO
+> - Add register definitions for TSP INTC and INTCIO
+> - Implement write handlers for TSP INTC and INTCIO
+> - Register new types in aspeed_intc_register_types
+> 
+> The design of the TSP INTC and INTCIO controllers is similar to
+> AST2700, with the following differences:
+> 
+> - AST2700
+>    Support GICINT128 to GICINT136 in INTC
+>    The INTCIO GIC_192_201 has 10 output pins, mapped as follows:
+>      Bit 0 -> GIC 192
+>      Bit 1 -> GIC 193
+>      Bit 2 -> GIC 194
+>      Bit 3 -> GIC 195
+>      Bit 4 -> GIC 196
+> 
+> - AST2700-tsp
+>    Support TSPINT128 to TSPINT136 in INTC
+>    The INTCIO TSPINT_160_169 has 10 output pins, mapped as follows:
+>      Bit 0 -> TSPINT 160
+>      Bit 1 -> TSPINT 161
+>      Bit 2 -> TSPINT 162
+>      Bit 3 -> TSPINT 163
+>      Bit 4 -> TSPINT 164
+> 
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Change-Id: I9e71a8aac400c0cdbd5b78073d0ada79d12a1350
 
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
----
- .gitlab-ci.d/buildtest-template.yml           |  27 ++++
- .gitlab-ci.d/buildtest.yml                    |   9 ++
- .gitlab-ci.d/container-cross.yml              |   5 +
- .../dockerfiles/emsdk-wasm32-cross.docker     | 145 ++++++++++++++++++
- 4 files changed, 186 insertions(+)
- create mode 100644 tests/docker/dockerfiles/emsdk-wasm32-cross.docker
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 39da7698b0..67167d68a5 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -126,3 +126,30 @@
-     - du -chs ${CI_PROJECT_DIR}/*-cache
-   variables:
-     QEMU_JOB_AVOCADO: 1
-+
-+.wasm_build_job_template:
-+  extends: .base_job_template
-+  stage: build
-+  image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-+  before_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start setup "Pre-script setup"
-+    - JOBS=$(expr $(nproc) + 1)
-+    - section_end setup
-+  script:
-+    - du -sh .git
-+    - mkdir build
-+    - cd build
-+    - section_start configure "Running configure"
-+    - emconfigure ../configure --disable-docs
-+          ${TARGETS:+--target-list="$TARGETS"}
-+          $CONFIGURE_ARGS ||
-+      { cat config.log meson-logs/meson-log.txt && exit 1; }
-+    - if test -n "$LD_JOBS";
-+      then
-+        pyvenv/bin/meson configure . -Dbackend_max_links="$LD_JOBS" ;
-+      fi || exit 1;
-+    - section_end configure
-+    - section_start build "Building QEMU"
-+    - emmake make -j"$JOBS"
-+    - section_end build
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 00f4bfcd9f..0f4d15021f 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -801,3 +801,12 @@ coverity:
-       when: never
-     # Always manual on forks even if $QEMU_CI == "2"
-     - when: manual
-+
-+build-wasm:
-+  extends: .wasm_build_job_template
-+  timeout: 2h
-+  needs:
-+    job: wasm-emsdk-cross-container
-+  variables:
-+    IMAGE: emsdk-wasm32-cross
-+    CONFIGURE_ARGS: --static --disable-tools --enable-debug
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 34c0e729ad..3ea4971950 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -94,3 +94,8 @@ win64-fedora-cross-container:
-   extends: .container_job_template
-   variables:
-     NAME: fedora-win64-cross
-+
-+wasm-emsdk-cross-container:
-+  extends: .container_job_template
-+  variables:
-+    NAME: emsdk-wasm32-cross
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-new file mode 100644
-index 0000000000..60a7d02f56
---- /dev/null
-+++ b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-@@ -0,0 +1,145 @@
-+# syntax = docker/dockerfile:1.5
-+
-+ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG ZLIB_VERSION=1.3.1
-+ARG GLIB_MINOR_VERSION=2.84
-+ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
-+ARG PIXMAN_VERSION=0.44.2
-+ARG FFI_VERSION=v3.4.7
-+ARG MESON_VERSION=1.5.0
-+
-+FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+ARG MESON_VERSION
-+ENV TARGET=/builddeps/target
-+ENV CPATH="$TARGET/include"
-+ENV PKG_CONFIG_PATH="$TARGET/lib/pkgconfig"
-+ENV EM_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-+ENV CFLAGS="-O3 -pthread -DWASM_BIGINT"
-+ENV CXXFLAGS="$CFLAGS"
-+ENV LDFLAGS="-sWASM_BIGINT -sASYNCIFY=1 -L$TARGET/lib"
-+RUN apt-get update && apt-get install -y \
-+    autoconf \
-+    build-essential \
-+    libglib2.0-dev \
-+    libtool \
-+    pkgconf \
-+    ninja-build \
-+    python3-pip
-+RUN pip3 install meson==${MESON_VERSION} tomli
-+RUN mkdir /build
-+WORKDIR /build
-+RUN mkdir -p $TARGET
-+RUN <<EOF
-+cat <<EOT > /cross.meson
-+[host_machine]
-+system = 'emscripten'
-+cpu_family = 'wasm32'
-+cpu = 'wasm32'
-+endian = 'little'
-+
-+[binaries]
-+c = 'emcc'
-+cpp = 'em++'
-+ar = 'emar'
-+ranlib = 'emranlib'
-+pkgconfig = ['pkg-config', '--static']
-+EOT
-+EOF
-+
-+FROM build-base AS zlib-dev
-+ARG ZLIB_VERSION
-+RUN mkdir -p /zlib
-+RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz | \
-+    tar xJC /zlib --strip-components=1
-+WORKDIR /zlib
-+RUN emconfigure ./configure --prefix=$TARGET --static
-+RUN emmake make install -j$(nproc)
-+
-+FROM build-base AS libffi-dev
-+ARG FFI_VERSION
-+RUN mkdir -p /libffi
-+RUN git clone https://github.com/libffi/libffi /libffi
-+WORKDIR /libffi
-+RUN git checkout $FFI_VERSION
-+RUN autoreconf -fiv
-+RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+    --prefix=$TARGET --enable-static \
-+    --disable-shared --disable-dependency-tracking \
-+    --disable-builddir --disable-multi-os-directory \
-+    --disable-raw-api --disable-docs
-+RUN emmake make install SUBDIRS='include' -j$(nproc)
-+
-+FROM build-base AS pixman-dev
-+ARG PIXMAN_VERSION
-+RUN mkdir /pixman/
-+RUN git clone  https://gitlab.freedesktop.org/pixman/pixman /pixman/
-+WORKDIR /pixman
-+RUN git checkout pixman-$PIXMAN_VERSION
-+RUN <<EOF
-+cat <<EOT >> /cross.meson
-+[built-in options]
-+c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+EOT
-+EOF
-+RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
-+    --default-library=static \
-+    --buildtype=release -Dtests=disabled -Ddemos=disabled
-+RUN meson install -C _build
-+
-+FROM build-base AS glib-dev
-+ARG GLIB_VERSION
-+ARG GLIB_MINOR_VERSION
-+RUN mkdir -p /stub
-+WORKDIR /stub
-+RUN <<EOF
-+cat <<'EOT' > res_query.c
-+#include <netdb.h>
-+int res_query(const char *name, int class,
-+              int type, unsigned char *dest, int len)
-+{
-+    h_errno = HOST_NOT_FOUND;
-+    return -1;
-+}
-+EOT
-+EOF
-+RUN emcc ${CFLAGS} -c res_query.c -fPIC -o libresolv.o
-+RUN ar rcs libresolv.a libresolv.o
-+RUN mkdir -p $TARGET/lib/
-+RUN cp libresolv.a $TARGET/lib/
-+
-+RUN mkdir -p /glib
-+RUN curl -Lks https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz | \
-+    tar xJC /glib --strip-components=1
-+
-+COPY --link --from=zlib-dev /builddeps/ /builddeps/
-+COPY --link --from=libffi-dev /builddeps/ /builddeps/
-+
-+WORKDIR /glib
-+RUN <<EOF
-+CFLAGS="$CFLAGS -Wno-incompatible-function-pointer-types" ;
-+cat <<EOT >> /cross.meson
-+[built-in options]
-+c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+EOT
-+EOF
-+RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
-+    --default-library=static --buildtype=release --force-fallback-for=pcre2 \
-+    -Dselinux=disabled -Dxattr=false -Dlibmount=disabled -Dnls=disabled \
-+    -Dtests=false -Dglib_debug=disabled -Dglib_assert=false -Dglib_checks=false
-+# FIXME: emscripten doesn't provide some pthread functions in the final link,
-+#        which isn't detected during meson setup.
-+RUN sed -i -E "/#define HAVE_POSIX_SPAWN 1/d" ./_build/config.h
-+RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" ./_build/config.h
-+RUN meson install -C _build
-+
-+FROM build-base
-+COPY --link --from=glib-dev /builddeps/ /builddeps/
-+COPY --link --from=pixman-dev /builddeps/ /builddeps/
--- 
-2.25.1
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   include/hw/intc/aspeed_intc.h |   2 +
+>   hw/intc/aspeed_intc.c         | 213 ++++++++++++++++++++++++++++++++++
+>   2 files changed, 215 insertions(+)
+> 
+> diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+> index 746f159bf3..51288384a5 100644
+> --- a/include/hw/intc/aspeed_intc.h
+> +++ b/include/hw/intc/aspeed_intc.h
+> @@ -17,6 +17,8 @@
+>   #define TYPE_ASPEED_2700_INTCIO TYPE_ASPEED_INTC "io-ast2700"
+>   #define TYPE_ASPEED_2700SSP_INTC TYPE_ASPEED_INTC "-ast2700ssp"
+>   #define TYPE_ASPEED_2700SSP_INTCIO TYPE_ASPEED_INTC "io-ast2700ssp"
+> +#define TYPE_ASPEED_2700TSP_INTC TYPE_ASPEED_INTC "-ast2700tsp"
+> +#define TYPE_ASPEED_2700TSP_INTCIO TYPE_ASPEED_INTC "io-ast2700tsp"
+>   
+>   OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+>   
+> diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+> index 1f8b4d4d36..9e3bee993f 100644
+> --- a/hw/intc/aspeed_intc.c
+> +++ b/hw/intc/aspeed_intc.c
+> @@ -106,6 +106,51 @@ REG32(SSPINT164_STATUS,     0x1C4)
+>   REG32(SSPINT165_EN,         0x1D0)
+>   REG32(SSPINT165_STATUS,     0x1D4)
+>   
+> +/*
+> + * TSP INTC Registers
+> + */
+> +REG32(TSPINT128_EN,             0x3000)
+> +REG32(TSPINT128_STATUS,         0x3004)
+> +REG32(TSPINT129_EN,             0x3100)
+> +REG32(TSPINT129_STATUS,         0x3104)
+> +REG32(TSPINT130_EN,             0x3200)
+> +REG32(TSPINT130_STATUS,         0x3204)
+> +REG32(TSPINT131_EN,             0x3300)
+> +REG32(TSPINT131_STATUS,         0x3304)
+> +REG32(TSPINT132_EN,             0x3400)
+> +REG32(TSPINT132_STATUS,         0x3404)
+> +REG32(TSPINT133_EN,             0x3500)
+> +REG32(TSPINT133_STATUS,         0x3504)
+> +REG32(TSPINT134_EN,             0x3600)
+> +REG32(TSPINT134_STATUS,         0x3604)
+> +REG32(TSPINT135_EN,             0x3700)
+> +REG32(TSPINT135_STATUS,         0x3704)
+> +REG32(TSPINT136_EN,             0x3800)
+> +REG32(TSPINT136_STATUS,         0x3804)
+> +REG32(TSPINT137_EN,             0x3900)
+> +REG32(TSPINT137_STATUS,         0x3904)
+> +REG32(TSPINT138_EN,             0x3A00)
+> +REG32(TSPINT138_STATUS,         0x3A04)
+> +REG32(TSPINT160_169_EN,         0x3B00)
+> +REG32(TSPINT160_169_STATUS,     0x3B04)
+> +
+> +/*
+> + * TSP INTCIO Registers
+> + */
+> +
+> +REG32(TSPINT160_EN,         0x200)
+> +REG32(TSPINT160_STATUS,     0x204)
+> +REG32(TSPINT161_EN,         0x210)
+> +REG32(TSPINT161_STATUS,     0x214)
+> +REG32(TSPINT162_EN,         0x220)
+> +REG32(TSPINT162_STATUS,     0x224)
+> +REG32(TSPINT163_EN,         0x230)
+> +REG32(TSPINT163_STATUS,     0x234)
+> +REG32(TSPINT164_EN,         0x240)
+> +REG32(TSPINT164_STATUS,     0x244)
+> +REG32(TSPINT165_EN,         0x250)
+> +REG32(TSPINT165_STATUS,     0x254)
+> +
+>   static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
+>                                                   uint32_t reg)
+>   {
+> @@ -540,6 +585,50 @@ static void aspeed_ssp_intc_write(void *opaque, hwaddr offset, uint64_t data,
+>       return;
+>   }
+>   
+> +static void aspeed_tsp_intc_write(void *opaque, hwaddr offset, uint64_t data,
+> +                                        unsigned size)
+> +{
+> +    AspeedINTCState *s = ASPEED_INTC(opaque);
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    uint32_t reg = offset >> 2;
+> +
+> +    trace_aspeed_intc_write(name, offset, size, data);
+> +
+> +    switch (reg) {
+> +    case R_TSPINT128_EN:
+> +    case R_TSPINT129_EN:
+> +    case R_TSPINT130_EN:
+> +    case R_TSPINT131_EN:
+> +    case R_TSPINT132_EN:
+> +    case R_TSPINT133_EN:
+> +    case R_TSPINT134_EN:
+> +    case R_TSPINT135_EN:
+> +    case R_TSPINT136_EN:
+> +    case R_TSPINT160_169_EN:
+> +        aspeed_intc_enable_handler(s, offset, data);
+> +        break;
+> +    case R_TSPINT128_STATUS:
+> +    case R_TSPINT129_STATUS:
+> +    case R_TSPINT130_STATUS:
+> +    case R_TSPINT131_STATUS:
+> +    case R_TSPINT132_STATUS:
+> +    case R_TSPINT133_STATUS:
+> +    case R_TSPINT134_STATUS:
+> +    case R_TSPINT135_STATUS:
+> +    case R_TSPINT136_STATUS:
+> +        aspeed_intc_status_handler(s, offset, data);
+> +        break;
+> +    case R_TSPINT160_169_STATUS:
+> +        aspeed_intc_status_handler_multi_outpins(s, offset, data);
+> +        break;
+> +    default:
+> +        s->regs[reg] = data;
+> +        break;
+> +    }
+> +
+> +    return;
+> +}
+> +
+>   static uint64_t aspeed_intcio_read(void *opaque, hwaddr offset,
+>                                      unsigned int size)
+>   {
+> @@ -622,6 +711,40 @@ static void aspeed_ssp_intcio_write(void *opaque, hwaddr offset, uint64_t data,
+>       return;
+>   }
+>   
+> +static void aspeed_tsp_intcio_write(void *opaque, hwaddr offset, uint64_t data,
+> +                                unsigned size)
+> +{
+> +    AspeedINTCState *s = ASPEED_INTC(opaque);
+> +    const char *name = object_get_typename(OBJECT(s));
+> +    uint32_t reg = offset >> 2;
+> +
+> +    trace_aspeed_intc_write(name, offset, size, data);
+> +
+> +    switch (reg) {
+> +    case R_TSPINT160_EN:
+> +    case R_TSPINT161_EN:
+> +    case R_TSPINT162_EN:
+> +    case R_TSPINT163_EN:
+> +    case R_TSPINT164_EN:
+> +    case R_TSPINT165_EN:
+> +        aspeed_intc_enable_handler(s, offset, data);
+> +        break;
+> +    case R_TSPINT160_STATUS:
+> +    case R_TSPINT161_STATUS:
+> +    case R_TSPINT162_STATUS:
+> +    case R_TSPINT163_STATUS:
+> +    case R_TSPINT164_STATUS:
+> +    case R_TSPINT165_STATUS:
+> +        aspeed_intc_status_handler(s, offset, data);
+> +        break;
+> +    default:
+> +        s->regs[reg] = data;
+> +        break;
+> +    }
+> +
+> +    return;
+> +}
+> +
+>   static const MemoryRegionOps aspeed_intc_ops = {
+>       .read = aspeed_intc_read,
+>       .write = aspeed_intc_write,
+> @@ -662,6 +785,26 @@ static const MemoryRegionOps aspeed_ssp_intcio_ops = {
+>       }
+>   };
+>   
+> +static const MemoryRegionOps aspeed_tsp_intc_ops = {
+> +    .read = aspeed_intc_read,
+> +    .write = aspeed_tsp_intc_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    }
+> +};
+> +
+> +static const MemoryRegionOps aspeed_tsp_intcio_ops = {
+> +    .read = aspeed_intcio_read,
+> +    .write = aspeed_tsp_intcio_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 4,
+> +    }
+> +};
+> +
+>   static void aspeed_intc_instance_init(Object *obj)
+>   {
+>       AspeedINTCState *s = ASPEED_INTC(obj);
+> @@ -887,6 +1030,74 @@ static const TypeInfo aspeed_2700ssp_intcio_info = {
+>       .class_init = aspeed_2700ssp_intcio_class_init,
+>   };
+>   
+> +static AspeedINTCIRQ aspeed_2700tsp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
+> +    {0, 0, 10, R_TSPINT160_169_EN, R_TSPINT160_169_STATUS},
+> +    {1, 10, 1, R_TSPINT128_EN, R_TSPINT128_STATUS},
+> +    {2, 11, 1, R_TSPINT129_EN, R_TSPINT129_STATUS},
+> +    {3, 12, 1, R_TSPINT130_EN, R_TSPINT130_STATUS},
+> +    {4, 13, 1, R_TSPINT131_EN, R_TSPINT131_STATUS},
+> +    {5, 14, 1, R_TSPINT132_EN, R_TSPINT132_STATUS},
+> +    {6, 15, 1, R_TSPINT133_EN, R_TSPINT133_STATUS},
+> +    {7, 16, 1, R_TSPINT134_EN, R_TSPINT134_STATUS},
+> +    {8, 17, 1, R_TSPINT135_EN, R_TSPINT135_STATUS},
+> +    {9, 18, 1, R_TSPINT136_EN, R_TSPINT136_STATUS},
+> +};
+> +
+> +static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+> +
+> +    dc->desc = "ASPEED 2700 TSP INTC Controller";
+> +    aic->num_lines = 32;
+> +    aic->num_inpins = 10;
+> +    aic->num_outpins = 19;
+> +    aic->mem_size = 0x4000;
+> +    aic->nr_regs = 0x3B08 >> 2;
+> +    aic->reg_offset = 0;
+> +    aic->reg_ops = &aspeed_tsp_intc_ops;
+> +    aic->irq_table = aspeed_2700tsp_intc_irqs;
+> +    aic->irq_table_count = ARRAY_SIZE(aspeed_2700tsp_intc_irqs);
+> +}
+> +
+> +static const TypeInfo aspeed_2700tsp_intc_info = {
+> +    .name = TYPE_ASPEED_2700TSP_INTC,
+> +    .parent = TYPE_ASPEED_INTC,
+> +    .class_init = aspeed_2700tsp_intc_class_init,
+> +};
+> +
+> +static AspeedINTCIRQ aspeed_2700tsp_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
+> +    {0, 0, 1, R_TSPINT160_EN, R_TSPINT160_STATUS},
+> +    {1, 1, 1, R_TSPINT161_EN, R_TSPINT161_STATUS},
+> +    {2, 2, 1, R_TSPINT162_EN, R_TSPINT162_STATUS},
+> +    {3, 3, 1, R_TSPINT163_EN, R_TSPINT163_STATUS},
+> +    {4, 4, 1, R_TSPINT164_EN, R_TSPINT164_STATUS},
+> +    {5, 5, 1, R_TSPINT165_EN, R_TSPINT165_STATUS},
+> +};
+> +
+> +static void aspeed_2700tsp_intcio_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
+> +
+> +    dc->desc = "ASPEED 2700 TSP INTC IO Controller";
+> +    aic->num_lines = 32;
+> +    aic->num_inpins = 6;
+> +    aic->num_outpins = 6;
+> +    aic->mem_size = 0x400;
+> +    aic->nr_regs = 0x258 >> 2;
+> +    aic->reg_offset = 0x0;
+> +    aic->reg_ops = &aspeed_tsp_intcio_ops;
+> +    aic->irq_table = aspeed_2700tsp_intcio_irqs;
+> +    aic->irq_table_count = ARRAY_SIZE(aspeed_2700tsp_intcio_irqs);
+> +}
+> +
+> +static const TypeInfo aspeed_2700tsp_intcio_info = {
+> +    .name = TYPE_ASPEED_2700TSP_INTCIO,
+> +    .parent = TYPE_ASPEED_INTC,
+> +    .class_init = aspeed_2700tsp_intcio_class_init,
+> +};
+> +
+>   static void aspeed_intc_register_types(void)
+>   {
+>       type_register_static(&aspeed_intc_info);
+> @@ -894,6 +1105,8 @@ static void aspeed_intc_register_types(void)
+>       type_register_static(&aspeed_2700_intcio_info);
+>       type_register_static(&aspeed_2700ssp_intc_info);
+>       type_register_static(&aspeed_2700ssp_intcio_info);
+> +    type_register_static(&aspeed_2700tsp_intc_info);
+> +    type_register_static(&aspeed_2700tsp_intcio_info);
+>   }
+>   
+>   type_init(aspeed_intc_register_types);
 
 
