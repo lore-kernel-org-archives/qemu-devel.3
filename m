@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA389C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 17:25:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1028C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 17:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1qD9-0002Zn-Ai; Mon, 07 Apr 2025 13:24:39 -0400
+	id 1u1qES-0003DJ-6f; Mon, 07 Apr 2025 13:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1u1qCy-0002WQ-Bd
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 13:24:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1u1qCv-0004Mg-NR
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 13:24:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744046663;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Hpt+5E4PJftiC5mEAoUqrbVomglX561zjCw5YqHHtAM=;
- b=AnR3lprisjJSY47yz8dOxOxKpJsmn+mn7dR+lcet8odVsEf3KYwEnop1h7eeMqCYXcG6Cn
- FmpSzbu6p2C02xKSW/L6UE8UjNdDgH+o62hVeSz9l1woK3dOiwc+5RCrlZ8onamYoAUeEn
- v3gV1cldavWqTi69Hqm8TP4xuIicR6E=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-Ocol8YojOFmuCAOKV4I5Fg-1; Mon, 07 Apr 2025 13:24:20 -0400
-X-MC-Unique: Ocol8YojOFmuCAOKV4I5Fg-1
-X-Mimecast-MFC-AGG-ID: Ocol8YojOFmuCAOKV4I5Fg_1744046660
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d0830c3f7so39012825e9.2
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 10:24:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744046659; x=1744651459;
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u1qEG-0003BO-Q2
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 13:25:52 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u1qED-0005IY-Ln
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 13:25:47 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2260c91576aso38555805ad.3
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 10:25:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744046744; x=1744651544; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Hpt+5E4PJftiC5mEAoUqrbVomglX561zjCw5YqHHtAM=;
- b=ZF6XJGf+ZDGAmm2La+in8W4VrC9xZCBp6R8J7c0+XTKxFDYPTWRcSKZcky48eJAsK6
- huAEUqXMGemLv6SCDnIygGfv98Y/TNMDPAPOA5MgBX+FVhxjWIH4gQywn+4JrTIo83jF
- Ib9afNTMTePpEjLKJy5D5EwSIRTYptG+l95AnFCh+diLehIAJw8JWzMpKZFNBz8S+RI4
- 71A44NdCqUQ1vDUz9uO1pQVNv4Hd8qMxrfAwv1LsC4OCqMZLwZQtJUXlmTZd8RzetBeG
- 4t55wgYQMNiq3mIK5k2RgWW5x5GRydfdyL8/uyZKy+sgGLkiy5Wx9YBV1mgUC+JQ4bCe
- zW5A==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rAJIt3z4/vpXRXn3CV1xXt7Ba1T9dESBWjnn2VOkbdg=;
+ b=KBsjNgKYJ7teksINKC0hsfSP2VnymD98pAG8LdzOCVGJLlPLuD7UZAzU+P0xDJiStV
+ 9O4GX4hpJh4xSSsih2v3TBeKR1+U/gQ9BTRuXYH4/8wc2c5ezJyKRx9CX0vL41nEZiN1
+ MI8rTulNSIJCRd0m4M7rFgw4e/nk/ri6eKOEK+zSmKbw5B1DJpCFNMG+o9KaMu8/O+Jx
+ peXs+V+MXe4qS2XYcJ2sRSlHT4alSkfz3FkqLPtrXJoPcMAe84UsuXTTeTWcCS7oKuPR
+ Ud3VC0ihFrb6J926Fo7EE6jP9dCsyKrZ+FvCip6Ln0K0EfFcfPLH9BXqrS9k3fqXjxBp
+ gxfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744046744; x=1744651544;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rAJIt3z4/vpXRXn3CV1xXt7Ba1T9dESBWjnn2VOkbdg=;
+ b=fPyyQxrDXVfbc6+DIEolvIbtjxOcOInTvQVG1LRhCf5qmTv8V1aVx9z/DeqEXclUa1
+ JBZ7Axr9XUx5SMeNXwLP2nOpWb7ELtYvNPWMMnqgW7PFahz2t0gq5eR9EIqitWgxtMK1
+ BmIiAspu+cXj70na4LOtbzzsdGR0ouzhLnHNIOSsUTM65rE44BPh5W/67fozmOTdyL5G
+ yhKm06By0b3EooFCfP9Jap0DNpkV7wW+qrhxSCBuf/eiwv1TCHaNmwHYUDPuFZ/gaCLd
+ EJK64uVN/r9FvHUGaB+fDdSAmbcI/kjIxOc7bWa0nW/MqaiaYHGjtj01mKGK3LF0QCrQ
+ msAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSJp+IGkO8YqkC2vq/bRKyBjKvxfLoRjNcX3pipB9r2NBOiyIgSHG4GV9HB05vhB66KUIGeCYsPZ6y@nongnu.org
-X-Gm-Message-State: AOJu0YyYy5Jud+lKhrrA2cwebCWUMz8tJHOmOdAddkjikv7rcZ9wPUBv
- 7N2tewpJ5/WzGxYhqngM1bWGlr6f/gQcCWysbxyJt2f3qindDcVxhHCLxUHAzZAmRKFYipb+/dc
- 2WM7s22dsKFw8cHkL3tLn6n8mft1FrMpCiAYBVECL3saMIKs1uGDB
-X-Gm-Gg: ASbGncuJ2/wzDKnSoeUltiFFn7od7zG8JrT2bJsRAeoKdRlNDl+xXtc+m6JfiFvWifJ
- kuJXDdIG3SsAZfYOZuLGGIVDsvp/p2/OMQYM31VV3lBKuBNn0ioavGO4RgdizEgibKxq0Hls6Gz
- YGPyFknqX1RyL9m3TVrK6jSICySi7MDBT8ECFiNsvfgiO64lHk/kkR0/nDp3vmH0vSSSYkAmr4l
- fguUKAz9FGkcqI7Z3vqc0H7QBRCJgnrOp2IoSn0d9yLBHAI7+XNZ1xm4BItvS7FoRgkw4S1OMGo
- 5L340hcvPFBzfKrKamJlRgobhn8vH39oFVTTQryeea3YdiIM+FSVhqQXWQLbASE=
-X-Received: by 2002:a05:600c:1e8f:b0:43c:f63c:babb with SMTP id
- 5b1f17b1804b1-43ed0b837c4mr114459735e9.1.1744046659421; 
- Mon, 07 Apr 2025 10:24:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWIvPiOCMDG1oNFq5StopaPxIs56gCvyv/yS4tc0+QBqSWiZSXKwFi89zGwOChAHSPqfKi0g==
-X-Received: by 2002:a05:600c:1e8f:b0:43c:f63c:babb with SMTP id
- 5b1f17b1804b1-43ed0b837c4mr114459485e9.1.1744046659009; 
- Mon, 07 Apr 2025 10:24:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AJvYcCXGRZ+z2TmO9xrO+Zggq8raBovlR3jkKxo/9jTSTE3jKUk6RvDwsR0h+chfBvU0zJX4TyeP2D+Jt8NT@nongnu.org
+X-Gm-Message-State: AOJu0Yxlw3pdNGPc9QeMbhYCmiMv1Ax0wKa5sBWOjOY7iK7FekfMQsbU
+ bWRHp0ivk97c3yYDwUSWPwDL1xwXOaZRQ1XSbNttCK4F2sJaZge2fkuXIOOJSD/Ubvbrx/E2N3B
+ p
+X-Gm-Gg: ASbGncuf0tN/3nw5UV7Eyiez0GuBbHSvHBDUsoewnKsI5POtbQAgXobV0lti5Hdduxf
+ Ll/mtJrWf8N3T1eKwcb2GT2xehwrLJbcLWpHvc4ywRCtsNwKI5oOSy0LK49GFllJuMm9E8LSnuO
+ oEgptLCJfYsi3PKGVH9Yu3sDuDchzwJyMRd9VRHjVVklY9IaVomhJQTS/MJfBWeqIN8hIzrLzWV
+ tu+IT/9Goym7E+w7IQ6zTx6gSs50oY5k8OVNnOrATsHN3hnJCI3adfCGdlwVPlflGKuj8XtG977
+ lWeHlIoa4s7h5oRpxzQ6O8L3WDk9bYsv6IvY+v/Y63pq1mgylif+NmTpnJ+04QEcwT4K
+X-Google-Smtp-Source: AGHT+IHRimBW+cCn44i8U990B9b9tpXGZ45gfPBgAZYIFyiY8pFCo3vt5SXhilUsvKc+tkxzkWAvew==
+X-Received: by 2002:a17:903:2f8c:b0:224:1780:c1ec with SMTP id
+ d9443c01a7336-22a8a1bb283mr199010535ad.35.1744046743789; 
+ Mon, 07 Apr 2025 10:25:43 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a727bsm12582362f8f.27.2025.04.07.10.24.17
+ d2e1a72fcca58-739d9ea0791sm8742662b3a.110.2025.04.07.10.25.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Apr 2025 10:24:18 -0700 (PDT)
-Message-ID: <7cad3f1f-1977-4d98-900c-080aa5ad32d5@redhat.com>
-Date: Mon, 7 Apr 2025 19:24:16 +0200
+ Mon, 07 Apr 2025 10:25:43 -0700 (PDT)
+Message-ID: <c048d251-6fc7-4807-b95a-9fd16f3c0050@linaro.org>
+Date: Mon, 7 Apr 2025 10:25:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/6] Specifying cache topology on ARM
+Subject: Re: [RFC PATCH-for-10.1 20/39] target/arm: Extract PSCI definitions
+ to 'psci.h'
 Content-Language: en-US
-To: Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Cc: mst@redhat.com, zhao1.liu@intel.com, dapeng1.mi@linux.intel.com,
- armbru@redhat.com, farman@linux.ibm.com, peter.maydell@linaro.org,
- anisinha@redhat.com, shannon.zhaosl@gmail.com, imammedo@redhat.com,
- mtosatti@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- shameerali.kolothum.thodi@huawei.com, jonathan.cameron@huawei.com,
- jiangkunkun@huawei.com, yangyicong@hisilicon.com, linuxarm@huawei.com
-References: <20250310162337.844-1-alireza.sanaee@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250310162337.844-1-alireza.sanaee@huawei.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250403235821.9909-1-philmd@linaro.org>
+ <20250403235821.9909-21-philmd@linaro.org>
+ <09bd795d-e62d-44fb-b80a-374efee32034@linaro.org>
+ <49ff72e2-24ac-41a8-8aee-f923d9b48cee@linaro.org>
+ <04e14ec2-dbfc-4c92-b061-dd7108cd66f2@linaro.org>
+ <cdd3bafb-fd69-463f-856b-ad1c95ee6978@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <cdd3bafb-fd69-463f-856b-ad1c95ee6978@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,155 +108,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ali,
-
-On 3/10/25 5:23 PM, Alireza Sanaee via wrote:
-> Specifying the cache layout in virtual machines is useful for
-> applications and operating systems to fetch accurate information about
-> the cache structure and make appropriate adjustments. Enforcing correct
-> sharing information can lead to better optimizations. This patch enables
-> the specification of cache layout through a command line parameter,
-> building on a patch set by Intel [1,2,3]. It uses this set as a
-some dependencies were merged. The series does not apply anymore.
-> foundation.  The device tree and ACPI/PPTT table, and device tree are
-> populated based on user-provided information and CPU topology.
-this last sentence need some rewording.
->
-> Example:
->
->
-> +----------------+                            +----------------+
-> |    Socket 0    |                            |    Socket 1    |
-> |    (L3 Cache)  |                            |    (L3 Cache)  |
-> +--------+-------+                            +--------+-------+
->          |                                             |
-> +--------+--------+                            +--------+--------+
-> |   Cluster 0     |                            |   Cluster 0     |
-> |   (L2 Cache)    |                            |   (L2 Cache)    |
-> +--------+--------+                            +--------+--------+
->          |                                             |
-> +--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-> |   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
-> |   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
-> +--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
->          |                   |                       |                   |
-> +--------+              +--------+              +--------+          +--------+
-> |Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
-> +--------+              +--------+              +--------+          +--------+
-> |Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
-> +--------+              +--------+              +--------+          +--------+
->
->
-> The following command will represent the system relying on **ACPI PPTT tables**.
->
-> ./qemu-system-aarch64 \
->  -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-
-s/cluseter/cluster
-> cache.3.cache=l3,smp-cache.3.topology=socket \
->  -cpu max \
->  -m 2048 \
->  -smp sockets=2,clusters=1,cores=2,threads=2 \
->  -kernel ./Image.gz \
->  -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
->  -initrd rootfs.cpio.gz \
->  -bios ./edk2-aarch64-code.fd \
->  -nographic
->
-> The following command will represent the system relying on **the device tree**.
->
-> ./qemu-system-aarch64 \
->  -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
->  -cpu max \
->  -m 2048 \
->  -smp sockets=2,clusters=1,cores=2,threads=2 \
->  -kernel ./Image.gz \
->  -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
->  -initrd rootfs.cpio.gz \
->  -nographic
->
-> Failure cases:
->     1) There are scenarios where caches exist in systems' registers but
->     left unspecified by users. In this case qemu returns failure.
-Can you give more details on 1)? is it a TCG case or does it also exist
-with KVM acceleration?
->
->     2) SMT threads cannot share caches which is not very common. More
->     discussions here [4].
->
-> Currently only three levels of caches are supported to be specified from
-> the command line. However, increasing the value does not require
-> significant changes. Further, this patch assumes l2 and l3 unified
-> caches and does not allow l(2/3)(i/d). The level terminology is
-> thread/core/cluster/socket right now. Hierarchy assumed in this patch:
-> Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
->
-> TODO:
->   1) Making the code to work with arbitrary levels
->   2) Separated data and instruction cache at L2 and L3.
->   3) Additional cache controls.  e.g. size of L3 may not want to just
->   match the underlying system, because only some of the associated host
->   CPUs may be bound to this VM.
-Does it mean this is more an RFC or do you plan to send improvement
-patches once this series gets upstream?
-
-Thanks
-
-Eric
->
-> [1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
-> [2] https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/
-> [3] https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-> [4] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
->
-> Change Log:
->   v7->v8:
->    * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
->    * I mis-included a file in patch #4 and I removed it in this one.
->
->   v6->v7:
->    * Intel stuff got pulled up, so rebase.
->    * added some discussions on device tree.
->
->   v5->v6:
->    * Minor bug fix.
->    * rebase based on new Intel patchset.
->      - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
->
->   v4->v5:
->     * Added Reviewed-by tags.
->     * Applied some comments.
->
->   v3->v4:
->     * Device tree added.
->
-> Depends-on: Building PPTT with root node and identical implementation flag
-> Depends-on: Msg-id: 20250306023342.508-1-alireza.sanaee@huawei.com
->
-> Alireza Sanaee (6):
->   target/arm/tcg: increase cache level for cpu=max
->   arm/virt.c: add cache hierarchy to device tree
->   bios-tables-test: prepare to change ARM ACPI virt PPTT
->   hw/acpi/aml-build.c: add cache hierarchy to pptt table
->   tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
->   Update the ACPI tables according to the acpi aml_build change, also
->     empty bios-tables-test-allowed-diff.h.
->
->  hw/acpi/aml-build.c                        | 205 +++++++++++-
->  hw/arm/virt-acpi-build.c                   |   8 +-
->  hw/arm/virt.c                              | 350 +++++++++++++++++++++
->  hw/cpu/core.c                              |  92 ++++++
->  hw/loongarch/virt-acpi-build.c             |   2 +-
->  include/hw/acpi/aml-build.h                |   4 +-
->  include/hw/arm/virt.h                      |   4 +
->  include/hw/cpu/core.h                      |  27 ++
->  target/arm/tcg/cpu64.c                     |  13 +
->  tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
->  tests/qtest/bios-tables-test.c             |   4 +
->  11 files changed, 701 insertions(+), 8 deletions(-)
->
-
+T24gNC81LzI1IDA3OjQzLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4gT24g
+NS80LzI1IDAzOjAzLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gT24gNC80LzI1IDE0
+OjU0LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90ZToNCj4+PiBPbiA0LzQvMjUgMjA6
+MjEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pj4+IE9uIDQvMy8yNSAxNjo1OCwgUGhp
+bGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+Pj4+PiBFeHRyYWN0IFBTQ0kgZGVmaW5p
+dGlvbnMgKHdoaWNoIGFyZSBub3QgdGFyZ2V0IHNwZWNpZmljKQ0KPj4+Pj4gdG8gdGhlIG5l
+dyAidGFyZ2V0L2FybS9wc2NpLmgiLCBzbyBjb2RlIGZyb20gaHcvYXJtLyBjYW4NCj4+Pj4+
+IHVzZSB0aGVtIHdpdGhvdXQgaGF2aW5nIHRvIGluY2x1ZGUgdGhlIHRhcmdldCBzcGVjaWZp
+Yw0KPj4+Pj4gImNwdS5oIiBoZWFkZXIuDQo+Pj4+Pg0KPj4+Pg0KPj4+PiBJbmNsdWRpbmcg
+Y3B1LmggaXMgbm90IGEgcHJvYmxlbSB0byBoYXZlIGNvbW1vbiBjb2RlIChwZXIgYXJjaGl0
+ZWN0dXJlKSwNCj4+Pj4gc28gdGhlcmUgaXMgbm8gbmVlZCB0byBkbyBhbnkgY2hhbmdlIGhl
+cmUuDQo+Pj4NCj4+PiBBZ2FpbiwgdGhpcyBpcyBhbiBvbGQgcGF0Y2ggZnJvbSBteSBoZXRl
+cm9nZW5lb3VzIFBvQyBicmFuY2guDQo+Pj4gSSdsbCByZW1vdmUgZnJvbSB0aGlzIHNlcmll
+cyB0byBub3QgZGlzdHJhY3QgeW91Lg0KPj4+DQo+Pg0KPj4gSXQncyBub3QgZGlzdHJhY3Rp
+bmcsIGJ1dCBzaW1wbHkgbm90IG5lZWRlZC4NCj4gDQo+IE5vdCBuZWVkZWQgZm9yIHNpbmds
+ZS1iaW5hcnksIGJ1dCBuZWVkZWQgZm9yIGhldGVyb2dlbmVvdXMgZW11bGF0aW9uLA0KPiBh
+cyB0aGUgc2FtZSBIVyBtaWdodCB1c2UgZGlzdGluY3QgYXJjaGl0ZWN0dXJlcy4NCj4gDQoN
+CkluIHRoZSBsaXN0IG9mIGZpbGVzIG1vZGlmaWVkIGJ5IHRoZSBjdXJyZW50IGNoYW5nZSwg
+dGhlIG9ubHkgDQpwb3RlbnRpYWxseSBjb25jZXJuZWQgZmlsZSBpcyBody92bWFwcGxlL3Zt
+YXBwbGUuYywgYXMgYWxsIG90aGVycyBhcmUgaW4gDQpody9hcm0gb3IgdGFyZ2V0L2FybSwg
+c28gY3B1LmggaXMgbm90IGFtYmlndW91cywgYW5kIGFscmVhZHkgYWNjZXNzaWJsZS4NCg0K
+QXMgaXQncyBhbiBpbXBsZW1lbnRhdGlvbiBvZiAiQXBwbGUgYWFyY2g2NCBWaXJ0dWFsIE1h
+Y2hpbmUiLCBlaXRoZXI6DQotIHdlIGNhbiBpbmNsdWRlIHRhcmdldC9hcm0vY3B1LmggZXhw
+bGljaXRlbHkgKHNvIFFFTVVfUFNDSV8qIGVudW0gaXMgDQp2aXNpYmxlKS4NCi0gd2UgY2Fu
+IGFkZCBpdCB0byBhcm1fY29tbW9uX3NzLCBzbyBjcHUuaCBiZWNvbWVzIHVuYW1iaWd1b3Vz
+Lg0KLSBUaGUgbW9zdCBjb3JyZWN0OiBpdCBzaG91bGQgYmUgbW92ZWQgdG8gaHcvYXJtL3Zt
+YXBwbGUvIGFuZCBhZGRlZCB0byANCmFybV9jb21tb25fc3MuDQoNCkkgZG9uJ3QgbWluZCB3
+aGljaCBzb2x1dGlvbiB3ZSBwaWNrIHVwIGFtb25nIHRob3NlIHRocmVlIChwZXJzb25hbCAN
+CnByZWZlcmVuY2UgZm9yIHRoZSB0aGlyZCBvbmUpLg0KDQpUaGF0IHNhaWQsIHRoZSBjdXJy
+ZW50IGFwcHJvYWNoIHRvIGV4dHJhY3QgY29kZSBvbmx5IHRvIG1ha2UgaXQgDQphY2Nlc3Np
+YmxlIGZvciBhIHNpbmdsZSBzb3VyY2UgZmlsZSB0aGF0IGlzIG5vdCBjb3JyZWN0bHkgbG9j
+YXRlZCBpbiB0aGUgDQpjb2RlYmFzZSBpcyBub3QgdGhlIHJpZ2h0IG9uZS4NCg0KPj4NCj4+
+Pj4NCj4+Pj4+IFNpZ25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGls
+bWRAbGluYXJvLm9yZz4NCj4+Pj4+IFJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxw
+aWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+Pj4+PiAtLS0NCj4+Pj4+ICDCoMKgIGlu
+Y2x1ZGUvaHcvYXJtL2Jvb3QuaMKgwqDCoMKgwqAgfMKgIDMgKystDQo+Pj4+PiAgwqDCoCB0
+YXJnZXQvYXJtL2NwdS5owqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDYgLS0tLS0tDQo+Pj4+
+PiAgwqDCoCB0YXJnZXQvYXJtL3BzY2kuaMKgwqDCoMKgwqDCoMKgwqDCoCB8IDE4ICsrKysr
+KysrKysrKysrKysrKw0KPj4+Pj4gIMKgwqAgaHcvYXJtL2JhbmFuYXBpX20ydS5jwqDCoMKg
+wqDCoCB8wqAgMSArDQo+Pj4+PiAgwqDCoCBody9hcm0vYm9vdC5jwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgaHcvYXJtL2hpZ2hiYW5rLmPCoMKg
+wqDCoMKgwqDCoMKgwqAgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgaHcvYXJtL2lteDhtcC1ldmsu
+Y8KgwqDCoMKgwqDCoMKgIHzCoCAxICsNCj4+Pj4+ICDCoMKgIGh3L2FybS9tY2lteDZ1bC1l
+dmsuY8KgwqDCoMKgwqAgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgaHcvYXJtL21jaW14N2Qtc2Fi
+cmUuY8KgwqDCoMKgIHzCoCAxICsNCj4+Pj4+ICDCoMKgIGh3L2FybS9vcmFuZ2VwaS5jwqDC
+oMKgwqDCoMKgwqDCoMKgIHzCoCAxICsNCj4+Pj4+ICDCoMKgIGh3L2FybS9zYnNhLXJlZi5j
+wqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxICsNCj4+Pj4+ICDCoMKgIGh3L2FybS92aXJ0LWFj
+cGktYnVpbGQuY8KgwqAgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgaHcvYXJtL3ZpcnQuY8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxICsNCj4+Pj4+ICDCoMKgIGh3L2FybS94bG54
+LXZlcnNhbC12aXJ0LmPCoCB8wqAgMSArDQo+Pj4+PiAgwqDCoCBody9hcm0veGxueC16Y3Ux
+MDIuY8KgwqDCoMKgwqDCoCB8wqAgMSArDQo+Pj4+PiAgwqDCoCBody92bWFwcGxlL3ZtYXBw
+bGUuY8KgwqDCoMKgwqDCoCB8wqAgMSArDQo+Pj4+PiAgwqDCoCB0YXJnZXQvYXJtL2hlbHBl
+ci5jwqDCoMKgwqDCoMKgwqAgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgdGFyZ2V0L2FybS9odmYv
+aHZmLmPCoMKgwqDCoMKgwqAgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgdGFyZ2V0L2FybS90Y2cv
+b3BfaGVscGVyLmMgfMKgIDEgKw0KPj4+Pj4gIMKgwqAgdGFyZ2V0L2FybS90Y2cvcHNjaS5j
+wqDCoMKgwqDCoCB8wqAgMSArDQo+Pj4+PiAgwqDCoCAyMCBmaWxlcyBjaGFuZ2VkLCAzNyBp
+bnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQ0KPj4+Pj4gIMKgwqAgY3JlYXRlIG1vZGUg
+MTAwNjQ0IHRhcmdldC9hcm0vcHNjaS5oDQo+Pj4NCj4+DQo+IA0KDQo=
 
