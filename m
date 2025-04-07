@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF399C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 11:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7D7C3601E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 11:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1kW4-0000Ef-2W; Mon, 07 Apr 2025 07:19:48 -0400
+	id 1u1l7J-00076J-79; Mon, 07 Apr 2025 07:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1u1kW2-0000ES-Of
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 07:19:46 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1u1kVz-0000cX-Pg
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 07:19:46 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-72d3b48d2ffso4217687b3a.2
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 04:19:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1744024780; x=1744629580;
- darn=nongnu.org; 
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HKXegi+ZhbtVvyPuf1B/BZ/ofjeGPi0rJK3872qSKok=;
- b=YcSQiBxRGmlCnoYDdpNV8TzPjK9zewbvUWRRxstnvImmzvWn4m8iMw03W/zy9EdSxe
- Vrd9T+XLArK1Ww4yLuI5i/g+oyEjRCEclCIMXAdc3NIYgOnpBES2yJ495JwE7x/vQW8U
- 267jq9Cg3G+SSF+Kgot47c9GANjKMWGglh+4YQmnK1yl+HzLUZMvOTisQ/4jntg72dkp
- VG7jq/QVtNwEVSTVRE+s1RwMuOQ4zypS7UmIADY9/WLl0XqftSjTtx3Bzd5LLkIvtsa9
- UFPv14jFes3i1IPB9N8CzxCeVLoNYO/gIF2tFPYf33YSdyGokIdBr6Egirrx/ptmmqIL
- Xr2g==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1u1l7D-00074U-Ie
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 07:58:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1u1l74-0004w2-L2
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 07:58:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744027073;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QLTqoNvl23SPEqwiQTNp78t1+GL63UOXJlzTp5U/2II=;
+ b=NSDYP/OsL7kF20DB0ElZxCuQ9gcg5jxpBGDpmxJCFAVwPoCJ2InELZjRcyXtCyiO7a0mr3
+ cQ3QqU/5w4NOBKqmPio9u1qI8tzW5Swq+iUNeKzXUJzT9pzlMNGpaQsfmwmIJXXZKZno5U
+ X+NPHkVlvA2hMiogXl/+X9Z0TJFQL3o=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-0N7WM4M5NfunQ3RPtsJYvQ-1; Mon, 07 Apr 2025 07:57:52 -0400
+X-MC-Unique: 0N7WM4M5NfunQ3RPtsJYvQ-1
+X-Mimecast-MFC-AGG-ID: 0N7WM4M5NfunQ3RPtsJYvQ_1744027071
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43ced8c2eb7so32965025e9.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 04:57:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744024780; x=1744629580;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HKXegi+ZhbtVvyPuf1B/BZ/ofjeGPi0rJK3872qSKok=;
- b=dfzd7FEAX+c9ua2VmeY7Rbzzz/sBJBn3JSScmGpZusxWZWlIroaZlzm5eOfzal/3CS
- Q7O9KGXPegeOPjbC5Don+AEdzsETnIciUSPJGVZ7YUcVwMGMhTxdmxNfrrjZ7spvMizl
- c+5rbYOZjIfqVc6bRN4/zQ0h53u730xmcM1aCj7aeP3k1TWT0d6AUqRdIsMOqDXeqWwb
- TzUpnaH0xzXI1TEcDcX53nSQ/pykGYEgEPmeL6M6/JPdbRAozk3OH6rhHDFxbedcvB/A
- +cBNrQFqCjVNTyFYCG26CsUZ1DySw0IrOlTECS3MQP5FveXBSKFrexcjXdGa8nTsG6iZ
- uk8w==
+ d=1e100.net; s=20230601; t=1744027071; x=1744631871;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QLTqoNvl23SPEqwiQTNp78t1+GL63UOXJlzTp5U/2II=;
+ b=Ls1Lp9TmpgBe1zwh16NxLcIecMd+4GZaXmyxt41DkIyuF+AEjfezibrwku7mporUrM
+ Q93Uu+vdaCprD9PAz0ubimX83TWrLymr3wPITTwgFcWzOjlxCUhxrObYH9fn5Sgo5uNd
+ dm+eQvFJCksCxA3m/BBv302c1iA4NDtKdm6LQJ2jeO10QJ/lWlnWCQqTVj3DRpZRuCBo
+ E8P2guEnryknCOpgVihqaC7SNyErP7rTpSm++qhZ4AOeeEWpKbSecUvUEOH/S3hmfqji
+ nE4bEYBH28AqspLJ8d7o+X6SzNZL2PtFKnt2vCennH4idBMzkXVUkdaYzHKKaPz3UW8l
+ zw9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJrSVnnjduHAXxx9A5kYiH3Rt5VComMbJ+aWrunn2jBUg/IWQ36QU3MBJBTecbuJinG4FvlcX3iL6L@nongnu.org
-X-Gm-Message-State: AOJu0YwJFnCMYQU9SfHv5qGgCFKbKoK7Js3FRZJ+rjSXDVMl698ux++/
- SMTPUYmwvpvqg03KWEW68CQo8mnVm5L22ucmJGbKIw3uHlxWnmLJuJvlBoy0sIc=
-X-Gm-Gg: ASbGnct0yX4yax70BMIsmvJoKO/Ik/2rwF8gNm110D1eoYAkR97pYNX1qqkjnVKapEt
- BqIX8vGrU2SjJ0Jd4ckNYzzIStBv+80aT0ncbNurwZtaBEjNegjH9l3A7RUjazWxUn8GIVX0gGj
- Kz13ktp7cMHlHtpqdv1phGV7/omVE+WHyE9l10bDGxQ7YROEyoFQiq3Tuf3lkSla4lAA4ZTiYnp
- DCJ2KyEIl6uehEhO0jsDLcPf4fiU4RTl+5cZpGYwWV2IJw5FHD8c71KVYCjQryqOv+uHoJtARAR
- SGn2osQpD5k2pn6wJ5PWgSlC3aZ9MJnHFRnuJJ3CNwA1+YR8GMG7+Zzy+E2jR/SO9Hblr5932mB
- 9458t8WMmPk02E1hRKoCmZCCJNi9vhUj1AzsEt0msFsS25lCV
-X-Google-Smtp-Source: AGHT+IFZTPMEumNMlqrJG9r6WQX8F0kykW9K8OccRgEW2fe0QW5S1YRxLytfmDS/w7ghcJv7b8ZaLw==
-X-Received: by 2002:a05:6a00:1790:b0:736:5c8e:bab8 with SMTP id
- d2e1a72fcca58-739e48d5a0fmr18827676b3a.3.1744024779828; 
- Mon, 07 Apr 2025 04:19:39 -0700 (PDT)
-Received: from smtpclient.apple (n058152022152.netvigator.com. [58.152.22.152])
+ AJvYcCXqGM9aPugVtfWRf3XpD40vvda2XtfnIyrHSX/ZdBT4Y0TKp166agx5Xcr/+MQjyQZPXAw70+MSGu9d@nongnu.org
+X-Gm-Message-State: AOJu0Yxuln/p6IoxstVNtuNkmRWUxAYaaLPNvlLZ9zOCr3s2ttdOWGD8
+ 4aS8hQ7XkeinkpwX8zUMumOMGtHENV2jWTThgoz3ahXGb2i+dMXVU4qCT9qPGMKgQTqWGfFsooa
+ v8/k13WsEodUAkM8bagRYFW4S6Ywgm8Qu/mwK3kPXx/oDHOlC/j8e
+X-Gm-Gg: ASbGncue/8E0hmN8yH3ZDtlNP8Esnb/zoZD4SeCqVsjuTwxsLdD0oT8yswgS/QHLQXM
+ C2cXD8LBLo/8a4LXKnE0qO8Cn6cuHuop5O8/olO0bNGGSoLsjQmotHyHiMYoA8VUdra3hsmX8KH
+ HbmwpC6qoAyEftb30nM9GxJedNU3VqqgUXm5YFzFrrJvAzXqRl7TizCngWj/wj5CHkPSsDzDsAe
+ Qs4khTzodpD6TIQs6lAZiuQQZT4PdZ7A7cVjsWSjYzXp9XwgqfTNLbrdvZZzWU4fFeHQkupJ50X
+ wvYDwV1SgzFnj6Hpo3QL+HOWIlBkq+NxtKa95gN8Fi9A2ApDJrGhasRfpgNjRYI=
+X-Received: by 2002:a5d:5f81:0:b0:391:456b:6ab7 with SMTP id
+ ffacd0b85a97d-39d0de2d38emr8443501f8f.34.1744027071331; 
+ Mon, 07 Apr 2025 04:57:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEoX20it3skUe5zNT2TA7QGpq8PFKbr6dN7xw9zEgKcp35T+JsMbcumu5vxRmRGeWG3m8PacA==
+X-Received: by 2002:a5d:5f81:0:b0:391:456b:6ab7 with SMTP id
+ ffacd0b85a97d-39d0de2d38emr8443476f8f.34.1744027070887; 
+ Mon, 07 Apr 2025 04:57:50 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739d97d2f63sm8270062b3a.1.2025.04.07.04.19.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 07 Apr 2025 04:19:38 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.500.231\))
-Subject: Re: [PATCH v2 3/3] vhost-user: return failure if backend crash when
- live migration
-From: Haoqian He <haoqian.he@smartx.com>
-In-Reply-To: <kesiax2fftxxkzydpbmzsn2gmgbknctcekskupug6jyhr5f4ii@wdrojsvhdfee>
-Date: Mon, 7 Apr 2025 19:19:22 +0800
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- Li Feng <fengli@smartx.com>, yuhua@smartx.com,
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "open list:Block layer core" <qemu-block@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7D403755-9B2A-4B98-A9E0-98F084A8670F@smartx.com>
-References: <20250309090708.3928953-1-haoqian.he@smartx.com>
- <20250314101535.1059308-1-haoqian.he@smartx.com>
- <20250314101535.1059308-4-haoqian.he@smartx.com>
- <5wblbg4qq7lmfrycksxo45ynh566gbzocwtim6yy6hiibus66a@fb75vbwpz5r5>
- <C1643EB1-EBA7-4627-A1E9-BB4F8CC688A2@smartx.com>
- <scj244d5eifrvxe7qgz4aszeg7wbjxzhh6tdccuzxkj5k3jxvi@ujonxzfmd3tb>
- <4DC039FB-6711-4FAC-9FCF-FB59E6B1151E@smartx.com>
- <hoq242tlgchxwzm3ukckyunkqpppiq4zfzpqrauhjdy7wbdiaq@wr26zlpznr5s>
- <8E231839-A758-4F80-B517-EDF0A780C6A0@smartx.com>
- <kesiax2fftxxkzydpbmzsn2gmgbknctcekskupug6jyhr5f4ii@wdrojsvhdfee>
-To: Stefano Garzarella <sgarzare@redhat.com>
-X-Mailer: Apple Mail (2.3731.500.231)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=haoqian.he@smartx.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ 5b1f17b1804b1-43ec36699e0sm128003355e9.35.2025.04.07.04.57.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Apr 2025 04:57:50 -0700 (PDT)
+Message-ID: <b3b8fe3b-1974-4098-8f44-ea197e85b36b@redhat.com>
+Date: Mon, 7 Apr 2025 13:57:47 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v3 1/9] hw/arm/virt: Remove pointless
+ VirtMachineState::tcg_its field
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
+ Udo Steinberg <udo@hypervisor.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>
+References: <20250403204029.47958-1-philmd@linaro.org>
+ <20250403204029.47958-2-philmd@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250403204029.47958-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,147 +120,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Philippe,
 
-> 2025=E5=B9=B44=E6=9C=884=E6=97=A5 15:30=EF=BC=8CStefano Garzarella =
-<sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Thu, Mar 27, 2025 at 02:53:24PM +0800, Haoqian He wrote:
->>=20
->>> 2025=E5=B9=B43=E6=9C=8825=E6=97=A5 17:51=EF=BC=8CStefano Garzarella =
-<sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->>>=20
->>> On Tue, Mar 25, 2025 at 04:39:46PM +0800, Haoqian He wrote:
->>>>> 2025=E5=B9=B43=E6=9C=8824=E6=97=A5 22:31=EF=BC=8CStefano =
-Garzarella <sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->>>>> On Thu, Mar 20, 2025 at 08:21:30PM +0800, Haoqian He wrote:
->>>>>>> 2025=E5=B9=B43=E6=9C=8819=E6=97=A5 23:20=EF=BC=8CStefano =
-Garzarella <sgarzare@redhat.com> =E5=86=99=E9=81=93=EF=BC=9A
->>>>>>> On Fri, Mar 14, 2025 at 06:15:34AM -0400, Haoqian He wrote:
->>>=20
->>> [...]
->>>=20
->>>>>>>> diff --git a/include/hw/virtio/virtio.h =
-b/include/hw/virtio/virtio.h
->>>>>>>> index 6386910280..c99d56f519 100644
->>>>>>>> --- a/include/hw/virtio/virtio.h
->>>>>>>> +++ b/include/hw/virtio/virtio.h
->>>>>>>> @@ -187,6 +187,7 @@ struct VirtioDeviceClass {
->>>>>>>> void (*set_config)(VirtIODevice *vdev, const uint8_t *config);
->>>>>>>> void (*reset)(VirtIODevice *vdev);
->>>>>>>> void (*set_status)(VirtIODevice *vdev, uint8_t val);
->>>>>>>> +    int (*set_status_ext)(VirtIODevice *vdev, uint8_t val);
->>>>>>>=20
->>>>>>> Why we need a new callback instead having `set_status` returning =
-int ?
->>>>>>=20
->>>>>> Because there are other devices such as virtio-net, =
-virtio-ballon, etc.,
->>>>>> we only focus on vhost-user-blk/scsi when live migration.
->>>>>=20
->>>>> Why only them?
->>>>>=20
->>>>> What I mean, is why in devices where it's not important, don't we =
-just return 0?
->>>>> It seems more complicated to maintain and confusing for new =
-devices to have 2 callbacks for the same thing.
->>>>>=20
->>>>> Stefano
->>>>=20
->>>> The series of these patches only want to fix that the inflight IO =
-can't be
->>>> completed due to the disconnection between and the vhost-user =
-backend for
->>>> vhost-user-blk / scsi devices during live migration. For other =
-virito devices
->>>> the issue does not exist, and `vm_state_notify` cannot distinguish =
-specific
->>>> devices, it's better not to return error.
->>>=20
->>> Why for example for vhost-user-fs it doesn't exist?
->>>=20
->>>>=20
->>>> I try to list the virtio sub-devices as follows:
->>>>=20
->>>> hw/virtio/virtio-iommu.c:    vdc->set_status =3D =
-virtio_iommu_set_status;
->>>> hw/virtio/virtio-balloon.c:    vdc->set_status =3D =
-virtio_balloon_set_status;
->>>> hw/virtio/virtio-rng.c:    vdc->set_status =3D =
-virtio_rng_set_status;
->>>> hw/virtio/virtio-crypto.c:    vdc->set_status =3D =
-virtio_crypto_set_status;
->>>> hw/virtio/vhost-vsock.c:    vdc->set_status =3D =
-vhost_vsock_set_status;
->>>> hw/virtio/vhost-user-vsock.c:    vdc->set_status =3D =
-vuv_set_status;
->>>> hw/virtio/vhost-user-scmi.c:    vdc->set_status =3D =
-vu_scmi_set_status;
->>>> hw/virtio/vhost-user-fs.c:    vdc->set_status =3D vuf_set_status;
->>>> hw/virtio/vhost-user-base.c:    vdc->set_status =3D vub_set_status;
->>>> hw/virtio/vdpa-dev.c:    vdc->set_status =3D =
-vhost_vdpa_device_set_status;
->>>> tests/qtest/libqos/virtio-pci.c:    .set_status =3D =
-qvirtio_pci_set_status,
->>>> tests/qtest/libqos/virtio-pci-modern.c:    .set_status =3D =
-set_status,
->>>> tests/qtest/libqos/virtio-mmio.c:    .set_status =3D =
-qvirtio_mmio_set_status,
->>>> hw/scsi/vhost-user-scsi.c:    vdc->set_status =3D =
-vhost_user_scsi_set_status;
->>>> hw/scsi/vhost-scsi.c:    vdc->set_status =3D vhost_scsi_set_status;
->>>> hw/net/virtio-net.c:    vdc->set_status =3D virtio_net_set_status;
->>>> hw/char/virtio-serial-bus.c:    vdc->set_status =3D set_status;
->>>> hw/block/vhost-user-blk.c:    vdc->set_status =3D =
-vhost_user_blk_set_status;
->>>> hw/block/virtio-blk.c:    vdc->set_status =3D =
-virtio_blk_set_status;
->>>>=20
->>>> If the new function pointer type is not added, the number of =
-functions affected
->>>> will be very huge. Although it may seem a bit complicated to use =
-two callbacks,
->>>> it's much safer.
->>>=20
->>> I can understand that it requires more change, but I don't =
-understand why it's safer, can you elaborate?
->>>=20
->>> Anyway let's see what Michael says, if it's okay for him to have 2 =
-callbacks for the same thing but differing only by the return value, no =
-objection for me.
->>>=20
->>> Thanks,
->>> Stefano
->>>=20
->>=20
->> Hi Stefano, I removed set_status_ext in patch v3, and only changed =
-the return
->> type of set_status to int. The new changes were applied to all =
-vhost-user
->> devices, and virtio returned 0 for other devices.
->>=20
->> Could you please review patch v3 is reasonable?
->=20
->=20
-> There are still questions like those a few lines above that I haven't =
-received answers to, please don't send new versions if we haven't =
-cleared up doubts about the current one first.
->=20
-> I still don't understand why we are only considering vhost-user-blk =
-and vhost-user-scsi, can you elaborate?
->=20
-> Thanks,
-> Stefano
->=20
+On 4/3/25 10:40 PM, Philippe Mathieu-Daudé wrote:
+> VirtMachineState::tcg_its has the negated logic value of
+> VirtMachineClass::no_tcg_its. Directly use the latter,
+> removing the former.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Sorry for the late reply. Both patch v1 and v2 are not comprehensive =
-enough.
-We should not only consider the block I/O interfaces =
-vhost-user-blk/scsi.
-
-Thanks,
-Haoqian
+Eric
+> ---
+>  include/hw/arm/virt.h |  1 -
+>  hw/arm/virt.c         | 13 +++++--------
+>  2 files changed, 5 insertions(+), 9 deletions(-)
+>
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index c8e94e6aedc..17c160429ea 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -150,7 +150,6 @@ struct VirtMachineState {
+>      bool highmem_mmio;
+>      bool highmem_redists;
+>      bool its;
+> -    bool tcg_its;
+>      bool virt;
+>      bool ras;
+>      bool mte;
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index a96452f17a4..177e9e0eadb 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -710,11 +710,12 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>  
+>  static void create_its(VirtMachineState *vms)
+>  {
+> +    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+>      const char *itsclass = its_class_name();
+>      DeviceState *dev;
+>  
+>      if (!strcmp(itsclass, "arm-gicv3-its")) {
+> -        if (!vms->tcg_its) {
+> +        if (vmc->no_tcg_its) {
+>              itsclass = NULL;
+>          }
+>      }
+> @@ -831,7 +832,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>                              redist_region_count);
+>  
+>          if (!kvm_irqchip_in_kernel()) {
+> -            if (vms->tcg_its) {
+> +            VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+> +
+> +            if (!vmc->no_tcg_its) {
+>                  object_property_set_link(OBJECT(vms->gic), "sysmem",
+>                                           OBJECT(mem), &error_fatal);
+>                  qdev_prop_set_bit(vms->gic, "has-lpi", true);
+> @@ -3357,12 +3360,6 @@ static void virt_instance_init(Object *obj)
+>      } else {
+>          /* Default allows ITS instantiation */
+>          vms->its = true;
+> -
+> -        if (vmc->no_tcg_its) {
+> -            vms->tcg_its = false;
+> -        } else {
+> -            vms->tcg_its = true;
+> -        }
+>      }
+>  
+>      /* Default disallows iommu instantiation */
 
 
