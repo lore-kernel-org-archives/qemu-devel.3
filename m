@@ -4,107 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E6C0C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 14:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E84C3601E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 14:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1nW5-0005Th-1d; Mon, 07 Apr 2025 10:32:02 -0400
+	id 1u1nrX-00045r-HS; Mon, 07 Apr 2025 10:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1u1nW2-0005N4-Fm; Mon, 07 Apr 2025 10:31:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u1nrV-00045R-3A
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 10:54:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1u1nVx-0007Xp-PX; Mon, 07 Apr 2025 10:31:58 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 537E4dm1008419;
- Mon, 7 Apr 2025 14:31:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=j0YNjLcDk0NRiIQUZ
- xwqcNOWVPq4sBssI5WzUs3fHYc=; b=XjATUhE71YK9WNKPbdZRk5Z/4bl4jiZC8
- vI1ORkDqqqkWnrUtYEFfUMpP2mxpX8GURCEJQ1xD3dVt9klYmZHafNTSDhyhwJ7h
- 1lepnop3o0IM0mAo71KeMMG8Jar/ATv+/rtyfZU/5IvbMjQTA0mN6wnLK9tBspuX
- 7e9mSDcIJb/enmqDkxgv44BI4I110nkVJO0iZTeMfUHBffehnyGRRrNcqOLDR3ac
- JR67LL3My7Ln1D1KgaXC49DfhvYxfqhfSftabx5InkO3Tyz3zN9UBgcboXRE4pFv
- XWaGpG2ufcwI8yMTGUf14wFeXYaTCDAGwE3DVbOiXTahwqT0iDLDA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45v739jwyb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Apr 2025 14:31:51 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 537ETCM2008908;
- Mon, 7 Apr 2025 14:31:51 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45v739jwy6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Apr 2025 14:31:51 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 537B6s1k017457;
- Mon, 7 Apr 2025 14:31:50 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45uh2ke0bw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 07 Apr 2025 14:31:50 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 537EVkDQ35062286
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 7 Apr 2025 14:31:46 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 405192004D;
- Mon,  7 Apr 2025 14:31:46 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C82CC20040;
- Mon,  7 Apr 2025 14:31:43 +0000 (GMT)
-Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com.com (unknown
- [9.124.220.105])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  7 Apr 2025 14:31:43 +0000 (GMT)
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>,
- Vaibhav Jain <vaibhav@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 2/2] vfio/spapr: Fix L2 crash with PCI device passthrough
- with L2 guest memory > 128G
-Date: Mon,  7 Apr 2025 20:01:19 +0530
-Message-ID: <20250407143119.1304513-2-amachhiw@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250407143119.1304513-1-amachhiw@linux.ibm.com>
-References: <20250407143119.1304513-1-amachhiw@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u1nrT-00035U-6j
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 10:54:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744037645;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lEOcZacHnNQ89sYmDkvJKZF7vzDjss6LlsJpaAG0ZWs=;
+ b=MAv1LyHPX/NofpZBkGFxusI0ISXuU9MEntkK9FcqCKR2E/Inr9fh4R/0ykSk/JRCgTqLLG
+ 642G9YHGZZgEtbzBrh1q3AoStT/45b+8ODpEjQMfNxZwfBlsj6om/lSZHUg0IlEQQTLrP9
+ zw+zHSL0HW5rQPQz2t2IOD0cRe2+Rnw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-_czdHv5XPr6J0p2PFrTenA-1; Mon,
+ 07 Apr 2025 10:54:04 -0400
+X-MC-Unique: _czdHv5XPr6J0p2PFrTenA-1
+X-Mimecast-MFC-AGG-ID: _czdHv5XPr6J0p2PFrTenA_1744037642
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 285ED195608B; Mon,  7 Apr 2025 14:54:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.21])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B91CC19541A6; Mon,  7 Apr 2025 14:54:00 +0000 (UTC)
+Date: Mon, 7 Apr 2025 09:53:58 -0500
+From: Eric Blake <eblake@redhat.com>
+To: prashant patil <pmgpatil@gmail.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Query on the dirty bitmap
+Message-ID: <6s2grkptds54jewlroehfvfpk4aci5ks7lkm4h4tfnvayxzi4l@2tilhng3srix>
+References: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
+ <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
+ <CAFvsdYk0J7ybdu+dL+w70Po1bGypLopBkixPp-ZzmTA8MdTr0w@mail.gmail.com>
+ <pf24mn3twfrc2kfaszovdyj5rhh6d4r4ixawh2dyx5dbi5no3j@ryk4lzslrnye>
+ <CAFvsdYmJFDuQzk6Byu+f4HcTO1EStin3vEMC+twh8P3T2ve6qA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: E7dr5Tu1YWv9iWk-juZNOasrA53IEUQn
-X-Proofpoint-ORIG-GUID: KKZfPr7GptQtGJn8b-6mUuib0TsfP9Lm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-07_04,2025-04-03_03,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- mlxlogscore=999 phishscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2502280000 definitions=main-2504070102
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFvsdYmJFDuQzk6Byu+f4HcTO1EStin3vEMC+twh8P3T2ve6qA@mail.gmail.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,108 +86,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An L2 KVM guest fails to boot inside a pSeries LPAR when booted with a
-memory more than 128 GB and PCI device passthrough. The L2 guest also
-crashes when it is booted with a memory greater than 128 GB and a PCI
-device is hotplugged later.
+On Mon, Apr 07, 2025 at 02:46:17PM +0530, prashant patil wrote:
+> Thanks Eric.
 
-The issue arises from a conditional check for `levels > 1` in
-`spapr_tce_create_table()` within L1 KVM. This check is meant to prevent
-multi-level TCEs, which are not supported by the PowerVM hypervisor. As
-a result, when QEMU makes a `VFIO_IOMMU_SPAPR_TCE_CREATE` ioctl call
-with `levels > 1`, it triggers the conditional check and returns
-`EINVAL`, causing the guest to crash with the following errors:
+[top-posting makes conversations harder to follow, so on this list we
+typically reply inline]
 
- 2025-03-04T06:36:36.133117Z qemu-system-ppc64: Failed to create a window, ret = -1 (Invalid argument)
- 2025-03-04T06:36:36.133176Z qemu-system-ppc64: Failed to create SPAPR window: Invalid argument
- qemu: hardware error: vfio: DMA mapping failed, unable to continue
+> I have a few questions about the bitmap content shown by 'qemu-img map'.
+> From below sample bitmap data:
+> 1. Why only some of the extents have start and offset values? And why are
+> they the same values?
+> 2. What does the start value indicate? Is it logical offset or physical
+> offset of data into qcow2?
 
-Fix this by checking the supported DDW "levels" returned by the
-VFIO_IOMMU_SPAPR_TCE_GET_INFO ioctl before attempting the TCE create
-ioctl in KVM.
+Normally (when there is no x-dirty-bitmap in play), 'start' denotes
+the logical offset being reported on (you'd expect a map to list every
+logical offset; so the start of entry N+1 should be the sum of start +
+length of entry N), while 'offset' is where that extent begins in the
+underlying file.  For a raw source, offset and start will be
+identical; for other sources, like qcow2, start is obviously logical,
+while offset is physical.  Entries without 'offset' are places where
+the logical contents are compressed, synthesized, or otherwise have no
+1:1 correspondence to an offset in the physical file.  'present'
+indicates whether the data is synthesized or not; 'offset' is going to
+be absent if 'present' is false; although it can also be absent even
+when 'present' is true such as in the case of compression.
 
-The patch has been tested on KVM guests with memory configurations of up
-to 390GB, and 450GB on PowerVM and bare-metal environments respectively.
+When it comes to exposing a qcow2 file over NBD, you generally want to
+have:
 
-Link: https://lore.kernel.org/qemu-devel/20250404091721.2653539-1-amachhiw@linux.ibm.com/
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
----
- hw/vfio/spapr.c | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+qemu-nbd using '-f qcow2' => raw view => qemu-img using '-f raw'
 
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index 4f2858b43f36..bcc6fe56e76e 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -26,6 +26,7 @@ typedef struct VFIOSpaprContainer {
-     VFIOContainer container;
-     MemoryListener prereg_listener;
-     QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
-+    unsigned int levels;
- } VFIOSpaprContainer;
- 
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOSpaprContainer, VFIO_IOMMU_SPAPR);
-@@ -236,9 +237,11 @@ static int vfio_spapr_create_window(VFIOContainer *container,
- {
-     int ret = 0;
-     VFIOContainerBase *bcontainer = &container->bcontainer;
-+    VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
-+                                                  container);
-     IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-     uint64_t pagesize = memory_region_iommu_get_min_page_size(iommu_mr), pgmask;
--    unsigned entries, bits_total, bits_per_level, max_levels;
-+    unsigned entries, bits_total, bits_per_level, max_levels, ddw_levels;
-     struct vfio_iommu_spapr_tce_create create = { .argsz = sizeof(create) };
-     long rampagesize = qemu_minrampagesize();
- 
-@@ -291,16 +294,29 @@ static int vfio_spapr_create_window(VFIOContainer *container,
-      */
-     bits_per_level = ctz64(qemu_real_host_page_size()) + 8;
-     create.levels = bits_total / bits_per_level;
--    if (bits_total % bits_per_level) {
--        ++create.levels;
--    }
--    max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
--    for ( ; create.levels <= max_levels; ++create.levels) {
--        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
--        if (!ret) {
--            break;
-+
-+    ddw_levels = scontainer->levels;
-+    if (ddw_levels > 1) {
-+        if (bits_total % bits_per_level) {
-+            ++create.levels;
-         }
-+        max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
-+        for ( ; create.levels <= max_levels; ++create.levels) {
-+            ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
-+            if (!ret) {
-+                break;
-+            }
-+        }
-+    } else { /* ddw_levels == 1 */
-+        if (create.levels > ddw_levels) {
-+            error_setg(errp, "Host doesn't support multi-level TCE tables"
-+                       ". Use larger IO page size. Supported mask is 0x%lx",
-+                       bcontainer->pgsizes);
-+            return -EINVAL;
-+        }
-+        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
-     }
-+
-     if (ret) {
-         error_setg_errno(errp, -ret, "Failed to create a window, ret = %d (%m)", ret);
-         return -errno;
-@@ -503,6 +519,8 @@ static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
-         goto listener_unregister_exit;
-     }
- 
-+    scontainer->levels = info.ddw.levels;
-+
-     if (v2) {
-         bcontainer->pgsizes = info.ddw.pgsizes;
-         /*
+to expose only the logical contents over the wire.  It is also
+possible to flip the responsibility:
+
+qemu-nbd using '-f raw' => qcow2 view => qemu-img using '-f qcow2'
+
+to expose the bare-metal qcow2 contents over the wire, but that gets
+less testing, in part because if you make the image writable, it tends
+to cause problems if the client writing to the qcow2 layer needs to
+allocate (since NBD does not have a resize command).  Having the
+server open the file as qcow2 and only serving raw contents means the
+server can resize transparently.  What's more, block status commands
+over NBD only work when the server is aware of the qcow2 nature of the
+file it is serving (if you expose qcow2 bits over the wire, the server
+treats the entire file as allocated, and there is is no dirty bitmap
+context for the client to read over NBD).
+
+Therefore, 'start' and 'offset' are going to be identical if you are
+using qemu-img map to read bitmaps from a server, since bitmaps can
+only be read when the wire has the raw view (not the qcow2 view).
+
+But when you add x-dirty-bitmap into the mix, you are asking qemu to
+DISREGARD the normal rules of backing file information and instead
+report on dirty bitmap information as if it were backing file info.
+This means that anywhere the dirty bitmap response differs from a
+normal backing file response, the output of qemu-img is reporting
+garbage data (for example, the 'present' bit is now bogus, which
+explains why the rows where qemu-img claims 'present' is false omit an
+'offset').  Only 'start', 'length', and 'data' matter when using
+x-dirty-bitmap, with 'data=false' meaning the section was reported
+dirty, and 'data=true' meaning the section was reported unchanged.
+
+And if that is confusing, well yeah. Which is why I recommend using
+libnbd's nbdinfo --map, where the output is more obvious.
+
+> 
+> root@be-proxmox1:/# qemu-img map --output=json --image-opts
+> "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:bitmap1"
+>   [{ "start": 0, "length": 196608, "depth": 0, "present": true, "zero":
+> false, "data": true, "compressed": false, "offset": 0},
+
+The extent starting at logical offset 0 and lasting 196608 bytes is
+unchanged.
+
+> { "start": 196608, "length": 65536, "depth": 0, "present": false, "zero":
+> false, "data": false, "compressed": false},
+
+The extent starting at 196608 and lasting 65536 bytes is dirty
+(altered since the point in time when the bitmap was created).
+
+> > > qemu-img
+> > > map with x-dirty-bitmap image-opts.
+> >
+> > Here, this works, but feels like a hack, because it is relying on the
+> > x-dirty-bitmap feature of qemu.  The libnbd project ships with an
+> > application 'nbdinfo --map' that can read the same information as
+> > 'qemu-img map' but with a much nicer layout.  It's not going to
+> > necessarily be faster, but because it is a fully-supported feature of
+> > libnbd rather than a hack in qemu, it may prove more stable in the
+> > long run, and certainly easier to understand.
+
+
+For a worked example:
+
+# Create an image, dirty two different offsets, with a bitmap created in between
+$ qemu-img create -f qcow2 foo.qcow2 3M
+Formatting 'foo.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=3145728 lazy_refcounts=off refcount_bits=16
+$ qemu-io -f qcow2 foo.qcow2 -c 'w 1M 512'
+wrote 512/512 bytes at offset 1048576
+512 bytes, 1 ops; 00.01 sec (42.906 KiB/sec and 85.8112 ops/sec)
+$ qemu-img bitmap -f qcow2 foo.qcow2 --add b1
+$ qemu-io -f qcow2 foo.qcow2 -c 'w 2M 512'
+wrote 512/512 bytes at offset 2097152
+512 bytes, 1 ops; 00.00 sec (107.735 KiB/sec and 215.4704 ops/sec)
+
+# Now, expose the raw bytes of the image over NBD, and inspect with nbdinfo
+
+$ qemu-nbd -f qcow2 foo.qcow2 -A -Bb1 -t
+$ nbdinfo --map=qemu:dirty-bitmap:b1 nbd://localhost
+         0     2097152    0  clean
+   2097152       65536    1  dirty
+   2162688      983040    0  clean
+$ nbdinfo --map nbd://localhost
+         0     1048576    3  hole,zero
+   1048576        4096    0  data
+   1052672       61440    2  zero
+   1114112      983040    3  hole,zero
+   2097152        4096    0  data
+   2101248       61440    2  zero
+   2162688      983040    3  hole,zero
+
+Comparing those to qemu-img map --output=json should be instructive.
+
+
 -- 
-2.49.0
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
