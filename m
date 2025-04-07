@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA8FDC3601A
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27630C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1hF9-0001DS-1h; Mon, 07 Apr 2025 03:50:07 -0400
+	id 1u1hFV-0001Ja-4N; Mon, 07 Apr 2025 03:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1u1hF5-0001Aj-Fu
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:03 -0400
+ id 1u1hFC-0001HG-By
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:11 -0400
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1u1hF2-0005Cu-T2
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:02 -0400
+ id 1u1hFA-0005Q2-Ag
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744012201; x=1775548201;
+ t=1744012209; x=1775548209;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=kk3uHBuJkJcjtKmTs4aWLcjX3wmb5FE548hrfQQbsSk=;
- b=domYoNh6cF1NpPUK0KtB3IUt+7xEh+bK/UEMQ1Kt9kH8SsZyTbLwp57z
- GBtCwX3yP0gkdVvBHWEyadeKlBfUVwwK6R7C47DvRvH3GyIYOBmvxGUWR
- sW3Kzkw9GppFwc6Jbc/8UTe6dvpOoNdRaOh1FBt5BSaQPh+5K4j46k+rT
- mswGXha7LTB2GZyY8YJRA6FMB3uLl5UkI/pw8rBRs//uxZ4/vD1Qo4CSh
- AveDMt/tnWIfqNCKEBUrf/fi4c/Lt/bsdmJyAFIBO1uN6TRiFCis4qkj6
- v4GsHSzYu3yGCzel629Xp8nRGxvJOT3p2cAg4Bryix/yw8wGuVZgBXsTm A==;
-X-CSE-ConnectionGUID: J3oe/mjtTaOp74g2BqZdwg==
-X-CSE-MsgGUID: SddLZJZ8TMyZMGRK0MM+kQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="67857521"
-X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="67857521"
+ bh=4/NxRHGIa82bpN+zenGnUIFub5qv8ngu3vJ4kD8YLHE=;
+ b=noXWiMVNqBzW93t9khdNwPsAYDrq8qvbkKYUBrvQ4f8jYzYNmzzdJxrZ
+ jNrNiDC5/rNllXewgtbP3Y12z8449LC218QvoiaX3y1m7zzlWRduvZX3T
+ PsBg5Z2oER9l2YL0RDzAzvVmtRrWCNOS1/CSWIoyJXHLNoAm9btvoY8qE
+ NLwnv46IPlt1BU+3XvW2TYwdh9ynw+ig7DVVGcaUnKzp7qJ9RBaYvKALy
+ 3FkBksmIpaC/CVQ4RkKSiGnXBvBLXBAIGRbPgPYsvld+0JIIOfNWs3/XR
+ CW6MYfOw7k0J07G6bvLzRrW8jZWJIQKTjlZbWVi91rT8JSXwOvC3JIJAJ A==;
+X-CSE-ConnectionGUID: UoJxzmw9QyShIz+q/ogvnw==
+X-CSE-MsgGUID: vEopJQ3PT4Ofavpvq4lQVA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="67857542"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="67857542"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 00:49:59 -0700
-X-CSE-ConnectionGUID: r2LJDjivQ7CzKUj3/5+NxQ==
-X-CSE-MsgGUID: t/e3SxxMSzeUz6Fac+NPzA==
+ 07 Apr 2025 00:50:07 -0700
+X-CSE-ConnectionGUID: yBqCn659QIiBIBvFTDzYEQ==
+X-CSE-MsgGUID: dQEPRNaGTPGDAItE1bRttw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128405484"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128405591"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 00:49:56 -0700
+ 07 Apr 2025 00:50:03 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
@@ -56,10 +56,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v4 03/13] memory: Unify the definiton of ReplayRamPopulate()
- and ReplayRamDiscard()
-Date: Mon,  7 Apr 2025 15:49:23 +0800
-Message-ID: <20250407074939.18657-4-chenyi.qiang@intel.com>
+Subject: [PATCH v4 05/13] memory: Introduce PrivateSharedManager Interface as
+ child of GenericStateManager
+Date: Mon,  7 Apr 2025 15:49:25 +0800
+Message-ID: <20250407074939.18657-6-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250407074939.18657-1-chenyi.qiang@intel.com>
 References: <20250407074939.18657-1-chenyi.qiang@intel.com>
@@ -90,223 +90,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update ReplayRamDiscard() function to return the result and unify the
-ReplayRamPopulate() and ReplayRamDiscard() to ReplayStateChange() at
-the same time due to their identical definitions. This unification
-simplifies related structures, such as VirtIOMEMReplayData, which makes
-it more cleaner and maintainable.
+To manage the private and shared RAM states in confidential VMs,
+introduce a new class of PrivateShareManager as a child of
+GenericStateManager, which inherits the six interface callbacks. With a
+different interface type, it can be distinguished from the
+RamDiscardManager object and provide the flexibility for addressing
+specific requirements of confidential VMs in the future.
 
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
 Changes in v4:
-    - Modify the commit message. We won't use Replay() operation when
-      doing the attribute change like v3.
-
-Changes in v3:
     - Newly added.
 ---
- hw/virtio/virtio-mem.c | 20 ++++++++++----------
- include/exec/memory.h  | 31 ++++++++++++++++---------------
- migration/ram.c        |  5 +++--
- system/memory.c        | 12 ++++++------
- 4 files changed, 35 insertions(+), 33 deletions(-)
+ include/exec/memory.h | 44 +++++++++++++++++++++++++++++++++++++++++--
+ system/memory.c       | 17 +++++++++++++++++
+ 2 files changed, 59 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index d0d3a0240f..1a88d649cb 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -1733,7 +1733,7 @@ static bool virtio_mem_rdm_is_populated(const RamDiscardManager *rdm,
- }
- 
- struct VirtIOMEMReplayData {
--    void *fn;
-+    ReplayStateChange fn;
-     void *opaque;
- };
- 
-@@ -1741,12 +1741,12 @@ static int virtio_mem_rdm_replay_populated_cb(MemoryRegionSection *s, void *arg)
- {
-     struct VirtIOMEMReplayData *data = arg;
- 
--    return ((ReplayRamPopulate)data->fn)(s, data->opaque);
-+    return data->fn(s, data->opaque);
- }
- 
- static int virtio_mem_rdm_replay_populated(const RamDiscardManager *rdm,
-                                            MemoryRegionSection *s,
--                                           ReplayRamPopulate replay_fn,
-+                                           ReplayStateChange replay_fn,
-                                            void *opaque)
- {
-     const VirtIOMEM *vmem = VIRTIO_MEM(rdm);
-@@ -1765,14 +1765,14 @@ static int virtio_mem_rdm_replay_discarded_cb(MemoryRegionSection *s,
- {
-     struct VirtIOMEMReplayData *data = arg;
- 
--    ((ReplayRamDiscard)data->fn)(s, data->opaque);
-+    data->fn(s, data->opaque);
-     return 0;
- }
- 
--static void virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
--                                            MemoryRegionSection *s,
--                                            ReplayRamDiscard replay_fn,
--                                            void *opaque)
-+static int virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
-+                                           MemoryRegionSection *s,
-+                                           ReplayStateChange replay_fn,
-+                                           void *opaque)
- {
-     const VirtIOMEM *vmem = VIRTIO_MEM(rdm);
-     struct VirtIOMEMReplayData data = {
-@@ -1781,8 +1781,8 @@ static void virtio_mem_rdm_replay_discarded(const RamDiscardManager *rdm,
-     };
- 
-     g_assert(s->mr == &vmem->memdev->mr);
--    virtio_mem_for_each_unplugged_section(vmem, s, &data,
--                                          virtio_mem_rdm_replay_discarded_cb);
-+    return virtio_mem_for_each_unplugged_section(vmem, s, &data,
-+                                                 virtio_mem_rdm_replay_discarded_cb);
- }
- 
- static void virtio_mem_rdm_register_listener(RamDiscardManager *rdm,
 diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 390477b588..3b1d25a403 100644
+index 30e5838d02..08f25e5e84 100644
 --- a/include/exec/memory.h
 +++ b/include/exec/memory.h
-@@ -566,8 +566,7 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
+@@ -55,6 +55,12 @@ typedef struct RamDiscardManager RamDiscardManager;
+ DECLARE_OBJ_CHECKERS(RamDiscardManager, RamDiscardManagerClass,
+                      RAM_DISCARD_MANAGER, TYPE_RAM_DISCARD_MANAGER);
+ 
++#define TYPE_PRIVATE_SHARED_MANAGER "private-shared-manager"
++typedef struct PrivateSharedManagerClass PrivateSharedManagerClass;
++typedef struct PrivateSharedManager PrivateSharedManager;
++DECLARE_OBJ_CHECKERS(PrivateSharedManager, PrivateSharedManagerClass,
++                     PRIVATE_SHARED_MANAGER, TYPE_PRIVATE_SHARED_MANAGER)
++
+ #ifdef CONFIG_FUZZ
+ void fuzz_dma_read_cb(size_t addr,
+                       size_t len,
+@@ -692,6 +698,14 @@ void generic_state_manager_register_listener(GenericStateManager *gsm,
+ void generic_state_manager_unregister_listener(GenericStateManager *gsm,
+                                                StateChangeListener *scl);
+ 
++static inline void state_change_listener_init(StateChangeListener *scl,
++                                              NotifyStateSet state_set_fn,
++                                              NotifyStateClear state_clear_fn)
++{
++    scl->notify_to_state_set = state_set_fn;
++    scl->notify_to_state_clear = state_clear_fn;
++}
++
+ typedef struct RamDiscardListener RamDiscardListener;
+ 
+ struct RamDiscardListener {
+@@ -713,8 +727,7 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
+                                              NotifyStateClear discard_fn,
+                                              bool double_discard_supported)
+ {
+-    rdl->scl.notify_to_state_set = populate_fn;
+-    rdl->scl.notify_to_state_clear = discard_fn;
++    state_change_listener_init(&rdl->scl, populate_fn, discard_fn);
      rdl->double_discard_supported = double_discard_supported;
  }
  
--typedef int (*ReplayRamPopulate)(MemoryRegionSection *section, void *opaque);
--typedef void (*ReplayRamDiscard)(MemoryRegionSection *section, void *opaque);
-+typedef int (*ReplayStateChange)(MemoryRegionSection *section, void *opaque);
+@@ -757,6 +770,25 @@ struct RamDiscardManagerClass {
+     GenericStateManagerClass parent_class;
+ };
  
- /*
-  * RamDiscardManagerClass:
-@@ -641,36 +640,38 @@ struct RamDiscardManagerClass {
-     /**
-      * @replay_populated:
-      *
--     * Call the #ReplayRamPopulate callback for all populated parts within the
-+     * Call the #ReplayStateChange callback for all populated parts within the
-      * #MemoryRegionSection via the #RamDiscardManager.
-      *
-      * In case any call fails, no further calls are made.
-      *
-      * @rdm: the #RamDiscardManager
-      * @section: the #MemoryRegionSection
--     * @replay_fn: the #ReplayRamPopulate callback
-+     * @replay_fn: the #ReplayStateChange callback
-      * @opaque: pointer to forward to the callback
-      *
-      * Returns 0 on success, or a negative error if any notification failed.
-      */
-     int (*replay_populated)(const RamDiscardManager *rdm,
-                             MemoryRegionSection *section,
--                            ReplayRamPopulate replay_fn, void *opaque);
-+                            ReplayStateChange replay_fn, void *opaque);
++typedef struct PrivateSharedListener PrivateSharedListener;
++struct PrivateSharedListener {
++    struct StateChangeListener scl;
++
++    QLIST_ENTRY(PrivateSharedListener) next;
++};
++
++struct PrivateSharedManagerClass {
++    /* private */
++    GenericStateManagerClass parent_class;
++};
++
++static inline void private_shared_listener_init(PrivateSharedListener *psl,
++                                                NotifyStateSet populate_fn,
++                                                NotifyStateClear discard_fn)
++{
++    state_change_listener_init(&psl->scl, populate_fn, discard_fn);
++}
++
+ /**
+  * memory_get_xlat_addr: Extract addresses from a TLB entry
+  *
+@@ -2521,6 +2553,14 @@ int memory_region_set_generic_state_manager(MemoryRegion *mr,
+  */
+ bool memory_region_has_ram_discard_manager(MemoryRegion *mr);
  
-     /**
-      * @replay_discarded:
-      *
--     * Call the #ReplayRamDiscard callback for all discarded parts within the
-+     * Call the #ReplayStateChange callback for all discarded parts within the
-      * #MemoryRegionSection via the #RamDiscardManager.
-      *
-      * @rdm: the #RamDiscardManager
-      * @section: the #MemoryRegionSection
--     * @replay_fn: the #ReplayRamDiscard callback
-+     * @replay_fn: the #ReplayStateChange callback
-      * @opaque: pointer to forward to the callback
-+     *
-+     * Returns 0 on success, or a negative error if any notification failed.
-      */
--    void (*replay_discarded)(const RamDiscardManager *rdm,
--                             MemoryRegionSection *section,
--                             ReplayRamDiscard replay_fn, void *opaque);
-+    int (*replay_discarded)(const RamDiscardManager *rdm,
-+                            MemoryRegionSection *section,
-+                            ReplayStateChange replay_fn, void *opaque);
- 
-     /**
-      * @register_listener:
-@@ -713,13 +714,13 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
- 
- int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-                                          MemoryRegionSection *section,
--                                         ReplayRamPopulate replay_fn,
-+                                         ReplayStateChange replay_fn,
-                                          void *opaque);
- 
--void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
--                                          MemoryRegionSection *section,
--                                          ReplayRamDiscard replay_fn,
--                                          void *opaque);
-+int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-+                                         MemoryRegionSection *section,
-+                                         ReplayStateChange replay_fn,
-+                                         void *opaque);
- 
- void ram_discard_manager_register_listener(RamDiscardManager *rdm,
-                                            RamDiscardListener *rdl,
-diff --git a/migration/ram.c b/migration/ram.c
-index ce28328141..053730367b 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -816,8 +816,8 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
-     return ret;
- }
- 
--static void dirty_bitmap_clear_section(MemoryRegionSection *section,
--                                       void *opaque)
-+static int dirty_bitmap_clear_section(MemoryRegionSection *section,
-+                                      void *opaque)
- {
-     const hwaddr offset = section->offset_within_region;
-     const hwaddr size = int128_get64(section->size);
-@@ -836,6 +836,7 @@ static void dirty_bitmap_clear_section(MemoryRegionSection *section,
-     }
-     *cleared_bits += bitmap_count_one_with_offset(rb->bmap, start, npages);
-     bitmap_clear(rb->bmap, start, npages);
-+    return 0;
- }
- 
- /*
++/**
++ * memory_region_has_private_shared_manager: check whether a #MemoryRegion has a
++ * #PrivateSharedManager assigned
++ *
++ * @mr: the #MemoryRegion
++ */
++bool memory_region_has_private_shared_manager(MemoryRegion *mr);
++
+ /**
+  * memory_region_find: translate an address/size relative to a
+  * MemoryRegion into a #MemoryRegionSection.
 diff --git a/system/memory.c b/system/memory.c
-index 62d6b410f0..b5ab729e13 100644
+index 7b921c66a6..e6e944d9c0 100644
 --- a/system/memory.c
 +++ b/system/memory.c
-@@ -2147,7 +2147,7 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
- 
- int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-                                          MemoryRegionSection *section,
--                                         ReplayRamPopulate replay_fn,
-+                                         ReplayStateChange replay_fn,
-                                          void *opaque)
- {
-     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
-@@ -2156,15 +2156,15 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
-     return rdmc->replay_populated(rdm, section, replay_fn, opaque);
+@@ -2137,6 +2137,16 @@ bool memory_region_has_ram_discard_manager(MemoryRegion *mr)
+     return true;
  }
  
--void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
--                                          MemoryRegionSection *section,
--                                          ReplayRamDiscard replay_fn,
--                                          void *opaque)
-+int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-+                                         MemoryRegionSection *section,
-+                                         ReplayStateChange replay_fn,
-+                                         void *opaque)
++bool memory_region_has_private_shared_manager(MemoryRegion *mr)
++{
++    if (!memory_region_is_ram(mr) ||
++        !object_dynamic_cast(OBJECT(mr->gsm), TYPE_PRIVATE_SHARED_MANAGER)) {
++        return false;
++    }
++
++    return true;
++}
++
+ uint64_t generic_state_manager_get_min_granularity(const GenericStateManager *gsm,
+                                                    const MemoryRegion *mr)
  {
-     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
+@@ -3837,12 +3847,19 @@ static const TypeInfo ram_discard_manager_info = {
+     .class_size         = sizeof(RamDiscardManagerClass),
+ };
  
-     g_assert(rdmc->replay_discarded);
--    rdmc->replay_discarded(rdm, section, replay_fn, opaque);
-+    return rdmc->replay_discarded(rdm, section, replay_fn, opaque);
++static const TypeInfo private_shared_manager_info = {
++    .parent             = TYPE_GENERIC_STATE_MANAGER,
++    .name               = TYPE_PRIVATE_SHARED_MANAGER,
++    .class_size         = sizeof(PrivateSharedManagerClass),
++};
++
+ static void memory_register_types(void)
+ {
+     type_register_static(&memory_region_info);
+     type_register_static(&iommu_memory_region_info);
+     type_register_static(&generic_state_manager_info);
+     type_register_static(&ram_discard_manager_info);
++    type_register_static(&private_shared_manager_info);
  }
  
- void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+ type_init(memory_register_types)
 -- 
 2.43.5
 
