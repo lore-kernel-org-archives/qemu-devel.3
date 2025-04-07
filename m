@@ -4,81 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DA3C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 09:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D6AC36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 09:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1iaz-0007p5-W9; Mon, 07 Apr 2025 05:16:46 -0400
+	id 1u1ie3-0008Vh-Pw; Mon, 07 Apr 2025 05:19:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
- id 1u1iax-0007ox-PV
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:16:43 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
- id 1u1iau-0001L1-Es
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:16:43 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-30ddad694c1so43666351fa.2
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 02:16:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744017393; x=1744622193; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dFw9f9oORgNP86WG3ObM4nO5VHLeCGsVOu4jzneYOmU=;
- b=fUmBX2f+/7E4ahuvTTTbvrOEQ7Sl7jXJdFN6OMo4NqbwUYOE2enXhMO/zoePbPWF46
- ljF5NTcSsDrJLLtiXAMdnle1o8rRMaYsk3rakOpcZjTV/F3TCxmZ2PPY1Y9Ppfe3D9FP
- +BhLRho8YLACnyPEruLyRJgly6S2BM0vYEm5HX+BhZqZ/IE3NAp5R9trAO1FzY8FJY6f
- MiCi8krdFF91mcp/Kk4ST41Wa/zhBxBJqElyrSQRluFTJvahaMQuByPsq4Vd6bsB5cZr
- zyqq+t5BUnBc4RhUe6M1v47PoOvhZVwU8hheFE3q5c/wkJlJkOQRwPHb5XJSS76njh8v
- I1vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744017393; x=1744622193;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dFw9f9oORgNP86WG3ObM4nO5VHLeCGsVOu4jzneYOmU=;
- b=ZgnUufSltRqWHZTd3Wl8ZWUohIAoQshAMFiETd/YBkNYhXpi8ri+fhcHPfjCI7YPUx
- 3GzlPXGKt4qsZ37sKvvHEPRqgfomNVUtY/aFJNMBWRyJiQ6zXcHgmtmAxP3yJnDIUlDn
- ZDmGbp7XVNA91iX9DzyUjT4v7G1ZRTWzuqcKWYMudZmc26n0JGcuN1HGp9ppN8noHFNn
- APVVAaQVirumVkbi7DFY/RxLFqqVpS5IYHmYyatwwNusdAhi7BoQ9GNMJ2LJNfH7ffOy
- 9gVfKgesOx7gADSMvge2GjQSOHijBpBOwehy8sGuls97N4lFHu9Y6mcFxIaaisUqp5Ri
- E7bQ==
-X-Gm-Message-State: AOJu0YwgXecCPV9UalOqqApUgYk7UxGmCboEXYu1qBgj7loH/N2PwX/q
- hhmwlvo4HZ/HaTgVWdXYIGaqOv8HVirKZnJv7mEZCKUO6BZhgsL/YWtk/XhHBXDp81d3abMepwq
- u680zf6PASrE6taYJNA3f10GdL64=
-X-Gm-Gg: ASbGncvtEaq2NeuXs+vOUT1LmZJLQmSQIqG78m4ehq1b4dTYYzxPjdXCii3cVDcFdlN
- g3QgTSHwZMgOwhy3IVsw87MDD1ZHBGBl3fM9DRh6AyhcItmULVxVZBHyxCE9JFjrhCns6kJNk0Y
- C41QXPraU62v4UXUDs9RRS4iyJp3Nl
-X-Google-Smtp-Source: AGHT+IGrXuHP2ZdSv9Uy5u6HiX4X+aNtp0+yJLsreQ/oAbtDkd5XL45WNGMZwc1FdUhwPXuf8d1jL/IfOCWCThhMeMY=
-X-Received: by 2002:a05:651c:210c:b0:30b:ce0a:3e84 with SMTP id
- 38308e7fff4ca-30f0c02d108mr33461461fa.32.1744017393254; Mon, 07 Apr 2025
- 02:16:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <huangborong@bosc.ac.cn>)
+ id 1u1idu-0008U8-7D; Mon, 07 Apr 2025 05:19:47 -0400
+Received: from out28-98.mail.aliyun.com ([115.124.28.98])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <huangborong@bosc.ac.cn>)
+ id 1u1idp-0001cv-Qj; Mon, 07 Apr 2025 05:19:45 -0400
+Received: from DESKTOP-MLVKPO8.(mailfrom:huangborong@bosc.ac.cn
+ fp:SMTPD_---.cFrSX0c_1744017556 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 07 Apr 2025 17:19:24 +0800
+From: Huang Borong <huangborong@bosc.ac.cn>
+To: qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ qemu-devel@nongnu.org, wangran@bosc.ac.cn,
+ Huang Borong <huangborong@bosc.ac.cn>
+Subject: [PATCH v2 1/2] target/riscv: Add BOSC's Xiangshan Kunminghu CPU
+Date: Mon,  7 Apr 2025 17:19:03 +0800
+Message-Id: <20250407091903.274038-1-huangborong@bosc.ac.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
- <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
- <CAFvsdYk0J7ybdu+dL+w70Po1bGypLopBkixPp-ZzmTA8MdTr0w@mail.gmail.com>
- <pf24mn3twfrc2kfaszovdyj5rhh6d4r4ixawh2dyx5dbi5no3j@ryk4lzslrnye>
-In-Reply-To: <pf24mn3twfrc2kfaszovdyj5rhh6d4r4ixawh2dyx5dbi5no3j@ryk4lzslrnye>
-From: prashant patil <pmgpatil@gmail.com>
-Date: Mon, 7 Apr 2025 14:46:17 +0530
-X-Gm-Features: ATxdqUEoqgELP2RAALeMnM3W5h_cK4cinBHTDMYZsgpA01sGQk21M9La9cSjJgs
-Message-ID: <CAFvsdYmJFDuQzk6Byu+f4HcTO1EStin3vEMC+twh8P3T2ve6qA@mail.gmail.com>
-Subject: Re: Query on the dirty bitmap
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000350c4d06322cb1d2"
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=pmgpatil@gmail.com; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.28.98;
+ envelope-from=huangborong@bosc.ac.cn; helo=out28-98.mail.aliyun.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,162 +57,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000350c4d06322cb1d2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Add a CPU entry for the Xiangshan Kunminghu CPU, an open-source,
+high-performance RISC-V processor. More details can be found at:
+https://github.com/OpenXiangShan/XiangShan
 
-Thanks Eric.
-I have a few questions about the bitmap content shown by 'qemu-img map'.
-From below sample bitmap data:
-1. Why only some of the extents have start and offset values? And why are
-they the same values?
-2. What does the start value indicate? Is it logical offset or physical
-offset of data into qcow2?
+Note: The ISA extensions supported by the Xiangshan Kunminghu CPU are
+categorized based on four RISC-V specifications: Volume I: Unprivileged
+Architecture, Volume II: Privileged Architecture, AIA, and RVA23. The
+extensions within each category are organized according to the chapter
+order in the specifications.
 
-root@be-proxmox1:/# qemu-img map --output=3Djson --image-opts
-"$IMG,x-dirty-bitmap=3Dqemu:dirty-bitmap:bitmap1"
-  [{ "start": 0, "length": 196608, "depth": 0, "present": true, "zero":
-false, "data": true, "compressed": false, "offset": 0},
-{ "start": 196608, "length": 65536, "depth": 0, "present": false, "zero":
-false, "data": false, "compressed": false},
-{ "start": 262144, "length": 105840640, "depth": 0, "present": true,
-"zero": false, "data": true, "compressed": false, "offset": 262144},
-{ "start": 106102784, "length": 95485952, "depth": 0, "present": false,
-"zero": false, "data": false, "compressed": false},
-{ "start": 201588736, "length": 145227776, "depth": 0, "present": true,
-"zero": false, "data": true, "compressed": false, "offset": 201588736},
-{ "start": 346816512, "length": 131072, "depth": 0, "present": false,
-"zero": false, "data": false, "compressed": false},
-{ "start": 346947584, "length": 131072, "depth": 0, "present": true,
-"zero": false, "data": true, "compressed": false, "offset": 346947584},
-{ "start": 347078656, "length": 65536, "depth": 0, "present": false,
-"zero": false, "data": false, "compressed": false},
-{ "start": 347144192, "length": 9699328, "depth": 0, "present": true,
-"zero": false, "data": true, "compressed": false, "offset": 347144192},
-{ "start": 356843520, "length": 131072, "depth": 0, "present": false,
-"zero": false, "data": false, "compressed": false},
-{ "start": 356974592, "length": 716767232, "depth": 0, "present": true,
-"zero": false, "data": true, "compressed": false, "offset": 356974592}]
+Signed-off-by: Yu Hu <huyu@bosc.ac.cn>
+Signed-off-by: Ran Wang <wangran@bosc.ac.cn>
+Signed-off-by: Borong Huang <huangborong@bosc.ac.cn>
+---
+ target/riscv/cpu-qom.h |  1 +
+ target/riscv/cpu.c     | 72 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+)
 
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 4cfdb74891..f2908939e7 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -53,6 +53,7 @@
+ #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
+ #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+ #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
++#define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
+ #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+ 
+ OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 09ded6829a..a076d9dc0c 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -697,6 +697,76 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
+ #endif
+ }
+ 
++static void rv64_xiangshan_kmh_cpu_init(Object *obj)
++{
++    CPURISCVState *env = &RISCV_CPU(obj)->env;
++    RISCVCPU *cpu = RISCV_CPU(obj);
++
++    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU | RVH | RVV);
++    env->priv_ver = PRIV_VERSION_1_13_0;
++
++    /* Enable ISA extensions */
++    cpu->cfg.mmu = true;
++    cpu->cfg.pmp = true;
++
++    /*
++     * The RISC-V Instruction Set Manual: Volume I
++     * Unprivileged Architecture
++     */
++    cpu->cfg.ext_zicntr = true;
++    cpu->cfg.ext_zihpm = true;
++    cpu->cfg.ext_zihintntl = true;
++    cpu->cfg.ext_zihintpause = true;
++    cpu->cfg.ext_zimop = true;
++    cpu->cfg.ext_zcmop = true;
++    cpu->cfg.ext_zicond = true;
++    cpu->cfg.ext_zawrs = true;
++    cpu->cfg.ext_zacas = true;
++    cpu->cfg.ext_zfh = true;
++    cpu->cfg.ext_zfa = true;
++    cpu->cfg.ext_zcb = true;
++    cpu->cfg.ext_zbc = true;
++    cpu->cfg.ext_zvfh = true;
++    cpu->cfg.ext_zkn = true;
++    cpu->cfg.ext_zks = true;
++    cpu->cfg.ext_zkt = true;
++    cpu->cfg.ext_zvbb = true;
++    cpu->cfg.ext_zvkt = true;
++
++    /*
++     * The RISC-V Instruction Set Manual: Volume II
++     * Privileged Architecture
++     */
++    cpu->cfg.ext_smstateen = true;
++    cpu->cfg.ext_smcsrind = true;
++    cpu->cfg.ext_sscsrind = true;
++    cpu->cfg.ext_svnapot = true;
++    cpu->cfg.ext_svpbmt = true;
++    cpu->cfg.ext_svinval = true;
++    cpu->cfg.ext_sstc = true;
++    cpu->cfg.ext_sscofpmf = true;
++    cpu->cfg.ext_ssdbltrp = true;
++    cpu->cfg.ext_ssnpm = true;
++    cpu->cfg.ext_smnpm = true;
++    cpu->cfg.ext_smmpm = true;
++    cpu->cfg.ext_sspm = true;
++    cpu->cfg.ext_supm = true;
++
++    /* The RISC-V Advanced Interrupt Architecture */
++    cpu->cfg.ext_smaia = true;
++    cpu->cfg.ext_ssaia = true;
++
++    /* RVA23 Profiles */
++    cpu->cfg.ext_zicbom = true;
++    cpu->cfg.ext_zicbop = true;
++    cpu->cfg.ext_zicboz = true;
++    cpu->cfg.ext_svade = true;
++
++#ifndef CONFIG_USER_ONLY
++    set_satp_mode_max_supported(cpu, VM_1_10_SV48);
++#endif
++}
++
+ #ifdef CONFIG_TCG
+ static void rv128_base_cpu_init(Object *obj)
+ {
+@@ -3261,6 +3331,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
+     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
+                                                  MXL_RV64, rv64_xiangshan_nanhu_cpu_init),
++    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_KMH,
++                                                 MXL_RV64,  rv64_xiangshan_kmh_cpu_init),
+ #ifdef CONFIG_TCG
+     DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_cpu_init),
+ #endif /* CONFIG_TCG */
+-- 
+2.34.1
 
-Regards
-Prashant
-
-On Thu, Mar 6, 2025 at 3:44=E2=80=AFAM Eric Blake <eblake@redhat.com> wrote=
-:
-
-> On Wed, Mar 05, 2025 at 03:36:35PM +0530, prashant patil wrote:
-> > I was trying to read the bitmap of the running vm's disk. When I follow=
-ed
-> > below mentioned commands, then I was able to read the bitmap properly.
-> > block-dirty-bitmap-add, block-dirty-bitmap-disable, nbd-server-start,
-> > nbd-server-add,
->
-> Up to here, everything you've done is indeed the ideal way to get at
-> the contents of a bitmap from a live qemu process over an NBD connection.
->
-> > qemu-img
-> > map with x-dirty-bitmap image-opts.
->
-> Here, this works, but feels like a hack, because it is relying on the
-> x-dirty-bitmap feature of qemu.  The libnbd project ships with an
-> application 'nbdinfo --map' that can read the same information as
-> 'qemu-img map' but with a much nicer layout.  It's not going to
-> necessarily be faster, but because it is a fully-supported feature of
-> libnbd rather than a hack in qemu, it may prove more stable in the
-> long run, and certainly easier to understand.
->
-> --
-> Eric Blake, Principal Software Engineer
-> Red Hat, Inc.
-> Virtualization:  qemu.org | libguestfs.org
->
->
-
---000000000000350c4d06322cb1d2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thanks Eric.<div>I have a few questions about the bitmap c=
-ontent shown by &#39;qemu-img map&#39;.</div><div>From below sample bitmap =
-data:</div><div>1. Why only some of the extents have start and offset value=
-s? And why are they the same values?</div><div>2. What does the start value=
- indicate? Is it logical offset or physical offset of data into qcow2?</div=
-><div><br></div><div>root@be-proxmox1:/# qemu-img map --output=3Djson --ima=
-ge-opts &quot;$IMG,x-dirty-bitmap=3Dqemu:dirty-bitmap:bitmap1&quot;=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 [{ &quot;start&quot;: 0, &quot;length&quot;: 19660=
-8, &quot;depth&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;: false=
-, &quot;data&quot;: true, &quot;compressed&quot;: false, &quot;offset&quot;=
-: 0},<br>{ &quot;start&quot;: 196608, &quot;length&quot;: 65536, &quot;dept=
-h&quot;: 0, &quot;present&quot;: false, &quot;zero&quot;: false, &quot;data=
-&quot;: false, &quot;compressed&quot;: false},<br>{ &quot;start&quot;: 2621=
-44, &quot;length&quot;: 105840640, &quot;depth&quot;: 0, &quot;present&quot=
-;: true, &quot;zero&quot;: false, &quot;data&quot;: true, &quot;compressed&=
-quot;: false, &quot;offset&quot;: 262144},<br>{ &quot;start&quot;: 10610278=
-4, &quot;length&quot;: 95485952, &quot;depth&quot;: 0, &quot;present&quot;:=
- false, &quot;zero&quot;: false, &quot;data&quot;: false, &quot;compressed&=
-quot;: false},<br>{ &quot;start&quot;: 201588736, &quot;length&quot;: 14522=
-7776, &quot;depth&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;: fa=
-lse, &quot;data&quot;: true, &quot;compressed&quot;: false, &quot;offset&qu=
-ot;: 201588736},<br>{ &quot;start&quot;: 346816512, &quot;length&quot;: 131=
-072, &quot;depth&quot;: 0, &quot;present&quot;: false, &quot;zero&quot;: fa=
-lse, &quot;data&quot;: false, &quot;compressed&quot;: false},<br>{ &quot;st=
-art&quot;: 346947584, &quot;length&quot;: 131072, &quot;depth&quot;: 0, &qu=
-ot;present&quot;: true, &quot;zero&quot;: false, &quot;data&quot;: true, &q=
-uot;compressed&quot;: false, &quot;offset&quot;: 346947584},<br>{ &quot;sta=
-rt&quot;: 347078656, &quot;length&quot;: 65536, &quot;depth&quot;: 0, &quot=
-;present&quot;: false, &quot;zero&quot;: false, &quot;data&quot;: false, &q=
-uot;compressed&quot;: false},<br>{ &quot;start&quot;: 347144192, &quot;leng=
-th&quot;: 9699328, &quot;depth&quot;: 0, &quot;present&quot;: true, &quot;z=
-ero&quot;: false, &quot;data&quot;: true, &quot;compressed&quot;: false, &q=
-uot;offset&quot;: 347144192},<br>{ &quot;start&quot;: 356843520, &quot;leng=
-th&quot;: 131072, &quot;depth&quot;: 0, &quot;present&quot;: false, &quot;z=
-ero&quot;: false, &quot;data&quot;: false, &quot;compressed&quot;: false},<=
-br>{ &quot;start&quot;: 356974592, &quot;length&quot;: 716767232, &quot;dep=
-th&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;: false, &quot;data=
-&quot;: true, &quot;compressed&quot;: false, &quot;offset&quot;: 356974592}=
-]</div><div><br></div><div><br></div><div>Regards</div><div>Prashant</div><=
-/div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Thu, Mar 6, 2025 at 3:44=E2=80=AFAM Eric Blake &lt;=
-<a href=3D"mailto:eblake@redhat.com">eblake@redhat.com</a>&gt; wrote:<br></=
-div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, Mar 05, 2025 =
-at 03:36:35PM +0530, prashant patil wrote:<br>
-&gt; I was trying to read the bitmap of the running vm&#39;s disk. When I f=
-ollowed<br>
-&gt; below mentioned commands, then I was able to read the bitmap properly.=
-<br>
-&gt; block-dirty-bitmap-add, block-dirty-bitmap-disable, nbd-server-start,<=
-br>
-&gt; nbd-server-add,<br>
-<br>
-Up to here, everything you&#39;ve done is indeed the ideal way to get at<br=
->
-the contents of a bitmap from a live qemu process over an NBD connection.<b=
-r>
-<br>
-&gt; qemu-img<br>
-&gt; map with x-dirty-bitmap image-opts.<br>
-<br>
-Here, this works, but feels like a hack, because it is relying on the<br>
-x-dirty-bitmap feature of qemu.=C2=A0 The libnbd project ships with an<br>
-application &#39;nbdinfo --map&#39; that can read the same information as<b=
-r>
-&#39;qemu-img map&#39; but with a much nicer layout.=C2=A0 It&#39;s not goi=
-ng to<br>
-necessarily be faster, but because it is a fully-supported feature of<br>
-libnbd rather than a hack in qemu, it may prove more stable in the<br>
-long run, and certainly easier to understand.<br>
-<br>
--- <br>
-Eric Blake, Principal Software Engineer<br>
-Red Hat, Inc.<br>
-Virtualization:=C2=A0 <a href=3D"http://qemu.org" rel=3D"noreferrer" target=
-=3D"_blank">qemu.org</a> | <a href=3D"http://libguestfs.org" rel=3D"norefer=
-rer" target=3D"_blank">libguestfs.org</a><br>
-<br>
-</blockquote></div>
-
---000000000000350c4d06322cb1d2--
 
