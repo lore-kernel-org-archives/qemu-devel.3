@@ -4,86 +4,204 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F153C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40FC3C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1hIr-0001ZV-W2; Mon, 07 Apr 2025 03:53:58 -0400
+	id 1u1hIt-0001cy-2v; Mon, 07 Apr 2025 03:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
- id 1u1hIT-0001Xv-2G; Mon, 07 Apr 2025 03:53:33 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oenhan@gmail.com>)
- id 1u1hIQ-0005gK-Hd; Mon, 07 Apr 2025 03:53:32 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-ad51f427054so2666375a12.1; 
- Mon, 07 Apr 2025 00:53:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744012407; x=1744617207; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cf+kAUA+YjpZvAnjsn7Us7xiQdIDLEdxWEeNxR7m0Cw=;
- b=Jgqk5n2H9acVzv/NRzFpL5SLvgxXedVi6zhzAUBwOLmjscbw20zvXVulfC7vuDYWsM
- DymaOD3bPqz6CfDUuA1O/x9ThSwroFsRGGY0IFyf9NBsU0Gei7kytJ7zJOJperqh8kfC
- b5YRBhPa2J37mLKuJjEJGIicQDR2JawAzk1ZwhNH4mqgJa4t3+W5QjqXwGjsN1XYXcLS
- ffsR+Cmb+XddTnHPT5+te3zw5qqrNVUD6IR8AxVeKYYyXE3N4sR66CKLE8lUlunHR5kA
- s/RAcU9jkgdXwl+6vu+PmHascMefVSJuikD5mY2ZejYL+7T6LUw9DCP+J6Y2F9Wq76f7
- hHOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744012407; x=1744617207;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cf+kAUA+YjpZvAnjsn7Us7xiQdIDLEdxWEeNxR7m0Cw=;
- b=M2ifo3w8PK8Sin5YyofLyWETb6sbBijHE44E0eEqrcNRQc/TxkvUTqI83Pvb2Rlk22
- u1waJmHy3bDDLdn8YQUvvjq5Eya4qFCxMh61OFGdV5Yr5XMwnuF5q0/85DkGfORlqB0E
- DwQpUe3U1eQ9o/Bzcqcm7cPPVEj9infq47usnqVWBtU1cLJode+tdc5YaLu5oSNyDONF
- wwj2ZCljRN3H4Cpr/b+sygLZqmNluVNBybycbjikEauOR/1sbi9mpIbP2dLJP+q4g0HO
- y+/3n2t+jtta2KL4Mhieg/crtXo3pXOXWZD1tTrqALVI/G3jboAXPrm6k1aYRetyFVQS
- uU7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFRxtbREMRR3VWf/bZewuNFLc8eYKQbDJKauKepSDM0bb5pG6aDc7X/cu/RTjwEPYp0ibXgvG4MuIiRbA=@nongnu.org,
- AJvYcCVpcxVojXv+jMR7vID4UTgue0bXvdmIV97VtlMf3MvLtbd1T1MfItZjtWHrD4/2sKKZnD/0SMr0Cpda@nongnu.org
-X-Gm-Message-State: AOJu0YykplIqzdx8OnPzXDG46hPW9N3IMjNc1lAryGs6s8+4MZ5wpyW0
- 8b8N+Fni7A/1ZQ60flBabckWw4HHMUrd4HFVZcezRdt/P6WFCx9dnxK1LeuZmRyMwhMObL5+lna
- PlNGd95lytB1siWSrcIRGTVcZUHE=
-X-Gm-Gg: ASbGncsqOYtKiX2ioE0IsQ0oTJTBDmcpIqboWmmRmJNs1V1Xz04rIm8KaRZJY9tyc5Q
- VzMPnf8er94LXFCzO51lht4jgJI/jAR0pkst/FNLET10Kys5XBHJ6hCQrFlj4DRPGjHWCLRmwbI
- SsVVWIaR3n4frOa2r1AYVIWpjnpPIBD1uVRvFW3wTL00zNUBrA
-X-Google-Smtp-Source: AGHT+IFGRCDl0yoE5pZnqM/KXEQbucT5Tw8aJr2kfs7Pr21D1Tc4dymtPg4g8RyuO8PRfrJ0Ofac9VBJw4cRF6DJhgo=
-X-Received: by 2002:a17:90b:2704:b0:2ee:693e:ed7a with SMTP id
- 98e67ed59e1d1-306a4b86db2mr15720076a91.35.1744012407324; Mon, 07 Apr 2025
- 00:53:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1u1hIa-0001Z9-S3
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:53:51 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1u1hIY-0005gw-Jq
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:53:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1744012418; x=1775548418;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=rKnnWRgY+kHrzLRf3zmKYqBLIwg21K062K2ADcElaaI=;
+ b=ah3nzMHljom1KcttpniIsK6fIhDghy31tGskbMBDCAMPab3LIOnry2nf
+ TGdETr1p/2iKjyoyCXT8qlPytgCmnrrD3iaeZfhTbvZwkd1SER2AfQQPU
+ JmZ1cRlj6HskNJMLT0XJLU0B0RzvXtfRh6tg9kVdFiwVN2AjPPLaExBRv
+ 3E4CQ4E2xpplCt7jXN9+Tvst1/97ey94wj0UR3wzsST/cMUONMXYbfM3z
+ 3uWCGWhrcwVY/ANYz3NKLHZFOm4zxjyU3wlj/tAe5l3QjTkKBxNVDrqXL
+ QA+4mA6XXoHJeF5BrO6dSJ3mB2Idxrn2f4pPUcp5BN4PajbIg6DlIsWr6 Q==;
+X-CSE-ConnectionGUID: f/3PZho2QaKa34anS7Y67Q==
+X-CSE-MsgGUID: KK4UcAhMTG65FPqH55oLvQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="45502179"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="45502179"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Apr 2025 00:53:34 -0700
+X-CSE-ConnectionGUID: MwXHh3aATryuP2eCDlBnaw==
+X-CSE-MsgGUID: 7UZhx35cSSql8k5IgyJc/Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128380292"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 07 Apr 2025 00:53:34 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Mon, 7 Apr 2025 00:53:33 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Mon, 7 Apr 2025 00:53:33 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.174)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Mon, 7 Apr 2025 00:53:32 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dbCRf8q1BBClB2x7MyE5VmnDlXRhYqT39wU/B7bR4EJScCn+7cgAU1KA4XR9Br6zdk+3YOCO83ypj+mFAelvKO624ton2jo1h3/ybYu2nb+Au7NQrx0QIefI1eOBgud1xtLSBv8AjTAOfWp6oGg+IsHJUfmYdnJXr3gcMxR5K6ouBl8ErbU3gE8d8vKLRlR4k+0CwIx3zUaQ8Fca0qUf3vn8bcvPFJqHQG7mTcUpXQZmQOdnZU8+whfd2DBQY1z6ptiMJpxUmHmqcoi20gqytMpWjxxq56yrj4fpNhk7p1YlZBhUBvjThL6i9zSZHxb+FYBs32e7RsxMXc49S8QHAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rKnnWRgY+kHrzLRf3zmKYqBLIwg21K062K2ADcElaaI=;
+ b=flxigQAmwrb/OupV7xZ1jq57pFru0/0KcPCkBG5dhulzk8DULwewOZmS5IY9UfMCLAbYfPEaC+xOxgwomMcHDvnpfnAV3hFksMwFlpWrwymwoqrS7rdbtd1UksXCi/nPd/e/hBLp3n/O4VW1Rpo3hE/aH77ulvtIn65FGLd2G3saizuByoO1FzSwAkM7V9ZnAMveFKihpMzg5XnwXwlYy+lHGtHOuzxVK/alhghWOYeO0oFP+l1HQAmEMSyKMERVl5VhBCzWQHOPR8+AMc3tQ+bUR6wT9BmJZTFD1UhQtZ5tYYq9d+liflGj09BQyjyRYBj7IxNJqM5cIa0SyOF3BQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by DM3PPFD3EB37DFC.namprd11.prod.outlook.com (2603:10b6:f:fc00::f52)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8606.34; Mon, 7 Apr
+ 2025 07:53:31 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%3]) with mapi id 15.20.8606.029; Mon, 7 Apr 2025
+ 07:53:30 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Alex Williamson
+ <alex.williamson@redhat.com>
+CC: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
+ John Levon <john.levon@nutanix.com>, Joao Martins <joao.m.martins@oracle.com>
+Subject: RE: [PATCH for-10.1 v2 11/37] vfio: Introduce new files for
+ VFIORegion definitions and declarations
+Thread-Topic: [PATCH for-10.1 v2 11/37] vfio: Introduce new files for
+ VFIORegion definitions and declarations
+Thread-Index: AQHbniQW1fH1XhI+g0itsTgL1r2YAbOGurYAgBEcVoCAAAggsA==
+Date: Mon, 7 Apr 2025 07:53:30 +0000
+Message-ID: <SJ0PR11MB6744784C71F86B276A0B31BD92AA2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20250326075122.1299361-1-clg@redhat.com>
+ <20250326075122.1299361-12-clg@redhat.com>
+ <SJ0PR11MB6744636C2266BA6A6837CB8D92A12@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <b0b5b230-4be8-4406-9ed2-978e9bcd4713@redhat.com>
+In-Reply-To: <b0b5b230-4be8-4406-9ed2-978e9bcd4713@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DM3PPFD3EB37DFC:EE_
+x-ms-office365-filtering-correlation-id: b45b5cd3-8a3f-4db6-43dc-08dd75a94a0d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?dHllaFZIZWd1Rk5rcWY3M1JtTXBUMEQzeWxaM0ZqVy9SYndDKzl1cmUyQXQv?=
+ =?utf-8?B?UHZKdlMySVJXMGVndUMxaGVSQ0xmSVZlMHQ3ZEdiRmovbmlodEoxajVyTG5M?=
+ =?utf-8?B?RmFGMDRkYlgzWnRadWNqOVlNMW5lZ2lDSTF1TSs1cWt6NEUyZ3VEeWc5S0Vp?=
+ =?utf-8?B?VERDT0pKWGV4Q2NGbmNZKzdYNGhicytGYmlvZUpaRkEvVzBScWV3b1FYSXJY?=
+ =?utf-8?B?d3ZFYW83cHZxV29pNlNkc0lKeGRDYnFGUHdGclF1a1M3R0VVeGdXK3VRN2dT?=
+ =?utf-8?B?S3JmRStyeXZLQStRc2xCOW5WU1RJVEVaUVZaVlB2a0RIQ20wMm1xSXNaY0dr?=
+ =?utf-8?B?YlZqSEZDTmhEamxYOVpUQ2NFMTF2Y1NydWhoNktwa3ord3dHL09kL08yK04r?=
+ =?utf-8?B?M2xoZ3FXSHhJeDhXZFNKRWdlbGVqQmlTajJUK0hFR3ZuWENRMSt5dUpYSk1q?=
+ =?utf-8?B?blNJMGFzZ3EwTmZTRVAreVFsQ0hXT0NEZWhPODhIWHh1TlVUdlA1VHpRSUtz?=
+ =?utf-8?B?RUNEbnFxQVArM1NkS3RDamZmb0RJU0hLQ1lBVmVxWUU0cjRPQjR5SHJHNGpI?=
+ =?utf-8?B?N21EZWpKSVlZUXQ5Z2p6Vm9GamlqaktwRlhaODNwZStndEtyeCt1dU1XNm4x?=
+ =?utf-8?B?TjBOaUJZYXhPbWc0Z3Fha2ZSbEpGVEZlWW5LVXpDZzNxRDVBQ3FkMmFBemM0?=
+ =?utf-8?B?eGNYZjRXbnBxMGhHeGdqUi9WaVhWc3B3M0dPalB6eHZXVGpBbDk0TjgyRjVQ?=
+ =?utf-8?B?K0Q1OXhZZTJKNHVDSjJhTFJ3K2xXTDY0YkxwNHphM1hyR1hnRVNkYjAwYUhj?=
+ =?utf-8?B?dEY3b1VlcVVGVWhwSE5PcVFpb29IbThjeGJNVUY4eXY0RmVSMEJKS2grTUlo?=
+ =?utf-8?B?ZHl0dzNHbmxTV1kyczB2UDdSNXgxdXZvMU5CeVYvRER0MnFFTGk1UDBpNkd0?=
+ =?utf-8?B?M1hEd0RQemhFYnRrQ3RJYlZDRlBRbWpqNjEybGxQbmNDSlF0N1ZzejhLbEpZ?=
+ =?utf-8?B?QkUzclh0VjNZUCtnU3VFU0dQM0JyNWF2OWpTaXpaSVorZkVDZGxCL05FZllM?=
+ =?utf-8?B?dmNBUTJOSXY4emVnUTBGVFh3eDhNenlUdVB2N2YwVDVPUWovVGtvWUEzcjlP?=
+ =?utf-8?B?dDliL1VOaXVScEk2bXphMHdFRERBQW5BejdvNzFmVk9WdmlLTVJCRmpIbnFl?=
+ =?utf-8?B?RXVkS2NNSXFxdTRibW5mQWhHczhGOUFXelVZWm9EQlVYeisxeGdEWFJRT1dx?=
+ =?utf-8?B?N1BTSk02emV0OC9jOHFvaHBDRXBjeGltODRRa0NIUkQ0VFZaQitUdW9mRllt?=
+ =?utf-8?B?SXZOZmpDV3hPc2REemZPTkx5cnVjZ05veEFjejgxeTlWN0FqOVplaVEvejIz?=
+ =?utf-8?B?Vjd1Y3djZW5GcmNlUnhsMjBNeWt4c2RRNnNCUjhUNDVqZG5abHlVUFlUMXo1?=
+ =?utf-8?B?Y1d6cS9zZXhmSEsrK1Z3ZkNXVDQwQkNjVVZZY0ZWMzR2eC94djVNUG1lYjZ3?=
+ =?utf-8?B?VGtVWFZFb0hZWXpqUE9majBxWDZCYnFrREd6bzAvVXkvdEtVTVhmVXlFVTFT?=
+ =?utf-8?B?Y1hhdVpLNWlFNzBrbk41YUNrL1NwS3pxc0h3bmJqNHI3M3NVRm1BaVhLTGFT?=
+ =?utf-8?B?N01Vbkg0a3BZNmg4bG5yTEJybVNNeGVJUHIrcWVwSHZBR05PT0ZvS05mK1N1?=
+ =?utf-8?B?T0NiRmxjc1FQaGM3YUlmQVZ1ZHNGNFRYYlB6OTEwTXhWaWhvM1JGUURtMjkx?=
+ =?utf-8?B?YW5xOWp2azBOd2hvdTZaVWtPU0w1UitpUnBCRk5jWE9wclBKMUlQb0tMbjkw?=
+ =?utf-8?B?eEFJditKSUFvdGROdXd3TnZsYVF0TUR3VW1xZjBYQkFGT3VTeGtGRXgwRmlS?=
+ =?utf-8?B?SU5VTlJ5VC92RDRoWXB5WU1UTTY2TVFKSDJiZ0RQVlMwa0YyR25Hd0hLWW91?=
+ =?utf-8?Q?gMeQ5zlk0etdYt2ggVh+SMSjY4lKPuVZ?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NmdjeGtDbis4MUtpMWxwcGE4NlhiajkzTi80bzg3MTl6SWhrekwxaUE2Wkh4?=
+ =?utf-8?B?Z3VTYWNCQlVlM2RhWk1vVVJXQ2hCRVBPWUY4L0pzc3lTNUg1TmFpNFR2Wkgy?=
+ =?utf-8?B?b1V3eG5wbFBvR3VlS1c1eVZGRmNWSVMvT3AvYWE4Z1UyRVRKbDNaL0VlWmVM?=
+ =?utf-8?B?Y2kvMFB3cFMyMUdyVWFEaTVnMzVZdlVzWTIxbTk3MmVULzUwOUgxU3lwQXNN?=
+ =?utf-8?B?aUlWSXhYNGd2MmNSRThNRWF5OWNHMG9pS1pJWWhLdVREUml2UWdId3Iwd1M1?=
+ =?utf-8?B?WXljajhONHNQT01BNnpJdzdWOGU3alBwRTUyc2RsenlUQlI3ZGlqN1hJd3J0?=
+ =?utf-8?B?bTVPVW5qQTZ2SWVVT3F0L1ZIM2tPaDh5cXdUNkg2REJIOWZIQ01oQThBT09k?=
+ =?utf-8?B?WXBod3o2QitaakZlbEpLMnNvVS81OFFLNXRGWHVKK0xzRkQ0Y0dlRFFiZXZM?=
+ =?utf-8?B?YlNSUFc1UXhxME14VzNUTUFLcHBiL0g3cGF1KzRNRVR0eXovQ3J1VFZPcFBT?=
+ =?utf-8?B?dGZ3Um9QYlVBL2F5WmdIZS9iVTYyMUJjOFRoeENlZ2hLeU50QVhsNXRXL1F1?=
+ =?utf-8?B?TFhPUkoydUxCajE1RFdTZTI4U3dyK3Yxc0M0VXBDYVdWOWZJSnR3OVhHaC9Q?=
+ =?utf-8?B?aWplNUxOOWxDMEFzdHlGSDlqOXQyb3hJdnVDeFhkcTFBdDh1Y3VtenJFVGk1?=
+ =?utf-8?B?T0llMnJxMVM1ZmNFQUM0UndEbTNBY3h3MGJqRFdFR2tOYkk1SUJYUERxSjlF?=
+ =?utf-8?B?YlRmd04zYTdZbnBGck94eHQ5M0NmekRwSjlIYVc4aEVyZDViNnN1bVk1NFNG?=
+ =?utf-8?B?WUl6QnZVVDk2TFV1TFlyT1NVYzROOVZnc1kxdDlqeWg0YVQvaThHZkxIMTU4?=
+ =?utf-8?B?MWNiSzJFS2U5ZU82R0dSWStLUXMvWVFmSjg0ekRHNTV1L2FWU01zaHVmVzNW?=
+ =?utf-8?B?ZnBobzI4cnl6cnpuTlVmV2dnWnNrNEl3UTNOYk1Ldzg1R1hCMXBwM3NLNmdO?=
+ =?utf-8?B?RERjNlYxSGxZMXpZRlg2ZmJ6b0FTUnVRdG05MENxa3FUTVBLK1RmZ1E0K3FF?=
+ =?utf-8?B?cnhpVS93UDl5SWtLa0w2VzFVVHV3QURpdGlpTURrZWtZbDQwckcvYitkd2NF?=
+ =?utf-8?B?c2hSRFNmWmxpNEZiK2Z1b3FwajFMZ3N2WVpXSUJRcG84bU15L3Jrc1NvbDE2?=
+ =?utf-8?B?MzRGS2Z0YXU1T1krZTl6SXQwSW4wMnNFS1JsUU5QcW9zdVVUcFZ3bFZSSzk2?=
+ =?utf-8?B?eVc5dys0WmJFa2NOZHFtMUFHcy9qa3kyVk1lVnJBVWZoVG5XaTBQMnhJaDFK?=
+ =?utf-8?B?bXZrL0p5RHpkdnJpMDhHeWZDdjZUdnJvNDFndVlBV3R6c0RmcHFIaGUxa0Fl?=
+ =?utf-8?B?blAwSnRnd0pPdkhiWThvRGRsR29tcE0zTCtFVnowajZKUzRySk5ueTBBd1VY?=
+ =?utf-8?B?a2RTcDBrZ2VMNjZkeFpwV2NRMEJhY0xBc1IrVHU2dXM5ZW1JWmdvUlFRVGNP?=
+ =?utf-8?B?Y0NKZ0NRTGJBZmxFc2VHSDM3VmZFeUxabkNzQUtwYmxDUzVWUHliRVNCdVJI?=
+ =?utf-8?B?SlFtb3l0YlBtQVRJZ3ZDVG5IaS9WRlpxa3gvV2N2SWt2UjFsWTR1bjFUL1l5?=
+ =?utf-8?B?WGNjQUFKZ0xvMWw0VHZjQkpheWlLbENFSFVrdnpIbkpvdEtnOS8rZGU1eDdM?=
+ =?utf-8?B?MG9OLzBiT05wV0NDdmdKM1I3TEd5K2dVeFloaDI3MER2ZkVGaXJzOEhOTU9a?=
+ =?utf-8?B?THNKZWhmQmQ5NXd0Zk9heDhXVzV1T2RYN1pQYlU5anRWcWc2eU8rVkdRZWpH?=
+ =?utf-8?B?RUY2L0NEa0tFcHJJbnVNQWNXczQrOWxHNXc4UHRXTWdwY29CRGxwN1RiVVpR?=
+ =?utf-8?B?WE12aldUZVh4ZlR3bG5hZU1QNnA0VjhHZVJncURPZHgxalI0TUR1U2xuWVJW?=
+ =?utf-8?B?akUxaDcxakdOMTFxb2lJR2hTRWp4WjF6Z1Z5WDVhZUx1VUJzZ0dzQ2VBSmdx?=
+ =?utf-8?B?V2FTVDJ6VmlDcnFnUWd1WFlRYjBPTndOaW95Z2trS3Q1VFk1MTB2UmgzYWJl?=
+ =?utf-8?B?emc1VHUyTnI5UHJadXZIcW43UTdkKzdLbjh5dFcwNCtVS0hNV0dyRTYxc2kr?=
+ =?utf-8?Q?rjgsyyaHC/ahfkFtz+12MGnv8?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20250326082537.379977-1-hanht2@chinatelecom.cn>
- <rqx2ixzzd3vnxirsyone67udq6xjztpp2jihwa7r44ffmdtjol@lpao7euzvcvj>
-In-Reply-To: <rqx2ixzzd3vnxirsyone67udq6xjztpp2jihwa7r44ffmdtjol@lpao7euzvcvj>
-From: Huaitong Han <oenhan@gmail.com>
-Date: Mon, 7 Apr 2025 15:53:24 +0800
-X-Gm-Features: ATxdqUF8miOlB0KSZGTizFIXSnjbsMLLAn2FG8UAFSu-wcGPAeA4TizwINIYJsg
-Message-ID: <CAAuJbeJCz8btAZCAcg6+7jmEGH-pfcK6Qo1CCo85sC92CXX+GA@mail.gmail.com>
-Subject: Re: [PATCH] vhost: Don't set vring call if guest notifier is unused
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com, 
- pasic@linux.ibm.com, farman@linux.ibm.com, borntraeger@linux.ibm.com, 
- leiyang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Huaitong Han <hanht2@chinatelecom.cn>,
- Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>, 
- Jidong Xia <xiajd@chinatelecom.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=oenhan@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b45b5cd3-8a3f-4db6-43dc-08dd75a94a0d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Apr 2025 07:53:30.8343 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9ASM8I4NHIRC+ad3++TWDg/EEohHr3xriTYvidguD7zGwYeEp1mlytM3WhOqm5q7D3y/piwJZxcHyCvxUMi8+TRFHBKgMbzASF/2vMcqzus=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPFD3EB37DFC
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.15;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,233 +218,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefano Garzarella <sgarzare@redhat.com> =E4=BA=8E2025=E5=B9=B44=E6=9C=881=
-=E6=97=A5=E5=91=A8=E4=BA=8C 18:49=E5=86=99=E9=81=93=EF=BC=9A
-
->
-> On Wed, Mar 26, 2025 at 04:25:37PM +0800, oenhan@gmail.com wrote:
-> >From: Huaitong Han <hanht2@chinatelecom.cn>
-> >
-> >The vring call fd is set even when the guest does not use msix (e.g., in=
- the
-> >case of virtio pmd), leading to unnecessary CPU overhead for processing
-> >interrupts. The previous patch optimized the condition where msix is
->
-> What would be the previous patch?
->
-> If you're referencing a patch already merged, please add them in the
-> same form you used in Fixes, for example:
-> Commit XXXXX ("vhost: ...") optimized the condition ...
->
-Accept
-
-> >enabled
-> >but the queue vector is unset. However, there is a additional case where=
- the
-> >guest interrupt notifier is effectively unused and the vring call fd sho=
-uld
-> >also be cleared: the guest does not use msix and the INTX_DISABLED bit i=
-n the PCI
-> >config is set.
->
-> I don't know this code very well, can you explain better what you are
-> changing with this patch and why change the name of
-> query_guest_notifiers?
->
-There's the case where the guest uses INTx, but the INTx_DISABLED bit
-is set =E2=80=94 meaning no notifier will actually be used either. This pat=
-ch
-generalizes the logic to cover these cases.
-The current name might be misleading. It seems to imply the device has
-notifiers enabled, but in fact, the check is meant to reflect whether
-the guest is actively using any interrupt mechanism.  I felt renaming
-it could make the intent more clear and reduce confusion. Let me know
-if you think it's better to keep the original name.
-
-> >
-> >Fixes: 96a3d98d2c ("vhost: don't set vring call if no vector")
-> >
-> >Test result:
-> >https://raw.githubusercontent.com/oenhan/build_log/refs/heads/main/qemu/=
-2503261015/build/meson-logs/testlog.txt
->
-> Does it make sense to have this link in the commit, will it always be
-> accessible?
-MST initially asked me to make the test result public.  I understand
-that embedding a direct test log link into the commit log is not good,
-I will remove the test result link from the commit log in the next
-version, and instead include it in the email reply body.
-
->
-> >
-> >Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
-> >Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
-> >Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
-> >---
-> > hw/pci/pci.c                   |  2 +-
-> > hw/s390x/virtio-ccw.c          |  9 ++++++---
-> > hw/virtio/vhost.c              |  5 ++---
-> > hw/virtio/virtio-pci.c         | 15 ++++++++++-----
-> > include/hw/pci/pci.h           |  1 +
-> > include/hw/virtio/virtio-bus.h |  2 +-
-> > 6 files changed, 21 insertions(+), 13 deletions(-)
-> >
-> >diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> >index 2844ec5556..503a897528 100644
-> >--- a/hw/pci/pci.c
-> >+++ b/hw/pci/pci.c
-> >@@ -1719,7 +1719,7 @@ static void pci_update_mappings(PCIDevice *d)
-> >     pci_update_vga(d);
-> > }
-> >
-> >-static inline int pci_irq_disabled(PCIDevice *d)
-> >+int pci_irq_disabled(PCIDevice *d)
-> > {
-> >     return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DIS=
-ABLE;
-> > }
-> >diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-> >index 43f3b162c8..af482a22cd 100644
-> >--- a/hw/s390x/virtio-ccw.c
-> >+++ b/hw/s390x/virtio-ccw.c
-> >@@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState =
-*d, bool running)
-> >     }
-> > }
-> >
-> >-static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
-> >+static bool virtio_ccw_query_guest_notifiers_used(DeviceState *d, int n=
-)
-> > {
-> >     CcwDevice *dev =3D CCW_DEVICE(d);
-> >+    VirtioCcwDevice *vdev =3D VIRTIO_CCW_DEVICE(d);
-> >+    VirtIODevice *virtio_dev =3D virtio_bus_get_device(&vdev->bus);
-> >
-> >-    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
-> >+    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
-> >+            && virtio_queue_vector(virtio_dev, n) !=3D VIRTIO_NO_VECTOR=
-;
-> > }
-> >
-> > static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
-> >@@ -1270,7 +1273,7 @@ static void virtio_ccw_bus_class_init(ObjectClass =
-*klass, void *data)
-> >     bus_class->max_dev =3D 1;
-> >     k->notify =3D virtio_ccw_notify;
-> >     k->vmstate_change =3D virtio_ccw_vmstate_change;
-> >-    k->query_guest_notifiers =3D virtio_ccw_query_guest_notifiers;
-> >+    k->query_guest_notifiers_used =3D virtio_ccw_query_guest_notifiers_=
-used;
-> >     k->set_guest_notifiers =3D virtio_ccw_set_guest_notifiers;
-> >     k->save_queue =3D virtio_ccw_save_queue;
-> >     k->load_queue =3D virtio_ccw_load_queue;
-> >diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> >index 6aa72fd434..32634da836 100644
-> >--- a/hw/virtio/vhost.c
-> >+++ b/hw/virtio/vhost.c
-> >@@ -1341,9 +1341,8 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-> >         vhost_virtqueue_mask(dev, vdev, idx, false);
-> >     }
-> >
-> >-    if (k->query_guest_notifiers &&
-> >-        k->query_guest_notifiers(qbus->parent) &&
-> >-        virtio_queue_vector(vdev, idx) =3D=3D VIRTIO_NO_VECTOR) {
-> >+    if (k->query_guest_notifiers_used &&
-> >+        !k->query_guest_notifiers_used(qbus->parent, idx)) {
-> >         file.fd =3D -1;
-> >         r =3D dev->vhost_ops->vhost_set_vring_call(dev, &file);
-> >         if (r) {
-> >diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> >index 3ca3f849d3..25ff869618 100644
-> >--- a/hw/virtio/virtio-pci.c
-> >+++ b/hw/virtio/virtio-pci.c
-> >@@ -30,6 +30,7 @@
-> > #include "qemu/error-report.h"
-> > #include "qemu/log.h"
-> > #include "qemu/module.h"
-> >+#include "hw/pci/pci.h"
-> > #include "hw/pci/msi.h"
-> > #include "hw/pci/msix.h"
-> > #include "hw/loader.h"
-> >@@ -1031,7 +1032,7 @@ static void virtio_pci_one_vector_mask(VirtIOPCIPr=
-oxy *proxy,
-> >
-> >     /* If guest supports masking, keep irqfd but mask it.
-> >      * Otherwise, clean it up now.
-> >-     */
-> >+     */
->
-> Unrelated change.
->
-> >     if (vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
-> >         k->guest_notifier_mask(vdev, queue_no, true);
-> >     } else {
-> >@@ -1212,10 +1213,15 @@ static int virtio_pci_set_guest_notifier(DeviceS=
-tate *d, int n, bool assign,
-> >     return 0;
-> > }
-> >
-> >-static bool virtio_pci_query_guest_notifiers(DeviceState *d)
-> >+static bool virtio_pci_query_guest_notifiers_used(DeviceState *d, int n=
-)
-> > {
-> >     VirtIOPCIProxy *proxy =3D to_virtio_pci_proxy(d);
-> >-    return msix_enabled(&proxy->pci_dev);
-> >+    VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >+
-> >+    if (msix_enabled(&proxy->pci_dev))
-> >+        return virtio_queue_vector(vdev, n) !=3D VIRTIO_NO_VECTOR;
-> >+    else
-> >+        return !pci_irq_disabled(&proxy->pci_dev);
-> > }
-> >
-> > static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, boo=
-l assign)
-> >@@ -2599,7 +2605,7 @@ static void virtio_pci_bus_class_init(ObjectClass =
-*klass, void *data)
-> >     k->save_extra_state =3D virtio_pci_save_extra_state;
-> >     k->load_extra_state =3D virtio_pci_load_extra_state;
-> >     k->has_extra_state =3D virtio_pci_has_extra_state;
-> >-    k->query_guest_notifiers =3D virtio_pci_query_guest_notifiers;
-> >+    k->query_guest_notifiers_used =3D virtio_pci_query_guest_notifiers_=
-used;
-> >     k->set_guest_notifiers =3D virtio_pci_set_guest_notifiers;
-> >     k->set_host_notifier_mr =3D virtio_pci_set_host_notifier_mr;
-> >     k->vmstate_change =3D virtio_pci_vmstate_change;
-> >@@ -2630,4 +2636,3 @@ static void virtio_pci_register_types(void)
-> > }
-> >
-> > type_init(virtio_pci_register_types)
-> >-
-> >diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> >index 822fbacdf0..de4ab28046 100644
-> >--- a/include/hw/pci/pci.h
-> >+++ b/include/hw/pci/pci.h
-> >@@ -256,6 +256,7 @@ void pci_del_capability(PCIDevice *pci_dev, uint8_t =
-cap_id, uint8_t cap_size);
-> >
-> > uint8_t pci_find_capability(PCIDevice *pci_dev, uint8_t cap_id);
-> >
-> >+int pci_irq_disabled(PCIDevice *d);
-> >
-> > uint32_t pci_default_read_config(PCIDevice *d,
-> >                                  uint32_t address, int len);
-> >diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-b=
-us.h
-> >index 7ab8c9dab0..de75a44895 100644
-> >--- a/include/hw/virtio/virtio-bus.h
-> >+++ b/include/hw/virtio/virtio-bus.h
-> >@@ -48,7 +48,7 @@ struct VirtioBusClass {
-> >     int (*load_done)(DeviceState *d, QEMUFile *f);
-> >     int (*load_extra_state)(DeviceState *d, QEMUFile *f);
-> >     bool (*has_extra_state)(DeviceState *d);
-> >-    bool (*query_guest_notifiers)(DeviceState *d);
-> >+    bool (*query_guest_notifiers_used)(DeviceState *d, int n);
-> >     int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
-> >     int (*set_host_notifier_mr)(DeviceState *d, int n,
-> >                                 MemoryRegion *mr, bool assign);
-> >--
-> >2.43.5
-> >
->
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
+IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIGZvci0xMC4xIHYyIDExLzM3
+XSB2ZmlvOiBJbnRyb2R1Y2UgbmV3IGZpbGVzIGZvciBWRklPUmVnaW9uDQo+ZGVmaW5pdGlvbnMg
+YW5kIGRlY2xhcmF0aW9ucw0KPg0KPk9uIDMvMjcvMjUgMTA6MzcsIER1YW4sIFpoZW56aG9uZyB3
+cm90ZToNCj4+DQo+Pg0KPj4+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+Pj4gRnJvbTog
+Q8OpZHJpYyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPj4+IFN1YmplY3Q6IFtQQVRDSCBm
+b3ItMTAuMSB2MiAxMS8zN10gdmZpbzogSW50cm9kdWNlIG5ldyBmaWxlcyBmb3IgVkZJT1JlZ2lv
+bg0KPj4+IGRlZmluaXRpb25zIGFuZCBkZWNsYXJhdGlvbnMNCi4uLg0KPjNmMDAyMjUyYWNmYjdh
+YzgwOTEwN2M5OWJkYmRiYWY2NmQ1NmE1MGQuLjQ1OTFlYzY4ZGE4NzdiMzA3ZjQzZWExYTgzDQo+
+Pj4gMGMzMTU3MjFiNTdlOWUgMTAwNjQ0DQo+Pj4gLS0tIGEvaHcvdmZpby9wY2ktcXVpcmtzLmMN
+Cj4+PiArKysgYi9ody92ZmlvL3BjaS1xdWlya3MuYw0KPj4+IEBAIC0yNiw2ICsyNiw3IEBADQo+
+Pj4gI2luY2x1ZGUgImh3L3FkZXYtcHJvcGVydGllcy5oIg0KPj4+ICNpbmNsdWRlICJwY2kuaCIN
+Cj4+PiAjaW5jbHVkZSAicGNpLXF1aXJrcy5oIg0KPj4+ICsjaW5jbHVkZSAiaHcvdmZpby92Zmlv
+LXJlZ2lvbi5oIg0KPj4NCj4+IFRoaXMgbG9va3MgdW5uZWNlc3NhcnkgYXMgcGNpLmggYWxyZWFk
+eSBpbmNsdWRlIGl0LA0KPg0KPkl0IGRvZXNuJ3QgYnV0IGl0IHNob3VsZC4gSSB3aWxsIGluY2x1
+ZGUgImh3L3ZmaW8vdmZpby1yZWdpb24uaCINCj5pbiAicGNpLmgiIGFuZCByZW1vdmUgaXQgZnJv
+bSAgInBjaS1xdWlya3MuYyIgYW5kICJwY2kuYyIgaW5zdGVhZC4NCg0KaHcvdmZpby9wY2kuaCBp
+bmNsdWRlcyBody92ZmlvL3ZmaW8tZGlzcGxheS5oIHdoaWNoIGZ1cnRoZXIgaW5jbHVkZXMgaW5j
+bHVkZS9ody92ZmlvL3ZmaW8tcmVnaW9uLmgsIGJ1aWxkIHBhc3MgaWYgb25seSByZW1vdmUgI2lu
+Y2x1ZGUgb24gbXkgZW52Lg0KDQpUaGFua3MNClpoZW56aG9uZw0K
 
