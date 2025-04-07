@@ -4,90 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3833BC36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 18:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1CF6C36018
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 19:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1r6m-00040i-CS; Mon, 07 Apr 2025 14:22:08 -0400
+	id 1u1s8A-0001jD-Al; Mon, 07 Apr 2025 15:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shajnocz@redhat.com>)
- id 1u1r6j-000406-Qi
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 14:22:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u1s7p-0001gR-Dg
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 15:27:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shajnocz@redhat.com>)
- id 1u1r6g-0002JM-Uy
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 14:22:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744050121;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FQn2cg+wkPiuBPMuD9aeXnjB550KiH7vtya18Bb7d7o=;
- b=ZhF1Ox6hAvvYlDSPIpLmd/bbd2fJ6hlfH7lSo6SHqJ65nMIVtQO49g8wW9zo1E2ZQJZme+
- LHbTptHXVMj5r3RROZRcp+J8Vj1KP7KAY1nEJdvky648hjNP3caT8TjXaTcZ8cRTuemhQU
- 577Wlce5iZRtALJ2zyDScgHTittjzBQ=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-mufa8mKBMyed75ke6aLFUQ-1; Mon, 07 Apr 2025 14:20:10 -0400
-X-MC-Unique: mufa8mKBMyed75ke6aLFUQ-1
-X-Mimecast-MFC-AGG-ID: mufa8mKBMyed75ke6aLFUQ_1744050010
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ac737973d03so370826766b.1
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 11:20:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u1s7n-0002jm-L7
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 15:27:17 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 537I3ah8015633
+ for <qemu-devel@nongnu.org>; Mon, 7 Apr 2025 19:27:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=M1A262U7T2dEykVaSJOg9n
+ xib35GvoWlzoxL7AoTDnA=; b=frBXxAqS8j71gLKi8/IaLmOtIru4JxXH8Al+ks
+ U+I9oR1jkho7jBeDGa0zrxQgy306z2+yPfYzdn3yTXnLEuE9193ynNWK1YSsew1n
+ k9VD8CVSNMSlCgES217dqxsGnNxBYQkWJnRQDOV7g8s28c/j+D+gP8oEuwIT9Q1M
+ b8/CZUWr0WoQMUbSa1r1x62SzneJ6NRtKxWB0vmQu2pybKXe5LJD7rSHBPUlm6ba
+ i7UlUUQJeWyV5TSZYdPNPLJZh5u5GjmgyXYOSNX92VZ9Dbx7eTQrF1iBidspjrTG
+ nAqQlMt/tojG+w8hJD+2brvoPFQrhJ5G28BuayNkfbhzQRog==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45twbe5bkk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 19:27:13 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-73009f59215so5649046b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 12:27:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744050009; x=1744654809;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FQn2cg+wkPiuBPMuD9aeXnjB550KiH7vtya18Bb7d7o=;
- b=KOBAh6O5RM8ct1EonZ2FjTlIE4Tj/IJcoTrZ64tF8Dv/c+Y03sJTvFvk4pQR4Lzi5t
- yM5EoKBsSSxIPFLHRrMPJCbRp8BtpogzY3kVKUL5XLKX9927XWx9jOgDEeVBu8/JqBza
- HOAIhVOnrEKa4VXmofObU2WF1/Y44wKE27lIZDhASrDbsQFpUTTZeNCgHc6qVj0/IBBZ
- RRQmJCoKYuH7MxQXLb2hJV92jIFRGcGiKpLT7UCIIIlBQi4a1AWLlhnILwJXwsZzFZ/e
- CfmGhovYVVTN+VDvzeT0qcWX6UVrb33dVj6xsW0wO6u586nh83SZmmJP5uwLKPDrZfKv
- ktig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdamrYOLz35gAJ9xVOCzroA+SDKcm2//R96j4SjZYy00oR33ElHibZPG7pEWgGcf+XnoEsprw/n944@nongnu.org
-X-Gm-Message-State: AOJu0Yzc85bB9CDv8W7xV0VMbgLuwjghiqMu5/0k8Yjg6kKdRWGMFX1W
- Dr2m7ZeSS4wRiBQVKDzGl4d2IQwdzreYAUimAw6fTBjVrHwxzXClnSOBsiwnyO4rGJVRdGeeBV1
- /DKJtGP/bqGR3ROR9zeCpA4S7epASRc1DXfQxnUhwanugS16m7Ln84KNkpDFBPhnBKUWqLbEboe
- mOfY9KAtAu3iF+gYrySiGTZe4ewrs=
-X-Gm-Gg: ASbGncty98W1L+LV4rcigQFI4oTqE5o/tOfptbVXz0gyL3Pkkq1I4ujZ1Kj/ZCutzS+
- RwNKvKP1bsxc9pOIKHPQb5akb5aRVZw/wRHcwCHbGaGPOleOofdwrzftq5BZlu/Kx/cljw6k=
-X-Received: by 2002:a17:907:7e98:b0:ac2:622f:39c1 with SMTP id
- a640c23a62f3a-ac7d6d06cd9mr1090536566b.22.1744050009566; 
- Mon, 07 Apr 2025 11:20:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyEodSUNmA7FQk4l63ZEqqA5Cx0NksMkuCsfh/dzFz9LcW5FZvY8dw1WJHGoqHNnXrWbeIggb1ZQmD7690NPw=
-X-Received: by 2002:a17:907:7e98:b0:ac2:622f:39c1 with SMTP id
- a640c23a62f3a-ac7d6d06cd9mr1090534766b.22.1744050009147; Mon, 07 Apr 2025
- 11:20:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1744054032; x=1744658832;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M1A262U7T2dEykVaSJOg9nxib35GvoWlzoxL7AoTDnA=;
+ b=DWRV7rco0Mpc/vGACNiBcwPfqXMjCsHBy6lE3tJdYPSlmWnv926Q0skztRIBVF4/Ck
+ iCu+AH3tD7MVm4+IJFWQg2hTzREBQtojG//w62DGyMLmI2q2JkSaxzJMqvBVDxkzUEwO
+ GtPa372t4XPb9AoyfxpibA6efWWL5CtDvN9WJIBhsD4iGPD24Vii3KyyziLkSBbi2qcE
+ 3sQTU0hNiJu9dj++gVsUWXiU2IiBoQFQgjC+KBLFuHLHnGCrw2jv2wQjpH2tENuw2TYv
+ zutmSEI0VxM3pVnGTKwkeW0ntKjp8HZIuQ748K+CKj15+ynaTyMwsZOEj9pPdr97JskF
+ DgKg==
+X-Gm-Message-State: AOJu0Yx61fghodnZaYYpRSIimRoe8e/u925kcTdbSL3AJt42H/clpSkl
+ 4U3drGyoqC5G5bdipgiYG2C3kvYCnZgd7Qxc/95hIYRy5gk63gGI9j+ChmAQrBygvDJXwY3WGw5
+ hS8RQXs8JCj8oIYcMeQO8jjdtwXpEdNSXj68+/b1OWPOvtZw9X2ivf6x6zOq6Hg==
+X-Gm-Gg: ASbGncs+qDCn0nR6b86xOBxnQAvniwdk8/jQTtIO55EzOOekykQsKR+lzsQWU+kfSWJ
+ pvnSm0SAk01LU9rk2K0a0RKT3CHllLVPlwJyw3lNE5Cq57KZAVReSIyCFS+kjkDWEYX4sp9gMaN
+ biQgKRRokEp+dYj0kFZZDzWXwecH2iNG/27cS4gAPCFCtgaNGwmZmfVIGzt9SiOfuWw6njcsVDF
+ QRf6R1iDRpd4GbXe6H7pWlA4zAXKCHMve7UybE3JqdOmphMiYoeL1NlEhAIK/aapeHkdbvp0/ct
+ BQGp5g8ShVdkdeYdBCC10spqrYlxqoJu+M5hB7qlmXrmbQSTcFA4+Xpge2jLEYR7
+X-Received: by 2002:a05:6a00:2187:b0:736:3fa8:cf7b with SMTP id
+ d2e1a72fcca58-739e7058e6bmr15068089b3a.13.1744054031865; 
+ Mon, 07 Apr 2025 12:27:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHR7CSKxIjnLsRAJXfht3nlvqJYo7VC3TKO4fSpeJ1ruqILPtSK+MSAF3xMTWjMDbwFBItOqw==
+X-Received: by 2002:a05:6a00:2187:b0:736:3fa8:cf7b with SMTP id
+ d2e1a72fcca58-739e7058e6bmr15068052b3a.13.1744054031367; 
+ Mon, 07 Apr 2025 12:27:11 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-739d97ee619sm9206559b3a.52.2025.04.07.12.27.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 07 Apr 2025 12:27:11 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
+ philmd@linaro.org, matheus.bernardino@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, marco.liebel@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ alex.bennee@linaro.org, quic_mburton@quicinc.com, sidneym@quicinc.com
+Subject: [PATCH v3 0/5] misc hexagon patches
+Date: Mon,  7 Apr 2025 12:27:00 -0700
+Message-Id: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250407155949.44736-1-kwolf@redhat.com>
-In-Reply-To: <20250407155949.44736-1-kwolf@redhat.com>
-From: Stefan Hajnoczi <shajnocz@redhat.com>
-Date: Mon, 7 Apr 2025 14:19:57 -0400
-X-Gm-Features: ATxdqUHkyPZbe70xz2TNIE7vKyDslJj7gNtT_ItpyhIXq1ofUrOHJnRq8dX0kbc
-Message-ID: <CAD60JZPnNRLCLwc71SCX5tfddHrW3WvdXJ9TmQ8T_Q-dz3xODA@mail.gmail.com>
-Subject: Re: [PATCH for-10.0] scsi-disk: Apply error policy for host_status
- errors again
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com, 
- stefanha@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=shajnocz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-GUID: 456Gwra6isULfA9dqhiAV3llClCpuchg
+X-Authority-Analysis: v=2.4 cv=T7OMT+KQ c=1 sm=1 tr=0 ts=67f42711 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=H0ak6hV333PAyDiPeksA:9
+ a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-ORIG-GUID: 456Gwra6isULfA9dqhiAV3llClCpuchg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-07_05,2025-04-07_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ mlxlogscore=858 lowpriorityscore=0 adultscore=0 phishscore=0 bulkscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504070136
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,159 +125,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 7, 2025 at 12:00=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
-:
->
-> Originally, all failed SG_IO requests called scsi_handle_rw_error() to
-> apply the configured error policy. However, commit f3126d65, which was
-> supposed to be a mere refactoring for scsi-disk.c, broke this and
-> accidentally completed the SCSI request without considering the error
-> policy any more if the error was signalled in the host_status field.
->
-> Apart from the commit message not describing the chance as intended,
-> errors indicated in host_status are also obviously backend errors and
-> not something the guest must deal with indepdently of the error policy.
->
-> This behaviour means that some recoverable errors (such as a path error
-> in multipath configurations) were reported to the guest anyway, which
-> might not expect it and might consider its disk broken.
->
-> Make sure that we apply the error policy again for host_status errors,
-> too. This addresses an existing FIXME comment and allows us to remove
-> some comments warning that callbacks weren't always called. With this
-> fix, they are called in all cases again.
->
-> The return value passed to the request callback doesn't have more free
-> values that could be used to indicate host_status errors as well as SAM
-> status codes and negative errno. Store the value in the host_status
-> field of the SCSIRequest instead and use -ENODEV as the return value (if
-> a path hasn't been reachable for a while, blk_aio_ioctl() will return
-> -ENODEV instead of just setting host_status, so just reuse it here -
-> it's not necessarily entirely accurate, but it's as good as any errno).
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: f3126d65b393 ('scsi: move host_status handling into SCSI drivers')
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  hw/scsi/scsi-disk.c | 39 +++++++++++++++++++++++++--------------
->  1 file changed, 25 insertions(+), 14 deletions(-)
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
->
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> index 8da1d5a77c..e59632e9b1 100644
-> --- a/hw/scsi/scsi-disk.c
-> +++ b/hw/scsi/scsi-disk.c
-> @@ -68,10 +68,9 @@ struct SCSIDiskClass {
->      SCSIDeviceClass parent_class;
->      /*
->       * Callbacks receive ret =3D=3D 0 for success. Errors are represente=
-d either as
-> -     * negative errno values, or as positive SAM status codes.
-> -     *
-> -     * Beware: For errors returned in host_status, the function may dire=
-ctly
-> -     * complete the request and never call the callback.
-> +     * negative errno values, or as positive SAM status codes. For host_=
-status
-> +     * errors, the function passes ret =3D=3D -ENODEV and sets the host_=
-status field
-> +     * of the SCSIRequest.
->       */
->      DMAIOFunc       *dma_readv;
->      DMAIOFunc       *dma_writev;
-> @@ -225,11 +224,26 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, in=
-t ret, bool acct_failed)
->      SCSIDiskState *s =3D DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
->      SCSIDiskClass *sdc =3D (SCSIDiskClass *) object_get_class(OBJECT(s))=
-;
->      SCSISense sense =3D SENSE_CODE(NO_SENSE);
-> +    int16_t host_status;
->      int error;
->      bool req_has_sense =3D false;
->      BlockErrorAction action;
->      int status;
->
-> +    /*
-> +     * host_status should only be set for SG_IO requests that came back =
-with a
-> +     * host_status error in scsi_block_sgio_complete(). This error path =
-passes
-> +     * -ENODEV as the return value.
-> +     *
-> +     * Reset host_status in the request because we may still want to com=
-plete
-> +     * the request successfully with the 'stop' or 'ignore' error policy=
-.
-> +     */
-> +    host_status =3D r->req.host_status;
-> +    if (host_status !=3D -1) {
-> +        assert(ret =3D=3D -ENODEV);
-> +        r->req.host_status =3D -1;
-> +    }
-> +
->      if (ret < 0) {
->          status =3D scsi_sense_from_errno(-ret, &sense);
->          error =3D -ret;
-> @@ -289,6 +303,10 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int=
- ret, bool acct_failed)
->          if (acct_failed) {
->              block_acct_failed(blk_get_stats(s->qdev.conf.blk), &r->acct)=
-;
->          }
-> +        if (host_status !=3D -1) {
-> +            scsi_req_complete_failed(&r->req, host_status);
-> +            return true;
-> +        }
->          if (req_has_sense) {
->              sdc->update_sense(&r->req);
->          } else if (status =3D=3D CHECK_CONDITION) {
-> @@ -409,7 +427,6 @@ done:
->      scsi_req_unref(&r->req);
->  }
->
-> -/* May not be called in all error cases, don't rely on cleanup here */
->  static void scsi_dma_complete(void *opaque, int ret)
->  {
->      SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
-> @@ -448,7 +465,6 @@ done:
->      scsi_req_unref(&r->req);
->  }
->
-> -/* May not be called in all error cases, don't rely on cleanup here */
->  static void scsi_read_complete(void *opaque, int ret)
->  {
->      SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
-> @@ -585,7 +601,6 @@ done:
->      scsi_req_unref(&r->req);
->  }
->
-> -/* May not be called in all error cases, don't rely on cleanup here */
->  static void scsi_write_complete(void * opaque, int ret)
->  {
->      SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
-> @@ -2846,14 +2861,10 @@ static void scsi_block_sgio_complete(void *opaque=
-, int ret)
->      sg_io_hdr_t *io_hdr =3D &req->io_header;
->
->      if (ret =3D=3D 0) {
-> -        /* FIXME This skips calling req->cb() and any cleanup in it */
->          if (io_hdr->host_status !=3D SCSI_HOST_OK) {
-> -            scsi_req_complete_failed(&r->req, io_hdr->host_status);
-> -            scsi_req_unref(&r->req);
-> -            return;
-> -        }
-> -
-> -        if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
-> +            r->req.host_status =3D io_hdr->host_status;
-> +            ret =3D -ENODEV;
-> +        } else if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
->              ret =3D BUSY;
->          } else {
->              ret =3D io_hdr->status;
-> --
-> 2.48.1
->
-
+Q2hhbmdlcyBzaW5jZSBwcmV2aW91cyAibWlzYyBoZXhhZ29uIHBhdGNoZXMiIHNlcmllcyAodjIp
+OgotIGNoYW5nZWQgYXV0aG9yIHRvIG1hdGNoIE1BSU5UQUlORVJTIChJIHdhcyBmb29sZWQgYnkg
+dGhlIG1haWxtYXAgYmVmb3JlIC0tCnNvLCBmb3IgcmVhbCB0aGlzIHRpbWUpLgoKCkJyaWFuIENh
+aW4gKDUpOgogIHRhcmdldC9oZXhhZ29uOiBoYW5kbGUgLm5ldyB2YWx1ZXMKICB0YXJnZXQvaGV4
+YWdvbjogRml4IGJhZHZhIHJlZmVyZW5jZSwgZGVsZXRlIENBVVNFCiAgdGFyZ2V0L2hleGFnb246
+IEFkZCBtaXNzaW5nIEFfQ0FMTCBhdHRyLCBoaW50anVtcHIgdG8gbXVsdGlfY29mCiAgdGFyZ2V0
+L2hleGFnb246IHMvcGt0X2hhc19zdG9yZS9wa3RfaGFzX3NjYWxhcl9zdG9yZQogIHRhcmdldC9o
+ZXhhZ29uOiBSZW1vdmUgdW5yZWFjaGFibGUKCiB0YXJnZXQvaGV4YWdvbi9pZGVmLXBhcnNlci9S
+RUFETUUucnN0ICAgICAgIHwgIDIgKy0KIHRhcmdldC9oZXhhZ29uL2luc24uaCAgICAgICAgICAg
+ICAgICAgICAgICAgfCAgNCArLS0KIHRhcmdldC9oZXhhZ29uL21hY3Jvcy5oICAgICAgICAgICAg
+ICAgICAgICAgfCAgOCArKystLS0KIHRhcmdldC9oZXhhZ29uL2NwdS5jICAgICAgICAgICAgICAg
+ICAgICAgICAgfCAgMyArLS0KIHRhcmdldC9oZXhhZ29uL2RlY29kZS5jICAgICAgICAgICAgICAg
+ICAgICAgfCAxMCArKysrLS0tCiB0YXJnZXQvaGV4YWdvbi9nZW5wdHIuYyAgICAgICAgICAgICAg
+ICAgICAgIHwgIDMgKystCiB0YXJnZXQvaGV4YWdvbi9pZGVmLXBhcnNlci9wYXJzZXItaGVscGVy
+cy5jIHwgIDQgKy0tCiB0YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYyAgICAgICAgICAgICAgICAg
+IHwgIDQgKy0tCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuYyAgICAgICAgICAgICAgICAgIHwg
+IDkgKysrKy0tLQogdGFyZ2V0L2hleGFnb24vZ2VuX2hlbHBlcl9mdW5jcy5weSAgICAgICAgICB8
+ICAyICstCiB0YXJnZXQvaGV4YWdvbi9oZXhfY29tbW9uLnB5ICAgICAgICAgICAgICAgIHwgMjkg
+KysrKysrKysrKysrKysrKy0tLS0tCiAxMSBmaWxlcyBjaGFuZ2VkLCA0OSBpbnNlcnRpb25zKCsp
+LCAyOSBkZWxldGlvbnMoLSkKCi0tIAoyLjM0LjEKCg==
 
