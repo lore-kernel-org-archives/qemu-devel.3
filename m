@@ -4,147 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F3EC3601A
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 08:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E1D6C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 08:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1hw3-0002cS-C8; Mon, 07 Apr 2025 04:34:28 -0400
+	id 1u1hw4-0002fk-GK; Mon, 07 Apr 2025 04:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1hvN-0002Dd-39
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 04:33:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1hvF-0003oH-UH
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 04:33:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744014816;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oEcSu6A5/MA/cGdAODZS2C/CsMwZyT2O3Ogr5khhLsk=;
- b=Ef2gmXXwPtGr5RzjOqwQpo6+zFHHTuLP+UqAapo9CoHFLp7VgUS2/oQ8DWY2sJ+BAF2qba
- 8VKW0G6iSwNnUQjLfWh7GRkgB1QU9DAxcchLAQHHnTCJLSXua+IIvACJvJgdI9xilwm827
- i2rV1u6rOSA626om0fgeG85wX4K34Lw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-rTaLXEd6PQmCMfScBNxnWg-1; Mon, 07 Apr 2025 04:33:35 -0400
-X-MC-Unique: rTaLXEd6PQmCMfScBNxnWg-1
-X-Mimecast-MFC-AGG-ID: rTaLXEd6PQmCMfScBNxnWg_1744014814
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913d8d7c3eso2188577f8f.0
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 01:33:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1u1hvp-0002YE-Pk
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 04:34:19 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1u1hvl-0003rx-M3
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 04:34:12 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22409077c06so49282015ad.1
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 01:34:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1744014846; x=1744619646; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K+IIfG+44f0zEPW4A1Y5RVRLSNmHfihzy61vhazHnUc=;
+ b=bTW7D8KJZsl/r/xCnfBkSx5hPvtweyUpLPckYTbWLU7coc4DFMQ+jTo3hD+PSNUWC9
+ LTmtoNhqoBq4jS+HlvydUqXwX2r69GiQsSZRpRBz4E2pTqmVXjZDx7sQf8LGx4S0T733
+ u9KU/bCgswdMUhytSXwtlHtxnqD93/igqivyNTaR1Pl2Jsrt8PILU/Ze3hFnjZ1ia6mu
+ JlsXvF3P3d8YwjbYKcHvn1RZRN1+r6/2kdjY/V4m9QKWSVmTB44ubNqo72bEbniLR37o
+ xwPJQvLhEnlh80P2D15hWfzifJI7te+wIOJuL0jA/zy71OoAw1e9JARxOmFDd4zRzLXC
+ P5iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744014813; x=1744619613;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oEcSu6A5/MA/cGdAODZS2C/CsMwZyT2O3Ogr5khhLsk=;
- b=LHjaRmwqBylcvQNoZxr3VaPljstN0rT8ZTIOCol7lIhcc77DyTNJK6RgmWhwbXGYRc
- dO3a4Tdm1cmOcPhnMzEl8nrZx/uKRVqvY3h5jWoMo/GBMrMGAspQALkduU6WNe7tB0qE
- BaQdNwL0o9te3uPKKF0mV74R0cPxyo7fJazDaoC4PIDEkn62Uy9H2IPkMv1+bjmmHdr/
- tdglFraZt+jtTmpaFd8AWBD+Gx4oIeNavzrt92WghsiSNJ2aI8PO373/I5biVRs4M6Xl
- scbJB3DGtAEbj2hGusA/hHbmc1WJ2iDNxfvNcURTORg6K7HLovh586p/VtL3V3As/23n
- jusw==
+ d=1e100.net; s=20230601; t=1744014846; x=1744619646;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K+IIfG+44f0zEPW4A1Y5RVRLSNmHfihzy61vhazHnUc=;
+ b=MkD+F3GybiL2cp4bXJdRkDBicxUCgW7Edoc1SBt4i5Ce5DsuFzi8hRcfX+6ndamJji
+ QL5SmFrUzgRfq3cVhLYXvbNabRkwXxw8r1bIZJeNP8ZUdPqLNNodxhLJc+YkxW3oCLqr
+ qo2TMIZoO21NN0pf0iv8zWYktapuyO592/GYI6iDUSFeill2ZBVZz26xmobUwcBtPbCe
+ wNkBpwD6XtnFyv72wS2oNlXOnMSOgG4KOYQqn/OWsLQbS04Wgsy3anSacOjVGvp1XRVe
+ re6W7T2SHljNSTBME3Z4ZDKcv6lAp5ZDjS/GB5lTfcGv+/b1LqWqJnpoqQBwi6e+1or6
+ Wq9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpD44hWDjGnjKxhCSyCFAC/SrfpCZzDBzPOIh5b+SEBv5SVZyeSGnRK4LtKM8uguetMsNvrxKD18/C@nongnu.org
-X-Gm-Message-State: AOJu0Yx0MhMxRLJt/Q0ARGavBwO+8PXdr95TZc7HWely/iUg5LMDA8mY
- Vcb1+CDXe+sizi8KkWvTxrEd2oG62B0ZBmA1KHYBI/NI5ZSemuNBKqyCB9EymF2TEMKaY92o8YX
- EEKxpOZjNvJyN7uYqmvKT5slKob++FAfJaf6ib6qBuHE1XkyKkFafFe+oOY/c
-X-Gm-Gg: ASbGnct07s1K3N+aoAW2b0K6sqZG6cVXwmCBG27gHJw7gKqHHOej1NrTRARgByj+2Lb
- afDpoMYOjXlJFnNTw8Qt91foUUxcIRNorpocTOr6f6vtSYgQQE0UD5dNMfzDj6w+x7wYv5+2S9p
- arO1VDNpyAPY7fv+sP5coon1e2X6lnrxjkJVUoEfLNgwLn9i/FE//IVbWCJRjgxVYzGCU8tVWzW
- 2r/asBAhKUifQ6gYCnR3hX3bUvWuVrDaqS2o4AEkVz7BU7ZwEV2YUzJKg3eXD3ES+cWIoC6BdEY
- I59KTDfWLYxckQ+ZZ3Ubw3PHTrIrykeTo5xIz01tAaJEM4SGpyo9ig==
-X-Received: by 2002:a05:6000:1863:b0:38d:e6b6:508b with SMTP id
- ffacd0b85a97d-39d07ad4e86mr9805946f8f.9.1744014812284; 
- Mon, 07 Apr 2025 01:33:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYbJwuoBpB7IZRU5uilkMT+PDPVNKmoXq3HImtMTMWiRzgxFWw+hhtzs4mPWFYEETF9XvkUw==
-X-Received: by 2002:a05:6000:1863:b0:38d:e6b6:508b with SMTP id
- ffacd0b85a97d-39d07ad4e86mr9805914f8f.9.1744014811924; 
- Mon, 07 Apr 2025 01:33:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCW3e+WwAnpjCYL9L+MkLIcttaJRGe+uGy2HzTDz0909sNVeFTvSM9uIGp1Oq0LhtcKic8ReM/K5aIKB@nongnu.org
+X-Gm-Message-State: AOJu0YxPZ0qRYuHQL8JDydSICLd/VJRVj/r1d9kIKoHUmZNGssSuRARZ
+ ZB8UG6pIb+I24BRiROyYO6/KAOuvUl4YgD8Vj/RfuxdXoeGSsCGn75PyeHMai+U=
+X-Gm-Gg: ASbGnctXEdTNVIfzxguYFsn4zr2VdKmfM3hKQYaWGnYSnbSc4m/4eYv0C8XIE+k9orM
+ wM0Ncy/po29d1bBKJYfxLlp5QIQBH9UR9bn8l0iwYVbVGkwQ9uZ/lMOVAcfn0soFA9TStpafIKf
+ TfZ7Hml+75VydMrfNy/1LcpvMGBPfOMy0AqbgRJtdOSWkXr5aHjcO92EoELcma68gfVpkWijp35
+ ZQxz2+PrwteVHEOabc1jznpGN+Gi4geIt7o5kJyewGt6SUyMaqYgUxC6OyoXxkFRVskHNAeh81b
+ 5kSWSbg77UcbwHag7p/e6oFd4lo7l1puF70=
+X-Google-Smtp-Source: AGHT+IGoKsOJlkBhytfbgBSoWSEJSjvQ6F1tx2bzX/RVhqWObKpFlHSR9syPFXg0wBJnKgSq5qw8XA==
+X-Received: by 2002:a17:903:41d2:b0:223:668d:eba9 with SMTP id
+ d9443c01a7336-22a8a84af74mr140175395ad.10.1744014846586; 
+ Mon, 07 Apr 2025 01:34:06 -0700 (PDT)
+Received: from [100.64.0.1] ([147.161.192.170])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301a6796sm11548194f8f.31.2025.04.07.01.33.31
+ d9443c01a7336-22978772746sm75480475ad.223.2025.04.07.01.34.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Apr 2025 01:33:31 -0700 (PDT)
-Message-ID: <0004714f-0ed1-4b42-9043-3b925c4824b6@redhat.com>
-Date: Mon, 7 Apr 2025 10:33:30 +0200
+ Mon, 07 Apr 2025 01:34:06 -0700 (PDT)
+Message-ID: <ba3a7e9a-51a6-4db5-9f06-c1a768467288@sifive.com>
+Date: Mon, 7 Apr 2025 16:34:02 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 v2 32/37] vfio: Introduce new files for VFIO
- MemoryListener
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>, Joao Martins <joao.m.martins@oracle.com>
-References: <20250326075122.1299361-1-clg@redhat.com>
- <20250326075122.1299361-33-clg@redhat.com>
- <30af983e-c532-43f7-8b84-8bf2a5b0d53b@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <30af983e-c532-43f7-8b84-8bf2a5b0d53b@nvidia.com>
+Subject: Re: [PATCH v2 04/12] target/riscv: rvv: Apply vext_check_input_eew to
+ vector register gather instructions
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ antonb@tenstorrent.com
+References: <20250329144446.2619306-1-max.chou@sifive.com>
+ <20250329144446.2619306-5-max.chou@sifive.com>
+ <87129ffe-fa62-4e6d-b154-8e61a22ce13a@ventanamicro.com>
+Content-Language: en-US
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <87129ffe-fa62-4e6d-b154-8e61a22ce13a@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,31 +109,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/25 15:49, Avihai Horon wrote:
-> 
-> On 26/03/2025 9:51, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
+On 2025/4/5 5:14 PM, Daniel Henrique Barboza wrote:
+>
+>
+> On 3/29/25 11:44 AM, Max Chou wrote:
+>> Handle the overlap of source registers with different EEWs.
+>> The vs1 EEW of vrgatherei16.vv is 16.
 >>
+>> Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
+>> Co-authored-by: Max Chou <max.chou@sifive.com>
+>
+> Since you're marked as Author you don't need this co-authored-by tag
+> in your name too.
+>
+> Same thing for patches 5 to 11.
+Thanks for the suggestion. I'll remove the co-authored-by tag from 
+patches 5 to 11 at v3.
+
+Max
+>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>> ---
+>
+> With the co-authored-by tag removed:
+>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>
+>>   target/riscv/insn_trans/trans_rvv.c.inc | 3 +++
+>>   1 file changed, 3 insertions(+)
 >>
->> File "common.c" has been emptied of most of its definitions by the
->> previous changes and the only definitions left are related to the VFIO
->> MemoryListener handlers. Rename it to "listener.c" and introduce its
->> associated "vfio-listener.h" header file for the declarations.
->>
->> Cleanup a little the includes while at it.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> 
-> Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-> 
-
-
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-
-
-Thanks,
-
-C.
-
+>> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc 
+>> b/target/riscv/insn_trans/trans_rvv.c.inc
+>> index 70c19c49ae4..4a0c9fbeff3 100644
+>> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+>> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+>> @@ -3478,6 +3478,7 @@ static bool vrgather_vv_check(DisasContext *s, 
+>> arg_rmrr *a)
+>>   {
+>>       return require_rvv(s) &&
+>>              vext_check_isa_ill(s) &&
+>> +           vext_check_input_eew(s, a->rs1, s->sew, a->rs2, s->sew, 
+>> a->vm) &&
+>>              require_align(a->rd, s->lmul) &&
+>>              require_align(a->rs1, s->lmul) &&
+>>              require_align(a->rs2, s->lmul) &&
+>> @@ -3490,6 +3491,7 @@ static bool vrgatherei16_vv_check(DisasContext 
+>> *s, arg_rmrr *a)
+>>       int8_t emul = MO_16 - s->sew + s->lmul;
+>>       return require_rvv(s) &&
+>>              vext_check_isa_ill(s) &&
+>> +           vext_check_input_eew(s, a->rs1, MO_16, a->rs2, s->sew, 
+>> a->vm) &&
+>>              (emul >= -3 && emul <= 3) &&
+>>              require_align(a->rd, s->lmul) &&
+>>              require_align(a->rs1, emul) &&
+>> @@ -3509,6 +3511,7 @@ static bool vrgather_vx_check(DisasContext *s, 
+>> arg_rmrr *a)
+>>   {
+>>       return require_rvv(s) &&
+>>              vext_check_isa_ill(s) &&
+>> +           vext_check_input_eew(s, -1, MO_64, a->rs2, s->sew, a->vm) &&
+>>              require_align(a->rd, s->lmul) &&
+>>              require_align(a->rs2, s->lmul) &&
+>>              (a->rd != a->rs2) &&
+>
 
 
