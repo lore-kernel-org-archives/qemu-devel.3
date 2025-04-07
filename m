@@ -4,75 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D24CC3601E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 14:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C7A8C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 14:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1n4A-0005MY-L9; Mon, 07 Apr 2025 10:03:10 -0400
+	id 1u1nOr-0002OM-8G; Mon, 07 Apr 2025 10:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u1n48-0005Lj-Ss
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 10:03:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u1nOo-0002NZ-TF; Mon, 07 Apr 2025 10:24:30 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u1n47-0002e7-1l
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 10:03:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744034585;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TOgPKDUAdodxd6JvGuArTiJybA8kn8tReY5B5XGHS1k=;
- b=GUfC7Vg2+sMyKJk2RR7/vkhW16CroZcZGYLexKoXDAOh4iMCcFoyIfHAnEID95bAGBLTvk
- aiFYyMZ38KlbZ+yOPRQVfInYgmJSiv89lF4BtN4mfaDWXbi6ZionFfIMGzPV8tCV+tjS0u
- sHoY1Nosco2+kYFb/+PfmNbVJYwnHBs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-XpSzWCXeNpSOF_0fPBNpxQ-1; Mon,
- 07 Apr 2025 10:02:52 -0400
-X-MC-Unique: XpSzWCXeNpSOF_0fPBNpxQ-1
-X-Mimecast-MFC-AGG-ID: XpSzWCXeNpSOF_0fPBNpxQ_1744034572
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDB03195609E; Mon,  7 Apr 2025 14:02:50 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.119])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 68E5E1828AA8; Mon,  7 Apr 2025 14:02:50 +0000 (UTC)
-Date: Mon, 7 Apr 2025 10:02:49 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH 14/15] fuse: Implement multi-threading
-Message-ID: <20250407140249.GC473226@fedora>
-References: <20250325160529.117543-1-hreitz@redhat.com>
- <20250325160655.119407-13-hreitz@redhat.com>
- <20250327155557.GN37458@fedora>
- <c3f70137-afd2-448b-8aa9-de14bef25224@redhat.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u1nOm-0006Gj-Th; Mon, 07 Apr 2025 10:24:30 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 537E3KRx025701;
+ Mon, 7 Apr 2025 14:24:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=j0YNjLcDk0NRiIQUZ
+ xwqcNOWVPq4sBssI5WzUs3fHYc=; b=i+f/cZ35OCC8XFqNz7FxRlOl31moZGeem
+ JqgbPLoKqxyRwoRz33FSohE1Khb5vw+ZI6gCGi5v45p2EuhNP2T5flYxdkKQslNF
+ HC6PyOCUaHYZ5HYL2DD9LN8eysMIXuOBz414O0jNghTiE0K/2XlW+Eqc9mu3uMYc
+ vovc2K/pgEXTHjp34eDY/OQAFQ8pNXEt8g1ub6O9fnjy0CFmE3P2VKLrlBVOzQzT
+ vYN4s4Y23ux05Rfl2R0ukQQfjjSurk2tEaR5d1yAGRophDveyDS0SVSe9KNLNQL+
+ eaDCCd+JPJ+7GHLUszNYi/j9gMJ2ivtDCM9n8Vo2XKzDuTITV9CTQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vg4q83aw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Apr 2025 14:24:26 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 537E3SYI026019;
+ Mon, 7 Apr 2025 14:24:25 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vg4q83at-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Apr 2025 14:24:25 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 537BJIHk018451;
+ Mon, 7 Apr 2025 14:24:25 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 45uh2kdye6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 07 Apr 2025 14:24:24 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 537EOLHh42336538
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 7 Apr 2025 14:24:21 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 30E5920040;
+ Mon,  7 Apr 2025 14:24:21 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BEDC62004B;
+ Mon,  7 Apr 2025 14:24:18 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com.com (unknown
+ [9.124.220.105])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  7 Apr 2025 14:24:18 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 2/2] vfio/spapr: Fix L2 crash with PCI device passthrough with
+ L2 guest 1memory > 128G
+Date: Mon,  7 Apr 2025 19:53:37 +0530
+Message-ID: <20250407142337.1272599-2-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250407142337.1272599-1-amachhiw@linux.ibm.com>
+References: <20250407142337.1272599-1-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="Lfw85ssTqC+z3tS6"
-Content-Disposition: inline
-In-Reply-To: <c3f70137-afd2-448b-8aa9-de14bef25224@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: jY1Xtel0plJEBqnZDYoxYKOcwODoANdO
+X-Proofpoint-GUID: 1N3GXrOy8Qp4Qjjhq9qIQ9cxWJr6QZBt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-07_04,2025-04-03_03,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0
+ mlxscore=0 priorityscore=1501 phishscore=0 mlxlogscore=999 malwarescore=0
+ clxscore=1015 suspectscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504070098
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,118 +120,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+An L2 KVM guest fails to boot inside a pSeries LPAR when booted with a
+memory more than 128 GB and PCI device passthrough. The L2 guest also
+crashes when it is booted with a memory greater than 128 GB and a PCI
+device is hotplugged later.
 
---Lfw85ssTqC+z3tS6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The issue arises from a conditional check for `levels > 1` in
+`spapr_tce_create_table()` within L1 KVM. This check is meant to prevent
+multi-level TCEs, which are not supported by the PowerVM hypervisor. As
+a result, when QEMU makes a `VFIO_IOMMU_SPAPR_TCE_CREATE` ioctl call
+with `levels > 1`, it triggers the conditional check and returns
+`EINVAL`, causing the guest to crash with the following errors:
 
-On Fri, Apr 04, 2025 at 02:49:08PM +0200, Hanna Czenczek wrote:
-> On 27.03.25 16:55, Stefan Hajnoczi wrote:
-> > On Tue, Mar 25, 2025 at 05:06:54PM +0100, Hanna Czenczek wrote:
-> > > FUSE allows creating multiple request queues by "cloning" /dev/fuse F=
-Ds
-> > > (via open("/dev/fuse") + ioctl(FUSE_DEV_IOC_CLONE)).
-> > >=20
-> > > We can use this to implement multi-threading.
-> > >=20
-> > > Note that the interface presented here differs from the multi-queue
-> > > interface of virtio-blk: The latter maps virtqueues to iothreads, whi=
-ch
-> > > allows processing multiple virtqueues in a single iothread.  The
-> > > equivalent (processing multiple FDs in a single iothread) would not m=
-ake
-> > > sense for FUSE because those FDs are used in a round-robin fashion by
-> > > the FUSE kernel driver.  Putting two of them into a single iothread w=
-ill
-> > > just create a bottleneck.
-> > This text might be outdated. virtio-blk's new iothread-vq-mapping
-> > parameter provides the "array of iothreads" mentioned below and a way to
-> > assign virtqueues to those IOThreads.
->=20
-> Ah, yes.=C2=A0 The difference is still that with FUSE, there is no such
-> assignment, because it wouldn=E2=80=99t make sense.=C2=A0 But I can chang=
-e s/maps
-> virtqueues/allows mapping virtqueues/, and s/differs from/is only a subset
-> of/, if that=E2=80=99s alright.
+ 2025-03-04T06:36:36.133117Z qemu-system-ppc64: Failed to create a window, ret = -1 (Invalid argument)
+ 2025-03-04T06:36:36.133176Z qemu-system-ppc64: Failed to create SPAPR window: Invalid argument
+ qemu: hardware error: vfio: DMA mapping failed, unable to continue
 
-Sure, thanks!
+Fix this by checking the supported DDW "levels" returned by the
+VFIO_IOMMU_SPAPR_TCE_GET_INFO ioctl before attempting the TCE create
+ioctl in KVM.
 
-> > > Therefore, all we need is an array of iothreads, and we will create o=
-ne
-> > > "queue" (FD) per thread.
-> > >=20
-> > > These are the benchmark results when using four threads (compared to a
-> > > single thread); note that fio still only uses a single job, but
-> > > performance can still be improved because of said round-robin usage f=
-or
-> > > the queues.  (Not in the sync case, though, in which case I guess it
-> > > just adds overhead.)
-> > Interesting. FUSE-over-io_uring seems to be different from
-> > FUSE_DEV_IOC_CLONE here. It doesn't do round-robin. It uses CPU affinity
-> > instead, handing requests to the io_uring context associated with the
-> > current CPU when possible.
->=20
-> Do you think that should have implications for the QAPI interface?
+The patch has been tested on KVM guests with memory configurations of up
+to 390GB, and 450GB on PowerVM and bare-metal environments respectively.
 
-It would be helpful to document the behavior so users know when
-round-robin or CPU affinity are used, but the parameter itself would be
-unchanged: an array of IOThreads.
-
->=20
-> [...]
->=20
-> > >   qapi/block-export.json |   8 +-
-> > >   block/export/fuse.c    | 214 +++++++++++++++++++++++++++++++++-----=
+Link: https://lore.kernel.org/qemu-devel/20250404091721.2653539-1-amachhiw@linux.ibm.com/
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 ---
-> > >   2 files changed, 179 insertions(+), 43 deletions(-)
-> > >=20
-> > > diff --git a/qapi/block-export.json b/qapi/block-export.json
-> > > index c783e01a53..0bdd5992eb 100644
-> > > --- a/qapi/block-export.json
-> > > +++ b/qapi/block-export.json
-> > > @@ -179,12 +179,18 @@
-> > >   #     mount the export with allow_other, and if that fails, try aga=
-in
-> > >   #     without.  (since 6.1; default: auto)
-> > >   #
-> > > +# @iothreads: Enables multi-threading: Handle requests in each of the
-> > > +#     given iothreads (instead of the block device's iothread, or the
-> > > +#     export's "main" iothread).  For this, the FUSE FD is duplicate=
-d so
-> > > +#     there is one FD per iothread.  (since 10.1)
-> > This option isn't FUSE-specific but FUSE is the first export type to
-> > support it. Please add it to BlockExportOptions instead and refuse
-> > export creation when the export type only supports 1 IOThread.
->=20
-> Makes sense.=C2=A0 I=E2=80=99ll try to go with what Kevin suggested, i.e.=
- have @iothread
-> be an alternate type.
->=20
-> Hanna
->=20
-> >=20
-> > Eric: Are you interested in implementing support for multiple IOThreads
-> > in the NBD export? I remember some time ago we talked about NBD
-> > multi-conn support, although maybe that was for the client rather than
-> > the server.
->=20
+ hw/vfio/spapr.c | 36 +++++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
---Lfw85ssTqC+z3tS6
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmfz2wgACgkQnKSrs4Gr
-c8jREQf+LKWndOm2cQIIFDNyDxoBOFdgROpHNo2POuwRNQ5ySsyMWhFViMMr4+uH
-GRjOvxKlUZuRWWRZu+uvqjW0fGre2jaqFWPAeMovuzXeYqQRP5LGU/UPfKA8cyhz
-KB8b1UJBoojFZChAVZx9Qi9TC82gvvjJkYBBZZmCOvgCz0Ws07+E/iyUx7hLxN2m
-uHUSxGkRhxb9LGbdjMiOPCXJ9OlekJ/fBlqxL7MONSiTiRWQ4tNy/x0773P4UqCF
-K7dNNcUUOu0CWhBMtO5Krb96sf0jrA0sgN1Yfu8/OiJ+v3oxMBlbLqU5oyMqD1+5
-/NpEB5/odXLIW+6vIrE9LTL20uHu0A==
-=M8D4
------END PGP SIGNATURE-----
-
---Lfw85ssTqC+z3tS6--
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 4f2858b43f36..bcc6fe56e76e 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -26,6 +26,7 @@ typedef struct VFIOSpaprContainer {
+     VFIOContainer container;
+     MemoryListener prereg_listener;
+     QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
++    unsigned int levels;
+ } VFIOSpaprContainer;
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOSpaprContainer, VFIO_IOMMU_SPAPR);
+@@ -236,9 +237,11 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+ {
+     int ret = 0;
+     VFIOContainerBase *bcontainer = &container->bcontainer;
++    VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
++                                                  container);
+     IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+     uint64_t pagesize = memory_region_iommu_get_min_page_size(iommu_mr), pgmask;
+-    unsigned entries, bits_total, bits_per_level, max_levels;
++    unsigned entries, bits_total, bits_per_level, max_levels, ddw_levels;
+     struct vfio_iommu_spapr_tce_create create = { .argsz = sizeof(create) };
+     long rampagesize = qemu_minrampagesize();
+ 
+@@ -291,16 +294,29 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+      */
+     bits_per_level = ctz64(qemu_real_host_page_size()) + 8;
+     create.levels = bits_total / bits_per_level;
+-    if (bits_total % bits_per_level) {
+-        ++create.levels;
+-    }
+-    max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
+-    for ( ; create.levels <= max_levels; ++create.levels) {
+-        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
+-        if (!ret) {
+-            break;
++
++    ddw_levels = scontainer->levels;
++    if (ddw_levels > 1) {
++        if (bits_total % bits_per_level) {
++            ++create.levels;
+         }
++        max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
++        for ( ; create.levels <= max_levels; ++create.levels) {
++            ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
++            if (!ret) {
++                break;
++            }
++        }
++    } else { /* ddw_levels == 1 */
++        if (create.levels > ddw_levels) {
++            error_setg(errp, "Host doesn't support multi-level TCE tables"
++                       ". Use larger IO page size. Supported mask is 0x%lx",
++                       bcontainer->pgsizes);
++            return -EINVAL;
++        }
++        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
+     }
++
+     if (ret) {
+         error_setg_errno(errp, -ret, "Failed to create a window, ret = %d (%m)", ret);
+         return -errno;
+@@ -503,6 +519,8 @@ static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+         goto listener_unregister_exit;
+     }
+ 
++    scontainer->levels = info.ddw.levels;
++
+     if (v2) {
+         bcontainer->pgsizes = info.ddw.pgsizes;
+         /*
+-- 
+2.49.0
 
 
