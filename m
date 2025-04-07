@@ -4,142 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B6CBC3601E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 09:03:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DA3C36010
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 09:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1iN5-0004VS-5U; Mon, 07 Apr 2025 05:02:28 -0400
+	id 1u1iaz-0007p5-W9; Mon, 07 Apr 2025 05:16:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1iM0-0004P2-LN
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:01:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1iLr-0007rb-9r
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:01:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744016463;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TG+17J6OnNrFFS2Zs93svwe09bzy5yMs7ywNL5E/mDY=;
- b=XGo81AZRjMa/KvIsDmwS5sprk0UdswM6tWNB+IWlnPjRw1EQGc3YlxwIPQSxV64jQb6l83
- JZFuIyKPJIskcK4elyXDAkxMPudnE6CduZ6yG3eiao7SBTIKGVijZ85p54OV+830YUS2Mt
- l36mHlmJSXEPdJ7khYWuzqClS7po7vo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-TUrH8XYWNCqyTBvppyOETA-1; Mon, 07 Apr 2025 05:01:01 -0400
-X-MC-Unique: TUrH8XYWNCqyTBvppyOETA-1
-X-Mimecast-MFC-AGG-ID: TUrH8XYWNCqyTBvppyOETA_1744016461
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39c184b20a2so2131270f8f.1
- for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 02:01:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
+ id 1u1iax-0007ox-PV
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:16:43 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
+ id 1u1iau-0001L1-Es
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 05:16:43 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-30ddad694c1so43666351fa.2
+ for <qemu-devel@nongnu.org>; Mon, 07 Apr 2025 02:16:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744017393; x=1744622193; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dFw9f9oORgNP86WG3ObM4nO5VHLeCGsVOu4jzneYOmU=;
+ b=fUmBX2f+/7E4ahuvTTTbvrOEQ7Sl7jXJdFN6OMo4NqbwUYOE2enXhMO/zoePbPWF46
+ ljF5NTcSsDrJLLtiXAMdnle1o8rRMaYsk3rakOpcZjTV/F3TCxmZ2PPY1Y9Ppfe3D9FP
+ +BhLRho8YLACnyPEruLyRJgly6S2BM0vYEm5HX+BhZqZ/IE3NAp5R9trAO1FzY8FJY6f
+ MiCi8krdFF91mcp/Kk4ST41Wa/zhBxBJqElyrSQRluFTJvahaMQuByPsq4Vd6bsB5cZr
+ zyqq+t5BUnBc4RhUe6M1v47PoOvhZVwU8hheFE3q5c/wkJlJkOQRwPHb5XJSS76njh8v
+ I1vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744016460; x=1744621260;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TG+17J6OnNrFFS2Zs93svwe09bzy5yMs7ywNL5E/mDY=;
- b=WaPfvpIsMX/IbcPngZKvGMfz1QVkUjb8hWa4Pv+JQP4LagbU/qNMeCIiS6JWtsp/fO
- vqK4SGbogkBsbGJ8HLl/FzXe3dQNhxCS5fODA1RWv34UWvgiCyUldh1ls9nQlQHbJvXp
- ipGK8Y3EEsFmtwIHe7WYwr7aZd1anvyAZiElnYSZbL3EM+qBAqkhUm+CgU44/Tt8+Qor
- MfqJQhVu7AE+wvPsR8UJ4K4laAU2NgoF1MnmsneQ7pqqhVNVqlGDb7TtpuQqCmu14qbH
- zrISHxkIOsHZ9nFKHJs6RbdUawXQQYVUjncbdasjQwa+qz4RuhBcqQEJZlohZlJ/9WmQ
- x4rw==
-X-Gm-Message-State: AOJu0YybYRec6uOde2JPh3N76TRfnnTIWv7VeYWSpKl12Gs27EsUImUs
- /ZUqNCkRM3KB4WMQCj853SsCB1Tm1qNi+OvLQZ7FeNNBuLcFCNADppyF0o7mkONKqbvS9ZkngNQ
- 0ls8TNALReBOaBHUCEQvyuSV/KJurB54vUrfAlKzDrXqPH0ey5i+Hul0i68tK+rDO690YJrwKXl
- xEaKYvo3x+5srOIH5V+eaxtekMkRCraQ==
-X-Gm-Gg: ASbGncs8oosXFM6Pk88IbBOKJwGoT9ngJSBOwUmIG5VPOpoCpk/+Jf7bDfPKpPQkSFJ
- 8deQBuTBgvbbIEZ+w6z947dp3I/cdaiGooi/a4/ATwcXACW9VmqMpIiAtUwvnTR3/sVBwvRBxZK
- r0fLtQBvft5i/scgjwA8+11aIR2BKjIRrS5VpsVlgPm6psp8AsEErrIbDhdXtVspz4UDbgSqHdC
- SFeVW3DqmTSLB+pMOsLgCLVgn50+b7583OmaBE25cNxdqet7ykHggoVmmiEGbWbSpI86qF2IWvS
- bvvlWOK3CRj/cLO9Mt08W94cv2VKncSSo83f8dzIzsrrA3XffqhLWg==
-X-Received: by 2002:a05:6000:4203:b0:391:3998:2660 with SMTP id
- ffacd0b85a97d-39cb35759c8mr9284109f8f.7.1744016459950; 
- Mon, 07 Apr 2025 02:00:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXHNAY/DK+44G9QZllGvrAuneBO9NbTOGU+ctnX7u3D8I2cSl9MnNqi2VfguONty2uD/8D8w==
-X-Received: by 2002:a05:6000:4203:b0:391:3998:2660 with SMTP id
- ffacd0b85a97d-39cb35759c8mr9284050f8f.7.1744016459289; 
- Mon, 07 Apr 2025 02:00:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c300968a1sm11605630f8f.11.2025.04.07.02.00.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 07 Apr 2025 02:00:58 -0700 (PDT)
-Message-ID: <df132244-3e44-4001-b161-d935c7b5ffbb@redhat.com>
-Date: Mon, 7 Apr 2025 11:00:57 +0200
+ d=1e100.net; s=20230601; t=1744017393; x=1744622193;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dFw9f9oORgNP86WG3ObM4nO5VHLeCGsVOu4jzneYOmU=;
+ b=ZgnUufSltRqWHZTd3Wl8ZWUohIAoQshAMFiETd/YBkNYhXpi8ri+fhcHPfjCI7YPUx
+ 3GzlPXGKt4qsZ37sKvvHEPRqgfomNVUtY/aFJNMBWRyJiQ6zXcHgmtmAxP3yJnDIUlDn
+ ZDmGbp7XVNA91iX9DzyUjT4v7G1ZRTWzuqcKWYMudZmc26n0JGcuN1HGp9ppN8noHFNn
+ APVVAaQVirumVkbi7DFY/RxLFqqVpS5IYHmYyatwwNusdAhi7BoQ9GNMJ2LJNfH7ffOy
+ 9gVfKgesOx7gADSMvge2GjQSOHijBpBOwehy8sGuls97N4lFHu9Y6mcFxIaaisUqp5Ri
+ E7bQ==
+X-Gm-Message-State: AOJu0YwgXecCPV9UalOqqApUgYk7UxGmCboEXYu1qBgj7loH/N2PwX/q
+ hhmwlvo4HZ/HaTgVWdXYIGaqOv8HVirKZnJv7mEZCKUO6BZhgsL/YWtk/XhHBXDp81d3abMepwq
+ u680zf6PASrE6taYJNA3f10GdL64=
+X-Gm-Gg: ASbGncvtEaq2NeuXs+vOUT1LmZJLQmSQIqG78m4ehq1b4dTYYzxPjdXCii3cVDcFdlN
+ g3QgTSHwZMgOwhy3IVsw87MDD1ZHBGBl3fM9DRh6AyhcItmULVxVZBHyxCE9JFjrhCns6kJNk0Y
+ C41QXPraU62v4UXUDs9RRS4iyJp3Nl
+X-Google-Smtp-Source: AGHT+IGrXuHP2ZdSv9Uy5u6HiX4X+aNtp0+yJLsreQ/oAbtDkd5XL45WNGMZwc1FdUhwPXuf8d1jL/IfOCWCThhMeMY=
+X-Received: by 2002:a05:651c:210c:b0:30b:ce0a:3e84 with SMTP id
+ 38308e7fff4ca-30f0c02d108mr33461461fa.32.1744017393254; Mon, 07 Apr 2025
+ 02:16:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 v2 00/37] vfio: Spring cleanup
-To: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>, Joao Martins <joao.m.martins@oracle.com>
-References: <20250326075122.1299361-1-clg@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250326075122.1299361-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
+ <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
+ <CAFvsdYk0J7ybdu+dL+w70Po1bGypLopBkixPp-ZzmTA8MdTr0w@mail.gmail.com>
+ <pf24mn3twfrc2kfaszovdyj5rhh6d4r4ixawh2dyx5dbi5no3j@ryk4lzslrnye>
+In-Reply-To: <pf24mn3twfrc2kfaszovdyj5rhh6d4r4ixawh2dyx5dbi5no3j@ryk4lzslrnye>
+From: prashant patil <pmgpatil@gmail.com>
+Date: Mon, 7 Apr 2025 14:46:17 +0530
+X-Gm-Features: ATxdqUEoqgELP2RAALeMnM3W5h_cK4cinBHTDMYZsgpA01sGQk21M9La9cSjJgs
+Message-ID: <CAFvsdYmJFDuQzk6Byu+f4HcTO1EStin3vEMC+twh8P3T2ve6qA@mail.gmail.com>
+Subject: Re: Query on the dirty bitmap
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000350c4d06322cb1d2"
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=pmgpatil@gmail.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,115 +94,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/25 08:50, Cédric Le Goater wrote:
-> Hello,
-> 
-> Several large extensions were merged in VFIO recently: migration
-> support with dirty tracking, support for different host IOMMU backend
-> devices, multifd support, etc. This adds up to the previous
-> extensions: vfio-platform, AP, CCW. The result is that VFIO is now a
-> subsystem of over +16,000 lines of code :
-> 
->    QEMU 2.0  :   3988 total
->                   ...
->    QEMU 10.0 :  16607 total
-> 
-> Organization is weak, naming inconsistent, the vfio-common.h header
-> file and common.c are quite messy. It's time to address the technical
-> debt before adding new features.
-> 
-> This proposal reorganizes some of the VFIO files to isolate features,
-> introduces new files and renames services to better reflect the
-> namespace they belong to. This is code reshuffling and there are no
-> intentional functional changes. If more could be done, please propose !
-> Timing seems right.
-> 
-> 
-> I have taken care to preserve all existing copyright notices in the
-> file headers. I have added one on behalf of my current employer for
-> newly created files. However, original authors may wish to include
-> their own notices as well. If so, please respond to the patch, and I
-> will update the patch in the next spin or before applying.
-> 
-> Here is a (short) list requiring your attention :
->    
->    * include/hw/vfio/vfio-migration.h
->    * hw/vfio/vfio-migration-internal.h
->      Kirti Wankhede and Avihai Horon, NVIDIA
->    
->    * hw/vfio/vfio-iommufd.h
->      Joao Martins and Yi Liu, Oracle and Intel
->    
->    * include/hw/vfio/vfio-region.h
->    * hw/vfio/region.c
->      Eric Auger, may be we could reduce the list ?
->    
->    * hw/vfio/vfio-cpr.h
->      Steve Sistare, Oracle
-> 
-> I think the remaining new files are correctly covered but I am human,
-> so please review and let me know.
-> 
-> I hope we can merge this when the QEMU 10.1 cycle starts and then
-> address the two large series waiting : live update and vfio-user.
-> 
-> 
-> What next in terms of cleanups :
-> 
->   - container.c is quite messy
->   - the pci* files need some love too (add vfio- prefix ?)
->   - improve overall documentation, structs and routines documentation
->     too would be great
->   - isolate all the low level routines (kvm ioctls) into helpers.c
->     to improve build ?
->   - improve build to reduce the number of files built per target
->   - continue the never ending quest of adding 'Error **' parameters,
->     Look for migration_file_set_error, in MemoryListener handlers :
->        vfio_listener_region_add
->        vfio_listener_log_global_stop
->        vfio_listener_log_sync
->     and in callback routines for IOMMU notifiers :
->        vfio_iommu_map_notify
->        vfio_iommu_map_dirty_notify
->     memory_region_iommu_replay() would be a start.
->   - remove vfio-platform (start of QEMU 10.2 cycle ~ September 2025)
-> 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> Changes in v2:
-> 
->   - Dropped vfio_migration_set_error()
->     https://lore.kernel.org/qemu-devel/20250324123315.637827-1-clg@redhat.com/
->   - Dropped R-b trailers on patches which were modified too much
->     (context changes are ok)
->   - Improved commit logs of patches adding new files
->   - Fixed top comment in header files
->   - Used a 'vfio_migration_' prefix instead of 'vfio_mig_'
->   - Made vfio_migration_add_bytes_transferred() internal
->   - Added extra patch for vfio_device_state_is_running/precopy()
->   - Moved vfio_reset_handler() in device.c
->   - Moved "dirty tracking" related services into container-base.c and
->     improved naming
->   - Introduced listener.* files instead of dirty-tracking.*
->   - Introduced vfio_listener_un/register() routines
-I pushed the changes I made to v2 to this branch:
+--000000000000350c4d06322cb1d2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-   https://github.com/legoater/qemu/commits/vfio-10.1
+Thanks Eric.
+I have a few questions about the bitmap content shown by 'qemu-img map'.
+From below sample bitmap data:
+1. Why only some of the extents have start and offset values? And why are
+they the same values?
+2. What does the start value indicate? Is it logical offset or physical
+offset of data into qcow2?
 
-I've added manually Avihai's R-bs which didn't reach lore for some
-reason. Please check.
-
-v3 should be after QEMU 10.0 is released, possibly next week.
-
-Thanks,
-
-C.
+root@be-proxmox1:/# qemu-img map --output=3Djson --image-opts
+"$IMG,x-dirty-bitmap=3Dqemu:dirty-bitmap:bitmap1"
+  [{ "start": 0, "length": 196608, "depth": 0, "present": true, "zero":
+false, "data": true, "compressed": false, "offset": 0},
+{ "start": 196608, "length": 65536, "depth": 0, "present": false, "zero":
+false, "data": false, "compressed": false},
+{ "start": 262144, "length": 105840640, "depth": 0, "present": true,
+"zero": false, "data": true, "compressed": false, "offset": 262144},
+{ "start": 106102784, "length": 95485952, "depth": 0, "present": false,
+"zero": false, "data": false, "compressed": false},
+{ "start": 201588736, "length": 145227776, "depth": 0, "present": true,
+"zero": false, "data": true, "compressed": false, "offset": 201588736},
+{ "start": 346816512, "length": 131072, "depth": 0, "present": false,
+"zero": false, "data": false, "compressed": false},
+{ "start": 346947584, "length": 131072, "depth": 0, "present": true,
+"zero": false, "data": true, "compressed": false, "offset": 346947584},
+{ "start": 347078656, "length": 65536, "depth": 0, "present": false,
+"zero": false, "data": false, "compressed": false},
+{ "start": 347144192, "length": 9699328, "depth": 0, "present": true,
+"zero": false, "data": true, "compressed": false, "offset": 347144192},
+{ "start": 356843520, "length": 131072, "depth": 0, "present": false,
+"zero": false, "data": false, "compressed": false},
+{ "start": 356974592, "length": 716767232, "depth": 0, "present": true,
+"zero": false, "data": true, "compressed": false, "offset": 356974592}]
 
 
+Regards
+Prashant
 
+On Thu, Mar 6, 2025 at 3:44=E2=80=AFAM Eric Blake <eblake@redhat.com> wrote=
+:
 
+> On Wed, Mar 05, 2025 at 03:36:35PM +0530, prashant patil wrote:
+> > I was trying to read the bitmap of the running vm's disk. When I follow=
+ed
+> > below mentioned commands, then I was able to read the bitmap properly.
+> > block-dirty-bitmap-add, block-dirty-bitmap-disable, nbd-server-start,
+> > nbd-server-add,
+>
+> Up to here, everything you've done is indeed the ideal way to get at
+> the contents of a bitmap from a live qemu process over an NBD connection.
+>
+> > qemu-img
+> > map with x-dirty-bitmap image-opts.
+>
+> Here, this works, but feels like a hack, because it is relying on the
+> x-dirty-bitmap feature of qemu.  The libnbd project ships with an
+> application 'nbdinfo --map' that can read the same information as
+> 'qemu-img map' but with a much nicer layout.  It's not going to
+> necessarily be faster, but because it is a fully-supported feature of
+> libnbd rather than a hack in qemu, it may prove more stable in the
+> long run, and certainly easier to understand.
+>
+> --
+> Eric Blake, Principal Software Engineer
+> Red Hat, Inc.
+> Virtualization:  qemu.org | libguestfs.org
+>
+>
+
+--000000000000350c4d06322cb1d2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Thanks Eric.<div>I have a few questions about the bitmap c=
+ontent shown by &#39;qemu-img map&#39;.</div><div>From below sample bitmap =
+data:</div><div>1. Why only some of the extents have start and offset value=
+s? And why are they the same values?</div><div>2. What does the start value=
+ indicate? Is it logical offset or physical offset of data into qcow2?</div=
+><div><br></div><div>root@be-proxmox1:/# qemu-img map --output=3Djson --ima=
+ge-opts &quot;$IMG,x-dirty-bitmap=3Dqemu:dirty-bitmap:bitmap1&quot;=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 [{ &quot;start&quot;: 0, &quot;length&quot;: 19660=
+8, &quot;depth&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;: false=
+, &quot;data&quot;: true, &quot;compressed&quot;: false, &quot;offset&quot;=
+: 0},<br>{ &quot;start&quot;: 196608, &quot;length&quot;: 65536, &quot;dept=
+h&quot;: 0, &quot;present&quot;: false, &quot;zero&quot;: false, &quot;data=
+&quot;: false, &quot;compressed&quot;: false},<br>{ &quot;start&quot;: 2621=
+44, &quot;length&quot;: 105840640, &quot;depth&quot;: 0, &quot;present&quot=
+;: true, &quot;zero&quot;: false, &quot;data&quot;: true, &quot;compressed&=
+quot;: false, &quot;offset&quot;: 262144},<br>{ &quot;start&quot;: 10610278=
+4, &quot;length&quot;: 95485952, &quot;depth&quot;: 0, &quot;present&quot;:=
+ false, &quot;zero&quot;: false, &quot;data&quot;: false, &quot;compressed&=
+quot;: false},<br>{ &quot;start&quot;: 201588736, &quot;length&quot;: 14522=
+7776, &quot;depth&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;: fa=
+lse, &quot;data&quot;: true, &quot;compressed&quot;: false, &quot;offset&qu=
+ot;: 201588736},<br>{ &quot;start&quot;: 346816512, &quot;length&quot;: 131=
+072, &quot;depth&quot;: 0, &quot;present&quot;: false, &quot;zero&quot;: fa=
+lse, &quot;data&quot;: false, &quot;compressed&quot;: false},<br>{ &quot;st=
+art&quot;: 346947584, &quot;length&quot;: 131072, &quot;depth&quot;: 0, &qu=
+ot;present&quot;: true, &quot;zero&quot;: false, &quot;data&quot;: true, &q=
+uot;compressed&quot;: false, &quot;offset&quot;: 346947584},<br>{ &quot;sta=
+rt&quot;: 347078656, &quot;length&quot;: 65536, &quot;depth&quot;: 0, &quot=
+;present&quot;: false, &quot;zero&quot;: false, &quot;data&quot;: false, &q=
+uot;compressed&quot;: false},<br>{ &quot;start&quot;: 347144192, &quot;leng=
+th&quot;: 9699328, &quot;depth&quot;: 0, &quot;present&quot;: true, &quot;z=
+ero&quot;: false, &quot;data&quot;: true, &quot;compressed&quot;: false, &q=
+uot;offset&quot;: 347144192},<br>{ &quot;start&quot;: 356843520, &quot;leng=
+th&quot;: 131072, &quot;depth&quot;: 0, &quot;present&quot;: false, &quot;z=
+ero&quot;: false, &quot;data&quot;: false, &quot;compressed&quot;: false},<=
+br>{ &quot;start&quot;: 356974592, &quot;length&quot;: 716767232, &quot;dep=
+th&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;: false, &quot;data=
+&quot;: true, &quot;compressed&quot;: false, &quot;offset&quot;: 356974592}=
+]</div><div><br></div><div><br></div><div>Regards</div><div>Prashant</div><=
+/div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Thu, Mar 6, 2025 at 3:44=E2=80=AFAM Eric Blake &lt;=
+<a href=3D"mailto:eblake@redhat.com">eblake@redhat.com</a>&gt; wrote:<br></=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, Mar 05, 2025 =
+at 03:36:35PM +0530, prashant patil wrote:<br>
+&gt; I was trying to read the bitmap of the running vm&#39;s disk. When I f=
+ollowed<br>
+&gt; below mentioned commands, then I was able to read the bitmap properly.=
+<br>
+&gt; block-dirty-bitmap-add, block-dirty-bitmap-disable, nbd-server-start,<=
+br>
+&gt; nbd-server-add,<br>
+<br>
+Up to here, everything you&#39;ve done is indeed the ideal way to get at<br=
+>
+the contents of a bitmap from a live qemu process over an NBD connection.<b=
+r>
+<br>
+&gt; qemu-img<br>
+&gt; map with x-dirty-bitmap image-opts.<br>
+<br>
+Here, this works, but feels like a hack, because it is relying on the<br>
+x-dirty-bitmap feature of qemu.=C2=A0 The libnbd project ships with an<br>
+application &#39;nbdinfo --map&#39; that can read the same information as<b=
+r>
+&#39;qemu-img map&#39; but with a much nicer layout.=C2=A0 It&#39;s not goi=
+ng to<br>
+necessarily be faster, but because it is a fully-supported feature of<br>
+libnbd rather than a hack in qemu, it may prove more stable in the<br>
+long run, and certainly easier to understand.<br>
+<br>
+-- <br>
+Eric Blake, Principal Software Engineer<br>
+Red Hat, Inc.<br>
+Virtualization:=C2=A0 <a href=3D"http://qemu.org" rel=3D"noreferrer" target=
+=3D"_blank">qemu.org</a> | <a href=3D"http://libguestfs.org" rel=3D"norefer=
+rer" target=3D"_blank">libguestfs.org</a><br>
+<br>
+</blockquote></div>
+
+--000000000000350c4d06322cb1d2--
 
