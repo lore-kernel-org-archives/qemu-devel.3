@@ -4,100 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0596CC3601A
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 10:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C02B0C3601E
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 11:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1jwy-000881-Tm; Mon, 07 Apr 2025 06:43:32 -0400
+	id 1u1kJE-0003qq-HB; Mon, 07 Apr 2025 07:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u1jww-00087l-4u
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 06:43:30 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u1jwt-0003lN-9S
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 06:43:29 -0400
-X-ASG-Debug-ID: 1744022597-1eb14e119e08610001-jgbH7p
-Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
- mx2.zhaoxin.com with ESMTP id ONaZwJBZzTrNwFRq (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Mon, 07 Apr 2025 18:43:17 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX2.zhaoxin.com
- (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Mon, 7 Apr
- 2025 18:43:17 +0800
-Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
- ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
- 15.01.2507.044; Mon, 7 Apr 2025 18:43:17 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Mon, 7 Apr
- 2025 17:33:15 +0800
-Message-ID: <94e8451f-1b44-4e22-8e3f-378c8490cf00@zhaoxin.com>
-Date: Mon, 7 Apr 2025 17:33:14 +0800
+ (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
+ id 1u1kJC-0003qF-AN
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 07:06:30 -0400
+Received: from [94.136.29.99] (helo=zilli.proxmox.com)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u1kJA-0006dC-FW
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 07:06:30 -0400
+Received: by zilli.proxmox.com (Postfix, from userid 1000)
+ id 761EC1C15AA; Mon,  7 Apr 2025 12:59:51 +0200 (CEST)
+From: Dietmar Maurer <dietmar@proxmox.com>
+To: qemu-devel@nongnu.org,
+	marcandre.lureau@redhat.com
+Cc: Dietmar Maurer <dietmar@proxmox.com>
+Subject: [PATCH 3/3] vnc: h264: send additional frames after the display is
+ clean
+Date: Mon,  7 Apr 2025 12:59:39 +0200
+Message-Id: <20250407105939.1997660-3-dietmar@proxmox.com>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250407105939.1997660-1-dietmar@proxmox.com>
+References: <20250407105939.1997660-1-dietmar@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/10] target/i386/kvm: reset AMD PMU registers during
- VM reset
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v2 08/10] target/i386/kvm: reset AMD PMU registers
- during VM reset
-CC: Dongli Zhang <dongli.zhang@oracle.com>, <qemu-devel@nongnu.org>,
- <kvm@vger.kernel.org>, <pbonzini@redhat.com>, <mtosatti@redhat.com>,
- <sandipan.das@amd.com>, <babu.moger@amd.com>, <likexu@tencent.com>,
- <like.xu.linux@gmail.com>, <zhenyuw@linux.intel.com>, <groug@kaod.org>,
- <khorenko@virtuozzo.com>, <alexander.ivanov@virtuozzo.com>,
- <den@virtuozzo.com>, <davydov-max@yandex-team.ru>, <xiaoyao.li@intel.com>,
- <dapeng1.mi@linux.intel.com>, <joe.jin@oracle.com>, <ewanhai@zhaoxin.com>,
- <cobechen@zhaoxin.com>, <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>,
- <frankzhu@zhaoxin.com>, <silviazhao@zhaoxin.com>, <yeeli@zhaoxin.com>
-References: <20250302220112.17653-1-dongli.zhang@oracle.com>
- <20250302220112.17653-9-dongli.zhang@oracle.com>
- <8a547bf5-bdd4-4a49-883a-02b4aa0cc92c@zhaoxin.com>
- <84653627-3a20-44fd-8955-a19264bd2348@oracle.com>
- <e3a64575-ab1f-4b6f-a91d-37a862715742@zhaoxin.com>
- <a94487ab-b06d-4df4-92d8-feceeeaf5ec3@oracle.com>
- <65a6e617-8dd8-46ee-b867-931148985e79@zhaoxin.com>
- <Z/OSEw+yJkN89aDG@intel.com>
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <Z/OSEw+yJkN89aDG@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 4/7/2025 6:43:15 PM
-X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
-X-Barracuda-Start-Time: 1744022597
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2128
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.01
-X-Barracuda-Spam-Status: No,
- SCORE=-2.01 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=TRACK_DBX_001
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.139615
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
- 0.01 TRACK_DBX_001          Custom rule TRACK_DBX_001
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 94.136.29.99 (failed)
+Received-SPF: none client-ip=94.136.29.99;
+ envelope-from=dietmar@zilli.proxmox.com; helo=zilli.proxmox.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, NO_DNS_FOR_FROM=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,51 +59,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+So that encoder can improve the picture quality.
 
+Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+---
+ ui/vnc.c | 25 ++++++++++++++++++++++++-
+ ui/vnc.h |  3 +++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-On 4/7/25 4:51 PM, Zhao Liu wrote:
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 2e60b55e47..4ba0b715fd 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3239,7 +3239,30 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     vnc_unlock_display(vd);
+ 
+     QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
+-        rects += vnc_update_client(vs, has_dirty);
++        int client_dirty = has_dirty;
++        if (vs->h264) {
++            if (client_dirty) {
++                vs->h264->keep_dirty = VNC_H264_KEEP_DIRTY;
++            } else {
++                if (vs->h264->keep_dirty > 0) {
++                    client_dirty = 1;
++                    vs->h264->keep_dirty--;
++                }
++            }
++        }
++
++        int count = vnc_update_client(vs, client_dirty);
++        rects += count;
++
++        if (vs->h264 && !count && vs->h264->keep_dirty) {
++            VncJob *job = vnc_job_new(vs);
++            int height = pixman_image_get_height(vd->server);
++            int width = pixman_image_get_width(vd->server);
++            vs->job_update = vs->update;
++            vs->update = VNC_STATE_UPDATE_NONE;
++            vnc_job_add_rect(job, 0, 0, width, height);
++            vnc_job_push(job);
++        }
+         /* vs might be free()ed here */
+     }
+ 
+diff --git a/ui/vnc.h b/ui/vnc.h
+index 7e232f7dac..e1b81d6bcc 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -236,10 +236,13 @@ typedef struct VncZywrle {
+ } VncZywrle;
+ 
+ #ifdef CONFIG_GSTREAMER
++/* Number of frames we send after the display is clean. */
++#define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+     size_t width;
+     size_t height;
++    guint keep_dirty;
+ } VncH264;
+ #endif
+ 
+-- 
+2.39.5
 
-> 
-> On Tue, Apr 01, 2025 at 11:35:49AM +0800, Ewan Hai wrote:
->> Date: Tue, 1 Apr 2025 11:35:49 +0800
->> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
->> Subject: Re: [PATCH v2 08/10] target/i386/kvm: reset AMD PMU registers
->>   during VM reset
->>
->>>> [2] As mentioned in [1], QEMU always sets the vCPU's vendor to match the host's
->>>> vendor
->>>> when acceleration (KVM or HVF) is enabled. Therefore, if users want to emulate a
->>>> Zhaoxin CPU on an Intel host, the vendor must be set manually.Furthermore,
->>>> should we display a warning to users who enable both vPMU and KVM acceleration
->>>> but do not manually set the guest vendor when it differs from the host vendor?
->>>
->>> Maybe not? Sometimes I emulate AMD on Intel host, while vendor is still the
->>> default :)
->>
->> Okay, handling this situation can be rather complex, so let's keep it
->> simple. I have added a dedicated function to capture the intended behavior
->> for potential future reference.
->>
->> Anyway, Thanks for taking Zhaoxin's situation into account, regardless.
->>
-> 
-> Thanks for your code example!!
-> 
-> Zhaoxin implements perfmon v2, so I think checking the vendor might be
-> overly complicated. If a check is needed, it seems more reasonable to
-> check the perfmon version rather than the vendor, similar to how avx10
-> version is checked in x86_cpu_filter_features().
-> 
-> I understand Ewan's concern is that if an Intel guest requires a higher
-> perfmon version that the Zhaoxin host doesn't support, there could be
-> issues (although I think this situation doesn't currently exist in KVM-QEMU,
-> one reason is QEMU uses the pmu_version in 0xa queried from KVM directly,
-> which means QEMU currently doesn't support custom pmu_version).
-
-Yeah, that's exactly what I was concerned about.
-Thanks for clearing that up!
-
-perfmon_version is a great idea --- I might add it as a property to the QEMU 
-vCPU template in the future, so it can adjust based on user input and host support.
-Can't promise a timeline yet, but it's definitely something I'll keep in mind.
 
