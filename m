@@ -4,89 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B6EC3601E
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 02:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B2DC36002
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 03:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1bw5-0005TK-Ld; Sun, 06 Apr 2025 22:10:06 -0400
+	id 1u1ci2-0003ph-VP; Sun, 06 Apr 2025 22:59:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1u1bvr-0005Sl-9p
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:09:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1u1ci1-0003pZ-IP
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:59:37 -0400
+Received: from esa5.fujitsucc.c3s2.iphmx.com ([68.232.159.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1u1bvp-00072N-FI
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:09:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1743991787;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RUXcWeUng/hGlbEM3cQ11vIzc8yuo14l+iA895elNUs=;
- b=Z03/Bpnmde93xDV8DLIJK6PSrayCFZ3uGs5/SQivUjbyy9Huo7Oi6LSamgd1r+rzAuc2bj
- PCfSuuRbaAe1tzw7Af6tsDhP1k8eBArtgsMiamYf+D5/ZCYFArJdJYQtU0zn82ik6vNLvM
- NX81YesTtChhVXv3pxO/xdc5pZjozXQ=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-hJ-ck1D8OVqxKEbnzyk1VQ-1; Sun, 06 Apr 2025 22:09:44 -0400
-X-MC-Unique: hJ-ck1D8OVqxKEbnzyk1VQ-1
-X-Mimecast-MFC-AGG-ID: hJ-ck1D8OVqxKEbnzyk1VQ_1743991784
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-224191d9228so46818535ad.3
- for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 19:09:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743991784; x=1744596584;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RUXcWeUng/hGlbEM3cQ11vIzc8yuo14l+iA895elNUs=;
- b=ijcdjLR2Yafdd5k8RYO53G8I5qnBuf6S97C+5fsUqTdWaGqvtdSHjWy4Kw7Sol4/jp
- DabLFOPeJa/IJHR2NMV1GDLBLk2LN0A7hM7Bz49V/4LjWnDZhn+oEdJYHiN9sJapWWtW
- GisoU7cNi4AlMzZT2DKnWktn8NZUAabD+r4ILKCKaLPzIrAi6ClgdR136GJ5+eGn7cWq
- TOWfNlg/359IfWAKgKqVmwQcNf5Yiib66RSWA7RYq+mOJH+GJf+euUa7weUicfI0OMUv
- YE8xFqIi+d2j1OklWhLx5bT2drn2yODhDIz9UkoFPSIn71QxWzftLoKlEn48LnmWHSdi
- YLAw==
-X-Gm-Message-State: AOJu0YzBRMjGDLyuWKkWVABYLKajIRC7BoEKXiaRW0xprdBLttsLJ49b
- iQfvmnVYN2iSFwa4yx7L1QnzfS7xODuSP2D77/tTmBd+JF+1XCmYIz50ekUNyv4ljyJ2K/kw49s
- MtXMN62pYLmX7hJJO0uhzVpzNq3UrQIEVSypcS3zLKCg242e0QtK5UxDIGuQxFwr2PPpTOD3RxO
- mcpMSYbDrVROwikAzWvppDKbxDYDc=
-X-Gm-Gg: ASbGncu1SeYqUjOz4vjftr1uNueHNmx2bb6HRzKG1XY6S+kIrMDWZ21phh6kEnbdrxa
- +42sSlgwg2Yj0XijejM+Xj0NlFcS0jJip3qyxcrwrwwhJI8+RGspGobEOZ5ZwinbpBEg4yg==
-X-Received: by 2002:a17:903:41d2:b0:223:668d:eba9 with SMTP id
- d9443c01a7336-22a8a84af74mr129133395ad.10.1743991783836; 
- Sun, 06 Apr 2025 19:09:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbsP5/Gi33wPz4mosyS1W6xOAkwuM4GdNz5EIZdS00/lTFInImZ/sioZK6WZHzPW0r08ZLmi79+9Q6jZvox7w=
-X-Received: by 2002:a17:903:41d2:b0:223:668d:eba9 with SMTP id
- d9443c01a7336-22a8a84af74mr129133135ad.10.1743991783481; Sun, 06 Apr 2025
- 19:09:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1u1chz-0006M2-C8
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:59:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1743994775; x=1775530775;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=N+HUXMeDL7CA+ktjmorF9MK2o7pyexYzhsutluREUm8=;
+ b=stdjunshP8WH98xj19k/R7vG8vaAx7IQYAU3IusdY7bPRCQCoe0joc4a
+ It/tLPGP04Bt4RwLeErL6do1Xs8GnbspJrcBVvGFuhvxxymwOTR65s5M7
+ /KtU1B2tYCCzQLgnEPhmhCEvz9PwuaphoPWJKNmtQGXFiDTx6I/gg7+xt
+ cY7W7Ns3OKWE4kQpxzG5fKZSDVU8zsasbQBy3iV/g25JwskE9xfazPwSU
+ KkthB7ff7l5fpfHQdIkhfYREVY28FoFmFyVgOjqES0RX9oewtRdBi+/PM
+ ZJuYgok6FrLlzF6efMCgya8xXH1KCAvkyLPTDws/Qa7QinFBucIP6+/SR g==;
+X-CSE-ConnectionGUID: MKA8Ixk3R+C749uugXkdow==
+X-CSE-MsgGUID: z/wVtgsQQc+4eQypsnThTg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="152401761"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739804400"; d="scan'208";a="152401761"
+Received: from mail-japanwestazlp17010002.outbound.protection.outlook.com
+ (HELO OS0P286CU011.outbound.protection.outlook.com) ([40.93.130.2])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Apr 2025 11:59:24 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=e4wHjXxnxP6p1vHfZn8o9X8jS5Qq2kdvZbumE099gdYv/+UE69e9urip/u57hE5/mysZ3v+CA7sZmcKoKzl8HMiZ+FjAi2EV9krrE9WZFLE6knDL2PcHjgQYxFLzugv8N44pJxzTD1C76mcJ2fAtoLJLH30uan2j1nEJwcyNudCtDm4SgZg3UoVwUMkzRJ217oYBqv205ysrjaKo5SHR348vozwQyBI9d1pvKIeNbpNDPsl03uh7wZPVua35SP4Q+d1gayueeC+Za3JaGOBOzvrCQbGo3tTzZhMtaQyeBwGK3nOxCp8aQI30OfWhVQNEJek9hl55Z23ORgzeC/pu5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N+HUXMeDL7CA+ktjmorF9MK2o7pyexYzhsutluREUm8=;
+ b=mxQlnBt+SwnMKU7huRNEnpFSABevzCVH+2Wti/ha6aQHHLBL8fejtEZdMe8aA093Lt8Hdbdudxbf8cB5efc7D26KGQgi7cL6G9cLXjVJtM1Wo8d11OqY3S42Twfpy0Yyb9PtT1L2AsxklDDghbm589vx02amlqqJGklYdQeCChVWyqm72bHl5F37vp9nPpw15Yn9gNc8JlVsyS4WsRf2G7f7JCLfzcxhWykUgRXs7G75vBa45gtQCYDI3VuNDO873PNUR/B/b44rn/CiIa9EWx/OsdeVC4S1c9mt042LcIz3FFo73FFNXg/G8ONOPwMaZ3nFaLmGsUySmAu0cAFJ4w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
+ by TY7PR01MB14992.jpnprd01.prod.outlook.com (2603:1096:405:250::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.44; Mon, 7 Apr
+ 2025 02:59:21 +0000
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377%4]) with mapi id 15.20.8606.029; Mon, 7 Apr 2025
+ 02:59:21 +0000
+To: Jonathan Cameron <jonathan.cameron@huawei.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Fan Ni <fan.ni@samsung.com>, "linux-cxl@vger.kernel.org"
+ <linux-cxl@vger.kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH] hw/pci-bridge/pci_expander_bridge: Fix HDM passthrough
+ condition
+Thread-Topic: [PATCH] hw/pci-bridge/pci_expander_bridge: Fix HDM passthrough
+ condition
+Thread-Index: AQHbm8o0B9htuAj4zE2+ObG4bZ08ZbOXmoiA
+Date: Mon, 7 Apr 2025 02:59:20 +0000
+Message-ID: <e2933a3b-7600-4f84-bfa9-d7b59dafb939@fujitsu.com>
+References: <20250323080420.935930-1-lizhijian@fujitsu.com>
+In-Reply-To: <20250323080420.935930-1-lizhijian@fujitsu.com>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|TY7PR01MB14992:EE_
+x-ms-office365-filtering-correlation-id: bf4b67d2-afb3-4b7f-2047-08dd758031ea
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|38070700018|1580799027; 
+x-microsoft-antispam-message-info: =?utf-8?B?di8wV0F2SUpNemJaUHY5azVmSVMzeXBHWldQbXVhbkxsSDVtaldOL3piWWVz?=
+ =?utf-8?B?cWJXUldLR2dDSXV1Wk9uV1JaVXJQU3lxSWFpZjJON1crUWZPNFNteW8rZ0xQ?=
+ =?utf-8?B?UlpUckZlOGlGajdGbDVGUFgzS0JrR2ZHYURjdm92U2FFcXdzR3ZaNUF6SmN4?=
+ =?utf-8?B?TU0xcTNsYUY3clpCUHdBcjBxbktidGRhY2RNdWEwc2NEblhFMjE0WWRwcEly?=
+ =?utf-8?B?cjJBS1pwSWROeTVVelc5a3hrYjg2NHF6SkxQM0pVL2t6R2N5V0ptVFhMUitE?=
+ =?utf-8?B?TnFIUkRkbUsvOXFMdC8xZmVLNkNJNnBESDVkWTBOb1Jkc2J0KzZyRXFnTFV5?=
+ =?utf-8?B?Q0pZQ1dnMkNzUFo1K2crMERrREtmUVF6a0U3M1NFbUpFcHJ4dVFBaEFlRHJa?=
+ =?utf-8?B?WHpyNXc5MnlxWHV0N3VwbmtPd0I3Y214WGtWeEdibzFlRDdhRStrbVNOTFRO?=
+ =?utf-8?B?Y1lXKzlPTkhKWXRlNGszaEFkWjBYYXM4bXNBeGVCejRrZnk3dXFrVHhPSk5i?=
+ =?utf-8?B?NlU5dElNZTFHREErY2RMSEFnUU8xOHVNbFRzZjRjQ0kyd2F3aVMzcUxPdWVv?=
+ =?utf-8?B?OUV5OU1WVVdXRFplSHUzZnVHc2JKZXErVFFPaUtoRGg1Smh4K25OTVlRallW?=
+ =?utf-8?B?dHMyNVpwRW9URTBCWC9Jb2RCYjNtek0vTVFBb3RMUWpaZWVjMk1aZHdNbDBl?=
+ =?utf-8?B?UEJsY0dmZlAwV3pXVG4rWGRUbWhsZE91Y1FLbzhjNGNsM0xwd3RRRmg4dGZI?=
+ =?utf-8?B?TDBaY1VXTk91UGRpbC9xRzhCQzdyZTJ3d2dMYXEzUEZ2N2RnQkMyeE1ickNZ?=
+ =?utf-8?B?VHJKQ01mL1RhcnlZVkx2SFBLdDBEL0JxeThac2dyOFp3UjV4emRNcjdPYXEz?=
+ =?utf-8?B?OEJZNE5GV2RTWm9ydFhwelpMMEFOTTZBZjU1TnF6OHh3Ykx4UHZET2tVeUZv?=
+ =?utf-8?B?dHovOC9QOHZ1VEY2Z1Z5VmpRVmpRK0FSTWRxR2s3Smt4SnFHbTFGeUR2SjQv?=
+ =?utf-8?B?ZU4ramljWWFzcEl4TTgxOFAydG91RmZTb0RacnN2QnpqejJvdkxua29HVExM?=
+ =?utf-8?B?K21GcEtsdU9ST25nYzc4N3plckxLazZZMWdxVkJOaFF4bElZbGEyWE44SVR3?=
+ =?utf-8?B?VzVjTUl5QWdxZStxczNOMHFRaUtlY0xGand4bmhpS1NNSE56bVR3UTNkQldJ?=
+ =?utf-8?B?U3hrVlcyMDhYaEZKT1FHdlhHQ3I5U25KMXZPQTIxQWRpbzBNN3ZsdEltSDNv?=
+ =?utf-8?B?TlExZjZMOW4rYVFWdUprR0RrWjhBRE4rOXpwdG0wQnZGeFg3UG8xdlk5WjdU?=
+ =?utf-8?B?bjlZbkUxOFNibEkrZ1F1QmV0WWJtbW9qR2pEcnR2cUJJVkRDU0huN2lpMkVD?=
+ =?utf-8?B?RUl3anFPU1FTNWhodXdoaFRENjVEazlQVndvMkptakRVZ1R1YkgrUjNMN1dh?=
+ =?utf-8?B?MW1kak15SmhsbjBSN3lBYlg5MFRKcEFFRyt6eFBncS9XM0FJTStqSXFjKzJv?=
+ =?utf-8?B?bHhIUFhKc0Z4OWt3Ny96LzJSeE1vRkd5c1JYbDN2Uk1CbHgybGpWMVYzakxP?=
+ =?utf-8?B?YUZWVVBmNzRBamN6dCtqSFc4SEFDOHN1bkR0Vk5UWVcyN3drR3BnY3RtWVdJ?=
+ =?utf-8?B?czR1WlRtV1lQcmdUK3k0WlN2UFQyMUJmbEE3aGpETnNHUjZRS1dKSGZ6ZTYw?=
+ =?utf-8?B?R1lJUzVzN0tNZEhiQzYwemNRNjZYN05pL09QUmNzRENpS2VkbXpyVGRLK1lt?=
+ =?utf-8?B?bDU2Rjl6QjJGZ0ppcStHc04zY0JNRGhwYXE4Q0lnSm8yV1V6YXVzeUhsREhj?=
+ =?utf-8?B?R2N0WkQ5dTJpVUFGNTBPMTd5SG5zTkNDYXcvenNEU0F5ZXZkMm9sWnJJZmFH?=
+ =?utf-8?B?a3NORjRxMCtaWDhRem9ORnJ0b0NUMk4yQ3BaU3NRbEZrQ3haOFRFcnU5MUt6?=
+ =?utf-8?B?UEh1NmlKR29QVk5IdmhIYmhVL3p3MGdsbjBKZ1prTVpOM2FLR1lTWXNUdWgv?=
+ =?utf-8?B?Tld4QVREVGZRPT0=?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(38070700018)(1580799027); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RUthVEpHdExWbjg4aTVLTkdMbndpZ2NUbUFPbjk3aUdqZkQrbjE4L0dZVFJO?=
+ =?utf-8?B?eTQ1bm96WkJzQTl2dUJST3U4M2cwK0FicEFrTHBVd01yWHhhUkdOY3IxZStV?=
+ =?utf-8?B?V3oyZlAzZGNGU01mYzh6aGJTZ3NqZmQrd1lvMjlvaS9KRDhxSXNQT2VScnc2?=
+ =?utf-8?B?SDFQS2ZmY3p1WmZBdDh6YXpUeVFUSHBJNXQ0OEZJaU1VOW1tUjBmVFZPY2JL?=
+ =?utf-8?B?REZhcnZiTXBFY0pXZ25jczUrN0d0dVU0STJzQks2clpEK1NZYlNaRW15TGVu?=
+ =?utf-8?B?anAyWnNWWmxnUHNQU0NRcFJHOUdQU1B1d1NIb2l1cFpXQzg3MVVDUzZQOUdv?=
+ =?utf-8?B?Y0N3bWlySTJzaGZURzRKN2k1YWk4RGR2dm9QaGRLOWsyd1ZXQ0V4SkNrOVFC?=
+ =?utf-8?B?c3dNRVlxU3IwTVlERWEyd1pTbEFIUENXVE5McnRkeEhmbVp4TVFKRjgwOCtW?=
+ =?utf-8?B?SlZRU1pkS0dYZC9VZmlnWS9HVXlGNm10eGpyc2V2U2dBbElPNFpnTllpbjJY?=
+ =?utf-8?B?RXZGanNhQmpvZHhZY0NSK1ptNXNzM2p5d2NsTnVZY2daK0M4NDZIdWd4SHM4?=
+ =?utf-8?B?WUx4TzZ4eGptbkRKT050VGVGdDlhOFdad0RkR0ZoeDhLRmxhdUlxYzZvTjc4?=
+ =?utf-8?B?eXA0QXM5TmQ0VWU3Uzg1c1kxTTh1ZjhBeXBaRWpFL0VlazYra2N0ZWdGSjdB?=
+ =?utf-8?B?N1dSS3ZFNFJhd3B0cTY2RDUrRStsM1lJVVBTbzB5bjA4NG9IZDVvUERnU3dt?=
+ =?utf-8?B?eUFmNkEwSDFSczNETVRxWHZTZnJYQmtuMGRCZStobVVGMVM4a2NwMG9RSGN6?=
+ =?utf-8?B?M1dna01XOVF0VlJwVzV4ckloL3I1a0NKK3M3d1oxNmZMSWVtV3JRQVlGRzl5?=
+ =?utf-8?B?NVpiWFNtZmhzTi9uMVJQcXlETy81VkUrSWlOeWIzalJBVXJWUW1HakpUY0Jr?=
+ =?utf-8?B?Y0dIcCtWaGd0emJXSnVocjEyYlFlbC90bzlQNDRvWXhjSnR3cU1jVmloZmVE?=
+ =?utf-8?B?eUkxdnd6anc0NFBDaVp2N3BXa2lQRlZBbXp4VVRxbXVHUWJ2S0VFWThUMzd2?=
+ =?utf-8?B?dUxFZGQxa0dUeFNJQkxiQWdGMG1yUVdVRHczMjlJUmNYZyt1K1Yrb1FhTWlt?=
+ =?utf-8?B?eml0UzViRDdZR1c2T0RvS1h4L3N2dnUxSWFPYjBkSTlSN284VnZvWE44eEVO?=
+ =?utf-8?B?UW9kTW80UzVwbUVXeGwyL1ZwSndHeWNGbmlkTkdPWlVaazQzMG53TC9IUVVm?=
+ =?utf-8?B?NDBTZU82QUxZUEJubmhjanFUY2c1a0cyT3dFdEovN3B1cWMzT1VaRlBrcEp3?=
+ =?utf-8?B?b2ExQm91eGJuQisvS2JuMXJBKzlIRW5GUE5JdVR6ZFlNbUJMdS9qd1ZWWmNP?=
+ =?utf-8?B?b0VLT01NTWpzL0kvNVhVT2tMck12aHY1RENLdGlJOGlOa2VCZVRHWkZ6Undj?=
+ =?utf-8?B?TEUvaUcySUlNSzRORXlFZE9pTkI3ZFhobmU4Q095Y2F6SnY5Yys2SGIySFlX?=
+ =?utf-8?B?UUNMdkdPclpsdVl0TmhGb1dNVFNpV2ZIdTA3c3ozWVpkWTNDTWtjRytoK05q?=
+ =?utf-8?B?OWsyU2grdTAwTU8xTU1GRkFPS05qS1FFdTliUDRvQ0NMQmRKL2xTL3l6NGtt?=
+ =?utf-8?B?RmFzbWowQUtPU0JTNC82NmVnU2d6a3Y1aUZxMGNWT3UvcXkxdVNGNng0aTg4?=
+ =?utf-8?B?NHdmZXVHNE9Rbll4Y3BjK0VsYTBXWW9kOWZqby9wRFlzTko2TW16V2ZMN25q?=
+ =?utf-8?B?Vi9JWnJVbC95a2ttQ1FSbXAreElZYnR4bEJjQUJFYVJreHVjVzA2QTR2ZE9m?=
+ =?utf-8?B?UzdzbVQreXhueEdydkhVcEdPWXpXOTFkMk9GTVpoa0NQWU84RjBhdDB5Y1FM?=
+ =?utf-8?B?dUhSK1VpRlVCVFhoUkJ1YmsyVndNRkRhUThIRnh2dDF6K0FMaXo5QjR0NGNa?=
+ =?utf-8?B?Mk9GendkVitmZVYybFYrbkdJNnkzNngrS3daQVNlYi8vM3I2aUVadFpPTGZU?=
+ =?utf-8?B?NUVIUjV1aHU3WjJ5VytYeVdSUHBnaUxlS3Z3N1pCMUYzWmVWWHl6T3pjVGdK?=
+ =?utf-8?B?NWlHSHFXNStMVk92TzBoZWNEVnNkbFdXZkNFcnVGMzNGSmwyK2FxRW1sczhS?=
+ =?utf-8?B?bHZDenJFZ2EvTkVvZDhYVG5GZkp2RlF4VnE2UUF2OWZxcTlZcWE4MXpFWlpT?=
+ =?utf-8?B?aWc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <7D8D32B36ECFF349A7695BD7F860695A@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
-In-Reply-To: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 7 Apr 2025 10:09:32 +0800
-X-Gm-Features: ATxdqUETg5LcVSdw55XnjUKe75DKTJrwRSJY06QagFKpoJ9t4gyYWs9R88GOYQ8
-Message-ID: <CACGkMEtLno7e6WVWAAoQnF-HpP18Q6TTEN3BxFqcBDS9x0m=cw@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: Copy all for dhclient workaround
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Antoine Damhet <adamhet@scaleway.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, devel@daynix.com, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: TsbyvR8REGwnTOECuhl0ZvfESGxlDF4N9D7XRVFMSjfZohCxxGPAK3COZTQlxv9sKZ/ilkhLe/Gda3R4LQdREboCvb21Eyc4jpd/ulvLxetETwbxd5B1gGRG2n+fk6myWlpvrCyote3ZSjJ27Pd0bGUsiFY7PNKVZyubSCro/h1EJkPJBFkEgtr5ljFwwW/q6dJ00SW8ctahZjziZSkf13MSd61QZoxUDAVTlY7H9DCoGlXspNCadhVUfJasL6TFpFBrKczj9u1jsJyJBL6x659rNOq0nuJFkXeVaTG01jbYOGYJXDvBsRZ+oODq8kylt+wHEEJ9gjFmW9nWLMNRolxsjQGRrm+fbfwdTG7WeGEEE+BCJ3gMNNMgddUlmIdQ2HtULuN6ei4VqaqI9TaK9w+G6zXuGuAmnAWrzMraVsqz4x6XEXkcF8pZ5FGneFXu6i1ZWEJgriEWgDk1dPlSKQNWLwytgqlcaPkKZjeFoW7NPGQ4dRqx+oO25eXdR7ZZTHLm039z03k8gy+50CY6osYyJtfMLdjqVIy1dyVCm8trY9S1jInuaHWgEa6cPNibN0mkHpJwXiu+uS/MaBj/wc1r+6Twbg+gkyOcTmWdEPwHE1C2aXhOM3vr30zUtHo5
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf4b67d2-afb3-4b7f-2047-08dd758031ea
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Apr 2025 02:59:21.0031 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: P0dAn1w0UjPKFFWijCEeus7PR1bCWAhpnQY3FzYYm/E/nIpj8ZP9bmF/2r9Vby9xSK13hrgE0Fx6txIwhZ+sgQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY7PR01MB14992
+Received-SPF: pass client-ip=68.232.159.76; envelope-from=lizhijian@fujitsu.com;
+ helo=esa5.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,44 +200,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 5, 2025 at 4:04=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix.=
-com> wrote:
->
-> The goal of commit 7987d2be5a8b ("virtio-net: Copy received header to
-> buffer") was to remove the need to patch the (const) input buffer with a
-> recomputed UDP checksum by copying headers to a RW region and inject the
-> checksum there. The patch computed the checksum only from the header
-> fields (missing the rest of the payload) producing an invalid one
-> and making guests fail to acquire a DHCP lease.
->
-> Fix the issue by copying the entire packet instead of only copying the
-> headers.
->
-> Fixes: 7987d2be5a8b ("virtio-net: Copy received header to buffer")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> This patch aims to resolves the issue the following one also does:
-> https://lore.kernel.org/qemu-devel/20250404151835.328368-1-adamhet@scalew=
-ay.com
->
-> The difference from the mentioned patch is that this patch also
-> preserves that the original intent of regressing change, which is to
-> remove the need to patch the (const) input buffer with a recomputed UDP
-> checksum.
->
-> To Antoine Damhet:
-> I confirmed that DHCP is currently not working and this patch fixes the
-> issue, but I would appreciate if you also confirm the fix as I already
-> have done testing badly for the regressing patch.
-
-Considering we are about to release, I'd prefer to do the reverting
-first and refine on the next version.
-
-Thanks
-
+UGluZw0KDQpPbmx5IGlmIChkc3BfY291bnQ9PTEgJiYgaGRtX2Zvcl9wYXNzdGhyb3VnaD09dHJ1
+ZSksIHRoZSBRRU1VIHNob3VsZG4ndCBpbXBsZW1lbnQNCnRoZSBIRE0gZGVjb2RkZXIgZm9yIHRo
+ZSBIb3N0LWJyaWRnZS4NCg0KQnV0IHByZXZpb3VzIGNvZGUgZGlkbid0IGZvbGxvdyB0aGlzLg0K
+DQpUaGFua3MNClpoaWppYW4NCg0KT24gMjMvMDMvMjAyNSAxNjowNCwgTGkgWmhpamlhbiB3cm90
+ZToNCj4gUmV2ZXJzZSB0aGUgbG9naWNhbCBjb25kaXRpb24gZm9yIEhETSBwYXNzdGhyb3VnaCBz
+dXBwb3J0IGluDQo+IHBjaV9leHBhbmRlcl9icmlkZ2UuIFRoaXMgcGF0Y2ggZW5zdXJlcyB0aGUg
+SERNIHBhc3N0aHJvdWdoIGNvbmRpdGlvbg0KPiBpcyBldmFsdWF0ZWQgb25seSB3aGVuIGhkbV9m
+b3JfcGFzc3Rocm91Z2ggaXMgc2V0IHRvIHRydWUsIGFsaWduaW5nDQo+IGJlaGF2aW9yIHdpdGgg
+aW50ZW5kZWQgc2VtYW50aWNzIGFuZCBjb21tZW50cy4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IExp
+IFpoaWppYW4gPGxpemhpamlhbkBmdWppdHN1LmNvbT4NCj4gLS0tDQo+IA0KPiBUaGlzIGNoYW5n
+ZSBjb3JyZWN0cyB3aGF0IGFwcGVhcnMgdG8gYmUgYSBwcmV2aW91cyBtaXN0YWtlIGluIGxvZ2lj
+DQo+IHJlZ2FyZGluZyBIRE0gcGFzc3Rocm91Z2ggY29uZGl0aW9ucy4NCj4gLS0tDQo+ICAgaHcv
+cGNpLWJyaWRnZS9wY2lfZXhwYW5kZXJfYnJpZGdlLmMgfCAyICstDQo+ICAgMSBmaWxlIGNoYW5n
+ZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHcv
+cGNpLWJyaWRnZS9wY2lfZXhwYW5kZXJfYnJpZGdlLmMgYi9ody9wY2ktYnJpZGdlL3BjaV9leHBh
+bmRlcl9icmlkZ2UuYw0KPiBpbmRleCAzMzk2YWI0YmRkLi4yNWY4OTIyZDc2IDEwMDY0NA0KPiAt
+LS0gYS9ody9wY2ktYnJpZGdlL3BjaV9leHBhbmRlcl9icmlkZ2UuYw0KPiArKysgYi9ody9wY2kt
+YnJpZGdlL3BjaV9leHBhbmRlcl9icmlkZ2UuYw0KPiBAQCAtMzA3LDcgKzMwNyw3IEBAIHN0YXRp
+YyB2b2lkIHB4Yl9jeGxfZGV2X3Jlc2V0KERldmljZVN0YXRlICpkZXYpDQo+ICAgICAgICAqIFRo
+ZSBDWEwgc3BlY2lmaWNhdGlvbiBhbGxvd3MgZm9yIGhvc3QgYnJpZGdlcyB3aXRoIG5vIEhETSBk
+ZWNvZGVycw0KPiAgICAgICAgKiBpZiB0aGV5IG9ubHkgaGF2ZSBhIHNpbmdsZSByb290IHBvcnQu
+DQo+ICAgICAgICAqLw0KPiAtICAgIGlmICghUFhCX0NYTF9ERVYoZGV2KS0+aGRtX2Zvcl9wYXNz
+dGhyb3VnaCkgew0KPiArICAgIGlmIChQWEJfQ1hMX0RFVihkZXYpLT5oZG1fZm9yX3Bhc3N0aHJv
+dWdoKSB7DQo+ICAgICAgICAgICBkc3BfY291bnQgPSBwY2llX2NvdW50X2RzX3BvcnRzKGhiLT5i
+dXMpOw0KPiAgICAgICB9DQo+ICAgICAgIC8qIEluaXRpYWwgcmVzZXQgd2lsbCBoYXZlIDAgZHNw
+IHNvIHdhaXQgdW50aWwgPiAwICov
 
