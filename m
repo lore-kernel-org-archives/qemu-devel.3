@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63DF2C36002
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 02:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6D8C36002
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 02:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1buH-0004iC-RY; Sun, 06 Apr 2025 22:08:13 -0400
+	id 1u1bwK-0005ap-9v; Sun, 06 Apr 2025 22:10:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u1buE-0004hf-PG
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:08:10 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1u1bwI-0005aI-DP
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:10:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u1buC-0006xH-BW
- for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:08:10 -0400
-X-ASG-Debug-ID: 1743991673-086e2365b73ef20001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx1.zhaoxin.com with ESMTP id JRO3mdox2zcq4hkV (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Mon, 07 Apr 2025 10:07:53 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Mon, 7 Apr
- 2025 10:07:52 +0800
-Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
- ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
- 15.01.2507.044; Mon, 7 Apr 2025 10:07:52 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ewan-server.zhaoxin.com (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Mon, 7 Apr
- 2025 10:07:05 +0800
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
-CC: <qemu-devel@nongnu.org>
-Subject: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFeng vCPU
- template
-Date: Sun, 6 Apr 2025 22:07:04 -0400
-X-ASG-Orig-Subj: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFeng
- vCPU template
-Message-ID: <20250407020704.2580294-1-ewanhai-oc@zhaoxin.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1u1bwD-00079m-Hs
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:10:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1743991812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PVuajaTbrz0lsY2sjqYprYPtWsMQHd946UcPkbQTmT0=;
+ b=PmlUXsqP9tjvNuj5JG+PjRdRvqL9V/mGqWlf8icYX+Ly8vUjLt+feqNndsH4a/+ipnqE1D
+ uRWFjZO/9/HiheN75474TTxVf7hpXUoXspbrq7hgpo8c4InAKCnl/+XvqAkELOSPF8Xzqu
+ BC1Vs+GWInb98h7Qg6adhTgtZ0p3OSo=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-580-sM84u-GoPNeRYCZ3xRc0kQ-1; Sun, 06 Apr 2025 22:10:10 -0400
+X-MC-Unique: sM84u-GoPNeRYCZ3xRc0kQ-1
+X-Mimecast-MFC-AGG-ID: sM84u-GoPNeRYCZ3xRc0kQ_1743991810
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ff8a2c7912so3042523a91.1
+ for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 19:10:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1743991809; x=1744596609;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PVuajaTbrz0lsY2sjqYprYPtWsMQHd946UcPkbQTmT0=;
+ b=wZ8YO/u9xbSokPXjaN5iSiWm38hJC3qoVBp233KViPik2ZZ9MOMWuOjvVhZaiHqFX/
+ mDV2A8SBLlBozc4val5Ofhp2q7n/yJamwegya3Urn8S8SmCWSeDL7O3YP3DCh4oSVDB6
+ FNtVejalxBkafPng7tRMMlH8Wbz1Z/xDcaL5MQnI4kCDbDvUQAUZ10W1seSz+iEPnStG
+ n0Cum+qFGFdcvl8pCO/b02yBSBFnWs8quTCxG/Aw0Qf0nwrZdz+txN3OWQk0n3IOuATW
+ HEBlUC3DpYdMlPWehxhh1fGB/Xd4oFgLRhuwNC3zrB3RAW+RL9fhYz/jf0B1oNyn4bzM
+ 33HQ==
+X-Gm-Message-State: AOJu0YwW9Bm9ZtFBIySG8UyCptQs0d5EZFhIVETbHQ1UcwClRxRlhTLN
+ hChgP4QMspkkJ/LdkrR5eOy1M0JX9kVJE2Ku7CLzSXja0aXHVhfJn74WcTzUwQuj5f3KsTSawA6
+ Zf0RkvcJ/yRD7Ab+ZHescNcDX9HLOZK9utz8CxZozeBJ8NbfqW6jHBcBFdARbrjG4H025eO2sHq
+ zzaIeol2Ssf+2V6qFzU5dM8zwqyq8j+P/Tg5ts1/Yg
+X-Gm-Gg: ASbGncuCe/cmsHkTXB6+kwL6M6RaIJWb1BP0YAHpfc1aJBlns7CCxfI+C57jak0jTUW
+ bYr/iE3ByZ70ynavMUR1D8HezMfC9jJtj1bNckJbvPaa+Br1OZOKgJPiG9/DAqsPSe/bARA==
+X-Received: by 2002:a17:90b:2dcc:b0:2ee:8cbb:de28 with SMTP id
+ 98e67ed59e1d1-306a4e76fb7mr16939987a91.8.1743991808340; 
+ Sun, 06 Apr 2025 19:10:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6J8OQpFNNkx46PafBTAArHRe+mN5TQW9tFBzHfKxbdCvpCBGhKgJQmLtvUWDxhMyGSZEFpLIkqStdpTq9gqg=
+X-Received: by 2002:a17:90b:2dcc:b0:2ee:8cbb:de28 with SMTP id
+ 98e67ed59e1d1-306a4e76fb7mr16939956a91.8.1743991807919; Sun, 06 Apr 2025
+ 19:10:07 -0700 (PDT)
 MIME-Version: 1.0
+References: <20250404151835.328368-1-adamhet@scaleway.com>
+In-Reply-To: <20250404151835.328368-1-adamhet@scaleway.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 7 Apr 2025 10:09:56 +0800
+X-Gm-Features: ATxdqUE7zYXi4JZsh8A3syiQG92rFlGKNmP7z8UMBxtpWR70x5sf0wzJRZiBLsk
+Message-ID: <CACGkMEun5HXgcXia8Bur3WVZtU3-KHUiO_X1FuwSDBb=fbjiHQ@mail.gmail.com>
+Subject: Re: [PATCH] Revert "virtio-net: Copy received header to buffer"
+To: Antoine Damhet <adamhet@scaleway.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 4/7/2025 10:07:51 AM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1743991673
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 1004
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.139599
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.659,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,35 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
-The correct value is 0x5b. This mistake occurred because the extended
-model bits in cpuid[eax=3D0x1].eax were overlooked, and only the base
-model was used.
+On Fri, Apr 4, 2025 at 11:19=E2=80=AFPM Antoine Damhet <adamhet@scaleway.co=
+m> wrote:
+>
+> This reverts commit 7987d2be5a8bc3a502f89ba8cf3ac3e09f64d1ce.
+>
+> The goal was to remove the need to patch the (const) input buffer
+> with a recomputed UDP checksum by copying headers to a RW region and
+> inject the checksum there. The patch computed the checksum only from the
+> header fields (missing the rest of the payload) producing an invalid one
+> and making guests fail to acquire a DHCP lease.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+> ---
 
-This patch corrects the model field.
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-Fixes: ff04bc1ac4 ("target/i386: Introduce Zhaoxin Yongfeng CPU model")
-Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1b64ceaaba..0dd9788a68 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5503,7 +5503,7 @@ static const X86CPUDefinition builtin_x86_defs[] =3D =
-{
-         .level =3D 0x1F,
-         .vendor =3D CPUID_VENDOR_ZHAOXIN1,
-         .family =3D 7,
--        .model =3D 11,
-+        .model =3D 0x5b,
-         .stepping =3D 3,
-         /* missing: CPUID_HT, CPUID_TM, CPUID_PBE */
-         .features[FEAT_1_EDX] =3D
---=20
-2.34.1
+Thanks
 
 
