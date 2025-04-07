@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52355C3601E
-	for <qemu-devel@archiver.kernel.org>; Sun,  6 Apr 2025 23:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63DF2C36002
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 02:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1ZUM-0001ud-GK; Sun, 06 Apr 2025 19:33:18 -0400
+	id 1u1buH-0004iC-RY; Sun, 06 Apr 2025 22:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZUC-0001so-Ep; Sun, 06 Apr 2025 19:33:09 -0400
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u1ZU9-0003yA-Id; Sun, 06 Apr 2025 19:33:07 -0400
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-86fea8329cdso3522161241.1; 
- Sun, 06 Apr 2025 16:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1743982383; x=1744587183; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xEHpk+uwUJKXYrPGSL2apLgeD0u+rgmq8Nrxew6SfVM=;
- b=MPeoz/e89X02Lp3V7YfdT8jDa9+URUSKNs9k0QkxUxojI3IBt6LazmJA+duCeEmR3s
- 7YKMT38yzcEJRYgcT+tidjhyZV+aNKBRDrqFxvfYfiIrm3wAsxIFQm3KBxVIsRAYwIbB
- rcR8zHGtihBlqgbwCups+3TmN+VsQNY8UAs7FnpglxeuSrFLXh0FKeOmZMkkzw3X0ozB
- BlgyZQlgeUbUp1z66rF5aymySd42DXMZiEy6pTXtoVdSjU1Szhn2Q1RIfhDyKjVKK5mJ
- OTgRUdO5YgT06y5o32ueUJziT9svy8BcRa56L6fY+yNJ8v++0nNG546YYGd1+48FUEz1
- BEZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1743982383; x=1744587183;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xEHpk+uwUJKXYrPGSL2apLgeD0u+rgmq8Nrxew6SfVM=;
- b=dp9i6A0n2YvfC5HynKADsk6IFHrlIKU29ZPn9u1KSjHZEDJ9lgxhR8+TbkC1ys4xdm
- S+TCDVtqUrgbSrDaoJQmpeGw5COjyoY2LNe3I92vVKCGHn5pS9u20gS7/dDC+kjQsTeE
- Hs/Q2odgtwwcflwNKIQGXkv5xrswoQHp88Vtd7pQTa0XZJV59h3wmuULOdKzslAjbScd
- GKy+XtfLSXzvOO/NNnSiqEZTfrtED83sC0JPC9ivp0fGH2/l56PIDPS8bAPybtC4VNYz
- OftOo0JI2DZm2IK4ReHcDxTWTOY51mRKQpS2VbTbqUbCPBBkxe6GelwgUki1V6ZdOEaL
- cE3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdHEvN5vVR3SKxND3M6DBqb0UL1u9I3V8bL84U1mTHUmujaWgZkHXEBKApb/PAW8LErar1Ns6mJrfM@nongnu.org
-X-Gm-Message-State: AOJu0YzZ9J9rks17eJrC8igLsgO7ynZO3N5pOzDu/Cj8iZ9Q9TSeS/vp
- Z1aQSt5Xl5XZPAYQcb9jqpj1S+gaUdHfu9kqG7O6lvZrdFNHyL46LigSV4YgW0m9IvEgK/Gc/+s
- ZkF9ObMssfh2S9EDHrKHoTEvgrIM=
-X-Gm-Gg: ASbGncs3oRFsD1imOF8Gr5Cga5bgZ9bXw4oJg+dQJzZvAgV5qw6ujUAQwh7o0/J6dQr
- gF43VXDVDp7mD4EDuQ9L9YBSoAv5GUCvFbW5qN+2el1D7qA7GZyL0fKkIztwe2fbXi1TkqldwPc
- QKtYZ5EeYSCKyBc/9UDtP1KQMdGDwjuYUpYeSA421sb0fndVj5n0XkdRpd
-X-Google-Smtp-Source: AGHT+IHJiARim7fINCtwBz9h8txsxLL+q3WRAPZEFzKCidpYp1PyfVbUvHQRadmGbEKB634W0cOpGVeY/TIzoysyNDc=
-X-Received: by 2002:a05:6102:5719:b0:4bb:9b46:3f71 with SMTP id
- ada2fe7eead31-4c863687728mr4408705137.8.1743982383482; Sun, 06 Apr 2025
- 16:33:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u1buE-0004hf-PG
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:08:10 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u1buC-0006xH-BW
+ for qemu-devel@nongnu.org; Sun, 06 Apr 2025 22:08:10 -0400
+X-ASG-Debug-ID: 1743991673-086e2365b73ef20001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx1.zhaoxin.com with ESMTP id JRO3mdox2zcq4hkV (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Mon, 07 Apr 2025 10:07:53 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Mon, 7 Apr
+ 2025 10:07:52 +0800
+Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
+ ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
+ 15.01.2507.044; Mon, 7 Apr 2025 10:07:52 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ewan-server.zhaoxin.com (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.44; Mon, 7 Apr
+ 2025 10:07:05 +0800
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>
+CC: <qemu-devel@nongnu.org>
+Subject: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFeng vCPU
+ template
+Date: Sun, 6 Apr 2025 22:07:04 -0400
+X-ASG-Orig-Subj: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFeng
+ vCPU template
+Message-ID: <20250407020704.2580294-1-ewanhai-oc@zhaoxin.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250404122858.241598-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250404122858.241598-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 7 Apr 2025 09:32:37 +1000
-X-Gm-Features: ATxdqUHbqIJL5xEvbODzO9mtx81KNc3ze_GThkmw4kO4AO-_nm98CsdLsvO3NXI
-Message-ID: <CAKmqyKNMk1bEEPXsj-bQ76mE5T0k9DU0MF2dmTTuWb3rvfekzA@mail.gmail.com>
-Subject: Re: [PATCH for-10.0] docs: deprecate RISC-V default machine option
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 4/7/2025 10:07:51 AM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1743991673
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 1004
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.139599
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,69 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 4, 2025 at 10:30=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Commit 5b4beba124 ("RISC-V Spike Machines") added the Spike machine and
-> made it default for qemu-system-riscv32/64. It was the first RISC-V
-> machine added in QEMU so setting it as default was sensible.
->
-> Today we have 7 riscv64 and 6 riscv32 machines and having 'spike' as
-> default machine is not intuitive. For example, [1] is a bug that was
-> opened with the 'virt' board in mind, but given that the user didn't
-> pass a '-machine' option, the user was using 'spike' without knowing.
->
-> Being explicit in the command line is desirable when we have a handful
-> of boards available, so deprecate the default machine setting from
-> RISC-V.
->
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2467
->
-> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
+The correct value is 0x5b. This mistake occurred because the extended
+model bits in cpuid[eax=3D0x1].eax were overlooked, and only the base
+model was used.
 
-Thanks!
+This patch corrects the model field.
 
-Applied to riscv-to-apply.next
+Fixes: ff04bc1ac4 ("target/i386: Introduce Zhaoxin Yongfeng CPU model")
+Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Alistair
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1b64ceaaba..0dd9788a68 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5503,7 +5503,7 @@ static const X86CPUDefinition builtin_x86_defs[] =3D =
+{
+         .level =3D 0x1F,
+         .vendor =3D CPUID_VENDOR_ZHAOXIN1,
+         .family =3D 7,
+-        .model =3D 11,
++        .model =3D 0x5b,
+         .stepping =3D 3,
+         /* missing: CPUID_HT, CPUID_TM, CPUID_PBE */
+         .features[FEAT_1_EDX] =3D
+--=20
+2.34.1
 
-> ---
->  docs/about/deprecated.rst | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 76291fdfd6..0f41a99c67 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -304,6 +304,23 @@ online to check that this board did not completely b=
-itrot yet). It is
->  recommended to use another MIPS machine for future MIPS code development
->  instead.
->
-> +RISC-V default machine option (since 10.0)
-> +''''''''''''''''''''''''''''''''''''''''''
-> +
-> +RISC-V defines ``spike`` as the default machine if no machine option is
-> +given in the command line.  This happens because ``spike`` is the first
-> +RISC-V machine implemented in QEMU and setting it as default was
-> +convenient at that time.  Now we have 7 riscv64 and 6 riscv32 machines
-> +and having ``spike`` as a default is no longer justified.  This default
-> +will also promote situations where users think they're running ``virt``
-> +(the most used RISC-V machine type in 10.0) when in fact they're
-> +running ``spike``.
-> +
-> +Removing the default machine option forces users to always set the machi=
-ne
-> +they want to use and avoids confusion.  Existing users of the ``spike``
-> +machine must ensure that they're setting the ``spike`` machine in the
-> +command line (``-M spike``).
-> +
->
->  Backend options
->  ---------------
-> --
-> 2.49.0
->
->
 
