@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BBCC36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 06:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794D0C3601A
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 06:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1g7J-0008Og-BO; Mon, 07 Apr 2025 02:37:57 -0400
+	id 1u1gCt-0001kj-AW; Mon, 07 Apr 2025 02:43:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1g7H-0008OU-Si
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 02:37:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1gCj-0001ic-8U
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 02:43:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1g7F-0002v3-RI
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 02:37:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u1gCh-0003VO-HA
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 02:43:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744007869;
+ s=mimecast20190719; t=1744008208;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mHKZOnd4xwLlUedReRkYkO98nOXBfho0oVC479PtilI=;
- b=TqbbeN9tGwXgWf2Sh5+PSskt01NtWAwbjq+c0pe0cxLdfnMgkvTg12uko2YbmMKNv7pHZ3
- Nz6YFS1f2JJXvJSoX4MAx4WD7auWUk3+GRiyqOuifPSieWOZf4q/TECyWg25ntyvNEUern
- Fr2VGiAQySg+SZg3C3w8mpBEFZdKelI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2N9EBUPfB72aOT18m8ZX2la+W/R4vK8QCjlKOmLrqhY=;
+ b=PhudApVbr5kVCxB8RYC6g478O3VGzuyr47RD9tFYXX25XZ62LHFLfOjmtyuBbPrb8BG/Sb
+ fbkjLyZ3jUBVtqisgRnFY775b+FXVX+2usaz/pFsg2nBjDXaMMrFkbf3+aNYXFwh3l7RCk
+ bYw1U19t/RFKa9yekg2YZULU8oyhhB8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-IuK-Ds1BNmauQvWCZ-KbtQ-1; Mon, 07 Apr 2025 02:37:47 -0400
-X-MC-Unique: IuK-Ds1BNmauQvWCZ-KbtQ-1
-X-Mimecast-MFC-AGG-ID: IuK-Ds1BNmauQvWCZ-KbtQ_1744007867
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-391459c0395so1585844f8f.2
- for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 23:37:47 -0700 (PDT)
+ us-mta-629-ZKEXlSDXMAOzcZlajkzcwQ-1; Mon, 07 Apr 2025 02:43:24 -0400
+X-MC-Unique: ZKEXlSDXMAOzcZlajkzcwQ-1
+X-Mimecast-MFC-AGG-ID: ZKEXlSDXMAOzcZlajkzcwQ_1744008203
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d22c304adso22534305e9.0
+ for <qemu-devel@nongnu.org>; Sun, 06 Apr 2025 23:43:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744007866; x=1744612666;
+ d=1e100.net; s=20230601; t=1744008203; x=1744613003;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mHKZOnd4xwLlUedReRkYkO98nOXBfho0oVC479PtilI=;
- b=PcEhIc0SAwUkW8AwyH5bXsxRbSh7COXR2Dv1wgPBcSug9ATCnfgk9it09jhvQ2iKjj
- Rksc5D0U8O/puXUhiNVkqohxZb4UQd5qhx9vJ95Znl9wUYC/vGvyYrA2KpcKU9f/tY5K
- 199bJeweNRjQBE8ZFkg5Y2eBTOS2yoatGY7Kc6/iKrSmBp3bSm6eNd4v0pTLtJitgeZ6
- ae2YdhWiG53Fr2QelPyrTa5KbLeWNbEU/xKEGPrrREhjxGub2wjeDB8yaW7rTSBdrQK4
- 3WelMGOKtIOOwRDziogFjZIAAuY3yGZXoCuBYYU9cZBFEZyGf0ytmGvJmYTBrxHJHTeb
- Kzug==
+ bh=2N9EBUPfB72aOT18m8ZX2la+W/R4vK8QCjlKOmLrqhY=;
+ b=ZJWBjIHtJODJQOVo49yvGhTo+V1nfOcn3vIATPkWrBO3y0UhXd3ohkJwBlzjWYJg1W
+ X/Qqq+0NsEw11oRFADXCiX/X9Bn0qXEtDb0sSCjRcjkEUs21xg8BQYBWynMFPhDNU1uj
+ zBObp+HObHjWTjWGHB0o2P6RYW59rm3KMZekZZRZgKkiAbTpO2/Zl2RbICO+btlHLaFp
+ yG/gb78kFX9Fs6ZyNdTslBtbcE5+PIiDfQU6G2yoHwpr0wuo1ZL2okfzMRG4hl4/Tga7
+ pqEiFY98yQldmW2jo1WWnGLja5/PKqeLsBtZLvbNqUwfBQwaYzb39x+fiXVmUY7tCN6x
+ YLhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUA85GtMEh+tbgK3InR11JZ2cNs5bs1oYxP7JSd1l2f9U9pxsYL5oE5UAaCWDhNB0Eh8UbEJJzR+0LZ@nongnu.org
-X-Gm-Message-State: AOJu0YyQxg2E1nt5oTwUMyOif/RM/Bi2Al7L2R/VtsVlFAT/DApYA+E/
- 5iVDx4S2sMyxfNnDz1nXwsBj0T1b+2e/ng6CAPCGaMGAiOxuUfSwE2JaIOU/PXQsUyjw+YApPyT
- UUPUzaNRWOdnhMXOUjebXik8qahCy7Gj86ZMSMRlUKES8zSZ0I48D
-X-Gm-Gg: ASbGncsUaQZJQv6Rdet9EfXYJcvmal58uw9GbCEhzyCh7lyPkgrW53jjtARDdsnVeBj
- 9ISuMOxnxKYd6u7mYdRMiD6p9bpgeYkYOlEVTfjPrZaxvoVw7N7d41fCmqAwy/ls0rHY69Yz+JD
- 4qcSfSQN5igy6+f4XVEUV5x6E06kS4N97C72Ts7Li452k9wOjHIjeNpTyn3GI+Geuf6CZbVO4ny
- at0JobcPUgIcp0LxwBqZuJnWpprwsMPbkttr+4SQI4iZwr+IQe07xuDmBjph89cGyMcc5NgUHzv
- 22uHLL0Mt7NvUNwRVHQ2g1pGCKfU7AvR00ceRhZu6qqeC3fUQBcuXg==
-X-Received: by 2002:a05:6000:4284:b0:39c:1f11:ead with SMTP id
- ffacd0b85a97d-39cb35a8860mr10393553f8f.26.1744007866020; 
- Sun, 06 Apr 2025 23:37:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqoeMcyY4w+Wa2kI+UggCQ+3z9RP1ZZWhUvrRNnztL3ZhNjSjLk30jKj6xU/hrHhs/IRL3Tw==
-X-Received: by 2002:a05:6000:4284:b0:39c:1f11:ead with SMTP id
- ffacd0b85a97d-39cb35a8860mr10393534f8f.26.1744007865635; 
- Sun, 06 Apr 2025 23:37:45 -0700 (PDT)
+ AJvYcCXOuktLU39fx7pj4VUSExD8Ur4ADsX7/PVADt5LpndmGxFtIQEqfOabIewfKS+OyrRh3bmpyOGpLWxL@nongnu.org
+X-Gm-Message-State: AOJu0Yw017wEg/g8bBCOxiR9SU7ZxXqrOA+wlCaThtymmQWq8CraK2VI
+ Pxwec9hXx8592X1bcO3ofHAUqt21yDTAbRrMrqGglJp7F/UxNgS/+BAtrCi8Ps0NP++++I3a3gU
+ bpIzOkxQhn176+mImegWLzUrubabxTOI/t1QdczL7vuMcTbeF8EiS
+X-Gm-Gg: ASbGncv/5b0yC7Uk5KRkVApHyGehEGKwiei6nV1nc32H86TAaPBui4tni9ussPy29a/
+ 2u0hh5lMak274IGWj3Ta0vX8W8WMa6LXKrw/WtEfvBF0xrSP838DokwMn8nwiJQpjwhVcLAaFfR
+ QWHX5SA8MIYuVJRROmIoMSCSpiNDsx6o6JDQ2mUbyOgF54fvm+07jEsCN6+rwfCk2TUMaPfsHkL
+ SMDEbKmJqirmloj3NldxI1FGHXUO2qMzwP7ipzdw+qZCuz+BBzIsXn+Q9QgH5FK9Dv35y4yGi/D
+ JbrDwaKHEpYw3c8q3SrXlnONKdYa8L6gV+KwfghcwvMoYJYS4+mSlQ==
+X-Received: by 2002:a05:6000:22c5:b0:39c:2c0b:8db4 with SMTP id
+ ffacd0b85a97d-39c2e610ac9mr12760734f8f.10.1744008203264; 
+ Sun, 06 Apr 2025 23:43:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGagUG6Ez4b2NPzdcrk3/IyIEiPlLM3yxc3YGfZajvX9Dj0AKsXx64N3QUiksdWd5yO4aLo6w==
+X-Received: by 2002:a05:6000:22c5:b0:39c:2c0b:8db4 with SMTP id
+ ffacd0b85a97d-39c2e610ac9mr12760713f8f.10.1744008202920; 
+ Sun, 06 Apr 2025 23:43:22 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c30096923sm11271393f8f.17.2025.04.06.23.37.44
+ ffacd0b85a97d-39c30095ea8sm11037505f8f.20.2025.04.06.23.43.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 06 Apr 2025 23:37:45 -0700 (PDT)
-Message-ID: <a5ddec85-d4d8-45aa-b746-f0841ee32fd4@redhat.com>
-Date: Mon, 7 Apr 2025 08:37:44 +0200
+ Sun, 06 Apr 2025 23:43:22 -0700 (PDT)
+Message-ID: <8a4a0b4d-fe97-440c-a475-31808bcfd257@redhat.com>
+Date: Mon, 7 Apr 2025 08:43:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 v2 03/37] vfio: Introduce a new header file for
- external migration services
+Subject: Re: [PATCH for-10.1 v2 06/37] vfio: Introduce a new header file for
+ internal migration services
 To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org,
  Alex Williamson <alex.williamson@redhat.com>
 Cc: Eric Auger <eric.auger@redhat.com>,
@@ -86,8 +86,8 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  John Levon <john.levon@nutanix.com>, Joao Martins
  <joao.m.martins@oracle.com>, Kirti Wankhede <kwankhede@nvidia.com>
 References: <20250326075122.1299361-1-clg@redhat.com>
- <20250326075122.1299361-4-clg@redhat.com>
- <d22dc2c7-b552-4341-a3db-fe99a1b52ef9@nvidia.com>
+ <20250326075122.1299361-7-clg@redhat.com>
+ <8667eb45-f908-4442-983f-fb1a9ac08e2f@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <d22dc2c7-b552-4341-a3db-fe99a1b52ef9@nvidia.com>
+In-Reply-To: <8667eb45-f908-4442-983f-fb1a9ac08e2f@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -161,211 +161,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/31/25 14:07, Avihai Horon wrote:
+On 3/31/25 14:23, Avihai Horon wrote:
 > 
 > On 26/03/2025 9:50, Cédric Le Goater wrote:
 >> External email: Use caution opening links or attachments
 >>
 >>
->> The migration core subsystem makes use of the VFIO migration API to
->> collect statistics on the number of bytes transferred. These services
->> are declared in "hw/vfio/vfio-common.h" which also contains VFIO
->> internal declarations. Move the migration declarations into a new
->> header file "hw/vfio/vfio-migration.h" to reduce the exposure of VFIO
->> internals.
->>
->> While at it, use a 'vfio_migration_' prefix for these services.
->>
->> To be noted, vfio_migration_add_bytes_transferred() is a VFIO
->> migration internal service which we will moved in the subsequent
->> patches.
+>> Gather all VFIO migration related declarations into
+>> "vfio-migration-internal.h" to reduce exposure of VFIO internals in
+>> "hw/vfio/vfio-common.h".
 >>
 >> Cc: Kirti Wankhede <kwankhede@nvidia.com>
 >> Cc: Avihai Horon <avihaih@nvidia.com>
 >> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > 
 > Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+> 
 
 Since lore didn't receive the email :
 
 Reviewed-by: Avihai Horon <avihaih@nvidia.com>
 
-> Small nit below.
-> 
->> ---
->>   include/hw/vfio/vfio-common.h    |  5 +----
->>   include/hw/vfio/vfio-migration.h | 16 ++++++++++++++++
->>   hw/vfio/migration-multifd.c      |  5 +++--
->>   hw/vfio/migration.c              | 11 ++++++-----
->>   migration/target.c               |  8 ++++----
->>   5 files changed, 30 insertions(+), 15 deletions(-)
->>   create mode 100644 include/hw/vfio/vfio-migration.h
->>
->> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->> index 9cfb3fb6931e71395ef1d67b0a743d8bc1433fdc..fd424a4a3d40132e940f457f9250458e50ea0b71 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -290,13 +290,10 @@ extern VFIODeviceList vfio_device_list;
->>   extern const MemoryListener vfio_memory_listener;
->>   extern int vfio_kvm_device_fd;
->>
->> -bool vfio_mig_active(void);
->>   int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp);
->>   void vfio_unblock_multiple_devices_migration(void);
->>   bool vfio_viommu_preset(VFIODevice *vbasedev);
->> -int64_t vfio_mig_bytes_transferred(void);
->> -void vfio_mig_reset_bytes_transferred(void);
->> -void vfio_mig_add_bytes_transferred(unsigned long val);
->> +void vfio_migration_add_bytes_transferred(unsigned long val);
->>   bool vfio_device_state_is_running(VFIODevice *vbasedev);
->>   bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
->>
->> diff --git a/include/hw/vfio/vfio-migration.h b/include/hw/vfio/vfio-migration.h
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..0d4ecd33d5d8c214bb77e0652b4405b6e43bcafa
->> --- /dev/null
->> +++ b/include/hw/vfio/vfio-migration.h
->> @@ -0,0 +1,16 @@
->> +/*
->> + * VFIO migration interface
->> + *
->> + * Copyright Red Hat, Inc. 2025
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef HW_VFIO_VFIO_MIGRATION_H
->> +#define HW_VFIO_VFIO_MIGRATION_H
->> +
->> +bool vfio_migration_active(void);
->> +int64_t vfio_migration_bytes_transferred(void);
->> +void vfio_migration_reset_bytes_transferred(void);
->> +
->> +#endif /* HW_VFIO_VFIO_MIGRATION_H */
->> diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
->> index 378f6f3bf01f6a4155fb424f8028cb5380f27f02..09aa57f5f890f37f7e36c857fd813f55b1da2fce 100644
->> --- a/hw/vfio/migration-multifd.c
->> +++ b/hw/vfio/migration-multifd.c
->> @@ -11,6 +11,7 @@
->>
->>   #include "qemu/osdep.h"
->>   #include "hw/vfio/vfio-common.h"
->> +#include "hw/vfio/vfio-migration.h"
-> 
-> This can be dropped.
-
-This include is needed until patch 6. Where I forgot to remove it.
-Will fix,
 
 Thanks,
 
 C.
 
-
-> Thanks.
-> 
->>   #include "migration/misc.h"
->>   #include "qapi/error.h"
->>   #include "qemu/bswap.h"
->> @@ -575,7 +576,7 @@ vfio_save_complete_precopy_thread_config_state(VFIODevice *vbasedev,
->>           return false;
->>       }
->>
->> -    vfio_mig_add_bytes_transferred(packet_len);
->> +    vfio_migration_add_bytes_transferred(packet_len);
->>
->>       return true;
->>   }
->> @@ -645,7 +646,7 @@ vfio_multifd_save_complete_precopy_thread(SaveLiveCompletePrecopyThreadData *d,
->>               goto thread_exit;
->>           }
->>
->> -        vfio_mig_add_bytes_transferred(packet_size);
->> +        vfio_migration_add_bytes_transferred(packet_size);
->>       }
->>
->>       if (!vfio_save_complete_precopy_thread_config_state(vbasedev,
->> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index 8bf65b8e11094b8363692dba3084b762362c7dd6..582d65932a6c590eaecd8bf0b765f27d93896c72 100644
->> --- a/hw/vfio/migration.c
->> +++ b/hw/vfio/migration.c
->> @@ -17,6 +17,7 @@
->>
->>   #include "system/runstate.h"
->>   #include "hw/vfio/vfio-common.h"
->> +#include "hw/vfio/vfio-migration.h"
->>   #include "migration/misc.h"
->>   #include "migration/savevm.h"
->>   #include "migration/vmstate.h"
->> @@ -373,7 +374,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
->>       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
->>       qemu_put_be64(f, data_size);
->>       qemu_put_buffer(f, migration->data_buffer, data_size);
->> -    vfio_mig_add_bytes_transferred(data_size);
->> +    vfio_migration_add_bytes_transferred(data_size);
->>
->>       trace_vfio_save_block(migration->vbasedev->name, data_size);
->>
->> @@ -1047,22 +1048,22 @@ static int vfio_block_migration(VFIODevice *vbasedev, Error *err, Error **errp)
->>
->>   /* ---------------------------------------------------------------------- */
->>
->> -int64_t vfio_mig_bytes_transferred(void)
->> +int64_t vfio_migration_bytes_transferred(void)
->>   {
->>       return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
->>   }
->>
->> -void vfio_mig_reset_bytes_transferred(void)
->> +void vfio_migration_reset_bytes_transferred(void)
->>   {
->>       qatomic_set(&bytes_transferred, 0);
->>   }
->>
->> -void vfio_mig_add_bytes_transferred(unsigned long val)
->> +void vfio_migration_add_bytes_transferred(unsigned long val)
->>   {
->>       qatomic_add(&bytes_transferred, val);
->>   }
->>
->> -bool vfio_mig_active(void)
->> +bool vfio_migration_active(void)
->>   {
->>       VFIODevice *vbasedev;
->>
->> diff --git a/migration/target.c b/migration/target.c
->> index f5d8cfe7c2a3473f4bd3f5068145598c60973c58..12fd399f0c521c5c28535b58f24feab6845947fd 100644
->> --- a/migration/target.c
->> +++ b/migration/target.c
->> @@ -11,21 +11,21 @@
->>   #include CONFIG_DEVICES
->>
->>   #ifdef CONFIG_VFIO
->> -#include "hw/vfio/vfio-common.h"
->> +#include "hw/vfio/vfio-migration.h"
->>   #endif
->>
->>   #ifdef CONFIG_VFIO
->>   void migration_populate_vfio_info(MigrationInfo *info)
->>   {
->> -    if (vfio_mig_active()) {
->> +    if (vfio_migration_active()) {
->>           info->vfio = g_malloc0(sizeof(*info->vfio));
->> -        info->vfio->transferred = vfio_mig_bytes_transferred();
->> +        info->vfio->transferred = vfio_migration_bytes_transferred();
->>       }
->>   }
->>
->>   void migration_reset_vfio_bytes_transferred(void)
->>   {
->> -    vfio_mig_reset_bytes_transferred();
->> +    vfio_migration_reset_bytes_transferred();
->>   }
->>   #else
->>   void migration_populate_vfio_info(MigrationInfo *info)
->> -- 
->> 2.49.0
->>
-> 
 
 
