@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76868C36010
-	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4DE7C3601A
+	for <qemu-devel@archiver.kernel.org>; Mon,  7 Apr 2025 07:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u1hFc-0001M0-8B; Mon, 07 Apr 2025 03:50:36 -0400
+	id 1u1hFh-0001OE-Vv; Mon, 07 Apr 2025 03:50:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1u1hFN-0001JS-Nd
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:25 -0400
+ id 1u1hFJ-0001Ir-Mz
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:22 -0400
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1u1hFK-0005Qw-AB
- for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:21 -0400
+ id 1u1hFG-0005Qw-Nn
+ for qemu-devel@nongnu.org; Mon, 07 Apr 2025 03:50:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744012219; x=1775548219;
+ t=1744012215; x=1775548215;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=o+a/Hw3O4JaruEHuRPJRaztD3Sx+cvobAeN0HQKIJvQ=;
- b=Tu5tLdILCKhctHYbdkNv+LzRwoPIvUHEw941SC+5x9oekKYnvvY8Q9id
- D8bB33iyD3xy8Ei7hhHCrt3VF4aL0kMeyyPPxbIkM5XTsyFVVgmIgn6k5
- SY2tqn55vGXB8KSV0DVt4idpYK7oCGymO914MH+J3xItBvnnv/YbkTj10
- 2G1l/o9u6fLstb4CdBLVvfGNufic14TqEh6s0vKpmFNbXa5SIzmc2dEhU
- FMEYG2Vq7lHnVP1f0c+dle1S9Dfll9tyPO8OD/c49eq2v41thE2fnQTji
- b8FX4+JLdPyttCOgXUkAiv11J03F+1H/hslJLncjZ5XZfwdcXbjNe/TUO Q==;
-X-CSE-ConnectionGUID: JJDlwF9dRAGoVvVLAp2w3w==
-X-CSE-MsgGUID: +HCoiyEmTSey6Ga/LjFbig==
-X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="67857562"
-X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="67857562"
+ bh=w6HCJqHaMptWnO0iH0yxSN1OpJkMWZIZHCGCASw6PYM=;
+ b=KyRNALE8exmwVDGCyUwJMHMDJKXHnt31Gd6GfkLvrXZ1aeOTJrWzdcJh
+ Q+4WzQvFX0kJ/YNfR/C560gwXu3mOrgB+Ak9J4ka5ttwdg9q0/vuaEUt6
+ NYzqyktwdCq1V79BOI1mOnbsKJDphzWDUSN6MEuYDqRMkZV4cJ8kOq7ZB
+ E62uimSsh66RyBF9/tRZqZObVaETYnqQvzwRLs7kPPg7WY0PIIkyM9Yfp
+ d8Yk2Pilku4TezOcktcTmU0sAsZFYNGyxWuxJjsZZnlZExsvDM4A/yzXg
+ 2JiHjpPoyyyVrc6nr4SZRlQPfeRuYpGpu0yHAcXLRGT9vV3F7QsCyU8FE Q==;
+X-CSE-ConnectionGUID: mI3RtrQ4R3CzYxSJ08n/Rg==
+X-CSE-MsgGUID: 9zHIkxKAS3y6FYe2WWiJtA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11396"; a="67857556"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="67857556"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 00:50:18 -0700
-X-CSE-ConnectionGUID: ZqAUSgJjSNmFp9U52hhdEg==
-X-CSE-MsgGUID: qT3igI5+Ro6ZU3k+HwPskw==
+ 07 Apr 2025 00:50:14 -0700
+X-CSE-ConnectionGUID: 3aX8Z7t2Q+ug3acnzQY8zQ==
+X-CSE-MsgGUID: Myyi4eYPToOY0AHfkrcZyA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128405652"
+X-IronPort-AV: E=Sophos;i="6.15,193,1739865600"; d="scan'208";a="128405639"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 00:50:14 -0700
+ 07 Apr 2025 00:50:11 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
@@ -56,10 +56,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v4 08/13] ram-block-attribute: Introduce a callback to notify
- shared/private state changes
-Date: Mon,  7 Apr 2025 15:49:28 +0800
-Message-ID: <20250407074939.18657-9-chenyi.qiang@intel.com>
+Subject: [PATCH v4 07/13] ram-block-attribute: Introduce RamBlockAttribute to
+ manage RAMBLock with guest_memfd
+Date: Mon,  7 Apr 2025 15:49:27 +0800
+Message-ID: <20250407074939.18657-8-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250407074939.18657-1-chenyi.qiang@intel.com>
 References: <20250407074939.18657-1-chenyi.qiang@intel.com>
@@ -90,319 +90,417 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new state_change() callback is introduced in PrivateSharedManageClass
-to efficiently notify all registered PrivateSharedListeners, including
-VFIO listeners, about memory conversion events in guest_memfd. The VFIO
-listener can dynamically DMA map/unmap shared pages based on conversion
-types:
-- For conversions from shared to private, the VFIO system ensures the
-  discarding of shared mapping from the IOMMU.
-- For conversions from private to shared, it triggers the population of
-  the shared mapping into the IOMMU.
+Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+discard") highlighted that subsystems like VFIO may disable RAM block
+discard. However, guest_memfd relies on discard operations for page
+conversion between private and shared memory, potentially leading to
+stale IOMMU mapping issue when assigning hardware devices to
+confidential VMs via shared memory. To address this, it is crucial to
+ensure systems like VFIO refresh its IOMMU mappings.
 
-Additionally, special conversion requests are handled as followed:
-- If a conversion request is made for a page already in the desired
-  state, the helper simply returns success.
-- For requests involving a range partially in the desired state, only
-  the necessary segments are converted, ensuring efficient compliance
-  with the request. In this case, fallback to "1 block at a time"
-  handling so that the range passed to the notify_to_private/shared() is
-  always in the desired state.
-- If a conversion request is declined by other systems, such as a
-  failure from VFIO during notify_to_shared(), the helper rolls back the
-  request to maintain consistency. As for notify_to_private() handling,
-  failure in VFIO is unexpected, so no error check is performed.
+PrivateSharedManager is introduced to manage private and shared states in
+confidential VMs, similar to RamDiscardManager, which supports
+coordinated RAM discard in VFIO. Integrating PrivateSharedManager with
+guest_memfd can facilitate the adjustment of VFIO mappings in response
+to page conversion events.
 
-Note that the bitmap status is updated before callbacks, allowing
-listeners to handle memory based on the latest status.
+Since guest_memfd is not an object, it cannot directly implement the
+PrivateSharedManager interface. Implementing it in HostMemoryBackend is
+not appropriate because guest_memfd is per RAMBlock, and some RAMBlocks
+have a memory backend while others do not. Notably, virtual BIOS
+RAMBlocks using memory_region_init_ram_guest_memfd() do not have a
+backend.
 
-Opportunistically, introduce a helper to trigger the state_change()
-callback of the class.
+To manage RAMBlocks with guest_memfd, define a new object named
+RamBlockAttribute to implement the RamDiscardManager interface. This
+object stores guest_memfd information such as shared_bitmap, and handles
+page conversion notification. The memory state is tracked at the host
+page size granularity, as the minimum memory conversion size can be one
+page per request. Additionally, VFIO expects the DMA mapping for a
+specific iova to be mapped and unmapped with the same granularity.
+Confidential VMs may perform partial conversions, such as conversions on
+small regions within larger regions. To prevent invalid cases and until
+cut_mapping operation support is available, all operations are performed
+with 4K granularity.
 
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
 Changes in v4:
-    - Add the state_change() callback in PrivateSharedManagerClass
-      instead of the RamBlockAttribute.
+    - Change the name from memory-attribute-manager to
+      ram-block-attribute.
+    - Implement the newly-introduced PrivateSharedManager instead of
+      RamDiscardManager and change related commit message.
+    - Define the new object in ramblock.h instead of adding a new file.
 
 Changes in v3:
-    - Move the bitmap update before notifier callbacks.
-    - Call the notifier callbacks directly in notify_discard/populate()
-      with the expectation that the request memory range is in the
-      desired attribute.
-    - For the case that only partial range in the desire status, handle
-      the range with block_size granularity for ease of rollback
-      (https://lore.kernel.org/qemu-devel/812768d7-a02d-4b29-95f3-fb7a125cf54e@redhat.com/)
+    - Some rename (bitmap_size->shared_bitmap_size,
+      first_one/zero_bit->first_bit, etc.)
+    - Change shared_bitmap_size from uint32_t to unsigned
+    - Return mgr->mr->ram_block->page_size in get_block_size()
+    - Move set_ram_discard_manager() up to avoid a g_free() in failure
+      case.
+    - Add const for the memory_attribute_manager_get_block_size()
+    - Unify the ReplayRamPopulate and ReplayRamDiscard and related
+      callback.
 
 Changes in v2:
-    - Do the alignment changes due to the rename to MemoryAttributeManager
-    - Move the state_change() helper definition in this patch.
+    - Rename the object name to MemoryAttributeManager
+    - Rename the bitmap to shared_bitmap to make it more clear.
+    - Remove block_size field and get it from a helper. In future, we
+      can get the page_size from RAMBlock if necessary.
+    - Remove the unncessary "struct" before GuestMemfdReplayData
+    - Remove the unncessary g_free() for the bitmap
+    - Add some error report when the callback failure for
+      populated/discarded section.
+    - Move the realize()/unrealize() definition to this patch.
 ---
- include/exec/memory.h        |   7 ++
- system/memory.c              |  10 ++
- system/ram-block-attribute.c | 191 +++++++++++++++++++++++++++++++++++
- 3 files changed, 208 insertions(+)
+ include/exec/ramblock.h      |  24 +++
+ system/meson.build           |   1 +
+ system/ram-block-attribute.c | 282 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 307 insertions(+)
+ create mode 100644 system/ram-block-attribute.c
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 08f25e5e84..a61896251c 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -780,6 +780,9 @@ struct PrivateSharedListener {
- struct PrivateSharedManagerClass {
-     /* private */
-     GenericStateManagerClass parent_class;
+diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+index 0babd105c0..b8b5469db9 100644
+--- a/include/exec/ramblock.h
++++ b/include/exec/ramblock.h
+@@ -23,6 +23,10 @@
+ #include "cpu-common.h"
+ #include "qemu/rcu.h"
+ #include "exec/ramlist.h"
++#include "system/hostmem.h"
 +
-+    int (*state_change)(PrivateSharedManager *mgr, uint64_t offset, uint64_t size,
-+                        bool to_private);
++#define TYPE_RAM_BLOCK_ATTRIBUTE "ram-block-attribute"
++OBJECT_DECLARE_TYPE(RamBlockAttribute, RamBlockAttributeClass, RAM_BLOCK_ATTRIBUTE)
+ 
+ struct RAMBlock {
+     struct rcu_head rcu;
+@@ -90,5 +94,25 @@ struct RAMBlock {
+      */
+     ram_addr_t postcopy_length;
  };
- 
- static inline void private_shared_listener_init(PrivateSharedListener *psl,
-@@ -789,6 +792,10 @@ static inline void private_shared_listener_init(PrivateSharedListener *psl,
-     state_change_listener_init(&psl->scl, populate_fn, discard_fn);
- }
- 
-+int private_shared_manager_state_change(PrivateSharedManager *mgr,
-+                                        uint64_t offset, uint64_t size,
-+                                        bool to_private);
 +
- /**
-  * memory_get_xlat_addr: Extract addresses from a TLB entry
-  *
-diff --git a/system/memory.c b/system/memory.c
-index e6e944d9c0..2f6eaf6314 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2206,6 +2206,16 @@ void generic_state_manager_unregister_listener(GenericStateManager *gsm,
-     gsmc->unregister_listener(gsm, scl);
- }
- 
-+int private_shared_manager_state_change(PrivateSharedManager *mgr,
-+                                        uint64_t offset, uint64_t size,
-+                                        bool to_private)
-+{
-+    PrivateSharedManagerClass *psmc = PRIVATE_SHARED_MANAGER_GET_CLASS(mgr);
++struct RamBlockAttribute {
++    Object parent;
 +
-+    g_assert(psmc->state_change);
-+    return psmc->state_change(mgr, offset, size, to_private);
-+}
++    MemoryRegion *mr;
 +
- /* Called with rcu_read_lock held.  */
- bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
-                           ram_addr_t *ram_addr, bool *read_only,
++    /* 1-setting of the bit represents the memory is populated (shared) */
++    unsigned shared_bitmap_size;
++    unsigned long *shared_bitmap;
++
++    QLIST_HEAD(, PrivateSharedListener) psl_list;
++};
++
++struct RamBlockAttributeClass {
++    ObjectClass parent_class;
++};
++
++int ram_block_attribute_realize(RamBlockAttribute *attr, MemoryRegion *mr);
++void ram_block_attribute_unrealize(RamBlockAttribute *attr);
++
+ #endif
+ #endif
+diff --git a/system/meson.build b/system/meson.build
+index 4952f4b2c7..50a5a64f1c 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -15,6 +15,7 @@ system_ss.add(files(
+   'dirtylimit.c',
+   'dma-helpers.c',
+   'globals.c',
++  'ram-block-attribute.c',
+   'memory_mapping.c',
+   'qdev-monitor.c',
+   'qtest.c',
 diff --git a/system/ram-block-attribute.c b/system/ram-block-attribute.c
-index 283c03b354..06ed134cda 100644
---- a/system/ram-block-attribute.c
+new file mode 100644
+index 0000000000..283c03b354
+--- /dev/null
 +++ b/system/ram-block-attribute.c
-@@ -233,6 +233,195 @@ static int ram_block_attribute_psm_replay_on_private(const GenericStateManager *
-                                                         ram_block_attribute_psm_replay_cb);
- }
- 
-+static bool ram_block_attribute_is_valid_range(RamBlockAttribute *attr,
-+                                               uint64_t offset, uint64_t size)
+@@ -0,0 +1,282 @@
++/*
++ * QEMU ram block attribute
++ *
++ * Copyright Intel
++ *
++ * Author:
++ *      Chenyi Qiang <chenyi.qiang@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "exec/ramblock.h"
++
++OBJECT_DEFINE_TYPE_WITH_INTERFACES(RamBlockAttribute,
++                                   ram_block_attribute,
++                                   RAM_BLOCK_ATTRIBUTE,
++                                   OBJECT,
++                                   { TYPE_PRIVATE_SHARED_MANAGER },
++                                   { })
++
++static size_t ram_block_attribute_get_block_size(const RamBlockAttribute *attr)
 +{
-+    MemoryRegion *mr = attr->mr;
-+
-+    g_assert(mr);
-+
-+    uint64_t region_size = memory_region_size(mr);
-+    int block_size = ram_block_attribute_get_block_size(attr);
-+
-+    if (!QEMU_IS_ALIGNED(offset, block_size)) {
-+        return false;
-+    }
-+    if (offset + size < offset || !size) {
-+        return false;
-+    }
-+    if (offset >= region_size || offset + size > region_size) {
-+        return false;
-+    }
-+    return true;
++    /*
++     * Because page conversion could be manipulated in the size of at least 4K or 4K aligned,
++     * Use the host page size as the granularity to track the memory attribute.
++     */
++    g_assert(attr && attr->mr && attr->mr->ram_block);
++    g_assert(attr->mr->ram_block->page_size == qemu_real_host_page_size());
++    return attr->mr->ram_block->page_size;
 +}
 +
-+static void ram_block_attribute_notify_to_private(RamBlockAttribute *attr,
-+                                                  uint64_t offset, uint64_t size)
++
++static bool ram_block_attribute_psm_is_shared(const GenericStateManager *gsm,
++                                              const MemoryRegionSection *section)
 +{
-+    PrivateSharedListener *psl;
++    const RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
++    const int block_size = ram_block_attribute_get_block_size(attr);
++    uint64_t first_bit = section->offset_within_region / block_size;
++    uint64_t last_bit = first_bit + int128_get64(section->size) / block_size - 1;
++    unsigned long first_discard_bit;
 +
-+    QLIST_FOREACH(psl, &attr->psl_list, next) {
-+        StateChangeListener *scl = &psl->scl;
-+        MemoryRegionSection tmp = *scl->section;
-+
-+        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
-+            continue;
-+        }
-+        scl->notify_to_state_clear(scl, &tmp);
-+    }
++    first_discard_bit = find_next_zero_bit(attr->shared_bitmap, last_bit + 1, first_bit);
++    return first_discard_bit > last_bit;
 +}
 +
-+static int ram_block_attribute_notify_to_shared(RamBlockAttribute *attr,
-+                                                uint64_t offset, uint64_t size)
++typedef int (*ram_block_attribute_section_cb)(MemoryRegionSection *s, void *arg);
++
++static int ram_block_attribute_notify_shared_cb(MemoryRegionSection *section, void *arg)
 +{
-+    PrivateSharedListener *psl, *psl2;
++    StateChangeListener *scl = arg;
++
++    return scl->notify_to_state_set(scl, section);
++}
++
++static int ram_block_attribute_notify_private_cb(MemoryRegionSection *section, void *arg)
++{
++    StateChangeListener *scl = arg;
++
++    scl->notify_to_state_clear(scl, section);
++    return 0;
++}
++
++static int ram_block_attribute_for_each_shared_section(const RamBlockAttribute *attr,
++                                                       MemoryRegionSection *section,
++                                                       void *arg,
++                                                       ram_block_attribute_section_cb cb)
++{
++    unsigned long first_bit, last_bit;
++    uint64_t offset, size;
++    const int block_size = ram_block_attribute_get_block_size(attr);
 +    int ret = 0;
 +
-+    QLIST_FOREACH(psl, &attr->psl_list, next) {
-+        StateChangeListener *scl = &psl->scl;
-+        MemoryRegionSection tmp = *scl->section;
++    first_bit = section->offset_within_region / block_size;
++    first_bit = find_next_bit(attr->shared_bitmap, attr->shared_bitmap_size, first_bit);
++
++    while (first_bit < attr->shared_bitmap_size) {
++        MemoryRegionSection tmp = *section;
++
++        offset = first_bit * block_size;
++        last_bit = find_next_zero_bit(attr->shared_bitmap, attr->shared_bitmap_size,
++                                      first_bit + 1) - 1;
++        size = (last_bit - first_bit + 1) * block_size;
 +
 +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
-+            continue;
-+        }
-+        ret = scl->notify_to_state_set(scl, &tmp);
-+        if (ret) {
 +            break;
 +        }
-+    }
 +
-+    if (ret) {
-+        /* Notify all already-notified listeners. */
-+        QLIST_FOREACH(psl2, &attr->psl_list, next) {
-+            StateChangeListener *scl2 = &psl2->scl;
-+            MemoryRegionSection tmp = *scl2->section;
-+
-+            if (psl == psl2) {
-+                break;
-+            }
-+            if (!memory_region_section_intersect_range(&tmp, offset, size)) {
-+                continue;
-+            }
-+            scl2->notify_to_state_clear(scl2, &tmp);
++        ret = cb(&tmp, arg);
++        if (ret) {
++            error_report("%s: Failed to notify RAM discard listener: %s", __func__,
++                         strerror(-ret));
++            break;
 +        }
++
++        first_bit = find_next_bit(attr->shared_bitmap, attr->shared_bitmap_size,
++                                  last_bit + 2);
 +    }
++
 +    return ret;
 +}
 +
-+static bool ram_block_attribute_is_range_shared(RamBlockAttribute *attr,
-+                                                uint64_t offset, uint64_t size)
++static int ram_block_attribute_for_each_private_section(const RamBlockAttribute *attr,
++                                                        MemoryRegionSection *section,
++                                                        void *arg,
++                                                        ram_block_attribute_section_cb cb)
 +{
++    unsigned long first_bit, last_bit;
++    uint64_t offset, size;
 +    const int block_size = ram_block_attribute_get_block_size(attr);
-+    const unsigned long first_bit = offset / block_size;
-+    const unsigned long last_bit = first_bit + (size / block_size) - 1;
-+    unsigned long found_bit;
-+
-+    /* We fake a shorter bitmap to avoid searching too far. */
-+    found_bit = find_next_zero_bit(attr->shared_bitmap, last_bit + 1, first_bit);
-+    return found_bit > last_bit;
-+}
-+
-+static bool ram_block_attribute_is_range_private(RamBlockAttribute *attr,
-+                                                uint64_t offset, uint64_t size)
-+{
-+    const int block_size = ram_block_attribute_get_block_size(attr);
-+    const unsigned long first_bit = offset / block_size;
-+    const unsigned long last_bit = first_bit + (size / block_size) - 1;
-+    unsigned long found_bit;
-+
-+    /* We fake a shorter bitmap to avoid searching too far. */
-+    found_bit = find_next_bit(attr->shared_bitmap, last_bit + 1, first_bit);
-+    return found_bit > last_bit;
-+}
-+
-+static int ram_block_attribute_psm_state_change(PrivateSharedManager *mgr, uint64_t offset,
-+                                                uint64_t size, bool to_private)
-+{
-+    RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(mgr);
-+    const int block_size = ram_block_attribute_get_block_size(attr);
-+    const unsigned long first_bit = offset / block_size;
-+    const unsigned long nbits = size / block_size;
-+    const uint64_t end = offset + size;
-+    unsigned long bit;
-+    uint64_t cur;
 +    int ret = 0;
 +
-+    if (!ram_block_attribute_is_valid_range(attr, offset, size)) {
-+        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
-+                     __func__, offset, size);
-+        return -1;
-+    }
++    first_bit = section->offset_within_region / block_size;
++    first_bit = find_next_zero_bit(attr->shared_bitmap, attr->shared_bitmap_size,
++                                   first_bit);
 +
-+    if (to_private) {
-+        if (ram_block_attribute_is_range_private(attr, offset, size)) {
-+            /* Already private */
-+        } else if (!ram_block_attribute_is_range_shared(attr, offset, size)) {
-+            /* Unexpected mixture: process individual blocks */
-+            for (cur = offset; cur < end; cur += block_size) {
-+                bit = cur / block_size;
-+                if (!test_bit(bit, attr->shared_bitmap)) {
-+                    continue;
-+                }
-+                clear_bit(bit, attr->shared_bitmap);
-+                ram_block_attribute_notify_to_private(attr, cur, block_size);
-+            }
-+        } else {
-+            /* Completely shared */
-+            bitmap_clear(attr->shared_bitmap, first_bit, nbits);
-+            ram_block_attribute_notify_to_private(attr, offset, size);
++    while (first_bit < attr->shared_bitmap_size) {
++        MemoryRegionSection tmp = *section;
++
++        offset = first_bit * block_size;
++        last_bit = find_next_bit(attr->shared_bitmap, attr->shared_bitmap_size,
++                                      first_bit + 1) - 1;
++        size = (last_bit - first_bit + 1) * block_size;
++
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
++            break;
 +        }
-+    } else {
-+        if (ram_block_attribute_is_range_shared(attr, offset, size)) {
-+            /* Already shared */
-+        } else if (!ram_block_attribute_is_range_private(attr, offset, size)) {
-+            /* Unexpected mixture: process individual blocks */
-+            unsigned long *modified_bitmap = bitmap_new(nbits);
 +
-+            for (cur = offset; cur < end; cur += block_size) {
-+                bit = cur / block_size;
-+                if (test_bit(bit, attr->shared_bitmap)) {
-+                    continue;
-+                }
-+                set_bit(bit, attr->shared_bitmap);
-+                ret = ram_block_attribute_notify_to_shared(attr, cur, block_size);
-+                if (!ret) {
-+                    set_bit(bit - first_bit, modified_bitmap);
-+                    continue;
-+                }
-+                clear_bit(bit, attr->shared_bitmap);
-+                break;
-+            }
-+
-+            if (ret) {
-+                /*
-+                 * Very unexpected: something went wrong. Revert to the old
-+                 * state, marking only the blocks as private that we converted
-+                 * to shared.
-+                 */
-+                for (cur = offset; cur < end; cur += block_size) {
-+                    bit = cur / block_size;
-+                    if (!test_bit(bit - first_bit, modified_bitmap)) {
-+                        continue;
-+                    }
-+                    assert(test_bit(bit, attr->shared_bitmap));
-+                    clear_bit(bit, attr->shared_bitmap);
-+                    ram_block_attribute_notify_to_private(attr, cur, block_size);
-+                }
-+            }
-+            g_free(modified_bitmap);
-+        } else {
-+            /* Complete private */
-+            bitmap_set(attr->shared_bitmap, first_bit, nbits);
-+            ret = ram_block_attribute_notify_to_shared(attr, offset, size);
-+            if (ret) {
-+                bitmap_clear(attr->shared_bitmap, first_bit, nbits);
-+            }
++        ret = cb(&tmp, arg);
++        if (ret) {
++            error_report("%s: Failed to notify RAM discard listener: %s", __func__,
++                         strerror(-ret));
++            break;
 +        }
++
++        first_bit = find_next_zero_bit(attr->shared_bitmap, attr->shared_bitmap_size,
++                                       last_bit + 2);
 +    }
 +
 +    return ret;
 +}
 +
- int ram_block_attribute_realize(RamBlockAttribute *attr, MemoryRegion *mr)
- {
-     uint64_t shared_bitmap_size;
-@@ -272,6 +461,7 @@ static void ram_block_attribute_finalize(Object *obj)
- static void ram_block_attribute_class_init(ObjectClass *oc, void *data)
- {
-     GenericStateManagerClass *gsmc = GENERIC_STATE_MANAGER_CLASS(oc);
-+    PrivateSharedManagerClass *psmc = PRIVATE_SHARED_MANAGER_CLASS(oc);
- 
-     gsmc->get_min_granularity = ram_block_attribute_psm_get_min_granularity;
-     gsmc->register_listener = ram_block_attribute_psm_register_listener;
-@@ -279,4 +469,5 @@ static void ram_block_attribute_class_init(ObjectClass *oc, void *data)
-     gsmc->is_state_set = ram_block_attribute_psm_is_shared;
-     gsmc->replay_on_state_set = ram_block_attribute_psm_replay_on_shared;
-     gsmc->replay_on_state_clear = ram_block_attribute_psm_replay_on_private;
-+    psmc->state_change = ram_block_attribute_psm_state_change;
- }
++static uint64_t ram_block_attribute_psm_get_min_granularity(const GenericStateManager *gsm,
++                                                            const MemoryRegion *mr)
++{
++    const RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
++
++    g_assert(mr == attr->mr);
++    return ram_block_attribute_get_block_size(attr);
++}
++
++static void ram_block_attribute_psm_register_listener(GenericStateManager *gsm,
++                                                      StateChangeListener *scl,
++                                                      MemoryRegionSection *section)
++{
++    RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
++    PrivateSharedListener *psl = container_of(scl, PrivateSharedListener, scl);
++    int ret;
++
++    g_assert(section->mr == attr->mr);
++    scl->section = memory_region_section_new_copy(section);
++
++    QLIST_INSERT_HEAD(&attr->psl_list, psl, next);
++
++    ret = ram_block_attribute_for_each_shared_section(attr, section, scl,
++                                                      ram_block_attribute_notify_shared_cb);
++    if (ret) {
++        error_report("%s: Failed to register RAM discard listener: %s", __func__,
++                     strerror(-ret));
++    }
++}
++
++static void ram_block_attribute_psm_unregister_listener(GenericStateManager *gsm,
++                                                        StateChangeListener *scl)
++{
++    RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
++    PrivateSharedListener *psl = container_of(scl, PrivateSharedListener, scl);
++    int ret;
++
++    g_assert(scl->section);
++    g_assert(scl->section->mr == attr->mr);
++
++    ret = ram_block_attribute_for_each_shared_section(attr, scl->section, scl,
++                                                      ram_block_attribute_notify_private_cb);
++    if (ret) {
++        error_report("%s: Failed to unregister RAM discard listener: %s", __func__,
++                     strerror(-ret));
++    }
++
++    memory_region_section_free_copy(scl->section);
++    scl->section = NULL;
++    QLIST_REMOVE(psl, next);
++}
++
++typedef struct RamBlockAttributeReplayData {
++    ReplayStateChange fn;
++    void *opaque;
++} RamBlockAttributeReplayData;
++
++static int ram_block_attribute_psm_replay_cb(MemoryRegionSection *section, void *arg)
++{
++    RamBlockAttributeReplayData *data = arg;
++
++    return data->fn(section, data->opaque);
++}
++
++static int ram_block_attribute_psm_replay_on_shared(const GenericStateManager *gsm,
++                                                    MemoryRegionSection *section,
++                                                    ReplayStateChange replay_fn,
++                                                    void *opaque)
++{
++    RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
++    RamBlockAttributeReplayData data = { .fn = replay_fn, .opaque = opaque };
++
++    g_assert(section->mr == attr->mr);
++    return ram_block_attribute_for_each_shared_section(attr, section, &data,
++                                                       ram_block_attribute_psm_replay_cb);
++}
++
++static int ram_block_attribute_psm_replay_on_private(const GenericStateManager *gsm,
++                                                     MemoryRegionSection *section,
++                                                     ReplayStateChange replay_fn,
++                                                     void *opaque)
++{
++    RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(gsm);
++    RamBlockAttributeReplayData data = { .fn = replay_fn, .opaque = opaque };
++
++    g_assert(section->mr == attr->mr);
++    return ram_block_attribute_for_each_private_section(attr, section, &data,
++                                                        ram_block_attribute_psm_replay_cb);
++}
++
++int ram_block_attribute_realize(RamBlockAttribute *attr, MemoryRegion *mr)
++{
++    uint64_t shared_bitmap_size;
++    const int block_size  = qemu_real_host_page_size();
++    int ret;
++
++    shared_bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
++
++    attr->mr = mr;
++    ret = memory_region_set_generic_state_manager(mr, GENERIC_STATE_MANAGER(attr));
++    if (ret) {
++        return ret;
++    }
++    attr->shared_bitmap_size = shared_bitmap_size;
++    attr->shared_bitmap = bitmap_new(shared_bitmap_size);
++
++    return ret;
++}
++
++void ram_block_attribute_unrealize(RamBlockAttribute *attr)
++{
++    g_free(attr->shared_bitmap);
++    memory_region_set_generic_state_manager(attr->mr, NULL);
++}
++
++static void ram_block_attribute_init(Object *obj)
++{
++    RamBlockAttribute *attr = RAM_BLOCK_ATTRIBUTE(obj);
++
++    QLIST_INIT(&attr->psl_list);
++}
++
++static void ram_block_attribute_finalize(Object *obj)
++{
++}
++
++static void ram_block_attribute_class_init(ObjectClass *oc, void *data)
++{
++    GenericStateManagerClass *gsmc = GENERIC_STATE_MANAGER_CLASS(oc);
++
++    gsmc->get_min_granularity = ram_block_attribute_psm_get_min_granularity;
++    gsmc->register_listener = ram_block_attribute_psm_register_listener;
++    gsmc->unregister_listener = ram_block_attribute_psm_unregister_listener;
++    gsmc->is_state_set = ram_block_attribute_psm_is_shared;
++    gsmc->replay_on_state_set = ram_block_attribute_psm_replay_on_shared;
++    gsmc->replay_on_state_clear = ram_block_attribute_psm_replay_on_private;
++}
 -- 
 2.43.5
 
