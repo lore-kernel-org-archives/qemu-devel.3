@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F88DC369A4
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 16:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8F1C369A2
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 16:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Bdv-0006q3-2N; Tue, 08 Apr 2025 12:17:43 -0400
+	id 1u2Be2-0006sJ-DG; Tue, 08 Apr 2025 12:17:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u2BJC-0005ef-1a; Tue, 08 Apr 2025 11:56:20 -0400
+ id 1u2BIc-0005UJ-2M; Tue, 08 Apr 2025 11:55:43 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u2BJ6-0005z0-Fl; Tue, 08 Apr 2025 11:56:15 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5386e1TO005729;
- Tue, 8 Apr 2025 15:56:10 GMT
+ id 1u2BIa-0005s0-7v; Tue, 08 Apr 2025 11:55:41 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538A6jfd029373;
+ Tue, 8 Apr 2025 15:55:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=HQ424chTjEYA8EDYR
- EM6fK9dPPCrR7m64a7UFpakGR4=; b=S33D1SRtLbp0EkNxSCD+yAVHKxmy3lR3e
- ibkcLmAIlPuK/I/qDCku78PfSSPjOye9l8xbJudnfxsmrI0szMOah1Fam05U0DRo
- mXSs4f/64QNJ5jkZBsf2nccGv5DO6ilsJfiNG73riSrJz9APK76MPJq9rsFxjLP4
- nzqxd7KWN24Pd2t0cAR31d1jCEX/reL4bDMl9Yi7KoJ+tpS5bu53kV/vknKo9RZ5
- FbCuFPBW+/5/fPDA/e8eBZ28qQpUVkiMtizXJTrM3O+TBQ7MjLzwshaq+8p8a/nB
- 0HcbZFZb84puS+eu1o32u4FeeNYDPZCxmC5ABaeVYVS3ug0EQ+fEA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vjvxnbuc-1
+ :mime-version:references:subject:to; s=pp1; bh=4Eb3DyixIvPG6SlUX
+ tBXVlVG9B6zCRiscUROQhYTVM8=; b=AQ/xA5It5bnYspkeT0XgebsEpiiNlIzZb
+ CNqJTzY+vtJ1D1fpjDzN+pIW07E7TYnZDrMOmW6WFCPpZFyopiFvHIxT9LDDzsAh
+ 54PzVWPuP0Yu4gIHtGWXlgkTLkPaojZ0icCHqqaiXEz9si80aX7xN83IMOxT3bm6
+ soi31zv/CAzXQb+lmJFSXL4eMQhbZLaRX+rPQONORaQscBgmAjcUOMM2hX2oQZOU
+ 7Fc4fbyDIPDU29riHN2Mw2iokECvo2lLjnMnuXsl40wf+AqS7hK2/vaDh5UiIy1q
+ Nz9aism6/DBVD7WWIsJP+2jgkeBOaHGv4vsoqxTwbe9D6ivmAdtkQ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vnx0mhg1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 15:56:09 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538C9b6m011069;
- Tue, 8 Apr 2025 15:56:09 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45uf7ykgqy-1
+ Tue, 08 Apr 2025 15:55:38 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538E1j8j018873;
+ Tue, 8 Apr 2025 15:55:37 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45uhj2b1bh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 15:56:09 +0000
+ Tue, 08 Apr 2025 15:55:37 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 538Fu7Fm65863982
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 538FtaYL21037724
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Apr 2025 15:56:08 GMT
+ Tue, 8 Apr 2025 15:55:36 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A87C05804E;
- Tue,  8 Apr 2025 15:56:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8A2A25804E;
+ Tue,  8 Apr 2025 15:55:36 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3535E5803F;
- Tue,  8 Apr 2025 15:56:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 144275803F;
+ Tue,  8 Apr 2025 15:55:35 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.125.94])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Apr 2025 15:56:06 +0000 (GMT)
+ Tue,  8 Apr 2025 15:55:34 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
  pbonzini@redhat.com
@@ -64,26 +64,26 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
  fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, zycai@linux.ibm.com
-Subject: [PATCH v1 23/24] pc-bios/s390-ccw: Handle secure boot with multiple
- boot devices
-Date: Tue,  8 Apr 2025 11:55:25 -0400
-Message-ID: <20250408155527.123341-24-zycai@linux.ibm.com>
+Subject: [PATCH v1 04/24] s390x/diag: Introduce DIAG 320 for certificate store
+ facility
+Date: Tue,  8 Apr 2025 11:55:06 -0400
+Message-ID: <20250408155527.123341-5-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408155527.123341-1-zycai@linux.ibm.com>
 References: <20250408155527.123341-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ruWR_n0fq3sDlW0dw6vbp6qfxL1zKNsH
-X-Proofpoint-GUID: ruWR_n0fq3sDlW0dw6vbp6qfxL1zKNsH
+X-Proofpoint-GUID: AzDDmquHJbIlmRXLUpgpi60DgWqtqbT9
+X-Proofpoint-ORIG-GUID: AzDDmquHJbIlmRXLUpgpi60DgWqtqbT9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-08_06,2025-04-08_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 mlxlogscore=999 impostorscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 clxscore=1015
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ impostorscore=0
+ mlxlogscore=960 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ clxscore=1015 malwarescore=0 mlxscore=0 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2504080107
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -96,7 +96,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 08 Apr 2025 12:17:35 -0400
+X-Mailman-Approved-At: Tue, 08 Apr 2025 12:17:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,197 +111,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current approach to enabling secure boot relies on providing
--secure-boot and -boot-certificates options, which apply to all boot
-devices.
+From: Collin Walling <walling@linux.ibm.com>
 
-With the possibility of multiple boot devices, secure boot expects all
-provided devices to be supported and eligible (e.g.,
-virtio-blk/virtio-scsi using the SCSI scheme).
+DIAGNOSE 320 is introduced to support certificate store facility,
+which includes operations such as query certificate storage
+information and provide certificates in the certificate store.
 
-If multiple boot devices are provided and include an unsupported (e.g.,
-ECKD, VFIO) or a non-eligible (e.g., Net) device, the boot process will
-terminate with an error logged to the console.
+Currently, only subcode 0 is supported with this patch, which is
+used to query a bitmap of which subcodes are supported.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- pc-bios/s390-ccw/bootmap.c  | 28 +++++++++-----
- pc-bios/s390-ccw/main.c     | 74 ++++++++++++++++++++++++++++++++++---
- pc-bios/s390-ccw/s390-ccw.h |  1 +
- 3 files changed, 88 insertions(+), 15 deletions(-)
+ hw/s390x/ipl.h                 |  1 +
+ include/hw/s390x/ipl/diag320.h | 19 ++++++++++++++++++
+ target/s390x/diag.c            | 36 ++++++++++++++++++++++++++++++++++
+ target/s390x/kvm/kvm.c         | 14 +++++++++++++
+ target/s390x/s390x-internal.h  |  2 ++
+ 5 files changed, 72 insertions(+)
+ create mode 100644 include/hw/s390x/ipl/diag320.h
 
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index a22061e1ad..285aae114f 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -1713,23 +1713,35 @@ int zipl_mode(void)
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index 8c2a442255..1bd73b4dc1 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -17,6 +17,7 @@
+ #include "cpu.h"
+ #include "exec/address-spaces.h"
+ #include "hw/qdev-core.h"
++#include "hw/s390x/ipl/diag320.h"
+ #include "hw/s390x/ipl/qipl.h"
+ #include "qom/object.h"
+ 
+diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+new file mode 100644
+index 0000000000..d6f70c65df
+--- /dev/null
++++ b/include/hw/s390x/ipl/diag320.h
+@@ -0,0 +1,19 @@
++/*
++ * S/390 DIAGNOSE 320 definitions and structures
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or (at
++ * your option) any later version. See the COPYING file in the top-level
++ * directory.
++ */
++
++#ifndef S390X_DIAG320_H
++#define S390X_DIAG320_H
++
++#define DIAG_320_SUBC_QUERY_ISM     0
++
++#define DIAG_320_RC_OK              0x0001
++
++#endif
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index da44b0133e..cb840e4b97 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -192,3 +192,39 @@ out:
+         break;
      }
  }
- 
-+int zipl_check_scsi_mbr_magic(void)
++
++void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
 +{
-+    ScsiMbr *mbr = (void *)sec;
++    S390CPU *cpu = env_archcpu(env);
++    uint64_t subcode = env->regs[r3];
++    uint64_t addr = env->regs[r1];
++    int rc;
 +
-+    /* Grab the MBR */
-+    memset(sec, FREE_SPACE_FILLER, sizeof(sec));
-+    if (virtio_read(0, mbr)) {
-+        puts("Cannot read block 0");
-+        return -EIO;
-+    }
-+
-+    if (!magic_match(mbr->magic, ZIPL_MAGIC)) {
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- void zipl_load(void)
- {
-     VDev *vdev = virtio_get_device();
- 
-     if (vdev->is_cdrom) {
--        if (boot_mode == ZIPL_SECURE_AUDIT_MODE || boot_mode == ZIPL_SECURE_MODE) {
--            panic("Secure boot from ISO image is not supported!");
--        }
-         ipl_iso_el_torito();
-         puts("Failed to IPL this ISO image!");
-         return;
-     }
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
--        if (boot_mode == ZIPL_SECURE_AUDIT_MODE || boot_mode == ZIPL_SECURE_MODE) {
--            panic("Virtio net boot device does not support secure boot!");
--        }
-         netmain();
-         puts("Failed to IPL from this network!");
-         return;
-@@ -1740,10 +1752,6 @@ void zipl_load(void)
-         return;
-     }
- 
--    if (boot_mode == ZIPL_SECURE_AUDIT_MODE || boot_mode == ZIPL_SECURE_MODE) {
--        panic("ECKD boot device does not support secure boot!");
--    }
--
-     switch (virtio_get_device_type()) {
-     case VIRTIO_ID_BLOCK:
-         zipl_load_vblk();
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 6189a5a7ba..30cb470ee4 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -271,8 +271,43 @@ static int virtio_setup(void)
-     return ret;
- }
- 
--static void ipl_boot_device(void)
-+static void validate_secure_boot_device(void)
-+{
-+    switch (cutype) {
-+    case CU_TYPE_DASD_3990:
-+    case CU_TYPE_DASD_2107:
-+        panic("Passthrough (vfio) device does not support secure boot!");
-+        break;
-+    case CU_TYPE_VIRTIO:
-+        if (virtio_setup() == 0) {
-+            VDev *vdev = virtio_get_device();
-+
-+            if (vdev->is_cdrom) {
-+                panic("Secure boot from ISO image is not supported!");
-+            }
-+
-+            if (virtio_get_device_type() == VIRTIO_ID_NET) {
-+                panic("Virtio net boot device does not support secure boot!");
-+            }
-+
-+            if (zipl_check_scsi_mbr_magic()) {
-+                panic("ECKD boot device does not support secure boot!");
-+            }
-+        }
-+        break;
-+    default:
-+        panic("Secure boot from unexpected device type is not supported!");
-+    }
-+
-+    printf("SCSI boot device supports secure boot.\n");
-+}
-+
-+static void check_secure_boot_support(void)
- {
-+    bool have_iplb_copy;
-+    IplParameterBlock *iplb_copy;
-+    QemuIplParameters *qipl_copy;
-+
-     if (boot_mode == 0) {
-         boot_mode = zipl_mode();
-     }
-@@ -281,13 +316,40 @@ static void ipl_boot_device(void)
-         panic("Need at least one certificate for secure boot!");
-     }
- 
-+    if (boot_mode == ZIPL_NORMAL_MODE) {
++    if (env->psw.mask & PSW_MASK_PSTATE) {
++        s390_program_interrupt(env, PGM_PRIVILEGED, ra);
 +        return;
 +    }
 +
-+    /*
-+     * Store copies of have_iplb, iplb and qipl.
-+     * They will be updated in load_next_iplb().
-+     */
-+    have_iplb_copy = have_iplb;
-+    iplb_copy = malloc(sizeof(IplParameterBlock));
-+    qipl_copy = malloc(sizeof(QemuIplParameters));
-+
-+    memcpy(qipl_copy, &qipl, sizeof(QemuIplParameters));
-+    memcpy(iplb_copy, iplb, sizeof(IplParameterBlock));
-+
-+    while (have_iplb_copy) {
-+        if (have_iplb_copy && find_boot_device()) {
-+            validate_secure_boot_device();
-+        }
-+        have_iplb_copy = load_next_iplb();
++    if (r1 & 1) {
++        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++        return;
 +    }
 +
-+    memcpy(&qipl, qipl_copy, sizeof(QemuIplParameters));
-+    memcpy(iplb, iplb_copy, sizeof(IplParameterBlock));
++    switch (subcode) {
++    case DIAG_320_SUBC_QUERY_ISM:
++        uint64_t ism =  0;
 +
-+    free(qipl_copy);
-+    free(iplb_copy);
++        if (s390_cpu_virt_mem_write(cpu, addr, (uint8_t)r1, &ism,
++                                    be64_to_cpu(sizeof(ism)))) {
++            s390_cpu_virt_mem_handle_exc(cpu, ra);
++            return;
++        }
++
++        rc = DIAG_320_RC_OK;
++        break;
++    default:
++        s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++        return;
++    }
++    env->regs[r1 + 1] = rc;
++}
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index d07ca879a3..b013751478 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -98,6 +98,7 @@
+ #define DIAG_TIMEREVENT                 0x288
+ #define DIAG_IPL                        0x308
+ #define DIAG_SET_CONTROL_PROGRAM_CODES  0x318
++#define DIAG_CERT_STORE                 0x320
+ #define DIAG_KVM_HYPERCALL              0x500
+ #define DIAG_KVM_BREAKPOINT             0x501
+ 
+@@ -1561,6 +1562,16 @@ static void handle_diag_318(S390CPU *cpu, struct kvm_run *run)
+     }
+ }
+ 
++static void kvm_handle_diag_320(S390CPU *cpu, struct kvm_run *run)
++{
++    uint64_t r1, r3;
++
++    r1 = (run->s390_sieic.ipa & 0x00f0) >> 4;
++    r3 = run->s390_sieic.ipa & 0x000f;
++
++    handle_diag_320(&cpu->env, r1, r3, RA_IGNORED);
 +}
 +
-+static void ipl_boot_device(void)
-+{
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-     case CU_TYPE_DASD_2107:
--        if (boot_mode == ZIPL_SECURE_AUDIT_MODE || boot_mode == ZIPL_SECURE_MODE) {
--            panic("Passthrough (vfio) device does not support secure boot!");
--        }
--
-         dasd_ipl(blk_schid, cutype);
+ #define DIAG_KVM_CODE_MASK 0x000000000000ffff
+ 
+ static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
+@@ -1591,6 +1602,9 @@ static int handle_diag(S390CPU *cpu, struct kvm_run *run, uint32_t ipb)
+     case DIAG_KVM_BREAKPOINT:
+         r = handle_sw_breakpoint(cpu, run);
          break;
-     case CU_TYPE_VIRTIO:
-@@ -337,6 +399,8 @@ void main(void)
-         probe_boot_device();
-     }
++    case DIAG_CERT_STORE:
++        kvm_handle_diag_320(cpu, run);
++        break;
+     default:
+         trace_kvm_insn_diag(func_code);
+         kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index a4ba6227ab..86a652f833 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -400,6 +400,8 @@ int mmu_translate_real(CPUS390XState *env, target_ulong raddr, int rw,
+ int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3);
+ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
+                      uintptr_t ra);
++void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3,
++                     uintptr_t ra);
  
-+    check_secure_boot_support();
-+
-     while (have_iplb) {
-         boot_setup();
-         if (have_iplb && find_boot_device()) {
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index e8ff3f7883..23b903b9ae 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -88,6 +88,7 @@ void zipl_load(void);
- #define ZIPL_SECURE_INVALID_MODE  -1
  
- int zipl_mode(void);
-+int zipl_check_scsi_mbr_magic(void);
- 
- /* jump2ipl.c */
- void write_reset_psw(uint64_t psw);
+ /* translate.c */
 -- 
 2.49.0
 
