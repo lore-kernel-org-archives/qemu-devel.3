@@ -4,51 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976BBC3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 08:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C376CC369A1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 08:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u241o-0008Tj-SJ; Tue, 08 Apr 2025 04:09:53 -0400
+	id 1u244C-0000qp-SY; Tue, 08 Apr 2025 04:12:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u241m-0008TG-LC
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 04:09:50 -0400
-Received: from bm.lauterbach.com ([62.154.241.218])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1u2442-0000qJ-8w
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 04:12:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u241k-0006zk-0j
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 04:09:50 -0400
-Received: from [10.2.13.100] (unknown [10.2.13.100])
- (Authenticated sender: mario.fleischmann@lauterbach.com)
- by bm.lauterbach.com (Postfix) with ESMTPSA id AC7F65F19C464;
- Tue,  8 Apr 2025 10:09:43 +0200 (CEST)
-Message-ID: <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
-Date: Tue, 8 Apr 2025 10:09:43 +0200
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1u2440-0007Je-3a
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 04:12:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744099920;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rXk77wnDA+GDw5mLn8FDn1OiHklNOm6Aa65B1Nz5LJo=;
+ b=CZ+ZWLQI229H4Jw6eoDMjhXHRG1zG6tZMqtx3VeBYLRF9VA4CQFEPEAczLbsq7g42NymlL
+ 0K2teSO19/nlqiLy6x9tFLwRvd4mVNlVEEV3Tl2fYfohC2J0bCeF1oIqdWXNaHSMVAvw7C
+ YUXBXuVh7pJLNKWjfypaMAyKEv0Alzk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-P3blUlgfPvmUYITh3SsrTw-1; Tue,
+ 08 Apr 2025 04:11:55 -0400
+X-MC-Unique: P3blUlgfPvmUYITh3SsrTw-1
+X-Mimecast-MFC-AGG-ID: P3blUlgfPvmUYITh3SsrTw_1744099913
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B99C180AB19; Tue,  8 Apr 2025 08:11:52 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.45.224.107])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 624F1180B486; Tue,  8 Apr 2025 08:11:50 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 1C3201800094; Tue, 08 Apr 2025 10:11:48 +0200 (CEST)
+Date: Tue, 8 Apr 2025 10:11:48 +0200
+From: Gerd Hoffman <kraxel@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
+ Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <63vckbpscnedivwx3qgucmhi6xiyebtpwqhkft4jelklujy6dz@wp6ibjvbtbox>
+References: <CAK3XEhNS10gKLh6SKeSc9cKi+_qwu3+Yu5rAkni5h7tYS59D5g@mail.gmail.com>
+ <aet7vo4qwexxrw5khiwvhelvhwya3w7wuk72w77jlq7idn3me5@2ojjjdw43u7q>
+ <85a9745d-e3b3-4e0e-90ad-066e6dcc25c1@amazon.com>
+ <ahtt7arm3pi7rlv6x4qepktrczgnsgaukftyee75ofn5duviho@v4wp6v7wlxbg>
+ <4593a2fe-098b-488b-9d55-1adc1e970f59@amazon.com>
+ <vajhincsurwwx5yfmfhamgmvo5i22hxsaaef22aaknkn24m7c6@yxuntxof4iie>
+ <Z9vSeF67fNazkxBh@8bytes.org>
+ <4p7orqixni5m3444l53isxe5awdwasrb5e5bu6wu4phhycqpir@z22wgnaxowsg>
+ <CAK3XEhNeB29eaPxZ_1Cc7WfEzOGZZPcvTc5uC1XAdtG0uNfDRw@mail.gmail.com>
+ <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, philmd@linaro.org,
- christian.boenig@lauterbach.com
-References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
- <87semkw3qx.fsf@pond.sub.org>
- <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
- <87semjp286.fsf@pond.sub.org>
-Content-Language: en-US
-From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
-In-Reply-To: <87semjp286.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
-X-Bm-Transport-Timestamp: 1744099783713
-Received-SPF: pass client-ip=62.154.241.218;
- envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,196 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apologies for the line wrapping in yesterday's answer. Should be fixed now.
+  Hi,
 
-On 08.04.2025 09:00, Markus Armbruster wrote:
-> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
-> 
->> Thanks a lot for the response, I really appreciate your time.
->>
->> On 07.04.2025 14:33, Markus Armbruster wrote:
->>
->>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
->>>
->>>> This patch series introduces support for the Multi-Core Debug (MCD) API, a
->>>> commonly used debug interface by emulators. The MCD API, defined through a
->>>> header file, consists of 54 functions for implementing debug and trace.
->>>> However, since it is a header-file-only interface, MCD does not specify a
->>>> communication protocol. We get around this limitation by following a remote
->>>> procedure call approach using QMP. The client stub corresponding to this
->>>> implementation can be found at https://gitlab.com/lauterbach/mcdrefsrv
->>>>
->>>> This series is the successor to:
->>>> "[PATCH v5 00/18] first version of mcdstub"
->>>> (https://patchew.org/QEMU/20231220162555.19545-1-nicolas.eder@lauterbach.com/)
->>>>
->>>> * Architecture-independent MCD implementation
->>>> * QMP instead of custom TCP protocol
->>>
->>> Rationale?  There must be pros and cons.
->>
->> Assuming you're referring to the protocol of the previous patch series:
->> The previous TCP protocol only supported a subset of MCD. As the 
->> implementation progresses, the protocol eventually needs to be extended, 
->> possibly resulting in backwards compatibility problems.
->> Following an RPC approach and keeping the communication layer as close 
->> to the MCD API as possible results in a larger protocol at first, but 
->> does not need to be changed afterwards.
->> By directly mapping MCD functions onto QMP commands, the complexity in 
->> the server and client stubs can be minimized.
->>
->> Assuming you're referring to the QMP choice:
->> QMP is being described as the "protocol which allows applications to 
->> control a QEMU instance".
->> It provides a RPC framework which automatically (de)serializes methods 
->> and their parameters, even inside QTests.
->> The whole interface is automatically documented.
-> 
-> Let's see whether I understand.
-> 
-> MCD is an established C interface.
-> 
-> Your goal is to provide remote MCD for QEMU, i.e. the client uses the
-> MCD C interface, and the interface's implementation talks to an MCD
-> server integrated into QEMU via some remote transport.
-> 
-> The previous version connects the two with a bespoke protocol via TCP.
-> The client software translates between the C interface and this
-> protocol.  QEMU implements the protocol's server side.  Designing and
-> maintaining a protocol is expensive.
-> 
-> This versions makes two changes:
-> 
-> 1. Instead of layering a protocol on top of MCD, you use MCD directly.
-> This eliminates protocol design and maintenance.  Moreover, translation
-> becomes straightforward marshaling / unmarshaling for the transport.
-> 
-> 2. You use QMP as a transport.  This gets you marshaling / unmarshaling
-> for free.  It also provides some useful infrastructure for tests,
-> documentation and such.
-> 
-> Fair?
+> Which means we are back to the single firmware image.  I think it makes
+> sense to continue supporting classic rom images (which can also be
+> loaded via -bios).  Any use case which needs more fine-grained control
+> must use igvm.  We can use format bits in both capabilities and control
+> fields to indicate what the hypervisor supports and what has been
+> uploaded to the firmware image region.  See interface header file draft
+> below.
 
-Couldn't have put it better myself.
+Updated draft.  Idea is to go all-in on IGVM and support IGVM only.  We
+keep the format bit, but more to make things future-proof (have the
+option to support other formats should the need arise at some point in
+the future) and not because we plan to support multiple formats today.
 
->>> How much data would you expect to flow in practical usage?  QMP isn't
->>> designed for bulk transfer...
->>
->> According to ifstat, the expected data rate in practical usage is around
->>
->> KB/s in  KB/s out
->>     100      100
->>
->> I fully understand your concern and agree that a JSON-based
->> protocol does not result in the lowest data rate.
->>
->> If the data rate is the highest priority: *Before* the QMP supported was 
->> implemented, the MCD interface was built on a custom RPC framework, 
->> generated with the code generator at:
->>
->> https://gitlab.com/lauterbach/mcdrefsrv/-/tree/main/codegen
->>
->> The resulting header file was basically a set of functions capable of 
->> serializing MCD's function arguments into a byte stream and vice-versa:
->>
->> https://gitlab.com/lauterbach/mcdrefsrv/-/blob/df754cef7f19ece2d00b6ce4e307ba37e91e5dcb/include/mcd_rpc.h
->>
->> The QMP support was added because of the advantages listed above and in 
->> order to evade yet another custom communication protocol.
->> As a user of the MCD interface, I haven't noticed any negative impact of 
->> the increased data rate in realistic debugging scenarios, even when 
->> trying to drive the data rate up. If that would have been the case, I 
->> would have sent this patch request with our custom RPC protocol.
-> 
-> I see.
-> 
->>>> qemu-system-<arch> [options] -qmp tcp::1235,server=on,wait=off
->>>>
->>>> * Architecture-independent QTest test suite
->>>>
->>>> V=1 QTEST_QEMU_BINARY="./qemu-system-<arch> [options]" tests/qtest/mcd-test
->>>>
->>>> * Architecture-specific tests can be found at the client stub
->>>
->>> [...]
->>>
->>>>   qapi/mcd.json             | 2366 ++++++++++++++++++++++
->>>
->>> This is *massive*.  By non-blank, non-comment lines, it's the second
->>> largest module in qapi/, almost 9% of the entire schema.  It's larger
->>> than the entire QEMU guest agent QAPI schema.  The QAPI generator
->>> generates some 280KiB of C code for it.
->>
->> I understand your point and I think it touches on the point made above 
->> regarding MCD's complexity:
->>
->>> mcd/mcd_api.h             | 3963 +++++++++++++++++++++++++++++++++++++
-> 
-> Uh, that's a big one.
-> 
-> Out of curiosity, what's the size of the previous version's code to
-> translate between the C interface and TCP?
+So we are down to this:
 
-The previous version's protocol was very similar to GDB's remote serial
-protocol which is why the size of its implementation is comparable to
-that of gdbstub.c
+--------------------------- cut here ------------------------
 
-> debug/mcdstub/mcdstub.c                  | 2481 ++++++++++++++++++++++
+/*
+ * igvm only vmfwupdate interface rewrite
+ */
 
-Note that this file contains both the transport layer as well as the
-implementation and does not implement mcd_api.h which makes the two
-patch sets difficult to compare.
+struct vmfwupdate {
+    // VMM capabilities, see VMFWUPDATE_CAP_*, read-only.
+    uint64_t capabilities;
+    // control bits, see VMFWUPDATE_CTL_*
+    uint64_t control;
 
->> I hope that we agree that RPC is generally the right approach to 
->> implement MCD. As far as the implementation is concerned, I'm open to 
->> any suggestion you have. I've always avoided to introduce any 
->> unnecessary external dependencies.
-> 
-> I think you're much better qualified to judge the merits of RPC here
-> than I am.  That leaves the question of the RPC transport.  You want to
-> use QMP.
+    // address and size of the firmware update image.  Will be cleared on
+    // firmware update and reset.
+    uint64_t fw_image_addr;
+    uint16_t fw_image_size;
+};
 
-I think that QMP is the more mature protocol than my RPC
-proof-of-concept and would improve interoperability. However, our
-open-source client stub supports both transport layers, so we're fine
-with both.
+// --- format bits, used by both 'capabilities' and 'control' ---
+// igvm
+#define VMFWUPDATE_FORMAT_IGVM           (1 << 32)
 
-> On the one hand, I'm tickled to see QAPI/QMP used for things it wasn't
-> designed for.
+// --- 'control' field bits ---
+// disable vmfwupdate interface
+#define VMFWUPDATE_CTL_DISABLE            (1 << 0)
 
-Might be a language issue but I can't tell whether that's meant
-positively or negatively.
+--------------------------- cut here ------------------------
 
-> On the other hand, QMP has grown so big.  Keeping it cohesive has become
-> a near-impossible mission.
-> 
-> Hmm.
-> 
-> We already provide another remote debugger interface: the GDB stub.
-> It's optional, i.e. the user has to create it, either with command line
-> option -gdb, or monitor command gdbserver.
+All other details will be offloaded to IGVM.  We will need some IGVM
+format updates for that:
 
-We had that option in our previous patch set:
+ * Add a parameter to specify the location of the payload (i.e.
+   the UKI, or some container format in case we want pass on more
+   than just one efi binary).
+ * Add a page types for db/dbx signature databases where we can
+   store either the signing key or the authenticode hash of the
+   payload.
 
-> $ qemu-system-arm -M virt -cpu cortex-a15 -mcd tcp::1235
-
-If you'd like, we can of course add such an option again. The QMP choice
-made that redundant for me because I wasn't aware of a way to only
-provide a subset of QMP.
-
-> We already have two-and-a-half QMPs: qemu-system-FOO's QMP,
-> qemu-storage-daemon's QMP (subset of the previous, so it counts only
-> half), and qemu-ga's QMP-like protocol.
-> 
-> What about providing the MCD interface as a separate QMP-like protocol?
-> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
-> compiling it out when not needed.
-> It gets its own socket, just like the GDB stub.  Might reduce
-> interference between debugging and QMP.
-> 
-> Thoughts?  Alex, Philippe, care to chime in?
-
-Sound reasonable to me. Keeping in mind the size of generated QAPI code,
-an option to `./configure [...] --enable-mcd` is definitely advisable.
+take care,
+  Gerd
 
 
