@@ -4,60 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76461C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 08:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DFAC369A4
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 08:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u24da-00010v-UZ; Tue, 08 Apr 2025 04:48:55 -0400
+	id 1u24dt-000133-NB; Tue, 08 Apr 2025 04:49:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1u24dS-0000zq-9A; Tue, 08 Apr 2025 04:48:46 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u24dr-00012d-KQ
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 04:49:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1u24dK-00030H-G3; Tue, 08 Apr 2025 04:48:45 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZX0856DJtz6FGp6;
- Tue,  8 Apr 2025 16:47:33 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id ECDCB1400DB;
- Tue,  8 Apr 2025 16:48:28 +0800 (CST)
-Received: from localhost (10.203.177.99) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 8 Apr
- 2025 10:48:28 +0200
-Date: Tue, 8 Apr 2025 09:48:22 +0100
-To: Eric Auger <eric.auger@redhat.com>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>,
- <zhao1.liu@intel.com>, <dapeng1.mi@linux.intel.com>, <armbru@redhat.com>,
- <farman@linux.ibm.com>, <peter.maydell@linaro.org>, <anisinha@redhat.com>,
- <shannon.zhaosl@gmail.com>, <imammedo@redhat.com>, <mtosatti@redhat.com>,
- <berrange@redhat.com>, <richard.henderson@linaro.org>,
- <shameerali.kolothum.thodi@huawei.com>, <jonathan.cameron@huawei.com>,
- <jiangkunkun@huawei.com>, <yangyicong@hisilicon.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v8 0/6] Specifying cache topology on ARM
-Message-ID: <20250408094822.0000012f.alireza.sanaee@huawei.com>
-In-Reply-To: <7cad3f1f-1977-4d98-900c-080aa5ad32d5@redhat.com>
-References: <20250310162337.844-1-alireza.sanaee@huawei.com>
- <7cad3f1f-1977-4d98-900c-080aa5ad32d5@redhat.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u24dp-000326-9x
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 04:49:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744102145;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GRCD8ox9Pi/L4aVcUWWUeTHW545W7RN9ylNCFiwGPZM=;
+ b=NUMmoUdhFommQkPurwgalc1g9zQ4Es2Ljfg1isM+Ko7u3ptH1Wy1PjjBhK9FN7fm1Zy47+
+ etCIuK5wg4GVxb9xnP8EIAD5HUEeBX9rS75tO4WYjb+/emRFtIwmpo5s4SX6sOmaYhkqi/
+ pu3QwdhGu1wBthOmL/vWG6nUW4MGKz0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-cty5RUspN_yrnWMaN__LpA-1; Tue,
+ 08 Apr 2025 04:48:59 -0400
+X-MC-Unique: cty5RUspN_yrnWMaN__LpA-1
+X-Mimecast-MFC-AGG-ID: cty5RUspN_yrnWMaN__LpA_1744102138
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F1391956089; Tue,  8 Apr 2025 08:48:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C6CE3180B486; Tue,  8 Apr 2025 08:48:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DC6AC21E6773; Tue, 08 Apr 2025 10:48:53 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+Cc: qemu-devel@nongnu.org,  alex.bennee@linaro.org,  philmd@linaro.org,
+ christian.boenig@lauterbach.com
+Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
+In-Reply-To: <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com> (Mario
+ Fleischmann's message of "Tue, 8 Apr 2025 10:09:43 +0200")
+References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
+ <87semkw3qx.fsf@pond.sub.org>
+ <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
+ <87semjp286.fsf@pond.sub.org>
+ <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
+Date: Tue, 08 Apr 2025 10:48:53 +0200
+Message-ID: <87r023m422.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- frapeml500003.china.huawei.com (7.182.85.28)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,202 +86,219 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 7 Apr 2025 19:24:16 +0200
-Eric Auger <eric.auger@redhat.com> wrote:
+Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
 
-> Hi Ali,
-> 
-> On 3/10/25 5:23 PM, Alireza Sanaee via wrote:
-> > Specifying the cache layout in virtual machines is useful for
-> > applications and operating systems to fetch accurate information
-> > about the cache structure and make appropriate adjustments.
-> > Enforcing correct sharing information can lead to better
-> > optimizations. This patch enables the specification of cache layout
-> > through a command line parameter, building on a patch set by Intel
-> > [1,2,3]. It uses this set as a  
-> some dependencies were merged. The series does not apply anymore.
-This has already picked up, thanks for pointing out. Will remove in the
-next version.
-> > foundation.  The device tree and ACPI/PPTT table, and device tree
-> > are populated based on user-provided information and CPU topology.  
-> this last sentence need some rewording.
-Sure, gonna fix.
-> >
-> > Example:
-> >
-> >
-> > +----------------+                            +----------------+
-> > |    Socket 0    |                            |    Socket 1    |
-> > |    (L3 Cache)  |                            |    (L3 Cache)  |
-> > +--------+-------+                            +--------+-------+
-> >          |                                             |
-> > +--------+--------+                            +--------+--------+
-> > |   Cluster 0     |                            |   Cluster 0     |
-> > |   (L2 Cache)    |                            |   (L2 Cache)    |
-> > +--------+--------+                            +--------+--------+
-> >          |                                             |
-> > +--------+--------+  +--------+--------+    +--------+--------+
-> > +--------+----+ |   Core 0         | |   Core 1        |    |
-> > Core 0        |  |   Core 1    | |   (L1i, L1d)     | |   (L1i,
-> > L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
-> > +--------+--------+  +--------+--------+    +--------+--------+
-> > +--------+----+ |                   |                       |
-> >             | +--------+              +--------+
-> > +--------+          +--------+ |Thread 0|              |Thread 1|
-> >            |Thread 1|          |Thread 0| +--------+
-> > +--------+              +--------+          +--------+ |Thread 1|
-> >            |Thread 0|              |Thread 0|          |Thread 1|
-> > +--------+              +--------+              +--------+
-> > +--------+
-> >
-> >
-> > The following command will represent the system relying on **ACPI
-> > PPTT tables**.
-> >
-> > ./qemu-system-aarch64 \
-> >  -machine
-> > virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-
-> >  
-> s/cluseter/cluster
-> > cache.3.cache=l3,smp-cache.3.topology=socket \
-> >  -cpu max \
-> >  -m 2048 \
-> >  -smp sockets=2,clusters=1,cores=2,threads=2 \
-> >  -kernel ./Image.gz \
-> >  -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
-> >  -initrd rootfs.cpio.gz \
-> >  -bios ./edk2-aarch64-code.fd \
-> >  -nographic
-> >
-> > The following command will represent the system relying on **the
-> > device tree**.
-> >
-> > ./qemu-system-aarch64 \
-> >  -machine
-> > virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket
-> > \ -cpu max \ -m 2048 \
-> >  -smp sockets=2,clusters=1,cores=2,threads=2 \
-> >  -kernel ./Image.gz \
-> >  -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
-> >  -initrd rootfs.cpio.gz \
-> >  -nographic
-> >
-> > Failure cases:
-> >     1) There are scenarios where caches exist in systems' registers
-> > but left unspecified by users. In this case qemu returns failure.  
-> Can you give more details on 1)? is it a TCG case or does it also
-> exist with KVM acceleration?
-Yes, imagine your CLIDR register describes L1, L2, and L3. Then in the
-interface we only describe L1, and L2 and leave L3. Situation for L3 
-right now is undefined, in a sense that what is the sharing situation?
-This is failure.
+> Apologies for the line wrapping in yesterday's answer. Should be fixed now.
+>
+> On 08.04.2025 09:00, Markus Armbruster wrote:
+>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>> 
+>>> Thanks a lot for the response, I really appreciate your time.
+>>>
+>>> On 07.04.2025 14:33, Markus Armbruster wrote:
+>>>
+>>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>>>>
+>>>>> This patch series introduces support for the Multi-Core Debug (MCD) API, a
+>>>>> commonly used debug interface by emulators. The MCD API, defined through a
+>>>>> header file, consists of 54 functions for implementing debug and trace.
+>>>>> However, since it is a header-file-only interface, MCD does not specify a
+>>>>> communication protocol. We get around this limitation by following a remote
+>>>>> procedure call approach using QMP. The client stub corresponding to this
+>>>>> implementation can be found at https://gitlab.com/lauterbach/mcdrefsrv
+>>>>>
+>>>>> This series is the successor to:
+>>>>> "[PATCH v5 00/18] first version of mcdstub"
+>>>>> (https://patchew.org/QEMU/20231220162555.19545-1-nicolas.eder@lauterbach.com/)
+>>>>>
+>>>>> * Architecture-independent MCD implementation
+>>>>> * QMP instead of custom TCP protocol
+>>>>
+>>>> Rationale?  There must be pros and cons.
+>>>
+>>> Assuming you're referring to the protocol of the previous patch series:
+>>> The previous TCP protocol only supported a subset of MCD. As the 
+>>> implementation progresses, the protocol eventually needs to be extended, 
+>>> possibly resulting in backwards compatibility problems.
+>>> Following an RPC approach and keeping the communication layer as close 
+>>> to the MCD API as possible results in a larger protocol at first, but 
+>>> does not need to be changed afterwards.
+>>> By directly mapping MCD functions onto QMP commands, the complexity in 
+>>> the server and client stubs can be minimized.
+>>>
+>>> Assuming you're referring to the QMP choice:
+>>> QMP is being described as the "protocol which allows applications to 
+>>> control a QEMU instance".
+>>> It provides a RPC framework which automatically (de)serializes methods 
+>>> and their parameters, even inside QTests.
+>>> The whole interface is automatically documented.
+>> 
+>> Let's see whether I understand.
+>> 
+>> MCD is an established C interface.
+>> 
+>> Your goal is to provide remote MCD for QEMU, i.e. the client uses the
+>> MCD C interface, and the interface's implementation talks to an MCD
+>> server integrated into QEMU via some remote transport.
+>> 
+>> The previous version connects the two with a bespoke protocol via TCP.
+>> The client software translates between the C interface and this
+>> protocol.  QEMU implements the protocol's server side.  Designing and
+>> maintaining a protocol is expensive.
+>> 
+>> This versions makes two changes:
+>> 
+>> 1. Instead of layering a protocol on top of MCD, you use MCD directly.
+>> This eliminates protocol design and maintenance.  Moreover, translation
+>> becomes straightforward marshaling / unmarshaling for the transport.
+>> 
+>> 2. You use QMP as a transport.  This gets you marshaling / unmarshaling
+>> for free.  It also provides some useful infrastructure for tests,
+>> documentation and such.
+>> 
+>> Fair?
+>
+> Couldn't have put it better myself.
+>
+>>>> How much data would you expect to flow in practical usage?  QMP isn't
+>>>> designed for bulk transfer...
+>>>
+>>> According to ifstat, the expected data rate in practical usage is around
+>>>
+>>> KB/s in  KB/s out
+>>>     100      100
+>>>
+>>> I fully understand your concern and agree that a JSON-based
+>>> protocol does not result in the lowest data rate.
+>>>
+>>> If the data rate is the highest priority: *Before* the QMP supported was 
+>>> implemented, the MCD interface was built on a custom RPC framework, 
+>>> generated with the code generator at:
+>>>
+>>> https://gitlab.com/lauterbach/mcdrefsrv/-/tree/main/codegen
+>>>
+>>> The resulting header file was basically a set of functions capable of 
+>>> serializing MCD's function arguments into a byte stream and vice-versa:
+>>>
+>>> https://gitlab.com/lauterbach/mcdrefsrv/-/blob/df754cef7f19ece2d00b6ce4e307ba37e91e5dcb/include/mcd_rpc.h
+>>>
+>>> The QMP support was added because of the advantages listed above and in 
+>>> order to evade yet another custom communication protocol.
+>>> As a user of the MCD interface, I haven't noticed any negative impact of 
+>>> the increased data rate in realistic debugging scenarios, even when 
+>>> trying to drive the data rate up. If that would have been the case, I 
+>>> would have sent this patch request with our custom RPC protocol.
+>> 
+>> I see.
+>> 
+>>>>> qemu-system-<arch> [options] -qmp tcp::1235,server=on,wait=off
+>>>>>
+>>>>> * Architecture-independent QTest test suite
+>>>>>
+>>>>> V=1 QTEST_QEMU_BINARY="./qemu-system-<arch> [options]" tests/qtest/mcd-test
+>>>>>
+>>>>> * Architecture-specific tests can be found at the client stub
+>>>>
+>>>> [...]
+>>>>
+>>>>>   qapi/mcd.json             | 2366 ++++++++++++++++++++++
+>>>>
+>>>> This is *massive*.  By non-blank, non-comment lines, it's the second
+>>>> largest module in qapi/, almost 9% of the entire schema.  It's larger
+>>>> than the entire QEMU guest agent QAPI schema.  The QAPI generator
+>>>> generates some 280KiB of C code for it.
+>>>
+>>> I understand your point and I think it touches on the point made above 
+>>> regarding MCD's complexity:
+>>>
+>>>> mcd/mcd_api.h             | 3963 +++++++++++++++++++++++++++++++++++++
+>> 
+>> Uh, that's a big one.
+>> 
+>> Out of curiosity, what's the size of the previous version's code to
+>> translate between the C interface and TCP?
+>
+> The previous version's protocol was very similar to GDB's remote serial
+> protocol which is why the size of its implementation is comparable to
+> that of gdbstub.c
+>
+>> debug/mcdstub/mcdstub.c                  | 2481 ++++++++++++++++++++++
+>
+> Note that this file contains both the transport layer as well as the
+> implementation and does not implement mcd_api.h which makes the two
+> patch sets difficult to compare.
 
-I think this is applicable to both TCG and KVM, because, the miss-match
-might come from real systems' registers or emulated ones. User might
-not exactly know the supported caches and misconfigure.
+Understood.
 
-I spend some time thinking about a default behavior but then that
-again will be unclear to users, and decided it is better if users
-decide what EXACTLY should happen in an informed fashion.
-> >
-> >     2) SMT threads cannot share caches which is not very common.
-> > More discussions here [4].
-> >
-> > Currently only three levels of caches are supported to be specified
-> > from the command line. However, increasing the value does not
-> > require significant changes. Further, this patch assumes l2 and l3
-> > unified caches and does not allow l(2/3)(i/d). The level
-> > terminology is thread/core/cluster/socket right now. Hierarchy
-> > assumed in this patch: Socket level = Cluster level + 1 = Core
-> > level + 2 = Thread level + 3;
-> >
-> > TODO:
-> >   1) Making the code to work with arbitrary levels
-> >   2) Separated data and instruction cache at L2 and L3.
-> >   3) Additional cache controls.  e.g. size of L3 may not want to
-> > just match the underlying system, because only some of the
-> > associated host CPUs may be bound to this VM.  
-> Does it mean this is more an RFC or do you plan to send improvement
-> patches once this series gets upstream?
-Short answer, I think I am better off sending upgrades once the main
-patchset got merged.
+>>> I hope that we agree that RPC is generally the right approach to 
+>>> implement MCD. As far as the implementation is concerned, I'm open to 
+>>> any suggestion you have. I've always avoided to introduce any 
+>>> unnecessary external dependencies.
+>> 
+>> I think you're much better qualified to judge the merits of RPC here
+>> than I am.  That leaves the question of the RPC transport.  You want to
+>> use QMP.
+>
+> I think that QMP is the more mature protocol than my RPC
+> proof-of-concept and would improve interoperability. However, our
+> open-source client stub supports both transport layers, so we're fine
+> with both.
+>
+>> On the one hand, I'm tickled to see QAPI/QMP used for things it wasn't
+>> designed for.
+>
+> Might be a language issue but I can't tell whether that's meant
+> positively or negatively.
 
-Some of these TODOs are good to have really, i.e., L3 size is something
-I have received some interest about already.
+Positively!
 
-Or separated data and instruction is interesting only if someone plans
-to build one (maybe there is already and I don't know).
+>> On the other hand, QMP has grown so big.  Keeping it cohesive has become
+>> a near-impossible mission.
+>> 
+>> Hmm.
+>> 
+>> We already provide another remote debugger interface: the GDB stub.
+>> It's optional, i.e. the user has to create it, either with command line
+>> option -gdb, or monitor command gdbserver.
+>
+> We had that option in our previous patch set:
+>
+>> $ qemu-system-arm -M virt -cpu cortex-a15 -mcd tcp::1235
+>
+> If you'd like, we can of course add such an option again. The QMP choice
+> made that redundant for me because I wasn't aware of a way to only
+> provide a subset of QMP.
 
-Or arbitrary levels is not a challenging mod, so can be added later,
-if people want to have 7 layers :)
+Or rather several QMPs.
 
-This is something community can help me knowing what else might be
-interesting.
+>> We already have two-and-a-half QMPs: qemu-system-FOO's QMP,
+>> qemu-storage-daemon's QMP (subset of the previous, so it counts only
+>> half), and qemu-ga's QMP-like protocol.
 
-> 
-> Thanks
-> 
-> Eric
-> >
-> > [1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
-> > [2] https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/
-> > [3] https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-> > [4] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
-> >
-> > Change Log:
-> >   v7->v8:
-> >    * rebase: Merge tag 'pull-nbd-2024-08-26'
-> > of https://repo.or.cz/qemu/ericb into staging
-> >    * I mis-included a file in patch #4 and I removed it in this one.
-> >
-> >   v6->v7:
-> >    * Intel stuff got pulled up, so rebase.
-> >    * added some discussions on device tree.
-> >
-> >   v5->v6:
-> >    * Minor bug fix.
-> >    * rebase based on new Intel patchset.
-> >      - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
-> >
-> >   v4->v5:
-> >     * Added Reviewed-by tags.
-> >     * Applied some comments.
-> >
-> >   v3->v4:
-> >     * Device tree added.
-> >
-> > Depends-on: Building PPTT with root node and identical
-> > implementation flag Depends-on: Msg-id:
-> > 20250306023342.508-1-alireza.sanaee@huawei.com
-> >
-> > Alireza Sanaee (6):
-> >   target/arm/tcg: increase cache level for cpu=max
-> >   arm/virt.c: add cache hierarchy to device tree
-> >   bios-tables-test: prepare to change ARM ACPI virt PPTT
-> >   hw/acpi/aml-build.c: add cache hierarchy to pptt table
-> >   tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
-> >   Update the ACPI tables according to the acpi aml_build change,
-> > also empty bios-tables-test-allowed-diff.h.
-> >
-> >  hw/acpi/aml-build.c                        | 205 +++++++++++-
-> >  hw/arm/virt-acpi-build.c                   |   8 +-
-> >  hw/arm/virt.c                              | 350
-> > +++++++++++++++++++++ hw/cpu/core.c                              |
-> > 92 ++++++ hw/loongarch/virt-acpi-build.c             |   2 +-
-> >  include/hw/acpi/aml-build.h                |   4 +-
-> >  include/hw/arm/virt.h                      |   4 +
-> >  include/hw/cpu/core.h                      |  27 ++
-> >  target/arm/tcg/cpu64.c                     |  13 +
-> >  tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
-> >  tests/qtest/bios-tables-test.c             |   4 +
-> >  11 files changed, 701 insertions(+), 8 deletions(-)
-> >  
-> 
-> 
+qemu-ga's protocol differs in certain details for historical reasons.  A
+new one should not.
+
+QMP supports introspection via query-qmp-schema.  This enables clients
+to deal with a wide range of server versions.  You don't need this if
+your interface never changes (a rather bold assertion), or your client
+always targets one specific version.  If you need it, I'm happy to
+advise on how to use it.
+
+>> What about providing the MCD interface as a separate QMP-like protocol?
+>> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
+>> compiling it out when not needed.
+>>
+>> It gets its own socket, just like the GDB stub.  Might reduce
+>> interference between debugging and QMP.
+>> 
+>> Thoughts?  Alex, Philippe, care to chime in?
+>
+> Sound reasonable to me. Keeping in mind the size of generated QAPI code,
+> an option to `./configure [...] --enable-mcd` is definitely advisable.
+
+Alex, Philippe?
 
 
