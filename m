@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60961C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 05:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7707C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 05:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u217k-0005bG-9Z; Tue, 08 Apr 2025 01:03:49 -0400
+	id 1u21JF-0000sL-PM; Tue, 08 Apr 2025 01:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u217h-0005ar-6X
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 01:03:45 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ id 1u21J7-0000rN-Sc
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 01:15:33 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u217e-0001Ek-UH
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 01:03:44 -0400
+ id 1u21J5-0002uS-Cs
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 01:15:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744088623; x=1775624623;
+ t=1744089331; x=1775625331;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=Zqy5B5Wj05+4KXOwALLqyvPLpQ1tbQVXH1C+Hwhhm6g=;
- b=G3peDysOQZvZTqKlgTMuZ1ScopfzVU/MS8prW5slWKxIUh+bYNLoYg5l
- O8z+gWeMl6Gr5BcQYrxz8TJBIS1CZQaiIQyUdpb36lyPWqcTAKgK4I09w
- 4vhPY5GsDvWgPG/O+ZY7R60W4PzhszIi1nIdD9S2fNnca/gMIFaWIff1X
- bmngzWzk082F0czfXK7piYcn9fGb/Kcb6JBa/AGY8xFJLw7xhOfPiLuYX
- WwRJrtNY2La274FRBX//b5qcAILnI4l4F5/ZufnqCTolVV2l6kzhVorY7
- oh5NRsRaThxPuYSUbM0JN0aL1fzFBQ5uvEilkIAzp/nBDZ/zeg8GBFn4u w==;
-X-CSE-ConnectionGUID: eTq8QG3hSfS0cDxKIjCdHQ==
-X-CSE-MsgGUID: +nrN2TAjTIeJ60IxCeVtHQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="44751830"
-X-IronPort-AV: E=Sophos;i="6.15,197,1739865600"; d="scan'208";a="44751830"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 22:03:38 -0700
-X-CSE-ConnectionGUID: LOKAB7mDRc2NENlHtFc6vw==
-X-CSE-MsgGUID: 85m6SchSQN2BmCRkQJ8c/Q==
+ bh=awOzSp4eKVpKtblE1A0vBqJI2VCNcj0U9FQSX6+bKv4=;
+ b=R6dx2NrDqrAKEH9abiqYSIKuuSL40aM/UrS/DsoVVnp51C49XQHSeD8n
+ ERGIBkAHt1txR9h3K44MfJPcTHDyxn5wJjeIzPRw12G5oQZHZWmqDP/jK
+ kKTz2/GkSb6r8HWVtUPcm8UVCfgpSG3imx0DoPmPkYoj2WYvAoVobfiNM
+ snvCINvE+XkQTpcfhprPqNA0D7QL1qj4oSjdTiSqQp6jQdyQCYRjStvi6
+ ttAUlYWgDVz44LMDM0jDKinAY7IpuJdX9+66wMkM0oVXZF30d3PSZlF4B
+ gFohZTv5HzNbmYkz0OWUvEU/hDRfszK1Osqzp3gSoxxWc6XjY++0MYTbO Q==;
+X-CSE-ConnectionGUID: H49Toxd6RGKcQZIiPBFVYw==
+X-CSE-MsgGUID: OU3x4pXJQOum3jNdUbMNIA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="70879770"
+X-IronPort-AV: E=Sophos;i="6.15,197,1739865600"; d="scan'208";a="70879770"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Apr 2025 22:15:28 -0700
+X-CSE-ConnectionGUID: zI5ahYPQQ4KNz9nFu5HJsw==
+X-CSE-MsgGUID: yBhEgc4nQA684FI2/9Q2Qg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,197,1739865600"; d="scan'208";a="132874497"
+X-IronPort-AV: E=Sophos;i="6.15,197,1739865600"; d="scan'208";a="128680818"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Apr 2025 22:03:30 -0700
-Message-ID: <1279f93c-3677-4097-968d-a8530a69678f@intel.com>
-Date: Tue, 8 Apr 2025 13:03:24 +0800
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Apr 2025 22:15:21 -0700
+Message-ID: <b6ec7c47-4d4e-41fd-a170-0c5e5daea8e8@intel.com>
+Date: Tue, 8 Apr 2025 13:15:15 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 38/55] i386/tdx: Set and check kernel_irqchip mode for
- TDX
+Subject: Re: [PATCH v8 55/55] docs: Add TDX documentation
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
  <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
+ Rick Edgecombe <rick.p.edgecombe@intel.com>, devel@lists.libvirt.org,
+ Jiri Denemark <jdenemar@redhat.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-39-xiaoyao.li@intel.com>
- <Z-0UdHfoXN-wIEnV@redhat.com>
+ <20250401130205.2198253-56-xiaoyao.li@intel.com>
+ <Z-0WclTZ-e-sTjzO@redhat.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z-0UdHfoXN-wIEnV@redhat.com>
+In-Reply-To: <Z-0WclTZ-e-sTjzO@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
@@ -93,67 +93,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/2/2025 6:41 PM, Daniel P. Berrangé wrote:
-> On Tue, Apr 01, 2025 at 09:01:48AM -0400, Xiaoyao Li wrote:
->> KVM mandates kernel_irqchip to be split mode.
+On 4/2/2025 6:50 PM, Daniel P. Berrangé wrote:
+> CC libvirt / Jiri, for confirmation about whether the CPUID restrictions
+> listed below will have any possible impact on libvirt CPUID handling...
+> 
+> On Tue, Apr 01, 2025 at 09:02:05AM -0400, Xiaoyao Li wrote:
+>> Add docs/system/i386/tdx.rst for TDX support, and add tdx in
+>> confidential-guest-support.rst
 >>
->> Set it to split mode automatically when users don't provide an explicit
->> value, otherwise check it to be the split mode.
->>
->> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 >> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 >> ---
->>   target/i386/kvm/tdx.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
+>> Changes in v6:
+>>   - Add more information of "Feature configuration"
+>>   - Mark TD Attestation as future work because KVM now drops the support
+>>     of it.
+>>
+>> Changes in v5:
+>>   - Add TD attestation section and update the QEMU parameter;
+>>
+>> Changes since v1:
+>>   - Add prerequisite of private gmem;
+>>   - update example command to launch TD;
+>>
+>> Changes since RFC v4:
+>>   - add the restriction that kernel-irqchip must be split
+>> ---
+>>   docs/system/confidential-guest-support.rst |   1 +
+>>   docs/system/i386/tdx.rst                   | 156 +++++++++++++++++++++
+>>   docs/system/target-i386.rst                |   1 +
+>>   3 files changed, 158 insertions(+)
+>>   create mode 100644 docs/system/i386/tdx.rst
 > 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+>> +Feature Configuration
+>> +---------------------
+>> +
+>> +Unlike non-TDX VM, the CPU features (enumerated by CPU or MSR) of a TD are not
+>> +under full control of VMM. VMM can only configure part of features of a TD on
+>> +``KVM_TDX_INIT_VM`` command of VM scope ``MEMORY_ENCRYPT_OP`` ioctl.
+>> +
+>> +The configurable features have three types:
+>> +
+>> +- Attributes:
+>> +  - PKS (bit 30) controls whether Supervisor Protection Keys is exposed to TD,
+>> +  which determines related CPUID bit and CR4 bit;
+>> +  - PERFMON (bit 63) controls whether PMU is exposed to TD.
+>> +
+>> +- XSAVE related features (XFAM):
+>> +  XFAM is a 64b mask, which has the same format as XCR0 or IA32_XSS MSR. It
+>> +  determines the set of extended features available for use by the guest TD.
+>> +
+>> +- CPUID features:
+>> +  Only some bits of some CPUID leaves are directly configurable by VMM.
+>> +
+>> +What features can be configured is reported via TDX capabilities.
+>> +
+>> +TDX capabilities
+>> +~~~~~~~~~~~~~~~~
+>> +
+>> +The VM scope ``MEMORY_ENCRYPT_OP`` ioctl provides command ``KVM_TDX_CAPABILITIES``
+>> +to get the TDX capabilities from KVM. It returns a data structure of
+>> +``struct kvm_tdx_capabilities``, which tells the supported configuration of
+>> +attributes, XFAM and CPUIDs.
+>> +
+>> +TD attributes
+>> +~~~~~~~~~~~~~
+>> +
+>> +QEMU supports configuring raw 64-bit TD attributes directly via "attributes"
+>> +property of "tdx-guest" object. Note, it's users' responsibility to provide a
+>> +valid value because some bits may not supported by current QEMU or KVM yet.
+>> +
+>> +QEMU also supports the configuration of individual attribute bits that are
+>> +supported by it, via properties of "tdx-guest" object.
+>> +E.g., "sept-ve-disable" (bit 28).
+>> +
+>> +MSR based features
+>> +~~~~~~~~~~~~~~~~~~
+>> +
+>> +Current KVM doesn't support MSR based feature (e.g., MSR_IA32_ARCH_CAPABILITIES)
+>> +configuration for TDX, and it's a future work to enable it in QEMU when KVM adds
+>> +support of it.
+>> +
+>> +Feature check
+>> +~~~~~~~~~~~~~
+>> +
+>> +QEMU checks if the final (CPU) features, determined by given cpu model and
+>> +explicit feature adjustment of "+featureA/-featureB", can be supported or not.
+>> +It can produce feature not supported warning like
+>> +
+>> +  "warning: host doesn't support requested feature: CPUID.07H:EBX.intel-pt [bit 25]"
+>> +
+>> +It can also produce warning like
+>> +
+>> +  "warning: TDX forcibly sets the feature: CPUID.80000007H:EDX.invtsc [bit 8]"
+>> +
+>> +if the fixed-1 feature is requested to be disabled explicitly. This is newly
+>> +added to QEMU for TDX because TDX has fixed-1 features that are forcibly enabled
+>> +by TDX module and VMM cannot disable them.
+> 
+> This is where I'm wondering if libvirt has anything to be concerned
+> about. Possibly when libvirt queries the actual CPUID after launching
+> the guest it will just "do the right thing" ? Wondering if there's any
+> need for libvirt to be aware of CPUID restrictions before that point
+> though ?
 > 
 > 
->> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
->> index 0d30506c2021..4128f27d6b64 100644
->> --- a/target/i386/kvm/tdx.c
->> +++ b/target/i386/kvm/tdx.c
->> @@ -16,6 +16,7 @@
->>   #include "qapi/error.h"
->>   #include "qom/object_interfaces.h"
->>   #include "crypto/hash.h"
->> +#include "system/kvm_int.h"
->>   #include "system/runstate.h"
->>   #include "system/system.h"
->>   #include "exec/ramblock.h"
->> @@ -390,6 +391,13 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
->>           return -EINVAL;
->>       }
->>   
->> +    if (kvm_state->kernel_irqchip_split == ON_OFF_AUTO_AUTO ) {
+>> +
+>> +Launching a TD (TDX VM)
+>> +-----------------------
+>> +
+>> +To launch a TD, the necessary command line options are tdx-guest object and
+>> +split kernel-irqchip, as below:
+>> +
+>> +.. parsed-literal::
+>> +
+>> +    |qemu_system_x86| \\
+>> +        -object tdx-guest,id=tdx0 \\
+>> +        -machine ...,kernel-irqchip=split,confidential-guest-support=tdx0 \\
+>> +        -bios OVMF.fd \\
 > 
-> Nitpick, no need for a space before the ')' ...
+> I don't think we need to show 'kernel-irqchip=split' now that we "do the
+> right thing" by default
 > 
->> +        kvm_state->kernel_irqchip_split = ON_OFF_AUTO_ON;
->> +    } else if(kvm_state->kernel_irqchip_split != ON_OFF_AUTO_ON) {
 > 
-> ..and need a space between 'if' and '('
+> This surely also ought to include '-accel kvm', as IIUC there's no
+> TCG support for TDX.
+> 
+> And presumably '-cpu host', since QEMU's default 'qemu64' CPU model
+> is likely a terrible match for what TDX will force set.
+> 
+>> +
+>> +Restrictions
+>> +------------
+>> +
+>> + - kernel-irqchip must be split;
+> 
+> Can append
+> 
+>     "This is set by default for TDX guests if kernel-irqchip is left on
+>      its default 'auto' setting."
 
-Thanks for catching these coding style issue. Will fix them in the next 
-version.
+This and above feedback are all good. Accept them all and will update in 
+the next version.
 
->> +        error_setg(errp, "TDX VM requires kernel_irqchip to be split");
->> +        return -EINVAL;
->> +    }
+Thanks!
+
+>> +
+>> + - No readonly support for private memory;
+>> +
+>> + - No SMM support: SMM support requires manipulating the guest register states
+>> +   which is not allowed;
 >> +
 > 
-> Note for self - 'tdx_kvm_init' is called by 'confidential_guest_kvm_init',
-> which is called by 'kvm_arch_init', which is called by 'kvm_init' *before*
-> it processes "kvm_state->kernel_irqchip_split == ON_OFF_AUTO_AUTO" to set
-> the default. So this change is correctly taking priority over the default
-> behaviour.
-> 
->>       if (!tdx_caps) {
->>           r = get_tdx_capabilities(errp);
->>           if (r) {
->> -- 
->> 2.34.1
->>
 > 
 > With regards,
 > Daniel
