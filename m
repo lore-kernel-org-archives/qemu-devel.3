@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CFFC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 20:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D250C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 20:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Fev-0002qa-C7; Tue, 08 Apr 2025 16:35:01 -0400
+	id 1u2FjL-0004ky-Co; Tue, 08 Apr 2025 16:39:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1u2Fes-0002nX-SO; Tue, 08 Apr 2025 16:34:58 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1u2Fj7-0004i9-5f; Tue, 08 Apr 2025 16:39:24 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1u2Fek-0007MH-PA; Tue, 08 Apr 2025 16:34:58 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-abec8b750ebso1006855166b.0; 
- Tue, 08 Apr 2025 13:34:49 -0700 (PDT)
+ id 1u2Fiw-0007pD-4L; Tue, 08 Apr 2025 16:39:16 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ac289147833so1004860466b.2; 
+ Tue, 08 Apr 2025 13:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744144486; x=1744749286; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744144745; x=1744749545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0r0lG6OOLkNl8UFlSJdqVTWl2Z8Sc3pFCEDfh9aJP4U=;
- b=KXKtcFiTR0cmP+BLvQ+MbFGda4LuSfH6ut6JK74sQRQltaJkZM60YwjFmZ97LFtWzY
- YcIbAXxhJ6VTNICrsfjvDRC7kN4jhy708jNkDJ9JPdEnwmQyWNtJQ7oQrKDHx39qMYbH
- RgNV33Qn3Plpo9TYC0WHepW6S/27dngh/ofR5CRhSHCyXg/e0ekaOqavKs5QcOi8Qb5r
- LWaUaI8zz1ZFFS2RIL0kPx90Cl95ZBr6FdzX5nxmYLx4lV3TY2N5KVHfUFUGZpqLrxuq
- YXTmbIvCdm4+NC7wlHH/Aw9WhID748X6y25mXrJC4ZuSZy/wa8HBkBTy5IO1P5x/+duG
- 1V4w==
+ bh=IgUxJfhh3Ozt/b8ulQyeQIxejkkPVWsfOwlbE8S6q0o=;
+ b=VLuZDroMFPA1sgAG6e3R2kOY4JJbdUpt/PIx8saHkEMTxjLRVM98nUZinLARfyCmL+
+ C2fEuibhTLX/449A4Ez/zdRxgX+Ym9PBXSsXtepM8pDkEVBspTVQ6aTnBNckKm+cenpu
+ 7dGE8MUjPXcDYWT/f1LtdfaOKeGBmXsUS8D93Bfd0mkNO9rS6L0oCa/+C2Se/wUNuvfr
+ DIf9ucOje1/1ZG5onl0IP+khZ14TWK1g7n0c2sEEE7tOPlTzr1CT0qaRU/Y45J3knXXk
+ o7pDBDNlMZgUH8E9p0PH//xPb4FiHkE3MT3c1ur9dZKCDUkKQNgHXMzFCl9ZMJ1EYfeE
+ LwhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744144486; x=1744749286;
+ d=1e100.net; s=20230601; t=1744144745; x=1744749545;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0r0lG6OOLkNl8UFlSJdqVTWl2Z8Sc3pFCEDfh9aJP4U=;
- b=Q6qoDWteXUfAfqFh7HqhoBQajhG6PXB6KMqkNl906VRSd+93RGjGp5GsZdv4/ZTfwg
- Rohkh0ZHiByILSRsJQsOaTqfqfWFmRPFlUugJMM2MrU+2rIUe6zCEl0sL8TASsXgh+/1
- RkPrQXgKDJlnJ/POPQ3cKStXmqcj0w0JeCMKI+EqW7RFQY2AYVqXnb739vzoOn+oSFDl
- Y60DVWrboU3Zx48l5Yg1PfF2Is5Z4bBB9m75mQoIgMxrfGW41C6jbMNc+IRMv9nzs1IR
- UzeEiTMTWxPG5D+1uUhCZRRebLCxrtk2PtLMz4AeZGnjI2Ihhcjo+iSent6pNBrHZJDR
- HOMQ==
-X-Gm-Message-State: AOJu0YwFnwvh4OzRtvNShaV6OV3K4HeaZSByOItvdlADcVgTFlXzBiOU
- kY4SEQbgpV0RY5dgT/ja3kXPa2T5xTEuSrVqA92/+ZF3qKRzWoiIyOoTQw==
-X-Gm-Gg: ASbGncuuAJAh455xUBosd9Hbopd3fr2PCLVxqgreJoqatEgj2nBt2dhWhe4rc67JSkA
- 0IgvcRBBYZH/dhiHIDnvRhH80YRIEj4ITZttYl4/ahS7+POlGsApXwtSdbxDNPz32vV7xrcbBPn
- rZJN9BszTr6kEZT/WVjRF2hDHIwbt/KWvFo967fswdloJuX/FSOmQtmA4ZfmopMsAWcWtakM8NX
- mgA5anBArlkcm4LZR2ipiNdIV7odYJ2jGD1reJ8ge3KfAnJumMn8hqrQPWTvDoPOS0uzcaR30AJ
- WlyAKJwUDD3M3BBTFI4rPqUaKlaNuAa6cQDXscOjJfmBC+5Y3Q0h5hn6n52zl7TrwWYihbEvhtC
- uaTvPKhUgEofGC3DmVJQc6Au/u6u1RrkdVIDWnqIeYhwk129O4oLx
-X-Google-Smtp-Source: AGHT+IGFZIZR5ZwboCAXE/LKYj9mFHJlrrG06UPPM/bb8ASR1eS/dceKUt7eQN+5pc603lDXXXcBXg==
-X-Received: by 2002:a17:907:3f26:b0:ac7:c66a:4702 with SMTP id
- a640c23a62f3a-aca9b77305fmr49493966b.57.1744144485997; 
- Tue, 08 Apr 2025 13:34:45 -0700 (PDT)
+ bh=IgUxJfhh3Ozt/b8ulQyeQIxejkkPVWsfOwlbE8S6q0o=;
+ b=LC/5dUXDPnuH803OY7q/JT8pTiDQN+zMoVF0mMsREopKZfwMBWESTvuwCOhZOsPPZk
+ XIlQcPFS3Oeyo9u+FMNkBRCkxMr8pxpAAB03l+NJ5j57e7w+fV052r6zCfUCkwOtmX2B
+ rQvgKYEdgjuRT6t1E0uLcCbZL7ZqSUFUZqRi4UdY1V5FlSt52PrHC6s8FCWsK4opnwst
+ e2qWiLroGSN9rEDOWupvw3T/7tBEYWj/CwwSc9KmrntY7EGyXOh9bgBC9NuIOKeERANQ
+ kpOOOxSx1eq5EFP8n5mPxdeF2Grax75k3xUgjOrICLccVvZRMSD1WW64I0E6S+S4QCVR
+ 5OlA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcWUpIInWwaW9cYgm4L2GookkchkSt6s5Y5kNgV/NdwJjNYNT3BULyfJ8G2AUHQ7tXGYB/vO8nGxHtgA==@nongnu.org,
+ AJvYcCWlsb5lkIeg5jFC5ZoQDiSxDbl4Ym0enwe6qQckwaraCOU5fYU9lqAUS5oX2tDCIm+O++pRITT/0Q==@nongnu.org
+X-Gm-Message-State: AOJu0YzlVRhUoF2D+94EF9RWi2FXO9Crp1Vxx8hZhqH4NIA8c/zABcnb
+ T2B0pxox/tBirZmd/z9WZ72I1vCHgDYptA93f1ZfwHmzjFjIDqa4
+X-Gm-Gg: ASbGncsgaP2WZJkx5NA7D4X9YZBAgXlyPxGx4g3J/XI3FcPn8+k1EeFAad5LNhLYIuN
+ 0ogaK/pydJnNJ5QeDY4aSQcvXU+fZfXsG5DqjkVmjmBUEVgPI8+PlYpW3UNHmLpKr/HWLAJLFyN
+ WEcrY0dr7oYX3qNVRvcco9DCoB2LJI5FlcmLRMfPWiqU2nRQtEdCIQcg3ziZ8pVmzsMHDHgnBMd
+ Cznlrpid+D9ZFjZK4Q4W6rCgwC/wu2bnO7WUt45MflIk5OgCz7I5BiuB6BBh/7/b4//6avBRoyT
+ 4Ejxj83vhfMjECXr+qTaEhGauSzxj0hCfEDg+DOYBQjDvoeepPeSKCwjK7vl01YGad639u8CW8n
+ RW8a4iAtRMk2s9W0eWV+Sclt7EZI3beKQmLSRqrp/yNp/mpDaoW+R
+X-Google-Smtp-Source: AGHT+IGsWTrv1+Ve9DqPSFLNnrJmJwd3ydzfWZBK7nf0ICkh/hYA5VgQAHxNcVtcY/ptu8k3GHxKtA==
+X-Received: by 2002:a17:907:6d11:b0:ac2:b1e2:4b85 with SMTP id
+ a640c23a62f3a-aca9d5d255cmr10332566b.3.1744144744931; 
+ Tue, 08 Apr 2025 13:39:04 -0700 (PDT)
 Received: from ?IPv6:::1?
  (dynamic-2a02-3100-291c-6e00-b87f-49d2-cee7-5562.310.pool.telefonica.de.
  [2a02:3100:291c:6e00:b87f:49d2:cee7:5562])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aca936cec1dsm82259666b.54.2025.04.08.13.34.45
+ a640c23a62f3a-ac7bfea16aesm971237566b.70.2025.04.08.13.39.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Apr 2025 13:34:45 -0700 (PDT)
-Date: Tue, 08 Apr 2025 20:34:42 +0000
+ Tue, 08 Apr 2025 13:39:04 -0700 (PDT)
+Date: Tue, 08 Apr 2025 20:39:01 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-CC: qemu-rust@nongnu.org
-Subject: Re: [PATCH preview 0/3] rust: update build system for Meson 1.8.0
-In-Reply-To: <20250405100603.253421-1-pbonzini@redhat.com>
-References: <20250405100603.253421-1-pbonzini@redhat.com>
-Message-ID: <0B9AB608-D9FE-4819-87DB-8B00F222F1C7@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org, 
+ Guenter Roeck <linux@roeck-us.net>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH-for-10.0 0/3] More imx8mp-evk improvements
+In-Reply-To: <49539ce7-d36e-42f1-9ff2-771c893e5ce3@linaro.org>
+References: <20250405214900.7114-1-shentey@gmail.com>
+ <49539ce7-d36e-42f1-9ff2-771c893e5ce3@linaro.org>
+Message-ID: <36A1B58F-535F-4129-A74C-EE8C467B91BA@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +109,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 5=2E April 2025 10:06:00 UTC schrieb Paolo Bonzini <pbonzini@redhat=2Ec=
-om>:
->Meson 1=2E7=2E0 and 1=2E8=2E0 include improved support for Rust, namely:
->* support for "objects" in Rust executables
->* support for doctest targets
+Am 8=2E April 2025 18:57:45 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <phi=
+lmd@linaro=2Eorg>:
+>On 5/4/25 23:48, Bernhard Beschow wrote:
+>
+>> Guenter Roeck (2):
+>>    hw/arm/imx8mp-evk: Remove unimplemented cpu-idle-states properties
+>>      from devicetree
+>>    hw/arm/imx8mp-evk: Remove unimplemented nxp,imx8mp-fspi node from
+>>      devicetree
+>
+>Patches 2 & 3 queued, thanks!
 
-Using Meson 1=2E7=2E2 (shipped with my distro) I didn't succeed with eithe=
-r of these=2E If just applying the first patch with --enable-modules I get =
-linker errors again=2E With all patches applied, "doctest" isn't recognized=
-=2E Is this perhaps 1=2E8-only material?
+Thanks! This is a real quality of life improvement=2E
 
 Best regards,
-Bernhard
-
->
->Use it to remove BQL-related hacks, fix --enable-modules --enable-rust
->and also simplify the Meson logic for building the qemu-api crate
->(which may help splitting the crate, too)=2E
->
->Meson also supports clippy and rustdoc but there are some bugs in the
->prerelease=2E  I'll try to get them fixed before 1=2E8=2E0=2E
->
->Paolo
->
->Paolo Bonzini (3):
->  rust: use "objects" for Rust executables as well
->  rust: add qemu-api doctests to "meson test"
->  rust: cell: remove support for running doctests with "cargo test --doc"
->
-> docs/devel/rust=2Erst        |  2 --
-> =2Egitlab-ci=2Ed/buildtest=2Eyml |  5 -----
-> rust/qemu-api/meson=2Ebuild  | 35 +++++++++++++++--------------------
-> rust/qemu-api/src/cell=2Ers  | 22 +++++++++-------------
-> 4 files changed, 24 insertions(+), 40 deletions(-)
->
+Bermhard
 
