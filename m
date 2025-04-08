@@ -4,147 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E2B8C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 20:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72FD9C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 20:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Fzj-0000j4-QL; Tue, 08 Apr 2025 16:56:31 -0400
+	id 1u2G1j-0001XY-HW; Tue, 08 Apr 2025 16:58:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u2FzZ-0000iR-Ar
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 16:56:22 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1u2FzW-0001G3-H7
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 16:56:21 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-736c1138ae5so5992129b3a.3
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 13:56:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744145776; x=1744750576; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=4wPjylEOB6efWwaHu6xYakTjsuoHO/jiNAhxLNjo6OU=;
- b=Ft4PtI9uQY861ftMmVIhgdGTPDSOuNnsWXrGEL/D4f+PeAv81rB3oiV79AJci/eFGd
- sqAZwVRw3C+K4PiiA2pcuuRCwUIBH3edh/28aAFWQvtu98a91zrqWdkj9UvWiKBZeQAu
- 7W3YCsHAgnoRdgwPcBdN8U7A6JSRlEToqQwqXNAwyKOf4+T9r9ee2kETq3kRpbO1HFbt
- F4maYjWCuL/lnJyU/dZEgOXrlqhq+fIO9+d9bcvgaOSpPk0A8BqPlF4LOJjF7S74USLa
- ctRS/4vZ+xfwWv9qKVqMc3A/JkhEMpIyzf737GY8uCYyhdgbIl5VTRuU+/83zJHTS0Wz
- ppIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744145776; x=1744750576;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4wPjylEOB6efWwaHu6xYakTjsuoHO/jiNAhxLNjo6OU=;
- b=jpnKTns/kjo9VONcvb4Kx2/FmrXSFwbj45GNKaXzOkN3tzMqvBAjGTVa98CFMPhw2s
- KzA/bQDnVtDsEh/fmgeSxuLavpgw6yTCrG0gpnn2vJug5N8KT6k0KJBEyHZH153ybs35
- tvzOThAABNkORuxu9HYOoabSnh7ZQlvoaQlqQpHmj5lZGoeoWPXz2zvoHSXvnlHc8OSZ
- 5PuRc880gbzfSuLZFJZS7AHrR0rbIBnqKxnrP2v7+sheJM+ppU72M+pFNdAIblVk+CwS
- 78K8olROtLmlhEEUaY4UxS3KYoHbhSRFJnIETeiXJylO3R5Q/yAUvhYoR3aKUcjOhopF
- YoXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhCOI83T6gX9fDlW8hleXlvWSu/MHTZioM62q37sIvnrqo+wlDdrM2icFXyk/2f+S0XC3LjCGzX6qx@nongnu.org
-X-Gm-Message-State: AOJu0YzaNLU7RCLMNGSGqWzjNjNR1+h3H3QmfFcoFuEFsGRis1xpuUe8
- eHN+qy7YCaMWXLHDDAwMfJedFcpzCbg2qcXQoE+52KbUvg24/qcy
-X-Gm-Gg: ASbGncvRZwXi+wW9YcpbW6hQLJvXIxBa3TilBzl029jFkxSOreaaFBqkhEtjR3wGTLW
- jXsXC5dqKo8WASPWSYcMtU+QPcNCXiJt1H0uONi6YmjinTJC4Kv3T8pP004VGy+6nZT4pS0GK2M
- b1/+owWOvrkkQelf6H0BQpW9zG39UtVC/Dqhm8ruo9/LYfZBpT+mf4lTojrBdy8xCfwZok+8h+w
- 2P1pw0btcorJQDGw8/3W3Xu79UuMtGqbcSaClXvyO7rLmCFlnl+hSzDFxRxgSXoZ3apkae7TC5h
- CXyvhrmhAocUN5+zJKZdxRSQ1m1Bz02AMmMq+7/NQvYMrqr+sez700FQ2GuY2vjn7vD30Ad5RbY
- QrlGqTfnHDT8nxo1LGkVZ+6G8O64J
-X-Google-Smtp-Source: AGHT+IH8vqSnJM3W9eS4HpwnxB7lI7/WjpKuhSiIZjsD/KgDu6Z5VZ/G67Zdld75fXWwG0igt+c5rw==
-X-Received: by 2002:a05:6a00:39a5:b0:735:d89c:4b8e with SMTP id
- d2e1a72fcca58-73bae496cf1mr424177b3a.5.1744145775920; 
- Tue, 08 Apr 2025 13:56:15 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
- ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-af9bc41af7csm9538000a12.76.2025.04.08.13.56.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Apr 2025 13:56:15 -0700 (PDT)
-Message-ID: <92fa62a8-88b5-40c0-947b-c35780497a0f@roeck-us.net>
-Date: Tue, 8 Apr 2025 13:56:14 -0700
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u2G1g-0001PN-OA
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 16:58:33 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u2G1d-0001SH-JG
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 16:58:32 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D1DFE4E601B;
+ Tue, 08 Apr 2025 22:58:21 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 5cz7nyXsV0tu; Tue,  8 Apr 2025 22:58:19 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C67884E6005; Tue, 08 Apr 2025 22:58:19 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C469474577C;
+ Tue, 08 Apr 2025 22:58:19 +0200 (CEST)
+Date: Tue, 8 Apr 2025 22:58:19 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+cc: qemu-devel@nongnu.org, Volker Ruemelin <vr_qemu@t-online.de>, 
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH] alsaaudio: Set try-poll to false by default
+In-Reply-To: <2024817.RjeAs2xCtm@silver>
+Message-ID: <164f41d0-8189-e0b7-21aa-ac1a6a4e154b@eik.bme.hu>
+References: <20250316002046.D066A4E6004@zero.eik.bme.hu>
+ <37909074.vkC8U9mzk0@silver>
+ <abecc55b-f032-03e3-a9f3-628b1f8f7e5d@eik.bme.hu> <2024817.RjeAs2xCtm@silver>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Add property to support writing ERSTBA in high-low
- order
-To: Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20250405140002.3537411-1-linux@roeck-us.net>
- <ae8cd367-8580-4476-9a75-3fa4f7aa2536@linaro.org>
- <7ed5d213-9429-45c8-bbf3-6f3f841a2299@roeck-us.net>
- <7C5A41A1-38EE-4D22-8F84-6A5A3A2BDD82@gmail.com>
- <42a82455-7fa1-4890-a9e8-690fec3433c3@roeck-us.net>
- <9239BBD2-DCB8-4B97-9EAA-FFB06CAB660C@gmail.com>
- <89b70bdd-00e3-46ee-8810-099da032f485@roeck-us.net>
- <C5389B31-E7B2-43E0-A10D-368571DAD081@gmail.com>
- <cd6dafe1-f291-46f4-8fb1-7555dc6a60db@roeck-us.net>
- <6A2167BC-910A-4801-8FB0-24C114EF5181@gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <6A2167BC-910A-4801-8FB0-24C114EF5181@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Content-Type: multipart/mixed;
+ boundary="3866299591-708742683-1744145899=:27322"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,52 +68,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/25 12:57, Bernhard Beschow wrote:
-> 
-> 
-> Am 8. April 2025 16:09:58 UTC schrieb Guenter Roeck <linux@roeck-us.net>:
->> On 4/6/25 11:08, Bernhard Beschow wrote:
->> [ .. ]
->>
->>>>> Yeah, it works with Buildroot as described in the handbook. When I append `-netdev user,id=net0 -device virtio-net-pci,netdev=net0` on the cli I can `wget http://www.google.com` successfully. When I omit it there is no network connectivity. This is with a 6.6.23 vendor kernel.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-708742683-1744145899=:27322
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 8 Apr 2025, Christian Schoenebeck wrote:
+> On Friday, April 4, 2025 1:34:27 PM CEST BALATON Zoltan wrote:
+>> On Fri, 4 Apr 2025, Christian Schoenebeck wrote:
+>>> On Monday, March 31, 2025 3:05:24 PM CEST BALATON Zoltan wrote:
+>>>> On Sun, 23 Mar 2025, Christian Schoenebeck wrote:
+>>>>> On Sunday, March 16, 2025 1:20:46 AM CET BALATON Zoltan wrote:
+>>>>>> Quoting Volker Rümelin: "try-poll=on tells the ALSA backend to try to
+>>>>>> use an event loop instead of the audio timer. This works most of the
+>>>>>> time. But the poll event handler in the ALSA backend has a bug. For
+>>>>>> example, if the guest can't provide enough audio frames in time, the
+>>>>>> ALSA buffer is only partly full and the event handler will be called
+>>>>>> again and again on every iteration of the main loop. This increases
+>>>>>> the processor load and the guest has less processor time to provide
+>>>>>> new audio frames in time. I have two examples where a guest can't
+>>>>>> recover from this situation and the guest seems to hang."
+>>>>>>
+>>>>>> One reproducer I've found is booting MorphOS demo iso on
+>>>>>> qemu-system-ppc -machine pegasos2 -audio alsa which should play a
+>>>>>> startup sound but instead it freezes. Even when it does not hang it
+>>>>>> plays choppy sound. Volker suggested using command line to set
+>>>>>> try-poll=off saying: "The try-poll=off arguments are typically
+>>>>>> necessary, because the alsa backend has a design issue with
+>>>>>> try-poll=on. If the guest can't provide enough audio frames, it's
+>>>>>> really unhelpful to ask for new audio frames on every main loop
+>>>>>> iteration until the guest can provide enough audio frames. Timer based
+>>>>>> playback doesn't have that problem."
+>>>>>>
+>>>>>> But users cannot easily find this option and having a non-working
+>>>>>> default is really unhelpful so to make life easier just set it to
+>>>>>> false by default which works until the issue with the alsa backend can
+>>>>>> be fixed.
+>>>>>>
+>>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>>>> ---
+>>>>>> This fixes my issue but if somebody has a better fix I'm open to that
+>>>>>> too.
+>>>>>>
+>>>>>>  audio/alsaaudio.c | 2 +-
+>>>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+>>>>>> index cacae1ea59..9b6c01c0ef 100644
+>>>>>> --- a/audio/alsaaudio.c
+>>>>>> +++ b/audio/alsaaudio.c
+>>>>>> @@ -899,7 +899,7 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+>>>>>>  static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
+>>>>>>  {
+>>>>>>      if (!apdo->has_try_poll) {
+>>>>>> -        apdo->try_poll = true;
+>>>>>> +        apdo->try_poll = false;
+>>>>>>          apdo->has_try_poll = true;
+>>>>>>      }
+>>>>>>  }
+>>>>>>
 >>>>>
+>>>>> Correct me if I am wrong, but AFAICS if polling is not used then no state
+>>>>> changes would be handled, no? At least I don't see any snd_pcm_state() call
+>>>>> outside of alsa_poll_handler().
 >>>>
->>>> I had no luck with virtio-net-pci. virtio-pci works for me, but I can not get real PCI devices
->>>> (such as nvme or scsi adapters) to work.
+>>>> I have no idea but this fixes the problem (and does the same that can be
+>>>> also done from command line but nobody can find that command line option)
+>>>> so unless somebody has a better idea could this be merged as a fix for
+>>>> now?
 >>>
->>> I now tested with the latest Buildroot recipe, changing to upstream kernel version 6.14 and using the defconfig. The `wget` command still works for me with virtio-net-pci. However, I can confirm that I need your xhci patches for the usb storage device to be detected.
->>>
+>>> Well, I understand that if fixes the misbehaviour you encountered. But how
+>>> helpful would it be if it then breaks behaviour for other people instead?
 >>
->> Following up on this, my problem is that adding "-netdev user,id=net0 -device virtio-net-pci,netdev=net0"
->> to the command line adds a _second_ Ethernet interface, in addition to the default one.
->> This results in
->> 	qemu-system-arm: warning: nic imx.enet.0 has no peer
->> reported when qemu starts.
-> 
-> I get this too when using virtio-net-pci successfully.
-> 
+>> What behaviour would it break and how?
+>
+> There are only a bunch of ALSA states handled right now in the QEMU Alsa
+> driver (see alsa_poll_handler()):
+>
+>    state = snd_pcm_state (hlp->handle);
+>    switch (state) {
+>    case SND_PCM_STATE_SETUP:
+>        alsa_recover (hlp->handle);
+>        break;
+>
+>    case SND_PCM_STATE_XRUN:
+>        alsa_recover (hlp->handle);
+>        break;
+>
+>    case SND_PCM_STATE_SUSPENDED:
+>        alsa_resume (hlp->handle);
+>        break;
+>
+>    case SND_PCM_STATE_PREPARED:
+>        audio_run(hlp->s, "alsa run (prepared)");
+>        break;
+>
+>    case SND_PCM_STATE_RUNNING:
+>        audio_run(hlp->s, "alsa run (running)");
+>        break;
+>
+> For instance in poll mode it recovers in case of an xrun, which happens on
+> audio output if the audio output data was not delivered by the application in
+> time.
+>
+> The other case is when the system was suspended (standby). It should also
+> recover the audio session here.
+>
+> Now I haven't tested whether these would work in callback mode right now, but
+> looking at the code suggests that they might not.
+>
+>>> I think it would be better to add a 2nd patch that would handle state changes
+>>> in callback mode. That would satisfy both groups of people. AFAICS
+>>> snd_pcm_state() can be called both in polling mode and callback mode.
 >>
->> I can not get that second interface to work, probably because of some userspace issue.
->>
->> Anyway, I never see any interrupts on the virtual PCI interface. From /proc/interrupts:
->>
->> 277:          0  PCI-MSI 524288 Edge      virtio0-config
->> 278:          0  PCI-MSI 524289 Edge      virtio0-input.0
->> 279:          0  PCI-MSI 524290 Edge      virtio0-output.0
-> 
-> I get:
-> 
-> 206:          0          0          0          0  PCI-MSI 524288 Edge      virtio0-config
-> 207:          3          0          0          0  PCI-MSI 524289 Edge      virtio0-input.0
-> 208:          8          0          0          0  PCI-MSI 524290 Edge      virtio0-output.0
-> 
-> Note that I'm using four CPUs, i.e. `-smp 4`.
-> 
+>> I can't do that because I don't quite know neither alsa nor audio in QEMU
+>> so I have no idea what to do. Can you give more clues?
+>
+> Well, as a starting point you might try whether these cases described above
+> would still work in callback mode. Maybe it is even working, who knows.
 
-I think I found it. Previously I needed to add .psci_conduit to struct arm_boot_info.
-No idea why; without it, the kernel would crash almost immediately. Now it seems
-that _adding_ that line causes the PCIe hiccup. Oh well :-(. Sorry for the noise.
+I did some quick test with running MorphOS demo iso with pegasos2 which 
+plays a startup sound. Without this patch the sound is choppy when using 
+alsa backend but correct with the patch applied. I don't know how to test 
+underruns or overruns but since the sound is not choppy with this patch I 
+think this is handled better than in poll mode. When stopping and 
+restarting QEMU with stop/cont in monitor while sound is playing I once 
+got this error after stopping:
+alsa: Failed to write 1648 frames from 0x55eb1fe09500
+alsa: Reason: File descriptor in bad state
+but other than this error sound seems to stop and continue and did not get 
+more errors on subsequent start stop. I don't know if this is enough 
+testing or what this means but that's the best I could do for now. I think 
+since sound is very much broken without this patch this is an improvement 
+in any case. If some problem is discovered later it can be fixed but at 
+least this makes it usable with alsa without extra command line tweaking 
+as the default is completly unusable.
 
-Guenter
-
+Regards,
+BALATON Zoltan
+--3866299591-708742683-1744145899=:27322--
 
