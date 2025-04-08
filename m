@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA76C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 18:56:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF6E0C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 18:56:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2E7I-0004bc-S7; Tue, 08 Apr 2025 14:56:12 -0400
+	id 1u2E7B-0004ZI-2i; Tue, 08 Apr 2025 14:56:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2E7H-0004bH-MR
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 14:56:11 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2E74-0004Yn-MS
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 14:55:58 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2E7C-0004FY-PN
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 14:56:11 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cfe574976so41267685e9.1
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 11:56:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2E72-0004DE-7k
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 14:55:58 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3965c995151so3000197f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 11:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744138564; x=1744743364; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744138554; x=1744743354; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rlcZi+8rtV1kSz292TgUOQ9wapPONbfOMzllPxUmecE=;
- b=kGK64M4wXfqtCi/ic0X0ieV2uPfX7j6Sb05H/LR9iDzNZDAqYKx8uOTgk17tukink0
- fQU/sf0UGmY+2Z9dtGPm6UQUZtB2lHGaUIHAR+hchA+5/3WxZTaeM883MNFXX9e1MjzN
- XeOC5fF8QHRvBIouQVOi97/wBSLvi8MM3SlAf6e1QucB93wTXeWfLp4P4Y/e78WJs1M8
- h6M2SUeEiYfqCwWTfGf1Np6zJ+9tQJjQV3LqNP4tEEn9DZ0unYo3moRA2qUppRc/y+XA
- ICZaKFibItoKw+AVfmRN+Khsc2QEl97NNXWidaqd8hSILlTYIo0Hg2DUHVt+9cqXe8c3
- lRBw==
+ bh=GGo0+5f/HLAe67bUnyFSuZNNk2QAFIW9Hf13M3Fh2as=;
+ b=CQ41GpPe57C4/TVDZA/mBMuzT8JxjzIEoTlG/fvFPVSeXVkT6pQO4KItMo3i5q9Ccj
+ LjKo/+1VtFAHU5rlhlRStkiIl+0DZ6TgayPeOQD90C8sGbQaLVuWkB6AS2MPXQSvcIqO
+ utmsvOL+wUwLkpVWVEZC8Qk+6+yiKKfXEI9n6GcNU2l0oH7vXH/LYYHar6HJdrdsiWKW
+ bBlIaYVBBq+zlIeHZL65TaFL3UGjJ3Y+kwTtKb4IpiSuzdSJlvrppa07jNUN9mGNBotd
+ hnmZDK0B1HkVKS5uJpdg7YVQHhPKjXsoKf8G24c00hICk7OxQ/OPJuUZVrkMe32M1fHq
+ uU6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744138564; x=1744743364;
+ d=1e100.net; s=20230601; t=1744138554; x=1744743354;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rlcZi+8rtV1kSz292TgUOQ9wapPONbfOMzllPxUmecE=;
- b=PTPXTLnPHpGap1zxGnWSl0k1FBL51vYj2EBBbpfVLce6bOzI0IEK0R2OaooHIuXtEs
- nwQotyBV0qhxIEubTf9hXqBVub38clW6EeuvLLgeJ1vy8/a9I2x56QN6NzvKTCN6WOyA
- xH3CJXHSUK3Btgkh2+iYGp2rj11yvcguzw00hZ3s5pr1+1Bhrd3s8CRXRl6B2rVkoh3I
- OOBV8Vp6JheCb8kSJbrr+xrQU3zLZHbsRtufSMkWcVZvQbtger5e0FK7rHVcNpCF1ipJ
- PE8B3thQ9F1xtaQPBVhQfwsUcZfyeTL5jMduM1uj4pROIWTsU4e1g8ZuHQB2DLJ/DxG4
- I1vA==
-X-Gm-Message-State: AOJu0YzSIcaU1Qz/f65Tdi+dWfEXgCNMYbMVB03no/+iJgCTg2YOKt+c
- Oa4HNUMyDj7yYKrDMiIwpVXRAFZ/TmVtu5dN8euTZlSQmw/ZSU5apnMmlJS5L9WO1fdkWRU/Fd+
- w8gE=
-X-Gm-Gg: ASbGncs2jnsN+0SQLRox0Y3BqXDIViZYk72XCbrWKxfzGBsqBV8nDMtgdvDKtJXbA8D
- RRRC4OiTUAZ9IVMy+EUoRfo0OrEysUVai6gzi6Hlh4Un1Zaizv9BbOyiNju2UdRZ6AuLVq4Gx4/
- x2Fp64OnQkVQ0ZhvDo+DvCaWUmPcJjiFLkXjXlQSZEyhuj1ze94Ol+CGb4Hi39OW5kejDaSiux9
- +Z0euypXkegOTuC5ut+eJKKNCopN6SDKet5hhskJ8pO8qwOkSjkcYe8McKZ/oxLcRQcJ1I8aVll
- SuXIDk3Olz7xim/jc641CgB0db6SZCi7KGthD+dAbnV0rSvGOl3EsY8wNOtP9XTX3SzQsCm76hU
- m7y4epOwMMGGQqcriIsQ=
-X-Google-Smtp-Source: AGHT+IGq24kcHZgqINDMuBeiG6fTbqbOg8pXcDHDRQvuZjhxd6v9FwMtZ14NAp9jAXlTeALTdMUwhQ==
-X-Received: by 2002:a05:600c:c08:b0:43c:e6d1:efe7 with SMTP id
- 5b1f17b1804b1-43f1ed4b44cmr1946615e9.26.1744138564254; 
- Tue, 08 Apr 2025 11:56:04 -0700 (PDT)
+ bh=GGo0+5f/HLAe67bUnyFSuZNNk2QAFIW9Hf13M3Fh2as=;
+ b=Y+pN3ciFTxDk1E4UUjE8MnJED8253csgr1Zk9w4qverwTZAf7yqej65rVOYrpRlo2w
+ 2HwfHqp0BeSksUelmpDTgiS4LwIpplPNklthhTK6MI71KBCqGQYPHyCNwUFg7+hrto1z
+ Aq7r/+L/KN6BeFY77I5UMqhamouQCVfAHXUQzUj5R8Tjmeee8OAX6l8KsLEbxkAH1WaC
+ 1OWmumQPwXQ+h5jN1VrTKDqpFyNTww9d7KvTLhJEs006+emliFYjZdPe5PpNzNqmlnN2
+ EM6RPj7VsKsuzEsNY003lj/fisAcqt0ZcKIQwbTNnp/7266R16JW/+7jbOHpXlrXsQh6
+ iMGA==
+X-Gm-Message-State: AOJu0Yzk++RhquF4It8gN8vFImUgbl8a1guakQ1rdANLKNZd9zUK2vsF
+ B8o85TywD0df+O9nSmkSuI13EfoKcORWgwLlsrbNr09LrxgkTQLMBhsSLMEbAqXjQLp76B/OtGj
+ JTdI=
+X-Gm-Gg: ASbGnctyXAwNtL/Dnw9ciSX9gtOpb1/cDdaSf3pfT2OzKTEKni83axKQkZTr7m2QD2c
+ y2sHFPQxVdQ7nCMUM3GCF9qIRbr4F4eK9cXXxWwedb5FETzrn/Oj++pdAgc/qhJ20WG41NLyAxr
+ pgxyHrxoxdpFR2zn1p6GLpgD4ukZyt/SlevpNu09gOaWPVU/RkVv436hqH/HqmIxJIwRaqwW8CC
+ w9/0q4GZb2AqxKZjPaWeSCOw0RUy8RsDPvG4DLdW4LLigxYQ7dtPf5+6nnWC05yRpDDlHIOsjck
+ wWTcxYa3I0zRzFMMLjdQX1/Jen+ryDOA/HvdJ4redBbEDkzdR01CBU2erg/n+BDxLeceEPRn1d6
+ ZnMbXpWPhYcoyMpR0spffel5YD5X1XQ==
+X-Google-Smtp-Source: AGHT+IGCAtkpDt5w9hFPYZ1nAPjNJc0FSyDsi0b9c3LqV4P54gNKhipgPzy0E/9b/vZi/IDlPOonVA==
+X-Received: by 2002:a05:6000:1863:b0:39c:12ce:67d with SMTP id
+ ffacd0b85a97d-39d87aa1cc0mr292951f8f.9.1744138553973; 
+ Tue, 08 Apr 2025 11:55:53 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b816csm15760639f8f.57.2025.04.08.11.56.02
+ 5b1f17b1804b1-43ec1f27a55sm173079115e9.2.2025.04.08.11.55.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 08 Apr 2025 11:56:03 -0700 (PDT)
+ Tue, 08 Apr 2025 11:55:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>, Bernhard Beschow <shentey@gmail.com>,
+Cc: Zhang Chen <zhangckid@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 5/8] hw/arm/imx8mp-evk: Remove unimplemented cpu-idle-states
- properties from devicetree
-Date: Tue,  8 Apr 2025 20:55:35 +0200
-Message-ID: <20250408185538.85538-6-philmd@linaro.org>
+Subject: [PULL 3/8] docs/arm: Add apple HVF host for supported guest CPU type
+Date: Tue,  8 Apr 2025 20:55:33 +0200
+Message-ID: <20250408185538.85538-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250408185538.85538-1-philmd@linaro.org>
 References: <20250408185538.85538-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,90 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Zhang Chen <zhangckid@gmail.com>
 
-The cpu-idle-states property causes a hard boot hang. Rather than documenting
-the workaround, perform the removal from the devicetree automatically.
+In my test, latest QEMU already support Apple HVF for -cpu host and max.
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-[Bernhard: split patch, update documentation, adapt commit message]
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20250405214900.7114-3-shentey@gmail.com>
+From guest VM lscpu:
+
+Architecture:             aarch64
+  CPU op-mode(s):         64-bit
+  Byte Order:             Little Endian
+CPU(s):                   11
+  On-line CPU(s) list:    0-10
+Vendor ID:                Apple
+  Model name:             -
+    Model:                0
+    Thread(s) per core:   1
+    Core(s) per socket:   11
+    Socket(s):            1
+    Stepping:             0x0
+    BogoMIPS:             48.00
+    Flags:                fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asim
+                          dfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint
+
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20250401083102.72845-1-zhangckid@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/system/arm/imx8mp-evk.rst | 12 ++----------
- hw/arm/imx8mp-evk.c            | 14 ++++++++++++++
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ docs/system/arm/virt.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index 00527b0cbed..b2f7d29ade5 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -35,7 +35,7 @@ Direct Linux Kernel Boot
+diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+index adf446c0a29..6a719b95863 100644
+--- a/docs/system/arm/virt.rst
++++ b/docs/system/arm/virt.rst
+@@ -70,11 +70,11 @@ Supported guest CPU types:
+ - ``cortex-a76`` (64-bit)
+ - ``cortex-a710`` (64-bit)
+ - ``a64fx`` (64-bit)
+-- ``host`` (with KVM only)
++- ``host`` (with KVM and HVF only)
+ - ``neoverse-n1`` (64-bit)
+ - ``neoverse-v1`` (64-bit)
+ - ``neoverse-n2`` (64-bit)
+-- ``max`` (same as ``host`` for KVM; best possible emulation with TCG)
++- ``max`` (same as ``host`` for KVM and HVF; best possible emulation with TCG)
  
- Probably the easiest way to get started with a whole Linux system on the machine
- is to generate an image with Buildroot. Version 2024.11.1 is tested at the time
--of writing and involves three steps. First run the following commands in the
-+of writing and involves two steps. First run the following commands in the
- toplevel directory of the Buildroot source tree:
- 
- .. code-block:: bash
-@@ -50,14 +50,6 @@ it and resize the SD card image to a power of two:
- 
-   $ qemu-img resize sdcard.img 256M
- 
--Finally, the device tree needs to be patched with the following commands which
--will remove the ``cpu-idle-states`` properties from CPU nodes:
--
--.. code-block:: bash
--
--  $ dtc imx8mp-evk.dtb | sed '/cpu-idle-states/d' > imx8mp-evk-patched.dts
--  $ dtc imx8mp-evk-patched.dts -o imx8mp-evk-patched.dtb
--
- Now that everything is prepared the machine can be started as follows:
- 
- .. code-block:: bash
-@@ -65,6 +57,6 @@ Now that everything is prepared the machine can be started as follows:
-   $ qemu-system-aarch64 -M imx8mp-evk -smp 4 -m 3G \
-       -display none -serial null -serial stdio \
-       -kernel Image \
--      -dtb imx8mp-evk-patched.dtb \
-+      -dtb imx8mp-evk.dtb \
-       -append "root=/dev/mmcblk2p2" \
-       -drive file=sdcard.img,if=sd,bus=2,format=raw,id=mmcblk2
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index f17d5db466d..3bbf2bfbea3 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -15,6 +15,19 @@
- #include "system/qtest.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include <libfdt.h>
-+
-+static void imx8mp_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
-+{
-+    int offset;
-+
-+    /* Remove cpu-idle-states property from CPU nodes */
-+    offset = fdt_node_offset_by_compatible(fdt, -1, "arm,cortex-a53");
-+    while (offset >= 0) {
-+        fdt_nop_property(fdt, offset, "cpu-idle-states");
-+        offset = fdt_node_offset_by_compatible(fdt, offset, "arm,cortex-a53");
-+    }
-+}
- 
- static void imx8mp_evk_init(MachineState *machine)
- {
-@@ -32,6 +45,7 @@ static void imx8mp_evk_init(MachineState *machine)
-         .board_id = -1,
-         .ram_size = machine->ram_size,
-         .psci_conduit = QEMU_PSCI_CONDUIT_SMC,
-+        .modify_dtb = imx8mp_evk_modify_dtb,
-     };
- 
-     s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
+ Note that the default is ``cortex-a15``, so for an AArch64 guest you must
+ specify a CPU type.
 -- 
 2.47.1
 
