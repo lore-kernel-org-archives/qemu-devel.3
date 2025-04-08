@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F430C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 19:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDEBBC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 19:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2EIt-0005xm-BF; Tue, 08 Apr 2025 15:08:11 -0400
+	id 1u2EvX-0004rr-Et; Tue, 08 Apr 2025 15:48:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2EIr-0005xW-Hd
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 15:08:09 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u2EvS-0004rA-4E
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 15:48:02 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2EIp-0005d9-1e
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 15:08:08 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5efe8d9eb1eso22194a12.0
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 12:08:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u2EvL-0002NE-TQ
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 15:47:58 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5e1a38c1aso8030224a12.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 12:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744139283; x=1744744083; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PoR0k18zL+wCQ8uDu+6XuIQb84rncvjS7RkGXs89FUI=;
- b=jEP2duL+MN8KWkP3xzb+RlRY06WXR67BR6r92foLorNQ3CjDJhvvGw9XmqqYZNRLPE
- vq2HfcPjaBCmm5mr+jrjpDtSmFaXa/CC2TRn+ve5Mu36UnN47JfJGFwN5ViBeSzQjnC7
- T4RxmEFeL8XTxayCk5UxWOOpa5FuffLQZ0XYSeuXETJ85KcfSlbSaFudkPShV0sHJKLj
- 7MrKT07yOq9YqZ6GPL1Ilz3c4S+v3ydDaERfd/DC63Sbz4tJ246HXtnGy+iUnlkK1c5u
- Fv+ZUVhnhRqNnnlvjWk870vsLUu8fKcKNj7HwzbpeIKaIl3nj31UTIdcsOaQfRcK7+UE
- aLrw==
+ d=gmail.com; s=20230601; t=1744141674; x=1744746474; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cl3hCnb/MBdDHoNMjn8hPamL6iM+3kaXVMFRX39xnJI=;
+ b=XtQmt0TrtQooqJG3b9qWe21AwehXZUiEn8qOE0WJDKZumrb3DZb8Uj3RxFJHenb++a
+ B+LA07z0yJDJp70k684W/7ilNY9GZsAeX59/7PJJOkI1dHWQ4bEggQjMGy7a7RftmquO
+ jARduhrvlpS9lxg6EERzjv5HDmX+2NqH+sQ8ofZohZlabLy0ME2yu6jUhW1EPLVmMI1z
+ dUKKap7IubbN3Dm4uuTbpfrRkGjZKNQigmesJahKMNtz9kSnTUcQr+VLW5HGUZOyvH1f
+ V+FelLdpALm0smhBKxZmy9haUk71l5SYe9C6H01+3T/ApvEtppVgtOJUYC7srdzIcpqg
+ dt9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744139283; x=1744744083;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PoR0k18zL+wCQ8uDu+6XuIQb84rncvjS7RkGXs89FUI=;
- b=O4OHcC/YqyplaWQ/TreVBRYNoKZcJJL7n03q20aQGUsokn4KVLiFF835bT48KK34sz
- bTydaJJl3qw/5+nYqPK36OsK2PxoV/HA0XX/766vsfP16K4qQTC5SJdHmgkOhH491jKx
- apQ/QQGXKFjkr/G7v2wcPgpgpiOz0oMb57XNtlCSFlovprlQDNDBJJvRrImG53jem8Um
- u4chf57v4NFUB3I0LKTa3hnFrjCljVAqehgrVVBQV5XHcL3EANDP9QVM5NYrXLTGqrUP
- 92EfMl3g5Gegm/NPX3ZerxGQrYXY6iigSRtr6AYqCSjxs6aFkfsjZyUT5x8hPwjQkgmW
- BAuA==
+ d=1e100.net; s=20230601; t=1744141674; x=1744746474;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Cl3hCnb/MBdDHoNMjn8hPamL6iM+3kaXVMFRX39xnJI=;
+ b=nQMFreILEhgy/HN/aJ0lNxVDRMdphl6DzPsVmX/jkmZIWwrdZyHrqlG9S1E3ehY42H
+ IbXpleY70kV/6zrRtq4v6mL3gdc+7sAAb4k8MyZ2qhZJnrx0Js0CDYiW+UCnL457xiqc
+ lcZvZ2du5XOegd/8BkMydc49cgRlvTjN5lmtEq6SJtt4P+d7O2/DT4ymTN94ixGB94DG
+ gGFA2FpNAks5Vq7hWzvKtMmGbpQdHQ3Ns0ykQsJZXmWaforIr1KpXu2qaWH7af505NKk
+ 2LvgnipgsZIhGJVJ1dKg/Vs82vTNlvcjqEzKhANOpKvJcBvvwRwjPU8yaWdjqDSTn2Fj
+ EJ7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUp/w/o1ZfLb+a7IgDHnyY+X4uxnf1hceugW/UlR9zQQ1PRGBpSdhxYrOhBS2Y2neVGC8MWuBbE55jk@nongnu.org
-X-Gm-Message-State: AOJu0YxYmusMyAjFKUyPmrEqL8Dvq6Apyfm1XWuCxwA/XjqRSySr1L3+
- AjK71alkW8iuc+ctXPPwXVJ4EX6C/bfwzu5AAkYsgQxoanUu9MLjp9fLzLWviFSBYQIe0/75235
- PBmg=
-X-Gm-Gg: ASbGncupmTgCfN7wreW/KIuIdEyhd9ujRnkZA4LDvwSGVkFR3D8bS7JF5sPfj029Xhl
- i1xx64tf15q9sKpCJiDKLLccfeNCUZyddSUc/mzHpNc9mXHcOjUROttodmCf+5PGJFGEq6Cr7kq
- 79YOpQOwvbuExnh42v3AAgvOVEaTGTpWMb/p4xwOZFM2stHO5uP8b7LzH1hm38oA1Hgj+wQq84S
- Os/Up+4pKd1UCjjjMkkacziddSF1aP79E6h34mHg0W+3esJupkboqrBSVTKNoRyESNi+DA4hTvh
- BL4D5LsANMQmlYTkpfyn1EDodvTzAegGkaL5t3XetTGokmfh8y0qUz6r3pX5aDp8/ZLGyZ/Rzl1
- Nj7BvpltjVopU
-X-Google-Smtp-Source: AGHT+IHwTeNyn5lRzn+M3vo150Jj2X/wetmSognclJ4jMy/RIxXhhkLo+FTXKGZ5SMm2FzzS+aq6JQ==
-X-Received: by 2002:a05:600c:2151:b0:43b:bb72:1dce with SMTP id
- 5b1f17b1804b1-43f0e55ecc4mr34997015e9.5.1744138893053; 
- Tue, 08 Apr 2025 12:01:33 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43ec1660bcesm171596595e9.10.2025.04.08.12.01.32
+ AJvYcCViDKVBypoOlnZ1Ge8fX70OpD6/f2i/CrFpyGSMXp5J5yKqPO637bzH+DkOrITN0tXr2KPRsBErSr1F@nongnu.org
+X-Gm-Message-State: AOJu0YyLu4b1kVXz8JPt6T0UOtxtd0ZlHH8V1nsOPmvpO23o7Pd+fb/v
+ E0wIFiSSY8iJHWrNZQkonLXqVm5Bu1Ka68seuxgbvVYNDyFoFOth
+X-Gm-Gg: ASbGncszDvh8gk+0DoYKUl1U+2uxEcSs9LOzABjBjfLDV5W4Onq4FqSm+NY2xn+e552
+ yFVfYFGhGSBKPSqjOwr9aubAu56oRytqvqY5bnBOaXQ27EKvYbr+tLGeNRFsKaM+GaRZM2c7zRs
+ nbprT1Pk0BiF6kvtOqo6NEGdbGOqt8JxTOgJPNFAgvu7juUdnaiXiavx9ZUbzlNzjW/WE45jmDl
+ xj+35l7wjkQ476lX54aTzbe/JBXjVOZ9DZqgDNR3nAAqdgLdY7NbTkpnIokO0bHuroJ3XlZ5WQ4
+ zxvZlv9L0KzGVUfmJRcXJr7SfYsxJaENlnFS+iQ0Ni/zUhufGlO0QwXeei3+0dSg1RzIIY9gSc9
+ mxMF9HJ4P3tK9lFztEItEW6HxhYnCkEfVcFUUb/WmaYq8gNnMKPgn
+X-Google-Smtp-Source: AGHT+IF14tyBStCeERY8VSgkrxzGdAieOQKmS6Tv87cRcF2CixZg6BCcAeRKD84zrnCL5sj5T9mBHg==
+X-Received: by 2002:a05:6402:2746:b0:5e4:92ca:34d0 with SMTP id
+ 4fb4d7f45d1cf-5f2f76e4f84mr216581a12.20.1744141673554; 
+ Tue, 08 Apr 2025 12:47:53 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-291c-6e00-b87f-49d2-cee7-5562.310.pool.telefonica.de.
+ [2a02:3100:291c:6e00:b87f:49d2:cee7:5562])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5f087714e1csm8356440a12.7.2025.04.08.12.47.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Apr 2025 12:01:32 -0700 (PDT)
-Message-ID: <19616b23-6b86-4f64-9836-fbfda79c76b8@linaro.org>
-Date: Tue, 8 Apr 2025 21:01:31 +0200
+ Tue, 08 Apr 2025 12:47:53 -0700 (PDT)
+Date: Tue, 08 Apr 2025 19:47:49 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org
+CC: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_0/2=5D_Add_property_to_supp?=
+ =?US-ASCII?Q?ort_writing_ERSTBA_in_high-low_order?=
+In-Reply-To: <20250405140002.3537411-1-linux@roeck-us.net>
+References: <20250405140002.3537411-1-linux@roeck-us.net>
+Message-ID: <975E8214-89EF-4D8C-8749-7C3FBEA253D7@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/curses: Fix infinite loop on windows
-To: William Hu <purplearmadillo77@proton.me>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <tSO5to8--iex6QMThG3Z8ElfnNOUahK_yitw2G2tEVRPoMKV936CBdrpyfbeNpVEpziKqeQ1ShBwPOoDkofgApM8YWwnPKJR_JrPDThV8Bc=@proton.me>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <tSO5to8--iex6QMThG3Z8ElfnNOUahK_yitw2G2tEVRPoMKV936CBdrpyfbeNpVEpziKqeQ1ShBwPOoDkofgApM8YWwnPKJR_JrPDThV8Bc=@proton.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,70 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/25 03:07, William Hu via wrote:
->  From a42046272f0544dd18ed58661e53ea17d1584c2c Mon Sep 17 00:00:00 2001
-> From: William Hu <purplearmadillo77@proton.me>
-> Date: Wed, 2 Apr 2025 12:00:00 -0400
-> Subject: [PATCH] ui/curses: Fix infinite loop on windows
-> 
-> Replace -1 comparisons for wint_t with WEOF to fix infinite loop caused by a
-> 65535 == -1 comparison.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2905
-> Signed-off-by: William Hu <purplearmadillo77@proton.me>
-> ---
->   ui/curses.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/ui/curses.c b/ui/curses.c
-> index a39aee8762..3f5c5adf78 100644
-> --- a/ui/curses.c
-> +++ b/ui/curses.c
-> @@ -265,7 +265,12 @@ static int curses2foo(const int _curses2foo[], const int _curseskey2foo[],
->   
->   static void curses_refresh(DisplayChangeListener *dcl)
->   {
-> -    int chr, keysym, keycode, keycode_alt;
-> +    /*
-> +     * DO NOT MAKE chr AN INT:
-> +     * Causes silent conversion errors on Windows where wint_t is unsigned short.
-> +     */
-> +    wint_t chr = 0;
-> +    int keysym, keycode, keycode_alt;
->       enum maybe_keycode maybe_keycode = CURSES_KEYCODE;
->   
->       curses_winch_check();
-> @@ -284,8 +289,9 @@ static void curses_refresh(DisplayChangeListener *dcl)
->           /* while there are any pending key strokes to process */
->           chr = console_getch(&maybe_keycode);
->   
-> -        if (chr == -1)
-> +        if (chr == WEOF) {
->               break;
-> +        }
 
-Correct but incomplete, also missing the same check few lines below:
 
--- >8 --
-diff --git a/ui/curses.c b/ui/curses.c
-index a39aee87623..9c33de331cd 100644
---- a/ui/curses.c
-+++ b/ui/curses.c
-@@ -304,9 +304,9 @@ static void curses_refresh(DisplayChangeListener *dcl)
-          /* alt or esc key */
-          if (keycode == 1) {
-              enum maybe_keycode next_maybe_keycode = CURSES_KEYCODE;
--            int nextchr = console_getch(&next_maybe_keycode);
-+            wint_t nextchr = console_getch(&next_maybe_keycode);
+Am 5=2E April 2025 14:00:00 UTC schrieb Guenter Roeck <linux@roeck-us=2Ene=
+t>:
+>This series is needed to support the USB interface on imx8mp-evk when
+>booting the Linux kernel=2E
+>
+>According to the XHCI specification, ERSTBA should be written in Low-High
+>order=2E The Linux kernel writes the high word first=2E This results in a=
+n
+>initialization failure=2E
+>
+>The following information is found in the Linux kernel commit log=2E
+>
+>[Synopsys]- The host controller was design to support ERST setting
+>during the RUN state=2E But since there is a limitation in controller
+>in supporting separate ERSTBA_HI and ERSTBA_LO programming,
+>It is supported when the ERSTBA is programmed in 64bit,
+>or in 32 bit mode ERSTBA_HI before ERSTBA_LO
+>
+>[Synopsys]- The internal initialization of event ring fetches
+>the "Event Ring Segment Table Entry" based on the indication of
+>ERSTBA_LO written=2E
+>
+>Add property to support writing the high word first=2E Enable it
+>for dwc3=2E
+>
+>----------------------------------------------------------------
+>Guenter Roeck (2):
+>      hw: usb: xhci: Add property to support writing ERSTBA in high-low o=
+rder
+>      hw/usb/hcd-dwc3: Set erstba-hi-lo property
+>
+> hw/usb/hcd-dwc3=2Ec | 1 +
+> hw/usb/hcd-xhci=2Ec | 8 +++++++-
+> hw/usb/hcd-xhci=2Eh | 1 +
+> 3 files changed, 9 insertions(+), 1 deletion(-)
 
--            if (nextchr != -1) {
-+            if (nextchr != WEOF) {
-                  chr = nextchr;
-                  maybe_keycode = next_maybe_keycode;
-                  keycode_alt = ALT;
----
+Series:
+Tested-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
-With that:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+=2E=2E=2E on imx8mp-evk board with 6=2E14 defconfig kernel=2E It indeed he=
+lps to get USB working with this kernel=2E
 
+Best regards,
+Bernhard
 
