@@ -4,73 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99576C369A1
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F791C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u275s-0007b9-Fb; Tue, 08 Apr 2025 07:26:16 -0400
+	id 1u27DT-0003rA-0L; Tue, 08 Apr 2025 07:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1u275p-0007aZ-Nz
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:26:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1u275n-0006OZ-Pv
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:26:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744111571;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Yq+SSWaeQzXTk76xvI7u2atw8L3iFrBBMkDgz0BDY5k=;
- b=AV7Gi/VoZ/rgumToQwvB69nPvnFcqG6Oyt/c/xG0FaGM8kLFlYTkvUmvc7L6a5XceGg4OE
- tte4ocvtkjIi/xL/nPDQO90qQ0Hs0zLonpameoFEng/yS2r6TuVfDAF5Cb/bF4h0krWB03
- SEYaFxFRuMnUKRyGVbrzdcAFDociyIc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-oqIzsSJPM3qH1lzLqmJ_Yw-1; Tue,
- 08 Apr 2025 07:26:09 -0400
-X-MC-Unique: oqIzsSJPM3qH1lzLqmJ_Yw-1
-X-Mimecast-MFC-AGG-ID: oqIzsSJPM3qH1lzLqmJ_Yw_1744111568
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B42A419560AB; Tue,  8 Apr 2025 11:26:08 +0000 (UTC)
-Received: from rh-jmarcin.redhat.com (unknown [10.44.34.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D9AB195DF84; Tue,  8 Apr 2025 11:26:05 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 5/5] utils/qemu-sockets: Introduce inet socket options
- controlling TCP keep-alive
-Date: Tue,  8 Apr 2025 13:25:04 +0200
-Message-ID: <20250408112508.1638722-6-jmarcin@redhat.com>
-In-Reply-To: <20250408112508.1638722-1-jmarcin@redhat.com>
-References: <20250408112508.1638722-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u27Cu-0003oP-8D
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:33:32 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u27Cr-0007Id-Iv
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:33:31 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-ac339f53df9so953048166b.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 04:33:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744112007; x=1744716807; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EYoAebW+mVCrH5+3zl2gfxi09/h8FSZxlYwO38Lyyu4=;
+ b=p9mneqvIivfMcnEfcMqwQA35UMQfMrbhF8VieAsMOF13pHUzjbxLN8nT+TSZ6g0mt7
+ 8NerLo96EMDmUCvHWlxlFxINLBAc+ZqYSWzfDkzOJsw+KNa6sTcf1PTuv6cXeGawKdKC
+ mqzWuWrXPJP8nI0CORfKrYYQYMaRPtVjUAxd2bBLSaDNr3roeEZD1/fBo7eiU3EzFwnA
+ F4U13/Tj8R8QffMLw9bBcEqvc4PTaaEkvjSH6rUjTtzyzhG3vXxQMO/RwrarxDiF1gmS
+ wCIatZCVU+fXlWEcFz3TJxTpLGnm6nnrVVBgrGSi3v1/V09uChm6Jo8wThQ57UT9ErWH
+ NJJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744112007; x=1744716807;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EYoAebW+mVCrH5+3zl2gfxi09/h8FSZxlYwO38Lyyu4=;
+ b=BcHA/eebCnbkIk4HsvvEgejYMXjHwf0+xsCXmjao/SfswzOLrB/yMSRgRxqciAdBK5
+ 5uORdEp3pZugBs4Ouy6CbFlIQQpAQdGsS7GJa7p8uYzAB3WLdnX6r43neoUawLi6uFlO
+ 7xLyAM5A+uBi6JbYP1O23pdtbSdtUTxms3dmlSrAO0IWzBg6GPs3Kh8uAJcvzL+UsCUP
+ YlrjugG/Ov6rW4k9RFi4ic0yb3eUQb7dTRkgvpGB29sWXV/nDtVp0v0LIx62ClmPsCC2
+ PRfUSxEOkbFNBrmBYOR32zczvQu/irWysu9+2SUSvnHa3hBQDw/1NtHsGTBSsgjG4z5Z
+ ZKog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXY8zj6Pu1fKgv4qgiHHK7bkNB+DHY2N1AEY2qINkcLn2kjj7+sNsYj5f1hshgStx75YhCN0mYcYEKq@nongnu.org
+X-Gm-Message-State: AOJu0YzVXnOmi5aapMXROYvjp88khLjzp6utt+B98F/a/OkbRLCHDG0E
+ I592YeSwej+E09UsPp4lxC9R1XsKMn9i58Gd0pj4zVntDirdJphhODv9FeIdwKo=
+X-Gm-Gg: ASbGncvIcM7p08Im6VBVSamp9ujvfYQP+5/rFFCPV2AI6zxBpyJh0Pq5Jq0pVRD05sl
+ gQJUkpZ8Wkgp1iWLAfbEwYHa500QKgu5mEUqUOjNnghbOED3xvLeBC/nT12Rf04nsWk1QUIo+0j
+ nM+TA393GzewmFb/H70ZymBjqWTym7z2U1+kDKz3tiP57XunBKuo7c4S+XqWq/3GzN7Afdl3DRZ
+ 7e9FJnhhlwI0hsfADxV1mEFuzEzfM6S/5N052vb0tw7+dbTUl8wjlwN2JsxzHcDTpUHVtjfLIpa
+ jUoWUgFBDkyOHxdPsfII2TuFRLlTVW3W07V5uGDZd+1pLS4=
+X-Google-Smtp-Source: AGHT+IErzGWtCDEvobE4Ioz2s0RiueqV1beGd7DKL9E2Gii0+EFARjSx0vW4ELTv1UXTxfA+//0aRA==
+X-Received: by 2002:a17:907:960f:b0:ac3:5c8e:d3f5 with SMTP id
+ a640c23a62f3a-ac7d190ff66mr1521592466b.27.1744112007305; 
+ Tue, 08 Apr 2025 04:33:27 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac7bfe9bb8esm884326666b.48.2025.04.08.04.33.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Apr 2025 04:33:26 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D4B2F5F8D1;
+ Tue,  8 Apr 2025 12:33:25 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Mario Fleischmann <mario.fleischmann@lauterbach.com>,
+ qemu-devel@nongnu.org,  philmd@linaro.org, christian.boenig@lauterbach.com
+Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
+In-Reply-To: <87r023m422.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Tue, 08 Apr 2025 10:48:53 +0200")
+References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
+ <87semkw3qx.fsf@pond.sub.org>
+ <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
+ <87semjp286.fsf@pond.sub.org>
+ <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
+ <87r023m422.fsf@pond.sub.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Tue, 08 Apr 2025 12:33:25 +0100
+Message-ID: <87a58qj3ay.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,202 +110,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+Markus Armbruster <armbru@redhat.com> writes:
 
-With the default TCP stack configuration, it could be even 2 hours
-before the connection times out due to the other side not being
-reachable. However, in some cases, the application needs to be aware of
-a connection issue much sooner.
+> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>
+>> Apologies for the line wrapping in yesterday's answer. Should be fixed n=
+ow.
+>>
+>> On 08.04.2025 09:00, Markus Armbruster wrote:
+>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>>>=20
+>>>> Thanks a lot for the response, I really appreciate your time.
+>>>>
+>>>> On 07.04.2025 14:33, Markus Armbruster wrote:
+>>>>
+>>>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>>>>>
+>>>>>> This patch series introduces support for the Multi-Core Debug (MCD) =
+API, a
+>>>>>> commonly used debug interface by emulators. The MCD API, defined thr=
+ough a
+>>>>>> header file, consists of 54 functions for implementing debug and tra=
+ce.
+>>>>>> However, since it is a header-file-only interface, MCD does not spec=
+ify a
+>>>>>> communication protocol. We get around this limitation by following a=
+ remote
+>>>>>> procedure call approach using QMP. The client stub corresponding to =
+this
+>>>>>> implementation can be found at https://gitlab.com/lauterbach/mcdrefs=
+rv
+>>>>>>
+>>>>>> This series is the successor to:
+>>>>>> "[PATCH v5 00/18] first version of mcdstub"
+>>>>>> (https://patchew.org/QEMU/20231220162555.19545-1-nicolas.eder@lauter=
+bach.com/)
+>>>>>>
+>>>>>> * Architecture-independent MCD implementation
+>>>>>> * QMP instead of custom TCP protocol
+>>>>>
+>>>>> Rationale?  There must be pros and cons.
+>>>>
+>>>> Assuming you're referring to the protocol of the previous patch series:
+>>>> The previous TCP protocol only supported a subset of MCD. As the=20
+>>>> implementation progresses, the protocol eventually needs to be extende=
+d,=20
+>>>> possibly resulting in backwards compatibility problems.
+>>>> Following an RPC approach and keeping the communication layer as close=
+=20
+>>>> to the MCD API as possible results in a larger protocol at first, but=
+=20
+>>>> does not need to be changed afterwards.
+>>>> By directly mapping MCD functions onto QMP commands, the complexity in=
+=20
+>>>> the server and client stubs can be minimized.
+>>>>
+>>>> Assuming you're referring to the QMP choice:
+>>>> QMP is being described as the "protocol which allows applications to=20
+>>>> control a QEMU instance".
+>>>> It provides a RPC framework which automatically (de)serializes methods=
+=20
+>>>> and their parameters, even inside QTests.
+>>>> The whole interface is automatically documented.
+>>>=20
+>>> Let's see whether I understand.
+>>>=20
+>>> MCD is an established C interface.
+>>>=20
+>>> Your goal is to provide remote MCD for QEMU, i.e. the client uses the
+>>> MCD C interface, and the interface's implementation talks to an MCD
+>>> server integrated into QEMU via some remote transport.
+>>>=20
+>>> The previous version connects the two with a bespoke protocol via TCP.
+>>> The client software translates between the C interface and this
+>>> protocol.  QEMU implements the protocol's server side.  Designing and
+>>> maintaining a protocol is expensive.
+>>>=20
+>>> This versions makes two changes:
+>>>=20
+>>> 1. Instead of layering a protocol on top of MCD, you use MCD directly.
+>>> This eliminates protocol design and maintenance.  Moreover, translation
+>>> becomes straightforward marshaling / unmarshaling for the transport.
+>>>=20
+>>> 2. You use QMP as a transport.  This gets you marshaling / unmarshaling
+>>> for free.  It also provides some useful infrastructure for tests,
+>>> documentation and such.
+>>>=20
+>>> Fair?
+>>
+>> Couldn't have put it better myself.
+>>
+<snip>
+>>> What about providing the MCD interface as a separate QMP-like protocol?
+>>> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
+>>> compiling it out when not needed.
+>>>
+>>> It gets its own socket, just like the GDB stub.  Might reduce
+>>> interference between debugging and QMP.
+>>>=20
+>>> Thoughts?  Alex, Philippe, care to chime in?
+>>
+>> Sound reasonable to me. Keeping in mind the size of generated QAPI code,
+>> an option to `./configure [...] --enable-mcd` is definitely advisable.
+>
+> Alex, Philippe?
 
-This is the case, for example, for postcopy live migration. If there is
-no traffic from the migration destination guest (server-side) to the
-migration source guest (client-side), the destination keeps waiting for
-pages indefinitely and does not switch to the postcopy-paused state.
-This can happen, for example, if the destination QEMU instance is
-started with the '-S' command line option and the machine is not started
-yet, or if the machine is idle and produces no new page faults for
-not-yet-migrated pages.
+When I spoke to Mario at DVCon last year I liked the idea of re-using
+QMP instead of inventing yet another RPC interface for QEMU. QMP
+certainly has nicer properties than the gdbstub which has a very
+"organic" and "serial" feel to it.
 
-This patch introduces new inet socket parameters that control count,
-idle period, and interval of TCP keep-alive packets before the
-connection is considered broken. These parameters are available on
-systems where the respective TCP socket options are defined
-(TCP_KEEPCNT, TCP_KEEPIDLE, TCP_KEEPINTVL).
+Are you suggesting we re-use the machinery but use an entirely separate
+socket with just the MCD namespace in it? I don't see that being a
+problem as long as we can test it properly in the CI.
 
-The default value for all is 0, which means the system configuration is
-used.
-
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- meson.build         |  6 ++++
- qapi/sockets.json   | 15 ++++++++
- util/qemu-sockets.c | 88 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 109 insertions(+)
-
-diff --git a/meson.build b/meson.build
-index 41f68d3806..680f47cf42 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2734,6 +2734,12 @@ if linux_io_uring.found()
-   config_host_data.set('HAVE_IO_URING_PREP_WRITEV2',
-                        cc.has_header_symbol('liburing.h', 'io_uring_prep_writev2'))
- endif
-+config_host_data.set('HAVE_TCP_KEEPCNT',
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPCNT'))
-+config_host_data.set('HAVE_TCP_KEEPIDLE',
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPIDLE'))
-+config_host_data.set('HAVE_TCP_KEEPINTVL',
-+                     cc.has_header_symbol('netinet/tcp.h', 'TCP_KEEPINTVL'))
- 
- # has_member
- config_host_data.set('HAVE_SIGEV_NOTIFY_THREAD_ID',
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 62797cd027..bb9d298635 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -59,6 +59,18 @@
- # @keep-alive: enable keep-alive when connecting to/listening on this socket.
- #     (Since 4.2, not supported for listening sockets until 10.1)
- #
-+# @keep-alive-count: number of keep-alive packets sent before the connection is
-+#     closed.  Only supported for TCP sockets on systems where TCP_KEEPCNT
-+#     socket option is defined.  (Since 10.1)
-+#
-+# @keep-alive-idle: time in seconds the connection needs to be idle before
-+#     sending a keepalive packet.  Only supported for TCP sockets on systems
-+#     where TCP_KEEPIDLE socket option is defined.  (Since 10.1)
-+#
-+# @keep-alive-interval: time in secods between keep-alive packets.  Only
-+#     supported for TCP sockets on systems where TCP_KEEPINTVL is defined.
-+#     (Since 10.1)
-+#
- # @mptcp: enable multi-path TCP.  (Since 6.1)
- #
- # Since: 1.3
-@@ -71,6 +83,9 @@
-     '*ipv4': 'bool',
-     '*ipv6': 'bool',
-     '*keep-alive': 'bool',
-+    '*keep-alive-count': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPCNT' },
-+    '*keep-alive-idle': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPIDLE' },
-+    '*keep-alive-interval': { 'type': 'uint32', 'if': 'HAVE_TCP_KEEPINTVL' },
-     '*mptcp': { 'type': 'bool', 'if': 'HAVE_IPPROTO_MPTCP' } } }
- 
- ##
-diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-index fed17a1ffb..8e355b097c 100644
---- a/util/qemu-sockets.c
-+++ b/util/qemu-sockets.c
-@@ -217,6 +217,45 @@ static int inet_set_sockopts(int sock, InetSocketAddress *saddr, Error **errp)
-                              "Unable to set keep-alive option on socket");
-             return -1;
-         }
-+#ifdef HAVE_TCP_KEEPCNT
-+        if (saddr->has_keep_alive_count &&
-+            saddr->keep_alive_count) {
-+            int keep_count = saddr->has_keep_alive_count;
-+            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &keep_count,
-+                             sizeof(keep_count));
-+            if (ret < 0) {
-+                error_setg_errno(errp, errno,
-+                                 "Unable to set TCP keep-alive count option on socket");
-+                return -1;
-+            }
-+        }
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+        if (saddr->has_keep_alive_idle &&
-+            saddr->keep_alive_idle) {
-+            int keep_idle = saddr->has_keep_alive_idle;
-+            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &keep_idle,
-+                             sizeof(keep_idle));
-+            if (ret < 0) {
-+                error_setg_errno(errp, errno,
-+                                 "Unable to set TCP keep-alive idle option on socket");
-+                return -1;
-+            }
-+        }
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+        if (saddr->has_keep_alive_interval &&
-+            saddr->keep_alive_interval) {
-+            int keep_interval = saddr->has_keep_alive_interval;
-+            ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, &keep_interval,
-+                             sizeof(keep_interval));
-+            if (ret < 0) {
-+                error_setg_errno(errp, errno,
-+                                 "Unable to set TCP keep-alive interval option on socket");
-+                return -1;
-+            }
-+        }
-+#endif
-     }
-     return 0;
- }
-@@ -628,6 +667,22 @@ static int inet_parse_flag(const char *flagname, const char *optstr, bool *val,
-     return 0;
- }
- 
-+static int inet_parse_u32(const char *optname, const char *optstr,
-+                          uint32_t max, uint32_t *val, Error **errp)
-+{
-+    int pos;
-+    if (sscanf(optstr, "%" PRIu32 "%n", val, &pos) != 1 ||
-+        (optstr[pos] != '\0' && optstr[pos] != ',')) {
-+        error_setg(errp, "error parsing %s argument", optname);
-+        return -1;
-+    }
-+    if (*val > max) {
-+        error_setg(errp, "%s is too large", optname);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
- int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
- {
-     const char *optstr, *h;
-@@ -700,6 +755,39 @@ int inet_parse(InetSocketAddress *addr, const char *str, Error **errp)
-         }
-         addr->has_keep_alive = true;
-     }
-+#ifdef HAVE_TCP_KEEPCNT
-+    begin = strstr(optstr, ",keep-alive-count=");
-+    if (begin) {
-+        if (inet_parse_u32("keep-alive-count",
-+                           begin + strlen(",keep-alive-count="), INT_MAX,
-+                           &addr->keep_alive_count, errp)) {
-+            return -1;
-+        }
-+        addr->has_keep_alive_count = true;
-+    }
-+#endif
-+#ifdef HAVE_TCP_KEEPIDLE
-+    begin = strstr(optstr, ",keep-alive-idle=");
-+    if (begin) {
-+        if (inet_parse_u32("keep-alive-idle",
-+                           begin + strlen(",keep-alive-idle="), INT_MAX,
-+                           &addr->keep_alive_idle, errp)) {
-+            return -1;
-+        }
-+        addr->has_keep_alive_idle = true;
-+    }
-+#endif
-+#ifdef HAVE_TCP_KEEPINTVL
-+    begin = strstr(optstr, ",keep-alive-interval=");
-+    if (begin) {
-+        if (inet_parse_u32("keep-alive-interval",
-+                           begin + strlen(",keep-alive-interval="), INT_MAX,
-+                           &addr->keep_alive_interval, errp)) {
-+            return -1;
-+        }
-+        addr->has_keep_alive_interval = true;
-+    }
-+#endif
- #ifdef HAVE_IPPROTO_MPTCP
-     begin = strstr(optstr, ",mptcp");
-     if (begin) {
--- 
-2.48.1
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
