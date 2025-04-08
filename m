@@ -4,95 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568B6C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 10:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 848F0C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:00:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u26Nm-0005JL-4s; Tue, 08 Apr 2025 06:40:42 -0400
+	id 1u26g0-0006WL-Lh; Tue, 08 Apr 2025 06:59:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1u26NS-0005CE-0B
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 06:40:24 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1u26NO-0008Rz-Bo
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 06:40:19 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7390d21bb1cso5125397b3a.2
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 03:40:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1744108815; x=1744713615; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=V3kIK3SPZ+6nNlN6c3rIDoA+sKT5kyUnVw4pY5gTecA=;
- b=BC3TBEVMoVoCxfCPlfSC1TPQukR+bh4D5h/JiJa/P95gfhkbuAHon2I0N+SASs+YMZ
- Ot74hJzTHdMswTCXgzf+HENR/cshyzoubLQUI7RXY07mWX5hgS2Bz7danIkOtKlF7vV7
- UfJDWweNOBWi/DhtzZNhR0Wf9yz9gCwGVFgaMuXvIY/G7gJksndjLfEtuYNOvtEhoYn7
- znD6TLonBKhtRZ4qF5Ag0N3SbvUmMdjMZTMmgwMKNhYepRJNsTDZ+rDjyElR+XDnKnna
- QOrIrkivq9DrRdDpVSXXsWZ6JqDDf6RHPyxm7Z8P/yWyIrBTkQbSfz0voC/iM1g5KRf9
- adyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744108815; x=1744713615;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=V3kIK3SPZ+6nNlN6c3rIDoA+sKT5kyUnVw4pY5gTecA=;
- b=ITgd6bKGreU2HMH+9AohCN7cVAFfcM1sIzF6PfZrFplBObN8nBgQaURGVeI3TIQ+Lo
- Q+ORHs/pHdaMy17/+jhiXD3teCav4HqkpjXQCfihfJPqFE7xfJoG+346I1WW1andk5t4
- Dl5csk8wBZMHdwQbMYYg4/MuH5t8fXyl+gVOq3/HkVlhaY214fTia+DopydunK9InxCI
- vBLMH14I1UA+C/dGP5ejaOaUtR2kYYZVTppNfbj28+3qvQsYyNjPvZk3b8CI37ISQ3Y5
- LQ5MaRA5OttCg54gWz2DOyoNYTTdFVoIdWpMBviMkAoPQXN2iH38eRaSG0NJoGMFgP07
- 2llw==
-X-Gm-Message-State: AOJu0YwCZXk8GMfN3OHgija79dfUzdau5THjvbd5Aqbr/2/gJuUMF3+g
- FxfAndd3XeeUbCJKg+1BtkrqL4FEKYHpOY3TQ+KczaTHj2dzlrdibWkksu3gBVZGcw2rB3l6lTR
- aSz2Lg4OxeUDCCJ4FJ8djVnxw40O60qM/W0zoz6yQO45x3Nh7sIRKLeAc8tX/Wir8Oy+rqX4nxa
- 4K02Qptp4tc8d/1z7k3MPQnDpdN1DvLDexCt2lDtDf
-X-Gm-Gg: ASbGncsd5yzPLh9ioM19qOWbRUQZTJOFDE1vDGIkskq7CN/ZUUX7rhXEkMYw3BKJX71
- vJTMBUNd5+VQa7IVeuHu/nu7cUIPFphoMMG8BUeYqlqRWFqGZJG0oSrIDwtzwXmh+cgkAzal6kB
- +N4LeN0+GdQpsTrmCxDDNaMuCKImYHIPYCimxovPTHgYYu5VQpxEYnXl962QaqR1ADbyHG5rjRy
- iMx9zBZZwdgmD8NUopNRgXCzw6Vozqx6D3FqsADHpB7fzMa5dqxWLkfni6zhdxH1APiEwXyOFqN
- /MpsM3dxJy6RrJS8bGEWt/KFSExI5KQlkwj3622HOxy9J1kk8qhNA7xovrkFZ9ZakUVaSjExEsd
- XviowVkIO+aYhQQ==
-X-Google-Smtp-Source: AGHT+IEvXWo0yvhk+JuMdsMB12/7jA6+6BVDdPzs0RuQQNvt3QjtzG+5W8qnFslMuCKwj2Wl79E1UA==
-X-Received: by 2002:a05:6a00:390a:b0:736:53bc:f1ab with SMTP id
- d2e1a72fcca58-739e4b49b9emr25589340b3a.12.1744108815396; 
- Tue, 08 Apr 2025 03:40:15 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-739da0e3734sm10532380b3a.179.2025.04.08.03.40.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Apr 2025 03:40:15 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, antonb@tenstorrent.com,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v3 09/10] target/riscv: rvv: Apply vext_check_input_eew to
- vector indexed load/store instructions
-Date: Tue,  8 Apr 2025 18:39:37 +0800
-Message-ID: <20250408103938.3623486-10-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250408103938.3623486-1-max.chou@sifive.com>
-References: <20250408103938.3623486-1-max.chou@sifive.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u26fw-0006U1-Pt; Tue, 08 Apr 2025 06:59:29 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u26fu-00028p-EO; Tue, 08 Apr 2025 06:59:28 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5388H7ad001719;
+ Tue, 8 Apr 2025 10:59:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=chwzAy
+ jMTkGuMDvcg2lB891ZuHp57IeGWk2KVzdLFcM=; b=HVBsSHTwSpk+KjN5MksdTo
+ EHngQrePJvka79PRiv7NfoO2n9a92iUnAI788DWg1bmvJi1HO6wO+u1TZC/gK8it
+ Oayb8GC94ZZ8/aDMyF+xta9fyKa5zVm5PxYpWxyZhX82YPGw/ucrojLz/trLWhjv
+ gLWAFaPHDpcZQ4u5HT4SzRe2tFKgfsaqKy+u+fjVRqaSqwRYNJVepjnAJ8ws4UI7
+ 2oMRcM7RsJfsUrQljVsyV6D7KsUziIFTjvN+D2O4EMU4l9h9Cat8n+XQ/rDHl9kg
+ 6Lxo/FJ4pjC/kSl1magfuJ6QfcjqZGnPtUlMUpaJQYv1tvFs7JgXBt01aapal5rw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45ver7drp7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Apr 2025 10:59:23 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 538Ak5pq003998;
+ Tue, 8 Apr 2025 10:59:23 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45ver7drp6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Apr 2025 10:59:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5387A7Ke024577;
+ Tue, 8 Apr 2025 10:59:22 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45ueutag8u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Apr 2025 10:59:22 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 538AxIwG35651994
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Apr 2025 10:59:19 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2CC420040;
+ Tue,  8 Apr 2025 10:59:18 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8AACD20043;
+ Tue,  8 Apr 2025 10:59:16 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.ibm.com (unknown
+ [9.109.198.22])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  8 Apr 2025 10:59:16 +0000 (GMT)
+Date: Tue, 8 Apr 2025 16:29:13 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH v2 1/2] vfio/spapr: Enhance error handling in
+ vfio_spapr_create_window()
+Message-ID: <20250408162603.2244de39-53-amachhiw@linux.ibm.com>
+Mail-Followup-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, 
+ qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Vaibhav Jain <vaibhav@linux.ibm.com>, 
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250407143119.1304513-1-amachhiw@linux.ibm.com>
+ <10a60957-21a1-4254-885b-21829d9746e6@redhat.com>
+ <20250408135041.9eaee011-8a-amachhiw@linux.ibm.com>
+ <c67aecc9-c07f-44a8-89e6-c94fef9595d9@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <c67aecc9-c07f-44a8-89e6-c94fef9595d9@redhat.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nhcUmFetNMSbgziwKIF8NG085IK2CZ2c
+X-Proofpoint-GUID: yVB0WF7rUMccczfv7s8rJA92bAdfy7iL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-08_03,2025-04-08_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_spam_definite policy=outbound
+ score=100 suspectscore=0
+ phishscore=0 mlxlogscore=-999 clxscore=1015 impostorscore=0 adultscore=0
+ mlxscore=100 spamscore=100 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504080078
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,40 +131,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle the overlap of source registers with different EEWs.
+On 2025/04/08 11:46 AM, Cédric Le Goater wrote:
+> On 4/8/25 11:14, Amit Machhiwal wrote:
+> > Hi Cédric,
+> > 
+> > Thanks for taking a look at this patch. Please find my responses below:
+> > 
+> > On 2025/04/08 08:29 AM, Cédric Le Goater wrote:
+> > > Hello Amit,
+> > > 
+> > > Please use --cover-letter for the next spin.
+> > 
+> > Sure, will do.
+> > 
+> > > 
+> > > 
+> > > On 4/7/25 16:31, Amit Machhiwal wrote:
+> > > > Introduce an Error ** parameter to vfio_spapr_create_window() to enable
+> > > > structured error reporting. This allows the function to propagate
+> > > > detailed errors back to callers.
+> > > > 
+> > > > Suggested-by: Cédric Le Goater <clg@redhat.com>
+> > > > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > > > ---
+> > > >    hw/vfio/spapr.c | 23 ++++++++++++-----------
+> > > >    1 file changed, 12 insertions(+), 11 deletions(-)
+> > > > 
+> > > > diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+> > > > index 1a5d1611f2cd..4f2858b43f36 100644
+> > > > --- a/hw/vfio/spapr.c
+> > > > +++ b/hw/vfio/spapr.c
+> > > > @@ -232,7 +232,7 @@ static int vfio_spapr_remove_window(VFIOContainer *container,
+> > > >    static int vfio_spapr_create_window(VFIOContainer *container,
+> > > 
+> > > This routine can return a bool since vfio_spapr_container_add_section_window()
+> > > does not check the returned errno.
+> > 
+> > Sure, I can make this change in next version.
+> > 
+> > > 
+> > > >                                        MemoryRegionSection *section,
+> > > > -                                    hwaddr *pgsize)
+> > > > +                                    hwaddr *pgsize, Error **errp)
+> > > >    {
+> > > >        int ret = 0;
+> > > >        VFIOContainerBase *bcontainer = &container->bcontainer;
+> > > > @@ -252,10 +252,10 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+> > > >        pgmask = bcontainer->pgsizes & (pagesize | (pagesize - 1));
+> > > >        pagesize = pgmask ? (1ULL << (63 - clz64(pgmask))) : 0;
+> > > >        if (!pagesize) {
+> > > > -        error_report("Host doesn't support page size 0x%"PRIx64
+> > > > -                     ", the supported mask is 0x%lx",
+> > > > -                     memory_region_iommu_get_min_page_size(iommu_mr),
+> > > > -                     bcontainer->pgsizes);
+> > > > +        error_setg(errp, "Host doesn't support page size 0x%"PRIx64
+> > > > +                   ", the supported mask is 0x%lx",
+> > > > +                   memory_region_iommu_get_min_page_size(iommu_mr),
+> > > > +                   bcontainer->pgsizes);
+> > > 
+> > > This can use error_setg_errno(errp, EINVAL, ... ) instead of
+> > > returning -EINVAL.
+> > 
+> > Sure.
+> > 
+> > > 
+> > > >            return -EINVAL;
+> > > >        }
+> > > > @@ -302,16 +302,16 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+> > > >            }
+> > > >        }
+> > > >        if (ret) {
+> > > > -        error_report("Failed to create a window, ret = %d (%m)", ret);
+> > > > +        error_setg_errno(errp, -ret, "Failed to create a window, ret = %d (%m)", ret);
+> > > >            return -errno;
+> > > >        }
+> > > >        if (create.start_addr != section->offset_within_address_space) {
+> > > >            vfio_spapr_remove_window(container, create.start_addr);
+> > > > -        error_report("Host doesn't support DMA window at %"HWADDR_PRIx", must be %"PRIx64,
+> > > > -                     section->offset_within_address_space,
+> > > > -                     (uint64_t)create.start_addr);
+> > > > +        error_setg(errp, "Host doesn't support DMA window at %"HWADDR_PRIx
+> > > > +                   ", must be %"PRIx64, section->offset_within_address_space,
+> > > > +                   (uint64_t)create.start_addr);
+> > > 
+> > > This can use error_setg_errno(errp, EINVAL, ... ) instead of
+> > > returning -EINVAL.
+> > 
+> > Sure.
+> > 
+> > > 
+> > > >            return -EINVAL;
+> > > >        }
+> > > >        trace_vfio_spapr_create_window(create.page_shift,
+> > > > @@ -334,6 +334,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
+> > > >                                                      container);
+> > > >        VFIOHostDMAWindow *hostwin;
+> > > >        hwaddr pgsize = 0;
+> > > > +    Error *local_err = NULL;
+> > > >        int ret;>         /*
+> > > > @@ -377,9 +378,9 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
+> > > >            }
+> > > >        }
+> > > > -    ret = vfio_spapr_create_window(container, section, &pgsize);
+> > > > +    ret = vfio_spapr_create_window(container, section, &pgsize, &local_err);
+> > > 
+> > > please pass errp instead.
+> > > 
+> > > >        if (ret) {
+> > > > -        error_setg_errno(errp, -ret, "Failed to create SPAPR window");
+> > > > +        error_propagate(errp, local_err);
+> > > 
+> > > no need to propagate if errp is passed to vfio_spapr_create_window()
+> > 
+> > As per my understanding, for calling error_setg() and friends, the Error **
+> > object has be NULL. If I were to call vfio_spapr_create_window() with errp
+> > instead of the local Error object, that'd result into the below assertion
+> > failure with only the first patch applied and a guest booted with a memory >
+> > 128G and PCI device passthrough:
+> > 
+> >   qemu-system-ppc64: ../util/error.c:68: error_setv: Assertion `*errp == NULL' failed.
+> > 
+> > This happens because the errp would already be set in vfio_spapr_create_window()
+> > and calling error_setg_errno(errp, ...) in vfio_spapr_container_add_section_window()
+> > would fail as errp is no more NULL.
+> 
+> Yes but I don't understand how this can happen.
+> 
+> vfio_spapr_container_add_section_window() calls vfio_spapr_create_window()
+> and if, in each case of error, error_setg() is called and false returned,
 
-Co-authored-by: Anton Blanchard <antonb@tenstorrent.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I was hitting the assert with the belows change in
+vfio_spapr_container_add_section_window() along with the above changes.
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2d067a59e27..445a0b72a56 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -1043,7 +1043,8 @@ static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_ld_index(s, a->rd, a->rs2, a->nf, a->vm, eew);
-+           vext_check_ld_index(s, a->rd, a->rs2, a->nf, a->vm, eew) &&
-+           vext_check_input_eew(s, -1, 0, a->rs2, eew, a->vm);
- }
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 1a5d1611f2cd..c9cc2278aaa8 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -378,7 +378,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
+     }
+
+     ret = vfio_spapr_create_window(container, section, &pgsize);
+-    if (ret) {
++    if (!ret) {
+         error_setg_errno(errp, -ret, "Failed to create SPAPR window");
+         return false;
+     }
+
+> it shouldn't reach the assert. In case of error, the caller *should not*
+> re-set the 'Error **' parameter, that would trigger the assert.
+> 
+> > This is the reason I chose to use a local
+> > Error object and later propagate it with errp.
+> > 
+> > IIUC, what you mean is to pass errp in vfio_spapr_create_window() and just
+> > return from this condition in vfio_spapr_container_add_section_window() but no
+> > need to call error_setg_errno() or error_propagate(). I think that would work.
+> > Please correct me.
+> 
+> yes.
+> 
+> Once the 'Error **' is set, one should not re-set it again. What you can
+> do is prepend some string to the returned error, report it or free it.
+
+I think following change should be enough along with your suggested changes:
+
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 1a5d1611f2cd..27fed3cd463c 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -378,8 +378,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
+     }
  
- GEN_VEXT_TRANS(vlxei8_v,  MO_8,  rnfvm, ld_index_op, ld_index_check)
-@@ -1095,7 +1096,8 @@ static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
- {
-     return require_rvv(s) &&
-            vext_check_isa_ill(s) &&
--           vext_check_st_index(s, a->rd, a->rs2, a->nf, eew);
-+           vext_check_st_index(s, a->rd, a->rs2, a->nf, eew) &&
-+           vext_check_input_eew(s, a->rd, s->sew, a->rs2, eew, a->vm);
- }
- 
- GEN_VEXT_TRANS(vsxei8_v,  MO_8,  rnfvm, st_index_op, st_index_check)
--- 
-2.43.0
+     ret = vfio_spapr_create_window(container, section, &pgsize);
+-    if (ret) {
+-        error_setg_errno(errp, -ret, "Failed to create SPAPR window");
++    if (!ret) {
+         return false;
+     }
 
+I'll be sending a v3 soon:
+
+Thanks,
+Amit
+
+> See Rules section in qapi/error.h for more info.
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+> 
+> > 
+> > Thanks,
+> > Amit
+> > 
+> > > 
+> > > 
+> > > Thanks,
+> > > 
+> > > C.
+> > > 
+> > > 
+> > > >            return false;
+> > > >        }
+> > > > 
+> > > > base-commit: 53f3a13ac1069975ad47cf8bd05cc96b4ac09962
+> > > 
+> > 
+> 
+> 
 
