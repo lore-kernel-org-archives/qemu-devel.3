@@ -4,97 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F791C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71862C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u27DT-0003rA-0L; Tue, 08 Apr 2025 07:34:09 -0400
+	id 1u27JJ-0005Fm-Ld; Tue, 08 Apr 2025 07:40:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u27Cu-0003oP-8D
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:33:32 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u27Cr-0007Id-Iv
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:33:31 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-ac339f53df9so953048166b.1
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 04:33:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744112007; x=1744716807; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EYoAebW+mVCrH5+3zl2gfxi09/h8FSZxlYwO38Lyyu4=;
- b=p9mneqvIivfMcnEfcMqwQA35UMQfMrbhF8VieAsMOF13pHUzjbxLN8nT+TSZ6g0mt7
- 8NerLo96EMDmUCvHWlxlFxINLBAc+ZqYSWzfDkzOJsw+KNa6sTcf1PTuv6cXeGawKdKC
- mqzWuWrXPJP8nI0CORfKrYYQYMaRPtVjUAxd2bBLSaDNr3roeEZD1/fBo7eiU3EzFwnA
- F4U13/Tj8R8QffMLw9bBcEqvc4PTaaEkvjSH6rUjTtzyzhG3vXxQMO/RwrarxDiF1gmS
- wCIatZCVU+fXlWEcFz3TJxTpLGnm6nnrVVBgrGSi3v1/V09uChm6Jo8wThQ57UT9ErWH
- NJJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744112007; x=1744716807;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=EYoAebW+mVCrH5+3zl2gfxi09/h8FSZxlYwO38Lyyu4=;
- b=BcHA/eebCnbkIk4HsvvEgejYMXjHwf0+xsCXmjao/SfswzOLrB/yMSRgRxqciAdBK5
- 5uORdEp3pZugBs4Ouy6CbFlIQQpAQdGsS7GJa7p8uYzAB3WLdnX6r43neoUawLi6uFlO
- 7xLyAM5A+uBi6JbYP1O23pdtbSdtUTxms3dmlSrAO0IWzBg6GPs3Kh8uAJcvzL+UsCUP
- YlrjugG/Ov6rW4k9RFi4ic0yb3eUQb7dTRkgvpGB29sWXV/nDtVp0v0LIx62ClmPsCC2
- PRfUSxEOkbFNBrmBYOR32zczvQu/irWysu9+2SUSvnHa3hBQDw/1NtHsGTBSsgjG4z5Z
- ZKog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXY8zj6Pu1fKgv4qgiHHK7bkNB+DHY2N1AEY2qINkcLn2kjj7+sNsYj5f1hshgStx75YhCN0mYcYEKq@nongnu.org
-X-Gm-Message-State: AOJu0YzVXnOmi5aapMXROYvjp88khLjzp6utt+B98F/a/OkbRLCHDG0E
- I592YeSwej+E09UsPp4lxC9R1XsKMn9i58Gd0pj4zVntDirdJphhODv9FeIdwKo=
-X-Gm-Gg: ASbGncvIcM7p08Im6VBVSamp9ujvfYQP+5/rFFCPV2AI6zxBpyJh0Pq5Jq0pVRD05sl
- gQJUkpZ8Wkgp1iWLAfbEwYHa500QKgu5mEUqUOjNnghbOED3xvLeBC/nT12Rf04nsWk1QUIo+0j
- nM+TA393GzewmFb/H70ZymBjqWTym7z2U1+kDKz3tiP57XunBKuo7c4S+XqWq/3GzN7Afdl3DRZ
- 7e9FJnhhlwI0hsfADxV1mEFuzEzfM6S/5N052vb0tw7+dbTUl8wjlwN2JsxzHcDTpUHVtjfLIpa
- jUoWUgFBDkyOHxdPsfII2TuFRLlTVW3W07V5uGDZd+1pLS4=
-X-Google-Smtp-Source: AGHT+IErzGWtCDEvobE4Ioz2s0RiueqV1beGd7DKL9E2Gii0+EFARjSx0vW4ELTv1UXTxfA+//0aRA==
-X-Received: by 2002:a17:907:960f:b0:ac3:5c8e:d3f5 with SMTP id
- a640c23a62f3a-ac7d190ff66mr1521592466b.27.1744112007305; 
- Tue, 08 Apr 2025 04:33:27 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7bfe9bb8esm884326666b.48.2025.04.08.04.33.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Apr 2025 04:33:26 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D4B2F5F8D1;
- Tue,  8 Apr 2025 12:33:25 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Mario Fleischmann <mario.fleischmann@lauterbach.com>,
- qemu-devel@nongnu.org,  philmd@linaro.org, christian.boenig@lauterbach.com
-Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
-In-Reply-To: <87r023m422.fsf@pond.sub.org> (Markus Armbruster's message of
- "Tue, 08 Apr 2025 10:48:53 +0200")
-References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
- <87semkw3qx.fsf@pond.sub.org>
- <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
- <87semjp286.fsf@pond.sub.org>
- <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
- <87r023m422.fsf@pond.sub.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 08 Apr 2025 12:33:25 +0100
-Message-ID: <87a58qj3ay.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u27If-0005Ac-M0
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:39:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u27Id-0007yZ-AP
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:39:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744112365;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AIAtQEYrWFYwySnMP0BU6rNLD7hDbgkMcRtopEPE+G0=;
+ b=CcraR4842OoIznqGkILHHHhnYinJDGeVmSoJEGjbhmVpl7wMnz3QdVii4LnBTb3tyuClOH
+ 62CvqsZ5nPxMP8TkEnmrtzi7QJqOseAyyr84oEyx1E5JHIRuTCmPH5VqD3ZdoOpVxqaPTy
+ 1s7J4iN7RmQ0BCe6K76Sc9fr/WWreac=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-47SyR3ndOiiQ2GHI5uxC-A-1; Tue,
+ 08 Apr 2025 07:39:21 -0400
+X-MC-Unique: 47SyR3ndOiiQ2GHI5uxC-A-1
+X-Mimecast-MFC-AGG-ID: 47SyR3ndOiiQ2GHI5uxC-A_1744112359
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB979180AF57; Tue,  8 Apr 2025 11:39:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3BB24180B487; Tue,  8 Apr 2025 11:39:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BE4CB21E675E; Tue, 08 Apr 2025 13:39:05 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Kane Chen <kane_chen@aspeedtech.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,  Steven
+ Lee <steven_lee@aspeedtech.com>,  Troy Lee <leetroy@gmail.com>,  Jamin Lin
+ <jamin_lin@aspeedtech.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,  "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>,  "open list:All patches CC here"
+ <qemu-devel@nongnu.org>,  qemu-block <qemu-block@nongnu.org>,  Troy Lee
+ <troy_lee@aspeedtech.com>
+Subject: Configuring onboard devices, in particular memory contents (was:
+ [PATCH v1 0/1] hw/misc/aspeed_sbc: Implement OTP memory and controller)
+In-Reply-To: <254844fd-15b8-47b2-9203-b19f8279c757@kaod.org>
+ (=?utf-8?Q?=22C=C3=A9dric?= Le
+ Goater"'s message of "Mon, 7 Apr 2025 11:55:17 +0200")
+References: <20250402091447.3381734-1-kane_chen@aspeedtech.com>
+ <9171629d-a386-4971-802b-cd26cc42e194@kaod.org>
+ <99497c16-cee4-4098-9971-f61ef7174412@linaro.org>
+ <c193e64d-6ce7-4e5c-bb2a-3e1d3f4f143e@kaod.org>
+ <SI6PR06MB7631DDEA18B197B4C343386DF7AA2@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <254844fd-15b8-47b2-9203-b19f8279c757@kaod.org>
+Date: Tue, 08 Apr 2025 13:39:05 +0200
+Message-ID: <877c3ulw6e.fsf_-_@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,121 +101,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+C=C3=A9dric Le Goater <clg@kaod.org> writes:
 
-> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+> Hello Kane,
 >
->> Apologies for the line wrapping in yesterday's answer. Should be fixed n=
-ow.
->>
->> On 08.04.2025 09:00, Markus Armbruster wrote:
->>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
->>>=20
->>>> Thanks a lot for the response, I really appreciate your time.
->>>>
->>>> On 07.04.2025 14:33, Markus Armbruster wrote:
->>>>
->>>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
->>>>>
->>>>>> This patch series introduces support for the Multi-Core Debug (MCD) =
-API, a
->>>>>> commonly used debug interface by emulators. The MCD API, defined thr=
-ough a
->>>>>> header file, consists of 54 functions for implementing debug and tra=
-ce.
->>>>>> However, since it is a header-file-only interface, MCD does not spec=
-ify a
->>>>>> communication protocol. We get around this limitation by following a=
- remote
->>>>>> procedure call approach using QMP. The client stub corresponding to =
-this
->>>>>> implementation can be found at https://gitlab.com/lauterbach/mcdrefs=
-rv
->>>>>>
->>>>>> This series is the successor to:
->>>>>> "[PATCH v5 00/18] first version of mcdstub"
->>>>>> (https://patchew.org/QEMU/20231220162555.19545-1-nicolas.eder@lauter=
-bach.com/)
->>>>>>
->>>>>> * Architecture-independent MCD implementation
->>>>>> * QMP instead of custom TCP protocol
->>>>>
->>>>> Rationale?  There must be pros and cons.
->>>>
->>>> Assuming you're referring to the protocol of the previous patch series:
->>>> The previous TCP protocol only supported a subset of MCD. As the=20
->>>> implementation progresses, the protocol eventually needs to be extende=
-d,=20
->>>> possibly resulting in backwards compatibility problems.
->>>> Following an RPC approach and keeping the communication layer as close=
-=20
->>>> to the MCD API as possible results in a larger protocol at first, but=
-=20
->>>> does not need to be changed afterwards.
->>>> By directly mapping MCD functions onto QMP commands, the complexity in=
-=20
->>>> the server and client stubs can be minimized.
->>>>
->>>> Assuming you're referring to the QMP choice:
->>>> QMP is being described as the "protocol which allows applications to=20
->>>> control a QEMU instance".
->>>> It provides a RPC framework which automatically (de)serializes methods=
-=20
->>>> and their parameters, even inside QTests.
->>>> The whole interface is automatically documented.
->>>=20
->>> Let's see whether I understand.
->>>=20
->>> MCD is an established C interface.
->>>=20
->>> Your goal is to provide remote MCD for QEMU, i.e. the client uses the
->>> MCD C interface, and the interface's implementation talks to an MCD
->>> server integrated into QEMU via some remote transport.
->>>=20
->>> The previous version connects the two with a bespoke protocol via TCP.
->>> The client software translates between the C interface and this
->>> protocol.  QEMU implements the protocol's server side.  Designing and
->>> maintaining a protocol is expensive.
->>>=20
->>> This versions makes two changes:
->>>=20
->>> 1. Instead of layering a protocol on top of MCD, you use MCD directly.
->>> This eliminates protocol design and maintenance.  Moreover, translation
->>> becomes straightforward marshaling / unmarshaling for the transport.
->>>=20
->>> 2. You use QMP as a transport.  This gets you marshaling / unmarshaling
->>> for free.  It also provides some useful infrastructure for tests,
->>> documentation and such.
->>>=20
->>> Fair?
->>
->> Couldn't have put it better myself.
->>
-<snip>
->>> What about providing the MCD interface as a separate QMP-like protocol?
->>> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
->>> compiling it out when not needed.
->>>
->>> It gets its own socket, just like the GDB stub.  Might reduce
->>> interference between debugging and QMP.
->>>=20
->>> Thoughts?  Alex, Philippe, care to chime in?
->>
->> Sound reasonable to me. Keeping in mind the size of generated QAPI code,
->> an option to `./configure [...] --enable-mcd` is definitely advisable.
+> + Markus (for ebc29e1beab0 implementation)
 >
-> Alex, Philippe?
+> On 4/7/25 09:33, Kane Chen wrote:
+>> Hi C=C3=A9dric/Philippe,
+>> OTP (One-Time Programmable) memory is a type of non-volatile memory
+>> in which each bit can be programmed only once. It is typically used
+>> to store critical and permanent information, such as the chip ID and
+>> secure boot keys. The structure and behavior of OTP memory are
+>> consistent across both the AST1030 and AST2600 platforms.
+>> As Philippe pointed out, this proposal models the OTP memory as a
+>> flash device and utilizes a block backend for persistent storage. In
+>> contrast, existing implementations such as NPCM7xxOTPState,
+>> BCM2835OTPState, and SiFiveUOTPState expose OTP memory via MMIO and
+>> always initialize it in a blank state.=20
+>
+> AFAIU, Aspeed SBC is also MMIO based or is there another device,
+> an eeprom, accessible through an external bus ? How is it
+> implemented in HW ?
+>
+>> The goal of this design is to
+>> allow the guest system to boot with a pre-configured OTP memory
+>> state.=20
+>
+> Yes. This is a valid request. It's not the first time we've had
+> this kind of requests. The initial content of EEPROM devices are
+> an example and some machines, like the rainier, have a lot.
+>
+> If the device can be defined on the command line, like would be
+> an EEPROM device attached to an I2C bus or a flash device attached
+> to a SPI bus, we can use a 'drive' property. Something like :
+>
+>   qemu-system-arm -M ast2600-evb \
+>       -blockdev node-name=3Dfmc0,driver=3Dfile,filename=3D/path/to/fmc0.i=
+mg \
+>       -device mx66u51235f,bus=3Dssi.0,cs=3D0x0,drive=3Dfmc0 \
+>       -blockdev node-name=3Dfmc1,driver=3Dfile,filename=3D/path/to/fmc1.i=
+mg \
+>       -device mx66u51235f,bus=3Dssi.0,cs=3D0x1,drive=3Dfmc1 \
+>       -blockdev node-name=3Dspi1,driver=3Dfile,filename=3D/path/to/spi1.i=
+mg \
+>       -device mx66u51235f,cs=3D0x0,bus=3Dssi.1,drive=3Dspi1 \
+>       ...
+>
+> However, the Aspeed SBC device is a platform device and it makes
+> things more complex : it can not be created on the command line,
+> it is directly created by the machine and the soc and passing
+> device properties to specify a blockdev it is not possible :
+>
+>   qemu-system-arm -M ast2600-evb \
+>       -blockdev node-name=3Dotpmem,driver=3Dfile,filename=3D/path/to/otpm=
+em.img \
+>       -device aspeed-sbc,drive=3Dotpmem \
+>       ...
 
-When I spoke to Mario at DVCon last year I liked the idea of re-using
-QMP instead of inventing yet another RPC interface for QEMU. QMP
-certainly has nicer properties than the gdbstub which has a very
-"organic" and "serial" feel to it.
+Configuring onboard devices is an old problem, and so far we have failed
+at solving it adequately.
 
-Are you suggesting we re-use the machinery but use an entirely separate
-socket with just the MCD namespace in it? I don't see that being a
-problem as long as we can test it properly in the CI.
+-device / device_add let you configure the new device in a general way,
+but these work only for device the user creates, not for devices the
+board creates automatically.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+We have a bunch of ad hoc and mostly ancient ways to configure them, but
+they're all limited.  For example:
+
+* A number of old command line options, such as -drive, -serial, -net
+  nic, create device backends and additionally deposit configuration in
+  some global table the board may elect to use however it sees fit.  The
+  intended use is to create frontends connected to these backends.
+
+  Some boards error out when they can't honor something in the table.
+  Others silently ignore parts of the table, or all of it.  Bad UI.
+
+  Device configuration the table doesn't support is not accessible this
+  way.  If you extend the table (and the associated option) to provide
+  access to some device-specific configuration, all the other devices
+  will silently ignore the new configuration bits.  Again, bad UI.
+
+  There's another serious issue with block devices: -drive is obsolete
+  for configurating complex block backends.  But its replacement
+  -blockdev is for backend configuration only.  If you use -blockdev,
+  you can't add to the table.
+
+* Command line option -global lets you change property defaults.  This
+  can be used to configure an onboard device as long as it is the only
+  such device in the system.  Limited use, and also bad UI.
+
+A modern attempt at a solution is to have machine properties alias
+properties of onboard devices, so you can specify them with -machine.
+For instance, a few machines expose the "drive" property of two onboard
+pflash devices as machine properties "pflash0" and "pflash1".
+
+Commits
+
+    e0561e60f170 (hw/arm/virt: Support firmware configuration with -blockde=
+v)
+    ebc29e1beab0 (pc: Support firmware configuration with -blockdev)=20
+
+explain this in a lot more detail in their commit messages.
+
+Sadly, this solution does not scale.  Adding alias properties to the
+machine object is work, sometimes a lot of work (evidence: the two
+commits above).  There are simply too many onboard devices with too many
+properties to all manually alias.
+
+Of course, even an insufficiently general / scalable solution like this
+one can work well enough for specific cases.
+
+>> To support this, the OTP memory is backed by a file,
+>> simulating persistent flash behavior.
+>
+> The idea is good but the implementation is problematic.
+>
+>     +static BlockBackend *init_otpmem(int64_t size_bytes)
+>     +{
+>     +    Error *local_err =3D NULL;
+>     +    BlockDriverState *bs =3D NULL;
+>     +    BlockBackend *blk =3D NULL;
+>     +    bool image_created =3D false;
+>     +    QDict *options;
+>     +    uint32_t i, odd_def =3D 0xffffffff, even_def =3D 0, *def;
+>     +
+>     +    if (!g_file_test(OTP_FILE_PATH, G_FILE_TEST_EXISTS)) {
+>     +        bdrv_img_create(OTP_FILE_PATH, "raw", NULL, NULL,
+>     +                        NULL, size_bytes, 0, true, &local_err);
+>     +        if (local_err) {
+>     +            qemu_log_mask(LOG_GUEST_ERROR,
+>     +                          "%s: Failed to create image %s: %s\n",
+>     +                          __func__, OTP_FILE_PATH,
+>     +                          error_get_pretty(local_err));
+>     +            error_free(local_err);
+>     +            return NULL;
+>     +        }
+>     +        image_created =3D true;
+>     +    }
+>     +
+>     +    blk =3D blk_new(qemu_get_aio_context(),
+>     +                  BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
+>     +                  0);
+>     +    if (!blk) {
+>     +        qemu_log_mask(LOG_GUEST_ERROR,
+>     +                      "%s: Failed to create BlockBackend\n",
+>     +                      __func__);
+>     +        return NULL;
+>     +    }
+>     +
+>     +    options =3D  qdict_new();
+>     +    qdict_put_str(options, "driver", "raw");
+>     +    bs =3D bdrv_open(OTP_FILE_PATH, NULL, options, BDRV_O_RDWR, &loc=
+al_err);
+>     +    if (local_err) {
+>     +        qemu_log_mask(LOG_GUEST_ERROR,
+>     +                      "%s: Failed to create OTP memory, err =3D %s\n=
+",
+>     +                      __func__, error_get_pretty(local_err));
+>     +        blk_unref(blk);
+>     +        error_free(local_err);
+>     +        return NULL;
+>     +    }
+>     +
+>     +    blk_insert_bs(blk, bs, &local_err);
+>     +    if (local_err) {
+>     +        qemu_log_mask(LOG_GUEST_ERROR,
+>     +                      "%s: Failed to insert OTP memory to SBC, err =
+=3D %s\n",
+>     +                      __func__, error_get_pretty(local_err));
+>     +        bdrv_unref(bs);
+>     +        blk_unref(blk);
+>     +        error_free(local_err);
+>     +        return NULL;
+>     +    }
+>     +    bdrv_unref(bs);
+>     ...
+>
+> IMO, this is low level block code that a device model shouldn't have
+> to deal with. A 'drive' should be used instead. Now, if the qemu-block
+> maintainers are OK with it, we need their approval.
+
+Using block backends to specify the contents of a memory device is a bit
+of a hack.  However, it's the hacky solution we use, and until we have a
+better solution, new code is well advised to stick to the same hacky
+solution we use in existing code.
+
+Why is it a bit of a hack?  Well, memory isn't a block device.  For
+read-only memory, all we want from the block device is slurping in some
+image in its entirety.  We're not interesting in reading parts, or
+writing at all.  For writable memory, we are interested in writing, but
+there's often a awkward translation to block device blocks.
+
+>  > The OTP memory access flow is as follows:
+>> 1. The guest issues a read or write OTP command to the Secure Boot
+>>     Controller (SBC)
+>> 2. The SBC triggers the corresponding operation in the OTP controller
+>> 3. The SBC returns the result to the guest
+>> Since the guest interacts with OTP memory exclusively through the
+>> SBC, the OTP logic is implemented within aspeed_sbc.c.
+>> If there are existing architectural guidelines or design patterns
+>> that should be followed for modeling OTP devices, I would greatly
+>> appreciate your feedback. I am happy to revise the implementation
+>> accordingly and submit updated patches for further review.
+>
+> Adding a 'drive' property to the aspeed-sbc model shouldn't change
+> too much the proposal and it will remove the init_otpmem() routine,
+> which is problematic.
+>
+> Then, we need to find a way to set the 'drive' property of the
+> aspeed-sbc model. I suggest using the same method of the edk2 flash
+> devices of the q35 machine. See ebc29e1beab0. Setting a machine
+> option would set the drive. Something like :
+>
+>   qemu-system-arm -M ast2600-evb,otpmem=3Dotpmem-drive \
+>       -blockdev node-name=3Dotpmem,driver=3Dfile,filename=3D/path/to/otpm=
+em.img \
+>       ...
+>
+> This machine option would only be defined for machine types needing
+> it.
+
+I don't love this solution, but it's what we use elsewhere.  I think
+C=C3=A9dric is right.
+
 
