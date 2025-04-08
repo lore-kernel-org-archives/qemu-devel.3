@@ -4,103 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8491AC369A1
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44469C369A1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u26fy-0006UK-Ll; Tue, 08 Apr 2025 06:59:30 -0400
+	id 1u26hl-0007lT-IL; Tue, 08 Apr 2025 07:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1u26fu-0006Tm-O7; Tue, 08 Apr 2025 06:59:27 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aik@ozlabs.ru>)
- id 1u26fr-00028c-MS; Tue, 08 Apr 2025 06:59:26 -0400
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal
- [10.202.2.50])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 0B7A41140192;
- Tue,  8 Apr 2025 06:59:19 -0400 (EDT)
-Received: from phl-imap-13 ([10.202.2.103])
- by phl-compute-10.internal (MEProxy); Tue, 08 Apr 2025 06:59:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.ru; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1744109959;
- x=1744196359; bh=qHyes5Zs3cVefRHhZjXjpLIa9Dk40UqP4Xg1MON3vCE=; b=
- F9rlNllqi4QVB50HryY6Zbs2zKyX0MnYKpxAzvSaLa6Ivwu4p4pFRgsGKh7Ndopg
- F/TfLbIOXRdSCz3bBC31GvJeJEZAfJgXzDNZKgfvk815b6fBp31I1ekAturmHWKU
- SlUqF5sc4acleXDR6hmT4a7gjDw5IFe5xXTJ4Y/UjA1vZaFsU3+24px+Le6WxYzQ
- xuRYKTCDouLiNq87j7mD1UTdWlUuSMFhHfxF/QD20Pai6b3LTIi/3fm08zumZ5YM
- x0BDiYxKzI5hIy+BKFgrvbScBUNYO+TMJxTBFOnyOo0+bFkugAi3BAtk3wZ+/HEC
- 4x5fiEcCjDRNxTc2mkXIQg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1744109959; x=
- 1744196359; bh=qHyes5Zs3cVefRHhZjXjpLIa9Dk40UqP4Xg1MON3vCE=; b=Y
- 8FtGgX3zKapOgDEyq0bZc+vl3NOluicPpdJdXqdWHDwPLQfBPi2RJVxXWlvtFSoX
- CIkiEqYRZtibX0r4ApaHX9LIDLhaLeiszc7T+P6Qc0ENoIqzsjkxsLOoC8tuwgx4
- 5AmInLA5Qobo9qVIKl0U3VrMoq47aKu70S2mw8o0Ih1rMeSGgY9hH+lkp1utDoUY
- aiCh/3xFbuP9mdtXeDPZRrBCXg/qOKR0oLxLWebR/rsOKOT2ffVPJMXVHLeCgSu5
- mRXJUahyPDruLmyVsV274U++6WmFV2PWHLNpmeXwVizncQ4irNbbtpXCCQ/Sk8g3
- 0N1mC++p0ngX2JpdxL6qg==
-X-ME-Sender: <xms:hAH1Z0UDmSR6-bVvafnMbIZnvtkPEME1d2DcT5i0Ao6D9rHHnfkmRw>
- <xme:hAH1Z4l-qC-piLyEnDKKay0mQWNj3C7hST6ZBP75UuwPAEz4Pgwa98UMfviZqqeLc
- tv-DAiL9OV2Hd4VBu0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtddvledtucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
- pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertder
- tddtnecuhfhrohhmpedftehlvgigvgihucfmrghruggrshhhvghvshhkihihfdcuoegrih
- hksehoiihlrggsshdrrhhuqeenucggtffrrghtthgvrhhnpeefvdeikeegkeeiieevleeh
- feejgfetveetvddvhfeuleeuhfduieelieelieehieenucevlhhushhtvghrufhiiigvpe
- dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrihhksehoiihlrggsshdrrhhupdhnsggp
- rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrghtoh
- hnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopegurghnihgvlhhhsgegudefsehgmhgr
- ihhlrdgtohhmpdhrtghpthhtohepnhhpihhgghhinhesghhmrghilhdrtghomhdprhgtph
- htthhopehhrghrshhhphgssehlihhnuhigrdhisghmrdgtohhmpdhrtghpthhtohepqhgv
- mhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqphhptg
- esnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:hAH1Z4ZOGRiYrzalfWNCFkh9ukB449SzFNIu1B1744nO_fPW5IjNew>
- <xmx:hAH1ZzU_vtu-_eR5qomZTwfGzuza78ZFDY-XImi7EkurRhQEoquuOA>
- <xmx:hAH1Z-lL6vO849it9lBEq33wU01Nx4dmo7ETXagszpl31xRmoVQzzA>
- <xmx:hAH1Z4dEqORowg2gadFMssUzUcThQgnJiuSFPu5u8E191uYAnrP3pQ>
- <xmx:hwH1Z5SbbXroLyEyKFjxwa3LSVxPQrq3EceTi6vK-FJHErQiRCayaJAw>
-Feedback-ID: i6e394913:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id B8EE71F00073; Tue,  8 Apr 2025 06:59:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
+ id 1u26hO-0007gV-Ig
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:00:59 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pmgpatil@gmail.com>)
+ id 1u26hL-0002Re-P7
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:00:58 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-54b166fa41bso1444909e87.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 04:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744110052; x=1744714852; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LJwZz7yvCJ5j/oDIn4XWU55Ohk40U6xIzbIdb8jE+LY=;
+ b=HnucnGm7jSAd+aCakXvCwHNJEtQXBPom7V/w1QcK1/JAR5AGM18HcHYoCEld/sFxuZ
+ yevyynzYtRkpb1a77M4Xfj1YhJ0ZCBYBLs2UuSyCf2g/nM80lY1B95t3rKIR9qZs8/ML
+ LVPHyk6aNyjPBjdZa0u3kKOCzCY3WPEjx3SlK6udrC1Kcr7FOPbsadtS9D5N0jWwDM1m
+ 5fg7Z3ubpvWXYq3aiILHCvpGd2r6cXKKH2+tlbxd17jUbz9S+qkLKFlazv3c2jrCpObW
+ bIdKa3xzIZjPzl+7NKkwscUFRi6yAZXpwJPz5HricIYLSix6aIY14z2POYd2SkuRaPsS
+ 3JEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744110052; x=1744714852;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LJwZz7yvCJ5j/oDIn4XWU55Ohk40U6xIzbIdb8jE+LY=;
+ b=BIulEGRmvreC1teb4MxDHZo80p53uohMQxAtgR98vfNFrNo+/pVV1L/eKQbU+kVvjS
+ gQDXvRgBuKI4KSzlKnN21RVIeo2tEqFVOZ1MnTbMeMAK5V07628QB+YRmxHAs41S8FUM
+ xOJw165Llhfa9PFx0PZLnVNXwLvraN1DP3TFtlecblOrawHAQfvE7ZFdHXYv7dfUUdLh
+ 0q1b0UVTtqy+wob2J3LotSt3h8QrsHyLXvflPQ2a78HeHlMs07AqX8bTrU0bHp8meCVY
+ tbk4y4b2VW0p4Hcp8w1OwA29PfOirkvBTEP9BGiO5Wb83MnlJ78NB5btuDxJXkMVvj7F
+ rEsw==
+X-Gm-Message-State: AOJu0Yynzc17XY1g65nI6FeXb5NbZtz8aJItg+Ld1satxR85vRvK7d/J
+ h+9n5r475IMv/7gGQhhdypJ98DEv0a047LAeuxiRp2LBm3Nn8DbVLW98JJd2GIJNcxC+k/CgjX+
+ +8WcOI6hHdrprd6hvz1F9rD3xsG3yl5Sb
+X-Gm-Gg: ASbGnct5wuv8vvPG+peHup768N0hm4vw9zHyyetwHTxub4Kr/OO2JF5TYH693hLiUTk
+ eWwmHiIrVp5wRBph997JO4un1iic2wHrYLh2nBSZsdhn3IQUtdAlpIeUBRGG35qEp7244M9/vZL
+ PLhlyRNNYkPC9FTtazYA80nuC1js6V
+X-Google-Smtp-Source: AGHT+IGhozt2MzHvDTkedgjgwXXpQ17wfIZ4WQ7XbmyPwB8imQDPaKnT/20ql7jvuD9iZEXmsKHeL7Ntyi34PRzFQh8=
+X-Received: by 2002:a05:651c:2210:b0:30b:b8e6:86d7 with SMTP id
+ 38308e7fff4ca-30f0bf4e0f8mr43766061fa.22.1744110051950; Tue, 08 Apr 2025
+ 04:00:51 -0700 (PDT)
 MIME-Version: 1.0
-X-ThreadId: Tc8f811213d1a6613
-Date: Tue, 08 Apr 2025 20:58:55 +1000
-From: "Alexey Kardashevskiy" <aik@ozlabs.ru>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- "Nicholas Piggin" <npiggin@gmail.com>,
- "Daniel Henrique Barboza" <danielhb413@gmail.com>,
- "Harsh Prateek Bora" <harshpb@linux.ibm.com>
-Message-Id: <4899ece7-7de4-45e8-b378-cde50963caf3@app.fastmail.com>
-In-Reply-To: <e12b9999-d51a-91ec-a778-e1bdfec2404b@eik.bme.hu>
-References: <20250331142627.BAA2F4E6029@zero.eik.bme.hu>
- <d8d883c3-afcd-44bd-aa71-6ca23d1dd9c3@app.fastmail.com>
- <e12b9999-d51a-91ec-a778-e1bdfec2404b@eik.bme.hu>
-Subject: Re: [PATCH v2] ppc/vof: Make nextprop behave more like Open Firmware
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=aik@ozlabs.ru;
- helo=fhigh-a2-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAFvsdYns1yO6Wsm8VKP_khbTPm09Kf5KDmBpeMSrjboyccK4Aw@mail.gmail.com>
+ <d2276vugq6wureu6zzrwci5sdtg3b6gllqskjv7hfvuulsmhyn@anl3d5htudty>
+ <CAFvsdYk0J7ybdu+dL+w70Po1bGypLopBkixPp-ZzmTA8MdTr0w@mail.gmail.com>
+ <pf24mn3twfrc2kfaszovdyj5rhh6d4r4ixawh2dyx5dbi5no3j@ryk4lzslrnye>
+ <CAFvsdYmJFDuQzk6Byu+f4HcTO1EStin3vEMC+twh8P3T2ve6qA@mail.gmail.com>
+ <6s2grkptds54jewlroehfvfpk4aci5ks7lkm4h4tfnvayxzi4l@2tilhng3srix>
+In-Reply-To: <6s2grkptds54jewlroehfvfpk4aci5ks7lkm4h4tfnvayxzi4l@2tilhng3srix>
+From: prashant patil <pmgpatil@gmail.com>
+Date: Tue, 8 Apr 2025 16:30:38 +0530
+X-Gm-Features: ATxdqUHprKogNBvFgeA0cD3MYHdCJn33F5KREjpSUZIC_-khebSYhvPOQ9CNHrM
+Message-ID: <CAFvsdYkhcMgNJfQwdSZ_23qwoqUwbSF8uhBYDQa6d=CiXbcLmw@mail.gmail.com>
+Subject: Re: Query on the dirty bitmap
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000188bc30632424441"
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=pmgpatil@gmail.com; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,168 +96,368 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000188bc30632424441
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+ Thank you, Eric, for the thorough information=E2=80=94truly appreciate it.
 
-On Sat, 5 Apr 2025, at 11:09, BALATON Zoltan wrote:
-> On Fri, 4 Apr 2025, Alexey Kardashevskiy wrote:
-> > On Tue, 1 Apr 2025, at 01:26, BALATON Zoltan wrote:
-> >> The FDT does not normally store name properties but reconstructs it
-> >> from path but each node in Open Firmware should at least have this
-> >> property. This is correctly handled in getprop but nextprop should
-> >> also return it even if not present as a property. This patch fixes
-> >> that and also skips phandle which does not appear in Open Firmware
-> >> and only added for internal use by VOF.
-> >>
-> >> Explicit name properties are still allowed because they are needed
-> >> e.g. on the root node that guests expect to have specific names as
-> >> seen on real machines instead of being empty so sometimes the node
-> >> name may need to be overriden.
-> >>
-> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> >> ---
-> >> I've tested this with pegasos2 but don't know how to test spapr.
-> >> v2:
-> >> Fixed a typo in commit message
-> >> Simplified loop to get next property name
-> >>
-> >> hw/ppc/vof.c | 51 ++++++++++++++++++++++++++++++++++-----------------
-> >> 1 file changed, 34 insertions(+), 17 deletions(-)
-> >>
-> >> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> >> index 09cb77de93..790d67c096 100644
-> >> --- a/hw/ppc/vof.c
-> >> +++ b/hw/ppc/vof.c
-> >> @@ -353,34 +353,51 @@ static uint32_t vof_nextprop(const void *fdt, uint32_t phandle,
-> >> {
-> >>      int offset, nodeoff = fdt_node_offset_by_phandle(fdt, phandle);
-> >>      char prev[OF_PROPNAME_LEN_MAX + 1];
-> >> -    const char *tmp;
-> >> +    const char *tmp = NULL;
-> >> +    bool match = false;
-> >>
-> >>      if (readstr(prevaddr, prev, sizeof(prev))) {
-> >>          return PROM_ERROR;
-> >>      }
-> >> -
-> >> -    fdt_for_each_property_offset(offset, fdt, nodeoff) {
-> >> -        if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
-> >> -            return 0;
-> >> +    /*
-> >> +     * "name" may or may not be present in fdt but we should still return it.
+Just to confirm what I understood, when we are reading a bitmap with
+'x-dirty-bitmap' (for powered on vm of course), the 'start' is always a
+logical offset no matter whether the record has 'offset' value or not. Is
+this correct?
+
+Also, I came across a case wherein we get the entire disk as allocated for
+a raw format disk which is present on lvm or lvm-thin storage (the disk has
+just a few MB data added, and the vm is in running state). Here is an
+example of 1Gb data. Is this expected behaviour?
+[{ "start": 0, "length": 1073741824, "depth": 0, "present": true, "zero":
+false, "data": true, "compressed": false, "offset": 0}]
+
+Regards,
+Prashant
+
+On Mon, Apr 7, 2025 at 8:24=E2=80=AFPM Eric Blake <eblake@redhat.com> wrote=
+:
+
+> On Mon, Apr 07, 2025 at 02:46:17PM +0530, prashant patil wrote:
+> > Thanks Eric.
+>
+> [top-posting makes conversations harder to follow, so on this list we
+> typically reply inline]
+>
+> > I have a few questions about the bitmap content shown by 'qemu-img map'=
+.
+> > From below sample bitmap data:
+> > 1. Why only some of the extents have start and offset values? And why a=
+re
+> > they the same values?
+> > 2. What does the start value indicate? Is it logical offset or physical
+> > offset of data into qcow2?
+>
+> Normally (when there is no x-dirty-bitmap in play), 'start' denotes
+> the logical offset being reported on (you'd expect a map to list every
+> logical offset; so the start of entry N+1 should be the sum of start +
+> length of entry N), while 'offset' is where that extent begins in the
+> underlying file.  For a raw source, offset and start will be
+> identical; for other sources, like qcow2, start is obviously logical,
+> while offset is physical.  Entries without 'offset' are places where
+> the logical contents are compressed, synthesized, or otherwise have no
+> 1:1 correspondence to an offset in the physical file.  'present'
+> indicates whether the data is synthesized or not; 'offset' is going to
+> be absent if 'present' is false; although it can also be absent even
+> when 'present' is true such as in the case of compression.
+>
+> When it comes to exposing a qcow2 file over NBD, you generally want to
+> have:
+>
+> qemu-nbd using '-f qcow2' =3D> raw view =3D> qemu-img using '-f raw'
+>
+> to expose only the logical contents over the wire.  It is also
+> possible to flip the responsibility:
+>
+> qemu-nbd using '-f raw' =3D> qcow2 view =3D> qemu-img using '-f qcow2'
+>
+> to expose the bare-metal qcow2 contents over the wire, but that gets
+> less testing, in part because if you make the image writable, it tends
+> to cause problems if the client writing to the qcow2 layer needs to
+> allocate (since NBD does not have a resize command).  Having the
+> server open the file as qcow2 and only serving raw contents means the
+> server can resize transparently.  What's more, block status commands
+> over NBD only work when the server is aware of the qcow2 nature of the
+> file it is serving (if you expose qcow2 bits over the wire, the server
+> treats the entire file as allocated, and there is is no dirty bitmap
+> context for the client to read over NBD).
+>
+> Therefore, 'start' and 'offset' are going to be identical if you are
+> using qemu-img map to read bitmaps from a server, since bitmaps can
+> only be read when the wire has the raw view (not the qcow2 view).
+>
+> But when you add x-dirty-bitmap into the mix, you are asking qemu to
+> DISREGARD the normal rules of backing file information and instead
+> report on dirty bitmap information as if it were backing file info.
+> This means that anywhere the dirty bitmap response differs from a
+> normal backing file response, the output of qemu-img is reporting
+> garbage data (for example, the 'present' bit is now bogus, which
+> explains why the rows where qemu-img claims 'present' is false omit an
+> 'offset').  Only 'start', 'length', and 'data' matter when using
+> x-dirty-bitmap, with 'data=3Dfalse' meaning the section was reported
+> dirty, and 'data=3Dtrue' meaning the section was reported unchanged.
+>
+> And if that is confusing, well yeah. Which is why I recommend using
+> libnbd's nbdinfo --map, where the output is more obvious.
+>
 > >
-> > yeah we should, at least, to match "getprop". I also wonder if VOF does 
-> > not add "name", then what would do so, do we really expect to see such 
-> > properties anywhere? Because if not, then we do not need to skip it as 
-> > we won't find it.
-> 
-> I have to add it to fdt where needed. For example on pegasos MorphOS 
-> checks the name of "/" and expects to find bplan,Pegasos2 which is how it 
-> identifies the machine. So we need a specific name property there which is 
-> one example when there will be explicit name property in the fdt. Maybe 
-> it's needed on some other nodes sometimes but normally the default will be 
-> sufficient but not always.
+> > root@be-proxmox1:/# qemu-img map --output=3Djson --image-opts
+> > "$IMG,x-dirty-bitmap=3Dqemu:dirty-bitmap:bitmap1"
+> >   [{ "start": 0, "length": 196608, "depth": 0, "present": true, "zero":
+> > false, "data": true, "compressed": false, "offset": 0},
+>
+> The extent starting at logical offset 0 and lasting 196608 bytes is
+> unchanged.
+>
+> > { "start": 196608, "length": 65536, "depth": 0, "present": false, "zero=
+":
+> > false, "data": false, "compressed": false},
+>
+> The extent starting at 196608 and lasting 65536 bytes is dirty
+> (altered since the point in time when the bitmap was created).
+>
+> > > > qemu-img
+> > > > map with x-dirty-bitmap image-opts.
+> > >
+> > > Here, this works, but feels like a hack, because it is relying on the
+> > > x-dirty-bitmap feature of qemu.  The libnbd project ships with an
+> > > application 'nbdinfo --map' that can read the same information as
+> > > 'qemu-img map' but with a much nicer layout.  It's not going to
+> > > necessarily be faster, but because it is a fully-supported feature of
+> > > libnbd rather than a hack in qemu, it may prove more stable in the
+> > > long run, and certainly easier to understand.
+>
+>
+> For a worked example:
+>
+> # Create an image, dirty two different offsets, with a bitmap created in
+> between
+> $ qemu-img create -f qcow2 foo.qcow2 3M
+> Formatting 'foo.qcow2', fmt=3Dqcow2 cluster_size=3D65536 extended_l2=3Dof=
+f
+> compression_type=3Dzlib size=3D3145728 lazy_refcounts=3Doff refcount_bits=
+=3D16
+> $ qemu-io -f qcow2 foo.qcow2 -c 'w 1M 512'
+> wrote 512/512 bytes at offset 1048576
+> 512 bytes, 1 ops; 00.01 sec (42.906 KiB/sec and 85.8112 ops/sec)
+> $ qemu-img bitmap -f qcow2 foo.qcow2 --add b1
+> $ qemu-io -f qcow2 foo.qcow2 -c 'w 2M 512'
+> wrote 512/512 bytes at offset 2097152
+> 512 bytes, 1 ops; 00.00 sec (107.735 KiB/sec and 215.4704 ops/sec)
+>
+> # Now, expose the raw bytes of the image over NBD, and inspect with nbdin=
+fo
+>
+> $ qemu-nbd -f qcow2 foo.qcow2 -A -Bb1 -t
+> $ nbdinfo --map=3Dqemu:dirty-bitmap:b1 nbd://localhost
+>          0     2097152    0  clean
+>    2097152       65536    1  dirty
+>    2162688      983040    0  clean
+> $ nbdinfo --map nbd://localhost
+>          0     1048576    3  hole,zero
+>    1048576        4096    0  data
+>    1052672       61440    2  zero
+>    1114112      983040    3  hole,zero
+>    2097152        4096    0  data
+>    2101248       61440    2  zero
+>    2162688      983040    3  hole,zero
+>
+> Comparing those to qemu-img map --output=3Djson should be instructive.
+>
+>
+> --
+> Eric Blake, Principal Software Engineer
+> Red Hat, Inc.
+> Virtualization:  qemu.org | libguestfs.org
+>
+>
 
-Put this paragraph to the commit log, this is useful.
+--000000000000188bc30632424441
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> >> +     * Do that first and then skip it if seen later. Also skip phandle which is
-> >
-> > (a nit) appears to me that if handling of a missing "name" was done 
-> > after the last property, the patch would look simpler, but not sure and 
-> > do not insist.
-> 
-> I put name first to match what OpenFirmware does which returns name first. 
-> SLOF seems to do everything backwards (maybe a result of parsing the fdt 
-> to build the device tree) and returns properties with inverted order so 
-> name is last on SLOF but even then the order is matched by putting name 
-> first when we return properties in the normal order otherwise it would not 
-> be in same order when reversed. I don't know if it's significant, some 
-> guests may expect to get a name first but most would probably look for the 
-> name not its position. The order now matches OpenFirmware and pegasos2 
-> SmartFirmware and SLOF backwards so I think name is now where it should be 
-> so I'd leave it first. The loop may become simpler if we don't skip 
-> phandle only name, the complexity is mostly from sometimes we need to skip 
-> both in a row.
-> 
-> >> +     * an internal value we added in vof_build_dt but should not appear here.
-> >
-> > I would not hide anything though, unless it breaks something. Thanks,
-> 
-> I did some tests with SLOF. This is what I get from SLOF:
-> 
-> package 0x1e64a890 /vdevice/v-scsi@71000003:
->          slof,from-fdt          0
->          reg                    71000003
->          device_type            "vscsi"
->          compatible             "IBM,v-scsi"
->          interrupts             [0x8 bytes, 2 cells]
->          [000] 00001103 00000000
->          ibm,#dma-address-cells 2
->          ibm,#dma-size-cells    2
->          ibm,my-dma-window      "q"
->          #address-cells         2
->          #size-cells            0
->          name                   "v-scsi"
-> 
-> This is VOF before patch:
-> 
-> package 0x00001122 /vdevice/v-scsi@71000003:
->          phandle                1122
->          #size-cells            0
->          #address-cells         2
->          ibm,my-dma-window      "q"
->          ibm,#dma-size-cells    2
->          ibm,#dma-address-cells 2
->          interrupts             [0x8 bytes, 2 cells]
->          [000] 00001103 00000000
->          compatible             "IBM,v-scsi"
->          device_type            "vscsi"
->          reg                    71000003
-> 
-> and this is VOF after patch:
-> 
-> package 0x00001122 /vdevice/v-scsi@71000003:
->          name                   "v-scsi"
->          #size-cells            0
->          #address-cells         2
->          ibm,my-dma-window      "q"
->          ibm,#dma-size-cells    2
->          ibm,#dma-address-cells 2
->          interrupts             [0x8 bytes, 2 cells]
->          [000] 00001103 00000000
->          compatible             "IBM,v-scsi"
->          device_type            "vscsi"
->          reg                    71000003
-> 
-> Apart from SLOF returning properties backwards this now matches better. 
-> SLOF or other Open Firmware implementations don't return phandle property 
-> because that's what you pass to nextprop or getprop to get the property in 
-> the first place (listed next to package above) and it is returned by 
-> finddevice so not normally stored as a property. But if Linux would add it 
-> and it helps Linux to have it there already we can keep it, it did not 
-> break OSes on pegasos as they only parse properties they need and ignore 
-> the rest. So I can skip skipping phandle and add that back if it would be 
-> better for Linux but didn't removing it fixed a warning about it too?
-> 
-> By the way, phandle is identifying the node so can't we use the fdt offset 
+<div dir=3D"ltr">
 
-This is sort of what SLOF does - uses physical addresses of nodes.
+Thank=C2=A0you, Eric, for the thorough information=E2=80=94truly appreciate=
+ it.
 
-> for it so we don't have to add phandle properties? Or does offset change 
-> when editing the fdt?
+<div><br></div><div>Just to confirm what I understood, when we are reading =
+a bitmap with &#39;x-dirty-bitmap&#39; (for powered on vm of course), the &=
+#39;start&#39; is always a logical offset no matter whether the record has =
+&#39;offset&#39; value or not. Is this correct?</div><div><br></div><div>Al=
+so, I came across a case wherein we get the entire disk as allocated for a =
+raw format disk which is present on lvm or lvm-thin storage (the disk has j=
+ust a few MB data added, and the vm is in running state). Here is an exampl=
+e of 1Gb data. Is this expected behaviour?</div><div>[{ &quot;start&quot;: =
+0, &quot;length&quot;: 1073741824, &quot;depth&quot;: 0, &quot;present&quot=
+;: true, &quot;zero&quot;: false, &quot;data&quot;: true, &quot;compressed&=
+quot;: false, &quot;offset&quot;: 0}]</div><div><br></div><div>Regards,</di=
+v><div>Prashant</div></div><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Apr 7, 2025 at 8:24=E2=
+=80=AFPM Eric Blake &lt;<a href=3D"mailto:eblake@redhat.com">eblake@redhat.=
+com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">On Mon, Apr 07, 2025 at 02:46:17PM +0530, prashant patil wrote:<br>
+&gt; Thanks Eric.<br>
+<br>
+[top-posting makes conversations harder to follow, so on this list we<br>
+typically reply inline]<br>
+<br>
+&gt; I have a few questions about the bitmap content shown by &#39;qemu-img=
+ map&#39;.<br>
+&gt; From below sample bitmap data:<br>
+&gt; 1. Why only some of the extents have start and offset values? And why =
+are<br>
+&gt; they the same values?<br>
+&gt; 2. What does the start value indicate? Is it logical offset or physica=
+l<br>
+&gt; offset of data into qcow2?<br>
+<br>
+Normally (when there is no x-dirty-bitmap in play), &#39;start&#39; denotes=
+<br>
+the logical offset being reported on (you&#39;d expect a map to list every<=
+br>
+logical offset; so the start of entry N+1 should be the sum of start +<br>
+length of entry N), while &#39;offset&#39; is where that extent begins in t=
+he<br>
+underlying file.=C2=A0 For a raw source, offset and start will be<br>
+identical; for other sources, like qcow2, start is obviously logical,<br>
+while offset is physical.=C2=A0 Entries without &#39;offset&#39; are places=
+ where<br>
+the logical contents are compressed, synthesized, or otherwise have no<br>
+1:1 correspondence to an offset in the physical file.=C2=A0 &#39;present&#3=
+9;<br>
+indicates whether the data is synthesized or not; &#39;offset&#39; is going=
+ to<br>
+be absent if &#39;present&#39; is false; although it can also be absent eve=
+n<br>
+when &#39;present&#39; is true such as in the case of compression.<br>
+<br>
+When it comes to exposing a qcow2 file over NBD, you generally want to<br>
+have:<br>
+<br>
+qemu-nbd using &#39;-f qcow2&#39; =3D&gt; raw view =3D&gt; qemu-img using &=
+#39;-f raw&#39;<br>
+<br>
+to expose only the logical contents over the wire.=C2=A0 It is also<br>
+possible to flip the responsibility:<br>
+<br>
+qemu-nbd using &#39;-f raw&#39; =3D&gt; qcow2 view =3D&gt; qemu-img using &=
+#39;-f qcow2&#39;<br>
+<br>
+to expose the bare-metal qcow2 contents over the wire, but that gets<br>
+less testing, in part because if you make the image writable, it tends<br>
+to cause problems if the client writing to the qcow2 layer needs to<br>
+allocate (since NBD does not have a resize command).=C2=A0 Having the<br>
+server open the file as qcow2 and only serving raw contents means the<br>
+server can resize transparently.=C2=A0 What&#39;s more, block status comman=
+ds<br>
+over NBD only work when the server is aware of the qcow2 nature of the<br>
+file it is serving (if you expose qcow2 bits over the wire, the server<br>
+treats the entire file as allocated, and there is is no dirty bitmap<br>
+context for the client to read over NBD).<br>
+<br>
+Therefore, &#39;start&#39; and &#39;offset&#39; are going to be identical i=
+f you are<br>
+using qemu-img map to read bitmaps from a server, since bitmaps can<br>
+only be read when the wire has the raw view (not the qcow2 view).<br>
+<br>
+But when you add x-dirty-bitmap into the mix, you are asking qemu to<br>
+DISREGARD the normal rules of backing file information and instead<br>
+report on dirty bitmap information as if it were backing file info.<br>
+This means that anywhere the dirty bitmap response differs from a<br>
+normal backing file response, the output of qemu-img is reporting<br>
+garbage data (for example, the &#39;present&#39; bit is now bogus, which<br=
+>
+explains why the rows where qemu-img claims &#39;present&#39; is false omit=
+ an<br>
+&#39;offset&#39;).=C2=A0 Only &#39;start&#39;, &#39;length&#39;, and &#39;d=
+ata&#39; matter when using<br>
+x-dirty-bitmap, with &#39;data=3Dfalse&#39; meaning the section was reporte=
+d<br>
+dirty, and &#39;data=3Dtrue&#39; meaning the section was reported unchanged=
+.<br>
+<br>
+And if that is confusing, well yeah. Which is why I recommend using<br>
+libnbd&#39;s nbdinfo --map, where the output is more obvious.<br>
+<br>
+&gt; <br>
+&gt; root@be-proxmox1:/# qemu-img map --output=3Djson --image-opts<br>
+&gt; &quot;$IMG,x-dirty-bitmap=3Dqemu:dirty-bitmap:bitmap1&quot;<br>
+&gt;=C2=A0 =C2=A0[{ &quot;start&quot;: 0, &quot;length&quot;: 196608, &quot=
+;depth&quot;: 0, &quot;present&quot;: true, &quot;zero&quot;:<br>
+&gt; false, &quot;data&quot;: true, &quot;compressed&quot;: false, &quot;of=
+fset&quot;: 0},<br>
+<br>
+The extent starting at logical offset 0 and lasting 196608 bytes is<br>
+unchanged.<br>
+<br>
+&gt; { &quot;start&quot;: 196608, &quot;length&quot;: 65536, &quot;depth&qu=
+ot;: 0, &quot;present&quot;: false, &quot;zero&quot;:<br>
+&gt; false, &quot;data&quot;: false, &quot;compressed&quot;: false},<br>
+<br>
+The extent starting at 196608 and lasting 65536 bytes is dirty<br>
+(altered since the point in time when the bitmap was created).<br>
+<br>
+&gt; &gt; &gt; qemu-img<br>
+&gt; &gt; &gt; map with x-dirty-bitmap image-opts.<br>
+&gt; &gt;<br>
+&gt; &gt; Here, this works, but feels like a hack, because it is relying on=
+ the<br>
+&gt; &gt; x-dirty-bitmap feature of qemu.=C2=A0 The libnbd project ships wi=
+th an<br>
+&gt; &gt; application &#39;nbdinfo --map&#39; that can read the same inform=
+ation as<br>
+&gt; &gt; &#39;qemu-img map&#39; but with a much nicer layout.=C2=A0 It&#39=
+;s not going to<br>
+&gt; &gt; necessarily be faster, but because it is a fully-supported featur=
+e of<br>
+&gt; &gt; libnbd rather than a hack in qemu, it may prove more stable in th=
+e<br>
+&gt; &gt; long run, and certainly easier to understand.<br>
+<br>
+<br>
+For a worked example:<br>
+<br>
+# Create an image, dirty two different offsets, with a bitmap created in be=
+tween<br>
+$ qemu-img create -f qcow2 foo.qcow2 3M<br>
+Formatting &#39;foo.qcow2&#39;, fmt=3Dqcow2 cluster_size=3D65536 extended_l=
+2=3Doff compression_type=3Dzlib size=3D3145728 lazy_refcounts=3Doff refcoun=
+t_bits=3D16<br>
+$ qemu-io -f qcow2 foo.qcow2 -c &#39;w 1M 512&#39;<br>
+wrote 512/512 bytes at offset 1048576<br>
+512 bytes, 1 ops; 00.01 sec (42.906 KiB/sec and 85.8112 ops/sec)<br>
+$ qemu-img bitmap -f qcow2 foo.qcow2 --add b1<br>
+$ qemu-io -f qcow2 foo.qcow2 -c &#39;w 2M 512&#39;<br>
+wrote 512/512 bytes at offset 2097152<br>
+512 bytes, 1 ops; 00.00 sec (107.735 KiB/sec and 215.4704 ops/sec)<br>
+<br>
+# Now, expose the raw bytes of the image over NBD, and inspect with nbdinfo=
+<br>
+<br>
+$ qemu-nbd -f qcow2 foo.qcow2 -A -Bb1 -t<br>
+$ nbdinfo --map=3Dqemu:dirty-bitmap:b1 nbd://localhost<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=A0 =C2=A02097152=C2=A0 =C2=A0=
+ 0=C2=A0 clean<br>
+=C2=A0 =C2=A02097152=C2=A0 =C2=A0 =C2=A0 =C2=A065536=C2=A0 =C2=A0 1=C2=A0 d=
+irty<br>
+=C2=A0 =C2=A02162688=C2=A0 =C2=A0 =C2=A0 983040=C2=A0 =C2=A0 0=C2=A0 clean<=
+br>
+$ nbdinfo --map nbd://localhost<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=A0 =C2=A01048576=C2=A0 =C2=A0=
+ 3=C2=A0 hole,zero<br>
+=C2=A0 =C2=A01048576=C2=A0 =C2=A0 =C2=A0 =C2=A0 4096=C2=A0 =C2=A0 0=C2=A0 d=
+ata<br>
+=C2=A0 =C2=A01052672=C2=A0 =C2=A0 =C2=A0 =C2=A061440=C2=A0 =C2=A0 2=C2=A0 z=
+ero<br>
+=C2=A0 =C2=A01114112=C2=A0 =C2=A0 =C2=A0 983040=C2=A0 =C2=A0 3=C2=A0 hole,z=
+ero<br>
+=C2=A0 =C2=A02097152=C2=A0 =C2=A0 =C2=A0 =C2=A0 4096=C2=A0 =C2=A0 0=C2=A0 d=
+ata<br>
+=C2=A0 =C2=A02101248=C2=A0 =C2=A0 =C2=A0 =C2=A061440=C2=A0 =C2=A0 2=C2=A0 z=
+ero<br>
+=C2=A0 =C2=A02162688=C2=A0 =C2=A0 =C2=A0 983040=C2=A0 =C2=A0 3=C2=A0 hole,z=
+ero<br>
+<br>
+Comparing those to qemu-img map --output=3Djson should be instructive.<br>
+<br>
+<br>
+-- <br>
+Eric Blake, Principal Software Engineer<br>
+Red Hat, Inc.<br>
+Virtualization:=C2=A0 <a href=3D"http://qemu.org" rel=3D"noreferrer" target=
+=3D"_blank">qemu.org</a> | <a href=3D"http://libguestfs.org" rel=3D"norefer=
+rer" target=3D"_blank">libguestfs.org</a><br>
+<br>
+</blockquote></div>
 
-afair it does.
-
-> I think libfdt also uses offsets to identify nodes 
-> so maybe these should be somewhat stable.
-
-tl;dr: no, we want properties.
-
-Stable phandles (vs fdt offset or address) was one of the main triggers to write this VOF in the first place as we already have a few predefined phandles in pseries - interrupt controller and something else, my memory is weak. They go to SLOF which then tells the QEMU what the actual phandle is [1].
-
-When a PCI host bridge is plugged into a pseries VM - there is no SLOF at this point but there an fdt node with a reference to the XICS phandle. And this ibm,client-architecture-support thing (which can enforce reduced number of threads-per-core and things like that) which causes rebuilding of the tree which involves QEMU creating a diff, feeding it back to SLOF which then would update its internal tree (which happens when SLOF is juuust about do die and it is not not really functional any more) to then build FDT (and do [1], again) - and this requires matching phandles in the nodes. 
-
-> 
-> Regards,
-> BALATON Zoltan
-> 
+--000000000000188bc30632424441--
 
