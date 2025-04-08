@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F1FC369A2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C711C369A4
 	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 16:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Be2-0006sF-AX; Tue, 08 Apr 2025 12:17:50 -0400
+	id 1u2Bdw-0006qa-KM; Tue, 08 Apr 2025 12:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u2BJ5-0005cX-OP; Tue, 08 Apr 2025 11:56:15 -0400
+ id 1u2BJ2-0005cN-Le; Tue, 08 Apr 2025 11:56:13 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u2BJ3-0005yE-E4; Tue, 08 Apr 2025 11:56:11 -0400
+ id 1u2BIy-0005xb-I1; Tue, 08 Apr 2025 11:56:07 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538CU1qJ028772;
- Tue, 8 Apr 2025 15:56:05 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538CU1qI028772;
+ Tue, 8 Apr 2025 15:56:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=BMii2g6Cq3KmZHIyc
- lvKVLChZ9pjMlONviN6FnGkQ4A=; b=VIt1guAiK+q8jlIQDYAo5XqB7e9CajlB9
- 0X06Mcemmmmpm34EPwtY95tCPeW3ECiaWvTDBi1V5AbBJpGvZRJQ5lrr7dIwMx6x
- Ou70/4jfKbIcsUhc1b5qKmr/BFCOf4Zqco8PIXXb5KaQ/m1daOMM/yq5NRnUMObq
- wSw0S53C5ijouEPfzo1R9zLEyPz76wfCgt5PArw60+WzkSe1ITI9SOF3KDpSMMKF
- IYkFH8rulqR2lCo8f7/gQYBYMQ2knmZ9/DJqz5mlLIz3SpLobDbkH2oE76/mljxY
- wtc2fepnp4QFugV3CkqLwICzukCuMVhh5bS4r+hIvpHqqYjfg9Dww==
+ :mime-version:references:subject:to; s=pp1; bh=U5Ea2HNCHmFcLvkkd
+ IgYU6Tq54dQSlrvzT4u2zyAIz0=; b=QEJNflt1VqKPw2z4QWb9KtI+xlUvFpK74
+ LZqMzI5xjJvGg//6mJklQdjQbp02CEU8FFSmWR4VPDnjy47gS+DoSkJBusxun0F9
+ OfYA9P1K92OXQ5jOl7+HXioBWuY0u68kudYABLzatmpr/bMFkQ0ugBzO1GihzovR
+ RylY/1uUN9fHWzeE7EI9T6fbb9zCoyd6oWR7iLS3RG3T1/qMQRn2GxWFRS7IckNn
+ DcMXECwrtUx9AEmXFjN26codZEJ8Ei5Nc8idqhlXZkBpIHlF9zOvHYHYoOwY6Jes
+ OrQGW8jBs51+9SuzGEOSDsvuElaHCJ8E3nVoIuy8GRTyC5qWSq+mw==
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vv6a3anr-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vv6a3and-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 15:56:05 +0000 (GMT)
+ Tue, 08 Apr 2025 15:56:01 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538CmdpV025510;
- Tue, 8 Apr 2025 15:56:04 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ugbku9wa-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538D0njZ025598;
+ Tue, 8 Apr 2025 15:56:00 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ugbku9w3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 15:56:04 +0000
+ Tue, 08 Apr 2025 15:56:00 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 538Fu21g24707620
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 538FtxrT30605856
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Apr 2025 15:56:03 GMT
+ Tue, 8 Apr 2025 15:55:59 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 991F55803F;
- Tue,  8 Apr 2025 15:56:02 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 62F3F5804E;
+ Tue,  8 Apr 2025 15:55:59 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A5535804E;
- Tue,  8 Apr 2025 15:56:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id EBFB35803F;
+ Tue,  8 Apr 2025 15:55:57 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.125.94])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Apr 2025 15:56:01 +0000 (GMT)
+ Tue,  8 Apr 2025 15:55:57 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
  pbonzini@redhat.com
@@ -64,24 +64,25 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
  fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, zycai@linux.ibm.com
-Subject: [PATCH v1 20/24] Add -secure-boot on|off option in QEMU command line
-Date: Tue,  8 Apr 2025 11:55:22 -0400
-Message-ID: <20250408155527.123341-21-zycai@linux.ibm.com>
+Subject: [PATCH v1 18/24] s390x: Guest support for Secure-IPL Code Loading
+ Attributes Facility (SCLAF)
+Date: Tue,  8 Apr 2025 11:55:20 -0400
+Message-ID: <20250408155527.123341-19-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408155527.123341-1-zycai@linux.ibm.com>
 References: <20250408155527.123341-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: uB0I5S0lc6S-jLho_xvrLrCy5tpqPub1
-X-Proofpoint-GUID: uB0I5S0lc6S-jLho_xvrLrCy5tpqPub1
+X-Proofpoint-ORIG-GUID: OOsdN24Dcm3N-InO_mPM2kc4Q8CWajy2
+X-Proofpoint-GUID: OOsdN24Dcm3N-InO_mPM2kc4Q8CWajy2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-08_06,2025-04-08_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 phishscore=0
  lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 suspectscore=0 bulkscore=0 mlxlogscore=741 mlxscore=0
+ clxscore=1011 suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2504080107
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
@@ -110,83 +111,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The `-secure-boot on|off` command line option is implemented
-to enable secure IPL.
+The secure-IPL-code-loading-attributes facility (SCLAF)
+provides additional security during IPL.
 
-By default, -secure-boot is set to false if not specified in
-the command line.
+Availability of SCLAF is determined by byte 136 bit 3 of the
+SCLP Read Info block.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- qemu-options.hx |  8 ++++++++
- system/vl.c     | 21 +++++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ target/s390x/cpu_features.c         | 1 +
+ target/s390x/cpu_features_def.h.inc | 1 +
+ target/s390x/cpu_models.c           | 2 ++
+ target/s390x/gen-features.c         | 1 +
+ target/s390x/kvm/kvm.c              | 3 +++
+ 5 files changed, 8 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index b460c63490..02d2f4d513 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1262,6 +1262,14 @@ SRST
-     A colon may be used to delineate multiple paths.
- ERST
+diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
+index e9371569cc..ee33a4e2a6 100644
+--- a/target/s390x/cpu_features.c
++++ b/target/s390x/cpu_features.c
+@@ -151,6 +151,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
+         break;
+     case S390_FEAT_TYPE_SCLP_CBL:
+         clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
++        clear_be_bit(s390_feat_def(S390_FEAT_SCLAF)->bit, data);
+         break;
+     default:
+         return;
+diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+index f874b9da6f..31e4efb8dc 100644
+--- a/target/s390x/cpu_features_def.h.inc
++++ b/target/s390x/cpu_features_def.h.inc
+@@ -142,6 +142,7 @@ DEF_FEAT(DIAG_320, "diag320", SCLP_FAC134, 5, "Provide Certificate Store functio
  
-+DEF("secure-boot", HAS_ARG, QEMU_OPTION_secure_boot,
-+    "-secure-boot on|off\n"
-+    "             enable/disable secure boot\n", QEMU_ARCH_S390X)
-+SRST
-+``-secure-boot on|off``
-+    Enable/disable secure boot. Default is off.
-+ERST
-+
- DEFHEADING()
+ /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
+ DEF_FEAT(SIPL, "sipl", SCLP_CBL, 1, "Seucre-IPL facility")
++DEF_FEAT(SCLAF, "sclaf", SCLP_CBL, 3, "Seucre-IPL-code-loading-attributes facility")
  
- DEFHEADING(Block device options:)
-diff --git a/system/vl.c b/system/vl.c
-index bd6197c887..5bdc35516c 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -524,6 +524,19 @@ static QemuOptsList qemu_boot_certificates_opts = {
-     },
+ /* Features exposed via SCLP CPU info. */
+ DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index a83c27dcb8..73d2d6247f 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -264,6 +264,7 @@ bool s390_has_feat(S390Feat feat)
+         case S390_FEAT_SIE_PFMFI:
+         case S390_FEAT_SIE_IBS:
+         case S390_FEAT_SIPL:
++        case S390_FEAT_SCLAF:
+         case S390_FEAT_CONFIGURATION_TOPOLOGY:
+             return false;
+             break;
+@@ -509,6 +510,7 @@ static void check_consistency(const S390CPUModel *model)
+         { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_DIAG_320, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
++        { S390_FEAT_SCLAF, S390_FEAT_EXTENDED_LENGTH_SCCB },
+         { S390_FEAT_NNPA, S390_FEAT_VECTOR },
+         { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
+         { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index d973efbf72..1755501fb7 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -698,6 +698,7 @@ static uint16_t full_GEN14_GA1[] = {
+     S390_FEAT_GROUP_MULTIPLE_EPOCH_PTFF,
+     S390_FEAT_DIAG_320,
+     S390_FEAT_SIPL,
++    S390_FEAT_SCLAF,
  };
  
-+static QemuOptsList qemu_secure_boot_opts = {
-+    .name = "secure-boot",
-+    .implied_opt_name = "secure-boot",
-+    .head = QTAILQ_HEAD_INITIALIZER(qemu_secure_boot_opts.head),
-+    .desc = {
-+        {
-+            .name = "secure-boot",
-+            .type = QEMU_OPT_BOOL,
-+        },
-+        { /* end of list */ }
-+    },
-+};
-+
- const char *qemu_get_vm_name(void)
- {
-     return qemu_name;
-@@ -2894,6 +2907,7 @@ void qemu_init(int argc, char **argv)
-     qemu_add_opts(&qemu_fw_cfg_opts);
-     qemu_add_opts(&qemu_action_opts);
-     qemu_add_opts(&qemu_boot_certificates_opts);
-+    qemu_add_opts(&qemu_secure_boot_opts);
-     qemu_add_run_with_opts();
-     module_call_init(MODULE_INIT_OPTS);
+ #define full_GEN14_GA2 EmptyFeat
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index f418102b7f..1ecb67f398 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -2520,6 +2520,9 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
+     /* Secure-IPL facility is handled entirely within QEMU */
+     set_bit(S390_FEAT_SIPL, model->features);
  
-@@ -3046,6 +3060,13 @@ void qemu_init(int argc, char **argv)
-                     exit(1);
-                 }
-                 break;
-+            case QEMU_OPTION_secure_boot:
-+                opts = qemu_opts_parse_noisily(qemu_find_opts("secure-boot"),
-+                                               optarg, true);
-+                if (!opts) {
-+                    exit(1);
-+                }
-+                break;
-             case QEMU_OPTION_fda:
-             case QEMU_OPTION_fdb:
-                 drive_add(IF_FLOPPY, popt->index - QEMU_OPTION_fda,
++    /* Secure-IPL-code-loading-attributes facility is handled entirely within QEMU */
++    set_bit(S390_FEAT_SCLAF, model->features);
++
+     /* Test for Ultravisor features that influence secure guest behavior */
+     query_uv_feat_guest(model->features);
+ 
 -- 
 2.49.0
 
