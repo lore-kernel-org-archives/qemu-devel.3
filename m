@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B070C36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 21:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D752FC36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 21:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Gic-0002ui-R9; Tue, 08 Apr 2025 17:42:54 -0400
+	id 1u2Gvq-00052Y-Sw; Tue, 08 Apr 2025 17:56:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dionnaglaze@google.com>)
- id 1u2Gia-0002uO-A0
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 17:42:52 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u2Gvo-00051x-Ie
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 17:56:32 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dionnaglaze@google.com>)
- id 1u2GiY-0006SP-G1
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 17:42:51 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ac2c663a3daso1122252066b.2
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 14:42:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u2Gvm-00084j-RS
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 17:56:32 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5e61da95244so10036074a12.2
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 14:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1744148568; x=1744753368; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1744149389; x=1744754189; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B9kRobnYoK2fs4IXh8qQND+m0DOVoSZkSj84zCGZECQ=;
- b=thRocOJI1psMycIHsbd1OkmGoSe4o9rMkG7/gGRVd2p9RJcJiQLHaK6ZAL3R/+QUCZ
- i7ZrDdiEI4EVnYkPo18Gf5wk3l3SLCYkrTVBtmntGIpzklVz8eLXucxXCODbkeC8pXiO
- VVOEH2FibRf+BdeXf5z4VA3F205t6e/1Tun2KpAreYoI1l4ijHFiauzIr3Puken/6vmj
- gG4FuEd6jkze1DSCb2sBnflTtguFgOHuPdX4Jz2za0MFhD+3sQuZ2DHv8bYWzbq27mY/
- Rk6ogF19tkvu/l1VYhKpB7grutEODON+7hTDUG1SYYRW6ahpOIjzzfPXyrwtPAv8WZvk
- KHfQ==
+ bh=3D/nuzWKWmKyfPyXTbT4MWTi34k7JjeQfu+8a4pzxiE=;
+ b=FCJmwna6x7bYtbvmm9Uuf5jU9GqElE2E/cyXn5YRuAY2PjkjMt+EcxWYuboF6bscdI
+ z4V0RsNzvOq9NwQXBqNJ0CyS188xkYrmmtmRMk2mxdfW/N+jFN26ufmqIaASc3QbNe2h
+ W7kEP2TyEWwnksYDqGz1PdQAglK0XseSRaTkYHAsihgfLtq/RoRfEMpx4muO12hphtWX
+ J+qL1ZbjtFdxGaDdtLeCQglrSkek2707pczr0e9Dud2BmgOa/TqCqbIvGNrMTkGdusmw
+ qLeW6kJXvUXlYRpvyaqRPkC+L2jASQKmLiUZ0HFunDF2yDDF3//P37ocACpGViDpmXzE
+ 2dOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744148568; x=1744753368;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1744149389; x=1744754189;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B9kRobnYoK2fs4IXh8qQND+m0DOVoSZkSj84zCGZECQ=;
- b=NWssOTr+kbzKhxITanG1SiUtDsFbe69ixgtMqq6CamltdyGnrYcnwaoEi3/if/On9L
- vEisKY5Z5y/Wh7BA0Z8PYpaodDLvHaw2GYow144qYReCS89ewWQU7ESBzmT9kg6HKbzc
- uY0nKtHpWE20jBK8tL7HIWak6h5F/g4EN/b1DUZ+WuBg6wfrNbLHtU1EHo1z5G9F9ujg
- HVOtqj3XXjaGa3jR73WP6XSn78QRdMM9y+R5iHyi97zUQkBumnuUs/SGdBN8nQz4ZJD/
- wo260GQDbke10U4oj9zErUWcJ6alSLmYxU7pmMwjlJCzJbHCN9kkKnIfwpChEvjAAzZI
- nMNg==
+ bh=3D/nuzWKWmKyfPyXTbT4MWTi34k7JjeQfu+8a4pzxiE=;
+ b=IeSfs6J7WhlK2bigA5ybllBjEIJZFrGPmRR2ABPNz66cihSMXggrIyt3rAwgnNnmVU
+ 5S99QG+1+BxHtDODUVqYZCGGNpHa2/rYb6vXZCTgFqRe4Af/HYUpJepzHRJkKEQHAqjK
+ W5Vqb+jHkP3I9HAyEfeShiMD5gUeliLo/JEnJ9EMzqRNp0HQF6fg+1P2RB2VpraXXQT0
+ UG/9SZBQ40WfpOzAlpuTnQKkE62fujKiLsgQRVDlRpXsaDNwPNSLjn3f4xMyQSsyYbdx
+ EBplsIuGj7bH4FN4zIEDUDX8PrSGIJkBZVEGJ8MUI0O4cHn82jshQP3fSTn5uNfOQ8j4
+ SQjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZ8flh8aH3qmBwpBeCGsxSIJiVvFdlBl+VVgZ6rqbMOrdfkG7CqDXxH3hjwldPnIcO1fpAlI0ZPcmc@nongnu.org
-X-Gm-Message-State: AOJu0Yzx7nyrNaKcpGm7mVOsMiHoXS/OyPivqiInRG+tkGUQyrVnjJ58
- Db3Jd938RlS4Ob54nv+Chd/mVPQxKs8t6K+cH7+cr9ViFgjLID0PyquCsDUrWihzy/uCNZ2SZE1
- 0vYAFocG4lM+jPc6lSoiGY2PIg55etaQhtD+A
-X-Gm-Gg: ASbGncsU+1BzL1j8v/RjfjgdGJy5ehxLThDvIYcPjncRWTbrxRG7GJAIHWvDxoPfZpk
- Y7B+2d/Qvv/OTttY21OmBNU7ea5EkMsAPgMsmW87yQasV9rewUbRfxgLOvKqoa+qQd1QXrlLnBB
- l4jfGqRIBNX6kiW9UwP1tvapK2dw==
-X-Google-Smtp-Source: AGHT+IHGNrz28aVBpnfWJGH2EjilOx5sKA5NUEbrPkJVaEl2sbT249qwzMj+i6YwJ89mcptRfdyAFtFPnGnUkUfBmCM=
-X-Received: by 2002:a17:907:97c3:b0:ac3:446f:20cb with SMTP id
- a640c23a62f3a-aca9d6f4a9fmr23525466b.43.1744148567793; Tue, 08 Apr 2025
- 14:42:47 -0700 (PDT)
+ AJvYcCUnnyKahLyIlQotbO43U1fC3Lb1Pva/ZYcGpxV7xxjG3H5wh4m5Xyi/mGOGmShLwlkRMn3PKmmvXo8R@nongnu.org
+X-Gm-Message-State: AOJu0YxHkQd1I0Ar3pRHnMhnyriQaLWScsqGVPt4NOA3Q+4xwt6ve8vs
+ yO5szAcE7fgmggMS7wPVpQHFNRHM0XQdAsDb7Zs/xjXoLmDMPszW
+X-Gm-Gg: ASbGncsGvw0zdhMCpwHFWMMqmHL/VPOsOpD3yX1BYf+ZxX5xD22Ry/DEQcaeOdLQyxq
+ I1pJiQOxXyFUm32dRFxK5GpxqXjl9iCAv6Ihl6eWhBNr+Ts4lQOzpHDpLpzjrvr/d/1C3MWekRD
+ euRDBKvsSaE0aqwd2ufWliNuGjh2mxl6yZngCofYHchhdnxUaUCy2rCf+s/MDgzpnfFLfbATcFI
+ A+eSvUxDLj6f8XDneyVI1z/o9uGCd3ffrWfWb4R9kiQtbfPwq3b+Fwgp66nl8DXJ9zKJ1nSHty3
+ 1hoBC8OBH7Su/ze5lWfRi4dzPOi9ZfcE6rfCdwvACCytLXdw4fmy7Km03Ysaz3uhkiq5hdxqean
+ xchT73zM4V/2fIUApenHN3ju84by0eyAAiSRTsOGrPhKs2VrxiLS0
+X-Google-Smtp-Source: AGHT+IFZB4NwDjR17ln8ZzDO+vEdBuRbIiM/sJFo9Q/+R29FvU7sccNY5ndskfGbMMU23Hvzhx7AEQ==
+X-Received: by 2002:a17:907:7293:b0:ac7:391b:e689 with SMTP id
+ a640c23a62f3a-aca9d728cd2mr22694466b.59.1744149388092; 
+ Tue, 08 Apr 2025 14:56:28 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-291c-6e00-b87f-49d2-cee7-5562.310.pool.telefonica.de.
+ [2a02:3100:291c:6e00:b87f:49d2:cee7:5562])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac7bfee5966sm974885966b.82.2025.04.08.14.56.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Apr 2025 14:56:27 -0700 (PDT)
+Date: Tue, 08 Apr 2025 21:56:23 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_0/2=5D_Add_property_to_supp?=
+ =?US-ASCII?Q?ort_writing_ERSTBA_in_high-low_order?=
+In-Reply-To: <3b0367ca-7242-4555-a6b2-ddf546374138@roeck-us.net>
+References: <20250405140002.3537411-1-linux@roeck-us.net>
+ <ae8cd367-8580-4476-9a75-3fa4f7aa2536@linaro.org>
+ <7ed5d213-9429-45c8-bbf3-6f3f841a2299@roeck-us.net>
+ <7C5A41A1-38EE-4D22-8F84-6A5A3A2BDD82@gmail.com>
+ <42a82455-7fa1-4890-a9e8-690fec3433c3@roeck-us.net>
+ <9239BBD2-DCB8-4B97-9EAA-FFB06CAB660C@gmail.com>
+ <89b70bdd-00e3-46ee-8810-099da032f485@roeck-us.net>
+ <C5389B31-E7B2-43E0-A10D-368571DAD081@gmail.com>
+ <cd6dafe1-f291-46f4-8fb1-7555dc6a60db@roeck-us.net>
+ <6A2167BC-910A-4801-8FB0-24C114EF5181@gmail.com>
+ <3b0367ca-7242-4555-a6b2-ddf546374138@roeck-us.net>
+Message-ID: <A3422A32-92AB-4D53-A53F-DD9D0FD5C1EE@gmail.com>
 MIME-Version: 1.0
-References: <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
- <CAK3XEhPYmBsn2-=PMR7qVQHiu0ydoh3EfJOEuunLccriSkKipg@mail.gmail.com>
- <53jhridwtejsuy4qojjr66rcjdebnyarwke4bs3m3w2afmqhe6@pab5zfyo46fx>
- <4f6a21a9-746e-45ac-88c7-dc0204480a86@amazon.com>
- <kmqzqeaatk3iyrpl4tvfxtfv6gefyusxpyxtz5bollw7jlp3wk@5c4zawrzehwq>
- <d79cff63-324f-4624-aef3-b6570cdb23e2@amazon.com>
- <rtbmlitus6unzibiatblquot2bthx4dmozbxgcbovisial6qar@konful7gzrsz>
- <6d815066-9977-4683-a2d5-871dda3e5369@amazon.com>
- <fwdk2pc4rfa5o22gdfqq4cfsqged4v6hmlrtqdwltgqj2bkpl4@bicazjx5d22l>
- <CAAH4kHZhEX0kaE3r5PVOOWh1PhzZNOfyWMixDm0PbCnjfmZceA@mail.gmail.com>
- <xjdm7m65w6hmnq3ik2psbfhizypk76c3hdriujh27kcm7ex5tv@7lq3x3k7y52h>
-In-Reply-To: <xjdm7m65w6hmnq3ik2psbfhizypk76c3hdriujh27kcm7ex5tv@7lq3x3k7y52h>
-From: Dionna Amalie Glaze <dionnaglaze@google.com>
-Date: Tue, 8 Apr 2025 14:42:36 -0700
-X-Gm-Features: ATxdqUGyRogAIjBi2rJE7BarXNqMRrZWYArr9FTAsK5yMScPTFi9bLf3wv9xGZw
-Message-ID: <CAAH4kHbFBekcmxBQcOA9K1Y+sFc2Jf56YEa4iv0M88ib7pCjgg@mail.gmail.com>
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Gerd Hoffman <kraxel@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, Ani Sinha <anisinha@redhat.com>, 
- =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=dionnaglaze@google.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,65 +116,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 8, 2025 at 1:33=E2=80=AFAM Gerd Hoffman <kraxel@redhat.com> wro=
-te:
->
->   Hi,
->
-> > > Well.  If you want put the db into the igvm and the igvm into the uki
-> > > you've got a chicken-and-egg problem.  Moving the firmware from the m=
-ain
-> > > UKI to UKI add-on would solve that.
-> >
-> > Why is embedding a public key that will sign the IGVM in the IGVM a
-> > chicken-and-egg problem? It's only that if db were a list of
-> > acceptable measurements, which it isn't.
-> > I'm not sure why relying on secure boot makes any sense for
-> > confidential computing. I still think that tearing down the VM context
-> > and rebuilding it is more secure, given
-> > the need for an honest launch measurement/MRTD.
->
-> Current idea is to allow passing EFI signature databases for db/dbx to
-> the firmware getting loaded.  The signature databases must be part of
-> the launch measurement.  Not clear yet how exactly to handle that, one
-> idea is to add a special page type to the igvm spec, so a igvm parser
-> can easily find and update db/dbx.
->
-> So, the VM context will be rebuild, the igvm (including db/dbx) will be
-> measured, the firmware can verify the payload using db/dbx and standard
-> secure boot hash/signature.
->
-> This allows to use both signing (pass CA certificate in db) and hashing
-> (pass authenticode hash(es) in db) for payload verification.
->
-> The chicken-and-egg problem arises if you go for hashing and want embed
-> the igvm file in the UKI.
 
-I don't really see how signing the IGVM file for secure boot helps anything=
-.
-The VM context will be reconstructed by the hypervisor, and anything
-checked or stored before loading
-the new firmware is suspect.
-SEV-SNP has IDBLOCK_AUTH to have the SNP firmware check a signature,
-but TDX has nothing of the sort.
-Your initial measurement is checked by nothing trusted.
 
-Do you need the UEFI_APPLICATION that uses the vmfwupdate interface to
-be signed for secure boot? Seems unnecessary.
+Am 8=2E April 2025 20:31:58 UTC schrieb Guenter Roeck <linux@roeck-us=2Ene=
+t>:
+>On 4/8/25 12:57, Bernhard Beschow wrote:
+>>=20
+>>=20
+>> Am 8=2E April 2025 16:09:58 UTC schrieb Guenter Roeck <linux@roeck-us=
+=2Enet>:
+>>> On 4/6/25 11:08, Bernhard Beschow wrote:
+>>> [ =2E=2E ]
+>>>=20
+>>>>>> Yeah, it works with Buildroot as described in the handbook=2E When =
+I append `-netdev user,id=3Dnet0 -device virtio-net-pci,netdev=3Dnet0` on t=
+he cli I can `wget http://www=2Egoogle=2Ecom` successfully=2E When I omit i=
+t there is no network connectivity=2E This is with a 6=2E6=2E23 vendor kern=
+el=2E
+>>>>>>=20
+>>>>>=20
+>>>>> I had no luck with virtio-net-pci=2E virtio-pci works for me, but I =
+can not get real PCI devices
+>>>>> (such as nvme or scsi adapters) to work=2E
+>>>>=20
+>>>> I now tested with the latest Buildroot recipe, changing to upstream k=
+ernel version 6=2E14 and using the defconfig=2E The `wget` command still wo=
+rks for me with virtio-net-pci=2E However, I can confirm that I need your x=
+hci patches for the usb storage device to be detected=2E
+>>>>=20
+>>>=20
+>>> Following up on this, my problem is that adding "-netdev user,id=3Dnet=
+0 -device virtio-net-pci,netdev=3Dnet0"
+>>> to the command line adds a _second_ Ethernet interface, in addition to=
+ the default one=2E
+>>> This results in
+>>> 	qemu-system-arm: warning: nic imx=2Eenet=2E0 has no peer
+>>> reported when qemu starts=2E
+>>=20
+>> I get this too when using virtio-net-pci successfully=2E
+>>=20
+>>>=20
+>>> I can not get that second interface to work, probably because of some =
+userspace issue=2E
+>>>=20
+>>> Anyway, I never see any interrupts on the virtual PCI interface=2E Fro=
+m /proc/interrupts:
+>>>=20
+>>> 277:          0  PCI-MSI 524288 Edge      virtio0-config
+>>> 278:          0  PCI-MSI 524289 Edge      virtio0-input=2E0
+>>> 279:          0  PCI-MSI 524290 Edge      virtio0-output=2E0
+>>=20
+>> I get:
+>>=20
+>> 206:          0          0          0          0  PCI-MSI 524288 Edge  =
+    virtio0-config
+>> 207:          3          0          0          0  PCI-MSI 524289 Edge  =
+    virtio0-input=2E0
+>> 208:          8          0          0          0  PCI-MSI 524290 Edge  =
+    virtio0-output=2E0
+>>=20
+>> Note that I'm using four CPUs, i=2Ee=2E `-smp 4`=2E
+>>=20
+>
+>I must be missing something=2E Can you send me your complete qemu command=
+ line ?
+>I'll also try building a buildroot image to see where it gets me=2E
+
+Will send you tomorrow=2E
 
 >
-> > Revocation is just not a real thing that works. Short-lived policy is.
-> > Policy services can be updated more simply than the UEFI variables of
-> > every node in the fleet.
+>>>=20
+>>> That may work for virtio-net-pci, but it doesn't work for other PCI(e)=
+ drivers=2E
+>>> If I try to attach any other PCIe devices, the device is reported with=
+ lspci but
+>>> then its initialization times out because it does not get any interrup=
+ts=2E
+>>=20
+>> Indeed, trying with e1000e:
+>>=20
+>> 205:          0          0          0          0  PCI-MSI   0 Edge     =
+ PCIe PME
+>> 206:         74          0          0          0  PCI-MSI 524288 Edge  =
+    eth1-rx-0
+>> 207:         20          0          0          0  PCI-MSI 524289 Edge  =
+    eth1-tx-0
+>> 208:         32          0          0          0  PCI-MSI 524290 Edge  =
+    eth1
+>>=20
+>> But I get this repeatedly with varying CPUs:
+>>=20
+>> [   14=2E657163] e1000e 0000:01:00=2E0 eth1: NIC Link is Up 1000 Mbps F=
+ull Duplex, Flow Control: Rx/Tx
+>> [   19=2E980452] e1000e 0000:01:00=2E0 eth1: NETDEV WATCHDOG: CPU: 0: t=
+ransmit queue 0 timed out 5312 ms
+>> [   19=2E982491] e1000e 0000:01:00=2E0 eth1: Reset adapter unexpectedly
+>>=20
+>>>=20
+>>> Tt turns out that sabrelite has the same problem=2E
+>>=20
+>> Did it work with QEMU 9=2E2?
+>>=20
 >
-> In the model outlined above you'll go ship db/dbx in the igvm, so the
-> launch measurement will tell you what is allowed and what is not.  Which
-> in turn can be used in attestation server policies.
->
-> take care,
->   Gerd
->
+>No, the pcie interfaces on sabrelite don't instantiate for me with qemu 9=
+=2E2 (9=2E2=2E3,
+>more specifically)=2E I see the pcie root port, but nothing behind it=2E
 
---
--Dionna Glaze, PhD, CISSP, CCSP (she/her)
+You need to add `bus=3Ddw-pcie` to the pci devices' options in QEMU 9=2E2=
+=2Ex and earler, otherwise it will end up on the wrong bus=2E This is fixed=
+ in master=2E
+
+Best regards,
+Bernhard
+
+>
+>Guenter
+>
 
