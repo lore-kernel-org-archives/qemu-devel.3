@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A19C369A4
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 12:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C89C369A2
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 12:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u28HN-0005Bh-1c; Tue, 08 Apr 2025 08:42:15 -0400
+	id 1u28HU-0005FZ-DU; Tue, 08 Apr 2025 08:42:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1u28GZ-0004zd-8X; Tue, 08 Apr 2025 08:41:25 -0400
+ id 1u28Gc-000500-H2; Tue, 08 Apr 2025 08:41:35 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1u28GW-0003Kx-Ks; Tue, 08 Apr 2025 08:41:22 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538CS5nO017819;
- Tue, 8 Apr 2025 12:41:19 GMT
+ id 1u28Ga-0003LU-Iv; Tue, 08 Apr 2025 08:41:26 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5383l7iH030590;
+ Tue, 8 Apr 2025 12:41:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=eLq4JT
- KIvTfnaUNR5/XBq5lpo+hkmCaQ3fmBoOxDbdY=; b=fgmNEGr6Wqx0EavUO78bwt
- oE+u9iOGmOmIwmv5qAoHwBHZNrZpG8WyPpmGi68NB2B7QR3Ow1j8WZBqAuK6jJz/
- VqnnHsndwcuA2PAZv7dkMQ3jmilFxEf/CCT5QiLPvmXrVJIcUkwX/+JrAdK3NsYd
- vrtXjcUBrNn1AGDMi/A+D1ImxPp8/LPybbT0us16RDDYbAudV31fjaeErn5NGDRu
- riqeUaV3AfSnKgFmIvxTVQgwXf0hM3jelDQODFNEWJAGN5kq8ldk+uzhMZB9pevQ
- fJxQnR/l9fs/GwqQJYMweuXunSOKG7AvxuK9hpe/LtC2aPawXo8wa5DPaNQgKg/Q
- ==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=qkffYc3WRNkToOyQA
+ lH8U4o8zXaA0caSj22NjnTwEiI=; b=gJ5S2ILd//JGMvhz/5MFrJSWN+oaKMaou
+ 5Wlw/ZHpOm7HJzCm9nGPAoqGZYKKvb73iU91Kn+wi1vTGiPK/r06UHNPRyTC1/7Q
+ at7SwBAioBtYmKRU7TYdHHIZOvVTBbkfu3k+O4kF9yWWdvR4BGtK1xWhEmfWzkRp
+ qyvc1iy5LUkGmnYNxh5qcKZ2xwSg/LrUaxVdPmVQ+Lmn9HERiHfSNlkj8sVg+bGA
+ AMcdvXfQB3m3kPgQet7uv+gVOeuftTfNWcorzE+8vBNdrr4GvKuAit1vXxTCs/Mc
+ 3WfJdLamAl46G+c1E/EKobWVQ0OM7wBVigUZgZGegWCEihJuhaNrQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45w3u301r7-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vv6a2a05-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 12:41:18 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 538CSdmP018774;
- Tue, 8 Apr 2025 12:41:18 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45w3u301r4-1
+ Tue, 08 Apr 2025 12:41:22 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 538CU6wa021367;
+ Tue, 8 Apr 2025 12:41:22 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vv6a2a02-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 12:41:18 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5388FCOL013858;
- Tue, 8 Apr 2025 12:41:17 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ufunjmpw-1
+ Tue, 08 Apr 2025 12:41:22 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538BUt2V024605;
+ Tue, 8 Apr 2025 12:41:21 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45ueutauh4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 12:41:16 +0000
+ Tue, 08 Apr 2025 12:41:21 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 538CfDM551446016
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 538CfHEd49283526
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Apr 2025 12:41:13 GMT
+ Tue, 8 Apr 2025 12:41:17 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A93720040;
- Tue,  8 Apr 2025 12:41:13 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BFBA520040;
+ Tue,  8 Apr 2025 12:41:17 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E106420043;
- Tue,  8 Apr 2025 12:41:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6A5D62004D;
+ Tue,  8 Apr 2025 12:41:15 +0000 (GMT)
 Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.in.ibm.com (unknown
  [9.109.198.22]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Apr 2025 12:41:10 +0000 (GMT)
+ Tue,  8 Apr 2025 12:41:15 +0000 (GMT)
 From: Amit Machhiwal <amachhiw@linux.ibm.com>
 To: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
@@ -74,26 +73,25 @@ Cc: qemu-devel@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 1/2] vfio/spapr: Enhance error handling in
- vfio_spapr_create_window()
-Date: Tue,  8 Apr 2025 18:10:41 +0530
-Message-ID: <20250408124042.2695955-2-amachhiw@linux.ibm.com>
+Subject: [PATCH v3 2/2] vfio/spapr: Fix L2 crash with PCI device passthrough
+ and memory > 128G
+Date: Tue,  8 Apr 2025 18:10:42 +0530
+Message-ID: <20250408124042.2695955-3-amachhiw@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
 References: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 8pm62huVGEN-3k3V_r7FbcW8hnJE2Ukg
-X-Proofpoint-ORIG-GUID: PAVgheuuSZT9m7TvfdDE2qQaeMOm3VIH
+X-Proofpoint-ORIG-GUID: BBTdBGAxrYCwlsCCpACmA3UsHPg7wYz8
+X-Proofpoint-GUID: g8f8brxx3lcaF8vLAkmUKS9Cj1PaRHSx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-08_04,2025-04-08_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
- clxscore=1015 malwarescore=0 mlxscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2504080088
 Received-SPF: pass client-ip=148.163.156.1;
@@ -121,94 +119,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce an Error ** parameter to vfio_spapr_create_window() to enable
-structured error reporting. This allows the function to propagate
-detailed errors back to callers.
+An L2 KVM guest fails to boot inside a pSeries LPAR when booted with a
+memory more than 128 GB and PCI device passthrough. The L2 guest also
+crashes when it is booted with a memory greater than 128 GB and a PCI
+device is hotplugged later.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
+The issue arises from a conditional check for `levels > 1` in
+`spapr_tce_create_table()` within L1 KVM. This check is meant to prevent
+multi-level TCEs, which are not supported by the PowerVM hypervisor. As
+a result, when QEMU makes a `VFIO_IOMMU_SPAPR_TCE_CREATE` ioctl call
+with `levels > 1`, it triggers the conditional check and returns
+`EINVAL`, causing the guest to crash with the following errors:
+
+ 2025-03-04T06:36:36.133117Z qemu-system-ppc64: Failed to create a window, ret = -1 (Invalid argument)
+ 2025-03-04T06:36:36.133176Z qemu-system-ppc64: Failed to create SPAPR window: Invalid argument
+ qemu: hardware error: vfio: DMA mapping failed, unable to continue
+
+Fix this by checking the supported DDW "levels" returned by the
+VFIO_IOMMU_SPAPR_TCE_GET_INFO ioctl before attempting the TCE create
+ioctl in KVM.
+
+The patch has been tested on KVM guests with memory configurations of up
+to 390GB, and 450GB on PowerVM and bare-metal environments respectively.
+
 Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 ---
- hw/vfio/spapr.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ hw/vfio/spapr.c | 36 +++++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
 diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index 1a5d1611f2cd..dd9207679dbe 100644
+index dd9207679dbe..32611096fa29 100644
 --- a/hw/vfio/spapr.c
 +++ b/hw/vfio/spapr.c
-@@ -230,9 +230,9 @@ static int vfio_spapr_remove_window(VFIOContainer *container,
-     return 0;
- }
+@@ -26,6 +26,7 @@ typedef struct VFIOSpaprContainer {
+     VFIOContainer container;
+     MemoryListener prereg_listener;
+     QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
++    unsigned int levels;
+ } VFIOSpaprContainer;
  
--static int vfio_spapr_create_window(VFIOContainer *container,
-+static bool vfio_spapr_create_window(VFIOContainer *container,
-                                     MemoryRegionSection *section,
--                                    hwaddr *pgsize)
-+                                    hwaddr *pgsize, Error **errp)
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOSpaprContainer, VFIO_IOMMU_SPAPR);
+@@ -236,9 +237,11 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
  {
      int ret = 0;
      VFIOContainerBase *bcontainer = &container->bcontainer;
-@@ -252,11 +252,11 @@ static int vfio_spapr_create_window(VFIOContainer *container,
-     pgmask = bcontainer->pgsizes & (pagesize | (pagesize - 1));
-     pagesize = pgmask ? (1ULL << (63 - clz64(pgmask))) : 0;
-     if (!pagesize) {
--        error_report("Host doesn't support page size 0x%"PRIx64
--                     ", the supported mask is 0x%lx",
--                     memory_region_iommu_get_min_page_size(iommu_mr),
--                     bcontainer->pgsizes);
--        return -EINVAL;
-+        error_setg_errno(errp, EINVAL, "Host doesn't support page size 0x%"PRIx64
-+                         ", the supported mask is 0x%lx",
-+                         memory_region_iommu_get_min_page_size(iommu_mr),
-+                         bcontainer->pgsizes);
-+        return false;
-     }
++    VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
++                                                  container);
+     IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+     uint64_t pagesize = memory_region_iommu_get_min_page_size(iommu_mr), pgmask;
+-    unsigned entries, bits_total, bits_per_level, max_levels;
++    unsigned entries, bits_total, bits_per_level, max_levels, ddw_levels;
+     struct vfio_iommu_spapr_tce_create create = { .argsz = sizeof(create) };
+     long rampagesize = qemu_minrampagesize();
  
-     /*
-@@ -302,17 +302,17 @@ static int vfio_spapr_create_window(VFIOContainer *container,
+@@ -291,16 +294,29 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
+      */
+     bits_per_level = ctz64(qemu_real_host_page_size()) + 8;
+     create.levels = bits_total / bits_per_level;
+-    if (bits_total % bits_per_level) {
+-        ++create.levels;
+-    }
+-    max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
+-    for ( ; create.levels <= max_levels; ++create.levels) {
+-        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
+-        if (!ret) {
+-            break;
++
++    ddw_levels = scontainer->levels;
++    if (ddw_levels > 1) {
++        if (bits_total % bits_per_level) {
++            ++create.levels;
          }
++        max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
++        for ( ; create.levels <= max_levels; ++create.levels) {
++            ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
++            if (!ret) {
++                break;
++            }
++        }
++    } else { /* ddw_levels == 1 */
++        if (create.levels > ddw_levels) {
++            error_setg_errno(errp, EINVAL, "Host doesn't support multi-level TCE tables"
++                             ". Use larger IO page size. Supported mask is 0x%lx",
++                             bcontainer->pgsizes);
++            return false;
++        }
++        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
      }
++
      if (ret) {
--        error_report("Failed to create a window, ret = %d (%m)", ret);
--        return -errno;
-+        error_setg_errno(errp, errno, "Failed to create a window, ret = %d", ret);
-+        return false;
-     }
- 
-     if (create.start_addr != section->offset_within_address_space) {
-         vfio_spapr_remove_window(container, create.start_addr);
- 
--        error_report("Host doesn't support DMA window at %"HWADDR_PRIx", must be %"PRIx64,
--                     section->offset_within_address_space,
--                     (uint64_t)create.start_addr);
--        return -EINVAL;
-+        error_setg_errno(errp, EINVAL, "Host doesn't support DMA window at %"HWADDR_PRIx
-+                         ", must be %"PRIx64, section->offset_within_address_space,
-+                         (uint64_t)create.start_addr);
-+        return false;
-     }
-     trace_vfio_spapr_create_window(create.page_shift,
-                                    create.levels,
-@@ -320,7 +320,7 @@ static int vfio_spapr_create_window(VFIOContainer *container,
-                                    create.start_addr);
-     *pgsize = pagesize;
- 
--    return 0;
-+    return true;
- }
- 
- static bool
-@@ -377,9 +377,8 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
-         }
-     }
- 
--    ret = vfio_spapr_create_window(container, section, &pgsize);
--    if (ret) {
--        error_setg_errno(errp, -ret, "Failed to create SPAPR window");
-+    ret = vfio_spapr_create_window(container, section, &pgsize, errp);
-+    if (!ret) {
+         error_setg_errno(errp, errno, "Failed to create a window, ret = %d", ret);
          return false;
+@@ -501,6 +517,8 @@ static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
+         goto listener_unregister_exit;
      }
  
++    scontainer->levels = info.ddw.levels;
++
+     if (v2) {
+         bcontainer->pgsizes = info.ddw.pgsizes;
+         /*
 -- 
 2.49.0
 
