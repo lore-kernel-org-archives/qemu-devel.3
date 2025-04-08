@@ -4,148 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 801B9C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 12:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F36C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 12:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u287D-000134-Se; Tue, 08 Apr 2025 08:31:43 -0400
+	id 1u28Gb-0004zI-6D; Tue, 08 Apr 2025 08:41:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u287B-00012a-2q
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 08:31:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u28GS-0004vR-VD; Tue, 08 Apr 2025 08:41:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u2878-000163-Pn
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 08:31:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744115496;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2b6qbumuviqTGlLJozdNi9K8pqJubdJuSFASjUL6Tqw=;
- b=Snh3DUNzqE3SGMAzTJ1ENVt0VNEoZV5JKBK0UKLqi3pR1iX32nmQKRebp1LijCvjt6nhLb
- AoSXehXBmE/EoOTQiJ3fMSywjpQbtrjAoMYFdPV5YrK8c8uKOvV04N1qFCDw5lzGFx6e4e
- 82j+Bkhzv3//kaFQ6M6sVJMZYeqcRf0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-qDNuS8EZO5SZggNk0c78sQ-1; Tue, 08 Apr 2025 08:31:35 -0400
-X-MC-Unique: qDNuS8EZO5SZggNk0c78sQ-1
-X-Mimecast-MFC-AGG-ID: qDNuS8EZO5SZggNk0c78sQ_1744115494
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so41671935e9.2
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 05:31:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744115494; x=1744720294;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2b6qbumuviqTGlLJozdNi9K8pqJubdJuSFASjUL6Tqw=;
- b=I4oYIG09pabQfP8sZHctWg3pPxYtvY9v2ouvUqT6ynqq7YXZfS7pcpfbx1p0ZHLnBc
- fbBTnZf/l/NzWOA6feAvoeQZ/qTl8Erp7yYfa2RWHCJeyzusgZlxxXqWjqHXxqqKn2es
- hqW1CA8b2A961kIvJqgNGg/YQdLSVi6CbLGGgR/P0qMdWLNfrSJlNw9VPlW/i+og6AsV
- UU5yCXWmI+fbPJGcNj0Pb3PUmkUyGcncL4d5VHpKfVo47fvkk7CIRuihwPXqlT4cPC7F
- UWY6GFcpiQUdOhwNJolmT+XYtH4rn4kw0xrz2JKCxwsZZHi9RXmiS5PgicmfZ9VjAwNC
- 583w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6MNPxFmevWudjYKzASAtu3dGAm0BqsVWdJL+4rtZO5wCEndkM8vtGK/s3AiKyVriot2voXJPO04Yt@nongnu.org
-X-Gm-Message-State: AOJu0YzupkinqM1bM6QAsfLbrgoufBVneqDYKcWNVb3SyEwq/W3PCfTC
- 4+qEU1d7jWrbo6I49mZkJ5Ap99hFOCYMLDWO4/ER0Z31DGipbptDG/LeCbygDmhhhoUVYuJSk41
- 79hFSpRHjiNwSX4T0esLUsShU3KpNAhDzfbOVczFjrtFVtCvF+6a1
-X-Gm-Gg: ASbGncugbLTtgEM4dpzZHHh+Nb6aaL2omMCwNlm9oJ7dqyVJQykV9d4krSkeDO2Vovv
- HkVZTwR22XuU5lbUf/ger/j4q0AFm7jZyCv5dGSiYIz3oiC9TnSnyXKSEswpH1NuIr6pIY+nHfo
- bEmCjKQfX5zldtPIepXKcxvFb5dLVQ85KLCNPmhAxHyFEhdiSDs+lx4D79lssvokEdol1jOcF8t
- Nemh4MgCrWTZtMR3Dplgn0SEhsmCsdveHYZGJ0wW2PLUJ7Gpp/fru/2ylId82BalrP5kH/3HvU1
- tn+KgIEZ+cW0/XTGg6qGR/p8Kuc2YNLMvd58wRTs35hBqulzmnBOmw==
-X-Received: by 2002:a05:600c:1e89:b0:43c:f184:2e16 with SMTP id
- 5b1f17b1804b1-43ee06134f3mr119297155e9.5.1744115494015; 
- Tue, 08 Apr 2025 05:31:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSa6KXuz20VeGIg9QZ2ELK/knSyj3SUPMdG2CVLeV0ghASeXhclNsYF0FDUF8Zd9GlK4NAsQ==
-X-Received: by 2002:a05:600c:1e89:b0:43c:f184:2e16 with SMTP id
- 5b1f17b1804b1-43ee06134f3mr119296925e9.5.1744115493618; 
- Tue, 08 Apr 2025 05:31:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39c301b816csm14840379f8f.57.2025.04.08.05.31.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Apr 2025 05:31:33 -0700 (PDT)
-Message-ID: <9edebb6e-f37a-4339-a47a-ae552400ccba@redhat.com>
-Date: Tue, 8 Apr 2025 14:31:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] vfio/spapr: Enhance error handling in
- vfio_spapr_create_window()
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1u28GQ-0003KM-Ra; Tue, 08 Apr 2025 08:41:16 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538CS5nN017819;
+ Tue, 8 Apr 2025 12:41:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=FTHsySPRgTJXcsWPvetcbDbvCKSz
+ sNVKalprySfLnJQ=; b=i5VHQL+o2n5sKq0JwTWCcG3iP+SDSBm3V2ge77jGzvyl
+ I9y6NXQa/AFeMFai50Q+fRW5O6Pv2gHmiPcRJSX48VBbnkgWxkLFj8wTQzkMwGNd
+ wVqMSVKU2YsBreYwT9OUUcbARwco/h5zu0wmc81S9eKnFdZP/Ld3BbsehUgCMOWv
+ /WeT6xueGAEOUxn8C5SQdaw6lyRwlPXskQ7cLzWLjspYriumZX0saOfuRtOLGlIq
+ OrvBWzVKZtkyzyrelE75yak6IhoVZ07WVl59cKoLRUHYnoBXxPNZxb94YTHepH8B
+ I7HwmRmRxHYr4b2JnsPmPEOlQi62kBSMJfZ/4Xoheg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45w3u301qt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Apr 2025 12:41:11 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 538Catt4002015;
+ Tue, 8 Apr 2025 12:41:11 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45w3u301qq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Apr 2025 12:41:11 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5389cSK5018873;
+ Tue, 8 Apr 2025 12:41:10 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45uhj2aahk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Apr 2025 12:41:10 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 538Cf6al58786140
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 8 Apr 2025 12:41:07 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E460820043;
+ Tue,  8 Apr 2025 12:41:06 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CA9A72004D;
+ Tue,  8 Apr 2025 12:41:04 +0000 (GMT)
+Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.in.ibm.com (unknown
+ [9.109.198.22]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  8 Apr 2025 12:41:04 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 To: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>,
  Vaibhav Jain <vaibhav@linux.ibm.com>,
  Shivaprasad G Bhat <sbhat@linux.ibm.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250407143119.1304513-1-amachhiw@linux.ibm.com>
- <10a60957-21a1-4254-885b-21829d9746e6@redhat.com>
- <20250408135041.9eaee011-8a-amachhiw@linux.ibm.com>
- <c67aecc9-c07f-44a8-89e6-c94fef9595d9@redhat.com>
- <20250408162603.2244de39-53-amachhiw@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250408162603.2244de39-53-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 0/2] vfio/spapr: Fix L2 crash with PCI device passthrough
+Date: Tue,  8 Apr 2025 18:10:40 +0530
+Message-ID: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: -e6PA2Ym4ETsQJd9f5PTmpiKnDPpewMd
+X-Proofpoint-ORIG-GUID: 5QfemKx_R7zejZhYGnCB58DrVS27V8Tu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-08_04,2025-04-08_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
+ clxscore=1015 malwarescore=0 mlxscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504080088
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -163,32 +117,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I think following change should be enough along with your suggested changes:
-> 
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index 1a5d1611f2cd..27fed3cd463c 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -378,8 +378,7 @@ vfio_spapr_container_add_section_window(VFIOContainerBase *bcontainer,
->       }
->   
->       ret = vfio_spapr_create_window(container, section, &pgsize);
-> -    if (ret) {
-> -        error_setg_errno(errp, -ret, "Failed to create SPAPR window");
-> +    if (!ret) {
->           return false;
->       }
+Hi,
 
-I think you mean :
+This patch series addresses two aspects in vfio_spapr_create_window() that
+includes the enhancement in error handling in this function and also fixes an
+issue with KVM guests (L2) inside a pSeries logical partition (LPAR) with larger
+memory configurations and PCI device passthrough.
 
-     if (!vfio_spapr_create_window(container, section, &pgsize, errp)) {
-         return false;
-     }
+The structure of the patch series is as below:
 
-if so, yes. This is the current practice in QEMU.
+1. The first patch introduces structured error reporting in
+   `vfio_spapr_create_window()` by adding an `Error **` parameter. This allows
+   better propagation of failure details to the caller.
+
+2. The second patch fixes a crash observed when booting an L2 KVM guest inside a
+   pSeries LPAR with memory more than 128 GB and PCI device passthrough. The
+   crash occurs due a check in KVM preventing multi-level TCEs because of not
+   being supported by PowerVM hypervisor. This patch ensures that such
+   configurations are avoided by first checking the supported number of levels
+   returned by the `VFIO_IOMMU_SPAPR_TCE_GET_INFO` ioctl.
+
+The fix has been tested with KVM guests on PowerVM and bare-metal enviroments
+with memory sizes up to 390 GB and 450 GB respectively.
 
 Thanks,
+Amit
 
-C.
+Changes in v3:
+  * Change vfio_spapr_create_window() to return bool
+  * Replace error_setg() with error_setg_errono() in vfio_spapr_create_window()
+  * Pass errp instead of local Error object in vfio_spapr_create_window()
+    while calling from vfio_spapr_add_section_window()
+  * Modified patch #2 subject
+
+Changes in v2:
+  * Link: https://lore.kernel.org/all/20250407143119.1304513-1-amachhiw@linux.ibm.com/
+  * Added Error ** parameter in vfio_spapr_create_window() for enhanced error
+    handling with error_setg() and friends
+
+v1: https://lore.kernel.org/all/20250404091721.2653539-1-amachhiw@linux.ibm.com/
+
+Amit Machhiwal (2):
+  vfio/spapr: Enhance error handling in vfio_spapr_create_window()
+  vfio/spapr: Fix L2 crash with PCI device passthrough and memory > 128G
+
+ hw/vfio/spapr.c | 69 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 43 insertions(+), 26 deletions(-)
+
+
+base-commit: dfaecc04c46d298e9ee81bd0ca96d8754f1c27ed
+-- 
+2.49.0
 
 
