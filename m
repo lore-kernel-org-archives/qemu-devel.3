@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C12AC369A1
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684F8C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 11:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u275a-0007WQ-Sp; Tue, 08 Apr 2025 07:25:59 -0400
+	id 1u275X-0007Vi-Nn; Tue, 08 Apr 2025 07:25:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1u275Y-0007WC-AO
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:25:56 -0400
+ id 1u275S-0007VH-H7
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:25:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1u275W-0006NG-H0
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:25:55 -0400
+ id 1u275Q-0006Mm-HR
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 07:25:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744111553;
+ s=mimecast20190719; t=1744111545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cZYjj3TSQknbpghdbxSdQf+QPw46EKUTI+qxJHOAmRg=;
- b=VRM3ezGE8zEKtMeVdeyVCpwaMEfbbTSQLAYZt7EBsF/24avj8yvMbojRbwaUxP4tXB59Sl
- z6telflKgu5heWi7hWLZhTrJFMBeNTZxAfZX3cVIyA0vwjUKLpvQxm6SYlys35S91HEN9S
- KRQPpGjGAFUnH5Si/yoOQfTS0YX0IWk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WjFPABZXILeJ78Wq6M5oMzhIXnSZu3uoZGgbnQQdzUM=;
+ b=d8aW2MOZojHcYvNGklkBfRQnCwryVtWFVw2KhtqHoPmX5pxkeFHPeeL/cOdTrr33xVUpfB
+ 7JHRmkHJEXKv+1/JDQ2+iMYjNBMN9ecKM+8csus+Cdlck6wZ8fJA+KCfkG4nt08FaOEz4a
+ owcBdpn9gnCVgEYhSQm2KnE/D64Ww5g=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-KFGmRhtJM0-UIAUkiu1m4g-1; Tue,
- 08 Apr 2025 07:25:48 -0400
-X-MC-Unique: KFGmRhtJM0-UIAUkiu1m4g-1
-X-Mimecast-MFC-AGG-ID: KFGmRhtJM0-UIAUkiu1m4g_1744111547
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-xueCR_dNPUGfeXrYIEEjwA-1; Tue,
+ 08 Apr 2025 07:25:41 -0400
+X-MC-Unique: xueCR_dNPUGfeXrYIEEjwA-1
+X-Mimecast-MFC-AGG-ID: xueCR_dNPUGfeXrYIEEjwA_1744111540
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E197818001FA; Tue,  8 Apr 2025 11:25:46 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5204195608A; Tue,  8 Apr 2025 11:25:40 +0000 (UTC)
 Received: from rh-jmarcin.redhat.com (unknown [10.44.34.27])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0E7719560AD; Tue,  8 Apr 2025 11:25:44 +0000 (UTC)
+ id 6516B195DF82; Tue,  8 Apr 2025 11:25:37 +0000 (UTC)
 From: Juraj Marcin <jmarcin@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, vsementsov@yandex-team.ru,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 1/5] io: Fix partial struct copy in
- qio_dns_resolver_lookup_sync_inet()
-Date: Tue,  8 Apr 2025 13:25:00 +0200
-Message-ID: <20250408112508.1638722-2-jmarcin@redhat.com>
-In-Reply-To: <20250408112508.1638722-1-jmarcin@redhat.com>
-References: <20250408112508.1638722-1-jmarcin@redhat.com>
+Subject: [PATCH v3 0/5] util/qemu-sockets: Introduce inet socket options
+ controlling TCP keep-alive
+Date: Tue,  8 Apr 2025 13:24:59 +0200
+Message-ID: <20250408112508.1638722-1-jmarcin@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -86,54 +83,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+This series extends the work introduced by commit aec21d3175 ("qapi: Add
+InetSocketAddress member keep-alive"). [1]
 
-Commit aec21d3175 (qapi: Add InetSocketAddress member keep-alive)
-introduces the keep-alive flag, but this flag is not copied together
-with other options in qio_dns_resolver_lookup_sync_inet().
+First, the series fixes an issue in qio_dns_resolver_lookup_sync_inet(),
+where the InetSocketAddress structure is only partially copied. Next, it
+refactors setting client socket options into a separate function and the
+success and failure paths in inet_listen_saddr() in preparation for
+keep-alive support on server sockets and the addition of new TCP
+keep-alive options.
 
-This patch fixes this issue and also prevents future ones by copying the
-entire structure first and only then overriding a few attributes that
-need to be different.
+Then, the series adds support for keep-alive on server sockets and adds
+three new InetSocketAddress options for control of TCP keep-alive
+settings. By default, the value of all new settings is 0, which means no
+custom socket option value is set.
 
-Fixes: aec21d31756c (qapi: Add InetSocketAddress member keep-alive)
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+This is useful, for example, for live migration. In case there is no
+traffic from the destination to the source machine during postcopy, the
+destination cannot detect a failed connection due to a lack of
+non-acknowledged packets and stays in the postcopy-active state until
+paused by the management of the QEMU instance.
+
+[1]: https://lore.kernel.org/all/20190725094937.32454-1-vsementsov@virtuozzo.com/
+
 ---
- io/dns-resolver.c | 21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+V3:
+- moved the InetSocketAddress struct copy fix and the common function
+  setting socket options into a separate commit
+- refactored inet_listen_saddr()
 
-diff --git a/io/dns-resolver.c b/io/dns-resolver.c
-index 53b0e8407a..3712438f82 100644
---- a/io/dns-resolver.c
-+++ b/io/dns-resolver.c
-@@ -111,22 +111,11 @@ static int qio_dns_resolver_lookup_sync_inet(QIODNSResolver *resolver,
-                     uaddr, INET6_ADDRSTRLEN, uport, 32,
-                     NI_NUMERICHOST | NI_NUMERICSERV);
- 
--        newaddr->u.inet = (InetSocketAddress){
--            .host = g_strdup(uaddr),
--            .port = g_strdup(uport),
--            .has_numeric = true,
--            .numeric = true,
--            .has_to = iaddr->has_to,
--            .to = iaddr->to,
--            .has_ipv4 = iaddr->has_ipv4,
--            .ipv4 = iaddr->ipv4,
--            .has_ipv6 = iaddr->has_ipv6,
--            .ipv6 = iaddr->ipv6,
--#ifdef HAVE_IPPROTO_MPTCP
--            .has_mptcp = iaddr->has_mptcp,
--            .mptcp = iaddr->mptcp,
--#endif
--        };
-+        newaddr->u.inet = *iaddr;
-+        newaddr->u.inet.host = g_strdup(uaddr),
-+        newaddr->u.inet.port = g_strdup(uport),
-+        newaddr->u.inet.has_numeric = true,
-+        newaddr->u.inet.numeric = true,
- 
-         (*addrs)[i] = newaddr;
-     }
+V2:
+- moved socket options setting into a common function for both server
+  and client sockets (suggested by Vladimir)
+
+Juraj Marcin (5):
+  io: Fix partial struct copy in qio_dns_resolver_lookup_sync_inet()
+  util/qemu-sockets: Refactor setting client sockopts into a separate
+    function
+  util/qemu-sockets: Refactor success and failure paths in
+    inet_listen_saddr()
+  util/qemu-sockets: Add support for keep-alive flag to passive sockets
+  utils/qemu-sockets: Introduce inet socket options controlling TCP
+    keep-alive
+
+ io/dns-resolver.c   |  21 ++----
+ meson.build         |   6 ++
+ qapi/sockets.json   |  19 ++++-
+ util/qemu-sockets.c | 177 ++++++++++++++++++++++++++++++++++----------
+ 4 files changed, 165 insertions(+), 58 deletions(-)
+
 -- 
 2.48.1
 
