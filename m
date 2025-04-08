@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9DAC369A4
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 15:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34AA6C369A2
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 15:11:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2AV4-0004xu-Pr; Tue, 08 Apr 2025 11:04:30 -0400
+	id 1u2AbU-0007S5-G2; Tue, 08 Apr 2025 11:11:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1u2AV1-0004w4-8J
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 11:04:28 -0400
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2AbS-0007RW-6p
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 11:11:06 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1u2AUz-0006LQ-DQ
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 11:04:27 -0400
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-476f4e9cf92so42207091cf.3
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 08:04:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2AbO-00079y-5Q
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 11:11:05 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39c1ee0fd43so4770679f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 08:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1744124662; x=1744729462; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ZsmsgzWLL6kVGqLwoLfULN5GphZA4bLGRgW5AWnpqp4=;
- b=Uu0QhN3MVdWGjrjgUYcO8BeFZUWM9QJffw+JT2QuM7dufcq/o77Qit06uHDHr/yRZl
- IVwEuEi2lO+84cLxNXFM7su87ZGxw03P+djkEDn5lrqPlRXEVcxOm0vcbnbjQ/bA7P7h
- OKMJOn9C4gsu6/9uvLkszZNRv7EzixSjher6qJHLMDKfZWEIw+jz+M1FmLJuD0guw6rN
- KSSR+FGLHL794fp8sBVi560cYBTZkwDS8sXROkz7YPLpFlE3nlmLzAnZltLmimkZLwzT
- TKbUaTdPn5n8JAOC+uRFh+Fuc0RK973u/R8Xy7OTHxgQpOJoLviJ2ARxbfRMROAVWO5L
- FvJw==
+ d=linaro.org; s=google; t=1744125059; x=1744729859; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ppVzXJk+5s37uuANspQDg2GcmOMcJQDWWGuWyALqCEc=;
+ b=zkIGJpNCtPPMRaqtE1HHWiHNGvEz4BLwToHUjHcbbfADcd0QYkRdFWnHHkTHhMbpw2
+ naWB72wt09fPU9tDGGNIAq+auHQJ1TI0iJ+2WLQ2SHRcieQzkA5/dP8ogRiL2EWJROny
+ a2OsukuzvrNNTFVOgOdrEgcKV2IYP9c7SnORpfYpo07l/djEoRaiNpWh6NUslbJzCEt7
+ CBrIQgXMWy85lbBA7lgR4QvzgCj1362aTsMuSFfQ0arngZcfr5lvjDuq0ZJyWuWo0pUf
+ FS+39hmwhnbI+xPwfB8TpMAb7JAZhwq1NdM8Z+8I3ITG0QOssfRAHJhQWyVOghqwuIGX
+ ShJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744124662; x=1744729462;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZsmsgzWLL6kVGqLwoLfULN5GphZA4bLGRgW5AWnpqp4=;
- b=XwI5QIzE1Bch7Q3HZIgN8mEFiAsmOUe6OJ0NxxjaqFarIAjOaag9Fe2WysPWwRqKt3
- 91Anzya1Ufc5pJhMqzsm14Wpp2uE3r9oMPlwUeViguhc1yH++310KsWfGF07bin5tQlm
- YJQIn3KyCbVCu3KQn3LQGWjT+2y/i0WeJuRH1L2U2+j9kijGUEYXKCdpVSBqGAnKfmnh
- TmXQNO/+Yq9273ePXiXvTwnS2TAHRzHRbX6CH+7NYVZxG9MzXDHrO22AjPvnnrg04hh4
- wDmE+oDe0/Xrkof2jC0iTFnCGx0WxJxsOPa7K1j3tA6covRCtC9zK77Zw6xbgYxw6Nlf
- k89Q==
+ d=1e100.net; s=20230601; t=1744125059; x=1744729859;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ppVzXJk+5s37uuANspQDg2GcmOMcJQDWWGuWyALqCEc=;
+ b=PFJ1JobzZ6kfl+SmtchOdim3gUccCnGy5JLYOnx9JjnB8jFD8oPqvI8aiG5CgFQ5FY
+ 2vxd6yDpPLdAFsPGYPGGpSlaXpdMdigTBpSxBU7c99N1lrfpFUeQcl/QDk4y6kvxM6br
+ zm7X2s3Gnin/Sdzs4Bevs8uwgEoiEx9Y+DKCszXMp32wtdGkAeKSdIJEMBrdahDlDp9F
+ wCvROz/bCdg7f86NkQhskiE+vcTtOIyot7ckujllsBcafx+DsZJcP8pZqhXKV2flaFtu
+ pMuZ4anqbT79L9VXhQU+MtTFyYVZbLL7cwHrskU1dJsZwyQrxim/y2z4egARrQ35Bnae
+ Bf0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXGRxQjm0Mj3vVP+87IpHOaSqGpdfCg698SuGgXxd4IV9jhcKWZrGOzpiPMTfcW+vXO59UVdoSl8hH@nongnu.org
-X-Gm-Message-State: AOJu0YwLcXG3/yGW61YgiWPEniqLVfonk1jQC25yT1MKTssEtA7c0Q7T
- YC8hLwtrwV931eLGx1DDW7RTP6IYaIlhZc5ienUoYq/xVYEKH2HkJgehemvbwAI=
-X-Gm-Gg: ASbGncuuXYiwo0pOzD6WfrYKn1dP38UNSH5un5Er77OhMB0wZNiNRqLwouHr+yYP6wU
- cdVUCVPpJDZC6hSNtvj2EEq5fiF2ywpjx6qIy/xJit8cMNStBwhjDUeid3uK9OQR7U67RYdnBrH
- H3fTUGdg8fbayEMOdjise32JD5wliRhYY9waAfj2ln2x0Y6kDprRw8BXCI3OJnw5F2rpDfthT9r
- jjG0Myhyj946WYJ7KNTGxPjTUDq+2hvJoFMgwqCNZxmxMdn6vzj9HVoOvbzSQxJRodyxvYVDCBy
- pxs6Qlhx7W6x6s5pDrUo0QPgGPtQCKGKIaDxH7rni1QqYA3UVsQsv2pHU4O++NvrgiYLm0l4c43
- ak6PPP5TkHPuBqrmvFwWZGKQ1rJ4=
-X-Google-Smtp-Source: AGHT+IFJtDtsqhqndKEDywk5WxR0Uoy5G4rpBDYAgWzK45UFzZFnH64aH9P06dvjmEqEV3b0o0jjHg==
-X-Received: by 2002:a05:622a:1:b0:476:76bc:cfb8 with SMTP id
- d75a77b69052e-47925991e1emr272565651cf.31.1744124662547; 
- Tue, 08 Apr 2025 08:04:22 -0700 (PDT)
-Received: from gourry-fedora-PF4VCD3F
- (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4791b088412sm77386711cf.39.2025.04.08.08.04.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Apr 2025 08:04:22 -0700 (PDT)
-Date: Tue, 8 Apr 2025 11:04:20 -0400
-From: Gregory Price <gourry@gourry.net>
-To: nifan.cxl@gmail.com
-Cc: jonathan.cameron@huawei.com, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com, anisa.su887@gmail.com,
- Fan Ni <fan.ni@samsung.com>
-Subject: Re: [RFC 0/3] Qemu FM emulation
-Message-ID: <Z_U69HlC_aKLghwL@gourry-fedora-PF4VCD3F>
-References: <20250408043051.430340-1-nifan.cxl@gmail.com>
+ AJvYcCXedZqeGdGUwvpoBXxr3c2dF1kpyXZVf5I8m4bhg+ikxusbQWFEAQmwulOjGFFUq80aq/6Z4yOd2e/h@nongnu.org
+X-Gm-Message-State: AOJu0Yxto7kC5ozD3pMxkcSwxoKsyXcAq7AFeePovjiTBUw4qqVhIt/y
+ rcJa92ej5JYiwLwcn+yw+Woo/Ra3CwBjs8vWQErcFDgdaNLous/CrdEjc1JSx2U=
+X-Gm-Gg: ASbGncvCd9al6/s89NJyPsG1WzWbX7SAC0Nu1zFpbydD4ae38GVBddQxeOZdKspNS/H
+ Sc8u7wqByoDZuZvtFZtYciEwVEmoUg7TyA9pLPDpD8D2XwojmUZb0LPPIBz1Bxx0zKVo+DZEhpr
+ iJ66UPpj0pC2M6Y1tjpThOAjUQrqJmfDBHldtS4elerQalqaJCCbk0eycoEvqVu/vSIJ7YulkS2
+ 1cwW07/qSwyumpBi6vUO/OWj8VEWwbUPYxzZDmVK5S1v8Ln4py4At6r8Pu1o5xeaq/vcOFH7epw
+ slWD55jwxEDnWIF+UFLOF0GrZ/CNWcWtoV4WLG78NvxyxVtCUm47w9+MzfZODyeR+qVE9asFkIW
+ ohF00XRwZaia3
+X-Google-Smtp-Source: AGHT+IFzTIJlNg0dcJiGCrM2sc5tiP9OMdwL3d1Hprqr1jTrQqJM03OARI8cs2sMEtXmsY6cBCubQQ==
+X-Received: by 2002:a05:6000:420a:b0:391:487f:27e7 with SMTP id
+ ffacd0b85a97d-39cba98bb36mr13827860f8f.55.1744125057932; 
+ Tue, 08 Apr 2025 08:10:57 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ec16f1a73sm167565835e9.24.2025.04.08.08.10.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Apr 2025 08:10:56 -0700 (PDT)
+Message-ID: <95411eba-7da2-43e5-98b6-e9f920490aef@linaro.org>
+Date: Tue, 8 Apr 2025 17:10:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250408043051.430340-1-nifan.cxl@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=gourry@gourry.net; helo=mail-qt1-x835.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] cleanup: Re-run return_directly.cocci
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org
+References: <20250407082643.2310002-1-armbru@redhat.com>
+ <20250407082643.2310002-2-armbru@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250407082643.2310002-2-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,20 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 07, 2025 at 09:20:27PM -0700, nifan.cxl@gmail.com wrote:
-> From: Fan Ni <fan.ni@samsung.com>
+On 7/4/25 10:26, Markus Armbruster wrote:
+> Coccinelle's indentation of virt_create_plic() results in a long line.
+> Avoid that by mimicking the old indentation manually.
 > 
-> The RFC provides a way for FM emulation in Qemu. The goal is to provide
-> a context where we can have more FM emulation discussions and share solutions
-> for a reasonable FM implementation in Qemu.
->
-... snip ...
+> Don't touch tests/tcg/mips/user/.  I'm not sure these files are ours
+> to make style cleanups on.  They might be imported third-party code,
+> which we should leave as is to not complicate future updates.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   hw/gpio/pca9554.c                     |  5 +----
+>   hw/i386/kvm/xen_xenstore.c            |  4 +---
+>   hw/riscv/virt.c                       | 25 ++++++++++---------------
+>   hw/scsi/esp.c                         |  5 +----
+>   hw/vfio/common.c                      |  7 ++-----
+>   plugins/api.c                         |  4 +---
+>   tests/qtest/cmsdk-apb-watchdog-test.c |  6 +-----
+>   tests/qtest/pnv-host-i2c-test.c       |  4 +---
+>   tests/qtest/stm32l4x5_usart-test.c    |  6 +-----
+>   tools/i386/qemu-vmsr-helper.c         |  5 +----
+>   10 files changed, 20 insertions(+), 51 deletions(-)
 
-Took a browse of the series, and I like this method.  It seems simple
-and straight-forward, avoids any complex networking between the vms and
-gives us what we want.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I'll wait for Jonathan's commentary, but solid prototype (bn_n)b
-
-~Gregory
 
