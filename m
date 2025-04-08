@@ -4,74 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C9FEC369A4
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 14:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463E5C369A2
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 14:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u29hc-0005Fq-4a; Tue, 08 Apr 2025 10:13:24 -0400
+	id 1u29lF-0006K8-GN; Tue, 08 Apr 2025 10:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u29hb-0005Fi-68
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 10:13:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u29hY-00064c-RZ
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 10:13:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744121598;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IHiNrwMuWg4UkdQtFcMWiRQPjdHzDVzNyEUjeNNQ14w=;
- b=GfFEgP5Bq1KmTrOYzjXiagBrV18QFW081eCW6lTknIDoEO7fINXtFm/xIy6kxrF8/KZymj
- vSU6u3leUlnfwVX8kVf6eczpP3DOuoLbBbByBddT1NcI5rpQ2Decry5o9opyHVkvusX3fS
- yrUhAMcKCHletcc9KxYhwMYiKZqwz0g=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-fseex5jKPdSkhs2knPmVjA-1; Tue,
- 08 Apr 2025 10:13:12 -0400
-X-MC-Unique: fseex5jKPdSkhs2knPmVjA-1
-X-Mimecast-MFC-AGG-ID: fseex5jKPdSkhs2knPmVjA_1744121591
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC5CD18007E1; Tue,  8 Apr 2025 14:13:11 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.136])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 324A01801747; Tue,  8 Apr 2025 14:13:10 +0000 (UTC)
-Date: Tue, 8 Apr 2025 10:13:09 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Cc: Daan De Meyer <daan.j.demeyer@gmail.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] smbios: Fix buffer overrun when using path= option
-Message-ID: <20250408141309.GA549046@fedora>
-References: <20250323213622.2581013-1-daan.j.demeyer@gmail.com>
- <c82ea7ec-7f53-4113-a4ee-95d215522d4d@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u29l4-0006JH-QD
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 10:17:00 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u29l1-0006gl-8E
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 10:16:58 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43d04ea9d9aso27349045e9.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 07:16:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744121812; x=1744726612; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/v1qt7Xe6ZVln/Jx1Y2btazm+i2QCPq+Nd/CHGgnIFU=;
+ b=DRxTdCcGwxbJhB6T8sxY5s0gPhTzREwczEAtORHqGD/Y7oIWlP9lISSwUAj2zVwLPh
+ t2I03pKRu7PHvmcKSmEwNmqJsRkK9WbqGgp/eWrtqoA/7C3A5fJxXMrHora6KaD8EXwW
+ w+mPWTBLKI4at1PeYEn4N82HF7lctrreLiVQ6DNVpDUxlSB1mkiNmK4vkz1qLpxgHVC+
+ qVEEzkKZnx1Hm9tkbVJuzWfw6o3mC9b8f3KTZWrzHSRhb01BeaavixBpGEGuRv6MQBr0
+ yA/uE+TaqNInGSdxwKIlhdaydYLddcSAtAn2+MGFlLoWttJJHXyNpqrUWcaSg2V2YWXd
+ ieiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744121812; x=1744726612;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/v1qt7Xe6ZVln/Jx1Y2btazm+i2QCPq+Nd/CHGgnIFU=;
+ b=DGtPN6oTXcZ6u1EJa4pPFZ/WAcLT4RznNhwLmn+ftexJyuKXgOIpycbPKVr22oZVhh
+ 6NTterXKTnzyQprCnrlh4Jup5BYXwNrkIeq7hozvotpMLe2a1wNrNOFvff6ZRP/WN3bk
+ FLq3fTm5xj+7ySQH5FGfSPlrueRJjm0gETCWQS5bgA3ZHHE0k4F4MUxh6ccf3KpRlJhJ
+ 7C5+bSoAF1titzMqd7PbIgbcBeQG/jMtzV34CTBysUbIdOaL2qiWS9X8FHuCmXswkJiG
+ ocQDtrC8v8UTVZgf3x9kTH4JWF3s6WxmJ5VLJhyKtPZ17U1btbJJpLs0NOfU71FXfnAP
+ 4fVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhO7lsHoXoUpMofj/oOy1+IJ9V+7Vl0m5O+K6sUmqUGAbgkPvK50rpBk9z6FrN5ek152+ryIClor+J@nongnu.org
+X-Gm-Message-State: AOJu0Yzr/SlHVUAmjfPxZ/rpvmGePvk61BjaU3yW38hTEWTZCzHm52mH
+ b/ineTM5ORPhaQME7oz2V6SaprmzjyaOiE0mOubm+5+e69NaXMtxu8LbzZupc44=
+X-Gm-Gg: ASbGncuyE/mGJekzKWo3N32GjrTB6T8FhXSeWYqEN+EyQYZlwvSTFQAdU2UUiSC/vk9
+ q1I0nPjawcEY1MsNSs8J8FsfdiS+2xemCQGkpnnFu1sKinwggIqyuiA3mPI6mGs7dU283Ij2vaT
+ LsZs2aLvoCEkPkchOC+I3lkZAt/2qv6LwM73dowQqbMdvcISLMyliQ18uaXLTo15MU3nUOqjGDU
+ YMomPHD34vB9NkzdLN7sOvIbOFFDSXpk6ta/qFRe68NL7UDjpdPl4jhhPneyY4xYzG63VJyDBXc
+ 2X7cnqZWEBT5bmpCG6G4iluf+/2FHjc8ib7sDAtvDIzpBIc=
+X-Google-Smtp-Source: AGHT+IELo05wFg5oVzlyGoH5/NRLdJmhfZTd54jhPoHfVqIobpc7erwb3pnTA5S1PjMM+ySHRsSTUA==
+X-Received: by 2002:a05:600c:3487:b0:43c:f3e4:d6f6 with SMTP id
+ 5b1f17b1804b1-43ecfa19260mr174062225e9.31.1744121812170; 
+ Tue, 08 Apr 2025 07:16:52 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43ec17b46bbsm165215995e9.36.2025.04.08.07.16.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Apr 2025 07:16:51 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 06E4B5F8D1;
+ Tue,  8 Apr 2025 15:16:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Mario Fleischmann <mario.fleischmann@lauterbach.com>,
+ qemu-devel@nongnu.org,  philmd@linaro.org, christian.boenig@lauterbach.com
+Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
+In-Reply-To: <87ldsakgp9.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Tue, 08 Apr 2025 13:58:42 +0200")
+References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
+ <87semkw3qx.fsf@pond.sub.org>
+ <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
+ <87semjp286.fsf@pond.sub.org>
+ <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
+ <87r023m422.fsf@pond.sub.org> <87a58qj3ay.fsf@draig.linaro.org>
+ <87ldsakgp9.fsf@pond.sub.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Tue, 08 Apr 2025 15:16:50 +0100
+Message-ID: <87y0wahh65.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="CdWMuD4P744o+Y+M"
-Content-Disposition: inline
-In-Reply-To: <c82ea7ec-7f53-4113-a4ee-95d215522d4d@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,66 +111,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Markus Armbruster <armbru@redhat.com> writes:
 
---CdWMuD4P744o+Y+M
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>
+>> Markus Armbruster <armbru@redhat.com> writes:
+>>
+>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>>>
+>>>> Apologies for the line wrapping in yesterday's answer. Should be fixed=
+ now.
+>>>>
+>>>> On 08.04.2025 09:00, Markus Armbruster wrote:
+>
+> [...]
+>
+>>>>> What about providing the MCD interface as a separate QMP-like protoco=
+l?
+>>>>> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
+>>>>> compiling it out when not needed.
+>>>>>
+>>>>> It gets its own socket, just like the GDB stub.  Might reduce
+>>>>> interference between debugging and QMP.
+>>>>>=20
+>>>>> Thoughts?  Alex, Philippe, care to chime in?
+>>>>
+>>>> Sound reasonable to me. Keeping in mind the size of generated QAPI cod=
+e,
+>>>> an option to `./configure [...] --enable-mcd` is definitely advisable.
+>>>
+>>> Alex, Philippe?
+>>
+>> When I spoke to Mario at DVCon last year I liked the idea of re-using
+>> QMP instead of inventing yet another RPC interface for QEMU. QMP
+>> certainly has nicer properties than the gdbstub which has a very
+>> "organic" and "serial" feel to it.
+>>
+>> Are you suggesting we re-use the machinery but use an entirely separate
+>> socket with just the MCD namespace in it? I don't see that being a
+>> problem as long as we can test it properly in the CI.
+>
+> Yes.
+>
+> "Keep them separate" is only a gut feeling, though.  While I pay
+> attention to my gut feelings, I know they can be wrong.  I am soliciting
+> opinions.
 
-On Mon, Mar 24, 2025 at 07:24:59AM +0100, Thomas Huth wrote:
-> On 23/03/2025 22.35, Daan De Meyer wrote:
-> > We have to make sure the array of bytes read from the path=3D file
-> > is null-terminated, otherwise we run into a buffer overrun later on.
-> >=20
-> > Fixes: bb99f4772f54017490e3356ecbb3df25c5d4537f ("hw/smbios: support lo=
-ading OEM strings values from a file")
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2879
-> >=20
-> > Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
-> > ---
-> >   hw/smbios/smbios.c | 3 +++
-> >   1 file changed, 3 insertions(+)
-> >=20
-> > diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> > index 02a09eb9cd..ad4cd6721e 100644
-> > --- a/hw/smbios/smbios.c
-> > +++ b/hw/smbios/smbios.c
-> > @@ -1285,6 +1285,9 @@ static int save_opt_one(void *opaque,
-> >               g_byte_array_append(data, (guint8 *)buf, ret);
-> >           }
-> > +        buf[0] =3D '\0';
-> > +        g_byte_array_append(data, (guint8 *)buf, 1);
-> > +
-> >           qemu_close(fd);
-> >           *opt->dest =3D g_renew(char *, *opt->dest, (*opt->ndest) + 1);
->=20
-> Please make sure to put the maintainers on CC: (done now, for the next ti=
-me
-> please see the MAINTAINERS file or use the scripts/get_maintainers.pl
-> script), otherwise your patch might go unnoticed.
+I forgot to add isn't the flexibility of the QMP API something we need
+to handle for single binary anyway?
 
-Michael, Igor, Ani: This patch is needed for QEMU 10.0. You are the
-maintainers, please review this patch.
-
-Thanks!
-
-Stefan
-
---CdWMuD4P744o+Y+M
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmf1LvUACgkQnKSrs4Gr
-c8g8/wf9H48jlbHTCPIXmjB0g55GYI4AkLGfRDx9KIslnOuO1ViJuYddtR9JPTiK
-xQrcruqQPktzRuZy6cS32+WO0eqJdtsGiMMPUzVRvbDymm1BHBfuFiUYr2bmbjtb
-/5uea0TKNF12P0/XaFW8gP0atdhWpif1Yjf/9L5yO3QmUN7VyIB0f/tEh+Qympn5
-pBBVw+f8e3q4x+nkv9DqfqQSA2zWrHFqANQ6SnaDx5T/SOtgAAHPDpyQe5ANf87y
-x7MSuJVQGkGupUkj8SPlWFHBZpTTU1GL3+GBXT5X1vwhXtS8plaxjeyH7qhGIHR0
-mUJSNnAdIfjJic2xcXQzmglbYKoQew==
-=PB0M
------END PGP SIGNATURE-----
-
---CdWMuD4P744o+Y+M--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
