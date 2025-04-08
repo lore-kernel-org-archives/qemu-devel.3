@@ -4,101 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D752FC36010
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 21:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50B0C36010
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 22:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Gvq-00052Y-Sw; Tue, 08 Apr 2025 17:56:34 -0400
+	id 1u2HR3-0003Ir-UP; Tue, 08 Apr 2025 18:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u2Gvo-00051x-Ie
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 17:56:32 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2HR0-0003Ig-G1
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 18:28:46 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u2Gvm-00084j-RS
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 17:56:32 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5e61da95244so10036074a12.2
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 14:56:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2HQy-0003A9-7s
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 18:28:46 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-38f2f391864so3386122f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 15:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744149389; x=1744754189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3D/nuzWKWmKyfPyXTbT4MWTi34k7JjeQfu+8a4pzxiE=;
- b=FCJmwna6x7bYtbvmm9Uuf5jU9GqElE2E/cyXn5YRuAY2PjkjMt+EcxWYuboF6bscdI
- z4V0RsNzvOq9NwQXBqNJ0CyS188xkYrmmtmRMk2mxdfW/N+jFN26ufmqIaASc3QbNe2h
- W7kEP2TyEWwnksYDqGz1PdQAglK0XseSRaTkYHAsihgfLtq/RoRfEMpx4muO12hphtWX
- J+qL1ZbjtFdxGaDdtLeCQglrSkek2707pczr0e9Dud2BmgOa/TqCqbIvGNrMTkGdusmw
- qLeW6kJXvUXlYRpvyaqRPkC+L2jASQKmLiUZ0HFunDF2yDDF3//P37ocACpGViDpmXzE
- 2dOQ==
+ d=linaro.org; s=google; t=1744151322; x=1744756122; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FigNQri1F3pPdX1w63q6FumAX/u368o6auyRy2jVS+8=;
+ b=HWevKVb8L8LP6s/A2YMZS7+O4PbsnsUsW9P5j8hKr9bVUyG3yxbXFFGhEnVl4UoLc5
+ M9Dg0LKamPKEs5BBuJkIX4VQakU6htsEmArokEstfqdG0g63oh78w65PJNpXOZW54dvd
+ QrKqh4irksxjaj/lsqSqNjGIhV74qeURjyXj4ATBVC7GewLchRnPtfcEdOISYPy3Dod9
+ kdyMwhCMjEQqQouocCaXu5OcfHHkawCtGd2n3bTWIbUbeAR1FW72xjjqhLlqjtO/zqgf
+ ZVsNSvRmizgabntTfAAitiScyjM2iEzfzzIpaRbDSQ0pKQ/tFvWiL2f1MI/1f0XobfMy
+ tmfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744149389; x=1744754189;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3D/nuzWKWmKyfPyXTbT4MWTi34k7JjeQfu+8a4pzxiE=;
- b=IeSfs6J7WhlK2bigA5ybllBjEIJZFrGPmRR2ABPNz66cihSMXggrIyt3rAwgnNnmVU
- 5S99QG+1+BxHtDODUVqYZCGGNpHa2/rYb6vXZCTgFqRe4Af/HYUpJepzHRJkKEQHAqjK
- W5Vqb+jHkP3I9HAyEfeShiMD5gUeliLo/JEnJ9EMzqRNp0HQF6fg+1P2RB2VpraXXQT0
- UG/9SZBQ40WfpOzAlpuTnQKkE62fujKiLsgQRVDlRpXsaDNwPNSLjn3f4xMyQSsyYbdx
- EBplsIuGj7bH4FN4zIEDUDX8PrSGIJkBZVEGJ8MUI0O4cHn82jshQP3fSTn5uNfOQ8j4
- SQjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUnnyKahLyIlQotbO43U1fC3Lb1Pva/ZYcGpxV7xxjG3H5wh4m5Xyi/mGOGmShLwlkRMn3PKmmvXo8R@nongnu.org
-X-Gm-Message-State: AOJu0YxHkQd1I0Ar3pRHnMhnyriQaLWScsqGVPt4NOA3Q+4xwt6ve8vs
- yO5szAcE7fgmggMS7wPVpQHFNRHM0XQdAsDb7Zs/xjXoLmDMPszW
-X-Gm-Gg: ASbGncsGvw0zdhMCpwHFWMMqmHL/VPOsOpD3yX1BYf+ZxX5xD22Ry/DEQcaeOdLQyxq
- I1pJiQOxXyFUm32dRFxK5GpxqXjl9iCAv6Ihl6eWhBNr+Ts4lQOzpHDpLpzjrvr/d/1C3MWekRD
- euRDBKvsSaE0aqwd2ufWliNuGjh2mxl6yZngCofYHchhdnxUaUCy2rCf+s/MDgzpnfFLfbATcFI
- A+eSvUxDLj6f8XDneyVI1z/o9uGCd3ffrWfWb4R9kiQtbfPwq3b+Fwgp66nl8DXJ9zKJ1nSHty3
- 1hoBC8OBH7Su/ze5lWfRi4dzPOi9ZfcE6rfCdwvACCytLXdw4fmy7Km03Ysaz3uhkiq5hdxqean
- xchT73zM4V/2fIUApenHN3ju84by0eyAAiSRTsOGrPhKs2VrxiLS0
-X-Google-Smtp-Source: AGHT+IFZB4NwDjR17ln8ZzDO+vEdBuRbIiM/sJFo9Q/+R29FvU7sccNY5ndskfGbMMU23Hvzhx7AEQ==
-X-Received: by 2002:a17:907:7293:b0:ac7:391b:e689 with SMTP id
- a640c23a62f3a-aca9d728cd2mr22694466b.59.1744149388092; 
- Tue, 08 Apr 2025 14:56:28 -0700 (PDT)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-291c-6e00-b87f-49d2-cee7-5562.310.pool.telefonica.de.
- [2a02:3100:291c:6e00:b87f:49d2:cee7:5562])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ac7bfee5966sm974885966b.82.2025.04.08.14.56.27
+ d=1e100.net; s=20230601; t=1744151322; x=1744756122;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FigNQri1F3pPdX1w63q6FumAX/u368o6auyRy2jVS+8=;
+ b=qTKHYvTeoRZyz73YJlB9Vhu/6F8CH1VksqCbO3erKyXQWU0hBkKWx+k4uHuhLQD1rC
+ PDtNfl1m4GVVN+qGNtTT9Ktj2fONJhSs2K+1Ew0yFDpuuYb6GswZPlwIqnakqgOFjQNF
+ w0qjP8cVcWT00LFreCoN1Iw7XhYKxz/zc8T9oXMhX0GehInHfCh20eTBM1fHAzRVpUdP
+ /vMZVXZBVp32QF1oXdvi40pSDJ284V85W0OaVkIE8umRxkxtqZVUq6JaXiUn51atM46l
+ BisOaNi1zk2bEYR2lNefME/PaI9igkAFIkzZke4ovQ0/SZmSZTDg76Ag2VLFaueI7nO/
+ vz1Q==
+X-Gm-Message-State: AOJu0Yxn/mGfs+p2Pm6Hu4ARFamrm7ONo4RXvKyLHwcnuCpfbJm6Adze
+ NAUuSc7U+WwaO5h2aiG8rt+lVstrEwqwa0xDOwcSUjzBpi4NRRJvHXhyS3inCzE=
+X-Gm-Gg: ASbGncvKz1d7fZixKDr1WuUS4Y57Rfo6yFWyhnZWSwaeW0viCOdBDc+vn4+Mhu7dPzF
+ J5ep4syT3kDt/nYVIcaOoE+kVeSoY36vBouEnELwWk4g0PJIxocb1fz7knW28z9xcwtI/L0FdlS
+ i477OenTuBSlL1KSq7F/BB7Xx4MT8mL9bnD8Jv1v2ClosS06nrTfXFwRvdVoizbbGCSrFuHBvjr
+ lRDSbnF2/AAImVq2dsNe0qZ6hXdlv03bKTcz+cfXCGPGkma27Yu1R0wFQtT4kgugSok8eQxu2/2
+ W2SMxn1ysHaqXT/hioIxT4hD/JLgJl989ou3EjaSdLecifF0naRZ9FlQ2ggfcTrvcR1hNeOC+TI
+ XM8gYH7drl0Fd
+X-Google-Smtp-Source: AGHT+IEmsTOD7538wFvsJGdGQesLlE0c/8fMPlHNAWnkD5yC7/9uHaX4GWesbZLxanbHhMB2AmignQ==
+X-Received: by 2002:a05:6000:2585:b0:391:2306:5131 with SMTP id
+ ffacd0b85a97d-39d87cd329fmr731449f8f.45.1744151321986; 
+ Tue, 08 Apr 2025 15:28:41 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39c301b8161sm16340542f8f.50.2025.04.08.15.28.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 08 Apr 2025 14:56:27 -0700 (PDT)
-Date: Tue, 08 Apr 2025 21:56:23 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Guenter Roeck <linux@roeck-us.net>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_0/2=5D_Add_property_to_supp?=
- =?US-ASCII?Q?ort_writing_ERSTBA_in_high-low_order?=
-In-Reply-To: <3b0367ca-7242-4555-a6b2-ddf546374138@roeck-us.net>
-References: <20250405140002.3537411-1-linux@roeck-us.net>
- <ae8cd367-8580-4476-9a75-3fa4f7aa2536@linaro.org>
- <7ed5d213-9429-45c8-bbf3-6f3f841a2299@roeck-us.net>
- <7C5A41A1-38EE-4D22-8F84-6A5A3A2BDD82@gmail.com>
- <42a82455-7fa1-4890-a9e8-690fec3433c3@roeck-us.net>
- <9239BBD2-DCB8-4B97-9EAA-FFB06CAB660C@gmail.com>
- <89b70bdd-00e3-46ee-8810-099da032f485@roeck-us.net>
- <C5389B31-E7B2-43E0-A10D-368571DAD081@gmail.com>
- <cd6dafe1-f291-46f4-8fb1-7555dc6a60db@roeck-us.net>
- <6A2167BC-910A-4801-8FB0-24C114EF5181@gmail.com>
- <3b0367ca-7242-4555-a6b2-ddf546374138@roeck-us.net>
-Message-ID: <A3422A32-92AB-4D53-A53F-DD9D0FD5C1EE@gmail.com>
+ Tue, 08 Apr 2025 15:28:41 -0700 (PDT)
+Message-ID: <ab3c7bc1-850a-4d58-bc2b-263b9a559d1e@linaro.org>
+Date: Wed, 9 Apr 2025 00:28:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ui/curses: Fix infinite loop on windows
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+ William Hu <purplearmadillo77@proton.me>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, kraxel@redhat.com,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <tSO5to8--iex6QMThG3Z8ElfnNOUahK_yitw2G2tEVRPoMKV936CBdrpyfbeNpVEpziKqeQ1ShBwPOoDkofgApM8YWwnPKJR_JrPDThV8Bc=@proton.me>
+ <20250408140821.GA548630@fedora>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250408140821.GA548630@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,120 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/4/25 16:08, Stefan Hajnoczi wrote:
+> On Thu, Apr 03, 2025 at 01:07:56AM +0000, William Hu via wrote:
+>> >From a42046272f0544dd18ed58661e53ea17d1584c2c Mon Sep 17 00:00:00 2001
+>> From: William Hu <purplearmadillo77@proton.me>
+>> Date: Wed, 2 Apr 2025 12:00:00 -0400
+>> Subject: [PATCH] ui/curses: Fix infinite loop on windows
+>>
+>> Replace -1 comparisons for wint_t with WEOF to fix infinite loop caused by a
+>> 65535 == -1 comparison.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2905
+>> Signed-off-by: William Hu <purplearmadillo77@proton.me>
+>> ---
+>>   ui/curses.c | 10 ++++++++--
+>>   1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> I have CCed Gerd Hoffmann (git-shortlog(1) shows he is the most frequent
+> committer to this source file) and Marc-André Lureau (ui/ maintainer
+> according to the ./MAINTAINERS file) so they can also review your patch.
+> 
+>>
+>> diff --git a/ui/curses.c b/ui/curses.c
+>> index a39aee8762..3f5c5adf78 100644
+>> --- a/ui/curses.c
+>> +++ b/ui/curses.c
+>> @@ -265,7 +265,12 @@ static int curses2foo(const int _curses2foo[], const int _curseskey2foo[],
+>>   
+>>   static void curses_refresh(DisplayChangeListener *dcl)
+>>   {
+>> -    int chr, keysym, keycode, keycode_alt;
+>> +    /*
+>> +     * DO NOT MAKE chr AN INT:
+>> +     * Causes silent conversion errors on Windows where wint_t is unsigned short.
+>> +     */
+>> +    wint_t chr = 0;
+>> +    int keysym, keycode, keycode_alt;
+>>       enum maybe_keycode maybe_keycode = CURSES_KEYCODE;
+>>   
+>>       curses_winch_check();
+>> @@ -284,8 +289,9 @@ static void curses_refresh(DisplayChangeListener *dcl)
+>>           /* while there are any pending key strokes to process */
+>>           chr = console_getch(&maybe_keycode);
+>>   
+>> -        if (chr == -1)
+>> +        if (chr == WEOF) {
+>>               break;
+>> +        }
+> 
+> Further below there appears to be another instance of the same bug:
+> 
+>    /* alt or esc key */
+>    if (keycode == 1) {
+>        enum maybe_keycode next_maybe_keycode = CURSES_KEYCODE;
+>        int nextchr = console_getch(&next_maybe_keycode);
+> 
+>        if (nextchr != -1) {
+>            ^^^^^^^^^^^^^
 
+Indeed.
 
-Am 8=2E April 2025 20:31:58 UTC schrieb Guenter Roeck <linux@roeck-us=2Ene=
-t>:
->On 4/8/25 12:57, Bernhard Beschow wrote:
->>=20
->>=20
->> Am 8=2E April 2025 16:09:58 UTC schrieb Guenter Roeck <linux@roeck-us=
-=2Enet>:
->>> On 4/6/25 11:08, Bernhard Beschow wrote:
->>> [ =2E=2E ]
->>>=20
->>>>>> Yeah, it works with Buildroot as described in the handbook=2E When =
-I append `-netdev user,id=3Dnet0 -device virtio-net-pci,netdev=3Dnet0` on t=
-he cli I can `wget http://www=2Egoogle=2Ecom` successfully=2E When I omit i=
-t there is no network connectivity=2E This is with a 6=2E6=2E23 vendor kern=
-el=2E
->>>>>>=20
->>>>>=20
->>>>> I had no luck with virtio-net-pci=2E virtio-pci works for me, but I =
-can not get real PCI devices
->>>>> (such as nvme or scsi adapters) to work=2E
->>>>=20
->>>> I now tested with the latest Buildroot recipe, changing to upstream k=
-ernel version 6=2E14 and using the defconfig=2E The `wget` command still wo=
-rks for me with virtio-net-pci=2E However, I can confirm that I need your x=
-hci patches for the usb storage device to be detected=2E
->>>>=20
->>>=20
->>> Following up on this, my problem is that adding "-netdev user,id=3Dnet=
-0 -device virtio-net-pci,netdev=3Dnet0"
->>> to the command line adds a _second_ Ethernet interface, in addition to=
- the default one=2E
->>> This results in
->>> 	qemu-system-arm: warning: nic imx=2Eenet=2E0 has no peer
->>> reported when qemu starts=2E
->>=20
->> I get this too when using virtio-net-pci successfully=2E
->>=20
->>>=20
->>> I can not get that second interface to work, probably because of some =
-userspace issue=2E
->>>=20
->>> Anyway, I never see any interrupts on the virtual PCI interface=2E Fro=
-m /proc/interrupts:
->>>=20
->>> 277:          0  PCI-MSI 524288 Edge      virtio0-config
->>> 278:          0  PCI-MSI 524289 Edge      virtio0-input=2E0
->>> 279:          0  PCI-MSI 524290 Edge      virtio0-output=2E0
->>=20
->> I get:
->>=20
->> 206:          0          0          0          0  PCI-MSI 524288 Edge  =
-    virtio0-config
->> 207:          3          0          0          0  PCI-MSI 524289 Edge  =
-    virtio0-input=2E0
->> 208:          8          0          0          0  PCI-MSI 524290 Edge  =
-    virtio0-output=2E0
->>=20
->> Note that I'm using four CPUs, i=2Ee=2E `-smp 4`=2E
->>=20
->
->I must be missing something=2E Can you send me your complete qemu command=
- line ?
->I'll also try building a buildroot image to see where it gets me=2E
-
-Will send you tomorrow=2E
-
->
->>>=20
->>> That may work for virtio-net-pci, but it doesn't work for other PCI(e)=
- drivers=2E
->>> If I try to attach any other PCIe devices, the device is reported with=
- lspci but
->>> then its initialization times out because it does not get any interrup=
-ts=2E
->>=20
->> Indeed, trying with e1000e:
->>=20
->> 205:          0          0          0          0  PCI-MSI   0 Edge     =
- PCIe PME
->> 206:         74          0          0          0  PCI-MSI 524288 Edge  =
-    eth1-rx-0
->> 207:         20          0          0          0  PCI-MSI 524289 Edge  =
-    eth1-tx-0
->> 208:         32          0          0          0  PCI-MSI 524290 Edge  =
-    eth1
->>=20
->> But I get this repeatedly with varying CPUs:
->>=20
->> [   14=2E657163] e1000e 0000:01:00=2E0 eth1: NIC Link is Up 1000 Mbps F=
-ull Duplex, Flow Control: Rx/Tx
->> [   19=2E980452] e1000e 0000:01:00=2E0 eth1: NETDEV WATCHDOG: CPU: 0: t=
-ransmit queue 0 timed out 5312 ms
->> [   19=2E982491] e1000e 0000:01:00=2E0 eth1: Reset adapter unexpectedly
->>=20
->>>=20
->>> Tt turns out that sabrelite has the same problem=2E
->>=20
->> Did it work with QEMU 9=2E2?
->>=20
->
->No, the pcie interfaces on sabrelite don't instantiate for me with qemu 9=
-=2E2 (9=2E2=2E3,
->more specifically)=2E I see the pcie root port, but nothing behind it=2E
-
-You need to add `bus=3Ddw-pcie` to the pci devices' options in QEMU 9=2E2=
-=2Ex and earler, otherwise it will end up on the wrong bus=2E This is fixed=
- in master=2E
-
-Best regards,
-Bernhard
-
->
->Guenter
->
+The changes comes from commit 459a707eccc ("curses: support wide input")
+from 2019. This isn't a blocker for the next release IMHO.
 
