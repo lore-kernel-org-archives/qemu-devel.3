@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF39C3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 10:30:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1575C369A1
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 10:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u26DC-0000Li-K0; Tue, 08 Apr 2025 06:29:46 -0400
+	id 1u26I6-0001eB-6P; Tue, 08 Apr 2025 06:34:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u26DA-0000KD-VI
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 06:29:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u26D9-0006ji-Dn
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 06:29:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744108182;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=P4ouzJG0fz4KNdTDpsxKwoTdI2TNQkioWbAVISGNtk8=;
- b=ivLHa9Z18r4myr89uSIGJQ6a30M6mJF1fE15ZKgZxQDOAnJcO3BYPWdeGJU6RmzsESrOLc
- x8+696ks8WMKCVpMQmPUlxtsbDZjStBRnkfroEg+LTxwKlHrvOYwTE+jCnBtfqKg9f5ayZ
- QmbQIjUAozBz9JM9NSC+wXVrOHCy9jo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-SbrsvtcgPYO9RrqQe_EvLQ-1; Tue,
- 08 Apr 2025 06:29:39 -0400
-X-MC-Unique: SbrsvtcgPYO9RrqQe_EvLQ-1
-X-Mimecast-MFC-AGG-ID: SbrsvtcgPYO9RrqQe_EvLQ_1744108178
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80807180025E; Tue,  8 Apr 2025 10:29:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.56])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B687180174E; Tue,  8 Apr 2025 10:29:31 +0000 (UTC)
-Date: Tue, 8 Apr 2025 12:29:24 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Vitalii Mordan <mordan@ispras.ru>
-Cc: John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- sdl.qemu@linuxtesting.org, Vadim Mutilin <mutilin@ispras.ru>,
- Alexey Khoroshilov <khoroshilov@ispras.ru>
-Subject: Re: [PATCH] Fix data races in test-bdrv-drain test
-Message-ID: <Z_T6hNpk83eq-PTs@redhat.com>
-References: <20250402102119.3345626-1-mordan@ispras.ru>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1u26I4-0001dt-Cb; Tue, 08 Apr 2025 06:34:48 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1u26I1-0007WZ-F4; Tue, 08 Apr 2025 06:34:47 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-abec8b750ebso907508166b.0; 
+ Tue, 08 Apr 2025 03:34:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744108483; x=1744713283; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QTbwRhe3DqMRjQbHAqyruavgTwGQghTB5+1ocfpnPJg=;
+ b=iVI1P7hfRTM8OiZdeOmDFqTEDYmftwkWqjMruf8eHV9DQXuWCgXJXFnax5B9cW3BPt
+ l5Ss4d+DCuoE3Ney1FgPRtXYWeTnxcWgu3rBvPF5p8K2enNdW8asXqPNCQ7Ni1Em6zB/
+ tLvqreI3qkAXkc4shUgu14gPzJ5WYB0k8J6q7Vx+mhkgh5ba77B/VhUlUXsNjOijKw36
+ J7E62qj4NLTb3ppv+3dZwybhDkzRAo0oV9Doj0JEhdk3/W+Mr2Kb/uJG4DEyVSZ84j6n
+ YBYI0LZd/JfRPFMwnDqEgw2fZWrvPi8MDuNo70ERila0mj+NgycblC0EgGERfOV5Fxlu
+ uUFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744108483; x=1744713283;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QTbwRhe3DqMRjQbHAqyruavgTwGQghTB5+1ocfpnPJg=;
+ b=haXy6X972IetSyxzWgPyitLoFS2Sw0o4ZxsNubesaAy2iAmj+D0Bj0fX7lU6Q35fkN
+ av3kYZLv+eJofAqsYbixTsUBLFLn6sOwIobFSOxqskxas1io+YkW1pSGgY2ybrFMdvGL
+ HYU/ZcOAyMxxhc4wlJ0i317mxPU1QLOuyXrrA45B7g3iCQ3pabZasSxtWFuRbN8Ls/bz
+ cfXQbJ9zssv1YwOvXLyLTbLQrlLIYV1yGxdZ0GeRftBqNfwOIeD6vUNskdVcaYqlWf9t
+ uSa9CoU3yJiFcRdbCdF12D3IpXHn3TgPcbd1DpASdg5BYq+ePQHBrkpIaoqJ874CNyUw
+ 4iqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9WieOcH+cjBxEC+OZ7weafJV6F3aK6NBSe7j42JP7KVZObltdnCVUKgdLpB41juotrS7Rd5mUWg==@nongnu.org,
+ AJvYcCXGEPNi0Mt6EvwjAfYHqqyEG0fxEx4XXG4RTI80r+WQjPehl+sl2S0kY16lxmU5ftcxIyx7LHq+gl/wTA==@nongnu.org
+X-Gm-Message-State: AOJu0YztVuSGg6lEMmJvj174ra/ByeKbKIsTbOt7YQVfQ6fafQOVWjam
+ pBdn1bdsaRCBGk/KIwaOJWk3f2u6Gy+wf1yXzdo+KVOuz5HIRl1v/uGY2w==
+X-Gm-Gg: ASbGncvROWsD3O5WcAcOfqSDQIcFv8MLIDKND036shgM0r1lCf0WkG3+8DHbUoZMiAL
+ ZNLxEEuIoR2VzLYwLwyg8F4IemEgQw3QtoiVQBm9vr42PNAzQMVA0I9aEPzsScqQsqAbZZnpv3C
+ nJcSkh95BJPmxRd1zfldFUVmZuNAFDSaOKDwd33ocvfhvV5/Uu0T2N/o5eUELoO+d/DHrdwiyT8
+ 1TVRC1vkk3tckgL2/w7PjguGrIbnG3fxDjWuzWZ/3nuCNoxXQhq97GXbp7Uu0qWsQ01KZIo23zU
+ u0cN0a2GlJPbXo6+CyLVQGPWhySH3vOGR2ouuxx5
+X-Google-Smtp-Source: AGHT+IGQQfkVD2U+/XLN08OwdWSpGeKYqaNrwJ3iMilmAV1Tzgme/QPjeAFL949EiNudFGGMHSTzIw==
+X-Received: by 2002:a17:906:c144:b0:ac3:2d47:f6af with SMTP id
+ a640c23a62f3a-ac7e71b44femr999117966b.20.1744108482633; 
+ Tue, 08 Apr 2025 03:34:42 -0700 (PDT)
+Received: from [127.0.0.1] ([90.187.110.129]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ac7bfeed008sm886206666b.85.2025.04.08.03.34.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 08 Apr 2025 03:34:42 -0700 (PDT)
+Date: Tue, 08 Apr 2025 10:15:32 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+CC: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org, 
+ Guenter Roeck <linux@roeck-us.net>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH-for-10=2E0_1/3=5D_tests/functional=3A_Add?=
+ =?US-ASCII?Q?_test_for_imx8mp-evk_board_with_USDHC_coverage?=
+In-Reply-To: <122aaf9e-cb4c-4117-90ae-2803f4810700@redhat.com>
+References: <20250405214900.7114-1-shentey@gmail.com>
+ <20250405214900.7114-2-shentey@gmail.com>
+ <122aaf9e-cb4c-4117-90ae-2803f4810700@redhat.com>
+Message-ID: <79FE9C71-1792-44F0-A4D0-364636B21F09@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250402102119.3345626-1-mordan@ispras.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.32,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,107 +105,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 02.04.2025 um 12:21 hat Vitalii Mordan geschrieben:
-> This patch addresses potential data races involving access to Job fields
-> in the test-bdrv-drain test.
-> 
-> Fixes: 7253220de4 ("test-bdrv-drain: Test drain vs. block jobs")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2900
-> Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
 
-Considering that we're nearing the end of the code freeze for 10.0, I
-fixed up a few trivial problems myself instead of asking for a v2 (see
-diff below).
 
-Thanks, applied to the block branch.
+Am 7=2E April 2025 05:38:28 UTC schrieb Thomas Huth <thuth@redhat=2Ecom>:
+> Hi!
+>
+>On 05/04/2025 23=2E48, Bernhard Beschow wrote:
+>> Introduce a functional test which boots Debian 12 on the imx8mp-evk boa=
+rd=2E Since
+>> the root filesystem resides on an SD card, the test also verifies the b=
+asic
+>> operation of the USDHC=2E
+>>=20
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>   MAINTAINERS                                 |  1 +
+>>   tests/functional/meson=2Ebuild                |  1 +
+>>   tests/functional/test_aarch64_imx8mp_evk=2Epy | 69 ++++++++++++++++++=
++++
+>>   3 files changed, 71 insertions(+)
+>>   create mode 100644 tests/functional/test_aarch64_imx8mp_evk=2Epy
+>>=20
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index d54b5578f8=2E=2E4ceffa89dc 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -833,6 +833,7 @@ F: include/hw/arm/fsl-imx8mp=2Eh
+>>   F: include/hw/misc/imx8mp_*=2Eh
+>>   F: include/hw/pci-host/fsl_imx8m_phy=2Eh
+>>   F: docs/system/arm/imx8mp-evk=2Erst
+>> +F: tests/functional/test_aarch64_imx8mp_evk=2Epy
+>>   F: tests/qtest/rs5c372-test=2Ec
+>>     MPS2 / MPS3
+>> diff --git a/tests/functional/meson=2Ebuild b/tests/functional/meson=2E=
+build
+>> index 0f8be30fe2=2E=2Eaaaf3472f1 100644
+>> --- a/tests/functional/meson=2Ebuild
+>> +++ b/tests/functional/meson=2Ebuild
+>> @@ -75,6 +75,7 @@ tests_aarch64_system_quick =3D [
+>>     tests_aarch64_system_thorough =3D [
+>>     'aarch64_aspeed',
+>> +  'aarch64_imx8mp_evk',
+>>     'aarch64_raspi3',
+>>     'aarch64_raspi4',
+>>     'aarch64_replay',
+>> diff --git a/tests/functional/test_aarch64_imx8mp_evk=2Epy b/tests/func=
+tional/test_aarch64_imx8mp_evk=2Epy
+>> new file mode 100644
+>
+>The test files should be executable so you can run them directly (after s=
+etting PYTHONPATH and QEMU_TEST_QEMU_BINARY)
 
-Kevin
+Ack=2E Will fix=2E
 
-diff --git a/include/qemu/job.h b/include/qemu/job.h
-index f27551a9ad..a5a04155ea 100644
---- a/include/qemu/job.h
-+++ b/include/qemu/job.h
-@@ -520,8 +520,6 @@ bool job_is_internal(Job *job);
-  */
- bool job_is_cancelled(Job *job);
+>
+>> index 0000000000=2E=2E5419d3c525
+>> --- /dev/null
+>> +++ b/tests/functional/test_aarch64_imx8mp_evk=2Epy
+>> @@ -0,0 +1,69 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# Functional test that boots a Linux kernel and checks the console
+>> +#
+>> +# SPDX-License-Identifier: GPL-2=2E0-or-later
+>> +
+>> +from qemu_test import LinuxKernelTest, Asset
+>> +
+>> +class Imx8mpEvkMachine(LinuxKernelTest):
+>> +
+>> +    ASSET_IMAGE =3D Asset(
+>> +        ('https://cloud=2Edebian=2Eorg/images/cloud/bookworm/20231210-=
+1590/'
+>> +         'debian-12-generic-arm64-20231210-1590=2Etar=2Exz'),
+>> +        '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b=
+359')
+>> +
+>> +    KERNEL_OFFSET =3D 0x51000000
+>> +    KERNEL_SIZE =3D 32622528
+>> +    INITRD_OFFSET =3D 0x76000000
+>> +    INITRD_SIZE =3D 30987766
+>> +    DTB_OFFSET =3D 0x64F51000
+>> +    DTB_SIZE =3D 45 * 1024
+>> +
+>> +    def extract(self, in_path, out_path, offset, size):
+>> +        try:
+>> +            with open(in_path, "rb") as source:
+>> +                source=2Eseek(offset)
+>> +                data =3D source=2Eread(size)
+>> +            with open(out_path, "wb") as target:
+>> +                target=2Ewrite(data)
+>> +        except (IOError, ValueError) as e:
+>> +            self=2Elog=2Eerror(f"Failed to extract {out_path}: {e}")
+>> +            raise
+>> +
+>> +    def setUp(self):
+>> +        super()=2EsetUp()
+>
+>Is there any special reason for overriding the setUp function here? =2E=
+=2E=2E otherwise, I think this could also simply be done from the test_aarc=
+h64_imx8mp_evk_usdhc function instead?
 
--bool job_is_paused(Job *job);
--
- /* Same as job_is_cancelled(), but called with job lock held. */
- bool job_is_cancelled_locked(Job *job);
+The idea is that it prepares the test data once which could be used by mul=
+tiple test cases in the future=2E One could add tests booting via USB and P=
+CIe=2E Not done yet due to concerns about CI resources=2E
 
-@@ -547,6 +545,9 @@ bool job_is_ready(Job *job);
- /* Same as job_is_ready(), but called with job lock held. */
- bool job_is_ready_locked(Job *job);
+>
+>> +        self=2EASSET_IMAGE=2Efetch()
+>
+>I think you can omit the fetch() here, it should be handled by archive_ex=
+tract() already=2E At least that's what we're doing in the other spots that=
+ use archive_extract()=2E
 
-+/** Returns whether the job is paused. Called with job_mutex *not* held. */
-+bool job_is_paused(Job *job);
-+
- /**
-  * Request @job to pause at the next pause point. Must be paired with
-  * job_resume(). If the job is supposed to be resumed by user action, call
-diff --git a/job.c b/job.c
-index d9b2dd8532..0653bc2ba6 100644
---- a/job.c
-+++ b/job.c
-@@ -253,8 +253,8 @@ bool job_is_cancelled_locked(Job *job)
+Sounds excellent, I'll try that=2E
 
- bool job_is_paused(Job *job)
- {
--	JOB_LOCK_GUARD();
--	return job->paused;
-+    JOB_LOCK_GUARD();
-+    return job->paused;
- }
+>
+>> +        self=2Earchive_extract(self=2EASSET_IMAGE)
+>> +
+>> +        self=2Eimage_path =3D self=2Escratch_file("disk=2Eraw")
+>> +        self=2Ekernel_path =3D self=2Escratch_file("linux")
+>> +        self=2Einitrd_path =3D self=2Escratch_file("initrd=2Ezstd")
+>> +        self=2Edtb_path =3D self=2Escratch_file("imx8mp-evk=2Edtb")
+>> +
+>> +        self=2Eextract(self=2Eimage_path, self=2Ekernel_path,
+>> +                     self=2EKERNEL_OFFSET, self=2EKERNEL_SIZE)
+>> +        self=2Eextract(self=2Eimage_path, self=2Einitrd_path,
+>> +                     self=2EINITRD_OFFSET, self=2EINITRD_SIZE)
+>> +        self=2Eextract(self=2Eimage_path, self=2Edtb_path,
+>> +                     self=2EDTB_OFFSET, self=2EDTB_SIZE)
+>> +
+>> +    def test_aarch64_imx8mp_evk_usdhc(self):
+>> +        self=2Eset_machine('imx8mp-evk')
+>> +        self=2Evm=2Eset_console(console_index=3D1)
+>> +        self=2Evm=2Eadd_args('-m', '2G',
+>> +                         '-smp', '4',
+>> +                         '-accel', 'tcg',
+>
+>The imx8mp-evk board has a "depends on TCG" in its Kconfig file, so I thi=
+nk you could omit "-accel tcg" here (but it also does not hurt to be explic=
+it, I guess)=2E
 
- bool job_is_cancelled(Job *job)
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 65041c9230..290cd2a70e 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -632,6 +632,8 @@ typedef struct TestBlockJob {
-     BlockDriverState *bs;
-     int run_ret;
-     int prepare_ret;
-+
-+    /* Accessed with atomics */
-     bool running;
-     bool should_complete;
- } TestBlockJob;
-@@ -799,7 +801,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
-     WITH_JOB_LOCK_GUARD() {
-         g_assert_cmpint(job->job.pause_count, ==, 0);
-         g_assert_false(job->job.paused);
--        g_assert_true(tjob->running);
-+        g_assert_true(qatomic_read(&tjob->running));
-         g_assert_true(job->job.busy); /* We're in qemu_co_sleep_ns() */
-     }
+I've seen it elsewhere, and I plan to add KVM support=2E That's why I adde=
+d it=2E If it can be omitted I'm happy to remove it=2E
 
-@@ -1411,10 +1413,12 @@ static void test_set_aio_context(void)
+Best regards,
+Bernhard
 
- typedef struct TestDropBackingBlockJob {
-     BlockJob common;
--    bool should_complete;
-     bool *did_complete;
-     BlockDriverState *detach_also;
-     BlockDriverState *bs;
-+
-+    /* Accessed with atomics */
-+    bool should_complete;
- } TestDropBackingBlockJob;
-
- static int coroutine_fn test_drop_backing_job_run(Job *job, Error **errp)
-@@ -1557,8 +1561,10 @@ static void test_blockjob_commit_by_drained_end(void)
-
- typedef struct TestSimpleBlockJob {
-     BlockJob common;
--    bool should_complete;
-     bool *did_complete;
-+
-+    /* Accessed with atomics */
-+    bool should_complete;
- } TestSimpleBlockJob;
-
- static int coroutine_fn test_simple_job_run(Job *job, Error **errp)
-
+>
+> Thomas
+>
+>
+>> +                         '-kernel', self=2Ekernel_path,
+>> +                         '-initrd', self=2Einitrd_path,
+>> +                         '-dtb', self=2Edtb_path,
+>> +                         '-append', 'root=3D/dev/mmcblk2p1',
+>> +                         '-drive', f'file=3D{self=2Eimage_path},if=3Ds=
+d,bus=3D2,'
+>> +                                    'format=3Draw,id=3Dmmcblk2')
+>> +
+>> +        self=2Evm=2Elaunch()
+>> +        self=2Ewait_for_console_pattern('Welcome to ')
+>> +
+>> +if __name__ =3D=3D '__main__':
+>> +    LinuxKernelTest=2Emain()
+>
 
