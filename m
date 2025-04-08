@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C714FC369A2
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 16:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08067C369A6
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 16:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Be2-0006sL-VK; Tue, 08 Apr 2025 12:17:51 -0400
+	id 1u2Bdx-0006r5-25; Tue, 08 Apr 2025 12:17:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u2BIf-0005VV-3T; Tue, 08 Apr 2025 11:55:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1u2BJC-0005ek-Gs; Tue, 08 Apr 2025 11:56:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u2BId-0005se-Fq; Tue, 08 Apr 2025 11:55:44 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538D4iJW005761;
- Tue, 8 Apr 2025 15:55:41 GMT
+ id 1u2BJ9-0005zR-DB; Tue, 08 Apr 2025 11:56:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 538CSN2i018056;
+ Tue, 8 Apr 2025 15:56:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=y59yHsdD9HnYWIUlR
- pBWECylzu6zQA0zTw9hn4BZD1c=; b=GRg9LPH0SCT7+rKrsPEVTpDxZib4j7whZ
- aD029zNVCaTw8YoBQNOwbUkOvNEc4AexEqsvfcO4UvNgKyPkkiLUq2n9AB+BZtJF
- ov68GYEvtf4on7K4XGRWdJSQSFFCj817dxqzbGnW6AVdqiGp23ivVjMbeg6B42/f
- VwUq4QTdXj88P4cIclJvoXty6ktLakBjhuo5IDLnpBvIGRi9RXiHpr3Bh1TVrM2h
- f+Ex1JwdUy2e9WZyKWNG91y0mf8J6cDEy6V3w+qieLFEW+EJWvH+a35C+HZvvFFp
- zeSoNc+Fuk0n+/Wd95YF/UwBUBWgf3L91dAt4RNJu5iFu0dHEcQaA==
+ :mime-version:references:subject:to; s=pp1; bh=zzz7gnw6nIjzPxlCG
+ mzjyu6YIbfQyXub9i3kCmT7jS4=; b=R+4oNYmhvVHR3/uKJE9tDSqlkzM/NnrRC
+ lVh1yARMSuTj43b6tdHhcklkA1+mR/GPRBKtAIq5CavlgXBy5NQqYvFcAm03mDjB
+ vLpN8GtRf3qaDryrl7Sp7kw17OtPXOaoCEhiWpS4IS8iNtGY3N/Fy2dwFNlQWiN2
+ i23PENHCYHTxvFk/lzTB9vfvNLH8DLS4q6bb17SzLNyjhT2qaSWpyNSNUac9oiYQ
+ WpmXV9fZcJCpjkdu1Whq2P6wti/rGIliFzaXX5ZU006DR9L7LOSBvwPDKCghYSLc
+ /ZwVb5/PF1IiUifT5ljMdSNJmwQW8uDJKCYhbCcCnDgxRsHCWRejA==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vjvxnbsw-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45w3u31275-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 15:55:40 +0000 (GMT)
+ Tue, 08 Apr 2025 15:56:11 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538Cg1CB013858;
- Tue, 8 Apr 2025 15:55:39 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ufunkb9t-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538CHhLw013823;
+ Tue, 8 Apr 2025 15:56:10 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ufunkbb7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 15:55:39 +0000
+ Tue, 08 Apr 2025 15:56:10 +0000
 Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
  [10.39.53.233])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 538FtcXd23527948
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 538Fu9tr12059380
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Apr 2025 15:55:38 GMT
+ Tue, 8 Apr 2025 15:56:09 GMT
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F72D5803F;
- Tue,  8 Apr 2025 15:55:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 520CD5804E;
+ Tue,  8 Apr 2025 15:56:09 +0000 (GMT)
 Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B459458054;
- Tue,  8 Apr 2025 15:55:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D2B535803F;
+ Tue,  8 Apr 2025 15:56:07 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.125.94])
  by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Apr 2025 15:55:36 +0000 (GMT)
+ Tue,  8 Apr 2025 15:56:07 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
  pbonzini@redhat.com
@@ -64,39 +64,39 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
  fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, zycai@linux.ibm.com
-Subject: [PATCH v1 05/24] s390x/diag: Refactor address validation check from
- diag308_parm_check
-Date: Tue,  8 Apr 2025 11:55:07 -0400
-Message-ID: <20250408155527.123341-6-zycai@linux.ibm.com>
+Subject: [PATCH v1 24/24] hw/s390x/ipl: Handle secure boot without specifying
+ a boot device
+Date: Tue,  8 Apr 2025 11:55:26 -0400
+Message-ID: <20250408155527.123341-25-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250408155527.123341-1-zycai@linux.ibm.com>
 References: <20250408155527.123341-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: vRbSMGc1nVAZcymP9u1YnGMP9zOmJNTc
-X-Proofpoint-GUID: vRbSMGc1nVAZcymP9u1YnGMP9zOmJNTc
+X-Proofpoint-GUID: lKsPhuqTnmov0OKqEtQsMrD-r3eBdOmr
+X-Proofpoint-ORIG-GUID: lKsPhuqTnmov0OKqEtQsMrD-r3eBdOmr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-08_06,2025-04-08_03,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0
- mlxscore=0 bulkscore=0 mlxlogscore=842 impostorscore=0 adultscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 clxscore=1011
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ lowpriorityscore=0
+ spamscore=0 adultscore=0 suspectscore=0 mlxlogscore=837 bulkscore=0
+ clxscore=1015 malwarescore=0 mlxscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2502280000 definitions=main-2504080107
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 08 Apr 2025 12:17:33 -0400
+X-Mailman-Approved-At: Tue, 08 Apr 2025 12:17:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,51 +111,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Collin Walling <walling@linux.ibm.com>
-
-Create a function to validate the address parameter of DIAGNOSE.
-
-Refactor the function for reuse in the next patch, which allows address
-validation in read or write operation of DIAGNOSE.
+If secure boot in audit mode or True Secure IPL mode is enabled without
+specifying a boot device, the boot process will terminate with an error.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- hw/s390x/ipl.h      | 6 ++++++
- target/s390x/diag.c | 4 +---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ hw/s390x/ipl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 1bd73b4dc1..822535ad76 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -114,6 +114,12 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
- #define S390_IPLB_MIN_FCP_LEN 384
- #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
- 
-+static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
-+{
-+    return address_space_access_valid(&address_space_memory, addr,
-+                                      size, write, MEMTXATTRS_UNSPECIFIED);
-+}
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 60bafcbd2e..0510f16a7d 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -767,6 +767,16 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
+         s390_ipl_create_cert_store(&ipl->cert_store);
+         if (!ipl->iplb_valid) {
+             ipl->iplb_valid = s390_init_all_iplbs(ipl);
 +
- static inline bool iplb_valid_len(IplParameterBlock *iplb)
- {
-     return be32_to_cpu(iplb->len) <= sizeof(IplParameterBlock);
-diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index cb840e4b97..c64b935c87 100644
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -64,9 +64,7 @@ static int diag308_parm_check(CPUS390XState *env, uint64_t r1, uint64_t addr,
-         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-         return -1;
-     }
--    if (!address_space_access_valid(&address_space_memory, addr,
--                                    sizeof(IplParameterBlock), write,
--                                    MEMTXATTRS_UNSPECIFIED)) {
-+    if (!diag_parm_addr_valid(addr, sizeof(IplParameterBlock), write)) {
-         s390_program_interrupt(env, PGM_ADDRESSING, ra);
-         return -1;
-     }
++            /*
++             * Secure IPL without specifying a boot device.
++             * IPLB is not generated if no boot device is defined.
++             */
++            if ((s390_has_certificate() || s390_secure_boot_enabled()) &&
++                !ipl->iplb_valid) {
++                error_report("No boot devicie defined for Secure IPL");
++                exit(1);
++            }
+         } else {
+             ipl->qipl.chain_len = 0;
+         }
 -- 
 2.49.0
 
