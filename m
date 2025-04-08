@@ -4,105 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C89C369A2
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 12:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36427C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 12:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u28HU-0005FZ-DU; Tue, 08 Apr 2025 08:42:21 -0400
+	id 1u28LA-0007wt-2K; Tue, 08 Apr 2025 08:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1u28Gc-000500-H2; Tue, 08 Apr 2025 08:41:35 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1u28Ga-0003LU-Iv; Tue, 08 Apr 2025 08:41:26 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5383l7iH030590;
- Tue, 8 Apr 2025 12:41:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=qkffYc3WRNkToOyQA
- lH8U4o8zXaA0caSj22NjnTwEiI=; b=gJ5S2ILd//JGMvhz/5MFrJSWN+oaKMaou
- 5Wlw/ZHpOm7HJzCm9nGPAoqGZYKKvb73iU91Kn+wi1vTGiPK/r06UHNPRyTC1/7Q
- at7SwBAioBtYmKRU7TYdHHIZOvVTBbkfu3k+O4kF9yWWdvR4BGtK1xWhEmfWzkRp
- qyvc1iy5LUkGmnYNxh5qcKZ2xwSg/LrUaxVdPmVQ+Lmn9HERiHfSNlkj8sVg+bGA
- AMcdvXfQB3m3kPgQet7uv+gVOeuftTfNWcorzE+8vBNdrr4GvKuAit1vXxTCs/Mc
- 3WfJdLamAl46G+c1E/EKobWVQ0OM7wBVigUZgZGegWCEihJuhaNrQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vv6a2a05-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 12:41:22 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 538CU6wa021367;
- Tue, 8 Apr 2025 12:41:22 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45vv6a2a02-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 12:41:22 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 538BUt2V024605;
- Tue, 8 Apr 2025 12:41:21 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45ueutauh4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 08 Apr 2025 12:41:21 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 538CfHEd49283526
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 8 Apr 2025 12:41:17 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFBA520040;
- Tue,  8 Apr 2025 12:41:17 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6A5D62004D;
- Tue,  8 Apr 2025 12:41:15 +0000 (GMT)
-Received: from li-e7e2bd4c-2dae-11b2-a85c-bfd29497117c.in.ibm.com (unknown
- [9.109.198.22]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  8 Apr 2025 12:41:15 +0000 (GMT)
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Amit Machhiwal <amachhiw@linux.ibm.com>,
- Vaibhav Jain <vaibhav@linux.ibm.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 2/2] vfio/spapr: Fix L2 crash with PCI device passthrough
- and memory > 128G
-Date: Tue,  8 Apr 2025 18:10:42 +0530
-Message-ID: <20250408124042.2695955-3-amachhiw@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
-References: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1u28L8-0007rW-1k; Tue, 08 Apr 2025 08:46:06 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1u28L6-0003sa-7v; Tue, 08 Apr 2025 08:46:05 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2260c91576aso45375225ad.3; 
+ Tue, 08 Apr 2025 05:46:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744116361; x=1744721161; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=omUo3N09aR7ebQ4zzd5jlYrU+UHr97ohhPYiCfPwuPU=;
+ b=f9VD9qupJfBgFjzJDmfIX/J7+5appgQcts7pi943nwc0JudKk85dDcO7D1K6AHudC0
+ WPBV1oenWkfcr2HEi7Zf9dX8roaX4/u0X0gwOWijq7vteI7wlYgo3othybjSemiGUBvc
+ jvpzhwml2ieyt1XJHFDVXN6B1G2tBvwzYWbJYWtk0AECaa6i/kZc+tznPuLN2ZTZak3v
+ 9dtT9RAh1aGhxvqVcfzh4yzCt/Dmni1++d61YKfl0eutQEQOSqxGZbhkOCWTfVH0WnxA
+ hTuA/IXaqL+LnQ3zC/rH/zIT901ZfvRuOdLYcg5gMr0D+RHwfRVHgDMH9SH8GvbjKomp
+ Q8IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744116361; x=1744721161;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=omUo3N09aR7ebQ4zzd5jlYrU+UHr97ohhPYiCfPwuPU=;
+ b=VRKYQCOxl7H8I+3xAFq5VmDeAtzxMbjo80n7z2xidZl4s3cFiBRSNhAjH5CvT493b5
+ lae28P/ha1orH/YH5umk+8+VOes0GxXwW5n2xzC2Tn+ff9/ONejD4PIiE+zPpufD2t6R
+ 33ucWObs/ZVasDiRlHWfctyiBn+O6q0GOdA5c2t1QXtK1mckr168neOmICjeVIkPOQPY
+ 3t2rJic4JLiUgVXYjRGhW7njy8oLHI58nP/ZyM/u4zh+DVllrkeLl30NDkRu8QazxllC
+ UZIduizRtttpp0hiTHJ6UEkIPjLJQjbjqJhqrWh1HfKM19DvzWG34VVxFpwljhd+mDcp
+ xT7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVpxKn06wZRKM2/63MewgdAyBHbGOCxa1OR8gCQc4HLZGCwhb9xsfTDk52bKzuMY6PJVryfAWYJMapvvw=@nongnu.org,
+ AJvYcCXYx202sy2oI5V7JrYbO6zY+aVyEwyjDRhsqn7Gq/Oi0sIoVYjTcYvx5iteUj2qQQmk3BVJ78L/aw==@nongnu.org
+X-Gm-Message-State: AOJu0YzaU461qEiZWlPgV3OlhTYLX0lULIxRLBl8DmX3FgIxR+4h7SDb
+ tSL2MxdNw4GQx1IYFRAe4zguPkHBXlg0VfA8CMO2vSIJWLv3qGPo2Ii0/+Px
+X-Gm-Gg: ASbGncu+YLYavNzdiJWYQOdmKDuzbo4zYLk8yaEWNAYa1C6V37ALdmEwiXxZYxvRh6n
+ uomVZlzrpsrUAlXLk2f3AuJ7Es9Z9bBQWvgUY3XOMqEuA05dvuJbAk++81A7Ikas66xSPXkHKG4
+ v6ardoQZfWOQG0FSFoqxkbP7onh5xKZx8T1tPLlEaWug7mEFqYAp0qdcQUHM3XCbCvLQF5ezYCt
+ INLzQKKI18UrqOFlC4R8Fgvp77kDi586ACoZeXCEmVeovBRjEEXD4GFlf/STmNqQvqwrRWNu561
+ IrOQTftoReJ61mPyFjikUdpFdtreMbFxWEwXgA1EbT2KwHnt7Wj/1rpV65kuNDT3NpeYPdA=
+X-Google-Smtp-Source: AGHT+IFHNIIlIDpXS1q38pOJ9XmLDdM98+IOpt72pmBqKoZ835nr4eGmYiTLwYbAiSg22eov+CXHnw==
+X-Received: by 2002:a17:903:2282:b0:224:1157:6d26 with SMTP id
+ d9443c01a7336-22a8a049f7emr247177725ad.4.1744116361482; 
+ Tue, 08 Apr 2025 05:46:01 -0700 (PDT)
+Received: from wheely.local0.net (27-32-255-92.tpgi.com.au. [27.32.255.92])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3057ca1f07fsm11036235a91.6.2025.04.08.05.45.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Apr 2025 05:46:01 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-stable@nongnu.org
+Subject: [PULL 1/2] target/ppc: Big-core scratch register fix
+Date: Tue,  8 Apr 2025 22:45:48 +1000
+Message-ID: <20250408124550.40485-2-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250408124550.40485-1-npiggin@gmail.com>
+References: <20250408124550.40485-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: BBTdBGAxrYCwlsCCpACmA3UsHPg7wYz8
-X-Proofpoint-GUID: g8f8brxx3lcaF8vLAkmUKS9Cj1PaRHSx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-08_04,2025-04-08_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504080088
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,107 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An L2 KVM guest fails to boot inside a pSeries LPAR when booted with a
-memory more than 128 GB and PCI device passthrough. The L2 guest also
-crashes when it is booted with a memory greater than 128 GB and a PCI
-device is hotplugged later.
+The per-core SCRATCH0-7 registers are shared between big cores, which
+was missed in the big-core implementation. It is difficult to model
+well with the big-core == 2xPnvCore scheme we moved to, this fix
+uses the even PnvCore to store the scrach data.
 
-The issue arises from a conditional check for `levels > 1` in
-`spapr_tce_create_table()` within L1 KVM. This check is meant to prevent
-multi-level TCEs, which are not supported by the PowerVM hypervisor. As
-a result, when QEMU makes a `VFIO_IOMMU_SPAPR_TCE_CREATE` ioctl call
-with `levels > 1`, it triggers the conditional check and returns
-`EINVAL`, causing the guest to crash with the following errors:
+Also remove a stray log message that came in with the same patch that
+introduced patch.
 
- 2025-03-04T06:36:36.133117Z qemu-system-ppc64: Failed to create a window, ret = -1 (Invalid argument)
- 2025-03-04T06:36:36.133176Z qemu-system-ppc64: Failed to create SPAPR window: Invalid argument
- qemu: hardware error: vfio: DMA mapping failed, unable to continue
-
-Fix this by checking the supported DDW "levels" returned by the
-VFIO_IOMMU_SPAPR_TCE_GET_INFO ioctl before attempting the TCE create
-ioctl in KVM.
-
-The patch has been tested on KVM guests with memory configurations of up
-to 390GB, and 450GB on PowerVM and bare-metal environments respectively.
-
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Fixes: c26504afd5f5c ("ppc/pnv: Add a big-core mode that joins two regular cores")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/vfio/spapr.c | 36 +++++++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+ target/ppc/misc_helper.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-index dd9207679dbe..32611096fa29 100644
---- a/hw/vfio/spapr.c
-+++ b/hw/vfio/spapr.c
-@@ -26,6 +26,7 @@ typedef struct VFIOSpaprContainer {
-     VFIOContainer container;
-     MemoryListener prereg_listener;
-     QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
-+    unsigned int levels;
- } VFIOSpaprContainer;
+diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+index 2d9512c116..46ae454afd 100644
+--- a/target/ppc/misc_helper.c
++++ b/target/ppc/misc_helper.c
+@@ -332,6 +332,10 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+     PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+     target_ulong sprc = env->spr[SPR_POWER_SPRC];
  
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOSpaprContainer, VFIO_IOMMU_SPAPR);
-@@ -236,9 +237,11 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
- {
-     int ret = 0;
-     VFIOContainerBase *bcontainer = &container->bcontainer;
-+    VFIOSpaprContainer *scontainer = container_of(container, VFIOSpaprContainer,
-+                                                  container);
-     IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-     uint64_t pagesize = memory_region_iommu_get_min_page_size(iommu_mr), pgmask;
--    unsigned entries, bits_total, bits_per_level, max_levels;
-+    unsigned entries, bits_total, bits_per_level, max_levels, ddw_levels;
-     struct vfio_iommu_spapr_tce_create create = { .argsz = sizeof(create) };
-     long rampagesize = qemu_minrampagesize();
++    if (pc->big_core) {
++        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
++    }
++
+     switch (sprc & 0x3e0) {
+     case 0: /* SCRATCH0-3 */
+     case 1: /* SCRATCH4-7 */
+@@ -368,6 +372,10 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+     PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+     int nr;
  
-@@ -291,16 +294,29 @@ static bool vfio_spapr_create_window(VFIOContainer *container,
-      */
-     bits_per_level = ctz64(qemu_real_host_page_size()) + 8;
-     create.levels = bits_total / bits_per_level;
--    if (bits_total % bits_per_level) {
--        ++create.levels;
--    }
--    max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
--    for ( ; create.levels <= max_levels; ++create.levels) {
--        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
--        if (!ret) {
--            break;
++    if (pc->big_core) {
++        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
++    }
 +
-+    ddw_levels = scontainer->levels;
-+    if (ddw_levels > 1) {
-+        if (bits_total % bits_per_level) {
-+            ++create.levels;
-         }
-+        max_levels = (64 - create.page_shift) / ctz64(qemu_real_host_page_size());
-+        for ( ; create.levels <= max_levels; ++create.levels) {
-+            ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
-+            if (!ret) {
-+                break;
-+            }
-+        }
-+    } else { /* ddw_levels == 1 */
-+        if (create.levels > ddw_levels) {
-+            error_setg_errno(errp, EINVAL, "Host doesn't support multi-level TCE tables"
-+                             ". Use larger IO page size. Supported mask is 0x%lx",
-+                             bcontainer->pgsizes);
-+            return false;
-+        }
-+        ret = ioctl(container->fd, VFIO_IOMMU_SPAPR_TCE_CREATE, &create);
-     }
-+
-     if (ret) {
-         error_setg_errno(errp, errno, "Failed to create a window, ret = %d", ret);
-         return false;
-@@ -501,6 +517,8 @@ static bool vfio_spapr_container_setup(VFIOContainerBase *bcontainer,
-         goto listener_unregister_exit;
-     }
- 
-+    scontainer->levels = info.ddw.levels;
-+
-     if (v2) {
-         bcontainer->pgsizes = info.ddw.pgsizes;
-         /*
+     switch (sprc & 0x3e0) {
+     case 0: /* SCRATCH0-3 */
+     case 1: /* SCRATCH4-7 */
+@@ -378,7 +386,6 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+          * information. Could also dump these upon checkstop.
+          */
+         nr = (sprc >> 3) & 0x7;
+-        qemu_log("SPRD write 0x" TARGET_FMT_lx " to SCRATCH%d\n", val, nr);
+         pc->scratch[nr] = val;
+         break;
+     default:
 -- 
-2.49.0
+2.47.1
 
 
