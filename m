@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A06AC3600C
-	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 13:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE82C3600C
+	for <qemu-devel@archiver.kernel.org>; Tue,  8 Apr 2025 13:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u28at-0007Ag-Oc; Tue, 08 Apr 2025 09:02:23 -0400
+	id 1u28as-00078P-VJ; Tue, 08 Apr 2025 09:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u28Ze-0006ly-Qg
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 09:01:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u28Zk-0006mL-WC
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 09:01:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u28Zc-0005cU-5x
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 09:01:06 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u28Zi-0005dE-Qv
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 09:01:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744117263;
+ s=mimecast20190719; t=1744117268;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h7O1+jeMjpt4PGSabZHa12EThqfaHw3Rj3mPvJFT2p0=;
- b=KHUr2YCD3RJMIHMEOCpLeRatiMaBL1nBEh+0Z1+/jI9CHZXtxJfQd4mzJzKrLLpD2ckMfY
- IkTHlOMCu+Ylqho+6WnF2QCjRedjkY5uR5XgRadj0EiYRJBdF5rIY/ETTaduYUd2lsMpYq
- nBHRrOzP9eoRRjKldzz+4A4SWNautKk=
+ bh=ahykKS5380HRIk59tI1Zc8zyJMxoC+VGjiLPBK0Cc6c=;
+ b=Nq+1YHhLsX1OuCl5s9L/qMTbgEyROuvConQli7MDITLBF6KyKdhH03PK0p+obkufUJQAAQ
+ lQBgl7QHaePQ1PXYUKmZPW/nLAKHwksaz0AfagH6+oOJ/XRZoLaKSlug34jOfY+5OrvOcN
+ aeRAfdb+mDTzP6GtuEhZRe6G+JlPh54=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-89pWzGi1O6udpRPD99MjZA-1; Tue,
- 08 Apr 2025 09:01:00 -0400
-X-MC-Unique: 89pWzGi1O6udpRPD99MjZA-1
-X-Mimecast-MFC-AGG-ID: 89pWzGi1O6udpRPD99MjZA_1744117259
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-umJ8wUPONJukArKaEsORBQ-1; Tue,
+ 08 Apr 2025 09:01:02 -0400
+X-MC-Unique: umJ8wUPONJukArKaEsORBQ-1
+X-Mimecast-MFC-AGG-ID: umJ8wUPONJukArKaEsORBQ_1744117260
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B1FA180AF65; Tue,  8 Apr 2025 13:00:59 +0000 (UTC)
+ id A6AE418011ED; Tue,  8 Apr 2025 13:01:00 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.33.56])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E87C71955BEF; Tue,  8 Apr 2025 13:00:57 +0000 (UTC)
+ id 83B5019560AD; Tue,  8 Apr 2025 13:00:59 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 3/4] scsi-disk: Apply error policy for host_status errors again
-Date: Tue,  8 Apr 2025 15:00:47 +0200
-Message-ID: <20250408130048.283364-4-kwolf@redhat.com>
+Subject: [PULL 4/4] test-bdrv-drain: Fix data races
+Date: Tue,  8 Apr 2025 15:00:48 +0200
+Message-ID: <20250408130048.283364-5-kwolf@redhat.com>
 In-Reply-To: <20250408130048.283364-1-kwolf@redhat.com>
 References: <20250408130048.283364-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,143 +82,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Originally, all failed SG_IO requests called scsi_handle_rw_error() to
-apply the configured error policy. However, commit f3126d65, which was
-supposed to be a mere refactoring for scsi-disk.c, broke this and
-accidentally completed the SCSI request without considering the error
-policy any more if the error was signalled in the host_status field.
+From: Vitalii Mordan <mordan@ispras.ru>
 
-Apart from the commit message not describing the change as intended,
-errors indicated in host_status are also obviously backend errors and
-not something the guest must deal with independently of the error
-policy.
+This patch addresses potential data races involving access to Job fields
+in the test-bdrv-drain test.
 
-This behaviour means that some recoverable errors (such as a path error
-in multipath configurations) were reported to the guest anyway, which
-might not expect it and might consider its disk broken.
-
-Make sure that we apply the error policy again for host_status errors,
-too. This addresses an existing FIXME comment and allows us to remove
-some comments warning that callbacks weren't always called. With this
-fix, they are called in all cases again.
-
-The return value passed to the request callback doesn't have more free
-values that could be used to indicate host_status errors as well as SAM
-status codes and negative errno. Store the value in the host_status
-field of the SCSIRequest instead and use -ENODEV as the return value (if
-a path hasn't been reachable for a while, blk_aio_ioctl() will return
--ENODEV instead of just setting host_status, so just reuse it here -
-it's not necessarily entirely accurate, but it's as good as any errno).
-
-Cc: qemu-stable@nongnu.org
-Fixes: f3126d65b393 ('scsi: move host_status handling into SCSI drivers')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250407155949.44736-1-kwolf@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Fixes: 7253220de4 ("test-bdrv-drain: Test drain vs. block jobs")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2900
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Message-ID: <20250402102119.3345626-1-mordan@ispras.ru>
+[kwolf: Fixed up coding style and one missing atomic access]
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- hw/scsi/scsi-disk.c | 39 +++++++++++++++++++++++++--------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ include/qemu/job.h           |  3 +++
+ job.c                        |  6 ++++++
+ tests/unit/test-bdrv-drain.c | 32 +++++++++++++++++++-------------
+ 3 files changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 8da1d5a77c..e59632e9b1 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -68,10 +68,9 @@ struct SCSIDiskClass {
-     SCSIDeviceClass parent_class;
-     /*
-      * Callbacks receive ret == 0 for success. Errors are represented either as
--     * negative errno values, or as positive SAM status codes.
--     *
--     * Beware: For errors returned in host_status, the function may directly
--     * complete the request and never call the callback.
-+     * negative errno values, or as positive SAM status codes. For host_status
-+     * errors, the function passes ret == -ENODEV and sets the host_status field
-+     * of the SCSIRequest.
-      */
-     DMAIOFunc       *dma_readv;
-     DMAIOFunc       *dma_writev;
-@@ -225,11 +224,26 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-     SCSIDiskClass *sdc = (SCSIDiskClass *) object_get_class(OBJECT(s));
-     SCSISense sense = SENSE_CODE(NO_SENSE);
-+    int16_t host_status;
-     int error;
-     bool req_has_sense = false;
-     BlockErrorAction action;
-     int status;
+diff --git a/include/qemu/job.h b/include/qemu/job.h
+index 2b873f2576..a5a04155ea 100644
+--- a/include/qemu/job.h
++++ b/include/qemu/job.h
+@@ -545,6 +545,9 @@ bool job_is_ready(Job *job);
+ /* Same as job_is_ready(), but called with job lock held. */
+ bool job_is_ready_locked(Job *job);
  
-+    /*
-+     * host_status should only be set for SG_IO requests that came back with a
-+     * host_status error in scsi_block_sgio_complete(). This error path passes
-+     * -ENODEV as the return value.
-+     *
-+     * Reset host_status in the request because we may still want to complete
-+     * the request successfully with the 'stop' or 'ignore' error policy.
-+     */
-+    host_status = r->req.host_status;
-+    if (host_status != -1) {
-+        assert(ret == -ENODEV);
-+        r->req.host_status = -1;
-+    }
++/** Returns whether the job is paused. Called with job_mutex *not* held. */
++bool job_is_paused(Job *job);
 +
-     if (ret < 0) {
-         status = scsi_sense_from_errno(-ret, &sense);
-         error = -ret;
-@@ -289,6 +303,10 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
-         if (acct_failed) {
-             block_acct_failed(blk_get_stats(s->qdev.conf.blk), &r->acct);
+ /**
+  * Request @job to pause at the next pause point. Must be paired with
+  * job_resume(). If the job is supposed to be resumed by user action, call
+diff --git a/job.c b/job.c
+index 660ce22c56..0653bc2ba6 100644
+--- a/job.c
++++ b/job.c
+@@ -251,6 +251,12 @@ bool job_is_cancelled_locked(Job *job)
+     return job->force_cancel;
+ }
+ 
++bool job_is_paused(Job *job)
++{
++    JOB_LOCK_GUARD();
++    return job->paused;
++}
++
+ bool job_is_cancelled(Job *job)
+ {
+     JOB_LOCK_GUARD();
+diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+index 7410e6f352..290cd2a70e 100644
+--- a/tests/unit/test-bdrv-drain.c
++++ b/tests/unit/test-bdrv-drain.c
+@@ -632,6 +632,8 @@ typedef struct TestBlockJob {
+     BlockDriverState *bs;
+     int run_ret;
+     int prepare_ret;
++
++    /* Accessed with atomics */
+     bool running;
+     bool should_complete;
+ } TestBlockJob;
+@@ -667,10 +669,10 @@ static int coroutine_fn test_job_run(Job *job, Error **errp)
+ 
+     /* We are running the actual job code past the pause point in
+      * job_co_entry(). */
+-    s->running = true;
++    qatomic_set(&s->running, true);
+ 
+     job_transition_to_ready(&s->common.job);
+-    while (!s->should_complete) {
++    while (!qatomic_read(&s->should_complete)) {
+         /* Avoid job_sleep_ns() because it marks the job as !busy. We want to
+          * emulate some actual activity (probably some I/O) here so that drain
+          * has to wait for this activity to stop. */
+@@ -685,7 +687,7 @@ static int coroutine_fn test_job_run(Job *job, Error **errp)
+ static void test_job_complete(Job *job, Error **errp)
+ {
+     TestBlockJob *s = container_of(job, TestBlockJob, common.job);
+-    s->should_complete = true;
++    qatomic_set(&s->should_complete, true);
+ }
+ 
+ BlockJobDriver test_job_driver = {
+@@ -791,7 +793,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+         /* job_co_entry() is run in the I/O thread, wait for the actual job
+          * code to start (we don't want to catch the job in the pause point in
+          * job_co_entry(). */
+-        while (!tjob->running) {
++        while (!qatomic_read(&tjob->running)) {
+             aio_poll(qemu_get_aio_context(), false);
          }
-+        if (host_status != -1) {
-+            scsi_req_complete_failed(&r->req, host_status);
-+            return true;
-+        }
-         if (req_has_sense) {
-             sdc->update_sense(&r->req);
-         } else if (status == CHECK_CONDITION) {
-@@ -409,7 +427,6 @@ done:
-     scsi_req_unref(&r->req);
- }
+     }
+@@ -799,7 +801,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+     WITH_JOB_LOCK_GUARD() {
+         g_assert_cmpint(job->job.pause_count, ==, 0);
+         g_assert_false(job->job.paused);
+-        g_assert_true(tjob->running);
++        g_assert_true(qatomic_read(&tjob->running));
+         g_assert_true(job->job.busy); /* We're in qemu_co_sleep_ns() */
+     }
  
--/* May not be called in all error cases, don't rely on cleanup here */
- static void scsi_dma_complete(void *opaque, int ret)
+@@ -825,7 +827,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+          *
+          * paused is reset in the I/O thread, wait for it
+          */
+-        while (job->job.paused) {
++        while (job_is_paused(&job->job)) {
+             aio_poll(qemu_get_aio_context(), false);
+         }
+     }
+@@ -858,7 +860,7 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+          *
+          * paused is reset in the I/O thread, wait for it
+          */
+-        while (job->job.paused) {
++        while (job_is_paused(&job->job)) {
+             aio_poll(qemu_get_aio_context(), false);
+         }
+     }
+@@ -1411,10 +1413,12 @@ static void test_set_aio_context(void)
+ 
+ typedef struct TestDropBackingBlockJob {
+     BlockJob common;
+-    bool should_complete;
+     bool *did_complete;
+     BlockDriverState *detach_also;
+     BlockDriverState *bs;
++
++    /* Accessed with atomics */
++    bool should_complete;
+ } TestDropBackingBlockJob;
+ 
+ static int coroutine_fn test_drop_backing_job_run(Job *job, Error **errp)
+@@ -1422,7 +1426,7 @@ static int coroutine_fn test_drop_backing_job_run(Job *job, Error **errp)
+     TestDropBackingBlockJob *s =
+         container_of(job, TestDropBackingBlockJob, common.job);
+ 
+-    while (!s->should_complete) {
++    while (!qatomic_read(&s->should_complete)) {
+         job_sleep_ns(job, 0);
+     }
+ 
+@@ -1541,7 +1545,7 @@ static void test_blockjob_commit_by_drained_end(void)
+ 
+     job_start(&job->common.job);
+ 
+-    job->should_complete = true;
++    qatomic_set(&job->should_complete, true);
+     bdrv_drained_begin(bs_child);
+     g_assert(!job_has_completed);
+     bdrv_drained_end(bs_child);
+@@ -1557,15 +1561,17 @@ static void test_blockjob_commit_by_drained_end(void)
+ 
+ typedef struct TestSimpleBlockJob {
+     BlockJob common;
+-    bool should_complete;
+     bool *did_complete;
++
++    /* Accessed with atomics */
++    bool should_complete;
+ } TestSimpleBlockJob;
+ 
+ static int coroutine_fn test_simple_job_run(Job *job, Error **errp)
  {
-     SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-@@ -448,7 +465,6 @@ done:
-     scsi_req_unref(&r->req);
- }
+     TestSimpleBlockJob *s = container_of(job, TestSimpleBlockJob, common.job);
  
--/* May not be called in all error cases, don't rely on cleanup here */
- static void scsi_read_complete(void *opaque, int ret)
- {
-     SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-@@ -585,7 +601,6 @@ done:
-     scsi_req_unref(&r->req);
- }
+-    while (!s->should_complete) {
++    while (!qatomic_read(&s->should_complete)) {
+         job_sleep_ns(job, 0);
+     }
  
--/* May not be called in all error cases, don't rely on cleanup here */
- static void scsi_write_complete(void * opaque, int ret)
- {
-     SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-@@ -2846,14 +2861,10 @@ static void scsi_block_sgio_complete(void *opaque, int ret)
-     sg_io_hdr_t *io_hdr = &req->io_header;
+@@ -1700,7 +1706,7 @@ static void test_drop_intermediate_poll(void)
+     job->did_complete = &job_has_completed;
  
-     if (ret == 0) {
--        /* FIXME This skips calling req->cb() and any cleanup in it */
-         if (io_hdr->host_status != SCSI_HOST_OK) {
--            scsi_req_complete_failed(&r->req, io_hdr->host_status);
--            scsi_req_unref(&r->req);
--            return;
--        }
--
--        if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
-+            r->req.host_status = io_hdr->host_status;
-+            ret = -ENODEV;
-+        } else if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
-             ret = BUSY;
-         } else {
-             ret = io_hdr->status;
+     job_start(&job->common.job);
+-    job->should_complete = true;
++    qatomic_set(&job->should_complete, true);
+ 
+     g_assert(!job_has_completed);
+     ret = bdrv_drop_intermediate(chain[1], chain[0], NULL, false);
 -- 
 2.49.0
 
