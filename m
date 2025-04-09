@@ -4,100 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9658C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 09:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9E2C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 09:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2RmK-00066Z-E0; Wed, 09 Apr 2025 05:31:28 -0400
+	id 1u2RwU-0000ON-S3; Wed, 09 Apr 2025 05:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u2RmF-00064y-Up
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:31:24 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u2RmD-0002fL-Q6
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:31:23 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43cf034d4abso69483645e9.3
- for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 02:31:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744191079; x=1744795879; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OIdsqU2+ysC7jA6LMmVzVUv//dkPeh3NGRc9p0W48yw=;
- b=O8cqDqhHBshRZkp50eJfP/jxiYvi2HSFHG59rKq86IlaNfAgUfkBFgLiCIDqWeFiN5
- OsowHSEe6QK3lFcw+5XxPTXJ+xSuE+6rYlSfZhd30q+v/c8rItslFbhW7Gxqn1LOVBtK
- az9+eI5IbWPYLHh3hf8XSSFfx6bjf0Utellb8HZ/gsb07j/489C4y0Ba83MLdfan9l+z
- H/eE1T9HSV6QgwuS9aADT2I/Tv3tDHzFmz213DjsH3atZCWi1K4C9aQ6yp6ibbNv5B/U
- nIy/a7mG0/X1s5P/YkFuUSYrMTSryngVdoaMcDiFUvX4ffOQGpsP1e9Dd0FAKXAVtR9h
- aDag==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u2RwR-0000No-1V
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:41:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u2RwP-0003nA-IJ
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:41:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744191712;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AqA+62Hk6IcoUKE9sNpV5baQe1h7tGJVhCbLmciokHU=;
+ b=Z4fAD3/sWE2yuxlZWLWDLR3hsd2+qzhTs1dBQH309WqzOx6UiUD2CKW98R+a+xG6mDJ0r3
+ 2eeCSy1mgj59Hkc5i5g8ng5XJWLlXaAiXrH8FJYxCIQSuZ9FE1aMpXZltfMbEhtW5u7DDl
+ 5v6IzoGrL12a0kyeecGFYKBWB8UuygQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-240-gwhNXor3Mai_V1Z2SMtYRA-1; Wed, 09 Apr 2025 05:41:50 -0400
+X-MC-Unique: gwhNXor3Mai_V1Z2SMtYRA-1
+X-Mimecast-MFC-AGG-ID: gwhNXor3Mai_V1Z2SMtYRA_1744191709
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3912fe32a30so2667289f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 02:41:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744191079; x=1744795879;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OIdsqU2+ysC7jA6LMmVzVUv//dkPeh3NGRc9p0W48yw=;
- b=bYM8YtCeH2bVcMwp0SmMoSuhSxqJKFMtqZksY8habgxOWKmWA/MAd36J13L6qQ0YBg
- KDiYGTMIy76mg3HplQR7qSDqRGPGXt3PZu15uviAVOzCNXA7NGWS1iIrs/5XmZEiTSH6
- I2o+iObDp33FBASqofHuzhdilcL1yfufxgvfoWqBRWCy6vFNKUkcCnC/2k5fTPtapG3+
- TCik0aNczincRsnBfcGO9/cRumYjLoP1Wyk18VPhnirYnGlgmK/sTdelw+jgsaedPtGO
- l/MoIIl/uqeBvx62HDZxTjKLji/UhFoZ38bpeU3mcTe1pMPwi4PWWngvTSM4DnmzWurf
- 1FEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtYm8Mt+wKOTWp8gpLtLVBHaTHCRyvxv//BixcR8DDfDTxDfsbpUy1lYlJImRqGF4Ced8iZeFoomaI@nongnu.org
-X-Gm-Message-State: AOJu0Yy4v7NVe5s4BKg19hrcS6nEFH181xmdZgaYBDaorLHlamXioC4p
- C3Yd0q52eH2mG/9NMJ2vVT79PKOb7Lxj2DzG8ECZhlLNjFRmJ/0tpXIQZlh7SXA=
-X-Gm-Gg: ASbGncuc/pXSsu846tmdvdpIGHC2HRpM4bcOJf1L4Ra1dybQwk8GNZ+AHA0CMmgXkeQ
- eiH1GUPA6OvAsq2QV+mgKm/n246EUxEhuw1DfB5NUlb4wWAw1GL3HMyPFrfN6E92Lf8Nz3lJlpT
- irAp4FD3hUhfiwnl0Zf33SFehA9cQtSr4GPD32VdsXgVP3lZQqbQroVJBmf4f/e5fs9nzXEKT/4
- fYMPczHEwjHbLqTrk4CvG1ywgfFL1Xk0ADvJ5vR936fa0evKU7bhQEfQqKH8wzJdPJ93KlQAvHY
- QmuLzPQ0Xvagba/hCJ6WHlJmqIbawRgwlyfnZRjJhgU=
-X-Google-Smtp-Source: AGHT+IEZ8OhoB9zV1U/jI4/LLoUGGPt3ZUJdtPfZ0eCcE5DGOeyzXF5N2Yw4RBMxkZ7H1KFgQe12Ww==
-X-Received: by 2002:a05:600c:3d16:b0:43c:f184:2e16 with SMTP id
- 5b1f17b1804b1-43f1ec7cda0mr18556615e9.5.1744191078951; 
- Wed, 09 Apr 2025 02:31:18 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f2066d26bsm14167215e9.22.2025.04.09.02.31.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Apr 2025 02:31:18 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9C0155F8B7;
- Wed,  9 Apr 2025 10:31:16 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Mario Fleischmann <mario.fleischmann@lauterbach.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
- philmd@linaro.org,  christian.boenig@lauterbach.com
-Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
-In-Reply-To: <b610c46f-3137-4fc9-a80a-6855e5884c6c@lauterbach.com> (Mario
- Fleischmann's message of "Wed, 9 Apr 2025 10:46:07 +0200")
-References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
- <87semkw3qx.fsf@pond.sub.org>
- <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
- <87semjp286.fsf@pond.sub.org>
- <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
- <87r023m422.fsf@pond.sub.org> <87a58qj3ay.fsf@draig.linaro.org>
- <87ldsakgp9.fsf@pond.sub.org> <87y0wahh65.fsf@draig.linaro.org>
- <87mscqiut6.fsf@pond.sub.org>
- <b610c46f-3137-4fc9-a80a-6855e5884c6c@lauterbach.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 09 Apr 2025 10:31:16 +0100
-Message-ID: <875xjdheaj.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1744191709; x=1744796509;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AqA+62Hk6IcoUKE9sNpV5baQe1h7tGJVhCbLmciokHU=;
+ b=RPsvU58ENkNjf5QTxh8pOx2jVGSdMkH7izKVz2C2MELxLiC92FWImA8vPCzhxsdwhe
+ 3ze+ZurA0vyQQolqin/LLcu+IKh1K8kLkkrhQIu+JE7WMCbtP2hPViVK3wOxBKYETnyh
+ fzS1h0w7KpOgfnGggqJjGF7ypfqXjZpVuTJb+sBnHaREF4Hdp8FrjoRkMhY+KYPLxw0d
+ Z3JuUYadU3BVOB0lv1FJ88TZazHwPhcVQ3xiQ2B/mp9PQ8V2Ni1GoeXT+1B6QkBohTz6
+ cAT2BJqjJpmZxMdftCoZlpIK7LeuJgIFkKVx2P2tTNJ7K3Hz1P69bmoVzLOA3EIIdG9M
+ BY/g==
+X-Gm-Message-State: AOJu0YzD5hfI+dVgZcedUuJgPZ9TK0OMIrvmgsmpBKOpJvC79j5zo6gc
+ ZDo3acI+6xut916oZTRhKjX78UyzUONuuX163Dfl0knLnZwTTu68pn9cjmSKZdGTbUmUHNTEZyQ
+ ZDnGjrIzsuPnnbp7QuffggJEEDfIi5Zk2gaGiLGn4CzonmADwTtPY
+X-Gm-Gg: ASbGncvM4Xd3GqytMUeFXGlXlEEWevt+U1luXyRS/dljKhkKvES2prKRmUOOVdVA+tG
+ BHJMYeTzByI2gByQ8+FNpjcEwE3rCC8HMnr/vf5944YzFI/ZE30xpzM5F65sJurRaDRkasLIg3p
+ DXAp2FYhj59fMftZ3GVCT9DHYdArGam/RtGmgN4Nh7JJh5LgOgdLdVM4QZsDDpBjdN8OcpmgdjP
+ 4UpJRslYTzgdLgcCLbcFRhufXr4cId7Ju/vpOQJ/31/fse+l/9NgACQf1IgoFGg1nuFGLGrfI/+
+ MWW9MVZbtIN/A5qRfyIaNBlhOjoxgtEBA/HN
+X-Received: by 2002:a05:6000:1868:b0:39c:cc7:3c5f with SMTP id
+ ffacd0b85a97d-39d87cdcc01mr1549653f8f.45.1744191709383; 
+ Wed, 09 Apr 2025 02:41:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmVIYOk0lCj+xS4ypP9PWwF0dTFoReXJDJD15J5M943LdGrD/rZbacEn9dVwFM5qjcqdv3fA==
+X-Received: by 2002:a05:6000:1868:b0:39c:cc7:3c5f with SMTP id
+ ffacd0b85a97d-39d87cdcc01mr1549631f8f.45.1744191708892; 
+ Wed, 09 Apr 2025 02:41:48 -0700 (PDT)
+Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39d8936129dsm1140695f8f.18.2025.04.09.02.41.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Apr 2025 02:41:48 -0700 (PDT)
+Message-ID: <e4ee7ed7-49a8-422e-8a31-cccbde84c992@redhat.com>
+Date: Wed, 9 Apr 2025 11:41:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] scripts: nixify archive-source.sh
+To: Joel Granados <joel.granados@kernel.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250408-jag-sysctl-v1-0-3f4f38b751be@kernel.org>
+ <20250408-jag-sysctl-v1-1-3f4f38b751be@kernel.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20250408-jag-sysctl-v1-1-3f4f38b751be@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,109 +154,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+On 08/04/2025 22.14, Joel Granados wrote:
+> Use "#!/usr/bin/env bash" instead of "#!/bin/bash". This is necessary
+> for nix environments as they only provide /usr/bin/env at the standard
+> location.
+> 
+> Signed-off-by: Joel Granados <joel.granados@kernel.org>
+> ---
+>   scripts/archive-source.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+> index 30677c3ec9032ea01090f74602d839d1c571d012..a469a5e2dec4b05e51474f0a1af190c1ccf23c7e 100755
+> --- a/scripts/archive-source.sh
+> +++ b/scripts/archive-source.sh
+> @@ -1,4 +1,4 @@
+> -#!/bin/bash
+> +#!/usr/bin/env bash
+>   #
+>   # Author: Fam Zheng <famz@redhat.com>
+>   #
+> 
 
-> On 08.04.2025 16:37, Markus Armbruster wrote:
->
->> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->>=20
->>> Markus Armbruster <armbru@redhat.com> writes:
->>>
->>>> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
->>>>
->>>>> Markus Armbruster <armbru@redhat.com> writes:
->>>>>
->>>>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
->>>>>>
->>>>>>> Apologies for the line wrapping in yesterday's answer. Should be fi=
-xed now.
->>>>>>>
->>>>>>> On 08.04.2025 09:00, Markus Armbruster wrote:
-<snip>
->>>>
->>>> "Keep them separate" is only a gut feeling, though.  While I pay
->>>> attention to my gut feelings, I know they can be wrong.  I am soliciti=
-ng
->>>> opinions.
->>>
->>> I forgot to add isn't the flexibility of the QMP API something we need
->>> to handle for single binary anyway?
->>=20
->> I have no idea :)
->
-> Alex, thanks for chiming in! By "single binary", I assume you mean user
-> space emulation? In that case, could you elaborate whether and how it's
-> a concern related to MCD? Maybe I'm missing something here.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Not directly, it was aimed at Markus. As we work towards a single binary
-build we have to consider how the QMP API is going to be presented when
-the binary could run a number of different targets. Markus and Philippe
-have discussed it before but I forget the details.
-
-> MCD is
-> specifically designed for debugging multi-core SoCs and therefore
-> currently only supported in system emulation.
-
-Eventually we hope to get to the position QEMU can emulation a
-heterogeneous SoC so having multiple architectures under one binary will
-present potential issues for debugging.=20
-
-> For user-space debugging,
-> I don't see any reason why not to use GDB's remote serial protocol.
->
->> Evolving a target-dependent interface into a target-independent
->> interface without breaking compatibility is always a bother.
->>=20
->> It's likely more of a bother when the interface is binary.  Textual
->> interfaces tend to have less target-dependence.
->>=20
->> Designing a target-independent interface is probably easier than
->> evolving it compatibly from a target-dependent one.
->
-> Like the gdbstub, the MCD implementation does not have any
-> target-specific dependencies. This is also a change compared to the last
-> patch set and something I wanted to point out with
->
->> Architecture-independent MCD implementation
->
-> But, again, maybe I'm missing something.
->
->> QMP is textual, and it's designed for certain kinds of compatible
->> evolution.  Using QAPI/QMP for a debugging interface may be a perfectly
->> sensible idea.  I don't know enough about debugging interfaces to judge.
->
-> Even though MCD is a very stable API (developed in 2008, functions
-> haven't changed since then), as you've already pointed out, it's bold to
-> assume that it will never change in the future. For that reason, MCD
-> provides the mcd_initialize_f function which can be used to communicate
-> the requested and implemented API versions. As long as that function
-> stays serializable over the RPC layer, evolution should be possible.
->
->> Use of QAPI/QMP does not imply use of the QMP monitor.  We can keep the
->> monitor and the debugging interface separate even though both are based
->> on QAPI/QMP.
->>=20
->> The monitor code is gnarly, I'm afraid.  It supports multiple monitors,
->> but they are not fully independent for historical reasons, chiefly
->> implied mutual exclusion for commands.  Adding a QAPI/QMP-based
->> debugging interface without undue coupling to monitors may pose a few
->> technical problems.  One way to find out.
->
-> If I understand you correctly, when QAPI-MCD runs on a separate socket
-> without using a monitor, it's still coupled to the monitor code
-> internally? Does this have an influence on the either the usage of a
-> monitor or the MCD interface or is it rather an implementation detail?
-
-An implementation detail - we should try and avoid needless coupling if
-we can though.
-
-AFAIK not all monitor commands map to QMP equivalents but I'm not sure
-if that's true the other way around - can you do everything you can over
-QMP under HMP? If you don't have to then that implies we can over a
-separate schema on a debug socket that doesn't need monitor bits tied
-in.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
