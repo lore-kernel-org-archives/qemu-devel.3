@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A5AC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218F0C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Wfd-0000dZ-Ot; Wed, 09 Apr 2025 10:44:53 -0400
+	id 1u2Wfi-0000lP-PK; Wed, 09 Apr 2025 10:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2WfV-0000WT-Js
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:44:47 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2Wfc-0000bX-9k
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:44:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2WfT-0006M8-En
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:44:44 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2WfZ-0006NT-62
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:44:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744209882;
+ s=mimecast20190719; t=1744209887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KhUgn4/7zQGJ2lgryJzEz6u4zhgrsTQVznT5OXMnSBY=;
- b=RIOY354wXfGui0wjKViBdjUBQl5mDF+knoyijWA0eS7Lt24rwPzNZOv6wd9JmtWFaz3bbC
- j47GbZw/YKMJ+O344DbSRIJdrsoCRhc9hZWEyByB8nHhQVpXA2xuOwlr/KCo6xErRzmkEp
- 8nUc+bNosb9FZeGGr56VTPTzJLa7g+U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ekskBF5GBKj4mH3h42hATvRtDb2eBG485Gn9iKgB1aU=;
+ b=NQe09ng+1SF6JkKFmUK0rb8bvzjW9Pye6KMH//a0Ji1ALk6M8XVzOpy5d13vydvbp7AuCn
+ HXbIweA6Ep659UYEVU/piGmYC8LGOYnW8gf7V05UlYGGxaC46/TQ3zqGuK7pdp65Llk5rO
+ uFoswhqf1ZUYTlYyJI/MHaAcbSj3+Hg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-Ag9Nj4meMp27dEJ0ESh5cg-1; Wed,
- 09 Apr 2025 10:44:37 -0400
-X-MC-Unique: Ag9Nj4meMp27dEJ0ESh5cg-1
-X-Mimecast-MFC-AGG-ID: Ag9Nj4meMp27dEJ0ESh5cg_1744209875
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-4iq_yQ7dNQSgag1WJprv9Q-1; Wed,
+ 09 Apr 2025 10:44:43 -0400
+X-MC-Unique: 4iq_yQ7dNQSgag1WJprv9Q-1
+X-Mimecast-MFC-AGG-ID: 4iq_yQ7dNQSgag1WJprv9Q_1744209881
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 559C119560B6; Wed,  9 Apr 2025 14:44:35 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56CE619560B1; Wed,  9 Apr 2025 14:44:41 +0000 (UTC)
 Received: from gondolin.redhat.com (unknown [10.45.227.4])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A1F88180B48E; Wed,  9 Apr 2025 14:44:29 +0000 (UTC)
+ id C10B11828A83; Wed,  9 Apr 2025 14:44:35 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -55,9 +55,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  agraf@csgraf.de
 Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
  pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH for-10.1 v5 12/13] arm/cpu: Add sysreg generation scripts
-Date: Wed,  9 Apr 2025 16:43:03 +0200
-Message-ID: <20250409144304.912325-13-cohuck@redhat.com>
+Subject: [PATCH for-10.1 v5 13/13] arm/cpu: switch to a generated
+ cpu-sysregs.h.inc
+Date: Wed,  9 Apr 2025 16:43:04 +0200
+Message-ID: <20250409144304.912325-14-cohuck@redhat.com>
 In-Reply-To: <20250409144304.912325-1-cohuck@redhat.com>
 References: <20250409144304.912325-1-cohuck@redhat.com>
 MIME-Version: 1.0
@@ -89,101 +90,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+Generated against Linux 6.14-rc1.
 
-Introduce scripts that automate the generation of system register
-definitions from a given linux source tree arch/arm64/tools/sysreg.
-
-Invocation of
-./update-aarch64-sysreg-code.sh $PATH_TO_LINUX_SOURCE_TREE
-in scripts directory generates target/arm/cpu-sysregs.h.inc
-containing defines for all system registers.
-
-[CH: update to handle current kernel sysregs structure, and to emit
-     the re-worked register structures; cpu properties will be added
-     later]
 Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- scripts/gen-cpu-sysregs-header.awk    | 35 +++++++++++++++++++++++++++
- scripts/update-aarch64-sysreg-code.sh | 25 +++++++++++++++++++
- 2 files changed, 60 insertions(+)
- create mode 100755 scripts/gen-cpu-sysregs-header.awk
- create mode 100755 scripts/update-aarch64-sysreg-code.sh
+ target/arm/cpu-sysregs.h.inc | 43 +++++++++++++++++++++++++-----------
+ 1 file changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/scripts/gen-cpu-sysregs-header.awk b/scripts/gen-cpu-sysregs-header.awk
-new file mode 100755
-index 000000000000..b6b207e3c0fd
---- /dev/null
-+++ b/scripts/gen-cpu-sysregs-header.awk
-@@ -0,0 +1,35 @@
-+#!/bin/awk -f
-+# SPDX-License-Identifier: GPL-2.0
-+# gen-cpu-sysregs-header.awk: arm64 sysreg header include generator
-+#
-+# Usage: awk -f gen-cpu-sysregs-header.awk $LINUX_PATH/arch/arm64/tools/sysreg
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index 6c9f9981cc5d..02aae133eb67 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -1,18 +1,8 @@
+-DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
+-DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
+-DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
+-DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
+-DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
+-DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+-DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+-DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+-DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
+-DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+-DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+-DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
 +
-+BEGIN {
-+    print ""
-+} END {
-+    print ""
-+}
+ DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+ DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+ DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
+ DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
+ DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
+ DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
+@@ -23,13 +13,40 @@ DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
+ DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
+ DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
+ DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
+-DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
+ DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
++DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
+ DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+ DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+ DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
++DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
++DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
++DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
+ DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
++DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
++DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
++DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
++DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
++DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
++DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
++DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
++DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
++DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
++DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
++DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
++DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
++DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
++DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
++DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
++DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
++DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
++DEF(GMID_EL1, 3, 1, 0, 0, 4)
++DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
++DEF(CSSELR_EL1, 3, 2, 0, 0, 0)
+ DEF(CTR_EL0, 3, 3, 0, 0, 1)
++DEF(DCZID_EL0, 3, 3, 0, 0, 7)
 +
-+# skip blank lines and comment lines
-+/^$/ { next }
-+/^[\t ]*#/ { next }
-+
-+/^Sysreg\t/ || /^Sysreg /{
-+
-+	reg = $2
-+	op0 = $3
-+	op1 = $4
-+	crn = $5
-+	crm = $6
-+	op2 = $7
-+
-+	if (op0 == 3 && (op1>=0 && op1<=3) && crn==0 && (crm>=0 && crm<=7) && (op2>=0 && op2<=7)) {
-+	    print "DEF("reg", "op0", "op1", "crn", "crm", "op2")"
-+	}
-+	next
-+}
-+
-+{
-+	/* skip all other lines */
-+	next
-+}
-diff --git a/scripts/update-aarch64-sysreg-code.sh b/scripts/update-aarch64-sysreg-code.sh
-new file mode 100755
-index 000000000000..721f41a9a516
---- /dev/null
-+++ b/scripts/update-aarch64-sysreg-code.sh
-@@ -0,0 +1,25 @@
-+#!/bin/sh -e
-+#
-+# Update target/arm/cpu-sysregs.h
-+# from a linux source tree (arch/arm64/tools/sysreg)
-+#
-+# Copyright Red Hat, Inc. 2024
-+#
-+# Authors:
-+#          Eric Auger <eric.auger@redhat.com>
-+#
-+
-+linux="$1"
-+output="$PWD"
-+
-+if [ -z "$linux" ] || ! [ -d "$linux" ]; then
-+    cat << EOF
-+usage: update-aarch64-sysreg-code.sh LINUX_PATH
-+
-+LINUX_PATH      Linux kernel directory to obtain the headers from
-+EOF
-+    exit 1
-+fi
-+
-+awk -f gen-cpu-sysregs-header.awk \
-+    $linux/arch/arm64/tools/sysreg > ../target/arm/cpu-sysregs.h.inc
 -- 
 2.48.1
 
