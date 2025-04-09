@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE53AC369A1
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9191AC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2SFD-00074h-F1; Wed, 09 Apr 2025 06:01:19 -0400
+	id 1u2SFH-00078r-Of; Wed, 09 Apr 2025 06:01:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2SF8-0006ze-Bb; Wed, 09 Apr 2025 06:01:14 -0400
+ id 1u2SFA-00072g-U5; Wed, 09 Apr 2025 06:01:18 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2SF6-0006jO-MA; Wed, 09 Apr 2025 06:01:14 -0400
+ id 1u2SF9-0006jO-Dl; Wed, 09 Apr 2025 06:01:16 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 9 Apr
- 2025 18:00:41 +0800
+ 2025 18:00:42 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 9 Apr 2025 18:00:41 +0800
+ Transport; Wed, 9 Apr 2025 18:00:42 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>
-Subject: [PATCH v1 8/9] tests/functional/aspeed: Update AST2700 functional
- test to use vbootrom
-Date: Wed, 9 Apr 2025 18:00:36 +0800
-Message-ID: <20250409100039.2391847-9-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 9/9] docs/system/arm/aspeed: Support vbootrom for AST2700
+Date: Wed, 9 Apr 2025 18:00:37 +0800
+Message-ID: <20250409100039.2391847-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250409100039.2391847-1-jamin_lin@aspeedtech.com>
 References: <20250409100039.2391847-1-jamin_lin@aspeedtech.com>
@@ -67,65 +66,48 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the AST2700 functional test to boot using the vbootrom image
-instead of manually loading boot components with -device loader.
-The boot ROM binary is now passed via the
--bios option, using the image located in pc-bios/ast27x0_bootrom.bin.
+Using the vbootrom image instead of manually loading boot components with
+-device loader. The boot ROM binary is now passed via the -bios option,
+using the image located in pc-bios/ast27x0_bootrom.bin.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/functional/test_aarch64_aspeed.py | 38 +------------------------
- 1 file changed, 1 insertion(+), 37 deletions(-)
+ docs/system/arm/aspeed.rst | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index c25c966278..971f548534 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -36,43 +36,7 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-             'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 97fd6a0e7f..dfa8e6b4c6 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -250,24 +250,14 @@ under Linux), use :
+ Booting the ast2700-evb machine
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
-     def start_ast2700_test(self, name):
--        num_cpu = 4
--        uboot_size = os.path.getsize(self.scratch_file(name,
--                                                       'u-boot-nodtb.bin'))
--        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
+-Boot the AST2700 machine from the flash image, use an MTD drive :
++Boot the AST2700 machine using a flash image, with an MTD drive and
++the virtual boot ROM :
+ 
+ .. code-block:: bash
+ 
+-  IMGDIR=ast2700-default
+-  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
 -
--        load_images_list = [
--            {
--                'addr': '0x400000000',
--                'file': self.scratch_file(name,
--                                          'u-boot-nodtb.bin')
--            },
--            {
--                'addr': str(uboot_dtb_load_addr),
--                'file': self.scratch_file(name, 'u-boot.dtb')
--            },
--            {
--                'addr': '0x430000000',
--                'file': self.scratch_file(name, 'bl31.bin')
--            },
--            {
--                'addr': '0x430080000',
--                'file': self.scratch_file(name, 'optee',
--                                          'tee-raw.bin')
--            }
--        ]
--
--        for load_image in load_images_list:
--            addr = load_image['addr']
--            file = load_image['file']
--            self.vm.add_args('-device',
--                             f'loader,force-raw=on,addr={addr},file={file}')
--
--        for i in range(num_cpu):
--            self.vm.add_args('-device',
--                             f'loader,addr=0x430000000,cpu-num={i}')
--
--        self.vm.add_args('-smp', str(num_cpu))
-+        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
-         self.vm.add_args('-device',
-                          'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-         self.do_test_aarch64_aspeed_sdk_start(
+   $ qemu-system-aarch64 -M ast2700-evb \
+-       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
+-       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
+-       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+-       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
+-       -device loader,cpu-num=0,addr=0x430000000 \
+-       -device loader,cpu-num=1,addr=0x430000000 \
+-       -device loader,cpu-num=2,addr=0x430000000 \
+-       -device loader,cpu-num=3,addr=0x430000000 \
+-       -smp 4 \
+-       -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
++       -bios ast27x0_bootrom.bin \
++       -drive file=image-bmc,format=raw,if=mtd \
+        -nographic
+ 
+ Aspeed minibmc family boards (``ast1030-evb``)
 -- 
 2.43.0
 
