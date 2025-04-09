@@ -4,119 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 905CCC369A1
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 12:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD356C369A1
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 12:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2U6F-0004Zh-DN; Wed, 09 Apr 2025 08:00:11 -0400
+	id 1u2Ucq-00086d-2f; Wed, 09 Apr 2025 08:33:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1u2U61-0004Ve-7b
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 07:59:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=1y2v=W3=kaod.org=clg@ozlabs.org>)
+ id 1u2UcY-00082N-S5; Wed, 09 Apr 2025 08:33:35 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1u2U5x-0004xX-Ia
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 07:59:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744199990;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dGYeIdON7sDA69uYb6aWZChE2KaJ8xLMx1K6I241Q/E=;
- b=hZX4IG+prYQPQpxWM62qOZBkDAo9d22fq5RWCgwVN5HWSOxA2tkmmeaN3SkCO0OfGQjF7P
- gjQJ/OU7apxhWbVS4sj54toPrZEzt7Y4haKEvVStR6s4pNVpVuUVRNfjBfzmfVhQbaRlVM
- UTlNxoKfXlYMPlKQKCgKcw3nmujLDlw=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-219-qF2TikwXOeC6DFJq6av1dw-1; Wed, 09 Apr 2025 07:59:47 -0400
-X-MC-Unique: qF2TikwXOeC6DFJq6av1dw-1
-X-Mimecast-MFC-AGG-ID: qF2TikwXOeC6DFJq6av1dw_1744199986
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-306e5d9c9a6so309198a91.1
- for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 04:59:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744199986; x=1744804786;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dGYeIdON7sDA69uYb6aWZChE2KaJ8xLMx1K6I241Q/E=;
- b=dg1QraRHYDnmdka2OKL5+9cPYvPO0h68nhJ9aXQQvgoUva5zGXMa/Howwa20xqGSKB
- JR4YhrtRTWlhdQE9q1nnrPn02YBu1FHRrVfWAFWlqH+X0TjO3OBH9QlY7SGzzPa2O2Ct
- SlPO0is7W8BnweJxOPbjr1GYYJ5cfsr4nR27QEheyGkXOyiDHHBo4BF/9P9Xlk3jEIr8
- 4i0BHHiCmAMDhQC10yZ3Uzgcdu6J7efSViFqtDQgUJ+3AyNgcrLXkGs+nyO+Nl1D/vat
- iCZONMN/xJcfkEO0lkN3kmPH6QK5MaVqoTl9ASMrkCcdFwHYCl5WiukkCWwC60pd85pN
- ZpxA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvvZvzMX/ebCPsKIGm/zQe7ScTSeXuA5g4LUjR8My4wBIvCWTNspTp6qR1TzvZbcF2VvdQvyrzZ9/X@nongnu.org
-X-Gm-Message-State: AOJu0YwDRnnT4kiGgKWcEFlmfxqBCkn43rHJTAAn2lsWYUwGFVBXjjT9
- mbUFpM1V8B+5RLb5iKoH0+R9VZDSwody8aWc2urolFhQPiZJy0PaenNkfMsv9GIqowIC0+UPtxn
- v+jXzGPyoKtUsv8DDHqnirkjKyOhI2LoGSaxQpgWyIgvYamqBSGgT
-X-Gm-Gg: ASbGncuCpN85sAFgV1xfgbmGz/Ak2WIlu2pmMvAneTC6iwCeEyd2s19LL9Bp/jAWLFI
- pA1NRfo9BG9Un/A3jLeaXhqr80MHlznvn6oXxkwEa4Wlk14B8GNsFzccn5pCRGcW5bNTp3NjVwa
- geKSgcjIPJsNja5K9HRc4VR6rkZBQX/nbJ8OQqJZJjp7qOyxtyjkZYNHSUXOOv9ycgqQ11SjKZy
- zreC2qspEsPgBXzGaRar9S2Gh3Qpmb1hMuu0wEwklBEAi5sj1R0jZ79imEyIZqazDw48P/j4tqk
- Ziqa6EEcKa39GX/2ntNClkBX/CNP
-X-Received: by 2002:a17:90b:5344:b0:2ea:712d:9a82 with SMTP id
- 98e67ed59e1d1-306dbc3ba42mr3666433a91.29.1744199986378; 
- Wed, 09 Apr 2025 04:59:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5pAQggumJtLLh7kjfEdPtZ8EDPuN9vfLvgpJPqP02shc0zPjL/2U3OHdnLDzNiYoKP/OCjA==
-X-Received: by 2002:a17:90b:5344:b0:2ea:712d:9a82 with SMTP id
- 98e67ed59e1d1-306dbc3ba42mr3666396a91.29.1744199985948; 
- Wed, 09 Apr 2025 04:59:45 -0700 (PDT)
-Received: from smtpclient.apple ([115.96.197.203])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-306df0907f3sm1344063a91.28.2025.04.09.04.59.40
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 09 Apr 2025 04:59:45 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <CAAH4kHbFBekcmxBQcOA9K1Y+sFc2Jf56YEa4iv0M88ib7pCjgg@mail.gmail.com>
-Date: Wed, 9 Apr 2025 17:29:28 +0530
-Cc: Gerd Hoffman <kraxel@redhat.com>, Alexander Graf <graf@amazon.com>,
- =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20EDEA71-FFB4-485A-A4F1-74E1EC82D5A0@redhat.com>
-References: <h2s75tkddnrmodbbr7hxugrivpbhq7cfpbmhmgqmnn5mlafedk@jhv5cobgtjkc>
- <CAK3XEhPYmBsn2-=PMR7qVQHiu0ydoh3EfJOEuunLccriSkKipg@mail.gmail.com>
- <53jhridwtejsuy4qojjr66rcjdebnyarwke4bs3m3w2afmqhe6@pab5zfyo46fx>
- <4f6a21a9-746e-45ac-88c7-dc0204480a86@amazon.com>
- <kmqzqeaatk3iyrpl4tvfxtfv6gefyusxpyxtz5bollw7jlp3wk@5c4zawrzehwq>
- <d79cff63-324f-4624-aef3-b6570cdb23e2@amazon.com>
- <rtbmlitus6unzibiatblquot2bthx4dmozbxgcbovisial6qar@konful7gzrsz>
- <6d815066-9977-4683-a2d5-871dda3e5369@amazon.com>
- <fwdk2pc4rfa5o22gdfqq4cfsqged4v6hmlrtqdwltgqj2bkpl4@bicazjx5d22l>
- <CAAH4kHZhEX0kaE3r5PVOOWh1PhzZNOfyWMixDm0PbCnjfmZceA@mail.gmail.com>
- <xjdm7m65w6hmnq3ik2psbfhizypk76c3hdriujh27kcm7ex5tv@7lq3x3k7y52h>
- <CAAH4kHbFBekcmxBQcOA9K1Y+sFc2Jf56YEa4iv0M88ib7pCjgg@mail.gmail.com>
-To: Dionna Amalie Glaze <dionnaglaze@google.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <SRS0=1y2v=W3=kaod.org=clg@ozlabs.org>)
+ id 1u2UcW-0002Zb-4O; Wed, 09 Apr 2025 08:33:34 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZXj6F6ZPcz4xLy;
+ Wed,  9 Apr 2025 22:33:25 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZXj6B0GT4z4wcd;
+ Wed,  9 Apr 2025 22:33:19 +1000 (AEST)
+Message-ID: <670b9434-56ce-45b7-bf50-d71cae560d93@kaod.org>
+Date: Wed, 9 Apr 2025 14:33:15 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
+ I2CM_DMA_TX/RX_ADDR set first
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20250408082504.3060742-1-jamin_lin@aspeedtech.com>
+ <SI2PR06MB50412DDB7CEE6844C1E5B953FCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <7512f3d5-d90e-449e-ab0c-4e82d32eb361@kaod.org>
+ <SI2PR06MB50418E5147D60FDD90A052D8FCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI2PR06MB50418E5147D60FDD90A052D8FCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=1y2v=W3=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,86 +115,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+>>> After discussing with the I2C hardware designers, we confirmed that the I2c
+>>> design in AST2600 and AST2700 A1 is the same.
+>>> The datasheet will be updated accordingly for AST2700.
+>>>
+>>> However, please note that bit 15 and bit 31 are not available on AST2700 A0
+>>> and FW do not set either bit 15 and bit 31.
+>>> AST2700 A0 was an engineering sample version. Given this, I plan to resend
+>>> the v3 patch with AST2700 A0 explicitly marked as unsupported.
+>>
+>> Are you going to introduce an I2C property to distinguish the
+>> A0 implementation for the A1 ?
+>>
+> 
+> No. I want the I2C model to be as simple as possible, without adding any ""AST2700 A0"" specific changes.
+> V1 patch work for AST2700 A1, AST2600, AST2500, AST1030, AST2500, AST2400 but not AST2700 A0.
 
-> On Apr 9, 2025, at 03:12, Dionna Amalie Glaze <dionnaglaze@google.com> =
-wrote:
->=20
-> On Tue, Apr 8, 2025 at 1:33=E2=80=AFAM Gerd Hoffman =
-<kraxel@redhat.com> wrote:
->>=20
->>  Hi,
->>=20
->>>> Well.  If you want put the db into the igvm and the igvm into the =
-uki
->>>> you've got a chicken-and-egg problem.  Moving the firmware from the =
-main
->>>> UKI to UKI add-on would solve that.
->>>=20
->>> Why is embedding a public key that will sign the IGVM in the IGVM a
->>> chicken-and-egg problem? It's only that if db were a list of
->>> acceptable measurements, which it isn't.
->>> I'm not sure why relying on secure boot makes any sense for
->>> confidential computing. I still think that tearing down the VM =
-context
->>> and rebuilding it is more secure, given
->>> the need for an honest launch measurement/MRTD.
->>=20
->> Current idea is to allow passing EFI signature databases for db/dbx =
-to
->> the firmware getting loaded.  The signature databases must be part of
->> the launch measurement.  Not clear yet how exactly to handle that, =
-one
->> idea is to add a special page type to the igvm spec, so a igvm parser
->> can easily find and update db/dbx.
->>=20
->> So, the VM context will be rebuild, the igvm (including db/dbx) will =
-be
->> measured, the firmware can verify the payload using db/dbx and =
-standard
->> secure boot hash/signature.
->>=20
->> This allows to use both signing (pass CA certificate in db) and =
-hashing
->> (pass authenticode hash(es) in db) for payload verification.
->>=20
->> The chicken-and-egg problem arises if you go for hashing and want =
-embed
->> the igvm file in the UKI.
->=20
-> I don't really see how signing the IGVM file for secure boot helps =
-anything.
-> The VM context will be reconstructed by the hypervisor, and anything
-> checked or stored before loading
-> the new firmware is suspect.
-> SEV-SNP has IDBLOCK_AUTH to have the SNP firmware check a signature,
-> but TDX has nothing of the sort.
-> Your initial measurement is checked by nothing trusted.
+ok. Please first adjust the ast2700 functional tests for the
+ast2700a0-evb machine (no I2C test) and deprecate ast2700a0-evb
+at the same time.
 
-By "initial measurement" you mean before the VM context is =
-reconstructed, that is in the first stage boot correct?
+Thanks,
 
->=20
-> Do you need the UEFI_APPLICATION that uses the vmfwupdate interface to
-> be signed for secure boot? Seems unnecessary.
->=20
->>=20
->>> Revocation is just not a real thing that works. Short-lived policy =
-is.
->>> Policy services can be updated more simply than the UEFI variables =
-of
->>> every node in the fleet.
->>=20
->> In the model outlined above you'll go ship db/dbx in the igvm, so the
->> launch measurement will tell you what is allowed and what is not.  =
-Which
->> in turn can be used in attestation server policies.
->>=20
->> take care,
->>  Gerd
->>=20
->=20
-> --
-> -Dionna Glaze, PhD, CISSP, CCSP (she/her)
+C.
 
 
 
