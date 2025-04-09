@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9191AC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2764C369A1
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2SFH-00078r-Of; Wed, 09 Apr 2025 06:01:24 -0400
+	id 1u2SEx-0006cw-PB; Wed, 09 Apr 2025 06:01:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2SFA-00072g-U5; Wed, 09 Apr 2025 06:01:18 -0400
+ id 1u2SEq-0006PP-RI; Wed, 09 Apr 2025 06:00:58 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2SF9-0006jO-Dl; Wed, 09 Apr 2025 06:01:16 -0400
+ id 1u2SEp-0006jO-2z; Wed, 09 Apr 2025 06:00:56 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 9 Apr
- 2025 18:00:42 +0800
+ 2025 18:00:40 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 9 Apr 2025 18:00:42 +0800
+ Transport; Wed, 9 Apr 2025 18:00:40 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>
-Subject: [PATCH v1 9/9] docs/system/arm/aspeed: Support vbootrom for AST2700
-Date: Wed, 9 Apr 2025 18:00:37 +0800
-Message-ID: <20250409100039.2391847-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 2/9] hw/arm/aspeed_ast27x0: Rename variable sram_name to
+ name in ast2700 realize
+Date: Wed, 9 Apr 2025 18:00:30 +0800
+Message-ID: <20250409100039.2391847-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250409100039.2391847-1-jamin_lin@aspeedtech.com>
 References: <20250409100039.2391847-1-jamin_lin@aspeedtech.com>
@@ -66,48 +67,41 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using the vbootrom image instead of manually loading boot components with
--device loader. The boot ROM binary is now passed via the -bios option,
-using the image located in pc-bios/ast27x0_bootrom.bin.
+The variable "sram_name" was only used for naming the SRAM memory region.
+Rename it to "name" for consistency with similar code and avoid unnecessary
+new local variable declarations.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- docs/system/arm/aspeed.rst | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 97fd6a0e7f..dfa8e6b4c6 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -250,24 +250,14 @@ under Linux), use :
- Booting the ast2700-evb machine
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 81dd90ffdd..c7188ae5f1 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -577,7 +577,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+     AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc[0]);
+     AspeedINTCClass *icio = ASPEED_INTC_GET_CLASS(&a->intc[1]);
+-    g_autofree char *sram_name = NULL;
++    g_autofree char *name = NULL;
+     qemu_irq irq;
  
--Boot the AST2700 machine from the flash image, use an MTD drive :
-+Boot the AST2700 machine using a flash image, with an MTD drive and
-+the virtual boot ROM :
+     /* Default boot region (SPI memory or ROMs) */
+@@ -649,9 +649,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     }
  
- .. code-block:: bash
- 
--  IMGDIR=ast2700-default
--  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
--
-   $ qemu-system-aarch64 -M ast2700-evb \
--       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
--       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
--       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
--       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
--       -device loader,cpu-num=0,addr=0x430000000 \
--       -device loader,cpu-num=1,addr=0x430000000 \
--       -device loader,cpu-num=2,addr=0x430000000 \
--       -device loader,cpu-num=3,addr=0x430000000 \
--       -smp 4 \
--       -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
-+       -bios ast27x0_bootrom.bin \
-+       -drive file=image-bmc,format=raw,if=mtd \
-        -nographic
- 
- Aspeed minibmc family boards (``ast1030-evb``)
+     /* SRAM */
+-    sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
+-    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
+-                                 errp)) {
++    name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
++    if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
++                                errp)) {
+         return;
+     }
+     memory_region_add_subregion(s->memory,
 -- 
 2.43.0
 
