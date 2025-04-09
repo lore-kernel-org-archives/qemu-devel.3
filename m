@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DC7C36010
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 02:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08477C369A5
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 02:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2LJi-0006VU-PE; Tue, 08 Apr 2025 22:37:30 -0400
+	id 1u2LKj-0007gZ-Q9; Tue, 08 Apr 2025 22:38:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1u2LJg-0006Tw-H7
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:37:28 -0400
+ id 1u2LKf-0007UD-T7
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:38:30 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1u2LJc-0007mp-O2
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:37:28 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1u2LKd-0007tq-Th
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:38:29 -0400
 Received: from loongson.cn (unknown [10.2.10.34])
- by gateway (Coremail) with SMTP id _____8BxlmlZ3fVnDq+1AA--.40119S3;
- Wed, 09 Apr 2025 10:37:13 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxC3Jg3fVnJ6+1AA--.40159S3;
+ Wed, 09 Apr 2025 10:37:20 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.10.34])
- by front1 (Coremail) with SMTP id qMiowMBxLsdY3fVnnsR1AA--.28294S3;
- Wed, 09 Apr 2025 10:37:12 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxLsdY3fVnnsR1AA--.28294S14;
+ Wed, 09 Apr 2025 10:37:19 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 01/16] hw/intc/loongarch_pch: Modify name of some registers
-Date: Wed,  9 Apr 2025 10:36:56 +0800
-Message-Id: <20250409023711.2960618-2-maobibo@loongson.cn>
+Subject: [PATCH v3 12/16] hw/intc/loongarch_pch: Use generic write callback
+ for iomem8 region
+Date: Wed,  9 Apr 2025 10:37:07 +0800
+Message-Id: <20250409023711.2960618-13-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250409023711.2960618-1-maobibo@loongson.cn>
 References: <20250409023711.2960618-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxLsdY3fVnnsR1AA--.28294S3
+X-CM-TRANSID: qMiowMBxLsdY3fVnnsR1AA--.28294S14
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxtw1ktrWrGrWxZr18AF1fAFc_yoWxXrWfpr
- yUArW2yr4DJrWxWF4xuw15ZwnrJFn7Cr9IgwsIgFyxCF1rJrykXF1DXas8GF15K3yUJr98
- Wrsxua9I93W7trbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFyfKrW3WFWfGF1xtw1xXrc_yoW5Jr47pr
+ W3Zryaqr4DJFsrWFs7Ja4DZr1xWFn7W34S9a90ka40kr98ZryDXFyDJ34kWFyjk34xArW8
+ Xrs5CryY9a1UW3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zwZ7UUUUU==
+ 0xBIdaVrnRJUUUk0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcHUqUUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -78,197 +79,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some registers with width 8 bytes, its name is something like
-PCH_PIC_INT_ID_LO and PCH_PIC_INT_ID_HI. From hardware manual,
-register name is PCH_PIC_INT_ID instead. Here name PCH_PIC_INT_ID
-is used, and PCH_PIC_INT_ID + 4 is used for PCH_PIC_INT_ID_HI.
+Add iomem8 region register write operation emulation in generic write
+function loongarch_pch_pic_write(), and use this function for iomem8
+region.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c            | 50 +++++++++++++-------------
- hw/loongarch/virt.c                    |  2 +-
- include/hw/intc/loongarch_pic_common.h | 27 +++++---------
- 3 files changed, 36 insertions(+), 43 deletions(-)
+ hw/intc/loongarch_pch_pic.c | 31 ++++++++++---------------------
+ 1 file changed, 10 insertions(+), 21 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index acd75ccb0c..2b90ccd1ff 100644
+index 7477e92ac5..adff2288a0 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -79,10 +79,10 @@ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
-     uint32_t offset = addr & 0xfff;
+@@ -123,7 +123,7 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
+ {
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint32_t offset;
+-    uint64_t old, mask, data;
++    uint64_t old, mask, data, *ptemp;
  
-     switch (offset) {
--    case PCH_PIC_INT_ID_LO:
-+    case PCH_PIC_INT_ID:
-         val = PCH_PIC_INT_ID_VAL;
+     offset = addr & 7;
+     addr -= offset;
+@@ -161,6 +161,14 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
+     case PCH_PIC_INT_POL:
+         s->int_polarity = (s->int_polarity & ~mask) | data;
          break;
--    case PCH_PIC_INT_ID_HI:
-+    case PCH_PIC_INT_ID + 4:
-         /*
-          * With 7A1000 manual
-          *   bit  0-15 pch irqchip version
-@@ -90,28 +90,29 @@ static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
-          */
-         val = deposit32(PCH_PIC_INT_ID_VER, 16, 16, s->irq_num - 1);
-         break;
--    case PCH_PIC_INT_MASK_LO:
-+    case PCH_PIC_INT_MASK:
-         val = (uint32_t)s->int_mask;
-         break;
--    case PCH_PIC_INT_MASK_HI:
-+    case PCH_PIC_INT_MASK + 4:
-         val = s->int_mask >> 32;
-         break;
--    case PCH_PIC_INT_EDGE_LO:
-+    case PCH_PIC_INT_EDGE:
-         val = (uint32_t)s->intedge;
-         break;
--    case PCH_PIC_INT_EDGE_HI:
-+    case PCH_PIC_INT_EDGE + 4:
-         val = s->intedge >> 32;
-         break;
--    case PCH_PIC_HTMSI_EN_LO:
-+    case PCH_PIC_HTMSI_EN:
-         val = (uint32_t)s->htmsi_en;
-         break;
--    case PCH_PIC_HTMSI_EN_HI:
-+    case PCH_PIC_HTMSI_EN + 4:
-         val = s->htmsi_en >> 32;
-         break;
--    case PCH_PIC_AUTO_CTRL0_LO:
--    case PCH_PIC_AUTO_CTRL0_HI:
--    case PCH_PIC_AUTO_CTRL1_LO:
--    case PCH_PIC_AUTO_CTRL1_HI:
-+    case PCH_PIC_AUTO_CTRL0:
-+    case PCH_PIC_AUTO_CTRL0 + 4:
-+    case PCH_PIC_AUTO_CTRL1:
-+    case PCH_PIC_AUTO_CTRL1 + 4:
-+        /* PCH PIC connect to EXTIOI always, discard auto_ctrl access */
-         break;
++    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
++        ptemp = (uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
++        *ptemp = (*ptemp & ~mask) | data;
++        break;
++    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
++        ptemp = (uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
++        *ptemp = (*ptemp & ~mask) | data;
++        break;
      default:
-         break;
-@@ -140,7 +141,7 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-     trace_loongarch_pch_pic_low_writew(size, addr, data);
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "pch_pic_write: Bad address 0x%"PRIx64"\n", addr);
+@@ -269,28 +277,9 @@ static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
+ static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
+                                      uint64_t data, unsigned size)
+ {
+-    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+-    int32_t offset_tmp;
+-
+     addr += PCH_PIC_ROUTE_ENTRY;
+     trace_loongarch_pch_pic_writeb(size, addr, data);
+-
+-    switch (addr) {
+-    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
+-        offset_tmp = addr - PCH_PIC_HTMSI_VEC;
+-        if (offset_tmp >= 0 && offset_tmp < 64) {
+-            s->htmsi_vector[offset_tmp] = (uint8_t)(data & 0xff);
+-        }
+-        break;
+-    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
+-        offset_tmp = addr - PCH_PIC_ROUTE_ENTRY;
+-        if (offset_tmp >= 0 && offset_tmp < 64) {
+-            s->route_entry[offset_tmp] = (uint8_t)(data & 0xff);
+-        }
+-        break;
+-    default:
+-        break;
+-    }
++    loongarch_pch_pic_write(opaque, addr, data, size);
+ }
  
-     switch (offset) {
--    case PCH_PIC_INT_MASK_LO:
-+    case PCH_PIC_INT_MASK:
-         old = s->int_mask;
-         s->int_mask = get_writew_val(old, data, 0);
-         old_valid = (uint32_t)old;
-@@ -151,7 +152,7 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-             pch_pic_update_irq(s, (~old_valid & data), 0);
-         }
-         break;
--    case PCH_PIC_INT_MASK_HI:
-+    case PCH_PIC_INT_MASK + 4:
-         old = s->int_mask;
-         s->int_mask = get_writew_val(old, data, 1);
-         old_valid = (uint32_t)(old >> 32);
-@@ -164,20 +165,20 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-             pch_pic_update_irq(s, int_mask << 32, 0);
-         }
-         break;
--    case PCH_PIC_INT_EDGE_LO:
-+    case PCH_PIC_INT_EDGE:
-         s->intedge = get_writew_val(s->intedge, data, 0);
-         break;
--    case PCH_PIC_INT_EDGE_HI:
-+    case PCH_PIC_INT_EDGE + 4:
-         s->intedge = get_writew_val(s->intedge, data, 1);
-         break;
--    case PCH_PIC_INT_CLEAR_LO:
-+    case PCH_PIC_INT_CLEAR:
-         if (s->intedge & data) {
-             s->intirr &= (~data);
-             pch_pic_update_irq(s, data, 0);
-             s->intisr &= (~data);
-         }
-         break;
--    case PCH_PIC_INT_CLEAR_HI:
-+    case PCH_PIC_INT_CLEAR + 4:
-         value <<= 32;
-         if (s->intedge & value) {
-             s->intirr &= (~value);
-@@ -185,16 +186,17 @@ static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
-             s->intisr &= (~value);
-         }
-         break;
--    case PCH_PIC_HTMSI_EN_LO:
-+    case PCH_PIC_HTMSI_EN:
-         s->htmsi_en = get_writew_val(s->htmsi_en, data, 0);
-         break;
--    case PCH_PIC_HTMSI_EN_HI:
-+    case PCH_PIC_HTMSI_EN + 4:
-         s->htmsi_en = get_writew_val(s->htmsi_en, data, 1);
-         break;
--    case PCH_PIC_AUTO_CTRL0_LO:
--    case PCH_PIC_AUTO_CTRL0_HI:
--    case PCH_PIC_AUTO_CTRL1_LO:
--    case PCH_PIC_AUTO_CTRL1_HI:
-+    case PCH_PIC_AUTO_CTRL0:
-+    case PCH_PIC_AUTO_CTRL0 + 4:
-+    case PCH_PIC_AUTO_CTRL1:
-+    case PCH_PIC_AUTO_CTRL1 + 4:
-+        /* discard auto_ctrl access */
-         break;
-     default:
-         break;
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index e25864214f..8c0cc98c72 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -432,7 +432,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-                             VIRT_IOAPIC_REG_BASE + PCH_PIC_ROUTE_ENTRY_OFFSET,
-                             sysbus_mmio_get_region(d, 1));
-     memory_region_add_subregion(get_system_memory(),
--                            VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS_LO,
-+                            VIRT_IOAPIC_REG_BASE + PCH_PIC_INT_STATUS,
-                             sysbus_mmio_get_region(d, 2));
- 
-     /* Connect pch_pic irqs to extioi */
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 43cce48978..c04471b08d 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -12,28 +12,19 @@
- 
- #define PCH_PIC_INT_ID_VAL              0x7000000UL
- #define PCH_PIC_INT_ID_VER              0x1UL
--#define PCH_PIC_INT_ID_LO               0x00
--#define PCH_PIC_INT_ID_HI               0x04
--#define PCH_PIC_INT_MASK_LO             0x20
--#define PCH_PIC_INT_MASK_HI             0x24
--#define PCH_PIC_HTMSI_EN_LO             0x40
--#define PCH_PIC_HTMSI_EN_HI             0x44
--#define PCH_PIC_INT_EDGE_LO             0x60
--#define PCH_PIC_INT_EDGE_HI             0x64
--#define PCH_PIC_INT_CLEAR_LO            0x80
--#define PCH_PIC_INT_CLEAR_HI            0x84
--#define PCH_PIC_AUTO_CTRL0_LO           0xc0
--#define PCH_PIC_AUTO_CTRL0_HI           0xc4
--#define PCH_PIC_AUTO_CTRL1_LO           0xe0
--#define PCH_PIC_AUTO_CTRL1_HI           0xe4
-+#define PCH_PIC_INT_ID                  0x00
-+#define PCH_PIC_INT_MASK                0x20
-+#define PCH_PIC_HTMSI_EN                0x40
-+#define PCH_PIC_INT_EDGE                0x60
-+#define PCH_PIC_INT_CLEAR               0x80
-+#define PCH_PIC_AUTO_CTRL0              0xc0
-+#define PCH_PIC_AUTO_CTRL1              0xe0
- #define PCH_PIC_ROUTE_ENTRY_OFFSET      0x100
- #define PCH_PIC_ROUTE_ENTRY_END         0x13f
- #define PCH_PIC_HTMSI_VEC_OFFSET        0x200
- #define PCH_PIC_HTMSI_VEC_END           0x23f
--#define PCH_PIC_INT_STATUS_LO           0x3a0
--#define PCH_PIC_INT_STATUS_HI           0x3a4
--#define PCH_PIC_INT_POL_LO              0x3e0
--#define PCH_PIC_INT_POL_HI              0x3e4
-+#define PCH_PIC_INT_STATUS              0x3a0
-+#define PCH_PIC_INT_POL                 0x3e0
- 
- #define STATUS_LO_START                 0
- #define STATUS_HI_START                 0x4
+ static const MemoryRegionOps loongarch_pch_pic_reg32_low_ops = {
 -- 
 2.39.3
 
