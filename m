@@ -4,174 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B82C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 09:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E096C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2SCn-0003ai-QX; Wed, 09 Apr 2025 05:58:50 -0400
+	id 1u2SEa-0006KG-16; Wed, 09 Apr 2025 06:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1u2SCX-0003Oy-5z
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:58:37 -0400
-Received: from mail-dm6nam12on20629.outbound.protection.outlook.com
- ([2a01:111:f403:2417::629]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u2SEG-0006Fl-UY
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 06:00:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1u2SCU-0006JV-Mv
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:58:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N8oiR3w/AXw/FzgfIH/IS2W3x0eBpF1lI8tEv/LxrqhgmX8al8qTukFemsKNp3OPvyVhsmuWXbpTCEm9P5zyi1VcPI5Ihy+JX05WNK+SdCVGocbFsrJZMYPL54STJm2pACVeA2rttzbyMPpMvMUbAnzgDWgeN2PR7OlpjQKqWVDTS60q7TFBwIfH5NMWpjRAmsgb+HEqGGkB9oywLKXBVKX2d0ogWRVhALzNuIURl7tCVYc3FsgO+rJaE7m6OSDVzU65ppj1XUUV5QquMMSilG3j47cWu+WaZt3k7m0fyfU7von37rrBrNKv79nPNqsJqQRDolVm+DjxxwbvD0m3rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DbLLpxyqS5g/aB9ZRysWB6S375JHw6isuOhDsAaGHek=;
- b=VRyJAmUomoWXmMHELRGHqqvwkmPkS2rzRsFAsZSx7zbZNqB1rSNZSIWWp1d3IaGHJUYmoM/4vTm1G3U+daGq1AL+SebdJRzgshxCwY+5a7RUDFFfBxdb6VsEb6V3wQ2CGbyHMPvEvmYmNjuXL6ldEYuSqEmj3Av5TXBD62Vn3nrsTVRBAdRozd4Q24hGlMsEuUhqO9KKdyn+cerc5IS2BkHSY0Z5PEYPo0ARrtx1+Y/RCyyglzoQT5nU6KG7Bxq1uVusRzMLkSv3szS1ybboY04pZQElvOQ76562ooUxg4EklCN8u5taQ8giXXRryQraTDzuNO0R8NbvZCQlZGB9kA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DbLLpxyqS5g/aB9ZRysWB6S375JHw6isuOhDsAaGHek=;
- b=lu92UDqmpL1srMMvrLI4NOYNABnxXzT7ZR1JSedry0WVbzVR94gL7bRtoh1vEjxVyj3bD+b3MA15F2JtaHI3no9YSrU4nBAwrk+Pu0cugNYL8Wha8WTBlcI3fb6p8DoNMeXWwCEGS3QHcElIMSZy/xd7SI5RBtONuUs5kXOtfsM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by PH7PR12MB5951.namprd12.prod.outlook.com (2603:10b6:510:1da::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.20; Wed, 9 Apr
- 2025 09:58:26 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f%4]) with mapi id 15.20.8606.029; Wed, 9 Apr 2025
- 09:58:26 +0000
-Message-ID: <5d35d719-4640-4c11-9691-689d5ef38887@amd.com>
-Date: Wed, 9 Apr 2025 19:58:22 +1000
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v4 06/13] vfio: Add the support for PrivateSharedManager
- Interface
-Content-Language: en-US
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-References: <20250407074939.18657-1-chenyi.qiang@intel.com>
- <20250407074939.18657-7-chenyi.qiang@intel.com>
-From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <20250407074939.18657-7-chenyi.qiang@intel.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u2SEF-0006ge-5v
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 06:00:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744192817;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+8K25wJgJHHtlJtW5Yj3Pd1vYrtyjlDbeaG7EZHhLz0=;
+ b=Raj9cPahFcsIdMY0m0nMe6AfCBzlV4x4ANHQCPfzaEF7R+dtzt7AgTtd8uq2lhk61jjPyG
+ wDZOtgLOQuOZA0DVEY4UHN6Dcqx03TNt3vAE2l0VNewdhuN/JID+B4IpsHZtu4EW0mgD4/
+ yLMtcbqP8sVMqoIf7/tmi2yPeikLrYg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-224-IA47JFFRPembAJ_pf45EXA-1; Wed, 09 Apr 2025 06:00:16 -0400
+X-MC-Unique: IA47JFFRPembAJ_pf45EXA-1
+X-Mimecast-MFC-AGG-ID: IA47JFFRPembAJ_pf45EXA_1744192815
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3913f97d115so310912f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 03:00:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744192815; x=1744797615;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+8K25wJgJHHtlJtW5Yj3Pd1vYrtyjlDbeaG7EZHhLz0=;
+ b=BVQMGkGp6K2zupkrdDPgTyO+aJfbYvvbd0WQWRYmYB+9ZR0LN6rd0IYKVVq+uiiH38
+ P1QozimkhaRCS1LBraEnX6G9mxHkHdT9Ar0jAkAdRQ9NZIfojqf3nMr/+wg32UcY+ukJ
+ KQ3JkIyyoYntpZwUPVgKsgQeuBehy4XeG2eLcsY8WUGgsEEXiXJoVgcQgL0wnTcU+8D2
+ mQqbluaOiSjYI+DdndNeaDVmnO8BWJikVTzDbETCB6liJ9e1QZnvhNCyq0VQ/e70j0Oq
+ MJo3d64edgB/ZeOsdyhJu8ikDpEsB5ozRkxcjmMX6w8ab97hmX+CbJuTIDcmbdoC+9mD
+ vEOw==
+X-Gm-Message-State: AOJu0YydnTt2yTBTjGH9W4NqyuQcu30TX62V3U7BjcKzkWFyfFfg6Zeo
+ WXb6rFLfAJ3IkA/Pqmq93yARXsQjMY+1J1iPlA9knDuAjm2ShGg0VS+JX1dNH+ywFdj98BDYIbw
+ VyhJjunO+7tgUiFVrkZwXKRkKhV2bvC2CzA1X+MhjJt07o/YNtjNvjy8BN6zf
+X-Gm-Gg: ASbGncu8J6+/LTpUB06to7YJTrWGGh7zZDL+G5xE6DjFalxFvnaqFQg1fNItQUsgvBm
+ wqbglmJsq77HYkm+2W4GCRnLDTbeOg2Uh2cd/nrsWDCNQ5m+T1yYDKRCH2Kt1IMZxwnB3i5Oq6l
+ l3OZVUggZScjnCPWRlhe0jhlCt82/H+z/88llFiUYAUGbYSa7R8Iu2YHaYZgb3GpyIpGrGqBKGp
+ gl2ui50FAhfTBJ8CaxPa+sgYH+DoPLOnpIDdoyyxKvrCr1oyztXnPALo4XO4f/qB1nj/PRFDFXk
+ w2j5Z3ptAQ+jPxQnxEAnlif9SqwC8wvlf0kTaBs0Nvcl8puOsA==
+X-Received: by 2002:a05:6000:22c3:b0:39c:12ce:105c with SMTP id
+ ffacd0b85a97d-39d87e84c05mr2034766f8f.6.1744192814827; 
+ Wed, 09 Apr 2025 03:00:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGda+c82lPWrwI06EshfslAKrSXLiLZzqTMa9qvJhZjgE1XSdm3+/DPU/HftejJU3xjGcV9iw==
+X-Received: by 2002:a05:6000:22c3:b0:39c:12ce:105c with SMTP id
+ ffacd0b85a97d-39d87e84c05mr2034739f8f.6.1744192814478; 
+ Wed, 09 Apr 2025 03:00:14 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39d893774aasm1181692f8f.30.2025.04.09.03.00.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Apr 2025 03:00:14 -0700 (PDT)
+Message-ID: <ba6aeb84-b567-4536-bd4d-84e666b66160@redhat.com>
+Date: Wed, 9 Apr 2025 12:00:13 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/2] vfio/spapr: Fix L2 crash with PCI device
+ passthrough
+To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250408124042.2695955-1-amachhiw@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MEVPR01CA0054.ausprd01.prod.outlook.com
- (2603:10c6:220:1fd::11) To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|PH7PR12MB5951:EE_
-X-MS-Office365-Filtering-Correlation-Id: 614f43cc-3efc-4376-61d9-08dd774d12a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|366016|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OHBMTEc4L1BkMVZGaUo4WGFFWnd3T20rM0phZWlwaXA4c0dpWmUzSURhTitr?=
- =?utf-8?B?a0lxc2VYdmFSNXRMaXVvZlYwTG9qU1UzQzluZUZYRWVUbGd2NDlXZDZxOCtJ?=
- =?utf-8?B?VTF2eE5HckFSQlM2bStSZGtQdHdCNFpsV1FXVUNXQlBSMjRJZGFQWXlkeVhj?=
- =?utf-8?B?VjFPTkRsYTI0d09hQUhXQmsxeXcrbUdWSzVQUzVBcmRGUlJTdXdtV2ZyMi9t?=
- =?utf-8?B?MitFRjBiSzZsYmJEaVFSSjlDNHpQRytJeHVMODZjTmNvZ1h1Z1UwSnZzY2No?=
- =?utf-8?B?L2RmRWYvMzlyWWd1TSswQUJOZUJGY3ZRb241TU1WRDBmdXYrNnkveUtpQkVS?=
- =?utf-8?B?dStHU1dsQkMvMGVsL3lLSUVYeEZidXB5WkZpV0IzTkM3TE9JN3Q1OXl6Yy91?=
- =?utf-8?B?RzgzWDBJMFFtalgxeVk2SzlmMTlCWUZjbDh0VFZLMzd5RVplTCswU0I3MTNF?=
- =?utf-8?B?WS9wT0I3SzZXT0lZY1loQVA4NC9KbnU1NTJRVlJqa1oreUczNlhLRTZNUjBS?=
- =?utf-8?B?VVY1ZE5oL3VYYUFLTjNmd3VVeEFVN1dMNTVmTGlUNDM5aEFTdjdtU1Bmb2d5?=
- =?utf-8?B?QkdJazczaEZvbDd1bzJHdnFJMXpBT1RCNEpvbDFqbndpQ0N6d0wvNzJnSU1t?=
- =?utf-8?B?S1pMVHRzVUNGN2UwdFpWZFpGelBDMFJnSXM4NE5YWWxBcEZ1YTdEOG5EbW5L?=
- =?utf-8?B?c0VKc0FnaEVzSExsYUI1SXd6UW9KMlEwUVJvQWZ1elpESmVPeEJid001WFA1?=
- =?utf-8?B?akM0blNsUU1EaU9OQ3FMc1ZvWitUMm1JOHRLSTNjaGpUZklUSkZvMFM1UkZH?=
- =?utf-8?B?N1ZmS0NPVGd1TXZrVVQ4L0ZuaDk2dVJTK08rQzZDOTdjUzVwZWU5OEdDY2p6?=
- =?utf-8?B?Z09nNncwUEx0QWVEZ1cvYnQvbmVjNVFOdkpsYjFFajNncW9jWXNSdlZnVm9r?=
- =?utf-8?B?SkYyRk14eFZ2NldPWWFKOFFDWnpPK1FMb2Y0aS9icjZ1ellUTFVvZDlDWDBn?=
- =?utf-8?B?c2Y5WW5NTUN0WDBqWWZZeFozSVJsS0FpSHFXR3VnaXRVaVY1eE9KYytpWTNz?=
- =?utf-8?B?ZFVQczkvTmhrZ01oY0RkamNLWW1VV0ltNkFQRjR5c1R2MVhIRmFGZ2tKZ0RK?=
- =?utf-8?B?M05nSzM1S0JuL1BuMjdzbXdFMUI3YWI3NGliZGFTM0NieVhBNm1GeGs5akRP?=
- =?utf-8?B?M1FQbDJXakdkQmdQVURFS3JveEJrZzZXMGFTUjJkSTdvaStkNGZhQUNyOVNj?=
- =?utf-8?B?TDZna2FzbnhZRTA0OGJKSWRaSjc5bDdteDJJVERJYk5MWUlYcWpXZ1BWaEhs?=
- =?utf-8?B?c1czQklWWUkwUkJoK3d5c0xTMGZrVkZXR0pkemRRQTJKUHA3TU1oeWs2ZnJp?=
- =?utf-8?B?MlRVYkJxblpBQ0NTZjh3T3Fxci9jYTZZTnZabWE0MlRqQ2dxeVlhVHdManR2?=
- =?utf-8?B?Mm1NTXgreWlNOFAvWDh1b3B6aFNhdEQwQjgzekNWNVdkSVFMM0tnQ2cwOUZh?=
- =?utf-8?B?cDVTSzAxdlJvZWZkNXA3ZEx2WEJlb3REckcwNmM3cS9jRFM2OEdBblU3ZzFD?=
- =?utf-8?B?Q0pVYzk2enpxRjRzMHhOK0hkT0I0QWhsTng3MnNNK2NISTBrZGRhQ1NTSFhH?=
- =?utf-8?B?bE0rVFE1L2JoTGM2S0tPSUR4Q1Y3STBHM2prYmJjdEpZTm1QRzEyUy9PZ1h5?=
- =?utf-8?B?T0JZaVc0aHkxblRRTFI2NnBoMmordFNtK29qOHZwMkFGRGFJL3ZqZ3ZBWU1j?=
- =?utf-8?B?b2V1STBEOExCVS9UMnlWbzh5S043cXRMeXBxOXp3c2J2YUlWZVZHQzZiaHpy?=
- =?utf-8?B?SWtCU0tSMHRFcWNZcytoZ3ZUemFUK2lhSit6WE1UWW1lWDl5OUpGTDJSaGZI?=
- =?utf-8?B?SG1vSTZhVDZvOHJzR1NUQ3pCTUQ1Ylp2R21jVFJ1bGIzVi9tMGdETjZpYjU1?=
- =?utf-8?Q?8WR5gu9zdGU=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(366016)(1800799024)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MXovOGIrUWJ4cHVMaThaODduU2loRmIzSk5GWFNZZHNqOEpMTlZPQUVDc2Vn?=
- =?utf-8?B?eXdXM1M2dFh2S1pQcEFwUG5NS3RqcWtESVp0RFVBajdWWWQxNUpRWDA3ajBH?=
- =?utf-8?B?VjlpTUdKVG1MWlJwbE1lczZuVmhVMzlQcjRVakViNXBpQ1JqRXRZc3hGWWJP?=
- =?utf-8?B?M0xlRng1L1N4TFN1WFR4aldSOFIxYU50MDFZbkZQZkw1VlBZZ0R5NXU4TTNq?=
- =?utf-8?B?WDFWUVdnSkZ4TkNtSmpvYlcvdXBIT0p2R1JxWWc1WFZHRlNtOWhLbHYzQnhx?=
- =?utf-8?B?UnN3OXg0d256QlFhTHRhYTVNZjNkdjJIRm1jbHBYdGpOK0tTRGZYRWNjaERt?=
- =?utf-8?B?bzRRaWNJc1FjS1NYQkxNdENPSUQ4OTNHMnd5R0lUbFY0OTZ5TEpVU3FtUmU5?=
- =?utf-8?B?YXBwemV0cGRKL3ZQUHBJUUN3TXBYQ3hYWjdzMjhtbFBhemR1ZzlQMkNDRDBh?=
- =?utf-8?B?cEx4SVo1d3VHTDR2YkIwaS9OQXpyMHdMSUszR1c3QUdiaDBTZUNwTGF0ZTRQ?=
- =?utf-8?B?cTV2cDMxeUQ0RjFYbUpSUzNocUIzNnNXajdHZHN3TUliYXh6MTJWR1VrYStj?=
- =?utf-8?B?MW83TlFybDAvejd4UGZPTjYxUFVBSitlNHRqM2ZqbzhaNkxGUFR0VkdCQWd2?=
- =?utf-8?B?MFNienlYaVRvenkrMTByWkhYZUw5em9FS1VxZjhYUFl6YVVNZXZSZHdpMHJQ?=
- =?utf-8?B?OHh3Z3kvdzVmNGhweHQ1bTUrZ1ZNNGxBVXhldnUvVklkUUhqeTlOQTV1bXUv?=
- =?utf-8?B?TVJrdUFvY1VSYkZVLzRoV1VZazR0cmNEN2wraGNJT2RTbmZHcks4RDJVcFRu?=
- =?utf-8?B?UW5BQ3BMb1Y1VlgzN2NTcTljcEc3dERvZGdLdkVCVDVrMitTYmVoT0RUM1Fp?=
- =?utf-8?B?SFRUbjFmUmUvYU9NVk50blBrVE94ek5kMHl5ZTlGcEVITDdDSHhMeWpwclAz?=
- =?utf-8?B?UWJTWU9OSVJUaTEzakNwb05tbW9jODFUcVpoT0w4c2xzcTBpRE9IdU13My9Y?=
- =?utf-8?B?SlRIZkNWYnZSTVZrSU5Bbi9LZVgvSUNSRlVWTjk0RHZieFU1Wll2dUs1OEFQ?=
- =?utf-8?B?QWVoWDBxSUdnWVBXMENiNjB0c3cxWk1uK3hRY2xNQWx0TTlYWFh0RmRpazA5?=
- =?utf-8?B?R0c5UmxxMmJxTG9XMldob3VxK0gzdE1NdWtjcVNpTlVrMTZraHJCM3l4Vmpk?=
- =?utf-8?B?RUJEZFVNKzFQU3ZUdVVnWjk4WVNHMkQyeDNMSFQ5cW82cHpla1hvdEt2UGN2?=
- =?utf-8?B?U3hNbTVmMXV1UFQ3UE52a284T0ZoNzltbzk5RTZuRHlLQUVxMmxXNzMyaHNj?=
- =?utf-8?B?L3JqVmFsbmxoQzB0MldNMTRFL3F2TmkxVmNOOHBPeDZuK3h0blRONCs2aWIv?=
- =?utf-8?B?bmhNWmxJRWpvM3gwQmxSSkp5RktmWUFiNFk0UDZHK3VrU1NxMEgyMDJxSVpv?=
- =?utf-8?B?NitFYlFIeTBwM3FMUkZkZjdaNWdMNE9pWjBZN3kwRjQ1Q3lOTFBxeTdZb1Nl?=
- =?utf-8?B?N0MreGlTakhDUkR1Wkp4WmdIZnVmRGtXQUU0MmRSREJmbEh5MEIxYWhlWThH?=
- =?utf-8?B?Q1FsZGhNYTkvYitmNFBOUDVwREFIYXRaTm90aG90MWdmbkFRbWdlNUU5TFc1?=
- =?utf-8?B?M2FMT3U2NTZ1STFlYVV2c1FTY1JBaE4veHRxeWd3b1lWUUZGVzE0ZjAzK3M0?=
- =?utf-8?B?cjVRKzhTMkN2NDFiZjYvV1JKbEJpb2hmSGo2cDlXUngzTVR5UDFBV2RYRExq?=
- =?utf-8?B?VVpoTXk5YkNLb1dRMXpPZDFpZlE3Y2N0S2dNUkJEME1wQ3FUb0FzYmZ0SGJM?=
- =?utf-8?B?N0dZelRvOUVHdFJCai83MVlSQ1owTnFIZkxWSUhWU0YvdVN1bU93VXVMNEdi?=
- =?utf-8?B?ZmFWV1FvOVU4bTlUNU1oYlRwZC9nbnRoKzNRZWRkdThCZ2ZXOUEwNmp0aWhp?=
- =?utf-8?B?c1VPNFhCYXF5aXdjbmdtM2JEWFVUanlmMHB4aWJPUTVDTXk0WUllZm1lcnRU?=
- =?utf-8?B?RjQ5Z2srWHF2NnNqSkhuQUdmaDdBNjZXblN3YTdQL1kyTWxYdDNIZnhiRTZJ?=
- =?utf-8?B?RHZjUnVZVWI4Z3FocDFQTGMwMTltWGlGSFViNVFIODAxV0Q4ZEhxTG83bTBt?=
- =?utf-8?Q?zUDMn4VWRQn1edz2snxbvweh7?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 614f43cc-3efc-4376-61d9-08dd774d12a2
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2025 09:58:26.6400 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Fb3VRrtYscAw7O0tjaunID1OqYFSvIiM3DLLMrTdS3hEVroSJklwcg0FBqZO5vbFOo+YEdL15BrneJBqGTfStw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5951
-Received-SPF: permerror client-ip=2a01:111:f403:2417::629;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
 X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -187,258 +158,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 7/4/25 17:49, Chenyi Qiang wrote:
-> Subsystems like VFIO previously disabled ram block discard and only
-> allowed coordinated discarding via RamDiscardManager. However,
-> guest_memfd in confidential VMs relies on discard operations for page
-> conversion between private and shared memory. This can lead to stale
-> IOMMU mapping issue when assigning a hardware device to a confidential
-> VM via shared memory. With the introduction of PrivateSharedManager
-> interface to manage private and shared states and being distinct from
-> RamDiscardManager, include PrivateSharedManager in coordinated RAM
-> discard and add related support in VFIO.
-
-How does the new behavior differ from what 
-vfio_register_ram_discard_listener() does? Thanks,
-
-
-> Currently, migration support for confidential VMs is not available, so
-> vfio_sync_dirty_bitmap() handling for PrivateSharedListener can be
-> ignored. The register/unregister of PrivateSharedListener is necessary
-> during vfio_listener_region_add/del(). The listener callbacks are
-> similar between RamDiscardListener and PrivateSharedListener, allowing
-> for extraction of common parts opportunisticlly.
+On 4/8/25 14:40, Amit Machhiwal wrote:
+> Hi,
 > 
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> ---
-> Changes in v4
->      - Newly added.
-> ---
->   hw/vfio/common.c                      | 104 +++++++++++++++++++++++---
->   hw/vfio/container-base.c              |   1 +
->   include/hw/vfio/vfio-container-base.h |  10 +++
->   3 files changed, 105 insertions(+), 10 deletions(-)
+> This patch series addresses two aspects in vfio_spapr_create_window() that
+> includes the enhancement in error handling in this function and also fixes an
+> issue with KVM guests (L2) inside a pSeries logical partition (LPAR) with larger
+> memory configurations and PCI device passthrough.
 > 
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 3172d877cc..48468a12c3 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -335,13 +335,9 @@ out:
->       rcu_read_unlock();
->   }
->   
-> -static void vfio_ram_discard_notify_discard(StateChangeListener *scl,
-> -                                            MemoryRegionSection *section)
-> +static void vfio_state_change_notify_to_state_clear(VFIOContainerBase *bcontainer,
-> +                                                    MemoryRegionSection *section)
->   {
-> -    RamDiscardListener *rdl = container_of(scl, RamDiscardListener, scl);
-> -    VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
-> -                                                listener);
-> -    VFIOContainerBase *bcontainer = vrdl->bcontainer;
->       const hwaddr size = int128_get64(section->size);
->       const hwaddr iova = section->offset_within_address_space;
->       int ret;
-> @@ -354,13 +350,28 @@ static void vfio_ram_discard_notify_discard(StateChangeListener *scl,
->       }
->   }
->   
-> -static int vfio_ram_discard_notify_populate(StateChangeListener *scl,
-> +static void vfio_ram_discard_notify_discard(StateChangeListener *scl,
->                                               MemoryRegionSection *section)
->   {
->       RamDiscardListener *rdl = container_of(scl, RamDiscardListener, scl);
->       VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
->                                                   listener);
-> -    VFIOContainerBase *bcontainer = vrdl->bcontainer;
-> +    vfio_state_change_notify_to_state_clear(vrdl->bcontainer, section);
-> +}
-> +
-> +static void vfio_private_shared_notify_to_private(StateChangeListener *scl,
-> +                                                  MemoryRegionSection *section)
-> +{
-> +    PrivateSharedListener *psl = container_of(scl, PrivateSharedListener, scl);
-> +    VFIOPrivateSharedListener *vpsl = container_of(psl, VFIOPrivateSharedListener,
-> +                                                   listener);
-> +    vfio_state_change_notify_to_state_clear(vpsl->bcontainer, section);
-> +}
-> +
-> +static int vfio_state_change_notify_to_state_set(VFIOContainerBase *bcontainer,
-> +                                                 MemoryRegionSection *section,
-> +                                                 uint64_t granularity)
-> +{
->       const hwaddr end = section->offset_within_region +
->                          int128_get64(section->size);
->       hwaddr start, next, iova;
-> @@ -372,7 +383,7 @@ static int vfio_ram_discard_notify_populate(StateChangeListener *scl,
->        * unmap in minimum granularity later.
->        */
->       for (start = section->offset_within_region; start < end; start = next) {
-> -        next = ROUND_UP(start + 1, vrdl->granularity);
-> +        next = ROUND_UP(start + 1, granularity);
->           next = MIN(next, end);
->   
->           iova = start - section->offset_within_region +
-> @@ -383,13 +394,33 @@ static int vfio_ram_discard_notify_populate(StateChangeListener *scl,
->                                        vaddr, section->readonly);
->           if (ret) {
->               /* Rollback */
-> -            vfio_ram_discard_notify_discard(scl, section);
-> +            vfio_state_change_notify_to_state_clear(bcontainer, section);
->               return ret;
->           }
->       }
->       return 0;
->   }
->   
-> +static int vfio_ram_discard_notify_populate(StateChangeListener *scl,
-> +                                            MemoryRegionSection *section)
-> +{
-> +    RamDiscardListener *rdl = container_of(scl, RamDiscardListener, scl);
-> +    VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
-> +                                                listener);
-> +    return vfio_state_change_notify_to_state_set(vrdl->bcontainer, section,
-> +                                                 vrdl->granularity);
-> +}
-> +
-> +static int vfio_private_shared_notify_to_shared(StateChangeListener *scl,
-> +                                                MemoryRegionSection *section)
-> +{
-> +    PrivateSharedListener *psl = container_of(scl, PrivateSharedListener, scl);
-> +    VFIOPrivateSharedListener *vpsl = container_of(psl, VFIOPrivateSharedListener,
-> +                                                   listener);
-> +    return vfio_state_change_notify_to_state_set(vpsl->bcontainer, section,
-> +                                                 vpsl->granularity);
-> +}
-> +
->   static void vfio_register_ram_discard_listener(VFIOContainerBase *bcontainer,
->                                                  MemoryRegionSection *section)
->   {
-> @@ -466,6 +497,27 @@ static void vfio_register_ram_discard_listener(VFIOContainerBase *bcontainer,
->       }
->   }
->   
-> +static void vfio_register_private_shared_listener(VFIOContainerBase *bcontainer,
-> +                                                  MemoryRegionSection *section)
-> +{
-> +    GenericStateManager *gsm = memory_region_get_generic_state_manager(section->mr);
-> +    VFIOPrivateSharedListener *vpsl;
-> +    PrivateSharedListener *psl;
-> +
-> +    vpsl = g_new0(VFIOPrivateSharedListener, 1);
-> +    vpsl->bcontainer = bcontainer;
-> +    vpsl->mr = section->mr;
-> +    vpsl->offset_within_address_space = section->offset_within_address_space;
-> +    vpsl->granularity = generic_state_manager_get_min_granularity(gsm,
-> +                                                                  section->mr);
-> +
-> +    psl = &vpsl->listener;
-> +    private_shared_listener_init(psl, vfio_private_shared_notify_to_shared,
-> +                                 vfio_private_shared_notify_to_private);
-> +    generic_state_manager_register_listener(gsm, &psl->scl, section);
-> +    QLIST_INSERT_HEAD(&bcontainer->vpsl_list, vpsl, next);
-> +}
-> +
->   static void vfio_unregister_ram_discard_listener(VFIOContainerBase *bcontainer,
->                                                    MemoryRegionSection *section)
->   {
-> @@ -491,6 +543,31 @@ static void vfio_unregister_ram_discard_listener(VFIOContainerBase *bcontainer,
->       g_free(vrdl);
->   }
->   
-> +static void vfio_unregister_private_shared_listener(VFIOContainerBase *bcontainer,
-> +                                                    MemoryRegionSection *section)
-> +{
-> +    GenericStateManager *gsm = memory_region_get_generic_state_manager(section->mr);
-> +    VFIOPrivateSharedListener *vpsl = NULL;
-> +    PrivateSharedListener *psl;
-> +
-> +    QLIST_FOREACH(vpsl, &bcontainer->vpsl_list, next) {
-> +        if (vpsl->mr == section->mr &&
-> +            vpsl->offset_within_address_space ==
-> +            section->offset_within_address_space) {
-> +            break;
-> +        }
-> +    }
-> +
-> +    if (!vpsl) {
-> +        hw_error("vfio: Trying to unregister missing RAM discard listener");
-> +    }
-> +
-> +    psl = &vpsl->listener;
-> +    generic_state_manager_unregister_listener(gsm, &psl->scl);
-> +    QLIST_REMOVE(vpsl, next);
-> +    g_free(vpsl);
-> +}
-> +
->   static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
->   {
->       MemoryRegion *mr = section->mr;
-> @@ -644,6 +721,9 @@ static void vfio_listener_region_add(MemoryListener *listener,
->       if (memory_region_has_ram_discard_manager(section->mr)) {
->           vfio_register_ram_discard_listener(bcontainer, section);
->           return;
-> +    } else if (memory_region_has_private_shared_manager(section->mr)) {
-> +        vfio_register_private_shared_listener(bcontainer, section);
-> +        return;
->       }
->   
->       vaddr = memory_region_get_ram_ptr(section->mr) +
-> @@ -764,6 +844,10 @@ static void vfio_listener_region_del(MemoryListener *listener,
->           vfio_unregister_ram_discard_listener(bcontainer, section);
->           /* Unregistering will trigger an unmap. */
->           try_unmap = false;
-> +    } else if (memory_region_has_private_shared_manager(section->mr)) {
-> +        vfio_unregister_private_shared_listener(bcontainer, section);
-> +        /* Unregistering will trigger an unmap. */
-> +        try_unmap = false;
->       }
->   
->       if (try_unmap) {
-> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-> index 749a3fd29d..ff5df925c2 100644
-> --- a/hw/vfio/container-base.c
-> +++ b/hw/vfio/container-base.c
-> @@ -135,6 +135,7 @@ static void vfio_container_instance_init(Object *obj)
->       bcontainer->iova_ranges = NULL;
->       QLIST_INIT(&bcontainer->giommu_list);
->       QLIST_INIT(&bcontainer->vrdl_list);
-> +    QLIST_INIT(&bcontainer->vpsl_list);
->   }
->   
->   static const TypeInfo types[] = {
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index 4cff9943ab..8d7c0b1179 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -47,6 +47,7 @@ typedef struct VFIOContainerBase {
->       bool dirty_pages_started; /* Protected by BQL */
->       QLIST_HEAD(, VFIOGuestIOMMU) giommu_list;
->       QLIST_HEAD(, VFIORamDiscardListener) vrdl_list;
-> +    QLIST_HEAD(, VFIOPrivateSharedListener) vpsl_list;
->       QLIST_ENTRY(VFIOContainerBase) next;
->       QLIST_HEAD(, VFIODevice) device_list;
->       GList *iova_ranges;
-> @@ -71,6 +72,15 @@ typedef struct VFIORamDiscardListener {
->       QLIST_ENTRY(VFIORamDiscardListener) next;
->   } VFIORamDiscardListener;
->   
-> +typedef struct VFIOPrivateSharedListener {
-> +    VFIOContainerBase *bcontainer;
-> +    MemoryRegion *mr;
-> +    hwaddr offset_within_address_space;
-> +    uint64_t granularity;
-> +    PrivateSharedListener listener;
-> +    QLIST_ENTRY(VFIOPrivateSharedListener) next;
-> +} VFIOPrivateSharedListener;
-> +
->   int vfio_container_dma_map(VFIOContainerBase *bcontainer,
->                              hwaddr iova, ram_addr_t size,
->                              void *vaddr, bool readonly);
+> The structure of the patch series is as below:
+> 
+> 1. The first patch introduces structured error reporting in
+>     `vfio_spapr_create_window()` by adding an `Error **` parameter. This allows
+>     better propagation of failure details to the caller.
+> 
+> 2. The second patch fixes a crash observed when booting an L2 KVM guest inside a
+>     pSeries LPAR with memory more than 128 GB and PCI device passthrough. The
+>     crash occurs due a check in KVM preventing multi-level TCEs because of not
+>     being supported by PowerVM hypervisor. This patch ensures that such
+>     configurations are avoided by first checking the supported number of levels
+>     returned by the `VFIO_IOMMU_SPAPR_TCE_GET_INFO` ioctl.
+> 
+> The fix has been tested with KVM guests on PowerVM and bare-metal enviroments
+> with memory sizes up to 390 GB and 450 GB respectively.
+> 
+> Thanks,
+> Amit
+> 
+> Changes in v3:
+>    * Change vfio_spapr_create_window() to return bool
+>    * Replace error_setg() with error_setg_errono() in vfio_spapr_create_window()
+>    * Pass errp instead of local Error object in vfio_spapr_create_window()
+>      while calling from vfio_spapr_add_section_window()
+>    * Modified patch #2 subject
+> 
+> Changes in v2:
+>    * Link: https://lore.kernel.org/all/20250407143119.1304513-1-amachhiw@linux.ibm.com/
+>    * Added Error ** parameter in vfio_spapr_create_window() for enhanced error
+>      handling with error_setg() and friends
+> 
+> v1: https://lore.kernel.org/all/20250404091721.2653539-1-amachhiw@linux.ibm.com/
+> 
+> Amit Machhiwal (2):
+>    vfio/spapr: Enhance error handling in vfio_spapr_create_window()
+>    vfio/spapr: Fix L2 crash with PCI device passthrough and memory > 128G
+> 
+>   hw/vfio/spapr.c | 69 ++++++++++++++++++++++++++++++-------------------
+>   1 file changed, 43 insertions(+), 26 deletions(-)
+> 
+> 
+> base-commit: dfaecc04c46d298e9ee81bd0ca96d8754f1c27ed
 
--- 
-Alexey
+
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
 
 
