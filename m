@@ -4,73 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E677C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 835A4C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 10:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2SzM-0000Y6-Im; Wed, 09 Apr 2025 06:49:00 -0400
+	id 1u2T5R-0001kt-Pz; Wed, 09 Apr 2025 06:55:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u2SzL-0000Xw-Ks
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 06:48:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u2SzJ-0007UQ-NL
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 06:48:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744195735;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bApCIjPDb7rE6jneUbjBXg2x2UuQ8rEQgogaE+eQ554=;
- b=GXAOITcjk3bGlOokI4lnn6r9Iwyk/N9FfE4mMPIO6C8x3hOL6lbVfxnjK9G09jJQYs5NR+
- PMw2JAgZANREmlBD/QmVvb8z1PMqn/NwUVPQtPffCX6N7yK4csp4hH+Mrf/qxnWRGAhjV8
- +DA3Mq0RDnKWTZlWfiJ6PahOJCnkt88=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-221-mgagX8wCOkKv6YUrlRAqMw-1; Wed,
- 09 Apr 2025 06:48:52 -0400
-X-MC-Unique: mgagX8wCOkKv6YUrlRAqMw-1
-X-Mimecast-MFC-AGG-ID: mgagX8wCOkKv6YUrlRAqMw_1744195731
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC0211955BC5; Wed,  9 Apr 2025 10:48:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29A1A1955BC1; Wed,  9 Apr 2025 10:48:49 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9CAB021E675E; Wed, 09 Apr 2025 12:48:46 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org,  mst@redhat.com,  eblake@redhat.com,
- eduardo@habkost.net,  berrange@redhat.com,  pbonzini@redhat.com,
- dave@treblig.org,  armbru@redhat.com,  sgarzare@redhat.com,
- den-plotnikov@yandex-team.ru
-Subject: Re: [PATCH v6] [for-10.1] virtio: add VIRTQUEUE_ERROR QAPI event
-In-Reply-To: <20250409094758.58232-1-vsementsov@yandex-team.ru> (Vladimir
- Sementsov-Ogievskiy's message of "Wed, 9 Apr 2025 12:47:58 +0300")
-References: <20250409094758.58232-1-vsementsov@yandex-team.ru>
-Date: Wed, 09 Apr 2025 12:48:46 +0200
-Message-ID: <87plhlbofl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2T5G-0001jX-63
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 06:55:06 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2T5C-00009l-Tg
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 06:55:05 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39c266c1389so4717016f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 03:54:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744196097; x=1744800897; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jcBAbBd5FPIILIqTt7rvo07REbaJqjD83akAyEzos0E=;
+ b=AcI83aw8xqMbKvhTi6WedIZgbDHKXhHx/MNwVldaakexeFaCf+0U9gdiVxkjSJS8Sh
+ SLJ9qWd9Uh4vXjFzAltib1921W2FyaEHl90JaoyJRYu1VlnNkp3t5ya2vXfh5XYDzc2w
+ KRsnIvCns9ZuG3735IM2S8sJgHtIIYzj3kehLuoXnoKbCvxk6o4G2UPANNHX/ti5CAA1
+ l1KyfHvtaujY7Gd7mVsHlGuIy8sBhKzTAmKAbidTyvlBNpYRKDr1Um3kxpHtAq/f8nUP
+ UpY0ZYQjxq86Pwl27631vSsgW/sI0bs4MUnCBwF/2LJRyV7iVd+uwXCAI2YKpSG9orLf
+ JSUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744196097; x=1744800897;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jcBAbBd5FPIILIqTt7rvo07REbaJqjD83akAyEzos0E=;
+ b=k2dbCbcD5YGfc8RoBNbs6WGXviG5BcTB5ru0AgxfNMM+Ms9f2EpDB2NpmuE5KPPvDt
+ AOaYY+pH7HY7PqsE0U5z0wTzD8QtYgchaajwTreLTWuz+D73tMaHjw66M96Puz1MILSH
+ sjR9Me/PRKWFwV3IhRGCCpx3BzghjgZlPQPargPob0IraMD26SNDF6Jr9b8dtp4ETn4g
+ QhYv8AWDrAAjaQEt2GAJzoWnJkvxQKBw8awB8moFfVU8773tDPMc+/3NQiOHSQARCkr4
+ 0dlXX3sfFh+JNUfcdPrrd34ZjltlBuiMgDFHKcbJyCyrnErArqMyvEV48nIW/Dz1jaHa
+ FQWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXz7nPKe0t0FPZVceCu3pa3dBx4uFhDyFKGOzx6boNYeTneGJjophDzMzxToMgQ4HdkRgHlYDGNtSVZ@nongnu.org
+X-Gm-Message-State: AOJu0YwDCd1O5DM739hqN1JFzqATRKuL3VQKn4sCyF8v0OrRi4QKOP9x
+ eQffu8i078AJ64oP85UM/XxMU3s7nMUL7nsBs4BPOMUIKofARz8eiMPmOAQP+FM6yHdGmNUxPxM
+ FrS0=
+X-Gm-Gg: ASbGncslOBjd8cuQmXmH3EMKs0b8SjlwJ2iY9EgSKKKU0IZ8k/j+cWiYXYBZknoq6Pq
+ R85wKfHxJPMk98pUybVWIspnwyeBywY+Ek2rwPZZv9z9lf+KoX1EHSqpW8Pqk1Mp6nj42hK6Lju
+ iVm7ZNw1VDx6SBzxYEgnVyNEjKALt9gHfAoSkyNAWkwX7dgwTA5Axdt9S56bCJJy6VjRdT6cC8s
+ YcIbimNVmTsu4oGDrFt1YaGLxlxa9YjpafkfSbCZy2lpgGB9gsSWEC0F17a2R6TDL7YWorj6iz/
+ GJ0vG1CaxKpsNdRTUI0Kbn5rfb8xatIC0+9YfbjOcm/NZJ00GqGGoGy+pFRnzju4MZs08pAzqmX
+ tDO6Pu+7hcT4=
+X-Google-Smtp-Source: AGHT+IEv7Xxdb4HKM1O/QUHyqJdmOZet1wAx2IE66VhM4OMBEgcQ+cG2syd8513zhiem0AbxZJ42og==
+X-Received: by 2002:a05:6000:2a10:b0:39c:1257:dbab with SMTP id
+ ffacd0b85a97d-39d87cddd45mr1521437f8f.59.1744196097044; 
+ Wed, 09 Apr 2025 03:54:57 -0700 (PDT)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f20625592sm16121325e9.10.2025.04.09.03.54.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 09 Apr 2025 03:54:56 -0700 (PDT)
+Message-ID: <e6cbd3ae-356d-4805-bca1-90b0e98c4d0d@linaro.org>
+Date: Wed, 9 Apr 2025 12:54:55 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] various: Fix type conflict of GLib function pointers
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
+ <2be81d2f86704662c9fa33ceb46077804e34ac77.1744032780.git.ktokunaga.mail@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2be81d2f86704662c9fa33ceb46077804e34ac77.1744032780.git.ktokunaga.mail@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,175 +118,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+Hi Kohei,
 
-> For now we only log the vhost device error, when virtqueue is actually
-> stopped. Let's add a QAPI event, which makes possible:
->
->  - collect statistics of such errors
->  - make immediate actions: take core dumps or do some other debugging
->  - inform the user through a management API or UI, so that (s)he can
->   react somehow, e.g. reset the device driver in the guest or even
->   build up some automation to do so
->
-> Note that basically every inconsistency discovered during virtqueue
-> processing results in a silent virtqueue stop.  The guest then just
-> sees the requests getting stuck somewhere in the device for no visible
-> reason.  This event provides a means to inform the management layer of
-> this situation in a timely fashion.
->
-> The event could be reused for some other virtqueue problems (not only
-> for vhost devices) in future. For this it gets a generic name and
-> structure.
->
-> We keep original VHOST_OPS_DEBUG(), to keep original debug output as is
-> here, it's not the only call to VHOST_OPS_DEBUG in the file.
-
-Likely should be tracepoints.  Not this patch's problem, though.
-
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 7/4/25 16:45, Kohei Tokunaga wrote:
+> On emscripten, function pointer casts can cause function call failure.
+> This commit fixes the function definition to match to the type of the
+> function call.
+> 
+> - qtest_set_command_cb passed to g_once should match to GThreadFunc
+> - object_class_cmp and cpreg_key_compare are passed to g_list_sort as
+>    GCopmareFunc but GLib cast them to GCompareDataFunc.
+> 
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 > ---
->
-> v6: rename path to qom-path, and improve throttling of the event
->     improve wording
->
->  hw/virtio/vhost.c | 12 +++++++++---
->  monitor/monitor.c | 14 ++++++++++++++
->  qapi/qdev.json    | 32 ++++++++++++++++++++++++++++++++
->  3 files changed, 55 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 6aa72fd434..0b205cef73 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -15,6 +15,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
-> +#include "qapi/qapi-events-qdev.h"
->  #include "hw/virtio/vhost.h"
->  #include "qemu/atomic.h"
->  #include "qemu/range.h"
-> @@ -1442,11 +1443,16 @@ static void vhost_virtqueue_error_notifier(EventNotifier *n)
->      struct vhost_virtqueue *vq = container_of(n, struct vhost_virtqueue,
->                                                error_notifier);
->      struct vhost_dev *dev = vq->dev;
-> -    int index = vq - dev->vqs;
->  
->      if (event_notifier_test_and_clear(n) && dev->vdev) {
-> -        VHOST_OPS_DEBUG(-EINVAL,  "vhost vring error in virtqueue %d",
-> -                        dev->vq_index + index);
-> +        int ind = vq - dev->vqs + dev->vq_index;
-> +        DeviceState *ds = &dev->vdev->parent_obj;
+>   hw/riscv/riscv_hart.c | 9 ++++++++-
+>   qom/object.c          | 5 +++--
+>   target/arm/helper.c   | 4 ++--
+>   3 files changed, 13 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+> index a55d156668..e37317dcbd 100644
+> --- a/hw/riscv/riscv_hart.c
+> +++ b/hw/riscv/riscv_hart.c
+> @@ -102,10 +102,17 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
+>       return false;
+>   }
+>   
+> +static gpointer g_qtest_set_command_cb(
+> +    bool (*pc_cb)(CharBackend *chr, gchar **words))
+> +{
+
+Why not use a GThreadFunc prototype, casting the argument?
+
+> +    qtest_set_command_cb(pc_cb);
+> +    return NULL;
+> +}
 > +
-> +        VHOST_OPS_DEBUG(-EINVAL,  "vhost vring error in virtqueue %d", ind);
-> +        qapi_event_send_virtqueue_error(ds->id, ds->canonical_path, ind,
-> +                                        VIRTQUEUE_ERROR_VHOST_VRING_ERROR,
-> +                                        "vhost reported failure through vring "
-> +                                        "error fd");
->      }
->  }
->  
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index c5a5d30877..11c8859703 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -313,6 +313,7 @@ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
->      [QAPI_EVENT_BALLOON_CHANGE]    = { 1000 * SCALE_MS },
->      [QAPI_EVENT_QUORUM_REPORT_BAD] = { 1000 * SCALE_MS },
->      [QAPI_EVENT_QUORUM_FAILURE]    = { 1000 * SCALE_MS },
-> +    [QAPI_EVENT_VIRTQUEUE_ERROR]   = { 1000 * SCALE_MS },
->      [QAPI_EVENT_VSERPORT_CHANGE]   = { 1000 * SCALE_MS },
->      [QAPI_EVENT_MEMORY_DEVICE_SIZE_CHANGE] = { 1000 * SCALE_MS },
->      [QAPI_EVENT_HV_BALLOON_STATUS_REPORT] = { 1000 * SCALE_MS },
-> @@ -499,6 +500,12 @@ static unsigned int qapi_event_throttle_hash(const void *key)
->          hash += g_str_hash(qdict_get_str(evstate->data, "qom-path"));
->      }
->  
-> +    if (evstate->event == QAPI_EVENT_VIRTQUEUE_ERROR) {
-> +        uint64_t virtqueue = qdict_get_int(evstate->data, "virtqueue");
-> +        hash += g_str_hash(qdict_get_str(evstate->data, "qom-path")) ^
-> +            g_int64_hash(&virtqueue);
-> +    }
-> +
->      return hash;
->  }
->  
-> @@ -527,6 +534,13 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
->                         qdict_get_str(evb->data, "qom-path"));
->      }
->  
-> +    if (eva->event == QAPI_EVENT_VIRTQUEUE_ERROR) {
-> +        return !strcmp(qdict_get_str(eva->data, "qom-path"),
-> +                       qdict_get_str(evb->data, "qom-path")) &&
-> +            (qdict_get_int(eva->data, "virtqueue") ==
-> +             qdict_get_int(evb->data, "virtqueue"));
-> +    }
-> +
->      return TRUE;
->  }
->  
+>   static void riscv_cpu_register_csr_qtest_callback(void)
+>   {
+>       static GOnce once;
+> -    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
+> +    g_once(&once, (GThreadFunc)g_qtest_set_command_cb, csr_qtest_callback);
+>   }
+>   #endif
+>   
 
-Rate-limiting is now per virt queue.  It was per device in previous
-revisions.  Worth it?
+OK for the rest, but it might help to merge by corresponding maintainers
+if split in 3 distinct patches.
 
-> diff --git a/qapi/qdev.json b/qapi/qdev.json
-> index 25cbcf977b..ddfae18761 100644
-> --- a/qapi/qdev.json
-> +++ b/qapi/qdev.json
-> @@ -187,3 +187,35 @@
->  { 'command': 'device-sync-config',
->    'features': [ 'unstable' ],
->    'data': {'id': 'str'} }
-> +
-> +##
-> +# @VirtqueueError:
-> +#
-> +# @vhost-vring-error: the vhost device has communicated failure via
-> +#     the vring error file descriptor
-> +#
-> +# Since: 10.1
-> +##
-> +{ 'enum': 'VirtqueueError',
-> +  'data': [ 'vhost-vring-error' ] }
-> +
-> +##
-> +# @VIRTQUEUE_ERROR:
-> +#
-> +# Emitted when a device virtqueue fails at runtime.
-> +#
-> +# @device: the device's ID if it has one
-> +#
-> +# @qom-path: the device's QOM path
-> +#
-> +# @virtqueue: the index of the virtqueue that failed
-> +#
-> +# @error: error identifier
-> +#
-> +# @description: human readable description
-> +#
-> +# Since: 10.1
-> +##
-> +{ 'event': 'VIRTQUEUE_ERROR',
-> + 'data': { '*device': 'str', 'qom-path': 'str', 'virtqueue': 'int',
-> +            'error': 'VirtqueueError', 'description': 'str'} }
-
-Standard question for events: can a management application poll for the
-information as well?
-
-I might have asked this before, I don't remember.  If you already
-answered it, feel free to point me to your answer.
-
-Why is this a standard question for events?  Say, a management
-application wants to track the state of X.  Two ways: poll the state
-with a query command that returns it, listen for events that report a
-change of X.
-
-Listening for an event is more efficient.
-
-However, if the management application connects to a QEMU instance, X
-could be anything, so it needs to poll once.
-
-Special case: the management application restarts for some reason.
+> diff --git a/qom/object.c b/qom/object.c
+> index 01618d06bd..19698aae4c 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -1191,7 +1191,8 @@ GSList *object_class_get_list(const char *implements_type,
+>       return list;
+>   }
+>   
+> -static gint object_class_cmp(gconstpointer a, gconstpointer b)
+> +static gint object_class_cmp(gconstpointer a, gconstpointer b,
+> +                             gpointer user_data)
+>   {
+>       return strcasecmp(object_class_get_name((ObjectClass *)a),
+>                         object_class_get_name((ObjectClass *)b));
+> @@ -1201,7 +1202,7 @@ GSList *object_class_get_list_sorted(const char *implements_type,
+>                                        bool include_abstract)
+>   {
+>       return g_slist_sort(object_class_get_list(implements_type, include_abstract),
+> -                        object_class_cmp);
+> +                        (GCompareFunc)object_class_cmp);
+>   }
+>   
+>   Object *object_ref(void *objptr)
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index bb445e30cd..68f81fadfc 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -220,7 +220,7 @@ static void count_cpreg(gpointer key, gpointer opaque)
+>       }
+>   }
+>   
+> -static gint cpreg_key_compare(gconstpointer a, gconstpointer b)
+> +static gint cpreg_key_compare(gconstpointer a, gconstpointer b, void *d)
+>   {
+>       uint64_t aidx = cpreg_to_kvm_id((uintptr_t)a);
+>       uint64_t bidx = cpreg_to_kvm_id((uintptr_t)b);
+> @@ -244,7 +244,7 @@ void init_cpreg_list(ARMCPU *cpu)
+>       int arraylen;
+>   
+>       keys = g_hash_table_get_keys(cpu->cp_regs);
+> -    keys = g_list_sort(keys, cpreg_key_compare);
+> +    keys = g_list_sort(keys, (GCompareFunc)cpreg_key_compare);
+>   
+>       cpu->cpreg_array_len = 0;
+>   
 
 
