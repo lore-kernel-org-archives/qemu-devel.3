@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CB3C369A4
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 13:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AABC369A4
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 13:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2VnA-0006Cz-UM; Wed, 09 Apr 2025 09:48:36 -0400
+	id 1u2VnM-0006RY-Rt; Wed, 09 Apr 2025 09:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1u2Vn9-0006Cg-Q7; Wed, 09 Apr 2025 09:48:35 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ id 1u2VnK-0006Ix-7c; Wed, 09 Apr 2025 09:48:46 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1u2Vn7-0005c5-N2; Wed, 09 Apr 2025 09:48:35 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5394KCkY013833;
- Wed, 9 Apr 2025 06:48:29 -0700
+ id 1u2VnI-0005eJ-DX; Wed, 09 Apr 2025 09:48:45 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 539DY9VE023160;
+ Wed, 9 Apr 2025 06:48:40 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=rR9V28JDgt5opNsu9/R0xl+qLHN6JE+OBMZWRsZR4
- YA=; b=t7k4uHwqd+4WNADf9xRV4eDG82TQDp1bkLyA+HocIkm+UpR/qR3AUmuz5
- joBwhwqgYZaE7Acvhp0RZywunNoNYjVLWID+Wed+tPSTCpCuTUIwNtkzhqYeoBos
- 1HrYnBqAbl6tEZj7B0dl4+L8ke30VqcwB9eAbbOmlWz4usY/8xUFAO3nq6YWfz5/
- MtNkegYRcXq1rCfEJ3clpLvqXtxZpIbCCzFwIL2GI6Tonh2Zzj3ATdMqMT3HXOhe
- QKsX8jBM43IpbI4muLOr+CLWDkDyTvz+qVSVtR83MZJPuiMMMgO9NAWBqFBCziSw
- pjUZcJe2ov9tmQOsmwGVKRxy7ZzBQ==
-Received: from sj2pr03cu001.outbound.protection.outlook.com
- (mail-westusazlp17012033.outbound.protection.outlook.com [40.93.1.33])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 45u42xhapg-1
+ proofpoint20171006; bh=tGX6AyRJDv3d+7JhmMGrrdabwexhRPRK8nrYOtFLn
+ Xg=; b=m9kiMY3+b/4q/jsEI2DsziOnfcWvApLQPLjKnkUNUaM2iw6yKfR1LpmBU
+ 5ytg2swckcUWv+4DoYOg79Ruqp04tPbMeHhCO+RuNmQWwF+eJuMKoJPYlzE9rSVC
+ uWPj53pSGqri69ZKb87vIK5+lR/ic7yhQZnbkqlSR++c0I5cJjkelB2TRiT5jEJH
+ nOh0O5t7hGxrOlFEKeHZMxFD95gDgEnm1rwiyKSeHR9Mljn/78A2rrfMEXHnGCUo
+ R672jI2GvzmybzFpG1Kok5/QlKCLCJ0hbz54LO6QUfajZugYYQcX+1z1VnwTqL0B
+ zwhVUP1i7sNrkynC8d35WYWLmnHBw==
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazlp17012053.outbound.protection.outlook.com
+ [40.93.20.53])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 45u2mhj3jg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Apr 2025 06:48:28 -0700 (PDT)
+ Wed, 09 Apr 2025 06:48:40 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=owfV5GBL/MZtd9Z197d5OfTS/uZTTT2oqPwWsstOJzoLtZo6o4pGxk5RWEwKv8H5kBiYq9gCqtcD8f2hIeUSXZviWuBhRt5lB6kh9CJBBD1rS0qTjaeqmlxVMzQhMVoU6xD+DsznssKGRPNx1USo2IgdRdNayCc97W5p4qPkEf0CkVSqiPAcjTHok35+gLcB2L/A2Yo+/YI6Ul52qllawIiqHATMiXfwV29K6TMLTS9DxHFmYPo6YUopouxvJoFqFdI7o+eqXbACfP+n3eYRQXOgwWm5cCFigOd40Wj3c7zQppsG8dmmg+g1ouqoxOx27yybYOPjT8TkVvcM+pTi8g==
+ b=cIg60FUtQiYxLWd547YJH2I3rcZ9/8kQBm65NHY+IG62wbJYAzkLkFCKX/J2v0CRklw0JrmZals6COLRmwSpDrNr/J5mnbMeGh8nxRo45tEY1Aux+o6rdVU+ItwMZSKivqjVy2KKpwdMYIV9sFOHkcxVF+XPXlLha0QLr9FA12rCCbQ1izQBhhK7syzP5NQqP3PtrlEDFQIuP9UUZtZsP6EAT9Bg4rsV+TyVxih0RH/zNpi/VGUcKr0pT5Ri3fK1RewpiJpIomT3xQ70+UQIVlRZGw30NHl4qwz37XY1a42E75KkwOFnwWCfQ3/+nD5IL1RwXldGcGw7kCUAnRkPUA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rR9V28JDgt5opNsu9/R0xl+qLHN6JE+OBMZWRsZR4YA=;
- b=XpyOgLNNYq9qofeew5xOpGOhbkefRq2r0P2NWAh9GAKBTq9lMlr+my6WaSHdx13ekCHqrm6nPkb1YFQYQUAVo7HpYgQpzpgZYkDBdylYiXRkmUYESSmENLYBlKlWF3gpAwLbYoQqft4yVaXXVplGytXe50fMSW695PNow/Dm9W0nOxBBGWmc/jTM+Flytc8hz/uUxH6aObrIFrDbx9H9VOMeNRzqE3b+iLB5JhaybbzhPBcUBHvMu63HZISJrE/onlQH+mp1DD6fcOxwZvbD/vyeyBmmfQlywBYkaJKcde3dIzu9FTgSxkF4xccbqTquMp6XW8salSBghG32aRgZhQ==
+ bh=tGX6AyRJDv3d+7JhmMGrrdabwexhRPRK8nrYOtFLnXg=;
+ b=tOENgOFgUF9v8XtU5UZzOaTR0G4wZLVckJRAX0GbtK47gAyrdKnIlQe40biZEuZounrChcfNEBmJhqiG8yVi/PQ2rwN3gPQAVdGFFoAwg2bbon5ZoLUwCa2wLaf/mMA41u0f5wuhlctUdkkwreCiMzByrM2OSME7tKMHT134dOHo/d1BU7C/mgGz05xkl9yVhQQxk1/lYst/WJ2QDMkTFCej4PvdTkv8HRGS4uHT9VIPZDfxr3A5Uf/DjcH6mFqtY+cAeazb8aH3iCVa0Midou/D5J7us6YfQ50RCLzNjtiU+jzgAN3CP29Dw/NRUfl9JWKmfAFEET8i5oDOYDqWbw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rR9V28JDgt5opNsu9/R0xl+qLHN6JE+OBMZWRsZR4YA=;
- b=zCQbJQ2oszA+huHu1z/0nZ9XSl/OES/XkW9PUgeNCcrkDmQmKj16+u+oEuN8nHNsF/lDi2DH/0qF4JxNe4zCKiB4eO3JFkF5KlfvzLiwxVSEJVc+K9eFpQopS9caa4H/X6U/b3ctBeC2oiya6z60k2QHZ0MEbdGsDyMqS2Y9F5aqj9DQ8jslvsheJv+SIEgrkSUbe9XG2u50Xit8WPKnRDVfPb1j2RJdZgf3ueMWSEM21rDvO6Ffft7a83WqXnzv8uIVq6+f0TTKL0VMGoXrW69Un+UQHQWpfaISjGUBG2/UfF41OgYnt8bph53ThoxKkVZmAXYRckyFOhQIAdcuqw==
+ bh=tGX6AyRJDv3d+7JhmMGrrdabwexhRPRK8nrYOtFLnXg=;
+ b=dyeBxcyFesMOXYs7o4PjkNYaiuFkWDOCiCQ8A7CSpHxevEaXM1tXqvLOJmpHbXSrdzJHiDDr9N+8nahGbREIkwu0Yg+8gH8jnVeF55WKZrkBQZqyk3r9U+WqwNP2TiSBB4QpQtKRgFn3VpkXsO9+HacgKRAW1QqOBAqywnvTapvPkbj6C5OzuV3zCGG1pl0nI9LMm7MstuPl3MFwhpXBvFzqKEvHLEUn7bNIkoNeERDANfioaAz/lPYQnfGI/VFfycfmnUC+t6SIb1hiOFnN4dKDtk5/JkMZ5QKKgixU5+Hw35BC6y3GUNCxJKxIbYkQkQKrLk6rya6yJkBxR7LBGA==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
  by MWHPR02MB10356.namprd02.prod.outlook.com (2603:10b6:303:289::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8606.32; Wed, 9 Apr
- 2025 13:48:27 +0000
+ 2025 13:48:38 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8606.027; Wed, 9 Apr 2025
- 13:48:27 +0000
+ 13:48:38 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
@@ -75,9 +76,9 @@ Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
  Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>,
  John Levon <john.levon@nutanix.com>
-Subject: [PATCH 03/14] vfio: add vfio_prepare_device()
-Date: Wed,  9 Apr 2025 15:48:03 +0200
-Message-Id: <20250409134814.478903-4-john.levon@nutanix.com>
+Subject: [PATCH 07/14] vfio: specify VFIO_DMA_UNMAP_FLAG_ALL to callback
+Date: Wed,  9 Apr 2025 15:48:07 +0200
+Message-Id: <20250409134814.478903-8-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250409134814.478903-1-john.levon@nutanix.com>
 References: <20250409134814.478903-1-john.levon@nutanix.com>
@@ -89,89 +90,89 @@ X-ClientProxiedBy: AM8P251CA0028.EURP251.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|MWHPR02MB10356:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5c4d7640-bdc1-4508-5079-08dd776d3463
+X-MS-Office365-Filtering-Correlation-Id: 545e7489-c253-487e-7a78-08dd776d3b44
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?/zRmNKfUnV9eRVcG5CqtFWfE8SoKJnCGHsSAXZ8i+qO1UFtD73qjr90ko4Uz?=
- =?us-ascii?Q?1um6uZ18I9VASuwhfmbrY5dRNtpSMd0UnPH/yUv9XllC0zAxl8ualhPmBqTH?=
- =?us-ascii?Q?xLbeXP85ftFRDeFgQU5s42eeFv6MYs9vJHQBA0LMLQMc8jaEzuuMxrtjj87N?=
- =?us-ascii?Q?M8IuksRgjWfosTn2JODbCc6mDfC09alkYEMeDDR0oQCVKlXsDJ4uV8hyMcO1?=
- =?us-ascii?Q?unExKgcjVcAP4Alx6aKBlra5XyAopA+zn2+vaKfl8oBHsXpKFbvZyn44IZyu?=
- =?us-ascii?Q?0lFZEi7Zm2z44pJtddJsaS3ldaIqc0K78m4nLEWwmrnDIIYWmp7DOtB+cjyS?=
- =?us-ascii?Q?cor1hROfx3qqelKEVWeb4ssi2rqGahAS3jxY6tHBqT6YY62a+i0zbdUMshZx?=
- =?us-ascii?Q?MOQGASMG0PbsHF8EVWJ56ESDUph1Y+Dp0dl56yZwUmdsJ1+d9O2MC0KIYc+i?=
- =?us-ascii?Q?jIszrJ+RA5ZreSPjCh/snpmWFzutXQIoGl/VhsDvO+fCoHX+4HlpagFdXIEv?=
- =?us-ascii?Q?iZArWEGCluaJuxC8uK8knHqbOU67Tr5yNbPUFheey9TVbUAEor8+4DkmqYay?=
- =?us-ascii?Q?zq5d0aGJPQ5G+rbC7LvPAMcTTFtT3VPC1hEfm0cJ1iAs9k7VR+WJfBS/20j4?=
- =?us-ascii?Q?4gJw4ONjErt7cXWffTya9JJDrD6TwN7E8Dz37NksC2KUQCrDqYVmV0BvjaOS?=
- =?us-ascii?Q?R/klbtR/G8X7c3s/ZE11BVHQE4iDPdVTRAIUZbpAA7I5GvJhciWgSu3NJCKf?=
- =?us-ascii?Q?YVOnuzcLtkdi87uEauGO7xhGurYscLb6vAv/rxko7g3S8YhFZDq4t0yakNl5?=
- =?us-ascii?Q?HRRrxwSJu8iNS0Gpce6xkhx315hKYs75/j/ZCBRiQFeH6d8iyE0O1S5PMSy9?=
- =?us-ascii?Q?gQnIXUApJBNnL10f4TBpOkpYBHW3cAez0DRLhKKVJ9Gr+TlRGDo9UaaxbxAK?=
- =?us-ascii?Q?3LROrT+eGNatwbxFpBT0yLmB2QdV9xkNh9UxeJKs5SF/D5xOD4VwjVUUpiDO?=
- =?us-ascii?Q?pOzE1TOEwfSUHtsXMdyY/OwVroDNfCcahLfNvAXRlc4b4xc+iw3D40AWNrB3?=
- =?us-ascii?Q?ZK44qdeeJ8lVuyNDz/2JXcg767D6d5W803A/qr++IRFVyb7Q9bJ8mz8ZJrg0?=
- =?us-ascii?Q?Tb3/MGvnyPqFzd+PpQSmdaXYPLi+2bexnIhbo5oJzfmJzw1R25L24gZrgvx9?=
- =?us-ascii?Q?N5wUVUmOFE2YUhcWnDOhxE3eeDqslpEo5zpY2XcWo0a4DknIyIqM496ZPNTQ?=
- =?us-ascii?Q?sE0QLWzW14tcZBZcJCi0xyxgfByW2+V8A6BgCjRr+oH4LTR1IDBrXV8gPHku?=
- =?us-ascii?Q?uDV5Zi5Nq+Ibov8kbXStJieVjCWiEvNrhrdFvzCCZqv/KClJvPwjTVs1I6Ck?=
- =?us-ascii?Q?Vjk3tpeN94mKqeBoiGEfO6BS46Tt?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?qj4Mxjtv+rF+knU10uYbBkbYBkntTDDtzqrLLR9M8Biaw7IDDEXQaz2u9per?=
+ =?us-ascii?Q?yQ9eE4GtulO3Xf//J8q8mF+i6IDaGTaBPNo+KESovFF4vZZ64lX4wF05xT7G?=
+ =?us-ascii?Q?FiFqVeT2l50wt2RUg9dYQJ9bqEgDjQnJVwlly4ksOAJIiAMbgi7UoWsI7vfY?=
+ =?us-ascii?Q?0ZYy57KVZ6cxnwlooY2ThGZAsOitGaeXQGF6GY7rO8MSK9iS4UaCCSw2e00w?=
+ =?us-ascii?Q?ze5Kj1gvPg50sHiDkyqiBwVEGLcKx3KVHCy+XLmsZ5fslt0wByVh4rNktpxy?=
+ =?us-ascii?Q?eTWrdkguH19uwPACoBsrd9D+j46yoA443lh8hdw6nAnxVtaONJI33Wdb5f2t?=
+ =?us-ascii?Q?+poXCYv/e52j3b44cNDzionmnZfVcRUK988/GJYOgVzl/4LPag3GVl6gAmB6?=
+ =?us-ascii?Q?J3lzLaqr/O1kesiRAw23duWXhC3GAX28V94ZF9mYjjKW1xyOarFD+V0xiqVv?=
+ =?us-ascii?Q?Vmhz6zqf5jnO0+aAXRVFG3p/Xa+tk4A1SkSbj68feCy4r9izTDua64RPB2nL?=
+ =?us-ascii?Q?Qap1o4BmxMUMkmaeWJs9VsaSzaNRaP5p6EkjyZA+P97ICSgUZh00SjU99PZo?=
+ =?us-ascii?Q?oQKPTRzpwRik2keIdDD0hx+CJ1CwxVFpjLuYQ4kLTM3QJteBwxbY4XzT3uFH?=
+ =?us-ascii?Q?8b/DfWOiejSuEf1ecIKTgCRRp8lJCbi87SVCvTY+OD5iaHHKHbOUT93I4zmg?=
+ =?us-ascii?Q?CPtY7gpNMmjxse6qze6AOCXHdYhU4g89VoRBA8mv/L1r1NHEGf7xrBVfrUrU?=
+ =?us-ascii?Q?1j0IaS0NhBtiE254Mo8U0YMsYxi/9xJBeJy1SSkrBzuhjLNUp6Ir3a8ObEvd?=
+ =?us-ascii?Q?B9nya4urZifNgQJYrxRTOvPE/dGQ2new7yFZB6jbH9xFmo14db4QmnGD0fE/?=
+ =?us-ascii?Q?TszU2PZQXxyqAyPjaxX7nWa9Rs5kG8hkl7UR5gQz2roZPeToT/CR7KGIdPhl?=
+ =?us-ascii?Q?NV72YdgqqB3/kaSmsGclQ34yjCCabXK1BjAJiAsaqmaOczFZidwtgd33aDR7?=
+ =?us-ascii?Q?OB4kHg7fKjs12lxbcUh6u4Sh3JwI9B8/YKxTCLoFZhNV7Po+AThkNyKQnqpp?=
+ =?us-ascii?Q?CvSfCGUJrucEEnCsv+UFgRHi/CpvjKuUI/q2xz0s5nzM1RMcaiumlCUAWLPh?=
+ =?us-ascii?Q?85PRGtnAphcmltDl0uk2DnYAss5DpxJRtBq29m5+2fM6iMPvP73bQgAbmvzP?=
+ =?us-ascii?Q?m84xNjzniia0b/olRFXZs2qn/pw3xbgRPCDCewvxRos2L21qu5Jyeh0/wHYw?=
+ =?us-ascii?Q?/rxC3ciIwVsa7wRAcR/LEA2YF4dyVaeFMTvOscDunbnlH8z655hhfwdTTR6I?=
+ =?us-ascii?Q?SIzZ/HyRAINiyGV58UpOypWjfHZ2p79y6MumCIxulCowLH4JxvxA8PI/zQAb?=
+ =?us-ascii?Q?KSLNX/DJbQE4Dd4aZL5r5dxJiikE?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(7416014)(376014)(366016)(1800799024); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VMpTYSElSRXZhLGn3L69DXxRI4UiEyouXvWawHlESoxn2OJdO6QKGqgzUlS9?=
- =?us-ascii?Q?BPR7MBrQaMjJDsk9MtwFY4eL7U53P8Qnu5xiHQUyRmxioOxI8hyKtWRYBYs3?=
- =?us-ascii?Q?wspn0d5y8oZ9N8th/YjKwpPbn9wQ6MrEQvk9/JAGUYeyLFwK+1iSOj8A1cfP?=
- =?us-ascii?Q?6KvtrRKgD+WmyXtMRsmvjLpWcJJdm6/zGSf5V3M23Uh0wb8Fgur451USTWwf?=
- =?us-ascii?Q?8Sc9g+za5sJE8QbhEbZt/WkS+dpyWG98tvLdFQVoDai9DYXv8zfPBV/A7yqQ?=
- =?us-ascii?Q?3EEEVjYf+aP2rh+bizOVE9c2B803bnvqqSbOI4fsC+SDyISHKAHAa2iAfnG2?=
- =?us-ascii?Q?HYqwQOWPvnsTjYw3cRJdg20nvFbAVKWxY2a6vCOY+eQR6SYwyEB6o4vxx3dM?=
- =?us-ascii?Q?uKJbeDb9js/6IyJ9KSxyeNtsFl3hEK8WUzEPL8oAGZDBhSqSLbj5Yfr0C34R?=
- =?us-ascii?Q?JHrU5qrdvDzVFJt7EA123lw+ki9G+QZ6IFhO2gM0/mUKab2ISmZ5fAmG3aep?=
- =?us-ascii?Q?XLltcx4BCJ9FC1Hh363wxS5QUwjwzSdv/QJ67OyR87KIhEf4XyyrwUuhHyZI?=
- =?us-ascii?Q?BcysvA30k93tMdnAvOfyDQhD3kxQmfhatX0+KFtw7ky8lMMOdaHGBeokBv5q?=
- =?us-ascii?Q?RQurt26oT7JCk05pUWdVZbCyxVq95x7IseC1Uw5Z+UrCDFxhOVNeMY15Tz6U?=
- =?us-ascii?Q?tghxZo6ym5VsRrdhLK7YmXlha1yxi+NYUR97p5s+4TbAUVfJseZEKxGkhDgr?=
- =?us-ascii?Q?W05S/D5s0a6l2fqVDNVD/5kSRgILQyl/3etNc2nDbZ54e7EvteDKmWER/E+o?=
- =?us-ascii?Q?SQuIk/xYTbCXfe0avaupZJM7Q20SW6VrF7N4uMTEg6ZnmQxeEPeCpwnQtTYr?=
- =?us-ascii?Q?dKKWC/Qd1n4ExoA/uUia50bUqYIdOfhJD1wPZ5V6VJwfnJ2FNKMIWKLII7ED?=
- =?us-ascii?Q?GuAtSQMJfvC1KUy64s16cTrMGzdLkVUG7i14Cnj0WRLrR4uS0+hZ1hfD8ZQP?=
- =?us-ascii?Q?8N2xcWwT1EPQbJNoNiR7O2zlAfAk0qenboQGvWMo/cLBWScRdNgNdJ+ehaUT?=
- =?us-ascii?Q?pCfleqVmkNpa/WbKNLI6RzZDQFIOBpm6tc8wCYSpDElnbGgZRruB/QfD3fLi?=
- =?us-ascii?Q?BednzS/Zn9TCQNFp17N5XghlK82sgCOWko82eaLJ3oTCy6rzYeFUG4cQTDWh?=
- =?us-ascii?Q?EvuH9e96DcdJjyqjU8FHe6oKWEJ9VbgoqRq8RPJTgjgAdDKvVd0TswMnXqXw?=
- =?us-ascii?Q?oL9mOl71HcyUd4tBkV1c4IXKPwwuTERfMMN2yLC6fc8YLuiMsYJemFndATaw?=
- =?us-ascii?Q?+vtB9vZI2Wwyfqe9zyAoBJ+SxkfW4ljcEW4D65fZNzBTBAPqbMDokwKpOvSG?=
- =?us-ascii?Q?CrIcWF2sgT8qfy0ZYO1CzIdCXzXVItN+yIiXVOng19azv1rkI0qEbPBZV/QG?=
- =?us-ascii?Q?o3FXYupqA8flB+XSrZsD67aqDHw8YzbnOWLOLCO2FHNi6C1q3nyA98C2x0hz?=
- =?us-ascii?Q?yGMRT9cTjnQlsChrpLhC5+pel4QXI3iB/O4AERTkAYJYfYje3CcmGVvA/CZQ?=
- =?us-ascii?Q?ZSdSpQcNCPIK6c7pHGpZ2SjAjo03xiK0nfu+1kWX?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?aBk18F5kOwrfkXuWOMHvyT09LKT0rE2onJKhfwfu90F8IJ2YT4HapgBeBFaq?=
+ =?us-ascii?Q?QuC5hpulX7ZyA6sdYedPEQhuGPln7tVpLo0lrkr3rnKVwbeZNpz/hbIcC4wZ?=
+ =?us-ascii?Q?dAFho7BfSpQFq4gDcD6N2M+x8Qo6CfHENAIjRTv8jMXZ2QYkGrr7oJ5guJDB?=
+ =?us-ascii?Q?fYIFHoCRk5vvd4q59MdBebNcOJD+l+HAXK03y6hokYnQwiPjzhNXnRfGopyt?=
+ =?us-ascii?Q?Y1aXPsRBboCgbDjMqVaZ0gBS7IG22khp82JZg1m6kUT1VT1rqdQWdxXw1TWH?=
+ =?us-ascii?Q?at1eTYnI31aPZ6T/YvzNoQBsoNjQXGdCoQImg0CDUgZ2jgit/g67//XBwqNx?=
+ =?us-ascii?Q?06SfgrBI3u0X5OZQnQfQImQXW2Keig21ekJJYcIyDciG3JL+xhkko20MaZ3k?=
+ =?us-ascii?Q?/e/fcyr71BX3JfUo2RhNMhmAH26PRhsaC8R93thgmLjPBjWkxqJenjwQtCsE?=
+ =?us-ascii?Q?RtPRIo2JgFIKne5qY34l+BkmxVnhCCS3ALzOEdHRjaaQgn+myDTyBc0Qjz60?=
+ =?us-ascii?Q?td0BoYRVkyhduFW5PPSd72unc+Zmnq8OnECtWr22r4I/ZFJE8YUAw+if9cir?=
+ =?us-ascii?Q?1bwYpf9Cv7YyMuqKyELbyjqgeIuMrj/4IMPHxx3t85X7VulZXibJatDoRhNj?=
+ =?us-ascii?Q?GTfBH+2/nQ7/BqGMKioEAmMUT65xK8QEHWlcK+SzYLNB7PIRrjwvLwLc9vIO?=
+ =?us-ascii?Q?/1x16BeUPRBBxETetNDcnviRkY0C0sisL03U773mFZ41rJEiX8dduTHC9fF7?=
+ =?us-ascii?Q?PijQDK0NbCNWv/pazJwJBQh2t7jBUWWuqcQPMP/OJGqBgaju63neon5lgF8M?=
+ =?us-ascii?Q?e8QHR5oqIBk6192O/0eBzYNxM5WS4CAP7n4BtZzzkhITyIqqloXjnVNaBRZ2?=
+ =?us-ascii?Q?c2OXfEWgIP/1vhm69xfBxnn3GJT7xYwNReC+BdWPkDT8XK0xERhigB5gQ+LJ?=
+ =?us-ascii?Q?dyYwqXP9W9I72BNPqiqXAHgF5+zudw2ZYVMCWeryHugqgJYlt0GBuCckCVcp?=
+ =?us-ascii?Q?geqtEzNrItiQaoKFrFEBuNtIcuEMOVxfJSK+7KG/o1lMxV84cKJyAqje3nW7?=
+ =?us-ascii?Q?EpxOXyblQNnTnIl8oIxUXRB7Xi+h1ttf/KbTCIz1f852TW1Yrqm+YHSDhHtH?=
+ =?us-ascii?Q?DVXNllmfebKE1DQqoMZ3M8HRXx5n8FwVZo+URcmXS3iULmwFFwJOfVPHshdT?=
+ =?us-ascii?Q?0kDeaFFFfLGkOaY5OvNZVk9IoUEVronUmgc7HK99H/97shrzBFz48vWiY42R?=
+ =?us-ascii?Q?qkjaLof+9Vx78snIgvPdyLBs56II7cq+wHUKxwVE1/nKElnkj4/hL0qyki4D?=
+ =?us-ascii?Q?nGSiyuFxra0M0YktIPjFCMo7sGDoJOhlmQ4BiBPGkZAJ3/wTAFJhupu1VmrJ?=
+ =?us-ascii?Q?zEh5chdggVjrhyX4b/+JivNVOIjvF+C+Isde8Yr1skID4oL5osJUtLFmFzsF?=
+ =?us-ascii?Q?wnU+gV+QK34wBTjmft4YuCoFENd9xjcCWSbrIEYrzxZBC0kltDutKqcrrKFu?=
+ =?us-ascii?Q?ai6mpZVygvbJFo9P+vinxtyMFICF5TCDM5OusKFoKlKvDC+i3XyotohiR6GF?=
+ =?us-ascii?Q?OCpYMcsgHgu2Mi05VcAC9rDIOLoW58ObnIOQ59Oo?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c4d7640-bdc1-4508-5079-08dd776d3463
+X-MS-Exchange-CrossTenant-Network-Message-Id: 545e7489-c253-487e-7a78-08dd776d3b44
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2025 13:48:27.2080 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2025 13:48:38.7288 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 94/ASm0ilQZUo9UVt+DBVlfkRhTnhwdTTfxq380cid7raIihrrkUCnQTLRuu+2ZjDm6kI0NeYzI615k+oBef9g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: Vnaqt3cqz0KcQZwm6ePquQ2z0XXljaplQCXDdJ12d5+GgqyFeiHSsEijc3RNGhHIGZmWVo5NJECE10xER2r/6g==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR02MB10356
-X-Proofpoint-GUID: XthCq4EzMPmiIi7wVMEqtVULCaPtMK9K
-X-Proofpoint-ORIG-GUID: XthCq4EzMPmiIi7wVMEqtVULCaPtMK9K
-X-Authority-Analysis: v=2.4 cv=LMxmQIW9 c=1 sm=1 tr=0 ts=67f67aac cx=c_pps
- a=eo5EBrZojstUK48b9mIPDA==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+X-Proofpoint-ORIG-GUID: YDVhwqmK5Iv8Lh8Yzdd-kIwSFgi8KzLc
+X-Proofpoint-GUID: YDVhwqmK5Iv8Lh8Yzdd-kIwSFgi8KzLc
+X-Authority-Analysis: v=2.4 cv=JPI7s9Kb c=1 sm=1 tr=0 ts=67f67ab8 cx=c_pps
+ a=sf1zYAMyThzbrKU8SMWnlQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
  a=xqWC_Br6kY4A:10 a=XR8D0OoHHMoA:10
- a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8 a=PEtKgAuwMexoxjSetS4A:9
+ a=0kUYKlekyDsA:10 a=64Cc0HZtAAAA:8 a=4WNC9uKCzI0CgEDnVfAA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-09_05,2025-04-08_04,2024-11-22_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -195,118 +196,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commonize some initialization code shared by the legacy and iommufd vfio
-implementations.
+Use the new flags parameter to indicate when we want to unmap
+everything; no functional change is intended.
 
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio/container.c           | 14 ++------------
- hw/vfio/device.c              | 14 ++++++++++++++
- hw/vfio/iommufd.c             |  9 +--------
- include/hw/vfio/vfio-device.h |  3 +++
- 4 files changed, 20 insertions(+), 20 deletions(-)
+ hw/vfio/container.c | 49 ++++++++++++++++++++++++++++++++++++---------
+ hw/vfio/iommufd.c   | 19 +++++++++++++++++-
+ hw/vfio/listener.c  | 19 ++++++------------
+ 3 files changed, 63 insertions(+), 24 deletions(-)
 
 diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 23a3373470..4fc181d33b 100644
+index 625bbe82a7..37b1217fd8 100644
 --- a/hw/vfio/container.c
 +++ b/hw/vfio/container.c
-@@ -811,18 +811,14 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
-         }
-     }
- 
-+    vfio_device_prepare(vbasedev, &group->container->bcontainer, info);
-+
-     vbasedev->fd = fd;
-     vbasedev->group = group;
-     QLIST_INSERT_HEAD(&group->device_list, vbasedev, next);
- 
--    vbasedev->num_irqs = info->num_irqs;
--    vbasedev->num_regions = info->num_regions;
--    vbasedev->flags = info->flags;
--
-     trace_vfio_device_get(name, info->flags, info->num_regions, info->num_irqs);
- 
--    vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
--
-     return true;
+@@ -119,12 +119,9 @@ unmap_exit:
+     return ret;
  }
  
-@@ -875,7 +871,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-     int groupid = vfio_device_get_groupid(vbasedev, errp);
-     VFIODevice *vbasedev_iter;
-     VFIOGroup *group;
--    VFIOContainerBase *bcontainer;
+-/*
+- * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
+- */
+-static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+-                                 hwaddr iova, ram_addr_t size,
+-                                 IOMMUTLBEntry *iotlb, int flags)
++static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
++                                     hwaddr iova, ram_addr_t size,
++                                     IOMMUTLBEntry *iotlb)
+ {
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+@@ -138,10 +135,6 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     int ret;
+     Error *local_err = NULL;
  
-     if (groupid < 0) {
-         return false;
-@@ -904,11 +899,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-         return false;
-     }
- 
--    bcontainer = &group->container->bcontainer;
--    vbasedev->bcontainer = bcontainer;
--    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
--    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+-    if (flags != 0) {
+-        return -ENOTSUP;
+-    }
 -
-     return true;
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+@@ -185,6 +178,42 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     return 0;
  }
  
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 4de6948cf4..4d940ddb3a 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -403,3 +403,17 @@ void vfio_device_detach(VFIODevice *vbasedev)
-     object_unref(vbasedev->hiod);
-     VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
- }
-+
-+void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-+                         struct vfio_device_info *info)
++/*
++ * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
++ */
++static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
++                                 hwaddr iova, ram_addr_t size,
++                                 IOMMUTLBEntry *iotlb, int flags)
 +{
-+    vbasedev->num_irqs = info->num_irqs;
-+    vbasedev->num_regions = info->num_regions;
-+    vbasedev->flags = info->flags;
-+    vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
++    int ret;
 +
-+    vbasedev->bcontainer = bcontainer;
-+    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
++    if ((flags & ~(VFIO_DMA_UNMAP_FLAG_ALL)) != 0) {
++        return -ENOTSUP;
++    }
 +
-+    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
++    if (flags & VFIO_DMA_UNMAP_FLAG_ALL) {
++        /* The unmap ioctl doesn't accept a full 64-bit span. */
++        Int128 llsize = int128_rshift(int128_2_64(), 1);
++
++        ret = vfio_legacy_dma_unmap_one(bcontainer, 0, int128_get64(llsize),
++                                        iotlb);
++
++        if (ret == 0) {
++            ret = vfio_legacy_dma_unmap_one(bcontainer, int128_get64(llsize),
++                                            int128_get64(llsize), iotlb);
++        }
++
++    } else {
++        ret = vfio_legacy_dma_unmap_one(bcontainer, iova, size, iotlb);
++    }
++
++    if (ret != 0) {
++        return -errno;
++    }
++
++    return 0;
 +}
++
+ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+                                ram_addr_t size, void *vaddr, bool readonly)
+ {
 diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 48db105422..1874185fcf 100644
+index 07334e65b5..22e5b16967 100644
 --- a/hw/vfio/iommufd.c
 +++ b/hw/vfio/iommufd.c
-@@ -587,14 +587,7 @@ found_container:
-         iommufd_cdev_ram_block_discard_disable(false);
+@@ -51,10 +51,27 @@ static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+     const VFIOIOMMUFDContainer *container =
+         container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+ 
+-    if (flags != 0) {
++    if ((flags & ~(VFIO_DMA_UNMAP_FLAG_ALL)) != 0) {
+         return -ENOTSUP;
      }
  
--    vbasedev->group = 0;
--    vbasedev->num_irqs = dev_info.num_irqs;
--    vbasedev->num_regions = dev_info.num_regions;
--    vbasedev->flags = dev_info.flags;
--    vbasedev->reset_works = !!(dev_info.flags & VFIO_DEVICE_FLAGS_RESET);
--    vbasedev->bcontainer = bcontainer;
--    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
--    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
-+    vfio_device_prepare(vbasedev, bcontainer, &dev_info);
- 
-     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
-                                    vbasedev->num_regions, vbasedev->flags);
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 66797b4c92..1a2fe378d0 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -129,6 +129,9 @@ bool vfio_device_attach(char *name, VFIODevice *vbasedev,
- void vfio_device_detach(VFIODevice *vbasedev);
- VFIODevice *vfio_get_vfio_device(Object *obj);
- 
-+void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-+                         struct vfio_device_info *info);
++    /* unmap in halves */
++    if (flags & VFIO_DMA_UNMAP_FLAG_ALL) {
++        Int128 llsize = int128_rshift(int128_2_64(), 1);
++        int ret;
 +
- typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
- extern VFIODeviceList vfio_device_list;
++        ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
++                                        0, int128_get64(llsize));
++
++        if (ret == 0) {
++            ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
++                                            int128_get64(llsize),
++                                            int128_get64(llsize));
++        }
++
++        return ret;
++    }
++
+     /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+     return iommufd_backend_unmap_dma(container->be,
+                                      container->ioas_id, iova, size);
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index c52d4a52ef..bcf2b98e79 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -661,21 +661,14 @@ static void vfio_listener_region_del(MemoryListener *listener,
+     }
  
+     if (try_unmap) {
++        int flags = 0;
++
+         if (int128_eq(llsize, int128_2_64())) {
+-            /* The unmap ioctl doesn't accept a full 64-bit span. */
+-            llsize = int128_rshift(llsize, 1);
+-            ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                           int128_get64(llsize), NULL, 0);
+-            if (ret) {
+-                error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+-                             "0x%"HWADDR_PRIx") = %d (%s)",
+-                             bcontainer, iova, int128_get64(llsize), ret,
+-                             strerror(-ret));
+-            }
+-            iova += int128_get64(llsize);
++            flags = VFIO_DMA_UNMAP_FLAG_ALL;
++            llsize = 0;
+         }
+-        ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                       int128_get64(llsize), NULL, 0);
++        ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
++                                       NULL, flags);
+         if (ret) {
+             error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+                          "0x%"HWADDR_PRIx") = %d (%s)",
 -- 
 2.34.1
 
