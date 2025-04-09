@@ -4,64 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC35C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8DEC369A1
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2W2K-0003qt-0Y; Wed, 09 Apr 2025 10:04:16 -0400
+	id 1u2W3v-0004UR-4z; Wed, 09 Apr 2025 10:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2W2F-0003qa-Lu
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:04:12 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1u2W3o-0004Kv-5G
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:05:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2W2D-0007Ym-5p
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:04:11 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:ca1:0:640:740c:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 0625860A5E;
- Wed,  9 Apr 2025 17:04:04 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:7304::1:2d] (unknown
- [2a02:6b8:b081:7304::1:2d])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 14fhIR0Fb0U0-4LJitn5F; Wed, 09 Apr 2025 17:04:02 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744207442;
- bh=0Y5kEG/rveil4XjmqXiZLhRE+HQN3fBqkd2aTYD8+8I=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=FHJOBEmcNRnFoQ8/LU660SoTuLid2vOePQzs2NUQcUA7lN/ly2c+uolA2QzwxiEUn
- W0i3AmW0sBVlU+olDgwDMhENl7yD4+b4sIczriJ1WoMrgYtt0iwjEVnM8Zz5XFy0Eu
- YYm4X5g1iBoPCM071YZ+6jaxDbFOYHW6oWAYkUIo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <556a58ac-7a71-47ef-8f00-312b027955bf@yandex-team.ru>
-Date: Wed, 9 Apr 2025 17:04:01 +0300
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1u2W3k-0007tT-HK
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:05:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744207543;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TXpzjH0wmH12EgOOYARPuDYUpIMGYWhEcpVFwC8gjms=;
+ b=A7ChLzefMhnjyIGnDYLzm6WOgk22bgykTw8Zm+cf9jhIMBCJbjoZ/JgW0jikX8kBzIBJJX
+ OeRTV0Xc9OiTlr0rniB0dDwA27IZPV1y0PYr/++b8oFEbpllzafUN9A4TUAJHlcsDYbTQC
+ zQLpcgBZkplvuk7ZvyG03mlxVwu2ELA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-249-8zTBs8iBMXyxJTixuFuGAQ-1; Wed, 09 Apr 2025 10:05:36 -0400
+X-MC-Unique: 8zTBs8iBMXyxJTixuFuGAQ-1
+X-Mimecast-MFC-AGG-ID: 8zTBs8iBMXyxJTixuFuGAQ_1744207536
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d01024089so59138375e9.1
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 07:05:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744207535; x=1744812335;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TXpzjH0wmH12EgOOYARPuDYUpIMGYWhEcpVFwC8gjms=;
+ b=EanmAWc0FL+RAteGX81o14Ci0btgbkXIfqBYWlRNatMe0eeMoxM1uruNtRFTEktfoD
+ AqKGl9mu+SzPrVYbq40S2K/CjDEKjHvkxsjY2xMYpAYerJtEsROhAv+ASVRTDgWbx76B
+ q6C3m6ipdgH0/qFxPjLvakmfR8H5PLilKve4JxlOiXsRe4lvweYXIRfkZtWKCEvrMy19
+ xwrOnNs5T1D0/GD+svjxTjfKeT7VHuUnMyhSc/b0LeuTq8ccHVcThW0cFJpfycsoiE8k
+ 4x090FvTymUd+zNpSscIa3czAsF4I/fC61NPMYrFPvTc67OKHpxR87jVCYsncJM2nt8x
+ AumQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgl3gVEvwLe/jMvcjTTkBhq0AwPIM2PDtT2vWtGwKMiBoJGTMHeZL0/phE+HePNR51BAIR2P4wCYm/@nongnu.org
+X-Gm-Message-State: AOJu0YyGcZJVPvXBdlsp5en/TEBtq7b1nPcQsuI3sVScLiQ2caFjb3so
+ 5ngSHG4YaCQ+jXVdeUyf11E0C/lyS3RKvxv0aadtaKphTcT+Y72ZqJlzY30A0mxq7tK6AMWrW/f
+ 38QIGTeaLMiqCiexkxRRv4LUf5SEd/RdezRdqEknvZKBFTpiPxEGG
+X-Gm-Gg: ASbGncsBPeV6oIu5x2f6RwGwlxsvTg0y23xgzu9PfnayyjQacH1PTcKFK41e437qm1c
+ izYf/Um7BeOhyJV8lyl9qs8yQQWHfR4XSSjMQ0UVMpy+6zuv7/NN55zPMEzP4efUmLtk8ipXPsX
+ +CgGTMm+DK5d4qe15MAG4scbZBYSVO2HDAcC4PPZEHlCB01eeQKeSFitGw22csW64AYdbcFS5k0
+ TPbMExJ0TXincYwiE785CvUXKgc+kckGZkVKJ4sab8chlcfFIuV0OC5XdZHLmW0Y5NOIZgXxcpm
+ RXXmB/jbq8aRfjkN7WVXyif06UAKwjuC
+X-Received: by 2002:a05:600c:3584:b0:43c:fa52:7d2d with SMTP id
+ 5b1f17b1804b1-43f1ff3f3c6mr23760205e9.20.1744207535147; 
+ Wed, 09 Apr 2025 07:05:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGhePg+Ys4LBzVmUmR1LhE0xZo8o8HspSka4M4T8US8tkqPYXJmIJAtNDl8tAE4Urle6qyybg==
+X-Received: by 2002:a05:600c:3584:b0:43c:fa52:7d2d with SMTP id
+ 5b1f17b1804b1-43f1ff3f3c6mr23759135e9.20.1744207533853; 
+ Wed, 09 Apr 2025 07:05:33 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f205ecac8sm21264715e9.4.2025.04.09.07.05.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Apr 2025 07:05:33 -0700 (PDT)
+Date: Wed, 9 Apr 2025 16:05:31 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Andrew Jones <ajones@ventanamicro.com>, Alex
+ =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, qemu-arm@nongnu.org, Udo Steinberg <udo@hypervisor.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH-for-10.1 v3 6/9] qtest/bios-tables-test: Whitelist
+ aarch64/virt 'its_off' variant blobs
+Message-ID: <20250409160531.341c205e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <671a6c82-ae10-4f3b-9d83-cecc32755206@linaro.org>
+References: <20250403204029.47958-1-philmd@linaro.org>
+ <20250403204029.47958-7-philmd@linaro.org>
+ <671a6c82-ae10-4f3b-9d83-cecc32755206@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] [for-10.1] virtio: add VIRTQUEUE_ERROR QAPI event
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, berrange@redhat.com, pbonzini@redhat.com,
- dave@treblig.org, sgarzare@redhat.com, den-plotnikov@yandex-team.ru
-References: <20250409094758.58232-1-vsementsov@yandex-team.ru>
- <87plhlbofl.fsf@pond.sub.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87plhlbofl.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -80,147 +118,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.04.25 13:48, Markus Armbruster wrote:
-> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-> 
->> For now we only log the vhost device error, when virtqueue is actually
->> stopped. Let's add a QAPI event, which makes possible:
->>
->>   - collect statistics of such errors
->>   - make immediate actions: take core dumps or do some other debugging
->>   - inform the user through a management API or UI, so that (s)he can
->>    react somehow, e.g. reset the device driver in the guest or even
->>    build up some automation to do so
->>
->> Note that basically every inconsistency discovered during virtqueue
->> processing results in a silent virtqueue stop.  The guest then just
->> sees the requests getting stuck somewhere in the device for no visible
->> reason.  This event provides a means to inform the management layer of
->> this situation in a timely fashion.
->>
->> The event could be reused for some other virtqueue problems (not only
->> for vhost devices) in future. For this it gets a generic name and
->> structure.
->>
->> We keep original VHOST_OPS_DEBUG(), to keep original debug output as is
->> here, it's not the only call to VHOST_OPS_DEBUG in the file.
-> 
-> Likely should be tracepoints.  Not this patch's problem, though.
-> 
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>
->> v6: rename path to qom-path, and improve throttling of the event
->>      improve wording
->>
+On Fri, 4 Apr 2025 00:01:22 -0300
+Gustavo Romero <gustavo.romero@linaro.org> wrote:
 
-[..]
+> Hi Phil,
+>=20
+> On 4/3/25 17:40, Philippe Mathieu-Daud=C3=A9 wrote:
+> > We are going to fix the test_acpi_aarch64_virt_tcg_its_off()
+> > test. In preparation, copy the ACPI tables which will be
+> > altered as 'its_off' variants, and whitelist them.
+> >=20
+> > Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > ---
+> >   tests/qtest/bios-tables-test-allowed-diff.h |   3 +++
+> >   tests/qtest/bios-tables-test.c              |   1 +
+> >   tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 0 -> 184 bytes
+> >   tests/data/acpi/aarch64/virt/FACP.its_off   | Bin 0 -> 276 bytes
+> >   tests/data/acpi/aarch64/virt/IORT.its_off   | Bin 0 -> 236 bytes
+> >   5 files changed, 4 insertions(+)
+> >   create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
+> >   create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
+> >   create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
+> >=20
+> > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/=
+bios-tables-test-allowed-diff.h
+> > index dfb8523c8bf..3421dd5adf3 100644
+> > --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> > @@ -1 +1,4 @@
+> >   /* List of comma-separated changed AML files to ignore */
+> > +"tests/data/acpi/aarch64/virt/APIC.its_off",
+> > +"tests/data/acpi/aarch64/virt/FACP.its_off",
+> > +"tests/data/acpi/aarch64/virt/IORT.its_off", =20
+>=20
+> I think your first approach is the correct one: you add the blobs
+> when adding the new test, so they would go into patch 5/9 in this series,
+> making the test pass without adding anything to bios-tables-test-allowed-=
+diff.h.
+> Then in this patch only add the APIC.its_off table to the bios-tables-tes=
+t-allowed-diff.h
+> since that's the table that changes when the fix is in place, as you did =
+in:
 
->> @@ -527,6 +534,13 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
->>                          qdict_get_str(evb->data, "qom-path"));
->>       }
->>   
->> +    if (eva->event == QAPI_EVENT_VIRTQUEUE_ERROR) {
->> +        return !strcmp(qdict_get_str(eva->data, "qom-path"),
->> +                       qdict_get_str(evb->data, "qom-path")) &&
->> +            (qdict_get_int(eva->data, "virtqueue") ==
->> +             qdict_get_int(evb->data, "virtqueue"));
->> +    }
->> +
->>       return TRUE;
->>   }
->>   
-> 
-> Rate-limiting is now per virt queue.  It was per device in previous
-> revisions.  Worth it?
-> 
+if APIC.its_off is the only one that's changing, but FACP/IORT blobs are th=
+e same
+as suffix-less blobs, one can omit copying FACP/IORT as test harness will f=
+allback
+to suffix-less blob if the one with suffix isn't found.
 
-Hmm. Probably not. If we have 2 virtqueue, seems good to see both event
-(or only one, if only one virtqueue failed).
-If we have 256 virtqueues, 256 immediate events seems too much.
-So, better is to drop virtqueue here and consider only qom-path for throttling.
+if blobs are different from defaults then create empty blobs and whitelist =
+them in the same patch
+then do your changes and then update blobs & wipeout withe list.
 
->> diff --git a/qapi/qdev.json b/qapi/qdev.json
->> index 25cbcf977b..ddfae18761 100644
->> --- a/qapi/qdev.json
->> +++ b/qapi/qdev.json
->> @@ -187,3 +187,35 @@
->>   { 'command': 'device-sync-config',
->>     'features': [ 'unstable' ],
->>     'data': {'id': 'str'} }
->> +
->> +##
->> +# @VirtqueueError:
->> +#
->> +# @vhost-vring-error: the vhost device has communicated failure via
->> +#     the vring error file descriptor
->> +#
->> +# Since: 10.1
->> +##
->> +{ 'enum': 'VirtqueueError',
->> +  'data': [ 'vhost-vring-error' ] }
->> +
->> +##
->> +# @VIRTQUEUE_ERROR:
->> +#
->> +# Emitted when a device virtqueue fails at runtime.
->> +#
->> +# @device: the device's ID if it has one
->> +#
->> +# @qom-path: the device's QOM path
->> +#
->> +# @virtqueue: the index of the virtqueue that failed
->> +#
->> +# @error: error identifier
->> +#
->> +# @description: human readable description
->> +#
->> +# Since: 10.1
->> +##
->> +{ 'event': 'VIRTQUEUE_ERROR',
->> + 'data': { '*device': 'str', 'qom-path': 'str', 'virtqueue': 'int',
->> +            'error': 'VirtqueueError', 'description': 'str'} }
-> 
-> Standard question for events: can a management application poll for the
-> information as well?
+Phil,
+the process is described in doc comment at the top of tests/qtest/bios-tabl=
+es-test.c
 
-Oh. that's a good shot.
-
-I'm afraid it can't. And this makes me to dig into history of this patch
-- no, we didn't discussed it before.
-
-And before trying to implement something new here (a way to get a kind of
-virtqueues status by a new QMP command), I check that:
-- our mgmt tool still doesn't use VIRTQUEUE_ERROR event (which we've
-merged to downstream QEMU long ago, of course)
-- the original problem that led us to introducing such event doesn't
-bother us for a long time
-
-It seems wiser to stop here for now. I should have considered these aspects
-before beginning the process of reviving this series. Sorry for your time.
-
-Still, if we (or someone other) need such event in future - good, we have
-a modern patch in mailing list to start from.
-
-> 
-> I might have asked this before, I don't remember.  If you already
-> answered it, feel free to point me to your answer.
-> 
-> Why is this a standard question for events?  Say, a management
-> application wants to track the state of X.  Two ways: poll the state
-> with a query command that returns it, listen for events that report a
-> change of X.
-> 
-> Listening for an event is more efficient.
-> 
-> However, if the management application connects to a QEMU instance, X
-> could be anything, so it needs to poll once.
-> 
-> Special case: the management application restarts for some reason.
-> 
-
--- 
-Best regards,
-Vladimir
+> https://mail.gnu.org/archive/html/qemu-devel/2025-03/msg07082.html
+>=20
+> Plus, adding the blobs, which are actually related to the test in the oth=
+er
+> patch, and ignoring them at the same time looks confusing to me. I unders=
+tand
+> that only the blob that changes (APIC.its_off) with the fix should be tem=
+porarily
+> ignored and, later, updated, as in your first series.
+>=20
+>=20
+> Cheers,
+> Gustavo
+>=20
+> > diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-t=
+est.c
+> > index baaf199e01c..55366bf4956 100644
+> > --- a/tests/qtest/bios-tables-test.c
+> > +++ b/tests/qtest/bios-tables-test.c
+> > @@ -2151,6 +2151,7 @@ static void test_acpi_aarch64_virt_tcg_its_off(vo=
+id)
+> >       test_data data =3D {
+> >           .machine =3D "virt",
+> >           .arch =3D "aarch64",
+> > +        .variant =3D ".its_off",
+> >           .tcg_only =3D true,
+> >           .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+> >           .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> > diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/acp=
+i/aarch64/virt/APIC.its_off
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..c37d05d6e05805304f10afe=
+73eb7cb9100fcccfa
+> > GIT binary patch
+> > literal 184
+> > zcmZ<^@O0k6z`($=3D+{xeBBUr&HBEVSz2pEB4AU24G0Uik$i-7~iVgWL^17JJ`2AFzr
+> > bgb+@aBn}xq0gwb2)Q)cq{30-g9B_L93G4|0
+> >=20
+> > literal 0
+> > HcmV?d00001
+> >=20
+> > diff --git a/tests/data/acpi/aarch64/virt/FACP.its_off b/tests/data/acp=
+i/aarch64/virt/FACP.its_off
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..606dac3fe4b55c31fd68b25=
+d3a4127eeef227434
+> > GIT binary patch
+> > literal 276 =20
+> > zcmZ>BbPf<<WME(uaq@Te2v%^42yj*a0-z8Bhz+8t3j|P&V`N}P6&N^PpsQ~v$aVnZ =20
+> > CVg~^L
+> >=20
+> > literal 0
+> > HcmV?d00001
+> >=20
+> > diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/acp=
+i/aarch64/virt/IORT.its_off
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..0fceb820d509e852ca0849b=
+af568a8e93e426738
+> > GIT binary patch
+> > literal 236
+> > zcmebD4+?q1z`(#9?&R<65v<@85#X!<1dKp25F11@1F-=3DRgMkDCNC*yK9F_<M77!bR =20
+> > zUBI%eoFED&4;F$FSwK1)h;xBB2Py`m{{M%tVD>TjFfcO#g+N#Zh@s|zoCF3AP#UU@ =20
+> > R!2`+%Dg6Hr$N|zYvjDIZ5CH%H
+> >=20
+> > literal 0
+> > HcmV?d00001
+> >  =20
+>=20
 
 
