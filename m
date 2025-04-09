@@ -4,89 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0714C369A2
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 02:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD26C369A2
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 02:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2LXf-0000s0-8y; Tue, 08 Apr 2025 22:51:55 -0400
+	id 1u2LdQ-0005Ma-4K; Tue, 08 Apr 2025 22:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u2LXd-0000rD-5V
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:51:53 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u2LXb-00018s-Ng
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:51:52 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-227aaa82fafso54092225ad.2
- for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 19:51:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1744167110; x=1744771910; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=yRx0l1L38CJZ6hR/oSAgykoMwro5gt/zxtwEU7Os2aE=;
- b=MOR3XBiTT8OYwkGHRJH/CkQEL46XzFWWbsGo05MuUNYRAChVAQrNRzwjSK25vkckCf
- SIetCPn8Mvdc+iw79o5C/1Vzx0+RMS5e7/4uK6G6CYRqJPrkEEfPjS/o6oFZaN5fwsSl
- oRT8lRkpDZCExMz4cvF7g2og0Hz385ij0D1hmUPYeq4ix5iWnYpoaYSuAU2vCsGdC0lX
- NveTHJRH3nLcIBhxh3eJGEPVn8eILmZC8B0t5iqNFBTxZ7lupzWj5M64U1EuaiEYiKH1
- itxP2oSepm4OsVnA8CGkW0GNQ1jc/d56LEteHRbCpEtJ2I7qrKWX/FzEEpdiftPIAiON
- JNMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744167110; x=1744771910;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yRx0l1L38CJZ6hR/oSAgykoMwro5gt/zxtwEU7Os2aE=;
- b=d5oVS4RgboEproeLT8TFfs7aTcPYYip3HFIyTvOEAcbO+dZmBf/bxNRF1/x3hAzInx
- U86rzUOVGZvVKWVnU/ocjAS+CnY2ZaL5hYMbpxMKeaIRYchr8qqqlRSdK28JhA9188no
- tBW2Kl3js12PVUTTeHY6CZsdfeNJiWwENgPABZUO03cSjRzOwtcRpkVbn+4T7cuEu5vk
- R0ttjoLaZHMZJX/+LoVKTGVueth3zHC2jkPbUfcwDX7lYG1xEieIUQdOa84DBV2jUD8C
- ZOVNXhtblfjMujiE2WDYo5z7kp2krV1535S2qUkHasG+wUEZOGUKk7fb+CkCOC79Aqwa
- c4cA==
-X-Gm-Message-State: AOJu0YyF2QWhqTvZ69L8kFa34nmkrvaSz9k4+3h0YaNvs9gY2XqEOOj5
- jLMHTpdMZjl3QhvDKu13CebLIZxktCA8kGh6KifEvimK0wKQJdq7TaryY+lnG2GNX7CRNouto3m
- zwEH9fAU/MbTXnwZo02GctWY3n+zTmO2poPj/Ooxr8mONGm8clo0CvubHZgMm/4AaaT7QMbFf48
- FLBIm20E2MPQ+xz8Md5m+TL/sPKX130quUDg==
-X-Gm-Gg: ASbGnct01yMeH0Fs3aTefuekRUriBWeo+hBpf4bunIOuMtpoEgwK0ZQwzaJfdbd3JVG
- AVyyHyQ9YWBc62fMOUzhg4kmebhN0MuF5yAWPnAuIlu7Vj3AacXC8w2mAECcuTffa+y75ancYYy
- 7xRDsMX7GiouBxsIT/MBwQtrR4ECfw5UEIQVUyyFOXYEm19LEhluKCy1ul7EQvIc707z3E/F34g
- lkNc+PxuvGTqEznJrFMowoSdtRvZoOKTQxk0BlW/1T1/nHtWtyDHPGxbAAxM2nh5CnG76bYeaYj
- rCgPua+JTkWTA89pTcGofjnmIqq6YUJ6M6L1waBNc9VB9mWxE6bhUOQY3SVcXGk8H2k=
-X-Google-Smtp-Source: AGHT+IGRUXOuHV5k9iXh7SQCDO8A9xOvUc5azGqlveS/QbakTaTBbUMMC+pp/tmf3CftcI1EnyaiQw==
-X-Received: by 2002:a17:902:ccc8:b0:227:e7c7:d451 with SMTP id
- d9443c01a7336-22ac3f9a8fcmr17212835ad.29.1744167109526; 
- Tue, 08 Apr 2025 19:51:49 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7cb5463sm665725ad.195.2025.04.08.19.51.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 08 Apr 2025 19:51:49 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v2 1/4] target/riscv: Add the checking into stimecmp write
- function.
-Date: Wed,  9 Apr 2025 10:51:28 +0800
-Message-Id: <20250409025131.3670-2-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250409025131.3670-1-jim.shu@sifive.com>
-References: <20250409025131.3670-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u2LdP-0005MR-3p
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:57:51 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u2LdM-0001kO-VS
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:57:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1744167469; x=1775703469;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=a5YJGvLAvptuhNOJ4X+MsFhU4v0EsHX81xULja4ARzI=;
+ b=ZvEeQadyNJmu+PpQBHzXItTP9pGop1bmo52JC29DtLv/+BoSHVWp9E+x
+ aFt1g58ZdjHwonTKebOJa017Kh0zBPjghAuikZS9hPf1ZXrGoflMgavJQ
+ nN98/NvTfB6+OpQwInczH9BKzmTD+6TCmgZlFv8Rz8dQDNM+KJeJvcQp1
+ 2EwAxqW8FbGNVNjW8udTSP0DatIttNuFhAyEcDrTd/hBnGeNBosDHkDAu
+ Lucq30eyTY+xDqZ2nxpY+MqIHITobK1fJgtQuht+ZfpVLr6Uwlt6rEEH8
+ O6cp/vf9bmBGkEgGeCh53Bn8e6133++xwXPz7wNmFlpZg3Qh2+BZMGhLZ Q==;
+X-CSE-ConnectionGUID: v/yhh4HuSiuw0mYYk0cf1w==
+X-CSE-MsgGUID: a0ucBs91QfOwsXZDtVDFMg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11397"; a="56996014"
+X-IronPort-AV: E=Sophos;i="6.15,199,1739865600"; d="scan'208";a="56996014"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Apr 2025 19:57:45 -0700
+X-CSE-ConnectionGUID: EIyMrmVkSMWGNUhMq1CLNQ==
+X-CSE-MsgGUID: C+VF7Z3wSLC9R2+UKI4C7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,199,1739865600"; d="scan'208";a="132575603"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Apr 2025 19:57:42 -0700
+Message-ID: <88fac92a-c646-4cbe-9409-60b6e3393dc8@intel.com>
+Date: Wed, 9 Apr 2025 10:57:39 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 12/55] i386/tdx: Validate TD attributes
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-13-xiaoyao.li@intel.com>
+ <Z-0j6nfevxiCJ_ud@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z-0j6nfevxiCJ_ud@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,47 +92,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Preparation commit to let aclint timer to use stimecmp write function.
-Aclint timer doesn't call sstc() predicate so we need to check inside
-the stimecmp write function.
+On 4/2/2025 7:47 PM, Daniel P. Berrangé wrote:
+> On Tue, Apr 01, 2025 at 09:01:22AM -0400, Xiaoyao Li wrote:
+>> Validate TD attributes with tdx_caps that only supported bits are
+>> allowed by KVM.
+>>
+>> Besides, sanity check the attribute bits that have not been supported by
+>> QEMU yet. e.g., debug bit, it will be allowed in the future when debug
+>> TD support lands in QEMU.
+>>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+>> ---
+>> Changes in v8:
+>> - Split the mrconfigid/mrowner/mrownerconfig part into a seperate next
+>>    patch;
+>>
+>> Changes in v7:
+>> - Define TDX_SUPPORTED_TD_ATTRS as QEMU supported mask, to validates
+>>    user's request. (Rick)
+>>
+>> Changes in v3:
+>> - using error_setg() for error report; (Daniel)
+>> ---
+>>   target/i386/kvm/tdx.c | 32 ++++++++++++++++++++++++++++++--
+>>   1 file changed, 30 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>> index 1202b2111ba8..aa043acb1a88 100644
+>> --- a/target/i386/kvm/tdx.c
+>> +++ b/target/i386/kvm/tdx.c
+>> @@ -18,10 +18,15 @@
+>>   #include "kvm_i386.h"
+>>   #include "tdx.h"
+>>   
+>> +#define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
+>>   #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
+>>   #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
+>>   #define TDX_TD_ATTRIBUTES_PERFMON           BIT_ULL(63)
+>>   
+>> +#define TDX_SUPPORTED_TD_ATTRS  (TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE |\
+>> +                                 TDX_TD_ATTRIBUTES_PKS | \
+>> +                                 TDX_TD_ATTRIBUTES_PERFMON)
+>> +
+>>   static TdxGuest *tdx_guest;
+>>   
+>>   static struct kvm_tdx_capabilities *tdx_caps;
+>> @@ -153,13 +158,33 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+>>       return KVM_X86_TDX_VM;
+>>   }
+>>   
+>> -static void setup_td_guest_attributes(X86CPU *x86cpu)
+>> +static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+>> +{
+>> +    if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+>> +        error_setg(errp, "Invalid attributes 0x%lx for TDX VM "
+>> +                   "(KVM supported: 0x%llx)", tdx->attributes,
+>> +                   tdx_caps->supported_attrs);
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (tdx->attributes & ~TDX_SUPPORTED_TD_ATTRS) {
+>> +        warn_report("Some QEMU unsupported TD attribute bits being requested:"
+>> +                    "requested: 0x%lx QEMU supported: 0x%llx",
+>> +                    tdx->attributes, TDX_SUPPORTED_TD_ATTRS);
+> 
+> IIUC, this is an explicit user mis-configuration, and so we
+> ought to use  error_setg & return -1, not merely a warning.
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/time_helper.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+My thought was to allow user to enable some QEMU unsupported but KVM 
+supported attribute bits, for testing purpose.
 
-diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-index bc0d9a0c4c..aebf0798d0 100644
---- a/target/riscv/time_helper.c
-+++ b/target/riscv/time_helper.c
-@@ -46,8 +46,23 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
- {
-     uint64_t diff, ns_diff, next;
-     RISCVAclintMTimerState *mtimer = env->rdtime_fn_arg;
--    uint32_t timebase_freq = mtimer->timebase_freq;
--    uint64_t rtc_r = env->rdtime_fn(env->rdtime_fn_arg) + delta;
-+    uint32_t timebase_freq;
-+    uint64_t rtc_r;
-+
-+    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn ||
-+        !env->rdtime_fn_arg || !get_field(env->menvcfg, MENVCFG_STCE)) {
-+        /* S/VS Timer IRQ depends on sstc extension, rdtime_fn(), and STCE. */
-+        return;
-+    }
-+
-+    if (timer_irq == MIP_VSTIP &&
-+        (!riscv_has_ext(env, RVH) || !get_field(env->henvcfg, HENVCFG_STCE))) {
-+        /* VS Timer IRQ also depends on RVH and henvcfg.STCE. */
-+        return;
-+    }
-+
-+    timebase_freq = mtimer->timebase_freq;
-+    rtc_r = env->rdtime_fn(env->rdtime_fn_arg) + delta;
- 
-     if (timecmp <= rtc_r) {
-         /*
--- 
-2.17.1
+But now I agree with you. It's not good for production QEMU.
+
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int setup_td_guest_attributes(X86CPU *x86cpu, Error **errp)
+>>   {
+>>       CPUX86State *env = &x86cpu->env;
+>>   
+>>       tdx_guest->attributes |= (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS) ?
+>>                                TDX_TD_ATTRIBUTES_PKS : 0;
+>>       tdx_guest->attributes |= x86cpu->enable_pmu ? TDX_TD_ATTRIBUTES_PERFMON : 0;
+>> +
+>> +    return tdx_validate_attributes(tdx_guest, errp);
+>>   }
+>>   
+>>   static int setup_td_xfam(X86CPU *x86cpu, Error **errp)
+>> @@ -225,7 +250,10 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>>       init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+>>                           sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+>>   
+>> -    setup_td_guest_attributes(x86cpu);
+>> +    r = setup_td_guest_attributes(x86cpu, errp);
+>> +    if (r) {
+>> +        return r;
+>> +    }
+>>   
+>>       r = setup_td_xfam(x86cpu, errp);
+>>       if (r) {
+>> -- 
+>> 2.34.1
+>>
+> 
+> With regards,
+> Daniel
 
 
