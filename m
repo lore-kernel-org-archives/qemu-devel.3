@@ -4,62 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E9DC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 08:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B0FC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 08:46:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2R1p-0001so-B2; Wed, 09 Apr 2025 04:43:25 -0400
+	id 1u2R4q-0003xl-Vd; Wed, 09 Apr 2025 04:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2R1g-0001qc-BQ; Wed, 09 Apr 2025 04:43:17 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1u2R4n-0003x4-B7
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 04:46:30 -0400
+Received: from bm.lauterbach.com ([62.154.241.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2R1d-00059D-Jo; Wed, 09 Apr 2025 04:43:16 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:2b89:0:640:9815:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7BEB560DA5;
- Wed,  9 Apr 2025 11:43:08 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:7304::1:2d])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id XgZSKO0FZa60-4XmGd1SI; Wed, 09 Apr 2025 11:43:07 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744188187;
- bh=fa/IPJY3y28a2mlf6LiUKNBq9ymdNBnCG3ARwxn+N9c=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=djXTGeq13r9zPIBc9DBtLmZS4hg+t0GxC8kIkOWDnxQcaVmbGGfK5A3d6NxQ1t5dj
- DEYdRj3yW8ZNyMy0PR5pnPlXPHRLeilGIjXbP969Sql8iU/2dKTKi1eaSP8WFXYlTW
- Tf3fnqhy/5bM651+Gar6ZoY5yA6rfaXxcpWY6dNI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- armbru@redhat.com, eblake@redhat.com, jsnow@redhat.com,
- devel@lists.libvirt.org, pkrempa@redhat.com, michael.roth@amd.com,
- pbonzini@redhat.com, vsementsov@yandex-team.ru
-Subject: [PATCH v3 2/2] qapi/block-core: deprecate some block-job- APIs
-Date: Wed,  9 Apr 2025 11:42:31 +0300
-Message-ID: <20250409084232.28201-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250409084232.28201-1-vsementsov@yandex-team.ru>
-References: <20250409084232.28201-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1u2R4k-0005di-H4
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 04:46:28 -0400
+Received: from [10.2.13.100] (unknown [10.2.13.100])
+ (Authenticated sender: mario.fleischmann@lauterbach.com)
+ by bm.lauterbach.com (Postfix) with ESMTPSA id A7728151AEBCD;
+ Wed,  9 Apr 2025 10:46:07 +0200 (CEST)
+Message-ID: <b610c46f-3137-4fc9-a80a-6855e5884c6c@lauterbach.com>
+Date: Wed, 9 Apr 2025 10:46:07 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, christian.boenig@lauterbach.com
+References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
+ <87semkw3qx.fsf@pond.sub.org>
+ <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
+ <87semjp286.fsf@pond.sub.org>
+ <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
+ <87r023m422.fsf@pond.sub.org> <87a58qj3ay.fsf@draig.linaro.org>
+ <87ldsakgp9.fsf@pond.sub.org> <87y0wahh65.fsf@draig.linaro.org>
+ <87mscqiut6.fsf@pond.sub.org>
+Content-Language: en-US
+From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+In-Reply-To: <87mscqiut6.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
+X-Bm-Transport-Timestamp: 1744188367691
+Received-SPF: pass client-ip=62.154.241.218;
+ envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,168 +70,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For change, pause, resume, complete, dismiss and finalize actions
-corresponding job- and block-job commands are almost equal. The
-difference is in find_block_job_locked() vs find_job_locked()
-functions. What's different?
+On 08.04.2025 16:37, Markus Armbruster wrote:
 
-1. find_block_job_locked() checks whether the found job is a block-job.
-   This is OK when moving to more generic API, no needs to document this
-   change.
+> Alex Bennée <alex.bennee@linaro.org> writes:
+> 
+>> Markus Armbruster <armbru@redhat.com> writes:
+>>
+>>> Alex Bennée <alex.bennee@linaro.org> writes:
+>>>
+>>>> Markus Armbruster <armbru@redhat.com> writes:
+>>>>
+>>>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
+>>>>>
+>>>>>> Apologies for the line wrapping in yesterday's answer. Should be fixed now.
+>>>>>>
+>>>>>> On 08.04.2025 09:00, Markus Armbruster wrote:
+>>>
+>>> [...]
+>>>
+>>>>>>> What about providing the MCD interface as a separate QMP-like protocol?
+>>>>>>> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
+>>>>>>> compiling it out when not needed.
+>>>>>>>
+>>>>>>> It gets its own socket, just like the GDB stub.  Might reduce
+>>>>>>> interference between debugging and QMP.
+>>>>>>>
+>>>>>>> Thoughts?  Alex, Philippe, care to chime in?
+>>>>>>
+>>>>>> Sound reasonable to me. Keeping in mind the size of generated QAPI code,
+>>>>>> an option to `./configure [...] --enable-mcd` is definitely advisable.
+>>>>>
+>>>>> Alex, Philippe?
+>>>>
+>>>> When I spoke to Mario at DVCon last year I liked the idea of re-using
+>>>> QMP instead of inventing yet another RPC interface for QEMU. QMP
+>>>> certainly has nicer properties than the gdbstub which has a very
+>>>> "organic" and "serial" feel to it.
+>>>>
+>>>> Are you suggesting we re-use the machinery but use an entirely separate
+>>>> socket with just the MCD namespace in it? I don't see that being a
+>>>> problem as long as we can test it properly in the CI.
+>>>
+>>> Yes.
+>>>
+>>> "Keep them separate" is only a gut feeling, though.  While I pay
+>>> attention to my gut feelings, I know they can be wrong.  I am soliciting
+>>> opinions.
+>>
+>> I forgot to add isn't the flexibility of the QMP API something we need
+>> to handle for single binary anyway?
+> 
+> I have no idea :)
 
-2. find_block_job_locked() reports DeviceNotActive on failure, when
-   find_job_locked() reports GenericError. So, let's document this
-   difference in deprecated.txt. Still, for dismiss and finalize errors
-   are not documented at all, so be silent in deprecated.txt as well.
+Alex, thanks for chiming in! By "single binary", I assume you mean user
+space emulation? In that case, could you elaborate whether and how it's
+a concern related to MCD? Maybe I'm missing something here. MCD is
+specifically designed for debugging multi-core SoCs and therefore
+currently only supported in system emulation. For user-space debugging,
+I don't see any reason why not to use GDB's remote serial protocol.
 
-ACKed-by: Peter Krempa <pkrempa@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- docs/about/deprecated.rst | 31 +++++++++++++++++++++++++++++++
- qapi/block-core.json      | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+)
+> Evolving a target-dependent interface into a target-independent
+> interface without breaking compatibility is always a bother.
+> 
+> It's likely more of a bother when the interface is binary.  Textual
+> interfaces tend to have less target-dependence.
+> 
+> Designing a target-independent interface is probably easier than
+> evolving it compatibly from a target-dependent one.
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 76291fdfd6..afa7075051 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -148,6 +148,37 @@ options are removed in favor of using explicit ``blockdev-create`` and
- ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
- details.
- 
-+``block-job-pause`` (since 10.1)
-+''''''''''''''''''''''''''''''''
-+
-+Use ``job-pause`` instead. The only difference is that ``job-pause``
-+always reports GenericError on failure when ``block-job-pause`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-resume`` (since 10.1)
-+'''''''''''''''''''''''''''''''''
-+
-+Use ``job-resume`` instead. The only difference is that ``job-resume``
-+always reports GenericError on failure when ``block-job-resume`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-complete`` (since 10.1)
-+'''''''''''''''''''''''''''''''''''
-+
-+Use ``job-complete`` instead. The only difference is that ``job-complete``
-+always reports GenericError on failure when ``block-job-complete`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-dismiss`` (since 10.1)
-+''''''''''''''''''''''''''''''''''
-+
-+Use ``job-dismiss`` instead.
-+
-+``block-job-finalize`` (since 10.1)
-+'''''''''''''''''''''''''''''''''''
-+
-+Use ``job-finalize`` instead.
-+
- ``query-migrationthreads`` (since 9.2)
- ''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 6beab0dc12..22061227ca 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2969,6 +2969,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-pause
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -2976,6 +2981,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-pause', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -2992,6 +2998,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-resume
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -2999,6 +3010,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-resume', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3026,6 +3038,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-complete
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -3033,6 +3050,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-complete', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3053,9 +3071,15 @@
- #
- # @id: The job identifier.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-dismiss
-+#     instead.
-+#
- # Since: 2.12
- ##
- { 'command': 'block-job-dismiss', 'data': { 'id': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3075,9 +3099,15 @@
- #
- # @id: The job identifier.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-finalize
-+#     instead.
-+#
- # Since: 2.12
- ##
- { 'command': 'block-job-finalize', 'data': { 'id': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
--- 
-2.48.1
+Like the gdbstub, the MCD implementation does not have any
+target-specific dependencies. This is also a change compared to the last
+patch set and something I wanted to point out with
+
+> Architecture-independent MCD implementation
+
+But, again, maybe I'm missing something.
+
+> QMP is textual, and it's designed for certain kinds of compatible
+> evolution.  Using QAPI/QMP for a debugging interface may be a perfectly
+> sensible idea.  I don't know enough about debugging interfaces to judge.
+
+Even though MCD is a very stable API (developed in 2008, functions
+haven't changed since then), as you've already pointed out, it's bold to
+assume that it will never change in the future. For that reason, MCD
+provides the mcd_initialize_f function which can be used to communicate
+the requested and implemented API versions. As long as that function
+stays serializable over the RPC layer, evolution should be possible.
+
+> Use of QAPI/QMP does not imply use of the QMP monitor.  We can keep the
+> monitor and the debugging interface separate even though both are based
+> on QAPI/QMP.
+> 
+> The monitor code is gnarly, I'm afraid.  It supports multiple monitors,
+> but they are not fully independent for historical reasons, chiefly
+> implied mutual exclusion for commands.  Adding a QAPI/QMP-based
+> debugging interface without undue coupling to monitors may pose a few
+> technical problems.  One way to find out.
+
+If I understand you correctly, when QAPI-MCD runs on a separate socket
+without using a monitor, it's still coupled to the monitor code
+internally? Does this have an influence on the either the usage of a
+monitor or the MCD interface or is it rather an implementation detail?
 
 
