@@ -4,49 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B0FC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 08:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE94AC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 09:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2R4q-0003xl-Vd; Wed, 09 Apr 2025 04:46:33 -0400
+	id 1u2RIW-0006VL-8K; Wed, 09 Apr 2025 05:00:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u2R4n-0003x4-B7
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 04:46:30 -0400
+ id 1u2RIT-0006Tk-Jn
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:00:37 -0400
 Received: from bm.lauterbach.com ([62.154.241.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u2R4k-0005di-H4
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 04:46:28 -0400
+ id 1u2RIR-0007MO-JD
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 05:00:37 -0400
 Received: from [10.2.13.100] (unknown [10.2.13.100])
  (Authenticated sender: mario.fleischmann@lauterbach.com)
- by bm.lauterbach.com (Postfix) with ESMTPSA id A7728151AEBCD;
- Wed,  9 Apr 2025 10:46:07 +0200 (CEST)
-Message-ID: <b610c46f-3137-4fc9-a80a-6855e5884c6c@lauterbach.com>
-Date: Wed, 9 Apr 2025 10:46:07 +0200
+ by bm.lauterbach.com (Postfix) with ESMTPSA id 6AC2F151C4D00;
+ Wed,  9 Apr 2025 11:00:31 +0200 (CEST)
+Message-ID: <8f64ff0d-c2e8-47c5-a02d-df211e45e78e@lauterbach.com>
+Date: Wed, 9 Apr 2025 11:00:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/16] Add Multi-Core Debug (MCD) API support
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, christian.boenig@lauterbach.com
+Subject: Re: [PATCH 13/16] mcd: Implement register/memory access
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
+ christian.boenig@lauterbach.com, Eric Blake <eblake@redhat.com>
 References: <20250310150510.200607-1-mario.fleischmann@lauterbach.com>
- <87semkw3qx.fsf@pond.sub.org>
- <ea767dfa-d52b-44fc-baec-deea0223094f@lauterbach.com>
- <87semjp286.fsf@pond.sub.org>
- <0736943f-443b-4bfc-8d69-f30f42029d07@lauterbach.com>
- <87r023m422.fsf@pond.sub.org> <87a58qj3ay.fsf@draig.linaro.org>
- <87ldsakgp9.fsf@pond.sub.org> <87y0wahh65.fsf@draig.linaro.org>
- <87mscqiut6.fsf@pond.sub.org>
+ <20250310150510.200607-14-mario.fleischmann@lauterbach.com>
 Content-Language: en-US
 From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
-In-Reply-To: <87mscqiut6.fsf@pond.sub.org>
+In-Reply-To: <20250310150510.200607-14-mario.fleischmann@lauterbach.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
-X-Bm-Transport-Timestamp: 1744188367691
+X-Bm-Transport-Timestamp: 1744189231444
 Received-SPF: pass client-ip=62.154.241.218;
  envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
 X-Spam_score_int: -18
@@ -70,106 +64,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.04.2025 16:37, Markus Armbruster wrote:
+Just found out that in the call stack of address_space_rw, the len
+argument eventually becomes the access width, if applicable. I wasn't
+aware of that because GDB's 'm' and 'M' packets don't pose any
+requirements on the access width ("the stub is free to use byte
+accesses, or not") and therefore the gdbstub couldn't make advantage of
+that.
 
-> Alex Bennée <alex.bennee@linaro.org> writes:
+MCD does have the field tx->access_width, so a v2 of this patch will
+call the memory access functions repeatedly, with
+len = tx->access_width (if set)
+
+On 10.03.2025 16:11, Mario Fleischmann wrote:
+> In MCD, all accesses to register or memory are issued over transaction lists.
+> This commit implements three types of transactions:
 > 
->> Markus Armbruster <armbru@redhat.com> writes:
->>
->>> Alex Bennée <alex.bennee@linaro.org> writes:
->>>
->>>> Markus Armbruster <armbru@redhat.com> writes:
->>>>
->>>>> Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
->>>>>
->>>>>> Apologies for the line wrapping in yesterday's answer. Should be fixed now.
->>>>>>
->>>>>> On 08.04.2025 09:00, Markus Armbruster wrote:
->>>
->>> [...]
->>>
->>>>>>> What about providing the MCD interface as a separate QMP-like protocol?
->>>>>>> It gets its own QAPI schema, just like for qemu-ga.  Simplifies
->>>>>>> compiling it out when not needed.
->>>>>>>
->>>>>>> It gets its own socket, just like the GDB stub.  Might reduce
->>>>>>> interference between debugging and QMP.
->>>>>>>
->>>>>>> Thoughts?  Alex, Philippe, care to chime in?
->>>>>>
->>>>>> Sound reasonable to me. Keeping in mind the size of generated QAPI code,
->>>>>> an option to `./configure [...] --enable-mcd` is definitely advisable.
->>>>>
->>>>> Alex, Philippe?
->>>>
->>>> When I spoke to Mario at DVCon last year I liked the idea of re-using
->>>> QMP instead of inventing yet another RPC interface for QEMU. QMP
->>>> certainly has nicer properties than the gdbstub which has a very
->>>> "organic" and "serial" feel to it.
->>>>
->>>> Are you suggesting we re-use the machinery but use an entirely separate
->>>> socket with just the MCD namespace in it? I don't see that being a
->>>> problem as long as we can test it properly in the CI.
->>>
->>> Yes.
->>>
->>> "Keep them separate" is only a gut feeling, though.  While I pay
->>> attention to my gut feelings, I know they can be wrong.  I am soliciting
->>> opinions.
->>
->> I forgot to add isn't the flexibility of the QMP API something we need
->> to handle for single binary anyway?
+> * register access
+> * logical memory access (with MMU)
+> * physical memory access (no MMU)
 > 
-> I have no idea :)
-
-Alex, thanks for chiming in! By "single binary", I assume you mean user
-space emulation? In that case, could you elaborate whether and how it's
-a concern related to MCD? Maybe I'm missing something here. MCD is
-specifically designed for debugging multi-core SoCs and therefore
-currently only supported in system emulation. For user-space debugging,
-I don't see any reason why not to use GDB's remote serial protocol.
-
-> Evolving a target-dependent interface into a target-independent
-> interface without breaking compatibility is always a bother.
+> Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+> ---
+>  mcd/libmcd_qapi.c  | 128 +++++++++++++++++++++++++++++++++
+>  mcd/libmcd_qapi.h  |  14 ++++
+>  mcd/mcdserver.c    | 176 ++++++++++++++++++++++++++++++++++++++++++++-
+>  mcd/mcdstub_qapi.c |  26 +++++++
+>  qapi/mcd.json      |  83 +++++++++++++++++++++
+>  5 files changed, 425 insertions(+), 2 deletions(-)
 > 
-> It's likely more of a bother when the interface is binary.  Textual
-> interfaces tend to have less target-dependence.
+> [...]
 > 
-> Designing a target-independent interface is probably easier than
-> evolving it compatibly from a target-dependent one.
-
-Like the gdbstub, the MCD implementation does not have any
-target-specific dependencies. This is also a change compared to the last
-patch set and something I wanted to point out with
-
-> Architecture-independent MCD implementation
-
-But, again, maybe I'm missing something.
-
-> QMP is textual, and it's designed for certain kinds of compatible
-> evolution.  Using QAPI/QMP for a debugging interface may be a perfectly
-> sensible idea.  I don't know enough about debugging interfaces to judge.
-
-Even though MCD is a very stable API (developed in 2008, functions
-haven't changed since then), as you've already pointed out, it's bold to
-assume that it will never change in the future. For that reason, MCD
-provides the mcd_initialize_f function which can be used to communicate
-the requested and implemented API versions. As long as that function
-stays serializable over the RPC layer, evolution should be possible.
-
-> Use of QAPI/QMP does not imply use of the QMP monitor.  We can keep the
-> monitor and the debugging interface separate even though both are based
-> on QAPI/QMP.
-> 
-> The monitor code is gnarly, I'm afraid.  It supports multiple monitors,
-> but they are not fully independent for historical reasons, chiefly
-> implied mutual exclusion for commands.  Adding a QAPI/QMP-based
-> debugging interface without undue coupling to monitors may pose a few
-> technical problems.  One way to find out.
-
-If I understand you correctly, when QAPI-MCD runs on a separate socket
-without using a monitor, it's still coupled to the monitor code
-internally? Does this have an influence on the either the usage of a
-monitor or the MCD interface or is it rather an implementation detail?
-
+> diff --git a/mcd/mcdserver.c b/mcd/mcdserver.c
+> index 116fbfaa30..837c0276e7 100644
+> --- a/mcd/mcdserver.c
+> +++ b/mcd/mcdserver.c
+> @@ -1081,11 +1081,183 @@ mcd_return_et mcd_qry_trig_set_state_f(const mcd_core_st *core,
+>      return g_server_state.last_error->return_status;
+>  }
+>  
+> +static mcd_return_et execute_memory_tx(mcdcore_state *core_state, mcd_tx_st *tx,
+> +                                       mcd_mem_type_et type)
+> +{
+> +    MemTxResult result;
+> +
+> +    /* each address space has one physical and one virtual memory */
+> +    int address_space_id = (tx->addr.mem_space_id - 1) / 2;
+> +    AddressSpace *as = cpu_get_address_space(core_state->cpu, address_space_id);
+> +
+> +    hwaddr addr = tx->addr.address;
+> +    hwaddr len = tx->num_bytes;
+> +    void *buf = tx->data;
+> +    bool is_write;
+> +
+> +    if (tx->access_type == MCD_TX_AT_R) {
+> +        is_write = false;
+> +    } else if (tx->access_type == MCD_TX_AT_W) {
+> +        is_write = true;
+> +    } else {
+> +        core_state->custom_error = (mcd_error_info_st) {
+> +            .return_status = MCD_RET_ACT_HANDLE_ERROR,
+> +            .error_code = MCD_ERR_TXLIST_TX,
+> +            .error_events = MCD_ERR_EVT_NONE,
+> +            .error_str = "tx access type not supported",
+> +        };
+> +        core_state->last_error = &core_state->custom_error;
+> +        return core_state->last_error->return_status;
+> +    }
+> +
+> +    if (type & MCD_MEM_SPACE_IS_PHYSICAL) {
+> +        MemTxAttrs attrs = {
+> +            .secure = !!(type & MCD_MEM_SPACE_IS_SECURE),
+> +            .space = address_space_id,
+> +        };
+> +        result = address_space_rw(as, addr, attrs, buf, len, is_write);
+> +    } else if (type & MCD_MEM_SPACE_IS_LOGICAL) {
+> +        int ret = cpu_memory_rw_debug(core_state->cpu, addr, buf, len,
+> +                                      is_write);
+> +        result = (ret == 0) ? MEMTX_OK : MEMTX_ERROR;
+> +    } else {
+> +        core_state->custom_error = (mcd_error_info_st) {
+> +            .return_status = MCD_RET_ACT_HANDLE_ERROR,
+> +            .error_code = MCD_ERR_TXLIST_TX,
+> +            .error_events = MCD_ERR_EVT_NONE,
+> +            .error_str = "unknown mem space type",
+> +        };
+> +        core_state->last_error = &core_state->custom_error;
+> +        return core_state->last_error->return_status;
+> +    }
+> +
+> +    if (result != MEMTX_OK) {
+> +        core_state->custom_error = (mcd_error_info_st) {
+> +            .return_status = MCD_RET_ACT_HANDLE_ERROR,
+> +            .error_code = is_write ? MCD_ERR_TXLIST_WRITE : MCD_ERR_TXLIST_READ,
+> +            .error_events = MCD_ERR_EVT_NONE,
+> +            .error_str = "",
+> +        };
+> +        snprintf(core_state->custom_error.error_str, MCD_INFO_STR_LEN,
+> +                 "Memory tx failed with error code %d", result);
+> +        core_state->last_error = &core_state->custom_error;
+> +        return core_state->last_error->return_status;
+> +    }
+> +
+> +    tx->num_bytes_ok = tx->num_bytes;
+> +    core_state->last_error = &MCD_ERROR_NONE;
+> +    return core_state->last_error->return_status;
+> +}
 
