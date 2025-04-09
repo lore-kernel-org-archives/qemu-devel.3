@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A3EC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 18:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21561C369A1
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 18:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2ZpY-0004vN-Ay; Wed, 09 Apr 2025 14:07:20 -0400
+	id 1u2aAz-0003ZB-Ng; Wed, 09 Apr 2025 14:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2ZpV-0004v3-80
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 14:07:17 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u2aAx-0003Vb-Kw
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 14:29:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2ZpR-0008LU-Bl
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 14:07:16 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c37:ee89:0:640:1681:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 525EF60F12;
- Wed,  9 Apr 2025 21:06:58 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:7304::1:2d] (unknown
- [2a02:6b8:b081:7304::1:2d])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id u6jo960FaOs0-QKCHF1D9; Wed, 09 Apr 2025 21:06:57 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744222017;
- bh=HTMRxoBgz4nnu4XO+m9YUMRE1iL19PFLzk4SkkCyJFg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=pxetfaYR0jmZEXxQoHZmPe4QJaNCwpg4V40PQXYVwO5pEU4QWQwlbwv/dKjOQ0lqx
- P7PElYhoH0ht9gH7OvUjN9qit/ASvv3YerHZZEXE+KZF8bS71kqCNI3amqjqb7JY7n
- hE8IizzdHGWOXodiI0RMohSUb7HonhbEe8BOV/ME=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <ec369356-e44d-4ace-865e-b206536ddb0b@yandex-team.ru>
-Date: Wed, 9 Apr 2025 21:06:56 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u2aAv-0003CY-KB
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 14:29:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744223363;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=cNKAuzXUkX8dWA8fQFDRIagvbomGFhNKZEr9QRehom4=;
+ b=LePE6fxhRImYc85AtcB/LNLSm+mNqUhHXfAaAPIxIrw4ZHGjR5pBNnV9OW8Z4pE8aB2n0y
+ R8urJvt/R/zIu9Fe8CyRoqMWlkdOntM1ppInUgfjcGWwyM1PXTLEhWccFEPpXnS6sqeiP9
+ OjS6b0GsArVCFSAL0kqEcqjhzbhLrJc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-NARs1h3qOw2QkqvV8Fwhew-1; Wed,
+ 09 Apr 2025 14:29:20 -0400
+X-MC-Unique: NARs1h3qOw2QkqvV8Fwhew-1
+X-Mimecast-MFC-AGG-ID: NARs1h3qOw2QkqvV8Fwhew_1744223359
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 72E601809CA5; Wed,  9 Apr 2025 18:29:18 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.144])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 98F661955DCE; Wed,  9 Apr 2025 18:29:15 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fam Zheng <fam@euphon.net>, <qemu-block@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PATCH 0/2] block: discard alignment fixes
+Date: Wed,  9 Apr 2025 14:29:12 -0400
+Message-ID: <20250409182914.4725-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V7 00/24] Live update: cpr-transfer
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
- <631d25f6-b37a-480e-a178-06f66033018b@yandex-team.ru>
- <024c7687-42a2-4d90-a91b-f1ff27dc34bb@oracle.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <024c7687-42a2-4d90-a91b-f1ff27dc34bb@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,71 +83,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.04.25 20:48, Steven Sistare wrote:
-> On 4/9/2025 12:22 PM, Vladimir Sementsov-Ogievskiy wrote:
->>
->> On 15.01.25 22:00, Steve Sistare wrote:
->>> This patch series implements a minimal version of cpr-transfer.  Additional
->>> series are ready to be posted to deliver the complete vision described
->>> above, including
->>>    * vfio
->>>    * chardev
->>>    * vhost and tap
->>>    * blockers
->>>    * cpr-exec mode
->>
->> Hi Steve. First, great congratulations with finally landed cpr-transfer! I saw the history of Live Update series was started overly five years ago.
-> 
-> Thanks!  It's been a marathon, not a sprint.
-> 
->> I've some questions, hope it's not much trouble for you.
->>
->> 1. We consider porting cpr-transver + vfio part of your "Live update: vfio and iommufd" to our downstream QEMU, based on v7.2. What do you think? I mean, may be you may quickly answer "don't try, you'll have to bring more than 100 commits from different series", or visa-versa "we have downstream based on 7.2 too, so it's possible" (OK, seems the latter answer is not possible, as iommufd code just absent in v7.2).
-> 
-> I have not tried it, but I think this is feasible if you omit the iommufd patches.
-> You will also need some of the cpr-reboot patches (like mode-specific migration
-> blockers) which did not appear until qemu 8.2.
+Two discard alignment issues were identified in
+https://issues.redhat.com/browse/RHEL-86032:
+1. pdiscard_alignment is not populated for host_device in file-posix.c.
+2. Misaligned head/tail discard requests are not skipped when file-posix.c
+   returns -EINVAL. This causes an undesired pause when guests are configured
+   with werror=stop.
 
-Well, I'll try, thanks!
+Stefan Hajnoczi (2):
+  file-posix: probe discard alignment on Linux block devices
+  block/io: skip head/tail requests on EINVAL
 
-> 
->> 2. About cpr-exec. Do you plan resending it in future? The solution is interesting for us, as it simplifies management a lot. 
-> 
-> I agree!  I made that argument when I submitted it.  Perhaps your +1 will add
-> enough critical mass to get it accepted next time.  I do plan to resubmit it later.
-
-Great!
-
-> 
->> I read the discussion on cpr-exec, seems the main problem was the security constraint, that we don't want to allow exec call in seccomp profile. Didn't you consider a variant with loding the library instead of exec?
->>
->> I mean:
->>
->> - turn the whole QEMU into library, which may be dynamically loaded. Recently there was a question how to do it, and the answer contained an example patch: https://github.com/pbo-linaro/qemu/commit/fbb39cc64f77d4bf1e5e50795c75b62735bf5c5f
->>
->> - and make a simple wrapper process for that library, which also is a container for migration state (including file descriptors), during live update.
->>
->> Benefits:
->>
->> - no execve, and we just need to add pattern for "qemu library" paths to apparmor profile
->>
->> - probably, we can load new library _before_ starting the migration, reducing freeze-time of migration - more like migration with two processes
-> 
-> I have not considered that.  A colleague suggested something similar -- loading the
-> new qemu binary in memory and implementing exec in userland.   No doubt either
-> method would be a non-trivial amount of work, versus cpr-exec which already works :)
-> 
-> Personally I don't think that requiring exec is a show stopper. If qemu is deployed in
-> a container environment, then the potential targets of an exec can be limited by the
-> container walls.
-> 
-
-> a container environment
-
-that's not our case.. Still, probably it's not a big deal to allow exec call, when we control the whole code base, where not too many exec calls.
+ block/file-posix.c | 56 +++++++++++++++++++++++++++++++++++++++++++++-
+ block/io.c         |  6 ++++-
+ 2 files changed, 60 insertions(+), 2 deletions(-)
 
 -- 
-Best regards,
-Vladimir
+2.49.0
 
 
