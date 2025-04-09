@@ -4,103 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF2FC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D66C369A1
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2WBd-0007o9-SR; Wed, 09 Apr 2025 10:13:54 -0400
+	id 1u2WFv-0001pl-Si; Wed, 09 Apr 2025 10:18:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u2WBc-0007nh-Fk; Wed, 09 Apr 2025 10:13:52 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u2WBa-0000nE-AQ; Wed, 09 Apr 2025 10:13:52 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 539CT7Q0019382;
- Wed, 9 Apr 2025 14:13:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=b2LfKs
- 720wD1M9ulRYtxJdts2IvQoLrBUb/dc5p69n0=; b=Ct8m42PUGEGpRuFGzjRhoR
- 2x07mE5AUxqoP6rOf5NLky+i2IJH4iGeIJ9Eb7hZTlyANcXJ9BBmEGWNNQfbOa/k
- sFO7RI13Bmvs8vDu//+772JmYI/YmIS3yJkZegNhwq50H7ezREZ6scRb8j+XoSwT
- KrWHKHxzDEEjzfFUKaER+3w6Ymn7ScU+QfQjhFb5Bxt2BueMnNMnD0Rh11tYQB5y
- LJFDJ0T+10Ngu8xPX9J2G2uVzLe7vKbEWt81Xu6fc5GAJ54Y46/Oh40qgqNkuxRj
- 2z9oFkONHeeMFsnYtxnxVFqP321LqsCAeRkxfntI+TnP2LBXivhE8a/H0H4Ol9ww
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45wrx2rkj7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Apr 2025 14:13:45 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 539AeCD4018877;
- Wed, 9 Apr 2025 14:13:44 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45uhj2fpv8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 09 Apr 2025 14:13:44 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 539EDh6322938210
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 9 Apr 2025 14:13:43 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BAA1B58056;
- Wed,  9 Apr 2025 14:13:43 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 64F7A58052;
- Wed,  9 Apr 2025 14:13:43 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  9 Apr 2025 14:13:43 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u2WFu-0001pb-LJ
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:18:18 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u2WFs-0001xT-UE
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:18:18 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5e61da95244so11196834a12.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 07:18:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744208294; x=1744813094; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pYA2JtDhdRBmRh8LdWqQ/ViaZ75fKalCivOLfAwjFY8=;
+ b=mJ/8Nfk7FoIRIMJktDb8pki3lsKC5DchXKi8OF8qTtYzYbfyG7MBNvpiOLoIIjAl1H
+ KcVhv58u6ea/eTwnBEMOsFQUitg8oi1Yiuvm/CcX+8U5tU1k9vgOeYGC0aZ83ozo8QlQ
+ Wbx6OquP6PH0gOwF/vnFJtX/4Orrxif2A91qWU1vhZEKwwo5Xdc6n/VZXVPoZ0MEzBBS
+ YB7uYFFnbd1fYs6HUhqb9pguG7ijhIcfXS1y1HomWr/zqj86/rwfTovkFyRu2zv3hDa+
+ UXlIoXtZ3zPIP9dc7OaCesbCyAzPpJgzUtmDdVbrHyZVGKpJzSYoAurKXxHke3wbwg5e
+ GbtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744208294; x=1744813094;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pYA2JtDhdRBmRh8LdWqQ/ViaZ75fKalCivOLfAwjFY8=;
+ b=ERnp8Pv1Tg9cs4YmYQTkD6rBVHSxS1g67A2Gs27eK9NGp27vLTVQEUgp6F+5Dbe0jX
+ AIFZqttiAJKOj7Z198kieHhXxW3YQbQH57uPKWC6RuuJUck0wEdH9xXBYnIc9miZd8Di
+ PQmTmk0JNlqvkHFrK76IQueJAELR688crXV9FXb8jCbcNlWHX3W9jZy4qxslBAQcs93A
+ m4U3AYvyVuuu5dy7QbRTQotvk/CTWuOkrEP6YJrBgSF5pqLhOZ/cdvh16x2povVVJUUt
+ u5FicDOjriVxxSJDgo1IQWpOBfCfnahtWB7kdVrjecY3CQo7S5ZvpwmKPsFrln4gD+mk
+ 0WBQ==
+X-Gm-Message-State: AOJu0Yzu9Nm/MTpk/vN3obAPuZlcFX5Yearfs5A8p94WvxDwI/jHpYGf
+ ka6DUDSxWgrZ00zzKOWJsYNZoqPN/crqtCxWYek+XTTGeakxjTWac0mANmtFU74HmI8BJujKYNy
+ 6WsWngEXs8ePGdaELTrhSqEkb6LE=
+X-Gm-Gg: ASbGncviRUDwNJ6n6/ckUWWAQ7OmDKkYSayZbXOLid1fb4L6rpNq9B5WSG9yTBUWTcB
+ Ew3eDbpA3JkczewZ/xzcrGf6qgZGrONqhSkRDlHawSQjUkMqHwrbDANzDTj/KLWSWieLCSSOXZM
+ jzAdd98P5VDftHB2t6Aq5yEaWWFb+gCw0=
+X-Google-Smtp-Source: AGHT+IHZJMFRnGzBQKHiKRH4vwM5JUl6tXpp9brIqEVTqpCZr6jqAJcXzMw4gkuM7V59yYQp2iUDXB5SqV0uVyuiKDg=
+X-Received: by 2002:a05:6402:2353:b0:5e6:e842:f9d2 with SMTP id
+ 4fb4d7f45d1cf-5f2f86d7fc9mr1868852a12.29.1744208293635; Wed, 09 Apr 2025
+ 07:18:13 -0700 (PDT)
 MIME-Version: 1.0
-Date: Wed, 09 Apr 2025 16:13:43 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
- <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
- <brueckner@linux.ibm.com>, "<Shalini Chellathurai Saroja"
- <shalini@linux.ibm.com>
-Subject: Re: [PATCH v3 4/4] hw/s390x: compat handling for backward migration
-In-Reply-To: <037d512b-5214-449c-a518-a6b2d9d5fc29@redhat.com>
-References: <20250331140041.3133621-1-shalini@linux.ibm.com>
- <20250331140041.3133621-5-shalini@linux.ibm.com>
- <1584a6d0-63b8-459b-9f4b-84192a9256e1@redhat.com>
- <688c719a1942615ada3e438670b8fb29@linux.ibm.com>
- <037d512b-5214-449c-a518-a6b2d9d5fc29@redhat.com>
-Message-ID: <f89e0dd54376a42f91dd95d2985696f4@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: sWIt5Z1-uefKx0OagDgDY7P3oKiF8l8d
-X-Proofpoint-ORIG-GUID: sWIt5Z1-uefKx0OagDgDY7P3oKiF8l8d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-09_05,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 mlxscore=0 spamscore=0 suspectscore=0 impostorscore=0
- bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504090082
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <87h62x8n6b.fsf@pond.sub.org>
+In-Reply-To: <87h62x8n6b.fsf@pond.sub.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 9 Apr 2025 10:18:01 -0400
+X-Gm-Features: ATxdqUF4_UFYU3WcMC54HiAnbCaGFdvcV6UbqJwdyrLsxhwdOBrK6zEKLbssNZw
+Message-ID: <CAJSP0QUyZfV8UQmhR5ADgC5Cr9zVrJ53fcWLvY0GUUSKfj8iyw@mail.gmail.com>
+Subject: Re: Note improvements to QAPI-generated manuals in ChangeLog/10.0?
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,144 +94,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-04-09 07:49, Thomas Huth wrote:
-> On 03/04/2025 14.49, Shalini Chellathurai Saroja wrote:
->> On 2025-04-02 09:52, Thomas Huth wrote:
->>> On 31/03/2025 16.00, Shalini Chellathurai Saroja wrote:
->>>> Add Control-Program Identification (CPI) device to QOM only when the 
->>>> virtual
->>>> machine supports CPI. CPI is supported from "s390-ccw-virtio-10.0" 
->>>> machine
->>>> and higher.
->>>> 
->>>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->>>> ---
->>>>   hw/s390x/event-facility.c  | 27 ++++++++++++++++++++++-----
->>>>   hw/s390x/s390-virtio-ccw.c |  1 +
->>>>   2 files changed, 23 insertions(+), 5 deletions(-)
->>>> 
->>>> diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
->>>> index c0fb6e098c..cb23bbc54b 100644
->>>> --- a/hw/s390x/event-facility.c
->>>> +++ b/hw/s390x/event-facility.c
->>>> @@ -22,6 +22,7 @@
->>>>   #include "hw/s390x/sclp.h"
->>>>   #include "migration/vmstate.h"
->>>>   #include "hw/s390x/event-facility.h"
->>>> +#include "hw/qdev-properties.h"
->>>>     typedef struct SCLPEventsBus {
->>>>       BusState qbus;
->>>> @@ -54,6 +55,7 @@ struct SCLPEventFacility {
->>>>       bool allow_all_mask_sizes;
->>>>       /* length of the receive mask */
->>>>       uint16_t mask_length;
->>>> +    bool use_cpi;
->>>>   };
->>>>     /* return true if any child has event pending set */
->>>> @@ -455,11 +457,20 @@ static void realize_event_facility(DeviceState 
->>>> *dev, Error **errp)
->>>>           qdev_unrealize(DEVICE(&event_facility->quiesce));
->>>>           return;
->>>>       }
->>>> -    if (!qdev_realize(DEVICE(&event_facility->cpi),
->>>> -                      BUS(&event_facility->sbus), errp)) {
->>>> -        qdev_unrealize(DEVICE(&event_facility->quiesce));
->>>> -        qdev_unrealize(DEVICE(&event_facility->cpu_hotplug));
->>>> -        return;
->>>> +    /*
->>>> +     * Add sclpcpi device to QOM only when the virtual machine 
->>>> supports
->>>> +     * Control-Program Identification. It is supported by 
->>>> "s390-ccw- virtio-10.0"
->>>> +     * machine and higher.
->>>> +     */
->>>> +    if (!event_facility->use_cpi) {
->>>> +        object_unparent(OBJECT(&event_facility->cpi));
->>>> +    } else {
->>>> +        if (!qdev_realize(DEVICE(&event_facility->cpi),
->>>> +                          BUS(&event_facility->sbus), errp)) {
->>>> +            qdev_unrealize(DEVICE(&event_facility->quiesce));
->>>> +            qdev_unrealize(DEVICE(&event_facility->cpu_hotplug));
->>>> +            return;
->>>> +        }
->>> 
->>> Hmm, first doing object_initialize_child() in init_event_facility()
->>> and then unparenting it here again in case we are running with an
->>> older machine type is a little bit ugly. I wonder whether it would be
->>> nicer to add the QOM object from ccw_init() init instead, similar to
->>> what we do with the SCLP-console in s390_create_sclpconsole() ? If
->>> you've got some spare minutes, could you please give it a try whether
->>> that looks nicer?
->>> 
->> 
->> Hello Thomas,
->> 
->> Sure. Did you mean like the code below?, if yes, the use_cpi is always 
->> true when adding the sclpcpi device from ccw_init(). The use_cpi is 
->> set to false at a later point, when the machine type is 9.2 or older. 
->> This means the sclpcpi device is always added, the output and the code 
->> are provided below. Please let me know how to proceed, thank you very 
->> much.
-> ...
->> @@ -499,6 +485,7 @@ static void init_event_facility_class(ObjectClass 
->> *klass, void *data)
->>       set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->>       k->command_handler = command_handler;
->>       k->event_pending = event_pending;
->> +    k->use_cpi = use_cpi;
->>   }
-> ...
->> diff --git a/include/hw/s390x/event-facility.h 
->> b/include/hw/s390x/event- facility.h
->> index f445d2f9f5..ba20161023 100644
->> --- a/include/hw/s390x/event-facility.h
->> +++ b/include/hw/s390x/event-facility.h
->> @@ -204,6 +204,7 @@ struct SCLPEventFacilityClass {
->>       SysBusDeviceClass parent_class;
->>       void (*command_handler)(SCLPEventFacility *ef, SCCB *sccb, 
->> uint64_t code);
->>       bool (*event_pending)(SCLPEventFacility *ef);
->> +    bool (*use_cpi)(SCLPEventFacility *ef);
->>   };
-> 
->  Hi,
-> 
-> you certainly don't need the (*use_cpi) callback here.
-> 
-> I'd suggest to:
-> 
-> 1) Add a boolean flag to S390CcwMachineClass in s390-virtio-ccw.h
-> called "use_cpi", "cpi_allowed", "has_cpi" or whatever.
-> 
-> 2) Set that flag to true in ccw_machine_class_init() (similar to that
-> hpage_1m_allowed flag)
-> 
-> 3) Set that flag to false in ccw_machine_9_2_class_options() so that
-> it gets disabled for older machine type classes. Important: use the
-> class_options() function here, not the instance_options()! Also not
-> that this should go into the ccw_machine_10_0_class_options()
-> functions instead once v10.0 has been released.
-> 
-> 4) In ccw_init() you should now be able to use "S390CcwMachineClass
-> *s390mc = S390_CCW_MACHINE_CLASS(mc)" to query the flag from the
-> machine class.
-> 
->  HTH,
->   Thomas
+On Wed, Apr 9, 2025 at 9:44=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> John improved looks and usabilibity of the QAPI-generated manuals quite
+> a bit.  These are
+>
+>     QEMU QMP Reference Manual
+>     QEMU Storage Daemon QMP Reference Manual
+>     QEMU Guest Agent Protocol Reference
+>
+> Where should it go?  https://wiki.qemu.org/ChangeLog/10.0 has no section
+> dedicated to the manuals.  We could mention it under System Emulation /
+> Monitor / QMP, and again under Guest Agent.  Thoughts?
 
-Hi Thomas,
+I would add a separate Documentation section for changes like this.
+That's also where major docs infrastructure items like changes to
+formats (rST), tooling (Sphinx), etc could be announced.
 
-I will do this, Thank you.
-
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
+Stefan
 
