@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8F5C369A4
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B214C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Wer-0008Op-4O; Wed, 09 Apr 2025 10:44:05 -0400
+	id 1u2Wg9-0001gu-RY; Wed, 09 Apr 2025 10:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2Wek-0008Nb-C8
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:43:59 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u2Wfp-00011X-F1
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:45:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2Weh-0006DF-6U
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:43:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u2Wfn-0006TS-FN
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:45:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744209832;
+ s=mimecast20190719; t=1744209902;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KQJdVGrhtoC2TiIlFoH6HcHJQxwUBBpU5rwZ1gnc0GA=;
- b=AS3k3POLedKV3yTHxbJpKmHc8xoiN8BMyIejuIOpzKVyeypj9VaroicKfEIlzdS7MCTnYd
- DJbsl3Kc2YCO4+DMWNXq9qcKqnP0XhptaUqksRTG+5uE4E0Qpnmutnc6LNwaXY0a1kF9zS
- BYcYr1UsSWRDAFfWUkzODuT6e0R28cI=
+ bh=3/Sy2XOVtSG9wgDDx1WNYIe3CmQ2Y5jiN3HOB995Suk=;
+ b=jPMB4EKYWUqMIRuXEHaxCzudZLZiWya7XomDxhfEZmxjuri9mnfhy8uVgvMS1UjoCKluvX
+ LmfQNWszB5YhpVJ1xsK3BHkaIQQQ+F+QAGwe/o6XeopPmcmUCD7q2w/jNzRuuvFfME5vrE
+ LexYCWYtaNt6TIiaHDXOxMqCz8atwKE=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-Ig0dDOExPz2MtcVjuEuaSw-1; Wed,
- 09 Apr 2025 10:43:46 -0400
-X-MC-Unique: Ig0dDOExPz2MtcVjuEuaSw-1
-X-Mimecast-MFC-AGG-ID: Ig0dDOExPz2MtcVjuEuaSw_1744209824
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-lqB53At0NkiM7DyvHCVWRA-1; Wed,
+ 09 Apr 2025 10:45:00 -0400
+X-MC-Unique: lqB53At0NkiM7DyvHCVWRA-1
+X-Mimecast-MFC-AGG-ID: lqB53At0NkiM7DyvHCVWRA_1744209899
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41E13180049D; Wed,  9 Apr 2025 14:43:44 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.45.227.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 08351180B48E; Wed,  9 Apr 2025 14:43:37 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH for-10.1 v5 04/13] arm/cpu: Store aa64pfr0/1 into the idregs
- array
-Date: Wed,  9 Apr 2025 16:42:55 +0200
-Message-ID: <20250409144304.912325-5-cohuck@redhat.com>
-In-Reply-To: <20250409144304.912325-1-cohuck@redhat.com>
-References: <20250409144304.912325-1-cohuck@redhat.com>
+ id 203751800259; Wed,  9 Apr 2025 14:44:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CFF13001D0E; Wed,  9 Apr 2025 14:44:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 89DB721E675E; Wed, 09 Apr 2025 16:44:55 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Eric Blake <eblake@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,  devel@lists.libvirt.org
+Subject: Re: [PATCH V1 0/6] fast qom tree get
+In-Reply-To: <507cd943-5922-44b2-a0cb-1b85f0cfd074@oracle.com> (Steven
+ Sistare's message of "Wed, 9 Apr 2025 10:06:00 -0400")
+References: <1741036202-265696-1-git-send-email-steven.sistare@oracle.com>
+ <87friheqcp.fsf@pond.sub.org>
+ <86bb6d0f-63a1-4643-b58a-1186a73e3b17@oracle.com>
+ <87mscp8nlu.fsf@pond.sub.org>
+ <507cd943-5922-44b2-a0cb-1b85f0cfd074@oracle.com>
+Date: Wed, 09 Apr 2025 16:44:55 +0200
+Message-ID: <87iknd75so.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -90,582 +92,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- target/arm/cpu-features.h | 40 ++++++++++++++++-----------------
- target/arm/cpu.c          | 29 ++++++++----------------
- target/arm/cpu.h          |  2 --
- target/arm/cpu64.c        | 14 ++++--------
- target/arm/helper.c       |  6 ++---
- target/arm/hvf/hvf.c      |  9 ++++----
- target/arm/kvm.c          | 24 +++++++++-----------
- target/arm/tcg/cpu64.c    | 47 ++++++++++++++++++---------------------
- 8 files changed, 73 insertions(+), 98 deletions(-)
+> On 4/9/2025 9:34 AM, Markus Armbruster wrote:
+>> Steven Sistare <steven.sistare@oracle.com> writes:
+>>> On 4/9/2025 3:39 AM, Markus Armbruster wrote:
+>>>> Hi Steve, I apologize for the slow response.
+>>>>
+>>>> Steve Sistare <steven.sistare@oracle.com> writes:
+>>>>
+>>>>> Using qom-list and qom-get to get all the nodes and property values in a
+>>>>> QOM tree can take multiple seconds because it requires 1000's of individual
+>>>>> QOM requests.  Some managers fetch the entire tree or a large subset
+>>>>> of it when starting a new VM, and this cost is a substantial fraction of
+>>>>> start up time.
+>>>>
+>>>> "Some managers"... could you name one?
+>>>
+>>> My personal experience is with Oracle's OCI, but likely others could benefit.
+>> 
+>> Peter Krempa tells us libvirt would benefit.
+>> 
+>>>>> To reduce this cost, consider QAPI calls that fetch more information in
+>>>>> each call:
+>>>>>     * qom-list-get: given a path, return a list of properties and values.
+>>>>>     * qom-list-getv: given a list of paths, return a list of properties and
+>>>>>       values for each path.
+>>>>>     * qom-tree-get: given a path, return all descendant nodes rooted at that
+>>>>>       path, with properties and values for each.
+>>>>
+>>>> Libvirt developers, would you be interested in any of these?
+>>>>
+>>>>> In all cases, a returned property is represented by ObjectPropertyValue,
+>>>>> with fields name, type, value, and error.  If an error occurs when reading
+>>>>> a value, the value field is omitted, and the error message is returned in the
+>>>>> the error field.  Thus an error for one property will not cause a bulk fetch
+>>>>> operation to fail.
+>>>>
+>>>> Returning errors this way is highly unusual.  Observation; I'm not
+>>>> rejecting this out of hand.  Can you elaborate a bit on why it's useful?
+>>>
+>>> It is considered an error to read some properties if they are not valid for
+>>> the configuration.  And some properties are write-only and return an error
+>>> if they are read.  Examples:
+>>>
+>>>     legacy-i8042: <EXCEPTION: Property 'vmmouse.legacy-i8042' is not readable> (str)
+>>>     legacy-memory: <EXCEPTION: Property 'qemu64-x86_64-cpu.legacy-memory' is not readable> (str)
+>>>     crash-information: <EXCEPTION: No crash occurred> (GuestPanicInformation)
+>>>
+>>> With conventional error handling, if any of these poison pills falls in the
+>>> scope of a bulk get operation, the entire operation fails.
+>> 
+>> I suspect many of these poison pills are design mistakes.
+>> 
+>> If a property is not valid for the configuration, why does it exist?
+>> QOM is by design dynamic.  I wish it wasn't, but as long as it is
+>> dynamic, I can't see why we should create properties we know to be
+>> unusable.
+>> 
+>> Why is reading crash-information an error when no crash occured?  This
+>> is the *normal* case.  Errors are for the abnormal.
+>> 
+>> Anyway, asking you to fix design mistakes all over the place wouldn't be
+>> fair.  So I'm asking you something else instead: do you actually need
+>> the error information?
+>
+> I don't need the specific error message.
+>
+> I could return a boolean meaning "property not available" instead of returning
+> the exact error message, as long as folks are OK with the output of the qom-tree
+> script changing for these properties.
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 37946d759375..5cc4721e6406 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -606,68 +606,68 @@ static inline bool isar_feature_aa64_rpres(const ARMISARegisters *id)
- static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
- {
-     /* We always set the AdvSIMD and FP fields identically.  */
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, FP) != 0xf;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, FP) != 0xf;
- }
- 
- static inline bool isar_feature_aa64_fp16(const ARMISARegisters *id)
- {
-     /* We always set the AdvSIMD and FP fields identically wrt FP16.  */
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, FP) == 1;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, FP) == 1;
- }
- 
- static inline bool isar_feature_aa64_aa32(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL0) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL0) >= 2;
- }
- 
- static inline bool isar_feature_aa64_aa32_el1(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL1) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL1) >= 2;
- }
- 
- static inline bool isar_feature_aa64_aa32_el2(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL2) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL2) >= 2;
- }
- 
- static inline bool isar_feature_aa64_ras(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RAS) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) != 0;
- }
- 
- static inline bool isar_feature_aa64_doublefault(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RAS) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) >= 2;
- }
- 
- static inline bool isar_feature_aa64_sve(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, SVE) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, SVE) != 0;
- }
- 
- static inline bool isar_feature_aa64_sel2(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, SEL2) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, SEL2) != 0;
- }
- 
- static inline bool isar_feature_aa64_rme(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RME) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) != 0;
- }
- 
- static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, DIT) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
- }
- 
- static inline bool isar_feature_aa64_scxtnum(const ARMISARegisters *id)
- {
--    int key = FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, CSV2);
-+    int key = FIELD_EX64_IDREG(id, ID_AA64PFR0, CSV2);
-     if (key >= 2) {
-         return true;      /* FEAT_CSV2_2 */
-     }
-     if (key == 1) {
--        key = FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, CSV2_FRAC);
-+        key = FIELD_EX64_IDREG(id, ID_AA64PFR1, CSV2_FRAC);
-         return key >= 2;  /* FEAT_CSV2_1p2 */
-     }
-     return false;
-@@ -675,37 +675,37 @@ static inline bool isar_feature_aa64_scxtnum(const ARMISARegisters *id)
- 
- static inline bool isar_feature_aa64_ssbs(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SSBS) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, SSBS) != 0;
- }
- 
- static inline bool isar_feature_aa64_bti(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, BT) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, BT) != 0;
- }
- 
- static inline bool isar_feature_aa64_mte_insn_reg(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) != 0;
- }
- 
- static inline bool isar_feature_aa64_mte(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 2;
- }
- 
- static inline bool isar_feature_aa64_mte3(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) >= 3;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 3;
- }
- 
- static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, SME) != 0;
- }
- 
- static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR1, NMI) != 0;
- }
- 
- static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index f8783eff1d41..23be9ab97334 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2126,14 +2126,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-     }
- 
-     if (!cpu->has_vfp) {
--        uint64_t t;
-         uint32_t u;
- 
-         FIELD_DP64_IDREG(isar, ID_AA64ISAR1, JSCVT, 0);
- 
--        t = cpu->isar.id_aa64pfr0;
--        t = FIELD_DP64(t, ID_AA64PFR0, FP, 0xf);
--        cpu->isar.id_aa64pfr0 = t;
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, FP, 0xf);
- 
-         u = cpu->isar.id_isar6;
-         u = FIELD_DP32(u, ID_ISAR6, JSCVT, 0);
-@@ -2188,9 +2185,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         t = FIELD_DP64(t, ID_AA64ISAR1, I8MM, 0);
-         SET_IDREG(isar, ID_AA64ISAR1, t);
- 
--        t = cpu->isar.id_aa64pfr0;
--        t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 0xf);
--        cpu->isar.id_aa64pfr0 = t;
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, ADVSIMD, 0xf);
- 
-         u = cpu->isar.id_isar5;
-         u = FIELD_DP32(u, ID_ISAR5, AES, 0);
-@@ -2332,12 +2327,10 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-          */
-         cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1, ID_PFR1, SECURITY, 0);
-         cpu->isar.id_dfr0 = FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, COPSDBG, 0);
--        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
--                                           ID_AA64PFR0, EL3, 0);
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL3, 0);
- 
-         /* Disable the realm management extension, which requires EL3. */
--        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
--                                           ID_AA64PFR0, RME, 0);
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, RME, 0);
-     }
- 
-     if (!cpu->has_el2) {
-@@ -2372,8 +2365,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-          * Disable the hypervisor feature bits in the processor feature
-          * registers if we don't have EL2.
-          */
--        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
--                                           ID_AA64PFR0, EL2, 0);
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL2, 0);
-         cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1,
-                                        ID_PFR1, VIRTUALIZATION, 0);
-     }
-@@ -2394,8 +2386,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-          * This matches Cortex-A710 BROADCASTMTE input being LOW.
-          */
-         if (tcg_enabled() && cpu->tag_memory == NULL) {
--            cpu->isar.id_aa64pfr1 =
--                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 1);
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 1);
-         }
- 
-         /*
-@@ -2403,7 +2394,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-          * enabled on the guest (i.e mte=off), clear guest's MTE bits."
-          */
-         if (kvm_enabled() && !cpu->kvm_mte) {
--                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 0);
-+                FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
-         }
- #endif
-     }
-@@ -2442,13 +2433,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         cpu->isar.id_dfr0 =
-             FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, MMAPTRC, 0);
-         /* FEAT_AMU (Activity Monitors Extension) */
--        cpu->isar.id_aa64pfr0 =
--            FIELD_DP64(cpu->isar.id_aa64pfr0, ID_AA64PFR0, AMU, 0);
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, AMU, 0);
-         cpu->isar.id_pfr0 =
-             FIELD_DP32(cpu->isar.id_pfr0, ID_PFR0, AMU, 0);
-         /* FEAT_MPAM (Memory Partitioning and Monitoring Extension) */
--        cpu->isar.id_aa64pfr0 =
--            FIELD_DP64(cpu->isar.id_aa64pfr0, ID_AA64PFR0, MPAM, 0);
-+        FIELD_DP64_IDREG(isar, ID_AA64PFR0, MPAM, 0);
-     }
- 
-     /* MPU can be configured out of a PMSA CPU either by setting has-mpu
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 4a143bc64b27..83ac125b97c5 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1097,8 +1097,6 @@ struct ArchCPU {
-         uint32_t dbgdidr;
-         uint32_t dbgdevid;
-         uint32_t dbgdevid1;
--        uint64_t id_aa64pfr0;
--        uint64_t id_aa64pfr1;
-         uint64_t id_aa64mmfr0;
-         uint64_t id_aa64mmfr1;
-         uint64_t id_aa64mmfr2;
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index b914f2ed58b5..111b2514218e 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -310,16 +310,13 @@ static bool cpu_arm_get_sve(Object *obj, Error **errp)
- static void cpu_arm_set_sve(Object *obj, bool value, Error **errp)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
--    uint64_t t;
- 
-     if (value && kvm_enabled() && !kvm_arm_sve_supported()) {
-         error_setg(errp, "'sve' feature not supported by KVM on this host");
-         return;
-     }
- 
--    t = cpu->isar.id_aa64pfr0;
--    t = FIELD_DP64(t, ID_AA64PFR0, SVE, value);
--    cpu->isar.id_aa64pfr0 = t;
-+    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, SVE, value);
- }
- 
- void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
-@@ -370,11 +367,8 @@ static bool cpu_arm_get_sme(Object *obj, Error **errp)
- static void cpu_arm_set_sme(Object *obj, bool value, Error **errp)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
--    uint64_t t;
- 
--    t = cpu->isar.id_aa64pfr1;
--    t = FIELD_DP64(t, ID_AA64PFR1, SME, value);
--    cpu->isar.id_aa64pfr1 = t;
-+    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, value);
- }
- 
- static bool cpu_arm_get_sme_fa64(Object *obj, Error **errp)
-@@ -676,7 +670,7 @@ static void aarch64_a57_initfn(Object *obj)
-     cpu->isar.id_isar4 = 0x00011142;
-     cpu->isar.id_isar5 = 0x00011121;
-     cpu->isar.id_isar6 = 0;
--    cpu->isar.id_aa64pfr0 = 0x00002222;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-     cpu->isar.id_aa64mmfr0 = 0x00001124;
-@@ -738,7 +732,7 @@ static void aarch64_a53_initfn(Object *obj)
-     cpu->isar.id_isar4 = 0x00011142;
-     cpu->isar.id_isar5 = 0x00011121;
-     cpu->isar.id_isar6 = 0;
--    cpu->isar.id_aa64pfr0 = 0x00002222;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-     cpu->isar.id_aa64mmfr0 = 0x00001122; /* 40 bit physical addr */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 548e51e82a8e..716d0570f6d6 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6940,7 +6940,7 @@ static uint64_t id_pfr1_read(CPUARMState *env, const ARMCPRegInfo *ri)
- static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
-     ARMCPU *cpu = env_archcpu(env);
--    uint64_t pfr0 = cpu->isar.id_aa64pfr0;
-+    uint64_t pfr0 = GET_IDREG(&cpu->isar, ID_AA64PFR0);
- 
-     if (env->gicv3state) {
-         pfr0 |= 1 << 24;
-@@ -7914,7 +7914,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .access = PL1_R,
- #ifdef CONFIG_USER_ONLY
-               .type = ARM_CP_CONST,
--              .resetvalue = cpu->isar.id_aa64pfr0
-+              .resetvalue = GET_IDREG(isar, ID_AA64PFR0)
- #else
-               .type = ARM_CP_NO_RAW,
-               .accessfn = access_aa64_tid3,
-@@ -7926,7 +7926,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 1,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64pfr1},
-+              .resetvalue = GET_IDREG(isar, ID_AA64PFR1)},
-             { .name = "ID_AA64PFR2_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 2,
-               .access = PL1_R, .type = ARM_CP_CONST,
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 8d6852fd7a52..9d37ca6bbbde 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -862,8 +862,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         int reg;
-         uint64_t *val;
-     } regs[] = {
--        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.id_aa64pfr0 },
--        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.id_aa64pfr1 },
-+        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
-+        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
-         { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.id_aa64dfr0 },
-         { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.id_aa64dfr1 },
-         { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
-@@ -910,7 +910,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-      * - fix any assumptions we made that SME implies SVE (since
-      *   on the M4 there is SME but not SVE)
-      */
--    host_isar.id_aa64pfr1 &= ~R_ID_AA64PFR1_SME_MASK;
-+    SET_IDREG(&host_isar, ID_AA64PFR1,
-+              GET_IDREG(&host_isar, ID_AA64PFR1) & ~R_ID_AA64PFR1_SME_MASK);
- 
-     ahcf->isar = host_isar;
- 
-@@ -927,7 +928,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     ahcf->reset_sctlr |= 0x00800000;
- 
-     /* Make sure we don't advertise AArch32 support for EL0/EL1 */
--    if ((host_isar.id_aa64pfr0 & 0xff) != 0x11) {
-+    if ((GET_IDREG(&host_isar, ID_AA64PFR0) & 0xff) != 0x11) {
-         return false;
-     }
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index e8992348b27f..44a5e219b051 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -331,8 +331,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     ahcf->dtb_compatible = "arm,arm-v8";
-     int fd = fdarray[2];
- 
--    err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
--                         ARM64_SYS_REG(3, 0, 0, 4, 0));
-+    err = get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
-     if (unlikely(err < 0)) {
-         /*
-          * Before v4.15, the kernel only exposed a limited number of system
-@@ -350,11 +349,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-          * ??? Either of these sounds like too much effort just
-          *     to work around running a modern host kernel.
-          */
--        ahcf->isar.id_aa64pfr0 = 0x00000011; /* EL1&0, AArch64 only */
-+        SET_IDREG(&ahcf->isar, ID_AA64PFR0, 0x00000011); /* EL1&0, AArch64 only */
-         err = 0;
-     } else {
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr1,
--                              ARM64_SYS_REG(3, 0, 0, 4, 1));
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
-         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
-                               ARM64_SYS_REG(3, 0, 0, 4, 5));
-         err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr0,
-@@ -380,10 +378,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-          * than skipping the reads and leaving 0, as we must avoid
-          * considering the values in every case.
-          */
--        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr0,
--                              ARM64_SYS_REG(3, 0, 0, 1, 0));
--        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr1,
--                              ARM64_SYS_REG(3, 0, 0, 1, 1));
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
-         err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_dfr0,
-                               ARM64_SYS_REG(3, 0, 0, 1, 2));
-         err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_mmfr0,
-@@ -434,14 +430,14 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-          * arch/arm64/kvm/sys_regs.c:trap_dbgidr() does.
-          * We only do this if the CPU supports AArch32 at EL1.
-          */
--        if (FIELD_EX32(ahcf->isar.id_aa64pfr0, ID_AA64PFR0, EL1) >= 2) {
--            int wrps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
--            int brps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
-+        if (FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL1) >= 2) {
-+            int wrps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
-+            int brps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
-             int ctx_cmps =
--                FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
-+                FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
-             int version = 6; /* ARMv8 debug architecture */
-             bool has_el3 =
--                !!FIELD_EX32(ahcf->isar.id_aa64pfr0, ID_AA64PFR0, EL3);
-+                !!FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL3);
-             uint32_t dbgdidr = 0;
- 
-             dbgdidr = FIELD_DP32(dbgdidr, DBGDIDR, WRPS, wrps);
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index f62e62595d8b..478ef839bafa 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -63,8 +63,8 @@ static void aarch64_a35_initfn(Object *obj)
-     cpu->isar.id_isar3 = 0x01112131;
-     cpu->isar.id_isar4 = 0x00011142;
-     cpu->isar.id_isar5 = 0x00011121;
--    cpu->isar.id_aa64pfr0 = 0x00002222;
--    cpu->isar.id_aa64pfr1 = 0;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-+    SET_IDREG(isar, ID_AA64PFR1, 0);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     cpu->isar.id_aa64dfr1 = 0;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-@@ -158,11 +158,8 @@ static bool cpu_arm_get_rme(Object *obj, Error **errp)
- static void cpu_arm_set_rme(Object *obj, bool value, Error **errp)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
--    uint64_t t;
- 
--    t = cpu->isar.id_aa64pfr0;
--    t = FIELD_DP64(t, ID_AA64PFR0, RME, value);
--    cpu->isar.id_aa64pfr0 = t;
-+    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, RME, value);
- }
- 
- static void cpu_max_set_l0gptsz(Object *obj, Visitor *v, const char *name,
-@@ -228,8 +225,8 @@ static void aarch64_a55_initfn(Object *obj)
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
--    cpu->isar.id_aa64pfr0  = 0x0000000010112222ull;
--    cpu->isar.id_aa64pfr1  = 0x0000000000000010ull;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x0000000010112222ull);
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
-     cpu->id_afr0       = 0x00000000;
-     cpu->isar.id_dfr0  = 0x04010088;
-     cpu->isar.id_isar0 = 0x02101110;
-@@ -312,7 +309,7 @@ static void aarch64_a72_initfn(Object *obj)
-     cpu->isar.id_isar3 = 0x01112131;
-     cpu->isar.id_isar4 = 0x00011142;
-     cpu->isar.id_isar5 = 0x00011121;
--    cpu->isar.id_aa64pfr0 = 0x00002222;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-     cpu->isar.id_aa64mmfr0 = 0x00001124;
-@@ -361,8 +358,8 @@ static void aarch64_a76_initfn(Object *obj)
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
--    cpu->isar.id_aa64pfr0  = 0x1100000010111112ull; /* GIC filled in later */
--    cpu->isar.id_aa64pfr1  = 0x0000000000000010ull;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
-     cpu->id_afr0       = 0x00000000;
-     cpu->isar.id_dfr0  = 0x04010088;
-     cpu->isar.id_isar0 = 0x02101110;
-@@ -427,8 +424,8 @@ static void aarch64_a64fx_initfn(Object *obj)
-     cpu->revidr = 0x00000000;
-     cpu->ctr = 0x86668006;
-     cpu->reset_sctlr = 0x30000180;
--    cpu->isar.id_aa64pfr0 =   0x0000000101111111; /* No RAS Extensions */
--    cpu->isar.id_aa64pfr1 = 0x0000000000000000;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000000);
-     cpu->isar.id_aa64dfr0 = 0x0000000010305408;
-     cpu->isar.id_aa64dfr1 = 0x0000000000000000;
-     cpu->id_aa64afr0 = 0x0000000000000000;
-@@ -609,8 +606,8 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
--    cpu->isar.id_aa64pfr0  = 0x1100000010111112ull; /* GIC filled in later */
--    cpu->isar.id_aa64pfr1  = 0x0000000000000020ull;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
-     cpu->id_afr0       = 0x00000000;
-     cpu->isar.id_dfr0  = 0x04010088;
-     cpu->isar.id_isar0 = 0x02101110;
-@@ -688,8 +685,8 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
-     cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
-     cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
-     cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
--    cpu->isar.id_aa64pfr0  = 0x1101110120111112ull; /* GIC filled in later */
--    cpu->isar.id_aa64pfr1  = 0x0000000000000020ull;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x1101110120111112ull); /* GIC filled in later */
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
-     cpu->id_afr0       = 0x00000000;
-     cpu->isar.id_dfr0  = 0x15011099;
-     cpu->isar.id_isar0 = 0x02101110;
-@@ -925,8 +922,8 @@ static void aarch64_a710_initfn(Object *obj)
-     cpu->isar.mvfr1    = 0x13211111;
-     cpu->isar.mvfr2    = 0x00000043;
-     cpu->isar.id_pfr2  = 0x00000011;
--    cpu->isar.id_aa64pfr0  = 0x1201111120111112ull; /* GIC filled in later */
--    cpu->isar.id_aa64pfr1  = 0x0000000000000221ull;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
-     SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
-     cpu->isar.id_aa64dfr0  = 0x000011f010305619ull;
-     cpu->isar.id_aa64dfr1  = 0;
-@@ -1027,8 +1024,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
-     cpu->isar.mvfr1    = 0x13211111;
-     cpu->isar.mvfr2    = 0x00000043;
-     cpu->isar.id_pfr2  = 0x00000011;
--    cpu->isar.id_aa64pfr0  = 0x1201111120111112ull; /* GIC filled in later */
--    cpu->isar.id_aa64pfr1  = 0x0000000000000221ull;
-+    SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
-+    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
-     SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
-     cpu->isar.id_aa64dfr0  = 0x000011f210305619ull;
-     cpu->isar.id_aa64dfr1  = 0;
-@@ -1183,7 +1180,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
-     SET_IDREG(isar, ID_AA64ISAR2, t);
- 
--    t = cpu->isar.id_aa64pfr0;
-+    t = GET_IDREG(isar, ID_AA64PFR0);
-     t = FIELD_DP64(t, ID_AA64PFR0, FP, 1);        /* FEAT_FP16 */
-     t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 1);   /* FEAT_FP16 */
-     t = FIELD_DP64(t, ID_AA64PFR0, RAS, 2);       /* FEAT_RASv1p1 + FEAT_DoubleFault */
-@@ -1192,9 +1189,9 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64PFR0, DIT, 1);       /* FEAT_DIT */
-     t = FIELD_DP64(t, ID_AA64PFR0, CSV2, 3);      /* FEAT_CSV2_3 */
-     t = FIELD_DP64(t, ID_AA64PFR0, CSV3, 1);      /* FEAT_CSV3 */
--    cpu->isar.id_aa64pfr0 = t;
-+    SET_IDREG(isar, ID_AA64PFR0, t);
- 
--    t = cpu->isar.id_aa64pfr1;
-+    t = GET_IDREG(isar, ID_AA64PFR1);
-     t = FIELD_DP64(t, ID_AA64PFR1, BT, 1);        /* FEAT_BTI */
-     t = FIELD_DP64(t, ID_AA64PFR1, SSBS, 2);      /* FEAT_SSBS2 */
-     /*
-@@ -1207,7 +1204,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
-     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_3 */
-     t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
--    cpu->isar.id_aa64pfr1 = t;
-+    SET_IDREG(isar, ID_AA64PFR1, t);
- 
-     t = cpu->isar.id_aa64mmfr0;
-     t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
--- 
-2.48.1
+Let's put aside the qom-tree script for a moment.
+
+In your patches, the queries return an object's properties as a list of
+ObjectPropertyValue, defined as
+
+    { 'struct': 'ObjectPropertyValue',
+      'data': { 'name': 'str',
+                'type': 'str',
+                '*value': 'any',
+                '*error': 'str' } }
+
+As far as I understand, exactly one of @value and @error are present.
+
+The list has no duplicates, i.e. no two elements have the same value of
+"name".
+
+Say we're interested in property "foo".  Three cases:
+
+* The list has an element with "name": "foo", and the element has member
+  "value": the property exists and "value" has its value.
+
+* The list has an element with "name": "foo", and the element does not
+  have member "value": the property exists, but its value cannot be
+  gotten; member "error" has the error message.
+
+* The list has no element with "name": "foo": the property does not
+  exist.
+
+If we simply drop ObjectPropertyValue member @error, we lose 'member
+"error" has the error message'.  That's all.
+
+If a need for more error information should arise later, we could add
+member @error.  Or something else entirely.  Or tell people to qom-get
+any properties qom-tree-get couldn't get for error information.  My
+point is: dropping @error now does not tie our hands as far as I can
+tell.
+
+Back to qom-tree.  I believe this script is a development aid that
+exists because qom-get is painful to use for humans.  Your qom-tree
+command would completely obsolete it.  I wouldn't worry about it.
+If you think I'm wrong there, please speak up!
 
 
