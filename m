@@ -4,101 +4,209 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD356C369A1
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 12:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC193C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 12:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Ucq-00086d-2f; Wed, 09 Apr 2025 08:33:52 -0400
+	id 1u2UlL-0003r2-Lg; Wed, 09 Apr 2025 08:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=1y2v=W3=kaod.org=clg@ozlabs.org>)
- id 1u2UcY-00082N-S5; Wed, 09 Apr 2025 08:33:35 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1u2Ul9-0003kR-O3
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 08:42:28 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=1y2v=W3=kaod.org=clg@ozlabs.org>)
- id 1u2UcW-0002Zb-4O; Wed, 09 Apr 2025 08:33:34 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZXj6F6ZPcz4xLy;
- Wed,  9 Apr 2025 22:33:25 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZXj6B0GT4z4wcd;
- Wed,  9 Apr 2025 22:33:19 +1000 (AEST)
-Message-ID: <670b9434-56ce-45b7-bf50-d71cae560d93@kaod.org>
-Date: Wed, 9 Apr 2025 14:33:15 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1u2Ul6-0003ui-JY
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 08:42:27 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5397tvKx025297;
+ Wed, 9 Apr 2025 12:42:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=gSGzlf/Yq1WUn9xS1R1Y1syykuyuUYkt+2HKj20lgI4=; b=
+ ARDvks4Nhzb1V0ObEXqa7NeekQvaiJYaJWW90EZdJao/M+I9q03eoZ1B8ODmuC/h
+ 6N0uNP12ip8ZvWk049Eb53hiHlYHvjKocN7Kh/ZEFzC++Xy87xqtSRSvTPhIhYLt
+ kUoytQ95LjaEaCyiNVokuahIGBGMFSmfXtx81XtcBd3O5Ki4VlHCBKu+kvM/PUB4
+ u5zacWWkBrf0cOj0Y807whPJdfTnFn0VG7daOT4C1ZTELrPsoeRKDuY9n1xupTBj
+ rRS3fsVnomBZYSDUdfSmq71B4lfp6zIEsPoLhkjwBlqyCZ6o6NWAaQ7FSezgVb0d
+ KkXMD5QoZ7B1nrz0HSql0g==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45tvjcy4m8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 09 Apr 2025 12:42:17 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 539CFCYY013695; Wed, 9 Apr 2025 12:42:16 GMT
+Received: from ch1pr05cu001.outbound.protection.outlook.com
+ (mail-northcentralusazlp17010004.outbound.protection.outlook.com
+ [40.93.20.4])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 45ttyh2j6g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 09 Apr 2025 12:42:16 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=r3ccy3zwl3sYgIiOR/3ZBWD1s16eH6vhEgEi0VMqUJ/CO/h/BONxScc/hQ9Q+B4cAU+crYLk7lExUK+QBjq2fRpb+P48Y+b6bq2M9Lr4g8lux+sH7YXat9TbkZ5etEyO9zE5CnpsjdSFJOpl5GL0BcPhpXKuLrN7fpMwBl+H2k4dQkXB5Qf25f2fnoRHhTG5KUJ05zXiqtO8Bf5iuPbyzO3bAjm0lB9schzmPOv0+ALZIoWfLM70FZjxvTHpk2Yey5cQAidg7s1cNHoA10+3dfqrqlw+20UGDQzTPMIVobrMXmFBEIOJE9IAYIcZ88qafpLWwO1E5yopGjaY4uyQYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gSGzlf/Yq1WUn9xS1R1Y1syykuyuUYkt+2HKj20lgI4=;
+ b=VVXGWaaEtGSv/mrd1ZezIRHUVlq3V0nscCBE1SMF5RmOqVKGKP6N5ekE1HBI879tYZi1Pje513lAj5dUQihMcR6UrhcvPFsO/5RY8Nh9w8CVViuIlF6f0oPV7plLkWKnuLKJW9TNIpRl1j+yeasyITpY/CBiIXeiaAD4NfEsUUav9XKdz2R1EXGRgTSwbC/aOSftvXij4AXR+M49vRbB6Iu2TFoRSBgXne8ik2KBWsQO6wEGa/VB5lL3d8Bc1ARUGb9pvuq8/CsOqE4IMuHp+NDAiNirVEApHDs/9ZDapr65ahV7RQh8wUyfwMidIYbWouOaIor8gAuM1dj19oLn1A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gSGzlf/Yq1WUn9xS1R1Y1syykuyuUYkt+2HKj20lgI4=;
+ b=Pdk/t4PEBdC2s+f8XMvjKxSHuOuCigd6lqd6DZ7e2xaiFiVs7Vg5kvx9mh6ZBOZer9HkABCfLUL6K+uzf9x6N23MscG4LYWXFQfHT4do8ST25btAN1XNkOi6i/afEOr53QK2jIi8doA1+Y7uaHWnSvSppMcfq2LiCSwY0H/q/Ak=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by IA1PR10MB5993.namprd10.prod.outlook.com (2603:10b6:208:3ef::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.21; Wed, 9 Apr
+ 2025 12:42:14 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%5]) with mapi id 15.20.8632.021; Wed, 9 Apr 2025
+ 12:42:14 +0000
+Message-ID: <86bb6d0f-63a1-4643-b58a-1186a73e3b17@oracle.com>
+Date: Wed, 9 Apr 2025 08:42:11 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/i2c/aspeed: Fix wrong I2CC_DMA_LEN when
- I2CM_DMA_TX/RX_ADDR set first
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250408082504.3060742-1-jamin_lin@aspeedtech.com>
- <SI2PR06MB50412DDB7CEE6844C1E5B953FCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <7512f3d5-d90e-449e-ab0c-4e82d32eb361@kaod.org>
- <SI2PR06MB50418E5147D60FDD90A052D8FCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI2PR06MB50418E5147D60FDD90A052D8FCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Subject: Re: [PATCH V1 0/6] fast qom tree get
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, devel@lists.libvirt.org
+References: <1741036202-265696-1-git-send-email-steven.sistare@oracle.com>
+ <87friheqcp.fsf@pond.sub.org>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <87friheqcp.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=1y2v=W3=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-ClientProxiedBy: BN9PR03CA0307.namprd03.prod.outlook.com
+ (2603:10b6:408:112::12) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|IA1PR10MB5993:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93c23d99-1437-4311-9a01-08dd7763f430
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?WFVFZm1DU1pzKzVxVXN4dzFEa29WbWt0MldBT1JiRjdKMXNJWGJMTUhrM2Uv?=
+ =?utf-8?B?N3huVy8xMENOdjk3a2tyRndXTGs2T0JzVWpRTWtTR2lIVko1aUFSVUE5MHQ5?=
+ =?utf-8?B?bHA2K24zci9acVU5U2lGUnZxMmIyVnM3YU5VRzhicHc5Tkl4WitnNk5tYThl?=
+ =?utf-8?B?U0RRU3RrUFFuZytGbmNuQ0p1MDd4Y010bTFQbVIveDM1c3lSSTdiMGdkZER6?=
+ =?utf-8?B?RFAyRTFidWhYWVJrTkNFMXo0L2l5YWptRnpaQVExWncxNG4xdnkyVzU4cWNt?=
+ =?utf-8?B?SWhobm5YUkRQVi9UNjFoS2tqbHlxS1dwZk9lS0d4YS9wWTJhQjFUYlovRmcy?=
+ =?utf-8?B?enkwNnVoU2phcGJUR0lHVkRNV2hLNVNtZm4xSjBReC9CWEwxSFFXdUQzWVBW?=
+ =?utf-8?B?UWg5UmYxYk95ankyYi90cmJMZGhQaE92aTkrNXVPajF0b3IxUHEyNnhKb0li?=
+ =?utf-8?B?NkJ4SCtBRktxek5LQVl0cHptcURzMlBPMTBsY1BlNEZ2bUNMZFh1ZHFEdEZP?=
+ =?utf-8?B?TUhDZG1pVy9PYU81WEc4YmxWeTJteDVSSW50b1E0OXc3OG42NEJmQUgvRVpB?=
+ =?utf-8?B?QkhlbVpURDQ2eGFuMDFNTjhCZFhDemJ3aXFRZzlVUWFsUVptRG0reTE0eGx2?=
+ =?utf-8?B?K2Zla3l3Zk1UWkNieTQ3K2VDRU5oOVlsWVF0Q3JoSFpOWWFrcEVOekRVQlNI?=
+ =?utf-8?B?T05kM2pzQU9Hem1oNkN4V2MveEFoNzNzbktDZ3MrL2NKVGFzZ0ZTLzM3NkJH?=
+ =?utf-8?B?MlVKZjAwU3oyU0lNYjlDcjZiaDZ0dFVRanM2dys0S3BoSTdJV1RLK0dPTTlE?=
+ =?utf-8?B?bzhEYVByZW8yc1BROFRRTll4Wjd5NHBPZlFQRkpkUjMxYUZXdWxXRk1hcXox?=
+ =?utf-8?B?dCtLcU1scVRqS1BlY3hoMUd1VkhueXVHano3OTR2SUU4TTM1dWl5NUxzREcw?=
+ =?utf-8?B?UWgzMUowNEt1TFNaczFnM3BBa1ZoN2pQd2N4a29sK2Q0QnJ6OG82LzlDeXpP?=
+ =?utf-8?B?SXNoRUVQZ2t0clNOcHBIYUhodlRZR1VqNUJTbFE0dzZKNDFVZGRNck84TSti?=
+ =?utf-8?B?TVYxTzNIL0ZGd2puRTZDZkdwMm94cjB6Z3d4b0FXL1JxbmhSUHFBbC9pcU9j?=
+ =?utf-8?B?UTNKQlhYR253YStLbU1nNCtyQjAwb2QxUFFSajlqWDhNTWxRajFNTU5QVklj?=
+ =?utf-8?B?QzVBQUlQdHlPc0V6TmJ5dVBwb0R0UUU2N3VsMFNYV2IvbWlHbXZjcXdDQzRN?=
+ =?utf-8?B?bHQvcm52ZUJidEUvckJEOU1ZZU1oc1Iyazc3QnZZQUlPajNlRktNRzI5LzVw?=
+ =?utf-8?B?aXAvbWYyZjVkSnlveUo0cXd1VGdKRTluSytyTjdOTjBjVjcxRS9RMFZTWVd3?=
+ =?utf-8?B?eU5TcEV3aXByRjlEaDVMblBFNHlPZVlhMzBxUE9kMXVWSDBLMFFTMG1wN1hG?=
+ =?utf-8?B?Ly9aaGJoUXdER3JITG9jT1dmM1dmQlJLSlcvK05Ybm9UUkdqZnlXZWgyL3kx?=
+ =?utf-8?B?dXk5MmRHTlZybjhWNEp2QWRJQlRvSEgrRk1VVmlEa2MxS0tnTklqRVo1dzJE?=
+ =?utf-8?B?SkJ5Y05RVEJPQWR2QWV3UnhYa09oV1Mrem5LWEk1dyt3VkpkUzJ1RnN3ZjlI?=
+ =?utf-8?B?RzE3MDJGdEtyaXhaa0VXN3IzdEpubDk0RUZROUIxY2JiWEdYZ0lHRmxMMWJK?=
+ =?utf-8?B?RlEzWG8remFySUJvWE5aTU5NVlNQUWl3Y3NXTTNZMWdHMHRGS2UxbHdRQk1m?=
+ =?utf-8?B?UWh5Rlg2c3NyUUxBZ2VqOHZMRm84bXU3M0E3K0N2aFRuNU5hcDlvczBjeHFJ?=
+ =?utf-8?B?ZmlZTDVVeFg4UTJrcjhoZ09TZlhGbnhmc1hia0xtUnNzVWkxeWZ0cWlIU0c0?=
+ =?utf-8?B?a2IvOHBpYTlNelIvdUFJTlRtWEdkdGFVSXpQWlFDeW55UTRiYTE1UjRlb1ZG?=
+ =?utf-8?Q?DVWyDxvL1V8=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?blNDaHhObU9WMUpjam82YTJxWUU1Y0RrMlcxUFVReW1hejdIdTE0UkhjYytS?=
+ =?utf-8?B?N3IwK2Voa3pJMEhKc2dFQ2p4eGJGVlprUFhMK3RLb2M2YjdaRkRMYVlVQzdE?=
+ =?utf-8?B?cDNjOFk4cmRvdUFSc2MzZVJXcE13R1NEVkFrd2FYRjNuZXR3dzQ0c1BWdE9X?=
+ =?utf-8?B?N3p5aFdMN3k4VThOVWlkSVpkRHlTOXRxbStDbFVia0tXNUVTQkxPeDJxOHl4?=
+ =?utf-8?B?WWpVSUw3TXZ2eFpSQkVMb0Y0aFZMY2xDS2thQVI1dDFIeWlqS1lRaDdOY2Vl?=
+ =?utf-8?B?aU53a1FTSDZtbm9KeTg4VGJyQ0pMSkdlUjVGTkVUeDBGS0dEODY4MVVNOGFk?=
+ =?utf-8?B?SEdVNld6cGdFckdnMnN2bmRLOGY3R2UybkoxOUx4UGExZ01iUkRSejd0d2hr?=
+ =?utf-8?B?eGxzKzA3SWpMSnYwQ1JtRGxqNGp2Yjl2eGp5TjR3QmNramlBVkhCZEZxNWtM?=
+ =?utf-8?B?VHFVYms2NW1PNE1LdjRFZTJVWHdoRUdNdXljclJYOFlyMWp2Tk9lQmpBdmdB?=
+ =?utf-8?B?VmNpa3JSNjViNXdRWTNyR01EZ0RvWWpUVVR1ZTlmbUNhZE1pZlU4LzhOVWgz?=
+ =?utf-8?B?bFMvenhKNTRjaWJBM1Y3Wmo1bE1BRklzSmpQY09rL3EyRzNFamFHS044WGlN?=
+ =?utf-8?B?c1g0TElxNVRTS3NueVllNTc5VTFVV2tUSmZsMHMrSnBQcGEzckdhQnpEL29p?=
+ =?utf-8?B?NmV6SXdmQjhUbnZrMkNmMjlBTGZzV05HV0FVUzMwVjNtbmtZMkI4aWtBYzFQ?=
+ =?utf-8?B?T3hVUHEzQWZBOHQyVUo4V0FlSUZlWlZnaEdINlV3NG1oK2hCd2luTFNUTVR3?=
+ =?utf-8?B?MEQyTmtoVHROeDRKTWNhWk9oOGtHQmZ3eWkxWXA1QjlmZG5uS2NQWUFPMGpP?=
+ =?utf-8?B?aWRYa0Y0RnVvd1FHY3c4RjY3MG1uQ2RZWWdSMTVOdjRWTGd4a1Z5TG51OGkv?=
+ =?utf-8?B?YWlQbzBZVUhqN1pmMUxrSUh4UmJTNHpDRG5jbmdXZmI0Nlp4SDZ6bnhqSnRu?=
+ =?utf-8?B?NG1ZWktFWnZOZHVkSEEzbjVKM2tQS1Jmam0rSWIxbk1qckwvZEZUY2FCRXpy?=
+ =?utf-8?B?R3lRUzBnMjdjOGtpNzVKSjBEVWcwYnUwSGNvS3FFOVE0TTRPTzNBOVpFZUJW?=
+ =?utf-8?B?Vi84L0xGc013SEZsdXpWWE5oaGZaZmNUWHJhRlp5UmorYTlZZkRCdFJXeWgr?=
+ =?utf-8?B?Nms1OVZNVU9GRDRQV1BoTSt0NHJPdnJPNU41RmpuNk1GNWF1RHRraGY4ZEpa?=
+ =?utf-8?B?UklWeWt2TmwrZndrdlJUQlY5UlVKa0VkM3o5SEZyTUh0YnBMK3BUK1FMaTVR?=
+ =?utf-8?B?TDNSb1RaLy9MdHRraEdrRUlsZFNPaWtKVkZsTUlGemVOMEl1c2dkMm5qMmVz?=
+ =?utf-8?B?MzR3ZjI4NTN4UnNjYy94Mmt5bHV5V1dOMXEyOEQ2ZVg4RFNrTWRYSUVHYWY3?=
+ =?utf-8?B?SmNuQ3l0VC9Udlh3MUtrOTBiVGJmUDhuZXdJRldacjgwbWt0S0xuSEh2Sm5s?=
+ =?utf-8?B?RnlXbTl0ZjJLMWUzZjFkU3ZZLzlMaDVLTDdiOHN5QjM2MHBSMGp1c3AvSjlO?=
+ =?utf-8?B?cmR3Qit3MDY2dzhXMnF6QUw1QUUrVjVNa1V3RjIrV3lnZnpadkxOWmxGYzB2?=
+ =?utf-8?B?WGN4dVk5MG9Db0hvUlhPODVuOERKa2d2TTA0UGE4R2JtRktJeGJsWld5ZkxP?=
+ =?utf-8?B?ZEU4TWU4SlpVNnZXaDNBSFFDcnpFWG9Nc3JDVmV3bUtsRE9yN2lTckVCTVJo?=
+ =?utf-8?B?RS9VZFFOazdFNXIxeWN2eFVrRGk0aVVWcDY5dGIwdVZkaGdCS3A1NDJRb0hW?=
+ =?utf-8?B?OWJuMG5HZmRoWFVJTzZGbDdVRDBiM2NaeEJXRTJBNkV0THRya2Vta0tKdjh2?=
+ =?utf-8?B?NGtIbGtpTERKRVErS2ZPMU1Ed2ViWmJLbjI2UEVLSmpEMTViSFl1aldlcXFv?=
+ =?utf-8?B?MkhqcVQzSU9rTlZsRGVZNVFvenZpcDE0a3hhQnF2dXlWcU54Z0JkY2dERXJ6?=
+ =?utf-8?B?Vkw0d0JCa1VCMDIySC85NWViRW42STJMaXdQLzgxelpGM1l1NTBkYXRodEEx?=
+ =?utf-8?B?Y2lwUU9NeHl0RVhTaUhzbFBRYjVrUk9sUzZhOXpHb0RLOGk1Y0tMNFVScHoy?=
+ =?utf-8?B?ZzhDS1lLbDF4bXpyY3I5RXN0dVNFY3krUkYwT2dSVTVQZWJoNUJqMUV3Rmlj?=
+ =?utf-8?B?MGc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 1R6HGwDdKA4Y0Dn5otz5xUVfAQ6iVYRmcdOxT+sidMEXp0YHpS8gvxI02EPQy35/KKad++RbMNkI9PQgPyEbUwZql4SBvtZT1EXv2Zz3dXO8y/fZcX8eGNlhukXT37GwDNnMLwC5f936mPF5pzq1w14g0QkLW3PuujroucTdbPX0yaPd6NqMj4D8V+8LofUUJtOzWZQIzg79olQXiAgZHZN2KLqT0Sc0fUQcVOhqGakASAGtsJi+wIC/y22sL1k7oq7bVAPzITMy8Hbsa79UtedJ44phkjDHay75/OLJKv82cr8AjBu63qD6+vQUTSd3vRS9C4aW0RsjfbVwT5Ngwuun9m9NrUWph0HbbK+AH5uVs+6MOg2nEZ7A2k/uuO6VA8MIxFdyNgm6Cc4ky9ylqXFZf7uMgjXhJfQizG8o1gzmCXkhg0Ez/ufnUCdCDm/xKUWe+xfrwLXhmtLg39Fk0rMLBPv0sx727+LqE6MykZXQVKSOYkEDn0p2kmWWfd4EDgFJ3SpU9rnBGDb7VlRZWMBE13RSMq9dvzGyNt0GxwejlAB7evwSeW9pJyEqRvKAJk0J2jOZiOnEVQD9ALbTTMr6LRPm3OXtibPiyv8tA/k=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93c23d99-1437-4311-9a01-08dd7763f430
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2025 12:42:14.0706 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MioxWh2xuW7cbH908zE2COU3aP0fRy/AwOkmzWvxFnbeYSy5D6Jr77V0H9KBm/HX3fLsp6t+sHMnQYYShDGwCYRgTMMZoQTvQ+FRr/eryNQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB5993
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-09_04,2025-04-08_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ adultscore=0
+ mlxlogscore=999 bulkscore=0 suspectscore=0 mlxscore=0 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2502280000 definitions=main-2504090075
+X-Proofpoint-ORIG-GUID: Ra_1PuVTuAKyjDrXSB_9d6dpISSKPHnW
+X-Proofpoint-GUID: Ra_1PuVTuAKyjDrXSB_9d6dpISSKPHnW
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,30 +222,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
->>> After discussing with the I2C hardware designers, we confirmed that the I2c
->>> design in AST2600 and AST2700 A1 is the same.
->>> The datasheet will be updated accordingly for AST2700.
->>>
->>> However, please note that bit 15 and bit 31 are not available on AST2700 A0
->>> and FW do not set either bit 15 and bit 31.
->>> AST2700 A0 was an engineering sample version. Given this, I plan to resend
->>> the v3 patch with AST2700 A0 explicitly marked as unsupported.
->>
->> Are you going to introduce an I2C property to distinguish the
->> A0 implementation for the A1 ?
->>
+On 4/9/2025 3:39 AM, Markus Armbruster wrote:
+> Hi Steve, I apologize for the slow response.
 > 
-> No. I want the I2C model to be as simple as possible, without adding any ""AST2700 A0"" specific changes.
-> V1 patch work for AST2700 A1, AST2600, AST2500, AST1030, AST2500, AST2400 but not AST2700 A0.
+> Steve Sistare <steven.sistare@oracle.com> writes:
+> 
+>> Using qom-list and qom-get to get all the nodes and property values in a
+>> QOM tree can take multiple seconds because it requires 1000's of individual
+>> QOM requests.  Some managers fetch the entire tree or a large subset
+>> of it when starting a new VM, and this cost is a substantial fraction of
+>> start up time.
+> 
+> "Some managers"... could you name one?
 
-ok. Please first adjust the ast2700 functional tests for the
-ast2700a0-evb machine (no I2C test) and deprecate ast2700a0-evb
-at the same time.
+My personal experience is with Oracle's OCI, but likely others could benefit.
 
-Thanks,
+>> To reduce this cost, consider QAPI calls that fetch more information in
+>> each call:
+>>    * qom-list-get: given a path, return a list of properties and values.
+>>    * qom-list-getv: given a list of paths, return a list of properties and
+>>      values for each path.
+>>    * qom-tree-get: given a path, return all descendant nodes rooted at that
+>>      path, with properties and values for each.
+> 
+> Libvirt developers, would you be interested in any of these?
+> 
+>> In all cases, a returned property is represented by ObjectPropertyValue,
+>> with fields name, type, value, and error.  If an error occurs when reading
+>> a value, the value field is omitted, and the error message is returned in the
+>> the error field.  Thus an error for one property will not cause a bulk fetch
+>> operation to fail.
+> 
+> Returning errors this way is highly unusual.  Observation; I'm not
+> rejecting this out of hand.  Can you elaborate a bit on why it's useful?
 
-C.
+It is considered an error to read some properties if they are not valid for
+the configuration.  And some properties are write-only and return an error
+if they are read.  Examples:
 
+   legacy-i8042: <EXCEPTION: Property 'vmmouse.legacy-i8042' is not readable> (str)
+   legacy-memory: <EXCEPTION: Property 'qemu64-x86_64-cpu.legacy-memory' is not readable> (str)
+   crash-information: <EXCEPTION: No crash occurred> (GuestPanicInformation)
 
+With conventional error handling, if any of these poison pills falls in the
+scope of a bulk get operation, the entire operation fails.
+
+>> To evaluate each method, I modified scripts/qmp/qom-tree to use the method,
+>> verified all methods produce the same output, and timed each using:
+>>
+>>    qemu-system-x86_64 -display none \
+>>      -chardev socket,id=monitor0,path=/tmp/vm1.sock,server=on,wait=off \
+>>      -mon monitor0,mode=control &
+>>
+>>    time qom-tree -s /tmp/vm1.sock > /dev/null
+> 
+> Cool!
+> 
+>> I only measured once per method, but the variation is low after a warm up run.
+>> The 'real - user - sys' column is a proxy for QEMU CPU time.
+>>
+>> method               real(s)   user(s)   sys(s)  (real - user - sys)(s)
+>> qom-list / qom-get   2.048     0.932     0.057   1.059
+>> qom-list-get         0.402     0.230     0.029   0.143
+>> qom-list-getv        0.200     0.132     0.015   0.053
+>> qom-tree-get         0.143     0.123     0.012   0.008
+>>
+>> qom-tree-get is the clear winner, reducing elapsed time by a factor of 14X,
+>> and reducing QEMU CPU time by 132X.
+>>
+>> qom-list-getv is slower when fetching the entire tree, but can beat
+>> qom-tree-get when only a subset of the tree needs to be fetched (not shown).
+>>
+>> qom-list-get is shown for comparison only, and is not included in this series.
+> 
+> If we have qom-list-getv, then qom-list-get is not worth having.
+
+Exactly.
+
+- Steve
 
