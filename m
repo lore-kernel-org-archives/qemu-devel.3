@@ -4,74 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE36AC36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2555BC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2ZZa-0006y3-Sb; Wed, 09 Apr 2025 13:50:50 -0400
+	id 1u2ZaB-0007IB-AY; Wed, 09 Apr 2025 13:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2ZZS-0006x3-VC
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:50:44 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1u2Za5-00076b-Nl
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:51:23 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u2ZZP-00055Y-NY
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:50:42 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:381b:0:640:f69d:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0B015613D2;
- Wed,  9 Apr 2025 20:50:29 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:7304::1:2d] (unknown
- [2a02:6b8:b081:7304::1:2d])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id RoiPL40Fda60-svC8wGu0; Wed, 09 Apr 2025 20:50:28 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744221028;
- bh=ydVzw7GhyfIxm6CVGHipSY6ZJX9EDwBW4fpge4tri/g=;
- h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
- b=nwfir+wxUWvZKVvp4G9WAdCCWgblhBZpdlz4X9iiMpwFyvrurP0jbKE4ssrhqFnsM
- ZO/M9Vem8ut4LKclxjpNxR4AmFDxEdh2dAAXN7yUf3dSwohe/3TOxdOgyWSa2HWl5x
- FCKvUow1hWboAzqfbqoOk1+vCwDir4MuAYWzUvEE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <da10f71b-d07e-4304-8be7-6fc1f389daa6@yandex-team.ru>
-Date: Wed, 9 Apr 2025 20:50:27 +0300
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1u2Za1-00058L-K1
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:51:20 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 4318844D77
+ for <qemu-devel@nongnu.org>; Wed,  9 Apr 2025 17:50:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1744221059;
+ bh=8n4QMiw+hYe805t9lwmTuDiTcQTPJosZqKpGzH3UeRU=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=QkBtt7c5W19yQYH/zjggQ3WKeLlDNsMYe1KNqtWx84dgbd74aOP9emHeUwwOV4PLm
+ yv/5cQgGTseq2R2jFBIRPfk9uWxQ+GEY6EHPR+nsqrFxbdl5Ta49nW+43/e4bJ8IyL
+ 21Yj9/4yI0VMzcdmKNHHfKypctWttQ1gJsDLP2qwz8z2hDsrKsM1eWif93sevY83Xd
+ iD0jtdRdlNNMFJlgItrCiMbtz8xxs2fzhduFALW9IRIRjoeXFjATV7n9JxUnNp+Asm
+ d2Xrt2Mpwb+XMqaJeiFgT/y17CFrwGOYz7Tgt81s5fCiiRcNZfDjClDt2zVjdMgV8D
+ r9OhTV/i3jyjQ==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 2B0F67E15A
+ for <qemu-devel@nongnu.org>; Wed,  9 Apr 2025 17:50:59 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V7 00/24] Live update: cpr-transfer
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1736967650-129648-1-git-send-email-steven.sistare@oracle.com>
- <631d25f6-b37a-480e-a178-06f66033018b@yandex-team.ru>
-Content-Language: en-US
-In-Reply-To: <631d25f6-b37a-480e-a178-06f66033018b@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 09 Apr 2025 17:37:49 -0000
+From: Andreas Hasenack <2072564@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Fix Released; importance=Undecided;
+ assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Undecided;
+ assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=oracular; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Undecided;
+ assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug-Tags: patch verification-needed verification-needed-noble
+ verification-needed-oracular
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: ahasenack crichton dimitry.unified-streaming.com
+ janitor michal.fita paelzer sergiodj thir820
+X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
+X-Launchpad-Bug-Modifier: Andreas Hasenack (ahasenack)
+References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
+Message-Id: <174422026918.3176405.8970686480278062595.malone@juju-98d295-prod-launchpad-3>
+Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
+ (amd64 host)
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="e76edd883483c71c468bb038e98836435de44530";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 2b59ac0bb90746e5440f906d06b8ab4ac8c27fde
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -80,51 +99,145 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.04.25 19:22, Vladimir Sementsov-Ogievskiy wrote:
-> [offlist]
+Given this possible regression:
 
-Hah, decided to send offlist, but forget to clear CC. Sorry. However, nothing secret here.
+   * This changes the alignment of sections in the ELF binary via QEMUs elf=
+loader, if something goes wrong=20
+     with this change, it could lead to all kind of crashes (segfault) of a=
+ny emulated binaries.
 
-Moreover, interesting, what do all think about a cpr-exec variant with loading QEMU as library instead of doing exec.
+Is there something we could do to mitigate it? Perhaps a quick similar
+ldconfig test in other emulated scenarios?
 
-> 
-> On 15.01.25 22:00, Steve Sistare wrote:
->> This patch series implements a minimal version of cpr-transfer.  Additional
->> series are ready to be posted to deliver the complete vision described
->> above, including
->>    * vfio
->>    * chardev
->>    * vhost and tap
->>    * blockers
->>    * cpr-exec mode
-> 
-> Hi Steve. First, great congratulations with finally landed cpr-transfer! I saw the history of Live Update series was started overly five years ago.
-> 
-> I've some questions, hope it's not much trouble for you.
-> 
-> 1. We consider porting cpr-transver + vfio part of your "Live update: vfio and iommufd" to our downstream QEMU, based on v7.2. What do you think? I mean, may be you may quickly answer "don't try, you'll have to bring more than 100 commits from different series", or visa-versa "we have downstream based on 7.2 too, so it's possible" (OK, seems the latter answer is not possible, as iommufd code just absent in v7.2).
-> 
-> 
-> 2. About cpr-exec. Do you plan resending it in future? The solution is interesting for us, as it simplifies management a lot. I read the discussion on cpr-exec, seems the main problem was the security constraint, that we don't want to allow exec call in seccomp profile. Didn't you consider a variant with loding the library instead of exec?
-> 
-> I mean:
-> 
-> - turn the whole QEMU into library, which may be dynamically loaded. Recently there was a question how to do it, and the answer contained an example patch: https://github.com/pbo-linaro/qemu/commit/fbb39cc64f77d4bf1e5e50795c75b62735bf5c5f
-> 
-> - and make a simple wrapper process for that library, which also is a container for migration state (including file descriptors), during live update.
-> 
-> Benefits:
-> 
-> - no execve, and we just need to add pattern for "qemu library" paths to apparmor profile
-> 
-> - probably, we can load new library _before_ starting the migration, reducing freeze-time of migration - more like migration with two processes
-> 
 
--- 
-Best regards,
-Vladimir
+** Changed in: qemu (Ubuntu Oracular)
+       Status: In Progress =3D> Fix Committed
+
+** Tags added: verification-needed verification-needed-oracular
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2072564
+
+Title:
+  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Noble:
+  Fix Committed
+Status in qemu source package in Oracular:
+  Fix Committed
+
+Bug description:
+  [ Impact ]
+
+   * QEMU crashes when running (emulating) ldconfig in a Ubuntu 22.04
+  arm64 guest
+
+   * This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
+  Ubuntu 24.04+, running on a amd64 host.
+
+   * When running docker containers with Ubuntu 22.04 in them, emulating
+  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
+  ldconfig.real) segfault, leading to problems when loading shared
+  libraries.
+
+  [ Test Plan ]
+
+   * Reproducer is very easy:
+
+  $ sudo snap install docker
+  docker 27.5.1 from Canonical** installed
+  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04
+  Unable to find image 'ubuntu:22.04' locally
+  22.04: Pulling from library/ubuntu
+  0d1c17d4e593: Pull complete=20
+  Digest: sha256:ed1544e454989078f5dec1bfdabd8c5cc9c48e0705d07b678ab6ae3fb6=
+1952d2
+  Status: Downloaded newer image for ubuntu:22.04
+
+  # Execute ldconfig.real inside the arm64 guest.
+  # This should not crash after the fix!
+  root@ad80af5378dc:/# /sbin/ldconfig.real
+  qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+  Segmentation fault (core dumped)
+
+  [ Where problems could occur ]
+
+   * This changes the alignment of sections in the ELF binary via QEMUs
+  elfloader, if something goes wrong with this change, it could lead to
+  all kind of crashes (segfault) of any emulated binaries.
+
+  [ Other Info ]
+
+   * Upstream bug: https://gitlab.com/qemu-project/qemu/-/issues/1913
+   * Upstream fix: https://gitlab.com/qemu-project/qemu/-/commit/4b7b20a3
+     - Fix dependency (needed for QEMU < 9.20): https://gitlab.com/qemu-pro=
+ject/qemu/-/commit/c81d1faf
+
+  --- original bug report ---
+
+ =20
+  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on Ubuntu 2=
+4.04, running on a amd64 host.
+
+  When running docker containers with Ubuntu 22.04 in them, emulating
+  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
+  ldconfig.real) segfault. For example:
+
+  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04
+  root@8861ff640a1c:/# /sbin/ldconfig.real
+  Segmentation fault
+
+  If you copy the ldconfig.real binary to the host, and run it directly
+  via qemu-aarch64-static:
+
+  $ gdb --args qemu-aarch64-static ./ldconfig.real
+  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+  Copyright (C) 2024 Free Software Foundation, Inc.
+  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
+tml>
+  This is free software: you are free to change and redistribute it.
+  There is NO WARRANTY, to the extent permitted by law.
+  Type "show copying" and "show warranty" for details.
+  This GDB was configured as "x86_64-linux-gnu".
+  Type "show configuration" for configuration details.
+  For bug reporting instructions, please see:
+  <https://www.gnu.org/software/gdb/bugs/>.
+  Find the GDB manual and other documentation resources online at:
+  =C2=A0=C2=A0=C2=A0=C2=A0<http://www.gnu.org/software/gdb/documentation/>.
+
+  For help, type "help".
+  Type "apropos word" to search for commands related to "word"...
+  Reading symbols from qemu-aarch64-static...
+  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
+4189499f62f176bea817bf2/debuginfo...
+  (gdb) r
+  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
+  [Thread debugging using libthread_db enabled]
+  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+  [New Thread 0x7ffff76006c0 (LWP 28378)]
+
+  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
+  0x00007fffe801645b in ?? ()
+  (gdb) disassemble
+  No function contains program counter for selected frame.
+
+  It looks like this is a known qemu regression after v8.1.1:
+  https://gitlab.com/qemu-project/qemu/-/issues/1913
+
+  Downgrading the package to qemu-user-
+  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
 
 
