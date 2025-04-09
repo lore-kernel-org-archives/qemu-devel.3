@@ -4,98 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A38C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 16:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB22C36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2YKG-00058x-6J; Wed, 09 Apr 2025 12:30:56 -0400
+	id 1u2Z2H-0006VN-OC; Wed, 09 Apr 2025 13:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1u2YKE-00058S-Jg; Wed, 09 Apr 2025 12:30:54 -0400
-Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
+ (Exim 4.90_1) (envelope-from <yuanchu@google.com>)
+ id 1u2YfI-0002Xc-BL
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 12:52:43 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1u2YKC-0007Ti-Pm; Wed, 09 Apr 2025 12:30:54 -0400
-Received: by mail-pg1-x543.google.com with SMTP id
- 41be03b00d2f7-7fd35b301bdso7038940a12.2; 
- Wed, 09 Apr 2025 09:30:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yuanchu@google.com>)
+ id 1u2YfE-0001fd-55
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 12:52:39 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2240aad70f2so8105ad.0
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 09:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744216251; x=1744821051; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4woJl9tIpPlD5YThDMG0uDydQ1uuOTwX/x7PyZNEr7Q=;
- b=N8x/6Xjl85NcUEJIgp91eeQyPsMJ1iVK19gqNhengkXi7+6VLsjIpsDXlLgdbUSm8W
- oG8ZJkkJ5njeqqfIf6UPtAmrCcOHhtAdbAgawrztkr7Ol5CpjZqqlatrJ8+BPXPCWXkV
- k6M4UaVuMAQSWIeQQbnmLJ1FgpjckJ3AmrWbiEayNxk1hf181thCg61mHk6/flalSoeb
- x91BKChO3MVrFCn1wZctPWfoIaruaprvGNdE1zOGgy0zrnq7TyyvKS4b7G4Krrg/zl5Q
- 5THNo3Q28MVhMbVSqNOd1YZFyEI1GvvDAnNHMsrj8J+GHOnW0oUipr0XOo1I1uv3YzV6
- 51gQ==
+ d=google.com; s=20230601; t=1744217551; x=1744822351; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KxhzB/rvLn01hoZmiKiKmNuUTf5Uqkd1lPGcDdEtm80=;
+ b=XOUUPibw/pUOpAtoOUtUZXiyl8ZzSC+hPQxU8PH7ZrLE+8rMO6wSCN517pZrME5OE+
+ QpK3r0N6e6RQgDSH+7tP8p5wMOTflUhXxr32/nQ443oXvQlE1jup5w4LL/BFIG/WKe8k
+ 7SS/QQRstVCLm8VnAtqhnPiBPa9gGAezjFI6UHE409HUaGQaD7XL/A0X71+D0zP4b3dP
+ wg27ku+H/rfvWPW+czkmk85DfDzaL9tmBKqUiVr72DQbixuV3sFVFNUgfNK80ov1UDbC
+ 1/9W3yCw+fBkrJLGBnxRvpg7R63DinftrdTFWIu55XggHBpTTDc1FS0QLolC/Iqz1Q/R
+ lnXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744216251; x=1744821051;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4woJl9tIpPlD5YThDMG0uDydQ1uuOTwX/x7PyZNEr7Q=;
- b=rIBAzsJzGfdIANMgQv/E/zUyzczqrAae+BxhLAgKyZLdG5IJjLLV4ZlRgT7X8W2Ntw
- +uQ5FTsj9JVfMotug861uyurkYS0VBrUKLOeNdHevWqmC+MmruxTQk1WOHEdK4Famw9G
- +gWT1k+0qEKaGODuF0nrmzNfG5ibRZ5NSR2QQki4GcapVoZttHMynBV/unbhXroZVzhY
- hfg3FKVKtcXQTPoVdgN+Io9kQ6/2uLogj/S/A3DBRpjeTLch7gH7nFVseYhJ2WGBvyLt
- N4NAxqgpWOlgQWYsrFb+X1b1iC7xKhggcCNc0wtOxKffqPfbImam3c0BLykaLVNiV8Ii
- uF1g==
+ d=1e100.net; s=20230601; t=1744217551; x=1744822351;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KxhzB/rvLn01hoZmiKiKmNuUTf5Uqkd1lPGcDdEtm80=;
+ b=E3bxpz50A2SUV5I8r7PM5mPypac1vkJ9EMwCibLyXBn15CThNPbyjQXHPLg9XeGarh
+ /PgyGhyTqslw+I2aUXy4Tqx7zRw1DspBijikmGvx2y32U9cfrbD33dc2q9vpWDm1f3Kh
+ 3ptrXMq0E/jHWr9PvTIScl5SMnmOSpCqsya5VDFwidTCG4+l+ALdcOIBnClstLrdB189
+ Oq5Az9+aQyOlh1YmyJq5/MSEbUkJ4ksvLeN264gdCRv0dDXOQbuhq8hffGxFLNYZ/M0S
+ UFZrpi74S8tQe+XU4vsWav+YO7ZM4TrS1BIAYwemEaIT1Mak+JW/lf81HQRWh/pUM61v
+ P4tg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsDv00XOMNdCet+hW5KsaXCASNWLlsmgWY1yNuMY6Iwu/M1OI2KMz2Rkvvth2vKmXxbYgTpbY8pPcU@nongnu.org
-X-Gm-Message-State: AOJu0YxQSk0LJE8NHATZtMlON/lT1wK79jWeafpGkDas9nEwcf646xKF
- IZID8i4BBbIPg52XRX1MIPBPdcOnF5os1E63QIZRRe8wJc28lq0=
-X-Gm-Gg: ASbGncvrMJeh3elixRa9WA59ZXxnMoTFELlvCaX/ZNMNDswfBdp1iAmkd0ZAf33v3DQ
- l3jwTDb0q8v7zTrkwS8m5Ya4RFkVWt3kpD8DouoLmORIxZPqiD2RvNIT+suQZqjpUxIdnoJdrgE
- w1cfkPb53FG1bZM52xUZfYRQF0skDyFAjFaHuFmev6jIYP5z5dWBdLqHY33Nf8FNeDpzd2eWdSJ
- QDngf39PSXG+pTDq0dACG3ECBokt5EnkvtP966+vSW8xkppqT16d7FopBke/6ObNfN54ugOWyZP
- RBgkQwFeQnsz119Ofv8G1L8slxe0yn8oDHpG2WHz9u8wOQ==
-X-Google-Smtp-Source: AGHT+IFNwVZ4canVCURKgsWm1V2HIS57xtX6EpStGV+xQY4piVQgrzAXrtllGIA7HjfrTsYbgAjaEg==
-X-Received: by 2002:a05:6a21:31c8:b0:1f5:837b:1868 with SMTP id
- adf61e73a8af0-2015afe0c2bmr4924882637.29.1744216250520; 
- Wed, 09 Apr 2025 09:30:50 -0700 (PDT)
-Received: from [192.168.0.113] ([139.227.17.72])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b02a2d3aa63sm1264599a12.50.2025.04.09.09.30.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 09 Apr 2025 09:30:49 -0700 (PDT)
-Message-ID: <a76453a8-c35d-46f9-b0b4-4fe35a5153ba@gmail.com>
-Date: Thu, 10 Apr 2025 00:30:40 +0800
+ AJvYcCXjc3MDffEhW4RPHlay2mTrgYQELUAg4G2KIg3fjCI9k4/vsdH6Vp1TJH7RMJiVJQ+N3ZcHnvfah7n1@nongnu.org
+X-Gm-Message-State: AOJu0YwVQqOjsElrjMPku5i2RW/XbnY7bgtPLa45IvSTRWF1wWeg+g3f
+ AZy7uQcHZkjH8K+YnUFfTQAfAJYPOsQfZ3ngNBclQCRj3tongFORk9vcQgx3biZHWx8DAx6fc94
+ BBYeNsSys68HcYq4CpsT85uY10Ci08VZP6wus
+X-Gm-Gg: ASbGncvdTbchaawfLMcym7yd+dlOP1Cl8ononXhvcrTGPpuj11E5QzS03CJryXCq83a
+ VZuYk713QfzGBlaMYv5zQOugMNrTA3Lkc5wfDHNS3PCauLUNkWjNNQAe4u75mmIymAvlsg25Qh6
+ sQ1ZwR66nGYn//FwvN0qM6O1TT6qs8dgDQh66V5ffuYdkUiSKWLKw=
+X-Google-Smtp-Source: AGHT+IFZlX+H2sLxd+0i1q4/NMVWp3DoVwGucarYZ0dIheff4noN52DsOyZlpg5W3rt1uBZ3mZQdHc0M5PnL3rAwwO4=
+X-Received: by 2002:a17:902:db06:b0:21f:3e29:9cd1 with SMTP id
+ d9443c01a7336-22ac43c9b30mr3186535ad.1.1744217550776; Wed, 09 Apr 2025
+ 09:52:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/14] vfio: add vfio_pci_config_space_read/write()
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
-References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-12-john.levon@nutanix.com>
- <ed4d5a1e-61dc-4041-a24d-c1a0bd49fa3e@gmail.com> <Z/aYPiAhqSaIrc/u@lent>
-Content-Language: en-US
-From: Tomita Moeko <tomitamoeko@gmail.com>
-In-Reply-To: <Z/aYPiAhqSaIrc/u@lent>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pg1-x543.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20230525222016.35333-1-talumbau@google.com>
+ <20250407053811-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20250407053811-mutt-send-email-mst@kernel.org>
+From: Yuanchu Xie <yuanchu@google.com>
+Date: Wed, 9 Apr 2025 09:52:12 -0700
+X-Gm-Features: ATxdqUEMTbMWjK5jZUT-GXTtxRsyn6Pfsae1bAmml38SIv5bGn_NfBEFtcO4Zp4
+Message-ID: <CAJj2-QE1fO5GhYL_N2=w+xqd+yspkqjrn4HGeTrPUWZYbTp+Sg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/5] virtio-balloon: Working Set Reporting
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "T.J. Alumbaugh" <talumbau@google.com>, qemu-devel@nongnu.org, 
+ David Hildenbrand <david@redhat.com>, Yu Zhao <yuzhao@google.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=yuanchu@google.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 09 Apr 2025 13:16:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,45 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/25 23:54, John Levon wrote:
-> On Wed, Apr 09, 2025 at 11:51:09PM +0800, Tomita Moeko wrote:
-> 
->> On 4/9/25 21:48, John Levon wrote:
->>> Add these helpers that access config space and return an -errno style
->>> return.
->>>
->>> Signed-off-by: John Levon <john.levon@nutanix.com>
->>> ---
->>>  hw/vfio/pci.c | 134 ++++++++++++++++++++++++++++++++++----------------
->>>  1 file changed, 91 insertions(+), 43 deletions(-)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index ddeee33aa9..c3842d2f8d 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -964,6 +964,28 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
->>>      }
->>>  }
->>>  
->>> +/* "Raw" read of underlying config space. */
->>> +static int vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
->>> +                                      uint32_t size, void *data)
->>
->> Returning ssize_t here might be better here to avoid casting issues,
->> though we would never read/write something exceeds INT32_MAX.
-> 
-> I considered this (and the later helpers in the patch), but most of the existing
-> code already uses int. Happy to look at fixing the callers too (e.g.
-> vfio_msi_setup()) if that's everyone's preference.
-> 
-> regards
-> john
+On Mon, Apr 7, 2025 at 2:39=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com> =
+wrote:
+>
+> On Thu, May 25, 2023 at 10:20:11PM +0000, T.J. Alumbaugh wrote:
+> > This is the device implementation for the proposed expanded balloon fea=
+ture
+> > described here:
+> >
+> > https://lore.kernel.org/linux-mm/20230509185419.1088297-1-yuanchu@googl=
+e.com/
+> >
+> > This series has a fixed number of "bins" for the working set report, bu=
+t this is
+> > not a constraint of the system. The bin number is fixed at device reali=
+zation
+> > time (in other implementations it is specified as a command line argume=
+nt). Once
+> > that number is fixed, this determines the correct number of bin interva=
+ls to
+> > pass to the QMP/HMP function 'working_set_config'. Any feedback on how =
+to
+> > properly construct that function for this use case (passing a variable =
+length
+> > list?) would be appreciated.
+>
+> It's been a while. Is there interest is reviving this? I also note that
+> reserving a feature bit is very much recommended to avoid a complete
+> mess.
+Thanks for the reminder Michael! I've been informed [1] that this
+should be brought up in VIRTIO TC, but I haven't gotten around to this
+yet. Should I send a patch to this mailing list or a proposal to
+virtio-comment@lists.oasis-open.org to reserve a feature bit?
 
-I checked the code, caller casts return of pread/pwrite to int because
-the `count` argument, bytes read/write at most, they passed does not
-exceed int. Given that uint32_t can exceed int, returning ssize_t here
-and let callers to determine cast or not is better I believe.
-
-Thanks,
-Moeko
+[1] https://lore.kernel.org/linux-mm/20241127025728.3689245-10-yuanchu@goog=
+le.com/
 
