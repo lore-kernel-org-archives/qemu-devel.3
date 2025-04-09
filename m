@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6397EC369A1
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 924AEC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 14:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2WeX-0008Hq-VQ; Wed, 09 Apr 2025 10:43:45 -0400
+	id 1u2Wj6-0000bY-1n; Wed, 09 Apr 2025 10:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2WeM-0008FH-Kc
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:43:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u2Wir-0000MK-TH
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:48:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u2WeI-00068I-DF
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:43:33 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u2Wiq-0006w8-7H
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 10:48:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744209808;
+ s=mimecast20190719; t=1744210090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZSBkA+zqw5R/IufhHEGuNZwZVqEv/46TgFvEM+OgFYM=;
- b=RTOqGiAkaUCLbPJLcYmHoQFkglMmqSc+OP4qWTwYPGNKhLw2nbNx4fCgaCtnkVZrs3HNxM
- nxrIP2sszCOLceFslQJuju8RktDooy84Obk734dv54fRARLvxQZdmk5/HAunypRmcEKBar
- B5y3m2YXvNWjcg4UAKgqQDrFGljZ2aM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HC9D5jMLOekyJpmVbLEL8XSl99hum9JYY5zwwG6Bf6U=;
+ b=WU2i1IVqE52aHNRX26wrE5CxvXi/8o3B1QLUnBSC4UHAeqoh2eUteA8Gx+Y1mzKxIupd8S
+ gVRPbX+459u2wALLheuSH3FeNISme0aQD0tNXqNM7Tm8oVHSN9kDR3wuEgwD71PLweOQSl
+ 5mf7OPEfjCQKSn/QWd9ptEXsKoBgvdk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-8TbrCal_O-CyvUoLWqxiQQ-1; Wed,
- 09 Apr 2025 10:43:26 -0400
-X-MC-Unique: 8TbrCal_O-CyvUoLWqxiQQ-1
-X-Mimecast-MFC-AGG-ID: 8TbrCal_O-CyvUoLWqxiQQ_1744209804
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-204-biEY0xTEPjmvgUwkaJ7Etg-1; Wed,
+ 09 Apr 2025 10:48:06 -0400
+X-MC-Unique: biEY0xTEPjmvgUwkaJ7Etg-1
+X-Mimecast-MFC-AGG-ID: biEY0xTEPjmvgUwkaJ7Etg_1744210085
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 775CB1800260; Wed,  9 Apr 2025 14:43:23 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.45.227.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C9E951828A83; Wed,  9 Apr 2025 14:43:16 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH for-10.1 v5 01/13] arm/cpu: Add sysreg definitions in
- cpu-sysregs.h
-Date: Wed,  9 Apr 2025 16:42:52 +0200
-Message-ID: <20250409144304.912325-2-cohuck@redhat.com>
-In-Reply-To: <20250409144304.912325-1-cohuck@redhat.com>
-References: <20250409144304.912325-1-cohuck@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D471180AF56; Wed,  9 Apr 2025 14:48:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C78E8180B486; Wed,  9 Apr 2025 14:48:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 30F1221E66C5; Wed, 09 Apr 2025 16:48:02 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org,  mst@redhat.com,  eblake@redhat.com,
+ eduardo@habkost.net,  berrange@redhat.com,  pbonzini@redhat.com,
+ dave@treblig.org,  sgarzare@redhat.com,  den-plotnikov@yandex-team.ru
+Subject: Re: [PATCH v6] [for-10.1] virtio: add VIRTQUEUE_ERROR QAPI event
+In-Reply-To: <556a58ac-7a71-47ef-8f00-312b027955bf@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 9 Apr 2025 17:04:01 +0300")
+References: <20250409094758.58232-1-vsementsov@yandex-team.ru>
+ <87plhlbofl.fsf@pond.sub.org>
+ <556a58ac-7a71-47ef-8f00-312b027955bf@yandex-team.ru>
+Date: Wed, 09 Apr 2025 16:48:02 +0200
+Message-ID: <87a58p75nh.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,229 +88,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-This new header contains macros that define aarch64 registers.
-In a subsequent patch, this will be replaced by a more exhaustive
-version that will be generated from linux arch/arm64/tools/sysreg
-file. Those macros are sufficient to migrate the storage of those
-ID regs from named fields in isar struct to an array cell.
+> On 09.04.25 13:48, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> For now we only log the vhost device error, when virtqueue is actually
+>>> stopped. Let's add a QAPI event, which makes possible:
+>>>
+>>>   - collect statistics of such errors
+>>>   - make immediate actions: take core dumps or do some other debugging
+>>>   - inform the user through a management API or UI, so that (s)he can
+>>>    react somehow, e.g. reset the device driver in the guest or even
+>>>    build up some automation to do so
+>>>
+>>> Note that basically every inconsistency discovered during virtqueue
+>>> processing results in a silent virtqueue stop.  The guest then just
+>>> sees the requests getting stuck somewhere in the device for no visible
+>>> reason.  This event provides a means to inform the management layer of
+>>> this situation in a timely fashion.
+>>>
+>>> The event could be reused for some other virtqueue problems (not only
+>>> for vhost devices) in future. For this it gets a generic name and
+>>> structure.
+>>>
+>>> We keep original VHOST_OPS_DEBUG(), to keep original debug output as is
+>>> here, it's not the only call to VHOST_OPS_DEBUG in the file.
+>> 
+>> Likely should be tracepoints.  Not this patch's problem, though.
+>> 
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> ---
+>>>
+>>> v6: rename path to qom-path, and improve throttling of the event
+>>>      improve wording
+>>>
+>
+> [..]
+>
+>>> @@ -527,6 +534,13 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
+>>>                          qdict_get_str(evb->data, "qom-path"));
+>>>       }
+>>>   
+>>> +    if (eva->event == QAPI_EVENT_VIRTQUEUE_ERROR) {
+>>> +        return !strcmp(qdict_get_str(eva->data, "qom-path"),
+>>> +                       qdict_get_str(evb->data, "qom-path")) &&
+>>> +            (qdict_get_int(eva->data, "virtqueue") ==
+>>> +             qdict_get_int(evb->data, "virtqueue"));
+>>> +    }
+>>> +
+>>>       return TRUE;
+>>>   }
+>>>   
+>> 
+>> Rate-limiting is now per virt queue.  It was per device in previous
+>> revisions.  Worth it?
+>> 
+>
+> Hmm. Probably not. If we have 2 virtqueue, seems good to see both event
+> (or only one, if only one virtqueue failed).
+> If we have 256 virtqueues, 256 immediate events seems too much.
+> So, better is to drop virtqueue here and consider only qom-path for throttling.
+>
+>>> diff --git a/qapi/qdev.json b/qapi/qdev.json
+>>> index 25cbcf977b..ddfae18761 100644
+>>> --- a/qapi/qdev.json
+>>> +++ b/qapi/qdev.json
+>>> @@ -187,3 +187,35 @@
+>>>   { 'command': 'device-sync-config',
+>>>     'features': [ 'unstable' ],
+>>>     'data': {'id': 'str'} }
+>>> +
+>>> +##
+>>> +# @VirtqueueError:
+>>> +#
+>>> +# @vhost-vring-error: the vhost device has communicated failure via
+>>> +#     the vring error file descriptor
+>>> +#
+>>> +# Since: 10.1
+>>> +##
+>>> +{ 'enum': 'VirtqueueError',
+>>> +  'data': [ 'vhost-vring-error' ] }
+>>> +
+>>> +##
+>>> +# @VIRTQUEUE_ERROR:
+>>> +#
+>>> +# Emitted when a device virtqueue fails at runtime.
+>>> +#
+>>> +# @device: the device's ID if it has one
+>>> +#
+>>> +# @qom-path: the device's QOM path
+>>> +#
+>>> +# @virtqueue: the index of the virtqueue that failed
+>>> +#
+>>> +# @error: error identifier
+>>> +#
+>>> +# @description: human readable description
+>>> +#
+>>> +# Since: 10.1
+>>> +##
+>>> +{ 'event': 'VIRTQUEUE_ERROR',
+>>> + 'data': { '*device': 'str', 'qom-path': 'str', 'virtqueue': 'int',
+>>> +            'error': 'VirtqueueError', 'description': 'str'} }
+>> 
+>> Standard question for events: can a management application poll for the
+>> information as well?
+>
+> Oh. that's a good shot.
+>
+> I'm afraid it can't. And this makes me to dig into history of this patch
+> - no, we didn't discussed it before.
+>
+> And before trying to implement something new here (a way to get a kind of
+> virtqueues status by a new QMP command), I check that:
+> - our mgmt tool still doesn't use VIRTQUEUE_ERROR event (which we've
+> merged to downstream QEMU long ago, of course)
+> - the original problem that led us to introducing such event doesn't
+> bother us for a long time
+>
+> It seems wiser to stop here for now. I should have considered these aspects
+> before beginning the process of reviving this series. Sorry for your time.
 
-[CH: reworked to use different structures]
-[CH: moved accessors from the patches first using them to here,
-     dropped interaction with writable registers, which will happen
-     later]
-[CH: use DEF magic suggested by rth]
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- target/arm/cpu-sysregs.h     | 42 +++++++++++++++++++++++++++++++
- target/arm/cpu-sysregs.h.inc | 35 ++++++++++++++++++++++++++
- target/arm/cpu.h             | 49 ++++++++++++++++++++++++++++++++++++
- target/arm/cpu64.c           | 22 ++++++++++++++++
- 4 files changed, 148 insertions(+)
- create mode 100644 target/arm/cpu-sysregs.h
- create mode 100644 target/arm/cpu-sysregs.h.inc
+Well, *I* could've remembered the standard question at the beginning!
+So, sorry for your time, too :)
 
-diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-new file mode 100644
-index 000000000000..7877a3b06a8e
---- /dev/null
-+++ b/target/arm/cpu-sysregs.h
-@@ -0,0 +1,42 @@
-+/*
-+ * Definitions for Arm ID system registers
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ARM_CPU_SYSREGS_H
-+#define ARM_CPU_SYSREGS_H
-+
-+/*
-+ * Following is similar to the coprocessor regs encodings, but with an argument
-+ * ordering that matches the ARM ARM. We also reuse the various CP_REG_ defines
-+ * that actually are the same as the equivalent KVM_REG_ values.
-+ */
-+#define ENCODE_ID_REG(op0, op1, crn, crm, op2)          \
-+    (((op0) << CP_REG_ARM64_SYSREG_OP0_SHIFT) |         \
-+     ((op1) << CP_REG_ARM64_SYSREG_OP1_SHIFT) |         \
-+     ((crn) << CP_REG_ARM64_SYSREG_CRN_SHIFT) |         \
-+     ((crm) << CP_REG_ARM64_SYSREG_CRM_SHIFT) |         \
-+     ((op2) << CP_REG_ARM64_SYSREG_OP2_SHIFT))
-+
-+#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) NAME##_IDX,
-+
-+typedef enum ARMIDRegisterIdx {
-+#include "cpu-sysregs.h.inc"
-+    NUM_ID_IDX,
-+} ARMIDRegisterIdx;
-+
-+#undef DEF
-+#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-+    SYS_##NAME = ENCODE_ID_REG(OP0, OP1, CRN, CRM, OP2),
-+
-+typedef enum ARMSysRegs {
-+#include "cpu-sysregs.h.inc"
-+} ARMSysRegs;
-+
-+#undef DEF
-+
-+extern const uint32_t id_register_sysreg[NUM_ID_IDX];
-+
-+int get_sysreg_idx(ARMSysRegs sysreg);
-+
-+#endif /* ARM_CPU_SYSREGS_H */
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-new file mode 100644
-index 000000000000..6c9f9981cc5d
---- /dev/null
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -0,0 +1,35 @@
-+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
-+DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
-+DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-+DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
-+DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
-+DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
-+DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-+DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
-+DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
-+DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
-+DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
-+DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
-+DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
-+DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
-+DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
-+DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
-+DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
-+DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
-+DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
-+DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
-+DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
-+DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
-+DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
-+DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
-+DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
-+DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
-+DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
-+DEF(CTR_EL0, 3, 3, 0, 0, 1)
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index a8177c6c2e89..5048c85b188c 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -30,6 +30,7 @@
- #include "qapi/qapi-types-common.h"
- #include "target/arm/multiprocessing.h"
- #include "target/arm/gtimer.h"
-+#include "target/arm/cpu-sysregs.h"
- 
- #ifdef TARGET_AARCH64
- #define KVM_HAVE_MCE_INJECTION 1
-@@ -855,6 +856,53 @@ typedef struct {
-     uint32_t map, init, supported;
- } ARMVQMap;
- 
-+/* REG is ID_XXX */
-+#define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        uint64_t regval = i_->idregs[REG ## _EL1_IDX];                  \
-+        regval = FIELD_DP64(regval, REG, FIELD, VALUE);                 \
-+        i_->idregs[REG ## _EL1_IDX] = regval;                           \
-+    })
-+
-+#define FIELD_DP32_IDREG(ISAR, REG, FIELD, VALUE)                       \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        uint64_t regval = i_->idregs[REG ## _EL1_IDX];                  \
-+        regval = FIELD_DP32(regval, REG, FIELD, VALUE);                 \
-+        i_->idregs[REG ## _EL1_IDX] = regval;                           \
-+    })
-+
-+#define FIELD_EX64_IDREG(ISAR, REG, FIELD)                              \
-+    ({                                                                  \
-+        const ARMISARegisters *i_ = (ISAR);                             \
-+        FIELD_EX64(i_->idregs[REG ## _EL1_IDX], REG, FIELD);            \
-+    })
-+
-+#define FIELD_EX32_IDREG(ISAR, REG, FIELD)                              \
-+    ({                                                                  \
-+        const ARMISARegisters *i_ = (ISAR);                             \
-+        FIELD_EX32(i_->idregs[REG ## _EL1_IDX], REG, FIELD);            \
-+    })
-+
-+#define FIELD_SEX64_IDREG(ISAR, REG, FIELD)                             \
-+    ({                                                                  \
-+        const ARMISARegisters *i_ = (ISAR);                             \
-+        FIELD_SEX64(i_->idregs[REG ## _EL1_IDX], REG, FIELD);           \
-+    })
-+
-+#define SET_IDREG(ISAR, REG, VALUE)                                     \
-+    ({                                                                  \
-+        ARMISARegisters *i_ = (ISAR);                                   \
-+        i_->idregs[REG ## _EL1_IDX] = VALUE;                            \
-+    })
-+
-+#define GET_IDREG(ISAR, REG)                                            \
-+    ({                                                                  \
-+        const ARMISARegisters *i_ = (ISAR);                             \
-+        i_->idregs[REG ## _EL1_IDX];                                    \
-+    })
-+
- /**
-  * ARMCPU:
-  * @env: #CPUARMState
-@@ -1063,6 +1111,7 @@ struct ArchCPU {
-         uint64_t id_aa64zfr0;
-         uint64_t id_aa64smfr0;
-         uint64_t reset_pmcr_el0;
-+        uint64_t idregs[NUM_ID_IDX];
-     } isar;
-     uint64_t midr;
-     uint32_t revidr;
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 8188ede5cc8a..62eff5375c19 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -36,6 +36,28 @@
- #include "cpu-features.h"
- #include "cpregs.h"
- 
-+/* convert between <register>_IDX and SYS_<register> */
-+#define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
-+    [NAME##_IDX] = SYS_##NAME,
-+
-+const uint32_t id_register_sysreg[NUM_ID_IDX] = {
-+#include "cpu-sysregs.h.inc"
-+};
-+
-+#undef DEF
-+#define DEF(NAME, OP0, OP1, CRN, CRM, OP2) \
-+    case SYS_##NAME: return NAME##_IDX;
-+
-+int get_sysreg_idx(ARMSysRegs sysreg)
-+{
-+    switch (sysreg) {
-+#include "cpu-sysregs.h.inc"
-+    }
-+    g_assert_not_reached();
-+}
-+
-+#undef DEF
-+
- void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
- {
-     /*
--- 
-2.48.1
+> Still, if we (or someone other) need such event in future - good, we have
+> a modern patch in mailing list to start from.
+
+Yes.  Thank you!
+
+>> I might have asked this before, I don't remember.  If you already
+>> answered it, feel free to point me to your answer.
+>> 
+>> Why is this a standard question for events?  Say, a management
+>> application wants to track the state of X.  Two ways: poll the state
+>> with a query command that returns it, listen for events that report a
+>> change of X.
+>> 
+>> Listening for an event is more efficient.
+>> 
+>> However, if the management application connects to a QEMU instance, X
+>> could be anything, so it needs to poll once.
+>> 
+>> Special case: the management application restarts for some reason.
 
 
