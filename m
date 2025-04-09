@@ -4,175 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C90C36010
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 02:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEBCC36010
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 02:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2LYF-0001BU-2d; Tue, 08 Apr 2025 22:52:31 -0400
+	id 1u2LXo-0000vu-E1; Tue, 08 Apr 2025 22:52:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1u2LY9-00019W-23
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:52:27 -0400
-Received: from mail-co1nam11on2089.outbound.protection.outlook.com
- ([40.107.220.89] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1u2LY6-0001BV-BE
- for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:52:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z9LTj7sMhM1+Tm0PmtyV6rgklTtL7gkJ8DFVExsstVoSmpGUQsgy1k18BmIXF+ovi+J7TJNYVy3wBU6mTtKb4fmYpboZg2j2myfoaQTo8tONrYhxssGMMhTYeqGbaF1jwARikmwjLVWfQemIeCDhWwuGoos6z8E+Ag4cq70xZsCk/UfvsOmRaXGc1vP0w7zF2vzJNM4f8ewJiPUkiahseVJarZjwr2oMarVgp8ncxoZFWWn+HH1UkVwAN+qo/XZCTLl1oLt4MMRdlIw3eymaOt5pX/tVkBw5M1eF60vidG6dJ7kwhEJfDOBQNv6kW8XgBqoypsBjZVmYzsTDgRRhaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rQg9fNNUHQCsVyLVCyujJeQHObnUM4Dxvztuw1pyeHQ=;
- b=nx2zxf5YDBeZQcnLa30U7Zjy7RsEv+TQedQXcaNupdzb7cFWweSqGnvgCW3PicegrHXjD+vuTGU8n+AnG37y9+gCPJ13ObT1JX/Rnp32m2NfYVQS6oABQJU3sMM+u9SoxY3WErU/mf63aOVmF8ieyzseYZUUlE+0FSRps0sd6yMt/esxpBi/PXGkKhMK4rwR4Bfijh+dILbMNm6sYZ7vzpxxrnBfnIwGNSmBdjmrpUWHRlkSQMvC9kRzePZnAigRFlYmY0ya9rfi2PtajXjERTai0PVvIB9NgVdk6kuIXgPvrGRCIzKSEj/Txx0QWbnzZnWfno7wK099cOEmrS+SDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rQg9fNNUHQCsVyLVCyujJeQHObnUM4Dxvztuw1pyeHQ=;
- b=f9Ttj3Dcdh1oDBT0fwKUdKlzrjIBE8KyDIh13d7qo1fWeIycR/84mMu9EcpuCbxHU7Gx9cb76VfGIZPMQrwvPL6yQOqOwJh727j0HxESNHbgnWcpt7K3C7h4kxi3e3kd51u0DpQ1Tuyrz58bykY7n0CuqXee48yzmStFMmJS4Hg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by CY8PR12MB7707.namprd12.prod.outlook.com (2603:10b6:930:86::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.21; Wed, 9 Apr
- 2025 02:47:17 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::53fb:bf76:727f:d00f%4]) with mapi id 15.20.8606.029; Wed, 9 Apr 2025
- 02:47:16 +0000
-Message-ID: <90152e8d-0af2-4735-b39a-8100cfb16d16@amd.com>
-Date: Wed, 9 Apr 2025 12:47:08 +1000
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v4 01/13] memory: Export a helper to get intersection of a
- MemoryRegionSection with a given range
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-References: <20250407074939.18657-1-chenyi.qiang@intel.com>
- <20250407074939.18657-2-chenyi.qiang@intel.com>
-Content-Language: en-US
-From: Alexey Kardashevskiy <aik@amd.com>
-In-Reply-To: <20250407074939.18657-2-chenyi.qiang@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: ME0P300CA0078.AUSP300.PROD.OUTLOOK.COM
- (2603:10c6:220:234::29) To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|CY8PR12MB7707:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4bba1deb-5a24-400e-8beb-08dd7710d692
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|366016|1800799024|376014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Skd6Q0w3MTN0Y1NRdVVkZVZmcXd6SmlIMHZqQ1FDWTZzUmZjQTBVdUgrcGdu?=
- =?utf-8?B?Q2Rwa2dEazlvdGtzTFkyZzBqVGxjSjBKVW5icUk1eUpjZTJrT0I2U0FkRm02?=
- =?utf-8?B?QU9TZ2NPcjRLdjhTZVRNZUJDdXN1OU5pdzNWS1E4dUYySjZwQWFMODJPSVhh?=
- =?utf-8?B?SGRYZW9qWFk3UFNJWU5ORzh3ZFR6cjk5UUtqQWo0UVRRNTVYTmh5VmVpeVRQ?=
- =?utf-8?B?OVVPZHZ6cHRVSFdpeEdxaVpXa3c3K292WWxRQUo0aGkvZUxmczJoaFM2Zldm?=
- =?utf-8?B?WW8zYlZBSGU5bS9zUU1aNkxObWRXL3ltek42dzRzUXR0SWhha0hhK0wwMDlO?=
- =?utf-8?B?TEF5eXV6L1dTNmJHMXgrd2Z0cEE0R2NnbUNRb2RQbWdOUlpuWjVhMjMreFV1?=
- =?utf-8?B?emdOeDQ5UzVSbGJYT3BRdGcxOXVaTGZNK1drRWZFM2NXTkZkMW9iMVNuVTFP?=
- =?utf-8?B?Q3FVdGhKWDJpOG1pR1FqVHFhQjhZWDgveUFmSGRBOWs0WURQU2I2VEw4RS9H?=
- =?utf-8?B?VW9ySERIV3NJVVFMLzdoaThZVGRRN1d4YWxydmxoamg4TENIQkhYZmVGQ2FL?=
- =?utf-8?B?d3ExcWI2emNQbURTNWdBaTg4aEtNakh5KzFMTjc4L3p3bXFzUGxjamFDMnA5?=
- =?utf-8?B?T095Wi9wY3ZIUnZrSm1keXlocjBHcmJHeWV1ZWl0MzNDVTB3enJYa28wcnBo?=
- =?utf-8?B?TWkwYW9RcXR4VkI3V2Jsbm1MVlZnWjkvSm04NzFqTlpKQkpEdk1Qd3VnaDdR?=
- =?utf-8?B?RDMvcXdqTFYvaVhRdjBGL2p4SUU5NGl2Q21mc1cxS2ZtdEN3OFhXY0RmK2Jh?=
- =?utf-8?B?NEx1NFJTekV3dHFRaHBpMDRSeXk5aTBLWk9SUUV6d004dU1oYlN3VU1za3hw?=
- =?utf-8?B?SXl4WlBHZm1Vc0Q5dXNEbFJ1ZStGUy9uN0ZpallTYTdDVHo0d0syRVRKS0Yv?=
- =?utf-8?B?ZWFOcHlFb1dQcE10SUlDeVZMdWx3c01lU1Y1Ym81ZjRLQW84QmF6N2xoMklw?=
- =?utf-8?B?WmdOUGxxK0kvNUh5aCtuREhXUVdrTVF4WlZ2TGFGUjJpM3FQVEthdjk4OEEr?=
- =?utf-8?B?OVlzdEV1cHhlaXlPNHQ2S1hBWFNHaDdVZGN0dUlxZjBXbXIyM0RuaGRZMmRI?=
- =?utf-8?B?ZkpLc0RoWmkwcEJQYkR4VmdQY1JPU3B4MG9JSGVjTTQxUW1ZTUd0MmMxUTNX?=
- =?utf-8?B?Q2dFODNqQW9PenVidk5NVUxGbENHNElxMDlwWFNZTTkrdEN6djJZS2Mzd29q?=
- =?utf-8?B?aXZmTlo2UFBVbnBBbE9VamI0V3R4WVd3QnBhSnBjWCtjdTRsMitQZDlYUU9m?=
- =?utf-8?B?ZHBsVTR2MmtnaFdPOW11OUFJV2NER2x4SFB0OVp3OWN6dTgyODl4VnFJTVhp?=
- =?utf-8?B?VzAvT3ZHOVdobG1kRzJKenRXUTlMTUI2eDAzUlloM1hzOGdqenU2MFRlMVRN?=
- =?utf-8?B?WnJzY3pCRVRCYmpNVGFzcVB5N0hBT0hjbHdKeC9ZTUdGdUVnbGhCaEZoVHNT?=
- =?utf-8?B?MjZnZ090RXRQa1hWd2c5UUIyRURwb2xrWW5CNURVRUsrNFBmOE1oRUtsNkhw?=
- =?utf-8?B?R2lGZXdPM1FOd2dZRk1veDVydFJIenY5RW55bUhaVjQ4N1prNlJMWU9wSjJB?=
- =?utf-8?B?RTU4S0pwWFg4ZWhrMGZiSnEvZWVpMVk4OTZzcnQ1bXFrWmpraUJjK0lDMlVt?=
- =?utf-8?B?L05zUWh2eEFadDJtcmMzbmdsQ0Q1KytidXg3WmhlS283bUpjWDdwcHhHd1dJ?=
- =?utf-8?B?NzhGTU1nUGh0QVkzUit6QnA0V2QvNklGZENuZmNQQkRnMTYxVVEwV1JVQm9I?=
- =?utf-8?B?aXNxOEV6dm5IN1NPczJkSzVjbEY3eCtYakF6dVFkQVNiMkRsZE5uQkxKR0tS?=
- =?utf-8?B?ZTNabTh4OE5NVXdRYlNWUWc0N3pVYklTUHFXTlY5MUdVdGRjSHl2Lzl1NHRm?=
- =?utf-8?Q?fC/psOyBryo=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(366016)(1800799024)(376014)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bTNMM3hiT2Y5ZnczaFV0SGNlTXZZSHFXVUVvSWMwSXd5eW1iUVBTR2w3UG43?=
- =?utf-8?B?L1BBNTFKb1NGSW5WTW94QURZSkxjYzJ2SDdVZ0lWd04vRmRBZk1UQWlpSmg4?=
- =?utf-8?B?NlNQZWhWbjFhdVk0dlJmS2RPOWR1clJQQnhHN05WUkhFQ3Bmb29rMk5tQUI0?=
- =?utf-8?B?VCs1REVRWGFicENrTE4yUkFkbjF5aDRRdEtCMXFpMGZJSDllREtXTzR3c2FI?=
- =?utf-8?B?RGIvS09rMytERm5JZ0lXWUQrSitwdnhYLzBEa09rMVcvSmNiOTZYTWNEVVU4?=
- =?utf-8?B?cnI3Z1l5WUcrQkQ1YVMwUDU5NXdSbzZrUWROenlmYTdzcXFLNUpxTEFnT1dO?=
- =?utf-8?B?bG93c2Y0Z25VUDFYdUFZQzV4QnBsSk0wazZITXpHQnVqOXRGLzl3QjBGN3p6?=
- =?utf-8?B?MXEvR1R0ZSs0LzkrVFRuUVBiRlBvcTNGb3Qwek5TTjVaNVhHVUNwYTNqQ1VB?=
- =?utf-8?B?Zm1Ub2IwQUhqU2Ntb0xFVUFwV0NmaUkvSWZ0ZUowb3RmUWN4R0RJR2hyVk9F?=
- =?utf-8?B?aklUM3l5T3FBTWVWb1pzWllHOVdLUmRrMG05SzZsMlBVSGFhNlBHTHJyTGlS?=
- =?utf-8?B?N3BMUEZkVGx6MWV2cWI5L1BuT1dPQS85VHlHV0hiMHhKdUp1WUI0bGZySzNP?=
- =?utf-8?B?Z0dMS3lOUVNmUndPZTVPZ2h3RWJEL1QrNnpRZ2pXOVVxWWNTb1hUMkNQM0No?=
- =?utf-8?B?bXBUbkh6eExIWk5QYlRtMDNZT2w4VnMvRHNWNmF1Ukp6US9tVWo3cG1oN0ZR?=
- =?utf-8?B?STVhZWErUTg4aW5ueTdicjVqK0VtS2p6M1ZMRmZ0NnlCeDNrZTVVSGhEdUFn?=
- =?utf-8?B?UVQ3bVI1N01DS092YkVzTXdlWm81TFNscGU4TGNJamFJS3FBNEVSUXVXaDhl?=
- =?utf-8?B?WjVGUldWbHhWdFVYSFZKbTcxRDlCUmVnWjJyaEN0dVpicDlZMTFvT0RxUzBv?=
- =?utf-8?B?MUw1ZUlIOXhNVEpBb1Q3OHFieXJRbW4wVGVCT0ROaS9HTWxLVm5TQnR4WEh0?=
- =?utf-8?B?T0lzejYyYXlPYmx6NDZ5ZFJsNGJNUUt4d3JQVUdNL0F1MXpUV08wenFSSDhE?=
- =?utf-8?B?TzlCdzhQKzB3YVdLUW5IbXp5aHF4bmJITjV1VjFNbEpCNWFMemNNVVFPSjZL?=
- =?utf-8?B?Y1NXdDU3R3VJN3BSVkNKRHJRZWhHRXFSSTlrL3JFSFk2QzdSVFZxbjFqMHdl?=
- =?utf-8?B?dXM4T0IvS2xmU3VWd3ZhczZ1bUlPNEhnS1dWZWswaEdVbk80MTh4MFpMNjFj?=
- =?utf-8?B?Y3dRbU0zTEQ1bVRqWEhrcUQzUXdhbXdtN250RjgyZ2VXM2RaN3ovOWdIcXo5?=
- =?utf-8?B?b1VYdFR6SkpqYWY4cFRYTlg2ejZEUTZEd2xKK2NuZU1jdFRSTE96Sjl1ejVk?=
- =?utf-8?B?Z0N3YVhIQjFPZFVMSFdKbkptRVZzbXpXMkJBTk5LSU53WThVM1JaQkdxcVRu?=
- =?utf-8?B?V0t4TjNiMCtaSTA1NXdiTmxZemMvejV5TGF1Y2RCQldrQ3FFNk54d0tMdFUr?=
- =?utf-8?B?MXp3MStFTFlEWnF0SjFLcjdCKytDOUNtek9QYzAwcXl2VHQrZWVzWjlXMmNX?=
- =?utf-8?B?cnFXZ1lvV0hWaU03ZDBGSTBjNEpiSHNQd292YktOcTNmblBMK05CcTVDcURx?=
- =?utf-8?B?azIrTWJVTFc3dU5GYi8xZ2ZsTFhKZXozbjVJN0lSVkhkZHhDWER4akZEM2Zh?=
- =?utf-8?B?NkxBVTVVSEswZUVQYkg0Q1M2TitQem4waVZSVWlad3JrY2l4YXVJQ1dQTk4r?=
- =?utf-8?B?UVVxckVaUXJHSytseFB0WWxNaXA3NHpnNmlFTEhXQnByM0JGWEZPUGZyTlNw?=
- =?utf-8?B?c0dZUC85V1VWRnZLR0t4eTZVQnkvZnlpanB2czB0Ni9WWldGWE9Kcm16TnZS?=
- =?utf-8?B?S0lZWXBmaTYzZkNFc043RTE3SXBNN0gxNUdCUnFsdEF6THpIb2pOaWpCa2ti?=
- =?utf-8?B?MGRucDJvN2RDVmVzTGQ3NStZMHJva2NPQU5WN2k3OVQyVWM3Z0p4dSttaHhO?=
- =?utf-8?B?ZkJsWktvRlZFUFJTQWtyckNjWWRoS2FPbDE4bWdNQkRzcy80Sng0c0w5eHFS?=
- =?utf-8?B?STg2bE1xNmRRcFJFSm5KT0l2d1d6dGxJcGwwUEVISU43bytYSjlpUm8zbXpi?=
- =?utf-8?Q?9w/Zqh5VePJaoBAZ6TJ7cWSUa?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4bba1deb-5a24-400e-8beb-08dd7710d692
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2025 02:47:16.4475 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zcRsOvLByJJvLpgpp1r8izyIIdGVAdbrKGZHVB/JyPL2yQ8P47CCJmu1+0yvjZ7xf+hyeeU8t5lmMGrYI7QPaA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7707
-Received-SPF: permerror client-ip=40.107.220.89;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1u2LXn-0000vA-0T
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:52:03 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1u2LXl-0001An-6x
+ for qemu-devel@nongnu.org; Tue, 08 Apr 2025 22:52:02 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22435603572so61039815ad.1
+ for <qemu-devel@nongnu.org>; Tue, 08 Apr 2025 19:52:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1744167119; x=1744771919; darn=nongnu.org;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=O1yC7t4bFmshXR5zuXWZMZ4iZ+UYQDfScvC8lHg5VFY=;
+ b=WpEYtVkuXEEQw4XJkZwQ7I0+TpvRnUsS10/XUP4TnCZVqlmKteim/3Y/7V1xrvGqu6
+ 4us1shdhyEFxFUVv4JJC7Qd7c4J3PT4vl/Sr+fyKg6KYzgAm7l2OGV+dj4AATVWZBCiq
+ JGqW7nzpQ7TB0SaUqiNvcjs+4sQMdeB2UxOsmED4+e27VgfE7HKSuIKY9lZM7k7jKzfg
+ gol+VwT03rC4a26br0BA7z6o2iVzYNinBE5a/sh3bsbsFK3toRmpsVzBPS65/X4D2NhE
+ WICJI3J4DcvupJMM6ADUhk7j3T5FLvSHULutD1rE9Ie6YE5WTmXu0r2nozjMXVi8DgyO
+ wHpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744167119; x=1744771919;
+ h=references:in-reply-to:message-id:date:subject:cc:to:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O1yC7t4bFmshXR5zuXWZMZ4iZ+UYQDfScvC8lHg5VFY=;
+ b=egm65Q+FSCSCVSEfT9FZrOX8cQYeo0WyYZJFgBwj5UFHEuidz2Z5Xy+/p8PrGGaqqq
+ tc+hIeage6IkDBvOdmbz9GXC+L9TTFJ/MWdOm371xNVnsgZoO3OgHmgh1sXcxhrK8JXt
+ 3sUGS0kI+eecq0PNk2UNwNZp+qPuV3ac8XaSR6fwbicqSZo3LluOE5aWb3l1eG3eR05Y
+ 5tpqep4phVQyA1LpUIHo4ydAYygGLopbYjwINSxAk2uJNUzo0ElYL8OwbFBgYyfBjRz3
+ QBYG955LnF2O7qnQvLJEUjC31sfrA2kWcW8QQzMC1MaS8vzI1pzc2KE+3aEy92RmoCKM
+ WR+A==
+X-Gm-Message-State: AOJu0Yx4FzTsssLDMB85J6LXWXJj1UKnyjSojtcgTwg3ojBWc4j2uxi0
+ U1cVLhVflmu8GYJtVxsn1JIxZIPDqjglD8ERjtrDC2lmwe+PdD3ZvsdE42QNZMGKQc+WRHrhSea
+ R2/O2sW17NO6RLzUG4bxUwuI1Jlz4DO6ErOtIkmltZspUoZg+7F87oo+Rn4FiikjYDeB1notpy2
+ rCmoPlc48CdK7CGSobe+C2SAYL+QYqAnNDrg==
+X-Gm-Gg: ASbGncvYOdivO7Gz5TogN77bqVQow2K7FFUeS5gSVlqHiXUS1cgcSbm/p+FdwbdwUXP
+ 3UoXIYbv1YLwAlxpB++R4pTKVM2J4L6M+RA1h1gkC7/Cf6iGu1w6YIMD34WbxJFedGHTtjSQN+H
+ KNwtDh7bVre+57vkEvKop59Is3BtvdJvMlzQ5GKSr4P6+6dLxBNrmm2n2mqfI1wWUvcWt+KXACO
+ GHqglvcsBuQNrkYMJqOF5DT7KcGnrFGgxicG1ZMJY7S0ydeV3b3n47goNI2Q7l44X+lZUA9ZVlx
+ rRI3O+Xj8WC+Shx3TpYFTzfAN7iUE4ZqBeq+AVoA9iv7GIDulNMdyEezwfQNVFN3uwE=
+X-Google-Smtp-Source: AGHT+IE1HPHnR4Mun/8Z2/lb5Ju5lCeHrQwUsf6KjTDAz6zsmWOoRoPxdePnqCVqe+Kn1GPDlxa9Ww==
+X-Received: by 2002:a17:903:a06:b0:224:3c9:19ae with SMTP id
+ d9443c01a7336-22ac2a1a5damr17161965ad.34.1744167118876; 
+ Tue, 08 Apr 2025 19:51:58 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7cb5463sm665725ad.195.2025.04.08.19.51.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 08 Apr 2025 19:51:58 -0700 (PDT)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH v2 4/4] target/riscv: Enable/Disable S/VS-mode Timer when STCE
+ bit is changed
+Date: Wed,  9 Apr 2025 10:51:31 +0800
+Message-Id: <20250409025131.3670-5-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20250409025131.3670-1-jim.shu@sifive.com>
+References: <20250409025131.3670-1-jim.shu@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.845,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,158 +102,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Updating STCE will enable/disable SSTC in S-mode or/and VS-mode, so we
+also need to update S/VS-mode Timer and S/VSTIP bits in $mip CSR.
 
-On 7/4/25 17:49, Chenyi Qiang wrote:
-> Rename the helper to memory_region_section_intersect_range() to make it
-> more generic. Meanwhile, define the @end as Int128 and replace the
-> related operations with Int128_* format since the helper is exported as
-> a wider API.
-> 
-> Suggested-by: Alexey Kardashevskiy <aik@amd.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ target/riscv/csr.c         | 44 ++++++++++++++++++++++++++++++++++++
+ target/riscv/time_helper.c | 46 ++++++++++++++++++++++++++++++++++++++
+ target/riscv/time_helper.h |  1 +
+ 3 files changed, 91 insertions(+)
 
-./scripts/checkpatch.pl complains "WARNING: line over 80 characters"
-
-with that fixed,
-
-Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
-
-> ---
-> Changes in v4:
->      - No change.
-> 
-> Changes in v3:
->      - No change
-> 
-> Changes in v2:
->      - Make memory_region_section_intersect_range() an inline function.
->      - Add Reviewed-by from David
->      - Define the @end as Int128 and use the related Int128_* ops as a wilder
->        API (Alexey)
-> ---
->   hw/virtio/virtio-mem.c | 32 +++++---------------------------
->   include/exec/memory.h  | 27 +++++++++++++++++++++++++++
->   2 files changed, 32 insertions(+), 27 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-> index b1a003736b..21f16e4912 100644
-> --- a/hw/virtio/virtio-mem.c
-> +++ b/hw/virtio/virtio-mem.c
-> @@ -244,28 +244,6 @@ static int virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
->       return ret;
->   }
->   
-> -/*
-> - * Adjust the memory section to cover the intersection with the given range.
-> - *
-> - * Returns false if the intersection is empty, otherwise returns true.
-> - */
-> -static bool virtio_mem_intersect_memory_section(MemoryRegionSection *s,
-> -                                                uint64_t offset, uint64_t size)
-> -{
-> -    uint64_t start = MAX(s->offset_within_region, offset);
-> -    uint64_t end = MIN(s->offset_within_region + int128_get64(s->size),
-> -                       offset + size);
-> -
-> -    if (end <= start) {
-> -        return false;
-> -    }
-> -
-> -    s->offset_within_address_space += start - s->offset_within_region;
-> -    s->offset_within_region = start;
-> -    s->size = int128_make64(end - start);
-> -    return true;
-> -}
-> -
->   typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void *arg);
->   
->   static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
-> @@ -287,7 +265,7 @@ static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
->                                         first_bit + 1) - 1;
->           size = (last_bit - first_bit + 1) * vmem->block_size;
->   
-> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
-> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
->               break;
->           }
->           ret = cb(&tmp, arg);
-> @@ -319,7 +297,7 @@ static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
->                                    first_bit + 1) - 1;
->           size = (last_bit - first_bit + 1) * vmem->block_size;
->   
-> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
-> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
->               break;
->           }
->           ret = cb(&tmp, arg);
-> @@ -355,7 +333,7 @@ static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
->       QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
->           MemoryRegionSection tmp = *rdl->section;
->   
-> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
-> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
->               continue;
->           }
->           rdl->notify_discard(rdl, &tmp);
-> @@ -371,7 +349,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
->       QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
->           MemoryRegionSection tmp = *rdl->section;
->   
-> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
-> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
->               continue;
->           }
->           ret = rdl->notify_populate(rdl, &tmp);
-> @@ -388,7 +366,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
->               if (rdl2 == rdl) {
->                   break;
->               }
-> -            if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
-> +            if (!memory_region_section_intersect_range(&tmp, offset, size)) {
->                   continue;
->               }
->               rdl2->notify_discard(rdl2, &tmp);
-> diff --git a/include/exec/memory.h b/include/exec/memory.h
-> index 3ee1901b52..3bebc43d59 100644
-> --- a/include/exec/memory.h
-> +++ b/include/exec/memory.h
-> @@ -1202,6 +1202,33 @@ MemoryRegionSection *memory_region_section_new_copy(MemoryRegionSection *s);
->    */
->   void memory_region_section_free_copy(MemoryRegionSection *s);
->   
-> +/**
-> + * memory_region_section_intersect_range: Adjust the memory section to cover
-> + * the intersection with the given range.
-> + *
-> + * @s: the #MemoryRegionSection to be adjusted
-> + * @offset: the offset of the given range in the memory region
-> + * @size: the size of the given range
-> + *
-> + * Returns false if the intersection is empty, otherwise returns true.
-> + */
-> +static inline bool memory_region_section_intersect_range(MemoryRegionSection *s,
-> +                                                         uint64_t offset, uint64_t size)
-> +{
-> +    uint64_t start = MAX(s->offset_within_region, offset);
-> +    Int128 end = int128_min(int128_add(int128_make64(s->offset_within_region), s->size),
-> +                            int128_add(int128_make64(offset), int128_make64(size)));
-> +
-> +    if (int128_le(end, int128_make64(start))) {
-> +        return false;
-> +    }
-> +
-> +    s->offset_within_address_space += start - s->offset_within_region;
-> +    s->offset_within_region = start;
-> +    s->size = int128_sub(end, int128_make64(start));
-> +    return true;
-> +}
-> +
->   /**
->    * memory_region_init: Initialize a memory region
->    *
-
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index e86808fd98..548daf6a7a 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3161,6 +3161,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+     const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+     uint64_t mask = MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
+                     MENVCFG_CBZE | MENVCFG_CDE;
++    bool stce_changed = false;
+ 
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+@@ -3186,10 +3187,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+         if ((val & MENVCFG_DTE) == 0) {
+             env->mstatus &= ~MSTATUS_SDT;
+         }
++
++        if (cfg->ext_sstc &&
++            ((env->menvcfg & MENVCFG_STCE) != (val & MENVCFG_STCE))) {
++            stce_changed = true;
++        }
+     }
+     env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
+     write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
+ 
++    if (stce_changed) {
++        riscv_timer_stce_changed(env, true, !!(val & MENVCFG_STCE));
++    }
++
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -3212,6 +3222,12 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+                     (cfg->ext_smcdeleg ? MENVCFG_CDE : 0) |
+                     (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+     uint64_t valh = (uint64_t)val << 32;
++    bool stce_changed = false;
++
++    if (cfg->ext_sstc &&
++        ((env->menvcfg & MENVCFG_STCE) != (valh & MENVCFG_STCE))) {
++        stce_changed = true;
++    }
+ 
+     if ((valh & MENVCFG_DTE) == 0) {
+         env->mstatus &= ~MSTATUS_SDT;
+@@ -3220,6 +3236,10 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+     env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
+     write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
+ 
++    if (stce_changed) {
++        riscv_timer_stce_changed(env, true, !!(valh & MENVCFG_STCE));
++    }
++
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -3297,8 +3317,10 @@ static RISCVException read_henvcfg(CPURISCVState *env, int csrno,
+ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+                                     target_ulong val)
+ {
++    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+     uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
+     RISCVException ret;
++    bool stce_changed = false;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+     if (ret != RISCV_EXCP_NONE) {
+@@ -3324,6 +3346,11 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
+             mask |= HENVCFG_PMM;
+         }
++
++        if (cfg->ext_sstc &&
++            ((env->henvcfg & HENVCFG_STCE) != (val & HENVCFG_STCE))) {
++            stce_changed = true;
++        }
+     }
+ 
+     env->henvcfg = val & mask;
+@@ -3331,6 +3358,10 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+         env->vsstatus &= ~MSTATUS_SDT;
+     }
+ 
++    if (stce_changed) {
++        riscv_timer_stce_changed(env, false, !!(val & HENVCFG_STCE));
++    }
++
+     return RISCV_EXCP_NONE;
+ }
+ 
+@@ -3352,19 +3383,32 @@ static RISCVException read_henvcfgh(CPURISCVState *env, int csrno,
+ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+                                      target_ulong val)
+ {
++    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+     uint64_t mask = env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE |
+                                     HENVCFG_ADUE | HENVCFG_DTE);
+     uint64_t valh = (uint64_t)val << 32;
+     RISCVException ret;
++    bool stce_changed = false;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_HSENVCFG);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
++
++    if (cfg->ext_sstc &&
++        ((env->henvcfg & HENVCFG_STCE) != (valh & HENVCFG_STCE))) {
++        stce_changed = true;
++    }
++
+     env->henvcfg = (env->henvcfg & 0xFFFFFFFF) | (valh & mask);
+     if ((env->henvcfg & HENVCFG_DTE) == 0) {
+         env->vsstatus &= ~MSTATUS_SDT;
+     }
++
++    if (stce_changed) {
++        riscv_timer_stce_changed(env, false, !!(val & HENVCFG_STCE));
++    }
++
+     return RISCV_EXCP_NONE;
+ }
+ 
+diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+index aebf0798d0..400e917354 100644
+--- a/target/riscv/time_helper.c
++++ b/target/riscv/time_helper.c
+@@ -140,6 +140,52 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
+     timer_mod(timer, next);
+ }
+ 
++/*
++ * When disabling xenvcfg.STCE, the S/VS Timer may be disabled at the same time.
++ * It is safe to call this function regardless of whether the timer has been
++ * deleted or not. timer_del() will do nothing if the timer has already
++ * been deleted.
++ */
++static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer *timer,
++                                 uint32_t timer_irq)
++{
++    /* Disable S-mode Timer IRQ and HW-based STIP */
++    if ((timer_irq == MIP_STIP) && !get_field(env->menvcfg, MENVCFG_STCE)) {
++        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
++        timer_del(timer);
++        return;
++    }
++
++    /* Disable VS-mode Timer IRQ and HW-based VSTIP */
++    if ((timer_irq == MIP_VSTIP) &&
++        (!get_field(env->menvcfg, MENVCFG_STCE) ||
++         !get_field(env->henvcfg, HENVCFG_STCE))) {
++        env->vstime_irq = 0;
++        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
++        timer_del(timer);
++        return;
++    }
++}
++
++/* Enable or disable S/VS-mode Timer when xenvcfg.STCE is changed */
++void riscv_timer_stce_changed(CPURISCVState *env, bool is_m_mode, bool enable)
++{
++    if (enable) {
++        riscv_timer_write_timecmp(env, env->vstimer, env->vstimecmp,
++                                  env->htimedelta, MIP_VSTIP);
++    } else {
++        riscv_timer_disable_timecmp(env, env->vstimer, MIP_VSTIP);
++    }
++
++    if (is_m_mode) {
++        if (enable) {
++            riscv_timer_write_timecmp(env, env->stimer, env->stimecmp, 0, MIP_STIP);
++        } else {
++            riscv_timer_disable_timecmp(env, env->stimer, MIP_STIP);
++        }
++    }
++}
++
+ void riscv_timer_init(RISCVCPU *cpu)
+ {
+     CPURISCVState *env;
+diff --git a/target/riscv/time_helper.h b/target/riscv/time_helper.h
+index cacd79b80c..af1f634f89 100644
+--- a/target/riscv/time_helper.h
++++ b/target/riscv/time_helper.h
+@@ -25,6 +25,7 @@
+ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
+                                uint64_t timecmp, uint64_t delta,
+                                uint32_t timer_irq);
++void riscv_timer_stce_changed(CPURISCVState *env, bool is_m_mode, bool enable);
+ void riscv_timer_init(RISCVCPU *cpu);
+ 
+ #endif
 -- 
-Alexey
+2.17.1
 
 
