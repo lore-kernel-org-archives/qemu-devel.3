@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4F6C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824FBC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2ZaE-0007Ps-0W; Wed, 09 Apr 2025 13:51:30 -0400
+	id 1u2ZaC-0007MY-Ma; Wed, 09 Apr 2025 13:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1u2Za5-00076Y-Kc
+ id 1u2Za5-00076a-N8
  for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:51:23 -0400
 Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1u2Za1-00059x-ML
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:51:20 -0400
+ id 1u2Za1-00059j-MP
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:51:21 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id EE35944DD7
- for <qemu-devel@nongnu.org>; Wed,  9 Apr 2025 17:51:09 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id D2DD644D8F
+ for <qemu-devel@nongnu.org>; Wed,  9 Apr 2025 17:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1744221069;
- bh=0MZwKJk3zQtDrzSZhHbv52nkS/Fjh8muZfLLPSSlbbY=;
+ s=20210803; t=1744221065;
+ bh=2pgFbxLS6bnFSH6XlkgTRWFEwha/pzB4KCj2FwgVvLQ=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=bxchp5TDiTmRuYPNUeAOe5g6/pxMAHPqFdTgW31SMIbUN/YJrz4piHtxS0mMAKyx3
- aGiaehP6lUHHOoExGlYOR9XCrexYlmuSaZ0AwTH9IWPeb+7pkO0cN1uXDLSlw5/V1D
- W87UIawUwz/ah3R+9xDNl7OjsxrX/kEVbdAlTX9YSGsOk1asCa4/tqRXa0qySTwefP
- 0LOthDz4UaSysc3im3sC6zFA/NtLQiJD43wi4o7VQ/v9M82TdIT95n+XPlYgmFiOFL
- 1hEfmpukGU8GQlg0HVM2ExlAW8gGQkVsiX4gJCBLGt1UtHHFrpDsB7ZPti67i8AeyU
- 33KLBrP7ouMuA==
+ b=TdrEwYG1zbEQgtrborApQuV9uRapDl3YS+20/nTsuZ7fkeTKHT0ulHhclPLeFM0vI
+ tgdS5jUMfwSRuSKDitTXTpqxCR3aVlUyE9RppohQguu0CZICYyC0vQsoXn9P6DbUEk
+ 5VqVHShwR0Dh9FtlAf61iFCRsIHJhqjapWqRGzIVOX57KI6H9bDn28MDTS+l5+sCKH
+ xuV0zGzCZsuCL1buPQh7GCaeHMKkNOsA5jEITIgqMA+MaD9vhqgd2f5BU7aUfMJZUM
+ GTTY4nZqceJLwjBxm61quQ42h3cUQUrCcd08ASJ1CeD4T73jl4SLiz8kfk6oII6NDj
+ V75+u1T2S2/XA==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id DF2FD7EE65
- for <qemu-devel@nongnu.org>; Wed,  9 Apr 2025 17:51:09 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id BB59E7E148
+ for <qemu-devel@nongnu.org>; Wed,  9 Apr 2025 17:51:05 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 09 Apr 2025 17:43:18 -0000
+Date: Wed, 09 Apr 2025 17:40:14 -0000
 From: Andreas Hasenack <2072564@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -68,7 +68,7 @@ X-Launchpad-Bug-Commenters: ahasenack crichton dimitry.unified-streaming.com
 X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
 X-Launchpad-Bug-Modifier: Andreas Hasenack (ahasenack)
 References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <174422059839.3186009.8080325751645249996.malone@juju-98d295-prod-launchpad-3>
+Message-Id: <174422041427.3299966.17935107661250509384.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2072564] Please test proposed package
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
@@ -76,7 +76,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="e76edd883483c71c468bb038e98836435de44530";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: eebd0deae0ee227a533abd79723bc9cba9585b64
+X-Launchpad-Hash: 8a7f6fb4585d59d18e626e0a7b8d501b99dea656
 Received-SPF: pass client-ip=185.125.188.251;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
@@ -104,9 +104,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hello Dimitry, or anyone else affected,
 
-Accepted qemu into noble-proposed. The package will build now and be
+Accepted qemu into oracular-proposed. The package will build now and be
 available at
-https://launchpad.net/ubuntu/+source/qemu/1:8.2.2+ds-0ubuntu1.7 in a few
+https://launchpad.net/ubuntu/+source/qemu/1:9.0.2+ds-4ubuntu5.3 in a few
 hours, and then in the -proposed repository.
 
 Please help us by testing this new package.  See
@@ -117,10 +117,10 @@ update out to other Ubuntu users.
 If this package fixes the bug for you, please add a comment to this bug,
 mentioning the version of the package you tested, what testing has been
 performed on the package and change the tag from verification-needed-
-noble to verification-done-noble. If it does not fix the bug for you,
-please add a comment stating that, and change the tag to verification-
-failed-noble. In either case, without details of your testing we will
-not be able to proceed.
+oracular to verification-done-oracular. If it does not fix the bug for
+you, please add a comment stating that, and change the tag to
+verification-failed-oracular. In either case, without details of your
+testing we will not be able to proceed.
 
 Further information regarding the verification process can be found at
 https://wiki.ubuntu.com/QATeam/PerformingSRUVerification .  Thank you in
@@ -129,6 +129,11 @@ advance for helping!
 N.B. The updated package will be released to -updates after the bug(s)
 fixed by this package have been verified and the package has been in
 -proposed for a minimum of 7 days.
+
+** Changed in: qemu (Ubuntu Noble)
+       Status: In Progress =3D> Fix Committed
+
+** Tags added: verification-needed-noble
 
 --=20
 You received this bug notification because you are a member of qemu-
