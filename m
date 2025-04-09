@@ -4,93 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB22C36002
-	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F137BC36002
+	for <qemu-devel@archiver.kernel.org>; Wed,  9 Apr 2025 17:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2Z2H-0006VN-OC; Wed, 09 Apr 2025 13:16:25 -0400
+	id 1u2Z49-0007Z6-Uo; Wed, 09 Apr 2025 13:18:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuanchu@google.com>)
- id 1u2YfI-0002Xc-BL
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 12:52:43 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuanchu@google.com>)
- id 1u2YfE-0001fd-55
- for qemu-devel@nongnu.org; Wed, 09 Apr 2025 12:52:39 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2240aad70f2so8105ad.0
- for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 09:52:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1744217551; x=1744822351; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KxhzB/rvLn01hoZmiKiKmNuUTf5Uqkd1lPGcDdEtm80=;
- b=XOUUPibw/pUOpAtoOUtUZXiyl8ZzSC+hPQxU8PH7ZrLE+8rMO6wSCN517pZrME5OE+
- QpK3r0N6e6RQgDSH+7tP8p5wMOTflUhXxr32/nQ443oXvQlE1jup5w4LL/BFIG/WKe8k
- 7SS/QQRstVCLm8VnAtqhnPiBPa9gGAezjFI6UHE409HUaGQaD7XL/A0X71+D0zP4b3dP
- wg27ku+H/rfvWPW+czkmk85DfDzaL9tmBKqUiVr72DQbixuV3sFVFNUgfNK80ov1UDbC
- 1/9W3yCw+fBkrJLGBnxRvpg7R63DinftrdTFWIu55XggHBpTTDc1FS0QLolC/Iqz1Q/R
- lnXg==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1u2Z42-0007V8-Tl
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:18:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1u2Z40-0006L8-MT
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 13:18:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744219089;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=E6wWaMN7nMlIMX3SOSgPIMNtBpxYv2zG6jqcxjifE9E=;
+ b=WwTJcpzyUtCzq4EDYpUFeqpDNkHOoxnITswl6+GENd35YhVMiXHJmSdH2nAs7hqkyBwP2Q
+ LqMn5socx0NsJoHLY8alBqbU0JnUmPfxL9XMBgLtysxtTJIXh8N85O6vWiWrKEpsRQX7DO
+ 4Mxuh7d+D+9z4kRJHx9GiUtAqEp9eog=
+Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
+ [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-81-lIn4YhbRM2y7z9_AHm-v8Q-1; Wed, 09 Apr 2025 13:18:06 -0400
+X-MC-Unique: lIn4YhbRM2y7z9_AHm-v8Q-1
+X-Mimecast-MFC-AGG-ID: lIn4YhbRM2y7z9_AHm-v8Q_1744219086
+Received: by mail-il1-f199.google.com with SMTP id
+ e9e14a558f8ab-3d451ad5b2fso3951685ab.2
+ for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 10:18:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744217551; x=1744822351;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1744219085; x=1744823885;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KxhzB/rvLn01hoZmiKiKmNuUTf5Uqkd1lPGcDdEtm80=;
- b=E3bxpz50A2SUV5I8r7PM5mPypac1vkJ9EMwCibLyXBn15CThNPbyjQXHPLg9XeGarh
- /PgyGhyTqslw+I2aUXy4Tqx7zRw1DspBijikmGvx2y32U9cfrbD33dc2q9vpWDm1f3Kh
- 3ptrXMq0E/jHWr9PvTIScl5SMnmOSpCqsya5VDFwidTCG4+l+ALdcOIBnClstLrdB189
- Oq5Az9+aQyOlh1YmyJq5/MSEbUkJ4ksvLeN264gdCRv0dDXOQbuhq8hffGxFLNYZ/M0S
- UFZrpi74S8tQe+XU4vsWav+YO7ZM4TrS1BIAYwemEaIT1Mak+JW/lf81HQRWh/pUM61v
- P4tg==
+ bh=E6wWaMN7nMlIMX3SOSgPIMNtBpxYv2zG6jqcxjifE9E=;
+ b=H/OKanEbMoxgD4S272jO04l2OvCt/ZThmurUsO7uelL/+QVkuKpz8oeOsrSOPx4j7q
+ zzAIkuAO7RSvtBP8/J1KlWvxW7BHATnqlqnDPkk4OpQNkQeTwvuFKquA9VhWJEy6uAkG
+ 9FcHpRuAdR9UIdG4GaghPI6c+bmfmliTJWIo4x4kAVSdsYlA/c2cCVXpTC1U8OJ4sSLk
+ UqRKf32zxTLxq5mWbntmzhNjFETVfB02+c08GBVm/eU+ZEvBNndEmDdLJ5GPJBuBPKRp
+ DAxWTAz6KGss+XQ3h+XIV5xNLnKLVfzz5fK33rPkcL/jNa2usBmlXh+gfwMmyv9wElvn
+ qpbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXjc3MDffEhW4RPHlay2mTrgYQELUAg4G2KIg3fjCI9k4/vsdH6Vp1TJH7RMJiVJQ+N3ZcHnvfah7n1@nongnu.org
-X-Gm-Message-State: AOJu0YwVQqOjsElrjMPku5i2RW/XbnY7bgtPLa45IvSTRWF1wWeg+g3f
- AZy7uQcHZkjH8K+YnUFfTQAfAJYPOsQfZ3ngNBclQCRj3tongFORk9vcQgx3biZHWx8DAx6fc94
- BBYeNsSys68HcYq4CpsT85uY10Ci08VZP6wus
-X-Gm-Gg: ASbGncvdTbchaawfLMcym7yd+dlOP1Cl8ononXhvcrTGPpuj11E5QzS03CJryXCq83a
- VZuYk713QfzGBlaMYv5zQOugMNrTA3Lkc5wfDHNS3PCauLUNkWjNNQAe4u75mmIymAvlsg25Qh6
- sQ1ZwR66nGYn//FwvN0qM6O1TT6qs8dgDQh66V5ffuYdkUiSKWLKw=
-X-Google-Smtp-Source: AGHT+IFZlX+H2sLxd+0i1q4/NMVWp3DoVwGucarYZ0dIheff4noN52DsOyZlpg5W3rt1uBZ3mZQdHc0M5PnL3rAwwO4=
-X-Received: by 2002:a17:902:db06:b0:21f:3e29:9cd1 with SMTP id
- d9443c01a7336-22ac43c9b30mr3186535ad.1.1744217550776; Wed, 09 Apr 2025
- 09:52:30 -0700 (PDT)
+ AJvYcCULVp6E3OnIKz6bVGD/OjPvG2Q8yma4Qg1m5FS0x3dMSu+ByKZ0CMHY+4tMAyVfc2veVfTCnrV5C5x+@nongnu.org
+X-Gm-Message-State: AOJu0YwE0C7GF3UD0jcB24tBsyMFJePI7wD7/AMNXJQ4oS1SosI+4VuJ
+ clBmDebOovsyltUvu4Y3gulDYcwJzPZnDT1KqGd8bpvM7jWh7RE2a+MFTiB4b3vd6b638WwIIwz
+ KVqwY6oIMJZ/VpKVXwpWTNV8FdvQUEcnTXxhQ/JlLxJRuDmg3ixBbEaPm85BD
+X-Gm-Gg: ASbGncshKUPBGF5NLZRfTx95+v4ynqubS0gbPp4kCY5MYoD4NqT4nH/DsVHVHswSisf
+ 1OEaTnleaytlvP5GYSg1H7YH6g+2Y/eFA3V/8siUhup4jPGJNQrSLhTOtLGI++APtxLeyLazHN2
+ snuDuFdi9Z8fhHwG3SIwF+bjWlG040WZ6vNy6mgLuCu6DQsQndZ4dCgufAwJty15C5uDHqh2hKj
+ TxvFYkCEha9Q/tky/rGneUZstG2x56FZJUKEVt/BeVgy2mMv7p+O95AKTXSWoFyREFh/itw6Sq6
+ BY3fdW1IRBch4Dc=
+X-Received: by 2002:a05:6e02:1a82:b0:3d1:35c6:a846 with SMTP id
+ e9e14a558f8ab-3d77c302710mr11597835ab.7.1744219084985; 
+ Wed, 09 Apr 2025 10:18:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkXUfhutRIPZ1D3G9H1yp5cN5IbQf7EYEF/jGdYGWNdar65eljwHTedw+wcJUrVwdFPMD8bA==
+X-Received: by 2002:a05:6e02:1a82:b0:3d1:35c6:a846 with SMTP id
+ e9e14a558f8ab-3d77c302710mr11597745ab.7.1744219084612; 
+ Wed, 09 Apr 2025 10:18:04 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3d7dc582742sm3476925ab.44.2025.04.09.10.18.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 09 Apr 2025 10:18:03 -0700 (PDT)
+Date: Wed, 9 Apr 2025 11:18:01 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vfio/igd: Check host PCI address when probing
+Message-ID: <20250409111801.4c97022f.alex.williamson@redhat.com>
+In-Reply-To: <20250325172239.27926-1-tomitamoeko@gmail.com>
+References: <20250325172239.27926-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20230525222016.35333-1-talumbau@google.com>
- <20250407053811-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20250407053811-mutt-send-email-mst@kernel.org>
-From: Yuanchu Xie <yuanchu@google.com>
-Date: Wed, 9 Apr 2025 09:52:12 -0700
-X-Gm-Features: ATxdqUEMTbMWjK5jZUT-GXTtxRsyn6Pfsae1bAmml38SIv5bGn_NfBEFtcO4Zp4
-Message-ID: <CAJj2-QE1fO5GhYL_N2=w+xqd+yspkqjrn4HGeTrPUWZYbTp+Sg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/5] virtio-balloon: Working Set Reporting
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "T.J. Alumbaugh" <talumbau@google.com>, qemu-devel@nongnu.org, 
- David Hildenbrand <david@redhat.com>, Yu Zhao <yuzhao@google.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=yuanchu@google.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 09 Apr 2025 13:16:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,39 +110,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 7, 2025 at 2:39=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
->
-> On Thu, May 25, 2023 at 10:20:11PM +0000, T.J. Alumbaugh wrote:
-> > This is the device implementation for the proposed expanded balloon fea=
-ture
-> > described here:
-> >
-> > https://lore.kernel.org/linux-mm/20230509185419.1088297-1-yuanchu@googl=
-e.com/
-> >
-> > This series has a fixed number of "bins" for the working set report, bu=
-t this is
-> > not a constraint of the system. The bin number is fixed at device reali=
-zation
-> > time (in other implementations it is specified as a command line argume=
-nt). Once
-> > that number is fixed, this determines the correct number of bin interva=
-ls to
-> > pass to the QMP/HMP function 'working_set_config'. Any feedback on how =
-to
-> > properly construct that function for this use case (passing a variable =
-length
-> > list?) would be appreciated.
->
-> It's been a while. Is there interest is reviving this? I also note that
-> reserving a feature bit is very much recommended to avoid a complete
-> mess.
-Thanks for the reminder Michael! I've been informed [1] that this
-should be brought up in VIRTIO TC, but I haven't gotten around to this
-yet. Should I send a patch to this mailing list or a proposal to
-virtio-comment@lists.oasis-open.org to reserve a feature bit?
+On Wed, 26 Mar 2025 01:22:39 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-[1] https://lore.kernel.org/linux-mm/20241127025728.3689245-10-yuanchu@goog=
-le.com/
+> So far, all Intel VGA adapters, including discrete GPUs like A770 and
+> B580, were treated as IGD devices. While this had no functional impact,
+> a error about "unsupported IGD device" will be printed when passthrough
+> Intel discrete GPUs.
+> 
+> Since IGD devices must be at "0000:00:02.0", let's check the host PCI
+> address when probing.
+> 
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> ---
+>  hw/vfio/igd.c | 23 +++++++++--------------
+>  1 file changed, 9 insertions(+), 14 deletions(-)
+> 
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index 265fffc2aa..ff250017b0 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -53,6 +53,13 @@
+>   * headless setup is desired, the OpRegion gets in the way of that.
+>   */
+>  
+> +static bool vfio_is_igd(VFIOPCIDevice *vdev)
+> +{
+> +    return vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) &&
+> +           vfio_is_vga(vdev) &&
+> +           vfio_pci_host_match(&vdev->host, "0000:00:02.0");
+> +}
+
+vfio-pci devices can also be specified via sysfsdev= rather than host=,
+so at a minimum I think we'd need to test against vdev->vbasedev.name,
+as other callers of vfio_pci_host_match do.  For example building a
+local PCIHostDeviceAddress and comparing it to name.  This is also not
+foolproof though if we start taking advantage of devices passed by fd.
+
+Could we instead rely PCIe capabilities?  A discrete GPU should
+identify as either an endpoint or legacy endpoint and IGD should
+identify as a root complex integrated endpoint, or maybe older versions
+would lack the PCIe capability altogether.
+
+Also I think the comments that were dropped below are still valid and
+useful to transfer to this new helper.  I think those are actually
+referring to the guest address of 00:02.0 though, which should maybe be
+a test as well.  Thanks,
+
+Alex
+
+> +
+>  /*
+>   * This presumes the device is already known to be an Intel VGA device, so we
+>   * take liberties in which device ID bits match which generation.  This should
+> @@ -427,13 +434,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>      VFIOConfigMirrorQuirk *ggc_mirror, *bdsm_mirror;
+>      int gen;
+>  
+> -    /*
+> -     * This must be an Intel VGA device at address 00:02.0 for us to even
+> -     * consider enabling legacy mode. Some driver have dependencies on the PCI
+> -     * bus address.
+> -     */
+> -    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> -        !vfio_is_vga(vdev) || nr != 0) {
+> +    if (nr != 0 || !vfio_is_igd(vdev)) {
+>          return;
+>      }
+>  
+> @@ -490,13 +491,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>      bool legacy_mode_enabled = false;
+>      Error *err = NULL;
+>  
+> -    /*
+> -     * This must be an Intel VGA device at address 00:02.0 for us to even
+> -     * consider enabling legacy mode.  The vBIOS has dependencies on the
+> -     * PCI bus address.
+> -     */
+> -    if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+> -        !vfio_is_vga(vdev)) {
+> +    if (!vfio_is_igd(vdev)) {
+>          return true;
+>      }
+>  
+
 
