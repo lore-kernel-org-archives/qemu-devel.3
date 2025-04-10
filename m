@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25CD5C369A6
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 22:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BB6C3601E
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 00:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u30ow-0004DQ-Ts; Thu, 10 Apr 2025 18:56:30 -0400
+	id 1u32bU-0002HD-Eu; Thu, 10 Apr 2025 20:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u30od-0004Bp-Js
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 18:56:14 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u30oa-0002ZK-JS
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 18:56:11 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22435603572so13836055ad.1
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 15:56:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744325767; x=1744930567; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/+C5+b1a8mySGOnXpO+yRnlPSMlppK5ZlK3cVTr23jo=;
- b=akpNfIYu3iBkedpLWkyIF6Kqy5U6zrRhldChiIEYj17SmLvgwX2gyKXgqT+N6zDBY3
- 41ptre0RbbJ4eQGTO8yBLIpu2JPkVSp3cz4xKNRAWKGhR0/RXdlksQNsPA1SN+j0yD40
- bfrXCwVM4AYIVYwSGxCAxx+ROxsHAddDKTeRKmqSMX70hCt6lzXnn67Zbg9JLgUsTVqQ
- HR82dB5BAVNW3D3dvFJqF+VmbUWUtTlVsMpKdPdl5DrOMOisMweJ7OTbWais846cP8Yt
- mBH4M90SvLEbfXreVGsuODfs35y+Ez0SbJMOyhJ6LzGBs6+zhU1teKtpEuGMyI11MuBd
- luMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744325767; x=1744930567;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/+C5+b1a8mySGOnXpO+yRnlPSMlppK5ZlK3cVTr23jo=;
- b=U98QrVpbcOrC1TbcPQPYb8Ohig8sBnfJJ4maBaWEjUPPOzzUnhIcm9YktUGOeBejNG
- NINYBJeOS0Z3AbPjAvq27XbYrqczrnh4y+9UlQTMosyEwADUQScLbNCVpCI6C+6YR23y
- oj8YMZKM/5z8/oiQBhRBy/75E1NXZrkYvGk+nScdy2wqQxEqUp3XS6wxM/CbvNXN2JKG
- bnsLoWFNoJdUjgeu9MSZ2XebE2R4Rp+IgIi7s/0oLqJB6/UFW3lqbmFOFAObZcyDCcQW
- xhogx2Pq4POwjckNiy8ZbblHT5tudg0Hum0+nzP7vz9eyGBLqzXCNgKJ/jTaJT+6eruB
- MyUw==
-X-Gm-Message-State: AOJu0YzPgHh44XezB6DOeTYVQZ4snX4uR8xrwPeT1bckDCEo71dsaqD1
- ivOGdmLnwfFYdzbQlsVPvjy8afTwJ4DVWD8FS74LBLczj9RkaDQ9V8I+3HFzL3gWXxko3VMvgcA
- p2Yo=
-X-Gm-Gg: ASbGncseH93nEfIP0zK4t/mW2L+akHAtRS2i4TdnKl4BzezX5n1ozClzaPMpPC/Elab
- Ng43e94Xpa/3ZUxhd1ZTI9V+cXUwthTBU4CLXZVLjZwIlPveqb5KaD0J27GB3g4aCNXbZRzTKt1
- p9rZFP0qplabJNM9EuD78Pw2RY2Qi+tWSm0WM6cgwud7gL34wJ3uepK//45uXF5leGnCa6v38J3
- POB/iOtSGXWAB03nqpmeur8npQ8EQomvkpI7ykzRrChnk/2n8FVZCkt1rFUZjRnRqx/dPy5Q2o+
- o/9Y4JF+zHVXWvcvCOfn+gbNeD3tkJ85bLvgTQgW
-X-Google-Smtp-Source: AGHT+IHs9D25qgiDbzI8gGKggg0wrOwdpCaenWVZo1nGJW0XNt6jI+YS4VfDHah/7c/Dul9P8K3bgQ==
-X-Received: by 2002:a17:903:2bce:b0:224:ab0:9b00 with SMTP id
- d9443c01a7336-22bea4bcc57mr8155805ad.27.1744325767220; 
- Thu, 10 Apr 2025 15:56:07 -0700 (PDT)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c97228sm36249225ad.128.2025.04.10.15.56.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 15:56:06 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 1/2] system/main: transfer replay mutex ownership from main
- thread to main loop thread
-Date: Thu, 10 Apr 2025 15:55:49 -0700
-Message-Id: <20250410225550.46807-2-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
-References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u32bO-0002Gq-Mg
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 20:50:40 -0400
+Received: from mx2.zhaoxin.com ([61.152.208.219])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u32bM-0001hp-BW
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 20:50:38 -0400
+X-ASG-Debug-ID: 1744332625-1eb14e119b12d20001-jgbH7p
+Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
+ mx2.zhaoxin.com with ESMTP id 5kUWY0mSwI0HvyD2 (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Fri, 11 Apr 2025 08:50:25 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX2.zhaoxin.com
+ (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 11 Apr
+ 2025 08:50:25 +0800
+Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
+ ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
+ 15.01.2507.044; Fri, 11 Apr 2025 08:50:25 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 10 Apr
+ 2025 22:07:16 +0800
+Message-ID: <a8750eb8-63ad-4ed8-a80d-f4568c4bc778@zhaoxin.com>
+Date: Thu, 10 Apr 2025 22:07:15 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFeng vCPU
+ template
+To: Paolo Bonzini <pbonzini@redhat.com>, <zhao1.liu@intel.com>
+X-ASG-Orig-Subj: Re: [PATCH v2] target/i386: Fix model number of Zhaoxin
+ YongFeng vCPU template
+CC: <qemu-devel@nongnu.org>
+References: <20250407020704.2580294-1-ewanhai-oc@zhaoxin.com>
+ <a0ca7d33-5551-41a7-be18-7fdb3b32a36a@redhat.com>
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <a0ca7d33-5551-41a7-be18-7fdb3b32a36a@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 4/11/2025 8:50:23 AM
+X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
+X-Barracuda-Start-Time: 1744332625
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 1398
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.139784
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=61.152.208.219;
+ envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,66 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On MacOS, UI event loop has to be ran in the main thread of a process.
-Because of that restriction, on this platform, qemu main event loop is
-ran on another thread [1].
+On 4/10/25 8:22 PM, Paolo Bonzini wrote:
+>=20
+> On 4/7/25 04:07, Ewan Hai wrote:
+>> The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
+>> The correct value is 0x5b. This mistake occurred because the extended
+>> model bits in cpuid[eax=3D0x1].eax were overlooked, and only the base
+>> model was used.
+>>
+>> This patch corrects the model field.
+>=20
+> Hi, please follow commit e0013791b9326945ccd09b5b602437beb322cab8 to
+> define a new version of the CPU.
 
-This breaks record/replay feature, which expects thread running qemu_init
-to initialize hold this lock, breaking associated functional tests on
-MacOS.
+I=E2=80=99ve noticed that in the QEMU repository at commit=20
+e0013791b9326945ccd09b5b602437beb322cab8 (as HEAD), the following patches I=
+=20
+previously submitted (which the Zhaoxin YongFeng vCPU model depends on) are=
+ not=20
+included:
+- 5d20aa540b6991c0dbeef933d2055e5372f52e0e: "target/i386: Add support for=20
+Zhaoxin CPU vendor identification"
+- c0799e8b003713e07b546faba600363eccd179ee: "target/i386: Add CPUID leaf=20
+0xC000_0001 EDX definitions"
+- ff04bc1ac478656e5d6a255bf4069edb3f55bc58: "target/i386: Introduce Zhaoxin=
+=20
+Yongfeng CPU model" (this is the main patch that needs to be fixed)
+- a4e749780bd20593c0c386612a51bf4d64a80132: "target/i386: Mask CMPLegacy bi=
+t in=20
+CPUID[0x80000001].ECX for Zhaoxin CPUs"
 
-Thus, as a generalization, and similar to how BQL is handled, we release
-it after init, and reacquire the lock before entering main event loop,
-avoiding a special case if a separate thread is used.
+Should I resend the entire patchset, or would it be sufficient to just send=
+ a=20
+revised version of the =E2=80=9Ctarget/i386: Introduce Zhaoxin Yongfeng CPU=
+ model=E2=80=9D patch?
 
-Tested on MacOS with:
-$ meson test -C build --setup thorough --print-errorlogs \
-func-x86_64-x86_64_replay func-arm-arm_replay func-aarch64-aarch64_replay
-$ ./build/qemu-system-x86_64 -nographic -icount shift=auto,rr=record,rrfile=replay.log
-$ ./build/qemu-system-x86_64 -nographic -icount shift=auto,rr=replay,rrfile=replay.log
-
-[1] https://gitlab.com/qemu-project/qemu/-/commit/f5ab12caba4f1656479c1feb5248beac1c833243
-
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2907
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- system/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/system/main.c b/system/main.c
-index ecb12fd397c..1c022067349 100644
---- a/system/main.c
-+++ b/system/main.c
-@@ -25,6 +25,7 @@
- #include "qemu/osdep.h"
- #include "qemu-main.h"
- #include "qemu/main-loop.h"
-+#include "system/replay.h"
- #include "system/system.h"
- 
- #ifdef CONFIG_SDL
-@@ -44,10 +45,12 @@ static void *qemu_default_main(void *opaque)
- {
-     int status;
- 
-+    replay_mutex_lock();
-     bql_lock();
-     status = qemu_main_loop();
-     qemu_cleanup(status);
-     bql_unlock();
-+    replay_mutex_unlock();
- 
-     exit(status);
- }
-@@ -67,6 +70,7 @@ int main(int argc, char **argv)
- {
-     qemu_init(argc, argv);
-     bql_unlock();
-+    replay_mutex_unlock();
-     if (qemu_main) {
-         QemuThread main_loop_thread;
-         qemu_thread_create(&main_loop_thread, "qemu_main",
--- 
-2.39.5
+Thank you for your guidance.
 
 
