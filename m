@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1C1C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 15:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2394C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 15:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2tYZ-00015p-Sq; Thu, 10 Apr 2025 11:11:07 -0400
+	id 1u2tYZ-00015q-UH; Thu, 10 Apr 2025 11:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u2tY2-0000yo-59; Thu, 10 Apr 2025 11:10:35 -0400
+ id 1u2tY5-0000zn-Oi; Thu, 10 Apr 2025 11:10:38 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u2tY0-0003cp-0I; Thu, 10 Apr 2025 11:10:33 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53AEF65j004599;
- Thu, 10 Apr 2025 15:10:30 GMT
+ id 1u2tY2-0003d4-AD; Thu, 10 Apr 2025 11:10:35 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A93Dfw025400;
+ Thu, 10 Apr 2025 15:10:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=OAjlTTTIYckzRFuMI
- zTrCd/gqQY/83SjC51iXpdijFg=; b=cw/ToCWE8bcgqYnxClMu8O1A+slD7WV33
- R8PKZv4zEpG5cya7qjsxt0mY3Bj0baJHZnXUWtcaKuhEFWQXIhPxWpeJcDHBfO7s
- guk5BeyEEmg5FKotp50pUAb8kRaPV6M0+sC9HXX4qll9bfz+8gwS7H3lEy5xx+AA
- mxdgLTSrwFJB1NK6UKFm2IsmYFs0GtHfKZ1hChzfCUQmix9pQgOqz2WtjNppRiBP
- 7w4qYbNoFb1LI73hSVTFVRpufY5A2dDy6MjZ7ZIIOM5awszyBWV5B6ywRrC0Fgc4
- R/yJ9OWu/W+d+XtJn4hOfKbz4ntRq6FuSYqwzTWii3LCpupieN6Sg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x0405e0c-1
+ :mime-version:references:subject:to; s=pp1; bh=5FlK7MqLPTJ0LDsCf
+ 65cbXQpd2OO7f0eFbvo8qIrnHE=; b=G67ZZKfNF9loRL+LVq0alVjzAx/FZqSZR
+ ERkjwoeFThtMMZDsu09IiAA6Af01XQhWf6l4YwGTua77CYIM0UFl/HjCCYJL5JR8
+ gusMQhuw3FGVU8pr1gZpwZjeWB99GsRZQ1Mgx00nrH+mmBRn9kwZMQMPlzapQsaS
+ 4Gi/v4pqD42QE5Pvg9XMGr6ZO6RyKiUlJtWXdeKBhSCxtB11l8DZrK5HCnoh+PWA
+ yuyRc2aCoefGn1fhs4J+k37XZJPYJuGoOR+pLAadNbpgYVHyVRMiwIBQl+iC55ql
+ 4uqwYmwYGPwuQ4QH+9bkHu7NNFqmExLvzKaoEqz+jmA7QsaiPou2g==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45ww2xegar-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 15:10:30 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53ADQMNr025562;
- Thu, 10 Apr 2025 15:10:29 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ugbm6ge6-1
+ Thu, 10 Apr 2025 15:10:32 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53ADJq0h014473;
+ Thu, 10 Apr 2025 15:10:26 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ufunxh5f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 15:10:29 +0000
+ Thu, 10 Apr 2025 15:10:26 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53AFAP4L51511796
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53AFAMl244892518
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 15:10:25 GMT
+ Thu, 10 Apr 2025 15:10:22 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 23A5F20043;
- Thu, 10 Apr 2025 15:10:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ACE5F20043;
+ Thu, 10 Apr 2025 15:10:22 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D34452004B;
- Thu, 10 Apr 2025 15:10:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6890920040;
+ Thu, 10 Apr 2025 15:10:22 +0000 (GMT)
 Received: from a46lp68.lnxne.boe (unknown [9.152.108.100])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 10 Apr 2025 15:10:24 +0000 (GMT)
+ Thu, 10 Apr 2025 15:10:22 +0000 (GMT)
 From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
 To: qemu-s390x mailing list <qemu-s390x@nongnu.org>,
  Thomas Huth <thuth@redhat.com>, Daniel Berrange <berrange@redhat.com>
@@ -64,26 +64,26 @@ Cc: qemu-devel mailing list <qemu-devel@nongnu.org>,
  Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
  Hendrik Brueckner <brueckner@linux.ibm.com>,
  Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-Subject: [PATCH v4 4/4] hw/s390x: compat handling for backward migration
-Date: Thu, 10 Apr 2025 17:09:34 +0200
-Message-ID: <20250410150934.1331433-5-shalini@linux.ibm.com>
+Subject: [PATCH v4 3/4] hw/s390x: support migration of CPI data
+Date: Thu, 10 Apr 2025 17:09:33 +0200
+Message-ID: <20250410150934.1331433-4-shalini@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250410150934.1331433-1-shalini@linux.ibm.com>
 References: <20250410150934.1331433-1-shalini@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: WKcF0U7rFBEAYZbIGDuS-CTZnc79FUpB
-X-Proofpoint-GUID: WKcF0U7rFBEAYZbIGDuS-CTZnc79FUpB
+X-Proofpoint-GUID: ib1Ig4f1OG3dHNvqTk-I_ATFJgkWEtZP
+X-Proofpoint-ORIG-GUID: ib1Ig4f1OG3dHNvqTk-I_ATFJgkWEtZP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-10_03,2025-04-10_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0
- lowpriorityscore=0 clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504100109
+ mlxlogscore=999 bulkscore=0
+ impostorscore=0 mlxscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504100109
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -109,70 +109,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add Control-Program Identification (CPI) device to QOM only when the virtual
-machine supports CPI. CPI is supported from "s390-ccw-virtio-10.0" machine
-and higher.
+Register Control-Program Identification data with the live
+migration infrastructure.
 
 Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 ---
- hw/s390x/s390-virtio-ccw.c         | 10 +++++++++-
- include/hw/s390x/s390-virtio-ccw.h |  1 +
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ hw/s390x/sclpcpi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 7f28cbd1de..81832ee638 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -274,6 +274,7 @@ static void s390_create_sclpcpi(SCLPDevice *sclp)
- static void ccw_init(MachineState *machine)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
-     S390CcwMachineState *ms = S390_CCW_MACHINE(machine);
-     int ret;
-     VirtualCssBus *css_bus;
-@@ -336,7 +337,10 @@ static void ccw_init(MachineState *machine)
-     s390_init_tod();
+diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
+index dcc8bd3245..40a74c16b5 100644
+--- a/hw/s390x/sclpcpi.c
++++ b/hw/s390x/sclpcpi.c
+@@ -22,6 +22,7 @@
+ #include "hw/s390x/event-facility.h"
+ #include "hw/s390x/ebcdic.h"
+ #include "qapi/qapi-visit-machine.h"
++#include "migration/vmstate.h"
  
-     /* init SCLP event Control-Program Identification */
--    s390_create_sclpcpi(ms->sclp);
-+    if (s390mc->use_cpi) {
-+        s390_create_sclpcpi(ms->sclp);
-+    }
-+
+ typedef struct Data {
+     uint8_t id_format;
+@@ -94,12 +95,36 @@ static void get_control_program_id(Object *obj, Visitor *v,
+     visit_type_S390ControlProgramId(v, name, &cpi, errp);
  }
  
- static void s390_cpu_plug(HotplugHandler *hotplug_dev,
-@@ -827,6 +831,7 @@ static void ccw_machine_class_init(ObjectClass *oc, void *data)
- 
-     s390mc->hpage_1m_allowed = true;
-     s390mc->max_threads = 1;
-+    s390mc->use_cpi = true;
-     mc->reset = s390_machine_reset;
-     mc->block_default_type = IF_VIRTIO;
-     mc->no_cdrom = 1;
-@@ -955,6 +960,9 @@ static void ccw_machine_9_2_class_options(MachineClass *mc)
-         { TYPE_S390_PCI_DEVICE, "relaxed-translation", "off", },
-     };
- 
-+    S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
-+    s390mc->use_cpi = false;
++static const VMStateDescription vmstate_control_program_id = {
++    .name = "s390_control_program_id",
++    .version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT8_ARRAY(system_type, ControlProgramId, 8),
++        VMSTATE_UINT8_ARRAY(system_name, ControlProgramId, 8),
++        VMSTATE_UINT64(system_level, ControlProgramId),
++        VMSTATE_UINT8_ARRAY(sysplex_name, ControlProgramId, 8),
++        VMSTATE_UINT64(timestamp, ControlProgramId),
++        VMSTATE_END_OF_LIST()
++    }
++};
 +
-     ccw_machine_10_0_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
-     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
-diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-index 686d9497d2..fc4112fbf5 100644
---- a/include/hw/s390x/s390-virtio-ccw.h
-+++ b/include/hw/s390x/s390-virtio-ccw.h
-@@ -55,6 +55,7 @@ struct S390CcwMachineClass {
-     /*< public >*/
-     bool hpage_1m_allowed;
-     int max_threads;
-+    bool use_cpi;
- };
++static const VMStateDescription vmstate_sclpcpi = {
++    .name = "s390_sclpcpi",
++    .version_id = 0,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(cpi, SCLPEventCPI, 0, vmstate_control_program_id,
++                       ControlProgramId),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static void cpi_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     SCLPEventClass *k = SCLP_EVENT_CLASS(klass);
  
- /* 1M huge page mappings allowed by the machine */
+     dc->user_creatable = false;
++    dc->vmsd =  &vmstate_sclpcpi;
+ 
+     k->can_handle_event = can_handle_event;
+     k->get_send_mask = send_mask;
 -- 
 2.49.0
 
