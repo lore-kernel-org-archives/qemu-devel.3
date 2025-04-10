@@ -4,150 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5309C369A2
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 15:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D20C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 16:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2uIw-0005m9-Vt; Thu, 10 Apr 2025 11:59:03 -0400
+	id 1u2uRz-0003vy-M1; Thu, 10 Apr 2025 12:08:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u2uIq-0005dP-PL
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 11:58:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1u2uRx-0003vZ-8q; Thu, 10 Apr 2025 12:08:21 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u2uIo-0001qn-Vb
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 11:58:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744300733;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=y7YNPVvDGegBMftMugeCjfwZ2qjrwxZyvKO7qoUnSKE=;
- b=iC83Y6+ru48rPkkD9byGOLKn3gRLX6li75pMltxm1XOVEokEbFlAwsx96cjwLiQFGjPjNY
- vLGCNlhPA3JddAKoLPW6MUtFMzV/G91PGBFFLYWROfPp7h9Zl8Uitm+uyeR0sd8cIp4v2C
- aGdo5x3h0eSHyJQl8KymYgsKhgQ9JgQ=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-8znDjs6KO8OsDfyptLjA9w-1; Thu, 10 Apr 2025 11:58:51 -0400
-X-MC-Unique: 8znDjs6KO8OsDfyptLjA9w-1
-X-Mimecast-MFC-AGG-ID: 8znDjs6KO8OsDfyptLjA9w_1744300730
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5e82390b87fso965915a12.3
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 08:58:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744300730; x=1744905530;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=y7YNPVvDGegBMftMugeCjfwZ2qjrwxZyvKO7qoUnSKE=;
- b=QytL5XGGB1So1aYiHUT6TMtbGdbpFrl5q4HQW6mh4Jg7teJmQyFXCsTGQvfJrtErJn
- 3p4PgRu++JVLo2wDW6lvM8wXLgO/QFlFV8qpcogQp1Enon/o/K+o+TlQSZolTsBJa6d+
- 1W730eFgZV8AMMoBNYtT1tW13ZO5T15jHh4gl73DNugyAFtbk3TTi2F+CvrK25PITKH9
- zTN7iGNNTVlqy5uXa2otjBzR5U9LFzknL40c9xLLdcc+nJfk9Ucgkeo2mE4RJomq1pRv
- F8ENCWrXg3e/1X5u7AYlLxWALiSFKfs45DlKvdP2wRqdOE8RZN3+xaEHPV4LXDqUFPAM
- SYBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOGBNF8Atecqg3QZLKpsx5pKxgs4pQ5E3SCTpZh19HVvdp30PZoXy5O0teidN2qWUpTIZ6klflGBm2@nongnu.org
-X-Gm-Message-State: AOJu0YwF1I2epy5izl0jeHUNOgK2Qn9USbXU+VPYTNGovkygK3lBki+4
- yj3ZMRQou+hd4zwTPd1ZZ2nmTEPfC5+z9UpIMCUdv6hPutgvirr8ibseA3KlyV9THLI8leOaL/z
- XMdeeOVTsg0QAvKY9VztPrAqmJuDq0aL3HXZjtHOH8LfseXXmIK5u
-X-Gm-Gg: ASbGncuMPK7SDbLfTGl9/g0tnfRqqTd1MiV7bFboxEEaz+hCJREFaa8/d9b4CG/0hE5
- q+baJHWZoHErI3XN4evsRKPEradpw5C9O/UeTIPY5CtnEqE3Ej8LXQ1Tef9YadcYc1ro3ag3u7n
- KEhh3nRFpCrjUBptyaytVbLLYOCtgf87IxmpNSxHWND1qwypg8GfaWSkb7YW8AokY7iAoPve6do
- 7slVQ6YXEFBEJD9+Uba5QVbZaMW0b1VD5H/xzB6vXWPEdjC6sHbnsoTTCrWyY3nv2ZTOCc5w74v
- UHpVcpxVvJfJ3YLt/xUkSkmzb2K2JjnmZoeB3Jy54R2hedDU4A==
-X-Received: by 2002:a05:6402:35c9:b0:5ed:c188:8e7e with SMTP id
- 4fb4d7f45d1cf-5f32930f5eemr2740188a12.27.1744300729814; 
- Thu, 10 Apr 2025 08:58:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFMjsYG4/orstB6BJBOAvCttKbWfA7npz4IEQdeqW9BNdRixHionFsRHi9LRtsDSwfojMVNQ==
-X-Received: by 2002:a05:6402:35c9:b0:5ed:c188:8e7e with SMTP id
- 4fb4d7f45d1cf-5f32930f5eemr2740156a12.27.1744300729357; 
- Thu, 10 Apr 2025 08:58:49 -0700 (PDT)
-Received: from [192.168.213.163] (93-33-70-196.ip43.fastwebnet.it.
- [93.33.70.196]) by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f2fbd3d9e1sm2461618a12.76.2025.04.10.08.58.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Apr 2025 08:58:48 -0700 (PDT)
-Message-ID: <65a63820-e59d-47d4-883a-4affe40f9b38@redhat.com>
-Date: Thu, 10 Apr 2025 17:58:45 +0200
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1u2uRu-0002kc-Vq; Thu, 10 Apr 2025 12:08:20 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53AEet5E003298;
+ Thu, 10 Apr 2025 16:07:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DhnNxg
+ ZGRXG3/bw/P50//vbg8cEzQGbFUk4DYVb57eY=; b=TAKpmZoJ3uMgWC3PYa3bmj
+ 3bg1KLZNBM/0w+YT1wapq55wUuT/b3LlAdTL1abRZplw+CFh/1eEtOCv0rAZnbwe
+ YXzInbZb97x0x5Fynypn7In9youLKI8E+Q1W7+gkxhVkMklwosBJmW/14EX+bfHz
+ XBrlQZx8aW0bE3dx7JBIlPbB+WFiDYL/2pe0A6IDJzoMX0It7NYDlzp2PHf06AX3
+ 3p4bh4+cHc153PfSPZorCd9J0ICt/AtqQCjlGyHWLDbiw450dAuMSTQjmHLYslZL
+ 1qfOqvFL8I78brPQDkz62leD9sDKorB5HSNgdehKbmn/ET1iV+RzU9t31HlQHmXg
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x0405rs6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 16:07:58 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53AG4NoU005658;
+ Thu, 10 Apr 2025 16:07:57 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x0405rs4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 16:07:57 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53AFZHA2024651;
+ Thu, 10 Apr 2025 16:07:56 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45ueutq0jw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 16:07:56 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53AG7tT028115592
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Apr 2025 16:07:55 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A65CC58052;
+ Thu, 10 Apr 2025 16:07:55 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 65CFA5805A;
+ Thu, 10 Apr 2025 16:07:54 +0000 (GMT)
+Received: from [9.61.249.150] (unknown [9.61.249.150])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Apr 2025 16:07:54 +0000 (GMT)
+Message-ID: <efa82601-4775-4b9f-9d7f-49f788d2f13f@linux.ibm.com>
+Date: Thu, 10 Apr 2025 09:07:51 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] various: Fix type conflict of GLib function pointers
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
- <2be81d2f86704662c9fa33ceb46077804e34ac77.1744032780.git.ktokunaga.mail@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 0/3] Enable QEMU NVMe userspace driver on s390x
+To: Alex Williamson <alex.williamson@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Niklas Schnelle <schnelle@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, fam@euphon.net,
+ philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com,
+ thuth@redhat.com, mjrosato@linux.ibm.com,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, venture@google.com,
+ crauer@google.com, pefoley@google.com, david@redhat.com
+References: <20250401172246.2688-1-alifm@linux.ibm.com>
+ <20250402155152.GE304512@fedora>
+ <2c11a602415f0780030d4e68a28eee7ffcdd8cb7.camel@linux.ibm.com>
+ <20250403154442.GA349582@fedora>
+ <20250403102704.7e1f4452.alex.williamson@redhat.com>
+ <2c244588-b37b-4e86-863e-ef462343edad@linux.ibm.com>
+ <20250403120504.2f660171.alex.williamson@redhat.com>
+ <d9e4feb3-351c-4c0b-8c8e-a5141e80ed5e@linux.ibm.com>
+ <20250403152402.1373f0b2.alex.williamson@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <2be81d2f86704662c9fa33ceb46077804e34ac77.1744032780.git.ktokunaga.mail@gmail.com>
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250403152402.1373f0b2.alex.williamson@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: JKMFcdLO3P3JJfRtOBLyjRw3iPAftU-X
+X-Proofpoint-GUID: 5wz9zgorEurr5EEApkFwqfUAG2-yrxWy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-10_04,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 clxscore=1011 malwarescore=0 spamscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504100116
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,99 +129,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/25 16:45, Kohei Tokunaga wrote:
-> On emscripten, function pointer casts can cause function call failure.
-> This commit fixes the function definition to match to the type of the
-> function call.
-> 
-> - qtest_set_command_cb passed to g_once should match to GThreadFunc
 
-Sending an alternative patch that doesn't use GOnce, this code runs in 
-the main thread.
+On 4/3/2025 2:24 PM, Alex Williamson wrote:
+> On Thu, 3 Apr 2025 13:33:17 -0700
+> Farhan Ali <alifm@linux.ibm.com> wrote:
+>
+>> On 4/3/2025 11:05 AM, Alex Williamson wrote:
+>>> On Thu, 3 Apr 2025 10:33:52 -0700
+>>> Farhan Ali <alifm@linux.ibm.com> wrote:
+>>>   
+>>>> On 4/3/2025 9:27 AM, Alex Williamson wrote:
+>>>>> On Thu, 3 Apr 2025 11:44:42 -0400
+>>>>> Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>>>>>      
+>>>>>> On Thu, Apr 03, 2025 at 09:47:26AM +0200, Niklas Schnelle wrote:
+>>>>>>> On Wed, 2025-04-02 at 11:51 -0400, Stefan Hajnoczi wrote:
+>>>>>>>> On Tue, Apr 01, 2025 at 10:22:43AM -0700, Farhan Ali wrote:
+>>>>>>>>> Hi,
+>>>>>>>>>
+>>>>>>>>> Recently on s390x we have enabled mmap support for vfio-pci devices [1].
+>>>>>>>> Hi Alex,
+>>>>>>>> I wanted to bring this to your attention. Feel free to merge it through
+>>>>>>>> the VFIO tree, otherwise I will merge it once you have taken a look.
+>>>>>>>>
+>>>>>>>> Thanks,
+>>>>>>>> Stefan
+>>>>>>>>          
+>>>>>>>>> This allows us to take advantage and use userspace drivers on s390x. However,
+>>>>>>>>> on s390x we have special instructions for MMIO access. Starting with z15
+>>>>>>>>> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
+>>>>>>>>> operate on virtually mapped PCI memory spaces, and can be used from userspace.
+>>>>>>>>> On older platforms we would fallback to using existing system calls for MMIO access.
+>>>>>>>>>
+>>>>>>>>> This patch series introduces support the PCI MIO instructions, and enables s390x
+>>>>>>>>> support for the userspace NVMe driver on s390x. I would appreciate any review/feedback
+>>>>>>>>> on the patches.
+>>>>>>>>>
+>>>>>>>>> Thanks
+>>>>>>>>> Farhan
+>>>>>>> Hi Stefan,
+>>>>>>>
+>>>>>>> the kernel patch actually made it into Linus' tree for v6.15 already as
+>>>>>>> commit aa9f168d55dc ("s390/pci: Support mmap() of PCI resources except
+>>>>>>> for ISM devices") plus prerequisites. This went via the PCI tree
+>>>>>>> because they included a change to struct pci_dev and also enabled
+>>>>>>> mmap() on PCI resource files. Alex reviewed an earlier version and was
+>>>>>>> the one who suggested to also enable mmap() on PCI resources.
+>>>>>> The introduction of a new QEMU API for accessing MMIO BARs in this
+>>>>>> series is something Alex might be interested in as QEMU VFIO maintainer.
+>>>>>> That wouldn't have been part of the kernel patch review.
+>>>>>>
+>>>>>> If he's aware of the new API he can encourage other VFIO users to use it
+>>>>>> in the future so that you won't need to convert them to work on s390x
+>>>>>> again.
+>>>>> I don't claim any jurisdiction over the vfio-nvme driver.  In general
+>>>>> vfio users should be using either vfio_region_ops, ram_device_mem_ops,
+>>>>> or directly mapping MMIO into the VM address space.  The first uses
+>>>>> pread/write through the region offset, irrespective of the type of
+>>>>> memory, the second provides the type of access used here where we're
+>>>>> dereferencing into an mmap, and the last if of course the preferred
+>>>>> mechanism where available.
+>>>>>
+>>>>> It is curious that the proposal here doesn't include any changes to
+>>>>> ram_device_mem_ops for more generically enabling MMIO access on s390x.
+>>>>> Thanks,
+>>>>>
+>>>>> Alex
+>>>> Hi Alex,
+>>>>    From my understanding the ram_device_mem_ops sets up the BAR access for
+>>>> a guest passthrough device. Unfortunately today an s390x KVM guest
+>>>> doesn't use and have support for these MIO instructions. We wanted to
+>>>> use this series as an initial test vehicle of the mmap support.
+>>> Right, ram_device_mem_ops is what we'll use to access a BAR that
+>>> supports mmap but for whatever reason we're accessing it directly
+>>> through the mmap.  For instance if an overlapping quirk prevents the
+>>> page from being mapped to the VM or we have some back channel mechanism
+>>> where the VMM is interacting with the BAR.
+>>>
+>>> I bring it up here because it's effectively the same kind of access
+>>> you're adding with these helpers and would need to be addressed if this
+>>> were generically enabling vfio mmap access on s390x.
+>> On s390x the use of the MIO instructions is limited to only PCI access.
+>> So i am not sure if we should generically apply this to all vfio mmap
+>> access (for non PCI devices).
+>>
+>>
+>>> Prior to commit 2b8fe81b3c2e ("system/memory: use ldn_he_p/stn_he_p")
+>>> the mmio helpers here might have been a drop-in replacement for the
+>>> dereferencing of mmap offsets, but something would need to be done
+>>> about the explicit PCI assumption introduced here and the possibility
+>>> of unaligned accesses that the noted commit tries to resolve.  Thanks,
+>>>
+>>> Alex
+>> AFAICT in qemu today the ram_device_mem_ops is used for non PCI vfio
+>> mmap cases. For s390x these helpers should be restricted to PCI
+>> accesses. For the unaligned accesses (thanks for pointing out that
+>> commmit!), are you suggesting we use the ld*_he_p/st*_he_p functions in
+>> the helpers i defined? Though those functions don't seem to be doing
+>> volatile accesses.
+> TBH, it's not clear to me that 2b8fe81b3c2e is correct.  We implemented
+> the ram_device MemoryRegion specifically to avoid memory access
+> optimizations that are not compatible with MMIO, but I see that these
+> {ld,st}*_he_pe operations are using __builtin_memcpy.  I'm not a
+> compiler aficionado, but is __builtin_memcpy guaranteed to use an
+> instruction set compatible with MMIO?
+>
+> Cc: folks related to that commit.
+>
+> The original issue that brought us ram_device was a very obscure
+> alignment of a memory region versus a device quirk only seen with
+> assignment of specific RTL NICs.
+>
+> The description for commit 4a2e242bbb30 ("memory: Don't use memcpy for
+> ram_device regions") also addresses unaligned accesses, we don't expect
+> drivers to use them and we don't want them to work differently in a VM
+> than they might on bare metal.  We can debate whether that's valid or
+> not, but that was the intent.
+>
+> Have we re-introduced the chance that we're using optimized
+> instructions only meant to target RAM here or is __builtin_memcpy
+> implicitly safe for MMIO?  Thanks,
+>
+> Alex
 
-> - object_class_cmp and cpreg_key_compare are passed to g_list_sort as
->    GCopmareFunc but GLib cast them to GCompareDataFunc.
 
-Please use g_list_sort_with_data instead, and poison 
-g_slist_sort/g_list_sort in include/glib-compat.h, with a comment 
-explaining that it's done this way because of Emscripten.
+Hi Stefan, Alex
 
-Paolo
 
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->   hw/riscv/riscv_hart.c | 9 ++++++++-
->   qom/object.c          | 5 +++--
->   target/arm/helper.c   | 4 ++--
->   3 files changed, 13 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index a55d156668..e37317dcbd 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -102,10 +102,17 @@ static bool csr_qtest_callback(CharBackend *chr, gchar **words)
->       return false;
->   }
->   
-> +static gpointer g_qtest_set_command_cb(
-> +    bool (*pc_cb)(CharBackend *chr, gchar **words))
-> +{
-> +    qtest_set_command_cb(pc_cb);
-> +    return NULL;
-> +}
-> +
->   static void riscv_cpu_register_csr_qtest_callback(void)
->   {
->       static GOnce once;
-> -    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback);
-> +    g_once(&once, (GThreadFunc)g_qtest_set_command_cb, csr_qtest_callback);
->   }
->   #endif
->   
-> diff --git a/qom/object.c b/qom/object.c
-> index 01618d06bd..19698aae4c 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -1191,7 +1191,8 @@ GSList *object_class_get_list(const char *implements_type,
->       return list;
->   }
->   
-> -static gint object_class_cmp(gconstpointer a, gconstpointer b)
-> +static gint object_class_cmp(gconstpointer a, gconstpointer b,
-> +                             gpointer user_data)
->   {
->       return strcasecmp(object_class_get_name((ObjectClass *)a),
->                         object_class_get_name((ObjectClass *)b));
-> @@ -1201,7 +1202,7 @@ GSList *object_class_get_list_sorted(const char *implements_type,
->                                        bool include_abstract)
->   {
->       return g_slist_sort(object_class_get_list(implements_type, include_abstract),
-> -                        object_class_cmp);
-> +                        (GCompareFunc)object_class_cmp);
->   }
->   
->   Object *object_ref(void *objptr)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index bb445e30cd..68f81fadfc 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -220,7 +220,7 @@ static void count_cpreg(gpointer key, gpointer opaque)
->       }
->   }
->   
-> -static gint cpreg_key_compare(gconstpointer a, gconstpointer b)
-> +static gint cpreg_key_compare(gconstpointer a, gconstpointer b, void *d)
->   {
->       uint64_t aidx = cpreg_to_kvm_id((uintptr_t)a);
->       uint64_t bidx = cpreg_to_kvm_id((uintptr_t)b);
-> @@ -244,7 +244,7 @@ void init_cpreg_list(ARMCPU *cpu)
->       int arraylen;
->   
->       keys = g_hash_table_get_keys(cpu->cp_regs);
-> -    keys = g_list_sort(keys, cpreg_key_compare);
-> +    keys = g_list_sort(keys, (GCompareFunc)cpreg_key_compare);
->   
->       cpu->cpreg_array_len = 0;
->   
+Polite ping. Following up to understand how we should proceed with this 
+series. Please let me know if there are any concerns that i haven't 
+addressed?
+
+Thanks
+
+Farhan
+
 
 
