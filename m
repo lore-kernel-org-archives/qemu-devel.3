@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8F1C369A5
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 02:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B971C369A1
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 02:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2hov-0001Yj-90; Wed, 09 Apr 2025 22:39:13 -0400
+	id 1u2hpP-0001oG-A7; Wed, 09 Apr 2025 22:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2hos-0001Y8-Lw; Wed, 09 Apr 2025 22:39:10 -0400
+ id 1u2hpK-0001id-OW; Wed, 09 Apr 2025 22:39:39 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2hoq-00033O-J9; Wed, 09 Apr 2025 22:39:10 -0400
+ id 1u2hpI-00033O-Mv; Wed, 09 Apr 2025 22:39:37 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 10 Apr
- 2025 10:38:57 +0800
+ 2025 10:38:59 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 10 Apr 2025 10:38:57 +0800
+ Transport; Thu, 10 Apr 2025 10:38:59 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>
-Subject: [PATCH v2 01/10] hw/arm/aspeed: Introduced ASPEED_DEV_VBOOTROM in the
- device enumeration
-Date: Thu, 10 Apr 2025 10:38:45 +0800
-Message-ID: <20250410023856.500258-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 09/10] tests/functional/aspeed: Update AST2700 functional
+ test to use vbootrom
+Date: Thu, 10 Apr 2025 10:38:53 +0800
+Message-ID: <20250410023856.500258-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
 References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
@@ -67,26 +67,65 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduced ASPEED_DEV_VBOOTROM into the ASPEED device enumeration to support a
-virtual boot ROM.
+Refactor the AST2700 functional test to boot using the vbootrom image
+instead of manually loading boot components with -device loader.
+The boot ROM binary is now passed via the
+-bios option, using the image located in pc-bios/ast27x0_bootrom.bin.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/arm/aspeed_soc.h | 1 +
- 1 file changed, 1 insertion(+)
+ tests/functional/test_aarch64_aspeed.py | 38 +------------------------
+ 1 file changed, 1 insertion(+), 37 deletions(-)
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index f069d17d16..37cd7cd793 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -169,6 +169,7 @@ struct AspeedSoCClass {
- const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index c25c966278..971f548534 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -36,43 +36,7 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+             'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
  
- enum {
-+    ASPEED_DEV_VBOOTROM,
-     ASPEED_DEV_SPI_BOOT,
-     ASPEED_DEV_IOMEM,
-     ASPEED_DEV_UART0,
+     def start_ast2700_test(self, name):
+-        num_cpu = 4
+-        uboot_size = os.path.getsize(self.scratch_file(name,
+-                                                       'u-boot-nodtb.bin'))
+-        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
+-
+-        load_images_list = [
+-            {
+-                'addr': '0x400000000',
+-                'file': self.scratch_file(name,
+-                                          'u-boot-nodtb.bin')
+-            },
+-            {
+-                'addr': str(uboot_dtb_load_addr),
+-                'file': self.scratch_file(name, 'u-boot.dtb')
+-            },
+-            {
+-                'addr': '0x430000000',
+-                'file': self.scratch_file(name, 'bl31.bin')
+-            },
+-            {
+-                'addr': '0x430080000',
+-                'file': self.scratch_file(name, 'optee',
+-                                          'tee-raw.bin')
+-            }
+-        ]
+-
+-        for load_image in load_images_list:
+-            addr = load_image['addr']
+-            file = load_image['file']
+-            self.vm.add_args('-device',
+-                             f'loader,force-raw=on,addr={addr},file={file}')
+-
+-        for i in range(num_cpu):
+-            self.vm.add_args('-device',
+-                             f'loader,addr=0x430000000,cpu-num={i}')
+-
+-        self.vm.add_args('-smp', str(num_cpu))
++        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
+         self.vm.add_args('-device',
+                          'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
+         self.do_test_aarch64_aspeed_sdk_start(
 -- 
 2.43.0
 
