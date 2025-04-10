@@ -4,97 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA0C4C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D577C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2qny-0006Tc-Cm; Thu, 10 Apr 2025 08:14:50 -0400
+	id 1u2qrG-0000vX-El; Thu, 10 Apr 2025 08:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2qnt-0006Sr-UX
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:14:46 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2qnr-0006re-Lj
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:14:45 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso6046125e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 05:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744287281; x=1744892081; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1RNQhSRNuvdlOyom3KD1yMuWAUd7GDTIT5OFQE4tc9Y=;
- b=s5vfVYFofKGQIOUrTZpHWADSgiX0WvakzFFxa4e4nFT0GWZpW6UcWOvXQS9UgsqD/y
- ipdsyWXCWT4jJ2yFx2ztKlFaPDYCGVazCjJQTAUDG/PRWlYWQiy1MPiaI4Lvn/OEq3tt
- GVKKJZOoaFbSCeUCqKRrcqzqP11w6PT0L/9Quzx7EeFue5n0LdnVsFyGnQ3c8SXHddG9
- OY67Dm6KjxvVOVLlINBHHaXniqck9UL4joVSImlZcY9/hgBkln0fELoQUBrPs3Ru/WvX
- JZ/uKj9zYbQAuvTFDkOK80gJ+U5ZqEiyHOg7+giLO+wd6Bng1sWPw/1bmhE2c00UrvAS
- GteA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u2qrE-0000vK-Ty
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:18:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u2qrC-0007VS-RK
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:18:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744287487;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=hae4jyWZXzzi6i60Izn7jrRI/3U4COE1CGPsx0bnijw=;
+ b=MTkqEoUk6J6LZK9cG91Mi4DIiaBCPX5H5VcPSMctn4QhHYLvl5Q+qpwmZU1MYNUWEUOJNK
+ Ut8pldYaktv0oGO2u8txErligzsZRu7iI4P3a4tBfLZbZjmF99B6yPevYzyGUCmCqrEyyK
+ af+TK5vy1WmSfCumIWLChy2/HTEyPqk=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-6-ReVRm6_SNRO8oGxxzpf9ag-1; Thu, 10 Apr 2025 08:18:04 -0400
+X-MC-Unique: ReVRm6_SNRO8oGxxzpf9ag-1
+X-Mimecast-MFC-AGG-ID: ReVRm6_SNRO8oGxxzpf9ag_1744287484
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-ac3dca41591so76020966b.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 05:18:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744287281; x=1744892081;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1RNQhSRNuvdlOyom3KD1yMuWAUd7GDTIT5OFQE4tc9Y=;
- b=DHjfZiWQ6kFSXWJL2kAcl2LGBJwVFpyIufLASnu9h/EkNXPi+2LKvfNcqcZ5+sZ99+
- 72BLO97tWI/cHHArS4Axm+ugM9mvGPcfcX8DrkBsPwup1RjO1HmXmZsM6NfUBsSdpcrl
- bp6I/X8erNV4XH7p7uEmrvcPRURIDzexrglR4lJJwp8pEOtJqOU5p6xvGt++FLQkwH7/
- 06gmLk2/6YlMdzYWIugWlKgRmqwo8Y0KA7Csl3n4alJ57DDBafq2tA6wQ+7s2ubgKrLw
- Jb2kCZOMQOZ+O13f6Gjcx6T7gER161wOrKE2otVJ11QICPX0aZSvE6LDwo/gcOhLqc2B
- dxXQ==
-X-Gm-Message-State: AOJu0YyJ1pwPxWAwA60PXu+AJfbwzMZnEUDSGTTQb4NQ8RhGDBspdfs4
- y8DMWnKh/2watR0mhvnTeNmYJomduSk1cIOkfYdJ5ChMH8XZtdOc7z7yOfHh6IOmYwtxqk2COLm
- /TR8=
-X-Gm-Gg: ASbGncuep+pT1WYdDPWOb+1YnewGpnSBAUgyIzI2rSIScEhZLGgiue4LMca61gOtBOp
- kuAIsTarrtZ61rAx+ltMYHsHWdUtO8gNk0OlbmBBabQJzc/prXVh/F29JECFLnBy+tMYValP9oV
- X5dNMtF4gfhJSYYgLC1MCNI+nPvLTZTotgRgExFy2l43EAG/n+fRr3amtRicqof/c7byfQQgUjT
- jzee/NR1uCY2985LpqZLiVD+7+HRq5UIuKluqKq4io5wpyic/IJc0qPDUYf0ZjBiw92AdNqkALZ
- trhR/UuQ0nencwJeeS2lPauKRdW23Nf+nwqVMeMkY3FC/GxAo8EyIfKbwaKPRv0uoX6ovYw3XOk
- AfYSs4FDV/J+wbQ==
-X-Google-Smtp-Source: AGHT+IHS23AK9o7NcJvvNnqqR4GZnyhUSCkDuTJo0qzIlrYuYJp22H5/M2L7uOCwVePPjQ5q8kCN5Q==
-X-Received: by 2002:a05:600c:35cf:b0:43c:ef13:7e5e with SMTP id
- 5b1f17b1804b1-43f2d96dd56mr23935025e9.26.1744287281255; 
- Thu, 10 Apr 2025 05:14:41 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f235a5d31sm49491265e9.35.2025.04.10.05.14.39
+ d=1e100.net; s=20230601; t=1744287483; x=1744892283;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hae4jyWZXzzi6i60Izn7jrRI/3U4COE1CGPsx0bnijw=;
+ b=JJ4DimODHvWtLSIbkmEMMikLar/dUHRaxlQyvX7qzUtVSnRVKwma21vvpf4/XeGjTd
+ /Ke6GLkrsR3hSlRaROLkUZ7NZs1h2K63EFEB4ae2LLft3UwUgBPxLDduRLEAATAj4wZQ
+ MBHh515fnWvXNMcjpXVJcvETDPLVMPW/m595uDMnBJXK8qWGcFuoSd046HANyjEX30FG
+ spFCCSXeC/5bWcbNolpyqd8lFmB5ZiDsk7yvM81Y0StdugT9Dfc/SMGFVU9Jv14AGIIG
+ fC3PH7wNOSDQNkQL9anJuvf/f8vvwQqhcfnqQpdXfIyGYfXslxO1Hfpabc94WBnwZJ9Q
+ Aabw==
+X-Gm-Message-State: AOJu0YxQ5liMlnKMWJ3du9t0AJ4C/WNhU9MdCtNmbYLPai5quHMo8uLu
+ iy29UKkDos+yfTaaF1yLwMyG7f7ENtQt0j5uoMdDLjtAQrsSOsXku3m4Vhe7wNi+UQz4Q5Rh9A8
+ 9xx+Ruks0/Fcuz93jcQKBAxRxCM/2170lLk69DgBHmw2Tsij1aNKp
+X-Gm-Gg: ASbGncvUR8HsAcidMf4cWylW4DwsRxdhDJYJpeyMZpLhAKaDTKQM950nJlsZijYbiOJ
+ 9OvCHNMUUc7aevT3zrJgv2DAUOd8wtYvFLGgSRipnF5Dhnd2sXqrTJBfdRQqYcG+OB2XetAp8nD
+ 3ELTxduXGw6cgAqdGRvk6rF3MhSYguJCk9LoHy4Ywa/qVdJJAMpV//1e7JRq9dvjhRPoSavhKbB
+ ltNgGuE10oKEva3B7bbMVj85Ajp4zXv/1nIEvNlyr0Lq5bx01kQGeF4cYqWT7vTcxnQbUUYmzNZ
+ +DLQDsqX6qjK0rtjKw==
+X-Received: by 2002:a17:907:3d4d:b0:ac7:d7f3:86d7 with SMTP id
+ a640c23a62f3a-acabd4cf63fmr277457066b.50.1744287483568; 
+ Thu, 10 Apr 2025 05:18:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdBJ7iH75HGr1fnN4bCfoad/2DkVUrmVT8k5QWfDQEe45oJG2/YOMkCofAwreWdC9hncGmug==
+X-Received: by 2002:a17:907:3d4d:b0:ac7:d7f3:86d7 with SMTP id
+ a640c23a62f3a-acabd4cf63fmr277454266b.50.1744287483210; 
+ Thu, 10 Apr 2025 05:18:03 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.103.255])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-acaa1ce70ebsm266799266b.178.2025.04.10.05.18.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Apr 2025 05:14:40 -0700 (PDT)
-Message-ID: <84b2bcf7-9df7-43e2-83d8-cae9d34ca541@linaro.org>
-Date: Thu, 10 Apr 2025 14:14:39 +0200
+ Thu, 10 Apr 2025 05:18:02 -0700 (PDT)
+Message-ID: <4f64f6a8-2e4a-4e20-b2c8-8f87b8b7900c@redhat.com>
+Date: Thu, 10 Apr 2025 14:18:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-8.0 09/10] hw/virtio: Extract
- vhost_user_ram_slots_max() to vhost-user-target.c
-To: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Greg Kurz <groug@kaod.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Subject: Re: [PATCH 1/3] scripts: nixify archive-source.sh
+To: Joel Granados <joel.granados@kernel.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20221212230517.28872-1-philmd@linaro.org>
- <20221212230517.28872-10-philmd@linaro.org>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20250408-jag-sysctl-v1-0-3f4f38b751be@kernel.org>
+ <20250408-jag-sysctl-v1-1-3f4f38b751be@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20221212230517.28872-10-philmd@linaro.org>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250408-jag-sysctl-v1-1-3f4f38b751be@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,172 +150,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+On 4/8/25 22:14, Joel Granados wrote:
+> Use "#!/usr/bin/env bash" instead of "#!/bin/bash". This is necessary
+> for nix environments as they only provide /usr/bin/env at the standard
+> location.
 
-On 13/12/22 00:05, Philippe Mathieu-Daudé wrote:
-> The current definition of VHOST_USER_MAX_RAM_SLOTS is
-> target specific. By converting this definition to a runtime
-> vhost_user_ram_slots_max() helper declared in a target
-> specific unit, we can have the rest of vhost-user.c target
-> independent.
+I am confused, how does this not break everything else?  All the test 
+scripts in tests/docker/test-* have "#!/bin/bash", and configure has 
+"/bin/sh".  How is the environment that runs scripts/archive-source.sh 
+different, and why should it be fixed in scripts/archive-source.sh?
+
+These are genuine questions - it would help if the commit message 
+explained those... In fact, what is a nix overlay and why would you use 
+scripts/archive-source.sh to prepare one? :)
+
 > 
-> To avoid variable length array or using the heap to store
-> arrays of vhost_user_ram_slots_max() elements, we simply
-> declare an array of the biggest VHOST_USER_MAX_RAM_SLOTS,
-> and each target uses up to vhost_user_ram_slots_max()
-> elements of it. Ensure arrays are big enough by adding an
-> assertion in vhost_user_init().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Joel Granados <joel.granados@kernel.org>
 > ---
-> RFC: Should I add VHOST_USER_MAX_RAM_SLOTS to vhost-user.h
->       or create an internal header for it?
-> ---
->   hw/virtio/meson.build          |  1 +
->   hw/virtio/vhost-user-target.c  | 29 +++++++++++++++++++++++++++++
->   hw/virtio/vhost-user.c         | 26 +++++---------------------
->   include/hw/virtio/vhost-user.h |  7 +++++++
->   4 files changed, 42 insertions(+), 21 deletions(-)
->   create mode 100644 hw/virtio/vhost-user-target.c
+>   scripts/archive-source.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> index eb7ee8ea92..bf7e35fa8a 100644
-> --- a/hw/virtio/meson.build
-> +++ b/hw/virtio/meson.build
-> @@ -11,6 +11,7 @@ if have_vhost
->     specific_virtio_ss.add(files('vhost.c', 'vhost-backend.c', 'vhost-iova-tree.c'))
->     if have_vhost_user
->       specific_virtio_ss.add(files('vhost-user.c'))
-> +    specific_virtio_ss.add(files('vhost-user-target.c'))
->     endif
->     if have_vhost_vdpa
->       specific_virtio_ss.add(files('vhost-vdpa.c', 'vhost-shadow-virtqueue.c'))
-> diff --git a/hw/virtio/vhost-user-target.c b/hw/virtio/vhost-user-target.c
-> new file mode 100644
-> index 0000000000..6a0d0f53d0
-> --- /dev/null
-> +++ b/hw/virtio/vhost-user-target.c
-> @@ -0,0 +1,29 @@
-> +/*
-> + * vhost-user target-specific helpers
-> + *
-> + * Copyright (c) 2013 Virtual Open Systems Sarl.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/virtio/vhost-user.h"
-> +
-> +#if defined(TARGET_X86) || defined(TARGET_X86_64) || \
-> +    defined(TARGET_ARM) || defined(TARGET_ARM_64)
-> +#include "hw/acpi/acpi.h"
-> +#elif defined(TARGET_PPC) || defined(TARGET_PPC64)
-> +#include "hw/ppc/spapr.h"
-> +#endif
-> +
-> +unsigned int vhost_user_ram_slots_max(void)
-> +{
-> +#if defined(TARGET_X86) || defined(TARGET_X86_64) || \
-> +    defined(TARGET_ARM) || defined(TARGET_ARM_64)
-> +    return ACPI_MAX_RAM_SLOTS;
-> +#elif defined(TARGET_PPC) || defined(TARGET_PPC64)
-> +    return SPAPR_MAX_RAM_SLOTS;
-> +#else
-> +    return 512;
-
-Should vhost_user_ram_slots_max be another TargetInfo field?
-
-> +#endif
-> +}
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 8f635844af..21fc176725 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -41,24 +41,7 @@
->   #define VHOST_MEMORY_BASELINE_NREGIONS    8
->   #define VHOST_USER_F_PROTOCOL_FEATURES 30
->   #define VHOST_USER_SLAVE_MAX_FDS     8
-> -
-> -/*
-> - * Set maximum number of RAM slots supported to
-> - * the maximum number supported by the target
-> - * hardware plaform.
-> - */
-> -#if defined(TARGET_X86) || defined(TARGET_X86_64) || \
-> -    defined(TARGET_ARM) || defined(TARGET_ARM_64)
-> -#include "hw/acpi/acpi.h"
-> -#define VHOST_USER_MAX_RAM_SLOTS ACPI_MAX_RAM_SLOTS
-> -
-> -#elif defined(TARGET_PPC) || defined(TARGET_PPC64)
-> -#include "hw/ppc/spapr.h"
-> -#define VHOST_USER_MAX_RAM_SLOTS SPAPR_MAX_RAM_SLOTS
-> -
-> -#else
->   #define VHOST_USER_MAX_RAM_SLOTS 512
-> -#endif
->   
->   /*
->    * Maximum size of virtio device config space
-> @@ -935,7 +918,7 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
->   
->       if (track_ramblocks) {
->           memcpy(u->postcopy_client_bases, shadow_pcb,
-> -               sizeof(uint64_t) * VHOST_USER_MAX_RAM_SLOTS);
-> +               sizeof(uint64_t) * vhost_user_ram_slots_max());
->           /*
->            * Now we've registered this with the postcopy code, we ack to the
->            * client, because now we're in the position to be able to deal with
-> @@ -956,7 +939,7 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
->   err:
->       if (track_ramblocks) {
->           memcpy(u->postcopy_client_bases, shadow_pcb,
-> -               sizeof(uint64_t) * VHOST_USER_MAX_RAM_SLOTS);
-> +               sizeof(uint64_t) * vhost_user_ram_slots_max());
->       }
->   
->       return ret;
-> @@ -1030,7 +1013,7 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
->           }
->   
->           memset(u->postcopy_client_bases, 0,
-> -               sizeof(uint64_t) * VHOST_USER_MAX_RAM_SLOTS);
-> +               sizeof(uint64_t) * vhost_user_ram_slots_max());
->   
->           /*
->            * They're in the same order as the regions that were sent
-> @@ -2169,7 +2152,7 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
->                   return -EINVAL;
->               }
->   
-> -            u->user->memory_slots = MIN(ram_slots, VHOST_USER_MAX_RAM_SLOTS);
-> +            u->user->memory_slots = MIN(ram_slots, vhost_user_ram_slots_max());
->           }
->       }
->   
-> @@ -2649,6 +2632,7 @@ static void vhost_user_state_destroy(gpointer data)
->   
->   bool vhost_user_init(VhostUserState *user, CharBackend *chr, Error **errp)
->   {
-> +    assert(vhost_user_ram_slots_max() <= VHOST_USER_MAX_RAM_SLOTS);
->       if (user->chr) {
->           error_setg(errp, "Cannot initialize vhost-user state");
->           return false;
-> diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-> index 191216a74f..e13584ade8 100644
-> --- a/include/hw/virtio/vhost-user.h
-> +++ b/include/hw/virtio/vhost-user.h
-> @@ -86,4 +86,11 @@ void vhost_user_async_close(DeviceState *d,
->                               CharBackend *chardev, struct vhost_dev *vhost,
->                               vu_async_close_fn cb);
->   
-> +/**
-> + * vhost_user_ram_slots_max()
-> + *
-> + * Return: maximum number of RAM slots supported by the target hardware plaform.
-> + */
-> +unsigned int vhost_user_ram_slots_max(void);
-> +
->   #endif
+> diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
+> index 30677c3ec9032ea01090f74602d839d1c571d012..a469a5e2dec4b05e51474f0a1af190c1ccf23c7e 100755
+> --- a/scripts/archive-source.sh
+> +++ b/scripts/archive-source.sh
+> @@ -1,4 +1,4 @@
+> -#!/bin/bash
+> +#!/usr/bin/env bash
+>   #
+>   # Author: Fam Zheng <famz@redhat.com>
+>   #
+> 
 
 
