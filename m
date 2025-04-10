@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734C6C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 10:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3075C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 10:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2pON-0007wR-87; Thu, 10 Apr 2025 06:44:19 -0400
+	id 1u2pOf-0007zj-JX; Thu, 10 Apr 2025 06:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1u2pOK-0007vk-I8; Thu, 10 Apr 2025 06:44:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1u2pOd-0007z8-F2
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 06:44:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1u2pOI-000440-Ne; Thu, 10 Apr 2025 06:44:16 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A6FWlR005759;
- Thu, 10 Apr 2025 10:44:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=W6Pp1nN0u9VE3yPMozkRTu3XvxoLdIIkl0GkyuAcR
- cs=; b=fvmXeU0ztvg5yviGcshgccyWho8bwAHEoULBMUiQ8jSE3YFoe6AYcLub+
- ZjUXjFEE+4pbmrE36+xxcgyuwRcn1KjlRAVMoe7Wvp5JI6C7aXqMGWcEHcWpf2QB
- NwT/HNSdwR7Isc0oolrGiwktK43BbjxZ3QIjONbEPmBI9HNgjGi8Qs3jfqvgdWKk
- qSPr+ZR1cgoIYFRdvVFEHQO5E26XDya166+wwDBZX4c0nRtTygek6pIoJ7R6UVaH
- OLRDkaf9fNN9QZZcSSCDgdRptxXkT4kDPVgmFQ9FGiLX0+pVIKmi+877lI708/78
- oAik5kK7TFK24mqdP3QQZBJ5zCy1A==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x04044b5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 10:44:09 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53AAf3O5017516;
- Thu, 10 Apr 2025 10:44:08 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x04044b3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 10:44:08 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53A8eTiI011069;
- Thu, 10 Apr 2025 10:44:08 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45uf7ywsbg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 10:44:08 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53AAi3V049152284
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 10:44:04 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9FCB82004B;
- Thu, 10 Apr 2025 10:44:03 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D73EF20040;
- Thu, 10 Apr 2025 10:44:01 +0000 (GMT)
-Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.in.ibm.com (unknown
- [9.204.206.66]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 10 Apr 2025 10:44:01 +0000 (GMT)
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
- pbonzini@redhat.com, vaibhav@linux.ibm.com
-Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH] hw/ppc/spapr_hcall: Return host mitigation characteristics in
- KVM mode
-Date: Thu, 10 Apr 2025 16:13:53 +0530
-Message-ID: <20250410104354.308714-1-gautam@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1u2pOb-0004AG-Uc
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 06:44:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744281871;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AWn2ETE+o5qWy/I+1x/Ak7ZUkU9CsqnC20EUsr51MgI=;
+ b=CiJkZQR7+QQDCkzH7x9Gi9AfyYAXc11VQ+Tj5ycetZX0pvn4lYdZlV7XmOQrc+mD7UTqTQ
+ ZAYK2y8fn0PPIAottB+iQ6/67DdhurbwRNpPdFmPRmoaDhSvo2bCEuZvLbO581VmfqWdww
+ hVVoeuzMr6LRwB8V87nRMlUcH2zyb+E=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-3FBIvw0ROkaKm3XQDUfiiw-1; Thu,
+ 10 Apr 2025 06:44:25 -0400
+X-MC-Unique: 3FBIvw0ROkaKm3XQDUfiiw-1
+X-Mimecast-MFC-AGG-ID: 3FBIvw0ROkaKm3XQDUfiiw_1744281863
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EDABF180034D; Thu, 10 Apr 2025 10:44:22 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.70])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0AE021808882; Thu, 10 Apr 2025 10:44:21 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id A804618000A1; Thu, 10 Apr 2025 12:44:19 +0200 (CEST)
+Date: Thu, 10 Apr 2025 12:44:19 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Dionna Amalie Glaze <dionnaglaze@google.com>, 
+ Alexander Graf <graf@amazon.com>,
+ =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tsirkin <mst@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v6] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <ttp3fs5hpxj52lnp32khyskt56tokgt6msqwqn3xkw7z4k5yhk@cw7zgrogplqy>
+References: <kmqzqeaatk3iyrpl4tvfxtfv6gefyusxpyxtz5bollw7jlp3wk@5c4zawrzehwq>
+ <d79cff63-324f-4624-aef3-b6570cdb23e2@amazon.com>
+ <rtbmlitus6unzibiatblquot2bthx4dmozbxgcbovisial6qar@konful7gzrsz>
+ <6d815066-9977-4683-a2d5-871dda3e5369@amazon.com>
+ <fwdk2pc4rfa5o22gdfqq4cfsqged4v6hmlrtqdwltgqj2bkpl4@bicazjx5d22l>
+ <CAAH4kHZhEX0kaE3r5PVOOWh1PhzZNOfyWMixDm0PbCnjfmZceA@mail.gmail.com>
+ <xjdm7m65w6hmnq3ik2psbfhizypk76c3hdriujh27kcm7ex5tv@7lq3x3k7y52h>
+ <CAAH4kHbFBekcmxBQcOA9K1Y+sFc2Jf56YEa4iv0M88ib7pCjgg@mail.gmail.com>
+ <aex5mpxcyybat5joqgvx4ssall53ksrfz3kkkpveso3jjosi4v@bofv3pqsgim4>
+ <2A385A2F-EB29-4573-8458-C5762792DC96@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CgcgQ5YApJANyeB-7xQW7X-XT38F0tWN
-X-Proofpoint-GUID: fwPwKQWeCdSrbVJnezC8KjNSbrYNL1zd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-10_02,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0
- lowpriorityscore=0 clxscore=1011 malwarescore=0 spamscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504100078
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+In-Reply-To: <2A385A2F-EB29-4573-8458-C5762792DC96@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,87 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, on a P10 KVM guest, the mitigations seen in the output of
-"lscpu" command are different from the host. The reason for this
-behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
-hcall, QEMU does not consider the data it received from the host via the
-KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
-spapr->eff.caps[], which in turn just contain the default values set in
-spapr_machine_class_init().
+On Thu, Apr 10, 2025 at 12:01:18PM +0530, Ani Sinha wrote:
+> 
+> 
+> > On 9 Apr 2025, at 11:51 AM, Gerd Hoffman <kraxel@redhat.com> wrote:
+> > 
+> >  Hi,
+> > 
+> >>> The chicken-and-egg problem arises if you go for hashing and want embed
+> >>> the igvm file in the UKI.
+> >> 
+> >> I don't really see how signing the IGVM file for secure boot helps anything.
+> > 
+> > It doesn't help indeed.  This comes from the original idea by Alex to
+> > simply add a firmware image to the UKI.  In that case the firmware is
+> > covered by the signature / hash, even though it is not needed.  Quite
+> > the contrary, it complicates things when we want ship db/dbx in the
+> > firmware image.
+> > 
+> > So most likely the firmware will not be part of the main UKI.  Options
+> > for alternatives are using UKI add-ons,
+> 
+> But add-ons are also subjected to signature verification. How does not using the main UKI help?
 
-Fix this behaviour by making sure that h_get_cpu_characteristics()
-returns the data received from the KVM ioctl for a KVM guest.
+For the first boot using secure boot doesn't help much, the trust
+in the firmware being loaded for the second boot is established via
+launch measurement not secure boot signature.
 
-Perf impact:
-With null syscall benchmark[1], ~45% improvement is observed.
+For the second boot (with new firmware) you don't need the add-on any
+more.
 
-1. Vanilla QEMU
-$ ./null_syscall
-132.19 ns     456.54 cycles
+The main advantage of wrapping the igvm into a uki add-on is that we
+can easily use the hwid matching support of systemd-stub when packaging
+multiple firmware variants (aws, azure, gcp, qemu, ...).  Not sure this
+will actually matter in practice though.
 
-2. With this patch
-$ ./null_syscall
-91.18 ns     314.57 cycles
-
-[1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
-
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
----
- hw/ppc/spapr_hcall.c   | 6 ++++++
- include/hw/ppc/spapr.h | 1 +
- target/ppc/kvm.c       | 2 ++
- 3 files changed, 9 insertions(+)
-
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 406aea4ecb..6aec4e22fc 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -1415,6 +1415,12 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
-     uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
-                                                      SPAPR_CAP_CCF_ASSIST);
- 
-+    if (kvm_enabled()) {
-+        args[0] = spapr->chars.character;
-+        args[1] = spapr->chars.behaviour;
-+        return H_SUCCESS;
-+    }
-+
-     switch (safe_cache) {
-     case SPAPR_CAP_WORKAROUND:
-         characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 39bd5bd5ed..b1e3ee1ae2 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -283,6 +283,7 @@ struct SpaprMachineState {
-     Error *fwnmi_migration_blocker;
- 
-     SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
-+    struct kvm_ppc_cpu_char chars;
- };
- 
- #define H_SUCCESS         0
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 992356cb75..fee6c5d131 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2511,6 +2511,7 @@ bool kvmppc_has_cap_xive(void)
- 
- static void kvmppc_get_cpu_characteristics(KVMState *s)
- {
-+    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
-     struct kvm_ppc_cpu_char c;
-     int ret;
- 
-@@ -2528,6 +2529,7 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
-         return;
-     }
- 
-+    spapr->chars = c;
-     cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
-     cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
-     cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
--- 
-2.49.0
+take care,
+  Gersd
 
 
