@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FE2C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2893C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2rJC-0000Hx-Mf; Thu, 10 Apr 2025 08:47:07 -0400
+	id 1u2rRU-0001q9-E4; Thu, 10 Apr 2025 08:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2rIy-0000GZ-Oh
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:46:54 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2rIw-0003AP-JO
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:46:52 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso8606785e9.0
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 05:46:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744289209; x=1744894009; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zZXIo1fhTP6w3XfC9tv2GhzcTe3ZMQskxjXxbZzFahQ=;
- b=X0/a1+ccF4lulBF9SNOocfhp5sp0L2ojq49B6/XA9PcvFm/csWnRRY0zNETOGbergK
- MeESIkls7Ugox2NDnGATvsbj4XJ9ePcZ10PBHoXZ/rIFgB1LRA7EtkMZYox6e4PP/PHS
- 26B2sgm7ejpSeB0R83ye5AJYT6uSeorHV01HKYoxHaUt7kE5I22z6ERnFmIocjGLCPAs
- MxpT8Ddg7Jo7uNOm+0tWHHXliHY0sm9sI7YCpF7M2s8osG7kWlGMZ30P7sRIsiNxU/8H
- 6nJvtCP2Zume73Sl4l2Kkpd7sSKb/U9Vt9AjbJKF+X5F4BPFq7gKJBv5rUdZAjK0gxVP
- CzAA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u2rRM-0001pL-KJ
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:55:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u2rRI-0004DR-6A
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:55:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744289726;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uY+GXIRcFHjEMDAwApDq5u+dpMv+32eCMLTfB4Go5sE=;
+ b=BgPDnAtxBn5JnWbR/HmrPPp69vhj+NtCRd+Z4AaiYA18Am8Z1v7jVQ4THDNAS/JzksggTJ
+ 3o6nomsAuSiX+XQOpnTnjmtBmpiVXdYwIpz/fjRiqlOfh+3K0Siqu4W363KTtf80nrpAC8
+ q98GuCoZQs2T3XQJDek4Ms+HakhFHkg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-133-ue-yKNEqPOmurWAZK6CeQg-1; Thu, 10 Apr 2025 08:55:24 -0400
+X-MC-Unique: ue-yKNEqPOmurWAZK6CeQg-1
+X-Mimecast-MFC-AGG-ID: ue-yKNEqPOmurWAZK6CeQg_1744289723
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43941ad86d4so4611885e9.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 05:55:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744289209; x=1744894009;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zZXIo1fhTP6w3XfC9tv2GhzcTe3ZMQskxjXxbZzFahQ=;
- b=c4sirdgoq3MdkpxTUfM0j4hLBCNibMCVErMR7qeUrrx3/OJi2JWBVtRB2PK9lCLoT0
- Wg1/px4b90Myv9s4R4Vhy5JtR2PQA+ECF0ABQ414uYIqwuD6ovhlE0w0U8duyMCO/4gI
- 126xEL9Wtd1QeTmukBbWmtqcjq49SVnFSNOIqknaPDspl6/CY/I1y1RIwja18J2CM0CI
- mhIBawqEvrH8dyao22sAucER24SROC+vlUJjLcfe2hNVGsR7tsE/Tys/2zV0M5PnWi84
- CpNvsjyFoCm14bi/5Ic48xB8svVX18DE1YzskMWWffmnnAzmuBQDHcrCwu3s+w0WmLEh
- pyag==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSHhBzl0wv/9kwthu1tCVzabxZhlE+mJRSoIW2qhqPvcMz0I1gjBftmqvS1fcCfDdP99Ctr6YXjW3S@nongnu.org
-X-Gm-Message-State: AOJu0YwG7WU1rPOeKZqdiVQ0f06cOuM6rmcGQBZdlgNWyMNIzks1df1C
- XZfE3jYFJdi1+IeOaulQHDnNgyS3k5ZS3FJaHaZnfAaopFOd6FCU6xq4oTWIXCI=
-X-Gm-Gg: ASbGncuZJ8YnHqBsyObPV3D7GbcpcnVAS6nJJckiMwxobLr/ah1kyUEwzh2uvD8j2BD
- 2NWRyDHQXPolaB5erSXhMsISV/opt4afAv9mh1K/bjJU9HgJDhS/08GoQ/EQnOXytHjDKRmL/Vk
- eFvZWUCjxNF27t4R+MVpWgg8ul0T3XXplko1o2S+lRJXStbkyl7xL8m3UaIZFyZ+ukv6c2N0SpQ
- SycJk1jHe3RE0z4yjWjwlhKywBPER0SwKU08Wx7NcWWffYIjVZFudmm2QMbPIKaTRM5fVHwaSuB
- rTA4sHkJC5bJm6hnglP2wmysSW5DbO6NOG3NJ7cR/FcFJwK8uIktTiaGk8Mis6+JBeQiYmTJYzD
- kMhKqsFyE+6Rq7g==
-X-Google-Smtp-Source: AGHT+IFYkPxS+JwgVWraoLI7bmEmqc5FQIN4eQ5rt5c/GcOIXBPGzwbqDNoNGdpm/+fgPK1Kb+38eA==
-X-Received: by 2002:a05:600c:258:b0:43d:fa59:bced with SMTP id
- 5b1f17b1804b1-43f3611175fmr2845515e9.32.1744289208772; 
- Thu, 10 Apr 2025 05:46:48 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f2075fc83sm55219905e9.26.2025.04.10.05.46.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Apr 2025 05:46:48 -0700 (PDT)
-Message-ID: <5393ff40-0e1f-4f3e-8379-8b2208301c70@linaro.org>
-Date: Thu, 10 Apr 2025 14:46:47 +0200
+ d=1e100.net; s=20230601; t=1744289722; x=1744894522;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uY+GXIRcFHjEMDAwApDq5u+dpMv+32eCMLTfB4Go5sE=;
+ b=fnuaT6ZwURaNBD1+heTKPqFsTUz+PgletHDdB1Bl+G24iR9Pxl2T+AjhvXdO8whz83
+ v6Px7KPN1dHAxKdibYZ61wH16mGmD8bDOQpqk0TJaQIAXE8fDwB6GsQuU3ZJ8tjTBQ8i
+ TekC+5bc3qlUTnL64PtUzvTbHwVoGu5M7xkq6zx9yFfZbmJB6p5v/QTN/+BVYb7GTLgW
+ pI76wD5DK6VRbqzPNM3CBa6og7QPJZx21T0tKnz3h1BUBQ9W9IS9tx54UEJVEvWAIYjx
+ jtZl5/WtxpMarwls3yZKyDJ0o1/smHMmT34DIVGKfbSdIAwGWVz1KGUxNoBWhRL+CKBO
+ oL/Q==
+X-Gm-Message-State: AOJu0YwVZAhd8qm0GmRoSgzCOS+UPS+s7JZJRkq8IFAwGIYXSkHxRW4l
+ 6NZ/IGnwOWaoFr6RoEv+X0zPdIMuzOTzl4kGn9bXmV3yaUI7r+usoszndToK1LJR1vkRpk8vIoJ
+ LUAtzPizb+XVou/VWhv2vCAUkbhUGNGoCIMN2OjdCGwgmjd4gOpZR+13hupGCzFHbh6GqcI6XMd
+ kQmaVhnXkLlQaTp7CoLrz69pmQQSa6jUHNWWixwA==
+X-Gm-Gg: ASbGncvIsYiUfpkHCCzKGtdoamd30ea5P7ihPC63uz6Yk8la7GWT/HW/OHWTry+cFnZ
+ e7s6aAmbPelaX54RYW4pmBTUOj5Hf5GAEajD9TSIJ+a/mu8St87whVClvMVMlGkSpaTzWqCE=
+X-Received: by 2002:a05:600c:444f:b0:43c:ec28:d301 with SMTP id
+ 5b1f17b1804b1-43f2d95a8cemr20170415e9.26.1744289721791; 
+ Thu, 10 Apr 2025 05:55:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGW/oI6PJ2sPXRseyY0hIx68eNKE/Q8Rq3HCpYvGRDu8u/qXQI7NkJgh7YcxTWBGAQGR7S5ei7TJG0O7JjER24=
+X-Received: by 2002:a05:600c:444f:b0:43c:ec28:d301 with SMTP id
+ 5b1f17b1804b1-43f2d95a8cemr20170155e9.26.1744289721389; Thu, 10 Apr 2025
+ 05:55:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc/spapr_hcall: Return host mitigation
- characteristics in KVM mode
-To: Gautam Menghani <gautam@linux.ibm.com>, npiggin@gmail.com,
- danielhb413@gmail.com, harshpb@linux.ibm.com, pbonzini@redhat.com,
- vaibhav@linux.ibm.com
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20250410104354.308714-1-gautam@linux.ibm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250410104354.308714-1-gautam@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
+ <04b7137a464e0925e2ae533bbde4fcdfe0dfe069.1744032780.git.ktokunaga.mail@gmail.com>
+ <e0dcc4e6-1e8e-468f-83e5-36ffb014eeef@linaro.org>
+ <671805c9-f802-412b-998e-ba83719f1e72@redhat.com>
+ <CAEDrbUbnAzXpmNSNi11j7+a0DCYHy7d_MCY=TMqHUoxmo_ZHGw@mail.gmail.com>
+In-Reply-To: <CAEDrbUbnAzXpmNSNi11j7+a0DCYHy7d_MCY=TMqHUoxmo_ZHGw@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 10 Apr 2025 14:55:07 +0200
+X-Gm-Features: ATxdqUGKmzOKJOybqP1sPUXX_2b_QdTs7865rXacRygnAG-Afji3ov0U768K7SU
+Message-ID: <CABgObfaL3f3BD56ajE=Dv+VKidjpW=FRuwTyFHr_Fpu5uAqmpg@mail.gmail.com>
+Subject: Re: [PATCH 05/10] meson: Add wasm build in build scripts
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,94 +122,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gautam,
+On Thu, Apr 10, 2025 at 2:24=E2=80=AFPM Kohei Tokunaga <ktokunaga.mail@gmai=
+l.com> wrote:
+> > >> has_int128_type is set to false on emscripten as of now to avoid err=
+ors by
+> > >> libffi.
+> >
+> > What is the error here?  How hard would it be to test for it?
+>
+> When has_int128_type=3Dtrue, I encountered a runtime error from libffi. T=
+o
+> reproduce this, we need to actually execute a libffi call with 128-bit
+> arguments.
+>
+> > Uncaught TypeError: Cannot convert 1079505232 to a BigInt
+> >     at ffi_call_js (out.js:702:37)
+> >     at qemu-system-x86_64.wasm.ffi_call (qemu-system-x86_64.wasm:0xa377=
+12)
+> >     at qemu-system-x86_64.wasm.tcg_qemu_tb_exec_tci (qemu-system-x86_64=
+.wasm:0x65f440)
+> >     at qemu-system-x86_64.wasm.tcg_qemu_tb_exec (qemu-system-x86_64.was=
+m:0x65edff)
+> >     at qemu-system-x86_64.wasm.cpu_tb_exec (qemu-system-x86_64.wasm:0x6=
+762c0)
+> >     at qemu-system-x86_64.wasm.cpu_exec_loop (qemu-system-x86_64.wasm:0=
+x677c84)
+> >     at qemu-system-x86_64.wasm.dynCall_iii (qemu-system-x86_64.wasm:0xa=
+b9014)
+> >     at ret.<computed> (out.js:6016:24)
+> >     at invoke_iii (out.js:7574:10)
+> >     at qemu-system-x86_64.wasm.cpu_exec_setjmp (qemu-system-x86_64.wasm=
+:0x676db8)
 
-On 10/4/25 12:43, Gautam Menghani wrote:
-> Currently, on a P10 KVM guest, the mitigations seen in the output of
-> "lscpu" command are different from the host. The reason for this
-> behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
-> hcall, QEMU does not consider the data it received from the host via the
-> KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
-> spapr->eff.caps[], which in turn just contain the default values set in
-> spapr_machine_class_init().
-> 
-> Fix this behaviour by making sure that h_get_cpu_characteristics()
-> returns the data received from the KVM ioctl for a KVM guest.
-> 
-> Perf impact:
-> With null syscall benchmark[1], ~45% improvement is observed.
-> 
-> 1. Vanilla QEMU
-> $ ./null_syscall
-> 132.19 ns     456.54 cycles
-> 
-> 2. With this patch
-> $ ./null_syscall
-> 91.18 ns     314.57 cycles
-> 
-> [1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
-> 
-> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-> ---
->   hw/ppc/spapr_hcall.c   | 6 ++++++
->   include/hw/ppc/spapr.h | 1 +
->   target/ppc/kvm.c       | 2 ++
->   3 files changed, 9 insertions(+)
-> 
-> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index 406aea4ecb..6aec4e22fc 100644
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -1415,6 +1415,12 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
->       uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
->                                                        SPAPR_CAP_CCF_ASSIST);
->   
-> +    if (kvm_enabled()) {
-> +        args[0] = spapr->chars.character;
-> +        args[1] = spapr->chars.behaviour;
+Ok, I guess a comment mentioning that it's a libffi limitation is enough.
 
-If kvmppc_get_cpu_characteristics() call fails, we return random data.
+> > At least -g -O3 -pthread should not be necessary.
+>
+> Thank you for the suggestion. -sPROXY_TO_PTHREAD flag used in c_link_args
+> always requires -pthread, even during configuration. Otherwise, emcc retu=
+rns
+> an error like:
+>
+> > emcc: error: -sPROXY_TO_PTHREAD requires -pthread to work!
+>
+> So I think -pthread needs to be included in c_link_args at minimum. I'll =
+try
+> to remove other flags in the next version of the series.
 
-Can't we just call kvm_vm_check_extension(s, KVM_CAP_PPC_GET_CPU_CHAR)
-and kvm_vm_ioctl(s, KVM_PPC_GET_CPU_CHAR, &c) here?
+Reading more about -sPROXY_TO_PTHREAD it seems that you need it for
+all calls to emcc, even when compiling, so it's better to leave it in
+everywhere.
 
-> +        return H_SUCCESS;
-> +    }
-> +
->       switch (safe_cache) {
->       case SPAPR_CAP_WORKAROUND:
->           characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index 39bd5bd5ed..b1e3ee1ae2 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -283,6 +283,7 @@ struct SpaprMachineState {
->       Error *fwnmi_migration_blocker;
->   
->       SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
-> +    struct kvm_ppc_cpu_char chars;
->   };
->   
->   #define H_SUCCESS         0
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 992356cb75..fee6c5d131 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -2511,6 +2511,7 @@ bool kvmppc_has_cap_xive(void)
->   
->   static void kvmppc_get_cpu_characteristics(KVMState *s)
->   {
-> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
->       struct kvm_ppc_cpu_char c;
->       int ret;
->   
-> @@ -2528,6 +2529,7 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
->           return;
->       }
->   
-> +    spapr->chars = c;
->       cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
->       cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
->       cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
+> > For -Wno-unused-command-line-argument what are the warnings/errors that
+> > you are getting?
+>
+> I encountered the following error when compiling QEMU:
+>
+> > clang: error: argument unused during compilation: '-no-pie' [-Werror,-W=
+unused-command-line-argument]
+>
+> It seems Emscripten doesn't support the -no-pie flag, and this wasn't cau=
+ght
+> during the configure phase. It seems that removing
+> -Wno-unused-command-line-argument would require the following change in
+> meson.build, but I'm open to better approaches.
+>
+> > -if not get_option('b_pie')
+> > +if not get_option('b_pie') and host_os !=3D 'emscripten'
+> >    qemu_common_flags +=3D cc.get_supported_arguments('-fno-pie', '-no-p=
+ie')
+> >  endif
+
+Meson should have passed the -Werror=3Dunused-command-line-argument flag
+when doing the above test (CLikeCompiler._has_multi_arguments ->
+has_arguments -> Compiler.compiles -> _build_wrapper ->
+build_wrapper_args -> ClangCompiler.get_compiler_check_args). It would
+be great if you can check what's wrong in this theory so perhaps meson
+can be fixed, or at least send here a meson-log.txt.
+
+My suggestion is (if possible) to split out the parts of this series
+that are enough to run QEMU under TCI, and get those in as quickly as
+possible. The TCG backend can come second.
+
+Thanks,
+
+Paolo
 
 
