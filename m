@@ -4,31 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962C8C369A6
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 11:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F91C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 11:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2pzc-00088p-L9; Thu, 10 Apr 2025 07:22:48 -0400
+	id 1u2pzc-00088Z-Ey; Thu, 10 Apr 2025 07:22:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u2pza-00087W-Ai
+ id 1u2pza-00087X-B2
  for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:46 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u2pzX-0000E7-0T
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u2pzX-0000EA-0R
  for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:45 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 759B01C15CE; Thu, 10 Apr 2025 13:22:40 +0200 (CEST)
+ id 726001C15BF; Thu, 10 Apr 2025 13:22:40 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: qemu-devel@nongnu.org,
 	marcandre.lureau@redhat.com
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v2 3/6] vnc: h264: send additional frames after the display is
- clean
-Date: Thu, 10 Apr 2025 13:22:35 +0200
-Message-Id: <20250410112238.3550155-4-dietmar@proxmox.com>
+Subject: [PATCH v2 1/6] new configure option to enable gstreamer
+Date: Thu, 10 Apr 2025 13:22:33 +0200
+Message-Id: <20250410112238.3550155-2-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250410112238.3550155-1-dietmar@proxmox.com>
 References: <20250410112238.3550155-1-dietmar@proxmox.com>
@@ -59,73 +58,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The H264 implementation only sends frames when it detects changes in
-the server's framebuffer. This leads to artifacts when there are no
-further changes, as the internal H264 encoder may still contain data.
-
-This patch modifies the code to send a few additional frames in such
-situations to flush the H264 encoder data.
+GStreamer is required to implement H264 encoding for VNC. Please note
+that QEMU already depends on this library when you enable Spice.
 
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- ui/vnc.c | 25 ++++++++++++++++++++++++-
- ui/vnc.h |  3 +++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+ meson.build                   | 10 ++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  5 ++++-
+ 3 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 2e60b55e47..4ba0b715fd 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3239,7 +3239,30 @@ static void vnc_refresh(DisplayChangeListener *dcl)
-     vnc_unlock_display(vd);
- 
-     QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
--        rects += vnc_update_client(vs, has_dirty);
-+        int client_dirty = has_dirty;
-+        if (vs->h264) {
-+            if (client_dirty) {
-+                vs->h264->keep_dirty = VNC_H264_KEEP_DIRTY;
-+            } else {
-+                if (vs->h264->keep_dirty > 0) {
-+                    client_dirty = 1;
-+                    vs->h264->keep_dirty--;
-+                }
-+            }
-+        }
+diff --git a/meson.build b/meson.build
+index 41f68d3806..28ca37855a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1348,6 +1348,14 @@ if not get_option('zstd').auto() or have_block
+                     required: get_option('zstd'),
+                     method: 'pkg-config')
+ endif
 +
-+        int count = vnc_update_client(vs, client_dirty);
-+        rects += count;
++gstreamer = not_found
++if not get_option('gstreamer').auto() or have_block
++  gstreamer = dependency('gstreamer-1.0 gstreamer-base-1.0', version: '>=1.22.0',
++                          required: get_option('gstreamer'),
++                          method: 'pkg-config')
++endif
 +
-+        if (vs->h264 && !count && vs->h264->keep_dirty) {
-+            VncJob *job = vnc_job_new(vs);
-+            int height = pixman_image_get_height(vd->server);
-+            int width = pixman_image_get_width(vd->server);
-+            vs->job_update = vs->update;
-+            vs->update = VNC_STATE_UPDATE_NONE;
-+            vnc_job_add_rect(job, 0, 0, width, height);
-+            vnc_job_push(job);
-+        }
-         /* vs might be free()ed here */
-     }
+ qpl = not_found
+ if not get_option('qpl').auto() or have_system
+   qpl = dependency('qpl', version: '>=1.5.0',
+@@ -2563,6 +2571,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
+ config_host_data.set('CONFIG_STATX', has_statx)
+ config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+ config_host_data.set('CONFIG_ZSTD', zstd.found())
++config_host_data.set('CONFIG_GSTREAMER', gstreamer.found())
+ config_host_data.set('CONFIG_QPL', qpl.found())
+ config_host_data.set('CONFIG_UADK', uadk.found())
+ config_host_data.set('CONFIG_QATZIP', qatzip.found())
+@@ -4836,6 +4845,7 @@ summary_info += {'snappy support':    snappy}
+ summary_info += {'bzip2 support':     libbzip2}
+ summary_info += {'lzfse support':     liblzfse}
+ summary_info += {'zstd support':      zstd}
++summary_info += {'gstreamer support': gstreamer}
+ summary_info += {'Query Processing Library support': qpl}
+ summary_info += {'UADK Library support': uadk}
+ summary_info += {'qatzip support':    qatzip}
+diff --git a/meson_options.txt b/meson_options.txt
+index 59d973bca0..11cd132be5 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -254,6 +254,8 @@ option('vnc_sasl', type : 'feature', value : 'auto',
+        description: 'SASL authentication for VNC server')
+ option('vte', type : 'feature', value : 'auto',
+        description: 'vte support for the gtk UI')
++option('gstreamer', type : 'feature', value : 'auto',
++       description: 'for VNC H.264 encoding with gstreamer')
  
-diff --git a/ui/vnc.h b/ui/vnc.h
-index 7e232f7dac..e1b81d6bcc 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -236,10 +236,13 @@ typedef struct VncZywrle {
- } VncZywrle;
- 
- #ifdef CONFIG_GSTREAMER
-+/* Number of frames we send after the display is clean. */
-+#define VNC_H264_KEEP_DIRTY 10
- typedef struct VncH264 {
-     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
-     size_t width;
-     size_t height;
-+    guint keep_dirty;
- } VncH264;
- #endif
- 
+ # GTK Clipboard implementation is disabled by default, since it may cause hangs
+ # of the guest VCPUs. See gitlab issue 1150:
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 3e8e00852b..b0c273d61e 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -229,6 +229,7 @@ meson_options_help() {
+   printf "%s\n" '                  Xen PCI passthrough support'
+   printf "%s\n" '  xkbcommon       xkbcommon support'
+   printf "%s\n" '  zstd            zstd compression support'
++  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
+ }
+ _meson_option_parse() {
+   case $1 in
+@@ -581,6 +582,8 @@ _meson_option_parse() {
+     --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
+     --enable-zstd) printf "%s" -Dzstd=enabled ;;
+     --disable-zstd) printf "%s" -Dzstd=disabled ;;
+-    *) return 1 ;;
++    --enable-gstreamer) printf "%s" -Dgstreamer=enabled ;;
++    --disable-gstreamer) printf "%s" -Dgstreamer=disabled ;;
++   *) return 1 ;;
+   esac
+ }
 -- 
 2.39.5
 
