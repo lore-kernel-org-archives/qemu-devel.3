@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B396C369A2
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 02:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC8D7C369A1
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 02:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2hpT-0001rJ-Gf; Wed, 09 Apr 2025 22:39:47 -0400
+	id 1u2hpO-0001md-AZ; Wed, 09 Apr 2025 22:39:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2hpR-0001qY-Gb; Wed, 09 Apr 2025 22:39:45 -0400
+ id 1u2hpE-0001fU-3J; Wed, 09 Apr 2025 22:39:33 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2hpN-0003Ay-0K; Wed, 09 Apr 2025 22:39:45 -0400
+ id 1u2hp7-00033O-UH; Wed, 09 Apr 2025 22:39:30 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 10 Apr
- 2025 10:38:59 +0800
+ 2025 10:38:58 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 10 Apr 2025 10:38:59 +0800
+ Transport; Thu, 10 Apr 2025 10:38:58 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>
-Subject: [PATCH v2 10/10] docs/system/arm/aspeed: Support vbootrom for AST2700
-Date: Thu, 10 Apr 2025 10:38:54 +0800
-Message-ID: <20250410023856.500258-11-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 07/10] hw/arm/aspeed: Add support for loading vbootrom
+ image via "-bios"
+Date: Thu, 10 Apr 2025 10:38:51 +0800
+Message-ID: <20250410023856.500258-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
 References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
@@ -66,48 +67,71 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using the vbootrom image instead of manually loading boot components with
--device loader. The boot ROM binary is now passed via the -bios option,
-using the image located in pc-bios/ast27x0_bootrom.bin.
+Introduce "aspeed_load_vbootrom()" to support loading a virtual boot ROM image
+into the vbootrom memory region, using the "-bios" command-line option.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- docs/system/arm/aspeed.rst | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ hw/arm/aspeed.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 97fd6a0e7f..dfa8e6b4c6 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -250,24 +250,14 @@ under Linux), use :
- Booting the ast2700-evb machine
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index b70a120e62..2811868c1a 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -27,6 +27,7 @@
+ #include "system/reset.h"
+ #include "hw/loader.h"
+ #include "qemu/error-report.h"
++#include "qemu/datadir.h"
+ #include "qemu/units.h"
+ #include "hw/qdev-clock.h"
+ #include "system/system.h"
+@@ -305,6 +306,32 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+                    rom_size, &error_abort);
+ }
  
--Boot the AST2700 machine from the flash image, use an MTD drive :
-+Boot the AST2700 machine using a flash image, with an MTD drive and
-+the virtual boot ROM :
++/*
++ * This function locates the vbootrom image file specified via the command line
++ * using the -bios option. It loads the specified image into the vbootrom
++ * memory region and handles errors if the file cannot be found or loaded.
++ */
++static void aspeed_load_vbootrom(MachineState *machine, uint64_t rom_size)
++{
++    AspeedMachineState *bmc = ASPEED_MACHINE(machine);
++    const char *bios_name = machine->firmware;
++    g_autofree char *filename = NULL;
++    AspeedSoCState *soc = bmc->soc;
++    int ret;
++
++    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
++    if (!filename) {
++        error_report("Could not find vbootrom image '%s'", bios_name);
++        exit(1);
++    }
++
++    ret = load_image_mr(filename, &soc->vbootrom);
++    if (ret < 0) {
++        error_report("Failed to load vbootrom image '%s'", filename);
++        exit(1);
++    }
++}
++
+ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+                                       unsigned int count, int unit0)
+ {
+@@ -483,6 +510,11 @@ static void aspeed_machine_init(MachineState *machine)
+         }
+     }
  
- .. code-block:: bash
++    if (amc->vbootrom) {
++        rom_size = memory_region_size(&bmc->soc->vbootrom);
++        aspeed_load_vbootrom(machine, rom_size);
++    }
++
+     arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
+ }
  
--  IMGDIR=ast2700-default
--  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
--
-   $ qemu-system-aarch64 -M ast2700-evb \
--       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
--       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
--       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
--       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
--       -device loader,cpu-num=0,addr=0x430000000 \
--       -device loader,cpu-num=1,addr=0x430000000 \
--       -device loader,cpu-num=2,addr=0x430000000 \
--       -device loader,cpu-num=3,addr=0x430000000 \
--       -smp 4 \
--       -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
-+       -bios ast27x0_bootrom.bin \
-+       -drive file=image-bmc,format=raw,if=mtd \
-        -nographic
- 
- Aspeed minibmc family boards (``ast1030-evb``)
 -- 
 2.43.0
 
