@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C232C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:39:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FE2C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2rAj-000643-An; Thu, 10 Apr 2025 08:38:22 -0400
+	id 1u2rJC-0000Hx-Mf; Thu, 10 Apr 2025 08:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u2rAc-00063r-Dg; Thu, 10 Apr 2025 08:38:15 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u2rAa-00021P-C2; Thu, 10 Apr 2025 08:38:14 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E9B0311446A;
- Thu, 10 Apr 2025 15:36:12 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A1EE1EC727;
- Thu, 10 Apr 2025 15:37:48 +0300 (MSK)
-Message-ID: <76bc1c49-43cb-445e-98e2-2f75c53623b8@tls.msk.ru>
-Date: Thu, 10 Apr 2025 15:37:48 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2rIy-0000GZ-Oh
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:46:54 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2rIw-0003AP-JO
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:46:52 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43ce70f9afbso8606785e9.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 05:46:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744289209; x=1744894009; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zZXIo1fhTP6w3XfC9tv2GhzcTe3ZMQskxjXxbZzFahQ=;
+ b=X0/a1+ccF4lulBF9SNOocfhp5sp0L2ojq49B6/XA9PcvFm/csWnRRY0zNETOGbergK
+ MeESIkls7Ugox2NDnGATvsbj4XJ9ePcZ10PBHoXZ/rIFgB1LRA7EtkMZYox6e4PP/PHS
+ 26B2sgm7ejpSeB0R83ye5AJYT6uSeorHV01HKYoxHaUt7kE5I22z6ERnFmIocjGLCPAs
+ MxpT8Ddg7Jo7uNOm+0tWHHXliHY0sm9sI7YCpF7M2s8osG7kWlGMZ30P7sRIsiNxU/8H
+ 6nJvtCP2Zume73Sl4l2Kkpd7sSKb/U9Vt9AjbJKF+X5F4BPFq7gKJBv5rUdZAjK0gxVP
+ CzAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744289209; x=1744894009;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zZXIo1fhTP6w3XfC9tv2GhzcTe3ZMQskxjXxbZzFahQ=;
+ b=c4sirdgoq3MdkpxTUfM0j4hLBCNibMCVErMR7qeUrrx3/OJi2JWBVtRB2PK9lCLoT0
+ Wg1/px4b90Myv9s4R4Vhy5JtR2PQA+ECF0ABQ414uYIqwuD6ovhlE0w0U8duyMCO/4gI
+ 126xEL9Wtd1QeTmukBbWmtqcjq49SVnFSNOIqknaPDspl6/CY/I1y1RIwja18J2CM0CI
+ mhIBawqEvrH8dyao22sAucER24SROC+vlUJjLcfe2hNVGsR7tsE/Tys/2zV0M5PnWi84
+ CpNvsjyFoCm14bi/5Ic48xB8svVX18DE1YzskMWWffmnnAzmuBQDHcrCwu3s+w0WmLEh
+ pyag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSHhBzl0wv/9kwthu1tCVzabxZhlE+mJRSoIW2qhqPvcMz0I1gjBftmqvS1fcCfDdP99Ctr6YXjW3S@nongnu.org
+X-Gm-Message-State: AOJu0YwG7WU1rPOeKZqdiVQ0f06cOuM6rmcGQBZdlgNWyMNIzks1df1C
+ XZfE3jYFJdi1+IeOaulQHDnNgyS3k5ZS3FJaHaZnfAaopFOd6FCU6xq4oTWIXCI=
+X-Gm-Gg: ASbGncuZJ8YnHqBsyObPV3D7GbcpcnVAS6nJJckiMwxobLr/ah1kyUEwzh2uvD8j2BD
+ 2NWRyDHQXPolaB5erSXhMsISV/opt4afAv9mh1K/bjJU9HgJDhS/08GoQ/EQnOXytHjDKRmL/Vk
+ eFvZWUCjxNF27t4R+MVpWgg8ul0T3XXplko1o2S+lRJXStbkyl7xL8m3UaIZFyZ+ukv6c2N0SpQ
+ SycJk1jHe3RE0z4yjWjwlhKywBPER0SwKU08Wx7NcWWffYIjVZFudmm2QMbPIKaTRM5fVHwaSuB
+ rTA4sHkJC5bJm6hnglP2wmysSW5DbO6NOG3NJ7cR/FcFJwK8uIktTiaGk8Mis6+JBeQiYmTJYzD
+ kMhKqsFyE+6Rq7g==
+X-Google-Smtp-Source: AGHT+IFYkPxS+JwgVWraoLI7bmEmqc5FQIN4eQ5rt5c/GcOIXBPGzwbqDNoNGdpm/+fgPK1Kb+38eA==
+X-Received: by 2002:a05:600c:258:b0:43d:fa59:bced with SMTP id
+ 5b1f17b1804b1-43f3611175fmr2845515e9.32.1744289208772; 
+ Thu, 10 Apr 2025 05:46:48 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f2075fc83sm55219905e9.26.2025.04.10.05.46.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Apr 2025 05:46:48 -0700 (PDT)
+Message-ID: <5393ff40-0e1f-4f3e-8379-8b2208301c70@linaro.org>
+Date: Thu, 10 Apr 2025 14:46:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0] scsi-disk: Apply error policy for host_status
- errors again
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: hreitz@redhat.com, pbonzini@redhat.com, stefanha@redhat.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20250407155949.44736-1-kwolf@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250407155949.44736-1-kwolf@redhat.com>
+Subject: Re: [PATCH] hw/ppc/spapr_hcall: Return host mitigation
+ characteristics in KVM mode
+To: Gautam Menghani <gautam@linux.ibm.com>, npiggin@gmail.com,
+ danielhb413@gmail.com, harshpb@linux.ibm.com, pbonzini@redhat.com,
+ vaibhav@linux.ibm.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20250410104354.308714-1-gautam@linux.ibm.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250410104354.308714-1-gautam@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,49 +104,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.04.2025 18:59, Kevin Wolf пишет:
-> Originally, all failed SG_IO requests called scsi_handle_rw_error() to
-> apply the configured error policy. However, commit f3126d65, which was
-> supposed to be a mere refactoring for scsi-disk.c, broke this and
-> accidentally completed the SCSI request without considering the error
-> policy any more if the error was signalled in the host_status field.
-> 
-> Apart from the commit message not describing the chance as intended,
-> errors indicated in host_status are also obviously backend errors and
-> not something the guest must deal with indepdently of the error policy.
-> 
-> This behaviour means that some recoverable errors (such as a path error
-> in multipath configurations) were reported to the guest anyway, which
-> might not expect it and might consider its disk broken.
-> 
-> Make sure that we apply the error policy again for host_status errors,
-> too. This addresses an existing FIXME comment and allows us to remove
-> some comments warning that callbacks weren't always called. With this
-> fix, they are called in all cases again.
-> 
-> The return value passed to the request callback doesn't have more free
-> values that could be used to indicate host_status errors as well as SAM
-> status codes and negative errno. Store the value in the host_status
-> field of the SCSIRequest instead and use -ENODEV as the return value (if
-> a path hasn't been reachable for a while, blk_aio_ioctl() will return
-> -ENODEV instead of just setting host_status, so just reuse it here -
-> it's not necessarily entirely accurate, but it's as good as any errno).
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: f3126d65b393 ('scsi: move host_status handling into SCSI drivers')
+Hi Gautam,
 
-Hi!
+On 10/4/25 12:43, Gautam Menghani wrote:
+> Currently, on a P10 KVM guest, the mitigations seen in the output of
+> "lscpu" command are different from the host. The reason for this
+> behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
+> hcall, QEMU does not consider the data it received from the host via the
+> KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
+> spapr->eff.caps[], which in turn just contain the default values set in
+> spapr_machine_class_init().
+> 
+> Fix this behaviour by making sure that h_get_cpu_characteristics()
+> returns the data received from the KVM ioctl for a KVM guest.
+> 
+> Perf impact:
+> With null syscall benchmark[1], ~45% improvement is observed.
+> 
+> 1. Vanilla QEMU
+> $ ./null_syscall
+> 132.19 ns     456.54 cycles
+> 
+> 2. With this patch
+> $ ./null_syscall
+> 91.18 ns     314.57 cycles
+> 
+> [1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
+> 
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> ---
+>   hw/ppc/spapr_hcall.c   | 6 ++++++
+>   include/hw/ppc/spapr.h | 1 +
+>   target/ppc/kvm.c       | 2 ++
+>   3 files changed, 9 insertions(+)
+> 
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index 406aea4ecb..6aec4e22fc 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -1415,6 +1415,12 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
+>       uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
+>                                                        SPAPR_CAP_CCF_ASSIST);
+>   
+> +    if (kvm_enabled()) {
+> +        args[0] = spapr->chars.character;
+> +        args[1] = spapr->chars.behaviour;
 
-Does it make sense to apply this one for older stable qemu series?
-In particular, in 8.2, we lack cfe0880835cd3
-"scsi-disk: Use positive return value for status in dma_readv/writev",
-which seems to be relevant here.  Or should I pick up cfe0880835cd3 too,
-maybe together with 8a0495624f (a no-op, just to make this patch to apply
-cleanly) and probably 9da6bd39f924?
+If kvmppc_get_cpu_characteristics() call fails, we return random data.
 
-Thanks,
+Can't we just call kvm_vm_check_extension(s, KVM_CAP_PPC_GET_CPU_CHAR)
+and kvm_vm_ioctl(s, KVM_PPC_GET_CPU_CHAR, &c) here?
 
-/mjt
-
+> +        return H_SUCCESS;
+> +    }
+> +
+>       switch (safe_cache) {
+>       case SPAPR_CAP_WORKAROUND:
+>           characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
+> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+> index 39bd5bd5ed..b1e3ee1ae2 100644
+> --- a/include/hw/ppc/spapr.h
+> +++ b/include/hw/ppc/spapr.h
+> @@ -283,6 +283,7 @@ struct SpaprMachineState {
+>       Error *fwnmi_migration_blocker;
+>   
+>       SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
+> +    struct kvm_ppc_cpu_char chars;
+>   };
+>   
+>   #define H_SUCCESS         0
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index 992356cb75..fee6c5d131 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -2511,6 +2511,7 @@ bool kvmppc_has_cap_xive(void)
+>   
+>   static void kvmppc_get_cpu_characteristics(KVMState *s)
+>   {
+> +    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
+>       struct kvm_ppc_cpu_char c;
+>       int ret;
+>   
+> @@ -2528,6 +2529,7 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
+>           return;
+>       }
+>   
+> +    spapr->chars = c;
+>       cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
+>       cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
+>       cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
 
 
