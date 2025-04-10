@@ -4,101 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B332CC369A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 09:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18CEC369A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 09:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2oFJ-0001Tj-Rs; Thu, 10 Apr 2025 05:30:54 -0400
+	id 1u2oHU-0002a6-8L; Thu, 10 Apr 2025 05:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u2oEf-0001NJ-OW; Thu, 10 Apr 2025 05:30:24 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1u2oEd-0003Kq-9C; Thu, 10 Apr 2025 05:30:13 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A6IEKV022725;
- Thu, 10 Apr 2025 09:30:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vf1yRN
- pRu0UF0Ut8lK7lEtgX5gHL8KPFNQhNmOmFMpU=; b=f+O5lsu+b8adxN4zwf+jEY
- ks2MathZFwg/MJxx8AQR2gvHtndn6L6TdZVc6Ggnt+V6/+9BivUf99DFpHi3pEh5
- uhPjY2rZ9MH4SEjhXU3J27+qaYyulZrR5SRQXx7c/iZ5xv2n/THilXjZpocI1z07
- FJGdH4LKnpBGyuVQ+uBfoESvQd+lXn6rKy9T9gBBNhmshykA/UigAzTNY7Z8ADuc
- GZkZ6J8nWmcICJhwTb5ALtc8UK21ifN65mBWXhaEuEr8V+gNeis8W/yTet9AI0Uv
- 9M5g4MpWbclz3ssfhRz7jk/LNofDHEL9tDOyWFxGGqevSjkgTUXZZicpEQextGYQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x02qbt2y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 09:30:09 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53A7Kt8P029513;
- Thu, 10 Apr 2025 09:30:08 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45x1k737ru-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 10 Apr 2025 09:30:08 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53A9U7L331916610
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 09:30:07 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 23F1A58062;
- Thu, 10 Apr 2025 09:30:07 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8564F5805D;
- Thu, 10 Apr 2025 09:30:06 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 10 Apr 2025 09:30:06 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2oH0-0002K7-77
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 05:32:38 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2oGx-0003dH-CK
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 05:32:37 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3914aba1ce4so416383f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 02:32:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744277553; x=1744882353; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y/3uNvEhSiUtMrMIDAyTCVGfurS1FjC7H0G6McwxFKA=;
+ b=R66U7V83DfcGZQ1cZiwXurKo23DTuVfxBO3Jh1KccTXMznKzAGtyYfcM9V7TzL9BTV
+ xY36Lu2B+Iy0kC0EIZd+5+k8mUTaj8Q2Z52r7TcoBMTCcAMmJW+JVGkXZOSN2E/I7rws
+ vuoWtlSxO9ToIbp7D5UUZQiMMSa1S3lNtwEBUUi/TUDJIV3dYSndPH7FuXBbxlEYOSPG
+ 5kQh72z+660M/gQxIUMuYVunPg7L8qCVsn2qmiIBkhr9x+pgaMPTwsbmLU2vWuENkoqs
+ cPhUR3mzNbuQXxl3OeZazi4Yh3x6VQ8QKei9VOf2qTa77hgRBwXN1NL6kxEfhgHs8hrA
+ RyXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744277553; x=1744882353;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y/3uNvEhSiUtMrMIDAyTCVGfurS1FjC7H0G6McwxFKA=;
+ b=eKw5xXj+aZx1v+FNI2/hjj/Udio+vhE+P7prwsKmYDOaymOJmyfZU7fVSvVF5k0srq
+ DWBV/Ls94gPBkFpTw7Xa9Hwx3Mce9jbimDKVV1DpOIs/f6R1yACuoGn/U4YpqSY+squC
+ pwtof6ddaM+MpZzQ8/oFfhCmz3okEWr44g4pN1w0nmqt/+6Z2ZZ73P8bM6DA8/3UXvcN
+ eRe9lD9OC4Oo57Mre0+eJmjtdGV8vCyij73sMi7fGsEYmT5Cemovrdt2Btmg1Zz0NMlu
+ sUGh+tOSGnUhmdt0JzEFhx7rAwrWwnC2PxvXUXJTLujJjOBtlWP0HunFvR1G3LFq5396
+ BNCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfqcp2mLSi0Ho8OKzL7SWwvp2sMaonQcH+b9DA954HE+wfMyOX6nWYSLt6byoBuJaRceixEGZmAH9A@nongnu.org
+X-Gm-Message-State: AOJu0Yzu8FJTzXjxrwFSTaf2qWq3M61SwCfQwS8re5XoN3JbIgntoJXg
+ 7yXvcoPrdjh0LkwUFJp9CeAS81GcxD49/48lFcbmeAJ3gLzM2dyJhL6ieTv8aFRYFkHd/cVfBkt
+ KI5s=
+X-Gm-Gg: ASbGnctORhMCayoZSXR5nHHcUDohSElkM7xvLTNEhPAbhhAwZMqSJ/pT5Eq0jArRQmX
+ 1YUnC9F7/6Cv1J9IFVXUPlg7rAz/s47IMIlujddLER751R4zs1LarQ0n+HFeZnjzPxHXd0ibCSd
+ yo7KtnZbzqKznRDy+EEz+QfDfGkZQYON79JBj9ZslGjpilEhWLaGj6JJ1FR8Y5R++ShalN1Poe8
+ opqQfX7rSGRZKVGzUHl24zdpiwNSoRV8uafxS+ipv083M7OCfoIog5xkJyi0QH9/x9Srr2kztl9
+ xf8TGAW5f2iMYGNihHg8iY1RTvJ03im8RrHU1OyPF+Eb8fL6nrTa/xK2PaVaNqNga5Tp/3Q8EUB
+ Vq0x/ehKREQ7vjoGx8uY9sqo0oSIqKg==
+X-Google-Smtp-Source: AGHT+IHW0Vip4Hn4gIrcEUlOfx2f5op5CPMcqQqYMMqIW68O96eIaLqJHyie/mdDgWNFMne5S840Uw==
+X-Received: by 2002:a5d:64ed:0:b0:391:41c9:7a8d with SMTP id
+ ffacd0b85a97d-39d8fdebf24mr1268856f8f.54.1744277553020; 
+ Thu, 10 Apr 2025 02:32:33 -0700 (PDT)
+Received: from [10.155.70.213] (224.red-88-28-18.dynamicip.rima-tde.net.
+ [88.28.18.224]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39d89389ed6sm4128482f8f.41.2025.04.10.02.32.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Apr 2025 02:32:32 -0700 (PDT)
+Message-ID: <59239d14-e50a-4a39-81dd-03580b025dc9@linaro.org>
+Date: Thu, 10 Apr 2025 11:32:29 +0200
 MIME-Version: 1.0
-Date: Thu, 10 Apr 2025 11:30:06 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-s390x mailing list
- <qemu-s390x@nongnu.org>, Daniel Berrange <berrange@redhat.com>, qemu-devel
- mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
- <brueckner@linux.ibm.com>, "<Shalini Chellathurai Saroja"
- <shalini@linux.ibm.com>
-Subject: Re: [PATCH v3 2/4] hw/s390x: add Control-Program Identification to QOM
-In-Reply-To: <7743d8f3-497f-4d7e-9f42-16d8e8fc5c8e@redhat.com>
-References: <bc4a5b3f078657b8dc3045a207ba9386@linux.ibm.com>
- <7743d8f3-497f-4d7e-9f42-16d8e8fc5c8e@redhat.com>
-Message-ID: <f6c486f309c25ef8603624eda5ed492c@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dDMEipBvwyW7PVdBxErWQ1awIabivm47
-X-Proofpoint-ORIG-GUID: dDMEipBvwyW7PVdBxErWQ1awIabivm47
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-10_01,2025-04-08_04,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0
- priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 mlxscore=0 adultscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504100070
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio: Call set_features during reset
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, devel@daynix.com,
+ qemu-stable@nongnu.org
+References: <20250410-reset-v1-1-751cd0064395@daynix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250410-reset-v1-1-751cd0064395@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,221 +103,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-04-09 07:30, Thomas Huth wrote:
-> On 03/04/2025 16.33, Shalini Chellathurai Saroja wrote:
->> On 2025-04-01 15:55, Nina Schoetterl-Glausch wrote:
->>> On Mon, 2025-03-31 at 16:00 +0200, Shalini Chellathurai Saroja wrote:
->>>> Add Control-Program Identification data to the QEMU Object
->>>> Model (QOM), along with the timestamp in which the data was 
->>>> received.
->>>> 
->>>> Example:
->>>> virsh # qemu-monitor-command vm --pretty '{
->>>> "execute": "qom-get",
->>>> "arguments": {
->>>> "path": "/machine/sclp/s390-sclp-event-facility/sclpcpi",
->>>> "property": "control-program-id" }}'
->>>> {
->>>>   "return": {
->>>>     "timestamp": 1742390410685762000,
->>>>     "system-level": 74872343805430528,
->>>>     "sysplex-name": "PLEX ",
->>>>     "system-name": "TESTVM  ",
->>>>     "system-type": "LINUX   "
->>>>   },
->>>>   "id": "libvirt-15"
->>>> }
->>>> 
->>>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->>>> ---
->>>>  hw/s390x/sclpcpi.c                | 38 ++++++++++++++++++++
->>>>  include/hw/s390x/event-facility.h |  9 +++++
->>>>  qapi/machine.json                 | 58 
->>>> +++++++++++++++++++++++++++++++
->>>>  3 files changed, 105 insertions(+)
->>>> 
->>>> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
->>>> index 7ace5dd64e..969c15e43d 100644
->>>> --- a/hw/s390x/sclpcpi.c
->>>> +++ b/hw/s390x/sclpcpi.c
->>>> @@ -57,8 +57,11 @@
->>>>    */
->>>> 
->>>>  #include "qemu/osdep.h"
->>>> +#include "qemu/timer.h"
->>>>  #include "hw/s390x/sclp.h"
->>>>  #include "hw/s390x/event-facility.h"
->>>> +#include "hw/s390x/ebcdic.h"
->>>> +#include "qapi/qapi-visit-machine.h"
->>>> 
->>>>  typedef struct Data {
->>>>      uint8_t id_format;
->>>> @@ -99,10 +102,37 @@ static int write_event_data(SCLPEvent *event, 
->>>> EventBufferHeader *evt_buf_hdr)
->>>>      ControlProgramIdMsg *cpim = container_of(evt_buf_hdr, 
->>>> ControlProgramIdMsg,
->>>>                                               ebh);
->>>> 
->>>> +    ascii_put(event->cpi.system_type, (char 
->>>> *)cpim->data.system_type, 8);
->>>> +    ascii_put(event->cpi.system_name, (char 
->>>> *)cpim->data.system_name, 8);
->>>> +    ascii_put(event->cpi.sysplex_name, (char 
->>>> *)cpim->data.sysplex_name, 8);
->>>> +    event->cpi.system_level = ldq_be_p(&cpim->data.system_level);
->>>> +    event->cpi.timestamp = qemu_clock_get_ns(QEMU_CLOCK_HOST);
->>>> +
->>>>      cpim->ebh.flags = SCLP_EVENT_BUFFER_ACCEPTED;
->>>>      return SCLP_RC_NORMAL_COMPLETION;
->>>>  }
->>>> 
->>>> +static void get_control_program_id(Object *obj, Visitor *v,
->>>> +                                   const char *name, void *opaque,
->>>> +                                   Error **errp)
->>>> +{
->>>> +    SCLPEvent *event = (SCLPEvent *)(obj);
->>> 
->>> Do a checked cast with SCLP_EVENT(obj).
->> 
->> Hello Nina,
->> 
->> ok, thank you.
->>> 
->>>> +    S390ControlProgramId *cpi;
->>>> +
->>>> +    cpi = &(S390ControlProgramId){
->>>> +        .system_type = g_strndup((char *) event->cpi.system_type,
->>>> +                                 sizeof(event->cpi.system_type)),
->>>> +        .system_name = g_strndup((char *) event->cpi.system_name,
->>>> +                                 sizeof(event->cpi.system_name)),
->>>> +        .system_level = event->cpi.system_level,
->>>> +        .sysplex_name = g_strndup((char *) event->cpi.sysplex_name,
->>>> +                                  sizeof(event->cpi.sysplex_name)),
->>>> +        .timestamp = event->cpi.timestamp
->>>> +    };
->>>> +
->>>> +    visit_type_S390ControlProgramId(v, name, &cpi, errp);
->>>> +}
->>>> +
->>>>  static void cpi_class_init(ObjectClass *klass, void *data)
->>>>  {
->>>>      DeviceClass *dc = DEVICE_CLASS(klass);
->>>> @@ -114,6 +144,14 @@ static void cpi_class_init(ObjectClass *klass, 
->>>> void *data)
->>>>      k->get_send_mask = send_mask;
->>>>      k->get_receive_mask = receive_mask;
->>>>      k->write_event_data = write_event_data;
->>>> +
->>>> +    object_class_property_add(klass, "control-program-id",
->>>> +                              "S390ControlProgramId",
->>>> +                              get_control_program_id,
->>>> +                              NULL, NULL, NULL);
->>>> +    object_class_property_set_description(klass, 
->>>> "control-program-id",
->>>> +        "Control-program identifiers provide data about the guest "
->>>> +        "operating system");
->>>>  }
->>>> 
->>>>  static const TypeInfo sclp_cpi_info = {
->>>> diff --git a/include/hw/s390x/event-facility.h 
->>>> b/include/hw/s390x/event- facility.h
->>>> index f445d2f9f5..39e589ed44 100644
->>>> --- a/include/hw/s390x/event-facility.h
->>>> +++ b/include/hw/s390x/event-facility.h
->>>> @@ -169,10 +169,19 @@ typedef struct ReadEventData {
->>>>      };
->>>>  } QEMU_PACKED ReadEventData;
->>>> 
->>>> +typedef struct ControlProgramId {
->>>> +    uint8_t system_type[8];
->>>> +    uint8_t system_name[8];
->>>> +    uint64_t system_level;
->>>> +    uint8_t sysplex_name[8];
->>>> +    uint64_t timestamp;
->>>> +} QEMU_PACKED ControlProgramId;
->>>> +
->>>>  struct SCLPEvent {
->>>>      DeviceState qdev;
->>>>      bool event_pending;
->>>>      char *name;
->>>> +    ControlProgramId cpi;
->>> 
->>> I don't think this should go into SCLPEvent.
->>> Rather SCLPEventFacility or SCLPDevice. Otherwise all events,
->>> so also quiesce and cpu_hotplug have a cpi field.
->>> 
->> ok, that is correct.
->> 
->> I gave it a try by moving ControlProgramId to SCLPDevice. With this, 
->> the migration data is stored in dc->vmsd of TYPE_SCLP as shown below.
->> 
->> diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
->> index 5945c9b1d8..4d6d5bb857 100644
->> --- a/hw/s390x/sclp.c
->> +++ b/hw/s390x/sclp.c
->> @@ -424,6 +424,29 @@ static void sclp_init(Object *obj)
->>       sclp_memory_init(sclp);
->>   }
->> 
->> +static const VMStateDescription vmstate_control_program_id = {
->> +    .name = "s390_control_program_id",
->> +    .version_id = 0,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_UINT8_ARRAY(system_type, ControlProgramId, 8),
->> +        VMSTATE_UINT8_ARRAY(system_name, ControlProgramId, 8),
->> +        VMSTATE_UINT64(system_level, ControlProgramId),
->> +        VMSTATE_UINT8_ARRAY(sysplex_name, ControlProgramId, 8),
->> +        VMSTATE_UINT64(timestamp, ControlProgramId),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->> +};
->> +
->> +static const VMStateDescription vmstate_sclpcpi = {
->> +    .name = "s390_sclpcpi",
->> +    .version_id = 0,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_STRUCT(cpi, SCLPDevice, 0, 
->> vmstate_control_program_id,
->> +                       ControlProgramId),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->> +};
->> +
->>   static void sclp_class_init(ObjectClass *oc, void *data)
->>   {
->>       SCLPDeviceClass *sc = SCLP_CLASS(oc);
->> @@ -438,6 +461,7 @@ static void sclp_class_init(ObjectClass *oc, void 
->> *data)
->>        * which is a non-pluggable sysbus device
->>        */
->>       dc->user_creatable = false;
->> +    dc->vmsd =  &vmstate_sclpcpi;
->> 
->>       sc->read_SCP_info = read_SCP_info;
->>       sc->read_cpu_info = sclp_read_cpu_info;
->> 
->> @Thomas Huth: Is this ok?, thank you.
-> 
->  Hi,
-> 
-> that also does not look like the right place to me ... can't you move
-> the migration state to the TYPE_SCLP_CPI device instead?
-> 
+Hi Akihiko,
 
-Hi Thomas,
-I will do so, thank you.
+On 10/4/25 09:42, Akihiko Odaki wrote:
+> virtio-net expects set_features() will be called when the feature set
+> used by the guest changes to update the number of virtqueues. Call it
+> during reset as reset clears all features and the queues added for
+> VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS will need to be removed.
+> 
+> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
+> Buglink: https://issues.redhat.com/browse/RHEL-73842
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   hw/virtio/virtio.c | 86 +++++++++++++++++++++++++++---------------------------
+>   1 file changed, 43 insertions(+), 43 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 85110bce3744..033e87cdd3b9 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -2316,49 +2316,6 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
+>       }
+>   }
+>   
+> -void virtio_reset(void *opaque)
+> -{
+> -    VirtIODevice *vdev = opaque;
+> -    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+> -    int i;
+> -
+> -    virtio_set_status(vdev, 0);
+> -    if (current_cpu) {
+> -        /* Guest initiated reset */
+> -        vdev->device_endian = virtio_current_cpu_endian();
+> -    } else {
+> -        /* System reset */
+> -        vdev->device_endian = virtio_default_endian();
+> -    }
+> -
+> -    if (k->get_vhost) {
+> -        struct vhost_dev *hdev = k->get_vhost(vdev);
+> -        /* Only reset when vhost back-end is connected */
+> -        if (hdev && hdev->vhost_ops) {
+> -            vhost_reset_device(hdev);
+> -        }
+> -    }
+> -
+> -    if (k->reset) {
+> -        k->reset(vdev);
+> -    }
+> -
+> -    vdev->start_on_kick = false;
+> -    vdev->started = false;
+> -    vdev->broken = false;
+> -    vdev->guest_features = 0;
+> -    vdev->queue_sel = 0;
+> -    vdev->status = 0;
+> -    vdev->disabled = false;
+> -    qatomic_set(&vdev->isr, 0);
+> -    vdev->config_vector = VIRTIO_NO_VECTOR;
+> -    virtio_notify_vector(vdev, vdev->config_vector);
+> -
+> -    for(i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+> -        __virtio_queue_reset(vdev, i);
+> -    }
+> -}
+> -
+>   void virtio_queue_set_addr(VirtIODevice *vdev, int n, hwaddr addr)
+>   {
+>       if (!vdev->vq[n].vring.num) {
+> @@ -3169,6 +3126,49 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+>       return ret;
+>   }
+>   
+> +void virtio_reset(void *opaque)
+> +{
+> +    VirtIODevice *vdev = opaque;
+> +    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+> +    int i;
+> +
+> +    virtio_set_status(vdev, 0);
+> +    if (current_cpu) {
+> +        /* Guest initiated reset */
+> +        vdev->device_endian = virtio_current_cpu_endian();
+> +    } else {
+> +        /* System reset */
+> +        vdev->device_endian = virtio_default_endian();
+> +    }
+> +
+> +    if (k->get_vhost) {
+> +        struct vhost_dev *hdev = k->get_vhost(vdev);
+> +        /* Only reset when vhost back-end is connected */
+> +        if (hdev && hdev->vhost_ops) {
+> +            vhost_reset_device(hdev);
+> +        }
+> +    }
+> +
+> +    if (k->reset) {
+> +        k->reset(vdev);
+> +    }
+> +
+> +    vdev->start_on_kick = false;
+> +    vdev->started = false;
+> +    vdev->broken = false;
+> +    virtio_set_features_nocheck(vdev, 0);
 
->  Thomas
+It would be simpler to review having a first patch doing code
+movement, then a second one with the addition.
 
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
+For my own education, are feature sets modifiable at runtime?
+
+> +    vdev->queue_sel = 0;
+> +    vdev->status = 0;
+> +    vdev->disabled = false;
+> +    qatomic_set(&vdev->isr, 0);
+> +    vdev->config_vector = VIRTIO_NO_VECTOR;
+> +    virtio_notify_vector(vdev, vdev->config_vector);
+> +
+> +    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+> +        __virtio_queue_reset(vdev, i);
+> +    }
+> +}
+> +
+>   static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
+>                                                              Error **errp)
+>   {
+> 
+> ---
+> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+> change-id: 20250406-reset-5ed5248ee3c1
+> 
+> Best regards,
+
 
