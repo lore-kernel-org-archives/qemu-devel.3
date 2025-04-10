@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D941C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 13:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21D3C369A6
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 13:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2s2Z-0006fA-UL; Thu, 10 Apr 2025 09:34:00 -0400
+	id 1u2sDw-0002w1-TH; Thu, 10 Apr 2025 09:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u2s2W-0006Zw-IJ; Thu, 10 Apr 2025 09:33:56 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u2sDm-0002mx-Nq
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 09:45:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u2s2U-0008Lc-Cm; Thu, 10 Apr 2025 09:33:56 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5176F114602;
- Thu, 10 Apr 2025 16:32:13 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E69151EC778;
- Thu, 10 Apr 2025 16:33:48 +0300 (MSK)
-Message-ID: <a2ec9fe4-c25f-4610-a1da-fe87817fe9f2@tls.msk.ru>
-Date: Thu, 10 Apr 2025 16:33:48 +0300
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u2sDk-0001LG-5O
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 09:45:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744292730;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W9DOsD21uLbA0VMGxKqTNK2oef+5UCnyF7Q5sLLk+fk=;
+ b=Meztp7KRn2fG1K+kiij9Q67tuqk7MnYN/Bhvu8ndDPdToub/qZrcmWfA00NuMdLNmxh5Iq
+ M2aKGLb1uh6g8VhHOqsD+ebX+1UukErmQ5QohQTQW70g8d7UxyiMeORZMxZFV3D98ziCiO
+ nXQNwYdWZZbWGVM8OpYvOYt4nS4b3Kk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-lZ3lrJlGP_uN8PqX0Ih1uA-1; Thu, 10 Apr 2025 09:45:27 -0400
+X-MC-Unique: lZ3lrJlGP_uN8PqX0Ih1uA-1
+X-Mimecast-MFC-AGG-ID: lZ3lrJlGP_uN8PqX0Ih1uA_1744292726
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf172ff63so6447635e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 06:45:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744292725; x=1744897525;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W9DOsD21uLbA0VMGxKqTNK2oef+5UCnyF7Q5sLLk+fk=;
+ b=CO5o7mmD4KVdsaNiy241yvlyg3KgsJBP1VJrAQ3hh8yFV7yddfZLlsuiWv4paKsVxe
+ tACXXXD+7DhLy3/dkNqXUiyRMOZb33SRGSWZB04UzqfYbqz5i2QvpCvn79L1RKiGSjCK
+ tbKD6BWjfGj0dhxsNHIiQAdTPyiZiEgnzrvIGtvR9H7h05J/i/2yNP8u/RtcWjD4GYFF
+ XEDCO1Y2WEOVIvcIOZNlEsSpzwmcISEuj9ksUGVxzS5tAfMiEc627iZZ/sznyRaUHpr7
+ 8FD9pcEDU12uAIUrL4xq2fO64aYmiWczArdz7GXXRJgFmjnedJWqjZXR4P9gbI7SQynu
+ 2EnQ==
+X-Gm-Message-State: AOJu0Yyg/h9Csumywf/WXLFbnWzITg/6dV9StzOOtMejBwb7SFFMhrpH
+ BZ9MIye6qgA9Sxr/4Ue1/EA3Ng2ExRJgN8YQOiuK4AgeNPS7nauI/M4qcv/sPoB5X90HUNle0oQ
+ /7scmx7VO5aa5jmQXdvpVk7b5tuP0uWs+viO+EEoHluOdmE3vWzsSZ63+Dqyi
+X-Gm-Gg: ASbGncujddY4l0OAfmEz47ssPJXyx/ZGj4o7ijgBy9VnYd0DmC2YwgtFUPmVpvQeZvY
+ GY2gSMC9+vSeX4HY1JNJA1XWXLzxp9XKNb8DWCqnKHQEazxFargpI7w9JcWMcyC7v7UMW9GISns
+ R9DfPLxnGCY4eMafR8ueq/BMqV1GbID0YmiyieyetwbfJd6PYcp2L4utbjOk6+t+G88AaS50ofp
+ FXn47DjdKay7BqE6okuYqXGxPVu/+teMnCjhlyjytGsqZ+Uj5DkjCYa3mWzwJMY09bkqdEnQfv6
+ /Be8CA==
+X-Received: by 2002:a05:600c:1c87:b0:43c:f1b8:16ad with SMTP id
+ 5b1f17b1804b1-43f2d9a12acmr31753445e9.30.1744292725293; 
+ Thu, 10 Apr 2025 06:45:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpWyIekgAfRJHRTLktDnfA2jiOhV/0Z23LKsoiWLwBf+foczHchXBm4WGlPaeOR2RV30zwGA==
+X-Received: by 2002:a05:600c:1c87:b0:43c:f1b8:16ad with SMTP id
+ 5b1f17b1804b1-43f2d9a12acmr31753235e9.30.1744292724874; 
+ Thu, 10 Apr 2025 06:45:24 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f206269c8sm57945505e9.16.2025.04.10.06.45.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Apr 2025 06:45:24 -0700 (PDT)
+Date: Thu, 10 Apr 2025 09:45:21 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, devel@daynix.com, qemu-stable@nongnu.org
+Subject: Re: [PATCH] virtio: Call set_features during reset
+Message-ID: <20250410094119-mutt-send-email-mst@kernel.org>
+References: <20250410-reset-v1-1-751cd0064395@daynix.com>
+ <20250410034550-mutt-send-email-mst@kernel.org>
+ <ece28e1e-ea85-4247-b2b1-54fbd8d2ce37@daynix.com>
+ <20250410035935-mutt-send-email-mst@kernel.org>
+ <d387d721-a5fc-4661-8a3b-576c34780398@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0] scsi-disk: Apply error policy for host_status
- errors again
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, pbonzini@redhat.com,
- stefanha@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20250407155949.44736-1-kwolf@redhat.com>
- <76bc1c49-43cb-445e-98e2-2f75c53623b8@tls.msk.ru>
- <Z_fENT4Te_hUTOT-@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <Z_fENT4Te_hUTOT-@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d387d721-a5fc-4661-8a3b-576c34780398@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +108,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-10.04.2025 16:14, Kevin Wolf wrote:
-> Am 10.04.2025 um 14:37 hat Michael Tokarev geschrieben:
-...>> Does it make sense to apply this one for older stable qemu series?
->> In particular, in 8.2, we lack cfe0880835cd3
->> "scsi-disk: Use positive return value for status in dma_readv/writev",
->> which seems to be relevant here.  Or should I pick up cfe0880835cd3 too,
->> maybe together with 8a0495624f (a no-op, just to make this patch to apply
->> cleanly) and probably 9da6bd39f924?
+On Thu, Apr 10, 2025 at 05:26:47PM +0900, Akihiko Odaki wrote:
+> On 2025/04/10 17:02, Michael S. Tsirkin wrote:
+> > On Thu, Apr 10, 2025 at 04:54:41PM +0900, Akihiko Odaki wrote:
+> > > On 2025/04/10 16:48, 'Michael S. Tsirkin' via devel wrote:
+> > > > On Thu, Apr 10, 2025 at 04:42:06PM +0900, Akihiko Odaki wrote:
+> > > > > virtio-net expects set_features() will be called when the feature set
+> > > > > used by the guest changes to update the number of virtqueues. Call it
+> > > > > during reset as reset clears all features and the queues added for
+> > > > > VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS will need to be removed.
+> > > > > 
+> > > > > Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
+> > > > > Buglink: https://issues.redhat.com/browse/RHEL-73842
+> > > > > Cc: qemu-stable@nongnu.org
+> > > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > > 
+> > > > The issue seems specific to virtio net: rset is reset,
+> > > > it is distict from set features.
+> > > > Why not just call the necessary functionality from virtio_net_reset?
+> > > 
+> > > set_features is currently implemented only in virtio-net; virtio-gpu-base
+> > > also have a function set but it only has code to trace. If another device
+> > > implements the function in the future, I think the device will also want to
+> > > have it called during reset for the same reason with virtio-net.
+> > > 
+> > > virtio_reset() also calls set_status to update the status field so calling
+> > > set_features() is more aligned with the handling of the status field.
+> > 
+> > That came to be because writing 0 to status resets the virtio device.
+> > For a while, this was the only way to reset vhost-user so we just
+> > went along with it.
 > 
-> Yes, I think it makes sense to pick all of them up (and 622a7016 in the
-> middle, too), they were part of one series:
-> 
-> https://patchew.org/QEMU/20240731123207.27636-1-kwolf@redhat.com/
-> 
-> And this patch builds on top of that series, so rebasing it correctly
-> might not be trivial without the previous series.
+> It is possible to have code to send a command to write 0 to status to
+> vhost-user in reset(), but calling set_status() in virtio_reset() is more
+> convenient and makes sense as the status is indeed being set to 0. I think
+> the same reasoning applies to features.
 
-A (most likely small) issue here: 622a70161a "scsi-block: Don't skip
-callback for sgio error status/driver_status" is on top of an earlier
-commit, 1404226804 "scsi: don't lock AioContext in I/O code path",
-but does not actually *require* it, since it removes whole code block
-where a locking has been removed earlier by 1404226804.
+I don't know who makes assumptions that features are only set during
+driver setup, though.
+This will send an extra VHOST_USER_SET_FEATURES message for vhost-user,
+for example.
+I want to have a good reason to add this overhead.
 
-Also the next comment commit, 8a0495624f "scsi-disk: Add warning comments
-that host_status errors take a shortcut", clashes with e7fc3c4a8cc "scsi:
-remove outdated AioContext lock comment".
+> > 
+> > 
+> > > > 
+> > > > 
+> > > > > ---
+> > > > >    hw/virtio/virtio.c | 86 +++++++++++++++++++++++++++---------------------------
+> > > > >    1 file changed, 43 insertions(+), 43 deletions(-)
+> > > > > 
+> > > > > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > > > > index 85110bce3744..033e87cdd3b9 100644
+> > > > > --- a/hw/virtio/virtio.c
+> > > > > +++ b/hw/virtio/virtio.c
+> > > > > @@ -2316,49 +2316,6 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
+> > > > >        }
+> > > > >    }
+> > > > > -void virtio_reset(void *opaque)
+> > > > > -{
+> > > > > -    VirtIODevice *vdev = opaque;
+> > > > > -    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+> > > > > -    int i;
+> > > > > -
+> > > > > -    virtio_set_status(vdev, 0);
+> > > > > -    if (current_cpu) {
+> > > > > -        /* Guest initiated reset */
+> > > > > -        vdev->device_endian = virtio_current_cpu_endian();
+> > > > > -    } else {
+> > > > > -        /* System reset */
+> > > > > -        vdev->device_endian = virtio_default_endian();
+> > > > > -    }
+> > > > > -
+> > > > > -    if (k->get_vhost) {
+> > > > > -        struct vhost_dev *hdev = k->get_vhost(vdev);
+> > > > > -        /* Only reset when vhost back-end is connected */
+> > > > > -        if (hdev && hdev->vhost_ops) {
+> > > > > -            vhost_reset_device(hdev);
+> > > > > -        }
+> > > > > -    }
+> > > > > -
+> > > > > -    if (k->reset) {
+> > > > > -        k->reset(vdev);
+> > > > > -    }
+> > > > > -
+> > > > > -    vdev->start_on_kick = false;
+> > > > > -    vdev->started = false;
+> > > > > -    vdev->broken = false;
+> > > > > -    vdev->guest_features = 0;
+> > > > > -    vdev->queue_sel = 0;
+> > > > > -    vdev->status = 0;
+> > > > > -    vdev->disabled = false;
+> > > > > -    qatomic_set(&vdev->isr, 0);
+> > > > > -    vdev->config_vector = VIRTIO_NO_VECTOR;
+> > > > > -    virtio_notify_vector(vdev, vdev->config_vector);
+> > > > > -
+> > > > > -    for(i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+> > > > > -        __virtio_queue_reset(vdev, i);
+> > > > > -    }
+> > > > > -}
+> > > > > -
+> > > > >    void virtio_queue_set_addr(VirtIODevice *vdev, int n, hwaddr addr)
+> > > > >    {
+> > > > >        if (!vdev->vq[n].vring.num) {
+> > > > > @@ -3169,6 +3126,49 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+> > > > >        return ret;
+> > > > >    }
+> > > > > +void virtio_reset(void *opaque)
+> > > > > +{
+> > > > > +    VirtIODevice *vdev = opaque;
+> > > > > +    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+> > > > > +    int i;
+> > > > > +
+> > > > > +    virtio_set_status(vdev, 0);
+> > > > > +    if (current_cpu) {
+> > > > > +        /* Guest initiated reset */
+> > > > > +        vdev->device_endian = virtio_current_cpu_endian();
+> > > > > +    } else {
+> > > > > +        /* System reset */
+> > > > > +        vdev->device_endian = virtio_default_endian();
+> > > > > +    }
+> > > > > +
+> > > > > +    if (k->get_vhost) {
+> > > > > +        struct vhost_dev *hdev = k->get_vhost(vdev);
+> > > > > +        /* Only reset when vhost back-end is connected */
+> > > > > +        if (hdev && hdev->vhost_ops) {
+> > > > > +            vhost_reset_device(hdev);
+> > > > > +        }
+> > > > > +    }
+> > > > > +
+> > > > > +    if (k->reset) {
+> > > > > +        k->reset(vdev);
+> > > > > +    }
+> > > > > +
+> > > > > +    vdev->start_on_kick = false;
+> > > > > +    vdev->started = false;
+> > > > > +    vdev->broken = false;
+> > > > > +    virtio_set_features_nocheck(vdev, 0);
+> > > > > +    vdev->queue_sel = 0;
+> > > > > +    vdev->status = 0;
+> > > > > +    vdev->disabled = false;
+> > > > > +    qatomic_set(&vdev->isr, 0);
+> > > > > +    vdev->config_vector = VIRTIO_NO_VECTOR;
+> > > > > +    virtio_notify_vector(vdev, vdev->config_vector);
+> > > > > +
+> > > > > +    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+> > > > > +        __virtio_queue_reset(vdev, i);
+> > > > > +    }
+> > > > > +}
+> > > > > +
+> > > > >    static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
+> > > > >                                                               Error **errp)
+> > > > >    {
+> > > > > 
+> > > > > ---
+> > > > > base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+> > > > > change-id: 20250406-reset-5ed5248ee3c1
+> > > > > 
+> > > > > Best regards,
+> > > > > -- 
+> > > > > Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > > 
+> > 
 
-This seems a bit too fragile for 8.2, don't you think?  And I haven't even
-tried to check 7.2 yet :)
-
-https://gitlab.com/mjt0k/qemu/-/tree/staging-8.2 for the current result
-(not yet tested) - I dislike my comment handling at scsi_dma_complete().
-
-Thanks,
-
-/mjt
 
