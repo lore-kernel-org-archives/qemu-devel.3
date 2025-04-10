@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2469BC3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 09:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B332CC369A4
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 09:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2o9u-0006xx-Lq; Thu, 10 Apr 2025 05:25:18 -0400
+	id 1u2oFJ-0001Tj-Rs; Thu, 10 Apr 2025 05:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u2o9l-0006si-UX; Thu, 10 Apr 2025 05:25:10 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1u2oEf-0001NJ-OW; Thu, 10 Apr 2025 05:30:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u2o9j-00026A-9F; Thu, 10 Apr 2025 05:25:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744277107; x=1775813107;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=vWFTCAHyc4ZZSNblinRf0t8BBfuIQYEI8cO6hq8NbrA=;
- b=CAGLPQl78R5F/0eb8DNCrhKsax4H8oLxcWT2JI5YQkfjoPvE6V3ZsJZs
- z6DogORdau5iKKoShp6lla52jwJmoJPjtQ7uqxf+1nPyxt3JNrHHEzdP7
- OIkum8zy1tUayGCMXP/NY6axmXrwUjjHoBhxooKmShKeatvnl5hzegPUG
- F3katX1LpNIjL8ETP0+30y+R/SLTxC0OSxqZh0qlORH9BwUH3p/lMBl9U
- n3vMKzwlJMmIbUmphPOQrtEKDYCtYTETaKAPTJGWC4MWJLq1eJiR/99jr
- 8QIq0jIjVJa0ITghG3jyOYj5mX86KDQIvyydEc+VwrbOG+pG323l7xoIo A==;
-X-CSE-ConnectionGUID: Xx6nNb4dTQGIrOXlLCgZuA==
-X-CSE-MsgGUID: hE6bzLpVRNKkM6EHcckQPw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11399"; a="49625375"
-X-IronPort-AV: E=Sophos;i="6.15,202,1739865600"; d="scan'208";a="49625375"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Apr 2025 02:25:00 -0700
-X-CSE-ConnectionGUID: 7EFLD+8sQoiP2fdPZgk4+Q==
-X-CSE-MsgGUID: aiCRLBNDQsqVw5PNhNlRAg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,202,1739865600"; d="scan'208";a="129685784"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 10 Apr 2025 02:24:51 -0700
-Date: Thu, 10 Apr 2025 17:45:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
- babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
- groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
- peter.maydell@linaro.org, gaosong@loongson.cn,
- chenhuacai@kernel.org, philmd@linaro.org, aurelien@aurel32.net,
- jiaxun.yang@flygoat.com, arikalo@gmail.com, npiggin@gmail.com,
- danielhb413@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- thuth@redhat.com, flavra@baylibre.com, ewanhai-oc@zhaoxin.com,
- ewanhai@zhaoxin.com, cobechen@zhaoxin.com, louisqi@zhaoxin.com,
- liamni@zhaoxin.com, frankzhu@zhaoxin.com, silviazhao@zhaoxin.com
-Subject: Re: [PATCH v3 10/10] target/i386/kvm: don't stop Intel PMU counters
-Message-ID: <Z/eTRVSveNMwZBaa@intel.com>
-References: <20250331013307.11937-1-dongli.zhang@oracle.com>
- <20250331013307.11937-11-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1u2oEd-0003Kq-9C; Thu, 10 Apr 2025 05:30:13 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A6IEKV022725;
+ Thu, 10 Apr 2025 09:30:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=vf1yRN
+ pRu0UF0Ut8lK7lEtgX5gHL8KPFNQhNmOmFMpU=; b=f+O5lsu+b8adxN4zwf+jEY
+ ks2MathZFwg/MJxx8AQR2gvHtndn6L6TdZVc6Ggnt+V6/+9BivUf99DFpHi3pEh5
+ uhPjY2rZ9MH4SEjhXU3J27+qaYyulZrR5SRQXx7c/iZ5xv2n/THilXjZpocI1z07
+ FJGdH4LKnpBGyuVQ+uBfoESvQd+lXn6rKy9T9gBBNhmshykA/UigAzTNY7Z8ADuc
+ GZkZ6J8nWmcICJhwTb5ALtc8UK21ifN65mBWXhaEuEr8V+gNeis8W/yTet9AI0Uv
+ 9M5g4MpWbclz3ssfhRz7jk/LNofDHEL9tDOyWFxGGqevSjkgTUXZZicpEQextGYQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x02qbt2y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 09:30:09 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53A7Kt8P029513;
+ Thu, 10 Apr 2025 09:30:08 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 45x1k737ru-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 09:30:08 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53A9U7L331916610
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Apr 2025 09:30:07 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 23F1A58062;
+ Thu, 10 Apr 2025 09:30:07 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8564F5805D;
+ Thu, 10 Apr 2025 09:30:06 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Apr 2025 09:30:06 +0000 (GMT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250331013307.11937-11-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Thu, 10 Apr 2025 11:30:06 +0200
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, qemu-s390x mailing list
+ <qemu-s390x@nongnu.org>, Daniel Berrange <berrange@redhat.com>, qemu-devel
+ mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>, "<Shalini Chellathurai Saroja"
+ <shalini@linux.ibm.com>
+Subject: Re: [PATCH v3 2/4] hw/s390x: add Control-Program Identification to QOM
+In-Reply-To: <7743d8f3-497f-4d7e-9f42-16d8e8fc5c8e@redhat.com>
+References: <bc4a5b3f078657b8dc3045a207ba9386@linux.ibm.com>
+ <7743d8f3-497f-4d7e-9f42-16d8e8fc5c8e@redhat.com>
+Message-ID: <f6c486f309c25ef8603624eda5ed492c@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: dDMEipBvwyW7PVdBxErWQ1awIabivm47
+X-Proofpoint-ORIG-GUID: dDMEipBvwyW7PVdBxErWQ1awIabivm47
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-10_01,2025-04-08_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0
+ priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 mlxscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504100070
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,41 +114,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 30, 2025 at 06:32:29PM -0700, Dongli Zhang wrote:
-> Date: Sun, 30 Mar 2025 18:32:29 -0700
-> From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH v3 10/10] target/i386/kvm: don't stop Intel PMU counters
-> X-Mailer: git-send-email 2.43.5
+On 2025-04-09 07:30, Thomas Huth wrote:
+> On 03/04/2025 16.33, Shalini Chellathurai Saroja wrote:
+>> On 2025-04-01 15:55, Nina Schoetterl-Glausch wrote:
+>>> On Mon, 2025-03-31 at 16:00 +0200, Shalini Chellathurai Saroja wrote:
+>>>> Add Control-Program Identification data to the QEMU Object
+>>>> Model (QOM), along with the timestamp in which the data was 
+>>>> received.
+>>>> 
+>>>> Example:
+>>>> virsh # qemu-monitor-command vm --pretty '{
+>>>> "execute": "qom-get",
+>>>> "arguments": {
+>>>> "path": "/machine/sclp/s390-sclp-event-facility/sclpcpi",
+>>>> "property": "control-program-id" }}'
+>>>> {
+>>>>   "return": {
+>>>>     "timestamp": 1742390410685762000,
+>>>>     "system-level": 74872343805430528,
+>>>>     "sysplex-name": "PLEX ",
+>>>>     "system-name": "TESTVM  ",
+>>>>     "system-type": "LINUX   "
+>>>>   },
+>>>>   "id": "libvirt-15"
+>>>> }
+>>>> 
+>>>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+>>>> ---
+>>>>  hw/s390x/sclpcpi.c                | 38 ++++++++++++++++++++
+>>>>  include/hw/s390x/event-facility.h |  9 +++++
+>>>>  qapi/machine.json                 | 58 
+>>>> +++++++++++++++++++++++++++++++
+>>>>  3 files changed, 105 insertions(+)
+>>>> 
+>>>> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
+>>>> index 7ace5dd64e..969c15e43d 100644
+>>>> --- a/hw/s390x/sclpcpi.c
+>>>> +++ b/hw/s390x/sclpcpi.c
+>>>> @@ -57,8 +57,11 @@
+>>>>    */
+>>>> 
+>>>>  #include "qemu/osdep.h"
+>>>> +#include "qemu/timer.h"
+>>>>  #include "hw/s390x/sclp.h"
+>>>>  #include "hw/s390x/event-facility.h"
+>>>> +#include "hw/s390x/ebcdic.h"
+>>>> +#include "qapi/qapi-visit-machine.h"
+>>>> 
+>>>>  typedef struct Data {
+>>>>      uint8_t id_format;
+>>>> @@ -99,10 +102,37 @@ static int write_event_data(SCLPEvent *event, 
+>>>> EventBufferHeader *evt_buf_hdr)
+>>>>      ControlProgramIdMsg *cpim = container_of(evt_buf_hdr, 
+>>>> ControlProgramIdMsg,
+>>>>                                               ebh);
+>>>> 
+>>>> +    ascii_put(event->cpi.system_type, (char 
+>>>> *)cpim->data.system_type, 8);
+>>>> +    ascii_put(event->cpi.system_name, (char 
+>>>> *)cpim->data.system_name, 8);
+>>>> +    ascii_put(event->cpi.sysplex_name, (char 
+>>>> *)cpim->data.sysplex_name, 8);
+>>>> +    event->cpi.system_level = ldq_be_p(&cpim->data.system_level);
+>>>> +    event->cpi.timestamp = qemu_clock_get_ns(QEMU_CLOCK_HOST);
+>>>> +
+>>>>      cpim->ebh.flags = SCLP_EVENT_BUFFER_ACCEPTED;
+>>>>      return SCLP_RC_NORMAL_COMPLETION;
+>>>>  }
+>>>> 
+>>>> +static void get_control_program_id(Object *obj, Visitor *v,
+>>>> +                                   const char *name, void *opaque,
+>>>> +                                   Error **errp)
+>>>> +{
+>>>> +    SCLPEvent *event = (SCLPEvent *)(obj);
+>>> 
+>>> Do a checked cast with SCLP_EVENT(obj).
+>> 
+>> Hello Nina,
+>> 
+>> ok, thank you.
+>>> 
+>>>> +    S390ControlProgramId *cpi;
+>>>> +
+>>>> +    cpi = &(S390ControlProgramId){
+>>>> +        .system_type = g_strndup((char *) event->cpi.system_type,
+>>>> +                                 sizeof(event->cpi.system_type)),
+>>>> +        .system_name = g_strndup((char *) event->cpi.system_name,
+>>>> +                                 sizeof(event->cpi.system_name)),
+>>>> +        .system_level = event->cpi.system_level,
+>>>> +        .sysplex_name = g_strndup((char *) event->cpi.sysplex_name,
+>>>> +                                  sizeof(event->cpi.sysplex_name)),
+>>>> +        .timestamp = event->cpi.timestamp
+>>>> +    };
+>>>> +
+>>>> +    visit_type_S390ControlProgramId(v, name, &cpi, errp);
+>>>> +}
+>>>> +
+>>>>  static void cpi_class_init(ObjectClass *klass, void *data)
+>>>>  {
+>>>>      DeviceClass *dc = DEVICE_CLASS(klass);
+>>>> @@ -114,6 +144,14 @@ static void cpi_class_init(ObjectClass *klass, 
+>>>> void *data)
+>>>>      k->get_send_mask = send_mask;
+>>>>      k->get_receive_mask = receive_mask;
+>>>>      k->write_event_data = write_event_data;
+>>>> +
+>>>> +    object_class_property_add(klass, "control-program-id",
+>>>> +                              "S390ControlProgramId",
+>>>> +                              get_control_program_id,
+>>>> +                              NULL, NULL, NULL);
+>>>> +    object_class_property_set_description(klass, 
+>>>> "control-program-id",
+>>>> +        "Control-program identifiers provide data about the guest "
+>>>> +        "operating system");
+>>>>  }
+>>>> 
+>>>>  static const TypeInfo sclp_cpi_info = {
+>>>> diff --git a/include/hw/s390x/event-facility.h 
+>>>> b/include/hw/s390x/event- facility.h
+>>>> index f445d2f9f5..39e589ed44 100644
+>>>> --- a/include/hw/s390x/event-facility.h
+>>>> +++ b/include/hw/s390x/event-facility.h
+>>>> @@ -169,10 +169,19 @@ typedef struct ReadEventData {
+>>>>      };
+>>>>  } QEMU_PACKED ReadEventData;
+>>>> 
+>>>> +typedef struct ControlProgramId {
+>>>> +    uint8_t system_type[8];
+>>>> +    uint8_t system_name[8];
+>>>> +    uint64_t system_level;
+>>>> +    uint8_t sysplex_name[8];
+>>>> +    uint64_t timestamp;
+>>>> +} QEMU_PACKED ControlProgramId;
+>>>> +
+>>>>  struct SCLPEvent {
+>>>>      DeviceState qdev;
+>>>>      bool event_pending;
+>>>>      char *name;
+>>>> +    ControlProgramId cpi;
+>>> 
+>>> I don't think this should go into SCLPEvent.
+>>> Rather SCLPEventFacility or SCLPDevice. Otherwise all events,
+>>> so also quiesce and cpu_hotplug have a cpi field.
+>>> 
+>> ok, that is correct.
+>> 
+>> I gave it a try by moving ControlProgramId to SCLPDevice. With this, 
+>> the migration data is stored in dc->vmsd of TYPE_SCLP as shown below.
+>> 
+>> diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+>> index 5945c9b1d8..4d6d5bb857 100644
+>> --- a/hw/s390x/sclp.c
+>> +++ b/hw/s390x/sclp.c
+>> @@ -424,6 +424,29 @@ static void sclp_init(Object *obj)
+>>       sclp_memory_init(sclp);
+>>   }
+>> 
+>> +static const VMStateDescription vmstate_control_program_id = {
+>> +    .name = "s390_control_program_id",
+>> +    .version_id = 0,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_UINT8_ARRAY(system_type, ControlProgramId, 8),
+>> +        VMSTATE_UINT8_ARRAY(system_name, ControlProgramId, 8),
+>> +        VMSTATE_UINT64(system_level, ControlProgramId),
+>> +        VMSTATE_UINT8_ARRAY(sysplex_name, ControlProgramId, 8),
+>> +        VMSTATE_UINT64(timestamp, ControlProgramId),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>> +static const VMStateDescription vmstate_sclpcpi = {
+>> +    .name = "s390_sclpcpi",
+>> +    .version_id = 0,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_STRUCT(cpi, SCLPDevice, 0, 
+>> vmstate_control_program_id,
+>> +                       ControlProgramId),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>>   static void sclp_class_init(ObjectClass *oc, void *data)
+>>   {
+>>       SCLPDeviceClass *sc = SCLP_CLASS(oc);
+>> @@ -438,6 +461,7 @@ static void sclp_class_init(ObjectClass *oc, void 
+>> *data)
+>>        * which is a non-pluggable sysbus device
+>>        */
+>>       dc->user_creatable = false;
+>> +    dc->vmsd =  &vmstate_sclpcpi;
+>> 
+>>       sc->read_SCP_info = read_SCP_info;
+>>       sc->read_cpu_info = sclp_read_cpu_info;
+>> 
+>> @Thomas Huth: Is this ok?, thank you.
 > 
-> The kvm_put_msrs() sets the MSRs using KVM_SET_MSRS. The x86 KVM processes
-> these MSRs one by one in a loop, only saving the config and triggering the
-> KVM_REQ_PMU request. This approach does not immediately stop the event
-> before updating PMC.
-
-This is ture after KVM's 68fb4757e867 (v6.2). QEMU even supports v4.5
-(docs/system/target-i386.rst)... I'm not sure whether it is outdated,
-but it's better to mention the Linux version.
-
-> In additional, PMU MSRs are set only at levels >= KVM_PUT_RESET_STATE,
-> excluding runtime. Therefore, updating these MSRs without stopping events
-> should be acceptable.
-
-I agree.
-
-> Finally, KVM creates kernel perf events with host mode excluded
-> (exclude_host = 1). While the events remain active, they don't increment
-> the counter during QEMU vCPU userspace mode.
+>  Hi,
 > 
-> No Fixed tag is going to be added for the commit 0d89436786b0 ("kvm:
-> migrate vPMU state"), because this isn't a bugfix.
+> that also does not look like the right place to me ... can't you move
+> the migration state to the TYPE_SCLP_CPI device instead?
 > 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
->  target/i386/kvm/kvm.c | 9 ---------
->  1 file changed, 9 deletions(-)
 
-Fine for me,
+Hi Thomas,
+I will do so, thank you.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+>  Thomas
 
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
