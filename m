@@ -4,65 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD8EC3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 21:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCC2C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 21:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2zpa-00075G-At; Thu, 10 Apr 2025 17:53:07 -0400
+	id 1u2zpX-00074j-11; Thu, 10 Apr 2025 17:53:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1u2zpR-00073K-IJ; Thu, 10 Apr 2025 17:52:58 -0400
+ id 1u2zpR-00073J-ID; Thu, 10 Apr 2025 17:52:58 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1u2zpO-0002jT-D3; Thu, 10 Apr 2025 17:52:55 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53ALM6NX011076;
- Thu, 10 Apr 2025 21:52:48 GMT
+ id 1u2zpO-0002jR-BX; Thu, 10 Apr 2025 17:52:55 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53ALMVXZ025460;
+ Thu, 10 Apr 2025 21:52:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=wOZIS
- ExYEAUELuFEJ2nWGEM2z4gchVoGQEjqlsFaSwg=; b=HE3j2fQt5RyAA9tiu+kH9
- 6AVudu+Jfbe1zGDT2iNuZH+emTIFRbRNLuneIo/a7Cm/rFFuqyo5k2jaUVHhu10b
- ldIsuv0OKaq3CAAdaLj8Ui5FkcDPaNxfly5z06kGb8yambmozAehnWV+6Pft6m3A
- KsX/YvgQeP1WR200/TTQcULaooh71uf28hBCo+jJtZx1Q/hauiIfWRR3jIrj6DUf
- su1e5d1pfvOs2TxCv7x0DWw6v9Sg/xPJaavt1rdbazVgKBydCY1eowqA95dVL8+J
- IHGin4ACTfuRHu+LVg9jy29jDQzQ6gzj8FB5/HtrKEG0B++ebSAiy8NSermFblt5
- w==
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2023-11-20; bh=HT6Ywn2oXJSuX12F9zf6foz7WAmFy
+ PeNDmcqWDyko04=; b=EldeNEbRuX6QV4+ZJX+lBMq34MpTnj10iPGBp1u8FljQF
+ 5qonm6ogz7/DSi9PZRClFTwkc2S1qVOhtGCf8ZzQCadY3UnLWWHSNt2BTGenyEb5
+ LtTTdhTsQ1OeWV5CtdFAxYG0I1cLidgY9oO7UKZbEgviOQsxukuKMh46Tkzi49mA
+ Vy6eqPOaCh8sGdzZojXfyn+H0R1yH5VY6GoEWsM0XZb4AL/bRipr9LtRymdPHGY8
+ M3veb3HI6fsOnnBHAy7+doLplii7siyjFzaqyqFY0lZnKU8NRYKJwJalqdK7LOLX
+ 00cuP31UeglpRwnKy+mVZc+ZGSqrgHckZ3r9f5IUg==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45xnu9r5vt-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45xnu9066k-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 21:52:47 +0000 (GMT)
+ Thu, 10 Apr 2025 21:52:46 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53AKfIpx013788; Thu, 10 Apr 2025 21:52:46 GMT
+ with ESMTP id 53ALf5Z5013695; Thu, 10 Apr 2025 21:52:45 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 45ttyk6twu-1
+ 45ttyk6twh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 21:52:46 +0000
+ Thu, 10 Apr 2025 21:52:45 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53ALqjZs008077;
- Thu, 10 Apr 2025 21:52:46 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53ALqjZq008077;
+ Thu, 10 Apr 2025 21:52:45 GMT
 Received: from ca-dev94.us.oracle.com (ca-dev94.us.oracle.com [10.129.136.30])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 45ttyk6tw6-2; Thu, 10 Apr 2025 21:52:46 +0000
+ ESMTP id 45ttyk6tw6-1; Thu, 10 Apr 2025 21:52:45 +0000
 From: Alan Adamson <alan.adamson@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: alan.adamson@oracle.com, foss@defmacro.it, kbusch@kernel.org,
  its@irrelevant.dk, qemu-block@nongnu.org
-Subject: [PATCH v2] hw/nvme: CMIC.MCTRS should be set automatically for
+Subject: [PATCH v2 0/1] hw/nvme: CMIC.MCTRS should be set automatically for
  multi-controller subsystems or by parameter
-Date: Thu, 10 Apr 2025 15:02:37 -0700
-Message-ID: <20250410220237.587858-2-alan.adamson@oracle.com>
+Date: Thu, 10 Apr 2025 15:02:36 -0700
+Message-ID: <20250410220237.587858-1-alan.adamson@oracle.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20250410220237.587858-1-alan.adamson@oracle.com>
-References: <20250410220237.587858-1-alan.adamson@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -73,8 +70,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxlogscore=999 bulkscore=0 suspectscore=0 mlxscore=0 spamscore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2502280000 definitions=main-2504100159
-X-Proofpoint-GUID: EP8ezOaWrXIG8e4bUlQ8c0hMetz9DsPF
-X-Proofpoint-ORIG-GUID: EP8ezOaWrXIG8e4bUlQ8c0hMetz9DsPF
+X-Proofpoint-GUID: uSUwH3cxb8FOx5sC8AgU0UTu7rI3faHQ
+X-Proofpoint-ORIG-GUID: uSUwH3cxb8FOx5sC8AgU0UTu7rI3faHQ
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=alan.adamson@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -100,73 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If there are multiple controllers in a subsystem, CMIC.MCTRS should be set to on
-for all controllers. For single controller subsystems, CMIC.MCTRS will be off by
-default. A new subsystem specific parameter will allow setting CMIC.MCTRS for
-single controller subsystems.
+v2: - Change the parameter name from "cmic" to "cmic-mctrs".
+    - If there is more than 1 controller in a subsystem, set CMIC.MCTRS
+      for each controller whether or not the cmic-mctrs parameter is set.
 
-New NVMe Subsystem QEMU Parameter (See NVMe Specification for details):
-    <subsystem>,cmic-mctrs=BOOLEAN (default: off)
+While testing Linux atomic writes with qemu-nvme v10.0.0-rc1, Linux was 
+incorrectly displaying atomic_write_max_bytes
+# cat /sys/block/nvme0n1/queue/atomic_write_max_bytes
+0
+# nvme id-ctrl /dev/nvme0n1 | grep awupf
+awupf     : 15
+#
+Since AWUPF was set to 15, it was expected atomic_write_max_bytes would
+be set to 8192.
 
-Signed-off-by: Alan Adamson <alan.adamson@oracle.com>
----
- hw/nvme/ctrl.c   | 15 ++++++++++++++-
- hw/nvme/nvme.h   |  2 ++
- hw/nvme/subsys.c |  1 +
- 3 files changed, 17 insertions(+), 1 deletion(-)
+The commit cd59f50ab017 ("hw/nvme: always initialize a subsystem")
+introduced this behavior. The commit hardcodes the subsystem cmic bit
+to ON which caused the Linux NVMe driver to treat the namespace as
+multi-pathed which uncovered a bug with how Atomic Write Queue Limits 
+were being inherited.  This Linux issue is being addressed, but the
+question was asked of why the subsystem CMIC.MCTRS bit was hardcoded to ON.
+Most NVMe devices today don't set CMIC.MCTRS  to ON. Shouldn't the setting
+of this bit be a settable paramter? 
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index d6b77d4fbc9d..ce0d98b39991 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8880,7 +8880,20 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     id->psd[0].enlat = cpu_to_le32(0x10);
-     id->psd[0].exlat = cpu_to_le32(0x4);
- 
--    id->cmic |= NVME_CMIC_MULTI_CTRL;
-+    n->subsys->total_ctrls++;
-+
-+    /* Check if there are more than 2 controllers or cmic.mctrs is enabled */
-+    if (n->subsys->params.cmic_mctrs || (n->subsys->total_ctrls > 2)) {
-+        id->cmic |= NVME_CMIC_MULTI_CTRL;
-+    } else if (n->subsys->total_ctrls == 2) {
-+        /*
-+         * When the 2nd controller on this subsys is inited, CMIC.MCTRS
-+         * needs to be set. Also need to go back and set CMIC.MCTRS
-+         * on the first controller.
-+         */
-+        id->cmic |= NVME_CMIC_MULTI_CTRL;
-+        n->subsys->ctrls[0]->id_ctrl.cmic |= NVME_CMIC_MULTI_CTRL;
-+    }
-     ctratt |= NVME_CTRATT_ENDGRPS;
- 
-     id->endgidmax = cpu_to_le16(0x1);
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index b5c9378ea4e5..061e7046550b 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -116,7 +116,9 @@ typedef struct NvmeSubsystem {
-             uint16_t nruh;
-             uint32_t nrg;
-         } fdp;
-+        bool         cmic_mctrs;
-     } params;
-+    uint8_t          total_ctrls;
- } NvmeSubsystem;
- 
- int nvme_subsys_register_ctrl(NvmeCtrl *n, Error **errp);
-diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
-index b617ac3892a3..9c90f12b6351 100644
---- a/hw/nvme/subsys.c
-+++ b/hw/nvme/subsys.c
-@@ -216,6 +216,7 @@ static const Property nvme_subsystem_props[] = {
-                      NVME_DEFAULT_RU_SIZE),
-     DEFINE_PROP_UINT32("fdp.nrg", NvmeSubsystem, params.fdp.nrg, 1),
-     DEFINE_PROP_UINT16("fdp.nruh", NvmeSubsystem, params.fdp.nruh, 0),
-+    DEFINE_PROP_BOOL("cmic.mctrs", NvmeSubsystem, params.cmic_mctrs, false),
- };
- 
- static void nvme_subsys_class_init(ObjectClass *oc, void *data)
+
+Proposal:
+
+- The default setting of the CMIC.MCTRS bit will be OFF.
+
+- If there is more than 1 controller detected in a subsystem, the CMIC.MCTRS 
+  bit will be set to ON for each controller in the subsystem.
+
+- Create a subsystem specific parameter (cmic-mctrs) to specify CMIC.MCTRS
+  in one controller subsystems.  This parameter does not affect
+  multi-controller subsystems.
+
+  <subsystem>,cmic-mctrs=BOOLEAN (default: off)
+
+  Example:
+    -device nvme-subsys,id=subsys0,cmic-mctrs=on \
+    -device nvme,serial=deadbeef,id=nvme0,subsys=subsys0,atomic.dn=off,atomic.awun=31,atomic.awupf=15 \
+    -drive id=ns1,file=/dev/nullb0,if=none \
+    -device nvme-ns,drive=ns1,bus=nvme0,nsid=1,shared=false 
+
 -- 
 2.43.5
 
