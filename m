@@ -4,85 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5A0C3601E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D86FAC369A2
 	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 20:05:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2y8i-0000hS-Gs; Thu, 10 Apr 2025 16:04:44 -0400
+	id 1u2y8h-0000f9-Iv; Thu, 10 Apr 2025 16:04:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.pentagrid@gmail.com>)
- id 1u2tBK-0000L9-Mw
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:47:07 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.pentagrid@gmail.com>)
- id 1u2tBI-0000wC-U1
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:47:06 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-30ddad694c1so8493931fa.2
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 07:47:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744296421; x=1744901221; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=feZuaxrFBmW/7qEu/+5shM64Px/4u1yOOiSmxUSEtqg=;
- b=B46dZAKvlAooaM0u3u6UN3gtoPSGU3dy/hRBOWNcpOX6y0gNs25u3lgtedWQYlGVs4
- ahhqhi9Jjp5m7Nhx2jxVuIgFh7ZWpWv+0Ms33Z5EdheMWuOyfXTobt/hBvUw8Ms1ihOr
- Z4WNdQdEshQ6hwIiHAze7aqFHQHrGpqZYXUH++6ipso4kQQcfb6OhuPzutx1aA+7yZnw
- QsQcOXShkQqEXC1KIoEUO6SwHYFDJy2vSbEHfYhB3RBybEhTJpQmvn55UwzC2m58+FaH
- sSSQoZhIw5IgRrP22q/9XxsMsTnM070TqmARs6nQdwL+edZFx5RlwKESuwjnDoG6jzKZ
- +o5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744296421; x=1744901221;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=feZuaxrFBmW/7qEu/+5shM64Px/4u1yOOiSmxUSEtqg=;
- b=E0Qcqzyafhf14diVXbKqiObqWp1miO4H4Q70tiEiU2yHLxTfXAqjTvM/gd/8yg8XNU
- RBMUw/OeRlztrsEskiXfB9oXzTlJUmHmtMci7uxBWC63qqVu6yphydOOPT0lwntgTzut
- grI72zLJRF6nGIzdXueoUa3YJ/Bght9iSxiL5y9pV3YIqb3UkG3PIYU6w+vAUAOuQRea
- B5M+dvdTZB0zh0LBmFW3Igk4PReDZ8W8YPjrUHhxIaR5WCVoxrgv09IHmeah8KF8BOHR
- 5+zPPzw3pHrOMxDFq2EZir4BOAED8D4zpK8y73WpzwfO45sqk1l0iYthHg1EsHbY7ndx
- AE5A==
-X-Gm-Message-State: AOJu0YxPRrqMfc4f85h26veZopW0PDqPfi87Za2zEwx/Jxni37Md/aZR
- Oi6sz6p0U6IcbEt0OKDruDumTKvMXYpDoEQCnhU+JxrrFdTZg5VeZaV1XSZK6Qk4dQ==
-X-Gm-Gg: ASbGnctQnA0+I8ejLrvzOMpWUjS0ozPfoCVCU0JYpCBFPbiASwSPVvVv4sFmlt+ONBe
- RZhfKVATWU/HvlZ9TVbxSRwmIlLZpJugLI9yYM/UvXiSDNuZZtvGuNzkr/ktmYKZd7UhjkquM4g
- 2cjoeKRgxRJYsxN6lXVsta2ga+yEE9XQn7aFJylApRGzt9PmcW8MSQfOwYwZrS6t3+74BiN/3BW
- GpJ7yTkiNqFdkqvI262MBJ1PubjQKMJ2A2p7xU5dB/CgldPUHwldAxV0elmHBWhxgKFK8ULN0TO
- pbb6NysRo/hrER1fSMOIvrc3yM4jm90phgjurRIJUQeKVBysSgUCeGKRpqovkN3OuGvspQ==
-X-Google-Smtp-Source: AGHT+IHps2ex7WUHYRh1F6pfalqAS+t3xoH5n99yd6RdsrQzd/R4jAa7Rvgik+13jW6mwMSpuV3Rdg==
-X-Received: by 2002:a2e:a98c:0:b0:30d:62a6:4431 with SMTP id
- 38308e7fff4ca-3103ea9cad7mr8840891fa.9.1744296420337; 
- Thu, 10 Apr 2025 07:47:00 -0700 (PDT)
-Received: from localhost.localdomain ([79.134.198.58])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-30f465f77f0sm5397991fa.94.2025.04.10.07.46.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 07:46:59 -0700 (PDT)
-From: Aleksandr Partanen <alex.pentagrid@gmail.com>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1u2sk7-00029z-UR
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:18:59 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1u2sk5-0005Ve-8N
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:18:59 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c15:2b89:0:640:9815:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3035C60B21;
+ Thu, 10 Apr 2025 17:18:47 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex.net (unknown
+ [2a02:6bf:8011:f00:aa58:26d7:246e:b27d])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id eIggH90FZiE0-2FT6qaP7; Thu, 10 Apr 2025 17:18:46 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1744294726;
+ bh=KQZximoWw8x5dlbSTsPnqBe/kHVFyYSKfFPQbU8R1qE=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=H4At/nvpdwJTorT3Ej+rnyg6NYD9R4nSD1NVD9SeEQjdRU76T9OJNEmSOg5d8IVgo
+ 5YM5NK1JKpVpq4x0mC+aywPQikNYunI4suqCOeYtCSWTrNo7uxy6KgnAPDSC78o+jb
+ F2UQP6/MIdAIBpZALrSPChCZ+le3Ee1DEMOTFhuU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 To: qemu-devel@nongnu.org
-Cc: Stefano Stabellini <sstabellini@kernel.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- xen-devel@lists.xenproject.org, Paul Durrant <paul@xen.org>,
- Anthony PERARD <anthony@xenproject.org>,
- Aleksandr Partanen <alex.pentagrid@gmail.com>
-Subject: [PATCH] xen: mapcache: Fix finding matching entry
-Date: Thu, 10 Apr 2025 17:46:04 +0300
-Message-Id: <20250410144604.214977-1-alex.pentagrid@gmail.com>
-X-Mailer: git-send-email 2.39.5
+Cc: Cleber Rosa <crosa@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH] tests/avocado: add memlock tests
+Date: Thu, 10 Apr 2025 19:17:53 +0500
+Message-Id: <20250410141752.275935-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=alex.pentagrid@gmail.com; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 10 Apr 2025 16:04:37 -0400
@@ -100,39 +75,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we have request without lock and hit unlocked or invalid
-entry during the search, we remap it immediately,
-even if we have matching entry in next entries in bucket.
-This leads to duplication of mappings of the same size,
-and to possibility of selecting the wrong element
-during invalidation and underflow it's entry->lock counter
+Add new tests to check the correctness of the `-overcommit memlock`
+option (possible values: off, on, on-fault) by using
+`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
+anonymous segments:
 
-Signed-off-by: Aleksandr Partanen <alex.pentagrid@gmail.com>
+* if `memlock=off`, then Locked = 0 on every anonymous smaps;
+* if `memlock=on`, then Size, Rss and Locked values must be equal for
+every anon smaps where Rss is not 0;
+* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
+smaps and anonymous segment with Rss < Size must exists.
+
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 ---
- hw/xen/xen-mapcache.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tests/avocado/memlock.py | 100 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
+ create mode 100644 tests/avocado/memlock.py
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 698b5c53ed..2c8f861fdb 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -376,12 +376,12 @@ tryagain:
- 
-     entry = &mc->entry[address_index % mc->nr_buckets];
- 
--    while (entry && (lock || entry->lock) && entry->vaddr_base &&
--            (entry->paddr_index != address_index || entry->size != cache_size ||
-+    while (entry && (!entry->vaddr_base ||
-+            entry->paddr_index != address_index || entry->size != cache_size ||
-              !test_bits(address_offset >> XC_PAGE_SHIFT,
-                  test_bit_size >> XC_PAGE_SHIFT,
-                  entry->valid_mapping))) {
--        if (!free_entry && !entry->lock) {
-+        if (!free_entry && (!entry->lock || !entry->vaddr_base)) {
-             free_entry = entry;
-             free_pentry = pentry;
-         }
+diff --git a/tests/avocado/memlock.py b/tests/avocado/memlock.py
+new file mode 100644
+index 0000000000..e3e98d9524
+--- /dev/null
++++ b/tests/avocado/memlock.py
+@@ -0,0 +1,100 @@
++# Functional test that check overcommit memlock options
++#
++# Copyright (c) Yandex Technologies LLC, 2025
++#
++# Author:
++#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
++#
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
++
++import re
++
++from typing import List, Dict
++
++from avocado_qemu.linuxtest import LinuxTest
++
++
++SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
++SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
++
++
++class Memlock(LinuxTest):
++    """
++    :avocado: tags=memlock
++
++    Boots a Linux system with memlock options.
++    Then verify, that this options is working correctly
++    by checking the smaps of the QEMU proccess.
++    """
++
++    def common_vm_setup_with_memlock(self, memlock):
++        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
++        self.launch_and_wait(set_up_ssh_connection=False)
++
++    def get_anon_smaps_by_pid(self, pid):
++        smaps_raw = self._get_raw_smaps_by_pid(pid)
++        return self._parse_anonymous_smaps(smaps_raw)
++
++
++    def test_memlock_off(self):
++        self.common_vm_setup_with_memlock('off')
++
++        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
++
++        # locked = 0 on every smap
++        for smap in anon_smaps:
++            self.assertEqual(smap['Locked'], 0)
++
++    def test_memlock_on(self):
++        self.common_vm_setup_with_memlock('on')
++
++        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
++
++        # size = rss = locked on every smap where rss not 0
++        for smap in anon_smaps:
++            if smap['Rss'] == 0:
++                continue
++            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
++
++    def test_memlock_onfault(self):
++        self.common_vm_setup_with_memlock('on-fault')
++
++        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
++
++        # rss = locked on every smap and segment with rss < size exists
++        exists = False
++        for smap in anon_smaps:
++            self.assertTrue(smap['Rss'] == smap['Locked'])
++            if smap['Rss'] < smap['Size']:
++                exists = True
++        self.assertTrue(exists)
++
++
++    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
++        result_segments = []
++        current_segment = {}
++        is_anonymous = False
++
++        for line in smaps_raw.split('\n'):
++            if SMAPS_HEADER_PATTERN.match(line):
++                if current_segment and is_anonymous:
++                    result_segments.append(current_segment)
++                current_segment = {}
++                # anonymous segment header looks like this:
++                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
++                # and non anonymous header looks like this:
++                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
++                is_anonymous = len(line.split()) == 5
++            elif m := SMAPS_VALUE_PATTERN.match(line):
++                current_segment[m.group(1)] = int(m.group(2))
++
++        if current_segment and is_anonymous:
++            result_segments.append(current_segment)
++
++        return result_segments
++
++    def _get_raw_smaps_by_pid(self, pid: int) -> str:
++        with open(f'/proc/{pid}/smaps', 'r') as f:
++            return f.read()
 -- 
-2.39.5
+2.34.1
 
 
