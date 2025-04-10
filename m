@@ -4,90 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18CEC369A4
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 09:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734C6C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 10:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2oHU-0002a6-8L; Thu, 10 Apr 2025 05:33:09 -0400
+	id 1u2pON-0007wR-87; Thu, 10 Apr 2025 06:44:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2oH0-0002K7-77
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 05:32:38 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u2oGx-0003dH-CK
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 05:32:37 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3914aba1ce4so416383f8f.2
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 02:32:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744277553; x=1744882353; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y/3uNvEhSiUtMrMIDAyTCVGfurS1FjC7H0G6McwxFKA=;
- b=R66U7V83DfcGZQ1cZiwXurKo23DTuVfxBO3Jh1KccTXMznKzAGtyYfcM9V7TzL9BTV
- xY36Lu2B+Iy0kC0EIZd+5+k8mUTaj8Q2Z52r7TcoBMTCcAMmJW+JVGkXZOSN2E/I7rws
- vuoWtlSxO9ToIbp7D5UUZQiMMSa1S3lNtwEBUUi/TUDJIV3dYSndPH7FuXBbxlEYOSPG
- 5kQh72z+660M/gQxIUMuYVunPg7L8qCVsn2qmiIBkhr9x+pgaMPTwsbmLU2vWuENkoqs
- cPhUR3mzNbuQXxl3OeZazi4Yh3x6VQ8QKei9VOf2qTa77hgRBwXN1NL6kxEfhgHs8hrA
- RyXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744277553; x=1744882353;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y/3uNvEhSiUtMrMIDAyTCVGfurS1FjC7H0G6McwxFKA=;
- b=eKw5xXj+aZx1v+FNI2/hjj/Udio+vhE+P7prwsKmYDOaymOJmyfZU7fVSvVF5k0srq
- DWBV/Ls94gPBkFpTw7Xa9Hwx3Mce9jbimDKVV1DpOIs/f6R1yACuoGn/U4YpqSY+squC
- pwtof6ddaM+MpZzQ8/oFfhCmz3okEWr44g4pN1w0nmqt/+6Z2ZZ73P8bM6DA8/3UXvcN
- eRe9lD9OC4Oo57Mre0+eJmjtdGV8vCyij73sMi7fGsEYmT5Cemovrdt2Btmg1Zz0NMlu
- sUGh+tOSGnUhmdt0JzEFhx7rAwrWwnC2PxvXUXJTLujJjOBtlWP0HunFvR1G3LFq5396
- BNCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfqcp2mLSi0Ho8OKzL7SWwvp2sMaonQcH+b9DA954HE+wfMyOX6nWYSLt6byoBuJaRceixEGZmAH9A@nongnu.org
-X-Gm-Message-State: AOJu0Yzu8FJTzXjxrwFSTaf2qWq3M61SwCfQwS8re5XoN3JbIgntoJXg
- 7yXvcoPrdjh0LkwUFJp9CeAS81GcxD49/48lFcbmeAJ3gLzM2dyJhL6ieTv8aFRYFkHd/cVfBkt
- KI5s=
-X-Gm-Gg: ASbGnctORhMCayoZSXR5nHHcUDohSElkM7xvLTNEhPAbhhAwZMqSJ/pT5Eq0jArRQmX
- 1YUnC9F7/6Cv1J9IFVXUPlg7rAz/s47IMIlujddLER751R4zs1LarQ0n+HFeZnjzPxHXd0ibCSd
- yo7KtnZbzqKznRDy+EEz+QfDfGkZQYON79JBj9ZslGjpilEhWLaGj6JJ1FR8Y5R++ShalN1Poe8
- opqQfX7rSGRZKVGzUHl24zdpiwNSoRV8uafxS+ipv083M7OCfoIog5xkJyi0QH9/x9Srr2kztl9
- xf8TGAW5f2iMYGNihHg8iY1RTvJ03im8RrHU1OyPF+Eb8fL6nrTa/xK2PaVaNqNga5Tp/3Q8EUB
- Vq0x/ehKREQ7vjoGx8uY9sqo0oSIqKg==
-X-Google-Smtp-Source: AGHT+IHW0Vip4Hn4gIrcEUlOfx2f5op5CPMcqQqYMMqIW68O96eIaLqJHyie/mdDgWNFMne5S840Uw==
-X-Received: by 2002:a5d:64ed:0:b0:391:41c9:7a8d with SMTP id
- ffacd0b85a97d-39d8fdebf24mr1268856f8f.54.1744277553020; 
- Thu, 10 Apr 2025 02:32:33 -0700 (PDT)
-Received: from [10.155.70.213] (224.red-88-28-18.dynamicip.rima-tde.net.
- [88.28.18.224]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39d89389ed6sm4128482f8f.41.2025.04.10.02.32.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Apr 2025 02:32:32 -0700 (PDT)
-Message-ID: <59239d14-e50a-4a39-81dd-03580b025dc9@linaro.org>
-Date: Thu, 10 Apr 2025 11:32:29 +0200
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1u2pOK-0007vk-I8; Thu, 10 Apr 2025 06:44:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1u2pOI-000440-Ne; Thu, 10 Apr 2025 06:44:16 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53A6FWlR005759;
+ Thu, 10 Apr 2025 10:44:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=W6Pp1nN0u9VE3yPMozkRTu3XvxoLdIIkl0GkyuAcR
+ cs=; b=fvmXeU0ztvg5yviGcshgccyWho8bwAHEoULBMUiQ8jSE3YFoe6AYcLub+
+ ZjUXjFEE+4pbmrE36+xxcgyuwRcn1KjlRAVMoe7Wvp5JI6C7aXqMGWcEHcWpf2QB
+ NwT/HNSdwR7Isc0oolrGiwktK43BbjxZ3QIjONbEPmBI9HNgjGi8Qs3jfqvgdWKk
+ qSPr+ZR1cgoIYFRdvVFEHQO5E26XDya166+wwDBZX4c0nRtTygek6pIoJ7R6UVaH
+ OLRDkaf9fNN9QZZcSSCDgdRptxXkT4kDPVgmFQ9FGiLX0+pVIKmi+877lI708/78
+ oAik5kK7TFK24mqdP3QQZBJ5zCy1A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x04044b5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 10:44:09 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53AAf3O5017516;
+ Thu, 10 Apr 2025 10:44:08 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45x04044b3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 10:44:08 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53A8eTiI011069;
+ Thu, 10 Apr 2025 10:44:08 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45uf7ywsbg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 10 Apr 2025 10:44:08 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53AAi3V049152284
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Apr 2025 10:44:04 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9FCB82004B;
+ Thu, 10 Apr 2025 10:44:03 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D73EF20040;
+ Thu, 10 Apr 2025 10:44:01 +0000 (GMT)
+Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.in.ibm.com (unknown
+ [9.204.206.66]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Apr 2025 10:44:01 +0000 (GMT)
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
+ pbonzini@redhat.com, vaibhav@linux.ibm.com
+Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org
+Subject: [PATCH] hw/ppc/spapr_hcall: Return host mitigation characteristics in
+ KVM mode
+Date: Thu, 10 Apr 2025 16:13:53 +0530
+Message-ID: <20250410104354.308714-1-gautam@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio: Call set_features during reset
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, devel@daynix.com,
- qemu-stable@nongnu.org
-References: <20250410-reset-v1-1-751cd0064395@daynix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250410-reset-v1-1-751cd0064395@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: CgcgQ5YApJANyeB-7xQW7X-XT38F0tWN
+X-Proofpoint-GUID: fwPwKQWeCdSrbVJnezC8KjNSbrYNL1zd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-10_02,2025-04-08_04,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 clxscore=1011 malwarescore=0 spamscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504100078
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,137 +113,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
+Currently, on a P10 KVM guest, the mitigations seen in the output of
+"lscpu" command are different from the host. The reason for this
+behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
+hcall, QEMU does not consider the data it received from the host via the
+KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
+spapr->eff.caps[], which in turn just contain the default values set in
+spapr_machine_class_init().
 
-On 10/4/25 09:42, Akihiko Odaki wrote:
-> virtio-net expects set_features() will be called when the feature set
-> used by the guest changes to update the number of virtqueues. Call it
-> during reset as reset clears all features and the queues added for
-> VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS will need to be removed.
-> 
-> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
-> Buglink: https://issues.redhat.com/browse/RHEL-73842
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   hw/virtio/virtio.c | 86 +++++++++++++++++++++++++++---------------------------
->   1 file changed, 43 insertions(+), 43 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 85110bce3744..033e87cdd3b9 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -2316,49 +2316,6 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
->       }
->   }
->   
-> -void virtio_reset(void *opaque)
-> -{
-> -    VirtIODevice *vdev = opaque;
-> -    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
-> -    int i;
-> -
-> -    virtio_set_status(vdev, 0);
-> -    if (current_cpu) {
-> -        /* Guest initiated reset */
-> -        vdev->device_endian = virtio_current_cpu_endian();
-> -    } else {
-> -        /* System reset */
-> -        vdev->device_endian = virtio_default_endian();
-> -    }
-> -
-> -    if (k->get_vhost) {
-> -        struct vhost_dev *hdev = k->get_vhost(vdev);
-> -        /* Only reset when vhost back-end is connected */
-> -        if (hdev && hdev->vhost_ops) {
-> -            vhost_reset_device(hdev);
-> -        }
-> -    }
-> -
-> -    if (k->reset) {
-> -        k->reset(vdev);
-> -    }
-> -
-> -    vdev->start_on_kick = false;
-> -    vdev->started = false;
-> -    vdev->broken = false;
-> -    vdev->guest_features = 0;
-> -    vdev->queue_sel = 0;
-> -    vdev->status = 0;
-> -    vdev->disabled = false;
-> -    qatomic_set(&vdev->isr, 0);
-> -    vdev->config_vector = VIRTIO_NO_VECTOR;
-> -    virtio_notify_vector(vdev, vdev->config_vector);
-> -
-> -    for(i = 0; i < VIRTIO_QUEUE_MAX; i++) {
-> -        __virtio_queue_reset(vdev, i);
-> -    }
-> -}
-> -
->   void virtio_queue_set_addr(VirtIODevice *vdev, int n, hwaddr addr)
->   {
->       if (!vdev->vq[n].vring.num) {
-> @@ -3169,6 +3126,49 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
->       return ret;
->   }
->   
-> +void virtio_reset(void *opaque)
-> +{
-> +    VirtIODevice *vdev = opaque;
-> +    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
-> +    int i;
-> +
-> +    virtio_set_status(vdev, 0);
-> +    if (current_cpu) {
-> +        /* Guest initiated reset */
-> +        vdev->device_endian = virtio_current_cpu_endian();
-> +    } else {
-> +        /* System reset */
-> +        vdev->device_endian = virtio_default_endian();
-> +    }
-> +
-> +    if (k->get_vhost) {
-> +        struct vhost_dev *hdev = k->get_vhost(vdev);
-> +        /* Only reset when vhost back-end is connected */
-> +        if (hdev && hdev->vhost_ops) {
-> +            vhost_reset_device(hdev);
-> +        }
-> +    }
-> +
-> +    if (k->reset) {
-> +        k->reset(vdev);
-> +    }
-> +
-> +    vdev->start_on_kick = false;
-> +    vdev->started = false;
-> +    vdev->broken = false;
-> +    virtio_set_features_nocheck(vdev, 0);
+Fix this behaviour by making sure that h_get_cpu_characteristics()
+returns the data received from the KVM ioctl for a KVM guest.
 
-It would be simpler to review having a first patch doing code
-movement, then a second one with the addition.
+Perf impact:
+With null syscall benchmark[1], ~45% improvement is observed.
 
-For my own education, are feature sets modifiable at runtime?
+1. Vanilla QEMU
+$ ./null_syscall
+132.19 ns     456.54 cycles
 
-> +    vdev->queue_sel = 0;
-> +    vdev->status = 0;
-> +    vdev->disabled = false;
-> +    qatomic_set(&vdev->isr, 0);
-> +    vdev->config_vector = VIRTIO_NO_VECTOR;
-> +    virtio_notify_vector(vdev, vdev->config_vector);
-> +
-> +    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
-> +        __virtio_queue_reset(vdev, i);
-> +    }
-> +}
-> +
->   static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
->                                                              Error **errp)
->   {
-> 
-> ---
-> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
-> change-id: 20250406-reset-5ed5248ee3c1
-> 
-> Best regards,
+2. With this patch
+$ ./null_syscall
+91.18 ns     314.57 cycles
+
+[1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
+
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+---
+ hw/ppc/spapr_hcall.c   | 6 ++++++
+ include/hw/ppc/spapr.h | 1 +
+ target/ppc/kvm.c       | 2 ++
+ 3 files changed, 9 insertions(+)
+
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 406aea4ecb..6aec4e22fc 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -1415,6 +1415,12 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
+     uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
+                                                      SPAPR_CAP_CCF_ASSIST);
+ 
++    if (kvm_enabled()) {
++        args[0] = spapr->chars.character;
++        args[1] = spapr->chars.behaviour;
++        return H_SUCCESS;
++    }
++
+     switch (safe_cache) {
+     case SPAPR_CAP_WORKAROUND:
+         characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 39bd5bd5ed..b1e3ee1ae2 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -283,6 +283,7 @@ struct SpaprMachineState {
+     Error *fwnmi_migration_blocker;
+ 
+     SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
++    struct kvm_ppc_cpu_char chars;
+ };
+ 
+ #define H_SUCCESS         0
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 992356cb75..fee6c5d131 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2511,6 +2511,7 @@ bool kvmppc_has_cap_xive(void)
+ 
+ static void kvmppc_get_cpu_characteristics(KVMState *s)
+ {
++    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
+     struct kvm_ppc_cpu_char c;
+     int ret;
+ 
+@@ -2528,6 +2529,7 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
+         return;
+     }
+ 
++    spapr->chars = c;
+     cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
+     cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
+     cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
+-- 
+2.49.0
 
 
