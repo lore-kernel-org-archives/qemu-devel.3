@@ -4,56 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B971C369A1
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 02:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBCFC369A1
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 03:08:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2hpP-0001oG-A7; Wed, 09 Apr 2025 22:39:43 -0400
+	id 1u2iEm-0002aN-3i; Wed, 09 Apr 2025 23:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2hpK-0001id-OW; Wed, 09 Apr 2025 22:39:39 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1u2iEa-0002a0-RH
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 23:05:46 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u2hpI-00033O-Mv; Wed, 09 Apr 2025 22:39:37 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 10 Apr
- 2025 10:38:59 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 10 Apr 2025 10:38:59 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>
-Subject: [PATCH v2 09/10] tests/functional/aspeed: Update AST2700 functional
- test to use vbootrom
-Date: Thu, 10 Apr 2025 10:38:53 +0800
-Message-ID: <20250410023856.500258-10-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
-References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1u2iEY-00069c-87
+ for qemu-devel@nongnu.org; Wed, 09 Apr 2025 23:05:44 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id A3D2046CDB
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 03:05:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1744254339;
+ bh=KXWF4mcz6FTXM8yftucq2mViyH61A9k8GTxRcywSFBM=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=eMubgpqrENkvMpLsOBWF0voa4hwtC3C4BeSkie/3Lvv5WaSMaXqOEvVAnF0s6ihu9
+ utgdIprotpGSb+ONujKaQpp4GJ7mNEXf7sl4WADhcHwIjxQ25mtju8elt7QEn3lE6w
+ KOgAK3N1uoKxwl64N4Nx0FBgX3rosvuLQQCN4OdDKP3VfS8vPkELlftOZi7bGcsUJ5
+ F/I9dgRa6jZopZiVgsoArJVogSQAVB2yGiE9beOuBlSyAD3ng2QbdRKdXe/vcQbUoL
+ mZztu/xe3KitktarHeigxp8m0DiZn4221fXj9wKX0CxWpbDEPaZVfmIsv9MWZbX7El
+ nxBq4uGJgtTkg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 8E65C7EB15
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 03:05:39 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Apr 2025 03:00:17 -0000
+From: Ubuntu SRU Bot <2072564@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Fix Released; importance=Undecided;
+ assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Undecided;
+ assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=oracular; sourcepackage=qemu;
+ component=main; status=Fix Committed; importance=Undecided;
+ assignee=lukas.maerdian@canonical.com; 
+X-Launchpad-Bug-Tags: patch verification-needed verification-needed-noble
+ verification-needed-oracular
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: ahasenack crichton dimitry.unified-streaming.com
+ janitor michal.fita paelzer sergiodj thir820 ubuntu-sru-bot
+X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
+X-Launchpad-Bug-Modifier: Ubuntu SRU Bot (ubuntu-sru-bot)
+References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
+Message-Id: <20250410030017.50353112BF9@ubuntu-archive-toolbox.internal>
+Subject: [Bug 2072564] Autopkgtest regression report
+ (qemu/1:8.2.2+ds-0ubuntu1.7)
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="e76edd883483c71c468bb038e98836435de44530";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: de3b7916428a2a5af639b75677fa17f89dac886a
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -62,71 +99,149 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
+Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactor the AST2700 functional test to boot using the vbootrom image
-instead of manually loading boot components with -device loader.
-The boot ROM binary is now passed via the
--bios option, using the image located in pc-bios/ast27x0_bootrom.bin.
+All autopkgtests for the newly accepted qemu (1:8.2.2+ds-0ubuntu1.7) for no=
+ble have finished running.
+The following regressions have been reported in tests triggered by the pack=
+age:
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- tests/functional/test_aarch64_aspeed.py | 38 +------------------------
- 1 file changed, 1 insertion(+), 37 deletions(-)
+glance/2:28.1.0-0ubuntu1 (amd64, arm64, ppc64el)
+livecd-rootfs/24.04.87 (s390x)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index c25c966278..971f548534 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -36,43 +36,7 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-             'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
- 
-     def start_ast2700_test(self, name):
--        num_cpu = 4
--        uboot_size = os.path.getsize(self.scratch_file(name,
--                                                       'u-boot-nodtb.bin'))
--        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
--
--        load_images_list = [
--            {
--                'addr': '0x400000000',
--                'file': self.scratch_file(name,
--                                          'u-boot-nodtb.bin')
--            },
--            {
--                'addr': str(uboot_dtb_load_addr),
--                'file': self.scratch_file(name, 'u-boot.dtb')
--            },
--            {
--                'addr': '0x430000000',
--                'file': self.scratch_file(name, 'bl31.bin')
--            },
--            {
--                'addr': '0x430080000',
--                'file': self.scratch_file(name, 'optee',
--                                          'tee-raw.bin')
--            }
--        ]
--
--        for load_image in load_images_list:
--            addr = load_image['addr']
--            file = load_image['file']
--            self.vm.add_args('-device',
--                             f'loader,force-raw=on,addr={addr},file={file}')
--
--        for i in range(num_cpu):
--            self.vm.add_args('-device',
--                             f'loader,addr=0x430000000,cpu-num={i}')
--
--        self.vm.add_args('-smp', str(num_cpu))
-+        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
-         self.vm.add_args('-device',
-                          'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-         self.do_test_aarch64_aspeed_sdk_start(
--- 
-2.43.0
+
+Please visit the excuses page listed below and investigate the failures, pr=
+oceeding afterwards as per the StableReleaseUpdates policy regarding autopk=
+gtest regressions [1].
+
+https://people.canonical.com/~ubuntu-archive/proposed-
+migration/noble/update_excuses.html#qemu
+
+[1] https://wiki.ubuntu.com/StableReleaseUpdates#Autopkgtest_Regressions
+
+Thank you!
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2072564
+
+Title:
+  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Noble:
+  Fix Committed
+Status in qemu source package in Oracular:
+  Fix Committed
+
+Bug description:
+  [ Impact ]
+
+   * QEMU crashes when running (emulating) ldconfig in a Ubuntu 22.04
+  arm64 guest
+
+   * This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
+  Ubuntu 24.04+, running on a amd64 host.
+
+   * When running docker containers with Ubuntu 22.04 in them, emulating
+  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
+  ldconfig.real) segfault, leading to problems when loading shared
+  libraries.
+
+  [ Test Plan ]
+
+   * Reproducer is very easy:
+
+  $ sudo snap install docker
+  docker 27.5.1 from Canonical** installed
+  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04
+  Unable to find image 'ubuntu:22.04' locally
+  22.04: Pulling from library/ubuntu
+  0d1c17d4e593: Pull complete=20
+  Digest: sha256:ed1544e454989078f5dec1bfdabd8c5cc9c48e0705d07b678ab6ae3fb6=
+1952d2
+  Status: Downloaded newer image for ubuntu:22.04
+
+  # Execute ldconfig.real inside the arm64 guest.
+  # This should not crash after the fix!
+  root@ad80af5378dc:/# /sbin/ldconfig.real
+  qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+  Segmentation fault (core dumped)
+
+  [ Where problems could occur ]
+
+   * This changes the alignment of sections in the ELF binary via QEMUs
+  elfloader, if something goes wrong with this change, it could lead to
+  all kind of crashes (segfault) of any emulated binaries.
+
+  [ Other Info ]
+
+   * Upstream bug: https://gitlab.com/qemu-project/qemu/-/issues/1913
+   * Upstream fix: https://gitlab.com/qemu-project/qemu/-/commit/4b7b20a3
+     - Fix dependency (needed for QEMU < 9.20): https://gitlab.com/qemu-pro=
+ject/qemu/-/commit/c81d1faf
+
+  --- original bug report ---
+
+ =20
+  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on Ubuntu 2=
+4.04, running on a amd64 host.
+
+  When running docker containers with Ubuntu 22.04 in them, emulating
+  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
+  ldconfig.real) segfault. For example:
+
+  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04
+  root@8861ff640a1c:/# /sbin/ldconfig.real
+  Segmentation fault
+
+  If you copy the ldconfig.real binary to the host, and run it directly
+  via qemu-aarch64-static:
+
+  $ gdb --args qemu-aarch64-static ./ldconfig.real
+  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
+  Copyright (C) 2024 Free Software Foundation, Inc.
+  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
+tml>
+  This is free software: you are free to change and redistribute it.
+  There is NO WARRANTY, to the extent permitted by law.
+  Type "show copying" and "show warranty" for details.
+  This GDB was configured as "x86_64-linux-gnu".
+  Type "show configuration" for configuration details.
+  For bug reporting instructions, please see:
+  <https://www.gnu.org/software/gdb/bugs/>.
+  Find the GDB manual and other documentation resources online at:
+  =C2=A0=C2=A0=C2=A0=C2=A0<http://www.gnu.org/software/gdb/documentation/>.
+
+  For help, type "help".
+  Type "apropos word" to search for commands related to "word"...
+  Reading symbols from qemu-aarch64-static...
+  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
+4189499f62f176bea817bf2/debuginfo...
+  (gdb) r
+  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
+  [Thread debugging using libthread_db enabled]
+  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+  [New Thread 0x7ffff76006c0 (LWP 28378)]
+
+  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
+  0x00007fffe801645b in ?? ()
+  (gdb) disassemble
+  No function contains program counter for selected frame.
+
+  It looks like this is a known qemu regression after v8.1.1:
+  https://gitlab.com/qemu-project/qemu/-/issues/1913
+
+  Downgrading the package to qemu-user-
+  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
 
 
