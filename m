@@ -4,136 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D4BC3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 14:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 586D0C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 14:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2sqz-0003Tt-EY; Thu, 10 Apr 2025 10:26:05 -0400
+	id 1u2t1t-0005uM-DA; Thu, 10 Apr 2025 10:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u2sqY-0003QQ-OH
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:25:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u2sqW-0006VO-IM
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:25:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744295134;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=w1ogun7aTIt1NMY1yf7/6F6+f0XhZUZrplktf+85xsA=;
- b=Lhl3XXgqMp5fVzAu5XFkf/3VMcBvQQ0AwTKTNa3w8J/BIOWw7lc2/Hsi1i1OIoB/DtNPOt
- OKVumAIjCvVvTbxJyDOJsIEqe8nzwhcrMqaWn7wVtWyWPa7iT9bhkd4DDFjKpfNNsQG5ol
- uO5dSojBEZkwMYqWxf6on91XUyfMrLU=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-CXSqrAWUOaiNIJzqn9V3TQ-1; Thu, 10 Apr 2025 10:25:32 -0400
-X-MC-Unique: CXSqrAWUOaiNIJzqn9V3TQ-1
-X-Mimecast-MFC-AGG-ID: CXSqrAWUOaiNIJzqn9V3TQ_1744295132
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5e82ed0f826so920259a12.0
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 07:25:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u2t17-0005jm-3o
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:36:37 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u2t14-0007zt-U9
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 10:36:32 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2295d78b433so9511935ad.2
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 07:36:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744295788; x=1744900588; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=obTXf1ifjZnAGKm7hSiYe652dEIXwoV5ttCEThK3YgQ=;
+ b=lpGs2dUIa6QOpx/nnPt/OokCDum0xMmEXiql1srgxS5MvSR+2L7ItaG08LvRd7L/nK
+ NuaIvbdxQ03AzJH0fx/bhWvJbFzegx4CIoOPrCuQI/qDd7MIIK9DL5NjNXp4zWZvwXpV
+ NEM4WKxdnrnCSBtbv8A6S0gLBfIfzEg2uzAgjKOq0e/ARHmFy2U9P1vv9QPGBDZ6Huat
+ A7f6IUxlsXpJ4K8NWdqbC+RmQi0bUIlSwMWrVCr2nICJGB6+2YapWiedsDMSb9L5yNqy
+ U7dLPLJe+glSjfoDiCD6Y6LLpTTXE2xnmA/prpbbfO3ysu691xfVGY3VkZNI6e5y2XdS
+ dIgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744295131; x=1744899931;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w1ogun7aTIt1NMY1yf7/6F6+f0XhZUZrplktf+85xsA=;
- b=jA0uRHPi3SEAO6ubjnNryYRzyXCca8EZ5vH4wWRHy+4Atj59K2fIGnWVxY8XfuSnjG
- MubWjC19ZwzMqa0X3i0ykLO+tw4oUudlo8jx6hxwu7D7/sMQDtiaQ3lo2y77VCB4JTaI
- wGk3A9iY+zfZXfXRHsgbIFJR2XnjOKo2C4v24jxqv6OUQ/2Lf7tdUubGd0wM9o1v5uB6
- eVGklKftDLD+CmMrm9JUaQOq5L4G1nvEvQTGIYFPjW4JppsVyVeDLxfV9iZGLUfXFbXO
- aQoB6qEW7tFaOWUdf3bM3qK9zqi+ZW2sHtrmyOXhD21VWMQuEW6MKsKTOisMM2SmWisn
- iNcQ==
+ d=1e100.net; s=20230601; t=1744295788; x=1744900588;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=obTXf1ifjZnAGKm7hSiYe652dEIXwoV5ttCEThK3YgQ=;
+ b=GSJF9+ePmDjajXzPT8UV3HwkC40fA+bRnmpDiKA7CFsV3Fskl8LGbR8aU1AXTlNqIm
+ GBLb1Dx3+we0QqEowiAyn/6TINA+zDKvemYMYj/3qFuBXJDaXa4sGPEtnmXuoKbGlq+z
+ EPLlElWDJn1AAlpLAOv7jLElPl5i/Mx+5cFGFk0+y+lciJXW1cBwJp4TzycnYJqfF09m
+ sgT8rHrr20POIDJzySP7Y1YiOElpHDuxSWUsNS6ECHSV6ZGtt/gmrGFHrrMe2/c+TsqZ
+ MYJ7AUUpFENkAVwkzO2fyX9J2roM3A4Kzo1WKH5NIxbbrdI6jXqCuFeg+HFDq6dJxIVp
+ M7RA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbzc+ozWH4zO+FYuEB4/K3GcBMlAG2Akkr7B/Bvqmc2W9/r6OhgcoOOVk6uClfrWBBWm12kBERrM6J@nongnu.org
-X-Gm-Message-State: AOJu0YxKfawWNSoWWfgijQk0OC72s2ZqcTnR0gyGFbJRq2mZfLNzhg83
- svI3vflFyllLJ/QSj8SyyI41y9pKFiaRNPZB38wiRvfVP0FoCDr3Eyw/TRQsIeu2UXiqzgnk9Y8
- Q/aULXV4CCU/aZ92TxcnFzCmmpDXOArsdxueXc01B57+qDOtngYoz
-X-Gm-Gg: ASbGnctVegTR6mskmX8qIdVFmA/nPk3oUEsb/3zfSDCgJxsxgpaOsWnM8gCqZpR9XlR
- OT3yFRZLBTt7Wkwi1+lUvnUv7EIEaLf9A6MnsR9eGDDwRgs44rJOQCLyWBl6bsUEK4XEMi2JKYO
- GlANCy5JTxfFlVy5DTGaprEirULqpbuFsmmk4N9idMQ0RZ1mK/mFPK3ZOG/P5zCXy5bhnDxoVxT
- F2kHFyx39LFNbrSp852u4quB9J4c/rfm0tbJhkxCygfVfTG7GwxqCwNtewBrCv6E5V+LUY08nAE
- psR0NcY1wYMa4IoqWmDxVkBbXXUYcG0rgyZkwzZ+hNFN6zptGQ==
-X-Received: by 2002:a05:6402:3513:b0:5e0:82a0:50ab with SMTP id
- 4fb4d7f45d1cf-5f32c46cdd1mr2173901a12.27.1744295131588; 
- Thu, 10 Apr 2025 07:25:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtLbR5WfybBY6/PGrFzM5MG0KjIyZ+xcSBKvghnsYzALDmCvwDKjftIaor0Ru55zyQ4lMa0A==
-X-Received: by 2002:a05:6402:3513:b0:5e0:82a0:50ab with SMTP id
- 4fb4d7f45d1cf-5f32c46cdd1mr2173879a12.27.1744295131208; 
- Thu, 10 Apr 2025 07:25:31 -0700 (PDT)
-Received: from [192.168.136.123] (93-33-70-196.ip43.fastwebnet.it.
- [93.33.70.196]) by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f2fbc0d2d9sm2415120a12.29.2025.04.10.07.25.29
+ AJvYcCVbrkzBu2KiUEUdEDoriKZ568CbBVRLHuFf4Qvdppm4VeiUzpkA5h6FqvZQ7qu+YltSnxDgJ9hcIhX5@nongnu.org
+X-Gm-Message-State: AOJu0Yz4IhLJ+Hc9gQE/UpIfBshuDJpn82e+i8VoRJb7gpLoQy4Te7lr
+ Au1GNzHLkWBQgxPieH3sV3IiHDz0qL/opmiQuPpfWLbtufYRyQHtQV1FH8i007U=
+X-Gm-Gg: ASbGncsyTM/rFHET3ByyuhtP14h7SWmre0rui5y+10HmfQfyeW/mdyflaKl1ISV+MGK
+ tmHC1g3tHXFv2h4l75ojuo9ufTcA3cWAfjRX4Fj8DeGtGyjOqgKA17z7Pfe0Ze7JUmyCtkF3gig
+ zUQVKTV9P2+ZEf9SEb/ICsC20VSbH0R/wAexe3YHuVnG2iOGWjrVnomTCZRaLem7mR8h93Ug/He
+ ILzhR8AZv/Guy2qRreekjpCOBm7f278FPSVvVwR58ek4fwETUWFesG7TMzK8DvmZ/B16abj1fZ7
+ SktZCN73LFhzuTzJXUksPqwRNzJw4pPWqJoFSWV1Zt8fM7XPHkazuA==
+X-Google-Smtp-Source: AGHT+IFD9nk5tcVAo6Ia68CJDofX+HqIgBnyMRomBFtYJxmEXzgTtYTyCNEfQt7YoXTmGwVSeMPsuQ==
+X-Received: by 2002:a17:903:1252:b0:225:ac99:ae08 with SMTP id
+ d9443c01a7336-22b2edace5amr51428155ad.5.1744295787518; 
+ Thu, 10 Apr 2025 07:36:27 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7b8af14sm31093465ad.76.2025.04.10.07.36.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Apr 2025 07:25:30 -0700 (PDT)
-Message-ID: <bf72ef35-289c-4ec7-962b-414e3487c176@redhat.com>
-Date: Thu, 10 Apr 2025 16:25:28 +0200
+ Thu, 10 Apr 2025 07:36:27 -0700 (PDT)
+Message-ID: <d4ecd6c2-73db-4c28-828c-bfa84ca90084@linaro.org>
+Date: Thu, 10 Apr 2025 07:36:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0] scsi-disk: Apply error policy for host_status
- errors again
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: hreitz@redhat.com, stefanha@redhat.com, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-References: <20250407155949.44736-1-kwolf@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH-for-8.0 09/10] hw/virtio: Extract
+ vhost_user_ram_slots_max() to vhost-user-target.c
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Cc: Greg Kurz <groug@kaod.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Hanna Reitz <hreitz@redhat.com>
+References: <20221212230517.28872-1-philmd@linaro.org>
+ <20221212230517.28872-10-philmd@linaro.org>
+ <84b2bcf7-9df7-43e2-83d8-cae9d34ca541@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250407155949.44736-1-kwolf@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <84b2bcf7-9df7-43e2-83d8-cae9d34ca541@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,146 +113,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/7/25 17:59, Kevin Wolf wrote:
-> Originally, all failed SG_IO requests called scsi_handle_rw_error() to
-> apply the configured error policy. However, commit f3126d65, which was
-> supposed to be a mere refactoring for scsi-disk.c, broke this and
-> accidentally completed the SCSI request without considering the error
-> policy any more if the error was signalled in the host_status field.
-> 
-> Apart from the commit message not describing the chance as intended,
-> errors indicated in host_status are also obviously backend errors and
-> not something the guest must deal with indepdently of the error policy.
-> 
-> This behaviour means that some recoverable errors (such as a path error
-> in multipath configurations) were reported to the guest anyway, which
-> might not expect it and might consider its disk broken.
-> 
-> Make sure that we apply the error policy again for host_status errors,
-> too. This addresses an existing FIXME comment and allows us to remove
-> some comments warning that callbacks weren't always called. With this
-> fix, they are called in all cases again.
-> 
-> The return value passed to the request callback doesn't have more free
-> values that could be used to indicate host_status errors as well as SAM
-> status codes and negative errno. Store the value in the host_status
-> field of the SCSIRequest instead and use -ENODEV as the return value (if
-> a path hasn't been reachable for a while, blk_aio_ioctl() will return
-> -ENODEV instead of just setting host_status, so just reuse it here -
-> it's not necessarily entirely accurate, but it's as good as any errno).
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: f3126d65b393 ('scsi: move host_status handling into SCSI drivers')
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   hw/scsi/scsi-disk.c | 39 +++++++++++++++++++++++++--------------
->   1 file changed, 25 insertions(+), 14 deletions(-)
-> 
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> index 8da1d5a77c..e59632e9b1 100644
-> --- a/hw/scsi/scsi-disk.c
-> +++ b/hw/scsi/scsi-disk.c
-> @@ -68,10 +68,9 @@ struct SCSIDiskClass {
->       SCSIDeviceClass parent_class;
->       /*
->        * Callbacks receive ret == 0 for success. Errors are represented either as
-> -     * negative errno values, or as positive SAM status codes.
-> -     *
-> -     * Beware: For errors returned in host_status, the function may directly
-> -     * complete the request and never call the callback.
-> +     * negative errno values, or as positive SAM status codes. For host_status
-> +     * errors, the function passes ret == -ENODEV and sets the host_status field
-> +     * of the SCSIRequest.
->        */
->       DMAIOFunc       *dma_readv;
->       DMAIOFunc       *dma_writev;
-> @@ -225,11 +224,26 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
->       SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
->       SCSIDiskClass *sdc = (SCSIDiskClass *) object_get_class(OBJECT(s));
->       SCSISense sense = SENSE_CODE(NO_SENSE);
-> +    int16_t host_status;
->       int error;
->       bool req_has_sense = false;
->       BlockErrorAction action;
->       int status;
->   
-> +    /*
-> +     * host_status should only be set for SG_IO requests that came back with a
-> +     * host_status error in scsi_block_sgio_complete(). This error path passes
-> +     * -ENODEV as the return value.
-> +     *
-> +     * Reset host_status in the request because we may still want to complete
-> +     * the request successfully with the 'stop' or 'ignore' error policy.
-> +     */
-> +    host_status = r->req.host_status;
-> +    if (host_status != -1) {
-> +        assert(ret == -ENODEV);
-> +        r->req.host_status = -1;
-
-You should set ret = 0 here to avoid going down the 
-scsi_sense_from_errno() path.
-
-Otherwise,
-
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-
-> +    }
-> +
->       if (ret < 0) {
->           status = scsi_sense_from_errno(-ret, &sense);
->           error = -ret;
-> @@ -289,6 +303,10 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int ret, bool acct_failed)
->           if (acct_failed) {
->               block_acct_failed(blk_get_stats(s->qdev.conf.blk), &r->acct);
->           }
-> +        if (host_status != -1) {
-> +            scsi_req_complete_failed(&r->req, host_status);
-> +            return true;
-> +        }
->           if (req_has_sense) {
->               sdc->update_sense(&r->req);
->           } else if (status == CHECK_CONDITION) {
-> @@ -409,7 +427,6 @@ done:
->       scsi_req_unref(&r->req);
->   }
->   
-> -/* May not be called in all error cases, don't rely on cleanup here */
->   static void scsi_dma_complete(void *opaque, int ret)
->   {
->       SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-> @@ -448,7 +465,6 @@ done:
->       scsi_req_unref(&r->req);
->   }
->   
-> -/* May not be called in all error cases, don't rely on cleanup here */
->   static void scsi_read_complete(void *opaque, int ret)
->   {
->       SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-> @@ -585,7 +601,6 @@ done:
->       scsi_req_unref(&r->req);
->   }
->   
-> -/* May not be called in all error cases, don't rely on cleanup here */
->   static void scsi_write_complete(void * opaque, int ret)
->   {
->       SCSIDiskReq *r = (SCSIDiskReq *)opaque;
-> @@ -2846,14 +2861,10 @@ static void scsi_block_sgio_complete(void *opaque, int ret)
->       sg_io_hdr_t *io_hdr = &req->io_header;
->   
->       if (ret == 0) {
-> -        /* FIXME This skips calling req->cb() and any cleanup in it */
->           if (io_hdr->host_status != SCSI_HOST_OK) {
-> -            scsi_req_complete_failed(&r->req, io_hdr->host_status);
-> -            scsi_req_unref(&r->req);
-> -            return;
-> -        }
-> -
-> -        if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
-> +            r->req.host_status = io_hdr->host_status;
-> +            ret = -ENODEV;
-> +        } else if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
->               ret = BUSY;
->           } else {
->               ret = io_hdr->status;
-
+T24gNC8xMC8yNSAwNToxNCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IEhp
+IFBpZXJyaWNrLA0KPiANCj4gT24gMTMvMTIvMjIgMDA6MDUsIFBoaWxpcHBlIE1hdGhpZXUt
+RGF1ZMOpIHdyb3RlOg0KPj4gVGhlIGN1cnJlbnQgZGVmaW5pdGlvbiBvZiBWSE9TVF9VU0VS
+X01BWF9SQU1fU0xPVFMgaXMNCj4+IHRhcmdldCBzcGVjaWZpYy4gQnkgY29udmVydGluZyB0
+aGlzIGRlZmluaXRpb24gdG8gYSBydW50aW1lDQo+PiB2aG9zdF91c2VyX3JhbV9zbG90c19t
+YXgoKSBoZWxwZXIgZGVjbGFyZWQgaW4gYSB0YXJnZXQNCj4+IHNwZWNpZmljIHVuaXQsIHdl
+IGNhbiBoYXZlIHRoZSByZXN0IG9mIHZob3N0LXVzZXIuYyB0YXJnZXQNCj4+IGluZGVwZW5k
+ZW50Lg0KPj4NCj4+IFRvIGF2b2lkIHZhcmlhYmxlIGxlbmd0aCBhcnJheSBvciB1c2luZyB0
+aGUgaGVhcCB0byBzdG9yZQ0KPj4gYXJyYXlzIG9mIHZob3N0X3VzZXJfcmFtX3Nsb3RzX21h
+eCgpIGVsZW1lbnRzLCB3ZSBzaW1wbHkNCj4+IGRlY2xhcmUgYW4gYXJyYXkgb2YgdGhlIGJp
+Z2dlc3QgVkhPU1RfVVNFUl9NQVhfUkFNX1NMT1RTLA0KPj4gYW5kIGVhY2ggdGFyZ2V0IHVz
+ZXMgdXAgdG8gdmhvc3RfdXNlcl9yYW1fc2xvdHNfbWF4KCkNCj4+IGVsZW1lbnRzIG9mIGl0
+LiBFbnN1cmUgYXJyYXlzIGFyZSBiaWcgZW5vdWdoIGJ5IGFkZGluZyBhbg0KPj4gYXNzZXJ0
+aW9uIGluIHZob3N0X3VzZXJfaW5pdCgpLg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6IFBoaWxp
+cHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj4+IC0tLQ0KPj4gUkZD
+OiBTaG91bGQgSSBhZGQgVkhPU1RfVVNFUl9NQVhfUkFNX1NMT1RTIHRvIHZob3N0LXVzZXIu
+aA0KPj4gICAgICAgIG9yIGNyZWF0ZSBhbiBpbnRlcm5hbCBoZWFkZXIgZm9yIGl0Pw0KPj4g
+LS0tDQo+PiAgICBody92aXJ0aW8vbWVzb24uYnVpbGQgICAgICAgICAgfCAgMSArDQo+PiAg
+ICBody92aXJ0aW8vdmhvc3QtdXNlci10YXJnZXQuYyAgfCAyOSArKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKw0KPj4gICAgaHcvdmlydGlvL3Zob3N0LXVzZXIuYyAgICAgICAgIHwg
+MjYgKysrKystLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4+ICAgIGluY2x1ZGUvaHcvdmlydGlv
+L3Zob3N0LXVzZXIuaCB8ICA3ICsrKysrKysNCj4+ICAgIDQgZmlsZXMgY2hhbmdlZCwgNDIg
+aW5zZXJ0aW9ucygrKSwgMjEgZGVsZXRpb25zKC0pDQo+PiAgICBjcmVhdGUgbW9kZSAxMDA2
+NDQgaHcvdmlydGlvL3Zob3N0LXVzZXItdGFyZ2V0LmMNCj4+DQo+PiBkaWZmIC0tZ2l0IGEv
+aHcvdmlydGlvL21lc29uLmJ1aWxkIGIvaHcvdmlydGlvL21lc29uLmJ1aWxkDQo+PiBpbmRl
+eCBlYjdlZThlYTkyLi5iZjdlMzVmYThhIDEwMDY0NA0KPj4gLS0tIGEvaHcvdmlydGlvL21l
+c29uLmJ1aWxkDQo+PiArKysgYi9ody92aXJ0aW8vbWVzb24uYnVpbGQNCj4+IEBAIC0xMSw2
+ICsxMSw3IEBAIGlmIGhhdmVfdmhvc3QNCj4+ICAgICAgc3BlY2lmaWNfdmlydGlvX3NzLmFk
+ZChmaWxlcygndmhvc3QuYycsICd2aG9zdC1iYWNrZW5kLmMnLCAndmhvc3QtaW92YS10cmVl
+LmMnKSkNCj4+ICAgICAgaWYgaGF2ZV92aG9zdF91c2VyDQo+PiAgICAgICAgc3BlY2lmaWNf
+dmlydGlvX3NzLmFkZChmaWxlcygndmhvc3QtdXNlci5jJykpDQo+PiArICAgIHNwZWNpZmlj
+X3ZpcnRpb19zcy5hZGQoZmlsZXMoJ3Zob3N0LXVzZXItdGFyZ2V0LmMnKSkNCj4+ICAgICAg
+ZW5kaWYNCj4+ICAgICAgaWYgaGF2ZV92aG9zdF92ZHBhDQo+PiAgICAgICAgc3BlY2lmaWNf
+dmlydGlvX3NzLmFkZChmaWxlcygndmhvc3QtdmRwYS5jJywgJ3Zob3N0LXNoYWRvdy12aXJ0
+cXVldWUuYycpKQ0KPj4gZGlmZiAtLWdpdCBhL2h3L3ZpcnRpby92aG9zdC11c2VyLXRhcmdl
+dC5jIGIvaHcvdmlydGlvL3Zob3N0LXVzZXItdGFyZ2V0LmMNCj4+IG5ldyBmaWxlIG1vZGUg
+MTAwNjQ0DQo+PiBpbmRleCAwMDAwMDAwMDAwLi42YTBkMGY1M2QwDQo+PiAtLS0gL2Rldi9u
+dWxsDQo+PiArKysgYi9ody92aXJ0aW8vdmhvc3QtdXNlci10YXJnZXQuYw0KPj4gQEAgLTAs
+MCArMSwyOSBAQA0KPj4gKy8qDQo+PiArICogdmhvc3QtdXNlciB0YXJnZXQtc3BlY2lmaWMg
+aGVscGVycw0KPj4gKyAqDQo+PiArICogQ29weXJpZ2h0IChjKSAyMDEzIFZpcnR1YWwgT3Bl
+biBTeXN0ZW1zIFNhcmwuDQo+PiArICoNCj4+ICsgKiBTUERYLUxpY2Vuc2UtSWRlbnRpZmll
+cjogR1BMLTIuMC1vci1sYXRlcg0KPj4gKyAqLw0KPj4gKw0KPj4gKyNpbmNsdWRlICJxZW11
+L29zZGVwLmgiDQo+PiArI2luY2x1ZGUgImh3L3ZpcnRpby92aG9zdC11c2VyLmgiDQo+PiAr
+DQo+PiArI2lmIGRlZmluZWQoVEFSR0VUX1g4NikgfHwgZGVmaW5lZChUQVJHRVRfWDg2XzY0
+KSB8fCBcDQo+PiArICAgIGRlZmluZWQoVEFSR0VUX0FSTSkgfHwgZGVmaW5lZChUQVJHRVRf
+QVJNXzY0KQ0KPj4gKyNpbmNsdWRlICJody9hY3BpL2FjcGkuaCINCj4+ICsjZWxpZiBkZWZp
+bmVkKFRBUkdFVF9QUEMpIHx8IGRlZmluZWQoVEFSR0VUX1BQQzY0KQ0KPj4gKyNpbmNsdWRl
+ICJody9wcGMvc3BhcHIuaCINCj4+ICsjZW5kaWYNCj4+ICsNCj4+ICt1bnNpZ25lZCBpbnQg
+dmhvc3RfdXNlcl9yYW1fc2xvdHNfbWF4KHZvaWQpDQo+PiArew0KPj4gKyNpZiBkZWZpbmVk
+KFRBUkdFVF9YODYpIHx8IGRlZmluZWQoVEFSR0VUX1g4Nl82NCkgfHwgXA0KPj4gKyAgICBk
+ZWZpbmVkKFRBUkdFVF9BUk0pIHx8IGRlZmluZWQoVEFSR0VUX0FSTV82NCkNCj4+ICsgICAg
+cmV0dXJuIEFDUElfTUFYX1JBTV9TTE9UUzsNCj4+ICsjZWxpZiBkZWZpbmVkKFRBUkdFVF9Q
+UEMpIHx8IGRlZmluZWQoVEFSR0VUX1BQQzY0KQ0KPj4gKyAgICByZXR1cm4gU1BBUFJfTUFY
+X1JBTV9TTE9UUzsNCj4+ICsjZWxzZQ0KPj4gKyAgICByZXR1cm4gNTEyOw0KPiANCj4gU2hv
+dWxkIHZob3N0X3VzZXJfcmFtX3Nsb3RzX21heCBiZSBhbm90aGVyIFRhcmdldEluZm8gZmll
+bGQ/DQo+IA0KDQpJIGRvbid0IHRoaW5rIHNvLCBpdCB3b3VsZCBiZSBiZXR0ZXIgdG8gdHJh
+bnNmb3JtIHRoZSBleGlzdGluZyBmdW5jdGlvbiANCmluIHNvbWV0aGluZyBsaWtlOg0KDQpz
+d2l0Y2ggKHRhcmdldF9jdXJyZW50KCkpIHsNCmNhc2UgVEFSR0VUX1g4NjoNCmNhc2UgVEFS
+R0VUX0FSTToNCmNhc2UgVEFSR0VUX1g4Nl82NDoNCmNhc2UgVEFSR0VUX0FSTV82NDoNCgly
+ZXR1cm4gQUNQSV9NQVhfUkFNX1NMT1RTOw0KY2FzZSBUQVJHRVQgUFBDOg0KY2FzZSBUQVJH
+RVQgUFBDNjQ6DQoJcmV0dXJuIFNQQVBSX01BWF9SQU1fU0xPVFM7DQpkZWZhdWx0Og0KCXJl
+dHVybiA1MTI7DQp9DQoNCldlIHNob3VsZCBub3QgYWRkIGFueXRoaW5nIHBvc3NpYmxlIHRv
+IFRhcmdldEluZm8sIGp1c3QgZm9yIHRoZSBzYWtlIG9mIA0KaXQuIEVzcGVjaWFsbHkgYmVj
+b21lcyBpdCdzIGhhcmQgdG8gZm9sbG93IHZhbHVlcyBzZXQgcGVyIGFyY2hpdGVjdHVyZS4N
+CkluIGEgY2FzZSBsaWtlIHRoaXMsIGEgc3dpdGNoIGlzIG11Y2ggbW9yZSByZWFkYWJsZSBh
+bmQgbG9jYXRlZCBpbiBvbmUgDQpwbGFjZS4gV2l0aCBhIGdlbmVyYXRlZCBqdW1wIHRhYmxl
+LCBpdCdzIHF1aXRlIGVmZmljaWVudCBhbHNvLg0KDQpJbiBteSBvcGluaW9uLCBpdCdzIGFu
+b3RoZXIgcHJvb2Ygd2UgbmVlZCB0byBoYXZlIFRBUkdFVF9YLCBhbmQgDQp0YXJnZXRfWCgp
+IGF2YWlsYWJsZSBhdCBydW50aW1lLg0KDQo+PiArI2VuZGlmDQo+PiArfQ0KPj4gZGlmZiAt
+LWdpdCBhL2h3L3ZpcnRpby92aG9zdC11c2VyLmMgYi9ody92aXJ0aW8vdmhvc3QtdXNlci5j
+DQo+PiBpbmRleCA4ZjYzNTg0NGFmLi4yMWZjMTc2NzI1IDEwMDY0NA0KPj4gLS0tIGEvaHcv
+dmlydGlvL3Zob3N0LXVzZXIuYw0KPj4gKysrIGIvaHcvdmlydGlvL3Zob3N0LXVzZXIuYw0K
+Pj4gQEAgLTQxLDI0ICs0MSw3IEBADQo+PiAgICAjZGVmaW5lIFZIT1NUX01FTU9SWV9CQVNF
+TElORV9OUkVHSU9OUyAgICA4DQo+PiAgICAjZGVmaW5lIFZIT1NUX1VTRVJfRl9QUk9UT0NP
+TF9GRUFUVVJFUyAzMA0KPj4gICAgI2RlZmluZSBWSE9TVF9VU0VSX1NMQVZFX01BWF9GRFMg
+ICAgIDgNCj4+IC0NCj4+IC0vKg0KPj4gLSAqIFNldCBtYXhpbXVtIG51bWJlciBvZiBSQU0g
+c2xvdHMgc3VwcG9ydGVkIHRvDQo+PiAtICogdGhlIG1heGltdW0gbnVtYmVyIHN1cHBvcnRl
+ZCBieSB0aGUgdGFyZ2V0DQo+PiAtICogaGFyZHdhcmUgcGxhZm9ybS4NCj4+IC0gKi8NCj4+
+IC0jaWYgZGVmaW5lZChUQVJHRVRfWDg2KSB8fCBkZWZpbmVkKFRBUkdFVF9YODZfNjQpIHx8
+IFwNCj4+IC0gICAgZGVmaW5lZChUQVJHRVRfQVJNKSB8fCBkZWZpbmVkKFRBUkdFVF9BUk1f
+NjQpDQo+PiAtI2luY2x1ZGUgImh3L2FjcGkvYWNwaS5oIg0KPj4gLSNkZWZpbmUgVkhPU1Rf
+VVNFUl9NQVhfUkFNX1NMT1RTIEFDUElfTUFYX1JBTV9TTE9UUw0KPj4gLQ0KPj4gLSNlbGlm
+IGRlZmluZWQoVEFSR0VUX1BQQykgfHwgZGVmaW5lZChUQVJHRVRfUFBDNjQpDQo+PiAtI2lu
+Y2x1ZGUgImh3L3BwYy9zcGFwci5oIg0KPj4gLSNkZWZpbmUgVkhPU1RfVVNFUl9NQVhfUkFN
+X1NMT1RTIFNQQVBSX01BWF9SQU1fU0xPVFMNCj4+IC0NCj4+IC0jZWxzZQ0KPj4gICAgI2Rl
+ZmluZSBWSE9TVF9VU0VSX01BWF9SQU1fU0xPVFMgNTEyDQo+PiAtI2VuZGlmDQo+PiAgICAN
+Cj4+ICAgIC8qDQo+PiAgICAgKiBNYXhpbXVtIHNpemUgb2YgdmlydGlvIGRldmljZSBjb25m
+aWcgc3BhY2UNCj4+IEBAIC05MzUsNyArOTE4LDcgQEAgc3RhdGljIGludCB2aG9zdF91c2Vy
+X2FkZF9yZW1vdmVfcmVnaW9ucyhzdHJ1Y3Qgdmhvc3RfZGV2ICpkZXYsDQo+PiAgICANCj4+
+ICAgICAgICBpZiAodHJhY2tfcmFtYmxvY2tzKSB7DQo+PiAgICAgICAgICAgIG1lbWNweSh1
+LT5wb3N0Y29weV9jbGllbnRfYmFzZXMsIHNoYWRvd19wY2IsDQo+PiAtICAgICAgICAgICAg
+ICAgc2l6ZW9mKHVpbnQ2NF90KSAqIFZIT1NUX1VTRVJfTUFYX1JBTV9TTE9UUyk7DQo+PiAr
+ICAgICAgICAgICAgICAgc2l6ZW9mKHVpbnQ2NF90KSAqIHZob3N0X3VzZXJfcmFtX3Nsb3Rz
+X21heCgpKTsNCj4+ICAgICAgICAgICAgLyoNCj4+ICAgICAgICAgICAgICogTm93IHdlJ3Zl
+IHJlZ2lzdGVyZWQgdGhpcyB3aXRoIHRoZSBwb3N0Y29weSBjb2RlLCB3ZSBhY2sgdG8gdGhl
+DQo+PiAgICAgICAgICAgICAqIGNsaWVudCwgYmVjYXVzZSBub3cgd2UncmUgaW4gdGhlIHBv
+c2l0aW9uIHRvIGJlIGFibGUgdG8gZGVhbCB3aXRoDQo+PiBAQCAtOTU2LDcgKzkzOSw3IEBA
+IHN0YXRpYyBpbnQgdmhvc3RfdXNlcl9hZGRfcmVtb3ZlX3JlZ2lvbnMoc3RydWN0IHZob3N0
+X2RldiAqZGV2LA0KPj4gICAgZXJyOg0KPj4gICAgICAgIGlmICh0cmFja19yYW1ibG9ja3Mp
+IHsNCj4+ICAgICAgICAgICAgbWVtY3B5KHUtPnBvc3Rjb3B5X2NsaWVudF9iYXNlcywgc2hh
+ZG93X3BjYiwNCj4+IC0gICAgICAgICAgICAgICBzaXplb2YodWludDY0X3QpICogVkhPU1Rf
+VVNFUl9NQVhfUkFNX1NMT1RTKTsNCj4+ICsgICAgICAgICAgICAgICBzaXplb2YodWludDY0
+X3QpICogdmhvc3RfdXNlcl9yYW1fc2xvdHNfbWF4KCkpOw0KPj4gICAgICAgIH0NCj4+ICAg
+IA0KPj4gICAgICAgIHJldHVybiByZXQ7DQo+PiBAQCAtMTAzMCw3ICsxMDEzLDcgQEAgc3Rh
+dGljIGludCB2aG9zdF91c2VyX3NldF9tZW1fdGFibGVfcG9zdGNvcHkoc3RydWN0IHZob3N0
+X2RldiAqZGV2LA0KPj4gICAgICAgICAgICB9DQo+PiAgICANCj4+ICAgICAgICAgICAgbWVt
+c2V0KHUtPnBvc3Rjb3B5X2NsaWVudF9iYXNlcywgMCwNCj4+IC0gICAgICAgICAgICAgICBz
+aXplb2YodWludDY0X3QpICogVkhPU1RfVVNFUl9NQVhfUkFNX1NMT1RTKTsNCj4+ICsgICAg
+ICAgICAgICAgICBzaXplb2YodWludDY0X3QpICogdmhvc3RfdXNlcl9yYW1fc2xvdHNfbWF4
+KCkpOw0KPj4gICAgDQo+PiAgICAgICAgICAgIC8qDQo+PiAgICAgICAgICAgICAqIFRoZXkn
+cmUgaW4gdGhlIHNhbWUgb3JkZXIgYXMgdGhlIHJlZ2lvbnMgdGhhdCB3ZXJlIHNlbnQNCj4+
+IEBAIC0yMTY5LDcgKzIxNTIsNyBAQCBzdGF0aWMgaW50IHZob3N0X3VzZXJfYmFja2VuZF9p
+bml0KHN0cnVjdCB2aG9zdF9kZXYgKmRldiwgdm9pZCAqb3BhcXVlLA0KPj4gICAgICAgICAg
+ICAgICAgICAgIHJldHVybiAtRUlOVkFMOw0KPj4gICAgICAgICAgICAgICAgfQ0KPj4gICAg
+DQo+PiAtICAgICAgICAgICAgdS0+dXNlci0+bWVtb3J5X3Nsb3RzID0gTUlOKHJhbV9zbG90
+cywgVkhPU1RfVVNFUl9NQVhfUkFNX1NMT1RTKTsNCj4+ICsgICAgICAgICAgICB1LT51c2Vy
+LT5tZW1vcnlfc2xvdHMgPSBNSU4ocmFtX3Nsb3RzLCB2aG9zdF91c2VyX3JhbV9zbG90c19t
+YXgoKSk7DQo+PiAgICAgICAgICAgIH0NCj4+ICAgICAgICB9DQo+PiAgICANCj4+IEBAIC0y
+NjQ5LDYgKzI2MzIsNyBAQCBzdGF0aWMgdm9pZCB2aG9zdF91c2VyX3N0YXRlX2Rlc3Ryb3ko
+Z3BvaW50ZXIgZGF0YSkNCj4+ICAgIA0KPj4gICAgYm9vbCB2aG9zdF91c2VyX2luaXQoVmhv
+c3RVc2VyU3RhdGUgKnVzZXIsIENoYXJCYWNrZW5kICpjaHIsIEVycm9yICoqZXJycCkNCj4+
+ICAgIHsNCj4+ICsgICAgYXNzZXJ0KHZob3N0X3VzZXJfcmFtX3Nsb3RzX21heCgpIDw9IFZI
+T1NUX1VTRVJfTUFYX1JBTV9TTE9UUyk7DQo+PiAgICAgICAgaWYgKHVzZXItPmNocikgew0K
+Pj4gICAgICAgICAgICBlcnJvcl9zZXRnKGVycnAsICJDYW5ub3QgaW5pdGlhbGl6ZSB2aG9z
+dC11c2VyIHN0YXRlIik7DQo+PiAgICAgICAgICAgIHJldHVybiBmYWxzZTsNCj4+IGRpZmYg
+LS1naXQgYS9pbmNsdWRlL2h3L3ZpcnRpby92aG9zdC11c2VyLmggYi9pbmNsdWRlL2h3L3Zp
+cnRpby92aG9zdC11c2VyLmgNCj4+IGluZGV4IDE5MTIxNmE3NGYuLmUxMzU4NGFkZTggMTAw
+NjQ0DQo+PiAtLS0gYS9pbmNsdWRlL2h3L3ZpcnRpby92aG9zdC11c2VyLmgNCj4+ICsrKyBi
+L2luY2x1ZGUvaHcvdmlydGlvL3Zob3N0LXVzZXIuaA0KPj4gQEAgLTg2LDQgKzg2LDExIEBA
+IHZvaWQgdmhvc3RfdXNlcl9hc3luY19jbG9zZShEZXZpY2VTdGF0ZSAqZCwNCj4+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICBDaGFyQmFja2VuZCAqY2hhcmRldiwgc3RydWN0
+IHZob3N0X2RldiAqdmhvc3QsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+dnVfYXN5bmNfY2xvc2VfZm4gY2IpOw0KPj4gICAgDQo+PiArLyoqDQo+PiArICogdmhvc3Rf
+dXNlcl9yYW1fc2xvdHNfbWF4KCkNCj4+ICsgKg0KPj4gKyAqIFJldHVybjogbWF4aW11bSBu
+dW1iZXIgb2YgUkFNIHNsb3RzIHN1cHBvcnRlZCBieSB0aGUgdGFyZ2V0IGhhcmR3YXJlIHBs
+YWZvcm0uDQo+PiArICovDQo+PiArdW5zaWduZWQgaW50IHZob3N0X3VzZXJfcmFtX3Nsb3Rz
+X21heCh2b2lkKTsNCj4+ICsNCj4+ICAgICNlbmRpZg0KPiANCg0K
 
