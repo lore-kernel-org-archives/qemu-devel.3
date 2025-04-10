@@ -4,107 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E91BC3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 06:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F27C369A2
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 07:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2lkr-0000PC-FU; Thu, 10 Apr 2025 02:51:17 -0400
+	id 1u2luL-0004Iq-L6; Thu, 10 Apr 2025 03:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1u2lkV-0000I1-LC
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 02:50:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1u2luE-0004IM-MD
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 03:00:59 -0400
+Received: from mail-dm3nam02on20616.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::616]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1u2lkS-0006dj-RE
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 02:50:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744267850;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HTm3jxIp5j55tgccKANvtb9WBAkFtdMn3VAIesopr4Q=;
- b=DhKa4BW7qixGybnOQ2xocLNKJ9oElnHtHQgUWJ+mf0bkFuAoq/+ShcLB4v69ZBduhAgO9D
- pPdVGIFQ0Oln49TVTN3oOX5Zhs/9oe+L/ANdBibLhReStf/XJAcMYqIkoyj0WEt4ng9lnQ
- BHKJk7/C/SPLcez43zkdWFNujW1G7Fo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-j29WBpWJOHmdd22oXqZFGA-1; Thu, 10 Apr 2025 02:50:45 -0400
-X-MC-Unique: j29WBpWJOHmdd22oXqZFGA-1
-X-Mimecast-MFC-AGG-ID: j29WBpWJOHmdd22oXqZFGA_1744267844
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913aea90b4so157321f8f.2
- for <qemu-devel@nongnu.org>; Wed, 09 Apr 2025 23:50:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744267844; x=1744872644;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HTm3jxIp5j55tgccKANvtb9WBAkFtdMn3VAIesopr4Q=;
- b=IJZZweuBCE9NjMucrHxODlfEq03RNKAdlQaIri/aIpR1Z2ZyVXWly3ZmnOZnsIQI2A
- Pf0b0fOSpaWzSoXbLDR6pQGFhBs8YDmhvAdPZA94WfxWqPGSya1fcXz1WdHYE/IjOPbs
- 6txNUzrFyp0D0T3L5cDoJVv4gAcIv0Mx63kpD9uDum7BOmNxeoEbNFF7pKL0/wVvNlMl
- m/UQ1n+nyHr6fRSm+B0WNtZY1Qh2dk43AM5MePXX6Eq3QFs19dqKAZkCogiGXp6+fsGw
- Jmsd1diuyvT7CAtE7wb2koimArRMsG75xV/orsKBYQwc5g7himjqpMKFtrEdxCXWsXlY
- 1elg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXF/i94VDGVqxJAOZx//TQVeInkNDgDvb+fI4JlfGYVkTinTaGntGtFKBZkDhLh/A1tSr4vrLNFtECt@nongnu.org
-X-Gm-Message-State: AOJu0YyHxas9URGtRs0n4sjRm/72+fjZpUw9sfnYEfrxdZ+DWPR49xKk
- NhloUVWyfX3lvAhisp7jNQZRRhxDLm17K1DFjl8s65z0k987+G9IJ3CgZqsiXJlgrCBw6KnHyaU
- 9O3St0WQ3UAfKxQ2elm8hHQw9nIXMgq9IHxc93XuG3BkdLtLNf7l3
-X-Gm-Gg: ASbGncuBrC7A9kN9sn88PUMUIeTitg/imN/x1Eywa4/HUMOhv365tXJA6iOupE1pD6j
- qz3OxDkf7FQ24zaANo18FCRrqoq96agsyKMP1FDkVBae8LXMi41eCpk5pwpaYJtBHArFoYdpAoI
- X10u85mbR/cg2QlsGMmHyFX+XdHM4zVnpLmZRqv/W/1IvDp8tHY+CZQULIbx0YAHCuYbMgrNhWu
- LfM6sJs/VjFQekf7Kvcn+0stcMZr7ZOXuG4usY98L6ou4tKWg+TDuebPBAO635pdDnGT74YgE3Z
- PAA3OhghICSP8E/+q7UC0/8Vx9pCP3aA
-X-Received: by 2002:a5d:64e3:0:b0:39a:cc34:2f9b with SMTP id
- ffacd0b85a97d-39d8f469224mr1259019f8f.16.1744267844408; 
- Wed, 09 Apr 2025 23:50:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+sGnmHAP9/Ng0YNJ3tJ7n+9MoCU2TDkRBgyrXjtCdQfXB1OVokNzefdw/+JEgo5NO6Tc2nQ==
-X-Received: by 2002:a5d:64e3:0:b0:39a:cc34:2f9b with SMTP id
- ffacd0b85a97d-39d8f469224mr1258991f8f.16.1744267844033; 
- Wed, 09 Apr 2025 23:50:44 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39d893631b5sm3740705f8f.3.2025.04.09.23.50.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Apr 2025 23:50:43 -0700 (PDT)
-Date: Thu, 10 Apr 2025 08:50:42 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Andrew Jones <ajones@ventanamicro.com>, Alex
- =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, qemu-arm@nongnu.org, Udo Steinberg <udo@hypervisor.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH-for-10.1 v3 6/9] qtest/bios-tables-test: Whitelist
- aarch64/virt 'its_off' variant blobs
-Message-ID: <20250410085042.6aa5593d@imammedo.users.ipa.redhat.com>
-In-Reply-To: <98b2676d-ad21-4c05-a165-12ae5e1b9c64@linaro.org>
-References: <20250403204029.47958-1-philmd@linaro.org>
- <20250403204029.47958-7-philmd@linaro.org>
- <671a6c82-ae10-4f3b-9d83-cecc32755206@linaro.org>
- <20250409160531.341c205e@imammedo.users.ipa.redhat.com>
- <98b2676d-ad21-4c05-a165-12ae5e1b9c64@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1u2lu5-0007fa-8R
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 03:00:51 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=G1utYWVeZJpnnaKVfpvAjrNtzkb1j652QKmPPWXnbLpuHEm7FPjN/xJuRoLZTv8kgVFB28RPqGyS7aohvNkIeKBQAD/umGZEdEFnIfHSbWp5LOycz5MxVVxyTi1FI1AuOXLWhn8fy5Snuo1iCXz5UWz5z3fWEJ9KRlK2XxL6/66JBmZqdbfUX5LXTWVVRHMi6WeXCSWwbqH2tOoUax86GRoqN7lyoY+JzUe7iQqq9iDi2O4sNHZpbndIFt/rQxsB9eaoMCTxPv/G1joJY0JvTNYHiMFb9S9Om+wr9k6440IRoL1gbQNPM1xfBRzfzGS8fBHuGMT5pdFZiBR/TotyPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gy/uOvYWuMhhxrZreNST0N9hvsc6f879J57gffLm8yA=;
+ b=vDRhdgEkHXt8yYRkfs8a4/sLf+k7NMT5dHv/EOfrNR0nWiGdgxWEUSAXuxYbmTS9jIArliFC5fm0UAmZnxgk6SvNzfeLeBJ5Ax4umc0LmXTjmKKTCXrgp4IP667IHjnp82k22536NOJo97/MQoY5FglxZ2ktnYxRLWpFoDTU1R/Ml1k5DaMX4vVXOonicLBduzJhXoqpy0jmS9zLTsk8EuCWNR33QOamlPYsB0H3KPgOrug8mgsSjGo3VgoobdGTip4W+lRH5FCkMlBh3G4gU7s9IxQbcTIClkg/lSAFaWCmRRoUyh0uySheQ40k4zC0nbpSIQSgawfSYsHd6hgmZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gy/uOvYWuMhhxrZreNST0N9hvsc6f879J57gffLm8yA=;
+ b=vOIwtpBpsTgPi5nV15Mh17yinzBMOX2yBldBJr2tSeRuf+FqVLLNsS5L8Vz7OOCxbgtUZcXsrU+djSI1a62VGBH/YoxR5pKVpKBoP3glu1qAPrxZek8v3sa9uxVjyOlCOhQJqjpVoBymUqDnL3X61vK16gaOICWnzCtKF+x3Gak=
+Received: from MN2PR15CA0053.namprd15.prod.outlook.com (2603:10b6:208:237::22)
+ by SN7PR12MB7225.namprd12.prod.outlook.com (2603:10b6:806:2a8::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.21; Thu, 10 Apr
+ 2025 07:00:40 +0000
+Received: from BL6PEPF0001AB57.namprd02.prod.outlook.com
+ (2603:10b6:208:237:cafe::4b) by MN2PR15CA0053.outlook.office365.com
+ (2603:10b6:208:237::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8632.25 via Frontend Transport; Thu,
+ 10 Apr 2025 07:00:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL6PEPF0001AB57.mail.protection.outlook.com (10.167.241.9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8632.13 via Frontend Transport; Thu, 10 Apr 2025 07:00:39 +0000
+Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 10 Apr
+ 2025 02:00:37 -0500
+From: Sairaj Kodilkar <sarunkod@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <suravee.suthikulpanit@amd.com>, <alejandro.j.jimenez@oracle.com>,
+ <joao.m.martins@oracle.com>, <philmd@linaro.org>, <sarunkod@amd.com>,
+ <vasant.hegde@amd.com>
+Subject: [PATCH 1/2] hw/i386/amd_iommu: Fix device setup failure when PT is on.
+Date: Thu, 10 Apr 2025 12:14:46 +0530
+Message-ID: <20250410064447.29583-2-sarunkod@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250410064447.29583-1-sarunkod@amd.com>
+References: <20250410064447.29583-1-sarunkod@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB57:EE_|SN7PR12MB7225:EE_
+X-MS-Office365-Filtering-Correlation-Id: 619717b9-05ae-4779-a01a-08dd77fd673a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4hi9sD0JaYx6ih56GMvNr1eeZMGOEJi05gOdeYvxeoPBOxImU38tHHxzFMkr?=
+ =?us-ascii?Q?r0Avx7+5shcKdg+RqkfoIRQfbOjbACalTvg0YzDBArCdR9GdVUPUXDQZ0LMP?=
+ =?us-ascii?Q?znmocMnYxjeiGAO7s37eLYvEKwqyD1Ow1BoLsb69012Lnaa/JLfiAsEUZXtA?=
+ =?us-ascii?Q?abcxcSeSfv4mtIG+YRLsrne6j8jFFUv86h+XdcR6RX2Apt11A8CdRsKPKQPD?=
+ =?us-ascii?Q?WYFFRyQx8P4kcpiNgubdLPZGoI9G5Qrh37W7iywIHeyXR9UbRbawRzWoed5N?=
+ =?us-ascii?Q?NJf6oIVOk0reOf0bkkSHwnyyYzhqIeXu5IiyRb2j6vK4G1P/3HrMXtQl8M2y?=
+ =?us-ascii?Q?EoSYxOQI/FRKCKoZrhxED8Rg0uf1lqUESgMKiymn2hyKiozYEhC27L3NWxX2?=
+ =?us-ascii?Q?jXINRqD65XafbEJv8Dt7EOmoe+UgcEnL/0WVmkXOf3re4zAXpWo+8XumU2aj?=
+ =?us-ascii?Q?x4OAub/fbj8ORkYLIvEUBeuqCgWtiI636i68LA4tjx0zoMKF7nWXpUwEtaU2?=
+ =?us-ascii?Q?ALbNrKDZrLCWMAGUMZYxlXpDl9EImPBZO5boQCG5MccnExMqXCPq1Mudjgpn?=
+ =?us-ascii?Q?DzjrO1mVZGVg1TuRtGSWi8sj0P+tOJF3smIu586JmHR/VvKrU8LSp0XISAlY?=
+ =?us-ascii?Q?UIElHnM56qBEyzamYJP3Gxe43+tjrhAWB60++E9mAiV4QjCelUQHh9+0x+yU?=
+ =?us-ascii?Q?yJ25Z9EXPx4I6pFMiIUR8Vj7Q+2dGywxlik8SsDFUDoPMiO2GPWB/W8ycCZo?=
+ =?us-ascii?Q?cdLZN6HDkXdryYWxNBnDAG9Vg6w4s58aPeTYGljQzMeJZqZRmw7F2lW7tpHE?=
+ =?us-ascii?Q?UCEcOXToT0wE1gqw6IoHMADg/WCmFfcbrRjNAJ4mtxLAJ4iNnLpRVO0DwRVt?=
+ =?us-ascii?Q?O4kJBGUcXj1T9VZIH49EfA0ntWR2MelYHTt8GDzNwjkeRlA4KR9oNe0DTXo1?=
+ =?us-ascii?Q?ecUXXHRyvq8mXiH+PeoTLD1L09k4013CnPjnNoGjBj49JHzIQh3uOOvAW/m8?=
+ =?us-ascii?Q?Yvb5okXhGvjvrLFjqoV0O9M97dahgBtUyCWP61uqPJ8Tv/tfi+/fxa/zxcok?=
+ =?us-ascii?Q?zYCXdHgFchYo6zQMD8uZBXSFSKbdlObJnDfBuhgSa/HvYfYmcRVaW35jjtvw?=
+ =?us-ascii?Q?QYAEl1JwxlIBZzrFteo0Uvs9wOmYBC1ntD/CbePWy9XzPGgrMxaAoREVeKSI?=
+ =?us-ascii?Q?sKLgwjYg0P+GaZa3HAJAN4xBgtBC1lqz0L53TBisC7jCvqbu6yqa1Mj3GcqA?=
+ =?us-ascii?Q?qYhOM3F7wwj84WGQEZohOHh8UW/fT0Gl+OiWehMotCwiqH5rxL6cHf/yuSUF?=
+ =?us-ascii?Q?h7JG3qU7rEPaDgASQkFvCVwjtEt/H43YcBZUro3+c3N00s7/0KXm8dOxlpyc?=
+ =?us-ascii?Q?CICBnCnMnkE/KflDe7AuXFkGuxQign1AyAdCDGxk5ux3INcU/kBW61/lYFvf?=
+ =?us-ascii?Q?am2n2jOAXtbbgOzKI8gMWky+RJpIK7KKOQYxdIJJk1BTUB7DFjo0sy4HhDf4?=
+ =?us-ascii?Q?Pxhd4zOZUZJ6s+1EYD9x9xw9dAdTKuXCr2Iu?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Apr 2025 07:00:39.8336 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 619717b9-05ae-4779-a01a-08dd77fd673a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB57.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7225
+Received-SPF: permerror client-ip=2a01:111:f403:2405::616;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.505,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,187 +150,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 9 Apr 2025 12:49:36 -0300
-Gustavo Romero <gustavo.romero@linaro.org> wrote:
+Current amd_iommu enables the iommu_nodma address space when pt_supported
+flag is on. This causes device to bypass the IOMMU and use untranslated
+address to perform DMA when guest kernel uses DMA mode, resulting in
+failure to setup the devices in the guest.
 
-> Hi Igor,
->=20
-> On 4/9/25 11:05, Igor Mammedov wrote:
-> > On Fri, 4 Apr 2025 00:01:22 -0300
-> > Gustavo Romero <gustavo.romero@linaro.org> wrote:
-> >  =20
-> >> Hi Phil,
-> >>
-> >> On 4/3/25 17:40, Philippe Mathieu-Daud=C3=A9 wrote: =20
-> >>> We are going to fix the test_acpi_aarch64_virt_tcg_its_off()
-> >>> test. In preparation, copy the ACPI tables which will be
-> >>> altered as 'its_off' variants, and whitelist them.
-> >>>
-> >>> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-> >>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >>> ---
-> >>>    tests/qtest/bios-tables-test-allowed-diff.h |   3 +++
-> >>>    tests/qtest/bios-tables-test.c              |   1 +
-> >>>    tests/data/acpi/aarch64/virt/APIC.its_off   | Bin 0 -> 184 bytes
-> >>>    tests/data/acpi/aarch64/virt/FACP.its_off   | Bin 0 -> 276 bytes
-> >>>    tests/data/acpi/aarch64/virt/IORT.its_off   | Bin 0 -> 236 bytes
-> >>>    5 files changed, 4 insertions(+)
-> >>>    create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
-> >>>    create mode 100644 tests/data/acpi/aarch64/virt/FACP.its_off
-> >>>    create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
-> >>>
-> >>> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtes=
-t/bios-tables-test-allowed-diff.h
-> >>> index dfb8523c8bf..3421dd5adf3 100644
-> >>> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> >>> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> >>> @@ -1 +1,4 @@
-> >>>    /* List of comma-separated changed AML files to ignore */
-> >>> +"tests/data/acpi/aarch64/virt/APIC.its_off",
-> >>> +"tests/data/acpi/aarch64/virt/FACP.its_off",
-> >>> +"tests/data/acpi/aarch64/virt/IORT.its_off", =20
-> >>
-> >> I think your first approach is the correct one: you add the blobs
-> >> when adding the new test, so they would go into patch 5/9 in this seri=
-es,
-> >> making the test pass without adding anything to bios-tables-test-allow=
-ed-diff.h.
-> >> Then in this patch only add the APIC.its_off table to the bios-tables-=
-test-allowed-diff.h
-> >> since that's the table that changes when the fix is in place, as you d=
-id in: =20
-> >=20
-> > if APIC.its_off is the only one that's changing, but FACP/IORT blobs ar=
-e the same
-> > as suffix-less blobs, one can omit copying FACP/IORT as test harness wi=
-ll fallback
-> > to suffix-less blob if the one with suffix isn't found. =20
->=20
-> OK. Just clarifying and for the records, this is not the case for this se=
-ries
->=20
->=20
-> > if blobs are different from defaults then create empty blobs and whitel=
-ist them in the same patch
-> > then do your changes and then update blobs & wipeout withe list. =20
->=20
-> Thanks for confirming it. That's what I suggested to Phil in my first rev=
-iew and what
-> I understood from the prescription in bios-tables-test.c.
->=20
-> However, on second thoughts, for this particular series, isn't it better =
-to have the following commit sequence instead:
->=20
-> 1) Add the new test and the new blobs that make the test pass, i.e. APIC.=
-suffix, FACP.suffix, and IORT.suffix (they are different than the default s=
-uffix-less blobs)
+Fix the issue by removing pt_supported check and disabling nodma memory
+region. Adding pt_supported requires additional changes and we will look
+into it later.
 
-blobs should be a separate commit (that way it's easier for maintainer to r=
-ebase them,
-if they clash during merge with some other change.
+Fixes: c1f46999ef506 ("amd_iommu: Add support for pass though mode")
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+---
+ hw/i386/amd_iommu.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-> 2) Whitelist only the APIC.suffix since that's the table that will change=
- with the fix
-> 3) Add the fix (which changes the APIC table so a new APIC.suffix blob is=
- needed and also stops generating the IORT table, so no more IORT.suffix bl=
-ob is necessary)
-> 4) Finally, update only the APIC.suffix blob and remove the IORT.suffix b=
-lob and wipe out the whitelist
->=20
-> This way:
->=20
-> A) It's clear that only ACPI blob changed with the fix, because there is =
-no addition of a FACP.suffix blob in 4) (it remains the same)
-> B) It's clear that the IORT table is removed with the fix and is not rele=
-vant anymore for the test
-
-I'd just mention it in commit log so  that later no one would wonder why we=
- are adding and then removing tables
-
-As for the rest of suggestions, it looks fine to me.
-
->=20
-> What do you think?
->=20
->=20
-> Cheers,
-> Gustavo
->=20
-> > Phil,
-> > the process is described in doc comment at the top of tests/qtest/bios-=
-tables-test.c
-> >  =20
-> >> https://mail.gnu.org/archive/html/qemu-devel/2025-03/msg07082.html
-> >>
-> >> Plus, adding the blobs, which are actually related to the test in the =
-other
-> >> patch, and ignoring them at the same time looks confusing to me. I und=
-erstand
-> >> that only the blob that changes (APIC.its_off) with the fix should be =
-temporarily
-> >> ignored and, later, updated, as in your first series.
-> >>
-> >>
-> >> Cheers,
-> >> Gustavo
-> >> =20
-> >>> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables=
--test.c
-> >>> index baaf199e01c..55366bf4956 100644
-> >>> --- a/tests/qtest/bios-tables-test.c
-> >>> +++ b/tests/qtest/bios-tables-test.c
-> >>> @@ -2151,6 +2151,7 @@ static void test_acpi_aarch64_virt_tcg_its_off(=
-void)
-> >>>        test_data data =3D {
-> >>>            .machine =3D "virt",
-> >>>            .arch =3D "aarch64",
-> >>> +        .variant =3D ".its_off",
-> >>>            .tcg_only =3D true,
-> >>>            .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
-> >>>            .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> >>> diff --git a/tests/data/acpi/aarch64/virt/APIC.its_off b/tests/data/a=
-cpi/aarch64/virt/APIC.its_off
-> >>> new file mode 100644
-> >>> index 0000000000000000000000000000000000000000..c37d05d6e05805304f10a=
-fe73eb7cb9100fcccfa
-> >>> GIT binary patch
-> >>> literal 184
-> >>> zcmZ<^@O0k6z`($=3D+{xeBBUr&HBEVSz2pEB4AU24G0Uik$i-7~iVgWL^17JJ`2AFzr
-> >>> bgb+@aBn}xq0gwb2)Q)cq{30-g9B_L93G4|0
-> >>>
-> >>> literal 0
-> >>> HcmV?d00001
-> >>>
-> >>> diff --git a/tests/data/acpi/aarch64/virt/FACP.its_off b/tests/data/a=
-cpi/aarch64/virt/FACP.its_off
-> >>> new file mode 100644
-> >>> index 0000000000000000000000000000000000000000..606dac3fe4b55c31fd68b=
-25d3a4127eeef227434
-> >>> GIT binary patch
-> >>> literal 276 =20
-> >>> zcmZ>BbPf<<WME(uaq@Te2v%^42yj*a0-z8Bhz+8t3j|P&V`N}P6&N^PpsQ~v$aVnZ =20
-> >>> CVg~^L
-> >>>
-> >>> literal 0
-> >>> HcmV?d00001
-> >>>
-> >>> diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/a=
-cpi/aarch64/virt/IORT.its_off
-> >>> new file mode 100644
-> >>> index 0000000000000000000000000000000000000000..0fceb820d509e852ca084=
-9baf568a8e93e426738
-> >>> GIT binary patch
-> >>> literal 236
-> >>> zcmebD4+?q1z`(#9?&R<65v<@85#X!<1dKp25F11@1F-=3DRgMkDCNC*yK9F_<M77!bR =
-=20
-> >>> zUBI%eoFED&4;F$FSwK1)h;xBB2Py`m{{M%tVD>TjFfcO#g+N#Zh@s|zoCF3AP#UU@ =20
-> >>> R!2`+%Dg6Hr$N|zYvjDIZ5CH%H
-> >>>
-> >>> literal 0
-> >>> HcmV?d00001
-> >>>     =20
-> >> =20
-> >  =20
->=20
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 5f9b95279997..df8ba5d39ada 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1426,7 +1426,6 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+     AMDVIState *s = opaque;
+     AMDVIAddressSpace **iommu_as, *amdvi_dev_as;
+     int bus_num = pci_bus_num(bus);
+-    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ 
+     iommu_as = s->address_spaces[bus_num];
+ 
+@@ -1486,15 +1485,8 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+                                             AMDVI_INT_ADDR_FIRST,
+                                             &amdvi_dev_as->iommu_ir, 1);
+ 
+-        if (!x86_iommu->pt_supported) {
+-            memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, false);
+-            memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu),
+-                                      true);
+-        } else {
+-            memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu),
+-                                      false);
+-            memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, true);
+-        }
++        memory_region_set_enabled(&amdvi_dev_as->iommu_nodma, false);
++        memory_region_set_enabled(MEMORY_REGION(&amdvi_dev_as->iommu), true);
+     }
+     return &iommu_as[devfn]->as;
+ }
+-- 
+2.34.1
 
 
