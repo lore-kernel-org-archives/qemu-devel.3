@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F91C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 11:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FD7C369A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 11:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2pzc-00088Z-Ey; Thu, 10 Apr 2025 07:22:48 -0400
+	id 1u2pze-00089J-DW; Thu, 10 Apr 2025 07:22:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u2pza-00087X-B2
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:46 -0400
+ id 1u2pzb-00088F-Q9
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:47 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u2pzX-0000EA-0R
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:45 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u2pzZ-0000F4-M8
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:47 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 726001C15BF; Thu, 10 Apr 2025 13:22:40 +0200 (CEST)
+ id 7AB251C15D3; Thu, 10 Apr 2025 13:22:40 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: qemu-devel@nongnu.org,
 	marcandre.lureau@redhat.com
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v2 1/6] new configure option to enable gstreamer
-Date: Thu, 10 Apr 2025 13:22:33 +0200
-Message-Id: <20250410112238.3550155-2-dietmar@proxmox.com>
+Subject: [PATCH v2 6/6] h264: new vnc option to configure h264 at server side
+Date: Thu, 10 Apr 2025 13:22:38 +0200
+Message-Id: <20250410112238.3550155-7-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250410112238.3550155-1-dietmar@proxmox.com>
 References: <20250410112238.3550155-1-dietmar@proxmox.com>
@@ -58,86 +58,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GStreamer is required to implement H264 encoding for VNC. Please note
-that QEMU already depends on this library when you enable Spice.
+Values can be 'on', 'off', or a space sparated list of
+allowed gstreamer encoders.
+
+- on: automatically select the encoder
+- off: disbale h264
+- encoder-list: select first available encoder from that list.
 
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- meson.build                   | 10 ++++++++++
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  5 ++++-
- 3 files changed, 16 insertions(+), 1 deletion(-)
+ ui/vnc-enc-h264.c | 28 +++++++++++++++++++++-------
+ ui/vnc.c          | 26 +++++++++++++++++++++-----
+ ui/vnc.h          |  6 +++++-
+ 3 files changed, 47 insertions(+), 13 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 41f68d3806..28ca37855a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1348,6 +1348,14 @@ if not get_option('zstd').auto() or have_block
-                     required: get_option('zstd'),
-                     method: 'pkg-config')
- endif
-+
-+gstreamer = not_found
-+if not get_option('gstreamer').auto() or have_block
-+  gstreamer = dependency('gstreamer-1.0 gstreamer-base-1.0', version: '>=1.22.0',
-+                          required: get_option('gstreamer'),
-+                          method: 'pkg-config')
-+endif
-+
- qpl = not_found
- if not get_option('qpl').auto() or have_system
-   qpl = dependency('qpl', version: '>=1.5.0',
-@@ -2563,6 +2571,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
- config_host_data.set('CONFIG_STATX', has_statx)
- config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
- config_host_data.set('CONFIG_ZSTD', zstd.found())
-+config_host_data.set('CONFIG_GSTREAMER', gstreamer.found())
- config_host_data.set('CONFIG_QPL', qpl.found())
- config_host_data.set('CONFIG_UADK', uadk.found())
- config_host_data.set('CONFIG_QATZIP', qatzip.found())
-@@ -4836,6 +4845,7 @@ summary_info += {'snappy support':    snappy}
- summary_info += {'bzip2 support':     libbzip2}
- summary_info += {'lzfse support':     liblzfse}
- summary_info += {'zstd support':      zstd}
-+summary_info += {'gstreamer support': gstreamer}
- summary_info += {'Query Processing Library support': qpl}
- summary_info += {'UADK Library support': uadk}
- summary_info += {'qatzip support':    qatzip}
-diff --git a/meson_options.txt b/meson_options.txt
-index 59d973bca0..11cd132be5 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -254,6 +254,8 @@ option('vnc_sasl', type : 'feature', value : 'auto',
-        description: 'SASL authentication for VNC server')
- option('vte', type : 'feature', value : 'auto',
-        description: 'vte support for the gtk UI')
-+option('gstreamer', type : 'feature', value : 'auto',
-+       description: 'for VNC H.264 encoding with gstreamer')
+diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+index 3eabfc2cfe..33067d3a16 100644
+--- a/ui/vnc-enc-h264.c
++++ b/ui/vnc-enc-h264.c
+@@ -3,13 +3,21 @@
  
- # GTK Clipboard implementation is disabled by default, since it may cause hangs
- # of the guest VCPUs. See gitlab issue 1150:
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 3e8e00852b..b0c273d61e 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -229,6 +229,7 @@ meson_options_help() {
-   printf "%s\n" '                  Xen PCI passthrough support'
-   printf "%s\n" '  xkbcommon       xkbcommon support'
-   printf "%s\n" '  zstd            zstd compression support'
-+  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
+ #include <gst/gst.h>
+ 
+-const char *encoder_list[] = { "x264enc", "openh264enc", NULL };
+-
+-static const char *get_available_encoder(void)
++static char *get_available_encoder(const char *encoder_list)
+ {
++    g_assert(encoder_list != NULL);
++
++    if (!strcmp(encoder_list, "")) {
++        /* use default list */
++        encoder_list = "x264enc openh264enc";
++    }
++
++    char *ret = NULL;
++    char **encoder_array = g_strsplit(encoder_list, " ", -1);
++
+     int i = 0;
+     do {
+-        const char *encoder_name = encoder_list[i];
++        const char *encoder_name = encoder_array[i];
+         if (encoder_name == NULL) {
+             break;
+         }
+@@ -17,12 +25,15 @@ static const char *get_available_encoder(void)
+             encoder_name, "video-encoder");
+         if (element != NULL) {
+             gst_object_unref(element);
+-            return encoder_name;
++            ret = strdup(encoder_name);
++            break;
+         }
+         i = i + 1;
+     } while (true);
+ 
+-    return NULL;
++    g_strfreev(encoder_array);
++
++    return ret;
  }
- _meson_option_parse() {
-   case $1 in
-@@ -581,6 +582,8 @@ _meson_option_parse() {
-     --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
-     --enable-zstd) printf "%s" -Dzstd=enabled ;;
-     --disable-zstd) printf "%s" -Dzstd=disabled ;;
--    *) return 1 ;;
-+    --enable-gstreamer) printf "%s" -Dgstreamer=enabled ;;
-+    --disable-gstreamer) printf "%s" -Dgstreamer=disabled ;;
-+   *) return 1 ;;
-   esac
+ 
+ static GstElement *create_encoder(const char *encoder_name)
+@@ -215,8 +226,10 @@ static bool create_encoder_context(VncState *vs, int w, int h)
+ int vnc_h264_encoder_init(VncState *vs)
+ {
+     g_assert(vs->h264 == NULL);
++    g_assert(vs->vd != NULL);
++    g_assert(vs->vd->h264_encoder_list != NULL);
+ 
+-    const char *encoder_name = get_available_encoder();
++    char *encoder_name = get_available_encoder(vs->vd->h264_encoder_list);
+     if (encoder_name == NULL) {
+         VNC_DEBUG("No H264 encoder available.\n");
+         return -1;
+@@ -316,6 +329,7 @@ void vnc_h264_clear(VncState *vs)
+ 
+     destroy_encoder_context(vs);
+ 
++    g_free(vs->h264->encoder_name);
+     g_free(vs->h264);
+     vs->h264 = NULL;
  }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 4ba0b715fd..5a7f93e762 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2190,11 +2190,11 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
+             break;
+ #ifdef CONFIG_GSTREAMER
+         case VNC_ENCODING_H264:
+-            if (vnc_h264_encoder_init(vs) == 0) {
+-                vnc_set_feature(vs, VNC_FEATURE_H264);
+-                vs->vnc_encoding = enc;
+-            } else {
+-                VNC_DEBUG("vnc_h264_encoder_init failed\n");
++            if (vs->vd->h264_encoder_list != NULL) { /* if h264 is enabled */
++                if (vnc_h264_encoder_init(vs) == 0) {
++                    vnc_set_feature(vs, VNC_FEATURE_H264);
++                    vs->vnc_encoding = enc;
++                }
+             }
+             break;
+ #endif
+@@ -3634,6 +3634,9 @@ static QemuOptsList qemu_vnc_opts = {
+         },{
+             .name = "power-control",
+             .type = QEMU_OPT_BOOL,
++        },{
++            .name = "h264",
++            .type = QEMU_OPT_STRING,
+         },
+         { /* end of list */ }
+     },
+@@ -4196,6 +4199,19 @@ void vnc_display_open(const char *id, Error **errp)
+     }
+ #endif
+ 
++#ifdef CONFIG_GSTREAMER
++    const char *h264_opt = qemu_opt_get(opts, "h264");
++    fprintf(stderr, "GOT %s\n", h264_opt);
++    if (!strcmp(h264_opt, "off")) {
++        vd->h264_encoder_list = NULL; /* disable h264 */
++    } else if  (!strcmp(h264_opt, "on")) {
++        vd->h264_encoder_list = ""; /* use default encoder list */
++    } else  {
++        /* assume this is a list of endiers */
++        vd->h264_encoder_list = h264_opt;
++    }
++#endif
++
+     if (vnc_display_setup_auth(&vd->auth, &vd->subauth,
+                                vd->tlscreds, password,
+                                sasl, false, errp) < 0) {
+diff --git a/ui/vnc.h b/ui/vnc.h
+index f39dbe21aa..e459441e35 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -188,6 +188,10 @@ struct VncDisplay
+     VncDisplaySASL sasl;
+ #endif
+ 
++#ifdef CONFIG_GSTREAMER
++    const char *h264_encoder_list;
++#endif
++
+     AudioState *audio_state;
+ };
+ 
+@@ -239,7 +243,7 @@ typedef struct VncZywrle {
+ /* Number of frames we send after the display is clean. */
+ #define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
+-    const char *encoder_name;
++    char *encoder_name;
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+     size_t width;
+     size_t height;
 -- 
 2.39.5
 
