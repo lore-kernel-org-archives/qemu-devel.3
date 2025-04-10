@@ -4,81 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE27C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 19:01:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB398C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 19:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2x92-0000WQ-MJ; Thu, 10 Apr 2025 15:01:00 -0400
+	id 1u2xxC-0003fi-Sf; Thu, 10 Apr 2025 15:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u2x91-0000VL-Aj; Thu, 10 Apr 2025 15:00:59 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u2xxB-0003fT-3c
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 15:52:49 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u2x8y-0008Hl-Lp; Thu, 10 Apr 2025 15:00:58 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5eb5ecf3217so2194920a12.3; 
- Thu, 10 Apr 2025 12:00:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744311653; x=1744916453; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JmA79TPB8DzVP9v42w5Mm5jwpBI20BPPUsMnSyuFNFw=;
- b=mRxNPC+Jw7t0jv+73zi22Yy04OaEcdHQ/LGsDtVySgAUZh7aXVyY2Tzvp/j3h4azti
- D7jTtH0ByArfaMgmRw5Q2MGd8+cU8Pru4MY/TNzzbJ8DMV5NkJEeasMR82gzhwJw26pg
- vGN+9GmoOstBkTj4mqVlDLp1aBU5jIKEPl668RlfP3RRur2lNVAH/SX/QLdrEMpqLAaN
- dejZzyT3mVxIUmxo97mE/RxH/c4k9bzaP5UdNwQfSLR6+hugkNKSrwNFRh+fGHWPg21x
- lTGnCD4xM0pn1yK8fumpg9debtcM5Z763SC69vF6tadgQsYWQZUXY+L39WB0No7LGdWK
- 68Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744311653; x=1744916453;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JmA79TPB8DzVP9v42w5Mm5jwpBI20BPPUsMnSyuFNFw=;
- b=PJmFE91M40ZP0UQEnSmpyxHcoWktsQuNFKCo/kKPEkCmYGI6MX05g/rnyiEwz1CPgm
- +Wy0rtsGruPzrf6vRhwN/QoSFuRENbhUcPx8IwPhRfovl65VeJ0Gjinl5SmmbDSgVmuR
- 4U2OHZjQtaaPrXMDLNeu79Me52UcKlmK4nUTIXLVCiBY19ByZUh5ZdLgMrwGrrL2OIAe
- oAWkyliGMnZzVZFsXr90lynwFn+Gw1dMjYh86Ind8Gddr/U6h2vtfg1gQbWndeyPpGGG
- 3jQnOiawsmJ0cKN0jWQPZPN9nGq3km47RljH+RgaBoP8SPzibMtUA4c0PErEOcSqN7zm
- /gdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWdqlm7hR+rxeR6HYxuk1J77pfsBwcdMVZ7phWlJN7amVpuGViAX+bBPBUIJcNt+FpqL6AnR3B323elgw==@nongnu.org
-X-Gm-Message-State: AOJu0Yyn6TZxuLHTMuvGeEmXq3i+u6mjN00+yHwu3RE/fRWJAnXAntQW
- 5LLEmHECPlZoiBpyyqOgiOF1oNfFmSA3uVILdUSgqknwZiArfAgquhg11mXG/HsXhrX+M5SeAjo
- gg+/Hv8SPK7dp+thnV5YYZ+Az+2I=
-X-Gm-Gg: ASbGncu26NkPTcZZ0Sio+/b2galySOFvwBzREyK8GsHzp9+wnwGt1yC34QQYEqXndmr
- jW6LzJDfTAGGgdDsaI+nSWDENLeI+wZtXjHZ/OMpocJchzd7c/YNmoxk71dI0T3c7MVPH1tBcDv
- EMd7z9Kq9crNpyFp7ATWdW
-X-Google-Smtp-Source: AGHT+IHL0naMJutfezY1Yu88PFaZT9tKPZo1PNlRaSLbsPQwC9GBI99Bp1R4V0w2Y73aVMGmxuc+3mlrrAfAza/qPsY=
-X-Received: by 2002:a05:6402:2103:b0:5dc:c9ce:b022 with SMTP id
- 4fb4d7f45d1cf-5f32926ac13mr2978619a12.9.1744311652517; Thu, 10 Apr 2025
- 12:00:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u2xx9-0006vS-47
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 15:52:48 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2D2982116A;
+ Thu, 10 Apr 2025 19:52:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744314765; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5d2G4DBeuxDoXFNOhHrKGl+xmEH0uvr9hvSPkQvYZZU=;
+ b=Zva2LSt/4EFC63ieeT4Dk+G2SHqBZfiBe4j5yTkT6EjrHzKB8ytVnSEfib8wlmgpyTC7Su
+ Pu0B53h8hL1XE811j0PFgOvklGzlAAF+lPZNlhsrY8r/nWE70DAYW83UtZcN0leFF4P0GF
+ hpZ4L/UvHxmQa/H6rjbFCQfgmmHhqKc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744314765;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5d2G4DBeuxDoXFNOhHrKGl+xmEH0uvr9hvSPkQvYZZU=;
+ b=ulBcRe8C/K30vTgYnOnPxU6Rqsf7BNHJMjqjfw/L/sQkBuWwZzffA5r/detI4sW1hQ5eUY
+ eg7xUfIguiLt41DQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Zva2LSt/";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ulBcRe8C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744314765; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5d2G4DBeuxDoXFNOhHrKGl+xmEH0uvr9hvSPkQvYZZU=;
+ b=Zva2LSt/4EFC63ieeT4Dk+G2SHqBZfiBe4j5yTkT6EjrHzKB8ytVnSEfib8wlmgpyTC7Su
+ Pu0B53h8hL1XE811j0PFgOvklGzlAAF+lPZNlhsrY8r/nWE70DAYW83UtZcN0leFF4P0GF
+ hpZ4L/UvHxmQa/H6rjbFCQfgmmHhqKc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744314765;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5d2G4DBeuxDoXFNOhHrKGl+xmEH0uvr9hvSPkQvYZZU=;
+ b=ulBcRe8C/K30vTgYnOnPxU6Rqsf7BNHJMjqjfw/L/sQkBuWwZzffA5r/detI4sW1hQ5eUY
+ eg7xUfIguiLt41DQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 99439132D8;
+ Thu, 10 Apr 2025 19:52:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4tWiFYwh+GfPWwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 10 Apr 2025 19:52:44 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Marco Cavenati <Marco.Cavenati@eurecom.fr>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Marco Cavenati <Marco.Cavenati@eurecom.fr>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>, Prasad Pandit
+ <ppandit@redhat.com>
+Subject: Re: [PATCH] migration: add FEATURE_SEEKABLE to QIOChannelBlock
+In-Reply-To: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
+References: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
+Date: Thu, 10 Apr 2025 16:52:41 -0300
+Message-ID: <87jz7rhjzq.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250408145345.142947-1-adamhet@scaleway.com>
-In-Reply-To: <20250408145345.142947-1-adamhet@scaleway.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 10 Apr 2025 15:00:40 -0400
-X-Gm-Features: ATxdqUFE75K7KQiPZcIQxC6afZ6x5kl8I6MR0O_tXgwciZmCwc4uxFbrD4zmd9s
-Message-ID: <CAJSP0QVmT0jmbgu-fJjm78CSu-cb8ZuX5t0B25n0MG1f9W++oQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Revert "virtio-net: Copy received header to buffer"
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Jason Wang <jasowang@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-stable@nongnu.org, Antoine Damhet <adamhet@scaleway.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 2D2982116A
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,209 +123,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 8, 2025 at 10:55=E2=80=AFAM Antoine Damhet <adamhet@scaleway.co=
-m> wrote:
+Marco Cavenati <Marco.Cavenati@eurecom.fr> writes:
+
+> Enable the use of the mapped-ram migration feature with savevm/loadvm
+> snapshots by adding the QIO_CHANNEL_FEATURE_SEEKABLE feature to
+> QIOChannelBlock. Implement io_preadv and io_pwritev methods to provide
+> positioned I/O capabilities that don't modify the channel's position
+> pointer.
+
+We'll need to add the infrastructure to reject multifd and direct-io
+before this. The rest of the capabilities should not affect mapped-ram,
+so it's fine (for now) if we don't honor them.
+
+What about zero page handling? Mapped-ram doesn't send zero pages
+because the file will always have zeroes in it and the migration
+destination is guaranteed to not have been running previously. I believe
+loading a snapshot in a VM that's already been running would leave stale
+data in the guest's memory.
+
 >
-> This reverts commit 7987d2be5a8bc3a502f89ba8cf3ac3e09f64d1ce.
->
-> The goal was to remove the need to patch the (const) input buffer
-> with a recomputed UDP checksum by copying headers to a RW region and
-> inject the checksum there. The patch computed the checksum only from the
-> header fields (missing the rest of the payload) producing an invalid one
-> and making guests fail to acquire a DHCP lease.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+> Signed-off-by: Marco Cavenati <Marco.Cavenati@eurecom.fr>
 > ---
-> v2: Rebased on master due to conflict with c17ad4b11bd2 (
-> "virtio-net: Fix num_buffers for version 1")
-
-Michael: Please review this and send a pull request for 10.0 (-rc4
-will be tagged on Tuesday). There was a conflict so this is not a
-mechanical revert.
-
-Thanks!
-
+> Hello, 
+> Please note that this depends on my previous fix [0] (which has already
+> been reviewed) in order to work.
 >
->  hw/net/virtio-net.c | 87 +++++++++++++++++++++------------------------
->  1 file changed, 40 insertions(+), 47 deletions(-)
+> The code in this patch is inspired by commit
+> 0478b030fa2530cbbfc4d6432e8e39a16d06865b that adds the same feature to
+> QIOChannelFile.
 >
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 340c6b642224..bd37651dabb0 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1702,44 +1702,41 @@ static void virtio_net_hdr_swap(VirtIODevice *vde=
-v, struct virtio_net_hdr *hdr)
->   * cache.
->   */
->  static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
-> -                                        size_t *hdr_len, const uint8_t *=
-buf,
-> -                                        size_t buf_size, size_t *buf_off=
-set)
-> +                                        uint8_t *buf, size_t size)
->  {
->      size_t csum_size =3D ETH_HLEN + sizeof(struct ip_header) +
->                         sizeof(struct udp_header);
+> Thank you,
+> Regards
+> Marco
 >
-> -    buf +=3D *buf_offset;
-> -    buf_size -=3D *buf_offset;
-> -
->      if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
-> -        (buf_size >=3D csum_size && buf_size < 1500) && /* normal sized =
-MTU */
-> +        (size >=3D csum_size && size < 1500) && /* normal sized MTU */
->          (buf[12] =3D=3D 0x08 && buf[13] =3D=3D 0x00) && /* ethertype =3D=
-=3D IPv4 */
->          (buf[23] =3D=3D 17) && /* ip.protocol =3D=3D UDP */
->          (buf[34] =3D=3D 0 && buf[35] =3D=3D 67)) { /* udp.srcport =3D=3D=
- bootps */
-> -        memcpy((uint8_t *)hdr + *hdr_len, buf, csum_size);
-> -        net_checksum_calculate((uint8_t *)hdr + *hdr_len, csum_size, CSU=
-M_UDP);
-> +        net_checksum_calculate(buf, size, CSUM_UDP);
->          hdr->flags &=3D ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
-> -        *hdr_len +=3D csum_size;
-> -        *buf_offset +=3D csum_size;
->      }
+> [0] [PATCH] migration: fix SEEK_CUR offset calculation in
+> qio_channel_block_seek https://lore.kernel.org/all/20250326162230.3323199-1-Marco.Cavenati@eurecom.fr/t/#u
+> ---
+>  migration/channel-block.c | 48 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>
+> diff --git a/migration/channel-block.c b/migration/channel-block.c
+> index fff8d87094..741cf6f31b 100644
+> --- a/migration/channel-block.c
+> +++ b/migration/channel-block.c
+> @@ -30,6 +30,7 @@ qio_channel_block_new(BlockDriverState *bs)
+>      QIOChannelBlock *ioc;
+>  
+>      ioc = QIO_CHANNEL_BLOCK(object_new(TYPE_QIO_CHANNEL_BLOCK));
+> +    qio_channel_set_feature(QIO_CHANNEL(ioc), QIO_CHANNEL_FEATURE_SEEKABLE);
+>  
+>      bdrv_ref(bs);
+>      ioc->bs = bs;
+> @@ -96,6 +97,49 @@ qio_channel_block_writev(QIOChannel *ioc,
+>      return qiov.size;
 >  }
->
-> -static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hdr,
-> -                             const void *buf, size_t buf_size,
-> -                             size_t *buf_offset)
-> +static void receive_header(VirtIONet *n, const struct iovec *iov, int io=
-v_cnt,
-> +                           const void *buf, size_t size)
->  {
-> -    size_t hdr_len =3D n->guest_hdr_len;
-> -
-> -    memcpy(hdr, buf, sizeof(struct virtio_net_hdr));
-> -
-> -    *buf_offset =3D n->host_hdr_len;
-> -    work_around_broken_dhclient(hdr, &hdr_len, buf, buf_size, buf_offset=
-);
-> +    if (n->has_vnet_hdr) {
-> +        /* FIXME this cast is evil */
-> +        void *wbuf =3D (void *)buf;
-> +        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
-> +                                    size - n->host_hdr_len);
->
-> -    if (n->needs_vnet_hdr_swap) {
-> -        virtio_net_hdr_swap(VIRTIO_DEVICE(n), hdr);
-> +        if (n->needs_vnet_hdr_swap) {
-> +            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
-> +        }
-> +        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr)=
-);
-> +    } else {
-> +        struct virtio_net_hdr hdr =3D {
-> +            .flags =3D 0,
-> +            .gso_type =3D VIRTIO_NET_HDR_GSO_NONE
-> +        };
-> +        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
->      }
-> -
-> -    return hdr_len;
->  }
->
->  static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
-> @@ -1907,13 +1904,6 @@ static int virtio_net_process_rss(NetClientState *=
-nc, const uint8_t *buf,
->      return (index =3D=3D new_index) ? -1 : new_index;
->  }
->
-> -typedef struct Header {
-> -    struct virtio_net_hdr_v1_hash virtio_net;
-> -    struct eth_header eth;
-> -    struct ip_header ip;
-> -    struct udp_header udp;
-> -} Header;
-> -
->  static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t =
-*buf,
->                                        size_t size)
->  {
-> @@ -1923,15 +1913,15 @@ static ssize_t virtio_net_receive_rcu(NetClientSt=
-ate *nc, const uint8_t *buf,
->      VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
->      size_t lens[VIRTQUEUE_MAX_SIZE];
->      struct iovec mhdr_sg[VIRTQUEUE_MAX_SIZE];
-> -    Header hdr;
-> +    struct virtio_net_hdr_v1_hash extra_hdr;
->      unsigned mhdr_cnt =3D 0;
->      size_t offset, i, guest_offset, j;
->      ssize_t err;
->
-> -    memset(&hdr.virtio_net, 0, sizeof(hdr.virtio_net));
-> +    memset(&extra_hdr, 0, sizeof(extra_hdr));
->
->      if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
-> -        int index =3D virtio_net_process_rss(nc, buf, size, &hdr.virtio_=
-net);
-> +        int index =3D virtio_net_process_rss(nc, buf, size, &extra_hdr);
->          if (index >=3D 0) {
->              nc =3D qemu_get_subqueue(n->nic, index % n->curr_queue_pairs=
-);
->          }
-> @@ -1996,20 +1986,23 @@ static ssize_t virtio_net_receive_rcu(NetClientSt=
-ate *nc, const uint8_t *buf,
->              if (n->mergeable_rx_bufs) {
->                  mhdr_cnt =3D iov_copy(mhdr_sg, ARRAY_SIZE(mhdr_sg),
->                                      sg, elem->in_num,
-> -                                    offsetof(typeof(hdr),
-> -                                             virtio_net.hdr.num_buffers)=
-,
-> -                                    sizeof(hdr.virtio_net.hdr.num_buffer=
-s));
-> +                                    offsetof(typeof(extra_hdr), hdr.num_=
-buffers),
-> +                                    sizeof(extra_hdr.hdr.num_buffers));
->              } else {
-> -                hdr.virtio_net.hdr.num_buffers =3D cpu_to_le16(1);
-> +                extra_hdr.hdr.num_buffers =3D cpu_to_le16(1);
->              }
->
-> -            guest_offset =3D n->has_vnet_hdr ?
-> -                           receive_header(n, (struct virtio_net_hdr *)&h=
-dr,
-> -                                          buf, size, &offset) :
-> -                           n->guest_hdr_len;
-> -
-> -            iov_from_buf(sg, elem->in_num, 0, &hdr, guest_offset);
-> -            total +=3D guest_offset;
-> +            receive_header(n, sg, elem->in_num, buf, size);
-> +            if (n->rss_data.populate_hash) {
-> +                offset =3D offsetof(typeof(extra_hdr), hash_value);
-> +                iov_from_buf(sg, elem->in_num, offset,
-> +                             (char *)&extra_hdr + offset,
-> +                             sizeof(extra_hdr.hash_value) +
-> +                             sizeof(extra_hdr.hash_report));
-> +            }
-> +            offset =3D n->host_hdr_len;
-> +            total +=3D n->guest_hdr_len;
-> +            guest_offset =3D n->guest_hdr_len;
->          } else {
->              guest_offset =3D 0;
->          }
-> @@ -2035,11 +2028,11 @@ static ssize_t virtio_net_receive_rcu(NetClientSt=
-ate *nc, const uint8_t *buf,
->      }
->
->      if (mhdr_cnt) {
-> -        virtio_stw_p(vdev, &hdr.virtio_net.hdr.num_buffers, i);
-> +        virtio_stw_p(vdev, &extra_hdr.hdr.num_buffers, i);
->          iov_from_buf(mhdr_sg, mhdr_cnt,
->                       0,
-> -                     &hdr.virtio_net.hdr.num_buffers,
-> -                     sizeof hdr.virtio_net.hdr.num_buffers);
-> +                     &extra_hdr.hdr.num_buffers,
-> +                     sizeof extra_hdr.hdr.num_buffers);
->      }
->
->      for (j =3D 0; j < i; j++) {
-> --
-> 2.49.0
->
->
+>  
+> +#ifdef CONFIG_PREADV
+> +static ssize_t
+> +qio_channel_block_preadv(QIOChannel *ioc,
+> +                         const struct iovec *iov,
+> +                         size_t niov,
+> +                         off_t offset,
+> +                         Error **errp)
+> +{
+> +    QIOChannelBlock *bioc = QIO_CHANNEL_BLOCK(ioc);
+> +    QEMUIOVector qiov;
+> +    int ret;
+> +
+> +    qemu_iovec_init_external(&qiov, (struct iovec *)iov, niov);
+> +    ret = bdrv_readv_vmstate(bioc->bs, &qiov, offset);
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, -ret, "bdrv_readv_vmstate failed");
+> +        return -1;
+> +    }
+> +
+> +    return qiov.size;
+> +}
+> +
+> +static ssize_t
+> +qio_channel_block_pwritev(QIOChannel *ioc,
+> +                          const struct iovec *iov,
+> +                          size_t niov,
+> +                          off_t offset,
+> +                          Error **errp)
+> +{
+> +    QIOChannelBlock *bioc = QIO_CHANNEL_BLOCK(ioc);
+> +    QEMUIOVector qiov;
+> +    int ret;
+> +
+> +    qemu_iovec_init_external(&qiov, (struct iovec *)iov, niov);
+> +    ret = bdrv_writev_vmstate(bioc->bs, &qiov, offset);
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, -ret, "bdrv_writev_vmstate failed");
+> +        return -1;
+> +    }
+> +
+> +    return qiov.size;
+> +}
+> +#endif /* CONFIG_PREADV */
+>  
+>  static int
+>  qio_channel_block_set_blocking(QIOChannel *ioc,
+> @@ -177,6 +221,10 @@ qio_channel_block_class_init(ObjectClass *klass,
+>      ioc_klass->io_writev = qio_channel_block_writev;
+>      ioc_klass->io_readv = qio_channel_block_readv;
+>      ioc_klass->io_set_blocking = qio_channel_block_set_blocking;
+> +#ifdef CONFIG_PREADV
+> +    ioc_klass->io_preadv = qio_channel_block_preadv;
+> +    ioc_klass->io_pwritev = qio_channel_block_pwritev;
+> +#endif
+>      ioc_klass->io_seek = qio_channel_block_seek;
+>      ioc_klass->io_close = qio_channel_block_close;
+>      ioc_klass->io_set_aio_fd_handler = qio_channel_block_set_aio_fd_handler;
 
