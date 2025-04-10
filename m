@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC7DC3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 15:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A81C369A2
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 15:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2tmm-0005ll-0Z; Thu, 10 Apr 2025 11:25:48 -0400
+	id 1u2tpT-0006bQ-3H; Thu, 10 Apr 2025 11:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u2tme-0005lO-T1
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 11:25:42 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u2tma-00069u-Sr
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 11:25:39 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3018e2d042bso680240a91.2
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 08:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744298734; x=1744903534; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Qv2bPBi9xBWDzO7IKyXQxcD8pmVkuqtkafS4Fc1WRa0=;
- b=eek8glCjXBTnLbgntyNcc3+bNCCGyfp3RkfKdLoIM+oJpDTjyaLILtZhVHVfN56nVC
- DsYR7hL0vs7vOQU8warE9hZVlql6BdrXbonK7hsbI4ZayrSMXA+ysCt+/lU/nM8XP/aJ
- Wg6ocNKpzP/05jB0/rzJA7A21BA5Wdr7trw01pj6TwTnJLkI1dLr3f/kZdO5+CC8fKeK
- tgx/CGHAkbHwtqHUNbxZ54jlf2ifYjVB5Js0KSvbwmgenFBlKj8J1BZmL2qjhVMtKA8z
- 7itJRptrQujT6P/qcZCCad3kiYBuorVAvXZ+YYUAHVejpCQqd6tItOnpbzGob6hGiMxb
- n9ow==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u2tpP-0006aX-Rv
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 11:28:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u2tpO-0006Pu-8j
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 11:28:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744298909;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vN80KB4QMP/b0Q604vYpZ/Z2c8YeQisV8jjwNFpnGkg=;
+ b=Xw2SHdvFI2Ghb1XfycQIt2rc2yR3jEWgg72igDpRdyshe/PbZKzh8caD8Zrj17LArwHZJz
+ Dzb0IdL7ckittnhMTsHxEJOX9KYOY86AY9HUJfo3KQQd5sY8gc7gIVfaNvwssWV44rBAon
+ xVPAAaPOyRqmNRxcZC20JJd0XYdDR+o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-387-csTWFaqKMoyyETy4O4Ob7w-1; Thu, 10 Apr 2025 11:28:25 -0400
+X-MC-Unique: csTWFaqKMoyyETy4O4Ob7w-1
+X-Mimecast-MFC-AGG-ID: csTWFaqKMoyyETy4O4Ob7w_1744298905
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d209dc2d3so6187045e9.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 08:28:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744298734; x=1744903534;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qv2bPBi9xBWDzO7IKyXQxcD8pmVkuqtkafS4Fc1WRa0=;
- b=hqlmTl2Xsm7JqmkstoSJ2OkPPKyQknJC5mLrERkXMUM9ET500PqrnEbquJs3DebUOQ
- IQ052iBYf8LUrg+b89JJFwhZvvkPLZ6/d7Z24eOLW+7j1OU6ARLRC5+QvuGzxO+Yutjl
- laiaxCX5vGilIQFSprRM0BfjedSejRaOf0Sy93ZXAZDAiOBAKKYacFVzURSJxW+at+Tz
- Qm8wmsisQ2gmok6CLNABhrFN58+4RfCJ64g5TAl01S8qRLgIfNkbWqtRVLz2iayXElLU
- cEEsbcUZEJzOp8tkhhsEdGfaqgWHSnLHadGiiaohPUUL+GsTYtNXYmEgTMirYHzL0/sp
- 2Idw==
+ d=1e100.net; s=20230601; t=1744298904; x=1744903704;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vN80KB4QMP/b0Q604vYpZ/Z2c8YeQisV8jjwNFpnGkg=;
+ b=V8NqfmdJJUBClgvrDJTrlIwdsfHwgNba+mEMgOKXXZ5zwLBWBnoc+xH7ydPmX3djn+
+ szYjl+uvFk3FHpHSCTJX/8Ft2yJUR3uTRPeedaU2KSBne3YVnoRnFs//MOs8kxLJOdEd
+ TC8J19IiNuFhTS258dwgwTSwx/IRfmHoC2J/BhSk9Zg5AKI0vql/eBY+pVbutt63S4pC
+ IDOZeZK7behN6FtmIkhF+B1nbN8Qt6PK6jnlQaK3TiPw+O0XpPowWQQeohj1efHdba4D
+ OZgGlSsJ19hgQ54nOUpbXfsI+IX3MW3SDUq/g5V/Xr0cKf9InrlI7FlqqKsEkiRce3uv
+ 8WXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWojhTimpSmgjBGarjJPJAiatVaPqY560pzt0Qx7nCmlYKpwa+HVzu6AnTEAewshtHpyEjtJguD1AnM@nongnu.org
-X-Gm-Message-State: AOJu0YwZWm+pxDT36VzOA3oXBGo+KXCMpR2yDIfol8PjmbHv3PGJ2h2Q
- F6z4faFrg3I87nIr8wXKYPy44nvUtekwMltxZmyRG/C8TB2yv167NgV2jDem4fM=
-X-Gm-Gg: ASbGnctkB+kjsuiJWJWR8uD8B5DMYwsHTpi7VimhZ27+46VZcStEz3ar73GShrfmv3v
- anUDT4IMdthfmsQ9fxUXOi9pN7AGu9cTxTwLQfr0kI+/PhxDeNemY0ce1jYaTpWkuAfiA706Zf1
- E+kKNYR3T7W7nmNGbYeN+CSdRiPgFvl06cNkI6TTBVC8qyJBUXygo84d4HxsjACA/83sBSDP/u6
- ky24atDy+eETYvYJtowUP4dE1OuF4VAfwMpIYQnJ4n7rhSa8+n7h+7f6PhqunGeARZ+jZBw0n08
- TMEUfPcuLh9hvN3SFJOUTFxfNR0WS2gnVk47Eoo5bHV+0cVkM3w6iqZ2REAu31b+
-X-Google-Smtp-Source: AGHT+IFfyAh1JVU7m7un12zx1T6MJaeKjljX99KvEdfk9g3foLmSAbIwptR4IddCtFGby4wy7UzxUA==
-X-Received: by 2002:a17:90b:2d46:b0:2ee:6d08:7936 with SMTP id
- 98e67ed59e1d1-30718b82e49mr4835990a91.20.1744298734220; 
- Thu, 10 Apr 2025 08:25:34 -0700 (PDT)
-Received: from [192.168.1.87] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-306df0823aasm3660606a91.20.2025.04.10.08.25.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Apr 2025 08:25:33 -0700 (PDT)
-Message-ID: <a8d9bc7f-2162-4198-ab6c-67e72c5e964e@linaro.org>
-Date: Thu, 10 Apr 2025 08:25:32 -0700
+ AJvYcCVsE1Fvjoebl1zYQNYh7UKq5onI49Fli6240ItcGF2BTEAqoNAFEz9rWlRXV/WYRngZ1GQkSzmQIn+k@nongnu.org
+X-Gm-Message-State: AOJu0YwXDPFR/S0kSVLZ3tZgGTyRrd5zw62t/qcRas5alg0qL8N77bHP
+ rxvVmpdkMXmhMTdt3B+C8GTOlSp3A+HYqvEzgEtnYublfuwihuKsTl9wVzoh2YlZ0WbVk75A2OM
+ SEjFBWH3gfm8lxjCG9494YSinN/ASyIwZjsG13T24SyGzDuFB1Ayest4k7JIr/o+AjpIh3DOR5d
+ I2iQ6NcmtKL/PhAHA+66HE3TgiH+c=
+X-Gm-Gg: ASbGncvzqg128VrgrX97xXgqD6gTsXIm68KTXMkDDsO+Q+xquo636NTVTYdSYiKMYNw
+ VGGl2wZ7zWvGDnBFw0Nzshb83lwx9eH4WexY2MPiLc5LNv7vf/o2MaNIHpv5fhWDF718=
+X-Received: by 2002:a5d:5846:0:b0:391:481a:5e75 with SMTP id
+ ffacd0b85a97d-39d8f469b3dmr2953325f8f.22.1744298904635; 
+ Thu, 10 Apr 2025 08:28:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVpzWrVBbWuGfyFMbfkfZrGAYp+EhcAHLU86qChdY0uE2PR1pDT/3GM+gQGS+XlxMBBv1ZX2eOGmr9QJWEivE=
+X-Received: by 2002:a5d:5846:0:b0:391:481a:5e75 with SMTP id
+ ffacd0b85a97d-39d8f469b3dmr2953297f8f.22.1744298904248; Thu, 10 Apr 2025
+ 08:28:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Issue with stoptrigger.c Plugin in QEMU Emulation
-Content-Language: en-US
-To: Saanjh Sengupta <saanjhsengupta@outlook.com>
-Cc: "philmd@linaro.org" <philmd@linaro.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
- "amir.gonnen@neuroblade.ai" <amir.gonnen@neuroblade.ai>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "aabhashswain25@gmail.com" <aabhashswain25@gmail.com>,
- "aniantre@gmail.com" <aniantre@gmail.com>,
- "guptapriyanshi180@gmail.com" <guptapriyanshi180@gmail.com>,
- "harshitgupta5049@gmail.com" <harshitgupta5049@gmail.com>
-References: <E57BEAE6-4DE5-4FF7-AADE-DB43678FE2E6@outlook.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <E57BEAE6-4DE5-4FF7-AADE-DB43678FE2E6@outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20250407155949.44736-1-kwolf@redhat.com>
+ <bf72ef35-289c-4ec7-962b-414e3487c176@redhat.com>
+In-Reply-To: <bf72ef35-289c-4ec7-962b-414e3487c176@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 10 Apr 2025 17:28:11 +0200
+X-Gm-Features: ATxdqUEF5pqEqbJ2ZGBPoeac1gr0yKXDFb2i6alB3o2hoYKGKpruSJpzak608_4
+Message-ID: <CABgObfaJw1VSE6pbs2o1oTTGi6nXLtFQG90RG3J9DY1sukZpMA@mail.gmail.com>
+Subject: Re: [PATCH for-10.0] scsi-disk: Apply error policy for host_status
+ errors again
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, stefanha@redhat.com, qemu-devel@nongnu.org, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,37 +106,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgU2FhbmpoLA0KDQpJIGhhdmUgbm90IGJlZW4gYWJsZSB0byByZXByb2R1Y2UgdGhlIGlz
-c3VlIHdpdGggY3VycmVudCBtYXN0ZXIgYnJhbmNoLg0KSXMgaXQgYW4gZXJyb3IgeW91IHNl
-ZSBmb3IgZXZlcnkgcnVuPw0KDQpSZWdhcmRzLA0KUGllcnJpY2sNCg0KT24gNC8xMC8yNSAw
-NDoxMCwgU2FhbmpoIFNlbmd1cHRhIHdyb3RlOg0KPiBIaSwNCj4gDQo+IEkgYW0gd3JpdGlu
-ZyB0byBzZWVrIGFzc2lzdGFuY2Ugd2l0aCBhbiBpc3N1ZSBJIGFtIGV4cGVyaWVuY2luZyB3
-aGlsZSANCj4gdXNpbmcgdGhlIHN0b3B0cmlnZ2VyLmMgcGx1Z2luIGluIFFFTVUgZW11bGF0
-aW9uLiBJIGFtIGN1cnJlbnRseSANCj4gdXRpbGlzaW5nIHRoZSBsYXRlc3QgUUVNVSB2ZXJz
-aW9uLCA5LjIuOTIsIGFuZCBhdHRlbXB0aW5nIHRvIGVtdWxhdGUgdGhlIA0KPiBEZWJpYW4g
-MTEgYXMgdGhlIG9wZXJhdGluZyBzeXN0ZW0uDQo+IA0KPiBUaGUgY29tbWFuZCBJIGFtIHVz
-aW5nIHRvIGVtdWxhdGUgUUVNVSBpcyBhcyBmb2xsb3dzOg0KPiAqLi9idWlsZC9xZW11LXN5
-c3RlbS14ODZfNjQgLW0gMjA0OE0gLXNtcCAyIC1ib290IGMgLW5vZ3JhcGhpYyAtc2VyaWFs
-IA0KPiBtb246c3RkaW8gLW5pYyB0YXAsaWZuYW1lPXRhcDAsc2NyaXB0PW5vLGRvd25zY3Jp
-cHQ9bm/CoCAtaGRhIA0KPiBkZWJpYW4xMS5xY293MiAtaWNvdW50IHNoaWZ0PTAgLXBsdWdp
-biAuL2J1aWxkL2NvbnRyaWIvcGx1Z2lucy8gDQo+IGxpYnN0b3B0cmlnZ2VyLnNvLGljb3Vu
-dD05MDAwMDAwMDAwIC1kIHBsdWdpbiAtcW1wIA0KPiB0Y3A6bG9jYWxob3N0OjQ0NDQsc2Vy
-dmVyLHdhaXQ9b2ZmKg0KPiANCj4gSG93ZXZlciwgd2hlbiBJIGF0dGVtcHQgdG8gdXNlIHRo
-ZSAtaWNvdW50IHNoaWZ0PTAgb3B0aW9uLCB0aGUgcGx1Z2luIA0KPiBmYWlscyB3aXRoIHRo
-ZSBlcnJvciAiKkJhc2ljIGljb3VudCByZWFkKiIuIEkgaGF2ZSBhdHRhY2hlZCBhIHNjcmVl
-bnNob3QgDQo+IG9mIHRoZSBlcnJvciBmb3IgeW91ciByZWZlcmVuY2UuDQo+IA0KPiBlcnJv
-ci5wbmcNCj4gDQo+IFdoZW4gSSByZW1vdmUgdGhlIC1wbHVnaW4gYXJndW1lbnQgZnJvbSB0
-aGUgY29tbWFuZCB0aGUgT1MgYm9vdHMgdXAgDQo+IHBlcmZlY3RseSwgYXMgZXhwZWN0ZWQu
-IENvbW1hbmQgdXRpbGlzZWQgaW4gdGhhdCBjb250ZXh0IHdhcyBzb21ld2hhdCANCj4gbGlr
-ZSAqLi9idWlsZC9xZW11LXN5c3RlbS14ODZfNjQgLW0gMjA0OE0gLXNtcCAyIC1ib290IGMg
-LW5vZ3JhcGhpYyAtIA0KPiBzZXJpYWwgbW9uOnN0ZGlvIC1uaWMgdGFwLGlmbmFtZT10YXAw
-LHNjcmlwdD1ubyxkb3duc2NyaXB0PW5vwqAgLWhkYSANCj4gZGViaWFuMTEucWNvdzIgLWlj
-b3VudCBzaGlmdD0wIC1xbXAgdGNwOmxvY2FsaG9zdDo0NDQ0LHNlcnZlcix3YWl0PW9mZioN
-Cj4gDQo+IA0KPiBJIHdvdWxkIGdyZWF0bHkgYXBwcmVjaWF0ZSBpdCBpZiB5b3UgY291bGQg
-cHJvdmlkZSBndWlkYW5jZSBvbiByZXNvbHZpbmcgDQo+IHRoaXMgaXNzdWUuIFNwZWNpZmlj
-YWxseSwgSSB3b3VsZCBsaWtlIHRvIGtub3cgdGhlIGNhdXNlIG9mIHRoZSBlcnJvciANCj4g
-YW5kIGFueSBwb3RlbnRpYWwgc29sdXRpb25zIG9yIHdvcmthcm91bmRzIHRoYXQgY291bGQg
-YmUgaW1wbGVtZW50ZWQgdG8gDQo+IHN1Y2Nlc3NmdWxseSB1c2UgdGhlIHN0b3B0cmlnZ2Vy
-LmMgcGx1Z2luIHdpdGggdGhlIC1pY291bnQgc2hpZnQ9MCBvcHRpb24uDQo+IA0KPiANCj4g
-UmVnYXJkcw0KPiANCj4gU2FhbmpoIFNlbmd1cHRhDQo+IA0KDQo=
+On Thu, Apr 10, 2025 at 4:25=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+> You should set ret =3D 0 here to avoid going down the
+> scsi_sense_from_errno() path.
+>
+> Otherwise,
+>
+> Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+
+Okay, going down the scsi_sense_from_errno() path is more or less
+harmless because status and sense end up unused; even though ENODEV is
+not something that the function handles, that can be added as a
+cleanup in 10.1.
+
+Paolo
+
+> > +    }
+> > +
+> >       if (ret < 0) {
+> >           status =3D scsi_sense_from_errno(-ret, &sense);
+> >           error =3D -ret;
+> > @@ -289,6 +303,10 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, i=
+nt ret, bool acct_failed)
+> >           if (acct_failed) {
+> >               block_acct_failed(blk_get_stats(s->qdev.conf.blk), &r->ac=
+ct);
+> >           }
+> > +        if (host_status !=3D -1) {
+> > +            scsi_req_complete_failed(&r->req, host_status);
+> > +            return true;
+> > +        }
+> >           if (req_has_sense) {
+> >               sdc->update_sense(&r->req);
+> >           } else if (status =3D=3D CHECK_CONDITION) {
+> > @@ -409,7 +427,6 @@ done:
+> >       scsi_req_unref(&r->req);
+> >   }
+> >
+> > -/* May not be called in all error cases, don't rely on cleanup here */
+> >   static void scsi_dma_complete(void *opaque, int ret)
+> >   {
+> >       SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
+> > @@ -448,7 +465,6 @@ done:
+> >       scsi_req_unref(&r->req);
+> >   }
+> >
+> > -/* May not be called in all error cases, don't rely on cleanup here */
+> >   static void scsi_read_complete(void *opaque, int ret)
+> >   {
+> >       SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
+> > @@ -585,7 +601,6 @@ done:
+> >       scsi_req_unref(&r->req);
+> >   }
+> >
+> > -/* May not be called in all error cases, don't rely on cleanup here */
+> >   static void scsi_write_complete(void * opaque, int ret)
+> >   {
+> >       SCSIDiskReq *r =3D (SCSIDiskReq *)opaque;
+> > @@ -2846,14 +2861,10 @@ static void scsi_block_sgio_complete(void *opaq=
+ue, int ret)
+> >       sg_io_hdr_t *io_hdr =3D &req->io_header;
+> >
+> >       if (ret =3D=3D 0) {
+> > -        /* FIXME This skips calling req->cb() and any cleanup in it */
+> >           if (io_hdr->host_status !=3D SCSI_HOST_OK) {
+> > -            scsi_req_complete_failed(&r->req, io_hdr->host_status);
+> > -            scsi_req_unref(&r->req);
+> > -            return;
+> > -        }
+> > -
+> > -        if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
+> > +            r->req.host_status =3D io_hdr->host_status;
+> > +            ret =3D -ENODEV;
+> > +        } else if (io_hdr->driver_status & SG_ERR_DRIVER_TIMEOUT) {
+> >               ret =3D BUSY;
+> >           } else {
+> >               ret =3D io_hdr->status;
+>
+
 
