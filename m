@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCC2C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 21:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AA1C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 22:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2zpX-00074j-11; Thu, 10 Apr 2025 17:53:03 -0400
+	id 1u2zw3-00017V-Cb; Thu, 10 Apr 2025 17:59:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1u2zpR-00073J-ID; Thu, 10 Apr 2025 17:52:58 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1u2zw2-00017M-CV
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 17:59:46 -0400
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alan.adamson@oracle.com>)
- id 1u2zpO-0002jR-BX; Thu, 10 Apr 2025 17:52:55 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53ALMVXZ025460;
- Thu, 10 Apr 2025 21:52:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2023-11-20; bh=HT6Ywn2oXJSuX12F9zf6foz7WAmFy
- PeNDmcqWDyko04=; b=EldeNEbRuX6QV4+ZJX+lBMq34MpTnj10iPGBp1u8FljQF
- 5qonm6ogz7/DSi9PZRClFTwkc2S1qVOhtGCf8ZzQCadY3UnLWWHSNt2BTGenyEb5
- LtTTdhTsQ1OeWV5CtdFAxYG0I1cLidgY9oO7UKZbEgviOQsxukuKMh46Tkzi49mA
- Vy6eqPOaCh8sGdzZojXfyn+H0R1yH5VY6GoEWsM0XZb4AL/bRipr9LtRymdPHGY8
- M3veb3HI6fsOnnBHAy7+doLplii7siyjFzaqyqFY0lZnKU8NRYKJwJalqdK7LOLX
- 00cuP31UeglpRwnKy+mVZc+ZGSqrgHckZ3r9f5IUg==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45xnu9066k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 21:52:46 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53ALf5Z5013695; Thu, 10 Apr 2025 21:52:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 45ttyk6twh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Apr 2025 21:52:45 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53ALqjZq008077;
- Thu, 10 Apr 2025 21:52:45 GMT
-Received: from ca-dev94.us.oracle.com (ca-dev94.us.oracle.com [10.129.136.30])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 45ttyk6tw6-1; Thu, 10 Apr 2025 21:52:45 +0000
-From: Alan Adamson <alan.adamson@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: alan.adamson@oracle.com, foss@defmacro.it, kbusch@kernel.org,
- its@irrelevant.dk, qemu-block@nongnu.org
-Subject: [PATCH v2 0/1] hw/nvme: CMIC.MCTRS should be set automatically for
- multi-controller subsystems or by parameter
-Date: Thu, 10 Apr 2025 15:02:36 -0700
-Message-ID: <20250410220237.587858-1-alan.adamson@oracle.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1u2zw0-0003Z9-CS
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 17:59:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1744322361; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Vo8J7RX6eYPAhsL+QdKWa8PhFgv05qZ+KozP0V8Na3oigjY7Sv/hgQOwdLOmahhDF4Q8mcx901i6/OS0u7uiNXXhoqpvcz3Z2134VL9cSmhm4VM18qxeponPdaC7C1oKsYR7YzgGS9RlCKgEfvAY7r1kCbUCoiUjOsTdiyCsA68=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1744322361;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=7nONUep5bnSOMiWWHwTvNyTSKC3sukLroyF3KuAylkw=; 
+ b=N4bLEv5N1r3+jYq5zjNnvDXhZz6rFjTvMI/TcSaUn7sJkR4K6TWx1HwO3KMwuuWjnGhnQZVrlg20BRjKcM3l9VG6UrOdIlFDEaLr08nFaqzRDlILMwxnMSV0UCsYTj6AEVtkKBYby+7FYr5KgMKKJT/7Gyo+gftEnV3OxlpAeno=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744322361; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=7nONUep5bnSOMiWWHwTvNyTSKC3sukLroyF3KuAylkw=;
+ b=h7kKShi2uPuQp1WSTZBTYZzdoPzIU9YEuAuuh6KajGHSS7gpNRpf5GsPkApslu9z
+ ptPuIzIxx7KLMoVxfBlsDJqsPNMlEHdtu7p7qzUC+9/4dU6qHK/eyEwrGjJSOdv11mD
+ IIOVYOoG1T2HKTUIRRI1CtMhOL1oZg0eK3xeaMTE=
+Received: by mx.zohomail.com with SMTPS id 1744322359077865.9523564041237;
+ Thu, 10 Apr 2025 14:59:19 -0700 (PDT)
+Message-ID: <d0e9e72a-02bf-4f1e-abe0-6e8d0d089b29@collabora.com>
+Date: Fri, 11 Apr 2025 00:59:11 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 04/10] virtio-gpu: Support asynchronous fencing
+To: Cong Liu <liucong2565@phytium.com.cn>
+Cc: Jiqian.Chen@amd.com, akihiko.odaki@daynix.com, alex.bennee@linaro.org,
+ alexander.deucher@amd.com, christian.koenig@amd.com,
+ gert.wollny@collabora.com, gurchetansingh@chromium.org, hi@alyssa.is,
+ honglei1.huang@amd.com, julia.zhang@amd.com, kraxel@redhat.com,
+ marcandre.lureau@redhat.com, mst@redhat.com, pbonzini@redhat.com,
+ philmd@linaro.org, pierre-eric.pelloux-prayer@amd.com,
+ qemu-devel@nongnu.org, ray.huang@amd.com, robdclark@gmail.com,
+ roger.pau@citrix.com, slp@redhat.com, stefano.stabellini@amd.com,
+ xenia.ragiadakou@amd.com, zzyiwei@chromium.org
+References: <20250310120555.150077-5-dmitry.osipenko@collabora.com>
+ <20250410095454.188105-1-liucong2565@phytium.com.cn>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20250410095454.188105-1-liucong2565@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-10_06,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- adultscore=0
- mlxlogscore=999 bulkscore=0 suspectscore=0 mlxscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2502280000 definitions=main-2504100159
-X-Proofpoint-GUID: uSUwH3cxb8FOx5sC8AgU0UTu7rI3faHQ
-X-Proofpoint-ORIG-GUID: uSUwH3cxb8FOx5sC8AgU0UTu7rI3faHQ
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alan.adamson@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,50 +89,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: - Change the parameter name from "cmic" to "cmic-mctrs".
-    - If there is more than 1 controller in a subsystem, set CMIC.MCTRS
-      for each controller whether or not the cmic-mctrs parameter is set.
+10.04.2025 12:54, Cong Liu пишет:
+> I discovered that on an ARM64 environment, the 'virtio-gpu: Support asynchronous fencing' patch causes the virtual machine GUI to fail to display. Rolling back this patch and using virgl allows the virtual machine to start normally. When the VM screen is black, I can see some errors in QEMU. I used QEMU's -serial stdio to enter the virtual machine's command line console but didn't see any errors inside the VM - the graphical interface seems to be stuck. I would greatly appreciate any suggestions regarding effective troubleshooting methods or specific areas I should investigate to resolve this issue.
+> 
+> Here's my software and hardware environment:
+> - host and guest are ubuntu 24.04
+> - QEMU: https://gitlab.freedesktop.org/digetx/qemu.git native-context-v11 branch
+> - virglrender: latest main branch 08eb12d00711370002e8f8fa6d620df9b79f9e27
+> - Mesa: Mesa 25.0~git2504031308.ff386e~oibaf~n (git-ff386eb 2025-04-03 noble-oibaf-ppa)
+> - Kernel: Linux d3000 6.14.1-061401-generic #202504071048
+> - GPU: Radeon RX 6600/6600 XT/6600M
+> - CPU: phytium D3000 aarch64
+> 
+> Here's the command I'm using to run the virtual machine, which displays a black frame with "Display output is not active" and fails to start the graphical interface normally:
+> 
+>     phytium@d3000:~/working/qemu$ /usr/local/bin/qemu-system-aarch64 --machine virt,accel=kvm -cpu host -smp 4 -m 4G -drive file=/home/phytium/working/ubuntu24.04-aarch64-native-context,format=raw,if=virtio -bios /usr/share/AAVMF/AAVMF_CODE.ms.fd -netdev user,id=net0 -device virtio-net-pci,netdev=net0 -device virtio-gpu-gl -display gtk,gl=on,show-cursor=on -device usb-ehci,id=usb -device usb-mouse,bus=usb.0 -device usb-kbd,bus=usb.0
+> 
+>     (qemu:46029): Gdk-WARNING **: 16:43:53.715: eglMakeCurrent failed
+>     (qemu:46029): Gdk-WARNING **: 16:43:53.715: eglMakeCurrent failed
+>     (qemu:46029): Gdk-WARNING **: 16:43:53.715: eglMakeCurrent failed
+>     (qemu:46029): Gdk-WARNING **: 16:43:53.715: eglMakeCurrent failed
+>     (qemu:46029): Gdk-WARNING **: 16:43:53.716: eglMakeCurrent failed
+> 
+> When using SDL, the error messages are slightly different:
+> 
+>     phytium@d3000:~/working/qemu$ /usr/local/bin/qemu-system-aarch64 --machine virt,accel=kvm -cpu host -smp 4 -m 4G -drive file=/home/phytium/working/ubuntu24.04-aarch64-native-context,format=raw,if=virtio -bios /usr/share/AAVMF/AAVMF_CODE.ms.fd -netdev user,id=net0 -device virtio-net-pci,netdev=net0 -device virtio-gpu-gl -display sdl,gl=on,show-cursor=on -device usb-ehci,id=usb -device usb-mouse,bus=usb.0 -device usb-kbd,bus=usb.0
+> 
+>     vrend_renderer_fill_caps: Entering with stale GL error: 1286
+> 
 
-While testing Linux atomic writes with qemu-nvme v10.0.0-rc1, Linux was 
-incorrectly displaying atomic_write_max_bytes
-# cat /sys/block/nvme0n1/queue/atomic_write_max_bytes
-0
-# nvme id-ctrl /dev/nvme0n1 | grep awupf
-awupf     : 15
-#
-Since AWUPF was set to 15, it was expected atomic_write_max_bytes would
-be set to 8192.
+Hi,
 
-The commit cd59f50ab017 ("hw/nvme: always initialize a subsystem")
-introduced this behavior. The commit hardcodes the subsystem cmic bit
-to ON which caused the Linux NVMe driver to treat the namespace as
-multi-pathed which uncovered a bug with how Atomic Write Queue Limits 
-were being inherited.  This Linux issue is being addressed, but the
-question was asked of why the subsystem CMIC.MCTRS bit was hardcoded to ON.
-Most NVMe devices today don't set CMIC.MCTRS  to ON. Shouldn't the setting
-of this bit be a settable paramter? 
+1. Please make sure that you're not only building QEMU against your
+virglrenderer version, but also setting LD_LIBRARY_PATH properly at
+runtime. Best to remove system version of virglrenderer if unsure,
 
-
-Proposal:
-
-- The default setting of the CMIC.MCTRS bit will be OFF.
-
-- If there is more than 1 controller detected in a subsystem, the CMIC.MCTRS 
-  bit will be set to ON for each controller in the subsystem.
-
-- Create a subsystem specific parameter (cmic-mctrs) to specify CMIC.MCTRS
-  in one controller subsystems.  This parameter does not affect
-  multi-controller subsystems.
-
-  <subsystem>,cmic-mctrs=BOOLEAN (default: off)
-
-  Example:
-    -device nvme-subsys,id=subsys0,cmic-mctrs=on \
-    -device nvme,serial=deadbeef,id=nvme0,subsys=subsys0,atomic.dn=off,atomic.awun=31,atomic.awupf=15 \
-    -drive id=ns1,file=/dev/nullb0,if=none \
-    -device nvme-ns,drive=ns1,bus=nvme0,nsid=1,shared=false 
+2. Can you reproduce this problem using tcg instead of kvm?
 
 -- 
-2.43.5
-
+Best regards,
+Dmitry
 
