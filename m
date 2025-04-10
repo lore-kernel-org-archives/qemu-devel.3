@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7619C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 11:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962C8C369A6
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 11:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2pzb-00087Z-L4; Thu, 10 Apr 2025 07:22:47 -0400
+	id 1u2pzc-00088p-L9; Thu, 10 Apr 2025 07:22:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u2pzZ-00087E-5d
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:45 -0400
+ id 1u2pza-00087W-Ai
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:46 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u2pzX-0000E6-08
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:44 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u2pzX-0000E7-0T
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 07:22:45 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 775001C15D0; Thu, 10 Apr 2025 13:22:40 +0200 (CEST)
+ id 759B01C15CE; Thu, 10 Apr 2025 13:22:40 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: qemu-devel@nongnu.org,
 	marcandre.lureau@redhat.com
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v2 4/6] h264: remove wrong libavcodec_ prefix from function
- names
-Date: Thu, 10 Apr 2025 13:22:36 +0200
-Message-Id: <20250410112238.3550155-5-dietmar@proxmox.com>
+Subject: [PATCH v2 3/6] vnc: h264: send additional frames after the display is
+ clean
+Date: Thu, 10 Apr 2025 13:22:35 +0200
+Message-Id: <20250410112238.3550155-4-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250410112238.3550155-1-dietmar@proxmox.com>
 References: <20250410112238.3550155-1-dietmar@proxmox.com>
@@ -59,172 +59,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The H264 implementation only sends frames when it detects changes in
+the server's framebuffer. This leads to artifacts when there are no
+further changes, as the internal H264 encoder may still contain data.
+
+This patch modifies the code to send a few additional frames in such
+situations to flush the H264 encoder data.
+
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- ui/vnc-enc-h264.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ ui/vnc.c | 25 ++++++++++++++++++++++++-
+ ui/vnc.h |  3 +++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-index ca8e206335..9e01b8a548 100644
---- a/ui/vnc-enc-h264.c
-+++ b/ui/vnc-enc-h264.c
-@@ -3,7 +3,7 @@
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 2e60b55e47..4ba0b715fd 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3239,7 +3239,30 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     vnc_unlock_display(vd);
  
- #include <gst/gst.h>
- 
--static void libavcodec_destroy_encoder_context(VncState *vs)
-+static void destroy_encoder_context(VncState *vs)
- {
-     if (!vs->h264) {
-         return;
-@@ -35,13 +35,13 @@ static void libavcodec_destroy_encoder_context(VncState *vs)
-     }
- }
- 
--static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-+static bool create_encoder_context(VncState *vs, int w, int h)
- {
-     g_assert(vs->h264 != NULL);
- 
-     if (vs->h264->sink) {
-         if (w != vs->h264->width || h != vs->h264->height) {
--            libavcodec_destroy_encoder_context(vs);
-+            destroy_encoder_context(vs);
-         }
-     }
- 
-@@ -55,21 +55,21 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     vs->h264->source = gst_element_factory_make("appsrc", "source");
-     if (!vs->h264->source) {
-         VNC_DEBUG("Could not create gst source\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
+     QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
+-        rects += vnc_update_client(vs, has_dirty);
++        int client_dirty = has_dirty;
++        if (vs->h264) {
++            if (client_dirty) {
++                vs->h264->keep_dirty = VNC_H264_KEEP_DIRTY;
++            } else {
++                if (vs->h264->keep_dirty > 0) {
++                    client_dirty = 1;
++                    vs->h264->keep_dirty--;
++                }
++            }
++        }
++
++        int count = vnc_update_client(vs, client_dirty);
++        rects += count;
++
++        if (vs->h264 && !count && vs->h264->keep_dirty) {
++            VncJob *job = vnc_job_new(vs);
++            int height = pixman_image_get_height(vd->server);
++            int width = pixman_image_get_width(vd->server);
++            vs->job_update = vs->update;
++            vs->update = VNC_STATE_UPDATE_NONE;
++            vnc_job_add_rect(job, 0, 0, width, height);
++            vnc_job_push(job);
++        }
+         /* vs might be free()ed here */
      }
  
-     vs->h264->convert = gst_element_factory_make("videoconvert", "convert");
-     if (!vs->h264->convert) {
-         VNC_DEBUG("Could not create gst convert element\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
+diff --git a/ui/vnc.h b/ui/vnc.h
+index 7e232f7dac..e1b81d6bcc 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -236,10 +236,13 @@ typedef struct VncZywrle {
+ } VncZywrle;
  
-     vs->h264->gst_encoder = gst_element_factory_make("x264enc", "gst-encoder");
-     if (!vs->h264->gst_encoder) {
-         VNC_DEBUG("Could not create gst x264 encoder\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
+ #ifdef CONFIG_GSTREAMER
++/* Number of frames we send after the display is clean. */
++#define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+     size_t width;
+     size_t height;
++    guint keep_dirty;
+ } VncH264;
+ #endif
  
-@@ -86,14 +86,14 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     vs->h264->sink = gst_element_factory_make("appsink", "sink");
-     if (!vs->h264->sink) {
-         VNC_DEBUG("Could not create gst sink\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-     vs->h264->pipeline = gst_pipeline_new("vnc-h264-pipeline");
-     if (!vs->h264->pipeline) {
-         VNC_DEBUG("Could not create gst pipeline\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -101,7 +101,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->source)) {
-         gst_object_unref(vs->h264->source);
-         VNC_DEBUG("Could not add source to gst pipeline\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -109,7 +109,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->convert)) {
-         gst_object_unref(vs->h264->convert);
-         VNC_DEBUG("Could not add convert to gst pipeline\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -117,7 +117,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->gst_encoder)) {
-         gst_object_unref(vs->h264->gst_encoder);
-         VNC_DEBUG("Could not add encoder to gst pipeline\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -125,7 +125,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->sink)) {
-         gst_object_unref(vs->h264->sink);
-         VNC_DEBUG("Could not add sink to gst pipeline\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -139,7 +139,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
- 
-     if (!source_caps) {
-         VNC_DEBUG("Could not create source caps filter\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -154,7 +154,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-             NULL
-         ) != TRUE) {
-         VNC_DEBUG("Elements could not be linked.\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -162,7 +162,7 @@ static bool libavcodec_create_encoder_context(VncState *vs, int w, int h)
-     int ret = gst_element_set_state(vs->h264->pipeline, GST_STATE_PLAYING);
-     if (ret == GST_STATE_CHANGE_FAILURE) {
-         VNC_DEBUG("Unable to set the pipeline to the playing state.\n");
--        libavcodec_destroy_encoder_context(vs);
-+        destroy_encoder_context(vs);
-         return FALSE;
-     }
- 
-@@ -183,7 +183,7 @@ int vnc_h264_send_framebuffer_update(
-     int _x,
-     int _y,
-     int _w,
--    int _h,
-+    int _h
- ) {
-     g_assert(vs->h264 != NULL);
-     g_assert(vs->vd != NULL);
-@@ -205,7 +205,7 @@ int vnc_h264_send_framebuffer_update(
-         rdb_h264_flags = 2;
-     }
- 
--    if (!libavcodec_create_encoder_context(vs, width, height)) {
-+    if (!create_encoder_context(vs, width, height)) {
-         VNC_DEBUG("Create encoder context failed\n");
-         return -1;
-     }
-@@ -262,7 +262,7 @@ void vnc_h264_clear(VncState *vs)
-         return;
-     }
- 
--    libavcodec_destroy_encoder_context(vs);
-+    destroy_encoder_context(vs);
- 
-     g_free(vs->h264);
-     vs->h264 = NULL;
 -- 
 2.39.5
 
