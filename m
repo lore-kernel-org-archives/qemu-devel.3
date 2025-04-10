@@ -4,91 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67C31C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A388C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 12:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2qvw-0004Oo-Gh; Thu, 10 Apr 2025 08:23:04 -0400
+	id 1u2qxX-0006cp-0h; Thu, 10 Apr 2025 08:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u2qvi-0004La-Py
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:22:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u2qve-0008Qc-3j
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 08:22:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744287763;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0I+37ipVD2CW1eHUA4I8HkVTfdPHdavKC9UaPF4KOU8=;
- b=L6US/VMskp3LrjeXSHrXmB6HlSYegKOnpJDsjV2aRu1vLnQnrq+gwaRdzOkoVRmOrIjj0a
- +xssaWad4KfWnTGjh50q+g6/vS+xHKPck0rf/f5V9kx0+Nuu90c1PrJPRDgNMu6kcpHgMo
- 6XTjwFvtN6VirTYa8JyOQ78xp2LwdZs=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-IQG8lnl_NG2no5OBJT8rDg-1; Thu, 10 Apr 2025 08:22:40 -0400
-X-MC-Unique: IQG8lnl_NG2no5OBJT8rDg-1
-X-Mimecast-MFC-AGG-ID: IQG8lnl_NG2no5OBJT8rDg_1744287758
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-391492acb59so406349f8f.3
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 05:22:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u2qxU-0006cS-Mv; Thu, 10 Apr 2025 08:24:40 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u2qxN-0000C5-WB; Thu, 10 Apr 2025 08:24:37 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-af51596da56so700745a12.0; 
+ Thu, 10 Apr 2025 05:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744287871; x=1744892671; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bUphInPLmEDCerY7cJxB4YMAiJbIiSaraVi2vqUAgHU=;
+ b=BbGVvST71amBqAOwhmwxFngUqkBYWloFv1rIeLong5+MNEacd1xsPk+XfwZzA7tQ37
+ 4e6I0ARsqtsH54H8Yz3yU4WAjmauT4Rs6QNk3qcCwje8/PiuX1cgNplI2L94uQJ+DmYC
+ dm1ZaazkyAhH04iub1XsS1N/WQjTPPCvQdF+xjbjBkxeFbDKI73K6y3UL8K6EIUsZMBV
+ WNBnP+KSxhhYdZgiDGtog060eKxsKjb6jiuPAVp0yuQbwc9lssQc3AAad+Ntb+VgBGYt
+ OXSSSLaheiaqDzdPe7SyFA7ENeLCKq13jN+xxZ1Jj14SxeWvLbl8L//qEPTUqLdsKzy8
+ TJcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744287758; x=1744892558;
+ d=1e100.net; s=20230601; t=1744287871; x=1744892671;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0I+37ipVD2CW1eHUA4I8HkVTfdPHdavKC9UaPF4KOU8=;
- b=LDCM9zehWFRLvBVKl9YKgKpCZ+s9EumTum4PcdWa5Is2w9QzH7irY41suc9SMdvkdm
- BS7FuJ1MgtCNN47jJ8YArAaZkt3u5YFziWSzsQE3mYjGRIA6AtpQYDEpdveS/8BSDUKK
- Do3kxdzJKdYyW9Hw+T0ZP9RG8bTNyM1hN2Q4sgrHtCAiLroDYdVbqTmWI3IQfPVkB3J+
- Sfv3I6YGCBOqTjzlvvUN77n2J3NHqSbFUCPlQ+8fqkAzQmc+R4Qp0T0UGPAtxYF1oKCF
- Fi3CZE3jJUeFaOOc1KdAT7OfFBqDyFjF+nezevUx1YgKTbuoM8vjtTToOu31ybKUAvUx
- lxPw==
-X-Gm-Message-State: AOJu0YwFC++/LuqRsL8GnlDF1wFt+dpeZKwrjP3rh46jdvAHGvNFeonS
- T9cRqUeT0KxGuf+cESpso48WaPvnQAknxRXvuhPlYqiGLLEBky7uqFjCTjd+0Yd93WAVg3ELjk0
- 1bCY0l+Z8qFCY82qJ3nhIiOmoFiCnyFfJExjJ/Bt0LG3To9UEnH3qhiXjWucf/sWaJ7V5qTrNxr
- P72RPg8ZnJhFAySkyoVTEYvmZmiZw=
-X-Gm-Gg: ASbGncvN1GbWVkKIxrt0WOIZo5kCSLJWSsmxAa/kfGeGDGOD7kYG6jGHMNz2dQfu83v
- Jo3m+9fWRN1wJ6cYzywzHQ7BSme6X1VB1OKfuHBw6zp5urXngovRwZ0+w3vOqwdhhEQuTPjI=
-X-Received: by 2002:a05:6000:250d:b0:39c:310f:f70a with SMTP id
- ffacd0b85a97d-39d8fd63e8amr2121546f8f.7.1744287758019; 
- Thu, 10 Apr 2025 05:22:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4WrMkgmctEvD7eH7TCrEp5R3jps3b2venej9FZJWNZ05l0eI3zjNBFteUgW5u+dTeZBi6fTelI7vwQh6ra4s=
-X-Received: by 2002:a05:6000:250d:b0:39c:310f:f70a with SMTP id
- ffacd0b85a97d-39d8fd63e8amr2121517f8f.7.1744287757608; Thu, 10 Apr 2025
- 05:22:37 -0700 (PDT)
+ bh=bUphInPLmEDCerY7cJxB4YMAiJbIiSaraVi2vqUAgHU=;
+ b=uZxEnUhP3Ai/E+p5bOjeymCv/GYeRTA+PFiiq1L/Fd+ukyoM4V4dhQxWTitMGw+3w8
+ MPG84NrixQjb8hQrt0OYsJBf0IK6rxGQyQ0knI9zUY7GTNMLaVT6ffPKwMIuRMvYVKa3
+ dQlAckc3uta7QmcRw+ZSX+kLqj/IIlQd/ybHoK9IT1Trb1Gw64hinGd5tPq9rtzV/da3
+ EL95bjia32RPyDf42Z2j2w0gTG5w9YHtMzhXAsAtx/xL1euzcbw5aWLxS45d1VM+LJFG
+ ebu0xbSxGt3TbzYrc/T8T0M1fNOqcS2PMgmb2iMSx4K/27dV8qR/bjHXbYCs097NymE6
+ HWVA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtkLNJOCvGLVEjlLWj6ntV0MX8OkFQ4bzPom+jN/bfTOyi65VrL+IaH03BR9GYKix2l0lU0rtel92yjg==@nongnu.org,
+ AJvYcCWR3jsNuamBsuVp/XBmLCRmeyQ8t7rLybQRjUNfMkKu6eWORNJ+FOiQGKqBKl9vQ3xDIFDG7kM19A==@nongnu.org,
+ AJvYcCWT7TNVmMQy4SqgT1v2T83IRUNpoKBpNuVDj2g9CVif3FKcON7AITrhe2VHenGO7nDEH5u+Ug6WtfSHKQ==@nongnu.org,
+ AJvYcCXctlW9lHaGhxwqwd8FSFarZAK6sFIdjSBxFKIpxCQaoTcoP9sGYA2jFNDFIiw7puukrm0mfYD5N1UWzg==@nongnu.org
+X-Gm-Message-State: AOJu0YyYzgG6yWoynIW6B/7PsTwb1yN44hWugPRb1Q7870hfRkaciGw2
+ PWy2PjASLHRSvbb+LA9E2kLTDdECfdPNDcfCYTSoVqaN0SqlNoj3u+lxYMmTVotLoQf9oGdhVxr
+ 7GrPya34p4CTjJeXe0fCap4iU9cA=
+X-Gm-Gg: ASbGncuLsJQWAxesGknBzow+FstrhSAy5eS7f6uDlW2fno/X99q4HwxteZHlAv3sfg8
+ 7rFuC5N7vYW17fY8XkHxuIj046+Zq53N9GGEse+cG/uWC/T02tr5QfcYcDbr6Ul+IFziQ1oPBkx
+ OWaV91qLridvm4z7uz2bKaRlLoVFBYKWgEOIWE64GRMkRCgvo1MXE=
+X-Google-Smtp-Source: AGHT+IFjSY680fopcspcV4dUSl5ihWrJhgbnXfs2mZ+dOnxVdG/BfQfFtKhI2p5hFRI6D7GBe8EyIw2lqwpHRV7Cn6k=
+X-Received: by 2002:a17:90b:1f88:b0:2ee:44ec:e524 with SMTP id
+ 98e67ed59e1d1-307e9b3f36dmr3334852a91.35.1744287871077; Thu, 10 Apr 2025
+ 05:24:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250318123846.1370312-1-ppandit@redhat.com>
- <87plhwgbu6.fsf@suse.de>
- <CAE8KmOyS+nPexU_NbF0yhK_=ubnGgKs5Lv+j7bH=xowgqQ2zkA@mail.gmail.com>
- <87zfgxjspn.fsf@suse.de>
-In-Reply-To: <87zfgxjspn.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 10 Apr 2025 17:52:21 +0530
-X-Gm-Features: ATxdqUEYPi5dW_sy-bwew-pKYl8PJ6SFr176mXxLLvVSdqHBMB_z77h0Rs2re9Y
-Message-ID: <CAE8KmOxi3w5sf_sd04qLxkg8Lys=KA0pMPJMcZ-=CJVGZRmivw@mail.gmail.com>
-Subject: Re: [PATCH v8 0/7] Allow to enable multifd and postcopy migration
- together
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
+ <04b7137a464e0925e2ae533bbde4fcdfe0dfe069.1744032780.git.ktokunaga.mail@gmail.com>
+ <e0dcc4e6-1e8e-468f-83e5-36ffb014eeef@linaro.org>
+ <671805c9-f802-412b-998e-ba83719f1e72@redhat.com>
+In-Reply-To: <671805c9-f802-412b-998e-ba83719f1e72@redhat.com>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Thu, 10 Apr 2025 21:24:18 +0900
+X-Gm-Features: ATxdqUEAUMCgXq0GAn2bYNIHf98GyBjr_QDHwkvX6Mgc8qM0VB1vNeJy_FRznks
+Message-ID: <CAEDrbUbnAzXpmNSNi11j7+a0DCYHy7d_MCY=TMqHUoxmo_ZHGw@mail.gmail.com>
+Subject: Re: [PATCH 05/10] meson: Add wasm build in build scripts
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000f1196306326baa44"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,194 +113,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Fabiano,
+--000000000000f1196306326baa44
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 3 Apr 2025 at 18:41, Fabiano Rosas <farosas@suse.de> wrote:
-> Prasad Pandit <ppandit@redhat.com> writes:
-> > * Thank you for the reproducer and traces. I'll try to check more and
-> > see if I'm able to reproduce it on my side.
+Hi Paolo, thank you for the comments.
+
+> >> has_int128_type is set to false on emscripten as of now to avoid
+errors by
+> >> libffi.
 >
-> Thanks. I cannot merge this series until that issue is resolved. If it
-> reproduces on my machine there's a high chance that it will break CI at
-> some point and then it'll be a nightmare to debug. This has happened
-> many times before with multifd.
+> What is the error here?  How hard would it be to test for it?
 
-===
-qemu/build)$ for i in $(seq 1 9999); do echo "$i ====";
-QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test
---full -r '/x86_64/migration/postcopy/multifd/plain' || break; done |
-tee /tmp/migration-test.out | awk -e '/====/ { printf ("%s ", $_) };
-/slow test/ { printf("%s\n", $_); }'
+When has_int128_type=true, I encountered a runtime error from libffi. To
+reproduce this, we need to actually execute a libffi call with 128-bit
+arguments.
 
-Host-1]
-...
-9980 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
-9981 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.47 secs
-9982 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.42 secs
-9983 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.56 secs
-9984 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.44 secs
-9985 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.43 secs
-9986 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.45 secs
-9987 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.53 secs
-9988 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.46 secs
-9989 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.49 secs
-9990 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9991 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.47 secs
-9992 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.45 secs
-9993 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.47 secs
-9994 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.41 secs
-9995 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.42 secs
-9996 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.58 secs
-9997 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.45 secs
-9998 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
-9999 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
---------
-Iter: 9999, low: 1.35, high: 1.73, avg: 1.47 secs
+> Uncaught TypeError: Cannot convert 1079505232 to a BigInt
+>     at ffi_call_js (out.js:702:37)
+>     at qemu-system-x86_64.wasm.ffi_call (qemu-system-x86_64.wasm:0xa37712)
+>     at qemu-system-x86_64.wasm.tcg_qemu_tb_exec_tci
+(qemu-system-x86_64.wasm:0x65f440)
+>     at qemu-system-x86_64.wasm.tcg_qemu_tb_exec
+(qemu-system-x86_64.wasm:0x65edff)
+>     at qemu-system-x86_64.wasm.cpu_tb_exec
+(qemu-system-x86_64.wasm:0x6762c0)
+>     at qemu-system-x86_64.wasm.cpu_exec_loop
+(qemu-system-x86_64.wasm:0x677c84)
+>     at qemu-system-x86_64.wasm.dynCall_iii
+(qemu-system-x86_64.wasm:0xab9014)
+>     at ret.<computed> (out.js:6016:24)
+>     at invoke_iii (out.js:7574:10)
+>     at qemu-system-x86_64.wasm.cpu_exec_setjmp
+(qemu-system-x86_64.wasm:0x676db8)
 
+> >> And tests aren't integrated with Wasm execution environment as of
+> >> now so this commit disables tests.
+>
+> Perhaps it would be enough to add
+>
+> [binaries]
+> exe_wrapper = 'node'
+>
+> to the emscripten.txt file?
 
-Host-2]
-...
-9980 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.45 secs
-9981 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.69 secs
-9982 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.41 secs
-9983 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.54 secs
-9984 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.45 secs
-9985 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.44 secs
-9986 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9987 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9988 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.44 secs
-9989 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
-9990 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.37 secs
-9991 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9992 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
-9993 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.47 secs
-9994 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.47 secs
-9995 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.45 secs
-9996 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.53 secs
-9997 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9998 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.47 secs
-9999 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
---------
-Iter: 9999, low: 1.34, high: 1.82, avg: 1.48 secs
+Thank you for the suggestion. I'll explore this approach.
 
+> >> +[built-in options]
+> >> +c_args = ['-Wno-unused-command-line-argument','-g','-O3','-pthread']
+> >> +cpp_args = ['-Wno-unused-command-line-argument','-g','-O3','-pthread']
+> >> +objc_args =
+['-Wno-unused-command-line-argument','-g','-O3','-pthread']
+> >> +c_link_args = ['-Wno-unused-command-line-argument','-g','-O3','-
+> >> pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-
+> >> sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-
+> >> sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-
+> >> sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
+> >> +cpp_link_args = ['-Wno-unused-command-line-argument','-g','-O3','-
+> >> pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-
+> >> sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-
+> >> sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-
+> >> sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
+>
+> At least -g -O3 -pthread should not be necessary.
 
-Host-3]
-...
-9980 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.50 secs
-9981 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.55 secs
-9982 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.54 secs
-9983 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.49 secs
-9984 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.49 secs
-9985 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.52 secs
-9986 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9987 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.52 secs
-9988 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.54 secs
-9989 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
-9990 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.51 secs
-9991 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.50 secs
-9992 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.53 secs
-9993 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.50 secs
-9994 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.53 secs
-9995 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.49 secs
-9996 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.48 secs
-9997 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.54 secs
-9998 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.44 secs
-9999 ==== # slow test /x86_64/migration/postcopy/multifd/plain
-executed in 1.54 secs
---------
-Iter: 9999, low: 1.31, high: 2.49, avg: 1.48
-===
+Thank you for the suggestion. -sPROXY_TO_PTHREAD flag used in c_link_args
+always requires -pthread, even during configuration. Otherwise, emcc returns
+an error like:
 
-* I tried to reproduce the hang issue with and without -traces across
-3 different machines but am unable to reproduce it on my side.
+> emcc: error: -sPROXY_TO_PTHREAD requires -pthread to work!
 
-* Going through the source and the back trace you provided, you said
-gdb hangs in the postcopy_ram_fault_thread() function at poll()
-function to wait for a missing page.
-   - But by this time, postcopy_ram_listen thread is already preparing
-to cleanup and exit
-       - That means postcopy migration is finished/ending
-   - ie. postcopy migration is ending without (or before) migrating
-all the RAM pages from the source side?
+So I think -pthread needs to be included in c_link_args at minimum. I'll try
+to remove other flags in the next version of the series.
 
-In postcopy mode:
-    * Is there a way to log the pages (#numers) that are sent from the
-source side?
-    * And log the pages (#numbers) that are received on the receive side?
+> For -Wno-unused-command-line-argument what are the warnings/errors that
+> you are getting?
 
-* That way we might be able to check/confirm the pages which were not
-received or not processed properly.
+I encountered the following error when compiling QEMU:
 
-* Can we connect the faulting/missing (HVA=0x7fffd68cc000)
-address/page in postcopy_ram_fault_thread() with the memcpy that the
-main thread seems to be loading via vapic_post_load()? ie. the main
-thread and pocyopy_ram_fault_thread() above could be doing unrelated
-things.
+> clang: error: argument unused during compilation: '-no-pie'
+[-Werror,-Wunused-command-line-argument]
 
-* Other than this, I've revised the patch-set as suggested. How do we
-proceed further?
+It seems Emscripten doesn't support the -no-pie flag, and this wasn't caught
+during the configure phase. It seems that removing
+-Wno-unused-command-line-argument would require the following change in
+meson.build, but I'm open to better approaches.
 
-Thank you.
----
-  - Prasad
+> -if not get_option('b_pie')
+> +if not get_option('b_pie') and host_os != 'emscripten'
+>    qemu_common_flags += cc.get_supported_arguments('-fno-pie', '-no-pie')
+>  endif
 
+> >> +elif host_os == 'emscripten'
+> >> +  supported_backends += ['fiber']
+>
+> Can you rename the backend to 'wasm' since the 'windows' backend also
+> uses an API called Fibers?
+
+Sure, I'll rename the coroutine backend in the next version of the series.
+
+--000000000000f1196306326baa44
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Paolo, thank you for =
+the comments.<br><br>&gt; &gt;&gt; has_int128_type is set to false on emscr=
+ipten as of now to avoid errors by<br>&gt; &gt;&gt; libffi.<br>&gt; <br>&gt=
+; What is the error here?=C2=A0 How hard would it be to test for it?<br><br=
+>When has_int128_type=3Dtrue, I encountered a runtime error from libffi. To=
+<br>reproduce this, we need to actually execute a libffi call with 128-bit<=
+br>arguments.<br><br>&gt; Uncaught TypeError: Cannot convert 1079505232 to =
+a BigInt<br>&gt; =C2=A0 =C2=A0 at ffi_call_js (out.js:702:37)<br>&gt; =C2=
+=A0 =C2=A0 at qemu-system-x86_64.wasm.ffi_call (qemu-system-x86_64.wasm:0xa=
+37712)<br>&gt; =C2=A0 =C2=A0 at qemu-system-x86_64.wasm.tcg_qemu_tb_exec_tc=
+i (qemu-system-x86_64.wasm:0x65f440)<br>&gt; =C2=A0 =C2=A0 at qemu-system-x=
+86_64.wasm.tcg_qemu_tb_exec (qemu-system-x86_64.wasm:0x65edff)<br>&gt; =C2=
+=A0 =C2=A0 at qemu-system-x86_64.wasm.cpu_tb_exec (qemu-system-x86_64.wasm:=
+0x6762c0)<br>&gt; =C2=A0 =C2=A0 at qemu-system-x86_64.wasm.cpu_exec_loop (q=
+emu-system-x86_64.wasm:0x677c84)<br>&gt; =C2=A0 =C2=A0 at qemu-system-x86_6=
+4.wasm.dynCall_iii (qemu-system-x86_64.wasm:0xab9014)<br>&gt; =C2=A0 =C2=A0=
+ at ret.&lt;computed&gt; (out.js:6016:24)<br>&gt; =C2=A0 =C2=A0 at invoke_i=
+ii (out.js:7574:10)<br>&gt; =C2=A0 =C2=A0 at qemu-system-x86_64.wasm.cpu_ex=
+ec_setjmp (qemu-system-x86_64.wasm:0x676db8)<br><br>&gt; &gt;&gt; And tests=
+ aren&#39;t integrated with Wasm execution environment as of<br>&gt; &gt;&g=
+t; now so this commit disables tests.<br>&gt; <br>&gt; Perhaps it would be =
+enough to add<br>&gt; <br>&gt; [binaries]<br>&gt; exe_wrapper =3D &#39;node=
+&#39;<br>&gt; <br>&gt; to the emscripten.txt file?<br><br>Thank you for the=
+ suggestion. I&#39;ll explore this approach.<br><br>&gt; &gt;&gt; +[built-i=
+n options]<br>&gt; &gt;&gt; +c_args =3D [&#39;-Wno-unused-command-line-argu=
+ment&#39;,&#39;-g&#39;,&#39;-O3&#39;,&#39;-pthread&#39;]<br>&gt; &gt;&gt; +=
+cpp_args =3D [&#39;-Wno-unused-command-line-argument&#39;,&#39;-g&#39;,&#39=
+;-O3&#39;,&#39;-pthread&#39;]<br>&gt; &gt;&gt; +objc_args =3D [&#39;-Wno-un=
+used-command-line-argument&#39;,&#39;-g&#39;,&#39;-O3&#39;,&#39;-pthread&#3=
+9;]<br>&gt; &gt;&gt; +c_link_args =3D [&#39;-Wno-unused-command-line-argume=
+nt&#39;,&#39;-g&#39;,&#39;-O3&#39;,&#39;-<br>&gt; &gt;&gt; pthread&#39;,&#3=
+9;-sASYNCIFY=3D1&#39;,&#39;-sPROXY_TO_PTHREAD=3D1&#39;,&#39;-sFORCE_FILESYS=
+TEM&#39;,&#39;-<br>&gt; &gt;&gt; sALLOW_TABLE_GROWTH&#39;,&#39;-sTOTAL_MEMO=
+RY=3D2GB&#39;,&#39;-sWASM_BIGINT&#39;,&#39;-<br>&gt; &gt;&gt; sEXPORT_ES6=
+=3D1&#39;,&#39;-sASYNCIFY_IMPORTS=3Dffi_call_js&#39;,&#39;-<br>&gt; &gt;&gt=
+; sEXPORTED_RUNTIME_METHODS=3DaddFunction,removeFunction,TTY,FS&#39;]<br>&g=
+t; &gt;&gt; +cpp_link_args =3D [&#39;-Wno-unused-command-line-argument&#39;=
+,&#39;-g&#39;,&#39;-O3&#39;,&#39;-<br>&gt; &gt;&gt; pthread&#39;,&#39;-sASY=
+NCIFY=3D1&#39;,&#39;-sPROXY_TO_PTHREAD=3D1&#39;,&#39;-sFORCE_FILESYSTEM&#39=
+;,&#39;-<br>&gt; &gt;&gt; sALLOW_TABLE_GROWTH&#39;,&#39;-sTOTAL_MEMORY=3D2G=
+B&#39;,&#39;-sWASM_BIGINT&#39;,&#39;-<br>&gt; &gt;&gt; sEXPORT_ES6=3D1&#39;=
+,&#39;-sASYNCIFY_IMPORTS=3Dffi_call_js&#39;,&#39;-<br>&gt; &gt;&gt; sEXPORT=
+ED_RUNTIME_METHODS=3DaddFunction,removeFunction,TTY,FS&#39;]<br>&gt; <br>&g=
+t; At least -g -O3 -pthread should not be necessary.<br><br>Thank you for t=
+he suggestion. -sPROXY_TO_PTHREAD flag used in c_link_args<br>always requir=
+es -pthread, even during configuration. Otherwise, emcc returns<br>an error=
+ like:<br><br>&gt; emcc: error: -sPROXY_TO_PTHREAD requires -pthread to wor=
+k!<br><br>So I think -pthread needs to be included in c_link_args at minimu=
+m. I&#39;ll try<br>to remove other flags in the next version of the series.=
+<br><br>&gt; For -Wno-unused-command-line-argument what are the warnings/er=
+rors that<br>&gt; you are getting?<br><br>I encountered the following error=
+ when compiling QEMU:<br><br>&gt; clang: error: argument unused during comp=
+ilation: &#39;-no-pie&#39; [-Werror,-Wunused-command-line-argument]<br><br>=
+It seems Emscripten doesn&#39;t support the -no-pie flag, and this wasn&#39=
+;t caught<br>during the configure phase. It seems that removing<br>-Wno-unu=
+sed-command-line-argument would require the following change in<br>meson.bu=
+ild, but I&#39;m open to better approaches.<br><br>&gt; -if not get_option(=
+&#39;b_pie&#39;)<br>&gt; +if not get_option(&#39;b_pie&#39;) and host_os !=
+=3D &#39;emscripten&#39;<br>&gt; =C2=A0 =C2=A0qemu_common_flags +=3D cc.get=
+_supported_arguments(&#39;-fno-pie&#39;, &#39;-no-pie&#39;)<br>&gt; =C2=A0e=
+ndif<br><br>&gt; &gt;&gt; +elif host_os =3D=3D &#39;emscripten&#39;<br>&gt;=
+ &gt;&gt; + =C2=A0supported_backends +=3D [&#39;fiber&#39;]<br>&gt; <br>&gt=
+; Can you rename the backend to &#39;wasm&#39; since the &#39;windows&#39; =
+backend also<br>&gt; uses an API called Fibers?<br><br>Sure, I&#39;ll renam=
+e the coroutine backend in the next version of the series.<br><br><br></div=
+></div>
+</div>
+
+--000000000000f1196306326baa44--
 
