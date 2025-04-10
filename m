@@ -4,83 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A0F2C3601E
-	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 21:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF780C3601E
+	for <qemu-devel@archiver.kernel.org>; Thu, 10 Apr 2025 21:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u2z0u-0005yt-4u; Thu, 10 Apr 2025 17:00:44 -0400
+	id 1u2zHV-0004eG-EG; Thu, 10 Apr 2025 17:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u2z0r-0005xC-GY
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 17:00:42 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1u2zHQ-0004cS-7e
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 17:17:48 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u2z0p-0001lb-Fq
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 17:00:41 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-224019ad9edso18111725ad.1
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 14:00:39 -0700 (PDT)
+ id 1u2zHM-0004TV-10
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 17:17:47 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-ae727e87c26so959039a12.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 14:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744318838; x=1744923638; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PmeV86UWNxMTSPkNU4LeBxv7d2QnrBx0YubZlLs/qhU=;
- b=jgMVDr2bdgdohL8//DMrQBoIzFy/nWB3riBShponSud05c2Xik7TvRg2Lsmhmx71HT
- vIC8f9SGY1VPZ5h/EyijedNssgNrBY+zSNYHCq+gi7MsD8e93knRdmmV0inYOOcgLooc
- WzXKOK/rL0ibM54AVn128jVGeZdtO3UgDYyPLqIkBNL8bloNpb58ix6RlcaRH6kStryY
- VezNqXfP5550QG1Ox6OF24XWG3FXq3NTA79I+RTn4QewSVIp5xfE7dIs+7wuCMusbRx2
- J6cFzv1brczCxJcDInhbY0BG2YHHrg6cCop2WZddNmpQdanhQy+VkoES0LZUVUSBniQw
- Vejg==
+ d=linaro.org; s=google; t=1744319862; x=1744924662; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=k27xR+gZgLXWoqf6VEdoeK1pkVf6pdMIpwfEk9UWv9g=;
+ b=MMzphmnA0dqP30OmQmZ/TzrN2pePoPUI0iOUodJJSth8qAT6FdS9VN8WmlHKfyw8P9
+ j/SFPUwAlek+HK6ggfFhlySfQq15I5GpfCKIbyux/kpeiWfGpNxFONaIfHio/TYOBN46
+ 9P7PuKmFZwvAhbkRp1gnhm41iW9rUi0Ddf04LoaS/CyOqNMp7ua46iuG1rnc0qVoGLO2
+ aqEh8q+bSMpDXI6qlDTVY3bVatqy+mdwS1dA4Fgh1WThpDpZyG5CsGTicsd6qSZoYvCQ
+ ph8BM15vxaVYHdcd6TfVt+5MFGWjbvOuaeREIhwBfiL1kf7si+u3PiCyUdsTUn6pQ99N
+ LA0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744318838; x=1744923638;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PmeV86UWNxMTSPkNU4LeBxv7d2QnrBx0YubZlLs/qhU=;
- b=Au277q/OP3MVMGW+alfjW6pL2DfotXNR/5LK0KvbmOTAb2xdqCWS0pb9jHpf9xGpDL
- gKn/nsPbcyBq6gm+PpHNHLM2j3d86GWg9XiKDnjH7ocY68h49tCAYOICflbRHaQxaHPd
- /rjg8U2N5ol/HoWcY3ZCrCdo/r+dJ3ldojctQz3BsZ+TPktxTBUUMqd+Nj8SdKZh9PHJ
- MzDHbubiQBpXtMDwHOkajbSODieTE6pkGFej4eumSNgNSbkSPB03WVgbxI54PKNI/RSC
- 3hhwPqSuwiXHXvD/BAbzwU84ntKVZ7+XoNQ+d7uiv5ZhSGB6tw58GrPLeh70YT2Uj/mo
- Q/Aw==
-X-Gm-Message-State: AOJu0YxJkLr+qhNLGE1H7z1xWclqxySUQOAcUDxru9DUXduybBXUiqHJ
- bjwoQaI8BmjSTCGGkX8R9byMytdPygFz+KafrbIE0nqJ5AkkHvQkHLftah9oUZgh/gJBBjVMLBc
- Z
-X-Gm-Gg: ASbGncubDBwE01rHIkIb/rO5VQmXS3dDHP4oIQbiDZCk9yCk+7dBMl/jsqlRxqh072S
- 8IRljsKFSLICEAYNY3EzoqetwGUDkZqo+Gg9ZZU3mXdlCsTEEQ1fC75OparmVBr4123qNic2P7N
- YfzxI4iNs4TqGSqFWDc6ZmAgHXrKVajaA9kvC+rfuBUdwOex9De1wN7MIOYaG2nDGkenJNk6aBu
- 3CiPtUokjNcTc04Eg+vKEKEpZwET2Nist6UeIm+TWg90oyKCJvP+C1iMNBlfM2olYcjn61nDzqH
- 1MU/eyZtkayl+3rcfxzJe1ApqX4xWsbBo55iNX4UIa1MzJSLOic=
-X-Google-Smtp-Source: AGHT+IH9ApjVDIlbHEiORAEkYyrDKhJ0F9TX9kzkMWvWD3E2WfGbbgaIrvceXWKN9jCNTc4t82oH1Q==
-X-Received: by 2002:a17:902:e5cf:b0:215:94eb:adb6 with SMTP id
- d9443c01a7336-22bea4efe58mr4867695ad.40.1744318838103; 
- Thu, 10 Apr 2025 14:00:38 -0700 (PDT)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd22f82a3sm12431b3a.90.2025.04.10.14.00.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 14:00:37 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org,
- alex.bennee@linaro.org, qemu-arm@nongnu.org,
- Yannis Bolliger <yannis.bolliger@protonmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 3/4] target/arm/ptw: extract arm_cpu_get_phys_page
-Date: Thu, 10 Apr 2025 14:00:21 -0700
-Message-Id: <20250410210022.809905-4-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250410210022.809905-1-pierrick.bouvier@linaro.org>
-References: <20250410210022.809905-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1744319862; x=1744924662;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=k27xR+gZgLXWoqf6VEdoeK1pkVf6pdMIpwfEk9UWv9g=;
+ b=nvKrk+gzuEh05IPnuzS/PK1EaB+kATPNV2l/z9wau24ZHQV+Gta6YlV1EfrvB9wPxq
+ DH5aE1CLAxXoa84zf/I3uozziqB/sFJK3Ufj9p8+z3DqnvtlinWhhQ0WbOvH+Y5NdARg
+ jK7C3jm4QijyzK9tJZO+W4vZoG04XC2rhGPcL8vvKG1qK62A8/VnQp91NUuuZzzoLpVi
+ GzmfV+5WB52FvTuuUAbSPYKzuWgrBkcFqARINVfSzZQP65HJj/cmVl2TV29qWC78QVf5
+ 4azp1pEF5XZkruCFJDJOXy0YuxVOmYgWOBMrvbJCB2JtLVbwfTekdSjr6Jd/7GhXCs57
+ lthw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRXH4S06He3PQtd/g1/fOO5HBKK6VHxE7NM7BXoM+YdY+II+MGPvfKXBOSk2uGctzjtakUJ6d8KRdY@nongnu.org
+X-Gm-Message-State: AOJu0YxoKRpgqcxPLCRn4/ncc8gFMo8qM03gpHyOzUXbsYxyNatROfZo
+ wEoIN/fc8poDodbluo/a9u9BlBDKktKJnXWuqt+G6EtDvQDNibLwppk3ctt+HOo=
+X-Gm-Gg: ASbGncsdcYmdd74L3+duey3t8FNiOAFmnzBcpL/zYg2MMpzYIvwtaRG4AqDg6Xqh+Ol
+ GK+16bUAyDuUsJh7dHHrHVVX28VIctCZHpGHG4MQGFZKfdQqfLXPIjP+IQN+RD0wGbRHg+O/ymG
+ nfDqRIaK9wzHuypEidaokcOoHDIicMhONH47r+M9asoSnoc3pWw/bwf6afTYILxqoAR6dpfLlVd
+ DdkOURYfcH7KMCO/pRXXTDc2C+lOdvl0O4fz3jsMiKxWQBhWldJDB2pRXH+LcZTwmtqFOBdvSYT
+ x9n4Q095RCxOvo9YPNyXSSxte+ner2L8hRwOxlL9OoljXirfkSoXYQ==
+X-Google-Smtp-Source: AGHT+IGV9Kr4rUGiX4wwreN3zU1Uxyn4f5lAefTT7MLjbAvXrDAG3ctGkzG9xhc3nM2j1PGz5SNXeA==
+X-Received: by 2002:a17:90a:e7ca:b0:2ff:6ac2:c5a6 with SMTP id
+ 98e67ed59e1d1-308237cdb4amr522205a91.31.1744319862237; 
+ Thu, 10 Apr 2025 14:17:42 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-306dd12b4d5sm4653646a91.25.2025.04.10.14.17.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Apr 2025 14:17:41 -0700 (PDT)
+Message-ID: <83f44749-0eea-48f0-8aa5-3882132e30d0@linaro.org>
+Date: Thu, 10 Apr 2025 14:17:40 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/10] Enable QEMU to run on browsers
+Content-Language: en-US
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
+ <20250409192115.GA5528@fedora>
+ <dc36c24e-dc4a-4c24-97b7-8b812441ffce@linaro.org>
+ <CAEDrbUZ4mbCT-npk8Nha4fDd9a5PGguAxS_RD0wG96gpQRUp+g@mail.gmail.com>
+ <CAEDrbUYM3aK5ErvF=+oV=q-NVLO0uzxbYjHzcxPGvTLp7yNtwA@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAEDrbUYM3aK5ErvF=+oV=q-NVLO0uzxbYjHzcxPGvTLp7yNtwA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,60 +122,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow to call that function easily several times in next commit.
+Hi Kohei,
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/arm/ptw.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+first, congrats for this work!
+It would be really nice to have this available upstream, starting with a 
+modest TCI port, before having the tcg backend also.
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 754ef0d3a25..6ea39ee5755 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3629,23 +3629,17 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-                              memop, result, fi);
- }
- 
--hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
--                                         MemTxAttrs *attrs)
-+static hwaddr arm_cpu_get_phys_page(CPUARMState *env, vaddr addr,
-+                                    MemTxAttrs *attrs, ARMMMUIdx mmu_idx)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
--    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
--    ARMSecuritySpace ss = arm_mmu_idx_to_security_space(env, mmu_idx);
-     S1Translate ptw = {
-         .in_mmu_idx = mmu_idx,
--        .in_space = ss,
-+        .in_space = arm_mmu_idx_to_security_space(env, mmu_idx),
-         .in_debug = true,
-     };
-     GetPhysAddrResult res = {};
-     ARMMMUFaultInfo fi = {};
--    bool ret;
--
--    ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
-+    bool ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
-     *attrs = res.f.attrs;
- 
-     if (ret) {
-@@ -3653,3 +3647,13 @@ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-     }
-     return res.f.phys_addr;
- }
-+
-+hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-+                                         MemTxAttrs *attrs)
-+{
-+    ARMCPU *cpu = ARM_CPU(cs);
-+    CPUARMState *env = &cpu->env;
-+    ARMMMUIdx mmu_idx = arm_mmu_idx(env);
-+
-+    return arm_cpu_get_phys_page(env, addr, attrs, mmu_idx);
-+}
--- 
-2.39.5
+On 4/10/25 06:13, Kohei Tokunaga wrote:
+> Hi Philippe,
+> 
+>  >
+>  > The biggest problem I'm seeing is we no longer support 64-bit guests on
+>  > 32-bit hosts, and don't plan to revert that.
+> 
+> Yes, so the sixth patch ("[PATCH 06/10] include/exec: Allow using 64bit
+> guest addresses on emscripten") should be considered as a temporary
+> workaround, enabled only for Emsripten builds. It will be removed once
+> wasm64 gains broader support and is adopted in the Wasm backend.
+> 
 
+Do you have recent information about wasm64? It seems to be something 
+that has been discussed for several years, without really seeing any 
+progress.
+
+As Philippe said, we can't really revert that (it's now an assumption 
+for our softmmu implementation, and would break code if we enabled it 
+again now.)
+
+That said, we can always have a first version supporting only 32 bits 
+targets. And later, when wasm64 will be available, we can extend this to 
+all remaining ones.
+
+Regards,
+Pierrick
 
