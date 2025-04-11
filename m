@@ -4,74 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA09C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 11:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA45EC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 11:46:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3Cng-0006KC-3e; Fri, 11 Apr 2025 07:44:00 -0400
+	id 1u3Cpf-0007BF-7t; Fri, 11 Apr 2025 07:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u3CnX-0006JU-Hd
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:43:53 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1u3CpU-00079D-0C
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:45:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u3CnU-0000yO-Td
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:43:50 -0400
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1u3CpQ-0001PK-Np
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:45:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744371827;
+ s=mimecast20190719; t=1744371947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gIPJ988moGNhtzk2RTCssFrBjRWK+YD8LnZ8UpVzBeU=;
- b=bTBYyZ7iZ9sHV90OEjIMbtzELzlrBQL5rroSSi1UeoCuDa6wxbDxrZxTtuax+QUhJ6BLL9
- JmXVO7Oo9E2mYXeSRzBqTdZbNrFCNusiFK3IQztAwHPWgdvy++OIT3fJXTU+MpxVx0D9z2
- S0RCgNTX/ZZZVb6pm/t8P678D6BCGUY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=f/pn0TFqoRfF4XBZ9bUxRI27ST/I+AyTtUQG9xBXoQQ=;
+ b=csKeu1p0MSdDyvXMczPs29bEbvtKfhzg+CkNBbWBNBrHNuw+npLlGjQ3Xehw7n4DDN8JBi
+ 0U8leNhcif6oJpOZ1hWsSYrUJtbrs+N8kRLY6qKhg3Zycc4wjU7tcX6hIVGSmTLvi5D3bQ
+ ecT9ah8vCgvZ2g2IHIdwUZJzK7rmFmQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-6g_xspm2MSKyAP7ko2yfew-1; Fri,
- 11 Apr 2025 07:43:43 -0400
-X-MC-Unique: 6g_xspm2MSKyAP7ko2yfew-1
-X-Mimecast-MFC-AGG-ID: 6g_xspm2MSKyAP7ko2yfew_1744371822
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-iDogS1-sMg6u4fPwbWmDbQ-1; Fri,
+ 11 Apr 2025 07:45:46 -0400
+X-MC-Unique: iDogS1-sMg6u4fPwbWmDbQ-1
+X-Mimecast-MFC-AGG-ID: iDogS1-sMg6u4fPwbWmDbQ_1744371945
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B8B919560B3; Fri, 11 Apr 2025 11:43:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A564619560AD; Fri, 11 Apr 2025 11:43:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1801421E6773; Fri, 11 Apr 2025 13:43:39 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Krempa <pkrempa@redhat.com>,  Steve Sistare
- <steven.sistare@oracle.com>,  qemu-devel@nongnu.org,  John Snow
- <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Eduardo
- Habkost <eduardo@habkost.net>,  Fabiano Rosas <farosas@suse.de>,  Laurent
- Vivier <lvivier@redhat.com>,  devel@lists.libvirt.org,
- David Hildenbrand <david@redhat.com>
-Subject: Re: Management applications and CPU feature flags
-In-Reply-To: <Z_jyVQMfRbWaM66y@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Fri, 11 Apr 2025 11:43:33 +0100")
-References: <1741036202-265696-1-git-send-email-steven.sistare@oracle.com>
- <87friheqcp.fsf@pond.sub.org> <Z_YolW1Nw6Q_tsz6@angien.pipo.sk>
- <Z_jq5drO_25w0bC6@redhat.com> <87lds77zgx.fsf_-_@pond.sub.org>
- <Z_jyVQMfRbWaM66y@redhat.com>
-Date: Fri, 11 Apr 2025 13:43:39 +0200
-Message-ID: <8734ee9b4k.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7DC8D1955BC9; Fri, 11 Apr 2025 11:45:44 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.74.16.160])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F33E18009BC; Fri, 11 Apr 2025 11:45:40 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: farosas@suse.de, peterx@redhat.com, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v9 0/7] Allow to enable multifd and postcopy migration together
+Date: Fri, 11 Apr 2025 17:15:27 +0530
+Message-ID: <20250411114534.3370816-1-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -96,110 +81,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-> On Fri, Apr 11, 2025 at 12:40:46PM +0200, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Wed, Apr 09, 2025 at 09:58:13AM +0200, Peter Krempa via Devel wrote:
->> >> On Wed, Apr 09, 2025 at 09:39:02 +0200, Markus Armbruster via Devel w=
-rote:
->> >> > Hi Steve, I apologize for the slow response.
->> >> >=20
->> >> > Steve Sistare <steven.sistare@oracle.com> writes:
->> >> >=20
->> >> > > Using qom-list and qom-get to get all the nodes and property valu=
-es in a
->> >> > > QOM tree can take multiple seconds because it requires 1000's of =
-individual
->> >> > > QOM requests.  Some managers fetch the entire tree or a large sub=
-set
->> >> > > of it when starting a new VM, and this cost is a substantial frac=
-tion of
->> >> > > start up time.
->> >> >=20
->> >> > "Some managers"... could you name one?
->> >>=20
->> >> libvirt is at ~500 qom-get calls during an average startup ...
->> >>=20
->> >> > > To reduce this cost, consider QAPI calls that fetch more informat=
-ion in
->> >> > > each call:
->> >> > >   * qom-list-get: given a path, return a list of properties and v=
-alues.
->> >> > >   * qom-list-getv: given a list of paths, return a list of proper=
-ties and
->> >> > >     values for each path.
->> >> > >   * qom-tree-get: given a path, return all descendant nodes roote=
-d at that
->> >> > >     path, with properties and values for each.
->> >> >=20
->> >> > Libvirt developers, would you be interested in any of these?
->> >>=20
->> >> YES!!!
->> >
->> > Not neccessarily, see below... !!!!=20
->> >
->> >>=20
->> >> The getter with value could SO MUCH optimize the startup sequence of a
->> >> VM where libvirt needs to probe CPU flags:
->> >>=20
->> >> (note the 'id' field in libvirt's monitor is sequential)
->> >>=20
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"realized"},"id":"libvirt-8"}
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"hotplugged"},"id":"libvirt-9"}
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"hotpluggable"},"id":"libvirt-10"}
->> >>=20
->> >> [...]
->> >>=20
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"hv-apicv"},"id":"libvirt-470"}
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"xd"},"id":"libvirt-471"}
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"sse4_1"},"id":"libvirt-472"}
->> >> buf=3D{"execute":"qom-get","arguments":{"path":"/machine/unattached/d=
-evice[0]","property":"unavailable-features"},"id":"libvirt-473"}
->> >>=20
->> >> First and last line's timestamps:
->> >>=20
->> >> 2025-04-08 14:44:28.882+0000: 1481190: info : qemuMonitorIOWrite:340 =
-: QEMU_MONITOR_IO_WRITE: mon=3D0x7f4678048360 buf=3D{"execute":"qom-get","a=
-rguments":{"path":"/machine/unattached/device[0]","property":"realized"},"i=
-d":"libvirt-8"}
->> >>=20
->> >> 2025-04-08 14:44:29.149+0000: 1481190: info : qemuMonitorIOWrite:340 =
-: QEMU_MONITOR_IO_WRITE: mon=3D0x7f4678048360 buf=3D{"execute":"qom-get","a=
-rguments":{"path":"/machine/unattached/device[0]","property":"unavailable-f=
-eatures"},"id":"libvirt-473"}
->> >>=20
->> >> Libvirt spent ~170 ms probing cpu flags.
->> >
->> > One thing I would point out is that qom-get can be considered an
->> > "escape hatch" to get information when no better QMP command exists.
->> > In this case, libvirt has made the assumption that every CPU feature
->> > is a QOM property.
->> >
->> > Adding qom-list-get doesn't appreciably change that, just makes the
->> > usage more efficient.
->> >
->> > Considering the bigger picture QMP design, when libvirt is trying to
->> > understand QEMU's CPU feature flag expansion, I would ask why we don't
->> > have something like a "query-cpu" command to tell us the current CPU
->> > expansion, avoiding the need for poking at QOM properties directly.
->>=20
->> How do the existing query-cpu-FOO fall short of what management
->> applications such as libvirt needs?
->
-> It has been along while since I looked at them, but IIRC they were
-> returning static info about CPU models, whereas libvirt wanted info
-> on the currently requested '-cpu ARGS'
+ Hello,
 
-Libvirt developers, please work with us on design of new commands or
-improvements to existing ones to better meet libvirt's needs in this
-area.
+
+* This series (v9) does minor refactoring and reordering changes as
+  suggested in the review of earlier series (v8). Also tried to
+  reproduce/debug a qtest hang issue, but it could not be reproduced.
+  From the shared stack traces it looked like Postcopy thread was
+  preparing to finish before migrating all the pages.
+===
+67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             170.50s   81 subtests passed
+===
+
+
+v8: https://lore.kernel.org/qemu-devel/20250318123846.1370312-1-ppandit@redhat.com/T/#t
+* This series (v8) splits earlier patch-2 which enabled multifd and
+  postcopy options together into two separate patches. One modifies
+  the channel discovery in migration_ioc_process_incoming() function,
+  and second one enables the multifd and postcopy migration together.
+
+  It also adds the 'save_postcopy_prepare' savevm_state handler to
+  enable different sections to take an action just before the Postcopy
+  phase starts. Thank you Peter for these patches.
+===
+67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             152.66s   81 subtests passed
+===
+
+
+v7: https://lore.kernel.org/qemu-devel/20250228121749.553184-1-ppandit@redhat.com/T/#t
+* This series (v7) adds 'MULTIFD_RECV_SYNC' migration command. It is used
+  to notify the destination migration thread to synchronise with the Multifd
+  threads. This allows Multifd ('mig/dst/recv_x') threads on the destination
+  to receive all their data, before they are shutdown.
+
+  This series also updates the channel discovery function and qtests as
+  suggested in the previous review comments.
+===
+67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             147.84s   81 subtests passed
+===
+
+
+v6: https://lore.kernel.org/qemu-devel/20250215123119.814345-1-ppandit@redhat.com/T/#t
+* This series (v6) shuts down Multifd threads before starting Postcopy
+  migration. It helps to avoid an issue of multifd pages arriving late
+  at the destination during Postcopy phase and corrupting the vCPU
+  state. It also reorders the qtest patches and does some refactoring
+  changes as suggested in previous review.
+===
+67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             161.35s   73 subtests passed
+===
+
+
+v5: https://lore.kernel.org/qemu-devel/20250205122712.229151-1-ppandit@redhat.com/T/#t
+* This series (v5) consolidates migration capabilities setting in one
+  'set_migration_capabilities()' function, thus simplifying test sources.
+  It passes all migration tests.
+===
+66/66 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             143.66s   71 subtests passed
+===
+
+
+v4: https://lore.kernel.org/qemu-devel/20250127120823.144949-1-ppandit@redhat.com/T/#t
+* This series (v4) adds more 'multifd+postcopy' qtests which test
+  Precopy migration with 'postcopy-ram' attribute set. And run
+  Postcopy migrations with 'multifd' channels enabled.
+===
+$ ../qtest/migration-test --tap -k -r '/x86_64/migration/multifd+postcopy' | grep -i 'slow test'
+# slow test /x86_64/migration/multifd+postcopy/plain executed in 1.29 secs
+# slow test /x86_64/migration/multifd+postcopy/recovery/tls/psk executed in 2.48 secs
+# slow test /x86_64/migration/multifd+postcopy/preempt/plain executed in 1.49 secs
+# slow test /x86_64/migration/multifd+postcopy/preempt/recovery/tls/psk executed in 2.52 secs
+# slow test /x86_64/migration/multifd+postcopy/tcp/tls/psk/match executed in 3.62 secs
+# slow test /x86_64/migration/multifd+postcopy/tcp/plain/zstd executed in 1.34 secs
+# slow test /x86_64/migration/multifd+postcopy/tcp/plain/cancel executed in 2.24 secs
+...
+66/66 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test                 OK             148.41s   71 subtests passed
+===
+
+
+v3: https://lore.kernel.org/qemu-devel/20250121131032.1611245-1-ppandit@redhat.com/T/#t
+* This series (v3) passes all existing 'tests/qtest/migration/*' tests
+  and adds a new one to enable multifd channels with postcopy migration.
+
+
+v2: https://lore.kernel.org/qemu-devel/20241129122256.96778-1-ppandit@redhat.com/T/#u
+* This series (v2) further refactors the 'ram_save_target_page'
+  function to make it independent of the multifd & postcopy change.
+
+
+v1: https://lore.kernel.org/qemu-devel/20241126115748.118683-1-ppandit@redhat.com/T/#u
+* This series removes magic value (4-bytes) introduced in the
+  previous series for the Postcopy channel.
+
+
+v0: https://lore.kernel.org/qemu-devel/20241029150908.1136894-1-ppandit@redhat.com/T/#u
+* Currently Multifd and Postcopy migration can not be used together.
+  QEMU shows "Postcopy is not yet compatible with multifd" message.
+
+  When migrating guests with large (100's GB) RAM, Multifd threads
+  help to accelerate migration, but inability to use it with the
+  Postcopy mode delays guest start up on the destination side.
+
+* This patch series allows to enable both Multifd and Postcopy
+  migration together. Precopy and Multifd threads work during
+  the initial guest (RAM) transfer. When migration moves to the
+  Postcopy phase, Multifd threads are restrained and the Postcopy
+  threads start to request pages from the source side.
+
+* This series introduces magic value (4-bytes) to be sent on the
+  Postcopy channel. It helps to differentiate channels and properly
+  setup incoming connections on the destination side.
+
+
+Thank you.
+---
+Peter Xu (2):
+  migration: Add save_postcopy_prepare() savevm handler
+  migration/ram: Implement save_postcopy_prepare()
+
+Prasad Pandit (5):
+  migration/multifd: move macros to multifd header
+  migration: refactor channel discovery mechanism
+  migration: enable multifd and postcopy together
+  tests/qtest/migration: consolidate set capabilities
+  tests/qtest/migration: add postcopy tests with multifd
+
+ include/migration/register.h              |  15 +++
+ migration/migration.c                     | 136 ++++++++++++----------
+ migration/multifd-nocomp.c                |   3 +-
+ migration/multifd.c                       |  12 +-
+ migration/multifd.h                       |   5 +
+ migration/options.c                       |   5 -
+ migration/ram.c                           |  42 ++++++-
+ migration/savevm.c                        |  33 ++++++
+ migration/savevm.h                        |   1 +
+ tests/qtest/migration/compression-tests.c |  38 +++++-
+ tests/qtest/migration/cpr-tests.c         |   6 +-
+ tests/qtest/migration/file-tests.c        |  58 +++++----
+ tests/qtest/migration/framework.c         |  76 ++++++++----
+ tests/qtest/migration/framework.h         |   9 +-
+ tests/qtest/migration/misc-tests.c        |   4 +-
+ tests/qtest/migration/postcopy-tests.c    |  35 +++++-
+ tests/qtest/migration/precopy-tests.c     |  48 +++++---
+ tests/qtest/migration/tls-tests.c         |  70 ++++++++++-
+ 18 files changed, 437 insertions(+), 159 deletions(-)
+
+-- 
+2.49.0
 
 
