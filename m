@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED2FC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 15:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A496AC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 15:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3GU2-00048J-7I; Fri, 11 Apr 2025 11:39:59 -0400
+	id 1u3GcS-0005uI-A5; Fri, 11 Apr 2025 11:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1u3GTy-00041r-Ou; Fri, 11 Apr 2025 11:39:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <SRS0=05Ho=W5=kaod.org=clg@ozlabs.org>)
+ id 1u3GcQ-0005sD-IC; Fri, 11 Apr 2025 11:48:38 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1u3GTu-0003cA-U5; Fri, 11 Apr 2025 11:39:54 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BE3YV1017271;
- Fri, 11 Apr 2025 15:39:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=oURppQ
- 40FVpyQGW2FcMCiUn7+Hr90rzXaujRYAUBhSA=; b=Yr85Wj9MVokwLmHIwgz11a
- YEGKwsbW+k4MvCb0wxjdgtlj1+7XjA3gyRyqfC9NrrXqHSPak25k3qtUshNr+lpO
- vCnBeSPq69XY0qNDxyAzIgbtduzlxfbe8htdEepuG1S+pcFbNtDCYQcgnvNIOe3x
- QdxvalPPoIzw00vHM1muBjmZ9xvTxSC5oUO2Ns2n4Sp0uQDCeDwxZRU+g3cbYu6C
- gzo5ZNO3T6UOnWBxCt+0gyiafwwEIzIY3lnW98Cc0pUEVXrdaL9rZ59S4nT16iuP
- ODOzCzbz4GRCoUmNjQ32Hn8H/sDPsYnEZ/JIOIfA7pDUeTcxAqB8wclXhFXj9/CQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45y4gqgf5u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Apr 2025 15:39:40 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53BDvYXn013915;
- Fri, 11 Apr 2025 15:39:39 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 45ufup3jc3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Apr 2025 15:39:39 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53BFdc4f28836394
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Apr 2025 15:39:38 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6E64758052;
- Fri, 11 Apr 2025 15:39:38 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C54FB58045;
- Fri, 11 Apr 2025 15:39:36 +0000 (GMT)
-Received: from [9.61.169.61] (unknown [9.61.169.61])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 11 Apr 2025 15:39:36 +0000 (GMT)
-Message-ID: <630be5a9-c27d-40c4-95b3-139e8fcb355d@linux.ibm.com>
-Date: Fri, 11 Apr 2025 11:39:35 -0400
+ (Exim 4.90_1) (envelope-from <SRS0=05Ho=W5=kaod.org=clg@ozlabs.org>)
+ id 1u3GcN-000515-Jo; Fri, 11 Apr 2025 11:48:38 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZZ1LP1XLmz4xN1;
+ Sat, 12 Apr 2025 01:48:29 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZZ1LK3h52z4wyl;
+ Sat, 12 Apr 2025 01:48:24 +1000 (AEST)
+Message-ID: <d44e6583-c9af-4216-b715-aa4aa8968048@kaod.org>
+Date: Fri, 11 Apr 2025 17:48:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 13/24] hw/s390x/ipl: Set iplb->len to maximum length of
- IPL Parameter Block
-To: Thomas Huth <thuth@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, fiuczy@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-14-zycai@linux.ibm.com>
- <3033a0df-44d5-458d-b738-cb93456e9f75@redhat.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <3033a0df-44d5-458d-b738-cb93456e9f75@redhat.com>
+Subject: Re: [PATCH v2 00/10] Support vbootrom for AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com, nabihestefan@google.com
+References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: pcMdfj_SCHE9fYClBnkWBRCX7cOURNIg
-X-Proofpoint-ORIG-GUID: pcMdfj_SCHE9fYClBnkWBRCX7cOURNIg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-11_05,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=936 bulkscore=0
- adultscore=0 priorityscore=1501 spamscore=0 impostorscore=0 clxscore=1011
- suspectscore=0 mlxscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504110095
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=05Ho=W5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,72 +111,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Jamin
+
+On 4/10/25 04:38, Jamin Lin wrote:
+> v1:
+>    Add initial support for AST27x0
+>    The purpose of vbootrom here is to simulate the work of BootMCU SPL (riscv)
+>    in AST2700, because QEMU doesn't support heterogenous architecture yet.
+> 
+>    ast27x0_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for
+>    ASPEED AST27x0 BMC SOC. It currently implements the bare minimum to
+>    load, parse, initialize and run boot images stored in SPI flash, but may grow
+>    more features over time as needed. The source code is available at:
+>    https://github.com/google/vbootrom
+
+I don't see any updates on the vbootrom github repo for Aspeed SoCs. Is the
+vbootrom compatible with the Nuvoton SoC ?
 
 
-On 4/11/25 10:46 AM, Thomas Huth wrote:
-> On 08/04/2025 17.55, Zhuoying Cai wrote:
->> The IPL Information Report Block (IIRB) immediately follows the IPL
->> Parameter Block (IPLB).
->>
->> The IPLB struct is allocated 4KB in memory, and iplb->len indicates
->> the amount of memory currently used by the IPLB.
->>
->> To ensure proper alignment of the IIRB and prevent overlap, set
->> iplb->len to the maximum length of the IPLB, allowing alignment
->> constraints to be determined based on its size.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>   hw/s390x/ipl.c | 6 +++---
->>   hw/s390x/ipl.h | 1 +
->>   2 files changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
->> index 59ec81181d..b646fcc74e 100644
->> --- a/hw/s390x/ipl.c
->> +++ b/hw/s390x/ipl.c
->> @@ -460,7 +460,7 @@ static bool s390_build_iplb(DeviceState *dev_st, 
->> IplParameterBlock *iplb)
->>               if (scsi_lp && strlen(scsi_lp) > 0) {
->>                   lp = scsi_lp;
->>               }
->> -            iplb->len = cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN);
->> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
->>               iplb->blk0_len =
->>                   cpu_to_be32(S390_IPLB_MIN_QEMU_SCSI_LEN - 
->> S390_IPLB_HEADER_LEN);
->>               iplb->pbt = S390_IPL_TYPE_QEMU_SCSI;
->> @@ -471,14 +471,14 @@ static bool s390_build_iplb(DeviceState 
->> *dev_st, IplParameterBlock *iplb)
->>               iplb->scsi.ssid = ccw_dev->sch->ssid & 3;
->>               break;
->>           case CCW_DEVTYPE_VFIO:
->> -            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
->> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
->>               iplb->pbt = S390_IPL_TYPE_CCW;
->>               iplb->ccw.devno = cpu_to_be16(ccw_dev->sch->devno);
->>               iplb->ccw.ssid = ccw_dev->sch->ssid & 3;
->>               break;
->>           case CCW_DEVTYPE_VIRTIO_NET:
->>           case CCW_DEVTYPE_VIRTIO:
->> -            iplb->len = cpu_to_be32(S390_IPLB_MIN_CCW_LEN);
->> +            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
->>               iplb->blk0_len =
->>                   cpu_to_be32(S390_IPLB_MIN_CCW_LEN - 
->> S390_IPLB_HEADER_LEN);
->>               iplb->pbt = S390_IPL_TYPE_CCW;
->
-> Wouldn't it make sense to only do this iff the secure IPL is also used?
+Thanks,
 
-The size of the IPLB struct itself is always the 4K max length, just 
-that most of it is (currently) unused reserved space at the end. With 
-secure IPL this matters for alignment, because the next block (IIRB) 
-must follow immediately after the IPLB in memory, but I think in general 
-the length of the IPLB as a whole should be 4K anyway, since that is 
-what's actually allocated for the IplParameterBlock struct.
+C.
 
->
->  Thomas
->
+
+
+
+> v2:
+>    Add "Introduced ASPEED_DEV_VBOOTROM in the device enumeration" patch to fix
+>    build failed.
+> 
+> Jamin Lin (10):
+>    hw/arm/aspeed: Introduced ASPEED_DEV_VBOOTROM in the device
+>      enumeration
+>    hw/arm/aspeed_ast27x0: Add "vbootrom_size" field to AspeedSoCClass
+>    hw/arm/aspeed_ast27x0: Rename variable sram_name to name in ast2700
+>      realize
+>    hw/arm/aspeed_ast27x0 Introduce vbootrom memory region
+>    hw/arm/aspeed: Enable vbootrom support by default on AST2700 EVB
+>      machines
+>    hw/arm/aspeed: Reuse rom_size variable for vbootrom setup
+>    hw/arm/aspeed: Add support for loading vbootrom image via "-bios"
+>    pc-bios: Add AST27x0 vBootrom
+>    tests/functional/aspeed: Update AST2700 functional test to use
+>      vbootrom
+>    docs/system/arm/aspeed: Support vbootrom for AST2700
+> 
+>   MAINTAINERS                             |   1 +
+>   docs/system/arm/aspeed.rst              |  18 +++--------
+>   include/hw/arm/aspeed.h                 |   1 +
+>   include/hw/arm/aspeed_soc.h             |   3 ++
+>   hw/arm/aspeed.c                         |  37 ++++++++++++++++++++++-
+>   hw/arm/aspeed_ast27x0.c                 |  20 ++++++++++---
+>   pc-bios/README                          |   6 ++++
+>   pc-bios/ast27x0_bootrom.bin             | Bin 0 -> 15464 bytes
+>   pc-bios/meson.build                     |   1 +
+>   tests/functional/test_aarch64_aspeed.py |  38 +-----------------------
+>   10 files changed, 69 insertions(+), 56 deletions(-)
+>   create mode 100644 pc-bios/ast27x0_bootrom.bin
+> 
 
 
