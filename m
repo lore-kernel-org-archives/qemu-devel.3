@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E4DC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 13:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08779C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 13:43:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3EWM-0007no-2n; Fri, 11 Apr 2025 09:34:14 -0400
+	id 1u3Ee2-0003GT-7H; Fri, 11 Apr 2025 09:42:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u3EWF-0007nA-NH
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 09:34:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u3EWC-00016h-Qx
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 09:34:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744378444;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1YeTYVjzBaIosUIh/SWFgI+rG34/EYmXmd5/a2eF6B8=;
- b=QCHFyrCB1TUW5SmCjg7w7OvxSf5mqw1vMniOs6SYpd4sa/TMXjYXluxVyZ6ad0w3/fFrd3
- wjZY+1mhl3GqWvcRBlIuEEJ+cxjuwPDEKf1tIqhepvGYPlFxlpakr1HcX8D+gqVjgPEPw6
- t5LE+RwJsPC2hoGq6J+c+abjtkLPUjg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-TEqlhAINOwumUvQ_1wR9BA-1; Fri,
- 11 Apr 2025 09:34:00 -0400
-X-MC-Unique: TEqlhAINOwumUvQ_1wR9BA-1
-X-Mimecast-MFC-AGG-ID: TEqlhAINOwumUvQ_1wR9BA_1744378438
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC2321809CA3; Fri, 11 Apr 2025 13:33:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA4D41955BCB; Fri, 11 Apr 2025 13:33:53 +0000 (UTC)
-Date: Fri, 11 Apr 2025 14:33:50 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com,
- walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- fiuczy@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 01/24] Add -boot-certificates /path/dir:/path/file
- option in QEMU command line
-Message-ID: <Z_kaPloSW89tdz9C@redhat.com>
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-2-zycai@linux.ibm.com>
- <2e8a1ccf-5073-48dc-9641-c80d95d65b93@redhat.com>
- <Z_kRtundT0x2-LxY@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3Ee0-0003GE-S8
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 09:42:08 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3Edz-0002Ax-DO
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 09:42:08 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso1182119f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 06:42:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744378924; x=1744983724; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9qHVSwHMGqo30ydWCmy3wUs6OU36WReUvV9ZmQvWtsk=;
+ b=px2F+3M1Z58FuJxjdhAUYuc3um48rnLTh41AuLLNXydSZrntsg+pxoIywuiZLmdiUS
+ qgubeV+6EN9roTFFbvbojojafVImkb+s7K6kCXbsrqLAzcufleIwbNjZXCm8IBoyFfEI
+ DFEBsgFt2RgUgAO8hcBhQ4D50T/Jr2RUgHen1qDFuYjJfVMx/48cABcaf14S5AYeQCp5
+ BmkPWpbAiXB4Luo+MuS3akxcWTUo4TjyD3Ycp0XURhMaXF66qxV/X8CqmAhoWyD8TFci
+ Ge4vDrbBlPvvfUOqucvqiRS0LmihZSV/WysmtdTK8i1XU1Pk/SemGKN87MSgYKy6bBkX
+ WmIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744378924; x=1744983724;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9qHVSwHMGqo30ydWCmy3wUs6OU36WReUvV9ZmQvWtsk=;
+ b=JVzrUZgThphIR/L+l9cmjChdfBXrAtz5Coie/UJSHJ2S3RBwK8Gnz3i/+oa5gzlArS
+ ul332pVKyJ0l1QIVAl4yDBxEnOASBk/S0WIOC8DieJ3kiC7xENocYdJ72R8g46QYsvUn
+ xhMg37xoXkkhuH2NBP7YJWbwS+WBIQClDTGVl9uQafqRQld0DhlbJ+LOxVVPVPwJFYqx
+ fVkJ6epvI9Gx9WxSlzKwAifgWl3Y70KxencGL98WA4ibGSh/d4rlrTj+H6QquRKfqUUw
+ 7YL6m9QQ8uOEFj1qdumeIioUrUPTnrE1Wl4B0iHkR8t3qFDjb2WrXz9w24MSONvW28X2
+ erdQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1lwn8juGzd8+wnVghHQ5Zg9kHoe1bSdZ9t10tTm29w32jfQ59U6qwrSeRB8rUfcYGr0sm+EydetGL@nongnu.org
+X-Gm-Message-State: AOJu0YwMKZ9K8TjIiAHpx5fKdKWQpiI0khj+O8raYsDwuPfTwBzG0Z6H
+ 4Ru8EcxK3topsz8IWu728LtmAbZ5bFDFWKsgoEq5vc/vLuuYOaUw3mJ+9Rzj0M4=
+X-Gm-Gg: ASbGncvYno8LZPXQ9FNgfatl0S3sccgstMUSI2mao1mHumQBZcXTyuvl0RgtsOGjHpg
+ nSf1eVrXq8rMH/61img8KW7/imNFC3kOOtsOmzLxGjSlYnAjHQl/knHvCEe39/nPsN9yP8SyEfx
+ R7mTImQEWK3qCrQt1eHNA9o1+SLQjzEKpSlnxBfdLAHcsDk0ehvjxfoG9xlAv/X2myGDAmD3ATt
+ uqatfARC7rgpX3kIYxwsXlEs3oZCOXNkH566IvnnxXiFAU3Sv1pzpBeBJW1PzH2Ip4/F0BhU3xz
+ lycVLAfAwrKUz6VR6x432KKe0XaNAmQDT48hKIt+fK4EuHccN6U6vVco46j338gvN8/VmrCcXL+
+ lyxW0Uw3yAyQ0dg==
+X-Google-Smtp-Source: AGHT+IFCzYH9TeNmyE0jZCkHHkkdOTQQdyXwmeAQTAyAseqNR15GNMtfjF6kJiCreYHV8ZCDgqJYdg==
+X-Received: by 2002:a05:6000:2282:b0:391:1806:e23f with SMTP id
+ ffacd0b85a97d-39ea51f5c52mr2392976f8f.17.1744378924284; 
+ Fri, 11 Apr 2025 06:42:04 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f206332d9sm86589085e9.13.2025.04.11.06.42.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Apr 2025 06:42:03 -0700 (PDT)
+Message-ID: <63ba432a-31f8-4189-811e-409bb6a5b9be@linaro.org>
+Date: Fri, 11 Apr 2025 15:42:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] fix record/replay on MacOS
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>
+References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Z_kRtundT0x2-LxY@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,86 +100,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 11, 2025 at 01:57:26PM +0100, Daniel P. Berrangé wrote:
-> On Fri, Apr 11, 2025 at 12:44:17PM +0200, Thomas Huth wrote:
-> > On 08/04/2025 17.55, Zhuoying Cai wrote:
-> > > The `-boot-certificates /path/dir:/path/file` option is implemented
-> > > to provide path to either a directory or a single certificate.
-> > > 
-> > > Multiple paths can be delineated using a colon.
-> > > 
-> > > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> > > ---
-> > >   qemu-options.hx | 11 +++++++++++
-> > >   system/vl.c     | 22 ++++++++++++++++++++++
-> > >   2 files changed, 33 insertions(+)
-> > > 
-> > > diff --git a/qemu-options.hx b/qemu-options.hx
-> > > index dc694a99a3..b460c63490 100644
-> > > --- a/qemu-options.hx
-> > > +++ b/qemu-options.hx
-> > > @@ -1251,6 +1251,17 @@ SRST
-> > >       Set system UUID.
-> > >   ERST
-> > > +DEF("boot-certificates", HAS_ARG, QEMU_OPTION_boot_certificates,
-> > > +    "-boot-certificates /path/directory:/path/file\n"
-> > > +    "                  Provide a path to a directory or a boot certificate.\n"
-> > > +    "                  A colon may be used to delineate multiple paths.\n",
-> > > +    QEMU_ARCH_S390X)
-> > > +SRST
-> > > +``-boot-certificates /path/directory:/path/file``
-> > > +    Provide a path to a directory or a boot certificate.
-> > > +    A colon may be used to delineate multiple paths.
-> > > +ERST
-> > 
-> > Unless there is a really, really good reason for introducing new top-level
-> > options to QEMU, this should rather be added to one of the existing options
-> > instead.
-> > 
-> > I assume this is very specific to s390x, isn't it? So the best way is likely
-> > to add this as a parameter of the machine type option, so that the user
-> > would specify:
-> > 
-> >  qemu-system-s390x -machine s390-ccw-virtio,boot-certificates=/path/to/certs
-> > 
-> > See the other object_class_property_add() statements in
-> > ccw_machine_class_init() for some examples how to do this.
-> 
-> With other arches that use EDK2 (x86, arm64, riscv64, loongarch64) we
-> pass this info via fw_cfg
+On 11/4/25 00:55, Pierrick Bouvier wrote:
 
-s/this info/this kind of info/
+> Pierrick Bouvier (2):
+>    system/main: transfer replay mutex ownership from main thread to main
+>      loop thread
+>    tests/functional/test_aarch64_replay: reenable on macos
 
-because technically the stuff below is certs for PXE boot downloads,
-not certs for secureboot. The latter are hardcoded in the EDK varstore
-at boot time, so any setup of certs for secureboot is out of band
-from QEMU startup
-
-> 
->    -fw_cfg name=etc/edk2/https/cacerts,file=<certdb>
-> 
-> Assuming this series is trying to implement a pre-existing s390x machine
-> standard for passing certs, then it seems inevitable that it will need
-> a different config approach than we use for EDK2.
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Series:
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
