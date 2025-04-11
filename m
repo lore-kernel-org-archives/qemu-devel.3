@@ -4,93 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98F1C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 09:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81652C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 09:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3Ab0-0006hD-9u; Fri, 11 Apr 2025 05:22:46 -0400
+	id 1u3Ao8-0006SC-5e; Fri, 11 Apr 2025 05:36:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ggala@linux.ibm.com>)
- id 1u3Aay-0006gC-Bh; Fri, 11 Apr 2025 05:22:44 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <saanjhsengupta@outlook.com>)
+ id 1u3Ao6-0006Rw-GB
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 05:36:18 -0400
+Received: from mail-koreacentralazolkn190120002.outbound.protection.outlook.com
+ ([2a01:111:f403:d40f::2] helo=SEVP216CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ggala@linux.ibm.com>)
- id 1u3Aaw-00066a-0k; Fri, 11 Apr 2025 05:22:43 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53B3k9Gq027448;
- Fri, 11 Apr 2025 09:22:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=gcwVRxPWOuhO4Ow+a
- bXOxZj4AJ3bKeX4KzQ5Jh/fVoA=; b=CzRKTBtCCxDOAPsVmANWCJ+Nuo+VGHIAd
- NA/tdvV5W51qR99hZcLginQS8XPJRg+tSLqiYVGrBQLZyIszm1Z9hiJcrP7O9npZ
- zPAW88cTnBOR5CJHRTPuETSArmAd5jYEyOy2i5IrgNKTwde82Ju4BI+qGqIBtjy/
- gIOsLbloHunlEUSEzuiH+mIVBLjdaqWnVJaZBob5G0byTDLdtcUnlDRfYsSf4nLL
- lINmq5U4Jz6j1/uM4UpfAGZ2mSJPJfnuRI0Lw1YEBu+E5zHfjh4o8IrKne1BzigA
- J2prrta73ck2v4hXSRkcXaKSOR4Z3m/LcqoA0082igBsr7gcDg53g==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 45xufa9dc4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Apr 2025 09:22:40 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53B8bP9r024651;
- Fri, 11 Apr 2025 09:22:39 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 45ueutth09-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Apr 2025 09:22:39 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53B9Mcnv14287496
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Apr 2025 09:22:38 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C88758056;
- Fri, 11 Apr 2025 09:22:38 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 554C658063;
- Fri, 11 Apr 2025 09:22:37 +0000 (GMT)
-Received: from t83lp65.lnxne.boe (unknown [9.152.108.100])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 11 Apr 2025 09:22:37 +0000 (GMT)
-From: Gautam Gala <ggala@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v1 3/3] target/s390x: Return UVC cmd code,
- RC and RRC value when DIAG 308 Subcode 10 fails to enter secure mode
-Date: Fri, 11 Apr 2025 11:22:33 +0200
-Message-ID: <20250411092233.418164-4-ggala@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250411092233.418164-1-ggala@linux.ibm.com>
-References: <20250411092233.418164-1-ggala@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <saanjhsengupta@outlook.com>)
+ id 1u3Ao4-0007pi-BZ
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 05:36:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=oyigok4SpoL3Ta9bIQHbUWJvOQl50F+sWpUT4+56kf3/gGYZ0O2jC2PaKqcKJ5QodHpqQ5yG8eNoSVqiKEt2zxgXnjVoet//v7Flb1d/EDguxLCUv5lZJldCR9E/QGwvO3GxUmrVFzPuPn50XCNJYB++LscQZpVCvawFzu9TS8qKO+BdlPdIaliRhnbTUSsZvxVQumTxqwpcBms6EP6PbobEoFu6EU1nri+c4+ECLrsZvk1WUBUO95iULIIy08TDsN6uumQ5tWrDTM9qdRMmBgO+1hT1qySZZeONH6SNdgk1gQBCVwLJK8LsLO5W24G1/PAYIxJPdH61GEF+VvPKzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IVothbx3AuxjDvuZV1PaEKzvGamrZmnaCMF/M/fR5oU=;
+ b=HUtiFj2y/t/Zr79cBZmrt8LdkOuVVqTSR6e5caeYXFND8++612KmXa735Jqzc5RkIt++N2NpYP/OVNgsGw2aywkQKfFbowb3tPu1USUda5vrE8n6npWilKiheZAOSXTKYYX4VYixdU4ciJbZTB39eiRTW49wOVeIOKHW8KjdFL/bPEjNRJmokYj1JEIBnvuVmWT4Ni4/r1LlJcxwykd0iACPI9avQUM3bgS/nU42ucshwhO97mZ4d9cVyHmaHsNyvgUJqdJtN5/DsOiB/UYCSp4EbRJREwehsn976EGOPmVGfz9Z7TcvbYk4TdAy/7QOHBcU6m4OGN7c5wkQk1Dugg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IVothbx3AuxjDvuZV1PaEKzvGamrZmnaCMF/M/fR5oU=;
+ b=tmZrJD6rGEznE8/hqSLWDPhX/OFxWY9PPeeNvIx9tMGNDWIsBChIdtZzKC0IneLYgargVf6nEZbr0k0o0OWJSsMEZl+9Q16XXDGb3hrJHpwhg+kkELpWOVbssPcZgizCQfuJLBcNW8eT/qsP5prS5JeFMDctESPCF2Paoi/OlYUU8b7fLJtjTQxzGL2alrm/QYmnkutcEnLfE1SNuZv5X3P5G3+dLRUMUerAbPGGyLonUTDuFnKjX02ojZhzby3HXoNESRuNWDoegPF8BKx5TyCAEaHI8MrT7ujxsff5x7WeKT6+crMDv8WBPQN+y2W1RCusYOedfJMxPnJ7TazIcQ==
+Received: from PS2P216MB1388.KORP216.PROD.OUTLOOK.COM (2603:1096:301:99::6) by
+ PU4P216MB2098.KORP216.PROD.OUTLOOK.COM (2603:1096:301:12c::12) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8632.24; Fri, 11 Apr 2025 09:36:07 +0000
+Received: from PS2P216MB1388.KORP216.PROD.OUTLOOK.COM
+ ([fe80::cf60:86f0:7ddd:c026]) by PS2P216MB1388.KORP216.PROD.OUTLOOK.COM
+ ([fe80::cf60:86f0:7ddd:c026%4]) with mapi id 15.20.8632.025; Fri, 11 Apr 2025
+ 09:36:07 +0000
+From: Saanjh Sengupta <saanjhsengupta@outlook.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+CC: "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "marcandre.lureau@redhat.com"
+ <marcandre.lureau@redhat.com>, "amir.gonnen@neuroblade.ai"
+ <amir.gonnen@neuroblade.ai>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "aabhashswain25@gmail.com" <aabhashswain25@gmail.com>, "aniantre@gmail.com"
+ <aniantre@gmail.com>, "guptapriyanshi180@gmail.com"
+ <guptapriyanshi180@gmail.com>, "harshitgupta5049@gmail.com"
+ <harshitgupta5049@gmail.com>, "atakale@gmail.com" <atakale@gmail.com>
+Subject: Re: Issue with stoptrigger.c Plugin in QEMU Emulation
+Thread-Topic: Issue with stoptrigger.c Plugin in QEMU Emulation
+Thread-Index: AQHbqgkoRvQTBP5kkkqjjTRUTVHxm7OdBYYAgAELhHo=
+Date: Fri, 11 Apr 2025 09:36:07 +0000
+Message-ID: <PS2P216MB13883D8DE8571EFF1E72A6AECCB62@PS2P216MB1388.KORP216.PROD.OUTLOOK.COM>
+References: <E57BEAE6-4DE5-4FF7-AADE-DB43678FE2E6@outlook.com>
+ <a8d9bc7f-2162-4198-ab6c-67e72c5e964e@linaro.org>
+In-Reply-To: <a8d9bc7f-2162-4198-ab6c-67e72c5e964e@linaro.org>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-reactions: allow
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PS2P216MB1388:EE_|PU4P216MB2098:EE_
+x-ms-office365-filtering-correlation-id: 95a17db4-8791-468c-861d-08dd78dc4973
+x-microsoft-antispam: BCL:0;
+ ARA:14566002|8062599003|12050799009|9400799030|8060799006|461199028|14030799003|19110799003|7092599003|15080799006|10035399004|3412199025|440099028|4302099013|102099032|1602099012;
+x-microsoft-antispam-message-info: =?us-ascii?Q?mYmfT28dsb2rF1dZ/jS+LbwiepHUTGxVjM23jC2MOCxYaHn3onZKtF4pBjrz?=
+ =?us-ascii?Q?w5plrNPNco/JVVK6Up2yNWuXOejNjdqb5mrDLrKmEIIHdvzGUaQcYihRhMwx?=
+ =?us-ascii?Q?Pm7YRlurWVSLt6tj4Dh2y19Zxr9w2vxUbUTJtShCLSNh3YYfOL6hfTZuYbaN?=
+ =?us-ascii?Q?8dQ42w8tgBfDNat7v1GxFP5yqZb09OkD80i6Tr32A46/Z3DmrYUmJfXrqWGX?=
+ =?us-ascii?Q?ZLzHEZ+3Ne6egPOKBn3u3TzB6yKOwlC9mFJr4j/IUByaCrEUVfHvQPkMVF2v?=
+ =?us-ascii?Q?k8ZRxKHjKbszX0W7IGGJvVS+CL++H4GxJhGWrtyAeuN5OwuJTrOP7NBb51QS?=
+ =?us-ascii?Q?y3dWyjA/48ixm86/Zmqq90Hz+mttpzZk8tvMDxVn7QVTbwSQ688AF5Cc/bwm?=
+ =?us-ascii?Q?U3FDfDNdVz+myqmTcONsi3hvqkVi5CrubtVQfovKKCyg0vKyJeMhJAkYLv+0?=
+ =?us-ascii?Q?JxBm8a35zfWA3fXCxLu9nFLbi80jUUOEUkMcfiXJV73FRQjBgu7qTd/D16Ti?=
+ =?us-ascii?Q?skcWnHBeHrE80ot/M2Dwdcc2WniE7Q6+bJ9fdpZJTSt9+1QP8nCyB82/76qW?=
+ =?us-ascii?Q?NoqJvLkr5xvLFhIr5e4VtL89k9w/uYthpO1CF/qfefZZ6xybRw9Y9p/InGrC?=
+ =?us-ascii?Q?6M8kcib19k7bgqZgF0eEnJWaBgfPlv+dZ21qzdAvJx1RkaHZXKoj3WkgB9Sg?=
+ =?us-ascii?Q?/wOzkTqtU+UzgH8wtSNiIDv2se5lCDi0QD2yWiFINlAh7Nc5SPQBNF6q3Rrf?=
+ =?us-ascii?Q?EPGb5UhSYg1O+MhEXkKWf4vGwcP/aWCLxF65oL3ppCU9U/Ofus7CR1VAL1fn?=
+ =?us-ascii?Q?VLyCJdMPHCAxBAmA9GE2CCLb98wOta3icKikTvkIThJZ9ueoMTAuGhfYReMW?=
+ =?us-ascii?Q?yJ8UpX2HskibssWrS3/AwM7DcPtxmfA2FdqWPTNF7z9fshIY+rmotyAlnQr/?=
+ =?us-ascii?Q?Gsb4zRiE0gYuQ0Wif/2iIc042sOiTwZR53KLmbgXptOnPmvBOqKrI4Mci4Ts?=
+ =?us-ascii?Q?D9mJkplplOw/9Ze+hJasZkbGu45LopTe0g5CgjcXdmnyuvcO8iMaLnz2TGOD?=
+ =?us-ascii?Q?tCRNhVqBXf6FB52KWrIYVYFU0Ee7ykz+xBzpJE5/PQnsyCJuGYSH3qJarlRk?=
+ =?us-ascii?Q?w1jgaaqIz511xL4A2AYbCapzAPlnojCuYFzvOtzFvczNiUeK1FVTDyyVe14X?=
+ =?us-ascii?Q?M2nA2+4Dhpya12Nthv3Zv44lJV3PxyBXoHlnbbqQiCYYBg3h3+rv151ksoiL?=
+ =?us-ascii?Q?bXkoOwkKnqLjIMtZSGNqEbfZCZ8W+dpCGrJZp7Xqq9Fq1ekm1Wp7/83WcodZ?=
+ =?us-ascii?Q?9D+jV4/6HNFZNnurN3wRnXwm?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?XjFrpV+s+cRfYAjrjDoams4p6AtVVk9Ol/2aAlcuCnyjjzfdSd3YfgEBo2nD?=
+ =?us-ascii?Q?rDRCVlsTZBYD14IT6Xcd4bUAnKwKVpo4Twz3zYTtBsEdtF+3SvNZiW9eV78l?=
+ =?us-ascii?Q?bC9GkhV6nSApFViWYLMcCvgdrEHOteSwnKj3QxVSVZ68Qg/SgAtpcHLQvGzz?=
+ =?us-ascii?Q?VbSkEIpB+ylej2++B88X/cQWUDJvX2O7XETOh1pzgdoMiNwzGYX+pQCynNEQ?=
+ =?us-ascii?Q?tIAD7qMk4tSxps8T4dHZbMKXiT/Rc24Upz57dE+2vmxGETG+xjCYUiNq3aS9?=
+ =?us-ascii?Q?h/jPD4gsl+HNkyaWv27T/Xr5EVj9U/stVk6Dvzhwc/N63OM8Nv+99uRBC55M?=
+ =?us-ascii?Q?oDbZbUawZKz9x7GBTHnfeJAefFxbjGf/exkz+GL6sskiVCyFLtw4xuMbSD14?=
+ =?us-ascii?Q?BPeqTSkjFvhI/1k+OdaKPIGdcxB1ABTQlbqDHwa5Y6bGXiCNsiLWKPBTn0ui?=
+ =?us-ascii?Q?FCDAyLzstfXnSEz1G0bsFTyBEZSamNOSaHWDsr2Y1TWoCOIFVmfQAjkkrgbe?=
+ =?us-ascii?Q?vnvUhC14UvVeZxcmo5Y8D19Zx1mN0sbtkktlktWpuktJGRRT/+9vJr7EuPnw?=
+ =?us-ascii?Q?ZwWbJKhTAQts5B1dgnmEAAZke3DQvqW6UWNqViNcPGEglSGQWBEWg8pl0Ih9?=
+ =?us-ascii?Q?i3gN6tIuzOlrQojS41MJon8lF+cu2eN+80OGD9s+xEZycPAIUkEtL3XrmeiN?=
+ =?us-ascii?Q?9rkGYfhIIkkKjO7Zm6r/YviV2lNVv2gS4rnbaOX2ora9KWbwX28UgaZJmFzq?=
+ =?us-ascii?Q?WkG3/XCIjCzfgahTRjhL1C5L0VchhaH0wGlbDLDY6hE0x2fM/+PhOPN0GGq4?=
+ =?us-ascii?Q?r9oCZVmgiH6vr2pB7AkUpYhkOH6PuwBvRyO59U468QwPm3WoSe59rr7bbQWY?=
+ =?us-ascii?Q?6Cb/bk6irVkbHuq++dzISgZjOtp7E4LCbQfOsBdl5pcvXXBWRLdPWY9N/Etv?=
+ =?us-ascii?Q?YPQLg5R+swpsPMujYOkLaHzNNYDuy0BvtvQnd3SM7wCNgRJDFUw4kqaQ/vus?=
+ =?us-ascii?Q?QZIwwe6FhplviUcedNMYpb/XSkU9Kxq5u53ZRKEr2xtB5v7KRXGZA3IcyWZ7?=
+ =?us-ascii?Q?zbcMsjvbntWIbld0iQo56DuThsO19r8EATBOiFtC/rwFI8d519K9a08J22F6?=
+ =?us-ascii?Q?qe8XgGOq7php5cvzeGF9u/m4Hml9SoPrXpfSLjO1wcpo+jJrcTNRNmQlp9nz?=
+ =?us-ascii?Q?FkjE13RGyFZ0C7p5w86UPHuhvjoL8M0kZJlpOhDhzIuZGL+mw75KraKjTmBB?=
+ =?us-ascii?Q?GUOSEDHj92MHOTnvmc3c?=
+Content-Type: multipart/alternative;
+ boundary="_000_PS2P216MB13883D8DE8571EFF1E72A6AECCB62PS2P216MB1388KORP_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 3jHP-Pt3p_CxPJfnEPCRV7t3HGwyzZDJ
-X-Proofpoint-ORIG-GUID: 3jHP-Pt3p_CxPJfnEPCRV7t3HGwyzZDJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-11_03,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0
- priorityscore=1501 adultscore=0 spamscore=0 bulkscore=0 mlxlogscore=999
- clxscore=1011 suspectscore=0 malwarescore=0 mlxscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504110049
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=ggala@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PS2P216MB1388.KORP216.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95a17db4-8791-468c-861d-08dd78dc4973
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Apr 2025 09:36:07.6416 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU4P216MB2098
+Received-SPF: pass client-ip=2a01:111:f403:d40f::2;
+ envelope-from=saanjhsengupta@outlook.com;
+ helo=SEVP216CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,318 +156,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend DIAG308 subcode 10 to return the UVC RC, RRC and command code
-in bit positions 32-47, 16-31, and 0-15 of register R1 + 1 if the
-function does not complete successfully (in addition to the
-previously returned diag response code in bit position 47-63).
+--_000_PS2P216MB13883D8DE8571EFF1E72A6AECCB62PS2P216MB1388KORP_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
----
- hw/s390x/ipl.c             | 11 ++++++----
- hw/s390x/ipl.h             |  5 +++--
- hw/s390x/s390-virtio-ccw.c | 24 +++++++++++++++------
- target/s390x/kvm/pv.c      | 44 +++++++++++++++++++++++++-------------
- target/s390x/kvm/pv.h      | 27 ++++++++++++++++-------
- 5 files changed, 76 insertions(+), 35 deletions(-)
+Hi,
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index ce6f6078d7..4f3e3945f1 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -676,7 +676,8 @@ static void s390_ipl_prepare_qipl(S390CPU *cpu)
-     cpu_physical_memory_unmap(addr, len, 1, len);
- }
- 
--int s390_ipl_prepare_pv_header(Error **errp)
-+int s390_ipl_prepare_pv_header(Error **errp, uint16_t *pv_cmd,
-+                               uint16_t *pv_rc, uint16_t *pv_rrc)
- {
-     IplParameterBlock *ipib = s390_ipl_get_iplb_pv();
-     IPLBlockPV *ipib_pv = &ipib->pv;
-@@ -685,12 +686,13 @@ int s390_ipl_prepare_pv_header(Error **errp)
- 
-     cpu_physical_memory_read(ipib_pv->pv_header_addr, hdr,
-                              ipib_pv->pv_header_len);
--    rc = s390_pv_set_sec_parms((uintptr_t)hdr, ipib_pv->pv_header_len, errp);
-+    rc = s390_pv_set_sec_parms((uintptr_t)hdr, ipib_pv->pv_header_len,
-+                               errp, pv_cmd, pv_rc, pv_rrc);
-     g_free(hdr);
-     return rc;
- }
- 
--int s390_ipl_pv_unpack(void)
-+int s390_ipl_pv_unpack(uint16_t *pv_cmd, uint16_t *pv_rc, uint16_t *pv_rrc)
- {
-     IplParameterBlock *ipib = s390_ipl_get_iplb_pv();
-     IPLBlockPV *ipib_pv = &ipib->pv;
-@@ -699,7 +701,8 @@ int s390_ipl_pv_unpack(void)
-     for (i = 0; i < ipib_pv->num_comp; i++) {
-         rc = s390_pv_unpack(ipib_pv->components[i].addr,
-                             TARGET_PAGE_ALIGN(ipib_pv->components[i].size),
--                            ipib_pv->components[i].tweak_pref);
-+                            ipib_pv->components[i].tweak_pref,
-+                            pv_cmd, pv_rc, pv_rrc);
-         if (rc) {
-             break;
-         }
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 8e3882d506..e021b2431f 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -26,8 +26,9 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp);
- void s390_ipl_fmt_loadparm(uint8_t *loadparm, char *str, Error **errp);
- void s390_rebuild_iplb(uint16_t index, IplParameterBlock *iplb);
- void s390_ipl_update_diag308(IplParameterBlock *iplb);
--int s390_ipl_prepare_pv_header(Error **errp);
--int s390_ipl_pv_unpack(void);
-+int s390_ipl_prepare_pv_header(Error **errp, uint16_t *pv_cmd,
-+                               uint16_t *pv_rc, uint16_t *pv_rrc);
-+int s390_ipl_pv_unpack(uint16_t *pv_cmd, uint16_t *pv_rc, uint16_t *pv_rrc);
- void s390_ipl_prepare_cpu(S390CPU *cpu);
- IplParameterBlock *s390_ipl_get_iplb(void);
- IplParameterBlock *s390_ipl_get_iplb_pv(void);
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index d9e683c5b4..0faf2841d6 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -53,6 +53,13 @@
- 
- static Error *pv_mig_blocker;
- 
-+struct diag308response {
-+    uint16_t pv_cmd;
-+    uint16_t pv_rrc;
-+    uint16_t pv_rc;
-+    uint16_t diag_rc;
-+};
-+
- static S390CPU *s390x_new_cpu(const char *typename, uint32_t core_id,
-                               Error **errp)
- {
-@@ -364,7 +371,10 @@ static void s390_machine_unprotect(S390CcwMachineState *ms)
-     ram_block_discard_disable(false);
- }
- 
--static int s390_machine_protect(S390CcwMachineState *ms)
-+static int s390_machine_protect(S390CcwMachineState *ms,
-+                                uint16_t *pv_cmd,
-+                                uint16_t *pv_rc,
-+                                uint16_t *pv_rrc)
- {
-     Error *local_err = NULL;
-     int rc;
-@@ -407,19 +417,19 @@ static int s390_machine_protect(S390CcwMachineState *ms)
-     }
- 
-     /* Set SE header and unpack */
--    rc = s390_ipl_prepare_pv_header(&local_err);
-+    rc = s390_ipl_prepare_pv_header(&local_err, pv_cmd, pv_rc, pv_rrc);
-     if (rc) {
-         goto out_err;
-     }
- 
-     /* Decrypt image */
--    rc = s390_ipl_pv_unpack();
-+    rc = s390_ipl_pv_unpack(pv_cmd, pv_rc, pv_rrc);
-     if (rc) {
-         goto out_err;
-     }
- 
-     /* Verify integrity */
--    rc = s390_pv_verify();
-+    rc = s390_pv_verify(pv_cmd, pv_rc, pv_rrc);
-     if (rc) {
-         goto out_err;
-     }
-@@ -452,6 +462,7 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
- {
-     S390CcwMachineState *ms = S390_CCW_MACHINE(machine);
-     enum s390_reset reset_type;
-+    struct diag308response resp;
-     CPUState *cs, *t;
-     S390CPU *cpu;
- 
-@@ -539,8 +550,9 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
-         }
-         run_on_cpu(cs, s390_do_cpu_reset, RUN_ON_CPU_NULL);
- 
--        if (s390_machine_protect(ms)) {
--            s390_pv_inject_reset_error(cs);
-+        if (s390_machine_protect(ms, &resp.pv_cmd, &resp.pv_rc, &resp.pv_rrc)) {
-+            resp.diag_rc = DIAG_308_RC_INVAL_FOR_PV;
-+            s390_pv_inject_reset_error(cs, (uint64_t *)(&resp));
-             /*
-              * Continue after the diag308 so the guest knows something
-              * went wrong.
-diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
-index b4abda2cef..3c69f6e74b 100644
---- a/target/s390x/kvm/pv.c
-+++ b/target/s390x/kvm/pv.c
-@@ -30,7 +30,7 @@ static struct kvm_s390_pv_info_vm info_vm;
- static struct kvm_s390_pv_info_dump info_dump;
- 
- static int __s390_pv_cmd(uint32_t cmd, const char *cmdname, void *data,
--                         int *pvrc)
-+                         uint16_t *pv_rc, uint16_t *pv_rrc)
- {
-     struct kvm_pv_cmd pv_cmd = {
-         .cmd = cmd,
-@@ -47,9 +47,13 @@ static int __s390_pv_cmd(uint32_t cmd, const char *cmdname, void *data,
-                      "IOCTL rc: %d", cmd, cmdname, pv_cmd.rc, pv_cmd.rrc,
-                      rc);
-     }
--    if (pvrc) {
--        *pvrc = pv_cmd.rc;
-+    if (pv_rc) {
-+        *pv_rc = pv_cmd.rc;
-     }
-+    if (pv_rrc) {
-+        *pv_rrc = pv_cmd.rrc;
-+    }
-+
-     return rc;
- }
- 
-@@ -57,8 +61,11 @@ static int __s390_pv_cmd(uint32_t cmd, const char *cmdname, void *data,
-  * This macro lets us pass the command as a string to the function so
-  * we can print it on an error.
-  */
--#define s390_pv_cmd(cmd, data) __s390_pv_cmd(cmd, #cmd, data, NULL)
--#define s390_pv_cmd_pvrc(cmd, data, pvrc) __s390_pv_cmd(cmd, #cmd, data, pvrc)
-+#define s390_pv_cmd(cmd, data)  __s390_pv_cmd(cmd, #cmd, data, NULL, NULL)
-+#define s390_pv_cmd_pvrc(cmd, data, pv_rc) \
-+                                __s390_pv_cmd(cmd, #cmd, data, pv_rc, NULL)
-+#define s390_pv_cmd_pvrc_pvrrc(cmd, data, pv_rc, pv_rrc) \
-+                                __s390_pv_cmd(cmd, #cmd, data, pv_rc, pv_rrc)
- 
- static void s390_pv_cmd_exit(uint32_t cmd, void *data)
- {
-@@ -149,18 +156,21 @@ bool s390_pv_vm_try_disable_async(S390CcwMachineState *ms)
- }
- 
- #define DIAG_308_UV_RC_INVAL_HOSTKEY    0x0108
--int s390_pv_set_sec_parms(uint64_t origin, uint64_t length, Error **errp)
-+int s390_pv_set_sec_parms(uint64_t origin, uint64_t length,
-+                          Error **errp, uint16_t *pv_cmd,
-+                          uint16_t *pv_rc, uint16_t *pv_rrc)
- {
--    int ret, pvrc;
-+    int ret;
-     struct kvm_s390_pv_sec_parm args = {
-         .origin = origin,
-         .length = length,
-     };
- 
--    ret = s390_pv_cmd_pvrc(KVM_PV_SET_SEC_PARMS, &args, &pvrc);
-+    *pv_cmd = KVM_PV_SET_SEC_PARMS;
-+    ret = s390_pv_cmd_pvrc_pvrrc(*pv_cmd, &args, pv_rc, pv_rrc);
-     if (ret) {
-         error_setg(errp, "Failed to set secure execution parameters");
--        if (pvrc == DIAG_308_UV_RC_INVAL_HOSTKEY) {
-+        if (*pv_rc == DIAG_308_UV_RC_INVAL_HOSTKEY) {
-             error_append_hint(errp, "Please check whether the image is "
-                                     "correctly encrypted for this host\n");
-         }
-@@ -172,7 +182,9 @@ int s390_pv_set_sec_parms(uint64_t origin, uint64_t length, Error **errp)
- /*
-  * Called for each component in the SE type IPL parameter block 0.
-  */
--int s390_pv_unpack(uint64_t addr, uint64_t size, uint64_t tweak)
-+int s390_pv_unpack(uint64_t addr, uint64_t size,
-+                   uint64_t tweak, uint16_t *pv_cmd,
-+                   uint16_t *pv_rc, uint16_t *pv_rrc)
- {
-     struct kvm_s390_pv_unp args = {
-         .addr = addr,
-@@ -180,7 +192,8 @@ int s390_pv_unpack(uint64_t addr, uint64_t size, uint64_t tweak)
-         .tweak = tweak,
-     };
- 
--    return s390_pv_cmd(KVM_PV_UNPACK, &args);
-+    *pv_cmd = KVM_PV_UNPACK;
-+    return s390_pv_cmd_pvrc_pvrrc(*pv_cmd, &args, pv_rc, pv_rrc);
- }
- 
- void s390_pv_prep_reset(void)
-@@ -188,9 +201,10 @@ void s390_pv_prep_reset(void)
-     s390_pv_cmd_exit(KVM_PV_PREP_RESET, NULL);
- }
- 
--int s390_pv_verify(void)
-+int s390_pv_verify(uint16_t *pv_cmd, uint16_t *pv_rc, uint16_t *pv_rrc)
- {
--    return s390_pv_cmd(KVM_PV_VERIFY, NULL);
-+    *pv_cmd = KVM_PV_VERIFY;
-+    return s390_pv_cmd_pvrc_pvrrc(*pv_cmd, NULL, pv_rc, pv_rrc);
- }
- 
- void s390_pv_unshare(void)
-@@ -198,13 +212,13 @@ void s390_pv_unshare(void)
-     s390_pv_cmd_exit(KVM_PV_UNSHARE_ALL, NULL);
- }
- 
--void s390_pv_inject_reset_error(CPUState *cs)
-+void s390_pv_inject_reset_error(CPUState *cs, uint64_t *resp)
- {
-     int r1 = (cs->kvm_run->s390_sieic.ipa & 0x00f0) >> 4;
-     CPUS390XState *env = &S390_CPU(cs)->env;
- 
-     /* Report that we are unable to enter protected mode */
--    env->regs[r1 + 1] = DIAG_308_RC_INVAL_FOR_PV;
-+    env->regs[r1 + 1] = *resp;
- }
- 
- uint64_t kvm_s390_pv_dmp_get_size_cpu(void)
-diff --git a/target/s390x/kvm/pv.h b/target/s390x/kvm/pv.h
-index 5e9c8bd351..7c003d1e28 100644
---- a/target/s390x/kvm/pv.h
-+++ b/target/s390x/kvm/pv.h
-@@ -42,12 +42,16 @@ int s390_pv_query_info(void);
- int s390_pv_vm_enable(void);
- void s390_pv_vm_disable(void);
- bool s390_pv_vm_try_disable_async(S390CcwMachineState *ms);
--int s390_pv_set_sec_parms(uint64_t origin, uint64_t length, Error **errp);
--int s390_pv_unpack(uint64_t addr, uint64_t size, uint64_t tweak);
-+int s390_pv_set_sec_parms(uint64_t origin, uint64_t length,
-+                          Error **errp, uint16_t *pv_cmd,
-+                          uint16_t *pv_rc, uint16_t *pv_rrc);
-+int s390_pv_unpack(uint64_t addr, uint64_t size,
-+                   uint64_t tweak, uint16_t *pv_cmd,
-+                   uint16_t *pv_rc, uint16_t *pv_rrc);
- void s390_pv_prep_reset(void);
--int s390_pv_verify(void);
-+int s390_pv_verify(uint16_t *pv_cmd, uint16_t *pv_rc, uint16_t *pv_rrc);
- void s390_pv_unshare(void);
--void s390_pv_inject_reset_error(CPUState *cs);
-+void s390_pv_inject_reset_error(CPUState *cs, uint64_t *resp);
- uint64_t kvm_s390_pv_dmp_get_size_cpu(void);
- uint64_t kvm_s390_pv_dmp_get_size_mem_state(void);
- uint64_t kvm_s390_pv_dmp_get_size_completion_data(void);
-@@ -63,12 +67,19 @@ static inline int s390_pv_vm_enable(void) { return 0; }
- static inline void s390_pv_vm_disable(void) {}
- static inline bool s390_pv_vm_try_disable_async(S390CcwMachineState *ms) { return false; }
- static inline int s390_pv_set_sec_parms(uint64_t origin, uint64_t length,
--                                        Error **errp) { return 0; }
--static inline int s390_pv_unpack(uint64_t addr, uint64_t size, uint64_t tweak) { return 0; }
-+                                        Error **errp, uint16_t *pv_cmd,
-+                                        uint16_t *pv_rc, uint16_t *pv_rrc)
-+                                        { return 0; }
-+static inline int s390_pv_unpack(uint64_t addr, uint64_t size,
-+                                 uint64_t tweak, uint16_t *pv_cmd,
-+                                 uint16_t *pv_rc, uint16_t *pv_rrc)
-+                                 { return 0; }
- static inline void s390_pv_prep_reset(void) {}
--static inline int s390_pv_verify(void) { return 0; }
-+static inline int s390_pv_verify(uint16_t *pv_cmd,
-+                                 uint16_t *pv_rc,
-+                                 uint16_t *pv_rrc) { return 0; }
- static inline void s390_pv_unshare(void) {}
--static inline void s390_pv_inject_reset_error(CPUState *cs) {};
-+static inline void s390_pv_inject_reset_error(CPUState *cs, uint64_t *resp) {};
- static inline uint64_t kvm_s390_pv_dmp_get_size_cpu(void) { return 0; }
- static inline uint64_t kvm_s390_pv_dmp_get_size_mem_state(void) { return 0; }
- static inline uint64_t kvm_s390_pv_dmp_get_size_completion_data(void) { return 0; }
--- 
-2.49.0
+Thank you for responding.
 
+The error is consistent while executing a command on the latest master bran=
+ch (commit ID: 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365) for the v10.0.0-rc=
+3 release.
+
+Could you please confirm if you are using the same command (like I do in my=
+ case), and if possible, share it for reference?
+
+Also, what OS are you emulating in QEMU and what is your host machine confi=
+guration over which QEMU is running ?
+
+Regards
+Saanjh Sengupta
+
+
+Sent from Outlook for Android<https://aka.ms/AAb9ysg>
+________________________________
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Sent: Thursday, April 10, 2025 8:55:32 PM
+To: Saanjh Sengupta <saanjhsengupta@outlook.com>
+Cc: philmd@linaro.org <philmd@linaro.org>; pbonzini@redhat.com <pbonzini@re=
+dhat.com>; marcandre.lureau@redhat.com <marcandre.lureau@redhat.com>; amir.=
+gonnen@neuroblade.ai <amir.gonnen@neuroblade.ai>; qemu-devel@nongnu.org <qe=
+mu-devel@nongnu.org>; aabhashswain25@gmail.com <aabhashswain25@gmail.com>; =
+aniantre@gmail.com <aniantre@gmail.com>; guptapriyanshi180@gmail.com <gupta=
+priyanshi180@gmail.com>; harshitgupta5049@gmail.com <harshitgupta5049@gmail=
+.com>
+Subject: Re: Issue with stoptrigger.c Plugin in QEMU Emulation
+
+Hi Saanjh,
+
+I have not been able to reproduce the issue with current master branch.
+Is it an error you see for every run?
+
+Regards,
+Pierrick
+
+On 4/10/25 04:10, Saanjh Sengupta wrote:
+> Hi,
+>
+> I am writing to seek assistance with an issue I am experiencing while
+> using the stoptrigger.c plugin in QEMU emulation. I am currently
+> utilising the latest QEMU version, 9.2.92, and attempting to emulate the
+> Debian 11 as the operating system.
+>
+> The command I am using to emulate QEMU is as follows:
+> *./build/qemu-system-x86_64 -m 2048M -smp 2 -boot c -nographic -serial
+> mon:stdio -nic tap,ifname=3Dtap0,script=3Dno,downscript=3Dno  -hda
+> debian11.qcow2 -icount shift=3D0 -plugin ./build/contrib/plugins/
+> libstoptrigger.so,icount=3D9000000000 -d plugin -qmp
+> tcp:localhost:4444,server,wait=3Doff*
+>
+> However, when I attempt to use the -icount shift=3D0 option, the plugin
+> fails with the error "*Basic icount read*". I have attached a screenshot
+> of the error for your reference.
+>
+> error.png
+>
+> When I remove the -plugin argument from the command the OS boots up
+> perfectly, as expected. Command utilised in that context was somewhat
+> like *./build/qemu-system-x86_64 -m 2048M -smp 2 -boot c -nographic -
+> serial mon:stdio -nic tap,ifname=3Dtap0,script=3Dno,downscript=3Dno  -hda
+> debian11.qcow2 -icount shift=3D0 -qmp tcp:localhost:4444,server,wait=3Dof=
+f*
+>
+>
+> I would greatly appreciate it if you could provide guidance on resolving
+> this issue. Specifically, I would like to know the cause of the error
+> and any potential solutions or workarounds that could be implemented to
+> successfully use the stoptrigger.c plugin with the -icount shift=3D0 opti=
+on.
+>
+>
+> Regards
+>
+> Saanjh Sengupta
+>
+
+
+--_000_PS2P216MB13883D8DE8571EFF1E72A6AECCB62PS2P216MB1388KORP_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+</head>
+<body>
+<div dir=3D"auto">Hi,</div>
+<div dir=3D"auto"><br>
+</div>
+<div dir=3D"auto">Thank you for responding.&nbsp;</div>
+<div dir=3D"auto"><br>
+</div>
+<div dir=3D"auto">The error is consistent while executing a command on the =
+latest master branch (<b>commit ID: 56c6e249b6988c1b6edc2dd34ebb0f1e570a136=
+5)</b>&nbsp;for the
+<b>v10.0.0-rc3</b>&nbsp;release.&nbsp;</div>
+<div dir=3D"auto"><br>
+</div>
+<div dir=3D"auto">Could you please confirm if you are using the same comman=
+d (like I do in my case), and if possible, share it for reference?</div>
+<div dir=3D"auto"><br>
+</div>
+<div dir=3D"auto">Also, what OS are you emulating in QEMU and what is your =
+host machine configuration over which QEMU is running ?&nbsp;</div>
+<div dir=3D"auto"><br>
+</div>
+<div dir=3D"auto">Regards</div>
+<div dir=3D"auto">Saanjh Sengupta&nbsp;</div>
+<div dir=3D"auto"><br>
+</div>
+<div id=3D"ms-outlook-mobile-body-separator-line" dir=3D"auto"><br>
+</div>
+<div dir=3D"auto" id=3D"ms-outlook-mobile-signature">Sent from <a href=3D"h=
+ttps://aka.ms/AAb9ysg">
+Outlook for Android</a></div>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Pierrick Bouvier &lt;=
+pierrick.bouvier@linaro.org&gt;<br>
+<b>Sent:</b> Thursday, April 10, 2025 8:55:32 PM<br>
+<b>To:</b> Saanjh Sengupta &lt;saanjhsengupta@outlook.com&gt;<br>
+<b>Cc:</b> philmd@linaro.org &lt;philmd@linaro.org&gt;; pbonzini@redhat.com=
+ &lt;pbonzini@redhat.com&gt;; marcandre.lureau@redhat.com &lt;marcandre.lur=
+eau@redhat.com&gt;; amir.gonnen@neuroblade.ai &lt;amir.gonnen@neuroblade.ai=
+&gt;; qemu-devel@nongnu.org &lt;qemu-devel@nongnu.org&gt;; aabhashswain25@g=
+mail.com
+ &lt;aabhashswain25@gmail.com&gt;; aniantre@gmail.com &lt;aniantre@gmail.co=
+m&gt;; guptapriyanshi180@gmail.com &lt;guptapriyanshi180@gmail.com&gt;; har=
+shitgupta5049@gmail.com &lt;harshitgupta5049@gmail.com&gt;<br>
+<b>Subject:</b> Re: Issue with stoptrigger.c Plugin in QEMU Emulation</font=
+>
+<div>&nbsp;</div>
+</div>
+<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
+">
+<div class=3D"PlainText">Hi Saanjh,<br>
+<br>
+I have not been able to reproduce the issue with current master branch.<br>
+Is it an error you see for every run?<br>
+<br>
+Regards,<br>
+Pierrick<br>
+<br>
+On 4/10/25 04:10, Saanjh Sengupta wrote:<br>
+&gt; Hi,<br>
+&gt; <br>
+&gt; I am writing to seek assistance with an issue I am experiencing while =
+<br>
+&gt; using the stoptrigger.c plugin in QEMU emulation. I am currently <br>
+&gt; utilising the latest QEMU version, 9.2.92, and attempting to emulate t=
+he <br>
+&gt; Debian 11 as the operating system.<br>
+&gt; <br>
+&gt; The command I am using to emulate QEMU is as follows:<br>
+&gt; *./build/qemu-system-x86_64 -m 2048M -smp 2 -boot c -nographic -serial=
+ <br>
+&gt; mon:stdio -nic tap,ifname=3Dtap0,script=3Dno,downscript=3Dno&nbsp; -hd=
+a <br>
+&gt; debian11.qcow2 -icount shift=3D0 -plugin ./build/contrib/plugins/ <br>
+&gt; libstoptrigger.so,icount=3D9000000000 -d plugin -qmp <br>
+&gt; tcp:localhost:4444,server,wait=3Doff*<br>
+&gt; <br>
+&gt; However, when I attempt to use the -icount shift=3D0 option, the plugi=
+n <br>
+&gt; fails with the error &quot;*Basic icount read*&quot;. I have attached =
+a screenshot <br>
+&gt; of the error for your reference.<br>
+&gt; <br>
+&gt; error.png<br>
+&gt; <br>
+&gt; When I remove the -plugin argument from the command the OS boots up <b=
+r>
+&gt; perfectly, as expected. Command utilised in that context was somewhat =
+<br>
+&gt; like *./build/qemu-system-x86_64 -m 2048M -smp 2 -boot c -nographic - =
+<br>
+&gt; serial mon:stdio -nic tap,ifname=3Dtap0,script=3Dno,downscript=3Dno&nb=
+sp; -hda <br>
+&gt; debian11.qcow2 -icount shift=3D0 -qmp tcp:localhost:4444,server,wait=
+=3Doff*<br>
+&gt; <br>
+&gt; <br>
+&gt; I would greatly appreciate it if you could provide guidance on resolvi=
+ng <br>
+&gt; this issue. Specifically, I would like to know the cause of the error =
+<br>
+&gt; and any potential solutions or workarounds that could be implemented t=
+o <br>
+&gt; successfully use the stoptrigger.c plugin with the -icount shift=3D0 o=
+ption.<br>
+&gt; <br>
+&gt; <br>
+&gt; Regards<br>
+&gt; <br>
+&gt; Saanjh Sengupta<br>
+&gt; <br>
+<br>
+</div>
+</span></font></div>
+</body>
+</html>
+
+--_000_PS2P216MB13883D8DE8571EFF1E72A6AECCB62PS2P216MB1388KORP_--
 
