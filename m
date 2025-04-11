@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 590B4C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 10:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C91C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 10:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3BbY-0001cT-3b; Fri, 11 Apr 2025 06:27:24 -0400
+	id 1u3Bci-0002rD-Km; Fri, 11 Apr 2025 06:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3BbW-0001bE-42
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:27:22 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3Bcg-0002qQ-9L
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:28:34 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3BbU-0006Gx-9g
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:27:21 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso13182675e9.0
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 03:27:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3Bce-0006ZR-JQ
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:28:34 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cebe06e9eso13530515e9.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 03:28:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744367238; x=1744972038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744367311; x=1744972111; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gJNgIjzYFRqq6Q+RMe/zLhdYNWW11VICjpZpl6ROY54=;
- b=Gpk7+zUNUAdzT1t1jXnh4b6dOS+itb28j8+jOgOeiXMutKJwbkYQ8X78iEDoL5DhMr
- iXvWeItxJz1Pynag059p72JG4c6HbFgS1bElxutywFmlTFMFL1FvO2ya4e8Y/WHavUbM
- xxj3S0sObLZqb+w6atC6i49VEldVDOQPzLl9TEpLEJn70dkiVXzZFK9FtMA8xb8aSETj
- PikNj8pC1ZHFNQnI1OADkyY9XY9NVUQH1RV8D1KqbV+lQXdQD2Fe4CEPMFcyj1eS9M4E
- dP1RT+74vZ1mIsuRCASFJSglI+LOFMCxgJ6fkxqW9JNoJBpcB2leRRvK2dABG9Yqb8yq
- KTQg==
+ bh=uJgaJgH1ayGQT4STGlnKfpb19CIyOTbXlUDxlQQFwyI=;
+ b=pqy/oRsyeL2Ft6fOXcBPXYNxJgzWlWEnri9rUOD9jhP2OdrUMmK9BwWbtymQbQCkea
+ 49VQF3TkPX0mHB+RJCY4GdW7DKTeJ2ClfoC6dc47ezY5fm4n81GIxvfR+537HN+8qHd9
+ PqvH713V7VD6ZQ947VLf/DdpM6iLimbw7JKaTAPg/TUwDjgbBEC53hu09WKsB18HpIMV
+ ui2eBF6tiNNLfoiuw9pU5rq5F7qnuZmxrQFiNYLcmn0WLaJQaMr2h/3k54NOrnwKWjQ2
+ mGkwIcrXjlAa7FHO1aw+N8BXHWoGlolDC2mxqdkxHemkgmAUuvZcPXw1FWDmwiHvKsxg
+ if1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744367238; x=1744972038;
+ d=1e100.net; s=20230601; t=1744367311; x=1744972111;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gJNgIjzYFRqq6Q+RMe/zLhdYNWW11VICjpZpl6ROY54=;
- b=BAdWeflp8+/l9f9C8mgppEujtI6YS/O/lQsxDEd5aslCkbmNAS5rq2pCL22ZEVN3+G
- QifwfNRKjmVGBvQHxqlmk2cJ4gySsGGW5ScQCFAvsRU6BztbA5iiQEZHgwu/8gunrjEI
- /7hQR8ApH8bhgq924hdKVz/KsHG6dSOm4rTAiM5xhhRCIpYNmngoql0qfFTTt2lMetuI
- C1NKPL8jBLbRYxI7JIq94Ck4jLsYxnvqIM2F0HH17mrvxdbNVlg2CSIOqTM8uEMsnQJR
- s4vTZu51JHKi8XcZ2kBQjUWBaxvkVlzGz+F5aE0YyKF6H64Jjpw7db1M5StreRgyIR4t
- KU+w==
-X-Gm-Message-State: AOJu0Yza5+5xxOLGxFt/I5ePTXQlwlT/2ObTwW/YhhSVBM7uYXeMOKWu
- iHDBCBeIFBL/P/puxJKwcnUfAh+gojtQv3WC7YqXQnqrNdp5dvb9SSE2sRLg1CU=
-X-Gm-Gg: ASbGnctF2WIbbpAuujt6RwbPvprwt9NtdFfUxDhSf3DesPzE6O8VnMbCJxcHSUZXG2r
- SXYwA3IfDCbsKPdDk6x+y4Ex3n5rx2Ri86d6b2B10e2EJ54VPcQ4F1+cHPTMSPCcrzFf+jj5ZYn
- Pvdgiu4RfMTtmaoybyrpeKZeYweWPMcFA9PxZwwBkZLo6JO22e2LTmt9jvnXgvjB4lEBVBb404f
- DZC6ra2jSpfctwUqc6B5Op2wr6RCbnF1ZePvam5QE/ksKh7UdpHW7QMAraFvfP1UB5Zo6BJpwjG
- n33BI1W1aZgjt1e14NG/19am9h/w5zfBl6JVbfwqNZ4ylnSN2tPT+sW1cnkgurC3VsFk33nNLEw
- XFk8tlZay
-X-Google-Smtp-Source: AGHT+IFI9lIeLobmjvHbgGQhZgeHXT0eJG5tN0I/86EXb1Yc+lQu3hAWU6nKzdnLLEvMGp6IPmIPaw==
-X-Received: by 2002:a05:600c:a04:b0:43d:ed:acd5 with SMTP id
- 5b1f17b1804b1-43f3a93d4a8mr18630495e9.10.1744367238334; 
- Fri, 11 Apr 2025 03:27:18 -0700 (PDT)
+ bh=uJgaJgH1ayGQT4STGlnKfpb19CIyOTbXlUDxlQQFwyI=;
+ b=CwTy7vs/cpiBLwzJZ1/ft5Xl5s7KXjZEyxq7+o4Gh56wX+Djut9jV+69/kiXUfEcRg
+ N3cRsSa6Dc0CH9HBFEChxNl4f5ESxmMYMkKTsBajpRwjaODRHLLYoghBMGGTyXLw0YnK
+ st3DLRWCfXzx1eClPmxW70+xXRsCOyr3iz/E6SqAVC1abrbn687jfWEKfExURbmDwDiY
+ aFak4Vn9M1HWbdg2l51n0SvXeEGmK5Y7C/LbqX8FEck2WI8Rp5jGAMimuOGRhQTXvW/f
+ 7SW2jS5yGl4b7xuPdoa4JTMs2rpSnEgjIEXYqDHwd4frxXN7yx83RAAOn7enooh/UYbT
+ NM6Q==
+X-Gm-Message-State: AOJu0YzWMNZ6dIyPtB2F3rLNaDbTdVWGaEOX5tU9T/sWRLL2dN/XXlOG
+ CwT6c2cNGlZfZnDC39qswhYK+7pHtTqjyWtTFYskBKFYCCEN59vBw36+aogq0gU05sNXt3KLbHU
+ z
+X-Gm-Gg: ASbGncsRQKzOlFQWx5kyKVyQd609nTt8rC8EZMIP6dx/OSyox1nXB9y6wJbdLuVFjyn
+ rLwuvSN7ClY7NNcPDHVBQE6H2JfLvfiby86G6afF5KhFm+CTV4HlW5LKwfSvEnUNKsQt4dtyk47
+ LZa/yMciqTxfNVf8zCbySCgoTGN5d4MTRBny8Dmx0+vNX6PgOvuzhE62N1lU0kIn4UgnzHltWCP
+ BiRwGutxqz96wPCpv3dDSlPMEW2Uws6TahawZRrVZc+g24hvn24Co3lToK9DHLmrYf6b9GcyCJn
+ mGUm6iVYUMDYAJzXrQnUi805d0xbW3rVPwf608vd/k0fGjp1G5RNg8R5nUS/RJujnFmX3OnN0h+
+ au2S2xw3b
+X-Google-Smtp-Source: AGHT+IGKEJN57rf68Xx7Cy5uQDx/xXqSsNOZz9AwFEvKQ85IkmRybu0Qo4tQhXIpj+PlK3GEsE0C6Q==
+X-Received: by 2002:a05:6000:1865:b0:39c:1424:2827 with SMTP id
+ ffacd0b85a97d-39ea5200a08mr1803535f8f.15.1744367310721; 
+ Fri, 11 Apr 2025 03:28:30 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eaf43cceesm1576867f8f.73.2025.04.11.03.27.17
+ 5b1f17b1804b1-43f235a5d57sm80408585e9.34.2025.04.11.03.28.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Apr 2025 03:27:17 -0700 (PDT)
-Message-ID: <3796b8e8-b896-4b7e-a90f-ae15a4132100@linaro.org>
-Date: Fri, 11 Apr 2025 12:27:17 +0200
+ Fri, 11 Apr 2025 03:28:30 -0700 (PDT)
+Message-ID: <ef79789a-c16b-4bf9-8acb-9fdb72711019@linaro.org>
+Date: Fri, 11 Apr 2025 12:28:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/10] usb/msd: Add some additional assertions
+Subject: Re: [PATCH v2 08/10] usb/msd: Rename mode to cbw_state, and tweak
+ names
 To: Nicholas Piggin <npiggin@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>
 Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
 References: <20250411080431.207579-1-npiggin@gmail.com>
- <20250411080431.207579-8-npiggin@gmail.com>
+ <20250411080431.207579-9-npiggin@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250411080431.207579-8-npiggin@gmail.com>
+In-Reply-To: <20250411080431.207579-9-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,71 +103,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/4/25 10:04, Nicholas Piggin wrote:
-> Add more assertions to help verify internal logic.
+> This reflects a little better what it does, particularly with a
+> subsequent change to relax the order packets are seen in. This
+> field is not the general state of the MSD state machine, rather
+> it follows packets that are completed as part of a CBW command.
+> 
+> The difference is a bit subtle, so for a concrete example, the
+> next change will permit the host to send a CSW packet before it
+> sends the associated CBW packet. In that case the CSW packet
+> will be tracked and the MSD state machine will move, but this
+> mode / cbw_state field would remain unchanged (in the "expecting
+> CBW" state), until the CBW packet arrives.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   hw/usb/dev-storage.c | 23 +++++++++++++++++++----
->   1 file changed, 19 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-> index a9d8d4e8618..3b806872587 100644
-> --- a/hw/usb/dev-storage.c
-> +++ b/hw/usb/dev-storage.c
-> @@ -264,13 +264,24 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
->       MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
->       USBPacket *p = s->data_packet;
->   
-> -    if ((s->mode == USB_MSDM_DATAOUT) != (req->cmd.mode == SCSI_XFER_TO_DEV)) {
-> -        usb_msd_fatal_error(s);
-> -        return;
-> +    if (s->mode == USB_MSDM_DATAIN) {
+>   include/hw/usb/msd.h | 12 +++++------
+>   hw/usb/dev-storage.c | 50 +++++++++++++++++++++++---------------------
+>   2 files changed, 32 insertions(+), 30 deletions(-)
 
-Or switch().
-
-> +        if (req->cmd.mode == SCSI_XFER_TO_DEV) {
-> +            usb_msd_fatal_error(s);
-> +            return;
-> +        }
-> +    } else if (s->mode == USB_MSDM_DATAOUT) {
-> +        if (req->cmd.mode != SCSI_XFER_TO_DEV) {
-> +            usb_msd_fatal_error(s);
-> +            return;
-> +        }
-> +    } else {
-> +        g_assert_not_reached();
->       }
->   
-> +    assert(s->scsi_len == 0);
->       s->scsi_len = len;
->       s->scsi_off = 0;
-> +
->       if (p) {
->           usb_msd_copy_data(s, p);
->           p = s->data_packet;
-> @@ -288,6 +299,10 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
->   
->       trace_usb_msd_cmd_complete(req->status, req->tag);
->   
-> +    g_assert(s->req);
-> +    /* The CBW is what starts the SCSI request */
-> +    g_assert(s->mode != USB_MSDM_CBW);
-> +
->       s->csw.sig = cpu_to_le32(0x53425355);
->       s->csw.tag = cpu_to_le32(req->tag);
->       s->csw.residue = cpu_to_le32(s->data_len);
-> @@ -486,7 +501,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
->           trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
->                                    cbw.cmd_len, s->data_len);
->           assert(le32_to_cpu(s->csw.residue) == 0);
-> -        s->scsi_len = 0;
-> +        assert(s->scsi_len == 0);
-
-Preferably having scsi_len changes in a distinct patch,
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->           s->req = scsi_req_new(scsi_dev, tag, cbw.lun,
->                                 cbw.cmd, cbw.cmd_len, NULL);
->           if (s->commandlog) {
 
 
