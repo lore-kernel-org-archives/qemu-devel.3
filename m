@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB12C369A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80399C369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3LDJ-0008Rj-Cq; Fri, 11 Apr 2025 16:43:01 -0400
+	id 1u3LDw-0000i7-JB; Fri, 11 Apr 2025 16:43:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1u3LDI-0008PP-1A
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:43:00 -0400
+ id 1u3LDv-0000hr-09
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:43:39 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1u3LDG-0001Mq-B7
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:42:59 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BKbBdp026274;
- Fri, 11 Apr 2025 20:42:52 GMT
+ id 1u3LDt-0001PJ-78
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:43:38 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BKVuD7027699;
+ Fri, 11 Apr 2025 20:43:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
  :mime-version:references:reply-to:subject:to; s=corp-2023-11-20;
- bh=W1P1bs7VQBT8ohlWDXoBmUG081fUqYeB7+rytmTTyUI=; b=dYAg3Ua+SyVN
- SXNUc0kAMOJCbIfU/xUuJV7lI20LypXyQyw2uN+DHKQ7Ha5hoVjCvGmcECrs1BhZ
- a+S9VUSgEBBcQjAH0aaiYaVlcLvZ9oqsNSBxbgY/et3VYG0Ows1bkMLFQhDyNG2P
- YF7DUjNt0S2jxUYSbO7nhu7VpJJ9dXnqel3QR0MxTw9/Nc8vPOnLVrtnEfXYkLkD
- vl0bvbfNh3GY7wQeJnF9RYw9SSLEDKHrdUl2nWloJSMw9K232r4zde5++fi8ge3o
- ZzD25wlK0rc6WLtq63XH6HgTB5GoojXnZXP26kINtYqtgczPh6TxjFOQ50nAQQ7J
- C6s8niEdYQ==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45ya96808e-1
+ bh=C2OKf7LxVmRA2bOllnVhZdW+mMACA47U5zJUhNIozZk=; b=amKkbdWnAw0M
+ VULFa2FIlOKZoo0M1ybRWTFzJVkAcqgRMPq/LPdOK7bcHz0W3RYFjSwww3Oes4fC
+ K8TsbU7zUbu49wKI/LuXndxF3YgCwDFRJnkebKWQj1yfOMFHR1lCPwgYKvZJyhEY
+ cxkkm7PXujFK/ebG5Tr6GpvvotR5oDHuyDUV9vcIpPjyYjJ2dhLhdZxmjy/YjC46
+ zfX+KzD5XqH+cmtSx2MnLCmFPliwfbCbNyKma46dWYRgncWy5As/lyURWq/XWWce
+ Y8kOxH5BcU8WOVYzuTCDGgJulOQVVGmwNMbrAaNYg6uf1jttTC8ZOW7Xj0BCCRS6
+ Xd79mQ9mzg==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45ya6ug0fh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Apr 2025 20:42:51 +0000 (GMT)
+ Fri, 11 Apr 2025 20:43:30 +0000 (GMT)
 Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53BKJ7fX001648; Fri, 11 Apr 2025 20:42:51 GMT
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 53BKMr7G020992; Fri, 11 Apr 2025 20:43:28 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 45ttye5dht-1
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 45ttymjbxd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Apr 2025 20:42:51 +0000
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BKgodo035382;
- Fri, 11 Apr 2025 20:42:50 GMT
+ Fri, 11 Apr 2025 20:43:28 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BKhRO1016781;
+ Fri, 11 Apr 2025 20:43:27 GMT
 Received: from localhost.localdomain (dhcp-10-43-12-85.usdhcp.oraclecorp.com
  [10.43.12.85])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 45ttye5dgr-1; Fri, 11 Apr 2025 20:42:50 +0000
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 45ttymjbtj-1; Fri, 11 Apr 2025 20:43:27 +0000
 From: Annie Li <annie.li@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
@@ -62,9 +62,9 @@ Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
  wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, slp@redhat.com, eblake@redhat.com,
  armbru@redhat.com, annie.li@oracle.com, miguel.luis@oracle.com
-Subject: [RFC V3 PATCH 07/13] microvm: support control method sleep button
-Date: Fri, 11 Apr 2025 16:42:35 -0400
-Message-ID: <20250411204236.2977-1-annie.li@oracle.com>
+Subject: [RFC V3 PATCH 08/13] hw/acpi: Add ACPI GED support for the sleep event
+Date: Fri, 11 Apr 2025 16:42:57 -0400
+Message-ID: <20250411204257.2988-1-annie.li@oracle.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20250411201912.2872-1-annie.li@oracle.com>
 References: <20250411201912.2872-1-annie.li@oracle.com>
@@ -73,13 +73,13 @@ Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-11_08,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxlogscore=999
- suspectscore=0 adultscore=0 bulkscore=0 mlxscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2502280000 definitions=main-2504110131
-X-Proofpoint-ORIG-GUID: DBHbSFo17MImDQFgprVYfyjps34PCAwX
-X-Proofpoint-GUID: DBHbSFo17MImDQFgprVYfyjps34PCAwX
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ spamscore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2502280000 definitions=main-2504110132
+X-Proofpoint-GUID: u_8u23RD7touKugkHvWoUrxndniq4COr
+X-Proofpoint-ORIG-GUID: u_8u23RD7touKugkHvWoUrxndniq4COr
 Received-SPF: pass client-ip=205.220.165.32; envelope-from=annie.li@oracle.com;
  helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -106,62 +106,72 @@ Reply-To: annie.li@oracle.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the support of control method sleep button and System
-S3 Sleeping State for microvm.
+From: Miguel Luis <miguel.luis@oracle.com>
 
+Add support for ACPI GED sleep event on the ACPI device
+interface so that HW-reduced systems can enable guests
+to sleep.
+
+Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
 Signed-off-by: Annie Li <annie.li@oracle.com>
 ---
- hw/i386/acpi-microvm.c                 | 11 +++++++++++
- include/hw/acpi/generic_event_device.h |  1 +
- 2 files changed, 12 insertions(+)
+ hw/acpi/generic_event_device.c         | 9 +++++++++
+ include/hw/acpi/generic_event_device.h | 1 +
+ 2 files changed, 10 insertions(+)
 
-diff --git a/hw/i386/acpi-microvm.c b/hw/i386/acpi-microvm.c
-index 279da6b4aa..57c45ea327 100644
---- a/hw/i386/acpi-microvm.c
-+++ b/hw/i386/acpi-microvm.c
-@@ -32,6 +32,7 @@
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index c85d97ca37..5a1ac8e362 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -13,6 +13,7 @@
+ #include "qapi/error.h"
+ #include "hw/acpi/acpi.h"
  #include "hw/acpi/generic_event_device.h"
- #include "hw/acpi/utils.h"
- #include "hw/acpi/erst.h"
 +#include "hw/acpi/control_method_device.h"
- #include "hw/i386/fw_cfg.h"
- #include "hw/i386/microvm.h"
- #include "hw/pci/pci.h"
-@@ -123,12 +124,22 @@ build_dsdt_microvm(GArray *table_data, BIOSLinker *linker,
-     build_ged_aml(sb_scope, GED_DEVICE, x86ms->acpi_dev,
-                   GED_MMIO_IRQ, AML_SYSTEM_MEMORY, GED_MMIO_BASE);
-     acpi_dsdt_add_power_button(sb_scope);
-+    acpi_dsdt_add_sleep_button(sb_scope);
-     acpi_dsdt_add_virtio(sb_scope, mms);
-     acpi_dsdt_add_xhci(sb_scope, mms);
-     acpi_dsdt_add_pci(sb_scope, mms);
-     aml_append(dsdt, sb_scope);
+ #include "hw/irq.h"
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/mem/nvdimm.h"
+@@ -26,6 +27,7 @@ static const uint32_t ged_supported_events[] = {
+     ACPI_GED_PWR_DOWN_EVT,
+     ACPI_GED_NVDIMM_HOTPLUG_EVT,
+     ACPI_GED_CPU_HOTPLUG_EVT,
++    ACPI_GED_SLEEP_EVT,
+ };
  
-     /* ACPI 5.0: Table 7-209 System State Package */
-+    scope = aml_scope("\\");
-+    pkg = aml_package(4);
-+    aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S3));
-+    aml_append(pkg, aml_int(0)); /* ignored */
-+    aml_append(pkg, aml_int(0)); /* reserved */
-+    aml_append(pkg, aml_int(0)); /* reserved */
-+    aml_append(scope, aml_name_decl("_S3", pkg));
-+    aml_append(dsdt, scope);
-+
-     scope = aml_scope("\\");
-     pkg = aml_package(4);
-     aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S5));
+ /*
+@@ -121,6 +123,11 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+                            aml_notify(aml_name("\\_SB.NVDR"),
+                                       aml_int(0x80)));
+                 break;
++            case ACPI_GED_SLEEP_EVT:
++                aml_append(if_ctx,
++                           aml_notify(aml_name(ACPI_SLEEP_BUTTON_DEVICE),
++                                      aml_int(0x80)));
++                break;
+             default:
+                 /*
+                  * Please make sure all the events in ged_supported_events[]
+@@ -295,6 +302,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+         sel = ACPI_GED_MEM_HOTPLUG_EVT;
+     } else if (ev & ACPI_POWER_DOWN_STATUS) {
+         sel = ACPI_GED_PWR_DOWN_EVT;
++    } else if (ev & ACPI_SLEEP_STATUS) {
++        sel = ACPI_GED_SLEEP_EVT;
+     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
+     } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
 diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-index d2dac87b4a..28c5785863 100644
+index 28c5785863..71503e0100 100644
 --- a/include/hw/acpi/generic_event_device.h
 +++ b/include/hw/acpi/generic_event_device.h
-@@ -85,6 +85,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
- #define ACPI_GED_SLP_TYP_POS       0x2   /* SLP_TYPx Bit Offset */
- #define ACPI_GED_SLP_TYP_MASK      0x07  /* SLP_TYPx 3-bit mask */
- #define ACPI_GED_SLP_TYP_S5        0x05  /* System _S5 State (Soft Off) */
-+#define ACPI_GED_SLP_TYP_S3        0x03  /* System _S3 State (Sleeping State) */
- #define ACPI_GED_SLP_EN            0x20  /* SLP_EN write-only bit */
+@@ -102,6 +102,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+ #define ACPI_GED_PWR_DOWN_EVT      0x2
+ #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+ #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
++#define ACPI_GED_SLEEP_EVT          0x10
  
- #define GED_DEVICE      "GED"
+ typedef struct GEDState {
+     MemoryRegion evt;
 -- 
 2.43.5
 
