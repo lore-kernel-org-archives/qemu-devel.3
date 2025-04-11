@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E3FC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 07:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E2EC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u394J-0006Ik-Uh; Fri, 11 Apr 2025 03:44:55 -0400
+	id 1u39IB-0002AN-AB; Fri, 11 Apr 2025 03:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u394G-0006IU-54
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 03:44:52 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u394D-0001qx-1d
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 03:44:51 -0400
-X-ASG-Debug-ID: 1744357477-086e2365b8984f0001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx1.zhaoxin.com with ESMTP id Nks1XBI2udHsf3NK (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 11 Apr 2025 15:44:37 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 11 Apr
- 2025 15:44:37 +0800
-Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
- ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
- 15.01.2507.044; Fri, 11 Apr 2025 15:44:37 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 11 Apr
- 2025 15:42:51 +0800
-Message-ID: <d69d169a-9401-4a19-a942-44d540f050d2@zhaoxin.com>
-Date: Fri, 11 Apr 2025 15:42:51 +0800
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39I8-00028A-Pe
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 03:59:12 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39I6-0003rP-Rf
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 03:59:12 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-736c277331eso2667343b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 00:59:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744358349; x=1744963149; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pW3ktPWxZ3GftuE1xtPzSwx/ntzRqF0mx0dzBHfFB40=;
+ b=CZ1A+8h4sBqlDdEggoCg+6P6NwNb54P+tNha+iuc6Xd14p0YgH2gIeS3iNa0PtVx+v
+ GPhfBljCkEHAsV+8IKtFBKgiwByrJ7Tnb14GOtIdLciPh1xGyVyHPDzT5LUqE1X1KUHO
+ yCKZuWHl57Ta7Qg49HNez7VkXl6e2RfUgx546sVQMTJk55YMkOrQsMRtnFDlmxCxq+Xt
+ hZ9NVi/F7XJPifnKrVWd6sijUZPq7bKL1lvBSGCZJ9TjIpCD0uV8UzAYcw4MdtRB/+Ak
+ yI6vvMdNrN7BJl3sJGHFtmMKXgJdYsQMBH5wewpkFkgWg9Yc9zBxgmPnXlXCkwHrMkCG
+ FM1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744358349; x=1744963149;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pW3ktPWxZ3GftuE1xtPzSwx/ntzRqF0mx0dzBHfFB40=;
+ b=tsr//i8repCNs3cGHIDMDiGPCar+uzAyJBd/wM09UO2YStJsjxMzR2tQOi9g+Ni5Ld
+ Flx/cfiziegzwTsNp/5QizrpeX+4MFA9Nw+jb3cYgn5pSnFCb2T4wp+3StAyOvqvBwEj
+ 0SBU+cIadFQw0qPwXLcU/qmer5wckG/konKajfPEv/a0B/z2FQiGUU3i7vf6Oz7sxqcd
+ LQTxm4KhCe2a3Wf8zjvdw9VtILdk3ndXmo2jjQhlqQJwmDQmdjZ8GtKyRM0ARZE57dpD
+ 592s0QPDYBB/FhFRTb6wGkx5fa8JHbvoIRMMZURO7d27TFueGA+RPUhtr3q38g6dysq3
+ kPAg==
+X-Gm-Message-State: AOJu0YwO0gZvVuwA0u4AijZIwRIQ5Etr8nFCvEWrTw58SOnSCW1kqrhJ
+ ulrX10A3vLRycIMPNVbvifBBJM28IrlyVCp5cuw0hz33V9rbGMJnYSNbKg==
+X-Gm-Gg: ASbGncvKy5pgvN5y25eC7dsz+MdFMyZUE5mdeR8JUXSCW7gVDG4Uz3uSiXeCuHYH87I
+ eEpGL6C8qM1YIhOE2W4Zrw+a0BO23CXNTWVwXrud6gQrkJ8UVwcrstcOygOPdJqevgBREP5QnFb
+ 9ToWlik+FSMTZsKhpreJoavayd8vEHilTZNji1hZdYAfEkGwKo2hGbZXUFbK5u9IBmLLPFQSZkT
+ 7uvCHDf9X2VFs1usrFH4vHdqs/TLUgFkU1/fpkR1/nQoijEzeqoFBP3wNr7gmqKA3bVSZIXygRM
+ yzzQLkoHMzlkkaSrOVMGtn98a6+y3mOLW5dkwaJbNPK+
+X-Google-Smtp-Source: AGHT+IGe8PaniikNDMyJPhg50DEA+DDeMQu3i5vDDgiFRIsx0ALrlf6Eu4QIkvc8XnAuqNoCcoWSdA==
+X-Received: by 2002:a05:6a00:98b:b0:736:5969:2b6f with SMTP id
+ d2e1a72fcca58-73bd0c23517mr2875750b3a.6.1744358349087; 
+ Fri, 11 Apr 2025 00:59:09 -0700 (PDT)
+Received: from wheely.local0.net ([220.253.99.94])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73bd233554asm851687b3a.180.2025.04.11.00.59.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Apr 2025 00:59:08 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v3 2/8] hw/usb/xhci: Rename and move HCD register region
+ constants to header
+Date: Fri, 11 Apr 2025 17:58:44 +1000
+Message-ID: <20250411075851.206995-3-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250411075851.206995-1-npiggin@gmail.com>
+References: <20250411075851.206995-1-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Subject: Re: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFeng vCPU
- template
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v2] target/i386: Fix model number of Zhaoxin
- YongFeng vCPU template
-CC: Paolo Bonzini <pbonzini@redhat.com>, <qemu-devel@nongnu.org>,
- <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>
-References: <20250407020704.2580294-1-ewanhai-oc@zhaoxin.com>
- <a0ca7d33-5551-41a7-be18-7fdb3b32a36a@redhat.com>
- <a8750eb8-63ad-4ed8-a80d-f4568c4bc778@zhaoxin.com>
- <Z/iK4wVFWTjhEa32@intel.com>
-In-Reply-To: <Z/iK4wVFWTjhEa32@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 4/11/2025 3:44:36 PM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1744357477
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 3948
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.139798
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,113 +102,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This also adds some missing constants rather than open-coding
+offsets and sizes.
 
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/usb/hcd-xhci.h | 16 ++++++++++++++++
+ hw/usb/hcd-xhci.c | 48 ++++++++++++++++++++++-------------------------
+ 2 files changed, 38 insertions(+), 26 deletions(-)
 
-On 4/11/25 11:22 AM, Zhao Liu wrote:
->=20
-> On Thu, Apr 10, 2025 at 10:07:15PM +0800, Ewan Hai wrote:
->> Date: Thu, 10 Apr 2025 22:07:15 +0800
->> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
->> Subject: Re: [PATCH v2] target/i386: Fix model number of Zhaoxin YongFen=
-g
->>   vCPU template
->>
->> On 4/10/25 8:22 PM, Paolo Bonzini wrote:
->>>
->>> On 4/7/25 04:07, Ewan Hai wrote:
->>>> The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
->>>> The correct value is 0x5b. This mistake occurred because the extended
->>>> model bits in cpuid[eax=3D0x1].eax were overlooked, and only the base
->>>> model was used.
->>>>
->>>> This patch corrects the model field.
->>>
->>> Hi, please follow commit e0013791b9326945ccd09b5b602437beb322cab8 to
->>> define a new version of the CPU.
->>
->> I=E2=80=99ve noticed that in the QEMU repository at commit
->> e0013791b9326945ccd09b5b602437beb322cab8 (as HEAD), the following patche=
-s I
->> previously submitted (which the Zhaoxin YongFeng vCPU model depends on) =
-are
->> not included:
->=20
-> :-) e0013791b9326945ccd09b5b602437beb322cab8 is an example case to show
-> how to fix model id.
->=20
->> - 5d20aa540b6991c0dbeef933d2055e5372f52e0e: "target/i386: Add support fo=
-r
->> Zhaoxin CPU vendor identification"
->> - c0799e8b003713e07b546faba600363eccd179ee: "target/i386: Add CPUID leaf
->> 0xC000_0001 EDX definitions"
->> - ff04bc1ac478656e5d6a255bf4069edb3f55bc58: "target/i386: Introduce Zhao=
-xin
->> Yongfeng CPU model" (this is the main patch that needs to be fixed)
->> - a4e749780bd20593c0c386612a51bf4d64a80132: "target/i386: Mask CMPLegacy=
- bit
->> in CPUID[0x80000001].ECX for Zhaoxin CPUs"
->>
->> Should I resend the entire patchset, or would it be sufficient to just s=
-end
->> a revised version of the =E2=80=9Ctarget/i386: Introduce Zhaoxin Yongfen=
-g CPU model=E2=80=9D
->> patch?
->=20
-> IIUC, because this fix is planning to land in v10.1 (next release
-> cycle), current CPU model (will be released in v10.0) can't be modified
-> directly. It is only possible to directly modify an unreleased CPU model
-> during the same release cycle.
->=20
-> Thus it's enough to just introduce a v2 and correct your model id like
-> this:
->=20
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 1b64ceaaba46..1ca1c3a729e8 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -5621,6 +5621,17 @@ static const X86CPUDefinition builtin_x86_defs[] =
-=3D {
->           .features[FEAT_VMX_VMFUNC] =3D MSR_VMX_VMFUNC_EPT_SWITCHING,
->           .xlevel =3D 0x80000008,
->           .model_id =3D "Zhaoxin YongFeng Processor",
-> +        .versions =3D (X86CPUVersionDefinition[]) {
-> +            { .version =3D 1 },
-> +            {
-> +                .version =3D 2,
-> +                .props =3D (PropValue[]) {
-> +                    { "model", "0x5b" },
-> +                    { /* end of list */ }
-> +                }
-> +            },
-> +            { /* end of list */ }
-> +        }
->       },
->   };
->=20
-
-Thanks again for your patience and explanation.
-
-I'm not entirely sure if this is the best approach. I have one thought, and=
- I'd=20
-like your help to confirm whether I'm on the right track or not. From what =
-I can=20
-tell, most other vCPU definitions that use the .versions mechanism do so=20
-incrementally: for instance, they add new features in v2, v3, etc., but eac=
-h of=20
-those versions (v1, v2, v3) remains valid for practical use.
-
-However, in our specific case, the v1 version of the Zhaoxin vCPU definitio=
-n has=20
-an incorrect .model value, which breaks the Linux guest's vPMU functionalit=
-y.=20
-That makes me uncertain whether using new version definitions to fix this i=
-ssue=20
-is really the best solution. After all, v1 itself would remain problematic.
-
-Do you have any thoughts on whether it might be better to correct the exist=
-ing=20
-definition, or do you think the versioned approach is still the recommended=
-=20
-path? I appreciate any input or guidance you can provide.
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index ee364efd0ab..20059fcf66c 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -115,6 +115,22 @@ typedef enum TRBCCode {
+     CC_SPLIT_TRANSACTION_ERROR
+ } TRBCCode;
+ 
++/* Register regions */
++#define XHCI_REGS_LENGTH_CAP         0x40
++#define XHCI_REGS_LENGTH_OPER        0x400
++#define XHCI_REGS_LENGTH_PORT        (XHCI_PORT_PR_SZ * XHCI_MAXPORTS)
++#define XHCI_REGS_LENGTH_RUNTIME     ((XHCI_MAXINTRS + 1) * XHCI_INTR_IR_SZ)
++/* XXX: Should doorbell length be *4 rather than *32? */
++#define XHCI_REGS_LENGTH_DOORBELL    ((XHCI_MAXSLOTS + 1) * 0x20)
++
++#define XHCI_REGS_OFFSET_CAP         0
++#define XHCI_REGS_OFFSET_OPER        (XHCI_REGS_OFFSET_CAP +   \
++                                      XHCI_REGS_LENGTH_CAP)
++#define XHCI_REGS_OFFSET_PORT        (XHCI_REGS_OFFSET_OPER +  \
++                                      XHCI_REGS_LENGTH_OPER)
++#define XHCI_REGS_OFFSET_RUNTIME     0x1000
++#define XHCI_REGS_OFFSET_DOORBELL    0x2000
++
+ /* Register definitions */
+ #define XHCI_HCCAP_REG_CAPLENGTH            0x00
+ #define XHCI_HCCAP_REG_HCIVERSION           0x02
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index b57db309b8d..7470db38561 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -46,22 +46,14 @@
+ #define COMMAND_LIMIT   256
+ #define TRANSFER_LIMIT  256
+ 
+-#define LEN_CAP         0x40
+-#define LEN_OPER        (0x400 + XHCI_PORT_PR_SZ * XHCI_MAXPORTS)
+-#define LEN_RUNTIME     ((XHCI_MAXINTRS + 1) * XHCI_INTR_IR_SZ)
+-#define LEN_DOORBELL    ((XHCI_MAXSLOTS + 1) * 0x20)
+-
+-#define OFF_OPER        LEN_CAP
+-#define OFF_RUNTIME     0x1000
+-#define OFF_DOORBELL    0x2000
+-
+-#if (OFF_OPER + LEN_OPER) > OFF_RUNTIME
+-#error Increase OFF_RUNTIME
++#if (XHCI_REGS_OFFSET_PORT + XHCI_REGS_LENGTH_PORT) > XHCI_REGS_OFFSET_RUNTIME
++#error Increase XHCI_REGS_OFFSET_RUNTIME
+ #endif
+-#if (OFF_RUNTIME + LEN_RUNTIME) > OFF_DOORBELL
+-#error Increase OFF_DOORBELL
++#if (XHCI_REGS_OFFSET_RUNTIME + XHCI_REGS_LENGTH_RUNTIME) >    \
++    XHCI_REGS_OFFSET_DOORBELL
++#error Increase XHCI_REGS_OFFSET_DOORBELL
+ #endif
+-#if (OFF_DOORBELL + LEN_DOORBELL) > XHCI_LEN_REGS
++#if (XHCI_REGS_OFFSET_DOORBELL + XHCI_REGS_LENGTH_DOORBELL) > XHCI_LEN_REGS
+ # error Increase XHCI_LEN_REGS
+ #endif
+ 
+@@ -2583,7 +2575,7 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
+ 
+     switch (reg) {
+     case XHCI_HCCAP_REG_CAPLENGTH: /* Covers HCIVERSION and CAPLENGTH */
+-        ret = 0x01000000 | LEN_CAP;
++        ret = 0x01000000 | XHCI_REGS_LENGTH_CAP;
+         break;
+     case XHCI_HCCAP_REG_HCSPARAMS1:
+         ret = ((xhci->numports_2+xhci->numports_3)<<24)
+@@ -2603,10 +2595,10 @@ static uint64_t xhci_cap_read(void *ptr, hwaddr reg, unsigned size)
+         }
+         break;
+     case XHCI_HCCAP_REG_DBOFF:
+-        ret = OFF_DOORBELL;
++        ret = XHCI_REGS_OFFSET_DOORBELL;
+         break;
+     case XHCI_HCCAP_REG_RTSOFF:
+-        ret = OFF_RUNTIME;
++        ret = XHCI_REGS_OFFSET_RUNTIME;
+         break;
+ 
+     /* extended capabilities */
+@@ -3256,22 +3248,26 @@ static void usb_xhci_realize(DeviceState *dev, Error **errp)
+ 
+     memory_region_init(&xhci->mem, OBJECT(dev), "xhci", XHCI_LEN_REGS);
+     memory_region_init_io(&xhci->mem_cap, OBJECT(dev), &xhci_cap_ops, xhci,
+-                          "capabilities", LEN_CAP);
++                          "capabilities", XHCI_REGS_LENGTH_CAP);
+     memory_region_init_io(&xhci->mem_oper, OBJECT(dev), &xhci_oper_ops, xhci,
+-                          "operational", 0x400);
++                          "operational", XHCI_REGS_LENGTH_OPER);
+     memory_region_init_io(&xhci->mem_runtime, OBJECT(dev), &xhci_runtime_ops,
+-                           xhci, "runtime", LEN_RUNTIME);
++                           xhci, "runtime", XHCI_REGS_LENGTH_RUNTIME);
+     memory_region_init_io(&xhci->mem_doorbell, OBJECT(dev), &xhci_doorbell_ops,
+-                           xhci, "doorbell", LEN_DOORBELL);
++                           xhci, "doorbell", XHCI_REGS_LENGTH_DOORBELL);
+ 
+-    memory_region_add_subregion(&xhci->mem, 0,            &xhci->mem_cap);
+-    memory_region_add_subregion(&xhci->mem, OFF_OPER,     &xhci->mem_oper);
+-    memory_region_add_subregion(&xhci->mem, OFF_RUNTIME,  &xhci->mem_runtime);
+-    memory_region_add_subregion(&xhci->mem, OFF_DOORBELL, &xhci->mem_doorbell);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_CAP,
++                                &xhci->mem_cap);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_OPER,
++                                &xhci->mem_oper);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_RUNTIME,
++                                &xhci->mem_runtime);
++    memory_region_add_subregion(&xhci->mem, XHCI_REGS_OFFSET_DOORBELL,
++                                &xhci->mem_doorbell);
+ 
+     for (i = 0; i < xhci->numports; i++) {
+         XHCIPort *port = &xhci->ports[i];
+-        uint32_t offset = OFF_OPER + 0x400 + XHCI_PORT_PR_SZ * i;
++        uint32_t offset = XHCI_REGS_OFFSET_PORT + XHCI_PORT_PR_SZ * i;
+         port->xhci = xhci;
+         memory_region_init_io(&port->mem, OBJECT(dev), &xhci_port_ops, port,
+                               port->name, XHCI_PORT_PR_SZ);
+-- 
+2.47.1
 
 
