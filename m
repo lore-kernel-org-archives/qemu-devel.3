@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DA0C369A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 19:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4939C369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:16:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3KT2-00077S-8a; Fri, 11 Apr 2025 15:55:12 -0400
+	id 1u3Kmk-0002ae-Lv; Fri, 11 Apr 2025 16:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u3KT0-00076j-Ob; Fri, 11 Apr 2025 15:55:11 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u3KmZ-0002Yz-MN
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:15:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u3KSx-0003Ld-RU; Fri, 11 Apr 2025 15:55:10 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c37:ee89:0:640:1681:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AA47160D44;
- Fri, 11 Apr 2025 22:54:58 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:7310::1:a] (unknown
- [2a02:6b8:b081:7310::1:a])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id vsmBgU1FduQ0-zE1RH6UO; Fri, 11 Apr 2025 22:54:58 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744401298;
- bh=X68VQGG+NiL8sITpL3/5Siga6JdhiASKYp6NQDQvmEM=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=sm/NVysZoP3bAAn8kfZ94p/uQ8Yb5tLbxIfucKNBrVTtFbM6hrTpRP/DTl1LaKOap
- 7m1wIOmqiCsHqqOtGY19umt8ccTFXsFkXiwfgq4DVVwSDjBYhYh8siyT25COZzEMF3
- VdZYl/uDnTFnpyY3d+5XA7zq6PJSdvuLo8L2TuBE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c72f0d7e-1408-49c7-b068-6a475ce336f1@yandex-team.ru>
-Date: Fri, 11 Apr 2025 22:54:57 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] mirror: Skip pre-zeroing destination if it is already
- zero
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, "open list:Block Jobs"
- <qemu-block@nongnu.org>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u3KmX-0006Bl-8h
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:15:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744402518;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TMFNZOUqphR5D1d5NJn+2p9ueCXtPk7JOFMR8lZ1vis=;
+ b=Yx+q8hkpHdjB0KurfCtzirYxpR7Qyn+5n3hf9t8fftXT7O6Jop/tXQMoNuxAuy4DgSviSy
+ 5VYhW5QCQvU/RgdpDH217Ul26GpI9/ZE33mHxvwmLR/BXB3I1J9cYk+j4P2J6B4Or3MTZM
+ 53TvUc2hnNBgOTwnjpHg3tHOeXsdEPo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-imwWa1MyMfW0tpQ5JBadNg-1; Fri,
+ 11 Apr 2025 16:15:17 -0400
+X-MC-Unique: imwWa1MyMfW0tpQ5JBadNg-1
+X-Mimecast-MFC-AGG-ID: imwWa1MyMfW0tpQ5JBadNg_1744402516
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C514B1801A1A; Fri, 11 Apr 2025 20:15:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.33])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C58B180AF7C; Fri, 11 Apr 2025 20:15:12 +0000 (UTC)
+Date: Fri, 11 Apr 2025 15:15:10 -0500
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: nsoffer@redhat.com, pkrempa@redhat.com
+Subject: Re: [PATCH 0/6] Make blockdev-mirror dest sparse in more cases
+Message-ID: <4iftygymz2kk24xea2arluttyv7qn2r3ase2g2y6qd2u3dijlm@6ekiuzefyotw>
 References: <20250411010732.358817-8-eblake@redhat.com>
- <20250411010732.358817-9-eblake@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250411010732.358817-9-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250411010732.358817-8-eblake@redhat.com>
+User-Agent: NeoMutt/20250113
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,95 +82,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.04.25 04:04, Eric Blake wrote:
-> When doing a sync=full mirroring, QMP drive-mirror requests full
-> zeroing if it did not just create the destination, and blockdev-mirror
-> requests full zeroing unconditionally.  This is because during a full
-> sync, we must ensure that the portions of the disk that are not
-> otherwise touched by the source still read as zero upon completion.
+On Thu, Apr 10, 2025 at 08:04:50PM -0500, Eric Blake wrote:
+> When mirroring images, it makes sense for the destination to be sparse
+> even if it was not connected with "discard":"unmap"; the only time the
+> destination should be fully allocated is if the user pre-allocated it,
+> or if the source was not sparse.
 > 
-> However, in mirror_dirty_init(), we were blindly assuming that if the
-> destination allows punching holes, we should pre-zero the entire
-> image; and if it does not allow punching holes, then treat the entire
-> source as dirty rather than mirroring just the allocated portions of
-> the source.  Without the ability to punch holes, this results in the
-> destination file being fully allocated; and even when punching holes
-> is supported, it causes duplicate I/O to the portions of the
-> destination corresponding to chunks of the source that are allocated
-> but read as zero.
-> 
-> Smarter is to avoid the pre-zeroing pass over the destination if it
-> can be proved the destination already reads as zero.  Note that a
-> later patch will then further improve things to skip writing to the
-> destination for parts of the image where the source is zero; but even
-> with just this patch, it is possible to see a difference for any BDS
-> that can quickly report that it already reads as zero.  Iotest 194 is
-> proof of this: instead of mirroring a completely sparse file, change
-> it to pre-populate some data.  When run with './check -file 194', the
-> full 1G is still allocated, but with './check -qcow2 194', only the 1M
-> of pre-populated data is now mirrored; this in turn requires an
-> additional log filter.
-> 
-> Note that there are still BDS layers that do not quickly report
-> reading as all zero; for example, the file-posix code implementation
-> for fast block status currently blindly reports the entire image as
-> allocated and non-zero without even consulting lseek(SEEK_DATA)); that
-> will be addressed in later patches.
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->   block/mirror.c             | 10 ++++++++--
->   tests/qemu-iotests/194     | 15 +++++++++++++--
->   tests/qemu-iotests/194.out |  4 ++--
->   3 files changed, 23 insertions(+), 6 deletions(-)
-> 
-> diff --git a/block/mirror.c b/block/mirror.c
-> index a53582f17bb..2e1e14c8e7e 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -841,14 +841,20 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->       int64_t offset;
->       BlockDriverState *bs;
->       BlockDriverState *target_bs = blk_bs(s->target);
-> -    int ret = -1;
-> +    int ret;
+> Eric Blake (6):
+>   mirror: Skip pre-zeroing destination if it is already zero
+>   file-posix: Allow lseek at offset 0 when !want_zero
+>   mirror: Skip writing zeroes when target is already zero
+>   block: Expand block status mode from bool to enum
+>   file-posix: Recognize blockdev-create file as starting all zero
+>   tests: Add iotest mirror-sparse for recent patches
 
-I think, it was to avoid Coverity false-positive around further code
+Responding here to point out that in
+https://issues.redhat.com/browse/RHEL-82906, Peter Krempa identified
+that it was Nir's earlier patch:
 
-         WITH_GRAPH_RDLOCK_GUARD() {
-             ret = bdrv_co_is_allocated_above(bs, s->base_overlay, true, offset,
-                                              bytes, &count);
-         }
-         if (ret < 0) {
-             return ret;
-         }
-
-which you don't touch here. I think "= -1;" should be kept. Or I missed static analyzes revolution (if so, it should be mentioned in commit message).
-
->       int64_t count;
+> commit d05ae948cc887054495977855b0859d0d4ab2613
+> Author: Nir Soffer <nsoffer@redhat.com>
+> Date:   Fri Jun 28 23:20:58 2024 +0300
 > 
->       bdrv_graph_co_rdlock();
->       bs = s->mirror_top_bs->backing->bs;
-> +    if (s->zero_target) {
-> +        ret = bdrv_co_is_zero_fast(target_bs, 0, s->bdev_length);
-> +    }
->       bdrv_graph_co_rdunlock();
-> 
-> -    if (s->zero_target) {
-> +    if (s->zero_target && ret <= 0) {
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
->           if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
->               bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
->               return 0;
-> diff --git a/tests/qemu-iotests/194 b/tests/qemu-iotests/194
-> index c0ce82dd257..814c15dfe3b 100755
+>     Consider discard option when writing zeros
+>     
+>     When opening an image with discard=off, we punch hole in the image when
+>     writing zeroes, making the image sparse. This breaks users that want to
+>     ensure that writes cannot fail with ENOSPACE by using fully allocated
+>     images[1].
+>     
+>     bdrv_co_pwrite_zeroes() correctly disables BDRV_REQ_MAY_UNMAP if we
+>     opened the child without discard=unmap or discard=on. But we don't go
+>     through this function when accessing the top node. Move the check down
+>     to bdrv_co_do_pwrite_zeroes() which seems to be used in all code paths.
+>     
+>     This change implements the documented behavior, punching holes only when
+>     opening the image with discard=on or discard=unmap. This may not be the
+>     best default but can improve it later.
+> ...
 
+that changed qemu's behavior last year to be closer to its documentation.
 
+It raises the question: should we change the default for "discard"
+from "ignore" (what we currently have, where write zeroes defaults to
+full allocation if you didn't request otherwise - but where this patch
+series demonstrates that we can still be careful to avoid writing
+zeroes to something that already reads as zeroes as a way to preserve
+sparseness) to "unmap" (ie. we would favor sparse files by default,
+but where you can still opt-in to full allocation)?
+
+What are the policies on changing defaults?  Do we have to issue a
+deprecation notice for any block device opened without specifying a
+"discard" policy, and go through a couple of release cycles, so that
+two releases down the road we can change the "discard" parameter from
+optional to mandatory, and then even later switch it back to optional
+but with a new default?
 
 -- 
-Best regards,
-Vladimir
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
