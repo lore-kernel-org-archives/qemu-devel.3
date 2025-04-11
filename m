@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4939C369A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E00C369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3Kmk-0002ae-Lv; Fri, 11 Apr 2025 16:15:35 -0400
+	id 1u3KrS-0004ca-OU; Fri, 11 Apr 2025 16:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u3KmZ-0002Yz-MN
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:15:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
+ id 1u3KrP-0004Z3-Ua
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:20:24 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u3KmX-0006Bl-8h
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:15:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744402518;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TMFNZOUqphR5D1d5NJn+2p9ueCXtPk7JOFMR8lZ1vis=;
- b=Yx+q8hkpHdjB0KurfCtzirYxpR7Qyn+5n3hf9t8fftXT7O6Jop/tXQMoNuxAuy4DgSviSy
- 5VYhW5QCQvU/RgdpDH217Ul26GpI9/ZE33mHxvwmLR/BXB3I1J9cYk+j4P2J6B4Or3MTZM
- 53TvUc2hnNBgOTwnjpHg3tHOeXsdEPo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-imwWa1MyMfW0tpQ5JBadNg-1; Fri,
- 11 Apr 2025 16:15:17 -0400
-X-MC-Unique: imwWa1MyMfW0tpQ5JBadNg-1
-X-Mimecast-MFC-AGG-ID: imwWa1MyMfW0tpQ5JBadNg_1744402516
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C514B1801A1A; Fri, 11 Apr 2025 20:15:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.33])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3C58B180AF7C; Fri, 11 Apr 2025 20:15:12 +0000 (UTC)
-Date: Fri, 11 Apr 2025 15:15:10 -0500
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: nsoffer@redhat.com, pkrempa@redhat.com
-Subject: Re: [PATCH 0/6] Make blockdev-mirror dest sparse in more cases
-Message-ID: <4iftygymz2kk24xea2arluttyv7qn2r3ase2g2y6qd2u3dijlm@6ekiuzefyotw>
-References: <20250411010732.358817-8-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
+ id 1u3KrN-00071c-MR
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:20:23 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BKH5Am020734;
+ Fri, 11 Apr 2025 20:20:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2023-11-20; bh=bSOzCxzQDTVzrZc/zHA6fQNxz9jJc
+ 8uVZebxWcGPO3Q=; b=hac0Xju6vXrAF5lYm4IGzd1gOVKKj7rXezoJEdvODJOlr
+ KbyLZx9ZxVxpXfSsuQjwPNvZdlrnF0Af32cn0OBGQHZTGKJQNC7qfKJquMXz7otl
+ cLCyc5Hg617agZZVH5AHvsl2LakQWMebGhPCkttSt1+As6F+V0lDCRSNYGDmeVOg
+ 6nXYrjIYM84uGgkJ2jlDN8wXM00tHRUr5lW7DKb5r3YwRVq8ZltYEYMbIZiAJqqF
+ fCdALgCupnagVumE+xgfUkV61Nd0QtNyUsF7eDUnNfcmBgX00KRLr8Zs90OiGF1h
+ manp1c8+UCZiUQee/GZGDp3+v7AuIRcViV62goQRQ==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45y9yr003m-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Apr 2025 20:20:10 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 53BIaXoa022165; Fri, 11 Apr 2025 20:20:09 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 45ttyevch8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Apr 2025 20:20:09 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BKK8Ah006663;
+ Fri, 11 Apr 2025 20:20:08 GMT
+Received: from localhost.localdomain (dhcp-10-43-12-85.usdhcp.oraclecorp.com
+ [10.43.12.85])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 45ttyevcdr-1; Fri, 11 Apr 2025 20:20:07 +0000
+From: Annie Li <annie.li@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, slp@redhat.com, eblake@redhat.com,
+ armbru@redhat.com, annie.li@oracle.com, miguel.luis@oracle.com
+Subject: [RFC V3 PATCH 00/13] Support ACPI Control Method Sleep button
+Date: Fri, 11 Apr 2025 16:19:12 -0400
+Message-ID: <20250411201912.2872-1-annie.li@oracle.com>
+X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250411010732.358817-8-eblake@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-11_08,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxscore=0 spamscore=0
+ adultscore=0 phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+ definitions=main-2504110129
+X-Proofpoint-GUID: OFxQgvmJzFy-NjVYz0TMwp5BBWEW0h9H
+X-Proofpoint-ORIG-GUID: OFxQgvmJzFy-NjVYz0TMwp5BBWEW0h9H
+Received-SPF: pass client-ip=205.220.177.32; envelope-from=annie.li@oracle.com;
+ helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,65 +102,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 10, 2025 at 08:04:50PM -0500, Eric Blake wrote:
-> When mirroring images, it makes sense for the destination to be sparse
-> even if it was not connected with "discard":"unmap"; the only time the
-> destination should be fully allocated is if the user pre-allocated it,
-> or if the source was not sparse.
-> 
-> Eric Blake (6):
->   mirror: Skip pre-zeroing destination if it is already zero
->   file-posix: Allow lseek at offset 0 when !want_zero
->   mirror: Skip writing zeroes when target is already zero
->   block: Expand block status mode from bool to enum
->   file-posix: Recognize blockdev-create file as starting all zero
->   tests: Add iotest mirror-sparse for recent patches
+The ACPI sleep button can be implemented as a fixed hardware button
+or Control Method Sleep button.
 
-Responding here to point out that in
-https://issues.redhat.com/browse/RHEL-82906, Peter Krempa identified
-that it was Nir's earlier patch:
+The patch of implementing a fixed hardware sleep button was posted
+here 1). More discussions can be found here 2). Essentially, the
+discussion mainly focuses on whether the sleep button is implemented
+as a fixed hardware button or Control Method Sleep button. The latter
+benefits various architectures since the code can be shared among
+them.
 
-> commit d05ae948cc887054495977855b0859d0d4ab2613
-> Author: Nir Soffer <nsoffer@redhat.com>
-> Date:   Fri Jun 28 23:20:58 2024 +0300
-> 
->     Consider discard option when writing zeros
->     
->     When opening an image with discard=off, we punch hole in the image when
->     writing zeroes, making the image sparse. This breaks users that want to
->     ensure that writes cannot fail with ENOSPACE by using fully allocated
->     images[1].
->     
->     bdrv_co_pwrite_zeroes() correctly disables BDRV_REQ_MAY_UNMAP if we
->     opened the child without discard=unmap or discard=on. But we don't go
->     through this function when accessing the top node. Move the check down
->     to bdrv_co_do_pwrite_zeroes() which seems to be used in all code paths.
->     
->     This change implements the documented behavior, punching holes only when
->     opening the image with discard=on or discard=unmap. This may not be the
->     best default but can improve it later.
-> ...
+This patch set implements Control Method Sleep button for both x86
+and Microvm.(The V1 patch set was posted previously here 3). We
+rebase all the patches on QEMU9.1.0 and re-post V2 here 4). This V3
+patch set here is rebased on QEMU 10.0.0-rc3. The sleep button support
+for MicroVM is added, however, its support for ARM platform in V2 is
+removed due to lower interests of it and more efforts in the firmware.
 
-that changed qemu's behavior last year to be closer to its documentation.
+For x86, a sleep button GPE event handler is implemented, so a GPE
+event is triggered to indicate the OSPM the sleep button is pressed.
+Tests have been done for Linux guest, and Windows Server guest,
+this sleep button works as expected.
 
-It raises the question: should we change the default for "discard"
-from "ignore" (what we currently have, where write zeroes defaults to
-full allocation if you didn't request otherwise - but where this patch
-series demonstrates that we can still be careful to avoid writing
-zeroes to something that already reads as zeroes as a way to preserve
-sparseness) to "unmap" (ie. we would favor sparse files by default,
-but where you can still opt-in to full allocation)?
+For MicroVM, a GED event is triggered to notify the OSPM. This GED
+event is also applicable for ARM platform, but this V3 patch set
+doesn't cover ARM platform as what V2 did 4). Tests have been done
+for Linux MicroVM guests.
 
-What are the policies on changing defaults?  Do we have to issue a
-deprecation notice for any block device opened without specifying a
-"discard" policy, and go through a couple of release cycles, so that
-two releases down the road we can change the "discard" parameter from
-optional to mandatory, and then even later switch it back to optional
-but with a new default?
+System_wakeup doesn't work for MicroVM for now due to the missing
+support of it. This patch set only covers system_sleep, not the
+wakeup part.
+
+
+1) https://lists.gnu.org/archive/html/qemu-devel/2017-07/msg06478.html
+2) https://lore.kernel.org/all/20210920095316.2dd133be@redhat.com/T/#mfe24f89778020deeacfe45083f3eea3cf9f55961
+3) https://lore.kernel.org/all/20231205002143.562-1-annie.li@oracle.com/T/
+4) https://patchwork.kernel.org/project/qemu-devel/cover/20240927183906.1248-1-annie.li@oracle.com/
+
+
+----Changes from V2----
+Replace license with SPDX-License-Identifier
+Rebase the patch set on qemu 10.0.0-rc3
+Reorder the patch
+Improve descriptions for system_sleep
+Improve comments and format
+Support system_sleep for microvm
+Remove patches for ARM
+----------------------
+
+----Changes from V1----
+Rebase the patch set on qemu 9.1.0-rc4
+-----------------------
+
+
+Annie Li (12):
+  acpi: Implement control method sleep button
+  test/acpi: allow DSDT table changes for x86 platform
+  acpi: Support Control Method sleep button for x86
+  tests/qtest/bios-table-tests: Update ACPI table binaries for x86
+  acpi: Send the GPE event of suspend and wakeup for x86
+  test/acpi: allow DSDT table changes for microvm
+  microvm: support control method sleep button
+  microvm: enable sleep GED event
+  tests/qtest/bios-table-tests: Update ACPI table binaries for microvm
+  microvm: suspend the system as requested
+  microvm: enable suspend
+  acpi: hmp/qmp: Add hmp/qmp support for system_sleep
+
+Miguel Luis (1):
+  hw/acpi: Add ACPI GED support for the sleep event
+
+ hmp-commands.hx                               |  14 ++++++++
+ hw/acpi/control_method_device.c               |  33 ++++++++++++++++++
+ hw/acpi/core.c                                |  10 ++++++
+ hw/acpi/generic_event_device.c                |  12 +++++++
+ hw/acpi/meson.build                           |   1 +
+ hw/core/machine-hmp-cmds.c                    |   5 +++
+ hw/core/machine-qmp-cmds.c                    |  11 ++++++
+ hw/i386/acpi-build.c                          |  22 +++++++++++-
+ hw/i386/acpi-microvm.c                        |  11 ++++++
+ hw/i386/microvm.c                             |   4 ++-
+ include/hw/acpi/acpi.h                        |   1 +
+ include/hw/acpi/acpi_dev_interface.h          |   1 +
+ include/hw/acpi/control_method_device.h       |  21 +++++++++++
+ include/hw/acpi/generic_event_device.h        |   2 ++
+ include/monitor/hmp.h                         |   1 +
+ qapi/machine.json                             |  20 +++++++++++
+ qapi/pragma.json                              |   1 +
+ tests/data/acpi/x86/microvm/DSDT              | Bin 365 -> 442 bytes
+ tests/data/acpi/x86/microvm/DSDT.ioapic2      | Bin 365 -> 442 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 3100 bytes
+ tests/data/acpi/x86/microvm/DSDT.rtc          | Bin 404 -> 481 bytes
+ tests/data/acpi/x86/microvm/DSDT.usb          | Bin 414 -> 491 bytes
+ tests/data/acpi/x86/pc/DSDT                   | Bin 8611 -> 8721 bytes
+ tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8522 -> 8632 bytes
+ tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9936 -> 10046 bytes
+ tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15482 -> 15592 bytes
+ tests/data/acpi/x86/pc/DSDT.cphp              | Bin 9075 -> 9185 bytes
+ tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10265 -> 10375 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8562 -> 8672 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5100 -> 5210 bytes
+ tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8683 -> 8793 bytes
+ tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9970 -> 10080 bytes
+ tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8469 -> 8579 bytes
+ tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8617 -> 8727 bytes
+ tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12404 -> 12514 bytes
+ tests/data/acpi/x86/q35/DSDT                  | Bin 8440 -> 8550 bytes
+ tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8457 -> 8567 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9765 -> 9875 bytes
+ .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 12650 -> 12760 bytes
+ .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8719 -> 8829 bytes
+ tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8486 -> 8596 bytes
+ tests/data/acpi/x86/q35/DSDT.bridge           | Bin 12053 -> 12163 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12998 -> 13108 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33855 -> 33965 bytes
+ tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8904 -> 9014 bytes
+ tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13231 -> 13341 bytes
+ tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10094 -> 10204 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8515 -> 8625 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8528 -> 8638 bytes
+ tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8457 -> 8567 bytes
+ tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9799 -> 9909 bytes
+ tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9570 -> 9680 bytes
+ tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13293 -> 13403 bytes
+ tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8302 -> 8412 bytes
+ tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8298 -> 8408 bytes
+ tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8446 -> 8556 bytes
+ tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8541 -> 8651 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12998 -> 13108 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33855 -> 33965 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 9046 -> 9156 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 9072 -> 9182 bytes
+ tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18674 -> 18784 bytes
+ tests/data/acpi/x86/q35/DSDT.viot             | Bin 14697 -> 14807 bytes
+ tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35803 -> 35913 bytes
+ 64 files changed, 168 insertions(+), 2 deletions(-)
+ create mode 100644 hw/acpi/control_method_device.c
+ create mode 100644 include/hw/acpi/control_method_device.h
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.43.5
 
 
