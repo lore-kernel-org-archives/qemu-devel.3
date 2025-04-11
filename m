@@ -4,86 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC255C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29580C369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:16:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u39OL-0002Sv-KY; Fri, 11 Apr 2025 04:05:37 -0400
+	id 1u39Xr-0003Xs-IX; Fri, 11 Apr 2025 04:15:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39Nu-0001xp-7V
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:05:11 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39Nr-0004uY-7b
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:05:09 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-301918a4e3bso1763321a91.3
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 01:05:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744358705; x=1744963505; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bakV1Nw41aQ2qXglXOF8Xs81TCloe9+HZ+gP072wOBQ=;
- b=CmkzWPCQvoCVUGx/gldFqZnjcAWsjowYsM/LcL2g8ehaEtPHN50k707M5TEYoOaN/O
- BplnhNU8CLvYaJVl8XX9XG9D5ujiDRhiG/GoTGOaOthozdPNaQVgjdVRvUsBGCt+12YM
- FkCi6ylKUk8PlGHeOeX+9jIU4U0Rh5CX1HaVNGl+xAAni/JIRF3BrmP/DRKs/kTRu38y
- prNIzNIhAPgyu/F28342pnTgLUrueGv6l5xpQydtl53LIctWImTn0CFtOLQhpLCMw5Zs
- tOP2o9MwxPUrAemC5KlwDyGkzLd6ocqTDauoZR5Di+NeQy+gCNRTKc/U7JgvpLtJHhUJ
- d09g==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u39Xn-0003Wo-Me
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:15:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u39Xl-00067v-P4
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:15:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744359319;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ppY5B33YQyTZ3crV5ByVN+th4ULX6sffmn9o2mo9Lhs=;
+ b=V5vRP0drJ2psdoNUL44bfQvBLV/6Gmn8IqLBd+2GNwteulVnrIiTH+DQPXAVOGNuIt4vd+
+ EQXVQTk5p6N6M9maYRDeF1GjBKr0w/8GuCvwuHrOgVbgvICtRidg/PDXb4XyUUtD8fDIbb
+ keUO8FhMOkTo0ewM+KeL9budJ8RMbs8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-186-xoQCcM0NMzuVdb0mM2RDtw-1; Fri, 11 Apr 2025 04:15:17 -0400
+X-MC-Unique: xoQCcM0NMzuVdb0mM2RDtw-1
+X-Mimecast-MFC-AGG-ID: xoQCcM0NMzuVdb0mM2RDtw_1744359316
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39c184b20a2so855765f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 01:15:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744358705; x=1744963505;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bakV1Nw41aQ2qXglXOF8Xs81TCloe9+HZ+gP072wOBQ=;
- b=edZ0K5RjHXkztKpbxaT2fk55VTesKH2OlxNTzOtCUJnEFaWgkQFxk1yTXp6yMnHyV8
- IWRAEiw6XunbYP06061dmTCp516c3+xGoRw2cG5xnqK8e91K1SM+i7XqqSSKfDWqWI7w
- /JW6luGczN2kiBzM3a3/yzp8WzDKgEmgT7BkCluz8RymNXoudR0VanLzbLqmD5EASvOC
- IsE6wuHJJpOR47y6c1OULZ5cmut3H0R0UPVLPODeyWwvBrx3rpWpMZqrzyqPHCIW5p7/
- obhSDh04LxlR21iargkx40ZmNT3f5PxKR2wljM7SVNrDcj3PXAkzTyXukNHXv+jRimlr
- oAdA==
+ d=1e100.net; s=20230601; t=1744359316; x=1744964116;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ppY5B33YQyTZ3crV5ByVN+th4ULX6sffmn9o2mo9Lhs=;
+ b=Ecznk2vXqUX5Nv6iljO41YPFi/NuhDkniti/+sV2xIUttrddV1TVSN+znd3pM6W9iE
+ xo+Ol10sjg36BzMHTTbpTpTTKLUdvjIKszBJc8uKfwwZMEC6ZBFldr2Xw9VY82INYPJT
+ AvDoOkONYObY7m0uTVfbm8Tk5yeZbliDeN7Q6av1Ftwb3oJ9mK2N3be5keds1HrNB7+d
+ bMEjwoi4+b0u3YgMi+CJ3jy1+R/mN2yIisUICiGbTRvzlBQUqQtSI2a2VJxzo2BAaPJX
+ P9vpLJc1yOhwaghXRumlNVqQtcPm/tQlWH1NvkjafkDVuGUJCWTUHGy2ne01qM8IyJFW
+ PKfg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVodIskQ2aF7wt9pR0ZjOK4QXL6V/ms5/7PcKm2lAsfXsDzEl0nA/4iL4zbWC8cPiuCF7ulO07bBN+u@nongnu.org
-X-Gm-Message-State: AOJu0YygXRlCje27VmgiHV0b2UcLPTvvr4wnth3PTYmkDx3UeTtPM4h4
- NmQoFqp8Gdsur/dEGCllqpqCAH+Q/A/v7cvIfeHZX5LI8Mxqn/0hVspUpw==
-X-Gm-Gg: ASbGnct83ePGNrQ7cYWmSi9+D5AkWu/Lq5Ae2/rCqehhkSnOcWw9WdvyQFE+z3+WGil
- g51oL3t5nwihFIIGiVFQT9F+7Go8rCZxqeymJ/Mgs3LzbQeriKH+xKaVTIZtsN1F3Y6nwevbOKS
- fnug5UuPRiGWrlqczmTlA6mndz4YISKQl69GGYL3kHWf6t60rAMAJPNbPHjrYNOHTCZVsU35TzV
- M+a2lVyROm9sQQiDiI3lX32+a3qxwNaBFlv8I5KUIulVUnyNA0O7AeBLNao+M5nSdN5Dyuc4Z3Y
- aFTpHOJUxc2CYdkvbsVKS+TnquybY01/h80EZG5FuqY6AdOgaSE7Oss=
-X-Google-Smtp-Source: AGHT+IE3C+EWZzK3AtgZt3ePpWZLTKOy0D3uhMKDhaXC331q5agUzLd/9DQCSF1gEDSOIjZWr+Fyhw==
-X-Received: by 2002:a17:90b:2f0b:b0:2f6:f32e:90ac with SMTP id
- 98e67ed59e1d1-30823639726mr3218534a91.11.1744358705563; 
- Fri, 11 Apr 2025 01:05:05 -0700 (PDT)
-Received: from wheely.local0.net ([220.253.99.94])
+ AJvYcCUvX19Lm+WS7aO77rsXSml8e6g7S8uRdm+B+1DfWlmRtZ5fThXw6npW+8S2+NCd4sc6351OZfeVnz9T@nongnu.org
+X-Gm-Message-State: AOJu0YwZ6xHLClC6pD0Koru9lP2vY7gJvcqeLunA6sS7HFTilTbX9I2y
+ aY2Ra34iP0jpDzSVhu54wuzljA+mj9x03bSM71NWUC36cX/3aAjda/D19gbm91+Hw6s94/B4gZa
+ lG332fmuJKx6zlP78TRngMtXBVK39CSSaOxGNaIqLOAjAwJtarhc3
+X-Gm-Gg: ASbGnct3ZRYBsMZ5xFBYlPogHiRH1l72AA1mgnVmCALIV6JU4wImy3mo1fRkwct8Fnv
+ 73hoPy6SVDcxCgfudbW06DJylVKare6mQ4UyVHQe98WHGJzhsVoiBl6EiTANIzyy7oCM+txC3y+
+ DoTHnHmzmsO1fDnRNat3Hhc3pT/QzLcBrk/sjhtIvYAT0YNSGx5Xl9NKeIg0LRREzKEQTVGxWwO
+ 77zGKV8jkXZiDLqOP4w8hpKWy7WeK+XRaiGQ5Aq5JQn7De3RzhOu7ik/m2VKodUC6eyr+vRCH60
+ C/XoAqR6r9ghQ19XAKn/Q7v1Zq5j82MYxpc7DqCbWFI/HjtO3qX8gDdMH6jonaa+0xUfyE9vY/8
+ fsgHeGQ99MCQx02JscSljJZvK4GsvRMyJyNfAUgnX
+X-Received: by 2002:a05:6000:2905:b0:39c:2665:2ce7 with SMTP id
+ ffacd0b85a97d-39eaaecd56amr1359847f8f.53.1744359315720; 
+ Fri, 11 Apr 2025 01:15:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFj9IJxykzS3JicIhzf1PuxHHEEOAtn/xsjwt3R4XHhTzQJ4HwjRcFtiKRXaj0pg9EgKQSbLQ==
+X-Received: by 2002:a05:6000:2905:b0:39c:2665:2ce7 with SMTP id
+ ffacd0b85a97d-39eaaecd56amr1359813f8f.53.1744359315264; 
+ Fri, 11 Apr 2025 01:15:15 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d732:e4be:15e6:ccc0:870d:ec27?
+ (p200300cfd732e4be15e6ccc0870dec27.dip0.t-ipconnect.de.
+ [2003:cf:d732:e4be:15e6:ccc0:870d:ec27])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c95c83sm43048065ad.147.2025.04.11.01.05.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Apr 2025 01:05:05 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v2 10/10] usb/msd: Add more tracing
-Date: Fri, 11 Apr 2025 18:04:31 +1000
-Message-ID: <20250411080431.207579-11-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250411080431.207579-1-npiggin@gmail.com>
-References: <20250411080431.207579-1-npiggin@gmail.com>
+ ffacd0b85a97d-39eae977fc8sm1254134f8f.48.2025.04.11.01.15.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Apr 2025 01:15:14 -0700 (PDT)
+Message-ID: <c7b9ddb4-10de-4c66-9f2f-c964d77275e0@redhat.com>
+Date: Fri, 11 Apr 2025 10:15:13 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] file-posix: probe discard alignment on Linux block
+ devices
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org
+References: <20250410184103.23385-1-stefanha@redhat.com>
+ <20250410184103.23385-2-stefanha@redhat.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20250410184103.23385-2-stefanha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,180 +115,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add tracing for more received packet types, cbw_state changes, and
-some more SCSI callbacks. These were useful in debugging relaxed
-packet ordering support.
+On 10.04.25 20:41, Stefan Hajnoczi wrote:
+> Populate the pdiscard_alignment block limit so the block layer is able
+> align discard requests correctly.
+>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>   block/file-posix.c | 56 +++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 55 insertions(+), 1 deletion(-)
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/usb/dev-storage.c | 23 +++++++++++++++++++++--
- hw/usb/trace-events  |  9 ++++++++-
- 2 files changed, 29 insertions(+), 3 deletions(-)
+Ah, I didn’t know sysfs is actually fair game.  Should we not also get 
+the maximum discard length then, too?
 
-diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 654b9071d33..0ed39de189d 100644
---- a/hw/usb/dev-storage.c
-+++ b/hw/usb/dev-storage.c
-@@ -187,7 +187,7 @@ static void usb_msd_data_packet_complete(MSDState *s, int status)
-      * because another request may be issued before usb_packet_complete
-      * returns.
-      */
--    trace_usb_msd_packet_complete();
-+    trace_usb_msd_data_packet_complete();
-     s->data_packet = NULL;
-     p->status = status;
-     usb_packet_complete(&s->dev, p);
-@@ -202,7 +202,7 @@ static void usb_msd_csw_packet_complete(MSDState *s, int status)
-      * because another request may be issued before usb_packet_complete
-      * returns.
-      */
--    trace_usb_msd_packet_complete();
-+    trace_usb_msd_csw_packet_complete();
-     s->csw_in_packet = NULL;
-     p->status = status;
-     usb_packet_complete(&s->dev, p);
-@@ -231,7 +231,11 @@ static void usb_msd_fatal_error(MSDState *s)
- static void usb_msd_copy_data(MSDState *s, USBPacket *p)
- {
-     uint32_t len;
-+
-     len = p->iov.size - p->actual_length;
-+
-+    trace_usb_msd_copy_data(s->req->tag, len);
-+
-     if (len > s->scsi_len)
-         len = s->scsi_len;
-     usb_packet_copy(p, scsi_req_get_buf(s->req) + s->scsi_off, len);
-@@ -264,6 +268,8 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
-     MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
-     USBPacket *p = s->data_packet;
- 
-+    trace_usb_msd_transfer_data(req->tag, len);
-+
-     if (s->cbw_state == USB_MSD_CBW_DATAIN) {
-         if (req->cmd.mode == SCSI_XFER_TO_DEV) {
-             usb_msd_fatal_error(s);
-@@ -324,11 +330,13 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
-         }
-         if (s->data_len == 0) {
-             s->cbw_state = USB_MSD_CBW_CSW;
-+            trace_usb_msd_cbw_state(s->cbw_state);
-         }
-         /* USB_RET_SUCCESS status clears previous ASYNC status */
-         usb_msd_data_packet_complete(s, USB_RET_SUCCESS);
-     } else if (s->data_len == 0) {
-         s->cbw_state = USB_MSD_CBW_CSW;
-+        trace_usb_msd_cbw_state(s->cbw_state);
-     }
- 
-     if (s->cbw_state == USB_MSD_CBW_CSW) {
-@@ -336,6 +344,7 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
-         if (p) {
-             usb_msd_send_status(s, p);
-             s->cbw_state = USB_MSD_CBW_NONE;
-+            trace_usb_msd_cbw_state(s->cbw_state);
-             /* USB_RET_SUCCESS status clears previous ASYNC status */
-             usb_msd_csw_packet_complete(s, USB_RET_SUCCESS);
-         }
-@@ -379,6 +388,7 @@ void usb_msd_handle_reset(USBDevice *dev)
- 
-     memset(&s->csw, 0, sizeof(s->csw));
-     s->cbw_state = USB_MSD_CBW_NONE;
-+    trace_usb_msd_cbw_state(s->cbw_state);
- 
-     s->needs_reset = false;
- }
-@@ -429,6 +439,8 @@ static void usb_msd_cancel_io(USBDevice *dev, USBPacket *p)
- {
-     MSDState *s = USB_STORAGE_DEV(dev);
- 
-+    trace_usb_msd_cancel_io();
-+
-     if (p == s->data_packet) {
-         s->data_packet = NULL;
-         if (s->req) {
-@@ -516,6 +528,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-         }
-         trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
-                                  cbw.cmd_len, s->data_len);
-+        trace_usb_msd_cbw_state(s->cbw_state);
-         assert(le32_to_cpu(s->csw.residue) == 0);
-         assert(s->scsi_len == 0);
-         s->req = scsi_req_new(scsi_dev, tag, cbw.lun,
-@@ -553,6 +566,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-                 s->data_len -= len;
-                 if (s->data_len == 0) {
-                     s->cbw_state = USB_MSD_CBW_CSW;
-+                    trace_usb_msd_cbw_state(s->cbw_state);
-                 }
-             }
-         }
-@@ -579,6 +593,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
- 
-     switch (s->cbw_state) {
-     case USB_MSD_CBW_NONE:
-+        trace_usb_msd_unknown_in(p->iov.size);
-         if (s->unknown_in_packet) {
-             qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: second IN packet was"
-                                            "received before CBW\n");
-@@ -590,6 +605,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         break;
- 
-     case USB_MSD_CBW_DATAOUT:
-+        trace_usb_msd_csw_in();
-         if (s->unknown_in_packet) {
-             error_report("usb-msd: unknown_in_packet in DATAOUT state");
-             goto fail;
-@@ -610,6 +626,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         break;
- 
-     case USB_MSD_CBW_CSW:
-+        trace_usb_msd_csw_in();
-         if (s->unknown_in_packet) {
-             error_report("usb-msd: unknown_in_packet in DATAOUT state");
-             goto fail;
-@@ -626,6 +643,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         } else {
-             usb_msd_send_status(s, p);
-             s->cbw_state = USB_MSD_CBW_NONE;
-+            trace_usb_msd_cbw_state(s->cbw_state);
-         }
-         break;
- 
-@@ -648,6 +666,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-                 s->data_len -= len;
-                 if (s->data_len == 0) {
-                     s->cbw_state = USB_MSD_CBW_CSW;
-+                    trace_usb_msd_cbw_state(s->cbw_state);
-                 }
-             }
-         }
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-index dd04f14add1..688f7ba0b3d 100644
---- a/hw/usb/trace-events
-+++ b/hw/usb/trace-events
-@@ -264,12 +264,19 @@ usb_msd_maxlun(unsigned maxlun) "%d"
- usb_msd_send_status(unsigned status, unsigned tag, size_t size) "status %d, tag 0x%x, len %zd"
- usb_msd_data_in(unsigned packet, unsigned remaining, unsigned total) "%d/%d (scsi %d)"
- usb_msd_data_out(unsigned packet, unsigned remaining) "%d/%d"
-+usb_msd_unknown_in(unsigned packet) "%d"
-+usb_msd_csw_in(void) ""
- usb_msd_packet_async(void) ""
--usb_msd_packet_complete(void) ""
-+usb_msd_data_packet_complete(void) ""
-+usb_msd_csw_packet_complete(void) ""
- usb_msd_cmd_submit(unsigned lun, unsigned tag, unsigned flags, unsigned len, unsigned data_len) "lun %u, tag 0x%x, flags 0x%08x, len %d, data-len %d"
- usb_msd_cmd_complete(unsigned status, unsigned tag) "status %d, tag 0x%x"
-+usb_msd_copy_data(unsigned tag, unsigned len) "tag 0x%x len %d"
-+usb_msd_transfer_data(unsigned tag, unsigned len) "tag 0x%x len %d"
- usb_msd_cmd_cancel(unsigned tag) "tag 0x%x"
-+usb_msd_cancel_io(void) ""
- usb_msd_fatal_error(void) ""
-+usb_msd_cbw_state(unsigned cbw_state) "cbw-state %d"
- 
- # dev-uas.c
- usb_uas_reset(int addr) "dev %d"
--- 
-2.47.1
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 56d1972d15..2a1e1f48c0 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -1276,10 +1276,10 @@ static int get_sysfs_zoned_model(struct stat *st, BlockZoneModel *zoned)
+>   }
+>   #endif /* defined(CONFIG_BLKZONED) */
+>   
+> +#ifdef CONFIG_LINUX
+>   /*
+>    * Get a sysfs attribute value as a long integer.
+>    */
+> -#ifdef CONFIG_LINUX
+>   static long get_sysfs_long_val(struct stat *st, const char *attribute)
+>   {
+>       g_autofree char *str = NULL;
+> @@ -1299,6 +1299,30 @@ static long get_sysfs_long_val(struct stat *st, const char *attribute)
+>       }
+>       return ret;
+>   }
+> +
+> +/*
+> + * Get a sysfs attribute value as a uint32_t.
+> + */
+> +static int get_sysfs_u32_val(struct stat *st, const char *attribute,
+> +                             uint32_t *u32)
+> +{
+> +    g_autofree char *str = NULL;
+> +    const char *end;
+> +    unsigned int val;
+> +    int ret;
+> +
+> +    ret = get_sysfs_str_val(st, attribute, &str);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    /* The file is ended with '\n', pass 'end' to accept that. */
+> +    ret = qemu_strtoui(str, &end, 10, &val);
+> +    if (ret == 0 && end && *end == '\0') {
+> +        *u32 = val;
+> +    }
+> +    return ret;
+> +}
+>   #endif
+>   
+>   static int hdev_get_max_segments(int fd, struct stat *st)
+> @@ -1318,6 +1342,23 @@ static int hdev_get_max_segments(int fd, struct stat *st)
+>   #endif
+>   }
+>   
+> +/*
+> + * Fills in *dalign with the discard alignment and returns 0 on success,
+> + * -errno otherwise.
+> + */
+> +static int hdev_get_pdiscard_alignment(struct stat *st, uint32_t *dalign)
+> +{
+> +#ifdef CONFIG_LINUX
+> +    /*
+> +     * Note that Linux "discard_granularity" is QEMU "discard_alignment". Linux
+> +     * "discard_alignment" is something else.
+> +     */
+> +    return get_sysfs_u32_val(st, "discard_granularity", dalign);
+> +#else
+> +    return -ENOTSUP;
+> +#endif
+> +}
+> +
+>   #if defined(CONFIG_BLKZONED)
+>   /*
+>    * If the reset_all flag is true, then the wps of zone whose state is
+> @@ -1527,6 +1568,19 @@ static void raw_refresh_limits(BlockDriverState *bs, Error **errp)
+>           }
+>       }
+>   
+> +    if (S_ISBLK(st.st_mode)) {
+> +        uint32_t dalign = 0;
+> +        int ret;
+> +
+> +        ret = hdev_get_pdiscard_alignment(&st, &dalign);
+> +        if (ret == 0) {
+> +            /* Must be a multiple of request_alignment */
+> +            assert(dalign % bs->bl.request_alignment == 0);
+
+Is it fair to crash qemu if the kernel reports a value that is not a 
+multiple of request_alignment?  Wouldn’t it make more sense to take the 
+maximum, and if that still isn’t a multiple, return an error here?
+
+Hanna
+
+> +
+> +            bs->bl.pdiscard_alignment = dalign;
+> +        }
+> +    }
+> +
+>       raw_refresh_zoned_limits(bs, &st, errp);
+>   }
+>   
 
 
