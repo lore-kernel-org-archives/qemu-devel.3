@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1EE4C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 16:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3835C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 16:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3HJs-0004qK-Gy; Fri, 11 Apr 2025 12:33:32 -0400
+	id 1u3HTt-0001NU-7U; Fri, 11 Apr 2025 12:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u3HJn-0004nK-L8
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 12:33:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u3HJk-0004r7-VZ
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 12:33:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744389203;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+rMsmzsVChofULFlaScDnlkm7h9HEgut+4e9/gQA2LA=;
- b=Sn/7znaTJpbLLmPujhyiY5RGpD0nSKOpvdJHXn5TAUG1h0YcwwQrbeHN6HaD6TijenGVBw
- LN5JoLXNofUmSulI2/WfxFZjzahsysxHLHLfaP1M3ca3pQBIvlyyOhPWnRtF/3tt6rpuRb
- FeePO5KT8NegvnryXeH7lerQk42GhQk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-wdSANvviPGC0qD8E8OgGuw-1; Fri,
- 11 Apr 2025 12:33:16 -0400
-X-MC-Unique: wdSANvviPGC0qD8E8OgGuw-1
-X-Mimecast-MFC-AGG-ID: wdSANvviPGC0qD8E8OgGuw_1744389195
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A19AC180899B; Fri, 11 Apr 2025 16:33:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 666543001D15; Fri, 11 Apr 2025 16:33:12 +0000 (UTC)
-Date: Fri, 11 Apr 2025 11:33:09 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Fam Zheng <fam@euphon.net>, 
- qemu-block@nongnu.org, Hanna Czenczek <hreitz@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH 1/2] file-posix: probe discard alignment on Linux block
- devices
-Message-ID: <yioauqg25egnwn24a5fitput2vedfc43b4bykscfqohxapr6rt@h2tn4uew5qmn>
-References: <20250409182914.4725-1-stefanha@redhat.com>
- <20250409182914.4725-2-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u3HTq-0001If-Ep
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 12:43:50 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u3HTo-0006Q3-HU
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 12:43:50 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22438c356c8so26564925ad.1
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 09:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744389827; x=1744994627; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yEehcKkEtvkrukIzx807jrlT1sua6l4Lwl0XwiVIqY8=;
+ b=fDHQSkDuioMfl3QYGvYy8Vy7ZJSTmUH3++CKMeGRuXaEt1kiJhXRuX6BWpR0lWoMnr
+ yFaNQLXrUvzUAR5OaIOQHsKMsPprqPPcJ6Z8s609xdGz8YENFo9KoU8BSMgarQPcLNhe
+ WgQ9VXxLAaRghChuwUJLnQe9GRuTEKO7ALmsVqnnLlTl2iiwxxpwqzie6mdedUf0CSjV
+ omUUYjEhcZ23Fg3YHLkxtK3GvR8+mWUMhkvcRBESTbxvLh7FdmjaWeFVbJKycEPuxCdh
+ zdbzpkmhQ94JKexYMRumtweu4Y/63DlSl8GPS+rk5qnJXrvL/v+U/DGneQqTGdCJtOaI
+ lGmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744389827; x=1744994627;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yEehcKkEtvkrukIzx807jrlT1sua6l4Lwl0XwiVIqY8=;
+ b=IQff0asb1spyYnT2SlhRNDOPKJ23QGxeaCHhqUgD//E+SsiYmzJEb2uoHlloka23cv
+ dRP1ptKIIIf1wYDJhFz+KpbPbmxHIBWvCg9wvvnuLwaGwGWWKjkaQVlsQviN7Ue0GbCo
+ 41RgEXJGSNGmIHBOUqmC7duyf79n8Zv9nmPLwrUYJolA52UKFawPlCc74jEutea4jNne
+ /AZs6ls4uArGXutaouXrq4R5Fd/eZf7O0PWqoo8fpdi44oPFTmaNY4Hm7H9VFw25RIQ8
+ FXrr1QFYZ5J57HNwSH8r6UD6MdamuwTzwE5NQCxRL8CvodPZHHSlX1BwGtKQjwZVb0Y9
+ xqyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgNrIH9JSpsTr7niJ7RbbAckIV/02r9Nx9BKD0sgTdKwpEx885Qkl9nwFWNOm18hxUWW9ZiY/w6hbk@nongnu.org
+X-Gm-Message-State: AOJu0YyrUNHsZHWJHBa2qo3GNW1lBlcLeXQt3I8s/gw0AeoBnUWMCvUj
+ eGUPvKfVCB2u3FtDWfNmlme0srABZ1zyt+vEkPs1ICCWaeDALLiI6WewIVGseXk=
+X-Gm-Gg: ASbGncuifYpG/lVr3bXv+QSLJvQREkSwtK+4pKgYpDUJK3jd+tQinBPa/1eiwfgF96F
+ mhmRPbwi5EU+k2kaqnnfBYO3pa2SP58Zyyd8CwDAgtXJQoyNSAGIJlE8zYxZ57okp3eDDglyHbv
+ bwCw7iaaIDEtzGKO4hSz+CBcL6iA0FFVJbQJKjohZ1vpPPHvfE3PPtKhtQE3/mfTSrR2Ac9u3BM
+ cSx5ede93JRkvoFkrxkbQ6HZB0cLNBecQXxXrZAo/AXIRfxADIXmTEM4BacBgSxLzuSIrjpJhld
+ Ej7dhZCvre0UZ0QlcDuHVQu9hFtxEQCTg0j9oPAP+lcZwCxapDnPgg==
+X-Google-Smtp-Source: AGHT+IGf54UMQ/WV03DIur+/XHnWpBL5Jn9QPVDaNn0xvv32LjsywHFJDgUYmDh0hVrTznsWUFFWkA==
+X-Received: by 2002:a17:902:ef0b:b0:21f:8453:7484 with SMTP id
+ d9443c01a7336-22bea4c76cdmr51659035ad.30.1744389826716; 
+ Fri, 11 Apr 2025 09:43:46 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7ccb5ddsm51718575ad.230.2025.04.11.09.43.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Apr 2025 09:43:46 -0700 (PDT)
+Message-ID: <7538bb41-cb6a-4a82-8535-3059f12e2f67@linaro.org>
+Date: Fri, 11 Apr 2025 09:43:45 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250409182914.4725-2-stefanha@redhat.com>
-User-Agent: NeoMutt/20250113
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/arm/ptw: extract arm_mmu_idx_to_security_space
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, alex.bennee@linaro.org,
+ qemu-arm@nongnu.org, Yannis Bolliger <yannis.bolliger@protonmail.com>
+References: <20250410210022.809905-1-pierrick.bouvier@linaro.org>
+ <20250410210022.809905-2-pierrick.bouvier@linaro.org>
+ <cea136fd-50a1-42be-98c6-e9550e85c1ed@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <cea136fd-50a1-42be-98c6-e9550e85c1ed@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,73 +108,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 09, 2025 at 02:29:13PM -0400, Stefan Hajnoczi wrote:
-> Populate the pdiscard_alignment block limit so the block layer is able
-> align discard requests correctly.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  block/file-posix.c | 56 +++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 55 insertions(+), 1 deletion(-)
-> 
-> diff --git a/block/file-posix.c b/block/file-posix.c
-> index 56d1972d15..2a1e1f48c0 100644
-> --- a/block/file-posix.c
-> +++ b/block/file-posix.c
-> @@ -1276,10 +1276,10 @@ static int get_sysfs_zoned_model(struct stat *st, BlockZoneModel *zoned)
->  }
->  #endif /* defined(CONFIG_BLKZONED) */
->  
-> +#ifdef CONFIG_LINUX
->  /*
->   * Get a sysfs attribute value as a long integer.
->   */
-> -#ifdef CONFIG_LINUX
->  static long get_sysfs_long_val(struct stat *st, const char *attribute)
-
-Random change to pull the comment inside of the #if, but tangentially
-related so I don't mind keeping it here.
-
->  {
->      g_autofree char *str = NULL;
-> @@ -1299,6 +1299,30 @@ static long get_sysfs_long_val(struct stat *st, const char *attribute)
->      }
->      return ret;
->  }
-> +
-> +/*
-> + * Get a sysfs attribute value as a uint32_t.
-> + */
-> +static int get_sysfs_u32_val(struct stat *st, const char *attribute,
-> +                             uint32_t *u32)
-> +{
-> +    g_autofree char *str = NULL;
-> +    const char *end;
-> +    unsigned int val;
-> +    int ret;
-> +
-> +    ret = get_sysfs_str_val(st, attribute, &str);
-> +    if (ret < 0) {
-> +        return ret;
-> +    }
-> +
-> +    /* The file is ended with '\n', pass 'end' to accept that. */
-> +    ret = qemu_strtoui(str, &end, 10, &val);
-> +    if (ret == 0 && end && *end == '\0') {
-> +        *u32 = val;
-> +    }
-> +    return ret;
-> +}
->  #endif
-
-May be worth amending this line to "#endif /* CONFIG_LINUX */" now
-that it is further from the opening #if.
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+T24gNC8xMS8yNSAwNjo0NCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
+IDEwLzQvMjUgMjM6MDAsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBXZSdsbCByZXVz
+ZSB0aGlzIGZ1bmN0aW9uIGxhdGVyLg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNr
+IEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+IC0tLQ0KPj4gICAg
+dGFyZ2V0L2FybS9wdHcuYyB8IDIxICsrKysrKysrKysrKysrLS0tLS0tLQ0KPj4gICAgMSBm
+aWxlIGNoYW5nZWQsIDE0IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pDQo+Pg0KPj4g
+ZGlmZiAtLWdpdCBhL3RhcmdldC9hcm0vcHR3LmMgYi90YXJnZXQvYXJtL3B0dy5jDQo+PiBp
+bmRleCA4ZDRlOWUwN2E5NC4uNWUxOTZjZmE5NTUgMTAwNjQ0DQo+PiAtLS0gYS90YXJnZXQv
+YXJtL3B0dy5jDQo+PiArKysgYi90YXJnZXQvYXJtL3B0dy5jDQo+PiBAQCAtMzU1MCwxMyAr
+MzU1MCw5IEBAIGJvb2wgZ2V0X3BoeXNfYWRkcl93aXRoX3NwYWNlX25vZ3BjKENQVUFSTVN0
+YXRlICplbnYsIHZhZGRyIGFkZHJlc3MsDQo+PiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgbWVtb3AsIHJlc3VsdCwgZmkpOw0KPj4gICAgfQ0KPj4gICAgDQo+PiAtYm9v
+bCBnZXRfcGh5c19hZGRyKENQVUFSTVN0YXRlICplbnYsIHZhZGRyIGFkZHJlc3MsDQo+PiAt
+ICAgICAgICAgICAgICAgICAgIE1NVUFjY2Vzc1R5cGUgYWNjZXNzX3R5cGUsIE1lbU9wIG1l
+bW9wLCBBUk1NTVVJZHggbW11X2lkeCwNCj4+IC0gICAgICAgICAgICAgICAgICAgR2V0UGh5
+c0FkZHJSZXN1bHQgKnJlc3VsdCwgQVJNTU1VRmF1bHRJbmZvICpmaSkNCj4+ICtzdGF0aWMg
+QVJNU2VjdXJpdHlTcGFjZSBhcm1fbW11X2lkeF90b19zZWN1cml0eV9zcGFjZQ0KPj4gKyhD
+UFVBUk1TdGF0ZSAqZW52LCBBUk1NTVVJZHggbW11X2lkeCkNCj4gDQo+IFN0eWxlIGlzOg0K
+PiANCj4gc3RhdGljIEFSTVNlY3VyaXR5U3BhY2UgYXJtX21tdV9pZHhfdG9fc2VjdXJpdHlf
+c3BhY2UoQ1BVQVJNU3RhdGUgKmVudiwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBBUk1NTVVJZHggbW11X2lkeCkNCj4gDQo+
+IG9yOg0KPiANCj4gc3RhdGljIEFSTVNlY3VyaXR5U3BhY2UNCj4gYXJtX21tdV9pZHhfdG9f
+c2VjdXJpdHlfc3BhY2UoQ1BVQVJNU3RhdGUgKmVudiwgQVJNTU1VSWR4IG1tdV9pZHgpDQo+
+IA0KDQpUaGFua3MsIEknbGwgdXBkYXRlIHRvIHRoaXMgb25lLg0KDQo+IFJldmlld2VkLWJ5
+OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQo+IA0KDQo=
 
 
