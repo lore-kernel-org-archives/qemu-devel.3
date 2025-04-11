@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A4F0C369A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5B2C369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 20:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3LF4-0001j7-Na; Fri, 11 Apr 2025 16:44:51 -0400
+	id 1u3LFZ-00030u-Oc; Fri, 11 Apr 2025 16:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1u3LF2-0001Zf-IY
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:44:48 -0400
+ id 1u3LFZ-00030k-1H
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:45:21 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
- id 1u3LF1-0001Tz-3P
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:44:48 -0400
+ id 1u3LFX-0001gr-Ig
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 16:45:20 -0400
 Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BJvBgX018303;
- Fri, 11 Apr 2025 20:44:39 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53BJuwnv017290;
+ Fri, 11 Apr 2025 20:45:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
  :mime-version:references:reply-to:subject:to; s=corp-2023-11-20;
- bh=jrols50ttmQYOJ46x4EgitOBjw2wF8AJ7w27GxNoKlQ=; b=fiUVYrNr+z0c
- m+FVY9yR7eNwohNogurrMoMFOf7kU6U3GyM1WZQE6IZJBe8o0vQoahVBtckIx+P+
- 9iaJwNibsMPr5ewF5ghzBIcSNCChkIX2jK270PMF5sjtAJTfW0OJBeH3g0uHD9xQ
- g1QMpsgzoXaAYxriQ52dtDS5DCSNwbgSh3cbPzXUWqGVuuxq35GtM/89iT/WifwR
- CEI3xh0Q6Ii6T73XcKUFVMVCkNNs2FWdknqWgWWV8vfnDskn7jwr+kv1oNvmcqBG
- 5iDOXiKKrCci9SkqsZHfHIfDC2fxaAhCFtxrtWgVvPX2NzgMU49xYuwN78omBvYd
- OQ+8ZJ3Pcg==
+ bh=+86Cu2iNauSJs7gn8B5x/L6ys9lFgpu3Hl+AJoM9CBo=; b=c8nQiObEO06n
+ y3WVk7tzd4+RTTySehtBSj5LiN7X126x/HwxUR7w7yQS5gkjtilJWHb9VSMGzCyf
+ Y3WGsvsSG1o/MTSIZW4Nu0ff6Hf9hcxDu2lQOxXG5A7AuGJtQBFihw2MTEZsq1x9
+ c1dJvsfMqjCbl2KCKEQtTAaKHq0J1+q9O2y6gKTrSkJ13eaKzCHugv4BgUunkQwh
+ WyONoTvjUYfnN0m2mqxWj2rcPZ9WuWr3T0kPaP94nwOQT75MaZTR97iF0PmW7fpM
+ 9NL2sJYdS192kGqs26XMM8k70UN0JjjbMYOn3EVO54D7P/ukmCF/jyY8LHeSRUWF
+ TVyek9cjSg==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45y9pc02da-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 45y9pc02et-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Apr 2025 20:44:39 +0000 (GMT)
+ Fri, 11 Apr 2025 20:45:11 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53BJqJh1020904; Fri, 11 Apr 2025 20:44:39 GMT
+ with ESMTP id 53BIxoqR023888; Fri, 11 Apr 2025 20:45:10 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 45ttymjd9a-1
+ 45ttymjdwc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Apr 2025 20:44:38 +0000
+ Fri, 11 Apr 2025 20:45:10 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BKhq8i018599;
- Fri, 11 Apr 2025 20:44:38 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53BKjAA4022849;
+ Fri, 11 Apr 2025 20:45:10 GMT
 Received: from localhost.localdomain (dhcp-10-43-12-85.usdhcp.oraclecorp.com
  [10.43.12.85])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 45ttymjd8q-1; Fri, 11 Apr 2025 20:44:38 +0000
+ 45ttymjdug-1; Fri, 11 Apr 2025 20:45:09 +0000
 From: Annie Li <annie.li@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
@@ -62,9 +62,9 @@ Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
  wangyanan55@huawei.com, zhao1.liu@intel.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, slp@redhat.com, eblake@redhat.com,
  armbru@redhat.com, annie.li@oracle.com, miguel.luis@oracle.com
-Subject: [RFC V3 PATCH 11/13] microvm: suspend the system as requested
-Date: Fri, 11 Apr 2025 16:44:24 -0400
-Message-ID: <20250411204424.3021-1-annie.li@oracle.com>
+Subject: [RFC V3 PATCH 12/13] microvm: enable suspend
+Date: Fri, 11 Apr 2025 16:44:46 -0400
+Message-ID: <20250411204446.3032-1-annie.li@oracle.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20250411201912.2872-1-annie.li@oracle.com>
 References: <20250411201912.2872-1-annie.li@oracle.com>
@@ -78,8 +78,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
  mlxlogscore=999 phishscore=0 bulkscore=0 adultscore=0 malwarescore=0
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2502280000 definitions=main-2504110132
-X-Proofpoint-GUID: d8xBMeIUJULH3_8svAsmwWuyWpDOH7aR
-X-Proofpoint-ORIG-GUID: d8xBMeIUJULH3_8svAsmwWuyWpDOH7aR
+X-Proofpoint-GUID: -_EfKwu-qSxMXBYwNh4HkLKEuMamBzvx
+X-Proofpoint-ORIG-GUID: -_EfKwu-qSxMXBYwNh4HkLKEuMamBzvx
 Received-SPF: pass client-ip=205.220.177.32; envelope-from=annie.li@oracle.com;
  helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -106,29 +106,28 @@ Reply-To: annie.li@oracle.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Once the microvm guest requests to go to sleep state and
-sets the GED register with S3 type, QEMU needs to continue
-suspending the system.
+The function qemu_wakeup_suspend_enabled combines the suspend
+and wakeup together. However, the microvm doesn't support
+wakeup yet. Suspend is enabled here, but wakeup doesn't
+actually work for microvm now.
 
 Signed-off-by: Annie Li <annie.li@oracle.com>
 ---
- hw/acpi/generic_event_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/i386/microvm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 5a1ac8e362..bc53551a45 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -213,6 +213,9 @@ static void ged_regs_write(void *opaque, hwaddr addr, uint64_t data,
-         if (slp_en && slp_typ == ACPI_GED_SLP_TYP_S5) {
-             qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-         }
-+        if (slp_en && slp_typ == ACPI_GED_SLP_TYP_S3) {
-+            qemu_system_suspend_request();
-+        }
-         return;
-     case ACPI_GED_REG_SLEEP_STS:
-         return;
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index eba33c4365..da5d4126e5 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -489,6 +489,7 @@ static void microvm_machine_state_init(MachineState *machine)
+     qemu_add_machine_init_done_notifier(&mms->machine_done);
+     mms->powerdown_req.notify = microvm_powerdown_req;
+     qemu_register_powerdown_notifier(&mms->powerdown_req);
++    qemu_register_wakeup_support();
+ 
+     microvm_memory_init(mms);
+ 
 -- 
 2.43.5
 
