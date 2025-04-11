@@ -4,84 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CB0C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 13:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D86C369AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 14:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3EuQ-0004Xe-Ul; Fri, 11 Apr 2025 09:59:06 -0400
+	id 1u3Eym-0006eg-2P; Fri, 11 Apr 2025 10:03:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u3EuP-0004XU-Cj
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 09:59:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u3EuN-0004Jl-Hx
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 09:59:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744379941;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kPjkwsv6mYTuttHcl/A2a+DZ5QGfarUi2mOJjE4NdMc=;
- b=Jl30c6lESlL8PVq4WZB5jPphxlQnofX/eo0JuTwhT9ti6a98pfvNl7x70+k6tWSUTgH/mx
- TMMmBMkUzu0QJiqLX9krKSzJRzVq59rgdh7jIqd5yKyV08KyqDdtzYxbJLXOLnzlm/FVrk
- rN8ULGFX9EyGZHPqPatVx+tU1QcdfTU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-E1z4HPZZN3iADha79C_Nfg-1; Fri,
- 11 Apr 2025 09:58:59 -0400
-X-MC-Unique: E1z4HPZZN3iADha79C_Nfg-1
-X-Mimecast-MFC-AGG-ID: E1z4HPZZN3iADha79C_Nfg_1744379938
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA756180025F; Fri, 11 Apr 2025 13:58:58 +0000 (UTC)
-Received: from localhost (unknown [10.44.34.99])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 98FEC1828A9F; Fri, 11 Apr 2025 13:58:57 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Jiri Denemark <jdenemar@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Peter Krempa
- <pkrempa@redhat.com>, Steve Sistare <steven.sistare@oracle.com>,
- qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, Cleber Rosa
- <crosa@redhat.com>, Eric Blake <eblake@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Fabiano
- Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- devel@lists.libvirt.org, David Hildenbrand <david@redhat.com>
-Subject: Re: Management applications and CPU feature flags
-In-Reply-To: <Z_kXuy9N4wiHU-qE@orkuz.int.mamuti.net>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <1741036202-265696-1-git-send-email-steven.sistare@oracle.com>
- <87friheqcp.fsf@pond.sub.org> <Z_YolW1Nw6Q_tsz6@angien.pipo.sk>
- <Z_jq5drO_25w0bC6@redhat.com> <87lds77zgx.fsf_-_@pond.sub.org>
- <Z_jyVQMfRbWaM66y@redhat.com> <8734ee9b4k.fsf@pond.sub.org>
- <Z_kXuy9N4wiHU-qE@orkuz.int.mamuti.net>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Fri, 11 Apr 2025 15:58:54 +0200
-Message-ID: <875xjakdep.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u3Eyb-0006dZ-C8; Fri, 11 Apr 2025 10:03:26 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u3EyZ-0004tv-K3; Fri, 11 Apr 2025 10:03:25 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-301c4850194so1600919a91.2; 
+ Fri, 11 Apr 2025 07:03:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744380200; x=1744985000; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xFy6ACGlewwahJcQDdgO8c8GfCX47OEfeGyDlhNqeLA=;
+ b=AhZpVDQ02F/MUa4jecJNQx/3FPNsbtwtNlQFQ2iQuFQ1lTIZJom6kWU+5ahVAgGubt
+ 1TlO5zXAIsmr+0tOi+c9YKMntLSvA9B7mTZ4ifpiPQxDLETEKk2MzhEeujt1PXMm9ZWe
+ MVUMG3fdd+GyHkX384+ltsmodTC6VYrR4FcamaVrcf3U+OIoS7wHl/OTiB7zHkjN+jiG
+ bRjr7xdCAsjxlyKe1nrtYcd1m5A/wBcH5nQBNnH0FfTB0KA9UmkG7H6lKj16kj33pTQL
+ X9jLaCilKGGDl4L5w+i/D9CiU0kFf3+nDFRV7cd3JJzkk4BKpHqc17ABbXyq9emWc4rU
+ mang==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744380200; x=1744985000;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xFy6ACGlewwahJcQDdgO8c8GfCX47OEfeGyDlhNqeLA=;
+ b=hTnkzpXjcHjLKechMUaV7TIyN6F9z0yZcclObNUWExI2ixnOLRA8eTEGadOmocJbW6
+ PiLf9IUFxeUAAXDFPKjsjpwL0o9Og8+xVLdNW3t1sT32GkOBe5ItqU1yuHKzP2cnfXZe
+ 8lJtPBIxw/3Pymqt0pgOPQ9aO9RJvOEFze89b+krdDB8koWYdKEr8TNtna3LY68poTbi
+ /AOsUJdKoULdNEbKpSegWmsrulYVYavHFXNwkIC3clEGW+9+4Mfx1X9n3wtol7hywAls
+ 61CDpH81FnZVUiLTfEV7iTykSTf2TFTld+w+Qv3LFCV8qP449j5q2OT2JoV9Bkk4V1al
+ W7OQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUaP1223P4ZSpa2+bvdIFDU4p530Hm3Mq3gJ1MXA0nNowy5llAI7VkJcLjOk+dW59B+B3JYtBfmlw==@nongnu.org,
+ AJvYcCVLyc0Qt7E3WLuO4ZZ2wGtmkxzhz30Hqdcut2jIsBunbdKoFlL77iDsMuZgx12423dftXOhLIAKN5Obhg==@nongnu.org,
+ AJvYcCWGx26u28xmSq2KqimuYjzae168WrKrXqHK+FgVcF5cdFZRib/RGxSz2bDilnCy1yeohbn8GUr/kraObQ==@nongnu.org,
+ AJvYcCXwA+EFtZFwS5cHqngMhxkoXFOUZD9QVjMOgWg494SvCxSnUy1K3Ns+BH/qBfcxHLKMATWy+iavhFxRcA==@nongnu.org
+X-Gm-Message-State: AOJu0YzCPAf8MYeazqAgtlRy3cfVmxyIjsgR2ws6lqpkDpWbk/HhnHYJ
+ atJAfqhdpJH/nr4vJq3I1VxEpCgkiHG2T9xYlxxr+xOi07eDlytvUAzydry9Doz71DykyosTurc
+ x/9FIFvwncP8EEUK0vFTQzd7zLCg=
+X-Gm-Gg: ASbGncsQiWZVWRKR6z6RGB6OpzcWZEqDMguS6OPEiAx9gzDfWrmh7P01saXQzkMqARz
+ Xlt+HuzzemfLKy/rP7LCqITb1yDqxN8q0PdY34PBz5sTgFWc/V8CdseU+fNME2Y63PYevHaKEwh
+ HAvGyK116zNX7qXgisa5oDV6ethIqP+wWoBZvLavsRrUOCNpNtiJw=
+X-Google-Smtp-Source: AGHT+IHazCXxnMA+xyqZPveubVFBv52IbAgpmh1CjzAbeFtFPVX6/q3G/iRq8FPnP60DzPRxeHXfocU9HqCUX5JBXWc=
+X-Received: by 2002:a17:90a:d888:b0:2ee:f677:aa14 with SMTP id
+ 98e67ed59e1d1-30823664084mr4622603a91.13.1744380199557; Fri, 11 Apr 2025
+ 07:03:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
+ <16376e4b63fad6f847ceadb39b8f9780fc288198.1744032780.git.ktokunaga.mail@gmail.com>
+ <2e9cb17e-47a4-49d3-a815-612bcbdcc92d@redhat.com>
+In-Reply-To: <2e9cb17e-47a4-49d3-a815-612bcbdcc92d@redhat.com>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Fri, 11 Apr 2025 23:03:07 +0900
+X-Gm-Features: ATxdqUGygzKUhd7MGEXS4tYylx2kmA9QydAJS9i_XTLSV_ewkssT5HpuuxRtrHA
+Message-ID: <CAEDrbUYDsZo_XO_prUnz8yZ_+gU1UgNiba48svDmANuqcTMyWw@mail.gmail.com>
+Subject: Re: [PATCH 08/10] hw/9pfs: Allow using hw/9pfs with emscripten
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000025e5270632812a75"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,65 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 11 2025, Jiri Denemark <jdenemar@redhat.com> wrote:
+--00000000000025e5270632812a75
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, Apr 11, 2025 at 13:43:39 +0200, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->> > On Fri, Apr 11, 2025 at 12:40:46PM +0200, Markus Armbruster wrote:
->> >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->> >> > Considering the bigger picture QMP design, when libvirt is trying to
->> >> > understand QEMU's CPU feature flag expansion, I would ask why we do=
-n't
->> >> > have something like a "query-cpu" command to tell us the current CPU
->> >> > expansion, avoiding the need for poking at QOM properties directly.
->> >>=20
->> >> How do the existing query-cpu-FOO fall short of what management
->> >> applications such as libvirt needs?
->> >
->> > It has been along while since I looked at them, but IIRC they were
->> > returning static info about CPU models, whereas libvirt wanted info
->> > on the currently requested '-cpu ARGS'
->>=20
->> Libvirt developers, please work with us on design of new commands or
->> improvements to existing ones to better meet libvirt's needs in this
->> area.
+Hi Paolo,
+
+> > Emscripten's fiber does not support submitting coroutines to other
+> > threads.
 >
-> The existing commands (query-cpu-definitions, query-cpu-model-expansion)
-> are useful for probing before starting a domain. But what we use qom-get
-> for is to get a view of the currently instantiated virtual CPU created
-> by QEMU according to -cpu when we're starting a domain. In other words,
-> we start QEMU with -S and before starting vCPUs we need to know exactly
-> what features were enabled and if any feature we requested was disabled
-> by QEMU. Currently we query QOM for CPU properties as that's what we
-> were advised to use ages ago.
+> Does it work as long as the thread does not rewind?
+
+The structure used by Fiber includes a thread-specific field related to
+rewind=E2=80=AF[1], which prevents it from being shared across threads. The=
+ behavior
+of the remaining fields in multi-threaded contexts is not documented, so
+further experimentation is needed to determine whether they can be safely
+shared.
+
+[1]
+https://emscripten.org/docs/api_reference/fiber.h.html#c.asyncify_data_t.re=
+wind_id
+
+> You can add all these to the stubs/emscripten.c file that I suggested
+> elsewhere.
+
+Sure, I'll apply this reorganization in the next verison of the series.
+
+> You could extracting v9fs_co_run_in_worker()'s bodies into separate
+> functions.  It is tedious but not hard; all you have to do is define
+> structs for the to parameters and return values of v9fs_co_*(), unpack
+> them in the callback functions, and retrieve the return value in
+> v9fs_co_*().  Many functions
 >
-> The reason behind querying such info is ensuring stable guest ABI during
-> migration. Asking QEMU for a specific CPU model and features does not
-> mean we'll get exactly what we asked for (this is not a bug) so we need
-> to record the differences so that we can start QEMU for incoming
-> migration with a CPU matching exactly the one provided on the source.
->
-> As Peter said, the current way is terribly inefficient as it requires
-> several hundreds of QMP commands so the goal is to have a single QMP
-> command that would tell us all we need to know about the virtual CPU.
-> That is all enabled features and all features that could not be enabled
-> even though we asked for them.
+> The advantage is that, instead of all the bottom half and yielding dance
+> that is done by v9fs_co_run_in_worker() and co_run_in_worker_bh(), you
+> can just use thread_pool_submit_co().
 
-Wandering in here from the still-very-much-in-progress Arm perspective
-(current but not yet posted QEMU code at
-https://gitlab.com/cohuck/qemu/-/tree/arm-cpu-model-rfcv3?ref_type=3Dheads):
+Thank you for the suggestion. I'll explore this approach, though it's still
+unclear whether thread_pool_submit_co() can be used with Emscripten's Fiber
+due to the limitations mentioned above.
 
-We're currently operating at the "writable ID register fields" level
-with the idea of providing features (FEAT_xxx) as an extra layer on top
-(as they model a subset of what we actually need) and have yet to come
-up with a good way to do named models for KVM. The
-query-cpu-model-expansion command will yield a list of all writable ID
-register fields and their values (as for now, for the 'host' model.) IIUC
-you want to query (a) what is actually available for configuration
-(before starting a domain) and (b) what you actually got (when starting
-a domain). Would a dump of the current state of the ID register fields
-before starting the vcpus work for (b)? Or is that too different from
-what other archs need/want? How much wriggle room do we have for special
-handling (different commands, different output, ...?)
+--00000000000025e5270632812a75
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div>Hi Paolo,</div><div><br></div><div>&gt; &gt; Emscript=
+en&#39;s fiber does not support submitting coroutines to other<br>&gt; &gt;=
+ threads.<br>&gt;<br>&gt; Does it work as long as the thread does not rewin=
+d?<br><br>The structure used by Fiber includes a thread-specific field rela=
+ted to<br>rewind=E2=80=AF[1], which prevents it from being shared across th=
+reads. The behavior<br>of the remaining fields in multi-threaded contexts i=
+s not documented, so<br>further experimentation is needed to determine whet=
+her they can be safely<br>shared.<br><br>[1] <a href=3D"https://emscripten.=
+org/docs/api_reference/fiber.h.html#c.asyncify_data_t.rewind_id">https://em=
+scripten.org/docs/api_reference/fiber.h.html#c.asyncify_data_t.rewind_id</a=
+><br><br>&gt; You can add all these to the stubs/emscripten.c file that I s=
+uggested<br>&gt; elsewhere.<br><br>Sure, I&#39;ll apply this reorganization=
+ in the next verison of the series.<br><br>&gt; You could extracting v9fs_c=
+o_run_in_worker()&#39;s bodies into separate<br>&gt; functions.=C2=A0 It is=
+ tedious but not hard; all you have to do is define<br>&gt; structs for the=
+ to parameters and return values of v9fs_co_*(), unpack<br>&gt; them in the=
+ callback functions, and retrieve the return value in<br>&gt; v9fs_co_*().=
+=C2=A0 Many functions<br>&gt;<br>&gt; The advantage is that, instead of all=
+ the bottom half and yielding dance<br>&gt; that is done by v9fs_co_run_in_=
+worker() and co_run_in_worker_bh(), you<br>&gt; can just use thread_pool_su=
+bmit_co().<br><br>Thank you for the suggestion. I&#39;ll explore this appro=
+ach, though it&#39;s still<br>unclear whether thread_pool_submit_co() can b=
+e used with Emscripten&#39;s Fiber<br>due to the limitations mentioned abov=
+e.<br><br><br><br></div><br></div>
+
+--00000000000025e5270632812a75--
 
