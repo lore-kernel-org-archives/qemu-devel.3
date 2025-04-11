@@ -4,142 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6508C369A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 21:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3833BC369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 22:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3LwH-0003tG-I3; Fri, 11 Apr 2025 17:29:29 -0400
+	id 1u3MrU-0005NI-F5; Fri, 11 Apr 2025 18:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1u3Lw9-0003sc-AD
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 17:29:21 -0400
-Received: from mail-mw2nam10on2041.outbound.protection.outlook.com
- ([40.107.94.41] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1u3MrR-0005Md-5p
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 18:28:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1u3Lvr-00076H-9j
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 17:29:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EU2fJT3H0SeteAVGJwsxRGPlE99Ubg+1LQkji9SG6iKTL9lh+HO/OdVnBGQHZPM3ay+h+HZqcMSPGxRdZmIOFf0KMo8JjA+vf6jcZMRy5tl2dwmUZclAIskIqsShfuPfVRQ+OuNAfmWKmzakc2BcJ/AM+f1kidY02amk+m4a52Fm6LfbulIPEhmuUGpbDUw3YaHI1emETw89flHCc8vMBzRZVEeYi8dhQ9ivYnHgwXA/ySSmQd0FodKwk7RYSNdP5cI74lgXKdSoGri+wm6ak0ZHh31B6JVhCeTWIBs1xEW+CuzgNm7Ga2hpCm3D7i7tZF/ypLcvTxyrSvWOCaw20Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E6+8b13Dqp6MbCL6b9qkTKeLoLFT/cqonHxxox2jT2w=;
- b=U/fii4YL3P+uqec2GgpxjhGwFCs7GUXJRRHommyc5C/dGC/yihMW9tgPMX0Ld9o6N+2Rg5PTOSi3m7LtWdflFy5ebjfFcUACkAGkrslg2gTYi3w2ekvRoi285Jo+L2xw9p+4mruTWN1rd/Kx4b0bDRBBkzT34Pjw4xqXJgicsyXgr2P4fiKuuBJgZhBL3SxkvOmhsRV7/Znhw7E5H3bpfcHA5xC4k6M2o7PIMFDIAErQYhGzyNCYlzgkcWKMwIoi6dV9ctQxIBBDLUq2hhhp44yQfX0gHN7TWZxNpUCgQ9kYcDYER9R8InDpgyFF/ldxSOa4rnwxDhCZrF8VR76AUg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E6+8b13Dqp6MbCL6b9qkTKeLoLFT/cqonHxxox2jT2w=;
- b=ydRGvehAeHSBRHsG27nYguroxVvn74+J5NlXVZySGCZu7sJPplfp7Vz5W6h/G9Q6GcEdKvvmk2bFfiF/aVUOg/lXonlW9JcY2ekQl4dqHWoIM5yM7qWzhBy8R3ox/ARF3DPB2o3VrNBrApCqXJBKBYPCOlWJlW7blGGb4BV72qQ=
-Received: from BN9PR03CA0536.namprd03.prod.outlook.com (2603:10b6:408:131::31)
- by IA0PR12MB7750.namprd12.prod.outlook.com (2603:10b6:208:431::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8606.32; Fri, 11 Apr
- 2025 21:23:52 +0000
-Received: from BL02EPF0001A100.namprd03.prod.outlook.com
- (2603:10b6:408:131:cafe::a2) by BN9PR03CA0536.outlook.office365.com
- (2603:10b6:408:131::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8632.26 via Frontend Transport; Fri,
- 11 Apr 2025 21:23:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL02EPF0001A100.mail.protection.outlook.com (10.167.242.107) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8655.12 via Frontend Transport; Fri, 11 Apr 2025 21:23:51 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 11 Apr
- 2025 16:23:51 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1u3MrO-00008E-PH
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 18:28:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744410508;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hWnfUd6k4P9NlmExxmFPZX/bCpaZxupoTcVIWf067G4=;
+ b=H1M8+YqEfQmWkpJ+z0r4pavYKZRgNhzzb1PLG5emlE6NFUXrk0cGPbrAIHUfEmsWqvxvzI
+ CI7JefcwHGHEyQOELPoQ38puoH+fs38VT6m8haiRotx/q417gpXs1JC793EJPMpxzbnIrv
+ UUgKPXW1yzQgqmKrBDe2BVpzv0+HGic=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-540-y2UHa-P2OGuZ-5hc6YAFGg-1; Fri, 11 Apr 2025 18:28:26 -0400
+X-MC-Unique: y2UHa-P2OGuZ-5hc6YAFGg-1
+X-Mimecast-MFC-AGG-ID: y2UHa-P2OGuZ-5hc6YAFGg_1744410506
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-86184fbd7a2so12189639f.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 15:28:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744410506; x=1745015306;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hWnfUd6k4P9NlmExxmFPZX/bCpaZxupoTcVIWf067G4=;
+ b=hwmg3IZlAiPafeZlASwpTdTOXcPKGRhScOPCTOIKd8SGdlp2waMJ9KzwR/Wb2Mesag
+ 4vxixxTrfE1E98/YZbrC/d7cvV9M76Lnll4LP0HGXLkje6Prhus/K5QtKGZVksonAchT
+ BGsX50quueBn8sq06QOxhSLGSpQ3m3O57cPEtiFzQqJNjBRI8IXF9GvQDxCTXOTn9V8g
+ gnURY+WZ9gSPuJHqfnElF7eKOqOO14SvL7GTpvuIY/6Sp3orb8/AO+X+bHOz1fXXJ/7k
+ i/T4D4kiLYLeJzHu8cD9Hjz52fLCxNBJc9EaQvqI/4OQq8vh1VIRzrKsQjS5Fh6e7mKM
+ hvEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuelAepj4u1Fc739iBF8UMgDzLD8B9+RDIcNLeBDv5ZywWMN0fvV0NxLkGmPA5x24JYKRBOZWs9epr@nongnu.org
+X-Gm-Message-State: AOJu0Yy4YzqB4kdPBRJzyxh8XFAh8b9YelFzCv4pmyr0J1oeawQX8foq
+ 5ZLstuW5bt7sV0iARHdK+g6Ko/jWsIJWyHqOPoGyjABu2zpbq9tlfj84Fg9me78TOXPpKRmR4JS
+ n5H/4pfwVUITO7aSXq6EWh7DIMbQSn9DAcLx/M+7txcKGK5ZHZLmJ
+X-Gm-Gg: ASbGncvF0ocslpFxoXv4MC3PmXXv0ipywMfFiRtSZfDr0cmwcpFeQaZ0kYAykY1ZIc1
+ pyz5cybUP1YZPVFmDdk3xzFfuN72iI8evJs1aRiXXj/YV5ZrNGJ+FbkPQj0ZzKHDHCQjh2wHPiP
+ WtIzVjiZMpDGjLVRjHx2gar6Sn1f1jxJ7E+AwuxbEH9MsVOtZXGIUENs/h1PdkOgiU83itQ+w6Z
+ WJIUGYlmBaJ61OP+clURaONbCJWN9mZUvIpe793TISTw5/LbEDamD6I+Q53NC6jhVJGRQvjBNM6
+ mSRLZ9BAn70RzSI=
+X-Received: by 2002:a05:6602:29c6:b0:85e:12c1:fe90 with SMTP id
+ ca18e2360f4ac-8617ffef834mr108252839f.5.1744410505809; 
+ Fri, 11 Apr 2025 15:28:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5KWGz25iHHBCcRgpTz5lMrp9vL56Nm16GIv/aev5RnWAz9aRU4vXOoZU7cP0n/+e1gb+DGw==
+X-Received: by 2002:a05:6602:29c6:b0:85e:12c1:fe90 with SMTP id
+ ca18e2360f4ac-8617ffef834mr108251339f.5.1744410505235; 
+ Fri, 11 Apr 2025 15:28:25 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-8616522dcf2sm112277339f.3.2025.04.11.15.28.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Apr 2025 15:28:23 -0700 (PDT)
+Date: Fri, 11 Apr 2025 16:28:19 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Farhan Ali <alifm@linux.ibm.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Niklas Schnelle
+ <schnelle@linux.ibm.com>, qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ qemu-s390x@nongnu.org, fam@euphon.net, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, thuth@redhat.com, mjrosato@linux.ibm.com,
+ =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, venture@google.com,
+ crauer@google.com, pefoley@google.com, david@redhat.com
+Subject: Re: [PATCH v3 0/3] Enable QEMU NVMe userspace driver on s390x
+Message-ID: <20250411162819.1526fb12.alex.williamson@redhat.com>
+In-Reply-To: <efa82601-4775-4b9f-9d7f-49f788d2f13f@linux.ibm.com>
+References: <20250401172246.2688-1-alifm@linux.ibm.com>
+ <20250402155152.GE304512@fedora>
+ <2c11a602415f0780030d4e68a28eee7ffcdd8cb7.camel@linux.ibm.com>
+ <20250403154442.GA349582@fedora>
+ <20250403102704.7e1f4452.alex.williamson@redhat.com>
+ <2c244588-b37b-4e86-863e-ef462343edad@linux.ibm.com>
+ <20250403120504.2f660171.alex.williamson@redhat.com>
+ <d9e4feb3-351c-4c0b-8c8e-a5141e80ed5e@linux.ibm.com>
+ <20250403152402.1373f0b2.alex.williamson@redhat.com>
+ <efa82601-4775-4b9f-9d7f-49f788d2f13f@linux.ibm.com>
+Organization: Red Hat
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 10.0.0-rc3 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-Date: Fri, 11 Apr 2025 16:23:36 -0500
-Message-ID: <174440661624.3334756.17990862921703010890@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A100:EE_|IA0PR12MB7750:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4db14ace-6c8b-4fa9-7b1e-08dd793f282b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|36860700013|376014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UE5mSXNKQ2RGZk9YVCsrQ2V5NG1zVFFUNDZjWDE1aXNMcTBzaTE3OEtNR3Nh?=
- =?utf-8?B?MlRuNEVFU3JjdmpEdG9zRTVQWTZRUEZ5TEloMFJnSDczUXdBRUhUMnRpNHlL?=
- =?utf-8?B?NXExNW56YnZCcnNHVXc0NGVwWmJBbkNrN1BOa0p5T1ZTbWFFODQ5amNudTBh?=
- =?utf-8?B?cGg2cVR5RzJXRVREQUpTNVhoSlcwcWpISDJPTm9Id0EvR1Ezb0VFeDhoSTlT?=
- =?utf-8?B?VGVJT0luV1V0UjMzbzhLRnd4ekZDTjN2YWNocTNiWWJRTk1TcjgwY1RpTFlK?=
- =?utf-8?B?RmE0a2xIOWlpa29qNExWRk5FOWRLNklHOEtSdlNEQ1NFUFdWM1h3MDRqK1R3?=
- =?utf-8?B?T1RRajNLTlZxWXhrK1J1ZUdNUmJPMkx0RzZuMGd6WWo2eGh1Q0ZpeTAxR3RC?=
- =?utf-8?B?V1JiMURqRHY2Z0hjazJVa2xwWmxjNGljanNZT2lXT2R0akZ3dkt2V3BzR3hR?=
- =?utf-8?B?SURYU3lFL1pXeU1NY0ZZS0hxMGRVcmg3dWhGMHVBQmUxcHdFTXRLQUZYKzJZ?=
- =?utf-8?B?cWRVbEpvVFgxMnF3SzRRU1k3MU9LYWMyeTE0M0huTytZWlprM3U2KzQ2bDdE?=
- =?utf-8?B?c3poVHhtU1ZEQ2lHN2RJWVAzOXJnQkUvWDVqZFBPK2pMME1ZN0JXYy82UVBq?=
- =?utf-8?B?R09rN3dYUDN6Nkd2aVdUQjF0VThaVXpOSkkzcGpiWHBreS9MVnlFNFRIM1VJ?=
- =?utf-8?B?TUhxcUNxblhBM1d4U0xHS1FmUnArY0RCY1pobHgzd1lJUkN2S2FSRy9zejdC?=
- =?utf-8?B?d0FsZCtWZnNTeWxkdzQzSnE2L1V0K0Fubk5JUk9odFZUcFozZ2tzOU1iYTZQ?=
- =?utf-8?B?YW45S2ZVQm5sNnVEU1lEcDhqSHQranhrZWRJb05qTkJzVmxIV1J3dVFuZW5R?=
- =?utf-8?B?Z1RXTHNKVkdJd1NxZXhuYlN1R2RQNk1RK2F3M1NhRmRWR3E5bHJrMHViU3JF?=
- =?utf-8?B?dGEweVd4ZEE4RUgvZHNtVEtUdGRZNmY1OExOTGMzSmV1OE1WTFJXODkvK2p4?=
- =?utf-8?B?QVQ2M0Njb09RZUo4UEVTdEFuRjd3cDFTTnV6T2RjTFlaT1RqWmFqaTdYbzFE?=
- =?utf-8?B?WDZlaEtlbFJVc2VEeU11Nzg0L1QzWUg3SU9Qc1V3b1B5bzA2OGF0MFJGM043?=
- =?utf-8?B?YkdiWkppWElpWXJIdE5LdURwKzBMZjU4ZU00MFQvb21ycWxPeU4yL3hxUHBJ?=
- =?utf-8?B?amJ2eUxPbEdTK2RvQmFibTlMUW9xN1dJaVQ3Wmt1NjR5MVpFK1Jja0o0Q1Fn?=
- =?utf-8?B?TnpFZmpxRmZHcENZY0M4UERaU0x3ZmlVWG9OTGR2OElGbU1RK1l1MlJ0dFFy?=
- =?utf-8?B?MUd0U3kyaDI0MzRkUUUrZnZCTERLbXU5KzNRdGI0dG1EMDFBVENOWHdXZWJU?=
- =?utf-8?B?SXBHcGFhcDlCVGtGOEtYdHMvdjY3NnRkVjA5N1c5d2hFU3l6alpEQjV1THJY?=
- =?utf-8?B?b0ZGK3FCUkxSUnVlTjlTN2ZURVRlbUhGLzgyNmxkQmRiNU4wUTQ4OURDSU1E?=
- =?utf-8?B?YlBlazFmTUlLUCtoWTZFRjd3VlJRRVhqT2laT3lPS2JsaU1McnR0MzltcHVi?=
- =?utf-8?B?SGZJQjV1ZXR0eWZtK00xRzd4azNZVmdEamFtbW9ReEtlOFhlUGNPR051S0Jq?=
- =?utf-8?B?elkxK2VVeDBwWUZDZVVPa0plMFV4eGZaWG55WDZuSnd5akZCRFhpVy9yREdq?=
- =?utf-8?B?MlRBUjhyS1FsZDlaOGtvKy9PN2V2TUVsTERJZmZYU2V3bHF3d2FobGh2MndP?=
- =?utf-8?B?TWkvNVZyWUJuNDdUaENaNGJTNHdzSk9PRGpwZ3FYaFRjKy9sQTJucmNCY255?=
- =?utf-8?B?bTJ3NXJpOVpqenMwVnFlUWJHU0NBejdOcWxUNjRLMjRCcTJFUzFwaFVGa0Rv?=
- =?utf-8?B?cEtvZDFBRG1HL3FOUXBNOTV2VWhyY1NZdHpxbVpXelovUzh3Q1lYd0xZZ3M5?=
- =?utf-8?B?bEtUUGQ1VVFmMmVQTXVBUk4xcUovTkFnQmdFVG93Q1oydWRsblVwR0FPZTlC?=
- =?utf-8?B?RU9Ydnc4Q3dBPT0=?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(36860700013)(376014)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Apr 2025 21:23:51.9848 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4db14ace-6c8b-4fa9-7b1e-08dd793f282b
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A100.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7750
-Received-SPF: permerror client-ip=40.107.94.41;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,102 +124,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Thu, 10 Apr 2025 09:07:51 -0700
+Farhan Ali <alifm@linux.ibm.com> wrote:
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-fourth release candidate for the QEMU 10.0 release. This release is meant
-for testing purposes and should not be used in a production environment.
+> On 4/3/2025 2:24 PM, Alex Williamson wrote:
+> > On Thu, 3 Apr 2025 13:33:17 -0700
+> > Farhan Ali <alifm@linux.ibm.com> wrote:
+> >  
+> >> On 4/3/2025 11:05 AM, Alex Williamson wrote:  
+> >>> On Thu, 3 Apr 2025 10:33:52 -0700
+> >>> Farhan Ali <alifm@linux.ibm.com> wrote:
+> >>>     
+> >>>> On 4/3/2025 9:27 AM, Alex Williamson wrote:  
+> >>>>> On Thu, 3 Apr 2025 11:44:42 -0400
+> >>>>> Stefan Hajnoczi <stefanha@redhat.com> wrote:
+> >>>>>        
+> >>>>>> On Thu, Apr 03, 2025 at 09:47:26AM +0200, Niklas Schnelle wrote:  
+> >>>>>>> On Wed, 2025-04-02 at 11:51 -0400, Stefan Hajnoczi wrote:  
+> >>>>>>>> On Tue, Apr 01, 2025 at 10:22:43AM -0700, Farhan Ali wrote:  
+> >>>>>>>>> Hi,
+> >>>>>>>>>
+> >>>>>>>>> Recently on s390x we have enabled mmap support for vfio-pci devices [1].  
+> >>>>>>>> Hi Alex,
+> >>>>>>>> I wanted to bring this to your attention. Feel free to merge it through
+> >>>>>>>> the VFIO tree, otherwise I will merge it once you have taken a look.
+> >>>>>>>>
+> >>>>>>>> Thanks,
+> >>>>>>>> Stefan
+> >>>>>>>>            
+> >>>>>>>>> This allows us to take advantage and use userspace drivers on s390x. However,
+> >>>>>>>>> on s390x we have special instructions for MMIO access. Starting with z15
+> >>>>>>>>> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
+> >>>>>>>>> operate on virtually mapped PCI memory spaces, and can be used from userspace.
+> >>>>>>>>> On older platforms we would fallback to using existing system calls for MMIO access.
+> >>>>>>>>>
+> >>>>>>>>> This patch series introduces support the PCI MIO instructions, and enables s390x
+> >>>>>>>>> support for the userspace NVMe driver on s390x. I would appreciate any review/feedback
+> >>>>>>>>> on the patches.
+> >>>>>>>>>
+> >>>>>>>>> Thanks
+> >>>>>>>>> Farhan  
+> >>>>>>> Hi Stefan,
+> >>>>>>>
+> >>>>>>> the kernel patch actually made it into Linus' tree for v6.15 already as
+> >>>>>>> commit aa9f168d55dc ("s390/pci: Support mmap() of PCI resources except
+> >>>>>>> for ISM devices") plus prerequisites. This went via the PCI tree
+> >>>>>>> because they included a change to struct pci_dev and also enabled
+> >>>>>>> mmap() on PCI resource files. Alex reviewed an earlier version and was
+> >>>>>>> the one who suggested to also enable mmap() on PCI resources.  
+> >>>>>> The introduction of a new QEMU API for accessing MMIO BARs in this
+> >>>>>> series is something Alex might be interested in as QEMU VFIO maintainer.
+> >>>>>> That wouldn't have been part of the kernel patch review.
+> >>>>>>
+> >>>>>> If he's aware of the new API he can encourage other VFIO users to use it
+> >>>>>> in the future so that you won't need to convert them to work on s390x
+> >>>>>> again.  
+> >>>>> I don't claim any jurisdiction over the vfio-nvme driver.  In general
+> >>>>> vfio users should be using either vfio_region_ops, ram_device_mem_ops,
+> >>>>> or directly mapping MMIO into the VM address space.  The first uses
+> >>>>> pread/write through the region offset, irrespective of the type of
+> >>>>> memory, the second provides the type of access used here where we're
+> >>>>> dereferencing into an mmap, and the last if of course the preferred
+> >>>>> mechanism where available.
+> >>>>>
+> >>>>> It is curious that the proposal here doesn't include any changes to
+> >>>>> ram_device_mem_ops for more generically enabling MMIO access on s390x.
+> >>>>> Thanks,
+> >>>>>
+> >>>>> Alex  
+> >>>> Hi Alex,
+> >>>>    From my understanding the ram_device_mem_ops sets up the BAR access for
+> >>>> a guest passthrough device. Unfortunately today an s390x KVM guest
+> >>>> doesn't use and have support for these MIO instructions. We wanted to
+> >>>> use this series as an initial test vehicle of the mmap support.  
+> >>> Right, ram_device_mem_ops is what we'll use to access a BAR that
+> >>> supports mmap but for whatever reason we're accessing it directly
+> >>> through the mmap.  For instance if an overlapping quirk prevents the
+> >>> page from being mapped to the VM or we have some back channel mechanism
+> >>> where the VMM is interacting with the BAR.
+> >>>
+> >>> I bring it up here because it's effectively the same kind of access
+> >>> you're adding with these helpers and would need to be addressed if this
+> >>> were generically enabling vfio mmap access on s390x.  
+> >> On s390x the use of the MIO instructions is limited to only PCI access.
+> >> So i am not sure if we should generically apply this to all vfio mmap
+> >> access (for non PCI devices).
+> >>
+> >>  
+> >>> Prior to commit 2b8fe81b3c2e ("system/memory: use ldn_he_p/stn_he_p")
+> >>> the mmio helpers here might have been a drop-in replacement for the
+> >>> dereferencing of mmap offsets, but something would need to be done
+> >>> about the explicit PCI assumption introduced here and the possibility
+> >>> of unaligned accesses that the noted commit tries to resolve.  Thanks,
+> >>>
+> >>> Alex  
+> >> AFAICT in qemu today the ram_device_mem_ops is used for non PCI vfio
+> >> mmap cases. For s390x these helpers should be restricted to PCI
+> >> accesses. For the unaligned accesses (thanks for pointing out that
+> >> commmit!), are you suggesting we use the ld*_he_p/st*_he_p functions in
+> >> the helpers i defined? Though those functions don't seem to be doing
+> >> volatile accesses.  
+> > TBH, it's not clear to me that 2b8fe81b3c2e is correct.  We implemented
+> > the ram_device MemoryRegion specifically to avoid memory access
+> > optimizations that are not compatible with MMIO, but I see that these
+> > {ld,st}*_he_pe operations are using __builtin_memcpy.  I'm not a
+> > compiler aficionado, but is __builtin_memcpy guaranteed to use an
+> > instruction set compatible with MMIO?
+> >
+> > Cc: folks related to that commit.
+> >
+> > The original issue that brought us ram_device was a very obscure
+> > alignment of a memory region versus a device quirk only seen with
+> > assignment of specific RTL NICs.
+> >
+> > The description for commit 4a2e242bbb30 ("memory: Don't use memcpy for
+> > ram_device regions") also addresses unaligned accesses, we don't expect
+> > drivers to use them and we don't want them to work differently in a VM
+> > than they might on bare metal.  We can debate whether that's valid or
+> > not, but that was the intent.
+> >
+> > Have we re-introduced the chance that we're using optimized
+> > instructions only meant to target RAM here or is __builtin_memcpy
+> > implicitly safe for MMIO?  Thanks,
+> >
+> > Alex  
+> 
+> 
+> Hi Stefan, Alex
+> 
+> 
+> Polite ping. Following up to understand how we should proceed with this 
+> series. Please let me know if there are any concerns that i haven't 
+> addressed?
 
-  http://download.qemu.org/qemu-10.0.0-rc3.tar.xz
-  http://download.qemu.org/qemu-10.0.0-rc3.tar.xz.sig
+I disassembled the current implementation using ldn_he_p/stn_he_p on
+x86_64 and it doesn't appear to introduce any of the mmx/sse optimized
+optimized code that we were trying to get away from in introducing the
+ram_device MemoryRegion and getting away from memcpy.  I wish I had
+some assurance that __builtin_memcpy won't invoke such operations, but
+it seems unlikely that it would for the discrete, fundamental size
+operations we're asking of it.  Therefore, maybe it is advisable to use
+the ld*_he_p/st*_he_p helpers rather than open code the memory derefs.
 
-You can help improve the quality of the QEMU 10.0 release by testing this
-release and reporting bugs using our GitLab issue tracker:
+It's unfortunate that s390x needs to specifically restrict this access
+to PCI memory, but maybe that means that PCI specific version of these
+helpers are only created for s390x and elsewhere #define'd to the
+generic ld/st helpers, which maybe means the main interface should be a
+host_pci_{ld,st}n_he_p (maybe "le" given the implementation) type
+function.  I don't know if we'd then create a ram_pci_device variant
+memory region ops for use in vfio-pci, but it should probably be coded
+with that in mind.  Thanks,
 
-  https://gitlab.com/qemu-project/qemu/-/milestones/15
+Alex
 
-The release plan, as well a documented known issues for release
-candidates, are available at:
-
-  http://wiki.qemu.org/Planning/10.0
-
-Please add entries to the ChangeLog for the 10.0 release below:
-
-  http://wiki.qemu.org/ChangeLog/10.0
-
-Thank you to everyone involved! And please excuse the delayed
-announcement email, which was meant to go out yesterday after
-publishing.
-
-Changes since rc2:
-
-56c6e249b6: Update version for v10.0.0-rc3 release (Stefan Hajnoczi)
-ae81527b43: scripts/checkpatch: Fix typo in SPDX-License-Identifier keyword=
- (Zhao Liu)
-8c996e3271: hw/nvme: fix attachment of private namespaces (Klaus Jensen)
-f978f410aa: hw/arm/imx8mp-evk: Temporarily remove unimplemented imx8mp-fspi=
- node from devicetree (Guenter Roeck)
-764ca3ec89: hw/arm/imx8mp-evk: Remove unimplemented cpu-idle-states propert=
-ies from devicetree (Guenter Roeck)
-535ef19566: hw/ufs: Fix incorrect comment for segment_size and allocation_u=
-nit_size (Keoseong Park)
-2ba700a501: docs/arm: Add apple HVF host for supported guest CPU type (Zhan=
-g Chen)
-15a9fe6e35: hw/core/machine: Fix -machine dumpdtb=3Dfile.dtb (Joel Stanley)
-a7a05f5f6a: smbios: Fix buffer overrun when using path=3D option (Daan De M=
-eyer)
-f8222bfba3: test-bdrv-drain: Fix data races (Vitalii Mordan)
-61b6d9b749: scsi-disk: Apply error policy for host_status errors again (Kev=
-in Wolf)
-b3d47c8303: target/ppc: Fix SPRC/SPRD SPRs for P9/10 (Nicholas Piggin)
-9808ce6d5c: target/ppc: Big-core scratch register fix (Nicholas Piggin)
-8e4ffb4ef4: qcow2: Don't crash qemu-img info with missing crypto header (Ke=
-vin Wolf)
-6b36a57831: qemu-img: fix division by zero in bench_cb() for zero-sized ima=
-ges (Denis Rastyogin)
-8d41a7dfc2: qga/qapi-schema: Add a proper introduction (Markus Armbruster)
-5e03548bf2: storage-daemon/qapi/qapi-schema: Add a proper introduction (Mar=
-kus Armbruster)
-9199d324a8: qapi/qapi-schema: Address the introduction's bit rot (Markus Ar=
-mbruster)
-d0ae5a3058: qapi/qapi-schema: Update introduction for example notation (Mar=
-kus Armbruster)
-6d7b3efc3f: docs/sphinx/qmp_lexer: Highlight elisions like comments, not pr=
-ompts (Markus Armbruster)
-bc361f2f9b: docs/sphinx/qmp_lexer: Generalize elision syntax (Markus Armbru=
-ster)
-e27608d053: docs/devel/qapi-code-gen: Improve the part on qmp-example direc=
-tive (Markus Armbruster)
-0d4c7ea0f8: docs/interop: Sanitize QMP reference manuals TOC (Markus Armbru=
-ster)
-ae75c37e50: docs/interop: Delete "QEMU Guest Agent Protocol Reference" TOC =
-(Markus Armbruster)
-2f0bcc65a8: qapi/rocker: Tidy up query-rocker-of-dpa-flows example (Markus =
-Armbruster)
-23d017ca84: docs/devel/qapi-code-gen: Tidy up whitespace (Markus Armbruster)
-fa0dde12db: hw/loongarch/virt: Replace destination error with error_abort (=
-Bibo Mao)
-988ad4cceb: hw/loongarch/virt: Fix cpuslot::cpu set at last in virt_cpu_plu=
-g() (Bibo Mao)
-d31d37fded: docs: deprecate RISC-V default machine option (Daniel Henrique =
-Barboza)
-49551752e8: hw/arm: Do not build VMapple machine by default (Philippe Mathi=
-eu-Daud=C3=A9)
-51514a34b3: tests/qtest: Skip Aarch64 VMapple machine (Philippe Mathieu-Dau=
-d=C3=A9)
-bd20bc46fe: tests/functional: Skip aarch64_replay test on macOS (Philippe M=
-athieu-Daud=C3=A9)
-00f119f4c4: tests/functional: Add a decorator for skipping tests on particu=
-lar OS (Philippe Mathieu-Daud=C3=A9)
-4412d71382: tests/functional/test_aarch64_rme_virt: fix sporadic failure (P=
-ierrick Bouvier)
-e139bc4b17: tcg: Allocate TEMP_VAL_MEM frame in temp_load() (Philippe Mathi=
-eu-Daud=C3=A9)
-961841472d: Revert "iotests: Stop NBD server in test 162 before starting th=
-e next one" (Thomas Huth)
-719255486d: hw/i386/amd_iommu: Assign pci-id 0x1419 for the AMD IOMMU devic=
-e (Suravee Suthikulpanit)
-c17ad4b11b: virtio-net: Fix num_buffers for version 1 (Akihiko Odaki)
-c0b32426ce: migration: fix SEEK_CUR offset calculation in qio_channel_block=
-_seek (Marco Cavenati)
 
