@@ -4,99 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B871EC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B0BC369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u39bU-0004lw-T2; Fri, 11 Apr 2025 04:19:16 -0400
+	id 1u3A3w-0003PJ-0k; Fri, 11 Apr 2025 04:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u39bL-0004kx-AQ
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:19:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1u3A3Y-0003Nl-I7
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:48:12 -0400
+Received: from smtp.eurecom.fr ([193.55.113.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1u39bJ-0006Xn-Bh
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:19:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744359540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p5tv82XoNM8n+7OjVviD3xcy/gBt+IAz/mDEGdURPPM=;
- b=gGTpyWxebQge9Q9fVZ5b2w9ht/WFLiO3rF12aHpjggvPQ6bl6sdt/eWZw6ig+ai6WeLmvL
- Xn5jQ6FgApYk5uZuBStHM/WpF8aMpxXW/yHxPD2rCtNBjoGFXcXnTIiSki1NTgY/1RAoL3
- ZTQzLGlEHjBKijL3fMVXeXCV5r16Fl8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-SBMGke_TPVi0gkOmfbCztA-1; Fri, 11 Apr 2025 04:18:59 -0400
-X-MC-Unique: SBMGke_TPVi0gkOmfbCztA-1
-X-Mimecast-MFC-AGG-ID: SBMGke_TPVi0gkOmfbCztA_1744359538
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3912fe32a30so727191f8f.1
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 01:18:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744359537; x=1744964337;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p5tv82XoNM8n+7OjVviD3xcy/gBt+IAz/mDEGdURPPM=;
- b=j4pO7fjPIHTuRuDR/IxGbEjnBfd68hep1kDm/Gt/K7+bczuCAvI3kCf+39gb2I3ZLS
- uBpcx0/6jn4W3qwOm74bWekM7v0oTW4MmRWMnsW0Xj56idQ2/a3kdVn0x2+iMy5tWmYD
- hjkSlqqvwOYLzgr/9nx9grnyLJ9UoBiRy/Lxb/J8NvA32JFEQT2323AhevMOL6mdXem1
- dt5brnW5vfGXOMl6A02UyaqypR7I1vjVQBO6idqXiXlPopqcfEuNOJlFno0lqR/E3VQJ
- aMUTBqv5iIEa2KSccsy1ggHlUyqhdRrQpBhs4XYZO90cLjMqjrt8tzwP/nrHDOu35R2N
- IklA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCJ1vwlyaUmWm3ldokPtzRdpiu3ruzJM8UpxU6Jov7P/hd6u2H+tM9ElnubfqpalWGqFxnzD9dvRI5@nongnu.org
-X-Gm-Message-State: AOJu0YxY+icUHc0Uma7Bxw+b/wg4pDAdxCK1owJSHMPieOlqCR0+oNWv
- etcdc0mCodl2/kgXnE+EMKKy6rKprHgU63DuNfQFgZgtZmE9EJ4WhLsqST8hA0QXUwAj4V42seX
- Bb0Kfh8NOlGDzFJrHdmxqgej+zpgPqJPRp0ZEyRHCvEx9VvQt8qmyM6OmPlnU
-X-Gm-Gg: ASbGncuieTPQ/44MlHO78XeGVAp1ahV4JunojFN6K51LCO/lQ8KwfjKaiLcxrtAtnsG
- yWpn03+XbQwfgxeZ0pUsYuOaEl2t3AQ0pBRYYmQmEltM0KV5O1zBK7bJarSPLYhao1HL0zM4tc5
- Z89N1n9KKPZVrKYvh9dfIoXlSCeyeXCtKntbayvyLsb1WBspSFYcqlPQU3by760+zQTIJaLR5Gd
- 9/bIKfUypV367KI/btiT3ZnZXLRgMCjmTeF3TVkAqpFrOG2Y0U8D4xzfNinBS56Tcq+rHTURcUL
- q1ZRep6NiNz3bySHKJ6pEsSoNgSRmUH0T5X6jC94Qc8Ghh0JJ7N0IJtWxepwun28C3sUn1CGPxV
- 6rd4kqhBB4OE+xFWf1eEnncfBQ+Hb6bJdi1CZOG5w
-X-Received: by 2002:a5d:588a:0:b0:39a:c9ae:9efe with SMTP id
- ffacd0b85a97d-39ea520384emr1026309f8f.18.1744359537260; 
- Fri, 11 Apr 2025 01:18:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnLI0i3ZqQLj2jTeaq9OWds+ta4lzdfw0GfmNmdfmkflEEvg9hJLHjngdKuTbL+rb0iWV0nA==
-X-Received: by 2002:a5d:588a:0:b0:39a:c9ae:9efe with SMTP id
- ffacd0b85a97d-39ea520384emr1026292f8f.18.1744359536897; 
- Fri, 11 Apr 2025 01:18:56 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d732:e4be:15e6:ccc0:870d:ec27?
- (p200300cfd732e4be15e6ccc0870dec27.dip0.t-ipconnect.de.
- [2003:cf:d732:e4be:15e6:ccc0:870d:ec27])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f233a2c53sm75170165e9.14.2025.04.11.01.18.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Apr 2025 01:18:56 -0700 (PDT)
-Message-ID: <c2daf7e2-359b-4e4b-826f-511fa9c0e3fb@redhat.com>
-Date: Fri, 11 Apr 2025 10:18:55 +0200
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1u3A3V-0001qg-2m
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:48:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
+ t=1744361289; x=1775897289;
+ h=from:in-reply-to:references:date:cc:to:mime-version:
+ message-id:subject:content-transfer-encoding;
+ bh=Ci4EFaAhlQ4nZiPAOrwNmNzxAUVhjqPsbAepI0Fk1/0=;
+ b=t49TZjSSWi84wU7R3iAo83G8FCxbt1h9F3UPxUUyHnrCDWSJUbcwGDUa
+ zA+ICNc4gzbPZBFCUyaUmweDwMxBTZ8KZVZQ/9XLrW4K7HF2RBx+4TZ86
+ mtsdGe2Vll0cWIEKuIpsVXvW0TiFt5gGyhKxgpVeJVQOhQim9HPQb15rp Y=;
+X-CSE-ConnectionGUID: ghYRCp2pSyW4sS21KHjF9w==
+X-CSE-MsgGUID: nW8PkTegRcyLnzPCbrZBQg==
+X-IronPort-AV: E=Sophos;i="6.15,203,1739833200"; 
+   d="scan'208";a="803176"
+Received: from quovadis.eurecom.fr ([10.3.2.233])
+ by drago1i.eurecom.fr with ESMTP; 11 Apr 2025 10:48:04 +0200
+From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
+In-Reply-To: <87jz7rhjzq.fsf@suse.de>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 193.55.114.5
+References: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
+ <87jz7rhjzq.fsf@suse.de>
+Date: Fri, 11 Apr 2025 10:48:04 +0200
+Cc: "Peter Xu" <peterx@redhat.com>, qemu-devel@nongnu.org,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Prasad Pandit" <ppandit@redhat.com>
+To: "Fabiano Rosas" <farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] block/io: skip head/tail requests on EINVAL
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org
-References: <20250410184103.23385-1-stefanha@redhat.com>
- <20250410184103.23385-3-stefanha@redhat.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20250410184103.23385-3-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Message-ID: <4caa0-67f8d780-a89-60718600@156698708>
+Subject: =?utf-8?q?Re=3A?= [PATCH] =?utf-8?q?migration=3A?= add 
+ =?utf-8?q?FEATURE=5FSEEKABLE?= to QIOChannelBlock
+User-Agent: SOGoMail 5.12.0
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=193.55.113.210;
+ envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,47 +77,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.04.25 20:41, Stefan Hajnoczi wrote:
-> When guests send misaligned discard requests, the block layer breaks
-> them up into a misaligned head, an aligned main body, and a misaligned
-> tail.
->
-> The file-posix block driver on Linux returns -EINVAL on misaligned
-> discard requests. This causes bdrv_co_pdiscard() to fail and guests
-> configured with werror=stop will pause.
->
-> Add a special case for misaligned head/tail requests. Simply continue
-> when EINVAL is encountered so that the aligned main body of the request
-> can be completed and the guest is not paused. This is the best we can do
-> when guest discard limits do not match the host discard limits.
->
-> Fixes: https://issues.redhat.com/browse/RHEL-86032
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->   block/io.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/block/io.c b/block/io.c
-> index 1ba8d1aeea..a0d0b31a3e 100644
-> --- a/block/io.c
-> +++ b/block/io.c
-> @@ -3180,7 +3180,11 @@ int coroutine_fn bdrv_co_pdiscard(BdrvChild *child, int64_t offset,
->               }
->           }
->           if (ret && ret != -ENOTSUP) {
-> -            goto out;
-> +            if (ret == -EINVAL && (offset % align != 0 || num % align != 0)) {
+On Thursday, April 10, 2025 21:52 CEST, Fabiano Rosas <farosas@suse.de>=
+ wrote:
 
-Could use `(offset | num) % align != 0`, but either way:
+> We'll need to add the infrastructure to reject multifd and direct-io
+> before this. The rest of the capabilities should not affect mapped-ra=
+m,
+> so it's fine (for now) if we don't honor them.
 
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Ok, thanks for the update.
+=20
+> What about zero page handling? Mapped-ram doesn't send zero pages
+> because the file will always have zeroes in it and the migration
+> destination is guaranteed to not have been running previously. I beli=
+eve
+> loading a snapshot in a VM that's already been running would leave st=
+ale
+> data in the guest's memory.
 
-> +                /* Silently skip rejected unaligned head/tail requests */
-> +            } else {
-> +                goto out; /* bail out */
-> +            }
->           }
->   
->           offset += num;
+Yes, you are correct.
+
+About the `RAMBlock->file=5Fbmap`, according to the code it is a:
+`/* bitmap of pages present in the migration file */`
+And, if a pages is a zero page, it won't be in the migration file:
+`/* zero pages are not transferred with mapped-ram */`
+So, zero page implies bitmap 0.
+Does the opposite hold?
+
+If bitmap 0 implies zero page, we could call `ram=5Fhandle=5Fzero`
+in `read=5Framblock=5Fmapped=5Fram` for the clear bits.
+Or do you fear this might be unnecessary expensive for migration?
+
+If bitmap 0 does not imply zero page, I feel like the
+"is present in the migration file" and "is zero page" info should
+be better separated.
+
+Best,
+Marco
 
 
