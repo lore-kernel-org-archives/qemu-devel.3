@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE706C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3987FC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:42:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u36AI-00027c-NQ; Fri, 11 Apr 2025 00:38:54 -0400
+	id 1u36D2-0003CK-AL; Fri, 11 Apr 2025 00:41:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u36AE-000279-Iy
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:38:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u36AA-0000fQ-Qo
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:38:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744346324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PTzIILfn+BEwNwtW56J6lhs9IhbQAvx+RqJINSsKWq4=;
- b=VkBtyULFCgAsYmU80ax7PDTkk3TnET+/FfMyaqSCelzJXx9GzIREXC4GGWKgnmdzAx471Z
- 6uQ8UhyyKu8rID9iyqYzLLAlcdWU7DSjQ8JcI8FjcY0J1dEz0azuKT1T0uYLzy5T67BzvZ
- jTCCgX3SpZofZpAZxhqXJXEUeNdO//Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-36oH1RziO8KYTsgfbNR7zw-1; Fri,
- 11 Apr 2025 00:38:41 -0400
-X-MC-Unique: 36oH1RziO8KYTsgfbNR7zw-1
-X-Mimecast-MFC-AGG-ID: 36oH1RziO8KYTsgfbNR7zw_1744346319
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F0521801A12; Fri, 11 Apr 2025 04:38:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4676A1828A9F; Fri, 11 Apr 2025 04:38:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C6AB821E6773; Fri, 11 Apr 2025 06:38:35 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcelo
- Tosatti <mtosatti@redhat.com>,  Shaoqin Huang <shahuang@redhat.com>,  Eric
- Auger <eauger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,  Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>,  Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org,  kvm@vger.kernel.org,  qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>,  Yi Lai <yi1.lai@intel.com>
-Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
-In-Reply-To: <Z/iUiEXZj52CbduB@intel.com> (Zhao Liu's message of "Fri, 11 Apr
- 2025 12:03:20 +0800")
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-2-zhao1.liu@intel.com>
- <878qo8yu5u.fsf@pond.sub.org> <Z/iUiEXZj52CbduB@intel.com>
-Date: Fri, 11 Apr 2025 06:38:35 +0200
-Message-ID: <87frifxqgk.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1u36D0-0003C2-RL; Fri, 11 Apr 2025 00:41:43 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1u36Cz-0001ZO-A4; Fri, 11 Apr 2025 00:41:42 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2241053582dso21798635ad.1; 
+ Thu, 10 Apr 2025 21:41:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744346499; x=1744951299; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=H6t4SJpfcCnWF6cns1lG2/hYIMS+W6yS8eMYzKAhvZs=;
+ b=FXQky3ucWiTCHT1pcd/dI4lrXwmOGyy7uRrNYTIfav8HYp1NjMm0gzef1/i9VXWIXs
+ eYIM+cOlFaX7tN+4C7NsEsYP+GjarK6uwy5AyzYPTrX+RVRD9Dlm13z2G5Q6HMnEb7QH
+ BHQYgLvo7SmOEix2Z+nEypOsEMVvvCYrYLUXkJY8MJteu+aAURml1/x9ZrhR/anFA8P2
+ jv5ZGtIuSSIyv3/PyMPfxk1FUrvemAoT26/Egm3+a7QbGiekR2h4bZg5uQ6ktgZSGklg
+ IT/npxtVQ14RIUGT1pGHI5iU1gYQolBnQfwBnDiYj2qa/lUNAD2dWx76xjpoIXuz4JIV
+ uFcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744346499; x=1744951299;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H6t4SJpfcCnWF6cns1lG2/hYIMS+W6yS8eMYzKAhvZs=;
+ b=AJJ8IhmqGphTOInM64dCUPQJbHdEJ3XtYuywDbtxvoxfhFp0tkwitZBsK2JBWyTGIi
+ TFKfa7Ff9aboMODVdH71Q8RzEVJbTI8lHvD+BnC2p+tZB+zeUB2YP/uC/u9RVdKtK2iU
+ XcgUFbqCVgzYIm+bc1Vgn25E+RecjTx9IAOSg4dAI0P+xFqn9k5EJ56Qb7Z/HTE1DV+d
+ Pi7HR3FrB3WYSR9oJiwgNGCFHjK7wEndtEP7dKsM4kGX+wMoHwnPsdYN7iS6AAmVBkS3
+ z3TLp3utoJoXIfFvBywCicgoj5un27SXRWI78OgJ6tVHLdeEW/oPx1P4ejPCyBcmASo4
+ gEFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwoCakgCz6n0qVTrIu5TrU1EO2QeD24LFudO+4Wp6unpW96IVYaucPRAJ7ZEcLCOaTfx5R/RhDEEB0@nongnu.org
+X-Gm-Message-State: AOJu0Yx99A7LbsdoUFBL6NxbE+75v/r32AJPQ9W58vBIwxOch92+Jc8a
+ nk8zeVA3jYCQYqNrVG/x14ibVru9IpT0O00PfyVgpnCFeZo0udO4BxRO2g==
+X-Gm-Gg: ASbGnctWPWx3L9cHdS3ezIhEMs8R1vIta8CLQt6JzFZe+9rMkr5EMCk7pzGG77ewtbD
+ aQSeFfuBQ4W8Qbvfotz1inW6l1HJW41R2rxC1MhqRz9rWTqusjtpRI7EtjfCutJ4PWmzY7etrQx
+ gqAs2apGlJVJs4xYYAEe0cv95b+6/sFklKkxdvzKqqh9r4AExddixmyMsHKGrPs4xPUyEUKULgz
+ Dane3mGuEbV6LdxcY/1FmiKXYpQVftCzPBlRhJRM3S5AgeILTjeaIM35lCdaZqOX1An5IZoC4l7
+ rKe+37RpKxNo4eK3nifQP8Jgpjyxfe9zvEhOucdi12m6
+X-Google-Smtp-Source: AGHT+IGFQNeTs9dOuNOUBID6LhRDaAW49TV1x0wwkr//fZvX+clappYwDXSkDz4ziWs0p6zUQ8ZH0Q==
+X-Received: by 2002:a17:902:f68f:b0:215:7421:262 with SMTP id
+ d9443c01a7336-22bea4b40f9mr18715415ad.12.1744346498951; 
+ Thu, 10 Apr 2025 21:41:38 -0700 (PDT)
+Received: from wheely.local0.net ([220.253.99.94])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7c971e4sm39672745ad.136.2025.04.10.21.41.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Apr 2025 21:41:38 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>,
+ John Snow <jsnow@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org
+Subject: [PATCH v4 0/7] qtest/libqos/pci: pci and msix fixes
+Date: Fri, 11 Apr 2025 14:41:22 +1000
+Message-ID: <20250411044130.201724-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,42 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+Since v3:
+https://lore.kernel.org/qemu-devel/20250117172244.406206-1-npiggin@gmail.com/
 
-> Hi Markus
->
-> On Thu, Apr 10, 2025 at 04:21:01PM +0200, Markus Armbruster wrote:
->> Date: Thu, 10 Apr 2025 16:21:01 +0200
->> From: Markus Armbruster <armbru@redhat.com>
->> Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
->> 
->> Zhao Liu <zhao1.liu@intel.com> writes:
->> 
->> > Introduce the kvm-pmu-filter object and support the PMU event with raw
->> > format.
->> 
->> Remind me, what does the kvm-pmu-filter object do, and why would we
->> want to use it?
->
-> KVM PMU filter allows user space to set PMU event whitelist / blacklist
-> for Guest. Both ARM and x86's KVMs accept a list of PMU events, and x86
-> also accpets other formats & fixed counter field.
+- Split out the preparation patches for the ahci and virtio tests
+  into their own patches as suggested by Phil.
+- Added an extra assertion that qpci_iounmap() must only be called
+  for a bar that was previously mapped, which required a bunch more
+  prep work in ahci including adding a qpci migration helper.
 
-But what does the system *do* with these event lists?
+Thanks,
+Nick
 
-> The earliest version uses custom parsing rules, which is not flexible
-> enough to scale. So to support such complex configuration in cli, it's
-> best to define and parse it via QAPI, and it's best to support the JSON
-> way.
->
-> Based on these considerations, I found "object" to be a suitable enough
-> choice.
->
-> Thus kvm-pmu-filter object handles all the complexity of parsing values
-> from cli, and it can include some checks that QAPI cannot include (such
-> as the 12-bit limit).
->
-> Thanks,
-> Zhao
+Nicholas Piggin (7):
+  tests/qtest/ahci: unmap pci bar before reusing device
+  tests/qtest/ahci: don't unmap pci bar if it wasn't mapped
+  tests/qtest/libquos/virtio: unmap pci bar when disabling device
+  tests/qtest/libquos/pci: Add migration fixup helper for pci devices
+  qtest/libqos/pci: Enforce balanced iomap/unmap
+  qtest/libqos/pci: Fix qpci_msix_enable sharing bar0
+  qtest/libqos/pci: Factor msix entry helpers into pci common code
+
+ tests/qtest/libqos/ahci.h       |   2 +
+ tests/qtest/libqos/pci.h        |  14 +++
+ tests/qtest/libqos/virtio-pci.h |   1 +
+ tests/qtest/ahci-test.c         |  38 +++++---
+ tests/qtest/libqos/ahci.c       |  11 +++
+ tests/qtest/libqos/pci.c        | 148 +++++++++++++++++++++++++++++---
+ tests/qtest/libqos/virtio-pci.c |  59 ++++---------
+ 7 files changed, 208 insertions(+), 65 deletions(-)
+
+-- 
+2.47.1
 
 
