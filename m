@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B608C369A8
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 620B3C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u363P-0004gY-AS; Fri, 11 Apr 2025 00:31:47 -0400
+	id 1u363d-0004mV-8Y; Fri, 11 Apr 2025 00:32:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363N-0004c8-Se
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:31:45 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363b-0004mK-QB
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:31:59 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363M-0007Vb-5a
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:31:45 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-227a8cdd241so18848085ad.3
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 21:31:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363a-0007YP-4S
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:31:59 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso14943485ad.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 21:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744345903; x=1744950703; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744345917; x=1744950717; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GRZOC2tSqmQDMujWz+eg0jjAA3OFDUOED5xf58eJ/zc=;
- b=ia5Rn2c4MWihENVRl0Bc2Jh1EbjF2m737Z8/8IasW9lJ8xGsdHQLTiX17L7xJH+ri3
- 0/PdSe7E4hwMqXMvhRXwQcgpO2tHQreq2GHw5KlA3UIBSIys/MKPvWKSComjufHy/6lR
- Keff+OHew+V/WN5jKyHLg4Z16Fut1cIaEZbGiAnv5JimvwbkgYSG1YTQRemgWCAMsOUZ
- NcVRPiwv1TIHUGHxu9/gYizsbavt2BEqDcvkXH9jqiXRip5v9M6WlVIhNqJNcza0qpjM
- ZDsr1OLAicwMheFVMW3ageaW/DeRrI091PiuUgnX3GHorq+AF4ZppOat3uncIkCeTRXo
- KB3Q==
+ bh=EdEHRQIcS/KoLKBQT/QdqdalMsNW84j9PK9MoRDA6/o=;
+ b=ZQiq9eCXV8fvrxBPOltg+j7ZryW7GI7p9wAjCNxF6oMzsrwiibnw21EtJ4wS8cJfBt
+ pXs1mf6r7PSiFrQUyvpVkrLxtGdTn/EmutoJ1pfwMWzD5f2G5kVL2C5fHHcmlFVoZKUX
+ 56b5LBAIEvmMJpMFBOa7mqQBgdjk/3uZJRaV0pqNLlfj6vD8s++dSzpAx6U0SXOHknLo
+ UmahqTW6KsL/k/kWYYdsDiMpiyTgPr0o7uRum1F+thshpsVv1KilRM2Q9Lhdo+L1Isut
+ EEkwguBAdhB1x6gwWxgup8l2DBFcrMi/2Wq+hX3xqEx9Wc3SUixX1fKo1tvHdtlIL28e
+ L7sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744345903; x=1744950703;
+ d=1e100.net; s=20230601; t=1744345917; x=1744950717;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GRZOC2tSqmQDMujWz+eg0jjAA3OFDUOED5xf58eJ/zc=;
- b=wlq3yJKzDfvqoz7/6T9K0gUsk3rxwleDVA8G1jzw6mocNsfP/59iO2l/VhNfZXDNIV
- 1Trqk5mnjfJaDvTBxJWKmrBr+CQVoKwCr20YAIifsd8sJu6jV1jph7yw5xEMrOAagUJE
- Fo2tpMN4gKmDX4ArLTwO46ricfzC3PEpvSBAphWyEPsn+b43yJMGmiDdHFel3J8GA02O
- uPs0cxSRcgApL0LP1aRtTSdrK7wgWeXQIWkynX/NripVMdw96f1Mn/d5v+qwR7HyiUKB
- 9rHDrwwQ5YFW7jDZj0eU6ETQNQeVA+8SpzN3odaqhtTS7XZsCRdxrG5i2+PUU5NrMIT3
- DeVw==
+ bh=EdEHRQIcS/KoLKBQT/QdqdalMsNW84j9PK9MoRDA6/o=;
+ b=jC7ao2vQQ1d6JZN5YuYDCtxXrUabORXMBsi6BB+nHIiSH+YyinbjNZ6kTOIfGVqmFU
+ 0l90VudO5fmikPNnD7+EePG83L0hEs9y0RWeGQxZt6OJnvi/mB+AKDfE84GrGvvFiuy7
+ QlQLyPZj2z/TTczoqyB4dqO4ZvAnsCXLEvc84o67109tpFnaA0paFIcOzB4uRoJSFNv3
+ yjl4DC4Cdlft/dCm8zQg0Zlly0fp/2JLEnTrO4Hm95WuYyQXENGfH+dd/uSdcO8z2d8F
+ 2LqyPjedrJc3BlaQmsY6+gKKNv/o/pXAkCoWsGgUb+Tnl8EW8STotMPSaVjI3Q3mw6Jm
+ nhnw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoFTvoixQsnQQiEb01t1rd1oxMfptmrRhCUyIhTvH9VgT4wbod749HBQM3BjuvqdWcYH6d0cxnomcC@nongnu.org
-X-Gm-Message-State: AOJu0YwouMHMOVbL/fVdkyBt1EWwX4lE32sKhXKvr6kv8vPzlsLcGYSi
- n8zTHji2hYqZkd9G0uErPBibdWigrQdu2vESDncjibF8CJRpOD1w
-X-Gm-Gg: ASbGncsxd05K5nh6coGIHn5ki1CaoxzQfluiuFrFOo1IEkqylMgrt5De7RS1ADRgOk2
- EkzUH40r5Fq5dUXN+A98QT6z1wmIY+0DxvpyyFew2v2CHCMPlHdk71HKhTvnytEchRstQ4ZUYK+
- cLwQfl0dTwRomG2AL6ktbi0Zpm5AF4LHOU3xTHf4mHWXhARamyUYvN4xJ9YCvMSIx55eX+Ijq4e
- ow/W/tn3pzAaBeCMh/L4iJEepxXnGppVLDb9qeP0rLLSonuH8vlW12znWRXltdraLyG72TYH32/
- +VisVsuL0OmRJWG0r/WxDmKQ3yL85EQnSk64CF9UvpM1
-X-Google-Smtp-Source: AGHT+IGW1SClwUYPaaFK53VuXDMjMaIHkjVB5P0LSj7LWWBcyTDTv1JPd0EizIhD1djdZ2Cfjrp+/w==
-X-Received: by 2002:a17:902:f710:b0:224:1935:d9a3 with SMTP id
- d9443c01a7336-22bea4aba6amr18988835ad.21.1744345902590; 
- Thu, 10 Apr 2025 21:31:42 -0700 (PDT)
+ AJvYcCVI2U0itqsMhAzM8iY/XziFK57dKBJfclDE+JCdkuyH4R/U84OfPUT/E9llYgcPi2AojsfelSPcxbq/@nongnu.org
+X-Gm-Message-State: AOJu0YzWHw8MVpEDZGi3vEHYbXovLNH73aRv8W5iVpAStpOgaqE9PKgz
+ Rr4Sgzq3l2r+L94YG5ucfmNvqMomzp5Fm6bwhyi05+ZPC8NMo3wP
+X-Gm-Gg: ASbGncvBAGBYHsCrZYeF+5TgapTcCIib7NH8C3+vb1md8jKqFzRF7ypqXC9YhMPgwJZ
+ JqPCKYySqqQTXs1gqU8YMmVEkGlaVEbk6DK6PhLKDHp2tkP292sxK3Myw2EoBfGw5Px5SDd7eng
+ AkHQpzhSRhk6ugeXn5A2tyFEcSsZcJsQv5k0hj6Su5cVHREGLjK5pJgZGRaBavnLAIGs1srl0+m
+ pkCCpsfIj3IMj02Rg81qRKVNF0G+YZuKx0DYXM61sHkoTk+b/Xp5VsssfmTPw6OVNaDDMRO/6Qm
+ nkp0jHLms8kVVa6lEiyfVjOtMO4Zeb7T/UEgo7t2kWXD
+X-Google-Smtp-Source: AGHT+IEKIQZsI6EtuTHSxMWXhSXtnZNyYkEgQ+6lwyGbrIyopf8Tawi/Nekhcd6h68RomfOad26wCA==
+X-Received: by 2002:a17:902:d4c5:b0:220:c63b:d93c with SMTP id
+ d9443c01a7336-22bea4fee9amr19251675ad.44.1744345916701; 
+ Thu, 10 Apr 2025 21:31:56 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7b64906sm39361625ad.48.2025.04.10.21.31.38
+ d9443c01a7336-22ac7b64906sm39361625ad.48.2025.04.10.21.31.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 21:31:42 -0700 (PDT)
+ Thu, 10 Apr 2025 21:31:56 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -72,17 +72,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 1/8] qtest/e1000e|igb: Clear interrupt-cause and msix
- pending bits after irq
-Date: Fri, 11 Apr 2025 14:31:21 +1000
-Message-ID: <20250411043128.201289-2-npiggin@gmail.com>
+Subject: [PATCH v2 4/8] qtest/e1000e|igb: assert irqs are clear before
+ triggering an irq
+Date: Fri, 11 Apr 2025 14:31:24 +1000
+Message-ID: <20250411043128.201289-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250411043128.201289-1-npiggin@gmail.com>
 References: <20250411043128.201289-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,13 +105,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The e1000e and igb tests do not clear the ICR/EICR cause bits (or
-set auto-clear) on seeing queue interrupts, which inhibits the
-triggering of a new interrupt. The msix pending bit which is used
-to test for the interrupt is also not cleared (the vector is masked).
+Assert there is no existing irq raised that would lead to a false
+positive interrupt test.
 
-Fix this by clearing the ICR/EICR cause bits, and the msix pending
-bit using the PBACLR device register.
+e1000e has to disable interrupt throttling for this test, because
+it can cause delayed superfluous interrupts which trip the assertions.
 
 Cc: Michael S. Tsirkin <mst@redhat.com>
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
@@ -120,63 +118,109 @@ Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/qtest/e1000e-test.c | 9 ++++++++-
- tests/qtest/igb-test.c    | 8 ++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ tests/qtest/libqos/e1000e.h |  1 +
+ tests/qtest/e1000e-test.c   | 10 ++++++++++
+ tests/qtest/igb-test.c      |  6 ++++++
+ tests/qtest/libqos/e1000e.c |  9 ++++++++-
+ 4 files changed, 25 insertions(+), 1 deletion(-)
 
+diff --git a/tests/qtest/libqos/e1000e.h b/tests/qtest/libqos/e1000e.h
+index 30643c80949..e693670119f 100644
+--- a/tests/qtest/libqos/e1000e.h
++++ b/tests/qtest/libqos/e1000e.h
+@@ -54,6 +54,7 @@ static inline uint32_t e1000e_macreg_read(QE1000E *d, uint32_t reg)
+     return qpci_io_readl(&d_pci->pci_dev, d_pci->mac_regs, reg);
+ }
+ 
++bool e1000e_pending_isr(QE1000E *d, uint16_t msg_id);
+ void e1000e_wait_isr(QE1000E *d, uint16_t msg_id);
+ void e1000e_tx_ring_push(QE1000E *d, void *descr);
+ void e1000e_rx_ring_push(QE1000E *d, void *descr);
 diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
-index de9738fdb74..746d26cfb67 100644
+index 746d26cfb67..a538c72cc84 100644
 --- a/tests/qtest/e1000e-test.c
 +++ b/tests/qtest/e1000e-test.c
-@@ -66,6 +66,10 @@ static void e1000e_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+@@ -61,6 +61,9 @@ static void e1000e_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+                                    E1000_TXD_DTYP_D   |
+                                    sizeof(buffer));
  
-     /* Wait for TX WB interrupt */
-     e1000e_wait_isr(d, E1000E_TX0_MSG_ID);
-+    /* Read ICR to make it ready for next interrupt, assert TXQ0 cause */
-+    g_assert(e1000e_macreg_read(d, E1000_ICR) & E1000_ICR_TXQ0);
-+    /* Write PBACLR to clear the MSIX pending bit */
-+    e1000e_macreg_write(d, E1000_PBACLR, (1 << E1000E_TX0_MSG_ID));
++    /* Ensure the interrupt has not been taken already */
++    g_assert(!e1000e_pending_isr(d, E1000E_TX0_MSG_ID));
++
+     /* Put descriptor to the ring */
+     e1000e_tx_ring_push(d, &descr);
  
-     /* Check DD bit */
-     g_assert_cmphex(le32_to_cpu(descr.upper.data) & E1000_TXD_STAT_DD, ==,
-@@ -117,7 +121,10 @@ static void e1000e_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator
+@@ -105,6 +108,9 @@ static void e1000e_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator
+     char buffer[64];
+     int ret;
  
-     /* Wait for TX WB interrupt */
-     e1000e_wait_isr(d, E1000E_RX0_MSG_ID);
--
-+    /* Read ICR to make it ready for next interrupt, assert RXQ0 cause */
-+    g_assert(e1000e_macreg_read(d, E1000_ICR) & E1000_ICR_RXQ0);
-+    /* Write PBACLR to clear the MSIX pending bit */
-+    e1000e_macreg_write(d, E1000_PBACLR, (1 << E1000E_RX0_MSG_ID));
-     /* Check DD bit */
-     g_assert_cmphex(le32_to_cpu(descr.wb.upper.status_error) &
-         E1000_RXD_STAT_DD, ==, E1000_RXD_STAT_DD);
++    /* Ensure the interrupt has not been taken already */
++    g_assert(!e1000e_pending_isr(d, E1000E_RX0_MSG_ID));
++
+     /* Send a dummy packet to device's socket*/
+     ret = iov_send(test_sockets[0], iov, 2, 0, sizeof(len) + sizeof(packet));
+     g_assert_cmpint(ret, == , sizeof(packet) + sizeof(len));
+@@ -188,6 +194,10 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
+         return;
+     }
+ 
++    /* Clear EITR because buggy QEMU throttle timer causes superfluous irqs */
++    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 0);
++    e1000e_macreg_write(d, E1000_EITR + E1000E_TX0_MSG_ID * 4, 0);
++
+     for (i = 0; i < iterations; i++) {
+         e1000e_send_verify(d, data, alloc);
+         e1000e_receive_verify(d, data, alloc);
 diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-index 3d397ea6973..cf8b4131cf2 100644
+index cf8b4131cf2..12cdd8b498a 100644
 --- a/tests/qtest/igb-test.c
 +++ b/tests/qtest/igb-test.c
-@@ -69,6 +69,10 @@ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *allo
+@@ -64,6 +64,9 @@ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *allo
+                                           E1000_TXD_DTYP_D   |
+                                           sizeof(buffer));
  
-     /* Wait for TX WB interrupt */
-     e1000e_wait_isr(d, E1000E_TX0_MSG_ID);
-+    /* Read EICR which clears it ready for next interrupt, assert TXQ0 cause */
-+    g_assert(e1000e_macreg_read(d, E1000_EICR) & (1 << E1000E_TX0_MSG_ID));
-+    /* Write PBACLR to clear the MSIX pending bit */
-+    e1000e_macreg_write(d, E1000_PBACLR, (1 << E1000E_TX0_MSG_ID));
++    /* Ensure the interrupt has not been taken already */
++    g_assert(!e1000e_pending_isr(d, E1000E_TX0_MSG_ID));
++
+     /* Put descriptor to the ring */
+     e1000e_tx_ring_push(d, &descr);
  
-     /* Check DD bit */
-     g_assert_cmphex(le32_to_cpu(descr.wb.status) & E1000_TXD_STAT_DD, ==,
-@@ -120,6 +124,10 @@ static void igb_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+@@ -119,6 +122,9 @@ static void igb_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+     memset(&descr, 0, sizeof(descr));
+     descr.read.pkt_addr = cpu_to_le64(data);
  
-     /* Wait for TX WB interrupt */
-     e1000e_wait_isr(d, E1000E_RX0_MSG_ID);
-+    /* Read EICR which clears it ready for next interrupt, assert RXQ0 cause */
-+    g_assert(e1000e_macreg_read(d, E1000_EICR) & (1 << E1000E_RX0_MSG_ID));
-+    /* Write PBACLR to clear the MSIX pending bit */
-+    e1000e_macreg_write(d, E1000_PBACLR, (1 << E1000E_RX0_MSG_ID));
++    /* Ensure the interrupt has not been taken already */
++    g_assert(!e1000e_pending_isr(d, E1000E_RX0_MSG_ID));
++
+     /* Put descriptor to the ring */
+     e1000e_rx_ring_push(d, &descr);
  
-     /* Check DD bit */
-     g_assert_cmphex(le32_to_cpu(descr.wb.upper.status_error) &
+diff --git a/tests/qtest/libqos/e1000e.c b/tests/qtest/libqos/e1000e.c
+index 925654c7fd4..0bf70e25389 100644
+--- a/tests/qtest/libqos/e1000e.c
++++ b/tests/qtest/libqos/e1000e.c
+@@ -77,13 +77,20 @@ static void e1000e_foreach_callback(QPCIDevice *dev, int devfn, void *data)
+     g_free(dev);
+ }
+ 
++bool e1000e_pending_isr(QE1000E *d, uint16_t msg_id)
++{
++    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
++
++    return qpci_msix_pending(&d_pci->pci_dev, msg_id);
++}
++
+ void e1000e_wait_isr(QE1000E *d, uint16_t msg_id)
+ {
+     QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
+     guint64 end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
+ 
+     do {
+-        if (qpci_msix_pending(&d_pci->pci_dev, msg_id)) {
++        if (e1000e_pending_isr(d, msg_id)) {
+             return;
+         }
+         qtest_clock_step(d_pci->pci_dev.bus->qts, 10000);
 -- 
 2.47.1
 
