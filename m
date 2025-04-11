@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E02C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 11:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C7CC369A9
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 11:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3Cps-0007F1-VQ; Fri, 11 Apr 2025 07:46:16 -0400
+	id 1u3Cpo-0007E1-Lv; Fri, 11 Apr 2025 07:46:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u3Cpr-0007EZ-HK
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1u3Cpc-0007As-3X
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u3Cpn-0001VU-RN
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:14 -0400
+ id 1u3CpZ-0001RY-54
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:45:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744371971;
+ s=mimecast20190719; t=1744371956;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zlCvESS8pRnIOQv9fXY5YAVWtJu1Ad2Rrf1r34K2cgk=;
- b=D5lqWrrhPF318DMIkKkF22WTk9bFcpxKdo1i43fCWxIaTz7oZWqp8O6T5q9QNhusz9ibTA
- f0mqliEQ43fxSXQyhHwt1gZUj5noHQRCva6m5Mh5m8abhBQ2WwE19oNHjMf8Bb6vep4Gr9
- DC/yTbv5r4jsl+kfZEi/km2I2DFH8cM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=+aCLtnXGmdYsqAtyifRbhfV/4qWUWuGWVS/lxW1noic=;
+ b=SuIM4BA1dRquhUjv63wWjioevu5rU0O/7RFH9bGMhHZk72g5hEwI/sT5F9CRAW9eaBoGLd
+ dUH/pWFbaZ2z1JNotjesv3buDhxg5kOzJ7Qj5hz+Y4N0jKbsAypZTL/p0YSordv+4plCAG
+ fxNUwOXeHBy6MaKr0bt574aIiZQGH6k=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-677-cTTRKXmvOqOCX9WTKk3dag-1; Fri,
- 11 Apr 2025 07:46:09 -0400
-X-MC-Unique: cTTRKXmvOqOCX9WTKk3dag-1
-X-Mimecast-MFC-AGG-ID: cTTRKXmvOqOCX9WTKk3dag_1744371968
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-ccZg8fsJMVeyb_hGJSjyRg-1; Fri,
+ 11 Apr 2025 07:45:55 -0400
+X-MC-Unique: ccZg8fsJMVeyb_hGJSjyRg-1
+X-Mimecast-MFC-AGG-ID: ccZg8fsJMVeyb_hGJSjyRg_1744371954
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26C72180025F; Fri, 11 Apr 2025 11:46:08 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D8181955DC6; Fri, 11 Apr 2025 11:45:54 +0000 (UTC)
 Received: from kaapi.redhat.com (unknown [10.74.16.160])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C48B18009BC; Fri, 11 Apr 2025 11:46:02 +0000 (UTC)
+ id 1ABF7180886A; Fri, 11 Apr 2025 11:45:49 +0000 (UTC)
 From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: farosas@suse.de, peterx@redhat.com, berrange@redhat.com,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v9 5/7] migration: enable multifd and postcopy together
-Date: Fri, 11 Apr 2025 17:15:32 +0530
-Message-ID: <20250411114534.3370816-6-ppandit@redhat.com>
+Subject: [PATCH v9 2/7] migration: refactor channel discovery mechanism
+Date: Fri, 11 Apr 2025 17:15:29 +0530
+Message-ID: <20250411114534.3370816-3-ppandit@redhat.com>
 In-Reply-To: <20250411114534.3370816-1-ppandit@redhat.com>
 References: <20250411114534.3370816-1-ppandit@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,99 +86,230 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Prasad Pandit <pjp@fedoraproject.org>
 
-Enable Multifd and Postcopy migration together.
-The migration_ioc_process_incoming() routine checks
-magic value sent on each channel and helps to properly
-setup multifd and postcopy channels.
+The various logical migration channels don't have a
+standardized way of advertising themselves and their
+connections may be seen out of order by the migration
+destination. When a new connection arrives, the incoming
+migration currently make use of heuristics to determine
+which channel it belongs to.
 
-The Precopy and Multifd threads work during the initial
-guest RAM transfer. When migration moves to the Postcopy
-phase, the multifd threads cease to send data on multifd
-channels and Postcopy threads on the destination
-request/pull data from the source side.
+The next few patches will need to change how the multifd
+and postcopy capabilities interact and that affects the
+channel discovery heuristic.
+
+Refactor the channel discovery heuristic to make it less
+opaque and simplify the subsequent patches.
 
 Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
- migration/multifd-nocomp.c | 3 ++-
- migration/multifd.c        | 7 +++++++
- migration/options.c        | 5 -----
- migration/ram.c            | 5 ++---
- 4 files changed, 11 insertions(+), 9 deletions(-)
+ migration/migration.c | 132 +++++++++++++++++++++++-------------------
+ 1 file changed, 71 insertions(+), 61 deletions(-)
 
-v8: remove a !migration_in_postcopy() check
+v8: remove else if (!mis->from_src_file) checks and add assert(3) check
 - https://lore.kernel.org/qemu-devel/20250318123846.1370312-1-ppandit@redhat.com/T/#t
 
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index ffe75256c9..02f8bf8ce8 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -17,6 +17,7 @@
- #include "migration-stats.h"
- #include "multifd.h"
- #include "options.h"
-+#include "migration.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -399,7 +400,7 @@ int multifd_ram_flush_and_sync(QEMUFile *f)
-     MultiFDSyncReq req;
-     int ret;
+diff --git a/migration/migration.c b/migration/migration.c
+index d46e776e24..64f4f40ae3 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -95,6 +95,9 @@ enum mig_rp_message_type {
+     MIG_RP_MSG_MAX
+ };
  
--    if (!migrate_multifd()) {
-+    if (!migrate_multifd() || migration_in_postcopy()) {
-         return 0;
++/* Migration channel types */
++enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
++
+ /* When we add fault tolerance, we could have several
+    migrations at once.  For now we don't need to add
+    dynamic creation of migration */
+@@ -931,9 +934,8 @@ static void migration_incoming_setup(QEMUFile *f)
+ {
+     MigrationIncomingState *mis = migration_incoming_get_current();
+ 
+-    if (!mis->from_src_file) {
+-        mis->from_src_file = f;
+-    }
++    assert(!mis->from_src_file);
++    mis->from_src_file = f;
+     qemu_file_set_blocking(f, false);
+ }
+ 
+@@ -985,28 +987,19 @@ void migration_fd_process_incoming(QEMUFile *f)
+     migration_incoming_process();
+ }
+ 
+-/*
+- * Returns true when we want to start a new incoming migration process,
+- * false otherwise.
+- */
+-static bool migration_should_start_incoming(bool main_channel)
++static bool migration_has_main_and_multifd_channels(void)
+ {
+-    /* Multifd doesn't start unless all channels are established */
+-    if (migrate_multifd()) {
+-        return migration_has_all_channels();
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    if (!mis->from_src_file) {
++        /* main channel not established */
++        return false;
      }
  
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 6139cabe44..074d16d07d 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -1379,6 +1379,13 @@ static void *multifd_recv_thread(void *opaque)
-         }
+-    /* Preempt channel only starts when the main channel is created */
+-    if (migrate_postcopy_preempt()) {
+-        return main_channel;
++    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
++        return false;
+     }
  
-         if (has_data) {
+-    /*
+-     * For all the rest types of migration, we should only reach here when
+-     * it's the main channel that's being created, and we should always
+-     * proceed with this channel.
+-     */
+-    assert(main_channel);
++    /* main and all multifd channels are established */
+     return true;
+ }
+ 
+@@ -1015,59 +1008,81 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     Error *local_err = NULL;
+     QEMUFile *f;
+-    bool default_channel = true;
++    uint8_t channel;
+     uint32_t channel_magic = 0;
+     int ret = 0;
+ 
+-    if (migrate_multifd() && !migrate_mapped_ram() &&
+-        !migrate_postcopy_ram() &&
+-        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
+-        /*
+-         * With multiple channels, it is possible that we receive channels
+-         * out of order on destination side, causing incorrect mapping of
+-         * source channels on destination side. Check channel MAGIC to
+-         * decide type of channel. Please note this is best effort, postcopy
+-         * preempt channel does not send any magic number so avoid it for
+-         * postcopy live migration. Also tls live migration already does
+-         * tls handshake while initializing main channel so with tls this
+-         * issue is not possible.
+-         */
+-        ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
+-                                          sizeof(channel_magic), errp);
++    if (!migration_has_main_and_multifd_channels()) {
++        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
 +            /*
-+             * multifd thread should not be active and receive data
-+             * when migration is in the Postcopy phase. Two threads
-+             * writing the same memory area could easily corrupt
-+             * the guest state.
++             * With multiple channels, it is possible that we receive channels
++             * out of order on destination side, causing incorrect mapping of
++             * source channels on destination side. Check channel MAGIC to
++             * decide type of channel. Please note this is best effort,
++             * postcopy preempt channel does not send any magic number so
++             * avoid it for postcopy live migration. Also tls live migration
++             * already does tls handshake while initializing main channel so
++             * with tls this issue is not possible.
 +             */
-+            assert(!migration_in_postcopy());
-             if (is_device_state) {
-                 assert(use_packets);
-                 ret = multifd_device_state_recv(p, &local_err);
-diff --git a/migration/options.c b/migration/options.c
-index b0ac2ea408..48aa6076de 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -491,11 +491,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-             error_setg(errp, "Postcopy is not compatible with ignore-shared");
-             return false;
++            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
++                                              sizeof(channel_magic), errp);
++            if (ret != 0) {
++                return;
++            }
+ 
+-        if (ret != 0) {
++            channel_magic = be32_to_cpu(channel_magic);
++            if (channel_magic == QEMU_VM_FILE_MAGIC) {
++                channel = CH_MAIN;
++            } else if (channel_magic == MULTIFD_MAGIC) {
++                assert(migrate_multifd());
++                channel = CH_MULTIFD;
++            } else if (!mis->from_src_file &&
++                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
++                /* reconnect main channel for postcopy recovery */
++                channel = CH_MAIN;
++            } else {
++                error_setg(errp, "unknown channel magic: %u", channel_magic);
++                return;
++            }
++        } else if (mis->from_src_file && migrate_multifd()) {
++            /*
++             * Non-peekable channels like tls/file are processed as
++             * multifd channels when multifd is enabled.
++             */
++            channel = CH_MULTIFD;
++        } else if (!mis->from_src_file) {
++            channel = CH_MAIN;
++        } else {
++            error_setg(errp, "non-peekable channel used without multifd");
+             return;
          }
 -
--        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
--            error_setg(errp, "Postcopy is not yet compatible with multifd");
--            return false;
--        }
+-        default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
+     } else {
+-        default_channel = !mis->from_src_file;
++        assert(migrate_postcopy_preempt());
++        channel = CH_POSTCOPY;
      }
  
-     if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
-diff --git a/migration/ram.c b/migration/ram.c
-index 753042456e..533c64b941 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1976,9 +1976,8 @@ static int ram_save_target_page(RAMState *rs, PageSearchStatus *pss)
+     if (multifd_recv_setup(errp) != 0) {
+         return;
+     }
+ 
+-    if (default_channel) {
++    if (channel == CH_MAIN) {
+         f = qemu_file_new_input(ioc);
+         migration_incoming_setup(f);
+-    } else {
++    } else if (channel == CH_MULTIFD) {
+         /* Multiple connections */
+-        assert(migration_needs_multiple_sockets());
+-        if (migrate_multifd()) {
+-            multifd_recv_new_channel(ioc, &local_err);
+-        } else {
+-            assert(migrate_postcopy_preempt());
+-            f = qemu_file_new_input(ioc);
+-            postcopy_preempt_new_channel(mis, f);
+-        }
++        multifd_recv_new_channel(ioc, &local_err);
+         if (local_err) {
+             error_propagate(errp, local_err);
+             return;
          }
++    } else if (channel == CH_POSTCOPY) {
++        assert(!mis->postcopy_qemufile_dst);
++        f = qemu_file_new_input(ioc);
++        postcopy_preempt_new_channel(mis, f);
++        return;
+     }
+ 
+-    if (migration_should_start_incoming(default_channel)) {
++    if (migration_has_main_and_multifd_channels()) {
+         /* If it's a recovery, we're done */
+         if (postcopy_try_recover()) {
+             return;
+@@ -1084,20 +1099,15 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+  */
+ bool migration_has_all_channels(void)
+ {
++    if (!migration_has_main_and_multifd_channels()) {
++        return false;
++    }
++
+     MigrationIncomingState *mis = migration_incoming_get_current();
+-
+-    if (!mis->from_src_file) {
++    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
+         return false;
      }
  
 -    if (migrate_multifd()) {
--        RAMBlock *block = pss->block;
--        return ram_save_multifd_page(block, offset);
-+    if (migrate_multifd() && !migration_in_postcopy()) {
-+        return ram_save_multifd_page(pss->block, offset);
-     }
+-        return multifd_recv_all_channels_created();
+-    }
+-
+-    if (migrate_postcopy_preempt()) {
+-        return mis->postcopy_qemufile_dst != NULL;
+-    }
+-
+     return true;
+ }
  
-     return ram_save_page(rs, pss);
 -- 
 2.49.0
 
