@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE1EC369A8
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF9AC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:33:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u363m-0004o3-4I; Fri, 11 Apr 2025 00:32:10 -0400
+	id 1u363u-0004qh-W3; Fri, 11 Apr 2025 00:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363k-0004nr-Io
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:32:08 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363t-0004qO-4l
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:32:17 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363i-0007b7-L4
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:32:08 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-af9a7717163so1838842a12.2
- for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 21:32:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u363r-0007cE-LG
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 00:32:16 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso22669095ad.0
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 21:32:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744345925; x=1744950725; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744345934; x=1744950734; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NfLhK5Ve1CZHHq4PEpYL+RpdL0tfDTxqGVUFnDZJCSM=;
- b=TNepy+o18b7UdVkDd0nQ3n7bFETl4mEfDbMVydkFmvlXnxK2l4AYOMQ8bVrSxIIc2A
- +u4+JuOdGM1TIKNAE4L2rj6fQXnXMQxWQqNey7JgozawzOKmVAm+XNZn9mXG8bOTbVau
- L5qM6wFrHUbkNBumnRcg1x+urp5FQob85+ItYErftJNRaHhGQzsb7v4YvGZ62Uv69Sgz
- GGrxjWLarJOnDrA+SxGjG6tJ6uLRITa8vLY4vkm6r7aYG676dAb4/Hw3uvebYESVwdZY
- e39a1ENQWsHFa9FDaDBE4OTm7wrORUsBRcA55G9VZntJ0bvjHz6NgsC6AVTg8V3DXH0V
- G8KA==
+ bh=mcgWH2x0gAyjXMufV1B2NOlfCFMvX5UXpeLLJX0H558=;
+ b=OJgh/AbCjYG+1umPSDll0VldZN9yoH8SnANkxyQhGughfBDbL5aCGBHRy0xLMYoekj
+ 9vPW6+4oqkXYS9/yh4tZV8M6qj1S2GAbTVTx0TaRSRzPqQuAjQs2cW6jxyWtEIqhLoC3
+ zcGU6tlZ1FdLjt/Lw8DQvXw6H+9Fxl28SdcCZnI1nVGw9pPgCszo373YxyGqgTajnEln
+ WJICMJKXwHWptPetbXFFMxgYCP681ZNWJ7M7amu21WTtS02Q4u1awLjO/tJh/zzREdbe
+ rGRr+Eul95JOAQdWwgdu7s1jJeWj9ssl210dZF8U+DtoN0ExGVfkSEpgWiT+jm/mKrOF
+ XErw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744345925; x=1744950725;
+ d=1e100.net; s=20230601; t=1744345934; x=1744950734;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NfLhK5Ve1CZHHq4PEpYL+RpdL0tfDTxqGVUFnDZJCSM=;
- b=WlO1AmVJtdq8IqxopXz9/sb06ZMpNOEM0cTVblBwDsRrULFM8Gb+h3PDEdcOhCEPSF
- T5ym7WthH2MJ/y5gQPyspi0wz+biYSSkD0F62C3n8/am+KhBCxF0nGPkWhgDpB0G8rbt
- 5isIwiLU73LQJMRElJRjkAsRj/7pVBii31W89KhQUpKZFuxDdZkW00dwHglInfqZZETB
- 6O+pcCxGwif2g40lQ1HAL1bO4xtg0L0korsZkGbeiD1iM0bvqMKJOZC8LllBtTES3FU8
- VsZNuyZ0AwIAJxmwl0pOGPJdVF7M48gG+Q9xmA51R66gkQ6dYL5D0jwYX01jHLSOn2dN
- nZ5g==
+ bh=mcgWH2x0gAyjXMufV1B2NOlfCFMvX5UXpeLLJX0H558=;
+ b=dT2HEekLK1seOz1sb45cRCMzZUMCAsTGXj964tkLOh9x8HxMmKQP4dAG+EImZFyYA0
+ zODpVaBquwI3Q141C8IPWA8F1C09LFniWI1eDMULs4+PlagQb47qAS0Y5eaFTIjOouGz
+ ZpRWujw0csmX/iaDhj0wXvDvU2XOQqE6AEUVxiUTr5Qbo712AreLswx9eJ5/FjaixIUy
+ 0Xk0Z4bPMVYpbOhtVc8nxPzhFvHPAwa5T46wWvDaBwK6BYcX4J0U/Jh6ZMCmWXWUqwPy
+ RfJSXJBBFnep4gQ9OfqZMFWq/Y3T177H0nrdH50Y1YlubQhT4Bf+P7s/7ZAIrw3V7bfH
+ M0GA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCzetL2kc255UIyNNGsBmuTEsZAw87wQLi9lTOLNqUBcenRTz9yDnuGE7SjHn2k1roDI48hrplmFRZ@nongnu.org
-X-Gm-Message-State: AOJu0YxIEMGv9AX8seS81CGdH0ROufh0UlazAwGjurajo+pet3JFdQ1t
- EXogbAe2tBHawqy2NQSYdsW1JbXapnDXkDVu742KuOZ5g+0h/Na+
-X-Gm-Gg: ASbGncuLhQ5XLoxH6uuo1CGgUro1dUCxy71fKMQVOYJgOZehS0S1ec4WAx/2j/tb0IB
- ScqtCPjLBa7oMByAuOg8yGHVSBTHcGw5KhU7TzF+Kn+Vl2zq4qNtpqI32YaYETrWmHkIaphbbZP
- hPrVv+PKMkV2uMfsLaChDCjqAAbr3Vcm094OfUKbwOzGTxByz9faF3KdHJ3b+cPFeMXS7hmnc58
- QAl2jhzcdJqOUiZqN+8riiKLgfvERzsfM9onbJ7d8GgzCEKrghrjORznse2VqmvNrNLODtCkDH/
- A5sAG7FCCwI1jhC3W199UIx3TkAsOL3QOEDIVn6NiuaL
-X-Google-Smtp-Source: AGHT+IHZ6+mbNhL+NeLI+h1oG9nQe9gXLZCiKOkCw3XafgWYAsLPfSjDE5E2N2EqojUQZXAnfAn4sA==
-X-Received: by 2002:a17:902:fc44:b0:223:90ec:80f0 with SMTP id
- d9443c01a7336-22bea4afaa3mr22666935ad.22.1744345925112; 
- Thu, 10 Apr 2025 21:32:05 -0700 (PDT)
+ AJvYcCXSRmRxJw2h9mwjiaf6qMjl9xqz1sohMzvsdoFF1itOQaW3GRTcAn8aGxTqbvAkexZjR0Y8EH3fy1ib@nongnu.org
+X-Gm-Message-State: AOJu0Yx2Lu3krg0vCocUX/IL93/ngEdTDrJmCbzeczHXHzOIzmUD+/nI
+ Zsv1z55MvhP/5YxnKF9gT0jFFNRYB1ckWPUW55zlB0JIue1jlAnd
+X-Gm-Gg: ASbGnct8aWOcxzyVA9yOzLAGZksNnU+YooX+JoJyCgZKV2w8IX7kSDv+mrNcRr/nHoB
+ 0d33DAYepqR+3/R1PJKWCD6J9Ah7f/Ekm8SA+CcsKUdZezdPWNyYqoZwZ3R19SYhWnqfheDTfMT
+ soXAk4p2+co0l7/oh9/tszBLzRiTx1775su8FdhkrywiyZCQS7ZsXFDEn4jYxvnEP3JVFYJtDHJ
+ VBONAGukUe6kiDUi48qKmgFnT6WjLGCEPkcbsz6+96udDu3UL74BNAk9sUw6OFqw7tI9WxrlXQ4
+ PdYvNjST7tLCnV6FT6BXfmY9ueoCg0FIJf/1MbA2RldT+PCLpnXca8M=
+X-Google-Smtp-Source: AGHT+IHq/k0DRaOYU1Gs2Ofnj69VHaktdTpevJkZUvSXAlauomL2AgIkD9W05Tu9oe/R09tiecI9rg==
+X-Received: by 2002:a17:903:1c7:b0:220:e5be:29c7 with SMTP id
+ d9443c01a7336-22bea4f180fmr22059705ad.39.1744345933977; 
+ Thu, 10 Apr 2025 21:32:13 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7b64906sm39361625ad.48.2025.04.10.21.32.01
+ d9443c01a7336-22ac7b64906sm39361625ad.48.2025.04.10.21.32.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 21:32:04 -0700 (PDT)
+ Thu, 10 Apr 2025 21:32:13 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -71,16 +71,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 6/8] net/igb: Implement EITR Moderation Counter
-Date: Fri, 11 Apr 2025 14:31:26 +1000
-Message-ID: <20250411043128.201289-7-npiggin@gmail.com>
+Subject: [PATCH v2 8/8] qtest/e1000e|igb: Test interrupt throttling in
+ multiple_transfers test
+Date: Fri, 11 Apr 2025 14:31:28 +1000
+Message-ID: <20250411043128.201289-9-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250411043128.201289-1-npiggin@gmail.com>
 References: <20250411043128.201289-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,137 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGB EITR registers have counter fields which reflect the current ITR
-and LLI counter values, as well as a bit to enable LLI moderation,
-and a bit to write the register without modifying the counter fields.
-
-Implement the EITR Moderation Counter (aka EITR counter), and counter
-ignore bit. The EITR counter is the time remaining in the interrupt
-moderation delay which is implemented as a QEMU timer.
-
-Log an unimp message if software tries to enable LLI moderation.
-
-Add a note about the problem with reloading timers after migration.
+Enable interrupt throtling on one of the two queue interrupts used
+in the multiple_transfers test, to improve coverage. The number of
+interrupts for the e1000e test is reduced because it has a long minimum
+throttling delay so without reducing iterations throttling adds about
+40s to the test runtime.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/net/igb_regs.h |  8 +++++--
- hw/net/igb_core.c | 54 ++++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 52 insertions(+), 10 deletions(-)
+ tests/qtest/e1000e-test.c | 6 +++---
+ tests/qtest/igb-test.c    | 4 ++++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
-index 1ed5ee5039a..b612248264a 100644
---- a/hw/net/igb_regs.h
-+++ b/hw/net/igb_regs.h
-@@ -321,8 +321,12 @@ union e1000_adv_rx_desc {
- #define E1000_EICR_TX_QUEUE3    0x00000800 /* Tx Queue 3 Interrupt */
- #define E1000_EICR_OTHER        0x80000000 /* Interrupt Cause Active */
- 
--/* Extended Interrupt Cause Set */
--/* E1000_EITR_CNT_IGNR is only for 82576 and newer */
-+/* Extended Interrupt Throttle */
-+/* These are only for 82576 and newer */
-+#define E1000_EITR_INTERVAL     0x00007FFC
-+#define E1000_EITR_LLI_EN       0x00008000
-+#define E1000_EITR_LLI_CNT      0x001F0000
-+#define E1000_EITR_ITR_CNT      0x7FE00000
- #define E1000_EITR_CNT_IGNR     0x80000000 /* Don't reset counters on write */
- 
- #define E1000_TSYNCTXCTL_VALID    0x00000001 /* tx timestamp valid */
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 8fcc872a7c0..3ae3e53530b 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -140,12 +140,8 @@ static void igb_msix_notify(IGBCore *core, unsigned int cause)
- }
- 
- static inline void
--igb_intrmgr_rearm_timer(IGBIntrDelayTimer *timer)
-+igb_intrmgr_arm_timer(IGBIntrDelayTimer *timer, int64_t delay_ns)
+diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
+index a538c72cc84..645b31127f0 100644
+--- a/tests/qtest/e1000e-test.c
++++ b/tests/qtest/e1000e-test.c
+@@ -181,7 +181,7 @@ static void test_e1000e_rx(void *obj, void *data, QGuestAllocator * alloc)
+ static void test_e1000e_multiple_transfers(void *obj, void *data,
+                                            QGuestAllocator *alloc)
  {
--    int64_t delay_ns =
--            (int64_t)((timer->core->mac[timer->delay_reg] & 0x7FFC) >> 2) *
--                     timer->delay_resolution_ns;
--
-     trace_e1000e_irq_rearm_timer(timer->delay_reg << 2, delay_ns);
+-    static const long iterations = 4 * 1024;
++    static const long iterations = 1 * 1024;
+     long i;
  
-     timer_mod(timer->timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay_ns);
-@@ -153,6 +149,16 @@ igb_intrmgr_rearm_timer(IGBIntrDelayTimer *timer)
-     timer->running = true;
- }
+     QE1000E_PCI *e1000e = obj;
+@@ -194,8 +194,8 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
+         return;
+     }
  
-+static inline void
-+igb_intrmgr_rearm_timer(IGBIntrDelayTimer *timer)
-+{
-+    uint32_t interval = (timer->core->mac[timer->delay_reg] &
-+                         E1000_EITR_INTERVAL) >> 2;
-+    int64_t delay_ns = (int64_t)interval * timer->delay_resolution_ns;
-+
-+    igb_intrmgr_arm_timer(timer, delay_ns);
-+}
-+
- static void
- igb_intmgr_timer_resume(IGBIntrDelayTimer *timer)
- {
-@@ -2881,7 +2887,21 @@ igb_mac_swsm_read(IGBCore *core, int index)
- static uint32_t
- igb_mac_eitr_read(IGBCore *core, int index)
- {
--    return core->mac[index - EITR0];
-+    uint32_t eitr_num = index - EITR0;
-+    uint32_t val = core->mac[eitr_num];
-+    IGBIntrDelayTimer *timer = &core->eitr[eitr_num];
-+
-+    if (timer->running) { /* timer is pending, find time remaining */
-+        int64_t remains = timer_expire_time_ns(timer->timer) -
-+                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+        if (remains > 0) {
-+            uint32_t cnt; /* CNT is the most significant 10 of 12 bits */
-+            cnt = remains / timer->delay_resolution_ns;
-+            val |= ((cnt >> 2) << 21) & E1000_EITR_ITR_CNT;
-+        }
-+    }
-+
-+    return val;
- }
+-    /* Clear EITR because buggy QEMU throttle timer causes superfluous irqs */
+-    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 0);
++    /* Use EITR for one irq and disable it for the other, for testing */
++    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 500);
+     e1000e_macreg_write(d, E1000_EITR + E1000E_TX0_MSG_ID * 4, 0);
  
- static uint32_t igb_mac_vfmailbox_read(IGBCore *core, int index)
-@@ -3047,7 +3067,23 @@ igb_set_eitr(IGBCore *core, int index, uint32_t val)
+     for (i = 0; i < iterations; i++) {
+diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
+index 12cdd8b498a..c1877a77be4 100644
+--- a/tests/qtest/igb-test.c
++++ b/tests/qtest/igb-test.c
+@@ -198,6 +198,10 @@ static void test_igb_multiple_transfers(void *obj, void *data,
+         return;
+     }
  
-     trace_igb_irq_eitr_set(eitr_num, val);
- 
--    core->mac[index] = val & 0x7FFE;
-+    if (val & (E1000_EITR_LLI_EN | E1000_EITR_LLI_CNT)) {
-+        qemu_log_mask(LOG_UNIMP, "%s: LLI moderation not supported, ignoring\n",
-+                                 __func__);
-+    }
++    /* Use EITR for one irq and disable it for the other, for testing */
++    e1000e_macreg_write(d, E1000_EITR(E1000E_RX0_MSG_ID), 0);
++    e1000e_macreg_write(d, E1000_EITR(E1000E_TX0_MSG_ID), 10 << 2); /* 10us */
 +
-+    if (!(val & E1000_EITR_CNT_IGNR)) {
-+        IGBIntrDelayTimer *timer = &core->eitr[eitr_num];
-+        uint32_t itr_cnt = (val & E1000_EITR_ITR_CNT) >> 21;
-+        /* CNT is the most significant 10 of 12 bits */
-+        uint64_t ns = (itr_cnt << 2) * timer->delay_resolution_ns;
-+
-+        igb_intrmgr_arm_timer(timer, ns);
-+    }
-+
-+    val &= E1000_EITR_INTERVAL | E1000_EITR_LLI_EN;
-+
-+    core->mac[index] = val;
- }
- 
- static void
-@@ -4553,7 +4589,9 @@ igb_core_post_load(IGBCore *core)
- 
-     /*
-      * we need to restart intrmgr timers, as an older version of
--     * QEMU can have stopped them before migration
-+     * QEMU can have stopped them before migration.
-+     * XXX: re-setting timers with fresh values breaks deterministic
-+     * replay.
-      */
-     igb_intrmgr_resume(core);
-     igb_autoneg_resume(core);
+     for (i = 0; i < iterations; i++) {
+         igb_send_verify(d, data, alloc);
+         igb_receive_verify(d, data, alloc);
 -- 
 2.47.1
 
