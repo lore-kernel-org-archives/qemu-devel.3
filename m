@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4436C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 06:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97968C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 06:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u37eQ-0007Oo-E6; Fri, 11 Apr 2025 02:14:06 -0400
+	id 1u37pI-0002i8-I5; Fri, 11 Apr 2025 02:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u37eH-0007NW-RH; Fri, 11 Apr 2025 02:13:58 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u37eC-0008OD-7U; Fri, 11 Apr 2025 02:13:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744352032; x=1775888032;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=XiD4Ot+jgvnkKI7STgAM9iTJOwfmABvmI0JlTGgCnBk=;
- b=W2oPL7P6W6tfbJnQa6xeOzZux/xsCVHgNv9CzLhxRmvSddYL9/mm0NDK
- ifmHTSu9W0OMhUhP4qc6RDo1K6bRKovuJHoJRlqW3ertpZSWPJ6HpwbPu
- pmygChPrMnZW6YuZtC9pl30bH0d5x9XcpWIUSsnzrjPg/VkKN0R53PfEG
- roTD5zqbFnr93WRWqaoPq63tDSzgk5Sjoaec62Vmp54enI+n1v49yS04k
- Pa/b87qN6EmlDxZuoYcHuVsWMfsHM1TmTV8acN5VQDZuBIvR2jz2X1DDG
- X1mtnGk8Pi42ICglGbu7EGfr9EHcT+XG/ieoa1VBJrQTXCV9ilEFOiUNG g==;
-X-CSE-ConnectionGUID: CZ5a5l0VTDKF9cttu20PlA==
-X-CSE-MsgGUID: xQV5hNFSR1WrPf7+1TA0jw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11400"; a="56076138"
-X-IronPort-AV: E=Sophos;i="6.15,203,1739865600"; d="scan'208";a="56076138"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Apr 2025 23:13:48 -0700
-X-CSE-ConnectionGUID: TUGIGU/aTYqXKX7y6P1t4Q==
-X-CSE-MsgGUID: 7Ebq+NivTnqdNeSWdeYkxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,203,1739865600"; d="scan'208";a="134219489"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 10 Apr 2025 23:13:44 -0700
-Date: Fri, 11 Apr 2025 14:34:34 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
-Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
-Message-ID: <Z/i3+l3uQ3dTjnHT@intel.com>
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-2-zhao1.liu@intel.com>
- <878qo8yu5u.fsf@pond.sub.org> <Z/iUiEXZj52CbduB@intel.com>
- <87frifxqgk.fsf@pond.sub.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87frifxqgk.fsf@pond.sub.org>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u37pG-0002hS-LZ
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 02:25:18 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u37pF-0003Qd-0F
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 02:25:18 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-227914acd20so22667315ad.1
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 23:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744352715; x=1744957515; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DhLyNiR/8622TsR7oFs3Rr8+ELyjFah8S9Q+ttfQkAM=;
+ b=EEmKcETFlBK6ilNtiR4B4U1/vl/tKbF3YhSSDxVr+Q/1bY7LKmNT2C2AEXWm0839hF
+ Stc5p3vE7gE9GxlZlM/gyqYf40wOISGy5xhpPN7RA3IRsq+DaA69m5c5YlL8p/eyP39g
+ sl/mt2RNPRzP9CiN0m9xBH6toOL2gKxtEZ51pJoEV5QCXGtF05KGdL1Rq/pwKW16yg3L
+ UAx3SWImdfDZ92IUqvmwTQNbyjHNJps3nz7wiI8c2IlO40oj1gy6wfN34EWl1ch0VJSP
+ LwGtFWb2NykdNeEgZcRRMUkR6lnfwWW9sWYD4PDTMXeNN5xBLGxBqa6cEG5iUK6Ommy7
+ /4Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744352715; x=1744957515;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=DhLyNiR/8622TsR7oFs3Rr8+ELyjFah8S9Q+ttfQkAM=;
+ b=dY6zxAzbA095RNAcplRyKji1GfeeAisB8LQ37p6WnwQDqmN2ollep3Ne3oARfxB48B
+ 6jEnIhwIXg9Zwt1xGJYBIvKNJECz0y3lrbb7AFR53LKpla/HPZDt8TNuxESThkhQmo0X
+ aI0sYTbFsh4LfKHTlRboYk6dqqyJm0P4EcuA8rwkCMvx1+Cu1D9baTrS8FzufgMhy1oM
+ 8K+CdLRBJ8k2FSMxpJmPgqlZfLY+1FlOkYeGRMdde5MLSOkSJzLdoOQN6qJ2Ui5UiEIc
+ k+EqLgZx2L16lJS46BobbE2+g6kNimWX9rYpVOeIvKZVE/1g3RkzZrlw8yHnbMZt4tky
+ GysQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAHQcAbMAf9jC5CV8SVGhayqL9NTPbdBqXfqJBaSPfE413BzhsAAranPLj2K1uVjvtidiiEH/4hkRg@nongnu.org
+X-Gm-Message-State: AOJu0Yy4ilEhYrgf9Wjpy5JesW7sVU6oz2RsWj8AWm8NTLVpB8APh4hM
+ 90Y68hFWU0usawv3yX2rdA7YLwFhT0FQXdzbFepNO+TzBJ8qaiJx
+X-Gm-Gg: ASbGncvkCUM8K7aU4MBv5Q7EL1qulQmiQfn9dZ7UYUN6sc4pMKmiGXCk65o3RhcycdJ
+ efwRcs0fCAajcwO99TCQOG1H607hN/BwMV89YKdQqU/skTUuT+3yS7WgXYcaL8T/IRqE158GZwg
+ cNVu5xCnZ/EyziEvZ+ZGPemXTpRrKETKgGo+wKygxy2A+MOL4D0xVf+Cfm2iI3v3JWAZB2Fiae3
+ JLvRqcxhE2NaKHhcKE8RN2EYXb6RaIGMwcGkQv9b8QHlHsAJlswO7RREDpRA5WAMVlje/lxmMxl
+ 0B0AyAVkJlOOscywwN7fo/Z+fdEzNNh0FA==
+X-Google-Smtp-Source: AGHT+IEHMRI0KJW5Mq2EGFHVqttLqXMUU7Q469gx7vh4RhzfnY3pgL8HI8IxEyblT42DLJNDmgKflA==
+X-Received: by 2002:a17:902:f54c:b0:215:ba2b:cd55 with SMTP id
+ d9443c01a7336-22bea025382mr22850495ad.2.1744352715278; 
+ Thu, 10 Apr 2025 23:25:15 -0700 (PDT)
+Received: from localhost ([220.253.99.94]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7c95cd1sm41151705ad.150.2025.04.10.23.25.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Apr 2025 23:25:14 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 11 Apr 2025 16:25:10 +1000
+Message-Id: <D93LFGHCQANR.1TFR56ESHUY1H@gmail.com>
+Cc: "Corey Minyard" <minyard@acm.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v3 0/5] ipmi: bmc-sim improvements
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: <corey@minyard.net>
+X-Mailer: aerc 0.19.0
+References: <20250401140153.685523-1-npiggin@gmail.com>
+ <Z-w75P6iav82W5Qr@mail.minyard.net>
+In-Reply-To: <Z-w75P6iav82W5Qr@mail.minyard.net>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,45 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 11, 2025 at 06:38:35AM +0200, Markus Armbruster wrote:
-> Date: Fri, 11 Apr 2025 06:38:35 +0200
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
-> 
-> Zhao Liu <zhao1.liu@intel.com> writes:
-> 
-> > Hi Markus
-> >
-> > On Thu, Apr 10, 2025 at 04:21:01PM +0200, Markus Armbruster wrote:
-> >> Date: Thu, 10 Apr 2025 16:21:01 +0200
-> >> From: Markus Armbruster <armbru@redhat.com>
-> >> Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
-> >> 
-> >> Zhao Liu <zhao1.liu@intel.com> writes:
-> >> 
-> >> > Introduce the kvm-pmu-filter object and support the PMU event with raw
-> >> > format.
-> >> 
-> >> Remind me, what does the kvm-pmu-filter object do, and why would we
-> >> want to use it?
-> >
-> > KVM PMU filter allows user space to set PMU event whitelist / blacklist
-> > for Guest. Both ARM and x86's KVMs accept a list of PMU events, and x86
-> > also accpets other formats & fixed counter field.
-> 
-> But what does the system *do* with these event lists?
+On Wed Apr 2, 2025 at 5:17 AM AEST, Corey Minyard wrote:
+> On Wed, Apr 02, 2025 at 12:01:47AM +1000, Nicholas Piggin wrote:
+>> These little things came up when looking at behaviour of IPMI with
+>> the bmc-sim implementation running the ppc powernv machine, and
+>> trying to clean up error messages and missing features.
+>
+> This all looks good to me.  Thanks to Philippe for reviewing, too.
+>
+> I can give you an
+>
+> Acked-by: Corey Minyard <cminyard@mvista.com>
+>
+> if you are working on this for your own tree, or I can take it into
+> mine.
 
-This is for security purposes, and can restrict Guest users from
-accessing certain sensitive hardware information on the Host via perf or
-PMU counter.
+Hey Corey,
 
-When a PMU event is blocked by KVM, Guest users can't get the
-corresponding event count via perf/PMU counter.
+Thanks for all the review, and sorry I missed your question...
 
-EMM, if ¡®system¡¯ refers to the QEMU part, then QEMU is responsible
-for checking the format and passing the list to KVM.
+I don't have anything further in my tree, I don't have an
+immediate need for it, it was just tidying up a few errors
+and warnings I noticed.
+
+I'd be happy for you to take it in your tree and send it up
+when it suits you.
 
 Thanks,
-Zhao
-
+Nick
 
