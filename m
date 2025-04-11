@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 679DDC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D9FC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 05:51:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u36Dh-0003di-H9; Fri, 11 Apr 2025 00:42:25 -0400
+	id 1u37HN-0005Oc-H3; Fri, 11 Apr 2025 01:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u36DY-0003aE-Hu; Fri, 11 Apr 2025 00:42:17 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u37HK-0005OP-Vk
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 01:50:15 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u36DW-0001hf-Pq; Fri, 11 Apr 2025 00:42:16 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22403cbb47fso16553865ad.0; 
- Thu, 10 Apr 2025 21:42:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1u37HJ-0001VM-As
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 01:50:14 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5e6c18e2c7dso2860524a12.3
+ for <qemu-devel@nongnu.org>; Thu, 10 Apr 2025 22:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744346533; x=1744951333; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1744350610; x=1744955410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xKyqrN482MxUi8aGlGxTp85Ez/bPRUp+V1nk5qGRW08=;
- b=ecEi1JF/UIDxxUQjvy7yqTolPWXJaOL7ciOKAOwxILMmItyAx/1pI0ShJgrIRRdNk8
- Ao9xUYOmYWFsdQNx5hdvbKkYkmqilhcadpP34hDriSbZiIgAVQod+ayntowa38eeKD8c
- /N6nhSbdSAzFbD0K71f8o5wwFWlRbP0gtj8OLBMUBuqjWEr5EfVpvI17NIp4Odk5Zuua
- B4AVGI/ujdawlxPfp7PBTni6mQ4sBH0SPdenrLwuX7TyA56ak9xeoQKTYCsJHxxR+tA4
- BzfJVa3Rr0g7rblnmJoq+xt7FMMypZUJrfpSv+DKBkq65F4XyGKY5N+JVgPouDKW7p/9
- IcNQ==
+ bh=7Fdp/FVIgkYOdnbPHtW8FxgITkJJUE4uFwBiTz8ZIeQ=;
+ b=lsBK7YJOSzfolrWyGCuSBCOmlh1RJtpy19IEZFwWdvko5WapPV8grd/jedk3KIdinr
+ Slv4t+jlj/uSBCj7jGPChcKBkRQVYF9niIdtm2Ei83xbXSxa3c6i99v+81c3VE/XP6Jd
+ ezM592OMcx7iyzoMwcKDcymcD32WYsczIco6fCugKbZkc9O1PS00ElC2R2p6H8s2DIwK
+ KoDKPiM8aDRvebdYHl0eFDjS/MIiYiNTWV/lZS7DBcFw0E+dn/AlWQrl/lWys32Z3VW9
+ ZGUMGLPQUo17WcrbrD5xzZDe8M9H0qhujpl5XOD75Li8DHoqEH5GAEZ2SCp21Jo6GJLI
+ GLrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744346533; x=1744951333;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1744350610; x=1744955410;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xKyqrN482MxUi8aGlGxTp85Ez/bPRUp+V1nk5qGRW08=;
- b=BdE/VPLJP/Kvru4pDmdoJwFpfCDjCBTKeyA+HE56hGOlJ2ntvK5R2XXm2oebM5/MZd
- bMjveOYmyNL6FMILG3MPSeW9RdbqYt8J070YZd82hb3Wjw6CMWT3X4lPSh4G4xXe/ic6
- CprGrtOHJkVoMa6zodoN1FYfzWEU/RBkLd6JsuDyZPuPJ+1B/SlGZEFLE9GLxUJuriEa
- WYszpb1XEkU/wpdl9tfIDt882+NDvaKEesSUHHkn+4wTEq/GXK14zbeTmkvigwI0YTvE
- m2mbuNh0aDWUr7EshgcogK739X4yg6FAxWiUhQD0xE5NLCmR9Coa2eG38jf2z7lDk9NV
- SW7A==
+ bh=7Fdp/FVIgkYOdnbPHtW8FxgITkJJUE4uFwBiTz8ZIeQ=;
+ b=qYO81PRW0v+Jhi4iR0WV6sNdYx7oczt7sUOHmQZjDxU2+n7LFbxdse1mz6U3WEHequ
+ Q0B+DHihTJWQoa8qCfMH6VmCtzqZdiYnEHYuhPFmQJLbJgO1thq+2tDczuKBxguyU+nY
+ Gv8gJ/Hn/WDIgirUsdyJ2pFbImUtMHcu7rgJ3CKhfKX7e8kkR8FW7u2BcYRFYgMOCVvl
+ ou99X3VjUHanMv888jnb7IqgxZ+U/m7hPC7myWGmB/h1+I4PD3rjbcvT60LyAnDo1CEI
+ ULZ2wjWALBdpDai6UOYtqvN6v4hqrcefMh7fS8Bwe/EIHQudD9FBUUMBxEaatuyi2GHA
+ S3DQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUw5qHzA4OcDTItcErWKR0jAh/A/ygDjezSomhRKoU2e2qSwqifmuXNPPj4g2QaUrP5X6bRNRscnqir@nongnu.org
-X-Gm-Message-State: AOJu0Yznc1NZBdP3iHOvyMwM/IOMoMAttfmIqLH9I2ABrg4j3hK7DR3F
- u57uEBwize6WjbIyhR500Eo/nrVqExXurkwwmlqbd1cXkcjds3fawWaP/w==
-X-Gm-Gg: ASbGncvXs6oCbvGMPC8rKwLYb5b6PWwgOwZ1Tev6jy3qrNEX+SkO2R9Umq742vTdzSy
- XkDs6RnjXHMGRjdoeT7m7vOSYPYwMXYQ1aSK2ATWKeVU1RttC+BCSdTdupXerWIPemHDp8QiLMr
- trL+yKY5Rhg+SpX4PqBE1/wVALYbTnxkPnMNkBIyBVio5AiX6YLFvmpwTQNE5yZ/ECXn8JKrKln
- GNWw/1z2yoS/UStNCI6eOYGReZdtwfpdGqk7bPCDtXlu6dg3VU+3q5buMkLaWQrNnVS4XIeqg/z
- 8/eocwYYv/UDp9pINwoKoTH8YLi9S+VxwddggyevKxre
-X-Google-Smtp-Source: AGHT+IG3tB7DxXSlgCT5ZkTIi1LG6Zl0zvamMoMbxjbGyFqZFeTIG8R1dRNqvfmmiy6phegym0XUpg==
-X-Received: by 2002:a17:903:2385:b0:227:e74a:a066 with SMTP id
- d9443c01a7336-22bea4c755cmr24707665ad.28.1744346532796; 
- Thu, 10 Apr 2025 21:42:12 -0700 (PDT)
-Received: from wheely.local0.net ([220.253.99.94])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c971e4sm39672745ad.136.2025.04.10.21.42.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 21:42:12 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>,
- John Snow <jsnow@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org
-Subject: [PATCH v4 7/7] qtest/libqos/pci: Factor msix entry helpers into pci
- common code
-Date: Fri, 11 Apr 2025 14:41:29 +1000
-Message-ID: <20250411044130.201724-8-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250411044130.201724-1-npiggin@gmail.com>
-References: <20250411044130.201724-1-npiggin@gmail.com>
+ AJvYcCW9n8Y/KksWs+/TDZJMSD4EGCc3EEj8DmmohKylPR3dOX7Uu1/yBk67csiSBbP9CsyafBYraQ/sgpHG@nongnu.org
+X-Gm-Message-State: AOJu0YysnDUr79jO9r6K9bQODZNSbsQZRsX7jkc4DHt9oPSXehWpIqvW
+ fJjRytgTkmaTeDFfaEtMkIcpmSZTNjrYw0eNwVqg9MAuVYUkOLb5ndqUbw==
+X-Gm-Gg: ASbGncu5nUmBFEx+RLjyrtinrR96a8gZWfWsCpRRIVccNa8/IFiVo+VpdVIzTpy0gLI
+ KrtSbiyWtPyHJ4nRlPqgkRwb3JfHoeTx47kBBow9LZPfr+ZX1MB2+En0+r36Hvewb7oaaTBvnaq
+ 1LUqcoz0mxJvBCzviqjboaBoLOe1WDzJ2RdlHJue22TdFxYjx52QCqnsEkCk++hKiDi/IIHithw
+ RNNyYXx2lGFUM13Ozg48sPUDlgO018p5gpfnzEZnhCn+V1CWpblzQ0ZOpjz9sGln3X15znnewv3
+ 04SiAlOYK7H+nyQgSb7LSX0yXBKUtCVg6b0=
+X-Google-Smtp-Source: AGHT+IHoY+AIhitII95ferf2VdrvCC13eEWJtp9o1s6Yuz34tvOE8fYIJ2dR/RmO/o1k6Bp8gPPfPg==
+X-Received: by 2002:a17:907:970d:b0:abf:750b:93b8 with SMTP id
+ a640c23a62f3a-acad3491f22mr105245266b.22.1744350609803; 
+ Thu, 10 Apr 2025 22:50:09 -0700 (PDT)
+Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-acaa1bb2e15sm393880466b.17.2025.04.10.22.50.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Apr 2025 22:50:09 -0700 (PDT)
+Date: Fri, 11 Apr 2025 05:50:06 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_0/2=5D_Add_property_to_supp?=
+ =?US-ASCII?Q?ort_writing_ERSTBA_in_high-low_order?=
+In-Reply-To: <d7f43c28-e328-4b19-b045-3b6fde881c89@roeck-us.net>
+References: <20250405140002.3537411-1-linux@roeck-us.net>
+ <ae8cd367-8580-4476-9a75-3fa4f7aa2536@linaro.org>
+ <7ed5d213-9429-45c8-bbf3-6f3f841a2299@roeck-us.net>
+ <7C5A41A1-38EE-4D22-8F84-6A5A3A2BDD82@gmail.com>
+ <42a82455-7fa1-4890-a9e8-690fec3433c3@roeck-us.net>
+ <9239BBD2-DCB8-4B97-9EAA-FFB06CAB660C@gmail.com>
+ <89b70bdd-00e3-46ee-8810-099da032f485@roeck-us.net>
+ <C5389B31-E7B2-43E0-A10D-368571DAD081@gmail.com>
+ <cd6dafe1-f291-46f4-8fb1-7555dc6a60db@roeck-us.net>
+ <6A2167BC-910A-4801-8FB0-24C114EF5181@gmail.com>
+ <3b0367ca-7242-4555-a6b2-ddf546374138@roeck-us.net>
+ <A3422A32-92AB-4D53-A53F-DD9D0FD5C1EE@gmail.com>
+ <d7f43c28-e328-4b19-b045-3b6fde881c89@roeck-us.net>
+Message-ID: <B4D8DAAE-862D-43F2-8B88-18F93B094783@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,197 +114,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Setting msix entry address and data and masking is moved into
-common code helpers from virtio tests.
 
-For now that remains the only user, but there are changes under
-development to enable msix vectors for msix, e1000e, and xhci
-tests, which can make use of them.
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/qtest/libqos/pci.h        |  3 ++
- tests/qtest/libqos/pci.c        | 53 +++++++++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-pci.c | 48 ++++-------------------------
- 3 files changed, 61 insertions(+), 43 deletions(-)
+Am 11=2E April 2025 03:53:27 UTC schrieb Guenter Roeck <linux@roeck-us=2En=
+et>:
+>On 4/8/25 14:56, Bernhard Beschow wrote:
+>
+>>>>> Tt turns out that sabrelite has the same problem=2E
+>>>>=20
+>>>> Did it work with QEMU 9=2E2?
+>>>>=20
+>>>=20
+>>> No, the pcie interfaces on sabrelite don't instantiate for me with qem=
+u 9=2E2 (9=2E2=2E3,
+>>> more specifically)=2E I see the pcie root port, but nothing behind it=
+=2E
+>>=20
+>> You need to add `bus=3Ddw-pcie` to the pci devices' options in QEMU 9=
+=2E2=2Ex and earler, otherwise it will end up on the wrong bus=2E This is f=
+ixed in master=2E
+>>=20
+>
+>Just to give you a quick update, I needed the diff below to get virtio-ne=
+t-pci
+>to work on sabrelite=2E
+>
+>No luck with any other non-virtio PCI controllers, though=2E
+>
+>Guenter
+>
+>---
+>diff --git a/include/hw/arm/fsl-imx6=2Eh b/include/hw/arm/fsl-imx6=2Eh
+>index 9da32fc189=2E=2E7325f3f2c4 100644
+>--- a/include/hw/arm/fsl-imx6=2Eh
+>+++ b/include/hw/arm/fsl-imx6=2Eh
+>@@ -456,10 +456,10 @@ struct FslIMX6State {
+> #define FSL_IMX6_MLB150_LOW_IRQ 117
+> #define FSL_IMX6_ENET_MAC_IRQ 118
+> #define FSL_IMX6_ENET_MAC_1588_IRQ 119
+>-#define FSL_IMX6_PCIE1_IRQ 120
+>-#define FSL_IMX6_PCIE2_IRQ 121
+>-#define FSL_IMX6_PCIE3_IRQ 122
+>-#define FSL_IMX6_PCIE4_MSI_IRQ 123
+>+#define FSL_IMX6_PCIE1_IRQ 123
+>+#define FSL_IMX6_PCIE2_IRQ 122
+>+#define FSL_IMX6_PCIE3_IRQ 121
+>+#define FSL_IMX6_PCIE4_MSI_IRQ 120
+> #define FSL_IMX6_DCIC1_IRQ 124
+> #define FSL_IMX6_DCIC2_IRQ 125
+> #define FSL_IMX6_MLB150_HIGH_IRQ 126
+>
 
-diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index d334d9c0837..c63342d8c72 100644
---- a/tests/qtest/libqos/pci.h
-+++ b/tests/qtest/libqos/pci.h
-@@ -100,8 +100,11 @@ void qpci_device_enable(QPCIDevice *dev);
- uint8_t qpci_find_capability(QPCIDevice *dev, uint8_t id, uint8_t start_addr);
- void qpci_msix_enable(QPCIDevice *dev);
- void qpci_msix_disable(QPCIDevice *dev);
-+void qpci_msix_set_entry(QPCIDevice *dev, uint16_t entry,
-+                         uint64_t guest_addr, uint32_t data);
- bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry);
- bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry);
-+void qpci_msix_set_masked(QPCIDevice *dev, uint16_t entry, bool masked);
- uint16_t qpci_msix_table_size(QPCIDevice *dev);
- 
- uint8_t qpci_config_readb(QPCIDevice *dev, uint8_t offset);
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index 72adf81ddd6..4627f324200 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -353,6 +353,25 @@ void qpci_msix_disable(QPCIDevice *dev)
-     dev->msix_pba_off = 0;
- }
- 
-+void qpci_msix_set_entry(QPCIDevice *dev, uint16_t entry,
-+                         uint64_t guest_addr, uint32_t data)
-+{
-+    uint64_t vector_off = dev->msix_table_off + entry * PCI_MSIX_ENTRY_SIZE;
-+
-+    g_assert(dev->msix_enabled);
-+    g_assert_cmpint(entry, >=, 0);
-+    g_assert_cmpint(entry, <, qpci_msix_table_size(dev));
-+
-+    qpci_io_writel(dev, dev->msix_table_bar,
-+                   vector_off + PCI_MSIX_ENTRY_LOWER_ADDR, guest_addr & ~0UL);
-+    qpci_io_writel(dev, dev->msix_table_bar,
-+                   vector_off + PCI_MSIX_ENTRY_UPPER_ADDR,
-+                   (guest_addr >> 32) & ~0UL);
-+
-+    qpci_io_writel(dev, dev->msix_table_bar,
-+                   vector_off + PCI_MSIX_ENTRY_DATA, data);
-+}
-+
- bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry)
- {
-     uint32_t pba_entry;
-@@ -360,6 +379,9 @@ bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry)
-     uint64_t  off = (entry / 32) * PCI_MSIX_ENTRY_SIZE / 4;
- 
-     g_assert(dev->msix_enabled);
-+    g_assert_cmpint(entry, >=, 0);
-+    g_assert_cmpint(entry, <, qpci_msix_table_size(dev));
-+
-     pba_entry = qpci_io_readl(dev, dev->msix_pba_bar, dev->msix_pba_off + off);
-     return (pba_entry & (1 << bit_n)) != 0;
- }
-@@ -371,6 +393,9 @@ bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry)
-     uint64_t vector_off = dev->msix_table_off + entry * PCI_MSIX_ENTRY_SIZE;
- 
-     g_assert(dev->msix_enabled);
-+    g_assert_cmpint(entry, >=, 0);
-+    g_assert_cmpint(entry, <, qpci_msix_table_size(dev));
-+
-     addr = qpci_find_capability(dev, PCI_CAP_ID_MSIX, 0);
-     g_assert_cmphex(addr, !=, 0);
-     val = qpci_config_readw(dev, addr + PCI_MSIX_FLAGS);
-@@ -384,6 +409,34 @@ bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry)
-     }
- }
- 
-+void qpci_msix_set_masked(QPCIDevice *dev, uint16_t entry, bool masked)
-+{
-+    uint8_t addr;
-+    uint16_t val;
-+    uint64_t vector_off = dev->msix_table_off + entry * PCI_MSIX_ENTRY_SIZE;
-+
-+    g_assert(dev->msix_enabled);
-+    g_assert_cmpint(entry, >=, 0);
-+    g_assert_cmpint(entry, <, qpci_msix_table_size(dev));
-+
-+    addr = qpci_find_capability(dev, PCI_CAP_ID_MSIX, 0);
-+    g_assert_cmphex(addr, !=, 0);
-+    val = qpci_config_readw(dev, addr + PCI_MSIX_FLAGS);
-+    g_assert(!(val & PCI_MSIX_FLAGS_MASKALL));
-+
-+    val = qpci_io_readl(dev, dev->msix_table_bar,
-+                         vector_off + PCI_MSIX_ENTRY_VECTOR_CTRL);
-+    if (masked && !(val & PCI_MSIX_ENTRY_CTRL_MASKBIT)) {
-+        qpci_io_writel(dev, dev->msix_table_bar,
-+                      vector_off + PCI_MSIX_ENTRY_VECTOR_CTRL,
-+                      val | PCI_MSIX_ENTRY_CTRL_MASKBIT);
-+    } else if (!masked && (val & PCI_MSIX_ENTRY_CTRL_MASKBIT)) {
-+        qpci_io_writel(dev, dev->msix_table_bar,
-+                      vector_off + PCI_MSIX_ENTRY_VECTOR_CTRL,
-+                      val & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
-+    }
-+}
-+
- uint16_t qpci_msix_table_size(QPCIDevice *dev)
- {
-     uint8_t addr;
-diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
-index cb52a7c3f2e..8dfe0ff310d 100644
---- a/tests/qtest/libqos/virtio-pci.c
-+++ b/tests/qtest/libqos/virtio-pci.c
-@@ -321,64 +321,26 @@ void qvirtio_pci_device_disable(QVirtioPCIDevice *d)
- void qvirtqueue_pci_msix_setup(QVirtioPCIDevice *d, QVirtQueuePCI *vqpci,
-                                         QGuestAllocator *alloc, uint16_t entry)
- {
--    uint32_t control;
--    uint64_t off;
--
-     g_assert(d->pdev->msix_enabled);
--    off = d->pdev->msix_table_off + (entry * 16);
--
--    g_assert_cmpint(entry, >=, 0);
--    g_assert_cmpint(entry, <, qpci_msix_table_size(d->pdev));
-     vqpci->msix_entry = entry;
--
-     vqpci->msix_addr = guest_alloc(alloc, 4);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_LOWER_ADDR, vqpci->msix_addr & ~0UL);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_UPPER_ADDR,
--                   (vqpci->msix_addr >> 32) & ~0UL);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_DATA, vqpci->msix_data);
--
--    control = qpci_io_readl(d->pdev, d->pdev->msix_table_bar,
--                            off + PCI_MSIX_ENTRY_VECTOR_CTRL);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_VECTOR_CTRL,
--                   control & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
- 
-+    qpci_msix_set_entry(d->pdev, entry, vqpci->msix_addr, vqpci->msix_data);
-+    qpci_msix_set_masked(d->pdev, entry, false);
-     d->msix_ops->set_queue_vector(d, vqpci->vq.index, entry);
- }
- 
- void qvirtio_pci_set_msix_configuration_vector(QVirtioPCIDevice *d,
-                                         QGuestAllocator *alloc, uint16_t entry)
- {
--    uint32_t control;
--    uint64_t off;
--
-     g_assert(d->pdev->msix_enabled);
--    off = d->pdev->msix_table_off + (entry * 16);
--
--    g_assert_cmpint(entry, >=, 0);
--    g_assert_cmpint(entry, <, qpci_msix_table_size(d->pdev));
-     d->config_msix_entry = entry;
--
-     d->config_msix_data = 0x12345678;
-     d->config_msix_addr = guest_alloc(alloc, 4);
- 
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_LOWER_ADDR, d->config_msix_addr & ~0UL);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_UPPER_ADDR,
--                   (d->config_msix_addr >> 32) & ~0UL);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_DATA, d->config_msix_data);
--
--    control = qpci_io_readl(d->pdev, d->pdev->msix_table_bar,
--                            off + PCI_MSIX_ENTRY_VECTOR_CTRL);
--    qpci_io_writel(d->pdev, d->pdev->msix_table_bar,
--                   off + PCI_MSIX_ENTRY_VECTOR_CTRL,
--                   control & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
--
-+    qpci_msix_set_entry(d->pdev, entry, d->config_msix_addr,
-+                                        d->config_msix_data);
-+    qpci_msix_set_masked(d->pdev, entry, false);
-     d->msix_ops->set_config_vector(d, entry);
- }
- 
--- 
-2.47.1
-
+Yeah, that matches the device tree=2E Mind sending a patch?
 
