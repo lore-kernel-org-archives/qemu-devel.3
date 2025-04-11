@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D997C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE30DC36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 08:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u39Ng-0001sC-I3; Fri, 11 Apr 2025 04:04:56 -0400
+	id 1u39Ng-0001s8-H4; Fri, 11 Apr 2025 04:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39Nd-0001qb-78
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:04:53 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39Ne-0001rP-LM
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:04:54 -0400
 Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39Na-0004hW-K3
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:04:52 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u39Nd-0004i5-1S
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 04:04:54 -0400
 Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22622ddcc35so21874295ad.2
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 01:04:50 -0700 (PDT)
+ d9443c01a7336-227c7e57da2so15885055ad.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 01:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744358689; x=1744963489; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744358692; x=1744963492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9pVVryayk6KcWQSaSD5Yx1gPCZpLa+a+1UqcEFcEJ0I=;
- b=QXaImOvj3b51voNOJlyqzg1opc0Sogtf+qwAiRcODvGwfLE+JH+LlQ8etNVGkUTSye
- LF0o5lFcReyU0fym12NkksBrNRrMMck0kucDFvgyCfVaCwlTmUgBTf0WD5S9u8AiW4xc
- Bo0VAV2+kzzyj+SoPv5aDpsC9dy2Z3Y6N0qfm6ao+knYOLP6RcPt9e2mIJjbFxaIPVcH
- n1q6Shte+7PDRI9NmjeG9obVKUUR6BV0xW3vUhHVc3+OJ4Y1Wc/WvrAQnuj/IVNDanhQ
- MGOuK4QL3SGLig5rrZtm1SF8R20IFfhI5p5MeugP3FGtjJvF/6mub/C/TgA9JUKJ3mVD
- WvKw==
+ bh=SWO2MpNR+Wq7+HXx3Lk8VZg+9OETBCuvoauKUfERGVY=;
+ b=Ueh10OKSG5Zp4i0EnaF8IRB1WffvIZNkzxZ2iVRd8YQ/JlRG27XP9OfNCdHKAEKyY7
+ y21iVIRwo04vpLOGVDQXyS1FXHtW500Iayvc3wnkVv96sVd6QZRA9XyLq9N7yyGcPdom
+ trXdrKSsyEWUi785ioy78a01pHc/efNwBIVEc6ZrXs//gidpYnPLtqoE/gPQDoUfmBOy
+ P8HMpt6Vy1NV2AKVzg8CH0Yw9f+Q/28+9oGprfj4GZysY4k2Cc4jUCmK00PKuUXTRS1z
+ VbL4O8igHd/bM2xTg8hIz9kMFA4yxrRaWaTsL2LKwk7CoLy0G//CUd+ky0f84pMWxsjt
+ hFdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744358689; x=1744963489;
+ d=1e100.net; s=20230601; t=1744358692; x=1744963492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9pVVryayk6KcWQSaSD5Yx1gPCZpLa+a+1UqcEFcEJ0I=;
- b=DAbPOOXUCyMjZ2zlLjn7MMJFiDu20xmbIWUAX8lflTgK7nog6FOk5SLZA8h975h/vm
- dLMTZ9G923rY4ZvHGNc/+wAWU832UHHsOyQCc/XbiUMlXBPaFir1VtT+NYhI4UW7CCHe
- sGFWguHd8oV1C/HDycGZlt4ppmr+qKOAWVjiclMYnNXigDSyYGGev4reiLRqqrmc8ef/
- O2PtgL5Hke61uw3yM5sI/B3bsDsP7V+CSRqcjx9+tsE++pEVemNabGFhW9Hww/3O/O26
- T5JfQ8rtH4G4ADNlrM2K5Sfw94SpKD8v4rTFxeZVgEtRCwI8dKiIJvWh+cNTANL2vVz2
- CGDw==
+ bh=SWO2MpNR+Wq7+HXx3Lk8VZg+9OETBCuvoauKUfERGVY=;
+ b=GOwiYM/Xz8KPgOzP+gYHaiJi5uFuNloAoi25XVjvfUjESaRweXsAF8v9guxJJhPskH
+ Gs95uneVyih6T/3F3xiRMCPg157nWoLRITwXcDaV/JPQYJ3ZHuZ5EgYhG4TcqQaSnBHh
+ hICD+oUyBmLWbllj09Agb79PVlh4Y4HsnVJ+2aK1sj+lCIIMSz4EoR+jkkO/A4i6nMi4
+ +l+4TBSXxbjvt2PRLS9AQ+bh4ZH4SfNI75FgWyRgV8TXPRmeJsAJdJreH8uDhZreMRby
+ hqLQC5FjltEPcIG+Wo5W6WdedL9IkQWVm1FjPpSyE9TyqGNKatFQ/RBh580dGPQUcogi
+ 87mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8fA5vFlyePruZbER1Ls2o+opggtgRXD8zuVYiASkx3ErE+FpZsI3faHWgHpa+0SRy/HQbSnZjwNuJ@nongnu.org
-X-Gm-Message-State: AOJu0YzlitvjSNDPfHFD/JCc/LJA0hE1JNjslMKkC08lMOOE7KpoMqso
- qvYEm94euAMxQiNGabmre8lxY7NF5XiEr3B82U9V1ys1oN5thaWTr3eTZQ==
-X-Gm-Gg: ASbGnctm20zpJF0AmV2q62dDLgfLQEoH/UwsWOsL0JdnYWaPdz0OFfAJrv2UN1yqMQj
- vrShgXCJDzTX3AboqE8tyiLD5x2HMD+CVO4kNhKcqb7mSzeT0FZcJ0jCz0MMDvcjW8KWdjgRQaP
- MoOmXnVIkcl9t6/XT+obFz1PbRE2Y8Dcy6ecei0897GBoBpytJaQ5TrAT7DrfVuJ8WVlyZh1SPy
- cmx8GPBV1XYrrHi5c1Z9uK6g7fOUN+gZ+PR3DI2+KTUTPY8W6Mi1GwaaK6eQrdz6qARX/b1Ravo
- j/CFzfw+U8WpIl9MEoV12xb1gHs3akym3CKXMXvbRLHyemXvMsU0hO8=
-X-Google-Smtp-Source: AGHT+IF877CSCG+jQAXpGbA5GvZXltn3M01SV+46b4XjfDeSy16W307R80U6LNcOBVHrSGtXr35A7A==
-X-Received: by 2002:a17:903:1b0b:b0:224:910:23f0 with SMTP id
- d9443c01a7336-22bea4fcc31mr31282805ad.49.1744358689006; 
- Fri, 11 Apr 2025 01:04:49 -0700 (PDT)
+ AJvYcCXjtTHjSCgK4eOlEjC1ZTjEz3g4UN+Ff6kiHg+bRnprwR7cMUnmP8Wx4rmvPHcZmqQFCR0BdPsQCdLn@nongnu.org
+X-Gm-Message-State: AOJu0YweGL17LIwTIqGqpEAmK8fTXHm/WlzgNkQKe6p+wY63t/Oy+KfD
+ gTpeGGv8PabLmUaqQuhJuXklOoTdv0RXqIWgHR3Az4ufd1sG6utP
+X-Gm-Gg: ASbGnct9Zi59VeYmUptn2bsyLZtAuCDTnZX/QJeS+0YWcPaOOP71DVWxmDdmAYSnef+
+ jrOAa2AH41hyzyVwvYqImkaMOyZiJFb/jLxTQLDggnGK5Afj8HBKSEQp1zxXNWaR+m28cXxHqXQ
+ u+Jma3JD6kk1rLHYjsd0gQ6xqCI3jFaNRYbo68xHh9CudCXrEDL5KhWIiXZxUtWfKXXuRjYLQqV
+ Wxqj3Nw8H7LoTcxMqn45H0Lu9QDgc9QQV2tk1LaxmufjloCVFxbAO/1txoqkXdX/mDeJKQkD0Of
+ ESW8XuXpwKXNzZJ5Qfzee/bjkk0X9blNAsbzeQCui4gt
+X-Google-Smtp-Source: AGHT+IEWLLB5jaPOfmOZqay5OMus7igJMgH2AceMaH8QP15MjI+Ue7E/Orl7N7qOICElf4nTZYoULg==
+X-Received: by 2002:a17:903:3c6d:b0:224:a74:28c2 with SMTP id
+ d9443c01a7336-22bea4c3e94mr32558085ad.29.1744358691712; 
+ Fri, 11 Apr 2025 01:04:51 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c95c83sm43048065ad.147.2025.04.11.01.04.46
+ d9443c01a7336-22ac7c95c83sm43048065ad.147.2025.04.11.01.04.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Apr 2025 01:04:48 -0700 (PDT)
+ Fri, 11 Apr 2025 01:04:51 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v2 04/10] usb/msd: Improve packet validation error logging
-Date: Fri, 11 Apr 2025 18:04:25 +1000
-Message-ID: <20250411080431.207579-5-npiggin@gmail.com>
+Subject: [PATCH v2 05/10] usb/msd: Allow CBW packet size greater than 31
+Date: Fri, 11 Apr 2025 18:04:26 +1000
+Message-ID: <20250411080431.207579-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250411080431.207579-1-npiggin@gmail.com>
 References: <20250411080431.207579-1-npiggin@gmail.com>
@@ -99,112 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Errors in incoming USB MSD packet format or context would typically
-be guest software errors. Log these under guest errors.
+The CBW structure is 31 bytes, so CBW DATAOUT packets must be at least
+31 bytes. QEMU enforces exactly 31 bytes, but this is inconsistent with
+how it handles CSW packets (where it allows greater than or equal to 13
+bytes) despite wording in the spec[*] being similar for both packet
+types: "shall end as a short packet with exactly 31 bytes transferred".
+
+  [*] USB MSD Bulk-Only Transport 1.0
+
+For consistency, and on the principle of being tolerant in accepting
+input, relax the CBW size check.
+
+Alternatively, both checks could be tightened to exact. Or a message
+could be printed warning of possible guest error if size is not exact,
+but still accept the packets.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/usb/dev-storage.c | 53 +++++++++++++++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 11 deletions(-)
+ hw/usb/dev-storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index c7c36ac80fa..6668114ea74 100644
+index 6668114ea74..27093de5c84 100644
 --- a/hw/usb/dev-storage.c
 +++ b/hw/usb/dev-storage.c
-@@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/option.h"
- #include "qemu/config-file.h"
-@@ -395,6 +396,36 @@ static void usb_msd_cancel_io(USBDevice *dev, USBPacket *p)
-     }
- }
- 
-+static bool try_get_valid_cbw(USBPacket *p, struct usb_msd_cbw *cbw)
-+{
-+    uint32_t sig;
-+
-+    if (p->iov.size != 31) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: Bad CBW size %zu\n",
-+                                       p->iov.size);
-+        return false;
-+    }
-+    usb_packet_copy(p, cbw, 31);
-+    sig = le32_to_cpu(cbw->sig);
-+    if (sig != 0x43425355) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: Bad CBW signature 0x%08x\n",
-+                                       sig);
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
-+static bool check_valid_csw(USBPacket *p)
-+{
-+    if (p->iov.size < 13) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: Bad CSW size %zu\n",
-+                      p->iov.size);
-+        return false;
-+    }
-+    return true;
-+}
-+
- static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
+@@ -400,7 +400,7 @@ static bool try_get_valid_cbw(USBPacket *p, struct usb_msd_cbw *cbw)
  {
-     MSDState *s = (MSDState *)dev;
-@@ -405,19 +436,13 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
+     uint32_t sig;
  
-     switch (s->mode) {
-     case USB_MSDM_CBW:
--        if (p->iov.size != 31) {
--            error_report("usb-msd: Bad CBW size");
--            goto fail;
--        }
--        usb_packet_copy(p, &cbw, 31);
--        if (le32_to_cpu(cbw.sig) != 0x43425355) {
--            error_report("usb-msd: Bad signature %08x",
--                         le32_to_cpu(cbw.sig));
-+        if (!try_get_valid_cbw(p, &cbw)) {
-             goto fail;
-         }
-         scsi_dev = scsi_device_find(&s->bus, 0, 0, cbw.lun);
-         if (scsi_dev == NULL) {
--            error_report("usb-msd: Bad LUN %d", cbw.lun);
-+            qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: Bad CBW LUN %d\n",
-+                                           cbw.lun);
-             goto fail;
-         }
-         tag = le32_to_cpu(cbw.tag);
-@@ -489,9 +514,15 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
- 
-     switch (s->mode) {
-     case USB_MSDM_DATAOUT:
--        if (s->data_len != 0 || p->iov.size < 13) {
-+        if (!check_valid_csw(p)) {
-+            goto fail;
-+        }
-+        if (s->data_len != 0) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: CSW received before "
-+                                           "all data was sent\n");
-             goto fail;
-         }
-+
-         /* Waiting for SCSI write to complete.  */
-         trace_usb_msd_packet_async();
-         s->packet = p;
-@@ -499,7 +530,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         break;
- 
-     case USB_MSDM_CSW:
--        if (p->iov.size < 13) {
-+        if (!check_valid_csw(p)) {
-             goto fail;
-         }
- 
+-    if (p->iov.size != 31) {
++    if (p->iov.size < 31) {
+         qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: Bad CBW size %zu\n",
+                                        p->iov.size);
+         return false;
 -- 
 2.47.1
 
