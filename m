@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AAA0C369A6
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 01:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9D9C3601E
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 01:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u33Gi-0007Fe-Ge; Thu, 10 Apr 2025 21:33:20 -0400
+	id 1u33Pi-0002fv-IT; Thu, 10 Apr 2025 21:42:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u33Gg-0007Eo-Kb; Thu, 10 Apr 2025 21:33:18 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u33Gf-0007s3-0N; Thu, 10 Apr 2025 21:33:18 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-523de538206so640509e0c.2; 
- Thu, 10 Apr 2025 18:33:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744335194; x=1744939994; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YwaTPVOtNW6mqEnqlAQT2A7WqzkGjD0hPlDEjwUIBoY=;
- b=KY+sR18dcb2y07BYHt6GUXzmB3Yim+0CvvXX5Kcx0+5t7HRb47ngpxtZMmgQ/5qZ9n
- 8/XoaKiYLHwfLho57y+VN4bVwDBJD5KkGyOcaEwaAAeOVvPxFIvPOjFFLxKx2VfjtOez
- JmYrA+itnsQ4d7DeJPvUxmiokCsgGDqjBdlOCGdBwwPZo9EVqqJkhl8tZ4dvqurXEsuy
- 2sEOsljQuMU6SXcJA1v1kwaTzh1suPuCIRvpkdQrjYEkdIfv1xDVguwALnhnmBptqo50
- 6KRNs21fplHuNdJm4UOQDv3tUjSVf7VbP+ORmAdJJYPCQprC8qDSgynaufYYmJhVpg5Q
- NyFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744335194; x=1744939994;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YwaTPVOtNW6mqEnqlAQT2A7WqzkGjD0hPlDEjwUIBoY=;
- b=hOHVZBDwDDQGcx2iEec803akryXYtmVvj+KmqsyXlEKnpabTqL3xb7deMjCy988sze
- dXMdd1Q7mGEsIG4GHcq7YX3QlPD8J3eGSzUpU5l4ZmxlSVIZpiyLJvVswdgrJPbXv4ay
- n2zeqqeSvrwkhkiN3zq3/C0Y2Mf7nHCYS9D2E+CAo2pwYH4Srlxzyg4ExbDqvO0djgTV
- 06ELdCF38fw/AUP4ovfmxo3T4z5M7hsdCBPH+KHCTXBlGPiTqcUl64sdo5Cnk5ZQd9zL
- t4SLEq2r3zNNaCi6nScnv6zYkByRzBYSuSxFYvc/E9jvKG0WuNqYBtVQNAJZrN+sFQGE
- wJTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWM4el++4fw6QxgQynFuNzZ8ykNlVfNIbKsGY9v4Ym5NpSETCAmICMbjc4hxu4JH/T2PfEL118aubwc@nongnu.org
-X-Gm-Message-State: AOJu0YyQ61eJcLtVNRjFlGC99Da+PAM36Biv7UAEj3qqZyhZhuE25aPr
- HrVJmDRRP3z4/jjwnJSUZeMxnS7M66B17hztHs85OGzbqrBf2uEs8sBXQGDT6iKdjGhgAyti1Up
- tB7StSTu7xgD+rH047gU+HXzhScQ=
-X-Gm-Gg: ASbGncsV3xVbUoaix7Fai+1fdppH1Q32Ctpr+VcQn01/gf35mnrUHst50bKEpFhGaox
- 0fRJf38hE7ZZhh/FoHsOvoJtNsgOU7CgCkrmR2bW0vvv870rO1jK6wJP+q4IsM1SC6ygAV2GTSg
- bpET2KNfnXJzcVtPxolB5mUxtqA2s+DRpOhG1kdaXx9CNsvTE7XKth4VB4b4nlGpQ=
-X-Google-Smtp-Source: AGHT+IHJsU+tbyHQ1GPm+QcZiBxiYw6VB7NlwFuI93KxvAs1V5AUNHAJafBkLCmOdmj1pSUdNyhQHEQhSnzUE/I9wvU=
-X-Received: by 2002:a05:6122:a22:b0:520:3987:ce0b with SMTP id
- 71dfb90a1353d-527c349533cmr1004789e0c.2.1744335193986; Thu, 10 Apr 2025
- 18:33:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <liucong2565@phytium.com.cn>)
+ id 1u33Pf-0002fj-Qh
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 21:42:35 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <liucong2565@phytium.com.cn>) id 1u33Pc-0000in-UA
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 21:42:35 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwD3WD6Bc_hnbwG6FA--.48758S2;
+ Fri, 11 Apr 2025 09:42:25 +0800 (CST)
+Received: from liucong2565$phytium.com.cn ( [218.76.62.144] ) by
+ ajax-webmail-mail (Coremail) ; Fri, 11 Apr 2025 09:42:19 +0800 (GMT+08:00)
+X-Originating-IP: [218.76.62.144]
+Date: Fri, 11 Apr 2025 09:42:19 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5YiY6IGq?= <liucong2565@phytium.com.cn>
+To: "Dmitry Osipenko" <dmitry.osipenko@collabora.com>
+Cc: Jiqian.Chen@amd.com, akihiko.odaki@daynix.com, alex.bennee@linaro.org,
+ alexander.deucher@amd.com, christian.koenig@amd.com,
+ gert.wollny@collabora.com, gurchetansingh@chromium.org, hi@alyssa.is,
+ honglei1.huang@amd.com, julia.zhang@amd.com, kraxel@redhat.com,
+ marcandre.lureau@redhat.com, mst@redhat.com, pbonzini@redhat.com,
+ philmd@linaro.org, pierre-eric.pelloux-prayer@amd.com,
+ qemu-devel@nongnu.org, ray.huang@amd.com, robdclark@gmail.com,
+ roger.pau@citrix.com, slp@redhat.com, stefano.stabellini@amd.com,
+ xenia.ragiadakou@amd.com, zzyiwei@chromium.org
+Subject: Re: Re: [PATCH v11 04/10] virtio-gpu: Support asynchronous fencing
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.1-cmXT6 build
+ 20240812(cfb32469) Copyright (c) 2002-2025 www.mailtech.cn
+ mispb-4edfefde-e422-4ddc-8a36-c3f99eb8cd32-icoremail.net
+In-Reply-To: <d0e9e72a-02bf-4f1e-abe0-6e8d0d089b29@collabora.com>
+References: <20250310120555.150077-5-dmitry.osipenko@collabora.com>
+ <20250410095454.188105-1-liucong2565@phytium.com.cn>
+ <d0e9e72a-02bf-4f1e-abe0-6e8d0d089b29@collabora.com>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: z+LzSWZvb3Rlcl90eHQ9NTU2MjozODM=
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-References: <20250410161722.595634-1-pbonzini@redhat.com>
-In-Reply-To: <20250410161722.595634-1-pbonzini@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 11 Apr 2025 11:32:47 +1000
-X-Gm-Features: ATxdqUENqfrI05L3VGUXO26Xr0C7Ed90vQWT5uyKXIjebvnjstk9A_MdU8D9UZE
-Message-ID: <CAKmqyKPX=q0GUQfnLT4avW069tijK84T4ZonLy1cEs91AAPMaw@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv: Fix type conflict of GLib function pointers
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Message-ID: <5514d916.6d34.19622831b11.Coremail.liucong2565@phytium.com.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: AQAAfwB3fop7c_hnD7dlAA--.11981W
+X-CM-SenderInfo: 5olxu0lqjskluv6sx5pwlxzhxfrphubq/1tbiAQARCmf4I7wBGwAC
+	sC
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=liucong256
+ 5@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvAXoWfGF13XrWkZr4rWr13AFWUArb_yoW8GrWxCo
+ ZrCrn8JF1DJwsrArn5uF4DGFy5GFs5Jr48Ar1DC3sYq3Wqyr1jv34jvw4fArnrJ393X348
+ twnrJFy0qr1UJw15n29KB7ZKAUJUUUU7529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+ J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+ UUUUUUU==
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=liucong2565@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,47 +87,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 11, 2025 at 2:19=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> qtest_set_command_cb passed to g_once should match GThreadFunc,
-> which it does not.  But using g_once is actually unnecessary,
-> because the function is called by riscv_harts_realize() under
-> the Big QEMU Lock.
->
-> Reported-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+CgoKPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2VzLS0tLS0KPiBGcm9tOiAiRG1pdHJ5IE9zaXBlbmtv
+IiA8ZG1pdHJ5Lm9zaXBlbmtvQGNvbGxhYm9yYS5jb20+Cj4gU2VuZCB0aW1lOkZyaWRheSwgMDQv
+MTEvMjAyNSAwNTo1OToxMQo+IFRvOiAiQ29uZyBMaXUiIDxsaXVjb25nMjU2NUBwaHl0aXVtLmNv
+bS5jbj4KPiBDYzogSmlxaWFuLkNoZW5AYW1kLmNvbSwgYWtpaGlrby5vZGFraUBkYXluaXguY29t
+LCBhbGV4LmJlbm5lZUBsaW5hcm8ub3JnLCBhbGV4YW5kZXIuZGV1Y2hlckBhbWQuY29tLCBjaHJp
+c3RpYW4ua29lbmlnQGFtZC5jb20sIGdlcnQud29sbG55QGNvbGxhYm9yYS5jb20sIGd1cmNoZXRh
+bnNpbmdoQGNocm9taXVtLm9yZywgaGlAYWx5c3NhLmlzLCBob25nbGVpMS5odWFuZ0BhbWQuY29t
+LCBqdWxpYS56aGFuZ0BhbWQuY29tLCBrcmF4ZWxAcmVkaGF0LmNvbSwgbWFyY2FuZHJlLmx1cmVh
+dUByZWRoYXQuY29tLCBtc3RAcmVkaGF0LmNvbSwgcGJvbnppbmlAcmVkaGF0LmNvbSwgcGhpbG1k
+QGxpbmFyby5vcmcsIHBpZXJyZS1lcmljLnBlbGxvdXgtcHJheWVyQGFtZC5jb20sIHFlbXUtZGV2
+ZWxAbm9uZ251Lm9yZywgcmF5Lmh1YW5nQGFtZC5jb20sIHJvYmRjbGFya0BnbWFpbC5jb20sIHJv
+Z2VyLnBhdUBjaXRyaXguY29tLCBzbHBAcmVkaGF0LmNvbSwgc3RlZmFuby5zdGFiZWxsaW5pQGFt
+ZC5jb20sIHhlbmlhLnJhZ2lhZGFrb3VAYW1kLmNvbSwgenp5aXdlaUBjaHJvbWl1bS5vcmcKPiBT
+dWJqZWN0OiBSZTogW1BBVENIIHYxMSAwNC8xMF0gdmlydGlvLWdwdTogU3VwcG9ydCBhc3luY2hy
+b25vdXMgZmVuY2luZwo+IAo+IDEwLjA0LjIwMjUgMTI6NTQsIENvbmcgTGl1INC/0LjRiNC10YI6
+Cj4gPiBJIGRpc2NvdmVyZWQgdGhhdCBvbiBhbiBBUk02NCBlbnZpcm9ubWVudCwgdGhlICd2aXJ0
+aW8tZ3B1OiBTdXBwb3J0IGFzeW5jaHJvbm91cyBmZW5jaW5nJyBwYXRjaCBjYXVzZXMgdGhlIHZp
+cnR1YWwgbWFjaGluZSBHVUkgdG8gZmFpbCB0byBkaXNwbGF5LiBSb2xsaW5nIGJhY2sgdGhpcyBw
+YXRjaCBhbmQgdXNpbmcgdmlyZ2wgYWxsb3dzIHRoZSB2aXJ0dWFsIG1hY2hpbmUgdG8gc3RhcnQg
+bm9ybWFsbHkuIFdoZW4gdGhlIFZNIHNjcmVlbiBpcyBibGFjaywgSSBjYW4gc2VlIHNvbWUgZXJy
+b3JzIGluIFFFTVUuIEkgdXNlZCBRRU1VJ3MgLXNlcmlhbCBzdGRpbyB0byBlbnRlciB0aGUgdmly
+dHVhbCBtYWNoaW5lJ3MgY29tbWFuZCBsaW5lIGNvbnNvbGUgYnV0IGRpZG4ndCBzZWUgYW55IGVy
+cm9ycyBpbnNpZGUgdGhlIFZNIC0gdGhlIGdyYXBoaWNhbCBpbnRlcmZhY2Ugc2VlbXMgdG8gYmUg
+c3R1Y2suIEkgd291bGQgZ3JlYXRseSBhcHByZWNpYXRlIGFueSBzdWdnZXN0aW9ucyByZWdhcmRp
+bmcgZWZmZWN0aXZlIHRyb3VibGVzaG9vdGluZyBtZXRob2RzIG9yIHNwZWNpZmljIGFyZWFzIEkg
+c2hvdWxkIGludmVzdGlnYXRlIHRvIHJlc29sdmUgdGhpcyBpc3N1ZS4KPiA+IAo+ID4gSGVyZSdz
+IG15IHNvZnR3YXJlIGFuZCBoYXJkd2FyZSBlbnZpcm9ubWVudDoKPiA+IC0gaG9zdCBhbmQgZ3Vl
+c3QgYXJlIHVidW50dSAyNC4wNAo+ID4gLSBRRU1VOiBodHRwczovL2dpdGxhYi5mcmVlZGVza3Rv
+cC5vcmcvZGlnZXR4L3FlbXUuZ2l0IG5hdGl2ZS1jb250ZXh0LXYxMSBicmFuY2gKPiA+IC0gdmly
+Z2xyZW5kZXI6IGxhdGVzdCBtYWluIGJyYW5jaCAwOGViMTJkMDA3MTEzNzAwMDJlOGY4ZmE2ZDYy
+MGRmOWI3OWY5ZTI3Cj4gPiAtIE1lc2E6IE1lc2EgMjUuMH5naXQyNTA0MDMxMzA4LmZmMzg2ZX5v
+aWJhZn5uIChnaXQtZmYzODZlYiAyMDI1LTA0LTAzIG5vYmxlLW9pYmFmLXBwYSkKPiA+IC0gS2Vy
+bmVsOiBMaW51eCBkMzAwMCA2LjE0LjEtMDYxNDAxLWdlbmVyaWMgIzIwMjUwNDA3MTA0OAo+ID4g
+LSBHUFU6IFJhZGVvbiBSWCA2NjAwLzY2MDAgWFQvNjYwME0KPiA+IC0gQ1BVOiBwaHl0aXVtIEQz
+MDAwIGFhcmNoNjQKPiA+IAo+ID4gSGVyZSdzIHRoZSBjb21tYW5kIEknbSB1c2luZyB0byBydW4g
+dGhlIHZpcnR1YWwgbWFjaGluZSwgd2hpY2ggZGlzcGxheXMgYSBibGFjayBmcmFtZSB3aXRoICJE
+aXNwbGF5IG91dHB1dCBpcyBub3QgYWN0aXZlIiBhbmQgZmFpbHMgdG8gc3RhcnQgdGhlIGdyYXBo
+aWNhbCBpbnRlcmZhY2Ugbm9ybWFsbHk6Cj4gPiAKPiA+ICAgICBwaHl0aXVtQGQzMDAwOn4vd29y
+a2luZy9xZW11JCAvdXNyL2xvY2FsL2Jpbi9xZW11LXN5c3RlbS1hYXJjaDY0IC0tbWFjaGluZSB2
+aXJ0LGFjY2VsPWt2bSAtY3B1IGhvc3QgLXNtcCA0IC1tIDRHIC1kcml2ZSBmaWxlPS9ob21lL3Bo
+eXRpdW0vd29ya2luZy91YnVudHUyNC4wNC1hYXJjaDY0LW5hdGl2ZS1jb250ZXh0LGZvcm1hdD1y
+YXcsaWY9dmlydGlvIC1iaW9zIC91c3Ivc2hhcmUvQUFWTUYvQUFWTUZfQ09ERS5tcy5mZCAtbmV0
+ZGV2IHVzZXIsaWQ9bmV0MCAtZGV2aWNlIHZpcnRpby1uZXQtcGNpLG5ldGRldj1uZXQwIC1kZXZp
+Y2UgdmlydGlvLWdwdS1nbCAtZGlzcGxheSBndGssZ2w9b24sc2hvdy1jdXJzb3I9b24gLWRldmlj
+ZSB1c2ItZWhjaSxpZD11c2IgLWRldmljZSB1c2ItbW91c2UsYnVzPXVzYi4wIC1kZXZpY2UgdXNi
+LWtiZCxidXM9dXNiLjAKPiA+IAo+ID4gICAgIChxZW11OjQ2MDI5KTogR2RrLVdBUk5JTkcgKio6
+IDE2OjQzOjUzLjcxNTogZWdsTWFrZUN1cnJlbnQgZmFpbGVkCj4gPiAgICAgKHFlbXU6NDYwMjkp
+OiBHZGstV0FSTklORyAqKjogMTY6NDM6NTMuNzE1OiBlZ2xNYWtlQ3VycmVudCBmYWlsZWQKPiA+
+ICAgICAocWVtdTo0NjAyOSk6IEdkay1XQVJOSU5HICoqOiAxNjo0Mzo1My43MTU6IGVnbE1ha2VD
+dXJyZW50IGZhaWxlZAo+ID4gICAgIChxZW11OjQ2MDI5KTogR2RrLVdBUk5JTkcgKio6IDE2OjQz
+OjUzLjcxNTogZWdsTWFrZUN1cnJlbnQgZmFpbGVkCj4gPiAgICAgKHFlbXU6NDYwMjkpOiBHZGst
+V0FSTklORyAqKjogMTY6NDM6NTMuNzE2OiBlZ2xNYWtlQ3VycmVudCBmYWlsZWQKPiA+IAo+ID4g
+V2hlbiB1c2luZyBTREwsIHRoZSBlcnJvciBtZXNzYWdlcyBhcmUgc2xpZ2h0bHkgZGlmZmVyZW50
+Ogo+ID4gCj4gPiAgICAgcGh5dGl1bUBkMzAwMDp+L3dvcmtpbmcvcWVtdSQgL3Vzci9sb2NhbC9i
+aW4vcWVtdS1zeXN0ZW0tYWFyY2g2NCAtLW1hY2hpbmUgdmlydCxhY2NlbD1rdm0gLWNwdSBob3N0
+IC1zbXAgNCAtbSA0RyAtZHJpdmUgZmlsZT0vaG9tZS9waHl0aXVtL3dvcmtpbmcvdWJ1bnR1MjQu
+MDQtYWFyY2g2NC1uYXRpdmUtY29udGV4dCxmb3JtYXQ9cmF3LGlmPXZpcnRpbyAtYmlvcyAvdXNy
+L3NoYXJlL0FBVk1GL0FBVk1GX0NPREUubXMuZmQgLW5ldGRldiB1c2VyLGlkPW5ldDAgLWRldmlj
+ZSB2aXJ0aW8tbmV0LXBjaSxuZXRkZXY9bmV0MCAtZGV2aWNlIHZpcnRpby1ncHUtZ2wgLWRpc3Bs
+YXkgc2RsLGdsPW9uLHNob3ctY3Vyc29yPW9uIC1kZXZpY2UgdXNiLWVoY2ksaWQ9dXNiIC1kZXZp
+Y2UgdXNiLW1vdXNlLGJ1cz11c2IuMCAtZGV2aWNlIHVzYi1rYmQsYnVzPXVzYi4wCj4gPiAKPiA+
+ICAgICB2cmVuZF9yZW5kZXJlcl9maWxsX2NhcHM6IEVudGVyaW5nIHdpdGggc3RhbGUgR0wgZXJy
+b3I6IDEyODYKPiA+IAo+IAo+IEhpLAo+IAo+IDEuIFBsZWFzZSBtYWtlIHN1cmUgdGhhdCB5b3Un
+cmUgbm90IG9ubHkgYnVpbGRpbmcgUUVNVSBhZ2FpbnN0IHlvdXIKPiB2aXJnbHJlbmRlcmVyIHZl
+cnNpb24sIGJ1dCBhbHNvIHNldHRpbmcgTERfTElCUkFSWV9QQVRIIHByb3Blcmx5IGF0Cj4gcnVu
+dGltZS4gQmVzdCB0byByZW1vdmUgc3lzdGVtIHZlcnNpb24gb2YgdmlyZ2xyZW5kZXJlciBpZiB1
+bnN1cmUsCgpJIGJ1aWx0IGFuZCBpbnN0YWxsZWQgdmlyZ2xyZW5kZXJlciB3aXRoIHRoZSAtLXBy
+ZWZpeD0vdXNyIG9wdGlvbiwgc28KIGl0IHJlcGxhY2VzIHRoZSBzeXN0ZW0gdmVyc2lvbiBhcyBl
+eHBlY3RlZC4KCj4gCj4gMi4gQ2FuIHlvdSByZXByb2R1Y2UgdGhpcyBwcm9ibGVtIHVzaW5nIHRj
+ZyBpbnN0ZWFkIG9mIGt2bT8KPiAKCiB5ZXMsIGNoYW5nZSBxZW11IGNvbW1hbmQgJy0tbWFjaGlu
+ZSB2aXJ0LGFjY2VsPWt2bSAtY3B1IGhvc3QnIHRvCictLW1hY2hpbmUgdmlydCAtY3B1IG1heCcg
+Y2FuIHJlcHJvZHVjZSB0aGlzIHByb2JsZW0uIAo+IC0tIAo+IEJlc3QgcmVnYXJkcywKPiBEbWl0
+cnkKCmRpZmYgLS1naXQgYS9zcmMvdnJlbmRfcmVuZGVyZXIuYyBiL3NyYy92cmVuZF9yZW5kZXJl
+ci5jCmluZGV4IGY2ZGY5ZGNiLi5mNmUwNjg0MiAxMDA2NDQKLS0tIGEvc3JjL3ZyZW5kX3JlbmRl
+cmVyLmMKKysrIGIvc3JjL3ZyZW5kX3JlbmRlcmVyLmMKQEAgLTEyODA4LDcgKzEyODA4LDcgQEAg
+dm9pZCB2cmVuZF9yZW5kZXJlcl9maWxsX2NhcHModWludDMyX3Qgc2V0LCB1aW50MzJfdCB2ZXJz
+aW9uLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdW5pb24gdmlyZ2xfY2FwcyAqY2Fw
+cykKIHsKICAgIGludCBnbF92ZXIsIGdsZXNfdmVyOwotICAgR0xlbnVtIGVycjsKKyAgIEdMZW51
+bSBlcnIgPSBHTF9OT19FUlJPUjsKICAgIGJvb2wgZmlsbF9jYXBzZXQyID0gZmFsc2U7CiAKICAg
+IGlmICghY2FwcykKCnBoeXRpdW1AZDMwMDA6fi93b3JraW5nL3FlbXUkIGdpdCBsb2cgLS1vbmVs
+aW5lICAtbiAxMAplMDI4NmY1NmM4IChIRUFEIC0+IG5hdGl2ZS1jb250ZXh0LXYxMSwgb3JpZ2lu
+L25hdGl2ZS1jb250ZXh0LXYxMSkgUmV2ZXJ0ICJhbWRfaW9tbXU6IEFkZCBzdXBwb3J0IGZvciBw
+YXNzIHRob3VnaCBtb2RlIgpkNmU5ZWIwZjBkIGRvY3Mvc3lzdGVtOiB2aXJ0aW8tZ3B1OiBEb2N1
+bWVudCBob3N0L2d1ZXN0IHJlcXVpcmVtZW50cwo1NWRiODIxZWE1IGRvY3Mvc3lzdGVtOiB2aXJ0
+aW8tZ3B1OiBVcGRhdGUgVmVudXMgbGluawowMDM5NDBkYjlhIGRvY3Mvc3lzdGVtOiB2aXJ0aW8t
+Z3B1OiBBZGQgbGluayB0byBNZXNhIFZpckdMIGRvYwo3Njc0ZTgyNzU1IHVpL2d0azogRG9uJ3Qg
+ZGlzYWJsZSBzY2Fub3V0IHdoZW4gZGlzcGxheSBpcyByZWZyZXNoZWQKNzEyZmQwMjRlMyB1aS9z
+ZGwyOiBEb24ndCBkaXNhYmxlIHNjYW5vdXQgd2hlbiBkaXNwbGF5IGlzIHJlZnJlc2hlZAo5MDAz
+ZGEzNTZmIHZpcnRpby1ncHU6IFN1cHBvcnQgRFJNIG5hdGl2ZSBjb250ZXh0CmUyZmY0ZjRhNDgg
+dmlydGlvLWdwdTogU3VwcG9ydCBhc3luY2hyb25vdXMgZmVuY2luZwoyNTQ1OGM3NjI1IHZpcnRp
+by1ncHU6IEhhbmRsZSB2aXJnbCBmZW5jZSBjcmVhdGlvbiBlcnJvcnMKCkkgdHJpZWQgaW5pdGlh
+bGl6aW5nIEdMZW51bSBlcnIgPSBHTF9OT19FUlJPUiBpbiB2cmVuZF9yZW5kZXJlcl9maWxsX2Nh
+cHMsIGJ1dCBpdCBkb2VzbuKAmXQgc2VlbSB0byByZXNvbHZlIHRoZSDigJxFbnRlcmluZyB3aXRo
+IHN0YWxlIEdMIGVycm9yOiAxMjg24oCdIG1lc3NhZ2UuIEhvd2V2ZXIsIHRoaXMgZXJyb3IgbWln
+aHQgbm90IGJlIGRpcmVjdGx5IHJlbGF0ZWQgdG8gdGhlIFZNIGJsYWNrIHNjcmVlbiBpc3N1ZS4g
+SSBub3RpY2VkIHRoYXQgZXZlbiB3aGVuIHRoZSBWTSB3YXMgd29ya2luZyBjb3JyZWN0bHnigJRz
+cGVjaWZpY2FsbHkgd2hlbiBJIHJlc2V0IHRvIGNvbW1pdCAyNTQ1OGM3NjI14oCUdGhlIHNhbWUg
+R0wgZXJyb3Igc3RpbGwgYXBwZWFyZWQuCgpCZXN0IHJlZ2FyZHMsCmxpdWNvbmcKDQoNCuS/oeaB
+r+WuieWFqOWjsOaYju+8muacrOmCruS7tuWMheWQq+S/oeaBr+W9kuWPkeS7tuS6uuaJgOWcqOe7
+hOe7h+aJgOaciSzlj5Hku7bkurrmiYDlnKjnu4Tnu4flr7nor6Xpgq7ku7bmi6XmnInmiYDmnInm
+nYPliKnjgILor7fmjqXmlLbogIXms6jmhI/kv53lr4Ys5pyq57uP5Y+R5Lu25Lq65Lmm6Z2i6K64
+5Y+vLOS4jeW+l+WQkeS7u+S9leesrOS4ieaWuee7hOe7h+WSjOS4quS6uumAj+mcsuacrOmCruS7
+tuaJgOWQq+S/oeaBr+OAgg0KSW5mb3JtYXRpb24gU2VjdXJpdHkgTm90aWNlOiBUaGUgaW5mb3Jt
+YXRpb24gY29udGFpbmVkIGluIHRoaXMgbWFpbCBpcyBzb2xlbHkgcHJvcGVydHkgb2YgdGhlIHNl
+bmRlcidzIG9yZ2FuaXphdGlvbi5UaGlzIG1haWwgY29tbXVuaWNhdGlvbiBpcyBjb25maWRlbnRp
+YWwuUmVjaXBpZW50cyBuYW1lZCBhYm92ZSBhcmUgb2JsaWdhdGVkIHRvIG1haW50YWluIHNlY3Jl
+Y3kgYW5kIGFyZSBub3QgcGVybWl0dGVkIHRvIGRpc2Nsb3NlIHRoZSBjb250ZW50cyBvZiB0aGlz
+IGNvbW11bmljYXRpb24gdG8gb3RoZXJzLg==
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
->  hw/riscv/riscv_hart.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index a55d1566687..bb9104bae0b 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -104,8 +104,11 @@ static bool csr_qtest_callback(CharBackend *chr, gch=
-ar **words)
->
->  static void riscv_cpu_register_csr_qtest_callback(void)
->  {
-> -    static GOnce once;
-> -    g_once(&once, (GThreadFunc)qtest_set_command_cb, csr_qtest_callback)=
-;
-> +    static bool first =3D true;
-> +    if (first) {
-> +        first =3D false;
-> +        qtest_set_command_cb(csr_qtest_callback);
-> +    }
->  }
->  #endif
->
-> --
-> 2.49.0
->
->
 
