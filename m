@@ -4,77 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5485C36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 10:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6367C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 10:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3BMo-0005bM-Vr; Fri, 11 Apr 2025 06:12:11 -0400
+	id 1u3BQ7-0007EY-VA; Fri, 11 Apr 2025 06:15:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u3BMl-0005Yu-DE
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:12:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u3BMj-00047Q-DZ
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:12:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744366323;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=CTwIzm6OrjdT08Xyvg1UB/TyDotQTt3ljXEORVSdEPk=;
- b=AK/CgR+0hG0F0G1U9s7copxF51bMzjpqdVDcIa2oZSNMoyHdopVGUHzkT5mrh8diF0yLs+
- LJpU0cpmhVdzo/MLf/wXvvF1PFuRdX5EE0dnt2UU6ASJjh2hgQcdyYarr3duXq1vMlTGsm
- vHiig0N1MZyeiLJEKt2Oho2NcycQ3aE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-140-t581dEl0MxOWB14rvVnyqg-1; Fri,
- 11 Apr 2025 06:12:00 -0400
-X-MC-Unique: t581dEl0MxOWB14rvVnyqg-1
-X-Mimecast-MFC-AGG-ID: t581dEl0MxOWB14rvVnyqg_1744366318
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B4CDB19560A2; Fri, 11 Apr 2025 10:11:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFDCD180174E; Fri, 11 Apr 2025 10:11:52 +0000 (UTC)
-Date: Fri, 11 Apr 2025 11:11:49 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, devel@lists.libvirt.org
-Subject: Re: [PATCH V1 0/6] fast qom tree get
-Message-ID: <Z_jq5drO_25w0bC6@redhat.com>
-References: <1741036202-265696-1-git-send-email-steven.sistare@oracle.com>
- <87friheqcp.fsf@pond.sub.org> <Z_YolW1Nw6Q_tsz6@angien.pipo.sk>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3BPx-0007Dj-Cs
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:15:25 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u3BPv-0004V7-2U
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:15:25 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so18078685e9.0
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 03:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744366519; x=1744971319; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=X81x+fX7ctUUUErMmUxwg1vgYhVwKbczeIUuxvWcibA=;
+ b=s4uBi3vzwjIDuzS5/BhM4/saP5VYEvlDvB+IlPOvqEmBz2ivQej4Me5ZlguTEvH01I
+ k5n9SKx/DAEaaQvtlYPAl6IjS35JQQJ8uAmSYWnIUvUVjY8njjAEbXFYZ01cW7JGMMG0
+ 87RzkQZUBJQHa1CFAPK27e/b0rGTYCvNel/58yYwYczFDYo6pJeWNFqijGJb3lzg/Bvl
+ yPnKOcxvB5BHZnGrzmIe9CsX5saeriQ7MJO+S5raRfuLXB8D/YWk/O8axaWas9ULW90U
+ 83oQKrzpHnYNiPmPQ5lqlGbI3T81xQul81dO3aHEpqu42dk1KzBMqheWYcZB6Tk5/8B1
+ IBGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744366519; x=1744971319;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X81x+fX7ctUUUErMmUxwg1vgYhVwKbczeIUuxvWcibA=;
+ b=dCCYI5NAjLETm5KZkZzasXZKIKygYifJfgdrdnF2oAjQ6NyjbUSoYyt1pE4ZGOCuhy
+ LDRhQOAz7KZTCj3WPeC9akYDzgp1msRSbqywwsmI0Ufd6A+c2IchLzM/Mt/KNqicwmzQ
+ wndvX7NMWwBOs/BAtxFuNcec0BqBt6bR/iMuh/iWNXQ8Przk9UwbpiU+Xrc8Za3kiBP2
+ Vhz3rAKjJ//UVRnOg3QaUaj9bxsBTjzH2BubdPk4ZtK1lZcRE7xXdiQNdZ0lyTj9crvX
+ BDb7LMr132PnoHAAg7k8CgZkMm7RV+TM2GaAvbOwRVwz7X2bCdePR+DRftXzMXY2Kcl5
+ 4Y2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXb/MZGv3KnJ3ABtw/npmVpLuNFoEpnqqMhEpADQRoHsRM9VAKfDWbZ0cb6HT9+w2ROrNKLCYSQbGQl@nongnu.org
+X-Gm-Message-State: AOJu0Ywvvo5VapEZxAZCit/tLvS5jwmNfWBunDINtW+YIuw4S08ioHBG
+ cRlzwtvolRC/eD5QqkS4nZEj0s+BhR8f1BHWCW/3Lcar2rA1gr216px5zbSuBaI=
+X-Gm-Gg: ASbGncvusNMt1RGukS4ETL7n3BQ5dgv83wIGEVX+L66x3HaK/OPvR2xRAQ5fVQqQIMQ
+ ziyRsF8MslNqoGptg6tIFyDSRHf1WHavFs/loE5SByN84Dkpo5NlWSLq4zifWR/To/I46Oo2UBo
+ L4RtHLeRHRzt6yYsZQ8QT2CUWjzbGZaINZOS5t8RWUW8vd9+I+8yUkbcmlSUxzBaOGTYiPzJVHt
+ KX2ztKzoEdPGG1KLelxTYU1AwHMp/UT1Z06epLuw+Ke0wss2cUb0qMyqEuiWB7Kzr/oaTk619Vd
+ IZDsvodBYL0saubSGnxhmXyjR1Lma/ICHVt2Ce3TSw2v3NIuBH2eHauh9/fm2lQz0JKTRz9R3Tc
+ 6VXY/YvtZoUTxgDgW/KE=
+X-Google-Smtp-Source: AGHT+IF9VQVJZxgHP5AZITiRj7zSzGzyYKmkRuoTavC56NbKQqG4yfTq/kUznmxEtrQp9ELJcjriKA==
+X-Received: by 2002:a05:600c:4e13:b0:43d:4686:5cfb with SMTP id
+ 5b1f17b1804b1-43f3a9add63mr19675875e9.27.1744366519571; 
+ Fri, 11 Apr 2025 03:15:19 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f233a2f71sm78563125e9.15.2025.04.11.03.15.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 11 Apr 2025 03:15:19 -0700 (PDT)
+Message-ID: <316898c8-20a6-499d-b0f4-437cf8e05d0b@linaro.org>
+Date: Fri, 11 Apr 2025 12:15:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z_YolW1Nw6Q_tsz6@angien.pipo.sk>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-8.0 09/10] hw/virtio: Extract
+ vhost_user_ram_slots_max() to vhost-user-target.c
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+Cc: Greg Kurz <groug@kaod.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Hanna Reitz <hreitz@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20221212230517.28872-1-philmd@linaro.org>
+ <20221212230517.28872-10-philmd@linaro.org>
+ <84b2bcf7-9df7-43e2-83d8-cae9d34ca541@linaro.org>
+ <d4ecd6c2-73db-4c28-828c-bfa84ca90084@linaro.org>
+ <0edf086b-18f1-4c75-a794-1c957b20bf19@linaro.org>
+ <2336ff13-f329-46f5-95b6-e847b012328e@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2336ff13-f329-46f5-95b6-e847b012328e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,83 +112,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 09, 2025 at 09:58:13AM +0200, Peter Krempa via Devel wrote:
-> On Wed, Apr 09, 2025 at 09:39:02 +0200, Markus Armbruster via Devel wrote:
-> > Hi Steve, I apologize for the slow response.
-> > 
-> > Steve Sistare <steven.sistare@oracle.com> writes:
-> > 
-> > > Using qom-list and qom-get to get all the nodes and property values in a
-> > > QOM tree can take multiple seconds because it requires 1000's of individual
-> > > QOM requests.  Some managers fetch the entire tree or a large subset
-> > > of it when starting a new VM, and this cost is a substantial fraction of
-> > > start up time.
-> > 
-> > "Some managers"... could you name one?
+On 10/4/25 19:29, Pierrick Bouvier wrote:
+> On 4/10/25 10:21, Philippe Mathieu-Daudé wrote:
+>> On 10/4/25 16:36, Pierrick Bouvier wrote:
+>>> On 4/10/25 05:14, Philippe Mathieu-Daudé wrote:
+>>>> Hi Pierrick,
+>>>>
+>>>> On 13/12/22 00:05, Philippe Mathieu-Daudé wrote:
+>>>>> The current definition of VHOST_USER_MAX_RAM_SLOTS is
+>>>>> target specific. By converting this definition to a runtime
+>>>>> vhost_user_ram_slots_max() helper declared in a target
+>>>>> specific unit, we can have the rest of vhost-user.c target
+>>>>> independent.
+>>>>>
+>>>>> To avoid variable length array or using the heap to store
+>>>>> arrays of vhost_user_ram_slots_max() elements, we simply
+>>>>> declare an array of the biggest VHOST_USER_MAX_RAM_SLOTS,
+>>>>> and each target uses up to vhost_user_ram_slots_max()
+>>>>> elements of it. Ensure arrays are big enough by adding an
+>>>>> assertion in vhost_user_init().
+>>>>>
+>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> ---
+>>>>> RFC: Should I add VHOST_USER_MAX_RAM_SLOTS to vhost-user.h
+>>>>>         or create an internal header for it?
+>>>>> ---
+>>>>>     hw/virtio/meson.build          |  1 +
+>>>>>     hw/virtio/vhost-user-target.c  | 29 +++++++++++++++++++++++++++++
+>>>>>     hw/virtio/vhost-user.c         | 26 +++++---------------------
+>>>>>     include/hw/virtio/vhost-user.h |  7 +++++++
+>>>>>     4 files changed, 42 insertions(+), 21 deletions(-)
+>>>>>     create mode 100644 hw/virtio/vhost-user-target.c
+>>>>>
+>>>>> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+>>>>> index eb7ee8ea92..bf7e35fa8a 100644
+>>>>> --- a/hw/virtio/meson.build
+>>>>> +++ b/hw/virtio/meson.build
+>>>>> @@ -11,6 +11,7 @@ if have_vhost
+>>>>>       specific_virtio_ss.add(files('vhost.c', 'vhost-backend.c',
+>>>>> 'vhost-iova-tree.c'))
+>>>>>       if have_vhost_user
+>>>>>         specific_virtio_ss.add(files('vhost-user.c'))
+>>>>> +    specific_virtio_ss.add(files('vhost-user-target.c'))
+>>>>>       endif
+>>>>>       if have_vhost_vdpa
+>>>>>         specific_virtio_ss.add(files('vhost-vdpa.c', 'vhost-shadow-
+>>>>> virtqueue.c'))
+>>>>> diff --git a/hw/virtio/vhost-user-target.c b/hw/virtio/vhost-user-
+>>>>> target.c
+>>>>> new file mode 100644
+>>>>> index 0000000000..6a0d0f53d0
+>>>>> --- /dev/null
+>>>>> +++ b/hw/virtio/vhost-user-target.c
+>>>>> @@ -0,0 +1,29 @@
+>>>>> +/*
+>>>>> + * vhost-user target-specific helpers
+>>>>> + *
+>>>>> + * Copyright (c) 2013 Virtual Open Systems Sarl.
+>>>>> + *
+>>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>> + */
+>>>>> +
+>>>>> +#include "qemu/osdep.h"
+>>>>> +#include "hw/virtio/vhost-user.h"
+>>>>> +
+>>>>> +#if defined(TARGET_X86) || defined(TARGET_X86_64) || \
+>>>>> +    defined(TARGET_ARM) || defined(TARGET_ARM_64)
+>>>>> +#include "hw/acpi/acpi.h"
+>>>>> +#elif defined(TARGET_PPC) || defined(TARGET_PPC64)
+>>>>> +#include "hw/ppc/spapr.h"
+>>>>> +#endif
+>>>>> +
+>>>>> +unsigned int vhost_user_ram_slots_max(void)
+>>>>> +{
+>>>>> +#if defined(TARGET_X86) || defined(TARGET_X86_64) || \
+>>>>> +    defined(TARGET_ARM) || defined(TARGET_ARM_64)
+>>>>> +    return ACPI_MAX_RAM_SLOTS;
+>>>>> +#elif defined(TARGET_PPC) || defined(TARGET_PPC64)
+>>>>> +    return SPAPR_MAX_RAM_SLOTS;
+>>>>> +#else
+>>>>> +    return 512;
+>>>>
+>>>> Should vhost_user_ram_slots_max be another TargetInfo field?
+>>>>
+>>>
+>>> I don't think so, it would be better to transform the existing function
+>>> in something like:
+>>>
+>>> switch (target_current()) {
+>>> case TARGET_X86:
+>>> case TARGET_ARM:
+>>> case TARGET_X86_64:
+>>> case TARGET_ARM_64:
+>>>       return ACPI_MAX_RAM_SLOTS;
+>>> case TARGET PPC:
+>>> case TARGET PPC64:
+>>>       return SPAPR_MAX_RAM_SLOTS;
+>>> default:
+>>>       return 512;
+>>> }
+>>
+>> Clever, I like it, thanks!
 > 
-> libvirt is at ~500 qom-get calls during an average startup ...
+> It's a pattern we can reuse in all places where it'll be needed.
+> It's better if we keep in TargetInfo only global information, that is 
+> used through all the codebase, and not specifics about a given 
+> subsystem/device/file.
 > 
-> > > To reduce this cost, consider QAPI calls that fetch more information in
-> > > each call:
-> > >   * qom-list-get: given a path, return a list of properties and values.
-> > >   * qom-list-getv: given a list of paths, return a list of properties and
-> > >     values for each path.
-> > >   * qom-tree-get: given a path, return all descendant nodes rooted at that
-> > >     path, with properties and values for each.
-> > 
-> > Libvirt developers, would you be interested in any of these?
-> 
-> YES!!!
+> By the way, TARGET_ARM_64 is probably TARGET_AARCH64.
 
-Not neccessarily, see below... !!!! 
+Correct, it has been fixed by Akihiko:
 
-> 
-> The getter with value could SO MUCH optimize the startup sequence of a
-> VM where libvirt needs to probe CPU flags:
-> 
-> (note the 'id' field in libvirt's monitor is sequential)
-> 
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"realized"},"id":"libvirt-8"}
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"hotplugged"},"id":"libvirt-9"}
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"hotpluggable"},"id":"libvirt-10"}
-> 
-> [...]
-> 
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"hv-apicv"},"id":"libvirt-470"}
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"xd"},"id":"libvirt-471"}
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"sse4_1"},"id":"libvirt-472"}
-> buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"unavailable-features"},"id":"libvirt-473"}
-> 
-> First and last line's timestamps:
-> 
-> 2025-04-08 14:44:28.882+0000: 1481190: info : qemuMonitorIOWrite:340 : QEMU_MONITOR_IO_WRITE: mon=0x7f4678048360 buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"realized"},"id":"libvirt-8"}
-> 
-> 2025-04-08 14:44:29.149+0000: 1481190: info : qemuMonitorIOWrite:340 : QEMU_MONITOR_IO_WRITE: mon=0x7f4678048360 buf={"execute":"qom-get","arguments":{"path":"/machine/unattached/device[0]","property":"unavailable-features"},"id":"libvirt-473"}
-> 
-> Libvirt spent ~170 ms probing cpu flags.
+commit 744734ccc9eff28394a453de462b2a155f364118
+Author: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date:   Mon Jan 9 15:31:30 2023 +0900
 
-One thing I would point out is that qom-get can be considered an
-"escape hatch" to get information when no better QMP command exists.
-In this case, libvirt has made the assumption that every CPU feature
-is a QOM property.
+     vhost-user: Correct a reference of TARGET_AARCH64
 
-Adding qom-list-get doesn't appreciably change that, just makes the
-usage more efficient.
+     Presumably TARGET_ARM_64 should be a mistake of TARGET_AARCH64.
 
-Considering the bigger picture QMP design, when libvirt is trying to
-understand QEMU's CPU feature flag expansion, I would ask why we don't
-have something like a "query-cpu" command to tell us the current CPU
-expansion, avoiding the need for poking at QOM properties directly.
+     Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+     Message-Id: <20230109063130.81296-1-akihiko.odaki@daynix.com>
+     Fixes: 27598393a2 ("Lift max memory slots limit imposed by vhost-user")
+     Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+     Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index d9ce0501b2c..6c79da953b3 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -48,7 +48,7 @@
+   * hardware plaform.
+   */
+  #if defined(TARGET_X86) || defined(TARGET_X86_64) || \
+-    defined(TARGET_ARM) || defined(TARGET_ARM_64)
++    defined(TARGET_ARM) || defined(TARGET_AARCH64)
+  #include "hw/acpi/acpi.h"
+  #define VHOST_USER_MAX_RAM_SLOTS ACPI_MAX_RAM_SLOTS
+
 
 
