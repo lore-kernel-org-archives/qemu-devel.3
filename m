@@ -4,103 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AAFC369A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 19:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DA0C369A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 19:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3JyS-0005XX-Vs; Fri, 11 Apr 2025 15:23:37 -0400
+	id 1u3KT2-00077S-8a; Fri, 11 Apr 2025 15:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u3JyP-0005XF-2g
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 15:23:33 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u3JyN-0007Eb-49
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 15:23:32 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5639721195;
- Fri, 11 Apr 2025 19:23:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744399409; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n4C6dkqUBXSZvGCPsTpMLEIVIrzGG+2g29i4qftKVgI=;
- b=0KTvIKW5kJCUMw+VxtRAzTMWEbXCYnOVU/7yzk3Fg8WHH2dCbu9NQU4nH6FJ4omCVlOMLZ
- tM6Btqy4EtoZiZNg1qr0Pzheft0rkCTjTndv0tn/RlGtxQs0ua1Msp/qaSKylbXNScm645
- 9ZjbJAs49TqMnOcCzM+VRYQyWoR6qBA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744399409;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n4C6dkqUBXSZvGCPsTpMLEIVIrzGG+2g29i4qftKVgI=;
- b=gcFmjU/fiAWFC2lV8lhz9UiRbzeww7GSVL+xlokLonwVUWkzJ8yF01lM84ux2i9GS3DwR7
- taTPIGVIG4zaw8BQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744399409; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n4C6dkqUBXSZvGCPsTpMLEIVIrzGG+2g29i4qftKVgI=;
- b=0KTvIKW5kJCUMw+VxtRAzTMWEbXCYnOVU/7yzk3Fg8WHH2dCbu9NQU4nH6FJ4omCVlOMLZ
- tM6Btqy4EtoZiZNg1qr0Pzheft0rkCTjTndv0tn/RlGtxQs0ua1Msp/qaSKylbXNScm645
- 9ZjbJAs49TqMnOcCzM+VRYQyWoR6qBA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744399409;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n4C6dkqUBXSZvGCPsTpMLEIVIrzGG+2g29i4qftKVgI=;
- b=gcFmjU/fiAWFC2lV8lhz9UiRbzeww7GSVL+xlokLonwVUWkzJ8yF01lM84ux2i9GS3DwR7
- taTPIGVIG4zaw8BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C3EFE13886;
- Fri, 11 Apr 2025 19:23:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id nXLZIDBs+WfaWwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 11 Apr 2025 19:23:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Prasad Pandit
- <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, Marco Cavenati
- <Marco.Cavenati@eurecom.fr>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 1/4] migration/savevm: Add a compatibility check for
- capabilities
-In-Reply-To: <87mscsjhhe.fsf@suse.de>
-References: <20250327143934.7935-1-farosas@suse.de>
- <20250327143934.7935-2-farosas@suse.de> <Z-Vms2l4jZ_eV-aa@redhat.com>
- <875xjua4pe.fsf@suse.de> <87semnk713.fsf@suse.de> <87mscsjhhe.fsf@suse.de>
-Date: Fri, 11 Apr 2025 16:23:26 -0300
-Message-ID: <87a58mh58x.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u3KT0-00076j-Ob; Fri, 11 Apr 2025 15:55:11 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u3KSx-0003Ld-RU; Fri, 11 Apr 2025 15:55:10 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c37:ee89:0:640:1681:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AA47160D44;
+ Fri, 11 Apr 2025 22:54:58 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:7310::1:a] (unknown
+ [2a02:6b8:b081:7310::1:a])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id vsmBgU1FduQ0-zE1RH6UO; Fri, 11 Apr 2025 22:54:58 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1744401298;
+ bh=X68VQGG+NiL8sITpL3/5Siga6JdhiASKYp6NQDQvmEM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=sm/NVysZoP3bAAn8kfZ94p/uQ8Yb5tLbxIfucKNBrVTtFbM6hrTpRP/DTl1LaKOap
+ 7m1wIOmqiCsHqqOtGY19umt8ccTFXsFkXiwfgq4DVVwSDjBYhYh8siyT25COZzEMF3
+ VdZYl/uDnTFnpyY3d+5XA7zq6PJSdvuLo8L2TuBE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c72f0d7e-1408-49c7-b068-6a475ce336f1@yandex-team.ru>
+Date: Fri, 11 Apr 2025 22:54:57 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] mirror: Skip pre-zeroing destination if it is already
+ zero
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:Block Jobs"
+ <qemu-block@nongnu.org>
+References: <20250411010732.358817-8-eblake@redhat.com>
+ <20250411010732.358817-9-eblake@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250411010732.358817-9-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,95 +78,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On 11.04.25 04:04, Eric Blake wrote:
+> When doing a sync=full mirroring, QMP drive-mirror requests full
+> zeroing if it did not just create the destination, and blockdev-mirror
+> requests full zeroing unconditionally.  This is because during a full
+> sync, we must ensure that the portions of the disk that are not
+> otherwise touched by the source still read as zero upon completion.
+> 
+> However, in mirror_dirty_init(), we were blindly assuming that if the
+> destination allows punching holes, we should pre-zero the entire
+> image; and if it does not allow punching holes, then treat the entire
+> source as dirty rather than mirroring just the allocated portions of
+> the source.  Without the ability to punch holes, this results in the
+> destination file being fully allocated; and even when punching holes
+> is supported, it causes duplicate I/O to the portions of the
+> destination corresponding to chunks of the source that are allocated
+> but read as zero.
+> 
+> Smarter is to avoid the pre-zeroing pass over the destination if it
+> can be proved the destination already reads as zero.  Note that a
+> later patch will then further improve things to skip writing to the
+> destination for parts of the image where the source is zero; but even
+> with just this patch, it is possible to see a difference for any BDS
+> that can quickly report that it already reads as zero.  Iotest 194 is
+> proof of this: instead of mirroring a completely sparse file, change
+> it to pre-populate some data.  When run with './check -file 194', the
+> full 1G is still allocated, but with './check -qcow2 194', only the 1M
+> of pre-populated data is now mirrored; this in turn requires an
+> additional log filter.
+> 
+> Note that there are still BDS layers that do not quickly report
+> reading as all zero; for example, the file-posix code implementation
+> for fast block status currently blindly reports the entire image as
+> allocated and non-zero without even consulting lseek(SEEK_DATA)); that
+> will be addressed in later patches.
+> 
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>   block/mirror.c             | 10 ++++++++--
+>   tests/qemu-iotests/194     | 15 +++++++++++++--
+>   tests/qemu-iotests/194.out |  4 ++--
+>   3 files changed, 23 insertions(+), 6 deletions(-)
+> 
+> diff --git a/block/mirror.c b/block/mirror.c
+> index a53582f17bb..2e1e14c8e7e 100644
+> --- a/block/mirror.c
+> +++ b/block/mirror.c
+> @@ -841,14 +841,20 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+>       int64_t offset;
+>       BlockDriverState *bs;
+>       BlockDriverState *target_bs = blk_bs(s->target);
+> -    int ret = -1;
+> +    int ret;
 
-> Fabiano Rosas <farosas@suse.de> writes:
->
-> +Cc Markus
->
-> context:
-> This series was trying to stop savevm from crashing when arbitrary
-> migration capabilities are enabled. Daniel brought up the previous
-> discussion around unifying capabilities + parameters and passing it all
-> via the migrate (or snapshot in this case) command arguments. I'm
-> looking into that now.
->
->> Fabiano Rosas <farosas@suse.de> writes:
->>
->>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>>
->>>> On Thu, Mar 27, 2025 at 11:39:31AM -0300, Fabiano Rosas wrote:
->>>>> It has always been possible to enable arbitrary migration capabilities
->>>>> and attempt to take a snapshot of the VM with the savevm/loadvm
->>>>> commands as well as their QMP counterparts
->>>>> snapshot-save/snapshot-load.
->>>>>=20
->>>>> Most migration capabilities are not meant to be used with snapshots
->>>>> and there's a risk of crashing QEMU or producing incorrect
->>>>> behavior. Ideally, every migration capability would either be
->>>>> implemented for savevm or explicitly rejected.
->>>>
->>>> IMHO, this a prime example of why migration config shouldn't be held
->>>> as global state, and instead passed as parameters to the commands
->>>> that need them.  The snapshot-save/load commands would then only
->>>> be able to accept what few settings are actually relevant, instead
->>>> of inheriting any/all global migration state.
->>>>
->>>
->>> Right, I remember we got caught around the fact that some migration
->>> options are needed during runtime as well... but I don't remember the
->>> details, let try to find that thread.
->>>
->>
->> Found it: https://lore.kernel.org/r/ZVM5xmsaE41WJYgb@redhat.com
->>
->> I don't think it's *too* hard to start passing the configuration to
->> qmp_migrate & friends. We just need to figure out a path for the
->> compatibility.
->>
->> I'm thiking of:
->>
->> 1) Unifying capabilities and parameters in a MigrationConfig
->> structure. We take the opportunity to fix the tls options to 'str'
->> instead of StrOrNull.
->>
->> 2) Deprecate migrate-set-capabilities. There are no capabilities
->> anymore.
->>
->> 3) Deprecate migate-set-parameters. There are no parameters
->> anymore. Alternatively, reuse the existing command, but have it take the
->> additional capabilities as optional (everything else is already
->> optional).
->>
->> 4) Depending on what we do on (3), add a new migrate-set-config command
->> that sets every option. All as optional. This would be nice because we
->> wouldn't need to worry about breaking compat on the tls options, we just
->> define the new command in the correct way.
->>
->> 5) Add a {'*config': MigrationConfig} entry to qmp_migrate and
->> migrate_set_{config|parameters}. Here is where I have questions, because
->> ideally we'd have a way to limit the migrate_set_config command to only
->> the options that can be set at runtime. But I can't see a way of doing
->> that without the duplication of the options in the QAPI .json file. I'm
->> inclined to allow the whole set of options and do some tracking on the
->> side in options.c in the migration code.
->>
->> (same issue for savevm really. To allow it to (say) work with
->> mapped-ram, we'd need a duplicate mapped-ram entry in migration.json)
->>
->> About (2) and (3). If we use this unified MigrationConfig, I can keep
->> the old commands working (along with the query_* variants), by defining
->> a compat function that converts from those commands specific format into
->> the new format. But then there's the question of what do we do when a
->> new capability/parameter comes along? Can we declare that the old
->> commands will not see the new data and that's it? If there's no
->> distinction between caps and params anymore, there isn't even a way to
->> decide which command to use.
->>
+I think, it was to avoid Coverity false-positive around further code
 
-Hi all, please disregard my messages on this thread. I've posted a
-series which has a cover letter that explains the situation better:
+         WITH_GRAPH_RDLOCK_GUARD() {
+             ret = bdrv_co_is_allocated_above(bs, s->base_overlay, true, offset,
+                                              bytes, &count);
+         }
+         if (ret < 0) {
+             return ret;
+         }
 
-[RFC PATCH 00/13] migration: Unify capabilities and parameters
-https://lore.kernel.org/r/20250411191443.22565-1-farosas@suse.de
+which you don't touch here. I think "= -1;" should be kept. Or I missed static analyzes revolution (if so, it should be mentioned in commit message).
+
+>       int64_t count;
+> 
+>       bdrv_graph_co_rdlock();
+>       bs = s->mirror_top_bs->backing->bs;
+> +    if (s->zero_target) {
+> +        ret = bdrv_co_is_zero_fast(target_bs, 0, s->bdev_length);
+> +    }
+>       bdrv_graph_co_rdunlock();
+> 
+> -    if (s->zero_target) {
+> +    if (s->zero_target && ret <= 0) {
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+>           if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
+>               bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
+>               return 0;
+> diff --git a/tests/qemu-iotests/194 b/tests/qemu-iotests/194
+> index c0ce82dd257..814c15dfe3b 100755
+
+
+
+-- 
+Best regards,
+Vladimir
+
 
