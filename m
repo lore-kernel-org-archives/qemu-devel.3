@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8848BC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 11:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88803C369A8
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 11:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3Cpr-0007EG-Cv; Fri, 11 Apr 2025 07:46:15 -0400
+	id 1u3CqX-0007kq-If; Fri, 11 Apr 2025 07:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u3Cph-0007CR-EY
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1u3Cq3-0007Nk-MX
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u3Cpf-0001TL-5G
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:04 -0400
+ id 1u3Cpz-0001YN-7Z
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 07:46:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744371962;
+ s=mimecast20190719; t=1744371982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SAgMwFknXKkkfdtdEIfRgOdkdzIxxxxTKSn68zcvnFA=;
- b=OKxQi287sQLAqptJmqqV9hAoPqaH+NIgnEu+RPbk76vNBs8z47ggSVxb8VfD7Z/xSl0Oyo
- 6ULE/3cObGQtNUNi2Bk09nll71F5ebUJg6xKV0XuOW3VN80DgZ/Jd1Sdh3Xf4vL6AtbOz+
- kLdchY5Cq1JptYds4wbwlyMzyPmPR8I=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2b4W57stMgH//9JJIYmOp253Hx+HltyEexreKzHBfNs=;
+ b=PRkZFMjsecY9tthmRsgRZ63E6pAQOPTlpqVETeFjmlrCrojzv9pc+OuPMqEhQjzDwOvcVD
+ clP6Yjv9bJr4bU/NxtA3CcnwbZdf/HNERwp1YKMpoH9ZiZ/ask2irJfkiAaufGcm2A+y1a
+ 6xak8YzI5zn1dc6AMRUQyaedhAMnM0M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-dwSljb3aODKwI0_loUsIBg-1; Fri,
- 11 Apr 2025 07:45:58 -0400
-X-MC-Unique: dwSljb3aODKwI0_loUsIBg-1
-X-Mimecast-MFC-AGG-ID: dwSljb3aODKwI0_loUsIBg_1744371958
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-zOhWwFSzOyCvzKv71FbSPQ-1; Fri,
+ 11 Apr 2025 07:46:19 -0400
+X-MC-Unique: zOhWwFSzOyCvzKv71FbSPQ-1
+X-Mimecast-MFC-AGG-ID: zOhWwFSzOyCvzKv71FbSPQ_1744371978
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0A201955DC5; Fri, 11 Apr 2025 11:45:57 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5EFC7195608D; Fri, 11 Apr 2025 11:46:18 +0000 (UTC)
 Received: from kaapi.redhat.com (unknown [10.74.16.160])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0656B1801A69; Fri, 11 Apr 2025 11:45:54 +0000 (UTC)
+ id C784B180174E; Fri, 11 Apr 2025 11:46:14 +0000 (UTC)
 From: Prasad Pandit <ppandit@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: farosas@suse.de,
-	peterx@redhat.com,
-	berrange@redhat.com
-Subject: [PATCH v9 3/7] migration: Add save_postcopy_prepare() savevm handler
-Date: Fri, 11 Apr 2025 17:15:30 +0530
-Message-ID: <20250411114534.3370816-4-ppandit@redhat.com>
+Cc: farosas@suse.de, peterx@redhat.com, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v9 7/7] tests/qtest/migration: add postcopy tests with multifd
+Date: Fri, 11 Apr 2025 17:15:34 +0530
+Message-ID: <20250411114534.3370816-8-ppandit@redhat.com>
 In-Reply-To: <20250411114534.3370816-1-ppandit@redhat.com>
 References: <20250411114534.3370816-1-ppandit@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.681,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,130 +84,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-Add a savevm handler for a module to opt-in sending extra sections right
-before postcopy starts, and before VM is stopped.
+Add new qtests to run postcopy migration with multifd
+channels enabled.
 
-RAM will start to use this new savevm handler in the next patch to do flush
-and sync for multifd pages.
-
-Note that we choose to do it before VM stopped because the current only
-potential user is not sensitive to VM status, so doing it before VM is
-stopped is preferred to enlarge any postcopy downtime.
-
-It is still a bit unfortunate that we need to introduce such a new savevm
-handler just for the only use case, however it's so far the cleanest.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
- include/migration/register.h | 15 +++++++++++++++
- migration/migration.c        |  4 ++++
- migration/savevm.c           | 33 +++++++++++++++++++++++++++++++++
- migration/savevm.h           |  1 +
- 4 files changed, 53 insertions(+)
+ tests/qtest/migration/compression-tests.c | 16 ++++++++
+ tests/qtest/migration/postcopy-tests.c    | 27 +++++++++++++
+ tests/qtest/migration/precopy-tests.c     | 19 +++++++++
+ tests/qtest/migration/tls-tests.c         | 47 +++++++++++++++++++++++
+ 4 files changed, 109 insertions(+)
 
-v8: reorder this patch before enabling multifd and postcopy together
+v8: no change
 - https://lore.kernel.org/qemu-devel/20250318123846.1370312-1-ppandit@redhat.com/T/#t
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index c041ce32f2..b79dc81b8d 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -189,6 +189,21 @@ typedef struct SaveVMHandlers {
- 
-     /* This runs outside the BQL!  */
- 
-+    /**
-+     * @save_postcopy_prepare
-+     *
-+     * This hook will be invoked on the source side right before switching
-+     * to postcopy (before VM stopped).
-+     *
-+     * @f:      QEMUFile where to send the data
-+     * @opaque: Data pointer passed to register_savevm_live()
-+     * @errp:   Error** used to report error message
-+     *
-+     * Returns: true if succeeded, false if error occured.  When false is
-+     * returned, @errp must be set.
-+     */
-+    bool (*save_postcopy_prepare)(QEMUFile *f, void *opaque, Error **errp);
+diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
+index 41e79f031b..a788a8d4a7 100644
+--- a/tests/qtest/migration/compression-tests.c
++++ b/tests/qtest/migration/compression-tests.c
+@@ -42,6 +42,20 @@ static void test_multifd_tcp_zstd(void)
+     };
+     test_precopy_common(&args);
+ }
 +
-     /**
-      * @state_pending_estimate
-      *
-diff --git a/migration/migration.c b/migration/migration.c
-index 64f4f40ae3..4bb29b7193 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2717,6 +2717,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-         }
++static void test_multifd_postcopy_tcp_zstd(void)
++{
++    MigrateCommon args = {
++        .listen_uri = "defer",
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
++            .caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] = true,
++        },
++        .start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
++    };
++
++    test_precopy_common(&args);
++}
+ #endif /* CONFIG_ZSTD */
+ 
+ #ifdef CONFIG_QATZIP
+@@ -184,6 +198,8 @@ void migration_test_add_compression(MigrationTestEnv *env)
+ #ifdef CONFIG_ZSTD
+     migration_test_add("/migration/multifd/tcp/plain/zstd",
+                        test_multifd_tcp_zstd);
++    migration_test_add("/migration/multifd+postcopy/tcp/plain/zstd",
++                       test_multifd_postcopy_tcp_zstd);
+ #endif
+ 
+ #ifdef CONFIG_QATZIP
+diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+index 483e3ff99f..eb637f94f7 100644
+--- a/tests/qtest/migration/postcopy-tests.c
++++ b/tests/qtest/migration/postcopy-tests.c
+@@ -94,6 +94,29 @@ static void migration_test_add_postcopy_smoke(MigrationTestEnv *env)
      }
- 
-+    if (!qemu_savevm_state_postcopy_prepare(ms->to_dst_file, errp)) {
-+        return -1;
-+    }
-+
-     trace_postcopy_start();
-     bql_lock();
-     trace_postcopy_start_set_run();
-diff --git a/migration/savevm.c b/migration/savevm.c
-index ce158c3512..23ef4c7dc9 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1523,6 +1523,39 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
-     qemu_fflush(f);
  }
  
-+bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp)
++static void test_multifd_postcopy(void)
 +{
-+    SaveStateEntry *se;
-+    bool ret;
++    MigrateCommon args = {
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
++        },
++    };
 +
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        if (!se->ops || !se->ops->save_postcopy_prepare) {
-+            continue;
-+        }
-+
-+        if (se->ops->is_active) {
-+            if (!se->ops->is_active(se->opaque)) {
-+                continue;
-+            }
-+        }
-+
-+        trace_savevm_section_start(se->idstr, se->section_id);
-+
-+        save_section_header(f, se, QEMU_VM_SECTION_PART);
-+        ret = se->ops->save_postcopy_prepare(f, se->opaque, errp);
-+        save_section_footer(f, se);
-+
-+        trace_savevm_section_end(se->idstr, se->section_id, ret);
-+
-+        if (!ret) {
-+            assert(*errp);
-+            return false;
-+        }
-+    }
-+
-+    return true;
++    test_postcopy_common(&args);
 +}
 +
- int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
++static void test_multifd_postcopy_preempt(void)
++{
++    MigrateCommon args = {
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
++            .caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT] = true,
++        },
++    };
++
++    test_postcopy_common(&args);
++}
++
+ void migration_test_add_postcopy(MigrationTestEnv *env)
  {
-     int64_t start_ts_each, end_ts_each;
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 138c39a7f9..2d5e9c7166 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -45,6 +45,7 @@ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
- void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
-                                         uint64_t *can_postcopy);
- int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
-+bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
- void qemu_savevm_send_ping(QEMUFile *f, uint32_t value);
- void qemu_savevm_send_open_return_path(QEMUFile *f);
- int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len);
+     migration_test_add_postcopy_smoke(env);
+@@ -114,6 +137,10 @@ void migration_test_add_postcopy(MigrationTestEnv *env)
+             "/migration/postcopy/recovery/double-failures/reconnect",
+             test_postcopy_recovery_fail_reconnect);
+ 
++        migration_test_add("/migration/postcopy/multifd/plain",
++                           test_multifd_postcopy);
++        migration_test_add("/migration/postcopy/multifd/preempt/plain",
++                           test_multifd_postcopy_preempt);
+         if (env->is_x86) {
+             migration_test_add("/migration/postcopy/suspend",
+                                test_postcopy_suspend);
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index f8404793b8..b2b0db8076 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -34,6 +34,7 @@
+ #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
+ 
+ static char *tmpfs;
++static bool postcopy_ram = false;
+ 
+ static void test_precopy_unix_plain(void)
+ {
+@@ -476,6 +477,11 @@ static void test_multifd_tcp_cancel(void)
+     migrate_ensure_non_converge(from);
+     migrate_prepare_for_dirty_mem(from);
+ 
++    if (postcopy_ram) {
++        migrate_set_capability(from, "postcopy-ram", true);
++        migrate_set_capability(to, "postcopy-ram", true);
++    }
++
+     migrate_set_parameter_int(from, "multifd-channels", 16);
+     migrate_set_parameter_int(to, "multifd-channels", 16);
+ 
+@@ -517,6 +523,10 @@ static void test_multifd_tcp_cancel(void)
+         return;
+     }
+ 
++    if (postcopy_ram) {
++        migrate_set_capability(to2, "postcopy-ram", true);
++    }
++
+     migrate_set_parameter_int(to2, "multifd-channels", 16);
+ 
+     migrate_set_capability(to2, "multifd", true);
+@@ -540,6 +550,13 @@ static void test_multifd_tcp_cancel(void)
+     migrate_end(from, to2, true);
+ }
+ 
++static void test_multifd_postcopy_tcp_cancel(void)
++{
++    postcopy_ram = true;
++    test_multifd_tcp_cancel();
++    postcopy_ram = false;
++}
++
+ static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
+                                          const char *uri, const char *phase)
+ {
+@@ -1127,6 +1144,8 @@ static void migration_test_add_precopy_smoke(MigrationTestEnv *env)
+                        test_multifd_tcp_uri_none);
+     migration_test_add("/migration/multifd/tcp/plain/cancel",
+                        test_multifd_tcp_cancel);
++    migration_test_add("/migration/multifd+postcopy/tcp/plain/cancel",
++                       test_multifd_postcopy_tcp_cancel);
+ }
+ 
+ void migration_test_add_precopy(MigrationTestEnv *env)
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index 72f44defbb..54581e182f 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -395,6 +395,19 @@ static void test_postcopy_recovery_tls_psk(void)
+     test_postcopy_recovery_common(&args);
+ }
+ 
++static void test_multifd_postcopy_recovery_tls_psk(void)
++{
++    MigrateCommon args = {
++        .start_hook = migrate_hook_start_tls_psk_match,
++        .end_hook = migrate_hook_end_tls_psk,
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
++        },
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
+ /* This contains preempt+recovery+tls test altogether */
+ static void test_postcopy_preempt_all(void)
+ {
+@@ -409,6 +422,19 @@ static void test_postcopy_preempt_all(void)
+     test_postcopy_recovery_common(&args);
+ }
+ 
++static void test_multifd_postcopy_preempt_recovery_tls_psk(void)
++{
++    MigrateCommon args = {
++        .start_hook = migrate_hook_start_tls_psk_match,
++        .end_hook = migrate_hook_end_tls_psk,
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
++        },
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
+ static void test_precopy_unix_tls_psk(void)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+@@ -657,6 +683,21 @@ static void test_multifd_tcp_tls_psk_mismatch(void)
+     test_precopy_common(&args);
+ }
+ 
++static void test_multifd_postcopy_tcp_tls_psk_match(void)
++{
++    MigrateCommon args = {
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MULTIFD] = true,
++            .caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] = true,
++        },
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_multifd_tcp_tls_psk_match,
++        .end_hook = migrate_hook_end_tls_psk,
++    };
++
++    test_precopy_common(&args);
++}
++
+ #ifdef CONFIG_TASN1
+ static void test_multifd_tcp_tls_x509_default_host(void)
+ {
+@@ -774,6 +815,10 @@ void migration_test_add_tls(MigrationTestEnv *env)
+                            test_postcopy_preempt_tls_psk);
+         migration_test_add("/migration/postcopy/preempt/recovery/tls/psk",
+                            test_postcopy_preempt_all);
++        migration_test_add("/migration/postcopy/multifd/recovery/tls/psk",
++                           test_multifd_postcopy_recovery_tls_psk);
++        migration_test_add("/migration/postcopy/multifd/preempt/recovery/tls/psk",
++                           test_multifd_postcopy_preempt_recovery_tls_psk);
+     }
+ #ifdef CONFIG_TASN1
+     migration_test_add("/migration/precopy/unix/tls/x509/default-host",
+@@ -805,6 +850,8 @@ void migration_test_add_tls(MigrationTestEnv *env)
+                        test_multifd_tcp_tls_psk_match);
+     migration_test_add("/migration/multifd/tcp/tls/psk/mismatch",
+                        test_multifd_tcp_tls_psk_mismatch);
++    migration_test_add("/migration/multifd+postcopy/tcp/tls/psk/match",
++                       test_multifd_postcopy_tcp_tls_psk_match);
+ #ifdef CONFIG_TASN1
+     migration_test_add("/migration/multifd/tcp/tls/x509/default-host",
+                        test_multifd_tcp_tls_x509_default_host);
 -- 
 2.49.0
 
