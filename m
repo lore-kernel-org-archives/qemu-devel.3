@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F644C3601E
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 01:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2ACFC369A6
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 01:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u32sr-0006Zg-NN; Thu, 10 Apr 2025 21:08:41 -0400
+	id 1u32ss-0006Zm-Rv; Thu, 10 Apr 2025 21:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u32sB-0006OJ-JH
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 21:08:00 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u32sI-0006TI-Dl
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 21:08:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u32s8-0004Jh-GC
- for qemu-devel@nongnu.org; Thu, 10 Apr 2025 21:07:58 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u32sA-0004K7-0i
+ for qemu-devel@nongnu.org; Thu, 10 Apr 2025 21:08:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744333675;
+ s=mimecast20190719; t=1744333677;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Iq5LHmolf3pV0bK0C03Cx524NrQH75iCgLrGQASdzck=;
- b=Hh5ZcGVBYpU3CAcVq18H5vsnRHlI7ZxE8vP2tgEN0dvS6G6nc1msmqBaQqQeKQmPjyyxHB
- iVgpmYY18Z6mMLK5ovl+R19HfQp3pwO8CuWlGw6YOpKcTS9BeV4nRjCsxFeabZCEBIyMJc
- jNjjkbkWeqECco0q5KJecafBjHLp4y0=
+ bh=IlZtSfeqvD+H2+2X37MVdXiNoRPyD0YoBpqxsczyCcI=;
+ b=HsABdRVjYWZv8z7das32ZxwDjtXY6czIEoD8EG3w8xiX0iBo2OHzXtRxYU6mbQaox0Vf5f
+ wGHjjUtGzuz17aNlhLByBaNOczBJe2thbT8FM4LH9/uVi/mfCrp8b5aqcrhnHiAiFkDnZX
+ 1rKgtqbFDWbpb46TND7DrjH9MWbMWR0=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-TJtKLOM8P4m0WEZCxAZCVw-1; Thu,
- 10 Apr 2025 21:07:52 -0400
-X-MC-Unique: TJtKLOM8P4m0WEZCxAZCVw-1
-X-Mimecast-MFC-AGG-ID: TJtKLOM8P4m0WEZCxAZCVw_1744333671
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-ytXlVO3GPPuRTqiSzWw3GQ-1; Thu,
+ 10 Apr 2025 21:07:53 -0400
+X-MC-Unique: ytXlVO3GPPuRTqiSzWw3GQ-1
+X-Mimecast-MFC-AGG-ID: ytXlVO3GPPuRTqiSzWw3GQ_1744333673
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A81418004A9; Fri, 11 Apr 2025 01:07:51 +0000 (UTC)
+ id EF3B3180882E; Fri, 11 Apr 2025 01:07:52 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.21])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9CC271801A69; Fri, 11 Apr 2025 01:07:50 +0000 (UTC)
+ id EF4A81801A69; Fri, 11 Apr 2025 01:07:51 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:raw)
-Subject: [PATCH 5/6] file-posix: Recognize blockdev-create file as starting
- all zero
-Date: Thu, 10 Apr 2025 20:04:55 -0500
-Message-ID: <20250411010732.358817-13-eblake@redhat.com>
+ qemu-block@nongnu.org (open list:Block layer core)
+Subject: [PATCH 6/6] tests: Add iotest mirror-sparse for recent patches
+Date: Thu, 10 Apr 2025 20:04:56 -0500
+Message-ID: <20250411010732.358817-14-eblake@redhat.com>
 In-Reply-To: <20250411010732.358817-8-eblake@redhat.com>
 References: <20250411010732.358817-8-eblake@redhat.com>
 MIME-Version: 1.0
@@ -68,7 +67,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,242 +83,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are enough optimizations possible when a file is known to read
-as all zero that it is worth taking the extra time during
-raw_open_common() to catch more than just 100% sparse files.  In
-particular, since our implementation of blockdev-create intentionally
-allocates a small all-zero block at the front of a file to make
-alignment probing easier, it is well worth the time spent checking
-whether that early block reads as all zero if the rest of the file is
-still sparse.
-
-I decided to stick the special case lseek and read in open, rather
-than in block status; which means the BDRVRawState struct gains
-another bool that must be updated anywhere an action can change the
-file's contents.
+Prove that blockdev-mirror can now result in sparse destination files.
+By making this a separate test, it was possible to test effects of
+individual patches for the various pieces that all have to work
+together for a sparse mirror to be successful.
 
 Signed-off-by: Eric Blake <eblake@redhat.com>
 ---
- block/file-posix.c | 89 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 77 insertions(+), 12 deletions(-)
+ tests/qemu-iotests/tests/mirror-sparse     | 100 ++++++++++++++
+ tests/qemu-iotests/tests/mirror-sparse.out | 153 +++++++++++++++++++++
+ 2 files changed, 253 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/mirror-sparse
+ create mode 100644 tests/qemu-iotests/tests/mirror-sparse.out
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index dcf906a6a7c..342ade828d7 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -167,6 +167,7 @@ typedef struct BDRVRawState {
-     bool force_alignment;
-     bool drop_cache;
-     bool check_cache_dropped;
-+    bool all_zero;
-     struct {
-         uint64_t discard_nb_ok;
-         uint64_t discard_nb_failed;
-@@ -543,6 +544,43 @@ static void raw_parse_filename(const char *filename, QDict *options,
-     bdrv_parse_filename_strip_prefix(filename, "file:", options);
- }
-
-+static int find_allocation(int fd, off_t start, off_t *data, off_t *hole);
+diff --git a/tests/qemu-iotests/tests/mirror-sparse b/tests/qemu-iotests/tests/mirror-sparse
+new file mode 100755
+index 00000000000..4251dea7531
+--- /dev/null
++++ b/tests/qemu-iotests/tests/mirror-sparse
+@@ -0,0 +1,100 @@
++#!/usr/bin/env bash
++# group: rw auto quick
++#
++# Test blockdev-mirror with raw sparse destination
++#
++# Copyright (C) 2025 Red Hat, Inc.
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
 +
-+/*
-+ * Hueristic to determine if the file reads as all zeroes.  Accounts
-+ * for files resulting from raw_co_create, where we intentionally
-+ * allocated a small block of zeroes up front to make alignment
-+ * probing easier.
-+ */
-+static bool raw_all_zero(int fd)
++seq="$(basename $0)"
++echo "QA output created by $seq"
++
++status=1 # failure is the default!
++
++_cleanup()
 +{
-+    off_t data, hole;
-+    int ret;
-+    char *buf;
-+    size_t max_align = MAX(MAX_BLOCKSIZE, qemu_real_host_page_size());
-+    bool result;
-+
-+    ret = find_allocation(fd, 0, &data, &hole);
-+    if (ret == -ENXIO) {
-+        return true;
-+    } else if (ret < 0) {
-+        return false;
-+    }
-+    /*
-+     * If data is reasonably small, AND if the rest of the file is a
-+     * hole, then it is worth reading the data portion to see if it
-+     * reads as zero.
-+     */
-+    if (data != 0 || hole > max_align ||
-+        find_allocation(fd, hole, &data, &hole) != -ENXIO) {
-+        return false;
-+    }
-+    buf = qemu_memalign(max_align, max_align);
-+    result = pread(fd, buf, hole, 0) == hole && buffer_is_zero(buf, hole);
-+    qemu_vfree(buf);
-+    return result;
++    _cleanup_test_img
++    _cleanup_qemu
 +}
++trap "_cleanup; exit \$status" 0 1 2 3 15
 +
- static QemuOptsList raw_runtime_opts = {
-     .name = "raw",
-     .head = QTAILQ_HEAD_INITIALIZER(raw_runtime_opts.head),
-@@ -756,9 +794,9 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
-                        bs->drv->format_name, bs->filename);
-             ret = -EINVAL;
-             goto fail;
--        } else {
--            s->has_fallocate = true;
-         }
-+        s->has_fallocate = true;
-+        s->all_zero = raw_all_zero(s->fd);
-     } else {
-         if (!(S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode))) {
-             error_setg(errp, "'%s' driver requires '%s' to be either "
-@@ -1695,9 +1733,13 @@ qemu_pwritev(int fd, const struct iovec *iov, int nr_iov, off_t offset)
- static ssize_t handle_aiocb_rw_vector(RawPosixAIOData *aiocb)
- {
-     ssize_t len;
-+    BDRVRawState *s = aiocb->bs->opaque;
-+    bool do_write = aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND);
-
--    len = RETRY_ON_EINTR(
--        (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) ?
-+    if (do_write) {
-+        s->all_zero = false;
-+    }
-+    len = RETRY_ON_EINTR(do_write ?
-             qemu_pwritev(aiocb->aio_fildes,
-                            aiocb->io.iov,
-                            aiocb->io.niov,
-@@ -1724,9 +1766,11 @@ static ssize_t handle_aiocb_rw_linear(RawPosixAIOData *aiocb, char *buf)
- {
-     ssize_t offset = 0;
-     ssize_t len;
-+    BDRVRawState *s = aiocb->bs->opaque;
-
-     while (offset < aiocb->aio_nbytes) {
-         if (aiocb->aio_type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) {
-+            s->all_zero = false;
-             len = pwrite(aiocb->aio_fildes,
-                          (const char *)buf + offset,
-                          aiocb->aio_nbytes - offset,
-@@ -2171,7 +2215,9 @@ static int handle_aiocb_copy_range(void *opaque)
-     uint64_t bytes = aiocb->aio_nbytes;
-     off_t in_off = aiocb->aio_offset;
-     off_t out_off = aiocb->copy_range.aio_offset2;
-+    BDRVRawState *s = aiocb->bs->opaque;
-
-+    s->all_zero = false;
-     while (bytes) {
-         ssize_t ret = copy_file_range(aiocb->aio_fildes, &in_off,
-                                       aiocb->copy_range.aio_fd2, &out_off,
-@@ -2208,6 +2254,9 @@ static int handle_aiocb_discard(void *opaque)
-     if (!s->has_discard) {
-         return -ENOTSUP;
-     }
-+    if (!s->has_write_zeroes) {
-+        s->all_zero = false;
-+    }
-
-     if (aiocb->aio_type & QEMU_AIO_BLKDEV) {
- #ifdef BLKDISCARD
-@@ -2493,6 +2542,9 @@ static int coroutine_fn raw_co_prw(BlockDriverState *bs, int64_t *offset_ptr,
-     int ret;
-     uint64_t offset = *offset_ptr;
-
-+    if (type & (QEMU_AIO_WRITE | QEMU_AIO_ZONE_APPEND)) {
-+        s->all_zero = false;
-+    }
-     if (fd_open(bs) < 0)
-         return -EIO;
- #if defined(CONFIG_BLKZONED)
-@@ -3103,11 +3155,10 @@ static int coroutine_fn raw_co_delete_file(BlockDriverState *bs,
-  * If @start is in a trailing hole or beyond EOF, return -ENXIO.
-  * If we can't find out, return a negative errno other than -ENXIO.
-  */
--static int find_allocation(BlockDriverState *bs, off_t start,
-+static int find_allocation(int fd, off_t start,
-                            off_t *data, off_t *hole)
- {
- #if defined SEEK_HOLE && defined SEEK_DATA
--    BDRVRawState *s = bs->opaque;
-     off_t offs;
-
-     /*
-@@ -3121,7 +3172,7 @@ static int find_allocation(BlockDriverState *bs, off_t start,
-      *     Treating like a trailing hole is simplest.
-      * D4. offs < 0, errno != ENXIO: we learned nothing
-      */
--    offs = lseek(s->fd, start, SEEK_DATA);
-+    offs = lseek(fd, start, SEEK_DATA);
-     if (offs < 0) {
-         return -errno;          /* D3 or D4 */
-     }
-@@ -3158,7 +3209,7 @@ static int find_allocation(BlockDriverState *bs, off_t start,
-      * H4. offs < 0, errno != ENXIO: we learned nothing
-      *     Pretend we know nothing at all, i.e. "forget" about D1.
-      */
--    offs = lseek(s->fd, start, SEEK_HOLE);
-+    offs = lseek(fd, start, SEEK_HOLE);
-     if (offs < 0) {
-         return -errno;          /* D1 and (H3 or H4) */
-     }
-@@ -3207,6 +3258,7 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
-                                             int64_t *map,
-                                             BlockDriverState **file)
- {
-+    BDRVRawState *s = bs->opaque;
-     off_t data = 0, hole = 0;
-     int ret;
-
-@@ -3218,20 +3270,29 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
-     }
-
-     /*
--     * If mode != PRECISE, then the caller wants speed over
-+     * If mode == ALLOCATED, then the caller wants speed over
-      * accuracy, and the only place where SEEK_DATA should be
-      * attempted is at the start of the file to learn if the file has
-      * any data at all (anywhere else, just blindly claim the entire
--     * file is data).
-+     * file is data).  If mode == ZERO, use internal status tracking
-+     * to work around thet case where raw_co_block_status calls
-+     * allocate_first_block to ease alignment probing but which breaks
-+     * lseek hole detection.
-      */
--    if (mode != BDRV_BSTAT_PRECISE && offset) {
-+    if (mode == BDRV_BSTAT_ALLOCATED && offset) {
-         *pnum = bytes;
-         *map = offset;
-         *file = bs;
-         return BDRV_BLOCK_DATA | BDRV_BLOCK_OFFSET_VALID;
-     }
-+    if (mode == BDRV_BSTAT_ZERO && s->all_zero) {
-+        *pnum = bytes;
-+        *map = offset;
-+        *file = bs;
-+        return BDRV_BLOCK_ZERO;
-+    }
-
--    ret = find_allocation(bs, offset, &data, &hole);
-+    ret = find_allocation(s->fd, offset, &data, &hole);
-     if (ret == -ENXIO) {
-         /* Trailing hole */
-         *pnum = bytes;
-@@ -3572,6 +3633,9 @@ raw_do_pdiscard(BlockDriverState *bs, int64_t offset, int64_t bytes,
-     RawPosixAIOData acb;
-     int ret;
-
-+    if (!s->has_write_zeroes) {
-+        s->all_zero = false;
-+    }
-     acb = (RawPosixAIOData) {
-         .bs             = bs,
-         .aio_fildes     = s->fd,
-@@ -3874,6 +3938,7 @@ raw_co_copy_range_to(BlockDriverState *bs,
-     BDRVRawState *s = bs->opaque;
-     BDRVRawState *src_s;
-
-+    s->all_zero = false;
-     assert(dst->bs == bs);
-     if (src->bs->drv->bdrv_co_copy_range_to != raw_co_copy_range_to) {
-         return -ENOTSUP;
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++. ./common.qemu
++
++_supported_fmt qcow2 raw  # Format of the source. dst is always raw file
++_supported_proto file
++_supported_os Linux
++
++echo
++echo "=== Initial image setup ==="
++echo
++
++TEST_IMG="$TEST_IMG.base" _make_test_img 20M
++$QEMU_IO -c 'w 8M 2M' -f $IMGFMT "$TEST_IMG.base" | _filter_qemu_io
++
++_launch_qemu -machine q35 \
++    -blockdev '{"driver":"file", "cache":{"direct":true, "no-flush":false},
++                "filename":"'"$TEST_IMG.base"'", "node-name":"src-file"}' \
++    -blockdev '{"driver":"'$IMGFMT'", "node-name":"src", "file":"src-file"}'
++h1=$QEMU_HANDLE
++_send_qemu_cmd $h1 '{"execute": "qmp_capabilities"}' 'return'
++
++# Each of these combinations should result in a sparse destination;
++# the destination should only be fully allocated if pre-allocated
++for creation in external blockdev-create; do
++for discard in ignore unmap; do
++
++echo
++echo "=== Destination with $creation creation and discard=$discard ==="
++echo
++
++rm -f $TEST_IMG
++if test $creation = external; then
++    truncate --size=20M $TEST_IMG
++else
++    _send_qemu_cmd $h1 '{"execute": "blockdev-create", "arguments":
++          {"options": {"driver":"file", "filename":"'$TEST_IMG'",
++          "size":'$((20*1024*1024))'}, "job-id":"job1"}}' 'concluded'
++    _send_qemu_cmd $h1 '{"execute": "job-dismiss", "arguments":
++          {"id": "job1"}}' 'return'
++fi
++_send_qemu_cmd $h1 '{"execute": "blockdev-add", "arguments":
++                     {"node-name": "dst", "driver":"file",
++                      "filename":"'$TEST_IMG'", "aio":"threads",
++                      "auto-read-only":true, "discard":"'$discard'"}}' 'return'
++_send_qemu_cmd $h1 '{"execute":"blockdev-mirror", "arguments":
++                     {"sync":"full", "device":"src", "target":"dst",
++                      "job-id":"job2"}}' 'return'
++_timed_wait_for $h1 '"ready"'
++_send_qemu_cmd $h1 '{"execute": "job-complete", "arguments":
++               {"id":"job2"}}' 'return'
++_send_qemu_cmd $h1 '{"execute": "blockdev-del", "arguments":
++                {"node-name": "dst"}}' 'return'
++$QEMU_IMG compare -f $IMGFMT -F raw $TEST_IMG.base $TEST_IMG
++$QEMU_IMG info -f raw $TEST_IMG | grep '^disk size:'
++
++done
++done
++
++_send_qemu_cmd $h1 '{"execute":"quit"}' ''
++
++# success, all done
++echo '*** done'
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/mirror-sparse.out b/tests/qemu-iotests/tests/mirror-sparse.out
+new file mode 100644
+index 00000000000..16eb041841f
+--- /dev/null
++++ b/tests/qemu-iotests/tests/mirror-sparse.out
+@@ -0,0 +1,153 @@
++QA output created by mirror-sparse
++
++=== Initial image setup ===
++
++Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=20971520
++wrote 2097152/2097152 bytes at offset 8388608
++2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++{"execute": "qmp_capabilities"}
++{"return": {}}
++
++=== Destination with external creation and discard=ignore ===
++
++{"execute": "blockdev-add", "arguments":
++                     {"node-name": "dst", "driver":"file",
++                      "filename":"TEST_DIR/t.IMGFMT", "aio":"threads",
++                      "auto-read-only":true, "discard":"ignore"}}
++{"return": {}}
++{"execute":"blockdev-mirror", "arguments":
++                     {"sync":"full", "device":"src", "target":"dst",
++                      "job-id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job2"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "job2"}}
++{"execute": "job-complete", "arguments":
++               {"id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments":
++                {"node-name": "dst"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job2"}}
++{"return": {}}
++Images are identical.
++disk size: 2.06 MiB
++
++=== Destination with external creation and discard=unmap ===
++
++{"execute": "blockdev-add", "arguments":
++                     {"node-name": "dst", "driver":"file",
++                      "filename":"TEST_DIR/t.IMGFMT", "aio":"threads",
++                      "auto-read-only":true, "discard":"unmap"}}
++{"return": {}}
++{"execute":"blockdev-mirror", "arguments":
++                     {"sync":"full", "device":"src", "target":"dst",
++                      "job-id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job2"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "job2"}}
++{"execute": "job-complete", "arguments":
++               {"id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments":
++                {"node-name": "dst"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job2"}}
++{"return": {}}
++Images are identical.
++disk size: 2.06 MiB
++
++=== Destination with blockdev-create creation and discard=ignore ===
++
++{"execute": "blockdev-create", "arguments":
++          {"options": {"driver":"file", "filename":"TEST_DIR/t.IMGFMT",
++          "size":20971520}, "job-id":"job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job1"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job1"}}
++{"execute": "job-dismiss", "arguments":
++          {"id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job1"}}
++{"return": {}}
++{"execute": "blockdev-add", "arguments":
++                     {"node-name": "dst", "driver":"file",
++                      "filename":"TEST_DIR/t.IMGFMT", "aio":"threads",
++                      "auto-read-only":true, "discard":"ignore"}}
++{"return": {}}
++{"execute":"blockdev-mirror", "arguments":
++                     {"sync":"full", "device":"src", "target":"dst",
++                      "job-id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job2"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "job2"}}
++{"execute": "job-complete", "arguments":
++               {"id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments":
++                {"node-name": "dst"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job2"}}
++{"return": {}}
++Images are identical.
++disk size: 2.06 MiB
++
++=== Destination with blockdev-create creation and discard=unmap ===
++
++{"execute": "blockdev-create", "arguments":
++          {"options": {"driver":"file", "filename":"TEST_DIR/t.IMGFMT",
++          "size":20971520}, "job-id":"job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job1"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job1"}}
++{"execute": "job-dismiss", "arguments":
++          {"id": "job1"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job1"}}
++{"return": {}}
++{"execute": "blockdev-add", "arguments":
++                     {"node-name": "dst", "driver":"file",
++                      "filename":"TEST_DIR/t.IMGFMT", "aio":"threads",
++                      "auto-read-only":true, "discard":"unmap"}}
++{"return": {}}
++{"execute":"blockdev-mirror", "arguments":
++                     {"sync":"full", "device":"src", "target":"dst",
++                      "job-id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "job2"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "job2"}}
++{"execute": "job-complete", "arguments":
++               {"id":"job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"return": {}}
++{"execute": "blockdev-del", "arguments":
++                {"node-name": "dst"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "waiting", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "pending", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_COMPLETED", "data": {"device": "job2", "len": 20971520, "offset": 20971520, "speed": 0, "type": "mirror"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "concluded", "id": "job2"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "null", "id": "job2"}}
++{"return": {}}
++Images are identical.
++disk size: 2.06 MiB
++{"execute":"quit"}
++*** done
 -- 
 2.49.0
 
