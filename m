@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65BA0C369A8
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834F8C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 04:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u36DB-0003Ep-KL; Fri, 11 Apr 2025 00:41:54 -0400
+	id 1u36DG-0003GJ-Sc; Fri, 11 Apr 2025 00:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u36DA-0003EO-DO; Fri, 11 Apr 2025 00:41:52 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1u36DF-0003FX-3T; Fri, 11 Apr 2025 00:41:57 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u36D8-0001c1-Kr; Fri, 11 Apr 2025 00:41:52 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-224341bbc1dso14994355ad.3; 
- Thu, 10 Apr 2025 21:41:49 -0700 (PDT)
+ id 1u36DD-0001db-FX; Fri, 11 Apr 2025 00:41:56 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-223f4c06e9fso16032885ad.1; 
+ Thu, 10 Apr 2025 21:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744346508; x=1744951308; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744346513; x=1744951313; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2lYQSLH9OUcacfFWWtc6NBDhhW0SrOAqjv9niMxwZuU=;
- b=cAXoeze4C5TBqiXG+X9SXBseHPjSU9ZEd05d5dj4+A6P3WegCmJPVEpfC8q7GMEDxW
- AHCUM0ByK06iKuYRWW6zuo0M4aY5WaIPgi3UEhNRdj5L9h61Z9Kqn9twTxHcnqoxaE9Z
- XXKagrCy7ICu/uV/gHsIsyaOduk32iBSCu3gt/0IxOMsWGyopFIyazUdVNSpfa6oK0BA
- kKtQ8HRKmFPEKznHLAYn/RvFdj5J96JVNIaHTsQbSgjeVHRw7g38K/XeiWZJIgOdYcom
- gEaaG4Zh9fXc7pVHpel9HG1onmG/pU7DfGf0VxjGADnzAPW2Z2bZgv6K9Ok8Z6Wl149/
- y9Iw==
+ bh=/o7YYwGycbMB48G0KCdsMRvKzBvHTyod2rEkRdfLkf8=;
+ b=DQB+r/rWKOcdIDHkzTO4igRwdhmty9EyiWv3tCuW657gRaXLCiFum85rXphTzllYHd
+ SME3In3e9IYX/uoOuScmuG1kzslSLoOYcDE+BtKEQ3pJCXd4t3Ndvfmv4i72lg5/QuA2
+ OGOHFcWqPlq4hNtE7lx25odpUQDE3QgSxszIFobHtkoRIcZsID994EC5tAgZLWeKB5kQ
+ iVji7y7gm2g59ZsvmsaDsUH6Watuv/77lkK6sneSS3jgbxGOn/FKnnOOVFqv8HWLB4w+
+ eYcYsALDe7JGGDteM60+xDXJMiZoxRgKnFfSbF/QDsEcldKNdHYVimzJL2U1IVDt8ako
+ uWmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744346508; x=1744951308;
+ d=1e100.net; s=20230601; t=1744346513; x=1744951313;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2lYQSLH9OUcacfFWWtc6NBDhhW0SrOAqjv9niMxwZuU=;
- b=LgaymSZpmbLHJialy7cr+Wz5CbojOfyazVqpPacaVJ+KjVHXMAUIcADqQEMGZRAoAA
- TZZ/EHw1QeNEhhDaM8TxE3wIbTCB+iaJ+HIi+E5VEnnemnR2f5Qc3fyAcxBcECv6AUp1
- Bz+l4wW/ZYLDFC7ptrLEnrEZdw+kz78n2Ik0RIK1YFxoNtfUx+RN4CdIxAXyT/f3FRJl
- mbGJgECz0a8v3OYNz/KXpBwaG3g9NPWjLyxHhK9AuczwQAVDOc7egkYyV77FTcI9GSju
- /z7GOxEiLA5ebkmUaOZwSjE2trXTwVQtxJLTljbetvmUGeSB6FHAx/lppSWLm4EHXNxU
- mz5A==
+ bh=/o7YYwGycbMB48G0KCdsMRvKzBvHTyod2rEkRdfLkf8=;
+ b=V3w4P9MZ2+uUH4MEiKlej8NsRG+OUVBQlr+yfg85NVbdszA71fFbMOHHc4mJhwsH6Z
+ SwG4krHDVaGiGYDsFY+v7ENmABsfrk7WPdei4GbX1hpiMWWI96Oc+AjsvYeB9m3QLxmZ
+ oPPsUNyGGr2zYFfOH9G63ei7AnJLPX9E7+FV2UGyrsp4The4ER71s/u4skmDi9L1NKOE
+ j28q4scx5eSQsephgTj+8iDadzSkSrpewuJV8Qv0dJMAmNetBE7KgyPS81NY9CZujeAb
+ UHgYKUJ0PgL0n05gKZdLMtQE13dEOCU1i9cWQT+YDr1gfFEZ2GyExiSFN3G89JQhcDHc
+ +RYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQI9Pn5bIX5ayFItU55U5N5ADJU6ALGvHs73jjQD2PheAvH8Jgb9TF/Axj2PqxxLX2ueau06EdTQ6c@nongnu.org
-X-Gm-Message-State: AOJu0Yxp1hxnVsoWbF/1QtEairv4D6fOZvY8oBf3x5Jflcq0kPc8purA
- JWKplxAl2web5sGi8aOOzBIe30ttfy9qytx1iUaGBl4lUL6TqfBk31xr6g==
-X-Gm-Gg: ASbGncsyY6FPkHKhzRft/CnjDSmvBPEQqzgR51FSc9frgxmkmNBN2BjGuetyWrI0vZ9
- BuoIKOUjtZmS+5IlXiky6wx/KDucaIIFjrjHdg1iPG1Gzjzlza7rWt64GhctAv4meTeuKcx38zs
- xdcdoyz7sJaohBCojCRnU/F10pyjbVFnMkPognwy1yG5WhBPKghIS+UBWY3JXXsd36xARweDlV8
- CtO8aY4JXW93pl67Us+oprk0C9o1M+H5gEQMOz47D3hZTl4heob078dUmV5m9T/4d6xo04+cw6W
- 5+7r98X5uyDN7SHPByFK6CaYRisX/zIUA+k1YV3lx85R
-X-Google-Smtp-Source: AGHT+IFst1buBogpUZRva6fTa9aq7I3/mso8A+T7Vpigl3nZioJ+nx/encnx+PQrQW3IRWOCi2BHSA==
-X-Received: by 2002:a17:903:1c5:b0:223:5ada:88ff with SMTP id
- d9443c01a7336-22bea4bcf30mr23126625ad.24.1744346508543; 
- Thu, 10 Apr 2025 21:41:48 -0700 (PDT)
+ AJvYcCVsi/hNAUHHIamX3CatvbcJpEjld9GiEPERKf0gtv5pUFHYs/HBF0hDgkixHtNscKsyKLtifhsE1xQ4@nongnu.org
+X-Gm-Message-State: AOJu0YzEkq65X7vNzP/byBPRh/RD9i3JQZM7ym7/i9jNOyFH/TDmPpMb
+ hA07cGGWfD/oyCUZKzSSAbqRbHK647xOk7uPuf1Ggbo7kADvo+LF7hDILA==
+X-Gm-Gg: ASbGncs7fLMAMGNw9E+fBve87r8fyyT/COUy/lQWOBsS+lT9p1ePhfP/bnKaeZrhJTF
+ ncVp4RMPuR2OHSDFQh2cVsptc0uq26lNX2M3BCWuZCpgxPFT7SMYO9dGLNoZNkLJ7DqNsnaO7iC
+ vLH5rvobhbNjq2bABJFPKlpfa1UVSmRU+IB5lHzKCUXaQTPyCu/4pbmL/TLu1B0Aq4cYAIMRrAA
+ l86LWkb1+Ukjz28zAFYdCk0SSzYzn+gBkB3VZACdAlHixB2LCD4yi196+i2W4VqoZgyDXeSFCUV
+ YBXTAyuWo3/J08srisJU2lo5iT99JI1f4IvZDiSHErp6
+X-Google-Smtp-Source: AGHT+IHYXRuD6gS2i4nIEW4pB5fxlGMlDpC30/K47GG6gftAxLtfSwWNG2fMF7M7Wq2DhJCz/vQw8A==
+X-Received: by 2002:a17:902:d4cb:b0:21f:1348:10e6 with SMTP id
+ d9443c01a7336-22bea05db99mr19802225ad.13.1744346513353; 
+ Thu, 10 Apr 2025 21:41:53 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c971e4sm39672745ad.136.2025.04.10.21.41.44
+ d9443c01a7336-22ac7c971e4sm39672745ad.136.2025.04.10.21.41.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Apr 2025 21:41:48 -0700 (PDT)
+ Thu, 10 Apr 2025 21:41:52 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -73,17 +73,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org
-Subject: [PATCH v4 2/7] tests/qtest/ahci: don't unmap pci bar if it wasn't
- mapped
-Date: Fri, 11 Apr 2025 14:41:24 +1000
-Message-ID: <20250411044130.201724-3-npiggin@gmail.com>
+Subject: [PATCH v4 3/7] tests/qtest/libquos/virtio: unmap pci bar when
+ disabling device
+Date: Fri, 11 Apr 2025 14:41:25 +1000
+Message-ID: <20250411044130.201724-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250411044130.201724-1-npiggin@gmail.com>
 References: <20250411044130.201724-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,138 +106,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ahci-test has a bunch of tests where the pci bar was not mapped. Avoid
-unmapping it in these cases, to keep iomaps balanced.
+Unmap the virtio-pci bar in qvirtio_pci_disable_device() to keep
+iomap/iounmap balanced.
 
 Cc: Michael S. Tsirkin <mst@redhat.com>
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/qtest/ahci-test.c | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ tests/qtest/libqos/virtio-pci.h |  1 +
+ tests/qtest/libqos/virtio-pci.c | 11 ++++++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 7cae6b58e0c..02c9d54f898 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -85,6 +85,8 @@ static void verify_state(AHCIQState *ahci, uint64_t hba_old)
-     uint64_t hba_base;
-     AHCICommandHeader cmd;
+diff --git a/tests/qtest/libqos/virtio-pci.h b/tests/qtest/libqos/virtio-pci.h
+index f5115cacba2..efdf904b254 100644
+--- a/tests/qtest/libqos/virtio-pci.h
++++ b/tests/qtest/libqos/virtio-pci.h
+@@ -26,6 +26,7 @@ typedef struct QVirtioPCIDevice {
+     uint64_t config_msix_addr;
+     uint32_t config_msix_data;
  
-+    g_assert_cmphex(ahci->hba_bar.addr, ==, hba_old);
-+
-     ahci_fingerprint = qpci_config_readl(ahci->dev, PCI_VENDOR_ID);
-     g_assert_cmphex(ahci_fingerprint, ==, ahci->fingerprint);
++    bool enabled;
+     int bar_idx;
  
-@@ -193,18 +195,28 @@ static AHCIQState *ahci_boot(const char *cli, ...)
+     /* VIRTIO 1.0 */
+diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+index 002bf8b8c2d..cb52a7c3f2e 100644
+--- a/tests/qtest/libqos/virtio-pci.c
++++ b/tests/qtest/libqos/virtio-pci.c
+@@ -300,13 +300,22 @@ static const QVirtioPCIMSIXOps qvirtio_pci_msix_ops_legacy = {
  
- /**
-  * Clean up the PCI device, then terminate the QEMU instance.
-+ * Should be called if ahci_pci_enable (or ahci_boot_and_enable)
-+ * was not used, or device/pci was disabled later.
-  */
--static void ahci_shutdown(AHCIQState *ahci)
-+static void ahci_shutdown_pci_disabled(AHCIQState *ahci)
+ void qvirtio_pci_device_enable(QVirtioPCIDevice *d)
  {
-     QOSState *qs = ahci->parent;
- 
--    ahci_pci_disable(ahci);
-     ahci_clean_mem(ahci);
-     free_ahci_device(ahci->dev);
-     g_free(ahci);
-     qtest_shutdown(qs);
++    g_assert(!d->enabled);
++    d->enabled = true;
+     qpci_device_enable(d->pdev);
+     d->bar = qpci_iomap(d->pdev, d->bar_idx, NULL);
  }
  
-+/**
-+ * Clean up the PCI device, then terminate the QEMU instance.
-+ */
-+static void ahci_shutdown(AHCIQState *ahci)
-+{
-+    ahci_pci_disable(ahci);
-+    ahci_shutdown_pci_disabled(ahci);
-+}
-+
- /**
-  * Boot and fully enable the HBA device.
-  * @see ahci_boot, ahci_pci_enable and ahci_hba_enable.
-@@ -945,7 +957,7 @@ static void test_sanity(void)
+ void qvirtio_pci_device_disable(QVirtioPCIDevice *d)
  {
-     AHCIQState *ahci;
-     ahci = ahci_boot(NULL);
--    ahci_shutdown(ahci);
-+    ahci_shutdown_pci_disabled(ahci);
+-    qpci_iounmap(d->pdev, d->bar);
++    /*
++     * Test for "enabled" device state because some paths can call
++     * qvirtio_pci_disable_device() on devices that have not been enabled.
++     */
++    if (d->enabled) {
++        qpci_iounmap(d->pdev, d->bar);
++        d->enabled = false;
++    }
  }
  
- /**
-@@ -957,7 +969,7 @@ static void test_pci_spec(void)
-     AHCIQState *ahci;
-     ahci = ahci_boot(NULL);
-     ahci_test_pci_spec(ahci);
--    ahci_shutdown(ahci);
-+    ahci_shutdown_pci_disabled(ahci);
- }
- 
- /**
-@@ -1143,8 +1155,8 @@ static void test_migrate_sanity(void)
- 
-     ahci_migrate(src, dst, uri);
- 
--    ahci_shutdown(src);
--    ahci_shutdown(dst);
-+    ahci_shutdown_pci_disabled(src);
-+    ahci_shutdown_pci_disabled(dst);
-     g_free(uri);
- }
- 
-@@ -1182,7 +1194,7 @@ static void ahci_migrate_simple(uint8_t cmd_read, uint8_t cmd_write)
-     /* Verify pattern */
-     g_assert_cmphex(memcmp(tx, rx, bufsize), ==, 0);
- 
--    ahci_shutdown(src);
-+    ahci_shutdown_pci_disabled(src);
-     ahci_shutdown(dst);
-     g_free(rx);
-     g_free(tx);
-@@ -1324,7 +1336,7 @@ static void ahci_migrate_halted_io(uint8_t cmd_read, uint8_t cmd_write)
-     g_assert_cmphex(memcmp(tx, rx, bufsize), ==, 0);
- 
-     /* Cleanup and go home. */
--    ahci_shutdown(src);
-+    ahci_shutdown_pci_disabled(src);
-     ahci_shutdown(dst);
-     g_free(rx);
-     g_free(tx);
-@@ -1388,8 +1400,8 @@ static void test_flush_migrate(void)
-     ahci_command_verify(dst, cmd);
- 
-     ahci_command_free(cmd);
--    ahci_shutdown(src);
--    ahci_shutdown(dst);
-+    ahci_shutdown_pci_disabled(src);
-+    ahci_shutdown_pci_disabled(dst);
-     g_free(uri);
- }
- 
-@@ -1421,6 +1433,7 @@ static void test_reset(void)
-         ahci_set(ahci, AHCI_GHC, AHCI_GHC_HR);
-         stop_ahci_device(ahci);
-         ahci_clean_mem(ahci);
-+        start_ahci_device(ahci);
-     }
- 
-     ahci_shutdown(ahci);
-@@ -1508,7 +1521,7 @@ static void test_reset_pending_callback(void)
-     stop_ahci_device(ahci);
-     ahci_clean_mem(ahci);
- 
--    ahci_shutdown(ahci);
-+    ahci_shutdown_pci_disabled(ahci);
- }
- 
- static void test_ncq_simple(void)
+ void qvirtqueue_pci_msix_setup(QVirtioPCIDevice *d, QVirtQueuePCI *vqpci,
 -- 
 2.47.1
 
