@@ -4,95 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A606DC36010
-	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 10:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C961C36010
+	for <qemu-devel@archiver.kernel.org>; Fri, 11 Apr 2025 10:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3BVi-0002eb-6l; Fri, 11 Apr 2025 06:21:23 -0400
+	id 1u3BVo-0002kF-2W; Fri, 11 Apr 2025 06:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u3BVV-0002YR-6N
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:21:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1u3BVe-0002ba-18
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:21:18 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u3BVN-0005OG-ET
- for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:21:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744366851;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=opVVaSGkm+v7J0L+i2NLNRTPU8jBN6OrZqKj37UOzRo=;
- b=gLYpyKcK2ZDx1I6DKuxikgEdvU/WEvIWgdDKtIz14bX7bYHGQRIXrbTNsp6btILYmLXIbX
- rCGTfM836AbwjQ8xp2iL6Ov/cdvqox4zVGv63vxIzbg8gWiz/irLcxqHLXae2yTMMAExv0
- QeFLMf9++S6GpAta9sLOXaSDnitZGLE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-3va141w2OY2_q4R8uvrIYw-1; Fri, 11 Apr 2025 06:20:50 -0400
-X-MC-Unique: 3va141w2OY2_q4R8uvrIYw-1
-X-Mimecast-MFC-AGG-ID: 3va141w2OY2_q4R8uvrIYw_1744366849
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3912fe32a30so782920f8f.1
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 03:20:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744366849; x=1744971649;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=opVVaSGkm+v7J0L+i2NLNRTPU8jBN6OrZqKj37UOzRo=;
- b=a/nw2mWvplYEB5/gZK7JCJPVOEBtBvIqMnNY+aE4y8CoQsodS31SznNr8oBdLYjhfy
- T3xIVrQGuPBJqAaTj64QK/G9cchfljNhvHH27sx4vWsW3/Gf9AxbxO/LBrlO6H6C9cuN
- Bzwx7nXocJEQtQ7Vwqv7dw/ib8jy1Aiv447MqilLRVZa0Jv5sOI4Gk5YmA9TKOPK6Yt0
- MjrkIvH6rw56Ug3SY2ibOqTA7ewyAkNqrm8NB1jfWcNkyumfAKmfJ8H/9X/ROvAzfwBY
- BpYyjhAC4tDBJHvOVG8oFXrOLaQQM1Mc2FOBej1psiBEGlZg6uXzbMPBzHNP0KtfwPda
- OCJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJON/LYTHMn8v0ohnVn6fgOa7mqXiYqkD8zJm1buFkXS6kS6mBOySUYcb7JEOhqr3Qs1zglJWinpof@nongnu.org
-X-Gm-Message-State: AOJu0Yx+9y3SvoP8Pq+QygcTEfZ0ChQMkrayEGNfyOFFpyV5hCTJlbez
- exi/+dFzNl+ZGplphsDVcKJs7dNoyGdHVMMHYC1ZkgHmuGet2BcM91Vy+HcMP+p3uu1VjbJqBVH
- HiR2slqX3jYdzwxrgamGPqWRXA5HMqYpbqdvHaodYrGH4gsyjhTFqDICaOjuP7F/5DrF5wk3WJE
- FcMcRounpb/ViBD3iQ9WbI4Ivj09Q=
-X-Gm-Gg: ASbGncvJSTR+hlnSpgPOdTvFhMQfR9foMc9nBHkCJvfjtV489ba1/l4RCEdg58JeP6T
- HIh5k2t4wl5pbFXIwGtxsKlkwAIoO7BND76hiQoYP1Z7EFnu37gJcDJBs5Lc8wb1Ah939aNE=
-X-Received: by 2002:a5d:648a:0:b0:399:737f:4de3 with SMTP id
- ffacd0b85a97d-39ea521f9f5mr1558765f8f.29.1744366849129; 
- Fri, 11 Apr 2025 03:20:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHKf6v7/YUjj6H+zE31+d4Bgpyg2EV4H0QfV3OvylyN8w+4ryM3GuN6Pxz+rP7171mpanTm1tqgG06kmMTGvok=
-X-Received: by 2002:a5d:648a:0:b0:399:737f:4de3 with SMTP id
- ffacd0b85a97d-39ea521f9f5mr1558749f8f.29.1744366848792; Fri, 11 Apr 2025
- 03:20:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1u3BVT-0005Nr-4m
+ for qemu-devel@nongnu.org; Fri, 11 Apr 2025 06:21:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1744366867; x=1775902867;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=1F7a1sjUDngnN5oBLAUAUwgEDgDAboQux7dnCudMDgI=;
+ b=hZgWI7L6Q/0p/HvvnMQleogswwiGyd8QyTazLNzPuwV56oiLWZrfAGji
+ kDsMbiwwjHa5Cca7eirmn8FILvIRwiJqCv05Eu6Xyo4d1mwVcfHkAOWUc
+ xpLcTo2jYL3w8lYJ4m6EuZSPHhLT+EdZ2C9r6b+rEZkmpbvGi2Kc9jKub
+ ccMf3Wii43p2Fj8fzKo38VIEX1TXalVQztakbxHmlKi0Aetxb14m33fqD
+ cDdGDCSwRLHi+Zx5DKzBYuz7GpBC5vmrwXl51ztB4hYCbAXOm+a518yCg
+ zinUzdcZDlQEUwRtC63J/tIUMP1vgh/7Uw9hTbcfarFwRePinOUPDcXhG w==;
+X-CSE-ConnectionGUID: 92ZFZwgMSsyuzlPb9C4msA==
+X-CSE-MsgGUID: RwdnyvwGRGeMuIPcUyG/aw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11400"; a="49566775"
+X-IronPort-AV: E=Sophos;i="6.15,205,1739865600"; d="scan'208";a="49566775"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Apr 2025 03:20:46 -0700
+X-CSE-ConnectionGUID: +qcDf0G7Qq2eUJazeBmj3w==
+X-CSE-MsgGUID: 4gPhNCWtTNGrjv6WwsxbcA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,205,1739865600"; d="scan'208";a="133917406"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Apr 2025 03:20:44 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH 0/5] cleanup interfaces
+Date: Fri, 11 Apr 2025 18:17:02 +0800
+Message-Id: <20250411101707.3460429-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250407155949.44736-1-kwolf@redhat.com>
- <bf72ef35-289c-4ec7-962b-414e3487c176@redhat.com>
- <CABgObfaJw1VSE6pbs2o1oTTGi6nXLtFQG90RG3J9DY1sukZpMA@mail.gmail.com>
- <Z_jsWQElOJyblb91@redhat.com>
-In-Reply-To: <Z_jsWQElOJyblb91@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 11 Apr 2025 12:20:36 +0200
-X-Gm-Features: ATxdqUHh1AZv40sVVg_vtMblYw7OiK4kHMhUCyGpG8efABL6Iw94QReE4ghIvjI
-Message-ID: <CABgObfa7Vp949NA-7Yu6QK8phKy2GwNSZ=ncWebYr=Gz6xP3Dw@mail.gmail.com>
-Subject: Re: [PATCH for-10.0] scsi-disk: Apply error policy for host_status
- errors again
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, stefanha@redhat.com, 
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.15;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.593,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,23 +83,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 11, 2025 at 12:18=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrot=
-e:
-> > Okay, going down the scsi_sense_from_errno() path is more or less
-> > harmless because status and sense end up unused; even though ENODEV is
-> > not something that the function handles, that can be added as a
-> > cleanup in 10.1.
->
-> Yes, it could be handled more explicitly. I considered adding a special
-> if branch in scsi_handle_rw_error() for host_status !=3D -1 before
-> checking ret < 0, but didn't do it in the end because the existing code
-> already handles it fine. If you prefer it to be there for readability, I
-> can send a cleanup patch.
+Hi,
 
-Don't worry, I tried when I thought it was a bug but came to the same
-conclusion.  I have sent a patch to handle ENODEV, which makes the
-code a bit less mysterious, but that's it.
+This series addresses Cédric's suggestion[1] and Donald's suggestion[2] to
+move realize() call after attach_device().
 
-Paolo
+Also addresses Eric and Nicolin's suggestion[3] to use a union to hold different
+vendor capabilities.
+
+[1] https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg01211.html
+[2] https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00898.html
+[3] https://lists.gnu.org/archive/html/qemu-devel/2025-03/msg01552.html
+
+Test:
+net card passthrough and ping test
+hotplug/unplug
+
+Based on vfio-next(b9d42a878b).
+
+Thanks
+Zhenzhong
+
+
+Zhenzhong Duan (5):
+  vfio/iommufd: Save host iommu capabilities in VFIODevice.caps
+  vfio: Move realize() after attach_device()
+  vfio/iommufd: Implement .get_cap() in
+    TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO sub-class
+  backends/iommufd: Drop hiod_iommufd_get_cap()
+  vfio/iommufd: Drop HostIOMMUDeviceCaps from HostIOMMUDevice
+
+ include/hw/vfio/vfio-device.h      |  2 +-
+ include/system/host_iommu_device.h | 14 -------
+ include/system/iommufd.h           | 26 ++++++++++++
+ backends/iommufd.c                 | 63 +++++++++++++++++++-----------
+ hw/vfio/container.c                |  4 --
+ hw/vfio/device.c                   | 28 ++++++-------
+ hw/vfio/iommufd.c                  | 39 ++++++++++--------
+ 7 files changed, 100 insertions(+), 76 deletions(-)
+
+-- 
+2.34.1
 
 
