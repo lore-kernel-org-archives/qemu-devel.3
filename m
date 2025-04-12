@@ -4,72 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FE0C369A1
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 10:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E86C369AE
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 16:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3YGE-0004BF-Ff; Sat, 12 Apr 2025 06:38:54 -0400
+	id 1u3dww-0006cH-Ho; Sat, 12 Apr 2025 12:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1u3YGA-0004AE-Az; Sat, 12 Apr 2025 06:38:50 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1u3YG8-0006iX-8S; Sat, 12 Apr 2025 06:38:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=cosF4cLG3559+ZAOzHp/RB0TPGm6onnaZsU/QKhSE3M=; b=jdn/E8317fF0Im23TcxV6tPIqL
- GvmVCQSKUC/KOvv7Kg8vNSqLpC4LkjgXNiN+G0F2IlTc21iRAlx6RdaPu3oXHQkjmofu2mQ3NJBDW
- U6sDZfPyeP3MpyBBh6kpR5nrzVFVah0cheaWfIRmO0V57dpasVfgHtHhlqsroID90FPnUZZSQ1vnK
- Q84pYx1NDDv+AVA+jflpp7vbZ1khzRHSf0Jr2ZkR7yNywWUa3gXsOvT11dt5sGh2L4UqUonVUqs99
- 2D1w7oxz5xNOYYL8K0nV5FFW/yMm9mcOwiFLWJLlJXD002rfei4xTibSTLnzbqdqPISNaNzRdjUyN
- tZ1y4M+IZcfBqzVuxEsVCh/ghLkr17QJYnmbkk64Hn9+lovClGmQPpTuovi2rnItzyXAHgQR99NyJ
- lKcDd/VJyiLAwzGrWk46BHb2iimIZ9N3f7hIHp2gfnJil5g1qAn3Pq0H/DcfZo2clSQUEoGB6PHjL
- BPGKi019w4pmryrglo9IGRGtmXslHrK14qB07l3xFGBAWuyH2fZKp9roUWD/VbKEUW0JhzMNsSZGt
- zZKa33rA8Mv1UOwfW7dh1PcLk21b6OCPC6VEHwge3RT43A0yD8EHSxhMdoznmjq1pd3jf6hX4+DyY
- kwMScqfxHSwI5DA2Di5WoN3CuMxc0LBVOAVSJuXyw=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u3dwu-0006bq-MB
+ for qemu-devel@nongnu.org; Sat, 12 Apr 2025 12:43:20 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u3dwt-00075w-5h
+ for qemu-devel@nongnu.org; Sat, 12 Apr 2025 12:43:20 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-226185948ffso32869625ad.0
+ for <qemu-devel@nongnu.org>; Sat, 12 Apr 2025 09:43:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744476197; x=1745080997; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IM3ruFcSn/3xOMWTqbq6MJahwA1zxl/1qzgndn9+Nfs=;
+ b=kFLEJBSZkk6KtOva2jPg69+aKz5pwO7YcNv3eqBOQMHTS9m4bQv+SPizZGRIgihwLY
+ AC0P/Q6vooXrmglw4K8E9lfRTH1MKR6v3Te9Jbb/rqLAp2RAQuluj5nNgm/2KrnWuJk3
+ 4v5DA3FqhJ0CX0sfr/Z9F7/NJyOPDyA3gMXBBwTRVuHejLZLbDLS+TlfxrUSpaciGcrF
+ mQoc7+Z2ii3+DXAB/O+QrsSqVCiVlqQ6ZhEvez8hsaJOkv8huGldi7zdO4eYOUJ5tlqR
+ 8Bg/NgaE51E+W2yPZvqhN395p8uMb8UhVQYLkqkSR9pN5EB6/t31tQtxj5/VXNnzjgV+
+ wcvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744476197; x=1745080997;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IM3ruFcSn/3xOMWTqbq6MJahwA1zxl/1qzgndn9+Nfs=;
+ b=it1PSNc825otxRI8NyufyAHyeHdXJkbbqkUBNQmzrfyOIjW7eFhEiSqvdvzG1erq4d
+ EUDuBOTiHiobRJfeNVxqZ+40+PyBYvYner4NYd77EXh2Z+B6e6e0xpoAMnOTVkjhVUMO
+ KAf0/9a/RZQuttoQGhsMro9FCqiVqC9hbf0ixaw6zhHf8lTUdq0nQE4p+O2nFgnr9q7k
+ d/iBGRnkNYjlYe+/ipgnv8D2BdHfdfPSz40JdiEXtjWJHTh9e+za46AuRnHGc1NNxw9Y
+ NbkoCCBd4lIbjdL2UO+bLUPxUJMaYNbabswha6kBVUoug1WMyAvYDsfaJelz9veTfyhp
+ Rf7A==
+X-Gm-Message-State: AOJu0YwRK38Jk79Pmm5y9DlL8f9qqXLUpuBqvCKFq1avvqbSsCK+kRvw
+ bcIlg3Jeiz3fDtVnOhy3EBydIZyGzjUbmrbxpSgRaQ6tb5iEYPsIndIQSjwgwExuV12i2zJLmLD
+ b
+X-Gm-Gg: ASbGncsfzUD0aV42XJVZbfZIqBZ7qTwHtJPLRnZCRE5fSaExTrhvmlGolI3TQ3bRkb/
+ kypyHYrMko15K0bOIEfrwU8//mXaVanZ67lrXQsq7uoNcQfZWJRBGFmsJ1LxQqYD08X2/mt20ur
+ 6yXMKPtg2B049AYS0evp096ncqasl1Uki0h3nn5qtjeshNsOrK+QWy/8n8uimVydeMywXsKvDYY
+ KwIjQpGOsgFlJhixpdIAZPchxebxWkyk52HGVTz5d37bI6wvdtw4iIdzw0YlyQvFxqxTPu2bF+m
+ YOrsXY1rL/DwlnU3FqqlUdKZnN/LWggyoAI1PlqPsdqbVrArqCmKCMPqUS1U+tVt20zTNymvU/8
+ =
+X-Google-Smtp-Source: AGHT+IGvp3g9SuDJXf+bjgO+CRhpBREkZbCVJXFDwapP6nUmAfKm5bBNCQbJNcHrrixfTr44BV3u3Q==
+X-Received: by 2002:a17:903:144e:b0:21f:4c8b:c4de with SMTP id
+ d9443c01a7336-22bea4f26dcmr79945445ad.42.1744476196981; 
+ Sat, 12 Apr 2025 09:43:16 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7cbdfe7sm69599435ad.207.2025.04.12.09.43.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 12 Apr 2025 09:43:16 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?ISO-8859-1?Q?Mathieu=2DDaud=E9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Greg Kurz <groug@kaod.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?ISO-8859-1?Q?Marc=2DAndr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel P =?ISO-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
-Subject: Re: [PATCH 08/10] hw/9pfs: Allow using hw/9pfs with emscripten
-Date: Sat, 12 Apr 2025 12:38:34 +0200
-Message-ID: <2555565.yjhJSkacHZ@silver>
-In-Reply-To: <1881242.gqbg26PhFk@silver>
-References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
- <2441396.svyq9LpYvz@silver> <1881242.gqbg26PhFk@silver>
+Cc: berrange@redhat.com,
+	stefanha@gmail.com,
+	philmd@linaro.org
+Subject: [PATCH for-10.0] docs: Document removal of 64-bit on 32-bit emulation
+Date: Sat, 12 Apr 2025 09:43:15 -0700
+Message-ID: <20250412164315.36161-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,45 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Saturday, April 12, 2025 12:21:47 PM CEST Christian Schoenebeck wrote:
-> On Saturday, April 12, 2025 10:21:47 AM CEST Christian Schoenebeck wrote:
-> > On Friday, April 11, 2025 12:47:29 PM CEST Kohei Tokunaga wrote:
-[...]
-> Let my answer my own question: I just checked the wasi sources. The errno
-> values are hard coded by the wasi API, consistent over systems. So the current
-> mapping of this patch is wrong. macOS uses a different mapping than the wasi
-> API.
-> 
-> https://github.com/WebAssembly/wasi-libc/blob/main/libc-bottom-half/headers/public/__errno_values.h
-> 
-> https://github.com/emscripten-core/emscripten/blob/4af36cf80647f9a82be617a0ff32f3e56f220e41/system/include/wasi/api.h#L116
-> 
-> So please use a correct mapping as defined in that header file.
-> 
-> /Christian
-> 
-> > Alternatively 9p2000.u protocol variant could be used for Emscripten. Not
-> > ideal, as this 9p protocol version is somewhat a legacy protocol from QEMU
-> > perspective, reduced performance, less reliable, but it transmits error
-> > strings to client which it can map to correct errno values by itself. Linux 9p
-> > client uses a hash map for this errno translation of 9p2000.u error strings.
+With acce728cbc6c we disallowed configuring 64-bit guests on
+32-bit hosts, but forgot to document that in removed-features.
 
-Stupid me. That's host errno -> Linux errno translation. So your values are
-obviously correct, sorry!
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ docs/about/removed-features.rst | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-However still worth comparing the Linux vs. wasi header files on this.
-
-And I would avoid duplicating the macOS translation code. Instead I would just
-do a one-line change:
-
-#elif defined(CONFIG_DARWIN) || defined(EMSCRIPTEN)
-...
-
-And probably leave a comment with a link to the wasi API header file there, so
-in case new errno translations are added for macOS, that people also check
-whether those macros exist in the wasi header file as well.
-
-/Christian
-
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 2527a91795..790a5e481c 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -858,6 +858,15 @@ QEMU.  Since all recent x86 hardware from the past >10 years is
+ capable of the 64-bit x86 extensions, a corresponding 64-bit OS should
+ be used instead.
+ 
++32-bit hosts for 64-bit guests (removed in 10.0)
++''''''''''''''''''''''''''''''''''''''''''''''''
++
++In general, 32-bit hosts cannot support the memory space or atomicity
++requirements of 64-bit guests.  Prior to 10.0, QEMU attempted to
++work around the atomicity issues in system mode by running all vCPUs
++in a single thread context; in user mode atomicity was simply broken.
++From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
++
+ Guest Emulator ISAs
+ -------------------
+ 
+-- 
+2.43.0
 
 
