@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D5D9C369A1
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 10:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FE0C369A1
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 10:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3Y02-0005Rc-54; Sat, 12 Apr 2025 06:22:10 -0400
+	id 1u3YGE-0004BF-Ff; Sat, 12 Apr 2025 06:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1u3Y00-0005RH-2I; Sat, 12 Apr 2025 06:22:08 -0400
+ id 1u3YGA-0004AE-Az; Sat, 12 Apr 2025 06:38:50 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1u3Xzx-0003gp-PY; Sat, 12 Apr 2025 06:22:07 -0400
+ id 1u3YG8-0006iX-8S; Sat, 12 Apr 2025 06:38:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Content-ID:Content-Description;
- bh=8ZN1z54BNoN4tZ6rXpv1jL7pDZiAQKvk/wBRnTkDugQ=; b=IDAZFJ7vcPW7YMgQ+g7m+TSHLb
- UxNotxxINEpJ/RoFD/GYuQNIpCWMiPZWuTrMpb/TEiRfqm9EzvkElWKisCMU08jOA1afyTGDkKcOM
- ZZBqx1kKvKBgw6scDXH14I4Ng/dyp8huyIa4q8qrFTfGK5dXGdKjSY3emvvc1vMY39/bIFF3KFVA2
- AHgZ5axKHKlf7g+PykfXk9HzODy3lDydiL/cYPzoZQh5x/HMTnokDySzF7UcLSd3gW13JnJO9Ao5e
- 6Rauf/DhH6ZPyRpwY5EjiAIlGdmLYOWb+RaoapSnRYzzk5m3hG1LVZDQmirdSmG8RHHp5D+Fa36Bg
- Ot9g86b8MysFA0kWOxETwF3R4EaD88UkBxWr10VW/Hhfri9h6r/j5I3c+LBMDuPD6SIfoekCMossP
- TuTtMhej+ViuSgfSHaPU8YvnWVb9IUC40XQ0b4UcWlfxxxBEfN/2ILnRTbgLh2bDhW6KIDi1yLm9I
- BJ+0QruA1qCZVZfR6a9EqL/iKX9y4anyGokeLBRjE0FFgdQQgILl+QRC/x31JXFdxaO2psWdFjStk
- DDHF4xgbjEWgvvZkOdoLojIqjniXOIGZFFapm9wM8M2Km30hdND0r1W2cbNHB3VharGX2oezD8BfR
- K2aWhgHHl6WO6TWmUGLlMNZB6IqGBJfg4H8LjFFKk=;
+ bh=cosF4cLG3559+ZAOzHp/RB0TPGm6onnaZsU/QKhSE3M=; b=jdn/E8317fF0Im23TcxV6tPIqL
+ GvmVCQSKUC/KOvv7Kg8vNSqLpC4LkjgXNiN+G0F2IlTc21iRAlx6RdaPu3oXHQkjmofu2mQ3NJBDW
+ U6sDZfPyeP3MpyBBh6kpR5nrzVFVah0cheaWfIRmO0V57dpasVfgHtHhlqsroID90FPnUZZSQ1vnK
+ Q84pYx1NDDv+AVA+jflpp7vbZ1khzRHSf0Jr2ZkR7yNywWUa3gXsOvT11dt5sGh2L4UqUonVUqs99
+ 2D1w7oxz5xNOYYL8K0nV5FFW/yMm9mcOwiFLWJLlJXD002rfei4xTibSTLnzbqdqPISNaNzRdjUyN
+ tZ1y4M+IZcfBqzVuxEsVCh/ghLkr17QJYnmbkk64Hn9+lovClGmQPpTuovi2rnItzyXAHgQR99NyJ
+ lKcDd/VJyiLAwzGrWk46BHb2iimIZ9N3f7hIHp2gfnJil5g1qAn3Pq0H/DcfZo2clSQUEoGB6PHjL
+ BPGKi019w4pmryrglo9IGRGtmXslHrK14qB07l3xFGBAWuyH2fZKp9roUWD/VbKEUW0JhzMNsSZGt
+ zZKa33rA8Mv1UOwfW7dh1PcLk21b6OCPC6VEHwge3RT43A0yD8EHSxhMdoznmjq1pd3jf6hX4+DyY
+ kwMScqfxHSwI5DA2Di5WoN3CuMxc0LBVOAVSJuXyw=;
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org
 Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
@@ -50,14 +50,14 @@ Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
 Subject: Re: [PATCH 08/10] hw/9pfs: Allow using hw/9pfs with emscripten
-Date: Sat, 12 Apr 2025 12:21:47 +0200
-Message-ID: <1881242.gqbg26PhFk@silver>
-In-Reply-To: <2441396.svyq9LpYvz@silver>
+Date: Sat, 12 Apr 2025 12:38:34 +0200
+Message-ID: <2555565.yjhJSkacHZ@silver>
+In-Reply-To: <1881242.gqbg26PhFk@silver>
 References: <cover.1744032780.git.ktokunaga.mail@gmail.com>
- <CAEDrbUakVwwn228nSb0rD1C9qiZ-tpcHBzLRDVyGRNsim97=JQ@mail.gmail.com>
- <2441396.svyq9LpYvz@silver>
+ <2441396.svyq9LpYvz@silver> <1881242.gqbg26PhFk@silver>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
@@ -85,83 +85,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Saturday, April 12, 2025 10:21:47 AM CEST Christian Schoenebeck wrote:
-> On Friday, April 11, 2025 12:47:29 PM CEST Kohei Tokunaga wrote:
-> > Hi Christian,
-> > 
-> > > > Emscripten's fiber does not support submitting coroutines to other
-> > > > threads. So this commit modifies hw/9pfs/coth.h to disable this behavior
-> > > > when compiled with Emscripten.
-> > >
-> > > The lack of being able to dispatch a coroutine to a worker thread is one
-> > > thing, however it would probably still make sense to use fibers in 9pfs as
-> > > replacement of its coroutines mechanism.
-> > >
-> > > In 9pfs coroutines are used to dispatch blocking fs I/O syscalls from main
-> > > thread to worker thread(s):
-> > >
-> > > https://wiki.qemu.org/Documentation/9p#Control_Flow
-> > >
-> > > If you just remove the coroutine code entirely, 9p server might hang for
-> > good,
-> > > and with it QEMU's main thread.
-> > >
-> > > By using fibers instead, it would not hang, as it seems as if I/O
-> > syscalls are
-> > > emulated in Emscripten, right?
-> > 
-> > Thank you for the feedback. Yes, it would be great if Emscripten's fiber
-> > could be used to address this limitation. Since Emscripten's fiber is
-> > cooperative, I believe a blocking code_block can still block the 9pfs server
-> > unless an explicit yield occurs within it. I'll continue exploring better
-> > solutions for this. Please let me know if I'm missing anything.
+On Saturday, April 12, 2025 12:21:47 PM CEST Christian Schoenebeck wrote:
+> On Saturday, April 12, 2025 10:21:47 AM CEST Christian Schoenebeck wrote:
+> > On Friday, April 11, 2025 12:47:29 PM CEST Kohei Tokunaga wrote:
+[...]
+> Let my answer my own question: I just checked the wasi sources. The errno
+> values are hard coded by the wasi API, consistent over systems. So the current
+> mapping of this patch is wrong. macOS uses a different mapping than the wasi
+> API.
 > 
-> As far as I understand it, the I/O syscalls are emulated, and when being
-> called by fibers, blocking syscalls would imply to yield under the hood,
-> without explicit yield by application that is.
+> https://github.com/WebAssembly/wasi-libc/blob/main/libc-bottom-half/headers/public/__errno_values.h
 > 
-> If that's true, it would only require little code changes for this to work.
+> https://github.com/emscripten-core/emscripten/blob/4af36cf80647f9a82be617a0ff32f3e56f220e41/system/include/wasi/api.h#L116
 > 
-> > > Missing
-> > >
-> > >     errno = ENOTSUP;
-> > 
-> > Sure, I'll fix this in the next version of the series.
-> > 
-> > > Looks like you just copied the macOS errno translation code. That probably
-> > > doesn't make sense.
-> > 
-> > Errno values differ between Emscripten and Linux, so conversion is required
-> > here. I've used the same mappings as macOS for now, but I'm happy to add
-> > more conversions if needed.
-> 
-> OK, but why have you chosen macOS errno mapping exactly? Are you testing on a
-> macOS host machine? Are errno values of emscripten machine dependent?
-> 
-> The errno mapping must be correct, otherwise funny things will happen on guest
-> side if 9p2000.L client is used, as it blindly expects errno numbers sent by
-> 9p server to be in native Linux errno number presentation.
-
-Let my answer my own question: I just checked the wasi sources. The errno
-values are hard coded by the wasi API, consistent over systems. So the current
-mapping of this patch is wrong. macOS uses a different mapping than the wasi
-API.
-
-https://github.com/WebAssembly/wasi-libc/blob/main/libc-bottom-half/headers/public/__errno_values.h
-
-https://github.com/emscripten-core/emscripten/blob/4af36cf80647f9a82be617a0ff32f3e56f220e41/system/include/wasi/api.h#L116
-
-So please use a correct mapping as defined in that header file.
-
-/Christian
-
-> Alternatively 9p2000.u protocol variant could be used for Emscripten. Not
-> ideal, as this 9p protocol version is somewhat a legacy protocol from QEMU
-> perspective, reduced performance, less reliable, but it transmits error
-> strings to client which it can map to correct errno values by itself. Linux 9p
-> client uses a hash map for this errno translation of 9p2000.u error strings.
+> So please use a correct mapping as defined in that header file.
 > 
 > /Christian
+> 
+> > Alternatively 9p2000.u protocol variant could be used for Emscripten. Not
+> > ideal, as this 9p protocol version is somewhat a legacy protocol from QEMU
+> > perspective, reduced performance, less reliable, but it transmits error
+> > strings to client which it can map to correct errno values by itself. Linux 9p
+> > client uses a hash map for this errno translation of 9p2000.u error strings.
+
+Stupid me. That's host errno -> Linux errno translation. So your values are
+obviously correct, sorry!
+
+However still worth comparing the Linux vs. wasi header files on this.
+
+And I would avoid duplicating the macOS translation code. Instead I would just
+do a one-line change:
+
+#elif defined(CONFIG_DARWIN) || defined(EMSCRIPTEN)
+...
+
+And probably leave a comment with a link to the wasi API header file there, so
+in case new errno translations are added for macOS, that people also check
+whether those macros exist in the wasi header file as well.
+
+/Christian
 
 
 
