@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20BDC369AB
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 05:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59325C369A1
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 05:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3THT-0006Mv-2A; Sat, 12 Apr 2025 01:19:51 -0400
+	id 1u3TSM-0000gR-Ur; Sat, 12 Apr 2025 01:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3THR-0006MU-Bc
- for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:19:49 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3TSL-0000gF-Nv
+ for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:31:05 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3THP-0001Ba-SG
- for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:19:49 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-736b98acaadso2561036b3a.1
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 22:19:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3TSJ-0003l6-V0
+ for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:31:05 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-736ad42dfd6so2221782b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 22:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744435185; x=1745039985; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744435862; x=1745040662; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cpkPaOaEpw1G6HeSFk7Zuci3HjUQkoatM1/iGGPErhk=;
- b=H0mlDW4v5G6IOCnpmoOF8ECAxdoYvgzdBV1CiS4CduxNZn1cObvtHbiQNYVqIrmmAQ
- +bi9VGh51ckxz5p76J807wMqUxZfkBVJ38ikk8jeGYEApFi59u0+20yfGR5+pHR7mk5W
- DRmT3RCbzOFrQz0SXhMxMWTSfiAPi9hNlL65t5vjP760WP9jeT7D/IkqkD/50gm95W9l
- RArTFzlZNEKgE5VRESDs4eYKYIeX1aXfZp9wAruvGbMq4ua0TPU5BvVm/OeSiUyvxyGP
- huRgHSLqnHDLtRhkZhn63E3FiC6L3OPBU90E0fATY7UCiB+BISigQU4I/+HqqaDsxyh4
- CXRg==
+ bh=ogO7i7TIXqsMEIrsP3iL8iXk/h44a8/7WuiRvUfkpEw=;
+ b=NVUpNxSoYgne61Bc+tYGlFCGWuy8vDBLUD2qefK5VUlb18rq7mtxP0mt8LC+HN2Jk1
+ /Gn372PPFWXOF+hfDhqCgLXfu5Xx2qJJVtlBig1l2y0XM7gZUroCuzbC5FqupNJBUJCJ
+ ulDY19h+qAenuvk6zMLTFLNwo4HQrQH2LLrUlzDS2t+VLO3/K8tLWJt8z0WnGJ4R3eFq
+ pi7UDoPq5XyiGUtfS6CT/xD9yxvopfPWbQMzO5eMpY6PwdAKK9FU6PYXDv2ZwcvlsaLr
+ P1/o87vbDDEg0VjS80PKkmEYmokehxauiFB8AX0eGFfIAyE/4DNdUKDCoDGg1KDowcca
+ jpWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744435185; x=1745039985;
+ d=1e100.net; s=20230601; t=1744435862; x=1745040662;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cpkPaOaEpw1G6HeSFk7Zuci3HjUQkoatM1/iGGPErhk=;
- b=Z0zuh6rOK0pV/zxxt6zjEm8+ppf6tcM0BToPslww4SGe/EPVA6vS+K+tQqRFDrgOtB
- 53TK36C5MlzbYi9V3/8OBGc8kow0quQd0UbZKP+9khl2VwZHXD1irLxUz9DRoF3TbZis
- G0Llm43VGVqHkzp2Xn9Sw2A5TRwwolMmyK84C9gn8ub3z8uX0wEiGHpHkGLLZzR/vRA3
- s3x7DyJo2WnkkaO8ANQhRpaXNuGvLayGGZ/UAGVNZooivfhPlIjo6m8nwFakQtczAOFe
- MOVtBwnwq6tY3vSXaHkt7XAFW9Orukj/17dMuBKQ4J7Hif+ztXNVs0SeiDB3uud3e5TA
- c/rg==
+ bh=ogO7i7TIXqsMEIrsP3iL8iXk/h44a8/7WuiRvUfkpEw=;
+ b=Czd4QEACfrDnNXoq7EZCfV43ThiufMTOqnDIQnn5EyPqU73k5+vgNdTXfTsdMq1DCa
+ groPvgAr1mPgyI9VxPssQ1KQEpYYNUvSa9iqnl+GOl8b2DeAZltD+HWna5XtM3CxxPbb
+ UNo6/UZiaTUhLGsVnFyDw1WASqZ3K2iAjU78AsZFDNe4DjcNV4MsUxfncbtkTuTd18KF
+ TPcV4MrwWfEs+GMDrPy/Z3NLWItwzEFin5HMScQaeA3ApdAW89EPZr2jkwidU9GNOmel
+ V0vHR0cswD3pGd/GQOY/nFTrVmvqVCY5kAkbaxAtChuQ83GDPEv0/ZDmPAYhrZVpn84X
+ HnAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiwSplgXvxDWARksh8cUE2VKHt3QSV+V3eap/2nIPRpPcZLb4TcJn/KQ6a5l0FIPUefQsxr3qq+aRN@nongnu.org
-X-Gm-Message-State: AOJu0Yxa1qVB5sFcSOJVHTpLAffa+TPL0hNB7hUjED44TorrqKQ9rl5T
- GJr81cMD9objPxYSXe8BANP7TzgiJxpTOyAIl+fnJRbO9IUTdY12
-X-Gm-Gg: ASbGncvmO209epNkyEQQvkRV4vIYGwl4uwcbWRZagG1PjmA45umBoNhCaKyqqNPxrNO
- Bn5pznc/knRAmfXCZBUdGImDXo9+HxBqZlRk/TKCpf6Z+MRCSHD4gbXcBtTOF4WzHyiIo/S5V+s
- eEGXovTV32bMWPe66XDTcc1vUrFJ+Wkrwf4D4fX8iTiTWAXKdJcohugyU4tEX7PSKBs1WOZejXd
- JxjyJMWaBLy+Xa6/3CngGSTU75IR1uY48m5dx08lwrUPDupb++43uCy9BgG3ucK3hsNcP7x5HHP
- T+8gXcdiMxncF7O40TuuYchmd7bKtIN49Q6WpNhxJPDF
-X-Google-Smtp-Source: AGHT+IE1xR7NZkWT3J9WV/1eXQoy6C5tuGllB3zhryYY0s6t0SwCIENJK1bE7PIfaHwKjX59BGu5Dg==
-X-Received: by 2002:a05:6a21:999b:b0:1f5:709d:e0cc with SMTP id
- adf61e73a8af0-201799908c2mr8243138637.40.1744435185069; 
- Fri, 11 Apr 2025 22:19:45 -0700 (PDT)
+ AJvYcCVVEWE2HS4WQSUgs16raiKWNnwOt0oymbv2R5S7Wrs1IqZsf04j77JzzypSOFAHpuAoAVrLFww4tqyg@nongnu.org
+X-Gm-Message-State: AOJu0Yx3OYZ3P/NNqOsKoT/PIW3ORmm+H56h0M0zlHpokLMHQN7Z9pds
+ AHNcSW7rz9LBMwDBnsIC3aYDFxzC2YCxLY5XQa+dPbtA9veuyPBpVhtHiw==
+X-Gm-Gg: ASbGnctnACZLms36fZTnDYwUhGe/DJNgRMGc+AZqNxnJEyrmPDBldP934xc9qf6/G/w
+ eVjTMu0lOmXh4AJ0sXo1NQb4qwzrkiVRz0Hd2OgsokTRUt6/VNQXovgkETTVX1Bmlw1dXh78hVO
+ DKwQQA6AwRQGbyLxi3gSyW+iSGWfFz77FZYs6hsxgMiqWg9eJfouuAOTmwLiBIbcjltbiAptMe/
+ +6MF66u4LZVkliS1N3FVpYsqv9XWnZtJbc8uvRk/+f+Y0tZhH8YT3k5K1Q3fn26VWH3TQYg3g83
+ IPu4RApB7aeJlfqicARBxDhI4vLb31HHTjWwbyzHGiLp
+X-Google-Smtp-Source: AGHT+IGUBacOXX40mGBzVzr9rLKZHIGPlGikhL5iv/c3zi0XdsxK7aQC4WIaWcTE86Zt3abiMk7h3w==
+X-Received: by 2002:a05:6a00:3901:b0:730:7600:aeab with SMTP id
+ d2e1a72fcca58-73bd120319amr6787161b3a.13.1744435859732; 
+ Fri, 11 Apr 2025 22:30:59 -0700 (PDT)
 Received: from localhost ([220.253.99.94]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b02a081814dsm5833747a12.15.2025.04.11.22.19.42
+ d2e1a72fcca58-73bd2336ea1sm2740675b3a.179.2025.04.11.22.30.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Apr 2025 22:19:44 -0700 (PDT)
+ Fri, 11 Apr 2025 22:30:59 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 12 Apr 2025 15:19:39 +1000
-Message-Id: <D94ENUA588DZ.2MMSB2A1AX0KL@gmail.com>
-Cc: "Corey Minyard" <minyard@acm.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v3 0/5] ipmi: bmc-sim improvements
+Date: Sat, 12 Apr 2025 15:30:54 +1000
+Message-Id: <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
+Cc: <philmd@linaro.org>, "Stefan Hajnoczi" <stefanha@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Phil Dennis-Jordan" <phil@philjordan.eu>
+Subject: Re: [PATCH 1/2] system/main: transfer replay mutex ownership from
+ main thread to main loop thread
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: <corey@minyard.net>
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.19.0
-References: <20250401140153.685523-1-npiggin@gmail.com>
- <Z-w75P6iav82W5Qr@mail.minyard.net> <D93LFGHCQANR.1TFR56ESHUY1H@gmail.com>
- <Z_ldV8X3AXe1QDFf@mail.minyard.net>
-In-Reply-To: <Z_ldV8X3AXe1QDFf@mail.minyard.net>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
+ <20250410225550.46807-2-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250410225550.46807-2-pierrick.bouvier@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,40 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat Apr 12, 2025 at 4:20 AM AEST, Corey Minyard wrote:
-> On Fri, Apr 11, 2025 at 04:25:10PM +1000, Nicholas Piggin wrote:
->> On Wed Apr 2, 2025 at 5:17 AM AEST, Corey Minyard wrote:
->> > On Wed, Apr 02, 2025 at 12:01:47AM +1000, Nicholas Piggin wrote:
->> >> These little things came up when looking at behaviour of IPMI with
->> >> the bmc-sim implementation running the ppc powernv machine, and
->> >> trying to clean up error messages and missing features.
->> >
->> > This all looks good to me.  Thanks to Philippe for reviewing, too.
->> >
->> > I can give you an
->> >
->> > Acked-by: Corey Minyard <cminyard@mvista.com>
->> >
->> > if you are working on this for your own tree, or I can take it into
->> > mine.
->>=20
->> Hey Corey,
->>=20
->> Thanks for all the review, and sorry I missed your question...
->>=20
->> I don't have anything further in my tree, I don't have an
->> immediate need for it, it was just tidying up a few errors
->> and warnings I noticed.
->>=20
->> I'd be happy for you to take it in your tree and send it up
->> when it suits you.
+On Fri Apr 11, 2025 at 8:55 AM AEST, Pierrick Bouvier wrote:
+> On MacOS, UI event loop has to be ran in the main thread of a process.
+> Because of that restriction, on this platform, qemu main event loop is
+> ran on another thread [1].
 >
-> Ok, it's in my tree.  I had to fix up pci_ipmi_kcs.c, it defined
-> pci_ipmi_bt_get_fwinfo, not pci_ipmi_kcs_get_fwinfo.
+> This breaks record/replay feature, which expects thread running qemu_init
+> to initialize hold this lock, breaking associated functional tests on
+> MacOS.
+>
+> Thus, as a generalization, and similar to how BQL is handled, we release
+> it after init, and reacquire the lock before entering main event loop,
+> avoiding a special case if a separate thread is used.
+>
+> Tested on MacOS with:
+> $ meson test -C build --setup thorough --print-errorlogs \
+> func-x86_64-x86_64_replay func-arm-arm_replay func-aarch64-aarch64_replay
+> $ ./build/qemu-system-x86_64 -nographic -icount shift=3Dauto,rr=3Drecord,=
+rrfile=3Dreplay.log
+> $ ./build/qemu-system-x86_64 -nographic -icount shift=3Dauto,rr=3Dreplay,=
+rrfile=3Dreplay.log
+>
+> [1] https://gitlab.com/qemu-project/qemu/-/commit/f5ab12caba4f1656479c1fe=
+b5248beac1c833243
+>
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2907
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  system/main.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/system/main.c b/system/main.c
+> index ecb12fd397c..1c022067349 100644
+> --- a/system/main.c
+> +++ b/system/main.c
+> @@ -25,6 +25,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu-main.h"
+>  #include "qemu/main-loop.h"
+> +#include "system/replay.h"
+>  #include "system/system.h"
+> =20
+>  #ifdef CONFIG_SDL
+> @@ -44,10 +45,12 @@ static void *qemu_default_main(void *opaque)
+>  {
+>      int status;
+> =20
+> +    replay_mutex_lock();
+>      bql_lock();
+>      status =3D qemu_main_loop();
+>      qemu_cleanup(status);
+>      bql_unlock();
+> +    replay_mutex_unlock();
+> =20
+>      exit(status);
+>  }
+> @@ -67,6 +70,7 @@ int main(int argc, char **argv)
+>  {
+>      qemu_init(argc, argv);
+>      bql_unlock();
+> +    replay_mutex_unlock();
+>      if (qemu_main) {
+>          QemuThread main_loop_thread;
+>          qemu_thread_create(&main_loop_thread, "qemu_main",
 
-Thanks, I noiced that just now too I thought I'd had a config
-that built it but clearly not :( Sorry.
+Do we actually need to hold replay mutex (or even bql) over qemu_init()?
+Both should get dropped before we return here. But as a simple fix, I
+guess this is okay.
 
-Thanks,
-Nick
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
