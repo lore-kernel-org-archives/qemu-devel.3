@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE27C369AE
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 17:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2AFC369AE
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 18:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3eaw-0002sh-Jz; Sat, 12 Apr 2025 13:24:42 -0400
+	id 1u3fI0-0001lQ-3X; Sat, 12 Apr 2025 14:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u3eat-0002sK-RQ
- for qemu-devel@nongnu.org; Sat, 12 Apr 2025 13:24:40 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <arthur.sengileyev@gmail.com>)
+ id 1u3fHk-0001fU-AB; Sat, 12 Apr 2025 14:08:57 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u3eas-00077R-2u
- for qemu-devel@nongnu.org; Sat, 12 Apr 2025 13:24:39 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-22622ddcc35so40420415ad.2
- for <qemu-devel@nongnu.org>; Sat, 12 Apr 2025 10:24:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <arthur.sengileyev@gmail.com>)
+ id 1u3fHg-0005Ic-O5; Sat, 12 Apr 2025 14:08:55 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-30effbfaf4aso28651331fa.3; 
+ Sat, 12 Apr 2025 11:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744478676; x=1745083476; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oXubs4yeHo2sCPpxl8mtjQPmIP+cIRXISNZpXqBAsaA=;
- b=oEJq9lrMl0QosA0XVYKO2VaTQpErVxaCv+QLU5dKd36gNVndB+tUgNdVTJLa7LfWbJ
- LmF03rN4Zev9pOzYIJGrBSKmRxV0rL8h/AtMbAPiGP5UJ80bQEz8dUsjF4U86aRpJ9s5
- wSDz6AnA+9y05EhBs7RSewsw9y0DpWU3kt0ifglZUKBmcyhHIbjMTj1Bs8t8k7XVEXna
- PJNG6Aix+jlbp5oUSjViG11hSxwgbw855jZaLinBD53+wXIwjlpvgHi/R5B6EIh/miIs
- QoA8R1EFFEZPff7EE9tfGJUxUTmPU4SGIqv9YIqYd+LQTKRTT5qg6hJvRUg2BL7Vv5TW
- KsFA==
+ d=gmail.com; s=20230601; t=1744481328; x=1745086128; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eTeQINHtOJdpGFDL7OobHFAVylbSYWG/0glbsWwisUc=;
+ b=H2Lb9VlD3+JCZ4UXKsb/Ygvoqh1BRozWVXuqVMbhHhEbXjq2lPK5FxMv79LDdViSBr
+ VrIZXExFA0RghXzKtoaT/jzvJf1P8o6IUEZeqgeSFxczWvscK0k2vGe3SBFSdacz7d1S
+ qQL46zLpQxd6/4tEW3KxW4kAA6wTcWrJMEj07fPbToxSF2gBRLs/dZ1VuEsNpU0i8crr
+ NioD+4OdUc0g+9nqnwmrbdaMYVjbdmD9ps4MgwAa+YfH5OZJYZ90gKPuczbWonPg7ca5
+ ZgUBtWorx9LqWtpXUsFg2qCwRo9Mx3oweDfWJAbo38GbNPXuHdd3gtrph3cby7cNB7pl
+ 6y0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744478676; x=1745083476;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oXubs4yeHo2sCPpxl8mtjQPmIP+cIRXISNZpXqBAsaA=;
- b=prFgGPR7j22M2N5A2dh2KYewmeks9veFLayrF9d6FlEkatI+IuBrr5BrJYQ73VflNx
- lT5xD5iW1V+e/3VO+iT/5NoFoAaBKpuka4Z3Dbp6mxQcGO0Gc2z8c86kQbgzaTWHKJWM
- AnJKWDoDTNRHY357E+PblBLrp/eErDF5PTyKWKVaIPmOLhyR3iS3fN7AsY9Qg2QFOds/
- ubEnWxPzzEb+9fPgvJI8Gp2YLUq/GEz85my+ReGnWJ1T21jQ9jsu4iKL0QKHua5YNiKo
- iZG86TmOp7HhMT8XMq+Aa9OWDF1I9+A2HDCo4wS+rPye11PiaW1TPK95cuXpAFNmjd0j
- 1BvQ==
+ d=1e100.net; s=20230601; t=1744481328; x=1745086128;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eTeQINHtOJdpGFDL7OobHFAVylbSYWG/0glbsWwisUc=;
+ b=nBLlJTAf2MmH8P0lcGEFm2FLugifCnSZ+wdz5HU7tBOB2C5GiaS6oJzoqD6ymgz642
+ CeWIiKmU9xfFdT7rJ2W0OWbXWZp3y7TsHs6QhJVcmVaHyj9hjjmQt5nV/0UfHbO7rZ7/
+ DeS9OzNv41HPlXzesXinW99DAkcJTDVFECNSnW8ttIslPaHH+dQMCZIOJEhEBIaYLSiY
+ f6G+Hc0ANtEGA5IvVfjcnUO0qh89jfJK8IiLhvheyMm2rqnsPe+xOXSCeAW5FwBXaC4L
+ xyn/mjZMay1l5ALXDMHxV8grOwSnH8cYKBlckqna+a4XttfbcTMrPcliSNKYEhTXNYwO
+ r3fw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzlQHD4TxKD2sSMxEeFipc6xdFNJ74l8gFYQyIPW423hRRWGLrT31hUoC4z3ZUA90UtsMe4HNLNr1Z@nongnu.org
-X-Gm-Message-State: AOJu0Yyc7EPTO4eI+bXODOOtfq106KwmAyhoiaAL/w59I7+x5yR/dE8a
- 2/EroCHbTWwP84pJXhgP4S4Jpmw39aZ92BvYBLZxNtt7fyj6NVfBirwxftujPrk=
-X-Gm-Gg: ASbGncv8XDoGpHNry5coQRfnrBhRvMbcdu0lyCt8hk3frQw13gVarSqZeuaZuN3+UnL
- mU/UhsKZGswbAvjKU3VVBXJk5MEYEHG26bRYwWxLt1X0p5kYv4ExRIK5IXyVIyTQL/olVpbkNp+
- +d3G2p9Z4My75XZuZeyZ5pj1pBljWp+zTeTbMJ4JephsJ2J1x7h+A8bLQyntrXncQGJ+4YUi8lr
- XceeAUhJp1QiWihKpIjxqrTYJQfV1qzoP8HOmeId4+tEJKyJzKOS2QO760lotapnpL2ksUTMvst
- tsKuvOZ6Xb+nUEFtT8lOZwSs9HNdMP7Su7Qw+oRWpB+Ke0et54JKyA==
-X-Google-Smtp-Source: AGHT+IE4arvjXyQPz8aAugIdk9OqKmnpkrubuzzSPF0Bjpr5coy5ce3BzkJr0bxyBrDrj0GGFr4+3w==
-X-Received: by 2002:a17:903:2bce:b0:224:a79:5fe9 with SMTP id
- d9443c01a7336-22bea4bd2cbmr95865215ad.30.1744478675937; 
- Sat, 12 Apr 2025 10:24:35 -0700 (PDT)
-Received: from [192.168.1.87] ([38.39.164.180])
+ AJvYcCUzmZSgxoIGb8iR5l8pE1fUNW99+/NhMg0Xy7ug8mp1oIyEAwTvHeVioN1vhO9VOLb69DHgZuwZIZjZm0I=@nongnu.org
+X-Gm-Message-State: AOJu0Yw5Xaim71WaiBv0eOuA9MvvexeoB3RS34UjUo0THtMP8oRT/7wk
+ 37nEXZqrAsDEBC5Iqftb/n5IeBBFMnsHm5vQ3GrU7yApOgAptbYXGJKcOrDh
+X-Gm-Gg: ASbGncvu9ITnJ4DvBddvsTsCNLfdqiTUEj/DbMjbfssFV/DM1eru9n15K7UnFslcy7k
+ BkWQyEnA83uDR1EJni/9KhPesQu3aM4kSxfmweRB8YwzyUqxnhfymMstaDzrfZP1j7gwFvvnMnH
+ 2dibg+s7zQWKB40UvFTgac9GgXEzj+Ayyyj3X0NMjxj7wTAinN+KpwdYMfXT5xqtYWnZwMgkj9z
+ w/r6ynQ/UbB53u+CK2iFu2hrXmeRNzZkss9e5oQD9VPvgCsbTvjcOWCQwwuViunDOK2I2qKRbpk
+ v/jwOMtcfYULTGQNNuszsEeamGIp/fISRt5CeHXs4Kk1qgXLdJmuP5C+sw4FbCqVBgMJ0XEybA=
+ =
+X-Google-Smtp-Source: AGHT+IHnBfEfKpo8B0ayRb+8SxcLJnq/r7hEFW/I5CXlnm0X9v5aeOde9bQYMpzW44w05WSTMiAO3g==
+X-Received: by 2002:a2e:9a12:0:b0:30b:bdb0:f09d with SMTP id
+ 38308e7fff4ca-31049a80161mr27003581fa.32.1744481328170; 
+ Sat, 12 Apr 2025 11:08:48 -0700 (PDT)
+Received: from glider-mk2.mshome.net ([87.246.149.32])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd22f10b3sm3612393b3a.118.2025.04.12.10.24.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 12 Apr 2025 10:24:35 -0700 (PDT)
-Message-ID: <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
-Date: Sat, 12 Apr 2025 10:24:34 -0700
+ 38308e7fff4ca-30f465f83ffsm11486471fa.101.2025.04.12.11.08.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 12 Apr 2025 11:08:47 -0700 (PDT)
+From: Arthur Sengileyev <arthur.sengileyev@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-trivial@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>,
+ Arthur Sengileyev <arthur.sengileyev@gmail.com>
+Subject: [PATCH] Fix objdump output parser in "nsis.py"
+Date: Sat, 12 Apr 2025 21:08:30 +0300
+Message-ID: <20250412180830.52742-1-arthur.sengileyev@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] system/main: transfer replay mutex ownership from
- main thread to main loop thread
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
- <20250410225550.46807-2-pierrick.bouvier@linaro.org>
- <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=arthur.sengileyev@gmail.com; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,77 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/25 22:30, Nicholas Piggin wrote:
-> On Fri Apr 11, 2025 at 8:55 AM AEST, Pierrick Bouvier wrote:
->> On MacOS, UI event loop has to be ran in the main thread of a process.
->> Because of that restriction, on this platform, qemu main event loop is
->> ran on another thread [1].
->>
->> This breaks record/replay feature, which expects thread running qemu_init
->> to initialize hold this lock, breaking associated functional tests on
->> MacOS.
->>
->> Thus, as a generalization, and similar to how BQL is handled, we release
->> it after init, and reacquire the lock before entering main event loop,
->> avoiding a special case if a separate thread is used.
->>
->> Tested on MacOS with:
->> $ meson test -C build --setup thorough --print-errorlogs \
->> func-x86_64-x86_64_replay func-arm-arm_replay func-aarch64-aarch64_replay
->> $ ./build/qemu-system-x86_64 -nographic -icount shift=auto,rr=record,rrfile=replay.log
->> $ ./build/qemu-system-x86_64 -nographic -icount shift=auto,rr=replay,rrfile=replay.log
->>
->> [1] https://gitlab.com/qemu-project/qemu/-/commit/f5ab12caba4f1656479c1feb5248beac1c833243
->>
->> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2907
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   system/main.c | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/system/main.c b/system/main.c
->> index ecb12fd397c..1c022067349 100644
->> --- a/system/main.c
->> +++ b/system/main.c
->> @@ -25,6 +25,7 @@
->>   #include "qemu/osdep.h"
->>   #include "qemu-main.h"
->>   #include "qemu/main-loop.h"
->> +#include "system/replay.h"
->>   #include "system/system.h"
->>   
->>   #ifdef CONFIG_SDL
->> @@ -44,10 +45,12 @@ static void *qemu_default_main(void *opaque)
->>   {
->>       int status;
->>   
->> +    replay_mutex_lock();
->>       bql_lock();
->>       status = qemu_main_loop();
->>       qemu_cleanup(status);
->>       bql_unlock();
->> +    replay_mutex_unlock();
->>   
->>       exit(status);
->>   }
->> @@ -67,6 +70,7 @@ int main(int argc, char **argv)
->>   {
->>       qemu_init(argc, argv);
->>       bql_unlock();
->> +    replay_mutex_unlock();
->>       if (qemu_main) {
->>           QemuThread main_loop_thread;
->>           qemu_thread_create(&main_loop_thread, "qemu_main",
-> 
-> Do we actually need to hold replay mutex (or even bql) over qemu_init()?
-> Both should get dropped before we return here. But as a simple fix, I
-> guess this is okay.
-> 
+In msys2 distribution objdump from gcc is using single tab character
+prefix, but objdump from clang is using 4 white space characters instead.
+The script will not identify any dll dependencies for a QEMU build
+generated with clang. This in turn will fail the build, because there
+will be no files inside dlldir and no setup file will be created.
+Instead of checking for whitespace in prefix use lstrip to accommodate
+for differences in outputs.
 
-For the bql, I don't know the exact reason.
-For replay lock, we need to hold it as clock gets saved as soon as the 
-devices are initialized, which happens before end of qemu_init.
+Signed-off-by: Arthur Sengileyev <arthur.sengileyev@gmail.com>
+---
+ scripts/nsis.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+diff --git a/scripts/nsis.py b/scripts/nsis.py
+index af4e064819..8f469634eb 100644
+--- a/scripts/nsis.py
++++ b/scripts/nsis.py
+@@ -23,7 +23,7 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
+     output = subprocess.check_output(["objdump", "-p", exe_or_dll], text=True)
+     output = output.split("\n")
+     for line in output:
+-        if not line.startswith("\tDLL Name: "):
++        if not line.lstrip().startswith("DLL Name: "):
+             continue
+ 
+         dep = line.split("DLL Name: ")[1].strip()
+-- 
+2.43.0
 
 
