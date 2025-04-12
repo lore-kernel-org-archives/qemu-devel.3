@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C90C369AB
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 05:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E44C369A1
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 05:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3TUd-0002HH-RT; Sat, 12 Apr 2025 01:33:27 -0400
+	id 1u3TUo-0002M6-Sc; Sat, 12 Apr 2025 01:33:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3TUc-0002H1-PP
- for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:33:26 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3TUm-0002JB-Mr
+ for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:33:36 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3TUb-0003xy-6b
- for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:33:26 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-223fd89d036so35097255ad.1
- for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 22:33:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u3TUk-0003ya-Vr
+ for qemu-devel@nongnu.org; Sat, 12 Apr 2025 01:33:36 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22401f4d35aso31917995ad.2
+ for <qemu-devel@nongnu.org>; Fri, 11 Apr 2025 22:33:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744436004; x=1745040804; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1744436013; x=1745040813; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jh0BaaB4xw1ocHehmXIvuBEOnl8pZo2NZTop052dpF0=;
- b=BcahYOj14XDH9xupxSDB1Xsg49dlPG/2R3YojbgHrAF1GFibyR+74V6ntz9mhwLbUu
- C82Eh2qwm/CYqzepmF5lEujGQTP6Pv8XVLkUWRkZbDVSLY8sWGMmgYz/Ovx/1arNZeAJ
- JEsBQujBq5P8/WuzcCUlCcRz7YwK+wVKNpUHkw7AddN4BBuS0rMFvsjRsGw/6poRTeyl
- gnbd4qXQN7PhA7pxlI6peQ8LGED9Kp+mjHdtjDmRaIO4NFnf3URZGdN1ZRxlQTaZX+xC
- KqM9+vfbsP/57XHF5ObY7Ka7kO1yxL9YQOr7CJGwB/86mBvJvpqOf82CD5FSsuqJ6HrN
- 9AZw==
+ bh=R+j4F8IDHdMaSGZ3+lVzOTYxn0VceKglRxG6ZXkxCyc=;
+ b=WvrEhvXei0EQxOn7Gbxo0xLySJDkb/vHuzFiKit5+6Qv47LhvaEoIoTpoDSSItg4rF
+ QaUojhJ1ySJwnvm+pK16IpIOhdKop0vPiEVbiViVpR5pEojPdJNEiP7O1QIZahLUao00
+ jOSVTn51XX0CIMLH41TF4IRAicQZP9La5eI8skYwRvs+4ggi+PGGWFa6QjWBkRgKaAwd
+ ceBG/Sz1IL8/WSAbVCRQkcur+bpFI3z74+YczkksAMQVDqVDIp6wxqUD44wpbjgQ5e2P
+ fZTPFPC8ToqeVAwk5gaiQ9lx0mk6voyhU13xFyPhIl49CkcsgOstTbV7Uwk5sbd21zJf
+ yA7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744436004; x=1745040804;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1744436013; x=1745040813;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=jh0BaaB4xw1ocHehmXIvuBEOnl8pZo2NZTop052dpF0=;
- b=UUdfItwCSOQRrcPzO0dkRfdOv0HefwYFp8D5E3S0yo+N260Nlv3AoA48A+Kq2rJutP
- mKGX+jJif27Eqggtxi4fNmvesAb59pVgk5XzWz11bO7sbT0kkkPVmZQdcPHnNHlIIs9E
- +LKJi8wDXKbwpelfmFCA7d5Di5kQYs3OXlwaaW9EMhVKnHkT1rxPmd7mDKnkmv4Ag3Ey
- nzTujq8x/QR2yNI1nR6pLWIG6lsolKecUWTgBLD8vC0g7ofU6RD0HNXydb4Si/dOgbCr
- s9eARPKdwMWfMoKstqPQuz+iJAoZMSkTDBDuNtYDNhWfuatLP5MDYuOoQGHC+dhMTVM1
- kTBA==
-X-Gm-Message-State: AOJu0YxqacB6R4Bv9MNNolDYbH/8w5wytNSmIisYYkXUunCwXgBVT1La
- ATMhU2RX76jpCgLQaw9uZQspAMSEE0NyDBIEatPsQZFmZr+yenl4on8D7Q==
-X-Gm-Gg: ASbGnctS6OcZ66zUDwASvdlP4QaKrcfvFOOasqViJX6mUPLt9o5s8+HsUchcoZeVuLP
- olLU1U7qd8fTImr2i3pkNYD93Gc+Pczq2FHEDkcUZ+sFa3lLA7Ftf1YEjPE3ylIQL2a6aXJpDrO
- 1xe2bhr/JQhvSUTGGoEDFYHX1YbkPHfkk5WmsihXrmOzzCCGYA7+agSn8grp7Ae/ghSa9+Fun6P
- qYg/wQUiVDoeOUWbqYbNqMN9NuTf7mT7sytzxHDYkK/BTKEe1uDwnL6XguYyWG/ycacSoIrVq8n
- jRc2z7kT6oR7vWDckgFfbvgWXEKc4SLvFw==
-X-Google-Smtp-Source: AGHT+IEtdrGGokvoxogFRkF4S9YDPFao3JT9iFAVtusMPy/VSpUt/C2yajpbIS7oU7gOmGrpiTnsFg==
-X-Received: by 2002:a17:903:2f8e:b0:224:160d:3f5b with SMTP id
- d9443c01a7336-22bea502b47mr66083335ad.49.1744435994938; 
- Fri, 11 Apr 2025 22:33:14 -0700 (PDT)
+ bh=R+j4F8IDHdMaSGZ3+lVzOTYxn0VceKglRxG6ZXkxCyc=;
+ b=ZzN18RdSItzFO0xXRqPRIv5lEM4S5W5Qpb+7VUFLgz4y5eUETI4oAau6U+r5hzsoqr
+ R5jl9BIB9a1eOg2AUNAHkdMuSEaGJF025CJkKpJ/+JHjofqE7//EvwZgC3XtzDPcmpQE
+ WN0LGs1nzmSWLePIQORzmh/dOAsVUorLsTbe0Bt+UH50iP7nkkjJmNtir5qRkAZ15loR
+ TlsNIcS7H0vT46RA0vG3ujBmkX1mCnnwCxS2Dzq0P7tlCnI3Ym6KI4N2jSVzXjMNeHwM
+ GpBhIJsbuj3I1hywsWEHhqFZMPbGg/boqNwMhxDeVq/SqplNObAdceJep/xBpMlm2Qjq
+ tOpg==
+X-Gm-Message-State: AOJu0YwrciDlJES/T7Ru9oCNprNIZ2LeJYQreEKoQp0AwTQLbAW5Bp0a
+ KRi5hiQRlP/xaetAPiCEAPdDHAAFonfT1BqRjmlsc5geZsdPyZNG
+X-Gm-Gg: ASbGnct5dstT3cVqAD2Sb3gZvzlBqiS1FDMKoVCCzyxvjk6QNRZb17nySCLhjWxxaD+
+ Zwc+c8TqPVDH1CUF/ygfTGRg5J/uqXNvAK4SPevIRtgp6T8Jj1oj7RmvU7pt9Mk4ujrRj26lEeE
+ cnRE+RlRHSCp7yljEnYNte+lQ2sAmomnvikyjyNfXnHNJkTNaLaulqzTpIhyA4dcb4Lv1taQSlD
+ Nbgcsp9Ju+txxYfcxOffSILcC6ps7PvfzoWS1QDCP4GPFnEPlXK25DmeRg8QbsFF7xwQC4+pFUa
+ Mw/4cucrcM3kuh/eNrjlsH8l+EgTQZZh2A==
+X-Google-Smtp-Source: AGHT+IG7sfqMghvFyc4o0QJfegIQffBVEk5bo37yt1LRALO0BU6+Pr50Phf8ZkXbVVX1kl/u0Vbq7A==
+X-Received: by 2002:a17:902:d4c5:b0:220:c63b:d93c with SMTP id
+ d9443c01a7336-22bea4fee9amr73141905ad.44.1744436013347; 
+ Fri, 11 Apr 2025 22:33:33 -0700 (PDT)
 Received: from localhost ([220.253.99.94]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7b62859sm60087805ad.40.2025.04.11.22.33.12
+ d9443c01a7336-22ac7c95cdcsm60252935ad.118.2025.04.11.22.33.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Apr 2025 22:33:14 -0700 (PDT)
+ Fri, 11 Apr 2025 22:33:32 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 12 Apr 2025 15:33:09 +1000
-Message-Id: <D94EY6H32JFV.MEHMRMWGT8Z6@gmail.com>
-Cc: <qemu-devel@nongnu.org>, "Kevin Wolf" <kwolf@redhat.com>
-Subject: Re: [PATCH v2 10/10] usb/msd: Add more tracing
-From: "Nicholas Piggin" <npiggin@gmail.com>
+Date: Sat, 12 Apr 2025 15:33:28 +1000
+Message-Id: <D94EYEYWM728.2K81YKH9JOHYL@gmail.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Gerd
  Hoffmann" <kraxel@redhat.com>
+Cc: <qemu-devel@nongnu.org>, "Kevin Wolf" <kwolf@redhat.com>
+Subject: Re: [PATCH v2 08/10] usb/msd: Rename mode to cbw_state, and tweak
+ names
+From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.19.0
 References: <20250411080431.207579-1-npiggin@gmail.com>
- <20250411080431.207579-11-npiggin@gmail.com>
- <5aba881b-a1bb-40fc-b707-2fd0d4b1a1d2@linaro.org>
-In-Reply-To: <5aba881b-a1bb-40fc-b707-2fd0d4b1a1d2@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
+ <20250411080431.207579-9-npiggin@gmail.com>
+ <104dc731-10bf-4e79-91fd-7b58e6033bca@linaro.org>
+In-Reply-To: <104dc731-10bf-4e79-91fd-7b58e6033bca@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Apr 11, 2025 at 8:36 PM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
+On Fri Apr 11, 2025 at 8:37 PM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
 > On 11/4/25 10:04, Nicholas Piggin wrote:
->> Add tracing for more received packet types, cbw_state changes, and
->> some more SCSI callbacks. These were useful in debugging relaxed
->> packet ordering support.
+>> This reflects a little better what it does, particularly with a
+>> subsequent change to relax the order packets are seen in. This
+>> field is not the general state of the MSD state machine, rather
+>> it follows packets that are completed as part of a CBW command.
+>>=20
+>> The difference is a bit subtle, so for a concrete example, the
+>> next change will permit the host to send a CSW packet before it
+>> sends the associated CBW packet. In that case the CSW packet
+>> will be tracked and the MSD state machine will move, but this
+>> mode / cbw_state field would remain unchanged (in the "expecting
+>> CBW" state), until the CBW packet arrives.
 >>=20
 >> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 >> ---
->>   hw/usb/dev-storage.c | 23 +++++++++++++++++++++--
->>   hw/usb/trace-events  |  9 ++++++++-
->>   2 files changed, 29 insertions(+), 3 deletions(-)
->
->
->>   static void usb_msd_copy_data(MSDState *s, USBPacket *p)
->>   {
->>       uint32_t len;
->> +
->>       len =3D p->iov.size - p->actual_length;
->> +
->> +    trace_usb_msd_copy_data(s->req->tag, len);
->> +
->>       if (len > s->scsi_len)
->>           len =3D s->scsi_len;
->>       usb_packet_copy(p, scsi_req_get_buf(s->req) + s->scsi_off, len);
->> @@ -264,6 +268,8 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_=
-t len)
->>       MSDState *s =3D DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.paren=
-t);
->>       USBPacket *p =3D s->data_packet;
+>>   include/hw/usb/msd.h | 12 +++++------
+>>   hw/usb/dev-storage.c | 50 +++++++++++++++++++++++---------------------
+>>   2 files changed, 32 insertions(+), 30 deletions(-)
+>>=20
+>> diff --git a/include/hw/usb/msd.h b/include/hw/usb/msd.h
+>> index a40d15f5def..c109544f632 100644
+>> --- a/include/hw/usb/msd.h
+>> +++ b/include/hw/usb/msd.h
+>> @@ -10,11 +10,11 @@
+>>   #include "hw/usb.h"
+>>   #include "hw/scsi/scsi.h"
 >>  =20
->> +    trace_usb_msd_transfer_data(req->tag, len);
->> +
->>       if (s->cbw_state =3D=3D USB_MSD_CBW_DATAIN) {
->>           if (req->cmd.mode =3D=3D SCSI_XFER_TO_DEV) {
->>               usb_msd_fatal_error(s);
->> @@ -324,11 +330,13 @@ void usb_msd_command_complete(SCSIRequest *req, si=
-ze_t resid)
->>           }
->>           if (s->data_len =3D=3D 0) {
->>               s->cbw_state =3D USB_MSD_CBW_CSW;
->> +            trace_usb_msd_cbw_state(s->cbw_state);
->>           }
->>           /* USB_RET_SUCCESS status clears previous ASYNC status */
->>           usb_msd_data_packet_complete(s, USB_RET_SUCCESS);
->>       } else if (s->data_len =3D=3D 0) {
->>           s->cbw_state =3D USB_MSD_CBW_CSW;
->> +        trace_usb_msd_cbw_state(s->cbw_state);
->>       }
+>> -enum USBMSDMode {
+>> -    USB_MSDM_CBW, /* Command Block.  */
+>> -    USB_MSDM_DATAOUT, /* Transfer data to device.  */
+>> -    USB_MSDM_DATAIN, /* Transfer data from device.  */
+>> -    USB_MSDM_CSW /* Command Status.  */
 >
-> Maybe helpful to log state transition?
+> Since modifying this, please add
 >
->    void usb_msd_cbw_change_state(MSDState *s,
->                                  enum USBMSDCBWState cbw_state)
->    {
->        if (s->cbw_state !=3D cbw_state) {
->            trace_usb_msd_cbw_state(s->cbw_state, cbw_state);
->            s->cbw_state =3D cbw_state;
->        }
->    }
+>    typedef
 
-Yeah that's not a bad idea. I added that. I made a few more tweaks
-and added some more trace points too, but nothing major.
+Done.
+
+Thanks,
+Nick
 
 >
-> Otherwise,
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> +enum USBMSDCBWState {
+>> +    USB_MSD_CBW_NONE,    /* Ready, waiting for CBW packet. */
+>> +    USB_MSD_CBW_DATAOUT, /* Expecting DATA-OUT (to device) packet */
+>> +    USB_MSD_CBW_DATAIN,  /* Expecting DATA-IN (from device) packet */
+>> +    USB_MSD_CBW_CSW      /* No more data, expecting CSW packet.  */
+>>   }
+>
+>        USBMSDCBWState;
+>
+>>  =20
+>>   struct QEMU_PACKED usb_msd_csw {
+>> @@ -26,7 +26,7 @@ struct QEMU_PACKED usb_msd_csw {
+>>  =20
+>>   struct MSDState {
+>>       USBDevice dev;
+>> -    enum USBMSDMode mode;
+>> +    enum USBMSDCBWState cbw_state;
+>
+>         USBMSDCBWState cbw_state;
+>
+>>       uint32_t scsi_off;
+>>       uint32_t scsi_len;
+>>       uint32_t data_len;
 
 
