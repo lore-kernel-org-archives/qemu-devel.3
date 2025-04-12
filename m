@@ -4,73 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA8C3C369B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 18:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14DC5C369AE
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 18:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3fL6-0003it-D9; Sat, 12 Apr 2025 14:12:24 -0400
+	id 1u3fSR-0005Zv-Q3; Sat, 12 Apr 2025 14:20:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
- id 1u3fL1-0003ie-NT; Sat, 12 Apr 2025 14:12:19 -0400
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
+ id 1u3fSP-0005ZJ-LC; Sat, 12 Apr 2025 14:19:57 -0400
 Received: from mail.weilnetz.de ([37.120.169.71]
  helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
- id 1u3fKz-0005xF-A8; Sat, 12 Apr 2025 14:12:19 -0400
-Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id 2E932DA044E;
- Sat, 12 Apr 2025 20:12:13 +0200 (CEST)
-Authentication-Results: mail.v2201612906741603.powersrv.de; dkim=none;
- dmarc=fail reason="No valid SPF, No valid DKIM" header.from=weilnetz.de
- (policy=none); 
- spf=softfail (mail.v2201612906741603.powersrv.de: 188.68.58.204 is neither
- permitted nor denied by domain of stefan@weilnetz.de)
- smtp.mailfrom=stefan@weilnetz.de
-Received: by qemu.weilnetz.de (Postfix, from userid 1000)
- id 18A59460026; Sat, 12 Apr 2025 20:12:13 +0200 (CEST)
-To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH for-10.0] docs: Fix some typos (found by codespell and typos)
-Date: Sat, 12 Apr 2025 20:11:47 +0200
-Message-Id: <20250412181147.1046898-1-sw@weilnetz.de>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
+ id 1u3fSN-0007Nb-Ev; Sat, 12 Apr 2025 14:19:57 -0400
+Received: from [192.168.178.109] (pd9ec31c5.dip0.t-ipconnect.de
+ [217.236.49.197])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 48BBBDA06C9;
+ Sat, 12 Apr 2025 20:19:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1744481991;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ZzZg/d+AQ2upOX9xKLNxE80boBlcGKY9SlC0H5lxCAE=;
+ b=d5ba6nRL+i5qTfe6EFcfW5VSA0zIyMWC7ycP1uH3EdDi/qj+SYxby8b76cfgK5y12IZGeY
+ 3/q8WpVj8x2RDHbClwSolKO86LUML+l35n32/d2EQeKGSCNAt33e6D/DBF9EU1e9cssxF5
+ lv6aU1uoF3wgrykp2xz5p1/34jjPBB4=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <d0f79ab8-5e02-4f9d-aa6b-acf8220e5d11@weilnetz.de>
+Date: Sat, 12 Apr 2025 20:19:50 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 2E932DA044E
-X-Spamd-Bar: +++
-X-Spamd-Result: default: False [3.60 / 12.00]; VIOLATED_DIRECT_SPF(3.50)[];
- BAYES_HAM(-3.00)[100.00%]; MID_CONTAINS_FROM(1.00)[];
- URI_HIDDEN_PATH(1.00)[https://gitlab.com/qemu-project/qemu/-/tree/master/.gitlab-ci.d];
- R_MISSING_CHARSET(0.50)[];
- FORGED_SENDER(0.30)[sw@weilnetz.de,stefan@weilnetz.de];
- ONCE_RECEIVED(0.20)[];
- DMARC_POLICY_SOFTFAIL(0.10)[weilnetz.de : No valid SPF, No valid
- DKIM,quarantine,sampled_out]; MIME_GOOD(-0.10)[text/plain];
- RCVD_NO_TLS_LAST(0.10)[]; RCVD_COUNT_ONE(0.00)[1];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-10.0] Fix objdump output parser in "nsis.py"
+To: Arthur Sengileyev <arthur.sengileyev@gmail.com>, qemu-devel@nongnu.org,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20250412180830.52742-1-arthur.sengileyev@gmail.com>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20250412180830.52742-1-arthur.sengileyev@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 48BBBDA06C9
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
+ MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; ARC_NA(0.00)[];
+ TAGGED_RCPT(0.00)[];
+ ASN(0.00)[asn:3320, ipnet:217.224.0.0/11, country:DE];
  TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[qapi_domain.py:url,qapidoc.py:url];
- ASN(0.00)[asn:197540, ipnet:188.68.56.0/22, country:DE];
- R_DKIM_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
- FROM_NEQ_ENVFROM(0.00)[sw@weilnetz.de,stefan@weilnetz.de];
- R_SPF_SOFTFAIL(0.00)[~all]; ARC_NA(0.00)[]
-X-Rspamd-Server: v2201612906741603
+ RCVD_COUNT_ZERO(0.00)[0];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org,redhat.com];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[weilnetz.de:mid,weilnetz.de:email]
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
+X-Rspamd-Server: v2201612906741603
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
  helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,126 +135,47 @@ From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
----
- docs/about/deprecated.rst  | 4 ++--
- docs/devel/codebase.rst    | 6 +++---
- docs/devel/qapi-domain.rst | 4 ++--
- include/exec/memory.h      | 4 ++--
- qapi/qdev.json             | 2 +-
- 5 files changed, 10 insertions(+), 10 deletions(-)
+Am 12.04.25 um 20:08 schrieb Arthur Sengileyev:
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 0f41a99c67..05381441a9 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -452,7 +452,7 @@ Backend ``memory`` (since 9.0)
- ``reconnect`` (since 9.2)
- ^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--The ``reconnect`` option only allows specifiying second granularity timeouts,
-+The ``reconnect`` option only allows specifying second granularity timeouts,
- which is not enough for all types of use cases, use ``reconnect-ms`` instead.
- 
- 
-@@ -462,7 +462,7 @@ Net device options
- Stream ``reconnect`` (since 9.2)
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--The ``reconnect`` option only allows specifiying second granularity timeouts,
-+The ``reconnect`` option only allows specifying second granularity timeouts,
- which is not enough for all types of use cases, use ``reconnect-ms`` instead.
- 
- VFIO device options
-diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
-index 1b09953197..ef98578296 100644
---- a/docs/devel/codebase.rst
-+++ b/docs/devel/codebase.rst
-@@ -5,7 +5,7 @@ Codebase
- This section presents the various parts of QEMU and how the codebase is
- organized.
- 
--Beyond giving succint descriptions, the goal is to offer links to various
-+Beyond giving succinct descriptions, the goal is to offer links to various
- parts of the documentation/codebase.
- 
- Subsystems
-@@ -67,7 +67,7 @@ yet, so sometimes the source code is all you have.
- * `chardev <https://gitlab.com/qemu-project/qemu/-/tree/master/chardev>`_:
-   Various backends used by char devices.
- * `common-user <https://gitlab.com/qemu-project/qemu/-/tree/master/common-user>`_:
--  User-mode assembly code for dealing with signals occuring during syscalls.
-+  User-mode assembly code for dealing with signals occurring during syscalls.
- * `configs <https://gitlab.com/qemu-project/qemu/-/tree/master/configs>`_:
-   Makefiles defining configurations to build QEMU.
- * `contrib <https://gitlab.com/qemu-project/qemu/-/tree/master/contrib>`_:
-@@ -102,7 +102,7 @@ yet, so sometimes the source code is all you have.
- * `.gitlab-ci.d <https://gitlab.com/qemu-project/qemu/-/tree/master/.gitlab-ci.d>`_:
-   `CI <ci>` yaml and scripts.
- * `include <https://gitlab.com/qemu-project/qemu/-/tree/master/include>`_:
--  All headers associated to different subsystems in QEMU. The hierachy used
-+  All headers associated to different subsystems in QEMU. The hierarchy used
-   mirrors source code organization and naming.
- * `hw <https://gitlab.com/qemu-project/qemu/-/tree/master/hw>`_:
-   `Devices <device-emulation>` and boards emulation. Devices are categorized by
-diff --git a/docs/devel/qapi-domain.rst b/docs/devel/qapi-domain.rst
-index a748529f51..11238723c2 100644
---- a/docs/devel/qapi-domain.rst
-+++ b/docs/devel/qapi-domain.rst
-@@ -41,7 +41,7 @@ Schema or generating documentation from code that exists. It is merely
- the rST syntax used to describe things. For instance, the Sphinx Python
- domain adds syntax like ``:py:func:`` for describing Python functions in
- documentation, but it's the autodoc module that is responsible for
--reading python code and generating such syntax. QAPI is analagous here:
-+reading Python code and generating such syntax. QAPI is analogous here:
- qapidoc.py is responsible for reading the QAPI Schema and generating rST
- syntax, and qapi_domain.py is responsible for translating that special
- syntax and providing APIs for Sphinx internals.
-@@ -514,7 +514,7 @@ the definition's "fully qualified name", allowing two different
- namespaces to create an otherwise identically named definition.
- 
- This directive also influences how reference resolution works for any
--references that do not explicity specify a namespace, so this directive
-+references that do not explicitly specify a namespace, so this directive
- can be used to nudge references into preferring targets from within that
- namespace.
- 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index d09af58c97..e1c196a0c2 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2162,7 +2162,7 @@ void memory_region_flush_rom_device(MemoryRegion *mr, hwaddr addr, hwaddr size);
-  * only useful on RAM regions.
-  *
-  * @mr: the region being updated.
-- * @readonly: whether rhe region is to be ROM or RAM.
-+ * @readonly: whether the region is to be ROM or RAM.
-  */
- void memory_region_set_readonly(MemoryRegion *mr, bool readonly);
- 
-@@ -2173,7 +2173,7 @@ void memory_region_set_readonly(MemoryRegion *mr, bool readonly);
-  * only useful on RAM regions.
-  *
-  * @mr: the region being updated.
-- * @nonvolatile: whether rhe region is to be non-volatile.
-+ * @nonvolatile: whether the region is to be non-volatile.
-  */
- void memory_region_set_nonvolatile(MemoryRegion *mr, bool nonvolatile);
- 
-diff --git a/qapi/qdev.json b/qapi/qdev.json
-index 25cbcf977b..32c7d10046 100644
---- a/qapi/qdev.json
-+++ b/qapi/qdev.json
-@@ -173,7 +173,7 @@
- # configuration changed.
- #
- # The command may be used to notify the guest about block device
--# capcity change.  Currently only vhost-user-blk device supports
-+# capacity change.  Currently only vhost-user-blk device supports
- # this.
- #
- # @id: the device's ID or QOM path
--- 
-2.39.5
+> In msys2 distribution objdump from gcc is using single tab character
+> prefix, but objdump from clang is using 4 white space characters instead.
+> The script will not identify any dll dependencies for a QEMU build
+> generated with clang. This in turn will fail the build, because there
+> will be no files inside dlldir and no setup file will be created.
+> Instead of checking for whitespace in prefix use lstrip to accommodate
+> for differences in outputs.
+>
+> Signed-off-by: Arthur Sengileyev <arthur.sengileyev@gmail.com>
+> ---
+>   scripts/nsis.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/scripts/nsis.py b/scripts/nsis.py
+> index af4e064819..8f469634eb 100644
+> --- a/scripts/nsis.py
+> +++ b/scripts/nsis.py
+> @@ -23,7 +23,7 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
+>       output = subprocess.check_output(["objdump", "-p", exe_or_dll], text=True)
+>       output = output.split("\n")
+>       for line in output:
+> -        if not line.startswith("\tDLL Name: "):
+> +        if not line.lstrip().startswith("DLL Name: "):
+>               continue
+>   
+>           dep = line.split("DLL Name: ")[1].strip()
+
+
+Thanks. I use nearly the same code `if not line.strip().startswith("DLL 
+Name: "):` in my builds for WoA.
+
+@Stefan, can this trivial patch still be applied for 10.0?
+
+I had planned to replace the whole code with objdump by platform 
+independent Python code, but that's a larger change, and I missed the 
+deadline.
+
+
+Reviewed-by: Stefan Weil <sw@weilnetz.de>
+
 
 
