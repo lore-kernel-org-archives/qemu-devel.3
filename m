@@ -4,121 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14DC5C369AE
-	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 18:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263BFC369AB
+	for <qemu-devel@archiver.kernel.org>; Sat, 12 Apr 2025 20:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u3fSR-0005Zv-Q3; Sat, 12 Apr 2025 14:20:00 -0400
+	id 1u3hNz-0002Vg-Ka; Sat, 12 Apr 2025 16:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
- id 1u3fSP-0005ZJ-LC; Sat, 12 Apr 2025 14:19:57 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
- id 1u3fSN-0007Nb-Ev; Sat, 12 Apr 2025 14:19:57 -0400
-Received: from [192.168.178.109] (pd9ec31c5.dip0.t-ipconnect.de
- [217.236.49.197])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ (Exim 4.90_1) (envelope-from <hauke@hauke-m.de>)
+ id 1u3gia-0005ld-JQ; Sat, 12 Apr 2025 15:40:44 -0400
+Received: from mout-p-102.mailbox.org ([2001:67c:2050:0:465::102])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <hauke@hauke-m.de>)
+ id 1u3giZ-0004WV-2q; Sat, 12 Apr 2025 15:40:44 -0400
+Received: from smtp202.mailbox.org (smtp202.mailbox.org
+ [IPv6:2001:67c:2050:b231:465::202])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 48BBBDA06C9;
- Sat, 12 Apr 2025 20:19:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1744481991;
+ by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4ZZkRh6xw5z9shn;
+ Sat, 12 Apr 2025 21:40:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hauke-m.de; s=MBO0001; 
+ t=1744486833;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZzZg/d+AQ2upOX9xKLNxE80boBlcGKY9SlC0H5lxCAE=;
- b=d5ba6nRL+i5qTfe6EFcfW5VSA0zIyMWC7ycP1uH3EdDi/qj+SYxby8b76cfgK5y12IZGeY
- 3/q8WpVj8x2RDHbClwSolKO86LUML+l35n32/d2EQeKGSCNAt33e6D/DBF9EU1e9cssxF5
- lv6aU1uoF3wgrykp2xz5p1/34jjPBB4=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
-Message-ID: <d0f79ab8-5e02-4f9d-aa6b-acf8220e5d11@weilnetz.de>
-Date: Sat, 12 Apr 2025 20:19:50 +0200
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3uYoCqQQCUB8iBV2tcSnaC2ZQgWOZfba1Gs7NYa+mYI=;
+ b=ExjXzW7/n3f/xF6bFXhnN0ufrq0jip4BLOHEcR+g1u4hCcgmBFQEHQ11QyB+cpt7brJN0D
+ IUjgl7IXyteTyku2So6KJc+PFxxyAjD2jLFNXLM8VBxPGI9/IzbjQxhD0iyqEWo/PyVlX9
+ vZGbxoTe6Jqlw3Q1zcoB2HHueWWjfdje0zaWe3o8ClrupW1GGKjIGDR1IKYlIqng0tPk1P
+ YO6EkF7E3nb+qlfyfYxcFTyzKHhXsBheqy1fcz/W38mvl+7MNozRykUyWfnzIMtJ3qH++M
+ qzoi1ZzIaHP1j3h5cupzsKeIlDrFpjKa9toLw5TTO99j/itGUs2lnS4S+9ourw==
+From: Hauke Mehrtens <hauke@hauke-m.de>
+To: qemu-devel@nongnu.org
+Cc: arikalo@gmail.com, jiaxun.yang@flygoat.com, aurelien@aurel32.net,
+ philmd@linaro.org, Hauke Mehrtens <hauke@hauke-m.de>,
+ qemu-stable@nongnu.org
+Subject: target/mips: Fix MIPS16e translation
+Date: Sat, 12 Apr 2025 21:40:03 +0200
+Message-ID: <20250412194003.181411-1-hauke@hauke-m.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.0] Fix objdump output parser in "nsis.py"
-To: Arthur Sengileyev <arthur.sengileyev@gmail.com>, qemu-devel@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20250412180830.52742-1-arthur.sengileyev@gmail.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- xsFNBFXCNBcBEACUbHx9FWsS1ATrhLGAS+Nc6bFQHPR3CpUQ4v++RiMg25bF6Ov1RsYEcovI
- 0DXGh6Ma+l6dRlvUXV8tMvNwqghDUr5KY7LN6tgcFKjBbXdv9VlKiWiMLKBrARcFKxx1sfLp
- 1P8RiaUdKsgy2Hq4T1PPy9ENTL1/FBG6P/Rw0rO9zOB+yNHcRJ5diDnERbi3x7qoaPUra2Ig
- lmQk/uxXKC0aNIhpNLNiQ+YpwTUN9q3eG6B9/3CG8RGtFzH9vDPlLvtUX+01a2gCifTi3iH3
- 8EEK8ACXIRs2dszlxMneKTvflXfvyCM1O+59wGcICQxltxLLhHSCJjOQyWdR2JUtn//XjVWM
- mf6bBT7Imx3DhhfFRlA+/Lw9Zah66DJrZgiV0LqoN/2f031TzD3FCBiGQEMC072MvSQ1DdJN
- OiRE1iWO0teLOxaFSbvJS9ij8CFSQQTnSVZs0YXGBal+1kMeaKo9sO4tkaAR2190IlMNanig
- CTJfeFqxzZkoki378grSHdGUTGKfwNPflTOA6Pw6xuUcxW55LB3lBsPqb0289P8o9dTR7582
- e6XTkpzqe/z/fYmfI9YXIjGY8WBMRbsuQA30JLq1/n/zwxAOr2P9y4nqTMMgFOtQS8w4G46K
- UMY/5IspZp2VnPwvazUo2zpYiUSLo1hFHx2jrePYNu2KLROXpwARAQABzRxTdGVmYW4gV2Vp
- bCA8c3dAd2VpbG5ldHouZGU+wsF6BBMBCAAkAhsDBQsJCAcDBRUKCQgLBRYCAwEAAh4BAheA
- BQJV04LlAhkBAAoJEOCMIdVndFCtP5QP/1U8yWZzHeHufRFxtMsK1PERiLuKyGRH2oE5NWVc
- 5QQHZZ2ypXu53o2ZbZxmdy8+4lXiPWWwYVqto3V7bPaMTvQhIT0I3c3ZEZsvwyEEE6QdRs52
- haZwX+TzNMQ5mOePdM2m4WqO0oU7YHU2WFf54MBmAGtj3FAQEAlZAaMiJs2aApw/4t35ICL1
- Sb0FY8d8lKBbIFOAaFfrlQTC3y8eMTk1QxOVtdXpRrOl6OE0alWn97NRqeZlBm0P+BEvdgTP
- Qt+9rxbe4ulgKME2LkbDhLqf0m2+xMXb7T4LiHbQYnnWKGZyogpFaw3PuRVd9m8uxx1F8b4U
- jNzI9x2Ez5LDv8NHpSY0LGwvVmkgELYbcbyiftbuw81gJuM7k4IW5GR85kTH6y/Sq6JNaI4p
- 909IK8X4eeoCkAqEVmDOo1D5DytgxIV/PErrin82OIDXLENzOWfPPtUTO+H7qUe80NS2HLPG
- IveYSjuYKBB6n2JhPkUD7xxMEdh5Ukqi1WIBSV4Tuk3/ubHajP5bqg4QP3Wo1AyICX09A1QQ
- DajtMkyxXhYxr826EGcRD2WUUprGNYwaks4YiPuvOAJxSYprKWT6UDHzE3S8u4uZZm9H8cyg
- Fa3pysJwTmbmrBAP1lMolwXHky60dPnKPmFyArGC0utAH7QELXzBybnE/vSNttNT1D+HzsFN
- BFXcnj0BEAC32cCu2MWeqZEcvShjkoKsXk42mHrGbeuh/viVn8JOQbTO706GZtazoww2weAz
- uVEYhwqi7u9RATz9MReHf7R5F0KIRhc/2NhNNeixT/7L+E5jffH1LD+0IQdeLPoz6unvg7U/
- 7OpdKWbHzPM3Lfd0N1dRP5sXULpjtYQKEgiOU58sc4F5rM10KoPFEMz8Ip4j9RbH/CbTPUM0
- S4PxytRciB3Fjd0ECbVsErTjX7cZc/yBgs3ip7BPVWgbflhrc+utML/MwC6ZqCOIXf/U0ICY
- fp5I7PDbUSWgMFHvorWegMYJ9EzZ2nTvytL8E75C2U3j5RZAuQH5ysfGpdaTS76CRrYDtkEc
- ViTL+hRUgrX9qvqzCdNEePbQZr6u6TNx3FBEnaTAZ5GuosfUk7ynvam2+zAzLNU+GTywTZL2
- WU+tvOePp9z1/mbLnH2LkWHgy3bPu77AFJ1yTbBXl5OEQ/PtTOJeC1urvgeNru26hDFSFyk4
- gFcqXxswu2PGU7tWYffXZXN+IFipCS718eDcT8eL66ifZ8lqJ8Vu5WJmp9mr1spP9RYbT7Rw
- pzZ3iiz7e7AZyOtpSMIVJeYZTbtiqJbyN4zukhrTdCgCFYgf0CkA5UGpYXp2sXPr+gVxKX2p
- tj/gid4n95vR7KMeWV6DJ0YS4hKGtdhkuJCpJfjKP/e8TwARAQABwsFfBBgBCAAJBQJV3J49
- AhsMAAoJEOCMIdVndFCtYRoQAJOu3RZTEvUBPoFqsnd849VmOKKg77cs+HD3xyLtp95JwQrz
- hwa/4ouDFrC86jt1vARfpVx5C8nQtNnWhg+5h5kyOIbtB1/27CCTdXAd/hL2k3GyrJXEc+i0
- 31E9bCqgf2KGY7+aXu4LeAfRIWJT9FGVzdz1f+77pJuRIRRmtSs8VAond2l+OcDdEI9Mjd9M
- qvyPJwDkDkDvsNptrcv4xeNzvX+2foxkJmYru6dJ+leritsasiAxacUowGB5E41RZEUg6bmV
- F4SMseIAEKWLy3hPGvYBOzADhq2YLgnM/wn9Y9Z7bEMy+w5e75saBbkFI7TncxDPUnIl/UTE
- KU1ORi5WWbvXYkUTtfNzZyD0/v3oojcIoZvK1OlpOtXHdlqOodjXF9nLe8eiVHyl8ZnzFxhe
- EW2QPvX8FLKqmSs9W9saQtk6bhv9LNYIYINjH3EEH/+bbmV+ln4O7a73Wm8L3tnpC3LmdGn2
- Rm8B6J2ZK6ci1TRDiMpCUWefpnIuE+TibC5VJR5zx0Yh11rxxBFob8mWktRmLZyeEoCcZoBo
- sbJxD80QxWO03zPpkcJ7d4BrVsQ/BJkBtEe4Jn4iqHqA/OcrzwuEZSv+/MdgoqfblBZhDusm
- LYfVy7wFDeVClG6eQIiK2EnmDChLRkVIQzbkV0iG+NJVVJHLGK7/OsO47+zq
-In-Reply-To: <20250412180830.52742-1-arthur.sengileyev@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 48BBBDA06C9
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
- MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; ARC_NA(0.00)[];
- TAGGED_RCPT(0.00)[];
- ASN(0.00)[asn:3320, ipnet:217.224.0.0/11, country:DE];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_COUNT_ZERO(0.00)[0];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org,redhat.com];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[weilnetz.de:mid,weilnetz.de:email]
-X-Rspamd-Action: no action
-X-Rspamd-Server: v2201612906741603
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4ZZkRh6xw5z9shn
+Received-SPF: pass client-ip=2001:67c:2050:0:465::102;
+ envelope-from=hauke@hauke-m.de; helo=mout-p-102.mailbox.org
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 12 Apr 2025 16:23:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,52 +69,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.04.25 um 20:08 schrieb Arthur Sengileyev:
+Fix a wrong conversion to gen_op_addr_addi(). The framesize should be
+added like it was done before.
 
-> In msys2 distribution objdump from gcc is using single tab character
-> prefix, but objdump from clang is using 4 white space characters instead.
-> The script will not identify any dll dependencies for a QEMU build
-> generated with clang. This in turn will fail the build, because there
-> will be no files inside dlldir and no setup file will be created.
-> Instead of checking for whitespace in prefix use lstrip to accommodate
-> for differences in outputs.
->
-> Signed-off-by: Arthur Sengileyev <arthur.sengileyev@gmail.com>
-> ---
->   scripts/nsis.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/scripts/nsis.py b/scripts/nsis.py
-> index af4e064819..8f469634eb 100644
-> --- a/scripts/nsis.py
-> +++ b/scripts/nsis.py
-> @@ -23,7 +23,7 @@ def find_deps(exe_or_dll, search_path, analyzed_deps):
->       output = subprocess.check_output(["objdump", "-p", exe_or_dll], text=True)
->       output = output.split("\n")
->       for line in output:
-> -        if not line.startswith("\tDLL Name: "):
-> +        if not line.lstrip().startswith("DLL Name: "):
->               continue
->   
->           dep = line.split("DLL Name: ")[1].strip()
+This bug broke booting OpenWrt MIPS32 BE malta Linux system images
+generated by OpenWrt.
 
+Fixes: d0b24b7f50e1 ("target/mips: Use gen_op_addr_addi() when possible")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
+---
+ target/mips/tcg/mips16e_translate.c.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks. I use nearly the same code `if not line.strip().startswith("DLL 
-Name: "):` in my builds for WoA.
-
-@Stefan, can this trivial patch still be applied for 10.0?
-
-I had planned to replace the whole code with objdump by platform 
-independent Python code, but that's a larger change, and I missed the 
-deadline.
-
-
-Reviewed-by: Stefan Weil <sw@weilnetz.de>
-
+diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
+index a9af8f1e74..97da3456ea 100644
+--- a/target/mips/tcg/mips16e_translate.c.inc
++++ b/target/mips/tcg/mips16e_translate.c.inc
+@@ -306,7 +306,7 @@ static void gen_mips16_restore(DisasContext *ctx,
+     int astatic;
+     TCGv t0 = tcg_temp_new();
+ 
+-    gen_op_addr_addi(ctx, t0, cpu_gpr[29], -framesize);
++    gen_op_addr_addi(ctx, t0, cpu_gpr[29], framesize);
+ 
+     if (do_ra) {
+         decr_and_load(ctx, 31, t0);
+@@ -386,7 +386,7 @@ static void gen_mips16_restore(DisasContext *ctx,
+         }
+     }
+ 
+-    gen_op_addr_addi(ctx, cpu_gpr[29], cpu_gpr[29], -framesize);
++    gen_op_addr_addi(ctx, cpu_gpr[29], cpu_gpr[29], framesize);
+ }
+ 
+ #if defined(TARGET_MIPS64)
+-- 
+2.49.0
 
 
