@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD7EC369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A28C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4MSr-0003q6-Hf; Mon, 14 Apr 2025 12:15:17 -0400
+	id 1u4MXw-0005KL-W3; Mon, 14 Apr 2025 12:20:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4MSp-0003pe-Ks
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:15:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4MSi-0001Es-Eg
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:15:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744647305;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2NVS5qRAf9oXldc5/DZALc+aohaGCAkevolsgsbWit0=;
- b=RJ/DvZhpsAjx80hmIRNyH7bxL+huXPoEPp/TodcCVvw1xr7lD0fw6pVbe1vl7CSr5r4H2i
- 7v5QZRVRQ1ZIobX3uB8vpfzGFUB08909aHe2QCl5vH4NyxGixCDq33+mQOCYSYMN5cDv+f
- eEYLWpGXz/gW5WNGWcJu+JZFphtRog0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-TaFcndToNgezXlhI17AO-Q-1; Mon,
- 14 Apr 2025 12:14:59 -0400
-X-MC-Unique: TaFcndToNgezXlhI17AO-Q-1
-X-Mimecast-MFC-AGG-ID: TaFcndToNgezXlhI17AO-Q_1744647297
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1506E1955DCF; Mon, 14 Apr 2025 16:14:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.99])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 489D31808867; Mon, 14 Apr 2025 16:14:53 +0000 (UTC)
-Date: Mon, 14 Apr 2025 17:14:50 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [RFC 0/2] python: integrate linter tests natively with meson
-Message-ID: <Z_00erYFFJ0EPMFa@redhat.com>
-References: <20250224191152.2123003-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MXr-0005Jf-VJ
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:20:28 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MXm-0002Ic-RR
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:20:27 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cf06eabdaso43553025e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744647620; x=1745252420; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6FU/p5lG64FvUSS60mxXpqI9om+F3obJIzSVaFXWLoI=;
+ b=abHOZegUNF6DBrPOv/D8PaOjKy5JbszKAWPJQ9P1KdTmOYKJqZL6H1uZnF8KHVB7BF
+ 3qlaJpBGpHEgyw0gFRM6yHavmSoxQbJHEqkG1KnNnGHF61/YZnXvD22FF1pHT4PLBGhf
+ zK4lQwgGtAgcDEp0e78loiTU2DGupiGlrpsyjQUvXbmYBE90S9J+y/DgXtKQI1IRum99
+ jToZLVG2X5QFpSu5O3UmV1PfMxCo+KH3hQzDAHOxiZ9wBE/KURdV8AzkGbmIiNd/8FVr
+ iNnEYOGiEvEK0b52BCT9o00P5cCrA+XizQ2OLE+fxRzhgPv+cQLQmkgSfwj1ixtbHVQY
+ ZPAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744647620; x=1745252420;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6FU/p5lG64FvUSS60mxXpqI9om+F3obJIzSVaFXWLoI=;
+ b=s2as98f28Lc0Hu0QTyHnAM3kE2boPwq/2rTFIdefgSm4EXQG7zj/s8T6SikYBA8OWP
+ jZ9pcqJ7qY6aZmGMqPFLpNduemUBzkPQ4sAs7Vr+dcepg7NGhNP96+6FX/ki+JjUZgma
+ VNDNZswcSaLmMvp9PAXcLMPtQB8/7dF8oVs62pynW1gdOh1TGnbTwhB5yy2d8EsrGUUj
+ 0yje+kV142pULZHznzaG55kOPXxfjStfxoA0ppCvAUOAl0XHOgjKyoR/qKS+4/JUeAqu
+ 741dhJlsY7CRif7vFQeGlG7S8lfxaZFxSQaM3QP4b4uBlDhBrbIsXNVQMXK1tCWk1uzS
+ yNoQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYHYuCFTgofrh5lgPQ2LtYSPrQcYqMPAO87dH9lj4pN2+iT0IPNyE+BTI4+cteoLn6UAEtqXGs/uVn@nongnu.org
+X-Gm-Message-State: AOJu0YzQbpRyCSjW1OOz94Kw+8JIWOzRj4+kOjTpuSp2PxqxTZMFD/en
+ F1b3qLdjgH8rmmeLsoDIuSKtU3MLlj/pVCFO0A9Is7gmB/qFew3ZOpXucYK8H9Y=
+X-Gm-Gg: ASbGncuCvrdhPukozwhE+0vhyulwqAsfQgMS/t+VzxnijGI3n95LqtC+cr4N5mSgHy4
+ wTq+jsBY2OyROo+8ffrOyMdmH4pARoDpzLhoyAt9ZcoSFNPo59WqBJ0HQi4Dlqk2oYCY2ZafPLx
+ PU4QZa6CKw4t1qz2/2Xz8KPNzZzSmN/wtkQWRP86kuYLzhz+B2nkkWDiSAN6K27aPu/U61MGJ4u
+ DDx1DUGzBkK0Gc4LiN8xENVLOeRwbwZKSgdirT7kc7ejx9q1KsSOt29jPrhyN2x2RZgQ1i0wybf
+ 3NfYVBw9f3ARPu0TAHaBsYThmwg3McoOjmTfKQbWIRurLwhUE5BqF/Q+IJ4nrxohsGOSfbhE/7l
+ iOPRRBgcR
+X-Google-Smtp-Source: AGHT+IG0kqvK/Ay7IwWx7v4CDUglA8/weFLFvGInbf1sOOmwlbqv+kxzIVR1x9Ijp6PO6z2favpQLQ==
+X-Received: by 2002:a05:6000:4202:b0:39e:db6a:4744 with SMTP id
+ ffacd0b85a97d-39edb6a47a3mr571970f8f.32.1744647620167; 
+ Mon, 14 Apr 2025 09:20:20 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39eaf43cd69sm11298216f8f.80.2025.04.14.09.20.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Apr 2025 09:20:19 -0700 (PDT)
+Message-ID: <2b1665eb-2a0d-4515-8203-621e15c91d81@linaro.org>
+Date: Mon, 14 Apr 2025 18:20:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] hw/s390x: Remove the obsolete hpage_1m_allowed switch
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+References: <20250414132914.250423-1-thuth@redhat.com>
+ <20250414132914.250423-3-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250414132914.250423-3-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250224191152.2123003-1-berrange@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,66 +101,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping: would like to hear John's thoughts on this series.
+On 14/4/25 15:29, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> The s390-ccw-virtio-3.0 machine was the last one that used the
+> hpage_1m_allowed switch. Since we removed this machine type, we
+> can now remove the switch and the related code, too. This allows
+> us to get rid of the get_machine_class() hack and the big fat
+> warning comment there.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   include/hw/s390x/s390-virtio-ccw.h |  4 ----
+>   hw/s390x/s390-virtio-ccw.c         | 35 ------------------------------
+>   target/s390x/kvm/kvm.c             |  6 -----
+>   3 files changed, 45 deletions(-)
 
-We're likely to eliminate usage of avocado for functional testing
-in this dev cycle. That leaves python testing as the main outstanding
-bit of QEMU that is not natively using meson's test integration and
-also still pulling in avocado as a dependency.
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 370b03a0b97..a4fe1e47150 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -746,39 +746,6 @@ static inline void machine_set_dea_key_wrap(Object *obj, bool value,
+>       ms->dea_key_wrap = value;
+>   }
+>   
+> -static S390CcwMachineClass *current_mc;
 
-On Mon, Feb 24, 2025 at 07:11:50PM +0000, Daniel P. Berrangé wrote:
-> It seems everytime I post some new patches which touch python code I
-> end up forgetting to run the extra non-default 'make check' target from
-> the python/ subdir.
-> 
-> IMHO, if we're going to pick up on linter failures in review feedback
-> (which is a reasonable thing to want to do), then we should be running
-> these linters by default in 'make check'.
-> 
-> This RFC is demonstrating a possible strategy to achieve that, by making
-> the python tests use meson in the same way as everything else, instead
-> of being stuck in the old 'make' world. In keeping with our work to
-> remove use of avocado for functional testing, this also removes avocado
-> for python linters since IMHO it adds no notable value over what meson
-> provides already.
-> 
-> See last patch for the interesting stuff, and the various caveats about
-> this initial PoC.
-> 
-> Being a PoC this is minimally tested beyond 'make check' on my local
-> machine.
-> 
-> Daniel P. Berrangé (2):
->   python: be more selective in hiding mypy subclassing warning
->   python: integrate linter tests natively with meson
-> 
->  meson.build                   |  1 +
->  python/meson.build            | 43 +++++++++++++++++++++++++++++++++++
->  python/qemu/qmp/qmp_tui.py    | 12 +++++-----
->  python/qemu/utils/qom_fuse.py |  2 +-
->  python/scripts/__init__.py    |  0
->  python/setup.cfg              |  8 -------
->  scripts/meson.build           |  9 ++++++++
->  tests/meson.build             |  1 +
->  tests/python/meson.build      | 17 ++++++++++++++
->  9 files changed, 78 insertions(+), 15 deletions(-)
->  create mode 100644 python/meson.build
->  create mode 100644 python/scripts/__init__.py
->  create mode 100644 tests/python/meson.build
-> 
-> -- 
-> 2.47.1
-> 
+Wow, good cleanup.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> @@ -883,7 +849,6 @@ static const TypeInfo ccw_machine_info = {
+>   #define DEFINE_CCW_MACHINE_IMPL(latest, ...)                                  \
+>       static void MACHINE_VER_SYM(mach_init, ccw, __VA_ARGS__)(MachineState *mach) \
+>       {                                                                         \
+> -        current_mc = S390_CCW_MACHINE_CLASS(MACHINE_GET_CLASS(mach));         \
+>           MACHINE_VER_SYM(instance_options, ccw, __VA_ARGS__)(mach);            \
+>           ccw_init(mach);                                                       \
+>       }                                                                         \
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
