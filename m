@@ -4,83 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C408C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EDBC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:31:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4HoW-0008HW-Da; Mon, 14 Apr 2025 07:17:20 -0400
+	id 1u4I1Y-0003Tg-JD; Mon, 14 Apr 2025 07:30:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
- id 1u4HoS-0008HD-KS; Mon, 14 Apr 2025 07:17:16 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
- id 1u4HoQ-0002Aw-JK; Mon, 14 Apr 2025 07:17:16 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-52446b21cfdso1780988e0c.1; 
- Mon, 14 Apr 2025 04:17:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744629433; x=1745234233; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FwU/3duoMzPmCLBmlSEEpQ+EfCjeAWRzJJ1nwlpKUxY=;
- b=YT6JQv501ie46YIu3Nglydh/iRADyVAlcsMgHMuf8w3Wx3PqSKgHOb//jZ/UUhYfbV
- pYT2BkqQ/WyiWmGBlvMq8ZgVGd5ZipjqQaiV+7OkQ2mx7W8m+vkpd/4zP4D6Af2xrBFc
- Z7ehq/88SpUwj1O/beJL1RW+N7t5y775qSlOF/3gRnIGppV48KDjM2UzrVYaJ/wAwB7y
- YDTekP30HlJcWX4lDDOHjbAoZea/wMO0RlfsGeuQLwR/EZSf8027bBmaKrEHl05Tblwd
- teW0+dkeQRscF82nu8gFUA3Vv7V4xGLqqDUyhIE6/+J6CnQKbNFB7fE2WWPXs99ldukZ
- f9oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744629433; x=1745234233;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FwU/3duoMzPmCLBmlSEEpQ+EfCjeAWRzJJ1nwlpKUxY=;
- b=Dz5KIhkzIuGkOrzo/MLM/NCSClJzxvG+0MPCZsaR/P6PflQbVyPZwEzaGswZLT2f00
- yUhGjUGXXgOkBatN5BzMpzLYx5J+/3dXoyQRxh4gI205t6NQ9K5IEeaT8IBBxhRTNmEy
- 2WP5JQEG6NIgel+HNROhDA25y0411fqH+HoDcbwi4M8jPyObbZ5apPvqfpW/CEN/pVAT
- PUsXFBCM20xBD5IfeamxnG9/gzdxpsdbycRBaI1AZ4Lywzh24qVAhc60nmw3xkRmG37o
- 1luZGxXU1sVumSfULKmJBrbiJWPhhsT/KW7hTTaheEXKefZQh8kXwjLGiQlhJSm3cLVh
- n2fA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWK8taDMhJXKumQCpcguRxEiOeGxZCTWL8vxLfI6vZFiGURnWsoON7g4wwDL/l20iIZMzsjNXOrfXK8/b4=@nongnu.org
-X-Gm-Message-State: AOJu0YwjP135qnSTr8IMEw9PlJbHkU4yKZewL/U827iOFlgXEa51hqSn
- SAb/oWbVnAWfWKaihdVkLdv/NJQd7PNKlCq6gC9ZmP3V3cmBSjYoiP+fovgHzSpjpORI526B8GJ
- wKUeMAksqPUxYuPc1ZjjGcTf6jHTJCfdc
-X-Gm-Gg: ASbGncs2EuiQs+EWi3IxtsgcQLuRfOt2vp1UHYxBwEbVv9zPUitVAkVhlrIGHnZkwVJ
- bYdsmUHHqET1FqMlQPGfiDP2jJjrC6PaMeyqgORyuqL27lzxQ9w6b83uo+agd2adKkI/gmQ3gSN
- skCYVUT5srBPCxfnhoNz67Tg==
-X-Google-Smtp-Source: AGHT+IEpy+/cAdKGWOTVqhnbJQN5yxJs38MxXbyz85OxySPY+/rDwZxMhk8szWuKREUW8K7WHSdfsWALGYi72J3w7JA=
-X-Received: by 2002:a05:6122:8c6:b0:526:720:704 with SMTP id
- 71dfb90a1353d-527c359743fmr6494705e0c.7.1744629432657; Mon, 14 Apr 2025
- 04:17:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1T-0003Sj-Fs
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1R-0003sn-FR
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744630238;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v3SvVrRB8XRc9sJMLrlmZk6r9s+sgxFxLvTivA6M6PY=;
+ b=Bv6rKkbo7eDmOKtv/dOghaeQ99pGb8jRnjmO2sA9iPgnE56Aux8v/iPC2I+5oK+g/OhJ5M
+ nqE0hFoM5n6hGIxsl+xogRneHVDQ/kC+lyioyha/5y6tegALSzm9KoslhvBV+WsZt1IN/0
+ 9uh57N0vWYB017SuX7bRdp3ADa8r2g0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-vOmbQf5INKmBKjuu1igDrw-1; Mon,
+ 14 Apr 2025 07:30:36 -0400
+X-MC-Unique: vOmbQf5INKmBKjuu1igDrw-1
+X-Mimecast-MFC-AGG-ID: vOmbQf5INKmBKjuu1igDrw_1744630236
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07785195608D; Mon, 14 Apr 2025 11:30:36 +0000 (UTC)
+Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
+ [10.33.192.219])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CA9941955BC1; Mon, 14 Apr 2025 11:30:34 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>
+Subject: [PATCH v2 01/15] gitlab-ci: Remove the avocado tests from the CI
+ pipelines
+Date: Mon, 14 Apr 2025 13:30:15 +0200
+Message-ID: <20250414113031.151105-2-thuth@redhat.com>
+In-Reply-To: <20250414113031.151105-1-thuth@redhat.com>
+References: <20250414113031.151105-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20250414034626.3491489-1-ziqiaokong@gmail.com>
- <20250414034626.3491489-2-ziqiaokong@gmail.com>
- <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
-In-Reply-To: <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
-From: Ziqiao Kong <ziqiaokong@gmail.com>
-Date: Mon, 14 Apr 2025 19:17:00 +0800
-X-Gm-Features: ATxdqUEuKvhtpv_hqx2zhvx-lskXItBGJAWym2WazV_QVc-PR4ipIt4qRhHFGYc
-Message-ID: <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] target/riscv: fix endless translation loop on big
- endian systems
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alistair.francis@wdc.com, 
- richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=ziqiaokong@gmail.com; helo=mail-vk1-xa2d.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,80 +85,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 14, 2025 at 6:41=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Hi,
->
-> On 14/4/25 05:46, Ziqiao Kong wrote:
-> > On big endian systems, pte and updated_pte hold big endian host data
-> > while pte_pa points to little endian target data. This means the branch
-> > at cpu_helper.c:1669 will be always satisfied and restart translation,
-> > causing an endless translation loop.
-> >
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 0c3e702aca7 ("RISC-V CPU Helpers")
->
-> > Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
-> > ---
-> >   target/riscv/cpu_helper.c | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> > index 6c4391d96b..bc146771c8 100644
-> > --- a/target/riscv/cpu_helper.c
-> > +++ b/target/riscv/cpu_helper.c
-> > @@ -1662,9 +1662,9 @@ static int get_physical_address(CPURISCVState *en=
-v, hwaddr *physical,
-> >               target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->ram_block, =
-addr1);
-> >               target_ulong old_pte;
-> >               if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
-> > -                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, pte, u=
-pdated_pte);
-> > +                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to=
-_le32(pte), cpu_to_le32(updated_pte));
-> >               } else {
-> > -                old_pte =3D qatomic_cmpxchg(pte_pa, pte, updated_pte);
-> > +                old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), =
-cpu_to_le64(updated_pte));
-> >               }
-> >               if (old_pte !=3D pte) {
-> >                   goto restart;
->
-> If PTEs are always stored in LE order, maybe what we want is earlier:
->
-> -- >8 --
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 619c76cc001..b6ac2800240 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1464,5 +1464,5 @@ static int get_physical_address(CPURISCVState
-> *env, hwaddr *physical,
->           if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> -            pte =3D address_space_ldl(cs->as, pte_addr, attrs, &res);
-> +            pte =3D address_space_ldl_le(cs->as, pte_addr, attrs, &res);
->           } else {
-> -            pte =3D address_space_ldq(cs->as, pte_addr, attrs, &res);
-> +            pte =3D address_space_ldq_le(cs->as, pte_addr, attrs, &res);
+From: Thomas Huth <thuth@redhat.com>
 
-Unfortunately, this doesn't work in two ways:
+We are going to move the remaining Avocado tests step by step
+into the functional test framework. Unfortunately, Avocado fails
+with an error if it cannot determine a test to run, so disable
+the tests here now to avoid failures in the Gitlab-CI during the
+next steps.
 
-1. Note pte is used in the following code and that means pte must hold
-a correct value from the
-view of host endian (in my case, big endian not little endian).
-2. address_space_ldq_le will dispatch to ldq_le_p, while
-address_space_leq will dispatch to ldq_p.
-However, on little endian targets, ldq_p is an alias of ldq_le_p so
-making no effects.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ .gitlab-ci.d/buildtest-template.yml | 11 ----------
+ .gitlab-ci.d/buildtest.yml          | 33 +++++++++++------------------
+ 2 files changed, 12 insertions(+), 32 deletions(-)
 
-Per my testing, this patch doesn't have any effect indeed. To have a
-brief view what is happening,
-see the logs just before atomic_cmpxchg:
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 39da7698b09..13fa4f4a4fc 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -95,7 +95,6 @@
+   cache:
+     key: "${CI_JOB_NAME}-cache"
+     paths:
+-      - ${CI_PROJECT_DIR}/avocado-cache
+       - ${CI_PROJECT_DIR}/functional-cache
+     policy: pull-push
+   artifacts:
+@@ -109,16 +108,6 @@
+     reports:
+       junit: build/tests/results/latest/results.xml
+   before_script:
+-    - mkdir -p ~/.config/avocado
+-    - echo "[datadir.paths]" > ~/.config/avocado/avocado.conf
+-    - echo "cache_dirs = ['${CI_PROJECT_DIR}/avocado-cache']"
+-           >> ~/.config/avocado/avocado.conf
+-    - echo -e '[job.output.testlogs]\nstatuses = ["FAIL", "INTERRUPT"]'
+-           >> ~/.config/avocado/avocado.conf
+-    - if [ -d ${CI_PROJECT_DIR}/avocado-cache ]; then
+-        du -chs ${CI_PROJECT_DIR}/*-cache ;
+-      fi
+-    - export AVOCADO_ALLOW_UNTRUSTED_CODE=1
+     - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
+     - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
+   after_script:
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 00f4bfcd9f3..431bc07d8fb 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -29,8 +29,7 @@ functional-system-alpine:
+       artifacts: true
+   variables:
+     IMAGE: alpine
+-    MAKE_CHECK_ARGS: check-avocado check-functional
+-    AVOCADO_TAGS: arch:avr arch:loongarch64 arch:mips64 arch:mipsel
++    MAKE_CHECK_ARGS: check-functional
+ 
+ build-system-ubuntu:
+   extends:
+@@ -60,8 +59,7 @@ functional-system-ubuntu:
+       artifacts: true
+   variables:
+     IMAGE: ubuntu2204
+-    MAKE_CHECK_ARGS: check-avocado check-functional
+-    AVOCADO_TAGS: arch:alpha arch:microblazeel arch:mips64el
++    MAKE_CHECK_ARGS: check-functional
+ 
+ build-system-debian:
+   extends:
+@@ -92,8 +90,7 @@ functional-system-debian:
+       artifacts: true
+   variables:
+     IMAGE: debian
+-    MAKE_CHECK_ARGS: check-avocado check-functional
+-    AVOCADO_TAGS: arch:arm arch:i386 arch:riscv64 arch:sh4 arch:sparc arch:xtensa
++    MAKE_CHECK_ARGS: check-functional
+ 
+ crash-test-debian:
+   extends: .native_test_job_template
+@@ -155,9 +152,7 @@ functional-system-fedora:
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado check-functional
+-    AVOCADO_TAGS: arch:microblaze arch:mips arch:xtensa arch:m68k
+-      arch:riscv32 arch:ppc arch:sparc64
++    MAKE_CHECK_ARGS: check-functional
+ 
+ crash-test-fedora:
+   extends: .native_test_job_template
+@@ -278,9 +273,7 @@ functional-system-centos:
+       artifacts: true
+   variables:
+     IMAGE: centos9
+-    MAKE_CHECK_ARGS: check-avocado check-functional
+-    AVOCADO_TAGS: arch:ppc64 arch:or1k arch:s390x arch:x86_64 arch:rx
+-      arch:sh4
++    MAKE_CHECK_ARGS: check-functional
+ 
+ build-system-opensuse:
+   extends:
+@@ -309,8 +302,7 @@ functional-system-opensuse:
+       artifacts: true
+   variables:
+     IMAGE: opensuse-leap
+-    MAKE_CHECK_ARGS: check-avocado check-functional
+-    AVOCADO_TAGS: arch:s390x arch:x86_64 arch:aarch64
++    MAKE_CHECK_ARGS: check-functional
+ 
+ #
+ # Flaky tests. We don't run these by default and they are allow fail
+@@ -338,10 +330,9 @@ functional-system-flaky:
+   allow_failure: true
+   variables:
+     IMAGE: debian
+-    MAKE_CHECK_ARGS: check-avocado check-functional
++    MAKE_CHECK_ARGS: check-functional
+     QEMU_JOB_OPTIONAL: 1
+     QEMU_TEST_FLAKY_TESTS: 1
+-    AVOCADO_TAGS: flaky
+ 
+ # This jobs explicitly disable TCG (--disable-tcg), KVM is detected by
+ # the configure script. The container doesn't contain Xen headers so
+@@ -482,8 +473,8 @@ clang-user:
+ # Since slirp callbacks are used in QEMU Timers, we cannot use libslirp with
+ # CFI builds, and thus have to disable it here.
+ #
+-# Split in three sets of build/check/avocado to limit the execution time of each
+-# job
++# Split in three sets of build/check/functional to limit the execution time
++# of each job
+ build-cfi-aarch64:
+   extends:
+     - .native_build_job_template
+@@ -520,7 +511,7 @@ functional-cfi-aarch64:
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado check-functional
++    MAKE_CHECK_ARGS: check-functional
+ 
+ build-cfi-ppc64-s390x:
+   extends:
+@@ -558,7 +549,7 @@ functional-cfi-ppc64-s390x:
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado check-functional
++    MAKE_CHECK_ARGS: check-functional
+ 
+ build-cfi-x86_64:
+   extends:
+@@ -592,7 +583,7 @@ functional-cfi-x86_64:
+       artifacts: true
+   variables:
+     IMAGE: fedora
+-    MAKE_CHECK_ARGS: check-avocado check-functional
++    MAKE_CHECK_ARGS: check-functional
+ 
+ tsan-build:
+   extends: .native_build_job_template
+-- 
+2.49.0
 
-pte_pa 0xf14000000000000 =3D=3D pte 0x140f ? updated_pte 0x144f
-
->           }
-> ---
 
