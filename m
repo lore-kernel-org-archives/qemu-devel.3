@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF29C369B1
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 02:04:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A702AC369B1
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 02:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u49BF-0007Po-8d; Sun, 13 Apr 2025 22:04:13 -0400
+	id 1u49B9-0007N5-O6; Sun, 13 Apr 2025 22:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1u49BC-0007OU-Tg
- for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:04:10 -0400
+ id 1u49B7-0007MF-0U
+ for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:04:05 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1u49BA-0007Wk-TW
- for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:04:10 -0400
+ id 1u49B5-0007VR-6n
+ for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:04:04 -0400
 Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E1q2gV028952;
- Mon, 14 Apr 2025 02:03:53 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E1q7Zc029268;
+ Mon, 14 Apr 2025 02:03:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=XmJbt
- ott0SIaCjB5qpDZa77BFg9hoYgMg983000r1sY=; b=Z3uq8BFYeTd+H9Tp6A/pR
- 5wlbrKsihbIfZvlvuMQFvAwz+w8Y2r6oiN8ifM0JLMXTp/YbW0RnEpeJ+k6LeFIt
- 1gBResOJq85e8+FQ7G0qRohvxEARVRwD5zq1XP6iq3gTC48xljN/tsw+i/VyUOzM
- JEpuPBu4PZbiK1G5tvM6eRuEfrokVkgj2PSsFQd7PsXEO4sJHFjXmNFiYJgsu5Wi
- yFUMq6rXwwKcnfUwqnRb95DLFbSfY65Pahcb/K3A1I23kmiOb6vff/McvbPrgmjL
- RYmwboDro6/d6Av7a7eHSqIMAS/NU8xA/aypurY/0SDR8BN73uhNqsW6MHzBVUTa
+ :mime-version:references:subject:to; s=corp-2023-11-20; bh=dKfVb
+ ixbZRXJnTFs5ELLu2+YNiNsZxWN9ZXUPy0JFx0=; b=jwqDIUsxXhXdvOEQ4Y6r7
+ F0yuo1jPC+sg8w8BKyGo73sF1iLfe+kBbwv4Ib8mG5cV0KTvAg/fuuyK8W0eD2oQ
+ LHMVt5JiKRJNoxLdK7nLcuhhspWn7CNKpjZ3lu3Wj7Eyo7K5hgqXuSenth5Y2+rL
+ GUZUO0fGjCcR+9mrw1Z1JMv/a61nV/GFUigflKWQPnwU+IknrAGc7QU9fTPbgM7P
+ EpMgLKFSS67sm2/aLeqkahJkEtt9S0iSflNu+qvWhqQq0J6EnMaA2QPODouRUjGP
+ lOhBRZ9pqHZgKwnHxcL/sj9h0WJHHuKzNXXXzsy+aeFPVqQ9Bdxjr1aBa2zdYgUG
  Q==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 460s2u007x-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 460s2u007s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Apr 2025 02:03:53 +0000 (GMT)
+ Mon, 14 Apr 2025 02:03:47 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53DMrgg3009249; Mon, 14 Apr 2025 02:03:52 GMT
+ with ESMTP id 53DNFDKR009267; Mon, 14 Apr 2025 02:03:46 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 460d3fvqw5-1
+ 460d3fvqtv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Apr 2025 02:03:52 +0000
+ Mon, 14 Apr 2025 02:03:46 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53E22tYs035550;
- Mon, 14 Apr 2025 02:03:52 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53E22tYm035550;
+ Mon, 14 Apr 2025 02:03:46 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 460d3fvqg0-17; Mon, 14 Apr 2025 02:03:51 +0000
+ 460d3fvqg0-14; Mon, 14 Apr 2025 02:03:45 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
@@ -65,10 +65,10 @@ Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  santosh.shukla@amd.com, sarunkod@amd.com, Wei.Huang2@amd.com,
  joao.m.martins@oracle.com, boris.ostrovsky@oracle.com,
  alejandro.j.jimenez@oracle.com
-Subject: [PATCH 16/18] amd_iommu: Do not assume passthrough translation when
- DTE[TV]=0
-Date: Mon, 14 Apr 2025 02:02:51 +0000
-Message-ID: <20250414020253.443831-17-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH 13/18] amd_iommu: Invalidate address translations on
+ INVALIDATE_IOMMU_ALL
+Date: Mon, 14 Apr 2025 02:02:48 +0000
+Message-ID: <20250414020253.443831-14-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
 References: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
@@ -82,8 +82,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  mlxlogscore=999 phishscore=0 suspectscore=0 spamscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
  definitions=main-2504140014
-X-Proofpoint-GUID: tgnLvpPoaN6m-maAVGSkbB0Mn82IW9L1
-X-Proofpoint-ORIG-GUID: tgnLvpPoaN6m-maAVGSkbB0Mn82IW9L1
+X-Proofpoint-GUID: YHu7N6ILpEdE2mUJvDEKPPOtI7jf8a3H
+X-Proofpoint-ORIG-GUID: YHu7N6ILpEdE2mUJvDEKPPOtI7jf8a3H
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -40
@@ -109,126 +109,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AMD I/O Virtualization Technology (IOMMU) Specification (see Table
-8: V, TV, and GV Fields in Device Table Entry), specifies that a DTE
-with V=0, TV=1 does not contain a valid address translation information.
-If a request requires a table walk, the walk is terminated when this
-condition is encountered.
+When the kernel IOMMU driver issues an INVALIDATE_IOMMU_ALL, the address
+translation and interrupt remapping information must be cleared for all
+Device IDs and all domains. Introduce a helper to sync the shadow page
+table for all the address spaces with registered notifiers, which
+replays both MAP and UNMAP events.
 
-Do not assume that addresses for a device with DTE[TV]=0 are passed
-through (i.e. not remapped) and instead terminate the page table walk
-early.
-
-Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/amd_iommu.c | 87 +++++++++++++++++++++++++--------------------
- 1 file changed, 48 insertions(+), 39 deletions(-)
+ hw/i386/amd_iommu.c | 49 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index e502bbbbb7d3..edf2935f6a83 100644
+index e24eab34c9e0..3bfa08419ffe 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -1221,51 +1221,60 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
-     uint64_t pte = dte[0], pte_addr, page_mask;
+@@ -100,6 +100,7 @@ static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte);
+ static void amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as,
+                                                uint64_t *dte, hwaddr addr,
+                                                uint64_t size, bool send_unmap);
++static void amdvi_address_space_unmap(AMDVIAddressSpace *as, IOMMUNotifier *n);
  
-     /* make sure the DTE has TV = 1 */
--    if (pte & AMDVI_DEV_TRANSLATION_VALID) {
--        level = get_pte_translation_mode(pte);
--        if (level >= 7) {
--            trace_amdvi_mode_invalid(level, addr);
-+    if (!(pte & AMDVI_DEV_TRANSLATION_VALID)) {
-+        /*
-+         * A DTE with V=1, TV=0 does not have a valid Page Table Root Pointer.
-+         * An IOMMU processing a request that requires a table walk terminates
-+         * the walk when it encounters this condition. Do the same and return
-+         * instead of assuming that the address is forwarded without translation
-+         * i.e. the passthrough case, as it is done for the case where DTE[V]=0.
-+         */
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
+ {
+@@ -462,6 +463,47 @@ static void amdvi_intremap_inval_notify_all(AMDVIState *s, bool global,
+     x86_iommu_iec_notify_all(X86_IOMMU_DEVICE(s), global, index, mask);
+ }
+ 
++static void amdvi_address_space_sync(AMDVIAddressSpace *as)
++{
++    IOMMUNotifier *n;
++    uint64_t dte[4] = { 0 };
++
++    /* If only UNMAP notifiers are registered, drop all existing mappings */
++    if (!(as->notifier_flags & IOMMU_NOTIFIER_MAP)) {
++        IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
++            /*
++             * Directly calling memory_region_unmap_iommu_notifier_range() does
++             * not guarantee that the addr_mask eventually passed as parameter
++             * to the notifier is valid. Use amdvi_address_space_unmap() which
++             * ensures the notifier range is divided into properly aligned
++             * regions, and issues notifications for each one.
++             */
++            amdvi_address_space_unmap(as, n);
++        }
 +        return;
 +    }
 +
-+    level = get_pte_translation_mode(pte);
-+    if (level >= 7) {
-+        trace_amdvi_mode_invalid(level, addr);
++    if (amdvi_as_to_dte(as, dte)) {
 +        return;
 +    }
-+    if (level == 0) {
-+        goto no_remap;
-+    }
 +
-+    /* we are at the leaf page table or page table encodes a huge page */
-+    do {
-+        pte_perms = amdvi_get_perms(pte);
-+        present = pte & 1;
-+        if (!present || perms != (perms & pte_perms)) {
-+            amdvi_page_fault(as->iommu_state, as->devfn, addr, perms);
-+            trace_amdvi_page_fault(addr);
-             return;
-         }
--        if (level == 0) {
--            goto no_remap;
-+        /* go to the next lower level */
-+        pte_addr = pte & AMDVI_DEV_PT_ROOT_MASK;
-+        /* add offset and load pte */
-+        pte_addr += ((addr >> (3 + 9 * level)) & 0x1FF) << 3;
-+        pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
-+        if (!pte) {
-+            return;
-         }
-+        oldlevel = level;
-+        level = get_pte_translation_mode(pte);
-+    } while (level > 0 && level < 7);
- 
--        /* we are at the leaf page table or page table encodes a huge page */
--        do {
--            pte_perms = amdvi_get_perms(pte);
--            present = pte & 1;
--            if (!present || perms != (perms & pte_perms)) {
--                amdvi_page_fault(as->iommu_state, as->devfn, addr, perms);
--                trace_amdvi_page_fault(addr);
--                return;
--            }
--
--            /* go to the next lower level */
--            pte_addr = pte & AMDVI_DEV_PT_ROOT_MASK;
--            /* add offset and load pte */
--            pte_addr += ((addr >> (3 + 9 * level)) & 0x1FF) << 3;
--            pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
--            if (!pte || (pte == (uint64_t)-1)) {
--                return;
--            }
--            oldlevel = level;
--            level = get_pte_translation_mode(pte);
--        } while (level > 0 && level < 7);
-+    if (level == 0x7) {
-+        page_mask = pte_override_page_mask(pte);
-+    } else {
-+        page_mask = pte_get_page_mask(oldlevel);
++    amdvi_sync_shadow_page_table_range(as, &dte[0], 0, UINT64_MAX, true);
++}
++
++/*
++ * This differs from the replay() method in that it issues both MAP and UNMAP
++ * notifications since it is called after global invalidation events in order to
++ * re-sync all address spaces.
++ */
++static void amdvi_iommu_address_space_sync_all(AMDVIState *s)
++{
++    AMDVIAddressSpace *as;
++
++    QLIST_FOREACH(as, &s->amdvi_as_with_notifiers, next) {
++        amdvi_address_space_sync(as);
 +    }
++}
++
+ static void amdvi_inval_all(AMDVIState *s, uint64_t *cmd)
+ {
+     if (extract64(cmd[0], 0, 60) || cmd[1]) {
+@@ -473,6 +515,13 @@ static void amdvi_inval_all(AMDVIState *s, uint64_t *cmd)
+     amdvi_intremap_inval_notify_all(s, true, 0, 0);
  
--        if (level == 0x7) {
--            page_mask = pte_override_page_mask(pte);
--        } else {
--            page_mask = pte_get_page_mask(oldlevel);
--        }
-+    /* get access permissions from pte */
-+    ret->iova = addr & page_mask;
-+    ret->translated_addr = (pte & AMDVI_DEV_PT_ROOT_MASK) & page_mask;
-+    ret->addr_mask = ~page_mask;
-+    ret->perm = amdvi_get_perms(pte);
-+    return;
+     amdvi_iotlb_reset(s);
++
++    /*
++     * Fully replay the address space i.e. send both UNMAP and MAP events in
++     * order to synchronize guest and host IO page tables tables.
++     */
++    amdvi_iommu_address_space_sync_all(s);
++
+     trace_amdvi_all_inval();
+ }
  
--        /* get access permissions from pte */
--        ret->iova = addr & page_mask;
--        ret->translated_addr = (pte & AMDVI_DEV_PT_ROOT_MASK) & page_mask;
--        ret->addr_mask = ~page_mask;
--        ret->perm = amdvi_get_perms(pte);
--        return;
--    }
- no_remap:
-     ret->iova = addr & AMDVI_PAGE_MASK_4K;
-     ret->translated_addr = addr & AMDVI_PAGE_MASK_4K;
 -- 
 2.43.5
 
