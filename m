@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0997CC369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 093C2C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4NCb-0005Sm-Hp; Mon, 14 Apr 2025 13:02:33 -0400
+	id 1u4NEl-0006Uj-PD; Mon, 14 Apr 2025 13:04:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u4NCS-0005Pp-VQ
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:02:25 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u4NEX-0006MK-EM
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:04:36 -0400
+Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u4NCP-0001pE-BD
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:02:23 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B090F218A3;
- Mon, 14 Apr 2025 17:02:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744650134; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C7HU55HnR2n33HjPq4ymw04FbSfVSN3EDZqOMPyxF6k=;
- b=nkgZSqA0Ve0fmgiVqeokzq3CT548+0ralV7lTKHCxBpnex+oXvxKhp9bR0AKQMVIyR3mHE
- 7SMXtTeiy75Pu712Zv1lod12d5yrrCMJe4qJRbm7xeSRcEC6mgO9TRHjV+nvGqPMSRZfLI
- U1QWD3qLb3Ay1nrI7fJ6UInBef8/57Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744650134;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C7HU55HnR2n33HjPq4ymw04FbSfVSN3EDZqOMPyxF6k=;
- b=BTiIMZrASTkSm1+pOgVTBZO9H+ZG//yLp4bBZMlSwm265ixJL2wZ3axKAYNVM7TSxoOsSY
- r86s1Ld957xoDUCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744650134; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C7HU55HnR2n33HjPq4ymw04FbSfVSN3EDZqOMPyxF6k=;
- b=nkgZSqA0Ve0fmgiVqeokzq3CT548+0ralV7lTKHCxBpnex+oXvxKhp9bR0AKQMVIyR3mHE
- 7SMXtTeiy75Pu712Zv1lod12d5yrrCMJe4qJRbm7xeSRcEC6mgO9TRHjV+nvGqPMSRZfLI
- U1QWD3qLb3Ay1nrI7fJ6UInBef8/57Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744650134;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C7HU55HnR2n33HjPq4ymw04FbSfVSN3EDZqOMPyxF6k=;
- b=BTiIMZrASTkSm1+pOgVTBZO9H+ZG//yLp4bBZMlSwm265ixJL2wZ3axKAYNVM7TSxoOsSY
- r86s1Ld957xoDUCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2A0431336F;
- Mon, 14 Apr 2025 17:02:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6ZZsNZU//WcmPgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 14 Apr 2025 17:02:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Markus Armbruster
- <armbru@redhat.com>
-Subject: Re: [RFC PATCH 05/13] migration: Reduce a bit of duplication in
- migration.json
-In-Reply-To: <Z_056amMGN6Ey_1i@redhat.com>
-References: <20250411191443.22565-1-farosas@suse.de>
- <20250411191443.22565-6-farosas@suse.de> <Z_056amMGN6Ey_1i@redhat.com>
-Date: Mon, 14 Apr 2025 14:02:10 -0300
-Message-ID: <87y0w2fzhp.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u4NEU-0002HY-Rc
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:04:32 -0400
+Received: by mail-io1-xd36.google.com with SMTP id
+ ca18e2360f4ac-85dac9729c3so355774139f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 10:04:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744650267; x=1745255067; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=l2TEbLAtlL1JbwCci1ecI1N/NDp0qEv95NpQvUg9hI8=;
+ b=XB62vqWwmgdLVcs3PitF56ObmaQ6FMepfzqJ/MHOiUpQPRtdL59bwxx4MvN5RQNGSB
+ kq8au5qOHl8VNApJwNawDaCOK9oovg7QWtuGjSlnkTm1HkKBpXyMWFfUIsAwdTfhK1wI
+ 6Gh+z0FKJBglrcXLgT9G4ArsF/LAeJ/NtfTHorBmqRQd7f1TDKjHNckzrMRVTaaEQiWe
+ bdq4c1+sltoNE10/6GiRtQ1OnmugdBZTFHiWclBnEGNY5eVGprYd5miKCVUiQltA76+P
+ iLI56Vgd2TL3HdvdXIqOX+QM3ViAAujPRGDAN0kbRP2bOpG8XJtl4F9ha7GLesKRV/xs
+ mQWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744650267; x=1745255067;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l2TEbLAtlL1JbwCci1ecI1N/NDp0qEv95NpQvUg9hI8=;
+ b=sUMkhFeRv9odAHWs95D/poAWifBdkaKQThC86g6P8Id/N43jALMXu9AfzD9iXQtrd3
+ xiJHMxHpSADOQl5lWANgexcdTbCBd8wQo9O8d+i6TO4fy/rHkd/ykeKm6iTP75pW/rjX
+ G47KOzeMbKuJhzxUAWj/ARIjLcfsqrPkxE2OR5f43xkm6S9+v/+azkXhaCXntIwThcyN
+ VR2wUYeZzKGPbB36hCGqxmJ3dkQjoWsgr5dHBf8QRsbVb5dRhC6eMvCcrwnVtjw40dSP
+ iz85mWOsC3iPko3x5BYBsbQrbO+dgG1OPfc2ltzBUWcwnKXO3ApIABF4eUjGbn7j3FuN
+ NqUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhuZ/LacfaFQiJLM6XtQgozd7fD/Ydm3Kir69IlGIoVCsdmBm7lH1LA0cFfcyI7Mcjvv0IpARi7m0d@nongnu.org
+X-Gm-Message-State: AOJu0Yz2LbO8H0W2vWd++SWzbkeCcruqPw28yRvq8FeB+vdWE+QfF2B+
+ GY0X5jaSzoz4wfaNA9DPFowgwQTTI28mgcMpjJy59pTanP0aZ0+f
+X-Gm-Gg: ASbGnctPTWNr4cyme3txxWiCNtIzy6eFHjAXPN6z+UbnC4btjfxn5us5wmG8zGAXd6z
+ BppfPU0cPEGtEw1GIXUR0QZBz9oALYwGT1AxdUz+brOu6wde+hpi2LlCx6WpOF3HaSwcgLvt5gz
+ zArSd0mD7iwivvPNbb7V0wEM3W5L31rCLfGLOMWTgqCPLE++Po8HgIfodYFjxd+4l9kewJ/H1HG
+ vTp2XEzMBTV4f8ikXxsSOIhEgQuHpmzSyx6qgg1OMhx4ypFmBwCokRkreGgtGE2mQx1iG823Jex
+ 7VIbyKChclG1upG+qQTxyI0B7258nl9fffVQ+WF+5794J9F067HWODW0boX3E4kP8T5rt9W1FZI
+ =
+X-Google-Smtp-Source: AGHT+IGCwpx7BD8STLuK0zw76hj9FOj4m15HwYGhpagno8JjuINQZ5p0kQvrk8jx59oOa4hesV05mw==
+X-Received: by 2002:a05:6602:379a:b0:85b:3449:faa2 with SMTP id
+ ca18e2360f4ac-8617cc09e8emr1329862539f.9.1744650266803; 
+ Mon, 14 Apr 2025 10:04:26 -0700 (PDT)
+Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
+ [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-861656e18b2sm220949839f.45.2025.04.14.10.04.24
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 14 Apr 2025 10:04:25 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <matheus.bernardino@oss.qualcomm.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
+References: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
+ <20250407192705.2605614-4-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250407192705.2605614-4-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr,
+ hintjumpr to multi_cof
+Date: Mon, 14 Apr 2025 11:04:22 -0600
+Message-ID: <058301dbad5f$467a2530$d36e6f90$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.992]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFxbseScfkce8xHjxBW05Q6egvQNQHWEv9stGktYCA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250414-0, 4/13/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d36;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,134 +113,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Fri, Apr 11, 2025 at 04:14:35PM -0300, Fabiano Rosas wrote:
->> Introduce a new MigrationConfigBase, to allow most of the duplication
->> in migration.json to be eliminated.
->>=20
->> The reason we need MigrationParameters and MigrationSetParameters is
->> that the internal parameter representation in the migration code, as
->> well as the user-facing return of query-migrate-parameters use one
->> type for the TLS options (tls-creds, tls-hostname, tls-authz), while
->> the user-facing input from migrate-set-parameters uses another.
->>=20
->> The difference is in whether the NULL values is accepted. The former
->> considers NULL as invalid, while the latter doesn't.
->>=20
->> Move all other (non-TLS) options into the new type and make it a base
->> type for the two diverging types so that each child type can declare
->> the TLS options in its own way.
->>=20
->> Nothing changes in the user API, nothing changes in the internal
->> representation, but we save several lines of duplication in
->> migration.json.
->>=20
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  qapi/migration.json | 358 +++++++++++++-------------------------------
->>  1 file changed, 108 insertions(+), 250 deletions(-)
->>=20
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index 8b9c53595c..5a4d5a2d3e 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -914,202 +914,6 @@
->
->> @@ -1277,45 +1059,121 @@
->>  #     only has effect if the @mapped-ram capability is enabled.
->>  #     (Since 9.1)
->>  #
->> +# @tls: Whether to use TLS. If this is set the options @tls-authz,
->> +#     @tls-creds, @tls-hostname are mandatory and a valid string is
->> +#     expected. (Since 10.1)
->> +#
->
-> I'm not really finding it compelling to add a bool @tls as it
-> is just a denormalization of  !!@tls-creds.
->
 
-This is here by mistake.
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Monday, April 7, 2025 1:27 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
+> anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com
+> Subject: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr, =
+hintjumpr
+> to multi_cof
+>=20
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/hex_common.py | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/target/hexagon/hex_common.py
+> b/target/hexagon/hex_common.py index 6803908718..a2dcb0aa2e 100755
+> --- a/target/hexagon/hex_common.py
+> +++ b/target/hexagon/hex_common.py
+> @@ -247,8 +247,11 @@ def need_next_PC(tag):
+>=20
+>=20
+>  def need_pkt_has_multi_cof(tag):
+> -    return "A_COF" in attribdict[tag]
+> -
+> +    return (
+> +        "A_JUMP" in attribdict[tag]
+> +        or "A_CALL" in attribdict[tag]
+> +        or "J2_rte" =3D=3D tag
+> +    ) and tag !=3D "J2_hintjumpr"
 
-I remember Markus mentioning that implying TLS usage from tls-creds was
-undesirable. I was prototyping a way of requiring an explicit opt-in.
+It would be better to make this decision with instruction attributes =
+only rather than a mix of attributes and specific tags.  If needed, add =
+another add_qemu_macro_attrib call to hex_common.calculate_attribs.
 
-> Incidentally the docs here are wrong - TLS can be used by
-> only setting @tls-creds. The @tls-authz & @tls-hostname
-> params are always optional.
->
->>  # Features:
->>  #
->>  # @unstable: Members @x-checkpoint-delay and
->>  #     @x-vcpu-dirty-limit-period are experimental.
->>  #
->> +# Since: 10.1
->> +##
->> +{ 'struct': 'MigrationConfigBase',
->> +  'data': { '*announce-initial': 'size',
->> +            '*announce-max': 'size',
->> +            '*announce-rounds': 'size',
->> +            '*announce-step': 'size',
->> +            '*throttle-trigger-threshold': 'uint8',
->> +            '*cpu-throttle-initial': 'uint8',
->> +            '*cpu-throttle-increment': 'uint8',
->> +            '*cpu-throttle-tailslow': 'bool',
->> +            '*max-bandwidth': 'size',
->> +            '*avail-switchover-bandwidth': 'size',
->> +            '*downtime-limit': 'uint64',
->> +            '*x-checkpoint-delay': { 'type': 'uint32',
->> +                                     'features': [ 'unstable' ] },
->> +            '*multifd-channels': 'uint8',
->> +            '*xbzrle-cache-size': 'size',
->> +            '*max-postcopy-bandwidth': 'size',
->> +            '*max-cpu-throttle': 'uint8',
->> +            '*multifd-compression': 'MultiFDCompression',
->> +            '*multifd-zlib-level': 'uint8',
->> +            '*multifd-qatzip-level': 'uint8',
->> +            '*multifd-zstd-level': 'uint8',
->> +            '*block-bitmap-mapping': [ 'BitmapMigrationNodeAlias' ],
->> +            '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
->> +                                            'features': [ 'unstable' ] =
-},
->> +            '*vcpu-dirty-limit': 'uint64',
->> +            '*mode': 'MigMode',
->> +            '*zero-page-detection': 'ZeroPageDetection',
->> +            '*direct-io': 'bool',
->> +            '*tls': 'bool' } }
->
->
->>  { 'struct': 'MigrationParameters',
->> +  'base': 'MigrationConfigBase',
->> +  'data': { 'tls-creds': 'str',
->> +            'tls-hostname': 'str',
->> +            'tls-authz': 'str' } }
->
-> snip
->
->> +{ 'struct': 'MigrateSetParameters',
->> +  'base': 'MigrationConfigBase',
->> +  'data': { '*tls-creds': 'StrOrNull',
->> +            '*tls-hostname': 'StrOrNull',
->> +            '*tls-authz': 'StrOrNull' } }
->
-> I recall we discussed this difference a year or two ago, but can't
-> recall what the outcome was.
->
-> Making the TLS params optional is a back compatible change for
-> MigrationParameters. I would think replacing 'str' with 'StrOrNull'
-> is also back compatible. So I'm wondering if we can't just unify
-> the sttructs fully for TLS, even if one usage scenario never actually
-> needs the "OrNull" bit nor needs the optionality=20
->
+Having said that, the correct tag for hintjumpr is J*4*_hintjumpr.
 
-MigrationParameters is the output type for query-migrate-parameters. I
-belive it must be all non-optional to keep compatibility. The docs on
-master say: "The optional members aren't really optional"
+Taylor
 
-For MigrateSetParameters they've always been optional and continue to
-be. There we need to keep StrOrNull for compat.
 
->
-> With regards,
-> Daniel
 
