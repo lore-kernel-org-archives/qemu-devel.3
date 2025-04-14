@@ -4,62 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6D6C369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3D1C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4NFh-0007Xx-P9; Mon, 14 Apr 2025 13:05:47 -0400
+	id 1u4NG6-0007og-1K; Mon, 14 Apr 2025 13:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u4NFW-0007VD-Ge; Mon, 14 Apr 2025 13:05:35 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u4NFQ-0002h9-4K; Mon, 14 Apr 2025 13:05:34 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:ca1:0:640:740c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2AABD60D96;
- Mon, 14 Apr 2025 20:05:22 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b4ae::1:27] (unknown
- [2a02:6b8:b081:b4ae::1:27])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id L5K85P0FV0U0-v1KBa4Fk; Mon, 14 Apr 2025 20:05:21 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744650321;
- bh=aZ9tTSafv+sEEGOGfR4aRBkcHAZIXhNwLNDFeAvqrPY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=d6Uh1ggaHDCulE09MDXHOK9P8wKCrMKYZA5VXDnr1Y9x+qX9T0iHl8ttRvsh/O0cl
- CIvi+M5VWsze6JiN5Xl6stzr8+717fWMkbuGKxr9XIxUTk0q7pu1G7xPxVn/559aNV
- OTx2Vzy1VdIKrMkEL0VBehLoPtOTUEAc7Mbt+eZE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <2d17f631-40b0-40bc-a4ba-0b507cd39c71@yandex-team.ru>
-Date: Mon, 14 Apr 2025 20:05:21 +0300
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u4NG3-0007mc-S4
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:06:07 -0400
+Received: from mail-io1-xd35.google.com ([2607:f8b0:4864:20::d35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u4NG1-0002rQ-RJ
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:06:07 -0400
+Received: by mail-io1-xd35.google.com with SMTP id
+ ca18e2360f4ac-86192b6946eso54453339f.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 10:06:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744650364; x=1745255164; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eoRmx5jWFwxR3IrS9Xpnp+5w0xVSuvU72mNWfqm4P4Q=;
+ b=a0UzrIvaQ3xnWBSxsPrgRtTcOCGCGj3bIgYwq8KENhd2wCSABCpbEnQkuUqNzqwsEI
+ YCR4FdIdNXjXMId7zeehizW7DcXG4EK7axuQC+4qJLS5KbZPsNsCRJHbRNNtT0FGqZxy
+ 6gmdWXOfryTDVF+n1E93HstCaehCisCSpYIGd1Y8dXIOUFcp6NyTfSE0HVIVlvVADlNE
+ 0g82apoFM2mpQPsZlRSb+bw2ArjonFw8NqBdYSHF+GaR29pIVLIhBcj2ltCADlTlRdFQ
+ 4/kELzfy1bBConU7xmsR/q1qVlr+T3Z7OMjxaAoh+2szy5Rsij659lkGAxmo5auQ4X0M
+ 34nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744650364; x=1745255164;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eoRmx5jWFwxR3IrS9Xpnp+5w0xVSuvU72mNWfqm4P4Q=;
+ b=sr077/XekcreHdFRFueuh+EdWKczqrX8avqJhbyDeRlnZR2xqtI++uiYsXGiA3bpbL
+ wzqlS9pKByF3Yl/fxz6FOXPDGLmIzfnv6qaTzKUvg2vAlB+fJ++cD1w33+gaiLEJLZgd
+ DJOLI3JY3dqYJ8yPSb48gqrbHjwWwFSGIiu1e8ET86mFccJfTR8p1eMOMAI2hEHVYqRb
+ UquDKCGYQgxEP7vr3xtTihHO9mRq/IS4kMX+2C/6M9UuajoLy+AmOXu+ahHreOHiKbvV
+ V4N7aEByIqRse2FsJwZt3sho315OoGDfITJx1u//G1hta8kVqIoOqS7rPh/pvLRI/1Vw
+ kZow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVf9tJJeQrhXm89XU2/UDfu7DiD0nh6foelXAZvFPNfFsGBu8zzcZJvuVcBYBwUAUuG9XqgLnjM0hdB@nongnu.org
+X-Gm-Message-State: AOJu0YwP753uTbSSThQP7f7NV8TwyOGvHi/lD19OjvgFBbT6XofVh6yk
+ Q2w+ujCgYkCQRaqyY3moca7Y1E/G+UO9hSQG7moAf0wBV8A9w0K9
+X-Gm-Gg: ASbGnctxfo0worK+Kl7KkNFMCap0pSflF3pAUUR2sjjolSqUe7mGwpSn6Jqawbomw6Z
+ JwvvykGPgeTUDEehOK7ccLxnOLC6qZy5KaWnEfFUhiPn7GlkTp1MMYI70ugUh5YuYUYHpgt5QvY
+ 9VaSb9LUUfs/d5rW0R2sA5uVPTz0IhXx2jY5UMcVQE0FijeU9TvtmhHD1TW0HBKJ6uJ7b3VYjyv
+ 4wO8vfG+rrptZyTg9A8+GyfzvZoQlMh44rp//eXdmA1iKCi3sghT2QtfHTimSaL9rd2rYB8XxK8
+ 2qXw8hNZrFzy4JuWetW+cqIWVM8xjDgjPJcd3opjZmdtEvIz+9YRWoHUCv11kuwQJ+AnF4QRG2g
+ =
+X-Google-Smtp-Source: AGHT+IH6Xkd4CnbCM4ag2+BNz+dDkKaLVQN/tEYhF5eAeiXA3IKCbU+6Thnnhvdm46F/Cj6mjQGApQ==
+X-Received: by 2002:a05:6602:4803:b0:85d:badb:a42e with SMTP id
+ ca18e2360f4ac-8617cc66166mr1673846439f.14.1744650364000; 
+ Mon, 14 Apr 2025 10:06:04 -0700 (PDT)
+Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
+ [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4f505d16a79sm2701808173.50.2025.04.14.10.06.02
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 14 Apr 2025 10:06:03 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <matheus.bernardino@oss.qualcomm.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
+References: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
+ <20250407192705.2605614-5-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250407192705.2605614-5-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH v3 4/5] target/hexagon:
+ s/pkt_has_store/pkt_has_scalar_store
+Date: Mon, 14 Apr 2025 11:06:00 -0600
+Message-ID: <058401dbad5f$80ec26a0$82c473e0$@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] file-posix: Allow lseek at offset 0 when !want_zero
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:raw" <qemu-block@nongnu.org>, "Denis V. Lunev" <den@openvz.org>
-References: <20250411010732.358817-8-eblake@redhat.com>
- <20250411010732.358817-10-eblake@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250411010732.358817-10-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFxbseScfkce8xHjxBW05Q6egvQNQHhzKT0tGjSpQA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250414-0, 4/13/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d35;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -77,62 +113,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.04.25 04:04, Eric Blake wrote:
-> The 'want_zero' parameter to raw_co_block_status() was added so that
-> we can avoid potentially time-consuming lseek(SEEK_DATA) calls
-> throughout the file (working around poor filesystems that have O(n)
-> rather than O(1) extent probing).  But when it comes to learning if a
-> file is completely sparse (for example, it was just created), always
-> claiming that a file is all data without even checking offset 0 breaks
-> what would otherwise be attempts at useful optimizations for a
-> known-zero mirror destination.
-> 
-> Note that this allows file-posix to report a file as completely zero
-> if it was externally created (such as via 'truncate --size=$n file')
-> as entirely sparse; however, it does NOT work for files created
-> internally by blockdev-create.  That's because blockdev-create
-> intentionally does a sequence of truncate(0), truncate(size),
-> allocate_first_block(), in order to make it possible for gluster on
-> XFS to probe the sector size for direct I/O (which doesn't work if the
-> first block is sparse).  That will be addressed in a later patch.
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+
+
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Monday, April 7, 2025 1:27 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
+> anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com
+> Subject: [PATCH v3 4/5] target/hexagon:
+> s/pkt_has_store/pkt_has_scalar_store
+>=20
+> To remove any confusion with HVX or other potential store =
+instructions, we'll
+> qualify this context var with "scalar".
+>=20
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   block/file-posix.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/block/file-posix.c b/block/file-posix.c
-> index 56d1972d156..67e83528cf5 100644
-> --- a/block/file-posix.c
-> +++ b/block/file-posix.c
-> @@ -3217,7 +3217,14 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
->           return ret;
->       }
-> 
-> -    if (!want_zero) {
-> +    /*
-> +     * If want_zero is clear, then the caller wants speed over
-> +     * accuracy, and the only place where SEEK_DATA should be
-> +     * attempted is at the start of the file to learn if the file has
-> +     * any data at all (anywhere else, just blindly claim the entire
-> +     * file is data).
-> +     */
-> +    if (!want_zero && offset) {
->           *pnum = bytes;
->           *map = offset;
->           *file = bs;
+>  target/hexagon/idef-parser/README.rst       | 2 +-
+>  target/hexagon/insn.h                       | 4 ++--
+>  target/hexagon/macros.h                     | 8 ++++----
+>  target/hexagon/decode.c                     | 4 ++--
+>  target/hexagon/genptr.c                     | 3 ++-
+>  target/hexagon/idef-parser/parser-helpers.c | 4 ++--
+>  target/hexagon/op_helper.c                  | 4 ++--
+>  target/hexagon/translate.c                  | 9 +++++----
+>  target/hexagon/gen_helper_funcs.py          | 2 +-
+>  9 files changed, 21 insertions(+), 19 deletions(-)
 
-Looks like a hack. So we have bdrv_co_is_zero_fast() which do pass want_zero=false to block-status. But in case of mirror, which want to check the whole disk, we actually want want_zero=true, and detect it by offset=0..
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-Isn't it better to add a kind of bdrv_is_zero_middle_speed() (which means, don't try to read the data to check, but be free to use suboptimal lseek call or something like this), which will pass want_zero=true, and use it from mirror? Mirror case differs from usage in qcow2 exactly by the fact that we call it only once.
-
-
-Another doubt (really weak): can this one extra lseek be so slow, that mirror becomes worse?
-Den, is it right, that problems about slow lseek (that we experienced several years ago) were about qcow2-internals, and nothing related to mirror itself? May one lseek call on mirror target break something?
-
-
--- 
-Best regards,
-Vladimir
 
 
