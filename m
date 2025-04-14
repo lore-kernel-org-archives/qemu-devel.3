@@ -4,189 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABED1C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 09:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00DF6C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 09:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4Frw-00033t-Gw; Mon, 14 Apr 2025 05:12:44 -0400
+	id 1u4Ftt-0004Xu-4B; Mon, 14 Apr 2025 05:14:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u4Frv-0002zv-1s
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 05:12:43 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u4Fti-0004XV-UM
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 05:14:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u4Frs-0000Fq-H7
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 05:12:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744621961; x=1776157961;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=yEVV+V0ZtVy/IuhEqJ+9rKgJEi+el5BpVLqbfXYeZV4=;
- b=SrR9zxB2pPhNIWQXPXRDlFcmpuFSOOyvp09+WjAYsMn/ypHFsHy4EWWY
- vp51BewT52tOWVg+aYtUu1F0CWQABEjWMT6KMdXSvbDa7borP9E0bsFNA
- BquVJ8AJqN/vSMocoFVSnDiiTF98ykQGen6zAODN5Xx0INMYIXy/s5P7m
- GBQENit/LorhnUlnmNxkHTkNST/qDaSmJyhU4lPbKSu/4TRNDhHxXRYfG
- /LztJzC2JNi2ST2llAneO4hQT6ZeD+YUrK2T4AkUsbUjZRN/wxcUJAap6
- F70CePPD0qIpSDrJvvcfslHk4R3poGkCgqmaHpr0vdOUSORqT3Cd9f8U7 g==;
-X-CSE-ConnectionGUID: u/KZL3OPT6Gva5zMKWMwSQ==
-X-CSE-MsgGUID: GXDPtSbKSnuCp4rbP47z7A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11402"; a="57466729"
-X-IronPort-AV: E=Sophos;i="6.15,211,1739865600"; d="scan'208";a="57466729"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2025 02:12:31 -0700
-X-CSE-ConnectionGUID: lrDFjZVNSLaR1igM7Gu+/g==
-X-CSE-MsgGUID: M8apn9/7Sy6f54LxEmzKSg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,211,1739865600"; d="scan'208";a="160719255"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2025 02:12:32 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Mon, 14 Apr 2025 02:12:30 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Mon, 14 Apr 2025 02:12:30 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.43) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Mon, 14 Apr 2025 02:12:30 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jGSQZUAV2VsCbH/MAt9aZWdtEvzDxtMcOK2yUOe+AAlNvHAazGIkrZzefvcNikZuzehuYFTDg+bZTk1i40yvD56qUO2Rx5YAPZiSOFk1TGIsEBYp8KOi7PpeEPeytugFcU4aNt/fG7N8gAjdcuENISK25VrR+K+2hdzqKRGTH7qdPMdS6sV6sE6gMWr59qWEJKcIzBRQINDNPScnQQQHU7OfOMmKpo6XcleG2m0orPeoAzhX7HNneShpdefvzFv0ygawnEINRBLG4PYd47qKSpjYKbnWNZKdGNq/y6P9PgHaQ3c/uD75xMntIaWoO2/+VNEoRnti9KRkgfUFojeckw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kfgwKVBgONOCh4tu2HjbmNmVuysfEfOxMr9iKY6Tqfo=;
- b=HLqXRJ03+7ihV6SHxhHALvFe+3OUFrfpIb6zODiCvYmM4074lo/8ZHhWIczIEBhh3bXaggW1mAWYvdP4m7mw1oCEip+8ZHOmkd44mEvUHbbBO5+1jJdB+EgBeUqZ040MC7Swza/Ka/z6BbjkFz+zdfDa67N6QTHxZfNTxX7TCbutV0eRG0s6R6kz13IZQ2zNQv9HBdbWxKxw/GWfeHUpJf7Bv6BUpYlo4TEVVMCZvi0Xijj/IvVuQIF7Js/FVNjieRaRgd8POWUI58LKrp1r8MwRSmARMPNa8kPWK3JO9RTqfdIHYQ6xg5ljntI5PuDOqCNti1yP1ILW/WRDNaDh0w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by SA0PR11MB4528.namprd11.prod.outlook.com (2603:10b6:806:99::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.32; Mon, 14 Apr
- 2025 09:12:03 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%3]) with mapi id 15.20.8632.030; Mon, 14 Apr 2025
- 09:12:03 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Peng, Chao P"
- <chao.p.peng@intel.com>, Donald Dutile <ddutile@redhat.com>
-Subject: RE: [PATCH 2/5] vfio: Move realize() after attach_device()
-Thread-Topic: [PATCH 2/5] vfio: Move realize() after attach_device()
-Thread-Index: AQHbqstqg8dGaGNdUEq2y5NCdeSeyLOeSpaAgASOVUA=
-Date: Mon, 14 Apr 2025 09:12:03 +0000
-Message-ID: <SJ0PR11MB67444594B4E98ED3E020787592B32@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250411101707.3460429-1-zhenzhong.duan@intel.com>
- <20250411101707.3460429-3-zhenzhong.duan@intel.com>
- <a9fbd9ed-f107-4bde-adfd-26b51bac0442@linaro.org>
-In-Reply-To: <a9fbd9ed-f107-4bde-adfd-26b51bac0442@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SA0PR11MB4528:EE_
-x-ms-office365-filtering-correlation-id: 8f2da9fd-7b06-40ec-3e92-08dd7b346c0e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?KLFT5fdQILMkoGLVUJHsBS9k1h15FTjxLjVKJjMAlWc3Ub3S3i6wH3Di0n?=
- =?iso-8859-1?Q?ZaoB0iEyyJLvgXM4SahtnA00/7rWrLjtzB9C/IvzysrB8h4h5wUDvpXlm8?=
- =?iso-8859-1?Q?3iPyRdYjjuTqNmj2Jh8nu6PxmyrPgaueiSqEfSB2flBROjGaA9a5/a2tQ1?=
- =?iso-8859-1?Q?XHxNcRVHHqi2QFsvpXn6ZT2Cg1+bui7yey79y6xs5+EyaOEtIb9xB8I0X/?=
- =?iso-8859-1?Q?wRBiNurviPxQt5wyb9GWZ7Rkpx/osn4ThFmZ5g5w1Ep7tGzNuUzZgxh3Q6?=
- =?iso-8859-1?Q?oxBCdQYpxFgKSbFqQoCc0jZ3sl/KFTwsQLiH2up1daQ971o6Edpz5EpT8h?=
- =?iso-8859-1?Q?SpD2eoNosHlDJsvTas5yH/bE24IZR1XfKK3RezfpBIwnRY7SHbVtr16jIX?=
- =?iso-8859-1?Q?LuZ5oYrPkLJV6UvWwkj6Hm5e4+pvUWE6Zus6LB4J+sRKp+EyIqbhtl4BzA?=
- =?iso-8859-1?Q?V1xmPDUC/HXHxL6OtUqrKPTcwxgMkuUnxA+BOZ7wLihYgR8DE2nqyydhTj?=
- =?iso-8859-1?Q?pwFXfXzI2bqKUK/tDKkb6UV+RHKDIE19niiF8FhLa3Fhb3iyQEuzf5HMG5?=
- =?iso-8859-1?Q?rKFI9Lq9kWU2VX1k2guUuxapeukCUv87801xB9ybdWPuMavgSQnoubtCRy?=
- =?iso-8859-1?Q?XweOOIFV8lMct14yD0ODSPxRWJplYPNmKxiRkEyFMhTH3pExrpsd66atbm?=
- =?iso-8859-1?Q?zPiYqmyEW6CvSgvvaEiN601QNwzVUKOCtabe+T4VJtvaBLrBrU8k3JVVXM?=
- =?iso-8859-1?Q?HUeMffYYH4fc+wG68kob0FfCTa4IV1Sxx82j1vYgkS3bmofkbkqrzJp8pM?=
- =?iso-8859-1?Q?MmnOrj7/K/eM6qvj7yuzc9F9bnlrjrqL6VbcTL6e3Zlb5XrsxLy+jDqSlm?=
- =?iso-8859-1?Q?4ziDHmlZz1lLW5CLoDs+rwZSt5O/AaN3CEQ6bI+FnzPIV3h9rK3tiv3THX?=
- =?iso-8859-1?Q?n+QudaosUkZYgdt1WiOkeRLF/xBD/cDSeumirG8eb9jP69YBUFtLTfgr9F?=
- =?iso-8859-1?Q?pbIpW8wBHggmTGCQ9q3MRU7XE+7kS8ULukEQJ7bVMmdfWdIZcPTWvZXL5E?=
- =?iso-8859-1?Q?SFzebk3GxUpmou5iYQ3h98BJasJ2iWhjNbdEFNngDwUR1P0PawaaKuJY7f?=
- =?iso-8859-1?Q?vxAsXatyPxGRiroQZITO3Vkwp4ye6mjsleLPOOp+TO1oNRv5RkYtDSLsRz?=
- =?iso-8859-1?Q?YTr3dVSqpig7JDwx5S5aT9ElWV9oMh72tlUL0yvinT4rm56tC0BV4M8fh1?=
- =?iso-8859-1?Q?sUUKkbKxX+PeSNvaWm/I398lyxPLzFk4N9DQ+JGsKoWA/oUyH2lC4RmI4t?=
- =?iso-8859-1?Q?msLoItUlxabb4H/lY/2gvlKUo9Q7ajC6AUXeop8jgePii5ItnyHXuRAVrj?=
- =?iso-8859-1?Q?5RSX1chLeWojBbl+RTo4tt6Vee+eR4KChtt2TXo2LTdkjPCQ6RIfzCbeUT?=
- =?iso-8859-1?Q?B7GStixsPfqz0ZdRJYN4l6xWwzkHBEmLPu/zxp65smGZwWakFaPlr0Cjc9?=
- =?iso-8859-1?Q?WzAtNrOssWjF/UNz7OBCRyJ/wxJsIZRq3mz7Neg0KjTg=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?4YR3axH2AkNcUpsKRK/67fHG+KwlYlF4Kq87koF7aRORKfShXmPhLh27eg?=
- =?iso-8859-1?Q?QdAGWhSe6EWEvMl6VoQU0D8kqF9/3C4Zcg9YRpxX8SrHp8J8fN9cnsAP6b?=
- =?iso-8859-1?Q?A5cn/99/9Cavpz/NWOSXsqKpxvUtNNFGC8qOnHpkRbwHLhVO8ytJyI+zOt?=
- =?iso-8859-1?Q?sm2H0Wx2iWD+ex0xvhgjMeRkSo0z45mk8EjOuidNK4qd9EP9PNDc8NiXfT?=
- =?iso-8859-1?Q?62nfRvyStEM8uDUDqoyd/qtcsEe1qsuYxvaYKtNIiNX9LsC8naVRwi3kaa?=
- =?iso-8859-1?Q?/KXQQJjyGaSMBssrvFNmTfx2ot2y9I9JGHWS7uDTpgMVZTp9e12VWvEK6b?=
- =?iso-8859-1?Q?bsIsmXyBoIicktS5z/RvIHr2CxcfH5BjsfC4KVgvHqPMVO6d13SpVqEpjQ?=
- =?iso-8859-1?Q?x+X735zE5qBuLEV4RbRFSl3RVko26XgJk2zuXSE97TDn1lGwV71zaalrY3?=
- =?iso-8859-1?Q?SlxFEL+0tWsDIay5ki2YTv328o9x/cQxJ+0I6ZK+x2n1ul7NQF2UtKwiii?=
- =?iso-8859-1?Q?YwiBUaT8id7qBTGggaW3ZVr+6urRRcSZc6vPiCgnsgkIKhIA0jqpPZ4/9r?=
- =?iso-8859-1?Q?yW8tLwsYJyzJbSdbrV6suexjUNTWIRBjHCGNXskWCFKOILy7n6QLYPnnby?=
- =?iso-8859-1?Q?ua3LM8qsuyf4rlJthdvuCeOaMPckWUI8RDfxF+w9jpu5M3FGeDWxwX9S5b?=
- =?iso-8859-1?Q?IrEhyFbyq1Zx4rYsLfen6bZoMVG7ntKf2ROZsb5WxoG3NsmYmyKjfvrhT/?=
- =?iso-8859-1?Q?AOST36D9AHnPZvxLW5b1/1x78he1/1wcS4t9PbHcn7PsvDP/ruCiCIRqZQ?=
- =?iso-8859-1?Q?j50ErvddSaT1tO/2A367MG7EyAW7Fsny12lqUuYlnkZx0LPE5MK+zmMfNf?=
- =?iso-8859-1?Q?CjImFsotEyqVA8D39K4I+sy8qEV+1mT7KLZReUcXbJinH1iBo5Lav7vALD?=
- =?iso-8859-1?Q?Ergs3Qy9aBhm16eAtuNJohcaXSzpsCulAGu9AE8WIdVM2hYVjwgzwLzd+7?=
- =?iso-8859-1?Q?0lkBNwvApixDV+zBeOlULhvEJe+33BqAKY234wZaJCnC3m355op6bp7QtC?=
- =?iso-8859-1?Q?XIxDoPhkVCdTjjxZ1WrJXMBkEvhkGntcPcndaRqaiPNcU6FUN5l6RmXAkL?=
- =?iso-8859-1?Q?BSuXwlJNrZnENdjMdQw7J8Cvmr/8bABx/226qF2tv3B4B+d0mtLUKQ6EmR?=
- =?iso-8859-1?Q?BNYjbKyzCLSHnEWbNzcU0KE/cK5FxuWPmgnIRhGFzY/sVKnBnxXG3o+R10?=
- =?iso-8859-1?Q?EyJahw5FF+aia/OZDPbogAkbBXxYmqFbMwaD+NT31RNEnkMacseAOr1dpn?=
- =?iso-8859-1?Q?+XiUr5H7oBjPTB1oYkA+rcX2XClWHdl3/+jLiknaW/dAVCfX+OCsj8KaQb?=
- =?iso-8859-1?Q?cgc/bRdw8GW6YtHSACOMcZs9CkP6g2Xo5rVE/HZ+MhxYJWH05N+p6ynpcc?=
- =?iso-8859-1?Q?C4GqdZEuCVJBpoqas9EJjkL1kOX8Jfz21tkbv/Z5aVUzqDDKzBJubRw6Is?=
- =?iso-8859-1?Q?63uSh6EDFi5evYgE7pBxFYqatxeDo+zkh4FyJsbgGzUvh64sb1S8HXZn4b?=
- =?iso-8859-1?Q?Xm4jQ+MjNxhllkVqSDq3suEjmh9mEHopu93hsRsxWARK8LsR5sQTJhc4h/?=
- =?iso-8859-1?Q?AZGT83paIxfFKYp+CF8jYO6+B9hnnuvoa7?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u4Ftg-0000Zh-Hz
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 05:14:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744622068;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rmcJmxBBERd2KzCJkgT6vfe7gtCgJ2OpF+UfMCBbvzU=;
+ b=AxICDCMBzoDcpapeZwjiiaSPSgCd30htV7TANJh6I2U73ZsTHSZPA5fbVwGQhW6TysdtQi
+ 1+/fiEUfL80GOeOF4FCK7cc5Vc6RRrapF8cVn9ayIN12VtEDsEbDvIa+en42A32STBsI5T
+ NRXHMoMfDvUnfpmrVztn7PJhzEuZicY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-556-Y5JNtO0FPAqLLwyntBNu3Q-1; Mon, 14 Apr 2025 05:14:26 -0400
+X-MC-Unique: Y5JNtO0FPAqLLwyntBNu3Q-1
+X-Mimecast-MFC-AGG-ID: Y5JNtO0FPAqLLwyntBNu3Q_1744622065
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39123912ff0so1583489f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 02:14:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744622065; x=1745226865;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rmcJmxBBERd2KzCJkgT6vfe7gtCgJ2OpF+UfMCBbvzU=;
+ b=Ha9lsDQ5YNEFCHEx0qjVKMNrcnOcBk4xARSI9ZjLMYSw9Q+mTvmJwtECTn+FeXRspk
+ E/v8mCOj2XCymIrgoSu7ON880uhcsINE84X+0AIZb40FEKfXLZnponLSXx9iXcMqJaxU
+ LTsX5YNY8xBo/LIr3ZfJ8Xmxkzl4ELEaoMbVtF68PyDe7+FIqFSXAQ2BoVdvL09IepB7
+ rrA/WrMcTu9aYjAI4WSrMnPmyudvhuHiocHNRSRznTiNOSBPlq+8ra/chTaT86jPS0p+
+ MXcJpPJIOZAuJMjlv6bHmkjzT/xHuR+Tipt4KuBTn9HGWKaTjpRkSaI3RR2MOwRKJ/sJ
+ sJrQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXpM+1Z8eBscQGw9dpTnNNC/ELQ7XuCrwixjJC1Kpi6Xh77tdmECLTb0+9x3TlVFKDBWHS1tpInQwF@nongnu.org
+X-Gm-Message-State: AOJu0YytfvUsEnLv45xZbNAICDoUYnwlNuVJsH9gzlcSagVsoWLUFLlt
+ SbV1iEfpreJX3BAizv/rOnCmYbD879rqakd40C5nAOZp2iFC6G1NOpGvCagKkLt4VN1vBdgS9bo
+ HE+2bhcvt/fPww4E5KH6TT8s1wJiWmqxZfEpwFhRvJIozV9mCAN7B
+X-Gm-Gg: ASbGncszD6XV44VUTkpj4pE+ghTlqdcTNn2MCQrYuGZs9583DOUfTzsS6MY8c2oZr9X
+ vWcwzhgcsqxqicYpJkqcatm5gRX2ahnHGCRrejsJt7TwpOQO2rgGu2gklkKDLvfH4fjbxMSekye
+ Dpc7UO+tnWfxVrAZuffm7xCAEk7K01DVOQvQ1RYWJvaPiIWnqSzlTxpfSQ9lpzXXj0kpmruAquN
+ Rmx+W0+S2T1mMvRrkhfM/wiO7v8tRAVDOvoiVAK36T6Og3p1LEG3B6sv5Ea+fj+ss8RyYAGZqrc
+ halzcuWlk29SeeWe
+X-Received: by 2002:a5d:64a9:0:b0:39c:2264:43ea with SMTP id
+ ffacd0b85a97d-39ea51d36a4mr8998028f8f.3.1744622065236; 
+ Mon, 14 Apr 2025 02:14:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGniTMK2XVbY6fNx5zEFVweB3dJgF/WWtFHZeQvqYtDyH7UrIvB671EmCpncCW6BrltBvJbTw==
+X-Received: by 2002:a5d:64a9:0:b0:39c:2264:43ea with SMTP id
+ ffacd0b85a97d-39ea51d36a4mr8998000f8f.3.1744622064750; 
+ Mon, 14 Apr 2025 02:14:24 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.109.83])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-39eae97b249sm10480975f8f.58.2025.04.14.02.14.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Apr 2025 02:14:23 -0700 (PDT)
+Message-ID: <cbf25ba4-7e0a-423a-8662-efdb98ce50d4@redhat.com>
+Date: Mon, 14 Apr 2025 11:14:21 +0200
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8f2da9fd-7b06-40ec-3e92-08dd7b346c0e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Apr 2025 09:12:03.7606 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QjVn/jNg0WaCB5/Zlzh5oAtjwYlth2vXqNnuxDuYUHC+4pPnq3tve6kwWXtXwGdoqOqj6XaRmwW9j4v7FD53o3TabHLTCdOe5Bk86hspXY8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4528
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/avocado: add memlock tests
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>,
+ "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>
+References: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -202,58 +148,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/14/25 09:57, Alexandr Moshkov wrote:
+> Add new tests to check the correctness of the `-overcommit memlock`
+> option (possible values: off, on, on-fault) by using
+> `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
+> anonymous segments:
+> 
+> * if `memlock=off`, then Locked = 0 on every anonymous smaps;
+> * if `memlock=on`, then Size, Rss and Locked values must be equal for
+> every anon smaps where Rss is not 0;
+> * if `memlock=on-fault`, then Rss and Locked must be equal on every anon
+> smaps and anonymous segment with Rss < Size must exists.
 
+Hi Alexandr,
 
->-----Original Message-----
->From: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
->Subject: Re: [PATCH 2/5] vfio: Move realize() after attach_device()
->
->Hi,
->
->On 11/4/25 12:17, Zhenzhong Duan wrote:
->> Previously device attaching depends on realize() getting host iommu
->> capabilities to check dirty tracking support.
->>
->> Now we save a caps copy in VFIODevice and check that copy for dirty
->> tracking support, there is no dependency any more, move realize()
->> call after attach_device() call in vfio_device_attach().
->>
->> Drop vfio_device_hiod_realize() which looks redundant now.
->>
->> Suggested-by: C=E9dric Le Goater <clg@redhat.com>
->> Suggested-by: Donald Dutile <ddutile@redhat.com>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->> ---
->>   include/hw/vfio/vfio-device.h |  1 -
->>   hw/vfio/container.c           |  4 ----
->>   hw/vfio/device.c              | 28 +++++++++++-----------------
->>   hw/vfio/iommufd.c             |  4 ----
->>   4 files changed, 11 insertions(+), 26 deletions(-)
->>
->> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device=
-.h
->> index 09a7af891a..14559733c6 100644
->> --- a/include/hw/vfio/vfio-device.h
->> +++ b/include/hw/vfio/vfio-device.h
->> @@ -124,7 +124,6 @@ bool vfio_device_irq_set_signaling(VFIODevice
->*vbasedev, int index, int subindex
->>
->>   void vfio_device_reset_handler(void *opaque);
->>   bool vfio_device_is_mdev(VFIODevice *vbasedev);
->> -bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
->
->Pre-existing, but can we add documentation about what vfio_device_attach
->does, in particular in which state is the device once attached (or if
->attachment failed)?
+tests/avocado is being phased out and will no longer be present in QEMU 
+10.1.  Can you write the test using the framework in tests/functional 
+instead?
 
-Sure, it can be in a separate patch.
+Thanks,
 
-Thanks
-Zhenzhong
+Paolo
 
->
->>   bool vfio_device_attach(char *name, VFIODevice *vbasedev,
->>                           AddressSpace *as, Error **errp);
->>   void vfio_device_detach(VFIODevice *vbasedev);
+> ---
+> 
+> v1 -> v2:
+> In the previous send, i forgot to specify new patch version (v2)
+> So i resend previous patch with version specified.
+> 
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>   tests/avocado/memlock.py | 98 ++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 98 insertions(+)
+>   create mode 100644 tests/avocado/memlock.py
+> 
+> diff --git a/tests/avocado/memlock.py b/tests/avocado/memlock.py
+> new file mode 100644
+> index 0000000000..935cc3dc42
+> --- /dev/null
+> +++ b/tests/avocado/memlock.py
+> @@ -0,0 +1,98 @@
+> +# Functional test that check overcommit memlock options
+> +#
+> +# Copyright (c) Yandex Technologies LLC, 2025
+> +#
+> +# Author:
+> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> +#
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +import re
+> +
+> +from typing import List, Dict
+> +
+> +from avocado_qemu.linuxtest import LinuxTest
+> +
+> +
+> +SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
+> +SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
+> +
+> +
+> +class Memlock(LinuxTest):
+> +    """
+> +    Boots a Linux system with memlock options.
+> +    Then verify, that this options is working correctly
+> +    by checking the smaps of the QEMU proccess.
+> +    """
+> +
+> +    def common_vm_setup_with_memlock(self, memlock):
+> +        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
+> +        self.launch_and_wait(set_up_ssh_connection=False)
+> +
+> +    def get_anon_smaps_by_pid(self, pid):
+> +        smaps_raw = self._get_raw_smaps_by_pid(pid)
+> +        return self._parse_anonymous_smaps(smaps_raw)
+> +
+> +
+> +    def test_memlock_off(self):
+> +        self.common_vm_setup_with_memlock('off')
+> +
+> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
+> +
+> +        # locked = 0 on every smap
+> +        for smap in anon_smaps:
+> +            self.assertEqual(smap['Locked'], 0)
+> +
+> +    def test_memlock_on(self):
+> +        self.common_vm_setup_with_memlock('on')
+> +
+> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
+> +
+> +        # size = rss = locked on every smap where rss not 0
+> +        for smap in anon_smaps:
+> +            if smap['Rss'] == 0:
+> +                continue
+> +            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
+> +
+> +    def test_memlock_onfault(self):
+> +        self.common_vm_setup_with_memlock('on-fault')
+> +
+> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
+> +
+> +        # rss = locked on every smap and segment with rss < size exists
+> +        exists = False
+> +        for smap in anon_smaps:
+> +            self.assertTrue(smap['Rss'] == smap['Locked'])
+> +            if smap['Rss'] < smap['Size']:
+> +                exists = True
+> +        self.assertTrue(exists)
+> +
+> +
+> +    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
+> +        result_segments = []
+> +        current_segment = {}
+> +        is_anonymous = False
+> +
+> +        for line in smaps_raw.split('\n'):
+> +            if SMAPS_HEADER_PATTERN.match(line):
+> +                if current_segment and is_anonymous:
+> +                    result_segments.append(current_segment)
+> +                current_segment = {}
+> +                # anonymous segment header looks like this:
+> +                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
+> +                # and non anonymous header looks like this:
+> +                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
+> +                is_anonymous = len(line.split()) == 5
+> +            elif m := SMAPS_VALUE_PATTERN.match(line):
+> +                current_segment[m.group(1)] = int(m.group(2))
+> +
+> +        if current_segment and is_anonymous:
+> +            result_segments.append(current_segment)
+> +
+> +        return result_segments
+> +
+> +    def _get_raw_smaps_by_pid(self, pid: int) -> str:
+> +        with open(f'/proc/{pid}/smaps', 'r') as f:
+> +            return f.read()
 
 
