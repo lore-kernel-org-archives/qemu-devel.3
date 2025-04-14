@@ -4,173 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDD9C3601E
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 02:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EFFCC3601E
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 02:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u49Df-0006gj-JA; Sun, 13 Apr 2025 22:06:44 -0400
+	id 1u49Ed-000282-Cl; Sun, 13 Apr 2025 22:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u49DR-0006J3-OI; Sun, 13 Apr 2025 22:06:32 -0400
-Received: from mail-tyzapc01on20730.outbound.protection.outlook.com
- ([2a01:111:f403:2011::730]
- helo=APC01-TYZ-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u49DO-0007va-Nd; Sun, 13 Apr 2025 22:06:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=p0tKxeRg2vcBqdcaasHrBIZS+1M03CMepLmEHPb/LrpS0LFiwlcHrr9YL4vxET/NMaMXdasNMwzb/PoABQQNRagtL5Mw6VHT+awCrDrCgxTWGBBVx0VAxWeOJRCzbpBhGEzi1JtjynWbVkOXwqU+LDZ3wXHlrV/l/3qd9SV6mcR4j/3rbWdetTN4A/cmWhcXC7LoEL7co76U4nwoYD3Nfyh90xqvAo6zZdHy+vtkg9BwquwPZXrqnE6uCKQ+xBbcfTjZ7yNJnGZ6yhhTPLVaYfLCE1AWRovvNQAijU5cuIs03F2LVu3oaYyrDNKuJAemyZSzqtPPdm3ToMr6MhHAfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7fV2wgwXd6wPRoasXB5QkQcus7peW+xBKv7AcNhj67M=;
- b=knzNQS8pWLTtfuWD2NrZjmTsykcw3VNCq0nhffnRViqwTul7xrczRe3fsjjlfd54LCnooYLDcBR6K72Udy5xiIDwPITtGJsTaoYlXcLmyRcs0QfutlKTNyzlhFwtGkiWwgKKvm9j5WVVN7fQoou9hnXSIYg0v4fZL52e/k8YNrIT+5tcF9d3LPE9tJGrV2fXkfSOm+PCEYct7tuwtaUcdfHLDo4ia2Z0dKoWc5A5KlwZpzCklngNRAC/SSLnP21FaEosFpoR/2hKUu4kuEU7vi39p6qNI4rPXGoOuZEO3Ejoh4noxnvjR7eN9kfOCDV7rpaNr30g+qnPdq+cNgMs/Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7fV2wgwXd6wPRoasXB5QkQcus7peW+xBKv7AcNhj67M=;
- b=EKEXaX74X4Eh+zt0taQdJpe46Vk2T+/4LK8Bz4QYeVUM8y4UZ9799SK5b8fZsihpc4mIb3xFHsfe9bH93hsvPXUYpuXPeofxx0x2DGLHSgp7kkkxh/WSqWNundJqpMKuVBY2Kxq08nF9jj6wyK9PuL6SnwHXXjyAOWTFH7HTh59WXWG4F/loVzWHSkFGUYZ42dHDfNby/kKTMjt0d+hA9H2UYZxdl3ed7cK51znXvjPr4fVf8tPw6T65eEM9MDiMuhzpXE5RfgyYwYgtHEK4pE9uZWphATK/laJanrC1hDvBvUSTsTtCBP8a+iOEb+l2DQEBvarfjzQ89shPlqHwyQ==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- JH0PR06MB7235.apcprd06.prod.outlook.com (2603:1096:990:97::10) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8606.35; Mon, 14 Apr 2025 02:06:15 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%4]) with mapi id 15.20.8632.025; Mon, 14 Apr 2025
- 02:06:15 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>
-Subject: RE: [PATCH v2 09/10] tests/functional/aspeed: Update AST2700
- functional test to use vbootrom
-Thread-Topic: [PATCH v2 09/10] tests/functional/aspeed: Update AST2700
- functional test to use vbootrom
-Thread-Index: AQHbqcG+a86eWFY6Bk+pSImGHfTqKbOeoGUAgAPPCMA=
-Date: Mon, 14 Apr 2025 02:06:15 +0000
-Message-ID: <SI2PR06MB5041B26ABF074372855EE55EFCB32@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
- <20250410023856.500258-10-jamin_lin@aspeedtech.com>
- <cd0a32b2-9d1a-42f4-805f-307f3e2a7bbf@kaod.org>
-In-Reply-To: <cd0a32b2-9d1a-42f4-805f-307f3e2a7bbf@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|JH0PR06MB7235:EE_
-x-ms-office365-filtering-correlation-id: 272c5ba0-3b32-46dd-06a3-08dd7af8efee
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?YzY2MHpGdzVPQmEzbkhxd3loam40enNMbE11aGw1c1BOK2taOXlhclNjbDVC?=
- =?utf-8?B?ZkF4bHVvY3ZhK2x3Z3hPWTkzQTg1ZnRDbGcxSGdGWEd5VngySVNhQnJ3eXNp?=
- =?utf-8?B?eDRmMVpIcjM5N1l1c0JZZExjQ0NNbzhmQnRwOEI3TDErS3FGU1JVYmJTR3hj?=
- =?utf-8?B?UmdEM2dLL0pvRHFiSHRkRXBEUVFVZ2doWWlsOXVpbm5DSmE2UEp6RFpoTWNp?=
- =?utf-8?B?UnFjazhHbmd3NkNhQytDWGhTdnkyQlVxQks0Mk40TGRROWI4eGdtQzIva3NB?=
- =?utf-8?B?ektBQjg4YUZHVC9TckNhQUU0YWZ1WUNLTzNXb2RhZnRrL1dwWm5pT04vbW9K?=
- =?utf-8?B?RmNNQkdQR2NNQXNmbE5PMHlHVmJ0eWpBL3gzemlmVGh0N2o3enBxZE1mVHR5?=
- =?utf-8?B?SkgwK3Z2aGNvVU12OEdSTlhKZzU0NmFKMU1FT3RaSlpMaEJRSGZ6TW8yOTRi?=
- =?utf-8?B?WWt3SjZuTlFWOGViZzkyYnFNYkhmYzdoMHV2M2ZvYXFRWU5ucEwwdFp6b3pt?=
- =?utf-8?B?OUw0L1Rnc3RyZEZGMHhoMEU2Y3BuTTY0ZVlkSWN0YTlVZWhoY24vaURhOG00?=
- =?utf-8?B?bFFtc2pGKzZhSHdGU1VQd3g2YWdlSytUZFYvUDJXdDNNbi9uYWEyMVQvTzNG?=
- =?utf-8?B?a1dEYjJBWVZ4eU85N2FwQzcyY293bE55ZlBtZ0pKTWNsODN2NUc2U2JwQ3o5?=
- =?utf-8?B?c3MvVTd3c2lxWDVFcGc1SmNKMGJFMkZxTEdXTEs0L1NXczlhMHB4RDhSZUxm?=
- =?utf-8?B?N00vb3MyelNyMHMrSlVZOXdpWXUvQTc1YWtRaTY0TUFhS1BzV2xoK2pVZkdU?=
- =?utf-8?B?dDZKVUR2cUIvSXJ2enNnVmJOTFQ0a2Z2amtMS2VuWkVTdFU5c1hmMlZ5N3d6?=
- =?utf-8?B?d1lUb1UxT2ZmQ1dPc0RGUjRWVHRxaGhrV3NUM2Ewb1VkTFhBT3ZBNWx3UG94?=
- =?utf-8?B?QmhzM3RSL1RoeitZajVjMTdwSFQrK3V0Q1gxbFRMcks4REVVYnp5RlBQVHVj?=
- =?utf-8?B?MG91RWkzZFNFUkxId3YyQ29VVDVxVlpURTc2QXRRUlgzWmpTcHJsRERkQU9r?=
- =?utf-8?B?dkpXaU4wMkFkRVJFcjV1Z0VIOXdNV2wwMHNidFFHZUNmZlR1eXhWWEZva2pU?=
- =?utf-8?B?ZmF5VGlqMDZ1Sm1nT3A1dTYxeTRKNmx4ZlhIUFFOR3U3dnZMVEcwNE9kUDlw?=
- =?utf-8?B?WHd6UWVFZHo1eHdDbW5qenpWVU1kV0w3dGRDMUIzSnpKRFBDWVdSRUtZZU14?=
- =?utf-8?B?c2tVc1BrNnhHVkNPaVAraXQ5Q3dXY0dnODUvWVJhQ2wvT01ZQUhuM2EyR3JB?=
- =?utf-8?B?RnlPSTlUMXFCV0hGcUdjRk5SRkRFbWczUWY4bDhwNmxUWW1zUFJleUE3UDVk?=
- =?utf-8?B?d2lQSUpveEZFR29hbzN0UE1FU2FQcnBqQjhEbWJ6V0E3Wm92aDNycmRlazhW?=
- =?utf-8?B?Y3RTSm1pTHduM2hxM081TDM2RndueDArNnBlRDZvV1hqY2VESWlOK2hSeThl?=
- =?utf-8?B?ams3L2tJSHlVaEN4d2ZHMStSVGI2QjBWTXdjY3MyZFUyUmNYdDFLSVVYb3dQ?=
- =?utf-8?B?bkt4ZnNSWFI1Q2p4KzRRN2NIMFl6RUNHVExaOFhDVTVuY3FkdjN5QURDSnBJ?=
- =?utf-8?B?M25nNFFBUnBJTStvTmdNMVFtV3E4aWMxZFpXOU1lbHdmZGx4VjdRb3RYVXV6?=
- =?utf-8?B?ZnBWcXJjTTBiSUJmUWpXTlNpSzFNVm9EbWFMeHRCWmwyOEYvdG9KdlRWRTUy?=
- =?utf-8?B?YVZjdWhLby9ZM01ONkhMYjl2QlhUU0RzcnJFYTh5aTdBMFEwajNaSnQyN0Zr?=
- =?utf-8?B?WUMxNFNMVjZuV00wTXdKQUpPdE1VU0pQMmtPQ0w5bmdSdjBCQmVQNjlhMysv?=
- =?utf-8?B?WnY1ZEZwQkJjRitiNkxhdnNqbkt6eGZaRzBXNFpqcy8remlENG9INVcyeDBN?=
- =?utf-8?B?bUdxQWVSYlZGamVDdmNMMytFMHFUQ0htZnhaMXJWSVhGY1Z2QlBwME9lNkV0?=
- =?utf-8?B?eTk1OWswTndBPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cmRCYjFxcEJOWkdIUHRmWXZBWU91bG5ZZUhFSUZMN1I3RzIrdUZydEpVRG12?=
- =?utf-8?B?WHAyWExWdXFqNFN6eVRsQm0wOFRJRWFLQUcydVM5Uk1UNjNnK2Nnd1VwQ091?=
- =?utf-8?B?dnFMNmZJTmVvL1Q4THMzemkxdEY4aG1CZVR5R3E1VHYyM2tCT01HcnA2My9X?=
- =?utf-8?B?S1VZeWJodVVlajZ5SVEwRGpSbTBUTmNWbXBVQ285dGJhU1ZKV3pQWXNyNllh?=
- =?utf-8?B?T0FPRDZHdHBmZ2FGMzUxRlVpZTMyekg5NEF1MG1MdjV0dHJ3c2J6bzJwNENU?=
- =?utf-8?B?NlpqSjJqRUp4d2Y0Z0ZmTWcyTHhSMVpITDNiNkt4emhjSkxOQ0dvV2FHTlNz?=
- =?utf-8?B?QWhDTXk5TWVCL0xyeGYrbWRvZkdQeXBVN0VkNXhSeU9Ea3JoUk5iUGR5VkV4?=
- =?utf-8?B?Sk9GN2Ftd1hITWdyb3phRDI2L1Frd2prY1VNVWF4QmdrZXBZR1FPMkRwRGJC?=
- =?utf-8?B?bkEzTGxtRXlJeXNQUlpHL3pFTDIwVDdnTUxKZTdZaW9hVWdIY0NiS2t3Mm5W?=
- =?utf-8?B?NWJabVJSSitYOHJuRWJkWU5FN0d1SkZqU25qV3JVWVgvR0tTQzhRUDJZK2wx?=
- =?utf-8?B?VSs0VlNIcDFUY21ORUFwc05ZeU5nVkJiZHF6NGlwdU1EUDh6UHkyZlBXbXJB?=
- =?utf-8?B?eEU0ZDFkeXRRZWVHN0R3SG95aU9lcXQ5WWw1bXlKK3lsN1hxYkpZd1VSSERE?=
- =?utf-8?B?cEdEcVl4Q01ZOFNFajFDSDZGWkoyeE1DNCtaNVhCSkZmVlg3ZllZeEdpWkln?=
- =?utf-8?B?cGJrRStHZHdDYzY1RlREZmdqRGoxQVZoVHcxdTBZYVczVlo4T1Jjd3o5VThH?=
- =?utf-8?B?U1cydllhcE55aHAvRW5YajVYUmtpOFRHNnR5bFh6NlZ3VEVVS3RjV3llZlJF?=
- =?utf-8?B?NjM1SE5PNTFPRVNLMDZ4dmJNY3JSbnBxYzJxb216cjNjSkFiOXVZaW1CekhF?=
- =?utf-8?B?WVU2UGZ5bXpMUmhYczJ1QURIQjFpUkVKY0kxVktmVjJJcHpHOEJjVHllM1py?=
- =?utf-8?B?NW83TEFaU3VtSDJFcE1NR29zbytrbWR0S0ZmWnpSbW9XSmNGNWcwUklacUo0?=
- =?utf-8?B?VVY1d0Rxc3E2eGFzbUoySWw1NlhtcElpT3Z1L2pRTGFDUFZWcDZDdURCaEFF?=
- =?utf-8?B?bno1MFdJcnRvOHNGeWtvcVIydTN0Qzl4d2ZnMDVsU293ck51K2tUSFBnSFFs?=
- =?utf-8?B?dVMxdnZxckthMUFxajBaQzFqOFNrRnQxMGJDMFNPK2dEamxMNnlXMGZzZnRC?=
- =?utf-8?B?d0pHVUp4ZWV4dk1SUVFxY1BIU1QyUUlmUHpYV0RBWm5sS051M1lTdUs5YlRU?=
- =?utf-8?B?a2dKaUI1ZkFUMjEyMXdsdnh6V1RDanF6YlQwWTZxcDZobzR0MUc1QkFzRzBT?=
- =?utf-8?B?aXdkOThsSzRNZWpWWVFCWjczeVVTdEFSZFg5MDEwTm51bnZ0RHF1eXpjQ3I2?=
- =?utf-8?B?Tk1Nc2ZqVEdzMVJhSnR6MHRwUFJPeGN2UFREVkdPeGJySm1JSHZHMzlseWdy?=
- =?utf-8?B?WFh1cTFGd09UeHJaWWlmYmo1RE9ubWExMUN3T0lTZk9QYW4vQjZVMW5OZldu?=
- =?utf-8?B?UGN4K2hUNHNRQ0RsTnZYN3BZb3VCKzU1Z3RMb2J0M3BXbFo3cTNvWXBhSDFx?=
- =?utf-8?B?Y0RDa2F5UHVNdThoVXlNeGlXdXpmZmpjZlZudFZDeUFZR1pnczlWS0sxTHBH?=
- =?utf-8?B?ckMvVUtiUkhDSHZiY0xpZ2xwWWs3cjQ5M1REenBGN1lXZzVBYUw3MStGakVC?=
- =?utf-8?B?TE8yamxDVWkvQU44Q0hIT25IQXQ1RktMQTVYT29UOVk5MU5FOHhxQzVEdVRI?=
- =?utf-8?B?Y3ZsWjFHUWUzb3VvNGtLUjlyU1VDaWF0UWF1c3AxbFM5c2ZXbFBReDJBYWhV?=
- =?utf-8?B?Q3QrakxtT0g3ckZ3VG9lYlhWMFE4ODdXR09hd1Vad3Q4UURKY2ZncU45SFp1?=
- =?utf-8?B?RU14NlhPVHUxbWltdEFBekVZb2hkajVsZGg3aHZ3bngrUFI1cFdKTUFDTHBq?=
- =?utf-8?B?MXhVc2JRckJrb1NqeFB6RlpPQk9QNDQwRitxSHJ4TEE0QlVORE5yU202YkRp?=
- =?utf-8?B?VFQ3M3NuWlY5b2N0Q1hISXAzM1NIcEhZSGdUVlVFM2xoYWtYdW5PM2t3R1Uy?=
- =?utf-8?Q?BTHiIOIYFIYYUmv6ZbNdn6jBs?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
+ id 1u49EZ-000275-Dq; Sun, 13 Apr 2025 22:07:40 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
+ id 1u49EX-00080s-HT; Sun, 13 Apr 2025 22:07:39 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3035858c687so2877975a91.2; 
+ Sun, 13 Apr 2025 19:07:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744596455; x=1745201255; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rAYRjFnkuIKTv2bCsQRtCjQmDzBlPOQW/KLz9/7m55U=;
+ b=euugMorNTq+dYRnfiAcShTIf8F+oBsCoR7+zWuQMF+r6tv9PUoWEgbhsOn53uX1EEc
+ hdQdLiXJFtrM7BgbihXBW+00y1GmXSiIlCirU0DynAHm4T4U1bmfHrWnvmzwkyUTUd2f
+ vu8+GlReONHmpVZ6zfwNAuc6vFjNXPRjBwYy/9G1gJeuvrzCBIshjdV3q8Df/5FKp8ZV
+ tuun58yQ5EixdHhJ759o1MrMJ5HMjdxz4Cohb/doqnXCaIRn8uIW8Me/kWS+Cs9Ky2Kw
+ RJfjEAixe7TdMhUJKT7tmqvk4+ta0hXXtEeciEa1dBs2eiEKfxpN4iBJkfc7pdvnTJxe
+ yOmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744596455; x=1745201255;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rAYRjFnkuIKTv2bCsQRtCjQmDzBlPOQW/KLz9/7m55U=;
+ b=vwoNoaIYNY91gIZ/Gc/VskdnZ6cRhKVbpcydFGI6h+wInUJEFR5+sU4mxyG5M4Ju6m
+ rtxDWjjRe0O8Ih9CjCmHAd2aGxLqPoFjEYvnZGFTK4IxIKXTQoeNijHCeIiOxXwjwi39
+ lLcFLb1RVhxWLIa/u6mfeksIHHIuXAaJQKUv59iF1OX3jomDJDUcjzRUAs3LUXyPAs41
+ 3YjkeWzco8Xp5l1S1xcboM/3YIse4Y5FCiAygImznLFBhk8lZV7AzrK3B29x2QxsuZXf
+ //v2lkzclUp7wjq7DQUJkW8XdRbqbNxpiZolG2D8by2Yl/lPqvrGwH4I9I2c63TMo/wO
+ hKCw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWo2o4FiofiY2LCpW3hMr72W0HSRnyAVAl7bn4UY6kFlCX+un2pYS1h295UgCBFhh0w6CkHXFCXEbXD@nongnu.org
+X-Gm-Message-State: AOJu0YzO8BexjdFtSY3n3cZdF1hasvOLM7NYJ7lzDSzNKLKzMGbH4nFG
+ nK+Gxyy+R+/HXeMFNxEa1pbmLmCAQX0xOqElkkIk8SjBnzl9M9RSbMAGbnN1
+X-Gm-Gg: ASbGncu9zbPQq6kFZbwRvFsDZhJk2RNI0JyJYz4DOr0B3yL3sy2PLol9pL/8tNy3evg
+ kj1lwSZHcKiQJaP7msSDWobkiBR3a178L3ZscaHdzvS2nxuRppCpQiJnL1xyR1wfdiArSKMlnoi
+ DnEHiGr92RjxrSJU414IGuWNVorxuDO9MGjCxC/iW6QqOcddAwxP3E5C29D4dqUYFAonPSEK6s/
+ /nxLqqxaks5q/5aKQ2d3NRS1Bj4kwfN0KLlcMVA1vrC3pLg4gKH6kbpPL0Y+OKyDQ7MBkaOk0w+
+ ujO3mhoOSYdwhXJTPMAfyRPVlpRZskCo3q7l/pO+nJAQ/stCYRobaVRd2uNI69i+fhKswWd1o+N
+ /GekULSyp
+X-Google-Smtp-Source: AGHT+IF08toQGsozr/+A+wTcsZfkBqqrerDe26zxYao8lcZZQfA9DGxOdDXnxLIZpxV9bbv2crwVBQ==
+X-Received: by 2002:a17:90b:2dca:b0:305:5f32:d9f5 with SMTP id
+ 98e67ed59e1d1-30823660b8amr16676466a91.7.1744596454980; 
+ Sun, 13 Apr 2025 19:07:34 -0700 (PDT)
+Received: from hcdev-d520mt.. (60-250-196-139.hinet-ip.hinet.net.
+ [60.250.196.139]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-306dd11e79fsm10185411a91.19.2025.04.13.19.07.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 13 Apr 2025 19:07:34 -0700 (PDT)
+From: Tim Lee <timlee660101@gmail.com>
+To: peter.maydell@linaro.org, wuhaotsh@google.com, kfting@nuvoton.com,
+ chli30@nuvoton.com
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Tim Lee <timlee660101@gmail.com>
+Subject: [PATCH] hw/arm: Attach PSPI module to NPCM8XX SoC
+Date: Mon, 14 Apr 2025 10:06:29 +0800
+Message-Id: <20250414020629.1867106-1-timlee660101@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 272c5ba0-3b32-46dd-06a3-08dd7af8efee
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Apr 2025 02:06:15.1778 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: LSzky7227ktneekteS9o8rBK20r1JcuKhp7CuB7UZOUTjIwePJXNaMiYOFJF2fYG3jVxNaOzmfEnNJBrTdbDmHu7IAfV8nyQ/fSF0mP/0YA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB7235
-Received-SPF: pass client-ip=2a01:111:f403:2011::730;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=timlee660101@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -187,56 +99,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMDkvMTBdIHRlc3RzL2Z1bmN0
-aW9uYWwvYXNwZWVkOiBVcGRhdGUgQVNUMjcwMA0KPiBmdW5jdGlvbmFsIHRlc3QgdG8gdXNlIHZi
-b290cm9tDQo+IA0KPiBPbiA0LzEwLzI1IDA0OjM4LCBKYW1pbiBMaW4gd3JvdGU6DQo+ID4gUmVm
-YWN0b3IgdGhlIEFTVDI3MDAgZnVuY3Rpb25hbCB0ZXN0IHRvIGJvb3QgdXNpbmcgdGhlIHZib290
-cm9tIGltYWdlDQo+ID4gaW5zdGVhZCBvZiBtYW51YWxseSBsb2FkaW5nIGJvb3QgY29tcG9uZW50
-cyB3aXRoIC1kZXZpY2UgbG9hZGVyLg0KPiA+IFRoZSBib290IFJPTSBiaW5hcnkgaXMgbm93IHBh
-c3NlZCB2aWEgdGhlIC1iaW9zIG9wdGlvbiwgdXNpbmcgdGhlDQo+ID4gaW1hZ2UgbG9jYXRlZCBp
-biBwYy1iaW9zL2FzdDI3eDBfYm9vdHJvbS5iaW4uDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBK
-YW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPiAtLS0NCj4gPiAgIHRlc3Rz
-L2Z1bmN0aW9uYWwvdGVzdF9hYXJjaDY0X2FzcGVlZC5weSB8IDM4ICstLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0NCj4gPiAgIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMzcgZGVsZXRp
-b25zKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvdGVzdHMvZnVuY3Rpb25hbC90ZXN0X2FhcmNo
-NjRfYXNwZWVkLnB5DQo+ID4gYi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9hc3BlZWQu
-cHkNCj4gPiBpbmRleCBjMjVjOTY2Mjc4Li45NzFmNTQ4NTM0IDEwMDc1NQ0KPiA+IC0tLSBhL3Rl
-c3RzL2Z1bmN0aW9uYWwvdGVzdF9hYXJjaDY0X2FzcGVlZC5weQ0KPiA+ICsrKyBiL3Rlc3RzL2Z1
-bmN0aW9uYWwvdGVzdF9hYXJjaDY0X2FzcGVlZC5weQ0KPiA+IEBAIC0zNiw0MyArMzYsNyBAQCBk
-ZWYgZG9fdGVzdF9hYXJjaDY0X2FzcGVlZF9zZGtfc3RhcnQoc2VsZiwgaW1hZ2UpOg0KPiA+DQo+
-ID4NCj4gJ2MxZjQ0OTZhZWMwNjc0M2M4MTJhNmU5YTFhMThkMDMyZjM0ZDYyZjNkZGI2OTU2ZTky
-NGZlZjYyYWEyMDQ2YTUnKQ0KPiA+DQo+ID4gICAgICAgZGVmIHN0YXJ0X2FzdDI3MDBfdGVzdChz
-ZWxmLCBuYW1lKToNCj4gPiAtICAgICAgICBudW1fY3B1ID0gNA0KPiA+IC0gICAgICAgIHVib290
-X3NpemUgPSBvcy5wYXRoLmdldHNpemUoc2VsZi5zY3JhdGNoX2ZpbGUobmFtZSwNCj4gPiAtDQo+
-ICd1LWJvb3Qtbm9kdGIuYmluJykpDQo+ID4gLSAgICAgICAgdWJvb3RfZHRiX2xvYWRfYWRkciA9
-IGhleCgweDQwMDAwMDAwMCArIHVib290X3NpemUpDQo+ID4gLQ0KPiA+IC0gICAgICAgIGxvYWRf
-aW1hZ2VzX2xpc3QgPSBbDQo+ID4gLSAgICAgICAgICAgIHsNCj4gPiAtICAgICAgICAgICAgICAg
-ICdhZGRyJzogJzB4NDAwMDAwMDAwJywNCj4gPiAtICAgICAgICAgICAgICAgICdmaWxlJzogc2Vs
-Zi5zY3JhdGNoX2ZpbGUobmFtZSwNCj4gPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgJ3UtYm9vdC1ub2R0Yi5iaW4nKQ0KPiA+IC0gICAgICAgICAgICB9LA0KPiA+
-IC0gICAgICAgICAgICB7DQo+ID4gLSAgICAgICAgICAgICAgICAnYWRkcic6IHN0cih1Ym9vdF9k
-dGJfbG9hZF9hZGRyKSwNCj4gPiAtICAgICAgICAgICAgICAgICdmaWxlJzogc2VsZi5zY3JhdGNo
-X2ZpbGUobmFtZSwgJ3UtYm9vdC5kdGInKQ0KPiA+IC0gICAgICAgICAgICB9LA0KPiA+IC0gICAg
-ICAgICAgICB7DQo+ID4gLSAgICAgICAgICAgICAgICAnYWRkcic6ICcweDQzMDAwMDAwMCcsDQo+
-ID4gLSAgICAgICAgICAgICAgICAnZmlsZSc6IHNlbGYuc2NyYXRjaF9maWxlKG5hbWUsICdibDMx
-LmJpbicpDQo+ID4gLSAgICAgICAgICAgIH0sDQo+ID4gLSAgICAgICAgICAgIHsNCj4gPiAtICAg
-ICAgICAgICAgICAgICdhZGRyJzogJzB4NDMwMDgwMDAwJywNCj4gPiAtICAgICAgICAgICAgICAg
-ICdmaWxlJzogc2VsZi5zY3JhdGNoX2ZpbGUobmFtZSwgJ29wdGVlJywNCj4gPiAtICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ3RlZS1yYXcuYmluJykNCj4gPiAtICAg
-ICAgICAgICAgfQ0KPiA+IC0gICAgICAgIF0NCj4gPiAtDQo+ID4gLSAgICAgICAgZm9yIGxvYWRf
-aW1hZ2UgaW4gbG9hZF9pbWFnZXNfbGlzdDoNCj4gPiAtICAgICAgICAgICAgYWRkciA9IGxvYWRf
-aW1hZ2VbJ2FkZHInXQ0KPiA+IC0gICAgICAgICAgICBmaWxlID0gbG9hZF9pbWFnZVsnZmlsZSdd
-DQo+ID4gLSAgICAgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLA0KPiA+IC0NCj4g
-Zidsb2FkZXIsZm9yY2UtcmF3PW9uLGFkZHI9e2FkZHJ9LGZpbGU9e2ZpbGV9JykNCj4gPiAtDQo+
-ID4gLSAgICAgICAgZm9yIGkgaW4gcmFuZ2UobnVtX2NwdSk6DQo+ID4gLSAgICAgICAgICAgIHNl
-bGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLA0KPiA+IC0NCj4gZidsb2FkZXIsYWRkcj0weDQzMDAw
-MDAwMCxjcHUtbnVtPXtpfScpDQo+ID4gLQ0KPiA+IC0gICAgICAgIHNlbGYudm0uYWRkX2FyZ3Mo
-Jy1zbXAnLCBzdHIobnVtX2NwdSkpDQo+ID4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWJp
-b3MnLCAnYXN0Mjd4MF9ib290cm9tLmJpbicpDQo+ID4gICAgICAgICAgIHNlbGYudm0uYWRkX2Fy
-Z3MoJy1kZXZpY2UnLA0KPiA+DQo+ICd0bXAxMDUsYnVzPWFzcGVlZC5pMmMuYnVzLjEsYWRkcmVz
-cz0weDRkLGlkPXRtcC10ZXN0JykNCj4gPiAgICAgICAgICAgc2VsZi5kb190ZXN0X2FhcmNoNjRf
-YXNwZWVkX3Nka19zdGFydCgNCj4gDQo+IA0KPiBJIHRoaW5rIGl0IGlzIGludGVyZXN0aW5nIHRv
-IGtlZXAgYm90aCBtZXRob2QgZm9yIHRoZSB0ZXN0cywgd2l0aCBhbmQgd2l0aG91dCB0aGUNCj4g
-dmJvb3Ryb20uDQo+IA0KDQpHb3QgaXQuDQpXaWxsIHVwZGF0ZSBpdC4NCg0KSmFtaW4NCg0KPiBU
-aGFua3MsDQo+IA0KPiBDLg0KPiANCg0K
+Nuvoton's PSPI is a general purpose SPI module which enables
+connections to SPI-based peripheral devices. Attach it to the NPCM8XX.
+
+Tested:
+NPCM8XX PSPI driver probed successfully from dmesg log.
+
+Signed-off-by: Tim Lee <timlee660101@gmail.com>
+---
+ hw/arm/npcm8xx.c         | 11 ++++++++++-
+ include/hw/arm/npcm8xx.h |  2 ++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+index f182accc47..a7888afb6e 100644
+--- a/hw/arm/npcm8xx.c
++++ b/hw/arm/npcm8xx.c
+@@ -67,6 +67,9 @@
+ /* SDHCI Modules */
+ #define NPCM8XX_MMC_BA          0xf0842000
+ 
++/* PSPI Modules */
++#define NPCM8XX_PSPI_BA         0xf0201000
++
+ /* Run PLL1 at 1600 MHz */
+ #define NPCM8XX_PLLCON1_FIXUP_VAL   0x00402101
+ /* Run the CPU from PLL1 and UART from PLL2 */
+@@ -83,6 +86,7 @@ enum NPCM8xxInterrupt {
+     NPCM8XX_PECI_IRQ            = 6,
+     NPCM8XX_KCS_HIB_IRQ         = 9,
+     NPCM8XX_MMC_IRQ             = 26,
++    NPCM8XX_PSPI_IRQ            = 28,
+     NPCM8XX_TIMER0_IRQ          = 32,   /* Timer Module 0 */
+     NPCM8XX_TIMER1_IRQ,
+     NPCM8XX_TIMER2_IRQ,
+@@ -441,6 +445,7 @@ static void npcm8xx_init(Object *obj)
+     }
+ 
+     object_initialize_child(obj, "mmc", &s->mmc, TYPE_NPCM7XX_SDHCI);
++    object_initialize_child(obj, "pspi", &s->pspi, TYPE_NPCM_PSPI);
+ }
+ 
+ static void npcm8xx_realize(DeviceState *dev, Error **errp)
+@@ -705,6 +710,11 @@ static void npcm8xx_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->mmc), 0,
+             npcm8xx_irq(s, NPCM8XX_MMC_IRQ));
+ 
++    /* PSPI */
++    sysbus_realize(SYS_BUS_DEVICE(&s->pspi), &error_abort);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pspi), 0, NPCM8XX_PSPI_BA);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->pspi), 0,
++            npcm8xx_irq(s, NPCM8XX_PSPI_IRQ));
+ 
+     create_unimplemented_device("npcm8xx.shm",          0xc0001000,   4 * KiB);
+     create_unimplemented_device("npcm8xx.gicextra",     0xdfffa000,  24 * KiB);
+@@ -720,7 +730,6 @@ static void npcm8xx_realize(DeviceState *dev, Error **errp)
+     create_unimplemented_device("npcm8xx.siox[1]",      0xf0101000,   4 * KiB);
+     create_unimplemented_device("npcm8xx.siox[2]",      0xf0102000,   4 * KiB);
+     create_unimplemented_device("npcm8xx.tmps",         0xf0188000,   4 * KiB);
+-    create_unimplemented_device("npcm8xx.pspi",         0xf0201000,   4 * KiB);
+     create_unimplemented_device("npcm8xx.viru1",        0xf0204000,   4 * KiB);
+     create_unimplemented_device("npcm8xx.viru2",        0xf0205000,   4 * KiB);
+     create_unimplemented_device("npcm8xx.jtm1",         0xf0208000,   4 * KiB);
+diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
+index 9812e6fa7e..3436abff99 100644
+--- a/include/hw/arm/npcm8xx.h
++++ b/include/hw/arm/npcm8xx.h
+@@ -36,6 +36,7 @@
+ #include "hw/usb/hcd-ehci.h"
+ #include "hw/usb/hcd-ohci.h"
+ #include "target/arm/cpu.h"
++#include "hw/ssi/npcm_pspi.h"
+ 
+ #define NPCM8XX_MAX_NUM_CPUS    (4)
+ 
+@@ -99,6 +100,7 @@ struct NPCM8xxState {
+     OHCISysBusState     ohci[2];
+     NPCM7xxFIUState     fiu[3];
+     NPCM7xxSDHCIState   mmc;
++    NPCMPSPIState       pspi;
+ };
+ 
+ struct NPCM8xxClass {
+-- 
+2.34.1
+
 
