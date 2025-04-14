@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66415C369B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D9BC369B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:32:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4I2F-0003m5-R5; Mon, 14 Apr 2025 07:31:31 -0400
+	id 1u4I24-0003Yn-Vq; Mon, 14 Apr 2025 07:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1l-0003Vr-M5
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1h-0003VO-Op
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1j-0003wN-DT
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1f-0003v6-DA
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744630258;
+ s=mimecast20190719; t=1744630253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UhZFs1R3Ux+K0IjbRYck7691sJ3ftnwY5ZrXuGH66II=;
- b=fNt8XqxdpBbkUIVyLIeS++vLvRAlRPZzODKhMVKghDuEBvXGMg+v4dnlv2/qb/6rM8LXOB
- Q3J4oxlY/H8qJjo9MqWvz+Hgv5YKgXGOjw6eILyQQqMpxGhriGR+QoXh+7CS8nLTCe8c7g
- ENZGJJxpY33qjTwaJrlebCZqmZaN/f0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ks7zB8+UXPocpjnbLqRfBX7yiiMVfQgEztwKi8rXsU8=;
+ b=TDuyhrPkjpbQTFaevTfhDdvm36V37xjxcn8Lq81fGZUsSLhNFwdupS/q1PDzp0KLkFz3ti
+ 8i4x0fYxv5z+tP3slFH29Kx3cbW8vkyiMPsrD4t+MeN7xoKo3Vi2kTHAVWcqJP2RmJ4sUN
+ K4OODB44ABY8K0wdHqj8WSq0en9r6v4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-te3AeiVhPR6dlrBGV_47Cw-1; Mon,
- 14 Apr 2025 07:30:55 -0400
-X-MC-Unique: te3AeiVhPR6dlrBGV_47Cw-1
-X-Mimecast-MFC-AGG-ID: te3AeiVhPR6dlrBGV_47Cw_1744630254
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-qV-Ic9xNODyXoebia3YAxg-1; Mon,
+ 14 Apr 2025 07:30:48 -0400
+X-MC-Unique: qV-Ic9xNODyXoebia3YAxg-1
+X-Mimecast-MFC-AGG-ID: qV-Ic9xNODyXoebia3YAxg_1744630248
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51BB919560BC; Mon, 14 Apr 2025 11:30:54 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9A13180035E; Mon, 14 Apr 2025 11:30:47 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0D3501956094; Mon, 14 Apr 2025 11:30:52 +0000 (UTC)
+ id AAA0B1956094; Mon, 14 Apr 2025 11:30:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH v2 12/15] tests/functional: Use the tuxrun kernel for the
- aarch64 replay test
-Date: Mon, 14 Apr 2025 13:30:26 +0200
-Message-ID: <20250414113031.151105-13-thuth@redhat.com>
+Subject: [PATCH v2 08/15] tests/functional: Convert the 64-bit little endian
+ Wheezy mips test
+Date: Mon, 14 Apr 2025 13:30:22 +0200
+Message-ID: <20250414113031.151105-9-thuth@redhat.com>
 In-Reply-To: <20250414113031.151105-1-thuth@redhat.com>
 References: <20250414113031.151105-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,262 +87,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-This way we can do a full boot in record-replay mode and
-should get a similar test coverage compared to the old
-replay test from tests/avocado/replay_linux.py.
-
-Since the aarch64 test was the last avocado test in the
-tests/avocado/replay_linux.py file, we can remove this
-file now completely.
+Reuse the test function from the 32-bit big endian test to easily
+convert the 64-bit little endian Wheezy mips test.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                             |   1 -
- tests/avocado/replay_linux.py           | 160 ------------------------
- tests/functional/test_aarch64_replay.py |  37 ++++--
- 3 files changed, 29 insertions(+), 169 deletions(-)
- delete mode 100644 tests/avocado/replay_linux.py
+ tests/avocado/linux_ssh_mips_malta.py   |  8 --------
+ tests/functional/meson.build            |  1 +
+ tests/functional/test_mips64el_malta.py | 22 ++++++++++++++++++++++
+ 3 files changed, 23 insertions(+), 8 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 72f6b208f5a..e29910cbd77 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3668,7 +3668,6 @@ F: include/system/replay.h
- F: docs/devel/replay.rst
- F: docs/system/replay.rst
- F: stubs/replay.c
--F: tests/avocado/replay_linux.py
- F: tests/functional/*reverse_debug*.py
- F: tests/functional/*replay*.py
- F: qapi/replay.json
-diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
-deleted file mode 100644
-index 6ba283d3bf6..00000000000
---- a/tests/avocado/replay_linux.py
-+++ /dev/null
-@@ -1,160 +0,0 @@
--# Record/replay test that boots a complete Linux system via a cloud image
--#
--# Copyright (c) 2020 ISP RAS
--#
--# Author:
--#  Pavel Dovgalyuk <Pavel.Dovgaluk@ispras.ru>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
+diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
+index c1300aec961..2fa5cf9a6c1 100644
+--- a/tests/avocado/linux_ssh_mips_malta.py
++++ b/tests/avocado/linux_ssh_mips_malta.py
+@@ -179,11 +179,3 @@ def test_mips_malta64eb_kernel3_2_0(self):
+         :avocado: tags=device:pcnet32
+         """
+         self.check_mips_malta('mips64', 'be')
 -
--import os
--import logging
--import time
--
--from avocado import skipUnless
--from avocado_qemu import BUILD_DIR
--from avocado.utils import cloudinit
--from avocado.utils import network
--from avocado.utils import vmimage
--from avocado.utils import datadrainer
--from avocado.utils.path import find_command
--from avocado_qemu.linuxtest import LinuxTest
--
--class ReplayLinux(LinuxTest):
--    """
--    Boots a Linux system, checking for a successful initialization
--    """
--
--    timeout = 1800
--    chksum = None
--    hdd = 'ide-hd'
--    cd = 'ide-cd'
--    bus = 'ide'
--
--    def setUp(self):
--        # LinuxTest does many replay-incompatible things, but includes
--        # useful methods. Do not setup LinuxTest here and just
--        # call some functions.
--        super(LinuxTest, self).setUp()
--        self._set_distro()
--        self.boot_path = self.download_boot()
--        self.phone_server = cloudinit.PhoneHomeServer(('0.0.0.0', 0),
--                                                      self.name)
--        ssh_pubkey, self.ssh_key = self.set_up_existing_ssh_keys()
--        self.cloudinit_path = self.prepare_cloudinit(ssh_pubkey)
--
--    def vm_add_disk(self, vm, path, id, device):
--        bus_string = ''
--        if self.bus:
--            bus_string = ',bus=%s.%d' % (self.bus, id,)
--        vm.add_args('-drive', 'file=%s,snapshot=on,id=disk%s,if=none' % (path, id))
--        vm.add_args('-drive',
--            'driver=blkreplay,id=disk%s-rr,if=none,image=disk%s' % (id, id))
--        vm.add_args('-device',
--            '%s,drive=disk%s-rr%s' % (device, id, bus_string))
--
--    def vm_add_cdrom(self, vm, path, id, device):
--        vm.add_args('-drive', 'file=%s,id=disk%s,if=none,media=cdrom' % (path, id))
--
--    def launch_and_wait(self, record, args, shift):
--        self.require_netdev('user')
--        vm = self.get_vm()
--        vm.add_args('-smp', '1')
--        vm.add_args('-m', '1024')
--        vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
--                    '-device', 'virtio-net,netdev=vnet')
--        vm.add_args('-object', 'filter-replay,id=replay,netdev=vnet')
--        if args:
--            vm.add_args(*args)
--        self.vm_add_disk(vm, self.boot_path, 0, self.hdd)
--        self.vm_add_cdrom(vm, self.cloudinit_path, 1, self.cd)
--        logger = logging.getLogger('replay')
--        if record:
--            logger.info('recording the execution...')
--            mode = 'record'
--        else:
--            logger.info('replaying the execution...')
--            mode = 'replay'
--        replay_path = os.path.join(self.workdir, 'replay.bin')
--        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
--                    (shift, mode, replay_path))
--
--        start_time = time.time()
--
--        vm.set_console()
--        vm.launch()
--        console_drainer = datadrainer.LineLogger(vm.console_socket.fileno(),
--                                    logger=self.log.getChild('console'),
--                                    stop_check=(lambda : not vm.is_running()))
--        console_drainer.start()
--        if record:
--            while not self.phone_server.instance_phoned_back:
--                self.phone_server.handle_request()
--            vm.shutdown()
--            logger.info('finished the recording with log size %s bytes'
--                % os.path.getsize(replay_path))
--            self.run_replay_dump(replay_path)
--            logger.info('successfully tested replay-dump.py')
--        else:
--            vm.event_wait('SHUTDOWN', self.timeout)
--            vm.wait()
--            logger.info('successfully finished the replay')
--        elapsed = time.time() - start_time
--        logger.info('elapsed time %.2f sec' % elapsed)
--        return elapsed
--
--    def run_rr(self, args=None, shift=7):
--        t1 = self.launch_and_wait(True, args, shift)
--        t2 = self.launch_and_wait(False, args, shift)
--        logger = logging.getLogger('replay')
--        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
--
--    def run_replay_dump(self, replay_path):
--        try:
--            subprocess.check_call(["./scripts/replay-dump.py",
--                                   "-f", replay_path],
--                                  stdout=subprocess.DEVNULL)
--        except subprocess.CalledProcessError:
--            self.fail('replay-dump.py failed')
--
--
--@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
--class ReplayLinuxAarch64(ReplayLinux):
--    """
--    :avocado: tags=accel:tcg
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
--    :avocado: tags=cpu:max
--    """
--
--    chksum = '1e18d9c0cf734940c4b5d5ec592facaed2af0ad0329383d5639c997fdf16fe49'
--
--    hdd = 'virtio-blk-device'
--    cd = 'virtio-blk-device'
--    bus = None
--
--    def get_common_args(self):
--        return ('-bios',
--                os.path.join(BUILD_DIR, 'pc-bios', 'edk2-aarch64-code.fd'),
--                "-cpu", "max,lpa2=off",
--                '-device', 'virtio-rng-pci,rng=rng0',
--                '-object', 'rng-builtin,id=rng0')
--
--    def test_virt_gicv2(self):
+-    def test_mips_malta64el_kernel3_2_0(self):
 -        """
--        :avocado: tags=machine:gic-version=2
+-        :avocado: tags=arch:mips64el
+-        :avocado: tags=endian:little
+-        :avocado: tags=device:pcnet32
 -        """
--
--        self.run_rr(shift=3,
--                    args=(*self.get_common_args(),
--                          "-machine", "virt,gic-version=2"))
--
--    def test_virt_gicv3(self):
--        """
--        :avocado: tags=machine:gic-version=3
--        """
--
--        self.run_rr(shift=3,
--                    args=(*self.get_common_args(),
--                          "-machine", "virt,gic-version=3"))
-diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
-index 029fef3cbf8..8afe95668e2 100755
---- a/tests/functional/test_aarch64_replay.py
-+++ b/tests/functional/test_aarch64_replay.py
-@@ -5,27 +5,48 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
+-        self.check_mips_malta('mips64', 'le')
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index cba0abf2920..a4a317115b3 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -42,6 +42,7 @@ test_timeouts = {
+   'mips_malta' : 480,
+   'mipsel_malta' : 420,
+   'mipsel_replay' : 480,
++  'mips64el_malta' : 420,
+   'mips64el_replay' : 180,
+   'netdev_ethtool' : 180,
+   'ppc_40p' : 240,
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+index a8da15a26b3..dd37212f9df 100755
+--- a/tests/functional/test_mips64el_malta.py
++++ b/tests/functional/test_mips64el_malta.py
+@@ -16,6 +16,8 @@
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
  
--from qemu_test import Asset, skipIfOperatingSystem
-+from subprocess import check_call, DEVNULL
++from test_mips_malta import mips_check_wheezy
 +
-+from qemu_test import Asset, skipIfOperatingSystem, get_qemu_img
- from replay_kernel import ReplayKernelBase
  
+ class MaltaMachineConsole(LinuxKernelTest):
  
- class Aarch64Replay(ReplayKernelBase):
+@@ -90,6 +92,26 @@ def test_mips64el_malta_5KEc_cpio(self):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
  
-     ASSET_KERNEL = Asset(
--        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
--         'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
--        '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
-+        'https://storage.tuxboot.com/buildroot/20241119/arm64/Image',
-+        'b74743c5e89e1cea0f73368d24ae0ae85c5204ff84be3b5e9610417417d2f235')
++    ASSET_WHEEZY_KERNEL = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mipsel/'
++         'vmlinux-3.2.0-4-5kc-malta'),
++        '5e8b725244c59745bb8b64f5d8f49f25fecfa549f3395fb6d19a3b9e5065b85b')
 +
-+    ASSET_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/buildroot/20241119/arm64/rootfs.ext4.zst',
-+        'a1acaaae2068df4648d04ff75f532aaa8c5edcd6b936122b6f0db4848a07b465')
- 
-     # Failing on Darwin: https://gitlab.com/qemu-project/qemu/-/issues/2907
-     @skipIfOperatingSystem('Darwin')
-     def test_aarch64_virt(self):
-+        self.require_netdev('user')
-         self.set_machine('virt')
--        self.cpu = 'cortex-a53'
-+        self.cpu = 'cortex-a57'
-         kernel_path = self.ASSET_KERNEL.fetch()
++    ASSET_WHEEZY_DISK = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mipsel/'
++         'debian_wheezy_mipsel_standard.qcow2'),
++        '454f09ae39f7e6461c84727b927100d2c7813841f2a0a5dce328114887ecf914')
 +
-+        raw_disk = self.uncompress(self.ASSET_ROOTFS)
-+        disk = self.scratch_file('scratch.qcow2')
-+        qemu_img = get_qemu_img(self)
-+        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', raw_disk,
-+                    '-F', 'raw', disk], stdout=DEVNULL, stderr=DEVNULL)
++    def test_wheezy(self):
++        kernel_path = self.ASSET_WHEEZY_KERNEL.fetch()
++        image_path = self.ASSET_WHEEZY_DISK.fetch()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
++                               + 'console=ttyS0 root=/dev/sda1')
++        mips_check_wheezy(self,
++            kernel_path, image_path, kernel_command_line, cpuinfo='MIPS 20Kc',
++            dl_file='/boot/initrd.img-3.2.0-4-5kc-malta',
++            hsum='7579f8b56c1187c7c04d0dc3c0c56c7a6314c5ddd3a9bf8803ecc7cf8a3be9f8')
 +
-+        args = ('-drive', 'file=%s,snapshot=on,id=hd0,if=none' % disk,
-+                '-drive', 'driver=blkreplay,id=hd0-rr,if=none,image=hd0',
-+                '-device', 'virtio-blk-device,drive=hd0-rr',
-+                '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
-+                '-device', 'virtio-net,netdev=vnet',
-+                '-object', 'filter-replay,id=replay,netdev=vnet')
-+
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
--                               'console=ttyAMA0')
--        console_pattern = 'VFS: Cannot open root device'
--        self.run_rr(kernel_path, kernel_command_line, console_pattern)
-+                               'console=ttyAMA0 root=/dev/vda')
-+        console_pattern = 'Welcome to TuxTest'
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern,
-+                    args=args)
  
- 
- if __name__ == '__main__':
+ @skipIfMissingImports('numpy', 'cv2')
+ class MaltaMachineFramebuffer(LinuxKernelTest):
 -- 
 2.49.0
 
