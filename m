@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC80C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3422EC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4MrA-0004rE-0m; Mon, 14 Apr 2025 12:40:25 -0400
+	id 1u4MrM-0005VD-Oj; Mon, 14 Apr 2025 12:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4Mqa-0004hl-6v
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:39:49 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4MrF-00056P-W1
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:40:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4MqV-0005v6-QK
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:39:47 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4MrD-0006Jw-AB
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:40:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744648781;
+ s=mimecast20190719; t=1744648825;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ST/Epdwc6K7kU2DxufZKND7JF8yJCWJgqDVNPy8cEvo=;
- b=WDgSr+x5Z2BAjSmlMXLf5lHhpXCk1+9X1GjvhjQWT5mmlIXsJr8HcsEqrn1NcAvJzc3QuF
- FjsiC6TvOqxlk3lUzQOHb8i6E+D+KcHMpoI4uubHc2zC9FQxQpbxz4ltvu+Bx6/WEQdMPi
- ue7buYvx7NWoY8CUVW9Frm9V7hGvvDI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=/c7JiX/L4oLi4jXQpUEkVkuVVt5PROWavD7NxMww6sE=;
+ b=TSReFfFJ3y1Ycn0P1cs2YWYcBkE0F7mz9rNYPkdzF5I7kxMcmjaMAiSuY/nh52daCNwqCW
+ 1Ut4tkqOKzNbRQgbJGwdvAZ1tL+oCeMfL3XCBFlUFcBBudRnFD8fKs23VbHwIvMY4c6QI0
+ 6sJ5ZgV/1mqKwNUy02u/CJpZjg/B8NA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-amOgVnpCMKCnzCTnfgOphQ-1; Mon,
- 14 Apr 2025 12:39:33 -0400
-X-MC-Unique: amOgVnpCMKCnzCTnfgOphQ-1
-X-Mimecast-MFC-AGG-ID: amOgVnpCMKCnzCTnfgOphQ_1744648771
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-522-rgJqEI60MIi-19Hhx40NIA-1; Mon,
+ 14 Apr 2025 12:40:22 -0400
+X-MC-Unique: rgJqEI60MIi-19Hhx40NIA-1
+X-Mimecast-MFC-AGG-ID: rgJqEI60MIi-19Hhx40NIA_1744648819
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 164381956087; Mon, 14 Apr 2025 16:39:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 81119180AF50; Mon, 14 Apr 2025 16:40:19 +0000 (UTC)
 Received: from gondolin.redhat.com (unknown [10.67.24.14])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D4AD180AF7C; Mon, 14 Apr 2025 16:39:14 +0000 (UTC)
+ id 68BEB1828AAA; Mon, 14 Apr 2025 16:40:03 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -54,10 +54,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
 Cc: agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
  philmd@linaro.org, pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v3 01/10] arm/cpu: Add infra to handle generated ID register
- definitions
-Date: Mon, 14 Apr 2025 18:38:40 +0200
-Message-ID: <20250414163849.321857-2-cohuck@redhat.com>
+Subject: [PATCH v3 04/10] kvm: kvm_get_writable_id_regs
+Date: Mon, 14 Apr 2025 18:38:43 +0200
+Message-ID: <20250414163849.321857-5-cohuck@redhat.com>
 In-Reply-To: <20250414163849.321857-1-cohuck@redhat.com>
 References: <20250414163849.321857-1-cohuck@redhat.com>
 MIME-Version: 1.0
@@ -73,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,174 +88,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+Add an helper to retrieve the writable id reg bitmask. The
+status of the query is stored in the CPU struct so that an
+an error, if any, can be reported on vcpu realize().
 
-The known ID regs are described in a new initialization function
-dubbed initialize_cpu_sysreg_properties(). That code will be
-automatically generated from linux arch/arm64/tools/sysreg. For the
-time being let's just describe a single id reg, CTR_EL0. In this
-description we only care about non RES/RAZ fields, ie. named fields.
-
-The registers are populated in an array indexed by ARMIDRegisterIdx
-and their fields are added in a sorted list.
-
-[CH: adapted to reworked register storage]
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- target/arm/cpu-custom.h            | 60 ++++++++++++++++++++++++++++++
- target/arm/cpu-sysreg-properties.c | 41 ++++++++++++++++++++
- target/arm/cpu64.c                 |  2 +
- target/arm/meson.build             |  1 +
- 4 files changed, 104 insertions(+)
- create mode 100644 target/arm/cpu-custom.h
- create mode 100644 target/arm/cpu-sysreg-properties.c
+ target/arm/cpu.h     | 26 ++++++++++++++++++++++++++
+ target/arm/kvm.c     | 32 ++++++++++++++++++++++++++++++++
+ target/arm/kvm_arm.h |  7 +++++++
+ 3 files changed, 65 insertions(+)
 
-diff --git a/target/arm/cpu-custom.h b/target/arm/cpu-custom.h
-new file mode 100644
-index 000000000000..615347376e56
---- /dev/null
-+++ b/target/arm/cpu-custom.h
-@@ -0,0 +1,60 @@
-+/*
-+ * handle ID registers and their fields
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ARM_CPU_CUSTOM_H
-+#define ARM_CPU_CUSTOM_H
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "cpu.h"
-+#include "cpu-sysregs.h"
-+
-+typedef struct ARM64SysRegField {
-+    const char *name; /* name of the field, for instance CTR_EL0_IDC */
-+    int index;
-+    int lower;
-+    int upper;
-+} ARM64SysRegField;
-+
-+typedef struct ARM64SysReg {
-+    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
-+    ARMSysRegs sysreg;
-+    int index;
-+    GList *fields; /* list of named fields, excluding RES* */
-+} ARM64SysReg;
-+
-+void initialize_cpu_sysreg_properties(void);
-+
-+/*
-+ * List of exposed ID regs (automatically populated from linux
-+ * arch/arm64/tools/sysreg)
-+ */
-+extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
-+
-+/* Allocate a new field and insert it at the head of the @reg list */
-+static inline GList *arm64_sysreg_add_field(ARM64SysReg *reg, const char *name,
-+                                     uint8_t min, uint8_t max) {
-+
-+     ARM64SysRegField *field = g_new0(ARM64SysRegField, 1);
-+
-+     field->name = name;
-+     field->lower = min;
-+     field->upper = max;
-+     field->index = reg->index;
-+
-+     reg->fields = g_list_append(reg->fields, field);
-+     return reg->fields;
-+}
-+
-+static inline ARM64SysReg *arm64_sysreg_get(ARMIDRegisterIdx index)
-+{
-+        ARM64SysReg *reg = &arm64_id_regs[index];
-+
-+        reg->index = index;
-+        reg->sysreg = id_register_sysreg[index];
-+        return reg;
-+}
-+
-+#endif
-diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-properties.c
-new file mode 100644
-index 000000000000..8b7ef5badfb9
---- /dev/null
-+++ b/target/arm/cpu-sysreg-properties.c
-@@ -0,0 +1,41 @@
-+/*
-+ * QEMU ARM CPU SYSREG PROPERTIES
-+ * to be generated from linux sysreg
-+ *
-+ * Copyright (c) Red Hat, Inc. 2024
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version 2
-+ * of the License, or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, see
-+ * <http://www.gnu.org/licenses/gpl-2.0.html>
-+ */
-+
-+#include "cpu-custom.h"
-+
-+ARM64SysReg arm64_id_regs[NUM_ID_IDX];
-+
-+void initialize_cpu_sysreg_properties(void)
-+{
-+    memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NUM_ID_IDX);
-+    /* CTR_EL0 */
-+    ARM64SysReg *CTR_EL0 = arm64_sysreg_get(CTR_EL0_IDX);
-+    CTR_EL0->name = "CTR_EL0";
-+    arm64_sysreg_add_field(CTR_EL0, "TminLine", 32, 37);
-+    arm64_sysreg_add_field(CTR_EL0, "DIC", 29, 29);
-+    arm64_sysreg_add_field(CTR_EL0, "IDC", 28, 28);
-+    arm64_sysreg_add_field(CTR_EL0, "CWG", 24, 27);
-+    arm64_sysreg_add_field(CTR_EL0, "ERG", 20, 23);
-+    arm64_sysreg_add_field(CTR_EL0, "DminLine", 16, 19);
-+    arm64_sysreg_add_field(CTR_EL0, "L1Ip", 14, 15);
-+    arm64_sysreg_add_field(CTR_EL0, "IminLine", 0, 3);
-+}
-+
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 9769401a8585..839442745ea4 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -35,6 +35,7 @@
- #include "internals.h"
- #include "cpu-features.h"
- #include "cpregs.h"
-+#include "cpu-custom.h"
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index d27134f4a025..bbee7ff2414a 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -856,6 +856,26 @@ typedef struct {
+     uint32_t map, init, supported;
+ } ARMVQMap;
  
- /* convert between <register>_IDX and SYS_<register> */
- #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
-@@ -891,6 +892,7 @@ static void aarch64_cpu_register_types(void)
++typedef enum ARMIdRegsState {
++    WRITABLE_ID_REGS_UNKNOWN,
++    WRITABLE_ID_REGS_NOT_DISCOVERABLE,
++    WRITABLE_ID_REGS_FAILED,
++    WRITABLE_ID_REGS_AVAIL,
++} ARMIdRegsState;
++
++/*
++ * The following structures are for the purpose of mapping the output of
++ * KVM_ARM_GET_REG_WRITABLE_MASKS that also may cover id registers we do
++ * not support in QEMU
++ * ID registers in op0==3, op1=={0,1,3}, crn=0, crm=={0-7}, op2=={0-7},
++ * as used by the KVM_ARM_GET_REG_WRITABLE_MASKS ioctl call.
++ */
++#define NR_ID_REGS (3 * 8 * 8)
++
++typedef struct IdRegMap {
++    uint64_t regs[NR_ID_REGS];
++} IdRegMap;
++
+ /* REG is ID_XXX */
+ #define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
+     ({                                                                  \
+@@ -1044,6 +1064,12 @@ struct ArchCPU {
+      */
+     bool host_cpu_probe_failed;
+ 
++    /*
++     * state of writable id regs query used to report an error, if any,
++     * on KVM custom vcpu model realize
++     */
++    ARMIdRegsState writable_id_regs;
++
+     /* QOM property to indicate we should use the back-compat CNTFRQ default */
+     bool backcompat_cntfrq;
+ 
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 8491f42a18d2..6e3cd06e9bc5 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -50,6 +50,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+ static bool cap_has_mp_state;
+ static bool cap_has_inject_serror_esr;
+ static bool cap_has_inject_ext_dabt;
++static int cap_writable_id_regs;
+ 
+ /**
+  * ARMHostCPUFeatures: information about the host CPU (identified
+@@ -488,6 +489,37 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     env->features = arm_host_cpu_features.features;
+ }
+ 
++int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
++{
++    struct reg_mask_range range = {
++        .range = 0, /* up to now only a single range is supported */
++        .addr = (uint64_t)idregmap,
++    };
++    int ret;
++
++    if (!kvm_enabled()) {
++        cpu->writable_id_regs = WRITABLE_ID_REGS_NOT_DISCOVERABLE;
++        return -ENOSYS;
++    }
++
++    cap_writable_id_regs =
++        kvm_check_extension(kvm_state, KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
++
++    if (!cap_writable_id_regs ||
++        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
++        cpu->writable_id_regs = WRITABLE_ID_REGS_NOT_DISCOVERABLE;
++        return -ENOSYS;
++    }
++
++    ret = kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range);
++    if (ret) {
++        cpu->writable_id_regs = WRITABLE_ID_REGS_FAILED;
++        return ret;
++     }
++    cpu->writable_id_regs = WRITABLE_ID_REGS_AVAIL;
++    return ret;
++}
++
+ static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
  {
-     size_t i;
+     return !ARM_CPU(obj)->kvm_adjvtime;
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 05c3de8cd46e..8d1f20ca8d89 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -221,6 +221,8 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
  
-+    initialize_cpu_sysreg_properties();
-     type_register_static(&aarch64_cpu_type_info);
+ void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
  
-     for (i = 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 3065081d241d..1c97c1ef7580 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -14,6 +14,7 @@ arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
- arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
-   'cpu64.c',
-   'gdbstub64.c',
-+  'cpu-sysreg-properties.c',
- ))
++int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap);
++
+ #else
  
- arm_system_ss = ss.source_set()
+ /*
+@@ -247,6 +249,11 @@ static inline bool kvm_arm_mte_supported(void)
+     return false;
+ }
+ 
++static inline int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
++{
++    return -ENOSYS;
++}
++
+ /*
+  * These functions should never actually be called without KVM support.
+  */
 -- 
 2.49.0
 
