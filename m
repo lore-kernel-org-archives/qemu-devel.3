@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052DDC369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 15:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBA5C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 15:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4LqD-0005n9-Eb; Mon, 14 Apr 2025 11:35:21 -0400
+	id 1u4Lyt-0008SS-6t; Mon, 14 Apr 2025 11:44:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u4Lq1-0005ih-Hr
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:35:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u4Lpz-0006ru-6j
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:35:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744644904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pTtdttDpMRCIR7RfY29Gl2AoWEWL6IbplTk10NoHapc=;
- b=ZHX09ltNl6K8uceai+coCjYTi5VTQibGtNIHWZDkC5d0Qk1Fu/APp/6cG1H0zfnWnFvxNl
- u2cPwevncJc4NRGJMUGzPo2Gn/uaqhd9mHsRNzUJUIDdPKY7PI6hdN3IwMD1v2MrY8Du8N
- LNvgnS1x6lltgIL+fTYMfWJEWzuTJyA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-rvIazJjVOxOkS6crMzGRuw-1; Mon,
- 14 Apr 2025 11:34:56 -0400
-X-MC-Unique: rvIazJjVOxOkS6crMzGRuw-1
-X-Mimecast-MFC-AGG-ID: rvIazJjVOxOkS6crMzGRuw_1744644895
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E899F1954B36; Mon, 14 Apr 2025 15:34:53 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.100])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 03AA91828AAA; Mon, 14 Apr 2025 15:34:52 +0000 (UTC)
-Date: Mon, 14 Apr 2025 11:34:51 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 1/2] file-posix: probe discard alignment on Linux
- block devices
-Message-ID: <20250414153451.GC117758@fedora>
-References: <20250410184103.23385-1-stefanha@redhat.com>
- <20250410184103.23385-2-stefanha@redhat.com>
- <c7b9ddb4-10de-4c66-9f2f-c964d77275e0@redhat.com>
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1u4Lyr-0008S6-FS
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:44:17 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1u4Lyp-00014O-VD
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:44:17 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-af589091049so3092248a12.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 08:44:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744645454; x=1745250254; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MetnSWs0nq1ZKwVMm1SZwshOSb7iM6OHgwlS7spNFUA=;
+ b=l+2jT7SZSZoR39i85EFGD0DCj4SS4UsgvZtoZco5vzI3Me/gy2tgSdNo1GnQD0AiCU
+ UKNDvDO7Yq5QXAl2KpKkk0bEtWA0/4cLSkCWaXWpkOptNiRu69VvgtWc8+VlBDQxWiaj
+ P78TIIL5hg0c3VWYEpqH8hvnf4imWb3rSuzqOS4lRIYdm3eeP2FaI+2oUTS6W+tnv0GS
+ 9wVrATFC/u8umqYeLWO73AS1tWd7Cnf81oO/NxDlojQFlHCH7BDvoR7Ojvyw9OLxUsoe
+ rZpumCPc68BCKADwiPtR+CP0mGmOQqmunR8IJcSe0fTtfBbWIvtlG6qDbVqDB+/nQ+r+
+ 9JEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744645454; x=1745250254;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MetnSWs0nq1ZKwVMm1SZwshOSb7iM6OHgwlS7spNFUA=;
+ b=fdDYzgEHgnhh2cmz+UKG3cSyduXz7zvF9vWMjRE7nX00vEsDmXyLcgT6JilhPaVpDx
+ fcDp3xyUgXN6MlYFEW4uDisSPrragULcBMWYB8HmxHku6AAh2LatOgkmHQWx7KT8jnbv
+ Gt6H5GfGSHnT7ZYoAhEDZ/T3u4gI+wJLQFoUt4lwmxayeX3uelNqlicheqOfSUKB7ZLT
+ au32coL29Sp1nRzcMuhWDHHMdqILF2ABAAAEKFB8ULQuwnUThxxyRRnf9ZOZ5GbiiSw6
+ xVe6EAiy+MbWKmV9Bm9RSDX0jdUftkBp78kgQH8CDcC3WIS4VZeZLp3Klq3LQgAdJDV3
+ FFgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXN3elHTnREmcRUbVeLrHFQTHhLVoHsL2g/2GQc8H6S2sUfCqQ/I+8POGZkkGWK2DErjJrez/QzhsZ+@nongnu.org
+X-Gm-Message-State: AOJu0YzqsY/mA1feye1Tzaezfv+ifxyZYKHI0V6QgTkTvQHM9d9Vf6mM
+ cJ1wcLRYQk//p7WzkJBAvKp3Y3ppLpDG7pc1mJHuv3Nbf7EpGCUs
+X-Gm-Gg: ASbGncuf8yl8ixKX1lKfjFZ11zC3q81WJVbD4eTg8O8IpQ2hzrg9waFmb1zSP4J/E7i
+ YtupO4ykkBAPuO56+6K7kJGozwVgGuYLA+SDetRfzI+9/UidBZWYIlPu0iFlNRkeESksKb9hfle
+ J9CGSxN1ja52kSf5QprVJPnfSZIq49Sy4DlAWtaYAE5fLzCxFXvrOl3RiDsu7PZc6rfoyFJnFrB
+ iTDtguRDWVbyPOi2xOOVm4xWFGNOal8861sa4SIuXXdw8PfCIPlujTSOoko5ayDBJT63hBrfLgF
+ iX/QNdVIeQWxqzU/5NIszm1tpaqBWuPfMZWR
+X-Google-Smtp-Source: AGHT+IEqcjxulOQzOxdwWrWqATGggSA8ehreXXU0YQ0R98Atb2/pn7p2pg1A4rxYW0oNMDj59tlPTg==
+X-Received: by 2002:a17:90b:5242:b0:2fe:e9c6:689e with SMTP id
+ 98e67ed59e1d1-30823670094mr18264782a91.8.1744645453550; 
+ Mon, 14 Apr 2025 08:44:13 -0700 (PDT)
+Received: from debian ([2607:fb90:8e61:8954:1427:df6e:93c8:2b14])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-306df08f71dsm11219783a91.23.2025.04.14.08.44.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Apr 2025 08:44:12 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Mon, 14 Apr 2025 08:44:07 -0700
+To: Gregory Price <gourry@gourry.net>
+Cc: nifan.cxl@gmail.com, jonathan.cameron@huawei.com, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org, a.manzanares@samsung.com,
+ dave@stgolabs.net, nmtadam.samsung@gmail.com, anisa.su887@gmail.com
+Subject: Re: [RFC 0/3] Qemu FM emulation
+Message-ID: <Z_0tRwHNXD8idZl-@debian>
+References: <20250408043051.430340-1-nifan.cxl@gmail.com>
+ <Z_U69HlC_aKLghwL@gourry-fedora-PF4VCD3F>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="cFhVdxoYEyX1w5mf"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c7b9ddb4-10de-4c66-9f2f-c964d77275e0@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <Z_U69HlC_aKLghwL@gourry-fedora-PF4VCD3F>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,163 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Apr 08, 2025 at 11:04:20AM -0400, Gregory Price wrote:
+> On Mon, Apr 07, 2025 at 09:20:27PM -0700, nifan.cxl@gmail.com wrote:
+> > From: Fan Ni <fan.ni@samsung.com>
+> > 
+> > The RFC provides a way for FM emulation in Qemu. The goal is to provide
+> > a context where we can have more FM emulation discussions and share solutions
+> > for a reasonable FM implementation in Qemu.
+> >
+> ... snip ...
+> 
+> Took a browse of the series, and I like this method.  It seems simple
+> and straight-forward, avoids any complex networking between the vms and
+> gives us what we want.
+> 
+> I'll wait for Jonathan's commentary, but solid prototype (bn_n)b
+> 
+> ~Gregory
 
---cFhVdxoYEyX1w5mf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Jonathan,
 
-On Fri, Apr 11, 2025 at 10:15:13AM +0200, Hanna Czenczek wrote:
-> On 10.04.25 20:41, Stefan Hajnoczi wrote:
-> > Populate the pdiscard_alignment block limit so the block layer is able
-> > align discard requests correctly.
-> >=20
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
-> >   block/file-posix.c | 56 +++++++++++++++++++++++++++++++++++++++++++++-
-> >   1 file changed, 55 insertions(+), 1 deletion(-)
->=20
-> Ah, I didn=E2=80=99t know sysfs is actually fair game.=C2=A0 Should we no=
-t also get the
-> maximum discard length then, too?
+Any feedback for this RFC?
 
-The maximum discard length behaves differently: the Linux block layer
-splits requests according to the maximum discard length. If the guest
-submits a discard request that is too large for the host, the host block
-layer will split it and the request succeeds. That is why I didn't make
-any changes to the maximum discard length in this series.
-
->=20
-> > diff --git a/block/file-posix.c b/block/file-posix.c
-> > index 56d1972d15..2a1e1f48c0 100644
-> > --- a/block/file-posix.c
-> > +++ b/block/file-posix.c
-> > @@ -1276,10 +1276,10 @@ static int get_sysfs_zoned_model(struct stat *s=
-t, BlockZoneModel *zoned)
-> >   }
-> >   #endif /* defined(CONFIG_BLKZONED) */
-> > +#ifdef CONFIG_LINUX
-> >   /*
-> >    * Get a sysfs attribute value as a long integer.
-> >    */
-> > -#ifdef CONFIG_LINUX
-> >   static long get_sysfs_long_val(struct stat *st, const char *attribute)
-> >   {
-> >       g_autofree char *str =3D NULL;
-> > @@ -1299,6 +1299,30 @@ static long get_sysfs_long_val(struct stat *st, =
-const char *attribute)
-> >       }
-> >       return ret;
-> >   }
-> > +
-> > +/*
-> > + * Get a sysfs attribute value as a uint32_t.
-> > + */
-> > +static int get_sysfs_u32_val(struct stat *st, const char *attribute,
-> > +                             uint32_t *u32)
-> > +{
-> > +    g_autofree char *str =3D NULL;
-> > +    const char *end;
-> > +    unsigned int val;
-> > +    int ret;
-> > +
-> > +    ret =3D get_sysfs_str_val(st, attribute, &str);
-> > +    if (ret < 0) {
-> > +        return ret;
-> > +    }
-> > +
-> > +    /* The file is ended with '\n', pass 'end' to accept that. */
-> > +    ret =3D qemu_strtoui(str, &end, 10, &val);
-> > +    if (ret =3D=3D 0 && end && *end =3D=3D '\0') {
-> > +        *u32 =3D val;
-> > +    }
-> > +    return ret;
-> > +}
-> >   #endif
-> >   static int hdev_get_max_segments(int fd, struct stat *st)
-> > @@ -1318,6 +1342,23 @@ static int hdev_get_max_segments(int fd, struct =
-stat *st)
-> >   #endif
-> >   }
-> > +/*
-> > + * Fills in *dalign with the discard alignment and returns 0 on succes=
-s,
-> > + * -errno otherwise.
-> > + */
-> > +static int hdev_get_pdiscard_alignment(struct stat *st, uint32_t *dali=
-gn)
-> > +{
-> > +#ifdef CONFIG_LINUX
-> > +    /*
-> > +     * Note that Linux "discard_granularity" is QEMU "discard_alignmen=
-t". Linux
-> > +     * "discard_alignment" is something else.
-> > +     */
-> > +    return get_sysfs_u32_val(st, "discard_granularity", dalign);
-> > +#else
-> > +    return -ENOTSUP;
-> > +#endif
-> > +}
-> > +
-> >   #if defined(CONFIG_BLKZONED)
-> >   /*
-> >    * If the reset_all flag is true, then the wps of zone whose state is
-> > @@ -1527,6 +1568,19 @@ static void raw_refresh_limits(BlockDriverState =
-*bs, Error **errp)
-> >           }
-> >       }
-> > +    if (S_ISBLK(st.st_mode)) {
-> > +        uint32_t dalign =3D 0;
-> > +        int ret;
-> > +
-> > +        ret =3D hdev_get_pdiscard_alignment(&st, &dalign);
-> > +        if (ret =3D=3D 0) {
-> > +            /* Must be a multiple of request_alignment */
-> > +            assert(dalign % bs->bl.request_alignment =3D=3D 0);
->=20
-> Is it fair to crash qemu if the kernel reports a value that is not a
-> multiple of request_alignment?=C2=A0 Wouldn=E2=80=99t it make more sense =
-to take the
-> maximum, and if that still isn=E2=80=99t a multiple, return an error here?
-
-I'll replace the assertion with an error.
-
-The Linux block layer sysfs documentation says:
-
-  [RO] Devices that support discard functionality may internally
-  allocate space using units that are bigger than the logical
-  block size.
-
-I don't expect dalign to be smaller than request_alignment, but it
-doesn't hurt the check if request_alignment would work.
-
->=20
-> Hanna
->=20
-> > +
-> > +            bs->bl.pdiscard_alignment =3D dalign;
-> > +        }
-> > +    }
-> > +
-> >       raw_refresh_zoned_limits(bs, &st, errp);
-> >   }
->=20
-
---cFhVdxoYEyX1w5mf
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmf9KxsACgkQnKSrs4Gr
-c8jPnQf8D1+1twXgXGCJABQ3O0xx3wX4AE1mK/MZwqCaece9Re1CHKo++NahrrjK
-wY9wAwTrL6kzJpE/nyRoH/2zJvsx23w0vCKoqaOtyFuGUzLF8SFTkfHs01t2ezSv
-iQaQz4l6H7K3cgRyD5uw72z/kqDEcDWKLGnGkWIOI/Exag8h8VDvOiP4tk7cNezi
-bGvvHCjyUnQYxsKvAyRpZx46X8HtyvK+jRWbJ++JvuvlOnysUxR2lMfqmEZfV03g
-vT0NDt0xIDdcfLxRltEBOrFeLjzXtOAFC21EWv1WwUv41jMU7jI4r7ywXJW9+hz1
-DKO71EE8m7/22mDkOXCCHjOKhvQlDQ==
-=QbKK
------END PGP SIGNATURE-----
-
---cFhVdxoYEyX1w5mf--
-
+Fan
 
