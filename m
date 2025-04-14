@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543D1C369B4
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD14EC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4MrI-000578-4q; Mon, 14 Apr 2025 12:40:32 -0400
+	id 1u4Mrv-0007Ma-Sb; Mon, 14 Apr 2025 12:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4Mqo-0004pM-Or
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:40:07 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4Mrt-0007Ep-Ps
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:41:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4Mqi-00060M-Pu
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:40:02 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u4Mrk-0006Qk-BK
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:41:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744648794;
+ s=mimecast20190719; t=1744648858;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GQJucsEU0+czHXH5GOQU4YsA6Y5H66tludcrXjXDsQY=;
- b=RWXspJArjPdCn78M2lZ5iL8e88hOThruCOyY73cuPJuEBCfe4tG7+Rofya70DpNqIpm5wf
- 8kcZuvGF4Z0UBPqEsS1KKzvYfJUQMs0xWU0OK4bwgMvnR/JOFx3zivKNB+OpQu8S4GjH8H
- WvwDHd0JJKNbBOkJTyLGJUR75oasXeY=
+ bh=/cm0715fZCJ1Z/wDTOFk0hsjOspQTrfFjfUTkh4U41I=;
+ b=UYHlLrM/m19lp2x6tzIm9HXmulP1O2gTyseG2FmsOXOS0o4yTcK/DzPW6fbKiAoRWkUXgD
+ pLPTgf7SdVPjWCTuS8ZFagrXWoU/GDJvkuXxyOcl6wJFfVnNnNNPUSKyqDHAGB9GEw4rts
+ gXcoPeeEEAEH8kStU2JGNx2OX3fJK6U=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-DtY3oA9gOSWxbZGobgRvzA-1; Mon,
- 14 Apr 2025 12:39:49 -0400
-X-MC-Unique: DtY3oA9gOSWxbZGobgRvzA-1
-X-Mimecast-MFC-AGG-ID: DtY3oA9gOSWxbZGobgRvzA_1744648786
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-308-rydyobF0My2CeO6h_6QyHg-1; Mon,
+ 14 Apr 2025 12:40:54 -0400
+X-MC-Unique: rydyobF0My2CeO6h_6QyHg-1
+X-Mimecast-MFC-AGG-ID: rydyobF0My2CeO6h_6QyHg_1744648853
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31EA8180AB16; Mon, 14 Apr 2025 16:39:46 +0000 (UTC)
+ id A5EF3180AF4E; Mon, 14 Apr 2025 16:40:52 +0000 (UTC)
 Received: from gondolin.redhat.com (unknown [10.67.24.14])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E314180B491; Mon, 14 Apr 2025 16:39:30 +0000 (UTC)
+ id 20EDE180AF7C; Mon, 14 Apr 2025 16:40:36 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -54,9 +54,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
 Cc: agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com,
  philmd@linaro.org, pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v3 02/10] arm/cpu: Add sysreg properties generation
-Date: Mon, 14 Apr 2025 18:38:41 +0200
-Message-ID: <20250414163849.321857-3-cohuck@redhat.com>
+Subject: [PATCH v3 06/10] arm/kvm: Allow reading all the writable ID registers
+Date: Mon, 14 Apr 2025 18:38:45 +0200
+Message-ID: <20250414163849.321857-7-cohuck@redhat.com>
 In-Reply-To: <20250414163849.321857-1-cohuck@redhat.com>
 References: <20250414163849.321857-1-cohuck@redhat.com>
 MIME-Version: 1.0
@@ -71,8 +71,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,381 +90,223 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eric Auger <eric.auger@redhat.com>
 
-Introduce a script that automates the generation of system register
-properties definitions from a given linux source tree
-arch/arm64/tools/sysreg.
+At the moment kvm_arm_get_host_cpu_features() reads a subset of the
+ID regs. As we want to introduce properties for all writable ID reg
+fields, we want more genericity and read more default host register
+values.
 
-Invocation of
-./update-aarch64-sysreg-code.sh $PATH_TO_LINUX_SOURCE_TREE
-in scripts directory additionally generates
-target/arm/cpu-sysreg-properties.c containing definitions for
-feature ID registers.
+Introduce a new get_host_cpu_idregs() helper and add a new exhaustive
+boolean parameter to kvm_arm_get_host_cpu_features() and
+kvm_arm_set_cpu_features_from_host() to select the right behavior.
+The host cpu model will keep the legacy behavior unless the writable
+id register interface is available.
 
-update-aarch64-sysreg-code.sh additionally calls
-gen-cpu-sysreg-properties.awk which is inherited from kernel
-arch/arm64/tools/gen-sysreg.awk. All credits to Mark Rutland
-the original author of this script.
+A writable_map IdRegMap is introduced in the CPU object. A subsequent
+patch will populate it.
 
-[CH: split off from original patch adding both sysreg definitions
- and properties]
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- scripts/gen-cpu-sysreg-properties.awk | 325 ++++++++++++++++++++++++++
- scripts/update-aarch64-sysreg-code.sh |   5 +-
- 2 files changed, 329 insertions(+), 1 deletion(-)
- create mode 100755 scripts/gen-cpu-sysreg-properties.awk
+ target/arm/cpu-sysregs.h |  2 ++
+ target/arm/cpu.h         |  3 ++
+ target/arm/cpu64.c       |  2 +-
+ target/arm/kvm.c         | 78 ++++++++++++++++++++++++++++++++++++++--
+ target/arm/kvm_arm.h     |  9 +++--
+ target/arm/trace-events  |  1 +
+ 6 files changed, 89 insertions(+), 6 deletions(-)
 
-diff --git a/scripts/gen-cpu-sysreg-properties.awk b/scripts/gen-cpu-sysreg-properties.awk
-new file mode 100755
-index 000000000000..76c37938b168
---- /dev/null
-+++ b/scripts/gen-cpu-sysreg-properties.awk
-@@ -0,0 +1,325 @@
-+#!/bin/awk -f
-+# SPDX-License-Identifier: GPL-2.0
-+# gen-cpu-sysreg-properties.awk: arm64 sysreg header generator
-+#
-+# Usage: awk -f gen-cpu-sysreg-properties.awk $LINUX_PATH/arch/arm64/tools/sysreg
-+
-+function block_current() {
-+	return __current_block[__current_block_depth];
-+}
-+
-+# Log an error and terminate
-+function fatal(msg) {
-+	print "Error at " NR ": " msg > "/dev/stderr"
-+
-+	printf "Current block nesting:"
-+
-+	for (i = 0; i <= __current_block_depth; i++) {
-+		printf " " __current_block[i]
-+	}
-+	printf "\n"
-+
-+	exit 1
-+}
-+
-+# Enter a new block, setting the active block to @block
-+function block_push(block) {
-+	__current_block[++__current_block_depth] = block
-+}
-+
-+# Exit a block, setting the active block to the parent block
-+function block_pop() {
-+	if (__current_block_depth == 0)
-+		fatal("error: block_pop() in root block")
-+
-+	__current_block_depth--;
-+}
-+
-+# Sanity check the number of records for a field makes sense. If not, produce
-+# an error and terminate.
-+function expect_fields(nf) {
-+	if (NF != nf)
-+		fatal(NF " fields found where " nf " expected")
-+}
-+
-+# Print a CPP macro definition, padded with spaces so that the macro bodies
-+# line up in a column
-+function define(name, val) {
-+	printf "%-56s%s\n", "#define " name, val
-+}
-+
-+# Print standard BITMASK/SHIFT/WIDTH CPP definitions for a field
-+function define_field(reg, field, msb, lsb, idreg) {
-+	if (idreg)
-+            print "    arm64_sysreg_add_field("reg", \""field"\", "lsb", "msb");"
-+}
-+
-+# Print a field _SIGNED definition for a field
-+function define_field_sign(reg, field, sign, idreg) {
-+	if (idreg)
-+            print "    arm64_sysreg_add_field("reg", \""field"\", "lsb", "msb");"
-+}
-+
-+# Parse a "<msb>[:<lsb>]" string into the global variables @msb and @lsb
-+function parse_bitdef(reg, field, bitdef, _bits)
-+{
-+	if (bitdef ~ /^[0-9]+$/) {
-+		msb = bitdef
-+		lsb = bitdef
-+	} else if (split(bitdef, _bits, ":") == 2) {
-+		msb = _bits[1]
-+		lsb = _bits[2]
-+	} else {
-+		fatal("invalid bit-range definition '" bitdef "'")
-+	}
-+
-+
-+	if (msb != next_bit)
-+		fatal(reg "." field " starts at " msb " not " next_bit)
-+	if (63 < msb || msb < 0)
-+		fatal(reg "." field " invalid high bit in '" bitdef "'")
-+	if (63 < lsb || lsb < 0)
-+		fatal(reg "." field " invalid low bit in '" bitdef "'")
-+	if (msb < lsb)
-+		fatal(reg "." field " invalid bit-range '" bitdef "'")
-+	if (low > high)
-+		fatal(reg "." field " has invalid range " high "-" low)
-+
-+	next_bit = lsb - 1
-+}
-+
-+BEGIN {
-+	print "#include \"cpu-custom.h\""
-+	print ""
-+	print "ARM64SysReg arm64_id_regs[NUM_ID_IDX];"
-+	print ""
-+	print "void initialize_cpu_sysreg_properties(void)"
-+	print "{"
-+        print "    memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NUM_ID_IDX);"
-+        print ""
-+
-+	__current_block_depth = 0
-+	__current_block[__current_block_depth] = "Root"
-+}
-+
-+END {
-+	if (__current_block_depth != 0)
-+		fatal("Missing terminator for " block_current() " block")
-+
-+	print "}"
-+}
-+
-+# skip blank lines and comment lines
-+/^$/ { next }
-+/^[\t ]*#/ { next }
-+
-+/^SysregFields/ && block_current() == "Root" {
-+	block_push("SysregFields")
-+
-+	expect_fields(2)
-+
-+	reg = $2
-+
-+	res0 = "UL(0)"
-+	res1 = "UL(0)"
-+	unkn = "UL(0)"
-+
-+	next_bit = 63
-+
-+	next
-+}
-+
-+/^EndSysregFields/ && block_current() == "SysregFields" {
-+	if (next_bit > 0)
-+		fatal("Unspecified bits in " reg)
-+
-+	reg = null
-+	res0 = null
-+	res1 = null
-+	unkn = null
-+
-+	block_pop()
-+	next
-+}
-+
-+/^Sysreg/ && block_current() == "Root" {
-+	block_push("Sysreg")
-+
-+	expect_fields(7)
-+
-+	reg = $2
-+	op0 = $3
-+	op1 = $4
-+	crn = $5
-+	crm = $6
-+	op2 = $7
-+
-+	res0 = "UL(0)"
-+	res1 = "UL(0)"
-+	unkn = "UL(0)"
-+
-+	if (op0 == 3 && (op1>=0 && op1<=3) && crn==0 && (crm>=0 && crm<=7) && (op2>=0 && op2<=7)) {
-+	    idreg = 1
-+        } else {
-+	    idreg = 0
-+	}
-+
-+	if (idreg == 1) {
-+	   print "    /* "reg" */"
-+	   print "    ARM64SysReg *"reg" = arm64_sysreg_get("reg"_IDX);"
-+	   print "    "reg"->name = \""reg"\";"
-+	}
-+
-+	next_bit = 63
-+
-+	next
-+}
-+
-+/^EndSysreg/ && block_current() == "Sysreg" {
-+	if (next_bit > 0)
-+		fatal("Unspecified bits in " reg)
-+
-+	reg = null
-+	op0 = null
-+	op1 = null
-+	crn = null
-+	crm = null
-+	op2 = null
-+	res0 = null
-+	res1 = null
-+	unkn = null
-+
-+	if (idreg==1)
-+	    print ""
-+	block_pop()
-+	next
-+}
-+
-+# Currently this is effectivey a comment, in future we may want to emit
-+# defines for the fields.
-+(/^Fields/ || /^Mapping/) && block_current() == "Sysreg" {
-+	expect_fields(2)
-+
-+	if (next_bit != 63)
-+		fatal("Some fields already defined for " reg)
-+
-+	print "/* For " reg " fields see " $2 " */"
-+	print ""
-+
-+        next_bit = 0
-+	res0 = null
-+	res1 = null
-+	unkn = null
-+
-+	next
-+}
-+
-+
-+/^Res0/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	expect_fields(2)
-+	parse_bitdef(reg, "RES0", $2)
-+	field = "RES0_" msb "_" lsb
-+
-+	res0 = res0 " | GENMASK_ULL(" msb ", " lsb ")"
-+
-+	next
-+}
-+
-+/^Res1/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	expect_fields(2)
-+	parse_bitdef(reg, "RES1", $2)
-+	field = "RES1_" msb "_" lsb
-+
-+	res1 = res1 " | GENMASK_ULL(" msb ", " lsb ")"
-+
-+	next
-+}
-+
-+/^Unkn/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	expect_fields(2)
-+	parse_bitdef(reg, "UNKN", $2)
-+	field = "UNKN_" msb "_" lsb
-+
-+	unkn = unkn " | GENMASK_ULL(" msb ", " lsb ")"
-+
-+	next
-+}
-+
-+/^Field/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	expect_fields(3)
-+	field = $3
-+	parse_bitdef(reg, field, $2)
-+
-+
-+	define_field(reg, field, msb, lsb, idreg)
-+
-+	next
-+}
-+
-+/^Raz/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	expect_fields(2)
-+	parse_bitdef(reg, field, $2)
-+
-+	next
-+}
-+
-+/^SignedEnum/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	block_push("Enum")
-+
-+	expect_fields(3)
-+	field = $3
-+	parse_bitdef(reg, field, $2)
-+
-+	define_field(reg, field, msb, lsb, idreg)
-+	define_field_sign(reg, field, "true", idreg)
-+
-+	next
-+}
-+
-+/^UnsignedEnum/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	block_push("Enum")
-+
-+	expect_fields(3)
-+	field = $3
-+	parse_bitdef(reg, field, $2)
-+
-+	define_field(reg, field, msb, lsb, idreg)
-+	#define_field_sign(reg, field, "false", idreg)
-+
-+	next
-+}
-+
-+/^Enum/ && (block_current() == "Sysreg" || block_current() == "SysregFields") {
-+	block_push("Enum")
-+
-+	expect_fields(3)
-+	field = $3
-+	parse_bitdef(reg, field, $2)
-+
-+	define_field(reg, field, msb, lsb, idreg)
-+
-+	next
-+}
-+
-+/^EndEnum/ && block_current() == "Enum" {
-+
-+	field = null
-+	msb = null
-+	lsb = null
-+
-+	block_pop()
-+	next
-+}
-+
-+/0b[01]+/ && block_current() == "Enum" {
-+	expect_fields(2)
-+	val = $1
-+	name = $2
-+
-+	next
-+}
-+
-+# Any lines not handled by previous rules are unexpected
-+{
-+	fatal("unhandled statement")
-+}
-diff --git a/scripts/update-aarch64-sysreg-code.sh b/scripts/update-aarch64-sysreg-code.sh
-index 721f41a9a516..a11637091815 100755
---- a/scripts/update-aarch64-sysreg-code.sh
-+++ b/scripts/update-aarch64-sysreg-code.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh -e
- #
--# Update target/arm/cpu-sysregs.h
-+# Update target/arm/cpu-sysreg-properties.c and target/arm/cpu-sysregs.h
- # from a linux source tree (arch/arm64/tools/sysreg)
- #
- # Copyright Red Hat, Inc. 2024
-@@ -23,3 +23,6 @@ fi
+diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+index e89a1105904c..367fab51f19e 100644
+--- a/target/arm/cpu-sysregs.h
++++ b/target/arm/cpu-sysregs.h
+@@ -41,6 +41,8 @@ int get_sysreg_idx(ARMSysRegs sysreg);
  
- awk -f gen-cpu-sysregs-header.awk \
-     $linux/arch/arm64/tools/sysreg > ../target/arm/cpu-sysregs.h.inc
+ #ifdef CONFIG_KVM
+ uint64_t idregs_sysreg_to_kvm_reg(ARMSysRegs sysreg);
++int kvm_idx_to_idregs_idx(int kidx);
++int idregs_idx_to_kvm_idx(ARMIDRegisterIdx idx);
+ #endif
+ 
+ #endif /* ARM_CPU_SYSREGS_H */
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 775a8aebc5d3..8717c5e7695b 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1088,6 +1088,9 @@ struct ArchCPU {
+      */
+     ARMIdRegsState writable_id_regs;
+ 
++    /* ID reg writable bitmask (KVM only) */
++    IdRegMap *writable_map;
 +
-+awk -f gen-cpu-sysreg-properties.awk \
-+       $linux/arch/arm64/tools/sysreg > ../target/arm/cpu-sysreg-properties.c
+     /* QOM property to indicate we should use the back-compat CNTFRQ default */
+     bool backcompat_cntfrq;
+ 
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 839442745ea4..60a709502697 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -757,7 +757,7 @@ static void aarch64_host_initfn(Object *obj)
+ {
+ #if defined(CONFIG_KVM)
+     ARMCPU *cpu = ARM_CPU(obj);
+-    kvm_arm_set_cpu_features_from_host(cpu);
++    kvm_arm_set_cpu_features_from_host(cpu, false);
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         aarch64_add_sve_properties(obj);
+         aarch64_add_pauth_properties(obj);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 6e3cd06e9bc5..b07d5f16db50 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -41,6 +41,7 @@
+ #include "hw/acpi/ghes.h"
+ #include "target/arm/gtimer.h"
+ #include "migration/blocker.h"
++#include "cpu-custom.h"
+ 
+ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_INFO(DEVICE_CTRL),
+@@ -270,7 +271,73 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf, ARMIDRegisterIdx i
+     return ret;
+ }
+ 
+-static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++int kvm_idx_to_idregs_idx(int kidx)
++{
++    int op1, crm, op2;
++    ARMSysRegs sysreg;
++
++    op1 = kidx / 64;
++    if (op1 == 2) {
++        op1 = 3;
++    }
++    crm = (kidx % 64) / 8;
++    op2 = kidx % 8;
++    sysreg = ENCODE_ID_REG(3, op1, 0, crm, op2);
++    return get_sysreg_idx(sysreg);
++}
++
++int idregs_idx_to_kvm_idx(ARMIDRegisterIdx idx)
++{
++    ARMSysRegs sysreg = id_register_sysreg[idx];
++
++    return KVM_ARM_FEATURE_ID_RANGE_IDX((sysreg & CP_REG_ARM64_SYSREG_OP0_MASK) >> CP_REG_ARM64_SYSREG_OP0_SHIFT,
++                                        (sysreg & CP_REG_ARM64_SYSREG_OP1_MASK) >> CP_REG_ARM64_SYSREG_OP1_SHIFT,
++                                        (sysreg & CP_REG_ARM64_SYSREG_CRN_MASK) >> CP_REG_ARM64_SYSREG_CRN_SHIFT,
++                                        (sysreg & CP_REG_ARM64_SYSREG_CRM_MASK) >> CP_REG_ARM64_SYSREG_CRM_SHIFT,
++                                        (sysreg & CP_REG_ARM64_SYSREG_OP2_MASK) >> CP_REG_ARM64_SYSREG_OP2_SHIFT);
++}
++
++
++/*
++ * get_host_cpu_idregs: Read all the writable ID reg host values
++ *
++ * Need to be called once the writable mask has been populated
++ * Note we may want to read all the known id regs but some of them are not
++ * writable and return an error, hence the choice of reading only those which
++ * are writable. Those are also readable!
++ */
++static int get_host_cpu_idregs(ARMCPU *cpu, int fd, ARMHostCPUFeatures *ahcf)
++{
++    int err = 0;
++    int i;
++
++    for (i = 0; i < NUM_ID_IDX; i++) {
++        ARM64SysReg *sysregdesc = &arm64_id_regs[i];
++        ARMSysRegs sysreg = sysregdesc->sysreg;
++        uint64_t writable_mask = cpu->writable_map->regs[idregs_idx_to_kvm_idx(i)];
++        uint64_t *reg;
++        int ret;
++
++        if (!writable_mask) {
++            continue;
++        }
++
++        reg = &ahcf->isar.idregs[i];
++        ret = read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg));
++        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
++        if (ret) {
++            error_report("%s error reading value of host %s register (%m)",
++                         __func__, sysregdesc->name);
++
++            err = ret;
++        }
++    }
++    return err;
++}
++
++static bool
++kvm_arm_get_host_cpu_features(ARMCPU *cpu, ARMHostCPUFeatures *ahcf,
++                              bool exhaustive)
+ {
+     /* Identify the feature bits corresponding to the host CPU, and
+      * fill out the ARMHostCPUClass fields accordingly. To do this
+@@ -398,6 +465,11 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         err |= get_host_cpu_reg(fd, ahcf, ID_DFR1_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_MMFR5_EL1_IDX);
+ 
++        /* Make sure writable ID reg values are read */
++        if (exhaustive) {
++            err |= get_host_cpu_idregs(cpu, fd, ahcf);
++        }
++
+         /*
+          * DBGDIDR is a bit complicated because the kernel doesn't
+          * provide an accessor for it in 64-bit mode, which is what this
+@@ -467,13 +539,13 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     return true;
+ }
+ 
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool exhaustive)
+ {
+     CPUARMState *env = &cpu->env;
+ 
+     if (!arm_host_cpu_features.dtb_compatible) {
+         if (!kvm_enabled() ||
+-            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
++            !kvm_arm_get_host_cpu_features(cpu, &arm_host_cpu_features, exhaustive)) {
+             /* We can't report this error yet, so flag that we need to
+              * in arm_cpu_realizefn().
+              */
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 8d1f20ca8d89..90ba4f7d8987 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -141,8 +141,12 @@ uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu);
+  *
+  * Set up the ARMCPU struct fields up to match the information probed
+  * from the host CPU.
++ *
++ * @cpu: cpu object
++ * @exhaustive: if true, all the feature ID regs are queried instead of
++ *              a subset
+  */
+-void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
++void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu, bool exhaustive);
+ 
+ /**
+  * kvm_arm_add_vcpu_properties:
+@@ -257,7 +261,8 @@ static inline int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
+ /*
+  * These functions should never actually be called without KVM support.
+  */
+-static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
++static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
++                                                      bool exhaustive)
+ {
+     g_assert_not_reached();
+ }
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 4438dce7becc..17e52c0705f2 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -13,3 +13,4 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ 
+ # kvm.c
+ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
++get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
 -- 
 2.49.0
 
