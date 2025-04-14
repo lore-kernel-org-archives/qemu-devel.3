@@ -4,107 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F5AC369B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B39C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4IAq-00049Z-8r; Mon, 14 Apr 2025 07:40:34 -0400
+	id 1u4IFn-0007eG-81; Mon, 14 Apr 2025 07:45:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4I9R-0003In-AE
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:39:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4IFj-0007do-Tp
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:45:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4I9P-0005NV-8t
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:38:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4IFh-0006XX-TE
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:45:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744630731;
+ s=mimecast20190719; t=1744631124;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5URvcRM/PLa7qq1fqG1PEHfxEv6adZZhwD1Vlr/G7UY=;
- b=hLPpVfwmLtr8i8Blbe89fhO4S/tf/gxfGiD0/pXg2RDN633JvDhax91Hw8S3DAniLlc6Qh
- 34Ue+5pJIIuuAxIsVii86+/Kz9ojxuE/BjXdidFZJ2hZJ5MVfQh4W/SpX4g7lrWDNnbC4Z
- KEV8SQsO+g0QMSRxdQ2BgLxpH4TN8ig=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mL8Fo3xMpyS43nM1Z0NKcBjlWVbaFkhu4IiE3ecixd8=;
+ b=VA9FtBlS1KbmndgnQy4tWFUzMTkF1cAl7qFhlU44s/uLfHqr0FBN/cYdvz+XSeVxDFIY2/
+ Z6YMDrTIJTAo+r5XT8DO2HjGkLMRbK27IxnG5yI8jueOJ9V3mQMQYQOnsZy4pvxT7h6Nk1
+ NY3fbJ6SXIUFFsUJjngWyjGA0feXCSk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-uPnoGbX4PNqcFoqdEW6bnw-1; Mon, 14 Apr 2025 07:38:49 -0400
-X-MC-Unique: uPnoGbX4PNqcFoqdEW6bnw-1
-X-Mimecast-MFC-AGG-ID: uPnoGbX4PNqcFoqdEW6bnw_1744630729
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43cf327e9a2so37644975e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 04:38:49 -0700 (PDT)
+ us-mta-428-eUUVB_U6PTqoti4yK-aznw-1; Mon, 14 Apr 2025 07:45:22 -0400
+X-MC-Unique: eUUVB_U6PTqoti4yK-aznw-1
+X-Mimecast-MFC-AGG-ID: eUUVB_U6PTqoti4yK-aznw_1744631121
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cf327e9a2so37689895e9.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 04:45:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744630729; x=1745235529;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5URvcRM/PLa7qq1fqG1PEHfxEv6adZZhwD1Vlr/G7UY=;
- b=l7swulf8Am4KW0HFhFoecIp1VrU6/asQ2+6wEh+F6rsX3Jq+FsbtQYbKsOQ54T0f9E
- l+r2G/eBuagOgtuCgelM4a1tONvVlIVOz7/tw1A/kfScA1k2I9LunwWZTYwuv9sZKk5c
- xo8HYc8Z1M4fqX292RznXL4I1T1Adj0BrzGKUQfetKGgli3CjJ0kNp8E4n2Lw6cMjwk/
- ymdm69rTBrymubuM8mqM+lM3MEL0ujD3A4RoeaCd/VbWjH8RHZVtTvwt1xjbvex2sqWh
- +0ecKczFGFiuCThnzye3NoMW5akA0hs9Qrd1qkskI+Z5Cm0XwphrdaIpChMWMc0jPiP/
- rVEQ==
+ d=1e100.net; s=20230601; t=1744631121; x=1745235921;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mL8Fo3xMpyS43nM1Z0NKcBjlWVbaFkhu4IiE3ecixd8=;
+ b=g0ljjmcmfPxQ/rtBk9mx8VI67JklSVrLrk4r0VhMldM//mR8I+GN69NtSqx+dKTK3o
+ HAn+v3k5zEHAGIewriakWybEETBujhOJCydLsSmfXwgl/26sUa1cFcsKMbBmPexe+P0x
+ 7af5aTzrqPKl3YL+GAGC5VkseSc3EeMbotFaDwek9JVOmp0C+MOPyvD7f8xlHz81rUP4
+ Zgb9CyrJCe+eyGVYLIzcbPzMKlNOSkRuY+u1Eg3GjQaQwYqZeIt4pIKfoaMsQ+mjuJT/
+ 9lFf+s569evFJxO1sD10+6ohbd4ppnOGCbXr3/+99kSjg0JMBHE76fO6scWBQMTFYiKL
+ CrQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUopXTGmJ2M23/hA6Du3c3k9QHE1r/k7eo4nP/d8hpghZIrs01JNI5p1XOP8hsgeBaAsjVfZVYQDj6@nongnu.org
-X-Gm-Message-State: AOJu0YzkeEizUz0EU32vbsJl0GvmwTsnwdkS8m6RRP4wiCo/S0RbF/R4
- /cSHCZTuHfYe1zcpjX1SpEv+XPu8c5dq7AW+1ouSxMV/q3YC7Gf+ibrY/9X0BejfE/VpIdjPuhd
- PAVb9hVopIRpSAYmw3VlrpKVu5uBALMM7BXf/uTRhdCIXf8x23qf3
-X-Gm-Gg: ASbGncv7Dv+itf0OcSrXBMtgveFofAODf/FCHIkqYJKhC3qdFn50UYRwBAiXT5qXoSC
- fiUrQWc8wCiA8PdoopCB8CK83XScMBBsAexKRhiPiOGOJlE1IgHuHeqhwDBmZsziqustQObJDZh
- VwZZ0jPBbVQ3SnsufZyccos9UObzCnlBQZ6CyX+51bgBY/QeTQdZXNOtwxLvw5ufoDmmN+GC1Mc
- PY+dNpd4GcMf2lShJbIy+LV+7CIUzc5ygeZcI2GENq2wqlfhYDzFbysgfeEQXn67413MZDaXZI4
- 1zEIpw==
-X-Received: by 2002:a5d:6d86:0:b0:39c:1efc:1c1c with SMTP id
- ffacd0b85a97d-39ea5211898mr10407937f8f.34.1744630728533; 
- Mon, 14 Apr 2025 04:38:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMZtwsuR0BSRDu0qboIHUb+ZsKz8XFYvq71+HDFM+9hTbZjcHdwKG5s417oWlQ36jRcsAC5g==
-X-Received: by 2002:a5d:6d86:0:b0:39c:1efc:1c1c with SMTP id
- ffacd0b85a97d-39ea5211898mr10407907f8f.34.1744630728023; 
- Mon, 14 Apr 2025 04:38:48 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ AJvYcCX+gyJIqtKkquci0moNdnJkFnVMXjg/4w2dzaRsu+FLZOPvS+ZzsfFQFnBn7wZv94JbP9qC0mi8kZHh@nongnu.org
+X-Gm-Message-State: AOJu0YwxGHfu4K6Fm/p024kFy+0i89Y0Oz4qAAYFcyyEAmeuXezVwO41
+ oEEwN7JrDsAMOVojPxQ0lr1nkuUbISyqX4ixtBB9hR99UwLcjbNoy6Mk2UDT2T6Ghf/0VdoUnd0
+ 5lQNClmuPypr6ro07/YAXQ/1Bfgq36CQhtMnzTwSYGg75H0le5mI5
+X-Gm-Gg: ASbGnctppyJX4Aj/9JBsDvEWpCtm42B8b9nQ89bPJYp/bdll0ExpvIg3wFlh1Zyh0xQ
+ y/hBpPafOFPCLk8jjMD5ZdO8OOg+SU+5nmsmVXl+yARYcdPg0qAZ8zSHYRMNkrpADXIupfJjXDu
+ WxsQxWa+pAw8MhwIE2zaaFwH1845swAVGbBxTYirBQCM9cEhrZBUwGXbUbeOJV9QvFbVoUy4BtM
+ 09USzEsyGVJU7NKHJb6G7CZHqP7UishEMz6hlLzVz4VTAqUTvAuIhS8Qyprg88q+6a7daF7/XhF
+ rbPhDm3WAELS+qPawXhkWyq9ORx1Z98+Hn6W
+X-Received: by 2002:a05:600c:46d1:b0:43c:ec28:d310 with SMTP id
+ 5b1f17b1804b1-43f3a93cc34mr126553105e9.10.1744631121441; 
+ Mon, 14 Apr 2025 04:45:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxrTOpu0Oz56Vu7wOgT8v5RVe4vk8DqchaiWmi49wFJx7lFdCrQxj/jhR6ShkkppOYw4y6fg==
+X-Received: by 2002:a05:600c:46d1:b0:43c:ec28:d310 with SMTP id
+ 5b1f17b1804b1-43f3a93cc34mr126552805e9.10.1744631121001; 
+ Mon, 14 Apr 2025 04:45:21 -0700 (PDT)
+Received: from [10.33.192.219] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eaf43cccdsm10748166f8f.79.2025.04.14.04.38.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Apr 2025 04:38:47 -0700 (PDT)
-Date: Mon, 14 Apr 2025 07:38:43 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: Re: [PATCH] hw: add compat machines for 10.1
-Message-ID: <20250414073837-mutt-send-email-mst@kernel.org>
-References: <20250414094543.221241-1-cohuck@redhat.com>
+ 5b1f17b1804b1-43f2338d6ebsm180013225e9.2.2025.04.14.04.45.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Apr 2025 04:45:20 -0700 (PDT)
+Message-ID: <aab25706-7110-4456-9d84-9c2f7964092d@redhat.com>
+Date: Mon, 14 Apr 2025 13:45:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250414094543.221241-1-cohuck@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/test_vnc: skip test if no crypto backend
+ available
+To: Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org
+References: <20250414093732.220498-1-cohuck@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Cc: "Daniel P. Berrange" <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250414093732.220498-1-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,251 +153,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 14, 2025 at 11:45:43AM +0200, Cornelia Huck wrote:
-> Add 10.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+On 14/04/2025 11.37, Cornelia Huck wrote:
+> The test_change_password test will fail if no cryptographic backend is
+> available (e.g. if QEMU was built on a system with no cryptographic
+> library development packages installed); just skip the test in that
+> case.
 > 
 > Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-
 > ---
->  hw/arm/virt.c              |  9 ++++++++-
->  hw/core/machine.c          |  3 +++
->  hw/i386/pc.c               |  3 +++
->  hw/i386/pc_piix.c          | 13 +++++++++++--
->  hw/i386/pc_q35.c           | 13 +++++++++++--
->  hw/m68k/virt.c             |  9 ++++++++-
->  hw/ppc/spapr.c             | 15 +++++++++++++--
->  hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
->  include/hw/boards.h        |  3 +++
->  include/hw/i386/pc.h       |  3 +++
->  10 files changed, 76 insertions(+), 9 deletions(-)
+>   tests/functional/test_vnc.py | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index a96452f17a48..3e72adaa918f 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3408,10 +3408,17 @@ static void machvirt_machine_init(void)
->  }
->  type_init(machvirt_machine_init);
->  
-> +static void virt_machine_10_1_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
-> +
->  static void virt_machine_10_0_options(MachineClass *mc)
->  {
-> +    virt_machine_10_1_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
->  }
-> -DEFINE_VIRT_MACHINE_AS_LATEST(10, 0)
-> +DEFINE_VIRT_MACHINE(10, 0)
->  
->  static void virt_machine_9_2_options(MachineClass *mc)
->  {
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 63c6ef93d296..abfcedd4a5f7 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -37,6 +37,9 @@
->  #include "hw/virtio/virtio-iommu.h"
->  #include "audio/audio.h"
->  
-> +GlobalProperty hw_compat_10_0[] = {};
-> +const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
-> +
->  GlobalProperty hw_compat_9_2[] = {
->      {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
->      { "virtio-balloon-pci", "vectors", "0" },
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 01d0581f62a3..1b5d55e96d51 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -79,6 +79,9 @@
->      { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
->      { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
->  
-> +GlobalProperty pc_compat_10_0[] = {};
-> +const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
-> +
->  GlobalProperty pc_compat_9_2[] = {};
->  const size_t pc_compat_9_2_len = G_N_ELEMENTS(pc_compat_9_2);
->  
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 6c91e2d29298..dbb59df64f75 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -479,12 +479,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
->                                       "Use a different south bridge than PIIX3");
->  }
->  
-> -static void pc_i440fx_machine_10_0_options(MachineClass *m)
-> +static void pc_i440fx_machine_10_1_options(MachineClass *m)
->  {
->      pc_i440fx_machine_options(m);
->  }
->  
-> -DEFINE_I440FX_MACHINE_AS_LATEST(10, 0);
-> +DEFINE_I440FX_MACHINE_AS_LATEST(10, 1);
-> +
-> +static void pc_i440fx_machine_10_0_options(MachineClass *m)
-> +{
-> +    pc_i440fx_machine_10_1_options(m);
-> +    compat_props_add(m->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-> +    compat_props_add(m->compat_props, pc_compat_10_0, pc_compat_10_0_len);
-> +}
-> +
-> +DEFINE_I440FX_MACHINE(10, 0);
->  
->  static void pc_i440fx_machine_9_2_options(MachineClass *m)
->  {
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index fd96d0345c7d..c538b3d05b47 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -361,12 +361,21 @@ static void pc_q35_machine_options(MachineClass *m)
->                       pc_q35_compat_defaults, pc_q35_compat_defaults_len);
->  }
->  
-> -static void pc_q35_machine_10_0_options(MachineClass *m)
-> +static void pc_q35_machine_10_1_options(MachineClass *m)
->  {
->      pc_q35_machine_options(m);
->  }
->  
-> -DEFINE_Q35_MACHINE_AS_LATEST(10, 0);
-> +DEFINE_Q35_MACHINE_AS_LATEST(10, 1);
-> +
-> +static void pc_q35_machine_10_0_options(MachineClass *m)
-> +{
-> +    pc_q35_machine_10_1_options(m);
-> +    compat_props_add(m->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-> +    compat_props_add(m->compat_props, pc_compat_10_0, pc_compat_10_0_len);
-> +}
-> +
-> +DEFINE_Q35_MACHINE(10, 0);
->  
->  static void pc_q35_machine_9_2_options(MachineClass *m)
->  {
-> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-> index d967bdd7438e..295a614e1619 100644
-> --- a/hw/m68k/virt.c
-> +++ b/hw/m68k/virt.c
-> @@ -366,10 +366,17 @@ type_init(virt_machine_register_types)
->  #define DEFINE_VIRT_MACHINE(major, minor) \
->      DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
->  
-> +static void virt_machine_10_1_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
-> +
->  static void virt_machine_10_0_options(MachineClass *mc)
->  {
-> +    virt_machine_10_1_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
->  }
-> -DEFINE_VIRT_MACHINE_AS_LATEST(10, 0)
-> +DEFINE_VIRT_MACHINE(10, 0)
->  
->  static void virt_machine_9_2_options(MachineClass *mc)
->  {
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index b0a0f8c68951..6fef1d167ae6 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -4766,15 +4766,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
->  #define DEFINE_SPAPR_MACHINE(major, minor) \
->      DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
->  
-> +/*
-> + * pseries-10.1
-> + */
-> +static void spapr_machine_10_1_class_options(MachineClass *mc)
-> +{
-> +    /* Defaults for the latest behaviour inherited from the base class */
-> +}
-> +
-> +DEFINE_SPAPR_MACHINE_AS_LATEST(10, 1);
-> +
->  /*
->   * pseries-10.0
->   */
->  static void spapr_machine_10_0_class_options(MachineClass *mc)
->  {
-> -    /* Defaults for the latest behaviour inherited from the base class */
-> +    spapr_machine_10_1_class_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
->  }
->  
-> -DEFINE_SPAPR_MACHINE_AS_LATEST(10, 0);
-> +DEFINE_SPAPR_MACHINE(10, 0);
->  
->  /*
->   * pseries-9.2
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 75b32182eb01..d64923a2c86b 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -921,14 +921,26 @@ static const TypeInfo ccw_machine_info = {
->      DEFINE_CCW_MACHINE_IMPL(false, major, minor)
->  
->  
-> +static void ccw_machine_10_1_instance_options(MachineState *machine)
-> +{
-> +}
-> +
-> +static void ccw_machine_10_1_class_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_CCW_MACHINE_AS_LATEST(10, 1);
-> +
->  static void ccw_machine_10_0_instance_options(MachineState *machine)
->  {
-> +    ccw_machine_10_1_instance_options(machine);
->  }
->  
->  static void ccw_machine_10_0_class_options(MachineClass *mc)
->  {
-> +    ccw_machine_10_1_class_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
->  }
-> -DEFINE_CCW_MACHINE_AS_LATEST(10, 0);
-> +DEFINE_CCW_MACHINE(10, 0);
->  
->  static void ccw_machine_9_2_instance_options(MachineState *machine)
->  {
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index f22b2e7fc75b..bfe8643a27ad 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -761,6 +761,9 @@ struct MachineState {
->      } \
->      type_init(machine_initfn##_register_types)
->  
-> +extern GlobalProperty hw_compat_10_0[];
-> +extern const size_t hw_compat_10_0_len;
-> +
->  extern GlobalProperty hw_compat_9_2[];
->  extern const size_t hw_compat_9_2_len;
->  
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 103b54301f82..8677dc8950b4 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -215,6 +215,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
->  /* sgx.c */
->  void pc_machine_init_sgx_epc(PCMachineState *pcms);
->  
-> +extern GlobalProperty pc_compat_10_0[];
-> +extern const size_t pc_compat_10_0_len;
-> +
->  extern GlobalProperty pc_compat_9_2[];
->  extern const size_t pc_compat_9_2_len;
->  
-> -- 
-> 2.49.0
+> diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
+> index 8c9953bdb001..d4e9dd0279ea 100755
+> --- a/tests/functional/test_vnc.py
+> +++ b/tests/functional/test_vnc.py
+> @@ -55,6 +55,8 @@ def launch_guarded(self):
+>           except VMLaunchFailure as excp:
+>               if "-vnc: invalid option" in excp.output:
+>                   self.skipTest("VNC support not available")
+> +            elif "Cipher backend does not support DES algorithm" in excp.output:
+> +                self.skipTest("No cryptographic backend available")
+>               else:
+>                   self.log.info("unhandled launch failure: %s", excp.output)
+>                   raise excp
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
