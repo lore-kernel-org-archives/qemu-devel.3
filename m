@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D914EC369B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 20:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8853C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 20:13:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4QAv-0002Mw-Pv; Mon, 14 Apr 2025 16:13:01 -0400
+	id 1u4QAf-0002J8-Eq; Mon, 14 Apr 2025 16:12:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u4QAU-0002Gd-0q
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 16:12:35 -0400
+ id 1u4QAO-0002Fz-Ik
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 16:12:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u4QAR-0003Pg-9N
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 16:12:33 -0400
+ id 1u4QAM-0003Ok-NU
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 16:12:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744661550;
+ s=mimecast20190719; t=1744661545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JlHI1n2vHoxMtwVdpUwbq7wEh0HqaLM+KnANBcDJ9yc=;
- b=VWzrsKS6iAfneHgPi7dFIEhWFSFBMRxyJDp6/2iKcU1+RUZAu+BmaIsFMgrGmjCoL/YizU
- r6XSMigkLCI4JrnjGxKCE4z/8T84IBFXsL8rC7EFgVU6VvFHfZurm5LIRVGuZCOX6ijZUO
- hb2K99Sk8zy1yvSy+J5moFoQ5+tBcJw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lnwvYU8wiln9Mjld4Smj0+Kw5Zx774dW9E8tIsCposI=;
+ b=DhSqR0JMcOx1R1+D6Al2a77Fn/XyqO67uv0URLOs5WsNHH7qsgHZK4ShRpiCSo7CeJfKAN
+ Kw+tlOrk5qs5yoOY5yH8JlT9GBzx3X6KNqlJ1+g4NzZD++J3wWfHxcc+i3qskTXjWU9R9p
+ /XTM3rA+6ngxz5eaJhlOho3xfitLmPc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-547-0uT5KKkIOc2Ppv1IHG5kDQ-1; Mon,
- 14 Apr 2025 16:12:23 -0400
-X-MC-Unique: 0uT5KKkIOc2Ppv1IHG5kDQ-1
-X-Mimecast-MFC-AGG-ID: 0uT5KKkIOc2Ppv1IHG5kDQ_1744661541
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321--ontRR7EMt-wv4J1LKRBDg-1; Mon,
+ 14 Apr 2025 16:12:19 -0400
+X-MC-Unique: -ontRR7EMt-wv4J1LKRBDg-1
+X-Mimecast-MFC-AGG-ID: -ontRR7EMt-wv4J1LKRBDg_1744661537
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 532D31955D80; Mon, 14 Apr 2025 20:12:21 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2FF331800349; Mon, 14 Apr 2025 20:12:17 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.100])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 78C7019560AD; Mon, 14 Apr 2025 20:12:20 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 29E071956094; Mon, 14 Apr 2025 20:12:15 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, <qemu-block@nongnu.org>,
  Fam Zheng <fam@euphon.net>, Stefan Hajnoczi <stefanha@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH v3 2/2] block/io: skip head/tail requests on EINVAL
-Date: Mon, 14 Apr 2025 16:12:14 -0400
-Message-ID: <20250414201214.241351-3-stefanha@redhat.com>
-In-Reply-To: <20250414201214.241351-1-stefanha@redhat.com>
-References: <20250414201214.241351-1-stefanha@redhat.com>
+Subject: [PATCH v3 0/2] block: discard alignment fixes
+Date: Mon, 14 Apr 2025 16:12:12 -0400
+Message-ID: <20250414201214.241351-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -85,43 +83,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When guests send misaligned discard requests, the block layer breaks
-them up into a misaligned head, an aligned main body, and a misaligned
-tail.
+v3:
+- Refine error handling when pdiscard_alignment is not a multiple of request_alignment [Hanna]
+v2:
+- Fix inverted logic in alignment check [Qing Wang]
 
-The file-posix block driver on Linux returns -EINVAL on misaligned
-discard requests. This causes bdrv_co_pdiscard() to fail and guests
-configured with werror=stop will pause.
+Two discard alignment issues were identified in
+https://issues.redhat.com/browse/RHEL-86032:
+1. pdiscard_alignment is not populated for host_device in file-posix.c.
+2. Misaligned head/tail discard requests are not skipped when file-posix.c
+   returns -EINVAL. This causes an undesired pause when guests are configured
+   with werror=stop.
 
-Add a special case for misaligned head/tail requests. Simply continue
-when EINVAL is encountered so that the aligned main body of the request
-can be completed and the guest is not paused. This is the best we can do
-when guest discard limits do not match the host discard limits.
+Stefan Hajnoczi (2):
+  file-posix: probe discard alignment on Linux block devices
+  block/io: skip head/tail requests on EINVAL
 
-Fixes: https://issues.redhat.com/browse/RHEL-86032
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
----
- block/io.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ block/file-posix.c | 67 +++++++++++++++++++++++++++++++++++++++++++++-
+ block/io.c         |  6 ++++-
+ 2 files changed, 71 insertions(+), 2 deletions(-)
 
-diff --git a/block/io.c b/block/io.c
-index 1ba8d1aeea..a0d0b31a3e 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3180,7 +3180,11 @@ int coroutine_fn bdrv_co_pdiscard(BdrvChild *child, int64_t offset,
-             }
-         }
-         if (ret && ret != -ENOTSUP) {
--            goto out;
-+            if (ret == -EINVAL && (offset % align != 0 || num % align != 0)) {
-+                /* Silently skip rejected unaligned head/tail requests */
-+            } else {
-+                goto out; /* bail out */
-+            }
-         }
- 
-         offset += num;
 -- 
 2.49.0
 
