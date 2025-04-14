@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3633EC369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 02:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED0AC369B1
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 02:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u49BE-0007Om-0S; Sun, 13 Apr 2025 22:04:12 -0400
+	id 1u49B8-0007Md-20; Sun, 13 Apr 2025 22:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1u49Aq-0007Gj-7P
- for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:03:48 -0400
+ id 1u49Aj-0007Dv-Kf
+ for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:03:42 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1u49Ao-0007UX-F8
- for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:03:47 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E1l87F003476;
- Mon, 14 Apr 2025 02:03:41 GMT
+ id 1u49Ah-0007T8-SI
+ for qemu-devel@nongnu.org; Sun, 13 Apr 2025 22:03:41 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E17Mqn023470;
+ Mon, 14 Apr 2025 02:03:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2023-11-20; bh=sXxl9
- nOc7QzKTi7Yj9JakM5/rSOn1wKG6MgIq83sVUo=; b=T40TRgMv5nweuu8XXuory
- BWASINOmwfA9vfXcDJ1eNYfvq33DwuPV86wn0ycetgNP6lY8ch88HmCUxFTCAiRh
- x7I6KnTc+aAn4fkVleRoRwXmsrpzQNhztuplnsXwf6TA2fq4Wl7VEDSOnmlX4i80
- 7DXljumu9dwQmro+osdq1CLzycWAobBaHff4pIk4KZJQeN3JgKvh2HDEXViH4Xfk
- 1pYtB5J1QHCQuPwoF7o73zUwuF2w338jzq+FMFVMucBHOV+abR2S+3zphjgnK1R8
- D8Ufebu6RN5DhbW+KT7UjPswkKwT4/JQgnmnIYkjljeKfdZnSOj0zXLdxmkzxGRs
- w==
+ :mime-version:references:subject:to; s=corp-2023-11-20; bh=QtWzE
+ 2qz3k9i1WVNgzsmCHeokzAu03u+0ILqSg4ZPo8=; b=iLuQ0Qt271bDe4/IJBrAm
+ lcwpEYnBCZwRHpPvnwbNaZXLYQBGv1bf8SOwSeXtg9LwTfjPYtXHzhHLjsIE8Qn6
+ fTKwXlPfF4yeP+zIPg3DW1nqIfC31VpS7WoJBPSoi25L9BYq5gdFZL0u8vb+Clk4
+ r6XUE7mNGwAr57ExD+slZ05IWhERuggCrvMRcjd65aPjVeOFd6p1fo7J0wnC4DVI
+ 5j4jg00YNSPzkFycaHikq38sYt2UojlDZXcqFSMVDGhkTk8oe7W8t+Qd6bByhlAR
+ LqLPm7QgpZbSCBS5vVTNYRTMq0LRn6M++C4l4W5E4FdXCGV7FRoQpdvMOc3CANsg
+ A==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 460s0g00bd-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 460rdr01fe-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Apr 2025 02:03:41 +0000 (GMT)
+ Mon, 14 Apr 2025 02:03:33 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53DMsuHh009219; Mon, 14 Apr 2025 02:03:40 GMT
+ with ESMTP id 53DNFDKQ009267; Mon, 14 Apr 2025 02:03:32 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 460d3fvqt6-1
+ 460d3fvqs6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Apr 2025 02:03:40 +0000
+ Mon, 14 Apr 2025 02:03:32 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53E22tYg035550;
- Mon, 14 Apr 2025 02:03:40 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53E22tYY035550;
+ Mon, 14 Apr 2025 02:03:32 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 460d3fvqg0-11; Mon, 14 Apr 2025 02:03:39 +0000
+ 460d3fvqg0-7; Mon, 14 Apr 2025 02:03:31 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
@@ -65,10 +65,10 @@ Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  santosh.shukla@amd.com, sarunkod@amd.com, Wei.Huang2@amd.com,
  joao.m.martins@oracle.com, boris.ostrovsky@oracle.com,
  alejandro.j.jimenez@oracle.com
-Subject: [PATCH 10/18] amd_iommu: Add a page walker to sync shadow page tables
- on invalidation
-Date: Mon, 14 Apr 2025 02:02:45 +0000
-Message-ID: <20250414020253.443831-11-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH 06/18] amd_iommu: Set all address spaces to default
+ translation mode on reset
+Date: Mon, 14 Apr 2025 02:02:41 +0000
+Message-ID: <20250414020253.443831-7-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
 References: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
@@ -82,8 +82,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  mlxlogscore=999 phishscore=0 suspectscore=0 spamscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
  definitions=main-2504140014
-X-Proofpoint-ORIG-GUID: VJgYpL8qg0E9YoylAHK6ebNpZwmAEoZn
-X-Proofpoint-GUID: VJgYpL8qg0E9YoylAHK6ebNpZwmAEoZn
+X-Proofpoint-GUID: qiDQKSgKjHkDdxONWhhxr7C2qTxq8lAJ
+X-Proofpoint-ORIG-GUID: qiDQKSgKjHkDdxONWhhxr7C2qTxq8lAJ
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -40
@@ -109,100 +109,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the specified address range, walk the page table identifying regions
-as mapped or unmapped and invoke registered notifiers with the
-corresponding event type.
+On reset, restore the default address translation mode for all the
+address spaces managed by the vIOMMU.
 
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/amd_iommu.c | 74 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ hw/i386/amd_iommu.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index d089fdc28ef1..6789e1e9b688 100644
+index 3f9aa2cc8d31..0df658712ec0 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -1688,6 +1688,80 @@ fetch_pte(AMDVIAddressSpace *as, const hwaddr address, uint64_t dte,
-     return pte;
+@@ -1548,6 +1548,33 @@ static void amdvi_switch_address_space(AMDVIAddressSpace *amdvi_as)
+     }
  }
  
 +/*
-+ * Walk the guest page table for an IOVA and range and signal the registered
-+ * notifiers to sync the shadow page tables in the host.
-+ * Must be called with a valid DTE for DMA remapping i.e. V=1,TV=1
++ * For all existing address spaces managed by the IOMMU, enable/disable the
++ * corresponding memory regions depending on the address translation mode
++ * as determined by the global and individual address space settings.
 + */
-+static void __attribute__((unused))
-+amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as, uint64_t *dte,
-+                                   hwaddr addr, uint64_t size, bool send_unmap)
++static void amdvi_switch_address_space_all(AMDVIState *s)
 +{
-+    IOMMUTLBEvent event;
++    AMDVIAddressSpace **iommu_as;
 +
-+    hwaddr iova_next, page_mask, pagesize;
-+    hwaddr iova = addr;
-+    hwaddr end = iova + size - 1;
++    for (int bus_num = 0; bus_num < PCI_BUS_MAX; bus_num++) {
 +
-+    uint64_t pte;
-+
-+    while (iova < end) {
-+
-+        pte = fetch_pte(as, iova, dte[0], &pagesize);
-+
-+        if (pte == (uint64_t)-2) {
-+            /*
-+             * Invalid conditions such as the IOVA being larger than supported
-+             * by current page table mode as configured in the DTE, or a failure
-+             * to fetch the Page Table from the Page Table Root Pointer in DTE.
-+             */
-+            assert(pagesize == 0);
-+            return;
++        /* Nothing to do if there are no devices on the current bus */
++        if (!s->address_spaces[bus_num]) {
++            continue;
 +        }
-+        /* PTE has been validated for major errors and pagesize is set */
-+        assert(pagesize);
-+        page_mask = ~(pagesize - 1);
-+        iova_next = (iova & page_mask) + pagesize;
++        iommu_as = s->address_spaces[bus_num];
 +
-+        if (pte == (uint64_t)-1) {
-+            /*
-+             * Failure to read PTE from memory, the pagesize matches the current
-+             * level. Unable to determine the region type, so a safe strategy is
-+             * to skip the range and continue the page walk.
-+             */
-+            goto next;
-+        }
++        for (int devfn = 0; devfn < PCI_DEVFN_MAX; devfn++) {
 +
-+        event.entry.target_as = &address_space_memory;
-+        event.entry.iova = iova & page_mask;
-+        /* translated_addr is irrelevant for the unmap case */
-+        event.entry.translated_addr = (pte & AMDVI_DEV_PT_ROOT_MASK) &
-+                                      page_mask;
-+        event.entry.addr_mask = ~page_mask;
-+        event.entry.perm = amdvi_get_perms(pte);
-+
-+        /*
-+         * In cases where the leaf PTE is not found, or it has invalid
-+         * permissions, an UNMAP type notification is sent, but only if the
-+         * caller requested it.
-+         */
-+        if (!IOMMU_PTE_PRESENT(pte) || (event.entry.perm == IOMMU_NONE)) {
-+            if (!send_unmap) {
-+                goto next;
++            if (!iommu_as[devfn]) {
++                continue;
 +            }
-+            event.type = IOMMU_NOTIFIER_UNMAP;
-+        } else {
-+            event.type = IOMMU_NOTIFIER_MAP;
++            amdvi_switch_address_space(iommu_as[devfn]);
 +        }
-+
-+        /* Invoke the notifiers registered for this address space */
-+        memory_region_notify_iommu(&as->iommu, 0, event);
-+
-+next:
-+        iova = iova_next;
 +    }
 +}
 +
- /*
-  * Toggle between address translation and passthrough modes by enabling the
-  * corresponding memory regions.
+ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+ {
+     char name[128];
+@@ -1745,6 +1772,7 @@ static void amdvi_sysbus_reset(DeviceState *dev)
+ 
+     /* Discard all mappings on device reset */
+     amdvi_address_space_unmap_all(s);
++    amdvi_switch_address_space_all(s);
+ }
+ 
+ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
 -- 
 2.43.5
 
