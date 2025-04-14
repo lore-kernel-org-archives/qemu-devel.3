@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E310C369B2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C0AC369B8
 	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4I2F-0003m1-JY; Mon, 14 Apr 2025 07:31:31 -0400
+	id 1u4I2D-0003jB-SZ; Mon, 14 Apr 2025 07:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1j-0003VU-Fu
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1Z-0003Tq-QZ
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1g-0003vH-F7
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1Y-0003u0-0p
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744630254;
+ s=mimecast20190719; t=1744630247;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N+iAdaQ+NI5jREqyJw1BczLgIl/Xxx+7leiQHYSN6Rc=;
- b=COTc8lq6xwHFaAluqIfOcnrFd/KiprgCuIfo98zrUUzEWpb3JILV48m1Bjuel3NDmlRte+
- gqzClgnd/LMZr6LHAS+yNKBYAlizzuZuP4JxQ8qkHuH2NstRJbuVmISoc10XLqHiubIdl8
- xBRheM4L5NSCyLy25lZUz19DzaWWhLo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=S97ls/REyKax5kRch48GSdItlPTuqCpNJsorhHCsEfE=;
+ b=ANFJSlMxPPiwITA97Hho0WMeMxFDbiWYYPmN3zZAU3lCW6wG+GZlFk53t6NhrRR3sDi2MZ
+ cBZzJEnhtO6gkykfEr1lu+PmyOj3GIVUEkW7RjkI/VSehdYSO3PDZGcJin08Fp4KZrxZ5o
+ YN1P8aBwhZoS0gtodnJrC84Mz2wiFFA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-eFl2C2d9NXiAqvZ5fzVWZA-1; Mon,
- 14 Apr 2025 07:30:51 -0400
-X-MC-Unique: eFl2C2d9NXiAqvZ5fzVWZA-1
-X-Mimecast-MFC-AGG-ID: eFl2C2d9NXiAqvZ5fzVWZA_1744630251
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-VSbJgsd5PA-xqEPuL5wzKQ-1; Mon,
+ 14 Apr 2025 07:30:44 -0400
+X-MC-Unique: VSbJgsd5PA-xqEPuL5wzKQ-1
+X-Mimecast-MFC-AGG-ID: VSbJgsd5PA-xqEPuL5wzKQ_1744630243
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC7F2180025B; Mon, 14 Apr 2025 11:30:50 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 30E901955DC5; Mon, 14 Apr 2025 11:30:43 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BD5C61956094; Mon, 14 Apr 2025 11:30:49 +0000 (UTC)
+ id 12C121956094; Mon, 14 Apr 2025 11:30:41 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH v2 10/15] tests/avocado: Remove the boot_linux.py tests
-Date: Mon, 14 Apr 2025 13:30:24 +0200
-Message-ID: <20250414113031.151105-11-thuth@redhat.com>
+Subject: [PATCH v2 05/15] tests/avocado: Remove the LinuxKernelTest class
+Date: Mon, 14 Apr 2025 13:30:19 +0200
+Message-ID: <20250414113031.151105-6-thuth@redhat.com>
 In-Reply-To: <20250414113031.151105-1-thuth@redhat.com>
 References: <20250414113031.151105-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,32 +86,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-These tests are based on the cloudinit functions from Avocado.
-The cloudinit is very, very slow compared to our other tests,
-so most of these Avocado tests have either been disabled by default
-with a decorator, or have been marked to only run with KVM.
-
-We won't include this sluggish cloudinit stuff in the functional
-framework, and we've already got plenty of other tests there that
-check pretty much the same things, so let's simply get rid of these
-old tests now.
+All tests that used this class have been converted to the functional
+framework, so we can remove the boot_linux_console.py file now.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/boot_linux.py | 132 ------------------------------------
- 1 file changed, 132 deletions(-)
- delete mode 100644 tests/avocado/boot_linux.py
+ tests/avocado/boot_linux_console.py | 62 -----------------------------
+ 1 file changed, 62 deletions(-)
+ delete mode 100644 tests/avocado/boot_linux_console.py
 
-diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
 deleted file mode 100644
-index a029ef4ad1e..00000000000
---- a/tests/avocado/boot_linux.py
+index cbb1e2fb506..00000000000
+--- a/tests/avocado/boot_linux_console.py
 +++ /dev/null
-@@ -1,132 +0,0 @@
--# Functional test that boots a complete Linux system via a cloud image
+@@ -1,62 +0,0 @@
+-# Functional test that boots a Linux kernel and checks the console
 -#
--# Copyright (c) 2018-2020 Red Hat, Inc.
+-# Copyright (c) 2018 Red Hat, Inc.
 -#
 -# Author:
 -#  Cleber Rosa <crosa@redhat.com>
@@ -120,127 +113,57 @@ index a029ef4ad1e..00000000000
 -# later.  See the COPYING file in the top-level directory.
 -
 -import os
+-import shutil
 -
--from avocado_qemu.linuxtest import LinuxTest
--from avocado_qemu import BUILD_DIR
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado.utils import process
+-from avocado.utils import archive
 -
--from avocado import skipUnless
+-class LinuxKernelTest(QemuSystemTest):
+-    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
 -
+-    def wait_for_console_pattern(self, success_message, vm=None):
+-        wait_for_console_pattern(self, success_message,
+-                                 failure_message='Kernel panic - not syncing',
+-                                 vm=vm)
 -
--class BootLinuxX8664(LinuxTest):
--    """
--    :avocado: tags=arch:x86_64
--    """
--    timeout = 480
--
--    def test_pc_i440fx_tcg(self):
+-    def extract_from_deb(self, deb, path):
 -        """
--        :avocado: tags=machine:pc
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
+-        Extracts a file from a deb package into the test workdir
 -
--    def test_pc_i440fx_kvm(self):
+-        :param deb: path to the deb archive
+-        :param path: path within the deb archive of the file to be extracted
+-        :returns: path of the extracted file
 -        """
--        :avocado: tags=machine:pc
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.launch_and_wait(set_up_ssh_connection=False)
+-        cwd = os.getcwd()
+-        os.chdir(self.workdir)
+-        file_path = process.run("ar t %s" % deb).stdout_text.split()[2]
+-        process.run("ar x %s %s" % (deb, file_path))
+-        archive.extract(file_path, self.workdir)
+-        os.chdir(cwd)
+-        # Return complete path to extracted file.  Because callers to
+-        # extract_from_deb() specify 'path' with a leading slash, it is
+-        # necessary to use os.path.relpath() as otherwise os.path.join()
+-        # interprets it as an absolute path and drops the self.workdir part.
+-        return os.path.normpath(os.path.join(self.workdir,
+-                                             os.path.relpath(path, '/')))
 -
--    def test_pc_q35_tcg(self):
+-    def extract_from_rpm(self, rpm, path):
 -        """
--        :avocado: tags=machine:q35
--        :avocado: tags=accel:tcg
+-        Extracts a file from an RPM package into the test workdir.
+-
+-        :param rpm: path to the rpm archive
+-        :param path: path within the rpm archive of the file to be extracted
+-                     needs to be a relative path (starting with './') because
+-                     cpio(1), which is used to extract the file, expects that.
+-        :returns: path of the extracted file
 -        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--    def test_pc_q35_kvm(self):
--        """
--        :avocado: tags=machine:q35
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--
--# For Aarch64 we only boot KVM tests in CI as booting the current
--# Fedora OS in TCG tests is very heavyweight. There are lighter weight
--# distros which we use in the machine_aarch64_virt.py tests.
--class BootLinuxAarch64(LinuxTest):
--    """
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
--    """
--    timeout = 720
--
--    def test_virt_kvm(self):
--        """
--        :avocado: tags=accel:kvm
--        :avocado: tags=cpu:host
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.vm.add_args("-machine", "virt,gic-version=host")
--        self.vm.add_args('-bios',
--                         os.path.join(BUILD_DIR, 'pc-bios',
--                                      'edk2-aarch64-code.fd'))
--        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
--        self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--
--# See the tux_baseline.py tests for almost the same coverage in a lot
--# less time.
--class BootLinuxPPC64(LinuxTest):
--    """
--    :avocado: tags=arch:ppc64
--    """
--
--    timeout = 360
--
--    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
--    def test_pseries_tcg(self):
--        """
--        :avocado: tags=machine:pseries
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--    def test_pseries_kvm(self):
--        """
--        :avocado: tags=machine:pseries
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.vm.add_args("-machine", "cap-ccf-assist=off")
--        self.launch_and_wait(set_up_ssh_connection=False)
--
--class BootLinuxS390X(LinuxTest):
--    """
--    :avocado: tags=arch:s390x
--    """
--
--    timeout = 240
--
--    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
--    def test_s390_ccw_virtio_tcg(self):
--        """
--        :avocado: tags=machine:s390-ccw-virtio
--        :avocado: tags=accel:tcg
--        """
--        self.require_accelerator("tcg")
--        self.vm.add_args("-accel", "tcg")
--        self.launch_and_wait(set_up_ssh_connection=False)
+-        cwd = os.getcwd()
+-        os.chdir(self.workdir)
+-        process.run("rpm2cpio %s | cpio -id %s" % (rpm, path), shell=True)
+-        os.chdir(cwd)
+-        return os.path.normpath(os.path.join(self.workdir, path))
 -- 
 2.49.0
 
