@@ -4,91 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A28C369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2634BC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4MXw-0005KL-W3; Mon, 14 Apr 2025 12:20:33 -0400
+	id 1u4Mgi-0000f0-3h; Mon, 14 Apr 2025 12:29:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MXr-0005Jf-VJ
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:20:28 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MXm-0002Ic-RR
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:20:27 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso43553025e9.2
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:20:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744647620; x=1745252420; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6FU/p5lG64FvUSS60mxXpqI9om+F3obJIzSVaFXWLoI=;
- b=abHOZegUNF6DBrPOv/D8PaOjKy5JbszKAWPJQ9P1KdTmOYKJqZL6H1uZnF8KHVB7BF
- 3qlaJpBGpHEgyw0gFRM6yHavmSoxQbJHEqkG1KnNnGHF61/YZnXvD22FF1pHT4PLBGhf
- zK4lQwgGtAgcDEp0e78loiTU2DGupiGlrpsyjQUvXbmYBE90S9J+y/DgXtKQI1IRum99
- jToZLVG2X5QFpSu5O3UmV1PfMxCo+KH3hQzDAHOxiZ9wBE/KURdV8AzkGbmIiNd/8FVr
- iNnEYOGiEvEK0b52BCT9o00P5cCrA+XizQ2OLE+fxRzhgPv+cQLQmkgSfwj1ixtbHVQY
- ZPAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744647620; x=1745252420;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6FU/p5lG64FvUSS60mxXpqI9om+F3obJIzSVaFXWLoI=;
- b=s2as98f28Lc0Hu0QTyHnAM3kE2boPwq/2rTFIdefgSm4EXQG7zj/s8T6SikYBA8OWP
- jZ9pcqJ7qY6aZmGMqPFLpNduemUBzkPQ4sAs7Vr+dcepg7NGhNP96+6FX/ki+JjUZgma
- VNDNZswcSaLmMvp9PAXcLMPtQB8/7dF8oVs62pynW1gdOh1TGnbTwhB5yy2d8EsrGUUj
- 0yje+kV142pULZHznzaG55kOPXxfjStfxoA0ppCvAUOAl0XHOgjKyoR/qKS+4/JUeAqu
- 741dhJlsY7CRif7vFQeGlG7S8lfxaZFxSQaM3QP4b4uBlDhBrbIsXNVQMXK1tCWk1uzS
- yNoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYHYuCFTgofrh5lgPQ2LtYSPrQcYqMPAO87dH9lj4pN2+iT0IPNyE+BTI4+cteoLn6UAEtqXGs/uVn@nongnu.org
-X-Gm-Message-State: AOJu0YzQbpRyCSjW1OOz94Kw+8JIWOzRj4+kOjTpuSp2PxqxTZMFD/en
- F1b3qLdjgH8rmmeLsoDIuSKtU3MLlj/pVCFO0A9Is7gmB/qFew3ZOpXucYK8H9Y=
-X-Gm-Gg: ASbGncuCvrdhPukozwhE+0vhyulwqAsfQgMS/t+VzxnijGI3n95LqtC+cr4N5mSgHy4
- wTq+jsBY2OyROo+8ffrOyMdmH4pARoDpzLhoyAt9ZcoSFNPo59WqBJ0HQi4Dlqk2oYCY2ZafPLx
- PU4QZa6CKw4t1qz2/2Xz8KPNzZzSmN/wtkQWRP86kuYLzhz+B2nkkWDiSAN6K27aPu/U61MGJ4u
- DDx1DUGzBkK0Gc4LiN8xENVLOeRwbwZKSgdirT7kc7ejx9q1KsSOt29jPrhyN2x2RZgQ1i0wybf
- 3NfYVBw9f3ARPu0TAHaBsYThmwg3McoOjmTfKQbWIRurLwhUE5BqF/Q+IJ4nrxohsGOSfbhE/7l
- iOPRRBgcR
-X-Google-Smtp-Source: AGHT+IG0kqvK/Ay7IwWx7v4CDUglA8/weFLFvGInbf1sOOmwlbqv+kxzIVR1x9Ijp6PO6z2favpQLQ==
-X-Received: by 2002:a05:6000:4202:b0:39e:db6a:4744 with SMTP id
- ffacd0b85a97d-39edb6a47a3mr571970f8f.32.1744647620167; 
- Mon, 14 Apr 2025 09:20:20 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eaf43cd69sm11298216f8f.80.2025.04.14.09.20.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Apr 2025 09:20:19 -0700 (PDT)
-Message-ID: <2b1665eb-2a0d-4515-8203-621e15c91d81@linaro.org>
-Date: Mon, 14 Apr 2025 18:20:18 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u4MgQ-0000Zy-Va; Mon, 14 Apr 2025 12:29:24 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u4MgJ-000425-Tw; Mon, 14 Apr 2025 12:29:18 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:ca1:0:640:740c:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id CDE5360914;
+ Mon, 14 Apr 2025 19:29:05 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b4ae::1:27] (unknown
+ [2a02:6b8:b081:b4ae::1:27])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 3TJKrL0FbW20-ZacwFYnw; Mon, 14 Apr 2025 19:29:04 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1744648144;
+ bh=jotjLdI7Qcj9b3TH4f5TY0oj0FYYi4F5RXcQ/Thl0Uw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=TR5H4jOes2yymbOd7PHxJzWhAMIjq0K9HGX6kb/9vJvb5Kw0CdGlBQfnTuJSWnP3I
+ nTIfdILUthxLd+uQ9FcM1xfKdEWAauBq1RL42OvPn1K3Y6NawjrcLip6kSYaFe2uHe
+ VrkgjTkG9nRA4TuzHD2JkAgnhozv+LL6U7mfxqTw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <98cce41c-44a2-4dca-adeb-ef5ac05fd147@yandex-team.ru>
+Date: Mon, 14 Apr 2025 19:29:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/s390x: Remove the obsolete hpage_1m_allowed switch
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-References: <20250414132914.250423-1-thuth@redhat.com>
- <20250414132914.250423-3-thuth@redhat.com>
+Subject: Re: [PATCH 1/6] mirror: Skip pre-zeroing destination if it is already
+ zero
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:Block Jobs"
+ <qemu-block@nongnu.org>
+References: <20250411010732.358817-8-eblake@redhat.com>
+ <20250411010732.358817-9-eblake@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250414132914.250423-3-thuth@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250411010732.358817-9-eblake@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,43 +79,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/25 15:29, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 11.04.25 04:04, Eric Blake wrote:
+> When doing a sync=full mirroring, QMP drive-mirror requests full
+> zeroing if it did not just create the destination, and blockdev-mirror
+> requests full zeroing unconditionally.  This is because during a full
+> sync, we must ensure that the portions of the disk that are not
+> otherwise touched by the source still read as zero upon completion.
 > 
-> The s390-ccw-virtio-3.0 machine was the last one that used the
-> hpage_1m_allowed switch. Since we removed this machine type, we
-> can now remove the switch and the related code, too. This allows
-> us to get rid of the get_machine_class() hack and the big fat
-> warning comment there.
+> However, in mirror_dirty_init(), we were blindly assuming that if the
+> destination allows punching holes, we should pre-zero the entire
+> image; and if it does not allow punching holes, then treat the entire
+> source as dirty rather than mirroring just the allocated portions of
+> the source.  Without the ability to punch holes, this results in the
+> destination file being fully allocated; and even when punching holes
+> is supported, it causes duplicate I/O to the portions of the
+> destination corresponding to chunks of the source that are allocated
+> but read as zero.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Smarter is to avoid the pre-zeroing pass over the destination if it
+> can be proved the destination already reads as zero.  Note that a
+> later patch will then further improve things to skip writing to the
+> destination for parts of the image where the source is zero; but even
+> with just this patch, it is possible to see a difference for any BDS
+> that can quickly report that it already reads as zero.  Iotest 194 is
+> proof of this: instead of mirroring a completely sparse file, change
+> it to pre-populate some data.  When run with './check -file 194', the
+> full 1G is still allocated, but with './check -qcow2 194', only the 1M
+> of pre-populated data is now mirrored; this in turn requires an
+> additional log filter.
+
+This make me doubt.
+
+Actually, what is the different for the user between "fast zeroing empty qcow2 (actually no-op)" and "skip zeroing empty qcow2 (no-op)"? And why visible interface effect should change after some internal optimization?
+
+> 
+> Note that there are still BDS layers that do not quickly report
+> reading as all zero; for example, the file-posix code implementation
+> for fast block status currently blindly reports the entire image as
+> allocated and non-zero without even consulting lseek(SEEK_DATA)); that
+> will be addressed in later patches.
+> 
+> Signed-off-by: Eric Blake <eblake@redhat.com>
 > ---
->   include/hw/s390x/s390-virtio-ccw.h |  4 ----
->   hw/s390x/s390-virtio-ccw.c         | 35 ------------------------------
->   target/s390x/kvm/kvm.c             |  6 -----
->   3 files changed, 45 deletions(-)
+>   block/mirror.c             | 10 ++++++++--
+>   tests/qemu-iotests/194     | 15 +++++++++++++--
+>   tests/qemu-iotests/194.out |  4 ++--
+>   3 files changed, 23 insertions(+), 6 deletions(-)
+> 
+> diff --git a/block/mirror.c b/block/mirror.c
+> index a53582f17bb..2e1e14c8e7e 100644
+> --- a/block/mirror.c
+> +++ b/block/mirror.c
+> @@ -841,14 +841,20 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+>       int64_t offset;
+>       BlockDriverState *bs;
+>       BlockDriverState *target_bs = blk_bs(s->target);
+> -    int ret = -1;
+> +    int ret;
+>       int64_t count;
+> 
+>       bdrv_graph_co_rdlock();
+>       bs = s->mirror_top_bs->backing->bs;
+> +    if (s->zero_target) {
+> +        ret = bdrv_co_is_zero_fast(target_bs, 0, s->bdev_length);
+> +    }
+>       bdrv_graph_co_rdunlock();
+> 
+> -    if (s->zero_target) {
+> +    if (s->zero_target && ret <= 0) {
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+>           if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
+>               bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 370b03a0b97..a4fe1e47150 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -746,39 +746,6 @@ static inline void machine_set_dea_key_wrap(Object *obj, bool value,
->       ms->dea_key_wrap = value;
->   }
->   
-> -static S390CcwMachineClass *current_mc;
+So, without your patch we go into this "if" and set the whole dirty bitmap even with qcow2?
 
-Wow, good cleanup.
+That looks like a preexisting bug to me. And this is because we don't have discard=unmap option on qcow2 node..
 
-> @@ -883,7 +849,6 @@ static const TypeInfo ccw_machine_info = {
->   #define DEFINE_CCW_MACHINE_IMPL(latest, ...)                                  \
->       static void MACHINE_VER_SYM(mach_init, ccw, __VA_ARGS__)(MachineState *mach) \
->       {                                                                         \
-> -        current_mc = S390_CCW_MACHINE_CLASS(MACHINE_GET_CLASS(mach));         \
->           MACHINE_VER_SYM(instance_options, ccw, __VA_ARGS__)(mach);            \
->           ccw_init(mach);                                                       \
->       }                                                                         \
+Probably, we'd better have something like bdrv_can_write_zeroes_fast(target_bs) here, which of course should be true for qcow2.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Probably in real world people always set discard=unmap for qcow2 nodes.
+
+>               return 0;
+> diff --git a/tests/qemu-iotests/194 b/tests/qemu-iotests/194
+> index c0ce82dd257..814c15dfe3b 100755
+> --- a/tests/qemu-iotests/194
+> +++ b/tests/qemu-iotests/194
+> @@ -22,6 +22,14 @@
+> 
+>   import iotests
+> 
+> +def filter_job_event(event):
+> +    '''Filter len and offset in a job event'''
+> +    event = dict(event)
+> +    if event['data'].get('len', 0) == event['data'].get('offset', 1):
+
+I'd prefer explicit check that both fields exist instead of magic 0 and 1. But I don't care too much.
+
+> +        event['data']['len'] = 'LEN'
+> +        event['data']['offset'] = 'LEN'
+> +    return event
+> +
+>   iotests.script_initialize(supported_fmts=['qcow2', 'qed', 'raw'],
+>                             supported_platforms=['linux'])
+> 
+> @@ -34,6 +42,7 @@ with iotests.FilePath('source.img') as source_img_path, \
+> 
+>       img_size = '1G'
+>       iotests.qemu_img_create('-f', iotests.imgfmt, source_img_path, img_size)
+> +    iotests.qemu_io('-f', iotests.imgfmt, '-c', 'write 512M 1M', source_img_path)
+>       iotests.qemu_img_create('-f', iotests.imgfmt, dest_img_path, img_size)
+> 
+>       iotests.log('Launching VMs...')
+> @@ -61,7 +70,8 @@ with iotests.FilePath('source.img') as source_img_path, \
+> 
+>       iotests.log('Waiting for `drive-mirror` to complete...')
+>       iotests.log(source_vm.event_wait('BLOCK_JOB_READY'),
+> -                filters=[iotests.filter_qmp_event])
+> +                filters=[iotests.filter_qmp_event,
+> +                         filter_job_event])
+> 
+>       iotests.log('Starting migration...')
+>       capabilities = [{'capability': 'events', 'state': True},
+> @@ -87,7 +97,8 @@ with iotests.FilePath('source.img') as source_img_path, \
+> 
+>       while True:
+>           event2 = source_vm.event_wait('BLOCK_JOB_COMPLETED')
+> -        iotests.log(event2, filters=[iotests.filter_qmp_event])
+> +        iotests.log(event2, filters=[iotests.filter_qmp_event,
+> +                                     filter_job_event])
+>           if event2['event'] == 'BLOCK_JOB_COMPLETED':
+>               iotests.log('Stopping the NBD server on destination...')
+>               iotests.log(dest_vm.qmp('nbd-server-stop'))
+> diff --git a/tests/qemu-iotests/194.out b/tests/qemu-iotests/194.out
+> index 6940e809cde..79b961723d8 100644
+> --- a/tests/qemu-iotests/194.out
+> +++ b/tests/qemu-iotests/194.out
+> @@ -7,7 +7,7 @@ Launching NBD server on destination...
+>   Starting `drive-mirror` on source...
+>   {"return": {}}
+>   Waiting for `drive-mirror` to complete...
+> -{"data": {"device": "mirror-job0", "len": 1073741824, "offset": 1073741824, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
+> +{"data": {"device": "mirror-job0", "len": "LEN", "offset": "LEN", "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_READY", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
+>   Starting migration...
+>   {"return": {}}
+>   {"execute": "migrate-start-postcopy", "arguments": {}}
+> @@ -18,7 +18,7 @@ Starting migration...
+>   {"data": {"status": "completed"}, "event": "MIGRATION", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
+>   Gracefully ending the `drive-mirror` job on source...
+>   {"return": {}}
+> -{"data": {"device": "mirror-job0", "len": 1073741824, "offset": 1073741824, "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
+> +{"data": {"device": "mirror-job0", "len": "LEN", "offset": "LEN", "speed": 0, "type": "mirror"}, "event": "BLOCK_JOB_COMPLETED", "timestamp": {"microseconds": "USECS", "seconds": "SECS"}}
+>   Stopping the NBD server on destination...
+>   {"return": {}}
+>   Wait for migration completion on target...
+
+
+With "int ret = -1;" kept as is:
+
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+-- 
+Best regards,
+Vladimir
 
 
