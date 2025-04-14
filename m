@@ -4,64 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3241BC369B4
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 07:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D947C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 07:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4EYs-00008k-Kg; Mon, 14 Apr 2025 03:48:58 -0400
+	id 1u4Ecj-00015S-No; Mon, 14 Apr 2025 03:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1u4EYp-00008Q-Mj
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 03:48:55 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1u4EYm-0007Dv-JY
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 03:48:55 -0400
-Received: from loongson.cn (unknown [223.64.120.81])
- by gateway (Coremail) with SMTP id _____8BxlmnRvfxnXbS8AA--.50569S3;
- Mon, 14 Apr 2025 15:48:33 +0800 (CST)
-Received: from lvm.. (unknown [223.64.120.81])
- by front1 (Coremail) with SMTP id qMiowMAxj8XGvfxnsL6AAA--.55749S2;
- Mon, 14 Apr 2025 15:48:27 +0800 (CST)
-From: WANG Rui <wangrui@loongson.cn>
-To: Gao Song <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org,
-	qemu@hev.cc,
-	WANG Rui <wangrui@loongson.cn>
-Subject: [PATCH] linux-user/loongarch64: Decode BRK break codes for FPE signals
-Date: Mon, 14 Apr 2025 15:49:52 +0800
-Message-ID: <20250414074952.6253-1-wangrui@loongson.cn>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4Ech-00014e-Jt
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 03:52:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4Ece-0008HS-As
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 03:52:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744617170;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=z2RYptpOAjGn32fyOu/qdKfQEPbVuYivyPUTT6mHBio=;
+ b=eCJ0qI66nEyG9wrkEEpD3iORVtsvBAv5vSTEFl6qvmkO4L9KUnGgqVbXICnCzzxFswYM8z
+ 8k9Jboj6lMOF27dWODnU35bOHyoDjCE6He9tSPqF6owvkOYP5+ZsxjLv2HPo5vDdXqreAo
+ PJEvHUNaixJ5mOlVa4UkvEt2ns0Tlco=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-93-o7m6n4aoMvWeV8bDhj5BSw-1; Mon, 14 Apr 2025 03:52:48 -0400
+X-MC-Unique: o7m6n4aoMvWeV8bDhj5BSw-1
+X-Mimecast-MFC-AGG-ID: o7m6n4aoMvWeV8bDhj5BSw_1744617167
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43cf446681cso26233095e9.1
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 00:52:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744617167; x=1745221967;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z2RYptpOAjGn32fyOu/qdKfQEPbVuYivyPUTT6mHBio=;
+ b=tx8nDVqJc/TxaYPT7DdzqKBYaVy6aicPy+R5Rzzx3Vouzth+aTFo8rdrUnBGutS8sz
+ kIZmKuz4beXNhzwKqELKVxqwxEGYPaOJxwDRj14TjlyOrLBIv2DpNce9if7kdoXyogcn
+ OvormHGgwcRJF7YeFFQJLZl3/8bnAvWOZh2CT5aDjtJRzOLVi9Ms9a8/2K2j9VV4+eJG
+ N1RhSVGYd0ypINOAadWUekJMOGcBd0hr3B0SpTxRINUQJlaineHaMFHasHdTbk1NUmU5
+ tj3pKwQEhPH2uK3m2InABcTuKiMkVvQrYzU2QXBdenrE1UVgVTBfTM1GXSUVY5FEKfSB
+ Sdsg==
+X-Gm-Message-State: AOJu0Ywn3nlDm8cLuiX15v+FXX2Qo1G5DQR7QnI0o/sCmm5RXGA35c7U
+ kliKw/L1grWydFHmgExQL5h3lWxE3b2e26lT2I60aik0tR5T27dnEF/4WG4XQgXisDCdXMEC+VT
+ uuH54+Xs90q3+xwlYi4f2xqOGbzDOVRfYCxA+9ZWfZMTm+bNfInhv
+X-Gm-Gg: ASbGncv6gOHoViAH4Vvry1z2kFM8hXzNJMzL7sk2FlQ3272dStG35ihUTirJBb9r8lW
+ fDcj1YjsD4gFny7tD9p+oeVKLOQK0sx9+12LBNNl+efmd48+DfaIYXF85kvSBkBcMKGUT93Y9vB
+ pssCwyFKpAJSe8sLdCp8Sb9t2Y6AvcrM7HnEtLTkBcO82Dp07XzVUnFoIbkQ2zbytLPWM+OVjVv
+ U/3bGk+muWKTrsbJiQaxRnSfSN8VvAPGxKytocu7Ys6R9ay9yb/4PQ0+SeezR6zh7L7WG9g83e5
+ Pns9yNAkGo3VNl0AlIVtvteiZoUz0RvIM3w1
+X-Received: by 2002:a05:600c:4fc1:b0:43c:fd72:f028 with SMTP id
+ 5b1f17b1804b1-43f3a9b015amr78473675e9.29.1744617167165; 
+ Mon, 14 Apr 2025 00:52:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5p3YMReihXNbmbnVDiLgL7t4mzxEKJh54YsBcVTeuHo9PamoTV3NgUUTo3c3mZnHjtIGLnA==
+X-Received: by 2002:a05:600c:4fc1:b0:43c:fd72:f028 with SMTP id
+ 5b1f17b1804b1-43f3a9b015amr78473455e9.29.1744617166759; 
+ Mon, 14 Apr 2025 00:52:46 -0700 (PDT)
+Received: from [10.33.192.219] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f20625eeesm170359795e9.11.2025.04.14.00.52.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Apr 2025 00:52:46 -0700 (PDT)
+Message-ID: <5f538130-184c-4105-ba3c-c27631c8c13d@redhat.com>
+Date: Mon, 14 Apr 2025 09:52:45 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/15] gitlab-ci: Update QEMU_JOB_AVOCADO and
+ QEMU_CI_AVOCADO_TESTING
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250325200026.344006-1-thuth@redhat.com>
+ <20250325200026.344006-15-thuth@redhat.com> <Z-PN0tip7DDurAVU@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <Z-PN0tip7DDurAVU@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxj8XGvfxnsL6AAA--.55749S2
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJr43uF45Gw1rCrWrur4fCrX_yoW8AFWfpF
- ykur1xCryUGry7twnxJ34kZF45uFs29r47Gryaka18J3yxJr1Uuw1q9Fsxua45JrW7ury7
- ZryUJwnruF1UAagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUk0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28IcxkI7V
- AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
- r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6x
- IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAI
- w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
- 0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,66 +153,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle specific LoongArch BRK break codes in user-mode emulation
-to deliver accurate floating-point exception signals. Specifically,
-BRK_OVERFLOW (6) triggers TARGET_FPE_INTOVF, and BRK_DIVZERO (7)
-triggers TARGET_FPE_INTDIV. Other BRK codes fall back to a generic
-SIGTRAP.
+On 26/03/2025 10.50, Daniel P. Berrangé wrote:
+> On Tue, Mar 25, 2025 at 09:00:22PM +0100, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> Since we don't run the Avocado jobs in the CI anymore, rename
+>> these variables to QEMU_JOB_FUNCTIONAL and QEMU_CI_FUNCTIONAL_TESTING.
+...
+>> -QEMU_CI_AVOCADO_TESTING
+>> -~~~~~~~~~~~~~~~~~~~~~~~
+>> -By default, tests using the Avocado framework are not run automatically in
+>> -the pipelines (because multiple artifacts have to be downloaded, and if
+>> -these artifacts are not already cached, downloading them make the jobs
+>> -reach the timeout limit). Set this variable to have the tests using the
+>> -Avocado framework run automatically.
+>> +QEMU_CI_FUNCTIONAL_TESTING
+> 
+> Both old and new terms are quite verbose, how about
+> dropping '_TESTING' suffix ?
 
-This improves correctness for programs that rely on BRK to signal
-overflow or divide-by-zero conditions.
+Sure, I'll drop it in v2!
 
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
----
- linux-user/loongarch64/cpu_loop.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+> With, or without that rename though:
+> 
+>    Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/linux-user/loongarch64/cpu_loop.c b/linux-user/loongarch64/cpu_loop.c
-index 0614d3de22..ec8a06c88c 100644
---- a/linux-user/loongarch64/cpu_loop.c
-+++ b/linux-user/loongarch64/cpu_loop.c
-@@ -11,6 +11,12 @@
- #include "user/cpu_loop.h"
- #include "signal-common.h"
- 
-+/* Break codes */
-+enum {
-+    BRK_OVERFLOW = 6,
-+    BRK_DIVZERO = 7
-+};
-+
- void cpu_loop(CPULoongArchState *env)
- {
-     CPUState *cs = env_cpu(env);
-@@ -66,9 +72,26 @@ void cpu_loop(CPULoongArchState *env)
-             force_sig_fault(TARGET_SIGFPE, si_code, env->pc);
-             break;
-         case EXCP_DEBUG:
--        case EXCCODE_BRK:
-             force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->pc);
-             break;
-+        case EXCCODE_BRK:
-+            {
-+                unsigned int opcode;
-+
-+                get_user_u32(opcode, env->pc);
-+
-+                switch (opcode & 0x7fff) {
-+                case BRK_OVERFLOW:
-+                    force_sig_fault(TARGET_SIGFPE, TARGET_FPE_INTOVF, env->pc);
-+                    break;
-+                case BRK_DIVZERO:
-+                    force_sig_fault(TARGET_SIGFPE, TARGET_FPE_INTDIV, env->pc);
-+                    break;
-+                default:
-+                    force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->pc);
-+                }
-+            }
-+            break;
-         case EXCCODE_BCE:
-             force_sig_fault(TARGET_SIGSYS, TARGET_SI_KERNEL, env->pc);
-             break;
--- 
-2.49.0
+Thanks!
+
+  Thomas
 
 
