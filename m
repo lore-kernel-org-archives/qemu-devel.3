@@ -4,100 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927D6C369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A76FC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 18:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4O0G-0006ys-Gp; Mon, 14 Apr 2025 13:53:52 -0400
+	id 1u4OG3-00059X-Ch; Mon, 14 Apr 2025 14:10:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u4O09-0006xx-6l; Mon, 14 Apr 2025 13:53:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1u4OFi-00054v-Pr
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 14:09:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u4O05-0002tT-6H; Mon, 14 Apr 2025 13:53:43 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53EAeQ3L010420;
- Mon, 14 Apr 2025 17:53:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2MhIM/
- A/LFUmEOlozDd6kef0Z1QR9BNyaI/EBpLW5JQ=; b=VPrGASKV8Ox7vTDVpOm+Qt
- kWRSmNQfwnuWvzHpY7sMFlQwqC9GCAG/WkjMrPJUI+D3WwyRqcEWp76QTUmKqdR5
- jyRz+9Ks/pTrh+axPGwgbpeWiLtV0iOpoPUDWWkRc6XxBmJ0Q8s91eJ0AcTP82wT
- v8otRpWem2/OzMqo0lo3JxC+6r3Y4jNxQGfc7egN8A0DP79tBf88lgnu2N3zKTEr
- 0E/rV7fEM8YqOk/LygjdfxCLoH5jSeDpyZdnA9Gp4dXynt0u5NypSTtLOi9CbdpS
- ttFjiY5ApKD9upoz7Qgowk/HORWxcCHBXNlCf0chxOmLwZslMizoRNHZNpHnv0AA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4610tpa1a4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Apr 2025 17:53:36 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53EHk14x010387;
- Mon, 14 Apr 2025 17:53:35 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4604qjy3e7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Apr 2025 17:53:35 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53EHrX1m26739030
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Apr 2025 17:53:34 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAAE05805A;
- Mon, 14 Apr 2025 17:53:33 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1703C5805C;
- Mon, 14 Apr 2025 17:53:33 +0000 (GMT)
-Received: from [9.61.117.19] (unknown [9.61.117.19])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 14 Apr 2025 17:53:32 +0000 (GMT)
-Message-ID: <8d3fa077-84ac-4964-a03f-6c4b335ae54b@linux.ibm.com>
-Date: Mon, 14 Apr 2025 13:53:32 -0400
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1u4OFg-0005hE-4M
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 14:09:49 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53E99n3t015739
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 18:09:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=pnKztRurHcn
+ IN1SWgIMfKA8sCfMtz/Nb+KW3UeBP1O0=; b=n1dFfK73r/St+ThTal1ZhFY8VUO
+ VyNXmptW1kIQaUYzB5v/GKbASnnVsT7Xq5htI7ROz1oTPNH85rITCEkF5aJ3sBuq
+ hOQwsldqn3I9+t6iUj+SMVJWp0BQoyTo7/j0FOs8cVSV+CloX8+cgZNVNM0zHl6k
+ XZMbYljVTtaawbWshEBD4L5+16rE7lrfLKsRE73CBeuOAL/n8rWM9IoV0vaQldbk
+ Wfdx1h3K5QkACf0AlF1l1N16pcNvXYt3WJkfk7nMgmqWih6ja71049ZEpLVtTpLK
+ sa2JwiZuZW/RgEvRDjWvE+UM+y5gA7Z+gEzQmv/tmzVvmO+dZAFHN4hmfZQ==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygd6desm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 18:09:44 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2242ade807fso71309125ad.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 11:09:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744654183; x=1745258983;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pnKztRurHcnIN1SWgIMfKA8sCfMtz/Nb+KW3UeBP1O0=;
+ b=YFNQib8TvrQ1j9WOI0A9oMUzDBvY30MuhwlKyMNvXmuMmDZ7YAUZHs1HddMYWD1Cb2
+ HqMB7JFtZ8rQeWoCRCu3k+P2behlOMElYzq/WnePxLdnRQWmsrY9sdp1biC6cbqGRh2N
+ NLLMUC5Vh3kYXNJ1yiya9lyvDZl4Lhv/j1du6pXrVPcl+iotoAKLWbOBmBEqm9EUT80J
+ cNHYlImbdJ9pszNOrd6f5l6IcwkseGE82e8Ko619XKX3PeANAlHxCEdy/fAHa4Rk63Qx
+ GluMLm9aL7m52jnbA94Sy428m//PfQOYuBiMVkoSntYJIYGHuTLg3cv/QaNtGkJGOBm/
+ 9njQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXH9u7Q/zHemCFcZCCY/reEFoUDHjaPGMjLNfe8vZsuwB1nPlgFHMErW9SSMhhz5/pwH9otsjZv9hDj@nongnu.org
+X-Gm-Message-State: AOJu0Yyj6eYKUNv0oAZFMewH76v75i18DdA2STqtQWOIFYT5CqgZ/M9N
+ WYy9mb3qNGJMBu6hMQPsRQw1Tx8WcomscEOrkFQt3j3jiNStMl/fZ6jfOJcxh11cfj5bTHvGHOv
+ lnVcZj4EnBkpXwyB9dvnQ5GABfoftVXYmQN1OdAoagXXRNoN0Nc/Tfg==
+X-Gm-Gg: ASbGncv4GSqtEyfauWuk5+omniR9KLno4Dyoe3eBKB58N/U90NpSx+ySNHP98JY32CE
+ Le+yty1sbPp+o9ufEr4yfEAd4ypxfqRjPfXYcHIG7xroHfi6Q0twR+sscsD4oxnj9/kaFOb4dJa
+ XNYxJ5zm0DRTtX1v2hj1PvRGzhIh4Fsr3BWcIjmPhCRMn/AZPqxDCQHuTTeeYRk3s2WqzE28fSp
+ kh+ieZTryBMNAwpBtvO7hWhslYFwSJG5roQ2lPN5qEnwTJqn1Vwv0FOg7y94AjZiCgzSQvOdphU
+ J8sRMWCq+usAhTQ/F1RnTpg2qfR2lqQeDf9gcR9bNkCkFYCiH83Bj+FHWgr2FCUXndmnwV4jDWo
+ =
+X-Received: by 2002:a17:902:ac90:b0:224:192a:9154 with SMTP id
+ d9443c01a7336-22bea4bd78amr142475435ad.26.1744654183262; 
+ Mon, 14 Apr 2025 11:09:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMojaxqiqNK1gusObqUhBB0jo276sbA8r0EDEGt+TdJ//Sfb1qU3qapat9NDx/wf0SGimtfA==
+X-Received: by 2002:a17:902:ac90:b0:224:192a:9154 with SMTP id
+ d9443c01a7336-22bea4bd78amr142475175ad.26.1744654182736; 
+ Mon, 14 Apr 2025 11:09:42 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73bd21c388fsm7159918b3a.54.2025.04.14.11.09.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Apr 2025 11:09:42 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: ltaylorsimpson@gmail.com
+Cc: brian.cain@oss.qualcomm.com, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ matheus.bernardino@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ marco.liebel@oss.qualcomm.com, alex.bennee@linaro.org,
+ quic_mburton@quicinc.com, sidneym@quicinc.com
+Subject: RE: [PATCH v3 5/5] target/hexagon: Remove unreachable
+Date: Mon, 14 Apr 2025 11:09:39 -0700
+Message-Id: <20250414180939.3575845-1-matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <058801dbad61_68ff5b00_3afe1100_@gmail.com>
+References: <058801dbad61_68ff5b00_3afe1100_@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/24] s390x: Guest support for Certificate Store
- Facility (CS)
-To: Thomas Huth <thuth@redhat.com>, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-4-zycai@linux.ibm.com>
- <1ea0eeb4-796d-4970-84d9-e46dda888aa2@redhat.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <1ea0eeb4-796d-4970-84d9-e46dda888aa2@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: aor217e1qE4CZnYeg_f5Mux-bWS40l7C
-X-Proofpoint-ORIG-GUID: aor217e1qE4CZnYeg_f5Mux-bWS40l7C
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: WG4CjUVcRJ46TN_W7QdAxabu1NAerjJe
+X-Proofpoint-GUID: WG4CjUVcRJ46TN_W7QdAxabu1NAerjJe
+X-Authority-Analysis: v=2.4 cv=ANaQCy7k c=1 sm=1 tr=0 ts=67fd4f68 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=XR8D0OoHHMoA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8
+ a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=WC4i52u04ZRiYehVJSoA:9 a=324X-CrmTo6CU4MGRt3R:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-14_06,2025-04-10_01,2024-11-22_01
+ definitions=2025-04-14_07,2025-04-10_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- phishscore=0 clxscore=1015 mlxlogscore=999 adultscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504140127
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ mlxscore=0 adultscore=0
+ mlxlogscore=768 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ phishscore=0 impostorscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140131
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,108 +133,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 14 Apr 2025 11:19:38 -0600 <ltaylorsimpson@gmail.com> wrote:
+>
+> > -----Original Message-----
+> > From: Brian Cain <brian.cain@oss.qualcomm.com>
+> > Sent: Monday, April 7, 2025 1:27 PM
+> > To: qemu-devel@nongnu.org
+> > Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> > philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
+> > anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
+> > alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> > sidneym@quicinc.com
+> > Subject: [PATCH v3 5/5] target/hexagon: Remove unreachable
+> > 
+> > We should raise an exception in the event that we encounter a packet that
+> > can't be correctly decoded, not fault.
+> > 
+> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> > ---
+> >  target/hexagon/decode.c | 6 +++++-
+> >  1 file changed, 5 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c index
+> > b5ece60450..1db7f1950f 100644
+> > --- a/target/hexagon/decode.c
+> > +++ b/target/hexagon/decode.c
+> > @@ -489,7 +489,6 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_t
+> > encoding)
+> >              insn->iclass = iclass_bits(encoding);
+> >              return 1;
+> >          }
+> > -        g_assert_not_reached();
+> >      } else {
+> >          uint32_t iclass = get_duplex_iclass(encoding);
+> >          unsigned int slot0_subinsn = get_slot0_subinsn(encoding); @@ -512,6
+> > +511,11 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_t encoding)
+> >          }
+> >          g_assert_not_reached();
+> 
+> Why leave this one rather than raising an exception?
 
-On 4/11/25 9:28 AM, Thomas Huth wrote:
-> On 08/04/2025 17.55, Zhuoying Cai wrote:
->> DIAG 320 is supported when the certificate-store (CS) facility
->> is installed.
->>
->> Availability of CS facility is determined by byte 134 bit 5 of the
->> SCLP Read Info block.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
-> ...
->> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
->> index 4b5be6798e..99089ab3f5 100644
->> --- a/target/s390x/cpu_features.c
->> +++ b/target/s390x/cpu_features.c
->> @@ -147,6 +147,7 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
->>           break;
->>       case S390_FEAT_TYPE_SCLP_FAC134:
->>           clear_be_bit(s390_feat_def(S390_FEAT_DIAG_318)->bit, data);
->> +        clear_be_bit(s390_feat_def(S390_FEAT_DIAG_320)->bit, data);
->>           break;
->>       default:
->>           return;
->> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
->> index e23e603a79..65d38f546d 100644
->> --- a/target/s390x/cpu_features_def.h.inc
->> +++ b/target/s390x/cpu_features_def.h.inc
->> @@ -138,6 +138,7 @@ DEF_FEAT(SIE_IBS, "ibs", SCLP_CONF_CHAR_EXT, 10, "SIE: Interlock-and-broadcast-s
->>   
->>   /* Features exposed via SCLP SCCB Facilities byte 134 (bit numbers relative to byte-134) */
->>   DEF_FEAT(DIAG_318, "diag318", SCLP_FAC134, 0, "Control program name and version codes")
->> +DEF_FEAT(DIAG_320, "diag320", SCLP_FAC134, 5, "Provide Certificate Store functions")
->>   
->>   /* Features exposed via SCLP CPU info. */
->>   DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
->> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
->> index 93a05e43d7..7d65c40bd1 100644
->> --- a/target/s390x/cpu_models.c
->> +++ b/target/s390x/cpu_models.c
->> @@ -248,6 +248,7 @@ bool s390_has_feat(S390Feat feat)
->>       if (s390_is_pv()) {
->>           switch (feat) {
->>           case S390_FEAT_DIAG_318:
->> +        case S390_FEAT_DIAG_320:
-> 
-> So secure IPL is not available with secure execution? That's surprising. 
-> Could you add a comment to the patch description why this is the case?
-> 
+Good point. I think this one should be removed as well. We have removed it
+downstream already.
 
-Secure IPL is not available for Secure Execution (SE) guests, as their
-images are already integrity protected, and an additional protection of
-the kernel by secure IPL is not necessary.
+> >      }
+> > +    /*
+> > +     * invalid/unrecognized opcode; return 1 and let gen_insn() raise an
+> > +     * exception when it sees this empty insn.
+> > +     */
+> > +    return 1;
+> 
+> You should set insn->generate to NULL if you want to guarantee that gen_insn
+> will raise an exception.
 
-I'll provide more context in the patch description for the next iteration.
+The caller already memset's it to 0 before passing `insn` down.
+ 
+> Do you have a test case for this?
 
->>           case S390_FEAT_HPMA2:
->>           case S390_FEAT_SIE_F2:
->>           case S390_FEAT_SIE_SKEY:
->> @@ -505,6 +506,7 @@ static void check_consistency(const S390CPUModel *model)
->>           { S390_FEAT_PTFF_STOUE, S390_FEAT_MULTIPLE_EPOCH },
->>           { S390_FEAT_AP_QUEUE_INTERRUPT_CONTROL, S390_FEAT_AP },
->>           { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
->> +        { S390_FEAT_DIAG_320, S390_FEAT_EXTENDED_LENGTH_SCCB },
-> 
-> Please also add a comment to the patch description why this feature needs 
-> S390_FEAT_EXTENDED_LENGTH_SCCB.
-> 
->>           { S390_FEAT_NNPA, S390_FEAT_VECTOR },
->>           { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
->>           { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
->> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
->> index 41840677ce..52c649adcd 100644
->> --- a/target/s390x/gen-features.c
->> +++ b/target/s390x/gen-features.c
->> @@ -696,6 +696,7 @@ static uint16_t full_GEN14_GA1[] = {
->>       S390_FEAT_HPMA2,
->>       S390_FEAT_SIE_KSS,
->>       S390_FEAT_GROUP_MULTIPLE_EPOCH_PTFF,
->> +    S390_FEAT_DIAG_320,
-> 
-> Is it available with the z14 already? 
-> https://www.ibm.com/docs/en/linux-on-systems?topic=linux-secure-boot seems 
-> to indicate a z15 instead??
-> 
->>   };
->>   
->>   #define full_GEN14_GA2 EmptyFeat
->> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
->> index 4d56e653dd..d07ca879a3 100644
->> --- a/target/s390x/kvm/kvm.c
->> +++ b/target/s390x/kvm/kvm.c
->> @@ -2487,6 +2487,8 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
->>           set_bit(S390_FEAT_DIAG_318, model->features);
->>       }
->>   
->> +    set_bit(S390_FEAT_DIAG_320, model->features);
->> +
->>       /* Test for Ultravisor features that influence secure guest behavior */
->>       query_uv_feat_guest(model->features);
-> 
->   Thomas
-> 
-
+We do have a softmmu test for this downstream. Maybe we can adjust it for
+user-mode and upstream it with this patch.
 
