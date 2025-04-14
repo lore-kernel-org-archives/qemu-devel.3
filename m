@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7D9C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 07:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1CAC369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 08:09:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4EhC-0002hC-ET; Mon, 14 Apr 2025 03:57:34 -0400
+	id 1u4ErL-00054V-Hx; Mon, 14 Apr 2025 04:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1u4EhA-0002gz-1C
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 03:57:32 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1u4ErB-00053E-RC
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:07:56 -0400
+Received: from p-east3-cluster7-host2-snip4-5.eps.apple.com ([57.103.84.146]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1u4Eh6-0000qJ-1S
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 03:57:31 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:ca1:0:640:740c:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 4C9466094A;
- Mon, 14 Apr 2025 10:57:18 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6b8:b081:8802::1:30])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8vAO4o5FTOs0-mmdOHssv; Mon, 14 Apr 2025 10:57:16 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744617436;
- bh=DKOjmUgT/8E+CIp4kvg1fWjMz27ZrU/rF62i0zxMnlk=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=ukDj+sshaWXyvkd1fA9U1RrnuQmspBH3iIuB3pyqFTs7q1356v5YNHmpV8k919/1f
- qlFfCaYYeWxq3YNiWrr6aB0YkZvl2ezHdQF5MWiayxIoBjmk6oLjJbaxmjzs8W0Lz2
- 8ffjdgWMu/1MKkun5I0xXORk31ctha6Ex/DpqGfI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1u4Er4-0003En-0S
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:07:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ bh=d+IXLMoawXqX/xjHW2ZgqT+C1iQaEI+DOzSb9WG04Vg=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=jukc+wKCWyKwyo++K+D16oo9ApqpdsW/JjsDQLrIy6H9q/hJw3Nwq9YxNys6UMCo5
+ FvhP00PjJ4Q4lFdh+XTjuYgpSWiVYDmh+ftO/PR8VVlS+wJanVjOkIt4WtEQbgtiVQ
+ vyspHZcB6I6VPeufD1T2fNes6FHgRTY+zhnn4X7nzs9fx2flzsph+z7+hyX72dwCkT
+ STZoX81z2F0wjOwXiaGpg2rCfQSuBApqNqyW3VM/LW7r5uQL0aUknoMhbotVN0Zvgl
+ NnX3/2i1LFTrWwHrA29ZbLFGxplo6rjFyu63yVDTwiyqK6DF/UT4Yfkco9+gpw7Mr3
+ QsPqYZxuF7xUw==
+Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
+ [17.57.155.37])
+ by outbound.qs.icloud.com (Postfix) with ESMTPSA id F20D118005F5;
+ Mon, 14 Apr 2025 08:07:39 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [PATCH 0/2] Fix GDB support for macOS hvf
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20250402135229.28143-1-mads@ynddal.dk>
+Date: Mon, 14 Apr 2025 10:07:26 +0200
+Cc: qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <m.ynddal@samsung.com>, Daniel Gomez <da.gomez@samsung.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <13247C25-632F-444B-BAAC-648490F1B4FA@ynddal.dk>
+References: <20250402135229.28143-1-mads@ynddal.dk>
 To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v2] tests/avocado: add memlock tests
-Date: Mon, 14 Apr 2025 12:57:03 +0500
-Message-Id: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
+X-Proofpoint-ORIG-GUID: AHtOJgL35LJa09qbRarPzhSU5FAaVtUf
+X-Proofpoint-GUID: AHtOJgL35LJa09qbRarPzhSU5FAaVtUf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_02,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 mlxlogscore=707 adultscore=0 spamscore=0
+ clxscore=1030 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2504140057
+Received-SPF: pass client-ip=57.103.84.146; envelope-from=mads@ynddal.dk;
+ helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -74,134 +82,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new tests to check the correctness of the `-overcommit memlock`
-option (possible values: off, on, on-fault) by using
-`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-anonymous segments:
 
-* if `memlock=off`, then Locked = 0 on every anonymous smaps;
-* if `memlock=on`, then Size, Rss and Locked values must be equal for
-every anon smaps where Rss is not 0;
-* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-smaps and anonymous segment with Rss < Size must exists.
+> In (recent versions of?) macOS, calls to hv_vcpu_set_sys_reg were =
+failing if
+> they were issued outside of the specific thread that owns the vCPU.
+>=20
+> This caused a crash when attaching a debugger through the GDB stub.
+>=20
+> This GDB stub has worked before, so it is unclear if Apple changed the
+> behavior of the function in a release of macOS.
+>=20
+> Mads Ynddal (2):
+>  hvf: avoid repeatedly setting trap debug for each cpu
+>  hvf: only update sysreg from owning thread
+>=20
+> accel/hvf/hvf-all.c  |  7 ++++++-
+> target/arm/hvf/hvf.c | 27 +++++++++++----------------
+> 2 files changed, 17 insertions(+), 17 deletions(-)
+>=20
 
----
+Daniel Gomez and I have been using this patch for the past two weeks. It =
+seems to be the right fix for the issue.
 
-v1 -> v2:
-In the previous send, i forgot to specify new patch version (v2)
-So i resend previous patch with version specified.
-
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
----
- tests/avocado/memlock.py | 98 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
- create mode 100644 tests/avocado/memlock.py
-
-diff --git a/tests/avocado/memlock.py b/tests/avocado/memlock.py
-new file mode 100644
-index 0000000000..935cc3dc42
---- /dev/null
-+++ b/tests/avocado/memlock.py
-@@ -0,0 +1,98 @@
-+# Functional test that check overcommit memlock options
-+#
-+# Copyright (c) Yandex Technologies LLC, 2025
-+#
-+# Author:
-+#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-+#
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import re
-+
-+from typing import List, Dict
-+
-+from avocado_qemu.linuxtest import LinuxTest
-+
-+
-+SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
-+SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
-+
-+
-+class Memlock(LinuxTest):
-+    """
-+    Boots a Linux system with memlock options.
-+    Then verify, that this options is working correctly
-+    by checking the smaps of the QEMU proccess.
-+    """
-+
-+    def common_vm_setup_with_memlock(self, memlock):
-+        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
-+        self.launch_and_wait(set_up_ssh_connection=False)
-+
-+    def get_anon_smaps_by_pid(self, pid):
-+        smaps_raw = self._get_raw_smaps_by_pid(pid)
-+        return self._parse_anonymous_smaps(smaps_raw)
-+
-+
-+    def test_memlock_off(self):
-+        self.common_vm_setup_with_memlock('off')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # locked = 0 on every smap
-+        for smap in anon_smaps:
-+            self.assertEqual(smap['Locked'], 0)
-+
-+    def test_memlock_on(self):
-+        self.common_vm_setup_with_memlock('on')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # size = rss = locked on every smap where rss not 0
-+        for smap in anon_smaps:
-+            if smap['Rss'] == 0:
-+                continue
-+            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
-+
-+    def test_memlock_onfault(self):
-+        self.common_vm_setup_with_memlock('on-fault')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # rss = locked on every smap and segment with rss < size exists
-+        exists = False
-+        for smap in anon_smaps:
-+            self.assertTrue(smap['Rss'] == smap['Locked'])
-+            if smap['Rss'] < smap['Size']:
-+                exists = True
-+        self.assertTrue(exists)
-+
-+
-+    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
-+        result_segments = []
-+        current_segment = {}
-+        is_anonymous = False
-+
-+        for line in smaps_raw.split('\n'):
-+            if SMAPS_HEADER_PATTERN.match(line):
-+                if current_segment and is_anonymous:
-+                    result_segments.append(current_segment)
-+                current_segment = {}
-+                # anonymous segment header looks like this:
-+                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
-+                # and non anonymous header looks like this:
-+                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
-+                is_anonymous = len(line.split()) == 5
-+            elif m := SMAPS_VALUE_PATTERN.match(line):
-+                current_segment[m.group(1)] = int(m.group(2))
-+
-+        if current_segment and is_anonymous:
-+            result_segments.append(current_segment)
-+
-+        return result_segments
-+
-+    def _get_raw_smaps_by_pid(self, pid: int) -> str:
-+        with open(f'/proc/{pid}/smaps', 'r') as f:
-+            return f.read()
--- 
-2.34.1
-
+=E2=80=94
+Mads Ynddal=
 
