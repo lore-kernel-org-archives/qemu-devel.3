@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1CAC369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 08:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B68C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 08:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4ErL-00054V-Hx; Mon, 14 Apr 2025 04:08:03 -0400
+	id 1u4FJf-0002qf-KD; Mon, 14 Apr 2025 04:37:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1u4ErB-00053E-RC
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:07:56 -0400
-Received: from p-east3-cluster7-host2-snip4-5.eps.apple.com ([57.103.84.146]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u4FJe-0002qW-6f
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:37:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1u4Er4-0003En-0S
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:07:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=d+IXLMoawXqX/xjHW2ZgqT+C1iQaEI+DOzSb9WG04Vg=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=jukc+wKCWyKwyo++K+D16oo9ApqpdsW/JjsDQLrIy6H9q/hJw3Nwq9YxNys6UMCo5
- FvhP00PjJ4Q4lFdh+XTjuYgpSWiVYDmh+ftO/PR8VVlS+wJanVjOkIt4WtEQbgtiVQ
- vyspHZcB6I6VPeufD1T2fNes6FHgRTY+zhnn4X7nzs9fx2flzsph+z7+hyX72dwCkT
- STZoX81z2F0wjOwXiaGpg2rCfQSuBApqNqyW3VM/LW7r5uQL0aUknoMhbotVN0Zvgl
- NnX3/2i1LFTrWwHrA29ZbLFGxplo6rjFyu63yVDTwiyqK6DF/UT4Yfkco9+gpw7Mr3
- QsPqYZxuF7xUw==
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by outbound.qs.icloud.com (Postfix) with ESMTPSA id F20D118005F5;
- Mon, 14 Apr 2025 08:07:39 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH 0/2] Fix GDB support for macOS hvf
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250402135229.28143-1-mads@ynddal.dk>
-Date: Mon, 14 Apr 2025 10:07:26 +0200
-Cc: qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <m.ynddal@samsung.com>, Daniel Gomez <da.gomez@samsung.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <13247C25-632F-444B-BAAC-648490F1B4FA@ynddal.dk>
-References: <20250402135229.28143-1-mads@ynddal.dk>
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
-X-Proofpoint-ORIG-GUID: AHtOJgL35LJa09qbRarPzhSU5FAaVtUf
-X-Proofpoint-GUID: AHtOJgL35LJa09qbRarPzhSU5FAaVtUf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-14_02,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 mlxscore=0
- suspectscore=0 malwarescore=0 mlxlogscore=707 adultscore=0 spamscore=0
- clxscore=1030 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2504140057
-Received-SPF: pass client-ip=57.103.84.146; envelope-from=mads@ynddal.dk;
- helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u4FJb-0001M7-Ma
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:37:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744619829;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=clXfms0hMcngIHUh9hMc6jy0AMhEWH3gKFMs3m4gZ1k=;
+ b=QpdqBYszftI9m9zzuHux1Ohrm/kv8dIbTTbiHEH9kQIjcMAw1Wad9rD+99PNk6OXX1Iem9
+ t7gAIeVkq9gXZDhGXVlJU8fC1jGyJsLC3LLjOdgKjAPc3UjdMlUZxJXf70bwBDK5mphCTI
+ Ocv4cRGv02isTwkgfzA9F4NLSo/LflI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-B4kvsl9yPNq6erXrx7JZdw-1; Mon,
+ 14 Apr 2025 04:37:04 -0400
+X-MC-Unique: B4kvsl9yPNq6erXrx7JZdw-1
+X-Mimecast-MFC-AGG-ID: B4kvsl9yPNq6erXrx7JZdw_1744619823
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59D041956048; Mon, 14 Apr 2025 08:37:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.99])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A22B1955BF6; Mon, 14 Apr 2025 08:37:01 +0000 (UTC)
+Date: Mon, 14 Apr 2025 09:36:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, stefanha@gmail.com, philmd@linaro.org
+Subject: Re: [PATCH for-10.0] docs: Document removal of 64-bit on 32-bit
+ emulation
+Message-ID: <Z_zJKWY8dxNtLMzq@redhat.com>
+References: <20250412164315.36161-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250412164315.36161-1-richard.henderson@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,31 +85,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, Apr 12, 2025 at 09:43:15AM -0700, Richard Henderson wrote:
+> With acce728cbc6c we disallowed configuring 64-bit guests on
+> 32-bit hosts, but forgot to document that in removed-features.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  docs/about/removed-features.rst | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+> index 2527a91795..790a5e481c 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -858,6 +858,15 @@ QEMU.  Since all recent x86 hardware from the past >10 years is
+>  capable of the 64-bit x86 extensions, a corresponding 64-bit OS should
+>  be used instead.
+>  
+> +32-bit hosts for 64-bit guests (removed in 10.0)
+> +''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +In general, 32-bit hosts cannot support the memory space or atomicity
+> +requirements of 64-bit guests.  Prior to 10.0, QEMU attempted to
+> +work around the atomicity issues in system mode by running all vCPUs
+> +in a single thread context; in user mode atomicity was simply broken.
+> +From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+> +
+>  Guest Emulator ISAs
+>  -------------------
 
-> In (recent versions of?) macOS, calls to hv_vcpu_set_sys_reg were =
-failing if
-> they were issued outside of the specific thread that owns the vCPU.
->=20
-> This caused a crash when attaching a debugger through the GDB stub.
->=20
-> This GDB stub has worked before, so it is unclear if Apple changed the
-> behavior of the function in a release of macOS.
->=20
-> Mads Ynddal (2):
->  hvf: avoid repeatedly setting trap debug for each cpu
->  hvf: only update sysreg from owning thread
->=20
-> accel/hvf/hvf-all.c  |  7 ++++++-
-> target/arm/hvf/hvf.c | 27 +++++++++++----------------
-> 2 files changed, 17 insertions(+), 17 deletions(-)
->=20
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Daniel Gomez and I have been using this patch for the past two weeks. It =
-seems to be the right fix for the issue.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-=E2=80=94
-Mads Ynddal=
 
