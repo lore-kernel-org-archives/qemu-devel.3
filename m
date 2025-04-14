@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 733FDC369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59ED3C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4NU2-0003sV-Nd; Mon, 14 Apr 2025 13:20:35 -0400
+	id 1u4NlM-0002jh-IB; Mon, 14 Apr 2025 13:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4NTy-0003rb-Uw
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:20:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4NTu-0005e0-Mx
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:20:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744651223;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Co5VK7MUg4VE9f5x1YwI4ikKJo7vyYaY24Kbe+QuACQ=;
- b=awibRmqaAubqznSOJ1P1O9bIr1pAk0lXj+leptTxqi0g2w5V8ohbEr9T7xAWCeX47q98bi
- kgjeDnXzbAR8TFwQLB6sBlwVoFP13f69Ubaf+2KjSb/ntYM1xE1FDorW3pccFKa/8TB5IS
- X7olFtEjyVhSVhpiev0qprsp3TJtye8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-vf8JrqFhNViyKq4FpHacnA-1; Mon,
- 14 Apr 2025 13:20:19 -0400
-X-MC-Unique: vf8JrqFhNViyKq4FpHacnA-1
-X-Mimecast-MFC-AGG-ID: vf8JrqFhNViyKq4FpHacnA_1744651218
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 63A45180025A; Mon, 14 Apr 2025 17:20:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.99])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D02BF3001D0F; Mon, 14 Apr 2025 17:20:15 +0000 (UTC)
-Date: Mon, 14 Apr 2025 18:20:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC PATCH 00/13] migration: Unify capabilities and parameters
-Message-ID: <Z_1DzDB8v6FOT9TG@redhat.com>
-References: <20250411191443.22565-1-farosas@suse.de>
- <Z_07dfI4rFRpvZA1@redhat.com> <87v7r6fz0c.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4Nl6-0002iZ-KT
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:38:15 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4Nl1-0000N6-Vh
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 13:38:12 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so4000046f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 10:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744652285; x=1745257085; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rUvpMz/wZkmDjLL+SoPmJyVaKdotCY03nMuxDIhiDKE=;
+ b=IWfYiiOFXTTOwOL8HyocoAXrfFqYQbafykwcWiQXqX7VqI2twgO5bed7IF+cOWBTdp
+ 7jawF8+QkQduwrkvoa5UUVxj6KBS1OFnwYo7i493zCykIe54ff2RQDasv7goPfF3TR5t
+ 8iMJWnbJUAiSo7aewlwt6H1caSv2GvUWDzJVElkXTovqlHr+E9wqSj6hZCD6cDu0v1BG
+ Tlw43ALzYM1o3IBb+a6nD5dunwNJNasRiTPN5StQUki8BwHY2UHgx0X9EJz59nbHeVl1
+ MIZsxLTpjL0+IuHgJSWxifcO8mjJrJEsa3QlNgojdPiOMBKbe34rVi0ufcS77ASjROBP
+ kL8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744652285; x=1745257085;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rUvpMz/wZkmDjLL+SoPmJyVaKdotCY03nMuxDIhiDKE=;
+ b=uhLVtjWJzTVwYic7s5Xor8njR/4TAoAnaYwioU+Ap0KTsmYnvi7D4TFa1X7+TZnvYu
+ WvuzoBVUhImRq7MBKbFcOfboor7Calq3lCGy6uUf6evO3sU6uxIbezaynZeLcgKo3HWE
+ yjNA68jS0xrTPF+2D3uQxP32McoUK5OZk05qijejOhZ6I41zwPI2H3sgJaoJLdjVHhjy
+ qDY0OUijS9eubgZQea7fTBLvyTSMxPFQ4OqBvcOj7bcy70QhwcOoc4mbwPFsXADYdYbN
+ qVAfOrGaKBf+/IsmsRk0IYjDX+b+KQVrAdLtHW4Nv/EJe+CWosdMN1/9nEQKfBwEyppU
+ 6zww==
+X-Gm-Message-State: AOJu0YwA4YmeG21Za/gt2JnO+H3b2y11LN4YoYr4mEo5juBJH5JInCYQ
+ IUviA//syBTgL38fQ5pd5FJXWni5PW6R+p1V9bvhfIt14ZUxhwz8i4quV4o9CNQ=
+X-Gm-Gg: ASbGncsZe2enG7RF5EmaZ5/GceLTC4d2/7w8/7gRjk+7aQSaFJEI5BniTr4V20pOWbA
+ kLede8w7QEQA3iuZPA11ELnkzSWb5lgEJf9vC2xG1sm3Ay89XTCwcenKyO3NZf2mWs50jxG1cUu
+ PDOjJmBieiaSWnhoe0oMM+fg9k+E8CcqsPPxcMlev9Vh7SPf3PdQmKokOVE5XLZMVG/DsV5yIAN
+ q6vKCbzgM36D26pQa8flYCgVSUwmIiAZXOxsgoOludFoCttMqNHN/HK8HTOznMlCrI4Xlnso3in
+ /GthXhYag9WQ3CUSsrmdjYX8bLyX4Gb7xbxwuduHgfeVhym/upYikrEPjvYa8fdtFfN6XRgOf/c
+ Z4tlaYJ0Y
+X-Google-Smtp-Source: AGHT+IFRmTNwVO4CDBFt8mh63rPkqOxlP/YoS43YSpCGdbBBfbWqeIrHwxjpqmtRpaTXhNP+2+OIqw==
+X-Received: by 2002:a5d:59a3:0:b0:390:e1e0:1300 with SMTP id
+ ffacd0b85a97d-39eaaea4548mr10454339f8f.33.1744652284995; 
+ Mon, 14 Apr 2025 10:38:04 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39eaf43cd17sm11672174f8f.78.2025.04.14.10.38.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Apr 2025 10:38:04 -0700 (PDT)
+Message-ID: <c566eed5-605f-4aeb-8841-dae4e591fcb3@linaro.org>
+Date: Mon, 14 Apr 2025 19:38:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] target/riscv: fix endless translation loop on big
+ endian systems
+To: Ziqiao Kong <ziqiaokong@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alistair.francis@wdc.com, 
+ richard.henderson@linaro.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250414034626.3491489-1-ziqiaokong@gmail.com>
+ <20250414034626.3491489-2-ziqiaokong@gmail.com>
+ <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
+ <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
+ <CAM0BWND3dr=_nZHXSoV2jzkXPXd=hViX6vM0cUMZ2Uru+TD6GQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAM0BWND3dr=_nZHXSoV2jzkXPXd=hViX6vM0cUMZ2Uru+TD6GQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v7r6fz0c.fsf@suse.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,116 +102,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 14, 2025 at 02:12:35PM -0300, Fabiano Rosas wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+Hi,
+
+On 14/4/25 18:59, Ziqiao Kong wrote:
+> Hello Philippe,
 > 
-> > On Fri, Apr 11, 2025 at 04:14:30PM -0300, Fabiano Rosas wrote:
-> >> Open questions:
-> >> ---------------
-> >> 
-> >> - Deprecations/compat?
-> >> 
-> >> I think we should deprecate migrate-set/query-capabilities and everything to do
-> >> with capabilities (specifically the validation in the JSON at the end of the
-> >> stream).
-> >> 
-> >> For migrate-set/query-parameters, we could probably keep it around indefinitely,
-> >> but it'd be convenient to introduce new commands so we can give them new
-> >> semantics.
-> >> 
-> >> - How to restrict the options that should not be set when the migration is in
-> >> progress?
-> >> 
-> >> i.e.:
-> >>   all options can be set before migration (initial config)
-> >>   some options can be set during migration (runtime)
-> >> 
-> >> I thought of adding another type at the top of the hierarchy, with
-> >> just the options allowed to change at runtime, but that doesn't really
-> >> stop the others being also set at runtime. I'd need a way to have a
-> >> set of options that are rejected 'if migration_is_running()', without
-> >> adding more duplication all around.
-> >> 
-> >> - What about savevm?
-> >> 
-> >> None of this solves the issue of random caps/params being set before
-> >> calling savevm. We still need to special-case savevm and reject
-> >> everything. Unless we entirely deprecate setting initial options via
-> >> set-parameters (or set-config) and require all options to be set as
-> >> savevm (and migrate) arguments.
-> >
-> > I'd suggest we aim for a world where the commands take all options
-> > as direct args and try to remove the global state eventually.
-> >
+> Any further concern regarding this series? I certainly would like to investigate
+> and help =).
+
+Short term I can't keep looking because I'm busy with other stuffs and
+tagged this patch for another review, because there is some endianness
+code smell in get_physical_address(). I understand your change fixes
+your issue, but I'm skeptical about it, in part because there are no
+such use in the whole code base. My change suggestion is just a starting
+point, more is needed.
+
 > 
-> Well, except the options that are adjusted during migration. But yes, I
-> agree. It all depends on how we proceed with keeping the old commands
-> around and for how long. If they're still around we can't stop people
-> from using them and later invoking "savevm" for instance.
+> Bests,
+> Ziqiao
 > 
-> > For savevm/loadvm in particular it is very much a foot-gun that
-> > 'migrate-set-*' will affect them, because savevm/loadvm aren't
-> > obviously connected to 'migrate-*' commands unless you're aware
-> > of how QEMU implements savevm internally.
-> >
-> 
-> Yes, I could perhaps reset all options once savevm is called, maybe that
-> would be acceptable, then we don't need to check and block every single
-> one. Once we add support to migration options to savevm, then they'd be
-> set in the savevm command-line from day 1 and those wouldn't be
-> reset. We could also keep HMP restricted to savevm without any migration
-> options. That's be easy to enforce. If the user wants fancy savevm, they
-> can invoke via QMP.
-
-Can we make the two approaches mutually exclusive ? Taking your
-'migrate' command example addition:
-
-  { 'command': 'migrate',
-    'data': {'*uri': 'str',
-             '*channels': [ 'MigrationChannel' ],
-  +          '*config': 'MigrationConfig',
-             '*detach': 'bool', '*resume': 'bool' } }
-
-if 'migrate' is invoked with the '*config' data being non-nil,
-then we should ignore *all* global state previously set with
-migrate-set-XXXX, and exclusively use '*config'.
-
-That gives a clean semantic break between old and new approaches,
-without us having to worry about removing the existing commands
-quickly.
-
-
-> >> - incoming defer?
-> >> 
-> >> It seems we cannot do the final step of removing
-> >> migrate-set-capabilites before we have a form of handshake
-> >> implemented. That would take the config from qmp_migrate on source and
-> >> send it to the destination for negotiation.
-> >
-> > I'm not sure I understand why the QAPI design changes are tied
-> > to the new protocol handshake ? I guess you're wanting to avoid
-> > updating 'migrate_incoming' to accept the new parameters directly ?
-> >
-> 
-> Yes, without migrate-set-capabilities, we'd need to pass an enormous
-> command line to -incoming defer to be able to enable capabilities on the
-> destination. With the handshake, we could transfer them over the wire
-> somehow. Does that make sense?
-
-'-incoming defer' still gets paired with 'migrate-incoming' on the
-target, so no matter what, there's no reason to ever pass parameters
-on the CLI with '-incoming defer'.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> On Mon, Apr 14, 2025 at 7:17 PM Ziqiao Kong <ziqiaokong@gmail.com> wrote:
+>>
+>> On Mon, Apr 14, 2025 at 6:41 PM Philippe Mathieu-Daudé
+>> <philmd@linaro.org> wrote:
+>>>
+>>> Hi,
+>>>
+>>> On 14/4/25 05:46, Ziqiao Kong wrote:
+>>>> On big endian systems, pte and updated_pte hold big endian host data
+>>>> while pte_pa points to little endian target data. This means the branch
+>>>> at cpu_helper.c:1669 will be always satisfied and restart translation,
+>>>> causing an endless translation loop.
+>>>>
+>>>
+>>> Cc: qemu-stable@nongnu.org
+>>> Fixes: 0c3e702aca7 ("RISC-V CPU Helpers")
+>>>
+>>>> Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
+>>>> ---
+>>>>    target/riscv/cpu_helper.c | 4 ++--
+>>>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>>> index 6c4391d96b..bc146771c8 100644
+>>>> --- a/target/riscv/cpu_helper.c
+>>>> +++ b/target/riscv/cpu_helper.c
+>>>> @@ -1662,9 +1662,9 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+>>>>                target_ulong *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
+>>>>                target_ulong old_pte;
+>>>>                if (riscv_cpu_sxl(env) == MXL_RV32) {
+>>>> -                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, pte, updated_pte);
+>>>> +                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(pte), cpu_to_le32(updated_pte));
+>>>>                } else {
+>>>> -                old_pte = qatomic_cmpxchg(pte_pa, pte, updated_pte);
+>>>> +                old_pte = qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), cpu_to_le64(updated_pte));
+>>>>                }
+>>>>                if (old_pte != pte) {
+>>>>                    goto restart;
+>>>
+>>> If PTEs are always stored in LE order, maybe what we want is earlier:
+>>>
+>>> -- >8 --
+>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>> index 619c76cc001..b6ac2800240 100644
+>>> --- a/target/riscv/cpu_helper.c
+>>> +++ b/target/riscv/cpu_helper.c
+>>> @@ -1464,5 +1464,5 @@ static int get_physical_address(CPURISCVState
+>>> *env, hwaddr *physical,
+>>>            if (riscv_cpu_mxl(env) == MXL_RV32) {
+>>> -            pte = address_space_ldl(cs->as, pte_addr, attrs, &res);
+>>> +            pte = address_space_ldl_le(cs->as, pte_addr, attrs, &res);
+>>>            } else {
+>>> -            pte = address_space_ldq(cs->as, pte_addr, attrs, &res);
+>>> +            pte = address_space_ldq_le(cs->as, pte_addr, attrs, &res);
+>>
+>> Unfortunately, this doesn't work in two ways:
+>>
+>> 1. Note pte is used in the following code and that means pte must hold
+>> a correct value from the
+>> view of host endian (in my case, big endian not little endian).
+>> 2. address_space_ldq_le will dispatch to ldq_le_p, while
+>> address_space_leq will dispatch to ldq_p.
+>> However, on little endian targets, ldq_p is an alias of ldq_le_p so
+>> making no effects.
+>>
+>> Per my testing, this patch doesn't have any effect indeed. To have a
+>> brief view what is happening,
+>> see the logs just before atomic_cmpxchg:
+>>
+>> pte_pa 0xf14000000000000 == pte 0x140f ? updated_pte 0x144f
+>>
+>>>            }
+>>> ---
 
 
