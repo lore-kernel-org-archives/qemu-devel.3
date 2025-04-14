@@ -4,72 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47F60C369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 13:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65AEFC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 13:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4JtI-0008VF-Ar; Mon, 14 Apr 2025 09:30:24 -0400
+	id 1u4JxO-0003VZ-SO; Mon, 14 Apr 2025 09:34:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4JsW-0008Cs-H5
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 09:29:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <seiden@linux.ibm.com>)
+ id 1u4JxL-0003VI-Jp; Mon, 14 Apr 2025 09:34:36 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4JsS-0005I5-8b
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 09:29:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744637371;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j4tKVdxWEdTDAPlaY/QuniG4/A/ZTMHNq8UPwtvqjkM=;
- b=GNHyDBfe5I0biZmukNCb4mHn0KxA4srX6WCCun0K0hRQlAUFdUIcfHhgJA+EkuFCzyS9ez
- UxvRdz6igVn4w7KJCLaQ/tr0n/jSUVK48zXOFYVn9lGQvXlit4fA1Ef0MAtWHVC0DNs/Qe
- hUrvfDfkcI8aoNvERep+lIQ6ZnHAnp4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-W1Q7__H_PX-MtAtORoBVhA-1; Mon,
- 14 Apr 2025 09:29:27 -0400
-X-MC-Unique: W1Q7__H_PX-MtAtORoBVhA-1
-X-Mimecast-MFC-AGG-ID: W1Q7__H_PX-MtAtORoBVhA_1744637366
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 054AB1800349; Mon, 14 Apr 2025 13:29:26 +0000 (UTC)
-Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
- [10.33.192.219])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8FCE319560AD; Mon, 14 Apr 2025 13:29:23 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ (Exim 4.90_1) (envelope-from <seiden@linux.ibm.com>)
+ id 1u4JxI-00060l-67; Mon, 14 Apr 2025 09:34:35 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53EAvjVR011560;
+ Mon, 14 Apr 2025 13:34:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=SBMcRSpilNqcPQGH2zilpy5yZW1iZ8
+ O/0pT68SJ9RFU=; b=gq55Bm5ZzW0v87OkSfm5IZHvsmbCAoWKZ1EYQXIJbme9Pg
+ z6sQ32D7zLO1avFwGT7RRh1s5/4/hdkBCYvn+dxg+muroUL0/n9vJ473UM5Dw44Q
+ xJdXj4rAS7YYdPPHiLqtcJ+G0jlPKLT68tW7Hk7gvfU2nEP9IMceAbbYiuCx8V2V
+ pchqMTrEkkuACfAjEqd/ECJqMuIGdDhjd2g7JUDbKALxbshureeIChEFanS64Qm+
+ gOSGpqRtldD5ra9ce76wrP3L/ZE5nnoRIp+7U7Smz0olB6q6JozSQgQbJUHxuN6n
+ 93OP42f5oNsF/rYgMy5R+loQ+9edV12otm05xt8g==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 460mufunjv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Apr 2025 13:34:29 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53E9ZpvV010392;
+ Mon, 14 Apr 2025 13:34:28 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4604qjx4ca-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Apr 2025 13:34:28 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53EDYOTd41419130
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Apr 2025 13:34:24 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 85AA62004B;
+ Mon, 14 Apr 2025 13:34:24 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6249020043;
+ Mon, 14 Apr 2025 13:34:24 +0000 (GMT)
+Received: from osiris (unknown [9.155.199.163])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 14 Apr 2025 13:34:24 +0000 (GMT)
+Date: Mon, 14 Apr 2025 15:34:23 +0200
+From: Steffen Eiden <seiden@linux.ibm.com>
+To: Gautam Gala <ggala@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH 3/4] hw/s390x/s390-virtio-ccw: Remove the deprecated 3.1
- machine type
-Date: Mon, 14 Apr 2025 15:29:13 +0200
-Message-ID: <20250414132914.250423-4-thuth@redhat.com>
-In-Reply-To: <20250414132914.250423-1-thuth@redhat.com>
-References: <20250414132914.250423-1-thuth@redhat.com>
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v1 1/3] target/s390x: Introduce constant when checking if
+ PV header couldn't be decrypted
+Message-ID: <20250414133423.61624-C-seiden@linux.ibm.com>
+References: <20250411092233.418164-1-ggala@linux.ibm.com>
+ <20250411092233.418164-2-ggala@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250411092233.418164-2-ggala@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: wvJZa0LzFiV9fBEs1yAFn5xw54afOuHi
+X-Proofpoint-ORIG-GUID: wvJZa0LzFiV9fBEs1yAFn5xw54afOuHi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_04,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1011 malwarescore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=760 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504140098
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=seiden@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,97 +109,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Fri, Apr 11, 2025 at 11:22:31AM +0200, Gautam Gala wrote:
+> Introduce a named constant when checking the Set Secure Configuration parameters
+> UV call return code for the case where no valid host key was found and therefore
+> the PV header couldn't be decrypted (0x108).
+> 
+> Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
 
-The s390-ccw-virtio-3.1 machine is older than 6 years, so according to
-our machine support policy, it can be removed now. The corresponding
-v3.1 CPU feature group can now be removed, too.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/s390x/s390-virtio-ccw.c  | 16 ----------------
- target/s390x/gen-features.c | 33 ---------------------------------
- 2 files changed, 49 deletions(-)
-
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index a4fe1e47150..3e346749a06 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1155,22 +1155,6 @@ static void ccw_machine_4_0_class_options(MachineClass *mc)
- }
- DEFINE_CCW_MACHINE(4, 0);
- 
--static void ccw_machine_3_1_instance_options(MachineState *machine)
--{
--    static const S390FeatInit qemu_cpu_feat = { S390_FEAT_LIST_QEMU_V3_1 };
--    ccw_machine_4_0_instance_options(machine);
--    s390_cpudef_featoff_greater(14, 1, S390_FEAT_MULTIPLE_EPOCH);
--    s390_cpudef_group_featoff_greater(14, 1, S390_FEAT_GROUP_MULTIPLE_EPOCH_PTFF);
--    s390_set_qemu_cpu_model(0x2827, 12, 2, qemu_cpu_feat);
--}
--
--static void ccw_machine_3_1_class_options(MachineClass *mc)
--{
--    ccw_machine_4_0_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_3_1, hw_compat_3_1_len);
--}
--DEFINE_CCW_MACHINE(3, 1);
--
- static void ccw_machine_register_types(void)
- {
-     type_register_static(&ccw_machine_info);
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 150e4d18438..0dbc5e181fb 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -844,38 +844,6 @@ static uint16_t default_GEN17_GA1[] = {
- 
- /* QEMU (CPU model) features */
- 
--static uint16_t qemu_V3_1[] = {
--    S390_FEAT_DAT_ENH,
--    S390_FEAT_IDTE_SEGMENT,
--    S390_FEAT_STFLE,
--    S390_FEAT_SENSE_RUNNING_STATUS,
--    S390_FEAT_EXTENDED_TRANSLATION_2,
--    S390_FEAT_MSA,
--    S390_FEAT_LONG_DISPLACEMENT,
--    S390_FEAT_LONG_DISPLACEMENT_FAST,
--    S390_FEAT_EXTENDED_IMMEDIATE,
--    S390_FEAT_EXTENDED_TRANSLATION_3,
--    S390_FEAT_ETF2_ENH,
--    S390_FEAT_STORE_CLOCK_FAST,
--    S390_FEAT_MOVE_WITH_OPTIONAL_SPEC,
--    S390_FEAT_ETF3_ENH,
--    S390_FEAT_EXTRACT_CPU_TIME,
--    S390_FEAT_COMPARE_AND_SWAP_AND_STORE,
--    S390_FEAT_COMPARE_AND_SWAP_AND_STORE_2,
--    S390_FEAT_GENERAL_INSTRUCTIONS_EXT,
--    S390_FEAT_EXECUTE_EXT,
--    S390_FEAT_SET_PROGRAM_PARAMETERS,
--    S390_FEAT_FLOATING_POINT_SUPPORT_ENH,
--    S390_FEAT_STFLE_45,
--    S390_FEAT_STFLE_49,
--    S390_FEAT_LOCAL_TLB_CLEARING,
--    S390_FEAT_INTERLOCKED_ACCESS_2,
--    S390_FEAT_ADAPTER_EVENT_NOTIFICATION,
--    S390_FEAT_ADAPTER_INT_SUPPRESSION,
--    S390_FEAT_MSA_EXT_3,
--    S390_FEAT_MSA_EXT_4,
--};
--
- static uint16_t qemu_V4_0[] = {
-     /*
-      * Only BFP bits are implemented (HFP, DFP, PFPO and DIVIDE TO INTEGER not
-@@ -1047,7 +1015,6 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-  * QEMU (CPU model) features
-  *******************************/
- static FeatGroupDefSpec QemuFeatDef[] = {
--    QEMU_FEAT_INITIALIZER(V3_1),
-     QEMU_FEAT_INITIALIZER(V4_0),
-     QEMU_FEAT_INITIALIZER(V4_1),
-     QEMU_FEAT_INITIALIZER(V6_0),
--- 
-2.49.0
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
 
 
