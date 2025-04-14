@@ -4,88 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273BDC369B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 10:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6B1C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 10:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4HQN-0002bQ-7J; Mon, 14 Apr 2025 06:52:24 -0400
+	id 1u4HV3-0003vB-Cc; Mon, 14 Apr 2025 06:57:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4HQH-0002ZU-5T
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 06:52:17 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4HQF-0007n4-LQ
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 06:52:16 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3914bc3e01aso2229560f8f.2
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 03:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744627933; x=1745232733; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3ZrqRr5HPjC7mQLam6H1rwgMMkgsj7fVAo7GxFBLLa4=;
- b=FVUDjm17nJnv8Mbh88kaY0tSFHr07cB+IYdPm+lRhqk+XFydsgzrp9IaisAyV3T1xo
- ku+Awd/57vU8zzEUsxEDuLEcYaaTMte03ph37vQWE3e9DTeXvuxK/8njfiRswYHn0alX
- c+xn5GeBR+ZB3Td45HwpUxn3eDXuyvkbABNhN/cfCZwY+nL8EB+e2NyFVIVqlO8WL0iq
- pTIIxfd0wrhySakWUziQmlO8BpFDtsUVOz1FT4lxQ3CBUbEc1+WrauFQ2ajMEpe/gCKc
- 8BxFZFH+zWrpwWR0BJ2c5n2egBLehHxvQdXOs4WmAk+vT1aB2wCyK3Uo1HQVylGIkgP8
- ZWfA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u4HUy-0003uF-JY
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 06:57:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u4HUx-0008Nv-5r
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 06:57:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744628225;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AU/6w6Mt/TK/rtTsO+4KvA3bUXlqruFH2A0OZ7uhg1s=;
+ b=bumz265GMWV/FmDx4Ex8qG66JFtejgr0jofHb8W9kjjhHMvXYdrPI90bhv7/gx3X4Wx19M
+ d7d81FI6On7u8JS2GRdc19c9b/fgCTdh7zo/l7abohybdgcKq2a+8m9e6MfDJty12kA9r+
+ 9IUrs6QUGQFONTQHpgIaiWffXQDxdio=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-142-AnXymfr4NxCZWlg8iV1D9A-1; Mon, 14 Apr 2025 06:57:04 -0400
+X-MC-Unique: AnXymfr4NxCZWlg8iV1D9A-1
+X-Mimecast-MFC-AGG-ID: AnXymfr4NxCZWlg8iV1D9A_1744628223
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39c30f26e31so2820642f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 03:57:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744627933; x=1745232733;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3ZrqRr5HPjC7mQLam6H1rwgMMkgsj7fVAo7GxFBLLa4=;
- b=qnIdXSKK0Pn+XFmY7edu4+iZdbgujkfr/7l7/wz0/55rbFzDh8W41rQ8NvWAIE1usj
- 5NvQhMa5nk1OAJL0934dIDBxqUsWAlqfd5cqGktQ2PLST5GkXAOZu4wStDVJnMkeW3EP
- nrxp02rGbZRjUZXFqbcQWRoSl88kbK55OhCmDfdIQ6I2K6ozFev0dn2HUpWfDnYQZxjb
- bOLd2KYJfiv4I1zdkB56xPl8T6ZioQGFpIN0adexOPfsD/gI/7o6O/Cldh6AqHLKPoNa
- cp42C3OY9g3Yu+i4PwVa0ZoRFGyquToWfIujZ/dCSiITwHqrGK2ASJ4q9ylcAc5ilNCp
- 5RQw==
-X-Gm-Message-State: AOJu0YyWLWr2O/PY/FvtqFr+TAjFH5xwK3SXef+DQddQTVUgIzRwnWOk
- 9QEbqRSaDu9/IpY+Pw+XL+Qf9xLwROX0rN0MV1iXSf92OIiRov32SCuHn0I0KHIGoGTHMQCsTM+
- C
-X-Gm-Gg: ASbGncthgSzJ5iQgWs2LN46sw/phBgcv0XzdbSxkcUJFn3ZT2zLsAhOYujd+kvYABAr
- qxS+5z0MdGrLVndV7yepqbp7PT7dCrYG9T0+aje3avIIB76i2+9t3hh9382gOWW7fFcXuvPkJaG
- dOkF3jezk7pshA0Z8V3BqLeZndKuGCnch2xjHY5zTS5q+Le1T5LWkD2q1U4Q1aBy1glrQbb955f
- 7FcWr6ebYqXlkqzU03sVsC4A1lNWpQIgByu7MvJ9ar8PAJlup13+Vse+JqCTvVC/6TSdv5ZkG4k
- yiLpDY+5bO83AoIq9txx1KDcp+D5e+5zH9cU5aimp/gFwzeXrdPUO4KDfL+k2fjBJCjhP5t79Oa
- TDOI/n9tn5TwZSEofHR4=
-X-Google-Smtp-Source: AGHT+IE1Vkt20mP/0fbEm+TKjleqaY6Uacix0pOns8Du60ZHogi89K+1ktxm9QWDrMu0J2Wm1XFAiA==
-X-Received: by 2002:a05:6000:2282:b0:391:39bd:a361 with SMTP id
- ffacd0b85a97d-39ea51f5a3bmr9118452f8f.18.1744627933187; 
- Mon, 14 Apr 2025 03:52:13 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eae979637sm10810593f8f.53.2025.04.14.03.52.12
+ d=1e100.net; s=20230601; t=1744628223; x=1745233023;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AU/6w6Mt/TK/rtTsO+4KvA3bUXlqruFH2A0OZ7uhg1s=;
+ b=dB4/p9HyvrlHlActThwtQ89Fhqe2pg1vk6cpaNz1++mV/yyX0oWNIPpVcZERPCHbWt
+ aQtg72pqHOouxEH8D6KCgd/Yuh4tBPeWEwjM3t0mAElkOp4LlQBBtSAzkgCB3han6RSC
+ fH5wVH1T+OJxnpIReZaSnRjne7euDWBUXpP+nBfrSv5ixPG6OfEK+IS7mnkO0J+gQLG0
+ NekdSEZTH9nahpZpX4jL+zejokyYhQdKnJAc7qV8OAPjILH++KDCro35liAU0PLr0Ock
+ b2nbnYqN30PoP5P1RF8fbssNMeGDiMrN+ia/XeQwqI518g0YYEhK9tZ+nnv0cOodjcNg
+ y4LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUt11L2RKPzIACKG45/prfAv5iXSx5aSBNDV6YRjJw0hjwABzcuqKSKIC8Jq5SMMTWZxieBX6OVfDM@nongnu.org
+X-Gm-Message-State: AOJu0YwGHgAVnQZ/ZWTONB3XaAN9WeIH9oLfXjF9qWlrL70WFRoj7JWV
+ YbGapECLtQkGSiAIvbm/uZj+U6lxAXSPjI/KMWBP02kwxSvrqNrDFfPA5jnXm+bFSS1JoWIBoJE
+ z2laCCOpmR+IulABZeu5q2wWM/rZI/zTFATGpmx6GGVs8NUgkQapf
+X-Gm-Gg: ASbGncvA1cUV7be5aLIMfGnEQCYFxxB3IJU9XA14wM/SfxYI+VvRwVcnriIDCWcyNkZ
+ bSNTcnFqDy7DmX4GPPovS/SLYKcrf9nlBg5f6c2lTtE6Y3UENpXjulboDbkmabdWuLSk7HcV2Vb
+ TQjLhQ9Qfa1gdFa+D8yysoNGpJgmu/xIwR3Yb9iA2baSDk5BQI6gAxtKbBiPNb1v27ylGMzxG7T
+ aZSszSQHLs2gBUz/D/wtQjPUo1w1t906a75aurFSiWuFw5tg0UDyPCfUlub71BbuxR5WON+j+KO
+ GVzVJJZwky2AFao+
+X-Received: by 2002:a05:6000:2401:b0:391:212:459a with SMTP id
+ ffacd0b85a97d-39ea521207fmr8616627f8f.22.1744628222855; 
+ Mon, 14 Apr 2025 03:57:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6GzRnbYHfsHjcYOVRGfR4i1sVbF1U8JrYq3DmXWXtf7sYpXMq3Kv+uuz1TD7o2eDncPJwTQ==
+X-Received: by 2002:a05:6000:2401:b0:391:212:459a with SMTP id
+ ffacd0b85a97d-39ea521207fmr8616607f8f.22.1744628222432; 
+ Mon, 14 Apr 2025 03:57:02 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.109.83])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-39eae96c6b8sm10730213f8f.37.2025.04.14.03.57.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Apr 2025 03:52:12 -0700 (PDT)
-Message-ID: <af5ab3aa-f72a-4668-aa64-ae09755f0e58@linaro.org>
-Date: Mon, 14 Apr 2025 12:52:12 +0200
+ Mon, 14 Apr 2025 03:57:01 -0700 (PDT)
+Message-ID: <4838b44b-49db-4f47-96da-52b9504b4f67@redhat.com>
+Date: Mon, 14 Apr 2025 12:57:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] target/loongarch: Code cleanup with function
- loongarch_map_address
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20250414012528.4075447-1-maobibo@loongson.cn>
+Subject: Re: [PATCH 1/2] system/main: transfer replay mutex ownership from
+ main thread to main loop thread
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
+ <20250410225550.46807-2-pierrick.bouvier@linaro.org>
+ <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
+ <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250414012528.4075447-1-maobibo@loongson.cn>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,28 +154,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bibo,
-
-On 14/4/25 03:25, Bibo Mao wrote:
-> Get physical address from virtual address is important for qmp command to
-> dump memory content. In TCG mode, it searches TLB tables firstly and
-> then do page table walker. In KVM mode, there is no TLB tables and page
-> table walker is used directly.
+On 4/12/25 19:24, Pierrick Bouvier wrote:
+> On 4/11/25 22:30, Nicholas Piggin wrote:
+>> Do we actually need to hold replay mutex (or even bql) over qemu_init()?
+>> Both should get dropped before we return here. But as a simple fix, I
+>> guess this is okay.
 > 
-> Here TLB tables searching is moved to directory tcg, and code about page
-> table walker is put in common part so that it can be used in KVM mode
-> also.
-> 
-> Bibo Mao (5):
->    target/loongarch: Move header file helper.h to directory tcg
->    target/loongarch: Add function loongarch_get_addr_from_tlb
->    target/loongarch: Move function get_dir_base_width to common directory
->    target/loongarch: Set function loongarch_map_address() with common
->      code
->    target/loongarch: Move function loongarch_tlb_search to directory tcg
+> For the bql, I don't know the exact reason.
 
-Please check if changes in patches 4 & 5 need adjustment.
-Otherwise for the series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+In general it's better to assume that there can be other threads (and 
+therefore you need BQL).
+
+Also, Rust code panics if you access a BqlCell or BqlRefCell without 
+holding the lock.
+
+Paolo
 
 
