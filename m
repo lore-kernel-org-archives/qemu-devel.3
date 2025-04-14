@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E67FC369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FFFC369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4I2K-0003na-LU; Mon, 14 Apr 2025 07:31:36 -0400
+	id 1u4I2A-0003Zg-8o; Mon, 14 Apr 2025 07:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1k-0003Vk-B7
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1n-0003WC-I3
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1i-0003wB-ID
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1l-0003wl-MW
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744630257;
+ s=mimecast20190719; t=1744630260;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aF74lNmpX+5QNfKZxlD+JtFGLxYnqnODpVhAJIrKW/s=;
- b=GYEAkS7iSZu1yPXZDhimS8fCI/Q5SR1+D/IITPIQMsyiC+/g39xNwds/38rZTuBvmzynzh
- Joq2PyUj3mKpmTjsT94kTpZ+4x/GOT6mGGa6vOFBwmjzDfZ9dAt7lMMjn5t3HwP+QmtnPT
- gXigVU1QMiMJYdh9xZF+ekBNoEDxKd4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ehssBvTBsCznQI3l0ZFsD4u7xuCreomGBJBuvFctdBo=;
+ b=Y8YCethKJkAA5elaxK0PEYm5WMQQ9BdXr/welEzQtn8SAZrOXlv6KKhBI5FMTNUS6UOw2z
+ 0T46qQn0AoaDfUZVajU06fMbWkR5wzj7XqlJxNfvOXLQ7E4wxcOkTWNpvJpoZGSlvRyMDM
+ YaVQiBo2R2ZFw0Py97YoDWJOQYxBUjA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-AWkx1PB3MQGka3RE5dujmw-1; Mon,
- 14 Apr 2025 07:30:49 -0400
-X-MC-Unique: AWkx1PB3MQGka3RE5dujmw-1
-X-Mimecast-MFC-AGG-ID: AWkx1PB3MQGka3RE5dujmw_1744630248
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-601-htv33V5LNquKHBFqzMnZCA-1; Mon,
+ 14 Apr 2025 07:30:58 -0400
+X-MC-Unique: htv33V5LNquKHBFqzMnZCA-1
+X-Mimecast-MFC-AGG-ID: htv33V5LNquKHBFqzMnZCA_1744630257
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44A11195609F; Mon, 14 Apr 2025 11:30:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78FE4180035C; Mon, 14 Apr 2025 11:30:57 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 26B541956094; Mon, 14 Apr 2025 11:30:44 +0000 (UTC)
+ id 5C8B71956094; Mon, 14 Apr 2025 11:30:56 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH v2 07/15] tests/functional: Convert the 32-bit little endian
- Wheezy mips test
-Date: Mon, 14 Apr 2025 13:30:21 +0200
-Message-ID: <20250414113031.151105-8-thuth@redhat.com>
+Subject: [PATCH v2 14/15] gitlab-ci: Update QEMU_JOB_AVOCADO and
+ QEMU_CI_AVOCADO_TESTING
+Date: Mon, 14 Apr 2025 13:30:28 +0200
+Message-ID: <20250414113031.151105-15-thuth@redhat.com>
 In-Reply-To: <20250414113031.151105-1-thuth@redhat.com>
 References: <20250414113031.151105-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -87,88 +87,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Reuse the test function from the big endian test to easily
-convert the 32-bit little endian Wheezy mips test.
+Since we don't run the Avocado jobs in the CI anymore, rename
+these variables to QEMU_JOB_FUNCTIONAL and QEMU_CI_FUNCTIONAL.
+
+Also, there was a mismatch between the documentation and the
+implementation of QEMU_CI_AVOCADO_TESTING: While the documentation
+said that you had to "Set this variable to have the tests using the
+Avocado framework run automatically", you indeed needed to set it
+to make the pipelines appear in your dashboard - but they were never
+run automatically in forks and had to be triggered manually. Let's
+improve this now: No need to hide these pipelines from the users
+by default anymore (the functional tests should be stable enough
+nowadays), and rather allow the users to run the pipelines auto-
+matically with this switch now instead, as was documented.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/linux_ssh_mips_malta.py |  8 --------
- tests/functional/meson.build          |  1 +
- tests/functional/test_mipsel_malta.py | 22 ++++++++++++++++++++++
- 3 files changed, 23 insertions(+), 8 deletions(-)
+ docs/devel/testing/ci-jobs.rst.inc  | 19 +++++++++----------
+ .gitlab-ci.d/base.yml               |  8 ++------
+ .gitlab-ci.d/buildtest-template.yml |  2 +-
+ 3 files changed, 12 insertions(+), 17 deletions(-)
 
-diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
-index 73d294ad5cf..c1300aec961 100644
---- a/tests/avocado/linux_ssh_mips_malta.py
-+++ b/tests/avocado/linux_ssh_mips_malta.py
-@@ -172,14 +172,6 @@ def check_mips_malta(self, uname_m, endianess):
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
+diff --git a/docs/devel/testing/ci-jobs.rst.inc b/docs/devel/testing/ci-jobs.rst.inc
+index 3756bbe3554..f1c541cc25b 100644
+--- a/docs/devel/testing/ci-jobs.rst.inc
++++ b/docs/devel/testing/ci-jobs.rst.inc
+@@ -126,10 +126,10 @@ QEMU_JOB_PUBLISH
+ The job is for publishing content after a branch has been
+ merged into the upstream default branch.
  
--    def test_mips_malta32el_kernel3_2_0(self):
--        """
--        :avocado: tags=arch:mipsel
--        :avocado: tags=endian:little
--        :avocado: tags=device:pcnet32
--        """
--        self.check_mips_malta('mips', 'le')
+-QEMU_JOB_AVOCADO
+-~~~~~~~~~~~~~~~~
++QEMU_JOB_FUNCTIONAL
++~~~~~~~~~~~~~~~~~~~
+ 
+-The job runs the Avocado integration test suite
++The job runs the functional test suite
+ 
+ Contributor controlled runtime variables
+ ----------------------------------------
+@@ -149,13 +149,12 @@ the jobs to be manually started from the UI
+ Set this variable to 2 to create the pipelines and run all
+ the jobs immediately, as was the historical behaviour
+ 
+-QEMU_CI_AVOCADO_TESTING
+-~~~~~~~~~~~~~~~~~~~~~~~
+-By default, tests using the Avocado framework are not run automatically in
+-the pipelines (because multiple artifacts have to be downloaded, and if
+-these artifacts are not already cached, downloading them make the jobs
+-reach the timeout limit). Set this variable to have the tests using the
+-Avocado framework run automatically.
++QEMU_CI_FUNCTIONAL
++~~~~~~~~~~~~~~~~~~
++By default, tests using the functional framework are not run automatically
++in the pipelines (because multiple artifacts have to be downloaded, which
++might cause a lot of network traffic). Set this variable to have the tests
++using the functional framework run automatically.
+ 
+ Other misc variables
+ --------------------
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index 25b88aaa06a..60a24a9d14d 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -69,10 +69,6 @@ variables:
+     - if: '$QEMU_CI != "1" && $QEMU_CI != "2" && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
+       when: never
+ 
+-    # Avocado jobs don't run in forks unless $QEMU_CI_AVOCADO_TESTING is set
+-    - if: '$QEMU_JOB_AVOCADO && $QEMU_CI_AVOCADO_TESTING != "1" && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
+-      when: never
 -
-     def test_mips_malta64eb_kernel3_2_0(self):
-         """
-         :avocado: tags=arch:mips64
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 4dedfc7b9f7..cba0abf2920 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -40,6 +40,7 @@ test_timeouts = {
-   'arm_sx1' : 360,
-   'intel_iommu': 300,
-   'mips_malta' : 480,
-+  'mipsel_malta' : 420,
-   'mipsel_replay' : 480,
-   'mips64el_replay' : 180,
-   'netdev_ethtool' : 180,
-diff --git a/tests/functional/test_mipsel_malta.py b/tests/functional/test_mipsel_malta.py
-index fe9c3a172e6..9ee2884da8e 100755
---- a/tests/functional/test_mipsel_malta.py
-+++ b/tests/functional/test_mipsel_malta.py
-@@ -13,6 +13,8 @@
- from qemu_test import interrupt_interactive_console_until_pattern
- from qemu_test import wait_for_console_pattern
  
-+from test_mips_malta import mips_check_wheezy
-+
+     #############################################################
+     # Stage 2: fine tune execution of jobs in specific scenarios
+@@ -101,8 +97,8 @@ variables:
+       when: manual
+       allow_failure: true
  
- class MaltaMachineConsole(LinuxKernelTest):
+-    # Avocado jobs can be manually start in forks if $QEMU_CI_AVOCADO_TESTING is unset
+-    - if: '$QEMU_JOB_AVOCADO && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
++    # Functional jobs can be manually started in forks
++    - if: '$QEMU_JOB_FUNCTIONAL && $QEMU_CI_FUNCTIONAL != "1" && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
+       when: manual
+       allow_failure: true
  
-@@ -57,6 +59,26 @@ def test_mips_malta32el_nanomips_16k_up(self):
-     def test_mips_malta32el_nanomips_64k_dbg(self):
-         self.do_test_mips_malta32el_nanomips(self.ASSET_KERNEL_64K)
- 
-+    ASSET_WHEEZY_KERNEL = Asset(
-+        ('https://people.debian.org/~aurel32/qemu/mipsel/'
-+         'vmlinux-3.2.0-4-4kc-malta'),
-+        'dc8a3648305b0201ca7a5cd135fe2890067a65d93c38728022bb0e656ad2bf9a')
-+
-+    ASSET_WHEEZY_DISK = Asset(
-+        ('https://people.debian.org/~aurel32/qemu/mipsel/'
-+         'debian_wheezy_mipsel_standard.qcow2'),
-+        '454f09ae39f7e6461c84727b927100d2c7813841f2a0a5dce328114887ecf914')
-+
-+    def test_wheezy(self):
-+        kernel_path = self.ASSET_WHEEZY_KERNEL.fetch()
-+        image_path = self.ASSET_WHEEZY_DISK.fetch()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
-+                               + 'console=ttyS0 root=/dev/sda1')
-+        mips_check_wheezy(self,
-+            kernel_path, image_path, kernel_command_line,
-+            dl_file='/boot/initrd.img-3.2.0-4-4kc-malta',
-+            hsum='9fc9f250ed56a74e35e704ddfd5a1c5a5625adefc5c9da91f649288d3ca000f0')
-+
- 
- class MaltaMachineYAMON(QemuSystemTest):
- 
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 13fa4f4a4fc..d4f145fdb58 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -114,4 +114,4 @@
+     - cd build
+     - du -chs ${CI_PROJECT_DIR}/*-cache
+   variables:
+-    QEMU_JOB_AVOCADO: 1
++    QEMU_JOB_FUNCTIONAL: 1
 -- 
 2.49.0
 
