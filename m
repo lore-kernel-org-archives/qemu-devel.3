@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3023C369B4
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 14:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B6FC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 14:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4KoI-0003J5-OU; Mon, 14 Apr 2025 10:29:18 -0400
+	id 1u4KoI-0003J2-JX; Mon, 14 Apr 2025 10:29:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4KoD-0003EE-25; Mon, 14 Apr 2025 10:29:14 -0400
+ id 1u4KoD-0003EF-Ed; Mon, 14 Apr 2025 10:29:14 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4KoB-00064c-7o; Mon, 14 Apr 2025 10:29:12 -0400
+ id 1u4KoB-00066q-LS; Mon, 14 Apr 2025 10:29:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744640951; x=1776176951;
+ t=1744640952; x=1776176952;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=KnEVRmkcMIjIQwxvCGT+LbKbf6vs9GNqHGy18nPzohw=;
- b=adw62zf9KCrkSlE5zEXvxrWfr+o+azJu+kCndv7u3JTqDXxdkMoKqgqK
- gYDX+40tjeyEnZlAFgl28+Rfq5uRbCswMufuTPL8qyYU3aveQKDKHzdIN
- DwxAVDErv2Nq6ltwXgp1izaaPHX8K0HFJ2Bpk+rqVNlk+mHsavXMOeLBN
- rRIkYUGwYWNyG4J+M9NYgkC+2QuUwOzQLC9F88Uid57AJMO6+URHdBcOI
- rUhmK+DT9UrhRUe+ehte3E6WndOlTFAW0hLQs1FIgmgh/5RDBPFGRoXFA
- Y2BwnUJZ9FcWIyZ53byXuG6ND9dkKLf/aMWzcnxF7QbfH3eKsO9P+DR0D g==;
-X-CSE-ConnectionGUID: uu4xSA84T1+ATxaKT4qUbw==
-X-CSE-MsgGUID: xabTlAVMSHy7KJnZKwlsbQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11403"; a="71501850"
-X-IronPort-AV: E=Sophos;i="6.15,212,1739865600"; d="scan'208";a="71501850"
+ bh=zxb9LLhjivKhW2dVowN5asrmv67wUZSMMGWnyVhMP5Q=;
+ b=WwaGSMlFYUU5GLSWgxcjHApCEW+EnzUVHeVH6ZKzpy8DX0prwo08ymqx
+ 1S5qGzvW9jc6kgOWCaxuczWJMh1ocrcS4MooKZTeSz964D7/d2M1TadL7
+ edvir3uf+knSME1lXNLV88D2KfvvhKxB+eoLDXNNFD6o79xt9W0bITpNo
+ vHCMf57ezMs66QHbPG7axcVjZ4c5gqam16uzXFgNjO+DaWX5npuPoAYc1
+ HG6oaRgKpwx4AzM2UjYBLLjeuvY29Pm23BqRsc1cwWEDG7sZFZBxdd0RG
+ x80XwqA1rkwB/wJqTfwJGbNUTa11oA6BAVdtrc85lA9HDHWmNT0V7TpfV w==;
+X-CSE-ConnectionGUID: v5HEKrJWQGmZaF4aEYenqw==
+X-CSE-MsgGUID: es3+rSaQQ5qDegSxHhhmLw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11403"; a="71501855"
+X-IronPort-AV: E=Sophos;i="6.15,212,1739865600"; d="scan'208";a="71501855"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2025 07:29:07 -0700
-X-CSE-ConnectionGUID: Ae+5aztLRxG6Mb7NAKOw/A==
-X-CSE-MsgGUID: Vdm4i2ThQLKeiMEysP/hjg==
+ 14 Apr 2025 07:29:08 -0700
+X-CSE-ConnectionGUID: Kjgjjjq3TXuKhHmALl+MNg==
+X-CSE-MsgGUID: 0rI9w6P1Qmy46NUIPBftJA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,212,1739865600"; d="scan'208";a="134606083"
+X-IronPort-AV: E=Sophos;i="6.15,212,1739865600"; d="scan'208";a="134606087"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 14 Apr 2025 07:29:05 -0700
+ by fmviesa005.fm.intel.com with ESMTP; 14 Apr 2025 07:29:07 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 6/9] rust/hpet: convert num_timers to u8 type
-Date: Mon, 14 Apr 2025 22:49:40 +0800
-Message-Id: <20250414144943.1112885-7-zhao1.liu@intel.com>
+Subject: [PATCH 7/9] rust/hpet: convert HPETTimer index to u8 type
+Date: Mon, 14 Apr 2025 22:49:41 +0800
+Message-Id: <20250414144943.1112885-8-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250414144943.1112885-1-zhao1.liu@intel.com>
 References: <20250414144943.1112885-1-zhao1.liu@intel.com>
@@ -80,134 +80,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The C version of HPET uses the uint8_t type for num_timers, and usize
-type in Rust version will break migration between the C and Rust
+The C version of HPET uses the uint8_t type for timer index ("tn"), and
+usize type in Rust version will break migration between the C and Rust
 versions.
 
-So convert num_timers' type to u8 (consistent with the C version of
+So convert HPETTimer index' type to u8 (consistent with the C version of
 HPET) to make it friendly for vmstate support.
-
-Note the commit 7bda68e8e2b0 ("qdev, rust/hpet: fix type of HPET
-'timers property") supports the usize type property, but the uint8
-property has to be re-supported now.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/hw/timer/hpet/src/hpet.rs | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ rust/hw/timer/hpet/src/hpet.rs | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 3ae3ec25f17a..1afa891362fa 100644
+index 1afa891362fa..dc8a23f29d95 100644
 --- a/rust/hw/timer/hpet/src/hpet.rs
 +++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -12,7 +12,7 @@
- use qemu_api::{
-     bindings::{
-         address_space_memory, address_space_stl_le, qdev_prop_bit, qdev_prop_bool,
--        qdev_prop_uint32, qdev_prop_usize,
-+        qdev_prop_uint32, qdev_prop_uint8,
-     },
-     c_str,
-     cell::{BqlCell, BqlRefCell},
-@@ -34,9 +34,9 @@
- const HPET_REG_SPACE_LEN: u64 = 0x400; // 1024 bytes
- 
- /// Minimum recommended hardware implementation.
--const HPET_MIN_TIMERS: usize = 3;
-+const HPET_MIN_TIMERS: u8 = 3;
- /// Maximum timers in each timer block.
--const HPET_MAX_TIMERS: usize = 32;
-+const HPET_MAX_TIMERS: u8 = 32;
- 
- /// Flags that HPETState.flags supports.
- const HPET_FLAG_MSI_SUPPORT_SHIFT: usize = 0;
-@@ -559,14 +559,19 @@ pub struct HPETState {
- 
-     /// HPET timer array managed by this timer block.
-     #[doc(alias = "timer")]
--    timers: [BqlRefCell<HPETTimer>; HPET_MAX_TIMERS],
--    num_timers: BqlCell<usize>,
-+    timers: [BqlRefCell<HPETTimer>; HPET_MAX_TIMERS as usize],
-+    num_timers: BqlCell<u8>,
- 
-     /// Instance id (HPET timer block ID).
-     hpet_id: BqlCell<usize>,
+@@ -184,7 +184,7 @@ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
+ pub struct HPETTimer {
+     /// timer N index within the timer block (`HPETState`)
+     #[doc(alias = "tn")]
+-    index: usize,
++    index: u8,
+     qemu_timer: Timer,
+     /// timer block abstraction containing this timer
+     state: NonNull<HPETState>,
+@@ -210,7 +210,7 @@ pub struct HPETTimer {
  }
  
- impl HPETState {
-+    // Get num_timers with `usize` type, which is useful to play with array index.
-+    fn get_num_timers(&self) -> usize {
-+        self.num_timers.get().into()
-+    }
-+
-     const fn has_msi_flag(&self) -> bool {
-         self.flags & (1 << HPET_FLAG_MSI_SUPPORT_SHIFT) != 0
-     }
-@@ -628,7 +633,7 @@ fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
-             self.hpet_offset
-                 .set(ticks_to_ns(self.counter.get()) - CLOCK_VIRTUAL.get_ns());
- 
--            for timer in self.timers.iter().take(self.num_timers.get()) {
-+            for timer in self.timers.iter().take(self.get_num_timers()) {
-                 let mut t = timer.borrow_mut();
- 
-                 if t.is_int_enabled() && t.is_int_active() {
-@@ -640,7 +645,7 @@ fn set_cfg_reg(&self, shift: u32, len: u32, val: u64) {
-             // Halt main counter and disable interrupt generation.
-             self.counter.set(self.get_ticks());
- 
--            for timer in self.timers.iter().take(self.num_timers.get()) {
-+            for timer in self.timers.iter().take(self.get_num_timers()) {
-                 timer.borrow_mut().del_timer();
-             }
-         }
-@@ -663,7 +668,7 @@ fn set_int_status_reg(&self, shift: u32, _len: u32, val: u64) {
-         let new_val = val << shift;
-         let cleared = new_val & self.int_status.get();
- 
--        for (index, timer) in self.timers.iter().take(self.num_timers.get()).enumerate() {
-+        for (index, timer) in self.timers.iter().take(self.get_num_timers()).enumerate() {
-             if cleared & (1 << index) != 0 {
-                 timer.borrow_mut().update_irq(false);
-             }
-@@ -737,7 +742,7 @@ fn realize(&self) {
-             1 << HPET_CAP_COUNT_SIZE_CAP_SHIFT |
-             1 << HPET_CAP_LEG_RT_CAP_SHIFT |
-             HPET_CAP_VENDER_ID_VALUE << HPET_CAP_VENDER_ID_SHIFT |
--            ((self.num_timers.get() - 1) as u64) << HPET_CAP_NUM_TIM_SHIFT | // indicate the last timer
-+            ((self.get_num_timers() - 1) as u64) << HPET_CAP_NUM_TIM_SHIFT | // indicate the last timer
-             (HPET_CLK_PERIOD * FS_PER_NS) << HPET_CAP_CNT_CLK_PERIOD_SHIFT, // 10 ns
-         );
- 
-@@ -746,7 +751,7 @@ fn realize(&self) {
+ impl HPETTimer {
+-    fn init(&mut self, index: usize, state: &HPETState) {
++    fn init(&mut self, index: u8, state: &HPETState) {
+         *self = HPETTimer {
+             index,
+             // SAFETY: the HPETTimer will only be used after the timer
+@@ -235,7 +235,7 @@ fn init(&mut self, index: usize, state: &HPETState) {
+             Timer::NS,
+             0,
+             timer_handler,
+-            &state.timers[self.index],
++            &state.timers[self.index as usize],
+         )
      }
  
-     fn reset_hold(&self, _type: ResetType) {
--        for timer in self.timers.iter().take(self.num_timers.get()) {
-+        for timer in self.timers.iter().take(self.get_num_timers()) {
-             timer.borrow_mut().reset();
-         }
+@@ -246,7 +246,7 @@ fn get_state(&self) -> &HPETState {
+     }
  
-@@ -774,7 +779,7 @@ fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode {
-             GlobalRegister::try_from(addr).map(HPETRegister::Global)
-         } else {
-             let timer_id: usize = ((addr - 0x100) / 0x20) as usize;
--            if timer_id <= self.num_timers.get() {
-+            if timer_id <= self.get_num_timers() {
-                 // TODO: Add trace point - trace_hpet_ram_[read|write]_timer_id(timer_id)
-                 TimerRegister::try_from(addr & 0x18)
-                     .map(|reg| HPETRegister::Timer(&self.timers[timer_id], reg))
-@@ -859,8 +864,8 @@ impl ObjectImpl for HPETState {
-         c_str!("timers"),
-         HPETState,
-         num_timers,
--        unsafe { &qdev_prop_usize },
--        usize,
-+        unsafe { &qdev_prop_uint8 },
-+        u8,
-         default = HPET_MIN_TIMERS
-     ),
-     qemu_api::define_property!(
+     fn is_int_active(&self) -> bool {
+-        self.get_state().is_timer_int_active(self.index)
++        self.get_state().is_timer_int_active(self.index.into())
+     }
+ 
+     const fn is_fsb_route_enabled(&self) -> bool {
+@@ -611,7 +611,7 @@ fn handle_legacy_irq(&self, irq: u32, level: u32) {
+ 
+     fn init_timer(&self) {
+         for (index, timer) in self.timers.iter().enumerate() {
+-            timer.borrow_mut().init(index, self);
++            timer.borrow_mut().init(index.try_into().unwrap(), self);
+         }
+     }
+ 
 -- 
 2.34.1
 
