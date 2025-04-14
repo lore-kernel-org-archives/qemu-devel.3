@@ -4,141 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6B1C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 10:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C408C369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4HV3-0003vB-Cc; Mon, 14 Apr 2025 06:57:13 -0400
+	id 1u4HoW-0008HW-Da; Mon, 14 Apr 2025 07:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u4HUy-0003uF-JY
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 06:57:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u4HUx-0008Nv-5r
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 06:57:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744628225;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AU/6w6Mt/TK/rtTsO+4KvA3bUXlqruFH2A0OZ7uhg1s=;
- b=bumz265GMWV/FmDx4Ex8qG66JFtejgr0jofHb8W9kjjhHMvXYdrPI90bhv7/gx3X4Wx19M
- d7d81FI6On7u8JS2GRdc19c9b/fgCTdh7zo/l7abohybdgcKq2a+8m9e6MfDJty12kA9r+
- 9IUrs6QUGQFONTQHpgIaiWffXQDxdio=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-AnXymfr4NxCZWlg8iV1D9A-1; Mon, 14 Apr 2025 06:57:04 -0400
-X-MC-Unique: AnXymfr4NxCZWlg8iV1D9A-1
-X-Mimecast-MFC-AGG-ID: AnXymfr4NxCZWlg8iV1D9A_1744628223
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39c30f26e31so2820642f8f.3
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 03:57:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
+ id 1u4HoS-0008HD-KS; Mon, 14 Apr 2025 07:17:16 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
+ id 1u4HoQ-0002Aw-JK; Mon, 14 Apr 2025 07:17:16 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-52446b21cfdso1780988e0c.1; 
+ Mon, 14 Apr 2025 04:17:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744629433; x=1745234233; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FwU/3duoMzPmCLBmlSEEpQ+EfCjeAWRzJJ1nwlpKUxY=;
+ b=YT6JQv501ie46YIu3Nglydh/iRADyVAlcsMgHMuf8w3Wx3PqSKgHOb//jZ/UUhYfbV
+ pYT2BkqQ/WyiWmGBlvMq8ZgVGd5ZipjqQaiV+7OkQ2mx7W8m+vkpd/4zP4D6Af2xrBFc
+ Z7ehq/88SpUwj1O/beJL1RW+N7t5y775qSlOF/3gRnIGppV48KDjM2UzrVYaJ/wAwB7y
+ YDTekP30HlJcWX4lDDOHjbAoZea/wMO0RlfsGeuQLwR/EZSf8027bBmaKrEHl05Tblwd
+ teW0+dkeQRscF82nu8gFUA3Vv7V4xGLqqDUyhIE6/+J6CnQKbNFB7fE2WWPXs99ldukZ
+ f9oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744628223; x=1745233023;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AU/6w6Mt/TK/rtTsO+4KvA3bUXlqruFH2A0OZ7uhg1s=;
- b=dB4/p9HyvrlHlActThwtQ89Fhqe2pg1vk6cpaNz1++mV/yyX0oWNIPpVcZERPCHbWt
- aQtg72pqHOouxEH8D6KCgd/Yuh4tBPeWEwjM3t0mAElkOp4LlQBBtSAzkgCB3han6RSC
- fH5wVH1T+OJxnpIReZaSnRjne7euDWBUXpP+nBfrSv5ixPG6OfEK+IS7mnkO0J+gQLG0
- NekdSEZTH9nahpZpX4jL+zejokyYhQdKnJAc7qV8OAPjILH++KDCro35liAU0PLr0Ock
- b2nbnYqN30PoP5P1RF8fbssNMeGDiMrN+ia/XeQwqI518g0YYEhK9tZ+nnv0cOodjcNg
- y4LA==
+ d=1e100.net; s=20230601; t=1744629433; x=1745234233;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FwU/3duoMzPmCLBmlSEEpQ+EfCjeAWRzJJ1nwlpKUxY=;
+ b=Dz5KIhkzIuGkOrzo/MLM/NCSClJzxvG+0MPCZsaR/P6PflQbVyPZwEzaGswZLT2f00
+ yUhGjUGXXgOkBatN5BzMpzLYx5J+/3dXoyQRxh4gI205t6NQ9K5IEeaT8IBBxhRTNmEy
+ 2WP5JQEG6NIgel+HNROhDA25y0411fqH+HoDcbwi4M8jPyObbZ5apPvqfpW/CEN/pVAT
+ PUsXFBCM20xBD5IfeamxnG9/gzdxpsdbycRBaI1AZ4Lywzh24qVAhc60nmw3xkRmG37o
+ 1luZGxXU1sVumSfULKmJBrbiJWPhhsT/KW7hTTaheEXKefZQh8kXwjLGiQlhJSm3cLVh
+ n2fA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUt11L2RKPzIACKG45/prfAv5iXSx5aSBNDV6YRjJw0hjwABzcuqKSKIC8Jq5SMMTWZxieBX6OVfDM@nongnu.org
-X-Gm-Message-State: AOJu0YwGHgAVnQZ/ZWTONB3XaAN9WeIH9oLfXjF9qWlrL70WFRoj7JWV
- YbGapECLtQkGSiAIvbm/uZj+U6lxAXSPjI/KMWBP02kwxSvrqNrDFfPA5jnXm+bFSS1JoWIBoJE
- z2laCCOpmR+IulABZeu5q2wWM/rZI/zTFATGpmx6GGVs8NUgkQapf
-X-Gm-Gg: ASbGncvA1cUV7be5aLIMfGnEQCYFxxB3IJU9XA14wM/SfxYI+VvRwVcnriIDCWcyNkZ
- bSNTcnFqDy7DmX4GPPovS/SLYKcrf9nlBg5f6c2lTtE6Y3UENpXjulboDbkmabdWuLSk7HcV2Vb
- TQjLhQ9Qfa1gdFa+D8yysoNGpJgmu/xIwR3Yb9iA2baSDk5BQI6gAxtKbBiPNb1v27ylGMzxG7T
- aZSszSQHLs2gBUz/D/wtQjPUo1w1t906a75aurFSiWuFw5tg0UDyPCfUlub71BbuxR5WON+j+KO
- GVzVJJZwky2AFao+
-X-Received: by 2002:a05:6000:2401:b0:391:212:459a with SMTP id
- ffacd0b85a97d-39ea521207fmr8616627f8f.22.1744628222855; 
- Mon, 14 Apr 2025 03:57:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6GzRnbYHfsHjcYOVRGfR4i1sVbF1U8JrYq3DmXWXtf7sYpXMq3Kv+uuz1TD7o2eDncPJwTQ==
-X-Received: by 2002:a05:6000:2401:b0:391:212:459a with SMTP id
- ffacd0b85a97d-39ea521207fmr8616607f8f.22.1744628222432; 
- Mon, 14 Apr 2025 03:57:02 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.109.83])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-39eae96c6b8sm10730213f8f.37.2025.04.14.03.57.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Apr 2025 03:57:01 -0700 (PDT)
-Message-ID: <4838b44b-49db-4f47-96da-52b9504b4f67@redhat.com>
-Date: Mon, 14 Apr 2025 12:57:00 +0200
+ AJvYcCWK8taDMhJXKumQCpcguRxEiOeGxZCTWL8vxLfI6vZFiGURnWsoON7g4wwDL/l20iIZMzsjNXOrfXK8/b4=@nongnu.org
+X-Gm-Message-State: AOJu0YwjP135qnSTr8IMEw9PlJbHkU4yKZewL/U827iOFlgXEa51hqSn
+ SAb/oWbVnAWfWKaihdVkLdv/NJQd7PNKlCq6gC9ZmP3V3cmBSjYoiP+fovgHzSpjpORI526B8GJ
+ wKUeMAksqPUxYuPc1ZjjGcTf6jHTJCfdc
+X-Gm-Gg: ASbGncs2EuiQs+EWi3IxtsgcQLuRfOt2vp1UHYxBwEbVv9zPUitVAkVhlrIGHnZkwVJ
+ bYdsmUHHqET1FqMlQPGfiDP2jJjrC6PaMeyqgORyuqL27lzxQ9w6b83uo+agd2adKkI/gmQ3gSN
+ skCYVUT5srBPCxfnhoNz67Tg==
+X-Google-Smtp-Source: AGHT+IEpy+/cAdKGWOTVqhnbJQN5yxJs38MxXbyz85OxySPY+/rDwZxMhk8szWuKREUW8K7WHSdfsWALGYi72J3w7JA=
+X-Received: by 2002:a05:6122:8c6:b0:526:720:704 with SMTP id
+ 71dfb90a1353d-527c359743fmr6494705e0c.7.1744629432657; Mon, 14 Apr 2025
+ 04:17:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] system/main: transfer replay mutex ownership from
- main thread to main loop thread
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
- <20250410225550.46807-2-pierrick.bouvier@linaro.org>
- <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
- <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250414034626.3491489-1-ziqiaokong@gmail.com>
+ <20250414034626.3491489-2-ziqiaokong@gmail.com>
+ <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
+In-Reply-To: <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
+From: Ziqiao Kong <ziqiaokong@gmail.com>
+Date: Mon, 14 Apr 2025 19:17:00 +0800
+X-Gm-Features: ATxdqUEuKvhtpv_hqx2zhvx-lskXItBGJAWym2WazV_QVc-PR4ipIt4qRhHFGYc
+Message-ID: <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] target/riscv: fix endless translation loop on big
+ endian systems
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alistair.francis@wdc.com, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=ziqiaokong@gmail.com; helo=mail-vk1-xa2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,20 +97,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/12/25 19:24, Pierrick Bouvier wrote:
-> On 4/11/25 22:30, Nicholas Piggin wrote:
->> Do we actually need to hold replay mutex (or even bql) over qemu_init()?
->> Both should get dropped before we return here. But as a simple fix, I
->> guess this is okay.
-> 
-> For the bql, I don't know the exact reason.
+On Mon, Apr 14, 2025 at 6:41=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi,
+>
+> On 14/4/25 05:46, Ziqiao Kong wrote:
+> > On big endian systems, pte and updated_pte hold big endian host data
+> > while pte_pa points to little endian target data. This means the branch
+> > at cpu_helper.c:1669 will be always satisfied and restart translation,
+> > causing an endless translation loop.
+> >
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 0c3e702aca7 ("RISC-V CPU Helpers")
+>
+> > Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
+> > ---
+> >   target/riscv/cpu_helper.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> > index 6c4391d96b..bc146771c8 100644
+> > --- a/target/riscv/cpu_helper.c
+> > +++ b/target/riscv/cpu_helper.c
+> > @@ -1662,9 +1662,9 @@ static int get_physical_address(CPURISCVState *en=
+v, hwaddr *physical,
+> >               target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->ram_block, =
+addr1);
+> >               target_ulong old_pte;
+> >               if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
+> > -                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, pte, u=
+pdated_pte);
+> > +                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to=
+_le32(pte), cpu_to_le32(updated_pte));
+> >               } else {
+> > -                old_pte =3D qatomic_cmpxchg(pte_pa, pte, updated_pte);
+> > +                old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), =
+cpu_to_le64(updated_pte));
+> >               }
+> >               if (old_pte !=3D pte) {
+> >                   goto restart;
+>
+> If PTEs are always stored in LE order, maybe what we want is earlier:
+>
+> -- >8 --
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 619c76cc001..b6ac2800240 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1464,5 +1464,5 @@ static int get_physical_address(CPURISCVState
+> *env, hwaddr *physical,
+>           if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> -            pte =3D address_space_ldl(cs->as, pte_addr, attrs, &res);
+> +            pte =3D address_space_ldl_le(cs->as, pte_addr, attrs, &res);
+>           } else {
+> -            pte =3D address_space_ldq(cs->as, pte_addr, attrs, &res);
+> +            pte =3D address_space_ldq_le(cs->as, pte_addr, attrs, &res);
 
-In general it's better to assume that there can be other threads (and 
-therefore you need BQL).
+Unfortunately, this doesn't work in two ways:
 
-Also, Rust code panics if you access a BqlCell or BqlRefCell without 
-holding the lock.
+1. Note pte is used in the following code and that means pte must hold
+a correct value from the
+view of host endian (in my case, big endian not little endian).
+2. address_space_ldq_le will dispatch to ldq_le_p, while
+address_space_leq will dispatch to ldq_p.
+However, on little endian targets, ldq_p is an alias of ldq_le_p so
+making no effects.
 
-Paolo
+Per my testing, this patch doesn't have any effect indeed. To have a
+brief view what is happening,
+see the logs just before atomic_cmpxchg:
 
+pte_pa 0xf14000000000000 =3D=3D pte 0x140f ? updated_pte 0x144f
+
+>           }
+> ---
 
