@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A6FAC369AE
-	for <qemu-devel@archiver.kernel.org>; Sun, 13 Apr 2025 23:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4582AC3601E
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 01:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u47CP-00064p-Ed; Sun, 13 Apr 2025 19:57:17 -0400
+	id 1u48Sw-0001oZ-Kt; Sun, 13 Apr 2025 21:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1u47CN-00062V-Gt; Sun, 13 Apr 2025 19:57:15 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1u47CI-0003OU-QK; Sun, 13 Apr 2025 19:57:13 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53DLLQ8F009567;
- Sun, 13 Apr 2025 23:57:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bR37VX
- t/cy3Y5PwKxL1zJD+cmvdd7YBlA/CPL/G76PY=; b=o4bGxTuspqL0pZ4txaHAy/
- fcQRw9aEGoHESRargjSBbgM0a8N941FzyDRB4z0Jhh36bxOVFqsLmGCRpx0wKfWO
- ZP9/bqNn0XvFFIVrm0JzK3f6ggJxBPDuy00+/qzEH1/3VADDgF993fA5DHrsL2q9
- +kpnECadCBbkv4xOMDNmf+HC9g4kq50efB3V9jCyAJNKmVpDf8oXaOzcJ6uCzdV8
- AawWfvaVJ2XOlTUlfRB8xTEhM5LezW/K6OO6ExIGbsYPQNbmxfqWQHqPhOZaxX/9
- yaeY5gGFmkCPjOoBXyd3QTIBW/FqPLdO0jv68vOSJZzqPGqyRYOmmHxFZ/8+hOsg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 460bqp9vbs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 13 Apr 2025 23:57:04 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53DNtCwS010435;
- Sun, 13 Apr 2025 23:57:04 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4604qjuhsw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 13 Apr 2025 23:57:04 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53DNv3gt24117906
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 13 Apr 2025 23:57:03 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C31658056;
- Sun, 13 Apr 2025 23:57:03 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9196D5803F;
- Sun, 13 Apr 2025 23:57:01 +0000 (GMT)
-Received: from [9.61.104.222] (unknown [9.61.104.222])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Sun, 13 Apr 2025 23:57:01 +0000 (GMT)
-Message-ID: <e8a542fe-c8f3-40f5-96bd-ee3a7e50197d@linux.ibm.com>
-Date: Sun, 13 Apr 2025 19:57:00 -0400
+ (Exim 4.90_1) (envelope-from <raman.dzehtsiar@gmail.com>)
+ id 1u48Sv-0001oI-6h; Sun, 13 Apr 2025 21:18:25 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <raman.dzehtsiar@gmail.com>)
+ id 1u48Ss-0001wD-SP; Sun, 13 Apr 2025 21:18:24 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cfe63c592so42185185e9.2; 
+ Sun, 13 Apr 2025 18:18:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744593500; x=1745198300; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AFu5qTvL8qDGLhfVf2cgq04HLl4krLoPHAgJSXoIUZQ=;
+ b=NJAHw47JqrNGymE73pZib6loQpOkzTFTeAVsUVG8qkXEK6OB3bCyhWj9eppzju6lWS
+ xMa/zFWRfVoUSP6WD0PR5S9h6HrGOu6JF88wOhHfVEAic/tKWbKJyu4ufEByfDMDSzP6
+ w+nrVhtS6z780nc3XvxStakp27FAqP3IdueGfV6s3WrwBHL6Un5xLeGqouU3hS8wyrWV
+ Rb/kDWxGCI+04JUxX8HQgP5hI6KdaIUFDqLdZHRGSIS1Hgw3g0xUV2R7TCHzEoQKxAlx
+ sWLHqMD98kKTc1CNXsncn6AF9R7aVwY+RMJ2uOHiT7P9qlIlX0a7U5BoAxUE1m2sCYhO
+ esyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744593500; x=1745198300;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AFu5qTvL8qDGLhfVf2cgq04HLl4krLoPHAgJSXoIUZQ=;
+ b=ULB/xFQa4+12mgMx3jTVcQrzs5mGvUJLKqIfMVhG3nihZSxFGu4E/1g+2S1RJ6qDbi
+ hpjqBokyiEmpJzKYcN+NFQNpM2RQw9rwVo6R8LhzIh4DQYEJMltNqVQ/E6dNUjkNaJEq
+ 0GdHalRxpA4u0zjIWkTtQ+lDh3k4yDUaykvr55GGRGSy9yFJ6tl2DrEj9mIXixxn5BfE
+ Py8Nph3Zz7buC0WItUcjjXsEfVnrGFUMY8curx76QRXm+2D47dYfnNpSLP/6nbttQlKw
+ o8SuEf7r3cpC9xYRsnn7xMGYC7gBf02MTKUyMHxjJlSa4Oe6kMSJa/J+Z8nZa2cc4WPg
+ 1a6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwmw1pF30rhUV7UlRc86DpaeSmeimQOWZExgIbYJS8g6izqLoarxAQy+HNGWOmYNvFB8Go6xFINGlR@nongnu.org
+X-Gm-Message-State: AOJu0YwhunBIfCTO83ktLamx/yp+CgmGsawzhCgvjdm7TvoAbnVJE7ik
+ Hv0FgLfvC6eN8AE+yvaCXNAOhcQlQg/oMXOJjPRhjOofCtyzqbYxisGhfUk6
+X-Gm-Gg: ASbGncuVHVKaPnQ+qrydxnIpCVyzotoGcZwBnwArLQ2VO5KcN33XJXbtRTUz6B7NuKo
+ a26B17zsZEk8e2sg2fce7ooJZE1H1UwOsqQIeCWxOtFtTwvcLdCA5vigiFaW26JF/+GdwDhk8jM
+ jSBY8sINKFpmla2k/lz/WNyNWldi95UjpkEN43Qztg1+eejxpk2qAYdPQ9oR1TfdzlcHeLWPCLu
+ b9XQVEcaLxovtyMaCteaM0MS3Grnc9VG2gnAkGGoNfa1QWkCkVXvtArREqQh8R7OFjfdPMncdpD
+ zRtcNoxuEOQy3hNF62waxnR74Gpt5PxPLEPUN9Q9fjC0w42yUgjO4j2oW1uT/nlI5e1O/xmRi1v
+ zkW7GNu4i/F4buO8Jxw==
+X-Google-Smtp-Source: AGHT+IFhgzmCw79GbwGChd0kOPnZXBmqjaIxwsgRzVoogVuu81Xveo1vjKEpVJQaiXDwh10a2j+4Ow==
+X-Received: by 2002:a05:600c:3b0d:b0:43c:f689:88ce with SMTP id
+ 5b1f17b1804b1-43f3a9ab46cmr70453855e9.20.1744593500072; 
+ Sun, 13 Apr 2025 18:18:20 -0700 (PDT)
+Received: from localhost.localdomain (ip-86-49-227-248.bb.vodafone.cz.
+ [86.49.227.248]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f235a5e9dsm163629885e9.36.2025.04.13.18.18.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 13 Apr 2025 18:18:19 -0700 (PDT)
+From: Raman Dzehtsiar <raman.dzehtsiar@gmail.com>
+X-Google-Original-From: Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Wen Congyang <wencongyang2@huawei.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Xie Changlong <xiechanglong.d@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org, Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
+Subject: [PATCH v3] blockdev-backup: Add error handling option for
+ copy-before-write jobs
+Date: Mon, 14 Apr 2025 03:18:17 +0200
+Message-ID: <20250414011817.671328-1-Raman.Dzehtsiar@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 17/24] pc-bios/s390-ccw: Add signature verification for
- secure boot in audit mode
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, fiuczy@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-18-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20250408155527.123341-18-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: P0Z5-kdTYublSWFWEB6hBh8FysS5blSE
-X-Proofpoint-GUID: P0Z5-kdTYublSWFWEB6hBh8FysS5blSE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-13_11,2025-04-10_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- adultscore=0 mlxscore=0 bulkscore=0 mlxlogscore=999 spamscore=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504130186
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=raman.dzehtsiar@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,719 +103,299 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This patch extends the blockdev-backup QMP command to allow users to specify
+how to behave when IO errors occur during copy-before-write operations.
+Previously, the behavior was fixed and could not be controlled by the user.
 
+The new 'on-cbw-error' option can be set to one of two values:
+- 'break-guest-write': Forwards the IO error to the guest and triggers
+  the on-source-error policy. This preserves snapshot integrity at the
+  expense of guest IO operations.
+- 'break-snapshot': Allows the guest OS to continue running normally,
+  but invalidates the snapshot and aborts related jobs. This prioritizes
+  guest operation over backup consistency.
 
-On 4/8/25 11:55 AM, Zhuoying Cai wrote:
-> Enable secure IPL in audit mode, which performs signature verification,
-> but any error does not terminate the boot process. Only warnings will be
-> logged to the console instead.
->
-> Add a comp_len variable to store the length of a segment in
-> zipl_load_segment. comp_len variable is necessary to store the
-> calculated segment length and is used during signature verification.
-> Return the length on success, or a negative return code on failure.
->
-> Secure IPL in audit mode requires at least one certificate provided in
-> the key store along with necessary facilities (Secure IPL Facility,
-> Certificate Store Facility and secure IPL extension support).
->
-> Note: Secure IPL in audit mode is implemented for the SCSI scheme of
-> virtio-blk/virtio-scsi devices.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw/bootmap.c  | 344 +++++++++++++++++++++++++++++++++++-
->   pc-bios/s390-ccw/bootmap.h  |   9 +
->   pc-bios/s390-ccw/iplb.h     |  68 +++++++
->   pc-bios/s390-ccw/main.c     |   9 +
->   pc-bios/s390-ccw/s390-ccw.h |  10 ++
->   pc-bios/s390-ccw/sclp.c     |  43 +++++
->   pc-bios/s390-ccw/sclp.h     |   6 +
->   7 files changed, 486 insertions(+), 3 deletions(-)
->
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 4fb3e99f4b..bdbd6ccd96 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -30,6 +30,13 @@
->   
->   /* Scratch space */
->   static uint8_t sec[MAX_SECTOR_SIZE*4] __attribute__((__aligned__(PAGE_SIZE)));
-> +/* sector for storing certificates */
-> +static uint8_t certs_sec[CERT_MAX_SIZE * MAX_CERTIFICATES];
-> +/* sector for storing signatures */
-> +static uint8_t sig_sec[MAX_SECTOR_SIZE] __attribute__((__aligned__(PAGE_SIZE)));
-> +
-> +uint8_t vcb_data[MAX_SECTOR_SIZE * 4] __attribute__((__aligned__(PAGE_SIZE)));
-> +uint8_t vcssb_data[VCSSB_MAX_LEN] __attribute__((__aligned__(PAGE_SIZE)));
->   
->   const uint8_t el_torito_magic[] = "EL TORITO SPECIFICATION"
->                                     "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
-> @@ -622,6 +629,7 @@ static int zipl_load_segment(ComponentEntry *entry, uint64_t address)
->       int i;
->       char err_msg[] = "zIPL failed to read BPRS at 0xZZZZZZZZZZZZZZZZ";
->       char *blk_no = &err_msg[30]; /* where to print blockno in (those ZZs) */
-> +    int comp_len = 0;
->   
->       blockno = entry->data.blockno;
->   
-> @@ -660,6 +668,9 @@ static int zipl_load_segment(ComponentEntry *entry, uint64_t address)
->                    */
->                   break;
->               }
-> +
-> +            comp_len += (uint64_t)bprs->size * ((uint64_t)bprs[i].blockct + 1);
-> +
->               address = virtio_load_direct(cur_desc[0], cur_desc[1], 0,
->                                            (void *)address);
->               if (!address) {
-> @@ -669,6 +680,305 @@ static int zipl_load_segment(ComponentEntry *entry, uint64_t address)
->           }
->       } while (blockno);
->   
-> +    return comp_len;
-> +}
-> +
-> +int get_vcssb(VerificationCertificateStorageSizeBlock *vcssb)
-> +{
-> +    int rc;
-> +
-> +    /* avoid retrieving vcssb multiple times */
-> +    if (vcssb->length == VCSSB_MAX_LEN) {
-> +        return 0;
-> +    }
-> +
-> +    rc = diag320(vcssb, DIAG_320_SUBC_QUERY_VCSI);
-> +    if (rc != DIAG_320_RC_OK) {
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static inline uint32_t request_certificate(uint64_t *cert, uint8_t index)
-> +{
-> +    VerificationCertificateStorageSizeBlock *vcssb;
-> +    VerficationCertificateBlock *vcb;
-> +    VerificationCertificateEntry *vce;
-> +    uint64_t rc = 0;
-> +    uint32_t cert_len = 0;
-> +
-> +    vcssb = (VerificationCertificateStorageSizeBlock *)vcssb_data;
-> +    vcb = (VerficationCertificateBlock *)vcb_data;
-> +
-> +    /* Get Verification Certificate Storage Size block with DIAG320 subcode 1 */
-> +    if (get_vcssb(vcssb)) {
-> +        return 0;
-> +    }
-> +
-> +    /*
-> +     * Request single entry
-> +     * Fill input fields of single-entry VCB
-> +     */
-> +    vcb->vcb_hdr.vcbinlen = ROUND_UP(vcssb->largestvcblen, PAGE_SIZE);
-> +    vcb->vcb_hdr.fvci = index + 1;
-> +    vcb->vcb_hdr.lvci = index + 1;
-> +
-> +    rc = diag320(vcb, DIAG_320_SUBC_STORE_VC);
-> +    if (rc == DIAG_320_RC_OK) {
-> +        vce = (VerificationCertificateEntry *)vcb->vcb_buf;
-> +        cert_len = vce->vce_hdr.certlen;
-> +        memcpy(cert, (uint8_t *)vce + vce->vce_hdr.certoffset, vce->vce_hdr.certlen);
-> +        /* clear out region for next cert(s) */
-> +        memcpy(vcb_data, 0, sizeof(vcb_data));
-> +    }
-> +
-> +    return cert_len;
-> +}
-> +
-> +static int cert_table_add(uint64_t **cert_table, uint64_t **cert,
-> +                    uint64_t cert_len, uint8_t cert_idx)
-> +{
-> +    if (request_certificate(*cert, cert_idx)) {
-> +        /* save certificate address to cert_table */
-> +        cert_table[cert_idx] = *cert;
-> +        /* update cert address for the next certificate */
-> +        *cert += cert_len;
-> +    } else {
-> +        puts("Could not get certificate");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static void cert_list_add(IplSignatureCertificateList *certs, int cert_index,
-> +                   uint64_t *cert, uint64_t cert_len)
-> +{
-> +    if (cert_index > MAX_CERTIFICATES - 1) {
-> +        printf("Warning: Ignoring cert entry [%d] because it's over 64 entires\n",
-> +                cert_index + 1);
-> +        return;
-> +    }
-> +
-> +    certs->cert_entries[cert_index].addr = (uint64_t)cert;
-> +    certs->cert_entries[cert_index].len = cert_len;
-> +    certs->ipl_info_header.len += sizeof(certs->cert_entries[cert_index]);
-> +}
-> +
-> +static void comp_list_add(IplDeviceComponentList *comps, int comp_index,
-> +                   int cert_index, uint64_t comp_addr,
-> +                   uint64_t comp_len, uint8_t flags)
-> +{
-> +    if (comp_index > MAX_CERTIFICATES - 1) {
-> +        printf("Warning: Ignoring comp entry [%d] because it's over 64 entires\n",
-> +                comp_index + 1);
-> +        return;
-> +    }
-> +
-> +    comps->device_entries[comp_index].addr = comp_addr;
-> +    comps->device_entries[comp_index].len = comp_len;
-> +    comps->device_entries[comp_index].flags = flags;
-> +    comps->device_entries[comp_index].cert_index = cert_index;
-> +    comps->ipl_info_header.len += sizeof(comps->device_entries[comp_index]);
-> +}
-Use MAX_CERTIFICATES in the warnings as well, rather than hard coding 
-the 64.
+This enhancement provides more flexibility for backup operations in different
+environments where requirements for guest availability versus backup
+consistency may vary.
 
-> +
-> +static int update_iirb(IplDeviceComponentList *comps, IplSignatureCertificateList *certs)
-> +{
-> +    IplInfoReportBlock *iirb;
-> +    IplDeviceComponentList *comp_list;
-> +    IplSignatureCertificateList *cert_list;
-> +
-> +    if (iplb->len % 8 != 0) {
-> +        puts("IPL parameter block length field value is not multiple of 8 bytes");
-> +        return -1;
-> +    }
-> +
-> +    /* IIRB immediately follows IPLB */
-> +    iirb = &ipl_data.iirb;
-> +    iirb->hdr.len = sizeof(IplInfoReportBlockHeader);
-> +
-> +    /* Copy IPL device component list after IIRB Header */
-> +    comp_list = (IplDeviceComponentList *) iirb->info_blks;
-> +    memcpy(comp_list, comps, comps->ipl_info_header.len);
-> +
-> +    /* Update IIRB length */
-> +    iirb->hdr.len += comps->ipl_info_header.len;
-> +
-> +    /* Copy IPL sig cert list after IPL device component list */
-> +    cert_list = (IplSignatureCertificateList *) (iirb->info_blks +
-> +                                                 comp_list->ipl_info_header.len);
-> +    memcpy(cert_list, certs, certs->ipl_info_header.len);
-> +
-> +    /* Update IIRB length */
-> +    iirb->hdr.len += certs->ipl_info_header.len;
-> +
-> +    return 0;
-> +}
-> +
-> +static bool secure_ipl_supported(void)
-> +{
-> +    if (!sclp_is_sipl_on()) {
-> +        puts("Secure IPL Facility is not supported by the hypervisor!");
-> +        return false;
-> +    }
-> +
-> +    if (!is_secure_ipl_extension_supported()) {
-> +        puts("Secure IPL extensions are not supported by the hypervisor!");
-> +        return false;
-> +    }
-> +
-> +    if (!(sclp_is_diag320_on() && is_cert_store_facility_supported())) {
-> +        puts("Certificate Store Facility is not supported by the hypervisor!");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static void init_lists(IplDeviceComponentList *comps, IplSignatureCertificateList *certs)
-> +{
-> +    comps->ipl_info_header.ibt = IPL_IBT_COMPONENTS;
-> +    comps->ipl_info_header.len = sizeof(comps->ipl_info_header);
-> +
-> +    certs->ipl_info_header.ibt = IPL_IBT_CERTIFICATES;
-> +    certs->ipl_info_header.len = sizeof(certs->ipl_info_header);
-> +}
-> +
-> +static bool check_sig_entry(ComponentEntry *entry, uint32_t *sig_len)
-> +{
-> +    if ((entry + 1)->component_type != ZIPL_COMP_ENTRY_LOAD) {
-> +        puts("Next component does not contain signed binary code");
-> +        return false;
-> +    }
-I think it is best to avoid accessing the n+1 index directly.
+The default behavior remains unchanged to maintain backward compatibility.
 
-> +
-> +    if (zipl_load_segment(entry, (uint64_t)sig_sec) < 0) {
-> +        return false;
-> +    };
-> +
-> +    if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
-> +        puts("Signature is not in DER format");
-> +        return false;
-> +    }
-> +
-> +    *sig_len = entry->compdat.sig_info.sig_len;
-> +    return true;
-This could be simplified with an int return value, and returning the 
-length on success or a negative RC on error.
+Signed-off-by: Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
+---
+ block/backup.c                                |  3 +-
+ block/copy-before-write.c                     |  2 +
+ block/copy-before-write.h                     |  1 +
+ block/replication.c                           |  4 +-
+ blockdev.c                                    |  6 ++
+ include/block/block_int-global-state.h        |  2 +
+ qapi/block-core.json                          |  4 +
+ tests/qemu-iotests/tests/copy-before-write    | 90 +++++++++++++++++++
+ .../qemu-iotests/tests/copy-before-write.out  |  4 +-
+ 9 files changed, 112 insertions(+), 4 deletions(-)
 
-> +}
-> +
-> +static int perform_sig_verf(uint64_t comp_addr, uint64_t comp_len, uint64_t sig_len,
-> +                           uint64_t *cert_table[], uint64_t **cert,
-> +                           IplDeviceComponentList *comps,
-> +                           IplSignatureCertificateList *certs,
-> +                           int comp_index, int cert_index,
-> +                           void (*print_func)(bool, const char *))
-> +{
-> +    uint64_t cert_len = -1;
-> +    uint8_t cert_idx = -1;
-> +    bool verified;
-> +
-> +    verified = verify_signature(comp_len, comp_addr, sig_len, (uint64_t)sig_sec,
-> +                                &cert_len, &cert_idx);
-> +
-> +    if (verified) {
-> +        if (cert_table[cert_idx] == 0) {
-> +            if (cert_table_add(cert_table, cert, cert_len, cert_idx)) {
-> +                return -1;
-> +            }
-> +        }
-> +
-> +        puts("Verified component");
-> +        cert_list_add(certs, cert_index, cert_table[cert_idx], cert_len);
-> +        comp_list_add(comps, comp_index, cert_index, comp_addr, comp_len,
-> +                      S390_IPL_COMPONENT_FLAG_SC | S390_IPL_COMPONENT_FLAG_CSV);
-> +    } else {
-> +        comp_list_add(comps, comp_index, -1, comp_addr, comp_len,
-> +                      S390_IPL_COMPONENT_FLAG_SC);
-> +        print_func(verified, "Could not verify component");
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int zipl_run_secure(ComponentEntry *entry, uint8_t *tmp_sec)
-> +{
-> +    bool found_signature = false;
-> +    struct IplDeviceComponentList comps;
-> +    struct IplSignatureCertificateList certs;
-> +    uint64_t *cert = (uint64_t *)certs_sec;
-> +    int cert_index = 0;
-> +    int comp_index = 0;
-> +    int comp_len;
-> +    bool valid_sig;
-> +    uint32_t sig_len;
-> +    /*
-> +     * Store address of certificate to prevent allocating
-> +     * the same certificate multiple times.
-> +     */
-> +    uint64_t *cert_table[MAX_CERTIFICATES];
-> +
-> +    void (*print_func)(bool, const char *) = NULL;
-> +    print_func = &IPL_check;
-> +
-> +    if (!secure_ipl_supported()) {
-> +        return -1;
-> +    }
-> +
-> +    init_lists(&comps, &certs);
-> +
-> +    valid_sig = false;
-> +    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
-> +           entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-> +
-> +        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-> +            valid_sig = check_sig_entry(entry, &sig_len);
-> +            if (!valid_sig) {
-> +                return -1;
-> +            }
-> +        } else {
-> +            comp_len = zipl_load_segment(entry, entry->compdat.load_addr);
-> +            if (comp_len < 0) {
-> +                return -1;
-> +            }
-> +
-> +            if (valid_sig) {
-> +                perform_sig_verf(entry->compdat.load_addr, comp_len, sig_len, cert_table,
-> +                                 &cert, &comps, &certs, comp_index, cert_index,
-> +                                 print_func);
-Since this function is only called here and rather short anyway, might 
-it be better to do it in-line and avoid needing 9 arguments?
-
-> +
-> +                cert_index++;
-> +                found_signature = true;
-> +                /*
-> +                 * complete signature verification for current component,
-> +                 * reset variable for the next signature entry.
-> +                 */
-> +                valid_sig = false;
-> +            }
-> +
-> +            comp_index++;
-> +        }
-> +
-> +        entry++;
-> +
-> +        if ((uint8_t *)(&entry[1]) > (tmp_sec + MAX_SECTOR_SIZE)) {
-> +            puts("Wrong entry value");
-> +            return -EINVAL;
-> +        }
-Is it intended that this check happens after incrementing the entry?
-
-> +    }
-> +
-> +    if (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
-> +        puts("No EXEC entry");
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (!found_signature) {
-> +        print_func(found_signature, "Secure boot is on, but components are not signed");
-> +    }
-> +
-> +    if (update_iirb(&comps, &certs)) {
-> +        print_func(false, "Failed to write IPL Information Report Block");
-> +    }
-> +    write_reset_psw(entry->compdat.load_psw);
-> +
->       return 0;
->   }
->   
-> @@ -683,7 +993,7 @@ static int zipl_run_normal(ComponentEntry *entry, uint8_t *tmp_sec)
->               continue;
->           }
->   
-> -        if (zipl_load_segment(entry, entry->compdat.load_addr)) {
-> +        if (zipl_load_segment(entry, entry->compdat.load_addr) < 0) {
->               return -1;
->           }
->   
-> @@ -731,8 +1041,17 @@ static int zipl_run(ScsiBlockPtr *pte)
->       /* Load image(s) into RAM */
->       entry = (ComponentEntry *)(&header[1]);
->   
-> -    if (zipl_run_normal(entry, tmp_sec)) {
-> -        return -1;
-> +    switch (boot_mode) {
-> +    case ZIPL_SECURE_AUDIT_MODE:
-> +        if (zipl_run_secure(entry, tmp_sec)) {
-> +            return -1;
-> +        }
-> +        break;
-> +    case ZIPL_NORMAL_MODE:
-> +        if (zipl_run_normal(entry, tmp_sec)) {
-> +            return -1;
-> +        }
-> +        break;
->       }
->   
->       /* should not return */
-> @@ -1091,17 +1410,32 @@ static int zipl_load_vscsi(void)
->    * IPL starts here
->    */
->   
-> +int zipl_mode(void)
-> +{
-> +    uint32_t cert_len;
-> +
-> +    cert_len = request_certificate((uint64_t *)certs_sec, 0);
-> +
-> +    return (cert_len > 0) ? ZIPL_SECURE_AUDIT_MODE : ZIPL_NORMAL_MODE;
-> +}
-> +
->   void zipl_load(void)
->   {
->       VDev *vdev = virtio_get_device();
->   
->       if (vdev->is_cdrom) {
-> +        if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-> +            panic("Secure boot from ISO image is not supported!");
-> +        }
->           ipl_iso_el_torito();
->           puts("Failed to IPL this ISO image!");
->           return;
->       }
->   
->       if (virtio_get_device_type() == VIRTIO_ID_NET) {
-> +        if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-> +            panic("Virtio net boot device does not support secure boot!");
-> +        }
->           netmain();
->           puts("Failed to IPL from this network!");
->           return;
-> @@ -1112,6 +1446,10 @@ void zipl_load(void)
->           return;
->       }
->   
-> +    if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-> +        panic("ECKD boot device does not support secure boot!");
-> +    }
-> +
->       switch (virtio_get_device_type()) {
->       case VIRTIO_ID_BLOCK:
->           zipl_load_vblk();
-> diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
-> index 95943441d3..e48823a835 100644
-> --- a/pc-bios/s390-ccw/bootmap.h
-> +++ b/pc-bios/s390-ccw/bootmap.h
-> @@ -88,9 +88,18 @@ typedef struct BootMapTable {
->       BootMapPointer entry[];
->   } __attribute__ ((packed)) BootMapTable;
->   
-> +#define DER_SIGNATURE_FORMAT 1
-> +
-> +typedef struct SignatureInformation {
-> +    uint8_t format;
-> +    uint8_t reserved[3];
-> +    uint32_t sig_len;
-> +} __attribute__((packed)) SignatureInformation;
-> +
->   typedef union ComponentEntryData {
->       uint64_t load_psw;
->       uint64_t load_addr;
-> +    SignatureInformation sig_info;
->   } ComponentEntryData;
->   
->   typedef struct ComponentEntry {
-> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-> index 11302e004d..8d9fdde30a 100644
-> --- a/pc-bios/s390-ccw/iplb.h
-> +++ b/pc-bios/s390-ccw/iplb.h
-> @@ -16,12 +16,15 @@
->   #define QEMU_PACKED __attribute__((packed))
->   #endif
->   
-> +#include <diag320.h>
-> +#include <diag508.h>
->   #include <qipl.h>
->   #include <string.h>
->   
->   extern QemuIplParameters qipl;
->   extern IplParameterBlock *iplb;
->   extern bool have_iplb;
-> +extern int boot_mode;
->   
->   struct IplInfoReportBlockHeader {
->       uint32_t len;
-> @@ -143,4 +146,69 @@ static inline bool load_next_iplb(void)
->       return true;
->   }
->   
-> +static inline uint64_t diag320(void *data, unsigned long subcode)
-> +{
-> +    register unsigned long addr asm("0") = (unsigned long)data;
-> +    register unsigned long rc asm("1") = 0;
-> +
-> +    asm volatile ("diag %0,%2,0x320\n"
-> +                  : "+d" (addr), "+d" (rc)
-> +                  : "d" (subcode)
-> +                  : "memory", "cc");
-> +    return rc;
-> +}
-> +
-> +static inline uint64_t get_320_subcodes(uint64_t *ism)
-> +{
-> +    return diag320(ism, DIAG_320_SUBC_QUERY_ISM);
-> +}
-> +
-> +static inline bool is_cert_store_facility_supported(void)
-> +{
-> +    uint64_t d320_ism;
-> +    get_320_subcodes(&d320_ism);
-> +    return (d320_ism & DIAG_320_ISM_QUERY_VCSI) &&
-> +           (d320_ism & DIAG_320_ISM_STORE_VC);
-> +}
-> +
-> +static inline uint64_t _diag508(void *data, unsigned long subcode)
-> +{
-> +    register unsigned long addr asm("0") = (unsigned long)data;
-> +    register unsigned long rc asm("1") = 0;
-> +
-> +    asm volatile ("diag %0,%2,0x508\n"
-> +                  : "+d" (addr), "+d" (rc)
-> +                  : "d" (subcode)
-> +                  : "memory", "cc");
-> +    return rc;
-> +}
-> +
-> +static inline uint64_t get_508_subcodes(void)
-> +{
-> +    return _diag508(NULL, DIAG_508_SUBC_QUERY_SUBC);
-> +}
-> +
-> +static inline bool is_secure_ipl_extension_supported(void)
-> +{
-> +    uint64_t d508_subcodes;
-> +
-> +    d508_subcodes = get_508_subcodes();
-> +    return d508_subcodes & DIAG_508_SUBC_SIG_VERIF;
-> +}
-> +
-> +static inline bool verify_signature(uint64_t comp_len, uint64_t comp_addr,
-> +                                    uint64_t sig_len, uint64_t sig_addr,
-> +                                    uint64_t *cert_len, uint8_t *cert_idx)
-> +{
-> +    Diag508SignatureVerificationBlock svb = {{}, comp_len, comp_addr,
-> +                                             sig_len, sig_addr };
-> +
-> +    if (_diag508(&svb, DIAG_508_SUBC_SIG_VERIF) == DIAG_508_RC_OK) {
-> +        *cert_len = svb.csi.len;
-> +        *cert_idx = svb.csi.idx;
-> +        return true;
-> +    }
-> +    return false;
-> +}
-> +
->   #endif /* IPLB_H */
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index c9328f1c51..92004a6f82 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -28,6 +28,7 @@ IplParameterBlock *iplb;
->   bool have_iplb;
->   static uint16_t cutype;
->   LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
-> +int boot_mode;
->   
->   #define LOADPARM_PROMPT "PROMPT  "
->   #define LOADPARM_EMPTY  "        "
-> @@ -272,9 +273,17 @@ static int virtio_setup(void)
->   
->   static void ipl_boot_device(void)
->   {
-> +    if (boot_mode == 0) {
-> +        boot_mode = zipl_mode();
-> +    }
-> +
->       switch (cutype) {
->       case CU_TYPE_DASD_3990:
->       case CU_TYPE_DASD_2107:
-> +        if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-> +            panic("Passthrough (vfio) device does not support secure boot!");
-> +        }
-> +
->           dasd_ipl(blk_schid, cutype);
->           break;
->       case CU_TYPE_VIRTIO:
-> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-> index 6cdce3e5e5..68ffbf7bc8 100644
-> --- a/pc-bios/s390-ccw/s390-ccw.h
-> +++ b/pc-bios/s390-ccw/s390-ccw.h
-> @@ -39,6 +39,9 @@ typedef unsigned long long u64;
->   #define MIN_NON_ZERO(a, b) ((a) == 0 ? (b) : \
->                               ((b) == 0 ? (a) : (MIN(a, b))))
->   #endif
-> +#ifndef ROUND_UP
-> +#define ROUND_UP(n, d) (((n) + (d) - 1) & -(0 ? (n) : (d)))
-> +#endif
->   
->   #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
->   
-> @@ -64,6 +67,8 @@ void sclp_print(const char *string);
->   void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
->   void sclp_setup(void);
->   void sclp_get_loadparm_ascii(char *loadparm);
-> +bool sclp_is_diag320_on(void);
-> +bool sclp_is_sipl_on(void);
->   int sclp_read(char *str, size_t count);
->   
->   /* virtio.c */
-> @@ -76,6 +81,11 @@ int virtio_read(unsigned long sector, void *load_addr);
->   /* bootmap.c */
->   void zipl_load(void);
->   
-> +#define ZIPL_NORMAL_MODE           1
-> +#define ZIPL_SECURE_AUDIT_MODE     2
-> +
-> +int zipl_mode(void);
-> +
->   /* jump2ipl.c */
->   void write_reset_psw(uint64_t psw);
->   int jump_to_IPL_code(uint64_t address);
-> diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
-> index 4a07de018d..fd25c83387 100644
-> --- a/pc-bios/s390-ccw/sclp.c
-> +++ b/pc-bios/s390-ccw/sclp.c
-> @@ -113,6 +113,49 @@ void sclp_get_loadparm_ascii(char *loadparm)
->       }
->   }
->   
-> +static void sclp_get_fac134(uint8_t *fac134)
-> +{
-> +
-> +    ReadInfo *sccb = (void *)_sccb;
-> +
-> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
-> +    sccb->h.length = SCCB_SIZE;
-> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
-> +        *fac134 = sccb->fac134;
-> +    }
-> +}
-> +
-> +bool sclp_is_diag320_on(void)
-> +{
-> +    uint8_t fac134 = 0;
-> +
-> +    sclp_get_fac134(&fac134);
-> +    return fac134 & SCCB_FAC134_DIAG320_BIT;
-> +}
-> +
-> +/*
-> + * Get cbl (byte 136 and byte 137 of the SCLP Read Info block) for IPL device facilities.
-> + */
-> +static void sclp_get_cbl(uint16_t *cbl)
-> +{
-> +
-> +    ReadInfo *sccb = (void *)_sccb;
-> +
-> +    memset((char *)_sccb, 0, sizeof(ReadInfo));
-> +    sccb->h.length = SCCB_SIZE;
-> +    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
-> +        *cbl = sccb->cbl;
-> +    }
-> +}
-> +
-> +bool sclp_is_sipl_on(void)
-> +{
-> +    uint16_t cbl = 0;
-> +
-> +    sclp_get_cbl(&cbl);
-> +    return cbl & SCCB_CBL_SIPL_BIT;
-> +}
-> +
->   int sclp_read(char *str, size_t count)
->   {
->       ReadEventData *sccb = (void *)_sccb;
-> diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
-> index 64b53cad29..de4141cb86 100644
-> --- a/pc-bios/s390-ccw/sclp.h
-> +++ b/pc-bios/s390-ccw/sclp.h
-> @@ -50,6 +50,8 @@ typedef struct SCCBHeader {
->   } __attribute__((packed)) SCCBHeader;
->   
->   #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
-> +#define SCCB_FAC134_DIAG320_BIT 0x4
-> +#define SCCB_CBL_SIPL_BIT 0x4000
->   
->   typedef struct ReadInfo {
->       SCCBHeader h;
-> @@ -57,6 +59,10 @@ typedef struct ReadInfo {
->       uint8_t rnsize;
->       uint8_t reserved[13];
->       uint8_t loadparm[LOADPARM_LEN];
-> +    uint8_t reserved1[102];
-> +    uint8_t fac134;
-> +    uint8_t reserved2;
-> +    uint16_t cbl;
->   } __attribute__((packed)) ReadInfo;
->   
->   typedef struct SCCB {
+diff --git a/block/backup.c b/block/backup.c
+index 79652bf57b..0151e84395 100644
+--- a/block/backup.c
++++ b/block/backup.c
+@@ -361,6 +361,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
+                   BackupPerf *perf,
+                   BlockdevOnError on_source_error,
+                   BlockdevOnError on_target_error,
++                  OnCbwError on_cbw_error,
+                   int creation_flags,
+                   BlockCompletionFunc *cb, void *opaque,
+                   JobTxn *txn, Error **errp)
+@@ -458,7 +459,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
+     }
+ 
+     cbw = bdrv_cbw_append(bs, target, filter_node_name, discard_source,
+-                          perf->min_cluster_size, &bcs, errp);
++                          perf->min_cluster_size, &bcs, on_cbw_error, errp);
+     if (!cbw) {
+         goto error;
+     }
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index fd470f5f92..00af0b18ac 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -551,6 +551,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
+                                   bool discard_source,
+                                   uint64_t min_cluster_size,
+                                   BlockCopyState **bcs,
++                                  OnCbwError on_cbw_error,
+                                   Error **errp)
+ {
+     BDRVCopyBeforeWriteState *state;
+@@ -568,6 +569,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
+     }
+     qdict_put_str(opts, "file", bdrv_get_node_name(source));
+     qdict_put_str(opts, "target", bdrv_get_node_name(target));
++    qdict_put_str(opts, "on-cbw-error", OnCbwError_str(on_cbw_error));
+ 
+     if (min_cluster_size > INT64_MAX) {
+         error_setg(errp, "min-cluster-size too large: %" PRIu64 " > %" PRIi64,
+diff --git a/block/copy-before-write.h b/block/copy-before-write.h
+index 2a5d4ba693..eb93364e85 100644
+--- a/block/copy-before-write.h
++++ b/block/copy-before-write.h
+@@ -42,6 +42,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
+                                   bool discard_source,
+                                   uint64_t min_cluster_size,
+                                   BlockCopyState **bcs,
++                                  OnCbwError on_cbw_error,
+                                   Error **errp);
+ void bdrv_cbw_drop(BlockDriverState *bs);
+ 
+diff --git a/block/replication.c b/block/replication.c
+index 0020f33843..748cf648ec 100644
+--- a/block/replication.c
++++ b/block/replication.c
+@@ -584,7 +584,9 @@ static void replication_start(ReplicationState *rs, ReplicationMode mode,
+                                 0, MIRROR_SYNC_MODE_NONE, NULL, 0, false, false,
+                                 NULL, &perf,
+                                 BLOCKDEV_ON_ERROR_REPORT,
+-                                BLOCKDEV_ON_ERROR_REPORT, JOB_INTERNAL,
++                                BLOCKDEV_ON_ERROR_REPORT,
++                                ON_CBW_ERROR_BREAK_GUEST_WRITE,
++                                JOB_INTERNAL,
+                                 backup_job_completed, bs, NULL, &local_err);
+         if (local_err) {
+             error_propagate(errp, local_err);
+diff --git a/blockdev.c b/blockdev.c
+index 1d1f27cfff..818ec42511 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -2641,6 +2641,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
+     BdrvDirtyBitmap *bmap = NULL;
+     BackupPerf perf = { .max_workers = 64 };
+     int job_flags = JOB_DEFAULT;
++    OnCbwError on_cbw_error = ON_CBW_ERROR_BREAK_GUEST_WRITE;
+ 
+     if (!backup->has_speed) {
+         backup->speed = 0;
+@@ -2745,6 +2746,10 @@ static BlockJob *do_backup_common(BackupCommon *backup,
+         job_flags |= JOB_MANUAL_DISMISS;
+     }
+ 
++    if (backup->has_on_cbw_error) {
++        on_cbw_error = backup->on_cbw_error;
++    }
++
+     job = backup_job_create(backup->job_id, bs, target_bs, backup->speed,
+                             backup->sync, bmap, backup->bitmap_mode,
+                             backup->compress, backup->discard_source,
+@@ -2752,6 +2757,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
+                             &perf,
+                             backup->on_source_error,
+                             backup->on_target_error,
++                            on_cbw_error,
+                             job_flags, NULL, NULL, txn, errp);
+     return job;
+ }
+diff --git a/include/block/block_int-global-state.h b/include/block/block_int-global-state.h
+index eb2d92a226..0d93783763 100644
+--- a/include/block/block_int-global-state.h
++++ b/include/block/block_int-global-state.h
+@@ -179,6 +179,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
+  *        all ".has_*" fields are ignored.
+  * @on_source_error: The action to take upon error reading from the source.
+  * @on_target_error: The action to take upon error writing to the target.
++ * @on_cbw_error: The action to take upon error in copy-before-write operations.
+  * @creation_flags: Flags that control the behavior of the Job lifetime.
+  *                  See @BlockJobCreateFlags
+  * @cb: Completion function for the job.
+@@ -198,6 +199,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
+                             BackupPerf *perf,
+                             BlockdevOnError on_source_error,
+                             BlockdevOnError on_target_error,
++                            OnCbwError on_cbw_error,
+                             int creation_flags,
+                             BlockCompletionFunc *cb, void *opaque,
+                             JobTxn *txn, Error **errp);
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b1937780e1..d35326167d 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -1622,6 +1622,9 @@
+ # @discard-source: Discard blocks on source which have already been
+ #     copied to the target.  (Since 9.1)
+ #
++# @on-cbw-error: optional policy defining behavior on I/O errors in
++#     copy-before-write jobs; defaults to break-guest-write.  (Since 10.0)
++#
+ # @x-perf: Performance options.  (Since 6.0)
+ #
+ # Features:
+@@ -1641,6 +1644,7 @@
+             '*compress': 'bool',
+             '*on-source-error': 'BlockdevOnError',
+             '*on-target-error': 'BlockdevOnError',
++            '*on-cbw-error': 'OnCbwError',
+             '*auto-finalize': 'bool', '*auto-dismiss': 'bool',
+             '*filter-node-name': 'str',
+             '*discard-source': 'bool',
+diff --git a/tests/qemu-iotests/tests/copy-before-write b/tests/qemu-iotests/tests/copy-before-write
+index 498c558008..23d70c7fe7 100755
+--- a/tests/qemu-iotests/tests/copy-before-write
++++ b/tests/qemu-iotests/tests/copy-before-write
+@@ -99,6 +99,66 @@ class TestCbwError(iotests.QMPTestCase):
+         log = iotests.filter_qemu_io(log)
+         return log
+ 
++    def do_cbw_error_via_blockdev_backup(self, on_cbw_error=None):
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'source',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'file',
++                'filename': source_img
++            }
++        })
++
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'target',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'blkdebug',
++                'image': {
++                    'driver': 'file',
++                    'filename': temp_img
++                },
++                'inject-error': [
++                    {
++                        'event': 'write_aio',
++                        'errno': 5,
++                        'immediately': False,
++                        'once': True
++                    }
++                ]
++            }
++        })
++
++        blockdev_backup_options = {
++            'device': 'source',
++            'target': 'target',
++            'sync': 'none',
++            'job-id': 'job-id',
++            'filter-node-name': 'cbw'
++        }
++
++        if on_cbw_error:
++            blockdev_backup_options['on-cbw-error'] = on_cbw_error
++
++        self.vm.cmd('blockdev-backup', blockdev_backup_options)
++
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'access',
++            'driver': 'snapshot-access',
++            'file': 'cbw'
++        })
++
++        result = self.vm.qmp('human-monitor-command', command_line='qemu-io cbw "write 0 1M"')
++        self.assert_qmp(result, 'return', '')
++
++        result = self.vm.qmp('human-monitor-command', command_line='qemu-io access "read 0 1M"')
++        self.assert_qmp(result, 'return', '')
++
++        self.vm.shutdown()
++        log = self.vm.get_log()
++        log = iotests.filter_qemu_io(log)
++        return log
++
+     def test_break_snapshot_on_cbw_error(self):
+         """break-snapshot behavior:
+         Guest write succeed, but further snapshot-read fails, as snapshot is
+@@ -123,6 +183,36 @@ read failed: Permission denied
+ write failed: Input/output error
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++""")
++
++    def test_break_snapshot_policy_forwarding(self):
++        """Ensure CBW filter accepts break-snapshot policy specified in blockdev-backup QMP command.
++        """
++        log = self.do_cbw_error_via_blockdev_backup('break-snapshot')
++        self.assertEqual(log, """\
++wrote 1048576/1048576 bytes at offset 0
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read failed: Permission denied
++""")
++
++    def test_break_guest_write_policy_forwarding(self):
++        """Ensure CBW filter accepts break-guest-write policy specified in blockdev-backup QMP command.
++        """
++        log = self.do_cbw_error_via_blockdev_backup('break-guest-write')
++        self.assertEqual(log, """\
++write failed: Input/output error
++read 1048576/1048576 bytes at offset 0
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++""")
++
++    def test_default_on_cbw_error_policy_forwarding(self):
++        """Ensure break-guest-write policy is used by default when on-cbw-error is not explicitly specified.
++        """
++        log = self.do_cbw_error_via_blockdev_backup()
++        self.assertEqual(log, """\
++write failed: Input/output error
++read 1048576/1048576 bytes at offset 0
++1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ """)
+ 
+     def do_cbw_timeout(self, on_cbw_error):
+diff --git a/tests/qemu-iotests/tests/copy-before-write.out b/tests/qemu-iotests/tests/copy-before-write.out
+index 89968f35d7..2f7d3902f2 100644
+--- a/tests/qemu-iotests/tests/copy-before-write.out
++++ b/tests/qemu-iotests/tests/copy-before-write.out
+@@ -1,5 +1,5 @@
+-....
++.......
+ ----------------------------------------------------------------------
+-Ran 4 tests
++Ran 7 tests
+ 
+ OK
+-- 
+2.43.0
 
 
