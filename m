@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB11C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 21:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E16CC369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 21:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4RNp-0006D4-K3; Mon, 14 Apr 2025 17:30:26 -0400
+	id 1u4RTs-0007xu-P1; Mon, 14 Apr 2025 17:36:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1u4RNm-0006CV-FR
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 17:30:22 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <antonb@tenstorrent.com>)
- id 1u4RNk-0001x3-Tf
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 17:30:22 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-727388e8f6cso2776240a34.0
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 14:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1744666218; x=1745271018; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=rSotBaFUmmKWr89h4uQGHoagPTJq+4FsRSbwdeSTqUo=;
- b=WVy2Q03j93QHzMKt+HPYP03TQRkjB+UOxhgxFvpCnOstqNecNGCYFGKMFWn5/hDDZm
- Ti5JNUCifgZQyjWSSLNf7uPJPjSLCXCeV/YhbzscE6RYAyiRDacXQ+8k8UC3wplqzsL8
- 9212qG4RzXvhXAAi06Jdc41uqL0bylqbBnVL3n2wzmT3gP8LbzDwum3zNldZgsJp5TuC
- eeKuCOpX+MqM7kLxTELbndOaJTqrdFSrl/C9oAmPbkwO1TAsaUjRj7hsHRUAh+R4Q652
- sh74J0il5zxfgNvow+obIWIgBsdJzuf1qstbnGHzzcLCbv2Xard6ftoI4jiK4QWvpS7s
- 401A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744666218; x=1745271018;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rSotBaFUmmKWr89h4uQGHoagPTJq+4FsRSbwdeSTqUo=;
- b=owh/6sc+s7fPbrghr5Kw054JfHIANhImmT+7WWwWs8vg1idVc80up495zzrlg/XiTa
- Z2Umu9099N7Zi2wcxi/0nx/5tbn5OC4Q32Au9tJdyYNNzu+Uyfx0Bh7iqyKY37LEmO6Z
- V4ETrBY8RiYwEmkLJI2Je5RlJW2NaXmCAB8sAFpiOsRL8tg6oNgvWoUhhdrBdcX7LxIS
- foeyXJkyT5IO0uTKqu+9k6Vbf0azjYkZl0NHjUe/XQODYKcnQjj/m1x+9VgWuAn+rOtd
- Dw9oTMpD3/b/gQj8KzzuN28fb+3ia+XUJ5W/OmeJ9SifxcoToS6JU6j7+23nLjQg8BDB
- MXag==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrPbmXUqPNnN272AzVB8eSDxz6/ImpyfBu+e1UjCAqUq1lG/CeXaEWpxjcMVMfE5F3miAm2Qu9IhKP@nongnu.org
-X-Gm-Message-State: AOJu0YwRCxOwtWOKT6hdnOWdLSi+ziTjH7zXLTwaOMSqKBh3QXfT56SA
- 3J0SxUsa8ey4l6p0IYpQpS8yMNVJ6YPGQEqq4MoSxLT7C/3vFfOGD8z3TQcZjX0=
-X-Gm-Gg: ASbGncs7boSn/5l4/l4zqXFUiWTXz+iukXwDY0vRemURAgL9O7yL9hChalFfGN7LdAz
- TF2kMygyH8t1ugnMQH3ZihTtQFh5HZV5BmSePwmSIqVAjAGoaKY4vUtxtD4ILCdEeql3EjA6zZJ
- W8NcRQbwK7ef1wdP+RknzBGn0csi5XoBE8V2qhlHgRX/glWmGvUNVNVQtboeDV26h5oS6WzlboV
- fhueqms7luBTCQ61oO6kkMei9wItLvExcv0tBdhh39fIsCGJPTzEaNtlK+n2z5dHZiQjYh9dKVj
- SOeKKqq3uVmJjELJA/ERl1qhHKREYaJmm2TFLD51yQfB01VKchfW7+eVtxeZOqlvrYAMf5XItms
- =
-X-Google-Smtp-Source: AGHT+IEkVa2S+U01stfqgQn76gV6oe8pSub133NcxE+NMQ92oq8B9w+toXaXzmbKP5Xac8+7hE1RRw==
-X-Received: by 2002:a05:6830:6812:b0:727:3e60:b44b with SMTP id
- 46e09a7af769-72e86331a84mr7800038a34.14.1744666218315; 
- Mon, 14 Apr 2025 14:30:18 -0700 (PDT)
-Received: from ausc-rvsw-c-01-anton.tenstorrent.com ([38.104.49.66])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-72e73e4d7e2sm2168999a34.45.2025.04.14.14.30.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Apr 2025 14:30:17 -0700 (PDT)
-From: Anton Blanchard <antonb@tenstorrent.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Anton Blanchard <antonb@tenstorrent.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH] target/riscv: Fix vslidedown with rvv_ta_all_1s
-Date: Mon, 14 Apr 2025 21:30:06 +0000
-Message-Id: <20250414213006.3509058-1-antonb@tenstorrent.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1u4RTl-0007un-S4; Mon, 14 Apr 2025 17:36:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1u4RTj-0003Go-Ev; Mon, 14 Apr 2025 17:36:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53EIXlsv026521;
+ Mon, 14 Apr 2025 21:36:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=TvFELmmpf/sdEtzfj
+ CrR1PgRLUIupH4ECKzApQitp2s=; b=aSwVEMgH+aY4R/t89/EwkV+d+dYijKrZw
+ G01GUVdjWN72k4qJXZ64pWe0dJYDIbZjt/hYoBq3bTW+QsiUhqZZlNCaNQrjiNRi
+ L27Hu/Q6Sx+EvtN2aJA5D85RiLMGwzWpHQuuzy0lJ/Q+5w+RzzZB5BmU1y/OKbWc
+ 8sqF7Oi5Ede3N1E5ssmpHMQunwwh7n6M4uflQEmrHTUGasWOIdP/pWfTMpcCwHbJ
+ OfVB2zzHeDAqODL9guMY7mQkUCXNdU9+9E/DTUyr8rCKodBBOw6a8DWi26by5Ro8
+ nENbMmTWm5ruuuPZWshwcPJwHD/UyqW9NUeXk0qQmuea6PM+4kdUA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46109f36db-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Apr 2025 21:36:26 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53ELBuic017170;
+ Mon, 14 Apr 2025 21:36:24 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040kqypd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Apr 2025 21:36:24 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53ELaNiD27853392
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Apr 2025 21:36:23 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9F7505804E;
+ Mon, 14 Apr 2025 21:36:23 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 20AE15803F;
+ Mon, 14 Apr 2025 21:36:22 +0000 (GMT)
+Received: from IBM-D32RQW3.ibm.com (unknown [9.61.251.75])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 14 Apr 2025 21:36:21 +0000 (GMT)
+From: Farhan Ali <alifm@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ schnelle@linux.ibm.com, stefanha@redhat.com, philmd@linaro.org,
+ kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com, fam@euphon.net,
+ alex.williamson@redhat.com
+Subject: [PATCH v4 2/3] include: Add a header to define host PCI MMIO functions
+Date: Mon, 14 Apr 2025 14:36:15 -0700
+Message-ID: <20250414213616.2675-3-alifm@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250414213616.2675-1-alifm@linux.ibm.com>
+References: <20250414213616.2675-1-alifm@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
- envelope-from=antonb@tenstorrent.com; helo=mail-ot1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: qF3nRASHSHWyMIfZCTXG-YHhPBtzWlqM
+X-Proofpoint-ORIG-GUID: qF3nRASHSHWyMIfZCTXG-YHhPBtzWlqM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_08,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=853 malwarescore=0 clxscore=1015 spamscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504140157
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,33 +108,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vslidedown always zeroes elements past vl, where it should use the
-tail policy.
+Add a generic API for host PCI MMIO reads/writes
+(e.g. Linux VFIO BAR accesses). The functions access
+little endian memory and returns the result in
+host cpu endianness.
 
-Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 ---
- target/riscv/vector_helper.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/qemu/host-pci-mmio.h | 141 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 141 insertions(+)
+ create mode 100644 include/qemu/host-pci-mmio.h
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 67b3bafebb..1012d38c8a 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -5113,9 +5113,11 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
-     }                                                                     \
-                                                                           \
-     for (i = i_max; i < vl; ++i) {                                        \
--        if (vm || vext_elem_mask(v0, i)) {                                \
--            *((ETYPE *)vd + H(i)) = 0;                                    \
-+        if (!vm && !vext_elem_mask(v0, i)) {                              \
-+            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            continue;                                                     \
-         }                                                                 \
-+        *((ETYPE *)vd + H(i)) = 0;                                        \
-     }                                                                     \
-                                                                           \
-     env->vstart = 0;                                                      \
+diff --git a/include/qemu/host-pci-mmio.h b/include/qemu/host-pci-mmio.h
+new file mode 100644
+index 0000000000..de17d67e3a
+--- /dev/null
++++ b/include/qemu/host-pci-mmio.h
+@@ -0,0 +1,141 @@
++/*
++ * API for host PCI MMIO accesses (e.g. Linux VFIO BARs)
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Farhan Ali <alifm@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HOST_PCI_MMIO_H
++#define HOST_PCI_MMIO_H
++
++#include "qemu/bswap.h"
++#include "qemu/s390x_pci_mmio.h"
++
++
++static inline uint8_t host_pci_ldub_p(const void *ioaddr)
++{
++    uint8_t ret = 0;
++#ifdef __s390x__
++    ret = s390x_pci_mmio_read_8(ioaddr);
++#else
++    ret = ldub_he_p(ioaddr);
++#endif
++
++    return ret;
++}
++
++static inline uint16_t host_pci_lduw_le_p(const void *ioaddr)
++{
++    uint16_t ret = 0;
++#ifdef __s390x__
++    ret = le16_to_cpu(s390x_pci_mmio_read_16(ioaddr));
++#else
++    ret = lduw_le_p(ioaddr);
++#endif
++
++    return ret;
++}
++
++static inline uint32_t host_pci_ldl_le_p(const void *ioaddr)
++{
++    uint32_t ret = 0;
++#ifdef __s390x__
++    ret = le32_to_cpu(s390x_pci_mmio_read_32(ioaddr));
++#else
++    ret = (uint32_t)ldl_le_p(ioaddr);
++#endif
++
++    return ret;
++}
++
++static inline uint64_t host_pci_ldq_le_p(const void *ioaddr)
++{
++    uint64_t ret = 0;
++#ifdef __s390x__
++    ret = le64_to_cpu(s390x_pci_mmio_read_64(ioaddr));
++#else
++    ret = ldq_le_p(ioaddr);
++#endif
++
++    return ret;
++}
++
++static inline void host_pci_stb_le_p(void *ioaddr, uint8_t val)
++{
++
++#ifdef __s390x__
++    s390x_pci_mmio_write_8(ioaddr, val);
++#else
++    stb_p(ioaddr, val);
++#endif
++}
++
++static inline void host_pci_stw_le_p(void *ioaddr, uint16_t val)
++{
++
++#ifdef __s390x__
++    s390x_pci_mmio_write_16(ioaddr, cpu_to_le16(val));
++#else
++    stw_le_p(ioaddr, val);
++#endif
++}
++
++static inline void host_pci_stl_le_p(void *ioaddr, uint32_t val)
++{
++
++#ifdef __s390x__
++    s390x_pci_mmio_write_32(ioaddr, cpu_to_le32(val));
++#else
++    stl_le_p(ioaddr, val);
++#endif
++}
++
++static inline void host_pci_stq_le_p(void *ioaddr, uint64_t val)
++{
++
++#ifdef __s390x__
++    s390x_pci_mmio_write_64(ioaddr, cpu_to_le64(val));
++#else
++    stq_le_p(ioaddr, val);
++#endif
++}
++
++static inline uint64_t host_pci_ldn_le_p(const void *ioaddr, int sz)
++{
++    switch (sz) {
++    case 1:
++        return host_pci_ldub_p(ioaddr);
++    case 2:
++        return host_pci_lduw_le_p(ioaddr);
++    case 4:
++        return host_pci_ldl_le_p(ioaddr);
++    case 8:
++        return host_pci_ldq_le_p(ioaddr);
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static inline void host_pci_stn_le_p(void *ioaddr, int sz, uint64_t v)
++{
++    switch (sz) {
++    case 1:
++        host_pci_stb_le_p(ioaddr, v);
++        break;
++    case 2:
++        host_pci_stw_le_p(ioaddr, v);
++        break;
++    case 4:
++        host_pci_stl_le_p(ioaddr, v);
++        break;
++    case 8:
++        host_pci_stq_le_p(ioaddr, v);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++#endif
 -- 
-2.34.1
+2.43.0
 
 
