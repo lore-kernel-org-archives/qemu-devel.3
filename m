@@ -4,100 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E40C369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 15:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601E4C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 15:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4LkA-0007sg-2m; Mon, 14 Apr 2025 11:29:06 -0400
+	id 1u4Llr-0000e2-OS; Mon, 14 Apr 2025 11:30:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4Lk4-0007rN-0z
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:29:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4Ljz-0004nO-Om
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:28:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744644534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fm9AsA4hAl0EPUVPZTlBFeK4p0y/hzKKTLJ4RjZWa8I=;
- b=Z4EsxwHogZBFSgBEJcy7wRAFTxB5ahPFxdew+Mpy2yIjcmzTHnLtosjrD/btTjnOnEeXqe
- zIFkXFblel+my6IY2Nqi/ftBCAnaStYTmdnbKnIIrUdhNvE1IuGocTXX1eOCIg5P2wdGNj
- dEXsClPSkBS91PVSKzV1H2CYgqTP+G4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-GKuHh3YKNaK31ouzy1tN6w-1; Mon, 14 Apr 2025 11:28:52 -0400
-X-MC-Unique: GKuHh3YKNaK31ouzy1tN6w-1
-X-Mimecast-MFC-AGG-ID: GKuHh3YKNaK31ouzy1tN6w_1744644531
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so25176155e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 08:28:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u4Lll-0000c6-M2
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:30:47 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u4Llg-0005Ww-47
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 11:30:43 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso49881015ad.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 08:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744644638; x=1745249438; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4SqoqmvVYlXEDRZUedwlOctIZe+hPz1e3t31K5AGbao=;
+ b=OlpKuW/qcVOJZo07lpE8ZAQv1sPSBfhTJ1uq/Xva6nIezXpdHNchFP+YFciM+GNPyE
+ mehP4HgEa5O32ASMhEySa3GMEPdVC3dIQOHVwuHMEyk/O7oVinbhDoyQEdwhSEfCrpTY
+ wbrgmjF+cGeWClJx6IvBKRs4FsvUoxj3MqvMsHCMfmd3pWrJjlfrrGaAe5DP3NUORPd2
+ gHgeM+K8MqGzYBrM4OPaV6NOszRczcKAwSo+UiBIjGnbeE7SpkLlwqlg3U76EsYqEp/H
+ haz+ZfRvWD9XZNwzKSpjyzbmZdh5khtzgGaE117iVKRPxAH1jpcNZ+v3DFvCC+H4Dq2w
+ NqBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744644531; x=1745249331;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fm9AsA4hAl0EPUVPZTlBFeK4p0y/hzKKTLJ4RjZWa8I=;
- b=QCmwuYGcQWKQ+r+xHt6UauRHYPv/B1unvb4Jorma41f/OEkp4U3M4NZDX525BVNf3k
- XoZHObrfbhW+RjZRnbxUXfywu96d+SpBE7wsK91wcjlVcIX2Y1/KctMdlpEUCmi55hfL
- vWk2Wn++LJMWIvidf3owukm+HpOqwMXVF6WNWkP+e+5JzJoUqdXdMQ5r3fAv8av6a404
- o7R/pS7QFjbyVhJW1GDOO5P67xshiI1/6xW+OLP95fUvPqU0rqbiBUUh4r8tmm3CR0sW
- nnVBmFQQVoEdhrQHcSexTStZ/xBn8GxklSAlhKvsPZ7omPsvyiT+khXmCAMijs+F1Quv
- g/kA==
-X-Gm-Message-State: AOJu0YzrLhJgilY3+RDJ9iJsH3L2kqU5Fs47JI3AYjwxzdktxCHqwDFG
- bgvTrggRu/5/qhKCptBhf5kh8v4/T4+0HDamQ5N/c06dFgCDZzopu8boT4tCl65U17ERpppucPF
- r/iAbx0cLRSmfqgCFsJ6ZfvzIpB1Veh+cHlIgoLTOhB3O388A4d2W
-X-Gm-Gg: ASbGnctSCS5J0E6KizVY4XTXYJnSKCVw+jC97auKEWXcEU6GF+r2Uj39DZAUKCiIokz
- aMUdo6LGKdXKgawcznAGV7Ji+shee5EQkEz/rJ44pXUsD4iwyVJ59vxLz42IN/tWDKZEwiQSACb
- tTQ6ug3BZsLXC9zaLUJCWeUZ2h3r/BpGaP9pGphbddhojJo4LNBr42IaVRu1jxgW3zBv2vsmgbw
- Sw9TzzfwwzB/JsAgPNftYLwX2p7QQ5Hl991QFoAKf9gVzOLOgut0nBmo5BSbkFfhIoCS+0LT7HN
- UIx05A==
-X-Received: by 2002:a05:600c:4e09:b0:43d:45a:8fca with SMTP id
- 5b1f17b1804b1-43f3a9b035fmr137822925e9.30.1744644531009; 
- Mon, 14 Apr 2025 08:28:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuBkIMG8DQaEIUQuIHDtRmim+3lSFxIyJeVaHDRc8+YiQh6HHKef2N29r+ri1aAEVXP9nf7g==
-X-Received: by 2002:a05:600c:4e09:b0:43d:45a:8fca with SMTP id
- 5b1f17b1804b1-43f3a9b035fmr137822575e9.30.1744644530508; 
- Mon, 14 Apr 2025 08:28:50 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39ed15caa5asm6259636f8f.20.2025.04.14.08.28.48
+ d=1e100.net; s=20230601; t=1744644638; x=1745249438;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4SqoqmvVYlXEDRZUedwlOctIZe+hPz1e3t31K5AGbao=;
+ b=PCttENQiOc1B2IQH/V4aLXaoEPYA9deMWtL5FDbWvOqfn4VHJys/G0snUCPOEFozna
+ Uk+uJgO4MFuJweyXKB6qqnWR1g8NMIcJbhyApJqeVNwt0V2jteYu6Bb1/mevIQf3Xon/
+ ea8CrMRUyhUzWjMAzn0IT5ae3ptuhSvxcnWDL/ZjM5CahpaAZj6x6IAWS0q1dG0eyaI1
+ 57ovTfUDcTKTO8d/KEDaPIabF+3OXVmU+bwRZqCNJPAXNp4vi2Z6D+Pt06oFwOSWl9RQ
+ G2LDygHxOXfCfW52tQuwAXq/L5W3x18ruosI8XjNjlBN5xPW6IfT2gHAcspMUZaALvBX
+ Pq0Q==
+X-Gm-Message-State: AOJu0Yy3ECubX+DZswULmV/Z4zf1hO82LnnvhkznnvTRfEqZNM/tlN1Q
+ SY0eLOvPtmPNvutxB7eFreDcVztIoe0eJSqVTpRc1FeVYk+07d9t4Vp5GxOPF1zVSqe/s3SdH5j
+ i
+X-Gm-Gg: ASbGncvZYBSIInM277dXEr08t4YCJqqSvxdtPH4lUMOeROStZzdY0/a5RpuMp0iflWF
+ Uy1lN1cYcIWzgBMT11Lo1p5MHZTLlVlSQ+Emni4fPFb3+lC1p7mVh9wSVy0/VGCknIt9mBP2ulk
+ 5mGBc569SwxjHbWCZWoFB7bReZfiHY/tjDGksWa0PM/H7jZzHtUGyeqSU4WZh6Az0xgqrUIzUYk
+ H1IMwBpI63sPPLUl2U2LqLLFt3ooHtwvhf7GDI+mrLqIstcEGhUWQ56LOAqhAM7fwJhq9Ltd5MI
+ 2SFf7+XOsiXBjve9w0ToMfm61XHdEEZFgTw/bqEIynObvUQ6JJA=
+X-Google-Smtp-Source: AGHT+IE+WThX3iTgzLGFWycKu9s66OhSD+U0uZaflp9uYDQ89fxzN5FXdyPxmZmpAd91a7//Qj6vQQ==
+X-Received: by 2002:a17:902:e886:b0:220:e362:9b1a with SMTP id
+ d9443c01a7336-22bea4bccb2mr190376515ad.25.1744644636183; 
+ Mon, 14 Apr 2025 08:30:36 -0700 (PDT)
+Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7ccbd5esm100735235ad.248.2025.04.14.08.30.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Apr 2025 08:28:49 -0700 (PDT)
-Date: Mon, 14 Apr 2025 11:28:46 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jason Chien <jason.chien@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Hannes Reinecke <hare@suse.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH 1/3] include/hw/pci: Attach BDF to Memory Attributes
-Message-ID: <20250414112346-mutt-send-email-mst@kernel.org>
-References: <20250302091209.20063-1-jason.chien@sifive.com>
- <20250302091209.20063-2-jason.chien@sifive.com>
+ Mon, 14 Apr 2025 08:30:35 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Richard Henderson <richard.henderson@linaro.org>,
+ Yannis Bolliger <yannis.bolliger@protonmail.com>, qemu-arm@nongnu.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 0/4] target/arm: fix arm_cpu_get_phys_page_attrs_debug
+Date: Mon, 14 Apr 2025 08:30:23 -0700
+Message-Id: <20250414153027.1486719-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250302091209.20063-2-jason.chien@sifive.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,69 +100,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 02, 2025 at 05:12:07PM +0800, Jason Chien wrote:
-> This commit adds the BDF to the memory attributes for DMA operations.
-> 
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> ---
->  include/hw/pci/pci_device.h | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-> index add208edfa..968f1ba3e9 100644
-> --- a/include/hw/pci/pci_device.h
-> +++ b/include/hw/pci/pci_device.h
-> @@ -244,6 +244,8 @@ static inline MemTxResult pci_dma_rw(PCIDevice *dev, dma_addr_t addr,
->                                       void *buf, dma_addr_t len,
->                                       DMADirection dir, MemTxAttrs attrs)
->  {
-> +    attrs.unspecified = 0;
-> +    attrs.requester_id = pci_requester_id(dev);
->      return dma_memory_rw(pci_get_address_space(dev), addr, buf, len,
->                           dir, attrs);
->  }
-> @@ -292,6 +294,8 @@ static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
->                                                 uint##_bits##_t *val, \
->                                                 MemTxAttrs attrs) \
->      { \
-> +        attrs.unspecified = 0; \
-> +        attrs.requester_id = pci_requester_id(dev); \
->          return ld##_l##_dma(pci_get_address_space(dev), addr, val, attrs); \
->      } \
->      static inline MemTxResult st##_s##_pci_dma(PCIDevice *dev, \
-> @@ -299,6 +303,8 @@ static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
->                                                 uint##_bits##_t val, \
->                                                 MemTxAttrs attrs) \
->      { \
-> +        attrs.unspecified = 0; \
-> +        attrs.requester_id = pci_requester_id(dev); \
->          return st##_s##_dma(pci_get_address_space(dev), addr, val, attrs); \
->      }
->  
-> @@ -327,8 +333,8 @@ PCI_DMA_DEFINE_LDST(q_be, q_be, 64);
->  static inline void *pci_dma_map(PCIDevice *dev, dma_addr_t addr,
->                                  dma_addr_t *plen, DMADirection dir)
->  {
-> -    return dma_memory_map(pci_get_address_space(dev), addr, plen, dir,
-> -                          MEMTXATTRS_UNSPECIFIED);
-> +    MemTxAttrs attrs = {.requester_id = pci_requester_id(dev)};
-> +    return dma_memory_map(pci_get_address_space(dev), addr, plen, dir, attrs);
->  }
+It was reported that QEMU monitor command gva2gpa was reporting unmapped
+memory for a valid access (qemu-system-aarch64), during a copy from
+kernel to user space (__arch_copy_to_user symbol in Linux) [1].
+This was affecting cpu_memory_rw_debug also, which
+is used in numerous places in our codebase. After investigating, the
+problem was specific to arm_cpu_get_phys_page_attrs_debug.
 
+[1] https://lists.nongnu.org/archive/html/qemu-discuss/2025-04/msg00013.html
 
-Map is the only issue  - bdf can technically change between map and
-unmap.
-The use in hw/net/net_tx_pkt.c is fine as it's under BQL.
-I don't know about the use in megasas though.
-I think it is probably fine as it seems to deal with commands
-and I think any driver would flush these if changing BDF.
-Cc megasas maintainers just to make sure though.
+When performing user access from a privileged space, we need to do a
+second lookup for user mmu idx, following what get_a64_user_mem_index is
+doing at translation time.
 
-Also, adding a code comment here can't hurt.
+This series first extract some functions, and then perform the second lookup
+expected using extracted functions.
 
+Besides running all QEMU tests, it was explicitely checked that during a linux
+boot sequence, accesses now report a valid physical address inconditionnally
+using this (non sent) patch:
 
->  static inline void pci_dma_unmap(PCIDevice *dev, void *buffer, dma_addr_t len,
-> -- 
-> 2.43.2
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -997,9 +997,7 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+     if (enable) {
+         address |= flags & TLB_FLAGS_MASK;
+         flags &= TLB_SLOW_FLAGS_MASK;
+-        if (flags) {
+             address |= TLB_FORCE_SLOW;
+-        }
+     } else {
+         address = -1;
+         flags = 0;
+@@ -1658,6 +1656,10 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
+         tlb_addr = tlb_read_idx(entry, access_type) & ~TLB_INVALID_MASK;
+     }
+
++    vaddr page = addr & TARGET_PAGE_MASK;
++    hwaddr physaddr = cpu_get_phys_page_debug(cpu, page);
++    g_assert(physaddr != -1);
++
+     full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
+     flags = tlb_addr & (TLB_FLAGS_MASK & ~TLB_FORCE_SLOW);
+     flags |= full->slow_flags[access_type];
+
+v2:
+- fix style in first commit (philmd)
+
+Pierrick Bouvier (4):
+  target/arm/ptw: extract arm_mmu_idx_to_security_space
+  target/arm/ptw: get current security_space for current mmu_idx
+  target/arm/ptw: extract arm_cpu_get_phys_page
+  target/arm/ptw: fix arm_cpu_get_phys_page_attrs_debug
+
+ target/arm/ptw.c | 65 +++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 48 insertions(+), 17 deletions(-)
+
+-- 
+2.39.5
 
 
