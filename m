@@ -4,99 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA4BC369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14684C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 17:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4N3g-0000oZ-OO; Mon, 14 Apr 2025 12:53:20 -0400
+	id 1u4NAo-0004DS-Fr; Mon, 14 Apr 2025 13:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u4N3e-0000oD-P8
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:53:18 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
+ id 1u4NAC-00047P-O4; Mon, 14 Apr 2025 13:00:05 -0400
+Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u4N3c-0000Np-RS
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:53:18 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-3d43c972616so12522095ab.0
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:53:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
+ id 1u4NA2-0001I2-21; Mon, 14 Apr 2025 13:00:03 -0400
+Received: by mail-ua1-x936.google.com with SMTP id
+ a1e0cc1a2514c-86d30787263so1923248241.1; 
+ Mon, 14 Apr 2025 09:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744649594; x=1745254394; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=hmsbxMU9jlieA4cuU5UJRciW2VrVQnuH77h5Uovvq3E=;
- b=FDTzgZvYS+ZjcHmmXmoXXbzCIPrZQ1eWo1H8n+SccQBOqrugxwFtgLop+jib9bY1Ms
- q0+L2n0d8vwpoFdDPi9AgRzAaeZbM0S6f0bz8fWGCtj+FpuQq9Oozm02MO/g+OzhDZTU
- iNSHl1zhPFo7XIm46L4SIDHXSumm39PQJQ0VNR5eqQEHOYMP8teY6v29pIR276e67fLd
- KbYlW8JWVxkP5mxQs8jMFC7GCkgyZNPQQ757i62f1up+rCDM3pLjoejO6nW0Jo6OAMKQ
- pfhc9HTcvyLWGZRaIq6QEmMIHCBrSVaVd/IEG7GNTG7cAGdrPl8FWKN4YSLRQ2tv5pU0
- mpag==
+ d=gmail.com; s=20230601; t=1744649992; x=1745254792; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iRRtBotIoeMV/57ax7oQatGsNL2fFD2WqwUiuUmDQ7U=;
+ b=I/GnYkyXQKkMXXkIW3bBicwgBBNJHfQh2Be7LrARCw143pO7rlw4GXwixJbbjoYA+A
+ W/wKlM7KOaSprEkodXeHIpmm+PFnbtLtCu4yVNlXQ9LuNRaa3nKAtYaotlx07Rdq9qxJ
+ E6PUrlOS/ktOCsej6L0Vp9lFiZTkWSHrhBpL6Lt9HcdxgDzKqyS2gND/fjT8w+3iMD3b
+ PRGHQVQgplEkE/fPtIZS8fDt4/3LsIqzFymBQCw1UtXoyLx2gxnz05sPl7ybG4iCV7Ie
+ P8tMUYZa/Z/Wbtb44dcbFRbq3ro4LqtBRpGXQYF8wAWSHe+8fowY8hEiLRk4LDBGR5P/
+ RnHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744649594; x=1745254394;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hmsbxMU9jlieA4cuU5UJRciW2VrVQnuH77h5Uovvq3E=;
- b=wEEuOK29Q3O5pgcxWBC4RAh25n/vfCKOOlrKHRSnVHZz93VNBVWM9lXHOoCDA7fhh/
- 6CRLH4VPATR0+3wW/82r0DlJ2oUQ6eB/muJXxUYdDYKKc5j41ET2/NqGyImwBWklDLfv
- d8FbzX4loiG4HmnXUssxX2+MmM3gDWR7zFPFTzhrYmJpviRPasPGgzSX3/m4xHvsr7Gt
- JxNWj3oa/prADcUfgEXJR0RnmnJhmybD/Ap/T3FyG+aQlPfZylWFOmL5GGZ5+gsD+UAB
- zpvt0RO+Mtd0ipsgcVJkDlbxQRov1KZWUqDue5GWPtMtHpCbIABslLXnMzwSnfTGTSZm
- JJyQ==
+ d=1e100.net; s=20230601; t=1744649992; x=1745254792;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iRRtBotIoeMV/57ax7oQatGsNL2fFD2WqwUiuUmDQ7U=;
+ b=fB1rwS1Pi8DsjgO5tmT6wxeVOeFoD5FMiHr8oWdJgmXUkSdu9zvwswFJ+0upNlX3a0
+ TryYLAf00mXPtBYo5eiGBgXgQm8PwvwSrJ6AUL7cuDLSxVk0PrzXuChmoUixB8BOB0hs
+ VDrDJQpAQi/CkssNOah2nlrQ4/lgqQyzl+nyoSaemqJw0Dey4brZIBph2pG8esHiWhw0
+ aSqfJp0W7upL29bWifBE1Bqy2/O55GpJclXO41zU+yfw2Yv/yGvcBHEK06x11knpCSAP
+ BqmWh0aP5rnLEO/icasszMtW6asPlFz0nitAp8cSoQ8QthKt7Cs0KtUWAXTwvwzdoRHT
+ h/Nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNDMxi+bXogZES9nW9/VUFigJOIT74tqeYbVTLOaOfXqNNZW2HDAQXwhbG6lLvg5AA/HzZ1E7T2PkH@nongnu.org
-X-Gm-Message-State: AOJu0Yw7F7nicH+kLQxZ9JZx2Zr75Gcu4kSYW9nYIT0EUHIM8ouwuONQ
- y67hI5U2mu2GweFMf6S2ZSEtdgUtw+vKAiQpSo+NO2wJvbEtSJ57+ypyDIvw
-X-Gm-Gg: ASbGncsKm9tudMik+XP2tkboILBobSmggN+SGjoBZB4+ma9dRh03N6ox944BZsKlC+1
- jxqbXq/36qibEigu3y9I/nu5wAcVZ8gZrOBKu5smRiG4uZ8YUvCdJdeInxA7TlI/WIcaxeOz/9C
- vnyVFuQ6Gtptaq9MhISoNNchxVDvaOIeObh2VbzztTW2nilGQL95dJyRAYvhla2In5lL4C7JhEU
- eSV0dIYUlfJ0z8xGJh1hw9uaQNZnV+f4OSBdbc4j8uQPNIMiOuGjj1R9GG8lPuLqglPtAcS+7GD
- bQgkuQJrRW2JfCiEyBqN2vQzogMKCvg/MU1WG+K7rK9lEPnVAcc1e81bAHaP+EGBq/L0bFGo7Eo
- =
-X-Google-Smtp-Source: AGHT+IECxQpz0UM9MH8LUR9wXpOBc2EQaLGJ3hO0sDMghU70akPD7zw5EhSUC92vfuZVi9YInnwP4g==
-X-Received: by 2002:a05:6e02:3c07:b0:3d3:d344:2a1a with SMTP id
- e9e14a558f8ab-3d809b01940mr3099565ab.0.1744649593041; 
- Mon, 14 Apr 2025 09:53:13 -0700 (PDT)
-Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
- [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d7dc591f6csm28605425ab.69.2025.04.14.09.53.11
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 14 Apr 2025 09:53:12 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <matheus.bernardino@oss.qualcomm.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
-References: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
- <20250407192705.2605614-3-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20250407192705.2605614-3-brian.cain@oss.qualcomm.com>
-Subject: RE: [PATCH v3 2/5] target/hexagon: Fix badva reference, delete CAUSE
-Date: Mon, 14 Apr 2025 10:53:09 -0600
-Message-ID: <058101dbad5d$b56042b0$2020c810$@gmail.com>
+ AJvYcCVjUC06VyhzKQgr4o1DsdgdTXSLoVhyU61ab3CQjXes6XC2VrJmjx7IqrZjrCYwCJ2lx5iYqUykw5TIsfo=@nongnu.org
+X-Gm-Message-State: AOJu0YyJZrCzi5gILA1+EwTeJ6Ep7nJQOfOKEDLCf9djAeRfJqFY/ph7
+ zxPtktrodgKkbL4hFgU8cNW8gvKpPi2WcYzJtQMzWVNwzGFXMlgmPyfao3wgVJsebnKfcSSi7d9
+ DxBC2NVGC0Zb+DqbjM7hWisIFpzg=
+X-Gm-Gg: ASbGncvYe8q3TKt20rZOjK0es5Ix2gt/AI4ykNMh/o9O8hxi02zJqMyyvWgqKT2sXfX
+ Xw0PaJmjJbCOvBWE7xb/0uvQD++G+QenxPe7bUxy1mFX3JJnokVOC5B4M1QA1ioS7GnX11sZE+a
+ 6BJaoNt0DtnhY6LV79IulO
+X-Google-Smtp-Source: AGHT+IGXet/2l9+1+/kjlG8+0MIar9KFlXWZLfaY+G3Bl5uQIacfQH+dTimZpvZ7qOAAVrgOIg/FRsDzZjVHqcbrj4w=
+X-Received: by 2002:a05:6102:509f:b0:4c4:e018:326f with SMTP id
+ ada2fe7eead31-4c9e4eec0bcmr8328173137.10.1744649991750; Mon, 14 Apr 2025
+ 09:59:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+References: <20250414034626.3491489-1-ziqiaokong@gmail.com>
+ <20250414034626.3491489-2-ziqiaokong@gmail.com>
+ <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
+ <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
+In-Reply-To: <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
+From: Ziqiao Kong <ziqiaokong@gmail.com>
+Date: Tue, 15 Apr 2025 00:59:40 +0800
+X-Gm-Features: ATxdqUEiYqnYUwijJljSg8gCk-PN9CynwRpdNIuCa6jo4UUakqmcVdHeL19SNbY
+Message-ID: <CAM0BWND3dr=_nZHXSoV2jzkXPXd=hViX6vM0cUMZ2Uru+TD6GQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] target/riscv: fix endless translation loop on big
+ endian systems
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alistair.francis@wdc.com, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFxbseScfkce8xHjxBW05Q6egvQNQFD5cvPtG29N+A=
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250414-0, 4/13/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
+ envelope-from=ziqiaokong@gmail.com; helo=mail-ua1-x936.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,46 +97,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Philippe,
 
+Any further concern regarding this series? I certainly would like to invest=
+igate
+and help =3D).
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Monday, April 7, 2025 1:27 PM
-> To: qemu-devel@nongnu.org
-> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
-> anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
-> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com
-> Subject: [PATCH v3 2/5] target/hexagon: Fix badva reference, delete =
-CAUSE
->=20
-> The BADVA reg is referred to with the wrong identifier.  The CAUSE reg =
-field
-> of SSR is not yet modeled.
->=20
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->=20
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
-> 766b678651..62f1fe15b8 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -216,8 +216,7 @@ static void hexagon_dump(CPUHexagonState *env,
-> FILE *f, int flags)
->      qemu_fprintf(f, "  cs0 =3D 0x00000000\n");
->      qemu_fprintf(f, "  cs1 =3D 0x00000000\n");  #else
-> -    print_reg(f, env, HEX_REG_CAUSE);
-> -    print_reg(f, env, HEX_REG_BADVA);
-> +    print_reg(f, env, HEX_SREG_BADVA);
+Bests,
+Ziqiao
 
-Since BADVA is a proxy for BADVA0/BADVA1, consider naming it =
-HEX_SREG_BADVA_ALIASED to help avoid the problems we've seen with =
-HEX_REG_P3_0_ALIASED.
-
-Taylor
-
-
+On Mon, Apr 14, 2025 at 7:17=E2=80=AFPM Ziqiao Kong <ziqiaokong@gmail.com> =
+wrote:
+>
+> On Mon, Apr 14, 2025 at 6:41=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> <philmd@linaro.org> wrote:
+> >
+> > Hi,
+> >
+> > On 14/4/25 05:46, Ziqiao Kong wrote:
+> > > On big endian systems, pte and updated_pte hold big endian host data
+> > > while pte_pa points to little endian target data. This means the bran=
+ch
+> > > at cpu_helper.c:1669 will be always satisfied and restart translation=
+,
+> > > causing an endless translation loop.
+> > >
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: 0c3e702aca7 ("RISC-V CPU Helpers")
+> >
+> > > Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
+> > > ---
+> > >   target/riscv/cpu_helper.c | 4 ++--
+> > >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> > > index 6c4391d96b..bc146771c8 100644
+> > > --- a/target/riscv/cpu_helper.c
+> > > +++ b/target/riscv/cpu_helper.c
+> > > @@ -1662,9 +1662,9 @@ static int get_physical_address(CPURISCVState *=
+env, hwaddr *physical,
+> > >               target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->ram_block=
+, addr1);
+> > >               target_ulong old_pte;
+> > >               if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
+> > > -                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, pte,=
+ updated_pte);
+> > > +                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_=
+to_le32(pte), cpu_to_le32(updated_pte));
+> > >               } else {
+> > > -                old_pte =3D qatomic_cmpxchg(pte_pa, pte, updated_pte=
+);
+> > > +                old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte)=
+, cpu_to_le64(updated_pte));
+> > >               }
+> > >               if (old_pte !=3D pte) {
+> > >                   goto restart;
+> >
+> > If PTEs are always stored in LE order, maybe what we want is earlier:
+> >
+> > -- >8 --
+> > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> > index 619c76cc001..b6ac2800240 100644
+> > --- a/target/riscv/cpu_helper.c
+> > +++ b/target/riscv/cpu_helper.c
+> > @@ -1464,5 +1464,5 @@ static int get_physical_address(CPURISCVState
+> > *env, hwaddr *physical,
+> >           if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> > -            pte =3D address_space_ldl(cs->as, pte_addr, attrs, &res);
+> > +            pte =3D address_space_ldl_le(cs->as, pte_addr, attrs, &res=
+);
+> >           } else {
+> > -            pte =3D address_space_ldq(cs->as, pte_addr, attrs, &res);
+> > +            pte =3D address_space_ldq_le(cs->as, pte_addr, attrs, &res=
+);
+>
+> Unfortunately, this doesn't work in two ways:
+>
+> 1. Note pte is used in the following code and that means pte must hold
+> a correct value from the
+> view of host endian (in my case, big endian not little endian).
+> 2. address_space_ldq_le will dispatch to ldq_le_p, while
+> address_space_leq will dispatch to ldq_p.
+> However, on little endian targets, ldq_p is an alias of ldq_le_p so
+> making no effects.
+>
+> Per my testing, this patch doesn't have any effect indeed. To have a
+> brief view what is happening,
+> see the logs just before atomic_cmpxchg:
+>
+> pte_pa 0xf14000000000000 =3D=3D pte 0x140f ? updated_pte 0x144f
+>
+> >           }
+> > ---
 
