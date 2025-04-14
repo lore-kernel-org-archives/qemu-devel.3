@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1EF9C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA4BC369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4N3D-0000m5-KO; Mon, 14 Apr 2025 12:52:51 -0400
+	id 1u4N3g-0000oZ-OO; Mon, 14 Apr 2025 12:53:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1u4N3B-0000lm-FX
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:52:49 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u4N3e-0000oD-P8
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:53:18 -0400
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1u4N37-0000Kg-Ve
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:52:48 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-6fece18b3c8so43279477b3.3
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:52:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u4N3c-0000Np-RS
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:53:18 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-3d43c972616so12522095ab.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744649562; x=1745254362; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=X/Lgh4hAs4+5AIw7g07yLu2dtfLPZQjYViU8643LlS0=;
- b=W7r2a3PsSFsF9vy1oxSdE6MlliHi3w4JhcdF17yFlfrJHE7yaHp284f2DQUV/1Rdtk
- wJWGF/MN0ECa7duirgVzsB5arJtX1yWZnTVl2LdMnzD+QDqwN8QElmwPZ9oE/W9SAc5E
- R0h7i8k0+boye4s7QqLEfOEN3WVu3/qY/QVetGPwPMDuDMRtESMDAwkMAMeq5NEAHkrZ
- cdTLsYFBDG+bIgcp80r5ZAKxc1+tXVsYw21cKZ1mtiX0Huz+2lFeVrKJjSVkGjwLmStm
- raeP3ocDNFzxin768O7yoMFx4WPS2OPFxdPjesjR6F4Zs439gDng3jYJl/n64BpcaF0K
- Ecdg==
+ d=gmail.com; s=20230601; t=1744649594; x=1745254394; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hmsbxMU9jlieA4cuU5UJRciW2VrVQnuH77h5Uovvq3E=;
+ b=FDTzgZvYS+ZjcHmmXmoXXbzCIPrZQ1eWo1H8n+SccQBOqrugxwFtgLop+jib9bY1Ms
+ q0+L2n0d8vwpoFdDPi9AgRzAaeZbM0S6f0bz8fWGCtj+FpuQq9Oozm02MO/g+OzhDZTU
+ iNSHl1zhPFo7XIm46L4SIDHXSumm39PQJQ0VNR5eqQEHOYMP8teY6v29pIR276e67fLd
+ KbYlW8JWVxkP5mxQs8jMFC7GCkgyZNPQQ757i62f1up+rCDM3pLjoejO6nW0Jo6OAMKQ
+ pfhc9HTcvyLWGZRaIq6QEmMIHCBrSVaVd/IEG7GNTG7cAGdrPl8FWKN4YSLRQ2tv5pU0
+ mpag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744649562; x=1745254362;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X/Lgh4hAs4+5AIw7g07yLu2dtfLPZQjYViU8643LlS0=;
- b=MefpPMTZSlLpQkdX8KtyaalQzrLZ+97Q52cPCwZ9k2GFgkJ0jYt5yyjJ6ojOQQrQLj
- AAMGKrEN9/wIYckricHlvjf4aGbYi8HKazvfuXNLS1Zf68/pidTsDom2T2gGYMt6mNvm
- zgjDTP0QET+nttTZqvHq/YiX3niAlED86Zye8muOQ76p4N01sCQrQNSMND8zQG+VAfcF
- HBop24TjVlXMDDzMN9Ukr2WOWa0DXbR+Mo6FVnGNgb8I0ocOzeG0Kx2G79DD6x8vlBSe
- sasAMbTlZZbsMCliDTt3GY3YOPo5YSPsldJcTIf32uA/sTG6MHSiXwEOniDMSR3zB3zu
- 2M5g==
+ d=1e100.net; s=20230601; t=1744649594; x=1745254394;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hmsbxMU9jlieA4cuU5UJRciW2VrVQnuH77h5Uovvq3E=;
+ b=wEEuOK29Q3O5pgcxWBC4RAh25n/vfCKOOlrKHRSnVHZz93VNBVWM9lXHOoCDA7fhh/
+ 6CRLH4VPATR0+3wW/82r0DlJ2oUQ6eB/muJXxUYdDYKKc5j41ET2/NqGyImwBWklDLfv
+ d8FbzX4loiG4HmnXUssxX2+MmM3gDWR7zFPFTzhrYmJpviRPasPGgzSX3/m4xHvsr7Gt
+ JxNWj3oa/prADcUfgEXJR0RnmnJhmybD/Ap/T3FyG+aQlPfZylWFOmL5GGZ5+gsD+UAB
+ zpvt0RO+Mtd0ipsgcVJkDlbxQRov1KZWUqDue5GWPtMtHpCbIABslLXnMzwSnfTGTSZm
+ JJyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXbPaTi2jeGF/o1REhiAA2u889nU9PM8eZna6Mkco+JmfgWWRzqrzpjx+4rkjuljjOc+ZzVGtkgyUM@nongnu.org
-X-Gm-Message-State: AOJu0YzQhqo03aLkf+9hSm9fgfUwH7JbRjSgHgyq7CQWkK53jsIIho1a
- CcsqXVM+5iWmVYUzAE1gS64jybh1Amdc/l1Na0LFg1NRCQ0ogbK/8ydEZDH2vmAmnkXgker7cQf
- AqExdySPn5UoFOPo4jj1qL2+Vy0E=
-X-Gm-Gg: ASbGncuE5mBJiZzDuPXnD6ITGjhKuVBY9WWihsdKWC7IxFAXG3Hm+oKd11C4m7Ph09d
- RoVWYOWp6ul9OkVZHGMoP7opU7nrYBXJs5QTTPfNaPiETNkJmdydBLZbpRXcTPVk6hTgLEhVXWq
- qtyJJE7XNWDavOskLZ8ETGxFCnW+V9S5Zf
-X-Google-Smtp-Source: AGHT+IEZVvUtc5XlUFMy7InQBMlipa5t5WcSNa9LRZ4iRE1ydc0eTOy/MQkmcwVaO/5JwuBao/9EF1JagL/HFqYTDYI=
-X-Received: by 2002:a81:be19:0:b0:705:5ab0:ea07 with SMTP id
- 00721157ae682-7055ab0eaf0mr185652877b3.2.1744649562103; Mon, 14 Apr 2025
- 09:52:42 -0700 (PDT)
+ AJvYcCUNDMxi+bXogZES9nW9/VUFigJOIT74tqeYbVTLOaOfXqNNZW2HDAQXwhbG6lLvg5AA/HzZ1E7T2PkH@nongnu.org
+X-Gm-Message-State: AOJu0Yw7F7nicH+kLQxZ9JZx2Zr75Gcu4kSYW9nYIT0EUHIM8ouwuONQ
+ y67hI5U2mu2GweFMf6S2ZSEtdgUtw+vKAiQpSo+NO2wJvbEtSJ57+ypyDIvw
+X-Gm-Gg: ASbGncsKm9tudMik+XP2tkboILBobSmggN+SGjoBZB4+ma9dRh03N6ox944BZsKlC+1
+ jxqbXq/36qibEigu3y9I/nu5wAcVZ8gZrOBKu5smRiG4uZ8YUvCdJdeInxA7TlI/WIcaxeOz/9C
+ vnyVFuQ6Gtptaq9MhISoNNchxVDvaOIeObh2VbzztTW2nilGQL95dJyRAYvhla2In5lL4C7JhEU
+ eSV0dIYUlfJ0z8xGJh1hw9uaQNZnV+f4OSBdbc4j8uQPNIMiOuGjj1R9GG8lPuLqglPtAcS+7GD
+ bQgkuQJrRW2JfCiEyBqN2vQzogMKCvg/MU1WG+K7rK9lEPnVAcc1e81bAHaP+EGBq/L0bFGo7Eo
+ =
+X-Google-Smtp-Source: AGHT+IECxQpz0UM9MH8LUR9wXpOBc2EQaLGJ3hO0sDMghU70akPD7zw5EhSUC92vfuZVi9YInnwP4g==
+X-Received: by 2002:a05:6e02:3c07:b0:3d3:d344:2a1a with SMTP id
+ e9e14a558f8ab-3d809b01940mr3099565ab.0.1744649593041; 
+ Mon, 14 Apr 2025 09:53:13 -0700 (PDT)
+Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
+ [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3d7dc591f6csm28605425ab.69.2025.04.14.09.53.11
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 14 Apr 2025 09:53:12 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
+	<qemu-devel@nongnu.org>
+Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
+ <matheus.bernardino@oss.qualcomm.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
+ <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
+References: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
+ <20250407192705.2605614-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20250407192705.2605614-3-brian.cain@oss.qualcomm.com>
+Subject: RE: [PATCH v3 2/5] target/hexagon: Fix badva reference, delete CAUSE
+Date: Mon, 14 Apr 2025 10:53:09 -0600
+Message-ID: <058101dbad5d$b56042b0$2020c810$@gmail.com>
 MIME-Version: 1.0
-References: <20250317164204.2299371-1-anisa.su887@gmail.com>
- <20250317164204.2299371-3-anisa.su887@gmail.com>
- <20250318155624.00006410@huawei.com>
- <Z-rvRZUTUpT2Kv-S@deb-101020-bm01.eng.stellus.in>
-In-Reply-To: <Z-rvRZUTUpT2Kv-S@deb-101020-bm01.eng.stellus.in>
-From: Anisa Su <anisa.su887@gmail.com>
-Date: Mon, 14 Apr 2025 09:52:31 -0700
-X-Gm-Features: ATxdqUHt8uipDFcrABnDmnOcHfPJ9PPDwjJPN2wtmBkQ5__9CsZAsZ3uFM6T_QM
-Message-ID: <CA+1mjcmnsXhtwpPop3TaB=UiYM-9qFZSuT5iXTaodhodsVVmrQ@mail.gmail.com>
-Subject: Re: [PATCH 2/9] cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
-To: Anisa Su <anisa.su@samsung.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
- nifan.cxl@gmail.com, dave@stgolabs.net, linux-cxl@vger.kernel.org
-Content-Type: multipart/alternative; boundary="000000000000682a650632bfe10e"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=anisa.su887@gmail.com; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFxbseScfkce8xHjxBW05Q6egvQNQFD5cvPtG29N+A=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250414-0, 4/13/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,215 +112,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000682a650632bfe10e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Jonathan,
 
-Any update on this?
+> -----Original Message-----
+> From: Brian Cain <brian.cain@oss.qualcomm.com>
+> Sent: Monday, April 7, 2025 1:27 PM
+> To: qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
+> anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
+> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+> sidneym@quicinc.com
+> Subject: [PATCH v3 2/5] target/hexagon: Fix badva reference, delete =
+CAUSE
+>=20
+> The BADVA reg is referred to with the wrong identifier.  The CAUSE reg =
+field
+> of SSR is not yet modeled.
+>=20
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/cpu.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>=20
+> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c index
+> 766b678651..62f1fe15b8 100644
+> --- a/target/hexagon/cpu.c
+> +++ b/target/hexagon/cpu.c
+> @@ -216,8 +216,7 @@ static void hexagon_dump(CPUHexagonState *env,
+> FILE *f, int flags)
+>      qemu_fprintf(f, "  cs0 =3D 0x00000000\n");
+>      qemu_fprintf(f, "  cs1 =3D 0x00000000\n");  #else
+> -    print_reg(f, env, HEX_REG_CAUSE);
+> -    print_reg(f, env, HEX_REG_BADVA);
+> +    print_reg(f, env, HEX_SREG_BADVA);
 
-Thanks,
-Anisa
+Since BADVA is a proxy for BADVA0/BADVA1, consider naming it =
+HEX_SREG_BADVA_ALIASED to help avoid the problems we've seen with =
+HEX_REG_P3_0_ALIASED.
 
-On Mon, Mar 31, 2025 at 12:38=E2=80=AFPM Anisa Su <anisa.su@samsung.com> wr=
-ote:
+Taylor
 
-> On Tue, Mar 18, 2025 at 03:56:24PM +0000, Jonathan Cameron wrote:
-> > On Mon, 17 Mar 2025 16:31:29 +0000
-> > anisa.su887@gmail.com wrote:
-> >
-> > > From: Anisa Su <anisa.su@samsung.com>
-> > >
-> > > FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section
-> 7.6.7.6.1
-> > >
-> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> > > --- a/hw/cxl/i2c_mctp_cxl.c
-> > > +++ b/hw/cxl/i2c_mctp_cxl.c
-> > > @@ -46,6 +46,9 @@
-> > >  /* Implementation choice - may make this configurable */
-> > >  #define MCTP_CXL_MAILBOX_BYTES 512
-> > >
-> > > +/* Supported FMAPI Cmds */
-> > > +#define FMAPI_CMD_MAX_OPCODE 0x57
-> > > +
-> > >  typedef struct CXLMCTPMessage {
-> > >      /*
-> > >       * DSP0236 (MCTP Base) Integrity Check + Message Type
-> > > @@ -200,7 +203,8 @@ static void
-> i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
-> > >          if (!(msg->message_type =3D=3D MCTP_MT_CXL_TYPE3 &&
-> > >                msg->command_set < 0x51) &&
-> > >              !(msg->message_type =3D=3D MCTP_MT_CXL_FMAPI &&
-> > > -              msg->command_set >=3D 0x51 && msg->command_set < 0x56)=
-) {
-> > > +              msg->command_set >=3D 0x51 &&
-> > > +              msg->command_set < FMAPI_CMD_MAX_OPCODE)) {
-> >
-> > Hmm. There is a visibility problem here we should address but probably
-> not
-> > by introducing a new define.  Maybe we should move the enum from
-> > cxl-mailbox-utils.c in a precursor patch.
-> >
-> > Jonathan
-> Thanks for the feedback and review Jonathan.
->
-> According to the comment above this condition, "Any command forming part
-> of the CXL FM-API command set... is valid only with the CXL Fabric
-> Manager API over MCTP binding (DSP0234)."
->
-> From my understanding, this check is to ensure that any message
-> sent from the FM API command set (0x51 - 0x59) has the MCTP_MT_CXL_FMAPI
-> binding and all other commands (opcode < 0x51) are are sent with the
-> MCTP_MT_CXL_TYPE3 binding.
->
-> Although I see from r3.2 Table 8-230 CXL Defined FM API Command Opcodes
-> that commands from sets 0x57-0x59 are prohibited from being implemented
-> in the MCTP CCI, would it be more correct to change the condition for
-> FMAPI commands  to msg->command_set < 0x59? Then if/when commands from se=
-ts
-> 0x57-0x59 are implemented, if they are implemented according to the spec,
-> they
-> should not be added to the FM MCTP CCI.
->
-> Please correct my understanding if this is incorrect.
->
-> Regarding the visibility problem, I intend to move the enum defining all
-> the
-> opcodes in cxl-mailbox.utils.c to cxl-mailbox.h and including cxl-mailbox=
-.h
-> in i2c_mctp_cxl.c
->
-> Let me know if that is what you intended.
->
-> Other than that, I have removed the extraneous TO-DO's from the other
-> patches and plan to send out v2 with relevant corrections soon.
-> Hopefully that makes the remaining patches easier for you to review.
->
-> Thanks,
-> Anisa
->
->
-> >
-> >
-> > >              buf->rc =3D CXL_MBOX_UNSUPPORTED;
-> > >              st24_le_p(buf->pl_length, len_out);
-> > >              s->len =3D s->pos;
-> >
->
 
---000000000000682a650632bfe10e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Jonathan,<div><br></div><div>Any update on=C2=A0this?</=
-div><div><br></div><div>Thanks,</div><div>Anisa</div></div><br><div class=
-=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
-">On Mon, Mar 31, 2025 at 12:38=E2=80=AFPM Anisa Su &lt;<a href=3D"mailto:a=
-nisa.su@samsung.com">anisa.su@samsung.com</a>&gt; wrote:<br></div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">On Tue, Mar 18, 2025 at 03:56:24PM=
- +0000, Jonathan Cameron wrote:<br>
-&gt; On Mon, 17 Mar 2025 16:31:29 +0000<br>
-&gt; <a href=3D"mailto:anisa.su887@gmail.com" target=3D"_blank">anisa.su887=
-@gmail.com</a> wrote:<br>
-&gt; <br>
-&gt; &gt; From: Anisa Su &lt;<a href=3D"mailto:anisa.su@samsung.com" target=
-=3D"_blank">anisa.su@samsung.com</a>&gt;<br>
-&gt; &gt; <br>
-&gt; &gt; FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Sec=
-tion 7.6.7.6.1<br>
-&gt; &gt; <br>
-&gt; &gt; Signed-off-by: Anisa Su &lt;<a href=3D"mailto:anisa.su@samsung.co=
-m" target=3D"_blank">anisa.su@samsung.com</a>&gt;<br>
-&gt; &gt; --- a/hw/cxl/i2c_mctp_cxl.c<br>
-&gt; &gt; +++ b/hw/cxl/i2c_mctp_cxl.c<br>
-&gt; &gt; @@ -46,6 +46,9 @@<br>
-&gt; &gt;=C2=A0 /* Implementation choice - may make this configurable */<br=
->
-&gt; &gt;=C2=A0 #define MCTP_CXL_MAILBOX_BYTES 512<br>
-&gt; &gt;=C2=A0 <br>
-&gt; &gt; +/* Supported FMAPI Cmds */<br>
-&gt; &gt; +#define FMAPI_CMD_MAX_OPCODE 0x57<br>
-&gt; &gt; +<br>
-&gt; &gt;=C2=A0 typedef struct CXLMCTPMessage {<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* DSP0236 (MCTP Base) Integrity Check +=
- Message Type<br>
-&gt; &gt; @@ -200,7 +203,8 @@ static void i2c_mctp_cxl_handle_message(MCTPI=
-2CEndpoint *mctp)<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!(msg-&gt;message_type =3D=
-=3D MCTP_MT_CXL_TYPE3 &amp;&amp;<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 msg-&gt;co=
-mmand_set &lt; 0x51) &amp;&amp;<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !(msg-&gt;message=
-_type =3D=3D MCTP_MT_CXL_FMAPI &amp;&amp;<br>
-&gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 msg-&gt;command=
-_set &gt;=3D 0x51 &amp;&amp; msg-&gt;command_set &lt; 0x56)) {<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 msg-&gt;command=
-_set &gt;=3D 0x51 &amp;&amp;<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 msg-&gt;command=
-_set &lt; FMAPI_CMD_MAX_OPCODE)) {<br>
-&gt; <br>
-&gt; Hmm. There is a visibility problem here we should address but probably=
- not<br>
-&gt; by introducing a new define.=C2=A0 Maybe we should move the enum from<=
-br>
-&gt; cxl-mailbox-utils.c in a precursor patch.<br>
-&gt; <br>
-&gt; Jonathan<br>
-Thanks for the feedback and review Jonathan.<br>
-<br>
-According to the comment above this condition, &quot;Any command forming pa=
-rt<br>
-of the CXL FM-API command set... is valid only with the CXL Fabric<br>
-Manager API over MCTP binding (DSP0234).&quot;<br>
-<br>
-From my understanding, this check is to ensure that any message<br>
-sent from the FM API command set (0x51 - 0x59) has the MCTP_MT_CXL_FMAPI<br=
->
-binding and all other commands (opcode &lt; 0x51) are are sent with the<br>
-MCTP_MT_CXL_TYPE3 binding.<br>
-<br>
-Although I see from r3.2 Table 8-230 CXL Defined FM API Command Opcodes<br>
-that commands from sets 0x57-0x59 are prohibited from being implemented<br>
-in the MCTP CCI, would it be more correct to change the condition for<br>
-FMAPI commands=C2=A0 to msg-&gt;command_set &lt; 0x59? Then if/when command=
-s from sets<br>
-0x57-0x59 are implemented, if they are implemented according to the spec, t=
-hey<br>
-should not be added to the FM MCTP CCI.<br>
-<br>
-Please correct my understanding if this is incorrect.<br>
-<br>
-Regarding the visibility problem, I intend to move the enum defining all th=
-e<br>
-opcodes in cxl-mailbox.utils.c to cxl-mailbox.h and including cxl-mailbox.h=
-<br>
-in i2c_mctp_cxl.c<br>
-<br>
-Let me know if that is what you intended.<br>
-<br>
-Other than that, I have removed the extraneous TO-DO&#39;s from the other<b=
-r>
-patches and plan to send out v2 with relevant corrections soon.<br>
-Hopefully that makes the remaining patches easier for you to review.<br>
-<br>
-Thanks,<br>
-Anisa<br>
-<br>
-<br>
-&gt; <br>
-&gt; <br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 buf-&gt;rc =3D CX=
-L_MBOX_UNSUPPORTED;<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 st24_le_p(buf-&gt=
-;pl_length, len_out);<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;len =3D s-&=
-gt;pos;<br>
-&gt; <br>
-</blockquote></div>
-
---000000000000682a650632bfe10e--
 
