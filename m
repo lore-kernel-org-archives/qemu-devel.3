@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56779C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 22:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A72AC369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 22:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4Rvz-0000r6-PG; Mon, 14 Apr 2025 18:05:43 -0400
+	id 1u4Rxp-0001e1-6X; Mon, 14 Apr 2025 18:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1u4Rvv-0000qY-Sd
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 18:05:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1u4Rxb-0001cp-Sy; Mon, 14 Apr 2025 18:07:25 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1u4Rvt-0000J2-MB
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 18:05:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744668335;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ebkJWADGWU7QqTV6dBZM2uagiBXaAaI4EgLlmUx2hm4=;
- b=D/51A4N2/mmeFjp1cH2bFo6gEvuvmHS3hf6yK2/6E18nre3crQwbKSsc5e5Taf7aLxPFaB
- LTYgGZVvrkOl5NEj8aXJg53SIM6o0e5rOafB2m4F6gm2EBdjCdubG5CjCOUVKUmuKQCJF+
- kVyT0lQ6dF+gxYeisAM3P+dQ/6EIa3c=
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-vjV3MeV9MFyJRIzOYXm14w-1; Mon, 14 Apr 2025 18:05:33 -0400
-X-MC-Unique: vjV3MeV9MFyJRIzOYXm14w-1
-X-Mimecast-MFC-AGG-ID: vjV3MeV9MFyJRIzOYXm14w_1744668333
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-3d59fc520edso5366475ab.1
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 15:05:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744668333; x=1745273133;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ebkJWADGWU7QqTV6dBZM2uagiBXaAaI4EgLlmUx2hm4=;
- b=uCGsW9vZmZ+tp/lH0zJsJAIuzNR4/FoG66aE6vNVZjW6PePcJs0lRFjHjMKjR9ZXwh
- iquxElj7Tf4Gc30F1Lx5oZ1XfQTiT3qjY2SzGazBfJkjJuQvlP5CekXTjzzwgFZvWGG4
- N687F2CFNqlCgHzzzEvh/q2d2ebjlVJBk1QvxmK0NFFxATnMrjaei7QoB4uMK+ZfSNEO
- Ox1UH3bwxu8L5h5Kh+FZenVqcampiTLNOGQGxKR8Y+A09QYrznJSTxEZem7tTI/bIJPs
- sfImJDOWh7niFuZDcNQ+/J2cKUwb5nHm6EdhcpBGdt7sBLRvUGu9PNM82EDUmOSBtta8
- Y15A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjTRNveoEEl8qFFzdAU7ulU2nz3ZLIQTRYIRNUCZXLE6cd2A13xCbWGCaldrg6obasrFXXETR6L6Kt@nongnu.org
-X-Gm-Message-State: AOJu0Yxl8bC5sDtD6EfO2EcaYTCBDXgrYhjEMR9Ja8giW8Csi+MYsh9a
- hx1lfOEFGQgsPgnyqtunqyJ/ZXRvHmclrUVZdT1sTris3NK6/eluF8JrSwpLMtXMv4LM/m2os8s
- jwmc8drQcfSvn7cUZCScDFcfVcN9/CAlt6/+MNfOKLiS8niz/dxdz
-X-Gm-Gg: ASbGncs2t5ScUIAkdWcUkMU2XNPEwjoSi0jDDmBQjR6pEjRqRq//eEJWl44z4l6fOtO
- rSYQnpS/+N58MNMM2Sci5g+7BvEyyb2FdVnLjWfnMvjINV9PXgn67NXl21ityDiN+/4Bw8YiI0m
- xiWGdHUvZUKjTWYAliPyZyW145ji1KhYlOGj8UXe7XKR4WY2tqrbOWT2e1Xe1f6oP11JnIVZPpt
- IOs8e4rOZXpMeih8T29k74J32HsBD+x2VKhDGhcup8oKVHISi/sxxUfH1N/KM8tYm8igTW3//8I
- ux0EwpRaaU0csfE=
-X-Received: by 2002:a05:6e02:2161:b0:3d5:eb0e:be0e with SMTP id
- e9e14a558f8ab-3d7ec0e346cmr33136305ab.0.1744668333052; 
- Mon, 14 Apr 2025 15:05:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEh7g01TX2XpLCMm51HwNeTk720gYCvHb2GDpmP8bULy/33rtMLwx4yezDblU8vVV3Q1tcQgA==
-X-Received: by 2002:a05:6e02:2161:b0:3d5:eb0e:be0e with SMTP id
- e9e14a558f8ab-3d7ec0e346cmr33136195ab.0.1744668332671; 
- Mon, 14 Apr 2025 15:05:32 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f505e2ece0sm2805054173.131.2025.04.14.15.05.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 14 Apr 2025 15:05:31 -0700 (PDT)
-Date: Mon, 14 Apr 2025 16:05:30 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
-Subject: Re: [PATCH] vfio/igd: Check host PCI address when probing
-Message-ID: <20250414160530.5d86aaf2.alex.williamson@redhat.com>
-In-Reply-To: <3e9743ab-bf81-4d92-8ea0-e01ac58a234b@gmail.com>
-References: <20250325172239.27926-1-tomitamoeko@gmail.com>
- <20250409111801.4c97022f.alex.williamson@redhat.com>
- <046a2961-23b1-4ef2-8673-9b9deedbbbdf@redhat.com>
- <3e9743ab-bf81-4d92-8ea0-e01ac58a234b@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1u4Rxa-0000Yp-5P; Mon, 14 Apr 2025 18:07:23 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53EKDdeR012967;
+ Mon, 14 Apr 2025 22:07:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zxSGji
+ sOOmxJNhzbO6QadTgf+AdWFA+SVMu4QF/iQ/I=; b=TXCmQ+c9TM1YH7jVRLRZY5
+ ddSuqK7PiWYUdvwoacqQX3J8Dn4NTLz8g/m7IMMYoLAWT4sSVlT49rGmFt6mYsDo
+ rJACQCeb7107OnkG5M3UE9JOUQ05WKtBuVD8Ar4ucerqvpiNxHYUVu42FMtsBI8O
+ 5N1eJ7jrpcFzgVJNzEN8uOsaPKAyp+nkJYSb9CmvHsh7mKrauEkBlgk6frfOir1b
+ lM79Bx1u68/WGve5vcCf3yB1Yt+rYwYVPGd0q7fBjHAmEAKkIjsZmUXbZj33/wUT
+ 7U4mw6zSFIOwZQ8GldJbNH4RCxFEAtDilbqALxHh/2bebA0+dIRiDCK656cgsLtQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4610tpayn9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Apr 2025 22:07:16 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53EHtqTT016722;
+ Mon, 14 Apr 2025 22:07:15 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 460571yv9n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 14 Apr 2025 22:07:15 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53EM7E7r32571950
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 14 Apr 2025 22:07:14 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 08FAA5805A;
+ Mon, 14 Apr 2025 22:07:14 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C5DA258054;
+ Mon, 14 Apr 2025 22:07:12 +0000 (GMT)
+Received: from [9.61.251.75] (unknown [9.61.251.75])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 14 Apr 2025 22:07:12 +0000 (GMT)
+Message-ID: <611df6cf-537e-40aa-b537-1797acb51ae0@linux.ibm.com>
+Date: Mon, 14 Apr 2025 15:07:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] include: Add a header to define host PCI MMIO
+ functions
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
+ stefanha@redhat.com, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, thuth@redhat.com, fam@euphon.net,
+ alex.williamson@redhat.com
+References: <20250414213616.2675-1-alifm@linux.ibm.com>
+ <20250414213616.2675-3-alifm@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250414213616.2675-3-alifm@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: yqDXUvZ4FTBlRp2tOJ2vvATWvCHKYVKY
+X-Proofpoint-ORIG-GUID: yqDXUvZ4FTBlRp2tOJ2vvATWvCHKYVKY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-14_08,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ phishscore=0 clxscore=1015 mlxlogscore=999 adultscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504140159
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,96 +113,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Apr 2025 01:23:56 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-> On 4/10/25 15:34, C=C3=A9dric Le Goater wrote:
-> > + Corvin
-> >=20
-> > On 4/9/25 19:18, Alex Williamson wrote: =20
-> >> On Wed, 26 Mar 2025 01:22:39 +0800
-> >> Tomita Moeko <tomitamoeko@gmail.com> wrote:
-> >> =20
-> >>> So far, all Intel VGA adapters, including discrete GPUs like A770 and
-> >>> B580, were treated as IGD devices. While this had no functional impac=
-t,
-> >>> a error about "unsupported IGD device" will be printed when passthrou=
-gh
-> >>> Intel discrete GPUs.
-> >>>
-> >>> Since IGD devices must be at "0000:00:02.0", let's check the host PCI
-> >>> address when probing.
-> >>>
-> >>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-> >>> ---
-> >>>   hw/vfio/igd.c | 23 +++++++++--------------
-> >>>   1 file changed, 9 insertions(+), 14 deletions(-)
-> >>>
-> >>> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> >>> index 265fffc2aa..ff250017b0 100644
-> >>> --- a/hw/vfio/igd.c
-> >>> +++ b/hw/vfio/igd.c
-> >>> @@ -53,6 +53,13 @@
-> >>>    * headless setup is desired, the OpRegion gets in the way of that.
-> >>>    */
-> >>>   +static bool vfio_is_igd(VFIOPCIDevice *vdev)
-> >>> +{
-> >>> +    return vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) &&
-> >>> +           vfio_is_vga(vdev) &&
-> >>> +           vfio_pci_host_match(&vdev->host, "0000:00:02.0");
-> >>> +} =20
-> >>
-> >> vfio-pci devices can also be specified via sysfsdev=3D rather than hos=
-t=3D,
-> >> so at a minimum I think we'd need to test against vdev->vbasedev.name,
-> >> as other callers of vfio_pci_host_match do.  For example building a
-> >> local PCIHostDeviceAddress and comparing it to name.  This is also not
-> >> foolproof though if we start taking advantage of devices passed by fd.
-> >>
-> >> Could we instead rely PCIe capabilities?  A discrete GPU should
-> >> identify as either an endpoint or legacy endpoint and IGD should
-> >> identify as a root complex integrated endpoint, or maybe older versions
-> >> would lack the PCIe capability altogether. =20
-> >=20
-> > Maintaining a list of PCI IDs for Intel GPU devices as Corvin was
-> > proposing in [1] is not a viable solution ?
-> >=20
-> > Thanks,
-> >=20
-> > C.
-> >=20
-> > [1] https://lore.kernel.org/qemu-devel/20250206121341.118337-1-corvin.k=
-oehne@gmail.com/ =20
->=20
-> I checked Intel doc, probably maintaining an device ID list is the only
-> possible way. But given that intel is moving to xe driver, generation
-> becomes unclear, I'd like to propose a list with quirk flags for igd.
->=20
-> static const struct igd_device igd_devices[] =3D {
->     INTEL_SNB_IDS(IGD_DEVICE, OPREGION_QUIRK | BDSM_QUIRK),
->     INTEL_TGL_IDS(IGD_DEVICE, OPREGION_QUIRK | BDSM64_QUIRK),
-> }
->=20
-> Matching in the list is more time consuming than current switch-case,
-> it's better to have a new field to cache it.
->=20
-> I will go with Corvin's first 2 patches with reordering suggested by
-> Cornelia.
+On 4/14/2025 2:36 PM, Farhan Ali wrote:
+> Add a generic API for host PCI MMIO reads/writes
+> (e.g. Linux VFIO BAR accesses). The functions access
+> little endian memory and returns the result in
+> host cpu endianness.
+>
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> ---
+>   include/qemu/host-pci-mmio.h | 141 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 141 insertions(+)
+>   create mode 100644 include/qemu/host-pci-mmio.h
+>
+> diff --git a/include/qemu/host-pci-mmio.h b/include/qemu/host-pci-mmio.h
+> new file mode 100644
+> index 0000000000..de17d67e3a
+> --- /dev/null
+> +++ b/include/qemu/host-pci-mmio.h
+> @@ -0,0 +1,141 @@
+> +/*
+> + * API for host PCI MMIO accesses (e.g. Linux VFIO BARs)
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HOST_PCI_MMIO_H
+> +#define HOST_PCI_MMIO_H
+> +
+> +#include "qemu/bswap.h"
+> +#include "qemu/s390x_pci_mmio.h"
+> +
+> +
+> +static inline uint8_t host_pci_ldub_p(const void *ioaddr)
+> +{
+> +    uint8_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = s390x_pci_mmio_read_8(ioaddr);
+> +#else
 
-If I recall the discussion correctly, Corvin's series was mapping device
-IDs to generation, where I had the concern that it creates ongoing
-overhead to sync with the i915 driver to create new mappings.  There
-was a suggestion that newer hardware has a register that reports the
-generation, so maybe we only need to manage creating the mapping table
-up to the point we can rely on getting the generation information from
-hardware (with the massive caveat that Intel could drop that generation
-register in the future, or maybe already has).
+Noticed a typo below, it should be ldub_p instead of ldub_he_p (didn't 
+have any compiler errors). Will fix this, but will wait for some other 
+feedback before sending a new revision.
 
-The above table however suggests yet another use case of the table, a
-mapping of quirks to specific devices.  It seems this once again
-introduces the maintenance issue.  Why would it not be sufficient to
-determine the quirks based on the generation alone?  Thanks,
-
-Alex
-
+> +    ret = ldub_he_p(ioaddr);
+> +#endif
+> +
+> +    return ret;
+> +}
+> +
+> +static inline uint16_t host_pci_lduw_le_p(const void *ioaddr)
+> +{
+> +    uint16_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = le16_to_cpu(s390x_pci_mmio_read_16(ioaddr));
+> +#else
+> +    ret = lduw_le_p(ioaddr);
+> +#endif
+> +
+> +    return ret;
+> +}
+> +
+> +static inline uint32_t host_pci_ldl_le_p(const void *ioaddr)
+> +{
+> +    uint32_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = le32_to_cpu(s390x_pci_mmio_read_32(ioaddr));
+> +#else
+> +    ret = (uint32_t)ldl_le_p(ioaddr);
+> +#endif
+> +
+> +    return ret;
+> +}
+> +
+> +static inline uint64_t host_pci_ldq_le_p(const void *ioaddr)
+> +{
+> +    uint64_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = le64_to_cpu(s390x_pci_mmio_read_64(ioaddr));
+> +#else
+> +    ret = ldq_le_p(ioaddr);
+> +#endif
+> +
+> +    return ret;
+> +}
+> +
+> +static inline void host_pci_stb_le_p(void *ioaddr, uint8_t val)
+> +{
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_8(ioaddr, val);
+> +#else
+> +    stb_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline void host_pci_stw_le_p(void *ioaddr, uint16_t val)
+> +{
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_16(ioaddr, cpu_to_le16(val));
+> +#else
+> +    stw_le_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline void host_pci_stl_le_p(void *ioaddr, uint32_t val)
+> +{
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_32(ioaddr, cpu_to_le32(val));
+> +#else
+> +    stl_le_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline void host_pci_stq_le_p(void *ioaddr, uint64_t val)
+> +{
+> +
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_64(ioaddr, cpu_to_le64(val));
+> +#else
+> +    stq_le_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline uint64_t host_pci_ldn_le_p(const void *ioaddr, int sz)
+> +{
+> +    switch (sz) {
+> +    case 1:
+> +        return host_pci_ldub_p(ioaddr);
+> +    case 2:
+> +        return host_pci_lduw_le_p(ioaddr);
+> +    case 4:
+> +        return host_pci_ldl_le_p(ioaddr);
+> +    case 8:
+> +        return host_pci_ldq_le_p(ioaddr);
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static inline void host_pci_stn_le_p(void *ioaddr, int sz, uint64_t v)
+> +{
+> +    switch (sz) {
+> +    case 1:
+> +        host_pci_stb_le_p(ioaddr, v);
+> +        break;
+> +    case 2:
+> +        host_pci_stw_le_p(ioaddr, v);
+> +        break;
+> +    case 4:
+> +        host_pci_stl_le_p(ioaddr, v);
+> +        break;
+> +    case 8:
+> +        host_pci_stq_le_p(ioaddr, v);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +#endif
 
