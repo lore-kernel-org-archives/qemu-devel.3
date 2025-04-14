@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D9BC369B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DDEC369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 11:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4I24-0003Yn-Vq; Mon, 14 Apr 2025 07:31:21 -0400
+	id 1u4I27-0003ZZ-1z; Mon, 14 Apr 2025 07:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1h-0003VO-Op
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1j-0003Vd-Qj
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:31:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1f-0003v6-DA
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4I1h-0003vk-Q5
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 07:30:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744630253;
+ s=mimecast20190719; t=1744630257;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ks7zB8+UXPocpjnbLqRfBX7yiiMVfQgEztwKi8rXsU8=;
- b=TDuyhrPkjpbQTFaevTfhDdvm36V37xjxcn8Lq81fGZUsSLhNFwdupS/q1PDzp0KLkFz3ti
- 8i4x0fYxv5z+tP3slFH29Kx3cbW8vkyiMPsrD4t+MeN7xoKo3Vi2kTHAVWcqJP2RmJ4sUN
- K4OODB44ABY8K0wdHqj8WSq0en9r6v4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=BhfTQ5TT4fi6f3OHTYsSSPVnpSGAUF6fIZjJer489Io=;
+ b=JjY6hXxwXn+g47FKLA+/EEpB7KeYJVHFRSwaVGFR6j+tcK00f9Rc0/ufOUCYcSWxHiMbdK
+ +236QrDrZHOPKc20DaN9UWHX+T5VsWHakmFeBr1iRkmA1seFI3Lt5VfDpgldXKoksgavdh
+ Oliwj7/Qb+c/apKoXVKQ7Zm2Jf7gdxA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-qV-Ic9xNODyXoebia3YAxg-1; Mon,
- 14 Apr 2025 07:30:48 -0400
-X-MC-Unique: qV-Ic9xNODyXoebia3YAxg-1
-X-Mimecast-MFC-AGG-ID: qV-Ic9xNODyXoebia3YAxg_1744630248
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-0-8MpzboO0-ork51C6-Oqw-1; Mon,
+ 14 Apr 2025 07:30:53 -0400
+X-MC-Unique: 0-8MpzboO0-ork51C6-Oqw-1
+X-Mimecast-MFC-AGG-ID: 0-8MpzboO0-ork51C6-Oqw_1744630252
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C9A13180035E; Mon, 14 Apr 2025 11:30:47 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99B8919560B0; Mon, 14 Apr 2025 11:30:52 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AAA0B1956094; Mon, 14 Apr 2025 11:30:46 +0000 (UTC)
+ id 7CC7D1956094; Mon, 14 Apr 2025 11:30:51 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Daniel P . Berrange" <berrange@redhat.com>
-Subject: [PATCH v2 08/15] tests/functional: Convert the 64-bit little endian
- Wheezy mips test
-Date: Mon, 14 Apr 2025 13:30:22 +0200
-Message-ID: <20250414113031.151105-9-thuth@redhat.com>
+Subject: [PATCH v2 11/15] tests/functional: Use the tuxrun kernel for the x86
+ replay test
+Date: Mon, 14 Apr 2025 13:30:25 +0200
+Message-ID: <20250414113031.151105-12-thuth@redhat.com>
 In-Reply-To: <20250414113031.151105-1-thuth@redhat.com>
 References: <20250414113031.151105-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,85 +87,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Reuse the test function from the 32-bit big endian test to easily
-convert the 64-bit little endian Wheezy mips test.
+This way we can do a full boot in record-replay mode and
+should get a similar test coverage compared to the old
+replay test from tests/avocado/replay_linux.py. Thus remove
+the x86 avocado replay_linux test now.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/linux_ssh_mips_malta.py   |  8 --------
- tests/functional/meson.build            |  1 +
- tests/functional/test_mips64el_malta.py | 22 ++++++++++++++++++++++
- 3 files changed, 23 insertions(+), 8 deletions(-)
+ tests/avocado/replay_linux.py          | 46 --------------------------
+ tests/functional/test_x86_64_replay.py | 43 ++++++++++++++++++------
+ 2 files changed, 33 insertions(+), 56 deletions(-)
 
-diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
-index c1300aec961..2fa5cf9a6c1 100644
---- a/tests/avocado/linux_ssh_mips_malta.py
-+++ b/tests/avocado/linux_ssh_mips_malta.py
-@@ -179,11 +179,3 @@ def test_mips_malta64eb_kernel3_2_0(self):
-         :avocado: tags=device:pcnet32
-         """
-         self.check_mips_malta('mips64', 'be')
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index 59169224353..6ba283d3bf6 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -118,52 +118,6 @@ def run_replay_dump(self, replay_path):
+         except subprocess.CalledProcessError:
+             self.fail('replay-dump.py failed')
+ 
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxX8664(ReplayLinux):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=accel:tcg
+-    """
 -
--    def test_mips_malta64el_kernel3_2_0(self):
+-    chksum = 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0'
+-
+-    def test_pc_i440fx(self):
 -        """
--        :avocado: tags=arch:mips64el
--        :avocado: tags=endian:little
--        :avocado: tags=device:pcnet32
+-        :avocado: tags=machine:pc
 -        """
--        self.check_mips_malta('mips64', 'le')
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index cba0abf2920..a4a317115b3 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -42,6 +42,7 @@ test_timeouts = {
-   'mips_malta' : 480,
-   'mipsel_malta' : 420,
-   'mipsel_replay' : 480,
-+  'mips64el_malta' : 420,
-   'mips64el_replay' : 180,
-   'netdev_ethtool' : 180,
-   'ppc_40p' : 240,
-diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
-index a8da15a26b3..dd37212f9df 100755
---- a/tests/functional/test_mips64el_malta.py
-+++ b/tests/functional/test_mips64el_malta.py
-@@ -16,6 +16,8 @@
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
+-        self.run_rr(shift=1)
+-
+-    def test_pc_q35(self):
+-        """
+-        :avocado: tags=machine:q35
+-        """
+-        self.run_rr(shift=3)
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxX8664Virtio(ReplayLinux):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=virtio
+-    :avocado: tags=accel:tcg
+-    """
+-
+-    hdd = 'virtio-blk-pci'
+-    cd = 'virtio-blk-pci'
+-    bus = None
+-
+-    chksum = 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0'
+-
+-    def test_pc_i440fx(self):
+-        """
+-        :avocado: tags=machine:pc
+-        """
+-        self.run_rr(shift=1)
+-
+-    def test_pc_q35(self):
+-        """
+-        :avocado: tags=machine:q35
+-        """
+-        self.run_rr(shift=3)
  
-+from test_mips_malta import mips_check_wheezy
+ @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+ class ReplayLinuxAarch64(ReplayLinux):
+diff --git a/tests/functional/test_x86_64_replay.py b/tests/functional/test_x86_64_replay.py
+index 180f23a60c5..27287d452dc 100755
+--- a/tests/functional/test_x86_64_replay.py
++++ b/tests/functional/test_x86_64_replay.py
+@@ -5,30 +5,53 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset, skipFlakyTest
++from subprocess import check_call, DEVNULL
 +
++from qemu_test import Asset, skipFlakyTest, get_qemu_img
+ from replay_kernel import ReplayKernelBase
  
- class MaltaMachineConsole(LinuxKernelTest):
  
-@@ -90,6 +92,26 @@ def test_mips64el_malta_5KEc_cpio(self):
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
+ class X86Replay(ReplayKernelBase):
  
-+    ASSET_WHEEZY_KERNEL = Asset(
-+        ('https://people.debian.org/~aurel32/qemu/mipsel/'
-+         'vmlinux-3.2.0-4-5kc-malta'),
-+        '5e8b725244c59745bb8b64f5d8f49f25fecfa549f3395fb6d19a3b9e5065b85b')
+     ASSET_KERNEL = Asset(
+-         ('https://archives.fedoraproject.org/pub/archive/fedora/linux'
+-          '/releases/29/Everything/x86_64/os/images/pxeboot/vmlinuz'),
+-        '8f237d84712b1b411baf3af2aeaaee10b9aae8e345ec265b87ab3a39639eb143')
++        'https://storage.tuxboot.com/buildroot/20241119/x86_64/bzImage',
++        'f57bfc6553bcd6e0a54aab86095bf642b33b5571d14e3af1731b18c87ed5aef8')
 +
-+    ASSET_WHEEZY_DISK = Asset(
-+        ('https://people.debian.org/~aurel32/qemu/mipsel/'
-+         'debian_wheezy_mipsel_standard.qcow2'),
-+        '454f09ae39f7e6461c84727b927100d2c7813841f2a0a5dce328114887ecf914')
-+
-+    def test_wheezy(self):
-+        kernel_path = self.ASSET_WHEEZY_KERNEL.fetch()
-+        image_path = self.ASSET_WHEEZY_DISK.fetch()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
-+                               + 'console=ttyS0 root=/dev/sda1')
-+        mips_check_wheezy(self,
-+            kernel_path, image_path, kernel_command_line, cpuinfo='MIPS 20Kc',
-+            dl_file='/boot/initrd.img-3.2.0-4-5kc-malta',
-+            hsum='7579f8b56c1187c7c04d0dc3c0c56c7a6314c5ddd3a9bf8803ecc7cf8a3be9f8')
-+
++    ASSET_ROOTFS = Asset(
++        'https://storage.tuxboot.com/buildroot/20241119/x86_64/rootfs.ext4.zst',
++        '4b8b2a99117519c5290e1202cb36eb6c7aaba92b357b5160f5970cf5fb78a751')
  
- @skipIfMissingImports('numpy', 'cv2')
- class MaltaMachineFramebuffer(LinuxKernelTest):
+-    def do_test_x86(self, machine):
++    def do_test_x86(self, machine, blkdevice, devroot):
++        self.require_netdev('user')
+         self.set_machine(machine)
++        self.cpu="Nehalem"
+         kernel_path = self.ASSET_KERNEL.fetch()
+-        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-        console_pattern = 'VFS: Cannot open root device'
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
++
++        raw_disk = self.uncompress(self.ASSET_ROOTFS)
++        disk = self.scratch_file('scratch.qcow2')
++        qemu_img = get_qemu_img(self)
++        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', raw_disk,
++                    '-F', 'raw', disk], stdout=DEVNULL, stderr=DEVNULL)
++
++        args = ('-drive', 'file=%s,snapshot=on,id=hd0,if=none' % disk,
++                '-drive', 'driver=blkreplay,id=hd0-rr,if=none,image=hd0',
++                '-device', '%s,drive=hd0-rr' % blkdevice,
++                '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
++                '-device', 'virtio-net,netdev=vnet',
++                '-object', 'filter-replay,id=replay,netdev=vnet')
++
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               f"console=ttyS0 root=/dev/{devroot}")
++        console_pattern = 'Welcome to TuxTest'
++        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5,
++                    args=args)
+ 
+     @skipFlakyTest('https://gitlab.com/qemu-project/qemu/-/issues/2094')
+     def test_pc(self):
+-        self.do_test_x86('pc')
++        self.do_test_x86('pc', 'virtio-blk', 'vda')
+ 
+     def test_q35(self):
+-        self.do_test_x86('q35')
++        self.do_test_x86('q35', 'ide-hd', 'sda')
+ 
+ 
+ if __name__ == '__main__':
 -- 
 2.49.0
 
