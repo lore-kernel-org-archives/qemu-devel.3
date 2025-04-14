@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3CAC369A2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F16C369A2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 16:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4MOy-0001u6-6y; Mon, 14 Apr 2025 12:11:16 -0400
+	id 1u4MQ9-0002BM-OB; Mon, 14 Apr 2025 12:12:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MOb-0001oo-JJ
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:10:56 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MPB-0001zy-6q
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:11:33 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MOZ-0000N5-Aw
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:10:53 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43ed8d32a95so38857475e9.3
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:10:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4MP8-0000WU-JL
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 12:11:28 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43d0359b1fcso30644955e9.0
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 09:11:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744647041; x=1745251841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744647085; x=1745251885; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=vsVZki9aVUMPgj1KDUr3cVqk2wTkPTQG2dt6tX3SEEo=;
- b=I//HKoAjYLFk81SM7gjklgMVnwpHM98mKB4JYUUNWzy22LuWhprZ1wRms8+0/5UHhy
- +n3vLYthS08Vm+XjiLgAI5nMJYhwqwhJE6mr0kH+Ixr93AFtznt4exYh/JCAzdl//c6a
- 0EKqMtu3D1ZfoeBOauHjnG7/KJJrRM8BJyp6KHqBb9DYd5FI9JcaJziMIGIyruAXw7Ob
- DRgiT9UfeI0saLQHfG6RnbM0uQ5ZzkLDzpIuVFuYNDzvQG+LWYzCFmHHZB2fXgbtwsqZ
- CeJwBmpIiv73w/0sWpBfZicOOsz12WzuEy5T2Dp1F3JknbSlMQ+ESDOI3oJwWOWin48X
- eP7Q==
+ bh=WqBFC1T5vvtFmaKrfZy+y6npmm7hcx4NUKeeI8wQlmk=;
+ b=rBMF3+sFBVP7HTPZGM15azdw41CrySc8otZPZjALRj/mTsJZEYKMWgN/jR5nyxbYFj
+ TrctYwgL3N+xfenGJGpOa45T4mzPgM8Xg41lo/cCplMUtMETYNdWAEFIvu3Ixzc9Ki3F
+ kixP7e49lv27OGwI32dNaoNxg1fiEO0BarYT7WfzRjQ06J17MGm+araNK5u60JSQ8hAz
+ PVWT/dWswpMVEQM6TRwO84Eg52OrKdvCSAvbVSdui42fGGPMUDQlI3w2JBXjSVMEQ57w
+ ivcTgeknY3CFjkYs1Jrpv5OEyqDivEmjEU5shLweJZK0VVWeCn2x4j36C6FRuhHYFkwc
+ 7CRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744647041; x=1745251841;
+ d=1e100.net; s=20230601; t=1744647085; x=1745251885;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vsVZki9aVUMPgj1KDUr3cVqk2wTkPTQG2dt6tX3SEEo=;
- b=TUicC3bPExMejRtb5cZ5Jh051+b1DM+p/QpF1T6AcwLvMO8A+B31SzVttbQa7ZPmho
- sGUo4+3Ck7AHZTnIqv34FlVu2HUS5pNnGDrKKOOFAP2zz625sqBX7P4n8QU2/daVumBc
- ayJCK0NaRjeSN5mc2GWeIo0hkd+9uZzerNCGRFTPlwl4kWuRWll23iTN+HBwBjRumT7C
- viSjKkBPOIQxPBqFmG3on4cAM8MOFH+IKTGvYjwOueOs+6rsXsm0zXU5hX4HoV3lseu7
- B48oD9Q5D63UNGWHw8Kp+4LrQ5vQBTzYdVM8EfGX3SD2Yf+j66wrhhTZ2JTHfIpgN6Xf
- qsnA==
+ bh=WqBFC1T5vvtFmaKrfZy+y6npmm7hcx4NUKeeI8wQlmk=;
+ b=mQJ5hbSia9pFqnmMHSBbWuG9nzFb2rnB9ag5XogVi/XR60QUllUxxE/Kb03xBqj3Fw
+ GgXmJ6E31deObIKGwh+KE5yPvQDXjox5RtNU09iZVfk5rqjKj2Ofglij2eG4YDA29klk
+ PKPva7dUmAKEMUgUcDj2LuR3b/dZDSZvS6LC2GqmjGKu6eeYFfyLT3qsNQrUDigrhNFY
+ 7e15tHbCUjf/1jJFwxlqOXACeO2PmvQ2rJ8yiSlHRmPCl9b4UYlIU01Ackd+PqX0hM5f
+ 2hXTptZF65AuxsEES2B/8ZaeYunEo575Ni9CUQ6/B6QP9BQg0v6ccVY/b7+SxprD5W9+
+ 9OjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdjz+CNQJ1lbGc/GFgVGUu7Ao8wP7kHJLnQnuz0DwyBBu5s6idJXwvaNvw2wwuspXRLDucVCqYAxT1@nongnu.org
-X-Gm-Message-State: AOJu0YwtqcPyb9U8JAYWh4a0A97cGXoyBm2Q9xlrOJRMeK4eSvLQZKLl
- xQY/AGmwwT0rX/4i6KVtuIf6kaX6N261gQjmrMuLNmjYaS+FjtK5lH4z3sinFj0=
-X-Gm-Gg: ASbGncvWTBp4UUh3gnNgwNGSiHpDi8sn0/uY7Grt9K7SVjoq+vqxeZNou05T4w4GPlh
- pH1TgQ8ErHa28OrvSMlLxGj9LfsMGzcDRHmk9nZiwe51lFRxWpTBlKMQuBAC5gzgfI3rsW+aevz
- enbKIoR+O3BpXrFg+KWd5ibYycTNMxqmT/VUe4bewSt5Gc+ETNlpmTlb90H0fxJojQ8B0CqDqNp
- HSjKf5IqbEff1fkV9wvu4etoBrqsBj2nEapkQWqzZvVseRa+SKNP+zfdfYuaRVClp6h/XjInTJv
- lgfg5O3XYL9Uw6BAwq8IdhNoPv3CP7YeY1w2T/sgz0hxklRDGulvfvN4FQGpvpPmx3pYsqakTqI
- 2nYTIPnwFir2HqZ+wCgo=
-X-Google-Smtp-Source: AGHT+IE9VZ17Z4CfjmAQjzRzKPc3XxSPBYcoA27Le+7/5Z4BKyGdthYmKNZDBqtqdaxPBMpOhqB9Hw==
-X-Received: by 2002:a05:600c:1c2a:b0:43b:c95f:fd9 with SMTP id
- 5b1f17b1804b1-43f3a9258e5mr92977615e9.5.1744647041529; 
- Mon, 14 Apr 2025 09:10:41 -0700 (PDT)
+ AJvYcCU8sIvUuheBp4FVOk6Z7BTfdGBNLsyoDzm6r2NEe5FRQ07v7O3ge1OSVSN08EIp4cbaj2rUR64In53O@nongnu.org
+X-Gm-Message-State: AOJu0YwyN6AmeuyQidoxCSuKnkneVto8k5npVj1N6WpaPjDWjmxx0RLb
+ hSM3TiSm8L3gum5Ytqle993Yb3CA9w3AlVkr+Kwz0lYewO1vR0aPgY3CVqVvlwM=
+X-Gm-Gg: ASbGncvPD9hHoBjby6vOISVZcxeVClebMmBA/Q6ZQ6redzC9MSUXIjALwy9W+qbjKFk
+ 6sf/3kpTf9Kz/Q4X411FVNO3MK671ewUeGljnrv4mRFQs8UHbOIrTuxf/mU8a86B2TLlite7dK3
+ wh/XCm3gutavFT97I37kRv0Jj2MusaqnatOcYzs5sxrmLCxg5/AfKlplIMOwiJ4rrvLHPImZLkG
+ bNYRvPuXL3aoJAcnZqe8WofjKiuM9/cWtFo+dLP2pXB3HZRx69OsHfiSOExzHnhFXtzvKWuUcl8
+ sMNSpHYyI+tlY1P4EyQcfOyWHGwhYovDJATRfHdY+iKZEtIm949GfrehLG5cBkz3Tke7Bo2O2Gi
+ elsbt9l79
+X-Google-Smtp-Source: AGHT+IE58QDSzxRSSij9wsJ1+McSibW5obJ715fI5C7s08F+e2CSRna8CL5p0vCRakDKH4mCwMGHNQ==
+X-Received: by 2002:a05:600c:3b27:b0:439:8878:5029 with SMTP id
+ 5b1f17b1804b1-43f99889ac5mr232165e9.2.1744647084720; 
+ Mon, 14 Apr 2025 09:11:24 -0700 (PDT)
 Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f233a2a13sm179125425e9.10.2025.04.14.09.10.40
+ ffacd0b85a97d-39eaf445772sm11501941f8f.91.2025.04.14.09.11.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Apr 2025 09:10:40 -0700 (PDT)
-Message-ID: <e941c299-e822-48f6-a3e1-f47f177684ac@linaro.org>
-Date: Mon, 14 Apr 2025 18:10:39 +0200
+ Mon, 14 Apr 2025 09:11:24 -0700 (PDT)
+Message-ID: <a8d305e6-3658-4ee6-98dd-167b41a184cd@linaro.org>
+Date: Mon, 14 Apr 2025 18:11:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Remove unnecessary import statements
+Subject: Re: [PATCH] MAINTAINERS: Add functional tests that are not covered yet
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20250414145457.261734-1-thuth@redhat.com>
+Cc: "Daniel P . Berrange" <berrange@redhat.com>, qemu-arm@nongnu.org
+References: <20250414121520.213665-1-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250414145457.261734-1-thuth@redhat.com>
+In-Reply-To: <20250414121520.213665-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,35 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/4/25 16:54, Thomas Huth wrote:
+On 14/4/25 14:15, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> pylint complains about these unnecessary import statements,
-> so let's remove them.
+> Some functional tests are currently not covered by the entries
+> in MAINTAINERS yet, so scripts/get_maintainers.pl fails to suggest
+> the right people who should be CC:-ed for related patches.
+> Add the uncovered tests to the right sections to close this gap.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   tests/functional/qemu_test/ports.py              | 3 +--
->   tests/functional/qemu_test/tuxruntest.py         | 2 --
->   tests/functional/qemu_test/uncompress.py         | 2 +-
->   tests/functional/test_aarch64_rme_sbsaref.py     | 6 ++----
->   tests/functional/test_aarch64_rme_virt.py        | 2 --
->   tests/functional/test_aarch64_sbsaref_alpine.py  | 3 ---
->   tests/functional/test_aarch64_sbsaref_freebsd.py | 2 --
->   tests/functional/test_aarch64_tcg_plugins.py     | 1 -
->   tests/functional/test_aarch64_virt.py            | 8 ++------
->   tests/functional/test_arm_aspeed_ast2500.py      | 3 +--
->   tests/functional/test_arm_cubieboard.py          | 2 --
->   tests/functional/test_arm_quanta_gsj.py          | 2 --
->   tests/functional/test_arm_smdkc210.py            | 2 --
->   tests/functional/test_migration.py               | 3 +--
->   tests/functional/test_mips64el_replay.py         | 6 +-----
->   tests/functional/test_mips_replay.py             | 2 +-
->   tests/functional/test_mipsel_replay.py           | 2 +-
->   tests/functional/test_ppc64_hv.py                | 8 ++++----
->   tests/functional/test_vnc.py                     | 4 ++--
->   tests/functional/test_x86_64_kvm_xen.py          | 2 --
->   20 files changed, 17 insertions(+), 48 deletions(-)
+>   MAINTAINERS | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
