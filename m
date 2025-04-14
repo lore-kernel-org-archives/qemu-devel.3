@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B68C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 08:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A539FC369B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 08:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4FJf-0002qf-KD; Mon, 14 Apr 2025 04:37:19 -0400
+	id 1u4FKt-0003SB-L5; Mon, 14 Apr 2025 04:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4FJe-0002qW-6f
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:37:18 -0400
+ id 1u4FKp-0003Rj-1k
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:38:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4FJb-0001M7-Ma
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:37:17 -0400
+ id 1u4FKm-0001Z7-Hy
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 04:38:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744619829;
+ s=mimecast20190719; t=1744619906;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=clXfms0hMcngIHUh9hMc6jy0AMhEWH3gKFMs3m4gZ1k=;
- b=QpdqBYszftI9m9zzuHux1Ohrm/kv8dIbTTbiHEH9kQIjcMAw1Wad9rD+99PNk6OXX1Iem9
- t7gAIeVkq9gXZDhGXVlJU8fC1jGyJsLC3LLjOdgKjAPc3UjdMlUZxJXf70bwBDK5mphCTI
- Ocv4cRGv02isTwkgfzA9F4NLSo/LflI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=EOxoTS0pVtoGq3rI5K2rtqMqIBowGzHFWq57dJdpg/c=;
+ b=EORMbKVD8OAGowovTBHEC8dZBq381h28Z3DVOiKQzTs/jqCWHGNpzqMVVThmseC6jZtNPr
+ 08wEwpaz6F5NXE64ZPo1A3sfHW2lHoWi35IOqdSk2Wg6xTl2wX1mEcZm4x03yu05JBWfQT
+ CLbGky0ZuItgnQ9a6TlyNE0+Tw06Md4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-B4kvsl9yPNq6erXrx7JZdw-1; Mon,
- 14 Apr 2025 04:37:04 -0400
-X-MC-Unique: B4kvsl9yPNq6erXrx7JZdw-1
-X-Mimecast-MFC-AGG-ID: B4kvsl9yPNq6erXrx7JZdw_1744619823
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-bYuxQCT2O4qzqCkKGKqBrg-1; Mon,
+ 14 Apr 2025 04:38:23 -0400
+X-MC-Unique: bYuxQCT2O4qzqCkKGKqBrg-1
+X-Mimecast-MFC-AGG-ID: bYuxQCT2O4qzqCkKGKqBrg_1744619902
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59D041956048; Mon, 14 Apr 2025 08:37:03 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABC6A18007E1; Mon, 14 Apr 2025 08:38:16 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.99])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A22B1955BF6; Mon, 14 Apr 2025 08:37:01 +0000 (UTC)
-Date: Mon, 14 Apr 2025 09:36:57 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98983180175D; Mon, 14 Apr 2025 08:38:11 +0000 (UTC)
+Date: Mon, 14 Apr 2025 09:38:07 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, stefanha@gmail.com, philmd@linaro.org
-Subject: Re: [PATCH for-10.0] docs: Document removal of 64-bit on 32-bit
- emulation
-Message-ID: <Z_zJKWY8dxNtLMzq@redhat.com>
-References: <20250412164315.36161-1-richard.henderson@linaro.org>
+To: Stefan Weil <sw@weilnetz.de>
+Cc: Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+Subject: Re: [PATCH for-10.0] docs: Fix some typos (found by codespell and
+ typos)
+Message-ID: <Z_zJb-MGkg1xEdnk@redhat.com>
+References: <20250412181147.1046898-1-sw@weilnetz.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250412164315.36161-1-richard.henderson@linaro.org>
+In-Reply-To: <20250412181147.1046898-1-sw@weilnetz.de>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -89,36 +93,18 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 12, 2025 at 09:43:15AM -0700, Richard Henderson wrote:
-> With acce728cbc6c we disallowed configuring 64-bit guests on
-> 32-bit hosts, but forgot to document that in removed-features.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Sat, Apr 12, 2025 at 08:11:47PM +0200, Stefan Weil via wrote:
+> Signed-off-by: Stefan Weil <sw@weilnetz.de>
 > ---
->  docs/about/removed-features.rst | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index 2527a91795..790a5e481c 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -858,6 +858,15 @@ QEMU.  Since all recent x86 hardware from the past >10 years is
->  capable of the 64-bit x86 extensions, a corresponding 64-bit OS should
->  be used instead.
->  
-> +32-bit hosts for 64-bit guests (removed in 10.0)
-> +''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +In general, 32-bit hosts cannot support the memory space or atomicity
-> +requirements of 64-bit guests.  Prior to 10.0, QEMU attempted to
-> +work around the atomicity issues in system mode by running all vCPUs
-> +in a single thread context; in user mode atomicity was simply broken.
-> +From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
-> +
->  Guest Emulator ISAs
->  -------------------
+>  docs/about/deprecated.rst  | 4 ++--
+>  docs/devel/codebase.rst    | 6 +++---
+>  docs/devel/qapi-domain.rst | 4 ++--
+>  include/exec/memory.h      | 4 ++--
+>  qapi/qdev.json             | 2 +-
+>  5 files changed, 10 insertions(+), 10 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 
 With regards,
 Daniel
