@@ -4,110 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2DA0C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 08:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9231BC369B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 08:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4bQK-0008Pl-Fl; Tue, 15 Apr 2025 04:13:41 -0400
+	id 1u4bOy-0003bi-G8; Tue, 15 Apr 2025 04:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u4bQB-00083a-U3
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 04:13:32 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u4bQ9-0001z6-Af
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 04:13:31 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-224341bbc1dso46532065ad.3
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 01:13:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1744704807; x=1745309607; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=31sA8ZoJNIVGckIUDC4jt2xxe297otB918AQ9sayA4k=;
- b=OVsaGVVET81oJmLFfdrhd0IamxYzr1PhdWstz5TOA5vb8HjERaApGMn8T/Pox+ki5F
- zK5ySesKkPLALxmw/zEIFiS0g5MAtxSTYe4GiL0tMLaks3HGGr1ANChZrSpebh0X7sMs
- gjDYYrKTIy/4T1TSIXJw3vdVhCS0o/fx4NzCf4Owr+120tfrel9N7uI+1FlObfbhTSvM
- YNlu5WFkDWaE7pykqBYLkhqCLJk9SObcZuRyyCpwwSLNz1fHuBCYjvIcBopYPvFcq+jP
- 6i6ipdLYwRZLffS525aEB/IY1hOqG5gOidaxKdHeMQMPfNDsBqWkAyz8SrKlhAvEqEdi
- /c7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744704807; x=1745309607;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=31sA8ZoJNIVGckIUDC4jt2xxe297otB918AQ9sayA4k=;
- b=SI1AL2k5+/fLlTjpo727Qp3nfpoqmb8NbMYdiyVJnd6rHLz6QnFl0WKv9ah60TDUR6
- IP1J1jinWx91BCjQFA/VKKoOT6M3FDWZ9PcKOTOeSv9ANd9tbW75p/h173EYQU8lDifk
- zDxMIRJoXbgiw2La4zXTBjtKZFBntiE08JEJaYGRX2XDiArXPJ3mHY+ggs59n712Sf3s
- YmIqWmWVskagjIFk8pRgP2mnvadgBSIVW5N6gTg4nm6I6J4YBYwONOkOfhHET/c7mP9J
- bXoNB1cxooFQatLIC+AVRHHt+qrTqgGO0cc5dhO3fZwhw80Lyv+o657lz8ropDtC6p14
- O9bQ==
-X-Gm-Message-State: AOJu0YyeTB/z2NCQvXld5i3sqKZOCXKoSBYH32MlxM/zeyGGOvBmzYPF
- RxKMZd/GvPIY01n9NMusJ1nDtZR3tFgb3MBO9OfGGh9w2sArSFKHIZ+bTQjS2lZWRofxynTJCMo
- XVBNfExWvOh5JxQ5jnDdosFWSW587oKurQhMThEI+Kpgxu6GP117JtH7CjhH8NQbXwmCRTrPTEz
- V/xyvaTFUChUVYaHoFLbPtEYmaNMSejoFeO6r1
-X-Gm-Gg: ASbGncv0IrCEZWLkQIwHa6Xe3mdgJabERiztotdMnyVrKZ0CBz2PN0Ktla1RtIBDQ0O
- CsyBj3RdUQ+sf6F7gVbpRwQgq4RH9XVsVlFiVhH06W6HrO5Phd1R7j9VUxiNN00iR32p/R0S/Cj
- iK3MFzIm8Vw1FLONfndKV0pkZTu3iZgWMpSCNKbs8jQoPS/NsWJFhbqrt+Uns92Fp94agdl/IaB
- sFcC5GYq4HgB87LFb+3AXYrjKV0VH1c61QD1AzqKJpVPoguQer+XVNOok5el1TrNfSa9noxk/qY
- YiBlfkQkE267LEB+4VWrZF143CnrZuQqXaMo7r24WXpw0ke31SnbsBFnSgSX/Kc=
-X-Google-Smtp-Source: AGHT+IG1cDOvUSZkXXjAg0Xikt2bJZC7MEeIsa5oZbWEIVSLT/jrN+9koPPH1yIIfjHY2bCEAnzAxQ==
-X-Received: by 2002:a17:902:d550:b0:224:1ec0:8a0c with SMTP id
- d9443c01a7336-22bea4bd74dmr236155105ad.29.1744704806989; 
- Tue, 15 Apr 2025 01:13:26 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c95cd1sm111082335ad.150.2025.04.15.01.13.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 01:13:26 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Michael Rolnik <mrolnik@gmail.com>, Helge Deller <deller@gmx.de>,
- Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>,
- qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
- Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 07/17] target/riscv: Add defines for WorldGuard CSRs
-Date: Tue, 15 Apr 2025 16:12:21 +0800
-Message-Id: <20250415081231.21186-8-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20250415081231.21186-1-jim.shu@sifive.com>
-References: <20250415081231.21186-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4bOw-0003WX-HU; Tue, 15 Apr 2025 04:12:14 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4bOt-0001py-57; Tue, 15 Apr 2025 04:12:14 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZcGxR5jh7z6LD3q;
+ Tue, 15 Apr 2025 16:08:11 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 07E801402C3;
+ Tue, 15 Apr 2025 16:12:09 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.203.177.241) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 15 Apr 2025 10:12:01 +0200
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
+ <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
+Subject: [PATCH 2/5] hw/arm/virt-acpi-build: Update IORT for multiple smmuv3
+ devices
+Date: Tue, 15 Apr 2025 09:11:01 +0100
+Message-ID: <20250415081104.71708-3-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
+In-Reply-To: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+References: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.203.177.241]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,33 +69,240 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CSRs for 3 WG extensions: Smwg, Smwgd, and Sswg.
+With the soon to be introduced user-creatable SMMUv3 devices for
+virt, it is possible to have multiple SMMUv3 devices associated
+with different PCIe root complexes.
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Update IORT nodes accordingly.
+
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- target/riscv/cpu_bits.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/arm/virt-acpi-build.c | 119 +++++++++++++++++++++++++++++++++++----
+ include/hw/arm/virt.h    |   1 +
+ 2 files changed, 108 insertions(+), 12 deletions(-)
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index a30317c617..7705c6995e 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -408,6 +408,11 @@
- #define CSR_DPC             0x7b1
- #define CSR_DSCRATCH        0x7b2
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 3ac8f8e178..d1e083ee31 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -43,6 +43,7 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "hw/acpi/tpm.h"
+ #include "hw/acpi/hmat.h"
++#include "hw/arm/smmuv3.h"
+ #include "hw/pci/pcie_host.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_bus.h"
+@@ -266,6 +267,60 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+     return idmap_a->input_base - idmap_b->input_base;
+ }
  
-+/* RISC-V WorldGuard */
-+#define CSR_MLWID           0x390
-+#define CSR_SLWID           0x190
-+#define CSR_MWIDDELEG       0x748
++struct SMMUv3Device {
++    int irq;
++    hwaddr base;
++    AcpiIortIdMapping smmu_idmap;
++};
++typedef struct SMMUv3Device SMMUv3Device;
 +
- /* Performance Counters */
- #define CSR_MHPMCOUNTER3    0xb03
- #define CSR_MHPMCOUNTER4    0xb04
++static int smmuv3_dev_idmap_compare(gconstpointer a, gconstpointer b)
++{
++    SMMUv3Device *sdev_a = (SMMUv3Device *)a;
++    SMMUv3Device *sdev_b = (SMMUv3Device *)b;
++
++    return sdev_a->smmu_idmap.input_base - sdev_b->smmu_idmap.input_base;
++}
++
++static int get_smmuv3_device(Object *obj, void *opaque)
++{
++    GArray *sdev_blob = opaque;
++    int min_bus, max_bus;
++    VirtMachineState *vms;
++    PlatformBusDevice *pbus;
++    SysBusDevice *sbdev;
++    SMMUv3Device sdev;
++    hwaddr base;
++    int irq;
++    PCIBus *bus;
++
++    if (!object_dynamic_cast(obj, TYPE_ARM_SMMUV3_DEV)) {
++        return 0;
++    }
++
++    bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
++    if (!bus || pci_bus_bypass_iommu(bus)) {
++        return 0;
++    }
++
++    vms = VIRT_MACHINE(qdev_get_machine());
++    pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
++    sbdev = SYS_BUS_DEVICE(obj);
++    base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
++    irq = platform_bus_get_irqn(pbus, sbdev, 0);
++
++    base += vms->memmap[VIRT_PLATFORM_BUS].base;
++    irq += vms->irqmap[VIRT_PLATFORM_BUS];
++
++    pci_bus_range(bus, &min_bus, &max_bus);
++    sdev.smmu_idmap.input_base = min_bus << 8;
++    sdev.smmu_idmap.id_count = (max_bus - min_bus + 1) << 8;
++    sdev.base = base;
++    sdev.irq = irq + ARM_SPI_BASE;
++    g_array_append_val(sdev_blob, sdev);
++    return 0;
++}
++
+ /*
+  * Input Output Remapping Table (IORT)
+  * Conforms to "IO Remapping Table System Software on ARM Platforms",
+@@ -275,25 +330,42 @@ static void
+ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ {
+     int i, nb_nodes, rc_mapping_count;
+-    size_t node_size, smmu_offset = 0;
++    size_t node_size, *smmu_offset = NULL;
+     AcpiIortIdMapping *idmap;
++    int num_smmus = 0;
+     uint32_t id = 0;
+     GArray *smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+     GArray *its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
++    GArray *smmuv3_devices = g_array_new(false, true, sizeof(SMMUv3Device));
+ 
+     AcpiTable table = { .sig = "IORT", .rev = 3, .oem_id = vms->oem_id,
+                         .oem_table_id = vms->oem_table_id };
+     /* Table 2 The IORT */
+     acpi_table_begin(&table, table_data);
+ 
+-    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+-        AcpiIortIdMapping next_range = {0};
+-
++    nb_nodes = 2; /* RC, ITS */
++    if (vms->iommu == VIRT_IOMMU_SMMUV3_DEV) {
++        object_child_foreach_recursive(object_get_root(),
++                                       get_smmuv3_device, smmuv3_devices);
++         /* Sort the smmuv3-devices by smmu idmap input_base */
++        g_array_sort(smmuv3_devices, smmuv3_dev_idmap_compare);
++        /*  Fill smmu idmap from sorted smmuv3 devices array */
++        for (i = 0; i < smmuv3_devices->len; i++) {
++            SMMUv3Device *s = &g_array_index(smmuv3_devices, SMMUv3Device, i);
++            g_array_append_val(smmu_idmaps, s->smmu_idmap);
++        }
++        num_smmus = smmuv3_devices->len;
++    } else if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+         object_child_foreach_recursive(object_get_root(),
+                                        iort_host_bridges, smmu_idmaps);
+ 
+         /* Sort the smmu idmap by input_base */
+         g_array_sort(smmu_idmaps, iort_idmap_compare);
++        num_smmus = 1;
++    }
++
++    if (num_smmus) {
++        AcpiIortIdMapping next_range = {0};
+ 
+         /*
+          * Split the whole RIDs by mapping from RC to SMMU,
+@@ -316,10 +388,10 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             g_array_append_val(its_idmaps, next_range);
+         }
+ 
+-        nb_nodes = 3; /* RC, ITS, SMMUv3 */
++        smmu_offset = g_new0(size_t, num_smmus);
++        nb_nodes += num_smmus;
+         rc_mapping_count = smmu_idmaps->len + its_idmaps->len;
+     } else {
+-        nb_nodes = 2; /* RC, ITS */
+         rc_mapping_count = 1;
+     }
+     /* Number of IORT Nodes */
+@@ -341,10 +413,20 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     /* GIC ITS Identifier Array */
+     build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
+ 
+-    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+-        int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
++    for (i = 0; i < num_smmus; i++) {
++        hwaddr base;
++        int irq;
++
++        if (vms->iommu == VIRT_IOMMU_SMMUV3_DEV) {
++            SMMUv3Device *s = &g_array_index(smmuv3_devices, SMMUv3Device, i);
++            base = s->base;
++            irq = s->irq;
++        } else {
++            base = vms->memmap[VIRT_SMMU].base;
++            irq = vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
++        }
+ 
+-        smmu_offset = table_data->len - table.table_offset;
++        smmu_offset[i] = table_data->len - table.table_offset;
+         /* Table 9 SMMUv3 Format */
+         build_append_int_noprefix(table_data, 4 /* SMMUv3 */, 1); /* Type */
+         node_size =  SMMU_V3_ENTRY_SIZE + ID_MAPPING_ENTRY_SIZE;
+@@ -355,7 +437,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         /* Reference to ID Array */
+         build_append_int_noprefix(table_data, SMMU_V3_ENTRY_SIZE, 4);
+         /* Base address */
+-        build_append_int_noprefix(table_data, vms->memmap[VIRT_SMMU].base, 8);
++        build_append_int_noprefix(table_data, base, 8);
+         /* Flags */
+         build_append_int_noprefix(table_data, 1 /* COHACC Override */, 4);
+         build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+@@ -404,15 +486,26 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     build_append_int_noprefix(table_data, 0, 3); /* Reserved */
+ 
+     /* Output Reference */
+-    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
++    if (num_smmus) {
+         AcpiIortIdMapping *range;
+ 
+         /* translated RIDs connect to SMMUv3 node: RC -> SMMUv3 -> ITS */
+         for (i = 0; i < smmu_idmaps->len; i++) {
++            size_t offset;
++            if (vms->iommu == VIRT_IOMMU_SMMUV3_DEV) {
++                offset = smmu_offset[i];
++            } else {
++                /*
++                 * For legacy VIRT_IOMMU_SMMUV3 case, one machine wide
++                 * smmuv3 may have multiple smmu_idmaps.
++                 */
++                offset = smmu_offset[0];
++            }
++
+             range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+             /* output IORT node is the smmuv3 node */
+             build_iort_id_mapping(table_data, range->input_base,
+-                                  range->id_count, smmu_offset);
++                                  range->id_count, offset);
+         }
+ 
+         /* bypassed RIDs connect to ITS group node directly: RC -> ITS */
+@@ -430,6 +523,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     acpi_table_end(linker, &table);
+     g_array_free(smmu_idmaps, true);
+     g_array_free(its_idmaps, true);
++    g_free(smmu_offset);
++    g_array_free(smmuv3_devices, true);
+ }
+ 
+ /*
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index c8e94e6aed..12395c7594 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -92,6 +92,7 @@ enum {
+ typedef enum VirtIOMMUType {
+     VIRT_IOMMU_NONE,
+     VIRT_IOMMU_SMMUV3,
++    VIRT_IOMMU_SMMUV3_DEV,
+     VIRT_IOMMU_VIRTIO,
+ } VirtIOMMUType;
+ 
 -- 
-2.17.1
+2.34.1
 
 
