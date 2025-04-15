@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14A33C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B4FC369BA
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4mOC-0003mL-5a; Tue, 15 Apr 2025 15:56:12 -0400
+	id 1u4mHf-0003qt-JS; Tue, 15 Apr 2025 15:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <suchitrashankar07@gmail.com>)
- id 1u4lLk-0006QB-W0
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 14:49:37 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u4mBn-0001Y2-Ic
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:43:24 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <suchitrashankar07@gmail.com>)
- id 1u4lLj-0002Zg-3D
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 14:49:36 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso46164885e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 11:49:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u4mAr-0007hF-Nw
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:43:23 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3f6ab1b8fc1so3144588b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:42:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744742967; x=1745347767; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Uvie6TwrseJP+NZ3SXZ7VgtCFNbgpWKYrB58DfuAYtY=;
- b=Bvde6qIRv02N3nSeq59haAEmu2oDki7R8Qm6TizFHCBQdm6C7f89NJu0h3S3Y8n371
- OJWfbA+Cdh5w8Jf9w4yvHAlAIRYSb360VXdgeSSjDLHUu70cUT69CRCHOYeDyZIRUcPF
- wS++DV+SEBuRaOPBli3IilSRatNXw1U1mPxag0c52/w8NWyRfkS/tGsW8e4FyhZq+WvM
- QobvUaT0BkmQsB9E2LLW3hsAqqxKoXfvD+eSKBubUA0rQp6h8O7pRPtccZkMdaGceEjA
- Md8gGqd5OY+dUSuDD38NhHgWng445YNC4vX3WBAO5pRGtIyiqvfat9xI3AYSeAYRKoNB
- I5Rw==
+ d=linaro.org; s=google; t=1744746138; x=1745350938; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=RaE4NUW0htUqy2JZaQ//W9CdS9U5ONG2ffBye71vnvI=;
+ b=P+MhFuyjZ3YDAAc2PXDG2QnqDKcoivH41mwdP9xmqvzL3bafINMRJyqaM+tmhmZ7QW
+ +dI+cG1bCx0DHWlsp6N+PZO9anrTImBiWTWmYmN46d+eeC9Yf6fKNmdTikEEI25+p0Cq
+ GV2OwWCWDH5wfqxYiio9P51C8vdtttnaPKhsKkNfqFuRii1QanPdQPPuWwVWfh9w9N8a
+ UPzD4oay7XEfYoDIBpc7ybda6CfMhzF0EAjJtQJhjlvrizYLqY/n+8bqFuDhImQRubkk
+ LOHV6PZEbrzRX2stY/51OtHHKjCv0Cxh+tOVQiqa5Kas057PIpjcmrBWHLOmrK5fCcM8
+ Sdgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744742967; x=1745347767;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Uvie6TwrseJP+NZ3SXZ7VgtCFNbgpWKYrB58DfuAYtY=;
- b=bKT3UbsqLOpuo7zLW+uFmvhBgqDy2YwcQMG/EQ2CH3pXsMhKw0kPU8wK9sNkG+fVqm
- jLcu0GPejOhyiUl+ZH4jKNKB1GiFHJ2GOoofSyQIf3JTZHGErFBJ+XnksZbFrxC81hsO
- yARhqyBBXTRlCWQ0Vremuwe991z/wj+Woalor/rtrEARKxYFX/V/6PmiO4SIe3ExSxsn
- biCiONjsJqbMkoNo7sjsDb7mXNG8mKYmMPTAfIIzRrAPwPSx/wjXjypmBZkByOhXJF8B
- BwPiHIZA7uzFYbvZgvNmozMRGowco5kHDA2o5Z4NRZk7h8HkNvhKizL2xXPf9lCEAeGd
- l9Sg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPvjQQZiHrNy9rbgII8J7WvCZEn9Rg5H2ClIjfBqahT7id2nQmFq8TbASUFVrfOKdWNQruRBdRfLGq@nongnu.org
-X-Gm-Message-State: AOJu0YzQgsaXXJ9r8VYaNadfHTLBB13laiiLYtKD9K1bpcAZlRJrDGp2
- 4hysmtssCi8s1O+05oHEsZLj5lsmtkM3nm8705mZhl+IK48Ywo/OPWFY2OKhPPWSe5DgjXKfrbO
- 9+GJX27YBiBsLexyt7o6ulnzrPEb7k/inCp8=
-X-Gm-Gg: ASbGnctLj9lTQ3mm6Pd5ChTxbYwOWV6x7WrsqahMxjxDoTdVCzsqyCjdDaOzV715iWG
- nb+pP5vnw3yuIc2K4ELeIiHzeDbsdnFVCbpSp47jOk99Wt6qxDMjZZGsqg8Knx5oTSFOJdYkXYI
- o7YbE9kjEnEU/RkgSO1Tmh
-X-Google-Smtp-Source: AGHT+IFH//akahVSnb66GMb9bF0y8QqQEnU0+WvUNRmz8iGEIgl5TxuXZVrohfGz7zc3lQKqCscGwLHHLvznv62IA8c=
-X-Received: by 2002:a05:6000:22c4:b0:39c:1257:feb9 with SMTP id
- ffacd0b85a97d-39ee27694c2mr486647f8f.57.1744742967297; Tue, 15 Apr 2025
- 11:49:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1744746138; x=1745350938;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RaE4NUW0htUqy2JZaQ//W9CdS9U5ONG2ffBye71vnvI=;
+ b=bh4CEF3fkcEMK21aGDMyus1ZMLPW8vYYLd++Hth83lfvObfQTvBFxAp0pWx3GdQo6X
+ L0tbrC1aP//5XQfNWg1KBtc3SvBzNnLKIjj5Pni+OjuZWUys0KOpIOssiLEWqpD2Vmjr
+ pI08d6AFjV9+U2b+2MDnvF+dapOW0M7ZEU9Hwe950pWue8RJhY792EXpBn00hIDHlY64
+ EF6XXj4IWL/g8FDCU7z9crGL9qLHIN3tWJZd+2HZdcehhD39FbmAPj8iERlL8XW/ixW4
+ Fs3YGflUw8FrwTeU2SmSzELGgJ5u4EkvT6pFGz3JfJ2mm4BymF43dib5Kljm9rEF2Anc
+ wu7w==
+X-Gm-Message-State: AOJu0YxRTzIvnu06OXyQdZYz1sA5wPoVOBeK0x9UBeb6+JZd6TtoZbnj
+ iJi6ImyNU3TfdSV6wyplnFKiNQh0sic68QpSM3rTGFfpyU/XjIvMLTl5muhSAtpkBY8dKTF/aSQ
+ w
+X-Gm-Gg: ASbGncuV7kdLLBRFJ5IgzjWQikMvHePs6+Zdz+8n29MFqHnDzJqpZVgPCPUqjQJSSE6
+ VSt+vJ2vgSMaMUefVF/88+PQ5iTbBZo4FM9Ng+V+Fa/i/6RLgTGxkhpCiLSX9OKhfUzxBJu96dZ
+ 5NbQaQ1EmWqzV0t1kXRhwftF+NNArkKHIZe0cR6U836MX93G6KYBd4w1E4/xcNaE7FQ5PEurnvN
+ 7yxANXg7LNvZxK5BuI3KvJcSbNwnQoOV1xe0Kr2cKzCosUHmdcwxW/neaTrZ1QiAgQ1jEJwVEdO
+ C2GZQthrtFvHWlWPCmD/XkTRHhNvr61+GDYzK5Rty5flQ3161cGznq8vNmHyBucxQhhykSEvYKV
+ ztfxFDPv/Nw==
+X-Google-Smtp-Source: AGHT+IEZb8Nw3s1c14zdXrBZBJq+vVpbwS2UBvFkGXhx9z7M9wpvanzUF+jCtJ/lXOww0oMoJ2vG6g==
+X-Received: by 2002:a05:6a00:cc4:b0:736:592e:795f with SMTP id
+ d2e1a72fcca58-73c1f8f7f6amr835685b3a.9.1744745762620; 
+ Tue, 15 Apr 2025 12:36:02 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73bd230e34asm9155603b3a.137.2025.04.15.12.36.02
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Apr 2025 12:36:02 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v4 126/163] target/microblaze: Use tcg_gen_addcio_i32
+Date: Tue, 15 Apr 2025 12:24:37 -0700
+Message-ID: <20250415192515.232910-127-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-From: Suchitra Shankar <suchitrashankar07@gmail.com>
-Date: Wed, 16 Apr 2025 00:19:15 +0530
-X-Gm-Features: ATxdqUEQQX3TD4pC30XrsirnbZIwrL5B9s_ruMIiO0WNOvxei5dfNIod9_rmZbQ
-Message-ID: <CABru571BjFa_SX5xHXbJwxRjKOOm-eo_dBTuaZx+KHOJBNVR=g@mail.gmail.com>
-Subject: [PATCH] Converting aio_set_event_notifier to use io_uring methods
-To: Stefan Hajnoczi <stefanha@redhat.com>, kwolf@redhat.com,
- qemu-devel@nongnu.org
-Content-Type: multipart/mixed; boundary="000000000000cb06680632d5a022"
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=suchitrashankar07@gmail.com; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 15 Apr 2025 15:56:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,89 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cb06680632d5a022
-Content-Type: multipart/alternative; boundary="000000000000cb06670632d5a020"
+Use this in gen_addc and gen_rsubc, both of which need
+add with carry-in and carry-out.
 
---000000000000cb06670632d5a020
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/microblaze/translate.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-Hi Stefan,
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index b54e5ac4b2..31afd3ab5d 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -310,11 +310,7 @@ static void gen_add(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+ /* Input and output carry. */
+ static void gen_addc(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+ {
+-    TCGv_i32 zero = tcg_constant_i32(0);
+-    TCGv_i32 tmp = tcg_temp_new_i32();
+-
+-    tcg_gen_add2_i32(tmp, cpu_msr_c, ina, zero, cpu_msr_c, zero);
+-    tcg_gen_add2_i32(out, cpu_msr_c, tmp, cpu_msr_c, inb, zero);
++    tcg_gen_addcio_i32(out, cpu_msr_c, ina, inb, cpu_msr_c);
+ }
+ 
+ /* Input carry, but no output carry. */
+@@ -543,12 +539,10 @@ static void gen_rsub(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+ /* Input and output carry. */
+ static void gen_rsubc(TCGv_i32 out, TCGv_i32 ina, TCGv_i32 inb)
+ {
+-    TCGv_i32 zero = tcg_constant_i32(0);
+     TCGv_i32 tmp = tcg_temp_new_i32();
+ 
+     tcg_gen_not_i32(tmp, ina);
+-    tcg_gen_add2_i32(tmp, cpu_msr_c, tmp, zero, cpu_msr_c, zero);
+-    tcg_gen_add2_i32(out, cpu_msr_c, tmp, cpu_msr_c, inb, zero);
++    tcg_gen_addcio_i32(out, cpu_msr_c, tmp, inb, cpu_msr_c);
+ }
+ 
+ /* No input or output carry. */
+-- 
+2.43.0
 
-Apologies for not using git send-email for submitting the patch =E2=80=94 I=
- had
-some issues setting up my SMTP configuration, so I=E2=80=99m sending it man=
-ually
-for now. I hope that=E2=80=99s alright.
-
-Thanks again for the guidance and for reviewing my contribution!
-----
-This patch updates aio_set_event_notifier to use IORING_OP_READ via
-aio_add_sqe()
-when CONFIG_LINUX_IO_URING is defined, in order to reduce the overhead of
-reactor-based file descriptor monitoring. This switches the mechanism from
-polling with eventfd to the more efficient io_uring proactor pattern.
-When io_uring is not available, the existing behavior is preserved.
-
-Signed-off-by: Suchitra Shankar <suchitrashankar07@gmail.com>
-
---000000000000cb06670632d5a020
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p class=3D"gmail-">Hi Stefan,</p>
-<p class=3D"gmail-">Apologies for not using <code>git send-email</code> for=
- submitting the patch =E2=80=94 I had some issues setting up my SMTP config=
-uration, so I=E2=80=99m sending it manually for now. I hope that=E2=80=99s =
-alright.</p>
-<p class=3D"gmail-">Thanks again for the guidance and for reviewing my cont=
-ribution!<br>----</p>This patch updates aio_set_event_notifier to use IORIN=
-G_OP_READ via aio_add_sqe()<br>when CONFIG_LINUX_IO_URING is defined, in or=
-der to reduce the overhead of<br>reactor-based file descriptor monitoring. =
-This switches the mechanism from<br>polling with eventfd to the more effici=
-ent io_uring proactor pattern.<br>When io_uring is not available, the exist=
-ing behavior is preserved.<br><br>Signed-off-by: Suchitra Shankar &lt;<a hr=
-ef=3D"mailto:suchitrashankar07@gmail.com">suchitrashankar07@gmail.com</a>&g=
-t;<br><br><br><br></div>
-
---000000000000cb06670632d5a020--
-
---000000000000cb06680632d5a022
-Content-Type: text/x-patch; charset="UTF-8"; name="contribution-task.patch"
-Content-Disposition: attachment; filename="contribution-task.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m9iuwl8k0>
-X-Attachment-Id: f_m9iuwl8k0
-
-RnJvbSA2NmIzNDg1ODY3YzU0MzI1NzU2ZTMwNjkxNWUwNDFmNWVmNDcwNWQxIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBTdWNoaXRyYSBTaGFua2FyIDxzdWNoaXRyYXNoYW5rYXIwN0Bn
-bWFpbC5jb20+CkRhdGU6IFR1ZSwgMTUgQXByIDIwMjUgMjM6MjU6NDggKzA1MzAKU3ViamVjdDog
-W1BBVENIXSBjaG9yZTogYWRoZXJlIHRvIHFlbXUgY29kaW5nIHN0ZHMKClNpZ25lZC1vZmYtYnk6
-IFN1Y2hpdHJhIFNoYW5rYXIgPHN1Y2hpdHJhc2hhbmthcjA3QGdtYWlsLmNvbT4KLS0tCiB1dGls
-L2Fpby1wb3NpeC5jIHwgMTQgKysrKysrKy0tLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCA3IGluc2Vy
-dGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdXRpbC9haW8tcG9zaXguYyBi
-L3V0aWwvYWlvLXBvc2l4LmMKaW5kZXggZDFjNmE0NmEyNS4uNzdhZjZjODliMCAxMDA2NDQKLS0t
-IGEvdXRpbC9haW8tcG9zaXguYworKysgYi91dGlsL2Fpby1wb3NpeC5jCkBAIC04MjksMTIgKzgy
-OSwxMiBAQCB2b2lkIGFpb19hZGRfc3FlX3dpdGhfY3R4KEFpb0NvbnRleHQgKmN0eCwKICAgICB2
-b2lkICgqcHJlcF9zcWUpKHN0cnVjdCBpb191cmluZ19zcWUgKnNxZSwgdm9pZCAqb3BhcXVlKSwK
-ICAgICB2b2lkICpvcGFxdWUsIENxZUhhbmRsZXIgKmNxZV9oYW5kbGVyKQogewotIGlmICghY3R4
-IHx8ICFjdHgtPmZkbW9uX29wcyB8fCAhY3R4LT5mZG1vbl9vcHMtPmFkZF9zcWUpIHsKLSBmcHJp
-bnRmKHN0ZGVyciwgImN0eCBvciBmZG1vbl9vcHMgaXMgTlVMTCEgQ2Fubm90IGFkZCBTUUVcbiIp
-OwotIGFib3J0KCk7CisgICAgaWYgKCFjdHggfHwgIWN0eC0+ZmRtb25fb3BzIHx8ICFjdHgtPmZk
-bW9uX29wcy0+YWRkX3NxZSkgeworICAgICAgICBmcHJpbnRmKHN0ZGVyciwgImN0eCBvciBmZG1v
-bl9vcHMgaXMgTlVMTCEgQ2Fubm90IGFkZCBTUUVcbiIpOworICAgICAgICBhYm9ydCgpOwogIH0K
-LS8vCi0vL2ZwcmludGYoc3RkZXJyLCAiPj4+IGFpb19hZGRfc3FlX3dpdGhfY3R4IGNhbGxlZCEg
-PDw8XG4iKTsKKworLypmcHJpbnRmKHN0ZGVyciwgIj4+PiBhaW9fYWRkX3NxZV93aXRoX2N0eCBj
-YWxsZWQhIDw8PFxuIik7Ki8KIGN0eC0+ZmRtb25fb3BzLT5hZGRfc3FlKGN0eCwgcHJlcF9zcWUs
-IG9wYXF1ZSwgY3FlX2hhbmRsZXIpOwogfQogCkBAIC04NDIsOCArODQyLDggQEAgdm9pZCBhaW9f
-YWRkX3NxZSh2b2lkICgqcHJlcF9zcWUpKHN0cnVjdCBpb191cmluZ19zcWUgKnNxZSwgdm9pZCAq
-b3BhcXVlKSwKICAgICAgICAgICAgICAgICAgdm9pZCAqb3BhcXVlLCBDcWVIYW5kbGVyICpjcWVf
-aGFuZGxlcikKIHsKICAgICBBaW9Db250ZXh0ICpjdHggPSBxZW11X2dldF9jdXJyZW50X2Fpb19j
-b250ZXh0KCk7ICAvLyDihpAgdGhpcyBpcyB0aGUgbWFnaWMKLQotICAgICBpZiAoIWN0eCB8fCAh
-Y3R4LT5mZG1vbl9vcHMgfHwgIWN0eC0+ZmRtb25fb3BzLT5hZGRfc3FlKSB7CisgICAgaWYgKCFj
-dHggfHwgIWN0eC0+ZmRtb25fb3BzIHx8ICFjdHgtPmZkbW9uX29wcy0+YWRkX3NxZSkgCisgICAg
-IHsKICAgICAgICAgIGZwcmludGYoc3RkZXJyLCAiY3R4IG9yIGZkbW9uX29wcyBpcyBOVUxMISBD
-YW5ub3QgYWRkIFNRRVxuIik7CiAgICAgICAgICBhYm9ydCgpOwogICAgICB9Ci0tIAoyLjQ5LjAK
-Cg==
---000000000000cb06680632d5a022--
 
