@@ -4,92 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D0CC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 10:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05065C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 10:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4dpu-0006bj-5r; Tue, 15 Apr 2025 06:48:14 -0400
+	id 1u4dqo-0007BG-RC; Tue, 15 Apr 2025 06:49:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4dpn-0006ax-Sj
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:48:07 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4dpl-0003uk-Ew
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:48:07 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39c1ef4acf2so3442519f8f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 03:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744714082; x=1745318882; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uHT98M7a4Y2ioWHmCy5qXsLMMburf4pv5iHUxS6+xlE=;
- b=LYxVQx255aun/k5I4DT3jXulJTjgx5/Ep4Onz6E2ULfCAaPxRLolqAM77pP0B8qxft
- uvhGtQKJgyFjsvztZ05yXGb/bf5cwT6yI7TzaY7errUY/92+ll1UkRdUYZflNST6JEGp
- lkm2HIrG3UMeN5kBdTESZvmQhz1ihSJZQIkyYv2Y0eNnlCRfrX07IlaVTsSpuAOPGti1
- KlVYxYbVS9YRTmKHeihqavwRAYsbfvUp+oKVrZKMfxXcjPKKhnkmEfqsr0PIRJW5qhIN
- V5f+2sVIYCJ4HNGO+1rSlQyMKX+71vGFRit1CKVbWWbkpmSTPFqGQRsNCebriqaws/tl
- rWXw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4dql-00075c-Qx
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:49:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4dqj-0003wd-KB
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:49:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744714144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=zvtGEAiZIFaknmAurD368DY2mK7BY3UeBwg67boPgFs=;
+ b=DEWZv4lD7R7tn9FjSAP5QIWdmxsWtnnIZ4l3ZIyb4a676y65kySCZZEu2k6rJ3gnnVJrmv
+ n1ScSkWuoTZvqhhVirvfb9B4KaLZ1/HksSOnx5tMsA1VSwdINLAdyRLg+ihUifrKtxVxVD
+ /4+cAl+ewHKXPdlT0VPa9nGaZMSM4HY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-25-xHcSaUzHO_y4HdvJ4fmduQ-1; Tue, 15 Apr 2025 06:49:00 -0400
+X-MC-Unique: xHcSaUzHO_y4HdvJ4fmduQ-1
+X-Mimecast-MFC-AGG-ID: xHcSaUzHO_y4HdvJ4fmduQ_1744714140
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39123912ff0so2120163f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 03:49:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744714082; x=1745318882;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uHT98M7a4Y2ioWHmCy5qXsLMMburf4pv5iHUxS6+xlE=;
- b=jGaGI1WckSFxBugO0pKlcTpI+xCuZDF7U6zh3YUI8fUvw4ViDddacUMTrg8xivKvNI
- YhhkSB7ydgA6arKp3hZ56jIsCqz8ymQogLBsJXIWahQEsEE8nbnJJWCx/DIkW8CtdcWL
- NcQAR4qvrC9SLZ7HbkMPj/uE2tJACActyXbs3c1OlASqDK+OcMEOXYJvaj8zKTDrzwUj
- aTOoMAgVSS02Eow634l3kYPzk3EouwVPY+iFqxWGx/XGeRMjGVyW42RkkWjl6HAcvFTX
- ps1h5oBAZ7NuwpPumxlF0DOwdLXTWr1ykD3DsByKnHAbfuHsLAIsGGxpy9pcmST57ELK
- SNnw==
+ d=1e100.net; s=20230601; t=1744714139; x=1745318939;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zvtGEAiZIFaknmAurD368DY2mK7BY3UeBwg67boPgFs=;
+ b=aaE4trD7S6U3EzobfGZdD+JebQuimNabDDu4c1hcYahtV6wpYIuk8lzLZ2di4DN88O
+ nGYIo7zEPb8AKx+c50TkFg2PrBU9wePkaC5FmPQT/NmzpIUGO+L10VeCHAtKig/paPov
+ XLB59Pap1Ox6apUtM1nBXoqNB/E2ftsKl20fcIxI8lcUHBVkpWZTHRyIJJ/1t1MX+is/
+ QqvxKlkNjp6o52AZ04gQZhVNvxlBGk4l9dHA5Cm5MOAGQRPSLPcC7+CIK+f133PUcYJF
+ 5f2+SJABCKQe65X7qGRWE6T5WxmKR+KSv47op01LavVOG1cW9dSALBkk/vAFN7eV8bo7
+ E/BA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDQw929hIq2XlPV4iCqoPzE3i3HcEFqfzjE6ECyYWDwJ7djWF0uzhKLmnJ21zfZTmxk7DX1Diti0H9@nongnu.org
-X-Gm-Message-State: AOJu0YwuIe2NS2+sDjmIKGdmDBgZOowszjKXNQxV01f4Zv1Wr7s48KZs
- 3yFWCl5ROSfSBunmVhK8eR2itI86OniBL+XJyzpFjlNmq1TOBidtYXvVUYS46qc=
-X-Gm-Gg: ASbGncsAshYy4iecdDIjr9ywH1bOsOT72ovvC/ttAUBVxS+JZGXj6UzXdR4UHHShiYv
- zjJb87XOzsFxOZ4umKXXhOzXEYOd1AnpW/QFnapm4tiOus8Ta51DW6MhuRJ1Pxc0KqDiqTMtA+a
- Bf1Jf2ndIZxsrcUeQDh4JRaDN8zDwNLI/g54bh7T4FQD5+P36xjGfgHTvYdcczRMJKdi+zQn2Wc
- H8tpZpjk2M9xhVAOsePSGkZbZagcmnzbWESu2AO92eYDAwCIhwjuUa0gLn2/1RLHLCgoOGF46dS
- M6rz10JWn2NjlzmijS+8pRjlU5QScrKHh/+5sNJAsjl1bQo1m2hctKCSqQZZUWKstG1KOQkvuG7
- N5M5hkLwx
-X-Google-Smtp-Source: AGHT+IFnI/RG2zL9JzyIIcTWTbBUy3RnH1yqOuGxg0AjzZC6ZI2SQIlXPS2JGESgwD908xVfpZsmgw==
-X-Received: by 2002:a05:6000:4023:b0:397:8ef9:a143 with SMTP id
- ffacd0b85a97d-39ea5212322mr12625601f8f.23.1744714082589; 
- Tue, 15 Apr 2025 03:48:02 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eaf43ce3bsm14112818f8f.66.2025.04.15.03.48.01
+ AJvYcCXb8gtb64Z04qQgHlkcvUMLkUPH2yUSLDQ39eDp3R+HuFde/1JI60bpopuljj3TqTWLeYbi1I5SRuaL@nongnu.org
+X-Gm-Message-State: AOJu0YwV7xRvio0+l7DEBOqhrIeYhIE0b/Fb4TbIE4Z9onfuuxCEYdWv
+ jP51Q8tIWUAW4nMHmeyyBi/EaMsrNJWUtRr87RUQu7/tBZUioNvKuEAri0RLd4Mz7mxxSkG1Boh
+ LhX8pVui5VYz6HZjv0t14F61c6ao7yJnnJG6GYgb9jpq7wTZoWCgv
+X-Gm-Gg: ASbGncss6ECfbxNsYgcHnJrEE/uE8PEnDCLv1dzFdmVbIjN9fVTdVwD8yJkDuEsRzHK
+ 03Cluav6gKZx4w/t4eozIU0+UkBLuYtDTqP6AR6uPfgaleYjuVFsWVRpylRjo12k8ATei18hdvV
+ aRHMrLelcvZVJZk3BqFOrD+2MA4deJCWs+8NVjhziWYTfruWZtsi9tcsa68FWTkBMw15B8tiEoY
+ P9IMt33NJY97MsAOj37j4kHRsBeRbtqB1SVQBo1dbm6XPO8BOkWTSNnQOCNnruvE1VOP0W7baxg
+ J8D5/UZlBRgTS6YHtqL20fi5CoakFX1xOe+vqXcNBFk=
+X-Received: by 2002:a05:6000:40d9:b0:39a:ca40:7bfb with SMTP id
+ ffacd0b85a97d-39eaaed3dbemr14516965f8f.54.1744714139627; 
+ Tue, 15 Apr 2025 03:48:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZfJbtGeYWI/OVSuLFyreUEyPTtV06TxGO+CUFdCey8rvzT3QEPPnao11SvnvW2zugpa57qQ==
+X-Received: by 2002:a05:6000:40d9:b0:39a:ca40:7bfb with SMTP id
+ ffacd0b85a97d-39eaaed3dbemr14516950f8f.54.1744714139257; 
+ Tue, 15 Apr 2025 03:48:59 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-43-176-89.web.vodafone.de.
+ [109.43.176.89]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39eaf44577dsm13887962f8f.94.2025.04.15.03.48.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Apr 2025 03:48:02 -0700 (PDT)
-Message-ID: <7feba2b2-ba40-4575-9846-6e09f9e9542a@linaro.org>
-Date: Tue, 15 Apr 2025 12:48:01 +0200
+ Tue, 15 Apr 2025 03:48:58 -0700 (PDT)
+Message-ID: <e5e18317-16e2-4145-a433-6958f5f65dad@redhat.com>
+Date: Tue, 15 Apr 2025 12:48:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] hw/riscv: fix PLIC hart topology configuration
- string when not getting CPUState correctly
-To: Chao Liu <lc00631@tecorigin.com>, alistair23@gmail.com, palmer@dabbelt.com
-Cc: zhiwei_liu@linux.alibaba.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, zqz00548@tecorigin.com,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-References: <cover.1744709888.git.lc00631@tecorigin.com>
- <07a97219e3f7e342c668d6772acc4c0a8eb4d4f3.1744709888.git.lc00631@tecorigin.com>
+Subject: Re: [RFC 1/2] python: be more selective in hiding mypy subclassing
+ warning
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>
+References: <20250224191152.2123003-1-berrange@redhat.com>
+ <20250224191152.2123003-2-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <07a97219e3f7e342c668d6772acc4c0a8eb4d4f3.1744709888.git.lc00631@tecorigin.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20250224191152.2123003-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,136 +159,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 15/4/25 12:05, Chao Liu wrote:
-> riscv_plic_hart_config_string() when getting CPUState via qemu_get_cpu()
-> should be consistent with keeping sifive_plic_realize() by
-> hartid_base + cpu_index.
+On 24/02/2025 20.11, Daniel P. Berrangé wrote:
+> Use an annotation inline to the file instead of in setup.cfg
 > 
-> For non-numa or single-cluster machines, hartid_base should be 0.
+> This has the added advantage that the mypy checks now pass when
+> using 'mypy /path/to/python/qemu' as well as 'mypy -p qemu'.
 > 
-> Also, to ensure that CPUState->cpu_index is set correctly, we need to
-> update it with the value of mhartid during riscv_hart_realize().
-> 
-> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
-> Reviewed-by: zhaoqingze <zqz00548@tecorigin.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/riscv/boot.c            | 4 ++--
->   hw/riscv/microchip_pfsoc.c | 2 +-
->   hw/riscv/riscv_hart.c      | 1 +
->   hw/riscv/sifive_u.c        | 5 +++--
->   hw/riscv/virt.c            | 2 +-
->   include/hw/riscv/boot.h    | 2 +-
->   6 files changed, 9 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 765b9e2b1a..d4c06e7530 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -44,13 +44,13 @@ bool riscv_is_32bit(RISCVHartArrayState *harts)
->    * Return the per-socket PLIC hart topology configuration string
->    * (caller must free with g_free())
->    */
-> -char *riscv_plic_hart_config_string(int hart_count)
-> +char *riscv_plic_hart_config_string(int hart_base, int hart_count)
->   {
->       g_autofree const char **vals = g_new(const char *, hart_count + 1);
->       int i;
->   
->       for (i = 0; i < hart_count; i++) {
-> -        CPUState *cs = qemu_get_cpu(i);
-> +        CPUState *cs = qemu_get_cpu(hart_base + i);
->           CPURISCVState *env = &RISCV_CPU(cs)->env;
->   
->           if (kvm_enabled()) {
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index 9c846f9b5b..5269336346 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -275,7 +275,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
->                                   l2lim_mem);
->   
->       /* create PLIC hart topology configuration string */
-> -    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-> +    plic_hart_config = riscv_plic_hart_config_string(0, ms->smp.cpus);
->   
->       /* PLIC */
->       s->plic = sifive_plic_create(memmap[MICROCHIP_PFSOC_PLIC].base,
-> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-> index a55d156668..522e795033 100644
-> --- a/hw/riscv/riscv_hart.c
-> +++ b/hw/riscv/riscv_hart.c
-> @@ -138,6 +138,7 @@ static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
->       }
->   
->       s->harts[idx].env.mhartid = s->hartid_base + idx;
-> +    CPU(&s->harts[idx])->cpu_index = s->harts[idx].env.mhartid;
+>   python/qemu/qmp/qmp_tui.py    | 12 ++++++------
+>   python/qemu/utils/qom_fuse.py |  2 +-
+>   python/setup.cfg              |  8 --------
+>   3 files changed, 7 insertions(+), 15 deletions(-)
 
-Why do we need this particular change? CPUState::cpu_index isn't related
-to RISC-V HART index, it is meant for the accelerators (KVM, TCG, ...),
-and shouldn't be used by hw/ code.
-
-Otherwise the rest LGTM.
-
-Regards,
-
-Phil.
-
->       qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
->       return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
->   }
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index 679f2024bc..516912c4f4 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -790,10 +790,11 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
->       MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
->       MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
->       char *plic_hart_config;
-> +    int hartid_base = 1;
->       int i, j;
->   
->       qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
-> -    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
-> +    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", hartid_base);
->       qdev_prop_set_string(DEVICE(&s->u_cpus), "cpu-type", s->cpu_type);
->       qdev_prop_set_uint64(DEVICE(&s->u_cpus), "resetvec", 0x1004);
->   
-> @@ -829,7 +830,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
->                                   l2lim_mem);
->   
->       /* create PLIC hart topology configuration string */
-> -    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-> +    plic_hart_config = riscv_plic_hart_config_string(hartid_base, ms->smp.cpus);
->   
->       /* MMIO */
->       s->plic = sifive_plic_create(memmap[SIFIVE_U_DEV_PLIC].base,
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index e517002fdf..41fdfd2bc8 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -1280,7 +1280,7 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
->       g_autofree char *plic_hart_config = NULL;
->   
->       /* Per-socket PLIC hart topology configuration string */
-> -    plic_hart_config = riscv_plic_hart_config_string(hart_count);
-> +    plic_hart_config = riscv_plic_hart_config_string(base_hartid, hart_count);
->   
->       /* Per-socket PLIC */
->       ret = sifive_plic_create(
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index 7d59b2e6c6..5937298646 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -40,7 +40,7 @@ typedef struct RISCVBootInfo {
->   
->   bool riscv_is_32bit(RISCVHartArrayState *harts);
->   
-> -char *riscv_plic_hart_config_string(int hart_count);
-> +char *riscv_plic_hart_config_string(int hart_base, int hart_count);
->   
->   void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
->   target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
