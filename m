@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9E5C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 22:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F89C369B9
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 22:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4oLf-0005kE-QS; Tue, 15 Apr 2025 18:01:43 -0400
+	id 1u4oMj-0007uN-Bx; Tue, 15 Apr 2025 18:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u4oLc-0005hG-Sl
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 18:01:41 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1u4oMb-0007ji-J7
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 18:02:42 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u4oLZ-0007wH-Te
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 18:01:40 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-227b828de00so56669035ad.1
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 15:01:37 -0700 (PDT)
+ id 1u4oMN-00088g-WB
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 18:02:41 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22401f4d35aso70537825ad.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 15:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744754496; x=1745359296; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1744754546; x=1745359346; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bsxD2DryWZbldm0yS7PH7SBc4w6ylXKHtZU7k7QObrc=;
- b=mH7NfH9waGq1RRUMxU2CdEh4zM5EKKfnNXE8ZM5A3LIU2tMyLpTnwmdPab1aAeH+iH
- JJfGGeW1BA1orTeb9vAkPF6AgerXMoE+JPog91JnIJgMNiCUIDxQYuU4IbyJnLsVNDX7
- 9ZPfTqJtsMa83qu5TizCh9PwsviJ+Ysp1SKySxpquRPwcJKdbh9heNR3FBsdJ2r1pQP2
- aZSMxyiOlSikXtMKilVki1AFrDf3rw5Bc6M+cHECP2eXPvuRbb6ffIUIZTSija2Sh/BZ
- jOzIwD6JY12VRGSzZmf1bAKqkWB+YVJcnG3OAQMlRG/6RtqBWZFxUSgWFuP1U7heh1dC
- 77/w==
+ bh=y5pqht5VG3iOXyRcR1l64/ZAmWTEoo/GQhalgKrevBM=;
+ b=pE2OvMRSdjc7lDgz04WUhz3+Gmr4IhQFZL66dF0Ni47IlNHvak7p4RAqJ77YQxXbDB
+ WqIEgNVzN2vC1WS9UlurRZjtHWMiwbkYqzPA6brCwfXJk5+wMAeGcNyJqvwiHp/PFdn3
+ 68xoLfz4uI/dMbs5bI1SBaFfVyQSD7jV4QdwgseakBlAiVdprwnaEv6DqNiHJ4fycLPx
+ q6xxVorPY4ht2Y9XVRSJ6DUjNoCdo3FJh7am+I2wpBk8LOLT7868F8JylgaUSydIAcrS
+ WdySZskG/oeH7W1aJ+kCSBlNstHotZAUmyk8T+nU/iaIt8lXFSiW5r2WlTb34rpBig71
+ 6leA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744754496; x=1745359296;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1744754546; x=1745359346;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bsxD2DryWZbldm0yS7PH7SBc4w6ylXKHtZU7k7QObrc=;
- b=ulQP6s59SeUfX189aDdr2BEEzGrkOhgsLstH+Q51T+aeheBeDuTeZGQBvQ8ccVXa4J
- hKdusptnB1XKdiY4RtQuztZ2HxxrIniAlQwoLXZYDKKqK7cw14eShr61+RPXv1UN0PVd
- 0YbmuqqGe104G09TWoBLYjeyb0DPhL0j/nIBMH+CaTG9XGHHbjADpIUOcueRxYkIG1OE
- 5qmN5MO3F1HQg0ZhuUqudNg0UZM/Pck9FVitjZRvEHy0D0Boky6bz0evj8wMkIfuE2iL
- hVjBfPAUlsjcul85iwcEiWSlLj4wuBbWvVhZSch60gWN5O5wwzjQ9ZvXHqOW6b2YKlFa
- aDvA==
+ bh=y5pqht5VG3iOXyRcR1l64/ZAmWTEoo/GQhalgKrevBM=;
+ b=b9AggMJoctI1eQzGw2zcOYcH+GtkLMPyIbcWLa/3ZDFyvPEGNea6lKbXCElkZ+Ubiy
+ OgTOxXsVOl95jr65I0ezNeYXL6+WExLGQ0qhToJYIedA+zw+mJrVjGaMeiMwqim4ZtVI
+ sWCcO0+yHXTU9Zn3DXKQqhy4WQDlmUYXI/WavAXuARYy3z++qquh1i8uh0bGhqZ4MluP
+ ALaOYofPMDhN6ngvc17zQSA4RI13F8W/gHHfp4dA9+QETLFzKloiHxOKz+na6jfzua3i
+ PyOvihX/x6oua8Dsx83XqOcp0Owb/8T8t6Q6mhG9n0bqto+WwMB0Ajix6a7QBrqUj9vv
+ d2sQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVhos4NyWx1BrRl6cCCwb9D5+8v1I/QPaHWFrWRmC1r8BglBd3CQFajqB6gO+xsVeeVgNIEngwjVsf@nongnu.org
-X-Gm-Message-State: AOJu0Yyqs8QC6uCgJz+7OCo8WK9VDQqu9Pbo/RgIKFZfXIhdsNz0gR9w
- WLu5n+9w0NcQ66FoGcbEsHlI5/wavvQ9nUDjs1jKP9auGkiihim2zsTVPaX+4a2azyqrgsYhLPL
- HYqE=
-X-Gm-Gg: ASbGncuGdS2l2pEIDQJ7lVQ9K068sm4Or4gL3nR7Htmb5e2EzE347ItRJ5z2hZNcrH6
- TycE++wxctEJn+WKFjE3LiJsncArH2YDE8Xx1kaVSHCAM4u6VnbymdbQQu6L8I+qs5sGH/RnQ7z
- S5tbUy0nkGMzRuaP0v704lKeLnAgFvJULajxlJHA22UbReku/TuSZ+E+WdgwotAAWkUfl8/sZrw
- HNJiqv1TXjwp8STar4iDoAoGE3E6ajOn21o71AcvwiD3ZmS0A/hAjjfXRGcHFgW+j+2fh8QM6iQ
- vyTo1yabI57PsMIWl215/PvLuV6HQGfl6U5YHxI0p7ZtQTPbM438qQ==
-X-Google-Smtp-Source: AGHT+IF0PWZ+tOAIJ1vsEm8wEHjzbVJadwaXn+ekQO9pvba8GlFZZbRKITYeb4s6UkIqeMR9RP59fw==
-X-Received: by 2002:a17:903:1946:b0:224:c76:5e56 with SMTP id
- d9443c01a7336-22c319fe23bmr9158365ad.27.1744754496094; 
- Tue, 15 Apr 2025 15:01:36 -0700 (PDT)
+ AJvYcCWrbUu0ArJj2Ym5ujgaKrR9oDN7RhboOifL0AB8b60iidJu9ohIhwWW+0G9tmKteCg7CJUsuup50v6l@nongnu.org
+X-Gm-Message-State: AOJu0Ywb389DC86csQPokZHfezTs/jTnfl0zibupIbIJOmAmxXHMHat+
+ fzYpoBjlL758KZonOUJyaWx4BOQijZMC45Je42/L+gw5UJoZHXms4CTqt23x1GAwbrg8TN1ikBn
+ oIuI=
+X-Gm-Gg: ASbGncuh3pDKFAmCmCJfMtsRwILbgf6k557+QrC71TQUNdMO6rQ86vuYeQir4MiEijJ
+ s0iB04p1ggPNEK2S1wc5VWGe4MjmboK3c83AieOblLV4M5WkfaakfUzKQ+ZmQSA9RW8RlyN9P+Z
+ /JowCdj5oe4A1Z6rEbhSeL5TfmO5Lnxj7jSQ4pa/q6v14onIJyjw56rpjWySWVdGuIY85/7rlCg
+ UQs+xGlSKNCUwczH/eRNrOPHF3bpBbbJKoKNE2qdgQeNDJR3fvplG3qRZB1XQZVEDcrYluKj04S
+ V3jyuT/Hx3Dtj0j+cpGV8ZTsVImJEqhehCjR36fIqGChyeXeNXqQsg==
+X-Google-Smtp-Source: AGHT+IEEpsfMRnEFhvcQj6eiGU9CfgIlMZlgeqiQmRvysB+/3v+qwvM3jOZwbUQ8Cc5MBvSyJ4EnCg==
+X-Received: by 2002:a17:902:ea01:b0:223:50f0:b97 with SMTP id
+ d9443c01a7336-22c31ac30d1mr11187025ad.52.1744754546163; 
+ Tue, 15 Apr 2025 15:02:26 -0700 (PDT)
 Received: from [192.168.1.87] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c33fa5e9esm218745ad.132.2025.04.15.15.01.35
+ d9443c01a7336-22c33fc47e0sm212845ad.167.2025.04.15.15.02.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Apr 2025 15:01:35 -0700 (PDT)
-Message-ID: <ff0a3501-b547-4a4b-bb1a-5fc3f1dbd2cb@linaro.org>
-Date: Tue, 15 Apr 2025 15:01:35 -0700
+ Tue, 15 Apr 2025 15:02:25 -0700 (PDT)
+Message-ID: <4ae1960a-8333-4742-8e05-ea837fe2c183@linaro.org>
+Date: Tue, 15 Apr 2025 15:02:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 104/163] tcg: Convert extract2 to TCGOutOpExtract2
+Subject: Re: [PATCH v4 105/163] tcg: Merge INDEX_op_extract2_{i32,i64}
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-105-richard.henderson@linaro.org>
+ <20250415192515.232910-106-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250415192515.232910-105-richard.henderson@linaro.org>
+In-Reply-To: <20250415192515.232910-106-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,608 +104,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/25 12:24, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/aarch64/tcg-target-has.h     |  2 --
->   tcg/arm/tcg-target-has.h         |  1 -
->   tcg/i386/tcg-target-has.h        |  2 --
->   tcg/loongarch64/tcg-target-has.h |  2 --
->   tcg/mips/tcg-target-has.h        |  6 -----
->   tcg/ppc/tcg-target-has.h         |  2 --
->   tcg/riscv/tcg-target-has.h       |  2 --
->   tcg/s390x/tcg-target-has.h       |  2 --
->   tcg/sparc64/tcg-target-has.h     |  2 --
->   tcg/tcg-has.h                    |  1 -
->   tcg/tci/tcg-target-has.h         |  2 --
->   tcg/tcg-op.c                     | 12 +++++-----
->   tcg/tcg.c                        | 24 ++++++++++++++++----
->   tcg/aarch64/tcg-target.c.inc     | 20 +++++++++--------
->   tcg/arm/tcg-target.c.inc         | 38 ++++++++++++--------------------
->   tcg/i386/tcg-target.c.inc        | 25 ++++++++++++---------
->   tcg/loongarch64/tcg-target.c.inc |  5 +++++
->   tcg/mips/tcg-target.c.inc        |  5 +++++
->   tcg/ppc/tcg-target.c.inc         |  4 ++++
->   tcg/riscv/tcg-target.c.inc       |  5 +++++
->   tcg/s390x/tcg-target.c.inc       |  4 ++++
->   tcg/sparc64/tcg-target.c.inc     |  4 ++++
->   tcg/tci/tcg-target.c.inc         |  4 ++++
->   23 files changed, 97 insertions(+), 77 deletions(-)
-> 
-> diff --git a/tcg/aarch64/tcg-target-has.h b/tcg/aarch64/tcg-target-has.h
-> index 82d8cd5965..011a91c263 100644
-> --- a/tcg/aarch64/tcg-target-has.h
-> +++ b/tcg/aarch64/tcg-target-has.h
-> @@ -13,13 +13,11 @@
->   #define have_lse2   (cpuinfo & CPUINFO_LSE2)
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     1
->   #define TCG_TARGET_HAS_add2_i32         1
->   #define TCG_TARGET_HAS_sub2_i32         1
->   #define TCG_TARGET_HAS_extr_i64_i32     0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
-> -#define TCG_TARGET_HAS_extract2_i64     1
->   #define TCG_TARGET_HAS_add2_i64         1
->   #define TCG_TARGET_HAS_sub2_i64         1
->   
-> diff --git a/tcg/arm/tcg-target-has.h b/tcg/arm/tcg-target-has.h
-> index c85b5da1e5..0d6a785542 100644
-> --- a/tcg/arm/tcg-target-has.h
-> +++ b/tcg/arm/tcg-target-has.h
-> @@ -24,7 +24,6 @@ extern bool use_neon_instructions;
->   #endif
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     1
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
->   #define TCG_TARGET_HAS_qemu_ldst_i128   0
-> diff --git a/tcg/i386/tcg-target-has.h b/tcg/i386/tcg-target-has.h
-> index 6b91b23fe8..0328102c2a 100644
-> --- a/tcg/i386/tcg-target-has.h
-> +++ b/tcg/i386/tcg-target-has.h
-> @@ -26,14 +26,12 @@
->   #define have_avx512vbmi2  ((cpuinfo & CPUINFO_AVX512VBMI2) && have_avx512vl)
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     1
->   #define TCG_TARGET_HAS_add2_i32         1
->   #define TCG_TARGET_HAS_sub2_i32         1
->   
->   #if TCG_TARGET_REG_BITS == 64
->   /* Keep 32-bit values zero-extended in a register.  */
->   #define TCG_TARGET_HAS_extr_i64_i32     1
-> -#define TCG_TARGET_HAS_extract2_i64     1
->   #define TCG_TARGET_HAS_add2_i64         1
->   #define TCG_TARGET_HAS_sub2_i64         1
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
-> diff --git a/tcg/loongarch64/tcg-target-has.h b/tcg/loongarch64/tcg-target-has.h
-> index 10090102f7..a1bd71db6a 100644
-> --- a/tcg/loongarch64/tcg-target-has.h
-> +++ b/tcg/loongarch64/tcg-target-has.h
-> @@ -10,13 +10,11 @@
->   #include "host/cpuinfo.h"
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     0
->   #define TCG_TARGET_HAS_add2_i32         0
->   #define TCG_TARGET_HAS_sub2_i32         0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
->   /* 64-bit operations */
-> -#define TCG_TARGET_HAS_extract2_i64     0
->   #define TCG_TARGET_HAS_extr_i64_i32     1
->   #define TCG_TARGET_HAS_add2_i64         0
->   #define TCG_TARGET_HAS_sub2_i64         0
-> diff --git a/tcg/mips/tcg-target-has.h b/tcg/mips/tcg-target-has.h
-> index 24b00f1eec..48a1e68fbe 100644
-> --- a/tcg/mips/tcg-target-has.h
-> +++ b/tcg/mips/tcg-target-has.h
-> @@ -51,13 +51,7 @@ extern bool use_mips32r2_instructions;
->   #endif
->   
->   /* optional instructions detected at runtime */
-> -#define TCG_TARGET_HAS_extract2_i32     0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
-> -
-> -#if TCG_TARGET_REG_BITS == 64
-> -#define TCG_TARGET_HAS_extract2_i64     0
-> -#endif
-> -
->   #define TCG_TARGET_HAS_qemu_ldst_i128   0
->   #define TCG_TARGET_HAS_tst              0
->   
-> diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc/tcg-target-has.h
-> index bd9c3d92ed..033d58e095 100644
-> --- a/tcg/ppc/tcg-target-has.h
-> +++ b/tcg/ppc/tcg-target-has.h
-> @@ -17,14 +17,12 @@
->   #define have_vsx       (cpuinfo & CPUINFO_VSX)
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
->   #if TCG_TARGET_REG_BITS == 64
->   #define TCG_TARGET_HAS_add2_i32         0
->   #define TCG_TARGET_HAS_sub2_i32         0
->   #define TCG_TARGET_HAS_extr_i64_i32     0
-> -#define TCG_TARGET_HAS_extract2_i64     0
->   #define TCG_TARGET_HAS_add2_i64         1
->   #define TCG_TARGET_HAS_sub2_i64         1
->   #endif
-> diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
-> index 88fadc2428..b2814f8ef9 100644
-> --- a/tcg/riscv/tcg-target-has.h
-> +++ b/tcg/riscv/tcg-target-has.h
-> @@ -10,12 +10,10 @@
->   #include "host/cpuinfo.h"
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     0
->   #define TCG_TARGET_HAS_add2_i32         1
->   #define TCG_TARGET_HAS_sub2_i32         1
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
-> -#define TCG_TARGET_HAS_extract2_i64     0
->   #define TCG_TARGET_HAS_extr_i64_i32     1
->   #define TCG_TARGET_HAS_add2_i64         1
->   #define TCG_TARGET_HAS_sub2_i64         1
-> diff --git a/tcg/s390x/tcg-target-has.h b/tcg/s390x/tcg-target-has.h
-> index 95407f61cf..4a2b71995d 100644
-> --- a/tcg/s390x/tcg-target-has.h
-> +++ b/tcg/s390x/tcg-target-has.h
-> @@ -29,13 +29,11 @@ extern uint64_t s390_facilities[3];
->       ((s390_facilities[FACILITY_##X / 64] >> (63 - FACILITY_##X % 64)) & 1)
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32   0
->   #define TCG_TARGET_HAS_add2_i32       1
->   #define TCG_TARGET_HAS_sub2_i32       1
->   #define TCG_TARGET_HAS_extr_i64_i32   0
->   #define TCG_TARGET_HAS_qemu_st8_i32   0
->   
-> -#define TCG_TARGET_HAS_extract2_i64   0
->   #define TCG_TARGET_HAS_add2_i64       1
->   #define TCG_TARGET_HAS_sub2_i64       1
->   
-> diff --git a/tcg/sparc64/tcg-target-has.h b/tcg/sparc64/tcg-target-has.h
-> index 2ced6f7c1c..b8760dd154 100644
-> --- a/tcg/sparc64/tcg-target-has.h
-> +++ b/tcg/sparc64/tcg-target-has.h
-> @@ -14,13 +14,11 @@ extern bool use_vis3_instructions;
->   #endif
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_extract2_i32     0
->   #define TCG_TARGET_HAS_add2_i32         1
->   #define TCG_TARGET_HAS_sub2_i32         1
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
->   #define TCG_TARGET_HAS_extr_i64_i32     0
-> -#define TCG_TARGET_HAS_extract2_i64     0
->   #define TCG_TARGET_HAS_add2_i64         1
->   #define TCG_TARGET_HAS_sub2_i64         1
->   
-> diff --git a/tcg/tcg-has.h b/tcg/tcg-has.h
-> index 21bef070fe..6125ac677c 100644
-> --- a/tcg/tcg-has.h
-> +++ b/tcg/tcg-has.h
-> @@ -12,7 +12,6 @@
->   #if TCG_TARGET_REG_BITS == 32
->   /* Turn some undef macros into false macros.  */
->   #define TCG_TARGET_HAS_extr_i64_i32     0
-> -#define TCG_TARGET_HAS_extract2_i64     0
->   #define TCG_TARGET_HAS_add2_i64         0
->   #define TCG_TARGET_HAS_sub2_i64         0
->   /* Turn some undef macros into true macros.  */
-> diff --git a/tcg/tci/tcg-target-has.h b/tcg/tci/tcg-target-has.h
-> index 90aa5c8bbb..4cb2b529ae 100644
-> --- a/tcg/tci/tcg-target-has.h
-> +++ b/tcg/tci/tcg-target-has.h
-> @@ -7,12 +7,10 @@
->   #ifndef TCG_TARGET_HAS_H
->   #define TCG_TARGET_HAS_H
->   
-> -#define TCG_TARGET_HAS_extract2_i32     0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
->   #if TCG_TARGET_REG_BITS == 64
->   #define TCG_TARGET_HAS_extr_i64_i32     0
-> -#define TCG_TARGET_HAS_extract2_i64     0
->   #define TCG_TARGET_HAS_add2_i32         1
->   #define TCG_TARGET_HAS_sub2_i32         1
->   #define TCG_TARGET_HAS_add2_i64         1
-> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-> index 961a39f446..5f95350d5d 100644
-> --- a/tcg/tcg-op.c
-> +++ b/tcg/tcg-op.c
-> @@ -921,7 +921,7 @@ void tcg_gen_deposit_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2,
->   
->       t1 = tcg_temp_ebb_new_i32();
->   
-> -    if (TCG_TARGET_HAS_extract2_i32) {
-> +    if (tcg_op_supported(INDEX_op_extract2_i32, TCG_TYPE_I32, 0)) {
->           if (ofs + len == 32) {
->               tcg_gen_shli_i32(t1, arg1, len);
->               tcg_gen_extract2_i32(ret, t1, arg2, len);
-> @@ -1077,7 +1077,7 @@ void tcg_gen_extract2_i32(TCGv_i32 ret, TCGv_i32 al, TCGv_i32 ah,
->           tcg_gen_mov_i32(ret, ah);
->       } else if (al == ah) {
->           tcg_gen_rotri_i32(ret, al, ofs);
-> -    } else if (TCG_TARGET_HAS_extract2_i32) {
-> +    } else if (tcg_op_supported(INDEX_op_extract2_i32, TCG_TYPE_I32, 0)) {
->           tcg_gen_op4i_i32(INDEX_op_extract2_i32, ret, al, ah, ofs);
->       } else {
->           TCGv_i32 t0 = tcg_temp_ebb_new_i32();
-> @@ -1799,7 +1799,7 @@ static inline void tcg_gen_shifti_i64(TCGv_i64 ret, TCGv_i64 arg1,
->               tcg_gen_movi_i32(TCGV_LOW(ret), 0);
->           }
->       } else if (right) {
-> -        if (TCG_TARGET_HAS_extract2_i32) {
-> +        if (tcg_op_supported(INDEX_op_extract2_i32, TCG_TYPE_I32, 0)) {
->               tcg_gen_extract2_i32(TCGV_LOW(ret),
->                                    TCGV_LOW(arg1), TCGV_HIGH(arg1), c);
->           } else {
-> @@ -1813,7 +1813,7 @@ static inline void tcg_gen_shifti_i64(TCGv_i64 ret, TCGv_i64 arg1,
->               tcg_gen_shri_i32(TCGV_HIGH(ret), TCGV_HIGH(arg1), c);
->           }
->       } else {
-> -        if (TCG_TARGET_HAS_extract2_i32) {
-> +        if (tcg_op_supported(INDEX_op_extract2_i32, TCG_TYPE_I32, 0)) {
->               tcg_gen_extract2_i32(TCGV_HIGH(ret),
->                                    TCGV_LOW(arg1), TCGV_HIGH(arg1), 32 - c);
->           } else {
-> @@ -2553,7 +2553,7 @@ void tcg_gen_deposit_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2,
->   
->       t1 = tcg_temp_ebb_new_i64();
->   
-> -    if (TCG_TARGET_HAS_extract2_i64) {
-> +    if (tcg_op_supported(INDEX_op_extract2_i64, TCG_TYPE_I64, 0)) {
->           if (ofs + len == 64) {
->               tcg_gen_shli_i64(t1, arg1, len);
->               tcg_gen_extract2_i64(ret, t1, arg2, len);
-> @@ -2781,7 +2781,7 @@ void tcg_gen_extract2_i64(TCGv_i64 ret, TCGv_i64 al, TCGv_i64 ah,
->           tcg_gen_mov_i64(ret, ah);
->       } else if (al == ah) {
->           tcg_gen_rotri_i64(ret, al, ofs);
-> -    } else if (TCG_TARGET_HAS_extract2_i64) {
-> +    } else if (tcg_op_supported(INDEX_op_extract2_i64, TCG_TYPE_I64, 0)) {
->           tcg_gen_op4i_i64(INDEX_op_extract2_i64, ret, al, ah, ofs);
->       } else {
->           TCGv_i64 t0 = tcg_temp_ebb_new_i64();
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 7d398354a2..f34f9cdd13 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -1029,6 +1029,12 @@ typedef struct TCGOutOpExtract {
->                      unsigned ofs, unsigned len);
->   } TCGOutOpExtract;
->   
-> +typedef struct TCGOutOpExtract2 {
-> +    TCGOutOp base;
-> +    void (*out_rrr)(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
-> +                    TCGReg a2, unsigned shr);
-> +} TCGOutOpExtract2;
-> +
->   typedef struct TCGOutOpMovcond {
->       TCGOutOp base;
->       void (*out)(TCGContext *s, TCGType type, TCGCond cond,
-> @@ -1140,6 +1146,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
->       OUTOP(INDEX_op_divu2, TCGOutOpDivRem, outop_divu2),
->       OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
->       OUTOP(INDEX_op_extract, TCGOutOpExtract, outop_extract),
-> +    OUTOP(INDEX_op_extract2_i32, TCGOutOpExtract2, outop_extract2),
-> +    OUTOP(INDEX_op_extract2_i64, TCGOutOpExtract2, outop_extract2),
->       OUTOP(INDEX_op_movcond, TCGOutOpMovcond, outop_movcond),
->       OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
->       OUTOP(INDEX_op_muls2, TCGOutOpMul2, outop_muls2),
-> @@ -2399,8 +2407,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_st_i32:
->           return true;
->   
-> -    case INDEX_op_extract2_i32:
-> -        return TCG_TARGET_HAS_extract2_i32;
->       case INDEX_op_add2_i32:
->           return TCG_TARGET_HAS_add2_i32;
->       case INDEX_op_sub2_i32:
-> @@ -2427,8 +2433,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_extrh_i64_i32:
->           return TCG_TARGET_REG_BITS == 64;
->   
-> -    case INDEX_op_extract2_i64:
-> -        return TCG_TARGET_HAS_extract2_i64;
->       case INDEX_op_add2_i64:
->           return TCG_TARGET_HAS_add2_i64;
->       case INDEX_op_sub2_i64:
-> @@ -5590,6 +5594,18 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
->           }
->           break;
->   
-> +    case INDEX_op_extract2_i32:
-> +    case INDEX_op_extract2_i64:
-> +        {
-> +            const TCGOutOpExtract2 *out = &outop_extract2;
-> +
-> +            tcg_debug_assert(!const_args[1]);
-> +            tcg_debug_assert(!const_args[2]);
-> +            out->out_rrr(s, type, new_args[0], new_args[1],
-> +                         new_args[2], new_args[3]);
-> +        }
-> +        break;
-> +
->       case INDEX_op_muls2:
->       case INDEX_op_mulu2:
->           {
-> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-> index dee4afcce1..bece494c55 100644
-> --- a/tcg/aarch64/tcg-target.c.inc
-> +++ b/tcg/aarch64/tcg-target.c.inc
-> @@ -2634,6 +2634,17 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static void tgen_extract2(TCGContext *s, TCGType type, TCGReg a0,
-> +                          TCGReg a1, TCGReg a2, unsigned shr)
-> +{
-> +    tcg_out_extr(s, type, a0, a2, a1, shr);
-> +}
-> +
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_O1_I2(r, rz, rz),
-> +    .out_rrr = tgen_extract2,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> @@ -2714,11 +2725,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
->           tcg_out_qemu_ldst_i128(s, a0, a1, a2, args[3], false);
->           break;
->   
-> -    case INDEX_op_extract2_i64:
-> -    case INDEX_op_extract2_i32:
-> -        tcg_out_extr(s, ext, a0, a2, a1, args[3]);
-> -        break;
-> -
->       case INDEX_op_add2_i32:
->           tcg_out_addsub2(s, TCG_TYPE_I32, a0, a1, a2, args[3],
->                           (int32_t)args[4], args[5], const_args[4],
-> @@ -3231,10 +3237,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_qemu_st_i128:
->           return C_O0_I3(rz, rz, r);
->   
-> -    case INDEX_op_extract2_i32:
-> -    case INDEX_op_extract2_i64:
-> -        return C_O1_I2(r, rz, rz);
-> -
->       case INDEX_op_add2_i32:
->       case INDEX_op_add2_i64:
->       case INDEX_op_sub2_i32:
-> diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-> index 2bf6bfe274..f366424af5 100644
-> --- a/tcg/arm/tcg-target.c.inc
-> +++ b/tcg/arm/tcg-target.c.inc
-> @@ -2317,6 +2317,20 @@ static const TCGOutOpSetcond2 outop_setcond2 = {
->       .out = tgen_setcond2,
->   };
->   
-> +static void tgen_extract2(TCGContext *s, TCGType type, TCGReg a0,
-> +                          TCGReg a1, TCGReg a2, unsigned shr)
-> +{
-> +    /* We can do extract2 in 2 insns, vs the 3 required otherwise.  */
-> +    tgen_shli(s, TCG_TYPE_I32, TCG_REG_TMP, a2, 32 - shr);
-> +    tcg_out_dat_reg(s, COND_AL, ARITH_ORR, a0, TCG_REG_TMP,
-> +                    a1, SHIFT_IMM_LSR(shr));
-> +}
-> +
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_O1_I2(r, r, r),
-> +    .out_rrr = tgen_extract2,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> @@ -2411,28 +2425,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           tcg_out_qemu_st(s, args[0], args[1], args[2], args[3], TCG_TYPE_I64);
->           break;
->   
-> -    case INDEX_op_extract2_i32:
-> -        /* ??? These optimization vs zero should be generic.  */
-> -        /* ??? But we can't substitute 2 for 1 in the opcode stream yet.  */
-> -        if (const_args[1]) {
-> -            if (const_args[2]) {
-> -                tcg_out_movi(s, TCG_TYPE_REG, args[0], 0);
-> -            } else {
-> -                tcg_out_dat_reg(s, COND_AL, ARITH_MOV, args[0], 0,
-> -                                args[2], SHIFT_IMM_LSL(32 - args[3]));
-> -            }
-> -        } else if (const_args[2]) {
-> -            tcg_out_dat_reg(s, COND_AL, ARITH_MOV, args[0], 0,
-> -                            args[1], SHIFT_IMM_LSR(args[3]));
-> -        } else {
-> -            /* We can do extract2 in 2 insns, vs the 3 required otherwise.  */
-> -            tcg_out_dat_reg(s, COND_AL, ARITH_MOV, TCG_REG_TMP, 0,
-> -                            args[2], SHIFT_IMM_LSL(32 - args[3]));
-> -            tcg_out_dat_reg(s, COND_AL, ARITH_ORR, args[0], TCG_REG_TMP,
-> -                            args[1], SHIFT_IMM_LSR(args[3]));
-> -        }
-> -        break;
-> -
->       case INDEX_op_mb:
->           tcg_out_mb(s, args[0]);
->           break;
-> @@ -2464,8 +2456,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_st_i32:
->           return C_O0_I2(r, r);
->   
-> -    case INDEX_op_extract2_i32:
-> -        return C_O1_I2(r, rZ, rZ);
->       case INDEX_op_add2_i32:
->           return C_O2_I4(r, r, r, r, rIN, rIK);
->       case INDEX_op_sub2_i32:
-> diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-> index 1dd9741f45..2b2ad9ca95 100644
-> --- a/tcg/i386/tcg-target.c.inc
-> +++ b/tcg/i386/tcg-target.c.inc
-> @@ -3261,6 +3261,21 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static void tgen_extract2(TCGContext *s, TCGType type, TCGReg a0,
-> +                          TCGReg a1, TCGReg a2, unsigned shr)
-> +{
-> +    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
-> +
-> +    /* Note that SHRD outputs to the r/m operand.  */
-> +    tcg_out_modrm(s, OPC_SHRD_Ib + rexw, a2, a0);
-> +    tcg_out8(s, shr);
-> +}
-> +
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_O1_I2(r, 0, r),
-> +    .out_rrr = tgen_extract2,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
-> @@ -3414,12 +3429,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           break;
->   #endif
->   
-> -    OP_32_64(extract2):
-> -        /* Note that SHRD outputs to the r/m operand.  */
-> -        tcg_out_modrm(s, OPC_SHRD_Ib + rexw, a2, a0);
-> -        tcg_out8(s, args[3]);
-> -        break;
-> -
->       case INDEX_op_mb:
->           tcg_out_mb(s, a0);
->           break;
-> @@ -4008,10 +4017,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_st_i64:
->           return C_O0_I2(re, r);
->   
-> -    case INDEX_op_extract2_i32:
-> -    case INDEX_op_extract2_i64:
-> -        return C_O1_I2(r, 0, r);
-> -
->       case INDEX_op_add2_i32:
->       case INDEX_op_add2_i64:
->       case INDEX_op_sub2_i32:
-> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index fcede3dd9f..735dcc117a 100644
-> --- a/tcg/loongarch64/tcg-target.c.inc
-> +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -1856,6 +1856,11 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-> index cd648ab1df..7fae1c51e9 100644
-> --- a/tcg/mips/tcg-target.c.inc
-> +++ b/tcg/mips/tcg-target.c.inc
-> @@ -2273,6 +2273,11 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-> index fc92a4896d..a964239aab 100644
-> --- a/tcg/ppc/tcg-target.c.inc
-> +++ b/tcg/ppc/tcg-target.c.inc
-> @@ -3495,6 +3495,10 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
-> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-> index 371e0c24c8..d74ac7587a 100644
-> --- a/tcg/riscv/tcg-target.c.inc
-> +++ b/tcg/riscv/tcg-target.c.inc
-> @@ -2542,6 +2542,11 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-> index d72393315d..ff06834e6e 100644
-> --- a/tcg/s390x/tcg-target.c.inc
-> +++ b/tcg/s390x/tcg-target.c.inc
-> @@ -1637,6 +1637,10 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
->   static void tgen_gotoi(TCGContext *s, int cc, const tcg_insn_unit *dest)
->   {
->       ptrdiff_t off = tcg_pcrel_diff(s, dest) >> 1;
-> diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-> index 741de260e9..4c7d916302 100644
-> --- a/tcg/sparc64/tcg-target.c.inc
-> +++ b/tcg/sparc64/tcg-target.c.inc
-> @@ -1795,6 +1795,10 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tgen_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-> index ef14e81609..9a5ca9c778 100644
-> --- a/tcg/tci/tcg-target.c.inc
-> +++ b/tcg/tci/tcg-target.c.inc
-> @@ -447,6 +447,10 @@ static const TCGOutOpExtract outop_sextract = {
->       .out_rr = tcg_out_sextract,
->   };
->   
-> +static const TCGOutOpExtract2 outop_extract2 = {
-> +    .base.static_constraint = C_NotImplemented,
-> +};
-> +
->   static void tcg_out_ext8s(TCGContext *s, TCGType type, TCGReg rd, TCGReg rs)
->   {
->       tcg_out_sextract(s, type, rd, rs, 0, 8);
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
+T24gNC8xNS8yNSAxMjoyNCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IFJldmlld2Vk
+LWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQo+IFNp
+Z25lZC1vZmYtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5h
+cm8ub3JnPg0KPiAtLS0NCj4gICBpbmNsdWRlL3RjZy90Y2ctb3BjLmggICAgICB8ICA1ICst
+LS0tDQo+ICAgdGNnL29wdGltaXplLmMgICAgICAgICAgICAgfCAxMCArKysrKy0tLS0tDQo+
+ICAgdGNnL3RjZy1vcC5jICAgICAgICAgICAgICAgfCAxNiArKysrKysrKy0tLS0tLS0tDQo+
+ICAgdGNnL3RjZy5jICAgICAgICAgICAgICAgICAgfCAgNiArKy0tLS0NCj4gICBkb2NzL2Rl
+dmVsL3RjZy1vcHMucnN0ICAgICB8ICA0ICsrLS0NCj4gICB0YXJnZXQvaTM4Ni90Y2cvZW1p
+dC5jLmluYyB8IDEyICstLS0tLS0tLS0tLQ0KPiAgIDYgZmlsZXMgY2hhbmdlZCwgMTkgaW5z
+ZXJ0aW9ucygrKSwgMzQgZGVsZXRpb25zKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaW5jbHVk
+ZS90Y2cvdGNnLW9wYy5oIGIvaW5jbHVkZS90Y2cvdGNnLW9wYy5oDQo+IGluZGV4IGM2ODQ4
+YjNjNjMuLjFmOTk1YzU0YmUgMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUvdGNnL3RjZy1vcGMu
+aA0KPiArKysgYi9pbmNsdWRlL3RjZy90Y2ctb3BjLmgNCj4gQEAgLTU2LDYgKzU2LDcgQEAg
+REVGKGRpdnUsIDEsIDIsIDAsIFRDR19PUEZfSU5UKQ0KPiAgIERFRihkaXZ1MiwgMiwgMywg
+MCwgVENHX09QRl9JTlQpDQo+ICAgREVGKGVxdiwgMSwgMiwgMCwgVENHX09QRl9JTlQpDQo+
+ICAgREVGKGV4dHJhY3QsIDEsIDEsIDIsIFRDR19PUEZfSU5UKQ0KPiArREVGKGV4dHJhY3Qy
+LCAxLCAyLCAxLCBUQ0dfT1BGX0lOVCkNCj4gICBERUYobW92Y29uZCwgMSwgNCwgMSwgVENH
+X09QRl9JTlQpDQo+ICAgREVGKG11bCwgMSwgMiwgMCwgVENHX09QRl9JTlQpDQo+ICAgREVG
+KG11bHMyLCAyLCAyLCAwLCBUQ0dfT1BGX0lOVCkNCj4gQEAgLTkwLDggKzkxLDYgQEAgREVG
+KGxkX2kzMiwgMSwgMSwgMSwgMCkNCj4gICBERUYoc3Q4X2kzMiwgMCwgMiwgMSwgMCkNCj4g
+ICBERUYoc3QxNl9pMzIsIDAsIDIsIDEsIDApDQo+ICAgREVGKHN0X2kzMiwgMCwgMiwgMSwg
+MCkNCj4gLS8qIHNoaWZ0cy9yb3RhdGVzICovDQo+IC1ERUYoZXh0cmFjdDJfaTMyLCAxLCAy
+LCAxLCAwKQ0KPiAgIA0KPiAgIERFRihhZGQyX2kzMiwgMiwgNCwgMCwgMCkNCj4gICBERUYo
+c3ViMl9pMzIsIDIsIDQsIDAsIDApDQo+IEBAIC0xMTAsOCArMTA5LDYgQEAgREVGKHN0OF9p
+NjQsIDAsIDIsIDEsIDApDQo+ICAgREVGKHN0MTZfaTY0LCAwLCAyLCAxLCAwKQ0KPiAgIERF
+RihzdDMyX2k2NCwgMCwgMiwgMSwgMCkNCj4gICBERUYoc3RfaTY0LCAwLCAyLCAxLCAwKQ0K
+PiAtLyogc2hpZnRzL3JvdGF0ZXMgKi8NCj4gLURFRihleHRyYWN0Ml9pNjQsIDEsIDIsIDEs
+IDApDQo+ICAgDQo+ICAgLyogc2l6ZSBjaGFuZ2luZyBvcHMgKi8NCj4gICBERUYoZXh0X2kz
+Ml9pNjQsIDEsIDEsIDAsIDApDQo+IGRpZmYgLS1naXQgYS90Y2cvb3B0aW1pemUuYyBiL3Rj
+Zy9vcHRpbWl6ZS5jDQo+IGluZGV4IGYxYWRlYTgyOWIuLjk1OTViMzJkNTQgMTAwNjQ0DQo+
+IC0tLSBhL3RjZy9vcHRpbWl6ZS5jDQo+ICsrKyBiL3RjZy9vcHRpbWl6ZS5jDQo+IEBAIC0x
+ODYxLDEyICsxODYxLDEyIEBAIHN0YXRpYyBib29sIGZvbGRfZXh0cmFjdDIoT3B0Q29udGV4
+dCAqY3R4LCBUQ0dPcCAqb3ApDQo+ICAgICAgICAgICB1aW50NjRfdCB2MiA9IGFyZ19pbmZv
+KG9wLT5hcmdzWzJdKS0+dmFsOw0KPiAgICAgICAgICAgaW50IHNociA9IG9wLT5hcmdzWzNd
+Ow0KPiAgIA0KPiAtICAgICAgICBpZiAob3AtPm9wYyA9PSBJTkRFWF9vcF9leHRyYWN0Ml9p
+NjQpIHsNCj4gLSAgICAgICAgICAgIHYxID4+PSBzaHI7DQo+IC0gICAgICAgICAgICB2MiA8
+PD0gNjQgLSBzaHI7DQo+IC0gICAgICAgIH0gZWxzZSB7DQo+ICsgICAgICAgIGlmIChjdHgt
+PnR5cGUgPT0gVENHX1RZUEVfSTMyKSB7DQo+ICAgICAgICAgICAgICAgdjEgPSAodWludDMy
+X3QpdjEgPj4gc2hyOw0KPiAgICAgICAgICAgICAgIHYyID0gKHVpbnQ2NF90KSgoaW50MzJf
+dCl2MiA8PCAoMzIgLSBzaHIpKTsNCj4gKyAgICAgICAgfSBlbHNlIHsNCj4gKyAgICAgICAg
+ICAgIHYxID4+PSBzaHI7DQo+ICsgICAgICAgICAgICB2MiA8PD0gNjQgLSBzaHI7DQo+ICAg
+ICAgICAgICB9DQo+ICAgICAgICAgICByZXR1cm4gdGNnX29wdF9nZW5fbW92aShjdHgsIG9w
+LCBvcC0+YXJnc1swXSwgdjEgfCB2Mik7DQo+ICAgICAgIH0NCj4gQEAgLTI4NjYsNyArMjg2
+Niw3IEBAIHZvaWQgdGNnX29wdGltaXplKFRDR0NvbnRleHQgKnMpDQo+ICAgICAgICAgICBj
+YXNlIElOREVYX29wX2V4dHJhY3Q6DQo+ICAgICAgICAgICAgICAgZG9uZSA9IGZvbGRfZXh0
+cmFjdCgmY3R4LCBvcCk7DQo+ICAgICAgICAgICAgICAgYnJlYWs7DQo+IC0gICAgICAgIENB
+U0VfT1BfMzJfNjQoZXh0cmFjdDIpOg0KPiArICAgICAgICBjYXNlIElOREVYX29wX2V4dHJh
+Y3QyOg0KPiAgICAgICAgICAgICAgIGRvbmUgPSBmb2xkX2V4dHJhY3QyKCZjdHgsIG9wKTsN
+Cj4gICAgICAgICAgICAgICBicmVhazsNCj4gICAgICAgICAgIGNhc2UgSU5ERVhfb3BfZXh0
+X2kzMl9pNjQ6DQo+IGRpZmYgLS1naXQgYS90Y2cvdGNnLW9wLmMgYi90Y2cvdGNnLW9wLmMN
+Cj4gaW5kZXggNWY5NTM1MGQ1ZC4uZWRiYjIxNGY3YyAxMDA2NDQNCj4gLS0tIGEvdGNnL3Rj
+Zy1vcC5jDQo+ICsrKyBiL3RjZy90Y2ctb3AuYw0KPiBAQCAtOTIxLDcgKzkyMSw3IEBAIHZv
+aWQgdGNnX2dlbl9kZXBvc2l0X2kzMihUQ0d2X2kzMiByZXQsIFRDR3ZfaTMyIGFyZzEsIFRD
+R3ZfaTMyIGFyZzIsDQo+ICAgDQo+ICAgICAgIHQxID0gdGNnX3RlbXBfZWJiX25ld19pMzIo
+KTsNCj4gICANCj4gLSAgICBpZiAodGNnX29wX3N1cHBvcnRlZChJTkRFWF9vcF9leHRyYWN0
+Ml9pMzIsIFRDR19UWVBFX0kzMiwgMCkpIHsNCj4gKyAgICBpZiAodGNnX29wX3N1cHBvcnRl
+ZChJTkRFWF9vcF9leHRyYWN0MiwgVENHX1RZUEVfSTMyLCAwKSkgew0KPiAgICAgICAgICAg
+aWYgKG9mcyArIGxlbiA9PSAzMikgew0KPiAgICAgICAgICAgICAgIHRjZ19nZW5fc2hsaV9p
+MzIodDEsIGFyZzEsIGxlbik7DQo+ICAgICAgICAgICAgICAgdGNnX2dlbl9leHRyYWN0Ml9p
+MzIocmV0LCB0MSwgYXJnMiwgbGVuKTsNCj4gQEAgLTEwNzcsOCArMTA3Nyw4IEBAIHZvaWQg
+dGNnX2dlbl9leHRyYWN0Ml9pMzIoVENHdl9pMzIgcmV0LCBUQ0d2X2kzMiBhbCwgVENHdl9p
+MzIgYWgsDQo+ICAgICAgICAgICB0Y2dfZ2VuX21vdl9pMzIocmV0LCBhaCk7DQo+ICAgICAg
+IH0gZWxzZSBpZiAoYWwgPT0gYWgpIHsNCj4gICAgICAgICAgIHRjZ19nZW5fcm90cmlfaTMy
+KHJldCwgYWwsIG9mcyk7DQo+IC0gICAgfSBlbHNlIGlmICh0Y2dfb3Bfc3VwcG9ydGVkKElO
+REVYX29wX2V4dHJhY3QyX2kzMiwgVENHX1RZUEVfSTMyLCAwKSkgew0KPiAtICAgICAgICB0
+Y2dfZ2VuX29wNGlfaTMyKElOREVYX29wX2V4dHJhY3QyX2kzMiwgcmV0LCBhbCwgYWgsIG9m
+cyk7DQo+ICsgICAgfSBlbHNlIGlmICh0Y2dfb3Bfc3VwcG9ydGVkKElOREVYX29wX2V4dHJh
+Y3QyLCBUQ0dfVFlQRV9JMzIsIDApKSB7DQo+ICsgICAgICAgIHRjZ19nZW5fb3A0aV9pMzIo
+SU5ERVhfb3BfZXh0cmFjdDIsIHJldCwgYWwsIGFoLCBvZnMpOw0KPiAgICAgICB9IGVsc2Ug
+ew0KPiAgICAgICAgICAgVENHdl9pMzIgdDAgPSB0Y2dfdGVtcF9lYmJfbmV3X2kzMigpOw0K
+PiAgICAgICAgICAgdGNnX2dlbl9zaHJpX2kzMih0MCwgYWwsIG9mcyk7DQo+IEBAIC0xNzk5
+LDcgKzE3OTksNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgdGNnX2dlbl9zaGlmdGlfaTY0KFRD
+R3ZfaTY0IHJldCwgVENHdl9pNjQgYXJnMSwNCj4gICAgICAgICAgICAgICB0Y2dfZ2VuX21v
+dmlfaTMyKFRDR1ZfTE9XKHJldCksIDApOw0KPiAgICAgICAgICAgfQ0KPiAgICAgICB9IGVs
+c2UgaWYgKHJpZ2h0KSB7DQo+IC0gICAgICAgIGlmICh0Y2dfb3Bfc3VwcG9ydGVkKElOREVY
+X29wX2V4dHJhY3QyX2kzMiwgVENHX1RZUEVfSTMyLCAwKSkgew0KPiArICAgICAgICBpZiAo
+dGNnX29wX3N1cHBvcnRlZChJTkRFWF9vcF9leHRyYWN0MiwgVENHX1RZUEVfSTMyLCAwKSkg
+ew0KPiAgICAgICAgICAgICAgIHRjZ19nZW5fZXh0cmFjdDJfaTMyKFRDR1ZfTE9XKHJldCks
+DQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVENHVl9MT1coYXJnMSks
+IFRDR1ZfSElHSChhcmcxKSwgYyk7DQo+ICAgICAgICAgICB9IGVsc2Ugew0KPiBAQCAtMTgx
+Myw3ICsxODEzLDcgQEAgc3RhdGljIGlubGluZSB2b2lkIHRjZ19nZW5fc2hpZnRpX2k2NChU
+Q0d2X2k2NCByZXQsIFRDR3ZfaTY0IGFyZzEsDQo+ICAgICAgICAgICAgICAgdGNnX2dlbl9z
+aHJpX2kzMihUQ0dWX0hJR0gocmV0KSwgVENHVl9ISUdIKGFyZzEpLCBjKTsNCj4gICAgICAg
+ICAgIH0NCj4gICAgICAgfSBlbHNlIHsNCj4gLSAgICAgICAgaWYgKHRjZ19vcF9zdXBwb3J0
+ZWQoSU5ERVhfb3BfZXh0cmFjdDJfaTMyLCBUQ0dfVFlQRV9JMzIsIDApKSB7DQo+ICsgICAg
+ICAgIGlmICh0Y2dfb3Bfc3VwcG9ydGVkKElOREVYX29wX2V4dHJhY3QyLCBUQ0dfVFlQRV9J
+MzIsIDApKSB7DQo+ICAgICAgICAgICAgICAgdGNnX2dlbl9leHRyYWN0Ml9pMzIoVENHVl9I
+SUdIKHJldCksDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVENHVl9M
+T1coYXJnMSksIFRDR1ZfSElHSChhcmcxKSwgMzIgLSBjKTsNCj4gICAgICAgICAgIH0gZWxz
+ZSB7DQo+IEBAIC0yNTUzLDcgKzI1NTMsNyBAQCB2b2lkIHRjZ19nZW5fZGVwb3NpdF9pNjQo
+VENHdl9pNjQgcmV0LCBUQ0d2X2k2NCBhcmcxLCBUQ0d2X2k2NCBhcmcyLA0KPiAgIA0KPiAg
+ICAgICB0MSA9IHRjZ190ZW1wX2ViYl9uZXdfaTY0KCk7DQo+ICAgDQo+IC0gICAgaWYgKHRj
+Z19vcF9zdXBwb3J0ZWQoSU5ERVhfb3BfZXh0cmFjdDJfaTY0LCBUQ0dfVFlQRV9JNjQsIDAp
+KSB7DQo+ICsgICAgaWYgKHRjZ19vcF9zdXBwb3J0ZWQoSU5ERVhfb3BfZXh0cmFjdDIsIFRD
+R19UWVBFX0k2NCwgMCkpIHsNCj4gICAgICAgICAgIGlmIChvZnMgKyBsZW4gPT0gNjQpIHsN
+Cj4gICAgICAgICAgICAgICB0Y2dfZ2VuX3NobGlfaTY0KHQxLCBhcmcxLCBsZW4pOw0KPiAg
+ICAgICAgICAgICAgIHRjZ19nZW5fZXh0cmFjdDJfaTY0KHJldCwgdDEsIGFyZzIsIGxlbik7
+DQo+IEBAIC0yNzgxLDggKzI3ODEsOCBAQCB2b2lkIHRjZ19nZW5fZXh0cmFjdDJfaTY0KFRD
+R3ZfaTY0IHJldCwgVENHdl9pNjQgYWwsIFRDR3ZfaTY0IGFoLA0KPiAgICAgICAgICAgdGNn
+X2dlbl9tb3ZfaTY0KHJldCwgYWgpOw0KPiAgICAgICB9IGVsc2UgaWYgKGFsID09IGFoKSB7
+DQo+ICAgICAgICAgICB0Y2dfZ2VuX3JvdHJpX2k2NChyZXQsIGFsLCBvZnMpOw0KPiAtICAg
+IH0gZWxzZSBpZiAodGNnX29wX3N1cHBvcnRlZChJTkRFWF9vcF9leHRyYWN0Ml9pNjQsIFRD
+R19UWVBFX0k2NCwgMCkpIHsNCj4gLSAgICAgICAgdGNnX2dlbl9vcDRpX2k2NChJTkRFWF9v
+cF9leHRyYWN0Ml9pNjQsIHJldCwgYWwsIGFoLCBvZnMpOw0KPiArICAgIH0gZWxzZSBpZiAo
+dGNnX29wX3N1cHBvcnRlZChJTkRFWF9vcF9leHRyYWN0MiwgVENHX1RZUEVfSTY0LCAwKSkg
+ew0KPiArICAgICAgICB0Y2dfZ2VuX29wNGlfaTY0KElOREVYX29wX2V4dHJhY3QyLCByZXQs
+IGFsLCBhaCwgb2ZzKTsNCj4gICAgICAgfSBlbHNlIHsNCj4gICAgICAgICAgIFRDR3ZfaTY0
+IHQwID0gdGNnX3RlbXBfZWJiX25ld19pNjQoKTsNCj4gICAgICAgICAgIHRjZ19nZW5fc2hy
+aV9pNjQodDAsIGFsLCBvZnMpOw0KPiBkaWZmIC0tZ2l0IGEvdGNnL3RjZy5jIGIvdGNnL3Rj
+Zy5jDQo+IGluZGV4IGYzNGY5Y2RkMTMuLmVkMDM4NDA5ODggMTAwNjQ0DQo+IC0tLSBhL3Rj
+Zy90Y2cuYw0KPiArKysgYi90Y2cvdGNnLmMNCj4gQEAgLTExNDYsOCArMTE0Niw3IEBAIHN0
+YXRpYyBjb25zdCBUQ0dPdXRPcCAqIGNvbnN0IGFsbF9vdXRvcFtOQl9PUFNdID0gew0KPiAg
+ICAgICBPVVRPUChJTkRFWF9vcF9kaXZ1MiwgVENHT3V0T3BEaXZSZW0sIG91dG9wX2RpdnUy
+KSwNCj4gICAgICAgT1VUT1AoSU5ERVhfb3BfZXF2LCBUQ0dPdXRPcEJpbmFyeSwgb3V0b3Bf
+ZXF2KSwNCj4gICAgICAgT1VUT1AoSU5ERVhfb3BfZXh0cmFjdCwgVENHT3V0T3BFeHRyYWN0
+LCBvdXRvcF9leHRyYWN0KSwNCj4gLSAgICBPVVRPUChJTkRFWF9vcF9leHRyYWN0Ml9pMzIs
+IFRDR091dE9wRXh0cmFjdDIsIG91dG9wX2V4dHJhY3QyKSwNCj4gLSAgICBPVVRPUChJTkRF
+WF9vcF9leHRyYWN0Ml9pNjQsIFRDR091dE9wRXh0cmFjdDIsIG91dG9wX2V4dHJhY3QyKSwN
+Cj4gKyAgICBPVVRPUChJTkRFWF9vcF9leHRyYWN0MiwgVENHT3V0T3BFeHRyYWN0Miwgb3V0
+b3BfZXh0cmFjdDIpLA0KPiAgICAgICBPVVRPUChJTkRFWF9vcF9tb3Zjb25kLCBUQ0dPdXRP
+cE1vdmNvbmQsIG91dG9wX21vdmNvbmQpLA0KPiAgICAgICBPVVRPUChJTkRFWF9vcF9tdWws
+IFRDR091dE9wQmluYXJ5LCBvdXRvcF9tdWwpLA0KPiAgICAgICBPVVRPUChJTkRFWF9vcF9t
+dWxzMiwgVENHT3V0T3BNdWwyLCBvdXRvcF9tdWxzMiksDQo+IEBAIC01NTk0LDggKzU1OTMs
+NyBAQCBzdGF0aWMgdm9pZCB0Y2dfcmVnX2FsbG9jX29wKFRDR0NvbnRleHQgKnMsIGNvbnN0
+IFRDR09wICpvcCkNCj4gICAgICAgICAgIH0NCj4gICAgICAgICAgIGJyZWFrOw0KPiAgIA0K
+PiAtICAgIGNhc2UgSU5ERVhfb3BfZXh0cmFjdDJfaTMyOg0KPiAtICAgIGNhc2UgSU5ERVhf
+b3BfZXh0cmFjdDJfaTY0Og0KPiArICAgIGNhc2UgSU5ERVhfb3BfZXh0cmFjdDI6DQo+ICAg
+ICAgICAgICB7DQo+ICAgICAgICAgICAgICAgY29uc3QgVENHT3V0T3BFeHRyYWN0MiAqb3V0
+ID0gJm91dG9wX2V4dHJhY3QyOw0KPiAgIA0KPiBkaWZmIC0tZ2l0IGEvZG9jcy9kZXZlbC90
+Y2ctb3BzLnJzdCBiL2RvY3MvZGV2ZWwvdGNnLW9wcy5yc3QNCj4gaW5kZXggYWVhOGE4OTdi
+ZC4uOTM5MmQ4ODA2OSAxMDA2NDQNCj4gLS0tIGEvZG9jcy9kZXZlbC90Y2ctb3BzLnJzdA0K
+PiArKysgYi9kb2NzL2RldmVsL3RjZy1vcHMucnN0DQo+IEBAIC00NzYsOSArNDc2LDkgQEAg
+TWlzYw0KPiAgICAgICAgICB8DQo+ICAgICAgICAgIHwgKHVzaW5nIGFuIGFyaXRobWV0aWMg
+cmlnaHQgc2hpZnQpIG9uIFRDR19UWVBFX0kzMi4NCj4gICANCj4gLSAgICogLSBleHRyYWN0
+Ml9pMzIvaTY0ICpkZXN0KiwgKnQxKiwgKnQyKiwgKnBvcyoNCj4gKyAgICogLSBleHRyYWN0
+MiAqZGVzdCosICp0MSosICp0MiosICpwb3MqDQo+ICAgDQo+IC0gICAgIC0gfCBGb3IgTiA9
+IHszMiw2NH0sIGV4dHJhY3QgYW4gTi1iaXQgcXVhbnRpdHkgZnJvbSB0aGUgY29uY2F0ZW5h
+dGlvbg0KPiArICAgICAtIHwgRm9yIFRDR19UWVBFX0l7Tn0sIGV4dHJhY3QgYW4gTi1iaXQg
+cXVhbnRpdHkgZnJvbSB0aGUgY29uY2F0ZW5hdGlvbg0KPiAgICAgICAgICAgIG9mICp0Mio6
+KnQxKiwgYmVnaW5uaW5nIGF0ICpwb3MqLiBUaGUgdGNnX2dlbl9leHRyYWN0Ml97aTMyLGk2
+NH0gZXhwYW5kZXINCj4gICAgICAgICAgICBhY2NlcHRzIDAgPD0gKnBvcyogPD0gTiBhcyBp
+bnB1dHMuIFRoZSBiYWNrZW5kIGNvZGUgZ2VuZXJhdG9yIHdpbGwNCj4gICAgICAgICAgICBu
+b3Qgc2VlIGVpdGhlciAwIG9yIE4gYXMgaW5wdXRzIGZvciB0aGVzZSBvcGNvZGVzLg0KPiBk
+aWZmIC0tZ2l0IGEvdGFyZ2V0L2kzODYvdGNnL2VtaXQuYy5pbmMgYi90YXJnZXQvaTM4Ni90
+Y2cvZW1pdC5jLmluYw0KPiBpbmRleCAwZmExNjY0YTI0Li5hM2NiYThkNzkxIDEwMDY0NA0K
+PiAtLS0gYS90YXJnZXQvaTM4Ni90Y2cvZW1pdC5jLmluYw0KPiArKysgYi90YXJnZXQvaTM4
+Ni90Y2cvZW1pdC5jLmluYw0KPiBAQCAtMTksMTYgKzE5LDYgQEANCj4gICAgKiBMaWNlbnNl
+IGFsb25nIHdpdGggdGhpcyBsaWJyYXJ5OyBpZiBub3QsIHNlZSA8aHR0cDovL3d3dy5nbnUu
+b3JnL2xpY2Vuc2VzLz4uDQo+ICAgICovDQo+ICAgDQo+IC0vKg0KPiAtICogU29tZXRpbWVz
+LCBrbm93aW5nIHdoYXQgdGhlIGJhY2tlbmQgaGFzIGNhbiBwcm9kdWNlIGJldHRlciBjb2Rl
+Lg0KPiAtICogVGhlIGV4YWN0IG9wY29kZSB0byBjaGVjayBkZXBlbmRzIG9uIDMyLSB2cy4g
+NjQtYml0Lg0KPiAtICovDQo+IC0jaWZkZWYgVEFSR0VUX1g4Nl82NA0KPiAtI2RlZmluZSBJ
+TkRFWF9vcF9leHRyYWN0Ml90bCAgICAgICAgICAgIElOREVYX29wX2V4dHJhY3QyX2k2NA0K
+PiAtI2Vsc2UNCj4gLSNkZWZpbmUgSU5ERVhfb3BfZXh0cmFjdDJfdGwgICAgICAgICAgICBJ
+TkRFWF9vcF9leHRyYWN0Ml9pMzINCj4gLSNlbmRpZg0KPiAtDQo+ICAgI2RlZmluZSBNTVhf
+T0ZGU0VUKHJlZykgICAgICAgICAgICAgICAgICAgICAgICBcDQo+ICAgICAoeyBhc3NlcnQo
+KHJlZykgPj0gMCAmJiAocmVnKSA8PSA3KTsgICAgICAgICBcDQo+ICAgICAgICBvZmZzZXRv
+ZihDUFVYODZTdGF0ZSwgZnByZWdzW3JlZ10ubW14KTsgfSkNCj4gQEAgLTI5OTcsNyArMjk4
+Nyw3IEBAIHN0YXRpYyB2b2lkIGdlbl9QTU9WTVNLQihEaXNhc0NvbnRleHQgKnMsIFg4NkRl
+Y29kZWRJbnNuICpkZWNvZGUpDQo+ICAgICAgIHRjZ19nZW5fbGQ4dV90bChzLT5UMCwgdGNn
+X2Vudiwgb2Zmc2V0b2YoQ1BVWDg2U3RhdGUsIHhtbV90MC5aTU1fQih2ZWNfbGVuIC0gMSkp
+KTsNCj4gICAgICAgd2hpbGUgKHZlY19sZW4gPiA4KSB7DQo+ICAgICAgICAgICB2ZWNfbGVu
+IC09IDg7DQo+IC0gICAgICAgIGlmICh0Y2dfb3Bfc3VwcG9ydGVkKElOREVYX29wX2V4dHJh
+Y3QyX3RsLCBUQ0dfVFlQRV9UTCwgMCkpIHsNCj4gKyAgICAgICAgaWYgKHRjZ19vcF9zdXBw
+b3J0ZWQoSU5ERVhfb3BfZXh0cmFjdDIsIFRDR19UWVBFX1RMLCAwKSkgew0KPiAgICAgICAg
+ICAgICAgIC8qDQo+ICAgICAgICAgICAgICAgICogTG9hZCB0aGUgbmV4dCBieXRlIG9mIHRo
+ZSByZXN1bHQgaW50byB0aGUgaGlnaCBieXRlIG9mIFQuDQo+ICAgICAgICAgICAgICAgICog
+VENHIGRvZXMgYSBzaW1pbGFyIGV4cGFuc2lvbiBvZiBkZXBvc2l0IHRvIHNobCtleHRyYWN0
+MjsgYnkNCg0KUmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZp
+ZXJAbGluYXJvLm9yZz4NCg0K
 
