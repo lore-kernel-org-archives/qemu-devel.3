@@ -4,159 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61ABCC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5F4C369BA
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4jFz-0007JS-FX; Tue, 15 Apr 2025 12:35:31 -0400
+	id 1u4jJk-0000Ic-TA; Tue, 15 Apr 2025 12:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbates@raithlin.com>)
- id 1u4jFl-0007HF-PY
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:35:21 -0400
-Received: from mail-canadaeastazon11020087.outbound.protection.outlook.com
- ([52.101.191.87] helo=YQZPR01CU011.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbates@raithlin.com>)
- id 1u4jFk-00083b-4Y
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:35:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IUpwxnnZnxRxOMiC38pi4IXtVyzGqiGg9wt/17UoNP7bXDSqZzYddQUbf9vu8teQ1u8Vyq2lzglkNT+u54rTWgx/tYTxbv9ov913zBepC6527SbA1bCZnBsTSGXOdPJMZD/jWmWQg/fkybkocvXRJ9U3wCsPVnibRFtJb1CMfmdprdIzJNenIwCOI4BhjkaqrgL2880C0MuZoswgcYDvLQpZNvbbZ2tg8MRt+OqV4pwIcvCDmxnR3veX1vj/OV+OuOfeGMtSAUDmOUG0vdc3+NTKjBavTcA0dVV5qJWsaQk4ZETMRvjSE3zjUvkgKe/QjdLSJXoaT0VreH5Tdk0F4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=evPcCQHRGYQK4Keg3AF36uFbvO83tIKos/Mhf23SQsA=;
- b=HS0fZtYe7rAkzy6VR/akP9fPUYR9TI41SM/hGS1kF8zhOYcyHKUPHQhrKrSov0jHNdCRXWQ5EErVS74+/bwPdFHOluQni8g3V4T+ZE5Sw/ynLfgnUj5rXOE88kz6GOAmd/48wOxCsEB/ys6dRlx8cAD4ZcWIoR5VPibH+VVs0QGNXQnT1sJpVyz1zBNa7HblRC9Zj5nbzO7AtuiQ4CyDdJZXrLYwRpzyLXU2ll/FKECEGWR3+1e2FJXTN03wuQukmuZPoj6qViNVnpHsM1n6muAioJZBYqfzasgFFEMLgivUA25nGY7xna7Au3dYerLUlI23ioj/HngWcV41renmhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=raithlin.com; dmarc=pass action=none header.from=raithlin.com;
- dkim=pass header.d=raithlin.com; arc=none
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1u4jJZ-0000H9-Vi
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:39:15 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1u4jJU-0008OZ-12
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:39:12 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5e6ff035e9aso10697926a12.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 09:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=raithlin.onmicrosoft.com; s=selector2-raithlin-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=evPcCQHRGYQK4Keg3AF36uFbvO83tIKos/Mhf23SQsA=;
- b=o1FkFQZQE9gshfxGe1kTquHS0jxCsCgv61I+UVAdYtN3CQCAeCKasPEpG3dRtMPOfBs1uca5GZMkso99OE7G0YeuSNtGGStogGo1ZD8wRC99Ras1+zqce/5Wr8IAYnVeVsjfk/RsHdPKkg2VW05Nv/LBswk7qg7z1KUGGpTlBXg=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=raithlin.com;
-Received: from TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b08::68c)
- by YT1PR01MB8891.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:ca::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.34; Tue, 15 Apr
- 2025 16:30:01 +0000
-Received: from TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::2671:57c7:e28d:98cd]) by TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::2671:57c7:e28d:98cd%8]) with mapi id 15.20.8655.021; Tue, 15 Apr 2025
- 16:30:01 +0000
-Date: Tue, 15 Apr 2025 10:29:56 -0600
-From: Stephen Bates <sbates@raithlin.com>
-To: qemu-devel@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com
-Cc: sbates@raithlin.com
-Subject: [PATCH] pci-testdev.c: Add membar-backed option for backing membar
-Message-ID: <Z_6JhDtn5PlaDgB_@MKMSTEBATES01.amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-ClientProxiedBy: PH0PR07CA0089.namprd07.prod.outlook.com
- (2603:10b6:510:f::34) To TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b08::68c)
+ d=sifive.com; s=google; t=1744735145; x=1745339945; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8d8YrrFlUlJqcgR/DRRyk7FPdwEAP2C2mIktWa8UaM0=;
+ b=SnX+hS6uyZ/FtPHwuJjCmIwincRY4H0YZXkSUvnkiX6NBBI1Jm7wJ7jtMaSNCTnjc3
+ tip0R2pdieLszVfPikSAMiPHieQM05lbC9oQdN3h8F8IDCRaY0Iwn5rBPGWIbSrS7ELp
+ jeOHj8RT/+Zl0jjpuiFi2pH+NP7nVnUCFPE6fwOacGITuc5FDUrTmAJE9YtOsUHHV5Qt
+ KCf5ShTtiky6RUzwNjuEWzhNflee85KoQAo0tNQ9Juqm/pczUBztNFtKvYwURYEMTG0C
+ FMPxxOCbiRopxvLX254fA9eITtgeQkMp29NtZs06Nfxos9cTvV13EtS6oYornR3IEKrK
+ AP4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744735145; x=1745339945;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8d8YrrFlUlJqcgR/DRRyk7FPdwEAP2C2mIktWa8UaM0=;
+ b=NsKOGo9YBCuT6QtOY1GOL1kKJIJH6peJGVipeFcBiDhG65JDTwc05iSVKezlv1IO6t
+ tqDim6y+xzRSxkXbsL23qWC2B7bEyzkl3km34UO+Azur0g2xgXJQl/dAoT4q9VuPzw5t
+ WRaIo0G/BurZyy2dIo+frzYukWUMa0fNqMNTHItB5z/H2ByVezyfxb97spdqHypfVt5s
+ iaetULALYDinTzL6TcCfK4Mqup5L0Kg9GCGd921UJnQkdBY/M75ulLkJ+goq8hQ03oSn
+ c3QB2HWogpz6I6bQXvHs3oev1hLxNWAuaZ4c4UHbDvlzqAnBzslbfqK88lzHbuH1+Mkg
+ xfoA==
+X-Gm-Message-State: AOJu0YwUYrypyNLaIH6rF0l155now0QjWknnq5EgJXXWEmsvb/z3KyZg
+ T3UYEPYtLzhLMvfbB6ugFOiL17edsC2/e5AOR6k6TbjkwumvywRYxWHc1vYEQM4C/0iVux0aJeU
+ sGPyVDQzvSFOM/jf/m4z+ZNZGNN2lQOFCGN9qVw==
+X-Gm-Gg: ASbGncteui+3c7o3y4rVNMrkOZ3bLIoBTKO6XDPE4S/zYBwtzhOdL/FyYtHmmbgPYZQ
+ evJv6rSWUeVh1VZ9nXnB8FHBO/0s+eN8ScxdWKEeAWeFs2FguIwwOAYdYEZ9YJB4wMIGuQXHMJe
+ 5C5HIjOsUSBrIsUSehVJechqjA
+X-Google-Smtp-Source: AGHT+IFRKtGZCjPosM7GBfhklF+gabkiYof1vyPKmOkYlTDWCuNNnHPEFIfgRIW1Y+5htdd0kaEFqkl1d1jy2H2sRGA=
+X-Received: by 2002:a05:6402:42c5:b0:5ed:2a1b:fd7d with SMTP id
+ 4fb4d7f45d1cf-5f36fee6a4amr14305561a12.19.1744735144888; Tue, 15 Apr 2025
+ 09:39:04 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TO1PPFC79171DBA:EE_|YT1PR01MB8891:EE_
-X-MS-Office365-Filtering-Correlation-Id: 85e634f0-e6c0-4d51-57fe-08dd7c3ac51e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aFpFR2VVTUVoY21aWWM4Umd1Nkl2dFhLTnlGbjlkdU5vQmd1UVRJbm4yS25J?=
- =?utf-8?B?V2I3SjFleUZkS0pWb1V2cW5DalRoOTM2V2EyaWlwb1Z2bHpiWSt2NnVUTXpK?=
- =?utf-8?B?Q3JZekVOZ0lVQlo3WXIzZElKd2NpakxxVml5YnE4UXFoaU13ZEEwMWVzM3Fr?=
- =?utf-8?B?YnBNUjlyOXJSbkhObWd0bGk3a1gzQzdSY25jYXVmMUpZWEU5eEpGT3VHTHE5?=
- =?utf-8?B?TmdaNW5wbnFhdSs1dG4xUnBZaDVadVQ1aXp3VnFZaFJkT2pkdGpWL0ZWeFBD?=
- =?utf-8?B?Q3Z3S3djR3NUdk4wZkZSMG96Slo5N28rYzZaMHcrczRtZFdZaFRUdEZ0Yy9J?=
- =?utf-8?B?ckxQRkNKVEJJOXlVZDZGZmVjYjhSUnFEYWtaQndQdW9sYUZ6T21UcFhSZzBz?=
- =?utf-8?B?QWhzYjhkMkJKczhMbFliOFZXWlEzN20vRFVQejRpZkhqajRRNkozOC8rQnM1?=
- =?utf-8?B?d05pOFgrYVBPK2FRc0x4TS9ieCtyOHB3cEJLaFB1YlQ5TStQSDhyVFZ4ZE4x?=
- =?utf-8?B?aUZPakJsYnhrSTlDcVNiR1J5ZU5EZVZpZ242ZC9UTUpPd1NOeEZlTzNBZ3Rw?=
- =?utf-8?B?RHBoclprRlBIYTFqUkZTWmNudjAxeFlMNUFTV3ZQUVRqclVFWUFyMjlPT3Vx?=
- =?utf-8?B?Mm56Z2JkaTZCajBkRGVWeDRMeE42VFdTRHZsdEZpRG53V2RWSWNMSTNqN1NP?=
- =?utf-8?B?TTB4d0JOdi85WklUSm9kZ0htMGE2R2N3Z3JRdHplc1R5MnBaYmZEdmlVT3pJ?=
- =?utf-8?B?S29TNndHcW5MdlhudFZPQXVQSDRiVXFhWEQ2ZSt5eXpuQXg4S2l0eHNoNkZ5?=
- =?utf-8?B?ZTdqT1ByamZRamROcTZtcDRObmE4blZRMTFYb0ZUYUxKQVliMDNickZkZ0Rv?=
- =?utf-8?B?cmxNYWNqZUFlU2VkVWpZSUhqUEpkWExXRWxZOHBZSU0yVFNUMkhOaFk5V3dK?=
- =?utf-8?B?eDJXMnBMcStRQTJKaWsvN25CZzBQV2dYTlVLNGJuV1BaWDNxU3VZWEJmVEY2?=
- =?utf-8?B?M1NZbS8xdDNrMXo5V0owK0tydU44bjR0aXQ1UUNpUVdhM04yblNMYU1qdFpj?=
- =?utf-8?B?cTJUUTRzcEV3SGxnQmh0cStWcFlYblYrZXp1WE5XM216L0tLZlpEQ0dnZmVN?=
- =?utf-8?B?QWpNZkpCVS9xbkZNaG5oZG5yTlp6VjR6M09BV1NLcmVIUnRKNzJmMzdGZzJx?=
- =?utf-8?B?Nlh0b2xjSVlkZmZtM0dWL2NKQ1BNTnZZeHlzWSs1NWtiTEF0Vjl6NnVQRXkw?=
- =?utf-8?B?bjEyOERKSGtyb1B6WWNNaHU4dEpBOG4yWkVST0trd2tJOHRXdlBsRldRM2pL?=
- =?utf-8?B?Z0s1OVljbnN6K0E0bXRndjlvNGhkMFZYYnpRSnltNWo0VEJ3ZjE0Y0lwK1Bq?=
- =?utf-8?B?QlQ2REc4clJTc1Y0c0FNWUtZZ0hIc1FHZWVkdkJRbWd0bkxDMjcvZXU0cGpK?=
- =?utf-8?B?R1dWbVUvbTVhNzdrTnlULzV5RUFjTnMzMmNiK3JmWWdBTVRNRllJa2lIUXFK?=
- =?utf-8?B?bUhJam5nR1gvNzQzNHpYN2JXWFc5OWNTZ1lhblZ0UE95WXFRTEJMek1DU28y?=
- =?utf-8?B?aW45U1BNRlR4M1YwRzlyUHdKb0VTQUdIcFY1Mk0wUE1QRVNkbytVcjhDd2py?=
- =?utf-8?B?NTVVa05vNTRhbHJ1S3dUU1k3eUZTWmNZazlORkh2Qk1SbmFvZ3N2d01nUk9l?=
- =?utf-8?B?R0NENXg2UGIrc2J5Z1ExSkE3NDQ0S1pHODBEZDVJcjRXNnNNVTU1dGRncFJK?=
- =?utf-8?B?aDZnNWRjdmFrNk1Bc1dEZWZtaUQyQTRZR21CdWZzNUx6THdVYzA5WWdCUHJW?=
- =?utf-8?B?RGtPZ2xPbWd0cUpvTEZWLzZveFV6R0pwcDFUank0OVdqUklVZ1hGRStRdUg4?=
- =?utf-8?B?ZjlMaGFyU1FjYjVoZzgvdGtiRWVPT3Z6cWRuN1R2Zk4xbmkxdnFjbmpNVXlU?=
- =?utf-8?Q?c2yAOcr+ilI=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RFY0OEw4VVVMa1NDVUxNYXozczVueGN4cDQzWjg5ZzdFNFZIQmFLYXFpa1FM?=
- =?utf-8?B?R1VzSlh3dEFZR3lxK1lQRzJ2QWJZdjZ6OVZCak42K3JBSTlBSkoyNE9GSUt5?=
- =?utf-8?B?dFBNNXJBdjhOMjkvUERhcit5R2p5Y1QvNnN4RlcrWUcwblRSUURXYWtaZ3Zk?=
- =?utf-8?B?L1NKTEQ5SXJtczNtSFRManZuTkNIT0Fxdmp1VFd5c0Z1NHkyZHN3MDRZdHUr?=
- =?utf-8?B?MDFLU2JxZHNqeFRXT3FZTXhHMlI4RmtCMzVGQkNyTXQ2a3V2Rk1XK3dyeHZl?=
- =?utf-8?B?dlZpelpMeStMc0NPbVVpYXRoSWVZSzhIOFN1TEZISE9RTjlTR3diMlZKOTRr?=
- =?utf-8?B?cHg1UzJJTVNLL0hwbllWRHBLdXlNNkt4T0JGUDRWOUNxYXV1NmYxdDNqd1JL?=
- =?utf-8?B?U0Q0eWwvQWFsNnF3RWptS3QvYnBNcFBEZjQ0N1RSM0xWMmJiNXE2Z2F0T2h1?=
- =?utf-8?B?dkM2ajYvZE1DZ1dtNjZjUFdhWXF0dlMyaXp0OHcxVlpJOTNUZmVNTFVMcWw3?=
- =?utf-8?B?R1VHRTFBb0t3YWIrVm1PYWJ4U085dVF2REFkcGlHcU1jbjJBUEs0bFBoQlZv?=
- =?utf-8?B?NGcxWjYvR3lGNG9JNTZ3NXVqYXFPMzVGREtUcmRIcVVReDlXdUplWElZUWZ1?=
- =?utf-8?B?WEk0a2RxbWNyR2hCcTN5bGFpRDZ5VXB0N3VMQVhCenZ1QXlBbmRYVVh1Y0l2?=
- =?utf-8?B?dzFDRG5pbVpUaEpmcW4vTVVBZ0JrcDdJSUdab2Uwamx2TittV0F3SGFtaGdn?=
- =?utf-8?B?NjBoZVpnUStkU3MxMlpyMUN1WEdtVVpEc1BvTFF3V1g5czJ0eHhlN0tSZTRi?=
- =?utf-8?B?YVVRWi9GZlVtTTR3SWJxT0I3akphdy9RWGxNT3NFTElDLzExK3JzNHVyd2RE?=
- =?utf-8?B?NzJPY3k1eU01V3NuMjlzMyticlVtditSTEY5ejdseCtOS0xJWE1ybjlWdXBX?=
- =?utf-8?B?Q0RWb2VCL3ZvelN2MXpvMmJINkszRXA1blh4citWWEJlNjluQ0VTYjJuQmQ4?=
- =?utf-8?B?V2E3ZXM3Z21SRDNWMlE4Njd0ZWlpUjZCZmtybGloYWE3Nzg4eWlZaG9mM0d1?=
- =?utf-8?B?bitNdWxNV3cyUE83MENjeDNSRkQwamNMMUVVd1BoRUdCbmROSC8xMVYrTllE?=
- =?utf-8?B?T3YxZG1hUHNXbWF1bWFaaHJUZEpzd0RZVExZRzVrTHJSTDVrcHlTKzR3blQy?=
- =?utf-8?B?aTNBdFlDbFQ3TWlFaHVWbWE3LzJYTWcwU2lqZ0N4dmgzeld5dXk5Tmo1b2tI?=
- =?utf-8?B?SlBtUnlhN21aajJYVEw1Rk9FWUw0bzNpWFVtTlZxQlQrZTcyNk9sWEpXR1F5?=
- =?utf-8?B?SkZka0ltdmtLSG0xZTQ4eExrd0s5cGE1Ymt3OUMyNk9hR1Y1NzdJRDd1Vzk1?=
- =?utf-8?B?Y1hDQUxzMS9CWndIemozNzBkRTNTK2RsWEVTV284WVl1b3lsNlRYdGd6Y2Zu?=
- =?utf-8?B?Qm5uejFWNDBZWEJSalVVcElBZFZSLzhCbnZINlVXbklpVno4KzNVMWVzcFFz?=
- =?utf-8?B?NFVab2lBR0tZWThnQVB0dERUbnNDdHBqaXJXSjNyVFNmRUozYzBGN2l1dzdh?=
- =?utf-8?B?eUc2VGZCTjg1c3Z5bzhhdW1YeFk1c09KZXdsWkNzTkVqQmpQSXZKZ0dNdDJi?=
- =?utf-8?B?aWVJcmxGaHR4QVEyQS9yVll6blZoQy85V0xubGFKb1pmNjU3THJ1QlJObnBj?=
- =?utf-8?B?Q3ZhNG9aOVZrb2VRNzBzZTl1dTRwQjdEVzMvRXNZcmZqMGNHNm9tNGZseExN?=
- =?utf-8?B?a0JlOEI1T3JsZkZ4N3RlZzJtYjRNTHVjTmVvTnM2dXVoVG5HbzNkUlJFQ29u?=
- =?utf-8?B?ZjhMQlIwN1UvTUpnT3VnRnFZMm9laUNmZ3Qxa3k0UUNuUlJDaDVJWWswZmpv?=
- =?utf-8?B?Y0FKYlhTYUVFRHpyTGYzUzZBR0lHd1VLV0Vic1BObFVOaXVlNEpBeFBmUFpx?=
- =?utf-8?B?YkR3eThiUmpwbkZpS1djK2g1ZEozZVE5ZmVDb2hTRCtPdjM1dmdXclNoc1Fs?=
- =?utf-8?B?OVdCTXJhb2lOdFB4TE93c2tNbW9DMUFrVWs3dm1CSjBqVnl4VnU4Y0szcit0?=
- =?utf-8?B?Y1RCdEdJK0Vxbm1MTm5oMXFlWGxidlJaajlyUjkrL2JxN1JZSGdmZnR6elpq?=
- =?utf-8?Q?n0ACNm9cwdzbZKsf8gPR+PmH/?=
-X-OriginatorOrg: raithlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85e634f0-e6c0-4d51-57fe-08dd7c3ac51e
-X-MS-Exchange-CrossTenant-AuthSource: TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2025 16:30:01.5479 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 18519031-7ff4-4cbb-bbcb-c3252d330f4b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1BQr/7yEQvJxWUAevjHh8jXz9nZ4P/swYcDfgTebG7a/2KS9ZIBLV/RaGg/dC0bm5/LBN0Zu2d//47JOe3FpiA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT1PR01MB8891
-Received-SPF: pass client-ip=52.101.191.87; envelope-from=sbates@raithlin.com;
- helo=YQZPR01CU011.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250415081231.21186-1-jim.shu@sifive.com>
+ <20250415081231.21186-2-jim.shu@sifive.com>
+ <2dd5952a93aca15bbae4b5624b680637@linux.ibm.com>
+In-Reply-To: <2dd5952a93aca15bbae4b5624b680637@linux.ibm.com>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Wed, 16 Apr 2025 00:38:52 +0800
+X-Gm-Features: ATxdqUE1bFY0OgeEVfSP6kxoXn-QXO1lP_eY0dZX40YG8IJXUxt68MW8ggAStAA
+Message-ID: <CALw707oxFXoZbBW73GKuJVa2SuH0RSiUyz6a2XfPrOWZM5jckQ@mail.gmail.com>
+Subject: Re: [PATCH 01/17] accel/tcg: Store section pointer in CPUTLBEntryFull
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Michael Rolnik <mrolnik@gmail.com>, 
+ Helge Deller <deller@gmx.de>, Song Gao <gaosong@loongson.cn>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Stafford Horne <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Thomas Huth <thuth@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-ppc@nongnu.org, 
+ qemu-s390x@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,65 +119,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pci-testdev device allows for an optional BAR. We have
-historically used this without backing to test that systems and OSes
-can accomodate large PCI BARs. However to help test p2pdma operations
-it is helpful to add an option to back this BAR with host memory.
+Hi Ilya,
 
-We add a membar-backed boolean parameter and when set to true or on we
-do a host RAM backing. The default is false which ensures backward
-compatability.
+My patch removes the use of `iotlb_to_section()`, so the section_index
+in the last 12-bit of `xlat_section` is no longer used. (Please
+correct me if I'm wrong!)
+Based on the comment of `phys_section_add()` and the commit log [1], I
+believe we can remove the assertion and support more than 4k sections.
 
-Signed-off-by: Stephen Bates <sbates@raithlin.com>
----
- hw/misc/pci-testdev.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+I think my commit should also remove the `iotlb_to_section()` function
+and rename `xlat_section` to `xlat`.
+I will fix it in the next patch.
 
-diff --git a/hw/misc/pci-testdev.c b/hw/misc/pci-testdev.c
-index f6718a7c37..da9126a8a7 100644
---- a/hw/misc/pci-testdev.c
-+++ b/hw/misc/pci-testdev.c
-@@ -90,6 +90,7 @@ struct PCITestDevState {
-     int current;
- 
-     uint64_t membar_size;
-+    bool membar_backed;
-     MemoryRegion membar;
- };
- 
-@@ -258,8 +259,14 @@ static void pci_testdev_realize(PCIDevice *pci_dev, Error **errp)
-     pci_register_bar(pci_dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &d->portio);
- 
-     if (d->membar_size) {
--        memory_region_init(&d->membar, OBJECT(d), "pci-testdev-membar",
--                           d->membar_size);
-+        if (d->membar_backed)
-+            memory_region_init_ram(&d->membar, OBJECT(d),
-+                                   "pci-testdev-membar-backed",
-+                                   d->membar_size, NULL);
-+        else
-+            memory_region_init(&d->membar, OBJECT(d),
-+                               "pci-testdev-membar",
-+                               d->membar_size);
-         pci_register_bar(pci_dev, 2,
-                          PCI_BASE_ADDRESS_SPACE_MEMORY |
-                          PCI_BASE_ADDRESS_MEM_PREFETCH |
-@@ -321,6 +328,8 @@ static void qdev_pci_testdev_reset(DeviceState *dev)
- 
- static const Property pci_testdev_properties[] = {
-     DEFINE_PROP_SIZE("membar", PCITestDevState, membar_size, 0),
-+    DEFINE_PROP_BOOL("membar-backed", PCITestDevState, membar_backed, false),
-+    DEFINE_PROP_END_OF_LIST(),
- };
- 
- static void pci_testdev_class_init(ObjectClass *klass, void *data)
--- 
-2.43.0
+[1] https://github.com/qemu/qemu/commit/68f3f65b09a1ce8c82fac17911ffc3bb603=
+1ebe4
+
+Jim
 
 
--- 
 
-Cheers
 
-Stephen Bates, PhD.
+
+On Tue, Apr 15, 2025 at 5:13=E2=80=AFPM Ilya Leoshkevich <iii@linux.ibm.com=
+> wrote:
+>
+> On 2025-04-15 10:12, Jim Shu wrote:
+> > 'CPUTLBEntryFull.xlat_section' stores section_index in last 12 bits to
+> > find the correct section when CPU access the IO region over the IOTLB
+> > (iotlb_to_section()).
+> >
+> > However, section_index is only unique inside single AddressSpace. If
+> > address space translation is over IOMMUMemoryRegion, it could return
+> > section from other AddressSpace. 'iotlb_to_section()' API only finds
+> > the
+> > sections from CPU's AddressSpace so that it couldn't find section in
+> > other AddressSpace. Thus, using 'iotlb_to_section()' API will find the
+> > wrong section and QEMU will have wrong load/store access.
+> >
+> > To fix this bug, store complete MemoryRegionSection pointer in
+> > CPUTLBEntryFull instead of section_index.
+> >
+> > This bug occurs only when
+> > (1) IOMMUMemoryRegion is in the path of CPU access.
+> > (2) IOMMUMemoryRegion returns different target_as and the section is in
+> > the IO region.
+> >
+> > Common IOMMU devices don't have this issue since they are only in the
+> > path of DMA access. Currently, the bug only occurs when ARM MPC device
+> > (hw/misc/tz-mpc.c) returns 'blocked_io_as' to emulate blocked access
+> > handling. Upcoming RISC-V wgChecker device is also affected by this
+> > bug.
+> >
+> > Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> > ---
+> >  accel/tcg/cputlb.c    | 19 +++++++++----------
+> >  include/hw/core/cpu.h |  3 +++
+> >  2 files changed, 12 insertions(+), 10 deletions(-)
+>
+> Does this mean that there can be more than 4k sections now and the
+> assertion in phys_section_add() can be removed?
 
