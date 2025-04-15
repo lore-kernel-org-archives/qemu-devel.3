@@ -4,58 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E35C369BA
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 15:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70884C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:00:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4iM2-00023A-OL; Tue, 15 Apr 2025 11:37:43 -0400
+	id 1u4ihS-0007tr-HL; Tue, 15 Apr 2025 11:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1u4iLn-00021F-KA
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 11:37:28 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u4ihJ-0007l6-35; Tue, 15 Apr 2025 11:59:41 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1u4iLd-0006rt-0q
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 11:37:27 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZcSpd57h8z6K9By;
- Tue, 15 Apr 2025 23:32:57 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 561B1140144;
- Tue, 15 Apr 2025 23:37:09 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 15 Apr
- 2025 17:37:08 +0200
-Date: Tue, 15 Apr 2025 16:37:07 +0100
-To: Fan Ni <nifan.cxl@gmail.com>
-CC: Gregory Price <gourry@gourry.net>, <qemu-devel@nongnu.org>,
- <linux-cxl@vger.kernel.org>, <a.manzanares@samsung.com>, <dave@stgolabs.net>, 
- <nmtadam.samsung@gmail.com>, <anisa.su887@gmail.com>, Markus Armbruster
- <armbru@redhat.com>
-Subject: Re: [RFC 0/3] Qemu FM emulation
-Message-ID: <20250415163707.00005091@huawei.com>
-In-Reply-To: <Z_0tRwHNXD8idZl-@debian>
-References: <20250408043051.430340-1-nifan.cxl@gmail.com>
- <Z_U69HlC_aKLghwL@gourry-fedora-PF4VCD3F> <Z_0tRwHNXD8idZl-@debian>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u4ih8-0001tk-D6; Tue, 15 Apr 2025 11:59:35 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:921:0:640:f23d:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 6C5D761C04;
+ Tue, 15 Apr 2025 18:59:16 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:16e::1:36] (unknown
+ [2a02:6bf:8080:16e::1:36])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id FxJGQP0FUmI0-onwCjIOL; Tue, 15 Apr 2025 18:59:15 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1744732755;
+ bh=wK/sW/tZhrT5vnIpdyAKdfStaxHOxPKFFqCDEN3wXO0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Jpcm7Xbb+yrg7wbbyVUKR/q9PO4T3KY7Zlv8/cdhq8BO1xunPKMcLUHr8QIPadtiJ
+ 5EAsdETPFBB21HX1TlUk6EdCBpifIOr+nkZr6yfkd9TPz2MJtUZMo3LS//oT6A8x92
+ VquSqV6r5TCyqWqUSP0rEu/rqLNcHE8C19aMSa9w=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c3044546-b921-4cbc-959d-4f23e0e3c49e@yandex-team.ru>
+Date: Tue, 15 Apr 2025 18:59:15 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] mirror: Skip writing zeroes when target is already
+ zero
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:Block Jobs"
+ <qemu-block@nongnu.org>
+References: <20250411010732.358817-8-eblake@redhat.com>
+ <20250411010732.358817-11-eblake@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250411010732.358817-11-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,60 +75,276 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Apr 2025 08:44:07 -0700
-Fan Ni <nifan.cxl@gmail.com> wrote:
-
-> On Tue, Apr 08, 2025 at 11:04:20AM -0400, Gregory Price wrote:
-> > On Mon, Apr 07, 2025 at 09:20:27PM -0700, nifan.cxl@gmail.com wrote:  
-> > > From: Fan Ni <fan.ni@samsung.com>
-> > > 
-> > > The RFC provides a way for FM emulation in Qemu. The goal is to provide
-> > > a context where we can have more FM emulation discussions and share solutions
-> > > for a reasonable FM implementation in Qemu.
-> > >  
-> > ... snip ...
-> > 
-> > Took a browse of the series, and I like this method.  It seems simple
-> > and straight-forward, avoids any complex networking between the vms and
-> > gives us what we want.
-> > 
-> > I'll wait for Jonathan's commentary, but solid prototype (bn_n)b
-> > 
-> > ~Gregory  
+On 11.04.25 04:04, Eric Blake wrote:
+> When mirroring, the goal is to ensure that the destination reads the
+> same as the source; this goal is met whether the destination is sparse
+> or fully-allocated.  However, if the destination cannot efficiently
+> write zeroes, then any time the mirror operation wants to copy zeroes
+> from the source to the destination (either during the background over
+> sparse regions when doing a full mirror, or in the foreground when the
+> guest actively writes zeroes), we were causing the destination to
+> fully allocate that portion of the disk, even if it already read as
+> zeroes.
 > 
-> Hi Jonathan,
+> We could just teach mirror_co_zero() to do a block_status() probe of
+> the destination, and skip the zeroes if the destination already reads
+> as zero, but we know from past experience that block_status() calls
+> are not always cheap (tmpfs, anyone?).  So this patch takes a slightly
+> different approach: any time we have to transfer the full image,
+> mirror_dirty_init() is _already_ doing a pre-zero pass over the entire
+> destination.  Therefore, if we track which clusters of the destination
+> are zero at any given moment, we don't have to do a block_status()
+> call on the destination, but can instead just refer to the zero bitmap
+> associated with the job.
 > 
-> Any feedback for this RFC?
-
-Immediate question is whether anything similar is done in other use cases
-in QEMU?   There are vaguely similar things that work via a socket but
-I'm not sure the mix of a shared buffer and a qmp based doorbell is done
-elsewhere.  There is use of shared memory for inter VM comms but that uses
-a socket for it's doorbell / interrupt path, not qmp.
-https://www.qemu.org/docs/master/specs/ivshmem-spec.html
-
-So without looking in that much detail yet, I'm not yet convinced this is
-preferable to a socket over which we can send the mctp packets.
-
-In general we need to also solve how to upstream the mctp support in
-qemu or this is adding yet more stuff to my cxl staging tree.
-
-+CC Markus for QMP part.
-
-https://lore.kernel.org/all/20250408043051.430340-1-nifan.cxl@gmail.com/
-is start of thread.
-https://lore.kernel.org/all/20250408043051.430340-3-nifan.cxl@gmail.com/
-the qmp patch adding what is more or less a doorbell pinged by a device
-on a different  QEMU instance.
-
-Jonathan
-
+> With this patch, if I externally create a raw sparse destination file
+> ('truncate --size=$N dst.raw'), connect it with QMP 'blockdev-add'
+> while leaving it at the default "discard":"ignore", then run QMP
+> 'blockdev-mirror' with "sync":"full", the destination remains sparse
+> rather than fully allocated.
 > 
-> Fan
+> However, a raw destination file created with 'blockdev-create' still
+> gets fully allocated, because more work is needed in file-posix to
+> still identify reads-as-zeroes even when the first 4k has to be
+> allocated to make alignment probing work.
+> 
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>   block/mirror.c | 94 +++++++++++++++++++++++++++++++++++++++++---------
+>   1 file changed, 78 insertions(+), 16 deletions(-)
+> 
+> diff --git a/block/mirror.c b/block/mirror.c
+> index 2e1e14c8e7e..98da5a6dc27 100644
+> --- a/block/mirror.c
+> +++ b/block/mirror.c
+> @@ -73,6 +73,7 @@ typedef struct MirrorBlockJob {
+>       size_t buf_size;
+>       int64_t bdev_length;
+>       unsigned long *cow_bitmap;
+> +    unsigned long *zero_bitmap;
+>       BdrvDirtyBitmap *dirty_bitmap;
+>       BdrvDirtyBitmapIter *dbi;
+>       uint8_t *buf;
+> @@ -408,15 +409,32 @@ static void coroutine_fn mirror_co_read(void *opaque)
+>   static void coroutine_fn jk(void *opaque)
+>   {
+>       MirrorOp *op = opaque;
+> -    int ret;
+> +    bool write_needed = true;
+> +    int ret = 0;
+> 
+>       op->s->in_flight++;
+>       op->s->bytes_in_flight += op->bytes;
+>       *op->bytes_handled = op->bytes;
+>       op->is_in_flight = true;
+> 
+> -    ret = blk_co_pwrite_zeroes(op->s->target, op->offset, op->bytes,
+> -                               op->s->unmap ? BDRV_REQ_MAY_UNMAP : 0);
+> +    if (op->s->zero_bitmap) {
+> +        unsigned long last = (op->offset + op->bytes) / op->s->granularity;
+
+Maybe, call it "end", not "last, as it's not last element of the range, but first after the range.
+
+Also, seems we need still do DIV_ROUND_UP, for ..
+
+> +        assert(QEMU_IS_ALIGNED(op->offset, op->s->granularity));
+> +        assert(QEMU_IS_ALIGNED(op->bytes, op->s->granularity) ||
+> +               op->offset + op->bytes == op->s->bdev_length);
+
+.. ^ this case, when bytes is unaligned to granularity but aligned to bdev_length.
+
+> +        if (find_next_zero_bit(op->s->zero_bitmap, last,
+> +                               op->offset / op->s->granularity) == last) {
+> +            write_needed = false;
+> +        }
+> +    }
+> +    if (write_needed) {
+> +        ret = blk_co_pwrite_zeroes(op->s->target, op->offset, op->bytes,
+> +                                   op->s->unmap ? BDRV_REQ_MAY_UNMAP : 0);
+> +    }
+> +    if (ret >= 0 && op->s->zero_bitmap) {
+> +        bitmap_set(op->s->zero_bitmap, op->offset / op->s->granularity,
+> +                   op->bytes / op->s->granularity);
+
+and here we want to align up bytes, for the corner case
+
+> +    }
+
+Also, I'm not sure, what guarantees we have in case of write-zeroes failure. Should we clear the bitmap in this case, like we do MIRROR_METHOD_COPY and MIRROR_METHOD_DISCARD below
+
+>       mirror_write_complete(op, ret);
+>   }
+> 
+> @@ -441,6 +459,9 @@ static unsigned mirror_perform(MirrorBlockJob *s, int64_t offset,
+>       Coroutine *co;
+>       int64_t bytes_handled = -1;
+> 
+> +    assert(QEMU_IS_ALIGNED(offset, s->granularity));
+> +    assert(QEMU_IS_ALIGNED(bytes, s->granularity) ||
+> +           offset + bytes == s->bdev_length);
+>       op = g_new(MirrorOp, 1);
+>       *op = (MirrorOp){
+>           .s              = s,
+> @@ -452,12 +473,21 @@ static unsigned mirror_perform(MirrorBlockJob *s, int64_t offset,
+> 
+>       switch (mirror_method) {
+>       case MIRROR_METHOD_COPY:
+> +        if (s->zero_bitmap) {
+> +            bitmap_clear(s->zero_bitmap, offset / s->granularity,
+> +                         bytes / s->granularity);
+
+again, align up for corner case
+
+> +        }
+>           co = qemu_coroutine_create(mirror_co_read, op);
+>           break;
+>       case MIRROR_METHOD_ZERO:
+> +        /* s->zero_bitmap handled in mirror_co_zero */
+>           co = qemu_coroutine_create(mirror_co_zero, op);
+>           break;
+>       case MIRROR_METHOD_DISCARD:
+> +        if (s->zero_bitmap) {
+> +            bitmap_clear(s->zero_bitmap, offset / s->granularity,
+> +                         bytes / s->granularity);
+> +        }
+>           co = qemu_coroutine_create(mirror_co_discard, op);
+>           break;
+>       default:
+> @@ -851,10 +881,17 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+>       }
+>       bdrv_graph_co_rdunlock();
+> 
+> -    if (s->zero_target && ret <= 0) {
+> +    if (s->zero_target) {
+> +        int64_t length;
+> +
+>           if (ret < 0) {
+>               return ret;
+>           }
+> +        length = DIV_ROUND_UP(s->bdev_length, s->granularity);
+> +        s->zero_bitmap = bitmap_new(length);
+> +        if (ret > 0) {
+> +            bitmap_set(s->zero_bitmap, 0, length);
+
+hmm, we should not continue zeroing target in case of ret > 0.
+
+I didn't like that we set ret in one if-block, and handle in another, but now it gets even more confusing.
+
+Maybe, just move bdrv_co_is_zero_fast() call into big "if (s->zero_target) {" ?
+
+
+
+> +        }
+>           if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
+>               bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
+>               return 0;
+> @@ -1169,6 +1206,7 @@ immediate_exit:
+>       assert(s->in_flight == 0);
+>       qemu_vfree(s->buf);
+>       g_free(s->cow_bitmap);
+> +    g_free(s->zero_bitmap);
+>       g_free(s->in_flight_bitmap);
+>       bdrv_dirty_iter_free(s->dbi);
+> 
+> @@ -1347,7 +1385,8 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+>   {
+>       int ret;
+>       size_t qiov_offset = 0;
+> -    int64_t bitmap_offset, bitmap_end;
+> +    int64_t dirty_bitmap_offset, dirty_bitmap_end;
+> +    int64_t zero_bitmap_offset, zero_bitmap_end;
+> 
+>       if (!QEMU_IS_ALIGNED(offset, job->granularity) &&
+>           bdrv_dirty_bitmap_get(job->dirty_bitmap, offset))
+> @@ -1391,31 +1430,54 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+>       }
+> 
+>       /*
+> -     * Tails are either clean or shrunk, so for bitmap resetting
+> -     * we safely align the range down.
+> +     * Tails are either clean or shrunk, so for dirty bitmap resetting
+> +     * we safely align the range down.  But for zero bitmap, round range
+> +     * up for checking or clearing, and down for setting.
+>        */
+> -    bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
+> -    bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
+> -    if (bitmap_offset < bitmap_end) {
+> -        bdrv_reset_dirty_bitmap(job->dirty_bitmap, bitmap_offset,
+> -                                bitmap_end - bitmap_offset);
+> +    dirty_bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
+> +    dirty_bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
+> +    if (dirty_bitmap_offset < dirty_bitmap_end) {
+> +        bdrv_reset_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
+> +                                dirty_bitmap_end - dirty_bitmap_offset);
+>       }
+> +    zero_bitmap_offset = offset / job->granularity;
+> +    zero_bitmap_end = DIV_ROUND_UP(offset + bytes, job->granularity);
+> 
+>       job_progress_increase_remaining(&job->common.job, bytes);
+>       job->active_write_bytes_in_flight += bytes;
+> 
+>       switch (method) {
+>       case MIRROR_METHOD_COPY:
+> +        if (job->zero_bitmap) {
+> +            bitmap_clear(job->zero_bitmap, zero_bitmap_offset,
+> +                         zero_bitmap_end - zero_bitmap_offset);
+> +        }
+>           ret = blk_co_pwritev_part(job->target, offset, bytes,
+>                                     qiov, qiov_offset, flags);
+>           break;
+> 
+>       case MIRROR_METHOD_ZERO:
+> +        if (job->zero_bitmap) {
+> +            if (find_next_zero_bit(job->zero_bitmap, zero_bitmap_end,
+> +                                   zero_bitmap_offset) == zero_bitmap_end) {
+> +                ret = 0;
+> +                break;
+> +            }
+> +        }
+>           assert(!qiov);
+>           ret = blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
+> +        if (job->zero_bitmap && ret >= 0) {
+> +            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
+> +                       (dirty_bitmap_end - dirty_bitmap_offset) /
+> +                       job->granularity);
+> +        }
+
+Same thing, probably we should clear the bitmap in case of write failure.
+
+>           break;
+> 
+>       case MIRROR_METHOD_DISCARD:
+> +        if (job->zero_bitmap) {
+> +            bitmap_clear(job->zero_bitmap, zero_bitmap_offset,
+> +                         zero_bitmap_end - zero_bitmap_offset);
+> +        }
+>           assert(!qiov);
+>           ret = blk_co_pdiscard(job->target, offset, bytes);
+>           break;
+> @@ -1436,10 +1498,10 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+>            * at function start, and they must be still dirty, as we've locked
+>            * the region for in-flight op.
+>            */
+> -        bitmap_offset = QEMU_ALIGN_DOWN(offset, job->granularity);
+> -        bitmap_end = QEMU_ALIGN_UP(offset + bytes, job->granularity);
+> -        bdrv_set_dirty_bitmap(job->dirty_bitmap, bitmap_offset,
+> -                              bitmap_end - bitmap_offset);
+> +        dirty_bitmap_offset = QEMU_ALIGN_DOWN(offset, job->granularity);
+> +        dirty_bitmap_end = QEMU_ALIGN_UP(offset + bytes, job->granularity);
+> +        bdrv_set_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
+> +                              dirty_bitmap_end - dirty_bitmap_offset);
+
+Not really matter, but still, renaming in a separate patch would make this one a bit simpler.
+
+>           qatomic_set(&job->actively_synced, false);
+> 
+>           action = mirror_error_action(job, false, -ret);
+
+-- 
+Best regards,
+Vladimir
 
 
