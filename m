@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB94C369B2
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 02:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09EABC369B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 03:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4WFI-0000Ir-E7; Mon, 14 Apr 2025 22:41:59 -0400
+	id 1u4WcF-00058q-GR; Mon, 14 Apr 2025 23:05:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u4WFC-0000IW-Pd
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 22:41:50 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u4WFA-0004hu-RI
- for qemu-devel@nongnu.org; Mon, 14 Apr 2025 22:41:50 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-227d6b530d8so48269625ad.3
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 19:41:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744684907; x=1745289707; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x2+5yJsSyqWliMgVLnyA+8CDIJW89HvFx89ssRLzPb4=;
- b=KojvCtcprpTAhswO3wkRbiADG0A7gqhymRR6UnX+p74DCzgTzv4FL1NvWT1gB9FMHY
- l5YXII/bxvdl+6Fo2d/KDphfvJwNHsFZaq2ZbqhdD/tzMyWYlTIw/OLe2PMlcRRR4cz2
- 9MnZAD6c7aRPoaZGI340Z1bBaCMV9sAJVEI1ewTJvwZHMoSF1F0WiQ0Ifty5NfI/7V73
- bWajsyU4SbC1nLoVsiieylW/ib28B2X/pICQaj0UX0bwN+JwYy9jb12jMwvrXKURtLns
- brwSf5FcCMMsVsDlwm0VD6/1Q2ybI4ld/Ln1KhIUT2hlBbIHSr/sMczC7kiK3fafhjxR
- PCIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744684907; x=1745289707;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=x2+5yJsSyqWliMgVLnyA+8CDIJW89HvFx89ssRLzPb4=;
- b=SnRe2FFCx4Vqpt+x3Kepaa8cM0MQMN0q3b4xpk3nu4zf3ZQMT50MJ1J3HZNLbmpTHS
- ZUfRU/sL1+R0cnyk1RupTROFquqD5gA08B9TgCBYQIORegY5CvYZyJCPEomXAyWGPx3N
- wYn4OqiblQ9dh5CHbgFWRx+qPbeLigLV0vSzqbnRSNRcZvkADUaG2R852POHk6cBjVUc
- t8uSW4ORQll5hy5fssVG+2ZXQ1Nvd3Hgn3kwewfGNKpdHt8IMESz2traO8LgjdBtdInW
- NvDVYqEZBqCZgLv4A7CVWTpZv7Z0utE1cfVPkAfB2xvAiaIvk9bDYKle/WjFgzdRynzp
- /0xQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFzZDDvJXrk/QLckOcsGPoy8FSxK1bAAXI0cKiJrFMQKgTrH5MYz8kGeYw27gOAreyvlFDn+I09DUq@nongnu.org
-X-Gm-Message-State: AOJu0YyqQfOUzBqAZdw/QNTdwLz9mm0ueL3hqJaufRbyRPFjyinaEl6b
- 3G3W1mSmhZ117fQisceISYJeEv39exXLSZduQ/GawBPYcfqsXlaz
-X-Gm-Gg: ASbGncshsPVkYqfwcN7XADQloe35MxMhsha5VvBaq2CPO62kiUjaLLbQJyyrTwa0x8c
- qu8Nrvun/l2gmyVE4V8q/b//ifzbhuZQgvNGVei4RASLWmgL2iCWjW3L+L/pk34Mq61N3nRp7xh
- 0IQqlj/vfjN8v6p3wEh0Vl+XXrc3vWhdyFtG5GBs0R/zWWCs5+THxwBKtFIdhDOHmsjLGm2OT/H
- cPgM80OpYp2JPng7BiirPu40Ofh/cZl5zW9gKOx8sdTyw184t3itdwp0cg4RQ3c7TUUy8+fKsTi
- kTwl+bear/W0W6cCB4wAEEVLqszmalFp
-X-Google-Smtp-Source: AGHT+IFpnPceht0rMRD1rFyyYjNCKjIktfadngwwKNTyfMXazaQlz5zcFgLCkpIjwigpXwaJr2xttQ==
-X-Received: by 2002:a17:902:e547:b0:220:c911:3f60 with SMTP id
- d9443c01a7336-22bea4fd182mr195374855ad.47.1744684906938; 
- Mon, 14 Apr 2025 19:41:46 -0700 (PDT)
-Received: from localhost ([1.145.34.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7c9937fsm106747075ad.155.2025.04.14.19.41.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Apr 2025 19:41:46 -0700 (PDT)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u4WcB-00058c-Ae
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 23:05:35 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u4Wc8-00075H-By
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 23:05:35 -0400
+X-ASG-Debug-ID: 1744686323-086e2365b8c1770001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx1.zhaoxin.com with ESMTP id DEoidJMRwD2TmTsw (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Tue, 15 Apr 2025 11:05:23 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Tue, 15 Apr
+ 2025 11:05:22 +0800
+Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
+ ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
+ 15.01.2507.044; Tue, 15 Apr 2025 11:05:22 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ewan-server.zhaoxin.com (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Tue, 15 Apr
+ 2025 10:45:45 +0800
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <xiaoyao.li@intel.com>
+CC: <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>, <qemu-devel@nongnu.org>
+Subject: [PATCH v4] target/i386: Fix model number of Zhaoxin YongFeng vCPU
+ template
+Date: Mon, 14 Apr 2025 22:45:44 -0400
+X-ASG-Orig-Subj: [PATCH v4] target/i386: Fix model number of Zhaoxin YongFeng
+ vCPU template
+Message-ID: <20250415024545.517897-1-ewanhai-oc@zhaoxin.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 15 Apr 2025 12:41:39 +1000
-Message-Id: <D96V6HTTNOF1.3DDO2NQ0AUEA0@gmail.com>
-Cc: "Stefan Hajnoczi" <stefanha@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "Phil
- Dennis-Jordan" <phil@philjordan.eu>
-Subject: Re: [PATCH 1/2] system/main: transfer replay mutex ownership from
- main thread to main loop thread
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
- <20250410225550.46807-2-pierrick.bouvier@linaro.org>
- <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
- <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
- <dee088aa-436f-48dc-8a28-f675de42767b@linaro.org>
- <5cac93d4-e5a6-42b0-8f7b-5a273168a450@linaro.org>
-In-Reply-To: <5cac93d4-e5a6-42b0-8f7b-5a273168a450@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 4/15/2025 11:05:21 AM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1744686323
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 2956
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.139979
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,114 +95,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Apr 15, 2025 at 1:24 AM AEST, Pierrick Bouvier wrote:
-> On 4/14/25 03:25, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 12/4/25 19:24, Pierrick Bouvier wrote:
->>> On 4/11/25 22:30, Nicholas Piggin wrote:
->>>> On Fri Apr 11, 2025 at 8:55 AM AEST, Pierrick Bouvier wrote:
->>>>> On MacOS, UI event loop has to be ran in the main thread of a process=
-.
->>>>> Because of that restriction, on this platform, qemu main event loop i=
-s
->>>>> ran on another thread [1].
->>>>>
->>>>> This breaks record/replay feature, which expects thread running
->>>>> qemu_init
->>>>> to initialize hold this lock, breaking associated functional tests on
->>>>> MacOS.
->>>>>
->>>>> Thus, as a generalization, and similar to how BQL is handled, we rele=
-ase
->>>>> it after init, and reacquire the lock before entering main event loop=
-,
->>>>> avoiding a special case if a separate thread is used.
->>>>>
->>>>> Tested on MacOS with:
->>>>> $ meson test -C build --setup thorough --print-errorlogs \
->>>>> func-x86_64-x86_64_replay func-arm-arm_replay func-aarch64-
->>>>> aarch64_replay
->>>>> $ ./build/qemu-system-x86_64 -nographic -icount
->>>>> shift=3Dauto,rr=3Drecord,rrfile=3Dreplay.log
->>>>> $ ./build/qemu-system-x86_64 -nographic -icount
->>>>> shift=3Dauto,rr=3Dreplay,rrfile=3Dreplay.log
->>>>>
->>>>> [1] https://gitlab.com/qemu-project/qemu/-/commit/
->>>>> f5ab12caba4f1656479c1feb5248beac1c833243
->>>>>
->>>>> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2907
->>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>> ---
->>>>>  =C2=A0 system/main.c | 4 ++++
->>>>>  =C2=A0 1 file changed, 4 insertions(+)
->>>>>
->>>>> diff --git a/system/main.c b/system/main.c
->>>>> index ecb12fd397c..1c022067349 100644
->>>>> --- a/system/main.c
->>>>> +++ b/system/main.c
->>>>> @@ -25,6 +25,7 @@
->>>>>  =C2=A0 #include "qemu/osdep.h"
->>>>>  =C2=A0 #include "qemu-main.h"
->>>>>  =C2=A0 #include "qemu/main-loop.h"
->>>>> +#include "system/replay.h"
->>>>>  =C2=A0 #include "system/system.h"
->>>>>  =C2=A0 #ifdef CONFIG_SDL
->>>>> @@ -44,10 +45,12 @@ static void *qemu_default_main(void *opaque)
->>>>>  =C2=A0 {
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int status;
->>>>> +=C2=A0=C2=A0=C2=A0 replay_mutex_lock();
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bql_lock();
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 status =3D qemu_main_loop();
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_cleanup(status);
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bql_unlock();
->>>>> +=C2=A0=C2=A0=C2=A0 replay_mutex_unlock();
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exit(status);
->>>>>  =C2=A0 }
->>>>> @@ -67,6 +70,7 @@ int main(int argc, char **argv)
->>>>>  =C2=A0 {
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_init(argc, argv);
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bql_unlock();
->>>>> +=C2=A0=C2=A0=C2=A0 replay_mutex_unlock();
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (qemu_main) {
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 QemuThread ma=
-in_loop_thread;
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_thread_c=
-reate(&main_loop_thread, "qemu_main",
->>>>
->>>> Do we actually need to hold replay mutex (or even bql) over qemu_init(=
-)?
->>>> Both should get dropped before we return here. But as a simple fix, I
->>>> guess this is okay.
->>>>
->>>
->>> For the bql, I don't know the exact reason.
->>> For replay lock, we need to hold it as clock gets saved as soon as the
->>> devices are initialized, which happens before end of qemu_init.
->>=20
->> Could be worth adding a comment with that information.
->>=20
->
-> In case someone is curious about it, changing default state of lock can=
+The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
+The correct value is 0x5b. This mistake occurred because the extended
+model bits in cpuid[eax=3D0x1].eax were overlooked, and only the base
+model was used.
+
+Using the wrong model number can affect guest behavior. One known issue
+is that vPMU (which relies on the model number) may fail to operate
+correctly.
+
+This patch corrects the model field by introducing a new vCPU version.
+
+Additionally, it adds a "Preferred CPU models for Zhaoxin x86 hosts"
+section in docs/system/cpu-models-x86.rst.inc to recommend the
+appropriate Zhaoxin CPU model(s).
+
+Fixes: ff04bc1ac4 ("target/i386: Introduce Zhaoxin Yongfeng CPU model")
+Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ docs/system/cpu-models-x86.rst.inc | 17 +++++++++++++++++
+ target/i386/cpu.c                  | 12 ++++++++++++
+ 2 files changed, 29 insertions(+)
+
+diff --git a/docs/system/cpu-models-x86.rst.inc b/docs/system/cpu-models-x8=
+6.rst.inc
+index 6a770ca835..ba001422e2 100644
+--- a/docs/system/cpu-models-x86.rst.inc
++++ b/docs/system/cpu-models-x86.rst.inc
+@@ -369,6 +369,23 @@ features are included if using "Host passthrough" or "=
+Host model".
+   Note that not all CPU hardware will support this feature.
 =20
-> answer why it's needed, as it crashes immediately on an assert.
+=20
++Preferred CPU models for Zhaoxin x86 hosts
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++The following CPU models are preferred for use on Zhaoxin hosts.
++Administrators / applications are recommended to use the CPU model that
++matches the generation of the host CPUs in use. In a deployment with a
++mixture of host CPU models between machines, if live migration
++compatibility is required, use the newest CPU model that is compatible
++across all desired hosts.
++
++Currently, Zhaoxin provides a single CPU model (with potential for more in
++the near future), which has two versions. Among them, version 2 is recomme=
+nded
++as it resolves several guest runtime issues related to the model field (FM=
+S).
++
++``YongFeng-v2``
++    Zhaoxin KH-40000 Processor (2022)
++
++
+ Default x86 CPU models
+ ^^^^^^^^^^^^^^^^^^^^^^
+=20
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1b64ceaaba..3fb1ec62da 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5621,6 +5621,18 @@ static const X86CPUDefinition builtin_x86_defs[] =3D=
+ {
+         .features[FEAT_VMX_VMFUNC] =3D MSR_VMX_VMFUNC_EPT_SWITCHING,
+         .xlevel =3D 0x80000008,
+         .model_id =3D "Zhaoxin YongFeng Processor",
++        .versions =3D (X86CPUVersionDefinition[]) {
++            { .version =3D 1 },
++            {
++                .version =3D 2,
++                .note =3D "with the correct model number",
++                .props =3D (PropValue[]) {
++                    { "model", "0x5b" },
++                    { /* end of list */ }
++                }
++            },
++            { /* end of list */ }
++        }
+     },
+ };
+=20
+--=20
+2.34.1
 
-That all sounds reasonable enough and good info. I'm not suggesting to
-remove the lock from qemu_init() by assuming we are in init and init is
-single threaded (I agree it's good practice to keep locking consistent).
-
-My question was more that we should move the locks tighter around
-the operations that require them. Move the unlock into qemu_init().
-
-Commit f5ab12caba4f1 didn't introduce this problem, cocoa_main()
-already immediatey called bql_unlock() so effectively the issue is
-still there. The original design before cocoa I guess was that qemu_init
-would init things under the same critical section as qemu_main_loop() is
-then called, which is reasonable and conservative. It would have been
-good to see this bql split get a specific patch to epxlain why it's not
-needed across qemu_init and qemu_main_loop, but no big deal now.
-
-The patch is fine for a fix, could I suggest another patch that
-moves the lock narrower and perhaps adds a few words of comment?
-
-Thanks,
-Nick
 
