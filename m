@@ -4,111 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571CEC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 18:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4024BC369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 18:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4khJ-0002IH-Tu; Tue, 15 Apr 2025 14:07:49 -0400
+	id 1u4kvE-0007DN-71; Tue, 15 Apr 2025 14:22:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u4khA-0002Gt-UQ
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 14:07:42 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u4kh7-00054a-C1
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 14:07:40 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2BAD5211A0;
- Tue, 15 Apr 2025 18:07:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744740455; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vAZnqB+1navEeRSN5eeMNti2MLqJcq3umMSysKM++hk=;
- b=kTJCipTmuQjcCcwTdTjn47Po6W/CZ39nSOQ6mJwdW+logazag2QBMaWHaep5dlM9DkDWdx
- I4HFNkQJ2yMByTnJ7qs3/P3eB840ePg9DKf6jvtq9Qg4DBTFj9F6aflklSDuBbYLl2rzD+
- 8Q/Y9ZuM9SUL0CUZgQFVqJjDqoQ3MI0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744740455;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vAZnqB+1navEeRSN5eeMNti2MLqJcq3umMSysKM++hk=;
- b=f6zZcdPTWxaILFMWwmlCk7MgmZt9UrPArL7jbDGIcSl50Q13KDEItcviDsX+wPazQWZkJI
- SVS7DQ5bnWsXiTCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744740455; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vAZnqB+1navEeRSN5eeMNti2MLqJcq3umMSysKM++hk=;
- b=kTJCipTmuQjcCcwTdTjn47Po6W/CZ39nSOQ6mJwdW+logazag2QBMaWHaep5dlM9DkDWdx
- I4HFNkQJ2yMByTnJ7qs3/P3eB840ePg9DKf6jvtq9Qg4DBTFj9F6aflklSDuBbYLl2rzD+
- 8Q/Y9ZuM9SUL0CUZgQFVqJjDqoQ3MI0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744740455;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vAZnqB+1navEeRSN5eeMNti2MLqJcq3umMSysKM++hk=;
- b=f6zZcdPTWxaILFMWwmlCk7MgmZt9UrPArL7jbDGIcSl50Q13KDEItcviDsX+wPazQWZkJI
- SVS7DQ5bnWsXiTCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8E952137A5;
- Tue, 15 Apr 2025 18:07:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iV7sEmag/mcxfgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 15 Apr 2025 18:07:34 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Coiby Xu <Coiby.Xu@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [RFC PATCH 2/2] tests/qtest: Enable spapr dma with linear iommu
- map
-In-Reply-To: <20250415081914.378236-3-npiggin@gmail.com>
-References: <20250415081914.378236-1-npiggin@gmail.com>
- <20250415081914.378236-3-npiggin@gmail.com>
-Date: Tue, 15 Apr 2025 15:07:31 -0300
-Message-ID: <87ikn5fgd8.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u4kvC-0007Cs-NL
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 14:22:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1u4kvA-000741-3O
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 14:22:10 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8tI0r025039
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 18:22:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 4y+OgGtawT/K+JThcbthAY4XI2x6J2QZ2+ysu4Bfjb8=; b=Vg5RrRH7BVupq90R
+ 9vlI07zKli9G3BTDnrAUbK99jtD066BHsc7LjEhmKRWqQ3M/+KUjNaTZELa7vyAD
+ gKl6EmoB4vVFM5R4MjUon+rZn4X7IQ7/jfRbGhFTC/l9aWEqVoaApe+PRk2/vCZs
+ wew1pBmytZMdSXOZTz34okonb2wuWaiZ/O0yU+YpgYGKsdmbAy5Dv5G4zEZfhT2/
+ +hKfx9Vzo7YbN0iWixAOInzn3plqUgcoXKhLi01zWn/3FkMQlb0CnUEyuM2ud/e2
+ YifbSTAQiOMoI86RUaMSp+8xoaWOixn+az6DF28m7wIbbiJlbo7qD8D1LqHRfBA3
+ LGllAA==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45yf69s3h8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 18:22:04 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-739525d4d7bso4183657b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 11:22:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744741323; x=1745346123;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4y+OgGtawT/K+JThcbthAY4XI2x6J2QZ2+ysu4Bfjb8=;
+ b=w/dcmTcJoSP3KGqgCw+ggY4i8vfI62QwgaGbH8toES/5t3PVOO4B8MnMovnC81aStf
+ zCro5l23MTKi/E7ykouVDfI45eWn/lVeu5GeMNoMO/b4A+YFDXuVNtoU/9aaA/vMiIas
+ azRRDCBAFwMNnEneoO6QJcEanFB8aWLJ5/spUnejfAIYTlJ0Rp6kyo2eQdgJOCvWUQal
+ vQf0t+hATqUE0zTovXlhi7VKvjmmb5ReEioZGVH3mKnCOm13UGzoh91YDA00tNeNq0Ur
+ KZtJRNjifny8GX4fMfHGKHmPMwEEgyppeIlNwwTlgeo9JEkJOepDjXq/1LtnWsQ9g53a
+ NrYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrQgMplIXWipE5NlwaM3LFmnklnUamPkIeArP7az0eqzNhuTVlKsZrpbgEbZktVSujkiv5AlNG8WX8@nongnu.org
+X-Gm-Message-State: AOJu0Yzvh0c2o/isrcAIjhRwV7U2YSO/63ZhQeB4ILiXu/yM3J7Tlbti
+ XVKSvMDKVanTVl1Xi16LgGg1HpoJpAhcl5bA9Gmqhd9gDm0IrhfeKmt29aC1cHABOn5IVFybWG1
+ ZND4YUfxyOYJ2oxszDBt9fn+/AaMDe32cxMht4J5PNBdFvj3N2i5ulCko3JzpvQ==
+X-Gm-Gg: ASbGncvvw4j8n5do6cSviSZ9CrhQi1SXWK74ar2GdB+xGSl/2VOySpBhwI6M/UBcgTu
+ 7BYUuqX2M6IL4kqWzwpMQOlWwHZVbh9lsWlHCGmeOcG5KYVhlHENmv9FMb7gWT/1GRpSCnou0Qo
+ N0bv2ImTxP2gW7l+6uAepJuZ+LhH1OwyOZzhSAH9yYtO8kTVjRo/z9FDOgl8Ejf6rXDUAI1WvDg
+ 80iQkT2pyECOC30wHd/b976Vtb7Qypsla2YdKuWQSXHF3+lranwAPBOSADMlEa0QJBB3dMPihpz
+ URYT9Xbf0wvSjC5ZpPa4kwg4DjOTD4NyKkqQ/+YMgayDl/y3ffyusCtnlDtvntFbokDqCP96NOX
+ T0ANmqZT86qlt
+X-Received: by 2002:a05:6a00:4485:b0:736:6ac4:d204 with SMTP id
+ d2e1a72fcca58-73c1f934cb1mr630227b3a.11.1744741322944; 
+ Tue, 15 Apr 2025 11:22:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHF620i5znmkCVZYLqlKvrBmEpfdhGV+ljriHanbbnK5bHD35rV640X1/ZHwxlov9hAebLESQ==
+X-Received: by 2002:a05:6a00:4485:b0:736:6ac4:d204 with SMTP id
+ d2e1a72fcca58-73c1f934cb1mr630199b3a.11.1744741322529; 
+ Tue, 15 Apr 2025 11:22:02 -0700 (PDT)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73bd2198a73sm8897950b3a.22.2025.04.15.11.22.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Apr 2025 11:22:02 -0700 (PDT)
+Message-ID: <12956419-d35e-46cb-985a-5ea06d2d4154@oss.qualcomm.com>
+Date: Tue, 15 Apr 2025 13:22:00 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[12]; TAGGED_RCPT(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com,linux.ibm.com,redhat.com,nongnu.org];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr, hintjumpr
+ to multi_cof
+To: ltaylorsimpson@gmail.com, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, philmd@linaro.org,
+ matheus.bernardino@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ marco.liebel@oss.qualcomm.com, alex.bennee@linaro.org,
+ quic_mburton@quicinc.com, sidneym@quicinc.com
+References: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
+ <20250407192705.2605614-4-brian.cain@oss.qualcomm.com>
+ <058301dbad5f$467a2530$d36e6f90$@gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <058301dbad5f$467a2530$d36e6f90$@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: bHELAqLVhRmfzngVpduKmOuQhYU8jbBS
+X-Authority-Analysis: v=2.4 cv=JNc7s9Kb c=1 sm=1 tr=0 ts=67fea3cc cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8
+ a=1BT2pQa5RkY6iQFXzHUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: bHELAqLVhRmfzngVpduKmOuQhYU8jbBS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_07,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0
+ suspectscore=0 mlxlogscore=882 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 phishscore=0 adultscore=0 priorityscore=1501
+ spamscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504150128
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,235 +138,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicholas Piggin <npiggin@gmail.com> writes:
 
-> qtests spapr dma was broken because the iommu was not set up.
+On 4/14/2025 12:04 PM, ltaylorsimpson@gmail.com wrote:
 >
-> spapr requires hypercalls to set up the iommu (TCE tables), but
-> there is no support for that or a side-channel to the iommu in
-> qtests at the moment, so add a quick workaround in QEMU to have
-> the spapr iommu provide a linear map to memory when running
-> qtests.
-
-That's fine.
-
-But what would it take to add support? Add another callback such as
-qtest_rtas_call() to handle hcalls and call H_PUT_TCE from the test? Or
-is there some other complication?
-
+>> -----Original Message-----
+>> From: Brian Cain <brian.cain@oss.qualcomm.com>
+>> Sent: Monday, April 7, 2025 1:27 PM
+>> To: qemu-devel@nongnu.org
+>> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
+>> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com; ale@rev.ng;
+>> anjo@rev.ng; marco.liebel@oss.qualcomm.com; ltaylorsimpson@gmail.com;
+>> alex.bennee@linaro.org; quic_mburton@quicinc.com;
+>> sidneym@quicinc.com
+>> Subject: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr, hintjumpr
+>> to multi_cof
+>>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   target/hexagon/hex_common.py | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/hexagon/hex_common.py
+>> b/target/hexagon/hex_common.py index 6803908718..a2dcb0aa2e 100755
+>> --- a/target/hexagon/hex_common.py
+>> +++ b/target/hexagon/hex_common.py
+>> @@ -247,8 +247,11 @@ def need_next_PC(tag):
+>>
+>>
+>>   def need_pkt_has_multi_cof(tag):
+>> -    return "A_COF" in attribdict[tag]
+>> -
+>> +    return (
+>> +        "A_JUMP" in attribdict[tag]
+>> +        or "A_CALL" in attribdict[tag]
+>> +        or "J2_rte" == tag
+>> +    ) and tag != "J2_hintjumpr"
+> It would be better to make this decision with instruction attributes only rather than a mix of attributes and specific tags.  If needed, add another add_qemu_macro_attrib call to hex_common.calculate_attribs.
 >
-> The buggy msix checks can all be removed since the tests all work
-> now.
+> Having said that, the correct tag for hintjumpr is J*4*_hintjumpr.
+
+
+Good catch, thanks for finding it.  And I suppose we can change it to 
+`"A_HINTJR" not in attribdict[tag]` instead.
+
+
+So, now more like this:
+
+      add_qemu_macro_attrib('fREAD_SP', 'A_IMPLICIT_READS_SP')
++    add_qemu_macro_attrib('fCLEAR_RTE_EX', 'A_RTE')
+
+      # Recurse down macros, find attributes from sub-macros
+      macroValues = list(macros.values())
+@@ -291,8 +292,8 @@ def need_pkt_has_multi_cof(tag):
+      return (
+          "A_JUMP" in attribdict[tag]
+          or "A_CALL" in attribdict[tag]
+-        or "J2_rte" == tag
+-    ) and tag != "J2_hintjumpr"
++        or "A_RTE" in attribdict[tag]
++    ) and "A_HINTJR" not in attribdict[tag]
+
+
+
+> Taylor
 >
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  tests/qtest/libqos/pci.h             |  4 ----
->  hw/ppc/spapr_iommu.c                 |  9 ++++++++-
->  tests/qtest/e1000e-test.c            | 23 +++--------------------
->  tests/qtest/igb-test.c               | 21 ---------------------
->  tests/qtest/libqos/generic-pcihost.c |  1 -
->  tests/qtest/libqos/pci-pc.c          |  3 ---
->  tests/qtest/libqos/pci-spapr.c       |  7 ++++---
->  tests/qtest/libqos/pci.c             | 14 --------------
->  tests/qtest/vhost-user-blk-test.c    |  6 ------
->  tests/qtest/virtio-blk-test.c        | 12 ------------
->  10 files changed, 15 insertions(+), 85 deletions(-)
 >
-
-...
-
-> @@ -173,13 +159,10 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
->  
->      QE1000E_PCI *e1000e = obj;
->      QE1000E *d = &e1000e->e1000e;
-> -    QOSGraphObject *e_object = obj;
-> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
->  
-> -    /* FIXME: add spapr support */
-> -    if (qpci_check_buggy_msi(dev)) {
-> -        return;
-> -    }
-> +    /* Use EITR for one irq and disable it for the other, for testing */
-> +    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 500);
-> +    e1000e_macreg_write(d, E1000_EITR + E1000E_TX0_MSG_ID * 4, 0);
-
-What's this about?
-
->  
->      for (i = 0; i < iterations; i++) {
->          e1000e_send_verify(d, data, alloc);
-> diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-> index 3d397ea6973..1b3b5aa6c76 100644
-> --- a/tests/qtest/igb-test.c
-> +++ b/tests/qtest/igb-test.c
-> @@ -142,13 +142,6 @@ static void test_igb_tx(void *obj, void *data, QGuestAllocator * alloc)
->  {
->      QE1000E_PCI *e1000e = obj;
->      QE1000E *d = &e1000e->e1000e;
-> -    QOSGraphObject *e_object = obj;
-> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
-> -
-> -    /* FIXME: add spapr support */
-> -    if (qpci_check_buggy_msi(dev)) {
-> -        return;
-> -    }
->  
->      igb_send_verify(d, data, alloc);
->  }
-> @@ -157,13 +150,6 @@ static void test_igb_rx(void *obj, void *data, QGuestAllocator * alloc)
->  {
->      QE1000E_PCI *e1000e = obj;
->      QE1000E *d = &e1000e->e1000e;
-> -    QOSGraphObject *e_object = obj;
-> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
-> -
-> -    /* FIXME: add spapr support */
-> -    if (qpci_check_buggy_msi(dev)) {
-> -        return;
-> -    }
->  
->      igb_receive_verify(d, data, alloc);
->  }
-> @@ -176,13 +162,6 @@ static void test_igb_multiple_transfers(void *obj, void *data,
->  
->      QE1000E_PCI *e1000e = obj;
->      QE1000E *d = &e1000e->e1000e;
-> -    QOSGraphObject *e_object = obj;
-> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
-> -
-> -    /* FIXME: add spapr support */
-> -    if (qpci_check_buggy_msi(dev)) {
-> -        return;
-> -    }
->  
->      for (i = 0; i < iterations; i++) {
->          igb_send_verify(d, data, alloc);
-> diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
-> index 4bbeb5ff508..568897e0ecc 100644
-> --- a/tests/qtest/libqos/generic-pcihost.c
-> +++ b/tests/qtest/libqos/generic-pcihost.c
-> @@ -182,7 +182,6 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
->  
->      qpci->gpex_pio_base = 0x3eff0000;
->      qpci->bus.not_hotpluggable = !hotpluggable;
-> -    qpci->bus.has_buggy_msi = false;
->  
->      qpci->bus.pio_readb = qpci_generic_pio_readb;
->      qpci->bus.pio_readw = qpci_generic_pio_readw;
-> diff --git a/tests/qtest/libqos/pci-pc.c b/tests/qtest/libqos/pci-pc.c
-> index 147009f4f44..8b79d858bd5 100644
-> --- a/tests/qtest/libqos/pci-pc.c
-> +++ b/tests/qtest/libqos/pci-pc.c
-> @@ -124,9 +124,6 @@ void qpci_init_pc(QPCIBusPC *qpci, QTestState *qts, QGuestAllocator *alloc)
->  {
->      assert(qts);
->  
-> -    /* tests can use pci-bus */
-> -    qpci->bus.has_buggy_msi = false;
-> -
->      qpci->bus.pio_readb = qpci_pc_pio_readb;
->      qpci->bus.pio_readw = qpci_pc_pio_readw;
->      qpci->bus.pio_readl = qpci_pc_pio_readl;
-> diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
-> index 0f1023e4a73..dfa2087a599 100644
-> --- a/tests/qtest/libqos/pci-spapr.c
-> +++ b/tests/qtest/libqos/pci-spapr.c
-> @@ -20,6 +20,10 @@
->   * PCI devices are always little-endian
->   * SPAPR by default is big-endian
->   * so PCI accessors need to swap data endianness
-> + *
-> + * The spapr iommu model has a qtest_enabled() check that short-cuts
-> + * the TCE table and provides a linear map for DMA, since qtests does
-> + * not have a way to make hcalls to set up the TCE table.
->   */
->  
->  static uint8_t qpci_spapr_pio_readb(QPCIBus *bus, uint32_t addr)
-> @@ -155,9 +159,6 @@ void qpci_init_spapr(QPCIBusSPAPR *qpci, QTestState *qts,
->  {
->      assert(qts);
->  
-> -    /* tests cannot use spapr, needs to be fixed first */
-> -    qpci->bus.has_buggy_msi = true;
-> -
->      qpci->alloc = alloc;
->  
->      qpci->bus.pio_readb = qpci_spapr_pio_readb;
-> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-> index a59197b9922..3bf6a0e0127 100644
-> --- a/tests/qtest/libqos/pci.c
-> +++ b/tests/qtest/libqos/pci.c
-> @@ -53,20 +53,6 @@ void qpci_device_foreach(QPCIBus *bus, int vendor_id, int device_id,
->      }
->  }
->  
-> -bool qpci_has_buggy_msi(QPCIDevice *dev)
-> -{
-> -    return dev->bus->has_buggy_msi;
-> -}
-> -
-> -bool qpci_check_buggy_msi(QPCIDevice *dev)
-> -{
-> -    if (qpci_has_buggy_msi(dev)) {
-> -        g_test_skip("Skipping due to incomplete support for MSI");
-> -        return true;
-> -    }
-> -    return false;
-> -}
-> -
->  static void qpci_device_set(QPCIDevice *dev, QPCIBus *bus, int devfn)
->  {
->      g_assert(dev);
-> diff --git a/tests/qtest/vhost-user-blk-test.c b/tests/qtest/vhost-user-blk-test.c
-> index ea90d41232e..3e71fdb9d78 100644
-> --- a/tests/qtest/vhost-user-blk-test.c
-> +++ b/tests/qtest/vhost-user-blk-test.c
-> @@ -554,14 +554,8 @@ static void idx(void *obj, void *u_data, QGuestAllocator *t_alloc)
->      uint32_t desc_idx;
->      uint8_t status;
->      char *data;
-> -    QOSGraphObject *blk_object = obj;
-> -    QPCIDevice *pci_dev = blk_object->get_driver(blk_object, "pci-device");
->      QTestState *qts = global_qtest;
->  
-> -    if (qpci_check_buggy_msi(pci_dev)) {
-> -        return;
-> -    }
-> -
->      qpci_msix_enable(pdev->pdev);
->      qvirtio_pci_set_msix_configuration_vector(pdev, t_alloc, 0);
->  
-> diff --git a/tests/qtest/virtio-blk-test.c b/tests/qtest/virtio-blk-test.c
-> index 98c906ebb4a..3a005d600c1 100644
-> --- a/tests/qtest/virtio-blk-test.c
-> +++ b/tests/qtest/virtio-blk-test.c
-> @@ -474,14 +474,8 @@ static void msix(void *obj, void *u_data, QGuestAllocator *t_alloc)
->      uint32_t free_head;
->      uint8_t status;
->      char *data;
-> -    QOSGraphObject *blk_object = obj;
-> -    QPCIDevice *pci_dev = blk_object->get_driver(blk_object, "pci-device");
->      QTestState *qts = global_qtest;
->  
-> -    if (qpci_check_buggy_msi(pci_dev)) {
-> -        return;
-> -    }
-> -
->      qpci_msix_enable(pdev->pdev);
->      qvirtio_pci_set_msix_configuration_vector(pdev, t_alloc, 0);
->  
-> @@ -584,14 +578,8 @@ static void idx(void *obj, void *u_data, QGuestAllocator *t_alloc)
->      uint32_t desc_idx;
->      uint8_t status;
->      char *data;
-> -    QOSGraphObject *blk_object = obj;
-> -    QPCIDevice *pci_dev = blk_object->get_driver(blk_object, "pci-device");
->      QTestState *qts = global_qtest;
->  
-> -    if (qpci_check_buggy_msi(pci_dev)) {
-> -        return;
-> -    }
-> -
->      qpci_msix_enable(pdev->pdev);
->      qvirtio_pci_set_msix_configuration_vector(pdev, t_alloc, 0);
 
