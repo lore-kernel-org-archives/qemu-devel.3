@@ -4,94 +4,199 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4E2C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 08:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD10C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 08:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4bXF-0001qs-TR; Tue, 15 Apr 2025 04:20:50 -0400
+	id 1u4beI-0006jC-Og; Tue, 15 Apr 2025 04:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u4bWe-0008UX-UU; Tue, 15 Apr 2025 04:20:16 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u4bWb-0002vW-TU; Tue, 15 Apr 2025 04:20:12 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7390d21bb1cso5083665b3a.2; 
- Tue, 15 Apr 2025 01:20:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744705207; x=1745310007; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x7ag/4WQb6NQh6XH9TufK+JtdflTO6cQsVupBkUwmLw=;
- b=Yzt/ENzO8HlVFGd0a8AcfLxrGlAjiDfcjBJp/1GjYjiypqha+rB4JMcJQ1CfkyN7YT
- Gd9JO5U2dlS1hVXEZaizyTZJL4ih1YaJ5lkX3JRSlHsGXziN2/z53HCHL4ugv8J5kNfk
- KQ/ySFOKEHZHRCBACajbjg0tzwU3QDT5Y9Z6KggAdVAGtvMZJTZSyecC2Z6s4CTF8F97
- RP43zkg5O8I0ogVS8mEP+VO1ce/iBKNTWAiowti2aFLMOBVtSTp2PyEdzbq9nxSuRAWF
- kE7fFDK/VVmV8pHABZinR8OBNZ5CRxAvDc8dk43qSmWsvmSjb0+2xUNXrfppA9Wu5UIX
- EcVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744705207; x=1745310007;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x7ag/4WQb6NQh6XH9TufK+JtdflTO6cQsVupBkUwmLw=;
- b=N5wcHBFZ5VXMNnlvuMl6/XJqQXEmQGD5x2LOEoAhkMThgK75vj4DKgOUyvrZBvE9+Y
- iCIJWi6CPbCZoOCOYThj7z2lAfGToD3BB9bUylIT17jtNt6WnFzaXYDQJFoNl2gVQUXw
- WZ5huKIvf+9v6V4OiGHvzsWCKVVexhPG+etzsXaj5Lzje83aeqkn3njEGII2HyzkinZm
- ZK9quLfn4EtBAj7/TVoyTQTyXa8OgEVz0faAtvKl6b5BNs5UPyuC4+TftsCyxQvJCUa3
- +W6UVJ6FhFLHe0374ruglfI8LM3htaI4QQtw/S9sCcLD31+2feKAFhI7Zeu/Vf+w052d
- uI3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAi6uX2VJIQSdUww7JqM5eXBEWQjnjVD2pDeFvr0UkA/17Ki32JiEWlJ5wELWvnqnXQwVfeJyJMh3s@nongnu.org,
- AJvYcCXAqFsrkUWXuz1Two8cgPDNm+fZmc6FTiNb5+mt1gDGORWHZDBCAbq+EaQ8bHzN2JuYz2OFNn6Fyhqltw==@nongnu.org
-X-Gm-Message-State: AOJu0YzbOxLCapjXs2guTInGESrKG+FnM67kbYTylGp8XJ+EpKhQCO0L
- SWwPrUZ5dFY35D6TyfmnMe2J1v2KxjNCRKOZ7JFctgi57wxX8kAI+moVJA==
-X-Gm-Gg: ASbGncsrj73bbKrVOb3eAJU22RvrRujHxaCTQyMHQIjIXZ1AGZr7CBaMmTrmtluB0Ks
- voVg2EfUgVmMSWY53q2h+daaw9Pc2m1g5jg5hnO834ryMHGnDN3nMclE7/uxdg2c9WiSMwDksmq
- SmuqG0DhDExupqCPdxF6eWCTIrtFNI4atjnQfdUKYsoia42JXKQveQjFNUP4VQ6/7kKaQCkuj3s
- 7Z1e8DnJ1zqOa7ZVMmHH/eBigHRvs2VBuo1QHfr2eMF7HXpNbqCkevYqfOh0Ygxy/1D3XtB1QMa
- XBJcx+CnqkpxAhSPeYXigprE2M/lappz1w+XBebYx7YuLcmBvbf4gLwhjXsUIeU5gZS/snwxFh2
- 5TGHf373SlYgNlJKabwPDE7nfsvpf9p4dweAyOc1I
-X-Google-Smtp-Source: AGHT+IE5LEo+nnSNexSerr0Ee/6nX7LcM6PlwAULMAL6uRaDoDhY4T4YOmizMD31Ea0ornP7eAy3UQ==
-X-Received: by 2002:a17:90b:4d0a:b0:305:5f55:899 with SMTP id
- 98e67ed59e1d1-30823670acdmr21360564a91.11.1744705206501; 
- Tue, 15 Apr 2025 01:20:06 -0700 (PDT)
-Received: from wheely.local0.net
- (ppp118-208-164-196.cbr-trn-nor-bras39.tpg.internode.on.net.
- [118.208.164.196]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-306df08f63bsm12543098a91.24.2025.04.15.01.19.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 01:20:06 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: [RFC PATCH 2/2] tests/qtest: Enable spapr dma with linear iommu map
-Date: Tue, 15 Apr 2025 18:19:14 +1000
-Message-ID: <20250415081914.378236-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250415081914.378236-1-npiggin@gmail.com>
-References: <20250415081914.378236-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1u4beE-0006hh-RJ
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 04:28:04 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1u4beB-0004FD-W6
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 04:28:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1744705680; x=1776241680;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=/kV1+46zR4e48xzGOT/yYrOCwIJV/zcEtMJghnRKJzQ=;
+ b=iJcA/NsQdWGaVNUQL8P6jTrHlV56oe818KdMyjx48okQp0NyZf3NsMYe
+ WAl28ScNpm45cn1ScMW4SF+FbWVxCmKiq9AKkixgXNlpl5tEjbB2iv6b/
+ h/2F+Nn4IJ5Q7/K53/G+mR6OUTIZXoNETicSodPhpiv5iQdq/oFhunJBf
+ mUou7rIjj4n7On5fiP/A9vYPOIOLhbYZ8rtqeNnJItHuW98JJ6/sM9Z3I
+ lfZGlWzgYIb1yYdK34aPUEIsDGwQvnlz5t2CN14JfiK35fzSXL4OooKBL
+ x6xJ6dqYhDgZ5hJ4BCS0Kr/u5rK/pzU1cjuFet1FS0u4ZMNNket3ECAYe A==;
+X-CSE-ConnectionGUID: xTV10xfoQCmrOpiF7BQMKQ==
+X-CSE-MsgGUID: 9cQ8wVpXSTaFQdlXqcXv6A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11403"; a="50004400"
+X-IronPort-AV: E=Sophos;i="6.15,213,1739865600"; d="scan'208";a="50004400"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2025 01:27:55 -0700
+X-CSE-ConnectionGUID: HEIL0WeXTca+31XtrvG9ZQ==
+X-CSE-MsgGUID: jUXmpcWBQ0e39sA08P+mNg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,213,1739865600"; d="scan'208";a="134156665"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Apr 2025 01:27:55 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Tue, 15 Apr 2025 01:27:54 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Tue, 15 Apr 2025 01:27:54 -0700
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.44) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Tue, 15 Apr 2025 01:27:52 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dgHtEg35zxUNENmHnONPxcGEUBcPvmMht6ciX/HJjCa8DJnoH0zExsOds5KDK2BxCk7TOnFmu68fanNc+jrHyvdtn6BIP9xShk/SunYRP86YUF9IHsCMeJWfmMu24cP7dcp9VBxq7tOGNn5jDFtKzTwYrIKR5FYhGHPFxrFeOOQApLKzWXIJYxMauesJmxECybfTHL9V/o/e6/4+J+fyJ4AyrD50pfCn/zyvAEpAoBGNitE9N7ZhCykucds/wMyU/xKdPv+Nf5ou97Ze31vjYcZzvXH/8g1opIgoLV5BQViqmQhwLW7H9lVL/0lj+jJpGlMudTM+sQh7eZ9pHT/bSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4cBXjH0ruLC1lO2DXbPFVuNXjir+l6UR4KM8opoFiIc=;
+ b=hJQK1iC/usBsUaF/R9pWubgwX6jfLnUkxsq1Dwy9gffarcDhfOpUe6MHtu85rRLndmQRwUDo06gR2cDVt39snYSqBzurZHvFpNNbuZYjOVdk4mxrBFKUbtKFDEoItCLEObkC+6eVV//FCi0KH7K6/ppKg6V0BGuUEXmcTA8amyHOuBF5nuqdYxIBTYo3lS+78B5qQWSnzKd7mqU+BCtdaAVxOcq/GreHa9vcPclG9BB8Ry7JvK/iN5HgV0DmKJJjDblu66VXjWU7XK7bDW25augDmmq4ZTqVHM7SKCMblK0qv7ByAoP8ShWumHXSnJWMFBTsf6mMbmxJvaGeln3YSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
+ by SA3PR11MB7581.namprd11.prod.outlook.com (2603:10b6:806:31b::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.28; Tue, 15 Apr
+ 2025 08:27:49 +0000
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a%3]) with mapi id 15.20.8632.030; Tue, 15 Apr 2025
+ 08:27:49 +0000
+Message-ID: <b346f57a-144c-46d2-adb6-dd82e6fbdd98@intel.com>
+Date: Tue, 15 Apr 2025 16:33:45 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] intel_iommu: Take the bql before registering a new
+ address space
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>
+References: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0044.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:193::8) To DS0PR11MB7529.namprd11.prod.outlook.com
+ (2603:10b6:8:141::20)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|SA3PR11MB7581:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2776ff2c-4ba3-4482-2171-08dd7bf76843
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RlNSb29sQ05sZDBOTFY1ZkFKVkpYVkhKc1pQRVlkenlWZUxkajZiVzhmV1Fk?=
+ =?utf-8?B?ampTeUllUVdYR0tkM0xyOWJJRnErTEx2bURuSUpZVWY5VnNaa1R5c2w2VXhY?=
+ =?utf-8?B?YUN2UHVmcU5DTzd3bHZ5YXVDRDlkQ3hUSDh5ZnhySVVuNnMvYjJaTVBMTWZm?=
+ =?utf-8?B?clF3MkdXMlRDalVUVzJHNlkvcngydzdkS01FazBERDNnZDcvV2tBb09FVmFo?=
+ =?utf-8?B?YkNqUk5hbVdpbTE0emt0b3QvT3VMdEZZbDliMVdLbkJQU1gvbWlzRFU5ZjY1?=
+ =?utf-8?B?OWFWaVhKaG5YQkxYVVZ2ZTBCUnhLa0NxNm9RZERndXZ6QktyOEY1ei9QaUtV?=
+ =?utf-8?B?eDdhemYzRTZJbUZjcVNKYU03eEtGbkw3Q25FVjhJdkdpckZtOFhaQWdGaXRL?=
+ =?utf-8?B?ZS9vTmp2eFFoNFIvNTA2ZFFoVW1JaVZQTi9HNHlHQmVCTnFZUk41QU9kcGVF?=
+ =?utf-8?B?eUhuaFhDUUNXL29hU2gwb05SYjhhN0Z6M0cxaTZqNmsxUHcvQUVOaHFGdWRq?=
+ =?utf-8?B?Zys2UCtsK2dvdUt6eDN1VXdFZEJQZ0gxam5NZ1JVUjg0KzM2Z3FKVHMyYW1U?=
+ =?utf-8?B?cGFYdEUyU1dOWlR1eDlXVTBMM3VXLzFMck4zam56N21HOXBQdHpnc05FZWVW?=
+ =?utf-8?B?eGxtSmk5OEI4OXhvai9GRzJ2Ujh3TEllZmhlWmJXODRwcTJuODVsNzUxU0do?=
+ =?utf-8?B?T0VOa044VllQSjJobDMvaVZSTzk5a2JQeEtidXl6dmlCY0tBRlBvTnR0Yjgz?=
+ =?utf-8?B?RUxYaFhYTjZNcnZRY1UyYVpjOVp6bE45aXgxZTRYcDBXTVQzZlJvRERkdkU1?=
+ =?utf-8?B?cWlmNzlpRzRXL2kxNDNQbnMrM3QyR3dZamxpd2ZHdnlXTUd1QTV5cnQrT3p0?=
+ =?utf-8?B?bm1wOUVuV1h3dTdNQjhrUlpEdTdaSUU1aXpPUE1obmxjMUNSYXl4NUNRWlVo?=
+ =?utf-8?B?enZnY1Uwd2NzTldtRnN3Y01zZ2R2WXNKc0hNRWVlNVFxSjI4WVNOUEhaOCty?=
+ =?utf-8?B?S1lMSVlnM0RpOWduYllvZmU0YStFK1hrSU1LMXdWMUtNWDYxaTJvaStkbFRa?=
+ =?utf-8?B?bVFJL3pMMExCQURad0l6RUJCeUJMTHJIcC95VzV3RzdOa0pQVDJUZzVPd0RD?=
+ =?utf-8?B?RDArNzVHdGV0Uk1zZjFuZDNmMmZ2QzVEQlV1R2tKWld6dUZIUXViTWpaMTNo?=
+ =?utf-8?B?ZlBqNDVyZHNIYjNkUUYySGViSXZtaG1xdjl3Z0RNK0RTVm1Xd2tjd2dhNWxI?=
+ =?utf-8?B?MndPZzhnRmJsS2lXTXNETUZVTFR1Q3hUYVVCTytGWFkwRlNIK0FRNlZBN1BI?=
+ =?utf-8?B?T1RXWVg0UjJXdFRxaU5NWDZNUE5zZ24xdEUycVVJajRTcDlqVHBjb2ZvMk9i?=
+ =?utf-8?B?ZGhrSGpSeHRhOVZBbU9WejlzdnBmblVpaVZCSy9zMUowUkZVdG96V0p1eUt6?=
+ =?utf-8?B?U3dML3NKdGtBQTFHR2hmODV2eEUxTElONXhMOEx4dFFPbUhDd0p1UHpQdzRL?=
+ =?utf-8?B?RDdXUkprUHV3L1FUaWZRZkhFV3FYeURvY0s3T3k2ZURzcVFTUi83eFVIYlpx?=
+ =?utf-8?B?NWYvVWpCN3NCNzlUL0ZrU0xBSk8xU0hvUS95ckI5eHFQaFJiNGN5eHJNc01Z?=
+ =?utf-8?B?SjcyQUxSNUxWc2VPemtJYXRqcWMvb0ZZN3g3USt4NzlRNUcyQW4yY0pkS1cx?=
+ =?utf-8?B?R1lNK05nSW1WRUtOMk1lMDE3WjB5NllkbU9aaGpaUkRLL1E1MFl2VmYyaGNI?=
+ =?utf-8?B?d1ZoMThIM0k5b2dPbjNISXExRWg0ZHRSOG1USWt2c3FjbUN4aDNzOC9vcmFR?=
+ =?utf-8?B?Z0dlVk9adDZ1aXJ1L2xCL0VBYmg1TG1rKzhWUmY1bTdWeFpSVnFmT1N2Vjh6?=
+ =?utf-8?B?M2dBekVKRnVvV0JVZTAxamozT3cwN1oyVGVRRlJlemZOWVZiazRwamR2OEJH?=
+ =?utf-8?Q?v+oKq0yZB/0=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS0PR11MB7529.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(7053199007); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NW03RU1UdmNUTVJRaFlQcElWejhFQUp1bWhYSkV6dTZETFdIWU0vUDU5SU05?=
+ =?utf-8?B?TXZnR0llTmo2YWw1Tko4SmRVZG0yelBmWWJSVWIxRndhZ0huVUJ1QjFVTGs1?=
+ =?utf-8?B?MThabGZ0eVRXM255SVhhRncvRHFtV3phcVVzMFUzWkFPYUdBUy81c2pMSXVG?=
+ =?utf-8?B?Q0E2K1pWRGVCWWJaNncvWDNJVlpGMkhjcStQNHRURHVzN01BSHdROGdKSTBk?=
+ =?utf-8?B?TU5tdFNvbjFsRndkaFNOL2VyVDhRNWFmL2tkbHpiYXVQQVMxa3ZDbUhRbWxU?=
+ =?utf-8?B?WlZkck4vbUVRMTh3RnZibHhUaDNNbEpTUHRwWXFhbDRrckxvMWZyZStpMzhw?=
+ =?utf-8?B?SkZMMHViakdzbHFtVElpdW85em01cDhRaThTdk1zeG5hZUtXSWhiRkZaNEVn?=
+ =?utf-8?B?WDVBWjcwT1VhNlhVcS9lblJwWFI0bWkwZWM0dTNYOURlb294TTRLcnlnODcw?=
+ =?utf-8?B?ejFrckMvWlljWE9EK1FWLy9MdEhDTTRhMXZuUkRRbnovcnJFTVJyVEhkaTY5?=
+ =?utf-8?B?eVpNNHZUZXU3RXBwQS9tQlo1OU9jME50b050NHllc2xrTjU5NndGaUw5T2tO?=
+ =?utf-8?B?NjYxRVFWMC9XYnZMK0RDWTZlQUYyWlZmU3k5cWpPR0R6NnpUajkzdTBFVnNq?=
+ =?utf-8?B?VzExWUhSbSt4WTFIeldDRVlQcVZZaTlYdkNZamtwelpzd3REWkJ4MnllaDRY?=
+ =?utf-8?B?cGYrOEszVzVtYm9YMXNoYmc5STF1bnFBWWdockxXWW8rTG5GTlNSL3VtUFZq?=
+ =?utf-8?B?d1J3ZTM3RzF5eENwOWN6eFVuYnorN0tCdVI0N0NFcElseUFEZS9KckY2QTNh?=
+ =?utf-8?B?b2ZKUjlWU0EyTWpNWk1uS1BUZ2RXUHh2cDl6eUxMbjA1aTVLc1J1M1VFcGFY?=
+ =?utf-8?B?OHJYQ2R6bjI0eHpMbEhIUDVtdkhtdmFVMXpkbXdTbExDU1BCajNIL2dKYTJm?=
+ =?utf-8?B?NTBRWWJUUUwvd3pVMHErVVB3RllBU0RHNC9tV3lnWGE5Vkx3MTBaRStLVk12?=
+ =?utf-8?B?N2xVNVdoMld4VWhIdndCTTlGRTdjY2lTS0dmUEVOL0htZWlUaEtlMG90R1h1?=
+ =?utf-8?B?eSsxOTQ4eEJsU1NsTDhlTFpxc05oaVFRS29tcjJjMVg1V1JsNWQ3Q0t2dWpE?=
+ =?utf-8?B?VE5aVTVvb3F3NENHVXV6TjJmWnd3YktVQlIrVDhvNlU2OFU2ZWhFS3FLYU1p?=
+ =?utf-8?B?VW9ScHlxbDByNXlmVndEdG5MaEZ4dGhZTllJOU5tNlpvQ3RwL215M2s4SFo2?=
+ =?utf-8?B?ZXJFZEdoYmlHcWJSajJjWTVjdlFVT2s2K2owejhGSWpzeU9zMTFKemgrQmo0?=
+ =?utf-8?B?cElRZ1ZBVXR3cEx5ZW4xV3VwYllQM2crdG9sNHYxeGJ4YWppSEpFRUlJdE1l?=
+ =?utf-8?B?aEszUmFsYVFFQ21lcGYxeDFnQUZtS0lrRFNHNjdOa0RZY2FsYkN6T284aGQv?=
+ =?utf-8?B?dDFmMW9DbXBvLzY1ZnB2YWNjdTdlUlhLZ3ozN2xhRklTNC9PTG5xRWxjMEFz?=
+ =?utf-8?B?SitKVEpNOTZ6T3FCQnVMSDV3RWIwMW1RMGdPS2ZOVEpIRUxEWTZWTitLMmFz?=
+ =?utf-8?B?clpCMGc0Mm0zNlRDSlZvQ1lTTXpVNEQ1RlJGaDlKWjR5K2RjVVNZK0VLK1Fw?=
+ =?utf-8?B?ZXplaXZNcEdBbFl4YnlMSlVQYUpHSk9ZQnkrcllnZjd1VWI0S0pJUHZRTWI5?=
+ =?utf-8?B?UzZVQ1ZEYUtBU0o5S0szTnVTd1haUG5JM2NkQ0ltOXdCazhBNnhwNXhhaHk1?=
+ =?utf-8?B?WnkyVDFzUHN5aUREdkI4Qmo3bjNNZnJQUVFCVkdrbGZWZUU4c2hKV1NCc1BP?=
+ =?utf-8?B?TnN3TEFwdmt4MWthSTlYQlhKMS9SZ1dJOG1FMWNHRERZaWZFRTM0ckE5U3VZ?=
+ =?utf-8?B?WVFGVnNsQXBlck4yRnZMbGtrclpXckw1bUl5ZjJOL2gvaDhtdjEwcmlrWncr?=
+ =?utf-8?B?VHdYS1B5NzMrdTFkNFJGSzltaExBcTdsUVZMN2gyZ1Z2dlJ3cXhiTUtGaEZt?=
+ =?utf-8?B?STNuaEs3VFBpZTZjK1o5R01QTnliazZOM3JKTWxmTFpvY1hmdjV3ZDBQVVc1?=
+ =?utf-8?B?Y1lrUXB0ODBSaHBZd0lMNFdTSlZ2cHNUazdQbTNocThEVXJuTWRmMmMrM3F2?=
+ =?utf-8?Q?/Rhu9rIy6MvuGoV85mp3A7wUY?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2776ff2c-4ba3-4482-2171-08dd7bf76843
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2025 08:27:49.5769 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qn+jb3dZisM1mlAQJ1VtSeCJh6vCqCuB2G60ir+8OyM8LSMQz9SnvqobVHa6YQ8Y77c+ll4GmpccONKkon+M0g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB7581
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,305 +213,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qtests spapr dma was broken because the iommu was not set up.
+Hi CMD,
 
-spapr requires hypercalls to set up the iommu (TCE tables), but
-there is no support for that or a side-channel to the iommu in
-qtests at the moment, so add a quick workaround in QEMU to have
-the spapr iommu provide a linear map to memory when running
-qtests.
+good catch. Did you see any assert log. Just curious which path complains
+it.
 
-The buggy msix checks can all be removed since the tests all work
-now.
+On 2025/4/15 14:18, CLEMENT MATHIEU--DRIF wrote:
+> Address space creation might end up being called without holding the
+> bql as it is exposed through the IOMMU ops.
+> 
+> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> ---
+>   hw/i386/intel_iommu.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/qtest/libqos/pci.h             |  4 ----
- hw/ppc/spapr_iommu.c                 |  9 ++++++++-
- tests/qtest/e1000e-test.c            | 23 +++--------------------
- tests/qtest/igb-test.c               | 21 ---------------------
- tests/qtest/libqos/generic-pcihost.c |  1 -
- tests/qtest/libqos/pci-pc.c          |  3 ---
- tests/qtest/libqos/pci-spapr.c       |  7 ++++---
- tests/qtest/libqos/pci.c             | 14 --------------
- tests/qtest/vhost-user-blk-test.c    |  6 ------
- tests/qtest/virtio-blk-test.c        | 12 ------------
- 10 files changed, 15 insertions(+), 85 deletions(-)
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 
-diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index 83896145235..9b0b365a0d2 100644
---- a/tests/qtest/libqos/pci.h
-+++ b/tests/qtest/libqos/pci.h
-@@ -51,7 +51,6 @@ struct QPCIBus {
-     QTestState *qts;
-     uint64_t pio_alloc_ptr, pio_limit;
-     uint64_t mmio_alloc_ptr, mmio_limit;
--    bool has_buggy_msi; /* TRUE for spapr, FALSE for pci */
-     bool not_hotpluggable; /* TRUE if devices cannot be hotplugged */
- 
- };
-@@ -83,9 +82,6 @@ QPCIDevice *qpci_device_find(QPCIBus *bus, int devfn);
- void qpci_device_init(QPCIDevice *dev, QPCIBus *bus, QPCIAddress *addr);
- int qpci_secondary_buses_init(QPCIBus *bus);
- 
--bool qpci_has_buggy_msi(QPCIDevice *dev);
--bool qpci_check_buggy_msi(QPCIDevice *dev);
--
- void qpci_device_enable(QPCIDevice *dev);
- uint8_t qpci_find_capability(QPCIDevice *dev, uint8_t id, uint8_t start_addr);
- void qpci_msix_enable(QPCIDevice *dev);
-diff --git a/hw/ppc/spapr_iommu.c b/hw/ppc/spapr_iommu.c
-index db3a14c1dfd..77895c597df 100644
---- a/hw/ppc/spapr_iommu.c
-+++ b/hw/ppc/spapr_iommu.c
-@@ -22,6 +22,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "system/kvm.h"
-+#include "system/qtest.h"
- #include "kvm_ppc.h"
- #include "migration/vmstate.h"
- #include "system/dma.h"
-@@ -125,7 +126,13 @@ static IOMMUTLBEntry spapr_tce_translate_iommu(IOMMUMemoryRegion *iommu,
-         .perm = IOMMU_NONE,
-     };
- 
--    if ((addr >> tcet->page_shift) < tcet->nb_table) {
-+    if (qtest_enabled()) {
-+        /* spapr qtests does not set up the IOMMU, shortcut a linear map */
-+        ret.iova = addr & TARGET_PAGE_MASK;
-+        ret.translated_addr = addr & TARGET_PAGE_MASK;
-+        ret.addr_mask = ~TARGET_PAGE_MASK;
-+        ret.perm = IOMMU_RW;
-+    } else if ((addr >> tcet->page_shift) < tcet->nb_table) {
-         /* Check if we are in bound */
-         hwaddr page_mask = IOMMU_PAGE_MASK(tcet->page_shift);
- 
-diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
-index de9738fdb74..a8d6d3eb013 100644
---- a/tests/qtest/e1000e-test.c
-+++ b/tests/qtest/e1000e-test.c
-@@ -139,13 +139,6 @@ static void test_e1000e_tx(void *obj, void *data, QGuestAllocator * alloc)
- {
-     QE1000E_PCI *e1000e = obj;
-     QE1000E *d = &e1000e->e1000e;
--    QOSGraphObject *e_object = obj;
--    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
--
--    /* FIXME: add spapr support */
--    if (qpci_check_buggy_msi(dev)) {
--        return;
--    }
- 
-     e1000e_send_verify(d, data, alloc);
- }
-@@ -154,13 +147,6 @@ static void test_e1000e_rx(void *obj, void *data, QGuestAllocator * alloc)
- {
-     QE1000E_PCI *e1000e = obj;
-     QE1000E *d = &e1000e->e1000e;
--    QOSGraphObject *e_object = obj;
--    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
--
--    /* FIXME: add spapr support */
--    if (qpci_check_buggy_msi(dev)) {
--        return;
--    }
- 
-     e1000e_receive_verify(d, data, alloc);
- }
-@@ -173,13 +159,10 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
- 
-     QE1000E_PCI *e1000e = obj;
-     QE1000E *d = &e1000e->e1000e;
--    QOSGraphObject *e_object = obj;
--    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
- 
--    /* FIXME: add spapr support */
--    if (qpci_check_buggy_msi(dev)) {
--        return;
--    }
-+    /* Use EITR for one irq and disable it for the other, for testing */
-+    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 500);
-+    e1000e_macreg_write(d, E1000_EITR + E1000E_TX0_MSG_ID * 4, 0);
- 
-     for (i = 0; i < iterations; i++) {
-         e1000e_send_verify(d, data, alloc);
-diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-index 3d397ea6973..1b3b5aa6c76 100644
---- a/tests/qtest/igb-test.c
-+++ b/tests/qtest/igb-test.c
-@@ -142,13 +142,6 @@ static void test_igb_tx(void *obj, void *data, QGuestAllocator * alloc)
- {
-     QE1000E_PCI *e1000e = obj;
-     QE1000E *d = &e1000e->e1000e;
--    QOSGraphObject *e_object = obj;
--    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
--
--    /* FIXME: add spapr support */
--    if (qpci_check_buggy_msi(dev)) {
--        return;
--    }
- 
-     igb_send_verify(d, data, alloc);
- }
-@@ -157,13 +150,6 @@ static void test_igb_rx(void *obj, void *data, QGuestAllocator * alloc)
- {
-     QE1000E_PCI *e1000e = obj;
-     QE1000E *d = &e1000e->e1000e;
--    QOSGraphObject *e_object = obj;
--    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
--
--    /* FIXME: add spapr support */
--    if (qpci_check_buggy_msi(dev)) {
--        return;
--    }
- 
-     igb_receive_verify(d, data, alloc);
- }
-@@ -176,13 +162,6 @@ static void test_igb_multiple_transfers(void *obj, void *data,
- 
-     QE1000E_PCI *e1000e = obj;
-     QE1000E *d = &e1000e->e1000e;
--    QOSGraphObject *e_object = obj;
--    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
--
--    /* FIXME: add spapr support */
--    if (qpci_check_buggy_msi(dev)) {
--        return;
--    }
- 
-     for (i = 0; i < iterations; i++) {
-         igb_send_verify(d, data, alloc);
-diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
-index 4bbeb5ff508..568897e0ecc 100644
---- a/tests/qtest/libqos/generic-pcihost.c
-+++ b/tests/qtest/libqos/generic-pcihost.c
-@@ -182,7 +182,6 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
- 
-     qpci->gpex_pio_base = 0x3eff0000;
-     qpci->bus.not_hotpluggable = !hotpluggable;
--    qpci->bus.has_buggy_msi = false;
- 
-     qpci->bus.pio_readb = qpci_generic_pio_readb;
-     qpci->bus.pio_readw = qpci_generic_pio_readw;
-diff --git a/tests/qtest/libqos/pci-pc.c b/tests/qtest/libqos/pci-pc.c
-index 147009f4f44..8b79d858bd5 100644
---- a/tests/qtest/libqos/pci-pc.c
-+++ b/tests/qtest/libqos/pci-pc.c
-@@ -124,9 +124,6 @@ void qpci_init_pc(QPCIBusPC *qpci, QTestState *qts, QGuestAllocator *alloc)
- {
-     assert(qts);
- 
--    /* tests can use pci-bus */
--    qpci->bus.has_buggy_msi = false;
--
-     qpci->bus.pio_readb = qpci_pc_pio_readb;
-     qpci->bus.pio_readw = qpci_pc_pio_readw;
-     qpci->bus.pio_readl = qpci_pc_pio_readl;
-diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
-index 0f1023e4a73..dfa2087a599 100644
---- a/tests/qtest/libqos/pci-spapr.c
-+++ b/tests/qtest/libqos/pci-spapr.c
-@@ -20,6 +20,10 @@
-  * PCI devices are always little-endian
-  * SPAPR by default is big-endian
-  * so PCI accessors need to swap data endianness
-+ *
-+ * The spapr iommu model has a qtest_enabled() check that short-cuts
-+ * the TCE table and provides a linear map for DMA, since qtests does
-+ * not have a way to make hcalls to set up the TCE table.
-  */
- 
- static uint8_t qpci_spapr_pio_readb(QPCIBus *bus, uint32_t addr)
-@@ -155,9 +159,6 @@ void qpci_init_spapr(QPCIBusSPAPR *qpci, QTestState *qts,
- {
-     assert(qts);
- 
--    /* tests cannot use spapr, needs to be fixed first */
--    qpci->bus.has_buggy_msi = true;
--
-     qpci->alloc = alloc;
- 
-     qpci->bus.pio_readb = qpci_spapr_pio_readb;
-diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index a59197b9922..3bf6a0e0127 100644
---- a/tests/qtest/libqos/pci.c
-+++ b/tests/qtest/libqos/pci.c
-@@ -53,20 +53,6 @@ void qpci_device_foreach(QPCIBus *bus, int vendor_id, int device_id,
-     }
- }
- 
--bool qpci_has_buggy_msi(QPCIDevice *dev)
--{
--    return dev->bus->has_buggy_msi;
--}
--
--bool qpci_check_buggy_msi(QPCIDevice *dev)
--{
--    if (qpci_has_buggy_msi(dev)) {
--        g_test_skip("Skipping due to incomplete support for MSI");
--        return true;
--    }
--    return false;
--}
--
- static void qpci_device_set(QPCIDevice *dev, QPCIBus *bus, int devfn)
- {
-     g_assert(dev);
-diff --git a/tests/qtest/vhost-user-blk-test.c b/tests/qtest/vhost-user-blk-test.c
-index ea90d41232e..3e71fdb9d78 100644
---- a/tests/qtest/vhost-user-blk-test.c
-+++ b/tests/qtest/vhost-user-blk-test.c
-@@ -554,14 +554,8 @@ static void idx(void *obj, void *u_data, QGuestAllocator *t_alloc)
-     uint32_t desc_idx;
-     uint8_t status;
-     char *data;
--    QOSGraphObject *blk_object = obj;
--    QPCIDevice *pci_dev = blk_object->get_driver(blk_object, "pci-device");
-     QTestState *qts = global_qtest;
- 
--    if (qpci_check_buggy_msi(pci_dev)) {
--        return;
--    }
--
-     qpci_msix_enable(pdev->pdev);
-     qvirtio_pci_set_msix_configuration_vector(pdev, t_alloc, 0);
- 
-diff --git a/tests/qtest/virtio-blk-test.c b/tests/qtest/virtio-blk-test.c
-index 98c906ebb4a..3a005d600c1 100644
---- a/tests/qtest/virtio-blk-test.c
-+++ b/tests/qtest/virtio-blk-test.c
-@@ -474,14 +474,8 @@ static void msix(void *obj, void *u_data, QGuestAllocator *t_alloc)
-     uint32_t free_head;
-     uint8_t status;
-     char *data;
--    QOSGraphObject *blk_object = obj;
--    QPCIDevice *pci_dev = blk_object->get_driver(blk_object, "pci-device");
-     QTestState *qts = global_qtest;
- 
--    if (qpci_check_buggy_msi(pci_dev)) {
--        return;
--    }
--
-     qpci_msix_enable(pdev->pdev);
-     qvirtio_pci_set_msix_configuration_vector(pdev, t_alloc, 0);
- 
-@@ -584,14 +578,8 @@ static void idx(void *obj, void *u_data, QGuestAllocator *t_alloc)
-     uint32_t desc_idx;
-     uint8_t status;
-     char *data;
--    QOSGraphObject *blk_object = obj;
--    QPCIDevice *pci_dev = blk_object->get_driver(blk_object, "pci-device");
-     QTestState *qts = global_qtest;
- 
--    if (qpci_check_buggy_msi(pci_dev)) {
--        return;
--    }
--
-     qpci_msix_enable(pdev->pdev);
-     qvirtio_pci_set_msix_configuration_vector(pdev, t_alloc, 0);
- 
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index dffd7ee885..fea2220013 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -4216,6 +4216,7 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>       vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
+>       if (!vtd_dev_as) {
+>           struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
+> +        bool take_bql = !bql_locked();
+>   
+>           new_key->bus = bus;
+>           new_key->devfn = devfn;
+> @@ -4238,6 +4239,11 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>           vtd_dev_as->context_cache_entry.context_cache_gen = 0;
+>           vtd_dev_as->iova_tree = iova_tree_new();
+>   
+> +        /* Some functions in this branch require the bql, make sure we own it */
+> +        if (take_bql) {
+> +            bql_lock();
+> +        }
+> +
+>           memory_region_init(&vtd_dev_as->root, OBJECT(s), name, UINT64_MAX);
+>           address_space_init(&vtd_dev_as->as, &vtd_dev_as->root, "vtd-root");
+>   
+> @@ -4305,6 +4311,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>   
+>           vtd_switch_address_space(vtd_dev_as);
+>   
+> +        if (take_bql) {
+> +            bql_unlock();
+> +        }
+> +
+>           g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
+>       }
+>       return vtd_dev_as;
+
 -- 
-2.47.1
-
+Regards,
+Yi Liu
 
