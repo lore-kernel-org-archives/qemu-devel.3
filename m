@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C665CC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 07:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D231AC369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 07:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4auC-0008RK-Mq; Tue, 15 Apr 2025 03:40:28 -0400
+	id 1u4aws-0001ns-Tj; Tue, 15 Apr 2025 03:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
- id 1u4auB-0008QQ-5I; Tue, 15 Apr 2025 03:40:27 -0400
-Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
- id 1u4au9-0006iC-38; Tue, 15 Apr 2025 03:40:26 -0400
-Received: by mail-vk1-xa35.google.com with SMTP id
- 71dfb90a1353d-523dc190f95so2510487e0c.1; 
- Tue, 15 Apr 2025 00:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744702823; x=1745307623; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XIguqg3VNpLvaRIuMEN4XWCcW9Xu+FsrKXt+8wsq7E8=;
- b=K3i9QVgTz6MvyMFCu21w9Q1KVHZzKyxP0xtCXzJz8b+R9KFii1k2TuywbeWzChFX7g
- EZaXuio7bjxKcebr+5ds/6qVAPtEkB+3CDYPsfyZwYCu9nupxyO0fyPcMx3vO72fqk1R
- ygje8xhYWZn2VGB6lUfvz/PB30O5z9yYiVXFzY1gcaxV+h/g6SeeosdZsAnX8RHvdSK+
- i5flFSPEhnrJYDi5lsD18koPbTbncESqbuKcBqe0B7vMKGVPIbIPn1rsT3aTUqMJcUq0
- wEYaq1NcL0bL1PbiOqS6uPYgARRgEkGyRz5ocqKV8Sqr7sMcJN6zbf+uf2scJvAH4zMM
- R0CA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4awl-0001nT-03
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 03:43:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4awj-0006sV-B9
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 03:43:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744702983;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OlrcEsIeCM7F+cO5CYR19hmweoaji5NZ0uxry2wjKPM=;
+ b=CtGS7uVobmUR+uMycEAK8zF7DEhnhXcGOfQQnV1XXBXotSxeOb2o4WmruhhI3RozUJ/vej
+ 5hqeeMv2Ol+ToGGUrzk80+8Eye58xzZHgfsrPs2a4NtALTdX1h4W86zRmnD8tDnL5/xaxG
+ 02wAU+08fsWW2XNqT2/DmSfl1XGuCSU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-294-KOnE00o8MHCfPicWeuXCWA-1; Tue, 15 Apr 2025 03:43:01 -0400
+X-MC-Unique: KOnE00o8MHCfPicWeuXCWA-1
+X-Mimecast-MFC-AGG-ID: KOnE00o8MHCfPicWeuXCWA_1744702980
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43ea256f039so39885375e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 00:43:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744702823; x=1745307623;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XIguqg3VNpLvaRIuMEN4XWCcW9Xu+FsrKXt+8wsq7E8=;
- b=IvDYxhse05Z/AA1Yz4ImJasvuxPixyLHTZHKnIhP2XrNf1mVlv4aatJShEYqRQcIm2
- g3dewqmCyBLOK7mAQE5uIYM+83R9YCzhQDjv6teLCuKSckCpYtw9k3K+ySC1dylAS+XS
- Oi5FKVldy7iaS+Vxwde5QxrVXd9Yf5RWzefRqpV6zb4pfE/pzs32FHzoGm+mpROc/pHo
- wwfRvwFXIoOprZgFWujW/WmgL6e0Ot65wwK0AjpIUIvqNMgi95veBHgWfwT0te5hlrE8
- +P0L5SjEfjFOgqOSMtFzLvbS6QzUPkfOcKDsuycHpmHF56IdJRJgk2U7DLer1S7dqMxP
- m8Xg==
+ d=1e100.net; s=20230601; t=1744702980; x=1745307780;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OlrcEsIeCM7F+cO5CYR19hmweoaji5NZ0uxry2wjKPM=;
+ b=wB1+R4z/E/T2Z6X0g+i2E9lacSRYq1TX207cts1n5063PCTiGYs3L9GLetgkyUYiOn
+ PuwKkbAYmp42Rod4q91433Fqu8D+/BOB0YYn6e9yNbLc1Zsw69Jycs+p4bz6QQOOYI1Z
+ C/ZGgpyMNrEjqGIDS5E3TA19L9OLpFE77PA5Ck9/ZNlf7vokD7xuNvchRHtWaNQYlcHd
+ K2FWIlCzMfnkSupWmxKsPtiJpfcRkTkgXxSe0gzKN4TMmD+N7E75aZpVwG2c3c5M2FsX
+ 90SAZpJ/MXJNrxmCGHtsaNmO/wJda9niEZOmroUY68heN9sZjWZuSbbQCEXnKsM9R/LQ
+ i/Yg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcQ+oaqcRQQBj0cOrq0H9Z1TtnRu41AZfQPf0S+Jxnrij9DwrX9sKO8EGjunW9WoSJNmaxGHZuPAK0ydg=@nongnu.org
-X-Gm-Message-State: AOJu0Yz2MDElGS3VaOGu1Llu/DY3Paz+dIaskT1HZm2wSy3uBMCk9dzC
- lRNyBej1KLwRKUOLhEcd5s6zX6GZgdTpTmHl0kULMZANxl7BT20FJhNAF3/mvwjM0SqCr5U29ni
- 1ej0KJOmL/5IUZhDigb22OqxVynM=
-X-Gm-Gg: ASbGncv6BFkxBZcPsBZ9CM3cHH71RHFobwv16NOkYvHms62vgVPeBv6khLZ2i/4a4Ls
- zAFxOv+dZ64aQZvXIg2BMtQ67t3zSkKjEQ8WzalPg2ulO8ZUogtbvX+WTa+CH5cGK+74Z5zjJKd
- Ekxq6mMKGmZ47ZP3rToivPQQ==
-X-Google-Smtp-Source: AGHT+IFZlpvTmUqewmgppqbsEiiSIJZxbjTaw/yMe4z/HC6ozE8W9pSLNMxbf4T0oCmOSGnPsAYfOknxAgvF8BbSMOM=
-X-Received: by 2002:a05:6122:d09:b0:523:a88b:9bfd with SMTP id
- 71dfb90a1353d-527c358d0f7mr11198709e0c.7.1744702823060; Tue, 15 Apr 2025
- 00:40:23 -0700 (PDT)
+ AJvYcCU8tsRoYlzVfi5GuKJy7uEEaD2UH8n6lBs86zA+m0t/1B3WWLE166WRLmHQidQUJbCfdgTcXAd88ONf@nongnu.org
+X-Gm-Message-State: AOJu0YzAJGXjX2I6AqZWI/VOjk1/Jq+cSBCQPCg6d/IbcUh1sA10CTjO
+ t/0eHgM9UId9ZyR7LRjYfAtPBLXlhfFggQpbI1d4p0tlRIhgrEvmhoLLc/9YLED+stZE+a8+8vH
+ uTNLeLCBP3sjIdkpiOtpb27dW0O6VTVeBm+9kBBeU1d5dwGnqRpZC
+X-Gm-Gg: ASbGncskRGjHzUWdMkIu2zOEP7daSuI3hM2Vets+dvtYgCMnNfVwapF3xWn9OpPhD66
+ f8mDiL2KYVABWK9e5ailFwct1RfOkLbVCTuWzVRZwvbHot+DpBGdMRrvdaSxRS+Ar1Do5SZ9Lju
+ DXGUFB4jgg7b2m7vz6DjLYCcvPGO8cao0PtVv/n7X40ISAVH8l7HDTCSXCuyY1XgS42xisrIrb3
+ 2j/37TYFpR5rAXoet+t1hDaOxKIrHGolqqShPfcNOhZFUGH+yHNDG3OTdJrGlsEm7r7PRiln70T
+ PXE0Yg==
+X-Received: by 2002:a05:600c:1e02:b0:43d:22d9:4b8e with SMTP id
+ 5b1f17b1804b1-43f86e1f246mr25391525e9.10.1744702979825; 
+ Tue, 15 Apr 2025 00:42:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtbWzUCVyQFwKQPh4evCxMUoUALYbwXZjRdAGzzNl7mXbgYRZytsAn0MXgmbgFTjkQ1dPOcw==
+X-Received: by 2002:a05:600c:1e02:b0:43d:22d9:4b8e with SMTP id
+ 5b1f17b1804b1-43f86e1f246mr25391205e9.10.1744702979408; 
+ Tue, 15 Apr 2025 00:42:59 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f2066d26bsm205037975e9.22.2025.04.15.00.42.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Apr 2025 00:42:58 -0700 (PDT)
+Date: Tue, 15 Apr 2025 03:42:55 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "peterx@redhat.com" <peterx@redhat.com>
+Subject: Re: [PATCH] intel_iommu: Take the bql before registering a new
+ address space
+Message-ID: <20250415034112-mutt-send-email-mst@kernel.org>
+References: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
+ <23c9f066-f30c-4e35-8629-504eeb9cd7a8@linaro.org>
+ <f3b38c07-f099-4422-87fa-32c78c7630a4@eviden.com>
 MIME-Version: 1.0
-References: <20250414034626.3491489-1-ziqiaokong@gmail.com>
- <20250414034626.3491489-2-ziqiaokong@gmail.com>
- <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
- <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
- <CAM0BWND3dr=_nZHXSoV2jzkXPXd=hViX6vM0cUMZ2Uru+TD6GQ@mail.gmail.com>
- <c566eed5-605f-4aeb-8841-dae4e591fcb3@linaro.org>
- <CAM0BWNBNrjJ6UuF+TRtkuEesLatnY1pzSjyaiPVDeKSMF8no-A@mail.gmail.com>
- <CAM0BWNBGAJ-scbhXAQ2s2Y=w3WhJ5pR72xSA5Xf+bsbk73cL6w@mail.gmail.com>
- <7d2e61de-17da-4a6b-b9c8-2ff14fdce15f@linaro.org>
- <CAM0BWNCOYwNZjD4h2XgEesV-HJYbDhapqfPYDcMm+U90PeU-vA@mail.gmail.com>
- <CAM0BWNDZG-KfFMT4SD9Ye+CNc=tcNpCLLTmGPTuKGyeGWBjXoQ@mail.gmail.com>
-In-Reply-To: <CAM0BWNDZG-KfFMT4SD9Ye+CNc=tcNpCLLTmGPTuKGyeGWBjXoQ@mail.gmail.com>
-From: Ziqiao Kong <ziqiaokong@gmail.com>
-Date: Tue, 15 Apr 2025 15:40:11 +0800
-X-Gm-Features: ATxdqUG3_oZIMUavYU2p8i_C106vaxw-3TK0HnsxBRuZ-eoiqDnH0rUw2oJZXzs
-Message-ID: <CAM0BWNCbD2dZBXuueOmx10+yuL20WWKjrj193SkMjdG1vZq0-g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] target/riscv: fix endless translation loop on big
- endian systems
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-trivial@nongnu.org, 
- alistair.francis@wdc.com, Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
- envelope-from=ziqiaokong@gmail.com; helo=mail-vk1-xa35.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f3b38c07-f099-4422-87fa-32c78c7630a4@eviden.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,211 +117,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 15, 2025 at 3:22=E2=80=AFPM Ziqiao Kong <ziqiaokong@gmail.com> =
-wrote:
->
-> On Tue, Apr 15, 2025 at 3:19=E2=80=AFPM Ziqiao Kong <ziqiaokong@gmail.com=
-> wrote:
-> >
-> > Hello Philippe,
-> >
-> > On Tue, Apr 15, 2025 at 3:15=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> > <philmd@linaro.org> wrote:
-> > >
-> > > On 15/4/25 09:04, Ziqiao Kong wrote:
-> > > > Accidentally not cc all recipients. Sorry for the confusion. Below =
-is
-> > > > the duplicated message:
-> > > >
-> > > > Hello Philippe,
-> > > >
-> > > > On Tue, Apr 15, 2025 at 1:38=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-> > > > <philmd@linaro.org> wrote:
-> > > >>
-> > > >> Hi,
-> > > >>
-> > > >> On 14/4/25 18:59, Ziqiao Kong wrote:
-> > > >>> Hello Philippe,
-> > > >>>
-> > > >>> Any further concern regarding this series? I certainly would like=
- to investigate
-> > > >>> and help =3D).
-> > > >>
-> > > >> Short term I can't keep looking because I'm busy with other stuffs=
- and
-> > > >> tagged this patch for another review, because there is some endian=
-ness
-> > > >> code smell in get_physical_address(). I understand your change fix=
-es
-> > > >> your issue, but I'm skeptical about it, in part because there are =
-no
-> > > >> such use in the whole code base. My change suggestion is just a st=
-arting
-> > > >> point, more is needed.
-> > > >
-> > > > Thanks for responding.
-> > > >
-> > > > Actually, the pattern of this usage is actually very common in the =
-code base and
-> > > > that's why I fixed in this way. Sorry I should have put this in the
-> > > > cover letter to
-> > > > justify my fix. Below is an incomplete list of the code using this =
-pattern:
-> > > >
-> > > > - target/i386/tcg/system/excp_helper.c:129
-> > > >
-> > > > if (likely(in->haddr)) {
-> > > > old =3D cpu_to_le32(old);
-> > > > new =3D cpu_to_le32(new);
-> > > > return qatomic_cmpxchg((uint32_t *)in->haddr, old, new) =3D=3D old;
-> > > > }
-> > > >
-> > > > - target/arm/ptw.c: 840
-> > > >
-> > > > if (ptw->out_be) {
-> > > > old_val =3D cpu_to_be64(old_val);
-> > > > new_val =3D cpu_to_be64(new_val);
-> > > > cur_val =3D qatomic_cmpxchg__nocheck((uint64_t *)host, old_val, new=
-_val);
-> > > > cur_val =3D be64_to_cpu(cur_val);
-> > > > } else {
-> > > > old_val =3D cpu_to_le64(old_val);
-> > > > new_val =3D cpu_to_le64(new_val);
-> > > > cur_val =3D qatomic_cmpxchg__nocheck((uint64_t *)host, old_val, new=
-_val);
-> > > > cur_val =3D le64_to_cpu(cur_val);
-> > > > }
-> > >
-> > > Doh OK...
-> > >
-> > > >
-> > > > You might want to do a `grep -rn "qatomic_cmpxchg" .` to see all ma=
-tches.
-> > > >
-> > > >
-> > > >>
-> > > >>>
-> > > >>> Bests,
-> > > >>> Ziqiao
-> > > >>>
-> > > >>> On Mon, Apr 14, 2025 at 7:17=E2=80=AFPM Ziqiao Kong <ziqiaokong@g=
-mail.com> wrote:
-> > > >>>>
-> > > >>>> On Mon, Apr 14, 2025 at 6:41=E2=80=AFPM Philippe Mathieu-Daud=C3=
-=A9
-> > > >>>> <philmd@linaro.org> wrote:
-> > > >>>>>
-> > > >>>>> Hi,
-> > > >>>>>
-> > > >>>>> On 14/4/25 05:46, Ziqiao Kong wrote:
-> > > >>>>>> On big endian systems, pte and updated_pte hold big endian hos=
-t data
-> > > >>>>>> while pte_pa points to little endian target data. This means t=
-he branch
-> > > >>>>>> at cpu_helper.c:1669 will be always satisfied and restart tran=
-slation,
-> > > >>>>>> causing an endless translation loop.
-> > > >>>>>>
-> > > >>>>>
-> > > >>>>> Cc: qemu-stable@nongnu.org
-> > > >>>>> Fixes: 0c3e702aca7 ("RISC-V CPU Helpers")
-> > > >>>>>
-> > > >>>>>> Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
-> > > >>>>>> ---
-> > > >>>>>>     target/riscv/cpu_helper.c | 4 ++--
-> > > >>>>>>     1 file changed, 2 insertions(+), 2 deletions(-)
-> > > >>>>>>
-> > > >>>>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_help=
-er.c
-> > > >>>>>> index 6c4391d96b..bc146771c8 100644
-> > > >>>>>> --- a/target/riscv/cpu_helper.c
-> > > >>>>>> +++ b/target/riscv/cpu_helper.c
-> > > >>>>>> @@ -1662,9 +1662,9 @@ static int get_physical_address(CPURISCV=
-State *env, hwaddr *physical,
-> > > >>>>>>                 target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->=
-ram_block, addr1);
-> > > >>>>>>                 target_ulong old_pte;
-> > > >>>>>>                 if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
-> > > >>>>>> -                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_p=
-a, pte, updated_pte);
-> > > >>>>>> +                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_p=
-a, cpu_to_le32(pte), cpu_to_le32(updated_pte));
-> > >
-> > > Then don't we need:
-> > >
-> > >      old_pte =3D le32_to_cpu(old_pte);
-> > >
-> > > >>>>>>                 } else {
-> > > >>>>>> -                old_pte =3D qatomic_cmpxchg(pte_pa, pte, upda=
-ted_pte);
-> > > >>>>>> +                old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le=
-64(pte), cpu_to_le64(updated_pte));
-> > >
-> > >      old_pte =3D le64_to_cpu(old_pte);
-> > >
-> > > ?
+On Tue, Apr 15, 2025 at 07:28:34AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> 
+> 
+> On 15/04/2025 8:53 am, Philippe Mathieu-Daudé wrote:
+> > Caution: External email. Do not open attachments or click links, unless 
+> > this email comes from a known sender and you know the content is safe.
+> > 
+> > 
+> > On 15/4/25 08:18, CLEMENT MATHIEU--DRIF wrote:
+> >> Address space creation might end up being called without holding the
+> >> bql as it is exposed through the IOMMU ops.
+> >>
+> >> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >> ---
+> >>   hw/i386/intel_iommu.c | 10 ++++++++++
+> >>   1 file changed, 10 insertions(+)
+> >>
+> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >> index dffd7ee885..fea2220013 100644
+> >> --- a/hw/i386/intel_iommu.c
+> >> +++ b/hw/i386/intel_iommu.c
+> >> @@ -4216,6 +4216,7 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState 
+> >> *s, PCIBus *bus,
+> >>       vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
+> >>       if (!vtd_dev_as) {
+> >>           struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
+> >> +        bool take_bql = !bql_locked();
+> >>
+> >>           new_key->bus = bus;
+> >>           new_key->devfn = devfn;
+> >> @@ -4238,6 +4239,11 @@ VTDAddressSpace 
+> >> *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+> >>           vtd_dev_as->context_cache_entry.context_cache_gen = 0;
+> >>           vtd_dev_as->iova_tree = iova_tree_new();
+> >>
+> >> +        /* Some functions in this branch require the bql, make sure 
+> >> we own it */
+> >> +        if (take_bql) {
+> >> +            bql_lock();
+> >> +        }
+> >> +
+> >>           memory_region_init(&vtd_dev_as->root, OBJECT(s), name, 
+> >> UINT64_MAX);
+> >>           address_space_init(&vtd_dev_as->as, &vtd_dev_as->root, "vtd- 
+> >> root");
+> >>
+> >> @@ -4305,6 +4311,10 @@ VTDAddressSpace 
+> >> *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+> >>
+> >>           vtd_switch_address_space(vtd_dev_as);
+> > 
+> > Would it help clarifying to propagate this argument down?
+> > vtd_switch_address_space(VTDAddressSpace *as, bool need_lock);
+> 
+> Hi phil, vtd_switch_address_space already does the same kind of check
+> 
+> > 
+> >>
+> >> +        if (take_bql) {
+> >> +            bql_unlock();
+> >> +        }
+> >> +
+> >>           g_hash_table_insert(s->vtd_address_spaces, new_key, 
+> >> vtd_dev_as);
+> >>       }
+> >>       return vtd_dev_as;
+> > 
 
-Oh you are correct. I will draft a v3.
 
-> >
-> > Note old_pte is no longer used later (it is defined within the scope he=
-re) and
-> > dropped immediately after qatomic_cmpxchg so we don't need that extra b=
-swap.
->
-> Also pte is not modified inplace previously, unlike the code samples abov=
-e.
->
-> >
-> > >
-> > > >>>>>>                 }
-> > > >>>>>>                 if (old_pte !=3D pte) {
-> > > >>>>>>                     goto restart;
-> > > >>>>>
-> > > >>>>> If PTEs are always stored in LE order, maybe what we want is ea=
-rlier:
-> > > >>>>>
-> > > >>>>> -- >8 --
-> > > >>>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helpe=
-r.c
-> > > >>>>> index 619c76cc001..b6ac2800240 100644
-> > > >>>>> --- a/target/riscv/cpu_helper.c
-> > > >>>>> +++ b/target/riscv/cpu_helper.c
-> > > >>>>> @@ -1464,5 +1464,5 @@ static int get_physical_address(CPURISCVS=
-tate
-> > > >>>>> *env, hwaddr *physical,
-> > > >>>>>             if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> > > >>>>> -            pte =3D address_space_ldl(cs->as, pte_addr, attrs,=
- &res);
-> > > >>>>> +            pte =3D address_space_ldl_le(cs->as, pte_addr, att=
-rs, &res);
-> > > >>>>>             } else {
-> > > >>>>> -            pte =3D address_space_ldq(cs->as, pte_addr, attrs,=
- &res);
-> > > >>>>> +            pte =3D address_space_ldq_le(cs->as, pte_addr, att=
-rs, &res);
-> > > >>>>
-> > > >>>> Unfortunately, this doesn't work in two ways:
-> > > >>>>
-> > > >>>> 1. Note pte is used in the following code and that means pte mus=
-t hold
-> > > >>>> a correct value from the
-> > > >>>> view of host endian (in my case, big endian not little endian).
-> > > >>>> 2. address_space_ldq_le will dispatch to ldq_le_p, while
-> > > >>>> address_space_leq will dispatch to ldq_p.
-> > > >>>> However, on little endian targets, ldq_p is an alias of ldq_le_p=
- so
-> > > >>>> making no effects.
-> > > >>>>
-> > > >>>> Per my testing, this patch doesn't have any effect indeed. To ha=
-ve a
-> > > >>>> brief view what is happening,
-> > > >>>> see the logs just before atomic_cmpxchg:
-> > > >>>>
-> > > >>>> pte_pa 0xf14000000000000 =3D=3D pte 0x140f ? updated_pte 0x144f
-> > > >>>>
-> > > >>>>>             }
-> > > >>>>> ---
-> > > >>
-> > >
+As an apropos, I think any caller of bql_lock really should call
+bql_lock_impl so we know who took BQL. Or just use BQL_LOCK_GUARD.
+But, that's an unrelated cleanup.
+
 
