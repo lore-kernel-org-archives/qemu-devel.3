@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1060AC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF99C369BA
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:12:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4m3T-0006TC-EX; Tue, 15 Apr 2025 15:34:49 -0400
+	id 1u4mI0-0004OH-A8; Tue, 15 Apr 2025 15:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4lzF-0008D1-RS
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:30:26 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1u4mBq-0001cb-AW
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:43:30 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4ly8-0000jm-H6
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:30:24 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-879d2e419b9so5032192a12.2
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:28:57 -0700 (PDT)
+ id 1u4mAv-0007cG-8t
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:43:24 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7376e311086so7846223b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:42:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744745336; x=1745350136; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744746129; x=1745350929; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KlmG2OwujkHfvC+9XIZtBlr9M1N19L4fuVBFqBalSEw=;
- b=on7ZdTWtW6cEcYZ1g7txRf/vU2gvfA6Rr8eDM89nRBkHehjEhpcMpPK48TgcBKr3/B
- rz3BEvZI9OWgjnGrw+AllcDTQ/aeDlfXoy4nND4pTHsL4+9NfpPV526qqOxQFx8o3AQw
- O3iH58gsnSzO1RnqYbe3Qo7WqgS/Kg5wwfIkwNQrQ9L8tAWmE49YoZUUDMElTcdrSEvn
- BwjG5/CXxLyDPmzzxtWBBCCABAYcZcWC4M2RGqpj30QoHgVjNexnLh58pwj8jWMUbNcG
- G+S7tqHEufUe7YVJhf3UyCl2koItW7RTH0+xht8WBX0eF87a7/sJFMV9Lp43zZoswARf
- 1wnA==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=D1EyruBkD+NBUce366c/Rl8XGoQXLo57MbsM21RJNHc=;
+ b=Zg+xwm/v7hX8BgDhORPVnHtLAvIk+TFNd9W37vQvQ/Oe/UFwNAyNfiJ3hIdzkdqe5p
+ JA1D+7yYpBzp2Crt0DTChLHo6s2jQ11TIsiDdfHxzNAxvIVwsk2CDNt0bZwZ1IfzHhg+
+ JuXFbLXpDmAjOF1ZQYDyAE9/pRT9iU8eMNaXlF8zSfmrgOFZsb4DheXE5DulPC5Zm0f7
+ W2ayZky77eQysCP1P9752/s8+y1ePSwsbLgwvn94jkOYYFSWOK1JSq240+UOqPsd/TZh
+ G35SggPq6R19irj2I0cwnfEUIu27CCT2+NhSkkoPo3orWMKZsapz2xUX+V4JSe5hKGFw
+ U2YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744745336; x=1745350136;
+ d=1e100.net; s=20230601; t=1744746129; x=1745350929;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KlmG2OwujkHfvC+9XIZtBlr9M1N19L4fuVBFqBalSEw=;
- b=iOhDKUiV7s3sUgipR6wlUEeM7fbY8sUO6iJi16rVG1BVLvf9lNQzjzwPrkAOAdVGK1
- 2YtaGEBcS3rTTPc3c31Zyyh4IEdRY+x/UfjoLyt81HvfHyDhY0XKiUBF/+fIxvwa26HJ
- 3MKCmKCJ8YXXRhZ7+1WCyTwzZiSsHNeGnVjrOfJL+TGg4zDjgKtrwtEUZkgugYvoRDxt
- sRIszcKD/rSELJT5v9EQmF3IWJo8QnDoRNHQJTgQIURm7qRt1sKa0402xs9tulQVHo/t
- 0e3hfBqPHW5LPDt9C1pAfIfd3FnEHyR783Wpr3OXxmr0d96lcHEc/dz6sYnDASZosK4x
- XsTg==
-X-Gm-Message-State: AOJu0YxhG0g7YdH6dXdteZwE2hGXZrLh56psh1hZciJsGabdD87CP5LY
- umy1aEFdhOTmCspZofVJZsgR+my6H7QRelb3f9WCNBiXwz52rLkMnA7xDOIME2iHDWjmi4x65LB
- i
-X-Gm-Gg: ASbGncs2rqg5Ygs3o9EYWasFYiPbqiZYa9T3uL/tqKiTS3GKKd+S/El7u+CiBJrn6jw
- o+T+nGfjvUJg3dnQjZGUxoQ0ocY5S5LSsGHYNGzQX/6AkSc/OPRTp2KWj5ioLTiTO3OhmmJvA8p
- y+GDM4barfVEmumKS9IDLzbvwi4Mrr8WX84vcF/ZSlrmuuDfDzuT8e1/NbqyzoTmWNLeT0DlsYZ
- az52FX7lDSnxFMjOXOHWGyf+tF5OUFPXsUwXsuQavp5ss5qb37R4idMwTtzqCB2DN9HKiK7GEtM
- L1Rxs8EezigI/YP3mv7sBRFm7Lb64yR6Sg7w0UDEkxB3Mgt3kKKrK+nxbj5NaI6vCamigCXn7jm
- YkQ6SPqoMnw==
-X-Google-Smtp-Source: AGHT+IH4ba6MXorW7rqnioxSq8WnWZ9rBRHsby6VQE4Lii+8rN7/t3rjWaSNIkSWP3pvkjwKb/i20g==
-X-Received: by 2002:a17:90a:da87:b0:2ff:7b28:a519 with SMTP id
- 98e67ed59e1d1-3085efefbb2mr528544a91.30.1744745336338; 
- Tue, 15 Apr 2025 12:28:56 -0700 (PDT)
+ bh=D1EyruBkD+NBUce366c/Rl8XGoQXLo57MbsM21RJNHc=;
+ b=jfZoFVnfAIskkB3xT52x/ZdTT5wxuCAjT7JBVmJrc8nfZsl7W1RAtZli80g0vnpZuB
+ h9iUhNxz3z5p++UHbhIZa1MXQbeaWtiPZ+hgS+TJK7Z+6goihJAirN/XujIqfy38a1VU
+ nwfNfM3srcZJPl+Q77aK49e7jaJWXjYst8go62dUU0nRCpFhdD6eZnVhE+DfALCKYZDd
+ iwFeR6Uq27y5BoAK0C3avC5EHM3tf8oL+T9X7TprE6lZp3Vroynlm8lAKRcqq7cH/3xe
+ xgdHVi83w1iMapwu/AX1jfTsiSXt9p3Z/KdsQqUBEP+fT9jpw4ApGXj8/MtlXYQ5Nck2
+ ta4Q==
+X-Gm-Message-State: AOJu0YxPumAZo93oe1L4HTkvzOx7q4eWWm07e9+S3lQxwrb36FgaiC2T
+ KojlIqlBHx0ZghW0cg4Vo9UF90pdXiGBhL8Q0kbi3kzIeeAXj/yxF42HM7QGZWgp5pBX7YDq+HD
+ j
+X-Gm-Gg: ASbGncvENeFaxhVoIoCc5DdC14mXFlHPHmhj92gTSLxYebvpf21rXoHQNULH/h3cTRX
+ 8Lkz5D/T3LnX1qrTis2Q0oz6haWfkKlRmyfbaT6IoZa9zlrEvGgPOezYiq811asFfu9OUz1n2cF
+ e/pOxGZLw6PZ+UBNfjL6FTrgKFx3rgHCzm3/R7lJnbqH32jjLNsFxNtigrFtl93jbdIDzshlx1t
+ /dE5U0o1GU/K2Yy/rNklrB4mbiEk4KqrvrS5yA02+JJzRn2VBjtZaFKiX0rOeKtlH276e/zmMCB
+ nzkIOWDsBKoLhhlvmmwx1CFWsFLhilE8c4N5NFAt4jgLT32hAcASWbiOsDPVWlL9uegj9G4pxh4
+ =
+X-Google-Smtp-Source: AGHT+IEYW7ACUrph/EywHmu/uAE5EDwPFSC+ttKGUD4khe5LMctP4DE/7mQ6yBY3jTZ+Z+wzXdsJPg==
+X-Received: by 2002:a05:6a00:398d:b0:732:a24:7354 with SMTP id
+ d2e1a72fcca58-73c1f8c3d99mr971666b3a.4.1744745770554; 
+ Tue, 15 Apr 2025 12:36:10 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-306df06a165sm13534812a91.4.2025.04.15.12.28.55
+ d2e1a72fcca58-73bd230e34asm9155603b3a.137.2025.04.15.12.36.10
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 12:28:55 -0700 (PDT)
+ Tue, 15 Apr 2025 12:36:10 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 045/163] tcg: Convert div2 to TCGOutOpDivRem
-Date: Tue, 15 Apr 2025 12:23:16 -0700
-Message-ID: <20250415192515.232910-46-richard.henderson@linaro.org>
+Subject: [PATCH v4 137/163] tcg/ppc: Implement add/sub carry opcodes
+Date: Tue, 15 Apr 2025 12:24:48 -0700
+Message-ID: <20250415192515.232910-138-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,323 +99,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg.c                        | 24 +++++++++++++++--
- tcg/aarch64/tcg-target.c.inc     |  4 +++
- tcg/arm/tcg-target.c.inc         |  4 +++
- tcg/i386/tcg-target.c.inc        | 17 ++++++++----
- tcg/loongarch64/tcg-target.c.inc |  4 +++
- tcg/mips/tcg-target.c.inc        |  4 +++
- tcg/ppc/tcg-target.c.inc         |  4 +++
- tcg/riscv/tcg-target.c.inc       |  4 +++
- tcg/s390x/tcg-target.c.inc       | 44 ++++++++++++++++----------------
- tcg/sparc64/tcg-target.c.inc     |  4 +++
- tcg/tci/tcg-target.c.inc         |  4 +++
- 11 files changed, 88 insertions(+), 29 deletions(-)
+ tcg/ppc/tcg-target-con-set.h |   3 +
+ tcg/ppc/tcg-target-con-str.h |   1 +
+ tcg/ppc/tcg-target.c.inc     | 167 ++++++++++++++++++++++++++++++-----
+ 3 files changed, 150 insertions(+), 21 deletions(-)
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index f77483188b..563a29e579 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -986,6 +986,12 @@ typedef struct TCGOutOpBinary {
-                     TCGReg a0, TCGReg a1, tcg_target_long a2);
- } TCGOutOpBinary;
- 
-+typedef struct TCGOutOpDivRem {
-+    TCGOutOp base;
-+    void (*out_rr01r)(TCGContext *s, TCGType type,
-+                      TCGReg a0, TCGReg a1, TCGReg a4);
-+} TCGOutOpDivRem;
-+
- typedef struct TCGOutOpUnary {
-     TCGOutOp base;
-     void (*out_rr)(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1);
-@@ -1022,6 +1028,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
-     OUTOP(INDEX_op_andc, TCGOutOpBinary, outop_andc),
-     OUTOP(INDEX_op_divs, TCGOutOpBinary, outop_divs),
-     OUTOP(INDEX_op_divu, TCGOutOpBinary, outop_divu),
-+    OUTOP(INDEX_op_div2_i32, TCGOutOpDivRem, outop_divs2),
-+    OUTOP(INDEX_op_div2_i64, TCGOutOpDivRem, outop_divs2),
-     OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
-     OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
-     OUTOP(INDEX_op_mulsh, TCGOutOpBinary, outop_mulsh),
-@@ -2265,7 +2273,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_rem_i32:
-     case INDEX_op_remu_i32:
-         return TCG_TARGET_HAS_rem_i32;
--    case INDEX_op_div2_i32:
-     case INDEX_op_divu2_i32:
-         return TCG_TARGET_HAS_div2_i32;
-     case INDEX_op_rotl_i32:
-@@ -2325,7 +2332,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_rem_i64:
-     case INDEX_op_remu_i64:
-         return TCG_TARGET_HAS_rem_i64;
--    case INDEX_op_div2_i64:
-     case INDEX_op_divu2_i64:
-         return TCG_TARGET_HAS_div2_i64;
-     case INDEX_op_rotl_i64:
-@@ -5464,6 +5470,20 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-         }
-         break;
- 
-+    case INDEX_op_div2_i32:
-+    case INDEX_op_div2_i64:
-+        {
-+            const TCGOutOpDivRem *out =
-+                container_of(all_outop[op->opc], TCGOutOpDivRem, base);
-+
-+            /* Only used by x86 and s390x, which use matching constraints. */
-+            tcg_debug_assert(new_args[0] == new_args[2]);
-+            tcg_debug_assert(new_args[1] == new_args[3]);
-+            tcg_debug_assert(!const_args[4]);
-+            out->out_rr01r(s, type, new_args[0], new_args[1], new_args[4]);
-+        }
-+        break;
-+
-     default:
-         if (def->flags & TCG_OPF_VECTOR) {
-             tcg_out_vec_op(s, op->opc, type - TCG_TYPE_V64,
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 167c51c897..ea5766414d 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -2168,6 +2168,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
- };
- 
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index 65d0ae83b2..ff750e2df8 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1880,6 +1880,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
- };
- 
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-index f258d6383b..9238e0e8e4 100644
---- a/tcg/i386/tcg-target.c.inc
-+++ b/tcg/i386/tcg-target.c.inc
-@@ -2637,6 +2637,18 @@ static const TCGOutOpBinary outop_divs = {
-     .base.static_constraint = C_NotImplemented,
- };
- 
-+static void tgen_divs2(TCGContext *s, TCGType type,
-+                       TCGReg a0, TCGReg a1, TCGReg a4)
-+{
-+    int rexw = type == TCG_TYPE_I32 ? 0 : P_REXW;
-+    tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_IDIV, a4);
-+}
-+
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_O2_I3(a, d, 0, 1, r),
-+    .out_rr01r = tgen_divs2,
-+};
-+
- static const TCGOutOpBinary outop_divu = {
-     .base.static_constraint = C_NotImplemented,
- };
-@@ -2847,9 +2859,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         }
-         break;
- 
--    OP_32_64(div2):
--        tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_IDIV, args[4]);
--        break;
-     OP_32_64(divu2):
-         tcg_out_modrm(s, OPC_GRP3_Ev + rexw, EXT3_DIV, args[4]);
-         break;
-@@ -3789,8 +3798,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_movcond_i64:
-         return C_O1_I4(r, r, reT, r, 0);
- 
--    case INDEX_op_div2_i32:
--    case INDEX_op_div2_i64:
-     case INDEX_op_divu2_i32:
-     case INDEX_op_divu2_i64:
-         return C_O2_I3(a, d, 0, 1, r);
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 8adcd030c5..deaf475c03 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1331,6 +1331,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
- };
- 
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-index ab9546f104..adbc7ee39d 100644
---- a/tcg/mips/tcg-target.c.inc
-+++ b/tcg/mips/tcg-target.c.inc
-@@ -1733,6 +1733,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
- };
- 
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
+diff --git a/tcg/ppc/tcg-target-con-set.h b/tcg/ppc/tcg-target-con-set.h
+index 14cd217287..9ea26c40ae 100644
+--- a/tcg/ppc/tcg-target-con-set.h
++++ b/tcg/ppc/tcg-target-con-set.h
+@@ -29,7 +29,10 @@ C_O1_I2(r, r, rC)
+ C_O1_I2(r, r, rI)
+ C_O1_I2(r, r, rT)
+ C_O1_I2(r, r, rU)
++C_O1_I2(r, r, rZM)
+ C_O1_I2(r, r, rZW)
++C_O1_I2(r, rI, rN)
++C_O1_I2(r, rZM, rZM)
+ C_O1_I2(v, v, v)
+ C_O1_I3(v, v, v, v)
+ C_O1_I4(v, v, v, vZM, v)
+diff --git a/tcg/ppc/tcg-target-con-str.h b/tcg/ppc/tcg-target-con-str.h
+index 16b687216e..faf92da47f 100644
+--- a/tcg/ppc/tcg-target-con-str.h
++++ b/tcg/ppc/tcg-target-con-str.h
+@@ -19,6 +19,7 @@ REGS('v', ALL_VECTOR_REGS)
+ CONST('C', TCG_CT_CONST_CMP)
+ CONST('I', TCG_CT_CONST_S16)
+ CONST('M', TCG_CT_CONST_MONE)
++CONST('N', TCG_CT_CONST_N16)
+ CONST('T', TCG_CT_CONST_S32)
+ CONST('U', TCG_CT_CONST_U32)
+ CONST('W', TCG_CT_CONST_WSZ)
 diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-index b347595131..1eb3e785c0 100644
+index 5b04655f3b..0b151db0e4 100644
 --- a/tcg/ppc/tcg-target.c.inc
 +++ b/tcg/ppc/tcg-target.c.inc
-@@ -2972,6 +2972,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
+@@ -89,14 +89,15 @@
+ /* Shorthand for size of a register.  */
+ #define SZR  (TCG_TARGET_REG_BITS / 8)
+ 
+-#define TCG_CT_CONST_S16  0x100
+-#define TCG_CT_CONST_U16  0x200
+-#define TCG_CT_CONST_S32  0x400
+-#define TCG_CT_CONST_U32  0x800
+-#define TCG_CT_CONST_ZERO 0x1000
+-#define TCG_CT_CONST_MONE 0x2000
+-#define TCG_CT_CONST_WSZ  0x4000
+-#define TCG_CT_CONST_CMP  0x8000
++#define TCG_CT_CONST_S16     0x00100
++#define TCG_CT_CONST_U16     0x00200
++#define TCG_CT_CONST_N16     0x00400
++#define TCG_CT_CONST_S32     0x00800
++#define TCG_CT_CONST_U32     0x01000
++#define TCG_CT_CONST_ZERO    0x02000
++#define TCG_CT_CONST_MONE    0x04000
++#define TCG_CT_CONST_WSZ     0x08000
++#define TCG_CT_CONST_CMP     0x10000
+ 
+ #define ALL_GENERAL_REGS  0xffffffffu
+ #define ALL_VECTOR_REGS   0xffffffff00000000ull
+@@ -342,6 +343,9 @@ static bool tcg_target_const_match(int64_t sval, int ct,
+     if ((ct & TCG_CT_CONST_U16) && uval == (uint16_t)uval) {
+         return 1;
+     }
++    if ((ct & TCG_CT_CONST_N16) && -sval == (int16_t)-sval) {
++        return 1;
++    }
+     if ((ct & TCG_CT_CONST_S32) && sval == (int32_t)sval) {
+         return 1;
+     }
+@@ -2863,21 +2867,69 @@ static const TCGOutOpBinary outop_add = {
+     .out_rri = tgen_addi,
  };
  
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index 74fa38d273..19c690c1c2 100644
---- a/tcg/riscv/tcg-target.c.inc
-+++ b/tcg/riscv/tcg-target.c.inc
-@@ -2009,6 +2009,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
- };
- 
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index f55309f48e..b434ce423a 100644
---- a/tcg/s390x/tcg-target.c.inc
-+++ b/tcg/s390x/tcg-target.c.inc
-@@ -2246,6 +2246,28 @@ static const TCGOutOpBinary outop_divs = {
-     .base.static_constraint = C_NotImplemented,
- };
- 
-+static void tgen_divs2(TCGContext *s, TCGType type,
-+                       TCGReg a0, TCGReg a1, TCGReg a4)
++static void tgen_addco_rrr(TCGContext *s, TCGType type,
++                           TCGReg a0, TCGReg a1, TCGReg a2)
 +{
-+    tcg_debug_assert((a1 & 1) == 0);
-+    tcg_debug_assert(a0 == a1 + 1);
-+    if (type == TCG_TYPE_I32) {
-+        tcg_out_insn(s, RR, DR, a1, a4);
++    tcg_out32(s, ADDC | TAB(a0, a1, a2));
++}
++
++static void tgen_addco_rri(TCGContext *s, TCGType type,
++                           TCGReg a0, TCGReg a1, tcg_target_long a2)
++{
++    tcg_out32(s, ADDIC | TAI(a0, a1, a2));
++}
++
++static TCGConstraintSetIndex cset_addco(TCGType type, unsigned flags)
++{
++    /*
++     * Note that the CA bit is defined based on the word size of the
++     * environment.  So in 64-bit mode it's always carry-out of bit 63.
++     * The fallback code using deposit works just as well for TCG_TYPE_I32.
++     */
++    return type == TCG_TYPE_REG ? C_O1_I2(r, r, rI) : C_NotImplemented;
++}
++
+ static const TCGOutOpBinary outop_addco = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_addco,
++    .out_rrr = tgen_addco_rrr,
++    .out_rri = tgen_addco_rri,
++};
++
++static void tgen_addcio_rrr(TCGContext *s, TCGType type,
++                            TCGReg a0, TCGReg a1, TCGReg a2)
++{
++    tcg_out32(s, ADDE | TAB(a0, a1, a2));
++}
++
++static void tgen_addcio_rri(TCGContext *s, TCGType type,
++                            TCGReg a0, TCGReg a1, tcg_target_long a2)
++{
++    tcg_out32(s, (a2 ? ADDME : ADDZE) | RT(a0) | RA(a1));
++}
++
++static TCGConstraintSetIndex cset_addcio(TCGType type, unsigned flags)
++{
++    return type == TCG_TYPE_REG ? C_O1_I2(r, r, rZM) : C_NotImplemented;
++}
++
++static const TCGOutOpBinary outop_addcio = {
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_addcio,
++    .out_rrr = tgen_addcio_rrr,
++    .out_rri = tgen_addcio_rri,
+ };
+ 
+ static const TCGOutOpAddSubCarry outop_addci = {
+-    .base.static_constraint = C_NotImplemented,
+-};
+-
+-static const TCGOutOpBinary outop_addcio = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_addcio,
++    .out_rrr = tgen_addcio_rrr,
++    .out_rri = tgen_addcio_rri,
+ };
+ 
+ static void tcg_out_set_carry(TCGContext *s)
+ {
+-    g_assert_not_reached();
++    tcg_out32(s, SUBFC | TAB(TCG_REG_R0, TCG_REG_R0, TCG_REG_R0));
+ }
+ 
+ static void tgen_and(TCGContext *s, TCGType type,
+@@ -3284,21 +3336,94 @@ static const TCGOutOpSubtract outop_sub = {
+     .out_rir = tgen_subfi,
+ };
+ 
++static void tgen_subbo_rrr(TCGContext *s, TCGType type,
++                           TCGReg a0, TCGReg a1, TCGReg a2)
++{
++    tcg_out32(s, SUBFC | TAB(a0, a2, a1));
++}
++
++static void tgen_subbo_rri(TCGContext *s, TCGType type,
++                           TCGReg a0, TCGReg a1, tcg_target_long a2)
++{
++    if (a2 == 0) {
++        tcg_out_movi(s, type, TCG_REG_R0, 0);
++        tgen_subbo_rrr(s, type, a0, a1, TCG_REG_R0);
 +    } else {
-+        /*
-+         * TODO: Move the sign-extend of the numerator from a2 into a3
-+         * into the tcg backend, instead of in early expansion.  It is
-+         * required for 32-bit DR, but not 64-bit DSGR.
-+         */
-+        tcg_out_insn(s, RRE, DSGR, a1, a4);
++        tgen_addco_rri(s, type, a0, a1, -a2);
 +    }
 +}
 +
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_O2_I3(o, m, 0, 1, r),
-+    .out_rr01r = tgen_divs2,
-+};
++/* The underlying insn for subfi is subfic. */
++#define tgen_subbo_rir  tgen_subfi
 +
- static const TCGOutOpBinary outop_divu = {
-     .base.static_constraint = C_NotImplemented,
- };
-@@ -2527,13 +2549,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         tcg_out_st(s, TCG_TYPE_I32, args[0], args[1], args[2]);
-         break;
- 
--    case INDEX_op_div2_i32:
--        tcg_debug_assert(args[0] == args[2]);
--        tcg_debug_assert(args[1] == args[3]);
--        tcg_debug_assert((args[1] & 1) == 0);
--        tcg_debug_assert(args[0] == args[1] + 1);
--        tcg_out_insn(s, RR, DR, args[1], args[4]);
--        break;
-     case INDEX_op_divu2_i32:
-         tcg_debug_assert(args[0] == args[2]);
-         tcg_debug_assert(args[1] == args[3]);
-@@ -2702,19 +2717,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         tcg_out_insn(s, RRE, LRVGR, args[0], args[1]);
-         break;
- 
--    case INDEX_op_div2_i64:
--        /*
--         * ??? We get an unnecessary sign-extension of the dividend
--         * into op0 with this definition, but as we do in fact always
--         * produce both quotient and remainder using INDEX_op_div_i64
--         * instead requires jumping through even more hoops.
--         */
--        tcg_debug_assert(args[0] == args[2]);
--        tcg_debug_assert(args[1] == args[3]);
--        tcg_debug_assert((args[1] & 1) == 0);
--        tcg_debug_assert(args[0] == args[1] + 1);
--        tcg_out_insn(s, RRE, DSGR, args[1], args[4]);
--        break;
-     case INDEX_op_divu2_i64:
-         tcg_debug_assert(args[0] == args[2]);
-         tcg_debug_assert(args[1] == args[3]);
-@@ -3396,8 +3398,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_movcond_i64:
-         return C_O1_I4(r, r, rC, rI, r);
- 
--    case INDEX_op_div2_i32:
--    case INDEX_op_div2_i64:
-     case INDEX_op_divu2_i32:
-     case INDEX_op_divu2_i64:
-         return C_O2_I3(o, m, 0, 1, r);
-diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-index 3a3372d7aa..472ccd7608 100644
---- a/tcg/sparc64/tcg-target.c.inc
-+++ b/tcg/sparc64/tcg-target.c.inc
-@@ -1352,6 +1352,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rri = tgen_divsi,
++static void tgen_subbo_rii(TCGContext *s, TCGType type,
++                           TCGReg a0, tcg_target_long a1, tcg_target_long a2)
++{
++    tcg_out_movi(s, type, TCG_REG_R0, a2);
++    tgen_subbo_rir(s, type, a0, a1, TCG_REG_R0);
++}
++
++static TCGConstraintSetIndex cset_subbo(TCGType type, unsigned flags)
++{
++    /* Recall that the CA bit is defined based on the host word size. */
++    return type == TCG_TYPE_REG ? C_O1_I2(r, rI, rN) : C_NotImplemented;
++}
++
+ static const TCGOutOpAddSubCarry outop_subbo = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_subbo,
++    .out_rrr = tgen_subbo_rrr,
++    .out_rri = tgen_subbo_rri,
++    .out_rir = tgen_subbo_rir,
++    .out_rii = tgen_subbo_rii,
  };
  
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
+-static const TCGOutOpAddSubCarry outop_subbi = {
+-    .base.static_constraint = C_NotImplemented,
+-};
++static void tgen_subbio_rrr(TCGContext *s, TCGType type,
++                            TCGReg a0, TCGReg a1, TCGReg a2)
++{
++    tcg_out32(s, SUBFE | TAB(a0, a2, a1));
++}
 +
- static void tgen_divu_rJ(TCGContext *s, TCGType type,
-                          TCGReg a0, TCGReg a1, TCGArg a2, bool c2)
++static void tgen_subbio_rri(TCGContext *s, TCGType type,
++                            TCGReg a0, TCGReg a1, tcg_target_long a2)
++{
++    tgen_addcio_rri(s, type, a0, a1, ~a2);
++}
++
++static void tgen_subbio_rir(TCGContext *s, TCGType type,
++                            TCGReg a0, tcg_target_long a1, TCGReg a2)
++{
++    tcg_debug_assert(a1 == 0 || a1 == -1);
++    tcg_out32(s, (a1 ? SUBFME : SUBFZE) | RT(a0) | RA(a2));
++}
++
++static void tgen_subbio_rii(TCGContext *s, TCGType type,
++                            TCGReg a0, tcg_target_long a1, tcg_target_long a2)
++{
++    tcg_out_movi(s, type, TCG_REG_R0, a2);
++    tgen_subbio_rir(s, type, a0, a1, TCG_REG_R0);
++}
++
++static TCGConstraintSetIndex cset_subbio(TCGType type, unsigned flags)
++{
++    return type == TCG_TYPE_REG ? C_O1_I2(r, rZM, rZM) : C_NotImplemented;
++}
+ 
+ static const TCGOutOpAddSubCarry outop_subbio = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_subbio,
++    .out_rrr = tgen_subbio_rrr,
++    .out_rri = tgen_subbio_rri,
++    .out_rir = tgen_subbio_rir,
++    .out_rii = tgen_subbio_rii,
+ };
+ 
++#define outop_subbi  outop_subbio
++
+ static void tcg_out_set_borrow(TCGContext *s)
  {
-diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-index dfa8aecc7a..6646be224d 100644
---- a/tcg/tci/tcg-target.c.inc
-+++ b/tcg/tci/tcg-target.c.inc
-@@ -658,6 +658,10 @@ static const TCGOutOpBinary outop_divs = {
-     .out_rrr = tgen_divs,
- };
+-    g_assert_not_reached();
++    /* borrow = !carry */
++    tcg_out32(s, ADDIC | TAI(TCG_REG_R0, TCG_REG_R0, 0));
+ }
  
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_divu(TCGContext *s, TCGType type,
-                       TCGReg a0, TCGReg a1, TCGReg a2)
- {
+ static void tgen_xor(TCGContext *s, TCGType type,
 -- 
 2.43.0
 
