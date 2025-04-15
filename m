@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4F9C369BD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B394CC369C2
 	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4mB5-0008NN-Am; Tue, 15 Apr 2025 15:42:39 -0400
+	id 1u4mIE-0004rv-FT; Tue, 15 Apr 2025 15:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4m2r-0004ru-3I
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:34:11 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1u4mCa-00032y-VV
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:44:17 -0400
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4m1k-0002xC-QD
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:34:06 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2264aefc45dso88975615ad.0
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:32:50 -0700 (PDT)
+ id 1u4mBc-0008EE-Jv
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:44:12 -0400
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-7c0e135e953so622682885a.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:43:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744745569; x=1745350369; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744746187; x=1745350987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nI/M/IwczebCOlajrhzp8aQhsqTUe7nxt6KRZlFvdew=;
- b=C6wT4vEXZOj92v5ecQLl7I8xx63GHQZfgu6DdrlNz3vaeVzSbo+MsAXAhieJ3lCfQO
- vFd75/90Lue8NhYAyJuaq6HTG6bMX6CRZCUG3nYWSS/LmoAGatT2MIabE/ou3pHXLpCS
- 1F6/sYVKmT9QED+v+Ha/TfL0zOoPp9oeYmun3eryQ7ItwhPrjSFeqi+FTj4/d7c5CpM/
- q6gH3aK83xKHErFfUKt84Zh5UEGB0wJ2nkdYqb+g52dFOiFQnTgSIoNqIjRWJgWGr/KE
- hE0brQf8SdBCMKR3TXCOBhFYttS0JIKnzvVwG5x5uYaDONq2gbShrLTnb7qZQ2pBiQHS
- T83w==
+ :reply-to; bh=hFnYeJKgvTco35iIcxVFzyI3nrLlH/dm/A1BmcF8NhQ=;
+ b=JpqkSkbppLkhj4C9QTEF2RporsoLUMpGy6ILhIin8aUlb/TOczb7KGCbMPergsAC+J
+ 2qwed08xRKudcyf541Eg5dGGm1JFkptPC7P9yEsDr3XnlZXfBw+pj9cnQPQ7R4kCVkM3
+ gI4MIzA3JDkAawiv5pAwlGzj8+vLIP1k1GhE3y1YxZnNP5Mfw+dPsO1tM8GjulUAjHmR
+ G7GGNyu3VXubWOjvdNqIOj7M4m/VIxl36sHBMQ5UUKlk4mjv9Oj3OhBZEWqP2WBByTR6
+ I9TATSEDRJ0wnwN4HWf70vwrpN23NEFFCv8HMlu/8K7xS6zYU2EhvR4SD5IEMDu2TAp5
+ t3jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744745569; x=1745350369;
+ d=1e100.net; s=20230601; t=1744746187; x=1745350987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nI/M/IwczebCOlajrhzp8aQhsqTUe7nxt6KRZlFvdew=;
- b=F5Va7Ga+JOsXpM0xJX7p/SWrrEW4UM/TNYlk5fyi19onfac4GvVMJx3bj1X0+ZqCOJ
- PQg9J/BuHFtwZY6IBiP9GmODLkm8kH1GJFpUVPTixaTt8Qmyhpjih/AKb7ytfRllUTp/
- i1bCpq51R71bExnrjjJMKnsrrvS87QRuPNbECmkn+5EyEXKDkhuZ5atOC0iirN/FMiLy
- /TgfCXowevF5/CqusBzCadiBlEfLZwa6GaW+OPmkn2UZ9ONyxMLvlsQa73XoSMtC91+p
- VaUmvDXPb7lo619coMQWValF4pjA5LbxIU385qcnQ+JJOfvZYVu2iqPIsYKMvSipfA5o
- owJA==
-X-Gm-Message-State: AOJu0YxsuBVaGGoVvA8HY7zDubIjEgy4e71IBvxKTeCJ89nxQ7ItDEqq
- 4uE/1YFRSysu39QGZz7/UsluLjpvExQskVzefxiFvLil1s8tg909k+Ds9sF5/fkh3QLC74ceIP7
- t
-X-Gm-Gg: ASbGncuS1vxbhf/hdJUB5LNfpBoQ5PATKllwnw1k9h4zQRb8Kg9GUoTv3iol+tD/xVi
- SIGLpKjb/O+fnSnilN8bUkQWTiPLkSROSNpt5clEwMG/YjL3ztVjB6JP+1zlIfMwGNer9xAY1qX
- YMi6rw8jMwZdQfP2KHmVO+E+e2UCUBb0nT3hSkI7BPsJNiaFwQGvgoUNNeXHHukmihCpM4clVnJ
- DynCT/7yhBpCI3xH7TOlxGFaWba3x5fVopdr0PFBSIo0QtZsFzGFZY3PspgYzd0oKaN129icZfL
- HdqBemOCQR4IFmSdGwXjQWJpj6FCLJhrUDgH9zw4P4TlTdnaOD3pO418/yXrLZUQgQDv3fo6lXc
+ bh=hFnYeJKgvTco35iIcxVFzyI3nrLlH/dm/A1BmcF8NhQ=;
+ b=See8nu0RnNzTgwSaoaqfCs1KDArvubp834dFQg11MfhVXnFpW7Y1L24lgOlFGiAVnu
+ bPhbye1E8AV5EqJZmNr1BPWozmJzQhlC0bGDCFSsW+4HZIFhK2QdmX9jtHm+xgxx1Q5V
+ WTyoBzy459o/uYxTEpPaPkCrajAq9IJj0AgeM5r5v0R8ZWbuIdWHDdhJrKu2HetxRtYo
+ SJMz6uxL+4hS+JxTzdyfyIu/wB+tPFTewMAU6iMp/MRfF7+hiqqzn2U5LYojk5zGy5gE
+ 4Nvj5XMfsu7l+qeTn6mo/TgmF96VsR3KYTUZSgFutswgsTOXLtxzIm4+HcSrecVk0/DN
+ 3ceQ==
+X-Gm-Message-State: AOJu0YwX6WEqtnF8629p3Z8bHClN0/jyDc8/WlUhosC0lJvbUYctytBP
+ CLLdjY2DbakSusAuZJGjkfVRKT3JoWggGEdmHXkfwwpbW3cPTxgUd4KJ6Bro1u1G7vkLgnIAOQA
+ Y
+X-Gm-Gg: ASbGncu7892US/aWkSV3xk4+3o45IUGmvFVSD1IBaGtPwctQWdSglghMOumeCkIushp
+ 3WHBe9urfaNpH3GFcO2k/095jTrtAAj+NYRgZNwdoQrXE7gpe47RuZM7HwIAYXcBaxD5gcvcV3Y
+ Nja/mIs3yMJ5TTKN4bVGqO8pjxv5FHmFd/BWHwo2tiKULW9w0L3Qj0QD8/0NXZhxM7B/elilUry
+ QC8y5JTamhu1Q3w5zCHmzlo/7J9CACt9p+1iNPixQk8o12cueYh8zbbexURLqkZpAVfYQjHdjUL
+ O3gHu5tzS5vFPYMj/lIOJfHTfVKu1TK+uLF5ATxsNya9ArujOfmtmnRHmWwmMzSmEQ7B9UcHc0s
  =
-X-Google-Smtp-Source: AGHT+IFVmm4RTNr7T1NIsT4A9/G+bEY8xkK50wZtg27m5uy5ATVRUdVTR3kLSJ9ZHOUqe27j84X+vw==
-X-Received: by 2002:a17:902:db07:b0:224:23be:c569 with SMTP id
- d9443c01a7336-22c319effd7mr4838385ad.22.1744745569225; 
- Tue, 15 Apr 2025 12:32:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQzgTxvpui5IC++3PKWNbHCVrvTi8iQDwvg/GaqoeVa6KtGTCepsrH7t2RZcb+QGiRXL29LA==
+X-Received: by 2002:a05:6a00:2e11:b0:736:52d7:daca with SMTP id
+ d2e1a72fcca58-73c1fafc18dmr1126600b3a.18.1744745761169; 
+ Tue, 15 Apr 2025 12:36:01 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7ccbd5esm122062355ad.248.2025.04.15.12.32.48
+ d2e1a72fcca58-73bd230e34asm9155603b3a.137.2025.04.15.12.36.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 12:32:48 -0700 (PDT)
+ Tue, 15 Apr 2025 12:36:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 110/163] tcg/riscv: Drop support for add2/sub2
-Date: Tue, 15 Apr 2025 12:24:21 -0700
-Message-ID: <20250415192515.232910-111-richard.henderson@linaro.org>
+Subject: [PATCH v4 124/163] target/arm: Use tcg_gen_addcio_* for ADCS
+Date: Tue, 15 Apr 2025 12:24:35 -0700
+Message-ID: <20250415192515.232910-125-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x733.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,165 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We now produce exactly the same code via generic expansion.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/riscv/tcg-target-con-set.h |  1 -
- tcg/riscv/tcg-target-has.h     |  6 +--
- tcg/riscv/tcg-target.c.inc     | 86 +---------------------------------
- 3 files changed, 3 insertions(+), 90 deletions(-)
+ target/arm/tcg/translate-a64.c |  8 ++------
+ target/arm/tcg/translate.c     | 17 +++--------------
+ 2 files changed, 5 insertions(+), 20 deletions(-)
 
-diff --git a/tcg/riscv/tcg-target-con-set.h b/tcg/riscv/tcg-target-con-set.h
-index 5ff2c2db60..0fc26d3f98 100644
---- a/tcg/riscv/tcg-target-con-set.h
-+++ b/tcg/riscv/tcg-target-con-set.h
-@@ -18,7 +18,6 @@ C_O1_I2(r, r, ri)
- C_O1_I2(r, r, rI)
- C_N1_I2(r, r, rM)
- C_O1_I4(r, r, rI, rM, rM)
--C_O2_I4(r, r, rz, rz, rM, rM)
- C_O0_I2(v, r)
- C_O1_I1(v, r)
- C_O1_I1(v, v)
-diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv/tcg-target-has.h
-index b2814f8ef9..c95dc1921e 100644
---- a/tcg/riscv/tcg-target-has.h
-+++ b/tcg/riscv/tcg-target-has.h
-@@ -10,13 +10,11 @@
- #include "host/cpuinfo.h"
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 934d66848a..99545a900d 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1076,11 +1076,9 @@ static void gen_adc_CC(int sf, TCGv_i64 dest, TCGv_i64 t0, TCGv_i64 t1)
+         TCGv_i64 cf_64 = tcg_temp_new_i64();
+         TCGv_i64 vf_64 = tcg_temp_new_i64();
+         TCGv_i64 tmp = tcg_temp_new_i64();
+-        TCGv_i64 zero = tcg_constant_i64(0);
  
- /* optional instructions */
--#define TCG_TARGET_HAS_add2_i32         1
--#define TCG_TARGET_HAS_sub2_i32         1
- #define TCG_TARGET_HAS_qemu_st8_i32     0
+         tcg_gen_extu_i32_i64(cf_64, cpu_CF);
+-        tcg_gen_add2_i64(result, cf_64, t0, zero, cf_64, zero);
+-        tcg_gen_add2_i64(result, cf_64, result, cf_64, t1, zero);
++        tcg_gen_addcio_i64(result, cf_64, t0, t1, cf_64);
+         tcg_gen_extrl_i64_i32(cpu_CF, cf_64);
+         gen_set_NZ64(result);
  
- #define TCG_TARGET_HAS_extr_i64_i32     1
--#define TCG_TARGET_HAS_add2_i64         1
--#define TCG_TARGET_HAS_sub2_i64         1
-+#define TCG_TARGET_HAS_add2_i64         0
-+#define TCG_TARGET_HAS_sub2_i64         0
+@@ -1094,12 +1092,10 @@ static void gen_adc_CC(int sf, TCGv_i64 dest, TCGv_i64 t0, TCGv_i64 t1)
+         TCGv_i32 t0_32 = tcg_temp_new_i32();
+         TCGv_i32 t1_32 = tcg_temp_new_i32();
+         TCGv_i32 tmp = tcg_temp_new_i32();
+-        TCGv_i32 zero = tcg_constant_i32(0);
  
- #define TCG_TARGET_HAS_qemu_ldst_i128   0
+         tcg_gen_extrl_i64_i32(t0_32, t0);
+         tcg_gen_extrl_i64_i32(t1_32, t1);
+-        tcg_gen_add2_i32(cpu_NF, cpu_CF, t0_32, zero, cpu_CF, zero);
+-        tcg_gen_add2_i32(cpu_NF, cpu_CF, cpu_NF, cpu_CF, t1_32, zero);
++        tcg_gen_addcio_i32(cpu_NF, cpu_CF, t0_32, t1_32, cpu_CF);
  
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index d74ac7587a..dce46dcba6 100644
---- a/tcg/riscv/tcg-target.c.inc
-+++ b/tcg/riscv/tcg-target.c.inc
-@@ -401,7 +401,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
-     }
-     /*
-      * Sign extended from 12 bits, +/- matching: [-0x7ff, 0x7ff].
--     * Used by addsub2 and movcond, which may need the negative value,
-+     * Used by movcond, which may need the negative value,
-      * and requires the modified constant to be representable.
-      */
-     if ((ct & TCG_CT_CONST_M12) && val >= -0x7ff && val <= 0x7ff) {
-@@ -1073,67 +1073,6 @@ static bool tcg_out_sti(TCGContext *s, TCGType type, TCGArg val,
-     return false;
- }
- 
--static void tcg_out_addsub2(TCGContext *s,
--                            TCGReg rl, TCGReg rh,
--                            TCGReg al, TCGReg ah,
--                            TCGArg bl, TCGArg bh,
--                            bool cbl, bool cbh, bool is_sub, bool is32bit)
--{
--    const RISCVInsn opc_add = is32bit ? OPC_ADDW : OPC_ADD;
--    const RISCVInsn opc_addi = is32bit ? OPC_ADDIW : OPC_ADDI;
--    const RISCVInsn opc_sub = is32bit ? OPC_SUBW : OPC_SUB;
--    TCGReg th = TCG_REG_TMP1;
--
--    /* If we have a negative constant such that negating it would
--       make the high part zero, we can (usually) eliminate one insn.  */
--    if (cbl && cbh && bh == -1 && bl != 0) {
--        bl = -bl;
--        bh = 0;
--        is_sub = !is_sub;
--    }
--
--    /* By operating on the high part first, we get to use the final
--       carry operation to move back from the temporary.  */
--    if (!cbh) {
--        tcg_out_opc_reg(s, (is_sub ? opc_sub : opc_add), th, ah, bh);
--    } else if (bh != 0 || ah == rl) {
--        tcg_out_opc_imm(s, opc_addi, th, ah, (is_sub ? -bh : bh));
--    } else {
--        th = ah;
--    }
--
--    /* Note that tcg optimization should eliminate the bl == 0 case.  */
--    if (is_sub) {
--        if (cbl) {
--            tcg_out_opc_imm(s, OPC_SLTIU, TCG_REG_TMP0, al, bl);
--            tcg_out_opc_imm(s, opc_addi, rl, al, -bl);
--        } else {
--            tcg_out_opc_reg(s, OPC_SLTU, TCG_REG_TMP0, al, bl);
--            tcg_out_opc_reg(s, opc_sub, rl, al, bl);
--        }
--        tcg_out_opc_reg(s, opc_sub, rh, th, TCG_REG_TMP0);
--    } else {
--        if (cbl) {
--            tcg_out_opc_imm(s, opc_addi, rl, al, bl);
--            tcg_out_opc_imm(s, OPC_SLTIU, TCG_REG_TMP0, rl, bl);
--        } else if (al == bl) {
--            /*
--             * If the input regs overlap, this is a simple doubling
--             * and carry-out is the input msb.  This special case is
--             * required when the output reg overlaps the input,
--             * but we might as well use it always.
--             */
--            tcg_out_opc_imm(s, OPC_SLTI, TCG_REG_TMP0, al, 0);
--            tcg_out_opc_reg(s, opc_add, rl, al, al);
--        } else {
--            tcg_out_opc_reg(s, opc_add, rl, al, bl);
--            tcg_out_opc_reg(s, OPC_SLTU, TCG_REG_TMP0,
--                            rl, (rl == bl ? al : bl));
--        }
--        tcg_out_opc_reg(s, opc_add, rh, th, TCG_REG_TMP0);
--    }
--}
--
- static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
-                                    TCGReg dst, TCGReg src)
+         tcg_gen_mov_i32(cpu_ZF, cpu_NF);
+         tcg_gen_xor_i32(cpu_VF, cpu_NF, t0_32);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index d280018138..e5aa76d44a 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -493,20 +493,9 @@ static void gen_add_CC(TCGv_i32 dest, TCGv_i32 t0, TCGv_i32 t1)
+ static void gen_adc_CC(TCGv_i32 dest, TCGv_i32 t0, TCGv_i32 t1)
  {
-@@ -2608,23 +2547,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
-         tcg_out_ldst(s, OPC_SD, a0, a1, a2);
-         break;
- 
--    case INDEX_op_add2_i32:
--        tcg_out_addsub2(s, a0, a1, a2, args[3], args[4], args[5],
--                        const_args[4], const_args[5], false, true);
--        break;
--    case INDEX_op_add2_i64:
--        tcg_out_addsub2(s, a0, a1, a2, args[3], args[4], args[5],
--                        const_args[4], const_args[5], false, false);
--        break;
--    case INDEX_op_sub2_i32:
--        tcg_out_addsub2(s, a0, a1, a2, args[3], args[4], args[5],
--                        const_args[4], const_args[5], true, true);
--        break;
--    case INDEX_op_sub2_i64:
--        tcg_out_addsub2(s, a0, a1, a2, args[3], args[4], args[5],
--                        const_args[4], const_args[5], true, false);
--        break;
--
-     case INDEX_op_qemu_ld_i32:
-         tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
-         break;
-@@ -2897,12 +2819,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_st_i64:
-         return C_O0_I2(rz, r);
- 
--    case INDEX_op_add2_i32:
--    case INDEX_op_add2_i64:
--    case INDEX_op_sub2_i32:
--    case INDEX_op_sub2_i64:
--        return C_O2_I4(r, r, rz, rz, rM, rM);
--
-     case INDEX_op_qemu_ld_i32:
-     case INDEX_op_qemu_ld_i64:
-         return C_O1_I1(r, r);
+     TCGv_i32 tmp = tcg_temp_new_i32();
+-    if (tcg_op_supported(INDEX_op_add2_i32, TCG_TYPE_I32, 0)) {
+-        tcg_gen_movi_i32(tmp, 0);
+-        tcg_gen_add2_i32(cpu_NF, cpu_CF, t0, tmp, cpu_CF, tmp);
+-        tcg_gen_add2_i32(cpu_NF, cpu_CF, cpu_NF, cpu_CF, t1, tmp);
+-    } else {
+-        TCGv_i64 q0 = tcg_temp_new_i64();
+-        TCGv_i64 q1 = tcg_temp_new_i64();
+-        tcg_gen_extu_i32_i64(q0, t0);
+-        tcg_gen_extu_i32_i64(q1, t1);
+-        tcg_gen_add_i64(q0, q0, q1);
+-        tcg_gen_extu_i32_i64(q1, cpu_CF);
+-        tcg_gen_add_i64(q0, q0, q1);
+-        tcg_gen_extr_i64_i32(cpu_NF, cpu_CF, q0);
+-    }
++
++    tcg_gen_addcio_i32(cpu_NF, cpu_CF, t0, t1, cpu_CF);
++
+     tcg_gen_mov_i32(cpu_ZF, cpu_NF);
+     tcg_gen_xor_i32(cpu_VF, cpu_NF, t0);
+     tcg_gen_xor_i32(tmp, t0, t1);
 -- 
 2.43.0
 
