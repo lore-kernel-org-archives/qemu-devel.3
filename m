@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5DDC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A741C369BA
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4mJQ-0007h9-0Q; Tue, 15 Apr 2025 15:51:18 -0400
+	id 1u4mHW-0003f7-Bd; Tue, 15 Apr 2025 15:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4mAS-0006IW-BU
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:42:16 -0400
-Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
+ id 1u4m9Z-0005fF-FD
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:41:32 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4m8f-0006VV-FN
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:41:13 -0400
-Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-7c55500d08cso527816785a.0
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:40:08 -0700 (PDT)
+ id 1u4m8U-00062I-Kw
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:40:47 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-736b98acaadso5492913b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744746008; x=1745350808; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744745971; x=1745350771; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+G8vJ2kGAYn6U5kRrUXQgJCAADvklAjAdFTsG7kgyJg=;
- b=Xc4BRwD1OTvax+opa2fFEVZpwyOnoCGTsIT9g/uAF/H/r5aJp9ne9eMW1kim5uR2r6
- dMQ3obtoCVvbilr8zqIQsPXmYaEWIfBNF4UE0M4AT5ti71/ljsxLo0Bg7rAYKzWMTiEk
- in2U8jM1q815BqTTOXiTBEQbQ97qxk9xCFW1lWKsp01VgrMJx/o0YlOhDnALfqtBmPaI
- IWLjfxAhHdPAL6xCGvaSMU6pwfL8wjNyupN+b2hqwrntPxvg/G53iC+CipVAzFI8HifE
- o+kBK08LS3bek+nO8D8wC8rz5zXklEaKTqSP2n6oYjBL/3QIA4L2LkLkZDMIluiZh7JH
- PXTg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=srG3cMapP21ofIvyaKFsAIidgszpeCTgpMFAYeb7uag=;
+ b=nWBZPL1NWbkRpp8NqqvvhAk9EznE0qto6Bnx87gKAm+MhqstDvkINgxQUIzaG2/IPz
+ v7qN9SWE1E0G4mdZQNEYxrAjhuciRMrsCrWEAIsmxQdQd56RK0sp93p/VaBhmd9cHDv8
+ Lvq6xmLbd/d+vr2gJ9MYMVE0kdTgbFgt9oVB6EHgLCm+B08UmHjmdK469WV1qyMlNaPd
+ X1iQY7zM/WpoaNNhA6MNAdWDJpF9hTYJbFeqsR4UK5GWfShVyJZWkNqBMtVg36HREEP5
+ rGLW6YUoWYz1LksMmR2lxl2GkKzZHhk7Q6pZXk+YZ2gnaoHBKBaqtWAx826vEVqhp8Y4
+ wf7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744746008; x=1745350808;
+ d=1e100.net; s=20230601; t=1744745971; x=1745350771;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+G8vJ2kGAYn6U5kRrUXQgJCAADvklAjAdFTsG7kgyJg=;
- b=jUjnUyRRZp8LJteZaAh9qSNIRR71B5dCMpnLJisPPwAdCakeEUjbJUoLVb3VrURo0K
- WWXYMxjxZfRNs7ydIzXGuQTLNdqfcrczkAD3S6ZyMyHYa334prAWSBmPV3LichR4/JRV
- c9f/8TpvtFzS+G6dVgwyVkPy2LVpdsSzu4pn6lloZtrBbJ6xq84Zlkpgd++xhHHzsEc9
- UzLz4erSOVzaGrCiV5/l56Ihur2buv+O5LjgT0osJxXUn+KOxd3ouOntAwTH9l+Cf2Ly
- nObIQ5v/ZI7irijI//8/fVPvS75Rj/vU0PhEVyuJQj7PKlCFE2Gn40HqrG7TrZtyBvdc
- U+cA==
-X-Gm-Message-State: AOJu0YwhkcyQ4uBNYEm36qntGpE7LyXWdeMTGxSt5cpN4LBwi8fH0Qgz
- b0Q7l9NUqovxOtqhOSd596UMjg8Y+2JhM45Xx5B270hhS0ejOYz1i/21GlDF4E3jQmfTgouICWp
- 7
-X-Gm-Gg: ASbGncu1LaexpiX0982CX8LDGOeiTFfUgmRzeeb7yBA3KnVJM7X1hiMXGHeu/xkDNic
- 5tXrVWkriSobnkxvMs2+nCpsQrzp6QnTHOhZJRbjXV0EvtjKAeeOOop+zUvaIkKYBJlE0BjN9dq
- gaJRzA8ZE9S++ynHYxGspfhK7+DJzUcuKmC4HGS1Hz1SON3sgC8uuSH/7RaTUUplMJ3hM9F10vh
- 8hPs/IzvB+u3Xp3wGG9WsoiZdHNYCp9eVoCjl/IBDNbucDtQiW0t2XFXqTKuC5VAZhyKuK8szIX
- cubZNg+VTJqZ3utSxSQSAJf/2EtWOCwrKfk2T72u/PBd7peDw+Rm0r9qLg23E4uLkYQsRx24OGi
- owj1XN8lc2Q==
-X-Google-Smtp-Source: AGHT+IFTBow9TpwMIE3wKqCZCFG4WDaOCJQtHnhMkYdd9Q7IvAKx7LDAb85r8SEBDV0+7XHq8Q0xFA==
-X-Received: by 2002:a17:902:ce07:b0:223:62f5:fd44 with SMTP id
- d9443c01a7336-22c31a7cbc4mr5591875ad.40.1744745556261; 
- Tue, 15 Apr 2025 12:32:36 -0700 (PDT)
+ bh=srG3cMapP21ofIvyaKFsAIidgszpeCTgpMFAYeb7uag=;
+ b=o0FiZ586038cnuQRY10RaSKQGCbOX7MrGqC+H9fD4ko7WLj9NatUTCCTZMvN3gJdje
+ MRrq7AAxA2Z0HviEKfxn0cHjZjWmZ86rEZf8Hx7Q21bvGbYx3ZJteBxxxwYrxDcm9YVH
+ UxSZ69E/jbNeicjnKoWWKG3p0WYOrLRNQmLGV0bwmLJlGDlA+hENXodsrLMAnES0rGiv
+ AWBvA9IdcM5DcWN0bSvKHhvQdunGUQbXcJPpW7bpeNoTKvrEl+ZgUZJ+w8XRjq5wEtgN
+ OvYbH7HApXycPdlqqj7uYfJq4ARwpsBQpIqFirJH5khMyh77VID//0YyidxPXsr4zNc8
+ s8cQ==
+X-Gm-Message-State: AOJu0Yy4cRMsh2ZZqbXVRr6cdByHR9olDj60lzlLWTOj/DdXeRw68Epw
+ UuNPxLmzhOHvgbj8q2nZQVwgPpExhE5r2YYKYwf564ZSfBhSPNrPIBzOtQkruwgHYu01DWphf5T
+ w
+X-Gm-Gg: ASbGncuaPsHSo9a+viBzd9Mp4S/ZlYBdieXw5L9FMowvWnHtKTqjclYTl7wiGJXsi5B
+ z+5TdVVPE8cjJ6WDYeIBDHBZ4/Ya5D97TV4qJY8tyZxXhjOE6FvKfmTRznErI4Ba0//LkpbwKj/
+ 2VJDVHBLn1NU8CqxYJ1RaU0PasVsZBl3ejZDA/2Xrz3FhGzozSR2nbeyAgQykt+qwZRPJbl4Wex
+ Kg0MBHLo8ieio2gFSicmqoNxs1+uAvU5b2Nvs0+2sEkpBgoDBIhrHJjV7DbDHpEzehIsvYejm6K
+ +n8/7lRTyRwtW/CmWSBtP/K0f8wKzhMNs5VVAw7FNYQ/uy+n69AMbx5Jyn1cam5hF0aQYJU8r/Q
+ =
+X-Google-Smtp-Source: AGHT+IGBEqL/C29Mj5O1uCA7JUZNWB7TmN8FwWQthyvH6dU/26FNY0o2SCxUJAq19WhQfnySOF4DnA==
+X-Received: by 2002:a05:6a00:44c4:b0:732:535d:bb55 with SMTP id
+ d2e1a72fcca58-73c1f8c3beamr1074602b3a.4.1744745970549; 
+ Tue, 15 Apr 2025 12:39:30 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7ccbd5esm122062355ad.248.2025.04.15.12.32.35
+ d2e1a72fcca58-73bd233553fsm9228554b3a.172.2025.04.15.12.39.29
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 12:32:35 -0700 (PDT)
+ Tue, 15 Apr 2025 12:39:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 094/163] tcg: Merge INDEX_op_extract_{i32,i64}
-Date: Tue, 15 Apr 2025 12:24:05 -0700
-Message-ID: <20250415192515.232910-95-richard.henderson@linaro.org>
+Subject: [PATCH v4 162/163] tcg: Convert qemu_st{2} to TCGOutOpLdSt{2}
+Date: Tue, 15 Apr 2025 12:25:13 -0700
+Message-ID: <20250415192515.232910-163-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,274 +99,933 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-opc.h    |  3 +--
- tcg/optimize.c           | 14 ++++----------
- tcg/tcg-op.c             |  8 ++++----
- tcg/tcg.c                |  9 +++------
- tcg/tci.c                | 12 ++++--------
- docs/devel/tcg-ops.rst   |  6 +++---
- tcg/tci/tcg-target.c.inc |  5 +----
- 7 files changed, 20 insertions(+), 37 deletions(-)
+ tcg/tcg.c                        | 12 ++++-
+ tcg/aarch64/tcg-target.c.inc     | 45 ++++++++-----------
+ tcg/arm/tcg-target.c.inc         | 61 ++++++++++++++++---------
+ tcg/i386/tcg-target.c.inc        | 71 ++++++++++++++++-------------
+ tcg/loongarch64/tcg-target.c.inc | 47 +++++++++----------
+ tcg/mips/tcg-target.c.inc        | 77 +++++++++++++++++---------------
+ tcg/ppc/tcg-target.c.inc         | 47 +++++++++++--------
+ tcg/riscv/tcg-target.c.inc       | 34 ++++++--------
+ tcg/s390x/tcg-target.c.inc       | 42 +++++++++--------
+ tcg/sparc64/tcg-target.c.inc     | 42 ++++++-----------
+ tcg/tci/tcg-target.c.inc         | 51 +++++++++++----------
+ 11 files changed, 271 insertions(+), 258 deletions(-)
 
-diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index 1d27b882fe..a8c304ca63 100644
---- a/include/tcg/tcg-opc.h
-+++ b/include/tcg/tcg-opc.h
-@@ -54,6 +54,7 @@ DEF(divs2, 2, 3, 0, TCG_OPF_INT)
- DEF(divu, 1, 2, 0, TCG_OPF_INT)
- DEF(divu2, 2, 3, 0, TCG_OPF_INT)
- DEF(eqv, 1, 2, 0, TCG_OPF_INT)
-+DEF(extract, 1, 1, 2, TCG_OPF_INT)
- DEF(movcond, 1, 4, 1, TCG_OPF_INT)
- DEF(mul, 1, 2, 0, TCG_OPF_INT)
- DEF(muls2, 2, 2, 0, TCG_OPF_INT)
-@@ -89,7 +90,6 @@ DEF(st16_i32, 0, 2, 1, 0)
- DEF(st_i32, 0, 2, 1, 0)
- /* shifts/rotates */
- DEF(deposit_i32, 1, 2, 2, 0)
--DEF(extract_i32, 1, 1, 2, 0)
- DEF(sextract_i32, 1, 1, 2, 0)
- DEF(extract2_i32, 1, 2, 1, 0)
- 
-@@ -112,7 +112,6 @@ DEF(st32_i64, 0, 2, 1, 0)
- DEF(st_i64, 0, 2, 1, 0)
- /* shifts/rotates */
- DEF(deposit_i64, 1, 2, 2, 0)
--DEF(extract_i64, 1, 1, 2, 0)
- DEF(sextract_i64, 1, 1, 2, 0)
- DEF(extract2_i64, 1, 2, 1, 0)
- 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 87395f8ab5..6a9effab6b 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2305,7 +2305,7 @@ static int fold_setcond_zmask(OptContext *ctx, TCGOp *op, bool neg)
- 
- static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
- {
--    TCGOpcode uext_opc = 0, sext_opc = 0;
-+    TCGOpcode sext_opc = 0;
-     TCGCond cond = op->args[3];
-     TCGArg ret, src1, src2;
-     TCGOp *op2;
-@@ -2326,17 +2326,11 @@ static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
- 
-     switch (ctx->type) {
-     case TCG_TYPE_I32:
--        if (TCG_TARGET_extract_valid(TCG_TYPE_I32, sh, 1)) {
--            uext_opc = INDEX_op_extract_i32;
--        }
-         if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, sh, 1)) {
-             sext_opc = INDEX_op_sextract_i32;
-         }
-         break;
-     case TCG_TYPE_I64:
--        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, sh, 1)) {
--            uext_opc = INDEX_op_extract_i64;
--        }
-         if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, sh, 1)) {
-             sext_opc = INDEX_op_sextract_i64;
-         }
-@@ -2355,8 +2349,8 @@ static void fold_setcond_tst_pow2(OptContext *ctx, TCGOp *op, bool neg)
-         op->args[2] = sh;
-         op->args[3] = 1;
-         return;
--    } else if (sh && uext_opc) {
--        op->opc = uext_opc;
-+    } else if (sh && TCG_TARGET_extract_valid(ctx->type, sh, 1)) {
-+        op->opc = INDEX_op_extract;
-         op->args[1] = src1;
-         op->args[2] = sh;
-         op->args[3] = 1;
-@@ -2885,7 +2879,7 @@ void tcg_optimize(TCGContext *s)
-         case INDEX_op_eqv_vec:
-             done = fold_eqv(&ctx, op);
-             break;
--        CASE_OP_32_64(extract):
-+        case INDEX_op_extract:
-             done = fold_extract(&ctx, op);
-             break;
-         CASE_OP_32_64(extract2):
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index ba062191ac..ddade73b7b 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -998,7 +998,7 @@ void tcg_gen_extract_i32(TCGv_i32 ret, TCGv_i32 arg,
-     }
- 
-     if (TCG_TARGET_extract_valid(TCG_TYPE_I32, ofs, len)) {
--        tcg_gen_op4ii_i32(INDEX_op_extract_i32, ret, arg, ofs, len);
-+        tcg_gen_op4ii_i32(INDEX_op_extract, ret, arg, ofs, len);
-         return;
-     }
-     if (ofs == 0) {
-@@ -1008,7 +1008,7 @@ void tcg_gen_extract_i32(TCGv_i32 ret, TCGv_i32 arg,
- 
-     /* Assume that zero-extension, if available, is cheaper than a shift.  */
-     if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, ofs + len)) {
--        tcg_gen_op4ii_i32(INDEX_op_extract_i32, ret, arg, 0, ofs + len);
-+        tcg_gen_op4ii_i32(INDEX_op_extract, ret, arg, 0, ofs + len);
-         tcg_gen_shri_i32(ret, ret, ofs);
-         return;
-     }
-@@ -2670,7 +2670,7 @@ void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
-     }
- 
-     if (TCG_TARGET_extract_valid(TCG_TYPE_I64, ofs, len)) {
--        tcg_gen_op4ii_i64(INDEX_op_extract_i64, ret, arg, ofs, len);
-+        tcg_gen_op4ii_i64(INDEX_op_extract, ret, arg, ofs, len);
-         return;
-     }
-     if (ofs == 0) {
-@@ -2680,7 +2680,7 @@ void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
- 
-     /* Assume that zero-extension, if available, is cheaper than a shift.  */
-     if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, ofs + len)) {
--        tcg_gen_op4ii_i64(INDEX_op_extract_i64, ret, arg, 0, ofs + len);
-+        tcg_gen_op4ii_i64(INDEX_op_extract, ret, arg, 0, ofs + len);
-         tcg_gen_shri_i64(ret, ret, ofs);
-         return;
-     }
 diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 3f81dce074..5f5b323c66 100644
+index ac955223a5..823bcc6cfc 100644
 --- a/tcg/tcg.c
 +++ b/tcg/tcg.c
-@@ -1091,8 +1091,7 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
-     OUTOP(INDEX_op_divs2, TCGOutOpDivRem, outop_divs2),
-     OUTOP(INDEX_op_divu2, TCGOutOpDivRem, outop_divu2),
-     OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
--    OUTOP(INDEX_op_extract_i32, TCGOutOpExtract, outop_extract),
--    OUTOP(INDEX_op_extract_i64, TCGOutOpExtract, outop_extract),
-+    OUTOP(INDEX_op_extract, TCGOutOpExtract, outop_extract),
-     OUTOP(INDEX_op_movcond, TCGOutOpMovcond, outop_movcond),
-     OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
-     OUTOP(INDEX_op_muls2, TCGOutOpMul2, outop_muls2),
-@@ -2326,6 +2325,7 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_add:
-     case INDEX_op_and:
-     case INDEX_op_brcond:
-+    case INDEX_op_extract:
-     case INDEX_op_mov:
-     case INDEX_op_movcond:
-     case INDEX_op_negsetcond:
-@@ -2342,7 +2342,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_st8_i32:
-     case INDEX_op_st16_i32:
-     case INDEX_op_st_i32:
--    case INDEX_op_extract_i32:
-     case INDEX_op_sextract_i32:
-     case INDEX_op_deposit_i32:
-         return true;
-@@ -2371,7 +2370,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_st_i64:
-     case INDEX_op_ext_i32_i64:
-     case INDEX_op_extu_i32_i64:
--    case INDEX_op_extract_i64:
-     case INDEX_op_sextract_i64:
-     case INDEX_op_deposit_i64:
-         return TCG_TARGET_REG_BITS == 64;
-@@ -5516,8 +5514,7 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+@@ -1224,6 +1224,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
+     OUTOP(INDEX_op_orc, TCGOutOpBinary, outop_orc),
+     OUTOP(INDEX_op_qemu_ld, TCGOutOpQemuLdSt, outop_qemu_ld),
+     OUTOP(INDEX_op_qemu_ld2, TCGOutOpQemuLdSt2, outop_qemu_ld2),
++    OUTOP(INDEX_op_qemu_st, TCGOutOpQemuLdSt, outop_qemu_st),
++    OUTOP(INDEX_op_qemu_st2, TCGOutOpQemuLdSt2, outop_qemu_st2),
+     OUTOP(INDEX_op_rems, TCGOutOpBinary, outop_rems),
+     OUTOP(INDEX_op_remu, TCGOutOpBinary, outop_remu),
+     OUTOP(INDEX_op_rotl, TCGOutOpBinary, outop_rotl),
+@@ -5813,15 +5815,21 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+         break;
+ 
+     case INDEX_op_qemu_ld:
++    case INDEX_op_qemu_st:
+         {
+-            const TCGOutOpQemuLdSt *out = &outop_qemu_ld;
++            const TCGOutOpQemuLdSt *out =
++                container_of(all_outop[op->opc], TCGOutOpQemuLdSt, base);
++
+             out->out(s, type, new_args[0], new_args[1], new_args[2]);
          }
          break;
  
--    case INDEX_op_extract_i32:
--    case INDEX_op_extract_i64:
-+    case INDEX_op_extract:
+     case INDEX_op_qemu_ld2:
++    case INDEX_op_qemu_st2:
          {
-             const TCGOutOpExtract *out =
-                 container_of(all_outop[op->opc], TCGOutOpExtract, base);
-diff --git a/tcg/tci.c b/tcg/tci.c
-index 30928c3412..6345029802 100644
---- a/tcg/tci.c
-+++ b/tcg/tci.c
-@@ -27,6 +27,7 @@
+-            const TCGOutOpQemuLdSt2 *out = &outop_qemu_ld2;
++            const TCGOutOpQemuLdSt2 *out =
++                container_of(all_outop[op->opc], TCGOutOpQemuLdSt2, base);
++
+             out->out(s, type, new_args[0], new_args[1],
+                      new_args[2], new_args[3]);
+         }
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index 21b6ce1229..be1ca74bc4 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -1827,8 +1827,8 @@ static const TCGOutOpQemuLdSt outop_qemu_ld = {
+     .out = tgen_qemu_ld,
+ };
  
- 
- #define ctpop_tr    glue(ctpop, TCG_TARGET_REG_BITS)
-+#define extract_tr  glue(extract, TCG_TARGET_REG_BITS)
- 
- /*
-  * Enable TCI assertions only when debugging TCG (and without NDEBUG defined).
-@@ -656,9 +657,9 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             tci_args_rrrbb(insn, &r0, &r1, &r2, &pos, &len);
-             regs[r0] = deposit32(regs[r1], pos, len, regs[r2]);
-             break;
--        case INDEX_op_extract_i32:
-+        case INDEX_op_extract:
-             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
--            regs[r0] = extract32(regs[r1], pos, len);
-+            regs[r0] = extract_tr(regs[r1], pos, len);
-             break;
-         case INDEX_op_sextract_i32:
-             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
-@@ -772,10 +773,6 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             tci_args_rrrbb(insn, &r0, &r1, &r2, &pos, &len);
-             regs[r0] = deposit64(regs[r1], pos, len, regs[r2]);
-             break;
--        case INDEX_op_extract_i64:
--            tci_args_rrbb(insn, &r0, &r1, &pos, &len);
--            regs[r0] = extract64(regs[r1], pos, len);
--            break;
-         case INDEX_op_sextract_i64:
-             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
-             regs[r0] = sextract64(regs[r1], pos, len);
-@@ -1057,8 +1054,7 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
-                            op_name, str_r(r0), str_r(r1), str_r(r2), pos, len);
-         break;
- 
--    case INDEX_op_extract_i32:
--    case INDEX_op_extract_i64:
-+    case INDEX_op_extract:
-     case INDEX_op_sextract_i32:
-     case INDEX_op_sextract_i64:
-         tci_args_rrbb(insn, &r0, &r1, &pos, &len);
-diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
-index 72a23d6ea2..2843f88772 100644
---- a/docs/devel/tcg-ops.rst
-+++ b/docs/devel/tcg-ops.rst
-@@ -456,7 +456,7 @@ Misc
-        |
-        |     *dest* = (*t1* & ~0x0f00) | ((*t2* << 8) & 0x0f00)
- 
--   * - extract_i32/i64 *dest*, *t1*, *pos*, *len*
-+   * - extract *dest*, *t1*, *pos*, *len*
- 
-        sextract_i32/i64 *dest*, *t1*, *pos*, *len*
- 
-@@ -467,12 +467,12 @@ Misc
-          to the left with zeros; for sextract_*, the result will be extended
-          to the left with copies of the bitfield sign bit at *pos* + *len* - 1.
-        |
--       | For example, "sextract_i32 dest, t1, 8, 4" indicates a 4-bit field
-+       | For example, "sextract dest, t1, 8, 4" indicates a 4-bit field
-          at bit 8. This operation would be equivalent to
-        |
-        |    *dest* = (*t1* << 20) >> 28
-        |
--       | (using an arithmetic right shift).
-+       | (using an arithmetic right shift) on TCG_TYPE_I32.
- 
-    * - extract2_i32/i64 *dest*, *t1*, *t2*, *pos*
- 
-diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-index d8cf5d237b..ede11d9e70 100644
---- a/tcg/tci/tcg-target.c.inc
-+++ b/tcg/tci/tcg-target.c.inc
-@@ -436,10 +436,7 @@ static void tcg_out_movi(TCGContext *s, TCGType type,
- static void tcg_out_extract(TCGContext *s, TCGType type, TCGReg rd,
-                             TCGReg rs, unsigned pos, unsigned len)
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg data_reg, TCGReg addr_reg,
+-                            MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType data_type, TCGReg data_reg,
++                         TCGReg addr_reg, MemOpIdx oi)
  {
--    TCGOpcode opc = type == TCG_TYPE_I32 ?
--                    INDEX_op_extract_i32 :
--                    INDEX_op_extract_i64;
--    tcg_out_op_rrbb(s, opc, rd, rs, pos, len);
-+    tcg_out_op_rrbb(s, INDEX_op_extract, rd, rs, pos, len);
+     TCGLabelQemuLdst *ldst;
+     HostAddress h;
+@@ -1843,6 +1843,11 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg data_reg, TCGReg addr_reg,
+     }
  }
  
- static const TCGOutOpExtract outop_extract = {
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(rz, r),
++    .out = tgen_qemu_st,
++};
++
+ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+                                    TCGReg addr_reg, MemOpIdx oi, bool is_ld)
+ {
+@@ -1956,6 +1961,17 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
+     .out = tgen_qemu_ld2,
+ };
+ 
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr_reg, MemOpIdx oi)
++{
++    tcg_out_qemu_ldst_i128(s, datalo, datahi, addr_reg, oi, false);
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_O0_I3(rz, rz, r),
++    .out = tgen_qemu_st2,
++};
++
+ static const tcg_insn_unit *tb_ret_addr;
+ 
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
+@@ -2885,25 +2901,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    /* Hoist the loads of the most common arguments.  */
+-    TCGArg a0 = args[0];
+-    TCGArg a1 = args[1];
+-    TCGArg a2 = args[2];
+-
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, a0, a1, a2, ext);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_out_qemu_ldst_i128(s, a0, a1, a2, args[3], false);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+@@ -3350,11 +3348,6 @@ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+     switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(rz, r);
+-    case INDEX_op_qemu_st2:
+-        return C_O0_I3(rz, rz, r);
+-
+     case INDEX_op_add_vec:
+     case INDEX_op_sub_vec:
+     case INDEX_op_mul_vec:
+diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
+index 681ecc3d7a..014a441420 100644
+--- a/tcg/arm/tcg-target.c.inc
++++ b/tcg/arm/tcg-target.c.inc
+@@ -1711,8 +1711,8 @@ static void tcg_out_qemu_st_direct(TCGContext *s, MemOp opc, TCGReg datalo,
+     }
+ }
+ 
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+-                            TCGReg addr, MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
++                         TCGReg addr, MemOpIdx oi)
+ {
+     MemOp opc = get_memop(oi);
+     TCGLabelQemuLdst *ldst;
+@@ -1720,7 +1720,37 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+ 
+     ldst = prepare_host_addr(s, &h, addr, oi, false);
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
++        ldst->datalo_reg = data;
++        ldst->datahi_reg = -1;
++
++        h.cond = COND_EQ;
++        tcg_out_qemu_st_direct(s, opc, data, -1, h);
++
++        /* The conditional call is last, as we're going to return here. */
++        ldst->label_ptr[0] = s->code_ptr;
++        tcg_out_bl_imm(s, COND_NE, 0);
++        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
++    } else {
++        tcg_out_qemu_st_direct(s, opc, data, -1, h);
++    }
++}
++
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(q, q),
++    .out = tgen_qemu_st,
++};
++
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
++{
++    MemOp opc = get_memop(oi);
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    ldst = prepare_host_addr(s, &h, addr, oi, false);
++    if (ldst) {
++        ldst->type = type;
+         ldst->datalo_reg = datalo;
+         ldst->datahi_reg = datahi;
+ 
+@@ -1736,6 +1766,11 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_O0_I3(Q, p, q),
++    .out = tgen_qemu_st2,
++};
++
+ static void tcg_out_epilogue(TCGContext *s);
+ 
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t arg)
+@@ -2609,31 +2644,13 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, args[0], -1, args[1], args[2], TCG_TYPE_I32);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_out_qemu_st(s, args[0], args[1], args[2], args[3], TCG_TYPE_I64);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+     switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(q, q);
+-    case INDEX_op_qemu_st2:
+-        return C_O0_I3(Q, p, q);
+-
+     case INDEX_op_st_vec:
+         return C_O0_I2(w, r);
+     case INDEX_op_ld_vec:
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index 7ec06f57ee..7b78ab67f4 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -2576,8 +2576,38 @@ static void tcg_out_qemu_st_direct(TCGContext *s, TCGReg datalo, TCGReg datahi,
+     }
+ }
+ 
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+-                            TCGReg addr, MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
++                         TCGReg addr, MemOpIdx oi)
++{
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    ldst = prepare_host_addr(s, &h, addr, oi, false);
++    tcg_out_qemu_st_direct(s, data, -1, h, get_memop(oi));
++
++    if (ldst) {
++        ldst->type = type;
++        ldst->datalo_reg = data;
++        ldst->datahi_reg = -1;
++        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
++    }
++}
++
++static TCGConstraintSetIndex cset_qemu_st(TCGType type, unsigned flags)
++{
++    return flags == MO_8 ? C_O0_I2(s, L) : C_O0_I2(L, L);
++}
++
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint =
++        TCG_TARGET_REG_BITS == 32 ? C_Dynamic : C_O0_I2(L, L),
++    .base.dynamic_constraint =
++        TCG_TARGET_REG_BITS == 32 ? cset_qemu_st : NULL,
++    .out = tgen_qemu_st,
++};
++
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
+ {
+     TCGLabelQemuLdst *ldst;
+     HostAddress h;
+@@ -2586,13 +2616,18 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+     tcg_out_qemu_st_direct(s, datalo, datahi, h, get_memop(oi));
+ 
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
+         ldst->datalo_reg = datalo;
+         ldst->datahi_reg = datahi;
+         ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_O0_I3(L, L, L),
++    .out = tgen_qemu_st2,
++};
++
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
+ {
+     /* Reuse the zeroing that exists for goto_ptr.  */
+@@ -3571,27 +3606,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    TCGArg a0, a1, a2;
+-
+-    /* Hoist the loads of the most common arguments.  */
+-    a0 = args[0];
+-    a1 = args[1];
+-    a2 = args[2];
+-
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, a0, -1, a1, a2, type);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_out_qemu_st(s, a0, a1, a2, args[3], type);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static int const umin_insn[4] = {
+@@ -4139,14 +4154,6 @@ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+     switch (op) {
+-    case INDEX_op_qemu_st:
+-        return (TCG_TARGET_REG_BITS == 32 && flags == MO_8
+-                ? C_O0_I2(s, L)
+-                : C_O0_I2(L, L));
+-
+-    case INDEX_op_qemu_st2:
+-        return C_O0_I3(L, L, L);
+-
+     case INDEX_op_ld_vec:
+     case INDEX_op_dupm_vec:
+         return C_O1_I1(x, r);
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index a1147a1cdc..49522dcd72 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -1200,8 +1200,8 @@ static void tcg_out_qemu_st_indexed(TCGContext *s, MemOp opc,
+     }
+ }
+ 
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg data_reg, TCGReg addr_reg,
+-                            MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data_reg,
++                         TCGReg addr_reg, MemOpIdx oi)
+ {
+     TCGLabelQemuLdst *ldst;
+     HostAddress h;
+@@ -1210,12 +1210,17 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg data_reg, TCGReg addr_reg,
+     tcg_out_qemu_st_indexed(s, get_memop(oi), data_reg, h);
+ 
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
+         ldst->datalo_reg = data_reg;
+         ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(rz, r),
++    .out = tgen_qemu_st,
++};
++
+ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg data_lo, TCGReg data_hi,
+                                    TCGReg addr_reg, MemOpIdx oi, bool is_ld)
+ {
+@@ -1274,6 +1279,17 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
+     .out = tgen_qemu_ld2,
+ };
+ 
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr_reg, MemOpIdx oi)
++{
++    tcg_out_qemu_ldst_i128(s, datalo, datahi, addr_reg, oi, false);
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_O0_I3(r, r, r),
++    .out = tgen_qemu_st2,
++};
++
+ /*
+  * Entry-points
+  */
+@@ -2018,25 +2034,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    TCGArg a0 = args[0];
+-    TCGArg a1 = args[1];
+-    TCGArg a2 = args[2];
+-    TCGArg a3 = args[3];
+-
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, a0, a1, a2, type);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_out_qemu_ldst_i128(s, a0, a1, a2, a3, false);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+@@ -2539,11 +2537,6 @@ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+     switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(rz, r);
+-    case INDEX_op_qemu_st2:
+-        return C_O0_I3(r, r, r);
+-
+     case INDEX_op_ld_vec:
+     case INDEX_op_dupm_vec:
+     case INDEX_op_dup_vec:
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
+index 14bffcd404..1f12500344 100644
+--- a/tcg/mips/tcg-target.c.inc
++++ b/tcg/mips/tcg-target.c.inc
+@@ -1510,8 +1510,8 @@ static void tcg_out_qemu_st_unalign(TCGContext *s, TCGReg lo, TCGReg hi,
+     }
+ }
+ 
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+-                            TCGReg addr, MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
++                         TCGReg addr, MemOpIdx oi)
+ {
+     MemOp opc = get_memop(oi);
+     TCGLabelQemuLdst *ldst;
+@@ -1519,6 +1519,35 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+ 
+     ldst = prepare_host_addr(s, &h, addr, oi, false);
+ 
++    if (use_mips32r6_instructions || h.aa.align >= (opc & MO_SIZE)) {
++        tcg_out_qemu_st_direct(s, data, 0, h.base, opc);
++    } else {
++        tcg_out_qemu_st_unalign(s, data, 0, h.base, opc);
++    }
++
++    if (ldst) {
++        ldst->type = type;
++        ldst->datalo_reg = data;
++        ldst->datahi_reg = 0;
++        ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
++    }
++}
++
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(rz, r),
++    .out = tgen_qemu_st,
++};
++
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
++{
++    MemOp opc = get_memop(oi);
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
++    ldst = prepare_host_addr(s, &h, addr, oi, false);
++
+     if (use_mips32r6_instructions || h.aa.align >= (opc & MO_SIZE)) {
+         tcg_out_qemu_st_direct(s, datalo, datahi, h.base, opc);
+     } else {
+@@ -1526,13 +1555,21 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg datalo, TCGReg datahi,
+     }
+ 
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
+         ldst->datalo_reg = datalo;
+         ldst->datahi_reg = datahi;
+         ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    /* Ensure that the mips32 code is compiled but discarded for mips64. */
++    .base.static_constraint =
++        TCG_TARGET_REG_BITS == 32 ? C_O0_I3(rz, rz, r) : C_NotImplemented,
++    .out =
++        TCG_TARGET_REG_BITS == 32 ? tgen_qemu_st2 : NULL,
++};
++
+ static void tcg_out_mb(TCGContext *s, unsigned a0)
+ {
+     static const MIPSInsn sync[] = {
+@@ -2411,43 +2448,13 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    TCGArg a0, a1, a2;
+-
+-    a0 = args[0];
+-    a1 = args[1];
+-    a2 = args[2];
+-
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, a0, 0, a1, a2, type);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
+-        tcg_out_qemu_st(s, a0, a1, a2, args[3], type);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+-    switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(rz, r);
+-    case INDEX_op_qemu_ld2:
+-        return TCG_TARGET_REG_BITS == 64 ? C_NotImplemented : C_O2_I1(r, r, r);
+-    case INDEX_op_qemu_st2:
+-        return TCG_TARGET_REG_BITS == 64 ? C_NotImplemented : C_O0_I3(rz, rz, r);
+-
+-    default:
+-        return C_NotImplemented;
+-    }
++    return C_NotImplemented;
+ }
+ 
+ static const int tcg_target_callee_save_regs[] = {
+diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+index e4e6b7b2d9..824cced94a 100644
+--- a/tcg/ppc/tcg-target.c.inc
++++ b/tcg/ppc/tcg-target.c.inc
+@@ -2722,6 +2722,33 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
+     .out = tgen_qemu_ld2,
+ };
+ 
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
++                         TCGReg addr, MemOpIdx oi)
++{
++    tcg_out_qemu_st(s, data, -1, addr, oi, type);
++}
++
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(r, r),
++    .out = tgen_qemu_st,
++};
++
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
++{
++    if (TCG_TARGET_REG_BITS == 32) {
++        tcg_out_qemu_st(s, datalo, datahi, addr, oi, type);
++    } else {
++        tcg_out_qemu_ldst_i128(s, datalo, datahi, addr, oi, false);
++    }
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint =
++        TCG_TARGET_REG_BITS == 64 ? C_O0_I3(o, m, r) : C_O0_I3(r, r, r),
++    .out = tgen_qemu_st2,
++};
++
+ static void tcg_out_nop_fill(tcg_insn_unit *p, int count)
+ {
+     int i;
+@@ -3805,25 +3832,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, args[0], -1, args[1], args[2], type);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        if (TCG_TARGET_REG_BITS == 32) {
+-            tcg_out_qemu_st(s, args[0], args[1], args[2],
+-                            args[3], TCG_TYPE_I64);
+-            break;
+-        }
+-        tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], false);
+-        break;
+-
+-    case INDEX_op_call:      /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:   /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:   /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ int tcg_can_emit_vec_op(TCGOpcode opc, TCGType type, unsigned vece)
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index 94e6f04fa6..eca1283742 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -1882,8 +1882,8 @@ static void tcg_out_qemu_st_direct(TCGContext *s, TCGReg val,
+     }
+ }
+ 
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg data_reg, TCGReg addr_reg,
+-                            MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data_reg,
++                         TCGReg addr_reg, MemOpIdx oi)
+ {
+     TCGLabelQemuLdst *ldst;
+     TCGReg base;
+@@ -1892,12 +1892,21 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg data_reg, TCGReg addr_reg,
+     tcg_out_qemu_st_direct(s, data_reg, base, get_memop(oi));
+ 
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
+         ldst->datalo_reg = data_reg;
+         ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(rz, r),
++    .out = tgen_qemu_st,
++};
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ static const tcg_insn_unit *tb_ret_addr;
+ 
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
+@@ -2637,21 +2646,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    TCGArg a0 = args[0];
+-    TCGArg a1 = args[1];
+-    TCGArg a2 = args[2];
+-
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, a0, a1, a2, type);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+@@ -2875,9 +2870,6 @@ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+     switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(rz, r);
+-
+     case INDEX_op_st_vec:
+         return C_O0_I2(v, r);
+     case INDEX_op_dup_vec:
+diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
+index 72dd161007..123e74290a 100644
+--- a/tcg/s390x/tcg-target.c.inc
++++ b/tcg/s390x/tcg-target.c.inc
+@@ -2102,8 +2102,8 @@ static const TCGOutOpQemuLdSt outop_qemu_ld = {
+     .out = tgen_qemu_ld,
+ };
+ 
+-static void tcg_out_qemu_st(TCGContext* s, TCGReg data_reg, TCGReg addr_reg,
+-                            MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext* s, TCGType type, TCGReg data_reg,
++                         TCGReg addr_reg, MemOpIdx oi)
+ {
+     TCGLabelQemuLdst *ldst;
+     HostAddress h;
+@@ -2112,12 +2112,17 @@ static void tcg_out_qemu_st(TCGContext* s, TCGReg data_reg, TCGReg addr_reg,
+     tcg_out_qemu_st_direct(s, get_memop(oi), data_reg, h);
+ 
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
+         ldst->datalo_reg = data_reg;
+         ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(r, r),
++    .out = tgen_qemu_st,
++};
++
+ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+                                    TCGReg addr_reg, MemOpIdx oi, bool is_ld)
+ {
+@@ -2203,6 +2208,17 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
+     .out = tgen_qemu_ld2,
+ };
+ 
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr_reg, MemOpIdx oi)
++{
++    tcg_out_qemu_ldst_i128(s, datalo, datahi, addr_reg, oi, false);
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_O0_I3(o, m, r),
++    .out = tgen_qemu_st2,
++};
++
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
+ {
+     /* Reuse the zeroing that exists for goto_ptr.  */
+@@ -3148,20 +3164,7 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, args[0], args[1], args[2], type);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], false);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+@@ -3604,11 +3607,6 @@ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+     switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(r, r);
+-    case INDEX_op_qemu_st2:
+-        return C_O0_I3(o, m, r);
+-
+     case INDEX_op_st_vec:
+         return C_O0_I2(v, r);
+     case INDEX_op_ld_vec:
+diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
+index d9a4b4ea36..49a4f4f281 100644
+--- a/tcg/sparc64/tcg-target.c.inc
++++ b/tcg/sparc64/tcg-target.c.inc
+@@ -1234,8 +1234,8 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
+     .base.static_constraint = C_NotImplemented,
+ };
+ 
+-static void tcg_out_qemu_st(TCGContext *s, TCGReg data, TCGReg addr,
+-                            MemOpIdx oi, TCGType data_type)
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
++                         TCGReg addr, MemOpIdx oi)
+ {
+     static const int st_opc[(MO_SIZE | MO_BSWAP) + 1] = {
+         [MO_UB]   = STB,
+@@ -1258,12 +1258,21 @@ static void tcg_out_qemu_st(TCGContext *s, TCGReg data, TCGReg addr,
+                     st_opc[get_memop(oi) & (MO_BSWAP | MO_SIZE)]);
+ 
+     if (ldst) {
+-        ldst->type = data_type;
++        ldst->type = type;
+         ldst->datalo_reg = data;
+         ldst->raddr = tcg_splitwx_to_rx(s->code_ptr);
+     }
+ }
+ 
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(rz, r),
++    .out = tgen_qemu_st,
++};
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint = C_NotImplemented,
++};
++
+ static void tcg_out_exit_tb(TCGContext *s, uintptr_t a0)
+ {
+     if (check_fit_ptr(a0, 13)) {
+@@ -2064,36 +2073,13 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    TCGArg a0, a1, a2;
+-
+-    /* Hoist the loads of the most common arguments.  */
+-    a0 = args[0];
+-    a1 = args[1];
+-    a2 = args[2];
+-
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_qemu_st(s, a0, a1, a2, type);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+-    switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(rz, r);
+-
+-    default:
+-        return C_NotImplemented;
+-    }
++    return C_NotImplemented;
+ }
+ 
+ static void tcg_target_init(TCGContext *s)
+diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+index f69e35e6ce..50e205211d 100644
+--- a/tcg/tci/tcg-target.c.inc
++++ b/tcg/tci/tcg-target.c.inc
+@@ -39,15 +39,7 @@
+ static TCGConstraintSetIndex
+ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+ {
+-    switch (op) {
+-    case INDEX_op_qemu_st:
+-        return C_O0_I2(r, r);
+-    case INDEX_op_qemu_st2:
+-        return TCG_TARGET_REG_BITS == 64 ? C_NotImplemented : C_O0_I3(r, r, r);
+-
+-    default:
+-        return C_NotImplemented;
+-    }
++    return C_NotImplemented;
+ }
+ 
+ static const int tcg_target_reg_alloc_order[] = {
+@@ -1218,25 +1210,36 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
+         TCG_TARGET_REG_BITS == 64 ? NULL : tgen_qemu_ld2,
+ };
+ 
++static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
++                         TCGReg addr, MemOpIdx oi)
++{
++    tcg_out_op_rrm(s, INDEX_op_qemu_st, data, addr, oi);
++}
++
++static const TCGOutOpQemuLdSt outop_qemu_st = {
++    .base.static_constraint = C_O0_I2(r, r),
++    .out = tgen_qemu_st,
++};
++
++static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
++                          TCGReg datahi, TCGReg addr, MemOpIdx oi)
++{
++    tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, oi);
++    tcg_out_op_rrrr(s, INDEX_op_qemu_st2, datalo, datahi, addr, TCG_REG_TMP);
++}
++
++static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
++    .base.static_constraint =
++        TCG_TARGET_REG_BITS == 64 ? C_NotImplemented : C_O0_I3(r, r, r),
++    .out =
++        TCG_TARGET_REG_BITS == 64 ? NULL : tgen_qemu_st2,
++};
++
+ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+                        const TCGArg args[TCG_MAX_OP_ARGS],
+                        const int const_args[TCG_MAX_OP_ARGS])
+ {
+-    switch (opc) {
+-    case INDEX_op_qemu_st:
+-        tcg_out_op_rrm(s, opc, args[0], args[1], args[2]);
+-        break;
+-    case INDEX_op_qemu_st2:
+-        tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, args[3]);
+-        tcg_out_op_rrrr(s, opc, args[0], args[1], args[2], TCG_REG_TMP);
+-        break;
+-
+-    case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
+-    case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
+-    case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
+-    default:
+-        g_assert_not_reached();
+-    }
++    g_assert_not_reached();
+ }
+ 
+ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg val, TCGReg base,
 -- 
 2.43.0
 
