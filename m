@@ -4,98 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2CBC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 11:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC71C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 11:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4eMH-0000je-2w; Tue, 15 Apr 2025 07:21:41 -0400
+	id 1u4eYS-0004mY-DX; Tue, 15 Apr 2025 07:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u4eME-0000jF-6g
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 07:21:38 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u4eMC-0007KK-1Z
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 07:21:37 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5e6194e9d2cso10816324a12.2
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 04:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744716093; x=1745320893; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4hHrYMGEPXrmtKgQQI7MLvBL47tpfhZNVXm6Dc1fUfY=;
- b=MifiaSlvnOeD7/g2DwiL9mAvFU/SB4XLspwQ3bdUTWq7AoPcpnrbeRc6KPNWCHwKO7
- SZ1cpyLshLipA+CwXqgiWj2HqSdlApVWGUZO2fecAMlGzOaldLcTuAZhV7JsWINWctOj
- awMh++zCf8rmUWM9L8k0RGM4ShpfqxnwM1vyiwa+ECEG/Dj4JaE+tdDbBjTW8nSiWM73
- 6tw52HwDidtfqtcb+DKuvB5dUEB8Id9vWqf2FaAbpaomQsMB5rPMFIEBj6VWG87RNr6u
- wM4y4R/A00UoCPf+Hn7uVDfyRY+N20Ho+DgvnoLLAPXoQVWmCOJQOELq1lXLgh/XQc2h
- jy/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744716093; x=1745320893;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4hHrYMGEPXrmtKgQQI7MLvBL47tpfhZNVXm6Dc1fUfY=;
- b=FzhtlJ7fDvRejdfHVJ4Plu2gRom+ZDhX/WtCzPPEYYHj/++nEhf7F49QhFIaTh4zjQ
- sUQBGU3AxZ43GXHWSn2Ekxv5HYdmDmg/u6CjDf0E8EBvPWAfoqS77ciwWRt2at5mRKtr
- vQSu7hbqEPHq8glGtlMlS07HsNzeHMkRCJ5Kq8IWn+3ABupVyirjjGbOAxq6F5MAyCNo
- OdzC1B1qU6Z/2Wldc9kpattBpNfPzjCVJ0TeUu51R3yjbAoIBuoqtuxaLQElP1QbuTKP
- 2WSEBeMMF49cVuSlBus4DLqQN2TmxrTy0pQlVTTXmBoQ6zmF0FP3t8yzwFi/U+8QjRL7
- 0Fpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVETOdu4IqXqGKV/sqto4qk/6v+v3pvTjyd/3ZJ9s54lzWtlnP7GvaDP5FJ+fq2RWMLPvQPDCJBSUNK@nongnu.org
-X-Gm-Message-State: AOJu0YyjhA1JOdY8/GxhFRgO4jQ3a4fOlz+6MWIV13PNMIaUcQJypIgP
- ZkML4xPyMTqJ3EFTe4Cm9hoTHC/HrSQZKuE1pZ1LV9XM/o2dDvY/x9ddL1aGeEI=
-X-Gm-Gg: ASbGncuIl/3q1WCd6sR85625RiyR34Q4Fuqd/IZN+Od6veMPc0p0BhX8BFME1HXN2TO
- dWGu1AW33G0zTg/ky2p8BuYlieSoyCI7OURTIrSoMWDtpfZqACk6s1fXoKMsWbdEH2J8d+vas+T
- ZW4vaHrWzi5I2pKAqgIKdeUvi//1PUZnIE0EuL3kwJfIp8du+Gc+H0FiTDtutomcdVi3HQC9MQ1
- 0+lispCLQNue1SblPy0s0QzoM5woaEqmRiwREyo8ReZVAeXI/vn1vsPYcvVCN3k0IQlh+oFRgEP
- x/hq7tLFPGHISuoMi5iq9WL8O3vNsURo5lHvq7cWxtQnrdUtphAswA==
-X-Google-Smtp-Source: AGHT+IF4xvvAKdRme6AL9CHrPKvbIhHoLT75VZBZoS4RuZblL9bhCbTbjFP0WBkdSZWIirjfePn2yQ==
-X-Received: by 2002:a17:906:d7c5:b0:acb:107d:ef51 with SMTP id
- a640c23a62f3a-acb107df1c0mr363297266b.2.1744716093131; 
- Tue, 15 Apr 2025 04:21:33 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acaa1ce7fdcsm1090622666b.176.2025.04.15.04.21.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 04:21:32 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 833945F915;
- Tue, 15 Apr 2025 12:21:31 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,  David Hildenbrand
- <david@redhat.com>
-Subject: Re: [PATCH v2 1/3] hw/display: re-arrange memory region tracking
-In-Reply-To: <bdd79b83-8487-479b-ba30-ada01476fdde@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 15 Apr 2025 12:35:39
- +0200")
-References: <20250410122643.1747913-1-manos.pitsidianakis@linaro.org>
- <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
- <bdd79b83-8487-479b-ba30-ada01476fdde@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 15 Apr 2025 12:21:31 +0100
-Message-ID: <871ptteklg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
+ id 1u4eYI-0004m7-Of
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 07:34:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jdenemar@redhat.com>)
+ id 1u4eYG-0000NZ-JT
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 07:34:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744716841;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l3s3eXsYR5oJDQYDO+0VyKF4fyILD/scwmC0ehY1fck=;
+ b=hOTyyDfu5C9vC6Yj0WQz7PxVpO9sE6NrkLEq4NUoO7HlV4vMEHX8S64D0lz78pNubb16L4
+ 7rw2V1s6UmndWK8nrQNrW8gHe6+va1R0XZ07veTLtY6CRT9R0G1XvwOjdgImyFy9sQo+Cp
+ cMI4Yfyn4gdxZgzWS35K5ThlJX1RGuY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-C_2NzCRAO_GxdegTY_I85g-1; Tue,
+ 15 Apr 2025 07:33:57 -0400
+X-MC-Unique: C_2NzCRAO_GxdegTY_I85g-1
+X-Mimecast-MFC-AGG-ID: C_2NzCRAO_GxdegTY_I85g_1744716836
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B6C81956048; Tue, 15 Apr 2025 11:33:56 +0000 (UTC)
+Received: from orkuz (unknown [10.43.3.115])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5993B1955BC0; Tue, 15 Apr 2025 11:33:55 +0000 (UTC)
+Date: Tue, 15 Apr 2025 13:33:54 +0200
+From: =?utf-8?B?SmnFmcOt?= Denemark <jdenemar@redhat.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Peter Krempa <pkrempa@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, devel@lists.libvirt.org,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: Management applications and CPU feature flags
+Message-ID: <Z_5EItOvC7auIXIm@orkuz.int.mamuti.net>
+References: <1741036202-265696-1-git-send-email-steven.sistare@oracle.com>
+ <87friheqcp.fsf@pond.sub.org> <Z_YolW1Nw6Q_tsz6@angien.pipo.sk>
+ <Z_jq5drO_25w0bC6@redhat.com> <87lds77zgx.fsf_-_@pond.sub.org>
+ <Z_jyVQMfRbWaM66y@redhat.com> <8734ee9b4k.fsf@pond.sub.org>
+ <Z_kXuy9N4wiHU-qE@orkuz.int.mamuti.net> <875xjakdep.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <875xjakdep.fsf@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jdenemar@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,128 +98,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On Fri, Apr 11, 2025 at 15:58:54 +0200, Cornelia Huck wrote:
+> On Fri, Apr 11 2025, Jiri Denemark <jdenemar@redhat.com> wrote:
+>=20
+> > On Fri, Apr 11, 2025 at 13:43:39 +0200, Markus Armbruster wrote:
+> >> Daniel P. Berrang=E9 <berrange@redhat.com> writes:
+> >> > On Fri, Apr 11, 2025 at 12:40:46PM +0200, Markus Armbruster wrote:
+> >> >> Daniel P. Berrang=E9 <berrange@redhat.com> writes:
+> >> >> > Considering the bigger picture QMP design, when libvirt is trying=
+ to
+> >> >> > understand QEMU's CPU feature flag expansion, I would ask why we =
+don't
+> >> >> > have something like a "query-cpu" command to tell us the current =
+CPU
+> >> >> > expansion, avoiding the need for poking at QOM properties directl=
+y.
+> >> >>=20
+> >> >> How do the existing query-cpu-FOO fall short of what management
+> >> >> applications such as libvirt needs?
+> >> >
+> >> > It has been along while since I looked at them, but IIRC they were
+> >> > returning static info about CPU models, whereas libvirt wanted info
+> >> > on the currently requested '-cpu ARGS'
+> >>=20
+> >> Libvirt developers, please work with us on design of new commands or
+> >> improvements to existing ones to better meet libvirt's needs in this
+> >> area.
+> >
+> > The existing commands (query-cpu-definitions, query-cpu-model-expansion)
+> > are useful for probing before starting a domain. But what we use qom-get
+> > for is to get a view of the currently instantiated virtual CPU created
+> > by QEMU according to -cpu when we're starting a domain. In other words,
+> > we start QEMU with -S and before starting vCPUs we need to know exactly
+> > what features were enabled and if any feature we requested was disabled
+> > by QEMU. Currently we query QOM for CPU properties as that's what we
+> > were advised to use ages ago.
+> >
+> > The reason behind querying such info is ensuring stable guest ABI during
+> > migration. Asking QEMU for a specific CPU model and features does not
+> > mean we'll get exactly what we asked for (this is not a bug) so we need
+> > to record the differences so that we can start QEMU for incoming
+> > migration with a CPU matching exactly the one provided on the source.
+> >
+> > As Peter said, the current way is terribly inefficient as it requires
+> > several hundreds of QMP commands so the goal is to have a single QMP
+> > command that would tell us all we need to know about the virtual CPU.
+> > That is all enabled features and all features that could not be enabled
+> > even though we asked for them.
+>=20
+> Wandering in here from the still-very-much-in-progress Arm perspective
+> (current but not yet posted QEMU code at
+> https://gitlab.com/cohuck/qemu/-/tree/arm-cpu-model-rfcv3?ref_type=3Dhead=
+s):
+>=20
+> We're currently operating at the "writable ID register fields" level
+> with the idea of providing features (FEAT_xxx) as an extra layer on top
+> (as they model a subset of what we actually need) and have yet to come
+> up with a good way to do named models for KVM. The
+> query-cpu-model-expansion command will yield a list of all writable ID
+> register fields and their values (as for now, for the 'host' model.) IIUC
+> you want to query (a) what is actually available for configuration
+> (before starting a domain) and (b) what you actually got (when starting
+> a domain).
 
-> On 10/4/25 14:26, Manos Pitsidianakis wrote:
->> From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> QOM objects can be embedded in other QOM objects and managed as part
->> of their lifetime but this isn't the case for
->> virtio_gpu_virgl_hostmem_region. However before we can split it out we
->> need some other way of associating the wider data structure with the
->> memory region.
->> Fortunately MemoryRegion has an opaque pointer. This is passed down
->> to
->> MemoryRegionOps for device type regions but is unused in the
->> memory_region_init_ram_ptr() case.
->
-> It is unclear to me what layer is supposed to set/consume it. So far
-> in memory_region_init_io/ram/rom it is kind of internal to the memory
-> layer, but MemoryRegionOps aren't. Yeah well, OK then.
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
->> Use the opaque to carry the
->> reference and allow the final MemoryRegion object to be reaped when
->> its reference count is cleared.
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> ---
->>   include/exec/memory.h         |  1 +
->>   hw/display/virtio-gpu-virgl.c | 23 ++++++++---------------
->>   2 files changed, 9 insertions(+), 15 deletions(-)
->> diff --git a/include/exec/memory.h b/include/exec/memory.h
->> index d09af58c97..bb735a3c7e 100644
->> --- a/include/exec/memory.h
->> +++ b/include/exec/memory.h
->> @@ -784,6 +784,7 @@ struct MemoryRegion {
->>       DeviceState *dev;
->>         const MemoryRegionOps *ops;
->> +    /* opaque data, used by backends like @ops */
->>       void *opaque;
->>       MemoryRegion *container;
->>       int mapped_via_alias; /* Mapped via an alias, container might be N=
-ULL */
->> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl=
-.c
->> index 145a0b3879..71a7500de9 100644
->> --- a/hw/display/virtio-gpu-virgl.c
->> +++ b/hw/display/virtio-gpu-virgl.c
->> @@ -52,17 +52,11 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
->>     #if VIRGL_VERSION_MAJOR >=3D 1
->>   struct virtio_gpu_virgl_hostmem_region {
->> -    MemoryRegion mr;
->> +    MemoryRegion *mr;
->>       struct VirtIOGPU *g;
->>       bool finish_unmapping;
->>   };
->>   -static struct virtio_gpu_virgl_hostmem_region *
->> -to_hostmem_region(MemoryRegion *mr)
->> -{
->> -    return container_of(mr, struct virtio_gpu_virgl_hostmem_region, mr);
->> -}
->> -
->>   static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
->>   {
->>       VirtIOGPU *g =3D opaque;
->> @@ -73,14 +67,12 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *op=
-aque)
->>   static void virtio_gpu_virgl_hostmem_region_free(void *obj)
->>   {
->>       MemoryRegion *mr =3D MEMORY_REGION(obj);
->> -    struct virtio_gpu_virgl_hostmem_region *vmr;
->> +    struct virtio_gpu_virgl_hostmem_region *vmr =3D mr->opaque;
->>       VirtIOGPUBase *b;
->>       VirtIOGPUGL *gl;
->>   -    vmr =3D to_hostmem_region(mr);
->> -    vmr->finish_unmapping =3D true;
->> -
->>       b =3D VIRTIO_GPU_BASE(vmr->g);
->> +    vmr->finish_unmapping =3D true;
->>       b->renderer_blocked--;
->>         /*
->> @@ -118,8 +110,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>         vmr =3D g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
->>       vmr->g =3D g;
->> +    mr =3D g_new0(MemoryRegion, 1);
->>   -    mr =3D &vmr->mr;
->>       memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
->>       memory_region_add_subregion(&b->hostmem, offset, mr);
->>       memory_region_set_enabled(mr, true);
->> @@ -131,7 +123,9 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>        * command processing until MR is fully unreferenced and freed.
->>        */
->>       OBJECT(mr)->free =3D virtio_gpu_virgl_hostmem_region_free;
->> +    mr->opaque =3D vmr;
->>   +    vmr->mr =3D mr;
->>       res->mr =3D mr;
->>         return 0;
->> @@ -142,16 +136,15 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
->>                                        struct virtio_gpu_virgl_resource =
-*res,
->>                                        bool *cmd_suspended)
->>   {
->> -    struct virtio_gpu_virgl_hostmem_region *vmr;
->>       VirtIOGPUBase *b =3D VIRTIO_GPU_BASE(g);
->>       MemoryRegion *mr =3D res->mr;
->> +    struct virtio_gpu_virgl_hostmem_region *vmr;
->
-> Same same but different? ;)
+I guess it will be possible for QEMU to actually set something different
+=66rom what we tell it to do (for example dependency of a specific
+settings on something else which was not set, etc)? If so, we indeed
+need both (a) and (b).
 
-Hmm I think I just reflexively put unassigned variables at the bottom of
-the list of declarations so they stand out more.
+> Would a dump of the current state of the ID register fields before
+> starting the vcpus work for (b)?
 
->
->>       int ret;
->>         if (!mr) {
->>           return 0;
->>       }
->> -
->> -    vmr =3D to_hostmem_region(res->mr);
->> +    vmr =3D mr->opaque;
->>         /*
->>        * Perform async unmapping in 3 steps:
+I guess so. Originally for x86_64 we got a dump of CPUID data, but that
+changed when some features started to be described by MSRs.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> Or is that too different from what other archs need/want?
+
+Each arch has some specifics in CPU configuration and the way we talk
+with QEMU about it. So having the same QMP interface is not a
+requirement. It depends how well the existing interface maps to details
+that need to be expressed. That said a common interface is better if it
+makes sense.
+
+Jirka
+
 
