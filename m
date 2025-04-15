@@ -4,68 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD3EC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61ABCC369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4isu-00070R-M8; Tue, 15 Apr 2025 12:11:40 -0400
+	id 1u4jFz-0007JS-FX; Tue, 15 Apr 2025 12:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u4isl-0006yX-8k; Tue, 15 Apr 2025 12:11:32 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <sbates@raithlin.com>)
+ id 1u4jFl-0007HF-PY
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:35:21 -0400
+Received: from mail-canadaeastazon11020087.outbound.protection.outlook.com
+ ([52.101.191.87] helo=YQZPR01CU011.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u4ish-0003xm-1O; Tue, 15 Apr 2025 12:11:30 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:381b:0:640:f69d:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A25B9610FA;
- Tue, 15 Apr 2025 19:11:18 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:16e::1:36] (unknown
- [2a02:6bf:8080:16e::1:36])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id HBKFMZ0FhmI0-YbeF79Wm; Tue, 15 Apr 2025 19:11:18 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744733478;
- bh=W4t6gNlCoa+T9JdU1ymQ1zdJCB8pVX1/swIJJZ4aCdg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=0DRLr/S+ix5CeCknaaR1Po5L9b4Q1OO/sMWbO5tde7PMn9ebCPDNOooI8EJvikQPX
- Ln+3ra8Wvt76ugItLJL6vGhMgtRwLZFMupRA/jnSFjtpwmDLiFYeTi/suEwIcOtjuf
- l3/vXq9fPdr5WAg5DbEqOVjq18R9Dsa1lXGnXe4Y=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <7e6b2cfc-b2b9-46de-9219-9c1a15a3c5be@yandex-team.ru>
-Date: Tue, 15 Apr 2025 19:11:17 +0300
+ (Exim 4.90_1) (envelope-from <sbates@raithlin.com>)
+ id 1u4jFk-00083b-4Y
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:35:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IUpwxnnZnxRxOMiC38pi4IXtVyzGqiGg9wt/17UoNP7bXDSqZzYddQUbf9vu8teQ1u8Vyq2lzglkNT+u54rTWgx/tYTxbv9ov913zBepC6527SbA1bCZnBsTSGXOdPJMZD/jWmWQg/fkybkocvXRJ9U3wCsPVnibRFtJb1CMfmdprdIzJNenIwCOI4BhjkaqrgL2880C0MuZoswgcYDvLQpZNvbbZ2tg8MRt+OqV4pwIcvCDmxnR3veX1vj/OV+OuOfeGMtSAUDmOUG0vdc3+NTKjBavTcA0dVV5qJWsaQk4ZETMRvjSE3zjUvkgKe/QjdLSJXoaT0VreH5Tdk0F4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=evPcCQHRGYQK4Keg3AF36uFbvO83tIKos/Mhf23SQsA=;
+ b=HS0fZtYe7rAkzy6VR/akP9fPUYR9TI41SM/hGS1kF8zhOYcyHKUPHQhrKrSov0jHNdCRXWQ5EErVS74+/bwPdFHOluQni8g3V4T+ZE5Sw/ynLfgnUj5rXOE88kz6GOAmd/48wOxCsEB/ys6dRlx8cAD4ZcWIoR5VPibH+VVs0QGNXQnT1sJpVyz1zBNa7HblRC9Zj5nbzO7AtuiQ4CyDdJZXrLYwRpzyLXU2ll/FKECEGWR3+1e2FJXTN03wuQukmuZPoj6qViNVnpHsM1n6muAioJZBYqfzasgFFEMLgivUA25nGY7xna7Au3dYerLUlI23ioj/HngWcV41renmhA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=raithlin.com; dmarc=pass action=none header.from=raithlin.com;
+ dkim=pass header.d=raithlin.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=raithlin.onmicrosoft.com; s=selector2-raithlin-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=evPcCQHRGYQK4Keg3AF36uFbvO83tIKos/Mhf23SQsA=;
+ b=o1FkFQZQE9gshfxGe1kTquHS0jxCsCgv61I+UVAdYtN3CQCAeCKasPEpG3dRtMPOfBs1uca5GZMkso99OE7G0YeuSNtGGStogGo1ZD8wRC99Ras1+zqce/5Wr8IAYnVeVsjfk/RsHdPKkg2VW05Nv/LBswk7qg7z1KUGGpTlBXg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=raithlin.com;
+Received: from TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b08::68c)
+ by YT1PR01MB8891.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:ca::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.34; Tue, 15 Apr
+ 2025 16:30:01 +0000
+Received: from TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::2671:57c7:e28d:98cd]) by TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::2671:57c7:e28d:98cd%8]) with mapi id 15.20.8655.021; Tue, 15 Apr 2025
+ 16:30:01 +0000
+Date: Tue, 15 Apr 2025 10:29:56 -0600
+From: Stephen Bates <sbates@raithlin.com>
+To: qemu-devel@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com
+Cc: sbates@raithlin.com
+Subject: [PATCH] pci-testdev.c: Add membar-backed option for backing membar
+Message-ID: <Z_6JhDtn5PlaDgB_@MKMSTEBATES01.amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-ClientProxiedBy: PH0PR07CA0089.namprd07.prod.outlook.com
+ (2603:10b6:510:f::34) To TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b08::68c)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] file-posix: Allow lseek at offset 0 when !want_zero
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, "open list:raw" <qemu-block@nongnu.org>,
- "Denis V. Lunev" <den@openvz.org>
-References: <20250411010732.358817-8-eblake@redhat.com>
- <20250411010732.358817-10-eblake@redhat.com>
- <2d17f631-40b0-40bc-a4ba-0b507cd39c71@yandex-team.ru>
- <6dn2vursoidmgeba4jtdrpy76b4o6ktkvh6l22bykm7cllmahw@hchia4nkjv2s>
- <7628c28f-8d6c-4f0b-af28-2cde86a2a8c7@yandex-team.ru>
- <gysmpcvn54bbcir6dytw3243j4zf5v7phlw3zfncqept6qqwua@meptpfpqkkq7>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <gysmpcvn54bbcir6dytw3243j4zf5v7phlw3zfncqept6qqwua@meptpfpqkkq7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TO1PPFC79171DBA:EE_|YT1PR01MB8891:EE_
+X-MS-Office365-Filtering-Correlation-Id: 85e634f0-e6c0-4d51-57fe-08dd7c3ac51e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aFpFR2VVTUVoY21aWWM4Umd1Nkl2dFhLTnlGbjlkdU5vQmd1UVRJbm4yS25J?=
+ =?utf-8?B?V2I3SjFleUZkS0pWb1V2cW5DalRoOTM2V2EyaWlwb1Z2bHpiWSt2NnVUTXpK?=
+ =?utf-8?B?Q3JZekVOZ0lVQlo3WXIzZElKd2NpakxxVml5YnE4UXFoaU13ZEEwMWVzM3Fr?=
+ =?utf-8?B?YnBNUjlyOXJSbkhObWd0bGk3a1gzQzdSY25jYXVmMUpZWEU5eEpGT3VHTHE5?=
+ =?utf-8?B?TmdaNW5wbnFhdSs1dG4xUnBZaDVadVQ1aXp3VnFZaFJkT2pkdGpWL0ZWeFBD?=
+ =?utf-8?B?Q3Z3S3djR3NUdk4wZkZSMG96Slo5N28rYzZaMHcrczRtZFdZaFRUdEZ0Yy9J?=
+ =?utf-8?B?ckxQRkNKVEJJOXlVZDZGZmVjYjhSUnFEYWtaQndQdW9sYUZ6T21UcFhSZzBz?=
+ =?utf-8?B?QWhzYjhkMkJKczhMbFliOFZXWlEzN20vRFVQejRpZkhqajRRNkozOC8rQnM1?=
+ =?utf-8?B?d05pOFgrYVBPK2FRc0x4TS9ieCtyOHB3cEJLaFB1YlQ5TStQSDhyVFZ4ZE4x?=
+ =?utf-8?B?aUZPakJsYnhrSTlDcVNiR1J5ZU5EZVZpZ242ZC9UTUpPd1NOeEZlTzNBZ3Rw?=
+ =?utf-8?B?RHBoclprRlBIYTFqUkZTWmNudjAxeFlMNUFTV3ZQUVRqclVFWUFyMjlPT3Vx?=
+ =?utf-8?B?Mm56Z2JkaTZCajBkRGVWeDRMeE42VFdTRHZsdEZpRG53V2RWSWNMSTNqN1NP?=
+ =?utf-8?B?TTB4d0JOdi85WklUSm9kZ0htMGE2R2N3Z3JRdHplc1R5MnBaYmZEdmlVT3pJ?=
+ =?utf-8?B?S29TNndHcW5MdlhudFZPQXVQSDRiVXFhWEQ2ZSt5eXpuQXg4S2l0eHNoNkZ5?=
+ =?utf-8?B?ZTdqT1ByamZRamROcTZtcDRObmE4blZRMTFYb0ZUYUxKQVliMDNickZkZ0Rv?=
+ =?utf-8?B?cmxNYWNqZUFlU2VkVWpZSUhqUEpkWExXRWxZOHBZSU0yVFNUMkhOaFk5V3dK?=
+ =?utf-8?B?eDJXMnBMcStRQTJKaWsvN25CZzBQV2dYTlVLNGJuV1BaWDNxU3VZWEJmVEY2?=
+ =?utf-8?B?M1NZbS8xdDNrMXo5V0owK0tydU44bjR0aXQ1UUNpUVdhM04yblNMYU1qdFpj?=
+ =?utf-8?B?cTJUUTRzcEV3SGxnQmh0cStWcFlYblYrZXp1WE5XM216L0tLZlpEQ0dnZmVN?=
+ =?utf-8?B?QWpNZkpCVS9xbkZNaG5oZG5yTlp6VjR6M09BV1NLcmVIUnRKNzJmMzdGZzJx?=
+ =?utf-8?B?Nlh0b2xjSVlkZmZtM0dWL2NKQ1BNTnZZeHlzWSs1NWtiTEF0Vjl6NnVQRXkw?=
+ =?utf-8?B?bjEyOERKSGtyb1B6WWNNaHU4dEpBOG4yWkVST0trd2tJOHRXdlBsRldRM2pL?=
+ =?utf-8?B?Z0s1OVljbnN6K0E0bXRndjlvNGhkMFZYYnpRSnltNWo0VEJ3ZjE0Y0lwK1Bq?=
+ =?utf-8?B?QlQ2REc4clJTc1Y0c0FNWUtZZ0hIc1FHZWVkdkJRbWd0bkxDMjcvZXU0cGpK?=
+ =?utf-8?B?R1dWbVUvbTVhNzdrTnlULzV5RUFjTnMzMmNiK3JmWWdBTVRNRllJa2lIUXFK?=
+ =?utf-8?B?bUhJam5nR1gvNzQzNHpYN2JXWFc5OWNTZ1lhblZ0UE95WXFRTEJMek1DU28y?=
+ =?utf-8?B?aW45U1BNRlR4M1YwRzlyUHdKb0VTQUdIcFY1Mk0wUE1QRVNkbytVcjhDd2py?=
+ =?utf-8?B?NTVVa05vNTRhbHJ1S3dUU1k3eUZTWmNZazlORkh2Qk1SbmFvZ3N2d01nUk9l?=
+ =?utf-8?B?R0NENXg2UGIrc2J5Z1ExSkE3NDQ0S1pHODBEZDVJcjRXNnNNVTU1dGRncFJK?=
+ =?utf-8?B?aDZnNWRjdmFrNk1Bc1dEZWZtaUQyQTRZR21CdWZzNUx6THdVYzA5WWdCUHJW?=
+ =?utf-8?B?RGtPZ2xPbWd0cUpvTEZWLzZveFV6R0pwcDFUank0OVdqUklVZ1hGRStRdUg4?=
+ =?utf-8?B?ZjlMaGFyU1FjYjVoZzgvdGtiRWVPT3Z6cWRuN1R2Zk4xbmkxdnFjbmpNVXlU?=
+ =?utf-8?Q?c2yAOcr+ilI=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RFY0OEw4VVVMa1NDVUxNYXozczVueGN4cDQzWjg5ZzdFNFZIQmFLYXFpa1FM?=
+ =?utf-8?B?R1VzSlh3dEFZR3lxK1lQRzJ2QWJZdjZ6OVZCak42K3JBSTlBSkoyNE9GSUt5?=
+ =?utf-8?B?dFBNNXJBdjhOMjkvUERhcit5R2p5Y1QvNnN4RlcrWUcwblRSUURXYWtaZ3Zk?=
+ =?utf-8?B?L1NKTEQ5SXJtczNtSFRManZuTkNIT0Fxdmp1VFd5c0Z1NHkyZHN3MDRZdHUr?=
+ =?utf-8?B?MDFLU2JxZHNqeFRXT3FZTXhHMlI4RmtCMzVGQkNyTXQ2a3V2Rk1XK3dyeHZl?=
+ =?utf-8?B?dlZpelpMeStMc0NPbVVpYXRoSWVZSzhIOFN1TEZISE9RTjlTR3diMlZKOTRr?=
+ =?utf-8?B?cHg1UzJJTVNLL0hwbllWRHBLdXlNNkt4T0JGUDRWOUNxYXV1NmYxdDNqd1JL?=
+ =?utf-8?B?U0Q0eWwvQWFsNnF3RWptS3QvYnBNcFBEZjQ0N1RSM0xWMmJiNXE2Z2F0T2h1?=
+ =?utf-8?B?dkM2ajYvZE1DZ1dtNjZjUFdhWXF0dlMyaXp0OHcxVlpJOTNUZmVNTFVMcWw3?=
+ =?utf-8?B?R1VHRTFBb0t3YWIrVm1PYWJ4U085dVF2REFkcGlHcU1jbjJBUEs0bFBoQlZv?=
+ =?utf-8?B?NGcxWjYvR3lGNG9JNTZ3NXVqYXFPMzVGREtUcmRIcVVReDlXdUplWElZUWZ1?=
+ =?utf-8?B?WEk0a2RxbWNyR2hCcTN5bGFpRDZ5VXB0N3VMQVhCenZ1QXlBbmRYVVh1Y0l2?=
+ =?utf-8?B?dzFDRG5pbVpUaEpmcW4vTVVBZ0JrcDdJSUdab2Uwamx2TittV0F3SGFtaGdn?=
+ =?utf-8?B?NjBoZVpnUStkU3MxMlpyMUN1WEdtVVpEc1BvTFF3V1g5czJ0eHhlN0tSZTRi?=
+ =?utf-8?B?YVVRWi9GZlVtTTR3SWJxT0I3akphdy9RWGxNT3NFTElDLzExK3JzNHVyd2RE?=
+ =?utf-8?B?NzJPY3k1eU01V3NuMjlzMyticlVtditSTEY5ejdseCtOS0xJWE1ybjlWdXBX?=
+ =?utf-8?B?Q0RWb2VCL3ZvelN2MXpvMmJINkszRXA1blh4citWWEJlNjluQ0VTYjJuQmQ4?=
+ =?utf-8?B?V2E3ZXM3Z21SRDNWMlE4Njd0ZWlpUjZCZmtybGloYWE3Nzg4eWlZaG9mM0d1?=
+ =?utf-8?B?bitNdWxNV3cyUE83MENjeDNSRkQwamNMMUVVd1BoRUdCbmROSC8xMVYrTllE?=
+ =?utf-8?B?T3YxZG1hUHNXbWF1bWFaaHJUZEpzd0RZVExZRzVrTHJSTDVrcHlTKzR3blQy?=
+ =?utf-8?B?aTNBdFlDbFQ3TWlFaHVWbWE3LzJYTWcwU2lqZ0N4dmgzeld5dXk5Tmo1b2tI?=
+ =?utf-8?B?SlBtUnlhN21aajJYVEw1Rk9FWUw0bzNpWFVtTlZxQlQrZTcyNk9sWEpXR1F5?=
+ =?utf-8?B?SkZka0ltdmtLSG0xZTQ4eExrd0s5cGE1Ymt3OUMyNk9hR1Y1NzdJRDd1Vzk1?=
+ =?utf-8?B?Y1hDQUxzMS9CWndIemozNzBkRTNTK2RsWEVTV284WVl1b3lsNlRYdGd6Y2Zu?=
+ =?utf-8?B?Qm5uejFWNDBZWEJSalVVcElBZFZSLzhCbnZINlVXbklpVno4KzNVMWVzcFFz?=
+ =?utf-8?B?NFVab2lBR0tZWThnQVB0dERUbnNDdHBqaXJXSjNyVFNmRUozYzBGN2l1dzdh?=
+ =?utf-8?B?eUc2VGZCTjg1c3Z5bzhhdW1YeFk1c09KZXdsWkNzTkVqQmpQSXZKZ0dNdDJi?=
+ =?utf-8?B?aWVJcmxGaHR4QVEyQS9yVll6blZoQy85V0xubGFKb1pmNjU3THJ1QlJObnBj?=
+ =?utf-8?B?Q3ZhNG9aOVZrb2VRNzBzZTl1dTRwQjdEVzMvRXNZcmZqMGNHNm9tNGZseExN?=
+ =?utf-8?B?a0JlOEI1T3JsZkZ4N3RlZzJtYjRNTHVjTmVvTnM2dXVoVG5HbzNkUlJFQ29u?=
+ =?utf-8?B?ZjhMQlIwN1UvTUpnT3VnRnFZMm9laUNmZ3Qxa3k0UUNuUlJDaDVJWWswZmpv?=
+ =?utf-8?B?Y0FKYlhTYUVFRHpyTGYzUzZBR0lHd1VLV0Vic1BObFVOaXVlNEpBeFBmUFpx?=
+ =?utf-8?B?YkR3eThiUmpwbkZpS1djK2g1ZEozZVE5ZmVDb2hTRCtPdjM1dmdXclNoc1Fs?=
+ =?utf-8?B?OVdCTXJhb2lOdFB4TE93c2tNbW9DMUFrVWs3dm1CSjBqVnl4VnU4Y0szcit0?=
+ =?utf-8?B?Y1RCdEdJK0Vxbm1MTm5oMXFlWGxidlJaajlyUjkrL2JxN1JZSGdmZnR6elpq?=
+ =?utf-8?Q?n0ACNm9cwdzbZKsf8gPR+PmH/?=
+X-OriginatorOrg: raithlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 85e634f0-e6c0-4d51-57fe-08dd7c3ac51e
+X-MS-Exchange-CrossTenant-AuthSource: TO1PPFC79171DBA.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2025 16:30:01.5479 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 18519031-7ff4-4cbb-bbcb-c3252d330f4b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1BQr/7yEQvJxWUAevjHh8jXz9nZ4P/swYcDfgTebG7a/2KS9ZIBLV/RaGg/dC0bm5/LBN0Zu2d//47JOe3FpiA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT1PR01MB8891
+Received-SPF: pass client-ip=52.101.191.87; envelope-from=sbates@raithlin.com;
+ helo=YQZPR01CU011.outbound.protection.outlook.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,100 +172,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.04.25 18:22, Eric Blake wrote:
-> On Tue, Apr 15, 2025 at 03:37:39PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 14.04.25 21:12, Eric Blake wrote:
->>> On Mon, Apr 14, 2025 at 08:05:21PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->>>> On 11.04.25 04:04, Eric Blake wrote:
->>>>> The 'want_zero' parameter to raw_co_block_status() was added so that
->>>>> we can avoid potentially time-consuming lseek(SEEK_DATA) calls
->>>>> throughout the file (working around poor filesystems that have O(n)
->>>>> rather than O(1) extent probing).  But when it comes to learning if a
->>>>> file is completely sparse (for example, it was just created), always
->>>>> claiming that a file is all data without even checking offset 0 breaks
->>>>> what would otherwise be attempts at useful optimizations for a
->>>>> known-zero mirror destination.
->>>>>
->>>>> Note that this allows file-posix to report a file as completely zero
->>>>> if it was externally created (such as via 'truncate --size=$n file')
->>>>> as entirely sparse; however, it does NOT work for files created
->>>>> internally by blockdev-create.  That's because blockdev-create
->>>>> intentionally does a sequence of truncate(0), truncate(size),
->>>>> allocate_first_block(), in order to make it possible for gluster on
->>>>> XFS to probe the sector size for direct I/O (which doesn't work if the
->>>>> first block is sparse).  That will be addressed in a later patch.
->>>>>
->>>>> Signed-off-by: Eric Blake<eblake@redhat.com>
->>>>> ---
->>>>>     block/file-posix.c | 9 ++++++++-
->>>>>     1 file changed, 8 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/block/file-posix.c b/block/file-posix.c
->>>>> index 56d1972d156..67e83528cf5 100644
->>>>> --- a/block/file-posix.c
->>>>> +++ b/block/file-posix.c
->>>>> @@ -3217,7 +3217,14 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
->>>>>             return ret;
->>>>>         }
->>>>>
->>>>> -    if (!want_zero) {
->>>>> +    /*
->>>>> +     * If want_zero is clear, then the caller wants speed over
->>>>> +     * accuracy, and the only place where SEEK_DATA should be
->>>>> +     * attempted is at the start of the file to learn if the file has
->>>>> +     * any data at all (anywhere else, just blindly claim the entire
->>>>> +     * file is data).
->>>>> +     */
->>>>> +    if (!want_zero && offset) {
->>>>>             *pnum = bytes;
->>>>>             *map = offset;
->>>>>             *file = bs;
->>>> Looks like a hack. So we have bdrv_co_is_zero_fast() which do pass want_zero=false to block-status. But in case of mirror, which want to check the whole disk, we actually want want_zero=true, and detect it by offset=0..
->>>>
->>>> Isn't it better to add a kind of bdrv_is_zero_middle_speed() (which means, don't try to read the data to check, but be free to use suboptimal lseek call or something like this), which will pass want_zero=true, and use it from mirror? Mirror case differs from usage in qcow2 exactly by the fact that we call it only once.
->>> Which is exactly why I wrote patch 4/6 turning the want_zero bool into
->>> an enum so that we are being more explicit in WHY block status is
->>> being requested.
->>
->> Hmm, and this makes more strange that this hack for file-posix is kept after it. Don't we have other block drivers, where we should behave similarly in block_status for offset=0? Or I mean, could we just use different block-status modes in qcow2 and mirror, when call bdrv_co_is_zero_fast(), and don't handle offset==0 specially in file-posix?
-> 
-> I'll need to ajust this in v2 of my series.
-> 
-> The problem I'm trying to resolve: libvirt migration with
-> --migrate-disks-detect-zeroes is causing the destination to become
-> fully allocated if the destination does not use "discard":"unmap",
-> whereas with QEMU 9.0 it did not.  The change was commit d05ae948c,
-> where we fixed a problem with punching holes into the mirror
-> destination even when the user had requested the file to not shrink;
-> but it means that a file that is not allowed to shrink is now fully
-> allocated rather than left sparse even when leaving it sparse would
-> still be an accurate mirror result with less I/O.
-> 
-> And it turns out that when libvirt is driving the mirror into a raw
-> destination, the mirroring is done over NBD, rather than directly to a
-> file-posix destination.  Coupled with the oddity that 'qemu-img create
-> -f raw' ends up pre-allocating up to 64k of the image with all zero
-> contents to make alignment probing easier, it is no longer possible to
-> quickly see that the entire NBD image reads as zero, just as it was
-> not possible to quickly see that for file-posix.  So, in v2 of my
-> patch series, I think I need to hoist the logic that I added to
-> file-posix.c that reads an initial small sector in order to determine
-> if the entire image is zero to instead live in io.c to be used across
-> all protocols, NBD included.
-> 
-> So if you don't think offset=0 should be given any special treatment
-> in file-posix, but instead have generic code in io.c that checks if an
-> entire image has block_status of sparse and/or just a small initial
-> non-sparse section that can be manually checked for zero contents,
-> then that should still fix the issue of mirroring to a sparse
-> destination with "discard":"ignore" but keeping the destination
-> sparse.
-> 
+The pci-testdev device allows for an optional BAR. We have
+historically used this without backing to test that systems and OSes
+can accomodate large PCI BARs. However to help test p2pdma operations
+it is helpful to add an option to back this BAR with host memory.
 
-Thanks for explanation! Yes I think making such specific checks about first sector in some kind of generic bdrv_is_all_zeroes() would be cleaner.
+We add a membar-backed boolean parameter and when set to true or on we
+do a host RAM backing. The default is false which ensures backward
+compatability.
+
+Signed-off-by: Stephen Bates <sbates@raithlin.com>
+---
+ hw/misc/pci-testdev.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/hw/misc/pci-testdev.c b/hw/misc/pci-testdev.c
+index f6718a7c37..da9126a8a7 100644
+--- a/hw/misc/pci-testdev.c
++++ b/hw/misc/pci-testdev.c
+@@ -90,6 +90,7 @@ struct PCITestDevState {
+     int current;
+ 
+     uint64_t membar_size;
++    bool membar_backed;
+     MemoryRegion membar;
+ };
+ 
+@@ -258,8 +259,14 @@ static void pci_testdev_realize(PCIDevice *pci_dev, Error **errp)
+     pci_register_bar(pci_dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &d->portio);
+ 
+     if (d->membar_size) {
+-        memory_region_init(&d->membar, OBJECT(d), "pci-testdev-membar",
+-                           d->membar_size);
++        if (d->membar_backed)
++            memory_region_init_ram(&d->membar, OBJECT(d),
++                                   "pci-testdev-membar-backed",
++                                   d->membar_size, NULL);
++        else
++            memory_region_init(&d->membar, OBJECT(d),
++                               "pci-testdev-membar",
++                               d->membar_size);
+         pci_register_bar(pci_dev, 2,
+                          PCI_BASE_ADDRESS_SPACE_MEMORY |
+                          PCI_BASE_ADDRESS_MEM_PREFETCH |
+@@ -321,6 +328,8 @@ static void qdev_pci_testdev_reset(DeviceState *dev)
+ 
+ static const Property pci_testdev_properties[] = {
+     DEFINE_PROP_SIZE("membar", PCITestDevState, membar_size, 0),
++    DEFINE_PROP_BOOL("membar-backed", PCITestDevState, membar_backed, false),
++    DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+ static void pci_testdev_class_init(ObjectClass *klass, void *data)
+-- 
+2.43.0
+
 
 -- 
-Best regards,
-Vladimir
 
+Cheers
+
+Stephen Bates, PhD.
 
