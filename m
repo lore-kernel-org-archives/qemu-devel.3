@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2FD4C369BA
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 19:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E76AC369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 19:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4lg2-0004Yl-6L; Tue, 15 Apr 2025 15:10:34 -0400
+	id 1u4lpP-0006xQ-Jc; Tue, 15 Apr 2025 15:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1u4lfx-0004UO-UK
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:10:29 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1u4lpO-0006wu-If
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:20:14 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1u4lfw-0005UJ-1l
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:10:29 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7398d65476eso4690937b3a.1
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:10:27 -0700 (PDT)
+ id 1u4lpM-00074d-0M
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:20:14 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-73712952e1cso5737115b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744744226; x=1745349026; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=aBauhdBD41zRnYBCE0WbCTReSwUy13Xdi5xTsquRxOo=;
- b=MvvKnxdFFgWcW2f9sh48ecZxQkEwnCIsENuXxqqAmDsz6l3R9tURdOOKilx1kFEkwl
- VuXZ0bXobeojQhHcQxE6ZztbWwC05OfOaTpRKW/pUk+eBh7/2HHtU5/VRfz6W1EiUBF9
- 5UXa8yjdAFmxcYTLoUrVDlIKBVvuDK9+zx0z8TxOb1VpR8/tdjS5aQ97L+kxJLaIKy8T
- sGr4KLeeSefl8OFo+27iPSlqA/3cHr/Bs7ixKbMIv+boFJ8mE7NPT1gyIOe8sWDXfokN
- I2M0amrFJIOI1onOryeEcH8hpAcYIDw5aImxnkCm5QLufxFNOIiPyYU/E4LlVww+Dm85
- WWdQ==
+ d=gmail.com; s=20230601; t=1744744810; x=1745349610; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=d8MV/9ihDX+bChlp3YZPyG3tNZDA3wf/xirltgvrCio=;
+ b=DF2vSTMj7boWZIAtFKB/6wZOSxtMXshzms9vFqc2IZl1leX8PiN372tuiequ/5gwpJ
+ V4/kfGIk6Y2ZFIY2zV+Wq0Q3tN1ETOb5LSh380BBX15/yCToZSzM4qn4mKdIohZTv3qv
+ svh0l25SZeMZqhm/DlXSGlDywc663ztoZSek0aVTkoFwLN7GLC2/Al9agxANjDE+LOa3
+ 98zW1yuI+QEuvAJ3rB8vjYcQUjidgwpg3dOTQaWX4B9Q6stazPOK+7bVNcIu/YTI3sAe
+ u/OcFHmtCaMJNi/UIsn/vLDFwR0d3/jCEsPHLZsOA+VmgcR/SXrwXvFQZod4U2hnw16f
+ x22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744744226; x=1745349026;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aBauhdBD41zRnYBCE0WbCTReSwUy13Xdi5xTsquRxOo=;
- b=Jt3UN0GIVtFKQ6CWnW/F7wT+HPRXhhfhE0On5nZjZc0B8x9qFnpI1yyM0XH1f0NOVK
- Ri5kYX5GgXOjSDC9Z4SaEYxJnYIQvhYAeTHoyDoksDF+RA4dwmzNIpoN/eBPVcQVmSyV
- tqTv1VToKPtd8KK8rqVpd/cvPzlqi228zni92D6K0dhdJjECxyQeyZIrwlzWn7q2qJL9
- A+oZWzoJ2GKj5nX3Thgjp6qMg/eeQv5/CUCrAMXFbVtBWNqm6fK8f/kDYiPtU3elSWMV
- 5Utr5+V546LW+6pSNXUIoggjbmBDpEtWI1ufSkxhfPpP5KDK1TyM4BBqrGlHNsCIgZwc
- 3mkg==
+ d=1e100.net; s=20230601; t=1744744810; x=1745349610;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d8MV/9ihDX+bChlp3YZPyG3tNZDA3wf/xirltgvrCio=;
+ b=e7hxAfBIoYuveoG88NyTZMoNB8FV+q2+r8vt8S4OiRJ1A1+8vVn9x0mNtt7N7e7RTc
+ LY5gHG8S7cRC9tvKdsL9cp3nlpmsXDHBTRdqlXm6BbQ48Abb2hGXjOw7ZsgG74zgjL1o
+ FYjaMKwenyomYZIQVL21/wEQ6J3M84cKw4M4swpgPTZadL+eYRhVlT07ttAkMTc45ePS
+ nvIYaQwj3g/Locejihdb5rDsT6Fbf+ZQvmyRg0/rmVAkYRO833QOJQH5PTwWaFH4t74r
+ hNMnGb0jLxdt3Lnp3x3s/b7jMkGVFzDy68JfLlzuredcA+9bVlqHLnQDglYHmDOrEACO
+ iZ3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzPlHoxeXpZddT+wRYNffnneKy3cUyHxRPq2ZlF5gW274e5H8rW4mk560Nq/DTpoRZtjhrgK0j4/z2@nongnu.org
-X-Gm-Message-State: AOJu0YwQkxwAnHRm/z71CoLBRD/4dQsqc58qs0ZdU18S3Anx7AxdSVcx
- uGXwOgedIYrfPX6fQ6nmBvar6htF0HVuSFt0tpGjOkFJmsFruoDA
-X-Gm-Gg: ASbGncv7x03z6O/pNtSNgYFQz2vAYywKSqlMUOBvSU5rvGiE5PBZ1KSbuf42AuMK2zp
- q4IG7awjDYw7ax5NjY69QuFlkNSOerRj6HdLhvRD8JUqsuuzYjZUKS5fpPm89haDOKYFr/ZKu1K
- kmtfu/xy+fQHuLtWu1yy3ZlaqX/hvY2hbtohV8eB53mj73fAJBzc0zFN6OWI4NTC/0gZTQbseJb
- QMiE+Z46cQqumF1/k9+gdH9QU8B6gHl8KxC5Fj7+AqkRXI7bHCRGv7TMemIY8tCxtBmwqbb/YxX
- zptrAq5oCHnhJ4mITYe8XC0yxBsCceCj3z3ASowWtm3NMBz1Z1Vo7mOUsePbFdU5io3uiGEtewR
- 1RxRwQ/xE
-X-Google-Smtp-Source: AGHT+IHl9ToY54I+z+AYWJGRIq6AtMdjvqfKXHT3Xe5MP7fY8TxBqLJunmvC5lth3YDfdiWDL+PTCw==
-X-Received: by 2002:a05:6a00:1491:b0:73b:ac3d:9d6b with SMTP id
- d2e1a72fcca58-73c1f92cfc4mr1005672b3a.4.1744744225704; 
- Tue, 15 Apr 2025 12:10:25 -0700 (PDT)
+ AJvYcCXIrBWNvNyasLkkg8l9tErYgxTmEtOnHZq2nS1JZeK1bwg2DY8Zpdq454D6iw8w4CqDXJTRtUwdixAF@nongnu.org
+X-Gm-Message-State: AOJu0Yycp12NsFcQo1meKLoUtW+OE4K02L4JO+COcabvOG62Qmmw32/P
+ +tVSrLO6GTDzb9LyLlSRmX3j4hjUaWlZ2H3T0MpzuS6X4TYTVjkx
+X-Gm-Gg: ASbGncsZE706a9Z6BRp7DlQ2sKXDgcjU3Vc8or880c7BgCxBL/noKBHz56l4cMkdFZb
+ pcGe9q6V+u+cqYRpnQShZ7GObGb3BdJRva5VS1+1InohlPuu50BnqxBbESsLxEJ+Prbhv5A4cqG
+ XmSaS30XcLkJvLKBw0TikQ5ymweAPNmMDyf8Uwrm71Lj8WgLHHUOhzZTgtztRX7Fc+Ljo6Y1u4v
+ fguE5vG6uRkf+IYUweyURezoM/A9wrQYPOI8EuC+StJySccPXh+OZmQxDTDtDLDm8krZfcUOqWB
+ 3eJjQccMNBmULlEMKA+cFnmPOtcWqgNrKDDu4batTRNVxk8gKe79Ua16mGa4S6pzNrZYY8HWfIt
+ qkQTCNW/zSjqNmt9jmUA=
+X-Google-Smtp-Source: AGHT+IFz91gqkPhjtp9wI2DwrWdJ9rFZ6mR8amh05HpwomvI5CvBiH9QptD2BcXrwLcU605fklyydA==
+X-Received: by 2002:a17:90b:4c43:b0:301:a0e9:66f with SMTP id
+ 98e67ed59e1d1-3085ef1dbbamr595981a91.14.1744744809825; 
+ Tue, 15 Apr 2025 12:20:09 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1c45:45a3:affe:4635:b6b6:1a76?
  ([2401:4900:1c45:45a3:affe:4635:b6b6:1a76])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd21c33bfsm8860168b3a.42.2025.04.15.12.10.23
+ 98e67ed59e1d1-306df2fb081sm13543997a91.35.2025.04.15.12.20.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Apr 2025 12:10:25 -0700 (PDT)
-Message-ID: <9a37c921-3a1f-439e-b2c0-960a15b3c4eb@gmail.com>
-Date: Wed, 16 Apr 2025 00:40:21 +0530
+ Tue, 15 Apr 2025 12:20:09 -0700 (PDT)
+Message-ID: <a549035f-9e33-45ed-a4bb-14d60964b604@gmail.com>
+Date: Wed, 16 Apr 2025 00:50:05 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 3/7] vhost: Forward descriptors to device via packed SVQ
+Subject: Re: [RFC v5 0/7] Add packed format to shadow virtqueue
+From: Sahil Siddiq <icegambit91@gmail.com>
 To: Eugenio Perez Martin <eperezma@redhat.com>
 Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
  sahilcdq@proton.me
 References: <20250324135929.74945-1-sahilcdq@proton.me>
- <20250324135929.74945-4-sahilcdq@proton.me>
- <a878b49b-0d00-483a-a5b6-27d048c4ebc7@gmail.com>
- <CAJaqyWdAX6=ZvJdugW2_SmjQDZ31EhMfn=qodoWkZmjd2kY73A@mail.gmail.com>
- <2fa2b2b2-dc9f-4a63-b24f-50cb190dadcf@gmail.com>
- <CAJaqyWfwUqek9McKYZoDpPxf-woxw0g8AJ589W9t6LSdqzdniQ@mail.gmail.com>
- <5f970447-2547-4ce2-8d27-420540d5896b@gmail.com>
- <CAJaqyWdJCaP79Pvy1YgkrZC4p7HBsg1U5MDmQR-LLDFmrBGSzg@mail.gmail.com>
+ <CAJaqyWdXat-ugJHEcZyB5dbTuwGgvrO2+DdDd9YneS0=j-99NA@mail.gmail.com>
+ <f1354888-74fb-44d8-8b48-c6a6a13db1a7@gmail.com>
 Content-Language: en-US
-From: Sahil Siddiq <icegambit91@gmail.com>
 Autocrypt: addr=icegambit91@gmail.com; keydata=
  xsDNBGcgaYEBDADpKUSKbchLCMdCuZGkuF50/7BiraKc8Ch+mk4T+2+E2/6qXAkalvCkFoqx
  3/sa35rconZAFzB/r19e7i3UajIQjATvENrGxqe/IFqcJxo2Jr1HQBwCrsmlQoUCilSC6nDi
@@ -120,11 +115,11 @@ Autocrypt: addr=icegambit91@gmail.com; keydata=
  kn6WekD80DYbAfKyFAXQCO/nclZ82RNmJbDRi3AeMFrxKi6KgdGCp1Izhj9USaMOVqcuV2p0
  Rsoq+sFqWOKaHWnQHCM9RkynQVqrgUaSawEbGlCP1KIhVmjfjVsmsCaKkUb9T6VeO+ZNe+Pn
  rPgMe6IIvn24UuW2f6fIt0AaqOWq
-In-Reply-To: <CAJaqyWdJCaP79Pvy1YgkrZC4p7HBsg1U5MDmQR-LLDFmrBGSzg@mail.gmail.com>
+In-Reply-To: <f1354888-74fb-44d8-8b48-c6a6a13db1a7@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=icegambit91@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=icegambit91@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -150,40 +145,110 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-On 4/14/25 8:37 PM, Eugenio Perez Martin wrote:
-> On Mon, Apr 14, 2025 at 11:38 AM Sahil Siddiq <icegambit91@gmail.com> wrote:
->> On 3/28/25 1:21 PM, Eugenio Perez Martin wrote:
->>> On Thu, Mar 27, 2025 at 7:42 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
->>>> On 3/26/25 1:33 PM, Eugenio Perez Martin wrote:
->>>> [...]
->>> I think both approaches should be valid. My advice is to follow
->>> Linux's code and let it be the tail descriptor id. This descriptor id
->>> is pushed and popped from vq->free_head in a stack style.
+On 4/14/25 2:50 PM, Sahil Siddiq wrote:
+> On 3/26/25 1:05 PM, Eugenio Perez Martin wrote:
+>> On Mon, Mar 24, 2025 at 2:59 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
+>>> I managed to fix a few issues while testing this patch series.
+>>> There is still one issue that I am unable to resolve. I thought
+>>> I would send this patch series for review in case I have missed
+>>> something.
 >>>
->>> In addition to that, Linux also sets the same id to all the chain
->>> elements. I think this is useful when dealing with bad devices. In
->>> particular,
+>>> The issue is that this patch series does not work every time. I
+>>> am able to ping L0 from L2 and vice versa via packed SVQ when it
+>>> works.
 >>
->> Understood. So far, I have implemented this so it matches the
->> implementation in Linux.
+>> So we're on a very good track then!
 >>
->>> QEMU's packed vq implementation looked at the first
->>> desciptor's id, which is an incorrect behavior.
+>>> When this doesn't work, both VMs throw a "Destination Host
+>>> Unreachable" error. This is sometimes (not always) accompanied
+>>> by the following kernel error (thrown by L2-kernel):
+>>>
+>>> virtio_net virtio1: output.0:id 1 is not a head!
+>>>
 >>
->> Are you referring to:
->>
->> 1. svq->desc_state[qemu_head].elem = elem (in vhost_svq_add()), and
->> 2. *head = id (in vhost_svq_add_packed())
->>
+>> How many packets have been sent or received before hitting this? If
+>> the answer to that is "the vq size", maybe there is a bug in the code
+>> that handles the wraparound of the packed vq, as the used and avail
+>> flags need to be twisted. You can count them in the SVQ code.
 > 
-> I meant "it used to use the first descriptor id by mistake". It was
-> fixed in commit 33abfea23959 ("hw/virtio: Fix obtain the buffer id
-> from the last descriptor"). It is better to set the descriptor id in
-> all the descriptors of the chain, so if QEMU does not contain this
-> patch in the nested VM case it can still work with this version.
+> I did a lot more testing. This issue is quite unpredictable in terms
+> of the time at which it appears after booting L2. So far, it almost
+> always appears after booting L2. Even when pinging works, this issue
+> appears after several seconds of pinging.
 > 
+> The total number of svq descriptors varied in every test run. But in
+> every case, all 256 indices were filled in the descriptor region for
+> vq with vq_idx = 0. This is the RX vq, right? This was filled while L2
+> was booting. In the case when the ctrl vq is disabled, I am not sure
+> what is responsible for filling the vqs in the data plane during
+> booting.
+> 
+> =====
+> The issue is hit most frequently when the following command is run
+> in L0:
+> $ ip addr add 111.1.1.1/24 dev tap0
+> $ ip link set tap0 up
+> 
+> or, running the following in L2:
+> # ip addr add 111.1.1.2/24 dev eth0
+> 
+> The other vq (vq_idx=1) is not filled completely before the issue is
+> hit. I have been noting down the numbers and here is an example:
+> 
+> 295 descriptors were added individually to the queues i.e., there were no chains (vhost_svq_add_packed)
+> |_ 256 additions in vq_idx = 0, all with unique ids
+>      |---- 27 descriptors (ids 0 through 26) were received later from the device (vhost_svq_get_buf_packed)
+> |_ 39 additions in vq_idx = 1
+>      |_ 13 descriptors had id = 0
+>      |_ 26 descriptors had id = 1
+>      |---- All descriptors were received at some point from the device (vhost_svq_get_buf_packed)
+> 
+> There was one case in which vq_idx=0 had wrapped around. I verified
+> that flags were set appropriately during the wrap (avail and used flags
+> were flipped as expected).
+> 
+> =====
+> The next common situation where this issue is hit is during startup.
+> Before L2 can finish booting successfully, this error is thrown:
+> 
+> virtio_net virtio1: output.0:id 0 is not a head!
+> 
+> 258 descriptors were added individually to the queues during startup (there were no chains) (vhost_svq_add_packed)
+> |_ 256 additions in vq_idx = 0, all with unique ids
+>     |---- None of them were received by the device (vhost_svq_get_buf_packed)
+> |_ 2 additions in vq_idx = 1
+>     |_ id = 0 in index 0
+>     |_ id = 1 in index 1
+>     |---- Both descriptors were received at some point during startup from the device (vhost_svq_get_buf_packed)
+> 
+> =====
+> Another case is after several seconds of pinging L0 from L2.
+> 
+> [   99.034114] virtio_net virtio1: output.0:id 0 is not a head!
+> 
+> 366 descriptors were added individually to the queues i.e., there were no chains (vhost_svq_add_packed)
+> |_ 289 additions in vq_idx = 0, wrap-around was observed with avail and used flags inverted for 33 descriptors
+> |   |---- 40 descriptors (ids 0 through 39) were received from the device (vhost_svq_get_buf_packed)
+> |_ 77 additions in vq_idx = 1
+>      |_ 76 descriptors had id = 0
+>      |_ 1 descriptor had id = 1
+>      |---- all 77 descriptors were received at some point from the device (vhost_svq_get_buf_packed)
+> 
+> I am not entirely sure now if there's an issue in the packed vq
+> implementation in QEMU or if this is being caused due to some sort
+> of race condition in linux.
 
-Oh, ok. I have understood this now.
+After some more testing, I think the issue is indeed in the current
+implementation of packed vq in QEMU. The kernel does not crash when
+using packed vqs with x-svq=false. I have an idea that might help
+find the issue. It involves debugging the linux kernel. I'll try this
+out and will let you know how it goes.
+
+> "id is not a head" is being thrown because vq->packed.desc_state[id].data
+> doesn't exist for the corresponding id in Linux [1]. But QEMU seems to have
+> stored some data for this id via vhost_svq_add() [2]. Linux sets the value
+> of vq->packed.desc_state[id].data in its version of virtqueue_add_packed() [3].
+> [...]
 
 Thanks,
 Sahil
