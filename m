@@ -4,65 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255E5C369B4
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 09:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B468C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 09:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4cLa-0001qt-Ft; Tue, 15 Apr 2025 05:12:50 -0400
+	id 1u4cTZ-0004sg-3S; Tue, 15 Apr 2025 05:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1u4cLX-0001qP-OE
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:12:47 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1u4cLT-0000kE-Vf
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:12:47 -0400
-Received: from loongson.cn (unknown [223.64.28.203])
- by gateway (Coremail) with SMTP id _____8DxfWv9Iv5nq8m9AA--.52487S3;
- Tue, 15 Apr 2025 17:12:30 +0800 (CST)
-Received: from lvm.. (unknown [223.64.28.203])
- by front1 (Coremail) with SMTP id qMiowMDxH+X1Iv5nCsmCAA--.59777S2;
- Tue, 15 Apr 2025 17:12:25 +0800 (CST)
-From: WANG Rui <wangrui@loongson.cn>
-To: Gao Song <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org,
-	qemu@hev.cc,
-	WANG Rui <wangrui@loongson.cn>
-Subject: [PATCH] target/loongarch: Restrict instruction execution based on CPU
- features
-Date: Tue, 15 Apr 2025 17:13:56 +0800
-Message-ID: <20250415091356.105861-1-wangrui@loongson.cn>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <manish.mishra@nutanix.com>)
+ id 1u4cTW-0004sB-7g
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:21:02 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <manish.mishra@nutanix.com>)
+ id 1u4cTT-0001fP-CP
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:21:01 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8aWPw018947;
+ Tue, 15 Apr 2025 02:20:53 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=OeSZIPeFp2/UFqASKcujSzfocYLdM54Vzquwb61Nx
+ c8=; b=qVm/GOKzNypjwe/EK4nc2YMfyHG3kp96pNx08YzwgNp2Vj0wB1onkNPKJ
+ gwrEWYV4FcOBve8ELwPDe/RAui13lQDDzolDfC1MrU7cZHL1U5Yhx8Qa+AXjghii
+ dwH6UPJzU2SfYpIspsJopUT/hO0OPZ2HVrM6XEnUgfP+AZBazT1n7A9COnRkhOxe
+ H/6ssDm9nD5HTm3eCrZeEV7+6U/2FEm//ZceBKBS/xG3bVTDCfRSanCWmDnQnf0d
+ CCWKl3eqkpCadZSaPM9J6aq5NSUts6zbFy/etJaV2SiYcrCTB/nyrtl5Uc66SP8l
+ 5gyQWuRQ3yyYEMyY9diF6bxF1uT5Q==
+Received: from cy7pr03cu001.outbound.protection.outlook.com
+ (mail-westcentralusazlp17012037.outbound.protection.outlook.com [40.93.6.37])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 45yp9hwub9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Apr 2025 02:20:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nDVTW7Sec8mRYJ0qVJBp5pNzFCNSvQtQTVBLpxUhubh8O4efDYQ/VVsOXGCaY5ub++0hY5tAoPo+ceiHEj2QZPxTz+Gflx7iKiiG39F5tP9S+RQlKYMfyUYSSVcpmV2ZmKpMGuruOEDhaNWwVtyti+z78TwH11lX2EGK2CuhfDSoet8Y7M1m9A/pGzuShXDyosSpybPAswOHkerRjsfOeXrB2XX+2Vsaufnub5NQWKhSrWaKUYmvgDdTydFF5eqzK/UaP0y7hxFi6u9I0uCN1iHmJFi4V+lR+9waMqmlBB6W9MIY0/tezPpEywlJdPOvexeMFoUzFOU8wg1jGuItrg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OeSZIPeFp2/UFqASKcujSzfocYLdM54Vzquwb61Nxc8=;
+ b=xm01B4Ufs18+kCYoZ2Nnw0MnE50jTb2HGOfvNWPoMVvWK38fpRUo6GAJkvhnOTU8NcM1yLOdeO4+JrTO8n1YXIPnkG6zZudV3eihgtxR2+wv2lV1BiOFFMiUqH6XGXzMowBdsQPQsueWDbUuNDtUm24VRsID8wmKrx2N0KpHzZVbMpBxvcCZLWZyUtcsLiO55LtmT2Skdz5ZYjDo/fFoz5+uI+/Fvk9XF18av+mteWs9kGhNJ/SS39/Q0unesy1vjjCUj/nkcfN/R7g1SW6TSOW1bjCgnxTMySlhbcsbVe+CWuISgSiVh455pOmBcDLEs7/vOgwmB/b8Pi7nF/VFOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OeSZIPeFp2/UFqASKcujSzfocYLdM54Vzquwb61Nxc8=;
+ b=yi9iphf4Eh/5UgsB60nzE7Jca1q9/DaxudrrJ1BLPW1F1dRUd104BtcJMrS54vzGgchifUhTYWlKKjVFu2Xu0v+ukxdHXNmWeIeAD9Djy5lkyTcI92IdqR+iRx6RL06ffapO7GsdtdbGKN7IIIW+fk2BHtB00zPCHGM6AACZri50oYuoa3pUhr0VQBpzzmDgomUAZ2YfktQlfM0t6VpyKvmQngjVCogdldnFD0nn7ZNs/yadYHWZJGcvQxCnBfHVBDP0HcLEP0vquKS7JdPgSsT5Jkj4pmoGhcUh/8pxjbQHmveAsqW0IQilzckzA7hvo8Gr1rvPj7E8W1Cq9Gmvqg==
+Received: from PH0PR02MB7384.namprd02.prod.outlook.com (2603:10b6:510:12::12)
+ by MWHPR02MB10596.namprd02.prod.outlook.com (2603:10b6:303:281::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.31; Tue, 15 Apr
+ 2025 09:20:49 +0000
+Received: from PH0PR02MB7384.namprd02.prod.outlook.com
+ ([fe80::6bd7:e8f0:596a:4842]) by PH0PR02MB7384.namprd02.prod.outlook.com
+ ([fe80::6bd7:e8f0:596a:4842%3]) with mapi id 15.20.8632.030; Tue, 15 Apr 2025
+ 09:20:49 +0000
+Message-ID: <14f644e9-aa8a-45b0-9d0a-972d72345409@nutanix.com>
+Date: Tue, 15 Apr 2025 14:50:39 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] QIOChannelSocket: Flush zerocopy socket error queue on
+ sendmsg failure due to ENOBUF
+Content-Language: en-GB
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: berrange@redhat.com, peterx@redhat.com, leobras@redhat.com
+References: <20250403082121.366851-1-manish.mishra@nutanix.com>
+ <871ptuhla6.fsf@suse.de>
+From: Manish <manish.mishra@nutanix.com>
+In-Reply-To: <871ptuhla6.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN3PEPF00000179.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c04::44) To PH0PR02MB7384.namprd02.prod.outlook.com
+ (2603:10b6:510:12::12)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxH+X1Iv5nCsmCAA--.59777S2
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9fXoW3Cr1kJr4DJw1rCw1UurykWFX_yoW8Xw45Zo
- WrAr4UJr4xJwn8urWYkr1kt34qvr1IvayDA39rGw1jgFykZa1j9a4fCw1kZw43u3ykAFy5
- Ww4xK3Z5Ja17Xrnrl-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
- 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
- UjIYCTnIWjp_UUU5R7kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
- 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUGVWUXwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
- Y2AK021l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
- v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
- vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
- jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2I
- x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
- 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07URa0PUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7384:EE_|MWHPR02MB10596:EE_
+X-MS-Office365-Filtering-Correlation-Id: 31082e2b-b27e-43e2-69f9-08dd7bfecf70
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|52116014|376014|10070799003; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?b3BPNXl1MmtlK0c4TnZCejJlOE9tNVlqdmV6ZWliNGRMNDdOc3ZKQUE4bDVV?=
+ =?utf-8?B?dnUvL3pOemhITDM1K214ZEdhRzFQQjNpZlJTQmMvZVRZRXV3ditLQUg4WGJY?=
+ =?utf-8?B?aGVQdWlGZlRjUzRjS0h3NDV6ZTArY2tGSjF5T3BMNjJseEFrMkRmZkdpSWZY?=
+ =?utf-8?B?SGluZzdLYkdDbHVpN1VxUlZ4VUhuRk5HVVRuZDR5YXBsUCtWc2N4RldaeTZV?=
+ =?utf-8?B?WnFhd1lodksyVGxHNUQwcjU4a2djVXNkUk5DNVFZbEFxcUxaNkVTMEw1L3E5?=
+ =?utf-8?B?Y1c2ZmZnYXNqOURQaVpzbFNkQ1U5Mytrb0krNUVxOXZVM253V3RXcWpwcmt1?=
+ =?utf-8?B?di9YeHozaldVblZyaXpTY0lOMnY4ek9ONjdOVXIwUDZZMitnSmdoZDdoQnph?=
+ =?utf-8?B?YnJ2cXhxNWpXZUFDUUdxTWkvYldVQUkrQmNBcXlRMTVMaTBSenp0QlZPRzI1?=
+ =?utf-8?B?WVFtNEl3dWx4QmZJaS92THlBMnZJM1ZtZXlONnhxRk5JUE1Fdk9HTlkvNVdJ?=
+ =?utf-8?B?T24yUUZoZ1JhMnlBVW1ab3dENENrNXMrcmpHTCtyaHBva2h1TGV0Lzd4RWox?=
+ =?utf-8?B?ZENqOFMyNDhpTkRkVDAwTmdkaEZ4R0VMM0o5NGpYclI2TlRMOE5SK2J3R2dJ?=
+ =?utf-8?B?QXBQdnZ4Mi9pbk1aVVY2aTdJa2M1YWFzMFpWQUkyTTllTUJTd3hxWWZ3Skpl?=
+ =?utf-8?B?SUp1blRQRm5qczZSNWk2S2k5MzVKcWptU3N0K2xTbTkyMTBWTVJKVXBHZys2?=
+ =?utf-8?B?QXlqUHNsRC9zYTZVZU5wa2YwbzV3TkhEajJOR0VrUEVvS0ZGeDZYTVFRaWhD?=
+ =?utf-8?B?MlJkRjZKRE8xUDF5VjVRSjVmQXd3bXJZZlE1UFJFZTRyZFVueCtKdTY1Y0Yx?=
+ =?utf-8?B?TkZRRkVKRXVGbGdNUGxtK0dtb0d0SzMvNVZEdDlZcmM3ZHpLYUlnV080d084?=
+ =?utf-8?B?T09nNUhPdjFFcWJLYjJuNkRJRkRjb3gyZkJIK1VOVURQOFdLQithV0tGK3Qr?=
+ =?utf-8?B?OGlyb0p2d0ZBUU5NUlJTczllU1l2L0lXMW5tbGNtZlB6cFpiV2I2SUg3ckdr?=
+ =?utf-8?B?ZzVscTNhWVNyblZDMTlNUmphTm5CWWgwWmE5NlRWc3BRS1F5b3EzNnYyYU5t?=
+ =?utf-8?B?cmlhSjA5cGk3RndneFF6bnV4ZVhURGlTTm5OQm9pa0hXbkFMeEt0Um80MTcv?=
+ =?utf-8?B?NlkwR2kvWlB4ZTFsS2k1V0RiTkRiMVY5bnY0S2hCZXBDaDdQL1JyV1NTN3Iw?=
+ =?utf-8?B?VkdtbWZFWlY3ZzJhZXNSb1ZoNkxLbGZxbS9BaWlidTJ0aGgyWjVVTlVqSklK?=
+ =?utf-8?B?aXBENlBGcGpJRWluM3Z3SldMdW9GNTlRaUN3dk50ZFRIcUVPelN0MU8wNnhU?=
+ =?utf-8?B?U3VyT091QUJzakF2T2FWbklpN3ZrR0RHL1VaWFlubVhneXRPSENDOW5kbjZ0?=
+ =?utf-8?B?RWR3SHVRLytDazlmR2V2REFWb1I5VEhEUUd4RU12VC9vWUxQZkJxVHNmTFFR?=
+ =?utf-8?B?NFZoWU1uOGFIYThJbDlad1J2R21RMEQwVUNkUmtQbWRjMW9MWmpGZXVvcHkw?=
+ =?utf-8?B?VE5EcThTU2RwVlJLc2pCOU45OTcyZkpBbnE5QU10UmpJNEl6QUhYOFV2V3BF?=
+ =?utf-8?B?ZHVqT09ndzhuWDRCejczVmhSb0NEVmhlZHMrYlZLbno1NiswUlluOE9rQTh1?=
+ =?utf-8?B?WG5TaW5pVlBPQXpaVUljZWtxN25aZTc4WEdzRnlKSTBGN1RXa3lBcFVaVEJO?=
+ =?utf-8?B?VTVTeHlCcld2bHYvbjV0elA5T1ZvS2Y5K1hJZk5ESHppRWNiSTdjVHVHVFRx?=
+ =?utf-8?Q?U+sXL/nXInIA2EvZiz0WwrEKhEOmVnP4Q8Rcs=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7384.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(52116014)(376014)(10070799003); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YUdEUm1VRVBVMzNibFFad3pYV1VuRDdVZWU2NVZ1czVUOStHazFxTHAvbGxh?=
+ =?utf-8?B?K0ZGbm1rRzNGUmhwM1BrTldLNjdSMDBFTHhKNjNVcSs1SlViZ2JER0h3bmJL?=
+ =?utf-8?B?MndISy9ld3dldzRMZG5DTDlaa2FXd3Q4cGUwdFkwRW5BM2YvVTRWMzVJdmUz?=
+ =?utf-8?B?Rk43YnJScVErOXBoaTFPYU1UTW1IWGtXMVlBbXpKNU1rSEdrWnJoTGNQS1hU?=
+ =?utf-8?B?blkwS2I3UmV2UGc1anBMekoxWk85aDBmU2c0M1lIZXFCS212NXJEc0tMTWZK?=
+ =?utf-8?B?ZnZsbFVZVkJ0ek96ZkFiZkMxb0JMNlc1VjMvMGdReFpVc3FrUituRWpKOWxI?=
+ =?utf-8?B?aXo0WEFRVUZ6RElmTUp5Rnp2aTJIRUZJSGoyZmJuOVhrUkNUUWFIOTdmbG16?=
+ =?utf-8?B?NGhDNnE5b2ZvYmJHZXk3a01lOGlpRHBoSjJJNkxMd0Q4Yi9hWDhqYVFGRUxv?=
+ =?utf-8?B?SGI4czR0eWxoVzlSVEE5bEVqQktFNlJuNkxZRDlCc1NJNWNlblErVnFjUVVZ?=
+ =?utf-8?B?Q3hjZk52TmtuUHMwajZKYlZDREN1TmR6UUo5ZzhVWnVqSVExTXJxLzFWYk5X?=
+ =?utf-8?B?ajdrbWpQOSttOHQ1TWdkUDhLeXhlNll2WFVwTDdINENZdENmRVRoT2tXY043?=
+ =?utf-8?B?SDFUZzFNMWZqeXpjSjBIRWtoVG03V1NibWhyT3dmZnFxOVF6RGVMQTRxakdY?=
+ =?utf-8?B?eEZtcjRrVGlMVk56c1ljTHZkWC8vL3Z6U2RVeGE5bVNMM0dnbWo2Y25tWC9W?=
+ =?utf-8?B?bU1xYk1OaHZ1UUcyQTBLTmlZK1ZKaE5sYkRyZmV2WEhjNExNalBJcHdLYVJx?=
+ =?utf-8?B?RDJ3QTdNZ3o5S1RtMk5xd3I0aFZSK1NhMlVyTk8vTTFGQU0zc3UwQnVXcDBL?=
+ =?utf-8?B?YjB3NWx4anI1VVdXblQrUnFxeGpOazFrOHozYnc1azNnL0ZKT3Y0ZTR3bGln?=
+ =?utf-8?B?d3lXTlNyYnhLOTI5bzlsNGZ0T3hYMWFJbyt2TVFtOFJvUktKRXJNS3ZtMnJh?=
+ =?utf-8?B?ZWdRczdBVWxqSEdMVWtVelhrcXNKOVRJUTg0Y2VROHkxbEZERytIeVhINXl0?=
+ =?utf-8?B?MTg0V1BLZzAxY1FBOUJxUzlaWU93RlBzWGlUZGh5a1hSSE4ySTZpeWV6Tndo?=
+ =?utf-8?B?TTB4bEZLVGcrRldHc2d3UzlwNE54bU1YcmxTRlRCSlJRSExLUFFaVStHMkhW?=
+ =?utf-8?B?ckVRSnRTVTZDU3JtTVdFV2NBQkpBNjVBTncya0ZxdGx0eFk2YTBMRUJoRy9i?=
+ =?utf-8?B?amVleDkvMnNiSjh3YjlYSXFnenE5eXVtVFE1WVpYTjJqZXFHRGNiMFFhZitS?=
+ =?utf-8?B?M04zcGozQkR2SGRNUWZVU0preGhxOEE3VnBlZ0s4c29md08rRmhVaDZqL1hR?=
+ =?utf-8?B?WlVZaGxBR3QxNDlzK202V3pVY005am9XNWZneDlISHhJV1c0QS9VMVlVcC9L?=
+ =?utf-8?B?THpkcXA4MnErSUI2VHlMQnExQ0k4MDNJRm9kckJvZ1RLVVg3aHVIZ0lSYmVI?=
+ =?utf-8?B?d1pkUFMxb2grYTRsSk1Pc2Z1N2F5aS9XUXBKR01LYkg4WUhKRHFuRlNPclFY?=
+ =?utf-8?B?NXIvSWwyVERWZHRYcm5XL0t4dWZWd1lrejFUYmxreHZBeGJ0WWdsQVpyV0VW?=
+ =?utf-8?B?M25nZEhCL29vVUVHbjMzQzRqUmxvaEVpWWFvL2RHWTNDb3ZqcWRzaGJyQ081?=
+ =?utf-8?B?Ly9lY1JTb1p5SG5VVEQySmlTZjdDOVpHK3pEaUxaSHpMUEM0cDNDaVc4L0tM?=
+ =?utf-8?B?c0I1WlFpdlBRWnJFL1dIYTdzMTdoaDNWeGljOTNLcWZ0RnRJbVhJYkIvd2Nw?=
+ =?utf-8?B?Q2tlWG5kTkJUcDNCSGQ5eUZkOXpaVFVUejB4N1J6aGpFTW9ibGJIV1dyWFJz?=
+ =?utf-8?B?RGNHV3Yxay9oVDlCTkN4bng4ZHp4dVh3Wm4wRjRHK21IWm1CLy92dHpmZERQ?=
+ =?utf-8?B?Z2pKSDBLT0VTK2ZHTnRPRzR0S05PbXZPNFR0bk5zczFUMEtoZElORHdZZkRI?=
+ =?utf-8?B?ZGZObkpsaEM3c2hoaG5HNWRaQ1N4SVJMVWNKUUM1TTV0QXpVRjl6UU11YTFF?=
+ =?utf-8?B?TWhKeXVZM0twUUExVDFaMlpVRE04d2FOcUwvYWdNQWhsYnozdVVUYmVHelI4?=
+ =?utf-8?B?NjEvQ2dhTGhlQ0lTVlpjSGFWS2o2MHo3SVA4NGZ6bFkvRDVUcWNPZ1RVUG5D?=
+ =?utf-8?B?Rm4vaWxLMWd6Wm9HUGlWNkVDM0wvVVlqMFcrZjduYy85WXJLU0NIZjcyZ28y?=
+ =?utf-8?B?Sk5KMUNjNi9BM1JEVy9PMUczc2lRPT0=?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 31082e2b-b27e-43e2-69f9-08dd7bfecf70
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7384.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2025 09:20:49.2379 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WghzhkuvDLxQI+HZUCrCxRadvm05qUj7kcKXlk50me7rFtqiwoHyBg7xm2lnHflh46eLdxHG6uSYUnOMsEl+EDLxTWzdB7MMcXsn3w2qozU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR02MB10596
+X-Proofpoint-GUID: -P4IAWomxRIHjtL5LxBxVsw4mdNBuPJr
+X-Authority-Analysis: v=2.4 cv=RK2zH5i+ c=1 sm=1 tr=0 ts=67fe24f5 cx=c_pps
+ a=dnQYvCYIB+Ymp8NUOuD+qQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=XR8D0OoHHMoA:10 a=0kUYKlekyDsA:10 a=VwQbUJbxAAAA:8 a=64Cc0HZtAAAA:8
+ a=FbYyvjo7L_R3UwzLoWwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: -P4IAWomxRIHjtL5LxBxVsw4mdNBuPJr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_04,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=manish.mishra@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,270 +209,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, some instructions could be executed regardless of CPU mode or
-feature support. This patch enforces proper checks so that instructions are
-only allowed when the required CPU features are enabled.
 
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
----
- target/loongarch/cpu.c                        |  2 +-
- target/loongarch/cpu.h                        |  2 +-
- .../tcg/insn_trans/trans_atomic.c.inc         | 36 +++++++++----------
- .../tcg/insn_trans/trans_branch.c.inc         |  4 +--
- .../tcg/insn_trans/trans_extra.c.inc          | 20 ++++++-----
- .../tcg/insn_trans/trans_privileged.c.inc     |  4 +--
- .../tcg/insn_trans/trans_shift.c.inc          |  4 +--
- .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++++-----
- target/loongarch/translate.h                  |  6 ++++
- 9 files changed, 52 insertions(+), 42 deletions(-)
+On 14/04/25 7:56 pm, Fabiano Rosas wrote:
+> !-------------------------------------------------------------------|
+>    CAUTION: External Email
+>
+> |-------------------------------------------------------------------!
+>
+> Manish Mishra <manish.mishra@nutanix.com> writes:
+>
+>> We allocate extra metadata SKBs in case of a zerocopy send. This metadata
+>> memory is accounted for in the OPTMEM limit. If there is any error while
+>> sending zerocopy packets or if zerocopy is skipped, these metadata SKBs are
+>> queued in the socket error queue. This error queue is freed when userspace
+>> reads it.
+>>
+>> Usually, if there are continuous failures, we merge the metadata into a single
+>> SKB and free another one. As a result, it never exceeds the OPTMEM limit.
+>> However, if there is any out-of-order processing or intermittent zerocopy
+>> failures, this error chain can grow significantly, exhausting the OPTMEM limit.
+>> As a result, all new sendmsg requests fail to allocate any new SKB, leading to
+>> an ENOBUF error. Depending on the amount of data queued before the flush
+>> (i.e., large live migration iterations), even large OPTMEM limits are prone to
+>> failure.
+>>
+>> To work around this, if we encounter an ENOBUF error with a zerocopy sendmsg,
+>> we flush the error queue and retry once more.
+>>
+>> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
+>> ---
+>>   include/io/channel-socket.h |  5 +++
+>>   io/channel-socket.c         | 74 ++++++++++++++++++++++++++++++-------
+>>   2 files changed, 65 insertions(+), 14 deletions(-)
+>>
+>> V2:
+>>    1. Removed the dirty_sync_missed_zero_copy migration stat.
+>>    2. Made the call to qio_channel_socket_flush_internal() from
+>>       qio_channel_socket_writev() non-blocking.
+>>
+>> V3:
+>>    1. Add the dirty_sync_missed_zero_copy migration stat again.
+>>
+>> V4:
+>>    1. Minor nit to rename s/zero_copy_flush_pending/zerocopy_flushed_once.
+>>
+>> diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
+>> index ab15577d38..2c48b972e8 100644
+>> --- a/include/io/channel-socket.h
+>> +++ b/include/io/channel-socket.h
+>> @@ -49,6 +49,11 @@ struct QIOChannelSocket {
+>>       socklen_t remoteAddrLen;
+>>       ssize_t zero_copy_queued;
+>>       ssize_t zero_copy_sent;
+>> +    /**
+>> +     * This flag indicates whether any new data was successfully sent with
+>> +     * zerocopy since the last qio_channel_socket_flush() call.
+>> +     */
+>> +    bool new_zero_copy_sent_success;
+>>   };
+>>   
+>>   
+>> diff --git a/io/channel-socket.c b/io/channel-socket.c
+>> index 608bcf066e..d5882c16fe 100644
+>> --- a/io/channel-socket.c
+>> +++ b/io/channel-socket.c
+>> @@ -37,6 +37,12 @@
+>>   
+>>   #define SOCKET_MAX_FDS 16
+>>   
+>> +#ifdef QEMU_MSG_ZEROCOPY
+>> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+>> +                                             bool block,
+>> +                                             Error **errp);
+>> +#endif
+>> +
+>>   SocketAddress *
+>>   qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
+>>                                        Error **errp)
+>> @@ -65,6 +71,7 @@ qio_channel_socket_new(void)
+>>       sioc->fd = -1;
+>>       sioc->zero_copy_queued = 0;
+>>       sioc->zero_copy_sent = 0;
+>> +    sioc->new_zero_copy_sent_success = FALSE;
+>>   
+>>       ioc = QIO_CHANNEL(sioc);
+>>       qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+>> @@ -566,6 +573,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>>       size_t fdsize = sizeof(int) * nfds;
+>>       struct cmsghdr *cmsg;
+>>       int sflags = 0;
+>> +    bool zerocopy_flushed_once = FALSE;
+>>   
+>>       memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
+>>   
+>> @@ -612,9 +620,25 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>>               goto retry;
+>>           case ENOBUFS:
+>>               if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
+>> -                error_setg_errno(errp, errno,
+>> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
+>> -                return -1;
+>> +                /**
+>> +                 * Socket error queueing may exhaust the OPTMEM limit. Try
+>> +                 * flushing the error queue once.
+>> +                 */
+>> +                if (!zerocopy_flushed_once) {
+>> +                    ret = qio_channel_socket_flush_internal(ioc, false, errp);
+> I'm not following this closely so I might have missed some disussion,
+> but let me point out that the previous version had a comment regarding
+> hardcoding 'false' here that I don't see addressed nor any comments
+> explaining why it wasn't addressed.
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index ea1665e270..c7d3a171ab 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -431,7 +431,7 @@ static void loongarch_la464_initfn(Object *obj)
-     data = FIELD_DP32(data, CPUCFG1, EP, 1);
-     data = FIELD_DP32(data, CPUCFG1, RPLV, 1);
-     data = FIELD_DP32(data, CPUCFG1, HP, 1);
--    data = FIELD_DP32(data, CPUCFG1, IOCSR_BRD, 1);
-+    data = FIELD_DP32(data, CPUCFG1, CRC, 1);
-     env->cpucfg[1] = data;
- 
-     data = 0;
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 254e4fbdcd..ab76a0b451 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -129,7 +129,7 @@ FIELD(CPUCFG1, RI, 21, 1)
- FIELD(CPUCFG1, EP, 22, 1)
- FIELD(CPUCFG1, RPLV, 23, 1)
- FIELD(CPUCFG1, HP, 24, 1)
--FIELD(CPUCFG1, IOCSR_BRD, 25, 1)
-+FIELD(CPUCFG1, CRC, 25, 1)
- FIELD(CPUCFG1, MSG_INT, 26, 1)
- 
- /* cpucfg[1].arch */
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index 3d70d75941..ea065d7b19 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -74,38 +74,38 @@ TRANS(sc_w, ALL, gen_sc, MO_TESL)
- TRANS(ll_d, 64, gen_ll, MO_TEUQ)
- TRANS(sc_d, 64, gen_sc, MO_TEUQ)
- TRANS(amswap_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
--TRANS(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
-+TRANS2(amswap_d, 64, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
- TRANS(amadd_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
--TRANS(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
-+TRANS2(amadd_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
- TRANS(amand_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
--TRANS(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
-+TRANS2(amand_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
- TRANS(amor_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
--TRANS(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
-+TRANS2(amor_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
- TRANS(amxor_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
--TRANS(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
-+TRANS2(amxor_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
- TRANS(ammax_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
--TRANS(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
-+TRANS2(ammax_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
- TRANS(ammin_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
--TRANS(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
-+TRANS2(ammin_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
- TRANS(ammax_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
--TRANS(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
-+TRANS2(ammax_du, 64, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
- TRANS(ammin_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
--TRANS(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
-+TRANS2(ammin_du, 64, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
- TRANS(amswap_db_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
--TRANS(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
-+TRANS2(amswap_db_d, 64, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
- TRANS(amadd_db_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
--TRANS(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
-+TRANS2(amadd_db_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
- TRANS(amand_db_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
--TRANS(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
-+TRANS2(amand_db_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
- TRANS(amor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
--TRANS(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
-+TRANS2(amor_db_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
- TRANS(amxor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
--TRANS(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
-+TRANS2(amxor_db_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
- TRANS(ammax_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
--TRANS(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
-+TRANS2(ammax_db_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
- TRANS(ammin_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
--TRANS(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
-+TRANS2(ammin_db_d, 64, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
- TRANS(ammax_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
--TRANS(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
-+TRANS2(ammax_db_du, 64, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
- TRANS(ammin_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
--TRANS(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
-+TRANS2(ammin_db_du, 64, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
-diff --git a/target/loongarch/tcg/insn_trans/trans_branch.c.inc b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-index 221e5159db..f94c1f37ab 100644
---- a/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-@@ -80,5 +80,5 @@ TRANS(bltu, ALL, gen_rr_bc, TCG_COND_LTU)
- TRANS(bgeu, ALL, gen_rr_bc, TCG_COND_GEU)
- TRANS(beqz, ALL, gen_rz_bc, TCG_COND_EQ)
- TRANS(bnez, ALL, gen_rz_bc, TCG_COND_NE)
--TRANS(bceqz, 64, gen_cz_bc, TCG_COND_EQ)
--TRANS(bcnez, 64, gen_cz_bc, TCG_COND_NE)
-+TRANS(bceqz, FP, gen_cz_bc, TCG_COND_EQ)
-+TRANS(bcnez, FP, gen_cz_bc, TCG_COND_NE)
-diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-index cfa361fecf..66333afb4f 100644
---- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
-@@ -69,6 +69,10 @@ static bool trans_rdtimeh_w(DisasContext *ctx, arg_rdtimeh_w *a)
- 
- static bool trans_rdtime_d(DisasContext *ctx, arg_rdtime_d *a)
- {
-+    if (!avail_64(ctx)) {
-+        return false;
-+    }
-+
-     return gen_rdtime(ctx, a, 0, 0);
- }
- 
-@@ -97,11 +101,11 @@ static bool gen_crc(DisasContext *ctx, arg_rrr *a,
-     return true;
- }
- 
--TRANS(crc_w_b_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
--TRANS(crc_w_h_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
--TRANS(crc_w_w_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
--TRANS(crc_w_d_w, 64, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
--TRANS(crcc_w_b_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
--TRANS(crcc_w_h_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
--TRANS(crcc_w_w_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
--TRANS(crcc_w_d_w, 64, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
-+TRANS(crc_w_b_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
-+TRANS(crc_w_h_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
-+TRANS(crc_w_w_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
-+TRANS2(crc_w_d_w, 64, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
-+TRANS(crcc_w_b_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
-+TRANS(crcc_w_h_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
-+TRANS(crcc_w_w_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
-+TRANS2(crcc_w_d_w, 64, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index ecbfe23b63..d0d23ca1c1 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -233,11 +233,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
- TRANS(iocsrrd_b, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_b)
- TRANS(iocsrrd_h, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_h)
- TRANS(iocsrrd_w, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_w)
--TRANS(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
-+TRANS2(iocsrrd_d, 64, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
- TRANS(iocsrwr_b, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_b)
- TRANS(iocsrwr_h, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_h)
- TRANS(iocsrwr_w, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_w)
--TRANS(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
-+TRANS2(iocsrwr_d, 64, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
- 
- static void check_mmu_idx(DisasContext *ctx)
- {
-diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-index 377307785a..136c4c8455 100644
---- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
-@@ -78,7 +78,7 @@ TRANS(sra_w, ALL, gen_rrr, EXT_SIGN, EXT_NONE, EXT_SIGN, gen_sra_w)
- TRANS(sll_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sll_d)
- TRANS(srl_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_srl_d)
- TRANS(sra_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sra_d)
--TRANS(rotr_w, 64, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
-+TRANS(rotr_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
- TRANS(rotr_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_rotr_d)
- TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
- TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
-@@ -86,5 +86,5 @@ TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN, tcg_gen_shri_tl)
- TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
- TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
- TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
--TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
-+TRANS(rotri_w, ALL, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
- TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index dff92772ad..9c18d31329 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -4853,9 +4853,9 @@ static bool gen_g2x(DisasContext *ctx, arg_vr_i *a, MemOp mop,
- TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_i64)
- TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_i64)
- TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_i64)
--TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
-+TRANS2(vinsgr2vr_d, 64, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
- TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_i64)
--TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
-+TRANS2(xvinsgr2vr_d, 64, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
- 
- static bool gen_v2g_vl(DisasContext *ctx, arg_rv_i *a, uint32_t oprsz, MemOp mop,
-                        void (*func)(TCGv, TCGv_ptr, tcg_target_long))
-@@ -4886,15 +4886,15 @@ static bool gen_x2g(DisasContext *ctx, arg_rv_i *a, MemOp mop,
- TRANS(vpickve2gr_b, LSX, gen_v2g, MO_8, tcg_gen_ld8s_i64)
- TRANS(vpickve2gr_h, LSX, gen_v2g, MO_16, tcg_gen_ld16s_i64)
- TRANS(vpickve2gr_w, LSX, gen_v2g, MO_32, tcg_gen_ld32s_i64)
--TRANS(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
-+TRANS2(vpickve2gr_d, 64, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
- TRANS(vpickve2gr_bu, LSX, gen_v2g, MO_8, tcg_gen_ld8u_i64)
- TRANS(vpickve2gr_hu, LSX, gen_v2g, MO_16, tcg_gen_ld16u_i64)
- TRANS(vpickve2gr_wu, LSX, gen_v2g, MO_32, tcg_gen_ld32u_i64)
--TRANS(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
-+TRANS2(vpickve2gr_du, 64, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
- TRANS(xvpickve2gr_w, LASX, gen_x2g, MO_32, tcg_gen_ld32s_i64)
--TRANS(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
-+TRANS2(xvpickve2gr_d, 64, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
- TRANS(xvpickve2gr_wu, LASX, gen_x2g, MO_32, tcg_gen_ld32u_i64)
--TRANS(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
-+TRANS2(xvpickve2gr_du, 64, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
- 
- static bool gvec_dup_vl(DisasContext *ctx, arg_vr *a,
-                         uint32_t oprsz, MemOp mop)
-@@ -4923,11 +4923,11 @@ static bool gvec_dupx(DisasContext *ctx, arg_vr *a, MemOp mop)
- TRANS(vreplgr2vr_b, LSX, gvec_dup, MO_8)
- TRANS(vreplgr2vr_h, LSX, gvec_dup, MO_16)
- TRANS(vreplgr2vr_w, LSX, gvec_dup, MO_32)
--TRANS(vreplgr2vr_d, LSX, gvec_dup, MO_64)
-+TRANS2(vreplgr2vr_d, 64, LSX, gvec_dup, MO_64)
- TRANS(xvreplgr2vr_b, LASX, gvec_dupx, MO_8)
- TRANS(xvreplgr2vr_h, LASX, gvec_dupx, MO_16)
- TRANS(xvreplgr2vr_w, LASX, gvec_dupx, MO_32)
--TRANS(xvreplgr2vr_d, LASX, gvec_dupx, MO_64)
-+TRANS2(xvreplgr2vr_d, 64, LASX, gvec_dupx, MO_64)
- 
- static bool trans_vreplvei_b(DisasContext *ctx, arg_vv_i *a)
- {
-diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-index 195f53573a..cf6eecd7ab 100644
---- a/target/loongarch/translate.h
-+++ b/target/loongarch/translate.h
-@@ -14,6 +14,11 @@
-     static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-     { return avail_##AVAIL(ctx) && FUNC(ctx, a, __VA_ARGS__); }
- 
-+#define TRANS2(NAME, AVAIL1, AVAIL2, FUNC, ...) \
-+    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-+    { return avail_##AVAIL1(ctx) && avail_##AVAIL2(ctx) && \
-+             FUNC(ctx, a, __VA_ARGS__); }
-+
- #define avail_ALL(C)   true
- #define avail_64(C)    (FIELD_EX32((C)->cpucfg1, CPUCFG1, ARCH) == \
-                         CPUCFG1_ARCH_LA64)
-@@ -25,6 +30,7 @@
- #define avail_LSX(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
- #define avail_LASX(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, LASX))
- #define avail_IOCSR(C) (FIELD_EX32((C)->cpucfg1, CPUCFG1, IOCSR))
-+#define avail_CRC(C)   (FIELD_EX32((C)->cpucfg1, CPUCFG1, CRC))
- 
- /*
-  * If an operation is being performed on less than TARGET_LONG_BITS,
--- 
-2.49.0
+Hi Fabiano, I did reply to that in last comment for v3. Please let me 
+know if that does not make sense. 
+https://lore.kernel.org/all/c7a86623-db04-459f-afd5-6a318475bb92@nutanix.com/T/
+
+
+>
+>> +                    if (ret < 0) {
+>> +                        error_setg_errno(errp, errno,
+>> +                                         "Zerocopy flush failed");
+>> +                        return -1;
+>> +                    }
+>> +                    zerocopy_flushed_once = TRUE;
+>> +                    goto retry;
+>> +                } else {
+>> +                    error_setg_errno(errp, errno,
+>> +                                     "Process can't lock enough memory for "
+>> +                                     "using MSG_ZEROCOPY");
+>> +                    return -1;
+>> +                }
+>>               }
+>>               break;
+>>           }
+>> @@ -725,8 +749,9 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
+>>   
+>>   
+>>   #ifdef QEMU_MSG_ZEROCOPY
+>> -static int qio_channel_socket_flush(QIOChannel *ioc,
+>> -                                    Error **errp)
+>> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+>> +                                             bool block,
+>> +                                             Error **errp)
+>>   {
+>>       QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+>>       struct msghdr msg = {};
+>> @@ -734,7 +759,6 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>>       struct cmsghdr *cm;
+>>       char control[CMSG_SPACE(sizeof(*serr))];
+>>       int received;
+>> -    int ret;
+>>   
+>>       if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
+>>           return 0;
+>> @@ -744,16 +768,19 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>>       msg.msg_controllen = sizeof(control);
+>>       memset(control, 0, sizeof(control));
+>>   
+>> -    ret = 1;
+>> -
+>>       while (sioc->zero_copy_sent < sioc->zero_copy_queued) {
+>>           received = recvmsg(sioc->fd, &msg, MSG_ERRQUEUE);
+>>           if (received < 0) {
+>>               switch (errno) {
+>>               case EAGAIN:
+>> -                /* Nothing on errqueue, wait until something is available */
+>> -                qio_channel_wait(ioc, G_IO_ERR);
+>> -                continue;
+>> +                if (block) {
+>> +                    /* Nothing on errqueue, wait until something is
+>> +                     * available.
+>> +                     */
+>> +                    qio_channel_wait(ioc, G_IO_ERR);
+>> +                    continue;
+>> +                }
+>> +                return 0;
+>>               case EINTR:
+>>                   continue;
+>>               default:
+>> @@ -791,13 +818,32 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
+>>           /* No errors, count successfully finished sendmsg()*/
+>>           sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
+>>   
+>> -        /* If any sendmsg() succeeded using zero copy, return 0 at the end */
+>> +        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
+>>           if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
+>> -            ret = 0;
+>> +            sioc->new_zero_copy_sent_success = TRUE;
+>>           }
+>>       }
+>>   
+>> -    return ret;
+>> +    return 0;
+>> +}
+>> +
+>> +static int qio_channel_socket_flush(QIOChannel *ioc,
+>> +                                    Error **errp)
+>> +{
+>> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+>> +    int ret;
+>> +
+>> +    ret = qio_channel_socket_flush_internal(ioc, true, errp);
+>> +    if (ret < 0) {
+>> +        return ret;
+>> +    }
+>> +
+>> +    if (sioc->new_zero_copy_sent_success) {
+>> +        sioc->new_zero_copy_sent_success = FALSE;
+>> +        return 0;
+>> +    }
+>> +
+>> +    return 1;
+>>   }
+>>   
+>>   #endif /* QEMU_MSG_ZEROCOPY */
+
+
+Thanks
+
+Manish Mishra
 
 
