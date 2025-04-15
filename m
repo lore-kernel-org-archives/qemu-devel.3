@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D007FC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 23:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACEB2C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 23:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4pkW-0002l7-M5; Tue, 15 Apr 2025 19:31:30 -0400
+	id 1u4q89-0002il-4H; Tue, 15 Apr 2025 19:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u4pkO-0002iz-AN
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 19:31:22 -0400
-Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
+ id 1u4q86-0002cR-Ms
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 19:55:50 -0400
+Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u4pkM-0003nR-7N
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 19:31:20 -0400
-Received: by mail-io1-xd34.google.com with SMTP id
- ca18e2360f4ac-85e15dc8035so200780939f.0
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 16:31:17 -0700 (PDT)
+ id 1u4q84-0005xY-Ff
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 19:55:50 -0400
+Received: by mail-io1-xd2a.google.com with SMTP id
+ ca18e2360f4ac-85e15dc8035so201627839f.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 16:55:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744759876; x=1745364676; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=nbizR/0Uj3YXLOYMLmIuUYwptwEysp9kEmNKohW+m98=;
- b=PIJS7i3Qm90Hayvd21NJxQ69iBy7caR2qQ11hwQa9Y+WPwrO/PKfMLLJ+ztvSEP/bT
- f1B4wDlp3V3CN+bvWc/FVNg8P2IXJZkB46cOkSSakasM7O82CdG2F8+nWS8nYTA4MinZ
- M+vImD/oaBAdqeFXHaM0yB2pz/c3+ayimmHxlW4WsvBl5Yp3oPuM0FbTiPReN2fVl++8
- PIYZxJb8VzUCI1dL19JMlV8gK/NzQFBsLJIhMhDwnPF5YdAqnKUF7k7RX3OzjoD/uU13
- Y/vCKQ44Ew+hb+BOP44E79TpEMjmw6vPpHi0bqw7zamK/jK49NqCi1U++0pM7FzGPiri
- Ya4Q==
+ d=gmail.com; s=20230601; t=1744761346; x=1745366146; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kJ1d08vVBcU0mhx7ZyhDbcvTv4EofLcKJPMCEY/4DTo=;
+ b=AZCV1z765cOcAeykmzI01/LhLEj99vyGY6lOYoHQr4eZPm67EMDLog27ZPxJMXW8+b
+ 0UriUDZxyaZRa5AtZRogUufPAlDf7D2xpetPJ13ZExfBbmhrCPXFJDXAB+5xV3n4EEuG
+ VyZkhMAq+ER3zCksu3BaM7wOZrDE7RXqfIKF60GSfz0blPVjuoOPPAlmwXJ9ITfg77oI
+ IKQHDQim3SK+nVmbyp+CUnWPNYbAKfGi/gfrnQLtN+w3yGlJumqv1gBGw1V7i4dvkybk
+ 29EG6A1ZusLNXtNZqtKoMrFRcBl5pM9DQfpsgSkR+dxDx7yOdb/h2SXjIZ2nMH/ToNjI
+ w5Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744759876; x=1745364676;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nbizR/0Uj3YXLOYMLmIuUYwptwEysp9kEmNKohW+m98=;
- b=n91HV8VYVjQDkPBeCjW+kqoOzzr86t0Sqjg9tocHj7cZFaVleygMqHaMGbQAYrUVQo
- mtCTQv4BTikoUri17YgLXCBT+cA0cXNpj3ufYMV5BSA775Q7ADs7yc27nuG3sZ9dNawA
- ZccecRBR2Oy0Nqf/HZI6k+dWOj9fumvjKvk7Er9u1kaCrynlvVGxbmV/1qp4/ALf2oUs
- bGJ5/1NEBvjUwS2z6E0XAjuVESXA8M0v/9oW7UN7jVSKStzDhFk9wHvW2l5Sz7uJLPOG
- KaazDWIRAOvB38XMdOo3Tg4kT6eoBoWMaiTlw1GfAvv8SZXajd9UUkSLY+p/CInKeLWY
- vIaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtFZAc1fqC5CD+Lo0j5gvrOmgi+eOPiAjJchFlxiMNCDZdv10iKUWeGvtRZaOe1IZa60JfA7KBhPCx@nongnu.org
-X-Gm-Message-State: AOJu0YznD+KAW4600W3xgngTPm0WvapM6weImdj1mBLvTkMQLl/bOIdX
- BnF+vAuWhoDmZkZjJ6Y/mocKoOE3HZeqf0LGen4U9wYNid+NnVlr
-X-Gm-Gg: ASbGncsLDYLoWT8nYNDQZO7gTeJSTC5I/1NtfRN4G4URPDA93GkY5pKbZCyb2iMytos
- rLzjpy/7WSj3EHnd0gTBXPUS6YQU7iNTpMYicC1zp8yYPXkkJcRnykqU/bHxBJFm01jt2Qvce9A
- ikaUHdKiIpzKR3UqDGpgAl4EctZxqSOhN44XKB7y7iluAu9L4YemuOVOHPCDouuo5SQB+ZAYAfD
- jAr3juqUpkBhQfYlUyT7S2NkNpKlR9/6ycbzwMGnTp5Jj3UNLLqwrQFEFvnpEbgHTMuX/DWq9gF
- urmLGwAC3gQiU0kg4oFIpi2pUZssX+lanCVt/2Oi3d9vKVJ+WHoxwy8ck8j5eyxnfos7cHRnltE
- =
-X-Google-Smtp-Source: AGHT+IE6ijd2I1aCsLzHLV7T+wvEu/JGJbRXG2Ku/s3vVdd/eu6ExDkHIarXTaAIkx+YK0RtD+Wo2w==
-X-Received: by 2002:a05:6602:3f0b:b0:861:1ba3:3e50 with SMTP id
- ca18e2360f4ac-861bf9f3947mr196625939f.0.1744759875777; 
- Tue, 15 Apr 2025 16:31:15 -0700 (PDT)
-Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
+ d=1e100.net; s=20230601; t=1744761346; x=1745366146;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kJ1d08vVBcU0mhx7ZyhDbcvTv4EofLcKJPMCEY/4DTo=;
+ b=qsihHYKc9123sif1CjeRnqgkvhzR6LAmd16lKdoYHW8J4+cfEf9itYH+j67O1G2t+t
+ y5hN+VSIiHqK5ShHsIZe+TXEoaTjpOud8Pvz45eECFM4KP9XpFjIn8oxoAsbFfaN6HXP
+ Gedyq6Rh51mMV8XzDQebIvy4oSpujl1JQzSfmNUXvtfLZMomMr3uoEhvg742QjjFDx3I
+ KBGDuPgsHB6TF85jHCfQXteT7vEfYN4fWNI7yrM6VXdclyMlaiZj6XbuAvLW2jbfCIN6
+ N4y3r4nIv6rAN29EPbnM7IVRlRk5xmPMH9usWfRcm9NLrNjsKTG4BrbBP/AFVol6UcEJ
+ ZDPg==
+X-Gm-Message-State: AOJu0YzzFEIzmNmsoaGfW3D52j8Jm/qnZvxxEghNVYYJBprAcH0ss9mA
+ JmuXR+OJX3zA3Jut5wWAYumWzcPHK/qRsoR3D7+WO6jYbuYqARWWxHiTQRHu
+X-Gm-Gg: ASbGncs01KkC6E5UVUFmX24r9spZ/ouSDKXISMFilWEs+BJ+TqhPUbwqBJfoeL7fEfz
+ k05r/WwirKJZU3zVOKvhpTqDWUlQ6W/X7a/ODjHUEoNNH4CV7dZSTubi4qh0tVvkf2bTSNcBiO0
+ +GsjhcoG4p5wDPPFWfNEPCmFBuM5sg3dX+rUfQLnl5k7OtlCiu7Kh50w5nJtBFZbnXbksQhD6Zd
+ s1EmiZPUxiiytH6ILTP6nWLwDWWKFkz2VANSth/cTYvg75JP6oPHS5vANpkwGOHh/tGz3Y9G/Uo
+ B20Ibr+KjStVl+Uzful9qC10vOqxy8E0D/vU6A2hvLm1Ocd0nEQQyLtUtAWXmf4d8TOd0IXXeFj
+ wtDOB0emo8Qys20T6/VjozJzypBktQ86blODQ
+X-Google-Smtp-Source: AGHT+IE+BgPfGNOX1TqTpaAyvLmMeOeh5pKQlMcQRyGNIdVruc7esVqj6LP6kME+lAzcxf0ih/CywA==
+X-Received: by 2002:a05:6e02:2381:b0:3d8:1231:5ddf with SMTP id
+ e9e14a558f8ab-3d812581264mr15848555ab.22.1744761346290; 
+ Tue, 15 Apr 2025 16:55:46 -0700 (PDT)
+Received: from taylor-ubuntu.. (c-67-190-160-7.hsd1.co.comcast.net.
  [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-861656c8f8bsm266256739f.38.2025.04.15.16.31.12
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 15 Apr 2025 16:31:14 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
-	<qemu-devel@nongnu.org>
-Cc: <richard.henderson@linaro.org>, <philmd@linaro.org>,
- <matheus.bernardino@oss.qualcomm.com>, <ale@rev.ng>, <anjo@rev.ng>,
- <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
-References: <20250407192705.2605614-1-brian.cain@oss.qualcomm.com>
- <20250407192705.2605614-4-brian.cain@oss.qualcomm.com>
- <058301dbad5f$467a2530$d36e6f90$@gmail.com>
- <12956419-d35e-46cb-985a-5ea06d2d4154@oss.qualcomm.com>
-In-Reply-To: <12956419-d35e-46cb-985a-5ea06d2d4154@oss.qualcomm.com>
-Subject: RE: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr,
- hintjumpr to multi_cof
-Date: Tue, 15 Apr 2025 17:31:10 -0600
-Message-ID: <06ee01dbae5e$7a761740$6f6245c0$@gmail.com>
+ e9e14a558f8ab-3d7dba85249sm36412735ab.27.2025.04.15.16.55.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Apr 2025 16:55:45 -0700 (PDT)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, quic_mathbern@quicinc.com,
+ sidneym@quicinc.com, quic_mliebel@quicinc.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+Subject: [PATCH] Hexagon (target/hexagon) Remove gen_tcg_func_table.py
+Date: Tue, 15 Apr 2025 17:55:42 -0600
+Message-ID: <20250415235542.71703-1-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFxbseScfkce8xHjxBW05Q6egvQNQHWEv9sAUmibjMB1usFMLRR8CFQ
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250415-10, 4/15/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d34;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd34.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,111 +100,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This can easily be done in C with opcodes_def_generated.h.inc
 
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/genptr.c              |  6 ++-
+ target/hexagon/README                |  1 -
+ target/hexagon/gen_tcg_func_table.py | 66 ----------------------------
+ target/hexagon/meson.build           | 10 -----
+ 4 files changed, 5 insertions(+), 78 deletions(-)
+ delete mode 100755 target/hexagon/gen_tcg_func_table.py
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Tuesday, April 15, 2025 12:22 PM
-> To: ltaylorsimpson@gmail.com; qemu-devel@nongnu.org
-> Cc: richard.henderson@linaro.org; philmd@linaro.org;
-> matheus.bernardino@oss.qualcomm.com; ale@rev.ng; anjo@rev.ng;
-> marco.liebel@oss.qualcomm.com; alex.bennee@linaro.org;
-> quic_mburton@quicinc.com; sidneym@quicinc.com
-> Subject: Re: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr,
-> hintjumpr to multi_cof
->=20
->=20
-> On 4/14/2025 12:04 PM, ltaylorsimpson@gmail.com wrote:
-> >
-> >> -----Original Message-----
-> >> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> >> Sent: Monday, April 7, 2025 1:27 PM
-> >> To: qemu-devel@nongnu.org
-> >> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> >> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com;
-> ale@rev.ng;
-> >> anjo@rev.ng; marco.liebel@oss.qualcomm.com;
-> ltaylorsimpson@gmail.com;
-> >> alex.bennee@linaro.org; quic_mburton@quicinc.com;
-> sidneym@quicinc.com
-> >> Subject: [PATCH v3 3/5] target/hexagon: Add missing A_CALL attr,
-> >> hintjumpr to multi_cof
-> >>
-> >> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> >> ---
-> >>   target/hexagon/hex_common.py | 7 +++++--
-> >>   1 file changed, 5 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/target/hexagon/hex_common.py
-> >> b/target/hexagon/hex_common.py index 6803908718..a2dcb0aa2e
-> 100755
-> >> --- a/target/hexagon/hex_common.py
-> >> +++ b/target/hexagon/hex_common.py
-> >> @@ -247,8 +247,11 @@ def need_next_PC(tag):
-> >>
-> >>
-> >>   def need_pkt_has_multi_cof(tag):
-> >> -    return "A_COF" in attribdict[tag]
-> >> -
-> >> +    return (
-> >> +        "A_JUMP" in attribdict[tag]
-> >> +        or "A_CALL" in attribdict[tag]
-> >> +        or "J2_rte" =3D=3D tag
-> >> +    ) and tag !=3D "J2_hintjumpr"
-> > It would be better to make this decision with instruction attributes =
-only
-> rather than a mix of attributes and specific tags.  If needed, add =
-another
-> add_qemu_macro_attrib call to hex_common.calculate_attribs.
-> >
-> > Having said that, the correct tag for hintjumpr is J*4*_hintjumpr.
->=20
->=20
-> Good catch, thanks for finding it.  And I suppose we can change it to
-> `"A_HINTJR" not in attribdict[tag]` instead.
->=20
->=20
-> So, now more like this:
->=20
->       add_qemu_macro_attrib('fREAD_SP', 'A_IMPLICIT_READS_SP')
-> +    add_qemu_macro_attrib('fCLEAR_RTE_EX', 'A_RTE')
->=20
->       # Recurse down macros, find attributes from sub-macros
->       macroValues =3D list(macros.values())
-> @@ -291,8 +292,8 @@ def need_pkt_has_multi_cof(tag):
->       return (
->           "A_JUMP" in attribdict[tag]
->           or "A_CALL" in attribdict[tag]
-> -        or "J2_rte" =3D=3D tag
-> -    ) and tag !=3D "J2_hintjumpr"
-> +        or "A_RTE" in attribdict[tag]
-> +    ) and "A_HINTJR" not in attribdict[tag]
-
-Let's take a step back here.  The goal is to eliminate the =
-pkt_has_multi_cof parameter from helpers that don't need it, right?
-
-So, the first step is to change a check for A_COF to a check for A_JUMP =
-or A_CALL.  Here are the opcodes where this distinction matters
-    J2_endloop*                     These have fGEN_TCG overrides so =
-there is no helper function.
-    J2_pause                            Ditto
-    J2_rte                                  Ditto
-    J4_hintjumpr                     This is a nop in QEMU, and there is =
-an idef-parser emit_J4_hintjumpr function that doesn't generate any TCG.
-                                                 When idef-parser is =
-off, you get a helper call, but you could easily override this with an =
-empty fGEN_TCG.
-    J2_trap[01]                        These have helper functions, so =
-we want to return false because the helpers don't need this argument.
-
-So the bottom line is you can add an A_TRAP attribute attached to the =
-fTRAP macro and then this function can be
-    return "A_COF" in attribdict[tag] and "A_TRAP" not in =
-attribdict[tag]
-
-HTH,
-Taylor
-
-
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index 2c5e15cfcf..330170ab44 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -1453,4 +1453,8 @@ void gen_add_sat_i64(DisasContext *ctx, TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
+ }
+ 
+ #include "tcg_funcs_generated.c.inc"
+-#include "tcg_func_table_generated.c.inc"
++const SemanticInsn opcode_genptr[XX_LAST_OPCODE] = {
++#define OPCODE(X)    [X] = generate_##X
++#include "opcodes_def_generated.h.inc"
++#undef OPCODE
++};
+diff --git a/target/hexagon/README b/target/hexagon/README
+index ca617e3364..5af298e3ed 100644
+--- a/target/hexagon/README
++++ b/target/hexagon/README
+@@ -47,7 +47,6 @@ header files in <BUILD_DIR>/target/hexagon
+         gen_op_attribs.py               -> op_attribs_generated.h.inc
+         gen_helper_protos.py            -> helper_protos_generated.h.inc
+         gen_tcg_funcs.py                -> tcg_funcs_generated.c.inc
+-        gen_tcg_func_table.py           -> tcg_func_table_generated.c.inc
+         gen_helper_funcs.py             -> helper_funcs_generated.c.inc
+         gen_idef_parser_funcs.py        -> idef_parser_input.h
+         gen_analyze_funcs.py            -> analyze_funcs_generated.c.inc
+diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
+deleted file mode 100755
+index 299a39b1aa..0000000000
+--- a/target/hexagon/gen_tcg_func_table.py
++++ /dev/null
+@@ -1,66 +0,0 @@
+-#!/usr/bin/env python3
+-
+-##
+-##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+-##
+-##  This program is free software; you can redistribute it and/or modify
+-##  it under the terms of the GNU General Public License as published by
+-##  the Free Software Foundation; either version 2 of the License, or
+-##  (at your option) any later version.
+-##
+-##  This program is distributed in the hope that it will be useful,
+-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-##  GNU General Public License for more details.
+-##
+-##  You should have received a copy of the GNU General Public License
+-##  along with this program; if not, see <http://www.gnu.org/licenses/>.
+-##
+-
+-import sys
+-import re
+-import string
+-import hex_common
+-import argparse
+-
+-
+-def main():
+-    parser = argparse.ArgumentParser(
+-        "Emit opaque macro calls with instruction semantics"
+-    )
+-    parser.add_argument("semantics", help="semantics file")
+-    parser.add_argument("out", help="output file")
+-    args = parser.parse_args()
+-    hex_common.read_semantics_file(args.semantics)
+-    hex_common.calculate_attribs()
+-    tagregs = hex_common.get_tagregs()
+-    tagimms = hex_common.get_tagimms()
+-
+-    with open(args.out, "w") as f:
+-        f.write("#ifndef HEXAGON_FUNC_TABLE_H\n")
+-        f.write("#define HEXAGON_FUNC_TABLE_H\n\n")
+-
+-        f.write("const SemanticInsn opcode_genptr[XX_LAST_OPCODE] = {\n")
+-        for tag in hex_common.tags:
+-            ## Skip the priv instructions
+-            if "A_PRIV" in hex_common.attribdict[tag]:
+-                continue
+-            ## Skip the guest instructions
+-            if "A_GUEST" in hex_common.attribdict[tag]:
+-                continue
+-            ## Skip the diag instructions
+-            if tag == "Y6_diag":
+-                continue
+-            if tag == "Y6_diag0":
+-                continue
+-            if tag == "Y6_diag1":
+-                continue
+-
+-            f.write(f"    [{tag}] = generate_{tag},\n")
+-        f.write("};\n\n")
+-
+-        f.write("#endif    /* HEXAGON_FUNC_TABLE_H */\n")
+-
+-
+-if __name__ == "__main__":
+-    main()
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index bb4ebaae81..b28aeddb85 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -41,20 +41,10 @@ hexagon_ss.add(semantics_generated)
+ #
+ # Step 2
+ # We use Python scripts to generate the following files
+-#     tcg_func_table_generated.c.inc
+ #     printinsn_generated.h.inc
+ #     op_attribs_generated.h.inc
+ #     opcodes_def_generated.h.inc
+ #
+-tcg_func_table_generated = custom_target(
+-    'tcg_func_table_generated.c.inc',
+-    output: 'tcg_func_table_generated.c.inc',
+-    depends: [semantics_generated],
+-    depend_files: [hex_common_py],
+-    command: [python, files('gen_tcg_func_table.py'), semantics_generated, '@OUTPUT@'],
+-)
+-hexagon_ss.add(tcg_func_table_generated)
+-
+ printinsn_generated = custom_target(
+     'printinsn_generated.h.inc',
+     output: 'printinsn_generated.h.inc',
+-- 
+2.43.0
 
 
