@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8CEBC369BA
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 17:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF2C7C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 17:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4k03-0000DO-7C; Tue, 15 Apr 2025 13:23:07 -0400
+	id 1u4k8k-0004sS-NV; Tue, 15 Apr 2025 13:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4k01-0000Cd-Gr
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 13:23:05 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u4k8T-0004rO-5U
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 13:31:53 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4jzz-0006vs-NO
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 13:23:05 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cf257158fso42056705e9.2
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 10:23:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u4k8R-0000hR-0U
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 13:31:48 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2241053582dso81243295ad.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 10:31:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744737782; x=1745342582; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PeByU0jwFO7MH0hprr6LSgGx+kuJBq/jNjVmMX1KbGo=;
- b=LQW3pQ8gCiu/uJhNAoYXzSwFLB+9K+k1XV9UrhVjS3DrP0aPzj5wiQEAu+qmHClTlg
- mn5x8bX4Fib+Yj1RhY7636Cb/PdQIyQQHRUSuNFr0CpU6PuljMU/+kZrSuDJLd1SeG4S
- MM2Ab4A1Xm/A6ZIrwMI4BPZGvXVuDbXjiIBUu77ZeR05PTXvRyIwYNoejxxf0QiRZJvl
- sCVHX037ALe+c871YmCx6i2lh99Rfm+XHHWiLOoLPe533ZS05ae88enGmNzdp9kcYy/m
- 7NEZHGVaVicP8yvWK91DuleBHlpMh4aFJl3m2BBU3LyjQVXL0+ekfubMlzrnMdgCeGSl
- /CMg==
+ d=linaro.org; s=google; t=1744738303; x=1745343103; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bCmVMDVljO40oRkPaHY3BRhSfb9wLUefJVNXmI0711A=;
+ b=OgzWFHtB7APy+NVyyHHOSQCiJb/d1aeQzyLCNRE717r2HGV23J13DOaccHeL7OoQJa
+ xhHdPqxo9DPfh7DF3CCuocIIspEnioxSgEapg1sqqtDHHThYF6vGvo1egL8gerGNl5e3
+ FsMsbUbUjpVnCbWoFCC/ES7rDb8lmQ6PqNafzBLq23yvQb9UYu7h6KMKxBzcW+E2A0Hk
+ SljFqbgfEU/1dsxQZWQqTvPjsAdpqyQyzWr1B10RZGiBL30GM1ilXIp149bE+jXugZQe
+ JtGEdR/lyrQZoDLZyuLi4u8HNLAyaa/Z11Sr6X75qmJiPAPQxuC3ObZR3t1qTrE8M0+z
+ F1/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744737782; x=1745342582;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PeByU0jwFO7MH0hprr6LSgGx+kuJBq/jNjVmMX1KbGo=;
- b=L1Xc0otffBsM7dNTWse8pFEeYJF2+RO7Va+tsJOrj1bxfwxmHjl4lOodAhPVPlDhsl
- qkecc8dBg18SkupPlnOGcoBurm2o2JQDTINJ5WmKkto+O0wptRhdqM6leTJ8xGeaLwau
- Ivq9bZqVRrcJtkN8W29/X29Zl4U+ox5pE/xUaxaJIAjpyL3Xa1ZkFr78TiF1gybQ44tv
- N2bkiACzjHC3tDM/QPaUPt6L05wgCrBHF7ONI48VlL0ykO4Ge4tC/jAugQQbX29WtzEf
- c8kOXnUAgilel4C1JYsDA1vKo+LjM4SMLXj5fB+XHHRtrUJHPWGSP5AH7d83ZvTRAf7b
- z/rw==
-X-Gm-Message-State: AOJu0Yyl4Lcuow3/qrga72BF2Qv4BcQLMKQxwq99uqbPYJWgyb8JjPD/
- l2jkvup6RaAnIghuMGJxWjM3HaTpE+gL2tWn0e9ruPsQeHqKg5lZJ7MO3NxbS0Kx8j+eAbp6v/c
- i
-X-Gm-Gg: ASbGncv0uRrfyQIukp2TRfUVKu4JXZbMvp8f4rUdVIW2ZW39NR+wVuaAEcNdMz6PhAY
- +S1Mn2QvRw9XIS3793IbonFbd5JQd2r4PN5macAOGTn7J5hqYFpAWBZg0IcMt6GXBdOjuGy489P
- YYNQaqQa+LUfF6+3PIBndMuGzcf3kzc0ArzYFFsBNmZ1qCwxwlH9r/eiTjCtSTZGcT92H+xmTKG
- HXmVuiGpvvZJV46nu7uK5yXnTlV6/EkUTccsxkZTa44TzExjB2nfIEGj7Egf3ZS1J3LeXm/FAKx
- tj+z/UJVgMrRRmdmH1Hq9I/4QyznNPyIGW9gwsl5v1B8LkqCAUbbDn/smFXogxd7jldvwVn5RzR
- 0CbvASwho4w31JS9rI+t9
-X-Google-Smtp-Source: AGHT+IGO9OI6cKEACIXOk1Fm1kYRKEzmVHjbsFFdLphNtTssejs5mnc8tSlwyzl3bI42wesr955Egw==
-X-Received: by 2002:a05:600c:500e:b0:43d:7588:667b with SMTP id
- 5b1f17b1804b1-43f3a93ca20mr185678855e9.10.1744737781985; 
- Tue, 15 Apr 2025 10:23:01 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f233a2f71sm214675675e9.15.2025.04.15.10.23.01
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 15 Apr 2025 10:23:01 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 3/3] target/arm: Replace target_ulong -> vaddr for
- CPUWatchpoint
-Date: Tue, 15 Apr 2025 19:22:46 +0200
-Message-ID: <20250415172246.79470-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250415172246.79470-1-philmd@linaro.org>
-References: <20250415172246.79470-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1744738303; x=1745343103;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bCmVMDVljO40oRkPaHY3BRhSfb9wLUefJVNXmI0711A=;
+ b=niSTqCiyUlyKk6LR+WP/rz8SGor4lkRXB2+FENyOGbDJrDDalZTEGqTeo4pJKYxE7y
+ OnpWic2332iFHuoQMSrIspyDAs61ej2zg7coDMl25ChxT5ye1RWYpDJ9ixtDCHOFekB5
+ PDWD6NpVi6BJqVlOnG8sBaUNLwaOn6QTFzfVSF0kl8MHVVPFstcIQvqe58fh4cQKxRTQ
+ MbDVRfZlEixIUQS8gOqbIvlVwAA01fS9CGXSiuze5tjaOYgjQJz9gD7+1v0LzLe3hFK4
+ BAqRRZ7panSsdryi6H4kpC9xdZCAuptZgEFnSTL//p9pU00iLsr2rgRDlPmlTRD0p+On
+ uZgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNNHqsdTh4Y3s8m/zuBINfCZBNl6HxTBmlZ8jk6Zte8o4yptFR+yLyP477WuBaQZK+/08XvVvKJLr0@nongnu.org
+X-Gm-Message-State: AOJu0YxErLOOVCyRm15H6s0zfe4FhHsgyXtSikrXGQo7FdPgc2z6lFKp
+ iHI/8H9S9QMJaxicK3j30rRExEaneBfJCLakymC2/6G9GYHs971D+Jny7vlgOos=
+X-Gm-Gg: ASbGncuCFBgW36oJaVtAi12iqr5H6ht7egXb4h5a9P/SIAkEsTjI8AgmTLA1CBQ49H3
+ iK5kon7NtQ2SszgNqI3F0U3JrZaqTle7Z3lyyAxdggsuzVkWc1oy4+jQUMU1juGgdovBDrKXhoM
+ ujhAGiDxyQfIyhjUXz9C9WVL4sMksDNFlT6KZKMBSH7+oVLU1hfvR21bnHE8L46QzYs0xAoHeOW
+ KAf2KKACYcuE7d6Vc+OJIXXA3R3KJmdI7v/0xFHy+QKsb+oF6YY9Gum6Hm8Wby9aEiFYNbqAGeI
+ 0nE2vPHaunBlBpHHZwyb7Hc52GwieZ1T7JEATtiQanjx6/zQi5+OXAcRunlQkap4
+X-Google-Smtp-Source: AGHT+IHrW4jHLUaLWGkG6UGZxlF8nHtmbigYilbF/sEQBNCC4miyKmdJtSbu+XWy4lS+aSfxGzsYrw==
+X-Received: by 2002:a17:902:f552:b0:223:5c33:56a8 with SMTP id
+ d9443c01a7336-22bea4ff1f5mr264413265ad.35.1744738302944; 
+ Tue, 15 Apr 2025 10:31:42 -0700 (PDT)
+Received: from [192.168.1.87] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22ac7b6284dsm121065315ad.38.2025.04.15.10.31.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Apr 2025 10:31:42 -0700 (PDT)
+Message-ID: <4fdcd3ae-71ac-42f3-94e7-c6d767448597@linaro.org>
+Date: Tue, 15 Apr 2025 10:31:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/3] target/arm: Replace target_ulong -> hwaddr in
+ ARMMMUFaultInfo
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250415172246.79470-1-philmd@linaro.org>
+ <20250415172246.79470-2-philmd@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250415172246.79470-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,82 +106,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUWatchpoint::vaddr/len are of type vaddr.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/internals.h   | 9 +++++----
- target/arm/hyp_gdbstub.c | 8 ++++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
-
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 05ceb9bcf5d..a19c805af45 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -26,6 +26,7 @@
- #define TARGET_ARM_INTERNALS_H
- 
- #include "exec/hwaddr.h"
-+#include "exec/vaddr.h"
- #include "exec/breakpoint.h"
- #include "hw/registerfields.h"
- #include "tcg/tcg-gvec-desc.h"
-@@ -1946,10 +1947,10 @@ bool find_hw_breakpoint(CPUState *cpu, uint64_t pc);
- int insert_hw_breakpoint(uint64_t pc);
- int delete_hw_breakpoint(uint64_t pc);
- 
--bool check_watchpoint_in_range(int i, target_ulong addr);
--CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, target_ulong addr);
--int insert_hw_watchpoint(target_ulong addr, target_ulong len, int type);
--int delete_hw_watchpoint(target_ulong addr, target_ulong len, int type);
-+bool check_watchpoint_in_range(int i, vaddr addr);
-+CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, vaddr addr);
-+int insert_hw_watchpoint(vaddr addr, vaddr len, int type);
-+int delete_hw_watchpoint(vaddr addr, vaddr len, int type);
- 
- /* Return the current value of the system counter in ticks */
- uint64_t gt_get_countervalue(CPUARMState *env);
-diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
-index 4e52d37ed80..4d8fd933868 100644
---- a/target/arm/hyp_gdbstub.c
-+++ b/target/arm/hyp_gdbstub.c
-@@ -125,7 +125,7 @@ int delete_hw_breakpoint(uint64_t pc)
-  * need to ensure you mask the address as required and set BAS=0xff
-  */
- 
--int insert_hw_watchpoint(target_ulong addr, target_ulong len, int type)
-+int insert_hw_watchpoint(vaddr addr, vaddr len, int type)
- {
-     HWWatchpoint wp = {
-         .wcr = R_DBGWCR_E_MASK, /* E=1, enable */
-@@ -182,7 +182,7 @@ int insert_hw_watchpoint(target_ulong addr, target_ulong len, int type)
-     return 0;
- }
- 
--bool check_watchpoint_in_range(int i, target_ulong addr)
-+bool check_watchpoint_in_range(int i, vaddr addr)
- {
-     HWWatchpoint *wp = get_hw_wp(i);
-     uint64_t addr_top, addr_bottom = wp->wvr;
-@@ -214,7 +214,7 @@ bool check_watchpoint_in_range(int i, target_ulong addr)
-  * Delete a breakpoint and shuffle any above down
-  */
- 
--int delete_hw_watchpoint(target_ulong addr, target_ulong len, int type)
-+int delete_hw_watchpoint(vaddr addr, vaddr len, int type)
- {
-     int i;
-     for (i = 0; i < cur_hw_wps; i++) {
-@@ -239,7 +239,7 @@ bool find_hw_breakpoint(CPUState *cpu, uint64_t pc)
-     return false;
- }
- 
--CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, target_ulong addr)
-+CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, vaddr addr)
- {
-     int i;
- 
--- 
-2.47.1
-
+T24gNC8xNS8yNSAxMDoyMiwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IFNp
+Z25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9y
+Zz4NCj4gLS0tDQo+ICAgdGFyZ2V0L2FybS9pbnRlcm5hbHMuaCB8IDUgKysrLS0NCj4gICAx
+IGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQ0KPiANCj4g
+ZGlmZiAtLWdpdCBhL3RhcmdldC9hcm0vaW50ZXJuYWxzLmggYi90YXJnZXQvYXJtL2ludGVy
+bmFscy5oDQo+IGluZGV4IDI4NTg1YzA3NTU1Li4xNzVmYjc5MjM3NSAxMDA2NDQNCj4gLS0t
+IGEvdGFyZ2V0L2FybS9pbnRlcm5hbHMuaA0KPiArKysgYi90YXJnZXQvYXJtL2ludGVybmFs
+cy5oDQo+IEBAIC0yNSw2ICsyNSw3IEBADQo+ICAgI2lmbmRlZiBUQVJHRVRfQVJNX0lOVEVS
+TkFMU19IDQo+ICAgI2RlZmluZSBUQVJHRVRfQVJNX0lOVEVSTkFMU19IDQo+ICAgDQo+ICsj
+aW5jbHVkZSAiZXhlYy9od2FkZHIuaCINCj4gICAjaW5jbHVkZSAiZXhlYy9icmVha3BvaW50
+LmgiDQo+ICAgI2luY2x1ZGUgImh3L3JlZ2lzdGVyZmllbGRzLmgiDQo+ICAgI2luY2x1ZGUg
+InRjZy90Y2ctZ3ZlYy1kZXNjLmgiDQo+IEBAIC03MjQsOCArNzI1LDggQEAgdHlwZWRlZiBz
+dHJ1Y3QgQVJNTU1VRmF1bHRJbmZvIEFSTU1NVUZhdWx0SW5mbzsNCj4gICBzdHJ1Y3QgQVJN
+TU1VRmF1bHRJbmZvIHsNCj4gICAgICAgQVJNRmF1bHRUeXBlIHR5cGU7DQo+ICAgICAgIEFS
+TUdQQ0YgZ3BjZjsNCj4gLSAgICB0YXJnZXRfdWxvbmcgczJhZGRyOw0KPiAtICAgIHRhcmdl
+dF91bG9uZyBwYWRkcjsNCj4gKyAgICBod2FkZHIgczJhZGRyOw0KPiArICAgIGh3YWRkciBw
+YWRkcjsNCj4gICAgICAgQVJNU2VjdXJpdHlTcGFjZSBwYWRkcl9zcGFjZTsNCj4gICAgICAg
+aW50IGxldmVsOw0KPiAgICAgICBpbnQgZG9tYWluOw0KDQpSZXZpZXdlZC1ieTogUGllcnJp
+Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KDQo=
 
