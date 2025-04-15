@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6E6C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 07:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D682C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 07:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4aS0-00068W-Cq; Tue, 15 Apr 2025 03:11:20 -0400
+	id 1u4aW5-00076F-3C; Tue, 15 Apr 2025 03:15:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4aRt-00067v-L2
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 03:11:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4aRq-0002NI-Vg
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 03:11:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744701068;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=P4UOVzjG8E8JrY5OZRyncxoDKm/5CZAy0Qh5j4KeZEc=;
- b=XfJlP0Rh2Z5Bn2PlprydiMTv4AsrtC5c6u+4e47rSh8dYf8ePEW+kybKlG2Fx2GrcNuZLA
- p5DxT+bFebLVrhZ3iLcNMtqJhyIMYQCSlheqHtNGHEtWwOsvRTCWuPvKocZSZ0F2Noy7SQ
- +2P+9cGbX3vjZW1Uf2NDwMhlPBBDdo0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-2ZZWH6KoPSiwd-b0wfFdNg-1; Tue, 15 Apr 2025 03:11:05 -0400
-X-MC-Unique: 2ZZWH6KoPSiwd-b0wfFdNg-1
-X-Mimecast-MFC-AGG-ID: 2ZZWH6KoPSiwd-b0wfFdNg_1744701064
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3912fe32a30so2104803f8f.1
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 00:11:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4aVw-00074X-Jb
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 03:15:28 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4aVt-0002vf-PO
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 03:15:24 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43d0359b1fcso34548855e9.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 00:15:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744701319; x=1745306119; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZL0XsFAjJStMlS2GESi+b2JFXXnWD2/r3K+/HTN1YHM=;
+ b=LAjp16GCA7OvhSatFIsHXOiYvyhXpzyl5fUTtSL6qCTOAAKqdL1tdMgCvxSYrU+9K5
+ J5xL3exvX2Smx62ZV3IaaaBGEPnaQY6s0CgL0ahSSqh2y10T1FNDlDUFj3pwWl9BffSx
+ omff2A+XUrPQlRMZzC+PLxNpBxmRycpzjaqlJmW8+KpSnxfdr7hy+La5zTjR7UdeZyIU
+ W9xo9RSa1TtNpCa2hp73Pzh741jrGYUdgR3CeBJmcHFralzg4ryST3nmZI01xTVnEd5Y
+ r5yZXm47CbLbjrbv32ETm7HS6MaLV2ChszhM1PPRQmcKDltt6OzEjwFbIkoth7BS+fPV
+ pHVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744701064; x=1745305864;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P4UOVzjG8E8JrY5OZRyncxoDKm/5CZAy0Qh5j4KeZEc=;
- b=Sjscwzk/63BxEH7k+eMpY76yO6MdGEui3UUwqtGIZvRAtrMw9+oZInfelufoJV/HW9
- dDJSStJCStKhIZbCRRYsstPQF7u56DHq3QcwUqkjkRJj7v+5qM9OR+zEDMBsPA2qxGRm
- opr/DWj9W5ui2mKyFJ+YygMkClYLqMOvwwpo+7jHchHqh3Ez6UcHVBmIxOHS38QeM4PR
- 8JdcIbEPsTmA99EYLtIXQaaL/VpDjdbDBGrucr1T+7IwrXaROaiitZM9jyklKjn6BEg3
- rxm6jXh2yzzCRgMtr3/nNfgquk69yE6At9lVN9VkwPgZ7QNhWKAzmXQ8DXZo5LJpbtj9
- bZxg==
-X-Gm-Message-State: AOJu0Yzr+MHsdhQ91+YR0Q0L8tsZvKxC6yoSBhAdLqxqR9D8ISgflGhe
- o97qPyVyleRM/1PgtFaI7JToMsEp0t3nIu7VPKX5Sf0ATmYvOzJuFrfwMMAtuxjzaU/wM7hMt5E
- BU+0Ea/E85fODKnO8yaF28JhXkuG2loaOhLdwZKh+pdSijTeaLGbm
-X-Gm-Gg: ASbGncuWP8ZbQ6YtHSX7oBMzmmJuhh6fI4NZxQ7KMhhEjhn6iKbIFuhPa3b1V3jyQTE
- eSL+uchHnTfjLGLdGrlipa6sePsBLYZb1uj3hBaTeKdqlQFLKr2ei75qPyKO8KWkVxkbK+jjuMw
- ccyTACadXhEw1xBKdZQayTcqwsQerrJRBJyv3d2JQh4/tnesN02Mcd7Oohz3Fq+HO9FEY+TkCz9
- 46LqqeAWbP96h5Poa8NOaB6nh5p43bK7Q3lH3/ZBAE7MqF07N74Q2DZ/eDT/PQxb3SHo2hMWwPm
- l2BnfQ==
-X-Received: by 2002:a05:6000:4285:b0:39c:1257:feb8 with SMTP id
- ffacd0b85a97d-39eaaed574amr11690212f8f.56.1744701064481; 
- Tue, 15 Apr 2025 00:11:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnvFzGpXnOSbyF5CICMKXElnWT9wlyQMsE6l917yrkInmVuh4DIOgpc3yJJ/Mry/P5zr+K5A==
-X-Received: by 2002:a05:6000:4285:b0:39c:1257:feb8 with SMTP id
- ffacd0b85a97d-39eaaed574amr11690192f8f.56.1744701064158; 
- Tue, 15 Apr 2025 00:11:04 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eae963f62sm13037355f8f.5.2025.04.15.00.11.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 00:11:03 -0700 (PDT)
-Date: Tue, 15 Apr 2025 03:11:00 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "peterx@redhat.com" <peterx@redhat.com>, stefanha@redhat.com
-Subject: Re: [PATCH] intel_iommu: Take the bql before registering a new
- address space
-Message-ID: <20250415030653-mutt-send-email-mst@kernel.org>
-References: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
+ d=1e100.net; s=20230601; t=1744701319; x=1745306119;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZL0XsFAjJStMlS2GESi+b2JFXXnWD2/r3K+/HTN1YHM=;
+ b=bTNFoZi7trke0fXyt7Eroh3oK4Ms18R5GH5zqDVSPB2/gwoXh+VzZaEFDVfTNQUwnc
+ ERH8T4MgReh6kFgzTr0C+/6h3/tnbX0UPlpOKnz92lp79+aAfMUxAO3J/kscXnS3IMHs
+ qImEdeVqwZqzqt8+79Irf5vXEO5W9529AZmpvvnDOoh4WLbGSrgyexFnG1S+BucJw2cv
+ nmHs6W7DV/05Fk7QmGXp1JDjzVfkZ0whjptWjRHMwx5Ir5iFwAsVPLxHCGisVdnIdWwa
+ vRTE2/kEb+m/2jajU+h+/l96BH2qeoihcxIdQjLLrHKgW7WXea/GV2QTkkEU5AlBSuDy
+ u+OQ==
+X-Gm-Message-State: AOJu0Yz3cOOPWoitTvE6AP1BVTsHl0j2Hi37npy0Z+nz2OpNkdu0vVPK
+ OLfhNNIuZjz9Qsg0+jBGYE/rwfFlSDcTnOx70SHDhE5qratHMkE22YuNEMBr4MA=
+X-Gm-Gg: ASbGncudQ9tSZaKLT/lXhzCXCx3AE+8oYrjJchRSjIqA93bhLN+g9RlFNU2D5wllHYL
+ E83CX5bHfZr2LO709razxK6vm0dY9lUwqLUu0Hec7wEPAZB9PcAw3zY8yhByH6X6r1QdlT/hXew
+ e5Mb7OJgUdOeiSNcjGbMWVJOwhtvbgg5sSR2xHDI/KCr4g68BYb3vrjumJyWlk18+EXE7rMDJCp
+ mxJtAVUfmeVz95s0NJ3fLgkVO+fepCrkQMmbjNH1y/KSY+Xf6tHF3FFPFHJY2dQUw01eVbVjcSH
+ wRfz3b/KLBbhwbI0t76w3Rvrn0WPW20cK+4ycsmyrQqz+Fdh2uJd63GUwppomhkLrMC/eQWHPZk
+ 6d1FvGUcY
+X-Google-Smtp-Source: AGHT+IFoWSpWm5oZvNzp0OMAe1rqwb9fvwh5nUqBsOhSIVIWuyV3G6A2qBdJtFWMQ7aMYyiPxt1XEQ==
+X-Received: by 2002:a05:600c:5122:b0:43b:baf7:76e4 with SMTP id
+ 5b1f17b1804b1-43f99874f7emr15036655e9.1.1744701318910; 
+ Tue, 15 Apr 2025 00:15:18 -0700 (PDT)
+Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f20625eeesm200949345e9.11.2025.04.15.00.15.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Apr 2025 00:15:18 -0700 (PDT)
+Message-ID: <7d2e61de-17da-4a6b-b9c8-2ff14fdce15f@linaro.org>
+Date: Tue, 15 Apr 2025 09:15:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] target/riscv: fix endless translation loop on big
+ endian systems
+To: Ziqiao Kong <ziqiaokong@gmail.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-trivial@nongnu.org,
+ alistair.francis@wdc.com, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250414034626.3491489-1-ziqiaokong@gmail.com>
+ <20250414034626.3491489-2-ziqiaokong@gmail.com>
+ <3c9e1adc-eb4e-49f4-be32-b273a5a161b8@linaro.org>
+ <CAM0BWNCVU3GNqAe-stRRYytqC2H7G2iC8Wmpe3sz0u4kkUpYDg@mail.gmail.com>
+ <CAM0BWND3dr=_nZHXSoV2jzkXPXd=hViX6vM0cUMZ2Uru+TD6GQ@mail.gmail.com>
+ <c566eed5-605f-4aeb-8841-dae4e591fcb3@linaro.org>
+ <CAM0BWNBNrjJ6UuF+TRtkuEesLatnY1pzSjyaiPVDeKSMF8no-A@mail.gmail.com>
+ <CAM0BWNBGAJ-scbhXAQ2s2Y=w3WhJ5pR72xSA5Xf+bsbk73cL6w@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAM0BWNBGAJ-scbhXAQ2s2Y=w3WhJ5pR72xSA5Xf+bsbk73cL6w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,58 +109,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 15, 2025 at 06:18:08AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> Address space creation might end up being called without holding the
-> bql as it is exposed through the IOMMU ops.
+On 15/4/25 09:04, Ziqiao Kong wrote:
+> Accidentally not cc all recipients. Sorry for the confusion. Below is
+> the duplicated message:
 > 
-> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-Stefan, want to pick this one up, too?
-
-
-> ---
->  hw/i386/intel_iommu.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> Hello Philippe,
 > 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index dffd7ee885..fea2220013 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -4216,6 +4216,7 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->      vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
->      if (!vtd_dev_as) {
->          struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
-> +        bool take_bql = !bql_locked();
->  
->          new_key->bus = bus;
->          new_key->devfn = devfn;
-> @@ -4238,6 +4239,11 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->          vtd_dev_as->context_cache_entry.context_cache_gen = 0;
->          vtd_dev_as->iova_tree = iova_tree_new();
->  
-> +        /* Some functions in this branch require the bql, make sure we own it */
-> +        if (take_bql) {
-> +            bql_lock();
-> +        }
-> +
->          memory_region_init(&vtd_dev_as->root, OBJECT(s), name, UINT64_MAX);
->          address_space_init(&vtd_dev_as->as, &vtd_dev_as->root, "vtd-root");
->  
-> @@ -4305,6 +4311,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->  
->          vtd_switch_address_space(vtd_dev_as);
->  
-> +        if (take_bql) {
-> +            bql_unlock();
-> +        }
-> +
->          g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
->      }
->      return vtd_dev_as;
-> -- 
-> 2.49.0
+> On Tue, Apr 15, 2025 at 1:38 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> Hi,
+>>
+>> On 14/4/25 18:59, Ziqiao Kong wrote:
+>>> Hello Philippe,
+>>>
+>>> Any further concern regarding this series? I certainly would like to investigate
+>>> and help =).
+>>
+>> Short term I can't keep looking because I'm busy with other stuffs and
+>> tagged this patch for another review, because there is some endianness
+>> code smell in get_physical_address(). I understand your change fixes
+>> your issue, but I'm skeptical about it, in part because there are no
+>> such use in the whole code base. My change suggestion is just a starting
+>> point, more is needed.
+> 
+> Thanks for responding.
+> 
+> Actually, the pattern of this usage is actually very common in the code base and
+> that's why I fixed in this way. Sorry I should have put this in the
+> cover letter to
+> justify my fix. Below is an incomplete list of the code using this pattern:
+> 
+> - target/i386/tcg/system/excp_helper.c:129
+> 
+> if (likely(in->haddr)) {
+> old = cpu_to_le32(old);
+> new = cpu_to_le32(new);
+> return qatomic_cmpxchg((uint32_t *)in->haddr, old, new) == old;
+> }
+> 
+> - target/arm/ptw.c: 840
+> 
+> if (ptw->out_be) {
+> old_val = cpu_to_be64(old_val);
+> new_val = cpu_to_be64(new_val);
+> cur_val = qatomic_cmpxchg__nocheck((uint64_t *)host, old_val, new_val);
+> cur_val = be64_to_cpu(cur_val);
+> } else {
+> old_val = cpu_to_le64(old_val);
+> new_val = cpu_to_le64(new_val);
+> cur_val = qatomic_cmpxchg__nocheck((uint64_t *)host, old_val, new_val);
+> cur_val = le64_to_cpu(cur_val);
+> }
+
+Doh OK...
+
+> 
+> You might want to do a `grep -rn "qatomic_cmpxchg" .` to see all matches.
+> 
+> 
+>>
+>>>
+>>> Bests,
+>>> Ziqiao
+>>>
+>>> On Mon, Apr 14, 2025 at 7:17 PM Ziqiao Kong <ziqiaokong@gmail.com> wrote:
+>>>>
+>>>> On Mon, Apr 14, 2025 at 6:41 PM Philippe Mathieu-Daudé
+>>>> <philmd@linaro.org> wrote:
+>>>>>
+>>>>> Hi,
+>>>>>
+>>>>> On 14/4/25 05:46, Ziqiao Kong wrote:
+>>>>>> On big endian systems, pte and updated_pte hold big endian host data
+>>>>>> while pte_pa points to little endian target data. This means the branch
+>>>>>> at cpu_helper.c:1669 will be always satisfied and restart translation,
+>>>>>> causing an endless translation loop.
+>>>>>>
+>>>>>
+>>>>> Cc: qemu-stable@nongnu.org
+>>>>> Fixes: 0c3e702aca7 ("RISC-V CPU Helpers")
+>>>>>
+>>>>>> Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
+>>>>>> ---
+>>>>>>     target/riscv/cpu_helper.c | 4 ++--
+>>>>>>     1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>>>>> index 6c4391d96b..bc146771c8 100644
+>>>>>> --- a/target/riscv/cpu_helper.c
+>>>>>> +++ b/target/riscv/cpu_helper.c
+>>>>>> @@ -1662,9 +1662,9 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+>>>>>>                 target_ulong *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
+>>>>>>                 target_ulong old_pte;
+>>>>>>                 if (riscv_cpu_sxl(env) == MXL_RV32) {
+>>>>>> -                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, pte, updated_pte);
+>>>>>> +                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(pte), cpu_to_le32(updated_pte));
+
+Then don't we need:
+
+     old_pte = le32_to_cpu(old_pte);
+
+>>>>>>                 } else {
+>>>>>> -                old_pte = qatomic_cmpxchg(pte_pa, pte, updated_pte);
+>>>>>> +                old_pte = qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), cpu_to_le64(updated_pte));
+
+     old_pte = le64_to_cpu(old_pte);
+
+?
+
+>>>>>>                 }
+>>>>>>                 if (old_pte != pte) {
+>>>>>>                     goto restart;
+>>>>>
+>>>>> If PTEs are always stored in LE order, maybe what we want is earlier:
+>>>>>
+>>>>> -- >8 --
+>>>>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>>>> index 619c76cc001..b6ac2800240 100644
+>>>>> --- a/target/riscv/cpu_helper.c
+>>>>> +++ b/target/riscv/cpu_helper.c
+>>>>> @@ -1464,5 +1464,5 @@ static int get_physical_address(CPURISCVState
+>>>>> *env, hwaddr *physical,
+>>>>>             if (riscv_cpu_mxl(env) == MXL_RV32) {
+>>>>> -            pte = address_space_ldl(cs->as, pte_addr, attrs, &res);
+>>>>> +            pte = address_space_ldl_le(cs->as, pte_addr, attrs, &res);
+>>>>>             } else {
+>>>>> -            pte = address_space_ldq(cs->as, pte_addr, attrs, &res);
+>>>>> +            pte = address_space_ldq_le(cs->as, pte_addr, attrs, &res);
+>>>>
+>>>> Unfortunately, this doesn't work in two ways:
+>>>>
+>>>> 1. Note pte is used in the following code and that means pte must hold
+>>>> a correct value from the
+>>>> view of host endian (in my case, big endian not little endian).
+>>>> 2. address_space_ldq_le will dispatch to ldq_le_p, while
+>>>> address_space_leq will dispatch to ldq_p.
+>>>> However, on little endian targets, ldq_p is an alias of ldq_le_p so
+>>>> making no effects.
+>>>>
+>>>> Per my testing, this patch doesn't have any effect indeed. To have a
+>>>> brief view what is happening,
+>>>> see the logs just before atomic_cmpxchg:
+>>>>
+>>>> pte_pa 0xf14000000000000 == pte 0x140f ? updated_pte 0x144f
+>>>>
+>>>>>             }
+>>>>> ---
+>>
 
 
