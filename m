@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3D0C369BA
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93866C369BA
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4mGU-0001ET-Ju; Tue, 15 Apr 2025 15:48:16 -0400
+	id 1u4mGa-0001Rn-C0; Tue, 15 Apr 2025 15:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4mAo-00071T-3k
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:42:23 -0400
-Received: from mail-oi1-f180.google.com ([209.85.167.180])
+ id 1u4m9I-0005Xd-PR
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:40:49 -0400
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4mAA-0007BE-4P
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:42:14 -0400
-Received: by mail-oi1-f180.google.com with SMTP id
- 5614622812f47-3feb0db95e6so3810949b6e.1
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:41:05 -0700 (PDT)
+ id 1u4m80-0005xg-0u
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:40:33 -0400
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-6e8fb83e137so44435666d6.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744746064; x=1745350864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744745961; x=1745350761; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+auAC/0fVNtyUj9IXA1C/8l+Sur9fbt7QCSiCH6lOqc=;
- b=l/qDztFpY7X3orh+3+YB6laVBDVxwaejsKVw32Jwc1sO3134e1YCxtmg9/kuxQCtbp
- OBsi2HxhsWBh7CU2klPfHnypdJAbMqAOzljrccqttHPr4bffA5lh1Sla4xDv07UE5fE1
- R/FjNnd1Nw2JHmToQnmLLauC0n3p2JqSnV09GWSG5m1RBqzlQmBN35twiJqlB043TkrY
- 22qWXCpu2/FepaoCpXoDfzQ7jRNR/bT5upS6hu3Crnt6X1oqzcBe9Grmzf2wyUrbc5pk
- 1qWJNPQ7VG1RO0O1dwCmysZrcU64g/Jcd4XAYaSeF7hryydaJY7so/FiVtMMPT2gUWcI
- 0vew==
+ :reply-to; bh=l107O4frPXf7npC/NfnXs9QCdXTaqtWm/ZvOPbpalB8=;
+ b=W16d7Z/xvv0b+KfTS8di0RmEDaiNt7TkcBZzYGHnTcxqqcl/5HJfPLai0KCjYMniKz
+ to6n1oafag8Zeb5dXv1OxDohV7jC/ls3Al/p4rVzdPhVydQQIdWhtaF7jyEtPUkvTi7R
+ s3G8oNytgn9stQVVGI0CGAnQf3+tZrpUD+Dxhqb8Y9GjpODCft7adrXneFh2EBfGGnX/
+ 68oCuoHccKQa9+Br53Df+t2c+8I8Tt+n95NhjA7RkND3aEF1HpcCnk4lw9gXb5n3M3EV
+ SMthcSLvl2Q8YcCfKYuR/UKy9cLk61M6HrvazXfQqvng0GIsJzYy643urF2Va1i9TUQe
+ tKtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744746064; x=1745350864;
+ d=1e100.net; s=20230601; t=1744745961; x=1745350761;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+auAC/0fVNtyUj9IXA1C/8l+Sur9fbt7QCSiCH6lOqc=;
- b=NIxBvTJ2+8wNWvsEYAYqDRfSSEPmzguHWsoK03G6rbQ94sG5upuaS5Xe0GCeZgmHOD
- LOSbt3jiiJorN9+z9XLzubkXJqqd31uic3WIHD6CGo+tZMTjAjj6NkQcncq5btpxr6p0
- YRkDGPxCQjNJ1mYZO4FpERgMRlOyvfootlwsxldllK+m5zkGiq3N9/G5YimU6rakLbNo
- tY7335fJu9IgVu5T/AdF/TB4bBaWHsGzCEWa9Rz21kwY/rGiFlrHjGNyetmbvqLx6/gK
- /MAgD9o1QuI8xDBaj+ioBx3ADWFf8CjsfcVklld4cdK8Us8eWmIUp17juUeYWlLcWk07
- MnhQ==
-X-Gm-Message-State: AOJu0YwikC/zUO/sHKZZnFaLFL38BetsVcIFwV6YIVIehbGof/ICjhoe
- MmBMrJ5YumK6rp9mI8X6MPt5kfJNsSpdGDQZwD/ZwGk3TPdbbk9sGMi8t6Wywdef96yvO0+j5hs
- u
-X-Gm-Gg: ASbGncuyJ1wqtKrVCmcFl8ffGimnR9veB7YgIMOcO6LIf7gzqWCtgV/sUkZhMM3Vnwc
- yQyRyEhSbbvri1TKCg7MNCOZo3qep/zXNSS/H6PvlW65SbLi3i41hbxZcwrjztmCSIbmgmOOAZz
- saCdjGyqTzI0TTeLWbZFa3TIB6EJ8R3mGgkFrrUZ+ZXV96nLuqCfoaEEi/H9u3NWewPp2a+ySxh
- EpdGjVoufkuvf8ax7Y+C2T3M62ZrQdxd95jzlwohzIUnBzNaR8tf/PJQl3uEMe6jlfPKdjdYCbG
- mnjdfdeiNTsKqDA5UqZnjkDtyRlny32x8y5oFEy1mJpuTPq2DPY45tRIbYewmYg0g1VB08ZrgAo
+ bh=l107O4frPXf7npC/NfnXs9QCdXTaqtWm/ZvOPbpalB8=;
+ b=AEm6F/rlMrTBqJ32+h32OWihCXHi5UYm/MCLrvgcpXhPpzyInGJhNotK5F6vHDWz40
+ dwNbCLuN+N+dKveSTkjrpWcdoFzcE3LZPvGjjT5t60QgcsQoQ/qy2x4WsbssjLVPtAif
+ QVKS/BG7oje6Tqe3w5e33ojpZi9074s0RVtXt5P04M7Jov2/DGUzkWfHqLQeRzH5k8Zg
+ TXBfq66B/smbLWuuULWoxASpM+xdJFPwsQ98FFE5eZ4FHgyPasVxVGeguL1nwdjaiACZ
+ pdcVuHe8C1hjx1LT1qxXkjlK8CfONPZju05wo7CeSmqEka+TCKqEoNLpgk2T+VWNsviD
+ zfxQ==
+X-Gm-Message-State: AOJu0YxrHUj7RI4ItI8b7CQGg4YPScfwmo+WG/aB/Vz1PIG8/HD1LYEQ
+ AbFJ8/ZFv3ogqcgqp/rWvUoNB/ZAui8otJwoOq5RPklXtJ5i1HxANuJ//f7xkVrby14nx8cx6xi
+ W
+X-Gm-Gg: ASbGncsaMXZeufl+pfJLpFDO6701Lg6MsIiKYXaSDRNf+8E+8Sk/9KVuhaeJVfDSYtt
+ en15hez5hIzg0kqpPL0iw180SGSzzZBjBvAOwZrnytGx4Qspk5boMCf926TfJPFL7C/SkSyX+/c
+ VFuaREYcsnW75SWDusNikWpL3D0m7jG+j0/S6W0tSnlV5WgemEEjdwFlMtAAja53e8w7GBQbGNd
+ xkI5pQC9Xcgah0ClUctUHYkQfxnkcDuivBpX+lMHsC3NeD245nZf5tjjBE9Fds3vbFACetSvbm+
+ KcYpckv1Iq6A/dtG4ES8h46d7vHtEI3J0BlHQijZO2h1lF040L9wKRAlqqNkWGVvUtJ1XhuMu8c
  =
-X-Google-Smtp-Source: AGHT+IEIXzOcghfrkHJ5KFWIoUnlAl3ZFVd6HUUb+32SPwAbSxc7/aS0XIVFeQDml65fXbgz4mlx8Q==
-X-Received: by 2002:a17:903:228e:b0:223:66a1:4503 with SMTP id
- d9443c01a7336-22c31a6e008mr5350015ad.30.1744745570468; 
- Tue, 15 Apr 2025 12:32:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCZ4JcO8ahpsH947gPO4QN73L3ygkjZJB/3Il1+7Vg+78Isl9Tt01Vwua1EW3tOjHJAunTlw==
+X-Received: by 2002:a17:903:41c3:b0:227:e74a:a057 with SMTP id
+ d9443c01a7336-22c31ab0f8emr5536005ad.44.1744745575782; 
+ Tue, 15 Apr 2025 12:32:55 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7ccbd5esm122062355ad.248.2025.04.15.12.32.49
+ d9443c01a7336-22ac7ccbd5esm122062355ad.248.2025.04.15.12.32.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 12:32:50 -0700 (PDT)
+ Tue, 15 Apr 2025 12:32:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 112/163] tcg: Sink def, nb_iargs,
- nb_oargs loads in liveness_pass_1
-Date: Tue, 15 Apr 2025 12:24:23 -0700
-Message-ID: <20250415192515.232910-113-richard.henderson@linaro.org>
+Subject: [PATCH v4 119/163] tcg/i386: Honor carry_live in tcg_out_movi
+Date: Tue, 15 Apr 2025 12:24:30 -0700
+Message-ID: <20250415192515.232910-120-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.167.180;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-f180.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,83 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sink the sets of the def, nb_iargs, nb_oargs variables to
-the default and do_not_remove labels.  They're not really
-needed beforehand, and it avoids preceding code from having
-to keep them up-to-date.  Note that def was *not* kept
-up-to-date; thankfully only def->flags had been used and
-those bits were constant between opcode changes.
+Do not clobber flags if they're live.  Required in order
+to perform register allocation on add/sub carry opcodes.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ tcg/i386/tcg-target.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 9da6c8bb4d..381e76cfc8 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -4071,8 +4071,6 @@ liveness_pass_1(TCGContext *s)
-         case INDEX_op_sub2_i64:
-             opc_new = INDEX_op_sub;
-         do_addsub2:
--            nb_iargs = 4;
--            nb_oargs = 2;
-             /* Test if the high part of the operation is dead, but not
-                the low part.  The result can be optimized to a simple
-                add or sub.  This happens often for x86_64 guest when the
-@@ -4087,8 +4085,6 @@ liveness_pass_1(TCGContext *s)
-                 op->args[1] = op->args[2];
-                 op->args[2] = op->args[4];
-                 /* Fall through and mark the single-word operation live.  */
--                nb_iargs = 2;
--                nb_oargs = 1;
-             }
-             goto do_not_remove;
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index 04e31cae12..8e0ccbc722 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -1092,7 +1092,7 @@ static void tcg_out_movi_int(TCGContext *s, TCGType type,
+ {
+     tcg_target_long diff;
  
-@@ -4100,8 +4096,6 @@ liveness_pass_1(TCGContext *s)
-             opc_new = INDEX_op_mul;
-             opc_new2 = INDEX_op_muluh;
-         do_mul2:
--            nb_iargs = 2;
--            nb_oargs = 2;
-             if (arg_temp(op->args[1])->state == TS_DEAD) {
-                 if (arg_temp(op->args[0])->state == TS_DEAD) {
-                     /* Both parts of the operation are dead.  */
-@@ -4122,19 +4116,15 @@ liveness_pass_1(TCGContext *s)
-                 goto do_not_remove;
-             }
-             /* Mark the single-word operation live.  */
--            nb_oargs = 1;
-             goto do_not_remove;
- 
-         default:
--            /* XXX: optimize by hardcoding common cases (e.g. triadic ops) */
--            nb_iargs = def->nb_iargs;
--            nb_oargs = def->nb_oargs;
--
-             /* Test if the operation can be removed because all
-                its outputs are dead. We assume that nb_oargs == 0
-                implies side effects */
--            if (!(def->flags & TCG_OPF_SIDE_EFFECTS) && nb_oargs != 0) {
--                for (int i = 0; i < nb_oargs; i++) {
-+            def = &tcg_op_defs[opc];
-+            if (!(def->flags & TCG_OPF_SIDE_EFFECTS) && def->nb_oargs != 0) {
-+                for (int i = def->nb_oargs - 1; i >= 0; i--) {
-                     if (arg_temp(op->args[i])->state != TS_DEAD) {
-                         goto do_not_remove;
-                     }
-@@ -4148,6 +4138,10 @@ liveness_pass_1(TCGContext *s)
-             break;
- 
-         do_not_remove:
-+            def = &tcg_op_defs[opc];
-+            nb_iargs = def->nb_iargs;
-+            nb_oargs = def->nb_oargs;
-+
-             for (int i = 0; i < nb_oargs; i++) {
-                 ts = arg_temp(op->args[i]);
- 
+-    if (arg == 0) {
++    if (arg == 0 && !s->carry_live) {
+         tgen_arithr(s, ARITH_XOR, ret, ret);
+         return;
+     }
 -- 
 2.43.0
 
