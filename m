@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B585C369BD
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32535C3ABA0
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 20:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4mBB-0000OF-2l; Tue, 15 Apr 2025 15:42:45 -0400
+	id 1u4mB5-0008OB-Ma; Tue, 15 Apr 2025 15:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4m2e-0004UO-FO
+ id 1u4m2e-0004TN-4q
  for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:34:03 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+Received: from mail-pl1-f174.google.com ([209.85.214.174])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u4m1V-0002tM-6t
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:33:48 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2264aefc45dso88974455ad.0
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:32:44 -0700 (PDT)
+ id 1u4m1G-0002gy-Vh
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 15:33:37 -0400
+Received: by mail-pl1-f174.google.com with SMTP id
+ d9443c01a7336-225477548e1so58493545ad.0
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 12:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744745563; x=1745350363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744745548; x=1745350348; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WtF4WXTFXXNdmtQwDwH4tY2LLA+QVqKCyOE1XosHViI=;
- b=MZS6eMcTTgnbkfWQ1dyhSfxY75PkTfoFRqcK9mJ166DDwBAk+tDCitwzBeElMMdWeD
- 8ix6vEqyaJN5DWFxw+zpyjmX1PKSsnw3hsmnwXFUtgZkkFzEKNp+0UkusqHuVzJngBEP
- fSrFQ5ybdj2dkbZYg8KZMOn5CE8RJj8O3OWJsz9Hfsce5MvI5xH/DqfwPveXbrzT+MsO
- Vxle7EurzDLF4qQgWNSkVmDsg9OMjd6fjaIEjcKHWSH6uNrmurXgXgo1TIki+KurUEZQ
- PAmUV3t/kSn2V+Q3S6uDSXt34WICUThO6OGhiFXrnqsTfBBDAN5ch6JfjLW+Nlru9pBC
- TGyg==
+ :reply-to; bh=zLecgdFcx9vj4rrBOS94LABacIUGVfkhSy89AY/MSu4=;
+ b=BDWeADulZ5Ron0eTXOxRQ5rvxpRyLzqKtIu60T+LBoaZ/4cGgO4PnbTpjnTAs37prw
+ 33hMNx+DMEcV6otTx5MVdsAoF8ghpe+47SFJFnR9+mt628NVlcZPGbiPxuuoeeENwnWu
+ Jr49QQoutdgDdfVKkN4xThEasOv8E8E+2Pj2QzZ8/RWAHhLm2BaQtghI7W3LSemGO5Bn
+ 7rUtJYmJ8hI0LWesR0MJ4dex60+Gak3Xjkowzx0OMF47xXwfrvLjo83xaGGXqpjY+OxF
+ oZwOL/7C4CNpVev/oMBPBRKTZ2AGp8Ukt+ydER2etIkgRyXBtqV5e7iU/YNm6d1DS8cX
+ ZaAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744745563; x=1745350363;
+ d=1e100.net; s=20230601; t=1744745548; x=1745350348;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WtF4WXTFXXNdmtQwDwH4tY2LLA+QVqKCyOE1XosHViI=;
- b=xVnU0YP36dEvmT2ckUnjSlUKUk+M34qdJCqEr94jpZguJZEG6lytTrZrJDM9xwQDj6
- AZSCCjQeRciym9Rjv8GKNZqQSK3F3ZQccNOyYUa82NWMXqhxRAZTkW+h3Pgq+uW2NAzi
- 981eV1ExIsU2tKvV2mebuwFopusFTkTHDL5OpNpEPZZNGG1CV6IhvKwgYXPB0WU0KiPa
- ZNOVDfUbnA75wKhPjauOpY4NN2DZjKqNmQ7NhcSfB5V58gpAVVTJmxIfIwtOMXc6eJgZ
- 40LrhNo6yGOe+H5zlCxFaNhFOSIMclQXCUU+7UoSmzJY6/iIEzfRk99+yNZ/HBTwfy1A
- tTew==
-X-Gm-Message-State: AOJu0Yx3bhtEm7icG0+/n1guiV+o4DR7QPNP8XsU5JcQc69wWFhDEmct
- 2e6k9k2tMKtvDns1ScqljibHWbJYQjBnxKeMKxalTNDSb6X6EpSDLyJWbMJYifkJSNZpw/wY3mE
- x
-X-Gm-Gg: ASbGncvdZryyvNmrtFFyk1FtVqLYRV/W6oeUOJv8LM1fTbNaOMPi3PpAgFJ6Cn6dnNn
- 2Y1yZiNI8zPtuxTZ28J3iw0wPnzvUnx9Dmvlyk3O2nfWPY/OGFRq1z1R63U/5oQAo5bDaBfW61s
- 3sM5dWYV+4GDulyUOcCn3CekXHXsy9uH49Z8yNu1+Xk2mAkBdB6bpvkFncQq+aMV1n80ppBya4+
- OvhyR961qzAVEJRL7BnIA4qZ/lDgjVPX3f4GWJnzdeJe2HkNyKZHtwPj3kpaT8zV7dRkT+WD12e
- wis3QIL95bo09Jk2hEpyK7od3GOAlLevgwDVjxU8sycarlyvpew8kxgQq/GjlmoSaMP3XCEmgeJ
- QO5Zfm80TXQ==
-X-Google-Smtp-Source: AGHT+IFdyhc5RleODRfvLEd2Q/lII83mENr8GzQdjZS3nhE6czyYmcgycxhDKV1hYbuMRE07IadiAQ==
-X-Received: by 2002:a17:902:dad0:b0:220:e5be:29c8 with SMTP id
- d9443c01a7336-22c31a86b9dmr5994675ad.32.1744745563047; 
- Tue, 15 Apr 2025 12:32:43 -0700 (PDT)
+ bh=zLecgdFcx9vj4rrBOS94LABacIUGVfkhSy89AY/MSu4=;
+ b=ZfV6UM8PWoTRlEq5meu0u0XUKEw65qsp9CAQWMBaKfjXMSz0n2R0qmnG0y+Bqg22bX
+ kM+uqS1KW7ElBgq5qunMDe0ka1NyaO9A7FDdsNClyP1Y5ZdIg6ghOFjLNQUHByCqzCRg
+ Sp822EnUFYLOWjIS2JDa4z8QmhuXHrezJOEw8e54Ha2mOcv+bIFdjOM87RaM92HH+Tk6
+ 7/kRZiZdOZwV0KU1+27IxoK+mjJiqhHOMDrrtjSRopZzKibk09fYK1DZDCBLgWpYkyNo
+ eC+9V2wx2j7giVeT8DvnNnRyRLLD3SaVIpuEbX5YXPk8ej933bL92SDgf2653+UnM3mi
+ 49GA==
+X-Gm-Message-State: AOJu0YxUhJPnjrnxfqPY1W92ggrNkOjX6A2jzqnvx+rkwW7NtyMd32kN
+ /MQOxzvmDiLBizVdnFHkFabAsVPEO7FddAN1heyKVHFiEaINi+mcemGGHyPFs9wg/y73qvzatg0
+ D
+X-Gm-Gg: ASbGncsSb4VliGbgkLg7h3F6zg8e/D1CrDA1S6NkkRhx/wPS3dAJ7ANXf+GukKxNHdv
+ 8tlBBzgI3o8H3e/QE3A+f4lMPFPyhpFGfq/u13RQ4AJAxMa2J6DFbjiKIjPUbMUfseP/cfqD26H
+ chloP9cvn9AYTJvgnR/x4/dCgP5ZnNuz9VQyNK+i7ahp9kynyu4SSbFhMcVxhkiVfEj4lTdj++O
+ jEIGsYmaxZJnGMrZtc7wR0t8oqRWL0Sszzx9tfYG2ANoc26v6Cz39LG/dQrLQtZOg7fr8mvb45x
+ V4Lhv83EbQWxsn18FXeo6yzKhawK6igSTMx7ekuYbIgcfpuwiPGXukW6P99mvgpXFYTgw/uKEXW
+ YieplDLMH9Q==
+X-Google-Smtp-Source: AGHT+IGlysaT+96+rEIyZ0C1zt/hHFwyyDpbeO6xJZcVwJX3pZceIYCGZWe4HB4XYgGZ4NkbkAe8Mg==
+X-Received: by 2002:a17:902:ea06:b0:223:f9a4:3f9c with SMTP id
+ d9443c01a7336-22c31a0c7e0mr4192395ad.9.1744745547883; 
+ Tue, 15 Apr 2025 12:32:27 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ac7ccbd5esm122062355ad.248.2025.04.15.12.32.42
+ d9443c01a7336-22ac7ccbd5esm122062355ad.248.2025.04.15.12.32.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 12:32:42 -0700 (PDT)
+ Tue, 15 Apr 2025 12:32:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 102/163] tcg/aarch64: Improve deposit
-Date: Tue, 15 Apr 2025 12:24:13 -0700
-Message-ID: <20250415192515.232910-103-richard.henderson@linaro.org>
+Subject: [PATCH v4 084/163] tcg/ppc: Expand arguments to tcg_out_cmp2
+Date: Tue, 15 Apr 2025 12:23:55 -0700
+Message-ID: <20250415192515.232910-85-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=209.85.214.174;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-f174.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,80 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use ANDI for deposit 0 into a register.
-Use UBFIZ, aka UBFM, for deposit register into 0.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/aarch64/tcg-target-con-set.h |  2 +-
- tcg/aarch64/tcg-target.c.inc     | 29 ++++++++++++++++++++++++++++-
- 2 files changed, 29 insertions(+), 2 deletions(-)
+ tcg/ppc/tcg-target.c.inc | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/tcg/aarch64/tcg-target-con-set.h b/tcg/aarch64/tcg-target-con-set.h
-index 1281e5efc0..2eda499cd3 100644
---- a/tcg/aarch64/tcg-target-con-set.h
-+++ b/tcg/aarch64/tcg-target-con-set.h
-@@ -18,7 +18,6 @@ C_O1_I1(r, r)
- C_O1_I1(w, r)
- C_O1_I1(w, w)
- C_O1_I1(w, wr)
--C_O1_I2(r, 0, rz)
- C_O1_I2(r, r, r)
- C_O1_I2(r, r, rA)
- C_O1_I2(r, r, rAL)
-@@ -26,6 +25,7 @@ C_O1_I2(r, r, rC)
- C_O1_I2(r, r, ri)
- C_O1_I2(r, r, rL)
- C_O1_I2(r, rz, rz)
-+C_O1_I2(r, rZ, rZ)
- C_O1_I2(w, 0, w)
- C_O1_I2(w, w, w)
- C_O1_I2(w, w, wN)
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 62b045c222..dee4afcce1 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -2572,12 +2572,39 @@ static void tgen_deposit(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
-                          TCGReg a2, unsigned ofs, unsigned len)
- {
-     unsigned mask = type == TCG_TYPE_I32 ? 31 : 63;
-+
-+    /*
-+     * Since we can't support "0Z" as a constraint, we allow a1 in
-+     * any register.  Fix things up as if a matching constraint.
-+     */
-+    if (a0 != a1) {
-+        if (a0 == a2) {
-+            tcg_out_mov(s, type, TCG_REG_TMP0, a2);
-+            a2 = TCG_REG_TMP0;
-+        }
-+        tcg_out_mov(s, type, a0, a1);
-+    }
-     tcg_out_bfm(s, type, a0, a2, -ofs & mask, len - 1);
+diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+index 1782d05290..669c5eae4a 100644
+--- a/tcg/ppc/tcg-target.c.inc
++++ b/tcg/ppc/tcg-target.c.inc
+@@ -2206,8 +2206,8 @@ static void tcg_out_cntxz(TCGContext *s, TCGType type, uint32_t opc,
+     }
  }
  
-+static void tgen_depositi(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
-+                          tcg_target_long a2, unsigned ofs, unsigned len)
-+{
-+    tgen_andi(s, type, a0, a1, ~MAKE_64BIT_MASK(ofs, len));
-+}
-+
-+static void tgen_depositz(TCGContext *s, TCGType type, TCGReg a0, TCGReg a2,
-+                          unsigned ofs, unsigned len)
-+{
-+    int max = type == TCG_TYPE_I32 ? 31 : 63;
-+    tcg_out_ubfm(s, type, a0, a2, -ofs & max, len - 1);
-+}
-+
- static const TCGOutOpDeposit outop_deposit = {
--    .base.static_constraint = C_O1_I2(r, 0, rz),
-+    .base.static_constraint = C_O1_I2(r, rZ, rZ),
-     .out_rrr = tgen_deposit,
-+    .out_rri = tgen_depositi,
-+    .out_rzr = tgen_depositz,
- };
+-static void tcg_out_cmp2(TCGContext *s, const TCGArg *args,
+-                         const int *const_args)
++static void tcg_out_cmp2(TCGContext *s, TCGCond cond, TCGReg al, TCGReg ah,
++                         TCGArg bl, bool blconst, TCGArg bh, bool bhconst)
+ {
+     static const struct { uint8_t bit1, bit2; } bits[] = {
+         [TCG_COND_LT ] = { CR_LT, CR_LT },
+@@ -2220,18 +2220,9 @@ static void tcg_out_cmp2(TCGContext *s, const TCGArg *args,
+         [TCG_COND_GEU] = { CR_GT, CR_LT },
+     };
  
- static void tgen_extract(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
+-    TCGCond cond = args[4], cond2;
+-    TCGArg al, ah, bl, bh;
+-    int blconst, bhconst;
++    TCGCond cond2;
+     int op, bit1, bit2;
+ 
+-    al = args[0];
+-    ah = args[1];
+-    bl = args[2];
+-    bh = args[3];
+-    blconst = const_args[2];
+-    bhconst = const_args[3];
+-
+     switch (cond) {
+     case TCG_COND_EQ:
+         op = CRAND;
+@@ -2286,7 +2277,8 @@ static void tcg_out_cmp2(TCGContext *s, const TCGArg *args,
+ static void tcg_out_setcond2(TCGContext *s, const TCGArg *args,
+                              const int *const_args)
+ {
+-    tcg_out_cmp2(s, args + 1, const_args + 1);
++    tcg_out_cmp2(s, args[5], args[1], args[2], args[3], const_args[3],
++                 args[4], const_args[4]);
+     tcg_out32(s, MFOCRF | RT(TCG_REG_R0) | FXM(0));
+     tcg_out_rlw(s, RLWINM, args[0], TCG_REG_R0, CR_EQ + 0*4 + 1, 31, 31);
+ }
+@@ -2294,7 +2286,8 @@ static void tcg_out_setcond2(TCGContext *s, const TCGArg *args,
+ static void tcg_out_brcond2(TCGContext *s, const TCGArg *args,
+                             const int *const_args)
+ {
+-    tcg_out_cmp2(s, args, const_args);
++    tcg_out_cmp2(s, args[4], args[0], args[1], args[2], const_args[2],
++                 args[3], const_args[3]);
+     tcg_out_bc_lab(s, TCG_COND_EQ, arg_label(args[5]));
+ }
+ 
 -- 
 2.43.0
 
