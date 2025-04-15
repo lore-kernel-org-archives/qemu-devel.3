@@ -4,65 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70884C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C83C6C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:08:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4ihS-0007tr-HL; Tue, 15 Apr 2025 11:59:51 -0400
+	id 1u4ipZ-0004hm-Nh; Tue, 15 Apr 2025 12:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u4ihJ-0007l6-35; Tue, 15 Apr 2025 11:59:41 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u4ih8-0001tk-D6; Tue, 15 Apr 2025 11:59:35 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:921:0:640:f23d:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 6C5D761C04;
- Tue, 15 Apr 2025 18:59:16 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:16e::1:36] (unknown
- [2a02:6bf:8080:16e::1:36])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id FxJGQP0FUmI0-onwCjIOL; Tue, 15 Apr 2025 18:59:15 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744732755;
- bh=wK/sW/tZhrT5vnIpdyAKdfStaxHOxPKFFqCDEN3wXO0=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=Jpcm7Xbb+yrg7wbbyVUKR/q9PO4T3KY7Zlv8/cdhq8BO1xunPKMcLUHr8QIPadtiJ
- 5EAsdETPFBB21HX1TlUk6EdCBpifIOr+nkZr6yfkd9TPz2MJtUZMo3LS//oT6A8x92
- VquSqV6r5TCyqWqUSP0rEu/rqLNcHE8C19aMSa9w=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <c3044546-b921-4cbc-959d-4f23e0e3c49e@yandex-team.ru>
-Date: Tue, 15 Apr 2025 18:59:15 +0300
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1u4ipP-0004fE-Qw
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:08:06 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1u4ipH-0003Nc-AW
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 12:08:02 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-47681dba807so252851cf.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 09:07:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1744733272; x=1745338072; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=67Seyv2EQ0eH3fvOgQj/T82RXsQkB/pngLiaqKyBV0I=;
+ b=H/izhTIFFMqgloOKyebQ6GlCeQXdHfH4zMyBc+4yUkl5mg1+mCYaaTRxhyhKgVwwGs
+ Op/D1uNIDIxc9HAuyJ4lBoVGOGAKz3PUkewUzAhuekaXDLWdAn1nzce8CHA0Q7ZOKhK+
+ a1PL9hNpRkM+Y3UrRLu+rDFYvESpFbMOA9tAdL7dxSc2C6mt6+6wWv2VImiYK4/ZGLOk
+ mssv/JGldLUHvuX+nV1ZPmHW4KNZhtjLZ/mhp88dOZgfcSejCjXQI3Io0dcodYHAxABp
+ pIXXEWgMRRd8oeDm5nHYiTYuJf8fSYXOFd3sTPwfWLhkUlqPBJ9VJxlwXbj2MNOzvhcF
+ iO9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744733272; x=1745338072;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=67Seyv2EQ0eH3fvOgQj/T82RXsQkB/pngLiaqKyBV0I=;
+ b=AVnwoDMnufSlZQqU0W6PsetqWieXxEPWmTxAfHMZ41HAot4sdFzhM2eCEYvTBYyLg1
+ trKuJ532vtQFQlWrFeEWKdD/ISp6abhktwbPtvj8nu9Xz2D9mw99r/z7Ch/lZdmfbrXx
+ kzOQqbqC8m4bBpyokPj3I21mHslX494H6fraeyPcqyQMDO1xvv18a6m2rFnNldjsulGX
+ 2JaNFPFrReIQAp8aAMvXVRmDx+1wA4WWhlcpF/KN+ScPAUH1IUnTnF1YLCFcNuD6fVv6
+ Y9K1usdl/L3OZ4g2cujhYlPXX94CF0bDgiwhshi6QOa9Kd8/SIFxRxI9qqhG5IayfNqq
+ T67w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWq7AzrDZa9QkSvzeXj+nfRy2Ymdmlc/fgZ/v2dYcuV2yRK4HqO5lD9vXENED+fJ4hLAXpiflHycMqP@nongnu.org
+X-Gm-Message-State: AOJu0YzL8Pl7PhNsX1ryeOTOeq7wymNb4LLs5qBb9b5EkrRegrXrfOgW
+ J8rWBAeKzCMWb2xU5W/yeM3I50aOpG0WHhixnYx7XX5/3LCyAArMkn8u5f2xOeyJjg83FIqwtNm
+ 8uySY7gxtWfaUdc/OlPirEG6inai112rPu1DU
+X-Gm-Gg: ASbGncsLiNOvsU0ld/8ILwzT3sUvO6IpcVslkpfqheskerWdj5/2E2IZS3v5zFl70yP
+ nYG3Ufwr+jknFyvSHsa63lOWuC3ZRegwRwRTB0J9jjNtO9icOjPwb3r+eZ1P36JvmWQUvbL4TEG
+ 6hj+oibcPAnIsqQdn73wtBDnjsSoxh06mRd+Fp0CS1sNfD+GDEM3Xa
+X-Google-Smtp-Source: AGHT+IHLXbIlE2rpVA1qdj9HHrbJPDFOSDtuSkXOi+z2wLlgPRnzWPf+xR8fFJnnHG5vbo8IQngl0n4ZXS/uSyaN5kI=
+X-Received: by 2002:ac8:5801:0:b0:477:1f86:178c with SMTP id
+ d75a77b69052e-47a6df06376mr4380841cf.26.1744733271903; Tue, 15 Apr 2025
+ 09:07:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] mirror: Skip writing zeroes when target is already
- zero
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, "open list:Block Jobs"
- <qemu-block@nongnu.org>
-References: <20250411010732.358817-8-eblake@redhat.com>
- <20250411010732.358817-11-eblake@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250411010732.358817-11-eblake@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
+ <20250410023856.500258-8-jamin_lin@aspeedtech.com>
+ <860fbb39-feec-4c1d-b05f-aea7889a698f@kaod.org>
+ <SI2PR06MB5041C73D934E10DEC9B66805FCB32@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <CA+QoejUvnwZBqS6nJBi5y=g1-r+f=9SnDD4SQOL3kxqeMbS_cw@mail.gmail.com>
+ <SI2PR06MB50413B875162D6ADD2F182ECFCB22@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <SI2PR06MB50413B875162D6ADD2F182ECFCB22@SI2PR06MB5041.apcprd06.prod.outlook.com>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Tue, 15 Apr 2025 09:07:40 -0700
+X-Gm-Features: ATxdqUEDZ5sbYGTAI86OPcyf-gBj1X5yKajDTplXBh0qjAyehNVapIKvkzq136A
+Message-ID: <CA+QoejWEn-B8E_QC-hAM87j_5TQXMYZRgDNUvq5qUTYUr9VQ-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 07/10] hw/arm/aspeed: Add support for loading vbootrom
+ image via "-bios"
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, 
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x82c.google.com
+X-Spam_score_int: -178
+X-Spam_score: -17.9
+X-Spam_bar: -----------------
+X-Spam_report: (-17.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.268,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,273 +109,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.04.25 04:04, Eric Blake wrote:
-> When mirroring, the goal is to ensure that the destination reads the
-> same as the source; this goal is met whether the destination is sparse
-> or fully-allocated.  However, if the destination cannot efficiently
-> write zeroes, then any time the mirror operation wants to copy zeroes
-> from the source to the destination (either during the background over
-> sparse regions when doing a full mirror, or in the foreground when the
-> guest actively writes zeroes), we were causing the destination to
-> fully allocate that portion of the disk, even if it already read as
-> zeroes.
-> 
-> We could just teach mirror_co_zero() to do a block_status() probe of
-> the destination, and skip the zeroes if the destination already reads
-> as zero, but we know from past experience that block_status() calls
-> are not always cheap (tmpfs, anyone?).  So this patch takes a slightly
-> different approach: any time we have to transfer the full image,
-> mirror_dirty_init() is _already_ doing a pre-zero pass over the entire
-> destination.  Therefore, if we track which clusters of the destination
-> are zero at any given moment, we don't have to do a block_status()
-> call on the destination, but can instead just refer to the zero bitmap
-> associated with the job.
-> 
-> With this patch, if I externally create a raw sparse destination file
-> ('truncate --size=$N dst.raw'), connect it with QMP 'blockdev-add'
-> while leaving it at the default "discard":"ignore", then run QMP
-> 'blockdev-mirror' with "sync":"full", the destination remains sparse
-> rather than fully allocated.
-> 
-> However, a raw destination file created with 'blockdev-create' still
-> gets fully allocated, because more work is needed in file-posix to
-> still identify reads-as-zeroes even when the first 4k has to be
-> allocated to make alignment probing work.
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->   block/mirror.c | 94 +++++++++++++++++++++++++++++++++++++++++---------
->   1 file changed, 78 insertions(+), 16 deletions(-)
-> 
-> diff --git a/block/mirror.c b/block/mirror.c
-> index 2e1e14c8e7e..98da5a6dc27 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -73,6 +73,7 @@ typedef struct MirrorBlockJob {
->       size_t buf_size;
->       int64_t bdev_length;
->       unsigned long *cow_bitmap;
-> +    unsigned long *zero_bitmap;
->       BdrvDirtyBitmap *dirty_bitmap;
->       BdrvDirtyBitmapIter *dbi;
->       uint8_t *buf;
-> @@ -408,15 +409,32 @@ static void coroutine_fn mirror_co_read(void *opaque)
->   static void coroutine_fn jk(void *opaque)
->   {
->       MirrorOp *op = opaque;
-> -    int ret;
-> +    bool write_needed = true;
-> +    int ret = 0;
-> 
->       op->s->in_flight++;
->       op->s->bytes_in_flight += op->bytes;
->       *op->bytes_handled = op->bytes;
->       op->is_in_flight = true;
-> 
-> -    ret = blk_co_pwrite_zeroes(op->s->target, op->offset, op->bytes,
-> -                               op->s->unmap ? BDRV_REQ_MAY_UNMAP : 0);
-> +    if (op->s->zero_bitmap) {
-> +        unsigned long last = (op->offset + op->bytes) / op->s->granularity;
-
-Maybe, call it "end", not "last, as it's not last element of the range, but first after the range.
-
-Also, seems we need still do DIV_ROUND_UP, for ..
-
-> +        assert(QEMU_IS_ALIGNED(op->offset, op->s->granularity));
-> +        assert(QEMU_IS_ALIGNED(op->bytes, op->s->granularity) ||
-> +               op->offset + op->bytes == op->s->bdev_length);
-
-.. ^ this case, when bytes is unaligned to granularity but aligned to bdev_length.
-
-> +        if (find_next_zero_bit(op->s->zero_bitmap, last,
-> +                               op->offset / op->s->granularity) == last) {
-> +            write_needed = false;
-> +        }
-> +    }
-> +    if (write_needed) {
-> +        ret = blk_co_pwrite_zeroes(op->s->target, op->offset, op->bytes,
-> +                                   op->s->unmap ? BDRV_REQ_MAY_UNMAP : 0);
-> +    }
-> +    if (ret >= 0 && op->s->zero_bitmap) {
-> +        bitmap_set(op->s->zero_bitmap, op->offset / op->s->granularity,
-> +                   op->bytes / op->s->granularity);
-
-and here we want to align up bytes, for the corner case
-
-> +    }
-
-Also, I'm not sure, what guarantees we have in case of write-zeroes failure. Should we clear the bitmap in this case, like we do MIRROR_METHOD_COPY and MIRROR_METHOD_DISCARD below
-
->       mirror_write_complete(op, ret);
->   }
-> 
-> @@ -441,6 +459,9 @@ static unsigned mirror_perform(MirrorBlockJob *s, int64_t offset,
->       Coroutine *co;
->       int64_t bytes_handled = -1;
-> 
-> +    assert(QEMU_IS_ALIGNED(offset, s->granularity));
-> +    assert(QEMU_IS_ALIGNED(bytes, s->granularity) ||
-> +           offset + bytes == s->bdev_length);
->       op = g_new(MirrorOp, 1);
->       *op = (MirrorOp){
->           .s              = s,
-> @@ -452,12 +473,21 @@ static unsigned mirror_perform(MirrorBlockJob *s, int64_t offset,
-> 
->       switch (mirror_method) {
->       case MIRROR_METHOD_COPY:
-> +        if (s->zero_bitmap) {
-> +            bitmap_clear(s->zero_bitmap, offset / s->granularity,
-> +                         bytes / s->granularity);
-
-again, align up for corner case
-
-> +        }
->           co = qemu_coroutine_create(mirror_co_read, op);
->           break;
->       case MIRROR_METHOD_ZERO:
-> +        /* s->zero_bitmap handled in mirror_co_zero */
->           co = qemu_coroutine_create(mirror_co_zero, op);
->           break;
->       case MIRROR_METHOD_DISCARD:
-> +        if (s->zero_bitmap) {
-> +            bitmap_clear(s->zero_bitmap, offset / s->granularity,
-> +                         bytes / s->granularity);
-> +        }
->           co = qemu_coroutine_create(mirror_co_discard, op);
->           break;
->       default:
-> @@ -851,10 +881,17 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->       }
->       bdrv_graph_co_rdunlock();
-> 
-> -    if (s->zero_target && ret <= 0) {
-> +    if (s->zero_target) {
-> +        int64_t length;
-> +
->           if (ret < 0) {
->               return ret;
->           }
-> +        length = DIV_ROUND_UP(s->bdev_length, s->granularity);
-> +        s->zero_bitmap = bitmap_new(length);
-> +        if (ret > 0) {
-> +            bitmap_set(s->zero_bitmap, 0, length);
-
-hmm, we should not continue zeroing target in case of ret > 0.
-
-I didn't like that we set ret in one if-block, and handle in another, but now it gets even more confusing.
-
-Maybe, just move bdrv_co_is_zero_fast() call into big "if (s->zero_target) {" ?
+Hi Jamin,
 
 
+On Tue, Apr 15, 2025 at 2:35=E2=80=AFAM Jamin Lin <jamin_lin@aspeedtech.com=
+> wrote:
+>
+> Hi Nabih,
+>
+> > <qemu-arm@nongnu.org>; Troy Lee <troy_lee@aspeedtech.com>
+> > Subject: Re: [PATCH v2 07/10] hw/arm/aspeed: Add support for loading
+> > vbootrom image via "-bios"
+> >
+> > Hi Jamin and Cedric,
+> >
+> > On Sun, Apr 13, 2025 at 8:17=E2=80=AFPM Jamin Lin <jamin_lin@aspeedtech=
+.com>
+> > wrote:
+> > >
+> > > Hi Cedric,
+> > >
+> > > > Subject: Re: [PATCH v2 07/10] hw/arm/aspeed: Add support for loadin=
+g
+> > > > vbootrom image via "-bios"
+> > > >
+> > > > On 4/10/25 04:38, Jamin Lin wrote:
+> > > > > Introduce "aspeed_load_vbootrom()" to support loading a virtual
+> > > > > boot ROM image into the vbootrom memory region, using the "-bios"
+> > > > command-line option.
+> > > > >
+> > > > > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> > > > > ---
+> > > > >   hw/arm/aspeed.c | 32 ++++++++++++++++++++++++++++++++
+> > > > >   1 file changed, 32 insertions(+)
+> > > > >
+> > > > > diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c index
+> > > > > b70a120e62..2811868c1a 100644
+> > > > > --- a/hw/arm/aspeed.c
+> > > > > +++ b/hw/arm/aspeed.c
+> > > > > @@ -27,6 +27,7 @@
+> > > > >   #include "system/reset.h"
+> > > > >   #include "hw/loader.h"
+> > > > >   #include "qemu/error-report.h"
+> > > > > +#include "qemu/datadir.h"
+> > > > >   #include "qemu/units.h"
+> > > > >   #include "hw/qdev-clock.h"
+> > > > >   #include "system/system.h"
+> > > > > @@ -305,6 +306,32 @@ static void
+> > > > aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+> > > > >                      rom_size, &error_abort);
+> > > > >   }
+> > > > >
+> > > > > +/*
+> > > > > + * This function locates the vbootrom image file specified via
+> > > > > +the command line
+> > > > > + * using the -bios option. It loads the specified image into the
+> > > > > +vbootrom
+> > > > > + * memory region and handles errors if the file cannot be found =
+or
+> > loaded.
+> > > > > + */
+> > > > > +static void aspeed_load_vbootrom(MachineState *machine, uint64_t
+> > > > > +rom_size)
+> > > >
+> > > > please add an 'Error **' parameter and let the caller decide to exi=
+t.
+> > > >
+> > >
+> > > Will add.
+> > >
+> > > > > +{
+> > > > > +    AspeedMachineState *bmc =3D ASPEED_MACHINE(machine);
+> > > > > +    const char *bios_name =3D machine->firmware;
+> > > > > +    g_autofree char *filename =3D NULL;
+> > > > > +    AspeedSoCState *soc =3D bmc->soc;
+> > > > > +    int ret;
+> > > > > +
+> > > > > +    filename =3D qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+> > > >
+> > > > What if the user didn't provide any -bios command line option ?
+> > > >
+> > >
+> > >
+> > > Will update to support both vbootrom and loader.
+> >
+> > For this case, could we have something like the npcm8xx_board.c where w=
+e
+> > have a default bootrom and override it with -bios? That would also fix =
+the qtest
+> > issues with the ast2700 qtests which fail with this patchset.
+> >
+> Do you mean that if the user does not specify "-bios", we should still lo=
+ad a default vbootrom image into the vbootrom memory region?
+> We can verify whether -bios was provided by checking if machine->firmware=
+ is NULL.
+> It seems that if the user doesn't provide -bios, NPCM QEMU will look for =
+a default vbootrom image in the current working directory =E2=80=94 is that=
+ correct?
+> https://github.com/qemu/qemu/blob/master/hw/arm/npcm8xx_boards.c#L37
 
-> +        }
->           if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
->               bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
->               return 0;
-> @@ -1169,6 +1206,7 @@ immediate_exit:
->       assert(s->in_flight == 0);
->       qemu_vfree(s->buf);
->       g_free(s->cow_bitmap);
-> +    g_free(s->zero_bitmap);
->       g_free(s->in_flight_bitmap);
->       bdrv_dirty_iter_free(s->dbi);
-> 
-> @@ -1347,7 +1385,8 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
->   {
->       int ret;
->       size_t qiov_offset = 0;
-> -    int64_t bitmap_offset, bitmap_end;
-> +    int64_t dirty_bitmap_offset, dirty_bitmap_end;
-> +    int64_t zero_bitmap_offset, zero_bitmap_end;
-> 
->       if (!QEMU_IS_ALIGNED(offset, job->granularity) &&
->           bdrv_dirty_bitmap_get(job->dirty_bitmap, offset))
-> @@ -1391,31 +1430,54 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
->       }
-> 
->       /*
-> -     * Tails are either clean or shrunk, so for bitmap resetting
-> -     * we safely align the range down.
-> +     * Tails are either clean or shrunk, so for dirty bitmap resetting
-> +     * we safely align the range down.  But for zero bitmap, round range
-> +     * up for checking or clearing, and down for setting.
->        */
-> -    bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
-> -    bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
-> -    if (bitmap_offset < bitmap_end) {
-> -        bdrv_reset_dirty_bitmap(job->dirty_bitmap, bitmap_offset,
-> -                                bitmap_end - bitmap_offset);
-> +    dirty_bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
-> +    dirty_bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
-> +    if (dirty_bitmap_offset < dirty_bitmap_end) {
-> +        bdrv_reset_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
-> +                                dirty_bitmap_end - dirty_bitmap_offset);
->       }
-> +    zero_bitmap_offset = offset / job->granularity;
-> +    zero_bitmap_end = DIV_ROUND_UP(offset + bytes, job->granularity);
-> 
->       job_progress_increase_remaining(&job->common.job, bytes);
->       job->active_write_bytes_in_flight += bytes;
-> 
->       switch (method) {
->       case MIRROR_METHOD_COPY:
-> +        if (job->zero_bitmap) {
-> +            bitmap_clear(job->zero_bitmap, zero_bitmap_offset,
-> +                         zero_bitmap_end - zero_bitmap_offset);
-> +        }
->           ret = blk_co_pwritev_part(job->target, offset, bytes,
->                                     qiov, qiov_offset, flags);
->           break;
-> 
->       case MIRROR_METHOD_ZERO:
-> +        if (job->zero_bitmap) {
-> +            if (find_next_zero_bit(job->zero_bitmap, zero_bitmap_end,
-> +                                   zero_bitmap_offset) == zero_bitmap_end) {
-> +                ret = 0;
-> +                break;
-> +            }
-> +        }
->           assert(!qiov);
->           ret = blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
-> +        if (job->zero_bitmap && ret >= 0) {
-> +            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
-> +                       (dirty_bitmap_end - dirty_bitmap_offset) /
-> +                       job->granularity);
-> +        }
+Yeah. IIUC the default functionality should be to use a vbootrom to
+boot with the AST27X0 so
+if there is no bootrom declared we should default to the one you
+created. for the NPCM one, if
+we don't provide bios it will default to the one in pc-bios since it's
+supposed to be the base true version.
+I think it makes sense to do the same thing in ast2700. If we really
+find use in supporting attaching the
+loader binaries separately we could add a flag that skip the vbootrom,
+but I don't see much use in that
+since the information that would change is in the "image-bmc".
 
-Same thing, probably we should clear the bitmap in case of write failure.
+>
+> ```
+> const char *bios_name =3D machine->firmware ?: npcm8xx_default_bootrom;
+> ```
+> Could you let me know which qtest(s) failed, so I can run them and verify=
+ everything before sending out the v3 patch?
 
->           break;
-> 
->       case MIRROR_METHOD_DISCARD:
-> +        if (job->zero_bitmap) {
-> +            bitmap_clear(job->zero_bitmap, zero_bitmap_offset,
-> +                         zero_bitmap_end - zero_bitmap_offset);
-> +        }
->           assert(!qiov);
->           ret = blk_co_pdiscard(job->target, offset, bytes);
->           break;
-> @@ -1436,10 +1498,10 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
->            * at function start, and they must be still dirty, as we've locked
->            * the region for in-flight op.
->            */
-> -        bitmap_offset = QEMU_ALIGN_DOWN(offset, job->granularity);
-> -        bitmap_end = QEMU_ALIGN_UP(offset + bytes, job->granularity);
-> -        bdrv_set_dirty_bitmap(job->dirty_bitmap, bitmap_offset,
-> -                              bitmap_end - bitmap_offset);
-> +        dirty_bitmap_offset = QEMU_ALIGN_DOWN(offset, job->granularity);
-> +        dirty_bitmap_end = QEMU_ALIGN_UP(offset + bytes, job->granularity);
-> +        bdrv_set_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
-> +                              dirty_bitmap_end - dirty_bitmap_offset);
+qemu:qtest+qtest-aarch64 / qtest-aarch64/ast2700-gpio-test
+qemu:qtest+qtest-aarch64 / qtest-aarch64/ast2700-smc-test
 
-Not really matter, but still, renaming in a separate patch would make this one a bit simpler.
+They both fail with " qemu-system-aarch64: Could not find vbootrom
+image '(null)' " so setting the default
+bootrom should fix this.
 
->           qatomic_set(&job->actively_synced, false);
-> 
->           action = mirror_error_action(job, false, -ret);
+>
+> Thanks-Jamin
+>
+> > >
+> > > > > +    if (!filename) {
+> > > > > +        error_report("Could not find vbootrom image '%s'",
+> > bios_name);
+> > > > > +        exit(1);
+> > > > > +    }
+> > > > > +
+> > > > > +    ret =3D load_image_mr(filename, &soc->vbootrom);
+> > > > > +    if (ret < 0) {
+> > > > > +        error_report("Failed to load vbootrom image '%s'", filen=
+ame);
+> > > > > +        exit(1);
+> > > > > +    }
+> > > > > +}
+> > > > > +
+> > > > >   void aspeed_board_init_flashes(AspeedSMCState *s, const char
+> > > > *flashtype,
+> > > > >                                         unsigned int count, int
+> > > > unit0)
+> > > > >   {
+> > > > > @@ -483,6 +510,11 @@ static void aspeed_machine_init(MachineState
+> > > > *machine)
+> > > > >           }
+> > > > >       }
+> > > > >
+> > > > > +    if (amc->vbootrom) {
+> > > > > +        rom_size =3D memory_region_size(&bmc->soc->vbootrom);> +
+> > > > aspeed_load_vbootrom(machine, rom_size);
+> > > > > +    }
+> > > > > +
+> > > >
+> > > > Even without a vbootrom file, the machine could boot with '-device =
+loader'
+> > > > options. We should preserve this way of booting an ast2700-evb mach=
+ine.
+> > > >
+> > >
+> > > Will support both loader and vbootrom.
+> > > Thanks for review and suggestion.
+> > >
+> > > Jamin
+> > > >
+> > > > Thanks,
+> > > >
+> > > > C.
+> > > >
+> > > >
+> > > >
+> > > >
+> > > > >       arm_load_kernel(ARM_CPU(first_cpu), machine,
+> > > > &aspeed_board_binfo);
+> > > > >   }
+> > > > >
+> > >
+> >
+> > Also, tested against our custom machine + custom bmc image and the boot=
+rom
+> > itself works.
+> > I think it might just need that default set.
+> >
+> > Tested-By: Nabih Estefan <nabihestefan@google.com>
 
--- 
-Best regards,
-Vladimir
-
+Thanks,
+Nabih
 
