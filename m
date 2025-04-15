@@ -4,67 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CEABC369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 09:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4C5C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 09:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4cJH-0000cX-BD; Tue, 15 Apr 2025 05:10:29 -0400
+	id 1u4cLp-0001sw-6L; Tue, 15 Apr 2025 05:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1u4cIj-0000XR-OQ
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:09:58 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1u4cLn-0001sO-2B; Tue, 15 Apr 2025 05:13:03 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1u4cId-0000Qk-5p
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:09:52 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:2b89:0:640:9815:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A4B92610E8;
- Tue, 15 Apr 2025 12:09:37 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6b8:b081:b4a2::1:8])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id T9D8rr1Fea60-OauJZqUX; Tue, 15 Apr 2025 12:09:36 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744708176;
- bh=Y3GGhWyFIw2cuFLMnWB9oKlUYsw0khi8tapA6yMBEeM=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=vWYy0CRG/cAjzRZ/l894FYMz/2KmbV4e9bEmrXoLFusv6SDr2eggw4I+i3iaefn1T
- n5T+SE/uALe9cpW5GWwhW4KH7q0cUeG+Rq1EnTDi5cdcfWWAaxRtn2RaiVUc8XlAJ7
- qkgLQrdnvUZT2yGqWlknhv2+u6iXSQLH1pAZkvhY=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v3] tests/functional: add memlock tests
-Date: Tue, 15 Apr 2025 14:08:55 +0500
-Message-Id: <20250415090854.71526-1-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1u4cLg-0000lT-4D; Tue, 15 Apr 2025 05:13:02 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F7PahI026315;
+ Tue, 15 Apr 2025 09:12:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GYwgXv
+ gogHbf4Rxmw4tj0ygllOpjn6We9NadOBf+OmQ=; b=VUjRUYiE3zsWmcU/k4oa22
+ z2BZB6z1sh3khqNfiA/QW0O2h1CaVs/uy1+5lSQRyOXNWp6XzxNOd6Rxo/pcYseY
+ d8xXBzEYpVKtRVaSeaBuy33nFDi+cdEqjQ9pgpsybS8yU8CMXATWng/X55VHQHNI
+ ZfMGVrnm1wzJwJQo5zxj/M43k5WNMJnzzrDZrh9K56mmsaZ0aJapCMw28wMS/NMo
+ /50mfE4gGtGB4fqOm2kMp29hYR1m3asgbpbCjcfiwZ48a6afb9gb/zr0DWA8ZKRp
+ UvNMQlFKbh9pFdf3zCykdCyK/pHz6WY2EzgdqiHFQbKYgkHD7LCJG7j8si8gdYvQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46109f5sq3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Apr 2025 09:12:06 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53F97gj4014268;
+ Tue, 15 Apr 2025 09:12:06 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46109f5spy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Apr 2025 09:12:05 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53F8NrOD024882;
+ Tue, 15 Apr 2025 09:12:04 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4602gtaqnw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 15 Apr 2025 09:12:04 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53F9C4vm16188030
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 15 Apr 2025 09:12:04 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7033D5803F;
+ Tue, 15 Apr 2025 09:12:04 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1FEA258056;
+ Tue, 15 Apr 2025 09:12:03 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 15 Apr 2025 09:12:03 +0000 (GMT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Tue, 15 Apr 2025 11:12:02 +0200
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Richard Henderson
+ <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Palmer
+ Dabbelt <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Michael Rolnik <mrolnik@gmail.com>, Helge Deller
+ <deller@gmx.de>, Song Gao <gaosong@loongson.cn>, Laurent Vivier
+ <laurent@vivier.eu>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>, Stafford
+ Horne <shorne@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, Yoshinori
+ Sato <ysato@users.sourceforge.jp>, Thomas Huth <thuth@redhat.com>, Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
+ <atar4qemu@gmail.com>, Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org
+Subject: Re: [PATCH 01/17] accel/tcg: Store section pointer in CPUTLBEntryFull
+In-Reply-To: <20250415081231.21186-2-jim.shu@sifive.com>
+References: <20250415081231.21186-1-jim.shu@sifive.com>
+ <20250415081231.21186-2-jim.shu@sifive.com>
+Message-ID: <2dd5952a93aca15bbae4b5624b680637@linux.ibm.com>
+X-Sender: iii@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: HB-xAWOWlqrH5x5tcS9sBMp2CsTcscjv
+X-Proofpoint-ORIG-GUID: rVrALMiRTwmK2Otn1O2icx0hNubiDuRY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_04,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=784 malwarescore=0 clxscore=1011 spamscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504150062
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,154 +135,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new tests to check the correctness of the `-overcommit memlock`
-option (possible values: off, on, on-fault) by using
-`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-anonymous segments:
+On 2025-04-15 10:12, Jim Shu wrote:
+> 'CPUTLBEntryFull.xlat_section' stores section_index in last 12 bits to
+> find the correct section when CPU access the IO region over the IOTLB
+> (iotlb_to_section()).
+> 
+> However, section_index is only unique inside single AddressSpace. If
+> address space translation is over IOMMUMemoryRegion, it could return
+> section from other AddressSpace. 'iotlb_to_section()' API only finds 
+> the
+> sections from CPU's AddressSpace so that it couldn't find section in
+> other AddressSpace. Thus, using 'iotlb_to_section()' API will find the
+> wrong section and QEMU will have wrong load/store access.
+> 
+> To fix this bug, store complete MemoryRegionSection pointer in
+> CPUTLBEntryFull instead of section_index.
+> 
+> This bug occurs only when
+> (1) IOMMUMemoryRegion is in the path of CPU access.
+> (2) IOMMUMemoryRegion returns different target_as and the section is in
+> the IO region.
+> 
+> Common IOMMU devices don't have this issue since they are only in the
+> path of DMA access. Currently, the bug only occurs when ARM MPC device
+> (hw/misc/tz-mpc.c) returns 'blocked_io_as' to emulate blocked access
+> handling. Upcoming RISC-V wgChecker device is also affected by this 
+> bug.
+> 
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> ---
+>  accel/tcg/cputlb.c    | 19 +++++++++----------
+>  include/hw/core/cpu.h |  3 +++
+>  2 files changed, 12 insertions(+), 10 deletions(-)
 
-* if `memlock=off`, then Locked = 0 on every anonymous smaps;
-* if `memlock=on`, then Size, Rss and Locked values must be equal for
-every anon smaps where Rss is not 0;
-* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-smaps and anonymous segment with Rss < Size must exists.
-
----
-
-v2 -> v3:
-Move tests to tests/functional dir, as the tests/avocado dir is being phased out.
-v2 was [PATCH v2] tests/avocado: add memlock tests.
-Supersedes: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
-
-v1 -> v2:
-In the previous send, i forgot to specify new patch version (v2)
-So i resend previous patch with version specified.
-
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
----
- tests/functional/meson.build     |   1 +
- tests/functional/test_memlock.py | 100 +++++++++++++++++++++++++++++++
- 2 files changed, 101 insertions(+)
- create mode 100644 tests/functional/test_memlock.py
-
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 0f8be30fe2..339af7835f 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -61,6 +61,7 @@ tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-   'version',
-+  'memlock',
- ]
- 
- tests_generic_linuxuser = [
-diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
-new file mode 100644
-index 0000000000..e551e54a77
---- /dev/null
-+++ b/tests/functional/test_memlock.py
-@@ -0,0 +1,100 @@
-+# Functional test that check overcommit memlock options
-+#
-+# Copyright (c) Yandex Technologies LLC, 2025
-+#
-+# Author:
-+#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-+#
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import re
-+
-+from typing import List, Dict
-+
-+from qemu_test import QemuSystemTest
-+
-+
-+SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
-+SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
-+
-+
-+class MemlockTest(QemuSystemTest):
-+    """
-+    Boots a Linux system with memlock options.
-+    Then verify, that this options is working correctly
-+    by checking the smaps of the QEMU proccess.
-+    """
-+
-+    def common_vm_setup_with_memlock(self, memlock):
-+        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
-+        self.vm.launch()
-+
-+    def get_anon_smaps_by_pid(self, pid):
-+        smaps_raw = self._get_raw_smaps_by_pid(pid)
-+        return self._parse_anonymous_smaps(smaps_raw)
-+
-+    def test_memlock_off(self):
-+        self.common_vm_setup_with_memlock('off')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # locked = 0 on every smap
-+        for smap in anon_smaps:
-+            self.assertEqual(smap['Locked'], 0)
-+
-+    def test_memlock_on(self):
-+        self.common_vm_setup_with_memlock('on')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # size = rss = locked on every smap where rss not 0
-+        for smap in anon_smaps:
-+            if smap['Rss'] == 0:
-+                continue
-+            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
-+
-+    def test_memlock_onfault(self):
-+        self.common_vm_setup_with_memlock('on-fault')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # rss = locked on every smap and segment with rss < size exists
-+        exists = False
-+        for smap in anon_smaps:
-+            self.assertTrue(smap['Rss'] == smap['Locked'])
-+            if smap['Rss'] < smap['Size']:
-+                exists = True
-+        self.assertTrue(exists)
-+
-+    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
-+        result_segments = []
-+        current_segment = {}
-+        is_anonymous = False
-+
-+        for line in smaps_raw.split('\n'):
-+            if SMAPS_HEADER_PATTERN.match(line):
-+                if current_segment and is_anonymous:
-+                    result_segments.append(current_segment)
-+                current_segment = {}
-+                # anonymous segment header looks like this:
-+                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
-+                # and non anonymous header looks like this:
-+                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
-+                is_anonymous = len(line.split()) == 5
-+            elif m := SMAPS_VALUE_PATTERN.match(line):
-+                current_segment[m.group(1)] = int(m.group(2))
-+
-+        if current_segment and is_anonymous:
-+            result_segments.append(current_segment)
-+
-+        return result_segments
-+
-+    def _get_raw_smaps_by_pid(self, pid: int) -> str:
-+        with open(f'/proc/{pid}/smaps', 'r') as f:
-+            return f.read()
-+
-+
-+if __name__ == '__main__':
-+    MemlockTest.main()
--- 
-2.34.1
-
+Does this mean that there can be more than 4k sections now and the
+assertion in phys_section_add() can be removed?
 
