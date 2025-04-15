@@ -4,99 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C21C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD3EC369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 16:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4irQ-0005Nq-0O; Tue, 15 Apr 2025 12:10:08 -0400
+	id 1u4isu-00070R-M8; Tue, 15 Apr 2025 12:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1u4iqJ-0004rp-Vo; Tue, 15 Apr 2025 12:09:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u4isl-0006yX-8k; Tue, 15 Apr 2025 12:11:32 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1u4iqI-0003Sy-59; Tue, 15 Apr 2025 12:08:59 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53F9dDjJ020615;
- Tue, 15 Apr 2025 16:08:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=G2TzsR
- +1GJc6en4aS+AYtUrPdq/9Wirl//4ZJPilOmg=; b=ZUwPZtRfA0tmosmqexMh0F
- F0Z7xgWufaoBN08FN/+eM5E86I51j6bAIFH1F6SVyMwWpw+YBim3kuLAlWSaxMqh
- lP5G8qh9T0lEdT+YputMMzzyezhgTvpOVXFMDSQN4oBD+kSOLzVcxa4eOrw/BbqY
- ZBYG9UGmqHgAmvqhh3fwCw39HwNyPspa+Z5J1IXnxXvZpctMGnLHMDtYbASr8PsY
- pBrlA0aSsNbdgGwGctVIvGfkrRab3V5O5ullVCUS5A+M9xj8Z7YlxxENdXRH3n2q
- KroJoNTlm0VlOqxbOjFjgngF5VGhct+Jyry/D3UEJoJE0/RS5EUXZfXTrf06ffeA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 461af54p5j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Apr 2025 16:08:41 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53FEb2PK017183;
- Tue, 15 Apr 2025 16:08:40 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040kurmy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 15 Apr 2025 16:08:40 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53FG8dtD31064638
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 15 Apr 2025 16:08:39 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2597858052;
- Tue, 15 Apr 2025 16:08:39 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4B5DD58056;
- Tue, 15 Apr 2025 16:08:38 +0000 (GMT)
-Received: from [9.61.251.12] (unknown [9.61.251.12])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 15 Apr 2025 16:08:38 +0000 (GMT)
-Message-ID: <b8829a9d-8518-4531-ab5a-e46965183398@linux.ibm.com>
-Date: Tue, 15 Apr 2025 09:08:32 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1u4ish-0003xm-1O; Tue, 15 Apr 2025 12:11:30 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c15:381b:0:640:f69d:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A25B9610FA;
+ Tue, 15 Apr 2025 19:11:18 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:16e::1:36] (unknown
+ [2a02:6bf:8080:16e::1:36])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id HBKFMZ0FhmI0-YbeF79Wm; Tue, 15 Apr 2025 19:11:18 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1744733478;
+ bh=W4t6gNlCoa+T9JdU1ymQ1zdJCB8pVX1/swIJJZ4aCdg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=0DRLr/S+ix5CeCknaaR1Po5L9b4Q1OO/sMWbO5tde7PMn9ebCPDNOooI8EJvikQPX
+ Ln+3ra8Wvt76ugItLJL6vGhMgtRwLZFMupRA/jnSFjtpwmDLiFYeTi/suEwIcOtjuf
+ l3/vXq9fPdr5WAg5DbEqOVjq18R9Dsa1lXGnXe4Y=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <7e6b2cfc-b2b9-46de-9219-9c1a15a3c5be@yandex-team.ru>
+Date: Tue, 15 Apr 2025 19:11:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] include: Add a header to define host PCI MMIO
- functions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
- stefanha@redhat.com, kwolf@redhat.com, hreitz@redhat.com,
- thuth@redhat.com, fam@euphon.net, alex.williamson@redhat.com
-References: <20250414213616.2675-1-alifm@linux.ibm.com>
- <20250414213616.2675-3-alifm@linux.ibm.com>
- <71997461-7470-452b-9df1-3efa6d6f68c4@linaro.org>
+Subject: Re: [PATCH 2/6] file-posix: Allow lseek at offset 0 when !want_zero
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, "open list:raw" <qemu-block@nongnu.org>,
+ "Denis V. Lunev" <den@openvz.org>
+References: <20250411010732.358817-8-eblake@redhat.com>
+ <20250411010732.358817-10-eblake@redhat.com>
+ <2d17f631-40b0-40bc-a4ba-0b507cd39c71@yandex-team.ru>
+ <6dn2vursoidmgeba4jtdrpy76b4o6ktkvh6l22bykm7cllmahw@hchia4nkjv2s>
+ <7628c28f-8d6c-4f0b-af28-2cde86a2a8c7@yandex-team.ru>
+ <gysmpcvn54bbcir6dytw3243j4zf5v7phlw3zfncqept6qqwua@meptpfpqkkq7>
 Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <71997461-7470-452b-9df1-3efa6d6f68c4@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <gysmpcvn54bbcir6dytw3243j4zf5v7phlw3zfncqept6qqwua@meptpfpqkkq7>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: hWWSFaJlILTWlATnJiQF1hkd3T7hqxPl
-X-Proofpoint-GUID: hWWSFaJlILTWlATnJiQF1hkd3T7hqxPl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-15_06,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0
- priorityscore=1501 mlxscore=0 clxscore=1015 adultscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504150112
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,67 +81,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 4/14/2025 11:43 PM, Philippe Mathieu-Daudé wrote:
-> Hi,
->
-> On 14/4/25 23:36, Farhan Ali wrote:
->> Add a generic API for host PCI MMIO reads/writes
->> (e.g. Linux VFIO BAR accesses). The functions access
->> little endian memory and returns the result in
->> host cpu endianness.
+On 15.04.25 18:22, Eric Blake wrote:
+> On Tue, Apr 15, 2025 at 03:37:39PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 14.04.25 21:12, Eric Blake wrote:
+>>> On Mon, Apr 14, 2025 at 08:05:21PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> On 11.04.25 04:04, Eric Blake wrote:
+>>>>> The 'want_zero' parameter to raw_co_block_status() was added so that
+>>>>> we can avoid potentially time-consuming lseek(SEEK_DATA) calls
+>>>>> throughout the file (working around poor filesystems that have O(n)
+>>>>> rather than O(1) extent probing).  But when it comes to learning if a
+>>>>> file is completely sparse (for example, it was just created), always
+>>>>> claiming that a file is all data without even checking offset 0 breaks
+>>>>> what would otherwise be attempts at useful optimizations for a
+>>>>> known-zero mirror destination.
+>>>>>
+>>>>> Note that this allows file-posix to report a file as completely zero
+>>>>> if it was externally created (such as via 'truncate --size=$n file')
+>>>>> as entirely sparse; however, it does NOT work for files created
+>>>>> internally by blockdev-create.  That's because blockdev-create
+>>>>> intentionally does a sequence of truncate(0), truncate(size),
+>>>>> allocate_first_block(), in order to make it possible for gluster on
+>>>>> XFS to probe the sector size for direct I/O (which doesn't work if the
+>>>>> first block is sparse).  That will be addressed in a later patch.
+>>>>>
+>>>>> Signed-off-by: Eric Blake<eblake@redhat.com>
+>>>>> ---
+>>>>>     block/file-posix.c | 9 ++++++++-
+>>>>>     1 file changed, 8 insertions(+), 1 deletion(-)
+>>>>>
+>>>>> diff --git a/block/file-posix.c b/block/file-posix.c
+>>>>> index 56d1972d156..67e83528cf5 100644
+>>>>> --- a/block/file-posix.c
+>>>>> +++ b/block/file-posix.c
+>>>>> @@ -3217,7 +3217,14 @@ static int coroutine_fn raw_co_block_status(BlockDriverState *bs,
+>>>>>             return ret;
+>>>>>         }
+>>>>>
+>>>>> -    if (!want_zero) {
+>>>>> +    /*
+>>>>> +     * If want_zero is clear, then the caller wants speed over
+>>>>> +     * accuracy, and the only place where SEEK_DATA should be
+>>>>> +     * attempted is at the start of the file to learn if the file has
+>>>>> +     * any data at all (anywhere else, just blindly claim the entire
+>>>>> +     * file is data).
+>>>>> +     */
+>>>>> +    if (!want_zero && offset) {
+>>>>>             *pnum = bytes;
+>>>>>             *map = offset;
+>>>>>             *file = bs;
+>>>> Looks like a hack. So we have bdrv_co_is_zero_fast() which do pass want_zero=false to block-status. But in case of mirror, which want to check the whole disk, we actually want want_zero=true, and detect it by offset=0..
+>>>>
+>>>> Isn't it better to add a kind of bdrv_is_zero_middle_speed() (which means, don't try to read the data to check, but be free to use suboptimal lseek call or something like this), which will pass want_zero=true, and use it from mirror? Mirror case differs from usage in qcow2 exactly by the fact that we call it only once.
+>>> Which is exactly why I wrote patch 4/6 turning the want_zero bool into
+>>> an enum so that we are being more explicit in WHY block status is
+>>> being requested.
 >>
->> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
->> ---
->>   include/qemu/host-pci-mmio.h | 141 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 141 insertions(+)
->>   create mode 100644 include/qemu/host-pci-mmio.h
->>
->> diff --git a/include/qemu/host-pci-mmio.h b/include/qemu/host-pci-mmio.h
->> new file mode 100644
->> index 0000000000..de17d67e3a
->> --- /dev/null
->> +++ b/include/qemu/host-pci-mmio.h
->> @@ -0,0 +1,141 @@
->> +/*
->> + * API for host PCI MMIO accesses (e.g. Linux VFIO BARs)
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef HOST_PCI_MMIO_H
->> +#define HOST_PCI_MMIO_H
->> +
->> +#include "qemu/bswap.h"
->> +#include "qemu/s390x_pci_mmio.h"
->> +
->> +
->> +static inline uint8_t host_pci_ldub_p(const void *ioaddr)
->
-> Is it really worth inlining?
->
-Hi Philippe,
+>> Hmm, and this makes more strange that this hack for file-posix is kept after it. Don't we have other block drivers, where we should behave similarly in block_status for offset=0? Or I mean, could we just use different block-status modes in qcow2 and mirror, when call bdrv_co_is_zero_fast(), and don't handle offset==0 specially in file-posix?
+> 
+> I'll need to ajust this in v2 of my series.
+> 
+> The problem I'm trying to resolve: libvirt migration with
+> --migrate-disks-detect-zeroes is causing the destination to become
+> fully allocated if the destination does not use "discard":"unmap",
+> whereas with QEMU 9.0 it did not.  The change was commit d05ae948c,
+> where we fixed a problem with punching holes into the mirror
+> destination even when the user had requested the file to not shrink;
+> but it means that a file that is not allowed to shrink is now fully
+> allocated rather than left sparse even when leaving it sparse would
+> still be an accurate mirror result with less I/O.
+> 
+> And it turns out that when libvirt is driving the mirror into a raw
+> destination, the mirroring is done over NBD, rather than directly to a
+> file-posix destination.  Coupled with the oddity that 'qemu-img create
+> -f raw' ends up pre-allocating up to 64k of the image with all zero
+> contents to make alignment probing easier, it is no longer possible to
+> quickly see that the entire NBD image reads as zero, just as it was
+> not possible to quickly see that for file-posix.  So, in v2 of my
+> patch series, I think I need to hoist the logic that I added to
+> file-posix.c that reads an initial small sector in order to determine
+> if the entire image is zero to instead live in io.c to be used across
+> all protocols, NBD included.
+> 
+> So if you don't think offset=0 should be given any special treatment
+> in file-posix, but instead have generic code in io.c that checks if an
+> entire image has block_status of sparse and/or just a small initial
+> non-sparse section that can be manually checked for zero contents,
+> then that should still fix the issue of mirroring to a sparse
+> destination with "discard":"ignore" but keeping the destination
+> sparse.
+> 
 
-I think so, we inline the ld/st generic helper functions in bswap.h. 
-Curious, why do you think its not necessary?
+Thanks for explanation! Yes I think making such specific checks about first sector in some kind of generic bdrv_is_all_zeroes() would be cleaner.
 
-Thanks
+-- 
+Best regards,
+Vladimir
 
-Farhan
-
->> +{
->> +    uint8_t ret = 0;
->> +#ifdef __s390x__
->> +    ret = s390x_pci_mmio_read_8(ioaddr);
->> +#else
->> +    ret = ldub_he_p(ioaddr);
->> +#endif
->> +
->> +    return ret;
->> +}
->
->
 
