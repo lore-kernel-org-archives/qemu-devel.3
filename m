@@ -4,84 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595B5C369B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 14 Apr 2025 23:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE08C369B2
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 01:25:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4T35-0000IO-TU; Mon, 14 Apr 2025 19:17:07 -0400
+	id 1u4V2c-0001ur-Dq; Mon, 14 Apr 2025 21:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u4T34-0000I8-LA; Mon, 14 Apr 2025 19:17:06 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u4T32-00059J-Dy; Mon, 14 Apr 2025 19:17:06 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5e61d91a087so7119699a12.0; 
- Mon, 14 Apr 2025 16:17:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
+ id 1u4V2a-0001uI-Uy
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 21:24:45 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <annie.li@oracle.com>)
+ id 1u4V2Y-0002lq-T4
+ for qemu-devel@nongnu.org; Mon, 14 Apr 2025 21:24:44 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53ELBuR6026100;
+ Tue, 15 Apr 2025 01:24:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=N5RmkP1Adc3uJ1wMk4+9eqjUOaagb0kpCZtP9kc4Bsg=; b=
+ BwxAwL63NPpZYuHp2Lc+rXiR2kwC3t68LWaWgWN/i4iAAPBbREXJRhFRy7LKcwPG
+ HMocpKdK1A45SFCF8Q1y1LNJtYwtwafbhEjlwrp85EfD8lqVUhUmfacf0McJ1yz8
+ NPYui9LinPtYAtP1oxZ0jkDJCoAQEnYLC+gRV2uB8BSh6qfDpkkclDA/sWXjPuVk
+ HbWMJ+nIIYQYKI/t0XeNdpurz2tTqeg5Co85mLS6LS1dVTvunv9YDbA1OcBnUMQ3
+ WawSNQgjmAXguhIK3Fb/GUEslexurnsUxJsmVPF8wkzTvvRB/ChX7REbyYgALivv
+ 7dyyIqQnfksDnbYk5SCpqw==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4619448bb0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 15 Apr 2025 01:24:32 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 53F0LIZv005685; Tue, 15 Apr 2025 01:24:32 GMT
+Received: from cy4pr02cu008.outbound.protection.outlook.com
+ (mail-westcentralusazlp17011030.outbound.protection.outlook.com [40.93.6.30])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 460d5ugdc2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 15 Apr 2025 01:24:32 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UkD0DqkSsvsRlP3mdhlTuASh30Fj+Ib83CE8qxv6CSJEvptyIRokD9PI8mak0s1KIZ3lrm6zFWKzhbIznxZAZqPQ1VRajCvWlK02Wy03WL6dSFfkaZMI5VuWMHiLpvP6n+QUQv5h/AeVuHgMprC907zMJ2fu3y8OY+n4WUzEuS+4obJdDcQipuOooVSS/F+riV+RywvYTEeOORHbBSGhSOkEFNsK2mK8Queh3U9m5P4WyDASlX3/fDniYM90xHBsdVc0TdN/8piDq6nYFJr+W4M8MTqoX3eGVzioxn5QqyH0SCP3WYSz89PYvPpFNyccmoj/idbFxnqt0+T6mHZsSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N5RmkP1Adc3uJ1wMk4+9eqjUOaagb0kpCZtP9kc4Bsg=;
+ b=fkzNIfyuETLzDrWnakV71QahA7pUzZ20qqdbaX8YES1ip7zN3MvkyvgdNU8QR8LW9bhKaz2d1k9SG0Fb2aFbkrmUqOforRzf+/KFhboujkcUW/I7Mte/vX2dOtATVJhVXitfwqaoqiVmxTda6ituaCYQt3d6l/F3jNIWkn9F0sUAjAnV3JYVnVwFA+d+LH/MVu8gD3+fbHCLZs5/2w5GuqxlP3kOzP5LjrGo0ouJTlFt5CaTa+vQQiX12FWCA8CrpjJmofaCkGlXOUnbQ+1S8aqtgbcmYLyxDB/BMw6zG0Vb+WjjUTP/Z4zvMAeVcNTC5IcCvKCTrnGcxn0J7apAaw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744672622; x=1745277422; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HqSssSpI7m2+C3SHF6ynyr79aCBQMvzXL4JUWyS1Qsg=;
- b=GpL1+pwmeGm7q81+ST9QBV7+o1VPxTJpqDmbaMM/OvZqOWdLd9wqKllXoTq8JNunmm
- DWIdqJGI29Gs8USS3o6fAsalurY6MJUp4+LNvGE8Yj55ZmTKhwCDhEKymDOuGDgype/l
- kX6rsUC1t+sU79ZpY2YYv8xgtPhw8UK7gsCEvWBURWZd6XW2MWVIRQqsfBBs0/QwDwcb
- a2IYqFjISoBxYmkruj83bquBx3HBaTrPT6IGs6OJ2fLH2zgA1y/9wf8ZeZiMUmF4OnIu
- T2+8GAtKadLfshFBSKSkyTv8MtZwV5j1fqeWZJM1/0YJ5her+0Ey2xrp3jzwEkM7dz6Z
- oNog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744672622; x=1745277422;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HqSssSpI7m2+C3SHF6ynyr79aCBQMvzXL4JUWyS1Qsg=;
- b=jmRW1LWuucZ16Gjx9IIyw8LLrx3uhH2KxNmYsKVgjjuKC5zD6YtGSk15DBSmATEEyc
- TKO0QIDdHF9M4k5SOrL4qe87vM8nFDx5aU+S2KhIfdH92xEmMInMGyfI1wGDzhX67X/Z
- W7/H+YYpxh1biyW5Dy+RIXsZzVuPTxk71rvUjYftNrDVOiLXLCzLfrna2AhR0I5d5Jtf
- VdEtF6T5HAVbj7BrTjgV5EV8hVllREADCHdcrqC0cXR8Rg0nHgwQrY2t1XbGFQluQ6ZP
- dBI+3nn2wgQXne+9/WGyDeXLAJKNGN5eInZNHGdVlAa6bMNLJBNTV0AYpfzOvei/9+DN
- nCyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU+8HVgfLrB2GJPiRj4lwAoVD5WbD2tMYoDFRuYasQwjOBpgBNdReJD+QLfvtz9KCs56nH2IthUM74jZA==@nongnu.org
-X-Gm-Message-State: AOJu0YxYqmzzhKytGVIxW7dGJqavpYQu97n0g5F9nXP/wwBq2o6bOPmp
- O1h4KnjZt8SgMkM0iqp/DBta0DbO/EnmY0jfweCXp1gxkPeT/xFckfh7JORWtxuOCDOGAYTxC32
- u1WEV/C/ip3THtJlywUDa+LfxWKMKHUkf
-X-Gm-Gg: ASbGncuSzCX2spTKu4yXjUQiQ58+fA45fAoR8NyTilog4KEKHrMgXss6GTfF1NTt5QD
- 8ivZQCklOrxXzIZHcCwqISWoqPvuQlMbI/VpQCI//+/VyDvt+JQ2bUhHlGUfM2ATrGpPhig6Hiv
- sebLJwTPbowE61ytDHWFxE
-X-Google-Smtp-Source: AGHT+IEYUhSJdewX9ycHc6xTHJ5PmOogdj/NIccaDNYWyFgV/uBVBZllW2nAf+cbzbpjp5nZMVvThAQJj95Wrbt8YUQ=
-X-Received: by 2002:a05:6402:448e:b0:5f3:7f32:3919 with SMTP id
- 4fb4d7f45d1cf-5f37f323f2cmr11755858a12.16.1744672621684; Mon, 14 Apr 2025
- 16:17:01 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=N5RmkP1Adc3uJ1wMk4+9eqjUOaagb0kpCZtP9kc4Bsg=;
+ b=AG4k4COuBkJfkDHyAjkA26ey28mxDzFoNX0F1Ac7YUVXEbQC70HcuYL/RlzZetvnLy/lhvxLbRZM9gNWIEOhAgIZGNK1ipMLzmtn7alhH/MnkaKJpRz01k9uo5nUnj42PcsO/yLGXVqRzFFpTMebGgKo0EaAT1ShmFU4v76bSIY=
+Received: from CY8PR10MB6851.namprd10.prod.outlook.com (2603:10b6:930:9f::11)
+ by DS0PR10MB6896.namprd10.prod.outlook.com (2603:10b6:8:134::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.27; Tue, 15 Apr
+ 2025 01:24:29 +0000
+Received: from CY8PR10MB6851.namprd10.prod.outlook.com
+ ([fe80::a218:72a4:83b2:56dc]) by CY8PR10MB6851.namprd10.prod.outlook.com
+ ([fe80::a218:72a4:83b2:56dc%4]) with mapi id 15.20.8632.030; Tue, 15 Apr 2025
+ 01:24:29 +0000
+Message-ID: <5a567f2d-31d4-442c-b68c-ed85491d77d4@oracle.com>
+Date: Mon, 14 Apr 2025 21:24:24 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC V3 PATCH 05/13] acpi: Send the GPE event of suspend and
+ wakeup for x86
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, dave@treblig.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ zhao1.liu@intel.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ slp@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ miguel.luis@oracle.com, Gustavo Romero <gustavo.romero@linaro.org>
+References: <20250411201912.2872-1-annie.li@oracle.com>
+ <20250411204133.2955-1-annie.li@oracle.com> <87cydeepp8.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Annie Li <annie.li@oracle.com>
+In-Reply-To: <87cydeepp8.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR03CA0342.namprd03.prod.outlook.com
+ (2603:10b6:a03:39c::17) To CY8PR10MB6851.namprd10.prod.outlook.com
+ (2603:10b6:930:9f::11)
 MIME-Version: 1.0
-References: <20250408145345.142947-1-adamhet@scaleway.com>
- <CAJSP0QVmT0jmbgu-fJjm78CSu-cb8ZuX5t0B25n0MG1f9W++oQ@mail.gmail.com>
- <20250414184718-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20250414184718-mutt-send-email-mst@kernel.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 14 Apr 2025 19:16:49 -0400
-X-Gm-Features: ATxdqUFEOubOMqMvcnA6mFP4pGSz0h2RqV5Det4ePWGJf2zM83tnqdkOLDK4t94
-Message-ID: <CAJSP0QVij5ugnZi8JV=4-n2JHger=Z5dDmhsPWm2uF-UbAT2Gg@mail.gmail.com>
-Subject: Re: [PATCH v2] Revert "virtio-net: Copy received header to buffer"
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Jason Wang <jasowang@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-stable@nongnu.org, Antoine Damhet <adamhet@scaleway.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY8PR10MB6851:EE_|DS0PR10MB6896:EE_
+X-MS-Office365-Filtering-Correlation-Id: e639c11f-8fe2-447b-0916-08dd7bbc4491
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VjNZRlZzK1JRSUUrNHJkUkdJZUtsekx6QlVEUUI1NHc4Zk9Jc2ZRdTlDUFN1?=
+ =?utf-8?B?UDlRUnBSTFJZTkhJcUlnVk9GNVVDcVgybU15TFBlUlZKTmVtN2F6MmMwZ0g1?=
+ =?utf-8?B?L3pTSmdLVnhyMjlZc3hyQThKR3NqNzFiR1NUMDBCTEVudm5xYjcwNFhxWGxF?=
+ =?utf-8?B?SHBYeGNTYW9HamNKbWNicWhlTHEvdlhrTk9pZXhBblFaWW5EK25WTllYYU05?=
+ =?utf-8?B?SGVSUG5WeXl1Q1ZTRk93T2lNZHpSVk5HTTI3U2dhcHlGRk5rcjJpUEtBZkRp?=
+ =?utf-8?B?UWpMdktHcmYzcVJKZzR5YU13M0E3RmhPczZ1ZzBSaWxVWDdML3ltbjkxdktq?=
+ =?utf-8?B?V2FlUjVYNVJCWDJ5amRtTGxWd1l4UmdvekhIaFNpWWxDSk5nWGk4WUkrblgz?=
+ =?utf-8?B?NVcvS3FlNTZHVFBhZnpDVXV3S21oMHBjYjdsWHRXbHBDRG5pNWNHYnFxdjNZ?=
+ =?utf-8?B?c1l5NEozeGRLYWFiSkFDSnBXK2tZOGVCSVIrZkxZbVBIMGZCbzVXTzdlejZ4?=
+ =?utf-8?B?RmxoNUpzdDZJVGpFV25vS1E3aVZ0eXhtekRrdzRGd2c3VDlNT3NZWkJKSWZs?=
+ =?utf-8?B?UncvRW9SdFV5ZTgyemtZZFRTd0pBVTNqQkpNaXVpcnFSSk1Ed0R2VE9KSU1h?=
+ =?utf-8?B?WjBKRDNid1g3Y241b0F5UlVNREc4Y1VBU3JwUXo5WEl2QTlIam5TVk1MY0oz?=
+ =?utf-8?B?Yjg0S3RTZElXTGpiYVNVc2JzSkhlZTM2YXZmNkk4Z2Npd3czMWlKSlJoM3Rl?=
+ =?utf-8?B?RWd0MFVBeVpnQWlMWkFrTkRiS2ZlSjJtd2N4eittdUp6WFprOEg1Wm5NMEpE?=
+ =?utf-8?B?MmtJN2RMZHNiWTd4WWxNWHc4ZjVIQkRVZWZnSjRTbHo2Tzk2c3p0dGJoc2M3?=
+ =?utf-8?B?RXJzMTBSdjhOSXlyNGZUSXo2a04yTUdUYUVnYlNodUwyTVIwZ2Z0Yk5udS9z?=
+ =?utf-8?B?VXU1bXNXSWMzQVNkOGZERGgrQWt6bXd3VDJZaVFlQ1NUaW1vUUYwbUl1WUhx?=
+ =?utf-8?B?aExxTWd3OXpkOENrZ1paeHVlUGxHUEk4YmJmZXhVRVg1TFNXUk9aOUpqNUJt?=
+ =?utf-8?B?S1BwZDhPd3RaTWZhTG0rbkhvb3o1cTFiSjNnU1VmOTBsV3hCRVUrRnlYVXA3?=
+ =?utf-8?B?UDlpV1Fub2l3QlY2WEdUb0gzdG5xR0M2V3pjeW9JcnJTRm5FREEwQThxbjJw?=
+ =?utf-8?B?ZDZIY2xEdSs4WElUSE40WmpoRXV6SXRuYXhWc1ZLZWRPMlBCbDR5NjF2VlVK?=
+ =?utf-8?B?QnozZFdPSkMzZHJsYTJtWGJIck1aNDl3YjkrNnpwK045VEdUVkYrSUlsRDNh?=
+ =?utf-8?B?cU0zSEJQR091OFZTV1Frcm5ZbVJCNmtnRUoxbEtiaEFPZGdjeHhGOGdQRHFE?=
+ =?utf-8?B?RUt2bkl0U0FQWnd5Z2tFdFNsaExvTVptY1BOYXljZzhqcWNCZjR0R0JjRXVO?=
+ =?utf-8?B?eTZVZnlzV1hTeHAxZVVXc3QvU0J4cVNhY0JhdzV3dUl1QVRhcWdST3Eza2tG?=
+ =?utf-8?B?djZkcDkybGE2TnRTKzJmMmtaamRCbGRyTFpTYkdUZkxZVE1iVzJicnJQVHhN?=
+ =?utf-8?B?VG5RbC9Vbi91bUZFMGhZMkJOaVVjQkMvb3FXd2g2YW9xbW9VZlQ3amIvZkJq?=
+ =?utf-8?B?WFluTW56OE01M0NJRys4WHo2bVhKMkxrREJ0SnB5WDlSZEI1cXBXR0NrVmpD?=
+ =?utf-8?B?dEJGQm8rRk1YcVFRYTRKdEFIblJTV0pPay94MFk2Z2R5bU1INjVsU21iblhH?=
+ =?utf-8?B?OXFMQmxiT29rYy9JZzkxMGtRUStIeFNmZU41K1l5RHhOZEJmclJ0Z1FQclpR?=
+ =?utf-8?B?NTZpZWx3WlJsSStwRVdJUnV0OCtRSmV5OGZQTnhNMEw0T3Z1Ulk2d2tFUWU2?=
+ =?utf-8?B?SUthNmdMNUpJeU5Wem9URjJrSU82TmJNWkd1SnFCMkFHbEE9PQ==?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CY8PR10MB6851.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Zk9ZbjdHQXc1TThndjljYmxOYkZVdFdWSGNTN041bGRPeURBdjhOS1VQTUtR?=
+ =?utf-8?B?OUxaWUsrdG5BRjZNL3NHY0JnUEVhaVFkdXgvUkxJRElPaFQvdnM4WTh1QkNH?=
+ =?utf-8?B?dXc1VVZ5Y0x2SWZLcnlyK2xTZXVVVlNzalREWjdKd3JOWnZWVnBWbnpHS280?=
+ =?utf-8?B?OGZXYytYN1hWMEpBcEtoTHZyMzVhRmFlSXVlZXhkSURKblNzZG9tbmlEdy9T?=
+ =?utf-8?B?a3Y1VEwxUll3dm1JQnk5d01xcWZlN1NyZTZUYUREejF3dUx6OElOcG9vc0Zp?=
+ =?utf-8?B?ZWxwN09MdmtWZFp5RnpMNE1lSEROSUpZMCttTlFGQlkvaTF3aldRVjc3Q1BN?=
+ =?utf-8?B?T0hHMGNzeVpUR2E4blJhYzRqWExYQjVhdGdMalQ1WWlvNnlUK205SmhybmF5?=
+ =?utf-8?B?cnJ5NnR3OFZwTVZLQkFSRmk3anpZZURVRG5WeEFmRGloZWQra3dnTllFNDZz?=
+ =?utf-8?B?S2RZalpoSGF3NytLUnoyaGZRVVlVVm42UjV2dFk2eU1RNTNEdU4wclROU1p3?=
+ =?utf-8?B?ZlU5aTU1Uk5kamxRMFV5Yks1NlJta2l3Y2syNFpPak83SVJUZ3N2S3paM0Zs?=
+ =?utf-8?B?TUxTdkQ3RkszTWF1VURQeEF5LzNjWncxL2M0dk9IbS9IVFp1TzV5MzhXY2k1?=
+ =?utf-8?B?V0dBQmo4Zi9VTnhud2FxYnpXL01KcHN4RE1MSUwzS1BhNGh0b0gvYUdWbjR3?=
+ =?utf-8?B?SEM0NWxJOFZpeTk2d0dMeFNic1lsS2llU2tNYXA3ZXJvYmhucC9XWmhUYkdC?=
+ =?utf-8?B?Tm5wWWF3WTBDOTd0R25vYlN0RnE4YUY1Q2F6SmhBWnk5L3BjNndiZWVudjZJ?=
+ =?utf-8?B?OTB6MHdGd1A2eENFVmdKanBtSXlrSG9nOXgrWnhoalcwQnNUaUZtKy9FNnVT?=
+ =?utf-8?B?aVZvQkxPMThkZGhZdWpZOEJvOW02WSt5K0NockFGUGQvUk0vck9UN0ZEWHVK?=
+ =?utf-8?B?cGVWdnVOMy9WRVgxSVluK0FzMkdQQUJ1Si83bGhLaisyZG9zVGxad0pTZ3Y1?=
+ =?utf-8?B?cVF6eXgvdHpRZmlTS2dNMjFZM2poMTQ3ZFlrc3dkODkwenRhcm1jSjg0bVM3?=
+ =?utf-8?B?T3Q2RVVQWmNXU0RhMHVpVTVOa2E1N2VWSU1Ha2p6anBJaHFPaHdrbUZUZElO?=
+ =?utf-8?B?dWtqZGNPbk1mU1I2SWJSdDhoSzYwck9VTy9DWGNUaisveFFlQmhrakw2cFdu?=
+ =?utf-8?B?SFJ2VWN3N2kzVGtldnBkMG91K25hcTVENnB3eVNCOHN5UHlYWEsrTWJ3MzBC?=
+ =?utf-8?B?M2VIZlhFRXhJdTdQZVRPRDdtbFRJUnJRMXZxZ3JwWmZDZkdpUjVvOUZ5bDdz?=
+ =?utf-8?B?ZUFLSzJCT2gwbnZXUDlDanNnNXpyYmFycS8wMkFSRGZKVDFhRHorM2x1cEp1?=
+ =?utf-8?B?QzYzek5PZ3AreFg4Q2RvSTQycTZaVTZXcVZIcXptVkFySG1RMlBKd29PajR1?=
+ =?utf-8?B?alRRR3FpdTA5TXhMbEpIYWU1djVxQ291aXp2a3M4bUdGTW85cVVydDkveTc2?=
+ =?utf-8?B?NUc4S1Evd29zMGR2Z0JqSWhmZDB2NjFlbkZhTWhobFlyaXJ4QzhRb1NnOGk0?=
+ =?utf-8?B?N0RVV0wySUU0WlBaSmxJTHdFL1JOK3FEc2Y0dG1wQm9LSFRmcFgwMjJuSFlQ?=
+ =?utf-8?B?RFdaNGg2ckxkZGR1VWp2cHZmOW9jOE5TZ0czWTFHZ1hlbmJOUy8zUEpJbnJM?=
+ =?utf-8?B?ZXd5NEJwaXpVek5hKzNxR1JpSFpQSCtWWVJkNUc5a2hUd0pDVEZTY1RLU0ln?=
+ =?utf-8?B?ckpUMnM3T0tBMWZqWXk1RUNXK2FNS3lnUmVYcUErZVhheW8xQjg3WDJQN0c0?=
+ =?utf-8?B?a1hOcnN4Sm0xKzBRRmxkNHFxRnBFQWw0SWNMUzhLZStFM2ZHWmxyVlNFZnp1?=
+ =?utf-8?B?TlR0dVkyMXM1S0hGcjhsOFFPSDNPQllGUkRCVW8yQWkxdkhQWU1STUxBT0Fq?=
+ =?utf-8?B?bGFyNVJTWFdlNHN6MWNESFBTOFZrVGgxdnA5WVhaUzRMdFZia09pdHNnWmRW?=
+ =?utf-8?B?V2tyOEkzbHY5RDB1UXFRck5la0w0YVBzdmhXSnRoQmpCL0Y4TFlrWXY5c3dt?=
+ =?utf-8?B?NDNuVlJiSnR3SFhLeWdtZzZYVVphZUQrWHIwdXcrMzlNOC9FYVA4MlRqUC8r?=
+ =?utf-8?Q?KU2tGt2MiDCDUPcSFJulyGu/O?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Ins/4hRf1e0j10bSwmpvZcshG4+EcsTo5uVKgy0XMz/pZj0aHZtr9gmCM1Jas2n+KgOkx54Y9g0HuLVhpPjJe3dXjcF71NBLpaDvQoj7NwilFZTrwqUb8jpcqxgx2ENYrz4VzSK/esZDOs69fHnq7O/WA+dcBmH45PyKw8nwtpOwULOVKNBAQWGmj6sCIzAyhNyf00RYs88zstv7HTW6/aQlu0mAsidKleYotOhyME6KvuFA7WL2aSnlPSjMgqOIzZecHEyhUkPo7r3riO7ALkcFGimHogD2ZfLl7rQ7DH5Fn5vtFAWQfc2Ca+gWapqj313awD4SrGcqHBrkdXMIIh6pB9JsIZb0JMLF9liQrCNbiRk8p4UcCALfgTkOpjxyTbTjDluuXpY8itkgFZAMYEVTIyzpPwiUjH33LOrdVCeXCXd3IjzmBrQsg03D2h6IDJbtZ/luVSj0wdhdWXJYmrR773m7ASi5k4zhl6RwKy7wDQhKfXrl2P4rgoq9OcZAIBzlWh+LksE/IQUaF99/hIEmbcyS3Fl7ZU7fC3y2L9IIEl2Ms1So+1LlMluPnjPDFYXqrc7BJN2yojXwQeqEmQHOm4J1eQsW/ErxxP0F2HE=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e639c11f-8fe2-447b-0916-08dd7bbc4491
+X-MS-Exchange-CrossTenant-AuthSource: CY8PR10MB6851.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2025 01:24:29.2753 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qhfdJv+RoTKpfRNI1Toe1TstVZ/Xxa21Zg86MX61clQYzV27LhkUt+maN0IOGEoddC+3uXAIrNf2Xi7qAr9AtQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6896
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-15_01,2025-04-10_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=999
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2502280000 definitions=main-2504150005
+X-Proofpoint-GUID: -cCa4ZllsKgfUTWg1lN7LGFDngCRkRMM
+X-Proofpoint-ORIG-GUID: -cCa4ZllsKgfUTWg1lN7LGFDngCRkRMM
+Received-SPF: pass client-ip=205.220.165.32; envelope-from=annie.li@oracle.com;
+ helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,240 +220,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 14, 2025 at 6:48=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
->
-> On Thu, Apr 10, 2025 at 03:00:40PM -0400, Stefan Hajnoczi wrote:
-> > On Tue, Apr 8, 2025 at 10:55=E2=80=AFAM Antoine Damhet <adamhet@scalewa=
-y.com> wrote:
-> > >
-> > > This reverts commit 7987d2be5a8bc3a502f89ba8cf3ac3e09f64d1ce.
-> > >
-> > > The goal was to remove the need to patch the (const) input buffer
-> > > with a recomputed UDP checksum by copying headers to a RW region and
-> > > inject the checksum there. The patch computed the checksum only from =
-the
-> > > header fields (missing the rest of the payload) producing an invalid =
-one
-> > > and making guests fail to acquire a DHCP lease.
-> > >
-> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
-> > > Cc: qemu-stable@nongnu.org
-> > > Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
-> > > ---
-> > > v2: Rebased on master due to conflict with c17ad4b11bd2 (
-> > > "virtio-net: Fix num_buffers for version 1")
-> >
-> > Michael: Please review this and send a pull request for 10.0 (-rc4
-> > will be tagged on Tuesday). There was a conflict so this is not a
-> > mechanical revert.
-> >
-> > Thanks!
->
->
-> Backlogged because of holidays, sorry.
->
->
-> Revert looks good:
->
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->
-> but this (userspace networking) is mostly Jason's area, not mine.
 
-Thank you, enjoy the holidays! I will merge this patch for 10.0.
+On 4/14/2025 11:18 AM, Alex Bennée wrote:
+> Annie Li <annie.li@oracle.com> writes:
+>
+>> The GPE event is triggered to notify x86 guest to suppend
+>> itself. The function acpi_send_sleep_event will also
+>> trigger GED events on HW-reduced systems where ACPI GED
+>> sleep event is supported.
+>>
+>> Signed-off-by: Annie Li <annie.li@oracle.com>
+>> ---
+>>   hw/acpi/core.c                       | 10 ++++++++++
+>>   include/hw/acpi/acpi.h               |  1 +
+>>   include/hw/acpi/acpi_dev_interface.h |  1 +
+>>   3 files changed, 12 insertions(+)
+>>
+>> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+>> index 58f8964e13..00a9d226f0 100644
+>> --- a/hw/acpi/core.c
+>> +++ b/hw/acpi/core.c
+>> @@ -359,6 +359,16 @@ int acpi_get_slic_oem(AcpiSlicOem *oem)
+>>       return -1;
+>>   }
+>>   
+>> +void acpi_send_sleep_event(void)
+>> +{
+>> +    Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF,
+>> NULL);
+> Is it a fair assumption there will only ever be one QOM object that
+> provides the TYPE_ACPI_DEVICE_IF interface on a system?
 
-Stefan
+I supposed it was, but I might be wrong(seeing some classes have the 
+same interface). Please correct me if I've missed something, thank you!
 
->
->
->
-> > >
-> > >  hw/net/virtio-net.c | 87 +++++++++++++++++++++----------------------=
---
-> > >  1 file changed, 40 insertions(+), 47 deletions(-)
-> > >
-> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > > index 340c6b642224..bd37651dabb0 100644
-> > > --- a/hw/net/virtio-net.c
-> > > +++ b/hw/net/virtio-net.c
-> > > @@ -1702,44 +1702,41 @@ static void virtio_net_hdr_swap(VirtIODevice =
-*vdev, struct virtio_net_hdr *hdr)
-> > >   * cache.
-> > >   */
-> > >  static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
-> > > -                                        size_t *hdr_len, const uint8=
-_t *buf,
-> > > -                                        size_t buf_size, size_t *buf=
-_offset)
-> > > +                                        uint8_t *buf, size_t size)
-> > >  {
-> > >      size_t csum_size =3D ETH_HLEN + sizeof(struct ip_header) +
-> > >                         sizeof(struct udp_header);
-> > >
-> > > -    buf +=3D *buf_offset;
-> > > -    buf_size -=3D *buf_offset;
-> > > -
-> > >      if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csu=
-m */
-> > > -        (buf_size >=3D csum_size && buf_size < 1500) && /* normal si=
-zed MTU */
-> > > +        (size >=3D csum_size && size < 1500) && /* normal sized MTU =
-*/
-> > >          (buf[12] =3D=3D 0x08 && buf[13] =3D=3D 0x00) && /* ethertype=
- =3D=3D IPv4 */
-> > >          (buf[23] =3D=3D 17) && /* ip.protocol =3D=3D UDP */
-> > >          (buf[34] =3D=3D 0 && buf[35] =3D=3D 67)) { /* udp.srcport =
-=3D=3D bootps */
-> > > -        memcpy((uint8_t *)hdr + *hdr_len, buf, csum_size);
-> > > -        net_checksum_calculate((uint8_t *)hdr + *hdr_len, csum_size,=
- CSUM_UDP);
-> > > +        net_checksum_calculate(buf, size, CSUM_UDP);
-> > >          hdr->flags &=3D ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
-> > > -        *hdr_len +=3D csum_size;
-> > > -        *buf_offset +=3D csum_size;
-> > >      }
-> > >  }
-> > >
-> > > -static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hd=
-r,
-> > > -                             const void *buf, size_t buf_size,
-> > > -                             size_t *buf_offset)
-> > > +static void receive_header(VirtIONet *n, const struct iovec *iov, in=
-t iov_cnt,
-> > > +                           const void *buf, size_t size)
-> > >  {
-> > > -    size_t hdr_len =3D n->guest_hdr_len;
-> > > -
-> > > -    memcpy(hdr, buf, sizeof(struct virtio_net_hdr));
-> > > -
-> > > -    *buf_offset =3D n->host_hdr_len;
-> > > -    work_around_broken_dhclient(hdr, &hdr_len, buf, buf_size, buf_of=
-fset);
-> > > +    if (n->has_vnet_hdr) {
-> > > +        /* FIXME this cast is evil */
-> > > +        void *wbuf =3D (void *)buf;
-> > > +        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
-> > > +                                    size - n->host_hdr_len);
-> > >
-> > > -    if (n->needs_vnet_hdr_swap) {
-> > > -        virtio_net_hdr_swap(VIRTIO_DEVICE(n), hdr);
-> > > +        if (n->needs_vnet_hdr_swap) {
-> > > +            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
-> > > +        }
-> > > +        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_=
-hdr));
-> > > +    } else {
-> > > +        struct virtio_net_hdr hdr =3D {
-> > > +            .flags =3D 0,
-> > > +            .gso_type =3D VIRTIO_NET_HDR_GSO_NONE
-> > > +        };
-> > > +        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
-> > >      }
-> > > -
-> > > -    return hdr_len;
-> > >  }
-> > >
-> > >  static int receive_filter(VirtIONet *n, const uint8_t *buf, int size=
-)
-> > > @@ -1907,13 +1904,6 @@ static int virtio_net_process_rss(NetClientSta=
-te *nc, const uint8_t *buf,
-> > >      return (index =3D=3D new_index) ? -1 : new_index;
-> > >  }
-> > >
-> > > -typedef struct Header {
-> > > -    struct virtio_net_hdr_v1_hash virtio_net;
-> > > -    struct eth_header eth;
-> > > -    struct ip_header ip;
-> > > -    struct udp_header udp;
-> > > -} Header;
-> > > -
-> > >  static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint=
-8_t *buf,
-> > >                                        size_t size)
-> > >  {
-> > > @@ -1923,15 +1913,15 @@ static ssize_t virtio_net_receive_rcu(NetClie=
-ntState *nc, const uint8_t *buf,
-> > >      VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
-> > >      size_t lens[VIRTQUEUE_MAX_SIZE];
-> > >      struct iovec mhdr_sg[VIRTQUEUE_MAX_SIZE];
-> > > -    Header hdr;
-> > > +    struct virtio_net_hdr_v1_hash extra_hdr;
-> > >      unsigned mhdr_cnt =3D 0;
-> > >      size_t offset, i, guest_offset, j;
-> > >      ssize_t err;
-> > >
-> > > -    memset(&hdr.virtio_net, 0, sizeof(hdr.virtio_net));
-> > > +    memset(&extra_hdr, 0, sizeof(extra_hdr));
-> > >
-> > >      if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
-> > > -        int index =3D virtio_net_process_rss(nc, buf, size, &hdr.vir=
-tio_net);
-> > > +        int index =3D virtio_net_process_rss(nc, buf, size, &extra_h=
-dr);
-> > >          if (index >=3D 0) {
-> > >              nc =3D qemu_get_subqueue(n->nic, index % n->curr_queue_p=
-airs);
-> > >          }
-> > > @@ -1996,20 +1986,23 @@ static ssize_t virtio_net_receive_rcu(NetClie=
-ntState *nc, const uint8_t *buf,
-> > >              if (n->mergeable_rx_bufs) {
-> > >                  mhdr_cnt =3D iov_copy(mhdr_sg, ARRAY_SIZE(mhdr_sg),
-> > >                                      sg, elem->in_num,
-> > > -                                    offsetof(typeof(hdr),
-> > > -                                             virtio_net.hdr.num_buff=
-ers),
-> > > -                                    sizeof(hdr.virtio_net.hdr.num_bu=
-ffers));
-> > > +                                    offsetof(typeof(extra_hdr), hdr.=
-num_buffers),
-> > > +                                    sizeof(extra_hdr.hdr.num_buffers=
-));
-> > >              } else {
-> > > -                hdr.virtio_net.hdr.num_buffers =3D cpu_to_le16(1);
-> > > +                extra_hdr.hdr.num_buffers =3D cpu_to_le16(1);
-> > >              }
-> > >
-> > > -            guest_offset =3D n->has_vnet_hdr ?
-> > > -                           receive_header(n, (struct virtio_net_hdr =
-*)&hdr,
-> > > -                                          buf, size, &offset) :
-> > > -                           n->guest_hdr_len;
-> > > -
-> > > -            iov_from_buf(sg, elem->in_num, 0, &hdr, guest_offset);
-> > > -            total +=3D guest_offset;
-> > > +            receive_header(n, sg, elem->in_num, buf, size);
-> > > +            if (n->rss_data.populate_hash) {
-> > > +                offset =3D offsetof(typeof(extra_hdr), hash_value);
-> > > +                iov_from_buf(sg, elem->in_num, offset,
-> > > +                             (char *)&extra_hdr + offset,
-> > > +                             sizeof(extra_hdr.hash_value) +
-> > > +                             sizeof(extra_hdr.hash_report));
-> > > +            }
-> > > +            offset =3D n->host_hdr_len;
-> > > +            total +=3D n->guest_hdr_len;
-> > > +            guest_offset =3D n->guest_hdr_len;
-> > >          } else {
-> > >              guest_offset =3D 0;
-> > >          }
-> > > @@ -2035,11 +2028,11 @@ static ssize_t virtio_net_receive_rcu(NetClie=
-ntState *nc, const uint8_t *buf,
-> > >      }
-> > >
-> > >      if (mhdr_cnt) {
-> > > -        virtio_stw_p(vdev, &hdr.virtio_net.hdr.num_buffers, i);
-> > > +        virtio_stw_p(vdev, &extra_hdr.hdr.num_buffers, i);
-> > >          iov_from_buf(mhdr_sg, mhdr_cnt,
-> > >                       0,
-> > > -                     &hdr.virtio_net.hdr.num_buffers,
-> > > -                     sizeof hdr.virtio_net.hdr.num_buffers);
-> > > +                     &extra_hdr.hdr.num_buffers,
-> > > +                     sizeof extra_hdr.hdr.num_buffers);
-> > >      }
-> > >
-> > >      for (j =3D 0; j < i; j++) {
-> > > --
-> > > 2.49.0
-> > >
-> > >
->
+Thanks
+
+Annie
+
+>> +
+>> +    if (obj) {
+>> +        /* Send sleep event */
+>> +        acpi_send_event(DEVICE(obj), ACPI_SLEEP_STATUS);
+>> +    }
+>> +}
+>> +
+>>   static void acpi_notify_wakeup(Notifier *notifier, void *data)
+>>   {
+>>       ACPIREGS *ar = container_of(notifier, ACPIREGS, wakeup);
+>> diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
+>> index d1a4fa2af8..64d3ff78ed 100644
+>> --- a/include/hw/acpi/acpi.h
+>> +++ b/include/hw/acpi/acpi.h
+>> @@ -184,6 +184,7 @@ uint32_t acpi_gpe_ioport_readb(ACPIREGS *ar, uint32_t addr);
+>>   
+>>   void acpi_send_gpe_event(ACPIREGS *ar, qemu_irq irq,
+>>                            AcpiEventStatusBits status);
+>> +void acpi_send_sleep_event(void);
+>>   
+>>   void acpi_update_sci(ACPIREGS *acpi_regs, qemu_irq irq);
+>>   
+>> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+>> index 68d9d15f50..1cb050cd3a 100644
+>> --- a/include/hw/acpi/acpi_dev_interface.h
+>> +++ b/include/hw/acpi/acpi_dev_interface.h
+>> @@ -13,6 +13,7 @@ typedef enum {
+>>       ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+>>       ACPI_VMGENID_CHANGE_STATUS = 32,
+>>       ACPI_POWER_DOWN_STATUS = 64,
+>> +    ACPI_SLEEP_STATUS = 128,
+>>   } AcpiEventStatusBits;
+>>   
+>>   #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
 
