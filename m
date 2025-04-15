@@ -4,137 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05065C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 10:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A742C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 10:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4dqo-0007BG-RC; Tue, 15 Apr 2025 06:49:10 -0400
+	id 1u4dwY-0000eR-Lo; Tue, 15 Apr 2025 06:55:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4dql-00075c-Qx
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:49:08 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u4dwS-0000dT-Jo
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:55:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u4dqj-0003wd-KB
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:49:07 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u4dwQ-0004cX-QM
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:55:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744714144;
+ s=mimecast20190719; t=1744714497;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zvtGEAiZIFaknmAurD368DY2mK7BY3UeBwg67boPgFs=;
- b=DEWZv4lD7R7tn9FjSAP5QIWdmxsWtnnIZ4l3ZIyb4a676y65kySCZZEu2k6rJ3gnnVJrmv
- n1ScSkWuoTZvqhhVirvfb9B4KaLZ1/HksSOnx5tMsA1VSwdINLAdyRLg+ihUifrKtxVxVD
- /4+cAl+ewHKXPdlT0VPa9nGaZMSM4HY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Kcd4O2VLH3aUEeBKl7Z3MiFTgsJfiyvlDtznnHlAeZ8=;
+ b=EWKKHWVqYJLux2C+Ra2Tj9WbCas4n+IWXYF2q7+7Q5Kg5wT+Ymen84Fpd2lNxHsoq6ZsxW
+ 1vgDinEhToNE16auajbbKQ2R8zjumNP6zOPZ1DwRSFPttAOjqEyKZqmndkx68fAuJZ7L4Z
+ D2xALYn7zBlKZEt+WpIQAOqbzdee9tY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-xHcSaUzHO_y4HdvJ4fmduQ-1; Tue, 15 Apr 2025 06:49:00 -0400
-X-MC-Unique: xHcSaUzHO_y4HdvJ4fmduQ-1
-X-Mimecast-MFC-AGG-ID: xHcSaUzHO_y4HdvJ4fmduQ_1744714140
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39123912ff0so2120163f8f.2
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 03:49:00 -0700 (PDT)
+ us-mta-499--qwaRN9TN8W8O2rCCHVVag-1; Tue, 15 Apr 2025 06:54:54 -0400
+X-MC-Unique: -qwaRN9TN8W8O2rCCHVVag-1
+X-Mimecast-MFC-AGG-ID: -qwaRN9TN8W8O2rCCHVVag_1744714494
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d0830c3f7so41010145e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 03:54:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744714139; x=1745318939;
+ d=1e100.net; s=20230601; t=1744714493; x=1745319293;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zvtGEAiZIFaknmAurD368DY2mK7BY3UeBwg67boPgFs=;
- b=aaE4trD7S6U3EzobfGZdD+JebQuimNabDDu4c1hcYahtV6wpYIuk8lzLZ2di4DN88O
- nGYIo7zEPb8AKx+c50TkFg2PrBU9wePkaC5FmPQT/NmzpIUGO+L10VeCHAtKig/paPov
- XLB59Pap1Ox6apUtM1nBXoqNB/E2ftsKl20fcIxI8lcUHBVkpWZTHRyIJJ/1t1MX+is/
- QqvxKlkNjp6o52AZ04gQZhVNvxlBGk4l9dHA5Cm5MOAGQRPSLPcC7+CIK+f133PUcYJF
- 5f2+SJABCKQe65X7qGRWE6T5WxmKR+KSv47op01LavVOG1cW9dSALBkk/vAFN7eV8bo7
- E/BA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXb8gtb64Z04qQgHlkcvUMLkUPH2yUSLDQ39eDp3R+HuFde/1JI60bpopuljj3TqTWLeYbi1I5SRuaL@nongnu.org
-X-Gm-Message-State: AOJu0YwV7xRvio0+l7DEBOqhrIeYhIE0b/Fb4TbIE4Z9onfuuxCEYdWv
- jP51Q8tIWUAW4nMHmeyyBi/EaMsrNJWUtRr87RUQu7/tBZUioNvKuEAri0RLd4Mz7mxxSkG1Boh
- LhX8pVui5VYz6HZjv0t14F61c6ao7yJnnJG6GYgb9jpq7wTZoWCgv
-X-Gm-Gg: ASbGncss6ECfbxNsYgcHnJrEE/uE8PEnDCLv1dzFdmVbIjN9fVTdVwD8yJkDuEsRzHK
- 03Cluav6gKZx4w/t4eozIU0+UkBLuYtDTqP6AR6uPfgaleYjuVFsWVRpylRjo12k8ATei18hdvV
- aRHMrLelcvZVJZk3BqFOrD+2MA4deJCWs+8NVjhziWYTfruWZtsi9tcsa68FWTkBMw15B8tiEoY
- P9IMt33NJY97MsAOj37j4kHRsBeRbtqB1SVQBo1dbm6XPO8BOkWTSNnQOCNnruvE1VOP0W7baxg
- J8D5/UZlBRgTS6YHtqL20fi5CoakFX1xOe+vqXcNBFk=
-X-Received: by 2002:a05:6000:40d9:b0:39a:ca40:7bfb with SMTP id
- ffacd0b85a97d-39eaaed3dbemr14516965f8f.54.1744714139627; 
- Tue, 15 Apr 2025 03:48:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZfJbtGeYWI/OVSuLFyreUEyPTtV06TxGO+CUFdCey8rvzT3QEPPnao11SvnvW2zugpa57qQ==
-X-Received: by 2002:a05:6000:40d9:b0:39a:ca40:7bfb with SMTP id
- ffacd0b85a97d-39eaaed3dbemr14516950f8f.54.1744714139257; 
- Tue, 15 Apr 2025 03:48:59 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-43-176-89.web.vodafone.de.
- [109.43.176.89]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eaf44577dsm13887962f8f.94.2025.04.15.03.48.58
+ bh=Kcd4O2VLH3aUEeBKl7Z3MiFTgsJfiyvlDtznnHlAeZ8=;
+ b=L5gSyHaIu9UqSZiqOH1l67tvm7VNKjf73r4yZIsVs2yWeOzx2b6SpQiYkE3nbN2i9T
+ Pidw/ARM/b53AU02MRcBJFq5+5IUXVUrZguPHno5wOFlTXaIFDeZx66kLYJ3QmqeID47
+ itFJ6IeeiOEA479oLUePclVx+TFijXNAzv07xRaElOyALIOF2e0YbkdDu/yxWNHL0rbn
+ ut1ObIfleEMfc/WJD/mHRQfCtj81NKuC0BLNZ1LZxN3H5e7+Lnv8YR9W24+jFLe6wrSw
+ t0yzsDUn/CgI4Ya8sqfldbVKzP3BQbeLNmxHIv4gnSWXp+ysogN9Px/p/ya+601Ij2Oe
+ /1Iw==
+X-Gm-Message-State: AOJu0Yx0jsYna7t0QmYk7NqtLGKJyq61raQO+govhKBr5BYGycaDEZE9
+ +0/yLlgnhUvpTGH8ZVQue7QV0Oa9dxWaIgNA6FudwdII+WTjAAIiQnpnA01OBR5ru9GtxEyPwyE
+ hKGSkI+BF+fIs8LJHu32i3V7hj7A+/wVfEYZODtVvP/7TbmDYOb6C
+X-Gm-Gg: ASbGncsqOgJRerhFBvL+D97m3ozyrNXdPMvaci+cgMIjR2oLk8is1pQgaTYOC4z6QuF
+ g/uSIFFErNrXjF6VgZ6HZ+V72zvwKzgxA3oGoNDwS3Z/+6gv/xtZmNx6hENV2GBwq5TBlEpVUlK
+ IrbD2FyQK1mvAnw09CBF5jCUP6DCUgJ3nqpGzLQisdLGwKhsk8yLpwffNcCHP+bAqD9QYFJ/Pvv
+ fE77xWfxWCpax32cPmAGG4YBJtaHC4Nbevj/0CPnlvbRb3L7oR7lXJ5eF9RK1KklwWOROuzYw68
+ gs1bI2c9vAF2jDbr
+X-Received: by 2002:a05:600c:34d3:b0:43c:ee3f:2c3 with SMTP id
+ 5b1f17b1804b1-43f3a9290d3mr122988835e9.7.1744714493483; 
+ Tue, 15 Apr 2025 03:54:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHabibOADBRYDz7P3Lxp3YlpQLWq73n9xmEZZt7E37EPD0uEq7x1FiwXIKYA8+MGPBgcem2Rg==
+X-Received: by 2002:a05:600c:34d3:b0:43c:ee3f:2c3 with SMTP id
+ 5b1f17b1804b1-43f3a9290d3mr122988595e9.7.1744714493071; 
+ Tue, 15 Apr 2025 03:54:53 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.109.83])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43f205ec97csm213187145e9.6.2025.04.15.03.54.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Apr 2025 03:48:58 -0700 (PDT)
-Message-ID: <e5e18317-16e2-4145-a433-6958f5f65dad@redhat.com>
-Date: Tue, 15 Apr 2025 12:48:57 +0200
+ Tue, 15 Apr 2025 03:54:52 -0700 (PDT)
+Message-ID: <c44eebb9-1252-447e-9262-e2946f90f01c@redhat.com>
+Date: Tue, 15 Apr 2025 12:54:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/2] python: be more selective in hiding mypy subclassing
- warning
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>
-References: <20250224191152.2123003-1-berrange@redhat.com>
- <20250224191152.2123003-2-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 2/9] rust/vmstate: Support varray's num field wrapped in
+ BqlCell
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>
+References: <20250414144943.1112885-1-zhao1.liu@intel.com>
+ <20250414144943.1112885-3-zhao1.liu@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250224191152.2123003-2-berrange@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20250414144943.1112885-3-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,19 +148,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/02/2025 20.11, Daniel P. Berrangé wrote:
-> Use an annotation inline to the file instead of in setup.cfg
+On 4/14/25 16:49, Zhao Liu wrote:
+> Currently, if the `num` field of a varray is not a numeric type, such as
+> being placed in a wrapper, the array variant of assert_field_type will
+> fail the check.
 > 
-> This has the added advantage that the mypy checks now pass when
-> using 'mypy /path/to/python/qemu' as well as 'mypy -p qemu'.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   python/qemu/qmp/qmp_tui.py    | 12 ++++++------
->   python/qemu/utils/qom_fuse.py |  2 +-
->   python/setup.cfg              |  8 --------
->   3 files changed, 7 insertions(+), 15 deletions(-)
+> HPET currently wraps num_timers in BqlCell<>. Although BqlCell<> is not
+> necessary from strictly speaking, it makes sense for vmstate to respect
+> BqlCell.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Dropping BqlCell<> from num_timers is indeed possible.  But I agree that 
+getting BqlCell<> varrays to work is a good thing anyway; then you can 
+separately decide whether to drop BqlCell<> from num_timers.
+
+> The failure of assert_field_type is because it cannot convert BqlCell<T>
+> into usize for use as the index.
+> 
+> Therefore, first, implement `From` trait for common numeric types on
+> BqlCell<>. Then, abstract the wrapper and non-wrapper cases uniformly
+> into a `IntoUsize` trait and make assert_field_type to get usize type
+> index via `IntoUsize` trait.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   rust/qemu-api/src/assertions.rs | 30 +++++++++++++++++++++++++++++-
+>   rust/qemu-api/src/cell.rs       | 23 +++++++++++++++++++++++
+>   2 files changed, 52 insertions(+), 1 deletion(-)
+
+I think you can drop the "num=" case of assert_field_type!, and use 
+something like this macro:
+
+/// Drop everything up to the colon, with the intention that
+/// `if_present!` is called inside an optional macro substitution
+/// (such as `$(... $arg ...)?` or `$(... $arg ...)*`).  This allows
+/// expanding `$result` depending on the presence of an argument,
+/// even if the argument itself is not included in `$result`.
+///
+/// # Examples
+///
+/// ```
+/// # use qemu_api::if_present;
+/// macro_rules! is_present {
+///     ($($cond:expr)?) => {
+///         loop {
+///             $(if_present!([$cond]: break true;);)?
+///             #[allow(unreachable_code)]
+///             break false;
+///         }
+///     }
+/// }
+///
+/// assert!(!is_present!());
+/// assert!(is_present!("abc"));
+/// ```
+#[macro_export]
+macro_rules! if_present {
+      ([$($cond:tt)*]: $($result:tt)*) => { $($result)* };
+}
+
+to expand the array part of the access:
+
+assert_field_type!(...
+     $($crate::if_present!([$num]: [0]))?;
+);
+
+With this change, assert_field_type! is nicer and at least the trait 
+you're introducing in assertions.rs goes away...
+
+> +// Orphan rules don't like something like `impl<T> From<BqlCell<T>> for T`.
+> +// It's enough to just implement Into for common types.
+> +macro_rules! impl_into_inner {
+> +    ($type:ty) => {
+> +        impl From<BqlCell<$type>> for $type {
+> +            fn from(c: BqlCell<$type>) -> $type {
+> +                c.get()
+> +            }
+> +        }
+> +    };
+> +}
+
+... and it's not clear to me whether this is needed with the change 
+above?  Would impl_vmstate_transparent!'s definition of VARRAY_FLAG be 
+enough?
+
+If not, I *think* you can do a blanket implementation of Into<T> for 
+BqlCell<T>.  Maybe that's nicer, you can decide.
+
+Paolo
 
 
