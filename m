@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEAB4C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 06:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5C7C369B8
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 06:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4aAo-0006SF-If; Tue, 15 Apr 2025 02:53:35 -0400
+	id 1u4aDH-0007dg-Aw; Tue, 15 Apr 2025 02:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4aAd-0006NW-0G
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 02:53:25 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4aAb-000808-1N
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 02:53:22 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cf3192f3bso52818855e9.1
- for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 23:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744699999; x=1745304799; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zsq9XB0Kt/BeYHREkL+MMGT7dUfzwFYgYO2EvCVPc6A=;
- b=ag28Sp+2unb/liMg8MMe3sfFRKu0NU0TQlc3jQt3LqyQUvp0LDR1+0zZYk/BFhZiBz
- bxwkaGwTaIaXVI9RE/4ZfIFJsoD7Y6vefQcu4KaYefiwD9tSv8xP9jSi4vjdlEh0FGU2
- iYRVSgZawz9jdyJ63UfeZHGKvVjRz6vnEHRlAQ97lwfT91ecUN2bbJr6fKkcnmrnRnIQ
- /zplvqsaQHSqvRQSDW80POukbFOgulA6PjbjRfmtkkSb82PUptvu3uDw6gBoJ0/Ar9Jv
- LyaW/0vvqRQcE+HcOV/+eVe/QpmLFJUC8Jh4pzFvF+RfLrIdYLxet3Yicy9THn2n28o6
- WDnA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4aDE-0007dL-Dc
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 02:56:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u4aDC-0008SN-Cv
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 02:56:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744700160;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sDhipnCahzydMj+9/begyBEBkCKSgxvwUUgTFEphbNY=;
+ b=Lyfu3beAp7W8RbNZ25OrfILcgcxau225A32+3FguEKcxlccu1y0VGSJmnQe4YScfKrHzMN
+ pacg3T9+dzK9nsi9WShYDjLxclRnR4ZdPY9CKUFopMwKMHGRM56DaXOD+yMqiNFj4Hf2rq
+ N0eMCQG77/BJbCMWplefGwm2I6LdN/8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-vCqar-akNeWKp0grclIrHA-1; Tue, 15 Apr 2025 02:55:58 -0400
+X-MC-Unique: vCqar-akNeWKp0grclIrHA-1
+X-Mimecast-MFC-AGG-ID: vCqar-akNeWKp0grclIrHA_1744700157
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so27120635e9.2
+ for <qemu-devel@nongnu.org>; Mon, 14 Apr 2025 23:55:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744699999; x=1745304799;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zsq9XB0Kt/BeYHREkL+MMGT7dUfzwFYgYO2EvCVPc6A=;
- b=N5BiSFTfkNNsUBBuLp8teNVY49RBvB5+oc6QY9zaqcGB9S9kZw17hQJ4ezyhPElJvB
- jrIjBidn6e/H1hEGJJZo8IDNU5dr51QefSSFLV0a5dVcfMjYTgGkUug2C64KO8Qkr6be
- lswHS952PNHb/rMTUKnNChIC7m3YCMWAe9mPVPn0BB1/QlTy0D56ELP3RQGbOzyA6GjF
- XPYQoPtR2+2XK2kJe/Axe3NAPKsBLBkRl4kkWBbblckDbFPgh5VZtfgNuSkKRP8wQjwo
- 1HnM7mJ8mnOZt4bs0xJLb2oMyPVGLADD5PXYzJuzIVMA7mRzpRuWMXQzK9+gq+F4zYen
- fcGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOQ1n9YNb18/5AIXfHMTe739xMMk8WLEuXYuEF9dZqK45ucOYtZCCEPVfe4a+OY7bAIsZANUdDRTFP@nongnu.org
-X-Gm-Message-State: AOJu0YyJC8Vcna58SrGPxI5HdPSrmEmnqORdrCwJeIST5zCBU8icPdRx
- BNqkKdwqItkXm/aXcGxUUJ45BCcwJEZD3TECzXWc7dnLtK7+G/rdjfYIkxJOZhI=
-X-Gm-Gg: ASbGnctcP2KuJUtAeI8EJmzimAqRvyeeuFsk8x1G/lF2SZq38GlJ0GGuu74lYHhNBKs
- 8exlp6azVZmJbAYuLi7CQ+E3pq0/XxLu34Ay3tjKijMeqxnq1UDIW/TAf7v63QQG1WxEH7PrDmR
- VyNYqjwwKWj3vYil/5HTIOlXB03PVe50uqgy6cMBAWgn6CYZaSB5VzjUcUgQAcde/TQD1zYdygJ
- TxNdVx8nFtzr2pJN9gsgQgn4B1Qc2CHAx5//ufvog742XiNbAP3jB6+1hH3LsCLkMAMKXOoFIA5
- Zr0GyGW9p00HxcqEQeYwK2fm33s8RM/d4UNJJnUOsL3kF8kWm2PBwV7EXEt9GrXfhfzNCbCHQhu
- FJ5+Q9F9L
-X-Google-Smtp-Source: AGHT+IHa7G4UDRcNDrPwphJzmH6/1Rj67IeKQZwe+AW67zch+tqxw3tP/okZndda4d+ruSgd1JgeKA==
-X-Received: by 2002:a05:600c:604e:b0:43c:f6b0:e807 with SMTP id
- 5b1f17b1804b1-43f3b055a80mr122922685e9.31.1744699998922; 
- Mon, 14 Apr 2025 23:53:18 -0700 (PDT)
-Received: from [192.168.69.238] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43f233c49f7sm196030575e9.17.2025.04.14.23.53.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 14 Apr 2025 23:53:18 -0700 (PDT)
-Message-ID: <23c9f066-f30c-4e35-8629-504eeb9cd7a8@linaro.org>
-Date: Tue, 15 Apr 2025 08:53:17 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] intel_iommu: Take the bql before registering a new
- address space
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "jasowang@redhat.com" <jasowang@redhat.com>,
+ d=1e100.net; s=20230601; t=1744700157; x=1745304957;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sDhipnCahzydMj+9/begyBEBkCKSgxvwUUgTFEphbNY=;
+ b=qh9huedkY9ieq3sguT9EOuXU4gdelFLG9CvVyGum2ajIE8vq8tt7SBBV6hB9l9QIlX
+ zxaq8fOeowkcxu/V98NBDfgOdZY4RXZUCm9zV5xXklwwymZBka67tYEQtKCYJdIIA6YT
+ gO/ERN1O1nGVGkd8mYWaNivy2qlT5VcxlrNvrxN6KsswPPMrk5o16NYgaFc6RKYcO0b9
+ Es9vtNDTWB69/yZrNz3F2kYMqX+zsnTOfA0aAtEkgdTK1EumI5remQyQ5ulgG4O/GbWf
+ 9JVkbyIpTqdH/3B1tCUYoMOYUTMBeTfocv5ptk/v+gGmA9pwQDmwz+QpkS4MSzED5yk8
+ oIpA==
+X-Gm-Message-State: AOJu0YwyNdTwUMU9/icFAlKaqTTvlemVtqayxpiN4HAlgT3U52zUbFuu
+ DmRQ0eEb2WW1lelwfMhpDqEsFERoBJUU6aTPPLsANG2F1aFi5bnmMAgMJ42I78Y1nhrK7m7jUNb
+ fF//IwSEJD+5f0N0fRj+VdaZEnj0zuxZKNhuwza1DWspLSeaEZ52X
+X-Gm-Gg: ASbGncuGQQO8Yx3oU0RD8LIqtnw6/A8b7WS72Tmr+gSouW9nUEzK1+6TDtHuFgoKo9I
+ eIExpqHmMV/xKTMv2+Vqd3FUeK9ZnxZRiHY911OgxxyD4ShF4Xc08SZlIIm6xqHFYZI4I+w9XAJ
+ khvYQSg9MEblzbNkj9bkrNt9hshz5/qsEJWbPBabF94/IGve7sFKz+IcBoCLe6vJbsYQ/UAnNtI
+ OiH8282iRcaSxavlecPDvg7/VaN2YqDRI/h/ZR0re56p8/VKOkQ3KFeWaTQfZV5wzTpFu3AtdAu
+ geyE4w==
+X-Received: by 2002:a05:600c:502a:b0:43c:e6d1:efe7 with SMTP id
+ 5b1f17b1804b1-43f3a9a70famr113220595e9.26.1744700157210; 
+ Mon, 14 Apr 2025 23:55:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOlQeENayE70svZt9tSPw1f+TP9uymZnhf3oFSVJdSW2xqmwHqcwUEW1AFfJcUlhuZ1yfzjA==
+X-Received: by 2002:a05:600c:502a:b0:43c:e6d1:efe7 with SMTP id
+ 5b1f17b1804b1-43f3a9a70famr113220425e9.26.1744700156911; 
+ Mon, 14 Apr 2025 23:55:56 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43f233a2f71sm197775635e9.15.2025.04.14.23.55.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 14 Apr 2025 23:55:56 -0700 (PDT)
+Date: Tue, 15 Apr 2025 02:55:53 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
  "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
  "kevin.tian@intel.com" <kevin.tian@intel.com>,
  "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "peterx@redhat.com" <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>
+ "peterx@redhat.com" <peterx@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Subject: Re: [PATCH] intel_iommu: Take the bql before registering a new
+ address space
+Message-ID: <20250415025138-mutt-send-email-mst@kernel.org>
 References: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,53 +111,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/4/25 08:18, CLEMENT MATHIEU--DRIF wrote:
+On Tue, Apr 15, 2025 at 06:18:08AM +0000, CLEMENT MATHIEU--DRIF wrote:
 > Address space creation might end up being called without holding the
 > bql as it is exposed through the IOMMU ops.
 > 
 > Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+
+
+Indeed, and this can maybe explain some failures we are seeing ...
+But is it just this part?
+For example, is access to vtd_address_spaces safe?
+
 > ---
->   hw/i386/intel_iommu.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+>  hw/i386/intel_iommu.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
 > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
 > index dffd7ee885..fea2220013 100644
 > --- a/hw/i386/intel_iommu.c
 > +++ b/hw/i386/intel_iommu.c
 > @@ -4216,6 +4216,7 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->       vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
->       if (!vtd_dev_as) {
->           struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
+>      vtd_dev_as = g_hash_table_lookup(s->vtd_address_spaces, &key);
+>      if (!vtd_dev_as) {
+>          struct vtd_as_key *new_key = g_malloc(sizeof(*new_key));
 > +        bool take_bql = !bql_locked();
->   
->           new_key->bus = bus;
->           new_key->devfn = devfn;
+>  
+>          new_key->bus = bus;
+>          new_key->devfn = devfn;
 > @@ -4238,6 +4239,11 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->           vtd_dev_as->context_cache_entry.context_cache_gen = 0;
->           vtd_dev_as->iova_tree = iova_tree_new();
->   
+>          vtd_dev_as->context_cache_entry.context_cache_gen = 0;
+>          vtd_dev_as->iova_tree = iova_tree_new();
+>  
 > +        /* Some functions in this branch require the bql, make sure we own it */
 > +        if (take_bql) {
 > +            bql_lock();
 > +        }
 > +
->           memory_region_init(&vtd_dev_as->root, OBJECT(s), name, UINT64_MAX);
->           address_space_init(&vtd_dev_as->as, &vtd_dev_as->root, "vtd-root");
->   
+>          memory_region_init(&vtd_dev_as->root, OBJECT(s), name, UINT64_MAX);
+>          address_space_init(&vtd_dev_as->as, &vtd_dev_as->root, "vtd-root");
+>  
 > @@ -4305,6 +4311,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->   
->           vtd_switch_address_space(vtd_dev_as);
-
-Would it help clarifying to propagate this argument down?
-vtd_switch_address_space(VTDAddressSpace *as, bool need_lock);
-
->   
+>  
+>          vtd_switch_address_space(vtd_dev_as);
+>  
 > +        if (take_bql) {
 > +            bql_unlock();
 > +        }
 > +
->           g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
->       }
->       return vtd_dev_as;
+>          g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
+>      }
+>      return vtd_dev_as;
+> -- 
+> 2.49.0
 
 
