@@ -4,143 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E06C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 13:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0495C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 13:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4gHg-0003qz-9j; Tue, 15 Apr 2025 09:25:05 -0400
+	id 1u4ggT-00028z-Jc; Tue, 15 Apr 2025 09:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u4gHY-0003pz-O6
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 09:24:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u4gHW-0006db-6l
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 09:24:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744723492;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PuAuMgAIZ4T8jGY+S4qCNSjehktQ3hGQppM3WeGCIOE=;
- b=EYgd8FhxkfEc9ZMTIprkpxgmJvmWWdS6vC9e22OGWaDykuO0H0aqympAvp+QvGkJjvlrNF
- aSv9pC6NvTdwulDs7az1mv+A+Z/ELdlDzAJz29X51OPbUV2sufXVbzCrs82J7km1ZtMTlT
- NR8n4CFv3svL7+OvtFCmxnN3Ivil2eU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-dzd1X7WXOWKhGa1pAlp9zQ-1; Tue, 15 Apr 2025 09:24:47 -0400
-X-MC-Unique: dzd1X7WXOWKhGa1pAlp9zQ-1
-X-Mimecast-MFC-AGG-ID: dzd1X7WXOWKhGa1pAlp9zQ_1744723486
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43cf172ffe1so45248515e9.3
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 06:24:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744723486; x=1745328286;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PuAuMgAIZ4T8jGY+S4qCNSjehktQ3hGQppM3WeGCIOE=;
- b=Nw17fZCJeOcBbwo2P9k3J+eo8JU2eUrdJjfAGlfIyBDiwwQ3M9EX06DU9iAvIVbLU+
- mqziU3n0sz6zIVGoNOrXjiUh85l1ckrMFXwqSoZJgDGkeHKaSPbST55F7Jr0DDZ6y2JH
- AGx/YI7S1qmOE5O+4cK2TtX+tLuRIqtXwlzvJ+Yl1O2wIqm79uoSbz6RDJQNj09ri13g
- pTzT9y9XvReI6aId20UZJxGJySZyWd7ynGGBrovum3ATAf+xBEwNizB2Jb3HbQveIGxn
- uooTT0Gq9VDLLURW4iK8T5ai1uo8GrUfUZwK27E0HiWuGGAraxn5bqNJJFkEYeWIKMPK
- WleA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2RISG835O7tSqk19LrNiTpB3UcMQHF7Le8cW4hZxWjJBSFyzJg3b8UzY5ix4LROLcthBeicmKIxFn@nongnu.org
-X-Gm-Message-State: AOJu0YwIeXrrnY5psXWWlROiehSObFc5bYmsiFywwr3za7oYt/GBgWhr
- ukKcckicR0sgjFRYN5huDHzMr7ljJbepVDgkqeRe/D7CkQELCAh8slKzjC95e/AaZ7aLF+UI1H5
- ltBiBm+8zhJCMZnI9NkDR7VpKRlvD5xjg6hWvZMPaDOFJMgumBtVU
-X-Gm-Gg: ASbGncswB58swz8OOTnYxX6+0tmjlO4KalKqUFlR8udrjwLN2n3L0jGn2EOirMkts3J
- ZdrclSLA2cbLi8C4UJb9c/tJEwep0akoHl3vvU3vV+wRqBaw1R+AW5T3ikLqSRCliFn+cK+I27F
- pClzNBXlw74+YG+U7ltaHIR2JYjWlcHDbjO7BrAwaarWiomZ7QptRZSmge2fqIRz3MyZEtA+zcB
- FK+iPPp5VbV82L8M9PKBwVVELzmuGrrCKswyK5q/2fQRIgfW7xcxCkRKicKu1hrcVMSL+fBWmEY
- VO1C6QWaeqlxEog2
-X-Received: by 2002:a05:600c:a43:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-43f3a9aa690mr115024135e9.20.1744723486080; 
- Tue, 15 Apr 2025 06:24:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfZlNCRIYhaB1h77C4YwkaCiM22AK4zWsxFzNheuiDHlPgp0lMDVvIB5V5IPuUSacIc7Z0Tw==
-X-Received: by 2002:a05:600c:a43:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-43f3a9aa690mr115023845e9.20.1744723485742; 
- Tue, 15 Apr 2025 06:24:45 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.109.83])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-43f205ecc73sm211157645e9.8.2025.04.15.06.24.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Apr 2025 06:24:45 -0700 (PDT)
-Message-ID: <3000f78a-5842-46f0-9dc4-cb8180c38a39@redhat.com>
-Date: Tue, 15 Apr 2025 15:24:43 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u4ggR-00028c-He
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 09:50:39 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u4ggL-0001K2-A0
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 09:50:39 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F232821114;
+ Tue, 15 Apr 2025 13:50:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744725031; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=N/S5UX6+6GIosqgh79dSz88wZdFjXtdu3mQKjRxgY1U=;
+ b=vgkZDSGwgr2CU7SOB/bMmURD+yYUD9AVrkBf92qvuYPjZu8s1hR2S6hxQQXwXkWIfYUj+y
+ npjWRI+0YbIjXu8raYoyoXlR5lAsgiSsCPrVCVeV3ELCjW+p6weX05J763fAqNqiMp2SV5
+ CdkffWn7cfusVcZ+CTfxIesYmiI6+5c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744725031;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=N/S5UX6+6GIosqgh79dSz88wZdFjXtdu3mQKjRxgY1U=;
+ b=OJGIj0ny2tish42tJu61mT+moSMXDI0u/5BVmTRUISt7i9/G0i6HEE1qeZqr5dZ8Zm7QNW
+ A1s5i6u8vRqJowDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744725030; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=N/S5UX6+6GIosqgh79dSz88wZdFjXtdu3mQKjRxgY1U=;
+ b=RDwFO/2zIbUEa1WCcWyp5a3hG7ER0PDbaczWrn4sr41g30LkLBscCtRIjMad0UGqLegGuN
+ QQ+mxKnGOTUpD+JxEFc6e9nxj7iqXEB+fvzXHN5KBIxzusntnou8OISydQwBPO16h2DlRI
+ tWxU+pfAlLiwObdH88hfquZAgAyrlRo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744725030;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=N/S5UX6+6GIosqgh79dSz88wZdFjXtdu3mQKjRxgY1U=;
+ b=5XEJuo7gioaiqX1WnHP4fb0II6G48RjvX+pIh3r4nEKZIHRvcdY1Dz2Be1RpUpFTPRqAVD
+ tcUEOitszXbawaCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6A77E13A9F;
+ Tue, 15 Apr 2025 13:50:30 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CAlJCCZk/mdtLgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 15 Apr 2025 13:50:30 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, =?utf-8?Q?Daniel?=
+ =?utf-8?Q?_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Prasad Pandit
+ <ppandit@redhat.com>
+Subject: Re: [PATCH] migration: add   FEATURE_SEEKABLE to QIOChannelBlock
+In-Reply-To: <7cd3c-67fe3180-3d9-10622a60@195384178>
+References: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
+ <87jz7rhjzq.fsf@suse.de> <4caa0-67f8d780-a89-60718600@156698708>
+ <87ecxyhon3.fsf@suse.de> <7cd3c-67fe3180-3d9-10622a60@195384178>
+Date: Tue, 15 Apr 2025 10:50:27 -0300
+Message-ID: <87plhdfs9o.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] intel_iommu: Take the bql before registering a new
- address space
-To: Stefan Hajnoczi <stefanha@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>
-Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "peterx@redhat.com" <peterx@redhat.com>
-References: <20250415061353.185589-1-clement.mathieu--drif@eviden.com>
- <20250415030653-mutt-send-email-mst@kernel.org>
- <20250415123330.GB270228@fedora>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250415123330.GB270228@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,30 +117,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/25 14:33, Stefan Hajnoczi wrote:
-> On Tue, Apr 15, 2025 at 03:11:00AM -0400, Michael S. Tsirkin wrote:
->> On Tue, Apr 15, 2025 at 06:18:08AM +0000, CLEMENT MATHIEU--DRIF wrote:
->>> Address space creation might end up being called without holding the
->>> bql as it is exposed through the IOMMU ops.
->>>
->>> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
->>
->>
->> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->>
->> Stefan, want to pick this one up, too?
-> 
-> Not yet, it may need to wait until after the release:
-> - Discussion is still ongoing.
-> - Is this a regression in 10.0 or a long-standing issue?
-> - Who is affected and what is the impact?
-> 
-> There are still a few hours left before -rc4 is tagged. I will merge it
-> if consensus is reached and the missing information becomes clear.
-There are other thread-safety issues in the same code, so I'd prefer to 
-hold this patch and not hold the release for it.  Even if it's a 
-regression, it can be fixed with a quick 10.0.1 in a couple weeks.
+"Marco Cavenati" <Marco.Cavenati@eurecom.fr> writes:
 
-Paolo
+> On Friday, April 11, 2025 14:24 CEST, Fabiano Rosas <farosas@suse.de> wrote:
+>
+>> > If bitmap 0 implies zero page, we could call `ram_handle_zero`
+>> > in `read_ramblock_mapped_ram` for the clear bits.
+>> > Or do you fear this might be unnecessary expensive for migration?
+>> 
+>> Yes, unfortunately the peformance difference is noticeable. But we could
+>> have a slightly different algorithm for savevm. At this point it might
+>> be easier to just duplicate read_ramblock_mapped_ram(), check for savevm
+>> in there and see what that the resulting code looks like.
+>
+> I tried to get some numbers in a "bad case" scenario restoring a
+> clean, fully booted, idle Debian VM with 4GB of ram. The zero pages
+> are ~90%. I'm using a nvme ssd to store the snapshot and I repeated
+> the restore 10 times with and without zeroing (`ram_handle_zero`).
+> The restore takes on average +25% of time.
+> (It's not a broad nor deep investigation.)
+>
+> So, I see your point on performance, but I'm not fully comfortable
+> with the difference in zero page handling between mapped-ram on
+> and mapped-ram off. In the former case zero pages are skipped, while
+> in the latter they are explicitly zeroed.
+> Enabling mapped-ram has the implicit effect to also skip zero-pages.
+> I think it is an optimization not really bound to mapped-ram and it
+> could be better to have this feature external to mapped-ram, enabled
+> when the destination ram is known to be already zeroed (also for
+> mapped-ram off ideally).
+>
 
+From a design perspective that makes sense. The only use case currently
+would be mapped-ram _migration_ (as opposed to snapshot) because
+non-mapped-ram migration is usually done live. The stream of pages will
+potentially have several versions of the same page, therefore we need to
+clear it when it's a zero page.
+
+We'd benefit from a separate "don't load zero pages" option only when
+the VM is guaranteed to be stopped and more importantly, not allowed to
+be unstopped. This is the tricky part. We have experimented with and
+dropped the idea of detecting a stopped-vm-migration for mapped-ram (the
+idea back then was not to do better zero page handling, but skip dirty
+tracking altogether).
+
+Since we're dealing with snapshots here, which are asynchronous, I'm
+wondering wheter it would make sense to extend the zero-page-detection
+option to the destination. Then we could bind the loadvm process to
+zero-page-detection=none because I don't think we can safely ignore them
+anyway.
+
+>> By the way, what's your overall goal with enabling the feature? Do you
+>> intent to enable further capabilities for snapshot? Specifically
+>> multifd. I belive the zero page skip is responsible for most of the
+>> performance gains for mapped-ram without direct-io and multifd. The
+>> benefit of bounded stream size doesn't apply to snapshots because
+>> they're not live.
+>
+> My overall goal is a hot-loadvm feature that currently lives in a fork
+> downstream and has a long way before getting in a mergeable state :)
+
+Cool. Don't hesitate to send stuff our way, the sooner and more often we
+discuss this, the better the chances of getting it merged upstream.
+
+Do you use libvirt at all? Mapped-ram support has been added to it in
+the latest version. The original use-case for mapped-ram was quick
+snapshot saving and loading after all. Libvirt does it in a way that
+does not use savevm, which might be helpful.
+
+> In a nutshell, I'm using dirty page tracking to load from the snapshot
+> only the pages that have been dirtied between two loadvm;
+> mapped-ram is required to seek and read only the dirtied pages.
+
+But then you'd have a bitmap of pages you could correlate with the
+file_bmap and force-load whatever pages you need. It doesn't seem like
+zero page handling would affect you too much in that case.
 
