@@ -4,47 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB3EC369B4
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 10:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C886C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 10:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4dDV-0004xN-VT; Tue, 15 Apr 2025 06:08:34 -0400
+	id 1u4dKP-0007yR-O6; Tue, 15 Apr 2025 06:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
- id 1u4dD9-0004r0-K5; Tue, 15 Apr 2025 06:08:12 -0400
-Received: from out28-97.mail.aliyun.com ([115.124.28.97])
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1u4dKE-0007vX-G9
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:15:32 -0400
+Received: from smtp.eurecom.fr ([193.55.113.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
- id 1u4dD4-0007Id-J7; Tue, 15 Apr 2025 06:08:11 -0400
-Received: from TC-DZ-03-0020.tc.local(mailfrom:lc00631@tecorigin.com
- fp:SMTPD_---.cN4sjlK_1744711660 cluster:ay29) by smtp.aliyun-inc.com;
- Tue, 15 Apr 2025 18:07:40 +0800
-From: Chao Liu <lc00631@tecorigin.com>
-To: alistair23@gmail.com,
-	palmer@dabbelt.com
-Cc: zhiwei_liu@linux.alibaba.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, lc00631@tecorigin.com,
- zqz00548@tecorigin.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v1 1/1] hw/riscv: fix PLIC hart topology configuration string
- when not getting CPUState correctly
-Date: Tue, 15 Apr 2025 18:05:30 +0800
-Message-ID: <07a97219e3f7e342c668d6772acc4c0a8eb4d4f3.1744709888.git.lc00631@tecorigin.com>
-X-Mailer: git-send-email 2.47.0.windows.2
-In-Reply-To: <cover.1744709888.git.lc00631@tecorigin.com>
-References: <cover.1744709888.git.lc00631@tecorigin.com>
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1u4dK8-00083f-E0
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 06:15:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
+ t=1744712121; x=1776248121;
+ h=from:in-reply-to:references:date:cc:to:mime-version:
+ message-id:subject:content-transfer-encoding;
+ bh=zFdlkfg8HOpidi2/q2ei3yN/fl4TXRX7xhEDxC3t5/I=;
+ b=cXlWzmfMcyah2btM4TtD6F7wVeIB0KPlhHtVzBz0qIwN4Tu51TG7nq6W
+ yPzjZoAcHIVuAPBWkGbAgI49YHg58L7fV5gwVzFwEBKHPLdtEub27TDcC
+ 30j/cuu/nGxVXy6Ibkjlq3LkIMtJNnSH0oDJMh0oARScMwmTiBbvR8tq4 Q=;
+X-CSE-ConnectionGUID: iaeZ/sFIR9WjKJ38Fh6M3g==
+X-CSE-MsgGUID: e/ppbHHhRSWJgRGNXP4dDQ==
+X-IronPort-AV: E=Sophos;i="6.15,213,1739833200"; 
+   d="scan'208";a="850446"
+Received: from quovadis.eurecom.fr ([10.3.2.233])
+ by drago1i.eurecom.fr with ESMTP; 15 Apr 2025 12:15:15 +0200
+From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
+In-Reply-To: <87ecxyhon3.fsf@suse.de>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 193.55.114.5
+References: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
+ <87jz7rhjzq.fsf@suse.de> <4caa0-67f8d780-a89-60718600@156698708>
+ <87ecxyhon3.fsf@suse.de>
+Date: Tue, 15 Apr 2025 12:15:18 +0200
+Cc: "Peter Xu" <peterx@redhat.com>, qemu-devel@nongnu.org,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Prasad Pandit" <ppandit@redhat.com>
+To: "Fabiano Rosas" <farosas@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.28.97; envelope-from=lc00631@tecorigin.com;
- helo=out28-97.mail.aliyun.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+Message-ID: <7cd3c-67fe3180-3d9-10622a60@195384178>
+Subject: =?utf-8?q?Re=3A?= [PATCH] =?utf-8?q?migration=3A?= add  
+ =?utf-8?q?FEATURE=5FSEEKABLE?= to QIOChannelBlock
+User-Agent: SOGoMail 5.12.0
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=193.55.113.210;
+ envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,126 +76,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-Message-ID: <20250415100530.dqfPKK2tLPtIvtJLUcwaazgFGvYQrhk8Z6eHQ-YHjjE@z>
 
-riscv_plic_hart_config_string() when getting CPUState via qemu_get_cpu()
-should be consistent with keeping sifive_plic_realize() by
-hartid_base + cpu_index.
+On Friday, April 11, 2025 14:24 CEST, Fabiano Rosas <farosas@suse.de> w=
+rote:
 
-For non-numa or single-cluster machines, hartid_base should be 0.
+> > If bitmap 0 implies zero page, we could call `ram=5Fhandle=5Fzero`
+> > in `read=5Framblock=5Fmapped=5Fram` for the clear bits.
+> > Or do you fear this might be unnecessary expensive for migration?
+>=20
+> Yes, unfortunately the peformance difference is noticeable. But we co=
+uld
+> have a slightly different algorithm for savevm. At this point it migh=
+t
+> be easier to just duplicate read=5Framblock=5Fmapped=5Fram(), check f=
+or savevm
+> in there and see what that the resulting code looks like.
 
-Also, to ensure that CPUState->cpu_index is set correctly, we need to
-update it with the value of mhartid during riscv_hart_realize().
+I tried to get some numbers in a "bad case" scenario restoring a
+clean, fully booted, idle Debian VM with 4GB of ram. The zero pages
+are ~90%. I'm using a nvme ssd to store the snapshot and I repeated
+the restore 10 times with and without zeroing (`ram=5Fhandle=5Fzero`).
+The restore takes on average +25% of time.
+(It's not a broad nor deep investigation.)
 
-Signed-off-by: Chao Liu <lc00631@tecorigin.com>
-Reviewed-by: zhaoqingze <zqz00548@tecorigin.com>
----
- hw/riscv/boot.c            | 4 ++--
- hw/riscv/microchip_pfsoc.c | 2 +-
- hw/riscv/riscv_hart.c      | 1 +
- hw/riscv/sifive_u.c        | 5 +++--
- hw/riscv/virt.c            | 2 +-
- include/hw/riscv/boot.h    | 2 +-
- 6 files changed, 9 insertions(+), 7 deletions(-)
+So, I see your point on performance, but I'm not fully comfortable
+with the difference in zero page handling between mapped-ram on
+and mapped-ram off. In the former case zero pages are skipped, while
+in the latter they are explicitly zeroed.
+Enabling mapped-ram has the implicit effect to also skip zero-pages.
+I think it is an optimization not really bound to mapped-ram and it
+could be better to have this feature external to mapped-ram, enabled
+when the destination ram is known to be already zeroed (also for
+mapped-ram off ideally).
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 765b9e2b1a..d4c06e7530 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -44,13 +44,13 @@ bool riscv_is_32bit(RISCVHartArrayState *harts)
-  * Return the per-socket PLIC hart topology configuration string
-  * (caller must free with g_free())
-  */
--char *riscv_plic_hart_config_string(int hart_count)
-+char *riscv_plic_hart_config_string(int hart_base, int hart_count)
- {
-     g_autofree const char **vals = g_new(const char *, hart_count + 1);
-     int i;
- 
-     for (i = 0; i < hart_count; i++) {
--        CPUState *cs = qemu_get_cpu(i);
-+        CPUState *cs = qemu_get_cpu(hart_base + i);
-         CPURISCVState *env = &RISCV_CPU(cs)->env;
- 
-         if (kvm_enabled()) {
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 9c846f9b5b..5269336346 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -275,7 +275,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-                                 l2lim_mem);
- 
-     /* create PLIC hart topology configuration string */
--    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-+    plic_hart_config = riscv_plic_hart_config_string(0, ms->smp.cpus);
- 
-     /* PLIC */
-     s->plic = sifive_plic_create(memmap[MICROCHIP_PFSOC_PLIC].base,
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index a55d156668..522e795033 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -138,6 +138,7 @@ static bool riscv_hart_realize(RISCVHartArrayState *s, int idx,
-     }
- 
-     s->harts[idx].env.mhartid = s->hartid_base + idx;
-+    CPU(&s->harts[idx])->cpu_index = s->harts[idx].env.mhartid;
-     qemu_register_reset(riscv_harts_cpu_reset, &s->harts[idx]);
-     return qdev_realize(DEVICE(&s->harts[idx]), NULL, errp);
- }
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 679f2024bc..516912c4f4 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -790,10 +790,11 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
-     MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
-     char *plic_hart_config;
-+    int hartid_base = 1;
-     int i, j;
- 
-     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
--    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
-+    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", hartid_base);
-     qdev_prop_set_string(DEVICE(&s->u_cpus), "cpu-type", s->cpu_type);
-     qdev_prop_set_uint64(DEVICE(&s->u_cpus), "resetvec", 0x1004);
- 
-@@ -829,7 +830,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-                                 l2lim_mem);
- 
-     /* create PLIC hart topology configuration string */
--    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-+    plic_hart_config = riscv_plic_hart_config_string(hartid_base, ms->smp.cpus);
- 
-     /* MMIO */
-     s->plic = sifive_plic_create(memmap[SIFIVE_U_DEV_PLIC].base,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index e517002fdf..41fdfd2bc8 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1280,7 +1280,7 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
-     g_autofree char *plic_hart_config = NULL;
- 
-     /* Per-socket PLIC hart topology configuration string */
--    plic_hart_config = riscv_plic_hart_config_string(hart_count);
-+    plic_hart_config = riscv_plic_hart_config_string(base_hartid, hart_count);
- 
-     /* Per-socket PLIC */
-     ret = sifive_plic_create(
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index 7d59b2e6c6..5937298646 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -40,7 +40,7 @@ typedef struct RISCVBootInfo {
- 
- bool riscv_is_32bit(RISCVHartArrayState *harts);
- 
--char *riscv_plic_hart_config_string(int hart_count);
-+char *riscv_plic_hart_config_string(int hart_base, int hart_count);
- 
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
- target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
--- 
-2.48.1
+> By the way, what's your overall goal with enabling the feature? Do yo=
+u
+> intent to enable further capabilities for snapshot? Specifically
+> multifd. I belive the zero page skip is responsible for most of the
+> performance gains for mapped-ram without direct-io and multifd. The
+> benefit of bounded stream size doesn't apply to snapshots because
+> they're not live.
+
+My overall goal is a hot-loadvm feature that currently lives in a fork
+downstream and has a long way before getting in a mergeable state :)
+In a nutshell, I'm using dirty page tracking to load from the snapshot
+only the pages that have been dirtied between two loadvm;
+mapped-ram is required to seek and read only the dirtied pages.
+About the other capabilities, I still have to understand if they might
+help in my use case.
+
+> It would be interesting to gather some numbers for the perf differenc=
+e
+> between mapped-ram=3Don vs off.
+
+Repeating the same experiment as above, without mapped-ram,
+I obtain +48% in restore time compared to mapped-ram and,
+therefore, a +18% wrt to the mapped-ram with zeroing.
+(It should be noted that mapped-ram without zeroing leaves
+the restored vm in an inconsistent state).
+At the moment I don't have numbers regarding savevm.
+
+Thanks!
+
+Best,
+Marco
 
 
