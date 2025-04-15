@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9315C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 09:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7E9C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 15 Apr 2025 09:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4cag-00037y-Qg; Tue, 15 Apr 2025 05:28:28 -0400
+	id 1u4cb5-0003dr-Q0; Tue, 15 Apr 2025 05:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4caV-000341-5H
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:28:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4caw-0003R8-Gb; Tue, 15 Apr 2025 05:28:42 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u4caQ-0002XP-Tu
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 05:28:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744709288;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=gMH03W6zuGFz+lUn3PNdcubr8mjzr75KzQr7lTep0Oc=;
- b=XOKpxTnY9yqZqz7sHCwN+qfdfai5+7JEOf28lEHl/VAeJBeVFtK9I6InAq8+ipnOKcl5Ts
- NNmleprNoBotoqMZZZEEqx6KHwjDEXKI9gn6YeN5ziweA0D5a80jKwaCntLmjD63E0VHpo
- njt6UGVv5GaIk2zT+t6OeHUoaqnJl7g=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-9fniDGqcNvuQyfsdsKHHoQ-1; Tue,
- 15 Apr 2025 05:28:04 -0400
-X-MC-Unique: 9fniDGqcNvuQyfsdsKHHoQ-1
-X-Mimecast-MFC-AGG-ID: 9fniDGqcNvuQyfsdsKHHoQ_1744709283
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A724A180AF68; Tue, 15 Apr 2025 09:28:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.133])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 49F8919560AD; Tue, 15 Apr 2025 09:28:00 +0000 (UTC)
-Date: Tue, 15 Apr 2025 10:27:56 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manish Mishra <manish.mishra@nutanix.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, leobras@redhat.com,
- farosas@suse.de
-Subject: Re: [PATCH v4] QIOChannelSocket: Flush zerocopy socket error queue
- on sendmsg failure due to ENOBUF
-Message-ID: <Z_4mnPol5yLGDHYb@redhat.com>
-References: <20250403082121.366851-1-manish.mishra@nutanix.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4cau-0002Y6-KK; Tue, 15 Apr 2025 05:28:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZcJdQ2h4cz6K9Tv;
+ Tue, 15 Apr 2025 17:24:26 +0800 (CST)
+Received: from frapeml100008.china.huawei.com (unknown [7.182.85.131])
+ by mail.maildlp.com (Postfix) with ESMTPS id 564571406AD;
+ Tue, 15 Apr 2025 17:28:37 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100008.china.huawei.com (7.182.85.131) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 15 Apr 2025 11:28:37 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Tue, 15 Apr 2025 11:28:37 +0200
+To: Jonathan Cameron <jonathan.cameron@huawei.com>, Linuxarm
+ <linuxarm@huawei.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH 4/5] hw/arm/virt: Add support for smmuv3 device
+Thread-Topic: [PATCH 4/5] hw/arm/virt: Add support for smmuv3 device
+Thread-Index: AQHbrehdMuAYIN1si0WJyp5C1dh1B7OkdTzg
+Date: Tue, 15 Apr 2025 09:28:37 +0000
+Message-ID: <ea6f7c90bef040a690579bcf97e096a3@huawei.com>
+References: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+ <20250415081104.71708-5-shameerali.kolothum.thodi@huawei.com>
+ <20250415102542.00007fd7@huawei.com>
+In-Reply-To: <20250415102542.00007fd7@huawei.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250403082121.366851-1-manish.mishra@nutanix.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,137 +81,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 03, 2025 at 04:21:21AM -0400, Manish Mishra wrote:
-> We allocate extra metadata SKBs in case of a zerocopy send. This metadata
-> memory is accounted for in the OPTMEM limit. If there is any error while
-> sending zerocopy packets or if zerocopy is skipped, these metadata SKBs are
-> queued in the socket error queue. This error queue is freed when userspace
-> reads it.
-> 
-> Usually, if there are continuous failures, we merge the metadata into a single
-> SKB and free another one. As a result, it never exceeds the OPTMEM limit.
-> However, if there is any out-of-order processing or intermittent zerocopy
-> failures, this error chain can grow significantly, exhausting the OPTMEM limit.
-> As a result, all new sendmsg requests fail to allocate any new SKB, leading to
-> an ENOBUF error. Depending on the amount of data queued before the flush
-> (i.e., large live migration iterations), even large OPTMEM limits are prone to
-> failure.
-> 
-> To work around this, if we encounter an ENOBUF error with a zerocopy sendmsg,
-> we flush the error queue and retry once more.
-> 
-> Signed-off-by: Manish Mishra <manish.mishra@nutanix.com>
-> ---
->  include/io/channel-socket.h |  5 +++
->  io/channel-socket.c         | 74 ++++++++++++++++++++++++++++++-------
->  2 files changed, 65 insertions(+), 14 deletions(-)
-> 
-> V2:
->   1. Removed the dirty_sync_missed_zero_copy migration stat.
->   2. Made the call to qio_channel_socket_flush_internal() from
->      qio_channel_socket_writev() non-blocking.
-> 
-> V3:
->   1. Add the dirty_sync_missed_zero_copy migration stat again.
-> 
-> V4:
->   1. Minor nit to rename s/zero_copy_flush_pending/zerocopy_flushed_once.
-> 
-> diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
-> index ab15577d38..2c48b972e8 100644
-> --- a/include/io/channel-socket.h
-> +++ b/include/io/channel-socket.h
-> @@ -49,6 +49,11 @@ struct QIOChannelSocket {
->      socklen_t remoteAddrLen;
->      ssize_t zero_copy_queued;
->      ssize_t zero_copy_sent;
-> +    /**
-> +     * This flag indicates whether any new data was successfully sent with
-> +     * zerocopy since the last qio_channel_socket_flush() call.
-> +     */
-> +    bool new_zero_copy_sent_success;
->  };
->  
->  
-> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> index 608bcf066e..d5882c16fe 100644
-> --- a/io/channel-socket.c
-> +++ b/io/channel-socket.c
-> @@ -37,6 +37,12 @@
->  
->  #define SOCKET_MAX_FDS 16
->  
-> +#ifdef QEMU_MSG_ZEROCOPY
-> +static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> +                                             bool block,
-> +                                             Error **errp);
-> +#endif
-> +
->  SocketAddress *
->  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
->                                       Error **errp)
-> @@ -65,6 +71,7 @@ qio_channel_socket_new(void)
->      sioc->fd = -1;
->      sioc->zero_copy_queued = 0;
->      sioc->zero_copy_sent = 0;
-> +    sioc->new_zero_copy_sent_success = FALSE;
->  
->      ioc = QIO_CHANNEL(sioc);
->      qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-> @@ -566,6 +573,7 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->      size_t fdsize = sizeof(int) * nfds;
->      struct cmsghdr *cmsg;
->      int sflags = 0;
-> +    bool zerocopy_flushed_once = FALSE;
->  
->      memset(control, 0, CMSG_SPACE(sizeof(int) * SOCKET_MAX_FDS));
->  
-> @@ -612,9 +620,25 @@ static ssize_t qio_channel_socket_writev(QIOChannel *ioc,
->              goto retry;
->          case ENOBUFS:
->              if (flags & QIO_CHANNEL_WRITE_FLAG_ZERO_COPY) {
-> -                error_setg_errno(errp, errno,
-> -                                 "Process can't lock enough memory for using MSG_ZEROCOPY");
-> -                return -1;
-> +                /**
-> +                 * Socket error queueing may exhaust the OPTMEM limit. Try
-> +                 * flushing the error queue once.
-> +                 */
-> +                if (!zerocopy_flushed_once) {
-> +                    ret = qio_channel_socket_flush_internal(ioc, false, errp);
 
-Passing in 'errp', so the error will be set on failure of this method...
 
-> +                    if (ret < 0) {
-> +                        error_setg_errno(errp, errno,
-> +                                         "Zerocopy flush failed");
+> -----Original Message-----
+> From: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Sent: Tuesday, April 15, 2025 10:26 AM
+> To: Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; Linuxarm
+> <linuxarm@huawei.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+> nicolinc@nvidia.com; ddutile@redhat.com; berrange@redhat.com;
+> nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com;
+> Wangzhou (B) <wangzhou1@hisilicon.com>; jiangkunkun
+> <jiangkunkun@huawei.com>; Jonathan Cameron
+> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+> Subject: Re: [PATCH 4/5] hw/arm/virt: Add support for smmuv3 device
+>=20
+> On Tue, 15 Apr 2025 09:11:03 +0100
+> Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+>=20
+> > Allow cold-plug of smmuv3 device to virt If the machine wide smmuv3
+> > or a virtio-iommu is not specified.
+> >
+> > Also restrict the usage if virt <=3D 9.2. This will prevent accidently
+> > creating a SMMUv3 device on machines prior to 9.2 and cause failure
+> > on migrating to machines with same version but has a legacy smmuv3
+> > device.
+>=20
+> Hi,
+>=20
+> As we discussed internally I'm not convinced we need to prevent this
+> particular
+> way for a user to shoot themselves in the foot.
+>=20
+> To be a problem they have to specifically request an old machine + the
+> device that didn't exist for that machine, then migrate to a real old
+> version of QEMU.  Agreed it is possible but I'm not sure we need to
+> prevent that particular crazy.
 
-...but we now try to overwrite the already set error. This error_setg_errno
-call should be removed.
+Agree. If there is no precedence or requirement for blocking such a use cas=
+e
+I will remove that check.
 
-> +                        return -1;
-> +                    }
-> +                    zerocopy_flushed_once = TRUE;
-> +                    goto retry;
-> +                } else {
-> +                    error_setg_errno(errp, errno,
-> +                                     "Process can't lock enough memory for "
-> +                                     "using MSG_ZEROCOPY");
-> +                    return -1;
-> +                }
->              }
->              break;
->          }
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Thanks,
+Shameer
 
