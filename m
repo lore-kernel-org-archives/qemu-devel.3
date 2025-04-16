@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBA9C369C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFB2C369C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u58Ml-0001tn-VK; Wed, 16 Apr 2025 15:24:11 -0400
+	id 1u58Ov-0002lo-Vp; Wed, 16 Apr 2025 15:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u58Mj-0001tA-Cn
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:24:09 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u58Mh-0007JY-LF
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:24:09 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-af6a315b491so6294736a12.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 12:24:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744831446; x=1745436246; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=H40+N+fQKmshn6EwwmzleyyX8/APVqIf2KhD3fCTk6s=;
- b=DCA3PRDcdgVEf9cIlnmu3kvvJLUeqxGMkMCeKYxuLK8CQO7TtBZZo88EsYzWp40c/E
- wjMK6Jj4Jp6mO8IXEFg5eP5N6Pkvf/FjzsOEQMA/mrZc5nUTX+VEyMtZ8wbGsZnd1Yba
- aYQm/4Im1z0Ayp7loZsKdWF5Y2mH2RFkWdhkSmE/0y5GkU28E8Ngv7+WYATr7MAH+389
- 5/+I3ffIAQmjs8yY6+TNNNhSm8klrb2aieVlJ95uFh6EHgsAx2Cb3v/u3V5MxH/CeFS3
- JUPoAQQ/bR5dJs85S3aU9gXOATWv+HU3kfcyb3Wn8xcAaEykFrzXBb5ATOHYikuC1Zms
- rg2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744831446; x=1745436246;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H40+N+fQKmshn6EwwmzleyyX8/APVqIf2KhD3fCTk6s=;
- b=araCmJ5s9OMKLQzPss2lzySqfA5LcChXTjibbRsqpnzMtE0I3Cy7Gi+vwI7ubOvgd+
- mC8CFhU+R3dokrr1oqSvriGyr2hmxODuf/R9EeSWlBKUbCIvmzlX3MTcMsULirveTwdG
- TDVsNb1AKxh9/RjiFgg/GjOC6ruq4W9W4Cjh/KjSsijIdatJ98vFUf/RpJkc1q11VHK/
- LT2YRJ0W78CUqpdE2JobvNPCD9RLXfLZzeMfA45Vu9qT6axf8hAUbmjQxr+qegU2vmo+
- D+ikjnHaTp1KqDQN5fRWMDAPpus71kux7X7wq/u8D4y799Uktobhry5ticwGbhVRD/L4
- NPJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVyQphvtEjwCKMnTkuWcnh2w+KQnZgx6UpKNfsJ5F2L/iTGftgrMRmxgz1sNjIWHD/Y80YqAqfDglpk@nongnu.org
-X-Gm-Message-State: AOJu0YzOGpiI+Ku+6O/a4Bunpmbu52H9yRLXTC6YDDZQM9OlbKLk7vd5
- e41RoMc2lJpy6JAxzOtykrN/tJZV2rOJst8Ov1McbAO4UxoOj1ALlD6sIcC45dY=
-X-Gm-Gg: ASbGncuU2PfcII/gan/n0KjgnN2+K+8psQeUvL+Kw44OyM8TEvN/lBLQh73pkWc2JXW
- HRBg12WTFH1fqEKUFFanpsfR2TBOLjZJ1GD5YaxuotqR/dQH5RT2MaeBAXI99gY7S6Xmkb/0NHO
- VphnxH8TXNSChNXeW6ydeCCJxQoelYgNvhrpJuCS2Vaf3P+0Bd8bnj7f0BW5CZM0gw+M2HktDi6
- qzgjNt9pu+J0pOljME7NkljlygvTeDLJ1oYM8VKOMQfp9fkZcciR/c/1gHLsXdon8tr93tMmk53
- BhGJ//xuPXFzNafaiSmVAjYMOORKG+odo3GHrYr2T8rnwxW65B25gs/ZSp0KOGgubAFsokY6Z4N
- KZ3JgqXc=
-X-Google-Smtp-Source: AGHT+IE8L3mjO9jwXdTq9fGhT3jqIUdmcVv/drtOYZ1r2liYOnZanSYtVIzRfzsa+XQCvULVdyhfLQ==
-X-Received: by 2002:a17:90b:268b:b0:2ee:8ea0:6b9c with SMTP id
- 98e67ed59e1d1-30863f18415mr6159982a91.12.1744831445699; 
- Wed, 16 Apr 2025 12:24:05 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30861212fffsm2010240a91.25.2025.04.16.12.24.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 12:24:05 -0700 (PDT)
-Message-ID: <c0887bf9-e820-4897-91a6-d9439301301d@linaro.org>
-Date: Wed, 16 Apr 2025 12:24:03 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u58Op-0002lU-KD
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:26:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u58On-0007km-4I
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:26:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744831575;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qT1ieZ434PvXCUh5GiA8je9Uykd0GsB5Mhjjw0dLnDw=;
+ b=BRH9Dl/odJZEUPL3gieWcHGm1X1GZ4RjsE5nHwHfJS6e+4kEImdRmZXMdV0tvrde+Ut37W
+ 9s7PdcOKa4HlDyJ3VNsl40nWlDz9x6YkxRCmDpwEAk7aYYSmme11wEBWFMCd8krLfY2HlN
+ SSvJ/N9xbrMtWYBZ8yoaej7QhrHnDdY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-EWm8UnHDP1q8Rx59TxPa1w-1; Wed,
+ 16 Apr 2025 15:26:11 -0400
+X-MC-Unique: EWm8UnHDP1q8Rx59TxPa1w-1
+X-Mimecast-MFC-AGG-ID: EWm8UnHDP1q8Rx59TxPa1w_1744831570
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 990B419560B5; Wed, 16 Apr 2025 19:26:10 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.14])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B8CD219560A3; Wed, 16 Apr 2025 19:26:09 +0000 (UTC)
+Date: Wed, 16 Apr 2025 15:26:08 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2 0/3] virtio-gpu: fix blob unmapping sequence
+Message-ID: <20250416192608.GB38698@fedora>
+References: <20250410122643.1747913-1-manos.pitsidianakis@linaro.org>
+ <87v7r5clft.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 159/163] tcg: Remove INDEX_op_qemu_st8_*
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-160-richard.henderson@linaro.org>
- <7e614948-f344-4cb1-ae0d-c645fcff562f@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <7e614948-f344-4cb1-ae0d-c645fcff562f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="kOREZOrGlE4X9D/S"
+Content-Disposition: inline
+In-Reply-To: <87v7r5clft.fsf@draig.linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +89,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/25 23:55, Philippe Mathieu-Daudé wrote:
->> @@ -2457,7 +2457,7 @@ static void tcg_out_qemu_st_direct(TCGContext *s, TCGReg datalo, 
->> TCGReg datahi,
->>       switch (memop & MO_SIZE) {
->>       case MO_8:
->> -        /* This is handled with constraints on INDEX_op_qemu_st8_i32. */
->> +        /* This is handled with constraints on INDEX_op_qemu_st_*_i32. */
-> 
-> "... handled with constraints on INDEX_op_qemu_st_i32."
-> 
-> Either INDEX_op_qemu_st_i32 or INDEX_op_qemu_st_*.
 
-As of the next patch, just INDEX_op_qemu_st.  :-/
+--kOREZOrGlE4X9D/S
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> +        return (TCG_TARGET_REG_BITS == 32 && flags == MO_8
-> 
-> )
-> 
->> +                ? C_O0_I2(s, L)
->> +                : C_O0_I2(L, L));
-> 
-> (misplaced parenthesis)
+On Tue, Apr 15, 2025 at 07:46:14PM +0100, Alex Benn=E9e wrote:
+> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+>=20
+> > A hang was observed when running a small kernel that exercised VIRTIO=
+=20
+> > GPU under TCG. This is an edge-case and won't happen under typical=20
+> > conditions.
+>=20
+> Should I (or MST?) pull these into a tree for 10.0 or should they be
+> grabbed for when the tree opens with a Cc qemu-stable?
 
-No, it's not.
+QEMU 10.0.0-rc4 has already been tagged. No further patches will be
+merged unless there is a show-stopper (build failure, security issue).
 
+Please Cc qemu-stable so this can be merged for 10.0.1. Thanks!
 
-r~
+>=20
+> >
+> > When unmapping a blob object, its MemoryRegion's freeing is deferred to=
+=20
+> > the RCU thread. The hang's cause was determined to be a busy main loop=
+=20
+> > not allowing for the RCU thread to run because the kernel did not setup=
+=20
+> > any timers or had any interrupts on the way. While fixing the RCU threa=
+d=20
+> > to run even if the guest CPU spins is a solution, it's easier to fix th=
+e=20
+> > reason why the MemoryRegion isn't freed from the main loop instead.
+> >
+> > While at it, also restructure the 3 stage cleanup to immediately respon=
+d=20
+> > to the guest if the MR happened to have had no other reference.
+> >
+> > PS: The hang can be reproduced by running this unikernel with TCG=20
+> >
+> > https://git.codelinaro.org/manos.pitsidianakis/virtio-tests/-/tree/8c0e=
+be9395827e24aa5711186d499bf5de87cf63/virtio-test-suite
+> >
+> > v1 to v2:
+> >   - Add patch by Alex to prevent double-free when FlatView is destroyed=
+=20
+> >     from RCU thread.
+> >
+> > Alex Benn=E9e (1):
+> >   hw/display: re-arrange memory region tracking
+> >
+> > Manos Pitsidianakis (2):
+> >   virtio-gpu: fix hang under TCG when unmapping blob
+> >   virtio-gpu: refactor async blob unmapping
+> >
+> >  include/exec/memory.h         |  1 +
+> >  hw/display/virtio-gpu-virgl.c | 60 ++++++++++++++++++++---------------
+> >  2 files changed, 35 insertions(+), 26 deletions(-)
+> >
+> >
+> > base-commit: 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365
+>=20
+> --=20
+> Alex Benn=E9e
+> Virtualisation Tech Lead @ Linaro
+>=20
+
+--kOREZOrGlE4X9D/S
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgABFAACgkQnKSrs4Gr
+c8gHYQf+J6UmpiIpHJG8tlMxLlHpw0tWv3eILmcVg9u/LQ1mQCxnba2MPIWWO3MO
+V2KcoUcSDUSKw2zhTTckVczW+RPIMnsmnOVHMVz8L4e8VUqBvvhSrN88m5Y5MW1E
+XuyzAzW/G30ldegbWsNY3Fpqe6q9TwLfD9Yq41Z5vSiGieT3EACSAw2DKxiPeB13
+V9ph3I7Kkvyxeu6hfd60YmVy8QJuKqjvSIPRZPfhEZP/WYmNvxGeYrDtrzIPl3Ei
+zWwi/GgshmQY4nYeRzGTF54o+pFehPAoTU3QByfObLLchdOgO8SYfSyVPkISoq+8
+5D0bDytrBTw/bRbftDceDXPUrRPtWw==
+=1jvc
+-----END PGP SIGNATURE-----
+
+--kOREZOrGlE4X9D/S--
+
 
