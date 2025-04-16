@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28087C369C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF314C369C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u58Qe-0003pk-Pj; Wed, 16 Apr 2025 15:28:12 -0400
+	id 1u58ZZ-000825-BL; Wed, 16 Apr 2025 15:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.nesterov@gmail.com>)
- id 1u58Qb-0003p9-MZ
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:28:09 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u58ZU-0007z8-2Z
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:37:20 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.nesterov@gmail.com>)
- id 1u58QZ-0007wj-Md
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:28:09 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5f435c9f2f9so31704a12.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 12:28:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u58ZR-0000vP-VD
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:37:19 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so5845328b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 12:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744831686; x=1745436486; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qHuAyvnQJoHRi+dia0h0RJ286a+cu1nhD0EYwZxTvyM=;
- b=HitJBVdMI5yEEK7iE90rwCSUE2k6+c+JAr9sRlaxUf/8G99RCE2kk+icN2VSZWykgB
- TRx1qyXFlEg+FTcOOd3nGzzyIj3C8B4Z2OGm+tZSZRzVChG3lxbLPfaI06Qu0KkaYy/y
- 0Ae6TrSohJ2/rqFdflNL9PiMWfA2iDQwmfWseALv9gwjpwCs/VWnVgA4aKG7tkwBlp+j
- Gw04NLsO8XqSi13WvwUXrTx6ZBupfFyoD0AI+2dehcvW5nu8lICEEE29ppXKTlUT6BB7
- odQY1/2pVGFI1CMKRe0VfeCDT3u73GovpUdMp4neXLeribw4Y8tMwMbtNfc1gXpTP/3E
- 0JZw==
+ d=linaro.org; s=google; t=1744832236; x=1745437036; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UTKan+8+pF41jDPNwrNV2PQks5CJwO1i+JD4FENEsFA=;
+ b=pG2ih5GdGI3leVB7vaahJbsqb9j5lNxRkIJcTtQJ3LN+QA21ILW5UrgoTZIeVwBiFL
+ 8gHdJWIMZ2THT8sZv7gQ5aXAv9JMmwCZDF4UMikACux6IhClC8yu44Ps14lAlR2oG28p
+ wTTImoDM4EgHcVuL3abpH9wXpanl/icuLdByDvFyDUZiYFCGvqhW+VI9sWK8iRu0HaRc
+ fxtHLqDBUNq2hTatLI3d++O/kuxLr/DIPhtOZMQNyecvHUvynOeJgwakMxChQRgzIzpd
+ oWUW3SLzS/vUvpZEU6Yq75T34Pzcma/QCCUqZ2Wnqo+xoCOClvf6vVmJxkjKjnaJ4HOG
+ K5yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744831686; x=1745436486;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qHuAyvnQJoHRi+dia0h0RJ286a+cu1nhD0EYwZxTvyM=;
- b=wt4FadMUC/mq8XlwMYiUSdGC2DabrYg/lNvkgKl4h2nN/1usO00stoV6321oIJ8ZPe
- pA7YtCm1qz3Nb0g1wwxUcgkw+TDA7FHUImu+WjedVNpJPfimaA/k95o8mdU/PURWSY6A
- rpjil+1aAIpdPzmM7/kobrIC0vD+vI4ih2Y/r2IWLNMFFdORM/eO5+lh+zvh/ALPoNSW
- XkEJ038TUVpBFOg9/cOIwoayhjERCTdPKUpyOiu0GAFrpsjpWkuphTDvCoTkQQqJY6i4
- jsv5LZnxaYgSRTo04CtYAVYA2bGQF8KwVqwZL/PMvbpXQ89hnIGESq0Yj4jLPrlTu8qr
- VW8w==
-X-Gm-Message-State: AOJu0YzX//cSSCtbQnVjAadfzNoC6ZRhHcElsezEIp/D9yJX8E/bkSkc
- Ba0Kf/de9eervNOgw9hE+Za24e66kdWCkVrGcVNjM2/aNtpNGn7+epGIMNHhz79cazUPoEnxMEr
- jxNFBL2IVv1Qx1UrkilHsRZ2qgUs=
-X-Gm-Gg: ASbGncv3SvtEmxJASAFfv7mbd57q5ISrJy7v/hygnrJ6agOyKFD/n8xnZaNLVQvcGCo
- DHxyJRPWtUrys8z4+Pm3yKlZ7K4se+Pqw2sMabfh/HI4M4zfvLUohxot0IZFFGf+45I2Q8bgVXy
- jVpRcG5cRrhNqqnyM1q6/6oTIoTZ99rAS2
-X-Google-Smtp-Source: AGHT+IHHSBqChb3Lznl0UatChaBd8v7FxTCxLWEZIEuHx/MN3ob+MXXDNWGPLfDhJvDf0mOSv2XP7FVo6oIoR5Dy37s=
-X-Received: by 2002:a05:6402:210a:b0:5ed:4591:6901 with SMTP id
- 4fb4d7f45d1cf-5f4b71fd47dmr2831558a12.8.1744831685461; Wed, 16 Apr 2025
- 12:28:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1744832236; x=1745437036;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UTKan+8+pF41jDPNwrNV2PQks5CJwO1i+JD4FENEsFA=;
+ b=oLReGrf9u42JHWDA1EPwxg4Apde6ize//Ljs5EwrN2WUIvA5TodROBZqG7BnfXebCz
+ oUvIsUXC8KHdgJB1MbQmdYy7vAtaLcdiIZaW6xchgB5CK/pFFfVz5iHea+zHOSwO1VhB
+ so4ibUBtbj6SVO7JbiFBXh4Dqw0EdhoKQZsORZznjn885DZ4nVQeDgY5QgI3x+5eV7QV
+ frkHe4DVwgltdOEbITaAbREXGmdaai/GpTkCgUuvwONhy4kRlUC8ja5LURhD6NDNN39m
+ z5MexND32sMpsQydJXyXR/2o5GVnB4FP1TblFjuPyFDModf8miM6u2/i7My64GLmgc2F
+ AsRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7YWcLVMaDaO6hi+ELnR6K2mzL7Vkv9nkl1gJ9JzR+beHutqd2fsKKfKos2rnaVmpG2BZol4+85MCn@nongnu.org
+X-Gm-Message-State: AOJu0YyxMInkZZ5NZ3Ijwzp/Ss4WsYfJY9CSMieMNxY5C+fHAsL3bHCB
+ Yh1yeIr9iLvsMJnnyHMZBY18nMTx2p0k6S6TkZE2g0Ygq6tSWw0rMP1qtUPapaM=
+X-Gm-Gg: ASbGncvYXKQACaLVfdYW5QD+fQgFHwbvJdQ+kuhEeewwCrqOTFjCQ+xXOYGOG+HGCDi
+ wtT3czz04055oCCEWkRxvzIGVFib1+Q7iE9hj3FshM6VcNyQtF+qjmP4oqNegahRsZ2jl+mYuvK
+ rSQuf3vJHnz6wh2zIO4lixi+LYAWhBe0jX66HtoihTal2NqKCGk9E75Rq7hL6zgaE0Rzi0CrPKf
+ RnyLLngYXlRyl4DvJNABYBjifSjmXqLpT932uynSqA4XM2Wthdbzz951POQePIckXISkAG0Ei6D
+ +0cYmbFRNzqPg5MBiR02p/u2Veqd/H0GEOxaHqXnecvhKUHI0JCyyQ==
+X-Google-Smtp-Source: AGHT+IHuKOmJPnChiKF9nlT0swelGWVH9V2LEeaI6inwIPirblnV0+F/OBb2ol+WxvEWkzM+CnVAzQ==
+X-Received: by 2002:a05:6a00:3920:b0:736:3c77:31fd with SMTP id
+ d2e1a72fcca58-73c267ecd0bmr4074683b3a.23.1744832235993; 
+ Wed, 16 Apr 2025 12:37:15 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73bd2198bd9sm10776554b3a.7.2025.04.16.12.37.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Apr 2025 12:37:15 -0700 (PDT)
+Message-ID: <f959b833-d3c4-4196-bf72-29a1e17b6531@linaro.org>
+Date: Wed, 16 Apr 2025 12:37:15 -0700
 MIME-Version: 1.0
-References: <20250416161929.2846102-1-yuri.nesterov@gmail.com>
- <Z__jtQe0nYsaGnoH@redhat.com>
-In-Reply-To: <Z__jtQe0nYsaGnoH@redhat.com>
-From: Yuri Nesterov <yuri.nesterov@gmail.com>
-Date: Wed, 16 Apr 2025 22:27:54 +0300
-X-Gm-Features: ATxdqUHjYMeN10aMV_bnGmnyPErcbaequ5p7x86N5jNPCQKNh7waSg288fKrrlI
-Message-ID: <CAB_o470VGNmj_4LKvo3-Y6O7LiKiJ4QXczt6ZqRua_mpM1LN2A@mail.gmail.com>
-Subject: Re: [PATCH] usb-host: enable autoscan for bus+addr to survive host
- suspend/resume
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=yuri.nesterov@gmail.com; helo=mail-ed1-x52f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 148/163] tcg/tci: Remove support for add2/sub2
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+ <20250415192515.232910-149-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250415192515.232910-149-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,125 +102,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 16, 2025 at 8:07=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Wed, Apr 16, 2025 at 07:19:29PM +0300, Yuri Nesterov wrote:
-> > Currently, there is a special case for usb-host devices added using the
-> > hostbus=3D and hostaddr=3D properties to avoid adding them to the hotpl=
-ug
-> > watchlist, since the address changes every time the device is plugged
-> > in. However, on Linux, when the host system goes into suspend and then
-> > resumes, those devices stop working in both the guest and the host.
-> >
-> > Enabling autoscan and adding those devices to the watchlist allows them
-> > to keep working in the guest after host suspend/resume.
->
-> So IIUC what you're saying is that on suspend the host device
-> is removed by the kernel, and on resume, the USB device is
-> recreated. So QEMU's open file handle for the USB device is
-> invalid after resume.
->
-> If the /dev/bus/usb/NNN/NNN file goes away and then gets
-> re-created by the kernel though, we can't assume QEMU is
-> going to be able to re-open the new /dev/bus/usb device
-> file though.
+On 4/15/25 12:24, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tci/tcg-target-has.h |  8 ++---
+>   tcg/tci.c                | 66 +++-------------------------------------
+>   tcg/tci/tcg-target.c.inc | 28 -----------------
+>   3 files changed, 9 insertions(+), 93 deletions(-)
+> 
+> diff --git a/tcg/tci/tcg-target-has.h b/tcg/tci/tcg-target-has.h
+> index 6063f32f7b..310d45ba62 100644
+> --- a/tcg/tci/tcg-target-has.h
+> +++ b/tcg/tci/tcg-target-has.h
+> @@ -8,13 +8,13 @@
+>   #define TCG_TARGET_HAS_H
+>   
+>   #define TCG_TARGET_HAS_qemu_st8_i32     0
+> -#define TCG_TARGET_HAS_add2_i32         1
+> -#define TCG_TARGET_HAS_sub2_i32         1
+> +#define TCG_TARGET_HAS_add2_i32         0
+> +#define TCG_TARGET_HAS_sub2_i32         0
+>   
+>   #if TCG_TARGET_REG_BITS == 64
+>   #define TCG_TARGET_HAS_extr_i64_i32     0
+> -#define TCG_TARGET_HAS_add2_i64         1
+> -#define TCG_TARGET_HAS_sub2_i64         1
+> +#define TCG_TARGET_HAS_add2_i64         0
+> +#define TCG_TARGET_HAS_sub2_i64         0
+>   #endif /* TCG_TARGET_REG_BITS == 64 */
+>   
+>   #define TCG_TARGET_HAS_qemu_ldst_i128   0
+> diff --git a/tcg/tci.c b/tcg/tci.c
+> index d65ff2b8f1..a18478a07a 100644
+> --- a/tcg/tci.c
+> +++ b/tcg/tci.c
+> @@ -179,17 +179,6 @@ static void tci_args_rrrrrc(uint32_t insn, TCGReg *r0, TCGReg *r1,
+>       *c5 = extract32(insn, 28, 4);
+>   }
+>   
+> -static void tci_args_rrrrrr(uint32_t insn, TCGReg *r0, TCGReg *r1,
+> -                            TCGReg *r2, TCGReg *r3, TCGReg *r4, TCGReg *r5)
+> -{
+> -    *r0 = extract32(insn, 8, 4);
+> -    *r1 = extract32(insn, 12, 4);
+> -    *r2 = extract32(insn, 16, 4);
+> -    *r3 = extract32(insn, 20, 4);
+> -    *r4 = extract32(insn, 24, 4);
+> -    *r5 = extract32(insn, 28, 4);
+> -}
+> -
+>   static bool tci_compare32(uint32_t u0, uint32_t u1, TCGCond condition)
+>   {
+>       bool result = false;
+> @@ -370,13 +359,12 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+>       for (;;) {
+>           uint32_t insn;
+>           TCGOpcode opc;
+> -        TCGReg r0, r1, r2, r3, r4, r5;
+> +        TCGReg r0, r1, r2, r3, r4;
+>           tcg_target_ulong t1;
+>           TCGCond condition;
+>           uint8_t pos, len;
+>           uint32_t tmp32;
+>           uint64_t tmp64, taddr;
+> -        uint64_t T1, T2;
+>           MemOpIdx oi;
+>           int32_t ofs;
+>           void *ptr;
+> @@ -445,9 +433,9 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+>   #if TCG_TARGET_REG_BITS == 32
+>           case INDEX_op_setcond2_i32:
+>               tci_args_rrrrrc(insn, &r0, &r1, &r2, &r3, &r4, &condition);
+> -            T1 = tci_uint64(regs[r2], regs[r1]);
+> -            T2 = tci_uint64(regs[r4], regs[r3]);
+> -            regs[r0] = tci_compare64(T1, T2, condition);
+> +            regs[r0] = tci_compare64(tci_uint64(regs[r2], regs[r1]),
+> +                                     tci_uint64(regs[r4], regs[r3]),
+> +                                     condition);
+>               break;
+>   #elif TCG_TARGET_REG_BITS == 64
+>           case INDEX_op_setcond:
+> @@ -717,22 +705,6 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+>                   tb_ptr = ptr;
+>               }
+>               break;
+> -#if TCG_TARGET_REG_BITS == 32 || TCG_TARGET_HAS_add2_i32
+> -        case INDEX_op_add2_i32:
+> -            tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
+> -            T1 = tci_uint64(regs[r3], regs[r2]);
+> -            T2 = tci_uint64(regs[r5], regs[r4]);
+> -            tci_write_reg64(regs, r1, r0, T1 + T2);
+> -            break;
+> -#endif
+> -#if TCG_TARGET_REG_BITS == 32 || TCG_TARGET_HAS_sub2_i32
+> -        case INDEX_op_sub2_i32:
+> -            tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
+> -            T1 = tci_uint64(regs[r3], regs[r2]);
+> -            T2 = tci_uint64(regs[r5], regs[r4]);
+> -            tci_write_reg64(regs, r1, r0, T1 - T2);
+> -            break;
+> -#endif
+>           case INDEX_op_bswap16:
+>               tci_args_rr(insn, &r0, &r1);
+>               regs[r0] = bswap16(regs[r1]);
+> @@ -786,24 +758,6 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
+>               tci_args_rrr(insn, &r0, &r1, &r2);
+>               regs[r0] = regs[r1] ? ctz64(regs[r1]) : regs[r2];
+>               break;
+> -#if TCG_TARGET_HAS_add2_i64
+> -        case INDEX_op_add2_i64:
+> -            tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
+> -            T1 = regs[r2] + regs[r4];
+> -            T2 = regs[r3] + regs[r5] + (T1 < regs[r2]);
+> -            regs[r0] = T1;
+> -            regs[r1] = T2;
+> -            break;
+> -#endif
+> -#if TCG_TARGET_HAS_add2_i64
+> -        case INDEX_op_sub2_i64:
+> -            tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
+> -            T1 = regs[r2] - regs[r4];
+> -            T2 = regs[r3] - regs[r5] - (regs[r2] < regs[r4]);
+> -            regs[r0] = T1;
+> -            regs[r1] = T2;
+> -            break;
+> -#endif
+>   
+>               /* Shift/rotate operations (64 bit). */
+>   
+> @@ -952,7 +906,7 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
+>       const char *op_name;
+>       uint32_t insn;
+>       TCGOpcode op;
+> -    TCGReg r0, r1, r2, r3, r4, r5;
+> +    TCGReg r0, r1, r2, r3, r4;
+>       tcg_target_ulong i1;
+>       int32_t s2;
+>       TCGCond c;
+> @@ -1125,16 +1079,6 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
+>                              str_r(r2), str_r(r3));
+>           break;
+>   
+> -    case INDEX_op_add2_i32:
+> -    case INDEX_op_add2_i64:
+> -    case INDEX_op_sub2_i32:
+> -    case INDEX_op_sub2_i64:
+> -        tci_args_rrrrrr(insn, &r0, &r1, &r2, &r3, &r4, &r5);
+> -        info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s, %s, %s",
+> -                           op_name, str_r(r0), str_r(r1), str_r(r2),
+> -                           str_r(r3), str_r(r4), str_r(r5));
+> -        break;
+> -
+>       case INDEX_op_qemu_ld_i64:
+>       case INDEX_op_qemu_st_i64:
+>           if (TCG_TARGET_REG_BITS == 32) {
+> diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
+> index 947aa1aada..35c0c91f3e 100644
+> --- a/tcg/tci/tcg-target.c.inc
+> +++ b/tcg/tci/tcg-target.c.inc
+> @@ -66,12 +66,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
+>       case INDEX_op_st_i64:
+>           return C_O0_I2(r, r);
+>   
+> -    case INDEX_op_add2_i32:
+> -    case INDEX_op_add2_i64:
+> -    case INDEX_op_sub2_i32:
+> -    case INDEX_op_sub2_i64:
+> -        return C_O2_I4(r, r, r, r, r, r);
+> -
+>       case INDEX_op_qemu_ld_i32:
+>           return C_O1_I1(r, r);
+>       case INDEX_op_qemu_ld_i64:
+> @@ -346,22 +340,6 @@ static void tcg_out_op_rrrrrc(TCGContext *s, TCGOpcode op,
+>       tcg_out32(s, insn);
+>   }
+>   
+> -static void tcg_out_op_rrrrrr(TCGContext *s, TCGOpcode op,
+> -                              TCGReg r0, TCGReg r1, TCGReg r2,
+> -                              TCGReg r3, TCGReg r4, TCGReg r5)
+> -{
+> -    tcg_insn_unit insn = 0;
+> -
+> -    insn = deposit32(insn, 0, 8, op);
+> -    insn = deposit32(insn, 8, 4, r0);
+> -    insn = deposit32(insn, 12, 4, r1);
+> -    insn = deposit32(insn, 16, 4, r2);
+> -    insn = deposit32(insn, 20, 4, r3);
+> -    insn = deposit32(insn, 24, 4, r4);
+> -    insn = deposit32(insn, 28, 4, r5);
+> -    tcg_out32(s, insn);
+> -}
+> -
+>   static void tcg_out_ldst(TCGContext *s, TCGOpcode op, TCGReg val,
+>                            TCGReg base, intptr_t offset)
+>   {
+> @@ -1182,12 +1160,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
+>           tcg_out_ldst(s, opc, args[0], args[1], args[2]);
+>           break;
+>   
+> -    CASE_32_64(add2)
+> -    CASE_32_64(sub2)
+> -        tcg_out_op_rrrrrr(s, opc, args[0], args[1], args[2],
+> -                          args[3], args[4], args[5]);
+> -        break;
+> -
+>       case INDEX_op_qemu_ld_i64:
+>       case INDEX_op_qemu_st_i64:
+>           if (TCG_TARGET_REG_BITS == 32) {
 
-I'm not sure if the file actually goes away. It looks like the internal
-state of the device changes and QEMU receives a "no device"
-response in usb_host_req_complete_data. However, the file
-remains in place. At least I don't see any changes in udevadm
-monitor or inotifywait aside from attribute modifications.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-After resuming from suspend, the device doesn't work on either
-host or guest. Probably the device stays with a detached kernel
-driver since QEMU can't reattach it after receiving the "no device"
-error. Adding such devices to the hotplug watchlist causes QEMU
-to reopen them the same way it does for devices specified by
-vendorid and productid or hostport.
-
-The reason bus+addr devices aren't currently added to that list is well
-explained in commit e058fa2dd599ccc780d334558be9c1d155222b80.
-A special case was made because the device address changes every
-time it's replugged. However, it turns out that it doesn't change after
-a suspend/resume cycle so adding them to the list allows them to
-keep working after resume.
-
-I haven't had a chance to test it with libvirt though.
-
-> When QEMU runs under libvirt, QEMU won't have any access
-> to the /dev/bus/usb device node unless libvirt has set the
-> right permissions and (where appropriate) also set the
-> SELinux label.
->
-> The current autoscan logic seems rather crude. AFAIK every 2
-> seconds it will re-scan every host USB device to see if any
-> has gone away and close it, and/or re-open if re-appeared.
->
-> If we enable this autoscan logic, then under libvirt, AFAICS,
-> QEMU is going to fail to re-open the device, and a counter in
-> the autoscan logic means that after 3 attempts to re-open QEMU
-> will stop attempting it at all...but strangely it appears QEMU
-> will keep the timer running, so every 2 seconds it will iterate
-> over every USB device, but never try to open any of them.
->
-> Regardless of your current patch this autoscan logic feels like
-> it needs improvement. We shouldn't need to busy-poll to see that
-> a USB device goes away, it should be possible to rely on event
-> notifications in some way.
->
-> Even then we'd still need a way to prevent this immediate auto
-> re-opening when under libvirt. Libvirt would have to detect the
-> reappearance of the device and perform relabelling and permissions
-> changes, before QEMU is able to be told to try to re-open.
-> Potentially this implies a new QMP command to tell QEMU to try
-> to re-open, unless perhaps QEMU can be triggered off an inotify
-> event for the permissions/label change of the device node.
->
-> >
-> > Signed-off-by: Yuri Nesterov <yuri.nesterov@gmail.com>
-> > ---
-> >  hw/usb/host-libusb.c | 5 ++++-
-> >  1 file changed, 4 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-> > index c3d642c9d3..32c0251471 100644
-> > --- a/hw/usb/host-libusb.c
-> > +++ b/hw/usb/host-libusb.c
-> > @@ -1227,7 +1227,7 @@ static void usb_host_realize(USBDevice *udev, Err=
-or **errp)
-> >          !s->match.vendor_id &&
-> >          !s->match.product_id &&
-> >          !s->match.port) {
-> > -        s->needs_autoscan =3D false;
-> > +        s->needs_autoscan =3D true;
-> >          ldev =3D usb_host_find_ref(s->match.bus_num,
-> >                                   s->match.addr);
-> >          if (!ldev) {
-> > @@ -1244,6 +1244,9 @@ static void usb_host_realize(USBDevice *udev, Err=
-or **errp)
-> >          }
-> >      } else {
-> >          s->needs_autoscan =3D true;
-> > +    }
-> > +
-> > +    if (s->needs_autoscan) {
-> >          QTAILQ_INSERT_TAIL(&hostdevs, s, next);
-> >          usb_host_auto_check(NULL);
-> >      }
-> > --
-> > 2.43.0
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
 
