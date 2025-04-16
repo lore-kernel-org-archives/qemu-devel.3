@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A31C369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 15:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F204C369BA
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 15:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u54Is-0002zP-VG; Wed, 16 Apr 2025 11:03:55 -0400
+	id 1u54wy-0005vf-1P; Wed, 16 Apr 2025 11:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u54Ip-0002xo-Ea
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 11:03:52 -0400
-Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1u54ww-0005vU-26
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 11:45:18 -0400
+Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u54In-0003zO-Bi
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 11:03:51 -0400
-Received: by mail-io1-xd29.google.com with SMTP id
- ca18e2360f4ac-8613f456960so194005639f.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 08:03:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1u54wt-000542-DQ
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 11:45:17 -0400
+Received: by mail-pf1-x442.google.com with SMTP id
+ d2e1a72fcca58-736c1cf75e4so5104826b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 08:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744815826; x=1745420626; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DKqVxMZCHmRoM3iC5psKw2o5UbFX4mgR8YlvnOf3C6c=;
- b=eoMz8UQbB/NztCv/MeGaHx3OzPL9/0hzIAbYnVWVmmxymEHH3hOs1LTvRUQK+ImgJV
- UAWtJKQNWzQlg4TuJCi5m7r8zpH8KxKemKFR+pKwf2mCbSfIDZd/QOxufoq8sBCZ1G26
- XIbse2RW08AWlipo6qwgLz55OUFjKE+bp9AerRs3saR+TdJuFVB76u1/7OYjZmtWbpu8
- Km7TwFYKatd6FsTZXKrXBb6Wq+n2pW/0HerTppuxYKoQIxMwv7RIx0iqDrrVV0YUcjgK
- IYGZLrDwMnv2efNUgeW/MKLNmJucq9kLLhfWS6eF8b4nqSM5lBMlEAM/ZGuhMVkSusjQ
- aTKg==
+ d=gmail.com; s=20230601; t=1744818314; x=1745423114; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Gf5r43mlmPCIRUE8uPdFi2Akx+24t1xwaMbCweuq5HY=;
+ b=j7B399lvLxUJwTwe4OWcVxcI895wV+OHmopMuPXHcSwMmFZBDOA0GiY88o8sOBmoVr
+ hEcGKzgP1tWRDhQwLePMirltfUfGTt6vinLWCmvnjm/HcT68a+jkw2cXN19MGDxTO9iQ
+ xop4Ge1ttJSiUiRDnDroKhyjlpKibqQDRkReeMQ3kjbdVCXBHQUyQrawOwI6XoZ61aeU
+ XM2oTHMZqVui++o2ZuzKvdTm2cMy59FDFwSxjK+wlUVpe2r2Kib2EelyqvV2xHaUYlpb
+ UgLVTrYl/cKrNRxXVi2gEXJWss3xBS5MCBoEs9QUbIxACG/BktNdR/AyFxROLIHaVLnh
+ N7eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744815826; x=1745420626;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DKqVxMZCHmRoM3iC5psKw2o5UbFX4mgR8YlvnOf3C6c=;
- b=rXBhXrlQAZ0LhZrY7hgkRgjHcnChtSLM833fgqzKEcgbksGJs70pp7qIiYag1vjlOX
- 9gmtQ4aruodFO1Ztt0zNG9mmvQPu4U0eC3Eqo0DyrnAL1AQvHkNWP0N6a705lKP6R5qM
- OezWUfNBiPOZ7cVzzWpgro8NC4Q2zMJpYrau9y2xN4y06PUhXxU0uQt1uGRfZsCJA8BB
- nQRV0jvNM+ckIdXeONPNl+Dt4nASutlyIqFBfsJoPbzYSDgmCjrL4d0X8t2wJBWn9Ykh
- g1vXNdmqEXYYxsqy22GHasPzLR0VyDLBeGSwkOadI+eZU+H7VsURH44ZtRwpfQuw9IYj
- +Amw==
-X-Gm-Message-State: AOJu0YwYgQWKwJm7AcGDTBHeizsfNtXn8Imsp/bzohCvpHyK8SdQUxmb
- XWTUyHjSWpuczgESDOijfuP0yJG0fTLfly4Vr1QRmBdvRlQka7dqxMl001pr
-X-Gm-Gg: ASbGncvvBo58FJhbANjP9Xvb+xXvrbfjHpPkfn4oWo82f931zZIF+cEEMzBSBYXcSeG
- Dzda/ro6sNUV/xE/+lpbfD/b7uoZcEkW1m5tC67S2ij6w4xTrHLvrN/hxp5ZP79cIgsxwc1z+/f
- hr0iJHf6kHg0OpiWVCF5VioApwHXGnA+lxsZVVDnHgYb5SMNo33SJVTTJNZqaP3n7XA8rPkGraM
- SCgJHyVd8sHz46mctLXkwUv/zfbG8hLJHh4h2Ppn2BcqLuTvdOyVVGyc2BeLwk7MKq9L8/mM44p
- NvRhOLvnRj+Rie8KOBDAY1ydXNVnQSZlrNmiagNp6bM1r5zgIv1csHFP0BNUXQ8VPrivTlflOdF
- mMAD/J69ED+Pgt/qGpyUIUdB+zA==
-X-Google-Smtp-Source: AGHT+IEqezZXzXumckV4Oet3rWpyS4D10X5qpfpOCOpQHHIA10/u7H8+SyWADW9ny+bf4sNaHo/OPA==
-X-Received: by 2002:a05:6e02:3e8b:b0:3d6:d3f7:8813 with SMTP id
- e9e14a558f8ab-3d815b70d2dmr25442075ab.22.1744815825505; 
- Wed, 16 Apr 2025 08:03:45 -0700 (PDT)
-Received: from taylor-ubuntu.. (c-67-190-160-7.hsd1.co.comcast.net.
- [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d817b2693bsm1790975ab.42.2025.04.16.08.03.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 08:03:44 -0700 (PDT)
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, quic_mathbern@quicinc.com,
- sidneym@quicinc.com, quic_mliebel@quicinc.com,
- richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
- ltaylorsimpson@gmail.com
-Subject: [PATCH v2] Hexagon (target/hexagon) Remove gen_tcg_func_table.py
-Date: Wed, 16 Apr 2025 09:03:43 -0600
-Message-ID: <20250416150343.73444-1-ltaylorsimpson@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1744818314; x=1745423114;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gf5r43mlmPCIRUE8uPdFi2Akx+24t1xwaMbCweuq5HY=;
+ b=rFN0eYH/0/IYaW7b3gHa5mi3u8HXSneT86mAs6sY6gynm4j+rHSEoeNmgkZ69emNyQ
+ Qv/W5j+unoTox5xy2zVEAF12Gg5ubiOraqD4fc67KGaYJFe6O1y6DvG/ydCJ0gK5J207
+ EMbwjHpvKOcyXy0eOqs1za5Qt61UAmE77/BcsAD/nozz4jcT5Qb42eZsA8B4wRFRtOme
+ kE+EAz3Nh0fEZwEF47uzSOwyY0W9jCzQ+pvu+NbGSAh5998aUSyYL40MZvCh76sRKPvh
+ Tin2e/zHjhOzamI3iTLdEN4Anqqls21IMYP73PmaN7rooCpaQGO9WZpofHxTJWGbxf8e
+ 6wGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqtXEuujWvgfNdKP1kCj2Q4PNrMC1zbplsWMnPp0JVjhTRqAJAKejik4QpcoGd3SVwFlfAKvjOyOIB@nongnu.org
+X-Gm-Message-State: AOJu0Yy4eXZph6y+YyjR+xuFoUdm1YgxYj9oyai7B07fude1zM2x7HLT
+ Qo3bvGnL0UyqeNzFWfpTqLQ64LzAj0EPBikouTEuaYrrDmhnxHQ=
+X-Gm-Gg: ASbGncsDONpNYCPuLJxNNqFdJg+FJ240uMsEXHUqFm/HoCXYMZR6RC9/j4cfiRQUbph
+ mntNDWpSX3BdpJ1yTPEZsVgnRgrqju5fphB/un0KiZ98DLyLEMkPpm9rH6QVgje1SCMz1caDWcn
+ 6xmYc7VmjUJCZY37AfMk7enCmlizlIiUKvY4Qe/A8geBHqK4VTv1m4GO0LiW8kjeiEiyeElAl82
+ SeAukyhxM0ZNE+kUjpwRt0WAVQrnDgrwJLSWwGXmeQK8bwfyrujCJARyVbZnvRvb1ltbqxsPGf5
+ z0EGPJPZywTs352TyOTye0ZtHEUlyaerXOZprOyxmYwnc2o=
+X-Google-Smtp-Source: AGHT+IHFU2RqeUDNXRlNZHyIvIVbuFuXyHTJLD06BXRmP70FIFurFxTQZD2PD5xAomaKWQh5sRTxkQ==
+X-Received: by 2002:a05:6a00:1da6:b0:739:3f55:b23f with SMTP id
+ d2e1a72fcca58-73c2671803fmr3355480b3a.14.1744818313657; 
+ Wed, 16 Apr 2025 08:45:13 -0700 (PDT)
+Received: from [192.168.0.113] ([139.227.89.108])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73bd22f8345sm10866510b3a.105.2025.04.16.08.45.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Apr 2025 08:45:13 -0700 (PDT)
+Message-ID: <f27926c8-3bae-45b9-bbc1-ea9d78bcbd10@gmail.com>
+Date: Wed, 16 Apr 2025 23:45:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd29.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/igd: Check host PCI address when probing
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>
+References: <20250325172239.27926-1-tomitamoeko@gmail.com>
+ <20250409111801.4c97022f.alex.williamson@redhat.com>
+ <046a2961-23b1-4ef2-8673-9b9deedbbbdf@redhat.com>
+ <3e9743ab-bf81-4d92-8ea0-e01ac58a234b@gmail.com>
+ <20250414160530.5d86aaf2.alex.williamson@redhat.com>
+ <e529bf00-bd58-4151-9bce-dad74c88fa6d@gmail.com>
+ <20250415130425.601e1902.alex.williamson@redhat.com>
+Content-Language: en-US
+From: Tomita Moeko <tomitamoeko@gmail.com>
+In-Reply-To: <20250415130425.601e1902.alex.williamson@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pf1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,146 +109,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This can easily be done in C with opcodes_def_generated.h.inc
+On 4/16/25 03:04, Alex Williamson wrote:
+> On Wed, 16 Apr 2025 01:36:15 +0800
+> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+>>
+>> The generation register also exists on discrete GPUs. In the new xe
+>> driver [1], the Battlemage discrete GPU shares the same logic reading
+>> GMD_ID_DISPLAY register. The driver itself uses is_dgfx bit mapped to
+>> device id. In QEMU, we need to know whether the device is a supported
+>> IGD device first before applying the IGD-specific quirk, especially
+>> for legacy mode.
+>>
+>> The most feasible way is to check if kernel exposes VFIO_REGION_SUBTYPE_
+>> INTEL_IGD_OPREGION on that device I think, as only IGD has OpRegion.
+>>
+>> i915 driver [2] and Arrow Lake datasheet [3] shows that Intel has
+>> removed the BDSM register by making the DSM range part of BAR2 since
+>> Meteor Lake and onwards. QEMU only need to quirk on the register for
+>> IGD devices until Raptor Lake, meaning that the device list is fixed
+>> for now.
+>>
+>> By the way, for legacy mode, I think we should only support it until
+>> Gen 9, as Intel only provide VBIOS or CSM support until that generation,
+>> and seabios cannot handle 64 bit BDSM register. I'm also wondering if
+>> VGA really works on newer generations.
+> 
+> If it's a VGA class device, it really should, but without CSM I could
+> see why you have doubts.
 
-Note that gen_tcg_func_table.py has some logic to skip instructions.
-However, there aren't any instructions currently in the code that would
-be skipped by this logic.  So, it is safe to base the table on the
-complete opcodes table.
+Without CSM/VBIOS there is no pre-boot video, but when it booted to OS,
+driver is used for video rather than VGA. Though it claims itself as
+VGA class, it does not have VGA compatiblity. A770 even does not have
+IO BAR, definitely it cannot handle VGA decoding.
 
-Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
----
- target/hexagon/genptr.c              |  6 ++-
- target/hexagon/README                |  1 -
- target/hexagon/gen_tcg_func_table.py | 66 ----------------------------
- target/hexagon/meson.build           | 10 -----
- 4 files changed, 5 insertions(+), 78 deletions(-)
- delete mode 100755 target/hexagon/gen_tcg_func_table.py
+Similar behavior is also found on AMD GPUs. They still claim as VGA
+controller, but without CSM support.
+https://www.amd.com/en/resources/support-articles/faqs/GPU-N4XCSM.html
 
-diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-index 2c5e15cfcf..330170ab44 100644
---- a/target/hexagon/genptr.c
-+++ b/target/hexagon/genptr.c
-@@ -1453,4 +1453,8 @@ void gen_add_sat_i64(DisasContext *ctx, TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
- }
- 
- #include "tcg_funcs_generated.c.inc"
--#include "tcg_func_table_generated.c.inc"
-+const SemanticInsn opcode_genptr[XX_LAST_OPCODE] = {
-+#define OPCODE(X)    [X] = generate_##X
-+#include "opcodes_def_generated.h.inc"
-+#undef OPCODE
-+};
-diff --git a/target/hexagon/README b/target/hexagon/README
-index ca617e3364..5af298e3ed 100644
---- a/target/hexagon/README
-+++ b/target/hexagon/README
-@@ -47,7 +47,6 @@ header files in <BUILD_DIR>/target/hexagon
-         gen_op_attribs.py               -> op_attribs_generated.h.inc
-         gen_helper_protos.py            -> helper_protos_generated.h.inc
-         gen_tcg_funcs.py                -> tcg_funcs_generated.c.inc
--        gen_tcg_func_table.py           -> tcg_func_table_generated.c.inc
-         gen_helper_funcs.py             -> helper_funcs_generated.c.inc
-         gen_idef_parser_funcs.py        -> idef_parser_input.h
-         gen_analyze_funcs.py            -> analyze_funcs_generated.c.inc
-diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
-deleted file mode 100755
-index 299a39b1aa..0000000000
---- a/target/hexagon/gen_tcg_func_table.py
-+++ /dev/null
-@@ -1,66 +0,0 @@
--#!/usr/bin/env python3
--
--##
--##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
--##
--##  This program is free software; you can redistribute it and/or modify
--##  it under the terms of the GNU General Public License as published by
--##  the Free Software Foundation; either version 2 of the License, or
--##  (at your option) any later version.
--##
--##  This program is distributed in the hope that it will be useful,
--##  but WITHOUT ANY WARRANTY; without even the implied warranty of
--##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--##  GNU General Public License for more details.
--##
--##  You should have received a copy of the GNU General Public License
--##  along with this program; if not, see <http://www.gnu.org/licenses/>.
--##
--
--import sys
--import re
--import string
--import hex_common
--import argparse
--
--
--def main():
--    parser = argparse.ArgumentParser(
--        "Emit opaque macro calls with instruction semantics"
--    )
--    parser.add_argument("semantics", help="semantics file")
--    parser.add_argument("out", help="output file")
--    args = parser.parse_args()
--    hex_common.read_semantics_file(args.semantics)
--    hex_common.calculate_attribs()
--    tagregs = hex_common.get_tagregs()
--    tagimms = hex_common.get_tagimms()
--
--    with open(args.out, "w") as f:
--        f.write("#ifndef HEXAGON_FUNC_TABLE_H\n")
--        f.write("#define HEXAGON_FUNC_TABLE_H\n\n")
--
--        f.write("const SemanticInsn opcode_genptr[XX_LAST_OPCODE] = {\n")
--        for tag in hex_common.tags:
--            ## Skip the priv instructions
--            if "A_PRIV" in hex_common.attribdict[tag]:
--                continue
--            ## Skip the guest instructions
--            if "A_GUEST" in hex_common.attribdict[tag]:
--                continue
--            ## Skip the diag instructions
--            if tag == "Y6_diag":
--                continue
--            if tag == "Y6_diag0":
--                continue
--            if tag == "Y6_diag1":
--                continue
--
--            f.write(f"    [{tag}] = generate_{tag},\n")
--        f.write("};\n\n")
--
--        f.write("#endif    /* HEXAGON_FUNC_TABLE_H */\n")
--
--
--if __name__ == "__main__":
--    main()
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index bb4ebaae81..b28aeddb85 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -41,20 +41,10 @@ hexagon_ss.add(semantics_generated)
- #
- # Step 2
- # We use Python scripts to generate the following files
--#     tcg_func_table_generated.c.inc
- #     printinsn_generated.h.inc
- #     op_attribs_generated.h.inc
- #     opcodes_def_generated.h.inc
- #
--tcg_func_table_generated = custom_target(
--    'tcg_func_table_generated.c.inc',
--    output: 'tcg_func_table_generated.c.inc',
--    depends: [semantics_generated],
--    depend_files: [hex_common_py],
--    command: [python, files('gen_tcg_func_table.py'), semantics_generated, '@OUTPUT@'],
--)
--hexagon_ss.add(tcg_func_table_generated)
--
- printinsn_generated = custom_target(
-     'printinsn_generated.h.inc',
-     output: 'printinsn_generated.h.inc',
--- 
-2.43.0
+>> Maybe we can continue with current igd_gen, but implement a logic like:
+>>     if (!intel graphics)
+>>         return;
+>>     if (!has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION)
+>>         return;
+>>     setup_opregion();  // make x-igd-opregion automatically enabled?
+>>     if (gen <= 9)
+>>         setup_legacy_mode();
+>>     if (gen >= 6 && gen <=9)
+>>         setup_32bit_bdsm():
+>>     else if (gen >= 9 && gen <= 12)
+>>         setup_64bit_bdsm();
+>>     // ...
+>>     // optional quirks like lpc bridge id
+>>
+>> A table can also be used to precisely track all the gen 6-12 devices.
+> 
+> This seems reasonable to me.
+> 
+>> Attached a config space dump of Intel A770 discrete GPU for reference
+>>
+>> 03:00.0 VGA compatible controller: Intel Corporation DG2 [Arc A770] (rev 08) (prog-if 00 [VGA controller])
+>> 	Subsystem: Intel Corporation Device 1020
+>> 	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+>> 	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+>> 	Latency: 0, Cache Line Size: 64 bytes
+>> 	Interrupt: pin ? routed to IRQ 181
+>> 	IOMMU group: 19
+>> 	Region 0: Memory at 81000000 (64-bit, non-prefetchable) [size=16M]
+>> 	Region 2: Memory at 6000000000 (64-bit, prefetchable) [size=16G]
+>> 	Expansion ROM at 82000000 [disabled] [size=2M]
+>> 	Capabilities: [40] Vendor Specific Information: Len=0c <?>
+>> 	Capabilities: [70] Express (v2) Endpoint, IntMsgNum 0
+>> 		DevCap:	MaxPayload 128 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+>> 			ExtTag+ AttnBtn- AttnInd- PwrInd- RBE+ FLReset+ SlotPowerLimit 0W TEE-IO-
+>> 		DevCtl:	CorrErr- NonFatalErr- FatalErr- UnsupReq-
+>> 			RlxdOrd+ ExtTag+ PhantFunc- AuxPwr- NoSnoop+ FLReset-
+>> 			MaxPayload 128 bytes, MaxReadReq 128 bytes
+>> 		DevSta:	CorrErr- NonFatalErr- FatalErr- UnsupReq+ AuxPwr- TransPend-
+>> 		LnkCap:	Port #0, Speed 2.5GT/s, Width x1, ASPM L0s L1, Exit Latency L0s <64ns, L1 <1us
+> 
+> Hmm, hardware bug?  Surely the A770 is not a Gen1, x1 device.
+> Something is going on with the interrupt pin above too.  At least it
+> claims FLReset+ above, does it work reliably though?  Seems like there
+> are various reports of Arc GPUs not working well with assignment due to
+> reset issues.  Thanks,
+> 
+> Alex
 
+Just did a quick search, link speed reporting is a known issue on Arc
+A-series GPU.
+https://www.intel.com/content/www/us/en/support/articles/000094587/graphics.html
+
+The root port reports correct `LnkSta:	Speed 16GT/s, Width x16`
+
+I also tried the passthough it to VM and not meeting any reset issue.
+Probably it was fixed, intel often publishes VBIOS updates (they call
+it IFWI) with windows driver releases. 
+
+Thanks,
+Moeko
+
+> 
+>> 			ClockPM- Surprise- LLActRep- BwNot- ASPMOptComp+
+>> 		LnkCtl:	ASPM Disabled; RCB 64 bytes, LnkDisable- CommClk-
+>> 			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+>> 		LnkSta:	Speed 2.5GT/s, Width x1
+>> 			TrErr- Train- SlotClk- DLActive- BWMgmt- ABWMgmt-
+>> 		DevCap2: Completion Timeout: Range B, TimeoutDis+ NROPrPrP- LTR+
+>> 			 10BitTagComp+ 10BitTagReq+ OBFF Not Supported, ExtFmt+ EETLPPrefix-
+>> 			 EmergencyPowerReduction Not Supported, EmergencyPowerReductionInit-
+>> 			 FRS- TPHComp- ExtTPHComp-
+>> 			 AtomicOpsCap: 32bit- 64bit- 128bitCAS-
+>> 		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+>> 			 AtomicOpsCtl: ReqEn-
+>> 			 IDOReq- IDOCompl- LTR+ EmergencyPowerReductionReq-
+>> 			 10BitTagReq- OBFF Disabled, EETLPPrefixBlk-
+>> 		LnkCap2: Supported Link Speeds: 2.5GT/s, Crosslink- Retimer- 2Retimers- DRS-
+>> 		LnkCtl2: Target Link Speed: 2.5GT/s, EnterCompliance- SpeedDis-
+>> 			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+>> 			 Compliance Preset/De-emphasis: -6dB de-emphasis, 0dB preshoot
+>> 		LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete- EqualizationPhase1-
+>> 			 EqualizationPhase2- EqualizationPhase3- LinkEqualizationRequest-
+>> 			 Retimer- 2Retimers- CrosslinkRes: unsupported
+>> 	Capabilities: [ac] MSI: Enable+ Count=1/1 Maskable+ 64bit+
+>> 		Address: 00000000fee008b8  Data: 0000
+>> 		Masking: 00000000  Pending: 00000000
+>> 	Capabilities: [d0] Power Management version 3
+>> 		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1-,D2-,D3hot+,D3cold-)
+>> 		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=0 PME-
+>> 	Capabilities: [100 v1] Alternative Routing-ID Interpretation (ARI)
+>> 		ARICap:	MFVC- ACS-, Next Function: 0
+>> 		ARICtl:	MFVC- ACS-, Function Group: 0
+>> 	Capabilities: [420 v1] Physical Resizable BAR
+>> 		BAR 2: current size: 16GB, supported: 256MB 512MB 1GB 2GB 4GB 8GB 16GB
+>> 	Capabilities: [400 v1] Latency Tolerance Reporting
+>> 		Max snoop latency: 15728640ns
+>> 		Max no snoop latency: 15728640ns
+>> 	Kernel driver in use: i915
+>> 	Kernel modules: i915, xe
+> 
 
