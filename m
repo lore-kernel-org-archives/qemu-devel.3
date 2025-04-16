@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DB3C369C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 23:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C5FC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 23:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5CAl-0003P4-6K; Wed, 16 Apr 2025 19:28:03 -0400
+	id 1u5CL4-0007PF-FA; Wed, 16 Apr 2025 19:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u5CAi-0003Ie-Sn
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 19:28:00 -0400
-Received: from mail-il1-x134.google.com ([2607:f8b0:4864:20::134])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5CL2-0007Ol-Rg
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 19:38:40 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1u5CAh-0008Gz-05
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 19:28:00 -0400
-Received: by mail-il1-x134.google.com with SMTP id
- e9e14a558f8ab-3d5e68418b5so1828495ab.2
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 16:27:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5CKy-0002H2-Vn
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 19:38:40 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22423adf751so2491515ad.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 16:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744846077; x=1745450877; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=B2Wp8g934lMbQ3AHhKii0nz2qHUM+Ly+Xnh/n0i3Wd0=;
- b=DaFdELciwIbH+f+Oo564FQwuGxGNhtqgqgTNVuSUNiQw7QIB0FajY7SxxWAuLazg0G
- vCSx+RynVu8Apgs1iXQ0FpFSprRzYTRkbS1AanAy2oNEnKAj2zXJopWSFN6NyrDPKHXW
- X7Aj900KU9dr8A+u5/C9nELAaH0YFrZEfI/cLLv1QCMHYXZ5KAXb5M15qIVQKoOFUiuc
- PpDfM3jC8A6teLdT0y5JLghYZPQtfDCCTBWsEuUrQexqjFBAGkbQzVWyDYTo9YFsed6n
- FvmvicWHDh1BQlMO46GC4OM3BKazjwjmAjY3+rMQ7qjYadgx92xuo+u6Bwld2NQvGcWy
- jkLw==
+ d=linaro.org; s=google; t=1744846714; x=1745451514; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eapEQPF2KNnMa7sI55bTpadCqRkhMi5xjeV7Dq2Dl00=;
+ b=TLyTegtGn+/C+MM5TPV/XaCTohnt6O8NQGCIJ81bCAY1wKSHxZPQYQyC4mEfLu6/wk
+ NuBsdg0b6htobnIr3kv6E2dh97xccuJ7KOgk1zaBYV5O2kYJkWYXw+YfNA6dBNusqLdy
+ M6Rahm57agbSKCtsf+esrayQXgqYfyXt2FDZ4tgkoCXVQnaU3oBrQSH6WFEEDpklBq7g
+ DnSuu6rYok0srOYF5rEmc252Oh10Jc4m6+u6xppp7BMxIwFzthx00Zw6dyg/2S/j6kBG
+ curSTYpw7bR1Dm0+zR7vWlMnZBaVSd9kN5WP26crcz6KilCLolJZc5+2d+aGAh+O8JD+
+ QufQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744846077; x=1745450877;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B2Wp8g934lMbQ3AHhKii0nz2qHUM+Ly+Xnh/n0i3Wd0=;
- b=HXr/PWpW+DdBVn74idbMnKObX6SZm/JiJwM4mo4POUwrwqVnoCZBoCAvC+ehhnEfXA
- PmZAJQkQGlPIaYfSHKCNa6iTJZbXs3KtGgJgqhbMeJfB3dIF/fD+cbHzLV8HmetMUl8w
- aVGmgH1dQNVfH3uHccHR8vdJGJNzARymLkISkppXKeRBkKuF5cSWbGdVj+L5nDMvhx89
- cBHvSNXnh8E9vjCo2DUr7cZSzBrHuW+U+qsNhLHVK5Y+dqp/x1sUWKMvOv+jcJ2HZIhl
- BMW6ZnxWhoDW/7uhPSQWH/YbcTcKRgzf6WdYg2YaTaWNkZpGkQ2EU5HCZ3IoQY+p4G40
- 8FHg==
-X-Gm-Message-State: AOJu0Yxv6r9Rl9b8A/MBFXsDRBKjS2OO64mUSjVIwfvOXiYT5jjBpXsp
- INWxXZ1goLE/C50UPC5xVJWaoB8xhVC+c7UBB+RVNzrXmaj16zrF
-X-Gm-Gg: ASbGncuJNZI2KT0n3QDZWE5xww/7+gt/CBNQGpeejpfEx2nkASuG1Cz4sbHOJcadwJX
- belOcFd7K+BpsYg5ahCDSlDfteoEo+jAZUQGLAkXwxoK1wnweZ9sCOOGrzKcl7YXQPWGeiikPOo
- +eQJ3J4vwNHk4rmVQvB+oHyRrAeMm4HEUHUyokjixd51B53wshdG+pok9il4QG2QulD6pF32rIU
- RyZI1a5bPXDWyDP8e2ZSE077v+3zKthew84KxrJuPq30sST6zK41HaCx8+odjuwUdYuWITnC3c8
- 6HFoKEAEUSUtwGw3iWyWR/gmx3VxE5hLAXgC8geaou+le9hNWvt+JLfb+qPWEOyf2ts08xA17Wc
- =
-X-Google-Smtp-Source: AGHT+IGiTCDKfYrWAuZP+P/lOrq97nsLhs9ntOE5sAi5TTYkqeX/TDBp59OZdLYysTDdHegPN46Yxg==
-X-Received: by 2002:a05:6e02:1d84:b0:3d5:eb14:9c85 with SMTP id
- e9e14a558f8ab-3d815b10ce6mr33640295ab.6.1744846077376; 
- Wed, 16 Apr 2025 16:27:57 -0700 (PDT)
-Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
- [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f673e84f0fsm1604881173.91.2025.04.16.16.27.56
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 16 Apr 2025 16:27:56 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <brian.cain@oss.qualcomm.com>,
- "'Matheus Tavares Bernardino'" <matheus.bernardino@oss.qualcomm.com>
-Cc: <qemu-devel@nongnu.org>, <richard.henderson@linaro.org>,
- <philmd@linaro.org>, <ale@rev.ng>, <anjo@rev.ng>,
- <marco.liebel@oss.qualcomm.com>, <alex.bennee@linaro.org>,
- <quic_mburton@quicinc.com>, <sidneym@quicinc.com>
-References: <058801dbad61_68ff5b00_3afe1100_@gmail.com>
- <20250414180939.3575845-1-matheus.bernardino@oss.qualcomm.com>
- <05df01dbad80$17e73890$47b5a9b0$@gmail.com>
- <b8f2eb78-1cc6-4d82-8597-6d994a6a6f66@oss.qualcomm.com>
-In-Reply-To: <b8f2eb78-1cc6-4d82-8597-6d994a6a6f66@oss.qualcomm.com>
-Subject: RE: [PATCH v3 5/5] target/hexagon: Remove unreachable
-Date: Wed, 16 Apr 2025 17:27:53 -0600
-Message-ID: <07bc01dbaf27$2f1c49d0$8d54dd70$@gmail.com>
+ d=1e100.net; s=20230601; t=1744846714; x=1745451514;
+ h=content-transfer-encoding:in-reply-to:cc:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eapEQPF2KNnMa7sI55bTpadCqRkhMi5xjeV7Dq2Dl00=;
+ b=C+u4vyCsLkECCsZ6+bYnjG55eg1KKGVk0MfttJjkwRRpkxDuB44ed90bbD90RNZ6gx
+ LTgpzgSr1e++6SQkz/OS8K7cf+pkzEMC0rfYHSx8tiijfQWXoWT9OIrFoxygYIkLv8RI
+ B0/GmkrTRmeG0rjmCWiZXk3AKKZ2RAM8bmICqewwI93DqI18FexaKBWoJ+RERTxqHq2h
+ wxJmRaDTzMoLos+qjm+3xMl2K5CkgMTekz/Gctd/Hch3ASLnJcrYX2y9LSCIMXUYVT6f
+ CK7lJBo9bHAOTpErIGdYV701lbeGIrbcj39JhDaw3QsUERBfvsCJeQ6M7mxnBHzbrLMy
+ 0JSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkNNm7mL8MYyLQ86K4o74dapf89pAztk8D2ckSSHXr04RtR5oWnM5XJws7Z8sOslFXvOMc7y/HIcNs@nongnu.org
+X-Gm-Message-State: AOJu0YyNNYtGue9U6uOnlxT3TImCNwusvm3B7c2z5bmcK3pyPGxIwS59
+ ooW6SKV2c74IExDB68b0N6DqjCIgS4spWnVUduz/3rC2hhhDRk0GAWDh87yzzQw=
+X-Gm-Gg: ASbGncv6c0kcI0A+5EzsuJCbgvrKvGpZOfGdlCPIudEX6La/osuA2bBKJgXbtXs1KJE
+ GgKQ1f+in3qLy5mc0A+rcdQhb/VaoPml+pZZK/gP4+jrZ1tsmFM6nB5zteLimkOirJ/yyT8Se4A
+ cT9s6cTqO+wAqpWjRsSeif2dZtvrn4khamcZyDCOzmlIa8PnAFdee9RwuABx1sMPZrc3/1GOem6
+ /j5w3XoXGnBKneeWCCPEpCm/UyBwCIzNO2KjJbl/zzK+WTDQ5dDha4FoQXe4DxZbB5VlCl4fPwo
+ F6rD/I1KqDtzYM1bRNS+gCns64Bpw/qqLF4F5JJdtPqrjSX0a8/YAA==
+X-Google-Smtp-Source: AGHT+IFNwHztofyEwIPX75udaPDxZZeGxyIzYH593JU+L1CXzY1woQ+VLbBCDp+LszqcvKhUIe2HMA==
+X-Received: by 2002:a17:902:d4c7:b0:223:2630:6b82 with SMTP id
+ d9443c01a7336-22c358bcd40mr54252655ad.10.1744846714081; 
+ Wed, 16 Apr 2025 16:38:34 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c33fa7794sm20358185ad.156.2025.04.16.16.38.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Apr 2025 16:38:33 -0700 (PDT)
+Message-ID: <a093de11-8901-4e1b-83eb-fd3b6a557249@linaro.org>
+Date: Wed, 16 Apr 2025 16:38:32 -0700
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 000/163] tcg: Convert to TCGOutOp structures
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQENfVRWeNfVsGY4Eunk52BzijBbDgFBXIfsAUgg7kgCPoaJ+LUdEzng
-Content-Language: en-us
-X-Antivirus: Norton (VPS 250416-4, 4/16/2025), Outbound message
-X-Antivirus-Status: Clean
-Received-SPF: pass client-ip=2607:f8b0:4864:20::134;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,114 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Richard,
 
+On 4/15/25 12:22, Richard Henderson wrote:
+> v2: 20250107080112.1175095-1-richard.henderson@linaro.org
+> v3: 20250216231012.2808572-1-richard.henderson@linaro.org
+> 
+> Since it has been 2 months, I don't recall specific changes from v3 to v4.
+> It's mostly application of r-b tags.  There is one more patch, which I
+> believe was Phil asking for one patch to be split.
+> 
+> Patches still requiring review: 29, 41-43, 46, 47, 49-51, 55, 57, 59-62,
+>    64, 66-68, 70, 72-78, 80, 82-87, 89, 91, 93, 95, 97-102, 104, 106-162.
+> 
+> 
+> r~
+> 
 
-> -----Original Message-----
-> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> Sent: Wednesday, April 16, 2025 4:22 PM
-> To: ltaylorsimpson@gmail.com; 'Matheus Tavares Bernardino'
-> <matheus.bernardino@oss.qualcomm.com>
-> Cc: qemu-devel@nongnu.org; richard.henderson@linaro.org;
-> philmd@linaro.org; ale@rev.ng; anjo@rev.ng;
-> marco.liebel@oss.qualcomm.com; alex.bennee@linaro.org;
-> quic_mburton@quicinc.com; sidneym@quicinc.com
-> Subject: Re: [PATCH v3 5/5] target/hexagon: Remove unreachable
-> 
-> 
-> On 4/14/2025 3:59 PM, ltaylorsimpson@gmail.com wrote:
-> >
-> >> -----Original Message-----
-> >> From: Matheus Tavares Bernardino
-> >> <matheus.bernardino@oss.qualcomm.com>
-> >> Sent: Monday, April 14, 2025 12:10 PM
-> >> To: ltaylorsimpson@gmail.com
-> >> Cc: brian.cain@oss.qualcomm.com; qemu-devel@nongnu.org;
-> >> richard.henderson@linaro.org; philmd@linaro.org;
-> >> matheus.bernardino@oss.qualcomm.com; ale@rev.ng; anjo@rev.ng;
-> >> marco.liebel@oss.qualcomm.com; alex.bennee@linaro.org;
-> >> quic_mburton@quicinc.com; sidneym@quicinc.com
-> >> Subject: RE: [PATCH v3 5/5] target/hexagon: Remove unreachable
-> >>
-> >> On Mon, 14 Apr 2025 11:19:38 -0600 <ltaylorsimpson@gmail.com> wrote:
-> >>>> -----Original Message-----
-> >>>> From: Brian Cain <brian.cain@oss.qualcomm.com>
-> >>>> Sent: Monday, April 7, 2025 1:27 PM
-> >>>> To: qemu-devel@nongnu.org
-> >>>> Cc: brian.cain@oss.qualcomm.com; richard.henderson@linaro.org;
-> >>>> philmd@linaro.org; matheus.bernardino@oss.qualcomm.com;
-> >> ale@rev.ng;
-> >>>> anjo@rev.ng; marco.liebel@oss.qualcomm.com;
-> >>>> ltaylorsimpson@gmail.com; alex.bennee@linaro.org;
-> >>>> quic_mburton@quicinc.com; sidneym@quicinc.com
-> >>>> Subject: [PATCH v3 5/5] target/hexagon: Remove unreachable
-> >>>>
-> >>>> We should raise an exception in the event that we encounter a
-> >>>> packet that can't be correctly decoded, not fault.
-> >>>>
-> >>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> >>>> ---
-> >>>>   target/hexagon/decode.c | 6 +++++-
-> >>>>   1 file changed, 5 insertions(+), 1 deletion(-)
-> >>>>
-> >>>> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
-> >>>> index b5ece60450..1db7f1950f 100644
-> >>>> --- a/target/hexagon/decode.c
-> >>>> +++ b/target/hexagon/decode.c
-> >>>> @@ -489,7 +489,6 @@ decode_insns(DisasContext *ctx, Insn *insn,
-> >>>> uint32_t
-> >>>> encoding)
-> >>>>               insn->iclass = iclass_bits(encoding);
-> >>>>               return 1;
-> >>>>           }
-> >>>> -        g_assert_not_reached();
-> >>>>       } else {
-> >>>>           uint32_t iclass = get_duplex_iclass(encoding);
-> >>>>           unsigned int slot0_subinsn = get_slot0_subinsn(encoding);
-> >>>> @@ -512,6
-> >>>> +511,11 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_t
-> >>>> +encoding)
-> >>>>           }
-> >>>>           g_assert_not_reached();
-> >>> Why leave this one rather than raising an exception?
-> >> Good point. I think this one should be removed as well. We have
-> >> removed it downstream already.
-> 
-> 
-> Taylor, is it satisfactory to include that update in a subsequent patch
-> series?  Or should this one replace the second unreachable too?
+Thanks for this series Richard, reviewing this is a good opportunity to 
+look at register allocation and associated constraints in tcg.
 
-If you just remove that line, it will fall through to the "return 1" below.
+The new way to define dynamic constraints is quite neat, and readable, 
+as it was one of the feedback you previously asked.
+The only concern I have is that we could create silent "performance" 
+related bugs, where a specific feature is deactivated because of a bad 
+combination, but it's inherent to this approach and not a blocker.
 
+Even though I reviewed this series, it's hard for me to review all the 
+target specific implementations, as I don't have your expertise on such 
+a wide range of architectures.
 
-> >>
-> >>>>       }
-> >>>> +    /*
-> >>>> +     * invalid/unrecognized opcode; return 1 and let gen_insn() raise
-> > an
-> >>>> +     * exception when it sees this empty insn.
-> >>>> +     */
-> >>>> +    return 1;
-> >>> You should set insn->generate to NULL if you want to guarantee that
-> >>> gen_insn will raise an exception.
-> >> The caller already memset's it to 0 before passing `insn` down.
-> >>
-> >>> Do you have a test case for this?
-> >> We do have a softmmu test for this downstream. Maybe we can adjust it
-> for
-> >> user-mode and upstream it with this patch.
-> > Take a look at tests/tcg/hexagon/invalid-slots.c to see how to do this in
-> > linux-user mode.  You'll also need to modify Makefile.target in that
-> > directory.
-> 
-> 
-> Matheus provided a linux-user test offline.  I'll include it in an
-> updated patch.
-> 
-> 
-> >
-> > HTH,
-> > Taylor
-> >
-> >
+As a more general question, how do you approach testing for a series 
+like this one? I see two different challenges, as it touches the IR 
+itself, and the various backends.
+- For the IR, I don't know how extensive our complete test suite is 
+(regarding coverage of all existing TCG ops), but I guess there are some 
+holes there. It would be interesting to generate coverage data once we 
+can get a single binary in the future.
+- For the various backends:
+   * Are you able to compile QEMU on all concerned hosts and run testing 
+there?
+   * Or do you cross compile and run binaries emulated?
+   * Or another way I might ignore at the moment?
 
+Regards,
+Pierrick
 
