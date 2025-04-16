@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9CAC369C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBA9C369C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u58J8-0000Sh-Ns; Wed, 16 Apr 2025 15:20:26 -0400
+	id 1u58Ml-0001tn-VK; Wed, 16 Apr 2025 15:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u58J5-0000Rv-QY
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:20:23 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u58Mj-0001tA-Cn
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:24:09 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u58J2-0006s6-UX
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:20:23 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22c33677183so383405ad.2
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 12:20:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u58Mh-0007JY-LF
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:24:09 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-af6a315b491so6294736a12.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 12:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744831219; x=1745436019; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9uiOYiJ3slcT5mHxcUGQ7mnx9Q3QvgbvjzruPIeJurs=;
- b=YVr6nEexI+Nu8wzuStjTXOOk0XgSxPBSvxa0LkSqG8teVLQWyWU6hKEi1ITAO2Bfg1
- fMqRhDOnH7n85n+7saF8J706DkzdptUFw+DG6H+0WSWEB0MYezo4+Ozl1X/4Etg6wv3a
- aAAxS7oP6VeNleDzVSwBVwbsTSzsiHKvAVU2QRM8iYt95P+41X9ougvj5WaXivFc99z+
- 7LP3ffzetEVW85+Uqr/2Y2upiLkqTKedd2SLFlqYzOnv+/h02mk432hugZu9gsjTrIX3
- mDKNfk/P+evNfLJmpmlGNjwLX83dTf++ZhO+lpZ7qI7sWP9DMkBxGJlVcnDz/+Qgsyru
- oH9A==
+ d=linaro.org; s=google; t=1744831446; x=1745436246; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=H40+N+fQKmshn6EwwmzleyyX8/APVqIf2KhD3fCTk6s=;
+ b=DCA3PRDcdgVEf9cIlnmu3kvvJLUeqxGMkMCeKYxuLK8CQO7TtBZZo88EsYzWp40c/E
+ wjMK6Jj4Jp6mO8IXEFg5eP5N6Pkvf/FjzsOEQMA/mrZc5nUTX+VEyMtZ8wbGsZnd1Yba
+ aYQm/4Im1z0Ayp7loZsKdWF5Y2mH2RFkWdhkSmE/0y5GkU28E8Ngv7+WYATr7MAH+389
+ 5/+I3ffIAQmjs8yY6+TNNNhSm8klrb2aieVlJ95uFh6EHgsAx2Cb3v/u3V5MxH/CeFS3
+ JUPoAQQ/bR5dJs85S3aU9gXOATWv+HU3kfcyb3Wn8xcAaEykFrzXBb5ATOHYikuC1Zms
+ rg2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744831219; x=1745436019;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1744831446; x=1745436246;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9uiOYiJ3slcT5mHxcUGQ7mnx9Q3QvgbvjzruPIeJurs=;
- b=G5DWzgmCuCbLBqY1NA9XQaslrCnBIPa3NEPX6m+6dwHmtagJeYxbNkt/rNElQNNejG
- ZlZQVrTDRcCOQHCjAznZdMod3yVHoGxNO7UTuDTGqqTE4lo5rEF5kbPVcVVGNRhgvKpq
- 1RpZjYI/2VYt0lY5FPqYtUD6N1lGRrIVWHzuocu3wr3h0ZQfYT9MuwR3MUiwTEf/uCGR
- iqKLkqN28BDuqJpVLXQnTPG63ajcQRM5zl12xdOcZEcACxQJnHuymOO9Hi0xQQR336y5
- fK5mAlzniCp1S3e4gOXAQuZ2aKSBzyfUiplP4rpP3v/5nQiUxL2OAhAhknMHghHcoWSS
- HHUQ==
+ bh=H40+N+fQKmshn6EwwmzleyyX8/APVqIf2KhD3fCTk6s=;
+ b=araCmJ5s9OMKLQzPss2lzySqfA5LcChXTjibbRsqpnzMtE0I3Cy7Gi+vwI7ubOvgd+
+ mC8CFhU+R3dokrr1oqSvriGyr2hmxODuf/R9EeSWlBKUbCIvmzlX3MTcMsULirveTwdG
+ TDVsNb1AKxh9/RjiFgg/GjOC6ruq4W9W4Cjh/KjSsijIdatJ98vFUf/RpJkc1q11VHK/
+ LT2YRJ0W78CUqpdE2JobvNPCD9RLXfLZzeMfA45Vu9qT6axf8hAUbmjQxr+qegU2vmo+
+ D+ikjnHaTp1KqDQN5fRWMDAPpus71kux7X7wq/u8D4y799Uktobhry5ticwGbhVRD/L4
+ NPJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNBTPZqxLkj6JFtbdZxkC2LFZYUflWjpk1EPrBveD5Njj8Rp8U4aM8cfZa8xoCb7EBF88nnUxPThva@nongnu.org
-X-Gm-Message-State: AOJu0YyGt4HUfbxl7sjrO+Qt5eHWDJGfC4j76fzaBklXCL+Ki6hqDAgA
- jP6Oruwtc3XFVAy9RRh5ci3dY7Nosr8I7frHZy3J4opSNX0JUbiBatPndzvsI2k=
-X-Gm-Gg: ASbGncugja6GIitYEQ1V63vJst8Gcg7e2KB+f5IsR9fVEyVRvX0mYzr550GOPANB+v+
- RlqxZCvfxrzEbRofE51k41OBG3Qt1uEKYCxeBArPIfv/5K74FdtL3AjHrtCQhvHpz8iBo/kQL47
- kOZL+AKZdP+XmB0jKAcUUqE9fKaH9qeXPD7b29hNxCJAKI8OfobAHhbPjKrdunETlMkxHu/+1es
- G4A1J+iUu/Zb1X1qq2yNSccxg14pzfAYMA004epCLasH5ND2bH8u3snjEVxYOXKOpdOlUCKdrRs
- 9D/MUT4EOdRKD6K0U+ALkpqp9oK5FsWGmKOJ3z1qal9zBkmiNOwb0w==
-X-Google-Smtp-Source: AGHT+IF9kByt2z6DTPK0vWM1r3zHqYwqqOw/tcI9tBab31MIBH6hV7ZNP/lmaN+ZJewKw6ZYi5PRVA==
-X-Received: by 2002:a17:903:3c65:b0:224:255b:c932 with SMTP id
- d9443c01a7336-22c358c3f5emr48812085ad.3.1744831219181; 
- Wed, 16 Apr 2025 12:20:19 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCVyQphvtEjwCKMnTkuWcnh2w+KQnZgx6UpKNfsJ5F2L/iTGftgrMRmxgz1sNjIWHD/Y80YqAqfDglpk@nongnu.org
+X-Gm-Message-State: AOJu0YzOGpiI+Ku+6O/a4Bunpmbu52H9yRLXTC6YDDZQM9OlbKLk7vd5
+ e41RoMc2lJpy6JAxzOtykrN/tJZV2rOJst8Ov1McbAO4UxoOj1ALlD6sIcC45dY=
+X-Gm-Gg: ASbGncuU2PfcII/gan/n0KjgnN2+K+8psQeUvL+Kw44OyM8TEvN/lBLQh73pkWc2JXW
+ HRBg12WTFH1fqEKUFFanpsfR2TBOLjZJ1GD5YaxuotqR/dQH5RT2MaeBAXI99gY7S6Xmkb/0NHO
+ VphnxH8TXNSChNXeW6ydeCCJxQoelYgNvhrpJuCS2Vaf3P+0Bd8bnj7f0BW5CZM0gw+M2HktDi6
+ qzgjNt9pu+J0pOljME7NkljlygvTeDLJ1oYM8VKOMQfp9fkZcciR/c/1gHLsXdon8tr93tMmk53
+ BhGJ//xuPXFzNafaiSmVAjYMOORKG+odo3GHrYr2T8rnwxW65B25gs/ZSp0KOGgubAFsokY6Z4N
+ KZ3JgqXc=
+X-Google-Smtp-Source: AGHT+IE8L3mjO9jwXdTq9fGhT3jqIUdmcVv/drtOYZ1r2liYOnZanSYtVIzRfzsa+XQCvULVdyhfLQ==
+X-Received: by 2002:a17:90b:268b:b0:2ee:8ea0:6b9c with SMTP id
+ 98e67ed59e1d1-30863f18415mr6159982a91.12.1744831445699; 
+ Wed, 16 Apr 2025 12:24:05 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c33f1cf9dsm18221385ad.75.2025.04.16.12.20.18
+ 98e67ed59e1d1-30861212fffsm2010240a91.25.2025.04.16.12.24.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 12:20:18 -0700 (PDT)
-Message-ID: <957b58d5-6606-4851-84a7-64b214cf7311@linaro.org>
-Date: Wed, 16 Apr 2025 12:20:18 -0700
+ Wed, 16 Apr 2025 12:24:05 -0700 (PDT)
+Message-ID: <c0887bf9-e820-4897-91a6-d9439301301d@linaro.org>
+Date: Wed, 16 Apr 2025 12:24:03 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 146/163] tcg/sparc64: Remove support for add2/sub2
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 159/163] tcg: Remove INDEX_op_qemu_st8_*
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-147-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250415192515.232910-147-richard.henderson@linaro.org>
+ <20250415192515.232910-160-richard.henderson@linaro.org>
+ <7e614948-f344-4cb1-ae0d-c645fcff562f@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <7e614948-f344-4cb1-ae0d-c645fcff562f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,329 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/25 12:24, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/sparc64/tcg-target-con-set.h |   6 +-
->   tcg/sparc64/tcg-target-has.h     |   8 +-
->   tcg/sparc64/tcg-target.c.inc     | 169 +++----------------------------
->   3 files changed, 19 insertions(+), 164 deletions(-)
+On 4/15/25 23:55, Philippe Mathieu-Daudé wrote:
+>> @@ -2457,7 +2457,7 @@ static void tcg_out_qemu_st_direct(TCGContext *s, TCGReg datalo, 
+>> TCGReg datahi,
+>>       switch (memop & MO_SIZE) {
+>>       case MO_8:
+>> -        /* This is handled with constraints on INDEX_op_qemu_st8_i32. */
+>> +        /* This is handled with constraints on INDEX_op_qemu_st_*_i32. */
 > 
-> diff --git a/tcg/sparc64/tcg-target-con-set.h b/tcg/sparc64/tcg-target-con-set.h
-> index 37cb190450..1a57adc0e8 100644
-> --- a/tcg/sparc64/tcg-target-con-set.h
-> +++ b/tcg/sparc64/tcg-target-con-set.h
-> @@ -15,9 +15,7 @@ C_O0_I2(r, rJ)
->   C_O1_I1(r, r)
->   C_O1_I2(r, r, r)
->   C_O1_I2(r, r, rJ)
-> -C_O1_I2(r, r, rZ)
-> -C_O1_I2(r, rZ, rJ)
-> -C_O1_I2(r, rZ, rZ)
-> +C_O1_I2(r, rz, rJ)
-> +C_O1_I2(r, rz, rz)
->   C_O1_I4(r, r, rJ, rI, 0)
->   C_O2_I2(r, r, r, r)
-> -C_O2_I4(r, r, rz, rz, rJ, rJ)
-> diff --git a/tcg/sparc64/tcg-target-has.h b/tcg/sparc64/tcg-target-has.h
-> index b8760dd154..caf7679595 100644
-> --- a/tcg/sparc64/tcg-target-has.h
-> +++ b/tcg/sparc64/tcg-target-has.h
-> @@ -14,13 +14,13 @@ extern bool use_vis3_instructions;
->   #endif
->   
->   /* optional instructions */
-> -#define TCG_TARGET_HAS_add2_i32         1
-> -#define TCG_TARGET_HAS_sub2_i32         1
-> +#define TCG_TARGET_HAS_add2_i32         0
-> +#define TCG_TARGET_HAS_sub2_i32         0
->   #define TCG_TARGET_HAS_qemu_st8_i32     0
->   
->   #define TCG_TARGET_HAS_extr_i64_i32     0
-> -#define TCG_TARGET_HAS_add2_i64         1
-> -#define TCG_TARGET_HAS_sub2_i64         1
-> +#define TCG_TARGET_HAS_add2_i64         0
-> +#define TCG_TARGET_HAS_sub2_i64         0
->   
->   #define TCG_TARGET_HAS_qemu_ldst_i128   0
->   
-> diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-> index 93bb88b05f..842ef68c54 100644
-> --- a/tcg/sparc64/tcg-target.c.inc
-> +++ b/tcg/sparc64/tcg-target.c.inc
-> @@ -919,74 +919,6 @@ static const TCGOutOpMovcond outop_movcond = {
->       .out = tgen_movcond,
->   };
->   
-> -static void tcg_out_addsub2_i32(TCGContext *s, TCGReg rl, TCGReg rh,
-> -                                TCGReg al, TCGReg ah, int32_t bl, int blconst,
-> -                                int32_t bh, int bhconst, int opl, int oph)
-> -{
-> -    TCGReg tmp = TCG_REG_T1;
-> -
-> -    /* Note that the low parts are fully consumed before tmp is set.  */
-> -    if (rl != ah && (bhconst || rl != bh)) {
-> -        tmp = rl;
-> -    }
-> -
-> -    tcg_out_arithc(s, tmp, al, bl, blconst, opl);
-> -    tcg_out_arithc(s, rh, ah, bh, bhconst, oph);
-> -    tcg_out_mov(s, TCG_TYPE_I32, rl, tmp);
-> -}
-> -
-> -static void tcg_out_addsub2_i64(TCGContext *s, TCGReg rl, TCGReg rh,
-> -                                TCGReg al, TCGReg ah, int32_t bl, int blconst,
-> -                                int32_t bh, int bhconst, bool is_sub)
-> -{
-> -    TCGReg tmp = TCG_REG_T1;
-> -
-> -    /* Note that the low parts are fully consumed before tmp is set.  */
-> -    if (rl != ah && (bhconst || rl != bh)) {
-> -        tmp = rl;
-> -    }
-> -
-> -    tcg_out_arithc(s, tmp, al, bl, blconst, is_sub ? ARITH_SUBCC : ARITH_ADDCC);
-> -
-> -    if (use_vis3_instructions && !is_sub) {
-> -        /* Note that ADDXC doesn't accept immediates.  */
-> -        if (bhconst && bh != 0) {
-> -           tcg_out_movi_s13(s, TCG_REG_T2, bh);
-> -           bh = TCG_REG_T2;
-> -        }
-> -        tcg_out_arith(s, rh, ah, bh, ARITH_ADDXC);
-> -    } else if (bh == TCG_REG_G0) {
-> -	/* If we have a zero, we can perform the operation in two insns,
-> -           with the arithmetic first, and a conditional move into place.  */
-> -	if (rh == ah) {
-> -            tcg_out_arithi(s, TCG_REG_T2, ah, 1,
-> -			   is_sub ? ARITH_SUB : ARITH_ADD);
-> -            tcg_out_movcc(s, COND_CS, MOVCC_XCC, rh, TCG_REG_T2, 0);
-> -	} else {
-> -            tcg_out_arithi(s, rh, ah, 1, is_sub ? ARITH_SUB : ARITH_ADD);
-> -	    tcg_out_movcc(s, COND_CC, MOVCC_XCC, rh, ah, 0);
-> -	}
-> -    } else {
-> -        /*
-> -         * Otherwise adjust BH as if there is carry into T2.
-> -         * Note that constant BH is constrained to 11 bits for the MOVCC,
-> -         * so the adjustment fits 12 bits.
-> -         */
-> -        if (bhconst) {
-> -            tcg_out_movi_s13(s, TCG_REG_T2, bh + (is_sub ? -1 : 1));
-> -        } else {
-> -            tcg_out_arithi(s, TCG_REG_T2, bh, 1,
-> -                           is_sub ? ARITH_SUB : ARITH_ADD);
-> -        }
-> -        /* ... smoosh T2 back to original BH if carry is clear ... */
-> -        tcg_out_movcc(s, COND_CC, MOVCC_XCC, TCG_REG_T2, bh, bhconst);
-> -	/* ... and finally perform the arithmetic with the new operand.  */
-> -        tcg_out_arith(s, rh, ah, TCG_REG_T2, is_sub ? ARITH_SUB : ARITH_ADD);
-> -    }
-> -
-> -    tcg_out_mov(s, TCG_TYPE_I64, rl, tmp);
-> -}
-> -
->   static void tcg_out_jmpl_const(TCGContext *s, const tcg_insn_unit *dest,
->                                  bool in_prologue, bool tail_call)
->   {
-> @@ -1424,10 +1356,10 @@ static void tgen_addci_rri(TCGContext *s, TCGType type,
->   {
->       if (type == TCG_TYPE_I32) {
->           tcg_out_arithi(s, a0, a1, a2, ARITH_ADDC);
-> -    } else if (use_vis3_instructions) {
-> -        tcg_debug_assert(a2 == 0);
-> -        tcg_out_arith(s, a0, a1, TCG_REG_G0, ARITH_ADDXC);
-> -    } else if (a2 != 0) {
-> +        return;
-> +    }
-> +    /* !use_vis3_instructions */
-> +    if (a2 != 0) {
->           tcg_out_arithi(s, TCG_REG_T1, a1, a2, ARITH_ADD); /* for CC */
->           tcg_out_arithi(s, a0, TCG_REG_T1, 1, ARITH_ADD);  /* for CS */
->           tcg_out_movcc(s, COND_CC, MOVCC_XCC, a0, TCG_REG_T1, false);
-> @@ -1440,25 +1372,13 @@ static void tgen_addci_rri(TCGContext *s, TCGType type,
->       }
->   }
->   
-> -static void tgen_addci_rir(TCGContext *s, TCGType type,
-> -                           TCGReg a0, tcg_target_long a1, TCGReg a2)
-> -{
-> -    tgen_addci_rri(s, type, a0, a2, a1);
-> -}
-> -
-> -static void tgen_addci_rii(TCGContext *s, TCGType type,
-> -                           TCGReg a0, tcg_target_long a1, tcg_target_long a2)
-> -{
-> -    tgen_addci_rri(s, type, a0, TCG_REG_G0, a2);
-> -}
-> -
->   static TCGConstraintSetIndex cset_addci(TCGType type, unsigned flags)
->   {
->       if (use_vis3_instructions && type == TCG_TYPE_I64) {
->           /* Note that ADDXC doesn't accept immediates.  */
-> -        return C_O1_I2(r, rZ, rZ);
-> +        return C_O1_I2(r, rz, rz);
->       }
-> -    return C_O1_I2(r, rZ, rJ);
-> +    return C_O1_I2(r, rz, rJ);
->   }
->   
->   static const TCGOutOpAddSubCarry outop_addci = {
-> @@ -1466,8 +1386,6 @@ static const TCGOutOpAddSubCarry outop_addci = {
->       .base.dynamic_constraint = cset_addci,
->       .out_rrr = tgen_addci_rrr,
->       .out_rri = tgen_addci_rri,
-> -    .out_rir = tgen_addci_rir,
-> -    .out_rii = tgen_addci_rii,
->   };
->   
->   /* Copy %xcc.c to %icc.c */
-> @@ -1487,10 +1405,7 @@ static void tgen_addcio_rrr(TCGContext *s, TCGType type,
->                               TCGReg a0, TCGReg a1, TCGReg a2)
->   {
->       if (type != TCG_TYPE_I32) {
-> -        if (use_vis3_instructions) {
-> -            tcg_out_arith(s, a0, a1, a2, ARITH_ADDXCCC);
-> -            return;
-> -        }
-> +        /* !use_vis3_instructions */
->           tcg_out_dup_xcc_c(s);
->       }
->       tcg_out_arith(s, a0, a1, a2, ARITH_ADDCCC);
-> @@ -1500,11 +1415,7 @@ static void tgen_addcio_rri(TCGContext *s, TCGType type,
->                               TCGReg a0, TCGReg a1, tcg_target_long a2)
->   {
->       if (type != TCG_TYPE_I32) {
-> -        if (use_vis3_instructions) {
-> -            tcg_debug_assert(a2 == 0);
-> -            tcg_out_arith(s, a0, a1, TCG_REG_G0, ARITH_ADDXCCC);
-> -            return;
-> -        }
-> +        /* !use_vis3_instructions */
->           tcg_out_dup_xcc_c(s);
->       }
->       tcg_out_arithi(s, a0, a1, a2, ARITH_ADDCCC);
-> @@ -1514,9 +1425,9 @@ static TCGConstraintSetIndex cset_addcio(TCGType type, unsigned flags)
->   {
->       if (use_vis3_instructions && type == TCG_TYPE_I64) {
->           /* Note that ADDXC doesn't accept immediates.  */
-> -        return C_O1_I2(r, r, rZ);
-> +        return C_O1_I2(r, rz, rz);
->       }
-> -    return C_O1_I2(r, r, rJ);
-> +    return C_O1_I2(r, rz, rJ);
->   }
->   
->   static const TCGOutOpBinary outop_addcio = {
-> @@ -1881,7 +1792,7 @@ static void tgen_subbo_rri(TCGContext *s, TCGType type,
->   }
->   
->   static const TCGOutOpAddSubCarry outop_subbo = {
-> -    .base.static_constraint = C_O1_I2(r, r, rJ),
-> +    .base.static_constraint = C_O1_I2(r, rz, rJ),
->       .out_rrr = tgen_subbo_rrr,
->       .out_rri = tgen_subbo_rri,
->   };
-> @@ -1917,24 +1828,10 @@ static void tgen_subbi_rri(TCGContext *s, TCGType type,
->       }
->   }
->   
-> -static void tgen_subbi_rir(TCGContext *s, TCGType type,
-> -                           TCGReg a0, tcg_target_long a1, TCGReg a2)
-> -{
-> -    tgen_subbi_rrr(s, type, a0, TCG_REG_G0, a2);
-> -}
-> -
-> -static void tgen_subbi_rii(TCGContext *s, TCGType type,
-> -                           TCGReg a0, tcg_target_long a1, tcg_target_long a2)
-> -{
-> -    tgen_subbi_rri(s, type, a0, TCG_REG_G0, a2);
-> -}
-> -
->   static const TCGOutOpAddSubCarry outop_subbi = {
-> -    .base.static_constraint = C_O1_I2(r, rZ, rJ),
-> +    .base.static_constraint = C_O1_I2(r, rz, rJ),
->       .out_rrr = tgen_subbi_rrr,
->       .out_rri = tgen_subbi_rri,
-> -    .out_rir = tgen_subbi_rir,
-> -    .out_rii = tgen_subbi_rii,
->   };
->   
->   static void tgen_subbio_rrr(TCGContext *s, TCGType type,
-> @@ -1955,24 +1852,10 @@ static void tgen_subbio_rri(TCGContext *s, TCGType type,
->       tcg_out_arithi(s, a0, a1, a2, ARITH_SUBCCC);
->   }
->   
-> -static void tgen_subbio_rir(TCGContext *s, TCGType type,
-> -                            TCGReg a0, tcg_target_long a1, TCGReg a2)
-> -{
-> -    tgen_subbio_rrr(s, type, a0, TCG_REG_G0, a2);
-> -}
-> -
-> -static void tgen_subbio_rii(TCGContext *s, TCGType type,
-> -                            TCGReg a0, tcg_target_long a1, tcg_target_long a2)
-> -{
-> -    tgen_subbio_rri(s, type, a0, TCG_REG_G0, a2);
-> -}
-> -
->   static const TCGOutOpAddSubCarry outop_subbio = {
-> -    .base.static_constraint = C_O1_I2(r, rZ, rJ),
-> +    .base.static_constraint = C_O1_I2(r, rz, rJ),
->       .out_rrr = tgen_subbio_rrr,
->       .out_rri = tgen_subbio_rri,
-> -    .out_rir = tgen_subbio_rir,
-> -    .out_rii = tgen_subbio_rii,
->   };
->   
->   static void tcg_out_set_borrow(TCGContext *s)
-> @@ -2114,17 +1997,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           tcg_out_ldst(s, a0, a1, a2, STW);
->           break;
->   
-> -    case INDEX_op_add2_i32:
-> -        tcg_out_addsub2_i32(s, args[0], args[1], args[2], args[3],
-> -                            args[4], const_args[4], args[5], const_args[5],
-> -                            ARITH_ADDCC, ARITH_ADDC);
-> -        break;
-> -    case INDEX_op_sub2_i32:
-> -        tcg_out_addsub2_i32(s, args[0], args[1], args[2], args[3],
-> -                            args[4], const_args[4], args[5], const_args[5],
-> -                            ARITH_SUBCC, ARITH_SUBC);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
->           break;
-> @@ -2148,15 +2020,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           tcg_out_ldst(s, a0, a1, a2, STX);
->           break;
->   
-> -    case INDEX_op_add2_i64:
-> -        tcg_out_addsub2_i64(s, args[0], args[1], args[2], args[3], args[4],
-> -                            const_args[4], args[5], const_args[5], false);
-> -        break;
-> -    case INDEX_op_sub2_i64:
-> -        tcg_out_addsub2_i64(s, args[0], args[1], args[2], args[3], args[4],
-> -                            const_args[4], args[5], const_args[5], true);
-> -        break;
-> -
->       case INDEX_op_mb:
->           tcg_out_mb(s, a0);
->           break;
-> @@ -2203,12 +2066,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_qemu_st_i64:
->           return C_O0_I2(rz, r);
->   
-> -    case INDEX_op_add2_i32:
-> -    case INDEX_op_add2_i64:
-> -    case INDEX_op_sub2_i32:
-> -    case INDEX_op_sub2_i64:
-> -        return C_O2_I4(r, r, rz, rz, rJ, rJ);
-> -
->       default:
->           return C_NotImplemented;
->       }
+> "... handled with constraints on INDEX_op_qemu_st_i32."
+> 
+> Either INDEX_op_qemu_st_i32 or INDEX_op_qemu_st_*.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+As of the next patch, just INDEX_op_qemu_st.  :-/
 
+>> +        return (TCG_TARGET_REG_BITS == 32 && flags == MO_8
+> 
+> )
+> 
+>> +                ? C_O0_I2(s, L)
+>> +                : C_O0_I2(L, L));
+> 
+> (misplaced parenthesis)
+
+No, it's not.
+
+
+r~
 
