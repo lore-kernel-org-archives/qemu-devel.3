@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B0CC369BA
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 09:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50354C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 09:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4yzk-0006Cf-CH; Wed, 16 Apr 2025 05:23:51 -0400
+	id 1u4z09-0006Og-TI; Wed, 16 Apr 2025 05:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1u4yzf-00065l-5V
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:23:43 -0400
+ id 1u4yzg-0006Ds-Vg
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:23:45 -0400
 Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1u4yza-000168-Qy
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:23:42 -0400
+ id 1u4yzd-00017H-LN
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:23:44 -0400
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id DA2A542BFE
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 09:23:34 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id D58CD42C82
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 09:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1744795414;
- bh=3DczRBIu1c8wh6t9eKIWDDaySAswVc9/vycbgRl1UTw=;
+ s=20210803; t=1744795419;
+ bh=6QmaZaZqtGdpFR0kkFYPW0lUZpkykVjd3F+DeCwZWv4=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=MbCs704paC1FN6J4FDI5pq1BSmwASsbc0hTPX6E9qU4D9dauGV8T2aHCGHnSEqjQS
- 2L8fO9BHgVOh2QPQ30uSQisX2fjWp8P7mmp5TTwmo3thIWxNjeqFmUE/Gn3XVaHhGR
- tgpCGVagLxTDnXPXDO9LcX0eDQp5JeqTI773onYdTBqoWhLw13THZzGLRjw+71yVuJ
- WbifN3Cc9hijlHB2tqSyCb1wP3vLkZiA0RPvi880gxVvh61CLH6SLwdxxuDkrwZJAd
- cmNpVIqJLYj4U7LXDohPS//tjlyIV8Wd5SohRoiNXjhmgbwm1V51I+N0CmdLLJtMGR
- ckAgGL8G9Y8PQ==
+ b=G5KJt2xMH96bPEpJ7DhPeEO11rlcLE9shRRML6i3vZnSjHkvNo95UoBug1BYmkqDn
+ ItYcaxpQ1rDzzKDBELJarvf9bXuXJtvIl5pWkRz7fKsYaoR18YcXNjUYqYVcGHBq6X
+ fUQWlOuppdKsYVaVExweQhtMJ/1x0KT3Nti6Dr3BKRSnswW5K4sK0hvN5jsUNmHgv3
+ G7IJ2Akack3leEuCBY0OZFIG+27VasAZtkZD++1yvtTebEDZweYni/UXNYj3Wx0mqT
+ FfDXz8Of0fLNZuZpoP7EQMb/xk6eE4hxJW0esv2qi47WwKvKUQ4pkxdW85gI6dObQp
+ UGwDFmhRJz79g==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id A06A87E917
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 09:23:34 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id CBD237E9F9
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 09:23:39 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 16 Apr 2025 09:09:55 -0000
+Date: Wed, 16 Apr 2025 09:14:39 -0000
 From: =?utf-8?q?Lukas_M=C3=A4rdian?= <2072564@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -68,7 +68,7 @@ X-Launchpad-Bug-Commenters: ahasenack crichton dimitry.unified-streaming.com
 X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
 X-Launchpad-Bug-Modifier: =?utf-8?q?Lukas_M=C3=A4rdian_=28slyon=29?=
 References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <174479459584.2610407.524894513659161001.malone@juju-98d295-prod-launchpad-2>
+Message-Id: <174479487975.2612455.16768280930919651104.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
  (amd64 host)
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -77,7 +77,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="e76edd883483c71c468bb038e98836435de44530";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: cf934cc3d14f8dcef0b0569202b258556a764b23
+X-Launchpad-Hash: 488bdb6379f9fd735699c458a9ac77bfa7a99a82
 Received-SPF: pass client-ip=185.125.188.251;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
@@ -102,52 +102,49 @@ Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I verified qemu-user-static 1:9.0.2+ds-4ubuntu5.3 from oracular-
-proposed. Looking good!
+I verified qemu-user-static 1:8.2.2+ds-0ubuntu1.7 from noble-proposed.
+Looking good!
 
+$ lxc launch --vm ubuntu-daily:noble lp2072564-nn
+$ lxc shell lp2072564-nn
 
-$ lxc launch --vm ubuntu-daily:oracular lp2072564-oo
-$ lxc shell lp2072564-oo
-
-root@lp2072564-oo:~# sudo apt install qemu-user-static  # the old, non-prop=
-osed version (1:9.0.2+ds-4ubuntu5.2) to confirm the issue
+root@lp2072564-nn:~# sudo apt install qemu-user-static # the old, non-propo=
+sed version (1:8.2.2+ds-0ubuntu1.6) to confirm the issue
 [...]
-root@lp2072564-oo:~# sudo snap install docker
-2025-04-16T09:00:43Z INFO Waiting for automatic snapd restart...
+root@lp2072564-nn:~# sudo snap install docker
+2025-04-16T09:00:47Z INFO Waiting for automatic snapd restart...
 docker 27.5.1 from Canonical=E2=9C=93 installed
-root@lp2072564-oo:~# docker run -ti --platform linux/arm64/v8 ubuntu:22.04
+root@lp2072564-nn:~# docker run -ti --platform linux/arm64/v8 ubuntu:22.04
 Unable to find image 'ubuntu:22.04' locally
 22.04: Pulling from library/ubuntu
 7b76bc00f23a: Pull complete=20
 Digest: sha256:d80997daaa3811b175119350d84305e1ec9129e1799bba0bd1e3120da3ff=
 52c3
 Status: Downloaded newer image for ubuntu:22.04
-root@3516ec56fbf6:/# sbin/ldconfig.real
+root@5de9734cef3a:/# sbin/ldconfig.real
 qemu: uncaught target signal 11 (Segmentation fault) - core dumped
 Segmentation fault (core dumped)
 
-=3D> I can reproduce the issue on the old version
+=3D> I can reproduce the issue on the old version.
 
-root@lp2072564-oo:~# vim /etc/apt/sources.list.d/ubuntu.sources  # enable -=
-proposed
-root@lp2072564-oo:~# apt update
+root@lp2072564-nn:~# vim /etc/apt/sources.list.d/ubuntu.sources # enable -p=
+roposed
+root@lp2072564-nn:~# apt update
 [...]
-root@lp2072564-oo:~# apt install -t oracular-proposed qemu-user-static
+root@lp2072564-nn:~# apt install -t noble-proposed qemu-user-static
 [...]
-Get:1 http://archive.ubuntu.com/ubuntu oracular-proposed/universe amd64 qem=
-u-user-static amd64 1:9.0.2+ds-4ubuntu5.3 [16.7 MB]
+Get:1 http://archive.ubuntu.com/ubuntu noble-proposed/universe amd64 qemu-u=
+ser-static amd64 1:8.2.2+ds-0ubuntu1.7 [14.7 MB]
 [...]
-root@lp2072564-oo:~# docker run -ti --platform linux/arm64/v8 ubuntu:22.04
-root@d31821abb9c9:/# /sbin/ldconfig.real
-root@d31821abb9c9:/# echo $?
+root@lp2072564-nn:~# docker run -ti --platform linux/arm64/v8 ubuntu:22.04
+root@77be7c8cfd66:/# /sbin/ldconfig.real
+root@77be7c8cfd66:/# echo $?
 0
 
 =3D> Issue is fixed! \o/
 
-
-
-** Tags removed: verification-needed-oracular
-** Tags added: verification-done-oracular
+** Tags removed: verification-needed verification-needed-noble
+** Tags added: verification-done verification-done-noble
 
 --=20
 You received this bug notification because you are a member of qemu-
