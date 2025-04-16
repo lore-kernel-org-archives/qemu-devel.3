@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DEDC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 08:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8DFC369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 08:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4y1v-0007qy-0N; Wed, 16 Apr 2025 04:21:59 -0400
+	id 1u4xzV-0005ig-1W; Wed, 16 Apr 2025 04:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u4xxB-0002PP-HC; Wed, 16 Apr 2025 04:17:08 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1u4xxQ-0002YT-UD; Wed, 16 Apr 2025 04:17:29 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u4xx8-0005xa-Dd; Wed, 16 Apr 2025 04:17:04 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7399838db7fso484556b3a.0; 
- Wed, 16 Apr 2025 01:17:00 -0700 (PDT)
+ id 1u4xxO-0005zq-Oy; Wed, 16 Apr 2025 04:17:20 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so5089468b3a.2; 
+ Wed, 16 Apr 2025 01:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744791419; x=1745396219; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744791435; x=1745396235; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LeWm4gdwYX7Mpk2+jTOfSOTsV04a2XRASVxxD/NFs3U=;
- b=Cny3sFPRfUHZZ2xZylXra+7azmFn0lCk7bAJCEFJ3FG2vv7vE5hqQC6vR+27L+KIMw
- YvSmDWMLt/ijcOWyynb9qxqX6scVlMFDK5pJRTXVMF3h0KsvO2dprP/t3R/Y6oexdW/n
- H6AJBWwD92GAXET7tUxu/AllcXIZ2Z1lqC7WNmdccKM1LrnfzWTS53gU+GwALQYnI/w4
- DYoejAkDXWElON7fqPwtBk6we8xpFOnSaiRoTtyGL8D76N1Xcm9VB4oAZU9oLTynP63F
- Io0EAZ84xTsBtZsU/HmacK0Sklm2uPfeSh5k4A58DONNgZcGSnMorXawDa4q/eHnAyiW
- aCIA==
+ bh=CZIwhkm1gYZydgV34GIP0NP1/+QooaD1oJOOb4q2f3I=;
+ b=LGx1aSBhL4X0HmMih4ACwsngW5cwGaMylsAYjrfPuy0Ji+ThQi6TmgazEGy0yqI460
+ /V1YbPuL/VrWTyaENOXIc04SsiLOBbXNOduMuaHRYg+yHjcx6wYXjY7zQPQfnVeC08Ji
+ ki5AXl5YBov0wK5gJ0KS3OltZFD7LDu40D2Jxb95p01kCTsd6KLq+NXymZHmWXXCS6F0
+ zz/iXMN7Nybmc1C476PO4inp2LWXbC+hNIu/lS0xha/SSVpsNgqFK6YSP8t6zl51IGL/
+ fRlunFzvTLz+5hTAV0QYhZgJditiEocAUcAnHqDy/uBrxaCisT9sVAfTl1Mpu2864jip
+ ZamQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744791419; x=1745396219;
+ d=1e100.net; s=20230601; t=1744791435; x=1745396235;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LeWm4gdwYX7Mpk2+jTOfSOTsV04a2XRASVxxD/NFs3U=;
- b=mo+34i5AaG/uzqEOG6dObFgEFBDkDeMY81VHt8P+/gvDXHohszAaZXbLthzX5seAdx
- zJVyWf2BFFLxjVq5xw1EGKJLwpbHffZjWlaJhYjENCi9jSf7hq4BXN2oXdZko3P3mYts
- kO1PSF2EJ3nG48SX/pnJobhlnfSyYHVKGDYNrUWDN4IqHsAWWeT/aTCFdSfDQ+pAMpRV
- BD9+BveC/PN9Tx1z2tkBbcRLXh8gm2b3bGoCMVGnjc/hdUdowKA9yCpInNxa4BXufaSr
- la1n6HpiiQTbD902Vmg+6OScq4KRZCLd6Xqcb47qBuN48gS21Ul/irRahtABMThG5axo
- 5ecw==
+ bh=CZIwhkm1gYZydgV34GIP0NP1/+QooaD1oJOOb4q2f3I=;
+ b=g5JXMkq/773MAxg+hofKJZPWHZzclYPm1yivN2THarvmciXGCO7aW023ptGA/PNKaT
+ tJ2SxJkRdmK4rXOzCAyWQa668tJb0e5GSQwB6DrhWwui9TLfXuPClLBVEzBSQUE5V1CQ
+ zuFRtPIJtPUtgbBF3XgkrcinusyfuxqQzs+3DP3KQXgaE1gmC6SRlek24sUugNvG60L9
+ OF/AzmeOse2b47H7ggza51NvEocmPbaqAcXg3KT2N04pMR31SvjzE3kienlRUSYLTxIm
+ iCoDVkF2PCSwCLIPxUd3iJMliivPEbgazqoQAIHYgOh3RBNv1pO72Pgz2zbQ3LnnHyeo
+ zigQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMCAzBuViEulcCnQCy3VOQdLeu4jrP3cxDoV6YGMOWf2aFmGluiwX0VdkH/8HtizDymgi2nFDapA==@nongnu.org,
- AJvYcCVwhzqYp/HNgQPYKpkeY7z8BfoTLZel8Rf6JTdpUIySgbkIM/3owx25wBs60m5WTmgis4z0xO7YYuw=@nongnu.org,
- AJvYcCXZx8Db2XxhDnzjJvTEpeDWruMtR+EuJ8ciI1plRM6HBK5nP4OZIIqcbSsfnHZndlGgEK08voPRNQ2d0g==@nongnu.org,
- AJvYcCXrniY/wYrU/lJxx5fWwnBt0oY5dUt/ZzF/g4HQEc7XfFpQmOzDz7yO/Bchmiv+UQ7Tgtvom4403MRodQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yyyi0xBoMgMWvsyzp6UW/MOalaUGWv2/EyANt3OjhsC0yOkUsNQ
- 2yJwQT3OmHu8LfH8Dqg9alZPnnzTPOwaIuNCKN3NsqI0wyK63xtCMWZFpeva
-X-Gm-Gg: ASbGncslPhoiaFx5UYA4HNqsyNj0t1a0glzpwL27ggWB+gFhk1Q5bfMCX+teKZTxIN9
- jJjVI+aKrMo7uqvsCcNY+Ag76CTctaxl5Wvk+mI6BjLnQBQEwNDNr4FdncJyo1J6eUVtkVryVzR
- UNdepyuERa/IuWlEKbSKSrv0aYFkJn9ZKDteW53toCtRRR11qANhahk13eO8fYML6X3Fg6xdPZq
- WoI5KYPfl8xal4sj6I080Nkp8cIJR/N9BG9VjpYOGBaouhUo2x7ieE3hqTt8CtqutGUSOsVzvCM
- DWwYS40GNebnpYCHELq33cQc/Fl0QUrQbUXzJG380XWpJ0ashI9eKP+gJw==
-X-Google-Smtp-Source: AGHT+IEd5+lBFTcqmb1ye1d++AMi9QLiZpHeWhQhSUvm6Ej8uB7TB8VIvQgflEsDVgsqaenyzYpXOQ==
-X-Received: by 2002:a05:6a00:391b:b0:734:26c6:26d3 with SMTP id
- d2e1a72fcca58-73c26d39553mr1508336b3a.5.1744791419205; 
- Wed, 16 Apr 2025 01:16:59 -0700 (PDT)
+ AJvYcCU1zM6FS+HXnxRbCzjuwdZ608/1HD0rVR2fLVAfn6Z5fIfuXPTZ2k0jaQqp+6z9sQP2V3ZSOluSZz0=@nongnu.org,
+ AJvYcCUzk1/+Derk2OuIRHOe75zhXspyX+uQIiP7OGmQX2tY4vBZKdQKpcPIogdMCE+FHLhLrYwSWOvQjlWBXw==@nongnu.org,
+ AJvYcCWizXA/Dq5vhv5rgrXFzGm3aB6nGWpgsO4wYk7cLIwKDbGckHriPeVvW2VHFf5qp0Q3Pts/JB8Xlw==@nongnu.org,
+ AJvYcCXWhHliy8qIFkJbODXA3wC7pG2ami9fhkKcLvSNj/reGY6x9K9oOVLej5/gGf0OeZY/jTmcAONGWs05pw==@nongnu.org
+X-Gm-Message-State: AOJu0YwTGYgNOYffpuTy5h+fXdjteZ1XlU7K9Zz7xNo7w0jVZyr/vfXl
+ Kfry1YKzqbS07sxKRFCfBL8f3TyeX9wOZfvlM//lGrLSS+NF63ErjKBWsKIY
+X-Gm-Gg: ASbGncvBeAkWMmSSa5b0KmPrxtGfCYCqTAANQE/h4dVGqJHx0npJxLqTmZ5SfAkyqH7
+ 9etbIj3A68W+ZsMt8Q4Emw5B2pELYAnlorF0aWINZN7veEMVpZu1w2ryx6Ks3QKPYrNeiSuR19L
+ LihTdAwNrbBVCiz1z4BIzoxsGteX/yOP/Bq2Yaiz+B5GEkWrYnURBCxmkfH0M+PupMK/HOdfyyu
+ No08CvYilBz90Ykhcd29j7sObXqxn7L0emLBmVu8Lqw3hli3n4IEH4XfDJeltd0aA8rXWjukK2c
+ 0Le5gon0o1N9/x8KVcgC7vgpxTot1ECqHWDvTHMZHADZF0rXlTJLGb9e7g==
+X-Google-Smtp-Source: AGHT+IGgzIJ5eER9yj0z1vC7FNinP2KD441XkBQRF9R/Tll92nVYI2cqMr8iiCC2EUQts7Tm457VMw==
+X-Received: by 2002:a05:6a21:3a8c:b0:1f5:852a:dd8a with SMTP id
+ adf61e73a8af0-203b3fc053bmr1269534637.28.1744791434901; 
+ Wed, 16 Apr 2025 01:17:14 -0700 (PDT)
 Received: from localhost.localdomain ([240d:1a:3b6:8b00:ee5a:e672:7d4c:d43])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd21c3263sm9839445b3a.38.2025.04.16.01.16.51
+ d2e1a72fcca58-73bd21c3263sm9839445b3a.38.2025.04.16.01.17.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 01:16:58 -0700 (PDT)
+ Wed, 16 Apr 2025 01:17:14 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -90,17 +90,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 15/19] util/mmap-alloc: Add qemu_ram_mmap implementation for
- emscripten
-Date: Wed, 16 Apr 2025 17:14:20 +0900
-Message-Id: <7ef485c860a0c26d2ddcf6a96430f5443deb5aee.1744787186.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 17/19] meson: Add wasm build in build scripts
+Date: Wed, 16 Apr 2025 17:14:22 +0900
+Message-Id: <835dfef61307a941cdb58331607c308238d37e00.1744787186.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1744787186.git.ktokunaga.mail@gmail.com>
 References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,61 +122,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+has_int128_type is set to false on emscripten as of now to avoid errors by
+libffi. Tests are disabled on emscripten because they rely on host
+features that aren't supported by emscripten (e.g. fork and unix
+socket).
+
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- util/mmap-alloc.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ configs/meson/emscripten.txt  |  8 ++++++++
+ configure                     |  7 +++++++
+ meson.build                   | 25 ++++++++++++++++++++-----
+ meson_options.txt             |  2 +-
+ scripts/meson-buildoptions.sh |  2 +-
+ stubs/meson.build             |  4 ++++
+ 6 files changed, 41 insertions(+), 7 deletions(-)
+ create mode 100644 configs/meson/emscripten.txt
 
-diff --git a/util/mmap-alloc.c b/util/mmap-alloc.c
-index ed14f9c64d..91f33682e8 100644
---- a/util/mmap-alloc.c
-+++ b/util/mmap-alloc.c
-@@ -145,6 +145,7 @@ static bool map_noreserve_effective(int fd, uint32_t qemu_map_flags)
-     return false;
- }
+diff --git a/configs/meson/emscripten.txt b/configs/meson/emscripten.txt
+new file mode 100644
+index 0000000000..4230e88005
+--- /dev/null
++++ b/configs/meson/emscripten.txt
+@@ -0,0 +1,8 @@
++[built-in options]
++c_args = ['-pthread']
++cpp_args = ['-pthread']
++objc_args = ['-pthread']
++# -sPROXY_TO_PTHREAD link time flag always requires -pthread even during
++# configuration so explicitly add the flag here.
++c_link_args = ['-pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
++cpp_link_args = ['-pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
+diff --git a/configure b/configure
+index 02f1dd2311..a1fe6e11cd 100755
+--- a/configure
++++ b/configure
+@@ -360,6 +360,10 @@ elif check_define __NetBSD__; then
+   host_os=netbsd
+ elif check_define __APPLE__; then
+   host_os=darwin
++elif check_define EMSCRIPTEN ; then
++  host_os=emscripten
++  cpu=wasm32
++  cross_compile="yes"
+ else
+   # This is a fatal error, but don't report it yet, because we
+   # might be going to just print the --help text, or it might
+@@ -526,6 +530,9 @@ case "$cpu" in
+     linux_arch=x86
+     CPU_CFLAGS="-m64"
+     ;;
++  wasm32)
++    CPU_CFLAGS="-m32"
++    ;;
+ esac
  
-+#ifndef EMSCRIPTEN
- /*
-  * Reserve a new memory region of the requested size to be used for mapping
-  * from the given fd (if any).
-@@ -176,6 +177,7 @@ static void *mmap_reserve(size_t size, int fd)
+ if test -n "$host_arch" && {
+diff --git a/meson.build b/meson.build
+index 41f68d3806..c9aa5016d6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -50,9 +50,9 @@ genh = []
+ qapi_trace_events = []
  
-     return mmap(0, size, PROT_NONE, flags, fd, 0);
- }
-+#endif
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+-supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux']
++supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+ supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
+-  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64']
++  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
  
- /*
-  * Activate memory in a reserved region from the given fd (if any), to make
-@@ -244,6 +246,21 @@ static inline size_t mmap_guard_pagesize(int fd)
- #endif
- }
+ cpu = host_machine.cpu_family()
  
-+#ifdef EMSCRIPTEN
-+void *qemu_ram_mmap(int fd,
-+                    size_t size,
-+                    size_t align,
-+                    uint32_t qemu_map_flags,
-+                    off_t map_offset)
-+{
-+    /*
-+     * emscripten doesn't support non-zero first argument for mmap so
-+     * mmap a larger region without the hint and return an aligned pointer.
-+     */
-+    void *ptr = mmap_activate(0, size + align, fd, qemu_map_flags, map_offset);
-+    return (void *)QEMU_ALIGN_UP((uintptr_t)ptr, align);
-+}
-+#else
- void *qemu_ram_mmap(int fd,
-                     size_t size,
-                     size_t align,
-@@ -293,6 +310,7 @@ void *qemu_ram_mmap(int fd,
+@@ -353,6 +353,8 @@ foreach lang : all_languages
+       # endif
+       #endif''')
+     # ok
++  elif compiler.get_id() == 'emscripten'
++    # ok
+   else
+     error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
+   endif
+@@ -470,7 +472,10 @@ endif
+ # instead, we can't add -no-pie because it overrides -shared: the linker then
+ # tries to build an executable instead of a shared library and fails.  So
+ # don't add -no-pie anywhere and cross fingers. :(
+-if not get_option('b_pie')
++#
++# Emscripten doesn't support -no-pie but meson can't catch the compiler
++# warning. So explicitly omit the flag for Emscripten.
++if not get_option('b_pie') and host_os != 'emscripten'
+   qemu_common_flags += cc.get_supported_arguments('-fno-pie', '-no-pie')
+ endif
  
-     return ptr;
- }
-+#endif /* EMSCRIPTEN */
+@@ -514,6 +519,8 @@ ucontext_probe = '''
+ supported_backends = []
+ if host_os == 'windows'
+   supported_backends += ['windows']
++elif host_os == 'emscripten'
++  supported_backends += ['wasm']
+ else
+   if host_os != 'darwin' and cc.links(ucontext_probe)
+     supported_backends += ['ucontext']
+@@ -2962,7 +2969,9 @@ config_host_data.set('CONFIG_ATOMIC64', cc.links('''
+     return 0;
+   }''', args: qemu_isa_flags))
  
- void qemu_ram_munmap(int fd, void *ptr, size_t size)
- {
+-has_int128_type = cc.compiles('''
++# has_int128_type is set to false on Emscripten to avoid errors by libffi
++# during runtime.
++has_int128_type = host_os != 'emscripten' and cc.compiles('''
+   __int128_t a;
+   __uint128_t b;
+   int main(void) { b = a; }''')
+@@ -3774,6 +3783,8 @@ if have_block
+   # os-win32.c does not
+   if host_os == 'windows'
+     system_ss.add(files('os-win32.c'))
++  elif host_os == 'emscripten'
++    blockdev_ss.add(files('os-wasm.c'))
+   else
+     blockdev_ss.add(files('os-posix.c'))
+   endif
+@@ -4456,7 +4467,11 @@ subdir('scripts')
+ subdir('tools')
+ subdir('pc-bios')
+ subdir('docs')
+-subdir('tests')
++# Tests are disabled on emscripten because they rely on host features that aren't
++# supported by emscripten (e.g. fork and unix socket).
++if host_os != 'emscripten'
++  subdir('tests')
++endif
+ if gtk.found()
+   subdir('po')
+ endif
+diff --git a/meson_options.txt b/meson_options.txt
+index 59d973bca0..45772484cc 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -34,7 +34,7 @@ option('fuzzing_engine', type : 'string', value : '',
+ option('trace_file', type: 'string', value: 'trace',
+        description: 'Trace file prefix for simple backend')
+ option('coroutine_backend', type: 'combo',
+-       choices: ['ucontext', 'sigaltstack', 'windows', 'auto'],
++       choices: ['ucontext', 'sigaltstack', 'windows', 'wasm', 'auto'],
+        value: 'auto', description: 'coroutine backend to use')
+ 
+ # Everything else can be set via --enable/--disable-* option
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 3e8e00852b..0568385f00 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -80,7 +80,7 @@ meson_options_help() {
+   printf "%s\n" '  --tls-priority=VALUE     Default TLS protocol/cipher priority string'
+   printf "%s\n" '                           [NORMAL]'
+   printf "%s\n" '  --with-coroutine=CHOICE  coroutine backend to use (choices:'
+-  printf "%s\n" '                           auto/sigaltstack/ucontext/windows)'
++  printf "%s\n" '                           auto/sigaltstack/ucontext/windows/wasm)'
+   printf "%s\n" '  --with-pkgversion=VALUE  use specified string as sub-version of the'
+   printf "%s\n" '                           package'
+   printf "%s\n" '  --with-suffix=VALUE      Suffix for QEMU data/modules/config directories'
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 63392f5e78..4fd4d362f9 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -89,3 +89,7 @@ if have_system or have_user
+   stub_ss.add(files('hotplug-stubs.c'))
+   stub_ss.add(files('sysbus.c'))
+ endif
++
++if host_os == 'emscripten'
++  stub_ss.add(files('emscripten.c'))
++endif
+\ No newline at end of file
 -- 
 2.25.1
 
