@@ -4,93 +4,217 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C06AC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 07:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D53C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 07:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4x59-0001mh-JC; Wed, 16 Apr 2025 03:21:15 -0400
+	id 1u4xWm-0001CN-8J; Wed, 16 Apr 2025 03:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1u4x51-0001lo-8q
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 03:21:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1u4xWk-0001C3-V1; Wed, 16 Apr 2025 03:49:46 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1u4x4u-0002be-4G
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 03:21:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744788057;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U1iGn7MFW8UnwFCTCQtZBFEgBpfm7ypTXWC8OO/lnMA=;
- b=O6CotArbSWX5onfMIUZelqvb0X2ap2yg7Lhf3VsVWCSx8SvllH8eq7G2/5CAk0AL8suxvY
- lBvhNObkHtn+B3tlGb1wyokEttAgYjhegRjT46dQDtGWoOqeXPFWbik8O5vUiXBcunb++d
- b5eEyNGoPzA8TCWzYldzfQnO06g0Y5E=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-DyomU7PrO8W6LlFFUGwFaA-1; Wed, 16 Apr 2025 03:20:56 -0400
-X-MC-Unique: DyomU7PrO8W6LlFFUGwFaA-1
-X-Mimecast-MFC-AGG-ID: DyomU7PrO8W6LlFFUGwFaA_1744788055
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2ff7aecba07so6305831a91.2
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 00:20:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744788055; x=1745392855;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U1iGn7MFW8UnwFCTCQtZBFEgBpfm7ypTXWC8OO/lnMA=;
- b=KoYibOMN7an1vlax9pDvpwbH7pHuQ+r+Dg64uMDORSnaNIyb+HEveFzOR8FvkIeObf
- kkjVUPSilZuQ3nhvdL238tvkSqO0bIlqIqNr6vLYp2+9YTcYCX850G/coRhPIYghdWFp
- uMcJ6Jz7Nt6AROuAmHfFgGdWT9eOLKQ76+hvhTfXu5TW/DlS1ZlgVEjbuK2bbwgS0K7b
- 2gj99/DWEDob2pwQcJM6boXNWkMVphQyHS8Vqn50H2yaSfmjAjNKGPW7od/D+XbYmW7a
- MwSRVLrcWdo/FXtBy5N6Tu/WsZB8PcdgDXd4quYCDjYiosJMV2KQYVBl1RmkFq3nvkkN
- 1zXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9+iecudQ6smovT6YVEqxHS3tv/lCg/485rQRtzvKz2ZZcq3+6FU1UZsDPYyMv5nMfyTqnd7Oj7oTJ@nongnu.org
-X-Gm-Message-State: AOJu0YyUTSJjtN9v2dHuixwbD1jmcLygJ55MlGM3AYsUkYZNoBfz4Rbb
- y2ZPGASFTO4mTPxc1lBarztzIs/81A/Zo4b3ImZmD99lp1C43lhjuxaYkOZdYzDBPzYjuzsCrGN
- UMAH7qGyl2S0qimA6mw7Kc3YntqVhwVz1AFOE72Bwt0K7qz2v4wcmpMxqD659EFdb53FYNl8uTe
- d7Jq5ozL2jyTlJu2PTdQB1Nnpv7G4=
-X-Gm-Gg: ASbGncu1Y2PkcdI/NzOEDvAH2a1Jk2Rpsqrid105OK0NZ2WmVp4aea4Tp5P/ZvMiVHv
- EQIvSqpU7Wr/9GIr+WvLVkp24m/xkgSrRL4+3kbwixv+PDji6NoRKaAr4pA4y/axUNo8=
-X-Received: by 2002:a17:90b:2d10:b0:2ee:dd9b:e402 with SMTP id
- 98e67ed59e1d1-30863f18c46mr1338900a91.12.1744788054691; 
- Wed, 16 Apr 2025 00:20:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvyAj9KcDW74laK3lXqMgnVo1Yn+o/Taham0vdXpVGrcUugGHzK0RSeUAERRXrnJVqGCdab7w9E6GGN8xTjjs=
-X-Received: by 2002:a17:90b:2d10:b0:2ee:dd9b:e402 with SMTP id
- 98e67ed59e1d1-30863f18c46mr1338843a91.12.1744788054202; Wed, 16 Apr 2025
- 00:20:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1u4xWh-0000nt-6A; Wed, 16 Apr 2025 03:49:46 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53FMMs2D005330;
+ Wed, 16 Apr 2025 07:48:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=UuRMai/atUHGm8JGmWGErYAlxnmsmeI88qA/SN40DxE=; b=
+ cA1sEXkTsiZpZ2wHN/Np+KGHo5VSSj1VowknnNE/jFPi5x7f+irsaxrv60irSmQe
+ xXbgqdXELX5xRtMF9i0JjyxkqPdubBViJ9wQ5pSXgYSUSObpOwfxsjQif//EMr1b
+ L+2gmcJS8d2pAa90A3naO1i7oPG6KmQaHMzqzB/jatBpgsVnxBUaA4yKyXdpTvmn
+ Ob08Or5Yqy73S5RByrjmZ0+omMHlZGUgEa/gszB8NMhYN0ZTvJ93wTSC8JO8Cpjn
+ gPR9+b55GHSpt/0/87YGuiqK2FLFf1qvuJZCnvdDJn3eB1bwPBnPntVc8iU7XvtR
+ S6kSlzLxjBjm/WCYkKlvZw==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4617jubgma-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Apr 2025 07:48:48 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 53G7J9qY009183; Wed, 16 Apr 2025 07:48:47 GMT
+Received: from nam04-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam04lp2044.outbound.protection.outlook.com [104.47.73.44])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 460d3k7xjb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Apr 2025 07:48:47 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rOxGLUBvl80kUYt1TNwtuOEGLY+BxxtUlU0oFw37A821WAxFnq9qTczs/uGkSA5aGhqZ9RQylc4MuEUwSgjdAFXqIg4iiHhECoonIr9y2i/mAcT8FUk9TpGnm/PNYhRQq4WtknP12kUAXBJZazP99AMZnRw0rA7FC+NQwsH61IoEURDf3R/wilIHr9UoOqM3BT1+LvpksR4OTvp6GMTFRF8DrhzRsksaJRcL/X/NHngTrD2AcFRBC4hcEEhN0suj2rMRO3e0V8nQn1ueAc7U0v2AQPWO+TpW6YLKg/y/Zh3ftNnJ3yQ1z4+Sf4EdgAHfxnIa9lndsYXpodpC+VNoJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UuRMai/atUHGm8JGmWGErYAlxnmsmeI88qA/SN40DxE=;
+ b=CkXczWNxRv4pV4FR1aTaNscfc5sDLsIi63Ex4u0wISIU1HQaDfROXqHKLG97osLoUvBTDxdNY8LdHovKV59gKjDVYwLfVwJ211feYgk0i/lpAqlFdFGuMSxLfCgzMGvXemJQpH0OlDtG9nTl+zUBiiap9T6nhuzdiVP9x6iHy86u7dngbJv4yuv93J5yLwqrpS7zKfVcmrilmp1QPMCWgoy17Pr3Oqh6xtmc/E+DmXfgELcku2gjuPTBXysO2Q9GrZbVCUa/CET1NFgLXMBM8MfcmPyNwzCo7XYbF4FeKukCZM7msFvNNYvYPOJ5bs3zkye6TJuzrX8fPRdyZHzofg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UuRMai/atUHGm8JGmWGErYAlxnmsmeI88qA/SN40DxE=;
+ b=xBtd4XUg/6b/wqjT5TUJ+XwI+zGvSWmDKrAjS3ZddIaJsAUYKpWm5eQEtbejXaw/qEOAbDMKsmPKWXgilJKctXUArVhXwbRIxROmNRQU7o4wN+e85vOEk2s9oQsZTO+qnR9TNPqlgp3wgOVFYv4302h/MzH39Q7nQnoOQ4WJYKU=
+Received: from DS7PR10MB7129.namprd10.prod.outlook.com (2603:10b6:8:e6::5) by
+ CY8PR10MB6802.namprd10.prod.outlook.com (2603:10b6:930:99::19) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8632.32; Wed, 16 Apr 2025 07:48:43 +0000
+Received: from DS7PR10MB7129.namprd10.prod.outlook.com
+ ([fe80::721c:7e49:d8c5:799c]) by DS7PR10MB7129.namprd10.prod.outlook.com
+ ([fe80::721c:7e49:d8c5:799c%5]) with mapi id 15.20.8632.030; Wed, 16 Apr 2025
+ 07:48:43 +0000
+Message-ID: <7bdcb028-1068-4621-8c06-f8ba68af52ee@oracle.com>
+Date: Wed, 16 Apr 2025 00:48:39 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/10] target/i386/kvm: query kvm.enable_pmu parameter
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
+ babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
+ groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
+ peter.maydell@linaro.org, gaosong@loongson.cn, chenhuacai@kernel.org,
+ philmd@linaro.org, aurelien@aurel32.net, jiaxun.yang@flygoat.com,
+ arikalo@gmail.com, npiggin@gmail.com, danielhb413@gmail.com,
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org,
+ david@redhat.com, iii@linux.ibm.com, thuth@redhat.com,
+ flavra@baylibre.com, ewanhai-oc@zhaoxin.com, ewanhai@zhaoxin.com,
+ cobechen@zhaoxin.com, louisqi@zhaoxin.com, liamni@zhaoxin.com,
+ frankzhu@zhaoxin.com, silviazhao@zhaoxin.com
+References: <20250331013307.11937-1-dongli.zhang@oracle.com>
+ <20250331013307.11937-8-dongli.zhang@oracle.com> <Z/dRiyGTxb8JBE8v@intel.com>
+Content-Language: en-US
+From: Dongli Zhang <dongli.zhang@oracle.com>
+In-Reply-To: <Z/dRiyGTxb8JBE8v@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY5PR17CA0004.namprd17.prod.outlook.com
+ (2603:10b6:a03:1b8::17) To DS7PR10MB7129.namprd10.prod.outlook.com
+ (2603:10b6:8:e6::5)
 MIME-Version: 1.0
-References: <20250324135929.74945-1-sahilcdq@proton.me>
- <CAJaqyWdXat-ugJHEcZyB5dbTuwGgvrO2+DdDd9YneS0=j-99NA@mail.gmail.com>
- <f1354888-74fb-44d8-8b48-c6a6a13db1a7@gmail.com>
-In-Reply-To: <f1354888-74fb-44d8-8b48-c6a6a13db1a7@gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 16 Apr 2025 09:20:17 +0200
-X-Gm-Features: ATxdqUHF4kGjAsRrknR9DidAu8ShduZi1VEo8HTwYRGLHgsf-EU9PYfcrQM5ty8
-Message-ID: <CAJaqyWd=ssa5fkmV7Z=tzJvFeciC1P2U2pYheaSrZ2PZCaejHg@mail.gmail.com>
-Subject: Re: [RFC v5 0/7] Add packed format to shadow virtqueue
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- sahilcdq@proton.me, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB7129:EE_|CY8PR10MB6802:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2854c00a-5b41-4553-ba24-08dd7cbb1c84
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NE5Id09oVjc5SEdRcGhkOWFlcGI1U1RhekNVc3IzY0EzQ2hDbFhickVTZjgx?=
+ =?utf-8?B?V1cvV1BzN254c2pTb004Vm1ubzdnelNNYkNzTVZiM2s2OVZDWVNHV2R3U2py?=
+ =?utf-8?B?UkVBWFFXczNabjVJRnJ1cTREOWtQMUNUMlRHakpOWFdEWWtsSEtCMytUTm0x?=
+ =?utf-8?B?SG14L0FEb0VBbE1kT2dVVkJWT3JSUXlIOEZxeWJoaFNMWTNXcjZ5T3Iycyt3?=
+ =?utf-8?B?WUlLRHBnY0NUVE51QTFVVFFwZERwMnpxaGVUSEk4bnRYa1pnUzNTQnhxR2Zy?=
+ =?utf-8?B?UVJoVFpIVmVWa0JnZ1ZnSnV0RmNDVUlZeHllNHhFczB6Z21tQ0Y0djF0dDhz?=
+ =?utf-8?B?YnlPSmg5bUtSWjREVmlvdGVyTWcrRFZWdXpMN0FZNW9yUzMrRVZycTZidGcr?=
+ =?utf-8?B?YXVEWXJWNWphVHZwdVdtYUNnUzIxMUROVDNWbTZicEJPTlRJSHNpZUttZ3g4?=
+ =?utf-8?B?WmRIbkUyTnNlUjk3Q0FIY2pVVXgwcWlLdzNWeFliaW90RzJ4QUxvYjZYN0ts?=
+ =?utf-8?B?SDFXOUhBMG9JYUxlS1RVMC93RVMzUHJQaEtaeGhqQnJHOTR5eCtKczVWck9I?=
+ =?utf-8?B?WGJUQ0tMS1E0SlBmMmZMTEhFRXBndzkwenNmNytSSVRML1NvTjg2ZkdScmU5?=
+ =?utf-8?B?RTQ5b241eXkzdDlKSWpVTTNWdTdrdEVzVlJyREZ5WVZnS3hvUGpKTFdxZnpx?=
+ =?utf-8?B?ZEFjOVN3TE1KZDU1TDJXSW9RSmwwaGlUbWpySlVzTjZlTlQ5KzdGSkRyK0x1?=
+ =?utf-8?B?WW5EY1lsVk55bmVJdWE5Q3dveUxWVk5iTTNDenY1bE9ucFFHa2NnVkMzWU82?=
+ =?utf-8?B?bjhIUzhvY0FBS0E5VHEyZXZKT0cza0hoWEEybngxWkRzek1hYmNiZTlPZ2tQ?=
+ =?utf-8?B?ZDMrR0VMSENQVmhYSDBKWkZIbXp1b1U0Z0FqQXJQUWVrdGdwUG9pZURzSFU5?=
+ =?utf-8?B?SkJnWHYvcTQvVWU3OUM4V1NpWERjT0NWK21ZTjR5Z05wVzZ3a0FxUGJzdlgy?=
+ =?utf-8?B?cmg4STJXNWhHamtCUjUvZTVPV0dDS2w4QXdSaTM2SFJPMXpQdGxBOE80RWEx?=
+ =?utf-8?B?clc2S21pemJjVllQdVFuUStNbHlqTEZDSVJ6S2dqeWFzdk4wbU1RSC8zU3JS?=
+ =?utf-8?B?VXVMN2lrekk4c2tCWW5rcFJ3NWJ5TnFNQ3VqbTJ3WUdCa2hXcGN1dnJUTTRC?=
+ =?utf-8?B?T2tSN1ZkcUFjOVp4M09iaUZqaEV6S2trbFFYaDU5TUUyMUZUcDA5TFh4VWxt?=
+ =?utf-8?B?WG02TXovcFRTSmIrY0wyZkt3MkhlNFFSNHRVMGh1ZDZQV0V5djVkUk9pVkJU?=
+ =?utf-8?B?aW1SWFhVY1hXbVNEMWYzQlptMXVHSDRKbCtJcE9xZTc4QnY1OHZ0ajJWQTg5?=
+ =?utf-8?B?OHJHRU9mNEtyejRQM3B2VFowQk5ORnFpZG5HT2J0OEZsaXZ0Kzk5YWt5Ujht?=
+ =?utf-8?B?czJrU1h4RDNKR280dk1GVlRuZXdyazY0VHhnbTUzSlUyd3dweVE1WkFOZnN5?=
+ =?utf-8?B?ak1lUUxkVjJzWGhsaWF0V3FyUlpGK3prcVc0Y2M3dXU0WmVKb05Fdkt3cTdY?=
+ =?utf-8?B?anZJRUk0UlhFcitGd0E0V20zdDA1RkxDRXJMMHc4cGNtcDJoczU3VkU1RzZU?=
+ =?utf-8?B?Mm5CRmFSb2EzSFpnVk8rSjF0QzVsaThqbWozWHduQytFdnpKaDgxQldYWlBt?=
+ =?utf-8?B?T3JNdzhPdGdsK3FLbzFHVVZXU0xyWENnaXUvMmVXTVNoZ210QTBlV1VDcVdr?=
+ =?utf-8?B?dmpmQlZMbFpNSTlZS0x5NG55dThFWkhqVkFiUG53UGg1djV3RjFBLyt1SXEw?=
+ =?utf-8?B?VEk5bjdQZ3pUVFNubTU0ZVdZT1FSNVB2QkpGT05yN1dCYVU1eHVkbWVBaEhT?=
+ =?utf-8?B?aGI3ZThTKytueEt1TTc1TlNwNnVKTEZJVkJXVDBJRWlIRldGeFFJdCtLOW5k?=
+ =?utf-8?Q?TCL9SMEVKRE=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR10MB7129.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V05UM01kY3ZsWEMxVG1FVldVY2Z6bCtTZ3NTY1BST2pVUUY2WnpZSmJJTVEz?=
+ =?utf-8?B?ejRXTk0xRzJMOUxBUjYxTzNxQVFZVmZjeTZ4c3Fobnh6R0dQeXhZRGl4U0JF?=
+ =?utf-8?B?WEJCdjh3aE51U29oQmUwSEFwcm9JTUpMTlpZVnVFSnd4ZnFRSmsyUlVZOVV4?=
+ =?utf-8?B?WG1BOWEwcmJWR200ZnJwTzdYbEE1RnNEamxjcS91b3l0aE9OS1ZTUlcwT3ZG?=
+ =?utf-8?B?aEYwWVlMQ0lSWE9HQlF3L0h4OVQyYXQ5RUpzbjhzVVU0d3hmU3ptNFhGWWlN?=
+ =?utf-8?B?M3ZFNFd0SlV3RjhNZER6S29Yd3F2TzdQYTlGc1VxNmpJZFZmZ09paFVleTBE?=
+ =?utf-8?B?WDBZeXhDUWkwY0JVT0ZLeTNDRjBnU3VqQUtkNUwwZmkzQjdWMFFCNVdrM3Bm?=
+ =?utf-8?B?SFhYZU8xZCtPbVNUMDlRazkvbTB3czZZdlI0OEdwU3F2QlEwNktscWlSd3g0?=
+ =?utf-8?B?MHAvSUxDSmN1enRQcWFkU2xUc0JPN0VReDEwZTQvNFZUUFRhSE9ieVpLWTd3?=
+ =?utf-8?B?bnZDSGsvekhBSENBMEFFQUFtQi9jLzdzb1hZd3paZjFFVXBSQWduM2U4TXN4?=
+ =?utf-8?B?MFNEb1ZDWDJlYkxaVlNZVkF0ekh0Y1pFWnhudzFRejFEM20xUVhnUnh3TktB?=
+ =?utf-8?B?VXJMSElyRzlwNWN2MTZQUGw3OCtKTE5ON044SExXY0V4dUJwN0tGRHdvK0xl?=
+ =?utf-8?B?dnJLRnJzZGJWN3NkeEQ3NExSRDIzN2tSMjNHdkRJOFpKNWkxcG4zQllDTG50?=
+ =?utf-8?B?em5Jd3F4ck56T3R6UWNNdjZOaGkyVkQvVEcyYzBtRlVBS2hWZ0Q1NUlEcURh?=
+ =?utf-8?B?cXFia2VpZ3dnbnJ0dVA0OE5UaDZoQTJSWFh3Mzk4b2dzL042WkJWa01HZDNt?=
+ =?utf-8?B?T0diMGFMSlZ5K2RuQU40WUNCS0JqNlZXWlVZNGNja1ZoK29ncE5nQkVOYUpD?=
+ =?utf-8?B?dVZkOG9TbzJ2ZVNacm1BcEZlNURqV3k4R0VmenpWcC9UbThYcUVxTjJ4VlZs?=
+ =?utf-8?B?L0dRZnlFVVRUclZXemhzbDBaTFh1clVoTmpsVWtoOXVCc0ZOVFRkZkw3cmtH?=
+ =?utf-8?B?b1pDSm90WmdXc1Y4VG1ydWZ5SmRMVGFsWWR3UGtKNjJvZGg5bnM5TmQ3bGU1?=
+ =?utf-8?B?cnRaa0t5a3Q2NkJzcnc2NkRFNCtJZXpYYXpWWFhxNnJUNTQ3Y21zZEFwWXJn?=
+ =?utf-8?B?eG9EZjFWQ3hMWDBNRStwUzdCT28rWWUwM0xJdDlWMUNVQkMvVjVBUUlBN3o4?=
+ =?utf-8?B?VmkwNEdpSnJZVFlFRFpjanh4Snl2blNlejZMMjZSS1M2MExNS1Blb3dhSVJz?=
+ =?utf-8?B?R1JyaTBEWWIvMFF2b2R1ZGpxZUZ5TWVtTUhVZ3IvMnFsaGVkMERaazE3R1Nk?=
+ =?utf-8?B?NU5KUW9HWXVzOEFIT25TQ3VUWXRrMjNSLzNEcTZxc2VqYWNvR2hiMjZheHVY?=
+ =?utf-8?B?TU9BVzdmTmRvSys5ODB3dys3L1ZVM2ZUNCt5NkdodkE4dHUyNDZ0RG9WVFVq?=
+ =?utf-8?B?eXNBdEMyYjMwU1V5Qm5nU09DeWsyM0JkZENJWnRka3FxMy92V2ZJcFlVS0ZL?=
+ =?utf-8?B?SU0yT1FCWWYwTWVhQlcxN3hocWlad0c3RzZ4MnordDRiTjVPMmREVE0zZlhr?=
+ =?utf-8?B?RFQzbVVUMEJ5Rm1oTWpSc0M5cm5GUDd4ZHZ0VHp0VC9RK3FhTEN6MkNyaFhw?=
+ =?utf-8?B?YlVOWDNVRTFMazZXYWd0OGNmTlFsdEQzTkRwa1FGcGQyeWxhdmFuSlRmNUNY?=
+ =?utf-8?B?ejhETDY1RXB3K3RLSXR3YXV6ejNpanlDejdjNi9JclVRQ3dJTjh1OGVkTytJ?=
+ =?utf-8?B?QWF1aEtrSi9qZnZaUWhUYU55VHF4cTQxQ21nYnFNOTJwcUV4WVBZVjlYWjhG?=
+ =?utf-8?B?bmw2UGxVZjhDY1pxQXl0VFoyRVRRcmVIVGgzN01OL0FXQ2RLdis4Sk9lazdX?=
+ =?utf-8?B?bzhKNEtsanJBZngwRVJrYU8rdFUrcXRTUTFPQ3ZXTWJKbHNXRXF4b3FWZnBq?=
+ =?utf-8?B?Wmt4TVhhK2FFTWpDK3h1Z04xUUNmczNoMVNUdWJ5cEoxMmRzRHlwWjJxSndw?=
+ =?utf-8?B?bWY3MGp3MUhWK3A3ZWM2aS9DU0pQNEtqVjhlVGZMSXh5bEovQ0tkeGtrRFk5?=
+ =?utf-8?B?NXNNT0VlTW5RYU5JL0d6NGtCZ2puSTduQXJ5K1d2OG80Q0E3QVVQdGtVbUw0?=
+ =?utf-8?B?U1E9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: CFlZY2pVK34Xc0T0BVYDXoaNv/rlP8f+Bu4AN4kyBh74LTzJyk7EFU0mvMSmOLK+FtAHyceSJHZYtfKw1CTjQokUOmpeNHmEmiAyourbW0pO2uoPzXAaVddnTRXTEgeO275AcuuxCzn84o2UZ8J1RzOQlWVwAnH+kvoQrL7dWW8ZNCLBvSZb/kL9DCc36WM5b/LAqSmVn9edVLxSv+fxanMt7lViFfZNZMedKiuEtABpxdkBSO3XOVEku4OJrn6VTcViEt9jbVWjHnRXfhC2HIuC2Uv+O8rf3NwqGzaN/uLNbu+UM1WaO5JjDdAtMcZem6zk7CihkYhBITddxL0nWIwdmJK8ujXutkVp7qF/hMdimQrm0de6LVhZun2u6yyIwNDIJxis4C8CL9ywxA5N7KVWeirEAgHiETWIc+c69Uer12F/PXzZXLvSCBdvR+4d/Xw0f4Oi8g3RJzv6lHmDF2A4z/Zp5iBYGDYE84t90QIMKjTHzOKh1/TI95wO8nTZ9ICFRJo+z92Hn2+umgGqKf0mSBZNGbztsB7Bgds34qK4fpQIlSzocQq/C6FEB9z0vCXemeRmsHKV355o9/oDN+s1GohKm7+cNujEq/zhtMY=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2854c00a-5b41-4553-ba24-08dd7cbb1c84
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB7129.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2025 07:48:43.7912 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9C2Cq+r3bs8+OOMiiHWc/EuuoVb/0hty7wocIbs3GIeSjju5ojBHO/3X/o8hxsrDAsgkr2CQoGoOCUbapGbDVg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR10MB6802
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-16_03,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ bulkscore=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 spamscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2502280000
+ definitions=main-2504160063
+X-Proofpoint-GUID: -fWpf8T8W4jBZAc3OFXMyPp6KnWKAoGR
+X-Proofpoint-ORIG-GUID: -fWpf8T8W4jBZAc3OFXMyPp6KnWKAoGR
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,268 +230,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 14, 2025 at 11:20=E2=80=AFAM Sahil Siddiq <icegambit91@gmail.co=
-m> wrote:
->
-> Hi,
->
-> On 3/26/25 1:05 PM, Eugenio Perez Martin wrote:
-> > On Mon, Mar 24, 2025 at 2:59=E2=80=AFPM Sahil Siddiq <icegambit91@gmail=
-.com> wrote:
-> >> I managed to fix a few issues while testing this patch series.
-> >> There is still one issue that I am unable to resolve. I thought
-> >> I would send this patch series for review in case I have missed
-> >> something.
-> >>
-> >> The issue is that this patch series does not work every time. I
-> >> am able to ping L0 from L2 and vice versa via packed SVQ when it
-> >> works.
-> >
-> > So we're on a very good track then!
-> >
-> >> When this doesn't work, both VMs throw a "Destination Host
-> >> Unreachable" error. This is sometimes (not always) accompanied
-> >> by the following kernel error (thrown by L2-kernel):
-> >>
-> >> virtio_net virtio1: output.0:id 1 is not a head!
-> >>
-> >
-> > How many packets have been sent or received before hitting this? If
-> > the answer to that is "the vq size", maybe there is a bug in the code
-> > that handles the wraparound of the packed vq, as the used and avail
-> > flags need to be twisted. You can count them in the SVQ code.
->
-> I did a lot more testing. This issue is quite unpredictable in terms
-> of the time at which it appears after booting L2. So far, it almost
-> always appears after booting L2. Even when pinging works, this issue
-> appears after several seconds of pinging.
->
+Hi Zhao,
 
-Maybe you can speed it up with ping -f?
+On 4/9/25 10:05 PM, Zhao Liu wrote:
+> Hi Dongli,
+> 
+> The logic is fine for me :-) And thank you to take my previous
+> suggestion. When I revisit here after these few weeks, I have some
+> thoughts:
+> 
+>> +        if (pmu_cap) {
+>> +            if ((pmu_cap & KVM_PMU_CAP_DISABLE) &&
+>> +                !X86_CPU(cpu)->enable_pmu) {
+>> +                ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+>> +                                        KVM_PMU_CAP_DISABLE);
+>> +                if (ret < 0) {
+>> +                    error_setg_errno(errp, -ret,
+>> +                                     "Failed to set KVM_PMU_CAP_DISABLE");
+>> +                    return ret;
+>> +                }
+>> +            }
+> 
+> This case enhances vPMU disablement.
+> 
+>> +        } else {
+>> +            /*
+>> +             * KVM_CAP_PMU_CAPABILITY is introduced in Linux v5.18. For old
+>> +             * linux, we have to check enable_pmu parameter for vPMU support.
+>> +             */
+>> +            g_autofree char *kvm_enable_pmu;
+>> +
+>> +            /*
+>> +             * The kvm.enable_pmu's permission is 0444. It does not change until
+>> +             * a reload of the KVM module.
+>> +             */
+>> +            if (g_file_get_contents("/sys/module/kvm/parameters/enable_pmu",
+>> +                                    &kvm_enable_pmu, NULL, NULL)) {
+>> +                if (*kvm_enable_pmu == 'N' && X86_CPU(cpu)->enable_pmu) {
+>> +                    error_setg(errp, "Failed to enable PMU since "
+>> +                               "KVM's enable_pmu parameter is disabled");
+>> +                    return -EPERM;
+>> +                }
+> 
+> And this case checks if vPMU could enable.
+> 
+>>              }
+>>          }
+>>      }
+> 
+> So I feel it's not good enough to check based on pmu_cap, we can
+> re-split it into these two cases: enable_pmu and !enable_pmu. Then we
+> can make the code path more clear!
+> 
+> Just like:
+> 
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index f68d5a057882..d728fb5eaec6 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -2041,44 +2041,42 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+>      if (first) {
+>          first = false;
+> 
+> -        /*
+> -         * Since Linux v5.18, KVM provides a VM-level capability to easily
+> -         * disable PMUs; however, QEMU has been providing PMU property per
+> -         * CPU since v1.6. In order to accommodate both, have to configure
+> -         * the VM-level capability here.
+> -         *
+> -         * KVM_PMU_CAP_DISABLE doesn't change the PMU
+> -         * behavior on Intel platform because current "pmu" property works
+> -         * as expected.
+> -         */
+> -        if (pmu_cap) {
+> -            if ((pmu_cap & KVM_PMU_CAP_DISABLE) &&
+> -                !X86_CPU(cpu)->enable_pmu) {
+> -                ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+> -                                        KVM_PMU_CAP_DISABLE);
+> -                if (ret < 0) {
+> -                    error_setg_errno(errp, -ret,
+> -                                     "Failed to set KVM_PMU_CAP_DISABLE");
+> -                    return ret;
+> -                }
+> -            }
+> -        } else {
+> -            /*
+> -             * KVM_CAP_PMU_CAPABILITY is introduced in Linux v5.18. For old
+> -             * linux, we have to check enable_pmu parameter for vPMU support.
+> -             */
+> +        if (X86_CPU(cpu)->enable_pmu) {
+>              g_autofree char *kvm_enable_pmu;
+> 
+>              /*
+> -             * The kvm.enable_pmu's permission is 0444. It does not change until
+> -             * a reload of the KVM module.
+> +             * The enable_pmu parameter is introduced since Linux v5.17,
+> +             * give a chance to provide more information about vPMU
+> +             * enablement.
+> +             *
+> +             * The kvm.enable_pmu's permission is 0444. It does not change
+> +             * until a reload of the KVM module.
+>               */
+>              if (g_file_get_contents("/sys/module/kvm/parameters/enable_pmu",
+>                                      &kvm_enable_pmu, NULL, NULL)) {
+> -                if (*kvm_enable_pmu == 'N' && X86_CPU(cpu)->enable_pmu) {
+> -                    error_setg(errp, "Failed to enable PMU since "
+> +                if (*kvm_enable_pmu == 'N') {
+> +                    warn_report("Failed to enable PMU since "
+>                                 "KVM's enable_pmu parameter is disabled");
+> -                    return -EPERM;
 
-> The total number of svq descriptors varied in every test run. But in
-> every case, all 256 indices were filled in the descriptor region for
-> vq with vq_idx =3D 0. This is the RX vq, right?
+Base on QA of v4 patchset, since we are not going to exit with an error
+(-EPERM), I will need to bring back the global variable as in v2: kvm_pmu_disabled.
 
-Right!
+https://lore.kernel.org/all/20250302220112.17653-8-dongli.zhang@oracle.com/
 
-> This was filled while L2
-> was booting. In the case when the ctrl vq is disabled, I am not sure
-> what is responsible for filling the vqs in the data plane during
-> booting.
->
+Because we don't exit with error, I need kvm_pmu_disabled in PATCH 08 to
+determine whether to skip the PMU info initialization, i.e.:
 
-The nested guest's driver fills the rx queue at startup. After that,
-that nested guest kicks and SVQ receives the descriptors. It copies
-the descriptors to the shadow virtqueue and then kicks L0 QEMU.
+- +pmu
+- enable_pmu=N
 
-> =3D=3D=3D=3D=3D
-> The issue is hit most frequently when the following command is run
-> in L0:
-> $ ip addr add 111.1.1.1/24 dev tap0
-> $ ip link set tap0 up
->
-> or, running the following in L2:
-> # ip addr add 111.1.1.2/24 dev eth0
->
+In this case, we don't need to initialize pmu_version or num_pmu_gp_counters.
 
-I guess those are able to start the network, aren't they?
+Thank you very much!
 
-> The other vq (vq_idx=3D1) is not filled completely before the issue is
-> hit.
-> I have been noting down the numbers and here is an example:
->
-> 295 descriptors were added individually to the queues i.e., there were no=
- chains (vhost_svq_add_packed)
-> |_ 256 additions in vq_idx =3D 0, all with unique ids
->      |---- 27 descriptors (ids 0 through 26) were received later from the=
- device (vhost_svq_get_buf_packed)
-> |_ 39 additions in vq_idx =3D 1
->      |_ 13 descriptors had id =3D 0
->      |_ 26 descriptors had id =3D 1
->      |---- All descriptors were received at some point from the device (v=
-host_svq_get_buf_packed)
->
-> There was one case in which vq_idx=3D0 had wrapped around. I verified
-> that flags were set appropriately during the wrap (avail and used flags
-> were flipped as expected).
->
-
-Ok sounds like you're able to reach it before filling the queue. I'd
-go for debugging notifications for this one then. More on this below.
-
-> =3D=3D=3D=3D=3D
-> The next common situation where this issue is hit is during startup.
-> Before L2 can finish booting successfully, this error is thrown:
->
-> virtio_net virtio1: output.0:id 0 is not a head!
->
-> 258 descriptors were added individually to the queues during startup (the=
-re were no chains) (vhost_svq_add_packed)
-> |_ 256 additions in vq_idx =3D 0, all with unique ids
->     |---- None of them were received by the device (vhost_svq_get_buf_pac=
-ked)
-> |_ 2 additions in vq_idx =3D 1
->     |_ id =3D 0 in index 0
->     |_ id =3D 1 in index 1
->     |---- Both descriptors were received at some point during startup fro=
-m the device (vhost_svq_get_buf_packed)
->
-> =3D=3D=3D=3D=3D
-> Another case is after several seconds of pinging L0 from L2.
->
-> [   99.034114] virtio_net virtio1: output.0:id 0 is not a head!
->
-
-So the L2 guest sees a descriptor it has not made available
-previously. This can be caused because SVQ returns the same descriptor
-twice, or it doesn't fill the id or flags properly. It can also be
-caused because we're not protecting the write ordering in the ring,
-but I don't see anything obviously wrong by looking at the code.
-
-> 366 descriptors were added individually to the queues i.e., there were no=
- chains (vhost_svq_add_packed)
-> |_ 289 additions in vq_idx =3D 0, wrap-around was observed with avail and=
- used flags inverted for 33 descriptors
-> |   |---- 40 descriptors (ids 0 through 39) were received from the device=
- (vhost_svq_get_buf_packed)
-> |_ 77 additions in vq_idx =3D 1
->      |_ 76 descriptors had id =3D 0
->      |_ 1 descriptor had id =3D 1
->      |---- all 77 descriptors were received at some point from the device=
- (vhost_svq_get_buf_packed)
->
-> I am not entirely sure now if there's an issue in the packed vq
-> implementation in QEMU or if this is being caused due to some sort
-> of race condition in linux.
->
-> "id is not a head" is being thrown because vq->packed.desc_state[id].data
-> doesn't exist for the corresponding id in Linux [1]. But QEMU seems to ha=
-ve
-> stored some data for this id via vhost_svq_add() [2]. Linux sets the valu=
-e
-> of vq->packed.desc_state[id].data in its version of virtqueue_add_packed(=
-) [3].
->
-
-Let's keep debugging further. Can you trace the ids that the L2 kernel
-makes available, and then the ones that it uses? At the same time, can
-you trace the ids that the svq sees in vhost_svq_get_buf and the ones
-that flushes? This allows us to check the set of available descriptors
-at any given time.
-
-> >> This error is not thrown always, but when it is thrown, the id
-> >> varies. This is invariably followed by a soft lockup:
-> >> [...]
-> >> [  284.662292] Call Trace:
-> >> [  284.662292]  <IRQ>
-> >> [  284.662292]  ? watchdog_timer_fn+0x1e6/0x270
-> >> [  284.662292]  ? __pfx_watchdog_timer_fn+0x10/0x10
-> >> [  284.662292]  ? __hrtimer_run_queues+0x10f/0x2b0
-> >> [  284.662292]  ? hrtimer_interrupt+0xf8/0x230
-> >> [  284.662292]  ? __sysvec_apic_timer_interrupt+0x4d/0x140
-> >> [  284.662292]  ? sysvec_apic_timer_interrupt+0x39/0x90
-> >> [  284.662292]  ? asm_sysvec_apic_timer_interrupt+0x1a/0x20
-> >> [  284.662292]  ? virtqueue_enable_cb_delayed+0x115/0x150
-> >> [  284.662292]  start_xmit+0x2a6/0x4f0 [virtio_net]
-> >> [  284.662292]  ? netif_skb_features+0x98/0x300
-> >> [  284.662292]  dev_hard_start_xmit+0x61/0x1d0
-> >> [  284.662292]  sch_direct_xmit+0xa4/0x390
-> >> [  284.662292]  __dev_queue_xmit+0x84f/0xdc0
-> >> [  284.662292]  ? nf_hook_slow+0x42/0xf0
-> >> [  284.662292]  ip_finish_output2+0x2b8/0x580
-> >> [  284.662292]  igmp_ifc_timer_expire+0x1d5/0x430
-> >> [  284.662292]  ? __pfx_igmp_ifc_timer_expire+0x10/0x10
-> >> [  284.662292]  call_timer_fn+0x21/0x130
-> >> [  284.662292]  ? __pfx_igmp_ifc_timer_expire+0x10/0x10
-> >> [  284.662292]  __run_timers+0x21f/0x2b0
-> >> [  284.662292]  run_timer_softirq+0x1d/0x40
-> >> [  284.662292]  __do_softirq+0xc9/0x2c8
-> >> [  284.662292]  __irq_exit_rcu+0xa6/0xc0
-> >> [  284.662292]  sysvec_apic_timer_interrupt+0x72/0x90
-> >> [  284.662292]  </IRQ>
-> >> [  284.662292]  <TASK>
-> >> [  284.662292]  asm_sysvec_apic_timer_interrupt+0x1a/0x20
-> >> [  284.662292] RIP: 0010:pv_native_safe_halt+0xf/0x20
-> >> [  284.662292] Code: 22 d7 c3 cc cc cc cc 0f 1f 40 00 90 90 90 90 90 9=
-0 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 53 75 3f 00 fb f=
-4 <c3> cc c0
-> >> [  284.662292] RSP: 0018:ffffb8f0000b3ed8 EFLAGS: 00000212
-> >> [  284.662292] RAX: 0000000000000001 RBX: 0000000000000001 RCX: 000000=
-0000000000
-> >> [  284.662292] RDX: 4000000000000000 RSI: 0000000000000083 RDI: 000000=
-00000289ec
-> >> [  284.662292] RBP: ffff96f200810000 R08: 0000000000000000 R09: 000000=
-0000000001
-> >> [  284.662292] R10: 0000000000000001 R11: 0000000000000000 R12: 000000=
-0000000000
-> >> [  284.662292] R13: 0000000000000000 R14: ffff96f200810000 R15: 000000=
-0000000000
-> >> [  284.662292]  default_idle+0x9/0x20
-> >> [  284.662292]  default_idle_call+0x2c/0xe0
-> >> [  284.662292]  do_idle+0x226/0x270
-> >> [  284.662292]  cpu_startup_entry+0x2a/0x30
-> >> [  284.662292]  start_secondary+0x11e/0x140
-> >> [  284.662292]  secondary_startup_64_no_verify+0x184/0x18b
-> >> [  284.662292]  </TASK>
-> >>
-> >> The soft lockup seems to happen in
-> >> drivers/net/virtio_net.c:start_xmit() [1].
-> >>
-> >
-> > Maybe it gets stuck in the do {} while(...
-> > !virtqueue_enable_cb_delayed()) ? you can add a printk in
-> > virtqueue_enable_cb_delayed return and check if it matches with the
-> > speed you're sending or receiving ping. For example, if ping is each
-> > second, you should not see a lot of traces.
-> >
-> > If this does not work I'd try never disabling notifications, both in
-> > the kernel and SVQ, and check if that works.
->
-> In order to disable notifications, will something have to be commented
-> out in the implementation?
->
-
-To *never* disable notifications you should comment out the SVQ calls
-to virtio_queue_set_notification and vhost_svq_disable_notification.
-This way the other side (L0 device in QEMU and the guest) are forced
-to notify SVQ always, and we can check if that solves the first issue,
-
-> >> [...]
-> >> QEMU command to boot L1:
-> >>
-> >> $ sudo ./qemu/build/qemu-system-x86_64 \
-> >> -enable-kvm \
-> >> -drive file=3D//home/valdaarhun/valdaarhun/qcow2_img/L1.qcow2,media=3D=
-disk,if=3Dvirtio \
-> >> -net nic,model=3Dvirtio \
-> >> -net user,hostfwd=3Dtcp::2222-:22 \
-> >> -device intel-iommu,snoop-control=3Don \
-> >> -device virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-moder=
-n=3Doff,iommu_platform=3Don,guest_uso4=3Doff,guest_uso6=3Doff,host_uso=3Dof=
-f,guest_announce=3Doff,mq=3Doff,ctrl_vq=3Doff,ctrl_rx=3Doff,ctrl_vlan=3Doff=
-,ctrl_mac_addr=3Doff,packed=3Don,event_idx=3Doff,bus=3Dpcie.0,addr=3D0x4 \
-> >> -netdev tap,id=3Dnet0,script=3Dno,downscript=3Dno,vhost=3Doff \
-> >> -nographic \
-> >> -m 8G \
-> >> -smp 4 \
-> >> -M q35 \
-> >> -cpu host 2>&1 | tee vm.log
-> >>
->
-> I have added "-device virtio-net-pci,indirect_desc=3Doff,queue_reset=3Dof=
-f"
-> to the L0 QEMU command to boot L1.
->
-> Thanks,
-> Sahil
->
-> [1] https://github.com/torvalds/linux/blob/master/drivers/virtio/virtio_r=
-ing.c#L1762
-> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
-adow-virtqueue.c#L290
-> [3] https://github.com/torvalds/linux/blob/master/drivers/virtio/virtio_r=
-ing.c#L1564
->
+Dongli Zhang
 
 
