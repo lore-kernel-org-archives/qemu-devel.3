@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B268EC369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDCFC369C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4zlY-0001W5-Bs; Wed, 16 Apr 2025 06:13:12 -0400
+	id 1u4zzX-0007i3-Kc; Wed, 16 Apr 2025 06:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4zlT-0001Ve-U3; Wed, 16 Apr 2025 06:13:08 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1u4zzU-0007gv-Sa; Wed, 16 Apr 2025 06:27:37 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4zlQ-0004ph-OY; Wed, 16 Apr 2025 06:13:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744798384; x=1776334384;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=V1tD4762zIW5vFUKrm/TKIOsDhWgGz05D4XIQjZH/0c=;
- b=hUroMVy+dvPuxYJiGRHS9d17aru5cOC2DWJJefLU5MSCScUZeLIp2YaS
- Sdo9V+c/TVTJeK94ayIcK0awTfMnil9J2OOHC9ecIsaxcANn0Od13N0ft
- SmSNftIpa+OJs6HiGjDMpxXapqNIljaIFvXtgSYTqwgayj0tiBndP3BGA
- FnXERwNP35rNWkKQwPAReyNn+QcTd8Prcq6B0s8vcu35ATtfSqoq0F5aL
- fSlB4GESwcICMaBhdPMrAd6y8O+zUbvfpd8YQ5F4oY8Tl+kBSYpgIeqbN
- Vm5U/TUd+nok8QlVVkX1CEYSjx7kqF8gsilKHNFUZlfjrh2b+KUpEemqv w==;
-X-CSE-ConnectionGUID: 28JHLWudScmamrCrazLgvg==
-X-CSE-MsgGUID: 4kOb7LiLT3KIub3S4gBGNQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="57331871"
-X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="57331871"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Apr 2025 03:13:01 -0700
-X-CSE-ConnectionGUID: UcsXT1GbTF2S+ZxYC37epw==
-X-CSE-MsgGUID: 1jBxpUaUSoSkimnvpdpfqQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="130372260"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 16 Apr 2025 03:12:59 -0700
-Date: Wed, 16 Apr 2025 18:33:52 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>
-Subject: Re: [PATCH 8/9] rust/hpet: Support migration
-Message-ID: <Z/+HkId2+ORzERJN@intel.com>
-References: <20250414144943.1112885-1-zhao1.liu@intel.com>
- <20250414144943.1112885-9-zhao1.liu@intel.com>
- <Z/5KlfQgC65g6Kid@intel.com>
- <78fdfdaf-7c94-4d79-be39-8215c033b423@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1u4zzS-0000BJ-UP; Wed, 16 Apr 2025 06:27:36 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 643C21189E2;
+ Wed, 16 Apr 2025 13:25:35 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B5CDF1F1F7B;
+ Wed, 16 Apr 2025 13:27:20 +0300 (MSK)
+Message-ID: <151289d2-ac87-48ba-8b0f-4eda047a98e5@tls.msk.ru>
+Date: Wed, 16 Apr 2025 13:27:20 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <78fdfdaf-7c94-4d79-be39-8215c033b423@redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: qemu-devel <qemu-devel@nongnu.org>, qemu-stable <qemu-stable@nongnu.org>, 
+ Sergio Durigan Junior <sergio.durigan@canonical.com>,
+ =?UTF-8?Q?Lukas_M=C3=A4rdian?= <slyon@ubuntu.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: 8.2.x stable series is end-of-life
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,77 +102,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > Although it can handle callbacks well, I found that the difficulty still
-> > lies in the fact that the vmstate_fields and vmstate_subsections macros
-> > cannot be eliminated, because any dynamic creation of arrays is not
-> > allowed in a static context!
-> 
-> Yes, this makes sense.  Array size must be known inside a const function and
-> the extra terminator at the end of fields and subsections cannot be added by
-> the builder itself.  c_str! has the same issue for the name, if I understand
-> correctly.
+Hi!
 
-Yes, I have to use c_str! in name().
-
-> > In any case, it's definitely still rough, but hope it helps and
-> > takes a small step forward.
-> 
-> Yes, of course---this:
-> 
-> +static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription<HPETState> =
-> +    VMStateDescriptionBuilder::<HPETState>::new()
-> +        .name(c_str!("hpet/rtc_irq_level"))
-> +        .version_id(1)
-> +        .minimum_version_id(1)
-> +        .needed(&HPETState::is_rtc_irq_level_needed)
-> +        .fields(vmstate_fields! {
-> +            vmstate_of!(HPETState, rtc_irq_level),
-> +        })
-> +        .build();
-> +
-> 
-> is readable, not foreign (it's similar to the MemoryRegionOps) and provides
-> an easy way to insert FFI wrappers.
-> 
-> Right now it's now fully typesafe, because the VMStateField returned by
-> vmstate_of! (as well as the arrays returned by vmstate_fields! and
-> vmstate_subsections!) does not track that it's for an HPETState; but that's
-> a small thing overall and getting the basic builder right is more important.
-
-I agree, additional consideration is needed here. Currently it is
-vmstate_fields! that limits changes to vmstate_of!.
-
-> I also made a note to check which callbacks could have a Result<> as the
-> return type, possibly reusing the Errno module (Result<(), ()> looks a bit
-> silly); but that is also not needed for this early stage.
-> 
-> Just a couple notes:
-> 
-> > +    bindings::{VMStateDescription as RawVMStateDescription, VMStateFlags},
-> 
-> I would use bindings::VMStateDescription throughout, similar to how
-> it's done in memory.rs.
-
-Sure, will fix.
-
-> > +    pub const fn name(mut self, name_str: &CStr) -> Self {
-> > +        self.0.name = ::std::ffi::CStr::as_ptr(name_str);
-> 
-> 
-> This can use "name_str.as_ptr()" because the type of name_str is known
-> (unlike in macros, such as define_property! or vmstate_validate!).
-
-I see and will fix.
-
-> (By the way, talking about macros, I have just stumbled on the attrs crate,
-> which is something to keep an eye on for when QOM/qdev bindings are extended
-> along the lines of https://lore.kernel.org/qemu-devel/e8e55772-906b-42cb-a744-031e6ae65f16@redhat.com/T/.
-> But I don't think procedural macros are a good match for VMState).
-
-I didn't have a deep understanding of this previously :-(. I'll take a
-closer look at this.
+I've been doing stable-8.2 series per request from ubuntu, since it is the
+base for LTS ubuntu noble release.  Since it is not actually used in ubuntu,
+I'm stopping doing this, current 8.2.10 release will be the last release in
+8.2.x series.  It's sad we wasted so much time for nothing.
 
 Thanks,
-Zhao
 
+/mjt
 
