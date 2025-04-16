@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98104C369BA
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6826C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4th8-0001sh-Hx; Tue, 15 Apr 2025 23:44:14 -0400
+	id 1u4thG-0001vp-6J; Tue, 15 Apr 2025 23:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4th0-0001qe-EX; Tue, 15 Apr 2025 23:44:08 -0400
+ id 1u4thD-0001v9-Jg; Tue, 15 Apr 2025 23:44:20 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4tgy-0006uD-0X; Tue, 15 Apr 2025 23:44:05 -0400
+ id 1u4thB-0006uD-9l; Tue, 15 Apr 2025 23:44:18 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 16 Apr
- 2025 11:43:28 +0800
+ 2025 11:43:29 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 16 Apr 2025 11:43:28 +0800
+ Transport; Wed, 16 Apr 2025 11:43:29 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v3 04/10] hw/arm/aspeed: Reuse rom_size variable for vbootrom
- setup
-Date: Wed, 16 Apr 2025 11:43:19 +0800
-Message-ID: <20250416034327.315714-5-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>
+Subject: [PATCH v3 07/10] tests/functional/aspeed: Move I2C test into shared
+ helper for AST2700 reuse
+Date: Wed, 16 Apr 2025 11:43:22 +0800
+Message-ID: <20250416034327.315714-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
 References: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,39 +67,86 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the declaration of `rom_size` to an outer scope in aspeed_machine_init()
-so it can be reused for setting up the vbootrom region as well.
-
-This avoids introducing a redundant local variable and ensures consistent
-ROM sizing logic when both SPI boot and vbootrom are used.
+Move the I2C test case into a common helper function (do_ast2700_i2c_test) so it
+can be reused across multiple AST2700-based test cases. This reduces duplication
+and improves maintainability.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/functional/test_aarch64_aspeed.py | 28 +++++++++++++------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index e852bbc4cb..b70a120e62 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -381,6 +381,7 @@ static void aspeed_machine_init(MachineState *machine)
-     AspeedSoCClass *sc;
-     int i;
-     DriveInfo *emmc0 = NULL;
-+    uint64_t rom_size;
-     bool boot_emmc;
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index c25c966278..441f7f3919 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -18,6 +18,8 @@ class AST2x00MachineSDK(QemuSystemTest):
+     def do_test_aarch64_aspeed_sdk_start(self, image):
+         self.require_netdev('user')
+         self.vm.set_console()
++        self.vm.add_args('-device',
++                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
+         self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+                          '-net', 'nic', '-net', 'user', '-snapshot')
  
-     bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
-@@ -475,7 +476,7 @@ static void aspeed_machine_init(MachineState *machine)
-         BlockBackend *fmc0 = dev ? m25p80_get_blk(dev) : NULL;
+@@ -35,6 +37,17 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
+             'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
  
-         if (fmc0 && !boot_emmc) {
--            uint64_t rom_size = memory_region_size(&bmc->soc->spi_boot);
-+            rom_size = memory_region_size(&bmc->soc->spi_boot);
-             aspeed_install_boot_rom(bmc, fmc0, rom_size);
-         } else if (emmc0) {
-             aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
++    def do_ast2700_i2c_test(self):
++        exec_command_and_wait_for_pattern(self,
++            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
++            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
++        exec_command_and_wait_for_pattern(self,
++            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
++        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
++                    property='temperature', value=18000)
++        exec_command_and_wait_for_pattern(self,
++            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
++
+     def start_ast2700_test(self, name):
+         num_cpu = 4
+         uboot_size = os.path.getsize(self.scratch_file(name,
+@@ -73,8 +86,6 @@ def start_ast2700_test(self, name):
+                              f'loader,addr=0x430000000,cpu-num={i}')
+ 
+         self.vm.add_args('-smp', str(num_cpu))
+-        self.vm.add_args('-device',
+-                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
+         self.do_test_aarch64_aspeed_sdk_start(
+             self.scratch_file(name, 'image-bmc'))
+ 
+@@ -83,28 +94,19 @@ def start_ast2700_test(self, name):
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+ 
+-        exec_command_and_wait_for_pattern(self,
+-            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
+-            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
+-        exec_command_and_wait_for_pattern(self,
+-            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
+-        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+-                    property='temperature', value=18000)
+-        exec_command_and_wait_for_pattern(self,
+-            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+-
+     def test_aarch64_ast2700_evb_sdk_v09_05(self):
+         self.set_machine('ast2700-evb')
+ 
+         self.archive_extract(self.ASSET_SDK_V905_AST2700)
+         self.start_ast2700_test('ast2700-a0-default')
++        self.do_ast2700_i2c_test()
+ 
+     def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
+         self.set_machine('ast2700a1-evb')
+ 
+         self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
+         self.start_ast2700_test('ast2700-default')
+-
++        self.do_ast2700_i2c_test()
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.43.0
 
