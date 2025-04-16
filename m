@@ -4,152 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD899C369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 12:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E9AC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 13:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u51ql-0000su-Vz; Wed, 16 Apr 2025 08:26:44 -0400
+	id 1u52NM-0000wn-N9; Wed, 16 Apr 2025 09:00:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1u51ep-0001hA-RM
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 08:14:23 -0400
-Received: from mail-bn8nam12on2062e.outbound.protection.outlook.com
- ([2a01:111:f403:2418::62e]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1u51em-0002Vz-2R
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 08:14:22 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZpoWWbTJJsMLVDh79QiUulmFPdCzlhFVBACqz9SwwVGqyc992uJn/okcxPIy7q2mEl6k1PdiIf2Ros13aOWvz0V0k28MalKKiErCpHG0oNruEE+B8y3anWXo4fVxHqPNW7Yu3BoSjN4yyuSW4sheao3PFbOrFrhh6dszTVPW1NH6KC/5dAzpqbyDcDb9i54maDnpB3EFq4/VPK8I+nI5cDypcdW4VyJ56BqTULI300+/TIIcgshwGg/SEcnR9HPc9ivwmaGkvuVQWyd9FECW62hRDuPi/LfQRxqze1JRkKrQe/6tdQ0LCtXDoKXKTpjOLLplQnok3qBLrujn80nIoQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O9VwuNqEOHRZMiykn+/gv0RL8QubYZkGSuaG0g1z+IA=;
- b=a4XJrjHtRSnr9hznzREEBQCTpy3DRYtPVn+Rn7o/mu/KnUg2DZKa+XOwGr5QBpXTGkScPvGiv2gT8WTnKPW+cqmCXK2D+5vdwQfezqAoeyKA4RmOSYKynvGZ1hjjXKhTW5Af7uT+3biQ4Hws6l9N93jkUPIzc3kIuudt+ApgWyUh9840enDfX/pbaBF/m8b0RsKw9bi4jk5w9ATJVIu0TlkMQYWzRR/xh6qxt4zKIFAthR6RWRbGLlmuufhR0d+NgROr9M2p7wKdCnAtKktg28Btw8Kmgmc/58CiSdLePwv4cWi3A0zIc4HRVDE5i9MrG/YQUZQfsLneSCt36V7m7g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O9VwuNqEOHRZMiykn+/gv0RL8QubYZkGSuaG0g1z+IA=;
- b=QGkzTaY8WPbvIx1IFX9bLMSBrj97AxzNR+3tvYORr6bpk0pqTJri2z3eAW4XcDGg+jTlNZLs8BAEgIGeiSBsNEC3c5ZG/oi3ZarsfAUBOGtp91BDZdoayE/JO40YE9yLXbe1M0mg2ZWA/EFljgQbTAQVp8fxYdPiQXBsmZbVoWI=
-Received: from SA9PR13CA0111.namprd13.prod.outlook.com (2603:10b6:806:24::26)
- by MW6PR12MB8960.namprd12.prod.outlook.com (2603:10b6:303:23e::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8632.34; Wed, 16 Apr
- 2025 12:14:11 +0000
-Received: from SN1PEPF0002636A.namprd02.prod.outlook.com
- (2603:10b6:806:24:cafe::77) by SA9PR13CA0111.outlook.office365.com
- (2603:10b6:806:24::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.12 via Frontend Transport; Wed,
- 16 Apr 2025 12:14:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SN1PEPF0002636A.mail.protection.outlook.com (10.167.241.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8655.12 via Frontend Transport; Wed, 16 Apr 2025 12:14:10 +0000
-Received: from [10.85.32.54] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 16 Apr
- 2025 07:14:05 -0500
-Message-ID: <d4c11455-f28f-4052-9042-5d2c2ed9329d@amd.com>
-Date: Wed, 16 Apr 2025 17:44:03 +0530
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u52Mn-0000sj-M2
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 08:59:49 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u52Ml-00043s-51
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 08:59:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D4A9921175;
+ Wed, 16 Apr 2025 12:59:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744808383; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
+ b=ig13IakO37FbRyjc29DFvPgALbXcBpAC7aEZx+zEa0k8WRfIA5GtBFYIq72muw9Q6WrM5Y
+ RDzugJzQ3z5qBQtHa0Q5zK/p2ZlpRtsmZTVk9r1KWb1DcQENLbMQ9LTRBBfxuczFCHK2Dm
+ NbHCEbqCQRNGkarsLx60JlLelRMWlAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744808383;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
+ b=HSXvlFLG19sCAyoyYcUQUTm3Dg1fzl0dy91D4p+RauvRLTzGm56syk6oh6Awtp8Am1re29
+ yaTvV+V4SC9jBSAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zpsVmT6o;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oeb524OP
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744808382; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
+ b=zpsVmT6oa0bTaInNT4BBkj0GLV7iajpW5rd56kb3+WMuxqgP4vYd3Sr5rHYAElEmawiGQn
+ jfTRw0pD+t9AazAOQ1so1YgA1tpWKXbPQan1FjzD4rQnGYhBOkkAFFah11rVMargqm9y1F
+ JE5NvmGXtKWtW1lfj745pEqjI6k35IM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744808382;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
+ b=oeb524OPCb63Mx/rC1N9qt7LH9WrL8vqo5/zSxZeEfcQg/GXltovwuGpHmOb4BY8ogK+Sv
+ Io1Abf898/6NDoAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 495A413976;
+ Wed, 16 Apr 2025 12:59:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id BRrTAb6p/2fLMgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 16 Apr 2025 12:59:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, berrange@redhat.com, Prasad Pandit
+ <pjp@fedoraproject.org>
+Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
+ together
+In-Reply-To: <87ecxteym0.fsf@suse.de>
+References: <20250411114534.3370816-1-ppandit@redhat.com>
+ <87ecxteym0.fsf@suse.de>
+Date: Wed, 16 Apr 2025 09:59:39 -0300
+Message-ID: <87bjswfeis.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/18] amd_iommu: Add support for IOMMU notifier
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
- <eduardo@habkost.net>, <peterx@redhat.com>, <david@redhat.com>,
- <philmd@linaro.org>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <alex.williamson@redhat.com>, <vasant.hegde@amd.com>,
- <suravee.suthikulpanit@amd.com>, <santosh.shukla@amd.com>,
- <Wei.Huang2@amd.com>, <joao.m.martins@oracle.com>,
- <boris.ostrovsky@oracle.com>
-References: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
- <20250414020253.443831-4-alejandro.j.jimenez@oracle.com>
-Content-Language: en-US
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20250414020253.443831-4-alejandro.j.jimenez@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002636A:EE_|MW6PR12MB8960:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4d48e482-ccc6-4298-4a1f-08dd7ce03190
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|7416014|376014|1800799024|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?M2ZGdnVOb0toYngzUzJjM2VnS0R3K3ZyQ3YyRTRQTFRrK2srRnNZMGtZdTFJ?=
- =?utf-8?B?bnFVZGEzeUlyMEhlNzZrYUd4N3U3YndURUJQbWdxcU11em1UaEpPOG5BQ3Zx?=
- =?utf-8?B?NWF5R2MxTVJiUUxRVzFGbzFCbnRXL1hlMjY5a0QzNCtGdUNVZk54RVRaV3F1?=
- =?utf-8?B?bHhRTEFiVkpWamh2Q0JHU3hFU2dkamQ2YkdpVkZKeGYybUhQVXlWRmZmUTNB?=
- =?utf-8?B?Q2p2OENyOUthSGFpNnR2d1RrVE8vbjFPUXFLU0RlTjZIMm45U2NBM25EWmts?=
- =?utf-8?B?cnZ2MDN6TzZaQ0xjenFJS2haRGJ4YmVDaVozMDVnUDRHbXFENU81K1VxeWFh?=
- =?utf-8?B?aGxZTnpZYnJZbER3ZXVxWlVNRnZtTzNORFpFaWdLbDc1aGdzak9RVmNEaHc4?=
- =?utf-8?B?UCtkbm5DdTRkRlFrVGVaa1Z6NklpRXlYRVNZRGpYTmdPL1cvRTJpYW0vcThm?=
- =?utf-8?B?c2JqNUxBRmNNSGd6ZXlUTGNHR3lkRkR3aGtibUtmSC9LNDJtKzNwbGtneFBU?=
- =?utf-8?B?YTVHRS9OWFFOcEtzR2gzUTJ2MjdFbTZMM054TFgyaW9aUjFmL1Y0c09lVC9v?=
- =?utf-8?B?a25WVWNSYjhoK2J2NVdYa0puOXBmbmsyWHh3bW5pQkFobXZzWEI5eVlVc3pP?=
- =?utf-8?B?T3BqSnRrN2J2RWpsWkh0T3doTW5LZjF1ckV3bWJXdy9QTFcxNDdTT2hqQ2lu?=
- =?utf-8?B?NVhiQ1crOXFxT2d1QUN3RDNEempTTDE3endpb2xTQVpVTUNWY2tqUFovZWor?=
- =?utf-8?B?T0R0SEVXM1FmYXpMdW5Rc3hKYnl2dkxobG1YaEFhU3pVQys5MENzMU9aVFh5?=
- =?utf-8?B?Ym1TNFJ5SnpkMmJ3Y3lJd0Z4S1U4Mm9KeWRXTWRpUEIwalRkZ1UzQmpxeUsy?=
- =?utf-8?B?VmNKSWY1Y2xlWm5YWS9LVUJIb0JmSzRYWFFyUlkrUnZRSmc3VUhKUnY1OHpl?=
- =?utf-8?B?MXEvNUowNjl5YzZhU1I2TWhhZkpYZE9kRXhGRFB2MHlDQ2FTM2ltbUNEZ1pl?=
- =?utf-8?B?eWYyZ0pEenV4TTlidjQ1WVRrK2ZtcGNHdXBnRkhoTFcvcUtleXlaT05LNmlQ?=
- =?utf-8?B?dFBSRHRWVmxRWDk3b2l4cWIxTW94UHZNMlFYdVFWaEFYVENyRlFIOHZiWUNl?=
- =?utf-8?B?MTR3Wk5HMWYwZGluUFJqMmNYL1RIdnpyZ1E0ejhIMkpSOHNrbUNFRkNpKzRv?=
- =?utf-8?B?QWJlYlRRb2xtVXlXQWtDMGNYS0VUYkxLdnI1dG5mNVZNYmJxVGc2YktIazZK?=
- =?utf-8?B?azVSdjV4T0UvOGlnaTFiODNoNmpSaWxYalpucmRtcFZZNHBxang4Y1g0akF6?=
- =?utf-8?B?OGZmTW1JUU9LdlpScEdvSkE4M2dqbU1ad0YwM1JaeHlZb0FCQjZadklxd2hl?=
- =?utf-8?B?aUxsMzZud29LTjlQYThUYjhReld2L29UZlh6MzdibmVSVmgxTTdZSFlDcDJx?=
- =?utf-8?B?TUVJdEpZeCtoblNyUWlOQS9La0pQbVhkVGt3T2YzZDAyd2JQSVcyTHBJZlho?=
- =?utf-8?B?OVduQUJrSEZuS2hPaVZPVTR1L0xHd1RnN043NmhRMUUwbFpDUk1KRStoSk5y?=
- =?utf-8?B?MnBSNG1CYzJKUEZIeVZZVlhneUZHS2pFa0pVOFArcVRuMVVyMWZOemo2UE12?=
- =?utf-8?B?elExK0lFeTY2aDN1SFlCQ2tJVzQrWVJ1YnA1Wm5aakZ6MmdwWnhybVZ5dDUw?=
- =?utf-8?B?Sy9nUTJjNjAwdmZwbjFVOGlsMnpuNHlRRk16aWVFSEs3cHVseDdSMVdwTnZj?=
- =?utf-8?B?NC9SZ3JZaWg1WSswQ21HVmxpNlQyWm5YVngvSE1vckp1R0lMN0hKRW1TU3ha?=
- =?utf-8?B?QVJ6T3NNSlVNc1MzYnpXaUVsYVg2NGQxQ0JxWVdWSi80Z1JQRkQ3SEtDVGVY?=
- =?utf-8?B?OVEwb2xIMzVrMXVFYk9GK053a25tMTlzNG81NXBvUVE4U3RCclo5QkhCQUk2?=
- =?utf-8?B?VlZYS2dycGFvWUpxZWtpZ3BYaTZVdFdIam1lYktJOUdLOHdwa0d5L3VDNXBj?=
- =?utf-8?B?MXlKbjk4ZGtneC9SZHV4VHZsd3NOQWkvcHgzTDJuZnZvQ0FhSlRkS29oNE5m?=
- =?utf-8?B?UzYySjZDOHlhTitQS1FiblM5TkRmVXptNlBrdz09?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(7416014)(376014)(1800799024)(82310400026)(7053199007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Apr 2025 12:14:10.1911 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4d48e482-ccc6-4298-4a1f-08dd7ce03190
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002636A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8960
-Received-SPF: permerror client-ip=2a01:111:f403:2418::62e;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Rspamd-Queue-Id: D4A9921175
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,141 +127,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alejandro,
+Fabiano Rosas <farosas@suse.de> writes:
 
-On 4/14/2025 7:32 AM, Alejandro Jimenez wrote:
-> In order to enable device assignment with IOMMU protection and guest
-> DMA address translation, IOMMU notifier support is necessary to allow
-> users like VFIO to synchronize the shadow page tables i.e. to receive
-> notifications when the guest updates its IO page tables and replay the
-> mappings onto host IO page tables.
-> 
-> This requires the vIOMMU is configured with the NpCache capability,
-> so the guest issues IOMMU invalidations for both map() and unmap()
-> operations. This capability is already part of AMDVI_CAPAB_FEATURES,
-> and is written to the configuration in amdvi_pci_realize().
-> 
-> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> ---
->   hw/i386/amd_iommu.c | 34 ++++++++++++++++++++++++++++------
->   hw/i386/amd_iommu.h |  6 ++++++
->   2 files changed, 34 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 22d648c2e0e3..8dbb10d91339 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -66,6 +66,13 @@ struct AMDVIAddressSpace {
->       MemoryRegion iommu_nodma;   /* Alias of shared nodma memory region  */
->       MemoryRegion iommu_ir;      /* Device's interrupt remapping region  */
->       AddressSpace as;            /* device's corresponding address space */
-> +
-> +    /* DMA address translation support */
-> +    IOMMUNotifierFlag notifier_flags;
-> +    /* entry in list of Address spaces with registered notifiers */
-> +    QLIST_ENTRY(AMDVIAddressSpace) next;
-> +    /* DMA address translation active */
-> +    bool addr_translation;
+> Prasad Pandit <ppandit@redhat.com> writes:
+>
+>> From: Prasad Pandit <pjp@fedoraproject.org>
+>>
+>>  Hello,
+>>
+>>
+>> * This series (v9) does minor refactoring and reordering changes as
+>>   suggested in the review of earlier series (v8). Also tried to
+>>   reproduce/debug a qtest hang issue, but it could not be reproduced.
+>>   From the shared stack traces it looked like Postcopy thread was
+>>   preparing to finish before migrating all the pages.
+>
+> The issue is that a zero page is being migrated by multifd but there's
+> an optimization in place that skips faulting the page in on the
+> destination. Later during postcopy when the page is found to be missing,
+> postcopy (@migrate_send_rp_req_pages) believes the page is already
+> present due to the receivedmap for that pfn being set and thus the code
+> accessing the guest memory just sits there waiting for the page.
+>
+> It seems your series has a logical conflict with this work that was done
+> a while back:
+>
+> https://lore.kernel.org/all/20240401154110.2028453-1-yuan1.liu@intel.com/
+>
+> The usage of receivedmap for multifd was supposed to be mutually
+> exclusive with postcopy. Take a look at the description of that series
+> and at postcopy_place_page_zero(). We need to figure out what needs to
+> change and how to do that compatibly. It might just be the case of
+> memsetting the zero page always for postcopy, but I havent't thought too
+> much about it.
+>
+> There's also other issues with the series:
+>
+> https://gitlab.com/farosas/qemu/-/pipelines/1770488059
+>
+> The CI workers don't support userfaultfd so the tests need to check for
+> that properly. We have MigrationTestEnv::has_uffd for that.
+>
+> Lastly, I have seem some weirdness with TLS channels disconnections
+> leading to asserts in qio_channel_shutdown() in my testing. I'll get a
+> better look at those tomorrow.
 
-I dont see any use of addr_translation in current patch.
-maybe define it when you are really need this flag ?
-
->   };
->   
->   /* AMDVI cache entry */
-> @@ -1561,14 +1568,28 @@ static int amdvi_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
->                                              Error **errp)
->   {
->       AMDVIAddressSpace *as = container_of(iommu, AMDVIAddressSpace, iommu);
-> +    AMDVIState *s = as->iommu_state;
-> +
-> +    /* DMA remapping capability is required to implement IOMMU notifier */
-> +    if (!s->dma_remap && (new & IOMMU_NOTIFIER_MAP)) {
-> +        error_setg_errno(errp, ENOTSUP,
-> +                "device %02x.%02x.%x requires dma-remap=1",
-> +                as->bus_num, PCI_SLOT(as->devfn), PCI_FUNC(as->devfn));
-> +        return -ENOTSUP;
-> +    }
->   
-> -    if (new & IOMMU_NOTIFIER_MAP) {
-> -        error_setg(errp,
-> -                   "device %02x.%02x.%x requires iommu notifier which is not "
-> -                   "currently supported", as->bus_num, PCI_SLOT(as->devfn),
-> -                   PCI_FUNC(as->devfn));
-> -        return -EINVAL;
-> +    /*
-> +     * Update notifier flags for address space and the list of address spaces
-> +     * with registered notifiers.
-> +     */
-> +    as->notifier_flags = new;
-> +
-> +    if (old == IOMMU_NOTIFIER_NONE) {
-> +        QLIST_INSERT_HEAD(&s->amdvi_as_with_notifiers, as, next);
-> +    } else if (new == IOMMU_NOTIFIER_NONE) {
-> +        QLIST_REMOVE(as, next);
->       }
-> +
->       return 0;
->   }
->   
-> @@ -1700,6 +1721,7 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
->   
->   static const Property amdvi_properties[] = {
->       DEFINE_PROP_BOOL("xtsup", AMDVIState, xtsup, false),
-> +    DEFINE_PROP_BOOL("dma-remap", AMDVIState, dma_remap, false),
->   };
-
-Please add a description in commit message for this flag
-
->   
->   static const VMStateDescription vmstate_amdvi_sysbus = {
-> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-> index 28125130c6fc..e12ecade4baa 100644
-> --- a/hw/i386/amd_iommu.h
-> +++ b/hw/i386/amd_iommu.h
-> @@ -365,12 +365,18 @@ struct AMDVIState {
->       /* for each served device */
->       AMDVIAddressSpace **address_spaces[PCI_BUS_MAX];
->   
-> +    /* list of address spaces with registered notifiers */
-> +    QLIST_HEAD(, AMDVIAddressSpace) amdvi_as_with_notifiers;
-> +
->       /* IOTLB */
->       GHashTable *iotlb;
->   
->       /* Interrupt remapping */
->       bool ga_enabled;
->       bool xtsup;
-> +
-> +    /* DMA address translation */
-> +    bool dma_remap;
-
-I think you should use this flag in the remapping path as well.
-I am aware that you are using it later in this series to switch the
-address space, but current patch will make things inconsistent for
-emulated and vfio devices (possibly breaking the bisect).
-
-Also newer AMD IVRS format provides a HATDis bit (Table 96 in IOMMU
-Specs [1]), informing the guest kernel that V1 page table is disabled in
-the IOMMU. Its good idea to set this bit in IVRS when dma_remap=false.
-This way a "HATDis bit aware" guest can enable iommu.passthrough.
-
-Also, is it a good idea to have default value for dma_remap=false ?
-Consider the guest which is not aware of HATDis bit. Things will break 
-if such guest boots with iommu.passthrough=0 (recreating the pt=on
-scenario).
-
-[1] 
-https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/specifications/48882_IOMMU.pdf
-
-Regards
-Sairaj Kodilkar
-
-PS: Sorry If I missed something here, I haven't progressed much in the 
-series.
-
->   };
->   
->   uint64_t amdvi_extended_feature_register(AMDVIState *s);
-
+Ok, you can ignore this last paragraph. I was seeing the postcopy
+recovery test disconnect messages, those are benign.
 
