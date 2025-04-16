@@ -4,113 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E9AC369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 13:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB65CC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 13:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u52NM-0000wn-N9; Wed, 16 Apr 2025 09:00:32 -0400
+	id 1u52lA-0005XM-UF; Wed, 16 Apr 2025 09:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u52Mn-0000sj-M2
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 08:59:49 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u52kr-0005Vc-FA
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 09:24:53 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u52Ml-00043s-51
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 08:59:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D4A9921175;
- Wed, 16 Apr 2025 12:59:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744808383; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
- b=ig13IakO37FbRyjc29DFvPgALbXcBpAC7aEZx+zEa0k8WRfIA5GtBFYIq72muw9Q6WrM5Y
- RDzugJzQ3z5qBQtHa0Q5zK/p2ZlpRtsmZTVk9r1KWb1DcQENLbMQ9LTRBBfxuczFCHK2Dm
- NbHCEbqCQRNGkarsLx60JlLelRMWlAE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744808383;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
- b=HSXvlFLG19sCAyoyYcUQUTm3Dg1fzl0dy91D4p+RauvRLTzGm56syk6oh6Awtp8Am1re29
- yaTvV+V4SC9jBSAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zpsVmT6o;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oeb524OP
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1744808382; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
- b=zpsVmT6oa0bTaInNT4BBkj0GLV7iajpW5rd56kb3+WMuxqgP4vYd3Sr5rHYAElEmawiGQn
- jfTRw0pD+t9AazAOQ1so1YgA1tpWKXbPQan1FjzD4rQnGYhBOkkAFFah11rVMargqm9y1F
- JE5NvmGXtKWtW1lfj745pEqjI6k35IM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1744808382;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rKkkEe73aBeiVA1HuV99dUfe+Zfq97nQHFEUkAsUd9k=;
- b=oeb524OPCb63Mx/rC1N9qt7LH9WrL8vqo5/zSxZeEfcQg/GXltovwuGpHmOb4BY8ogK+Sv
- Io1Abf898/6NDoAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 495A413976;
- Wed, 16 Apr 2025 12:59:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id BRrTAb6p/2fLMgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 16 Apr 2025 12:59:42 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, berrange@redhat.com, Prasad Pandit
- <pjp@fedoraproject.org>
-Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
- together
-In-Reply-To: <87ecxteym0.fsf@suse.de>
-References: <20250411114534.3370816-1-ppandit@redhat.com>
- <87ecxteym0.fsf@suse.de>
-Date: Wed, 16 Apr 2025 09:59:39 -0300
-Message-ID: <87bjswfeis.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: D4A9921175
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u52kn-0002K3-Nx
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 09:24:39 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2260c91576aso57598695ad.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 06:24:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744809876; x=1745414676; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:to:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a6QexFJEEMJSic0+z/ZC+XLtFb+kKnzgDCDW4UFJLdc=;
+ b=cKh3iUOUUCMQCx+fs/7mjE1hCqLcydLnuZ86B9mjFitJITZnTO4WgQxxvz6lxzsKdf
+ 2q1QZPYQwgZi04Kn2JY6eczPFvwdMAthdx0CEKCoPr5zskC7PnOCSzVrvIRb73bskeIF
+ HrFvYwk9nO2dsrmqhtdncA6AELkxXyI/hpXLIr/0ZTH5sjq9iF5ZX6zDIeEUOyw/Sd2X
+ LpQrzgUJVoe9OpspWG/BRj5al6rPw2FODSkbs77PgQVLzwQez0mmkN3gU0JWc6Z2rtg/
+ wQjhvi1lZffWsQ+Ala98331hsbwJqUyp+V7AEGnvst6UnBRl5OfTtVtmSh6uWbNX57zf
+ qyuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744809876; x=1745414676;
+ h=in-reply-to:references:from:subject:to:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=a6QexFJEEMJSic0+z/ZC+XLtFb+kKnzgDCDW4UFJLdc=;
+ b=Xy7Z9P8WKEBfjB3YgnSHjlcsfaaVhkZXpbXMkn6mjddi/usBRVmJo16IY2z7pNum22
+ KGAMKmLs5Nc5Jkwpsa0osHvw0DouLos3bqBtY+sqwhoF71oThykFANlMlcEsbVkqCzVF
+ gYO1UiKbS9FCOO69LintY6Fdb/naNEIKOtmfcZoLgN5PS3OiSr6rCKLoUqhoercYJEa0
+ VURl9KV/kfz++IiIzbsR67iCi8TIkjxJ7kxA5nzzXaGYP7JKUENGesznqNIi3YLcsSdx
+ AMQVdozz3oCYMo4fV/Ub9WIsBCXCznetyDIivcAj7zGZKs1XbeDQhUc1PVpUSciuJxW6
+ N9sQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDiAagwvoVk8b4ZxZeI9pmN7CntnVLGNJLc4vSpgN96bq9Mw6KX/Z/+NLUoBL+RQgV9QbaLdlRKNha@nongnu.org
+X-Gm-Message-State: AOJu0Yy3QWueD63uqQORYORP+lvvWveS3wohXKgFayw2OKD4hquSZ6XQ
+ 02kFaXj7C953oOQuOK5dua1NvXSbGn2WECiAZ3iYqRDgQvlIiUt6
+X-Gm-Gg: ASbGncscS/XmSmtQbdNuzg7uURSaiNiMhRfz3aG+TjmEKYOsLwar6hLrdjI8jIkYqOD
+ 5NwWclW/QWFdoOJzU6HdADuq3FASDyCiitbgATy7GA80MuWZ3t3nKZspaWfS6N7nYXYhpdrkmfW
+ F5YPqoX4MUDQv0zz/40V2Qgd6Q5HwDTR8S89SnezSFBKb0btCmq0IWJcOb1kbXEtRnofca2ghC/
+ 9YVQIg4z3xGwqLv0Zm9hROGOUqenTLV2BYa5O6NDL/JrQrYGvZ8PSLtDCuRxpttgBeErKUA3A7Z
+ xN278FDUZswdXjd6HmmMzM8MyV3/VBU=
+X-Google-Smtp-Source: AGHT+IFoycJct0tKTG853mskBR7Wro2zQXNetyFfpDZYQqK6KFgGwPi7e3oAFZEZoEiJeyLQ5LM5/A==
+X-Received: by 2002:a17:902:e541:b0:224:912:153 with SMTP id
+ d9443c01a7336-22c358c4083mr28401405ad.5.1744809876066; 
+ Wed, 16 Apr 2025 06:24:36 -0700 (PDT)
+Received: from localhost ([1.145.55.85]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c33fe6e1dsm13310615ad.236.2025.04.16.06.24.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Apr 2025 06:24:35 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 16 Apr 2025 23:24:32 +1000
+Message-Id: <D983H9RDME9Z.1ZIYO7RRNBQS4@gmail.com>
+To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v4 000/163] tcg: Convert to TCGOutOp structures
+From: "Nicholas Piggin" <npiggin@gmail.com>
+X-Mailer: aerc 0.19.0
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+In-Reply-To: <20250415192515.232910-1-richard.henderson@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,51 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On Wed Apr 16, 2025 at 5:22 AM AEST, Richard Henderson wrote:
+> v2: 20250107080112.1175095-1-richard.henderson@linaro.org
+> v3: 20250216231012.2808572-1-richard.henderson@linaro.org
+>
+> Since it has been 2 months, I don't recall specific changes from v3 to v4=
+.
+> It's mostly application of r-b tags.  There is one more patch, which I
+> believe was Phil asking for one patch to be split.
+>
+> Patches still requiring review: 29, 41-43, 46, 47, 49-51, 55, 57, 59-62,
+>   64, 66-68, 70, 72-78, 80, 82-87, 89, 91, 93, 95, 97-102, 104, 106-162.
 
-> Prasad Pandit <ppandit@redhat.com> writes:
->
->> From: Prasad Pandit <pjp@fedoraproject.org>
->>
->>  Hello,
->>
->>
->> * This series (v9) does minor refactoring and reordering changes as
->>   suggested in the review of earlier series (v8). Also tried to
->>   reproduce/debug a qtest hang issue, but it could not be reproduced.
->>   From the shared stack traces it looked like Postcopy thread was
->>   preparing to finish before migrating all the pages.
->
-> The issue is that a zero page is being migrated by multifd but there's
-> an optimization in place that skips faulting the page in on the
-> destination. Later during postcopy when the page is found to be missing,
-> postcopy (@migrate_send_rp_req_pages) believes the page is already
-> present due to the receivedmap for that pfn being set and thus the code
-> accessing the guest memory just sits there waiting for the page.
->
-> It seems your series has a logical conflict with this work that was done
-> a while back:
->
-> https://lore.kernel.org/all/20240401154110.2028453-1-yuan1.liu@intel.com/
->
-> The usage of receivedmap for multifd was supposed to be mutually
-> exclusive with postcopy. Take a look at the description of that series
-> and at postcopy_place_page_zero(). We need to figure out what needs to
-> change and how to do that compatibly. It might just be the case of
-> memsetting the zero page always for postcopy, but I havent't thought too
-> much about it.
->
-> There's also other issues with the series:
->
-> https://gitlab.com/farosas/qemu/-/pipelines/1770488059
->
-> The CI workers don't support userfaultfd so the tests need to check for
-> that properly. We have MigrationTestEnv::has_uffd for that.
->
-> Lastly, I have seem some weirdness with TLS channels disconnections
-> leading to asserts in qio_channel_shutdown() in my testing. I'll get a
-> better look at those tomorrow.
+For ppc64 host I ran check and functional and avocado tests and
+some ad hoc tests and holds up so far.
 
-Ok, you can ignore this last paragraph. I was seeing the postcopy
-recovery test disconnect messages, those are benign.
+Tested-by: Nicholas Piggin <npiggin@gmail.com> (ppc64 host)
 
