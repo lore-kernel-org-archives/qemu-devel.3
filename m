@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BDCFC369C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E05DC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4zzX-0007i3-Kc; Wed, 16 Apr 2025 06:27:39 -0400
+	id 1u50Ew-0004r3-JW; Wed, 16 Apr 2025 06:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u4zzU-0007gv-Sa; Wed, 16 Apr 2025 06:27:37 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u50Em-0004pY-8T
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 06:43:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u4zzS-0000BJ-UP; Wed, 16 Apr 2025 06:27:36 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 643C21189E2;
- Wed, 16 Apr 2025 13:25:35 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B5CDF1F1F7B;
- Wed, 16 Apr 2025 13:27:20 +0300 (MSK)
-Message-ID: <151289d2-ac87-48ba-8b0f-4eda047a98e5@tls.msk.ru>
-Date: Wed, 16 Apr 2025 13:27:20 +0300
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u50Ei-0003V1-7U
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 06:43:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744800198;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=I1SNf4k1vkbPSdFHGZM7Talbjfhoph3u3m0MzlCZPjs=;
+ b=WSSf/qQGpqOICbvJQB9TOhctC+/qUUGRVQyCnRUHPbHaJk0TOrsB+E3z3orrrwcPHVmL8F
+ JAfrv6hqBqe/P2GxAyZ/2APO8mcQUDGCQpeY2rY3fxfjOrRIiJtARuE9Xg9S9HD1EJXhRn
+ xtr4FGlgatQkskzKSm1JGI+5FkrssTk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-UCMIg48JOcqnPxJO4C3TDA-1; Wed,
+ 16 Apr 2025 06:43:14 -0400
+X-MC-Unique: UCMIg48JOcqnPxJO4C3TDA-1
+X-Mimecast-MFC-AGG-ID: UCMIg48JOcqnPxJO4C3TDA_1744800193
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C538F1956096; Wed, 16 Apr 2025 10:43:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.31])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4152B19560A3; Wed, 16 Apr 2025 10:43:09 +0000 (UTC)
+Date: Wed, 16 Apr 2025 12:43:07 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org,
+ Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org
+Subject: Re: [PATCH v2 1/2] file-posix: probe discard alignment on Linux
+ block devices
+Message-ID: <Z_-JuzabVntIfGgm@redhat.com>
+References: <20250410184103.23385-1-stefanha@redhat.com>
+ <20250410184103.23385-2-stefanha@redhat.com>
+ <c7b9ddb4-10de-4c66-9f2f-c964d77275e0@redhat.com>
+ <20250414153451.GC117758@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: qemu-devel <qemu-devel@nongnu.org>, qemu-stable <qemu-stable@nongnu.org>, 
- Sergio Durigan Junior <sergio.durigan@canonical.com>,
- =?UTF-8?Q?Lukas_M=C3=A4rdian?= <slyon@ubuntu.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: 8.2.x stable series is end-of-life
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="5UgUjOQKq5WOGByV"
+Content-Disposition: inline
+In-Reply-To: <20250414153451.GC117758@fedora>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,14 +87,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
 
-I've been doing stable-8.2 series per request from ubuntu, since it is the
-base for LTS ubuntu noble release.  Since it is not actually used in ubuntu,
-I'm stopping doing this, current 8.2.10 release will be the last release in
-8.2.x series.  It's sad we wasted so much time for nothing.
+--5UgUjOQKq5WOGByV
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
+Am 14.04.2025 um 17:34 hat Stefan Hajnoczi geschrieben:
+> On Fri, Apr 11, 2025 at 10:15:13AM +0200, Hanna Czenczek wrote:
+> > On 10.04.25 20:41, Stefan Hajnoczi wrote:
+> > > Populate the pdiscard_alignment block limit so the block layer is able
+> > > align discard requests correctly.
+> > >=20
+> > > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > ---
+> > >   block/file-posix.c | 56 +++++++++++++++++++++++++++++++++++++++++++=
+++-
+> > >   1 file changed, 55 insertions(+), 1 deletion(-)
+> >=20
+> > Ah, I didn=E2=80=99t know sysfs is actually fair game.=C2=A0 Should we =
+not also get the
+> > maximum discard length then, too?
+>=20
+> The maximum discard length behaves differently: the Linux block layer
+> splits requests according to the maximum discard length. If the guest
+> submits a discard request that is too large for the host, the host block
+> layer will split it and the request succeeds. That is why I didn't make
+> any changes to the maximum discard length in this series.
 
-/mjt
+Do we need to do something with it for SCSI passthrough? Similar to how
+we expose bs->bl.max_hw_transfer/iov in the block limits VPD page?
+
+Kevin
+
+--5UgUjOQKq5WOGByV
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmf/iboACgkQfwmycsiP
+L9ap9RAAr7XW58GMMYNJLUaWfYIMiqV9q1tSgkPy/SWTIw/W/lvfkNZuthUV6YyU
+KQV7wlrsxd9+aC7Tj9hZ0TeHviL2iD/7aApquHVnyKNzEBTCIbBupyP29CrYSwFk
+n/xSAqrqM9TkfKRkgpDFXZDvfkRYZV9ZfOPViuafxLPci6E4FTU/WdiD1LttNUyt
+Nqh2xLqCsSsK4EDfzrGwF6+Er2QLaIKVupyVbd2FENRLgn1uvnzNg77pFfjWAe1Z
+sUkZKzeD8eRqb6Rfd+0Z84fvomoY0aJJln6tlzU0H55icfQSFLM6upkFX6XuCc50
+K1bg5421XZuj338TyKseFcDnpE4qmB5YvwKH0f1fv2tEZ6aoNV2WlhrjRpjH2r6u
+VA2O1FZWti3jqCAQJMKvtoLs1I/c6xVG8OQ0KifrcNWybvK1rM/xew4TUlQaZSY0
+ujDt9ovv1/52SQ+Hp2pbCA6+9EKuIO711HRfY8SgScgRZRKOrg+Iw85JSsTs6ivA
+w4PoOGD1ovGYbuZQxtCMYofpNBeR/nB65Hs7MpXZgmNssSWZ8fvIuWMW0HDuNPij
+6+mTI/jMyt/d4OW9n+l396YBNt/skol2zAOdbbZsXcXenWJrgSkz7FKzFe3fW0Di
+VQNeOVj1WyDakV3KjT1bDxzmm5JxOdMIZ+xq2+LJYO5LVoO3x5c=
+=oq3m
+-----END PGP SIGNATURE-----
+
+--5UgUjOQKq5WOGByV--
+
 
