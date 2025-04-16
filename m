@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D14C369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 08:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463D3C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 08:26:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4y1q-0007ij-8D; Wed, 16 Apr 2025 04:21:57 -0400
+	id 1u4xzy-00067W-FA; Wed, 16 Apr 2025 04:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u4xxc-0002dS-Vs; Wed, 16 Apr 2025 04:17:36 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1u4xxJ-0002Xl-3G; Wed, 16 Apr 2025 04:17:29 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u4xxW-00060u-5a; Wed, 16 Apr 2025 04:17:32 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7396f13b750so6692736b3a.1; 
- Wed, 16 Apr 2025 01:17:23 -0700 (PDT)
+ id 1u4xxG-0005ye-C1; Wed, 16 Apr 2025 04:17:12 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-223fb0f619dso70489485ad.1; 
+ Wed, 16 Apr 2025 01:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744791443; x=1745396243; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744791427; x=1745396227; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qh7ZvjfwF1hD8dMzut82Yi3dWFW09ht1e9BNINW8RSM=;
- b=esGnx8x/CUVmPkGBvgPVinz39yTzgxyBkybk6scifMTveX5bdEt68NSKV80VxvUYQk
- ukwR55OKdc5+TvxTtTXzLSfEeuiS3/O4f1trlv0096+/VTvLH66mMgdHbrmUdcm7/nTf
- 9jqP/dZf/ufJmsgw348CbbiYyQ7fQ/OHFYfYtUc0hSpLpKNE4p1neSAXIV9iZYaE0PdN
- a12wfSFf6jMXjxR7uEOPdw6ErNFuem6JsVRalqGCoQFgZHdseee7d+tcLxXgNNQBKn4F
- b1yWQUpKLQog/wiVYbZ21/f52yzPHtYiLzlMyNs5NNqHMVZUlU9OKhe+xljTbNDjxCwt
- Hpgg==
+ bh=oIbAMZeonD1y/THuAvolLW7txmOpN+fF9GLLZzGqdZQ=;
+ b=J/a+dx+JDpy+x8eWyQwXDmNCJ4+LX4g7/bvCenpJO6zsPIqtV+H/28k0kTv8WIhbxa
+ Msfl787l8FwOTPa0x9qasqQ0gbTCnVsO12tghR3dWpkeH1prUEqmzxAOwr9ctGDfmJyE
+ 3b0Pc186N8c54tGgDsvSjH69FxTHOM7zY9NxnN7LEC1yJTKfPJXOhhGJLbLSotmxR3km
+ ggoqU+wVV7DmWQGKRnsnW1n+EEeCrkyFBAJDom7fpGBHbac2kBZ4pwkKnt4+jrDT0BOr
+ b3MVdRvxmC3uViWMLwJZ1KpP+OhHEDfiNW87rWR/c1X5CStQ8Tb2ADWZ1SfhzXqiy471
+ jRsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744791443; x=1745396243;
+ d=1e100.net; s=20230601; t=1744791427; x=1745396227;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qh7ZvjfwF1hD8dMzut82Yi3dWFW09ht1e9BNINW8RSM=;
- b=L8Xnh9OWqW/3FnoiK/uyZrLPgl7e09+RoqyVGlltqTUP8dA4MxJ05vpgf57dLUbfWS
- Dkyr/NOkZkOUADQ1VlYAL53+Zi0fVscu0QbcDIl25Proy5rf3h1KB2GULv/tnklDq4Tg
- g7yGIvOS+T/E1pE+8bexoBcg008eReJD/yQg1NIt0XTM154bdJalktngicyCAok6VEPd
- Z66xc9kcj6kLys/8iyjtltDpsUCRJZoCzG9lsZKPJq8Xp2+Euz9BMUszp/NRbsMkC237
- l0v6Q0WFRCkHUpRqHOZtkLkZjj7fLAhFr6U7x1R6RzDqI+6lw0DUt4qu2xM9Ou3jUHJq
- /Kag==
+ bh=oIbAMZeonD1y/THuAvolLW7txmOpN+fF9GLLZzGqdZQ=;
+ b=XAMBAoSlNlPyi3F04I9ahiJ5FBbDNddPiDDy0X1FUbbhHpGARcRxlZJfd+6RQ5bBN4
+ rQ2vpF6VJ4hWi1qWwuhk0kutgxf60eTJqRE27HQQG383LrlaVEWnVZcVHcqalY1oDWcM
+ hbTmO8aFlAyrCs7ZlYxIeYC1DyDoHNvWdlFFj32oUoNLLyVf8catis9oPUx9ZTxGXSSo
+ FBY2ljCaE6vKiV/LuHVNn7sJBjvynVoMOwGSo4xzW88hA76kH2/7iVEKzhLq89XZKbQw
+ /BQdz6f1oJsFpzkBfxN1TSAaMdMmY+CVg1dB9lT0Ccka1l2DEmHYULcFSn4xdtam8Csp
+ 1FZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlvwhPIHAcTFhScK5JC9K5b3nL8elxlJ3n1ONJ5wXAY4fl7RXkIdMInGiyo5s30qN5wNxs0npEP8WXCA==@nongnu.org,
- AJvYcCW5nJxDbqeKXv2L/YXTi2JOKkZ7TGrZ0KK8gxRlFopIPURhtcvbKTwhhrLbCJp9sezUCpgaCH740T+NZQ==@nongnu.org,
- AJvYcCWMXfVdGyIU4xXl3U/nI3LJQ3mFChiADbUgLANemLETQyznOuuUvPCvfND0gNR5t2jOxhAQRWb4mA==@nongnu.org,
- AJvYcCXWEGHEBByD5ephG7bD3rP8f80l+fU9Ywey+wULrBBzpK7rTmCGqSX63ahKTlZsETYvaME4TxT22Yc=@nongnu.org
-X-Gm-Message-State: AOJu0YxOVXA58Q61fqfeb8Y4REAgooAr7yHoIlyLGVxlc70I0T+t42uG
- XcBC9MpsddPv/vUF0LpKgPuW3neG9PVgjywToJDp/B5IhfIf+lgS3i+S/Dd8
-X-Gm-Gg: ASbGncs0N5HiySAz1i1+Pxl7oCdyHPBlh62/NAqsAy+2DfXeKTLElwNV+bxPBwIOHPh
- ukwSg+HJ6dor4EqG3xbZ5/ae7XE2smhXtLfEmvmHe2MAOeK0qHt6l2dMRrgRatqgNkbrgro6NWq
- o11Ze/gmHXPTyDyKtaWhmkYUN1D+GPQP0u5vjEl+hzckZTTxvYwMbcuj7wL7xkCPaBl12zvj2qy
- 8zTw+3reX0G55c0AmvIV6u1gTocEj8ZROGCZIr4WSk1czlqQVx8WqEDsVi3dxRA/ZU+Z5G1zQJM
- rceuX+5BQoNU1WsWYUZBvYD3pCNQIxckrxHcSw7v/SnSCZFevmbiglC6Ig==
-X-Google-Smtp-Source: AGHT+IFCeHlptEnbJhSJmI0VWsiGyayCzWAUrXdaQCdZgbcfPLImuN5NBzUlCdW6/hhmr03FFM2KKw==
-X-Received: by 2002:a05:6a00:279f:b0:736:3e50:bfec with SMTP id
- d2e1a72fcca58-73c266e7905mr1632687b3a.8.1744791442486; 
- Wed, 16 Apr 2025 01:17:22 -0700 (PDT)
+ AJvYcCV//IyruN3q0KxvMGjQU0xhixoF7UHO+CPTyAiWN5jlkB8BWisKcSKJRRZvQWePMf/M66/z/N8mkjzxLQ==@nongnu.org,
+ AJvYcCVUKyuMqxuX92DB8m32rf9qYEGcT5n7iJ9CNOKIB+D5yJfrAvacMziu27QQpqj3xYL7iuRxmbY1+o4=@nongnu.org,
+ AJvYcCWijqgLNk2s0MKVDObAnczwE9aWjoaSLCnLKFYQ2tkOcXPvFAuOHa4x/XuBP5IAQd+bHBV2xkGgCA==@nongnu.org,
+ AJvYcCXOLfAioAemkqobYc8ZQ1xDoYUKn1wQ/m2mGZDlqhTnD52OEm3EcMdjunhHu05nm8VeJhbkuiPsyEyFkw==@nongnu.org
+X-Gm-Message-State: AOJu0YxaA6aG8e9wjLbN5R3bcq/XvdSH+b8e6Hy5Q+LlFKQ7ZdcUz+Tw
+ 1xBfl3euhvJP9tHYAew2j2XKFna9pdaJdJC0brQ1RcZcsoBJpgut7j/RsANL
+X-Gm-Gg: ASbGncslSF36zWQqoVZbd3S5FPC5zqGmnVRmDoywEwCy4i9ScM65PIT4BJAmSnanG/p
+ /DwXhLfpdr8QJcZS2Tko4rZ+JqTLQoRiiwZgn8piMy3iy1VWPAi4Mqax67SNEeLKt1djuAf/unl
+ 8skNQ1NUSn4lqiUOfKMVWCrJUNdpURHrslm//GJr6qTUKAsNFL/obXEFIXQoMWKIxFOXn7NSmfr
+ LUeU7eqUxX0mdKhZqvFyGlFCIVr452DFnf5i+sxopi9YOhoj+6d8O+TOvJNVik3hc1Pxy74cW5d
+ sln4vifLyKPYggKHcLrEMJ4nGP4K6l3xBVegHhz6Fxj2NdIGfDKO+A3DQg==
+X-Google-Smtp-Source: AGHT+IFYdhSnB9zITJ1aITjDAOjnlnlic7rRWk+WIB51c/0DcssgTKezLLv7xrxaBupxkzncoPYm3w==
+X-Received: by 2002:a17:902:ef01:b0:223:517c:bfa1 with SMTP id
+ d9443c01a7336-22c3597ec25mr17871905ad.38.1744791426992; 
+ Wed, 16 Apr 2025 01:17:06 -0700 (PDT)
 Received: from localhost.localdomain ([240d:1a:3b6:8b00:ee5a:e672:7d4c:d43])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd21c3263sm9839445b3a.38.2025.04.16.01.17.15
+ d2e1a72fcca58-73bd21c3263sm9839445b3a.38.2025.04.16.01.16.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 01:17:21 -0700 (PDT)
+ Wed, 16 Apr 2025 01:17:06 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -90,16 +90,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 18/19] gitlab: Enable CI for wasm build
-Date: Wed, 16 Apr 2025 17:14:23 +0900
-Message-Id: <16055d17cadcb5f4c23203218cb8fc3fa81d1754.1744787186.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 16/19] util: Add coroutine backend for emscripten
+Date: Wed, 16 Apr 2025 17:14:21 +0900
+Message-Id: <f89c3ddfcb3d1fe04781ac1b1ed94f3feec8601d.1744787186.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1744787186.git.ktokunaga.mail@gmail.com>
 References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,235 +122,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GitLab CI job that builds QEMU using emscripten. The build runs in the
-added Dockerfile that contains dependencies (glib, libffi, pixman, zlib)
-compiled by emscripten.
+Emscripten does not support couroutine methods currently used by QEMU but
+provides a coroutine implementation called "fiber". This commit introduces a
+coroutine backend using fiber. Note that fiber does not support submitting
+coroutines to other threads.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- .gitlab-ci.d/buildtest-template.yml           |  27 ++++
- .gitlab-ci.d/buildtest.yml                    |   9 ++
- .gitlab-ci.d/container-cross.yml              |   5 +
- .../dockerfiles/emsdk-wasm32-cross.docker     | 145 ++++++++++++++++++
- 4 files changed, 186 insertions(+)
- create mode 100644 tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+ util/coroutine-wasm.c | 127 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 127 insertions(+)
+ create mode 100644 util/coroutine-wasm.c
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 39da7698b0..67167d68a5 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -126,3 +126,30 @@
-     - du -chs ${CI_PROJECT_DIR}/*-cache
-   variables:
-     QEMU_JOB_AVOCADO: 1
-+
-+.wasm_build_job_template:
-+  extends: .base_job_template
-+  stage: build
-+  image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-+  before_script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start setup "Pre-script setup"
-+    - JOBS=$(expr $(nproc) + 1)
-+    - section_end setup
-+  script:
-+    - du -sh .git
-+    - mkdir build
-+    - cd build
-+    - section_start configure "Running configure"
-+    - emconfigure ../configure --disable-docs
-+          ${TARGETS:+--target-list="$TARGETS"}
-+          $CONFIGURE_ARGS ||
-+      { cat config.log meson-logs/meson-log.txt && exit 1; }
-+    - if test -n "$LD_JOBS";
-+      then
-+        pyvenv/bin/meson configure . -Dbackend_max_links="$LD_JOBS" ;
-+      fi || exit 1;
-+    - section_end configure
-+    - section_start build "Building QEMU"
-+    - emmake make -j"$JOBS"
-+    - section_end build
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 00f4bfcd9f..0f92d5313a 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -801,3 +801,12 @@ coverity:
-       when: never
-     # Always manual on forks even if $QEMU_CI == "2"
-     - when: manual
-+
-+build-wasm:
-+  extends: .wasm_build_job_template
-+  timeout: 2h
-+  needs:
-+    job: wasm-emsdk-cross-container
-+  variables:
-+    IMAGE: emsdk-wasm32-cross
-+    CONFIGURE_ARGS: --static --disable-tools --enable-debug --enable-tcg-interpreter
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 34c0e729ad..3ea4971950 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -94,3 +94,8 @@ win64-fedora-cross-container:
-   extends: .container_job_template
-   variables:
-     NAME: fedora-win64-cross
-+
-+wasm-emsdk-cross-container:
-+  extends: .container_job_template
-+  variables:
-+    NAME: emsdk-wasm32-cross
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+diff --git a/util/coroutine-wasm.c b/util/coroutine-wasm.c
 new file mode 100644
-index 0000000000..60a7d02f56
+index 0000000000..cb1ec92509
 --- /dev/null
-+++ b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-@@ -0,0 +1,145 @@
-+# syntax = docker/dockerfile:1.5
++++ b/util/coroutine-wasm.c
+@@ -0,0 +1,127 @@
++/*
++ * emscripten fiber coroutine initialization code
++ * based on coroutine-ucontext.c
++ *
++ * Copyright (C) 2006  Anthony Liguori <anthony@codemonkey.ws>
++ * Copyright (C) 2011  Kevin Wolf <kwolf@redhat.com>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.0 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG ZLIB_VERSION=1.3.1
-+ARG GLIB_MINOR_VERSION=2.84
-+ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
-+ARG PIXMAN_VERSION=0.44.2
-+ARG FFI_VERSION=v3.4.7
-+ARG MESON_VERSION=1.5.0
++#include "qemu/osdep.h"
++#include "qemu/coroutine_int.h"
++#include "qemu/coroutine-tls.h"
 +
-+FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+ARG MESON_VERSION
-+ENV TARGET=/builddeps/target
-+ENV CPATH="$TARGET/include"
-+ENV PKG_CONFIG_PATH="$TARGET/lib/pkgconfig"
-+ENV EM_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-+ENV CFLAGS="-O3 -pthread -DWASM_BIGINT"
-+ENV CXXFLAGS="$CFLAGS"
-+ENV LDFLAGS="-sWASM_BIGINT -sASYNCIFY=1 -L$TARGET/lib"
-+RUN apt-get update && apt-get install -y \
-+    autoconf \
-+    build-essential \
-+    libglib2.0-dev \
-+    libtool \
-+    pkgconf \
-+    ninja-build \
-+    python3-pip
-+RUN pip3 install meson==${MESON_VERSION} tomli
-+RUN mkdir /build
-+WORKDIR /build
-+RUN mkdir -p $TARGET
-+RUN <<EOF
-+cat <<EOT > /cross.meson
-+[host_machine]
-+system = 'emscripten'
-+cpu_family = 'wasm32'
-+cpu = 'wasm32'
-+endian = 'little'
++#include <emscripten/fiber.h>
 +
-+[binaries]
-+c = 'emcc'
-+cpp = 'em++'
-+ar = 'emar'
-+ranlib = 'emranlib'
-+pkgconfig = ['pkg-config', '--static']
-+EOT
-+EOF
++typedef struct {
++    Coroutine base;
++    void *stack;
++    size_t stack_size;
 +
-+FROM build-base AS zlib-dev
-+ARG ZLIB_VERSION
-+RUN mkdir -p /zlib
-+RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz | \
-+    tar xJC /zlib --strip-components=1
-+WORKDIR /zlib
-+RUN emconfigure ./configure --prefix=$TARGET --static
-+RUN emmake make install -j$(nproc)
++    void *asyncify_stack;
++    size_t asyncify_stack_size;
 +
-+FROM build-base AS libffi-dev
-+ARG FFI_VERSION
-+RUN mkdir -p /libffi
-+RUN git clone https://github.com/libffi/libffi /libffi
-+WORKDIR /libffi
-+RUN git checkout $FFI_VERSION
-+RUN autoreconf -fiv
-+RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+    --prefix=$TARGET --enable-static \
-+    --disable-shared --disable-dependency-tracking \
-+    --disable-builddir --disable-multi-os-directory \
-+    --disable-raw-api --disable-docs
-+RUN emmake make install SUBDIRS='include' -j$(nproc)
++    CoroutineAction action;
 +
-+FROM build-base AS pixman-dev
-+ARG PIXMAN_VERSION
-+RUN mkdir /pixman/
-+RUN git clone  https://gitlab.freedesktop.org/pixman/pixman /pixman/
-+WORKDIR /pixman
-+RUN git checkout pixman-$PIXMAN_VERSION
-+RUN <<EOF
-+cat <<EOT >> /cross.meson
-+[built-in options]
-+c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+EOT
-+EOF
-+RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
-+    --default-library=static \
-+    --buildtype=release -Dtests=disabled -Ddemos=disabled
-+RUN meson install -C _build
++    emscripten_fiber_t fiber;
++} CoroutineEmscripten;
 +
-+FROM build-base AS glib-dev
-+ARG GLIB_VERSION
-+ARG GLIB_MINOR_VERSION
-+RUN mkdir -p /stub
-+WORKDIR /stub
-+RUN <<EOF
-+cat <<'EOT' > res_query.c
-+#include <netdb.h>
-+int res_query(const char *name, int class,
-+              int type, unsigned char *dest, int len)
++/**
++ * Per-thread coroutine bookkeeping
++ */
++QEMU_DEFINE_STATIC_CO_TLS(Coroutine *, current);
++QEMU_DEFINE_STATIC_CO_TLS(CoroutineEmscripten *, leader);
++size_t leader_asyncify_stack_size = COROUTINE_STACK_SIZE;
++
++static void coroutine_trampoline(void *co_)
 +{
-+    h_errno = HOST_NOT_FOUND;
-+    return -1;
++    Coroutine *co = co_;
++
++    while (true) {
++        co->entry(co->entry_arg);
++        qemu_coroutine_switch(co, co->caller, COROUTINE_TERMINATE);
++    }
 +}
-+EOT
-+EOF
-+RUN emcc ${CFLAGS} -c res_query.c -fPIC -o libresolv.o
-+RUN ar rcs libresolv.a libresolv.o
-+RUN mkdir -p $TARGET/lib/
-+RUN cp libresolv.a $TARGET/lib/
 +
-+RUN mkdir -p /glib
-+RUN curl -Lks https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz | \
-+    tar xJC /glib --strip-components=1
++Coroutine *qemu_coroutine_new(void)
++{
++    CoroutineEmscripten *co;
 +
-+COPY --link --from=zlib-dev /builddeps/ /builddeps/
-+COPY --link --from=libffi-dev /builddeps/ /builddeps/
++    co = g_malloc0(sizeof(*co));
 +
-+WORKDIR /glib
-+RUN <<EOF
-+CFLAGS="$CFLAGS -Wno-incompatible-function-pointer-types" ;
-+cat <<EOT >> /cross.meson
-+[built-in options]
-+c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+EOT
-+EOF
-+RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
-+    --default-library=static --buildtype=release --force-fallback-for=pcre2 \
-+    -Dselinux=disabled -Dxattr=false -Dlibmount=disabled -Dnls=disabled \
-+    -Dtests=false -Dglib_debug=disabled -Dglib_assert=false -Dglib_checks=false
-+# FIXME: emscripten doesn't provide some pthread functions in the final link,
-+#        which isn't detected during meson setup.
-+RUN sed -i -E "/#define HAVE_POSIX_SPAWN 1/d" ./_build/config.h
-+RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" ./_build/config.h
-+RUN meson install -C _build
++    co->stack_size = COROUTINE_STACK_SIZE;
++    co->stack = qemu_alloc_stack(&co->stack_size);
 +
-+FROM build-base
-+COPY --link --from=glib-dev /builddeps/ /builddeps/
-+COPY --link --from=pixman-dev /builddeps/ /builddeps/
++    co->asyncify_stack_size = COROUTINE_STACK_SIZE;
++    co->asyncify_stack = g_malloc0(co->asyncify_stack_size);
++    emscripten_fiber_init(&co->fiber, coroutine_trampoline, &co->base,
++                          co->stack, co->stack_size, co->asyncify_stack,
++                          co->asyncify_stack_size);
++
++    return &co->base;
++}
++
++void qemu_coroutine_delete(Coroutine *co_)
++{
++    CoroutineEmscripten *co = DO_UPCAST(CoroutineEmscripten, base, co_);
++
++    qemu_free_stack(co->stack, co->stack_size);
++    g_free(co->asyncify_stack);
++    g_free(co);
++}
++
++CoroutineAction qemu_coroutine_switch(Coroutine *from_, Coroutine *to_,
++                      CoroutineAction action)
++{
++    CoroutineEmscripten *from = DO_UPCAST(CoroutineEmscripten, base, from_);
++    CoroutineEmscripten *to = DO_UPCAST(CoroutineEmscripten, base, to_);
++
++    set_current(to_);
++    to->action = action;
++    emscripten_fiber_swap(&from->fiber, &to->fiber);
++    return from->action;
++}
++
++Coroutine *qemu_coroutine_self(void)
++{
++    Coroutine *self = get_current();
++
++    if (!self) {
++        CoroutineEmscripten *leaderp = get_leader();
++        if (!leaderp) {
++            leaderp = g_malloc0(sizeof(*leaderp));
++            leaderp->asyncify_stack = g_malloc0(leader_asyncify_stack_size);
++            leaderp->asyncify_stack_size = leader_asyncify_stack_size;
++            emscripten_fiber_init_from_current_context(
++                &leaderp->fiber,
++                leaderp->asyncify_stack,
++                leaderp->asyncify_stack_size);
++            leaderp->stack = leaderp->fiber.stack_limit;
++            leaderp->stack_size =
++                leaderp->fiber.stack_base - leaderp->fiber.stack_limit;
++            set_leader(leaderp);
++        }
++        self = &leaderp->base;
++        set_current(self);
++    }
++    return self;
++}
++
++bool qemu_in_coroutine(void)
++{
++    Coroutine *self = get_current();
++
++    return self && self->caller;
++}
 -- 
 2.25.1
 
