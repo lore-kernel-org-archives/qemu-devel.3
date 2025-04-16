@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A856AC369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B268EC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4zaP-0002Lv-WE; Wed, 16 Apr 2025 06:01:43 -0400
+	id 1u4zlY-0001W5-Bs; Wed, 16 Apr 2025 06:13:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4zYl-0000OS-ME; Wed, 16 Apr 2025 06:00:00 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
+ id 1u4zlT-0001Ve-U3; Wed, 16 Apr 2025 06:13:08 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4zYi-00011v-Lp; Wed, 16 Apr 2025 05:59:59 -0400
+ id 1u4zlQ-0004ph-OY; Wed, 16 Apr 2025 06:13:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744797596; x=1776333596;
+ t=1744798384; x=1776334384;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=Ne8pzpJiZGIpH61ngDLPEs3Z3DMm/OvMamEe6rhPgIQ=;
- b=Z17kxjbP8fusxp9inOvyzIp8TXs1UtjXQFPSgyMacb5kZo29MnyvGoOu
- RCJuZJEpF7OxEckEAeh9gVNa0b4icqyfHFeevfNWPc3c/0WcmWwSY+r/U
- VefYrL0Ftfz4grKriswqWDERIdNvyhQ7ASbihu+ZB1jQbwMpJUhB2018e
- CiY6ABKW1QIjuBK1jE+J/dripkKF2r8y+VBG5WSdlZLZQIKft0Gh2gcBq
- u1w9JoXTGq6RDjf5iJfoBnQqQNvth2ImZcAtVrLbBp2+QpB2h1cJGLWOa
- FKyYmisMAy3X0wwqEdvnoK5H4yd0M8geYyL8laYP5cET3LeIUwQMM3rut g==;
-X-CSE-ConnectionGUID: NAMWSdEpTky8bVkkOr7HSw==
-X-CSE-MsgGUID: diFZ7soJQtWrIFWOKXV8wg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="46219484"
-X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="46219484"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Apr 2025 02:59:52 -0700
-X-CSE-ConnectionGUID: gfKsDdOZRSa26ldDLBXy4g==
-X-CSE-MsgGUID: CS9U8NVDRAOvPSJ96iOhpQ==
+ mime-version:in-reply-to;
+ bh=V1tD4762zIW5vFUKrm/TKIOsDhWgGz05D4XIQjZH/0c=;
+ b=hUroMVy+dvPuxYJiGRHS9d17aru5cOC2DWJJefLU5MSCScUZeLIp2YaS
+ Sdo9V+c/TVTJeK94ayIcK0awTfMnil9J2OOHC9ecIsaxcANn0Od13N0ft
+ SmSNftIpa+OJs6HiGjDMpxXapqNIljaIFvXtgSYTqwgayj0tiBndP3BGA
+ FnXERwNP35rNWkKQwPAReyNn+QcTd8Prcq6B0s8vcu35ATtfSqoq0F5aL
+ fSlB4GESwcICMaBhdPMrAd6y8O+zUbvfpd8YQ5F4oY8Tl+kBSYpgIeqbN
+ Vm5U/TUd+nok8QlVVkX1CEYSjx7kqF8gsilKHNFUZlfjrh2b+KUpEemqv w==;
+X-CSE-ConnectionGUID: 28JHLWudScmamrCrazLgvg==
+X-CSE-MsgGUID: 4kOb7LiLT3KIub3S4gBGNQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="57331871"
+X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="57331871"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Apr 2025 03:13:01 -0700
+X-CSE-ConnectionGUID: UcsXT1GbTF2S+ZxYC37epw==
+X-CSE-MsgGUID: 1jBxpUaUSoSkimnvpdpfqQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="135477205"
+X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="130372260"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 16 Apr 2025 02:59:51 -0700
-Date: Wed, 16 Apr 2025 18:20:43 +0800
+ by orviesa006.jf.intel.com with ESMTP; 16 Apr 2025 03:12:59 -0700
+Date: Wed, 16 Apr 2025 18:33:52 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
  Dapeng Mi <dapeng1.mi@intel.com>
 Subject: Re: [PATCH 8/9] rust/hpet: Support migration
-Message-ID: <Z/+Ee4YlUBSVtArJ@intel.com>
+Message-ID: <Z/+HkId2+ORzERJN@intel.com>
 References: <20250414144943.1112885-1-zhao1.liu@intel.com>
  <20250414144943.1112885-9-zhao1.liu@intel.com>
  <Z/5KlfQgC65g6Kid@intel.com>
  <78fdfdaf-7c94-4d79-be39-8215c033b423@redhat.com>
- <CABgObfb9z6r0vY1ojr1XMoCyYujEt4dX1UONcZEJgzDx8mry3Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfb9z6r0vY1ojr1XMoCyYujEt4dX1UONcZEJgzDx8mry3Q@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <78fdfdaf-7c94-4d79-be39-8215c033b423@redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -86,81 +84,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 15, 2025 at 07:43:00PM +0200, Paolo Bonzini wrote:
-> Date: Tue, 15 Apr 2025 19:43:00 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 8/9] rust/hpet: Support migration
+> > Although it can handle callbacks well, I found that the difficulty still
+> > lies in the fact that the vmstate_fields and vmstate_subsections macros
+> > cannot be eliminated, because any dynamic creation of arrays is not
+> > allowed in a static context!
 > 
-> On Tue, Apr 15, 2025 at 4:21 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > > An additional difficult case is vmsd(). Passing the raw VMStateDescription
-> > > looks not good, while passing the VMStateDescription<> wrapper requires
-> > > bounding DeviceImpl with 'static. Ultimately, I added an extra
-> > > StaticVMStateDescription trait to successfully compile...
-> >
-> > Hmm I cannot fully understand it so I'll check it out later.
+> Yes, this makes sense.  Array size must be known inside a const function and
+> the extra terminator at the end of fields and subsections cannot be added by
+> the builder itself.  c_str! has the same issue for the name, if I understand
+> correctly.
+
+Yes, I have to use c_str! in name().
+
+> > In any case, it's definitely still rough, but hope it helps and
+> > takes a small step forward.
 > 
-> So the problem is that, in a "&'a Foo<T>", T must also be "T: 'a".
-> One solution is for vmsd() to return an
-> Option<VMStateDescription<Self>>, and do Box::into_raw(Box::new(vmsd))
-> in the class_init method. Once we have const_refs_static, "fn vmsd()"
-> can become a const and the Box is not needed anymore.
-
-Thanks so much, that's a good idea!
-
-About `Box::into_raw(Box::new(vmsd))`, do you think it's necessary to use
-Box::leak(Box::new(*))? (though the Box<> isn't actively dropped during
-the class's existence)
-
-    pub fn class_init<T: DeviceImpl>(&mut self) {
-        ...
-        if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
-            let static_vmsd: &'static mut bindings::VMStateDescription = Box::leak(Box::new(vmsd.get_vmsd()));
-            self.vmsd = static_vmsd;
-        }
-    }
-
-> Also please turn get_vmsd_ptr() into get_vmsd_ref() so that we get
-> more checks that things are not copied behind our back (leaving behind
-> a dangling pointer)
-
-Sure!
-
-> I attach the conversion I did of the other devices and tests. I am not
-> sure if it's possible to avoid having a huge patch to do everything at
-> once (except HPET since that can be added separately).
-
-Thank you again! From my initial thoughts: Splitting is also possible,
-but it requires first renaming VMStateDescription<T> to
-VMStateDescriptionWrapper<T>, then replacing it in pl011 and test (and
-hpet) one by one, and finally renaming it back to VMStateDescription<T>.
-If you prefer this approach, I can help you split your patch below.
-
-> +const VMSTATE_HPET: VMStateDescription<HPETState> =
+> Yes, of course---this:
+> 
+> +static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription<HPETState> =
 > +    VMStateDescriptionBuilder::<HPETState>::new()
-> +        .name(c_str!("hpet"))
-> +        .version_id(2)
+> +        .name(c_str!("hpet/rtc_irq_level"))
+> +        .version_id(1)
 > +        .minimum_version_id(1)
-> +        .pre_save(&HPETState::pre_save)
-> +        .post_load(&HPETState::post_load)
+> +        .needed(&HPETState::is_rtc_irq_level_needed)
 > +        .fields(vmstate_fields! {
-> +            vmstate_of!(HPETState, config),
-> +            vmstate_of!(HPETState, int_status),
-> +            vmstate_of!(HPETState, counter),
-> +            vmstate_of!(HPETState, num_timers_save).with_version_id(2),
-> +            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
-> +            vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
-
-And it seems like you don't oppose the hack in patch 1? ;-)
-
+> +            vmstate_of!(HPETState, rtc_irq_level),
 > +        })
-> +        .subsections(vmstate_subsections!(
-> +            VMSTATE_HPET_RTC_IRQ_LEVEL,
-> +            VMSTATE_HPET_OFFSET,
-> +        ))
 > +        .build();
+> +
+> 
+> is readable, not foreign (it's similar to the MemoryRegionOps) and provides
+> an easy way to insert FFI wrappers.
+> 
+> Right now it's now fully typesafe, because the VMStateField returned by
+> vmstate_of! (as well as the arrays returned by vmstate_fields! and
+> vmstate_subsections!) does not track that it's for an HPETState; but that's
+> a small thing overall and getting the basic builder right is more important.
+
+I agree, additional consideration is needed here. Currently it is
+vmstate_fields! that limits changes to vmstate_of!.
+
+> I also made a note to check which callbacks could have a Result<> as the
+> return type, possibly reusing the Errno module (Result<(), ()> looks a bit
+> silly); but that is also not needed for this early stage.
+> 
+> Just a couple notes:
+> 
+> > +    bindings::{VMStateDescription as RawVMStateDescription, VMStateFlags},
+> 
+> I would use bindings::VMStateDescription throughout, similar to how
+> it's done in memory.rs.
+
+Sure, will fix.
+
+> > +    pub const fn name(mut self, name_str: &CStr) -> Self {
+> > +        self.0.name = ::std::ffi::CStr::as_ptr(name_str);
+> 
+> 
+> This can use "name_str.as_ptr()" because the type of name_str is known
+> (unlike in macros, such as define_property! or vmstate_validate!).
+
+I see and will fix.
+
+> (By the way, talking about macros, I have just stumbled on the attrs crate,
+> which is something to keep an eye on for when QOM/qdev bindings are extended
+> along the lines of https://lore.kernel.org/qemu-devel/e8e55772-906b-42cb-a744-031e6ae65f16@redhat.com/T/.
+> But I don't think procedural macros are a good match for VMState).
+
+I didn't have a deep understanding of this previously :-(. I'll take a
+closer look at this.
 
 Thanks,
 Zhao
-
 
 
