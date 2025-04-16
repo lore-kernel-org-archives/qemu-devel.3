@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B610C369C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 14:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6D0C369C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 14:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u53zV-0000PR-RX; Wed, 16 Apr 2025 10:43:53 -0400
+	id 1u540q-0001DU-9d; Wed, 16 Apr 2025 10:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u53zU-0000PC-5x
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:43:52 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u540l-0001BW-6Z
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:45:13 -0400
+Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u53zS-0000A7-FP
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:43:51 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-30155bbbed9so5350822a91.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 07:43:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u540j-0000bY-4V
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:45:10 -0400
+Received: by mail-il1-x12a.google.com with SMTP id
+ e9e14a558f8ab-3d46fddf357so23284425ab.2
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 07:45:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744814629; x=1745419429; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3ub5frZUrYEM3lY/ffUk632gF7y6vI8PGd5dndCynyM=;
- b=Os78SRsd6CP8Dzuxv6AJ2Hyyjy4BJ8mlKbfkXfcSdtRLRam4Yxmr0UiLofVuTkkAXJ
- WVnOJ11zQMl0pFE9Iz8IUPWC3O0+A7d8ruFgKgE6lSHagx5Wy42dYf5hNzGWCFqEAMoL
- OQ48uYj5hitYoS5HeJ/Qoek5Mm5at7B8tJQ9/gbpnjxRkFZYag+503jXC/FN6ielHqM8
- cYQDDsIPMFt8SOxnet2I56/XD0LJXMGodvxsnnu2Yzcaj92NqBl1IQKdHgubtVHjzS6Y
- Hzbyq8dP4fCEqt0rUye9L29SNvKjVknSaCamW98FJHGWQISDoD/sYddWQnozcJap8INU
- J2Mg==
+ d=gmail.com; s=20230601; t=1744814707; x=1745419507; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=j09gAotxdlMdRJiQRIJ8apf6JqT1CvStdxiLHjSWONU=;
+ b=RUOl3np+tuGE7KBI29UZczcypxMr6IrPQBrl+9ct2CA0vneX0tmWSAdefEL46WlrXr
+ /sW+wgshZcvFavDyrNLDLIpXk8VJd18/yEP5SDsa8t8Ndhsdam50sIv+dT4iTBCnzJmn
+ zs+/NKBgyrLccuTe2KQjd5L/CXrw1sy9zo6nci2vnSMZo5UT4QQJhLQ/F/uBGlemJyLM
+ ELpQKFhBamhG5xx/tr0vLLbCaoMfoDi84iO1VIoDowv2mQE3z6xVnlTpRuqwGVeL2EuM
+ T1Hziqfymefxphhh3MoAtCABNHC+LjxWiw+TBL9VA3zr/QleQk0DLyZpflHzKiYkIZFD
+ M8qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744814629; x=1745419429;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3ub5frZUrYEM3lY/ffUk632gF7y6vI8PGd5dndCynyM=;
- b=oh0eGugjU3EQ3L7Cj39taewxn1utQJrF1YuwrJjSDDCPCXEDTpt+XbaS8Osuy6D/LS
- i8D1Kzv2pV0QdYBqfScGMzphB8pOAbGQyTp6J/WT1PicHkVaYNDWM6mdesZ8+I8GMR3K
- vPog4oAslhYmQPBTi5rbO2/HVLRQbuna5ZMLvyMj2N+WjjiN9kK4zsZyxnyWfMgGypp7
- ZuSw2LWQZD0f7990ceRVZY/BYCTEOONO4UHQDHqhFie8fX5ia2N6/67rDCd2oF8WUcyh
- Py74DOeO26CBemgSsl/28ufDAvOzl6kZG4AGdJPo1pSOB1myW2/M/rg5VhyXWKT9rU+Q
- Q37g==
+ d=1e100.net; s=20230601; t=1744814707; x=1745419507;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=j09gAotxdlMdRJiQRIJ8apf6JqT1CvStdxiLHjSWONU=;
+ b=UAYeamK1xyI1qAHiILfAnRxPdCFMLCNcCgzQDIV8HZ+0IRajK1ZC+1TNy6Lxa0eWio
+ DEXC4fq9FJWV4VwVTLE8TbBCtPqXR2kJFftTGG1gfu2yZenPFk3N5VkkVSGrvHGaRmqx
+ KDLX5NmQca80zBl0ZZeZgkezVBg8BbjMUglFZjEma3WKuLMQuw6e5zl4Iki3bStcYPnQ
+ lQd9ixHpnxjMQaMji6SGJ0SvKzXIG/piv/m0p4sKKKuI/ySiI/a4Vee5gLOvFPdMNJkm
+ yqws4ykRx9IpHVWDnTlVeEeLPgmUGGBCq6IZLRwyYlpb4CAdcKd74KzoSXD2YWfmvr7W
+ minQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0IN0IvgP8YagOb26tanMruCh8xI8rV5X776FGgTV8+gxdaEYqVqvu0YgaJVtF/oV1xgRon7zjd/hl@nongnu.org
-X-Gm-Message-State: AOJu0Yy2BDxGAgGGZ0Qb7dzc4Gkp3bonJckHEue+e6NwZnuZMKopBad1
- zffBEHPNPSTQ7TGSAAa25ka1LAfSsg97unVNFaGGuSE1RGhJ0Jt5
-X-Gm-Gg: ASbGncvpRMaeKVOebX1b5VZUts2a4TiLOSlC89SClQnEEdefWNb2wILBoRjzg8Z12iU
- nLUiByzJf1olMLVjh4tbSYRCGIGwdmm6Bz7bqe6bd99CbCPP4o9OQD75bc73FsVATMKqwuNJdwB
- LnlnaOaSDraU7ORNRwsH7e2BzZTpo6uGhfT8z2sU4HjMLxsH3ydcdlvhsz7g4Pqj6D02b1ejLmF
- 3tqWbXiMZtoU1XAo9WZ/RFFcuxgXQzy3v8G43GwVVjBoLIpmawZJn0TspAU4EBr2GvVfJVGEjbK
- eJIyHjE+H4XI2gPAiSSIvGMiBHG0jKM=
-X-Google-Smtp-Source: AGHT+IHjMYZKqZyFNia3VfAA//Ue42T8krz184h16kExFukz0O/wZNew7VaTD3ZBOOmJBMqEmjUYhw==
-X-Received: by 2002:a17:90b:1f88:b0:2f6:d266:f462 with SMTP id
- 98e67ed59e1d1-30864172a14mr2976726a91.35.1744814628732; 
- Wed, 16 Apr 2025 07:43:48 -0700 (PDT)
-Received: from localhost ([1.145.55.85]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-308611f3f31sm1677354a91.16.2025.04.16.07.43.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 07:43:48 -0700 (PDT)
-Mime-Version: 1.0
+ AJvYcCXbP6LABmeJMrohbUGD3QnTvVYYHwKYuWb767/AFxTnHA5BEwxB7AW0tcASaIjwD8NeFE6iERA+Ytr8@nongnu.org
+X-Gm-Message-State: AOJu0YxhNCWE81l2wX9lbUfWEY6uX5l8QdQpBbdJJJngPYYfCaUzIT1p
+ 7qv20WO+YglkOlg2Vm/QKlwsJU2F/FQ8xdQawXTOg8FI48UtlerK
+X-Gm-Gg: ASbGnctzWGrE73derZ+B8lf2zk3OzVcIC6HnW9b2AzuhkpECn6/oangXL8eXhOIFotZ
+ AaCUTQv/trXi0zBjnhsZjayL2TW41eeyiWtggyO2BQwh065mneq61jiH4J0n1w7kqTicJp1fJoe
+ 3aVHsdXGs1kZxBqOmYaB+zgbPruuYAORcy48c70bF5/ruwD+XJpXXWYY2YOVgP60L1DVBXXo6YR
+ tfgjRLic1tSj/S/6JoHWUyGo9T2dkB29nj8dFMLqF63use5lLFjhcqWZYK0bVOLIaCv0qkAdRXJ
+ 4NGfHJ1uuoNQyRKM5TsxKKHCjP2+radd38u/709XeEaN1HC2VVPzrJXRY2+eC25quuqOTY71d/4
+ =
+X-Google-Smtp-Source: AGHT+IFqfFOi5tk3Ll+C92LBNc8IW/aUNWCQ8rjfrrpMwPA3ZOidtH1j175f/p0QqxoXtkUQlmkL8w==
+X-Received: by 2002:a05:6e02:3087:b0:3d3:f9e0:709b with SMTP id
+ e9e14a558f8ab-3d815b5e60amr21822105ab.17.1744814707214; 
+ Wed, 16 Apr 2025 07:45:07 -0700 (PDT)
+Received: from DESKTOPUU50BPD (c-67-190-160-7.hsd1.co.comcast.net.
+ [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3d817b2693bsm1723625ab.42.2025.04.16.07.45.06
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 16 Apr 2025 07:45:06 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: =?utf-8?Q?'Philippe_Mathieu-Daud=C3=A9'?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+Cc: <brian.cain@oss.qualcomm.com>, <quic_mathbern@quicinc.com>,
+ <sidneym@quicinc.com>, <quic_mliebel@quicinc.com>,
+ <richard.henderson@linaro.org>, <ale@rev.ng>, <anjo@rev.ng>
+References: <20250415235542.71703-1-ltaylorsimpson@gmail.com>
+ <c7588131-2c4f-4a66-8107-cba4df904278@linaro.org>
+In-Reply-To: <c7588131-2c4f-4a66-8107-cba4df904278@linaro.org>
+Subject: RE: [PATCH] Hexagon (target/hexagon) Remove gen_tcg_func_table.py
+Date: Wed, 16 Apr 2025 08:45:03 -0600
+Message-ID: <074e01dbaede$2516b720$6f442560$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 17 Apr 2025 00:43:44 +1000
-Message-Id: <D9855WYVZU02.HS264Q491Q1R@gmail.com>
-Subject: Re: [PATCH v4 084/163] tcg/ppc: Expand arguments to tcg_out_cmp2
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-85-richard.henderson@linaro.org>
-In-Reply-To: <20250415192515.232910-85-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKaLHs1ylS/ArO36JsiYcELWqd62wKrQYO0shQHBsA=
+Content-Language: en-us
+X-Antivirus: Norton (VPS 250416-2, 4/16/2025), Outbound message
+X-Antivirus-Status: Clean
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,78 +111,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Apr 16, 2025 at 5:23 AM AEST, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Looks equivalent.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> -----Original Message-----
+> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Sent: Wednesday, April 16, 2025 12:18 AM
+> To: Taylor Simpson <ltaylorsimpson@gmail.com>; qemu-devel@nongnu.org
+> Cc: brian.cain@oss.qualcomm.com; quic_mathbern@quicinc.com;
+> sidneym@quicinc.com; quic_mliebel@quicinc.com;
+> richard.henderson@linaro.org; ale@rev.ng; anjo@rev.ng
+> Subject: Re: [PATCH] Hexagon (target/hexagon) Remove
+> gen_tcg_func_table.py
+>=20
+> Hi Taylor,
+>=20
+> On 16/4/25 01:55, Taylor Simpson wrote:
+> > This can easily be done in C with opcodes_def_generated.h.inc
+> >
+> > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> > ---
+> >   target/hexagon/genptr.c              |  6 ++-
+> >   target/hexagon/README                |  1 -
+> >   target/hexagon/gen_tcg_func_table.py | 66 =
+----------------------------
+> >   target/hexagon/meson.build           | 10 -----
+> >   4 files changed, 5 insertions(+), 78 deletions(-)
+> >   delete mode 100755 target/hexagon/gen_tcg_func_table.py
+> >
+> > diff --git a/target/hexagon/gen_tcg_func_table.py
+> > b/target/hexagon/gen_tcg_func_table.py
+> > deleted file mode 100755
+> > index 299a39b1aa..0000000000
+> > --- a/target/hexagon/gen_tcg_func_table.py
+> > -        f.write("const SemanticInsn opcode_genptr[XX_LAST_OPCODE] =
+=3D
+> {\n")
+> > -        for tag in hex_common.tags:
+> > -            ## Skip the priv instructions
+> > -            if "A_PRIV" in hex_common.attribdict[tag]:
+> > -                continue
+> > -            ## Skip the guest instructions
+> > -            if "A_GUEST" in hex_common.attribdict[tag]:
+> > -                continue
+> > -            ## Skip the diag instructions
+> > -            if tag =3D=3D "Y6_diag":
+> > -                continue
+> > -            if tag =3D=3D "Y6_diag0":
+> > -                continue
+> > -            if tag =3D=3D "Y6_diag1":
+> > -                continue
+>=20
+> What about all these skipped tags? IIUC gen_opcodes_def.py doesn't =
+skip
+> them. If it isn't necessary to skip, please mention it in the commit =
+description
+> for clarity.
+>=20
+> Regards,
+>=20
+> Phil.
 
-> ---
->  tcg/ppc/tcg-target.c.inc | 21 +++++++--------------
->  1 file changed, 7 insertions(+), 14 deletions(-)
->
-> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-> index 1782d05290..669c5eae4a 100644
-> --- a/tcg/ppc/tcg-target.c.inc
-> +++ b/tcg/ppc/tcg-target.c.inc
-> @@ -2206,8 +2206,8 @@ static void tcg_out_cntxz(TCGContext *s, TCGType ty=
-pe, uint32_t opc,
->      }
->  }
-> =20
-> -static void tcg_out_cmp2(TCGContext *s, const TCGArg *args,
-> -                         const int *const_args)
-> +static void tcg_out_cmp2(TCGContext *s, TCGCond cond, TCGReg al, TCGReg =
-ah,
-> +                         TCGArg bl, bool blconst, TCGArg bh, bool bhcons=
-t)
->  {
->      static const struct { uint8_t bit1, bit2; } bits[] =3D {
->          [TCG_COND_LT ] =3D { CR_LT, CR_LT },
-> @@ -2220,18 +2220,9 @@ static void tcg_out_cmp2(TCGContext *s, const TCGA=
-rg *args,
->          [TCG_COND_GEU] =3D { CR_GT, CR_LT },
->      };
-> =20
-> -    TCGCond cond =3D args[4], cond2;
-> -    TCGArg al, ah, bl, bh;
-> -    int blconst, bhconst;
-> +    TCGCond cond2;
->      int op, bit1, bit2;
-> =20
-> -    al =3D args[0];
-> -    ah =3D args[1];
-> -    bl =3D args[2];
-> -    bh =3D args[3];
-> -    blconst =3D const_args[2];
-> -    bhconst =3D const_args[3];
-> -
->      switch (cond) {
->      case TCG_COND_EQ:
->          op =3D CRAND;
-> @@ -2286,7 +2277,8 @@ static void tcg_out_cmp2(TCGContext *s, const TCGAr=
-g *args,
->  static void tcg_out_setcond2(TCGContext *s, const TCGArg *args,
->                               const int *const_args)
->  {
-> -    tcg_out_cmp2(s, args + 1, const_args + 1);
-> +    tcg_out_cmp2(s, args[5], args[1], args[2], args[3], const_args[3],
-> +                 args[4], const_args[4]);
->      tcg_out32(s, MFOCRF | RT(TCG_REG_R0) | FXM(0));
->      tcg_out_rlw(s, RLWINM, args[0], TCG_REG_R0, CR_EQ + 0*4 + 1, 31, 31)=
-;
->  }
-> @@ -2294,7 +2286,8 @@ static void tcg_out_setcond2(TCGContext *s, const T=
-CGArg *args,
->  static void tcg_out_brcond2(TCGContext *s, const TCGArg *args,
->                              const int *const_args)
->  {
-> -    tcg_out_cmp2(s, args, const_args);
-> +    tcg_out_cmp2(s, args[4], args[0], args[1], args[2], const_args[2],
-> +                 args[3], const_args[3]);
->      tcg_out_bc_lab(s, TCG_COND_EQ, arg_label(args[5]));
->  }
-> =20
+
 
 
