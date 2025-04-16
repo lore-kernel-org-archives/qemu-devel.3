@@ -4,64 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05F6C369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 11:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49AFBC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 11:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u51Lg-0000fv-Vj; Wed, 16 Apr 2025 07:54:38 -0400
+	id 1u51Nq-00023r-GD; Wed, 16 Apr 2025 07:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u51LZ-0000cg-UW; Wed, 16 Apr 2025 07:54:33 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u51NL-0001pv-T9; Wed, 16 Apr 2025 07:56:20 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u51LS-0006fV-Gb; Wed, 16 Apr 2025 07:54:26 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:471f:0:640:4191:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4C26A618C6;
- Wed, 16 Apr 2025 14:54:12 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:166::1:b] (unknown [2a02:6bf:8080:166::1:b])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8sG0vq2FZmI0-B3wDagWx; Wed, 16 Apr 2025 14:54:10 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744804450;
- bh=rtGyvQmhxSBm1WpvgkrqycH4hh00Gv7RUUcxloDxE50=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=F+qQVkj8j2OA2VoLPGJQqi4JZuoMgacyUChdaIyrT3cFjF7iB6qjbf/2C29K0lRR+
- qxdvmdG/N+XEh9hUDKfAnzee1ZhJBGBXJLJEcHMTPp3/4+zHO+d5+Sm+nMlSTFoKw/
- o21VIWBSfnOLIdfUWmohocHsfYB8bNLYOwjsFnoM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <e24c0993-8b09-41fb-b2d4-17a9e8e0043d@yandex-team.ru>
-Date: Wed, 16 Apr 2025 14:54:08 +0300
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u51NI-000739-Ex; Wed, 16 Apr 2025 07:56:18 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D058B4E6033;
+ Wed, 16 Apr 2025 13:56:05 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 8l-mtgXqr-oN; Wed, 16 Apr 2025 13:56:03 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E0DE14E6027; Wed, 16 Apr 2025 13:56:03 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DE66574577C;
+ Wed, 16 Apr 2025 13:56:03 +0200 (CEST)
+Date: Wed, 16 Apr 2025 13:56:03 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>, 
+ Vikram Garhwal <vikram.garhwal@bytedance.com>, 
+ Jason Wang <jasowang@redhat.com>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Hildenbrand <david@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org, 
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+Subject: Re: [PATCH 10/19] include/glib-compat.h: Poison g_list_sort and
+ g_slist_sort
+In-Reply-To: <f6e0e42ae3491564478929e412991c2a16ee3539.1744787186.git.ktokunaga.mail@gmail.com>
+Message-ID: <263e4803-65d0-5a41-4031-99766b067915@eik.bme.hu>
+References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
+ <f6e0e42ae3491564478929e412991c2a16ee3539.1744787186.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] blockdev-backup: Add error handling option for
- copy-before-write jobs
-To: Raman Dzehtsiar <raman.dzehtsiar@gmail.com>, qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>, Xie Changlong <xiechanglong.d@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Wen Congyang <wencongyang2@huawei.com>, Markus Armbruster <armbru@redhat.com>
-References: <20250414090025.828660-1-Raman.Dzehtsiar@gmail.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250414090025.828660-1-Raman.Dzehtsiar@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,36 +87,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.04.25 12:00, Raman Dzehtsiar wrote:
-> This patch extends the blockdev-backup QMP command to allow users to specify
-> how to behave when IO errors occur during copy-before-write operations.
-> Previously, the behavior was fixed and could not be controlled by the user.
-> 
-> The new 'on-cbw-error' option can be set to one of two values:
-> - 'break-guest-write': Forwards the IO error to the guest and triggers
->    the on-source-error policy. This preserves snapshot integrity at the
->    expense of guest IO operations.
-> - 'break-snapshot': Allows the guest OS to continue running normally,
->    but invalidates the snapshot and aborts related jobs. This prioritizes
->    guest operation over backup consistency.
-> 
-> This enhancement provides more flexibility for backup operations in different
-> environments where requirements for guest availability versus backup
-> consistency may vary.
-> 
-> The default behavior remains unchanged to maintain backward compatibility.
-> 
-> Signed-off-by: Raman Dzehtsiar<Raman.Dzehtsiar@gmail.com>
+On Wed, 16 Apr 2025, Kohei Tokunaga wrote:
+> On emscripten, function pointer casts can cause function call
+> failure. g_list_sort and g_slist_sort performs this internally so can't be
+> used on Emscripten. Instead, g_list_sort_with_data and
+> g_slist_sort_with_data should be used.
+>
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> ---
+> include/glib-compat.h | 6 ++++++
+> 1 file changed, 6 insertions(+)
+>
+> diff --git a/include/glib-compat.h b/include/glib-compat.h
+> index 86be439ba0..e441b396ef 100644
+> --- a/include/glib-compat.h
+> +++ b/include/glib-compat.h
+> @@ -36,6 +36,12 @@
+> #include <pwd.h>
+> #endif
+>
+> +/* These functions perform function pointer casts which can cause function call
+> + * failure on Emscripten. Use g_slist_sort_with_data and g_list_sort_with_data
+> + * insted of these functions.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Typo: instead
 
-Thanks, applied to my block branch.
+Regards,
+BALATON Zoltan
 
-Note for the future: better, add test in a separate commit, no reason to merge it into feature-commit.
-
--- 
-Best regards,
-Vladimir
-
+> + */
+> +#pragma GCC poison g_slist_sort g_list_sort
+> +
+> /*
+>  * Note that because of the GLIB_VERSION_MAX_ALLOWED constant above, allowing
+>  * use of functions from newer GLib via this compat header needs a little
+>
 
