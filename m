@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0C4C369BA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC451C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 08:21:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4xzN-0005D5-1V; Wed, 16 Apr 2025 04:19:21 -0400
+	id 1u4xwE-0001Gk-Ae; Wed, 16 Apr 2025 04:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u4xwo-00021l-OC; Wed, 16 Apr 2025 04:16:46 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1u4xvm-00010V-Aj; Wed, 16 Apr 2025 04:15:40 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u4xwm-0005ti-5Q; Wed, 16 Apr 2025 04:16:41 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-739be717eddso5044949b3a.2; 
- Wed, 16 Apr 2025 01:16:37 -0700 (PDT)
+ id 1u4xvk-0005d1-L6; Wed, 16 Apr 2025 04:15:37 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso8562126b3a.2; 
+ Wed, 16 Apr 2025 01:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744791396; x=1745396196; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744791334; x=1745396134; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kXW9TkBOCeygIoZUCLTmx3/WoYw9rEQTC6TItKA27ak=;
- b=SY4YoePHygCuqB5g3LPZxmx2fWWx4u5GXGqiDogVJMNwWA4RB01q5VXsHEPjaNB4pg
- qUCDY7z0Q9WkgKVE7x/xGI8MwO1z5gsS8ICm5/5FBtfpsQyWzLd/hSsoiTzJWQjSMo6p
- fJIne28AhGW2YVMPFoZkYUHHZ8jDZoT3nFChgwBxlSO6sslKogrtsIOPpPjPwRBFfgae
- t/Zvwf/mCVxCPmb7EKy9TWBWJ1VaLh7kKTrtiS4+drymCTE/iLiZ2/4wo4pn0C2ByKLU
- 66rZGeR0QA73AdbbZrQ99L0DVOUEYnm6oJVNCwpnqY0q0q7zchzFow5JKqp+4VAiJSnw
- 0Mtw==
+ bh=fFdycMSzFipz9Zxr0ZH3h/HarCGC0DbvNHYJF0RN1dM=;
+ b=SzMDKvvhj/1mdbuTHhao3NfMegrLrbY06gGATowELGB16UiyJDdBV76Da/BM5kOGkr
+ qZaPp4ZwVuYVGFHXV6T4+8cCcXqsNDU9Ynb3zRWyyljg6GTxozm+lxXBAuCR4hh0G3Hr
+ HRfUTsb/zTmMHUm5iKeePCPbnWoZ/JOD9TAAxDo/4+CU0JqQx7L2JtA95pVJZQfNYJdU
+ +0k9kWz30fkeJR/WxnGhYhdwpReXDf15+0BIwAcZX3H44+IzbY7urQaLttBL6mUHtrS1
+ ufUgRe1a9XOG3L/k25BkFsyqk/kSKfjKxY9qV3dKxqguXPAqAG+5SyhiSz1nq+jdVJNo
+ DRvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744791396; x=1745396196;
+ d=1e100.net; s=20230601; t=1744791334; x=1745396134;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kXW9TkBOCeygIoZUCLTmx3/WoYw9rEQTC6TItKA27ak=;
- b=aod21WUJNsPBV37K4rU0xZWlYcRB3WRBqbboAE2R5KLwULX6mxdWRG60ZhLQWCBzdf
- 0XfUOwny2lZpzZ5ogpsi+D9iBfgKVzfcGua0vlSwSDsi05z9yuV2XUILZ9evF4OrwFYs
- wQPcul8DIDzbjfpmHfpqUqFo3HVreBqwP0HEKaXmgK0MkLjs08WxgFgrqLCz1Pi67hTP
- qcqk7Yc0Gp5Aa0jR1FTDwTfGoNRvFO982RFMSSrf4wub3y6AbfUVI696y3svAvSyUmol
- xbPhb9dExHohrhsPE3glfau+jeMaPvmKHnCY9ah1OuIEkRnIiV0qNjf1p8PNUZqBF+Nq
- YqqA==
+ bh=fFdycMSzFipz9Zxr0ZH3h/HarCGC0DbvNHYJF0RN1dM=;
+ b=kO3MGWKzBbqzgvEYJS/x4h9g/53hHmLQlXt4xqZnkESe/TDtNjbljYlO/YAxcYEA8l
+ cBRpA9ku/p712fEMEEYg2jJjYPuSqJKUoD2xYHURQ6p1Y1M99RkUia4VDFciGYtpc8Gd
+ gOcB10l38YJAruQk0vFTJrCdeiAMlNt9m4Wm0YBFEd1e/sX2lPavsQNug3+y6MC6XZGz
+ HkSfnePvl5DXcgJCCcdQCzUf6JhXcdzlzgKW7MCXPtOROpykl2okIxFFOT7jvs8yZn33
+ ZVD9Hg2bHmcBPPgCEm3RyjsrAUncSxGYka3rbjwLEcDWmVNmKykh/J7Vf7yzDlMF5/1+
+ gCaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqUPnSiChDEVgMK2yaZs5lCcnotHPeT5TmBtsBaV9aLqzLmHiuZFd1IS1S6kDilQYgDT1gTUFskVx5HQ==@nongnu.org,
- AJvYcCUtujKF8Mj82mhUkT2nTdeiAXm7PjjCat8jJcrFv73K1VqZ4s+6re62Yagl350141RJUHAlErbRBD4JKg==@nongnu.org,
- AJvYcCVNiqNJk3NK+W/ifpPT5dCNGwfDcwgZDspAgNEwjH1S4kc45VYUlNQ/qHItJ8ufyCwMud4/iftm7SA=@nongnu.org,
- AJvYcCVpJ99hmQfpjCrO/h3o+ewb0KBeK1BbEXURdvyZU7foU9W4gTPYscrsLNxQk1jt19GxJKBFbRLvTw==@nongnu.org
-X-Gm-Message-State: AOJu0YynJPqySq/LjjI+PxKwQY/gnFLyoHlbWUa3uS46aLAGF3WCLK0z
- W/vQE3fSkUcyHPg7CH4JMoW/ymtMe8f/rlNN2bGz4G20ZpwyEJZht0cOmgyY
-X-Gm-Gg: ASbGncuI6/0JcMKHZI2PHNJZ8NCnqzjYBlZ+giSDhoOGIWZWS+7QQoMjNMChQsTjlBc
- aSFU2wLrvoTuQFLi98n8RxgXYYFL02dj5zG0EAXZUTaM5q/lzZwFh4ffGINazPmhNrMNMwZi96y
- AgJS2EvVFXvT7k1eFIFjsJHySZPQVwf1XgQj6ntIX6eEPvKtb4oL9ijssMO5nq40yATLod1//6D
- qKFfZc+owgxi3hGNQot+Hbvf4PY0jzi1tXzk4EbNdFF1XGTQnSVhGz34jmgmxhMeIOA6TSsheaE
- Y6Ilm4UijNBM0g+Qo7mZaChP7549a6Fwqvnj5GbwDzTPZrVotdoAq5tRww==
-X-Google-Smtp-Source: AGHT+IFot2Prutev9vQh238P3Y8Qu6FWMP21RaEkJWIAAcrPZLBNFGYxFnfgXEoks8g52jfCfyjKGg==
-X-Received: by 2002:a05:6a00:ac2:b0:736:3be3:3d77 with SMTP id
- d2e1a72fcca58-73c267c9faemr1430041b3a.16.1744791395895; 
- Wed, 16 Apr 2025 01:16:35 -0700 (PDT)
+ AJvYcCU+RIKQYqvBukigMYamg8UlAYpT5fdYyQ9WVEqh0Wxq6rp8667XdfSWgMJM+6ArA8WSL5XpRpGxfZJfHQ==@nongnu.org,
+ AJvYcCUYNzzT7ACanX56CdMY4GZStOQIZofSbpogT5ZmH/8UX0bY1O+K6PP98iikdw7dUp5rx4iBhFYqtQ==@nongnu.org,
+ AJvYcCVrgv9H/Yb/SFRh/YKd1sisMJS0OzJLzaT5WPSmvy4A9oys2NTVdM8BiL7WykoHz0ptFI8gPpT7PV4=@nongnu.org,
+ AJvYcCXW189ahhLfPJL+lmXfHVOUpl3w78xdfQMSMWB9KCuvhi2iE6kdCQ/+PKiey5+cgk3bUZJQeG46YwRTEg==@nongnu.org
+X-Gm-Message-State: AOJu0YyN0IK0uka7hTVtS5NwJZ98AsRuOvuZwczcJCebWsvFeigZm5ld
+ k4qhe7Y84Kz59vRxA4Bk2QWG23xQxDSWWkKcnwJC7I0TJ9EkwifUEkgLxrYF
+X-Gm-Gg: ASbGncuR0+/vepwXkY3iWP6m8yzEiymLYVBE+74MHxN6Qtf0YFs/7CsvOnpI5lgZWqd
+ BC8jA+Uc0oE2UXoQac78jWgPdUmKtxLq63T0uUMV8I7ZkbHBZHchicybVbjAvclskswaoFZ8kXJ
+ oduIViX4eTp+BFdxlwMLkScx0osq1Z6I5SzmwJIH6lxv0kPgL0W9g+qxZ1LXPrZ7pmOOMT1nO3q
+ fmlEeF7+UKLgiNdEdaWFV/1ErS+6lZOM7GJ4V0+M6dwPKARQSO07elT62Io6kF3xKrHlCvtEXJK
+ Hwi/hi7Or392Vmq4zZCkMCEpH/2TN7OzhNYpbXiYyHQ/YjAsSB+MMWfbC2E5s/uVOnwZ
+X-Google-Smtp-Source: AGHT+IFJGr+vW9xLmlInModOrpRdhxEYHBP65U5/zipWn3lToz5KEXtzcMWCVlmEzka/wjvIBdQPuw==
+X-Received: by 2002:a05:6a00:896:b0:736:5664:53f3 with SMTP id
+ d2e1a72fcca58-73c267d4f79mr1287060b3a.15.1744791333882; 
+ Wed, 16 Apr 2025 01:15:33 -0700 (PDT)
 Received: from localhost.localdomain ([240d:1a:3b6:8b00:ee5a:e672:7d4c:d43])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd21c3263sm9839445b3a.38.2025.04.16.01.16.28
+ d2e1a72fcca58-73bd21c3263sm9839445b3a.38.2025.04.16.01.15.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 01:16:35 -0700 (PDT)
+ Wed, 16 Apr 2025 01:15:33 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -90,16 +90,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 12/19] block: Update block to compile with Emscripten
-Date: Wed, 16 Apr 2025 17:14:17 +0900
-Message-Id: <9da41d784991f77e2c1f38d0781cd047b593e053.1744787186.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH 04/19] target/arm/helper.c: Fix type conflict of GLib function
+ pointers
+Date: Wed, 16 Apr 2025 17:14:09 +0900
+Message-Id: <ea53758b9300450908497f746af1e2b43d8f941b.1744787186.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1744787186.git.ktokunaga.mail@gmail.com>
 References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,67 +123,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-emscripten exposes copy_file_range declaration but doesn't provide the
-implementation in the final link. Define the emscripten-specific stub
-function to avoid type conflict with the emscripten's header.
+On emscripten, function pointer casts can cause function call failure.
+This commit fixes the function definition to match to the type of the
+function call using g_list_sort_with_data.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- block/file-posix.c |  6 ++++++
- stubs/emscripten.c | 13 +++++++++++++
- 2 files changed, 19 insertions(+)
- create mode 100644 stubs/emscripten.c
+ target/arm/helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 56d1972d15..22e0ed5069 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -110,6 +110,10 @@
- #include <sys/diskslice.h>
- #endif
- 
-+#ifdef EMSCRIPTEN
-+#include <sys/ioctl.h>
-+#endif
-+
- /* OS X does not have O_DSYNC */
- #ifndef O_DSYNC
- #ifdef O_SYNC
-@@ -2010,6 +2014,7 @@ static int handle_aiocb_write_zeroes_unmap(void *opaque)
-     return handle_aiocb_write_zeroes(aiocb);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index bb445e30cd..05793a6c97 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -220,7 +220,7 @@ static void count_cpreg(gpointer key, gpointer opaque)
+     }
  }
  
-+#ifndef EMSCRIPTEN
- #ifndef HAVE_COPY_FILE_RANGE
- static off_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
-                              off_t *out_off, size_t len, unsigned int flags)
-@@ -2023,6 +2028,7 @@ static off_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
- #endif
- }
- #endif
-+#endif
+-static gint cpreg_key_compare(gconstpointer a, gconstpointer b)
++static gint cpreg_key_compare(gconstpointer a, gconstpointer b, void *d)
+ {
+     uint64_t aidx = cpreg_to_kvm_id((uintptr_t)a);
+     uint64_t bidx = cpreg_to_kvm_id((uintptr_t)b);
+@@ -244,7 +244,7 @@ void init_cpreg_list(ARMCPU *cpu)
+     int arraylen;
  
- /*
-  * parse_zone - Fill a zone descriptor
-diff --git a/stubs/emscripten.c b/stubs/emscripten.c
-new file mode 100644
-index 0000000000..2157d6349b
---- /dev/null
-+++ b/stubs/emscripten.c
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "qemu/osdep.h"
-+/*
-+ * emscripten exposes copy_file_range declaration but doesn't provide the
-+ * implementation in the final link. Define the stub here but avoid type
-+ * conflict with the emscripten's header.
-+ */
-+ssize_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
-+                             off_t *out_off, size_t len, unsigned int flags)
-+{
-+    errno = ENOSYS;
-+    return -1;
-+}
+     keys = g_hash_table_get_keys(cpu->cp_regs);
+-    keys = g_list_sort(keys, cpreg_key_compare);
++    keys = g_list_sort_with_data(keys, cpreg_key_compare, NULL);
+ 
+     cpu->cpreg_array_len = 0;
+ 
 -- 
 2.25.1
 
