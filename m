@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE0D7C369BA
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 17:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14DE8C369C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 18:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u570g-0008P5-MZ; Wed, 16 Apr 2025 13:57:18 -0400
+	id 1u57qL-00064W-5r; Wed, 16 Apr 2025 14:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1u570a-0008O4-0f
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 13:57:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u57qF-00063d-GH
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 14:50:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1u570Y-0007mk-82
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 13:57:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u57qD-0001nq-1j
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 14:50:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744826228;
+ s=mimecast20190719; t=1744829429;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eV8b9ckxRAmWZhMAqOpShTMnlLReAghHa7l5FvcRKr8=;
- b=CmKqY56iy5GIs3hLBoOI2WDfOYIukN7Z6n9X04DR1DOu6GHtFAOI0+Oq6gUwe8AWe0l/ys
- hyLGuGho2bk+iawdY6KyMNi327FC2fdYJJDRFbUZJBvadtw5swBkHeQsnaDpAgqfXCtPQc
- eU545DzZxF+12J3cncPr2FAXeaWccnw=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DT/PtrHkjVnX7raTAKshZaoX5HNaQDviCZNsrUW0lLQ=;
+ b=Kcg5f3Z+F3v9EcrvDwpseyix6QiRLExveRav9ubAbRh62cZ2Awsr34K2DA2Xv/Gvoe07W/
+ k3O58+XxKacNuqtZ1sglvI5+i2A0xK0lu+q8Q8POGKZYOA0sbkpUNRmv0h6rrzI1HQ6spf
+ Hm2b+ANu3UYFWXtON3vuATxXpuG5dzM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-148-fi7Mm1vPOWei8qhenzYZSw-1; Wed, 16 Apr 2025 13:57:06 -0400
-X-MC-Unique: fi7Mm1vPOWei8qhenzYZSw-1
-X-Mimecast-MFC-AGG-ID: fi7Mm1vPOWei8qhenzYZSw_1744826225
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-85b5ea50d28so82556039f.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 10:57:06 -0700 (PDT)
+ us-mta-283-p-wJkfJZNgyiyoE3Yihf3g-1; Wed, 16 Apr 2025 14:50:23 -0400
+X-MC-Unique: p-wJkfJZNgyiyoE3Yihf3g-1
+X-Mimecast-MFC-AGG-ID: p-wJkfJZNgyiyoE3Yihf3g_1744829422
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d01024089so57436475e9.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 11:50:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744826225; x=1745431025;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=eV8b9ckxRAmWZhMAqOpShTMnlLReAghHa7l5FvcRKr8=;
- b=vD2S5qxVFGO6vIebWL0eW3ybnzj2nFEgDaHGbdsnZK71ZoP+52quTXi/d5/m4waQ9v
- IwveGaef/rBZwTkTfmta5Qo2lcFsux/PXNtHednvZwL0ZOulMIUnZatzoAp12lxNg+oa
- GnrNMGjQOqcLKwcnasP9fvbVU6LtA+Lj8uQp8P8/twZuiMhaRLtyog53mpQbWj6NL9LV
- RCaj05svdUDVoo3r1Lqi1BPouP+7oBgxc+Gp8DtKCu1CWJSX16z4UktrCPSDcRfY1G+r
- vsqXKegWN3aEu+Z8IgMhVwODDt4Jrq35yu9YM2hoNUCo8BfuYVDgqj+LSpNHB2hoehe7
- d3VQ==
+ d=1e100.net; s=20230601; t=1744829422; x=1745434222;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DT/PtrHkjVnX7raTAKshZaoX5HNaQDviCZNsrUW0lLQ=;
+ b=nzkVioobvk01vUJmHR7Ehn9erjHxQrH2Pt8QLqSeoz8srrZJV76p8t7WPIg+cSxIbu
+ bkGOtG5xvlr2q3565Xz3SCPKvrnBOahQCvLzvqozqeFuRErfuneIBtdkFPxKwQvRtzX3
+ ww3mDFSKEOOzKqtJCfrCm/M/kwFmAOkT5clJN1ZMa+2X5G5OuxQYP5Cx7r7UYCZ6twQv
+ ou2HffP8CdzwddbNAUvsiVbud1KaN8/WwnHI05fGIdat866ovQcBxFkweFULyr6FeaPp
+ Hq2UZr0Z2DD99KHEQJ2Z+RY6RcLFIw7MYWAopr0TR37kuDWNwYBr9HDx2BtoZot66FVn
+ Iz6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoVjOiDr58EkzQup5kfx0WqIoNYbGMgpcRrgEFM75zvWoiqhkVBt1hnG/Sw5jy2KWMME0WIcFYnu4s@nongnu.org
-X-Gm-Message-State: AOJu0YwoBxqEdJL5MjCRwWJuIBM6hvmUjnMBpZXeug+MGOSfoYu6uyIS
- CHSJjD+6HhJTcD5QowdDfL3cFDkXUZWLpZ+C/ics6nG8N2RnCfI0ttiNLZEPb6Nt6WkxRGyifM3
- 7sJ6InOxmuFjbePJ7th/KmVKzQJ2zz20F50SqqPOvuy9uV2Nawf7X
-X-Gm-Gg: ASbGncsWao4MpYhaEGx4gPk5XgFjeda18J2aOLHLp2lYQSzi2749KahSLdxtnjRfuvQ
- RVQlbX4KW6Yo5CmPEoqa0rq9MKfLLSQPxRFQUtLBhhCbRGUnQuqnx6U2SuaXLQuMHB12xsbGvBD
- wDIeJcWMJ84F5oBdu2EigsH1GSnNoL5uoiWSyTtoArsqpxllVfGXz0IisPoZf8NAmINe2oR/V2s
- XAvv13LGNXTww5ysAk3DxvTtrbERbkPI96fyGiIHkriiuYCQmjdkF/cZiUuXe1sL0bZfDTpqcXH
- PbqzFg0W5eh+C6c=
-X-Received: by 2002:a05:6e02:3987:b0:3d4:2b52:6e14 with SMTP id
- e9e14a558f8ab-3d81a3e2dc8mr2851885ab.7.1744826225462; 
- Wed, 16 Apr 2025 10:57:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7Fp5ZW04g70oE85NLJiqV2WgLAhVK+uQLj46SOimIc9I8M9+29KKE24Yf/IndEo4AHSNxfg==
-X-Received: by 2002:a05:6e02:3987:b0:3d4:2b52:6e14 with SMTP id
- e9e14a558f8ab-3d81a3e2dc8mr2851815ab.7.1744826225106; 
- Wed, 16 Apr 2025 10:57:05 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d81997de4bsm1131295ab.40.2025.04.16.10.57.04
+ AJvYcCUYCCyNZZ/aWaU6UX7Vq7C4+v/FxQ/zi/eJho2DQpZ4aBDtyFxhx4wubHVoVsFAdu3LlAtPZO86qkzA@nongnu.org
+X-Gm-Message-State: AOJu0YwBeoEaCg1z52LOgKinjQPIH/otEsv0ZAtelOOcWuwFvN0H1AVu
+ MXJiG+Vk7Fc2nMleD4oO/Z8Gxbf/TMTPDVjQ8axlYVkbknGcAkvB6m5MbCIWQLD8VUn1gkmtZ9d
+ lesGlfQpuQ7M5ZGc6co3WrayOzmB6NQ7i4BZDr+/NGCIFE1KFSrt0BO2plupH
+X-Gm-Gg: ASbGncuzDyapIsaXrsmzPDFIHUHw+vRwMXosuq2vS0ME5qcm1+tL2+48Z3sq9LM0dAQ
+ 6nO6PiznsYRLt0QIl3nEO8TEruhdadPmYqMMVkoINbPqY941B24LpQxtiNAab5eh++tCGIgzmB1
+ DJx+Q+BzuvvY+NuWQVB+/8/nlmpQ3u0k4WFTxYXSjbXdmp0uqJe8oarK3xrZfY88IeEYujZBSn5
+ MlwqPmBEuswCixjyLbOkAFL8Fd8GEB8KWY++jnodoyt6uKdHCVIW2EU7xMJ32JIQVFWLEln4lut
+ sQQ2Tw==
+X-Received: by 2002:a05:600c:1e12:b0:43c:e481:3353 with SMTP id
+ 5b1f17b1804b1-4405d6276a5mr32704325e9.17.1744829422123; 
+ Wed, 16 Apr 2025 11:50:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1d/sqrci68FzlIdwNyLUWyUFSG5BveIH80uF8cIaVZ4xL3m5LTRbXFxHMjjCGRSC7Yyk0Wg==
+X-Received: by 2002:a05:600c:1e12:b0:43c:e481:3353 with SMTP id
+ 5b1f17b1804b1-4405d6276a5mr32703985e9.17.1744829421709; 
+ Wed, 16 Apr 2025 11:50:21 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39eae96c184sm18060921f8f.30.2025.04.16.11.50.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 10:57:04 -0700 (PDT)
-Date: Wed, 16 Apr 2025 11:57:02 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
-Subject: Re: [PATCH] vfio/igd: Check host PCI address when probing
-Message-ID: <20250416115702.41b2dc4e.alex.williamson@redhat.com>
-In-Reply-To: <0ec0fa57-1e99-4e21-b0c5-991806f4bd6d@gmail.com>
-References: <20250325172239.27926-1-tomitamoeko@gmail.com>
- <20250409111801.4c97022f.alex.williamson@redhat.com>
- <046a2961-23b1-4ef2-8673-9b9deedbbbdf@redhat.com>
- <3e9743ab-bf81-4d92-8ea0-e01ac58a234b@gmail.com>
- <20250414160530.5d86aaf2.alex.williamson@redhat.com>
- <e529bf00-bd58-4151-9bce-dad74c88fa6d@gmail.com>
- <20250415130425.601e1902.alex.williamson@redhat.com>
- <f27926c8-3bae-45b9-bbc1-ea9d78bcbd10@gmail.com>
- <20250416101038.3f84f2b8.alex.williamson@redhat.com>
- <0ec0fa57-1e99-4e21-b0c5-991806f4bd6d@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Wed, 16 Apr 2025 11:50:20 -0700 (PDT)
+Date: Wed, 16 Apr 2025 14:50:17 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, richard.henderson@linaro.org,
+ eduardo@habkost.net, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ alex.williamson@redhat.com, vasant.hegde@amd.com,
+ suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
+ Wei.Huang2@amd.com, joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
+Subject: Re: [PATCH 02/18] amd_iommu: Add helper function to extract the DTE
+Message-ID: <20250416144817-mutt-send-email-mst@kernel.org>
+References: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
+ <20250414020253.443831-3-alejandro.j.jimenez@oracle.com>
+ <4a7a8eff-dd21-49b7-9d2a-449ae0424eb2@amd.com>
+ <49e7c66f-6527-4ae1-b712-10921c538d5a@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <49e7c66f-6527-4ae1-b712-10921c538d5a@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -120,71 +117,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 17 Apr 2025 01:41:22 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
-
-> On 4/17/25 00:10, Alex Williamson wrote:
-> > On Wed, 16 Apr 2025 23:45:08 +0800
-> > Tomita Moeko <tomitamoeko@gmail.com> wrote:
-> >   
-> >> On 4/16/25 03:04, Alex Williamson wrote:  
-> >>> On Wed, 16 Apr 2025 01:36:15 +0800
-> >>> Tomita Moeko <tomitamoeko@gmail.com> wrote:    
-> >>>>
-> >>>> The generation register also exists on discrete GPUs. In the new xe
-> >>>> driver [1], the Battlemage discrete GPU shares the same logic reading
-> >>>> GMD_ID_DISPLAY register. The driver itself uses is_dgfx bit mapped to
-> >>>> device id. In QEMU, we need to know whether the device is a supported
-> >>>> IGD device first before applying the IGD-specific quirk, especially
-> >>>> for legacy mode.
-> >>>>
-> >>>> The most feasible way is to check if kernel exposes VFIO_REGION_SUBTYPE_
-> >>>> INTEL_IGD_OPREGION on that device I think, as only IGD has OpRegion.
-> >>>>
-> >>>> i915 driver [2] and Arrow Lake datasheet [3] shows that Intel has
-> >>>> removed the BDSM register by making the DSM range part of BAR2 since
-> >>>> Meteor Lake and onwards. QEMU only need to quirk on the register for
-> >>>> IGD devices until Raptor Lake, meaning that the device list is fixed
-> >>>> for now.
-> >>>>
-> >>>> By the way, for legacy mode, I think we should only support it until
-> >>>> Gen 9, as Intel only provide VBIOS or CSM support until that generation,
-> >>>> and seabios cannot handle 64 bit BDSM register. I'm also wondering if
-> >>>> VGA really works on newer generations.    
-> >>>
-> >>> If it's a VGA class device, it really should, but without CSM I could
-> >>> see why you have doubts.    
-> >>
-> >> Without CSM/VBIOS there is no pre-boot video, but when it booted to OS,
-> >> driver is used for video rather than VGA. Though it claims itself as
-> >> VGA class, it does not have VGA compatiblity. A770 even does not have
-> >> IO BAR, definitely it cannot handle VGA decoding.  
+On Wed, Apr 16, 2025 at 09:29:23AM -0400, Alejandro Jimenez wrote:
+> 
+> 
+> On 4/16/25 7:36 AM, Sairaj Kodilkar wrote:
 > > 
-> > VGA ranges are implicit in a VGA class device, they're not backed by
-> > BARs.  Lack of CSM support makes it more difficult to prove whether VGA
-> > support is present since we can't easily initialize the device for a
-> > legacy OS, but I don't think lack of CSM necessary proves the hardware
-> > doesn't support VGA.  If we really cared, we could probably do some low
-> > level experiments writing into the VGA frame buffer range to test if
-> > it's present and behaves as expected relative to memory and IO enable
-> > bits.  
+> > 
+> > On 4/14/2025 7:32 AM, Alejandro Jimenez wrote:
+> > Hi Alejandro,
+> > 
+> > > Extracting the DTE from a given AMDVIAddressSpace pointer structure is a
+> > > common operation required for syncing the shadow page tables. Implement a
+> > > helper to do it and check for common error conditions.
+> > > 
+> > > Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> > > ---
+> > >   hw/i386/amd_iommu.c | 47 ++++++++++++++++++++++++++++++++++++++++-----
+> > >   1 file changed, 42 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> > > index 5f9b95279997..22d648c2e0e3 100644
+> > > --- a/hw/i386/amd_iommu.c
+> > > +++ b/hw/i386/amd_iommu.c
+> > > @@ -77,6 +77,20 @@ typedef struct AMDVIIOTLBEntry {
+> > >       uint64_t page_mask;         /* physical page size  */
+> > >   } AMDVIIOTLBEntry;
+> > > +/*
+> > > + * These 'fault' reasons have an overloaded meaning since they are
+> > > not only
+> > > + * intended for describing reasons that generate an IO_PAGE_FAULT
+> > > as per the AMD
+> > > + * IOMMU specification, but are also used to signal internal errors
+> > > in the
+> > > + * emulation code.
+> > > + */
+> > > +typedef enum AMDVIFaultReason {
+> > > +    AMDVI_FR_DTE_RTR_ERR = 1,           /* Failure to retrieve DTE */
+> > > +    AMDVI_FR_DTE_V,                     /* DTE[V] = 0 */
+> > > +    AMDVI_FR_DTE_TV,                    /* DTE[TV] = 0 */
+> > > +} AMDVIFaultReason;
+> > > +
+> > > +static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte);
+> > > +
+> > 
+> > No need to have this function declaration as it is a static function.
+> > 
 > 
-> Sorry for my misunderstanding. The bridge control register in PCI bridge
-> config space determines forwarding VGA IO/MMIO accesses to which device,
-> BAR is not related in this process.
+> I am adding a forward declaration since this function will be used by
+> several other new and existing functions throughout the series, and this
+> avoids having to keep moving the function definition. I do the same for many
+> other functions in later patches, since it is more practical than constantly
+> moving definitions around to guarantee ordering constraints. That approach
+> would create patches with large diffs but non-functional changes due to code
+> movement alone, makes it harder to parse the changes that actually matter,
+> harder to rebase and resolve conflicts, etc...
 > 
-> As device initialization (by legacy VBIOS) is required for booting
-> legacy OS with seabios, limiting legacy mode to gen9 and older sounds
-> resonable.
-> 
-> Trying VGA framebuffer would be difficult we have to disable EFI GOP and
-> manually instruct the device to enter VGA mode without VBIOS routines.
-> It's not a major problem here, let's skip it for now?
+> Alejandro
 
-This is only a curiosity as far as I'm concerned, I agree with your
-proposal that we can drop legacy mode where the bare metal system
-doesn't even support CSM.  Thanks,
+You can add forward declarations temporarily to simplify review.  But in
+the end, I prefer seeing code without forward declarations, with
+functions ordered sensibly by order of calls, rather than spread
+randomly all over the place.
 
-Alex
+
+
+> > 
+> > Regards
+> > Sairaj Kodilkar
 
 
