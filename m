@@ -4,71 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A35C369C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 09:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79432C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 09:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4yyv-0005Kk-Pl; Wed, 16 Apr 2025 05:22:59 -0400
+	id 1u4yzV-0005kY-5T; Wed, 16 Apr 2025 05:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4yyr-0005Jw-BD; Wed, 16 Apr 2025 05:22:53 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u4yym-0000tv-Gj; Wed, 16 Apr 2025 05:22:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744795368; x=1776331368;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=6kkcbVRiGm+IDFcg7xHiAdB1rRbDbGRHT6//Z+zcFLk=;
- b=b8hPub37RqMhQpN4nlhtfr/EFSQan64j7pxvh8UvdEHtZING4Edym62+
- FcHDolSZ6yqKpzJz5y1yPZ6AoCCu18VKniFMMJib0TtH8KMNLQAc0PvXC
- SJXZKfPRL3+1+/ZI0b1oR2l6h+xMMiOiSg9KK94K2gYwmTjIs34AMYTZU
- oxxGJ40x4e3OOikx6s3818XwiMbiNU2Ffgl/Ba4H+9j8NY7NtiTquHJ44
- xLeIzk+6PCrnng7OST5h5u1pXBfxPBVKDnMJyGTrdgLsXNQ8b6BEj490R
- vCrbyBn52ZL2KPh0FEHcxHhpRyyBWaNOf7zsTjUkD2avjClLKOjra0EOL w==;
-X-CSE-ConnectionGUID: emqHGqJLSRag8M9SKzJS0g==
-X-CSE-MsgGUID: alXW0CUXQXmSgk4tebQvhA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="50155941"
-X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="50155941"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Apr 2025 02:22:41 -0700
-X-CSE-ConnectionGUID: xmyv6m72SEiny3VSLNijcQ==
-X-CSE-MsgGUID: hqWxc7wwRA20jBy7Pxm8dw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="130923475"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 16 Apr 2025 02:22:40 -0700
-Date: Wed, 16 Apr 2025 17:43:32 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>
-Subject: Re: [PATCH 2/9] rust/vmstate: Support varray's num field wrapped in
- BqlCell
-Message-ID: <Z/97xG5VONqmlK+7@intel.com>
-References: <20250414144943.1112885-1-zhao1.liu@intel.com>
- <20250414144943.1112885-3-zhao1.liu@intel.com>
- <c44eebb9-1252-447e-9262-e2946f90f01c@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4yzF-0005fC-QO
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:23:18 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4yzC-00010l-91
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:23:16 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-39ee5ac4321so307475f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 02:23:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744795392; x=1745400192; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XoImJa+fjliBajtT+2WRyNvLKOrfk0bxtRwFuQd95Yg=;
+ b=YTwgQhtnlQnVK3BGIcEti8+brCKDt0+piSZxk3ueMpitGUA6f2pjSaUO+Zo/ZOSXPJ
+ Fe3/mm0XF5Mjvz6GtUxlXfIfgGShWKWFEokS9r2drn16q4+h0ahpE7O9HvQJnYdd4IrB
+ 5NOSgTngjnDa6lyoYQidw2c4nT2MgU+Eb/bHN4bxKRHJLtoAy2MGiOG84I5/iH5/dinJ
+ cZ5KfNxc7lkHQiEMeczjHaOTL4kXVkg842lhOh+/Wm+4O7pMUx8syChtMKjiuBUaSyAB
+ wJtlU81FIZmrShNLu4Sbysvkzen8nbf0RYUJaTuWIxvdAdPnRTGrgl01ktJvIDWcqx6J
+ 1cbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744795392; x=1745400192;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XoImJa+fjliBajtT+2WRyNvLKOrfk0bxtRwFuQd95Yg=;
+ b=nStSgpfgKSAUEtQSY9d8FPIn4yg6I7EcbT6mmH5CfyMfAVU63fYO03J9MY8WsR+l3D
+ fKJKPOVUMC8tKYhpz42kVCnivXmcdMeXFuLkW0SXr9xzCwUyUQaC5frvaTsDJRsYD5Pl
+ etQhUkkli+CbyFSUZGH32Z0qXDV2WGJtFR2oQi5yxTVjIl+97T7ZAlx9QyS/qF/MaVTT
+ PAsDpsf+Nuk87FRYszZE9LYp4IkK0ik63CAC2fFak83yEC2oxtouBWgJvA7/yBl9oDiy
+ NvMfAODKnF7sr4Hd0t4Iqvd/QgXxfnSzIsjnBKNCeC21yo+6avnW5CaROgneG38YWxHc
+ eUPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8mblzCUjhjc+s9JNUPFbf0Qiy4CSq5wg1BcBA5cJRDyX3vTgP40b72gMEbJgip8Hv7G6ZG8mRJ+Yt@nongnu.org
+X-Gm-Message-State: AOJu0Yxo7IacIebE9CB01NZ6qJRnjZfrQKJqIwoLRdH4PpToDaRFsIoB
+ dz5xkLNq3CHhogczJeZ1/d2gsRA7nrVnepnfZGePz9WrZ/Z6FVHRlsoXSMU9VPc=
+X-Gm-Gg: ASbGnctsm1MChcvpD52V85jxFL482bkk9E547F2e0d1lhKFjL9WDKQSttgCGsPAdHsf
+ 0vjeCfZJyypjj27P+WRb5ZfD7Dj3Nipwh97rq2BJ+UvIB+A2Km+LIDW9vi/o24CUa0UdNzeNYv7
+ rBzyQRyImPh4O2kOCtD/kmOltGAC9wtx/sdS9f7IfPV891zmQfPBoZxULonT3VTSysKgfTJRuOu
+ EFCVl8tQR/PQejsK5F2IcOTCcTIYHKBdpYncLA/1YBmccAhBRiWZdzGlLE5cyvslXgG89EkviD1
+ UlFuIGj2O4u+A4/lEejw4P6yh1I60trD5WkDbAnb1eZd8mcL19WVU3/f9+apd+ie1wBtoI4+ExP
+ HcQIWHhmi7ZgXlQ==
+X-Google-Smtp-Source: AGHT+IGa7RGQyM2l9Tq/ih49pAHM7+HApoQxnN2Cd45RmYTPDotEOrhSfrtvQ6JTX++TzJDKj63q1g==
+X-Received: by 2002:a05:6000:2584:b0:39e:cbd2:986b with SMTP id
+ ffacd0b85a97d-39ee5b10eddmr912645f8f.7.1744795392174; 
+ Wed, 16 Apr 2025 02:23:12 -0700 (PDT)
+Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39eae96407esm16736471f8f.17.2025.04.16.02.23.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 16 Apr 2025 02:23:11 -0700 (PDT)
+Message-ID: <91dc0def-2e17-40c0-a66a-c5992f10eb3e@linaro.org>
+Date: Wed, 16 Apr 2025 11:23:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c44eebb9-1252-447e-9262-e2946f90f01c@redhat.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 18/19] gitlab: Enable CI for wasm build
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org
+References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
+ <16055d17cadcb5f4c23203218cb8fc3fa81d1754.1744787186.git.ktokunaga.mail@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <16055d17cadcb5f4c23203218cb8fc3fa81d1754.1744787186.git.ktokunaga.mail@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,202 +121,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 15, 2025 at 12:54:51PM +0200, Paolo Bonzini wrote:
-> Date: Tue, 15 Apr 2025 12:54:51 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 2/9] rust/vmstate: Support varray's num field wrapped
->  in BqlCell
+On 16/4/25 10:14, Kohei Tokunaga wrote:
+> Add GitLab CI job that builds QEMU using emscripten. The build runs in the
+> added Dockerfile that contains dependencies (glib, libffi, pixman, zlib)
+> compiled by emscripten.
 > 
-> On 4/14/25 16:49, Zhao Liu wrote:
-> > Currently, if the `num` field of a varray is not a numeric type, such as
-> > being placed in a wrapper, the array variant of assert_field_type will
-> > fail the check.
-> > 
-> > HPET currently wraps num_timers in BqlCell<>. Although BqlCell<> is not
-> > necessary from strictly speaking, it makes sense for vmstate to respect
-> > BqlCell.
-> 
-> Dropping BqlCell<> from num_timers is indeed possible.
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> ---
+>   .gitlab-ci.d/buildtest-template.yml           |  27 ++++
+>   .gitlab-ci.d/buildtest.yml                    |   9 ++
+>   .gitlab-ci.d/container-cross.yml              |   5 +
+>   .../dockerfiles/emsdk-wasm32-cross.docker     | 145 ++++++++++++++++++
+>   4 files changed, 186 insertions(+)
+>   create mode 100644 tests/docker/dockerfiles/emsdk-wasm32-cross.docker
 
-I can move the num_timers adjustment from realize() into init().
-
-> But I agree that getting BqlCell<> varrays to work is a good thing anyway;
-
-While num_timers can get out of BqlCell<>, num_timers_save is still
-needed to stay in BqlCell<>, since I understand pre_save - as a callback
-of the vmstate - still needs the bql protection.
-
-So this patch is still necessary to support migration for HPET.
-
-> then you can separately decide whether to drop BqlCell<> from num_timers.
-
-Yes. In the next version, I can drop BqlCell<> and adjust the C version
-as well. But then I can't update the document at the same time, because
-the document needs to list the synchronized commit ID. I can update the
-document after the HPET migration is able to be merged.
-
-> > The failure of assert_field_type is because it cannot convert BqlCell<T>
-> > into usize for use as the index.
-> > 
-> > Therefore, first, implement `From` trait for common numeric types on
-> > BqlCell<>. Then, abstract the wrapper and non-wrapper cases uniformly
-> > into a `IntoUsize` trait and make assert_field_type to get usize type
-> > index via `IntoUsize` trait.
-> > 
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> >   rust/qemu-api/src/assertions.rs | 30 +++++++++++++++++++++++++++++-
-> >   rust/qemu-api/src/cell.rs       | 23 +++++++++++++++++++++++
-> >   2 files changed, 52 insertions(+), 1 deletion(-)
-> 
-> I think you can drop the "num=" case of assert_field_type!, and use
-> something like this macro:
-> 
-> /// Drop everything up to the colon, with the intention that
-> /// `if_present!` is called inside an optional macro substitution
-> /// (such as `$(... $arg ...)?` or `$(... $arg ...)*`).  This allows
-> /// expanding `$result` depending on the presence of an argument,
-> /// even if the argument itself is not included in `$result`.
-> ///
-> /// # Examples
-> ///
-> /// ```
-> /// # use qemu_api::if_present;
-> /// macro_rules! is_present {
-
-I understand this is_present could have another name to avoid confusion
-with our real is_present macro.
-
-> ///     ($($cond:expr)?) => {
-> ///         loop {
-> ///             $(if_present!([$cond]: break true;);)?
-> ///             #[allow(unreachable_code)]
-> ///             break false;
-> ///         }
-> ///     }
-> /// }
-> ///
-> /// assert!(!is_present!());
-> /// assert!(is_present!("abc"));
-> /// ```
-> #[macro_export]
-> macro_rules! if_present {
->      ([$($cond:tt)*]: $($result:tt)*) => { $($result)* };
-> }
-> 
-> to expand the array part of the access:
-> 
-> assert_field_type!(...
->     $($crate::if_present!([$num]: [0]))?;
-
-This example remind me that I introduced a bug into array part:
-
-    let index: usize = v.$num.try_into().unwrap();
-    types_must_be_equal::<_, &$ti>(&v.$i[index]);
-
-In the current code, actually it accesses v[num], but when num
-stores the length of the whole array, it will cause index out of bounds.
-
-So for current code, at least it should access `v.i[num - 1]`:
-
-    let index: usize = v.$num.try_into().unwrap() - 1; // access the last element.
-    types_must_be_equal::<_, &$ti>(&v.$i[index]);
-
-> );
-> 
-> With this change, assert_field_type! is nicer and at least the trait you're
-> introducing in assertions.rs goes away...
-
-Yes! Great idea.
-
-Then with your help, we could integrate the array part like:
-
-#[macro_export]
-macro_rules! if_present {
-    ([$($cond:tt)*]: $($result:tt)*) => { $($result)* };
-}
-
-...
-
-#[macro_export]
-macro_rules! assert_field_type {
-    ($t:ty, $i:tt, $ti:ty $(, $num:ident)?) => {
-        const _: () = {
-            #[allow(unused)]
-            fn assert_field_type(v: $t) {
-                fn types_must_be_equal<T, U>(_: T)
-                where
-                    T: $crate::assertions::EqType<Itself = U>,
-                {
-                }
-
-                let access = v.$i$($crate::if_present!([$num]: [v.$num - 1])])?;
-                types_must_be_equal::<_, $ti>(access);
-            }
-        };
-    };
-}
-
-> > +// Orphan rules don't like something like `impl<T> From<BqlCell<T>> for T`.
-> > +// It's enough to just implement Into for common types.
-> > +macro_rules! impl_into_inner {
-> > +    ($type:ty) => {
-> > +        impl From<BqlCell<$type>> for $type {
-> > +            fn from(c: BqlCell<$type>) -> $type {
-> > +                c.get()
-> > +            }
-> > +        }
-> > +    };
-> > +}
-> 
-> ... and it's not clear to me whether this is needed with the change above?
-> Would impl_vmstate_transparent!'s definition of VARRAY_FLAG be enough?
-
-If I change the array part like (the change is needed because: cannot
-subtract `{integer}` from `BqlCell<u8>`):
-
-- let access = v.$i$([$crate::if_present!([$num]: v.$num) - 1])?;
-+ let access = v.$i$([$crate::if_present!([$num]: v.$num).into() - 1])?;
-
-Then there'll be an error:
-
-85   | macro_rules! assert_field_type {
-     | ------------------------------ in this expansion of `$crate::assert_field_type!` (#2)
-...
-96   |                 let access = v.$i$([$crate::if_present!([$num]: v.$num).into() - 1])?;
-     |                                                                         ^^^^ cannot infer type
-
-
-This is because I want to also check whether "num" would cause index out
-of bounds. If we just check the [0] element, then everything is OK...
-
-> If not, I *think* you can do a blanket implementation of Into<T> for
-> BqlCell<T>.  Maybe that's nicer, you can decide.
-
-I tired this way, but there's 2 difficulities:
- * Into<T> for BqlCell<T> will violate coherence rules:
-
-error[E0119]: conflicting implementations of trait `Into<_>` for type `cell::BqlCell<_>`
-   --> qemu-api/src/cell.rs:312:1
-    |
-312 | impl<T> Into<T> for BqlCell<T> {}
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = note: conflicting implementation in crate `core`:
-            - impl<T, U> Into<U> for T
-              where U: From<T>;
-
- * As index, we need to convert BqlCell<T> into T and then convert T
-   into usize. :-(
-
-Do you think there is a better way to check array[num -1]? (array's
-len() method also returns usize).
-
-Or do you think whether it's necessary to check array[num -1]?
-(referring to C version, for example, VMSTATE_STRUCT_VARRAY_UINT8, it
-doesn't check the array's out of bounds case.)
-
-Thanks,
-Zhao
-
+Probably nitpicking, I'd add the Dockerfile first, then the GitLab job
+in another patch.
 
