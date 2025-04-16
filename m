@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32EDC369C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 14:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF84AC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 14:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u53RR-0005kx-57; Wed, 16 Apr 2025 10:08:41 -0400
+	id 1u53hG-0001H8-8J; Wed, 16 Apr 2025 10:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u53RH-0005b1-Ex
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:08:33 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u53RF-00020V-Ih
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:08:31 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2241053582dso94214905ad.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 07:08:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744812508; x=1745417308; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fbr14RX5wn8VWEYSnk1QHCfNTYUqbo0S2ELyIpKXyGA=;
- b=TJc5ew6jtVdD7iXFfiSarm9dnJAwcHOfyBfzQALfAIMax5yA0qakvZPcxKcmpk8Cox
- yWWwLq6TWKtJ+LE8x9/i9sf81bvHsNdsAt1Kj2IWXWrRLmOaigsYHlVekzGzUhfZUL9I
- tzvmIo3VXB3vc1VTEFtjlR/yUkxIWxX+zr7DpKcUMSyczoX2I3idLBvZTCB4R+JEX2qK
- Sy3zqP2ZVxbQrZbSXcJFsJq5qjJZxSP9Q38glpFJSkRLlHtPx2XewYPnNS1Z7OTqZmkk
- u24c2l5UIXUlekg5cNEsSekvhA9EPNz0U1T1lPAVUXTAhdtwOUQuQbAXEj2ZJgBIDUmn
- Xxkw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u53gp-0001Fk-Px
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:24:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u53gn-0004tO-Q0
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 10:24:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744813470;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=q8CbI7YFNj21yDqmjb88k0lLSJFd82KWDmHzO/GZVF4=;
+ b=ZuSGQpw0jdbpUoX3ygnM+NsX8TySXj1tvxnM+fGtqLtNXHlg+EmfbCuQu7YhNbT0klgs5J
+ 6oulVw6jkNwM4sNYI8dwYW6yhfE8DknuEa9regvhhr2iAknzh0werk75837NcZAJATUJEw
+ K4oWS9NU8BdShGt8DzJpfs4SGVqRKpM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-228-Ih15sPIdOZ28vap5B8rCyA-1; Wed, 16 Apr 2025 10:24:21 -0400
+X-MC-Unique: Ih15sPIdOZ28vap5B8rCyA-1
+X-Mimecast-MFC-AGG-ID: Ih15sPIdOZ28vap5B8rCyA_1744813460
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43cec217977so40841775e9.0
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 07:24:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744812508; x=1745417308;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Fbr14RX5wn8VWEYSnk1QHCfNTYUqbo0S2ELyIpKXyGA=;
- b=hYLgWzIyUYXuNa+nw/AriQ/9YvHogvUN3saF4UAZBNxHNmhKg7j1friTEinoeZDy08
- aPeUfcQbFYXidGWyb1hrD5E+2Ku0+fkNMSUfM/S3r+7h3wcntm7EYx5jWs6j4TfrnPte
- UL2HoOJOFyeYLW6NUU9j0VKv/u0DF+KYjEelK7XiqmYcr/1omfpDyghtEK1zu2+25Apq
- gJ8BsYBfF5V3jmzQEvQb2hVhE5m0w24mn+MQlKdinard+gFt4DmUof/cYLcD+s7YFRtD
- eukRTiKzzXt7MCPTRD7LFPvFBXpBjyBejnkZ27lLKlmLOoWxK7VD6Y1K60MZYrSdaXSq
- 5T6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvH9UHTTHZ02c35ueXD5bbxIn27oslCZVRY27ZAjaRdkoON003QEWFg7R+PgXzBhdVZKHRbrTmkr9z@nongnu.org
-X-Gm-Message-State: AOJu0YzdB+RBA36+ZayI5LCzgpBUyDsIl3QWcvgoME8XDv63345HE+NE
- e0HA7dZVi768VZzkZqaGHdHYQyPW+YpbD2EJuu7uo2JldQThpH8h
-X-Gm-Gg: ASbGnctblZidwPDAeSwGnFxbvwjjVDnGHNT3KFzvu03FnxIPzKQBF162KU5wg6HcPs0
- BTXQx3XbAfsgiE2GHkEz4qjMZ/+Ke07ZtbUMqx+j9ItFRWap3UBjaRfrpIwzIadF2d8mpFEBwNT
- jhwq1gWinXOqQ67FOTszEewreyBkvG0Wz1QfSGvW9xR7KQ/SFmKVzp+gU4KIZO2mP10ZGy4YVoK
- XgC24e3PKQd2QJy0f0d9ayfSpMMAS10mkA7Kv2SYwICnyfuJQWGMEoysxOjh2fr2idcwIsQOGxi
- kQTwPfAzYx7nwBtJWlpeiukVG6Jsu7FQ69s+FdX7nA==
-X-Google-Smtp-Source: AGHT+IE/FZKFy7We9HOqFjjY+edOUJBN8sehUIlf3po83mJvI81m+Rm4u10E1eapPLCXZKtIYvxtFw==
-X-Received: by 2002:a17:902:cecf:b0:223:fabd:4f76 with SMTP id
- d9443c01a7336-22c35917410mr27707175ad.30.1744812507550; 
- Wed, 16 Apr 2025 07:08:27 -0700 (PDT)
-Received: from localhost ([1.145.55.85]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd21c3870sm10309430b3a.48.2025.04.16.07.08.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 07:08:27 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 17 Apr 2025 00:08:23 +1000
-Message-Id: <D984EUHJXTAB.3H99WEJWWC8RV@gmail.com>
-Subject: Re: [PATCH v4 128/163] target/ppc: Use tcg_gen_addcio_tl for ADD
- and SUBF
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-129-richard.henderson@linaro.org>
-In-Reply-To: <20250415192515.232910-129-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+ d=1e100.net; s=20230601; t=1744813460; x=1745418260;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q8CbI7YFNj21yDqmjb88k0lLSJFd82KWDmHzO/GZVF4=;
+ b=KNHA+wQRdB88nwdJL0UBLIURu/s4vqICd913fSWFHYyE1iSug8dwuzfh46z3Ni9kZA
+ WXeCXXjkpmHYA7JE5LD2XS22XhoqVzivkIZ3cdj0q4Es/MwzcOQxgDDrWu8OepYb/p49
+ 3B65twHMOdSs9wDcJCnWh0Tqpl78hIt3bFKS3qottuazvjJdixN4mfCHtSdU6NH2e+qS
+ hRoWxaEWKIrrKxTlPqJ9es6UL1A7NlQwT5G/FeRqXdjAq3msiLdyw+OmdIP7QSJlcRMe
+ IOX5he4AbfYXG7tsKDcJkjELHYOQC7gfX1y7+a11h9XLn3CvGjjxQFGsIYvGoxXfaLW2
+ RyPA==
+X-Gm-Message-State: AOJu0YzuFFhUvf+gvLC4ohPtmKmRJ9d0LDaWGfesBKECsiCNAQCOAmwg
+ hpTlacg77fFwVglkGg71VNTHUa7axEfbSHEG9P9QW3A9Iy8dDq6qj9dP2dMt//OG+vWRYvIcClZ
+ 92SIq15gWTMYM95wsgvHVmUaFO0qGqdpvW3sJxsBNjtaKCqsAq0UjXrIMczDqR/AD4aQu4iLNU5
+ m0OGqgCiVAn6kpfx3h56WZ7v7mM0k=
+X-Gm-Gg: ASbGncvmF9uC5gaqfHcyZh1MGib49NGT+NabdWe7wX6VCE9u3ZnWec2rW64Qeob2uzu
+ hH0A1p8hq8vQuJ3jjk8bk4nmI/GYCfWhgQzEeABl9/bjxabjvQZ9oVruQ7BZDSTe8xLsOEw==
+X-Received: by 2002:a05:600c:54c5:b0:43d:10c:2f60 with SMTP id
+ 5b1f17b1804b1-4405e4b88b4mr16181365e9.24.1744813460206; 
+ Wed, 16 Apr 2025 07:24:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPsD4cWB8KvnFFOp1rscTdMjNWmz6MGStVEGdBHPVwrLCl1q2QCFASTHbx6zpjcBODb+Xxe/gL4JnD8IGqpG8=
+X-Received: by 2002:a05:600c:54c5:b0:43d:10c:2f60 with SMTP id
+ 5b1f17b1804b1-4405e4b88b4mr16181135e9.24.1744813459758; Wed, 16 Apr 2025
+ 07:24:19 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250414144943.1112885-1-zhao1.liu@intel.com>
+ <20250414144943.1112885-3-zhao1.liu@intel.com>
+ <c44eebb9-1252-447e-9262-e2946f90f01c@redhat.com> <Z/97xG5VONqmlK+7@intel.com>
+ <Z/+j3be+ZT7G1ToL@intel.com>
+In-Reply-To: <Z/+j3be+ZT7G1ToL@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 16 Apr 2025 16:24:07 +0200
+X-Gm-Features: ATxdqUGRX_V_bfTsFItme8CeZJ8Ner1vUlayCbnxr1bv4fc03jO9yQpKnBPeGJs
+Message-ID: <CABgObfZVh1nAjFd8m4hO8_dfW87cAjYgBC9_3Mve5pXWf=n-mw@mail.gmail.com>
+Subject: Re: [PATCH 2/9] rust/vmstate: Support varray's num field wrapped in
+ BqlCell
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
+ Dapeng Mi <dapeng1.mi@intel.com>
+Content-Type: multipart/alternative; boundary="00000000000077f35f0632e60a4d"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,50 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Apr 16, 2025 at 5:24 AM AEST, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+--00000000000077f35f0632e60a4d
+Content-Type: text/plain; charset="UTF-8"
 
-Nice op, looks good to me.
+Il mer 16 apr 2025, 14:14 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
-> ---
->  target/ppc/translate.c | 11 ++++-------
->  1 file changed, 4 insertions(+), 7 deletions(-)
+> >                 let access = v.$i$($crate::if_present!([$num]: [v.$num -
+> 1])])?;
 >
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index a52cbc869a..e082d50977 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -1745,11 +1745,10 @@ static inline void gen_op_arith_add(DisasContext =
-*ctx, TCGv ret, TCGv arg1,
->                  tcg_gen_mov_tl(ca32, ca);
->              }
->          } else {
-> -            TCGv zero =3D tcg_constant_tl(0);
->              if (add_ca) {
-> -                tcg_gen_add2_tl(t0, ca, arg1, zero, ca, zero);
-> -                tcg_gen_add2_tl(t0, ca, t0, ca, arg2, zero);
-> +                tcg_gen_addcio_tl(t0, ca, arg1, arg2, ca);
->              } else {
-> +                TCGv zero =3D tcg_constant_tl(0);
->                  tcg_gen_add2_tl(t0, ca, arg1, zero, arg2, zero);
->              }
->              gen_op_arith_compute_ca32(ctx, t0, arg1, arg2, ca32, 0);
-> @@ -1948,11 +1947,9 @@ static inline void gen_op_arith_subf(DisasContext =
-*ctx, TCGv ret, TCGv arg1,
->                  tcg_gen_mov_tl(cpu_ca32, cpu_ca);
->              }
->          } else if (add_ca) {
-> -            TCGv zero, inv1 =3D tcg_temp_new();
-> +            TCGv inv1 =3D tcg_temp_new();
->              tcg_gen_not_tl(inv1, arg1);
-> -            zero =3D tcg_constant_tl(0);
-> -            tcg_gen_add2_tl(t0, cpu_ca, arg2, zero, cpu_ca, zero);
-> -            tcg_gen_add2_tl(t0, cpu_ca, t0, cpu_ca, inv1, zero);
-> +            tcg_gen_addcio_tl(t0, cpu_ca, arg2, inv1, cpu_ca);
->              gen_op_arith_compute_ca32(ctx, t0, inv1, arg2, cpu_ca32, 0);
->          } else {
->              tcg_gen_setcond_tl(TCG_COND_GEU, cpu_ca, arg2, arg1);
+> So, the correct code should just check array[0] as you said:
+>
+> let access = v.$i$($crate::if_present!([$num]: [0])])?;
+>
+
+Except I think the if_present! call would not be in assert_field_type; it
+would be in the caller, i.e. vmstate.rs.
+
+Paolo
+
+Based on this, there's no need for anything else such as `Into`.
+>
+> >                 types_must_be_equal::<_, $ti>(access);
+> >             }
+> >         };
+> >     };
+> > }
+>
+> Thanks,
+> Zhao
+>
+>
+
+--00000000000077f35f0632e60a4d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 16 apr 2025, 14:14 Zhao L=
+iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
+a scritto:</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let acces=
+s =3D v.$i$($crate::if_present!([$num]: [v.$num - 1])])?;<br>
+<br>
+So, the correct code should just check array[0] as you said:<br>
+<br>
+let access =3D v.$i$($crate::if_present!([$num]: [0])])?;<br></blockquote><=
+/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Except I think the=
+ if_present! call would not be in assert_field_type; it would be in the cal=
+ler, i.e. <a href=3D"http://vmstate.rs">vmstate.rs</a>.</div><div dir=3D"au=
+to"><br></div><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">
+Based on this, there&#39;s no need for anything else such as `Into`.<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0types_mus=
+t_be_equal::&lt;_, $ti&gt;(access);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0};<br>
+&gt; }<br>
+<br>
+Thanks,<br>
+Zhao<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000077f35f0632e60a4d--
 
 
