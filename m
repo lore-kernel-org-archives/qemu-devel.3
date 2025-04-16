@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1DAC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 07:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D80C369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 07:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4x2O-0007V5-R2; Wed, 16 Apr 2025 03:18:24 -0400
+	id 1u4x2M-0007TN-M9; Wed, 16 Apr 2025 03:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1u4x2J-0007S1-HC; Wed, 16 Apr 2025 03:18:21 -0400
-Received: from apollo.dupie.be ([51.159.20.238])
+ id 1u4x2H-0007Ri-S6; Wed, 16 Apr 2025 03:18:17 -0400
+Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1u4x2D-0001oe-MA; Wed, 16 Apr 2025 03:18:19 -0400
+ id 1u4x2D-0001oc-M6; Wed, 16 Apr 2025 03:18:17 -0400
 Received: from localhost.localdomain (unknown
  [IPv6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c])
- by apollo.dupie.be (Postfix) with ESMTPSA id F08141520F9F;
+ by apollo.dupie.be (Postfix) with ESMTPSA id 797561520DC8;
  Wed, 16 Apr 2025 09:18:03 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1744787884;
+ t=1744787883;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4eHuFiwy8bthRIgr6VRuJkXpBxcL9KA+wWFQkjE4X98=;
- b=L0MFfZrxpX1KtN2np+H9+tVBYTLUzpU8QRKhKzSglRvPC4svUtBHIfw+gQAxIgDXMkMwEn
- gOrUZjl+RCu26KNWzmdr6monj0perfQLGLX/7EhWE4xk3KA0Te12CbInL3gSMOmwMrn1Fl
- AgT42Vynu5/zmksLmMcSrilmw7QtDa5D5Afi0vEI+NNYc4oMKhRcSM8OIpf4J6dQPEaNiE
- Lv7eligbtwbFawalt1QHlQCCvlYgrFTued7raY1+y3/pTLx+daGqIgP/oWaBcsMsknv4Qj
- A9YfE2WGGS7U9aSvWZYkjIygUSJybN3QsCVwdhb0nayh7TZV+XYYVWDHn0Nkmw==
+ bh=gl/B/pqU2gp9qrU7yqQXA2XkLT0NnoQn430/60d+yMc=;
+ b=BQsRbQ37vNSZglUtAgqzqbE6nFM0HEtpytZEhEE1/HZeprkfFICeIunNaZDk/29hCGm5qE
+ ZXQ9DaH9NoIQyzMVqelHEctSgFQTV3a/ZpTG2a4/Dw/VP74PYM3mpR4cDS8bsJvQzmDw99
+ LvF8+aDnAZudoSyZtEne/c0sZkalPBlmJrhyxazIWL34kcZXYmvFmza69kEFxd6/h1vqz1
+ JaYjngns9J/AKAiyx0TyfPcHlHvAdmIMSsdCv7icPUFlC89Hb/ET810CjHtRZiVGFKlzmH
+ lmzjK66w0PT1Ak/2UCWIGTPDuQUYSkSen/UOp5ywNnCCK0RqAf0M9oBhmLSKgA==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH 3/3] iotests/290: add test case for for_commit measure
-Date: Wed, 16 Apr 2025 09:16:54 +0200
-Message-ID: <20250416071654.978264-4-jean-louis@dupond.be>
+Subject: [PATCH 1/3] block: add for_commit option to measure
+Date: Wed, 16 Apr 2025 09:16:52 +0200
+Message-ID: <20250416071654.978264-2-jean-louis@dupond.be>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250416071654.978264-1-jean-louis@dupond.be>
 References: <20250416071654.978264-1-jean-louis@dupond.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
- helo=apollo.dupie.be
+Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
+ envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,145 +70,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We create an image, write and discard some data in it, and then create a
-snapshot. In the snapshot we write and discard again some data.
-Then we measure the images with 'for_commit' option to calculate the
-merged image size. Finally we commit the image and check it's size.
-
-This scenario is executed for discard-no-unref enabled and disabled.
+To specify we use measure call for commit size calculations, we add a
+new 'for_commit' option to the measure call.
+This will be used in following commit to do a different measurement.
 
 Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
 ---
- tests/qemu-iotests/290     | 45 ++++++++++++++++++++++++++++
- tests/qemu-iotests/290.out | 61 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 106 insertions(+)
+ block/qcow2.c                    | 16 +++++++++++++
+ include/block/block_int-common.h |  4 ++++
+ qapi/block-core.json             | 28 ++++++++++++++++++++++
+ qemu-img.c                       | 40 ++++++++++++++++++++++++++++----
+ 4 files changed, 83 insertions(+), 5 deletions(-)
 
-diff --git a/tests/qemu-iotests/290 b/tests/qemu-iotests/290
-index 776b59de1b..1d6608ad13 100755
---- a/tests/qemu-iotests/290
-+++ b/tests/qemu-iotests/290
-@@ -92,6 +92,51 @@ for qcow2_compat in 0.10 1.1; do
-     $QEMU_IMG map "$TEST_IMG" | _filter_testdir
- done
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 7774e7f090..19028e051c 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -3945,6 +3945,7 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+         { BLOCK_OPT_COMPAT_LEVEL,       "version" },
+         { BLOCK_OPT_DATA_FILE_RAW,      "data-file-raw" },
+         { BLOCK_OPT_COMPRESSION_TYPE,   "compression-type" },
++        { BLOCK_OPT_FOR_COMMIT,         "for-commit" },
+         { NULL, NULL },
+     };
  
-+echo
-+echo "### Test qemu-img measure for commit differences with 'discard-no-unref' option enabled"
-+echo
+@@ -6066,6 +6067,20 @@ void qcow2_signal_corruption(BlockDriverState *bs, bool fatal, int64_t offset,
+         .def_value_str = "16"                                       \
+     }
+ 
++static QemuOptsList qcow2_measure_opts = {
++    .name = "qcow2-measure-opts",
++    .head = QTAILQ_HEAD_INITIALIZER(qcow2_measure_opts.head),
++    .desc = {
++        {                                                       \
++            .name = BLOCK_OPT_FOR_COMMIT,                       \
++            .type = QEMU_OPT_BOOL,                              \
++            .help = "Use measure for commit",                   \
++            .def_value_str = "off"                              \
++        },                                                      \
++        { /* end of list */ }
++    }
++};
 +
-+for DISCARD_NO_UNREF in true false; do
-+    echo "# Create a base image and fill it with data"
-+    TEST_IMG="$TEST_IMG.base" _make_test_img 128M
+ static QemuOptsList qcow2_create_opts = {
+     .name = "qcow2-create-opts",
+     .head = QTAILQ_HEAD_INITIALIZER(qcow2_create_opts.head),
+@@ -6190,6 +6205,7 @@ BlockDriver bdrv_qcow2 = {
+ 
+     .create_opts                        = &qcow2_create_opts,
+     .amend_opts                         = &qcow2_amend_opts,
++    .measure_opts                       = &qcow2_measure_opts,
+     .strong_runtime_opts                = qcow2_strong_runtime_opts,
+     .mutable_opts                       = mutable_opts,
+     .bdrv_co_check                      = qcow2_co_check,
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index ebb4e56a50..26d521459d 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -57,6 +57,7 @@
+ #define BLOCK_OPT_DATA_FILE_RAW     "data_file_raw"
+ #define BLOCK_OPT_COMPRESSION_TYPE  "compression_type"
+ #define BLOCK_OPT_EXTL2             "extended_l2"
++#define BLOCK_OPT_FOR_COMMIT        "for_commit"
+ 
+ #define BLOCK_PROBE_BUF_SIZE        512
+ 
+@@ -177,6 +178,9 @@ struct BlockDriver {
+     /* List of options for image amend */
+     QemuOptsList *amend_opts;
+ 
++    /* List of options for image measure */
++    QemuOptsList *measure_opts;
 +
-+    $QEMU_IO -c 'write 0 8M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c 'write 10M 8M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c 'write 24M 32M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c 'write 56M 20M' "$TEST_IMG.base" | _filter_qemu_io
-+    $QEMU_IO -c "reopen -o discard=unmap,discard-no-unref=$DISCARD_NO_UNREF" \
-+        -c 'discard 32M 10M' "$TEST_IMG.base" | _filter_qemu_io
+     /*
+      * If this driver supports reopening images this contains a
+      * NULL-terminated list of the runtime options that can be
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b1937780e1..ab897be404 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -5557,6 +5557,34 @@
+   'features': [ 'unstable' ],
+   'allow-preconfig': true }
+ 
++  ##
++  # @BlockdevMeasureOptionsQcow2:
++  #
++  # Driver specific image measure options for qcow2.
++  #
++  # @for-commit: Use the measure command to calculate commit image size
++  #
++  # Since: 10.0
++  ##
++  { 'struct': 'BlockdevMeasureOptionsQcow2',
++    'data': { '*for-commit': 'bool' } }
 +
-+    echo "# Create a top image and do some writes and discards"
-+    TEST_IMG="$TEST_IMG.top" _make_test_img -b "$TEST_IMG.base" -F $IMGFMT 128M
++  ##
++  # @BlockdevMeasureOptions:
++  #
++  # Options for measuring an image format
++  #
++  # @driver: Block driver of the node to measure.
++  #
++  # Since: 10.0
++  ##
++  { 'union': 'BlockdevMeasureOptions',
++    'base': {
++        'driver':         'BlockdevDriver' },
++    'discriminator': 'driver',
++    'data': {
++        'qcow2':           'BlockdevMeasureOptionsQcow2' } }
 +
-+    $QEMU_IO -c "reopen -o discard=unmap,discard-no-unref=$DISCARD_NO_UNREF" -c 'write 16M 8M' \
-+        -c 'discard 60M 20M' -c 'write 84M 10M' "$TEST_IMG.top" | _filter_qemu_io
-+
-+    FILE_JSON="json:{
-+        'file': {
-+            'driver': 'file',
-+            'filename': '$TEST_IMG.top'
-+        },
-+        'driver': 'qcow2',
-+        'discard': 'unmap',
-+        'discard-no-unref': '$DISCARD_NO_UNREF',
-+        'backing': {
-+            'driver': 'qcow2',
-+            'discard-no-unref': '$DISCARD_NO_UNREF',
-+            'file': {
-+                'driver': 'file',
-+                'filename': '$TEST_IMG.base'
-+            },
-+            'backing': null
-+        }}"
-+    echo "# Measure size with discard-no-unref=$DISCARD_NO_UNREF"
-+    $QEMU_IMG measure --output=json -ofor_commit=on -O qcow2 "${FILE_JSON}"
-+    echo "# Merging the top image into the base image"
-+    $QEMU_IMG commit -t none -f qcow2 "${FILE_JSON}"
-+    stat -c"base disk image file size in bytes: %s" "$TEST_IMG.base"
-+done
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/290.out b/tests/qemu-iotests/290.out
-index 22b476594f..4207572118 100644
---- a/tests/qemu-iotests/290.out
-+++ b/tests/qemu-iotests/290.out
-@@ -58,4 +58,65 @@ read 131072/131072 bytes at offset 0
- 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- # Output of qemu-img map
- Offset          Length          Mapped to       File
-+
-+### Test qemu-img measure for commit differences with 'discard-no-unref' option enabled
-+
-+# Create a base image and fill it with data
-+Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=134217728
-+wrote 8388608/8388608 bytes at offset 0
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 8388608/8388608 bytes at offset 10485760
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 33554432/33554432 bytes at offset 25165824
-+32 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 20971520/20971520 bytes at offset 58720256
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 10485760/10485760 bytes at offset 33554432
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Create a top image and do some writes and discards
-+Formatting 'TEST_DIR/t.IMGFMT.top', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
-+wrote 8388608/8388608 bytes at offset 16777216
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 20971520/20971520 bytes at offset 62914560
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 10485760/10485760 bytes at offset 88080384
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Measure size with discard-no-unref=true
+ ##
+ # @BlockErrorAction:
+ #
+diff --git a/qemu-img.c b/qemu-img.c
+index 2044c22a4c..a4673c3f32 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -5327,6 +5327,31 @@ out:
+     return 0;
+ }
+ 
++static int print_measure_option_help(const char *format)
 +{
-+    "bitmaps": 0,
-+    "required": 88670208,
-+    "fully-allocated": 134545408
++    BlockDriver *drv;
++
++    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    /* Find driver and parse its options */
++    drv = bdrv_find_format(format);
++    if (!drv) {
++        error_report("Unknown file format '%s'", format);
++        return 1;
++    }
++
++    if (!drv->measure_opts) {
++        error_report("Format driver '%s' does not support measure options",
++            format);
++        return 1;
++    }
++
++    printf("Measure options for '%s':\n", format);
++    qemu_opts_print_help(drv->measure_opts, false);
++
++    return 0;
 +}
-+# Merging the top image into the base image
-+Image committed.
-+base disk image file size in bytes: 88408064
-+# Create a base image and fill it with data
-+Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=134217728
-+wrote 8388608/8388608 bytes at offset 0
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 8388608/8388608 bytes at offset 10485760
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 33554432/33554432 bytes at offset 25165824
-+32 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 20971520/20971520 bytes at offset 58720256
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 10485760/10485760 bytes at offset 33554432
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Create a top image and do some writes and discards
-+Formatting 'TEST_DIR/t.IMGFMT.top', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
-+wrote 8388608/8388608 bytes at offset 16777216
-+8 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discard 20971520/20971520 bytes at offset 62914560
-+20 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 10485760/10485760 bytes at offset 88080384
-+10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+# Measure size with discard-no-unref=false
-+{
-+    "bitmaps": 0,
-+    "required": 71892992,
-+    "fully-allocated": 134545408
-+}
-+# Merging the top image into the base image
-+Image committed.
-+base disk image file size in bytes: 71630848
- *** done
++
+ static void dump_json_block_measure_info(BlockMeasureInfo *info)
+ {
+     GString *str;
+@@ -5366,7 +5391,7 @@ static int img_measure(int argc, char **argv)
+     QemuOpts *opts = NULL;
+     QemuOpts *object_opts = NULL;
+     QemuOpts *sn_opts = NULL;
+-    QemuOptsList *create_opts = NULL;
++    QemuOptsList *all_opts = NULL;
+     bool image_opts = false;
+     uint64_t img_size = UINT64_MAX;
+     BlockMeasureInfo *info = NULL;
+@@ -5491,10 +5516,15 @@ static int img_measure(int argc, char **argv)
+                      drv->format_name);
+         goto out;
+     }
++    if (options && has_help_option(options)) {
++        ret = print_measure_option_help(drv->format_name);
++        goto out;
++    }
+ 
+-    create_opts = qemu_opts_append(create_opts, drv->create_opts);
+-    create_opts = qemu_opts_append(create_opts, bdrv_file.create_opts);
+-    opts = qemu_opts_create(create_opts, NULL, 0, &error_abort);
++    all_opts = qemu_opts_append(all_opts, drv->create_opts);
++    all_opts = qemu_opts_append(all_opts, bdrv_file.create_opts);
++    all_opts = qemu_opts_append(all_opts, drv->measure_opts);
++    opts = qemu_opts_create(all_opts, NULL, 0, &error_abort);
+     if (options) {
+         if (!qemu_opts_do_parse(opts, options, NULL, &local_err)) {
+             error_report_err(local_err);
+@@ -5529,7 +5559,7 @@ out:
+     qemu_opts_del(object_opts);
+     qemu_opts_del(opts);
+     qemu_opts_del(sn_opts);
+-    qemu_opts_free(create_opts);
++    qemu_opts_free(all_opts);
+     g_free(options);
+     blk_unref(in_blk);
+     return ret;
 -- 
 2.49.0
 
