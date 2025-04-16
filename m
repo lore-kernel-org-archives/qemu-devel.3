@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97018C369C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 20:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091C3C369C9
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 20:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u59lO-00058B-44; Wed, 16 Apr 2025 16:53:42 -0400
+	id 1u59lI-00055s-Od; Wed, 16 Apr 2025 16:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u59lB-00054f-9o
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:53:30 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1u59kz-00053R-Kp
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:53:23 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u59l6-0001cm-MT
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:53:28 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-306b6ae4fb3so27261a91.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 13:53:24 -0700 (PDT)
+ id 1u59ku-0001bI-Tm
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:53:16 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-73712952e1cso27926b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 13:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744836803; x=1745441603; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1744836790; x=1745441590; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lQD1i3hYxH6cjrMdQ8ijBQ5sCQ9QTskO0+67j2ZGEQ0=;
- b=HQSmnhlVeq6KiLSjaK+rE1yuCeLh6WK0MwTHcSmVDTqXHOqc/AckjUjcTDB/E1FztH
- h/YW6KnemdwpvRSh2fHUIpGtd+HV655OlL4XSOMWTBxTXEyYSWn8uj/fvj9TyWDXxnoX
- VCPlWfKd3VgFB0k/NLVv6ZlQJ1Jri2Q1Tpczhaaq6cPEkA90I0GyFameA+iNQVVR4ZT8
- y4qspsz5y1QtgT3VvhIIeVfmb+9G3xUQEn6AmZmw1mdPDCczqqHyt4CXx4/eVB2sN52N
- c7w5tJRmsluJuBToIrEp5VhO2CFcXMksH1vM9vDOEx58c2CvDcXgQY5eAXGJVQH6x2uc
- H8xg==
+ bh=GZpt/iLFnUmwYq0i5oRG8BAjWHJGJzKxHoiqxXlmQ+w=;
+ b=xEVF6sjqF//Ym0vx5Q5eVGYSl3uOdB484j820NKcouU05CDKdRhdr7TjLrKZCLWQMP
+ nwwrKp+C9laSEns7sY+3skMYww3fxpMLV6DLQBIYGJYfNwOwyhlSqRoYKjWfGCCgxRfa
+ dH6j8YtSmnI6vpvpNIf1Wsupo4UaFfU1pXTOGp2IG224LBHlDMi15C3Wm+17C9S3sJOw
+ aiSeqXVgeOL9bAKhzY2SIUa25nppRBoTV/onrcncqR4FzRYgw/1gldzr4Dp8pccacd/H
+ UV3TD501dTUEBdksNT5c0YALv/z9eH0CM+Fet4Yr2jGRo6b5djFS6s6GiDq3+7/Hz/5x
+ 4LzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744836803; x=1745441603;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1744836790; x=1745441590;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lQD1i3hYxH6cjrMdQ8ijBQ5sCQ9QTskO0+67j2ZGEQ0=;
- b=CV+0ukp5l+b+HRzoZFS6M54C797HAsPnCMOKcu0wz1vsDydbW1Z/6CvmMrywIlyxIs
- lmhf9FxrIbImW4lfPWmpiU8gsb4ZjQJCLcLfXV3/7SfowZZ338bm6ydik7x6FA+tLyOS
- LrhQFWnnWrfK27Zwtqt7e/iP6fkNpxOXxcNkhkflXenZGOTmPRIxyS0CUE9mL57cEbnh
- BvUVg+15CgjBY39Cz7oq7Xz8H3O88ohtXDGuHKZ7nsuomlH4ARumMG38iQ/o9EMcntVN
- I2J0jdZ/0SFK9+meRsHGm+PFf32JAJ5lEsid7bMa/sd2TfB9te30LRz+cGqnXcxLUCpy
- 3r5g==
+ bh=GZpt/iLFnUmwYq0i5oRG8BAjWHJGJzKxHoiqxXlmQ+w=;
+ b=KacMMMKgXcld1v+y4HLpyp8VL8E7Agox6XoczoPL1x67x2KPeeiRgNVaEEIXAe82bs
+ wQO+fW4fhYu88IT4VJRIIkmbJyHMr6vycM2UstJePQD2p1uLDxlJrjSfIgwpltoyCThN
+ fusy4IJ2fOQDsy2i0vI2hjC+ZNSWV7lUlDk05Cq9yog3IbpfzAMOGrXG4KRJrGJ2tSFn
+ pCr/gZ6RriOQYFGgGZwXpo/e2Io0WtYYtQhq19JM4V+ISvxNPCt1YHlolEM9GdJFkH8Y
+ FPOHUoZ/r+ghiPi8WKTJzSY5VGQtYkFtwcXHqUgDaRJIJ+FeEIXJ/qcOckoqS5r1Rzoi
+ fJiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmbXRGTaG6f1Sd+Dtq6vj+61EnVEePxc+NJ7Euz+O3T6S+kxfKTBFAEqzzgzAfvV3qsROzhDzqtL6n@nongnu.org
-X-Gm-Message-State: AOJu0Yyp7s1twjBRUAKNfE7z1X4brE0dvimmYvm4whG9dyigT9vaZ9pb
- yLRk10xwgZBmNjox+KpUxlGJMqLoQBAR3VU7NghQGjtu7kznHKYZyJpdUq0e3tggiuuSa1cfuLT
- V
-X-Gm-Gg: ASbGncsVCmVqsh7C6hnct9TLoFn6ODhb/T/526mIlc2r0upZiDp9KQHruuch6DXB85Q
- B+2A+Lhf48TtIX0DybYbNMTj9/DAK7g8AHwrkOrQgBeVJ+zUcAldycTMi/gAxDjhq2SprpSpYci
- OMl2mLfnfVlnYvx0k4Pq8HDR9DV2qmMZnJFC4XsQ1zXRlBxQmV70yIX0RzHZfpQ1znYuxC+e1DB
- qq1t5A17aSSHIaQqRfeZM43DiBEnCWcILLYN675bh6IGG3OtDq4+FQ2HREL6qnoa9REy63YH6M0
- Sxom/XE7InwzLMhfY+fyfP5nlcoKA6RWEwBvVLuTdBRSsc3yNmKUDA==
-X-Google-Smtp-Source: AGHT+IGezCqwe1GVkWn4o/pBh8q1CBBZjonqHHzDIpl3+Mgv+zVucC5/OvaHWuIBN2oBmF2zu4PeRQ==
-X-Received: by 2002:a17:90b:50c4:b0:2ff:4f04:4261 with SMTP id
- 98e67ed59e1d1-30864173c25mr4022531a91.34.1744836803104; 
- Wed, 16 Apr 2025 13:53:23 -0700 (PDT)
+ AJvYcCXLX5IPEE13Nb3qztntkmfolUQM6JZMT22YzrSCzRsNi4ZM2qqb2zyM9bu3VVzXiFSeajL3GZD8N3GZ@nongnu.org
+X-Gm-Message-State: AOJu0YxN2REbmTMiFlQGImMXDDr5edTRdnGTuEYMfmLMxqjQ8OG06jsj
+ U4vOo2tql22n9syPM1KWQoJNhIUhxtcVlFSFHKKFN2g2fYE5zqbC2ipIRQDELZ4=
+X-Gm-Gg: ASbGncvd0Q9XnRJD1CrN1pp8Jbuydg4ZsZMGfvVMXapI9q5gm7i5aU6e/5HLz63f2Ox
+ saL0en+IpR067EpKk3zfpTkizOyewpZh/vaHRE3EhGTMUOIwhTQPwUzXXHSIz4UQTU4ivKMNqEv
+ 6nFEeJ348+zarDOYpT47SZdznYYTIRFoT6/WHFnEItmzOZfknBrrW9+DZcwlKMFujE0hlLk63mU
+ D3GPRMgFqe5EOMKPuK1SUJv46XnLy660VrKNeIGOWxFn4Xpsf/qquHnChfRfWH5d6MVNp/z1QZU
+ yjgJ+h2N65lhnHnf/0ANT7I20mbDRKDnFIyCuhAKRUEhZ5EzO6rhVg==
+X-Google-Smtp-Source: AGHT+IH9a7NhJH0l64DYGcDhjOKnBPhIrGM7mmbMHc/O0Cytj7ElGWuj+6KT7tEPWm1noJDnecndKA==
+X-Received: by 2002:a05:6a00:240c:b0:736:5725:59b4 with SMTP id
+ d2e1a72fcca58-73c266b5fcfmr5484558b3a.3.1744836789976; 
+ Wed, 16 Apr 2025 13:53:09 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30861366242sm2101120a91.47.2025.04.16.13.53.22
+ d2e1a72fcca58-73bd2198926sm10881826b3a.20.2025.04.16.13.53.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 13:53:22 -0700 (PDT)
-Message-ID: <59b575e1-01ab-480e-8bf3-2f3c70771307@linaro.org>
-Date: Wed, 16 Apr 2025 13:53:22 -0700
+ Wed, 16 Apr 2025 13:53:09 -0700 (PDT)
+Message-ID: <59e32dc0-1704-4806-a266-d361ea12e841@linaro.org>
+Date: Wed, 16 Apr 2025 13:53:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 156/163] tcg: Convert st to TCGOutOpStore
+Subject: Re: [PATCH v4 155/163] tcg: Merge INDEX_op_ld*_{i32,i64}
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-157-richard.henderson@linaro.org>
+ <20250415192515.232910-156-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250415192515.232910-157-richard.henderson@linaro.org>
+In-Reply-To: <20250415192515.232910-156-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,1004 +103,391 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/25 12:25, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/tcg.c                        |  37 ++++++++++
->   tcg/aarch64/tcg-target.c.inc     |  52 +++++++-------
->   tcg/arm/tcg-target.c.inc         |  72 +++++++++----------
->   tcg/i386/tcg-target.c.inc        | 114 ++++++++++++++-----------------
->   tcg/loongarch64/tcg-target.c.inc |  50 +++++++-------
->   tcg/mips/tcg-target.c.inc        |  55 ++++++++-------
->   tcg/ppc/tcg-target.c.inc         |  52 +++++++-------
->   tcg/riscv/tcg-target.c.inc       |  52 +++++++-------
->   tcg/s390x/tcg-target.c.inc       |  60 ++++++++--------
->   tcg/sparc64/tcg-target.c.inc     |  53 +++++++-------
->   tcg/tci/tcg-target.c.inc         |  56 ++++++++-------
->   11 files changed, 341 insertions(+), 312 deletions(-)
-> 
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 3f228db0e5..d6b501254a 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -1090,6 +1090,14 @@ typedef struct TCGOutOpSetcond2 {
->                   TCGArg bl, bool const_bl, TCGArg bh, bool const_bh);
->   } TCGOutOpSetcond2;
->   
-> +typedef struct TCGOutOpStore {
-> +    TCGOutOp base;
-> +    void (*out_r)(TCGContext *s, TCGType type, TCGReg data,
-> +                  TCGReg base, intptr_t offset);
-> +    void (*out_i)(TCGContext *s, TCGType type, tcg_target_long data,
-> +                  TCGReg base, intptr_t offset);
-> +} TCGOutOpStore;
-> +
->   typedef struct TCGOutOpSubtract {
->       TCGOutOp base;
->       void (*out_rrr)(TCGContext *s, TCGType type,
-> @@ -1211,6 +1219,12 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
->       OUTOP(INDEX_op_sextract, TCGOutOpExtract, outop_sextract),
->       OUTOP(INDEX_op_shl, TCGOutOpBinary, outop_shl),
->       OUTOP(INDEX_op_shr, TCGOutOpBinary, outop_shr),
-> +    OUTOP(INDEX_op_st_i32, TCGOutOpStore, outop_st),
-> +    OUTOP(INDEX_op_st_i64, TCGOutOpStore, outop_st),
-> +    OUTOP(INDEX_op_st8_i32, TCGOutOpStore, outop_st8),
-> +    OUTOP(INDEX_op_st8_i64, TCGOutOpStore, outop_st8),
-> +    OUTOP(INDEX_op_st16_i32, TCGOutOpStore, outop_st16),
-> +    OUTOP(INDEX_op_st16_i64, TCGOutOpStore, outop_st16),
->       OUTOP(INDEX_op_sub, TCGOutOpSubtract, outop_sub),
->       OUTOP(INDEX_op_subbi, TCGOutOpAddSubCarry, outop_subbi),
->       OUTOP(INDEX_op_subbio, TCGOutOpAddSubCarry, outop_subbio),
-> @@ -1232,6 +1246,7 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
->       OUTOP(INDEX_op_extrh_i64_i32, TCGOutOpUnary, outop_extrh_i64_i32),
->       OUTOP(INDEX_op_ld32u, TCGOutOpLoad, outop_ld32u),
->       OUTOP(INDEX_op_ld32s, TCGOutOpLoad, outop_ld32s),
-> +    OUTOP(INDEX_op_st32_i64, TCGOutOpStore, outop_st),
->   #endif
->   };
->   
-> @@ -5777,6 +5792,28 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
->           }
->           break;
->   
-> +    case INDEX_op_st32_i64:
-> +        /* Use tcg_op_st w/ I32. */
-> +        type = TCG_TYPE_I32;
-> +        /* fall through */
-> +    case INDEX_op_st_i32:
-> +    case INDEX_op_st_i64:
-> +    case INDEX_op_st8_i32:
-> +    case INDEX_op_st8_i64:
-> +    case INDEX_op_st16_i32:
-> +    case INDEX_op_st16_i64:
-> +        {
-> +            const TCGOutOpStore *out =
-> +                container_of(all_outop[op->opc], TCGOutOpStore, base);
-> +
-> +            if (const_args[0]) {
-> +                out->out_i(s, type, new_args[0], new_args[1], new_args[2]);
-> +            } else {
-> +                out->out_r(s, type, new_args[0], new_args[1], new_args[2]);
-> +            }
-> +        }
-> +        break;
-> +
->       case INDEX_op_brcond:
->           {
->               const TCGOutOpBrcond *out = &outop_brcond;
-> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-> index 903a95ad7e..efdc315a0d 100644
-> --- a/tcg/aarch64/tcg-target.c.inc
-> +++ b/tcg/aarch64/tcg-target.c.inc
-> @@ -2838,6 +2838,33 @@ static const TCGOutOpLoad outop_ld32s = {
->       .out = tgen_ld32s,
->   };
->   
-> +static void tgen_st8_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, I3312_STRB, data, base, offset, 0);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st8_r,
-> +};
-> +
-> +static void tgen_st16_r(TCGContext *s, TCGType type, TCGReg data,
-> +                        TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, I3312_STRH, data, base, offset, 0);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st16_r,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> @@ -2848,22 +2875,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType ext,
->       TCGArg a2 = args[2];
->   
->       switch (opc) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -        tcg_out_ldst(s, I3312_STRB, a0, a1, a2, 0);
-> -        break;
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -        tcg_out_ldst(s, I3312_STRH, a0, a1, a2, 1);
-> -        break;
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        tcg_out_ldst(s, I3312_STRW, a0, a1, a2, 2);
-> -        break;
-> -    case INDEX_op_st_i64:
-> -        tcg_out_ldst(s, I3312_STRX, a0, a1, a2, 3);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->       case INDEX_op_qemu_ld_i64:
->           tcg_out_qemu_ld(s, a0, a1, a2, ext);
-> @@ -3331,15 +3342,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(rz, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->       case INDEX_op_qemu_ld_i64:
->           return C_O1_I1(r, r);
-> diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-> index 2079dd3bdc..5b34f61ca1 100644
-> --- a/tcg/arm/tcg-target.c.inc
-> +++ b/tcg/arm/tcg-target.c.inc
-> @@ -1084,26 +1084,6 @@ static void tcg_out_st32(TCGContext *s, ARMCond cond,
->           tcg_out_st32_12(s, cond, rd, rn, offset);
->   }
->   
-> -static void tcg_out_st16(TCGContext *s, ARMCond cond,
-> -                         TCGReg rd, TCGReg rn, int32_t offset)
-> -{
-> -    if (offset > 0xff || offset < -0xff) {
-> -        tcg_out_movi32(s, cond, TCG_REG_TMP, offset);
-> -        tcg_out_st16_r(s, cond, rd, rn, TCG_REG_TMP);
-> -    } else
-> -        tcg_out_st16_8(s, cond, rd, rn, offset);
-> -}
-> -
-> -static void tcg_out_st8(TCGContext *s, ARMCond cond,
-> -                        TCGReg rd, TCGReg rn, int32_t offset)
-> -{
-> -    if (offset > 0xfff || offset < -0xfff) {
-> -        tcg_out_movi32(s, cond, TCG_REG_TMP, offset);
-> -        tcg_out_st8_r(s, cond, rd, rn, TCG_REG_TMP);
-> -    } else
-> -        tcg_out_st8_12(s, cond, rd, rn, offset);
-> -}
-> -
->   /*
->    * The _goto case is normally between TBs within the same code buffer, and
->    * with the code buffer limited to 16MB we wouldn't need the long case.
-> @@ -2548,21 +2528,48 @@ static const TCGOutOpLoad outop_ld16s = {
->       .out = tgen_ld16s,
->   };
->   
-> +static void tgen_st8(TCGContext *s, TCGType type, TCGReg rd,
-> +                     TCGReg rn, ptrdiff_t offset)
-> +{
-> +    if (offset > 0xfff || offset < -0xfff) {
-> +        tcg_out_movi32(s, COND_AL, TCG_REG_TMP, offset);
-> +        tcg_out_st8_r(s, COND_AL, rd, rn, TCG_REG_TMP);
-> +    } else {
-> +        tcg_out_st8_12(s, COND_AL, rd, rn, offset);
-> +    }
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st8,
-> +};
-> +
-> +static void tgen_st16(TCGContext *s, TCGType type, TCGReg rd,
-> +                      TCGReg rn, ptrdiff_t offset)
-> +{
-> +    if (offset > 0xff || offset < -0xff) {
-> +        tcg_out_movi32(s, COND_AL, TCG_REG_TMP, offset);
-> +        tcg_out_st16_r(s, COND_AL, rd, rn, TCG_REG_TMP);
-> +    } else {
-> +        tcg_out_st16_8(s, COND_AL, rd, rn, offset);
-> +    }
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st16,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
->   {
->       switch (opc) {
-> -    case INDEX_op_st8_i32:
-> -        tcg_out_st8(s, COND_AL, args[0], args[1], args[2]);
-> -        break;
-> -    case INDEX_op_st16_i32:
-> -        tcg_out_st16(s, COND_AL, args[0], args[1], args[2]);
-> -        break;
-> -    case INDEX_op_st_i32:
-> -        tcg_out_st32(s, COND_AL, args[0], args[1], args[2]);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, args[0], -1, args[1], args[2], TCG_TYPE_I32);
->           break;
-> @@ -2589,11 +2596,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st_i32:
-> -        return C_O0_I2(r, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->           return C_O1_I1(r, q);
->       case INDEX_op_qemu_ld_i64:
-> diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
-> index d16ddcb940..52285bcd54 100644
-> --- a/tcg/i386/tcg-target.c.inc
-> +++ b/tcg/i386/tcg-target.c.inc
-> @@ -3489,55 +3489,69 @@ static const TCGOutOpLoad outop_ld32s = {
->   };
->   #endif
->   
-> +static void tgen_st8_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_modrm_offset(s, OPC_MOVB_EvGv | P_REXB_R, data, base, offset);
-> +}
-> +
-> +static void tgen_st8_i(TCGContext *s, TCGType type, tcg_target_long data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_modrm_offset(s, OPC_MOVB_EvIz, 0, base, offset);
-> +    tcg_out8(s, data);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(qi, r),
-> +    .out_r = tgen_st8_r,
-> +    .out_i = tgen_st8_i,
-> +};
-> +
-> +static void tgen_st16_r(TCGContext *s, TCGType type, TCGReg data,
-> +                        TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_modrm_offset(s, OPC_MOVL_EvGv | P_DATA16, data, base, offset);
-> +}
-> +
-> +static void tgen_st16_i(TCGContext *s, TCGType type, tcg_target_long data,
-> +                        TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_modrm_offset(s, OPC_MOVL_EvIz | P_DATA16, 0, base, offset);
-> +    tcg_out16(s, data);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(ri, r),
-> +    .out_r = tgen_st16_r,
-> +    .out_i = tgen_st16_i,
-> +};
-> +
-> +static void tgen_st_i(TCGContext *s, TCGType type, tcg_target_long data,
-> +                      TCGReg base, ptrdiff_t offset)
-> +{
-> +    bool ok = tcg_out_sti(s, type, data, base, offset);
-> +    tcg_debug_assert(ok);
-> +}
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(re, r),
-> +    .out_r = tcg_out_st,
-> +    .out_i = tgen_st_i,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
->   {
->       TCGArg a0, a1, a2;
->   
-> -#if TCG_TARGET_REG_BITS == 64
-> -# define OP_32_64(x) \
-> -        case glue(glue(INDEX_op_, x), _i64): \
-> -        case glue(glue(INDEX_op_, x), _i32)
-> -#else
-> -# define OP_32_64(x) \
-> -        case glue(glue(INDEX_op_, x), _i32)
-> -#endif
-> -
->       /* Hoist the loads of the most common arguments.  */
->       a0 = args[0];
->       a1 = args[1];
->       a2 = args[2];
->   
->       switch (opc) {
-> -    OP_32_64(st8):
-> -        if (const_args[0]) {
-> -            tcg_out_modrm_offset(s, OPC_MOVB_EvIz, 0, a1, a2);
-> -            tcg_out8(s, a0);
-> -        } else {
-> -            tcg_out_modrm_offset(s, OPC_MOVB_EvGv | P_REXB_R, a0, a1, a2);
-> -        }
-> -        break;
-> -    OP_32_64(st16):
-> -        if (const_args[0]) {
-> -            tcg_out_modrm_offset(s, OPC_MOVL_EvIz | P_DATA16, 0, a1, a2);
-> -            tcg_out16(s, a0);
-> -        } else {
-> -            tcg_out_modrm_offset(s, OPC_MOVL_EvGv | P_DATA16, a0, a1, a2);
-> -        }
-> -        break;
-> -#if TCG_TARGET_REG_BITS == 64
-> -    case INDEX_op_st32_i64:
-> -#endif
-> -    case INDEX_op_st_i32:
-> -        if (const_args[0]) {
-> -            tcg_out_modrm_offset(s, OPC_MOVL_EvIz, 0, a1, a2);
-> -            tcg_out32(s, a0);
-> -        } else {
-> -            tcg_out_st(s, TCG_TYPE_I32, a0, a1, a2);
-> -        }
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, a0, -1, a1, a2, TCG_TYPE_I32);
->           break;
-> @@ -3569,25 +3583,12 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           tcg_out_qemu_st(s, a0, a1, a2, args[3], TCG_TYPE_I128);
->           break;
->   
-> -#if TCG_TARGET_REG_BITS == 64
-> -    case INDEX_op_st_i64:
-> -        if (const_args[0]) {
-> -            tcg_out_modrm_offset(s, OPC_MOVL_EvIz | P_REXW, 0, a1, a2);
-> -            tcg_out32(s, a0);
-> -        } else {
-> -            tcg_out_st(s, TCG_TYPE_I64, a0, a1, a2);
-> -        }
-> -        break;
-> -#endif
-> -
->       case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
->       case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
->       case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
->       default:
->           g_assert_not_reached();
->       }
-> -
-> -#undef OP_32_64
->   }
->   
->   static int const umin_insn[4] = {
-> @@ -4135,19 +4136,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -        return C_O0_I2(qi, r);
-> -
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        return C_O0_I2(ri, r);
-> -
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(re, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->           return C_O1_I1(r, L);
->   
-> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index 250556b137..69b2a7660b 100644
-> --- a/tcg/loongarch64/tcg-target.c.inc
-> +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -1971,6 +1971,33 @@ static const TCGOutOpLoad outop_ld32s = {
->       .out = tgen_ld32s,
->   };
->   
-> +static void tgen_st8_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, OPC_ST_B, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st8_r,
-> +};
-> +
-> +static void tgen_st16_r(TCGContext *s, TCGType type, TCGReg data,
-> +                        TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, OPC_ST_H, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st16_r,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
-> @@ -1981,22 +2008,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->       TCGArg a3 = args[3];
->   
->       switch (opc) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -        tcg_out_ldst(s, OPC_ST_B, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -        tcg_out_ldst(s, OPC_ST_H, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        tcg_out_ldst(s, OPC_ST_W, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_st_i64:
-> -        tcg_out_ldst(s, OPC_ST_D, a0, a1, a2);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
->           break;
-> @@ -2524,13 +2535,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st_i64:
->       case INDEX_op_qemu_st_i32:
->       case INDEX_op_qemu_st_i64:
->           return C_O0_I2(rz, r);
-> diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips/tcg-target.c.inc
-> index 21ed11b78d..5e41729d88 100644
-> --- a/tcg/mips/tcg-target.c.inc
-> +++ b/tcg/mips/tcg-target.c.inc
-> @@ -2342,12 +2342,38 @@ static const TCGOutOpLoad outop_ld32s = {
->   };
->   #endif
->   
-> +static void tgen_st8_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, OPC_SB, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st8_r,
-> +};
-> +
-> +static void tgen_st16_r(TCGContext *s, TCGType type, TCGReg data,
-> +                        TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, OPC_SH, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st16_r,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
->   {
-> -    MIPSInsn i1;
->       TCGArg a0, a1, a2;
->   
->       a0 = args[0];
-> @@ -2355,24 +2381,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->       a2 = args[2];
->   
->       switch (opc) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -        i1 = OPC_SB;
-> -        goto do_ldst;
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -        i1 = OPC_SH;
-> -        goto do_ldst;
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        i1 = OPC_SW;
-> -        goto do_ldst;
-> -    case INDEX_op_st_i64:
-> -        i1 = OPC_SD;
-> -    do_ldst:
-> -        tcg_out_ldst(s, i1, a0, a1, a2);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, a0, 0, a1, a2, TCG_TYPE_I32);
->           break;
-> @@ -2407,15 +2415,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(rz, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->           return C_O1_I1(r, r);
->       case INDEX_op_qemu_st_i32:
-> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-> index 275c5a90a5..9cf24831df 100644
-> --- a/tcg/ppc/tcg-target.c.inc
-> +++ b/tcg/ppc/tcg-target.c.inc
-> @@ -3746,28 +3746,39 @@ static const TCGOutOpLoad outop_ld32s = {
->   };
->   #endif
->   
-> +static void tgen_st8(TCGContext *s, TCGType type, TCGReg data,
-> +                     TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_mem_long(s, STB, STBX, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st8,
-> +};
-> +
-> +static void tgen_st16(TCGContext *s, TCGType type, TCGReg data,
-> +                      TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_mem_long(s, STH, STHX, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st16,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
->   {
->       switch (opc) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -        tcg_out_mem_long(s, STB, STBX, args[0], args[1], args[2]);
-> -        break;
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -        tcg_out_mem_long(s, STH, STHX, args[0], args[1], args[2]);
-> -        break;
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        tcg_out_mem_long(s, STW, STWX, args[0], args[1], args[2]);
-> -        break;
-> -    case INDEX_op_st_i64:
-> -        tcg_out_mem_long(s, STD, STDX, args[0], args[1], args[2]);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, args[0], -1, args[1], args[2], TCG_TYPE_I32);
->           break;
-> @@ -4415,15 +4426,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(r, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->           return C_O1_I1(r, r);
->       case INDEX_op_qemu_ld_i64:
-> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-> index 5b987c930f..bcfdb6c545 100644
-> --- a/tcg/riscv/tcg-target.c.inc
-> +++ b/tcg/riscv/tcg-target.c.inc
-> @@ -2596,6 +2596,33 @@ static const TCGOutOpLoad outop_ld32s = {
->       .out = tgen_ld32s,
->   };
->   
-> +static void tgen_st8_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, OPC_SB, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st8_r,
-> +};
-> +
-> +static void tgen_st16_r(TCGContext *s, TCGType type, TCGReg data,
-> +                        TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, OPC_SH, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st16_r,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
-> @@ -2606,22 +2633,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->       TCGArg a2 = args[2];
->   
->       switch (opc) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -        tcg_out_ldst(s, OPC_SB, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -        tcg_out_ldst(s, OPC_SH, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        tcg_out_ldst(s, OPC_SW, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_st_i64:
-> -        tcg_out_ldst(s, OPC_SD, a0, a1, a2);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
->           break;
-> @@ -2864,15 +2875,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(rz, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->       case INDEX_op_qemu_ld_i64:
->           return C_O1_I1(r, r);
-> diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-> index fe7665b21d..e266c19829 100644
-> --- a/tcg/s390x/tcg-target.c.inc
-> +++ b/tcg/s390x/tcg-target.c.inc
-> @@ -3100,29 +3100,39 @@ static const TCGOutOpLoad outop_ld32s = {
->       .out = tgen_ld32s,
->   };
->   
-> -# define OP_32_64(x) \
-> -        case glue(glue(INDEX_op_,x),_i32): \
-> -        case glue(glue(INDEX_op_,x),_i64)
-> +static void tgen_st8(TCGContext *s, TCGType type, TCGReg data,
-> +                     TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_mem(s, RX_STC, RXY_STCY, data, base, TCG_REG_NONE, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st8,
-> +};
-> +
-> +static void tgen_st16(TCGContext *s, TCGType type, TCGReg data,
-> +                      TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_mem(s, RX_STH, RXY_STHY, data, base, TCG_REG_NONE, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st16,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
->   {
->       switch (opc) {
-> -    OP_32_64(st8):
-> -        tcg_out_mem(s, RX_STC, RXY_STCY, args[0], args[1],
-> -                    TCG_REG_NONE, args[2]);
-> -        break;
-> -
-> -    OP_32_64(st16):
-> -        tcg_out_mem(s, RX_STH, RXY_STHY, args[0], args[1],
-> -                    TCG_REG_NONE, args[2]);
-> -        break;
-> -
-> -    case INDEX_op_st_i32:
-> -        tcg_out_st(s, TCG_TYPE_I32, args[0], args[1], args[2]);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, args[0], args[1], args[2], TCG_TYPE_I32);
->           break;
-> @@ -3142,13 +3152,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           tcg_out_qemu_ldst_i128(s, args[0], args[1], args[2], args[3], false);
->           break;
->   
-> -    case INDEX_op_st32_i64:
-> -        tcg_out_st(s, TCG_TYPE_I32, args[0], args[1], args[2]);
-> -        break;
-> -    case INDEX_op_st_i64:
-> -        tcg_out_st(s, TCG_TYPE_I64, args[0], args[1], args[2]);
-> -        break;
-> -
->       case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
->       case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
->       case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
-> @@ -3597,15 +3600,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(r, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->       case INDEX_op_qemu_ld_i64:
->           return C_O1_I1(r, r);
-> diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-> index a6bc4cd85a..37371019b4 100644
-> --- a/tcg/sparc64/tcg-target.c.inc
-> +++ b/tcg/sparc64/tcg-target.c.inc
-> @@ -2023,6 +2023,33 @@ static const TCGOutOpLoad outop_ld32s = {
->       .out = tgen_ld32s,
->   };
->   
-> +static void tgen_st8_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, data, base, offset, STB);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st8_r,
-> +};
-> +
-> +static void tgen_st16_r(TCGContext *s, TCGType type, TCGReg data,
-> +                       TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, data, base, offset, STH);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tgen_st16_r,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(rz, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
-> @@ -2036,21 +2063,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->       a2 = args[2];
->   
->       switch (opc) {
-> -#define OP_32_64(x)                             \
-> -        glue(glue(case INDEX_op_, x), _i32):    \
-> -        glue(glue(case INDEX_op_, x), _i64)
-> -
-> -    OP_32_64(st8):
-> -        tcg_out_ldst(s, a0, a1, a2, STB);
-> -        break;
-> -    OP_32_64(st16):
-> -        tcg_out_ldst(s, a0, a1, a2, STH);
-> -        break;
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -        tcg_out_ldst(s, a0, a1, a2, STW);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i32:
->           tcg_out_qemu_ld(s, a0, a1, a2, TCG_TYPE_I32);
->           break;
-> @@ -2064,10 +2076,6 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->           tcg_out_qemu_st(s, a0, a1, a2, TCG_TYPE_I64);
->           break;
->   
-> -    case INDEX_op_st_i64:
-> -        tcg_out_ldst(s, a0, a1, a2, STX);
-> -        break;
-> -
->       case INDEX_op_call:     /* Always emitted via tcg_out_call.  */
->       case INDEX_op_exit_tb:  /* Always emitted via tcg_out_exit_tb.  */
->       case INDEX_op_goto_tb:  /* Always emitted via tcg_out_goto_tb.  */
-> @@ -2084,13 +2092,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->       case INDEX_op_qemu_ld_i64:
->           return C_O1_I1(r, r);
->   
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
->       case INDEX_op_qemu_st_i32:
->       case INDEX_op_qemu_st_i64:
->           return C_O0_I2(rz, r);
-> diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-> index d549dc90f5..be9270a861 100644
-> --- a/tcg/tci/tcg-target.c.inc
-> +++ b/tcg/tci/tcg-target.c.inc
-> @@ -40,15 +40,6 @@ static TCGConstraintSetIndex
->   tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
->   {
->       switch (op) {
-> -    case INDEX_op_st8_i32:
-> -    case INDEX_op_st16_i32:
-> -    case INDEX_op_st_i32:
-> -    case INDEX_op_st8_i64:
-> -    case INDEX_op_st16_i64:
-> -    case INDEX_op_st32_i64:
-> -    case INDEX_op_st_i64:
-> -        return C_O0_I2(r, r);
-> -
->       case INDEX_op_qemu_ld_i32:
->           return C_O1_I1(r, r);
->       case INDEX_op_qemu_ld_i64:
-> @@ -487,18 +478,6 @@ static void tcg_out_call(TCGContext *s, const tcg_insn_unit *func,
->       tcg_out32(s, insn);
->   }
->   
-> -#if TCG_TARGET_REG_BITS == 64
-> -# define CASE_32_64(x) \
-> -        case glue(glue(INDEX_op_, x), _i64): \
-> -        case glue(glue(INDEX_op_, x), _i32):
-> -# define CASE_64(x) \
-> -        case glue(glue(INDEX_op_, x), _i64):
-> -#else
-> -# define CASE_32_64(x) \
-> -        case glue(glue(INDEX_op_, x), _i32):
-> -# define CASE_64(x)
-> -#endif
-> -
->   static void tcg_out_exit_tb(TCGContext *s, uintptr_t arg)
->   {
->       tcg_out_op_p(s, INDEX_op_exit_tb, (void *)arg);
-> @@ -1191,20 +1170,39 @@ static const TCGOutOpLoad outop_ld32s = {
->   };
->   #endif
->   
-> +static void tgen_st8(TCGContext *s, TCGType type, TCGReg data,
-> +                     TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, INDEX_op_st8_i32, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st8 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st8,
-> +};
-> +
-> +static void tgen_st16(TCGContext *s, TCGType type, TCGReg data,
-> +                      TCGReg base, ptrdiff_t offset)
-> +{
-> +    tcg_out_ldst(s, INDEX_op_st16_i32, data, base, offset);
-> +}
-> +
-> +static const TCGOutOpStore outop_st16 = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tgen_st16,
-> +};
-> +
-> +static const TCGOutOpStore outop_st = {
-> +    .base.static_constraint = C_O0_I2(r, r),
-> +    .out_r = tcg_out_st,
-> +};
-> +
->   
->   static void tcg_out_op(TCGContext *s, TCGOpcode opc, TCGType type,
->                          const TCGArg args[TCG_MAX_OP_ARGS],
->                          const int const_args[TCG_MAX_OP_ARGS])
->   {
->       switch (opc) {
-> -    CASE_32_64(st8)
-> -    CASE_32_64(st16)
-> -    case INDEX_op_st_i32:
-> -    CASE_64(st32)
-> -    CASE_64(st)
-> -        tcg_out_ldst(s, opc, args[0], args[1], args[2]);
-> -        break;
-> -
->       case INDEX_op_qemu_ld_i64:
->       case INDEX_op_qemu_st_i64:
->           if (TCG_TARGET_REG_BITS == 32) {
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
+T24gNC8xNS8yNSAxMjoyNSwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IFJldmlld2Vk
+LWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+DQo+IFNp
+Z25lZC1vZmYtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5h
+cm8ub3JnPg0KPiAtLS0NCj4gICBpbmNsdWRlL3RjZy90Y2ctb3BjLmggICAgfCAxOSArKysr
+Ky0tLS0tLS0NCj4gICB0Y2cvb3B0aW1pemUuYyAgICAgICAgICAgfCAyNyArKysrKysrKy0t
+LS0tLS0tLQ0KPiAgIHRjZy90Y2ctb3AuYyAgICAgICAgICAgICB8IDI0ICsrKysrKystLS0t
+LS0tLQ0KPiAgIHRjZy90Y2cuYyAgICAgICAgICAgICAgICB8IDY0ICsrKysrKysrKysrKysr
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCj4gICB0Y2cvdGNpLmMgICAgICAgICAgICAg
+ICAgfCA0MyArKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0NCj4gICB0Y2cvdGNpL3RjZy10
+YXJnZXQuYy5pbmMgfCAyOCArKysrKysrLS0tLS0tLS0tLS0NCj4gICA2IGZpbGVzIGNoYW5n
+ZWQsIDgzIGluc2VydGlvbnMoKyksIDEyMiBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1n
+aXQgYS9pbmNsdWRlL3RjZy90Y2ctb3BjLmggYi9pbmNsdWRlL3RjZy90Y2ctb3BjLmgNCj4g
+aW5kZXggMzBiYTE1NzIzYS4uNmU4ZmNlZmFlZiAxMDA2NDQNCj4gLS0tIGEvaW5jbHVkZS90
+Y2cvdGNnLW9wYy5oDQo+ICsrKyBiL2luY2x1ZGUvdGNnL3RjZy1vcGMuaA0KPiBAQCAtNTcs
+NiArNTcsMTMgQEAgREVGKGRpdnUyLCAyLCAzLCAwLCBUQ0dfT1BGX0lOVCkNCj4gICBERUYo
+ZXF2LCAxLCAyLCAwLCBUQ0dfT1BGX0lOVCkNCj4gICBERUYoZXh0cmFjdCwgMSwgMSwgMiwg
+VENHX09QRl9JTlQpDQo+ICAgREVGKGV4dHJhY3QyLCAxLCAyLCAxLCBUQ0dfT1BGX0lOVCkN
+Cj4gK0RFRihsZDh1LCAxLCAxLCAxLCBUQ0dfT1BGX0lOVCkNCj4gK0RFRihsZDhzLCAxLCAx
+LCAxLCBUQ0dfT1BGX0lOVCkNCj4gK0RFRihsZDE2dSwgMSwgMSwgMSwgVENHX09QRl9JTlQp
+DQo+ICtERUYobGQxNnMsIDEsIDEsIDEsIFRDR19PUEZfSU5UKQ0KPiArREVGKGxkMzJ1LCAx
+LCAxLCAxLCBUQ0dfT1BGX0lOVCkNCj4gK0RFRihsZDMycywgMSwgMSwgMSwgVENHX09QRl9J
+TlQpDQo+ICtERUYobGQsIDEsIDEsIDEsIFRDR19PUEZfSU5UKQ0KPiAgIERFRihtb3Zjb25k
+LCAxLCA0LCAxLCBUQ0dfT1BGX0lOVCkNCj4gICBERUYobXVsLCAxLCAyLCAwLCBUQ0dfT1BG
+X0lOVCkNCj4gICBERUYobXVsczIsIDIsIDIsIDAsIFRDR19PUEZfSU5UKQ0KPiBAQCAtOTMs
+MTEgKzEwMCw2IEBAIERFRihzdWJiaSwgMSwgMiwgMCwgVENHX09QRl9JTlQgfCBUQ0dfT1BG
+X0NBUlJZX0lOKQ0KPiAgIERFRihzdWJiaW8sIDEsIDIsIDAsIFRDR19PUEZfSU5UIHwgVENH
+X09QRl9DQVJSWV9JTiB8IFRDR19PUEZfQ0FSUllfT1VUKQ0KPiAgIA0KPiAgIC8qIGxvYWQv
+c3RvcmUgKi8NCj4gLURFRihsZDh1X2kzMiwgMSwgMSwgMSwgMCkNCj4gLURFRihsZDhzX2kz
+MiwgMSwgMSwgMSwgMCkNCj4gLURFRihsZDE2dV9pMzIsIDEsIDEsIDEsIDApDQo+IC1ERUYo
+bGQxNnNfaTMyLCAxLCAxLCAxLCAwKQ0KPiAtREVGKGxkX2kzMiwgMSwgMSwgMSwgMCkNCj4g
+ICBERUYoc3Q4X2kzMiwgMCwgMiwgMSwgMCkNCj4gICBERUYoc3QxNl9pMzIsIDAsIDIsIDEs
+IDApDQo+ICAgREVGKHN0X2kzMiwgMCwgMiwgMSwgMCkNCj4gQEAgLTEwNiwxMyArMTA4LDYg
+QEAgREVGKGJyY29uZDJfaTMyLCAwLCA0LCAyLCBUQ0dfT1BGX0JCX0VORCB8IFRDR19PUEZf
+Q09ORF9CUkFOQ0gpDQo+ICAgREVGKHNldGNvbmQyX2kzMiwgMSwgNCwgMSwgMCkNCj4gICAN
+Cj4gICAvKiBsb2FkL3N0b3JlICovDQo+IC1ERUYobGQ4dV9pNjQsIDEsIDEsIDEsIDApDQo+
+IC1ERUYobGQ4c19pNjQsIDEsIDEsIDEsIDApDQo+IC1ERUYobGQxNnVfaTY0LCAxLCAxLCAx
+LCAwKQ0KPiAtREVGKGxkMTZzX2k2NCwgMSwgMSwgMSwgMCkNCj4gLURFRihsZDMydV9pNjQs
+IDEsIDEsIDEsIDApDQo+IC1ERUYobGQzMnNfaTY0LCAxLCAxLCAxLCAwKQ0KPiAtREVGKGxk
+X2k2NCwgMSwgMSwgMSwgMCkNCj4gICBERUYoc3Q4X2k2NCwgMCwgMiwgMSwgMCkNCj4gICBE
+RUYoc3QxNl9pNjQsIDAsIDIsIDEsIDApDQo+ICAgREVGKHN0MzJfaTY0LCAwLCAyLCAxLCAw
+KQ0KPiBkaWZmIC0tZ2l0IGEvdGNnL29wdGltaXplLmMgYi90Y2cvb3B0aW1pemUuYw0KPiBp
+bmRleCAwZjY2MWE4YzBiLi4xZGEyMzc1NWUzIDEwMDY0NA0KPiAtLS0gYS90Y2cvb3B0aW1p
+emUuYw0KPiArKysgYi90Y2cvb3B0aW1pemUuYw0KPiBAQCAtMjg2OCwyMiArMjg2OCwyMiBA
+QCBzdGF0aWMgYm9vbCBmb2xkX3RjZ19sZChPcHRDb250ZXh0ICpjdHgsIFRDR09wICpvcCkN
+Cj4gICANCj4gICAgICAgLyogV2UgY2FuJ3QgZG8gYW55IGZvbGRpbmcgd2l0aCBhIGxvYWQs
+IGJ1dCB3ZSBjYW4gcmVjb3JkIGJpdHMuICovDQo+ICAgICAgIHN3aXRjaCAob3AtPm9wYykg
+ew0KPiAtICAgIENBU0VfT1BfMzJfNjQobGQ4cyk6DQo+ICsgICAgY2FzZSBJTkRFWF9vcF9s
+ZDhzOg0KPiAgICAgICAgICAgc19tYXNrID0gSU5UOF9NSU47DQo+ICAgICAgICAgICBicmVh
+azsNCj4gLSAgICBDQVNFX09QXzMyXzY0KGxkOHUpOg0KPiArICAgIGNhc2UgSU5ERVhfb3Bf
+bGQ4dToNCj4gICAgICAgICAgIHpfbWFzayA9IE1BS0VfNjRCSVRfTUFTSygwLCA4KTsNCj4g
+ICAgICAgICAgIGJyZWFrOw0KPiAtICAgIENBU0VfT1BfMzJfNjQobGQxNnMpOg0KPiArICAg
+IGNhc2UgSU5ERVhfb3BfbGQxNnM6DQo+ICAgICAgICAgICBzX21hc2sgPSBJTlQxNl9NSU47
+DQo+ICAgICAgICAgICBicmVhazsNCj4gLSAgICBDQVNFX09QXzMyXzY0KGxkMTZ1KToNCj4g
+KyAgICBjYXNlIElOREVYX29wX2xkMTZ1Og0KPiAgICAgICAgICAgel9tYXNrID0gTUFLRV82
+NEJJVF9NQVNLKDAsIDE2KTsNCj4gICAgICAgICAgIGJyZWFrOw0KPiAtICAgIGNhc2UgSU5E
+RVhfb3BfbGQzMnNfaTY0Og0KPiArICAgIGNhc2UgSU5ERVhfb3BfbGQzMnM6DQo+ICAgICAg
+ICAgICBzX21hc2sgPSBJTlQzMl9NSU47DQo+ICAgICAgICAgICBicmVhazsNCj4gLSAgICBj
+YXNlIElOREVYX29wX2xkMzJ1X2k2NDoNCj4gKyAgICBjYXNlIElOREVYX29wX2xkMzJ1Og0K
+PiAgICAgICAgICAgel9tYXNrID0gTUFLRV82NEJJVF9NQVNLKDAsIDMyKTsNCj4gICAgICAg
+ICAgIGJyZWFrOw0KPiAgICAgICBkZWZhdWx0Og0KPiBAQCAtMzExNCwxNiArMzExNCwxNSBA
+QCB2b2lkIHRjZ19vcHRpbWl6ZShUQ0dDb250ZXh0ICpzKQ0KPiAgICAgICAgICAgY2FzZSBJ
+TkRFWF9vcF9leHRyaF9pNjRfaTMyOg0KPiAgICAgICAgICAgICAgIGRvbmUgPSBmb2xkX2V4
+dHUoJmN0eCwgb3ApOw0KPiAgICAgICAgICAgICAgIGJyZWFrOw0KPiAtICAgICAgICBDQVNF
+X09QXzMyXzY0KGxkOHMpOg0KPiAtICAgICAgICBDQVNFX09QXzMyXzY0KGxkOHUpOg0KPiAt
+ICAgICAgICBDQVNFX09QXzMyXzY0KGxkMTZzKToNCj4gLSAgICAgICAgQ0FTRV9PUF8zMl82
+NChsZDE2dSk6DQo+IC0gICAgICAgIGNhc2UgSU5ERVhfb3BfbGQzMnNfaTY0Og0KPiAtICAg
+ICAgICBjYXNlIElOREVYX29wX2xkMzJ1X2k2NDoNCj4gKyAgICAgICAgY2FzZSBJTkRFWF9v
+cF9sZDhzOg0KPiArICAgICAgICBjYXNlIElOREVYX29wX2xkOHU6DQo+ICsgICAgICAgIGNh
+c2UgSU5ERVhfb3BfbGQxNnM6DQo+ICsgICAgICAgIGNhc2UgSU5ERVhfb3BfbGQxNnU6DQo+
+ICsgICAgICAgIGNhc2UgSU5ERVhfb3BfbGQzMnM6DQo+ICsgICAgICAgIGNhc2UgSU5ERVhf
+b3BfbGQzMnU6DQo+ICAgICAgICAgICAgICAgZG9uZSA9IGZvbGRfdGNnX2xkKCZjdHgsIG9w
+KTsNCj4gICAgICAgICAgICAgICBicmVhazsNCj4gLSAgICAgICAgY2FzZSBJTkRFWF9vcF9s
+ZF9pMzI6DQo+IC0gICAgICAgIGNhc2UgSU5ERVhfb3BfbGRfaTY0Og0KPiArICAgICAgICBj
+YXNlIElOREVYX29wX2xkOg0KPiAgICAgICAgICAgY2FzZSBJTkRFWF9vcF9sZF92ZWM6DQo+
+ICAgICAgICAgICAgICAgZG9uZSA9IGZvbGRfdGNnX2xkX21lbWNvcHkoJmN0eCwgb3ApOw0K
+PiAgICAgICAgICAgICAgIGJyZWFrOw0KPiBkaWZmIC0tZ2l0IGEvdGNnL3RjZy1vcC5jIGIv
+dGNnL3RjZy1vcC5jDQo+IGluZGV4IGIwMTM5Y2UwNWQuLjY4MGY3NTJjZjkgMTAwNjQ0DQo+
+IC0tLSBhL3RjZy90Y2ctb3AuYw0KPiArKysgYi90Y2cvdGNnLW9wLmMNCj4gQEAgLTEzNzks
+MjcgKzEzNzksMjcgQEAgdm9pZCB0Y2dfZ2VuX2Fic19pMzIoVENHdl9pMzIgcmV0LCBUQ0d2
+X2kzMiBhKQ0KPiAgIA0KPiAgIHZvaWQgdGNnX2dlbl9sZDh1X2kzMihUQ0d2X2kzMiByZXQs
+IFRDR3ZfcHRyIGFyZzIsIHRjZ190YXJnZXRfbG9uZyBvZmZzZXQpDQo+ICAgew0KPiAtICAg
+IHRjZ19nZW5fbGRzdF9vcF9pMzIoSU5ERVhfb3BfbGQ4dV9pMzIsIHJldCwgYXJnMiwgb2Zm
+c2V0KTsNCj4gKyAgICB0Y2dfZ2VuX2xkc3Rfb3BfaTMyKElOREVYX29wX2xkOHUsIHJldCwg
+YXJnMiwgb2Zmc2V0KTsNCj4gICB9DQo+ICAgDQo+ICAgdm9pZCB0Y2dfZ2VuX2xkOHNfaTMy
+KFRDR3ZfaTMyIHJldCwgVENHdl9wdHIgYXJnMiwgdGNnX3RhcmdldF9sb25nIG9mZnNldCkN
+Cj4gICB7DQo+IC0gICAgdGNnX2dlbl9sZHN0X29wX2kzMihJTkRFWF9vcF9sZDhzX2kzMiwg
+cmV0LCBhcmcyLCBvZmZzZXQpOw0KPiArICAgIHRjZ19nZW5fbGRzdF9vcF9pMzIoSU5ERVhf
+b3BfbGQ4cywgcmV0LCBhcmcyLCBvZmZzZXQpOw0KPiAgIH0NCj4gICANCj4gICB2b2lkIHRj
+Z19nZW5fbGQxNnVfaTMyKFRDR3ZfaTMyIHJldCwgVENHdl9wdHIgYXJnMiwgdGNnX3Rhcmdl
+dF9sb25nIG9mZnNldCkNCj4gICB7DQo+IC0gICAgdGNnX2dlbl9sZHN0X29wX2kzMihJTkRF
+WF9vcF9sZDE2dV9pMzIsIHJldCwgYXJnMiwgb2Zmc2V0KTsNCj4gKyAgICB0Y2dfZ2VuX2xk
+c3Rfb3BfaTMyKElOREVYX29wX2xkMTZ1LCByZXQsIGFyZzIsIG9mZnNldCk7DQo+ICAgfQ0K
+PiAgIA0KPiAgIHZvaWQgdGNnX2dlbl9sZDE2c19pMzIoVENHdl9pMzIgcmV0LCBUQ0d2X3B0
+ciBhcmcyLCB0Y2dfdGFyZ2V0X2xvbmcgb2Zmc2V0KQ0KPiAgIHsNCj4gLSAgICB0Y2dfZ2Vu
+X2xkc3Rfb3BfaTMyKElOREVYX29wX2xkMTZzX2kzMiwgcmV0LCBhcmcyLCBvZmZzZXQpOw0K
+PiArICAgIHRjZ19nZW5fbGRzdF9vcF9pMzIoSU5ERVhfb3BfbGQxNnMsIHJldCwgYXJnMiwg
+b2Zmc2V0KTsNCj4gICB9DQo+ICAgDQo+ICAgdm9pZCB0Y2dfZ2VuX2xkX2kzMihUQ0d2X2kz
+MiByZXQsIFRDR3ZfcHRyIGFyZzIsIHRjZ190YXJnZXRfbG9uZyBvZmZzZXQpDQo+ICAgew0K
+PiAtICAgIHRjZ19nZW5fbGRzdF9vcF9pMzIoSU5ERVhfb3BfbGRfaTMyLCByZXQsIGFyZzIs
+IG9mZnNldCk7DQo+ICsgICAgdGNnX2dlbl9sZHN0X29wX2kzMihJTkRFWF9vcF9sZCwgcmV0
+LCBhcmcyLCBvZmZzZXQpOw0KPiAgIH0NCj4gICANCj4gICB2b2lkIHRjZ19nZW5fc3Q4X2kz
+MihUQ0d2X2kzMiBhcmcxLCBUQ0d2X3B0ciBhcmcyLCB0Y2dfdGFyZ2V0X2xvbmcgb2Zmc2V0
+KQ0KPiBAQCAtMTQ2Myw3ICsxNDYzLDcgQEAgdm9pZCB0Y2dfZ2VuX21vdmlfaTY0KFRDR3Zf
+aTY0IHJldCwgaW50NjRfdCBhcmcpDQo+ICAgdm9pZCB0Y2dfZ2VuX2xkOHVfaTY0KFRDR3Zf
+aTY0IHJldCwgVENHdl9wdHIgYXJnMiwgdGNnX3RhcmdldF9sb25nIG9mZnNldCkNCj4gICB7
+DQo+ICAgICAgIGlmIChUQ0dfVEFSR0VUX1JFR19CSVRTID09IDY0KSB7DQo+IC0gICAgICAg
+IHRjZ19nZW5fbGRzdF9vcF9pNjQoSU5ERVhfb3BfbGQ4dV9pNjQsIHJldCwgYXJnMiwgb2Zm
+c2V0KTsNCj4gKyAgICAgICAgdGNnX2dlbl9sZHN0X29wX2k2NChJTkRFWF9vcF9sZDh1LCBy
+ZXQsIGFyZzIsIG9mZnNldCk7DQo+ICAgICAgIH0gZWxzZSB7DQo+ICAgICAgICAgICB0Y2df
+Z2VuX2xkOHVfaTMyKFRDR1ZfTE9XKHJldCksIGFyZzIsIG9mZnNldCk7DQo+ICAgICAgICAg
+ICB0Y2dfZ2VuX21vdmlfaTMyKFRDR1ZfSElHSChyZXQpLCAwKTsNCj4gQEAgLTE0NzMsNyAr
+MTQ3Myw3IEBAIHZvaWQgdGNnX2dlbl9sZDh1X2k2NChUQ0d2X2k2NCByZXQsIFRDR3ZfcHRy
+IGFyZzIsIHRjZ190YXJnZXRfbG9uZyBvZmZzZXQpDQo+ICAgdm9pZCB0Y2dfZ2VuX2xkOHNf
+aTY0KFRDR3ZfaTY0IHJldCwgVENHdl9wdHIgYXJnMiwgdGNnX3RhcmdldF9sb25nIG9mZnNl
+dCkNCj4gICB7DQo+ICAgICAgIGlmIChUQ0dfVEFSR0VUX1JFR19CSVRTID09IDY0KSB7DQo+
+IC0gICAgICAgIHRjZ19nZW5fbGRzdF9vcF9pNjQoSU5ERVhfb3BfbGQ4c19pNjQsIHJldCwg
+YXJnMiwgb2Zmc2V0KTsNCj4gKyAgICAgICAgdGNnX2dlbl9sZHN0X29wX2k2NChJTkRFWF9v
+cF9sZDhzLCByZXQsIGFyZzIsIG9mZnNldCk7DQo+ICAgICAgIH0gZWxzZSB7DQo+ICAgICAg
+ICAgICB0Y2dfZ2VuX2xkOHNfaTMyKFRDR1ZfTE9XKHJldCksIGFyZzIsIG9mZnNldCk7DQo+
+ICAgICAgICAgICB0Y2dfZ2VuX3NhcmlfaTMyKFRDR1ZfSElHSChyZXQpLCBUQ0dWX0xPVyhy
+ZXQpLCAzMSk7DQo+IEBAIC0xNDgzLDcgKzE0ODMsNyBAQCB2b2lkIHRjZ19nZW5fbGQ4c19p
+NjQoVENHdl9pNjQgcmV0LCBUQ0d2X3B0ciBhcmcyLCB0Y2dfdGFyZ2V0X2xvbmcgb2Zmc2V0
+KQ0KPiAgIHZvaWQgdGNnX2dlbl9sZDE2dV9pNjQoVENHdl9pNjQgcmV0LCBUQ0d2X3B0ciBh
+cmcyLCB0Y2dfdGFyZ2V0X2xvbmcgb2Zmc2V0KQ0KPiAgIHsNCj4gICAgICAgaWYgKFRDR19U
+QVJHRVRfUkVHX0JJVFMgPT0gNjQpIHsNCj4gLSAgICAgICAgdGNnX2dlbl9sZHN0X29wX2k2
+NChJTkRFWF9vcF9sZDE2dV9pNjQsIHJldCwgYXJnMiwgb2Zmc2V0KTsNCj4gKyAgICAgICAg
+dGNnX2dlbl9sZHN0X29wX2k2NChJTkRFWF9vcF9sZDE2dSwgcmV0LCBhcmcyLCBvZmZzZXQp
+Ow0KPiAgICAgICB9IGVsc2Ugew0KPiAgICAgICAgICAgdGNnX2dlbl9sZDE2dV9pMzIoVENH
+Vl9MT1cocmV0KSwgYXJnMiwgb2Zmc2V0KTsNCj4gICAgICAgICAgIHRjZ19nZW5fbW92aV9p
+MzIoVENHVl9ISUdIKHJldCksIDApOw0KPiBAQCAtMTQ5Myw3ICsxNDkzLDcgQEAgdm9pZCB0
+Y2dfZ2VuX2xkMTZ1X2k2NChUQ0d2X2k2NCByZXQsIFRDR3ZfcHRyIGFyZzIsIHRjZ190YXJn
+ZXRfbG9uZyBvZmZzZXQpDQo+ICAgdm9pZCB0Y2dfZ2VuX2xkMTZzX2k2NChUQ0d2X2k2NCBy
+ZXQsIFRDR3ZfcHRyIGFyZzIsIHRjZ190YXJnZXRfbG9uZyBvZmZzZXQpDQo+ICAgew0KPiAg
+ICAgICBpZiAoVENHX1RBUkdFVF9SRUdfQklUUyA9PSA2NCkgew0KPiAtICAgICAgICB0Y2df
+Z2VuX2xkc3Rfb3BfaTY0KElOREVYX29wX2xkMTZzX2k2NCwgcmV0LCBhcmcyLCBvZmZzZXQp
+Ow0KPiArICAgICAgICB0Y2dfZ2VuX2xkc3Rfb3BfaTY0KElOREVYX29wX2xkMTZzLCByZXQs
+IGFyZzIsIG9mZnNldCk7DQo+ICAgICAgIH0gZWxzZSB7DQo+ICAgICAgICAgICB0Y2dfZ2Vu
+X2xkMTZzX2kzMihUQ0dWX0xPVyhyZXQpLCBhcmcyLCBvZmZzZXQpOw0KPiAgICAgICAgICAg
+dGNnX2dlbl9zYXJpX2kzMihUQ0dWX0hJR0gocmV0KSwgVENHVl9MT1cocmV0KSwgMzEpOw0K
+PiBAQCAtMTUwMyw3ICsxNTAzLDcgQEAgdm9pZCB0Y2dfZ2VuX2xkMTZzX2k2NChUQ0d2X2k2
+NCByZXQsIFRDR3ZfcHRyIGFyZzIsIHRjZ190YXJnZXRfbG9uZyBvZmZzZXQpDQo+ICAgdm9p
+ZCB0Y2dfZ2VuX2xkMzJ1X2k2NChUQ0d2X2k2NCByZXQsIFRDR3ZfcHRyIGFyZzIsIHRjZ190
+YXJnZXRfbG9uZyBvZmZzZXQpDQo+ICAgew0KPiAgICAgICBpZiAoVENHX1RBUkdFVF9SRUdf
+QklUUyA9PSA2NCkgew0KPiAtICAgICAgICB0Y2dfZ2VuX2xkc3Rfb3BfaTY0KElOREVYX29w
+X2xkMzJ1X2k2NCwgcmV0LCBhcmcyLCBvZmZzZXQpOw0KPiArICAgICAgICB0Y2dfZ2VuX2xk
+c3Rfb3BfaTY0KElOREVYX29wX2xkMzJ1LCByZXQsIGFyZzIsIG9mZnNldCk7DQo+ICAgICAg
+IH0gZWxzZSB7DQo+ICAgICAgICAgICB0Y2dfZ2VuX2xkX2kzMihUQ0dWX0xPVyhyZXQpLCBh
+cmcyLCBvZmZzZXQpOw0KPiAgICAgICAgICAgdGNnX2dlbl9tb3ZpX2kzMihUQ0dWX0hJR0go
+cmV0KSwgMCk7DQo+IEBAIC0xNTEzLDcgKzE1MTMsNyBAQCB2b2lkIHRjZ19nZW5fbGQzMnVf
+aTY0KFRDR3ZfaTY0IHJldCwgVENHdl9wdHIgYXJnMiwgdGNnX3RhcmdldF9sb25nIG9mZnNl
+dCkNCj4gICB2b2lkIHRjZ19nZW5fbGQzMnNfaTY0KFRDR3ZfaTY0IHJldCwgVENHdl9wdHIg
+YXJnMiwgdGNnX3RhcmdldF9sb25nIG9mZnNldCkNCj4gICB7DQo+ICAgICAgIGlmIChUQ0df
+VEFSR0VUX1JFR19CSVRTID09IDY0KSB7DQo+IC0gICAgICAgIHRjZ19nZW5fbGRzdF9vcF9p
+NjQoSU5ERVhfb3BfbGQzMnNfaTY0LCByZXQsIGFyZzIsIG9mZnNldCk7DQo+ICsgICAgICAg
+IHRjZ19nZW5fbGRzdF9vcF9pNjQoSU5ERVhfb3BfbGQzMnMsIHJldCwgYXJnMiwgb2Zmc2V0
+KTsNCj4gICAgICAgfSBlbHNlIHsNCj4gICAgICAgICAgIHRjZ19nZW5fbGRfaTMyKFRDR1Zf
+TE9XKHJldCksIGFyZzIsIG9mZnNldCk7DQo+ICAgICAgICAgICB0Y2dfZ2VuX3NhcmlfaTMy
+KFRDR1ZfSElHSChyZXQpLCBUQ0dWX0xPVyhyZXQpLCAzMSk7DQo+IEBAIC0xNTI3LDcgKzE1
+MjcsNyBAQCB2b2lkIHRjZ19nZW5fbGRfaTY0KFRDR3ZfaTY0IHJldCwgVENHdl9wdHIgYXJn
+MiwgdGNnX3RhcmdldF9sb25nIG9mZnNldCkNCj4gICAgICAgICogdGhleSBjYW5ub3QgYmUg
+dGhlIHNhbWUgdGVtcG9yYXJ5IC0tIG5vIGNoYW5jZSBvZiBvdmVybGFwLg0KPiAgICAgICAg
+Ki8NCj4gICAgICAgaWYgKFRDR19UQVJHRVRfUkVHX0JJVFMgPT0gNjQpIHsNCj4gLSAgICAg
+ICAgdGNnX2dlbl9sZHN0X29wX2k2NChJTkRFWF9vcF9sZF9pNjQsIHJldCwgYXJnMiwgb2Zm
+c2V0KTsNCj4gKyAgICAgICAgdGNnX2dlbl9sZHN0X29wX2k2NChJTkRFWF9vcF9sZCwgcmV0
+LCBhcmcyLCBvZmZzZXQpOw0KPiAgICAgICB9IGVsc2UgaWYgKEhPU1RfQklHX0VORElBTikg
+ew0KPiAgICAgICAgICAgdGNnX2dlbl9sZF9pMzIoVENHVl9ISUdIKHJldCksIGFyZzIsIG9m
+ZnNldCk7DQo+ICAgICAgICAgICB0Y2dfZ2VuX2xkX2kzMihUQ0dWX0xPVyhyZXQpLCBhcmcy
+LCBvZmZzZXQgKyA0KTsNCj4gZGlmZiAtLWdpdCBhL3RjZy90Y2cuYyBiL3RjZy90Y2cuYw0K
+PiBpbmRleCA1ZThlOGJmNzkxLi4zZjIyOGRiMGU1IDEwMDY0NA0KPiAtLS0gYS90Y2cvdGNn
+LmMNCj4gKysrIGIvdGNnL3RjZy5jDQo+IEBAIC0xMTg0LDE2ICsxMTg0LDExIEBAIHN0YXRp
+YyBjb25zdCBUQ0dPdXRPcCAqIGNvbnN0IGFsbF9vdXRvcFtOQl9PUFNdID0gew0KPiAgICAg
+ICBPVVRPUChJTkRFWF9vcF9lcXYsIFRDR091dE9wQmluYXJ5LCBvdXRvcF9lcXYpLA0KPiAg
+ICAgICBPVVRPUChJTkRFWF9vcF9leHRyYWN0LCBUQ0dPdXRPcEV4dHJhY3QsIG91dG9wX2V4
+dHJhY3QpLA0KPiAgICAgICBPVVRPUChJTkRFWF9vcF9leHRyYWN0MiwgVENHT3V0T3BFeHRy
+YWN0Miwgb3V0b3BfZXh0cmFjdDIpLA0KPiAtICAgIE9VVE9QKElOREVYX29wX2xkOHVfaTMy
+LCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkOHUpLA0KPiAtICAgIE9VVE9QKElOREVYX29wX2xk
+OHVfaTY0LCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkOHUpLA0KPiAtICAgIE9VVE9QKElOREVY
+X29wX2xkOHNfaTMyLCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkOHMpLA0KPiAtICAgIE9VVE9Q
+KElOREVYX29wX2xkOHNfaTY0LCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkOHMpLA0KPiAtICAg
+IE9VVE9QKElOREVYX29wX2xkMTZ1X2kzMiwgVENHT3V0T3BMb2FkLCBvdXRvcF9sZDE2dSks
+DQo+IC0gICAgT1VUT1AoSU5ERVhfb3BfbGQxNnVfaTY0LCBUQ0dPdXRPcExvYWQsIG91dG9w
+X2xkMTZ1KSwNCj4gLSAgICBPVVRPUChJTkRFWF9vcF9sZDE2c19pMzIsIFRDR091dE9wTG9h
+ZCwgb3V0b3BfbGQxNnMpLA0KPiAtICAgIE9VVE9QKElOREVYX29wX2xkMTZzX2k2NCwgVENH
+T3V0T3BMb2FkLCBvdXRvcF9sZDE2cyksDQo+IC0gICAgT1VUT1AoSU5ERVhfb3BfbGRfaTMy
+LCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkKSwNCj4gLSAgICBPVVRPUChJTkRFWF9vcF9sZF9p
+NjQsIFRDR091dE9wTG9hZCwgb3V0b3BfbGQpLA0KPiArICAgIE9VVE9QKElOREVYX29wX2xk
+OHUsIFRDR091dE9wTG9hZCwgb3V0b3BfbGQ4dSksDQo+ICsgICAgT1VUT1AoSU5ERVhfb3Bf
+bGQ4cywgVENHT3V0T3BMb2FkLCBvdXRvcF9sZDhzKSwNCj4gKyAgICBPVVRPUChJTkRFWF9v
+cF9sZDE2dSwgVENHT3V0T3BMb2FkLCBvdXRvcF9sZDE2dSksDQo+ICsgICAgT1VUT1AoSU5E
+RVhfb3BfbGQxNnMsIFRDR091dE9wTG9hZCwgb3V0b3BfbGQxNnMpLA0KPiArICAgIE9VVE9Q
+KElOREVYX29wX2xkLCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkKSwNCj4gICAgICAgT1VUT1Ao
+SU5ERVhfb3BfbW92Y29uZCwgVENHT3V0T3BNb3Zjb25kLCBvdXRvcF9tb3Zjb25kKSwNCj4g
+ICAgICAgT1VUT1AoSU5ERVhfb3BfbXVsLCBUQ0dPdXRPcEJpbmFyeSwgb3V0b3BfbXVsKSwN
+Cj4gICAgICAgT1VUT1AoSU5ERVhfb3BfbXVsczIsIFRDR091dE9wTXVsMiwgb3V0b3BfbXVs
+czIpLA0KPiBAQCAtMTIzNSw4ICsxMjMwLDggQEAgc3RhdGljIGNvbnN0IFRDR091dE9wICog
+Y29uc3QgYWxsX291dG9wW05CX09QU10gPSB7DQo+ICAgICAgIE9VVE9QKElOREVYX29wX2V4
+dHVfaTMyX2k2NCwgVENHT3V0T3BVbmFyeSwgb3V0b3BfZXh0dV9pMzJfaTY0KSwNCj4gICAg
+ICAgT1VUT1AoSU5ERVhfb3BfZXh0cmxfaTY0X2kzMiwgVENHT3V0T3BVbmFyeSwgb3V0b3Bf
+ZXh0cmxfaTY0X2kzMiksDQo+ICAgICAgIE9VVE9QKElOREVYX29wX2V4dHJoX2k2NF9pMzIs
+IFRDR091dE9wVW5hcnksIG91dG9wX2V4dHJoX2k2NF9pMzIpLA0KPiAtICAgIE9VVE9QKElO
+REVYX29wX2xkMzJ1X2k2NCwgVENHT3V0T3BMb2FkLCBvdXRvcF9sZDMydSksDQo+IC0gICAg
+T1VUT1AoSU5ERVhfb3BfbGQzMnNfaTY0LCBUQ0dPdXRPcExvYWQsIG91dG9wX2xkMzJzKSwN
+Cj4gKyAgICBPVVRPUChJTkRFWF9vcF9sZDMydSwgVENHT3V0T3BMb2FkLCBvdXRvcF9sZDMy
+dSksDQo+ICsgICAgT1VUT1AoSU5ERVhfb3BfbGQzMnMsIFRDR091dE9wTG9hZCwgb3V0b3Bf
+bGQzMnMpLA0KPiAgICNlbmRpZg0KPiAgIH07DQo+ICAgDQo+IEBAIC0yNDQzLDYgKzI0Mzgs
+MTEgQEAgYm9vbCB0Y2dfb3Bfc3VwcG9ydGVkKFRDR09wY29kZSBvcCwgVENHVHlwZSB0eXBl
+LCB1bnNpZ25lZCBmbGFncykNCj4gICAgICAgY2FzZSBJTkRFWF9vcF9icmNvbmQ6DQo+ICAg
+ICAgIGNhc2UgSU5ERVhfb3BfZGVwb3NpdDoNCj4gICAgICAgY2FzZSBJTkRFWF9vcF9leHRy
+YWN0Og0KPiArICAgIGNhc2UgSU5ERVhfb3BfbGQ4dToNCj4gKyAgICBjYXNlIElOREVYX29w
+X2xkOHM6DQo+ICsgICAgY2FzZSBJTkRFWF9vcF9sZDE2dToNCj4gKyAgICBjYXNlIElOREVY
+X29wX2xkMTZzOg0KPiArICAgIGNhc2UgSU5ERVhfb3BfbGQ6DQo+ICAgICAgIGNhc2UgSU5E
+RVhfb3BfbW92Og0KPiAgICAgICBjYXNlIElOREVYX29wX21vdmNvbmQ6DQo+ICAgICAgIGNh
+c2UgSU5ERVhfb3BfbmVnc2V0Y29uZDoNCj4gQEAgLTI0NTIsMTEgKzI0NTIsNiBAQCBib29s
+IHRjZ19vcF9zdXBwb3J0ZWQoVENHT3Bjb2RlIG9wLCBUQ0dUeXBlIHR5cGUsIHVuc2lnbmVk
+IGZsYWdzKQ0KPiAgICAgICBjYXNlIElOREVYX29wX3hvcjoNCj4gICAgICAgICAgIHJldHVy
+biBoYXNfdHlwZTsNCj4gICANCj4gLSAgICBjYXNlIElOREVYX29wX2xkOHVfaTMyOg0KPiAt
+ICAgIGNhc2UgSU5ERVhfb3BfbGQ4c19pMzI6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDE2
+dV9pMzI6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDE2c19pMzI6DQo+IC0gICAgY2FzZSBJ
+TkRFWF9vcF9sZF9pMzI6DQo+ICAgICAgIGNhc2UgSU5ERVhfb3Bfc3Q4X2kzMjoNCj4gICAg
+ICAgY2FzZSBJTkRFWF9vcF9zdDE2X2kzMjoNCj4gICAgICAgY2FzZSBJTkRFWF9vcF9zdF9p
+MzI6DQo+IEBAIC0yNDY2LDEzICsyNDYxLDggQEAgYm9vbCB0Y2dfb3Bfc3VwcG9ydGVkKFRD
+R09wY29kZSBvcCwgVENHVHlwZSB0eXBlLCB1bnNpZ25lZCBmbGFncykNCj4gICAgICAgY2Fz
+ZSBJTkRFWF9vcF9zZXRjb25kMl9pMzI6DQo+ICAgICAgICAgICByZXR1cm4gVENHX1RBUkdF
+VF9SRUdfQklUUyA9PSAzMjsNCj4gICANCj4gLSAgICBjYXNlIElOREVYX29wX2xkOHVfaTY0
+Og0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGQ4c19pNjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9v
+cF9sZDE2dV9pNjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDE2c19pNjQ6DQo+IC0gICAg
+Y2FzZSBJTkRFWF9vcF9sZDMydV9pNjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDMyc19p
+NjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZF9pNjQ6DQo+ICsgICAgY2FzZSBJTkRFWF9v
+cF9sZDMydToNCj4gKyAgICBjYXNlIElOREVYX29wX2xkMzJzOg0KPiAgICAgICBjYXNlIElO
+REVYX29wX3N0OF9pNjQ6DQo+ICAgICAgIGNhc2UgSU5ERVhfb3Bfc3QxNl9pNjQ6DQo+ICAg
+ICAgIGNhc2UgSU5ERVhfb3Bfc3QzMl9pNjQ6DQo+IEBAIC00NDI2LDEwICs0NDE2LDcgQEAg
+bGl2ZW5lc3NfcGFzc18yKFRDR0NvbnRleHQgKnMpDQo+ICAgICAgICAgICAgICAgYXJnX3Rz
+ID0gYXJnX3RlbXAob3AtPmFyZ3NbaV0pOw0KPiAgICAgICAgICAgICAgIGRpcl90cyA9IGFy
+Z190cy0+c3RhdGVfcHRyOw0KPiAgICAgICAgICAgICAgIGlmIChkaXJfdHMgJiYgYXJnX3Rz
+LT5zdGF0ZSA9PSBUU19ERUFEKSB7DQo+IC0gICAgICAgICAgICAgICAgVENHT3Bjb2RlIGxv
+cGMgPSAoYXJnX3RzLT50eXBlID09IFRDR19UWVBFX0kzMg0KPiAtICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgID8gSU5ERVhfb3BfbGRfaTMyDQo+IC0gICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgOiBJTkRFWF9vcF9sZF9pNjQpOw0KPiAtICAgICAgICAg
+ICAgICAgIFRDR09wICpsb3AgPSB0Y2dfb3BfaW5zZXJ0X2JlZm9yZShzLCBvcCwgbG9wYywg
+Myk7DQo+ICsgICAgICAgICAgICAgICAgVENHT3AgKmxvcCA9IHRjZ19vcF9pbnNlcnRfYmVm
+b3JlKHMsIG9wLCBJTkRFWF9vcF9sZCwgMyk7DQo+ICAgDQo+ICAgICAgICAgICAgICAgICAg
+IFRDR09QX1RZUEUobG9wKSA9IGFyZ190cy0+dHlwZTsNCj4gICAgICAgICAgICAgICAgICAg
+bG9wLT5hcmdzWzBdID0gdGVtcF9hcmcoZGlyX3RzKTsNCj4gQEAgLTU3NjEsMjAgKzU3NDgs
+MTMgQEAgc3RhdGljIHZvaWQgdGNnX3JlZ19hbGxvY19vcChUQ0dDb250ZXh0ICpzLCBjb25z
+dCBUQ0dPcCAqb3ApDQo+ICAgICAgICAgICB9DQo+ICAgICAgICAgICBicmVhazsNCj4gICAN
+Cj4gLSAgICBjYXNlIElOREVYX29wX2xkMzJ1X2k2NDoNCj4gLSAgICBjYXNlIElOREVYX29w
+X2xkMzJzX2k2NDoNCj4gLSAgICAgICAgdGNnX2RlYnVnX2Fzc2VydCh0eXBlID09IFRDR19U
+WVBFX0k2NCk7DQo+IC0gICAgICAgIC8qIGZhbGwgdGhyb3VnaCAqLw0KPiAtICAgIGNhc2Ug
+SU5ERVhfb3BfbGQ4dV9pMzI6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDh1X2k2NDoNCj4g
+LSAgICBjYXNlIElOREVYX29wX2xkOHNfaTMyOg0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGQ4
+c19pNjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDE2dV9pMzI6DQo+IC0gICAgY2FzZSBJ
+TkRFWF9vcF9sZDE2dV9pNjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDE2c19pMzI6DQo+
+IC0gICAgY2FzZSBJTkRFWF9vcF9sZDE2c19pNjQ6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9s
+ZF9pMzI6DQo+IC0gICAgY2FzZSBJTkRFWF9vcF9sZF9pNjQ6DQo+ICsgICAgY2FzZSBJTkRF
+WF9vcF9sZDh1Og0KPiArICAgIGNhc2UgSU5ERVhfb3BfbGQ4czoNCj4gKyAgICBjYXNlIElO
+REVYX29wX2xkMTZ1Og0KPiArICAgIGNhc2UgSU5ERVhfb3BfbGQxNnM6DQo+ICsgICAgY2Fz
+ZSBJTkRFWF9vcF9sZDMydToNCj4gKyAgICBjYXNlIElOREVYX29wX2xkMzJzOg0KPiArICAg
+IGNhc2UgSU5ERVhfb3BfbGQ6DQo+ICAgICAgICAgICB7DQo+ICAgICAgICAgICAgICAgY29u
+c3QgVENHT3V0T3BMb2FkICpvdXQgPQ0KPiAgICAgICAgICAgICAgICAgICBjb250YWluZXJf
+b2YoYWxsX291dG9wW29wLT5vcGNdLCBUQ0dPdXRPcExvYWQsIGJhc2UpOw0KPiBkaWZmIC0t
+Z2l0IGEvdGNnL3RjaS5jIGIvdGNnL3RjaS5jDQo+IGluZGV4IGExODQ3OGEwN2EuLjg5MGNj
+YmU4NWIgMTAwNjQ0DQo+IC0tLSBhL3RjZy90Y2kuYw0KPiArKysgYi90Y2cvdGNpLmMNCj4g
+QEAgLTQ2NiwzMSArNDY2LDMwIEBAIHVpbnRwdHJfdCBRRU1VX0RJU0FCTEVfQ0ZJIHRjZ19x
+ZW11X3RiX2V4ZWMoQ1BVQXJjaFN0YXRlICplbnYsDQo+ICAgDQo+ICAgICAgICAgICAgICAg
+LyogTG9hZC9zdG9yZSBvcGVyYXRpb25zICgzMiBiaXQpLiAqLw0KPiAgIA0KPiAtICAgICAg
+ICBDQVNFXzMyXzY0KGxkOHUpDQo+ICsgICAgICAgIGNhc2UgSU5ERVhfb3BfbGQ4dToNCj4g
+ICAgICAgICAgICAgICB0Y2lfYXJnc19ycnMoaW5zbiwgJnIwLCAmcjEsICZvZnMpOw0KPiAg
+ICAgICAgICAgICAgIHB0ciA9ICh2b2lkICopKHJlZ3NbcjFdICsgb2ZzKTsNCj4gICAgICAg
+ICAgICAgICByZWdzW3IwXSA9ICoodWludDhfdCAqKXB0cjsNCj4gICAgICAgICAgICAgICBi
+cmVhazsNCj4gLSAgICAgICAgQ0FTRV8zMl82NChsZDhzKQ0KPiArICAgICAgICBjYXNlIElO
+REVYX29wX2xkOHM6DQo+ICAgICAgICAgICAgICAgdGNpX2FyZ3NfcnJzKGluc24sICZyMCwg
+JnIxLCAmb2ZzKTsNCj4gICAgICAgICAgICAgICBwdHIgPSAodm9pZCAqKShyZWdzW3IxXSAr
+IG9mcyk7DQo+ICAgICAgICAgICAgICAgcmVnc1tyMF0gPSAqKGludDhfdCAqKXB0cjsNCj4g
+ICAgICAgICAgICAgICBicmVhazsNCj4gLSAgICAgICAgQ0FTRV8zMl82NChsZDE2dSkNCj4g
+KyAgICAgICAgY2FzZSBJTkRFWF9vcF9sZDE2dToNCj4gICAgICAgICAgICAgICB0Y2lfYXJn
+c19ycnMoaW5zbiwgJnIwLCAmcjEsICZvZnMpOw0KPiAgICAgICAgICAgICAgIHB0ciA9ICh2
+b2lkICopKHJlZ3NbcjFdICsgb2ZzKTsNCj4gICAgICAgICAgICAgICByZWdzW3IwXSA9ICoo
+dWludDE2X3QgKilwdHI7DQo+ICAgICAgICAgICAgICAgYnJlYWs7DQo+IC0gICAgICAgIENB
+U0VfMzJfNjQobGQxNnMpDQo+ICsgICAgICAgIGNhc2UgSU5ERVhfb3BfbGQxNnM6DQo+ICAg
+ICAgICAgICAgICAgdGNpX2FyZ3NfcnJzKGluc24sICZyMCwgJnIxLCAmb2ZzKTsNCj4gICAg
+ICAgICAgICAgICBwdHIgPSAodm9pZCAqKShyZWdzW3IxXSArIG9mcyk7DQo+ICAgICAgICAg
+ICAgICAgcmVnc1tyMF0gPSAqKGludDE2X3QgKilwdHI7DQo+ICAgICAgICAgICAgICAgYnJl
+YWs7DQo+IC0gICAgICAgIGNhc2UgSU5ERVhfb3BfbGRfaTMyOg0KPiAtICAgICAgICBDQVNF
+XzY0KGxkMzJ1KQ0KPiArICAgICAgICBjYXNlIElOREVYX29wX2xkOg0KPiAgICAgICAgICAg
+ICAgIHRjaV9hcmdzX3JycyhpbnNuLCAmcjAsICZyMSwgJm9mcyk7DQo+ICAgICAgICAgICAg
+ICAgcHRyID0gKHZvaWQgKikocmVnc1tyMV0gKyBvZnMpOw0KPiAtICAgICAgICAgICAgcmVn
+c1tyMF0gPSAqKHVpbnQzMl90ICopcHRyOw0KPiArICAgICAgICAgICAgcmVnc1tyMF0gPSAq
+KHRjZ190YXJnZXRfdWxvbmcgKilwdHI7DQo+ICAgICAgICAgICAgICAgYnJlYWs7DQo+ICAg
+ICAgICAgICBDQVNFXzMyXzY0KHN0OCkNCj4gICAgICAgICAgICAgICB0Y2lfYXJnc19ycnMo
+aW5zbiwgJnIwLCAmcjEsICZvZnMpOw0KPiBAQCAtNzE2LDE2ICs3MTUsMTYgQEAgdWludHB0
+cl90IFFFTVVfRElTQUJMRV9DRkkgdGNnX3FlbXVfdGJfZXhlYyhDUFVBcmNoU3RhdGUgKmVu
+diwNCj4gICAjaWYgVENHX1RBUkdFVF9SRUdfQklUUyA9PSA2NA0KPiAgICAgICAgICAgICAg
+IC8qIExvYWQvc3RvcmUgb3BlcmF0aW9ucyAoNjQgYml0KS4gKi8NCj4gICANCj4gLSAgICAg
+ICAgY2FzZSBJTkRFWF9vcF9sZDMyc19pNjQ6DQo+ICsgICAgICAgIGNhc2UgSU5ERVhfb3Bf
+bGQzMnU6DQo+ICsgICAgICAgICAgICB0Y2lfYXJnc19ycnMoaW5zbiwgJnIwLCAmcjEsICZv
+ZnMpOw0KPiArICAgICAgICAgICAgcHRyID0gKHZvaWQgKikocmVnc1tyMV0gKyBvZnMpOw0K
+PiArICAgICAgICAgICAgcmVnc1tyMF0gPSAqKHVpbnQzMl90ICopcHRyOw0KPiArICAgICAg
+ICAgICAgYnJlYWs7DQo+ICsgICAgICAgIGNhc2UgSU5ERVhfb3BfbGQzMnM6DQo+ICAgICAg
+ICAgICAgICAgdGNpX2FyZ3NfcnJzKGluc24sICZyMCwgJnIxLCAmb2ZzKTsNCj4gICAgICAg
+ICAgICAgICBwdHIgPSAodm9pZCAqKShyZWdzW3IxXSArIG9mcyk7DQo+ICAgICAgICAgICAg
+ICAgcmVnc1tyMF0gPSAqKGludDMyX3QgKilwdHI7DQo+ICAgICAgICAgICAgICAgYnJlYWs7
+DQo+IC0gICAgICAgIGNhc2UgSU5ERVhfb3BfbGRfaTY0Og0KPiAtICAgICAgICAgICAgdGNp
+X2FyZ3NfcnJzKGluc24sICZyMCwgJnIxLCAmb2ZzKTsNCj4gLSAgICAgICAgICAgIHB0ciA9
+ICh2b2lkICopKHJlZ3NbcjFdICsgb2ZzKTsNCj4gLSAgICAgICAgICAgIHJlZ3NbcjBdID0g
+Kih1aW50NjRfdCAqKXB0cjsNCj4gLSAgICAgICAgICAgIGJyZWFrOw0KPiAgICAgICAgICAg
+Y2FzZSBJTkRFWF9vcF9zdF9pNjQ6DQo+ICAgICAgICAgICAgICAgdGNpX2FyZ3NfcnJzKGlu
+c24sICZyMCwgJnIxLCAmb2ZzKTsNCj4gICAgICAgICAgICAgICBwdHIgPSAodm9pZCAqKShy
+ZWdzW3IxXSArIG9mcyk7DQo+IEBAIC05NzAsMTggKzk2OSwxMiBAQCBpbnQgcHJpbnRfaW5z
+bl90Y2koYmZkX3ZtYSBhZGRyLCBkaXNhc3NlbWJsZV9pbmZvICppbmZvKQ0KPiAgICAgICAg
+ICAgaW5mby0+ZnByaW50Zl9mdW5jKGluZm8tPnN0cmVhbSwgIiUtMTJzIiwgb3BfbmFtZSk7
+DQo+ICAgICAgICAgICBicmVhazsNCj4gICANCj4gLSAgICBjYXNlIElOREVYX29wX2xkOHVf
+aTMyOg0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGQ4dV9pNjQ6DQo+IC0gICAgY2FzZSBJTkRF
+WF9vcF9sZDhzX2kzMjoNCj4gLSAgICBjYXNlIElOREVYX29wX2xkOHNfaTY0Og0KPiAtICAg
+IGNhc2UgSU5ERVhfb3BfbGQxNnVfaTMyOg0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGQxNnVf
+aTY0Og0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGQxNnNfaTMyOg0KPiAtICAgIGNhc2UgSU5E
+RVhfb3BfbGQxNnNfaTY0Og0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGQzMnVfaTY0Og0KPiAt
+ICAgIGNhc2UgSU5ERVhfb3BfbGQzMnNfaTY0Og0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGRf
+aTMyOg0KPiAtICAgIGNhc2UgSU5ERVhfb3BfbGRfaTY0Og0KPiArICAgIGNhc2UgSU5ERVhf
+b3BfbGQ4dToNCj4gKyAgICBjYXNlIElOREVYX29wX2xkOHM6DQo+ICsgICAgY2FzZSBJTkRF
+WF9vcF9sZDE2dToNCj4gKyAgICBjYXNlIElOREVYX29wX2xkMTZzOg0KPiArICAgIGNhc2Ug
+SU5ERVhfb3BfbGQzMnU6DQo+ICsgICAgY2FzZSBJTkRFWF9vcF9sZDoNCj4gICAgICAgY2Fz
+ZSBJTkRFWF9vcF9zdDhfaTMyOg0KPiAgICAgICBjYXNlIElOREVYX29wX3N0OF9pNjQ6DQo+
+ICAgICAgIGNhc2UgSU5ERVhfb3Bfc3QxNl9pMzI6DQo+IGRpZmYgLS1naXQgYS90Y2cvdGNp
+L3RjZy10YXJnZXQuYy5pbmMgYi90Y2cvdGNpL3RjZy10YXJnZXQuYy5pbmMNCj4gaW5kZXgg
+MmRjZDU2MWI3Ny4uZDU0OWRjOTBmNSAxMDA2NDQNCj4gLS0tIGEvdGNnL3RjaS90Y2ctdGFy
+Z2V0LmMuaW5jDQo+ICsrKyBiL3RjZy90Y2kvdGNnLXRhcmdldC5jLmluYw0KPiBAQCAtMzM5
+LDE4ICszMzksMTIgQEAgc3RhdGljIHZvaWQgdGNnX291dF9sZHN0KFRDR0NvbnRleHQgKnMs
+IFRDR09wY29kZSBvcCwgVENHUmVnIHZhbCwNCj4gICBzdGF0aWMgdm9pZCB0Y2dfb3V0X2xk
+KFRDR0NvbnRleHQgKnMsIFRDR1R5cGUgdHlwZSwgVENHUmVnIHZhbCwgVENHUmVnIGJhc2Us
+DQo+ICAgICAgICAgICAgICAgICAgICAgICAgICBpbnRwdHJfdCBvZmZzZXQpDQo+ICAgew0K
+PiAtICAgIHN3aXRjaCAodHlwZSkgew0KPiAtICAgIGNhc2UgVENHX1RZUEVfSTMyOg0KPiAt
+ICAgICAgICB0Y2dfb3V0X2xkc3QocywgSU5ERVhfb3BfbGRfaTMyLCB2YWwsIGJhc2UsIG9m
+ZnNldCk7DQo+IC0gICAgICAgIGJyZWFrOw0KPiAtI2lmIFRDR19UQVJHRVRfUkVHX0JJVFMg
+PT0gNjQNCj4gLSAgICBjYXNlIFRDR19UWVBFX0k2NDoNCj4gLSAgICAgICAgdGNnX291dF9s
+ZHN0KHMsIElOREVYX29wX2xkX2k2NCwgdmFsLCBiYXNlLCBvZmZzZXQpOw0KPiAtICAgICAg
+ICBicmVhazsNCj4gLSNlbmRpZg0KPiAtICAgIGRlZmF1bHQ6DQo+IC0gICAgICAgIGdfYXNz
+ZXJ0X25vdF9yZWFjaGVkKCk7DQo+ICsgICAgVENHT3Bjb2RlIG9wID0gSU5ERVhfb3BfbGQ7
+DQo+ICsNCj4gKyAgICBpZiAoVENHX1RBUkdFVF9SRUdfQklUUyA9PSA2NCAmJiB0eXBlID09
+IFRDR19UWVBFX0kzMikgew0KPiArICAgICAgICBvcCA9IElOREVYX29wX2xkMzJ1Ow0KPiAg
+ICAgICB9DQo+ICsgICAgdGNnX291dF9sZHN0KHMsIG9wLCB2YWwsIGJhc2UsIG9mZnNldCk7
+DQo+ICAgfQ0KPiAgIA0KPiAgIHN0YXRpYyBib29sIHRjZ19vdXRfbW92KFRDR0NvbnRleHQg
+KnMsIFRDR1R5cGUgdHlwZSwgVENHUmVnIHJldCwgVENHUmVnIGFyZykNCj4gQEAgLTExMzIs
+NyArMTEyNiw3IEBAIHN0YXRpYyB2b2lkIHRjZ19vdXRfYnIoVENHQ29udGV4dCAqcywgVENH
+TGFiZWwgKmwpDQo+ICAgc3RhdGljIHZvaWQgdGdlbl9sZDh1KFRDR0NvbnRleHQgKnMsIFRD
+R1R5cGUgdHlwZSwgVENHUmVnIGRlc3QsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgIFRD
+R1JlZyBiYXNlLCBwdHJkaWZmX3Qgb2Zmc2V0KQ0KPiAgIHsNCj4gLSAgICB0Y2dfb3V0X2xk
+c3QocywgSU5ERVhfb3BfbGQ4dV9pMzIsIGRlc3QsIGJhc2UsIG9mZnNldCk7DQo+ICsgICAg
+dGNnX291dF9sZHN0KHMsIElOREVYX29wX2xkOHUsIGRlc3QsIGJhc2UsIG9mZnNldCk7DQo+
+ICAgfQ0KPiAgIA0KPiAgIHN0YXRpYyBjb25zdCBUQ0dPdXRPcExvYWQgb3V0b3BfbGQ4dSA9
+IHsNCj4gQEAgLTExNDMsNyArMTEzNyw3IEBAIHN0YXRpYyBjb25zdCBUQ0dPdXRPcExvYWQg
+b3V0b3BfbGQ4dSA9IHsNCj4gICBzdGF0aWMgdm9pZCB0Z2VuX2xkOHMoVENHQ29udGV4dCAq
+cywgVENHVHlwZSB0eXBlLCBUQ0dSZWcgZGVzdCwNCj4gICAgICAgICAgICAgICAgICAgICAg
+ICAgVENHUmVnIGJhc2UsIHB0cmRpZmZfdCBvZmZzZXQpDQo+ICAgew0KPiAtICAgIHRjZ19v
+dXRfbGRzdChzLCBJTkRFWF9vcF9sZDhzX2kzMiwgZGVzdCwgYmFzZSwgb2Zmc2V0KTsNCj4g
+KyAgICB0Y2dfb3V0X2xkc3QocywgSU5ERVhfb3BfbGQ4cywgZGVzdCwgYmFzZSwgb2Zmc2V0
+KTsNCj4gICB9DQo+ICAgDQo+ICAgc3RhdGljIGNvbnN0IFRDR091dE9wTG9hZCBvdXRvcF9s
+ZDhzID0gew0KPiBAQCAtMTE1NCw3ICsxMTQ4LDcgQEAgc3RhdGljIGNvbnN0IFRDR091dE9w
+TG9hZCBvdXRvcF9sZDhzID0gew0KPiAgIHN0YXRpYyB2b2lkIHRnZW5fbGQxNnUoVENHQ29u
+dGV4dCAqcywgVENHVHlwZSB0eXBlLCBUQ0dSZWcgZGVzdCwNCj4gICAgICAgICAgICAgICAg
+ICAgICAgICAgIFRDR1JlZyBiYXNlLCBwdHJkaWZmX3Qgb2Zmc2V0KQ0KPiAgIHsNCj4gLSAg
+ICB0Y2dfb3V0X2xkc3QocywgSU5ERVhfb3BfbGQxNnVfaTMyLCBkZXN0LCBiYXNlLCBvZmZz
+ZXQpOw0KPiArICAgIHRjZ19vdXRfbGRzdChzLCBJTkRFWF9vcF9sZDE2dSwgZGVzdCwgYmFz
+ZSwgb2Zmc2V0KTsNCj4gICB9DQo+ICAgDQo+ICAgc3RhdGljIGNvbnN0IFRDR091dE9wTG9h
+ZCBvdXRvcF9sZDE2dSA9IHsNCj4gQEAgLTExNjUsNyArMTE1OSw3IEBAIHN0YXRpYyBjb25z
+dCBUQ0dPdXRPcExvYWQgb3V0b3BfbGQxNnUgPSB7DQo+ICAgc3RhdGljIHZvaWQgdGdlbl9s
+ZDE2cyhUQ0dDb250ZXh0ICpzLCBUQ0dUeXBlIHR5cGUsIFRDR1JlZyBkZXN0LA0KPiAgICAg
+ICAgICAgICAgICAgICAgICAgICAgVENHUmVnIGJhc2UsIHB0cmRpZmZfdCBvZmZzZXQpDQo+
+ICAgew0KPiAtICAgIHRjZ19vdXRfbGRzdChzLCBJTkRFWF9vcF9sZDE2c19pMzIsIGRlc3Qs
+IGJhc2UsIG9mZnNldCk7DQo+ICsgICAgdGNnX291dF9sZHN0KHMsIElOREVYX29wX2xkMTZz
+LCBkZXN0LCBiYXNlLCBvZmZzZXQpOw0KPiAgIH0NCj4gICANCj4gICBzdGF0aWMgY29uc3Qg
+VENHT3V0T3BMb2FkIG91dG9wX2xkMTZzID0gew0KPiBAQCAtMTE3Nyw3ICsxMTcxLDcgQEAg
+c3RhdGljIGNvbnN0IFRDR091dE9wTG9hZCBvdXRvcF9sZDE2cyA9IHsNCj4gICBzdGF0aWMg
+dm9pZCB0Z2VuX2xkMzJ1KFRDR0NvbnRleHQgKnMsIFRDR1R5cGUgdHlwZSwgVENHUmVnIGRl
+c3QsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICBUQ0dSZWcgYmFzZSwgcHRyZGlmZl90
+IG9mZnNldCkNCj4gICB7DQo+IC0gICAgdGNnX291dF9sZHN0KHMsIElOREVYX29wX2xkMzJ1
+X2k2NCwgZGVzdCwgYmFzZSwgb2Zmc2V0KTsNCj4gKyAgICB0Y2dfb3V0X2xkc3QocywgSU5E
+RVhfb3BfbGQzMnUsIGRlc3QsIGJhc2UsIG9mZnNldCk7DQo+ICAgfQ0KPiAgIA0KPiAgIHN0
+YXRpYyBjb25zdCBUQ0dPdXRPcExvYWQgb3V0b3BfbGQzMnUgPSB7DQo+IEBAIC0xMTg4LDcg
+KzExODIsNyBAQCBzdGF0aWMgY29uc3QgVENHT3V0T3BMb2FkIG91dG9wX2xkMzJ1ID0gew0K
+PiAgIHN0YXRpYyB2b2lkIHRnZW5fbGQzMnMoVENHQ29udGV4dCAqcywgVENHVHlwZSB0eXBl
+LCBUQ0dSZWcgZGVzdCwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgIFRDR1JlZyBiYXNl
+LCBwdHJkaWZmX3Qgb2Zmc2V0KQ0KPiAgIHsNCj4gLSAgICB0Y2dfb3V0X2xkc3QocywgSU5E
+RVhfb3BfbGQzMnNfaTY0LCBkZXN0LCBiYXNlLCBvZmZzZXQpOw0KPiArICAgIHRjZ19vdXRf
+bGRzdChzLCBJTkRFWF9vcF9sZDMycywgZGVzdCwgYmFzZSwgb2Zmc2V0KTsNCj4gICB9DQo+
+ICAgDQo+ICAgc3RhdGljIGNvbnN0IFRDR091dE9wTG9hZCBvdXRvcF9sZDMycyA9IHsNCg0K
+UmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJv
+Lm9yZz4NCg0K
 
