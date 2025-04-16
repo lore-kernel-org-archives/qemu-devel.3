@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4D80C369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 07:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C19C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 07:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4x2M-0007TN-M9; Wed, 16 Apr 2025 03:18:22 -0400
+	id 1u4x2O-0007Uh-2B; Wed, 16 Apr 2025 03:18:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1u4x2H-0007Ri-S6; Wed, 16 Apr 2025 03:18:17 -0400
+ id 1u4x2J-0007S3-Hd; Wed, 16 Apr 2025 03:18:21 -0400
 Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1u4x2D-0001oc-M6; Wed, 16 Apr 2025 03:18:17 -0400
+ id 1u4x2D-0001od-Lf; Wed, 16 Apr 2025 03:18:17 -0400
 Received: from localhost.localdomain (unknown
  [IPv6:2a02:a03f:eafe:6901:38ac:f342:2515:2d3c])
- by apollo.dupie.be (Postfix) with ESMTPSA id 797561520DC8;
+ by apollo.dupie.be (Postfix) with ESMTPSA id C4CD61520F9C;
  Wed, 16 Apr 2025 09:18:03 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
  t=1744787883;
@@ -28,20 +28,20 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gl/B/pqU2gp9qrU7yqQXA2XkLT0NnoQn430/60d+yMc=;
- b=BQsRbQ37vNSZglUtAgqzqbE6nFM0HEtpytZEhEE1/HZeprkfFICeIunNaZDk/29hCGm5qE
- ZXQ9DaH9NoIQyzMVqelHEctSgFQTV3a/ZpTG2a4/Dw/VP74PYM3mpR4cDS8bsJvQzmDw99
- LvF8+aDnAZudoSyZtEne/c0sZkalPBlmJrhyxazIWL34kcZXYmvFmza69kEFxd6/h1vqz1
- JaYjngns9J/AKAiyx0TyfPcHlHvAdmIMSsdCv7icPUFlC89Hb/ET810CjHtRZiVGFKlzmH
- lmzjK66w0PT1Ak/2UCWIGTPDuQUYSkSen/UOp5ywNnCCK0RqAf0M9oBhmLSKgA==
+ bh=nMhXkyKs9C1vd0QyPMuiY7jcH+grkGMWCQRu0SAGVDw=;
+ b=Lc8ZRlFQTNQ3jHcy93D8LLM52P0DAcU+VBYSQBhqIJ/35BIV5psl2a8w9F/fSI1uZN9+GW
+ Rc3q97jDBML1qwra5fUsq+BBtA2YhuR8E8bV3nOXA8/Mt5aSgL1oQgMkF0+R4lAZBAGLNE
+ Z3EiVSU+ryZS9SG5v4O01TP9OK5U4zd+BA49RzAtZYmUhCo6q05vTk6fZPufv6Qz37Mnb0
+ wnlBiCNbxcJo0cTbUMyB0Vw27A1LqA2K7nF6jAiVqHGh77uWHtl65pTWSa8pkmg9WOrfeG
+ CG5GPMsfUZ4gYJFOgDGt70sYFVBqrqv8lx/ANQqTCEUqmyhltwY9Hin7LMAhbw==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org, Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH 1/3] block: add for_commit option to measure
-Date: Wed, 16 Apr 2025 09:16:52 +0200
-Message-ID: <20250416071654.978264-2-jean-louis@dupond.be>
+Subject: [PATCH 2/3] qcow2: make measure for_commit aware
+Date: Wed, 16 Apr 2025 09:16:53 +0200
+Message-ID: <20250416071654.978264-3-jean-louis@dupond.be>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250416071654.978264-1-jean-louis@dupond.be>
 References: <20250416071654.978264-1-jean-louis@dupond.be>
@@ -70,193 +70,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To specify we use measure call for commit size calculations, we add a
-new 'for_commit' option to the measure call.
-This will be used in following commit to do a different measurement.
+Sometimes (for example when using block storage for qcow2 images), we
+want to be able to calculate the size the commit target image will have.
+
+This patch implements this functionality in the qemu-img command when
+the 'for_commit' option is passed.
+
+When calculating for_commit, we check the blocks of the top and base
+image, and if new blocks are needed, we increment the next_cluster_index
+until everything is allocated for all blocks in the top image.
+Then we have a new cluster_index, from where we can calculate the size
+of the target image after commit.
 
 Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
 ---
- block/qcow2.c                    | 16 +++++++++++++
- include/block/block_int-common.h |  4 ++++
- qapi/block-core.json             | 28 ++++++++++++++++++++++
- qemu-img.c                       | 40 ++++++++++++++++++++++++++++----
- 4 files changed, 83 insertions(+), 5 deletions(-)
+ block/qcow2.c | 121 +++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 115 insertions(+), 6 deletions(-)
 
 diff --git a/block/qcow2.c b/block/qcow2.c
-index 7774e7f090..19028e051c 100644
+index 19028e051c..f86d4f1673 100644
 --- a/block/qcow2.c
 +++ b/block/qcow2.c
-@@ -3945,6 +3945,7 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-         { BLOCK_OPT_COMPAT_LEVEL,       "version" },
-         { BLOCK_OPT_DATA_FILE_RAW,      "data-file-raw" },
-         { BLOCK_OPT_COMPRESSION_TYPE,   "compression-type" },
-+        { BLOCK_OPT_FOR_COMMIT,         "for-commit" },
-         { NULL, NULL },
-     };
+@@ -5086,6 +5086,7 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+     bool has_backing_file;
+     bool has_luks;
+     bool extended_l2;
++    bool for_commit;
+     size_t l2e_size;
  
-@@ -6066,6 +6067,20 @@ void qcow2_signal_corruption(BlockDriverState *bs, bool fatal, int64_t offset,
-         .def_value_str = "16"                                       \
+     /* Parse image creation options */
+@@ -5157,6 +5158,9 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+         goto err;
      }
  
-+static QemuOptsList qcow2_measure_opts = {
-+    .name = "qcow2-measure-opts",
-+    .head = QTAILQ_HEAD_INITIALIZER(qcow2_measure_opts.head),
-+    .desc = {
-+        {                                                       \
-+            .name = BLOCK_OPT_FOR_COMMIT,                       \
-+            .type = QEMU_OPT_BOOL,                              \
-+            .help = "Use measure for commit",                   \
-+            .def_value_str = "off"                              \
-+        },                                                      \
-+        { /* end of list */ }
-+    }
-+};
++    /* Check if this measure is for commit size calculation */
++    for_commit = qemu_opt_get_bool_del(opts, BLOCK_OPT_FOR_COMMIT, false);
 +
- static QemuOptsList qcow2_create_opts = {
-     .name = "qcow2-create-opts",
-     .head = QTAILQ_HEAD_INITIALIZER(qcow2_create_opts.head),
-@@ -6190,6 +6205,7 @@ BlockDriver bdrv_qcow2 = {
+     /* Account for input image */
+     if (in_bs) {
+         int64_t ssize = bdrv_getlength(in_bs);
+@@ -5178,6 +5182,28 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+         } else {
+             int64_t offset;
+             int64_t pnum = 0;
++            BlockDriverState *parent = NULL;
++            BDRVQcow2State *sp = NULL;
++            int64_t next_cluster_index = 0;
++            int64_t last_cluster_index = 0;
++            int64_t max_allocated_clusters = 0;
++            int64_t freed_clusters = 0;
++
++            if (for_commit) {
++                int64_t psize;
++
++                parent = bdrv_filter_or_cow_bs(in_bs);
++                if (parent) {
++                    sp = parent->opaque;
++                } else {
++                    error_setg(&local_err,
++                        "No parent found, cannot measure for commit");
++                    goto err;
++                }
++                psize = bdrv_getlength(parent);
++                last_cluster_index = qcow2_get_last_cluster(parent, psize);
++                max_allocated_clusters = last_cluster_index;
++            }
  
-     .create_opts                        = &qcow2_create_opts,
-     .amend_opts                         = &qcow2_amend_opts,
-+    .measure_opts                       = &qcow2_measure_opts,
-     .strong_runtime_opts                = qcow2_strong_runtime_opts,
-     .mutable_opts                       = mutable_opts,
-     .bdrv_co_check                      = qcow2_co_check,
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index ebb4e56a50..26d521459d 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -57,6 +57,7 @@
- #define BLOCK_OPT_DATA_FILE_RAW     "data_file_raw"
- #define BLOCK_OPT_COMPRESSION_TYPE  "compression_type"
- #define BLOCK_OPT_EXTL2             "extended_l2"
-+#define BLOCK_OPT_FOR_COMMIT        "for_commit"
+             for (offset = 0; offset < ssize; offset += pnum) {
+                 int ret;
+@@ -5191,17 +5217,100 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+                     goto err;
+                 }
  
- #define BLOCK_PROBE_BUF_SIZE        512
+-                if (ret & BDRV_BLOCK_ZERO) {
+-                    /* Skip zero regions (safe with no backing file) */
+-                } else if ((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
+-                           (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
++                /*
++                 * If this is a measure for_commit then we have a parent
++                 * We check the allocation status of the parent blocks to see
++                 * if we need to allocate new blocks or not.
++                 * We also keep track of the number of freed clusters.
++                 */
++                if (for_commit) {
++                    int retp;
++                    int64_t pnum_parent = 0;
++
++                    /* Check if the parent block is allocated */
++                    retp = bdrv_block_status_above(parent, NULL, offset,
++                                            ssize - offset, &pnum_parent, NULL,
++                                            NULL);
++
++                    if (retp < 0) {
++                        error_setg_errno(&local_err, -ret,
++                                            "Unable to get block status for parent");
++                        goto err;
++                    }
++                    /*
++                     * If the parent continuous block is smaller, use that pnum,
++                     * so the next iteration starts with the smallest offset.
++                     */
++                    if (pnum_parent < pnum) {
++                        pnum = pnum_parent;
++                    }
++
+                     /* Extend pnum to end of cluster for next iteration */
+                     pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
  
-@@ -177,6 +178,9 @@ struct BlockDriver {
-     /* List of options for image amend */
-     QemuOptsList *amend_opts;
- 
-+    /* List of options for image measure */
-+    QemuOptsList *measure_opts;
+-                    /* Count clusters we've seen */
+-                    required += offset % cluster_size + pnum;
++                    uint64_t nb_clusters = size_to_clusters(sp, pnum);
 +
-     /*
-      * If this driver supports reopening images this contains a
-      * NULL-terminated list of the runtime options that can be
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b1937780e1..ab897be404 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -5557,6 +5557,34 @@
-   'features': [ 'unstable' ],
-   'allow-preconfig': true }
- 
-+  ##
-+  # @BlockdevMeasureOptionsQcow2:
-+  #
-+  # Driver specific image measure options for qcow2.
-+  #
-+  # @for-commit: Use the measure command to calculate commit image size
-+  #
-+  # Since: 10.0
-+  ##
-+  { 'struct': 'BlockdevMeasureOptionsQcow2',
-+    'data': { '*for-commit': 'bool' } }
++                    /*
++                     * When the block has no offset and the new
++                     * block is non-zero, we will need to
++                     * allocate a new cluster for the commit.
++                     */
++                    if (~retp & BDRV_BLOCK_OFFSET_VALID &&
++                        ~ret & BDRV_BLOCK_ZERO) {
++                        uint64_t i, refcount = 0;
 +
-+  ##
-+  # @BlockdevMeasureOptions:
-+  #
-+  # Options for measuring an image format
-+  #
-+  # @driver: Block driver of the node to measure.
-+  #
-+  # Since: 10.0
-+  ##
-+  { 'union': 'BlockdevMeasureOptions',
-+    'base': {
-+        'driver':         'BlockdevDriver' },
-+    'discriminator': 'driver',
-+    'data': {
-+        'qcow2':           'BlockdevMeasureOptionsQcow2' } }
++                    retry:
++                        for (i = 0; i < nb_clusters; i++) {
++                            int retr;
++                            next_cluster_index++;
 +
- ##
- # @BlockErrorAction:
- #
-diff --git a/qemu-img.c b/qemu-img.c
-index 2044c22a4c..a4673c3f32 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -5327,6 +5327,31 @@ out:
-     return 0;
- }
- 
-+static int print_measure_option_help(const char *format)
-+{
-+    BlockDriver *drv;
++                            retr = qcow2_get_refcount(parent,
++                                next_cluster_index, &refcount);
++                            if (retr < 0) {
++                                error_setg_errno(&local_err, -retr,
++                                    "Unable to get refcount");
++                                goto err;
++                            }
++                            /* No free block found, retry */
++                            if (refcount != 0) {
++                                goto retry;
++                            }
++                        }
++                        /* Check if we have a new maximum cluster index */
++                        if ((next_cluster_index - freed_clusters) >
++                            last_cluster_index &&
++                            (next_cluster_index - freed_clusters) >
++                            max_allocated_clusters) {
++                            max_allocated_clusters =
++                                next_cluster_index - freed_clusters;
++                        }
++                    } else if (!sp->discard_no_unref &&
++                               (ret & BDRV_BLOCK_ZERO) &&
++                               (retp & BDRV_BLOCK_DATA)) {
++                        /*
++                         * Parent block is allocated but new block is zero
++                         * we can free. Except if the parent block is zero.
++                         */
++                        freed_clusters += nb_clusters;
++                    }
++                } else {
++                    if (ret & BDRV_BLOCK_ZERO) {
++                        /* Skip zero regions (safe with no backing file) */
++                    } else if (((ret &
++                                 (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
++                                (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED))) {
++                        /* Extend pnum to end of cluster for next iteration */
++                        pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
 +
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+    /* Find driver and parse its options */
-+    drv = bdrv_find_format(format);
-+    if (!drv) {
-+        error_report("Unknown file format '%s'", format);
-+        return 1;
-+    }
-+
-+    if (!drv->measure_opts) {
-+        error_report("Format driver '%s' does not support measure options",
-+            format);
-+        return 1;
-+    }
-+
-+    printf("Measure options for '%s':\n", format);
-+    qemu_opts_print_help(drv->measure_opts, false);
-+
-+    return 0;
-+}
-+
- static void dump_json_block_measure_info(BlockMeasureInfo *info)
- {
-     GString *str;
-@@ -5366,7 +5391,7 @@ static int img_measure(int argc, char **argv)
-     QemuOpts *opts = NULL;
-     QemuOpts *object_opts = NULL;
-     QemuOpts *sn_opts = NULL;
--    QemuOptsList *create_opts = NULL;
-+    QemuOptsList *all_opts = NULL;
-     bool image_opts = false;
-     uint64_t img_size = UINT64_MAX;
-     BlockMeasureInfo *info = NULL;
-@@ -5491,10 +5516,15 @@ static int img_measure(int argc, char **argv)
-                      drv->format_name);
-         goto out;
++                        /* Count clusters we've seen */
++                        required += offset % cluster_size + pnum;
++                    }
+                 }
+             }
++            if (for_commit) {
++                /* Then the required size is just until the last cluster */
++                required = max_allocated_clusters << sp->cluster_bits;
++            }
+         }
      }
-+    if (options && has_help_option(options)) {
-+        ret = print_measure_option_help(drv->format_name);
-+        goto out;
-+    }
  
--    create_opts = qemu_opts_append(create_opts, drv->create_opts);
--    create_opts = qemu_opts_append(create_opts, bdrv_file.create_opts);
--    opts = qemu_opts_create(create_opts, NULL, 0, &error_abort);
-+    all_opts = qemu_opts_append(all_opts, drv->create_opts);
-+    all_opts = qemu_opts_append(all_opts, bdrv_file.create_opts);
-+    all_opts = qemu_opts_append(all_opts, drv->measure_opts);
-+    opts = qemu_opts_create(all_opts, NULL, 0, &error_abort);
-     if (options) {
-         if (!qemu_opts_do_parse(opts, options, NULL, &local_err)) {
-             error_report_err(local_err);
-@@ -5529,7 +5559,7 @@ out:
-     qemu_opts_del(object_opts);
-     qemu_opts_del(opts);
-     qemu_opts_del(sn_opts);
--    qemu_opts_free(create_opts);
-+    qemu_opts_free(all_opts);
-     g_free(options);
-     blk_unref(in_blk);
-     return ret;
 -- 
 2.49.0
 
