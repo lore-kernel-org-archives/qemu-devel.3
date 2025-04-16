@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A07C8C369C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 15:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A31C369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 15:04:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u54F5-0006eI-31; Wed, 16 Apr 2025 11:00:00 -0400
+	id 1u54Is-0002zP-VG; Wed, 16 Apr 2025 11:03:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u54Em-0006ZO-4r; Wed, 16 Apr 2025 10:59:40 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u54Ip-0002xo-Ea
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 11:03:52 -0400
+Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1u54Ee-00035D-A6; Wed, 16 Apr 2025 10:59:34 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-736aaeed234so5739488b3a.0; 
- Wed, 16 Apr 2025 07:59:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1u54In-0003zO-Bi
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 11:03:51 -0400
+Received: by mail-io1-xd29.google.com with SMTP id
+ ca18e2360f4ac-8613f456960so194005639f.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 08:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744815568; x=1745420368; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744815826; x=1745420626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HXuQGfkXP/19tux2piI9VRUlehpzjl8OjOtBJ20HPC0=;
- b=koRf3T8QRN3dOHwgKexVo/7Um5xO/8rfkFt6+zvAl3STFd+9M2w2KKmJMV8QmG0DXM
- WI6S/KDjsnEUzklxICQj+a6/weXqtVRyv77NPHE9eyECUmINNSyObBhHLkx/Rk5TGCYd
- sL490lWW0IO8X7uQPD+MqCVHHuls2At3/qkt4K2k54UHxFwgyqT2omwQx7S3m7CG8eTn
- JmKHkwukzHWilyTCkR8OMSkLujcN2Ovr0VxIIWxn3AlEDvZA5LkYvkvfELvBbhwL+dYL
- 28SW8kKWtc/5KL2CIoVIIscHTpG6WxUBt33/FpylB0hRteHaJOR0onegjthIpQOGuJNi
- iaqQ==
+ bh=DKqVxMZCHmRoM3iC5psKw2o5UbFX4mgR8YlvnOf3C6c=;
+ b=eoMz8UQbB/NztCv/MeGaHx3OzPL9/0hzIAbYnVWVmmxymEHH3hOs1LTvRUQK+ImgJV
+ UAWtJKQNWzQlg4TuJCi5m7r8zpH8KxKemKFR+pKwf2mCbSfIDZd/QOxufoq8sBCZ1G26
+ XIbse2RW08AWlipo6qwgLz55OUFjKE+bp9AerRs3saR+TdJuFVB76u1/7OYjZmtWbpu8
+ Km7TwFYKatd6FsTZXKrXBb6Wq+n2pW/0HerTppuxYKoQIxMwv7RIx0iqDrrVV0YUcjgK
+ IYGZLrDwMnv2efNUgeW/MKLNmJucq9kLLhfWS6eF8b4nqSM5lBMlEAM/ZGuhMVkSusjQ
+ aTKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744815568; x=1745420368;
+ d=1e100.net; s=20230601; t=1744815826; x=1745420626;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HXuQGfkXP/19tux2piI9VRUlehpzjl8OjOtBJ20HPC0=;
- b=AMG/6dgVT4VJoq+s5ZtClFbWQNP/wsky6NsKlzx8eLWzC47tK59Xe761ExfWaDHFbc
- Zwg6c3j/DIXMrh+kGUBKTYVX8LfsKYuN3KsIu+kCZYuJzvZdA7B30/EfECVAT8XBXlE0
- mzAsIuOnVG4Kxx6f2MUbH1gyp1r+IPfjxRGF2TOtQxaPXSUGwP1MZE8gX6nAjaMSmcF5
- gtfNDYnJ61bO1guevRgvOiaVt9e1Qw8nPjVMOp1CpGoKlqsyfOP6j8aIOtsFG5jKAq2d
- RERL0emFNYL1UyPnczBAuuDDQ6jI2ODCRWQc2icMndSFcYn/UEDF52sxJIZPn26dO7Rr
- vfpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrDMWuhC3/2MzZ9Qk3HJFt7RznpbrbtclT6EPhEECmnafvkD8Xr2XMX7MRTg6jsY1rEb7SQt0z1kSr@nongnu.org,
- AJvYcCWznIWRSB6lUFO5c9k/49k6SQdoLf6pJ/+bp065ihLf60fB7qFXj4lZJIVQpQfSz0TXbmWfe7OMmx5yqQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxaWR7alDvQf3L5bHpqdXLuwWbVuTDOcrpX1eGzoGtNlyx2C7SJ
- lPLUlmCp1JORi/6xVi4cnDPHJ56JlzziumPIF3kYTxYQZkxFZk24OMILLQ==
-X-Gm-Gg: ASbGncuDA4GaeIvxbXY26g5O+iP6EGXqr38jBgvlHN0WT7aqwfV4pszwP+Jb9JPrgcs
- Qu+/vg8Mo7JwwHy6MKqLwij894d5iD/QJP+rA6GaKiEa18zmslEgswxpOLJHO8dApsPWgl0TttA
- f5biW9qSVwsitc1YwO1XmLX1KXTGfakLz2z1CpBS91fTjoimqfSlg1LdTrLb7sLvKqNKdmXx0KL
- fb6yH0q4iRaUaVDQcd4atpje50lcE9YHHJY8YNmZ9E4re4795J2v6wXIdTGcuJJawn1CmAcq15c
- a1gIQaH7s+EYKq/s7IdsvpaaA/RDhnKqvy0ETt5++Q==
-X-Google-Smtp-Source: AGHT+IGvsKhx50Ja+VWnGN3C82mcjVGOvOGlZGYXvkAowslG+YKQUq/1AvQsG+lbC0l5vNvb/hO4XQ==
-X-Received: by 2002:a05:6a00:3001:b0:736:d297:164 with SMTP id
- d2e1a72fcca58-73c266b28efmr2838269b3a.1.1744815567702; 
- Wed, 16 Apr 2025 07:59:27 -0700 (PDT)
-Received: from wheely.local0.net ([1.145.55.85])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd230e355sm10814506b3a.139.2025.04.16.07.59.22
+ bh=DKqVxMZCHmRoM3iC5psKw2o5UbFX4mgR8YlvnOf3C6c=;
+ b=rXBhXrlQAZ0LhZrY7hgkRgjHcnChtSLM833fgqzKEcgbksGJs70pp7qIiYag1vjlOX
+ 9gmtQ4aruodFO1Ztt0zNG9mmvQPu4U0eC3Eqo0DyrnAL1AQvHkNWP0N6a705lKP6R5qM
+ OezWUfNBiPOZ7cVzzWpgro8NC4Q2zMJpYrau9y2xN4y06PUhXxU0uQt1uGRfZsCJA8BB
+ nQRV0jvNM+ckIdXeONPNl+Dt4nASutlyIqFBfsJoPbzYSDgmCjrL4d0X8t2wJBWn9Ykh
+ g1vXNdmqEXYYxsqy22GHasPzLR0VyDLBeGSwkOadI+eZU+H7VsURH44ZtRwpfQuw9IYj
+ +Amw==
+X-Gm-Message-State: AOJu0YwYgQWKwJm7AcGDTBHeizsfNtXn8Imsp/bzohCvpHyK8SdQUxmb
+ XWTUyHjSWpuczgESDOijfuP0yJG0fTLfly4Vr1QRmBdvRlQka7dqxMl001pr
+X-Gm-Gg: ASbGncvvBo58FJhbANjP9Xvb+xXvrbfjHpPkfn4oWo82f931zZIF+cEEMzBSBYXcSeG
+ Dzda/ro6sNUV/xE/+lpbfD/b7uoZcEkW1m5tC67S2ij6w4xTrHLvrN/hxp5ZP79cIgsxwc1z+/f
+ hr0iJHf6kHg0OpiWVCF5VioApwHXGnA+lxsZVVDnHgYb5SMNo33SJVTTJNZqaP3n7XA8rPkGraM
+ SCgJHyVd8sHz46mctLXkwUv/zfbG8hLJHh4h2Ppn2BcqLuTvdOyVVGyc2BeLwk7MKq9L8/mM44p
+ NvRhOLvnRj+Rie8KOBDAY1ydXNVnQSZlrNmiagNp6bM1r5zgIv1csHFP0BNUXQ8VPrivTlflOdF
+ mMAD/J69ED+Pgt/qGpyUIUdB+zA==
+X-Google-Smtp-Source: AGHT+IEqezZXzXumckV4Oet3rWpyS4D10X5qpfpOCOpQHHIA10/u7H8+SyWADW9ny+bf4sNaHo/OPA==
+X-Received: by 2002:a05:6e02:3e8b:b0:3d6:d3f7:8813 with SMTP id
+ e9e14a558f8ab-3d815b70d2dmr25442075ab.22.1744815825505; 
+ Wed, 16 Apr 2025 08:03:45 -0700 (PDT)
+Received: from taylor-ubuntu.. (c-67-190-160-7.hsd1.co.comcast.net.
+ [67.190.160.7]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3d817b2693bsm1790975ab.42.2025.04.16.08.03.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 07:59:27 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: [PATCH 0/4] tests/qtest: Enable spapr dma tests
-Date: Thu, 17 Apr 2025 00:59:14 +1000
-Message-ID: <20250416145918.415674-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.47.1
+ Wed, 16 Apr 2025 08:03:44 -0700 (PDT)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, quic_mathbern@quicinc.com,
+ sidneym@quicinc.com, quic_mliebel@quicinc.com,
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng,
+ ltaylorsimpson@gmail.com
+Subject: [PATCH v2] Hexagon (target/hexagon) Remove gen_tcg_func_table.py
+Date: Wed, 16 Apr 2025 09:03:43 -0600
+Message-ID: <20250416150343.73444-1-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,42 +100,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I kept R-B tags from Fabiano and Phil despite a little change in
-how patch 1 looks and splitting it, hope that is okay.
+This can easily be done in C with opcodes_def_generated.h.inc
 
-Since RFC:
-- Split endian fix + invalid value assert into two paches.
-- Changed the invalid message assertion in what is now patch 1 to
-  use g_assert_cmphex so the failing value can be seen.
-- Added patch 3 to factor duplicated code we just changed. Some
-  patches I have for e1000e and xhci tests also want to use the
-  same function...
-- Fixed stray hunk from mis-rebase in the spapr patch.
+Note that gen_tcg_func_table.py has some logic to skip instructions.
+However, there aren't any instructions currently in the code that would
+be skipped by this logic.  So, it is safe to base the table on the
+complete opcodes table.
 
-Thanks,
-Nick
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/genptr.c              |  6 ++-
+ target/hexagon/README                |  1 -
+ target/hexagon/gen_tcg_func_table.py | 66 ----------------------------
+ target/hexagon/meson.build           | 10 -----
+ 4 files changed, 5 insertions(+), 78 deletions(-)
+ delete mode 100755 target/hexagon/gen_tcg_func_table.py
 
-Nicholas Piggin (4):
-  tests/qtest: Enforce zero for the "un-fired" msix message value
-  tests/qtest: Fix virtio msix message endianness
-  tests/qtest: Add libqos function for testing msix interrupt status
-  tests/qtest: Enable spapr dma with linear iommu map
-
- tests/qtest/libqos/pci.h               |  6 +--
- hw/ppc/spapr_iommu.c                   |  9 +++-
- tests/qtest/e1000e-test.c              | 21 ---------
- tests/qtest/igb-test.c                 | 21 ---------
- tests/qtest/libqos/generic-pcihost.c   |  1 -
- tests/qtest/libqos/pci-pc.c            |  3 --
- tests/qtest/libqos/pci-spapr.c         |  7 +--
- tests/qtest/libqos/pci.c               | 62 ++++++++++++++++++++------
- tests/qtest/libqos/virtio-pci-modern.c | 30 +++----------
- tests/qtest/libqos/virtio-pci.c        | 38 ++++------------
- tests/qtest/vhost-user-blk-test.c      |  6 ---
- tests/qtest/virtio-blk-test.c          | 12 -----
- 12 files changed, 77 insertions(+), 139 deletions(-)
-
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index 2c5e15cfcf..330170ab44 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -1453,4 +1453,8 @@ void gen_add_sat_i64(DisasContext *ctx, TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
+ }
+ 
+ #include "tcg_funcs_generated.c.inc"
+-#include "tcg_func_table_generated.c.inc"
++const SemanticInsn opcode_genptr[XX_LAST_OPCODE] = {
++#define OPCODE(X)    [X] = generate_##X
++#include "opcodes_def_generated.h.inc"
++#undef OPCODE
++};
+diff --git a/target/hexagon/README b/target/hexagon/README
+index ca617e3364..5af298e3ed 100644
+--- a/target/hexagon/README
++++ b/target/hexagon/README
+@@ -47,7 +47,6 @@ header files in <BUILD_DIR>/target/hexagon
+         gen_op_attribs.py               -> op_attribs_generated.h.inc
+         gen_helper_protos.py            -> helper_protos_generated.h.inc
+         gen_tcg_funcs.py                -> tcg_funcs_generated.c.inc
+-        gen_tcg_func_table.py           -> tcg_func_table_generated.c.inc
+         gen_helper_funcs.py             -> helper_funcs_generated.c.inc
+         gen_idef_parser_funcs.py        -> idef_parser_input.h
+         gen_analyze_funcs.py            -> analyze_funcs_generated.c.inc
+diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
+deleted file mode 100755
+index 299a39b1aa..0000000000
+--- a/target/hexagon/gen_tcg_func_table.py
++++ /dev/null
+@@ -1,66 +0,0 @@
+-#!/usr/bin/env python3
+-
+-##
+-##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+-##
+-##  This program is free software; you can redistribute it and/or modify
+-##  it under the terms of the GNU General Public License as published by
+-##  the Free Software Foundation; either version 2 of the License, or
+-##  (at your option) any later version.
+-##
+-##  This program is distributed in the hope that it will be useful,
+-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-##  GNU General Public License for more details.
+-##
+-##  You should have received a copy of the GNU General Public License
+-##  along with this program; if not, see <http://www.gnu.org/licenses/>.
+-##
+-
+-import sys
+-import re
+-import string
+-import hex_common
+-import argparse
+-
+-
+-def main():
+-    parser = argparse.ArgumentParser(
+-        "Emit opaque macro calls with instruction semantics"
+-    )
+-    parser.add_argument("semantics", help="semantics file")
+-    parser.add_argument("out", help="output file")
+-    args = parser.parse_args()
+-    hex_common.read_semantics_file(args.semantics)
+-    hex_common.calculate_attribs()
+-    tagregs = hex_common.get_tagregs()
+-    tagimms = hex_common.get_tagimms()
+-
+-    with open(args.out, "w") as f:
+-        f.write("#ifndef HEXAGON_FUNC_TABLE_H\n")
+-        f.write("#define HEXAGON_FUNC_TABLE_H\n\n")
+-
+-        f.write("const SemanticInsn opcode_genptr[XX_LAST_OPCODE] = {\n")
+-        for tag in hex_common.tags:
+-            ## Skip the priv instructions
+-            if "A_PRIV" in hex_common.attribdict[tag]:
+-                continue
+-            ## Skip the guest instructions
+-            if "A_GUEST" in hex_common.attribdict[tag]:
+-                continue
+-            ## Skip the diag instructions
+-            if tag == "Y6_diag":
+-                continue
+-            if tag == "Y6_diag0":
+-                continue
+-            if tag == "Y6_diag1":
+-                continue
+-
+-            f.write(f"    [{tag}] = generate_{tag},\n")
+-        f.write("};\n\n")
+-
+-        f.write("#endif    /* HEXAGON_FUNC_TABLE_H */\n")
+-
+-
+-if __name__ == "__main__":
+-    main()
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index bb4ebaae81..b28aeddb85 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -41,20 +41,10 @@ hexagon_ss.add(semantics_generated)
+ #
+ # Step 2
+ # We use Python scripts to generate the following files
+-#     tcg_func_table_generated.c.inc
+ #     printinsn_generated.h.inc
+ #     op_attribs_generated.h.inc
+ #     opcodes_def_generated.h.inc
+ #
+-tcg_func_table_generated = custom_target(
+-    'tcg_func_table_generated.c.inc',
+-    output: 'tcg_func_table_generated.c.inc',
+-    depends: [semantics_generated],
+-    depend_files: [hex_common_py],
+-    command: [python, files('gen_tcg_func_table.py'), semantics_generated, '@OUTPUT@'],
+-)
+-hexagon_ss.add(tcg_func_table_generated)
+-
+ printinsn_generated = custom_target(
+     'printinsn_generated.h.inc',
+     output: 'printinsn_generated.h.inc',
 -- 
-2.47.1
+2.43.0
 
 
