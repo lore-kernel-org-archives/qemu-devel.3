@@ -4,101 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1ACC369B9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 02:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36661C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4soT-00026F-RP; Tue, 15 Apr 2025 22:47:45 -0400
+	id 1u4tGQ-0002Vk-CT; Tue, 15 Apr 2025 23:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1u4soR-00025T-Lt
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 22:47:43 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u4tGO-0002VT-VD
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 23:16:37 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <haoqian.he@smartx.com>)
- id 1u4soO-0000Vw-UK
- for qemu-devel@nongnu.org; Tue, 15 Apr 2025 22:47:43 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7394945d37eso5429291b3a.3
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 19:47:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u4tGM-0003oO-UB
+ for qemu-devel@nongnu.org; Tue, 15 Apr 2025 23:16:36 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-73bf5aa95e7so2829954b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 20:16:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1744771658; x=1745376458;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1744773392; x=1745378192; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iRX5DWX1J5odec4kJXVIOK1ovAUrij3fW9QCY2FCljA=;
- b=xgmcCRfB3eJhh7yHWBLnGHe/o3aUb+hVNPtQuQfpKr6obg1o/w0ysM9labeXjVE7Ld
- BYc1uzuFwHSMZOEJlp8Fq4LpB3lKYaWXKJxuciKJzFLk4vZu9Mp79DbUpvW3ndOakUZ2
- heNIwy4XNkM5007XsIGAy4/PAcK5HnnP3vBPFCZCQe9wX2X+0sXxOIpqeSNm96koD9DI
- zi3aozU1OEZQ0xyGECeKajjQFSkNGDdtsYCUsxYxT9uMg+52t8KEvbzPzWikWyTXZQs7
- DwJA44I40lUpwsXRhvc5SASk3KzEL34OscueY+/Ps023eYBHzQkpx0SPrfj7TSl1OBHo
- l6PA==
+ bh=kFUPBZRAfipWI2IhgFTKirKDKIIaY6khLK6b2Z4CfVg=;
+ b=i/zYM7c4Jw0X263YZLyFtYCv+HRMXADVxNG7huqF7G+o9Cpa5VBq2F+fAKOyO83IYT
+ OfljZUp1HsjMKxqFCaV9Mkw9F3qqvH3RFR+W22uFf5QwYF2X2lbjAlDc2elh8xWPcCpT
+ hNzYxSyTFCUKswGJi19M+Vm07g7UAsWIZBb0xX7B6MAzC/TsEU3XqDvabvseNImMWdez
+ qRGHiwhBSr4IkLauEuNI0M0HVI1lp+K7KfzwVlrB0edUdZunPqZMNcDbtwPFl58/hCsY
+ 12fEjFmKayo6FxLJi+X34mAMVcz8X62mok2It2BlTS78vqL7fRGpFfIF8wBCKA8aZ0IJ
+ rL5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744771658; x=1745376458;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iRX5DWX1J5odec4kJXVIOK1ovAUrij3fW9QCY2FCljA=;
- b=Fnc4yrYAwdg10K0vfAcyH8daaI31Jnxu39qgFVXpgMchdkpPehQrkUxuZ9t49/euyx
- ZmKDE5R53Z8GDVhOxj9sTMN3tpIvrSSL5JTn3Z+JcgqIaa6pjq+ZSUKy2TgL0sgFeV6s
- GT/C0bdjNILyDOCmNL7zJTe40QI5DZ3PaQmha9Yc8sEJcTeLgFkrZ0m2sG53emhj4HIp
- Vjsj7cXahfw3+8N4uSzbNUwEyVN/K+XA0BjmyPW0DsG+x/juidAFNUR6ALRqenc72T/r
- 9mgEDoSbe3Kh3vEkZ2O/gf73PYaYM6CuYHD3v7fIWPeefBVOnNNsOSSsRvynvnLdvclR
- ZaPg==
-X-Gm-Message-State: AOJu0YyqhoY100SuLxyP1xiO8lviFrsaSnuU5FIRWP/Uh6K4FlljgVsz
- z3ScUWE+aP/AedOZaySMsXSJ3wAY2r+q5275gZV4skupDYzifD/6xCOs+aqT1XLfD5cUYmJd9NV
- sdnM006lY
-X-Gm-Gg: ASbGncv+MBFey4Q3ePYnuuNEMoZGASXu2MBxAwstA67Ru/YfiJGGdvmpcGSKZAV08YA
- ddHRo5PLwl5FwKuJQrPUMU4SWSnoTjPNRAzN5bEiB5rE485Z+6PXBT/le96bn5EkUjQz0kqGYLS
- a99Q10CWzLPHjw3tlcYPmc/U7YgsIF82srF9YEy6OiV3l6StJPZXMYFz1/AyrNxuuxod8MNV/0T
- 4FoWwNuRpE7gTfg619BeZCIrUR+isgRRVa4J2P8159u6pBC14HPp7z7nRALfJn7xKcPwkw7Mj6v
- r1Qxy19Y+DpXmXZRRC9PJTiVg+ga
-X-Google-Smtp-Source: AGHT+IFQ3Ao/ER1izLhaTk7KQcVPXoZa8L+TTx/4F/2fO2nY6jvI66RFkQ8vXvNkel22p+27sLcSxw==
-X-Received: by 2002:a05:6a00:4ac6:b0:736:9f20:a175 with SMTP id
- d2e1a72fcca58-73c266b5fecmr186298b3a.2.1744771658087; 
- Tue, 15 Apr 2025 19:47:38 -0700 (PDT)
-Received: from fedora.smartx.com ([2001:df0:a640:1::4])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd230e305sm9624958b3a.140.2025.04.15.19.47.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Apr 2025 19:47:37 -0700 (PDT)
-From: Haoqian He <haoqian.he@smartx.com>
-To: qemu-devel@nongnu.org, mst@redhat.com, sgarzare@redhat.com,
- raphael@enfabrica.net
-Cc: fengli@smartx.com, yuhua@smartx.com, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- mzamazal@redhat.com (reviewer:vhost-user-scmi),
- David Hildenbrand <david@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Eric Auger <eric.auger@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-block@nongnu.org (open list:Block layer core),
- virtio-fs@lists.linux.dev (open list:virtiofs)
-Subject: [PATCH v5 0/3] vhost: fix the IO error after live migration
-Date: Tue, 15 Apr 2025 22:47:25 -0400
-Message-ID: <20250416024729.3289157-1-haoqian.he@smartx.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20250401151819.1526461-1-haoqian.he@smartx.com>
-References: <20250401151819.1526461-1-haoqian.he@smartx.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=haoqian.he@smartx.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ d=1e100.net; s=20230601; t=1744773392; x=1745378192;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=kFUPBZRAfipWI2IhgFTKirKDKIIaY6khLK6b2Z4CfVg=;
+ b=YIXPAQDk3KmAWYLJCWdDunDbXz8yXus+VbKRouklaU94lHWb+8aDJ8dgvQzj3D7I05
+ m0P4AWCffMGOPHX/FowsyyBDXb0UNLBj4gdXfl+yV9gER9ucFHuY4sEpAfWge1Aj3FMV
+ xlWDH9kC9xye0Z0rufbAu+Vr4i+YPXW4i/tmLnCdj4Rwkfu8f6lBev/u1zAgMc9Bvj70
+ oHDfcUBGh7NJGrv4CXWi5uGgBLHqKEIIBaaKWPJxstYdj66JLX10iVNafpw58NgVj3iK
+ twr6swxmlX3IUAMnxUMWL0j+g1+fwc/H9ZJD00UHx17tcafFHH0LC1NFPSQTYLGHwXaJ
+ eiaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVv7oekDNGdUlLRwUdee/G7vptFGw2/G4BcX5qyn+a0ccpIwrzwrEPD1J2ypVAtyRFE1dXQ0tWHOyMz@nongnu.org
+X-Gm-Message-State: AOJu0Yy1QdM84R0HFEAZRlPEdLmEHq4khGMBXC4U4jGtY6imJDjsCNcG
+ fy9sN2IkQEeWDklv6oKxUr7eGc+9lOdL86jm51/iSzZVSJ6/BLer
+X-Gm-Gg: ASbGncuxlhlSrg0Qj9sClvgwVb2yNMQZLg7sdCw7bSZzMoBPWpQ0WU6lXDY0UO4qxXD
+ ZPKW3gBXwCGONpER/M3Qu0SIjIo1eTEr8DChZA5pHgngb3wYJRPD5WtgRSW5kbZIIdMxkFYUQA0
+ 0hqYh6Zdrs2FRTsDgGpmCvV6fi6PEyGEqLGthO9OYaMb45QT6KBBAwO4UJ5DFpA+iom+odbwiFR
+ vd/gy7MhzXriiZp9MgLxFJaekwete1l1te2a5W3JgV8PcA3U53iur83JEJfBQjgxjjqUWA4z8hc
+ 5QGBGycxfazwWB6fTELPT9yneMR0DHc=
+X-Google-Smtp-Source: AGHT+IEk509I+8vInsGMWf+RbWnb0s6+nobMCaEFeszILo0fXkklbwyiGJYF1Ln2QUXGWTXke7L0+w==
+X-Received: by 2002:a05:6a00:1da6:b0:739:3f55:b23f with SMTP id
+ d2e1a72fcca58-73c2671803fmr317949b3a.14.1744773392165; 
+ Tue, 15 Apr 2025 20:16:32 -0700 (PDT)
+Received: from localhost ([1.145.6.120]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b0b2221eb8bsm286011a12.75.2025.04.15.20.16.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 15 Apr 2025 20:16:31 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 16 Apr 2025 13:16:25 +1000
+Message-Id: <D97QJO5Z909K.368VVIBFA17TA@gmail.com>
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+Cc: "Stefan Hajnoczi" <stefanha@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "Phil
+ Dennis-Jordan" <phil@philjordan.eu>
+Subject: Re: [PATCH 1/2] system/main: transfer replay mutex ownership from
+ main thread to main loop thread
+From: "Nicholas Piggin" <npiggin@gmail.com>
+X-Mailer: aerc 0.19.0
+References: <20250410225550.46807-1-pierrick.bouvier@linaro.org>
+ <20250410225550.46807-2-pierrick.bouvier@linaro.org>
+ <D94EWG4QRMFP.123EPDW889YVC@gmail.com>
+ <7e760e04-0571-48f3-9aa7-e71c631dcaff@linaro.org>
+ <dee088aa-436f-48dc-8a28-f675de42767b@linaro.org>
+ <5cac93d4-e5a6-42b0-8f7b-5a273168a450@linaro.org>
+ <D96V6HTTNOF1.3DDO2NQ0AUEA0@gmail.com>
+ <f8a90e7b-daa7-4c87-9702-e80e9d5b162e@linaro.org>
+In-Reply-To: <f8a90e7b-daa7-4c87-9702-e80e9d5b162e@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,78 +110,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the end of the VM live migration, the vhost device will be stopped.
-Currently, if the vhost-user backend crashes, vhost device's set_status()
-would not return failure, live migration won't perceive the disconnection
-with the backend. After the live migration is successful, the stale inflight
-IO will be submitted to the migration target host, which may be leading to
-the IO error.
+On Wed Apr 16, 2025 at 4:31 AM AEST, Pierrick Bouvier wrote:
+> On 4/14/25 19:41, Nicholas Piggin wrote:
+>> On Tue Apr 15, 2025 at 1:24 AM AEST, Pierrick Bouvier wrote:
+>>> On 4/14/25 03:25, Philippe Mathieu-Daud=C3=A9 wrote:
+>>>> On 12/4/25 19:24, Pierrick Bouvier wrote:
+>>>>> On 4/11/25 22:30, Nicholas Piggin wrote:
+>>>>>> On Fri Apr 11, 2025 at 8:55 AM AEST, Pierrick Bouvier wrote:
+>>>>>>> On MacOS, UI event loop has to be ran in the main thread of a proce=
+ss.
+>>>>>>> Because of that restriction, on this platform, qemu main event loop=
+ is
+>>>>>>> ran on another thread [1].
+>>>>>>>
+>>>>>>> This breaks record/replay feature, which expects thread running
+>>>>>>> qemu_init
+>>>>>>> to initialize hold this lock, breaking associated functional tests =
+on
+>>>>>>> MacOS.
+>>>>>>>
+>>>>>>> Thus, as a generalization, and similar to how BQL is handled, we re=
+lease
+>>>>>>> it after init, and reacquire the lock before entering main event lo=
+op,
+>>>>>>> avoiding a special case if a separate thread is used.
+>>>>>>>
+>>>>>>> Tested on MacOS with:
+>>>>>>> $ meson test -C build --setup thorough --print-errorlogs \
+>>>>>>> func-x86_64-x86_64_replay func-arm-arm_replay func-aarch64-
+>>>>>>> aarch64_replay
+>>>>>>> $ ./build/qemu-system-x86_64 -nographic -icount
+>>>>>>> shift=3Dauto,rr=3Drecord,rrfile=3Dreplay.log
+>>>>>>> $ ./build/qemu-system-x86_64 -nographic -icount
+>>>>>>> shift=3Dauto,rr=3Dreplay,rrfile=3Dreplay.log
+>>>>>>>
+>>>>>>> [1] https://gitlab.com/qemu-project/qemu/-/commit/
+>>>>>>> f5ab12caba4f1656479c1feb5248beac1c833243
+>>>>>>>
+>>>>>>> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2907
+>>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>>>> ---
+>>>>>>>   =C2=A0 system/main.c | 4 ++++
+>>>>>>>   =C2=A0 1 file changed, 4 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/system/main.c b/system/main.c
+>>>>>>> index ecb12fd397c..1c022067349 100644
+>>>>>>> --- a/system/main.c
+>>>>>>> +++ b/system/main.c
+>>>>>>> @@ -25,6 +25,7 @@
+>>>>>>>   =C2=A0 #include "qemu/osdep.h"
+>>>>>>>   =C2=A0 #include "qemu-main.h"
+>>>>>>>   =C2=A0 #include "qemu/main-loop.h"
+>>>>>>> +#include "system/replay.h"
+>>>>>>>   =C2=A0 #include "system/system.h"
+>>>>>>>   =C2=A0 #ifdef CONFIG_SDL
+>>>>>>> @@ -44,10 +45,12 @@ static void *qemu_default_main(void *opaque)
+>>>>>>>   =C2=A0 {
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int status;
+>>>>>>> +=C2=A0=C2=A0=C2=A0 replay_mutex_lock();
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bql_lock();
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 status =3D qemu_main_loop();
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_cleanup(status);
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bql_unlock();
+>>>>>>> +=C2=A0=C2=A0=C2=A0 replay_mutex_unlock();
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exit(status);
+>>>>>>>   =C2=A0 }
+>>>>>>> @@ -67,6 +70,7 @@ int main(int argc, char **argv)
+>>>>>>>   =C2=A0 {
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_init(argc, argv);
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bql_unlock();
+>>>>>>> +=C2=A0=C2=A0=C2=A0 replay_mutex_unlock();
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (qemu_main) {
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 QemuThread=
+ main_loop_thread;
+>>>>>>>   =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_threa=
+d_create(&main_loop_thread, "qemu_main",
+>>>>>>
+>>>>>> Do we actually need to hold replay mutex (or even bql) over qemu_ini=
+t()?
+>>>>>> Both should get dropped before we return here. But as a simple fix, =
+I
+>>>>>> guess this is okay.
+>>>>>>
+>>>>>
+>>>>> For the bql, I don't know the exact reason.
+>>>>> For replay lock, we need to hold it as clock gets saved as soon as th=
+e
+>>>>> devices are initialized, which happens before end of qemu_init.
+>>>>
+>>>> Could be worth adding a comment with that information.
+>>>>
+>>>
+>>> In case someone is curious about it, changing default state of lock can
+>>> answer why it's needed, as it crashes immediately on an assert.
+>>=20
+>> That all sounds reasonable enough and good info. I'm not suggesting to
+>> remove the lock from qemu_init() by assuming we are in init and init is
+>> single threaded (I agree it's good practice to keep locking consistent).
+>>=20
+>> My question was more that we should move the locks tighter around
+>> the operations that require them. Move the unlock into qemu_init().
+>>=20
+>> Commit f5ab12caba4f1 didn't introduce this problem, cocoa_main()
+>> already immediatey called bql_unlock() so effectively the issue is
+>> still there. The original design before cocoa I guess was that qemu_init
+>> would init things under the same critical section as qemu_main_loop() is
+>> then called, which is reasonable and conservative. It would have been
+>> good to see this bql split get a specific patch to epxlain why it's not
+>> needed across qemu_init and qemu_main_loop, but no big deal now.
+>>=20
+>
+> Looking more closely, bql_lock ensure vcpus don't start executing=20
+> anything before init is completed. So we really want to hold the lock=20
+> through all qemu_init().
+>
+> Concerning replay_lock, during init, icount_configure calls=20
+> qemu_clock_get_ns, that calls replay_save_clock, which expects to have=20
+> the lock. Thus, we should hold the lock, at least during icount=20
+> configuration.
 
-The following patch series fixes the issue by making the live migration
-aware of the loss of connection with the vhost-user backend and aborting
-the live migration.
+Sounds reasonable.
 
----
-  v1 ... v2
-    1. Fix some grammar issues in commit message.
-    2. Remove assert in vhost_scsi_common_stop and return error upwards.
+>> The patch is fine for a fix, could I suggest another patch that
+>> moves the lock narrower and perhaps adds a few words of comment?
+>>=20
+>
+> We would still need to acquire locks in qemu_default_main() anyway.
+>
+> For bql, we definitely want to hold it anytime through init, so the=20
+> scope is end of init.
+> For replay_lock, it could be moved around parts that expect it during=20
+> initialization, but what would be the benefit, considering only one=20
+> thread is running during init?
+>
+> Moving locks narrower is usually made to allow more concurrency, at the=
+=20
+> price of increased complexity. In init phase, only one thread runs=20
+> anyway, so there is no benefit to do anything around here.
+>
+> What we could eventually do is move those unlock at the end of=20
+> qemu_init, but IMHO, it's more readable to see the lock/unlock scheme in=
+=20
+> a single place, in system/main.c.
+> As well, I think it's better to have a single code path for lock/unlock,=
+=20
+> whether we use a background thread or not (vs adding a bool parameter to=
+=20
+> qemu_default_main() saying if we are in the same thread, or a different=
+=20
+> one).
 
-  v2 ... v3
-    1. Added more detailed comments and commit message.
-    2. Change the newly added type name and parameter name.
-    3. Remove set_status_ext, change the return type of set_status to int.
+I think the benefit is just code clarity. I think a function returning
+with a different lock state that it is called with generally is not
+desirable if it can be avoided.
 
-  v3 ... v4
-    1. Call set_status() only if the function pointer is not NULL in the
-       3rd patch.
-    2. Add the more detailed commit messages for the 3rd patch.
+qemu_init() caller just releasing locks immediately doesn't really serve
+a benefit. A comment can be added to say that when qemu_init() returns,
+bql is not held and CPUs may be running. This would be the same for any
+configuration of background thread or not.
 
-  v4 ... v5
-    1. Fix code style issues in patch v4.
-    2. Rebased on master.
+I don't want to bikeshed it too much, if you prefer not to move it. It is
+nly one specialized case. Adding some comments about the purpose of the
+locks is more important than if you release them here or in the callee.
 
-Haoqian He (3):
-  system/runstate: add VM state change cb with return value
-  vhost: return failure if stop virtqueue failed in vhost_dev_stop
-  vhost-user: return failure if backend crash when live migration
-
- backends/vhost-user.c                  | 20 +++++++--------
- hw/block/vhost-user-blk.c              | 27 +++++++++++---------
- hw/block/virtio-blk.c                  |  7 +++---
- hw/char/virtio-serial-bus.c            |  3 ++-
- hw/core/vm-change-state-handler.c      | 18 ++++++++-----
- hw/display/vhost-user-gpu.c            | 12 ++++++---
- hw/input/virtio-input.c                |  3 ++-
- hw/net/virtio-net.c                    |  3 ++-
- hw/scsi/scsi-bus.c                     |  2 +-
- hw/scsi/vhost-scsi-common.c            | 13 +++++-----
- hw/scsi/vhost-scsi.c                   |  5 ++--
- hw/scsi/vhost-user-scsi.c              | 18 +++++++------
- hw/vfio/migration.c                    |  2 +-
- hw/virtio/vdpa-dev.c                   |  5 ++--
- hw/virtio/vhost-user-base.c            | 23 ++++++++++-------
- hw/virtio/vhost-user-fs.c              | 23 ++++++++++-------
- hw/virtio/vhost-user-scmi.c            | 27 ++++++++++++--------
- hw/virtio/vhost-user-vsock.c           | 15 +++++++----
- hw/virtio/vhost-vsock-common.c         | 12 ++++-----
- hw/virtio/vhost-vsock.c                | 11 ++++----
- hw/virtio/vhost.c                      | 23 +++++++++--------
- hw/virtio/virtio-balloon.c             |  3 ++-
- hw/virtio/virtio-crypto.c              |  3 ++-
- hw/virtio/virtio-iommu.c               |  3 ++-
- hw/virtio/virtio-rng.c                 |  5 ++--
- hw/virtio/virtio.c                     | 22 ++++++++++------
- include/hw/virtio/vhost-scsi-common.h  |  2 +-
- include/hw/virtio/vhost-vsock-common.h |  2 +-
- include/hw/virtio/vhost.h              |  8 +++---
- include/hw/virtio/virtio.h             |  2 +-
- include/system/runstate.h              | 13 +++++++---
- include/system/vhost-user-backend.h    |  2 +-
- system/cpus.c                          |  8 ++++--
- system/runstate.c                      | 35 ++++++++++++++++++++++----
- 34 files changed, 239 insertions(+), 141 deletions(-)
-
--- 
-2.44.0
-
+Thanks,
+Nick
 
