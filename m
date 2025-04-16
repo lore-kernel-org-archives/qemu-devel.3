@@ -4,92 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC380C369C9
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 21:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E811CC369CA
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 21:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5AGP-0001ZH-QO; Wed, 16 Apr 2025 17:25:45 -0400
+	id 1u5AN1-00046K-Gp; Wed, 16 Apr 2025 17:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1u5AGM-0001Z2-OV
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 17:25:42 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1u5AGK-0000A1-4x
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 17:25:41 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22c33677183so1499795ad.2
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 14:25:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744838738; x=1745443538; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oAEUDZKbLPgza5DZtsu0FJyh6PwlcfTu2jJWNYque1Y=;
- b=Lbb8cENDhMp8PKPOWqdSRwtl/XujdEqKxnICcfzjoE9f/3sTeGgItkFayM8RTJ4si5
- KjSa5GlrEhLmixxt9kqTjA2oz9g54i2J1tPphwSUYRQrmkD2jg6ZO8mvz17Hnb+gYdW4
- 3SWNnXE/DcjUnswAohYwm+bxmlnTICo2hqF8PGa3s2jWhwFGtIfrNbw+uYOjTJPG+ipn
- qbAbbvh6RhA7tl7dA61baJv9A6mKPsm7yNHQZLy8QutaR3LkAMPoZn+sWq+dPGhWVgff
- x9slRt2g3w+YFhzySsOdl8Q8diMgUTcwk/NgmJ8/qawprntvlU2C+zn1V4BLfENTfrMB
- /wDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744838738; x=1745443538;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oAEUDZKbLPgza5DZtsu0FJyh6PwlcfTu2jJWNYque1Y=;
- b=wz+p+biUZ14bE6AVREXRWQQpv1wz2okW3b/4ww8A8aBRPMO3Tw8L6T4CZjX0v58nP6
- 4IsAeGaDshBYOIeOBiXldJeYzKG+uSe3Gm+k5c61C4Q+X+ohnz5PRBZlXuuDj+fQO21O
- aDeS5KTZ7xlCyC9LKurUCHuJ1yBkjPOPz3gt6YvV1ala5JmqfeNU7a1d8p9f5YYx63DD
- Qgj0OVSRtwF7UUubPvIUV38AFLEBMiyz7nXflrQJykmiTYWXA8vvIvQre3RhIT4bfN8W
- 2i0CjxOXCMrzPy5lv12yVPIwZkA5LZ5y2emxdTkUiI4tznx4Ht0yHu9pNy2J2bMqXUX7
- V7xw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4m6RQcnTe5ge8i+yOHokYIVSrkZy2+SM8FB7cKM7x2dbXWKGh91UD/w7ztdrHDk5u8QZaBHv8J9Ly@nongnu.org
-X-Gm-Message-State: AOJu0YyGqsghM5As3TOwghmgkzx8MREiCocU+qUcZVNyJ1CnkTq2dR4F
- K6eTt6lqfCaZAY5SnoEz26MHV7KAzbHWfBFDDaS9LPXq33zJJCf2
-X-Gm-Gg: ASbGncuKcNsXoUesJpcQZWSki0Myu276ZIHNyjUIWUvMZBITyfaqG3vs34TWNpb1QZ7
- fQvyiagLe2Nfie6gLwvwiHgNBF+meuNOStT1e7rsH8HhQtaE9B3PQHrGw6gi9mlJET55tf4QLOd
- fSZVlp74sG93hl2OwM/cB+ar0dq4LACmnWwzVG5Qm12ZkpAjkz7V/+WWXPIA5T323Dr+Nl3YACg
- od7fWuRMboE8Vh41+p3kXBW6+DZYKs1litYSj3+OyrTdcppFD6f0gNDz5woVlCP21rJV/ebCFvK
- MkQRqU7wxNI2ssZtw1ZP2HsK5fjmRUnbXafbfZuCGZF2oGW+aWegsh1UKSomrqFcEt1jIyy/fHj
- GjQ==
-X-Google-Smtp-Source: AGHT+IGP3CPy6p8wued0F90EC+c8Pvvq25w8rVHX8qBnidg5TnYXPH4w3uHp5M00MdN4ml26InZEhg==
-X-Received: by 2002:a17:902:eb8a:b0:224:2200:5940 with SMTP id
- d9443c01a7336-22c3596b995mr66522655ad.38.1744838737875; 
- Wed, 16 Apr 2025 14:25:37 -0700 (PDT)
-Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-308537cdb13sm2663562a91.0.2025.04.16.14.25.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Apr 2025 14:25:37 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Wed, 16 Apr 2025 21:25:34 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: anisa.su887@gmail.com, qemu-devel@nongnu.org, nifan.cxl@gmail.com,
- dave@stgolabs.net, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH 2/9] cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
-Message-ID: <aAAgTjeapPWpXhjt@deb-101020-bm01.eng.stellus.in>
-References: <20250317164204.2299371-1-anisa.su887@gmail.com>
- <20250317164204.2299371-3-anisa.su887@gmail.com>
- <20250318155624.00006410@huawei.com>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1u5AN0-000465-2P; Wed, 16 Apr 2025 17:32:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1u5AMx-0001ql-Hb; Wed, 16 Apr 2025 17:32:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53GL2hls011058;
+ Wed, 16 Apr 2025 21:32:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Mag3Lo
+ f0cI4knrEQ+OsDsVIySLCpFPgnC6ACo7HHvPE=; b=nqqO9KVSAspYjw8yqGC1eA
+ MKAB7mnXlduY9RfyqJKafE2g65o4L5rXQu+HBimfgVvndnCWOlZnx7OGhzDaA3CE
+ NWIR/0v+iGHMDIsjjxG9qdPD745U3tTyZlWPJUMTr/+wT0VF/QKOeEAy5bTYswcE
+ urnXclnnGgpAhPPnFcMnOX79qzJkqTUR1C7r2G2UEYX3fYueVNGqd5+UPvtYHZDd
+ eoqr42TV63gIaniZ6xESzvRDySLBtZvSn/Yxb4XG6FNVdSI+K/TOOqpWa7ykSvzJ
+ RgMaM8gzz+OjnpdAOEaWBY/za78bXiNf/j94mrQWkDVrFimHxyqqYuDM0Vwc40Hw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462m49r3am-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Apr 2025 21:32:27 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53GJ6gBv010432;
+ Wed, 16 Apr 2025 21:32:26 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4604qka6kr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Apr 2025 21:32:26 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53GLWPXM26280634
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Apr 2025 21:32:25 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8713C5805E;
+ Wed, 16 Apr 2025 21:32:25 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A960058059;
+ Wed, 16 Apr 2025 21:32:24 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 16 Apr 2025 21:32:24 +0000 (GMT)
+Message-ID: <6af75e03-86f2-4742-80d9-05a2887f6039@linux.ibm.com>
+Date: Wed, 16 Apr 2025 17:32:24 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250318155624.00006410@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=anisa.su887@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 07/24] s390x/diag: Implement DIAG 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
+Cc: jjherne@linux.ibm.com, jrossi@linux.ibm.com, fiuczy@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20250408155527.123341-1-zycai@linux.ibm.com>
+ <20250408155527.123341-8-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20250408155527.123341-8-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=etnfzppX c=1 sm=1 tr=0 ts=680021eb cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=CE0QtGyIfJpeGUXb5vQA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: XmIzq9rBUOFRm6VHSYRejqDf0qDymyOy
+X-Proofpoint-GUID: XmIzq9rBUOFRm6VHSYRejqDf0qDymyOy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-16_08,2025-04-15_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015 spamscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0
+ phishscore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504160173
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,182 +116,449 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 03:56:24PM +0000, Jonathan Cameron wrote:
-> On Mon, 17 Mar 2025 16:31:29 +0000
-> anisa.su887@gmail.com wrote:
+On 4/8/25 11:55 AM, Zhuoying Cai wrote:
+> DIAG 320 subcode 2 provides certificates that are in the
+> certificate store.
 > 
-> > From: Anisa Su <anisa.su@samsung.com>
-> > 
-> > FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section 7.6.7.6.1
-> > 
-> > Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> > ---
-> >  hw/cxl/cxl-mailbox-utils.c | 67 ++++++++++++++++++++++++++++++++++++++
-> >  hw/cxl/i2c_mctp_cxl.c      |  6 +++-
-> >  2 files changed, 72 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > index 1b62d36101..e9991fd1a7 100644
-> > --- a/hw/cxl/cxl-mailbox-utils.c
-> > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > @@ -122,6 +122,8 @@ enum {
-> >          #define MANAGEMENT_COMMAND     0x0
-> >      MHD = 0x55,
-> >          #define GET_MHD_INFO 0x0
-> > +    FMAPI_DCD_MGMT = 0x56,
-> > +        #define GET_DCD_INFO 0x0
-> >  };
-> >  
-> >  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> > @@ -3341,6 +3343,62 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-> >      return CXL_MBOX_SUCCESS;
-> >  }
-> >  
-> > +/*
-> > + * CXL r3.2 section 7.6.7.6.1: Get DCD Info (Opcode 5600h)
-> > + */
+> The subcode value is denoted by setting the second-left-most bit
+> of an 8-byte field.
 > 
-> Single line comment should be fine here.
+> The verification-certificate-block (VCB) contains the output data
+> when the operation completes successfully. VCB includes a common
+> header followed by zero or more verification-certificate entries (VCEs).
 > 
-> > +static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
-> > +                                      uint8_t *payload_in,
-> > +                                      size_t len_in,
-> > +                                      uint8_t *payload_out,
-> > +                                      size_t *len_out,
-> > +                                      CXLCCI *cci)
-> > +{
-> > +    struct {
-> > +        uint8_t num_hosts;
-> > +        uint8_t num_regions_supported;
-> > +        uint8_t rsvd1[2];
-> > +        uint16_t add_select_policy_bitmask;
-> > +        uint8_t rsvd2[2];
-> > +        uint16_t release_select_policy_bitmask;
-> > +        uint8_t sanitize_on_release_bitmask;
-> > +        uint8_t rsvd3;
-> > +        uint64_t total_dynamic_capacity;
-> > +        uint64_t region_blk_size_bitmasks[8];
-> > +    } QEMU_PACKED *out;
->     } QEMU_PACKED *out = (void *)payload_out;
-> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> > +    CXLDCRegion region;
-> > +    int i;
-> > +
-> > +    if (ct3d->dc.num_regions == 0) {
-> > +        return CXL_MBOX_UNSUPPORTED;
-> > +    }
-> > +
-> > +    out = (void *)payload_out;
-> Why not just do this at declaration above?
-> It is harmless to set it then even if we exit earlier
-> I think.
-> 
-> > +
-> > +    /* TODO: num hosts set to 1 for now */
-> 
-> Unless this changes later in the set, no need for a todo here.
-> This simply denotes what we are emulating. Maybe we will make
-> it more flexible in future, maybe not.
-> 
-> > +    out->num_hosts = 1;
-> > +    out->num_regions_supported = ct3d->dc.num_regions;
-> > +    /* TODO: only prescriptive supported for now */
-> 
-> Likewise, not a todo that needs comment. Just a current setting.
-> As long as we never make it nor support this we are fine for
-> compatibility etc.  The CXL stuff doesn't support migration anyway
-> so not problems there.
-> 
-> > +    stw_le_p(&out->add_select_policy_bitmask,
-> > +             CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE);
-should be
-BIT(CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE)
-> > +    stw_le_p(&out->release_select_policy_bitmask,
-> > +             CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE);
-should be
-BIT(CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE)
 
--Anisa
-> > +    /* TODO: sanitize on release bitmask cleared for now */
+Please add a comment stating that only x509 certificates in DER format
+and SHA-256 hash type are recognized.
+
+Further, I would further explain what this 320 SC 2 implementation is
+doing either in this commit message or where appropriate as comments:
+ - DIAG 320 uses a one-origin index for cert entries
+ - Describe the data structures in some more detail (mainly the more
+obscure fields)
+ - Describe why the VCB header is written to userspace last
+ - Describe which fields are taken from the certificate and stored in
+the data structures
+ - State that these certificates are retrieved from your cert store impl
+
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>  include/hw/s390x/ipl/diag320.h |  59 +++++++++
+>  target/s390x/diag.c            | 227 ++++++++++++++++++++++++++++++++-
+>  2 files changed, 285 insertions(+), 1 deletion(-)
 > 
-> As with above, not really a todo, more of a choice made for now.
-> 
-> > +    out->sanitize_on_release_bitmask = 0;
-> > +
-> > +    stq_le_p(&out->total_dynamic_capacity,
-> > +             ct3d->dc.total_capacity / CXL_CAPACITY_MULTIPLIER);
-> > +
-> > +    for (i = 0; i < ct3d->dc.num_regions; i++) {
-> > +        region = ct3d->dc.regions[i];
-> > +        memcpy(&out->region_blk_size_bitmasks[i],
-> > +                &region.supported_blk_size_bitmask, 8);
-> 
-> sizeof(out->region_blk_size_bitmasks[i]) 
-> 
-> > +    }
-> > +
-> > +    *len_out = sizeof(*out);
-> > +    return CXL_MBOX_SUCCESS;
-> > +}
-> > +
-> >  static const struct cxl_cmd cxl_cmd_set[256][256] = {
-> >      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-> >          cmd_infostat_bg_op_abort, 0, 0 },
-> > @@ -3462,6 +3520,11 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-> >                                       cmd_tunnel_management_cmd, ~0, 0 },
-> >  };
-> >  
-> > +static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-> > +    [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
-> > +        cmd_fm_get_dcd_info, 0, 0},
-> > +};
-> > +
-> >  /*
-> >   * While the command is executing in the background, the device should
-> >   * update the percentage complete in the Background Command Status Register
-> > @@ -3764,7 +3827,11 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
-> >                                             DeviceState *intf,
-> >                                             size_t payload_max)
-> >  {
-> > +    CXLType3Dev *ct3d = CXL_TYPE3(d);
-> >      cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-> > +    if (ct3d->dc.num_regions) {
-> > +        cxl_copy_cci_commands(cci, cxl_cmd_set_fm_dcd);
-> > +    }
-> >      cci->d = d;
-> >      cci->intf = intf;
-> >      cxl_init_cci(cci, payload_max);
-> > diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
-> > index 7d2cbc3b75..df95182925 100644
-> > --- a/hw/cxl/i2c_mctp_cxl.c
-> > +++ b/hw/cxl/i2c_mctp_cxl.c
-> > @@ -46,6 +46,9 @@
-> >  /* Implementation choice - may make this configurable */
-> >  #define MCTP_CXL_MAILBOX_BYTES 512
-> >  
-> > +/* Supported FMAPI Cmds */
-> > +#define FMAPI_CMD_MAX_OPCODE 0x57
-> > +
-> >  typedef struct CXLMCTPMessage {
-> >      /*
-> >       * DSP0236 (MCTP Base) Integrity Check + Message Type
-> > @@ -200,7 +203,8 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
-> >          if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
-> >                msg->command_set < 0x51) &&
-> >              !(msg->message_type == MCTP_MT_CXL_FMAPI &&
-> > -              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
-> > +              msg->command_set >= 0x51 &&
-> > +              msg->command_set < FMAPI_CMD_MAX_OPCODE)) {
-> 
-> Hmm. There is a visibility problem here we should address but probably not
-> by introducing a new define.  Maybe we should move the enum from
-> cxl-mailbox-utils.c in a precursor patch.
-> 
-> Jonathan
-> 
-> 
-> >              buf->rc = CXL_MBOX_UNSUPPORTED;
-> >              st24_le_p(buf->pl_length, len_out);
-> >              s->len = s->pos;
-> 
+> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+> index ded336df25..32b6914b3b 100644
+> --- a/include/hw/s390x/ipl/diag320.h
+> +++ b/include/hw/s390x/ipl/diag320.h
+> @@ -14,15 +14,24 @@
+>  
+>  #define DIAG_320_SUBC_QUERY_ISM     0
+>  #define DIAG_320_SUBC_QUERY_VCSI    1
+> +#define DIAG_320_SUBC_STORE_VC      2
+>  
+>  #define DIAG_320_RC_OK              0x0001
+>  #define DIAG_320_RC_NOMEM           0x0202
+> +#define DIAG_320_RC_INVAL_VCB_LEN   0x0204
+> +#define DIAG_320_RC_BAD_RANGE       0x0302
+>  
+>  #define VCSSB_MAX_LEN   128
+>  #define VCE_HEADER_LEN  128
+>  #define VCB_HEADER_LEN  64
+>  
+>  #define DIAG_320_ISM_QUERY_VCSI     0x4000000000000000
+> +#define DIAG_320_ISM_STORE_VC       0x2000000000000000
+> +
+> +#define DIAG_320_VCE_FLAGS_VALID                0x80
+> +#define DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING    0
+> +#define DIAG_320_VCE_FORMAT_X509_DER            1
+> +#define DIAG_320_VCE_HASHTYPE_SHA2_256          1
+>  
+>  struct VerificationCertificateStorageSizeBlock {
+>      uint32_t length;
+> @@ -41,4 +50,54 @@ struct VerificationCertificateStorageSizeBlock {
+>  typedef struct VerificationCertificateStorageSizeBlock \
+>  VerificationCertificateStorageSizeBlock;
+>  
+> +struct vcb_header {
+> +    uint32_t vcbinlen;
+> +    uint32_t reserved0;
+> +    uint16_t fvci;> +    uint16_t lvci;
+> +    uint32_t reserved1;
+> +    uint32_t cstoken;
+> +    uint32_t reserved2[3];
+> +    uint32_t vcboutlen;
+> +    uint8_t reserved3[3];
+> +    uint8_t version;
+> +    uint16_t svcc;
+> +    uint16_t rvcc;
+> +    uint32_t reserved4[5];
+> +} QEMU_PACKED;
+> +typedef struct vcb_header vcb_header;
+
+s/vcbinlen/in_len
+s/vcboutlen/out_len
+
+s/fvci/first_vc_index
+s/lvci/last_vc_index
+
+s/cstoken/cs_token, which I guess we don't make use of at all... does it
+make sense to just remove it and combine the reserved fields?
+
+s/svcc/stored_ct
+s/rvcc/remain_ct
+
+This will make things much easier to understand.
+
+> +
+> +struct VerficationCertificateBlock {
+> +    vcb_header vcb_hdr;
+> +    uint8_t vcb_buf[];
+
+s/vcb_buf/vce_buf
+
+What is the justification of having a separate header struct?  Can't we
+just put everything in the VerificationCertificateBlock?  It would make
+some of the accessing in the functions below a LOT cleaner.
+
+> +} QEMU_PACKED;
+> +typedef struct VerficationCertificateBlock VerficationCertificateBlock;
+> +
+> +struct vce_header {
+> +    uint32_t len;
+> +    uint8_t flags;
+> +    uint8_t keytype;
+> +    uint16_t certidx;
+> +    uint32_t name[16];
+> +    uint8_t format;
+> +    uint8_t reserved0;
+> +    uint16_t keyidlen;
+> +    uint8_t reserved1;
+> +    uint8_t hashtype;
+> +    uint16_t hashlen;
+> +    uint32_t reserved2;
+> +    uint32_t certlen;
+> +    uint32_t reserved3[2];
+> +    uint16_t hashoffset;
+> +    uint16_t certoffset;
+> +    uint32_t reserved4[7];
+
+Use underscores to separate words in these fields to make them easier on
+the eyes.
+
+> +} QEMU_PACKED;
+> +typedef struct vce_header vce_header;
+> +
+> +struct VerificationCertificateEntry {
+> +    vce_header vce_hdr;
+> +    uint8_t cert_data_buf[];
+
+s/cert_data_buf/cert_buf
+
+and same comments as above w.r.t. to putting all header fields in here
+
+> +} QEMU_PACKED;
+> +typedef struct VerificationCertificateEntry VerificationCertificateEntry;
+> +
+>  #endif
+> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+> index cc639819ec..82e4dc9e1e 100644
+> --- a/target/s390x/diag.c
+> +++ b/target/s390x/diag.c
+> @@ -17,6 +17,7 @@
+>  #include "s390x-internal.h"
+>  #include "hw/watchdog/wdt_diag288.h"
+>  #include "system/cpus.h"
+> +#include "hw/s390x/cert-store.h"
+>  #include "hw/s390x/ipl.h"
+>  #include "hw/s390x/s390-virtio-ccw.h"
+>  #include "system/kvm.h"
+> @@ -191,6 +192,94 @@ out:
+>      }
+>  }
+>  
+> +#ifdef CONFIG_GNUTLS
+> +static bool diag_320_is_cert_valid(gnutls_x509_crt_t cert)
+> +{
+> +    time_t now;
+> +
+> +    if (gnutls_x509_crt_get_version(cert) < 0) {
+> +        return false;
+> +    }
+> +
+> +    now = time(0);
+> +    if (!((gnutls_x509_crt_get_activation_time(cert) < now) &&
+> +         (gnutls_x509_crt_get_expiration_time(cert) > now))) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+
+qcrypto_tls_creds_check_cert_times may suffice for now.
+
+> +#endif /* CONFIG_GNUTLS */
+> +
+> +static int diag_320_get_cert_info(VerificationCertificateEntry *vce,
+> +                                 S390IPLCertificate qcert, bool *is_valid,
+> +                                 unsigned char **key_id_data, void **hash_data)
+> +{
+> +#ifdef CONFIG_GNUTLS
+> +    unsigned int algo;
+> +    unsigned int bits;
+> +    int hash_type;
+> +    int rc;
+> +
+> +    gnutls_x509_crt_t g_cert = NULL;
+> +    if (g_init_cert((uint8_t *)qcert.raw, qcert.size, &g_cert)) {
+> +        return -1;
+> +    }
+> +
+> +    /* VCE flag (validity) */
+> +    *is_valid = diag_320_is_cert_valid(g_cert);
+> +
+> +    /* key-type */
+> +    algo = gnutls_x509_crt_get_pk_algorithm(g_cert, &bits);
+> +    if (algo == GNUTLS_PK_RSA) {
+> +        vce->vce_hdr.keytype = DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
+> +    }
+> +
+> +    /* VC format */
+> +    if (qcert.format == GNUTLS_X509_FMT_DER) {
+> +        vce->vce_hdr.format = DIAG_320_VCE_FORMAT_X509_DER;
+> +    }
+> +
+> +    /* key id and key id len */
+> +    *key_id_data = g_malloc0(qcert.key_id_size);
+> +    rc = gnutls_x509_crt_get_key_id(g_cert, GNUTLS_KEYID_USE_SHA256,
+> +                                    *key_id_data, &qcert.key_id_size);
+> +    if (rc < 0) {
+> +        error_report("Fail to retrieve certificate key ID");
+> +        goto out;
+> +    }
+> +    vce->vce_hdr.keyidlen = (uint16_t)qcert.key_id_size;
+> +
+> +    /* hash type */
+> +    hash_type = gnutls_x509_crt_get_signature_algorithm(g_cert);
+> +    if (hash_type == GNUTLS_SIGN_RSA_SHA256) {
+> +        vce->vce_hdr.hashtype = DIAG_320_VCE_HASHTYPE_SHA2_256;
+> +    }
+> +
+> +    /* hash and hash len */
+> +    *hash_data = g_malloc0(qcert.hash_size);
+> +    rc = gnutls_x509_crt_get_fingerprint(g_cert, GNUTLS_DIG_SHA256,
+> +                                            *hash_data, &qcert.hash_size);
+> +    if (rc < 0) {
+> +        error_report("Fail to retrieve certificate hash");
+> +        goto out;
+> +    }
+> +    vce->vce_hdr.hashlen = (uint16_t)qcert.hash_size;
+> +
+> +    gnutls_x509_crt_deinit(g_cert);
+> +
+> +    return 0;
+> +out:
+> +    gnutls_x509_crt_deinit(g_cert);
+> +    g_free(*key_id_data);
+> +    g_free(*hash_data);
+> +
+> +    return -1;
+> +#else
+> +    return -1;
+> +#endif /* CONFIG_GNUTLS */
+
+As per Daniel's suggestion, let's move all gnutls functions to somewhere
+in the crypto/* directory.  There seems to be a file aptly titled
+"x509-utils.c" that may be a good starting point to contribute to.
+
+A lot of this function should get offloaded to new/existing qcrypto
+functions, so I'll reserve my comments for now.
+
+> +}
+> +
+>  void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>  {
+>      S390CPU *cpu = env_archcpu(env);
+> @@ -211,7 +300,7 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>  
+>      switch (subcode) {
+>      case DIAG_320_SUBC_QUERY_ISM:
+> -        uint64_t ism = DIAG_320_ISM_QUERY_VCSI;
+> +        uint64_t ism = DIAG_320_ISM_QUERY_VCSI | DIAG_320_ISM_STORE_VC;
+>  
+>          if (s390_cpu_virt_mem_write(cpu, addr, (uint8_t)r1, &ism,
+>                                      be64_to_cpu(sizeof(ism)))) {
+> @@ -257,6 +346,142 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+>          }
+>          rc = DIAG_320_RC_OK;
+>          break;
+> +    case DIAG_320_SUBC_STORE_VC:
+> +        VerficationCertificateBlock *vcb;
+> +        size_t vce_offset = VCB_HEADER_LEN;
+> +        size_t remaining_space;
+> +        size_t vce_hdr_offset;
+> +        int i;
+> +
+> +        unsigned char *key_id_data = NULL;
+> +        void *hash_data = NULL;
+> +        bool is_valid = false;
+> +
+> +        vcb = g_new0(VerficationCertificateBlock, 1);
+> +        if (s390_cpu_virt_mem_read(cpu, addr, (uint8_t)r1, vcb, sizeof(*vcb))) {
+> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +            return;
+> +        }
+> +
+> +        if (vcb->vcb_hdr.vcbinlen % 4096 != 0) {
+
+I think you want to use TARGET_PAGE_MASK here instead of the explicit 4096.
+
+> +            rc = DIAG_320_RC_INVAL_VCB_LEN;
+> +            g_free(vcb);
+> +            break;
+> +        }
+> +
+> +        if (1 > vcb->vcb_hdr.fvci || vcb->vcb_hdr.fvci > vcb->vcb_hdr.lvci) {
+
+This is no longer entirely correct for vc index 0.  If first and last
+indexes are both 0, no certificates are returned and rc should be OK.
+We may not use this feature in this patch series, but we need to be
+compliant.
+
+Additionally, it's valid to have first == 0 and last > first.  In this
+case, index 0 is skipped since the DIAG 320 cert store uses a one-origin
+index.
+
+> +            rc = DIAG_320_RC_BAD_RANGE;
+> +            g_free(vcb);
+> +            break;
+> +        }
+> +
+> +        vcb->vcb_hdr.vcboutlen = VCB_HEADER_LEN;
+> +        vcb->vcb_hdr.version = 0;
+> +        vcb->vcb_hdr.svcc = 0;
+> +        vcb->vcb_hdr.rvcc = 0;
+> +
+
+g_new0 initalizes all fields to 0, so no need to do that here.
+
+> +        remaining_space = vcb->vcb_hdr.vcbinlen - VCB_HEADER_LEN;
+> +
+> +        for (i = vcb->vcb_hdr.fvci - 1; i < vcb->vcb_hdr.lvci; i++) {
+> +            VerificationCertificateEntry vce;> +
+S390IPLCertificate qcert;
+> +
+> +            /*
+> +             * If cert index goes beyond the highest cert
+> +             * store index (count - 1), then exit early
+> +             */
+> +            if (i >= qcs->count) {
+> +                break;
+> +            }
+
+May make sense to just toss this in with the loop condition and then
+initialize qcert = qcs->certs[i]; above.
+
+> +
+> +            qcert = qcs->certs[i];
+> +
+> +            /*
+> +             * If there is no more space to store the cert,
+> +             * set the remaining verification cert count and
+> +             * break early.
+> +             */
+> +            if (remaining_space < qcert.size) {
+> +                vcb->vcb_hdr.rvcc = vcb->vcb_hdr.lvci - i;
+> +                break;
+> +            }
+> +
+> +            /* Construct VCE */
+> +            vce.vce_hdr.len = VCE_HEADER_LEN;
+> +            vce.vce_hdr.certidx = i + 1;
+> +            vce.vce_hdr.certlen = qcert.size;
+> +
+> +            strncpy((char *)vce.vce_hdr.name, (char *)qcert.vc_name, VC_NAME_LEN_BYTES);
+> +
+> +            rc = diag_320_get_cert_info(&vce, qcert, &is_valid, &key_id_data, &hash_data);
+> +            if (rc) {
+> +                continue;
+> +            }
+> +
+> +            vce.vce_hdr.len += vce.vce_hdr.keyidlen;
+> +            vce.vce_hdr.len += vce.vce_hdr.hashlen;
+> +            vce.vce_hdr.len += vce.vce_hdr.certlen;
+> +
+> +            vce.vce_hdr.hashoffset = VCE_HEADER_LEN + vce.vce_hdr.keyidlen;
+> +            vce.vce_hdr.certoffset = VCE_HEADER_LEN + vce.vce_hdr.keyidlen +
+> +                                     vce.vce_hdr.hashlen;
+> +
+> +            vce_hdr_offset = vce_offset;
+> +            vce_offset += VCE_HEADER_LEN;
+> +
+> +            /* Write Key ID */
+> +            if (s390_cpu_virt_mem_write(cpu, addr + vce_offset, (uint8_t)r1, key_id_data,
+> +                                        be16_to_cpu(vce.vce_hdr.keyidlen))) {
+> +                s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +                return;
+> +            }
+> +            vce_offset += vce.vce_hdr.keyidlen;
+> +
+> +            /* Write Hash key */
+> +            if (s390_cpu_virt_mem_write(cpu, addr + vce_offset, (uint8_t)r1, hash_data,
+> +                                        be16_to_cpu(vce.vce_hdr.hashlen))) {
+> +                s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +                return;
+> +            }
+> +             vce_offset += vce.vce_hdr.hashlen;
+
+Leading space.
+
+> +
+> +            /* Write VCE cert data */
+> +            if (s390_cpu_virt_mem_write(cpu, addr + vce_offset, (uint8_t)r1, qcert.raw,
+> +                                        be32_to_cpu(vce.vce_hdr.certlen))) {
+> +                s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +                return;
+> +            }
+> +            vce_offset += qcert.size;
+> +
+> +            /* The certificate is valid and VCE contains the certificate */
+> +            if (is_valid) {
+> +                vce.vce_hdr.flags |= DIAG_320_VCE_FLAGS_VALID;
+> +            }
+> +
+> +            /* Write VCE Header */
+> +            if (s390_cpu_virt_mem_write(cpu, addr + vce_hdr_offset, (uint8_t)r1, &vce,
+> +                                        be32_to_cpu(VCE_HEADER_LEN))) {
+> +                s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +                return;
+> +            }
+> +
+> +            vcb->vcb_hdr.vcboutlen += vce.vce_hdr.len;
+> +            remaining_space -= vce.vce_hdr.len;
+> +            vcb->vcb_hdr.svcc++;
+> +
+> +            g_free(key_id_data);
+> +            g_free(hash_data);
+> +        }
+> +
+> +        /* Finally, write the header */
+
+/* Write VCB Header */
+
+> +        if (s390_cpu_virt_mem_write(cpu, addr, (uint8_t)r1, vcb,
+> +                                    be32_to_cpu(VCB_HEADER_LEN))) {
+> +            s390_cpu_virt_mem_handle_exc(cpu, ra);
+> +            return;
+> +        }> +        rc = DIAG_320_RC_OK;
+> +        g_free(vcb);
+> +        break;
+>      default:
+>          s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+>          return;
+
+
+-- 
+Regards,
+  Collin
 
