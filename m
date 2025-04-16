@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB76C369C7
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 20:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7984FC369C7
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 20:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u59JU-0007GZ-J6; Wed, 16 Apr 2025 16:24:52 -0400
+	id 1u59JB-00072K-Nf; Wed, 16 Apr 2025 16:24:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1u59JC-00072q-Mf
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:24:35 -0400
+ id 1u59J9-00070n-Gq
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:24:31 -0400
 Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1u59J9-0002IF-GA
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:24:34 -0400
+ id 1u59J7-0002Gx-Om
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 16:24:31 -0400
 Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-47681dba807so12941cf.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 13:24:31 -0700 (PDT)
+ d75a77b69052e-4769e30af66so21031cf.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 13:24:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1744835070; x=1745439870; darn=nongnu.org;
+ d=google.com; s=20230601; t=1744835068; x=1745439868; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dbRjehg7BDu5aLWRv9UwWcITpA9l3iDZFOySPlh+RlE=;
- b=qpD/0gcCJ4UvievklwX3AqAUtYLR86PKUC4dcW5PBmCdt54eVk3b1LKU+xsFGnOhbm
- +8yZA/e42SZgJvoRGLFEHTfy8ZTgPxBW25vi8LifHheMWRXs3gKBhOnUkTMuUtjWLO+B
- UuCAlFpVSk6s1jHQiNSC+iAjuZ4+YqINbt1zgC0ZP5iTLIGNLRVbADiNYfSgtmnN4Hva
- 7pRs3btMr72fCdhSDh+K/RGE5cZ7tVRbed7o2G/MzpfRVj7+v5/qOnTUt+bCczBDtOwK
- MjARGDHoLZF6Gl+hQaMdITHKdRQKD4516NzYZs2BJU8oE8Y/I5AHFJOKFyYq/lZHavVv
- bmDQ==
+ bh=Xq388DhXZB9hNvxukWG3QesZ8hs+pPdsydsNVKIkg9E=;
+ b=eec+e2kBpZSXqlN6fTOI2qZId4264Mi9et/EcRVidYIUezM1IhT/5dJBGNAYL3WtCE
+ C4jKvShCD4HZgIHbzuESxaHu2VEYsmd1WG3bMovKWJ+oZOh41w+QL5T+ImQNgxlalNdG
+ NQucsie6gbzdvJk5+XVlyvKyOWwGYQfTxoBhD9zm/wFJiUzuUuCmWMnnZurMwNyAtoIM
+ W+bDWtnVFLPy7+fcvMNrn+T4VbcKV6Kr07CBBP0B3R9OunMduFhBGFiQcCEZVe9BZ6FS
+ m3e66qz0mAWPxNU5VzpJAdFG1jcVZhSjYrBOAiCjaU93QJ5ajuX1FruXPN/qtlos/NRo
+ iszQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744835070; x=1745439870;
+ d=1e100.net; s=20230601; t=1744835068; x=1745439868;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dbRjehg7BDu5aLWRv9UwWcITpA9l3iDZFOySPlh+RlE=;
- b=C6r7411Lp0BSqg16sR5UsCCt/G0fOrVdPiyAYBaxCaOFfVDWDACd0OOLTObZpBzZzD
- JJ3HWvBWm6m46jk01rcGoD4D1au0nq7iXrCPSqv92O4YNz5V6gH5jJAswt3eAfjZ/vqL
- lsoY8CZDrpLjbTtkxEpt9noMOzai6LhLG0H6UBzigXBljyRxXIgryY2Obcs51pFAw3eI
- CXN+XocfNMv9APRt0FMC0Y3Pe5iYA4bEU7I98djRHBNVRPh9WzXNijSGTOHfB5pYUiH5
- 2d8eVUXaRpluwUYHiWIT3uiGoolKHrD6OaASJRjWzt8MVC0qbyx9MO3vv3yyn/8xYuqj
- 9ywQ==
+ bh=Xq388DhXZB9hNvxukWG3QesZ8hs+pPdsydsNVKIkg9E=;
+ b=a4b01j8TzKAY9HDyuOBnlpWk5XbIYSgZA/+kErGHlJWKaHA2CPFNTl9yrUxprxjKz5
+ 3BquFA6wJJm4mzYbipJNtgV+B8utylOWpfk9/3upC0Q5SkjOBqn42P2QmJbf+7JREfGD
+ nV2ITjO/FoJd4elKTbQkW/K+b1NSFVIdXwWxYt2ajL3n0xbrj12pC2JpAONI/IdvbK8I
+ BRODApKgg/Z59SGJenXUu8iDLoQ8CqDD31f9NyiYwwG0RED0beN1K9ASZsFjb5jG0BlP
+ nYd1O6NpiSSQXSe7/W9b6SGtkc4x6A6pQzvBJWUXDSDmiWJtHrQGS+jTcajvBQ9uswKj
+ gwSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVJ8ZWKQjsQwcm8UHtuqvlByBQMq4skP0Mct50dhkjv3e1hmPl4th/TDBqdjqHm7hyt0/f3/CMk07T@nongnu.org
-X-Gm-Message-State: AOJu0YxFTgulmTMvSd6j8hqFBD2mr/kkfl20FYRCFTCRklm80r7kONXa
- MJl5lEbLiWBpL9sk6yfN/MQT9n9rKfDJ7ImCkn5fDStZxDMQh/w13l0RiQWvttOeiChEHYMY34/
- 26tDBEQMyR9YM9qukA1UJUt2mmNV3CN3ymwIS
-X-Gm-Gg: ASbGncvCbw9DaRaWD7r46rK0zWIKSQzxQoS3W8LAHt1lwxkEuadebVUCBAZuQWDLg5v
- fumX0LQ+RFkXnriB5ZFhuyOfp8DokznaJ1y+lETyigfnR4JKN1I/KDGL1/7XMvyYv6tWsQ48kB+
- f8p2Zlyz5JZ1mhdVkPOLMLSDrzeDTqCHNsKPrFsvlog9q+5F7EWo5APKEXQ+8iUjM=
-X-Google-Smtp-Source: AGHT+IHtb1K0swz1RF0lUfUt9ptrlYRE+UK2p99hrOHNKg+znU/nxzjs7M4/7bCraV2ALZCUgr8iGZNpFhS0H3xvUiQ=
-X-Received: by 2002:a05:622a:2c5:b0:477:95a:ac57 with SMTP id
- d75a77b69052e-47ade63186emr836391cf.14.1744835070334; Wed, 16 Apr 2025
- 13:24:30 -0700 (PDT)
+ AJvYcCVuNqefqrsNN9708+RI1wzmOveTezioNur6Qhcm0Hs+/TvSMmEAemuAUj9u5TLkLH5go7ftruHlGQbB@nongnu.org
+X-Gm-Message-State: AOJu0YwoV5WYkdx+YlwsJByhcapcQvjhmCDLyUAB9Eu4OS6bUy9Wrs4t
+ IoKPdufbkx7hN47cd0BnUChceBFSiXaeb1zu0WG9BORV2xsKcEgihNmxlkX9Xf+KemyNZYE35iL
+ 6hjyBXDFbnfQgdf89QjA1rFMYMZL98b7L26v1
+X-Gm-Gg: ASbGncuvdExYFSZbgFLy2tVY+4FHeEkQPTwOBKGtfDVVZQ8/RmSF67lGxk3l/U945AJ
+ TcHibcoXOvMOM+BiFViGgS0FpgLXU+MP+5y/wuuMK5gK5uI5hUt22ZwsCrFilpe0o2aKMZimJEu
+ FhFWmcE39vwyCTh80aB4Z+W2YuRW/4OZDw5fJSB8JgIL4+gq1aHJDs
+X-Google-Smtp-Source: AGHT+IGw0AnopGaHiXVZWRjUeiXBg/4xA7eirbf7l+niaUN0F1GUCNDk01Ubq3agDtHzjR1U67INV2wK9VYBWveo2uI=
+X-Received: by 2002:a05:622a:14d4:b0:479:973:46f1 with SMTP id
+ d75a77b69052e-47ade6ac501mr965301cf.22.1744835068400; Wed, 16 Apr 2025
+ 13:24:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
- <20250416034327.315714-3-jamin_lin@aspeedtech.com>
-In-Reply-To: <20250416034327.315714-3-jamin_lin@aspeedtech.com>
+ <20250416034327.315714-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250416034327.315714-4-jamin_lin@aspeedtech.com>
 From: Nabih Estefan <nabihestefan@google.com>
-Date: Wed, 16 Apr 2025 13:24:19 -0700
-X-Gm-Features: ATxdqUFq1ies6X_faHPMU06IjZSOxDjpJBR1rf9HQiubbulexA5x6RbYBnhWDAE
-Message-ID: <CA+QoejXckB0N60DYXudiG12FN7jWZverWceYBXC5jpjHLP2hQg@mail.gmail.com>
-Subject: Re: [PATCH v3 02/10] hw/arm/aspeed_ast27x0 Introduce vbootrom memory
- region
+Date: Wed, 16 Apr 2025 13:24:16 -0700
+X-Gm-Features: ATxdqUGzMUpbSUdHOBu1xoXj518eftjerrPMnQNDiUOFR192a8s55Im3UDVqj_0
+Message-ID: <CA+QoejUwtpNrDLfQrxv5u-3eDeD+McT=+WVwrPp84hm-bXT5-A@mail.gmail.com>
+Subject: Re: [PATCH v3 03/10] hw/arm/aspeed: Add vbootrom support on AST2700
+ EVB machines
 To: Jamin Lin <jamin_lin@aspeedtech.com>
 Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
  Peter Maydell <peter.maydell@linaro.org>,
@@ -107,106 +107,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Apr 15, 2025 at 8:43=E2=80=AFPM Jamin Lin <jamin_lin@aspeedtech.com=
 > wrote:
 >
-> Introduce a new vbootrom memory region. The region is mapped at address
-> "0x00000000" and has a size of 128KB, identical to the SRAM region size.
-> This memory region is intended for loading a vbootrom image file as part =
-of the
-> boot process.
+> Introduce a new "vbootrom" field in the AspeedMachineClass to indicate wh=
+ether
+> a machine supports the virtual boot ROM region.
 >
-> The vbootrom registered in the SoC's address space using the ASPEED_DEV_V=
-BOOTROM
-> index.
->
-> Introduced a "vbootrom_size" attribute in "AspeedSoCClass" to define virt=
-ual
-> boot ROM size.
+> Set this field to true by default for the AST2700-A0 and AST2700-A1 EVB
+> machines.
 >
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 Tested-by: Nabih Estefan <nabihestefan@google.com>
 
 > ---
->  include/hw/arm/aspeed_soc.h |  3 +++
->  hw/arm/aspeed_ast27x0.c     | 12 ++++++++++++
->  2 files changed, 15 insertions(+)
+>  include/hw/arm/aspeed.h | 1 +
+>  hw/arm/aspeed.c         | 2 ++
+>  2 files changed, 3 insertions(+)
 >
-> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index f069d17d16..9af8cfbc3e 100644
-> --- a/include/hw/arm/aspeed_soc.h
-> +++ b/include/hw/arm/aspeed_soc.h
-> @@ -59,6 +59,7 @@ struct AspeedSoCState {
->      MemoryRegion sram;
->      MemoryRegion spi_boot_container;
->      MemoryRegion spi_boot;
-> +    MemoryRegion vbootrom;
->      AddressSpace dram_as;
->      AspeedRtcState rtc;
->      AspeedTimerCtrlState timerctrl;
-> @@ -152,6 +153,7 @@ struct AspeedSoCClass {
->      const char * const *valid_cpu_types;
->      uint32_t silicon_rev;
->      uint64_t sram_size;
-> +    uint64_t vbootrom_size;
->      uint64_t secsram_size;
->      int spis_num;
->      int ehcis_num;
-> @@ -169,6 +171,7 @@ struct AspeedSoCClass {
->  const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
+> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
+> index 9cae45a1c9..973277bea6 100644
+> --- a/include/hw/arm/aspeed.h
+> +++ b/include/hw/arm/aspeed.h
+> @@ -40,6 +40,7 @@ struct AspeedMachineClass {
+>      void (*i2c_init)(AspeedMachineState *bmc);
+>      uint32_t uart_default;
+>      bool sdhci_wp_inverted;
+> +    bool vbootrom;
+>  };
 >
->  enum {
-> +    ASPEED_DEV_VBOOTROM,
->      ASPEED_DEV_SPI_BOOT,
->      ASPEED_DEV_IOMEM,
->      ASPEED_DEV_UART0,
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index b05ed75ff4..7eece8e286 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -24,6 +24,7 @@
->  #include "qemu/log.h"
 >
->  static const hwaddr aspeed_soc_ast2700_memmap[] =3D {
-> +    [ASPEED_DEV_VBOOTROM]  =3D  0x00000000,
->      [ASPEED_DEV_SRAM]      =3D  0x10000000,
->      [ASPEED_DEV_HACE]      =3D  0x12070000,
->      [ASPEED_DEV_EMMC]      =3D  0x12090000,
-> @@ -657,6 +658,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *=
-dev, Error **errp)
->      memory_region_add_subregion(s->memory,
->                                  sc->memmap[ASPEED_DEV_SRAM], &s->sram);
->
-> +    /* VBOOTROM */
-> +    name =3D g_strdup_printf("aspeed.vbootrom.%d", CPU(&a->cpu[0])->cpu_=
-index);
-> +    if (!memory_region_init_ram(&s->vbootrom, OBJECT(s), name,
-> +                                sc->vbootrom_size, errp)) {
-> +        return;
-> +    }
-> +    memory_region_add_subregion(s->memory,
-> +                                sc->memmap[ASPEED_DEV_VBOOTROM], &s->vbo=
-otrom);
-> +
->      /* SCU */
->      if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
->          return;
-> @@ -898,6 +908,7 @@ static void aspeed_soc_ast2700a0_class_init(ObjectCla=
-ss *oc, void *data)
->
->      sc->valid_cpu_types =3D valid_cpu_types;
->      sc->silicon_rev  =3D AST2700_A0_SILICON_REV;
-> +    sc->vbootrom_size =3D 0x20000;
->      sc->sram_size    =3D 0x20000;
->      sc->spis_num     =3D 3;
->      sc->wdts_num     =3D 8;
-> @@ -925,6 +936,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectCla=
-ss *oc, void *data)
->
->      sc->valid_cpu_types =3D valid_cpu_types;
->      sc->silicon_rev  =3D AST2700_A1_SILICON_REV;
-> +    sc->vbootrom_size =3D 0x20000;
->      sc->sram_size    =3D 0x20000;
->      sc->spis_num     =3D 3;
->      sc->wdts_num     =3D 8;
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 82f42582fa..e852bbc4cb 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1689,6 +1689,7 @@ static void aspeed_machine_ast2700a0_evb_class_init=
+(ObjectClass *oc, void *data)
+>      amc->macs_mask =3D ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+>      amc->uart_default =3D ASPEED_DEV_UART12;
+>      amc->i2c_init  =3D ast2700_evb_i2c_init;
+> +    amc->vbootrom =3D true;
+>      mc->auto_create_sdcard =3D true;
+>      mc->default_ram_size =3D 1 * GiB;
+>      aspeed_machine_class_init_cpus_defaults(mc);
+> @@ -1709,6 +1710,7 @@ static void aspeed_machine_ast2700a1_evb_class_init=
+(ObjectClass *oc, void *data)
+>      amc->macs_mask =3D ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+>      amc->uart_default =3D ASPEED_DEV_UART12;
+>      amc->i2c_init  =3D ast2700_evb_i2c_init;
+> +    amc->vbootrom =3D true;
+>      mc->auto_create_sdcard =3D true;
+>      mc->default_ram_size =3D 1 * GiB;
+>      aspeed_machine_class_init_cpus_defaults(mc);
 > --
 > 2.43.0
 >
