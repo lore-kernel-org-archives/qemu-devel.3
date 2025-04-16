@@ -4,48 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BAEC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 05:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D58AC369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 05:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4vCJ-0006tI-2F; Wed, 16 Apr 2025 01:20:31 -0400
+	id 1u4vOC-0003gj-UT; Wed, 16 Apr 2025 01:32:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
- id 1u4vCG-0006sY-4r; Wed, 16 Apr 2025 01:20:28 -0400
-Received: from out28-76.mail.aliyun.com ([115.124.28.76])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4vOA-0003fs-M1; Wed, 16 Apr 2025 01:32:46 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
- id 1u4vCB-0003hR-No; Wed, 16 Apr 2025 01:20:27 -0400
-Received: from TC-DZ-03-0020.tc.local(mailfrom:lc00631@tecorigin.com
- fp:SMTPD_---.cNuP0JE_1744780813 cluster:ay29) by smtp.aliyun-inc.com;
- Wed, 16 Apr 2025 13:20:13 +0800
-From: Chao Liu <lc00631@tecorigin.com>
-To: palmer@dabbelt.com,
-	alistair23@gmail.com
-Cc: zhiwei_liu@linux.alibaba.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, zhangtj@tecorigin.com,
- zqz00548@tecorigin.com, lc00631@tecorigin.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Subject: [PATCH v3 1/1] hw/riscv: fix PLIC hart topology configuration string
- when not getting CPUState correctly
-Date: Wed, 16 Apr 2025 13:17:03 +0800
-Message-ID: <b7ba615aeef5abca603413cfd17dcaecd0b99bf1.1744779826.git.lc00631@tecorigin.com>
-X-Mailer: git-send-email 2.47.0.windows.2
-In-Reply-To: <cover.1744779826.git.lc00631@tecorigin.com>
-References: <cover.1744779826.git.lc00631@tecorigin.com>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4vO7-0005sQ-Fg; Wed, 16 Apr 2025 01:32:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZcqLt07wfz6M4ct;
+ Wed, 16 Apr 2025 13:28:38 +0800 (CST)
+Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8CAD1140144;
+ Wed, 16 Apr 2025 13:32:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 16 Apr 2025 07:32:36 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 16 Apr 2025 07:32:36 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH 1/5] hw/arm/smmuv3: Introduce SMMUv3 device
+Thread-Topic: [PATCH 1/5] hw/arm/smmuv3: Introduce SMMUv3 device
+Thread-Index: AQHbrd4wHiQuJHoKEkaF+k+tUIN96LOlhaaAgAA/jIA=
+Date: Wed, 16 Apr 2025 05:32:36 +0000
+Message-ID: <5de48a047d6b4076b033cbe4fa10a803@huawei.com>
+References: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+ <20250415081104.71708-2-shameerali.kolothum.thodi@huawei.com>
+ <Z/8m8cFLY1vEjHpA@Asurada-Nvidia>
+In-Reply-To: <Z/8m8cFLY1vEjHpA@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.152.164]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.28.76; envelope-from=lc00631@tecorigin.com;
- helo=out28-76.mail.aliyun.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,138 +81,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_plic_hart_config_string() when getting CPUState via qemu_get_cpu()
-should be consistent with keeping sifive_plic_realize()
-by hartid_base + cpu_index.
 
-A better approach is to use cpu_by_arch_id() instead of qemu_get_cpu(),
-in riscv cpu_by_arch_id() uses the mhartid.
 
-For non-numa or single-cluster machines, hartid_base should be 0.
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Wednesday, April 16, 2025 4:42 AM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
+> mochs@nvidia.com; smostafa@google.com; Linuxarm
+> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+> Subject: Re: [PATCH 1/5] hw/arm/smmuv3: Introduce SMMUv3 device
+>=20
+> On Tue, Apr 15, 2025 at 09:11:00AM +0100, Shameer Kolothum wrote:
+> > +static int smmuv3_dev_pcie_bus(Object *obj, void *opaque)
+> > +{
+> > +    DeviceState *d =3D opaque;
+> > +    PCIBus *bus;
+> > +
+> > +    if (!object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
+> > +        return 0;
+> > +    }
+> > +
+> > +    bus =3D PCI_HOST_BRIDGE(obj)->bus;
+> > +    if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus-
+> >name)) {
+> > +        object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus)=
+,
+> > +                                 &error_abort);
+> > +        return 1;
+>=20
+> Return 1 would break the caller's foreach. And I guess that's what
+> we want since "primary-bus" should only be set once?
 
-Signed-off-by: Chao Liu <lc00631@tecorigin.com>
-Reviewed-by: Qingze Zhao <zqz00548@tecorigin.com>
-Reviewed-by: Tingjian Zhang <zhangtj@tecorigin.com>
----
- hw/intc/sifive_plic.c      | 4 ++--
- hw/riscv/boot.c            | 4 ++--
- hw/riscv/microchip_pfsoc.c | 2 +-
- hw/riscv/sifive_u.c        | 5 +++--
- hw/riscv/virt.c            | 2 +-
- include/hw/riscv/boot.h    | 2 +-
- 6 files changed, 10 insertions(+), 9 deletions(-)
+Yes. It will only set once and once you get it no need to iterate again.
+>=20
+> Maybe better to add a line of comments to explain that a bit?
+Ok.
 
-diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
-index a5b0f6ef1b..d2aedfce78 100644
---- a/hw/intc/sifive_plic.c
-+++ b/hw/intc/sifive_plic.c
-@@ -399,7 +399,7 @@ static void sifive_plic_realize(DeviceState *dev, Error **errp)
-      * hardware controlled when a PLIC is attached.
-      */
-     for (i = 0; i < s->num_harts; i++) {
--        RISCVCPU *cpu = RISCV_CPU(qemu_get_cpu(s->hartid_base + i));
-+        RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(s->hartid_base + i));
-         if (riscv_cpu_claim_interrupts(cpu, MIP_SEIP) < 0) {
-             error_setg(errp, "SEIP already claimed");
-             return;
-@@ -505,7 +505,7 @@ DeviceState *sifive_plic_create(hwaddr addr, char *hart_config,
- 
-     for (i = 0; i < plic->num_addrs; i++) {
-         int cpu_num = plic->addr_config[i].hartid;
--        CPUState *cpu = qemu_get_cpu(cpu_num);
-+        CPUState *cpu = cpu_by_arch_id(cpu_num);
- 
-         if (plic->addr_config[i].mode == PLICMode_M) {
-             qdev_connect_gpio_out(dev, cpu_num - hartid_base + num_harts,
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 765b9e2b1a..4cd29221c2 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -44,13 +44,13 @@ bool riscv_is_32bit(RISCVHartArrayState *harts)
-  * Return the per-socket PLIC hart topology configuration string
-  * (caller must free with g_free())
-  */
--char *riscv_plic_hart_config_string(int hart_count)
-+char *riscv_plic_hart_config_string(int hart_base, int hart_count)
- {
-     g_autofree const char **vals = g_new(const char *, hart_count + 1);
-     int i;
- 
-     for (i = 0; i < hart_count; i++) {
--        CPUState *cs = qemu_get_cpu(i);
-+        CPUState *cs = cpu_by_arch_id(hart_base + i);
-         CPURISCVState *env = &RISCV_CPU(cs)->env;
- 
-         if (kvm_enabled()) {
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 9c846f9b5b..5269336346 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -275,7 +275,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-                                 l2lim_mem);
- 
-     /* create PLIC hart topology configuration string */
--    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-+    plic_hart_config = riscv_plic_hart_config_string(0, ms->smp.cpus);
- 
-     /* PLIC */
-     s->plic = sifive_plic_create(memmap[MICROCHIP_PFSOC_PLIC].base,
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 679f2024bc..516912c4f4 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -790,10 +790,11 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
-     MemoryRegion *l2lim_mem = g_new(MemoryRegion, 1);
-     char *plic_hart_config;
-+    int hartid_base = 1;
-     int i, j;
- 
-     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
--    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
-+    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", hartid_base);
-     qdev_prop_set_string(DEVICE(&s->u_cpus), "cpu-type", s->cpu_type);
-     qdev_prop_set_uint64(DEVICE(&s->u_cpus), "resetvec", 0x1004);
- 
-@@ -829,7 +830,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
-                                 l2lim_mem);
- 
-     /* create PLIC hart topology configuration string */
--    plic_hart_config = riscv_plic_hart_config_string(ms->smp.cpus);
-+    plic_hart_config = riscv_plic_hart_config_string(hartid_base, ms->smp.cpus);
- 
-     /* MMIO */
-     s->plic = sifive_plic_create(memmap[SIFIVE_U_DEV_PLIC].base,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index e517002fdf..41fdfd2bc8 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1280,7 +1280,7 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
-     g_autofree char *plic_hart_config = NULL;
- 
-     /* Per-socket PLIC hart topology configuration string */
--    plic_hart_config = riscv_plic_hart_config_string(hart_count);
-+    plic_hart_config = riscv_plic_hart_config_string(base_hartid, hart_count);
- 
-     /* Per-socket PLIC */
-     ret = sifive_plic_create(
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index 7d59b2e6c6..5937298646 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -40,7 +40,7 @@ typedef struct RISCVBootInfo {
- 
- bool riscv_is_32bit(RISCVHartArrayState *harts);
- 
--char *riscv_plic_hart_config_string(int hart_count);
-+char *riscv_plic_hart_config_string(int hart_base, int hart_count);
- 
- void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
- target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
--- 
-2.48.1
+>=20
+> > +    }
+> > +    return 0;
+> > +}
+> > +
+> > +static void smmuv3_dev_realize(DeviceState *d, Error **errp)
+> > +{
+> > +    SMMUv3DevState *s_nested =3D ARM_SMMUV3_DEV(d);
+> > +    SMMUv3DevClass *c =3D ARM_SMMUV3_DEV_GET_CLASS(s_nested);
+>=20
+Oops...that's probably from a prototype code I had earlier!.=20
 
+Thanks,
+Shameer
 
