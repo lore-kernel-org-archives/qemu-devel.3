@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B3CC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 09:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A856AC369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 10:02:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4zFe-0001bQ-7F; Wed, 16 Apr 2025 05:40:17 -0400
+	id 1u4zaP-0002Lv-WE; Wed, 16 Apr 2025 06:01:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4zFb-0001aL-IK
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:40:11 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4zFZ-0005H6-HX
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 05:40:10 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39149bccb69so6423045f8f.2
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 02:40:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744796408; x=1745401208; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=U+swtM5eNoaWowPpJ0+nOSfNZlP6uiC0n2EId8otugg=;
- b=R7IarvScT8lgKrUHL8XiU/QFudxR9ozRuZ6Qoa/nqLwpbxWjjZyqUiFgIOjWgEEq/Q
- XbQeePC+cb8ufTx1suLy8pwjrXTda+E6S5J8bYa7PPJoKHpxxwtOAzcdBde5D8rsJhRD
- I6crwJArd6FoudI0cUuqnnk+qzVtJy55iwOQpR9jz5gKtsY7SKs7ub/SQckmDYn0xjFn
- mR3aNKRwjBVkILPBhwB+EsNgr/0uMJRrpW2M5Yqv5e9iToJdgKCdXqZissWJdPUMp5Bf
- MYBXUDsPGIQOhRfC7/Ymi6g6S0CfVOWdmXme04B6VVnN05HPtxkyzIGaIpXigNEdPgJQ
- Q9Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744796408; x=1745401208;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U+swtM5eNoaWowPpJ0+nOSfNZlP6uiC0n2EId8otugg=;
- b=PiSQj1tJKUY6t6Wc6bxR9RbgGpe/OUlXCXJvkkegsBkDCGu1KyrxZY+beQFg1V5SYz
- WV+dprrjRc4cQkcGFIpJ0/5iOQZnhbRzjk39Q9voHN8giTjBKAT87U68rnEjXN0BYIAM
- E+L3Ow1x5LFU7ckA96nNI03aJ7Qn5Ek0mwrZxyWb/oKwupYovHb9YqP4s6t/fLPhZBP9
- 408kgjbyY8YIbppTsHYdHRAJD1JqxFkMsoqjBO/PUr8WOQMSJmzALglej2JcEzue0Ixu
- 6td2o1QwInX8AusypHxqUhB3NngJdmXD8Bw8NLWh8qi8dt+onZtX77BDEgVkCxqEa5tm
- ZnYA==
-X-Gm-Message-State: AOJu0Yyeg1eOes8og71DadOaEz2fQDjz6r7WYlruastZv+fz2nj1ShDn
- 4HVrhaF0XNCgLTctAawTijLuYcMYdBg/ygojzPSluICkmzVhr43seAIFENb4/n+RgkDs1DT7zHP
- M
-X-Gm-Gg: ASbGncvkjOw+ubDzRHUVMkAJ1kP5xcCI/x50gDrfFcHpvjDfjtznOqEnkAODVyZKESq
- TG6uqmmGvjVqOgPF0gim75EaGsDH9MGW3fb7t95UA24pcXVztKIwODkg63cIHDLqO4OxAlHZ3MQ
- NTFt9rLO0Ntvg5pZG1fuMAfp4QavH0CS5/4j0DQg/mJDblhKE2DqMjxosJS8cBv3eNKhVXxGFQp
- NGPlp6/CGYAMSTB3XMhMHfJ0NsWu5MZTXQJnk1NccVOPLCdECPTeg9pWfX/HC4WUbAdzH6j/p5X
- riSiMK6evTalME6eHSRPa6IdnSgUMDq/ko24C0fpJDBwHO3CYtc52sZETVfAiVvdjkpUXQ+OKuq
- 4//o4ILca0OvXGsPy475pbZ+D
-X-Google-Smtp-Source: AGHT+IE90E6HWILOtCJbOlHcEhOWbqwNUyHDYz8o9dek5kMEJOG1juvohGFu7/FCKx4bgH6sRx8ogw==
-X-Received: by 2002:a05:6000:43cc:20b0:39e:cbf3:79db with SMTP id
- ffacd0b85a97d-39ee5b0ff07mr745804f8f.10.1744796407781; 
- Wed, 16 Apr 2025 02:40:07 -0700 (PDT)
-Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eae96e912sm16889384f8f.31.2025.04.16.02.40.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 02:40:07 -0700 (PDT)
-Message-ID: <529770bb-3026-403d-b6f2-24efea26122d@linaro.org>
-Date: Wed, 16 Apr 2025 11:40:06 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u4zYl-0000OS-ME; Wed, 16 Apr 2025 06:00:00 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u4zYi-00011v-Lp; Wed, 16 Apr 2025 05:59:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1744797596; x=1776333596;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Ne8pzpJiZGIpH61ngDLPEs3Z3DMm/OvMamEe6rhPgIQ=;
+ b=Z17kxjbP8fusxp9inOvyzIp8TXs1UtjXQFPSgyMacb5kZo29MnyvGoOu
+ RCJuZJEpF7OxEckEAeh9gVNa0b4icqyfHFeevfNWPc3c/0WcmWwSY+r/U
+ VefYrL0Ftfz4grKriswqWDERIdNvyhQ7ASbihu+ZB1jQbwMpJUhB2018e
+ CiY6ABKW1QIjuBK1jE+J/dripkKF2r8y+VBG5WSdlZLZQIKft0Gh2gcBq
+ u1w9JoXTGq6RDjf5iJfoBnQqQNvth2ImZcAtVrLbBp2+QpB2h1cJGLWOa
+ FKyYmisMAy3X0wwqEdvnoK5H4yd0M8geYyL8laYP5cET3LeIUwQMM3rut g==;
+X-CSE-ConnectionGUID: NAMWSdEpTky8bVkkOr7HSw==
+X-CSE-MsgGUID: diFZ7soJQtWrIFWOKXV8wg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11404"; a="46219484"
+X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="46219484"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Apr 2025 02:59:52 -0700
+X-CSE-ConnectionGUID: gfKsDdOZRSa26ldDLBXy4g==
+X-CSE-MsgGUID: CS9U8NVDRAOvPSJ96iOhpQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,215,1739865600"; d="scan'208";a="135477205"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa004.fm.intel.com with ESMTP; 16 Apr 2025 02:59:51 -0700
+Date: Wed, 16 Apr 2025 18:20:43 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>
+Subject: Re: [PATCH 8/9] rust/hpet: Support migration
+Message-ID: <Z/+Ee4YlUBSVtArJ@intel.com>
+References: <20250414144943.1112885-1-zhao1.liu@intel.com>
+ <20250414144943.1112885-9-zhao1.liu@intel.com>
+ <Z/5KlfQgC65g6Kid@intel.com>
+ <78fdfdaf-7c94-4d79-be39-8215c033b423@redhat.com>
+ <CABgObfb9z6r0vY1ojr1XMoCyYujEt4dX1UONcZEJgzDx8mry3Q@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: PPC MacOS9 SCSI PCI Passthrough
-To: =?UTF-8?Q?Andr=C3=A9_from_Negmaster?= <andre@negmaster.com>,
- qemu-discuss@nongnu.org, qemu-block <qemu-block@nongnu.org>
-References: <339F0125-96C3-49FD-8088-185570DAE412@negmaster.com>
-Content-Language: en-US
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <339F0125-96C3-49FD-8088-185570DAE412@negmaster.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, LOTS_OF_MONEY=0.001,
- MONEY_NOHTML=0.307, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <CABgObfb9z6r0vY1ojr1XMoCyYujEt4dX1UONcZEJgzDx8mry3Q@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,43 +86,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi André,
+On Tue, Apr 15, 2025 at 07:43:00PM +0200, Paolo Bonzini wrote:
+> Date: Tue, 15 Apr 2025 19:43:00 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 8/9] rust/hpet: Support migration
+> 
+> On Tue, Apr 15, 2025 at 4:21 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > > An additional difficult case is vmsd(). Passing the raw VMStateDescription
+> > > looks not good, while passing the VMStateDescription<> wrapper requires
+> > > bounding DeviceImpl with 'static. Ultimately, I added an extra
+> > > StaticVMStateDescription trait to successfully compile...
+> >
+> > Hmm I cannot fully understand it so I'll check it out later.
+> 
+> So the problem is that, in a "&'a Foo<T>", T must also be "T: 'a".
+> One solution is for vmsd() to return an
+> Option<VMStateDescription<Self>>, and do Box::into_raw(Box::new(vmsd))
+> in the class_init method. Once we have const_refs_static, "fn vmsd()"
+> can become a const and the Box is not needed anymore.
 
-adding more PPC developers.
+Thanks so much, that's a good idea!
 
-On 16/4/25 10:42, André from Negmaster wrote:
-> First of all many thanks for your work on PPC emulation.
-> 
-> I would like to request SCSI/PCI passthrough to MacOS9 if possible.
-> 
-> I spent the last two days trying to get this working to no avail. To me 
-> it seems QEMU can't do that. The PPC documentation is missing 
-> information about passthrough. I would like to see some more information 
-> there. Because i am still not sure if it would work or not. I passed all 
-> hurdles, like IOMMU groups, IRQ issues etc...but still no SCSI card or 
-> scanner in the system profiler.
-> Something like a HTML table that would describe the possibilities of PPC 
-> emulation vs I386/x64 would be very helpful.
-> 
-> I would like to point out that passthrough is particularly important for 
-> OS9, as we have a quite big community of people using old filmscanners 
-> (more than 700 people). These scanners were very expensive and are no 
-> longer made but require OS8/9 to run on the software they came with. 
-> Sometimes they cost up to €150.000 and they are not supported by modern 
-> 3rd party software like Vuescan or Silverfast. Thus they are not able to 
-> run on modern operating systems.
-> 
-> Many of these scanners were trashed during the upcoming digital camera 
-> era in the 2000s and i'm doing my very best to save and repair the 
-> remaining devices.
-> 
-> QEMU could be very helpful here in terms of sustainability and economy. 
-> Also because people often don't want to deal with old G3 or G4 
-> computers. Those are getting difficult to maintain, take a lot of space 
-> and are not really energy efficient.
-> 
-> The TLDR is that this way QEMU would be used in a productive environment 
-> for earning people's living (film scanning labs and film photographers). 
-> So in a way more meaningful than just for retro leisures.
+About `Box::into_raw(Box::new(vmsd))`, do you think it's necessary to use
+Box::leak(Box::new(*))? (though the Box<> isn't actively dropped during
+the class's existence)
+
+    pub fn class_init<T: DeviceImpl>(&mut self) {
+        ...
+        if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
+            let static_vmsd: &'static mut bindings::VMStateDescription = Box::leak(Box::new(vmsd.get_vmsd()));
+            self.vmsd = static_vmsd;
+        }
+    }
+
+> Also please turn get_vmsd_ptr() into get_vmsd_ref() so that we get
+> more checks that things are not copied behind our back (leaving behind
+> a dangling pointer)
+
+Sure!
+
+> I attach the conversion I did of the other devices and tests. I am not
+> sure if it's possible to avoid having a huge patch to do everything at
+> once (except HPET since that can be added separately).
+
+Thank you again! From my initial thoughts: Splitting is also possible,
+but it requires first renaming VMStateDescription<T> to
+VMStateDescriptionWrapper<T>, then replacing it in pl011 and test (and
+hpet) one by one, and finally renaming it back to VMStateDescription<T>.
+If you prefer this approach, I can help you split your patch below.
+
+> +const VMSTATE_HPET: VMStateDescription<HPETState> =
+> +    VMStateDescriptionBuilder::<HPETState>::new()
+> +        .name(c_str!("hpet"))
+> +        .version_id(2)
+> +        .minimum_version_id(1)
+> +        .pre_save(&HPETState::pre_save)
+> +        .post_load(&HPETState::post_load)
+> +        .fields(vmstate_fields! {
+> +            vmstate_of!(HPETState, config),
+> +            vmstate_of!(HPETState, int_status),
+> +            vmstate_of!(HPETState, counter),
+> +            vmstate_of!(HPETState, num_timers_save).with_version_id(2),
+> +            vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
+> +            vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
+
+And it seems like you don't oppose the hack in patch 1? ;-)
+
+> +        })
+> +        .subsections(vmstate_subsections!(
+> +            VMSTATE_HPET_RTC_IRQ_LEVEL,
+> +            VMSTATE_HPET_OFFSET,
+> +        ))
+> +        .build();
+
+Thanks,
+Zhao
+
 
 
