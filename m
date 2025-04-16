@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4060C369C5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB79BC369BA
 	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 18:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u57wv-0008R0-RE; Wed, 16 Apr 2025 14:57:29 -0400
+	id 1u57xN-0000b5-Ul; Wed, 16 Apr 2025 14:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u57wr-0008PJ-1f
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 14:57:26 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u57wp-00036D-31
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 14:57:24 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22423adf751so276665ad.2
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 11:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744829838; x=1745434638; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pF50KJIbCMiAAMwKnzA1i9qQ8ccRc4K4y7sUwVB0ygA=;
- b=YniA6kYdhlBQl9FISrd4g0CrnAK6lC+Ze9yGu09OyPtYyS63dnen8xQhzGVfj5q1RP
- byxMTAXlbg9a8EI7OXpzaxIEEPRLhF29GFt3BqrYku3NZPZy1g4ETp3xFQr/iv1b5TGW
- wWkoXBoqh9PF4ocYbyVFsZqRHqvgoD1qO1ELxd1WKSb+OD7yVtsN6QzKxDJdMhN5hVa8
- eafvAxmk4UiLP69zAM0TNoxbLoV15DzQGITcANTn2P03VjqpZ+3JOKmYvbNz/35ILj4w
- iD3fQXr826m0WzN22uoMDvDNKSTl6bwR1cU9YFqdsiCTTlGBC/LNj06d4zvlqzSBC86R
- rbeA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u57xD-0000MB-5h
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 14:57:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u57x7-000393-Mr
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 14:57:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744829859;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZcRZwiN6j/slUai9WeqVIDyBWThPVlYrO/NlF8t7qTA=;
+ b=SczOYlkGA03JRsV21bf7hKoDCSLOuuJ23G+5TKXbAqcJOyqpO/lR0V8jpulBP3zMB5p7E0
+ 1/fZL0ZQzbcpzbrr/G5BYKEmCehQ1LZetaTjvTE/A8b9MVIz78kBgXarZctYgRdKfS341n
+ q3x4a967KKovMc38YE7QMrlQAGBGvqs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-457-t1gQflfuMO2MARHaqqexEg-1; Wed, 16 Apr 2025 14:57:37 -0400
+X-MC-Unique: t1gQflfuMO2MARHaqqexEg-1
+X-Mimecast-MFC-AGG-ID: t1gQflfuMO2MARHaqqexEg_1744829856
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912d5f6689so3973873f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 11:57:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744829838; x=1745434638;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1744829856; x=1745434656;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pF50KJIbCMiAAMwKnzA1i9qQ8ccRc4K4y7sUwVB0ygA=;
- b=Yz+2aEgewF/Zm8NIR58B53zmLrO6h2noK2PyRR7j8glNGdlRw9JmFrirjGFErWupTS
- APnMSOwwYahpw0fwYWVdlwyak0veCX7lf4qP7CW1Vk5whgsaySEiQ6wklJg5/OqDGWum
- jAvWPpBTyvfwNtsEUiJz9uWYdZrzeFBoSRgpN272AEGTpPNcO0wEFlO/V7DxsiOE2CFo
- QjP+rUlVLugaz+1lJ+VknhEUyB5yqizpKK3XJHUHAHyux6NNeaq/uZrT2UaH12fMJgoa
- VchaDhpJ2Kn1EvojKsVqnUuey7zp9hS7HVS64lfJ5pndUE2Pu9BZBW5i5LoY0GVxx+z7
- LJug==
+ bh=ZcRZwiN6j/slUai9WeqVIDyBWThPVlYrO/NlF8t7qTA=;
+ b=TI9IxftfPjN4tWkJr4rfP3mMG8b036w3IZ+y+5aAxBn42y8cUseXpnJqW4dUoxi6HF
+ Djc2pXv9/e30+t/Ufcux+Kd1T6c0V4qcNLc+p4ZxMGNIkujUcbbb3WjcGxy6jcyTbRxr
+ anf+nB3x7fenybcI8YnYCfupJtQ03f4GJPiNxM/5SBUnvdi45PmaFP97+CHsdkCfuFR8
+ dkASa94JNOn24yLzpOrACDhVj2VWDEBCbQsNBRn7SU/4GSt/tGAPhSSv2zqe5dUPIKh/
+ WCb/+qV8oh0qgQZh/3eD8pQvQqdPwz+42OqjsmKVmqUGDJUuzQL2+OrzCX6RZ9nfvYGL
+ 3Iow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNABGrMUBI/BvgwxSKVUCmQPbZmNJYoU5s29TLig9fVUZoX672uEYHwl18tdGKkWciORcxo8cJn940@nongnu.org
-X-Gm-Message-State: AOJu0YyJ21jb8EOxlFcZVMFsSqeQ7DyliV++MMKmCd5iQ3d357Sod+Tu
- ih4EONho8XRrxi43ZoRUsY7tdjJZACZOdWkgbXN08PTFZreYoC+KTt24Ix3dQgw=
-X-Gm-Gg: ASbGnctaoSuZPfe0KlQvaUN3eMR3/+MXDhlKz1vovH/SAbMyCQxNwAcrsqknHCX/cUO
- SufFe3a+BeMCUYPCuehXpfqJycm2/lIkrGSGuf7rwxAaAvj+Wf5EoZ2nNOYeYrKdYqR5QjYmObL
- R2efzGWPHE3/1xa4CFGaFT1XJzPtvH/tISkRD+cY+2JyxngmytCHxHeo3c6YD0SczhxJgpTJfGL
- KOvSnhsxRZEZ6kyXFYe9FOiKCV80P07hcR9UY+PPiL3W5Z8i4NQo2fsD8Z5ap1yZ2aaHo3SNzDN
- SbXHteJcHyJBC58+lBznyrc6A8IqV+6fN90mI3eRkbastlH4KnJZYg==
-X-Google-Smtp-Source: AGHT+IEAmX+tBmQ4B/6qc4ue2xzD7f6QESlswNWFes6r5EHOOCEG7wJ2f1EjeTze/dMuEQd5rcbC4A==
-X-Received: by 2002:a17:903:2383:b0:229:1717:8826 with SMTP id
- d9443c01a7336-22c358fd48bmr50876365ad.28.1744829838079; 
- Wed, 16 Apr 2025 11:57:18 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCVvzvUKsd+W1lY4DvRjD9YH2Pq8rza6KQxX+Zv8vA1GR1EE+ZtLAOCvVjeMSoebWewY1gVdHNkp1DgE@nongnu.org
+X-Gm-Message-State: AOJu0YwgeSRC3ZbXXf5Oruu7/i+izz8ZqD4Z0Y+jPeo3QRTS5CbTPgrO
+ +oPQGUoLywaUWOzxfIXHtaT/Bvqz407djtZ0VMrocCucBa+Wxh4j1iPZats96CW6YL3shxu7ITA
+ AA+lgbSZM8XuvTy/Ay8PFArh1g/lxzzDvMcpxNkD2RVSv9r2umuRt
+X-Gm-Gg: ASbGncsqxqHmcAaEhRimX2+nmY8+Md8Dsg2wbZ1fxw61vuAb+4eBMYQyPAEsbqf0BQl
+ PXmIUO44GseFfESd65Dc3LVFI+C1lOdT/cpmS9aFEn75w9Bs09518PY+v3CYUn4ueP5xigE6C1k
+ Hk0rEnOQmsCPt2zNiobXw1FbcuMEbNI13i9VNeU9+MKLEaIlAJ6LLbEM3sY3boVMtmPeSwkEZei
+ tlyjSChyv5UvLQhUKF3SijT6tliBeu6ZLAojquG65UIjqONwJgfkwEit/tGloiYcSmvbNCOhTa/
+ e7zdRg==
+X-Received: by 2002:a05:6000:420d:b0:39e:cbe3:17c8 with SMTP id
+ ffacd0b85a97d-39ee5b13951mr2286164f8f.12.1744829856035; 
+ Wed, 16 Apr 2025 11:57:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcACzB5If9KHN35K9dcOboSe/iy/DdLor86VdvbK4EVDU1TJDT0KuBGasCo6bbYr066jigcQ==
+X-Received: by 2002:a05:6000:420d:b0:39e:cbe3:17c8 with SMTP id
+ ffacd0b85a97d-39ee5b13951mr2286148f8f.12.1744829855664; 
+ Wed, 16 Apr 2025 11:57:35 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c33fe6aa0sm17940675ad.222.2025.04.16.11.57.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 11:57:17 -0700 (PDT)
-Message-ID: <6f528f8b-f03c-41be-9085-ab6cba94a6fd@linaro.org>
-Date: Wed, 16 Apr 2025 11:57:17 -0700
+ ffacd0b85a97d-39eaf445515sm17421436f8f.89.2025.04.16.11.57.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Apr 2025 11:57:34 -0700 (PDT)
+Date: Wed, 16 Apr 2025 14:57:32 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v2 0/3] virtio-gpu: fix blob unmapping sequence
+Message-ID: <20250416145701-mutt-send-email-mst@kernel.org>
+References: <20250410122643.1747913-1-manos.pitsidianakis@linaro.org>
+ <87v7r5clft.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 118/163] tcg: Use sub carry opcodes to expand sub2
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-119-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250415192515.232910-119-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87v7r5clft.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,60 +113,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/25 12:24, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/tcg-op.c | 29 +++++++++++++++++++++++++++--
->   1 file changed, 27 insertions(+), 2 deletions(-)
+On Tue, Apr 15, 2025 at 07:46:14PM +0100, Alex Bennée wrote:
+> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 > 
-> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-> index f17ec658fb..447b0ebacd 100644
-> --- a/tcg/tcg-op.c
-> +++ b/tcg/tcg-op.c
-> @@ -1126,7 +1126,13 @@ void tcg_gen_add2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
->   void tcg_gen_sub2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
->                         TCGv_i32 ah, TCGv_i32 bl, TCGv_i32 bh)
->   {
-> -    if (TCG_TARGET_HAS_sub2_i32) {
-> +    if (tcg_op_supported(INDEX_op_subbi, TCG_TYPE_I32, 0)) {
-> +        TCGv_i32 t0 = tcg_temp_ebb_new_i32();
-> +        tcg_gen_op3_i32(INDEX_op_subbo, t0, al, bl);
-> +        tcg_gen_op3_i32(INDEX_op_subbi, rh, ah, bh);
-> +        tcg_gen_mov_i32(rl, t0);
-> +        tcg_temp_free_i32(t0);
-> +    } else if (TCG_TARGET_HAS_sub2_i32) {
->           tcg_gen_op6_i32(INDEX_op_sub2_i32, rl, rh, al, ah, bl, bh);
->       } else {
->           TCGv_i32 t0 = tcg_temp_ebb_new_i32();
-> @@ -2865,7 +2871,26 @@ void tcg_gen_add2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
->   void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
->                         TCGv_i64 ah, TCGv_i64 bl, TCGv_i64 bh)
->   {
-> -    if (TCG_TARGET_HAS_sub2_i64) {
-> +    if (tcg_op_supported(INDEX_op_subbi, TCG_TYPE_REG, 0)) {
-> +        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
-> +
-> +        if (TCG_TARGET_REG_BITS == 32) {
-> +            tcg_gen_op3_i32(INDEX_op_subbo, TCGV_LOW(t0),
-> +                            TCGV_LOW(al), TCGV_LOW(bl));
-> +            tcg_gen_op3_i32(INDEX_op_subbio, TCGV_HIGH(t0),
-> +                            TCGV_HIGH(al), TCGV_HIGH(bl));
-> +            tcg_gen_op3_i32(INDEX_op_subbio, TCGV_LOW(rh),
-> +                            TCGV_LOW(ah), TCGV_LOW(bh));
-> +            tcg_gen_op3_i32(INDEX_op_subbi, TCGV_HIGH(rh),
-> +                            TCGV_HIGH(ah), TCGV_HIGH(bh));
-> +        } else {
-> +            tcg_gen_op3_i64(INDEX_op_subbo, t0, al, bl);
-> +            tcg_gen_op3_i64(INDEX_op_subbi, rh, ah, bh);
-> +        }
-> +
-> +        tcg_gen_mov_i64(rl, t0);
-> +        tcg_temp_free_i64(t0);
-> +    } else if (TCG_TARGET_HAS_sub2_i64) {
->           tcg_gen_op6_i64(INDEX_op_sub2_i64, rl, rh, al, ah, bl, bh);
->       } else {
->           TCGv_i64 t0 = tcg_temp_ebb_new_i64();
+> > A hang was observed when running a small kernel that exercised VIRTIO 
+> > GPU under TCG. This is an edge-case and won't happen under typical 
+> > conditions.
+> 
+> Should I (or MST?) pull these into a tree for 10.0 or should they be
+> grabbed for when the tree opens with a Cc qemu-stable?
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Let's just agree who takes them, then it's up to that maintainer.
+You wanna merge them?
+
+> >
+> > When unmapping a blob object, its MemoryRegion's freeing is deferred to 
+> > the RCU thread. The hang's cause was determined to be a busy main loop 
+> > not allowing for the RCU thread to run because the kernel did not setup 
+> > any timers or had any interrupts on the way. While fixing the RCU thread 
+> > to run even if the guest CPU spins is a solution, it's easier to fix the 
+> > reason why the MemoryRegion isn't freed from the main loop instead.
+> >
+> > While at it, also restructure the 3 stage cleanup to immediately respond 
+> > to the guest if the MR happened to have had no other reference.
+> >
+> > PS: The hang can be reproduced by running this unikernel with TCG 
+> >
+> > https://git.codelinaro.org/manos.pitsidianakis/virtio-tests/-/tree/8c0ebe9395827e24aa5711186d499bf5de87cf63/virtio-test-suite
+> >
+> > v1 to v2:
+> >   - Add patch by Alex to prevent double-free when FlatView is destroyed 
+> >     from RCU thread.
+> >
+> > Alex Bennée (1):
+> >   hw/display: re-arrange memory region tracking
+> >
+> > Manos Pitsidianakis (2):
+> >   virtio-gpu: fix hang under TCG when unmapping blob
+> >   virtio-gpu: refactor async blob unmapping
+> >
+> >  include/exec/memory.h         |  1 +
+> >  hw/display/virtio-gpu-virgl.c | 60 ++++++++++++++++++++---------------
+> >  2 files changed, 35 insertions(+), 26 deletions(-)
+> >
+> >
+> > base-commit: 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365
+> 
+> -- 
+> Alex Bennée
+> Virtualisation Tech Lead @ Linaro
 
 
