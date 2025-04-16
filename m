@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36503C369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCB8C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4thQ-00026K-Lz; Tue, 15 Apr 2025 23:44:32 -0400
+	id 1u4tgp-0001nR-8r; Tue, 15 Apr 2025 23:43:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4thK-000238-PS; Tue, 15 Apr 2025 23:44:28 -0400
+ id 1u4tgl-0001n2-TP; Tue, 15 Apr 2025 23:43:51 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4thI-0006uD-FJ; Tue, 15 Apr 2025 23:44:25 -0400
+ id 1u4tgj-0006uD-Fu; Tue, 15 Apr 2025 23:43:50 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 16 Apr
- 2025 11:43:30 +0800
+ 2025 11:43:28 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 16 Apr 2025 11:43:30 +0800
+ Transport; Wed, 16 Apr 2025 11:43:28 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>
-Subject: [PATCH v3 09/10] tests/functional/aspeed: Add to test vbootrom for
- AST2700
-Date: Wed, 16 Apr 2025 11:43:24 +0800
-Message-ID: <20250416034327.315714-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 02/10] hw/arm/aspeed_ast27x0 Introduce vbootrom memory
+ region
+Date: Wed, 16 Apr 2025 11:43:17 +0800
+Message-ID: <20250416034327.315714-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
 References: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
@@ -67,48 +67,95 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the AST2700 functional test to boot using the vbootrom image
-instead of manually loading boot components with -device loader.
-The boot ROM binary is now passed via the
--bios option, using the image located in pc-bios/ast27x0_bootrom.bin.
+Introduce a new vbootrom memory region. The region is mapped at address
+"0x00000000" and has a size of 128KB, identical to the SRAM region size.
+This memory region is intended for loading a vbootrom image file as part of the
+boot process.
+
+The vbootrom registered in the SoC's address space using the ASPEED_DEV_VBOOTROM
+index.
+
+Introduced a "vbootrom_size" attribute in "AspeedSoCClass" to define virtual
+boot ROM size.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- tests/functional/test_aarch64_aspeed.py | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ include/hw/arm/aspeed_soc.h |  3 +++
+ hw/arm/aspeed_ast27x0.c     | 12 ++++++++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index 337d701917..85789c1b1d 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -94,6 +94,14 @@ def start_ast2700_test(self, name):
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index f069d17d16..9af8cfbc3e 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -59,6 +59,7 @@ struct AspeedSoCState {
+     MemoryRegion sram;
+     MemoryRegion spi_boot_container;
+     MemoryRegion spi_boot;
++    MemoryRegion vbootrom;
+     AddressSpace dram_as;
+     AspeedRtcState rtc;
+     AspeedTimerCtrlState timerctrl;
+@@ -152,6 +153,7 @@ struct AspeedSoCClass {
+     const char * const *valid_cpu_types;
+     uint32_t silicon_rev;
+     uint64_t sram_size;
++    uint64_t vbootrom_size;
+     uint64_t secsram_size;
+     int spis_num;
+     int ehcis_num;
+@@ -169,6 +171,7 @@ struct AspeedSoCClass {
+ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
  
-+    def start_ast2700_test_vbootrom(self, name):
-+        self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
-+        self.do_test_aarch64_aspeed_sdk_start(
-+                self.scratch_file(name, 'image-bmc'))
-+        wait_for_console_pattern(self, f'{name} login:')
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-+        exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
-+
-     def test_aarch64_ast2700_evb_sdk_v09_06(self):
-         self.set_machine('ast2700-evb')
+ enum {
++    ASPEED_DEV_VBOOTROM,
+     ASPEED_DEV_SPI_BOOT,
+     ASPEED_DEV_IOMEM,
+     ASPEED_DEV_UART0,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index b05ed75ff4..7eece8e286 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -24,6 +24,7 @@
+ #include "qemu/log.h"
  
-@@ -108,5 +116,12 @@ def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-         self.start_ast2700_test('ast2700-default')
-         self.do_ast2700_i2c_test()
+ static const hwaddr aspeed_soc_ast2700_memmap[] = {
++    [ASPEED_DEV_VBOOTROM]  =  0x00000000,
+     [ASPEED_DEV_SRAM]      =  0x10000000,
+     [ASPEED_DEV_HACE]      =  0x12070000,
+     [ASPEED_DEV_EMMC]      =  0x12090000,
+@@ -657,6 +658,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(s->memory,
+                                 sc->memmap[ASPEED_DEV_SRAM], &s->sram);
  
-+    def test_aarch64_ast2700a1_evb_sdk_vboottom_v09_06(self):
-+        self.set_machine('ast2700a1-evb')
++    /* VBOOTROM */
++    name = g_strdup_printf("aspeed.vbootrom.%d", CPU(&a->cpu[0])->cpu_index);
++    if (!memory_region_init_ram(&s->vbootrom, OBJECT(s), name,
++                                sc->vbootrom_size, errp)) {
++        return;
++    }
++    memory_region_add_subregion(s->memory,
++                                sc->memmap[ASPEED_DEV_VBOOTROM], &s->vbootrom);
 +
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-+        self.start_ast2700_test_vbootrom('ast2700-default')
-+        self.do_ast2700_i2c_test()
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+     /* SCU */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+         return;
+@@ -898,6 +908,7 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
+ 
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2700_A0_SILICON_REV;
++    sc->vbootrom_size = 0x20000;
+     sc->sram_size    = 0x20000;
+     sc->spis_num     = 3;
+     sc->wdts_num     = 8;
+@@ -925,6 +936,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, void *data)
+ 
+     sc->valid_cpu_types = valid_cpu_types;
+     sc->silicon_rev  = AST2700_A1_SILICON_REV;
++    sc->vbootrom_size = 0x20000;
+     sc->sram_size    = 0x20000;
+     sc->spis_num     = 3;
+     sc->wdts_num     = 8;
 -- 
 2.43.0
 
