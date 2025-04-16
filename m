@@ -4,52 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB9DC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4BB3C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 04:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4thI-0001wk-3n; Tue, 15 Apr 2025 23:44:24 -0400
+	id 1u4uTI-0003ex-B9; Wed, 16 Apr 2025 00:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4thG-0001wN-Pl; Tue, 15 Apr 2025 23:44:22 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4thE-0006uD-MP; Tue, 15 Apr 2025 23:44:22 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 16 Apr
- 2025 11:43:30 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 16 Apr 2025 11:43:30 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>
-Subject: [PATCH v3 08/10] tests/functional/aspeed: Update test ASPEED SDK
- v09.06
-Date: Wed, 16 Apr 2025 11:43:23 +0800
-Message-ID: <20250416034327.315714-9-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
-References: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u4uTD-0003eY-Df; Wed, 16 Apr 2025 00:33:56 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u4uTB-0004tq-Fq; Wed, 16 Apr 2025 00:33:55 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-5242f137a1eso2509078e0c.1; 
+ Tue, 15 Apr 2025 21:33:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744778031; x=1745382831; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TLKUQy5gYABgjaBL4u4hjmZvkq+rI+6O1nGmkPD98LM=;
+ b=DQRNjlOI7Xfr1FXgGGwp/Qc1VcUVyhP/PvwOYd6pZKiJ31jjHAeV4YJ0ShU7755kYF
+ ngTr4BwwhoS10XlUl6QRD+VFjXKcIJFnDw45jMGJGwSawN9MNQIUnQlsnRfRpFp1EhVf
+ wP2ziH3AGMJkAtMkepndc/BSnz8v0PkvkMbA9g6/vTMch4ekDPHmFZiMrQ3vHOQy/LKm
+ GUz7PvwHjwiYvO+KSMoU3jUxKN/pH9dSCo33wf8EaMoV/qw+xR62QrZzjQSr/Y7kXF1l
+ uvB3kXLya7aaFwUfltgj6bt38uZGKgRJZJDkp9rVtC7eyFjZKyWC72BUDdODrPy5HTHu
+ vR/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744778031; x=1745382831;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TLKUQy5gYABgjaBL4u4hjmZvkq+rI+6O1nGmkPD98LM=;
+ b=lKxf2BOhP8B0rdzEaLkV5DOxmeM8YIT1hmildrkUKQ62jRoFpQ9YQsGTREF0tdqzb+
+ va1gT2i5blxnmT35Uq7xtQf6fWmA//uJ7PmludZ+wTKFZjdhIdcsJmV8lRkIleC+xnye
+ HEsAdBMf61R2S1D/KYZXkvBD6nhelj3ciGTH7BdJkvM8mvoOrWoMEBvdoqqGE9qU3I4M
+ FxF7f+V9N3151kXlZVFvXmOpIjoXtjXDHIkN4rafIbNzZKDVOLxwMC3jmPW11njr7sMa
+ SnDV/N1SFOvSjME9lVM1g115yVa9jBl1YIvYTiP2U0SV1RdTVbSgVJ2QjsIlQRYTYb2p
+ snNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyOP1F8+lOZBo7xO9own6jcocelEqovC4g7QmtHitZyuHM2Qus/u7bxAiWg17tNWsm1YF3r0Y07aiB8l8=@nongnu.org
+X-Gm-Message-State: AOJu0YyY8A56+mBySARd6wbaZTMUF8nRy9i66bpDNRwJEXQ8UTasQqBU
+ UzCrkCn+TGpO0lzRKEMAYel76rYnDWbLwR7Ogarog6fsxGwP4XxBUvRT1fxzJ2Ui0nzt7zStKoO
+ oEWiFfBSUJKsefbyBOLM+3+U2ATQ=
+X-Gm-Gg: ASbGncvIMBvI5TZMWzJMrOpsnbORhlp/WfpxIezKSiogRidnMs9m0YwvXDT/HfpJulw
+ BzTDd+nbEQZyEt+JTy1U/g52A5fVO82G7cL4Vb4+eW/J2D+P7GRywpli+JVUL9W/9IXlABo8Skg
+ tCSZmCVfDEyn8F+huM55W2gCREZETbMCOLnufYFc9tRiRAjVeBj8vcbnVhaOlA5kI=
+X-Google-Smtp-Source: AGHT+IE/dY+bxQnCNah1uLfNqkpzxP9++maw29Xbx/usraZBNU7jquMrzOxGv1X/8orzPQ7naMIL8p0BoYLqAxRIhBY=
+X-Received: by 2002:a05:6102:53cc:b0:4c1:86bc:f959 with SMTP id
+ ada2fe7eead31-4cb591e0f5bmr69533137.8.1744778031522; Tue, 15 Apr 2025
+ 21:33:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20250415080254.3667878-1-ziqiaokong@gmail.com>
+ <20250415080254.3667878-2-ziqiaokong@gmail.com>
+In-Reply-To: <20250415080254.3667878-2-ziqiaokong@gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 16 Apr 2025 14:33:25 +1000
+X-Gm-Features: ATxdqUHQNpityw54OZ5D6s0DwH98W5i1bCXjjWqUDto6QZgf_5_1uAD856GwlXo
+Message-ID: <CAKmqyKOyBb9wkkvjeVg76Qs+c-D4R13hJuQKQa2RRnw5rP3ZJw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/1] target/riscv: fix endless translation loop on big
+ endian systems
+To: Ziqiao Kong <ziqiaokong@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alistair.francis@wdc.com, 
+ richard.henderson@linaro.org, philmd@linaro.org, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,63 +94,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- tests/functional/test_aarch64_aspeed.py | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+On Tue, Apr 15, 2025 at 6:06=E2=80=AFPM Ziqiao Kong <ziqiaokong@gmail.com> =
+wrote:
+>
+> On big endian systems, pte and updated_pte hold big endian host data
+> while pte_pa points to little endian target data. This means the branch
+> at cpu_helper.c:1669 will be always satisfied and restart translation,
+> causing an endless translation loop.
+>
+> The correctness of this patch can be deduced by:
+>
+> old_pte will hold value either from cpu_to_le32/64(pte) or
+> cpu_to_le32/64(updated_pte), both of wich is litte endian. After that,
+> an in-place conversion by le32/64_to_cpu(old_pte) ensures that old_pte
+> now is in native endian, same with pte. Therefore, the endianness of the
+> both side of if (old_pte !=3D pte) is correct.
+>
+> Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index 441f7f3919..337d701917 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -29,13 +29,13 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
-         wait_for_console_pattern(self, 'Starting kernel ...')
- 
--    ASSET_SDK_V905_AST2700 = Asset(
--            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
--            'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
-+    ASSET_SDK_V906_AST2700 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-a0-default-obmc.tar.gz',
-+            '7247b6f19dbfb700686f8d9f723ac23f3eb229226c0589cb9b06b80d1b61f3cb')
- 
--    ASSET_SDK_V905_AST2700A1 = Asset(
--            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
--            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
-+    ASSET_SDK_V906_AST2700A1 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
-+            'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
- 
-     def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-@@ -94,17 +94,17 @@ def start_ast2700_test(self, name):
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
- 
--    def test_aarch64_ast2700_evb_sdk_v09_05(self):
-+    def test_aarch64_ast2700_evb_sdk_v09_06(self):
-         self.set_machine('ast2700-evb')
- 
--        self.archive_extract(self.ASSET_SDK_V905_AST2700)
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
-         self.do_ast2700_i2c_test()
- 
--    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-+    def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-         self.set_machine('ast2700a1-evb')
- 
--        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-         self.start_ast2700_test('ast2700-default')
-         self.do_ast2700_i2c_test()
- 
--- 
-2.43.0
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
+Alistair
+
+> ---
+>  target/riscv/cpu_helper.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 6c4391d96b..3233b66e7e 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1662,9 +1662,11 @@ static int get_physical_address(CPURISCVState *env=
+, hwaddr *physical,
+>              target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->ram_block, add=
+r1);
+>              target_ulong old_pte;
+>              if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
+> -                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, pte, upd=
+ated_pte);
+> +                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_l=
+e32(pte), cpu_to_le32(updated_pte));
+> +                old_pte =3D le32_to_cpu(old_pte);
+>              } else {
+> -                old_pte =3D qatomic_cmpxchg(pte_pa, pte, updated_pte);
+> +                old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), cp=
+u_to_le64(updated_pte));
+> +                old_pte =3D le64_to_cpu(old_pte);
+>              }
+>              if (old_pte !=3D pte) {
+>                  goto restart;
+> --
+> 2.34.1
+>
+>
 
