@@ -4,76 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2DDC369BD
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 13:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0195C369BD
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 14:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5342-0005Fd-Qy; Wed, 16 Apr 2025 09:44:31 -0400
+	id 1u53RM-0005c6-Rc; Wed, 16 Apr 2025 10:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u533u-0005Dv-A8
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 09:44:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u53RB-0005ab-Rt; Wed, 16 Apr 2025 10:08:27 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u533r-0006Ba-Kp
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 09:44:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744811057;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HdcalDUGtnqtaaV0ke2ZB8ueVUbROh4idsld6IxSnIs=;
- b=Lk96d6oFt3dK+xLpAmo3dOfn43V5Vyl+IncPSue1n9KrT9CnmK9ldZ3MQhKz9vjl4kEXM5
- KGzsc2I1mdr/QJvMi1aBJZfTMwJ8LLSYtZjdYMoWFK4V3p3gdDA1fF7N7iEqLGhWHTwN+k
- iufppFaH74kDq+0Tk7C5GUB9lMEr4Dc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-3OHU3fizMnmD4VLUhFlcZw-1; Wed,
- 16 Apr 2025 09:44:14 -0400
-X-MC-Unique: 3OHU3fizMnmD4VLUhFlcZw-1
-X-Mimecast-MFC-AGG-ID: 3OHU3fizMnmD4VLUhFlcZw_1744811053
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 715B5180056F; Wed, 16 Apr 2025 13:44:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2256A180045C; Wed, 16 Apr 2025 13:44:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 739AC21E6766; Wed, 16 Apr 2025 15:44:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,  qemu-devel@nongnu.org,  Peter Xu
- <peterx@redhat.com>
-Subject: Re: [RFC PATCH 00/13] migration: Unify capabilities and parameters
-In-Reply-To: <Z_07dfI4rFRpvZA1@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 14 Apr 2025 17:44:37 +0100")
-References: <20250411191443.22565-1-farosas@suse.de>
- <Z_07dfI4rFRpvZA1@redhat.com>
-Date: Wed, 16 Apr 2025 15:44:10 +0200
-Message-ID: <874iyomdat.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u53R9-0001zV-9R; Wed, 16 Apr 2025 10:08:25 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 07B624E601D;
+ Wed, 16 Apr 2025 16:08:19 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 0R9bl3JWV48j; Wed, 16 Apr 2025 16:08:17 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F421A4E600F; Wed, 16 Apr 2025 16:08:16 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F1B5674577C;
+ Wed, 16 Apr 2025 16:08:16 +0200 (CEST)
+Date: Wed, 16 Apr 2025 16:08:16 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Andr=E9_from_Negmaster?= <andre@negmaster.com>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-discuss@nongnu.org, qemu-ppc@nongnu.org, 
+ QEMU Developers <qemu-devel@nongnu.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Howard Spoelstra <hsp.cat7@gmail.com>
+Subject: Re: PPC MacOS9 SCSI PCI Passthrough
+In-Reply-To: <529770bb-3026-403d-b6f2-24efea26122d@linaro.org>
+Message-ID: <5b3d61f7-3029-664f-2b36-ccc6918d48b3@eik.bme.hu>
+References: <339F0125-96C3-49FD-8088-185570DAE412@negmaster.com>
+ <529770bb-3026-403d-b6f2-24efea26122d@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-612314375-1744812496=:76743"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,54 +69,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Fri, Apr 11, 2025 at 04:14:30PM -0300, Fabiano Rosas wrote:
->> Open questions:
->> ---------------
->>=20
->> - Deprecations/compat?
->>=20
->> I think we should deprecate migrate-set/query-capabilities and everythin=
-g to do
->> with capabilities (specifically the validation in the JSON at the end of=
- the
->> stream).
->>=20
->> For migrate-set/query-parameters, we could probably keep it around indef=
-initely,
->> but it'd be convenient to introduce new commands so we can give them new
->> semantics.
->>=20
->> - How to restrict the options that should not be set when the migration =
-is in
->> progress?
->>=20
->> i.e.:
->>   all options can be set before migration (initial config)
->>   some options can be set during migration (runtime)
->>=20
->> I thought of adding another type at the top of the hierarchy, with
->> just the options allowed to change at runtime, but that doesn't really
->> stop the others being also set at runtime. I'd need a way to have a
->> set of options that are rejected 'if migration_is_running()', without
->> adding more duplication all around.
->>=20
->> - What about savevm?
->>=20
->> None of this solves the issue of random caps/params being set before
->> calling savevm. We still need to special-case savevm and reject
->> everything. Unless we entirely deprecate setting initial options via
->> set-parameters (or set-config) and require all options to be set as
->> savevm (and migrate) arguments.
->
-> I'd suggest we aim for a world where the commands take all options
-> as direct args and try to remove the global state eventually.
+--3866299591-612314375-1744812496=:76743
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Yes.
+Hello,
 
-Even better: make it a job.
+On Wed, 16 Apr 2025, Philippe Mathieu-Daudé wrote:
+> adding more PPC developers.
 
-[...]
+Maybe they are more likely to be found on qemu-ppc list and adding Howard 
+who may have some guide on this.
 
+> On 16/4/25 10:42, André from Negmaster wrote:
+>> First of all many thanks for your work on PPC emulation.
+>> 
+>> I would like to request SCSI/PCI passthrough to MacOS9 if possible.
+>> 
+>> I spent the last two days trying to get this working to no avail. To me it 
+>> seems QEMU can't do that. The PPC documentation is missing information 
+>> about passthrough. I would like to see some more information there. Because 
+>> i am still not sure if it would work or not. I passed all hurdles, like 
+>> IOMMU groups, IRQ issues etc...but still no SCSI card or scanner in the 
+>> system profiler.
+
+There's not enough information here to give more than generic advice 
+(details such as which qemu-system-ppc -machine, MacOS version, SCSI card, 
+etc. may be needed to see what you tried). In general it should work. Some 
+people successfully passed through video cards, usb and network cards for 
+qemu-system-ppc so QEMU can do that but this may not be plug and play 
+especially with MacOS if it needs an FCode ROM to be run as OpenBIOS does 
+not do that by default and may not be able to run it even if you try 
+manually. We needed patches for video card ROMs before.
+
+There are two ways to pass through a SCSI device: passing through the SCSI 
+card and letting the host handle SCSI and only pass through the SCSI 
+device. For the latter you need an emulated SCSI card that's recognised by 
+the guest. Most guides talk about virtio-scsi but I don't think MacOS has 
+a driver for that and don't know if any of the emulated SCSI adapters 
+would work. Classic Macs have an ESP SCSI adapter AFAIK and dc390 seems to 
+be a PCI version of that so maybe that could work but if MacOS needs 
+anything in device-tree that would be added by an FCode ROM then it's 
+again the same problem as with a passed through card. If you don't want to 
+dig deeper and change anything in OpenBIOS and QEMU to make it work what 
+you could do is try all the emulated SCSI devices and try to find MacOS 
+drivers for them and see if any of those works then if you get a SCSI 
+adapter in the guest you could try passing through the device only. For 
+passing through the card I'd check first if it has an FCode ROM and then 
+try to run that in OpenBIOS manually (I forgot how to do that but sombody 
+may remember or dig up old messages on this) and then maybe patch OpenBIOS 
+to work with that.
+
+So it may not be easy to set up and may require fixing some issues here 
+and there but generally it's possible and was done for some cards before 
+so there's no theretical limit that would prevent it from working.
+
+Regards,
+BALATON Zoltan
+--3866299591-612314375-1744812496=:76743--
 
