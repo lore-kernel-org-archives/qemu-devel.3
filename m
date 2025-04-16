@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD17C369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 05:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D00C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 05:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4viV-00021b-8J; Wed, 16 Apr 2025 01:53:47 -0400
+	id 1u4vjC-0002Nq-1K; Wed, 16 Apr 2025 01:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u4viT-000219-Fs; Wed, 16 Apr 2025 01:53:45 -0400
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u4viS-0000eS-5r; Wed, 16 Apr 2025 01:53:45 -0400
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-524168b16d3so5506136e0c.0; 
- Tue, 15 Apr 2025 22:53:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744782822; x=1745387622; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=awZExRevPW6ijiKnOK5pcpL/ssFfPxmm3s1coNKpI88=;
- b=dJXF3k08lIDB519xwqx4tZtl76SXHHXnxYAEaTSGp8/+94Z8u1Cb81R3fV1Fzxoafa
- KsvEtpJM0AaIRlqAYdrMRI6szaaA6cC9LM2rbGAoYeCyQQAe5TO7WSWS/uMGakvg6YD1
- wfCIG+IKHUYwYnxhzqmFqYjmp0+a90S/Fok0CXkBqPh2l1bJDjwh3gyWGgR2OE2BgNFi
- 5PB32hy1BoHVFH1NSP0vJJhNdeeZ8/AegpT5S4xgnlG7dD6AgMp2yBqhlZ7UHBJvEjyp
- 9X20UEnmUK+ZfUMgnaEjedIGjUQh/U/O+0hRFSr87I1zgX9dqLUZNQrWhujt3vuty6Qk
- 2PNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744782822; x=1745387622;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=awZExRevPW6ijiKnOK5pcpL/ssFfPxmm3s1coNKpI88=;
- b=g1PEVP5bmD5xgtYA51+m6JVYOQxDqTdlaOt0bbmUjl4iYI4OPsHRE093CsefaRIpL8
- SJZJ/xsMik4wTCNiLXRaycsfDGpQxTNk9VAJullDZ2GS/gucc445gPsvGYI4wXMaAij2
- HvrrZdc8r4ArzTcno9JUiBGU+UYnq+oB87Jk/t3CyKuc9r+/Y3NFIMOU5qIMORrLXyr0
- i1oomwdGeN/mX/uFVfBHQtYZI4pG+MVyUxrOAmIVx03MfxDkczfjg6eMIiHXgmjRVqiI
- 5Ogih2xtmPMlRuTtOiRK1jCZYR0n9t1b3I7NCnh4/mHzpYKxN0QJ6fni0YXnu8eDvX11
- tftA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOB0LdiBsqegItQ6UsDvD9DbH8D+LxcMWu6H4QkJep2Blc02/IXHuznhWZI5UBIcSZb1iVrCJ8MajMfp8=@nongnu.org
-X-Gm-Message-State: AOJu0YxqDGRU4FPlMO0/yTRB/sDOYVHpREGk1Q0JqlAO6zxqFXCLrE7Q
- 4m+/3RHJzQ09dc+iHWrSfmydIZi6mNACQlnl0LNImhIAs5nMG3ok2aXjw+CIyow+NA8V3bCYEt4
- mtxsN+85dWl0knvrOod/hYl+l3EQ=
-X-Gm-Gg: ASbGncvp019ZPzDwLyLbMlFVuBZtWzO4n8uBfgD+FXNWRYYYkvxOHK0JEvuJrcOhuTO
- tiaiPdBAUH13fnAc3E7Ewd4/jSIxd1u8saRnEhQBrva9YN5dp0v0Isj8Lj9Orn5YIOT0pqIDxIq
- YOKKOh3xWq1LF4qcLOxPhOQ2P6hSJ1WMJjHjHh0WDZ9dWcMMbsI/1N
-X-Google-Smtp-Source: AGHT+IGfJD90KBsfZeTntiZF3Uzg1AVVz93SMx+NLemnY79UPIixv/IAuTlkCsWhaa+ZkcorNiROzuZN2Ov3/3ip9Bs=
-X-Received: by 2002:a05:6122:218f:b0:518:91b3:5e37 with SMTP id
- 71dfb90a1353d-5290dfe1bb1mr233452e0c.5.1744782822458; Tue, 15 Apr 2025
- 22:53:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250415080254.3667878-1-ziqiaokong@gmail.com>
-In-Reply-To: <20250415080254.3667878-1-ziqiaokong@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 16 Apr 2025 15:53:16 +1000
-X-Gm-Features: ATxdqUEjSVpkEiHm98uXd7atWS2djH4ruTefhs2bY5ggxYKs59CwFmwrjBQ80r8
-Message-ID: <CAKmqyKNy4E_PRYcaXnJ7ca3AyZyHzt0Rquw4b0E3Qa_w9E7qZQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/1] Fix endless translation loop of riscv
-To: Ziqiao Kong <ziqiaokong@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alistair.francis@wdc.com, 
- richard.henderson@linaro.org, philmd@linaro.org, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4vj6-0002Bj-6l; Wed, 16 Apr 2025 01:54:25 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u4vj3-0000iX-28; Wed, 16 Apr 2025 01:54:23 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Zcqqv0lPGz6M4KC;
+ Wed, 16 Apr 2025 13:50:19 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id A6868140144;
+ Wed, 16 Apr 2025 13:54:17 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 16 Apr 2025 07:54:17 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 16 Apr 2025 07:54:17 +0200
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH 3/5] hw/arm/virt: Factor out common SMMUV3 dt bindings code
+Thread-Topic: [PATCH 3/5] hw/arm/virt: Factor out common SMMUV3 dt bindings
+ code
+Thread-Index: AQHbreQJ5nmGR2MrPk6zb0+HverIIrOlkfAAgAA5vqA=
+Date: Wed, 16 Apr 2025 05:54:17 +0000
+Message-ID: <922a3b3f19874210b61778882b2f3253@huawei.com>
+References: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+ <20250415081104.71708-4-shameerali.kolothum.thodi@huawei.com>
+ <Z/8xSljew92Hhh99@Asurada-Nvidia>
+In-Reply-To: <Z/8xSljew92Hhh99@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.152.164]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,37 +82,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 15, 2025 at 6:05=E2=80=AFPM Ziqiao Kong <ziqiaokong@gmail.com> =
-wrote:
->
-> This version fixes the return value `old_pte` not correctly handled in
-> my previous patch.
->
-> This patch refers to common usages of qatomic_cmpxchg like those in
-> target/i386/tcg/system/excp_helper.c and target/arm/ptw.c. I also add
-> a brief explanation of the correctness in the commit message.
->
-> Thanks Philippe Mathieu-Daud=C3=A9 for offering previous review for my
-> previous patch!
->
-> Ziqiao Kong (1):
->   target/riscv: fix endless translation loop on big endian systems
 
-Thanks!
 
-Applied to riscv-to-apply.next
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Wednesday, April 16, 2025 5:26 AM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
+> mochs@nvidia.com; smostafa@google.com; Linuxarm
+> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+> Subject: Re: [PATCH 3/5] hw/arm/virt: Factor out common SMMUV3 dt
+> bindings code
+>=20
+> On Tue, Apr 15, 2025 at 09:11:02AM +0100, Shameer Kolothum wrote:
+> > No functional changes intended. This will be useful when we add
+> > support for user-creatable smmuv3 device.
+> >
+> > Signed-off-by: Shameer Kolothum
+> <shameerali.kolothum.thodi@huawei.com>
+> > ---
+> >  hw/arm/virt.c | 55
+> > +++++++++++++++++++++++++++------------------------
+> >  1 file changed, 29 insertions(+), 26 deletions(-)
+> >
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c index
+> > a96452f17a..729f192558 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -1417,19 +1417,42 @@ static void create_pcie_irq_map(const
+> MachineState *ms,
+> >                             0x7           /* PCI irq */);
+> >  }
+> >
+> > +static void create_smmuv3_dt_bindings(const VirtMachineState *vms,
+> hwaddr base,
+> > +                                      int irq) {
+> > +    char *node;
+> > +    const char compat[] =3D "arm,smmu-v3";
+> > +    const char irq_names[] =3D "eventq\0priq\0cmdq-sync\0gerror";
+> > +    MachineState *ms =3D MACHINE(vms);
+> > +
+> > +    node =3D g_strdup_printf("/smmuv3@%" PRIx64, base);
+> > +    qemu_fdt_add_subnode(ms->fdt, node);
+> > +    qemu_fdt_setprop(ms->fdt, node, "compatible", compat,
+> sizeof(compat));
+> > +    qemu_fdt_setprop_sized_cells(ms->fdt, node, "reg", 2, base, 2,
+> > + 0x20000);
+>=20
+> Nit: I would pass in the size from its caller, just to ease in the future=
+ when
+> we need to add an instance supporting a different MMIO range.
 
-Alistair
+Yes, that makes sense. And probably will use #define for the current size.
 
->
->  target/riscv/cpu_helper.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> --
-> 2.34.1
->
->
+Thanks,
+Shameer
 
