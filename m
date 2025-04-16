@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFB2C369C5
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28087C369C5
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 19:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u58Ov-0002lo-Vp; Wed, 16 Apr 2025 15:26:26 -0400
+	id 1u58Qe-0003pk-Pj; Wed, 16 Apr 2025 15:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u58Op-0002lU-KD
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:26:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u58On-0007km-4I
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:26:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744831575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qT1ieZ434PvXCUh5GiA8je9Uykd0GsB5Mhjjw0dLnDw=;
- b=BRH9Dl/odJZEUPL3gieWcHGm1X1GZ4RjsE5nHwHfJS6e+4kEImdRmZXMdV0tvrde+Ut37W
- 9s7PdcOKa4HlDyJ3VNsl40nWlDz9x6YkxRCmDpwEAk7aYYSmme11wEBWFMCd8krLfY2HlN
- SSvJ/N9xbrMtWYBZ8yoaej7QhrHnDdY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-EWm8UnHDP1q8Rx59TxPa1w-1; Wed,
- 16 Apr 2025 15:26:11 -0400
-X-MC-Unique: EWm8UnHDP1q8Rx59TxPa1w-1
-X-Mimecast-MFC-AGG-ID: EWm8UnHDP1q8Rx59TxPa1w_1744831570
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 990B419560B5; Wed, 16 Apr 2025 19:26:10 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.14])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B8CD219560A3; Wed, 16 Apr 2025 19:26:09 +0000 (UTC)
-Date: Wed, 16 Apr 2025 15:26:08 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 0/3] virtio-gpu: fix blob unmapping sequence
-Message-ID: <20250416192608.GB38698@fedora>
-References: <20250410122643.1747913-1-manos.pitsidianakis@linaro.org>
- <87v7r5clft.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <yuri.nesterov@gmail.com>)
+ id 1u58Qb-0003p9-MZ
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:28:09 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yuri.nesterov@gmail.com>)
+ id 1u58QZ-0007wj-Md
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 15:28:09 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5f435c9f2f9so31704a12.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 12:28:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744831686; x=1745436486; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qHuAyvnQJoHRi+dia0h0RJ286a+cu1nhD0EYwZxTvyM=;
+ b=HitJBVdMI5yEEK7iE90rwCSUE2k6+c+JAr9sRlaxUf/8G99RCE2kk+icN2VSZWykgB
+ TRx1qyXFlEg+FTcOOd3nGzzyIj3C8B4Z2OGm+tZSZRzVChG3lxbLPfaI06Qu0KkaYy/y
+ 0Ae6TrSohJ2/rqFdflNL9PiMWfA2iDQwmfWseALv9gwjpwCs/VWnVgA4aKG7tkwBlp+j
+ Gw04NLsO8XqSi13WvwUXrTx6ZBupfFyoD0AI+2dehcvW5nu8lICEEE29ppXKTlUT6BB7
+ odQY1/2pVGFI1CMKRe0VfeCDT3u73GovpUdMp4neXLeribw4Y8tMwMbtNfc1gXpTP/3E
+ 0JZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744831686; x=1745436486;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qHuAyvnQJoHRi+dia0h0RJ286a+cu1nhD0EYwZxTvyM=;
+ b=wt4FadMUC/mq8XlwMYiUSdGC2DabrYg/lNvkgKl4h2nN/1usO00stoV6321oIJ8ZPe
+ pA7YtCm1qz3Nb0g1wwxUcgkw+TDA7FHUImu+WjedVNpJPfimaA/k95o8mdU/PURWSY6A
+ rpjil+1aAIpdPzmM7/kobrIC0vD+vI4ih2Y/r2IWLNMFFdORM/eO5+lh+zvh/ALPoNSW
+ XkEJ038TUVpBFOg9/cOIwoayhjERCTdPKUpyOiu0GAFrpsjpWkuphTDvCoTkQQqJY6i4
+ jsv5LZnxaYgSRTo04CtYAVYA2bGQF8KwVqwZL/PMvbpXQ89hnIGESq0Yj4jLPrlTu8qr
+ VW8w==
+X-Gm-Message-State: AOJu0YzX//cSSCtbQnVjAadfzNoC6ZRhHcElsezEIp/D9yJX8E/bkSkc
+ Ba0Kf/de9eervNOgw9hE+Za24e66kdWCkVrGcVNjM2/aNtpNGn7+epGIMNHhz79cazUPoEnxMEr
+ jxNFBL2IVv1Qx1UrkilHsRZ2qgUs=
+X-Gm-Gg: ASbGncv3SvtEmxJASAFfv7mbd57q5ISrJy7v/hygnrJ6agOyKFD/n8xnZaNLVQvcGCo
+ DHxyJRPWtUrys8z4+Pm3yKlZ7K4se+Pqw2sMabfh/HI4M4zfvLUohxot0IZFFGf+45I2Q8bgVXy
+ jVpRcG5cRrhNqqnyM1q6/6oTIoTZ99rAS2
+X-Google-Smtp-Source: AGHT+IHHSBqChb3Lznl0UatChaBd8v7FxTCxLWEZIEuHx/MN3ob+MXXDNWGPLfDhJvDf0mOSv2XP7FVo6oIoR5Dy37s=
+X-Received: by 2002:a05:6402:210a:b0:5ed:4591:6901 with SMTP id
+ 4fb4d7f45d1cf-5f4b71fd47dmr2831558a12.8.1744831685461; Wed, 16 Apr 2025
+ 12:28:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="kOREZOrGlE4X9D/S"
-Content-Disposition: inline
-In-Reply-To: <87v7r5clft.fsf@draig.linaro.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250416161929.2846102-1-yuri.nesterov@gmail.com>
+ <Z__jtQe0nYsaGnoH@redhat.com>
+In-Reply-To: <Z__jtQe0nYsaGnoH@redhat.com>
+From: Yuri Nesterov <yuri.nesterov@gmail.com>
+Date: Wed, 16 Apr 2025 22:27:54 +0300
+X-Gm-Features: ATxdqUHjYMeN10aMV_bnGmnyPErcbaequ5p7x86N5jNPCQKNh7waSg288fKrrlI
+Message-ID: <CAB_o470VGNmj_4LKvo3-Y6O7LiKiJ4QXczt6ZqRua_mpM1LN2A@mail.gmail.com>
+Subject: Re: [PATCH] usb-host: enable autoscan for bus+addr to survive host
+ suspend/resume
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=yuri.nesterov@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,90 +95,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---kOREZOrGlE4X9D/S
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Apr 15, 2025 at 07:46:14PM +0100, Alex Benn=E9e wrote:
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
->=20
-> > A hang was observed when running a small kernel that exercised VIRTIO=
-=20
-> > GPU under TCG. This is an edge-case and won't happen under typical=20
-> > conditions.
->=20
-> Should I (or MST?) pull these into a tree for 10.0 or should they be
-> grabbed for when the tree opens with a Cc qemu-stable?
-
-QEMU 10.0.0-rc4 has already been tagged. No further patches will be
-merged unless there is a show-stopper (build failure, security issue).
-
-Please Cc qemu-stable so this can be merged for 10.0.1. Thanks!
-
->=20
+On Wed, Apr 16, 2025 at 8:07=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Wed, Apr 16, 2025 at 07:19:29PM +0300, Yuri Nesterov wrote:
+> > Currently, there is a special case for usb-host devices added using the
+> > hostbus=3D and hostaddr=3D properties to avoid adding them to the hotpl=
+ug
+> > watchlist, since the address changes every time the device is plugged
+> > in. However, on Linux, when the host system goes into suspend and then
+> > resumes, those devices stop working in both the guest and the host.
 > >
-> > When unmapping a blob object, its MemoryRegion's freeing is deferred to=
-=20
-> > the RCU thread. The hang's cause was determined to be a busy main loop=
-=20
-> > not allowing for the RCU thread to run because the kernel did not setup=
-=20
-> > any timers or had any interrupts on the way. While fixing the RCU threa=
-d=20
-> > to run even if the guest CPU spins is a solution, it's easier to fix th=
-e=20
-> > reason why the MemoryRegion isn't freed from the main loop instead.
-> >
-> > While at it, also restructure the 3 stage cleanup to immediately respon=
-d=20
-> > to the guest if the MR happened to have had no other reference.
-> >
-> > PS: The hang can be reproduced by running this unikernel with TCG=20
-> >
-> > https://git.codelinaro.org/manos.pitsidianakis/virtio-tests/-/tree/8c0e=
-be9395827e24aa5711186d499bf5de87cf63/virtio-test-suite
-> >
-> > v1 to v2:
-> >   - Add patch by Alex to prevent double-free when FlatView is destroyed=
-=20
-> >     from RCU thread.
-> >
-> > Alex Benn=E9e (1):
-> >   hw/display: re-arrange memory region tracking
-> >
-> > Manos Pitsidianakis (2):
-> >   virtio-gpu: fix hang under TCG when unmapping blob
-> >   virtio-gpu: refactor async blob unmapping
-> >
-> >  include/exec/memory.h         |  1 +
-> >  hw/display/virtio-gpu-virgl.c | 60 ++++++++++++++++++++---------------
-> >  2 files changed, 35 insertions(+), 26 deletions(-)
-> >
-> >
-> > base-commit: 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365
->=20
-> --=20
-> Alex Benn=E9e
-> Virtualisation Tech Lead @ Linaro
->=20
+> > Enabling autoscan and adding those devices to the watchlist allows them
+> > to keep working in the guest after host suspend/resume.
+>
+> So IIUC what you're saying is that on suspend the host device
+> is removed by the kernel, and on resume, the USB device is
+> recreated. So QEMU's open file handle for the USB device is
+> invalid after resume.
+>
+> If the /dev/bus/usb/NNN/NNN file goes away and then gets
+> re-created by the kernel though, we can't assume QEMU is
+> going to be able to re-open the new /dev/bus/usb device
+> file though.
 
---kOREZOrGlE4X9D/S
-Content-Type: application/pgp-signature; name=signature.asc
+I'm not sure if the file actually goes away. It looks like the internal
+state of the device changes and QEMU receives a "no device"
+response in usb_host_req_complete_data. However, the file
+remains in place. At least I don't see any changes in udevadm
+monitor or inotifywait aside from attribute modifications.
 
------BEGIN PGP SIGNATURE-----
+After resuming from suspend, the device doesn't work on either
+host or guest. Probably the device stays with a detached kernel
+driver since QEMU can't reattach it after receiving the "no device"
+error. Adding such devices to the hotplug watchlist causes QEMU
+to reopen them the same way it does for devices specified by
+vendorid and productid or hostport.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgABFAACgkQnKSrs4Gr
-c8gHYQf+J6UmpiIpHJG8tlMxLlHpw0tWv3eILmcVg9u/LQ1mQCxnba2MPIWWO3MO
-V2KcoUcSDUSKw2zhTTckVczW+RPIMnsmnOVHMVz8L4e8VUqBvvhSrN88m5Y5MW1E
-XuyzAzW/G30ldegbWsNY3Fpqe6q9TwLfD9Yq41Z5vSiGieT3EACSAw2DKxiPeB13
-V9ph3I7Kkvyxeu6hfd60YmVy8QJuKqjvSIPRZPfhEZP/WYmNvxGeYrDtrzIPl3Ei
-zWwi/GgshmQY4nYeRzGTF54o+pFehPAoTU3QByfObLLchdOgO8SYfSyVPkISoq+8
-5D0bDytrBTw/bRbftDceDXPUrRPtWw==
-=1jvc
------END PGP SIGNATURE-----
+The reason bus+addr devices aren't currently added to that list is well
+explained in commit e058fa2dd599ccc780d334558be9c1d155222b80.
+A special case was made because the device address changes every
+time it's replugged. However, it turns out that it doesn't change after
+a suspend/resume cycle so adding them to the list allows them to
+keep working after resume.
 
---kOREZOrGlE4X9D/S--
+I haven't had a chance to test it with libvirt though.
 
+> When QEMU runs under libvirt, QEMU won't have any access
+> to the /dev/bus/usb device node unless libvirt has set the
+> right permissions and (where appropriate) also set the
+> SELinux label.
+>
+> The current autoscan logic seems rather crude. AFAIK every 2
+> seconds it will re-scan every host USB device to see if any
+> has gone away and close it, and/or re-open if re-appeared.
+>
+> If we enable this autoscan logic, then under libvirt, AFAICS,
+> QEMU is going to fail to re-open the device, and a counter in
+> the autoscan logic means that after 3 attempts to re-open QEMU
+> will stop attempting it at all...but strangely it appears QEMU
+> will keep the timer running, so every 2 seconds it will iterate
+> over every USB device, but never try to open any of them.
+>
+> Regardless of your current patch this autoscan logic feels like
+> it needs improvement. We shouldn't need to busy-poll to see that
+> a USB device goes away, it should be possible to rely on event
+> notifications in some way.
+>
+> Even then we'd still need a way to prevent this immediate auto
+> re-opening when under libvirt. Libvirt would have to detect the
+> reappearance of the device and perform relabelling and permissions
+> changes, before QEMU is able to be told to try to re-open.
+> Potentially this implies a new QMP command to tell QEMU to try
+> to re-open, unless perhaps QEMU can be triggered off an inotify
+> event for the permissions/label change of the device node.
+>
+> >
+> > Signed-off-by: Yuri Nesterov <yuri.nesterov@gmail.com>
+> > ---
+> >  hw/usb/host-libusb.c | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+> > index c3d642c9d3..32c0251471 100644
+> > --- a/hw/usb/host-libusb.c
+> > +++ b/hw/usb/host-libusb.c
+> > @@ -1227,7 +1227,7 @@ static void usb_host_realize(USBDevice *udev, Err=
+or **errp)
+> >          !s->match.vendor_id &&
+> >          !s->match.product_id &&
+> >          !s->match.port) {
+> > -        s->needs_autoscan =3D false;
+> > +        s->needs_autoscan =3D true;
+> >          ldev =3D usb_host_find_ref(s->match.bus_num,
+> >                                   s->match.addr);
+> >          if (!ldev) {
+> > @@ -1244,6 +1244,9 @@ static void usb_host_realize(USBDevice *udev, Err=
+or **errp)
+> >          }
+> >      } else {
+> >          s->needs_autoscan =3D true;
+> > +    }
+> > +
+> > +    if (s->needs_autoscan) {
+> >          QTAILQ_INSERT_TAIL(&hostdevs, s, next);
+> >          usb_host_auto_check(NULL);
+> >      }
+> > --
+> > 2.43.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
