@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6736EC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98104C369BA
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 03:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4tgi-0001mM-Iy; Tue, 15 Apr 2025 23:43:48 -0400
+	id 1u4th8-0001sh-Hx; Tue, 15 Apr 2025 23:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4tgh-0001m4-L0; Tue, 15 Apr 2025 23:43:47 -0400
+ id 1u4th0-0001qe-EX; Tue, 15 Apr 2025 23:44:08 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u4tgc-0006uD-W5; Tue, 15 Apr 2025 23:43:44 -0400
+ id 1u4tgy-0006uD-0X; Tue, 15 Apr 2025 23:44:05 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 16 Apr
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v3 01/10] hw/arm/aspeed_ast27x0: Rename variable sram_name to
- name in ast2700 realize
-Date: Wed, 16 Apr 2025 11:43:16 +0800
-Message-ID: <20250416034327.315714-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 04/10] hw/arm/aspeed: Reuse rom_size variable for vbootrom
+ setup
+Date: Wed, 16 Apr 2025 11:43:19 +0800
+Message-ID: <20250416034327.315714-5-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
 References: <20250416034327.315714-1-jamin_lin@aspeedtech.com>
@@ -68,42 +68,39 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The variable "sram_name" was only used for naming the SRAM memory region.
-Rename it to "name" for consistency with similar code and avoid unnecessary
-new local variable declarations.
+Move the declaration of `rom_size` to an outer scope in aspeed_machine_init()
+so it can be reused for setting up the vbootrom region as well.
+
+This avoids introducing a redundant local variable and ensures consistent
+ROM sizing logic when both SPI boot and vbootrom are used.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast27x0.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/arm/aspeed.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index dce7255a2c..b05ed75ff4 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -577,7 +577,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-     AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc[0]);
-     AspeedINTCClass *icio = ASPEED_INTC_GET_CLASS(&a->intc[1]);
--    g_autofree char *sram_name = NULL;
-+    g_autofree char *name = NULL;
-     qemu_irq irq;
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index e852bbc4cb..b70a120e62 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -381,6 +381,7 @@ static void aspeed_machine_init(MachineState *machine)
+     AspeedSoCClass *sc;
+     int i;
+     DriveInfo *emmc0 = NULL;
++    uint64_t rom_size;
+     bool boot_emmc;
  
-     /* Default boot region (SPI memory or ROMs) */
-@@ -649,9 +649,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     }
+     bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+@@ -475,7 +476,7 @@ static void aspeed_machine_init(MachineState *machine)
+         BlockBackend *fmc0 = dev ? m25p80_get_blk(dev) : NULL;
  
-     /* SRAM */
--    sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
--    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
--                                 errp)) {
-+    name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
-+    if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
-+                                errp)) {
-         return;
-     }
-     memory_region_add_subregion(s->memory,
+         if (fmc0 && !boot_emmc) {
+-            uint64_t rom_size = memory_region_size(&bmc->soc->spi_boot);
++            rom_size = memory_region_size(&bmc->soc->spi_boot);
+             aspeed_install_boot_rom(bmc, fmc0, rom_size);
+         } else if (emmc0) {
+             aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
 -- 
 2.43.0
 
