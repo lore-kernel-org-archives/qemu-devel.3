@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C2CC369B1
-	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 06:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D06C369B1
+	for <qemu-devel@archiver.kernel.org>; Wed, 16 Apr 2025 06:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u4wCg-0005IC-L0; Wed, 16 Apr 2025 02:24:58 -0400
+	id 1u4wHO-0001U5-Kc; Wed, 16 Apr 2025 02:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4wCd-0005He-U8
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 02:24:56 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4wHM-0001TQ-3R
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 02:29:48 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4wCR-0006BL-Kr
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 02:24:55 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43edb40f357so52897845e9.0
- for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 23:24:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u4wHK-00080e-1N
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 02:29:47 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43cfdc2c8c9so34891985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 15 Apr 2025 23:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744784680; x=1745389480; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744784984; x=1745389784; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ywtgg0QcmgzCtu2Bdhe053g8gGjG5gdsspYd3ytd+tk=;
- b=XHlICTXQG9lnXWuiHJUDOa/hVxIe0k8kS3pdoI2AY4IbAFtVCmLON/mKNRVCeyYHYw
- 3Q2ZPkMQOpFcpHSraANNxT3uG1OJ7jdNkNFHhLO/nfMvl+JlROiML/3oVA5hGFUV/Ucv
- nOtO7g/E9Mm+2ipblK1q9SpPmDbshCe0Fo14Ke/hWiixcR9e5vNWnSq3u1NsNZwE7+3p
- z2cAGRdAPAeu+VwGgrfn1DQTAYIwG0TGXe4xeIyZTFZwcKnPETINy7uSICSvq+7rBoa6
- /OCt9aW12+qQmOerW07Up5XFmQ05s795Dh7ZtENVraEonQOQmjGLKXMEU5650frMM4K/
- pZBg==
+ bh=yKNZDPkdYN45C03Ar7jz8q/Zu8xstH50YzPI+0PaZHM=;
+ b=s8cvvIurqp0lzol+ipKhNq7+x3yMgaylPh9i8v6gazVHmH4lSRaJrF0J8v0tMQGLWb
+ mCKtbvtHyBYGu+SV92m/xHSOTXSfgLbzklpi809q8ClY/1k/nU9s50+1WbLntnczHaq5
+ pYjA0dXOUfQz+vAkdq22v5wwYjCoSoyloZ09E53YEAUUoU6QYOnoKVjP0EgrgyHbf9wP
+ 836ajx0fHfkgyqkQlgZ3dIcoSmyARMtQZKT+fU7K+NOuSlbEV+jHA5HHSjy/6sSfgveQ
+ jhS5GFmas1CLyqYEQNZ7v4UDXaWB6U9+IogprUeskziVU6boS7hguXVWSXmaAlZrBEdm
+ P6jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744784680; x=1745389480;
+ d=1e100.net; s=20230601; t=1744784984; x=1745389784;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ywtgg0QcmgzCtu2Bdhe053g8gGjG5gdsspYd3ytd+tk=;
- b=hf5GkargcA320XJV8QcIgPtA9Iwzmtx0O241BcLONETBfD86Q+Tb8FMADej7ZgM3TQ
- aH/eDywGniQM0VEpSJ06Jt/kvZ8FPgCCEiIOLRyDNmmp1VL4wInYl6K3TDGe7di6HlJv
- KOEWVeqwj0HTF/jfuFI2obyGCde36Wq6RDS7w293H69DOjW46ZoBckneDv+fuYS/lFHh
- 0q/nyBAi6TBWiAOi9Wf8AGjV03B4CALADORcZj0fC05jJLwW0WKItGPugy3eHoMPzeuz
- WaK4SHq+Rv+OqXZHTsi047GyGM+zynNwn1lqENOsbokTCEB9tbtuiB9Qvu3W65KWJzVc
- EsEg==
-X-Gm-Message-State: AOJu0YwmrAR8r2yNQlz1zMTrZ3Z8gnuRDwlmgtLcG0TH3/TLIdSDbSXA
- JXo7CZw3sS2yrecKyO0zKlLD+g8NeJoMDt83poYxzaRBcDAvaEgtcLsaatWTecQ=
-X-Gm-Gg: ASbGncsVfq/r3RkfNL8LZ3dx3INWDL9aondv3nWzs+OMZSlScFpdB4QaRXGnmCt2Gzv
- apZOKMiHDr7MKzTBV01xsrmrzJ2uHNWrzG0c+QGspI4NkasSLTyzx+3dDMvYaLepTe7L4FwRWsx
- 0YmRyPKwqs+jAwH1HasFDn8QFl45auZ5AhdTupe1mKf3grBSom77zYw2WVGjQXxFzjEunT3BDWM
- VGMEVjtAPRYZTuym+TtL0pA3r6Q0V/skSYNz+tHoEVEGfyfqTVfN3+7ujp8h7D0os/0sn5YaBxm
- L6gCIMt8DJgD+FsrndMgfBadNYz4TgKNWOKOq8GtuLa+QR1aHdRMECr0WcStmcY9JN7Vsl9HS91
- +ldNF5Q==
-X-Google-Smtp-Source: AGHT+IEseZRrQ/79hAiuFMGHz6fdINJsSEmqFa9LDfRLz4GjdTbOJ6GQTKwEgGbG/YA6OrNNY2hn1Q==
-X-Received: by 2002:a5d:588f:0:b0:39c:30d8:a80 with SMTP id
- ffacd0b85a97d-39ee5b167admr354913f8f.19.1744784680355; 
- Tue, 15 Apr 2025 23:24:40 -0700 (PDT)
+ bh=yKNZDPkdYN45C03Ar7jz8q/Zu8xstH50YzPI+0PaZHM=;
+ b=gavsUa2jvDmNNaIXgAO+nafFsxBBMhnZP+ePcs99j9vY8kXvx5H5PhlAKY+d+x4zcm
+ rK5NJ2/IvyYW28PtXflmsi/jxKWy7sSNfaowsfmXoC5jvSRFzgCOFT2mMu3FE6x+ptT4
+ n3vZKxkaHYenGZSmQIZw1G0yYID4pY3z8wlLJgoc/HTNwcrvqr1my7R1ha1v1zvOWx7Y
+ kSomT1j94CgPj3WrrMUkIwPwODH2S2UQ4Hc36Ncot30BUY7v8195FKDWssybUukL0vOy
+ vQ39PSSyALrG4nTCDyHrQ5mbTmtGrvpynpW0oXrIFpJ0HM32PiBa+K7ZBGPnSHJbvWHe
+ uxog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQxTzXNJfXyPf/vceiXDW2w6CVBTRhxMhDzA5KKLZiyueWeJF9KWkzfRoNYq44g3K7UXKNXDKFbBSG@nongnu.org
+X-Gm-Message-State: AOJu0YxDGxNjZ4hv9D8cIPnOhr4RqCv84OmYM1rORUmvzqV49O/p0omm
+ SQvu2P27nciDBBnVKccdEhNqik5idY8vOtNqb8T3ytU0vQW6EG0r6/MIbzXj2eE=
+X-Gm-Gg: ASbGnctfFUJoO8cbT/M94hZTgT0ZPKsST+aftvFjHxUOQ+RYw2KW0h0I+ydHcd9PPHt
+ meyop3Ar80o5toMl3xUJtdju/B+lNKqO9NuKc0PYoiyfYR/rqNt+3Y+HfOS2wO5fYUlo8P/ybwv
+ mrQS3z1daSnOO3eLp3xV0enBtTU5sBHhzfzwocgbzlHU3/j/t8dtbyvL7SgELb9hiHo7IDNNGwf
+ dzho6hMgHMxCFnRznjVqy8dUPNwmswiRocUpYD1GmKUdNKqrU0wJQG1Kto9bjAogI6DpYGUaO66
+ 9E30CvrWSXXRWTMuF3uJtaLADdbWDRH8y6Ik90oRxwcJGdVDHdoMSm30eIjJTZTy8PSQSkd2YK1
+ KCUksMA==
+X-Google-Smtp-Source: AGHT+IFl+1CalyIyAc93DoOapeLwaA2Ptr2zf4oUVAyl7wFw1I3fwrQYbAOkx5joX3n6UeJ6HEAQIw==
+X-Received: by 2002:a05:600c:384b:b0:43c:e7ae:4bcf with SMTP id
+ 5b1f17b1804b1-4405d5bdb1cmr5153745e9.0.1744784983801; 
+ Tue, 15 Apr 2025 23:29:43 -0700 (PDT)
 Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4405b54224bsm10841535e9.38.2025.04.15.23.24.38
+ ffacd0b85a97d-39eaf445737sm15899803f8f.88.2025.04.15.23.29.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 15 Apr 2025 23:24:39 -0700 (PDT)
-Message-ID: <8e48b403-6f30-415d-b8e1-30fc772f1d7d@linaro.org>
-Date: Wed, 16 Apr 2025 08:24:38 +0200
+ Tue, 15 Apr 2025 23:29:43 -0700 (PDT)
+Message-ID: <0d3ae936-7013-418d-a478-48d14b5b8e70@linaro.org>
+Date: Wed, 16 Apr 2025 08:29:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V3 PATCH 05/13] acpi: Send the GPE event of suspend and
- wakeup for x86
-To: Annie Li <annie.li@oracle.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, dave@treblig.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, wangyanan55@huawei.com, zhao1.liu@intel.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, slp@redhat.com,
- eblake@redhat.com, armbru@redhat.com, miguel.luis@oracle.com,
- Gustavo Romero <gustavo.romero@linaro.org>
-References: <20250411201912.2872-1-annie.li@oracle.com>
- <20250411204133.2955-1-annie.li@oracle.com> <87cydeepp8.fsf@draig.linaro.org>
- <5a567f2d-31d4-442c-b68c-ed85491d77d4@oracle.com>
- <6d771164-bac1-4d99-8e05-0bf65a3351ca@linaro.org>
- <07dfb619-d563-4735-ba39-6ff4561d368b@oracle.com>
+Subject: Re: [RFC PATCH 1/2] tests/qtest: Fix virtio msix message endianness
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <20250415081914.378236-1-npiggin@gmail.com>
+ <20250415081914.378236-2-npiggin@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <07dfb619-d563-4735-ba39-6ff4561d368b@oracle.com>
+In-Reply-To: <20250415081914.378236-2-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,122 +107,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/4/25 23:48, Annie Li wrote:
+Hi Nick,
+
+On 15/4/25 10:19, Nicholas Piggin wrote:
+> msix messages are written to memory in little-endian order, so they
+> should not be byteswapped depending on target endianness, but read
+> as le and converted to host endian by the qtest.
 > 
-> On 4/15/2025 11:29 AM, Philippe Mathieu-Daudé wrote:
->> Hi Annie,
->>
->> On 15/4/25 03:24, Annie Li wrote:
->>>
->>> On 4/14/2025 11:18 AM, Alex Bennée wrote:
->>>> Annie Li <annie.li@oracle.com> writes:
->>>>
->>>>> The GPE event is triggered to notify x86 guest to suppend
->>>>> itself. The function acpi_send_sleep_event will also
->>>>> trigger GED events on HW-reduced systems where ACPI GED
->>>>> sleep event is supported.
->>>>>
->>>>> Signed-off-by: Annie Li <annie.li@oracle.com>
->>>>> ---
->>>>>   hw/acpi/core.c                       | 10 ++++++++++
->>>>>   include/hw/acpi/acpi.h               |  1 +
->>>>>   include/hw/acpi/acpi_dev_interface.h |  1 +
->>>>>   3 files changed, 12 insertions(+)
->>>>>
->>>>> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
->>>>> index 58f8964e13..00a9d226f0 100644
->>>>> --- a/hw/acpi/core.c
->>>>> +++ b/hw/acpi/core.c
->>>>> @@ -359,6 +359,16 @@ int acpi_get_slic_oem(AcpiSlicOem *oem)
->>>>>       return -1;
->>>>>   }
->>>>> +void acpi_send_sleep_event(void)
->>>>> +{
->>>>> +    Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF,
->>>>> NULL);
->>>> Is it a fair assumption there will only ever be one QOM object that
->>>> provides the TYPE_ACPI_DEVICE_IF interface on a system?
->>>
->>> I supposed it was, but I might be wrong(seeing some classes have the 
->>> same interface). Please correct me if I've missed something, thank you!
->>
->>     /**
->>      * object_resolve_path_type:
->>      * @path: the path to resolve
->>      * @typename: the type to look for.
->>      * @ambiguous: (out) (optional): location to store whether the
->>      *             lookup failed because it was ambiguous, or %NULL.
->>      *             Set to %false on success.
->>
->> Since you use ambiguous=NULL, your code will only set %obj if there
->> is exactly ONE device implementing the ACPI_DEVICE interface created.
->>
->> So far IIUC nothing forbids creating multiple ones, so if you expect
->> only one, you should add code to handle the "2 or more" case. Or at
->> least add a comment.
-> Actually, there is only one QOM object here.
-> There are 3 classes involves with TYPE_ACPI_DEVICE_IF interface.
-> PC, Q35, GED.
-> For x86 system, the PC or Q35 machine doesn't use GED event, instead,
-> it sends the GPE event.
-> For microvm/ARM/virt system, GED device is used, its own 
-> TYPE_ACPI_DEVICE_IF
-> is involved.
-> All these objects do not exist at the same time, so it is safe to assume 
-> only one QOM
-> object exists here.
-
-I agree this is the case as of today, but I'm not sure about tomorrow.
-AFAICT nothing prohibit instanciating more than 1 type implementing
-TYPE_ACPI_DEVICE_IF.
-
-Anyway we are just trying to be more cautious here; up to the
-maintainer.
-
-Regards,
-
-Phil.
-
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   tests/qtest/libqos/virtio-pci-modern.c | 9 +++++++--
+>   tests/qtest/libqos/virtio-pci.c        | 7 +++++--
+>   2 files changed, 12 insertions(+), 4 deletions(-)
 > 
-> Thanks
-> Annie
->>
->> Regards,
->>
->> Phil.
->>
->>>>> +
->>>>> +    if (obj) {
->>>>> +        /* Send sleep event */
->>>>> +        acpi_send_event(DEVICE(obj), ACPI_SLEEP_STATUS);
->>>>> +    }
->>>>> +}
->>>>> +
->>>>>   static void acpi_notify_wakeup(Notifier *notifier, void *data)
->>>>>   {
->>>>>       ACPIREGS *ar = container_of(notifier, ACPIREGS, wakeup);
->>>>> diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
->>>>> index d1a4fa2af8..64d3ff78ed 100644
->>>>> --- a/include/hw/acpi/acpi.h
->>>>> +++ b/include/hw/acpi/acpi.h
->>>>> @@ -184,6 +184,7 @@ uint32_t acpi_gpe_ioport_readb(ACPIREGS *ar, 
->>>>> uint32_t addr);
->>>>>   void acpi_send_gpe_event(ACPIREGS *ar, qemu_irq irq,
->>>>>                            AcpiEventStatusBits status);
->>>>> +void acpi_send_sleep_event(void);
->>>>>   void acpi_update_sci(ACPIREGS *acpi_regs, qemu_irq irq);
->>>>> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/ 
->>>>> acpi/ acpi_dev_interface.h
->>>>> index 68d9d15f50..1cb050cd3a 100644
->>>>> --- a/include/hw/acpi/acpi_dev_interface.h
->>>>> +++ b/include/hw/acpi/acpi_dev_interface.h
->>>>> @@ -13,6 +13,7 @@ typedef enum {
->>>>>       ACPI_NVDIMM_HOTPLUG_STATUS = 16,
->>>>>       ACPI_VMGENID_CHANGE_STATUS = 32,
->>>>>       ACPI_POWER_DOWN_STATUS = 64,
->>>>> +    ACPI_SLEEP_STATUS = 128,
->>>>>   } AcpiEventStatusBits;
->>>>>   #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
->>
+> diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+> index 4e67fcbd5d3..67aa2af0bd7 100644
+> --- a/tests/qtest/libqos/virtio-pci-modern.c
+> +++ b/tests/qtest/libqos/virtio-pci-modern.c
+> @@ -8,6 +8,7 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/bswap.h"
+>   #include "standard-headers/linux/pci_regs.h"
+>   #include "standard-headers/linux/virtio_pci.h"
+>   #include "standard-headers/linux/virtio_config.h"
+> @@ -136,12 +137,16 @@ static bool get_msix_status(QVirtioPCIDevice *dev, uint32_t msix_entry,
+>           return qpci_msix_pending(dev->pdev, msix_entry);
+>       }
+>   
+> -    data = qtest_readl(dev->pdev->bus->qts, msix_addr);
+> +    qtest_memread(dev->pdev->bus->qts, msix_addr, &data, 4);
+> +    data = le32_to_cpu(data);
+>       if (data == msix_data) {
+>           qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
+>           return true;
+> -    } else {
+> +    } else if (data == 0) {
+>           return false;
+> +    } else {
+> +        /* Must only be either 0 (no interrupt) or the msix data. */
+> +        g_assert_not_reached();
+
+This distinct change belong to a different preliminary patch.
+
+>       }
+>   }
+>   
+> diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+> index 002bf8b8c2d..6b421a4d859 100644
+> --- a/tests/qtest/libqos/virtio-pci.c
+> +++ b/tests/qtest/libqos/virtio-pci.c
+> @@ -131,12 +131,15 @@ static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+>               /* No ISR checking should be done if masked, but read anyway */
+>               return qpci_msix_pending(dev->pdev, vqpci->msix_entry);
+>           } else {
+> -            data = qtest_readl(dev->pdev->bus->qts, vqpci->msix_addr);
+> +            qtest_memread(dev->pdev->bus->qts, vqpci->msix_addr, &data, 4);
+> +            data = le32_to_cpu(data);
+>               if (data == vqpci->msix_data) {
+>                   qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
+>                   return true;
+> -            } else {
+> +            } else if (data == 0) {
+>                   return false;
+> +            } else {
+> +                g_assert_not_reached();
+
+Ditto.
+
+>               }
+>           }
+
+Splitting in 2:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>       } else {
 
 
