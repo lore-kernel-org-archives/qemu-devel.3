@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD45CC369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 20:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E566C369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 20:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5W4n-0001Bw-Dx; Thu, 17 Apr 2025 16:43:13 -0400
+	id 1u5W7r-0002Bf-DP; Thu, 17 Apr 2025 16:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u5W4i-0001BM-Jd
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 16:43:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1u5W7p-0002Af-EW
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 16:46:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u5W4g-0005jX-EE
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 16:43:07 -0400
+ id 1u5W7n-0006FH-OS
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 16:46:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744922585;
+ s=mimecast20190719; t=1744922777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IM6oBhdbly2ZbAwLQaOv68tPhbTFfV9Er8VWK51lPBE=;
- b=FxIQeJDBneMCRQ9jgweKH1gkYHMWKoep3nsHh6WyFePL0lLpp4hjP7kkIF10I3GVun0KqG
- J4dlZ5mGGFJ5N0m/BgX3k09A55aBeg+YrNymJnaAQqDS+45bn7AbyHy9WKG8bS29Jk1HBs
- 1joFCnVbfxV/Go0hXW8M3gkCKT3r/2o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jlpXXKdzjLVvpDsV/dlrDh9QsS3qMHIROT5s4rUfUos=;
+ b=YEeMgnd7Fs7nVtE2jmMlqrxMY+bCRjxsckObCMRFIO+DxM4+W9g+k7PjQRyus3L7uFWrxD
+ unPQ6jR0C8rwNUkb+YOP8JcbmHCQqVssu7x4DHHj7wbvhCliPOOVD1B4vwSL54whJKEB5U
+ d2eOHFKalXyYUs06BPtgh8N3pkYoApQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-9ppgBuRFO1OjyhNodnv6pg-1; Thu,
- 17 Apr 2025 16:43:01 -0400
-X-MC-Unique: 9ppgBuRFO1OjyhNodnv6pg-1
-X-Mimecast-MFC-AGG-ID: 9ppgBuRFO1OjyhNodnv6pg_1744922580
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-Xrp2czjXMamJ912J9MceXQ-1; Thu,
+ 17 Apr 2025 16:46:12 -0400
+X-MC-Unique: Xrp2czjXMamJ912J9MceXQ-1
+X-Mimecast-MFC-AGG-ID: Xrp2czjXMamJ912J9MceXQ_1744922771
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91CB5195609F; Thu, 17 Apr 2025 20:43:00 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 540FF19560AF; Thu, 17 Apr 2025 20:46:11 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.64])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA01230002C2; Thu, 17 Apr 2025 20:42:59 +0000 (UTC)
-Date: Thu, 17 Apr 2025 16:42:58 -0400
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8AF2C19560A3; Thu, 17 Apr 2025 20:46:10 +0000 (UTC)
+Date: Thu, 17 Apr 2025 16:46:09 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Eric Blake <eblake@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, vsementsov@yandex-team.ru,
  John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 06/11] mirror: Minor refactoring
-Message-ID: <20250417204258.GE85491@fedora>
+Subject: Re: [PATCH v2 07/11] mirror: Skip pre-zeroing destination if it is
+ already zero
+Message-ID: <20250417204609.GF85491@fedora>
 References: <20250417184133.105746-13-eblake@redhat.com>
- <20250417184133.105746-19-eblake@redhat.com>
+ <20250417184133.105746-20-eblake@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="F6ol0q2B0aeeelG1"
+ protocol="application/pgp-signature"; boundary="2A1SEVfFaOye7/5i"
 Content-Disposition: inline
-In-Reply-To: <20250417184133.105746-19-eblake@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20250417184133.105746-20-eblake@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,44 +89,57 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---F6ol0q2B0aeeelG1
+--2A1SEVfFaOye7/5i
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 17, 2025 at 01:39:11PM -0500, Eric Blake wrote:
-> Commit 5791ba52 (v9.2) pre-initialized ret in mirror_dirty_init to
-> silence a false positive compiler warning, even though in all code
-> paths where ret is used, it was guaranteed to be reassigned
-> beforehand.  But since the function returns -errno, and -1 is not
-> always the right errno, it's better to initialize to -EIO.
+On Thu, Apr 17, 2025 at 01:39:12PM -0500, Eric Blake wrote:
+> When doing a sync=3Dfull mirroring, QMP drive-mirror requests full
+> zeroing if it did not just create the destination, and blockdev-mirror
+> requests full zeroing unconditionally.  This is because during a full
+> sync, we must ensure that the portions of the disk that are not
+> otherwise touched by the source still read as zero upon completion.
 >=20
-> An upcoming patch wants to track two bitmaps in
-> do_sync_target_write(); this will be easier if the current variables
-> related to the dirty bitmap are renamed.
+> However, in mirror_dirty_init(), we were blindly assuming that if the
+> destination allows punching holes, we should pre-zero the entire
+> image; and if it does not allow punching holes, then treat the entire
+> source as dirty rather than mirroring just the allocated portions of
+> the source.  Without the ability to punch holes, this results in the
+> destination file being fully allocated; and even when punching holes
+> is supported, it causes duplicate I/O to the portions of the
+> destination corresponding to chunks of the source that are allocated
+> but read as zero.
+>=20
+> Smarter is to avoid the pre-zeroing pass over the destination if it
+> can be proved the destination already reads as zero.  Note that a
+> later patch will then further improve things to skip writing to the
+> destination for parts of the image where the source is zero; but even
+> with just this patch, it is possible to see a difference for any BDS
+> that can quickly report that it already reads as zero.
 >=20
 > Signed-off-by: Eric Blake <eblake@redhat.com>
 > ---
->  block/mirror.c | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+>  block/mirror.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---F6ol0q2B0aeeelG1
+--2A1SEVfFaOye7/5i
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgBZ9IACgkQnKSrs4Gr
-c8j3HQf/cIiPKSfOQFZrZRKDnualgPLApc+BMlTFA94tuVWl/VcUGU2elgicE2oy
-GUNUwL8IgMXFpaLwIQyQRNaxVuVUhjY7JKoRbjLFBw7fG+VBrwEb0EV4CHeoCZb1
-SHr+DBUgTUe/IwRSDafQsd2asLVNah+HVkTquzpKGo2UVJVQ6OBx3SwXw4O38+2o
-tZ3iQyMPvNTcBhQHaWjEmd55H7KLHWofBTgUA+RnF7tSqIMa7yGXaH8cUbymL+Sy
-0wuQxVxyz6R4YFFuc8DkhWkGff5Qi0KmD3pnJGBLhFuMs85uo2siKi5+wkrrxUNu
-2rSVVWGytOv3j2JVGyo0MRc0FNaYNg==
-=AWzA
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgBaJEACgkQnKSrs4Gr
+c8g/OQf/YJhf0HwRBIMQgYIKiFosqHoiLDxm9zIbyg224JGdJWVSDzX/1AtVODaD
+dQF/Np+ibppUsNw1LK+AZoKMoo2x7wFYIHvneZ9bMtB0P2dcZFX7txWyLAFYSoyx
+QfHBODN1749u6bKxfGSGmOOQwaVAFnTG9bOU3LYq88BDI2lBpfrqCSFEWVeMbkWH
+XYDFRlEQaUTmfzY2RFGBJUA8RNEMz76n2L7JsbNs6qQLBK5vxjuPjLCkG95rzMa5
+IAKZFDJBLbM1ggE7tH6pR2LHK7WmmlSaOPRU3FaNF01sEuJ/wuJPOhUnli7qNTAz
+gzJN8NwfzVzYlDguINxWilxfr65zLw==
+=rKK4
 -----END PGP SIGNATURE-----
 
---F6ol0q2B0aeeelG1--
+--2A1SEVfFaOye7/5i--
 
 
