@@ -4,124 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8401C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 15:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5304C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Ra8-0006Dm-Sz; Thu, 17 Apr 2025 11:55:16 -0400
+	id 1u5RkK-0005RM-67; Thu, 17 Apr 2025 12:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1u5Ra7-0006DY-3v
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 11:55:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1u5Ra4-0000LJ-SD
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 11:55:14 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HClat5029708
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 15:55:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- UHvTENV1jRwA5M8ruHNR7q4XcdGD9r+gmlKVEfPssTc=; b=kdK1Y8LqxU5KSISg
- Hq1iJyppmY6VWpMmu+p08ANpJrOdRRHoDfkeXyrd+k+Uqe/rWA0Lk8SYbwVex3wo
- pbMnYpWyRlvROVHf7wkQeT48tubWWMipfOdwW9hbuzQ/KIgVVdvZw7Cb6WO+vh/4
- 2ULS3SmmvGCpjDPsobja5Ip1+DTp6Fob8zR1XoSmimLLH7n3vKhsAN/DHTMdoZm/
- iOijJAfYqNAAvvieBR0wGzgTd94BA2bdetAj4eg9x7s4AWtkzCglND8rseU15sQR
- Hy1wy3XPQmHVi8e2yI6h+QCXLkBrt8gfCgO9vKSIqX0VLgbTRJ54no2HVCyc01ky
- wD/f2g==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 45ygj9fex9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 15:55:10 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6ead629f6c6so15745296d6.2
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 08:55:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744905310; x=1745510110;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UHvTENV1jRwA5M8ruHNR7q4XcdGD9r+gmlKVEfPssTc=;
- b=DSvudGe7GxxEznJcQW6pKEi26pgUszS+3d1j0rWrLvacyMoTTFOnxBc71qK+7uXry2
- 86g3H+xE3zNK7kjj2q9sQU8HQ6EJLlXTEvDLoKo6KrQ4BEUSzsd1C9MHsrVr99oS5Sse
- HYry0uGq6bjCAxfRZ/70h4PdXFdyOV7K6m7vDbA65Ymrul45+sINx/cxIia58QrI5OlY
- 6wfT56OU1NqfOVQxB+Q6AjCQZOjp4paAhWdvURpBnvDh97uB+3q1yiXU3ncliXM8lkHk
- CljeUu3czkZKeWpAOZm9FVqpmKT7TLe79pULt9upzO1Vu0+Ts90cF7ZESWmCH+SUNzuh
- fqUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrTZQpJfH/xKpQocoayUT1c3bxTm/FrJ2qZZkfJQJlUETczSX2a4oY1vLT0B7+xurEGBDcHSVpBZ0Y@nongnu.org
-X-Gm-Message-State: AOJu0YztLpdxkeTDeHdeMmSB98j0oZA7mpmVuuy9X5nndLKOwcceZc1R
- jI8qy0m7BGA3dDctZmvcMrYvLUfiM+AsO2klxTDDRQ4gGBIP8/5IOblLeLJbods9PpaAy4M1kiQ
- auAnUjrwSH6E0FaC4UsSOfOBLv0uj3btrierfeAk5YUxx7JhTtvF5+w==
-X-Gm-Gg: ASbGncu9twfWY3Zx5+HjbLX1BYqLw0VsOT7A9PzrfKGsoU5141t9WbjOcuE5xTWemIx
- PXMO+LnhBc1eziZg7I69cnKnAsFXLDeXhVDakS+E1j2Y9jsQSq71J+ny/HoDRCuW1G4PFnuaE26
- 4MQsW55ac1jm2jbpvkfv68L8sZ2Li/sVBcW87WeWshlhjc0Lk4ASCXNHSwWgUqi6WGNQ8Opyv4s
- 4Aikdid10C65uJpcb4qRS2TDVCuRUBKoppLSG6zVgt0URO/HFn/DOrdPsdolJ/k5GbzsiuuXG9P
- Gnj2OV6hz4X1VuenQSIlOd3EXhjpsr8LzJbIcTuJiY/GNg8i4LW23gWQybSS+RXmJVPd6w==
-X-Received: by 2002:ad4:5965:0:b0:6ed:1651:e8dc with SMTP id
- 6a1803df08f44-6f2b2f43031mr88465546d6.11.1744905309649; 
- Thu, 17 Apr 2025 08:55:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUkuw7xd+CyMYxO6uFJioHyVGVOgo3YmYAT0rYQ1qrIgfzOihTzdJ3N0p9VE1NpeXDzIuKrg==
-X-Received: by 2002:ad4:5965:0:b0:6ed:1651:e8dc with SMTP id
- 6a1803df08f44-6f2b2f43031mr88465216d6.11.1744905309220; 
- Thu, 17 Apr 2025 08:55:09 -0700 (PDT)
-Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f2c2af5b28sm577056d6.10.2025.04.17.08.55.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 08:55:08 -0700 (PDT)
-Message-ID: <f59afca5-d739-4e4a-8e96-fb1bc08e4673@oss.qualcomm.com>
-Date: Thu, 17 Apr 2025 10:55:07 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u5RkI-0005RA-M1
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:05:46 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u5RkE-00028x-Vu
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:05:45 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A7C441F391;
+ Thu, 17 Apr 2025 16:05:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744905940; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Aq/R5FECjLRK3/ZFP1SwZE5j4Cp3GhTcl69BgN8anFc=;
+ b=msFhv7WOBYcjxHhF2Jp11FGFRLP6mwVRkcCEVoCUON/x0205vIwOHkzj7mII+Qt9javUxG
+ vw/Gnrejf+TtqYBzw8nMqj8iH7zEwbHJpjd63qJg0HqW0v0X3uJx3nzp6IY8d/9TE/dsTJ
+ Gs8iqbsomSLYLnJIjzySVqi3Y0JlIBg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744905940;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Aq/R5FECjLRK3/ZFP1SwZE5j4Cp3GhTcl69BgN8anFc=;
+ b=XzJW0o+IIEL5Pr3/ygvdLOLs6g2fLBniXVDffqho0+bE8Aw2Gry9WQWviby3JJhqTmp1Eo
+ Jse5FyWi/OZwUuAg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744905940; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Aq/R5FECjLRK3/ZFP1SwZE5j4Cp3GhTcl69BgN8anFc=;
+ b=msFhv7WOBYcjxHhF2Jp11FGFRLP6mwVRkcCEVoCUON/x0205vIwOHkzj7mII+Qt9javUxG
+ vw/Gnrejf+TtqYBzw8nMqj8iH7zEwbHJpjd63qJg0HqW0v0X3uJx3nzp6IY8d/9TE/dsTJ
+ Gs8iqbsomSLYLnJIjzySVqi3Y0JlIBg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744905940;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Aq/R5FECjLRK3/ZFP1SwZE5j4Cp3GhTcl69BgN8anFc=;
+ b=XzJW0o+IIEL5Pr3/ygvdLOLs6g2fLBniXVDffqho0+bE8Aw2Gry9WQWviby3JJhqTmp1Eo
+ Jse5FyWi/OZwUuAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 16F1E1388F;
+ Thu, 17 Apr 2025 16:05:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nE2BMdMmAWhacQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 17 Apr 2025 16:05:39 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, Prasad
+ Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
+ together
+In-Reply-To: <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
+References: <20250411114534.3370816-1-ppandit@redhat.com>
+ <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
+ <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
+Date: Thu, 17 Apr 2025 13:05:37 -0300
+Message-ID: <87y0vyepta.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Hexagon (target/hexagon) Remove gen_tcg_func_table.py
-To: ltaylorsimpson@gmail.com, =?UTF-8?Q?=27Philippe_Mathieu-Daud=C3=A9=27?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: quic_mathbern@quicinc.com, sidneym@quicinc.com, quic_mliebel@quicinc.com, 
- richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng,
- marco.liebel@oss.qualcomm.com,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-References: <20250415235542.71703-1-ltaylorsimpson@gmail.com>
- <c7588131-2c4f-4a66-8107-cba4df904278@linaro.org>
- <074e01dbaede$2516b720$6f442560$@gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <074e01dbaede$2516b720$6f442560$@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 9RHHUsHgm89ssPWdJ6HZxcuHsqbA4CZ7
-X-Authority-Analysis: v=2.4 cv=PruTbxM3 c=1 sm=1 tr=0 ts=6801245e cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8
- a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=5beqLnDKGG3ao05cDN4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 9RHHUsHgm89ssPWdJ6HZxcuHsqbA4CZ7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_05,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 spamscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504170119
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.19)[-0.941]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,63 +119,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding Matheus, Marco -- their "quic_" email addresses might be 
-deactivated soon if not already.
+Prasad Pandit <ppandit@redhat.com> writes:
 
-On 4/16/2025 9:45 AM, ltaylorsimpson@gmail.com wrote:
+> Hi,
 >
->> -----Original Message-----
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Sent: Wednesday, April 16, 2025 12:18 AM
->> To: Taylor Simpson <ltaylorsimpson@gmail.com>; qemu-devel@nongnu.org
->> Cc: brian.cain@oss.qualcomm.com; quic_mathbern@quicinc.com;
->> sidneym@quicinc.com; quic_mliebel@quicinc.com;
->> richard.henderson@linaro.org; ale@rev.ng; anjo@rev.ng
->> Subject: Re: [PATCH] Hexagon (target/hexagon) Remove
->> gen_tcg_func_table.py
->>
->> Hi Taylor,
->>
->> On 16/4/25 01:55, Taylor Simpson wrote:
->>> This can easily be done in C with opcodes_def_generated.h.inc
->>>
->>> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
->>> ---
->>>    target/hexagon/genptr.c              |  6 ++-
->>>    target/hexagon/README                |  1 -
->>>    target/hexagon/gen_tcg_func_table.py | 66 ----------------------------
->>>    target/hexagon/meson.build           | 10 -----
->>>    4 files changed, 5 insertions(+), 78 deletions(-)
->>>    delete mode 100755 target/hexagon/gen_tcg_func_table.py
->>>
->>> diff --git a/target/hexagon/gen_tcg_func_table.py
->>> b/target/hexagon/gen_tcg_func_table.py
->>> deleted file mode 100755
->>> index 299a39b1aa..0000000000
->>> --- a/target/hexagon/gen_tcg_func_table.py
->>> -        f.write("const SemanticInsn opcode_genptr[XX_LAST_OPCODE] =
->> {\n")
->>> -        for tag in hex_common.tags:
->>> -            ## Skip the priv instructions
->>> -            if "A_PRIV" in hex_common.attribdict[tag]:
->>> -                continue
->>> -            ## Skip the guest instructions
->>> -            if "A_GUEST" in hex_common.attribdict[tag]:
->>> -                continue
->>> -            ## Skip the diag instructions
->>> -            if tag == "Y6_diag":
->>> -                continue
->>> -            if tag == "Y6_diag0":
->>> -                continue
->>> -            if tag == "Y6_diag1":
->>> -                continue
->> What about all these skipped tags? IIUC gen_opcodes_def.py doesn't skip
->> them. If it isn't necessary to skip, please mention it in the commit description
->> for clarity.
->>
->> Regards,
->>
->> Phil.
+> On Wed, 16 Apr 2025 at 18:29, Fabiano Rosas <farosas@suse.de> wrote:
+>> > The issue is that a zero page is being migrated by multifd but there's
+>> > an optimization in place that skips faulting the page in on the
+>> > destination. Later during postcopy when the page is found to be missing,
+>> > postcopy (@migrate_send_rp_req_pages) believes the page is already
+>> > present due to the receivedmap for that pfn being set and thus the code
+>> > accessing the guest memory just sits there waiting for the page.
+>> >
+>> > It seems your series has a logical conflict with this work that was done
+>> > a while back:
+>> >
+>> > https://lore.kernel.org/all/20240401154110.2028453-1-yuan1.liu@intel.com/
+>> >
+>> > The usage of receivedmap for multifd was supposed to be mutually
+>> > exclusive with postcopy. Take a look at the description of that series
+>> > and at postcopy_place_page_zero(). We need to figure out what needs to
+>> > change and how to do that compatibly. It might just be the case of
+>> > memsetting the zero page always for postcopy, but I havent't thought too
+>> > much about it.
 >
+> ===
+> $ grep -i avx /proc/cpuinfo
+> flags        : avx avx2 avx512f avx512dq avx512ifma avx512cd avx512bw
+> avx512vl avx512vbmi avx512_vbmi2 avx512_vnni avx512_bitalg
+> avx512_vpopcntdq avx512_vp2intersect
+> $
+> $ ./configure --enable-kvm --enable-avx512bw --enable-avx2
+> --disable-docs --target-list='x86_64-softmmu'
+> $ make -sj10 check-qtest
+> 67/67 qemu:qtest+qtest-x86_64 / qtest-x86_64/migration-test
+>      OK             193.80s   81 subtests passed
+> ===
 >
+> * One of my machines does seem to support 'avx*' instructions. QEMU is
+> configured and built with the 'avx2' and 'avx512bw' support. Still
+> migration-tests run fine, without any hang issue observed. Not sure
+> why the hang issue is not reproducing on my side. How do you generally
+> build QEMU to run these tests?  Does this issue require some specific
+> h/w setup/support?
+>
+
+There's nothing unusual here that I know of. Configure line is just
+--target-list=x86_64-softmmu --enable-debug --disable-docs --disable-plugins.
+
+> * Not sure how/why page faults happen during the Multifd phase when
+> the guest on the destination is not running. If 'receivedmap' says
+> that page is present, code accessing guest memory should just access
+> whatever is available/present in that space, without waiting. I'll try
+> to see what zero pages do, how page-faults occur during postcopy and
+> how they are serviced. Let's see..
+
+It's not that page faults happen during multifd. The page was already
+sent during precopy, but multifd-recv didn't write to it, it just marked
+the receivedmap. When postcopy starts, the page gets accessed and
+faults. Since postcopy is on, the migration wants to request the page
+from the source, but it's present in the receivedmap, so it doesn't
+ask. No page ever comes and the code hangs waiting for the page fault to
+be serviced (or potentially faults continuously? I'm not sure on the
+details).
+
+>
+> * Another suggestion is, maybe we should review and pull at least the
+> refactoring patches so that in the next revisions we don't have to
+> redo them. We can hold back the "enable multifd and postcopy together"
+> patch that causes this guest hang issue to surface.
+>
+
+That's reasonable. But I won't be available for the next two
+weeks. Peter is going to be back in the meantime, let's hear what he has
+to say about this postcopy issue. I'll provide my r-bs.
+
+>> > There's also other issues with the series:
+>> >
+>> > https://gitlab.com/farosas/qemu/-/pipelines/1770488059
+>> >
+>> > The CI workers don't support userfaultfd so the tests need to check for
+>> > that properly. We have MigrationTestEnv::has_uffd for that.
+>> >
+>> > Lastly, I have seem some weirdness with TLS channels disconnections
+>> > leading to asserts in qio_channel_shutdown() in my testing. I'll get a
+>> > better look at those tomorrow.
+>>
+>> Ok, you can ignore this last paragraph. I was seeing the postcopy
+>> recovery test disconnect messages, those are benign.
+>
+> * ie. ignore everything after - "There's also other issues with this
+> series: " ?  OR just the last one " ...with TLS channels..." ??
+> Postcopy tests are added only if (env->has_uffd) check returns true.
+>
+
+Only the TLS part. The CI is failing with just this series. I didn't
+change anything there. Maybe there's a bug in the userfaultfd detection?
+I'll leave it to you, here's the error:
+
+# Running /ppc64/migration/multifd+postcopy/tcp/plain/cancel
+# Using machine type: pseries-10.0
+# starting QEMU: exec ./qemu-system-ppc64 -qtest
+#  unix:/tmp/qtest-1305.sock -qtest-log /dev/null -chardev
+#  socket,path=/tmp/qtest-1305.qmp,id=char0 -mon
+#  chardev=char0,mode=control -display none -audio none -accel kvm -accel
+#  tcg -machine pseries-10.0,vsmt=8 -name source,debug-threads=on -m 256M
+#  -serial file:/tmp/migration-test-X0SO42/src_serial -nodefaults
+#  -machine
+#  cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken,cap-ccf-assist=off,
+#  -bios /tmp/migration-test-X0SO42/bootsect 2>/dev/null -accel qtest
+# starting QEMU: exec ./qemu-system-ppc64 -qtest
+#  unix:/tmp/qtest-1305.sock -qtest-log /dev/null -chardev
+#  socket,path=/tmp/qtest-1305.qmp,id=char0 -mon
+#  chardev=char0,mode=control -display none -audio none -accel kvm -accel
+#  tcg -machine pseries-10.0,vsmt=8 -name target,debug-threads=on -m 256M
+#  -serial file:/tmp/migration-test-X0SO42/dest_serial -incoming defer
+#  -nodefaults -machine
+#  cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken,cap-ccf-assist=off,
+#  -bios /tmp/migration-test-X0SO42/bootsect 2>/dev/null -accel qtest
+# {
+#     "error": {
+#         "class": "GenericError",
+#         "desc": "Postcopy is not supported: Userfaultfd not available: Function not implemented"
+#     }
+# }
+
 
