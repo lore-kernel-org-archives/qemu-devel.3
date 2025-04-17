@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBD3C369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 10:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E23C369C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 10:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5MsS-0007cw-3U; Thu, 17 Apr 2025 06:53:52 -0400
+	id 1u5MsS-0007cz-4t; Thu, 17 Apr 2025 06:53:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u5MsM-0007X2-M3
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:53:47 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1u5MsH-0007TZ-99
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:53:42 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u5MsK-0003Oo-5b
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:53:46 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7376dd56f60so414698b3a.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 03:53:43 -0700 (PDT)
+ id 1u5MsE-0003NR-Sk
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:53:41 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7399838db7fso599504b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 03:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1744887222; x=1745492022; darn=nongnu.org;
+ d=sifive.com; s=google; t=1744887217; x=1745492017; darn=nongnu.org;
  h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nwKYDLJebV8nfrFMI0a6Dc+oBkaaAbOXeXeNO1BXXr4=;
- b=IuVNSOsKQ6zMRtyTx8/XKs+2edbSXgt++x/xSJZR15pqzdAqh0IBguK7AT93tjrI9N
- 7NGWV33JlCcIADUNLeuYn1rPqNNyV+uyRcN1DbyyNWSScJVdWuK1hcB6K/IYOkRjFgaJ
- xgzmkQRTIFsNijS6TxUTSUhqgsOT7pYrNXWDIQKf+6iVj6PH3erb49vulv0msuOTgaoB
- xSuNTV1NJDWt1IHKSp4GndzayiROXW6iP+ooPIUzcajjvhYqmitFznMKL9hoOT3z8BaS
- peCQDtQ/Mfa5mRg8OF5I4oXkguf4vtyi+c/SmS+CVWu4zwqvdZkTqJhcncTdo87Lj2QJ
- Swuw==
+ bh=Q73Ra6NhBnNXysABi6967YWRbV9gsBItuZ0tiWgYmXM=;
+ b=MxQibbiCnjGq9Ic9H23T5yiZgGbiBswbIEMy/FdLrya3GSmYaMBiZnc40fMC+BIV2G
+ QLFMt49EprBeHP6vWPRj9uyrbC+yzodT8ydQJ8MQOVjW1Mou+sWrUAlWXHcF7UeVRIcR
+ 1UgWAAf5XSQnegoqEuhGAAnaobvoqo6hSayu0fQbW9nJeTDRvPPiTAfvMfBOcyxa23N+
+ /A+92NiXMU9HnX/3Bymz8yvaLl+jH6ExboWBXn+SL/48yr9Nra37aXsWXHTjITnjA5D5
+ iuzjwL1N/ZSJRuoW72yOFZppbd6fxDLlqVXHq7i9/OHE5A9efbmgBVxL/q4m4R/4k6aL
+ 1ChA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744887222; x=1745492022;
+ d=1e100.net; s=20230601; t=1744887217; x=1745492017;
  h=references:in-reply-to:message-id:date:subject:cc:to:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nwKYDLJebV8nfrFMI0a6Dc+oBkaaAbOXeXeNO1BXXr4=;
- b=efAJuvG7mFjHhy+OcVv7pkdWv1ZTv07qCGcw7RSH18+dUvLHk9SEXHYJyPmVIqtkDw
- jHYHN88l0rK1yvqyAOD2sa5tN83hS0f0loBkouQSw081xpLqS+Rmu2mOD9jPnRtp0NCn
- sUJpxjydgWR+32AAsaZn8Ks6lzvpw7TAoWUYmBcEn7D336lHHg/43gBxEZAKxpr8NqoN
- 4LjQ3lDuUhtQcprnpg1sNY5f8xfDgOfaeXQvPeuiOuNpHHe2kk7Nr5mc5DC+RbJJiEjr
- fUyHOjv0sLI8bWpdPqw0buCLJE7FgD+Cgx++Bfy5hIxUcL7+ZsKPuLhawoja0BLr1zAB
- lnDg==
-X-Gm-Message-State: AOJu0YxDnv/QM3IyvYAv9gpnxWD25+NZkIezLGkhHTLDOXMH8GD0nnG8
- 0VIEhJ3CWvvdwnwsgVkOq7KQLGeHvXyH2V4fI4HEiRs6pVL/jDghuZCBgfhuXaVpSW1VltxM7Bo
- n/X8pXx2+zyJ9EgWZ1Ub/7M1kg+DUHq2oVH3PBFomk9ivO45puWzJOd13nngwD39QkNc9kkYGe+
- nQ8/mK/7Id+fRRv2bmUJLaY9pox2giaDWj/g==
-X-Gm-Gg: ASbGnct3DwJRQIIsmva2xdbaIFhSkHs+2/Q15B4TQmGNR7Ay6DesBc/oos9Q9TcOr4K
- WU7M4gK4jrJ1ATB6lmJulhj48Q88uxwFTCjXS1fD/Jr1wEswbaam7qS14MjSvPLHku+8cVnozjC
- Tk9BBemoPwhegTCa78pZAWl0mxubxjjfRrDwEuN5qahiXDRO9eYFd5dSs7j5SH3LJMPEju2q0I/
- If5n9J1SfK+OC0KTYHOdnW0XUa2/+z02IptylRpOK5cEFxXmF1ZfqmkMj8byep/8KQnh90ODJIE
- eeUtn3+M3jPmNTCVy7Tr6Y75LITIO0/pujL34sH/VeQM/DLRLMvowPi3I9LVu68=
-X-Google-Smtp-Source: AGHT+IEtAT+0wGCf8mT+gDNa+Ynb8Ljy3iul0+oHiooH2s8FGiapW9pti1/nUioVpzgnp2NNFNq2IQ==
-X-Received: by 2002:a05:6a00:4501:b0:737:6d4b:f5f8 with SMTP id
- d2e1a72fcca58-73c267d36bdmr7470882b3a.17.1744887221840; 
- Thu, 17 Apr 2025 03:53:41 -0700 (PDT)
+ bh=Q73Ra6NhBnNXysABi6967YWRbV9gsBItuZ0tiWgYmXM=;
+ b=A4TDK90PWZktwamFrSSJHJoN297oRPGaLWaxF8z4BIxwfeaOAoziW+CtqCqiGJLmah
+ fthAEpgfy50RW7Mo05dfy42wqtlUo4F6DYp1rgKwkeu5+bOnR1p6AjvHdRrh8KVBhzNA
+ a4FT5KlXQzFlszx8Sqnq2TCxridiYX/KeTrkR6FnH9mBga1UCjrUZc6Jw7D9+Osp9qLT
+ OqPy0S89eS3USPfIjhLvwVygfaeZYCustVJ5ghKig7e9qBIB7AvVyrXV6dYrIBvldKFc
+ QICBLdVW1p8Tx3bJeuwhufsbc6iL5g08O/VZoPzK+1azhF04Rlqo0ryEGAMBVow9trGE
+ ZefQ==
+X-Gm-Message-State: AOJu0YyFe8MvB0sAsqCxiHUjfyAQGv4q1ZHSPntlBMcJFVH9LdS3tC4h
+ WKuDz3rkGbr/b07RCfOn2AkT89Ev3gRwLEAkMDUHoeU6MOmy6onGqEbbWV6dI04RzKKk49Q3+AT
+ WWdJpDlji/WXgTGvLhGzS/v0odv1IoMDdWjoZCGQQT7K0pWFoJQu5qcDltZyg5bJb9vDPOqputA
+ JO/pssLpk8mrmCZG/DGnOzdUdSLKatfx3MqQ==
+X-Gm-Gg: ASbGnctpH82gCF4E27XANDRkkZjE7TBZyc6RNMrdnGnP1wqUmSP5rbu6NGzfT+4sSHM
+ WOtWMdhq6ZxxEQdN6Eg0H1KWQQUktRhl/Wq9WHULMuB2rmCYVRX8pmO+V/XHdiYpEK/gF61ODri
+ f1YweQDve++TB8D1VWH5SV6U4xjAvUDbL8i9GcdCoq54U3WlhQJ++wcyNTkTthNNWK6Ojs1vx9Y
+ brj9MOm3IQ2O9ARxntwYKPAD/KiXw7Z3iYk/666Re7zADaz9JQ5JCj5lZBTqbXzUrOZmrTkOUvb
+ dXW7nd4BBPD0LNRfd4EgJq7lDp9CJeBRvIsoOjdJ7vO0j0ewlFD0IGpkyiXrjmg=
+X-Google-Smtp-Source: AGHT+IG9lIi4y81GtUAS/p2kFe8CuUnY6PtZhntDyHe9dS07v84VZAseI8Cz6apbvILdy6H2Wt/8XQ==
+X-Received: by 2002:a05:6a00:26dd:b0:734:26c6:26d3 with SMTP id
+ d2e1a72fcca58-73cdbf142f5mr3803664b3a.5.1744887216489; 
+ Thu, 17 Apr 2025 03:53:36 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd230ddaasm12366251b3a.138.2025.04.17.03.53.36
+ d2e1a72fcca58-73bd230ddaasm12366251b3a.138.2025.04.17.03.53.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Apr 2025 03:53:41 -0700 (PDT)
+ Thu, 17 Apr 2025 03:53:36 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -92,15 +92,15 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
  qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v2 07/18] target/riscv: Add hard-coded CPU state of WG
+Subject: [PATCH v2 06/18] target/riscv: Add CPU options of WorldGuard CPU
  extension
-Date: Thu, 17 Apr 2025 18:52:38 +0800
-Message-Id: <20250417105249.18232-8-jim.shu@sifive.com>
+Date: Thu, 17 Apr 2025 18:52:37 +0800
+Message-Id: <20250417105249.18232-7-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20250417105249.18232-1-jim.shu@sifive.com>
 References: <20250417105249.18232-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,75 +123,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add hard-coded state of WG extension. 'mwid' is the M-mode WID of CPU.
-'mwidlist' is the list of allowed WID value of 'mlwid' CSR.
-
-These CPU states can be set by CPU option, or can be set by machine code
-via newly added APIs. If we want different WG configs of CPUs, we should
-set it by machine code.
+We define CPU options for WG CSR support in RISC-V CPUs which
+can be set by machine/device emulation. The RISC-V CSR emulation
+will also check this feature for emulating WG CSRs.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 ---
- target/riscv/cpu.h        |  2 ++
- target/riscv/cpu_cfg.h    |  2 ++
- target/riscv/cpu_helper.c | 18 ++++++++++++++++++
- 3 files changed, 22 insertions(+)
+ target/riscv/cpu.c         |  3 +++
+ target/riscv/cpu_cfg.h     |  3 +++
+ target/riscv/tcg/tcg-cpu.c | 11 +++++++++++
+ 3 files changed, 17 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 51e49e03de..ac50928b57 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -613,6 +613,8 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
-                                    void *rmw_fn_arg);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 09ded6829a..a182e8c61f 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -236,6 +236,9 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(xtheadmempair, PRIV_VERSION_1_11_0, ext_xtheadmempair),
+     ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsync),
+     ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVentanaCondOps),
++    ISA_EXT_DATA_ENTRY(smwg, PRIV_VERSION_1_12_0, ext_smwg),
++    ISA_EXT_DATA_ENTRY(smwgd, PRIV_VERSION_1_12_0, ext_smwgd),
++    ISA_EXT_DATA_ENTRY(sswg, PRIV_VERSION_1_12_0, ext_sswg),
  
- RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
-+void riscv_cpu_set_wg_mwid(CPURISCVState *env, uint32_t mwid);
-+void riscv_cpu_set_wg_mwidlist(CPURISCVState *env, uint32_t mwidlist);
- #endif /* !CONFIG_USER_ONLY */
- 
- void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
+     { },
+ };
 diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index a5b045aa2f..86b6240989 100644
+index 8a843482cc..a5b045aa2f 100644
 --- a/target/riscv/cpu_cfg.h
 +++ b/target/riscv/cpu_cfg.h
-@@ -196,6 +196,8 @@ struct RISCVCPUConfig {
-     bool pmp;
-     bool debug;
-     bool misa_w;
-+    uint32_t mwid;
-+    uint32_t mwidlist;
+@@ -143,6 +143,9 @@ struct RISCVCPUConfig {
+     bool ext_smmpm;
+     bool ext_sspm;
+     bool ext_supm;
++    bool ext_smwg;
++    bool ext_smwgd;
++    bool ext_sswg;
+     bool rvv_ta_all_1s;
+     bool rvv_ma_all_1s;
+     bool rvv_vl_half_avl;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 5aef9eef36..343e46e698 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -694,6 +694,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         cpu->cfg.ext_ssctr = false;
+     }
  
-     bool short_isa_string;
- 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index f4c4b69a3c..2c3a0d903b 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -231,6 +231,24 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
-     *pflags = flags;
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+void riscv_cpu_set_wg_mwid(CPURISCVState *env, uint32_t mwid)
-+{
-+    CPUState *cs = env_cpu(env);
-+    RISCVCPU *cpu = RISCV_CPU(cs);
++    /* RISC-V WorldGuard */
++    if (cpu->cfg.ext_sswg && !cpu->cfg.ext_smwg) {
++        error_setg(errp, "Sswg extension requires Smwg extension");
++        return;
++    }
 +
-+    cpu->cfg.mwid = mwid;
-+}
++    if (cpu->cfg.ext_smwgd != cpu->cfg.ext_sswg) {
++        error_setg(errp, "Smwgd/Sswg extensions should be enabled together");
++        return;
++    }
 +
-+void riscv_cpu_set_wg_mwidlist(CPURISCVState *env, uint32_t mwidlist)
-+{
-+    CPUState *cs = env_cpu(env);
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+
-+    cpu->cfg.mwidlist = mwidlist;
-+}
-+#endif /* CONFIG_USER_ONLY */
-+
- RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
- {
- #ifndef CONFIG_USER_ONLY
+     /*
+      * Disable isa extensions based on priv spec after we
+      * validated and set everything we need.
 -- 
 2.17.1
 
