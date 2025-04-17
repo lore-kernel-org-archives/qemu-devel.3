@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58304C369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 18:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CFFC369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 18:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5ToN-00070j-Oj; Thu, 17 Apr 2025 14:18:07 -0400
+	id 1u5TyZ-0003XB-U5; Thu, 17 Apr 2025 14:28:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5To7-0006lQ-KY
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:17:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5To3-0004Tp-EO
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:17:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744913866;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wRC2FtIJrxlZog4Rd2GDFKZ3EONccmgYGAEEMv5D+nE=;
- b=gis8JhQiZ+JJWvJwm1rNDTr/f0Vvm+2ohGZokxt2cLaRr/BznS7fJ/aTMEnCUN698l4FIr
- /VD3xQueZOIfVe+gLh8TVdjRzqm2ruTxavI2w0WJhvOsWnuUvs+oPEYP2oNXRUBYn75/X5
- fvcVYmtnMIEIDr4+HiXKNHUXth3fOxs=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-Iy0juWNmPfaUnTfps4lqSw-1; Thu, 17 Apr 2025 14:17:44 -0400
-X-MC-Unique: Iy0juWNmPfaUnTfps4lqSw-1
-X-Mimecast-MFC-AGG-ID: Iy0juWNmPfaUnTfps4lqSw_1744913862
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2ff58318acaso1439473a91.0
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 11:17:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5TyV-0003SF-Jz
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:28:36 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5TyS-0006l2-Ed
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:28:35 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-224191d92e4so14552225ad.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 11:28:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744914509; x=1745519309; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZVcXrtZT02pJwqzz+JNp3ideFbZg4voWp8UCH0aLd40=;
+ b=rvhzsgWF684/me6Xl9Y2cMMMedYpFJYQ4Hsw/opx4OybUbU/C2ClJRSr+HS4soGRAc
+ c8hhiz0GrFPSMpXmCxiATq5rLTjSpcdrwCCVQWdhLKqvR4YouVeYo/gxTqLuXCa8JHq4
+ mhh5APLgEz9dw4ZMdHURAe3iXiWbm0AA2QVB5AGS8uj9q9qxFpK+s9QqIU1gu3QW9b79
+ PH1Jmztes8xWkk9p4l42VTADqjprk5Patqd75g6agV61c8s4+z/GOP5IZ1LZwyCkM0og
+ XyeqnZqJSJc6vCmpRTC7g40qDUuhAkkbUT9ZRv/PK0petuDBpqRFbsd0k3VQaG4jZdv7
+ KdqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744913862; x=1745518662;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wRC2FtIJrxlZog4Rd2GDFKZ3EONccmgYGAEEMv5D+nE=;
- b=g+vkcLIG/IYrbNPp4cfQYzHNSde5gBWTgBTCpWs4WZxRMnYtGbWkyMKZMGHYB7ESFw
- hT4kjexffGS+PY8r0Fv8d0mDmWKCd/tRbAUAOBMqI7jMXx9ZVw6MbNfP4kUJYFLzKSEn
- qb8WzW4EzFw0CGEgffHuvE0NwrLDXkbGrvkiJjyY3HhRFc9NXyM98VPAFrxXORjSN8XI
- IS+DZypBmhXkU3sjEby5oJj48J35mGA0TXTCtxIZOHFYJ4sTPkI7hr8uhe8Mf/q+LxdX
- h75XbS/6Kpv/NwMs7nSgeY3l+e2FznmI15ArzydKIAompY6rV2NGL57hGvzgYfDguVyX
- O0DQ==
-X-Gm-Message-State: AOJu0YydWQJbYkLKmiDshyVtZRlI9qGkmXdFe0VNvmVN5lEYRq1i47Ax
- Hcv5kL+DS8LQPoZoc023zR9ONCX+sNHTxIhw1fA+dIFhTqLVCkERE6vzRehd4ygnLzxcbXRjXB3
- 70h+gFL1jyoQxV9KSEUwA3iyUcLSGK9kx/HS/rmf5CGibMaG2W71yZ6R4jWqZCoK+xwrO+bo5+X
- 6hHiYUmW1ElBWVgzJkPnnJtF+haSg=
-X-Gm-Gg: ASbGncvoXr0Y9UPzRsT/2fc3c6QTsp43ih6d7vu9FcRJWJpMuoCWlJnP66Xsfz9BMHI
- jYsLU1/iOFNow53WC7J9zragBp0Ap0RfisTwPLl15N9EAMHCraFr9BHXYx+NX81KD7tdpcbliMD
- lzJANivAuahTdzFmn5R5qvKpdM
-X-Received: by 2002:a17:90a:d44d:b0:2f2:a664:df1a with SMTP id
- 98e67ed59e1d1-30863d257c3mr11798004a91.2.1744913862040; 
- Thu, 17 Apr 2025 11:17:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDyRAmLHttVDpXijgvf2hrl5gRlqqC3Wtby2CsWuXBMl+d8nF2+K7kxR+eJsmKG2fh3zOsklf17+Ases8ryII=
-X-Received: by 2002:a17:90a:d44d:b0:2f2:a664:df1a with SMTP id
- 98e67ed59e1d1-30863d257c3mr11797973a91.2.1744913861780; Thu, 17 Apr 2025
- 11:17:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1744914509; x=1745519309;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZVcXrtZT02pJwqzz+JNp3ideFbZg4voWp8UCH0aLd40=;
+ b=k1jeVBB3r7AucqkiZ3Jad109hLd8hG3NytwrFrTRyqAcNvnmAOpBAyG8uKPMbyapv+
+ 91BFAd5yKxkJ2THJnrqARwHGgBV/p1odlfo5rODdEEzn9TZGZ3mUsqg78Myrmt1lQiHp
+ S2BRQkBk9r7COJQ95jdLLgnKDzrXVfzEhD0+9K4U8ZZ4TUQeU0jltqXGh/Xj1PXdRy8v
+ yuQcqyjgXnNI4Exs+SWP9VetHN0oCC0a1khaYZ5eLmVZvPgxceItXCr1ob/2ty2D4RAu
+ YzpYvMkYEzvUGmwJFXnO7peKE6/WjXDHuTyBcr9DxmrAmI7tzSOEhp04d/qBH6e9IpCO
+ n16w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEbJ8JzB3ORxQrSBZIcyAfYgw54i2mL4F5kR6G82kvsJ4NLfvGaYLmdCH8ETHGi8ohu4vePHuoj6NC@nongnu.org
+X-Gm-Message-State: AOJu0Ywa1d72s+GAsRAQcgZViTyas1DmpBisu3QK/fsLwr55hisBw12A
+ g3zTcNAcx+KqC68voVuSmk7xLO4L8fSafVfIsh7nHpA0p0N3PoPXLmtMnp4Pdj7q223LztbUZ32
+ D
+X-Gm-Gg: ASbGnctnPnqTFWH1o+uV4buxKa1u6lUJXHf5g73k5NtSbNpFmnoUAsAg9IDFW0mi5IX
+ MiLxPs3urUUB+Vhit+raS9jkxL3Z+PVWSBAJ06TdzBXFMOWta6IwMzpKsyXJBJoDWziZUm5f9a8
+ J3UdiFSeL2M31ZkJRl4Ttp657TSqjdPI6i40mAXHIX/MxsYEO8WinjPnck5eL0W2Od0xG9KJueI
+ RAO2p3/ISfRYNtIfWDAoEUiCH41TFMEh3jvt2YCgl7qDiopJLqtgb1iDk5Gfl+S3zBaW4G1DH5w
+ Np/3yqglxEnyX+BCji2S9k+jzrVjSfYQgiUaA8GsnJrDMKeksvSDdw==
+X-Google-Smtp-Source: AGHT+IGN2v242tOA3H/0wpqu04cLQW0x+WIX8O6cfuvimruQJXqNfTqS6i4KXPQCmPWY6AVS4FfrKA==
+X-Received: by 2002:a17:903:98f:b0:224:f12:3746 with SMTP id
+ d9443c01a7336-22c535aca10mr87285ad.30.1744914509307; 
+ Thu, 17 Apr 2025 11:28:29 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50fda18esm3053195ad.212.2025.04.17.11.28.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Apr 2025 11:28:28 -0700 (PDT)
+Message-ID: <84eaddaa-ad02-4cf9-be3d-3d8da7a2d312@linaro.org>
+Date: Thu, 17 Apr 2025 11:28:28 -0700
 MIME-Version: 1.0
-References: <20250404121413.1743790-1-armbru@redhat.com>
- <20250404121413.1743790-10-armbru@redhat.com>
-In-Reply-To: <20250404121413.1743790-10-armbru@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 17 Apr 2025 14:17:29 -0400
-X-Gm-Features: ATxdqUGi77iEHcVt5ib9Czl73wEYqleeFed8zkQBgCcFOyPDPmO6b6g3kGlLvVI
-Message-ID: <CAFn=p-bqvkkD5sgdgEVP4cAnCNyTuOFXWJvGBWwiWVVCthZFGQ@mail.gmail.com>
-Subject: Re: [PATCH 09/11] qapi/qapi-schema: Address the introduction's bit rot
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com, 
- kwolf@redhat.com, peter.maydell@linaro.org, eblake@redhat.com, 
- jiri@resnulli.us, qemu-block@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e53f520632fd6a41"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] cpus: Replace CPU_RESOLVING_TYPE -> target_cpu_type()
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250417165430.58213-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250417165430.58213-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,154 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e53f520632fd6a41
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Apr 4, 2025 at 8:14=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
-
-> Cut the crap that stopped making sense years ago.  Adjust the
-> remainder.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  qapi/qapi-schema.json | 27 +++++++--------------------
->  1 file changed, 7 insertions(+), 20 deletions(-)
->
-> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-> index 0d027d5017..7bc600bb76 100644
-> --- a/qapi/qapi-schema.json
-> +++ b/qapi/qapi-schema.json
-> @@ -3,37 +3,24 @@
->  ##
->  # =3D Introduction
->  #
-> -# This document describes all commands currently supported by QMP.
-> +# This manual describes the commands and events supported by the QEMU
-> +# Monitor Protocol (QMP).
->  #
->  # For locating a particular item, please see the `qapi-qmp-index`.
->  #
-> -# Most of the time their usage is exactly the same as in the user
-> -# Monitor, this means that any other document which also describe
-> -# commands (the manpage, QEMU's manual, etc) can and should be
-> -# consulted.
-> -#
-> -# QMP has two types of commands: regular and query commands.  Regular
-> -# commands usually change the Virtual Machine's state someway, while
-> -# query commands just return information.  The sections below are
-> -# divided accordingly.
-> -#
-> -# It's important to observe that all communication examples are
-> -# formatted in a reader-friendly way, so that they're easier to
-> -# understand.  However, in real protocol usage, they're emitted as a
-> -# single line.
-> -#
-> -# Also, the following notation is used to denote data flow:
-> -#
-> -# Example:
-> +# The following notation is used in examples:
->  #
->  # .. qmp-example::
->  #
->  #   -> ... text sent by client (commands) ...
->  #   <- ... text sent by server (command responses and events) ...
->  #
-> +# Example text is formatted for readability.  However, in real
-> +# protocol usage, its commonly emitted as a single line.
-> +#
->  # Please refer to the
->  # :doc:`QEMU Machine Protocol Specification </interop/qmp-spec>`
-> -# for detailed information on the Server command and response formats.
-> +# for the general format of commands, responses, and events.
->  ##
->
->  { 'include': 'pragma.json' }
-> --
-> 2.48.1
-
-
-Thanks for this one :)
-
---000000000000e53f520632fd6a41
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Apr 4, =
-2025 at 8:14=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
-at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">Cut the crap that stopped making sense years ago.=
-=C2=A0 Adjust the<br>
-remainder.<br>
-<br>
-Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
-arget=3D"_blank">armbru@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qapi/qapi-schema.json | 27 +++++++--------------------<br>
-=C2=A01 file changed, 7 insertions(+), 20 deletions(-)<br>
-<br>
-diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json<br>
-index 0d027d5017..7bc600bb76 100644<br>
---- a/qapi/qapi-schema.json<br>
-+++ b/qapi/qapi-schema.json<br>
-@@ -3,37 +3,24 @@<br>
-=C2=A0##<br>
-=C2=A0# =3D Introduction<br>
-=C2=A0#<br>
--# This document describes all commands currently supported by QMP.<br>
-+# This manual describes the commands and events supported by the QEMU<br>
-+# Monitor Protocol (QMP).<br>
-=C2=A0#<br>
-=C2=A0# For locating a particular item, please see the `qapi-qmp-index`.<br=
->
-=C2=A0#<br>
--# Most of the time their usage is exactly the same as in the user<br>
--# Monitor, this means that any other document which also describe<br>
--# commands (the manpage, QEMU&#39;s manual, etc) can and should be<br>
--# consulted.<br>
--#<br>
--# QMP has two types of commands: regular and query commands.=C2=A0 Regular=
-<br>
--# commands usually change the Virtual Machine&#39;s state someway, while<b=
-r>
--# query commands just return information.=C2=A0 The sections below are<br>
--# divided accordingly.<br>
--#<br>
--# It&#39;s important to observe that all communication examples are<br>
--# formatted in a reader-friendly way, so that they&#39;re easier to<br>
--# understand.=C2=A0 However, in real protocol usage, they&#39;re emitted a=
-s a<br>
--# single line.<br>
--#<br>
--# Also, the following notation is used to denote data flow:<br>
--#<br>
--# Example:<br>
-+# The following notation is used in examples:<br>
-=C2=A0#<br>
-=C2=A0# .. qmp-example::<br>
-=C2=A0#<br>
-=C2=A0#=C2=A0 =C2=A0-&gt; ... text sent by client (commands) ...<br>
-=C2=A0#=C2=A0 =C2=A0&lt;- ... text sent by server (command responses and ev=
-ents) ...<br>
-=C2=A0#<br>
-+# Example text is formatted for readability.=C2=A0 However, in real<br>
-+# protocol usage, its commonly emitted as a single line.<br>
-+#<br>
-=C2=A0# Please refer to the<br>
-=C2=A0# :doc:`QEMU Machine Protocol Specification &lt;/interop/qmp-spec&gt;=
-`<br>
--# for detailed information on the Server command and response formats.<br>
-+# for the general format of commands, responses, and events.<br>
-=C2=A0##<br>
-<br>
-=C2=A0{ &#39;include&#39;: &#39;pragma.json&#39; }<br>
--- <br>
-2.48.1</blockquote><div><br></div><div>Thanks for this one :) <br></div></d=
-iv></div>
-
---000000000000e53f520632fd6a41--
-
+TWF5YmUgaXQgd291bGQgYmUgcHJlZmVyYWJsZSB0byBmb2N1cyBvbiBwcm92aWRpbmcgYSBt
+aW5pbWFsIGJ1dCANCipjb21wbGV0ZSogVGFyZ2V0SW5mbyBiZWZvcmUgdXBzdHJlYW1pbmcg
+YW55IG9mIHRoaXMsIGFzIGl0J3MgcmVhbGx5IA0KYmxvY2tpbmcgdGhlIHJlc3Qgb2YgdGhl
+IHdvcmsgZm9yIHNpbmdsZSBiaW5hcnkuDQoNCk1pbmltYWwgcmVxdWlyZW1lbnRzIHRvIGhh
+dmUgYSBjb21wbGV0ZSBzZXJpZXMgd291bGQgYmU6DQotIFJlbmFtZSBRTVAgVGFyZ2V0SW5m
+byBzdHJ1Y3QgdG8gdXNlIHRoYXQgbmFtZQ0KLSBCZSBhYmxlIHRvIHF1ZXJ5IHRhcmdldCBj
+cHUgdHlwZSAod2hhdCB0aGlzIHNlcmllcyBkb2VzKQ0KLSBCZSBhYmxlIHRvIHF1ZXJ5IG1h
+Y2hpbmUgY3B1IHR5cGUNCi0gTW9kaWZ5IGdlbmVyaWMgZnVuY3Rpb25zIGxpc3RpbmcgbWFj
+aGluZXMvY3B1cyB0byB0YWtlIHRoaXMgaW50byBhY2NvdW50DQotIFRhZyBsYWJlbGVkIGJv
+YXJkcy9jcHUgaW4gaHcvYXJtIHRvIHByb3ZlIHRoaXMgaXMgd29ya2luZyAod2l0aG91dCAN
+CmRvaW5nIGFueSBvdGhlciBjbGVhbnVwIHRvIHRob3NlIGZpbGVzIGFuZCAqbm90KiBtYWtl
+IHRoZW0gY29tbW9uKQ0KLSBObyBvdGhlciBhZGRpdGlvbmFsIHRhcmdldCBpbmZvcm1hdGlv
+biBmb3IgdGhlIHYxLCBsZXQncyBrZWVwIHRoYXQgZm9yIA0KbGF0ZXIuDQoNCk5vdGU6IHRh
+cmdldF9jcHVfdHlwZSB3aWxsIG5vdCBiZSBUWVBFX0FSTV9DUFUsIGFzIGl0IHdyb25nbHkg
+d3JhcHMgDQphcm0zMiBhbmQgYWFyY2g2NCBjcHVzLCB3aGlsZSBpdCBzaG91bGQgY29ycmVj
+dGx5IGlkZW50aWZ5IG9uZSBvciB0aGUgDQpvdGhlci4gSSBzdWdnZXN0ZWQgVFlQRV9UQVJH
+RVRfQ1BVX0FSTSwgVFlQRV9UQVJHRVRfQ1BVX0FBUkNINjQsIGFuZCANCnNhbWUgZm9yIG1h
+Y2hpbmVzOiBUWVBFX1RBUkdFVF9NQUNISU5FX0FSTSwgVFlQRV9UQVJHRVRfTUFDSElORV9B
+QVJDSDY0Lg0KU28gd2UgY2FuIHJldXNlIHRoaXMgbmFtaW5nIGNvbnZlbnRpb24gd2l0aCBh
+bnkgb3RoZXIgdGFyZ2V0IHdlJ2xsIHJldXNlIA0KaW4gdGhlIGZ1dHVyZS4NCg0KUGllcnJp
+Y2sNCg0KT24gNC8xNy8yNSAwOTo1NCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6
+DQo+IChTZXJpZXMgZnVsbHkgcmV2aWV3ZWQsIEkgcGxhbiB0byBxdWV1ZSBpdCB2aWEgbXkg
+dHJlZSkNCj4gDQo+IFRoaXMgc2VyaWVzIHJlcGxhY2UgdGhlIHRhcmdldC1zcGVjaWZpYyBD
+UFVfUkVTT0xWSU5HX1RZUEUNCj4gYnkgY2FsbHMgdG8gdGhlIHRhcmdldC1hZ25vc3RpYyB0
+YXJnZXRfY3B1X3R5cGUoKSBtZXRob2QuDQo+IA0KPiBTaW5jZSBSRkN2MToNCj4gLSBTcGxp
+dCBmcm9tIGJpZ2dlci91bnJlbGF0ZWQgVGFyZ2V0SW5mbyBzZXJpZXMgKFBpZXJyaWNrKQ0K
+PiAtIEFkZGVkIFBpZXJyaWNrIFItYiB0YWdzDQo+IC0gQWRkZWQgY29tbWl0IGRlc2NyaXB0
+aW9ucw0KPiANCj4gUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgKDcpOg0KPiAgICBxZW11OiBJ
+bnRyb2R1Y2UgdGFyZ2V0X2NwdV90eXBlKCkNCj4gICAgY3B1czogUmVwbGFjZSBDUFVfUkVT
+T0xWSU5HX1RZUEUgLT4gdGFyZ2V0X2NwdV90eXBlKCkNCj4gICAgY3B1czogTW92ZSB0YXJn
+ZXQtYWdub3N0aWMgbWV0aG9kcyBvdXQgb2YgY3B1LXRhcmdldC5jDQo+ICAgIGFjY2VsOiBJ
+bXBsZW1lbnQgYWNjZWxfaW5pdF9vcHNfaW50ZXJmYWNlcygpIGZvciBib3RoIHN5c3RlbS91
+c2VyIG1vZGUNCj4gICAgYWNjZWw6IEluY2x1ZGUgbWlzc2luZyAncWVtdS9hY2NlbC5oJyBo
+ZWFkZXIgaW4gYWNjZWwtaW50ZXJuYWwuaA0KPiAgICBhY2NlbDogTWFrZSBBY2NlbENQVUNs
+YXNzIHN0cnVjdHVyZSB0YXJnZXQtYWdub3N0aWMNCj4gICAgYWNjZWw6IE1vdmUgdGFyZ2V0
+LWFnbm9zdGljIGNvZGUgZnJvbSBhY2NlbC10YXJnZXQuYyAtPiBhY2NlbC1jb21tb24uYw0K
+PiANCj4gICBNQUlOVEFJTkVSUyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAg
+IDQgKy0NCj4gICBtZXNvbi5idWlsZCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+fCAgIDIgKw0KPiAgIGFjY2VsL3thY2NlbC1zeXN0ZW0uaCA9PiBhY2NlbC1pbnRlcm5hbC5o
+fSB8ICAxMCArLQ0KPiAgIGluY2x1ZGUvYWNjZWwvYWNjZWwtY3B1LXRhcmdldC5oICAgICAg
+ICAgICB8ICAxMiArLQ0KPiAgIGluY2x1ZGUvYWNjZWwvYWNjZWwtY3B1LmggICAgICAgICAg
+ICAgICAgICB8ICAyMyArKysrDQo+ICAgaW5jbHVkZS9xZW11L3RhcmdldF9pbmZvLmggICAg
+ICAgICAgICAgICAgIHwgIDE5ICsrKw0KPiAgIGFjY2VsL2FjY2VsLWNvbW1vbi5jICAgICAg
+ICAgICAgICAgICAgICAgICB8IDE0MiArKysrKysrKysrKysrKysrKysrKysNCj4gICBhY2Nl
+bC9hY2NlbC1zeXN0ZW0uYyAgICAgICAgICAgICAgICAgICAgICAgfCAgIDQgKy0NCj4gICBh
+Y2NlbC9hY2NlbC10YXJnZXQuYyAgICAgICAgICAgICAgICAgICAgICAgfCAxMzQgLS0tLS0t
+LS0tLS0tLS0tLS0tLQ0KPiAgIGFjY2VsL2FjY2VsLXVzZXIuYyAgICAgICAgICAgICAgICAg
+ICAgICAgICB8ICAgNiArDQo+ICAgYWNjZWwvdGNnL3RjZy1hbGwuYyAgICAgICAgICAgICAg
+ICAgICAgICAgIHwgICA1ICstDQo+ICAgY3B1LXRhcmdldC5jICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIHwgIDc2ICstLS0tLS0tLS0tDQo+ICAgaHcvY29yZS9jcHUtY29tbW9u
+LmMgICAgICAgICAgICAgICAgICAgICAgIHwgIDc0ICsrKysrKysrKysrDQo+ICAgdGFyZ2V0
+X2luZm8tZGVmcy5jICAgICAgICAgICAgICAgICAgICAgICAgIHwgIDE2ICsrKw0KPiAgIGFj
+Y2VsL21lc29uLmJ1aWxkICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgMSArDQo+ICAg
+MTUgZmlsZXMgY2hhbmdlZCwgMjk5IGluc2VydGlvbnMoKyksIDIyOSBkZWxldGlvbnMoLSkN
+Cj4gICByZW5hbWUgYWNjZWwve2FjY2VsLXN5c3RlbS5oID0+IGFjY2VsLWludGVybmFsLmh9
+ICg1NiUpDQo+ICAgY3JlYXRlIG1vZGUgMTAwNjQ0IGluY2x1ZGUvYWNjZWwvYWNjZWwtY3B1
+LmgNCj4gICBjcmVhdGUgbW9kZSAxMDA2NDQgaW5jbHVkZS9xZW11L3RhcmdldF9pbmZvLmgN
+Cj4gICBjcmVhdGUgbW9kZSAxMDA2NDQgYWNjZWwvYWNjZWwtY29tbW9uLmMNCj4gICBjcmVh
+dGUgbW9kZSAxMDA2NDQgdGFyZ2V0X2luZm8tZGVmcy5jDQo+IA0KDQo=
 
