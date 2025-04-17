@@ -4,106 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E469CC369CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 14:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95778C369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 14:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Pzd-00058Y-9q; Thu, 17 Apr 2025 10:13:29 -0400
+	id 1u5Q1K-0006DU-79; Thu, 17 Apr 2025 10:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u5PzX-00054N-Ne; Thu, 17 Apr 2025 10:13:23 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1u5PzV-0008Rk-NY; Thu, 17 Apr 2025 10:13:23 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HAipwR016518;
- Thu, 17 Apr 2025 14:13:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nrZsTJ
- gmG7utdFjJkRLKSgg4w2qVlc6QHy3XFTDPVCw=; b=jPJCYwpuIE57zvI6vOKnSm
- YbXfoNs4NRSqIC+F6INUSXg1XMG/mmVpAUyY0GLgFOKeDYRdo09lfmO9phkqamIQ
- qZC+BFidw/UX+v2R6082bNl25CwABbaMeo9aqmwqxGaEMVZUZixxn3JGeE6fVB1R
- hSuFxI6Lj5muecxtHvT90FMi38rS35oW5RKi3znE4fbtGCQslrkfVRwMvAVvp281
- uBY6KiJQ6IEeU7X+F6F2fU2LKYgWwb9IYKrpoRfHzNjMseZBH1fpq32MWBCkc954
- rTqb7ECoaxhITMDni49l1Xkl8psZ2xRvqMf4L5odbwaMxxHGjVqvrYvALWNd7LAQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462mn7v0uk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 14:13:17 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53HB8NgL017233;
- Thu, 17 Apr 2025 14:13:16 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040m5vmm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 14:13:16 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53HEDFiH6029936
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Apr 2025 14:13:15 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D3B1358059;
- Thu, 17 Apr 2025 14:13:14 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5BF5D58055;
- Thu, 17 Apr 2025 14:13:13 +0000 (GMT)
-Received: from [9.61.39.227] (unknown [9.61.39.227])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 17 Apr 2025 14:13:13 +0000 (GMT)
-Message-ID: <bc000c83-979a-4ec6-9628-f2b48a433558@linux.ibm.com>
-Date: Thu, 17 Apr 2025 10:13:11 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Q14-00068b-U6
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 10:15:00 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Q0z-0000Ax-7m
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 10:14:58 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39c2688619bso552638f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 07:14:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744899291; x=1745504091; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yvmyiNTk0u5oNuIpgtas10xXjsPizBsh4ZZXoVLw+xc=;
+ b=YcSCnB7e9y6O3fgtLZ0XQebtwKuF+xokDsOi3PvXNTPC4AkgVUm/0Tyl6oDymziaYd
+ O7X/FsQyDR1AvOisQyW+aOk+3YHsNp5LJ4Y+muOA+BVoEvyqnXuIiHRQPMqv/dy8gUwE
+ bbntSNX/AXwzDb0QL3eaKlJ0r0qT7be/ouN9sO0WZpERW7n9HC6lg8QbTiWBpIgYfe7T
+ /BltA5IbXsH6C8IuxxA083NphQD4KzqRx6k2nAt99D5VMi/p/EcZsg+m3u32II0DTb1N
+ 90flR0Tgm759oZYQTXAq3EReCqR4kg1amqf6gHM2WL6l+lInxF84+a5s68qNI1PEZPER
+ ffng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744899291; x=1745504091;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yvmyiNTk0u5oNuIpgtas10xXjsPizBsh4ZZXoVLw+xc=;
+ b=vNRTZ89KW2cAzI39dSGfXYFgNJIqNCbH7ch/2HaI0IWljjuLfFTsRdKM+qTT7wy0iw
+ /0/V5d4ZCVcFNj8BwnGPSvGKsFp9Xw6jjoiD9uU1dtcUtKvEJ6JSe7KCcV2BY2/NqU3K
+ O7+6q8x7fL0rC3RvzA7o/rC8uZmsvV/A8Z237RkRChAaJaWMBGKTaF/Jo70dEAxtUaFo
+ fWnN+bYeSosHzTkq9zjfksNQZGr+lnJ017WATTY/lxdqs2RMiiPzmKLOG0c6FAOpegrh
+ A6M/UgKIZR/H3k1MUSK1IWMbikcB6/LxsLwzMt4lf30Rxv73BxlRbidX+S0gSsh32deV
+ BTJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJDRZMeLM02NNl55uWuQJ6ghJtFRSAt9iGBFQU15z0B0Vop9+aVpfhKHOLYtPe40DZFyvaE6PUpkZV@nongnu.org
+X-Gm-Message-State: AOJu0Yw+r58z+cjl5DWW/tHrMbnQc5jcuEP4wT8R6d3VoTHB5gWrXJCX
+ D0KWPm9trTJwelYU1m1CF1Ng7lIgWvYaHUYsQ16NoczxzTwNjCwbrL0/iTFlx44=
+X-Gm-Gg: ASbGncs9IMINr7C3rZdNHxEgADQfaajid+eUHOmsd0PgtaUPf7twHYkNVcMw/JMdiLn
+ ELliLt/MDxc7iUzxe8RH7XG/I0gbh5shOUlIkvWgSDLMgI3wkG+MO0Id724+B4xNLjEHDVuRO5W
+ xbNxRC/OWejnCd+vQet+V0gsXOXsvvpiSJ6JwisPc5+uySoqvbTIxrsgZ96jWGKnD1grqmtrg33
+ g3KeOoKO56czZ21N4WCYSZHzFf/SohvaY4repskLw0T3fUUDtoj9yl/7lAnFwvpip9iSYrAyKz2
+ +BwTCUtA44aPxqunHOZlvMwxmc2w/v+UB1gfqIBO79JxrgLeyNYyig024pAC2mGjN4SuCPOymvP
+ NLCM5JHXYrMn9d9PjTLw=
+X-Google-Smtp-Source: AGHT+IEQhdqHMztoPb4BKBCf45aJ1jSou1PwZmArvBGyPRRvF1o+l0C362oIWisk6/QDISbYbIp/nw==
+X-Received: by 2002:a05:6000:2203:b0:39c:30d8:3290 with SMTP id
+ ffacd0b85a97d-39ee5b13096mr5182061f8f.7.1744899291293; 
+ Thu, 17 Apr 2025 07:14:51 -0700 (PDT)
+Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4405b4d105bsm54931595e9.11.2025.04.17.07.14.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Apr 2025 07:14:50 -0700 (PDT)
+Message-ID: <a99dbff0-99c1-48b3-ba8e-341d5bd4d6e1@linaro.org>
+Date: Thu, 17 Apr 2025 16:14:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 24/24] hw/s390x/ipl: Handle secure boot without
- specifying a boot device
-To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
-Cc: jjherne@linux.ibm.com, jrossi@linux.ibm.com, fiuczy@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-25-zycai@linux.ibm.com>
- <93f3cb7f-9dda-4ff4-b3e9-81a6c870d115@linux.ibm.com>
+Subject: Re: [ANNOUNCE] QEMU 10.0.0-rc4 is now available
+To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+References: <174489857530.3753920.12348493900787935207@amd.com>
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <93f3cb7f-9dda-4ff4-b3e9-81a6c870d115@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ANnAolku c=1 sm=1 tr=0 ts=68010c7d cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=0UfI22MnMs8H_QUV0GAA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: GEOfZQyamL3opzB5atMhv0CJHP6iohqG
-X-Proofpoint-ORIG-GUID: GEOfZQyamL3opzB5atMhv0CJHP6iohqG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_04,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- mlxlogscore=999 adultscore=0 spamscore=0 mlxscore=0 bulkscore=0
- suspectscore=0 phishscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504170101
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <174489857530.3753920.12348493900787935207@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,55 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
-On 4/16/25 6:11 PM, Collin Walling wrote:
-> On 4/8/25 11:55 AM, Zhuoying Cai wrote:
->> If secure boot in audit mode or True Secure IPL mode is enabled without
->> specifying a boot device, the boot process will terminate with an error.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>  hw/s390x/ipl.c | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->>
->> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
->> index 60bafcbd2e..0510f16a7d 100644
->> --- a/hw/s390x/ipl.c
->> +++ b/hw/s390x/ipl.c
->> @@ -767,6 +767,16 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
->>          s390_ipl_create_cert_store(&ipl->cert_store);
->>          if (!ipl->iplb_valid) {
->>              ipl->iplb_valid = s390_init_all_iplbs(ipl);
->> +
->> +            /*
->> +             * Secure IPL without specifying a boot device.
->> +             * IPLB is not generated if no boot device is defined.
->> +             */
->> +            if ((s390_has_certificate() || s390_secure_boot_enabled()) &&
->> +                !ipl->iplb_valid) {
->> +                error_report("No boot devicie defined for Secure IPL");
->> +                exit(1);
->> +            }
+On 17/4/25 16:02, Michael Roth wrote:
+> Hello,
 > 
-> I'm confused why this check is needed.  If there is no valid iplb, won't
-> boot just fail outright anyway?
+> On behalf of the QEMU Team, I'd like to announce the availability of the
+> fifth release candidate for the QEMU 10.0 release. This release is meant
+> for testing purposes and should not be used in a production environment.
+
+As Stefan mentioned on IRC, there are no open issues for 10.0.
+So except if critical blockers are found over the next few days,
+this is the last RC before the final release.
+
+Regards,
+
+Phil.
+
 > 
-
-If no boot device is specified, the BIOS will still scan all channels to
-find a bootable device (as defined in probe_boot_device() within
-pc-bios/s390-ccw/main.c).
-
-Boot will proceed if a bootable device is found, but the IPLB will not
-be generated on the host side in this case. We cannot determine whether
-secure boot is enabled, since it's indicated by the IPLB flags.
-
-Therefore, specifying secure IPL without a boot device cause the process
-to terminate early.
-
->>          } else {
->>              ipl->qipl.chain_len = 0;
->>          }
+>    http://download.qemu.org/qemu-10.0.0-rc4.tar.xz
+>    http://download.qemu.org/qemu-10.0.0-rc4.tar.xz.sig
 > 
+> You can help improve the quality of the QEMU 10.0 release by testing this
+> release and reporting bugs using our GitLab issue tracker:
+> 
+>    https://gitlab.com/qemu-project/qemu/-/milestones/15
+> 
+> The release plan, as well a documented known issues for release
+> candidates, are available at:
+> 
+>    http://wiki.qemu.org/Planning/10.0
+> 
+> Please add entries to the ChangeLog for the 10.0 release below:
+> 
+>    http://wiki.qemu.org/ChangeLog/10.0
+> 
+> Thank you to everyone involved!
+> 
+> Changes since rc3:
+> 
+> a9cd5bc639: Update version for v10.0.0-rc4 release (Stefan Hajnoczi)
+> e28fbd1c52: Revert "virtio-net: Copy received header to buffer" (Antoine Damhet)
+> 8bdd3a0308: tests/functional/test_aarch64_replay: reenable on macos (Pierrick Bouvier)
+> fa3f3a33f3: system/main: transfer replay mutex ownership from main thread to main loop thread (Pierrick Bouvier)
+> f3ca7ca222: docs: Document removal of 64-bit on 32-bit emulation (Richard Henderson)
+> b0b5af62ef: Fix objdump output parser in "nsis.py" (Arthur Sengileyev)
+> 22e6d70294: docs: Fix some typos (found by codespell and typos) (Stefan Weil via)
+> d832ff9d02: tests/tcg/plugins: add plugin to test reset and uninstall (Pierrick Bouvier)
+> c07cd110a1: plugins/loader: fix deadlock when resetting/uninstalling a plugin (Pierrick Bouvier)
+> 9edb9c2a6a: tests/tcg: fix semihosting SYS_EXIT for aarch64 in boot.S (Alex Bennée)
 > 
 
 
