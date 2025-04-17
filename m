@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20611C369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE84EC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:42:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5SEE-0002Zs-RZ; Thu, 17 Apr 2025 12:36:42 -0400
+	id 1u5SJl-0005Wd-LH; Thu, 17 Apr 2025 12:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5SEC-0002Zc-Vt
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:36:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5SEA-0000kE-SZ
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:36:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744907796;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Mfqexr1lIsjOjErOfef5CBITb7GIZpU5qfknGo4xyQo=;
- b=WA9LlznqUgQZfmij07k4qL5Y2Ux9xKFlWFjaMcgASiiaHU2NoNORQ+fruAjkwRbFr3WbKc
- H5ZXaFqCNHIy/5DsYJa9GlmhfzVw3l7X/WxL1aY5ngcwIAMDcc4uQtLrFOdq5hIrAp9Rpf
- hn9kZB/g7Wa3XAepo4ZIJw/PNd1jr4w=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-2_bY7nUHNy2sn3Unmz_1eQ-1; Thu, 17 Apr 2025 12:35:23 -0400
-X-MC-Unique: 2_bY7nUHNy2sn3Unmz_1eQ-1
-X-Mimecast-MFC-AGG-ID: 2_bY7nUHNy2sn3Unmz_1eQ_1744907723
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3054210ce06so1275459a91.2
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 09:35:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5SJi-0005W3-20
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:42:22 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5SJf-0001mr-Sh
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:42:21 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cfecdd8b2so7900645e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 09:42:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744908136; x=1745512936; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xAGVG2cs8Y16eR/ev25u9kwLxmJoGJy//385ktuSMwA=;
+ b=myowZ9dyhXRTjBjd6OrD1LTDpAvG8hwYSzi1RHZvkIKsnGZUe2yiZBA+x6L8oQXIQX
+ AwX6K8w3az+RKV90E5qxPPQoPLdtIaRWDSs55492gGGJiiLIc7BPcYVr2XOaaS+hbv4g
+ 4Lw5p6hSCdlOMcpeQfGyyDUAr3WPnoq6UYAG2CXn3/G4/Q/sIpH7AMIGy8Hs9oIDfuJW
+ b+w0RtkncC23OIugNpvDov3GmHdq2q6154DpGZpMnhem910Xqvx03GfuAM+M2Fg9JZPB
+ aom0zAWMTZPvCdyU9KliNbNDYrNCnK418nqfArk6xprZN1JuLzW+OffKiYzaj56A45d7
+ VxDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744907721; x=1745512521;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Mfqexr1lIsjOjErOfef5CBITb7GIZpU5qfknGo4xyQo=;
- b=jg5vazH033cj89zojgzaJJPMDV1eRZ3YjHfLnlIHBGIOpPycY7+HccMAHSGADHTccF
- XfJG+a5U2PFHEDvaXf2WSpPbLEBjlrpKGebcNrTQ1R5JsRHj8ujbPKHA3GcCBNJyHooI
- QLblhAFwulOhj5XS8MqKw3wRNlmKPx5zhirpXWQo1VyA77qn2sLaGoavnw0GVvUTNAYs
- IIIJzwx8MZAo0R5JVJ08sMy1liSWr/3uC8DweIR5lkT/rmdKHEJGypYGKSkIVBFh3VFP
- sMk4kSPn5uG+CiFsx0FdlOAi71598PffnDxGiiDYEgBztq8OZsJkKIv+vZQ+ylodPeU1
- IUoA==
-X-Gm-Message-State: AOJu0Yx/L3kLRSUC6cwrKVXfR07yhBaY8cnrpUxRQlIoe/HdMS2Ln+EU
- akVAF5P44xw1Tx01R7VQj30jVE0jdSdGN1ynlizEtloL/3Eb0uu1AkgfTrRy6lypeI7QLEZIbcJ
- XiHwGETbQX5V572sCVbMIxBnovNx9q+v84yTqIhxFeAO/1NRVzeOo/rgJiM8XFR8Io8C4y0zdS3
- o9OYLneFLu1Fb1EO8d6H07TEvowbB/T6itjKA=
-X-Gm-Gg: ASbGncst/nAKqnVN+DADicToQ7J1C9DIWlxaBtb0DVIFcKIjZcDOywRCvkZPynLlN4K
- rTf6iWKGqsIhv2k8TYz7AQfSWCpGK+fdSlgmHvTOFOxSab329+L+hUQpRzdqNQbNCX2B7w5j3d9
- OcqEqUPyx8X+MGjHyNmm4MDrCv
-X-Received: by 2002:a17:90b:268b:b0:2ee:8ea0:6b9c with SMTP id
- 98e67ed59e1d1-30863f18415mr12717725a91.12.1744907721301; 
- Thu, 17 Apr 2025 09:35:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEx1VMuMveeYuxTuOgMUKfVDgU1s0DlCx980M4zqV1LErq2Apwqfhjq3fyJyVCAcHfj4NVIV6H4JSntkVKhU2g=
-X-Received: by 2002:a17:90b:268b:b0:2ee:8ea0:6b9c with SMTP id
- 98e67ed59e1d1-30863f18415mr12717688a91.12.1744907720911; Thu, 17 Apr 2025
- 09:35:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1744908136; x=1745512936;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xAGVG2cs8Y16eR/ev25u9kwLxmJoGJy//385ktuSMwA=;
+ b=P8bLIG1yVorxxGfPeqArn9UceiGNI0VCG5ZNjOiJCIpUGyBHa6fj+0c/EAGwHNsGL8
+ dmU0tQ5zqy9eHo/5Uzf1U9IMTN1xXpzzHD1PAdXmoybu/qqO1FxGQTSvTzSZyLEpwyZ4
+ xy7vmJ2INHgi+/70ieXUi3YsQQpNWUwDyBrBNpWLkeAx670Dkd3bJ8FZ18SJyHpgRNUW
+ 3Qna58RuzU9Q0fOwpxkXFXN0TzNZnDOHGUGtwODH8nxBC4UhD8wy5lucb7OHyYWzmSQ0
+ 5Q5Mxp50hJ9ydis2lrBCX8GJDsI9XnqzjUDsmWxTwWyiJ0kkhdYt2+KSlfOzFHyGRkBd
+ An9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVvd7Jo7wfQNLVxiIzcXc8dxTaI9ncX+uSVMvaVJQ7VcjXPfTMaIznvQc1cetMvRbirjWbCS83UESi@nongnu.org
+X-Gm-Message-State: AOJu0YyfQe4h79TLuHDujzF+UgKUCuvpdBSJgElcBAmWxU8gIw50iB2d
+ WqkYMKCs98ZJAWi6GYQCA+STZHyoL5pnuLQQTw84eJ9ihsp/wkm+8T99F1kfFTg=
+X-Gm-Gg: ASbGncuQhf/mSqiEgPuvgPlv1HWc7uochoCRgxK61VNMOsxYSzVJneQk04oWT8AmbLt
+ TetToBsciuVw05VDV+EPQFfbJrEe/w9pMcirjDKRvOZuwT4pHNklltKPQp6OxAtsiaeZLupsl2y
+ PMXmbWmPPszRVtb4/S8oxNWYX928b50GKSwOzL5W1StcOP/BWsq72cScoeWzg+XxOlEBLFmSQ4d
+ ipJV2f5nstsGAYPm5XUfryfI+YAbHwfnAO7mW23CdcTX0utFeonAFMHo+GfLfKt+KrdZZAB/8uZ
+ 7aR+z7fW15w3IuR2yN95KMdsspjPWaGSswKmt0ylP15AoQzwtqAn33TPXdgTzam0/WL5eif0r+S
+ 1dnGIAx1r
+X-Google-Smtp-Source: AGHT+IEcXPQ+XSnuor5Qz+1T7qrMqoqzNuWJb/Cq0rNQq+yMHCtPnrcLCra3F81vzI8KXcnckbaJOQ==
+X-Received: by 2002:a05:600c:350e:b0:43d:878c:7c40 with SMTP id
+ 5b1f17b1804b1-4405f2fae8fmr71045645e9.10.1744908136564; 
+ Thu, 17 Apr 2025 09:42:16 -0700 (PDT)
+Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa433429sm114754f8f.37.2025.04.17.09.42.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Apr 2025 09:42:16 -0700 (PDT)
+Message-ID: <a71d784e-f016-479f-a34d-f9c19d9d10d6@linaro.org>
+Date: Thu, 17 Apr 2025 18:42:15 +0200
 MIME-Version: 1.0
-References: <f14e4ca7-63ff-4dfd-85d9-8ebde2a0c840@archlinux.org>
-In-Reply-To: <f14e4ca7-63ff-4dfd-85d9-8ebde2a0c840@archlinux.org>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 17 Apr 2025 12:35:08 -0400
-X-Gm-Features: ATxdqUE4BKHK_9lCCZAsrqoxk8b7Zl24vxAijn_H-fUBFXnh8hf1GlryNah033E
-Message-ID: <CAFn=p-Zc1F6GUx3aAueHcoX4HcVgJ+XEE8WayN_KnWJZnpJG1w@mail.gmail.com>
-Subject: Re: CRITICAL Unexpected bottom half exception
-To: Anton Hvornum <torxed@archlinux.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000df07410632fbfca5"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-10.1 17/19] accel: Move target-agnostic code from
+ accel-target.c -> accel-common.c
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250403234914.9154-1-philmd@linaro.org>
+ <20250403234914.9154-18-philmd@linaro.org>
+ <0b4376ee-504b-4096-a590-8a509ec7894d@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0b4376ee-504b-4096-a590-8a509ec7894d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,218 +106,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000df07410632fbfca5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 4/4/25 18:59, Pierrick Bouvier wrote:
+> On 4/3/25 16:49, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   accel/accel-common.c | 142 +++++++++++++++++++++++++++++++++++++++++++
+>>   accel/accel-target.c | 129 ---------------------------------------
+>>   accel/meson.build    |   1 +
+>>   3 files changed, 143 insertions(+), 129 deletions(-)
+>>   create mode 100644 accel/accel-common.c
 
-How exciting! Can you give me some more information on what occurred?
 
-- What is your operating system?
-- What were you in the process of doing at the time? (It looks like it died
-during the initial connection attempt)
-- Did this happen inside of another application, or a script you wrote, or
-in the/a Python REPL?
-- Is this reproducible, or does it appear to be a race condition or
-something that only triggers occasionally?
+> It seems that only accel_cpu_type is left in accel-target.c after that.
+> Couldn't we move that to TargetInfo, so the whole accel-target.c file 
+> can become common instead?
 
-Thank you for reporting back!
+IIUC "accel/accel-cpu-target.h" defines the AccelCPUClass QOM
+CLASS_CHECKERS macros based on CPU_RESOLVING_TYPE.
 
---js
+> If there is something I missed, I'm ok with the current change.
 
-On Fri, Apr 4, 2025 at 6:11=E2=80=AFAM Anton Hvornum <torxed@archlinux.org>=
- wrote:
+Thanks.
 
-> 2025-04-04 12:07:59,172 archtest CRITICAL Unexpected bottom half
-> exception. This is a bug in the QMP library. Please report it to
-> <qemu-devel@nongnu.org> <qemu-devel@nongnu.org> and CC: John Snow
-> <jsnow@redhat.com> <jsnow@redhat.com>.:
->   | Traceback (most recent call last):
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 462, in _session_guard
->   |     yield
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 417, in connect
->   |     await self._establish_session()
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.py",
-> line 297, in _establish_session
->   |     self._greeting =3D await self._get_greeting()
->   |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.py",
-> line 317, in _get_greeting
->   |     msg =3D await self._recv()
->   |           ^^^^^^^^^^^^^^^^^^
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 1046, in _recv
->   |     message =3D await self._do_recv()
->   |               ^^^^^^^^^^^^^^^^^^^^^
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.py",
-> line 449, in _do_recv
->   |     msg_bytes =3D await self._readline()
->   |                 ^^^^^^^^^^^^^^^^^^^^^^
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 1014, in _readline
->   |     raise EOFError
->   | EOFError
->   |
->   | During handling of the above exception, another exception occurred:
->   |
->   | Traceback (most recent call last):
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 468, in _session_guard
->   |     await self.disconnect()
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 436, in disconnect
->   |     await self._wait_disconnect()
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 758, in _wait_disconnect
->   |     self._cleanup()
->   |     ~~~~~~~~~~~~~^^
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.py",
-> line 385, in _cleanup
->   |     super()._cleanup()
->   |     ~~~~~~~~~~~~~~~~^^
->   |   File
-> "/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protocol.py",
-> line 772, in _cleanup
->   |     assert self.runstate =3D=3D Runstate.DISCONNECTING
->   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->   | AssertionError
->
->
->
+> I just feel the last 3 commits, and this one, are a bit disconnected 
+> from the series.
 
---000000000000df07410632fbfca5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>How exciting! Can you give me some more information o=
-n what occurred?</div><div><br></div><div>- What is your operating system?<=
-br></div><div>- What were you in the process of doing at the time? (It look=
-s like it died during the initial connection attempt)</div><div>- Did this =
-happen inside of another application, or a script you wrote, or in the/a Py=
-thon REPL?</div><div>- Is this reproducible, or does it appear to be a race=
- condition or something that only triggers occasionally?</div><div><br></di=
-v><div>Thank you for reporting back!</div><div><br></div><div>--js</div><br=
-><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Fri, Apr 4, 2025 at 6:11=E2=80=AFAM Anton Hvornum &lt;<a hr=
-ef=3D"mailto:torxed@archlinux.org">torxed@archlinux.org</a>&gt; wrote:<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex"><u></u>
-
- =20
-
-   =20
- =20
-  <div>
-    <font face=3D"Hack">2025-04-04 12:07:59,172 archtest CRITICAL
-      Unexpected bottom half exception. This is a bug in the QMP
-      library. Please report it to <a href=3D"mailto:qemu-devel@nongnu.org"=
- target=3D"_blank">&lt;qemu-devel@nongnu.org&gt;</a> and CC:
-      John Snow <a href=3D"mailto:jsnow@redhat.com" target=3D"_blank">&lt;j=
-snow@redhat.com&gt;</a>.:<br>
-      =C2=A0 | Traceback (most recent call last):<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 462, in _session_guard<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 yield<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 417, in connect<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 await self._establish_session()<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-&quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.p=
-y&quot;,
-      line 297, in _establish_session<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 self._greeting =3D await self._get_g=
-reeting()<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^^^^^^^^=
-^^^^^^^^^^^^^^^^^^<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-&quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.p=
-y&quot;,
-      line 317, in _get_greeting<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 msg =3D await self._recv()<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-^^^^^^^^^^^^^^^^^^<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 1046, in _recv<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 message =3D await self._do_recv()<br=
->
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 ^^^^^^^^^^^^^^^^^^^^^<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-&quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.p=
-y&quot;,
-      line 449, in _do_recv<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 msg_bytes =3D await self._readline()=
-<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^^^^^^^^^^^^^^^^^^^^^^<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 1014, in _readline<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 raise EOFError<br>
-      =C2=A0 | EOFError<br>
-      =C2=A0 |=C2=A0<br>
-      =C2=A0 | During handling of the above exception, another exception
-      occurred:<br>
-      =C2=A0 |=C2=A0<br>
-      =C2=A0 | Traceback (most recent call last):<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 468, in _session_guard<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 await self.disconnect()<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 436, in disconnect<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 await self._wait_disconnect()<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 758, in _wait_disconnect<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 self._cleanup()<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 ~~~~~~~~~~~~~^^<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-&quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/qmp_client.p=
-y&quot;,
-      line 385, in _cleanup<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 super()._cleanup()<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 ~~~~~~~~~~~~~~~~^^<br>
-      =C2=A0 |=C2=A0=C2=A0 File
-      &quot;/home/anton/.local/lib/python3.13/site-packages/qemu/qmp/protoc=
-ol.py&quot;,
-      line 772, in _cleanup<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0 assert self.runstate =3D=3D Runstate=
-.DISCONNECTING<br>
-      =C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^<br>
-      =C2=A0 | AssertionError<br>
-      <br>
-      <br>
-    </font>
-  </div>
-
-</blockquote></div></div>
-
---000000000000df07410632fbfca5--
+OK, will do.
 
 
