@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 700B3C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 04:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7FAC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 04:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5HJm-0002gd-1l; Thu, 17 Apr 2025 00:57:43 -0400
+	id 1u5HKQ-000383-Lm; Thu, 17 Apr 2025 00:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u5HJN-0002Wv-7t
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 00:57:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u5HKN-00037I-VL
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 00:58:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u5HJI-0000GK-HK
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 00:57:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u5HKG-0000MP-Pi
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 00:58:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744865830;
+ s=mimecast20190719; t=1744865891;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JqcTonfb6y2Ez9jvS8EuBIgB8M25hQ7OiCMnyyWigxQ=;
- b=AOYvyakReLDGMTMWreH1ja8zXN/pqxDxkjnwq4y8w1pihZh1NydUPqmdgnLrKm6FbpXtTv
- Y+l8H3WAF1jCiGozfJM6c4Zol7kzYndkjZV2mpCHY51T/gR9AO3TVJEaReCSvHlYVFoOvP
- fp1QDFjfD4S0dVIp+dEXcS9b7gLPUqM=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SR7r1qklJjnrZXA0Px6mnasPj/bkBUGrQtCyDce8sDg=;
+ b=INV4B6fpGl6vxDAmULstUNAJ8yI11mXmBfb+fCVZueUdOjrymafPbSWJMaNM8gHduSC7d9
+ JHtaDRK3YzkbUnFPzpO7lFW8lDtAih0R9wZQK4CXg5dGcmolxkV7tZTFz1mYXO6jYhJL7z
+ XRTsjSrOiV5AWDWdJxP2OT7HqVboHys=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175-Dap546AxPTeuNFwQBjIh1Q-1; Thu, 17 Apr 2025 00:57:05 -0400
-X-MC-Unique: Dap546AxPTeuNFwQBjIh1Q-1
-X-Mimecast-MFC-AGG-ID: Dap546AxPTeuNFwQBjIh1Q_1744865824
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ac710ace217so25916666b.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 21:57:05 -0700 (PDT)
+ us-mta-341-DgeqDAxkNg6Up6xqieVrNQ-1; Thu, 17 Apr 2025 00:58:08 -0400
+X-MC-Unique: DgeqDAxkNg6Up6xqieVrNQ-1
+X-Mimecast-MFC-AGG-ID: DgeqDAxkNg6Up6xqieVrNQ_1744865887
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ac28a2c7c48so26985066b.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 21:58:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744865824; x=1745470624;
+ d=1e100.net; s=20230601; t=1744865887; x=1745470687;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JqcTonfb6y2Ez9jvS8EuBIgB8M25hQ7OiCMnyyWigxQ=;
- b=D3cpuWK5jYJiBlNKBL7CMPNrvoR3U9r8ES7i+jA9HJTiYQ2FePIOcZ0isNPH9ZM9jy
- 7OnoqjmSYqgf2Hdvw9d0mvYQN6vrl2uqYXccfPdluPByKzGBovzL9HgzH8ANKofGPEnw
- GED3e3B4a3ZnQ/wXQG7P1Si2e0aeATqcj0XQsE4sEFITpnc7VUnASzzT9f3KAvZuEeLn
- bH5KUNDaxIgTLIdJU79mrOkY0az4Q10U7v3T/b/XwUw31XZeq3hEdewL6mxchmIpypDD
- xWgohbiaT4P8t+VHpAkGbk66liPtF9jmEvSqbTNsCCep0bfcjcNzoiuM+IP93CegZuHR
- 7hGw==
+ bh=SR7r1qklJjnrZXA0Px6mnasPj/bkBUGrQtCyDce8sDg=;
+ b=WQohdtz4bq6camBtTJlWABQFKXCImIRltT9LG+UBlX2s/nYPm2dV+iP+Iud764Xebr
+ RcJPE1+nzBCeHnKkiNC5X18JNXTgsJhJyZVo4Bl2Y1Wb8GJvg2dquSNO+IGauTDmeiMn
+ /Gu2hWNDnUEFyr5vpbfBhmIN6sFTm5aHxQQ/vPO8pJFO4yav4giWAZE/oKmFdfV6f7fx
+ jwzuD/3qai7CfTHnhXChpa2yTxzJT7O4X7X/LlWN0b/ykFoAszFuQJZLhU7ZR0AkdVVm
+ nE2Fn2g5t5CVk3mh79Ith5/9RdfxgtdyQbyiO6wD+cHOarpkqJKGxmF2B3wDXfksvCIe
+ c/Qw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwdg0zTt6jDQHmKVmb7cYtDKYuwAsDgRgYgQ5yq/SfvhCIBiKtkac+D8bGYUkrW6UM3O0T4TzQwOWA@nongnu.org
-X-Gm-Message-State: AOJu0YzUFxl7zn8T6YN4dNLje3QkzWZWtpiRZxsMJ+EdQ7XYBv/QR+uG
- jpXHXFMUnLymrT9NdqusnN6SLi0q+pl0v4KaHByx6ncGMJ4RGnNHnLByZRpOoaf3PxI/WWK1c9C
- ZpLEd8zr+WycR8wp/NzjKnrawWP5u4IIJdrO4GhiTU1EyloJiifgF
-X-Gm-Gg: ASbGncsaSEMg8FV9McM7mJNfRHaS+7qhzOcQfCjN5MpPW35HyRCYN8z3Ddr7QaCqBZL
- 5W/c4tCHA696bWuF2FnQMdLWJi0ex/tkylp3MUzvzvKK4+Ow3DElC6iDa+B/Ap5pB0rmVtT6ULa
- u1rcvLw2ujGueBANx2haWIhrQgE/W8pk68739jBDGWuAkelKejs0Klzv+UuaOtOMjQQvlAckTrl
- bFmjeFcrQUiEesWcYGAfi7dtCU5/YtzgK0+DNPlQCVmM0iQNU29HA2lz2pVQfM0Ktt6kBLWda/U
- cmuOlqc/2JRcvm3SDDuY3eZiYBthpnJevHV2bvAUvok=
-X-Received: by 2002:a17:907:3cc3:b0:ac7:d0fe:e9e4 with SMTP id
- a640c23a62f3a-acb428f03a6mr458401266b.19.1744865824159; 
- Wed, 16 Apr 2025 21:57:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhp2c+9rH/NjbLse/f86l2Wr9lcR1zA0+8y8QKbpQ3Egk78sz+LCStWZ7eOehQ5pRUR27A2w==
-X-Received: by 2002:a17:907:3cc3:b0:ac7:d0fe:e9e4 with SMTP id
- a640c23a62f3a-acb428f03a6mr458398366b.19.1744865823706; 
- Wed, 16 Apr 2025 21:57:03 -0700 (PDT)
+ AJvYcCXUvmh+oJXYA9+6++yJGBJd7vcK+Pqcm0B6ZsA7SycU1Y8D/K7fB9PuYMu29nzKib4FONoM2pwywsYb@nongnu.org
+X-Gm-Message-State: AOJu0YwfD9QAfoHLcTUgxtk38qcg99P9SeL8DqFGwby4ttzey8vUQM1R
+ ZS4D69rGm3pfLW+uuVYJKo2JIqFEBHQjlyO8/33xGrEGBRyrM0yTi6Rg5/p0Ze9Sw+d6TwmCuVQ
+ SQgxbiWSQMtvABQxN3WUCl8knIrZBvJCQdD8Gdp6UCD6z7xsmDwjk
+X-Gm-Gg: ASbGncte7DtG7zYF/SK5MKcNI93wPMyjxRbpVYFPfFwDSZzUo32/Cm69SNKAyVl8/JK
+ wh+2nUEjT/FH4qyIuvKNj0JhOLZdx0GrnnRq3/uIaprGLvyPNLmMHHtwh8MNxHJcJnqpYic1Tap
+ H3QUwlWmb8bayHWUAc/rld5+/GBqlaXeGlLUOdJyj3hXMB87FaDR4/PDpeA2pez/HFX8Ex8YmCT
+ K0LHK6Y2Ml/77Bt2HHZP2jfbpsLHXujVqdUe5ZW6w6YfK5IMK0QEsExlGx2zE9Va1Yg3NbAEPBi
+ NNB5Gkijx+Pt7TNLCaXlEEUMa134P90WG/TwqiFBX2s=
+X-Received: by 2002:a17:907:3d11:b0:ac2:a4ec:46c2 with SMTP id
+ a640c23a62f3a-acb42c68c4bmr424617766b.49.1744865887020; 
+ Wed, 16 Apr 2025 21:58:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGpKJIMh///zTshtj5IgjNW2XC8DAWP5A98Mp/9bChGmlfFzs3tPRXBWnwm1acK5rRB0+PelA==
+X-Received: by 2002:a17:907:3d11:b0:ac2:a4ec:46c2 with SMTP id
+ a640c23a62f3a-acb42c68c4bmr424615366b.49.1744865886655; 
+ Wed, 16 Apr 2025 21:58:06 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-176-89.web.vodafone.de.
  [109.43.176.89]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acb3d128932sm227671266b.88.2025.04.16.21.57.02
+ a640c23a62f3a-acb3cd635d0sm228793666b.25.2025.04.16.21.58.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 21:57:03 -0700 (PDT)
-Message-ID: <cef64bca-dece-4d7f-870b-03d06ebda66b@redhat.com>
-Date: Thu, 17 Apr 2025 06:57:01 +0200
+ Wed, 16 Apr 2025 21:58:06 -0700 (PDT)
+Message-ID: <efe3d94c-83c4-41d4-bd68-de76cdf0dc8c@redhat.com>
+Date: Thu, 17 Apr 2025 06:58:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 18/24] s390x: Guest support for Secure-IPL Code Loading
- Attributes Facility (SCLAF)
+Subject: Re: [PATCH v1 14/24] s390x: Guest support for Secure-IPL Facility
 To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
  david@redhat.com, pbonzini@redhat.com
 Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
@@ -85,7 +84,7 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
  farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
 References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-19-zycai@linux.ibm.com>
+ <20250408155527.123341-15-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250408155527.123341-19-zycai@linux.ibm.com>
+In-Reply-To: <20250408155527.123341-15-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -159,24 +158,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/04/2025 17.55, Zhuoying Cai wrote:
-> The secure-IPL-code-loading-attributes facility (SCLAF)
-> provides additional security during IPL.
+> Introduce Secure-IPL (SIPL) facility.
 > 
-> Availability of SCLAF is determined by byte 136 bit 3 of the
+> Use the abbreviation CBL (Consolidated-Boot-Loader facility at bit 0 of
+> byte 136) to represent bytes 136 and 137 for IPL device facilities of the
 > SCLP Read Info block.
+> 
+> Availability of SIPL facility is determined by byte 136 bit 1 of the
+> SCLP Read Info block.
+> 
+> When SIPL facility is installed, the IPL Parameter Block length must
+> contains value that is multiple of 8 bytes.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
 ...
 > diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-> index f874b9da6f..31e4efb8dc 100644
+> index 65d38f546d..f874b9da6f 100644
 > --- a/target/s390x/cpu_features_def.h.inc
 > +++ b/target/s390x/cpu_features_def.h.inc
-> @@ -142,6 +142,7 @@ DEF_FEAT(DIAG_320, "diag320", SCLP_FAC134, 5, "Provide Certificate Store functio
+> @@ -140,6 +140,9 @@ DEF_FEAT(SIE_IBS, "ibs", SCLP_CONF_CHAR_EXT, 10, "SIE: Interlock-and-broadcast-s
+>   DEF_FEAT(DIAG_318, "diag318", SCLP_FAC134, 0, "Control program name and version codes")
+>   DEF_FEAT(DIAG_320, "diag320", SCLP_FAC134, 5, "Provide Certificate Store functions")
 >   
->   /* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
->   DEF_FEAT(SIPL, "sipl", SCLP_CBL, 1, "Seucre-IPL facility")
-> +DEF_FEAT(SCLAF, "sclaf", SCLP_CBL, 3, "Seucre-IPL-code-loading-attributes facility")
+> +/* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
+> +DEF_FEAT(SIPL, "sipl", SCLP_CBL, 1, "Seucre-IPL facility")
 
 s/Seucre/Secure/
 
