@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE35C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778B4C369CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:38:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Lef-0003KY-IL; Thu, 17 Apr 2025 05:35:33 -0400
+	id 1u5Lh2-0004Jy-Gs; Thu, 17 Apr 2025 05:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u5Lea-0003Jp-B3; Thu, 17 Apr 2025 05:35:28 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1u5Lh1-0004Ix-1A; Thu, 17 Apr 2025 05:37:59 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u5LeX-0006iK-N1; Thu, 17 Apr 2025 05:35:27 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-b041afe0ee1so490275a12.1; 
- Thu, 17 Apr 2025 02:35:24 -0700 (PDT)
+ id 1u5Lgz-0006wU-C9; Thu, 17 Apr 2025 05:37:58 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3054ef26da3so363734a91.3; 
+ Thu, 17 Apr 2025 02:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744882523; x=1745487323; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744882674; x=1745487474; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xO5EtXdo5R5SORB6VhGJS2vroOZK0eGIlzXzvwsNqpU=;
- b=gKR6adsF2LvVei7PuZoUha0/mzanikF6WLz3pzdNIgzjwNdPCuhTCn8OxT437tj/PC
- ThldzqkrqwIYYuOVqv3Fk4egcFIWoffsyf5WqA7YxjBfwZbCjecVlbRkCLY/M6X4wlGR
- LQ2M0yDUCGtMQRMbC3rWdFefXpMUiL2lPr//RSR5VP/cLHxr6Ldf/1sdy/M076HM7uq3
- NY0TtP9EyCA4Nk1UwcJlqsPt0Wr8V/03P8qpQlr53/yHjJd6fmEJzphUcmViYfJL/GKs
- i2IrLXTVQAYPpTotxjWshOmQln+xscaJ/sQAFDrOIChlxha7mPOXzZRSjlDFIBey4U+s
- puoA==
+ bh=VIHHhOHU9thrZULwqN7ovEV2VNYQ+ztuVgkUr/Z3nlI=;
+ b=mM4z0Ihzuhzj/8Na+VaiRkCtZBT2sL1Ln3X/lTwp4KjayjWmphW3BqEtJCYGYyjePG
+ zy48HYrnnlOc5v9sjIGnES2a4EOHv6rFhNU+FPnO5TQh01XWPiBRYQBiOA+gLaDkPk5f
+ JkJPD+c7LQMwv3np9CblxUT4vqhDpWaxpoXPtb5alzoC3wlumKQ9F1FB85SgvfviDsKj
+ rq5F/aGbw7my+RaeDg6Y5xBjM6se9jEf/G0zTPHRYvlfj861nKDhaSZstkX5unI3VmiR
+ BzTXgJkjHQ+UUm6u7lZ2Jw3G8ODlRsa4xogldmipfX8EM2go3G2MqA5SWkevqNX9eyxK
+ J5gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744882523; x=1745487323;
+ d=1e100.net; s=20230601; t=1744882674; x=1745487474;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xO5EtXdo5R5SORB6VhGJS2vroOZK0eGIlzXzvwsNqpU=;
- b=FxFQzoxPPSrWtw0p9U7BxHeCZgzdkf+nK0mYsp5CovlrXsy13LtcB5UY4aVF1n252c
- tm/tHk+RcDeScmhJwNOG1vXxWYW8wuY+M5UL1Rg1UlJuc4fQNYd3vL+MktaORg+y0o7N
- 4YefCiEQYK2b04O9wcoO7IXYwkHwvMpnv8PffHuV3oa4oMH89nrlo0Ng1U9U4w4eeuiQ
- DHw6k1BBjVjqMiSKbm8NVmyTJchZDYNpeJoABvfIyZJBCVsJFDyCozrJWWIh4XEs5c5z
- 47hLHOtk+fW0rx/EWpc3XR94QLuCA1roso8Y3n/P9yV2RO3iAvbxpARQ0tK+yR7A7HPf
- t8FQ==
+ bh=VIHHhOHU9thrZULwqN7ovEV2VNYQ+ztuVgkUr/Z3nlI=;
+ b=DMqB0Rv5WFQDGgOruR84qHdTWhI13NILrctA/aLrDavpPjGD3ybRoQWZWyih+ByYz1
+ v6CmWryRjUpbTeJns81Vy/ThtDvlfcuFW+yAmi0/da1iggZiS9/RyJxcYbJNH/Bii4JG
+ glSOAd+qIO15Loo3KWNuzdQfUNKH/L1ZrJvAjq+V7NkNm8sUdXkgPIUKJ1OrqWHUbx18
+ DVOpujhhefc42FLea83E/cXAeFyhfTZNSru1OiJQcQgbOjzbtvXz1KtRBIePFF7zfAIK
+ 6b85wQoOitK8R4C13cnoxzzqwWQhZ0cuZHjfyZFFovd7gDFGRoABYVttiZDCVSi1MLHc
+ 09WQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN+UFJRCqod0LGtw3WhpOYk+Ax2ymBk2FJChVXqmeOk9q4VHZpb4q/5g98/KyAz80C3uChTYAgawc=@nongnu.org,
- AJvYcCWXDFBiDz8EvjHaJCuFZfwbsSrlkOuuZveNzbEWEgqXDr95TNCmVDigNarU4wXbZFhfVdVIFcVyJ6PNUw==@nongnu.org,
- AJvYcCWsQMV1P5m+u78xbCGypUZojVEOLp364qe4P/7Wj0zb6X3GIA0VbQ/1pM2g/AICCTio58ZVSG47Nw==@nongnu.org,
- AJvYcCXIocQOnd/CDtTU0lxJAezou/cxHkAqWPOxzEXULi74PTwyOoq+7jZxl7an4DMN+IDh1KsDduqKAOm/Pw==@nongnu.org,
- AJvYcCXdecSW7Si2ArriDi6l/ntVkcvxl5RVVnUPM82HPw60UEXhppLA/2K8d9X5UfP9DQelGW1RG4YLfXjuqA==@nongnu.org
-X-Gm-Message-State: AOJu0YxlKvMRDfuTUq17k2QPdBK5VdiHa1RRFHJi3XPZClpqQgiN2o22
- rpupP3OiuvE5sFMncargUwVpAzu8vNVfkQN85ec1B1bsBDnblVW0QOqOiimJZzeQv4owdbKly+U
- CoUJm9sqif5cqA3Gs1qwjN1WvOdA=
-X-Gm-Gg: ASbGncuRmMo0376yWsJ1GXuRGiLoMnmr6f7vVZytvMpVQ1MHJdfBdzPTCZSjvEhnM9H
- Zr/45Vj3R/geLOA0I6yaWXqW/qMhaP1a2Q2nfJmAFXi6tF3pM004PNS0pVF7L53K9m1os8NRbKG
- P052W8W3ZYJ+J9mkqJwul6lZUcJGStgKAWkYcyBRqKRMqgyrtMsx26
-X-Google-Smtp-Source: AGHT+IEVLXnHZPcnnQ0+XGzkds0VJ6GfOiqMQh1ZBRq3Q9zGrdJIlmfDtyJzayKxEXYlV17znANc3AGZNGGP1of6Ik8=
-X-Received: by 2002:a17:90a:dfc5:b0:2fe:8c22:48b0 with SMTP id
- 98e67ed59e1d1-30863f2e193mr8333339a91.15.1744882523014; Thu, 17 Apr 2025
- 02:35:23 -0700 (PDT)
+ AJvYcCUMjlF8kJQRPOQOGWsPq0Y5fDc33OSlPqGG1xulDB8FonxuXEUQJokHuBXhl5+4NYS5PFvGJ+k6XIw=@nongnu.org,
+ AJvYcCUyN4Rat8COnRi/ERUCUptShpl5XPsJGOjeg2ekfsF432gHro25B0THbn2HaNz8QrM5Cbs/WO0IFuEnpw==@nongnu.org,
+ AJvYcCUzZw+2I3AtjZNCOE55ZJcX9CUZ8wXN6BtvLmCDhvHpG0881wvyNSevl4tjel9+rYDQsc6xbhX6cN6Bpg==@nongnu.org,
+ AJvYcCVHhW0PQZs7aR6A9IM4u+so7su0ss1Gd6y+6T97p3DC0p1gkJI15QPm9rn0pOhcD/pjG1J4QMsVDSo1Vg==@nongnu.org,
+ AJvYcCXWAv5jbdgG6KucTLyDicwEfJidDQBu2mmSdfrCuNTAx6gm3bmqqZSbqp0wQwZ+ZhVtG/4cg7ObjA==@nongnu.org
+X-Gm-Message-State: AOJu0YxF4SD+onM0Wsg9ORryNYExjq5KCtDBHMgO1YPKSIliQ/Qppyzg
+ 9Tbg7z9yXjPuOaJJB4tIyDjweAPys+6w5gZC7HcAl2alh5sLUwShdmmEuy0vbJMsdbaN+7qy3H3
+ NOBz/5p+jHkhrC9JqIhcLJjR2UHE=
+X-Gm-Gg: ASbGncvfBVaQ9kiQ4RIIDzlCkDBQIv16OzW012x2fJqCgMl45UeejNw+uQA1/a/W3Wt
+ 07qL+otTqtW+8sLBTGdFTLhWmxpDla7ll8S4NQbC1rooRmMM95zZJUyUW0HpAFCKJwy01HwoKW/
+ oxBfGxkew3KEbC2T04vDAUZT3X8sJfKK/DGtJoF8HbSrwXo94XTuNB
+X-Google-Smtp-Source: AGHT+IGEw9Ig9rsAuDcS+U8mEvnZBN113C69jDEuhXVah5myDghRCQFAujKFPMx05ApxSnY+XT049yJaBKqjFnQ6qK0=
+X-Received: by 2002:a17:90b:2810:b0:2ee:d371:3227 with SMTP id
+ 98e67ed59e1d1-30863f2f79fmr8276090a91.17.1744882674626; Thu, 17 Apr 2025
+ 02:37:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
- <7ef485c860a0c26d2ddcf6a96430f5443deb5aee.1744787186.git.ktokunaga.mail@gmail.com>
- <a92737eb-786d-4ebc-87df-a5518417195c@linaro.org>
-In-Reply-To: <a92737eb-786d-4ebc-87df-a5518417195c@linaro.org>
+ <835dfef61307a941cdb58331607c308238d37e00.1744787186.git.ktokunaga.mail@gmail.com>
+ <c00e2bc8-3248-44a7-bf4a-87441f6f9c19@linaro.org>
+In-Reply-To: <c00e2bc8-3248-44a7-bf4a-87441f6f9c19@linaro.org>
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Thu, 17 Apr 2025 18:35:11 +0900
-X-Gm-Features: ATxdqUGQDeC-L_eWjOnDqk1i2h_NYl6uI6kQaJuEdutsEAhD4spiaw4v131Labg
-Message-ID: <CAEDrbUaZYYxvW_D8ZS=qxOai06PiQQnN4mO2fjupPkwiNqqQjA@mail.gmail.com>
-Subject: Re: [PATCH 15/19] util/mmap-alloc: Add qemu_ram_mmap implementation
- for emscripten
+Date: Thu, 17 Apr 2025 18:37:43 +0900
+X-Gm-Features: ATxdqUGrkd5pDO3oglO636PGnfGtSmhldiHWBdiYlXRlIjzH63vRphXYkdkBSJU
+Message-ID: <CAEDrbUZxBDUsK4WzbjkxZfyRzM-ALup9YfLVBeh1rD8XuhGDMQ@mail.gmail.com>
+Subject: Re: [PATCH 17/19] meson: Add wasm build in build scripts
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  qemu-devel@nongnu.org
 Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -92,9 +91,9 @@ Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, 
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f58c390632f61e38"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52c.google.com
+Content-Type: multipart/alternative; boundary="000000000000fef8cf0632f6271b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,20 +116,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f58c390632f61e38
+--000000000000fef8cf0632f6271b
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Philippe,
 
-> Can we keep this code generic? I.e. with something in the lines
-> of (only build-tested):
+> Does wasm depend on TCI at this point (no TCG backend)? If so, should
+> we check TCI is enabled? (I wonder if configuring with the
+> --disable-tcg-interpreter option succeed).
 
-Thank you for the suggestion. I'll try this approach.
+Yes, it depends on TCI at this point. Configuring with the
+--disable-tcg-interpreter succeeds but leads to a build error. I'll update
+the patch to include a check to ensure TCI is enabled.
 
---000000000000f58c390632f61e38
+--000000000000fef8cf0632f6271b
 Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-<div dir="ltr"><div dir="ltr">Hi Philippe,<br><br>&gt; Can we keep this code generic? I.e. with something in the lines<br>&gt; of (only build-tested):<br><br>Thank you for the suggestion. I&#39;ll try this approach.</div><br></div>
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Philippe,</div><div dir=3D"ltr"><br></=
+div>&gt; Does wasm depend on TCI at this point (no TCG backend)? If so, sho=
+uld<br>&gt; we check TCI is enabled? (I wonder if configuring with the<br>&=
+gt; --disable-tcg-interpreter option succeed).<br><br>Yes, it depends on TC=
+I at this point. Configuring with the<br>--disable-tcg-interpreter succeeds=
+ but leads to a build error. I&#39;ll update<br>the patch to include a chec=
+k to ensure TCI is enabled.<br><br><br><br></div>
 
---000000000000f58c390632f61e38--
+--000000000000fef8cf0632f6271b--
 
