@@ -4,135 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7FAC369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 04:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2082C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 05:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5HKQ-000383-Lm; Thu, 17 Apr 2025 00:58:22 -0400
+	id 1u5IEg-0002RL-05; Thu, 17 Apr 2025 01:56:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u5HKN-00037I-VL
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 00:58:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u5IEe-0002Na-3C
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 01:56:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u5HKG-0000MP-Pi
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 00:58:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u5IEb-0001h5-Cp
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 01:56:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744865891;
+ s=mimecast20190719; t=1744869383;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SR7r1qklJjnrZXA0Px6mnasPj/bkBUGrQtCyDce8sDg=;
- b=INV4B6fpGl6vxDAmULstUNAJ8yI11mXmBfb+fCVZueUdOjrymafPbSWJMaNM8gHduSC7d9
- JHtaDRK3YzkbUnFPzpO7lFW8lDtAih0R9wZQK4CXg5dGcmolxkV7tZTFz1mYXO6jYhJL7z
- XRTsjSrOiV5AWDWdJxP2OT7HqVboHys=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-341-DgeqDAxkNg6Up6xqieVrNQ-1; Thu, 17 Apr 2025 00:58:08 -0400
-X-MC-Unique: DgeqDAxkNg6Up6xqieVrNQ-1
-X-Mimecast-MFC-AGG-ID: DgeqDAxkNg6Up6xqieVrNQ_1744865887
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ac28a2c7c48so26985066b.3
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 21:58:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744865887; x=1745470687;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SR7r1qklJjnrZXA0Px6mnasPj/bkBUGrQtCyDce8sDg=;
- b=WQohdtz4bq6camBtTJlWABQFKXCImIRltT9LG+UBlX2s/nYPm2dV+iP+Iud764Xebr
- RcJPE1+nzBCeHnKkiNC5X18JNXTgsJhJyZVo4Bl2Y1Wb8GJvg2dquSNO+IGauTDmeiMn
- /Gu2hWNDnUEFyr5vpbfBhmIN6sFTm5aHxQQ/vPO8pJFO4yav4giWAZE/oKmFdfV6f7fx
- jwzuD/3qai7CfTHnhXChpa2yTxzJT7O4X7X/LlWN0b/ykFoAszFuQJZLhU7ZR0AkdVVm
- nE2Fn2g5t5CVk3mh79Ith5/9RdfxgtdyQbyiO6wD+cHOarpkqJKGxmF2B3wDXfksvCIe
- c/Qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUvmh+oJXYA9+6++yJGBJd7vcK+Pqcm0B6ZsA7SycU1Y8D/K7fB9PuYMu29nzKib4FONoM2pwywsYb@nongnu.org
-X-Gm-Message-State: AOJu0YwfD9QAfoHLcTUgxtk38qcg99P9SeL8DqFGwby4ttzey8vUQM1R
- ZS4D69rGm3pfLW+uuVYJKo2JIqFEBHQjlyO8/33xGrEGBRyrM0yTi6Rg5/p0Ze9Sw+d6TwmCuVQ
- SQgxbiWSQMtvABQxN3WUCl8knIrZBvJCQdD8Gdp6UCD6z7xsmDwjk
-X-Gm-Gg: ASbGncte7DtG7zYF/SK5MKcNI93wPMyjxRbpVYFPfFwDSZzUo32/Cm69SNKAyVl8/JK
- wh+2nUEjT/FH4qyIuvKNj0JhOLZdx0GrnnRq3/uIaprGLvyPNLmMHHtwh8MNxHJcJnqpYic1Tap
- H3QUwlWmb8bayHWUAc/rld5+/GBqlaXeGlLUOdJyj3hXMB87FaDR4/PDpeA2pez/HFX8Ex8YmCT
- K0LHK6Y2Ml/77Bt2HHZP2jfbpsLHXujVqdUe5ZW6w6YfK5IMK0QEsExlGx2zE9Va1Yg3NbAEPBi
- NNB5Gkijx+Pt7TNLCaXlEEUMa134P90WG/TwqiFBX2s=
-X-Received: by 2002:a17:907:3d11:b0:ac2:a4ec:46c2 with SMTP id
- a640c23a62f3a-acb42c68c4bmr424617766b.49.1744865887020; 
- Wed, 16 Apr 2025 21:58:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpKJIMh///zTshtj5IgjNW2XC8DAWP5A98Mp/9bChGmlfFzs3tPRXBWnwm1acK5rRB0+PelA==
-X-Received: by 2002:a17:907:3d11:b0:ac2:a4ec:46c2 with SMTP id
- a640c23a62f3a-acb42c68c4bmr424615366b.49.1744865886655; 
- Wed, 16 Apr 2025 21:58:06 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-43-176-89.web.vodafone.de.
- [109.43.176.89]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acb3cd635d0sm228793666b.25.2025.04.16.21.58.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 21:58:06 -0700 (PDT)
-Message-ID: <efe3d94c-83c4-41d4-bd68-de76cdf0dc8c@redhat.com>
-Date: Thu, 17 Apr 2025 06:58:04 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=fV/zUsYUfEpjLtSRVTw1QYlXl+TL4iLw5Bnz+HIW/fw=;
+ b=fgWNLc3S8N7c5Tfp+jkzZJ+rmxUk8Ud64p0QFCqa+v04Nsv27gPfWLPivwelPGEndcQ1w0
+ Szb3StTfLqzm7PjXGYTfrrKx4mqtYhPt0U/L6phmILUKgKBIXOpDpfEnD2wKOf/lhhYNEX
+ eryAz7e/6ZbofYG6ZDlIP2TJ63A+Nwg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-aNmdGxZ6Nuym3lfx2fIfwQ-1; Thu,
+ 17 Apr 2025 01:56:20 -0400
+X-MC-Unique: aNmdGxZ6Nuym3lfx2fIfwQ-1
+X-Mimecast-MFC-AGG-ID: aNmdGxZ6Nuym3lfx2fIfwQ_1744869380
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8E201800374; Thu, 17 Apr 2025 05:56:19 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52ABD1800D97; Thu, 17 Apr 2025 05:56:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 699E221E66C3; Thu, 17 Apr 2025 07:56:16 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>
+Subject: Re: [RFC PATCH 05/13] migration: Reduce a bit of duplication in
+ migration.json
+In-Reply-To: <878qo0f9tg.fsf@suse.de> (Fabiano Rosas's message of "Wed, 16 Apr
+ 2025 11:41:15 -0300")
+References: <20250411191443.22565-1-farosas@suse.de>
+ <20250411191443.22565-6-farosas@suse.de> <Z_056amMGN6Ey_1i@redhat.com>
+ <87y0w2fzhp.fsf@suse.de> <878qo0mdk1.fsf@pond.sub.org>
+ <878qo0f9tg.fsf@suse.de>
+Date: Thu, 17 Apr 2025 07:56:16 +0200
+Message-ID: <87r01rjpq7.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 14/24] s390x: Guest support for Secure-IPL Facility
-To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-15-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250408155527.123341-15-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -141,7 +75,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,35 +91,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/04/2025 17.55, Zhuoying Cai wrote:
-> Introduce Secure-IPL (SIPL) facility.
-> 
-> Use the abbreviation CBL (Consolidated-Boot-Loader facility at bit 0 of
-> byte 136) to represent bytes 136 and 137 for IPL device facilities of the
-> SCLP Read Info block.
-> 
-> Availability of SIPL facility is determined by byte 136 bit 1 of the
-> SCLP Read Info block.
-> 
-> When SIPL facility is installed, the IPL Parameter Block length must
-> contains value that is multiple of 8 bytes.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
-...
-> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-> index 65d38f546d..f874b9da6f 100644
-> --- a/target/s390x/cpu_features_def.h.inc
-> +++ b/target/s390x/cpu_features_def.h.inc
-> @@ -140,6 +140,9 @@ DEF_FEAT(SIE_IBS, "ibs", SCLP_CONF_CHAR_EXT, 10, "SIE: Interlock-and-broadcast-s
->   DEF_FEAT(DIAG_318, "diag318", SCLP_FAC134, 0, "Control program name and version codes")
->   DEF_FEAT(DIAG_320, "diag320", SCLP_FAC134, 5, "Provide Certificate Store functions")
->   
-> +/* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
-> +DEF_FEAT(SIPL, "sipl", SCLP_CBL, 1, "Seucre-IPL facility")
+Fabiano Rosas <farosas@suse.de> writes:
 
-s/Seucre/Secure/
+> Markus Armbruster <armbru@redhat.com> writes:
+>
+>> Fabiano Rosas <farosas@suse.de> writes:
+>>
+>>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>>
+>>>> On Fri, Apr 11, 2025 at 04:14:35PM -0300, Fabiano Rosas wrote:
+>>>>> Introduce a new MigrationConfigBase, to allow most of the duplication
+>>>>> in migration.json to be eliminated.
+>>>>>=20
+>>>>> The reason we need MigrationParameters and MigrationSetParameters is
+>>>>> that the internal parameter representation in the migration code, as
+>>>>> well as the user-facing return of query-migrate-parameters use one
+>>>>> type for the TLS options (tls-creds, tls-hostname, tls-authz), while
+>>>>> the user-facing input from migrate-set-parameters uses another.
+>>>>>=20
+>>>>> The difference is in whether the NULL values is accepted. The former
+>>>>> considers NULL as invalid, while the latter doesn't.
+>>>>>=20
+>>>>> Move all other (non-TLS) options into the new type and make it a base
+>>>>> type for the two diverging types so that each child type can declare
+>>>>> the TLS options in its own way.
+>>>>>=20
+>>>>> Nothing changes in the user API, nothing changes in the internal
+>>>>> representation, but we save several lines of duplication in
+>>>>> migration.json.
+>>>>>=20
+>>>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>>>> ---
+>>>>>  qapi/migration.json | 358 +++++++++++++-----------------------------=
+--
+>>>>>  1 file changed, 108 insertions(+), 250 deletions(-)
+>>>>>=20
+>>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>>> index 8b9c53595c..5a4d5a2d3e 100644
+>>>>> --- a/qapi/migration.json
+>>>>> +++ b/qapi/migration.json
+>>>>> @@ -914,202 +914,6 @@
+>>>>
+>>>>> @@ -1277,45 +1059,121 @@
+>>>>>  #     only has effect if the @mapped-ram capability is enabled.
+>>>>>  #     (Since 9.1)
+>>>>>  #
+>>>>> +# @tls: Whether to use TLS. If this is set the options @tls-authz,
+>>>>> +#     @tls-creds, @tls-hostname are mandatory and a valid string is
+>>>>> +#     expected. (Since 10.1)
+>>>>> +#
+>>>>
+>>>> I'm not really finding it compelling to add a bool @tls as it
+>>>> is just a denormalization of  !!@tls-creds.
+>>>>
+>>>
+>>> This is here by mistake.
+>>>
+>>> I remember Markus mentioning that implying TLS usage from tls-creds was
+>>> undesirable. I was prototyping a way of requiring an explicit opt-in.
+>>
+>> I don't remember a thing :)
+>>
+>
+> I hope I interpreted you correctly:
+>
+>   "We have three syntactically independent parameters: @tls-creds,
+>   @tls-hostname, @tls-authz.  The latter two are meaningless (and silently
+>   ignored) unless the first one is given.  I hate that.
+>=20=20=20
+>   TLS is off by default.  To enable it, set @tls-creds.  Except setting it
+>   to the otherwise invalid value "" disables it.  That's because all we
+>   have for configuration is the "set migration parameter to value"
+>   interface.  Only works because we have an invalid value we can abuse.  I
+>   hate that." -- https://lore.kernel.org/all/877cnrjd71.fsf@pond.sub.org/
 
-  Thomas
+Ah, now I remember!
+
+Possible minimally invasive improvement here:
+
+* Reject @tls-hostname and @tls-authz when the value of @tls-creds means
+  "TLS is off".
+
+* When @tls-set-creds get set to a value that means "TLS is off",
+  @tls-hostname and @tls-authz get unset.
+
+This could break applications.  I'm not at all sure the slight reduction
+in ugliness would be worth the risk.
+
+I do not mean to discourage pursuing your RFC!  The TLS configuration is
+ugly and confusing to use internally.  Getting that streamlined would be
+nice.
+
+> I still think it might be an improvement to define a new interface that
+> requires explicitly enabling TLS. IOW, make tls a capability. But I
+> really don't want to get caught on that right now, one mess at a time.
+
+First: one mess at a time is commonly the sensible approach.
+
+Second: I'm not sure attempts to make the existing migration
+configuration interfaces somewhat less ugly and confusing are
+worthwhile.
+
+I rarely advocate starting over just because something is ugly.
+However, migration configuration is not only ugly; its use of global
+state feels fundamentally misguided to me.  Evidence: the surprising
+side effects on savevm Daniel mentioned.  I'll add: when a management
+application connects to an existing QEMU, it needs to laboriously set
+the entire global migration configuration state, or else rely on unsound
+assumptions.  Complete non-problem when the entire configuration is
+passed to the command, like we do elsewhere.
+
+>>>> Incidentally the docs here are wrong - TLS can be used by
+>>>> only setting @tls-creds. The @tls-authz & @tls-hostname
+>>>> params are always optional.
+>>>>
+>>>>>  # Features:
+>>>>>  #
+>>>>>  # @unstable: Members @x-checkpoint-delay and
+>>>>>  #     @x-vcpu-dirty-limit-period are experimental.
+>>>>>  #
+>>>>> +# Since: 10.1
+>>>>> +##
+>>>>> +{ 'struct': 'MigrationConfigBase',
+>>>>> +  'data': { '*announce-initial': 'size',
+>>>>> +            '*announce-max': 'size',
+>>>>> +            '*announce-rounds': 'size',
+>>>>> +            '*announce-step': 'size',
+>>>>> +            '*throttle-trigger-threshold': 'uint8',
+>>>>> +            '*cpu-throttle-initial': 'uint8',
+>>>>> +            '*cpu-throttle-increment': 'uint8',
+>>>>> +            '*cpu-throttle-tailslow': 'bool',
+>>>>> +            '*max-bandwidth': 'size',
+>>>>> +            '*avail-switchover-bandwidth': 'size',
+>>>>> +            '*downtime-limit': 'uint64',
+>>>>> +            '*x-checkpoint-delay': { 'type': 'uint32',
+>>>>> +                                     'features': [ 'unstable' ] },
+>>>>> +            '*multifd-channels': 'uint8',
+>>>>> +            '*xbzrle-cache-size': 'size',
+>>>>> +            '*max-postcopy-bandwidth': 'size',
+>>>>> +            '*max-cpu-throttle': 'uint8',
+>>>>> +            '*multifd-compression': 'MultiFDCompression',
+>>>>> +            '*multifd-zlib-level': 'uint8',
+>>>>> +            '*multifd-qatzip-level': 'uint8',
+>>>>> +            '*multifd-zstd-level': 'uint8',
+>>>>> +            '*block-bitmap-mapping': [ 'BitmapMigrationNodeAlias' ],
+>>>>> +            '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
+>>>>> +                                            'features': [ 'unstable'=
+ ] },
+>>>>> +            '*vcpu-dirty-limit': 'uint64',
+>>>>> +            '*mode': 'MigMode',
+>>>>> +            '*zero-page-detection': 'ZeroPageDetection',
+>>>>> +            '*direct-io': 'bool',
+>>>>> +            '*tls': 'bool' } }
+>>>>
+>>>>
+>>>>>  { 'struct': 'MigrationParameters',
+>>>>> +  'base': 'MigrationConfigBase',
+>>>>> +  'data': { 'tls-creds': 'str',
+>>>>> +            'tls-hostname': 'str',
+>>>>> +            'tls-authz': 'str' } }
+>>>>
+>>>> snip
+>>>>
+>>>>> +{ 'struct': 'MigrateSetParameters',
+>>>>> +  'base': 'MigrationConfigBase',
+>>>>> +  'data': { '*tls-creds': 'StrOrNull',
+>>>>> +            '*tls-hostname': 'StrOrNull',
+>>>>> +            '*tls-authz': 'StrOrNull' } }
+>>>>
+>>>> I recall we discussed this difference a year or two ago, but can't
+>>>> recall what the outcome was.
+>>>>
+>>>> Making the TLS params optional is a back compatible change for
+>>>> MigrationParameters. I would think replacing 'str' with 'StrOrNull'
+>>>> is also back compatible. So I'm wondering if we can't just unify
+>>>> the sttructs fully for TLS, even if one usage scenario never actually
+>>>> needs the "OrNull" bit nor needs the optionality=20
+>>>>
+>>>
+>>> MigrationParameters is the output type for query-migrate-parameters. I
+>>> belive it must be all non-optional to keep compatibility. The docs on
+>>> master say: "The optional members aren't really optional"
+>>
+>> To be precise: even though the members are declared optional, they must
+>> always be present.
+>>
+>> The members became optional when commit de63ab61241 (migrate: Share
+>> common MigrationParameters struct) reused MigrationParameters as
+>> migrate-set-parameters argument type.
+>>
+>
+> Then, commit 1bda8b3c69 (migration: Unshare MigrationParameters struct
+> for now, 2017-07-18) partially undid that change and introduced
+> MigrateSetParameters.
+>
+> At that point we might have been able to make the MigrationParameters'
+> members mandatory, but it was chosen not too, probably with good
+> reason. I can't tell from the commit message.
+
+As far as I remember: to minimize last minute churn, and to not
+complicate a future re-sharing.
+
+> Strictly speaking, we cannot make them mandatory now because commit
+> 31e4c354b3 (migration: Add block-bitmap-mapping parameter, 2020-08-20)
+> added the block-bitmap parameter, but made its output in
+> query-migrate-parameters truly optional:
+>
+>     if (s->parameters.has_block_bitmap_mapping) {
+>         params->has_block_bitmap_mapping =3D true;
+>         params->block_bitmap_mapping =3D
+>             QAPI_CLONE(BitmapMigrationNodeAliasList,
+>                        s->parameters.block_bitmap_mapping);
+>     }
+
+We're consistently inconsistent ;)
+
+>> Making mandatory members of some type optional is compatible as long as
+>> the type occurs only in command arguments.  But MigrationParameters is a
+>> command return type.  Making its members optional was not kosher.
+>> Because the optional members are always present, QMP didn't actually
+>> change, except for introspection.
+>>
+>>> For MigrateSetParameters they've always been optional and continue to
+>>> be. There we need to keep StrOrNull for compat.
+>>
+>> StrOrNull goes back to commit 01fa5598269 (migration: Use JSON null
+>> instead of "" to reset parameter to default).
+>>
+>> Similar argument: adding values to a member is compatible as long as the
+>> type occurs only in command arguments.  But MigrationParameters is a
+>> command return type.  Adding value null is won't be kosher.  However, as
+>> long as as the value is never actually used there, QMP won't actually
+>> change, except for introspection.
+>>
+>> If this was a clean and obvious interface, I'd argue against such
+>> trickery and for keeping it clean and obvious.  But the migration
+>> configuration interface isn't.
 
 
