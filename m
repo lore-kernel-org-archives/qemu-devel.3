@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6364DC369BD
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 00:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E744C369BD
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 00:50:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Cy7-0004A8-FS; Wed, 16 Apr 2025 20:19:03 -0400
+	id 1u5DRt-0005K7-NV; Wed, 16 Apr 2025 20:49:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5Cy6-00049t-19
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 20:19:02 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5DRs-0005Jw-1Q
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 20:49:48 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5Cy4-0000ZC-CC
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 20:19:01 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22409077c06so3396875ad.1
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 17:18:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5DRq-000603-11
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 20:49:47 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2260c91576aso1921755ad.3
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 17:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744849138; x=1745453938; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1744850984; x=1745455784; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YfebzoBpfubmfxOdBpKtLXB34njMOCjZmuaSAhr4wfk=;
- b=Evg7jmh+q6Z8EAyiqqgk995+WfDHbW/reQ6DFSB8QOuc+ZsRmZFVJJyCMeWC5OdyR9
- SZkoJD36vI/z5/m2lK0tNUyGtNhIVutUK3OL7eDk6gf3/6qU/4aHtLZsqjGUe6tD3IuV
- 496mizrkM8w19HzJA0GNBp1Qckmg5Fl9eNf7cPNSXl55uZ8xVucrutqgdGSzhNCo10oW
- FbQRowyD4SAK7bPied5/4t5ZX8Q8BGHI+dYKYZBHZsyrAb4ts1gjgX30OHvy6HsBhnpZ
- hL9ELsVQttvBAiFCjOexSJVQZFA5Df8gmxZV/R2WnHUOg6nWG/WB5rWC1aF18nAJkUVF
- I1kw==
+ bh=RuHA6pUMirqV1TOPFX6w25hNdUOAxYA25rk5tgTLC64=;
+ b=k69bYWnZi6XAhvHdvDoebWRkZyB+8nPQ/PoeO2WqhUL9zAoTcMVD0f7s0KowFJi73M
+ +ateAzu4hCsuR3eM8iGkJI111kcmc2k/TRvufPaskDSj11UAu0mervlD3ZdOpzwrdbs7
+ /DtL5i9kYraV8AvnLR6eX0qk7APBxs8B0iiEPxfr34PHOKdTRfwGInXRkSAspZbpJsWR
+ XaEreDapdq/xc+YWMixeD6xvvhYSw9ob/t46DQcw9xX7hLyHl2f05yR3k7D/iHUn8Hk4
+ Be0fKFb0svOYLUBSX5QLdXbhVpXGYHT2Dzc2iA1xzFNp/A+0CF8B7Kt3csBnpbskxOsN
+ cqCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744849138; x=1745453938;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1744850984; x=1745455784;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YfebzoBpfubmfxOdBpKtLXB34njMOCjZmuaSAhr4wfk=;
- b=b4FyN6qhW4vB0ZNeZS3JBuE4MVZG5ZVoprwR/jjZsXI3YlNIeHReU8HuXc/475jKvQ
- 0smN8+uvgRgm55om5ExbCpG6wUNAVCuepaNEAMVFBGM9LecnrP/DWcNMR6MD0rPQRSM9
- EPLhv7ob8/0VAqaXqPUsXtIg2XpfWpAW+W0OMUkJlBr6uZ2O/mkBO/gmtm8TRHwLJ7in
- 8VQEcb+Qbh+4IZx2R/uPP8o0E4kRWEue0nSyNeGoJRWMiYYuyvKP156vz/QYonKCSscM
- 0LasnbwmsMNRnZqL+/mcqgZ/PF/kadh30cHV7TN1x+17cn7nKYJ4CJstcWeeUX4Ldyk1
- fDbw==
+ bh=RuHA6pUMirqV1TOPFX6w25hNdUOAxYA25rk5tgTLC64=;
+ b=U45DERmVNgwzyxAE/FKxcbjSQ7u/P2T3dWsvCXYsauRjwuP/xzM9rqAtUTuwh21jU+
+ QpjAlkNN2J/hscOf2T7HebkPDyO9vDoF9IXrdAvhWyqgLCBkNkMLZv+yjwM4czAIxOWW
+ d+lzo+zw+rBcmEe5iSbAGIV1Ay329RS/lj8cOgR4RtX+ukj1ihJuMzDOu4GZ8g3JP4ob
+ 6SQuBZ3o3KTauGjX60aMb2s1bdr2CEqRvFTb7rZ7JH2569FQeo7pJiDVvtnurScPRpwP
+ 7DXcpvNw+WmqSJSzRHlWqGMi5eUCcvmVoqiZNvGMd2b4dNQx1105SFaejCIsgC4MlyoM
+ bnNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2Jm2v4Nnp2Pfks0Jb0Wer7iDVfnpMBjX1UoFioElDTKsCnXxtlj0LWYZcHTCPH/ZIFRb7GFeqeMAP@nongnu.org
-X-Gm-Message-State: AOJu0YxCEWVMsv3s6dJe3Q3TYIMZCQvhxrxQVoV8oQqrgcQuCfEHANT5
- Mu+L+VqeL7KycGpm2kK03MZAXdf4IiqGPgZheqnnhzO5188wXmZwbIguPYVsOImNW9UgHIeDd7f
- g
-X-Gm-Gg: ASbGnct7RFcPAY/DreC4oP15dZwOjLpq0ELYLm3ZcWJPWrO6dm8PMP/zeLumBNrpmot
- eUF00bZ6d7QwTyE95sDvxpyikI4XquhNThdFNnyysMvTtGg6k7IbmkPnXIZ6eEusCzLudmnEjV2
- 8M09T9ftlYahIHc+Vole1Yi7ayfBil2x/IH1WWWKj797YUw68xszbB9wkydzy3lz1lR+bE9x0PO
- VIr9oY30p+3OcF/JgJvUHQ+t/PVWI4JIREpNvRq9Ci1Q7mn2K2dN+R82QyxiiLFcnFPByTAjfE8
- qf/ZMn7fYMt+D+SWfUXgTKbzXAXqRD6hvMdf7eNv26uDt2ppuEt78KVBvTJ8PmYsm/8BhvW8R5O
- b7I60wRo=
-X-Google-Smtp-Source: AGHT+IEdlhFV9PJUkhXGK6YnnwxRkOG9gsH0tT60FuVTfpdynd5xskdGUt0y0vv+rD8POl9GzqYbww==
-X-Received: by 2002:a17:902:e54a:b0:224:179a:3b8f with SMTP id
- d9443c01a7336-22c359182bamr58405455ad.23.1744849137786; 
- Wed, 16 Apr 2025 17:18:57 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ AJvYcCXAXjlHahVOhZXg4FAjd0jcmcFwxpkNkuBdQFzHAh2j71Q5fnGZTwBP1XNfETLgfWVk+uy7HMTUz+Ju@nongnu.org
+X-Gm-Message-State: AOJu0YyFG5xrj1nSzjzalW3sg00DDQ10gqClotJCKE5jScXp4fMloOza
+ +NJydHHD260QALz09YoNvcBec7LV0sJWPk7VADGmp9RKr+rVgMUlYGWhXF9ZI98=
+X-Gm-Gg: ASbGncsPvFYqShKovK6VlNgd3h6ZXs/ATVygFOXolZB8IKhpwsmUZUT+Q3rO5VUu3E0
+ IJoZdyTQoZL16M/HarBygLN22tmRADwPsJh18KlQqzhKQBkIQmMAbxj/md0MZ8D4DpTu0PP8uz6
+ 4TrnxEDTrPC2JXTHkDvOZCyPoUPNy7Ae/yyWxXYbzc106PhyDj8p6dGmI/k3V9EdYTxIkVI+C3v
+ Zr7RnFASITXVE90i/h/aFsCglS49ucPKxaktUP5EQJoAYyyPKVATV5jCxh22tx9fp2IcXz90IFl
+ n3oZN3RwCg4agA0ql2c6UE6PFfJ9CjzJHGuoIEl31vtn6kyWLnv8/w==
+X-Google-Smtp-Source: AGHT+IHHqHgTkKLvfEueDG67UYtM46xknrsuiXxZPifyDEbcpzZ4jbYdygLszmTfeSLmzbfMtqZ8vQ==
+X-Received: by 2002:a17:903:2341:b0:223:4c09:20b8 with SMTP id
+ d9443c01a7336-22c3596bbbbmr59711195ad.37.1744850984244; 
+ Wed, 16 Apr 2025 17:49:44 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c33fa5c8asm20663125ad.155.2025.04.16.17.18.57
+ d9443c01a7336-22c33fccafcsm20949715ad.205.2025.04.16.17.49.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 17:18:57 -0700 (PDT)
-Message-ID: <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
-Date: Wed, 16 Apr 2025 17:18:55 -0700
+ Wed, 16 Apr 2025 17:49:43 -0700 (PDT)
+Message-ID: <0af3284c-9a5a-471c-ae7f-41e0ea18a766@linaro.org>
+Date: Wed, 16 Apr 2025 17:49:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 000/163] tcg: Convert to TCGOutOp structures
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250415192515.232910-1-richard.henderson@linaro.org>
  <a093de11-8901-4e1b-83eb-fd3b6a557249@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <a093de11-8901-4e1b-83eb-fd3b6a557249@linaro.org>
+ <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,39 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/16/25 16:38, Pierrick Bouvier wrote:
-> The only concern I have is that we could create silent "performance" related bugs, where a 
-> specific feature is deactivated because of a bad combination, but it's inherent to this 
-> approach and not a blocker.
-
-I think I know what you mean, and the way I see things it that the silent performance bug 
-was previously scattered across different sections of the code, whereas now it is on the 
-same page.  But underneath there is no real change.
-
-Unless you mean something different?
-
-> As a more general question, how do you approach testing for a series like this one? I see 
-> two different challenges, as it touches the IR itself, and the various backends.
-> - For the IR, I don't know how extensive our complete test suite is (regarding coverage of 
-> all existing TCG ops), but I guess there are some holes there. It would be interesting to 
-> generate coverage data once we can get a single binary in the future.
-
-I don't use anything more than our testsuite.
-Coverage data would indeed be interesting; I've not attempted that.
-
-> - For the various backends:
->    * Are you able to compile QEMU on all concerned hosts and run testing there?
-
-I have aarch64, arm, s390x via *.ci.qemu.org;
-loongarch64, riscv64, ppc64le via the gcc compile farm.
-
->    * Or do you cross compile and run binaries emulated?
-
-This is my only option for mipsel, mips64el.
-
-I do not even have a cross-compile solution for ppc32, as there is no longer any distro 
-support. I have been ignoring that, waiting to remove it when all 32-bit hosts get kicked.
-
-
-r~
+T24gNC8xNi8yNSAxNzoxOCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDQvMTYv
+MjUgMTY6MzgsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBUaGUgb25seSBjb25jZXJu
+IEkgaGF2ZSBpcyB0aGF0IHdlIGNvdWxkIGNyZWF0ZSBzaWxlbnQgInBlcmZvcm1hbmNlIiBy
+ZWxhdGVkIGJ1Z3MsIHdoZXJlIGENCj4+IHNwZWNpZmljIGZlYXR1cmUgaXMgZGVhY3RpdmF0
+ZWQgYmVjYXVzZSBvZiBhIGJhZCBjb21iaW5hdGlvbiwgYnV0IGl0J3MgaW5oZXJlbnQgdG8g
+dGhpcw0KPj4gYXBwcm9hY2ggYW5kIG5vdCBhIGJsb2NrZXIuDQo+IA0KPiBJIHRoaW5rIEkg
+a25vdyB3aGF0IHlvdSBtZWFuLCBhbmQgdGhlIHdheSBJIHNlZSB0aGluZ3MgaXQgdGhhdCB0
+aGUgc2lsZW50IHBlcmZvcm1hbmNlIGJ1Zw0KPiB3YXMgcHJldmlvdXNseSBzY2F0dGVyZWQg
+YWNyb3NzIGRpZmZlcmVudCBzZWN0aW9ucyBvZiB0aGUgY29kZSwgd2hlcmVhcyBub3cgaXQg
+aXMgb24gdGhlDQo+IHNhbWUgcGFnZS4gIEJ1dCB1bmRlcm5lYXRoIHRoZXJlIGlzIG5vIHJl
+YWwgY2hhbmdlLg0KPiANCj4gVW5sZXNzIHlvdSBtZWFuIHNvbWV0aGluZyBkaWZmZXJlbnQ/
+DQo+IA0KDQpJdCBzaG91bGQgYmUgZnVuY3Rpb25uYWxseSBlcXVpdmFsZW50IGluZGVlZCwg
+YnV0IGluIGNhc2Ugb25lIG9mIGNzZXRfKiANCmZ1bmN0aW9uIGNvbnRhaW5zIGJ1ZywgaXQg
+bWlnaHQgc2lsZW50bHkgZmFsbGJhY2sgdG8gYSBzbG93ZXIgDQppbXBsZW1lbnRhdGlvbi4g
+VGhlIFRDR19UQVJHRVRfSEFTXyogd2VyZSBsZXNzIGVycm9yIHByb25lIEkgZ3Vlc3MsIGFz
+IA0KaXQncyBqdXN0IGEgZGVjbGFyYXRpb24uDQoNCkJ1dCBvdmVyYWxsLCB0aGUgbmV3IGFw
+cHJvYWNoIGlzIHJlYWxseSBiZXR0ZXIsIHNvIGl0J3Mgd29ydGggdGhlIHJpc2suDQoNCj4+
+IEFzIGEgbW9yZSBnZW5lcmFsIHF1ZXN0aW9uLCBob3cgZG8geW91IGFwcHJvYWNoIHRlc3Rp
+bmcgZm9yIGEgc2VyaWVzIGxpa2UgdGhpcyBvbmU/IEkgc2VlDQo+PiB0d28gZGlmZmVyZW50
+IGNoYWxsZW5nZXMsIGFzIGl0IHRvdWNoZXMgdGhlIElSIGl0c2VsZiwgYW5kIHRoZSB2YXJp
+b3VzIGJhY2tlbmRzLg0KPj4gLSBGb3IgdGhlIElSLCBJIGRvbid0IGtub3cgaG93IGV4dGVu
+c2l2ZSBvdXIgY29tcGxldGUgdGVzdCBzdWl0ZSBpcyAocmVnYXJkaW5nIGNvdmVyYWdlIG9m
+DQo+PiBhbGwgZXhpc3RpbmcgVENHIG9wcyksIGJ1dCBJIGd1ZXNzIHRoZXJlIGFyZSBzb21l
+IGhvbGVzIHRoZXJlLiBJdCB3b3VsZCBiZSBpbnRlcmVzdGluZyB0bw0KPj4gZ2VuZXJhdGUg
+Y292ZXJhZ2UgZGF0YSBvbmNlIHdlIGNhbiBnZXQgYSBzaW5nbGUgYmluYXJ5IGluIHRoZSBm
+dXR1cmUuDQo+IA0KPiBJIGRvbid0IHVzZSBhbnl0aGluZyBtb3JlIHRoYW4gb3VyIHRlc3Rz
+dWl0ZS4NCj4gQ292ZXJhZ2UgZGF0YSB3b3VsZCBpbmRlZWQgYmUgaW50ZXJlc3Rpbmc7IEkn
+dmUgbm90IGF0dGVtcHRlZCB0aGF0Lg0KPiANCg0KSSB0cmllZCBwcmV2aW91c2x5LCBidXQg
+c2luY2Ugd2UgaGF2ZSBkdXBsaWNhdGVkIGNvbXBpbGF0aW9uIHVuaXRzIHBlciANCnRhcmdl
+dCwgdGhpcyBpcyBjb25mdXNpbmcgZm9yIGFueSBjb3ZlcmFnZSB0b29sLCBhcyBzb29uIGFz
+IHlvdSB0cnkgdG8gDQphZ2dyZWdhdGUgZGF0YSBmcm9tIHNldmVyYWwgdGFyZ2V0cy4NCg0K
+Pj4gLSBGb3IgdGhlIHZhcmlvdXMgYmFja2VuZHM6DQo+PiAgIMKgICogQXJlIHlvdSBhYmxl
+IHRvIGNvbXBpbGUgUUVNVSBvbiBhbGwgY29uY2VybmVkIGhvc3RzIGFuZCBydW4gdGVzdGlu
+ZyB0aGVyZT8NCj4gDQo+IEkgaGF2ZSBhYXJjaDY0LCBhcm0sIHMzOTB4IHZpYSAqLmNpLnFl
+bXUub3JnOw0KPiBsb29uZ2FyY2g2NCwgcmlzY3Y2NCwgcHBjNjRsZSB2aWEgdGhlIGdjYyBj
+b21waWxlIGZhcm0uDQo+IA0KPj4gICDCoCAqIE9yIGRvIHlvdSBjcm9zcyBjb21waWxlIGFu
+ZCBydW4gYmluYXJpZXMgZW11bGF0ZWQ/DQo+IA0KPiBUaGlzIGlzIG15IG9ubHkgb3B0aW9u
+IGZvciBtaXBzZWwsIG1pcHM2NGVsLg0KPiANCj4gSSBkbyBub3QgZXZlbiBoYXZlIGEgY3Jv
+c3MtY29tcGlsZSBzb2x1dGlvbiBmb3IgcHBjMzIsIGFzIHRoZXJlIGlzIG5vIGxvbmdlciBh
+bnkgZGlzdHJvDQo+IHN1cHBvcnQuIEkgaGF2ZSBiZWVuIGlnbm9yaW5nIHRoYXQsIHdhaXRp
+bmcgdG8gcmVtb3ZlIGl0IHdoZW4gYWxsIDMyLWJpdCBob3N0cyBnZXQga2lja2VkLg0KPiAN
+Cj4gDQo+IHJ+DQoNCg==
 
