@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADF5C369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 18:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CEBC369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 19:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5UNe-0005Bs-J7; Thu, 17 Apr 2025 14:54:35 -0400
+	id 1u5UVR-0007wd-GF; Thu, 17 Apr 2025 15:02:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1u5UNP-000597-33; Thu, 17 Apr 2025 14:54:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1u5UNK-0006ru-0m; Thu, 17 Apr 2025 14:54:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HIPU1J003083;
- Thu, 17 Apr 2025 18:54:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=r2PXBj
- wnll7LPm8G29W5r4UCMLji/Ho1jASrvncgBgQ=; b=g/r0scMU7mPy9FJepXdON7
- 8KwNNmOitoTC4EeLlF8o26Es3JWPd/dVvBt8mDwmDxGA3P8qkMeMm26F6/Ag2BUu
- jRer8xu5u6hd7ezK3cgWPOBAsg/qo9l12A1wfAWY82uW/kFh5XYr/5bU+7sE9Jlj
- 1/UNHd/gwJV7kolq7IXJ648Ip0u6QXq5S3yuKo4/qh7t6QAfkCOtMpzqKWihM084
- Cx3TNgXW8ZpN2awI5OLdy+r+sFnbQRaOqUmLOtWtFyhN/o+LxMEZQK2AV/sxS0hn
- zTyQRJTwfovcrJoawgz/t0NOqCpd+3vQHNGtCDssha6o2X4kxwylZ7cxk10pAVwg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462yjjakx7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 18:54:11 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53HIGOpV017170;
- Thu, 17 Apr 2025 18:54:09 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040m7282-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 18:54:09 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53HIs85l23986860
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Apr 2025 18:54:08 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 577165803F;
- Thu, 17 Apr 2025 18:54:08 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A2A4E58061;
- Thu, 17 Apr 2025 18:54:07 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 17 Apr 2025 18:54:07 +0000 (GMT)
-Message-ID: <9f3e4869-e4ce-4480-9c6b-4ed2030e81e2@linux.ibm.com>
-Date: Thu, 17 Apr 2025 14:54:07 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5UV1-0007tp-Ui
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 15:02:13 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5UUy-0008TO-8N
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 15:02:11 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b074d908e56so846618a12.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 12:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744916524; x=1745521324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L+667g5HAPBUuOb36DPmVj7TbFDJx+ZTfcaQPsMOZTE=;
+ b=TG7ODbe9R6pmoAv02p7wrHw2wVQlPxn68/H6hTicToLBIsrh1WTGZLk9XiodhO6N6M
+ 3iYEU2Sjycq+SiB0njxlrkADnRdjEzo55nlIzd9/C99X0lkhtGJORChJ27JWlB1k2sgY
+ UA5HXpOSQx88Dfju5RC8XIA+CIwv0IdvmzxiGcxXHnERDs1DmSxoxY0AvW7XVRKEWQwX
+ 6XpVUn3UUmCZj0rFBYdlKvYBWrMZoQjDFRYIqxV0lC8zN+I3mVEclXPuxbwd4Fqj4NZ0
+ diS1U3o3x2zsSQm3AZi5fDOjJgvNRs3vVPm2vWcHAb++AnrTZiza6spN7lUDYbQC6ZLc
+ qLDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744916524; x=1745521324;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=L+667g5HAPBUuOb36DPmVj7TbFDJx+ZTfcaQPsMOZTE=;
+ b=HZC83wrgEw5tGf1tYXlDiQBPUyuLG+yh1qNsZR8h7yNZ6f9eKvkfIMh1knXijxScNH
+ fIUJauuSQt/NbyOkuGzUf0b4HhDMQpVgrBo2xW1IKt4aXHpv44dgUVQ4hnxVRB1l6w3r
+ V+mysADow3/b8MmdbjvrgnoPrlzNxhMYYiBqyGuL8dn0g1+nGZpvkZbW9Hw1c0Dbn1tz
+ XhRrNYC+uylevvYWivYo1Yeqeq6FZ9VM1HAiATK5JCIQVIJtWPfmYZp2tPyI3lv7saAy
+ n5IR9bZccGn4cATLhlzGjZxc/OWwQ7tYsX+23gX7q5rTVeoFRYbimdXsJOF3aiHy1ijq
+ 0oRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUY1E3N8K0d3AG9pW5KggraYi9USkXsguVYd2PS9PjFeDhww9CaZk9ElBhC/FNFcS6V27xlREtgE0Hh@nongnu.org
+X-Gm-Message-State: AOJu0YzeZJ3QXPeqF75xzScjymggQuHswIgrBn9705K/1SHqDScXrflJ
+ Q3P4bLteWfOA4f4dw/b4C9O8D2aAxYZB4uaRsTXRtTlGHFongkw/Lko7pgSA/QY=
+X-Gm-Gg: ASbGncvTA3uqyayVnnvt5r7xx/MNjRQmtw7Lxbv2UmiYF4ZIc8nJRyJ/RD3aes1sPoy
+ CY75rTYai7jyTpuG07O1RSiMJhGBlwi3s20qhiS+haWHeYTA94kFSMWwWo/Z0qgtUvtCsfxt0qW
+ o2SUJgnhRdXdq7ZahtUvdMedW3OH9KBBRQT6Etp557C17ijTGDCljfS4AFXXGR4NPRQoy4KotTA
+ P2kSjok+t2AkMjr1fMImhis8SlVmEItszaem4EU5ENebfI/ViAlNSgUPpO2FRufZqmKE8j3Jfvj
+ qulXTEZMKLfd7Bh+OKp7JlhlazPuYLF9sLi+rHmNN6DRuIYmr/GqOA==
+X-Google-Smtp-Source: AGHT+IHyAJ4KguBZDz1yCuaMb3FT2pNnBFRsOlgW1mXm9UjJEVPCc55pMJY7qRHsfOyiXLjpn5EeEg==
+X-Received: by 2002:a17:90b:5646:b0:2ee:f80c:6889 with SMTP id
+ 98e67ed59e1d1-3087bcc8a9dmr120116a91.33.1744916524122; 
+ Thu, 17 Apr 2025 12:02:04 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3087bb6945fsm37541a91.26.2025.04.17.12.02.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Apr 2025 12:02:03 -0700 (PDT)
+Message-ID: <f5380fe5-9479-47d8-9bd5-a3100cab5afb@linaro.org>
+Date: Thu, 17 Apr 2025 12:02:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 14/24] s390x: Guest support for Secure-IPL Facility
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
-Cc: jjherne@linux.ibm.com, jrossi@linux.ibm.com, fiuczy@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-15-zycai@linux.ibm.com>
+Subject: Re: [PATCH 0/7] cpus: Replace CPU_RESOLVING_TYPE -> target_cpu_type()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250417165430.58213-1-philmd@linaro.org>
+ <84eaddaa-ad02-4cf9-be3d-3d8da7a2d312@linaro.org>
+ <fe5198f0-df6c-4b9b-9c68-9b18d8f01406@linaro.org>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20250408155527.123341-15-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: lkwoAEo1Ht-BajLxPX_oGRdxnv5HeEH-
-X-Authority-Analysis: v=2.4 cv=MsNS63ae c=1 sm=1 tr=0 ts=68014e53 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=s11BkKu2StZtikTM1toA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: lkwoAEo1Ht-BajLxPX_oGRdxnv5HeEH-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_06,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=999
- suspectscore=0 priorityscore=1501 phishscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- malwarescore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504170136
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <fe5198f0-df6c-4b9b-9c68-9b18d8f01406@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,163 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/8/25 11:55 AM, Zhuoying Cai wrote:
-> Introduce Secure-IPL (SIPL) facility.
-> 
-> Use the abbreviation CBL (Consolidated-Boot-Loader facility at bit 0 of
-> byte 136) to represent bytes 136 and 137 for IPL device facilities of the
-> SCLP Read Info block.
-
-This should *not* be used to label these bytes!  This facility is
-represented by a specific bit on the entire byte, and the other bits are
-used for multiple things unrelated to CBL.
-
-Just use the generic byte-naming scheme (e.g. fac136) for now until
-these bits are defined and a better name comes up.  Further, you only
-need byte 136 for the secure IPL bit.
-
-Further, explain the significance for the dependency of ELS in the
-commit message:
-
-"Byte 136's facilities cannot be represented without the availability of
-the extended-length-SCCB, so add it as a check for consistency."
-
-> 
-> Availability of SIPL facility is determined by byte 136 bit 1 of the
-> SCLP Read Info block.
-> 
-> When SIPL facility is installed, the IPL Parameter Block length must
-> contains value that is multiple of 8 bytes.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  hw/s390x/sclp.c                     | 2 ++
->  include/hw/s390x/sclp.h             | 4 +++-
->  target/s390x/cpu_features.c         | 3 +++
->  target/s390x/cpu_features.h         | 1 +
->  target/s390x/cpu_features_def.h.inc | 3 +++
->  target/s390x/cpu_models.c           | 2 ++
->  target/s390x/gen-features.c         | 1 +
->  target/s390x/kvm/kvm.c              | 3 +++
->  8 files changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
-> index 5945c9b1d8..bab65955b7 100644
-> --- a/hw/s390x/sclp.c
-> +++ b/hw/s390x/sclp.c
-> @@ -145,6 +145,8 @@ static void read_SCP_info(SCLPDevice *sclp, SCCB *sccb)
->      if (s390_has_feat(S390_FEAT_EXTENDED_LENGTH_SCCB)) {
->          s390_get_feat_block(S390_FEAT_TYPE_SCLP_FAC134,
->                              &read_info->fac134);
-> +        s390_get_feat_block(S390_FEAT_TYPE_SCLP_CBL,
-> +                            read_info->cbl);
->      }
->  
->      read_info->facilities = cpu_to_be64(SCLP_HAS_CPU_INFO |
-> diff --git a/include/hw/s390x/sclp.h b/include/hw/s390x/sclp.h
-> index d32f6180e0..97af95a78d 100644
-> --- a/include/hw/s390x/sclp.h
-> +++ b/include/hw/s390x/sclp.h
-> @@ -136,7 +136,9 @@ typedef struct ReadInfo {
->      uint32_t hmfai;
->      uint8_t  _reserved7[134 - 128];     /* 128-133 */
->      uint8_t  fac134;
-> -    uint8_t  _reserved8[144 - 135];     /* 135-143 */
-> +    uint8_t  _reserved8;
-> +    uint8_t  cbl[2];                    /* 136-137 */
-> +    uint8_t  _reserved9[144 - 137];     /* 138-143 */
->      struct CPUEntry entries[];
->      /*
->       * When the Extended-Length SCCB (ELS) feature is enabled the
-> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-> index 99089ab3f5..e9371569cc 100644
-> --- a/target/s390x/cpu_features.c
-> +++ b/target/s390x/cpu_features.c
-> @@ -149,6 +149,9 @@ void s390_fill_feat_block(const S390FeatBitmap features, S390FeatType type,
->          clear_be_bit(s390_feat_def(S390_FEAT_DIAG_318)->bit, data);
->          clear_be_bit(s390_feat_def(S390_FEAT_DIAG_320)->bit, data);
->          break;
-> +    case S390_FEAT_TYPE_SCLP_CBL:
-> +        clear_be_bit(s390_feat_def(S390_FEAT_SIPL)->bit, data);
-> +        break;
->      default:
->          return;
->      }
-> diff --git a/target/s390x/cpu_features.h b/target/s390x/cpu_features.h
-> index 5635839d03..823fcf8b90 100644
-> --- a/target/s390x/cpu_features.h
-> +++ b/target/s390x/cpu_features.h
-> @@ -24,6 +24,7 @@ typedef enum {
->      S390_FEAT_TYPE_SCLP_CONF_CHAR,
->      S390_FEAT_TYPE_SCLP_CONF_CHAR_EXT,
->      S390_FEAT_TYPE_SCLP_FAC134,
-> +    S390_FEAT_TYPE_SCLP_CBL,
->      S390_FEAT_TYPE_SCLP_CPU,
->      S390_FEAT_TYPE_MISC,
->      S390_FEAT_TYPE_PLO,
-> diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-> index 65d38f546d..f874b9da6f 100644
-> --- a/target/s390x/cpu_features_def.h.inc
-> +++ b/target/s390x/cpu_features_def.h.inc
-> @@ -140,6 +140,9 @@ DEF_FEAT(SIE_IBS, "ibs", SCLP_CONF_CHAR_EXT, 10, "SIE: Interlock-and-broadcast-s
->  DEF_FEAT(DIAG_318, "diag318", SCLP_FAC134, 0, "Control program name and version codes")
->  DEF_FEAT(DIAG_320, "diag320", SCLP_FAC134, 5, "Provide Certificate Store functions")
->  
-> +/* Features exposed via SCLP SCCB Facilities byte 136 - 137 (bit numbers relative to byte-136) */
-> +DEF_FEAT(SIPL, "sipl", SCLP_CBL, 1, "Seucre-IPL facility")
-> +
->  /* Features exposed via SCLP CPU info. */
->  DEF_FEAT(SIE_F2, "sief2", SCLP_CPU, 4, "SIE: interception format 2 (Virtual SIE)")
->  DEF_FEAT(SIE_SKEY, "skey", SCLP_CPU, 5, "SIE: Storage-key facility")
-> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-> index 7d65c40bd1..a83c27dcb8 100644
-> --- a/target/s390x/cpu_models.c
-> +++ b/target/s390x/cpu_models.c
-> @@ -263,6 +263,7 @@ bool s390_has_feat(S390Feat feat)
->          case S390_FEAT_SIE_CMMA:
->          case S390_FEAT_SIE_PFMFI:
->          case S390_FEAT_SIE_IBS:
-> +        case S390_FEAT_SIPL:
->          case S390_FEAT_CONFIGURATION_TOPOLOGY:
->              return false;
->              break;
-> @@ -507,6 +508,7 @@ static void check_consistency(const S390CPUModel *model)
->          { S390_FEAT_AP_QUEUE_INTERRUPT_CONTROL, S390_FEAT_AP },
->          { S390_FEAT_DIAG_318, S390_FEAT_EXTENDED_LENGTH_SCCB },
->          { S390_FEAT_DIAG_320, S390_FEAT_EXTENDED_LENGTH_SCCB },
-> +        { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
->          { S390_FEAT_NNPA, S390_FEAT_VECTOR },
->          { S390_FEAT_RDP, S390_FEAT_LOCAL_TLB_CLEARING },
->          { S390_FEAT_UV_FEAT_AP, S390_FEAT_AP },
-> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-> index 52c649adcd..d973efbf72 100644
-> --- a/target/s390x/gen-features.c
-> +++ b/target/s390x/gen-features.c
-> @@ -697,6 +697,7 @@ static uint16_t full_GEN14_GA1[] = {
->      S390_FEAT_SIE_KSS,
->      S390_FEAT_GROUP_MULTIPLE_EPOCH_PTFF,
->      S390_FEAT_DIAG_320,
-> +    S390_FEAT_SIPL,
->  };
->  
->  #define full_GEN14_GA2 EmptyFeat
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index a5c5150c04..f418102b7f 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -2517,6 +2517,9 @@ bool kvm_s390_get_host_cpu_model(S390CPUModel *model, Error **errp)
->  
->      set_bit(S390_FEAT_DIAG_320, model->features);
->  
-> +    /* Secure-IPL facility is handled entirely within QEMU */
-> +    set_bit(S390_FEAT_SIPL, model->features);
-> +
->      /* Test for Ultravisor features that influence secure guest behavior */
->      query_uv_feat_guest(model->features);
->  
-
-
--- 
-Regards,
-  Collin
+T24gNC8xNy8yNSAxMTozOCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
+IDE3LzQvMjUgMjA6MjgsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBNYXliZSBpdCB3
+b3VsZCBiZSBwcmVmZXJhYmxlIHRvIGZvY3VzIG9uIHByb3ZpZGluZyBhIG1pbmltYWwgYnV0
+DQo+PiAqY29tcGxldGUqIFRhcmdldEluZm8gYmVmb3JlIHVwc3RyZWFtaW5nIGFueSBvZiB0
+aGlzLCBhcyBpdCdzIHJlYWxseQ0KPj4gYmxvY2tpbmcgdGhlIHJlc3Qgb2YgdGhlIHdvcmsg
+Zm9yIHNpbmdsZSBiaW5hcnkuDQo+IA0KPiBJIHN1cHBvc2UgSSBtaXN1bmRlcnN0b29kIHlv
+dSBhc2tpbmcgdG8gcG9zdCB0aGVzZSByZXZpZXdlZCBwYXRjaGVzIGFzDQo+IHNlcGFyYXRl
+IG9mIHRoZSBUYXJnZXRJbmZvIHNlcmllcyB3aGljaCBuZWVkIG1vcmUgd29yazoNCj4gDQo+
+ICJJIGp1c3QgZmVlbCB0aGUgbGFzdCAzIGNvbW1pdHMsIGFuZCB0aGlzIG9uZSwgYXJlIGEg
+Yml0IGRpc2Nvbm5lY3RlZA0KPiBmcm9tIHRoZSBzZXJpZXMuIg0KPiANCg0KWW91J3JlIHJp
+Z2h0LCBpdCBtZWFudCB0aGF0IHRoZSA0IGNvbW1pdHMgKGFjY2VsOiAqKSBhcmUgZXh0cmEg
+Y2xlYW51cHMgDQphbmQgbm90IHJlYWxseSByZWxhdGVkIHRvIHRoZSBzZXJpZXMgdGl0bGUg
+IkludHJvZHVjZSBUYXJnZXRJbmZvIEFQSSANCihmb3Igc2luZ2xlIGJpbmFyeSkiLCB3aGlj
+aCBpcyBmaW5lIHRvIHVwc3RyZWFtIGJ5IGl0c2VsZi4NCkhvd2V2ZXIsIGludHJvZHVjaW5n
+IHRhcmdldF9pbmZvLmggcGFydGlhbGx5IGp1c3QgdG8gZG8gdGhpcyBjbGVhbnVwIA0KZmly
+c3Qgc291bmRzIGEgYml0IHdlaXJkIHRvIG1lLg0KDQpNeSBjb21wbGV0ZSB0aG91Z2h0IHdh
+cyAiVGhpcyBjbGVhbnVwIGlzIG9rLCBidXQgcGxlYXNlIHBvc3Rwb25lIGl0IG9uY2UgDQp3
+ZSBoYXZlIFRhcmdldEluZm8gQVBJIHVwc3RyZWFtIi4NCkl0J3MgYSByZW1hcmsgSSdsbCBr
+ZWVwIGRvaW5nIGZvciBUYXJnZXRJbmZvLCBhcyB0aGUgZ29hbCBmb3IgdjEgaXMgdG8gDQpo
+YXZlIGEgbWluaW1hbCBBUEksIGludHJvZHVjaW5nIHRoZSBjb25jZXB0IG9mIE1hY2hpbmUg
+YW5kIENQVSB0eXBlcywgDQphbmQgYXBwbHkgaXQgdG8gaHcvYXJtLCB3aGljaCB3YXMgb3Vy
+IGluaXRpYWwgbmVlZCBhbmQgd2h5IHdlIHRhbGtlZCANCmFib3V0IHRoaXMgaW4gdGhlIGZp
+cnN0IHBsYWNlLg0KDQpPbmNlIGl0J3MgdGhlcmUgdXBzdHJlYW0sIHdlIGNhbiBhbGwgZW5o
+YW5jZSBpdCBpbiBwYXJhbGxlbCwgd2l0aCB0aGUgDQp2YXJpb3VzIG5lZWRzIHdlJ2xsIGhh
+dmUgZm9yIGNsZWFuaW5nIHVwIG90aGVyIHBhcnRzIG9mIHRoZSBjb2RlYmFzZS4NCg0KTXkg
+cmF0aW9uYWxlIGlzIHRoYXQgaXQncyBlYXN5IHRvIHJlYmFzZSBvdXIgY29uZmxpY3Rpbmcg
+Y29kZSBhZ2FpbnN0IGEgDQpjb21tb24gZmlsZSwgYnV0IGl0J3MgaGFyZCB0byBkbyBpdCBp
+ZiBpdCBkb2Vzbid0IGV4aXN0LCB0aHVzIG15IA0KaW5zaXN0ZW5jZSBvbiBnZXR0aW5nIGEg
+bWluaW1hbCBBUEkgZmlyc3QuDQoNCkZvciBpbnN0YW5jZSwgb25jZSBpdCdzIHVwc3RyZWFt
+LCB3ZSBjYW4gZWFzaWx5IGFkZCBpbiBkaWZmZXJlbnQgc2VyaWVzIA0KKGFuZCBkaWZmZXJl
+bnQgcGVvcGxlKToNCi0gdGFyZ2V0X2N1cnJlbnQoKSAtPiBlbnVtIFRhcmdldA0KLSB0YXJn
+ZXRfYWFyY2g2NCgpIC0+IGJvb2wNCmFuZCBwcm9ncmVzcyB3aXRob3V0IGhhdmluZyB0byBm
+aXJzdCBiZSBibG9ja2VkIGJ5IHRoZSBleGlzdGVuY2Ugb2YgDQpUYXJnZXRJbmZvIGl0c2Vs
+Zi4gV2UgY2FuIGFzIHdlbGwgY2hlcnJ5IHBpY2sgb3VyIG11dHVhbCBwYXRjaGVzIA0KdG91
+Y2hpbmcgVGFyZ2V0SW5mbyB3aXRob3V0IGdldHRpbmcgYmxvY2tlZCBieSB0aGUgdXBzdHJl
+YW0gcHJvY2VzcyANCml0c2VsZiwgYW5kIHRoZSBmaXJzdCBzZXJpZXMgdG8gYmUgcHVsbGVk
+IHdpbGwgbWFrZSBpdCBhdmFpbGFibGUgZm9yIA0KZXZlcnlvbmUuDQoNCj4gaHR0cHM6Ly9s
+b3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZlbC8wYjQzNzZlZS01MDRiLTQwOTYtYTU5MC04YTUw
+OWVjNzg5NGRAbGluYXJvLm9yZy8NCj4gDQo+Pg0KPj4gTWluaW1hbCByZXF1aXJlbWVudHMg
+dG8gaGF2ZSBhIGNvbXBsZXRlIHNlcmllcyB3b3VsZCBiZToNCj4+IC0gUmVuYW1lIFFNUCBU
+YXJnZXRJbmZvIHN0cnVjdCB0byB1c2UgdGhhdCBuYW1lDQo+PiAtIEJlIGFibGUgdG8gcXVl
+cnkgdGFyZ2V0IGNwdSB0eXBlICh3aGF0IHRoaXMgc2VyaWVzIGRvZXMpDQo+PiAtIEJlIGFi
+bGUgdG8gcXVlcnkgbWFjaGluZSBjcHUgdHlwZQ0KPj4gLSBNb2RpZnkgZ2VuZXJpYyBmdW5j
+dGlvbnMgbGlzdGluZyBtYWNoaW5lcy9jcHVzIHRvIHRha2UgdGhpcyBpbnRvIGFjY291bnQN
+Cj4+IC0gVGFnIGxhYmVsZWQgYm9hcmRzL2NwdSBpbiBody9hcm0gdG8gcHJvdmUgdGhpcyBp
+cyB3b3JraW5nICh3aXRob3V0DQo+PiBkb2luZyBhbnkgb3RoZXIgY2xlYW51cCB0byB0aG9z
+ZSBmaWxlcyBhbmQgKm5vdCogbWFrZSB0aGVtIGNvbW1vbikNCj4+IC0gTm8gb3RoZXIgYWRk
+aXRpb25hbCB0YXJnZXQgaW5mb3JtYXRpb24gZm9yIHRoZSB2MSwgbGV0J3Mga2VlcCB0aGF0
+IGZvcg0KPj4gbGF0ZXIuDQo+Pg0KPj4gTm90ZTogdGFyZ2V0X2NwdV90eXBlIHdpbGwgbm90
+IGJlIFRZUEVfQVJNX0NQVSwgYXMgaXQgd3JvbmdseSB3cmFwcw0KPj4gYXJtMzIgYW5kIGFh
+cmNoNjQgY3B1cywgd2hpbGUgaXQgc2hvdWxkIGNvcnJlY3RseSBpZGVudGlmeSBvbmUgb3Ig
+dGhlDQo+PiBvdGhlci4gSSBzdWdnZXN0ZWQgVFlQRV9UQVJHRVRfQ1BVX0FSTSwgVFlQRV9U
+QVJHRVRfQ1BVX0FBUkNINjQsIGFuZA0KPj4gc2FtZSBmb3IgbWFjaGluZXM6IFRZUEVfVEFS
+R0VUX01BQ0hJTkVfQVJNLCBUWVBFX1RBUkdFVF9NQUNISU5FX0FBUkNINjQuDQo+PiBTbyB3
+ZSBjYW4gcmV1c2UgdGhpcyBuYW1pbmcgY29udmVudGlvbiB3aXRoIGFueSBvdGhlciB0YXJn
+ZXQgd2UnbGwgcmV1c2UNCj4+IGluIHRoZSBmdXR1cmUuDQo+IA0KPiBHb3QgaXQuDQo+IA0K
+Pj4NCj4+IFBpZXJyaWNrDQoNCg==
 
