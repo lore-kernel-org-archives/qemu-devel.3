@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA155C369CA
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 17:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3771C369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 17:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5T2v-0006px-KW; Thu, 17 Apr 2025 13:29:12 -0400
+	id 1u5T3i-0000EX-Cf; Thu, 17 Apr 2025 13:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u5T2q-0006me-TS
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:29:01 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1u5T3g-0000BU-DE
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:29:52 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u5T2o-0000gd-Mz
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:29:00 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22435603572so13085335ad.1
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 10:28:57 -0700 (PDT)
+ id 1u5T3e-0000m3-IN
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:29:52 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22435603572so13100785ad.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 10:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744910936; x=1745515736; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744910989; x=1745515789; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uE6SpS9iCTqPjCvh1GFyDybdYD6CvcUwjj0EsECqXYY=;
- b=ui8sc8iX2T2GTUsw+c2Jtw8WxC5uunOAvL1h6SdRiuXihcfqQtq81ukWbDvuYgSq4t
- NDZ+ESSE+9i0Z4EKjrfkMCV4ZhEwyX+UaX9CVqGR2CXGnB/ZVl0A/lXIqpwBhJBQ2Yg7
- YrorzubzuFiCHy9pbpUHwofn7d4e+YEwMQ5fr0kTkI7t5h92qk6IMYGZBLzN4IZuGPNk
- wctxkO8WhcEoHJTWjNdI4UxCn8Av1wpxXz9VAO3O0du7/GQwmwavfEx8nLQIIUNlSEyF
- o6sWu8O1nHgrmmqIsOgelpDP4i+6uEvrwdT/MMyU0HsxRWgiACqvbpAmefm606o7ZSQp
- OrIw==
+ bh=ff2G7L2C25G8onm3yIFbfgTblLNgw7wKbsY5vlfAxPY=;
+ b=w5KgYA4MZKxvVP6+77GqvMo4vwaFHoIaye9SVKIq8m0V/1u1VXDUNbSH3SoI8/Sl8e
+ NP6DFOqUyMBAGPX/zqC14d/wnQRubwVs4oI3/oeTKA6OIdZJfRdIcL5olEexv8HBiCkQ
+ FpaVvNYHVEhC3kNGI6kIm9C8B90qmE5gRwkCfLKd53O9g71GewcsI3walRR0wJuQDPol
+ KIq+nBex+9fA1FBBg5VTOL//rsBc0c59TnQ1zVtIzKM1DSbUIP5lK4a0ox9T+RqsDnmn
+ 52UN3APXaal8Mx6OwAk4voESms7/+0E1F0FAKcMZ65Roek/Okzv90DasPLEQm4QnJnSk
+ VBCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744910936; x=1745515736;
+ d=1e100.net; s=20230601; t=1744910989; x=1745515789;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uE6SpS9iCTqPjCvh1GFyDybdYD6CvcUwjj0EsECqXYY=;
- b=G6fuf+TaxrD7nhb/ljBdV5/szW5BzkWWVZLgo/wxK3PzEig9lV5wH4kXfWaPufsvSy
- KVSr2H07t3vvbPviudzvsRk3r7cbzr+PF/g8jt/GZm7RtFXuGQHZxCrTR87Nt3O/VT2o
- vH88KfaYMVk52OrFxLHxgufcr0idOzRt1WR87PpQiV7uzkP9+GQ9+1kvCogr0AlOuHjO
- OWQ35KGUXshy/Tu0NOlXnav/zpP3ksxtdG/lSRyJRMY5+eFWS6FNhyFwimf9JhABQJKD
- opFI35+QnsD0Lt/dVhOaG5UeSgyfAbwAjDPbg6PrWaHArtrBeIolQnebHYzhR7fNrcwg
- 7qCQ==
+ bh=ff2G7L2C25G8onm3yIFbfgTblLNgw7wKbsY5vlfAxPY=;
+ b=h9LNle5Uqzh/mUenmY1dJ04U1sz754ecjJH8q0Cqt8kpQQ+iChPPAtEAHUHCbJYkSk
+ QjrhZ7UiDZjmmN43nSS8eJAxeh3ttd82mDvXoZuSAGZUV9e5zDc7xKPPbrSwtED9L2o/
+ y4vDWFpimzTEe4Pv6q9v7/15LAwufB6+EGocbIbaBuvXsma9Gm4WuCnKk3rme14sAc54
+ /xk3nYwWermcjzJlnhjc4HzPJkrYdTNwl9sj/VE0bX91hwWnFBu5ca/EK/tZmcKQXfNk
+ kgOU44xo1pBtWPs992bM7DgT61wzCSjeH5y9mobpbE5HzAZdZWL7E/8B2DData91tptd
+ KgdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFuGbtg2lrjKIXgueo/fCpG6mKmCWLjjhDJSrW+tLoqP0CP1jBWDw4YgBtUIFe2vAGHxQ9glHS6CvQ@nongnu.org
-X-Gm-Message-State: AOJu0Yw69wi2RSdG3pCNZb1+t/T1eiCL1hIEC7XRQs+ZTKJGYOSr9bTT
- Qnf1FqPQEOgHIexR0nPTXzarktIADPmh0Wq5EyYrf65lYQsmZnJuznd7Pe7C6PM=
-X-Gm-Gg: ASbGncugb4QFAt4NQHt6Da64/sVe3IA4PxFQcurmmZset/Fx4B2+dzpC6FgkoQPt+Ox
- 6GlQGmkgnL/RIw2Fa5K2QtFqYc1muRstfgXfbVr6bnu8wAIECYA6a8gBtBZjAUKkV6oetFiiS4j
- HxiSUv5Uanz/z5e4K3OphDM3YZ7wrkBEZ4kh/CueZ1gVBRsooIWVqUgekl8LlsprZ+v0SbKNnli
- evCNP/XemUMj1j7TJzIoVi4+1YQ50SSCxa0SYujxkX/IRCD/xcVQK5Sm/9xWEPC7dOfrLlmUKXd
- mgZZTBHwMvz3ca5FWLhZuIpPeq0a8HdF/ayKq4PJc2PWlqGuc6Ew
-X-Google-Smtp-Source: AGHT+IGCYFCrNLgSophewf089Kr3J8Czq5Bz1RUTB/MSGJmbkeZVCUCGxnPtYvh9mh+O09cXiRcVlA==
-X-Received: by 2002:a17:902:e808:b0:223:2aab:462c with SMTP id
- d9443c01a7336-22c358d70femr98442945ad.15.1744910936282; 
- Thu, 17 Apr 2025 10:28:56 -0700 (PDT)
+ AJvYcCX4FjocTtgYpGT+Ok0MFnZ1yi0CsXTnCCPZXZ2tWVl/tLovD0K44zyovYzyjEC59pELVSJp9/4oPM55@nongnu.org
+X-Gm-Message-State: AOJu0Yyww18t51T/rbiIU+fvuhKMbltUxSiE8i8BNYahmt4YCc8Albmk
+ emvnff0CqXwd+FbNsWovZ+pZ8WReafZ2HDoSVVeSpaVNKQYkFoBMUQxRkW0WgOC3bMRd5W6uN6r
+ k
+X-Gm-Gg: ASbGncuVZBlGJZ8gzBvvu7qLRf2mR4Cpvo11A7X7/Kv3skjq5fzLzGUcIWmp8ZMI/lW
+ +ehA7omrt5KLBljey/2NVAJ2X/YhgiS+FlCJQS/9HB/xg/cHv4fdDGNv+AnrrSy7qDbJczYbpYO
+ cYewvzQLKmxMlr+2w5JHKnvgP/Z2yK8xCFLzWgg0XLf8UzmZycLGaiLrK8SjiMKeyTDrMpVvBot
+ J1x41Ww1TB8GxVOj21gbVRIppm2wj2hbwqRVWQiwqw7/8ClN1UK8c+2m05HkVf/bqclbvLl4ODh
+ z7hkZ6n5NNF4HMVuvEKHjLMHZZBaJ0qN8aMeraf9twMP8hh0urko
+X-Google-Smtp-Source: AGHT+IECQTgkNplQ6HE5FwxDdQW7jThzBn4pyDv1wf0M5rlYpf1TzNG1VAJMxXrWExA2QIhj+9FjfQ==
+X-Received: by 2002:a17:902:d4c7:b0:223:33cb:335f with SMTP id
+ d9443c01a7336-22c358bc546mr80984395ad.3.1744910988929; 
+ Thu, 17 Apr 2025 10:29:48 -0700 (PDT)
 Received: from [192.168.0.102] ([186.215.52.65])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fdbc5esm2442985ad.222.2025.04.17.10.28.53
+ d9443c01a7336-22c50eb4a46sm2541035ad.147.2025.04.17.10.29.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 10:28:55 -0700 (PDT)
-Message-ID: <75bfdfcc-d030-4a59-bece-49f422799869@linaro.org>
-Date: Thu, 17 Apr 2025 14:28:52 -0300
+ Thu, 17 Apr 2025 10:29:48 -0700 (PDT)
+Message-ID: <52e9a4fe-e29d-4368-b320-36e00243a080@linaro.org>
+Date: Thu, 17 Apr 2025 14:29:45 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V3 PATCH 01/13] acpi: Implement control method sleep button
+Subject: Re: [RFC V3 PATCH 02/13] test/acpi: allow DSDT table changes for x86
+ platform
 To: annie.li@oracle.com, qemu-devel@nongnu.org
-Cc: mst@redhat.com, paul@xen.org, Jonathan.Cameron@huawei.com, git@dprinz.de, 
- imammedo@redhat.com, miguel.luis@oracle.com
+Cc: mst@redhat.com, imammedo@redhat.com, alistair.francis@wdc.com,
+ sunilvl@ventanamicro.com, ribalda@chromium.org
 References: <20250411201912.2872-1-annie.li@oracle.com>
- <20250411202827.2904-1-annie.li@oracle.com>
+ <20250411203159.2917-1-annie.li@oracle.com>
 Content-Language: en-US
 From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250411202827.2904-1-annie.li@oracle.com>
+In-Reply-To: <20250411203159.2917-1-annie.li@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,115 +108,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Annie,
 
-On 4/11/25 17:28, Annie Li wrote:
-> The fixed hardware sleep button isn't appropriate for hardware
-> reduced platform. This patch implements the control method sleep
-> button in a separate source file so that the button can be added
-> for various platforms.
-> 
-> Co-developed-by: Miguel Luis <miguel.luis@oracle.com>
+On 4/11/25 17:31, Annie Li wrote:
+> list changed files in tests/qtest/bios-tables-test-allowed-diff.h
+
+nit: List
+
+
 > Signed-off-by: Annie Li <annie.li@oracle.com>
 > ---
->   hw/acpi/control_method_device.c         | 33 +++++++++++++++++++++++++
->   hw/acpi/meson.build                     |  1 +
->   include/hw/acpi/control_method_device.h | 21 ++++++++++++++++
->   3 files changed, 55 insertions(+)
+>   tests/qtest/bios-tables-test-allowed-diff.h | 42 +++++++++++++++++++++
+>   1 file changed, 42 insertions(+)
 > 
-> diff --git a/hw/acpi/control_method_device.c b/hw/acpi/control_method_device.c
-> new file mode 100644
-> index 0000000000..c3b1d484c4
-> --- /dev/null
-> +++ b/hw/acpi/control_method_device.c
-> @@ -0,0 +1,33 @@
-> +/*
-> + * Control Method Device
-> + *
-> + * Copyright (c) 2023 Oracle and/or its affiliates.
-> + *
-> + *
-> + * Authors:
-> + *     Annie Li <annie.li@oracle.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/acpi/control_method_device.h"
-> +#include "hw/mem/nvdimm.h"
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..a1047913af 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,43 @@
+>   /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/x86/pc/DSDT",
+> +"tests/data/acpi/x86/pc/DSDT.acpierst",
+> +"tests/data/acpi/x86/pc/DSDT.acpihmat",
+> +"tests/data/acpi/x86/pc/DSDT.bridge",
+> +"tests/data/acpi/x86/pc/DSDT.cphp",
+> +"tests/data/acpi/x86/pc/DSDT.dimmpxm",
+> +"tests/data/acpi/x86/pc/DSDT.hpbridge",
+> +"tests/data/acpi/x86/pc/DSDT.hpbrroot",
+> +"tests/data/acpi/x86/pc/DSDT.ipmikcs",
+> +"tests/data/acpi/x86/pc/DSDT.memhp",
+> +"tests/data/acpi/x86/pc/DSDT.nohpet",
+> +"tests/data/acpi/x86/pc/DSDT.numamem",
+> +"tests/data/acpi/x86/pc/DSDT.roothp",
+> +"tests/data/acpi/x86/q35/DSDT",
+> +"tests/data/acpi/x86/q35/DSDT.acpierst",
+> +"tests/data/acpi/x86/q35/DSDT.acpihmat",
+> +"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
+> +"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
+> +"tests/data/acpi/x86/q35/DSDT.applesmc",
+> +"tests/data/acpi/x86/q35/DSDT.bridge",
+> +"tests/data/acpi/x86/q35/DSDT.core-count",
+> +"tests/data/acpi/x86/q35/DSDT.core-count2",
+> +"tests/data/acpi/x86/q35/DSDT.cphp",
+> +"tests/data/acpi/x86/q35/DSDT.cxl",
+> +"tests/data/acpi/x86/q35/DSDT.dimmpxm",
+> +"tests/data/acpi/x86/q35/DSDT.ipmibt",
+> +"tests/data/acpi/x86/q35/DSDT.ipmismbus",
+> +"tests/data/acpi/x86/q35/DSDT.ivrs",
+> +"tests/data/acpi/x86/q35/DSDT.memhp",
+> +"tests/data/acpi/x86/q35/DSDT.mmio64",
+> +"tests/data/acpi/x86/q35/DSDT.multi-bridge",
+> +"tests/data/acpi/x86/q35/DSDT.noacpihp",
+> +"tests/data/acpi/x86/q35/DSDT.nohpet",
+> +"tests/data/acpi/x86/q35/DSDT.numamem",
+> +"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
+> +"tests/data/acpi/x86/q35/DSDT.thread-count",
+> +"tests/data/acpi/x86/q35/DSDT.thread-count2",
+> +"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
+> +"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
+> +"tests/data/acpi/x86/q35/DSDT.type4-count",
+> +"tests/data/acpi/x86/q35/DSDT.viot",
+> +"tests/data/acpi/x86/q35/DSDT.xapic",
 
-NVDIMM is out of context here, please use:
-
-#include "hw/acpi/aml-build.h"
-
-instead for the aml_* symbols.
-
-
-> +/*
-> + * The control method sleep button[ACPI v6.5 Section 4.8.2.2.2.2]
-> + * resides in generic hardware address spaces. The sleep button
-> + * is defined as _HID("PNP0C0E") that associates with device "SLPB".
-> + */
-> +void acpi_dsdt_add_sleep_button(Aml *scope)
-> +{
-> +    Aml *dev = aml_device(ACPI_SLEEP_BUTTON_DEVICE);
-> +    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0E")));
-
-I see that since GPE event handler L07 will be tied to the sleep button
-device there is no _PRW variable defined here. Do you mind adding a comment
-here about it? Something like:
-
-/* No _PRW, the sleeping button device is always tied to GPE L07 event handler. */
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
 
 Cheers,
 Gustavo
-
-> +    aml_append(dev, aml_operation_region("\\SLP", AML_SYSTEM_IO,
-> +                                         aml_int(0x201), 0x1));
-> +    Aml *field = aml_field("\\SLP", AML_BYTE_ACC, AML_NOLOCK,
-> +                           AML_WRITE_AS_ZEROS);
-> +    aml_append(field, aml_named_field("SBP", 1));
-> +    aml_append(dev, field);
-> +    aml_append(scope, dev);
-> +}
-> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-> index 73f02b9691..a62e625cef 100644
-> --- a/hw/acpi/meson.build
-> +++ b/hw/acpi/meson.build
-> @@ -17,6 +17,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('c
->   acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
-> +acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('control_method_device.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
->   acpi_ss.add(when: 'CONFIG_ACPI_PIIX4', if_true: files('piix4.c'))
-> diff --git a/include/hw/acpi/control_method_device.h b/include/hw/acpi/control_method_device.h
-> new file mode 100644
-> index 0000000000..079f1a74dd
-> --- /dev/null
-> +++ b/include/hw/acpi/control_method_device.h
-> @@ -0,0 +1,21 @@
-> +/*
-> + * Control Method Device
-> + *
-> + * Copyright (c) 2023 Oracle and/or its affiliates.
-> + *
-> + *
-> + * Authors:
-> + *     Annie Li <annie.li@oracle.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +
-> +#ifndef HW_ACPI_CONTROL_METHOD_DEVICE_H
-> +#define HW_ACPI_CONTROL_NETHOD_DEVICE_H
-> +
-> +#define ACPI_SLEEP_BUTTON_DEVICE "SLPB"
-> +
-> +void acpi_dsdt_add_sleep_button(Aml *scope);
-> +
-> +#endif
-
 
