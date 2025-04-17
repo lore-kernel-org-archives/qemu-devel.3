@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60435C369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 21:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8541DC369D0
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 21:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Wpb-0007MX-A5; Thu, 17 Apr 2025 17:31:35 -0400
+	id 1u5WpT-0007L7-1z; Thu, 17 Apr 2025 17:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5WpW-0007M0-N4
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 17:31:31 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5WpR-0007Ks-KJ
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 17:31:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5WpU-0000W0-Vl
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 17:31:30 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u5WpO-0000Ul-QE
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 17:31:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744925488;
+ s=mimecast20190719; t=1744925481;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=f/b85gJL7xVHanuZJX/dXUtQRv8HVdyerj2fpryzRbk=;
- b=ad6FZOwPR9vVAV0R/KaT4SScCBIBdaX0Eud7D01MxoREZqObLJJrmlIffCGHjXi5GLMn/R
- zAGbKqc2nyUXL3dbIEAOQpQnybUbrNXmFDAHteOnFEko5Y3rSoWX5aFyiFJxTyqDnG1c/l
- vEN5+ovz9DR3MAbrdtiVw87a6UfknXM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=UmLGDH1nX2+M38G//F2H+1ywzKQwloPv3mqbaFuXncE=;
+ b=JWMQf8CQusi+kip2N3SZXlylpHk4ZAboiwniv7AYt4A53sGOl+u6Z7fAaJ/GV5qI4UqaRf
+ doNyyQwOGVj9kXW2Ym325jGE6S0h8ZPD7lvE2N8wq+607sH1d6LQvHuwYlqMyVOunaOIlG
+ JBZhhcrZfLMLOilR0jcysw93eP06P54=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-VirdACRqPDmLjXwO60e9CA-1; Thu,
- 17 Apr 2025 17:31:25 -0400
-X-MC-Unique: VirdACRqPDmLjXwO60e9CA-1
-X-Mimecast-MFC-AGG-ID: VirdACRqPDmLjXwO60e9CA_1744925484
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-0t1SjGnGNC6FTKFLbiVIYw-1; Thu,
+ 17 Apr 2025 17:31:19 -0400
+X-MC-Unique: 0t1SjGnGNC6FTKFLbiVIYw-1
+X-Mimecast-MFC-AGG-ID: 0t1SjGnGNC6FTKFLbiVIYw_1744925478
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01A0D18004A7; Thu, 17 Apr 2025 21:31:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 583C3195608E; Thu, 17 Apr 2025 21:31:18 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.220])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 19F3619560A3; Thu, 17 Apr 2025 21:31:20 +0000 (UTC)
+ id 6B1B719560A3; Thu, 17 Apr 2025 21:31:15 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>
-Subject: [PATCH v2 2/5] docs/qapidoc: linting fixes
-Date: Thu, 17 Apr 2025 17:31:11 -0400
-Message-ID: <20250417213114.2336239-3-jsnow@redhat.com>
-In-Reply-To: <20250417213114.2336239-1-jsnow@redhat.com>
-References: <20250417213114.2336239-1-jsnow@redhat.com>
+Subject: [PATCH v2 0/5] python: add QAPI and qapidoc et al to python linter
+ tests
+Date: Thu, 17 Apr 2025 17:31:09 -0400
+Message-ID: <20250417213114.2336239-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -84,118 +83,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This restores the linting baseline in qapidoc. The order of some imports
-change slightly here due to configuring isort a little better:
-previously, isort was having difficulty understanding that "compat" and
-"qapidoc_legacy" were local modules because docs/sphinx "isn't a python
-package". Configuring this manually, isort chooses a different import
-ordering, which _is_ intentional here.
-
-Also: extra ignores are added for pylint. The most recent versions of
-pylint don't require these ignores, but the oldest versions we support
-do, so in the extra ignores go.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- docs/sphinx/qapi_domain.py | 25 ++++++++++++++-----------
- docs/sphinx/qapidoc.py     |  5 +++--
- 2 files changed, 17 insertions(+), 13 deletions(-)
-
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index c94af5719ca..ebc46a72c61 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -20,16 +20,6 @@
- 
- from docutils import nodes
- from docutils.parsers.rst import directives
--
--from compat import (
--    CompatField,
--    CompatGroupedField,
--    CompatTypedField,
--    KeywordNode,
--    ParserFix,
--    Signature,
--    SpaceNode,
--)
- from sphinx import addnodes
- from sphinx.directives import ObjectDescription
- from sphinx.domains import (
-@@ -44,6 +34,16 @@
- from sphinx.util.docutils import SphinxDirective
- from sphinx.util.nodes import make_id, make_refnode
- 
-+from compat import (
-+    CompatField,
-+    CompatGroupedField,
-+    CompatTypedField,
-+    KeywordNode,
-+    ParserFix,
-+    Signature,
-+    SpaceNode,
-+)
-+
- 
- if TYPE_CHECKING:
-     from typing import (
-@@ -56,7 +56,6 @@
-     )
- 
-     from docutils.nodes import Element, Node
--
-     from sphinx.addnodes import desc_signature, pending_xref
-     from sphinx.application import Sphinx
-     from sphinx.builders import Builder
-@@ -168,6 +167,8 @@ class QAPIDescription(ParserFix):
-     """
- 
-     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-+        # pylint: disable=unused-argument
-+
-         # Do nothing. The return value here is the "name" of the entity
-         # being documented; for QAPI, this is the same as the
-         # "signature", which is just a name.
-@@ -210,6 +211,8 @@ def _get_fqn(self, name: Signature) -> str:
-     def add_target_and_index(
-         self, name: Signature, sig: str, signode: desc_signature
-     ) -> None:
-+        # pylint: disable=unused-argument
-+
-         # name is the return value of handle_signature.
-         # sig is the original, raw text argument to handle_signature.
-         # For QAPI, these are identical, currently.
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 661b2c4ed0e..8011ac9efaf 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -27,6 +27,7 @@
- 
- from __future__ import annotations
- 
-+
- __version__ = "2.0"
- 
- from contextlib import contextmanager
-@@ -56,8 +57,6 @@
-     QAPISchemaVisitor,
- )
- from qapi.source import QAPISourceInfo
--
--from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
- from sphinx import addnodes
- from sphinx.directives.code import CodeBlock
- from sphinx.errors import ExtensionError
-@@ -65,6 +64,8 @@
- from sphinx.util.docutils import SphinxDirective, switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- 
-+from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
-+
- 
- if TYPE_CHECKING:
-     from typing import (
--- 
-2.48.1
+Hiya, this series turns on automated linting for scripts/qapi,=0D
+docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.=0D
+=0D
+This includes flake8/isort/pylint/mypy for scripts/qapi, but omits mypy=0D
+from the Sphinx plugins owing to my inability to strictly type the=0D
+extensions given the wide versions of Sphinx we actually support.=0D
+=0D
+Though I have been using black in my own development, I have not yet=0D
+enabled it anywhere automatically. Maybe soon.=0D
+=0D
+V2:=0D
+ - Mostly commit message updates based on Markus's's's review.=0D
+=0D
+John Snow (5):=0D
+  qapi: Add some pylint ignores=0D
+  docs/qapidoc: linting fixes=0D
+  python: update missing dependencies from minreqs=0D
+  python: add qapi static analysis tests=0D
+  qapi: delete un-needed python static analysis configs=0D
+=0D
+ docs/sphinx/qapi_domain.py  | 25 ++++++++++++++-----------=0D
+ docs/sphinx/qapidoc.py      |  5 +++--=0D
+ python/setup.cfg            |  1 +=0D
+ python/tests/minreqs.txt    | 25 +++++++++++++++++++++++++=0D
+ python/tests/qapi-flake8.sh |  4 ++++=0D
+ python/tests/qapi-isort.sh  |  6 ++++++=0D
+ python/tests/qapi-mypy.sh   |  2 ++=0D
+ python/tests/qapi-pylint.sh |  6 ++++++=0D
+ scripts/qapi/.flake8        |  3 ---=0D
+ scripts/qapi/.isort.cfg     |  7 -------=0D
+ scripts/qapi/backend.py     |  2 ++=0D
+ scripts/qapi/mypy.ini       |  4 ----=0D
+ scripts/qapi/pylintrc       |  1 +=0D
+ 13 files changed, 64 insertions(+), 27 deletions(-)=0D
+ create mode 100755 python/tests/qapi-flake8.sh=0D
+ create mode 100755 python/tests/qapi-isort.sh=0D
+ create mode 100755 python/tests/qapi-mypy.sh=0D
+ create mode 100755 python/tests/qapi-pylint.sh=0D
+ delete mode 100644 scripts/qapi/.flake8=0D
+ delete mode 100644 scripts/qapi/.isort.cfg=0D
+ delete mode 100644 scripts/qapi/mypy.ini=0D
+=0D
+-- =0D
+2.48.1=0D
+=0D
 
 
