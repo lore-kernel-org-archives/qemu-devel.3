@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA2B2C369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 13:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81231C369C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 13:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5P1U-0005xc-1t; Thu, 17 Apr 2025 09:11:21 -0400
+	id 1u5P0p-0005ft-2B; Thu, 17 Apr 2025 09:10:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5P0j-0005dL-Ni
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 09:10:34 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5P0Z-0005TW-81
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 09:10:24 -0400
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5P0h-0007wd-7s
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 09:10:32 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5P0V-0007tx-ON
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 09:10:22 -0400
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43d04ea9d9aso3611295e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 06:10:30 -0700 (PDT)
+ 5b1f17b1804b1-43cf848528aso5880675e9.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 06:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744895429; x=1745500229; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744895415; x=1745500215; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XCjGM8gwQ/EmIYgFRxP35ULYOynfX81xOLUnM2jN7fw=;
- b=s573tsHamaVdsCET+qrHl9ao9vGH3uEMRD/Nlp1mdlnbjr8dPl5O2vj5+oLty6oCCx
- YLHYM1flD0HhaDNmVTKYt7uuxCSd5MUqzR3f6XpLvM5RP64IhvHkmctSdm+1l28W2A2Q
- +v6Y8GMbkXW2aX0bwYoh24dPz9Ix6XVJ/y2FKQ1vqgQ+7C5C+o+qFXS0Ah20TV8mUW5K
- apCQYFgzTOEWBkd81JxG+5TpcO+Y9PqQ20SCMXo096hzvP0gUQCDTbH3LeIzbYfMfi8z
- X+xhceN/61jrpbw10IhTE5RXr3lD8IZ56oC1M5Znw47Z+8Z3itMoWuwzOLshS/xm7Npv
- V/6Q==
+ bh=Uw5NN7Xo5UOrJyhClnps6dKALo3bScAPHLwVEEE8AFY=;
+ b=bVN3uCWA6o/P4xnhLY/AI6/kxPGoRfRi3wl03rh7l1mfJ4/VW8x1qd7wjRHkL6uGWj
+ perX4v51F6E6grVda2KgshTRE/xWQrh6KT2Fj9ymkNSnuOAWG46IaTE0NvZjTHXS0Ljt
+ 1pCv2nkdUm+ynnCMQXQDnTtPdJIBzO+7m+6itnoDo1ltbyvihsSz0MQmhWZvM1OV+JxY
+ VHyfAmhng0SjMTq7haMn1DznqrUOKjDJRig9MRDZVRtH6dJZJJfPfnPhEmVOimHYh/vG
+ HaHAfNsoC4wMrOwM1R4H1PiBL0s5T7xcDcT5Gz5wl7VegLMF3fj72ONVJNtBYrmyBjRX
+ n3gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744895429; x=1745500229;
+ d=1e100.net; s=20230601; t=1744895415; x=1745500215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XCjGM8gwQ/EmIYgFRxP35ULYOynfX81xOLUnM2jN7fw=;
- b=dPbFavMIPJCuzVUx/yqGeGmnqepQZXU8DOPv9tXq4xDMYq+YFK360zEvwb5zRjNgLO
- BmBq5oIgm7FsZwNRQrMZ8xht4rdUPRHeALrfSKj9gI3icwrp8xuYpHoRH+fUDMd27Vsq
- 6WJlALAfbx3ZWyxVAxkuVDiC/NWZ3eMnIZTS6uu6hktcBs6d20cRvR3SeYukhBmnWYEL
- ZJLxJzuedqmj4WJVEQiPdUSyAJl4lyQojPxdc2Uc8DxDeiI2tIF39gd0Ux3XeWJH7vb+
- DO13TvbnyH3ySNt9mwPV8Th/Gs7k/BmGVskNTSSdv6CGDGmZLCjo4gEVUCjvvs1k+m9h
- vlHg==
-X-Gm-Message-State: AOJu0Yyh/mhDlT3VFHpBoSi9C9D3IahhdNwI3zVmFlk7H4BOtcZr3hEm
- 9X2jkTlHzVgV5tKl83fYBHl5me+/JjcG6utVc/D931v3T0sA/1Wo3zMt5ptGnTAIEjdAtkjFdT5
- c
-X-Gm-Gg: ASbGnct9o3m2q5MYDs8uv4kqzruZjg+v7lSN4RGx0gGeBwhqnxtZNEqUbai9qgXnoqf
- Sz30hxdXEKH8aphcqSxdhiY5vFdHFffLzyTosZBvU0fvVN5j6ydebe8gXCBQ3lw9sxB1QZxziSW
- FXpuROaob1h59i3FYV1qhTq7mNN0IOyDHJuzfdOSQxqNbO+2eugMcJ9rGlMVwKQWiOvJkMIBIqk
- vUou+mbDMMuDNHxfdzWPB1lmemC77pSei9TkZ/3lto6XeYzW2z/ZFMBs5IU+RMwi6jv+Qx2oqvW
- Pz46mCxmBDlTj/Zo4iRfjOQyJBaw77WDqN1CnphtWiqhxG7xZuRKCnQVMcJ+tIUvFkbHmLrf0+q
- 0lsm/kYveKOjJ5vk=
-X-Google-Smtp-Source: AGHT+IE290OeOl6Fu8sSkGbhms3Sogoc1NuKbIsaBRa73hdX95qte9ONh3P+5pOo6XDVY35IQ85Flw==
-X-Received: by 2002:a05:600c:5107:b0:43c:eeee:b70a with SMTP id
- 5b1f17b1804b1-4405d6aaeb9mr46089045e9.22.1744895429160; 
- Thu, 17 Apr 2025 06:10:29 -0700 (PDT)
+ bh=Uw5NN7Xo5UOrJyhClnps6dKALo3bScAPHLwVEEE8AFY=;
+ b=JWUGE99Oo9X/06iB9adg7sajrI+D7mp1FXpqNB6nsrD3YOH1NgwPyVkTGateAhn3Mo
+ q4Yw3Qj3mMGcY431Z9AkvyP32e9+ltZrbbJUdWBaehMtr8b21hBRSbLit+qg3GLdTfwh
+ 4T6C12Zh1J/P3zq3tb3T97XdYAJLS/MtiRTYUedXstN1fNH4ALU8hxFLv1WjKYzqv7oo
+ f3niXeZ1lq15NzHLcziWEAbVdfJyj0FOHCf+rbBwDPeALSWhbDAPjBL+liPg4z3QrjWf
+ mTqNDEgGhma81+yQTsx5wgyubN/xfiXQHWACm4HIZyadtIPfzaPsRw3/b7b95MMuTOOM
+ njsg==
+X-Gm-Message-State: AOJu0YxqS1cLvjVx4qIvWF1caVlnN23ty8O/ZujOBy4vNj7mJLmZaGog
+ 0BH8qe/RiZSVes6yZS52oQjr4prC1lW7ubNa+pjZuqa866tSavCanJjXncvpi25/TmlJoINlLNt
+ X
+X-Gm-Gg: ASbGncuLt0AL9v2dkXk6QE6zHhDzBQ8BLnpt8sMhugV8YqhtHKU6t2jOMiObI4DzRuf
+ BYVgNdVUxBKEWx5eUgTjyRy58lnEU1DRIa8bElH2igWJWlc14sFBnGB2/q3HpIGJTPJgFnWxsiT
+ p0nPp6IRHJO3zBZqQNhZQrXr7ysCyzD2jiWisYkzGSvL1NqK+0ync45Bn2hpVRR68qsMNKMu34j
+ JLkmxFbNYWTw3Qj2UpLxLq4ykwGEP/7OZAVOtuxT9fWGXenq3wgxf/27sN5TJBiZZvzNwRMa+J8
+ zDn9In1R83HqwgwBeHbhrFsygAPmUisbvuXcBw7W/xP+TAvuGgOTS86eOwn+X7TBCRaJK5XsPF9
+ ES3xV9F49TgKCJT8=
+X-Google-Smtp-Source: AGHT+IFNB9mzDknxD9OlmHxbJ96LDCXMMXdb0R0o74lJrExCbfJUCOkuLnEsFNrsnOiZARj5fzGKug==
+X-Received: by 2002:a05:600c:4f8e:b0:43d:fa:1f9a with SMTP id
+ 5b1f17b1804b1-4405d6cea58mr56540255e9.30.1744895415445; 
+ Thu, 17 Apr 2025 06:10:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eaf4457a6sm20402214f8f.98.2025.04.17.06.10.28
+ 5b1f17b1804b1-4405b4d3453sm52906815e9.16.2025.04.17.06.10.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 17 Apr 2025 06:10:28 -0700 (PDT)
+ Thu, 17 Apr 2025 06:10:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/8] target/xtensa: Evaluate TARGET_BIG_ENDIAN at compile time
-Date: Thu, 17 Apr 2025 15:10:01 +0200
-Message-ID: <20250417131004.47205-6-philmd@linaro.org>
+Subject: [PATCH 2/8] accel/kvm: Use target_needs_bswap()
+Date: Thu, 17 Apr 2025 15:09:58 +0200
+Message-ID: <20250417131004.47205-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250417131004.47205-1-philmd@linaro.org>
 References: <20250417131004.47205-1-philmd@linaro.org>
@@ -100,33 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than evaluating TARGET_BIG_ENDIAN at preprocessing
-time via #ifdef'ry, do it in C at compile time
+Check whether we need to swap at runtime using
+target_needs_bswap().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/translate.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ accel/kvm/kvm-all.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
-index 5ebd4a512c9..2af83c07c2e 100644
---- a/target/xtensa/translate.c
-+++ b/target/xtensa/translate.c
-@@ -1395,11 +1395,11 @@ static void translate_bbi(DisasContext *dc, const OpcodeArg arg[],
-                           const uint32_t par[])
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 7c5d1a98bc4..28a32afb209 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -33,6 +33,7 @@
+ #include "system/cpus.h"
+ #include "system/accel-blocker.h"
+ #include "qemu/bswap.h"
++#include "exec/tswap.h"
+ #include "system/memory.h"
+ #include "system/ram_addr.h"
+ #include "qemu/event_notifier.h"
+@@ -1319,21 +1320,21 @@ bool kvm_hwpoisoned_mem(void)
+ 
+ static uint32_t adjust_ioeventfd_endianness(uint32_t val, uint32_t size)
  {
-     TCGv_i32 tmp = tcg_temp_new_i32();
--#if TARGET_BIG_ENDIAN
--    tcg_gen_andi_i32(tmp, arg[0].in, 0x80000000u >> arg[1].imm);
--#else
--    tcg_gen_andi_i32(tmp, arg[0].in, 0x00000001u << arg[1].imm);
+-#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
+-    /* The kernel expects ioeventfd values in HOST_BIG_ENDIAN
+-     * endianness, but the memory core hands them in target endianness.
+-     * For example, PPC is always treated as big-endian even if running
+-     * on KVM and on PPC64LE.  Correct here.
+-     */
+-    switch (size) {
+-    case 2:
+-        val = bswap16(val);
+-        break;
+-    case 4:
+-        val = bswap32(val);
+-        break;
++    if (target_needs_bswap()) {
++        /* The kernel expects ioeventfd values in HOST_BIG_ENDIAN
++         * endianness, but the memory core hands them in target endianness.
++         * For example, PPC is always treated as big-endian even if running
++         * on KVM and on PPC64LE.  Correct here, swapping back.
++         */
++        switch (size) {
++        case 2:
++            val = bswap16(val);
++            break;
++        case 4:
++            val = bswap32(val);
++            break;
++        }
+     }
 -#endif
-+    if (TARGET_BIG_ENDIAN) {
-+        tcg_gen_andi_i32(tmp, arg[0].in, 0x80000000u >> arg[1].imm);
-+    } else {
-+        tcg_gen_andi_i32(tmp, arg[0].in, 0x00000001u << arg[1].imm);
-+    }
-     gen_brcondi(dc, par[0], tmp, 0, arg[2].imm);
+     return val;
  }
  
 -- 
