@@ -4,106 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0BFC369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5595C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5NYj-0004cG-3z; Thu, 17 Apr 2025 07:37:33 -0400
+	id 1u5Nbe-0006eh-HV; Thu, 17 Apr 2025 07:40:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u5NYg-0004bk-3W
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:37:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1u5Nbb-0006co-H8
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:40:32 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u5NYd-00035b-3i
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:37:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744889845;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=omXWP0DV8EaQ2tVSFFZE6IzH9CWefJQxeK3N5sFdXiY=;
- b=NyZcz7SKGN8ottQtN+HBFudygm+1UegPOPEMoKyZbeSnqtqy/FAq2nIQ13HcGojujJ2ZOu
- HiDvo72SA/UIMEiFGFuawzx/8As/2LLfi+ZTb0c0pSTh+x+IkijYDe9iOprLL62l1CQgu/
- gT8TkWDoi2hdEW0SgBqSU2pUpT+9Low=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-rkXmdYoVMY-hGnulZBgpfA-1; Thu, 17 Apr 2025 07:37:23 -0400
-X-MC-Unique: rkXmdYoVMY-hGnulZBgpfA-1
-X-Mimecast-MFC-AGG-ID: rkXmdYoVMY-hGnulZBgpfA_1744889843
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913b2d355fso268465f8f.1
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 04:37:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744889843; x=1745494643;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=omXWP0DV8EaQ2tVSFFZE6IzH9CWefJQxeK3N5sFdXiY=;
- b=DuXixsLR4H9qsqczSfF0qF5OD0wzvScSvjefprz/JVY3GqdZXmri0JP5PTmfueySeN
- GChs0eLUBWCeRtHCNjMxBV/UAMSaHr3UhEnAM9pmRlfaT1OTnAfINFS23jzvrjqtyXJL
- 3FUUNtiZYtSEB1WxLbufYyTHFXBrhu/8t2NhKtqLOrwzrkhWtjaDQXUKsDBRqsHWbb9b
- Gi1NrInUYVCRvUqXOTmVpMBfbDvPu9qoXF8V4JNNVZTSmnjLiCihe1lUMiNTT+EOaRVQ
- UUtA68q2R3ryhWRnMmtz5rt3na68wxXYf1+V70GIFluboBfIO5I23Nrln0RMoBvGoCCL
- hgHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1ZVQ0Hl7jorvFOf49IKhm4+w4ea9SUhH12F671IS6iqhPsQmOP2S4V5OVMErAofOq+lhB1cmCx39q@nongnu.org
-X-Gm-Message-State: AOJu0Yzem9yWbiQ7IPtR03jTBASyfYwSN/zUudC/CXiIaeUkM9j4oCbw
- FfscMSPr/6LMYEwYUzcrGFiDoqT+dOCz2tTLhSx/TvxoijT1SZKrNjGUMJR1AI/Iun9BwDZmgcm
- q4IwvYspv4I6N3UFT1NajQFe+4tiaV2GVh3Yaxqk8d14dgWt0UJ+0
-X-Gm-Gg: ASbGncvYJl/RYWcC8Rtfj5xa47W2ucpgQZJq8D3KExqM92+VEg7sVN2iL7tVkxRhvgr
- r1A3twjqZdajJ0K9QPxo/ewp8FP/aOwIOlHLPyhI+e+F9ZwaaLDkMXOEJDXVx/YbA8vM2cvC9AT
- kfOBbL65+QmnmEKgSL0QdPhIvD9ntJq0RSczCeCaj+INeS0B8cMO/chNa71JyWDo30tqVp0BvTc
- FHaBitfHmWSMi9KKxIzyDFYuhD00EfJPWTUuXAjlmGLSeos8Yd0JeCzbiobBQOZNMbQ0tUsrV8q
- SyYnMg==
-X-Received: by 2002:a05:6000:1acb:b0:391:a74:d7dc with SMTP id
- ffacd0b85a97d-39ee5bad723mr4490488f8f.50.1744889842738; 
- Thu, 17 Apr 2025 04:37:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmWt+56eTzjT0pAD+JsIgH4fY69YphLpS8MraQQKYLQrXbhpppRN6OOMqgAPXPkxEZJk5KWA==
-X-Received: by 2002:a05:6000:1acb:b0:391:a74:d7dc with SMTP id
- ffacd0b85a97d-39ee5bad723mr4490469f8f.50.1744889842417; 
- Thu, 17 Apr 2025 04:37:22 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eae9807b7sm19982826f8f.60.2025.04.17.04.37.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Apr 2025 04:37:21 -0700 (PDT)
-Date: Thu, 17 Apr 2025 07:37:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH v2 0/3] virtio-gpu: fix blob unmapping sequence
-Message-ID: <20250417073708-mutt-send-email-mst@kernel.org>
-References: <20250410122643.1747913-1-manos.pitsidianakis@linaro.org>
- <87v7r5clft.fsf@draig.linaro.org>
- <20250416145701-mutt-send-email-mst@kernel.org>
- <87jz7jcj4n.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1u5NbX-0003fF-Ny
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:40:31 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c11:4195:0:640:137b:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3F74360E85;
+ Thu, 17 Apr 2025 14:40:22 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6b8:b081:8014::1:10])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id FeHLbV5FamI0-rsqcvn0f; Thu, 17 Apr 2025 14:40:21 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1744890021;
+ bh=lRTA0dnyXW+bE/I759jXbwr6fCfRClqebKvBuqzXPYs=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=r5LizdYJGkAXNXNHT1czjAQpqjSvX9Vho0osO8e2nw/bT5iTvGuZAEq5Wkufk+/ZD
+ QCdgHE0D4Den66mAn3XbXqQPtMEbRRphUT48sT+DJ5pr3iOcDS5ixk+uGVed+xuKSp
+ WtnLvcfjwkT7ye1CTX/gIi7ylXqXPnOtLNUuA1Pc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>,
+ "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v6 0/2] tests/functional: add memlock tests
+Date: Thu, 17 Apr 2025 16:40:07 +0500
+Message-Id: <20250417114008.169350-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87jz7jcj4n.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -115,31 +76,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 17, 2025 at 09:00:40AM +0100, Alex Bennée wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Tue, Apr 15, 2025 at 07:46:14PM +0100, Alex Bennée wrote:
-> >> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
-> >> 
-> >> > A hang was observed when running a small kernel that exercised VIRTIO 
-> >> > GPU under TCG. This is an edge-case and won't happen under typical 
-> >> > conditions.
-> >> 
-> >> Should I (or MST?) pull these into a tree for 10.0 or should they be
-> >> grabbed for when the tree opens with a Cc qemu-stable?
-> >
-> >
-> > Let's just agree who takes them, then it's up to that maintainer.
-> > You wanna merge them?
-> 
-> I'm happy to take them, I'll cc stable when the tree opens up again.
+Add new tests to check the correctness of the `-overcommit memlock`
+option (possible values: off, on, on-fault) by using
+`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
+anonymous segments:
+
+* if `memlock=off`, then Locked = 0 on every anonymous smaps;
+* if `memlock=on`, then Size, Rss and Locked values must be equal for
+every anon smaps where Rss is not 0;
+* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
+smaps and anonymous segment with Rss < Size must exists.
+
+---
+
+v5 -> v6:
+* add python3 shebang to tests/functional/test_memlock.py
+
+v4 -> v5:
+* refactor skipLockedMemoryTest decorator: using resource.getrlimit()
+  function instead of spawning a process
+
+v3 -> v4:
+* add skipLockedMemoryTest decorator to skip test if system's locked
+  memory limit is below the required threashold;
+* add to MemlockTest skipLockedMemoryTest decorator with 2 GB limit.
+
+v2 -> v3:
+Move tests to tests/functional dir, as the tests/avocado dir is being phased out.
+v2 was [PATCH v2] tests/avocado: add memlock tests.
+Supersedes: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
+
+v1 -> v2:
+In the previous send, i forgot to specify new patch version (v2)
+So i resend previous patch with version specified.
 
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Alexandr Moshkov (2):
+  tests/functional: add skipLockedMemoryTest decorator
+  tests/functional: add memlock tests
 
+ tests/functional/meson.build             |   1 +
+ tests/functional/qemu_test/__init__.py   |   2 +-
+ tests/functional/qemu_test/decorators.py |  18 ++++
+ tests/functional/test_memlock.py         | 104 +++++++++++++++++++++++
+ 4 files changed, 124 insertions(+), 1 deletion(-)
+ create mode 100755 tests/functional/test_memlock.py
 
-> -- 
-> Alex Bennée
-> Virtualisation Tech Lead @ Linaro
+-- 
+2.34.1
 
 
