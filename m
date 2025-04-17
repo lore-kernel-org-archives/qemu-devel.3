@@ -4,102 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC28DC369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 19:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69C2CC369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 20:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5VMY-0005n5-Ou; Thu, 17 Apr 2025 15:57:30 -0400
+	id 1u5Vgp-0004ch-Bn; Thu, 17 Apr 2025 16:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1u5VMV-0005mJ-GE; Thu, 17 Apr 2025 15:57:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u5Vgd-0004aO-H6
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 16:18:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1u5VMT-00031q-Et; Thu, 17 Apr 2025 15:57:27 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HA4Fwo003094;
- Thu, 17 Apr 2025 19:57:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=X/GenB
- XaQaTTKnXuLcEi3xlPy6OPsvadj8VvgPfHqas=; b=idoenoP668nDZuPMQxVhhE
- rMBNMfU3JIjjadoDygC6jsWAkW3n/T2AQBLgUURpTyTbNbam/ilBFKgshAhV9coS
- NmhNHyUXWBF/ez/OFVQtX7pHU9oejv2hoGJykqf2DZpMM9J0b8S8/qUyHJLXvwrS
- oedokOwlvhIxNoUFV/WajOMfjGzuPrSEKzfLTC3C3LyjxPREooGWkUpykWZco37Y
- dJ2qrqb8PA4W2t074TvzR78xcJ4gtTP3WViybBCSIs1PtmH11c0k3PrWhFORFVlq
- tQG9EJY/Y5Iq6OhU4ZKT/Zx4J+d0wlca40J/rze5acJVJ6coqa4lyh/TJKCgLbzg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462yjjave0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 19:57:21 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53HI7uX9017183;
- Thu, 17 Apr 2025 19:57:20 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040m79c3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 19:57:20 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53HJvIYS20775490
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Apr 2025 19:57:18 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C547558056;
- Thu, 17 Apr 2025 19:57:18 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1F53F5803F;
- Thu, 17 Apr 2025 19:57:18 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 17 Apr 2025 19:57:18 +0000 (GMT)
-Message-ID: <323c18f2-208f-4818-a95f-ac6ae068ea88@linux.ibm.com>
-Date: Thu, 17 Apr 2025 15:57:17 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u5Vgb-0008Fg-CP
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 16:18:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744921090;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=S169KlWxRQo9hncQNecpTrNwZ2FiQ516JGK2iYkkeN0=;
+ b=VWy+z1gpFMd8XQokNkGgLfBRFbjqEgjjnn+Fr7odqGUpzgLtyOx3Hp5CYIyz8pwd0fE5fF
+ dtq8iSxXYnVOdZr7yhv/PrPAJRIVWb3MxCY+srS/p2iMp9opQuI8Yrw4PLizRNb9O1BXT0
+ YscfaZr4YDo+DktMw/fxKbKNQPF2Rn8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-204-wC4lPL8eNYai9q32KesD2g-1; Thu,
+ 17 Apr 2025 16:18:07 -0400
+X-MC-Unique: wC4lPL8eNYai9q32KesD2g-1
+X-Mimecast-MFC-AGG-ID: wC4lPL8eNYai9q32KesD2g_1744921085
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B0AC1955DCD; Thu, 17 Apr 2025 20:18:04 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.64])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BB567180047F; Thu, 17 Apr 2025 20:17:56 +0000 (UTC)
+Date: Thu, 17 Apr 2025 16:17:55 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, vsementsov@yandex-team.ru,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ John Snow <jsnow@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Lieven <pl@dlhnet.de>,
+ "Denis V. Lunev" <den@openvz.org>, Alberto Garcia <berto@igalia.com>,
+ Ilya Dryomov <idryomov@gmail.com>, Stefan Weil <sw@weilnetz.de>,
+ "open list:GLUSTER" <integration@gluster.org>
+Subject: Re: [PATCH v2 01/11] block: Expand block status mode from bool to enum
+Message-ID: <20250417201755.GA85491@fedora>
+References: <20250417184133.105746-13-eblake@redhat.com>
+ <20250417184133.105746-14-eblake@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 06/24] s390x/diag: Implement DIAG 320 subcode 1
-To: Thomas Huth <thuth@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
-Cc: jjherne@linux.ibm.com, jrossi@linux.ibm.com, fiuczy@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250408155527.123341-1-zycai@linux.ibm.com>
- <20250408155527.123341-7-zycai@linux.ibm.com>
- <bddc01e1-056a-454a-b1f1-165d1604deef@redhat.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <bddc01e1-056a-454a-b1f1-165d1604deef@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CMTq7e7RLUFS_Vtb4QQ7g0lUuYKhrJRY
-X-Authority-Analysis: v=2.4 cv=MsNS63ae c=1 sm=1 tr=0 ts=68015d21 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=aq3tatrJt277NIGcrMUA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: CMTq7e7RLUFS_Vtb4QQ7g0lUuYKhrJRY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_07,2025-04-17_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=999
- suspectscore=0 priorityscore=1501 phishscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 bulkscore=0 impostorscore=0
- malwarescore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504170143
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="mYJMunW4mY2YGUIF"
+Content-Disposition: inline
+In-Reply-To: <20250417184133.105746-14-eblake@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,69 +92,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/11/25 9:57 AM, Thomas Huth wrote:
-> On 08/04/2025 17.55, Zhuoying Cai wrote:
->> DIAG 320 subcode 1 provides information needed to determine
->> the amount of storage to store one or more certificates.
->>
->> The subcode value is denoted by setting the left-most bit
->> of an 8-byte field.
->>
->> The verification-certificate-storage-size block (VCSSB) contains
->> the output data when the operation completes successfully.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>   include/hw/s390x/ipl/diag320.h | 25 ++++++++++++++++++++++
->>   target/s390x/diag.c            | 39 +++++++++++++++++++++++++++++++++-
->>   2 files changed, 63 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
->> index d6f70c65df..ded336df25 100644
->> --- a/include/hw/s390x/ipl/diag320.h
->> +++ b/include/hw/s390x/ipl/diag320.h
->> @@ -13,7 +13,32 @@
->>   #define S390X_DIAG320_H
->>   
->>   #define DIAG_320_SUBC_QUERY_ISM     0
->> +#define DIAG_320_SUBC_QUERY_VCSI    1
->>   
->>   #define DIAG_320_RC_OK              0x0001
->> +#define DIAG_320_RC_NOMEM           0x0202
->> +
->> +#define VCSSB_MAX_LEN   128
->> +#define VCE_HEADER_LEN  128
->> +#define VCB_HEADER_LEN  64
->> +
->> +#define DIAG_320_ISM_QUERY_VCSI     0x4000000000000000
->> +
->> +struct VerificationCertificateStorageSizeBlock {
->> +    uint32_t length;
->> +    uint8_t reserved0[3];
->> +    uint8_t version;
->> +    uint32_t reserved1[6];
->> +    uint16_t totalvc;
->> +    uint16_t maxvc;
->> +    uint32_t reserved3[7];
->> +    uint32_t maxvcelen;
->> +    uint32_t reserved4[3];
->> +    uint32_t largestvcblen;
->> +    uint32_t totalvcblen;
->> +    uint32_t reserved5[10];
->> +} QEMU_PACKED;
->> +typedef struct VerificationCertificateStorageSizeBlock \
->> +VerificationCertificateStorageSizeBlock;
-> 
-> That's quite a long name, maybe shorten to VerificationCertStorageBlock or 
-> something similar?
-> 
 
-I think it would benefit many of the data structures using the
-"VerificationCertificate" prefix to be short-handed to "VC".
+--mYJMunW4mY2YGUIF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[...]
+On Thu, Apr 17, 2025 at 01:39:06PM -0500, Eric Blake wrote:
+> This patch is purely mechanical, changing bool want_zero into a new
+> enum BlockStatusMode.  As of this patch, all implementations are
+> unchanged (the old want_zero=3D=3Dtrue is now mode=3D=3DBDRV_BSTAT_PRECIS=
+E),
+> but the callers in io.c are set up so that future patches will be able
+> to differente between whether the caller cares more about allocation
 
--- 
-Regards,
-  Collin
+differentiate
+
+> or about reads-as-zero, for driver implementations that will actually
+> want to behave differently for those more-specific hints.
+>=20
+> As for the background why this patch is useful: right now, the
+> file-posix driver recognizes that if allocation is being queried, the
+> entire image can be reported as allocated (there is no backing file to
+> refer to) - but this throws away information on whether the entire
+> image reads as zero (trivially true if lseek(SEEK_HOLE) at offset 0
+> returns -ENXIO, a bit more complicated to prove if the raw file was
+> created with 'qemu-img create' since we intentionally allocate a small
+> chunk of all-zero data to help with alignment probing).  The next
+> patches will add a generic algorithm for seeing if an entire file
+> reads as zeroes, as well as tweak the file-posix driver to react to
+> the new hints.
+>=20
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>  block/coroutines.h               |  4 +--
+>  include/block/block-common.h     | 26 ++++++++++++++++
+>  include/block/block_int-common.h | 25 +++++++++-------
+>  include/block/block_int-io.h     |  4 +--
+>  block/io.c                       | 51 ++++++++++++++++----------------
+>  block/blkdebug.c                 |  6 ++--
+>  block/copy-before-write.c        |  4 +--
+>  block/file-posix.c               |  4 +--
+>  block/gluster.c                  |  4 +--
+>  block/iscsi.c                    |  6 ++--
+>  block/nbd.c                      |  4 +--
+>  block/null.c                     |  6 ++--
+>  block/parallels.c                |  6 ++--
+>  block/qcow.c                     |  2 +-
+>  block/qcow2.c                    |  6 ++--
+>  block/qed.c                      |  6 ++--
+>  block/quorum.c                   |  4 +--
+>  block/raw-format.c               |  4 +--
+>  block/rbd.c                      |  6 ++--
+>  block/snapshot-access.c          |  4 +--
+>  block/vdi.c                      |  4 +--
+>  block/vmdk.c                     |  2 +-
+>  block/vpc.c                      |  2 +-
+>  block/vvfat.c                    |  6 ++--
+>  tests/unit/test-block-iothread.c |  2 +-
+>  25 files changed, 114 insertions(+), 84 deletions(-)
+>=20
+> diff --git a/block/coroutines.h b/block/coroutines.h
+> index 79e5efbf752..c8323aa67e6 100644
+> --- a/block/coroutines.h
+> +++ b/block/coroutines.h
+> @@ -47,7 +47,7 @@ int coroutine_fn GRAPH_RDLOCK
+>  bdrv_co_common_block_status_above(BlockDriverState *bs,
+>                                    BlockDriverState *base,
+>                                    bool include_base,
+> -                                  bool want_zero,
+> +                                  enum BlockStatusMode mode,
+>                                    int64_t offset,
+>                                    int64_t bytes,
+>                                    int64_t *pnum,
+> @@ -78,7 +78,7 @@ int co_wrapper_mixed_bdrv_rdlock
+>  bdrv_common_block_status_above(BlockDriverState *bs,
+>                                 BlockDriverState *base,
+>                                 bool include_base,
+> -                               bool want_zero,
+> +                               enum BlockStatusMode mode,
+>                                 int64_t offset,
+>                                 int64_t bytes,
+>                                 int64_t *pnum,
+> diff --git a/include/block/block-common.h b/include/block/block-common.h
+> index 0b831ef87b1..619e75b9c8d 100644
+> --- a/include/block/block-common.h
+> +++ b/include/block/block-common.h
+> @@ -508,6 +508,32 @@ enum BdrvChildRoleBits {
+>                                | BDRV_CHILD_PRIMARY,
+>  };
+>=20
+> +/* Modes for block status calls */
+> +enum BlockStatusMode {
+> +    /*
+> +     * Status should be as accurate as possible: _OFFSET_VALID
+> +     * and_OFFSET_ZERO should each be set where efficiently possible,
+
+"and _OFFSET_ZERO"
+
+> +     * extents may be smaller, and iteration through the entire block
+> +     * device may take more calls.
+> +     */
+> +    BDRV_BSTAT_PRECISE,
+> +
+> +    /*
+> +     * The caller is primarily concerned about overall allocation:
+> +     * favor larger *pnum, perhaps by coalescing extents and reporting
+> +     * _DATA instead of _ZERO, and without needing to read data or
+> +     * bothering with _OFFSET_VALID.
+> +     */
+> +    BDRV_BSTAT_ALLOCATED,
+> +
+> +    /*
+> +     * The caller is primarily concerned about whether the device
+> +     * reads as zero: favor a result of _ZERO, even if it requires
+> +     * reading a few sectors to verify, without needing _OFFSET_VALID.
+> +     */
+> +    BDRV_BSTAT_ZERO,
+> +};
+
+I have trouble understanding what the exact semantics are of these modes
+are. Would it be possible to pass flags to block status calls that can
+be ORed together instead: WANT_OFFSET_VALID, WANT_ZERO, etc? The flags
+would be orthogonal and easier to understand than modes that seem to
+combine multiple flag behaviors.
+
+Stefan
+
+--mYJMunW4mY2YGUIF
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgBYfMACgkQnKSrs4Gr
+c8gjTwf/SHYjMVDGRjAMdgGaz5sgreNZwnQk7OK9O3Hc4zat9RJICD63seLrlBry
+5l6/d7joFMqqRP3dqJfimQyQV2StGQojxt227lwcZFXr79KsckcDWLCueSTAaiRT
+Td4kDiTel//S/S9Hk4XSlLf+Nk0ocV722S0vyaFCNxumF+NTLPRmyVt8wRJJH16W
+qZGfhLvBCNEq6mPh0lsoPH1RkFL0gerni9S2nriEW8wTZFvd8rDBEwcfKfdvzU9x
+m2Df16kguJudmfYIulnLVPzG9GS9Lq/Xzhh/El7z4FaLavQ9JvAahaiowx6NTfC3
+gNG6lGx74Z73Zr8TdmRh2kXop11Hug==
+=70pb
+-----END PGP SIGNATURE-----
+
+--mYJMunW4mY2YGUIF--
+
 
