@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14803C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 07:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD52AC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 07:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5JsR-0005Wp-8F; Thu, 17 Apr 2025 03:41:41 -0400
+	id 1u5Jrd-0005DL-0r; Thu, 17 Apr 2025 03:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ggala@linux.ibm.com>)
- id 1u5JsO-0005Ud-2h; Thu, 17 Apr 2025 03:41:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1u5JrT-0005Av-7F; Thu, 17 Apr 2025 03:40:40 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ggala@linux.ibm.com>)
- id 1u5JsM-0004Qu-8q; Thu, 17 Apr 2025 03:41:35 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53GNkdfK018802;
- Thu, 17 Apr 2025 07:40:31 GMT
+ id 1u5JrR-0004Sv-1Y; Thu, 17 Apr 2025 03:40:38 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53GMhxAs017971;
+ Thu, 17 Apr 2025 07:40:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Dd0pbhRwsw2I5Xsw52a1Y3ZbH7oGsSwlIlpKqh3Lr
- RY=; b=nfhVlX77CUHN0yLBlySSIX/q1atmFMwlHco9tBRbhYs3iKEtjlhXMUsVb
- yVzTcYccHcLKaT/MK8gZP5W5bqn9Jr9tPAmJPpMphuD8hM7fyLnqRgtAd4SD7iyN
- 8DAlvhotDIPuMR1sNxwa1/S+yoeOJKzKenSHJrrg08Qt8dhcVE20DljfNSjUMnNy
- xZSxtZduIA+J2wm0VxMXq/H3Un+M5/iKfhaLhymC40TkJtA1vbu8wfsBWAdFVi/M
- RqPNIVyIj7/E3ctSGZCmGv0Gr9WUv82fzNeo9IzihOea9ztG3OwsVoY8Hhmjk9Hf
- EX15NVevu2vD/3C+s14bNE2Lg+p7Q==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462ph09p6v-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=sCCSf9R+vWDhK7Hl5
+ gwg2YW6AI3FtJLiS8RPAVgQBqA=; b=JmT9fFXk3oxWfOp+otZARxUCEnWLBErBY
+ T51FyxD78dikOcQvDRbc3xZw3BK9kSKP92R5uta+w+XtiE1lOjixvjnIjl1oLdG2
+ D66UqvbTX0JoSCqMmtA6b1gIPwn6WFhu+D6vlsWeXODkykyWjTkqaG2Mg41FEIK5
+ cPKiLGoLWutRT11KualKJdL2NsjKln+Kx5GrjONyX9KAKy3Xx7o1aWn7dzk3hdMh
+ gg1Qem+i9YKR7ikAn+OQxWapNwMpBTsOZMVZLpJ2G5MurPYvcyhijgIVtIzJl5TL
+ TQ311yhRNMlGF39w8b7L+HxnFVR6iiSjewybIB0QnsJfxiHyE4RoQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462m49tad2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 07:40:31 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53H7EUiN017195;
- Thu, 17 Apr 2025 07:40:30 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040m4frr-1
+ Thu, 17 Apr 2025 07:40:34 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53H7GY8a010415;
+ Thu, 17 Apr 2025 07:40:34 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4604qkcbce-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 07:40:30 +0000
+ Thu, 17 Apr 2025 07:40:34 +0000
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53H7eTp222413916
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53H7eW6x32113214
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Apr 2025 07:40:29 GMT
+ Thu, 17 Apr 2025 07:40:32 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87039580F9;
- Thu, 17 Apr 2025 07:40:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 59C18580F9;
+ Thu, 17 Apr 2025 07:40:32 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 70ACD58232;
- Thu, 17 Apr 2025 07:40:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 331B758232;
+ Thu, 17 Apr 2025 07:40:31 +0000 (GMT)
 Received: from t83lp65.lnxne.boe (unknown [9.152.108.100])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Apr 2025 07:40:28 +0000 (GMT)
+ Thu, 17 Apr 2025 07:40:31 +0000 (GMT)
 From: Gautam Gala <ggala@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
  Thomas Huth <thuth@redhat.com>, Steffen Eiden <seiden@linux.ibm.com>,
  Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH v3 0/3] DIAG 308: extend subcode 10 to return UVC cmd id,
- RC and RRC values upon failure to enter secure mode
-Date: Thu, 17 Apr 2025 09:40:24 +0200
-Message-ID: <20250417074027.711076-1-ggala@linux.ibm.com>
+Subject: [PATCH v3 2/3] target/s390x: Introduce function when exiting PV
+Date: Thu, 17 Apr 2025 09:40:26 +0200
+Message-ID: <20250417074027.711076-3-ggala@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250417074027.711076-1-ggala@linux.ibm.com>
+References: <20250417074027.711076-1-ggala@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=QJdoRhLL c=1 sm=1 tr=0 ts=6800b06f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=XR8D0OoHHMoA:10 a=20KFwNOVAAAA:8 a=9lonpTW9IpegU1W_ekgA:9
-X-Proofpoint-GUID: uhfEBGIsZuyiToYen8Iwdb1sQ5YZvTAw
-X-Proofpoint-ORIG-GUID: uhfEBGIsZuyiToYen8Iwdb1sQ5YZvTAw
+X-Authority-Analysis: v=2.4 cv=etnfzppX c=1 sm=1 tr=0 ts=6800b073 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=wThvhrd033kK1bniQ4UA:9
+X-Proofpoint-ORIG-GUID: MDRKGddAkZ3gRXwyXr3J1VBRDk2sTf2Q
+X-Proofpoint-GUID: MDRKGddAkZ3gRXwyXr3J1VBRDk2sTf2Q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-17_01,2025-04-15_01,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0
- adultscore=0 mlxlogscore=921 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 classifier=spam authscore=0 adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2502280000 definitions=main-2504170057
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=ggala@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ lowpriorityscore=0
+ suspectscore=0 mlxscore=0 mlxlogscore=791 clxscore=1015 spamscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0
+ phishscore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504170057
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=ggala@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,37 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DIAG 308 (subcode 10 - performing secure execution unpack) response
-code when the configuration is unable to enter secure mode has limited
-usability as it is a fixed value (0xa02) for variety of different
-reasons. The aim is to extend this DIAG to return UVC command ID, RC
-and RRC values in addition to the diag response code. This feature can
-be used by the stage3a bootloader (s390-tools/rust/pvimg/boot) to read
-these new values from the corresponding register and print an
-appropriate error message to help pin point the cause.
+Replace an existing macro (s390_pv_cmd_exit) that looks like
+a function with an actual function. The function will be used
+when exiting PV instead of the macro.
 
-The response code, UVC RC, RRC, and command ID are returned in bit
-positions 48-63, 32-47, 16-31, and 0-15 of register R1 + 1 if the
-function does not complete successfully (Previously, only the
-response code was returned in bits 48-63).
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
+Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
+---
+ target/s390x/kvm/pv.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-This patch version contains updates based on feedback from Thomas Huth 
-in Message-ID: <88084780-38b2-4ca9-a2ff-ecd70d62c361@redhat.com>.
-
-Gautam Gala (3):
-  target/s390x: Introduce constant when checking if PV header couldn't
-    be decrypted
-  target/s390x: Introduce function when exiting PV
-  target/s390x: Return UVC cmd code, RC and RRC value when DIAG 308
-    Subcode 10 fails to enter secure mode
-
- hw/s390x/ipl.c             | 11 +++++----
- hw/s390x/ipl.h             |  6 +++--
- hw/s390x/s390-virtio-ccw.c | 23 +++++++++++++-----
- target/s390x/kvm/pv.c      | 50 ++++++++++++++++++++------------------
- target/s390x/kvm/pv.h      | 24 ++++++++++++------
- 5 files changed, 71 insertions(+), 43 deletions(-)
-
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 3a0a971f0b..66194caaae 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -59,14 +59,12 @@ static int __s390_pv_cmd(uint32_t cmd, const char *cmdname, void *data,
+  */
+ #define s390_pv_cmd(cmd, data) __s390_pv_cmd(cmd, #cmd, data, NULL)
+ #define s390_pv_cmd_pvrc(cmd, data, pvrc) __s390_pv_cmd(cmd, #cmd, data, pvrc)
+-#define s390_pv_cmd_exit(cmd, data)    \
+-{                                      \
+-    int rc;                            \
+-                                       \
+-    rc = __s390_pv_cmd(cmd, #cmd, data, NULL); \
+-    if (rc) {                          \
+-        exit(1);                       \
+-    }                                  \
++
++static void s390_pv_cmd_exit(uint32_t cmd, void *data)
++{
++    if (s390_pv_cmd(cmd, data)) {
++        exit(1);
++    }
+ }
+ 
+ int s390_pv_query_info(void)
 -- 
 2.49.0
 
