@@ -4,84 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB479C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 14:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E469CC369CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 14:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Pyt-0004oH-2V; Thu, 17 Apr 2025 10:12:43 -0400
+	id 1u5Pzd-00058Y-9q; Thu, 17 Apr 2025 10:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.nesterov@gmail.com>)
- id 1u5Pyr-0004o6-1d
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 10:12:41 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.nesterov@gmail.com>)
- id 1u5Pyn-0008Nt-QQ
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 10:12:40 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ac73723b2d5so150060366b.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 07:12:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744899155; x=1745503955; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RlnkcTtsPgIczGT6m8P4wsg+T/AhK0jRk6bsSiDCr0U=;
- b=VvGPXsGlKrkmI7/pj2ufHLVB46aty8XnEZK+epM74Fwn0kjOLl7IkfbCx2TeeNGDiV
- 2F2xF/0rZr5dK0PEhtKyDFz3A9gQCwlyQO1KcJ3FeQBpYK+i2eQhgyrBm83aGByWjIgK
- 468NE6t29/txqIIR1LuOQPHUZXFwMiS1TYuIOHFjj0ortyUK+NXncQmSLHc1C+6pgd84
- L+8B/hNE7wxKHuwUPg0TL+7zCApgr9oKtkzmBoq+RdiEzNvLjCSbMIBhMMVMHDzfftER
- CGaP3W1f4yj4E0zpA8s+bHokqjC6wdDDxg5IRgssXdwAijpe18Bls709k09LWlOAQWOd
- h24g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744899155; x=1745503955;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RlnkcTtsPgIczGT6m8P4wsg+T/AhK0jRk6bsSiDCr0U=;
- b=hhGgb8ShQzbiT41oPK3235C/C0ZwKewD/4QWWox6vJeaD7r2v9Dq46Z+HJP39j1Abt
- N4/NHQnV9/U579J8rxgAQE/dK44cOsumGa/af6uQkAT52XyHsmRFvMMiHumlCsvunosL
- TLG7zgqY7PS0uyb3n50XM692ot2tKKjvUDYkGxzdHNoYRDXSVrxgw8kBU1obEBG8ATVx
- MOWH2QUnYihNh0wP7idsT4s1W75R403DnuccDDDC9AXszrilqehWJ+NXeIP3E3JorTgp
- 2Ivx59yG8w9fvrQ7k39mj+te2V1IDG2wwVuJ1Ib8jIXj5Qsvt8Aww1yNC6ON5xjXh5kD
- yHPQ==
-X-Gm-Message-State: AOJu0YwJqSyGm0dxrTefH9CgqYBOjJ4eyZkH6pJxl1hvVyhyEUNEeXQ2
- Z0nGrh6a2CG7KjZ1fky7yrKD9EnbdC+HPg2psp91sps5HDysBPUlDA4YrSZlb5btOBoYwMlQMuz
- yA5EvCoO0HJ/LgkxYd3kvndksdr0=
-X-Gm-Gg: ASbGncs8e4LKN66IzBMQ3jQUj7d5Cj4AvhlMNx5U0RIkmV7tuAq9vRYnvLbIH1vRJ8P
- UENZ+cbGpnWRFXx27XonFPPMMRsxQ1wM2EeebXbHGARGLnoXxOXQ9nOdntBfwhMJhP5Smtm9sYN
- A6AwVzt6gRSULihG1CaOy0Ux8tVrFWKHStl0Q=
-X-Google-Smtp-Source: AGHT+IEDSaRXjwOwIi+lObV3WQqMH1wOrh7N5zFyQTzXsNA+olpQWy2jYwT/bQzXuJp8XxTjilGsyMNa7042MsglJ8w=
-X-Received: by 2002:a17:907:3cc6:b0:ac7:ec90:2ae5 with SMTP id
- a640c23a62f3a-acb42997607mr615014966b.25.1744899154852; Thu, 17 Apr 2025
- 07:12:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1u5PzX-00054N-Ne; Thu, 17 Apr 2025 10:13:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1u5PzV-0008Rk-NY; Thu, 17 Apr 2025 10:13:23 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53HAipwR016518;
+ Thu, 17 Apr 2025 14:13:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nrZsTJ
+ gmG7utdFjJkRLKSgg4w2qVlc6QHy3XFTDPVCw=; b=jPJCYwpuIE57zvI6vOKnSm
+ YbXfoNs4NRSqIC+F6INUSXg1XMG/mmVpAUyY0GLgFOKeDYRdo09lfmO9phkqamIQ
+ qZC+BFidw/UX+v2R6082bNl25CwABbaMeo9aqmwqxGaEMVZUZixxn3JGeE6fVB1R
+ hSuFxI6Lj5muecxtHvT90FMi38rS35oW5RKi3znE4fbtGCQslrkfVRwMvAVvp281
+ uBY6KiJQ6IEeU7X+F6F2fU2LKYgWwb9IYKrpoRfHzNjMseZBH1fpq32MWBCkc954
+ rTqb7ECoaxhITMDni49l1Xkl8psZ2xRvqMf4L5odbwaMxxHGjVqvrYvALWNd7LAQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462mn7v0uk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Apr 2025 14:13:17 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53HB8NgL017233;
+ Thu, 17 Apr 2025 14:13:16 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46040m5vmm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Apr 2025 14:13:16 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53HEDFiH6029936
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Apr 2025 14:13:15 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D3B1358059;
+ Thu, 17 Apr 2025 14:13:14 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5BF5D58055;
+ Thu, 17 Apr 2025 14:13:13 +0000 (GMT)
+Received: from [9.61.39.227] (unknown [9.61.39.227])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu, 17 Apr 2025 14:13:13 +0000 (GMT)
+Message-ID: <bc000c83-979a-4ec6-9628-f2b48a433558@linux.ibm.com>
+Date: Thu, 17 Apr 2025 10:13:11 -0400
 MIME-Version: 1.0
-References: <20250416161929.2846102-1-yuri.nesterov@gmail.com>
- <Z__jtQe0nYsaGnoH@redhat.com>
- <CAB_o470VGNmj_4LKvo3-Y6O7LiKiJ4QXczt6ZqRua_mpM1LN2A@mail.gmail.com>
- <aADMttudIP3zC85W@redhat.com>
-In-Reply-To: <aADMttudIP3zC85W@redhat.com>
-From: Yuri Nesterov <yuri.nesterov@gmail.com>
-Date: Thu, 17 Apr 2025 17:12:23 +0300
-X-Gm-Features: ATxdqUFtUEJe6kBQspAT3nSoC7uIg568vP4rHiyJlmZh9ysmWdvAWQmg5tTN1K0
-Message-ID: <CAB_o471Vcf4AxZoucvuye7bG=yM_0g3TAfu5Kc=ZQJXR9vdr=A@mail.gmail.com>
-Subject: Re: [PATCH] usb-host: enable autoscan for bus+addr to survive host
- suspend/resume
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=yuri.nesterov@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 24/24] hw/s390x/ipl: Handle secure boot without
+ specifying a boot device
+To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, pbonzini@redhat.com
+Cc: jjherne@linux.ibm.com, jrossi@linux.ibm.com, fiuczy@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ iii@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20250408155527.123341-1-zycai@linux.ibm.com>
+ <20250408155527.123341-25-zycai@linux.ibm.com>
+ <93f3cb7f-9dda-4ff4-b3e9-81a6c870d115@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <93f3cb7f-9dda-4ff4-b3e9-81a6c870d115@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ANnAolku c=1 sm=1 tr=0 ts=68010c7d cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=0UfI22MnMs8H_QUV0GAA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: GEOfZQyamL3opzB5atMhv0CJHP6iohqG
+X-Proofpoint-ORIG-GUID: GEOfZQyamL3opzB5atMhv0CJHP6iohqG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-17_04,2025-04-17_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ mlxlogscore=999 adultscore=0 spamscore=0 mlxscore=0 bulkscore=0
+ suspectscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504170101
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,70 +119,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 17, 2025 at 12:41=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Wed, Apr 16, 2025 at 10:27:54PM +0300, Yuri Nesterov wrote:
-> > On Wed, Apr 16, 2025 at 8:07=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > >
-> > > On Wed, Apr 16, 2025 at 07:19:29PM +0300, Yuri Nesterov wrote:
-> > > > Currently, there is a special case for usb-host devices added using=
- the
-> > > > hostbus=3D and hostaddr=3D properties to avoid adding them to the h=
-otplug
-> > > > watchlist, since the address changes every time the device is plugg=
-ed
-> > > > in. However, on Linux, when the host system goes into suspend and t=
-hen
-> > > > resumes, those devices stop working in both the guest and the host.
-> > > >
-> > > > Enabling autoscan and adding those devices to the watchlist allows =
-them
-> > > > to keep working in the guest after host suspend/resume.
-> > >
-> > > So IIUC what you're saying is that on suspend the host device
-> > > is removed by the kernel, and on resume, the USB device is
-> > > recreated. So QEMU's open file handle for the USB device is
-> > > invalid after resume.
-> > >
-> > > If the /dev/bus/usb/NNN/NNN file goes away and then gets
-> > > re-created by the kernel though, we can't assume QEMU is
-> > > going to be able to re-open the new /dev/bus/usb device
-> > > file though.
-> >
-> > I'm not sure if the file actually goes away. It looks like the internal
-> > state of the device changes and QEMU receives a "no device"
-> > response in usb_host_req_complete_data. However, the file
-> > remains in place. At least I don't see any changes in udevadm
-> > monitor or inotifywait aside from attribute modifications.
-> >
-> > After resuming from suspend, the device doesn't work on either
-> > host or guest. Probably the device stays with a detached kernel
-> > driver since QEMU can't reattach it after receiving the "no device"
-> > error. Adding such devices to the hotplug watchlist causes QEMU
-> > to reopen them the same way it does for devices specified by
-> > vendorid and productid or hostport.
->
-> This is a bit odd, as AFAICT from reading the code, the
-> usb_host_auto_check wll only trigger close + re-open of
-> the device, if there is a period of time in which the
-> /dev/bus/usb device node does not exist, but you're
-> saying it remains existing across suspend/resume.
 
-I guess it depends on how it's configured, both in hardware
-and software. I'm testing on a regular ThinkPad with Ubuntu
-and default settings. It's probably possible to configure USB
-to turn off power during suspend. In that case, it might
-reappear after resume with a new address. However, with
-the default settings, it seems to keep the same device node
-and address. I assume the driver just switches it to
-low-power mode and then back to normal.
+On 4/16/25 6:11 PM, Collin Walling wrote:
+> On 4/8/25 11:55 AM, Zhuoying Cai wrote:
+>> If secure boot in audit mode or True Secure IPL mode is enabled without
+>> specifying a boot device, the boot process will terminate with an error.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  hw/s390x/ipl.c | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
+>>
+>> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+>> index 60bafcbd2e..0510f16a7d 100644
+>> --- a/hw/s390x/ipl.c
+>> +++ b/hw/s390x/ipl.c
+>> @@ -767,6 +767,16 @@ void s390_ipl_prepare_cpu(S390CPU *cpu)
+>>          s390_ipl_create_cert_store(&ipl->cert_store);
+>>          if (!ipl->iplb_valid) {
+>>              ipl->iplb_valid = s390_init_all_iplbs(ipl);
+>> +
+>> +            /*
+>> +             * Secure IPL without specifying a boot device.
+>> +             * IPLB is not generated if no boot device is defined.
+>> +             */
+>> +            if ((s390_has_certificate() || s390_secure_boot_enabled()) &&
+>> +                !ipl->iplb_valid) {
+>> +                error_report("No boot devicie defined for Secure IPL");
+>> +                exit(1);
+>> +            }
+> 
+> I'm confused why this check is needed.  If there is no valid iplb, won't
+> boot just fail outright anyway?
+> 
 
-In usb_host_auto_check, it reopens the device when the
-handle s->dh is NULL. This happens after
-usb_host_req_complete_data receives the "no device" status
-and closes the device. Maybe one of the kernel functions
-returns -ENODEV at some point, but after that, the device
-continues to work fine.
+If no boot device is specified, the BIOS will still scan all channels to
+find a bootable device (as defined in probe_boot_device() within
+pc-bios/s390-ccw/main.c).
+
+Boot will proceed if a bootable device is found, but the IPLB will not
+be generated on the host side in this case. We cannot determine whether
+secure boot is enabled, since it's indicated by the IPLB flags.
+
+Therefore, specifying secure IPL without a boot device cause the process
+to terminate early.
+
+>>          } else {
+>>              ipl->qipl.chain_len = 0;
+>>          }
+> 
+> 
+
 
