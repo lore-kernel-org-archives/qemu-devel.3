@@ -4,90 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDE7C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 07:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC882C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 07:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5JTc-00043F-VZ; Thu, 17 Apr 2025 03:16:00 -0400
+	id 1u5JaK-0005X7-2n; Thu, 17 Apr 2025 03:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5JTa-00042m-2V
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 03:15:58 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5JTX-0007PA-R6
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 03:15:57 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb46so2829595e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 00:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744874153; x=1745478953; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5JJBdii6dcHKAjFI+mgghLcmHyOIvbYQMW9QkENWibE=;
- b=q+68aWLL+j1awGqUP0YVv55fv8BU3V0y9bcxRjLye6nQHWMiPT2gJz0GUPvRV8vyQB
- aY6uwkjFzbhatyMAfH5W8xH2poSr6e9wirdTKsdvRscppCY7SaVdA3oZ2KXQZPmbiDpd
- japqqSCsWJIfJvyjbFbZU2Wd76s8F+CKpP4X6dwj61rS73g+QCM5FXlNI9V7DhfTUb21
- EOzw9KlZ+/J/vMpWGQGAeJpAW1bLHir1+PSSoFttkvqhyLmrEcoeyDWzjLvtZCe8evaI
- SHkHgZkSXLq3P6jEza9UsFMM46dQQjwEoBM0NbE8FG0gTgeKsk9+O4lljXfgyviIW5UZ
- azYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744874153; x=1745478953;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5JJBdii6dcHKAjFI+mgghLcmHyOIvbYQMW9QkENWibE=;
- b=h9EwtyQHlQ1LmbnMipkt1laJsPdoiqY+gVyAOHdypnHDH+lV0T1qeu1KuMtkihPInV
- znL4rYhMkaMUS7q1hcZeRHDzoFhcmpP0AvIiBrnDGriNSKub4YrDAVIZudefWzP0pqYm
- keg8oywYA4eqyS8pFih1YcGYPJ9UP+SKHeVsX9MTkjxAKCfaMIchcuT6kMxVc1DuLeNs
- uaLPSsb3iCtn1zJgd5gn5Db6LwepFtLkMSDK3oVn+PJBsjZhrNntY9VQSNR1SNexY3iQ
- AK1hirZgZQpp6bc2P6WAUhcVkLeQA09tjL/dhPISprwNCz6LMnKN9tFipnRJGYlxmQPF
- prYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqJ2ecanCKMkt17EPhMV3GAaLcB9o+1ZJIN7Hhddve/KdtnaHEGG+RjxEGs8MWL6MtuJ9FTIV+crw0@nongnu.org
-X-Gm-Message-State: AOJu0Yxojmq8NCp6sseBL2xfpBL4D23hiaAaslzn/dVk/MWj3TM4z35m
- /wAWcjPLJGHnvK5njZcBwCc5/b0pTQESRyvIodDI+Zx/WjNVGbcX5bN6mF6P+X4=
-X-Gm-Gg: ASbGncvtyaNkZkxHMqzEWu6sTwSXcxiGJNtW5P8qMnwFsSyzb7BmqBxaH6cmRu4h8L7
- hVwUI89MMlopBhacrowNAGoRF0hTDi6DkB/5R+4UJOY18E9mzxCYRcgcXFVsfWERNRejkfEjyxm
- cVzkIpl8dI3NdqxdezuEIoxZ6b4JC3BlZwFp5MsgYPc206b5j41ekXJigdYgHcZ09+/jazQd7ta
- Q6sQNjWy/+MmsZRsbFMJ/5S4HwENpJndCqmBdwjj8fT2TICWtxRXm7t7OwcHSJmlJy5PJj5yALC
- NKQpgPsuX+RA8KMi8SY5DM0FLizx3aLQsmLCDCMGPy1QKbezArxxLhUDcZEwMr87SRrV6Rob6iq
- 2tdJdfAYE
-X-Google-Smtp-Source: AGHT+IFzKngjPdJkmE3UajkY57UdHo9/qHorCQm2iqlFZ+nAjUgfpRqxXi1T9T4HBNFph23XMNCyng==
-X-Received: by 2002:a05:600c:1e0d:b0:43d:4e9:27ff with SMTP id
- 5b1f17b1804b1-4405d5fcd26mr47709905e9.7.1744874153073; 
- Thu, 17 Apr 2025 00:15:53 -0700 (PDT)
-Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4405b4f3227sm42480605e9.20.2025.04.17.00.15.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 00:15:52 -0700 (PDT)
-Message-ID: <19ffd753-4851-44f0-8c4f-d2e9c416405f@linaro.org>
-Date: Thu, 17 Apr 2025 09:15:51 +0200
+ (Exim 4.90_1) (envelope-from <uwu@icenowy.me>)
+ id 1u5JaG-0005Wi-I5; Thu, 17 Apr 2025 03:22:52 -0400
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <uwu@icenowy.me>)
+ id 1u5JaD-0000IO-Vn; Thu, 17 Apr 2025 03:22:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1744874541; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=etC8tz+N8jpqIabFPp0WtZQxw9N/+xszbsiRzYqDFylrXe0wz1Xlo/v29NZwUen7Lid1rc1Q4Z3Q3T3mK+qu7SCf5YnxnKHt9cULw8P97qIELDVBqCB/X46yGJYNNXTdL+5Qx2hxLnyX6Dok8ALnxp0OrXJIDeOsLHz58aYoOgk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1744874541;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=xKsO1uho/0nTL/EI6evKCLfwRNYH8HmHj6cAJA8H24w=; 
+ b=GN5GHIdLpWJ/YG+RF+rCvd+SX3e0Q7FJoVYJPWzOhOGwiBPze3joLvzI52TichJUlVUHnVWuhfvEnpSY7n3TojbZsh6VccmbGgPERxWenF+Rq4CnGYmozrt+S5zvts8WcREaDBJHWJ8WC1Gg2HQoLV8jU9U6gZ72/AZDK4SPLUs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=icenowy.me;
+ spf=pass  smtp.mailfrom=uwu@icenowy.me;
+ dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1744874541; 
+ s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=xKsO1uho/0nTL/EI6evKCLfwRNYH8HmHj6cAJA8H24w=;
+ b=ZKgPlvc3UGzOsGUxej+8N/VIP2v5twszjIprFtndw2lq94GEMD+iYmIs1SwYwwr7
+ qPtGCxAKP68+ES7Qab/npTxWBYWoNV5hAbdpV8E8izkADLaufvMsL5y01LnIqTbkcK+
+ tbdkybaqkzW02TyQWCfDsckHcSvksaYZPCt8bByPM1f3Ct+XlmH/ykZ4KDEGiwwur9e
+ 1diimrx3F7bnQK1uaLQFWWdLW515KSspf86QJDWfkqgPC3D29yJ/sIGqxQmY4Kt1aF7
+ ESui+wTyoqHbv/+odvlZGEewnTz3U7QAUj4Jh5wNagjo5LY5hZOCFYkevogWoQzyLeY
+ rSUsIUQE/Q==
+Received: by mx.zohomail.com with SMTPS id 174487453811922.435879893512833;
+ Thu, 17 Apr 2025 00:22:18 -0700 (PDT)
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Riku Voipio <riku.voipio@iki.fi>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Icenowy Zheng <uwu@icenowy.me>
+Subject: [PATCH] common-user/host/riscv: use tail pseudoinstruction for
+ calling tail
+Date: Thu, 17 Apr 2025 15:22:06 +0800
+Message-ID: <20250417072206.364008-1-uwu@icenowy.me>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Hexagon (target/hexagon) Remove gen_tcg_func_table.py
-To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, quic_mathbern@quicinc.com,
- sidneym@quicinc.com, quic_mliebel@quicinc.com, richard.henderson@linaro.org,
- ale@rev.ng, anjo@rev.ng
-References: <20250416150343.73444-1-ltaylorsimpson@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250416150343.73444-1-ltaylorsimpson@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=uwu@icenowy.me;
+ helo=sender4-op-o15.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,23 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/4/25 17:03, Taylor Simpson wrote:
-> This can easily be done in C with opcodes_def_generated.h.inc
-> 
-> Note that gen_tcg_func_table.py has some logic to skip instructions.
-> However, there aren't any instructions currently in the code that would
-> be skipped by this logic.  So, it is safe to base the table on the
-> complete opcodes table.
-> 
-> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> ---
->   target/hexagon/genptr.c              |  6 ++-
->   target/hexagon/README                |  1 -
->   target/hexagon/gen_tcg_func_table.py | 66 ----------------------------
->   target/hexagon/meson.build           | 10 -----
->   4 files changed, 5 insertions(+), 78 deletions(-)
->   delete mode 100755 target/hexagon/gen_tcg_func_table.py
+The j pseudoinstruction maps to a JAL instruction, which can only handle
+a jump to somewhere with a signed 20-bit destination. In case of static
+linking and LTO'ing this easily leads to "relocation truncated to fit"
+error.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Switch to use tail pseudoinstruction, which is the standard way to
+tail-call a function in medium code model (emits AUIPC+JALR).
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+---
+P.S.
+It seems that moving it to common-user/ makes the file out of the
+MAINTAINERS section of "RISC-V TCG CPUS". I Manually added the
+maintainers there, but the MAINTAINERS file seems to need a change on
+this.
+
+ common-user/host/riscv/safe-syscall.inc.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host/riscv/safe-syscall.inc.S
+index dfe83c300e..c8b81e33d0 100644
+--- a/common-user/host/riscv/safe-syscall.inc.S
++++ b/common-user/host/riscv/safe-syscall.inc.S
+@@ -69,11 +69,11 @@ safe_syscall_end:
+ 
+         /* code path setting errno */
+ 0:      neg     a0, a0
+-        j       safe_syscall_set_errno_tail
++        tail    safe_syscall_set_errno_tail
+ 
+         /* code path when we didn't execute the syscall */
+ 2:      li      a0, QEMU_ERESTARTSYS
+-        j       safe_syscall_set_errno_tail
++        tail    safe_syscall_set_errno_tail
+ 
+         .cfi_endproc
+         .size   safe_syscall_base, .-safe_syscall_base
+-- 
+2.49.0
 
 
