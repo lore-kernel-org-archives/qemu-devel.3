@@ -4,70 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40467C369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A954C369CF
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 12:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5NoO-0004Gz-In; Thu, 17 Apr 2025 07:53:44 -0400
+	id 1u5NyV-0008VT-Rz; Thu, 17 Apr 2025 08:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1u5No3-0004Ep-N5
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:53:29 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1u5No0-0005sx-He
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:53:23 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxaeGp6wBoqvPAAA--.13832S3;
- Thu, 17 Apr 2025 19:53:13 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxb8el6wBoTtmHAA--.7392S3;
- Thu, 17 Apr 2025 19:53:13 +0800 (CST)
-Subject: Re: [PATCH v2 0/6] target/loongarch: Code cleanup with function
- loongarch_map_address
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250417035143.268248-1-maobibo@loongson.cn>
- <d8f0f7ab-d67c-4dc6-b135-31b46b89c7d3@linaro.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <b38c4ca7-a2dd-65ab-5127-5b8d70ca3b73@loongson.cn>
-Date: Thu, 17 Apr 2025 19:52:23 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u5NyR-0008V3-TZ
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 08:04:07 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u5NyP-0006rP-83
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 08:04:07 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E10C14E6027;
+ Thu, 17 Apr 2025 14:02:59 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id nk96FnRK-mZg; Thu, 17 Apr 2025 14:02:57 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E72A74E6013; Thu, 17 Apr 2025 14:02:57 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E510D74577D;
+ Thu, 17 Apr 2025 14:02:57 +0200 (CEST)
+Date: Thu, 17 Apr 2025 14:02:57 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 000/163] tcg: Convert to TCGOutOp structures
+In-Reply-To: <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
+Message-ID: <14bf23c2-1623-9c52-5eb9-00a5e743205d@eik.bme.hu>
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+ <a093de11-8901-4e1b-83eb-fd3b6a557249@linaro.org>
+ <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <d8f0f7ab-d67c-4dc6-b135-31b46b89c7d3@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8el6wBoTtmHAA--.7392S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrZry8KFyfXFy3Cw13AF43Jwc_yoWfGwbEgF
- 43Gr4Du34vyw4qyayFv34rZrnrW3W7ury5tryFqrW8K345Zwnagw13AF1kua45tFW2ywsx
- Gr4DZr1ay347XosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbx8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0
- oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F4
- 0EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_
- Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbI
- xvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
- xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrx
- kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v2
- 6r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8Jw
- CI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZUUUUU
- =
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.272,
+Content-Type: multipart/mixed;
+ boundary="3866299591-567190824-1744891377=:63222"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,33 +69,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-567190824-1744891377=:63222
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On 2025/4/17 下午6:03, Philippe Mathieu-Daudé wrote:
-> Hi Bibo,
-> 
-> On 17/4/25 05:51, Bibo Mao wrote:
->> Get physical address from virtual address is important for qmp command to
->> dump memory content. In TCG mode, it searches TLB tables firstly and
->> then do page table walker. In KVM mode, there are no TLB tables and page
->> table walker is used directly.
->>
->> Here TLB tables searching is moved to directory tcg, and code about page
->> table walker is put in the common part so that it can be used in KVM mode
->> also.
-> 
-> Can you add a cross-loongarch64-kvm-only job in
-> .gitlab-ci.d/crossbuilds.yml to ensure we cover
-> this configuration on our CI?
-We want to do, the problem is that there is no popular OS (such as 
-debian/fedora) supporting LoongArch now :(, so there is no CI for 
-avocado or crossbuilds.yml still.
+On Wed, 16 Apr 2025, Richard Henderson wrote:
+> On 4/16/25 16:38, Pierrick Bouvier wrote:
+>> The only concern I have is that we could create silent "performance" 
+>> related bugs, where a specific feature is deactivated because of a bad 
+>> combination, but it's inherent to this approach and not a blocker.
+>
+> I think I know what you mean, and the way I see things it that the silent 
+> performance bug was previously scattered across different sections of the 
+> code, whereas now it is on the same page.  But underneath there is no real 
+> change.
+>
+> Unless you mean something different?
+>
+>> As a more general question, how do you approach testing for a series like 
+>> this one? I see two different challenges, as it touches the IR itself, and 
+>> the various backends.
+>> - For the IR, I don't know how extensive our complete test suite is 
+>> (regarding coverage of all existing TCG ops), but I guess there are some 
+>> holes there. It would be interesting to generate coverage data once we can 
+>> get a single binary in the future.
+>
+> I don't use anything more than our testsuite.
+> Coverage data would indeed be interesting; I've not attempted that.
+>
+>> - For the various backends:
+>>    * Are you able to compile QEMU on all concerned hosts and run testing 
+>> there?
+>
+> I have aarch64, arm, s390x via *.ci.qemu.org;
+> loongarch64, riscv64, ppc64le via the gcc compile farm.
+>
+>>    * Or do you cross compile and run binaries emulated?
+>
+> This is my only option for mipsel, mips64el.
+>
+> I do not even have a cross-compile solution for ppc32, as there is no longer 
+> any distro support. I have been ignoring that, waiting to remove it when all 
+> 32-bit hosts get kicked.
 
-Regards
-Bibo Mao
-> 
-> Thanks,
-> 
-> Phil.
+Compiling for ppc32 is still possible with powerpc64-linux-gnu-gcc -m32 
+-mbig-endian which should still be available in distros. As long as there 
+are ppc32 hosts available keeping support for KVM may be interesting. And 
+I hope you don't want to remove emulating ppc32 on 64 bit hosts at least.
 
+Regards,
+BALATON Zoltan
+--3866299591-567190824-1744891377=:63222--
 
