@@ -4,90 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E07A0C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3EBC369C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5LrN-0006IX-Gn; Thu, 17 Apr 2025 05:48:42 -0400
+	id 1u5LtH-00077Y-Cl; Thu, 17 Apr 2025 05:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Lqt-0006C7-Fb
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:48:17 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Lt8-00075Y-KY
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:50:30 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Lqp-0000SE-Kl
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:48:10 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-39c13fa05ebso392396f8f.0
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 02:48:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Lt6-0000sg-2X
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:50:30 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43cebe06e9eso4538615e9.3
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 02:50:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744883285; x=1745488085; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744883425; x=1745488225; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=c9z188USbMHEAsmOS9aZWv+1+Xr9xFEVLP0AvPR6hxw=;
- b=NV2T4Rbf8SKZW1XEDUUjSnjFyg7b1bow+qsil394tA+l7uJ5yPo0t9Fid1EfFy2Z31
- fiSKfDtyGJpDh5Fq3s8ap4jmBxsoYn/TpYJcuyVmozzDJMai5Q3a6QY/nvHtCbXngi2O
- bc5tB901Z9ny6FXdThKGOSLvf1bbkqrijHfhV7jx9cjAcfr4ogmY8KUWCcm2M4xshair
- /x2v8tFESu33jaM9owgDbzIGAnjGwRuJi9gwAeMLydR886zxxRdezcwr0T5cSJbfb/Ke
- bCSfd4wZCQ5hXR5pD0O3/33alJmDutcCYS62rLUG1B9infSUZFwnQuAyRBmpr9raDqgt
- D1rQ==
+ bh=5BxTtwAQkIA/7hmrydh5BciZVxfSCSymTFm+usKP8Dk=;
+ b=OoHbVtv3qqAZTcrVYy1YdY2YckF1u6V/JEMb6DLhDHIlebJ0wXObyfwfK8JaIXvHRO
+ KiPV+VncMR/41nqGDBDzKOpcO58DHTj05ActDp8MrIBw1BH0MPh4ivB6E4n+gIREmPqf
+ 1EOVSPp2cRlRq3pGzsg3mTkiRV4usJyQb0kNTD70HlKpfNOlJRuVjyxOb2qKdgliWurx
+ /GcMXH1+SRZjAUugLobysKRWdP9Zou5fWQ2NVo3zqjtlavDCzYcppLL7tCpTLjpD0mc/
+ PZiyHsx9jls57FZmoUxUj76ojf/8TeKkk3IvJoQgkNhR9EPSh/iEIDBNbqZDeQ5lpHqL
+ T8aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744883285; x=1745488085;
+ d=1e100.net; s=20230601; t=1744883425; x=1745488225;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c9z188USbMHEAsmOS9aZWv+1+Xr9xFEVLP0AvPR6hxw=;
- b=Es+qkBEnolSy7lrz6kWb8KQOjEzyN9oxnbGIq3kDkIU+skzcJlsXmuo15MoQUyfOx2
- jGeGrjwKkXsWw8aJOOaQs+/iTP6O+wA9tpmnPn/1Ph6+yLAiJfhlWFMg40EvrVauv3L1
- nlwjt8FgxXWR5uakPJ4yxmUSxitypnZftu/S1p8HdH2+A/N2GWdqbp8apz/C7gBdr+QF
- s8yKRs+Me71oZDzu79kye198HmgQPHIQEDbDJbL2OIPrV3zTi8jkSb0XG/C+xnAlHOZ/
- la/wMFQQBqDeTWNxoKVgzOBF8V6a/mS5Qi9qZ0TNXmq9LkvxYsV/21kqIdiX3JH74SEM
- liRg==
+ bh=5BxTtwAQkIA/7hmrydh5BciZVxfSCSymTFm+usKP8Dk=;
+ b=rSzQXlisenOGIpwh8dMBqFb46RGrQ5WjbtoUyojKWS5Bsfc2rBCCZY7/FbxjNHtPUD
+ 9S8gWQLg8958REQfTPX07IkhDKLWIY0mikGCkwqk21eHRHmUDCafvokoiTCjsUMddX85
+ 3mB641kCygxwW5+blvr0v8qSt7CYDhaH1kUqDj5baXspM54BQZFzDobeS84fFjJa9i8N
+ by1IJUmbyzYShBenkoPa28OKOeesSa/BdTl7u1AGBgDs6NxKi45CBm8+eUI6FbFLiG+3
+ 00TyuTsjYl884or04V2wsYH3gYbPtrGhczouDlWwwYoAoMHmLva6O9uXo9DGDE2okvlx
+ z4Jg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHLPyrXy6Z7Yq/0eOemaI+oD33rThZvSIwGwB9AWslCDsQxfgXd4jop1xb/HFprZ6mTP4MI9d2FOCN@nongnu.org
-X-Gm-Message-State: AOJu0YwS07gt8U1kWmT9L6SIHBmhiYKqj3Ouqb4YYIopRtLcPuHYsAP5
- rh6MN4TSb5o+jpEmvrTMgPlOBdfNYWjkFHv3pSCyAmjahPVhmtlfDa+WJYeYk2ExOtTHvQM6y9Q
- y
-X-Gm-Gg: ASbGncua72O5v0PtUHufOHcaSJM+83LBvr7tnU3F6PMVapapy/lGGl2/o2nAbsBLOkE
- EUD4gVtcSZO6M86HOUVAPdXJOSBH9Jz8Ym2b0BX3kLsOjJOxXpWOF/VDyl9VyZyyTgoJupH4Xuf
- YzZiYoklaGePXIB/ZbcWJ+lIB0NhfTEUcw4v9rdxJ/QsyuGJwOU6HKi4YRGYUamIRCy4/IXUmO0
- uI+lbpv0tvWozvp95nx/2ZyRgDDoIEe2Q5bUxZ3EfAWoI5HCk9k3HpcvD2HVLVgfoiRM4DBZado
- rI4F17bSRKvp764yLGQZGUv5wV5CkjrU9UuXC6E8sstjTuB+Lshhy7AAeA2XCcH0Sju+xKEm7Oq
- XR+MNoUVN
-X-Google-Smtp-Source: AGHT+IHt9vr/9AnjE0csomAITnsz6FVhtEU8mP40NKpFr5Qug0e2c8ij9xvP9hEcIpUf7+PROvGrXQ==
-X-Received: by 2002:a05:6000:18a7:b0:390:df75:ddc4 with SMTP id
- ffacd0b85a97d-39ee5bac4c1mr4112460f8f.44.1744883284881; 
- Thu, 17 Apr 2025 02:48:04 -0700 (PDT)
+ AJvYcCU1m00ZAINsRyQ4yVqK4QqIugsmQ1fteAQodjO1mk8ST6usJrUlBhRC63x53jvtAlaz/59L7yAB5DiL@nongnu.org
+X-Gm-Message-State: AOJu0YwxJHftI9lLTYbV08gmBNjkMhjX7Gm7uFAz4wjdkuoqXZmmR4yQ
+ wNsD3pk8UTsjgEsYsFLvGa9nSjd9OGaQhxvOUso51n6voXF8CbZt+YKlh9YbgHk=
+X-Gm-Gg: ASbGncu4fd90J4h3HU9IZHZgoWQBI7+dS3kBCR+/kF21S23Zn0REzbm56BCuiE0JPd1
+ NdzMjuapmFVe0IXYg3goY0GF2pUkeRhTE3bQVfMAKzh2Csc36L+UzIwIDEXKDdWbKtjOTNrocyt
+ RQpy983FXfHpqVKjm+ng758YXvogSotDyegG1jG/G8CLeETLuMvrfVYFGwM3qDC8/zobprW5XNr
+ RDqb83HEFX6DP6DjaO9xuOtNLRw1kOkLePl62i0iL0RMxiZtxAUv8J6enAnLvAZcbMAaTZA/cZ7
+ 3gV3P5RYbfBz2Rz+ihOAxHGvVbGGwRWdJlmr0BPIc0POlGbrJYmGSfgZZMdjuH0lIwBrl1Nn2YR
+ ZSgBy7bHMycwwzbJR3Ko=
+X-Google-Smtp-Source: AGHT+IFcQflbDZ12X4g9KWaMhIedgJHwJNO6CgZ3fYxf3VIS21k+SopVHxHUIJawnYDlLSKN75t0zg==
+X-Received: by 2002:a05:600c:45c9:b0:43d:16a0:d82c with SMTP id
+ 5b1f17b1804b1-4405d5fce94mr50473445e9.2.1744883425515; 
+ Thu, 17 Apr 2025 02:50:25 -0700 (PDT)
 Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39eae96c102sm19802614f8f.35.2025.04.17.02.48.04
+ 5b1f17b1804b1-4405b4f39b1sm47042825e9.22.2025.04.17.02.50.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 02:48:04 -0700 (PDT)
-Message-ID: <0e2832b7-e5c8-4e85-a816-f313a8290e34@linaro.org>
-Date: Thu, 17 Apr 2025 11:48:03 +0200
+ Thu, 17 Apr 2025 02:50:24 -0700 (PDT)
+Message-ID: <c2bcfa70-1b6f-4182-ac3d-dd4493232a16@linaro.org>
+Date: Thu, 17 Apr 2025 11:50:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] ui/vnc: Do not copy z_stream
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@daynix.com
-References: <20250417-zlib-v1-0-34fad73b843b@daynix.com>
+Subject: Re: [PATCH 11/19] util/cacheflush.c: Update cache flushing mechanism
+ for Emscripten
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org
+References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
+ <97a2164b3f428265136bb1c01615a16b516138c2.1744787186.git.ktokunaga.mail@gmail.com>
+ <29330430-61a8-42c8-a87c-259f0cdbefe0@linaro.org>
+ <CAEDrbUYu-NH4Dwkby-UTtQpiy0ApN+Z4dwt+iOs_SZjCwfM_ZA@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250417-zlib-v1-0-34fad73b843b@daynix.com>
+In-Reply-To: <CAEDrbUYu-NH4Dwkby-UTtQpiy0ApN+Z4dwt+iOs_SZjCwfM_ZA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,21 +124,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/4/25 11:41, Akihiko Odaki wrote:
-> vnc_worker_thread_loop() copies z_stream stored in its local VncState to
-> the persistent VncState, and the copied one is freed with deflateEnd()
-> later. However, deflateEnd() refuses to operate with a copied z_stream
-> and returns Z_STREAM_ERROR, leaking the allocated memory.
+On 17/4/25 11:27, Kohei Tokunaga wrote:
+> Hi Philippe,
 > 
-> Avoid copying the zlib state to fix the memory leak.
+>  > The "why?" isn't clearly described.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Akihiko Odaki (2):
->        ui/vnc: Introduce the VncWorker type
->        ui/vnc: Do not copy z_stream
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I'm happy with the following ...
+
+> Although __builtin___clear_cache is used to flush the instruction cache for
+> a specified memory region[1], this operation doesn't apply to wasm, as its
+> memory isn't executable. Moreover, Emscripten does not support this builtin
+> and fails to compile it with the following error.
+> 
+>  > fatal error: error in backend: llvm.clear_cache is not supported on wasm
+> 
+> To resolve this, I've removed the call to __builtin___clear_cache.
+
+... used as commit description,
+
+> 
+> I'll update this patch to include an explicit "#elif" branch with an
+> explanation, like the following:
+> 
+> +#elif defined(EMSCRIPTEN)
+> +
+> +/* Wasm does not have an executable memory region. */
+> +
+
+and this comment in the code. Thanks!
+
+> 
+> Please let me know if I'm missing something or if there is a preferred way
+> to handle this case.
+> 
+> [1] https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Other- 
+> Builtins.html#index-_005f_005fbuiltin_005f_005f_005fclear_005fcache 
+> <https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Other- 
+> Builtins.html#index-_005f_005fbuiltin_005f_005f_005fclear_005fcache>
+> 
 
 
