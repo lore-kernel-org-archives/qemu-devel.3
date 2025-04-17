@@ -4,57 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F7EAC369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 18:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6635CC369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 18:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5UBf-00045E-G5; Thu, 17 Apr 2025 14:42:15 -0400
+	id 1u5UBR-0003oj-8M; Thu, 17 Apr 2025 14:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u5UBa-000440-3h
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:42:06 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u5UBH-0003ip-EZ
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:41:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u5UBX-0002uG-P4
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:42:05 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u5UBE-0002mk-VB
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 14:41:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744915323;
+ s=mimecast20190719; t=1744915302;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dakir4L3nktKnN6Yme7bev8PnDnH2GQk65lKvpaop5E=;
- b=a6jzrTOpAmJvhrdxJeppuu7FqLE8OkvXAmLOadwuIByrxRyzvEBizLxbfhW4RpcAaFDUzY
- S9V+0IbBmS9A1kLkPJ59v04qjXKkfP4LmcJ800mFpPPx3j9ItcWN3SQzeSyibHePEkoShq
- z+HhTUY0JKNLblhOmwsPql/OxnpqyMY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vPnhjydzAeT6IKAZ+PbPO6c9xezPNa1amtRltp9JrWo=;
+ b=ODKCPA6oHJHf2v6iw5YJYcB6BnBSNn1Zcc0naKIExmnzJg7yfvG6Uz5jf1PytLL8cjI2Hu
+ qFpkViLcPd1Dzqr+XHU7xNrL4EhlfXRGafWTx45REte3qQIScfGx0Ik/UcADVmE+mtu9hz
+ asnbm7qfrJJTAC9nai+mEsyEMSrA5uo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-ft3T3zqCMUGyzLSKHzjHYA-1; Thu,
- 17 Apr 2025 14:42:00 -0400
-X-MC-Unique: ft3T3zqCMUGyzLSKHzjHYA-1
-X-Mimecast-MFC-AGG-ID: ft3T3zqCMUGyzLSKHzjHYA_1744915319
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-_mfQsvm3P3K87cxggz8pIQ-1; Thu,
+ 17 Apr 2025 14:41:39 -0400
+X-MC-Unique: _mfQsvm3P3K87cxggz8pIQ-1
+X-Mimecast-MFC-AGG-ID: _mfQsvm3P3K87cxggz8pIQ_1744915298
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09D341956086; Thu, 17 Apr 2025 18:41:59 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29B241955D81; Thu, 17 Apr 2025 18:41:37 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.121])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1ED651956095; Thu, 17 Apr 2025 18:41:56 +0000 (UTC)
+ id E1C471955E96; Thu, 17 Apr 2025 18:41:35 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v2 04/11] block: Add new bdrv_co_is_all_zeroes() function
-Date: Thu, 17 Apr 2025 13:39:09 -0500
-Message-ID: <20250417184133.105746-17-eblake@redhat.com>
-In-Reply-To: <20250417184133.105746-13-eblake@redhat.com>
-References: <20250417184133.105746-13-eblake@redhat.com>
+Cc: qemu-block@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH v2 00/11] Make blockdev-mirror dest sparse in more cases
+Date: Thu, 17 Apr 2025 13:39:05 -0500
+Message-ID: <20250417184133.105746-13-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -84,113 +80,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are some optimizations that require knowing if an image starts
-out as reading all zeroes, such as making blockdev-mirror faster by
-skipping the copying of source zeroes to the destination.  The
-existing bdrv_co_is_zero_fast() is a good building block for answering
-this question, but it tends to give an answer of 0 for a file we just
-created via QMP 'blockdev-create' or similar (such as 'qemu-img create
--f raw').  Why?  Because file-posix.c insists on allocating a tiny
-header to any file rather than leaving it 100% sparse, due to some
-filesystems that are unable to answer alignment probes on a hole.  But
-teaching file-posix.c to read the tiny header doesn't scale - the
-problem of a small header is also visible when libvirt sets up an NBD
-client to a just-created file on a migration destination host.
+V1 was here: https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg01654.html
 
-So, we need a wrapper function that handles a bit more complexity in a
-common manner for all block devices - when the BDS is mostly a hole,
-but has a small non-hole header, it is still worth the time to read
-that header and check if it reads as all zeroes before giving up and
-returning a pessimistic answer.
+In v2:
+ - Rearrange and split several patches
+ - Fewer changes to file-posix.c; instead,
+ - New bdrv_co_is_all_zeroes() in io.c, which works on both file-posix and NBD
+ - Clean up several corner cases spotted during review
+ - Better iotest coverage, required pulling in Andrey's patch for disk_usage
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
- include/block/block-io.h |  2 ++
- block/io.c               | 58 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+)
+Andrey Drobyshev (1):
+  iotests/common.rc: add disk_usage function
 
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index b49e0537dd4..b99cc98d265 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -161,6 +161,8 @@ bdrv_is_allocated_above(BlockDriverState *bs, BlockDriverState *base,
+Eric Blake (10):
+  block: Expand block status mode from bool to enum
+  file-posix: Handle zero block status hint better
+  block: Let bdrv_co_is_zero_fast consolidate adjacent extents
+  block: Add new bdrv_co_is_all_zeroes() function
+  iotests: Improve iotest 194 to mirror data
+  mirror: Minor refactoring
+  mirror: Skip pre-zeroing destination if it is already zero
+  mirror: Skip writing zeroes when target is already zero
+  tests: Add iotest mirror-sparse for recent patches
+  mirror: Allow QMP override to declare target already zero
 
- int coroutine_fn GRAPH_RDLOCK
- bdrv_co_is_zero_fast(BlockDriverState *bs, int64_t offset, int64_t bytes);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_is_all_zeroes(BlockDriverState *bs);
+ qapi/block-core.json                       |   8 +-
+ block/coroutines.h                         |   4 +-
+ include/block/block-common.h               |  26 ++++
+ include/block/block-io.h                   |   2 +
+ include/block/block_int-common.h           |  25 ++--
+ include/block/block_int-global-state.h     |   3 +-
+ include/block/block_int-io.h               |   4 +-
+ block/io.c                                 | 120 ++++++++++++----
+ block/blkdebug.c                           |   6 +-
+ block/copy-before-write.c                  |   4 +-
+ block/file-posix.c                         |   5 +-
+ block/gluster.c                            |   4 +-
+ block/iscsi.c                              |   6 +-
+ block/mirror.c                             | 121 +++++++++++++---
+ block/nbd.c                                |   4 +-
+ block/null.c                               |   6 +-
+ block/parallels.c                          |   6 +-
+ block/qcow.c                               |   2 +-
+ block/qcow2.c                              |   6 +-
+ block/qed.c                                |   6 +-
+ block/quorum.c                             |   4 +-
+ block/raw-format.c                         |   4 +-
+ block/rbd.c                                |   6 +-
+ block/snapshot-access.c                    |   4 +-
+ block/vdi.c                                |   4 +-
+ block/vmdk.c                               |   2 +-
+ block/vpc.c                                |   2 +-
+ block/vvfat.c                              |   6 +-
+ blockdev.c                                 |  18 ++-
+ tests/unit/test-block-iothread.c           |   4 +-
+ tests/qemu-iotests/common.rc               |   6 +
+ tests/qemu-iotests/194                     |   1 +
+ tests/qemu-iotests/250                     |   5 -
+ tests/qemu-iotests/tests/mirror-sparse     | 109 +++++++++++++++
+ tests/qemu-iotests/tests/mirror-sparse.out | 153 +++++++++++++++++++++
+ 35 files changed, 571 insertions(+), 125 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/mirror-sparse
+ create mode 100644 tests/qemu-iotests/tests/mirror-sparse.out
 
- int GRAPH_RDLOCK
- bdrv_apply_auto_read_only(BlockDriverState *bs, const char *errmsg,
-diff --git a/block/io.c b/block/io.c
-index 6ef78070915..dc1341e4029 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -2778,6 +2778,64 @@ int coroutine_fn bdrv_co_is_zero_fast(BlockDriverState *bs, int64_t offset,
-     return 1;
- }
-
-+/*
-+ * Check @bs (and its backing chain) to see if the entire image is known
-+ * to read as zeroes.
-+ * Return 1 if that is the case, 0 otherwise and -errno on error.
-+ * This test is meant to be fast rather than accurate so returning 0
-+ * does not guarantee non-zero data; however, it can report 1 in more
-+ * cases than bdrv_co_is_zero_fast.
-+ */
-+int coroutine_fn bdrv_co_is_all_zeroes(BlockDriverState *bs)
-+{
-+    int ret;
-+    int64_t pnum, bytes;
-+    char *buf;
-+    QEMUIOVector local_qiov;
-+    IO_CODE();
-+
-+    bytes = bdrv_co_getlength(bs);
-+    if (bytes < 0) {
-+        return bytes;
-+    }
-+
-+    /* First probe - see if the entire image reads as zero */
-+    ret = bdrv_co_common_block_status_above(bs, NULL, false, BDRV_BSTAT_ZERO,
-+                                            0, bytes, &pnum, NULL, NULL,
-+                                            NULL);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+    if (ret & BDRV_BLOCK_ZERO) {
-+        return bdrv_co_is_zero_fast(bs, pnum, bytes - pnum);
-+    }
-+
-+    /*
-+     * Because of the way 'blockdev-create' works, raw files tend to
-+     * be created with a non-sparse region at the front to make
-+     * alignment probing easier.  If the block starts with only a
-+     * small allocated region, it is still worth the effort to see if
-+     * the rest of the image is still sparse, coupled with manually
-+     * reading the first region to see if it reads zero after all.
-+     */
-+    if (pnum > qemu_real_host_page_size()) {
-+        return 0;
-+    }
-+    ret = bdrv_co_is_zero_fast(bs, pnum, bytes - pnum);
-+    if (ret <= 0) {
-+        return ret;
-+    }
-+    /* Only the head of the image is unknown, and it's small.  Read it.  */
-+    buf = qemu_blockalign(bs, pnum);
-+    qemu_iovec_init_buf(&local_qiov, buf, pnum);
-+    ret = bdrv_driver_preadv(bs, 0, pnum, &local_qiov, 0, 0);
-+    if (ret >= 0) {
-+        ret = buffer_is_zero(buf, pnum);
-+    }
-+    qemu_vfree(buf);
-+    return ret;
-+}
-+
- int coroutine_fn bdrv_co_is_allocated(BlockDriverState *bs, int64_t offset,
-                                       int64_t bytes, int64_t *pnum)
- {
 -- 
 2.49.0
 
