@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A39C369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718C8C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5SW5-0008V2-6E; Thu, 17 Apr 2025 12:55:09 -0400
+	id 1u5SWE-000085-0n; Thu, 17 Apr 2025 12:55:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5SW0-0008SC-7c
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:55:04 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5SW1-0008T8-Qq
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:55:07 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5SVp-0003f6-KM
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:54:55 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cfba466b2so10739105e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 09:54:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5SVz-0003fZ-Vq
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:55:05 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cf680d351so12822625e9.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 09:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744908891; x=1745513691; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744908896; x=1745513696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HQaw5EphNOPUEEg94VOsDJb4EqhlPL6RL/fasC54olQ=;
- b=qv1H+JB1jyx2hMI0OzKwQmKFLlP9FoRmQD13Kd3cxE65nSN79CYI8xZfnoh3T5hd3m
- uCEUE9M2cSr7OpXV2/6jnRdudZo8Bpcxzz+PIvPiihqt0xOi3JWD1GorFJpNhgZLLcq9
- 9eGALV0dLi5j+MU9o8PNaqUFRCJodhaS0U6SL1kD3q2KWWiEZPUzbGBfl5iQwPHPub6T
- t1oO99uX/AmG7WOOAGhRaAXiDhL6XWA/WSfLUP4zJwFQGnvuhBKHLTZNoKvLdc+EE7sN
- tfjhNe+CaByMBCjYZhkpfRRtT/8UYj2xsxGa3A1FqYXjfZSGXwRjXEXLM9TfcVGRWc+R
- iK3w==
+ bh=ZuMPts4lp59PTenHXoFrRtrrX/gN06WnA+unwyU0N4c=;
+ b=jJFx0GwIaPB09QYbMcjfLqNjuitfQTM/jPb2VzQlJFgFQlz0WD3k8TFMEADb3hdMR0
+ 7AFDeAQkwHr7dJqmsTQE97C0rPC4CvJ73iEOnYx7Gx9pvRZdQ0DsGZW3cRH1iYOsTy4s
+ KaC2Xq3MUSbfHKD1l8Dam2pwbQ5QPzqZ4+gMZcROdlkT5/uVxKvsgqD20P3laEyepHrS
+ hgiGe9zqtqRPDH/jC551JPWw90LkoXzcvW4L6nM/LD9HiTfkr+qJUYNHtTGD8N3LdMHI
+ UEOaRejL7w/JnizMeAuEpfKCnfrtRnvWwt1Ze5Xjzai9NH4n5EZ24Bs4uAeO7XJMIrV7
+ Ya9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744908891; x=1745513691;
+ d=1e100.net; s=20230601; t=1744908896; x=1745513696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HQaw5EphNOPUEEg94VOsDJb4EqhlPL6RL/fasC54olQ=;
- b=vT8KCGYTcqPDrE7tyF7th3mCo97iVqM6LiKCKPdOgmiZT0P898p/U0r+lMVIn0yDsE
- LY7d+Px7630wwqd9z8rSpgAuyD09O4lWknaqPTNsU44Khz9CaQtu0b1i2Pnfq5WZb9nm
- RZR4jrJLBHBly2lgCfOI1keRJAS80Er1+oENdN+1K+RYPNZ6IkIpSFLpz/r7mWG2QLMG
- w05VqFDjdrm0U4evQx1Y7KnbhfWkAPQGkZWFOoDsK+pmO7rngKy9p/4sg+DviuGYxqAj
- nHzoJ7RXY2sF2UstCG3f3llO5OZ6LEKuHumYTPNbJ2qaPk4MWZec4PouEb+nat990IAr
- oJwA==
-X-Gm-Message-State: AOJu0YxP+K039CMWsQ/AJtQJYQdzytm2xK4ThZKK1mczhMGsQrqBwaRN
- VKGWGqiWW5m2UEa2DX9hvgSi1gl+Hj7oKYrSyC0qa8CJcfswyHGan4fLemdzWeLqJS++5zJGErq
- w
-X-Gm-Gg: ASbGncuVuV9hWfvXeIvaVFc1YkEkRiMEkJNQln5UQnlbehekvpx+ef0X/T+L/9okIJs
- tlMSvru08Ig3TLO4ytipXhGEp6pnpOxFcOAIUuCX+16wI6nqd48NZhWDeqbXaqyzw+sE4M7yCn2
- GtXPFiZKFVHCEQ+3u3zeT//dj3dNyw+w6aCoEE5qCsLAspWt3c8BP+Ir/AyCSiKGOYwP5XXTgpK
- Uf/RAVv3qEhDefifeY4kXhp98bmyaWkCjIxW1RmuemHW/EJVN9TiAlOXr+1V/Qy67Wdy5BCc292
- BdEVcVuypRBv+4tKI6AJgK7z1GKj4WAYA5/2Ji+IDd0eX+VnFR1ToBuEixU63EHXrdqgqW3h7Uh
- PRHmMshxc3blEhw4=
-X-Google-Smtp-Source: AGHT+IEySMqUpEaj8M5qbhzzgUAEdGbnOxgEOHFeOTnbawtuSRbb2t0fHsDAA5xp5wsGb5VTPHkfnQ==
-X-Received: by 2002:a05:600c:4688:b0:43c:fa52:7d2d with SMTP id
- 5b1f17b1804b1-4405d69b7acmr54233875e9.20.1744908891536; 
- Thu, 17 Apr 2025 09:54:51 -0700 (PDT)
+ bh=ZuMPts4lp59PTenHXoFrRtrrX/gN06WnA+unwyU0N4c=;
+ b=Ub5JJPsUFdX6vqRRLMerGJKpHqXoELINOUzln227KOd23X2N/EQ9XbqebomcgC4Hn2
+ 1qD9SlLdPcZ3A2ZNUhQMBxAuptqkw5LiPSKy97CWSfq3PDoD44YXBr/5aOdTofo1wScq
+ FCBh39gSBJRVJeo0GsqlCDm7HYq8149CHliW3b7pwvqr6HbmfIRF1cBzb2slo8N61XOU
+ KzzalkbUl75/soaldgZsb67C9LA8W/K8RGCj/IA0y+oS5xSYdkj4ZvcHXFAQwNBccGmu
+ vJohAnVyESfQtpCZOsG1PcDkUuTI3+5+BaOu8zRaIc5+25ddABSvFsDZK9KIa5Xv5ig8
+ +HxA==
+X-Gm-Message-State: AOJu0YwS7HxVsMkKBgj9vMPdLvqw6VBlewBo0NT75d5GSPej8y4YrSNl
+ V4VXbJMnO9qfU/9ArRDyrCkbXqkNbTqEkzX9jvSdb7ssrp7A53tielpHpbkXM0SwFx6U25uIdYu
+ t
+X-Gm-Gg: ASbGncs2KP6GuiatYPLPlbp98NZ75NHFIJ+t4RSmX958ornIwEYJ9AS79onwgBkhMSy
+ uYq8PQadQK67dtJsYrV3UCqPThLhP0v8vsqaWQmj5/T0mJGw+nFL0EVpNOsCCVorA3EWj6apM6s
+ AK5Iz1qyXyB4wWoDaDP01e2N55df66B16FPUlDyHROOnLFQLoBYc1kSONrHOf/cbIpVirLuEBq+
+ Zbyci4g+LR5DSQ6nbtVAGa5Pz25Y+PcB/ySR16j4a/75zpk1H+6FaWEzXDtb5BuVLRd1n2rPONc
+ hTDwWCWC/Ug6EHF/OFtw5B9mr0e0UwxaKSCDLVz4/rhMk+1MazSa0aQHx2NUCeBwYZwnrptWEoD
+ s4J3kbee0wr+gmjc=
+X-Google-Smtp-Source: AGHT+IF6l6MqC9OlU7MWRBm8/jilyNyCrD4Vt4zNw34eFnqTQdUeSJpxMCwQnmRmMigqZ2sNu/XjOA==
+X-Received: by 2002:a05:6000:18a7:b0:39c:1efb:f7c4 with SMTP id
+ ffacd0b85a97d-39ef9466f43mr524005f8f.25.1744908896196; 
+ Thu, 17 Apr 2025 09:54:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44069953823sm4736265e9.19.2025.04.17.09.54.50
+ 5b1f17b1804b1-440699d106csm4068305e9.34.2025.04.17.09.54.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 17 Apr 2025 09:54:51 -0700 (PDT)
+ Thu, 17 Apr 2025 09:54:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
@@ -74,18 +74,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 4/7] accel: Implement accel_init_ops_interfaces() for both
- system/user mode
-Date: Thu, 17 Apr 2025 18:54:27 +0200
-Message-ID: <20250417165430.58213-5-philmd@linaro.org>
+Subject: [PATCH 5/7] accel: Include missing 'qemu/accel.h' header in
+ accel-internal.h
+Date: Thu, 17 Apr 2025 18:54:28 +0200
+Message-ID: <20250417165430.58213-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250417165430.58213-1-philmd@linaro.org>
 References: <20250417165430.58213-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,130 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We want to build more common code, moving objects from meson's
-specific_ss[] set to common_ss[]. Since the CONFIG_USER_ONLY
-definitions isn't applied on the common_ss[] set, it is simpler
-to add an empty accel_init_ops_interfaces() stub on user emulation,
-removing any CONFIG_USER_ONLY use in accel-target.c.
+The "qemu/accel.h" header is implicitly pulled in. Include
+it explicitly in order to avoid when refactoring unrelated
+headers:
+
+  accel/accel-internal.h:13:32: error: unknown type name 'AccelClass'
+     13 | void accel_init_ops_interfaces(AccelClass *ac);
+        |                                ^
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                                |  2 +-
- accel/{accel-system.h => accel-internal.h} |  8 ++++----
- accel/accel-system.c                       |  4 ++--
- accel/accel-target.c                       | 10 ++--------
- accel/accel-user.c                         |  6 ++++++
- 5 files changed, 15 insertions(+), 15 deletions(-)
- rename accel/{accel-system.h => accel-internal.h} (56%)
+ accel/accel-internal.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 07ca088f7e8..9bd7e63c6cd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -499,7 +499,7 @@ F: include/qemu/target_info.h
- F: include/system/accel-*.h
- F: include/system/cpus.h
- F: include/accel/accel-cpu-target.h
--F: accel/accel-*.c
-+F: accel/accel-*.?
- F: accel/Makefile.objs
- F: accel/stubs/Makefile.objs
- F: cpu-common.c
-diff --git a/accel/accel-system.h b/accel/accel-internal.h
-similarity index 56%
-rename from accel/accel-system.h
-rename to accel/accel-internal.h
-index 2d37c73c97b..03426aa21ee 100644
---- a/accel/accel-system.h
+diff --git a/accel/accel-internal.h b/accel/accel-internal.h
+index 03426aa21ee..d3a4422cbf7 100644
+--- a/accel/accel-internal.h
 +++ b/accel/accel-internal.h
-@@ -1,5 +1,5 @@
- /*
-- * QEMU System Emulation accel internal functions
-+ * QEMU accel internal functions
-  *
-  * Copyright 2021 SUSE LLC
-  *
-@@ -7,9 +7,9 @@
-  * See the COPYING file in the top-level directory.
-  */
+@@ -10,6 +10,8 @@
+ #ifndef ACCEL_INTERNAL_H
+ #define ACCEL_INTERNAL_H
  
--#ifndef ACCEL_SYSTEM_H
--#define ACCEL_SYSTEM_H
-+#ifndef ACCEL_INTERNAL_H
-+#define ACCEL_INTERNAL_H
- 
--void accel_system_init_ops_interfaces(AccelClass *ac);
-+void accel_init_ops_interfaces(AccelClass *ac);
++#include "qemu/accel.h"
++
+ void accel_init_ops_interfaces(AccelClass *ac);
  
  #endif /* ACCEL_SYSTEM_H */
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 5df49fbe831..a0f562ae9ff 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -29,7 +29,7 @@
- #include "system/accel-ops.h"
- #include "system/cpus.h"
- #include "qemu/error-report.h"
--#include "accel-system.h"
-+#include "accel-internal.h"
- 
- int accel_init_machine(AccelState *accel, MachineState *ms)
- {
-@@ -63,7 +63,7 @@ void accel_setup_post(MachineState *ms)
- }
- 
- /* initialize the arch-independent accel operation interfaces */
--void accel_system_init_ops_interfaces(AccelClass *ac)
-+void accel_init_ops_interfaces(AccelClass *ac)
- {
-     const char *ac_name;
-     char *ops_name;
-diff --git a/accel/accel-target.c b/accel/accel-target.c
-index 9e9e70be876..6fa5c3ef04e 100644
---- a/accel/accel-target.c
-+++ b/accel/accel-target.c
-@@ -29,10 +29,7 @@
- 
- #include "cpu.h"
- #include "accel/accel-cpu-target.h"
--
--#ifndef CONFIG_USER_ONLY
--#include "accel-system.h"
--#endif /* !CONFIG_USER_ONLY */
-+#include "accel-internal.h"
- 
- static const TypeInfo accel_type = {
-     .name = TYPE_ACCEL,
-@@ -106,10 +103,7 @@ static void accel_init_cpu_interfaces(AccelClass *ac)
- 
- void accel_init_interfaces(AccelClass *ac)
- {
--#ifndef CONFIG_USER_ONLY
--    accel_system_init_ops_interfaces(ac);
--#endif /* !CONFIG_USER_ONLY */
--
-+    accel_init_ops_interfaces(ac);
-     accel_init_cpu_interfaces(ac);
- }
- 
-diff --git a/accel/accel-user.c b/accel/accel-user.c
-index 22b6a1a1a89..7d192306a65 100644
---- a/accel/accel-user.c
-+++ b/accel/accel-user.c
-@@ -9,6 +9,12 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/accel.h"
-+#include "accel-internal.h"
-+
-+void accel_init_ops_interfaces(AccelClass *ac)
-+{
-+    /* nothing */
-+}
- 
- AccelState *current_accel(void)
- {
 -- 
 2.47.1
 
