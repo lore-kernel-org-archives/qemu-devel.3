@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7587BC369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88AAC369C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5M1c-0002Ti-M4; Thu, 17 Apr 2025 05:59:16 -0400
+	id 1u5M1o-0002W5-W6; Thu, 17 Apr 2025 05:59:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5M1b-0002RR-1d
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:59:15 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5M1m-0002VT-LP
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:59:26 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5M1Z-0002Hs-8h
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:59:14 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso5016005e9.0
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 02:59:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5M1k-0002JI-O6
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:59:26 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-39c30d9085aso419427f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 02:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744883951; x=1745488751; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744883963; x=1745488763; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=E17VfZyb8qLY4zedxJspW5pqewiK+6QS0Fu7hOdhK3g=;
- b=UdtlfeXHFYKuvFL+mFCQ52FVV2G1NL8oUTXO9NXal6wxdkM6myMu80Hr+Ckt529eNg
- w7Xtiv8YodrWtg0+XfV73qVlkR2uMZiRf6v2YrNcu01eOiP0M4Hp9YAgvySaB626qJsv
- 1Dsz5Eph2jbK1IIn3T73n41T01OKcWq18SIfjNMZFIlkQFbsBIOdoDsUs+PMosYMrsPl
- 9orTimhdPTRGhRfC4mNhYB8FwRl9xJmxnb2+WRvpoIRyaZ41EYI3uNZ0+3DK4fiBQhQj
- 08FDwPqHq3ZJrlm2cb7ttOrDAJtKVOjb1km4bZY8BXb+n4dhQPvZ2kiQKbxLVfRMIjcG
- wG7A==
+ bh=nOHCFZ/q8018UWwWrmnf5XIZ8fx1Nubz0vTuMFEj+p8=;
+ b=vUZVMznVvs4oTyKqCpx3nIrxSMN3qIGH9gzcLyPpX3mHk0o0TXEyc/PLr87WrjFEOd
+ sVfE1GXQSZYbGfyKWv2pLc+PmbE4JvjCOWX7C5Y+msP9RtQdNZ0mIqOBG8NaRDpjbNIA
+ MxpctKrOfPdJC//JZDGhQDcgFyiIds7zPQ0PdoEuiajfb1NtlBbW+HUPeW9tX6Loe5/+
+ s4Uxz5i22wam2c5oajftF5o8zPkc4U87Le3c0dYMrHN0cA/AyEIMmdGI+gBor1iYEApm
+ HcQ394klvaX7RPUm3gCG9o7b9QJK1a4sJ+s2JuHmu0YA4THhNtcod1iJzNf+hTTHToP4
+ FnlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744883951; x=1745488751;
+ d=1e100.net; s=20230601; t=1744883963; x=1745488763;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E17VfZyb8qLY4zedxJspW5pqewiK+6QS0Fu7hOdhK3g=;
- b=uRQfccOeovstCoAmHzptfqzEm8GCj8AL7HQmr//2SjeJKqKCO5hB0D6y8M3PT/gUXV
- 9aCDFm02Y1lOaGLG47SXad3dcJDDmuJk4l4wz1MUkbVdsV+RXXaR5r9EQ3pN3idxOXNw
- D1UjNKLq4/MRXwB0U9if6ocrIfOWjSj9DldF0q8yJW1kVjCSwpTsb/Z0hVOaDJj2Fa5Y
- +oymPvuQ0nLf4VtEP1A8QNzRJMEvEo48nzpHQS1588NGHfluoqzbsbohXqVW8mgT+9HL
- +fK65DxxIooSNscXzNLNuNLQJnV8V9yu+Pz9BJNLwYk/x4JdO78d7pw/+XIl8Jdh6rTw
- +1gQ==
-X-Gm-Message-State: AOJu0Yya41z+XNlnPHF+yUemv2ytZNAzei0ubPzy4Q7e0yLJ3z6FwYXv
- S0lSyfrOhQ1aFvOP3UrJ8p/Lagu84Ew12vnwaEfF54eb7aB81fQCYX8o4LwQrSM=
-X-Gm-Gg: ASbGnctVS5nKS9DC/YLMO/W1cqcGbhOoUEl1IaXRo3phwMZE3aAZls92iY+CVzh4376
- a/KunGB+9QbqqXRsCeku3rwYpscehOYJE0Fx3bRbTvt4sbXK+UFwPTpghmV9raQhfuFMXT+TBo5
- sMZGs1+wNrCx8WRqKsSaZRvuKLYFtyynOHdtgYydILdnC9Pu9QTAiy+QWcgB6To3RgcI6Y69B9R
- Lr6zoHSVaUkgWrmm4K9+aa4JpvQ2czm83r2+GhKZ44p+mv3T+jhDpd01CUUV2bg064krOLoZrFS
- U8d+LozEGs1xwGtjMCJwTAakpwm2ziYMuI8JJx1HiyxXyHAOvfjc/87m5EWR+6pc2Uh7fE7wb2f
- 9FXb9k2M8
-X-Google-Smtp-Source: AGHT+IE3BS3f9ZlWSGKpcl/1N4L223TB5CrBJycMsLvVMBjFxEfVrRIxxnNykl7mQRwscj050nUidQ==
-X-Received: by 2002:a05:600c:1c07:b0:43d:4e9:27fe with SMTP id
- 5b1f17b1804b1-4405d61cb53mr44934755e9.8.1744883951172; 
- Thu, 17 Apr 2025 02:59:11 -0700 (PDT)
+ bh=nOHCFZ/q8018UWwWrmnf5XIZ8fx1Nubz0vTuMFEj+p8=;
+ b=HKdDYESOyLDrVeVSkRwkd8jYC1SFpvNa8yQ8G4RfK8atJ548iCcxSAvV40+MerbLw3
+ ANZsOHbeKxZgR3ZfdW34oDa89a58vZD1DiuAEFVp1h704vQtLoAyUm065Rbu3rCTEqQw
+ pTUfIbCL7oma3o9N2Rd3vOKt2wj1A2akEOPbUlnll65Wat7bQNPToBxQhSoENeQWoADN
+ IzXLL+AYlmnLEPJ+HMGukhgavfXvYl92Y6/iRDoiHsCAOiJ6sl1ziFC5e2e5jksZ3JMW
+ SkntccNY3BcDnF18E70JNPS8R9Wo4J4zvTrje8nXL9XPzjS/vdThwsuuovg//ZaiLYkm
+ pseA==
+X-Gm-Message-State: AOJu0YzK34Xox6fxSghj2oh038lTO9EjnmAX2sHsIo3cee/J1ruxndHc
+ 2e3jo34l4/TpbeXya/0k75CPNgnD7hNhfgyFxwzGFo1IqQmdpdFURPiwA3/lKAw=
+X-Gm-Gg: ASbGncvTpd2kvmT0Y6xEOaUQCsiKmDZDCi+eNy+lR0LzaMsqBf2Xiabjxsk2Fjarh/I
+ t3o6/5Xl60S/6f8q/jQXINEA09LkD9tCfHOExmWDIewHhRAqbQOxSoSWmZAM+6dK7N5EM23fiBY
+ rBKA05EthX4W2/91KloPClKw3KwUiwrSSHLmVVMWzMnnWCb3H6rJon64Mi+Br8ebO39kO/TXeYn
+ RwOCqXA0j6P+YthNhvmo1Ny4+sHVo/CEudStKG0hL7KEQuzkj/UmFOrhYBtpp79PujirAJTeucH
+ nJXGxuuGKzlI1wuQctjliDevmhGnSqQnFc6N+IOB7aKbrdqAJOJ+L4shIaOOCdVVsKAQuZvWse4
+ 8FeEks2w7
+X-Google-Smtp-Source: AGHT+IFGFHy+jUq6o32BZfKF/Q1cLMrPtl0aS0mHJROjJxQf1F3tnlnJ6ohk+wXICf8f+kUB/p/pKg==
+X-Received: by 2002:a5d:64ae:0:b0:39e:e588:6725 with SMTP id
+ ffacd0b85a97d-39ee5b1312emr5018214f8f.2.1744883962834; 
+ Thu, 17 Apr 2025 02:59:22 -0700 (PDT)
 Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4405b4f3df8sm47480015e9.24.2025.04.17.02.59.10
+ ffacd0b85a97d-39eae9777a0sm19579713f8f.43.2025.04.17.02.59.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 02:59:10 -0700 (PDT)
-Message-ID: <c2372ba0-e328-4443-85f5-8edcdca95613@linaro.org>
-Date: Thu, 17 Apr 2025 11:59:09 +0200
+ Thu, 17 Apr 2025 02:59:22 -0700 (PDT)
+Message-ID: <53db2d29-fe14-4c39-b13e-a0557dec4ae6@linaro.org>
+Date: Thu, 17 Apr 2025 11:59:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] target/loongarch: Add stub function
- loongarch_get_addr_from_tlb
+Subject: Re: [PATCH v2 5/6] target/loongarch: Set function
+ loongarch_map_address() with common code
 To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20250417035143.268248-1-maobibo@loongson.cn>
- <20250417035143.268248-5-maobibo@loongson.cn>
+ <20250417035143.268248-6-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250417035143.268248-5-maobibo@loongson.cn>
+In-Reply-To: <20250417035143.268248-6-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +103,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/4/25 05:51, Bibo Mao wrote:
-> Stub function loongarch_get_addr_from_tlb() is added if option
-> CONFIG_TCG is not enabled, so this function can be called in KVM
-> only mode.
+> Function loongarch_map_address is to get physical address from virtual
+> address, it is used by qmp commands to dump memory from virtual
+> address.
+> 
+> It is used by kvm mode also, here move function loongarch_map_address()
+> out of macro CONFIG_TCG. And it is common code, the similar with
+> function loongarch_page_table_walker().
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   target/loongarch/cpu_helper.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
+>   target/loongarch/cpu_helper.c | 10 ----------
+>   1 file changed, 10 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
