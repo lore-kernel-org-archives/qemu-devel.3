@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79AB9C369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 10:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D32C369C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 10:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Msy-0008RQ-SZ; Thu, 17 Apr 2025 06:54:24 -0400
+	id 1u5Msf-0007fi-BP; Thu, 17 Apr 2025 06:54:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u5Mso-0007sU-SC
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:54:14 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1u5MsR-0007cD-Nw
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:53:51 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1u5Msm-0003WG-Gn
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:54:13 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-73bf1cef6ceso511960b3a.0
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 03:54:10 -0700 (PDT)
+ id 1u5MsP-0003QJ-8o
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 06:53:51 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so427228b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 03:53:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1744887249; x=1745492049; darn=nongnu.org;
+ d=sifive.com; s=google; t=1744887227; x=1745492027; darn=nongnu.org;
  h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vQTsKrAn76+UasM8uqjd/nLkuCgMzLsX/xbV+gpdXKA=;
- b=I9+Q53nHVW8rYoQtt/fhjN3DE5MD6jM5TYEzDWKQGVWTDhANcxPTXjLiqumgdMo7Dx
- M/fPW0HrtdjOO8JoJuHLUEciAUYGPPIv1J09Vcj6oJNiPQKK57tgfSJ3ad9hEIRi3Yxk
- SfAVFCcpoHuakta427pMKn+Le2DhJjAX/UpSNo90qohO4ekf40ofyvN8dRPRcxYgqedV
- qhHjopERl0LlKh9cXraIj6o8TgjXz0Oz34cH0TdRJKdEdZRgC5q1gEY77qSYUvrxUWMf
- lXJqXf15lkXJNJl5AeVigSSv1nISzSIw3ZV0Vxfj9GGUtJD3SGkxHfahhVid4HIcQ5jz
- nadw==
+ bh=31sA8ZoJNIVGckIUDC4jt2xxe297otB918AQ9sayA4k=;
+ b=nmUMWWfLY4qyOfwB3TFEJCNXlqN1f+Qrqh2E0d5mVZ05z4JX0FSVYXgfZTPoJZx7DR
+ MfslXuyLyuHl3Myg0KnHQu2CNxlwOA+SuhvwpRdsrBF3+g85k+//J8qoOslMJfMI1I+u
+ y0sh/CzjvdKGBS0nAOqkLXQkP6Ry3yTs8B82dokD/zMs1o1oYXMDnTR2um4KsM4Jw9KU
+ xRo6aCLmhbpch85nTC8uOSwfFwNDwBroagu/uPEvxcdmDdPra1H2msHauR2XTeUNgdpw
+ DC24I2SVeO3PDpnhrUaGFqRpsJBG2NCffUmlg4JGh+N8oJcTNSkfH7DjfFB5NAeFZqaN
+ fhZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744887249; x=1745492049;
+ d=1e100.net; s=20230601; t=1744887227; x=1745492027;
  h=references:in-reply-to:message-id:date:subject:cc:to:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vQTsKrAn76+UasM8uqjd/nLkuCgMzLsX/xbV+gpdXKA=;
- b=hJqRhDiGqdeEYCCd/Wx9sjMlEqzi3eYFqzFqGaCLBpBPcD2s+MdUZHd90BSxJhjtYo
- OF/HdvLs9g5mHQ/basvEHehBc63VequHXbIRakJMag/sLhIX9pr5CbfxoU+Vx2njbZXS
- Egu1F9ChbSDhEdQIarHXnRJU+YgfB2RzXqAobOkOJ6v04TNhKQErcyUz7KfRoF2VQ0sL
- KLfh/bGG2rJqbxMEsxLt0IVBbW72/TTY5qE2EUBqrrU+cTuKxBdx7gwDprQp7+Vsl5sk
- FgkNc45sPRYd94aoURC0Sm4chfZJzMzA8aEVKWWAqxvmh/Seu7/ln2QpDfXv4uVB4V4i
- dRaw==
-X-Gm-Message-State: AOJu0Yzn4JPM36Kvxd5aXsEbfMGrPEpPaCKN7VlfjC5y714oZkgvj3Yk
- WtZjehckEMOiXGwYFvSUHlCIEzbb7ED3SBSK8aAAsnXQ8nwku/7+uE28fgYkPNRn1me1i512qHi
- ZBxVik6d2wR1X1Q+FJb5jckV9P8Rx6Ktfw/SG2daiNd7kb+K6KiPUlknYUad+b60IsD8ESowQFl
- 8K/WzEkgA5gdTxP3YDSnFe/sJWncg02MG9VQ==
-X-Gm-Gg: ASbGnctu2y8zapclrvAIWNuusxYxJiY7xP3J3+JLknHIzUZ2bf9/mjFBiOUqJmjDn0P
- fc4PmHxddjmcgrFLi78rnpudauue49yevM9Vow1bNoZQzGLnKUFmyf6xiatkk9EBmhc8RLFr//z
- gMrUmBKzPArU6a/uaAbLZNCbErCwnZ1a0L5l0se8ylM9GJwEWAhwpUtqWAtv4nHzXXEScdfuLNd
- rKtvs3pFMcYcFE/0fhqmPi6g/8ECs5tPWw9JoDZgXwuesX7BFpbMN4twpQT5DKlmRcfdpEuAhSH
- SN339KHcIRNy6qgkpbydLHjaAu8logMdenSCrvMjV/eBIFfW2y0LtSiL/8Xv95s=
-X-Google-Smtp-Source: AGHT+IEekOeXlJxQgqE9ZWPX/+ewPT7W/wX1P7lgDnVNwXejZ1pv1ga4HdqDy4pgWILsWxLishEcHg==
-X-Received: by 2002:a05:6a21:150b:b0:1f5:97c3:41b9 with SMTP id
- adf61e73a8af0-203b3e4ffe2mr7406779637.5.1744887248819; 
- Thu, 17 Apr 2025 03:54:08 -0700 (PDT)
+ bh=31sA8ZoJNIVGckIUDC4jt2xxe297otB918AQ9sayA4k=;
+ b=nmgXAcZnwwlANqikHM+xxrH6Z7q8IwwO9q5KyI6mFFP+RU9OYQdVZXaSYXXuVzRd+K
+ y3juGETcceqraehqJ8UbkZjibj1C26RuJ08Cqsrgql4Put4blFFq5iwvsD++yWb+RAqY
+ dXmdwFgTqE07qTlQA2WR89WaAYAeMBh1flQVKsIz5ctrom77tEx6p3kjiOGXx+tCKCNt
+ 1UFnoNvLHxljurvAJkLOXpuM9J7ab395nyjF7opwULwfJKOC4Nw8j4OCtljAKB+JcAyi
+ E7EJFrj5bIOXpIg3PuwWm1iKZDnGff9wzylcWfoAtwGx8yEQ56qdWOh7O3bdDNibSvxk
+ Jhow==
+X-Gm-Message-State: AOJu0Yx8kA/k3fPtNEKVy8IrNxhMd7Wjut0mUXulJqRTSs4cF8hVuy+o
+ YWoAcuL/5y/Pg+oYoKeOz6Fe783fIp4NRLj7HLHzf+tERNYIgrK/ftN5RPgYmIR3LoDkKUdqSov
+ n6Y8I4wk6WN0cTEzJTUJacfrUo37LqXD7N4BcpchHcSAfWbvomfmnCqwdGe/VzY+esoOwMw2SwE
+ UE0hDGyKJkpd8dx/61D5PREIXkrMSUVQrXyw==
+X-Gm-Gg: ASbGncvas07tRjEwELJ5GSnnVeZaWj5epbO5Hddt2xqBDzLSL7P70nbSWK/oq7iIwLk
+ 2d6wzCJcAQcco2InRsN9y3bdMP2wQH2m1KoWER8EsZ0XZgKJxRATFougyZm77E5szFnyn6KTgFQ
+ oy5YOT8baQZF6loQ82P9zarOkCHNVViT20Osw6OSRkFb8DSfuUoev5LeKOUgPk/mH3yZVWnYV5E
+ Gou0Lo0+LvjiGAv860lhNKfJWEKFxc7lYHWGQmJb6f8SbIo+Mw6sRa5vMD+t932oxkzaEYXDdKJ
+ peg61Nn/WFL4s3nysGcxeqF49Ribs9EMlFoeBvwGcPIFg/1gZR+rQzP+FpXHpqHJRRrFaoYS8A=
+ =
+X-Google-Smtp-Source: AGHT+IHdsLrCbuW1aeatAFe3irR5/r1fGLXPAu4NMLYEYp6v5RXrAbLkqQgEtPEohMi9Kv46uYpboA==
+X-Received: by 2002:a05:6a00:240c:b0:736:5725:59b4 with SMTP id
+ d2e1a72fcca58-73c266b5fcfmr8696901b3a.3.1744887227222; 
+ Thu, 17 Apr 2025 03:53:47 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73bd230ddaasm12366251b3a.138.2025.04.17.03.54.03
+ d2e1a72fcca58-73bd230ddaasm12366251b3a.138.2025.04.17.03.53.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Apr 2025 03:54:08 -0700 (PDT)
+ Thu, 17 Apr 2025 03:53:46 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -92,21 +93,21 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
  qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v2 12/18] target/riscv: Expose CPU options of WorldGuard
-Date: Thu, 17 Apr 2025 18:52:43 +0800
-Message-Id: <20250417105249.18232-13-jim.shu@sifive.com>
+Subject: [PATCH v2 08/18] target/riscv: Add defines for WorldGuard CSRs
+Date: Thu, 17 Apr 2025 18:52:39 +0800
+Message-Id: <20250417105249.18232-9-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20250417105249.18232-1-jim.shu@sifive.com>
 References: <20250417105249.18232-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,40 +123,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose WG CPU extensions (Smwg, Sswg, Smwgd) and WG CPU configs
-(mwid, mwidlist).
+Add CSRs for 3 WG extensions: Smwg, Smwgd, and Sswg.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 ---
- target/riscv/cpu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/riscv/cpu_bits.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 1aba6dd853..46df970fe3 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1742,6 +1742,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
- const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-     MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index a30317c617..7705c6995e 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -408,6 +408,11 @@
+ #define CSR_DPC             0x7b1
+ #define CSR_DSCRATCH        0x7b2
  
-+    /* RISC-V WorldGuard v0.4 */
-+    MULTI_EXT_CFG_BOOL("x-smwg", ext_smwg, false),
-+    MULTI_EXT_CFG_BOOL("x-smwgd", ext_smwgd, false),
-+    MULTI_EXT_CFG_BOOL("x-sswg", ext_sswg, false),
++/* RISC-V WorldGuard */
++#define CSR_MLWID           0x390
++#define CSR_SLWID           0x190
++#define CSR_MWIDDELEG       0x748
 +
-     { },
- };
- 
-@@ -2975,6 +2980,9 @@ static const Property riscv_cpu_properties[] = {
-      * it with -x and default to 'false'.
-      */
-     DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
-+
-+    DEFINE_PROP_UINT32("x-mwid", RISCVCPU, cfg.mwid, UINT32_MAX),
-+    DEFINE_PROP_UINT32("x-mwidlist", RISCVCPU, cfg.mwidlist, UINT32_MAX),
- };
- 
- #if defined(TARGET_RISCV64)
+ /* Performance Counters */
+ #define CSR_MHPMCOUNTER3    0xb03
+ #define CSR_MHPMCOUNTER4    0xb04
 -- 
 2.17.1
 
