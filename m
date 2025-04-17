@@ -4,93 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD63C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA0AC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 16:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Rwp-0002oG-SH; Thu, 17 Apr 2025 12:18:43 -0400
+	id 1u5Rx8-0002vt-Vv; Thu, 17 Apr 2025 12:19:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u5Rwl-0002ni-Di
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:18:40 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u5Rx7-0002sm-IN
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:19:01 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u5Rwj-00054u-Ow
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:18:39 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3912d2c89ecso983850f8f.2
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 09:18:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744906716; x=1745511516; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UH2wT6uE5R6HdIGixMAO0vVonM/z0oULdFeYT9l2A3w=;
- b=b5vSlkJgSJ22M/Jq6Rz4C2N/jTMQCQMIRGpHB3z1GBvMcjOzpNOAcnjN35zCObNXvJ
- wFYYRXhEUV/t3eYVMTnMM4B57OVauLRmZtzYDXf0r729Cg/bsqG152dBdARoXl2szXPP
- aTfgEl2NatC23FcyP/ewWPPjdEJnFuy3fcultqwU+Wpixqh9ksknbiuwZtYqCFammA2d
- 13cD1eB/Wvdxa9JBCThGgf7rSb9W/vbGzKyJb5gnpm8GTbMELRS8q1RJ8fFoNP+Wr1Eb
- SWfx7+se5aOsMcfivfn9u89RzZ8pimSdbvUPLgzUrwCi4I3+JzcGun/7a5oEGiUg8L3s
- TOtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744906716; x=1745511516;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UH2wT6uE5R6HdIGixMAO0vVonM/z0oULdFeYT9l2A3w=;
- b=sqZVNOePQ4o7ByGlm5uK2APiLIa1to/gGdrKcXUcojnzIl8cIvAUlJbFiN9/OlAeVC
- acEV1E/EU30xMo9utWg35GpkQGJyBpTlTbRCNoa246aZvSbEXDSDJg+vnVj+shcZdY22
- qf3cUHR4V2nuJnMsaMPCXfuSxRJ8X6w9fu7cqhFbSNukiXTaRZF9vBD1RmL4KkAzQgw3
- irFWgd9poPt/7S7vRVcd8BY2+lvZJCmY5YATpCoGk2E5seS1EjrL6LeZ4Yrymd1kFD3o
- ENRBdGj60r2rf6c/m4zuNp+jETspzMxz4mT58CL1iyblVNpRZe4bGjmIBEXjIEXjuNvi
- 2wcA==
-X-Gm-Message-State: AOJu0YxL42XF3/DNfQ3ZWpOHpo8jE2nYfiIo7QERv8BVHTInnAFYTxtt
- l9LgChgU109Qabk8q20xOZLmr9nJM3Ma85dCJt+EPAdPF/LF86fxM9b6qzcEziMEg09oQ4e4NYs
- s
-X-Gm-Gg: ASbGncvVpvf+bqZ0xkeGIVaIbN3jLc7FuIAGN3ysenMEU2JkIPFQ91cuHzLyCcTAaxx
- Xg8UTOLFbQUVk7kFxcdN6MDXx3eXbh/1V5xEtG2De0G3Oq5sR3oS9W+0nRrd/vziwaQXFTKyaP9
- OMEde4MXkHuBEYma8jHm6HPxbufw4h5pA6oGw5WvgggS4DoUgXBeTjYrAbKjJbreH9P1s0yiN4Z
- n/LsEDSsLMpVTmTzcteZq1kR6Rr1ud/X1GdoUofnNpue+oEPKt6Xnr//oZgI3lrSthDjMnjUpx+
- sD0fqb3CvLgJCLwAa9z2rHpxF/w2iFT3YwkLGUCMg8s=
-X-Google-Smtp-Source: AGHT+IH9qHTXdUnUJJm3gez4pI7Eop4mlOWchK3szarm6Ock0bEwOVcDMrA6eZpeCJv5g2MKpGXTvQ==
-X-Received: by 2002:a05:6000:1a8e:b0:39a:e71d:ee34 with SMTP id
- ffacd0b85a97d-39ee5b9e3aamr5270831f8f.37.1744906715718; 
- Thu, 17 Apr 2025 09:18:35 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa420837sm48436f8f.10.2025.04.17.09.18.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Apr 2025 09:18:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 583975F893;
- Thu, 17 Apr 2025 17:18:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 8/8] gdbstub/helpers: Evaluate TARGET_BIG_ENDIAN at
- compile time
-In-Reply-To: <20250417131004.47205-9-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 17 Apr 2025 15:10:04
- +0200")
-References: <20250417131004.47205-1-philmd@linaro.org>
- <20250417131004.47205-9-philmd@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Thu, 17 Apr 2025 17:18:34 +0100
-Message-ID: <878qnydan9.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1u5Rx4-0005H7-PO
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 12:19:01 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8D83A1F443;
+ Thu, 17 Apr 2025 16:18:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744906736; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qk+6IVwb+rERXrNAt9O+sD5SzHVBcuIEg5P1WNzQkCc=;
+ b=YpXMPwEqhuvqUR+a6Z5r1yPGk0saUHyg06PruGm3jtogFQW+Yto7acyyyfNCEVdP5iLwol
+ 03AZzAqTTu+xPa/I2UTiM/HKDKaxymcIIUguqdz91iH+naSypYvmrlvbH1tMy3KrY3bulZ
+ uraMDeuIJnCCiTHE7J1c2z6mKgdlfJs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744906736;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qk+6IVwb+rERXrNAt9O+sD5SzHVBcuIEg5P1WNzQkCc=;
+ b=WaqycJeK0fkz8CG+oFM5K6Oso4Al+hNEgbJMavBs/S9bGBDJH8DdMXknH1quvr1pxy2qMq
+ nGHdWJQRcOem7TBw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=YpXMPwEq;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WaqycJeK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744906736; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qk+6IVwb+rERXrNAt9O+sD5SzHVBcuIEg5P1WNzQkCc=;
+ b=YpXMPwEqhuvqUR+a6Z5r1yPGk0saUHyg06PruGm3jtogFQW+Yto7acyyyfNCEVdP5iLwol
+ 03AZzAqTTu+xPa/I2UTiM/HKDKaxymcIIUguqdz91iH+naSypYvmrlvbH1tMy3KrY3bulZ
+ uraMDeuIJnCCiTHE7J1c2z6mKgdlfJs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744906736;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qk+6IVwb+rERXrNAt9O+sD5SzHVBcuIEg5P1WNzQkCc=;
+ b=WaqycJeK0fkz8CG+oFM5K6Oso4Al+hNEgbJMavBs/S9bGBDJH8DdMXknH1quvr1pxy2qMq
+ nGHdWJQRcOem7TBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F1F35137CF;
+ Thu, 17 Apr 2025 16:18:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id t0crK+8pAWjAdQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 17 Apr 2025 16:18:55 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
+ <danielhb413@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH 4/4] tests/qtest: Enable spapr dma with linear iommu map
+In-Reply-To: <20250416145918.415674-5-npiggin@gmail.com>
+References: <20250416145918.415674-1-npiggin@gmail.com>
+ <20250416145918.415674-5-npiggin@gmail.com>
+Date: Thu, 17 Apr 2025 13:18:53 -0300
+Message-ID: <87h62mep76.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 8D83A1F443
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCPT_COUNT_TWELVE(0.00)[13];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,linux.ibm.com,redhat.com,linaro.org,nongnu.org];
+ DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_HAS_DN(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; TAGGED_RCPT(0.00)[];
+ MISSING_XM_UA(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,16 +138,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Nicholas Piggin <npiggin@gmail.com> writes:
 
-> Rather than evaluating TARGET_BIG_ENDIAN at preprocessing
-> time via #ifdef'ry, do it in C at compile time
+> qtests spapr dma was broken because the iommu was not set up.
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> spapr requires hypercalls to set up the iommu (TCE tables), but
+> there is no support for that or a side-channel to the iommu in
+> qtests at the moment, so add a quick workaround in QEMU to have
+> the spapr iommu provide a linear map to memory when running
+> qtests.
+>
+> The buggy msix checks can all be removed since the tests all work
+> now.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I'm off for the next two weeks, if you're in a rush feel free to merge
+this. It passes all the tests I do for the qtest tree.
+
+There's a preexisting refcount bug on the ASAN build with:
+
+QTEST_QEMU_BINARY=./qemu-system-ppc64 ./tests/qtest/qos-test -r \
+/ppc64/pseries/spapr-pci-host-bridge/pci-bus-spapr/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/connect-fail
+
+I'll report separately.
+
 
