@@ -4,140 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB04CC369CA
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 17:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA155C369CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 17:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5T1Q-0005lQ-6H; Thu, 17 Apr 2025 13:27:32 -0400
+	id 1u5T2v-0006px-KW; Thu, 17 Apr 2025 13:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u5T1K-0005kW-1D
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:27:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u5T1H-0000SQ-Rt
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:27:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744910841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VJtUGhrpuHY0ej2pL/8furpW/zCO848mc9PosCyQdXE=;
- b=VAabcynjxOBZz908230DuYVUlcKbeXFB2L2LxpZ/niVtCJZ0K4oWfEsHlWz2Ifbad5qv0Y
- 44ztc07PFEWiwFGGbvlFfCrdEGycY+KRbOscoGiGtg+Iv5ABk1S3l23NDZMAtJc6yjIxw1
- omaHwFk/1xF2I6qoOAwvsOr/T40+iH4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-psvCFJaGMCGX2-2qyqw3OQ-1; Thu, 17 Apr 2025 13:27:19 -0400
-X-MC-Unique: psvCFJaGMCGX2-2qyqw3OQ-1
-X-Mimecast-MFC-AGG-ID: psvCFJaGMCGX2-2qyqw3OQ_1744910838
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43eed325461so5844815e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 10:27:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1u5T2q-0006me-TS
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:29:01 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1u5T2o-0000gd-Mz
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:29:00 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-22435603572so13085335ad.1
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 10:28:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744910936; x=1745515736; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uE6SpS9iCTqPjCvh1GFyDybdYD6CvcUwjj0EsECqXYY=;
+ b=ui8sc8iX2T2GTUsw+c2Jtw8WxC5uunOAvL1h6SdRiuXihcfqQtq81ukWbDvuYgSq4t
+ NDZ+ESSE+9i0Z4EKjrfkMCV4ZhEwyX+UaX9CVqGR2CXGnB/ZVl0A/lXIqpwBhJBQ2Yg7
+ YrorzubzuFiCHy9pbpUHwofn7d4e+YEwMQ5fr0kTkI7t5h92qk6IMYGZBLzN4IZuGPNk
+ wctxkO8WhcEoHJTWjNdI4UxCn8Av1wpxXz9VAO3O0du7/GQwmwavfEx8nLQIIUNlSEyF
+ o6sWu8O1nHgrmmqIsOgelpDP4i+6uEvrwdT/MMyU0HsxRWgiACqvbpAmefm606o7ZSQp
+ OrIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744910838; x=1745515638;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VJtUGhrpuHY0ej2pL/8furpW/zCO848mc9PosCyQdXE=;
- b=VDYjsbYiS2qmdJoRzOPxlUq0mUB+ssjWaP3FsPGAjHb9eCENXfmqcHk7LJ3H2mfzFx
- 9NOY5pv8Ef5uiu8e0+Ql3cTiRyURfyBZCtKj9Hhm0gFPb4OdD0RvoPbrExYrmceIESgW
- S0l9mPDyPFRgBJy24b1IoKv9CFah9Z68ga9fcXkDyZu/7AMvPAENgYytpPUNU1N392nf
- m0yg3+718bJ6ebXT0oEKCYOiE2bl75u+SDOUajmb04qCHaPnNi3gcaNOPRriF2C/JxIH
- PYJFi/9HQa7JHBWEjxlJIXzCwN6sXYnYa19FNpqCwlJ+PbwTPR/kCnlHwL0YROqWrF+U
- X46A==
+ d=1e100.net; s=20230601; t=1744910936; x=1745515736;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uE6SpS9iCTqPjCvh1GFyDybdYD6CvcUwjj0EsECqXYY=;
+ b=G6fuf+TaxrD7nhb/ljBdV5/szW5BzkWWVZLgo/wxK3PzEig9lV5wH4kXfWaPufsvSy
+ KVSr2H07t3vvbPviudzvsRk3r7cbzr+PF/g8jt/GZm7RtFXuGQHZxCrTR87Nt3O/VT2o
+ vH88KfaYMVk52OrFxLHxgufcr0idOzRt1WR87PpQiV7uzkP9+GQ9+1kvCogr0AlOuHjO
+ OWQ35KGUXshy/Tu0NOlXnav/zpP3ksxtdG/lSRyJRMY5+eFWS6FNhyFwimf9JhABQJKD
+ opFI35+QnsD0Lt/dVhOaG5UeSgyfAbwAjDPbg6PrWaHArtrBeIolQnebHYzhR7fNrcwg
+ 7qCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmFPHXPEbkijkdE2f6Bva1mwkeH5DsNXLT9wLJNrcxFWVDsgY+cABi3+GLrkO2y0x/TnLXcNXMvbJP@nongnu.org
-X-Gm-Message-State: AOJu0YzL5ashIMkK0E/3fus15RapKsBlGp/7WOEbYuKpw7pT6hoGwL26
- 3pTYe4iQEq3BQzv9AD6IhKiUC89YktxBBCSTMebz3Gcq4KcsRiTP+5rFxOJx78GL3XMjUv12B+V
- PRHFDsd4kD7H9Eja4ngDSuR9K6FZpM+JpXmrdahTWhNmR0d3k9H2Z
-X-Gm-Gg: ASbGncvBF9aKcMIFCLaY0fvOSdCCHk8pd898/213u54RBDPjcdfpo+38WpvWTFbyjUJ
- Z5NchNS8EqknwmOlQ6bP+ONs8RhNxXg9GAD6LojBN1Pg8Pol6L1cIOgRdsPeQBsE3Euuuw9RBA0
- 7xonVct0FQ94cmudgI46FWDbh0PV2iZkJnGM9aSTX6TKey6/Gv9ZvnvQbgVgYr/DcJi+1qpJV0z
- Xu24UrjPC+m46QQTddukZIIBdOuONU/Qs6FgO76def0AJLSdcUioUPxkTTOwuXGmv68xZY3w5nD
- 1G9jD3dNCop2rG+9
-X-Received: by 2002:a05:600c:1e0d:b0:43d:4e9:27ff with SMTP id
- 5b1f17b1804b1-4405d5fcd26mr69987055e9.7.1744910837326; 
- Thu, 17 Apr 2025 10:27:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEsJarTHVVxJv9SHOwTMu9rvqtMTI0W7TiHWrFCIsY4s5tSXGGk9ZbBsnaeN1ZDmdD/fAs6qg==
-X-Received: by 2002:a05:600c:1e0d:b0:43d:4e9:27ff with SMTP id
- 5b1f17b1804b1-4405d5fcd26mr69986925e9.7.1744910837030; 
- Thu, 17 Apr 2025 10:27:17 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.109.83])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-4405b4c817dsm62209245e9.4.2025.04.17.10.27.16
+ AJvYcCVFuGbtg2lrjKIXgueo/fCpG6mKmCWLjjhDJSrW+tLoqP0CP1jBWDw4YgBtUIFe2vAGHxQ9glHS6CvQ@nongnu.org
+X-Gm-Message-State: AOJu0Yw69wi2RSdG3pCNZb1+t/T1eiCL1hIEC7XRQs+ZTKJGYOSr9bTT
+ Qnf1FqPQEOgHIexR0nPTXzarktIADPmh0Wq5EyYrf65lYQsmZnJuznd7Pe7C6PM=
+X-Gm-Gg: ASbGncugb4QFAt4NQHt6Da64/sVe3IA4PxFQcurmmZset/Fx4B2+dzpC6FgkoQPt+Ox
+ 6GlQGmkgnL/RIw2Fa5K2QtFqYc1muRstfgXfbVr6bnu8wAIECYA6a8gBtBZjAUKkV6oetFiiS4j
+ HxiSUv5Uanz/z5e4K3OphDM3YZ7wrkBEZ4kh/CueZ1gVBRsooIWVqUgekl8LlsprZ+v0SbKNnli
+ evCNP/XemUMj1j7TJzIoVi4+1YQ50SSCxa0SYujxkX/IRCD/xcVQK5Sm/9xWEPC7dOfrLlmUKXd
+ mgZZTBHwMvz3ca5FWLhZuIpPeq0a8HdF/ayKq4PJc2PWlqGuc6Ew
+X-Google-Smtp-Source: AGHT+IGCYFCrNLgSophewf089Kr3J8Czq5Bz1RUTB/MSGJmbkeZVCUCGxnPtYvh9mh+O09cXiRcVlA==
+X-Received: by 2002:a17:902:e808:b0:223:2aab:462c with SMTP id
+ d9443c01a7336-22c358d70femr98442945ad.15.1744910936282; 
+ Thu, 17 Apr 2025 10:28:56 -0700 (PDT)
+Received: from [192.168.0.102] ([186.215.52.65])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50fdbc5esm2442985ad.222.2025.04.17.10.28.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 10:27:16 -0700 (PDT)
-Message-ID: <68b6c799-6407-43cc-aebc-a0ef6b8b64fa@redhat.com>
-Date: Thu, 17 Apr 2025 19:27:15 +0200
+ Thu, 17 Apr 2025 10:28:55 -0700 (PDT)
+Message-ID: <75bfdfcc-d030-4a59-bece-49f422799869@linaro.org>
+Date: Thu, 17 Apr 2025 14:28:52 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-10.1 07/19] target/hppa: Replace TARGET_LONG_BITS
- -> target_long_bits()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250403234914.9154-1-philmd@linaro.org>
- <20250403234914.9154-8-philmd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC V3 PATCH 01/13] acpi: Implement control method sleep button
+To: annie.li@oracle.com, qemu-devel@nongnu.org
+Cc: mst@redhat.com, paul@xen.org, Jonathan.Cameron@huawei.com, git@dprinz.de, 
+ imammedo@redhat.com, miguel.luis@oracle.com
+References: <20250411201912.2872-1-annie.li@oracle.com>
+ <20250411202827.2904-1-annie.li@oracle.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250403234914.9154-8-philmd@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250411202827.2904-1-annie.li@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,30 +104,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/4/25 01:49, Philippe Mathieu-Daudé wrote:
-> @@ -101,7 +102,7 @@ static void hppa_flush_tlb_ent(CPUHPPAState *env, HPPATLBEntry *ent,
->   
->       tlb_flush_range_by_mmuidx(cs, ent->itree.start,
->                                 ent->itree.last - ent->itree.start + 1,
-> -                              HPPA_MMU_FLUSH_MASK, TARGET_LONG_BITS);
-> +                              HPPA_MMU_FLUSH_MASK, target_long_bits());
+Hi Annie,
 
-This ignores the fact that TCG is still using the target_long type, so 
-there's no real hope at this point of differentiating TARGET_LONG_BITS 
-this way.
+On 4/11/25 17:28, Annie Li wrote:
+> The fixed hardware sleep button isn't appropriate for hardware
+> reduced platform. This patch implements the control method sleep
+> button in a separate source file so that the button can be added
+> for various platforms.
+> 
+> Co-developed-by: Miguel Luis <miguel.luis@oracle.com>
+> Signed-off-by: Annie Li <annie.li@oracle.com>
+> ---
+>   hw/acpi/control_method_device.c         | 33 +++++++++++++++++++++++++
+>   hw/acpi/meson.build                     |  1 +
+>   include/hw/acpi/control_method_device.h | 21 ++++++++++++++++
+>   3 files changed, 55 insertions(+)
+> 
+> diff --git a/hw/acpi/control_method_device.c b/hw/acpi/control_method_device.c
+> new file mode 100644
+> index 0000000000..c3b1d484c4
+> --- /dev/null
+> +++ b/hw/acpi/control_method_device.c
+> @@ -0,0 +1,33 @@
+> +/*
+> + * Control Method Device
+> + *
+> + * Copyright (c) 2023 Oracle and/or its affiliates.
+> + *
+> + *
+> + * Authors:
+> + *     Annie Li <annie.li@oracle.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/acpi/control_method_device.h"
+> +#include "hw/mem/nvdimm.h"
 
-I think that you really need to make sure that target_long/target_ulong 
-are little more than a shortcut used by TCG backends to invoke *_tl 
-functions.  Basically remove all uses outside target/ and tcg/ (a lot of 
-uses in hw/ are for sPAPR devices and they can be replaced easily with 
-uint64_t; there are actually not many).
+NVDIMM is out of context here, please use:
 
-Then let cpu.h define target_long/target_ulong so that you can remove 
-the uses in tcg/ as well, and poison TARGET_LONG_BITS outside target/. 
-This way TARGET_LONG_BITS does not need to be part of the TargetInfo.
+#include "hw/acpi/aml-build.h"
 
-On the other hand, if I'm missing something in your plan just tell me.
+instead for the aml_* symbols.
 
-Paolo
+
+> +/*
+> + * The control method sleep button[ACPI v6.5 Section 4.8.2.2.2.2]
+> + * resides in generic hardware address spaces. The sleep button
+> + * is defined as _HID("PNP0C0E") that associates with device "SLPB".
+> + */
+> +void acpi_dsdt_add_sleep_button(Aml *scope)
+> +{
+> +    Aml *dev = aml_device(ACPI_SLEEP_BUTTON_DEVICE);
+> +    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0E")));
+
+I see that since GPE event handler L07 will be tied to the sleep button
+device there is no _PRW variable defined here. Do you mind adding a comment
+here about it? Something like:
+
+/* No _PRW, the sleeping button device is always tied to GPE L07 event handler. */
+
+
+Cheers,
+Gustavo
+
+> +    aml_append(dev, aml_operation_region("\\SLP", AML_SYSTEM_IO,
+> +                                         aml_int(0x201), 0x1));
+> +    Aml *field = aml_field("\\SLP", AML_BYTE_ACC, AML_NOLOCK,
+> +                           AML_WRITE_AS_ZEROS);
+> +    aml_append(field, aml_named_field("SBP", 1));
+> +    aml_append(dev, field);
+> +    aml_append(scope, dev);
+> +}
+> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+> index 73f02b9691..a62e625cef 100644
+> --- a/hw/acpi/meson.build
+> +++ b/hw/acpi/meson.build
+> @@ -17,6 +17,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('c
+>   acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
+>   acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
+>   acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
+> +acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('control_method_device.c'))
+>   acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
+>   acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
+>   acpi_ss.add(when: 'CONFIG_ACPI_PIIX4', if_true: files('piix4.c'))
+> diff --git a/include/hw/acpi/control_method_device.h b/include/hw/acpi/control_method_device.h
+> new file mode 100644
+> index 0000000000..079f1a74dd
+> --- /dev/null
+> +++ b/include/hw/acpi/control_method_device.h
+> @@ -0,0 +1,21 @@
+> +/*
+> + * Control Method Device
+> + *
+> + * Copyright (c) 2023 Oracle and/or its affiliates.
+> + *
+> + *
+> + * Authors:
+> + *     Annie Li <annie.li@oracle.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +
+> +#ifndef HW_ACPI_CONTROL_METHOD_DEVICE_H
+> +#define HW_ACPI_CONTROL_NETHOD_DEVICE_H
+> +
+> +#define ACPI_SLEEP_BUTTON_DEVICE "SLPB"
+> +
+> +void acpi_dsdt_add_sleep_button(Aml *scope);
+> +
+> +#endif
 
 
