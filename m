@@ -4,91 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E744C369BD
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 00:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D4DC369BD
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 01:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5DRt-0005K7-NV; Wed, 16 Apr 2025 20:49:49 -0400
+	id 1u5EOq-0002Kh-4g; Wed, 16 Apr 2025 21:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u5DRs-0005Jw-1Q
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 20:49:48 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u5DRq-000603-11
- for qemu-devel@nongnu.org; Wed, 16 Apr 2025 20:49:47 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2260c91576aso1921755ad.3
- for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 17:49:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744850984; x=1745455784; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RuHA6pUMirqV1TOPFX6w25hNdUOAxYA25rk5tgTLC64=;
- b=k69bYWnZi6XAhvHdvDoebWRkZyB+8nPQ/PoeO2WqhUL9zAoTcMVD0f7s0KowFJi73M
- +ateAzu4hCsuR3eM8iGkJI111kcmc2k/TRvufPaskDSj11UAu0mervlD3ZdOpzwrdbs7
- /DtL5i9kYraV8AvnLR6eX0qk7APBxs8B0iiEPxfr34PHOKdTRfwGInXRkSAspZbpJsWR
- XaEreDapdq/xc+YWMixeD6xvvhYSw9ob/t46DQcw9xX7hLyHl2f05yR3k7D/iHUn8Hk4
- Be0fKFb0svOYLUBSX5QLdXbhVpXGYHT2Dzc2iA1xzFNp/A+0CF8B7Kt3csBnpbskxOsN
- cqCg==
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1u5EOn-0002Ju-Fx
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 21:50:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1u5EOl-0006k3-Fi
+ for qemu-devel@nongnu.org; Wed, 16 Apr 2025 21:50:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744854633;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eoXW3euL7P1b5uSmPIoxAMaBPZOcNV1ldqEm0tWPLn8=;
+ b=RpMb/UF0P0ViBCcGiqxsauPEb755+YJqrf8pwGQFxdBEfC5Q4rvpriwTHvpxwXTXOj0JXw
+ 4N+JhI7feJV+08uMIHHcyXeTlWjiwVyaL7NzeijC+ovSTFv61aMtrlptcF7ttvTVCDZOBR
+ DZXvV+EnXCC0qJTvYPW8DOIhnbLEA/U=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-367-klpRVbskMJOoL-9FYqmdlQ-1; Wed, 16 Apr 2025 21:49:20 -0400
+X-MC-Unique: klpRVbskMJOoL-9FYqmdlQ-1
+X-Mimecast-MFC-AGG-ID: klpRVbskMJOoL-9FYqmdlQ_1744854559
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5f4c30f881fso215404a12.1
+ for <qemu-devel@nongnu.org>; Wed, 16 Apr 2025 18:49:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744850984; x=1745455784;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RuHA6pUMirqV1TOPFX6w25hNdUOAxYA25rk5tgTLC64=;
- b=U45DERmVNgwzyxAE/FKxcbjSQ7u/P2T3dWsvCXYsauRjwuP/xzM9rqAtUTuwh21jU+
- QpjAlkNN2J/hscOf2T7HebkPDyO9vDoF9IXrdAvhWyqgLCBkNkMLZv+yjwM4czAIxOWW
- d+lzo+zw+rBcmEe5iSbAGIV1Ay329RS/lj8cOgR4RtX+ukj1ihJuMzDOu4GZ8g3JP4ob
- 6SQuBZ3o3KTauGjX60aMb2s1bdr2CEqRvFTb7rZ7JH2569FQeo7pJiDVvtnurScPRpwP
- 7DXcpvNw+WmqSJSzRHlWqGMi5eUCcvmVoqiZNvGMd2b4dNQx1105SFaejCIsgC4MlyoM
- bnNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXAXjlHahVOhZXg4FAjd0jcmcFwxpkNkuBdQFzHAh2j71Q5fnGZTwBP1XNfETLgfWVk+uy7HMTUz+Ju@nongnu.org
-X-Gm-Message-State: AOJu0YyFG5xrj1nSzjzalW3sg00DDQ10gqClotJCKE5jScXp4fMloOza
- +NJydHHD260QALz09YoNvcBec7LV0sJWPk7VADGmp9RKr+rVgMUlYGWhXF9ZI98=
-X-Gm-Gg: ASbGncsPvFYqShKovK6VlNgd3h6ZXs/ATVygFOXolZB8IKhpwsmUZUT+Q3rO5VUu3E0
- IJoZdyTQoZL16M/HarBygLN22tmRADwPsJh18KlQqzhKQBkIQmMAbxj/md0MZ8D4DpTu0PP8uz6
- 4TrnxEDTrPC2JXTHkDvOZCyPoUPNy7Ae/yyWxXYbzc106PhyDj8p6dGmI/k3V9EdYTxIkVI+C3v
- Zr7RnFASITXVE90i/h/aFsCglS49ucPKxaktUP5EQJoAYyyPKVATV5jCxh22tx9fp2IcXz90IFl
- n3oZN3RwCg4agA0ql2c6UE6PFfJ9CjzJHGuoIEl31vtn6kyWLnv8/w==
-X-Google-Smtp-Source: AGHT+IHHqHgTkKLvfEueDG67UYtM46xknrsuiXxZPifyDEbcpzZ4jbYdygLszmTfeSLmzbfMtqZ8vQ==
-X-Received: by 2002:a17:903:2341:b0:223:4c09:20b8 with SMTP id
- d9443c01a7336-22c3596bbbbmr59711195ad.37.1744850984244; 
- Wed, 16 Apr 2025 17:49:44 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c33fccafcsm20949715ad.205.2025.04.16.17.49.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 16 Apr 2025 17:49:43 -0700 (PDT)
-Message-ID: <0af3284c-9a5a-471c-ae7f-41e0ea18a766@linaro.org>
-Date: Wed, 16 Apr 2025 17:49:42 -0700
+ d=1e100.net; s=20230601; t=1744854559; x=1745459359;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eoXW3euL7P1b5uSmPIoxAMaBPZOcNV1ldqEm0tWPLn8=;
+ b=i9VrSsZWfRWVeSrT2I983/rgG59cd/CrOuzVWmX/W8I3JPbUTyk8S3thtfKiUhCzMZ
+ Sw8GD/GpzLtvFblMez+6oMaE2D9CJ6iE21bn8WbBC5eVz5BsTUFEdkkwsAaZjosG/cP9
+ KdDK807oMpDtPbC7auYX2ZGfZCwUcUCjpaw0bR8mqsY/nwGz1bZC00vvxD7KXl2xtKdf
+ 1kK1DjjQRJM/K0MyzqmkxYklhsVgBEvZCzCxDadqjCYyqIVsi2NCweCrqQ20cAnThyi9
+ UUJzjwnZyPjpzBwlcHEuvvY2UhlDUIc52EIpqSGpovB8DXhfANDurxJVKXk2gMu+kZ2h
+ egZg==
+X-Gm-Message-State: AOJu0Yyz9bQSZb8ym2/MQsFeFshSpFjDMyeSwOwS9gHZIupbaqZROFuU
+ JzSJhHdojc31ZL5E7Fow8pxqEbick/0oAQk+LQUrrxGCfe2Ktf8x4HxDbSyp6au96Wx4m8bSdjY
+ GemzPbEgPZb8o5MunOWKikG1r0vvwqEOO40xx5fhXhANnSrIPotwVXlLIFLv1SUSq4cHwL7S5g+
+ XoSxTqh1QtVCOPMWkqN/QXqb7QCa8=
+X-Gm-Gg: ASbGncvQKZGmIwTU0+3wBMvd+Q8Zs5JcE+7t4Mg7LvZDod+S2fBa+90+587sPOTRIpS
+ mj4sS52yt9tVEMKD/0OnsgF+QLwQ1OhRDNOg+EFzRlQ6EYbmDD127wmlWbPnb5WSaWokLeQ==
+X-Received: by 2002:a05:6402:3486:b0:5ed:837:e3db with SMTP id
+ 4fb4d7f45d1cf-5f4b770ba1fmr3913787a12.32.1744854558905; 
+ Wed, 16 Apr 2025 18:49:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFz9s8GC12Am+90eLD0JT2AHn+T88kVZVNYDHzSNx3KUp/zbpO0N2dDHR9WOl/NTV7ff3nUxoqD/2eq7jKlDRI=
+X-Received: by 2002:a05:6402:3486:b0:5ed:837:e3db with SMTP id
+ 4fb4d7f45d1cf-5f4b770ba1fmr3913756a12.32.1744854558548; Wed, 16 Apr 2025
+ 18:49:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 000/163] tcg: Convert to TCGOutOp structures
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <a093de11-8901-4e1b-83eb-fd3b6a557249@linaro.org>
- <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <baa52414-03a5-4c86-9719-d6d5419cd798@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+References: <20250401151819.1526461-1-haoqian.he@smartx.com>
+ <20250416024729.3289157-1-haoqian.he@smartx.com>
+In-Reply-To: <20250416024729.3289157-1-haoqian.he@smartx.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Thu, 17 Apr 2025 09:48:41 +0800
+X-Gm-Features: ATxdqUEbOeZjib-VfImPIPAM7Okl7Yivuy_D-UczmwsEQAmJL3TYtZQX7sFBhL0
+Message-ID: <CAPpAL=zN_Opj2nyutaDeZvcKDn0z_LYqJR77n=7Yz=AnhPx-xA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] vhost: fix the IO error after live migration
+To: Haoqian He <haoqian.he@smartx.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, sgarzare@redhat.com, 
+ raphael@enfabrica.net, fengli@smartx.com, yuhua@smartx.com, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "reviewer:vhost-user-scmi" <mzamazal@redhat.com>,
+ David Hildenbrand <david@redhat.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, Eric Auger <eric.auger@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ "open list:virtiofs" <virtio-fs@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,46 +118,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8xNi8yNSAxNzoxOCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDQvMTYv
-MjUgMTY6MzgsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBUaGUgb25seSBjb25jZXJu
-IEkgaGF2ZSBpcyB0aGF0IHdlIGNvdWxkIGNyZWF0ZSBzaWxlbnQgInBlcmZvcm1hbmNlIiBy
-ZWxhdGVkIGJ1Z3MsIHdoZXJlIGENCj4+IHNwZWNpZmljIGZlYXR1cmUgaXMgZGVhY3RpdmF0
-ZWQgYmVjYXVzZSBvZiBhIGJhZCBjb21iaW5hdGlvbiwgYnV0IGl0J3MgaW5oZXJlbnQgdG8g
-dGhpcw0KPj4gYXBwcm9hY2ggYW5kIG5vdCBhIGJsb2NrZXIuDQo+IA0KPiBJIHRoaW5rIEkg
-a25vdyB3aGF0IHlvdSBtZWFuLCBhbmQgdGhlIHdheSBJIHNlZSB0aGluZ3MgaXQgdGhhdCB0
-aGUgc2lsZW50IHBlcmZvcm1hbmNlIGJ1Zw0KPiB3YXMgcHJldmlvdXNseSBzY2F0dGVyZWQg
-YWNyb3NzIGRpZmZlcmVudCBzZWN0aW9ucyBvZiB0aGUgY29kZSwgd2hlcmVhcyBub3cgaXQg
-aXMgb24gdGhlDQo+IHNhbWUgcGFnZS4gIEJ1dCB1bmRlcm5lYXRoIHRoZXJlIGlzIG5vIHJl
-YWwgY2hhbmdlLg0KPiANCj4gVW5sZXNzIHlvdSBtZWFuIHNvbWV0aGluZyBkaWZmZXJlbnQ/
-DQo+IA0KDQpJdCBzaG91bGQgYmUgZnVuY3Rpb25uYWxseSBlcXVpdmFsZW50IGluZGVlZCwg
-YnV0IGluIGNhc2Ugb25lIG9mIGNzZXRfKiANCmZ1bmN0aW9uIGNvbnRhaW5zIGJ1ZywgaXQg
-bWlnaHQgc2lsZW50bHkgZmFsbGJhY2sgdG8gYSBzbG93ZXIgDQppbXBsZW1lbnRhdGlvbi4g
-VGhlIFRDR19UQVJHRVRfSEFTXyogd2VyZSBsZXNzIGVycm9yIHByb25lIEkgZ3Vlc3MsIGFz
-IA0KaXQncyBqdXN0IGEgZGVjbGFyYXRpb24uDQoNCkJ1dCBvdmVyYWxsLCB0aGUgbmV3IGFw
-cHJvYWNoIGlzIHJlYWxseSBiZXR0ZXIsIHNvIGl0J3Mgd29ydGggdGhlIHJpc2suDQoNCj4+
-IEFzIGEgbW9yZSBnZW5lcmFsIHF1ZXN0aW9uLCBob3cgZG8geW91IGFwcHJvYWNoIHRlc3Rp
-bmcgZm9yIGEgc2VyaWVzIGxpa2UgdGhpcyBvbmU/IEkgc2VlDQo+PiB0d28gZGlmZmVyZW50
-IGNoYWxsZW5nZXMsIGFzIGl0IHRvdWNoZXMgdGhlIElSIGl0c2VsZiwgYW5kIHRoZSB2YXJp
-b3VzIGJhY2tlbmRzLg0KPj4gLSBGb3IgdGhlIElSLCBJIGRvbid0IGtub3cgaG93IGV4dGVu
-c2l2ZSBvdXIgY29tcGxldGUgdGVzdCBzdWl0ZSBpcyAocmVnYXJkaW5nIGNvdmVyYWdlIG9m
-DQo+PiBhbGwgZXhpc3RpbmcgVENHIG9wcyksIGJ1dCBJIGd1ZXNzIHRoZXJlIGFyZSBzb21l
-IGhvbGVzIHRoZXJlLiBJdCB3b3VsZCBiZSBpbnRlcmVzdGluZyB0bw0KPj4gZ2VuZXJhdGUg
-Y292ZXJhZ2UgZGF0YSBvbmNlIHdlIGNhbiBnZXQgYSBzaW5nbGUgYmluYXJ5IGluIHRoZSBm
-dXR1cmUuDQo+IA0KPiBJIGRvbid0IHVzZSBhbnl0aGluZyBtb3JlIHRoYW4gb3VyIHRlc3Rz
-dWl0ZS4NCj4gQ292ZXJhZ2UgZGF0YSB3b3VsZCBpbmRlZWQgYmUgaW50ZXJlc3Rpbmc7IEkn
-dmUgbm90IGF0dGVtcHRlZCB0aGF0Lg0KPiANCg0KSSB0cmllZCBwcmV2aW91c2x5LCBidXQg
-c2luY2Ugd2UgaGF2ZSBkdXBsaWNhdGVkIGNvbXBpbGF0aW9uIHVuaXRzIHBlciANCnRhcmdl
-dCwgdGhpcyBpcyBjb25mdXNpbmcgZm9yIGFueSBjb3ZlcmFnZSB0b29sLCBhcyBzb29uIGFz
-IHlvdSB0cnkgdG8gDQphZ2dyZWdhdGUgZGF0YSBmcm9tIHNldmVyYWwgdGFyZ2V0cy4NCg0K
-Pj4gLSBGb3IgdGhlIHZhcmlvdXMgYmFja2VuZHM6DQo+PiAgIMKgICogQXJlIHlvdSBhYmxl
-IHRvIGNvbXBpbGUgUUVNVSBvbiBhbGwgY29uY2VybmVkIGhvc3RzIGFuZCBydW4gdGVzdGlu
-ZyB0aGVyZT8NCj4gDQo+IEkgaGF2ZSBhYXJjaDY0LCBhcm0sIHMzOTB4IHZpYSAqLmNpLnFl
-bXUub3JnOw0KPiBsb29uZ2FyY2g2NCwgcmlzY3Y2NCwgcHBjNjRsZSB2aWEgdGhlIGdjYyBj
-b21waWxlIGZhcm0uDQo+IA0KPj4gICDCoCAqIE9yIGRvIHlvdSBjcm9zcyBjb21waWxlIGFu
-ZCBydW4gYmluYXJpZXMgZW11bGF0ZWQ/DQo+IA0KPiBUaGlzIGlzIG15IG9ubHkgb3B0aW9u
-IGZvciBtaXBzZWwsIG1pcHM2NGVsLg0KPiANCj4gSSBkbyBub3QgZXZlbiBoYXZlIGEgY3Jv
-c3MtY29tcGlsZSBzb2x1dGlvbiBmb3IgcHBjMzIsIGFzIHRoZXJlIGlzIG5vIGxvbmdlciBh
-bnkgZGlzdHJvDQo+IHN1cHBvcnQuIEkgaGF2ZSBiZWVuIGlnbm9yaW5nIHRoYXQsIHdhaXRp
-bmcgdG8gcmVtb3ZlIGl0IHdoZW4gYWxsIDMyLWJpdCBob3N0cyBnZXQga2lja2VkLg0KPiAN
-Cj4gDQo+IHJ+DQoNCg==
+I tested this series of patches v5 with virtio-net regression tests,
+everything works fine.
+
+Tested-by: Lei Yang <leiyang@redhat.com>
+
+On Wed, Apr 16, 2025 at 10:49=E2=80=AFAM Haoqian He <haoqian.he@smartx.com>=
+ wrote:
+>
+> At the end of the VM live migration, the vhost device will be stopped.
+> Currently, if the vhost-user backend crashes, vhost device's set_status()
+> would not return failure, live migration won't perceive the disconnection
+> with the backend. After the live migration is successful, the stale infli=
+ght
+> IO will be submitted to the migration target host, which may be leading t=
+o
+> the IO error.
+>
+> The following patch series fixes the issue by making the live migration
+> aware of the loss of connection with the vhost-user backend and aborting
+> the live migration.
+>
+> ---
+>   v1 ... v2
+>     1. Fix some grammar issues in commit message.
+>     2. Remove assert in vhost_scsi_common_stop and return error upwards.
+>
+>   v2 ... v3
+>     1. Added more detailed comments and commit message.
+>     2. Change the newly added type name and parameter name.
+>     3. Remove set_status_ext, change the return type of set_status to int=
+.
+>
+>   v3 ... v4
+>     1. Call set_status() only if the function pointer is not NULL in the
+>        3rd patch.
+>     2. Add the more detailed commit messages for the 3rd patch.
+>
+>   v4 ... v5
+>     1. Fix code style issues in patch v4.
+>     2. Rebased on master.
+>
+> Haoqian He (3):
+>   system/runstate: add VM state change cb with return value
+>   vhost: return failure if stop virtqueue failed in vhost_dev_stop
+>   vhost-user: return failure if backend crash when live migration
+>
+>  backends/vhost-user.c                  | 20 +++++++--------
+>  hw/block/vhost-user-blk.c              | 27 +++++++++++---------
+>  hw/block/virtio-blk.c                  |  7 +++---
+>  hw/char/virtio-serial-bus.c            |  3 ++-
+>  hw/core/vm-change-state-handler.c      | 18 ++++++++-----
+>  hw/display/vhost-user-gpu.c            | 12 ++++++---
+>  hw/input/virtio-input.c                |  3 ++-
+>  hw/net/virtio-net.c                    |  3 ++-
+>  hw/scsi/scsi-bus.c                     |  2 +-
+>  hw/scsi/vhost-scsi-common.c            | 13 +++++-----
+>  hw/scsi/vhost-scsi.c                   |  5 ++--
+>  hw/scsi/vhost-user-scsi.c              | 18 +++++++------
+>  hw/vfio/migration.c                    |  2 +-
+>  hw/virtio/vdpa-dev.c                   |  5 ++--
+>  hw/virtio/vhost-user-base.c            | 23 ++++++++++-------
+>  hw/virtio/vhost-user-fs.c              | 23 ++++++++++-------
+>  hw/virtio/vhost-user-scmi.c            | 27 ++++++++++++--------
+>  hw/virtio/vhost-user-vsock.c           | 15 +++++++----
+>  hw/virtio/vhost-vsock-common.c         | 12 ++++-----
+>  hw/virtio/vhost-vsock.c                | 11 ++++----
+>  hw/virtio/vhost.c                      | 23 +++++++++--------
+>  hw/virtio/virtio-balloon.c             |  3 ++-
+>  hw/virtio/virtio-crypto.c              |  3 ++-
+>  hw/virtio/virtio-iommu.c               |  3 ++-
+>  hw/virtio/virtio-rng.c                 |  5 ++--
+>  hw/virtio/virtio.c                     | 22 ++++++++++------
+>  include/hw/virtio/vhost-scsi-common.h  |  2 +-
+>  include/hw/virtio/vhost-vsock-common.h |  2 +-
+>  include/hw/virtio/vhost.h              |  8 +++---
+>  include/hw/virtio/virtio.h             |  2 +-
+>  include/system/runstate.h              | 13 +++++++---
+>  include/system/vhost-user-backend.h    |  2 +-
+>  system/cpus.c                          |  8 ++++--
+>  system/runstate.c                      | 35 ++++++++++++++++++++++----
+>  34 files changed, 239 insertions(+), 141 deletions(-)
+>
+> --
+> 2.44.0
+>
+>
+
 
