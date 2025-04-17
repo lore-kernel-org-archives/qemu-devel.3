@@ -4,88 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95778C369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 14:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3337AC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 15:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Q1K-0006DU-79; Thu, 17 Apr 2025 10:15:14 -0400
+	id 1u5QlF-0004Hi-7r; Thu, 17 Apr 2025 11:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Q14-00068b-U6
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 10:15:00 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Q0z-0000Ax-7m
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 10:14:58 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-39c2688619bso552638f8f.1
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 07:14:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744899291; x=1745504091; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yvmyiNTk0u5oNuIpgtas10xXjsPizBsh4ZZXoVLw+xc=;
- b=YcSCnB7e9y6O3fgtLZ0XQebtwKuF+xokDsOi3PvXNTPC4AkgVUm/0Tyl6oDymziaYd
- O7X/FsQyDR1AvOisQyW+aOk+3YHsNp5LJ4Y+muOA+BVoEvyqnXuIiHRQPMqv/dy8gUwE
- bbntSNX/AXwzDb0QL3eaKlJ0r0qT7be/ouN9sO0WZpERW7n9HC6lg8QbTiWBpIgYfe7T
- /BltA5IbXsH6C8IuxxA083NphQD4KzqRx6k2nAt99D5VMi/p/EcZsg+m3u32II0DTb1N
- 90flR0Tgm759oZYQTXAq3EReCqR4kg1amqf6gHM2WL6l+lInxF84+a5s68qNI1PEZPER
- ffng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744899291; x=1745504091;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yvmyiNTk0u5oNuIpgtas10xXjsPizBsh4ZZXoVLw+xc=;
- b=vNRTZ89KW2cAzI39dSGfXYFgNJIqNCbH7ch/2HaI0IWljjuLfFTsRdKM+qTT7wy0iw
- /0/V5d4ZCVcFNj8BwnGPSvGKsFp9Xw6jjoiD9uU1dtcUtKvEJ6JSe7KCcV2BY2/NqU3K
- O7+6q8x7fL0rC3RvzA7o/rC8uZmsvV/A8Z237RkRChAaJaWMBGKTaF/Jo70dEAxtUaFo
- fWnN+bYeSosHzTkq9zjfksNQZGr+lnJ017WATTY/lxdqs2RMiiPzmKLOG0c6FAOpegrh
- A6M/UgKIZR/H3k1MUSK1IWMbikcB6/LxsLwzMt4lf30Rxv73BxlRbidX+S0gSsh32deV
- BTJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJDRZMeLM02NNl55uWuQJ6ghJtFRSAt9iGBFQU15z0B0Vop9+aVpfhKHOLYtPe40DZFyvaE6PUpkZV@nongnu.org
-X-Gm-Message-State: AOJu0Yw+r58z+cjl5DWW/tHrMbnQc5jcuEP4wT8R6d3VoTHB5gWrXJCX
- D0KWPm9trTJwelYU1m1CF1Ng7lIgWvYaHUYsQ16NoczxzTwNjCwbrL0/iTFlx44=
-X-Gm-Gg: ASbGncs9IMINr7C3rZdNHxEgADQfaajid+eUHOmsd0PgtaUPf7twHYkNVcMw/JMdiLn
- ELliLt/MDxc7iUzxe8RH7XG/I0gbh5shOUlIkvWgSDLMgI3wkG+MO0Id724+B4xNLjEHDVuRO5W
- xbNxRC/OWejnCd+vQet+V0gsXOXsvvpiSJ6JwisPc5+uySoqvbTIxrsgZ96jWGKnD1grqmtrg33
- g3KeOoKO56czZ21N4WCYSZHzFf/SohvaY4repskLw0T3fUUDtoj9yl/7lAnFwvpip9iSYrAyKz2
- +BwTCUtA44aPxqunHOZlvMwxmc2w/v+UB1gfqIBO79JxrgLeyNYyig024pAC2mGjN4SuCPOymvP
- NLCM5JHXYrMn9d9PjTLw=
-X-Google-Smtp-Source: AGHT+IEQhdqHMztoPb4BKBCf45aJ1jSou1PwZmArvBGyPRRvF1o+l0C362oIWisk6/QDISbYbIp/nw==
-X-Received: by 2002:a05:6000:2203:b0:39c:30d8:3290 with SMTP id
- ffacd0b85a97d-39ee5b13096mr5182061f8f.7.1744899291293; 
- Thu, 17 Apr 2025 07:14:51 -0700 (PDT)
-Received: from [192.168.69.176] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4405b4d105bsm54931595e9.11.2025.04.17.07.14.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 07:14:50 -0700 (PDT)
-Message-ID: <a99dbff0-99c1-48b3-ba8e-341d5bd4d6e1@linaro.org>
-Date: Thu, 17 Apr 2025 16:14:49 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u5QlD-0004Fk-HB
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 11:02:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u5QlA-0008Mr-GM
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 11:02:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744902155;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M0BpeQ+x6RViPhM7rsbZIPxlT6aM0YrZAr6a5GDf45I=;
+ b=FpkkoLN1uz6ZLC9C9tymcK5q2iyKWtqRvRLywOW4/h2Kg8WQSnDsRkjy0GCpdtRA1fakL4
+ 56Y6IAtbFWs4DhsB2ZUNgb1VBBJfSxyHwbNMNTIRyv9lIqr6NhJqElKNdoFG1EZALHkdgN
+ d3BWmwA1N92gq1hdEC1gePgT6Z8QfLY=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615--Nik6wWnMMO618MO-vVERg-1; Thu,
+ 17 Apr 2025 11:02:32 -0400
+X-MC-Unique: -Nik6wWnMMO618MO-vVERg-1
+X-Mimecast-MFC-AGG-ID: -Nik6wWnMMO618MO-vVERg_1744902151
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D720519560BB; Thu, 17 Apr 2025 15:02:30 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.64])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 57D4419560AE; Thu, 17 Apr 2025 15:02:29 +0000 (UTC)
+Date: Thu, 17 Apr 2025 11:02:28 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>, eblake@redhat.com
+Subject: Re: [PATCH v3 2/2] block/io: skip head/tail requests on EINVAL
+Message-ID: <20250417150228.GC70767@fedora>
+References: <20250414201214.241351-1-stefanha@redhat.com>
+ <20250414201214.241351-3-stefanha@redhat.com>
+ <aADAs7oerG789LTI@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [ANNOUNCE] QEMU 10.0.0-rc4 is now available
-To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-References: <174489857530.3753920.12348493900787935207@amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <174489857530.3753920.12348493900787935207@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="AOer5y78u3SfjT2E"
+Content-Disposition: inline
+In-Reply-To: <aADAs7oerG789LTI@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +87,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-On 17/4/25 16:02, Michael Roth wrote:
-> Hello,
-> 
-> On behalf of the QEMU Team, I'd like to announce the availability of the
-> fifth release candidate for the QEMU 10.0 release. This release is meant
-> for testing purposes and should not be used in a production environment.
+--AOer5y78u3SfjT2E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As Stefan mentioned on IRC, there are no open issues for 10.0.
-So except if critical blockers are found over the next few days,
-this is the last RC before the final release.
+On Thu, Apr 17, 2025 at 10:49:55AM +0200, Kevin Wolf wrote:
+> Am 14.04.2025 um 22:12 hat Stefan Hajnoczi geschrieben:
+> > When guests send misaligned discard requests, the block layer breaks
+> > them up into a misaligned head, an aligned main body, and a misaligned
+> > tail.
+> >=20
+> > The file-posix block driver on Linux returns -EINVAL on misaligned
+> > discard requests. This causes bdrv_co_pdiscard() to fail and guests
+> > configured with werror=3Dstop will pause.
+> >=20
+> > Add a special case for misaligned head/tail requests. Simply continue
+> > when EINVAL is encountered so that the aligned main body of the request
+> > can be completed and the guest is not paused. This is the best we can do
+> > when guest discard limits do not match the host discard limits.
+> >=20
+> > Fixes: https://issues.redhat.com/browse/RHEL-86032
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+>=20
+> It would be good to also update the comment a bit further up:
+>=20
+>     /* Discard is advisory, but some devices track and coalesce
+>      * unaligned requests, so we must pass everything down rather than
+>      * round here.  Still, most devices will just silently ignore
+>      * unaligned requests (by returning -ENOTSUP), so we must fragment
+>      * the request accordingly.  */
+>=20
+> I'm not sure where the -ENOTSUP came from (Eric, do you remember?), but
+> we should at least mention this -EINVAL case separately.
 
-Regards,
+Sounds good.
 
-Phil.
+Stefan
 
-> 
->    http://download.qemu.org/qemu-10.0.0-rc4.tar.xz
->    http://download.qemu.org/qemu-10.0.0-rc4.tar.xz.sig
-> 
-> You can help improve the quality of the QEMU 10.0 release by testing this
-> release and reporting bugs using our GitLab issue tracker:
-> 
->    https://gitlab.com/qemu-project/qemu/-/milestones/15
-> 
-> The release plan, as well a documented known issues for release
-> candidates, are available at:
-> 
->    http://wiki.qemu.org/Planning/10.0
-> 
-> Please add entries to the ChangeLog for the 10.0 release below:
-> 
->    http://wiki.qemu.org/ChangeLog/10.0
-> 
-> Thank you to everyone involved!
-> 
-> Changes since rc3:
-> 
-> a9cd5bc639: Update version for v10.0.0-rc4 release (Stefan Hajnoczi)
-> e28fbd1c52: Revert "virtio-net: Copy received header to buffer" (Antoine Damhet)
-> 8bdd3a0308: tests/functional/test_aarch64_replay: reenable on macos (Pierrick Bouvier)
-> fa3f3a33f3: system/main: transfer replay mutex ownership from main thread to main loop thread (Pierrick Bouvier)
-> f3ca7ca222: docs: Document removal of 64-bit on 32-bit emulation (Richard Henderson)
-> b0b5af62ef: Fix objdump output parser in "nsis.py" (Arthur Sengileyev)
-> 22e6d70294: docs: Fix some typos (found by codespell and typos) (Stefan Weil via)
-> d832ff9d02: tests/tcg/plugins: add plugin to test reset and uninstall (Pierrick Bouvier)
-> c07cd110a1: plugins/loader: fix deadlock when resetting/uninstalling a plugin (Pierrick Bouvier)
-> 9edb9c2a6a: tests/tcg: fix semihosting SYS_EXIT for aarch64 in boot.S (Alex Bennée)
-> 
+--AOer5y78u3SfjT2E
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgBGAQACgkQnKSrs4Gr
+c8i7FQgAhM8rr4crr6WdaqCQ9pO0EZfNroMioI4eAlVdc2gAd328uPwcxFZkidGc
+FNRhXIOYV+y0T2x0/0ufM+Gje4gDID+/wDFCXaFTdut4GWIRJdX9iLJBJJ8i1RZL
+w9RDa3s2x2Ue4cxyniZtJrluQACkMlDvDS+U6UPYWZw+gQ/ZgO9GS8qzI/ZImzxw
+mUAr0ItYt6d8Bko+SolO+hmAtFilG+AlMWJQxbfKiX21ko8q1bn+3yg4c+85Pkb7
+SmKJgVUr8X05oCO3aCCYqanj8v+mj6FQdb4jihdPbbFDv5mcw1qF17mDL8STtdBd
+zeiEPUR4IW0W+fMEnVouRleqOm4WdA==
+=LzG7
+-----END PGP SIGNATURE-----
+
+--AOer5y78u3SfjT2E--
 
 
