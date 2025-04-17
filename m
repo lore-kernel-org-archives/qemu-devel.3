@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCBA1C369CB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 00:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4323FC369CB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 00:01:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Z85-00073d-57; Thu, 17 Apr 2025 19:58:49 -0400
+	id 1u5Z80-0006xZ-6Q; Thu, 17 Apr 2025 19:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z83-0006zn-T6
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:58:47 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z7y-0006uy-Qr
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:58:42 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z82-0003uI-27
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:58:47 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43d07ca6a80so6976875e9.1
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 16:58:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z7w-0003sc-8y
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:58:42 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3912d2c89ecso1332141f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 16:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744934324; x=1745539124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744934318; x=1745539118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BisZb8cnL3Qhu4Zao2XQnv9XLrWqIWO9ZQzoyvXQRoc=;
- b=lH7Hs1+FoFYAUi8RHv3bSg/9yng2VfplsQQ2jPxN2rRVm83H6sbMY6cogNXrV0VLxY
- Ad6NB6vTc4zBH/D9GMdus7048UGjG4NExofgjknZmiC43Sj4ikZ/z5Il5J9RdZuzUL2g
- T+mzpBaLrBCOn+OYd1oUszIZ67ssdw4ng/AN7Whr5BmUxY6+8d2z2HjB8AwVeTdJroGu
- 1RJzhpuZN7W7DQI8w7EJHin3OiNgNLk8eQm8t32IsVHWVpsRJA9wUapOIH/wnYoZWIv2
- yhhjmwg1gYiXbmHDPf5cpQ9Bm3Lwk79WYCfd9AX43y2kEGXun6nnm7feBC4Ct9LLb2N7
- Nnqw==
+ bh=AOUZObtkL1pnrtX/HUZz7JN00TbmXk0vW2RpCKqJB7c=;
+ b=PAFAo2Pp0wgCkq+BChyAr860QFHxBpZWeB7EPQAsx5igLUkJjy6m6FrFRhmUQlon6Q
+ 9tmYyjKCjhUXsWyqwGOuRS3mCLa3aoqwXWPjzP+vqbo22VG/Aj7fJKm/LwEzUyI8BMhS
+ VcerR7gzOxY9S9YXANUFDAi7svQQBXGJ9l/UN1fAOM7yvjyAP2cZVDfvWxtu/qJ1HvaL
+ OIyHGq9ATeCpnQExpK+nMdJgNdguB7Y4ZOrLbKGXDb0P9Vlg86t+/ZDDo0ycpRZOr1yk
+ rSvaZHlnvWqTnN1+0EZsMdlsJrRD3vTZgFAo5xHM6Z5eXBxx3+Jlp4WsKqieL6Petoae
+ RNdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744934324; x=1745539124;
+ d=1e100.net; s=20230601; t=1744934318; x=1745539118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BisZb8cnL3Qhu4Zao2XQnv9XLrWqIWO9ZQzoyvXQRoc=;
- b=Bbks1+hwOnt/OYXs5go4FZea9eRSpAN3cKCztAI6V/R9zJ6Klrm35UJKsQTWMtZJkW
- uYcAJKxbGyyuhCNwI7vfEuX/ufOeQBkCLO+YDGTb8LE05o4SdgeJ8XcH3vio+G33M/IN
- CIO+NK/wn5jBAFPw1cE/w0SzSP01XDp0laoy3wbFaDmva6lymhvYcdjWGeOk/M2E9ZeF
- 92tPyQ8dPbou+5+ng5ANaCvFiOyv4pW4Ewa3YLeLi4jwlr/owpuu0Zi/NOxNtIDkb3H0
- rNp1LPEznJFPEo1yBHmkWk57t4vgj3+DX8vBojVdjKUaHM6p/I6rDDoZZvvKKWYI3dhD
- p6Sw==
-X-Gm-Message-State: AOJu0YyaEoMk+4cKqln/wdggYvZqkVU5jgXRutxqy0gB+zEOowB3J4VC
- hJJCjGBFOYSTHmMBD+dsxIgKauVzfSjkOPp9IUCQ+fRB6gmoaa9VYIy9Gz5FGMxFGQA5s2EJokr
- g
-X-Gm-Gg: ASbGncuCVBDyZgJUMIQti3rhes7IunGS/x7ehiaSOMB2K9yNvaMSgkRzGms8+HkgTgC
- pF+3aOw3/uCcLAS3iB3wXe4Zzxcsjo3ZyLC0fAuAGnQKZ1E+gln+/yWAnJ1GV9cs9Se6WzW4xvJ
- CEOoagavvTrN/SfqqLMCIsfqMNuEntvJjoU26Shbi6cUfkRdkd578/nvzqY3xJEHr6zlZljCR3/
- L76W+dhkY6sQmotSErTRs1Ja8zWhoPqxOXZaX08caKnXmG2zbBDDjry4NmO7k9tOjRLJffMxUTV
- TlD8NMNoYXRLkSc0ngshOmHuTec1/BwaTXCTwP+C/riUO6rgPj5s6nE2ut5ze5UWPLRdeYe+ZAv
- 8rm+nO7/Z/9iHLTsL/sFz
-X-Google-Smtp-Source: AGHT+IEqqA/+uhtD+GYHQlqkz2bQ4WpgqqL0oVRkPJhIfadBIl9HW6H1odSRzX38ma6fd5oCkz42tQ==
-X-Received: by 2002:a05:600c:1e10:b0:43c:f513:9591 with SMTP id
- 5b1f17b1804b1-4406ab95a4bmr6529345e9.14.1744934324153; 
- Thu, 17 Apr 2025 16:58:44 -0700 (PDT)
+ bh=AOUZObtkL1pnrtX/HUZz7JN00TbmXk0vW2RpCKqJB7c=;
+ b=VtdkyjM8KrJv0lw2yhJrcddnmhcIaZhSoeE/wSqoMyoS0YlBkNSEMdIGeuAWoNvpjP
+ ArdjvUJyw7XRGbrk/3cZqWW0ZdtjWWsQet8zeQE0DZK4z/XRldBC7H/bpLKm83VPfm6a
+ d2OkMBxFQ/JCxegGkCT/B6AwpZXs7pdb1hduezEJcC7ldggkSHNX/aNsh8d++snPj0Pn
+ 45TJriiklEHw0J/ZhBxtOEPB8xjy/rxfz3QEXZkwmz51juBWJV6D291CtgPZJZtpwnQb
+ kXzpNpdeFGrpK1VWrcaEvuaSH9uX1CelWPBOGg0JGSJi5mR3Ls1v2CVDVhL9GstN5dqp
+ EMlA==
+X-Gm-Message-State: AOJu0Yzu8ZIqnGQcgEN7IWKlLQ0HJYOpU/x5vQxcY40+iJGg/1Ivewua
+ AZJfn1Rvmdz5a999ExzHy1bC5R7FUHpsSknAiRp67osaMFWplTdHoXp03df5Mb5ffeFkAnAbPAp
+ Y
+X-Gm-Gg: ASbGncs8SDzTtPwMMlSjgQRL90kkBngNyxJBZ3LlyysfxJz1tebZMEUGD69DqcHvySY
+ 6B5EqAGgMu1/5KRiXDZ+H7gb18LcA64ZlYkw5g4X8iHfpK5zwMLgQe73uC088AzaRJAp1SE8Wud
+ HRKrZ8YOjgpW6yOyrzB1mqBbqRBEwq9z5Df8w8rUaOHp3X2yRhYHbdmPPjoUtBBtf4Tw0KEfYZo
+ GN8A2O/xLSSqupCaW/3QGS7ouV2uk+ACsXCR6tpR2MMluBHuCdU5D7TfiJ28+i1YH6RuBtaOUlp
+ hS9NEbAco7z8FsYdbWXRQnP+XHySeJKC5lfCMt0eWBniDK1dqRjdIsHfDFccp2WHZnwfBXfoIwP
+ RdmnMgBRaBPPVthWQUN0C
+X-Google-Smtp-Source: AGHT+IGhqBs8Cl/BCZPZ7KaNygtBEknvGH5/U+hhfQ7awY412rO0X5VO0Q5avYnk4lVyhj2JOI9Arg==
+X-Received: by 2002:a05:6000:4006:b0:390:f4f9:8396 with SMTP id
+ ffacd0b85a97d-39efba5c77emr501897f8f.28.1744934318310; 
+ Thu, 17 Apr 2025 16:58:38 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5d712esm910885e9.36.2025.04.17.16.58.42
+ ffacd0b85a97d-39efa49312fsm1045268f8f.70.2025.04.17.16.58.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 17 Apr 2025 16:58:42 -0700 (PDT)
+ Thu, 17 Apr 2025 16:58:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Andrey Smirnov <andrew.smirnov@gmail.com>,
@@ -81,17 +81,17 @@ Cc: Andrey Smirnov <andrew.smirnov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH 05/11] hw/arm/imx: Define machines as generic QOM types
-Date: Fri, 18 Apr 2025 01:58:08 +0200
-Message-ID: <20250417235814.98677-6-philmd@linaro.org>
+Subject: [PATCH 04/11] hw/arm/digic: Define machine as generic QOM type
+Date: Fri, 18 Apr 2025 01:58:07 +0200
+Message-ID: <20250417235814.98677-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250417235814.98677-1-philmd@linaro.org>
 References: <20250417235814.98677-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -121,162 +121,39 @@ register interfaces.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/imx25_pdk.c     | 14 ++++++++++++--
- hw/arm/imx8mp-evk.c    | 15 +++++++++++++--
- hw/arm/mcimx6ul-evk.c  | 15 +++++++++++++--
- hw/arm/mcimx7d-sabre.c | 15 +++++++++++++--
- hw/arm/sabrelite.c     | 14 ++++++++++++--
- 5 files changed, 63 insertions(+), 10 deletions(-)
+ hw/arm/digic_boards.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
-index e95ea5e4e18..a90def7f1a2 100644
---- a/hw/arm/imx25_pdk.c
-+++ b/hw/arm/imx25_pdk.c
-@@ -141,8 +141,10 @@ static void imx25_pdk_init(MachineState *machine)
-     }
+diff --git a/hw/arm/digic_boards.c b/hw/arm/digic_boards.c
+index 466b8b84c0e..3c0cc6e4370 100644
+--- a/hw/arm/digic_boards.c
++++ b/hw/arm/digic_boards.c
+@@ -136,8 +136,10 @@ static void canon_a1100_init(MachineState *machine)
+     digic4_board_init(machine, &digic4_board_canon_a1100);
  }
  
--static void imx25_pdk_machine_init(MachineClass *mc)
-+static void imx25_pdk_machine_class_init(ObjectClass *oc, void *data)
+-static void canon_a1100_machine_init(MachineClass *mc)
++static void digic_machine_class_init(ObjectClass *oc, void *data)
  {
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +
-     mc->desc = "ARM i.MX25 PDK board (ARM926)";
-     mc->init = imx25_pdk_init;
+     mc->desc = "Canon PowerShot A1100 IS (ARM946)";
+     mc->init = &canon_a1100_init;
      mc->ignore_memory_transaction_failures = true;
-@@ -150,4 +152,12 @@ static void imx25_pdk_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
+@@ -145,4 +147,12 @@ static void canon_a1100_machine_init(MachineClass *mc)
+     mc->default_ram_id = "ram";
  }
  
--DEFINE_MACHINE("imx25-pdk", imx25_pdk_machine_init)
-+static const TypeInfo imx25_machine_types[] = {
+-DEFINE_MACHINE("canon-a1100", canon_a1100_machine_init)
++static const TypeInfo digic_machine_types[] = {
 +    {
-+        .name           = MACHINE_TYPE_NAME("imx25-pdk"),
++        .name           = MACHINE_TYPE_NAME("canon-a1100"),
 +        .parent         = TYPE_MACHINE,
-+        .class_init     = imx25_pdk_machine_class_init,
++        .class_init     = digic_machine_class_init,
 +    },
 +};
 +
-+DEFINE_TYPES(imx25_machine_types)
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index 967258e6484..c7d87d99230 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -64,11 +64,22 @@ static void imx8mp_evk_init(MachineState *machine)
-     }
- }
- 
--static void imx8mp_evk_machine_init(MachineClass *mc)
-+static void imx8mp_evk_machine_class_init(ObjectClass *oc, void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "NXP i.MX 8M Plus EVK Board";
-     mc->init = imx8mp_evk_init;
-     mc->max_cpus = FSL_IMX8MP_NUM_CPUS;
-     mc->default_ram_id = "imx8mp-evk.ram";
- }
--DEFINE_MACHINE("imx8mp-evk", imx8mp_evk_machine_init)
-+
-+static const TypeInfo imx8_machine_types[] = {
-+    {
-+        .name           = MACHINE_TYPE_NAME("imx8mp-evk"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = imx8mp_evk_machine_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(imx8_machine_types)
-diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
-index 86982cb0772..d947836d2be 100644
---- a/hw/arm/mcimx6ul-evk.c
-+++ b/hw/arm/mcimx6ul-evk.c
-@@ -68,12 +68,23 @@ static void mcimx6ul_evk_init(MachineState *machine)
-     }
- }
- 
--static void mcimx6ul_evk_machine_init(MachineClass *mc)
-+static void mcimx6ul_evk_machine_class_init(ObjectClass *oc, void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Freescale i.MX6UL Evaluation Kit (Cortex-A7)";
-     mc->init = mcimx6ul_evk_init;
-     mc->max_cpus = FSL_IMX6UL_NUM_CPUS;
-     mc->default_ram_id = "mcimx6ul-evk.ram";
-     mc->auto_create_sdcard = true;
- }
--DEFINE_MACHINE("mcimx6ul-evk", mcimx6ul_evk_machine_init)
-+
-+static const TypeInfo imx6_machine_types[] = {
-+    {
-+        .name           = MACHINE_TYPE_NAME("mcimx6ul-evk"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = mcimx6ul_evk_machine_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(imx6_machine_types)
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index 33119610113..f5dc9c211dd 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -68,12 +68,23 @@ static void mcimx7d_sabre_init(MachineState *machine)
-     }
- }
- 
--static void mcimx7d_sabre_machine_init(MachineClass *mc)
-+static void mcimx7d_sabre_machine_class_init(ObjectClass *oc, void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Freescale i.MX7 DUAL SABRE (Cortex-A7)";
-     mc->init = mcimx7d_sabre_init;
-     mc->max_cpus = FSL_IMX7_NUM_CPUS;
-     mc->default_ram_id = "mcimx7d-sabre.ram";
-     mc->auto_create_sdcard = true;
- }
--DEFINE_MACHINE("mcimx7d-sabre", mcimx7d_sabre_machine_init)
-+
-+static const TypeInfo imx7_machine_types[] = {
-+    {
-+        .name           = MACHINE_TYPE_NAME("mcimx7d-sabre"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = mcimx7d_sabre_machine_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(imx7_machine_types)
-diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
-index df60d47c6fd..ea59ba301e7 100644
---- a/hw/arm/sabrelite.c
-+++ b/hw/arm/sabrelite.c
-@@ -103,8 +103,10 @@ static void sabrelite_init(MachineState *machine)
-     }
- }
- 
--static void sabrelite_machine_init(MachineClass *mc)
-+static void sabrelite_machine_class_init(ObjectClass *oc, void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
-     mc->init = sabrelite_init;
-     mc->max_cpus = FSL_IMX6_NUM_CPUS;
-@@ -113,4 +115,12 @@ static void sabrelite_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE("sabrelite", sabrelite_machine_init)
-+static const TypeInfo sabrelite_machine_types[] = {
-+    {
-+        .name           = MACHINE_TYPE_NAME("sabrelite"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = sabrelite_machine_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(sabrelite_machine_types)
++DEFINE_TYPES(digic_machine_types)
 -- 
 2.47.1
 
