@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E15C5C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40467C369C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:54:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Njj-0001t6-TX; Thu, 17 Apr 2025 07:48:55 -0400
+	id 1u5NoO-0004Gz-In; Thu, 17 Apr 2025 07:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1u5NjA-0001ot-9m
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:48:24 -0400
+ id 1u5No3-0004Ep-N5
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:53:29 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1u5Nj1-0004xH-B3
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:48:16 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1u5No0-0005sx-He
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:53:23 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxrOJy6gBotPLAAA--.18398S3;
- Thu, 17 Apr 2025 19:48:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxaeGp6wBoqvPAAA--.13832S3;
+ Thu, 17 Apr 2025 19:53:13 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxPcVs6gBo+teHAA--.7002S3;
- Thu, 17 Apr 2025 19:48:01 +0800 (CST)
-Subject: Re: [PATCH v2 6/6] target/loongarch: Move function
- loongarch_tlb_search to directory tcg
+ by front1 (Coremail) with SMTP id qMiowMBxb8el6wBoTtmHAA--.7392S3;
+ Thu, 17 Apr 2025 19:53:13 +0800 (CST)
+Subject: Re: [PATCH v2 0/6] target/loongarch: Code cleanup with function
+ loongarch_map_address
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
  Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20250417035143.268248-1-maobibo@loongson.cn>
- <20250417035143.268248-7-maobibo@loongson.cn>
- <33b477b3-6579-4c6e-afb2-d54fa4e13141@linaro.org>
+ <d8f0f7ab-d67c-4dc6-b135-31b46b89c7d3@linaro.org>
 From: bibo mao <maobibo@loongson.cn>
-Message-ID: <a649db09-63f0-35eb-e540-8036f722e072@loongson.cn>
-Date: Thu, 17 Apr 2025 19:47:10 +0800
+Message-ID: <b38c4ca7-a2dd-65ab-5127-5b8d70ca3b73@loongson.cn>
+Date: Thu, 17 Apr 2025 19:52:23 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <33b477b3-6579-4c6e-afb2-d54fa4e13141@linaro.org>
+In-Reply-To: <d8f0f7ab-d67c-4dc6-b135-31b46b89c7d3@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxPcVs6gBo+teHAA--.7002S3
+X-CM-TRANSID: qMiowMBxb8el6wBoTtmHAA--.7392S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGF47ArykKrWfXFW8uw4rZwc_yoW5tw4fpr
- yxAr1UJryUJrykJr1UJr1UJFyUJr1UJw1UJF13JF18Cr1UJr1jqr1UXr1qgF1UJ3y8Jr1j
- qr1UJr1UZF1UJrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
- U
+X-Coremail-Antispam: 1Uk129KBj9xXoWrZry8KFyfXFy3Cw13AF43Jwc_yoWfGwbEgF
+ 43Gr4Du34vyw4qyayFv34rZrnrW3W7ury5tryFqrW8K345Zwnagw13AF1kua45tFW2ywsx
+ Gr4DZr1ay347XosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbx8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0
+ oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F4
+ 0EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_
+ Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbI
+ xvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
+ xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrx
+ kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v2
+ 6r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8Jw
+ CI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZUUUUU
+ =
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -31
@@ -88,68 +87,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2025/4/17 下午6:01, Philippe Mathieu-Daudé wrote:
+On 2025/4/17 下午6:03, Philippe Mathieu-Daudé wrote:
+> Hi Bibo,
+> 
 > On 17/4/25 05:51, Bibo Mao wrote:
->> Function loongarch_tlb_search() and loongarch_map_tlb_entry() works
->> only in TCG mode, move these functions to directory tcg.
+>> Get physical address from virtual address is important for qmp command to
+>> dump memory content. In TCG mode, it searches TLB tables firstly and
+>> then do page table walker. In KVM mode, there are no TLB tables and page
+>> table walker is used directly.
 >>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   target/loongarch/cpu_helper.c     | 153 ------------------------------
->>   target/loongarch/internals.h      |  14 ++-
->>   target/loongarch/tcg/tlb_helper.c | 144 ++++++++++++++++++++++++++++
->>   3 files changed, 156 insertions(+), 155 deletions(-)
+>> Here TLB tables searching is moved to directory tcg, and code about page
+>> table walker is put in the common part so that it can be used in KVM mode
+>> also.
 > 
-> 
->> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
->> index 9fdc3059d8..f85927860b 100644
->> --- a/target/loongarch/internals.h
->> +++ b/target/loongarch/internals.h
->> @@ -54,8 +54,6 @@ uint64_t 
->> cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
->>   uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
->>   void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
->>                                                  uint64_t value);
->> -bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
->> -                          int *index);
->>   int get_physical_address(CPULoongArchState *env, hwaddr *physical,
->>                            int *prot, target_ulong address,
->>                            MMUAccessType access_type, int mmu_idx, int 
->> is_debug);
->> @@ -67,6 +65,18 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState 
->> *cpu, vaddr addr);
->>   bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->>                               MMUAccessType access_type, int mmu_idx,
->>                               bool probe, uintptr_t retaddr);
->> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
->> *physical,
->> +                                int *prot, target_ulong address,
->> +                                MMUAccessType access_type, int mmu_idx);
->> +#else
->> +static inline int loongarch_get_addr_from_tlb(CPULoongArchState *env,
->> +                                              hwaddr *physical,
->> +                                              int *prot, target_ulong 
->> address,
->> +                                              MMUAccessType access_type,
->> +                                              int mmu_idx)
->> +{
->> +    return TLBRET_NOMATCH;
->> +}
->>   #endif
-> 
-> I wonder if we shouldn't move these declarations to
-> target/loongarch/tcg/tcg_loongarch.h. Can be done as
-> future cleanup, so:
-Sure, will move these declarations to file 
-target/loongarch/tcg/tcg_loongarch.h in next version, it is not hurry to 
-merge
-now.
+> Can you add a cross-loongarch64-kvm-only job in
+> .gitlab-ci.d/crossbuilds.yml to ensure we cover
+> this configuration on our CI?
+We want to do, the problem is that there is no popular OS (such as 
+debian/fedora) supporting LoongArch now :(, so there is no CI for 
+avocado or crossbuilds.yml still.
 
 Regards
 Bibo Mao
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Thanks,
 > 
->>   #endif /* !CONFIG_USER_ONLY */
+> Phil.
 
 
