@@ -4,69 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA0DC369CF
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E15C5C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Nby-0006jA-JM; Thu, 17 Apr 2025 07:40:54 -0400
+	id 1u5Njj-0001t6-TX; Thu, 17 Apr 2025 07:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1u5Nbn-0006hd-O2
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:40:47 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1u5Nbk-0003jP-ME
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:40:43 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c11:4195:0:640:137b:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 2707E60E85;
- Thu, 17 Apr 2025 14:40:39 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6b8:b081:8014::1:10])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id FeHLbV5FamI0-KyhT9FCA; Thu, 17 Apr 2025 14:40:38 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1744890038;
- bh=uXpaGGGHRa/oCsBM03aiv4KIB6uS9ZBdo0efpd7Ny2c=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=S6/dooAdmt2kOgNsu3IqIXpPvhwD1iS7pC9JKbAck3hIxZgX4cq31BJLWL+j100YV
- QeeMfTGeZD6eeQCYbjVx3EVv7zuNAIblJ6XWpPZaUnZYjYNSKE0gKcBSEiQv8lYeCL
- aCVqfYBvWR4JO9us5i178xYb8sy7EkJl+AhrJybk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v6 2/2] tests/functional: add memlock tests
-Date: Thu, 17 Apr 2025 16:40:11 +0500
-Message-Id: <20250417114008.169350-3-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250417114008.169350-1-dtalexundeer@yandex-team.ru>
-References: <20250417114008.169350-1-dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1u5NjA-0001ot-9m
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:48:24 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1u5Nj1-0004xH-B3
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:48:16 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxrOJy6gBotPLAAA--.18398S3;
+ Thu, 17 Apr 2025 19:48:02 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMDxPcVs6gBo+teHAA--.7002S3;
+ Thu, 17 Apr 2025 19:48:01 +0800 (CST)
+Subject: Re: [PATCH v2 6/6] target/loongarch: Move function
+ loongarch_tlb_search to directory tcg
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20250417035143.268248-1-maobibo@loongson.cn>
+ <20250417035143.268248-7-maobibo@loongson.cn>
+ <33b477b3-6579-4c6e-afb2-d54fa4e13141@linaro.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <a649db09-63f0-35eb-e540-8036f722e072@loongson.cn>
+Date: Thu, 17 Apr 2025 19:47:10 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <33b477b3-6579-4c6e-afb2-d54fa4e13141@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMDxPcVs6gBo+teHAA--.7002S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxGF47ArykKrWfXFW8uw4rZwc_yoW5tw4fpr
+ yxAr1UJryUJrykJr1UJr1UJFyUJr1UJw1UJF13JF18Cr1UJr1jqr1UXr1qgF1UJ3y8Jr1j
+ qr1UJr1UZF1UJrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.272,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -78,147 +86,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new tests to check the correctness of the `-overcommit memlock`
-option (possible values: off, on, on-fault) by using
-`/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-anonymous segments:
 
-* if `memlock=off`, then Locked = 0 on every anonymous smaps;
-* if `memlock=on`, then Size, Rss and Locked values must be equal for
-every anon smaps where Rss is not 0;
-* if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-smaps and anonymous segment with Rss < Size must exists.
 
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
----
- tests/functional/meson.build     |   1 +
- tests/functional/test_memlock.py | 104 +++++++++++++++++++++++++++++++
- 2 files changed, 105 insertions(+)
- create mode 100755 tests/functional/test_memlock.py
+On 2025/4/17 下午6:01, Philippe Mathieu-Daudé wrote:
+> On 17/4/25 05:51, Bibo Mao wrote:
+>> Function loongarch_tlb_search() and loongarch_map_tlb_entry() works
+>> only in TCG mode, move these functions to directory tcg.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   target/loongarch/cpu_helper.c     | 153 ------------------------------
+>>   target/loongarch/internals.h      |  14 ++-
+>>   target/loongarch/tcg/tlb_helper.c | 144 ++++++++++++++++++++++++++++
+>>   3 files changed, 156 insertions(+), 155 deletions(-)
+> 
+> 
+>> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+>> index 9fdc3059d8..f85927860b 100644
+>> --- a/target/loongarch/internals.h
+>> +++ b/target/loongarch/internals.h
+>> @@ -54,8 +54,6 @@ uint64_t 
+>> cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
+>>   uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
+>>   void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
+>>                                                  uint64_t value);
+>> -bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>> -                          int *index);
+>>   int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>>                            int *prot, target_ulong address,
+>>                            MMUAccessType access_type, int mmu_idx, int 
+>> is_debug);
+>> @@ -67,6 +65,18 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState 
+>> *cpu, vaddr addr);
+>>   bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>>                               MMUAccessType access_type, int mmu_idx,
+>>                               bool probe, uintptr_t retaddr);
+>> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
+>> *physical,
+>> +                                int *prot, target_ulong address,
+>> +                                MMUAccessType access_type, int mmu_idx);
+>> +#else
+>> +static inline int loongarch_get_addr_from_tlb(CPULoongArchState *env,
+>> +                                              hwaddr *physical,
+>> +                                              int *prot, target_ulong 
+>> address,
+>> +                                              MMUAccessType access_type,
+>> +                                              int mmu_idx)
+>> +{
+>> +    return TLBRET_NOMATCH;
+>> +}
+>>   #endif
+> 
+> I wonder if we shouldn't move these declarations to
+> target/loongarch/tcg/tcg_loongarch.h. Can be done as
+> future cleanup, so:
+Sure, will move these declarations to file 
+target/loongarch/tcg/tcg_loongarch.h in next version, it is not hurry to 
+merge
+now.
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 0f8be30fe2..339af7835f 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -61,6 +61,7 @@ tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-   'version',
-+  'memlock',
- ]
- 
- tests_generic_linuxuser = [
-diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
-new file mode 100755
-index 0000000000..eaf3d46dec
---- /dev/null
-+++ b/tests/functional/test_memlock.py
-@@ -0,0 +1,104 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that check overcommit memlock options
-+#
-+# Copyright (c) Yandex Technologies LLC, 2025
-+#
-+# Author:
-+#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-+#
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import re
-+
-+from typing import List, Dict
-+
-+from qemu_test import QemuSystemTest
-+from qemu_test import skipLockedMemoryTest
-+
-+
-+SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
-+SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
-+
-+
-+@skipLockedMemoryTest(2_097_152)  # 2GB
-+class MemlockTest(QemuSystemTest):
-+    """
-+    Boots a Linux system with memlock options.
-+    Then verify, that this options is working correctly
-+    by checking the smaps of the QEMU proccess.
-+    """
-+
-+    def common_vm_setup_with_memlock(self, memlock):
-+        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
-+        self.vm.launch()
-+
-+    def get_anon_smaps_by_pid(self, pid):
-+        smaps_raw = self._get_raw_smaps_by_pid(pid)
-+        return self._parse_anonymous_smaps(smaps_raw)
-+
-+    def test_memlock_off(self):
-+        self.common_vm_setup_with_memlock('off')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # locked = 0 on every smap
-+        for smap in anon_smaps:
-+            self.assertEqual(smap['Locked'], 0)
-+
-+    def test_memlock_on(self):
-+        self.common_vm_setup_with_memlock('on')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # size = rss = locked on every smap where rss not 0
-+        for smap in anon_smaps:
-+            if smap['Rss'] == 0:
-+                continue
-+            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
-+
-+    def test_memlock_onfault(self):
-+        self.common_vm_setup_with_memlock('on-fault')
-+
-+        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-+
-+        # rss = locked on every smap and segment with rss < size exists
-+        exists = False
-+        for smap in anon_smaps:
-+            self.assertTrue(smap['Rss'] == smap['Locked'])
-+            if smap['Rss'] < smap['Size']:
-+                exists = True
-+        self.assertTrue(exists)
-+
-+    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
-+        result_segments = []
-+        current_segment = {}
-+        is_anonymous = False
-+
-+        for line in smaps_raw.split('\n'):
-+            if SMAPS_HEADER_PATTERN.match(line):
-+                if current_segment and is_anonymous:
-+                    result_segments.append(current_segment)
-+                current_segment = {}
-+                # anonymous segment header looks like this:
-+                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
-+                # and non anonymous header looks like this:
-+                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
-+                is_anonymous = len(line.split()) == 5
-+            elif m := SMAPS_VALUE_PATTERN.match(line):
-+                current_segment[m.group(1)] = int(m.group(2))
-+
-+        if current_segment and is_anonymous:
-+            result_segments.append(current_segment)
-+
-+        return result_segments
-+
-+    def _get_raw_smaps_by_pid(self, pid: int) -> str:
-+        with open(f'/proc/{pid}/smaps', 'r') as f:
-+            return f.read()
-+
-+
-+if __name__ == '__main__':
-+    MemlockTest.main()
--- 
-2.34.1
+Regards
+Bibo Mao
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>>   #endif /* !CONFIG_USER_ONLY */
 
 
