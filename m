@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53B6C369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DB7C369BD
 	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 03:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Fdz-0006Cw-31; Wed, 16 Apr 2025 23:10:27 -0400
+	id 1u5Fdv-000683-SX; Wed, 16 Apr 2025 23:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1u5Fdx-0006C6-E2; Wed, 16 Apr 2025 23:10:25 -0400
+ id 1u5Fdt-00066N-Cn; Wed, 16 Apr 2025 23:10:21 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1u5Fdv-0000B0-Hc; Wed, 16 Apr 2025 23:10:25 -0400
+ id 1u5Fdr-0000B0-EM; Wed, 16 Apr 2025 23:10:20 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 17 Apr
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 3/3] hw/arm: Integrate Aspeed OTP memory into AST10x0 and
- AST2600 SoCs
-Date: Thu, 17 Apr 2025 11:09:55 +0800
-Message-ID: <20250417030957.2586802-4-kane_chen@aspeedtech.com>
+Subject: [PATCH v2 2/3] hw/misc/aspeed_sbc: Connect Aspeed OTP memory device
+ to SBC controller
+Date: Thu, 17 Apr 2025 11:09:54 +0800
+Message-ID: <20250417030957.2586802-3-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250417030957.2586802-1-kane_chen@aspeedtech.com>
 References: <20250417030957.2586802-1-kane_chen@aspeedtech.com>
@@ -69,158 +69,249 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-This patch wires up the OTP memory device (`aspeed.otpmem`) into the
-AST1030 and AST2600 SoC models. The device is initialized, attached
-to a backing block drive (`-drive id=otpmem`) and linked to the SBC
-controller via a QOM link.
+This patch integrates the `aspeed.otpmem` device with the ASPEED
+Secure Boot Controller (SBC). The SBC now accepts an OTP backend via
+a QOM link property ("otpmem"), enabling internal access to OTP content
+for controller-specific logic.
 
-The default OTP memory image can be generated using the following
-command.
-```bash
-for i in $(seq 1 2048); do
-  printf '\x00\x00\x00\x00\xff\xff\xff\xff'
-done > otpmem.img
-```
-
-To load the OTP memory image into the guest, use:
-```bash
-./qemu-system-arm \
-  -drive id=otpmem,file=otpmem.img,if=none,format=raw \
-  ...
-```
-
-Note: Do not use the -snapshot option, or OTP data writes will not
-persist to the image file.
+This connection provides the foundation for future enhancements
+involving fuse storage, device configuration, or secure manufacturing
+data provisioning.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
- hw/arm/aspeed_ast10x0.c     | 19 +++++++++++++++++++
- hw/arm/aspeed_ast2600.c     | 19 +++++++++++++++++++
- include/hw/arm/aspeed_soc.h |  2 ++
- 3 files changed, 40 insertions(+)
+ hw/misc/aspeed_sbc.c         | 155 +++++++++++++++++++++++++++++++++++
+ include/hw/misc/aspeed_sbc.h |  15 ++++
+ 2 files changed, 170 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index ec329f4991..eaa70feb9f 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -15,6 +15,7 @@
- #include "system/system.h"
- #include "hw/qdev-clock.h"
- #include "hw/misc/unimp.h"
-+#include "system/block-backend-global-state.h"
- #include "hw/arm/aspeed_soc.h"
+diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+index e4a6bd1581..ed128c5dee 100644
+--- a/hw/misc/aspeed_sbc.c
++++ b/hw/misc/aspeed_sbc.c
+@@ -17,7 +17,11 @@
+ #include "migration/vmstate.h"
  
- #define ASPEED_SOC_IOMEM_SIZE 0x00200000
-@@ -156,6 +157,8 @@ static void aspeed_soc_ast1030_init(Object *obj)
+ #define R_PROT          (0x000 / 4)
++#define R_CMD           (0x004 / 4)
++#define R_ADDR          (0x010 / 4)
+ #define R_STATUS        (0x014 / 4)
++#define R_CAMP1         (0x020 / 4)
++#define R_CAMP2         (0x024 / 4)
+ #define R_QSR           (0x040 / 4)
  
-     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
+ /* R_STATUS */
+@@ -57,6 +61,152 @@ static uint64_t aspeed_sbc_read(void *opaque, hwaddr addr, unsigned int size)
+     return s->regs[addr];
+ }
  
-+    object_initialize_child(obj, "otpmem", &s->otpmem, TYPE_ASPEED_OTPMEM);
++static void aspeed_sbc_otpmem_read(void *opaque)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    uint32_t otp_addr, data, otp_offset;
++    bool is_data = false;
++    Error *local_err = NULL;
 +
-     for (i = 0; i < sc->wdts_num; i++) {
-         snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
-         object_initialize_child(obj, "wdt[*]", &s->wdt[i], typename);
-@@ -194,6 +197,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     Error *err = NULL;
-     int i;
-     g_autofree char *sram_name = NULL;
-+    BlockBackend *blk;
- 
-     if (!clock_has_source(s->sysclk)) {
-         error_setg(errp, "sysclk clock must be wired up by the board code");
-@@ -359,6 +363,21 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-     }
- 
-+    /* OTP memory */
-+    blk = blk_by_name(ASPEED_OTPMEM_DRIVE);
-+    if (blk) {
-+        blk_set_perm(blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
-+                     0, &error_fatal);
-+        qdev_prop_set_drive(DEVICE(&s->otpmem), "drive", blk);
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->otpmem), errp)) {
-+            return;
-+        }
-+        /* Assign OTP memory to SBC */
-+        object_property_set_link(OBJECT(&s->sbc), "otpmem",
-+                                 OBJECT(&s->otpmem), &error_abort);
++    if (s->otpmem == NULL) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: OTP not initialized\n",
++                      __func__);
++        return;
 +    }
 +
-     /* Secure Boot Controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
++    otp_addr = s->regs[R_ADDR];
++    if (otp_addr < OTP_DATA_DWORD_COUNT) {
++        is_data = true;
++    } else if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid OTP addr 0x%x\n",
++                      __func__, otp_addr);
++        return;
++    }
++    otp_offset = otp_addr << 2;
++
++    s->otpmem->ops->read(s->otpmem, otp_offset, &data, &local_err);
++    if (local_err) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to read data 0x%x, %s\n",
++                      __func__, otp_offset,
++                      error_get_pretty(local_err));
++        error_free(local_err);
++        return;
++    }
++    s->regs[R_CAMP1] = data;
++
++    if (is_data) {
++        s->otpmem->ops->read(s->otpmem, otp_offset + 4, &data, &local_err);
++        if (local_err) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: Failed to read data 0x%x, %s\n",
++                          __func__, otp_offset,
++                          error_get_pretty(local_err));
++            error_free(local_err);
++            return;
++        }
++        s->regs[R_CAMP2] = data;
++    }
++}
++
++static void mr_handler(uint32_t otp_addr, uint32_t data)
++{
++    switch (otp_addr) {
++    case MODE_REGISTER:
++    case MODE_REGISTER_A:
++    case MODE_REGISTER_B:
++        /* HW behavior, do nothing here */
++        break;
++    default:
++    qemu_log_mask(LOG_GUEST_ERROR,
++                  "%s: Unsupported address 0x%x\n",
++                  __func__, otp_addr);
++        return;
++    }
++}
++
++static void aspeed_sbc_otpmem_write(void *opaque)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    uint32_t otp_addr, data;
++
++    otp_addr = s->regs[R_ADDR];
++    data = s->regs[R_CAMP1];
++
++    if (otp_addr == 0) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignore write program bit request\n",
++                      __func__);
++    } else if (otp_addr >= MODE_REGISTER) {
++        mr_handler(otp_addr, data);
++    } else {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unhandled OTP write address 0x%x\n",
++                      __func__, otp_addr);
++    }
++}
++
++static void aspeed_sbc_otpmem_prog(void *opaque)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++    uint32_t otp_addr, value;
++    Error *local_err = NULL;
++
++    if (s->otpmem == NULL) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: OTP not initialized\n",
++                      __func__);
++        return;
++    }
++    otp_addr = s->regs[R_ADDR];
++    value = s->regs[R_CAMP1];
++    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid OTP addr 0x%x\n",
++                      __func__, otp_addr);
++        return;
++    }
++
++    s->otpmem->ops->prog(s->otpmem, otp_addr, value, &local_err);
++    if (local_err) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Failed to program data 0x%x to 0x%x, %s\n",
++                      __func__, value, otp_addr,
++                      error_get_pretty(local_err));
++        error_free(local_err);
++        return;
++    }
++}
++
++static void aspeed_sbc_handle_command(void *opaque, uint32_t cmd)
++{
++    AspeedSBCState *s = ASPEED_SBC(opaque);
++
++    s->regs[R_STATUS] &= ~(OTP_MEM_IDLE | OTP_IDLE);
++
++    switch (cmd) {
++    case READ_CMD:
++        aspeed_sbc_otpmem_read(s);
++        break;
++    case WRITE_CMD:
++        aspeed_sbc_otpmem_write(s);
++        break;
++    case PROG_CMD:
++        aspeed_sbc_otpmem_prog(s);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unknown command 0x%x\n",
++                      __func__, cmd);
++        break;
++    }
++
++    s->regs[R_STATUS] |= (OTP_MEM_IDLE | OTP_IDLE);
++}
++
++
+ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
+                               unsigned int size)
+ {
+@@ -78,6 +228,9 @@ static void aspeed_sbc_write(void *opaque, hwaddr addr, uint64_t data,
+                       "%s: write to read only register 0x%" HWADDR_PRIx "\n",
+                       __func__, addr << 2);
          return;
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 1f994ba26c..9fe3eeeb0e 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
++    case R_CMD:
++        aspeed_sbc_handle_command(opaque, data);
++        return;
+     default:
+         break;
+     }
+@@ -139,6 +292,8 @@ static const VMStateDescription vmstate_aspeed_sbc = {
+ static const Property aspeed_sbc_properties[] = {
+     DEFINE_PROP_BOOL("emmc-abr", AspeedSBCState, emmc_abr, 0),
+     DEFINE_PROP_UINT32("signing-settings", AspeedSBCState, signing_settings, 0),
++    DEFINE_PROP_LINK("otpmem", AspeedSBCState, otpmem,
++                     TYPE_ASPEED_OTPMEM, AspeedOTPMemState *),
+ };
+ 
+ static void aspeed_sbc_class_init(ObjectClass *klass, void *data)
+diff --git a/include/hw/misc/aspeed_sbc.h b/include/hw/misc/aspeed_sbc.h
+index 405e6782b9..8ae59d977e 100644
+--- a/include/hw/misc/aspeed_sbc.h
++++ b/include/hw/misc/aspeed_sbc.h
 @@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/misc/unimp.h"
-+#include "system/block-backend-global-state.h"
- #include "hw/arm/aspeed_soc.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
-@@ -263,6 +264,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
+ #define ASPEED_SBC_H
  
-     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
- 
-+    object_initialize_child(obj, "otpmem", &s->otpmem, TYPE_ASPEED_OTPMEM);
-+
-     object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "video", &s->video, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "dpmcu", &s->dpmcu, TYPE_UNIMPLEMENTED_DEVICE);
-@@ -293,6 +296,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-     qemu_irq irq;
-     g_autofree char *sram_name = NULL;
-+    BlockBackend *blk;
- 
-     /* Default boot region (SPI memory or ROMs) */
-     memory_region_init(&s->spi_boot_container, OBJECT(s),
-@@ -628,6 +632,21 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i3c.devices[i]), 0, irq);
-     }
- 
-+    /* OTP memory */
-+    blk = blk_by_name(ASPEED_OTPMEM_DRIVE);
-+    if (blk) {
-+        blk_set_perm(blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
-+                     0, &error_fatal);
-+        qdev_prop_set_drive(DEVICE(&s->otpmem), "drive", blk);
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->otpmem), errp)) {
-+            return;
-+        }
-+        /* Assign OTP memory to SBC */
-+        object_property_set_link(OBJECT(&s->sbc), "otpmem",
-+                                 OBJECT(&s->otpmem), &error_abort);
-+    }
-+
-     /* Secure Boot Controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
-         return;
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index f069d17d16..2d15c6047a 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -36,6 +36,7 @@
- #include "hw/usb/hcd-ehci.h"
- #include "qom/object.h"
- #include "hw/misc/aspeed_lpc.h"
+ #include "hw/sysbus.h"
 +#include "hw/misc/aspeed_otpmem.h"
- #include "hw/misc/unimp.h"
- #include "hw/misc/aspeed_peci.h"
- #include "hw/fsi/aspeed_apb2opb.h"
-@@ -73,6 +74,7 @@ struct AspeedSoCState {
-     AspeedSMCState spi[ASPEED_SPIS_NUM];
-     EHCISysBusState ehci[ASPEED_EHCIS_NUM];
-     AspeedSBCState sbc;
-+    AspeedOTPMemState otpmem;
-     AspeedSLIState sli;
-     AspeedSLIState sliio;
-     MemoryRegion secsram;
+ 
+ #define TYPE_ASPEED_SBC "aspeed.sbc"
+ #define TYPE_ASPEED_AST2600_SBC TYPE_ASPEED_SBC "-ast2600"
+@@ -27,6 +28,18 @@ OBJECT_DECLARE_TYPE(AspeedSBCState, AspeedSBCClass, ASPEED_SBC)
+ #define QSR_SHA384                  (0x2 << 10)
+ #define QSR_SHA512                  (0x3 << 10)
+ 
++#define READ_CMD                    (0x23b1e361)
++#define WRITE_CMD                   (0x23b1e362)
++#define PROG_CMD                    (0x23b1e364)
++
++#define OTP_DATA_DWORD_COUNT        (0x800)
++#define OTP_TOTAL_DWORD_COUNT       (0x1000)
++#define OTP_FILE_SIZE               (OTP_TOTAL_DWORD_COUNT * sizeof(uint32_t))
++
++#define MODE_REGISTER               (0x1000)
++#define MODE_REGISTER_A             (0x3000)
++#define MODE_REGISTER_B             (0x5000)
++
+ struct AspeedSBCState {
+     SysBusDevice parent;
+ 
+@@ -36,6 +49,8 @@ struct AspeedSBCState {
+     MemoryRegion iomem;
+ 
+     uint32_t regs[ASPEED_SBC_NR_REGS];
++
++    AspeedOTPMemState *otpmem;
+ };
+ 
+ struct AspeedSBCClass {
 -- 
 2.43.0
 
