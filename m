@@ -4,102 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6530C369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B006BC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5NHS-0006tK-1v; Thu, 17 Apr 2025 07:19:42 -0400
+	id 1u5NOq-0000PI-U1; Thu, 17 Apr 2025 07:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1u5NHM-0006sZ-Dh; Thu, 17 Apr 2025 07:19:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u5NOi-0000Ni-RG
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:27:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1u5NHI-0008OE-IX; Thu, 17 Apr 2025 07:19:34 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53H9YV3k017611;
- Thu, 17 Apr 2025 11:19:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Yezzv0pZeIyWHSKf3BEz3UFe19N90TLZsvxQ4zxMv
- Zk=; b=T5ygU6wfq7Tjtt+ibueJbGPqMVeD6UlCbJ0kpxgPnm0J9u5KhbKgY+fHQ
- vkt5959WL5ZsDEvhMbIwRRgRdm45q4Ml27Wlk1yYWWekZekC1GzGQWPlVje79Q7H
- zP4v3471ecuX87ST1MkFa3EE/exBjPpkS4B/sc0LdnlRQuIQ57qQqeMbZd4iC1cO
- A+GL5dAjeKjsZVQDl65Nke4A2v2s5QQafYQvlKVhZBmKNllwYbDp1YXiRPdhF0Ck
- QOr7xCvPdNbgmKgidNmfUTIMjfWS8BD7qRS6tMAk7cXhVr93XQgiyI4Dp8Ch/3rh
- F3QkqH9G0fdag5sObQBLCuEpCrbxQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462mpv30gq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 11:19:27 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53HBFgvR023174;
- Thu, 17 Apr 2025 11:19:27 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 462mpv30gn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 11:19:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53H7SoQx016722;
- Thu, 17 Apr 2025 11:19:26 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 460572d0hx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Apr 2025 11:19:26 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53HBJNg948628218
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 17 Apr 2025 11:19:23 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E46B720043;
- Thu, 17 Apr 2025 11:19:22 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2AB1220040;
- Thu, 17 Apr 2025 11:19:21 +0000 (GMT)
-Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.in.ibm.com (unknown
- [9.204.206.66]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 17 Apr 2025 11:19:20 +0000 (GMT)
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
- pbonzini@redhat.com
-Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, vaibhav@linux.ibm.com
-Subject: [PATCH v2] hw/ppc/spapr_hcall: Return host mitigation characteristics
- in KVM mode
-Date: Thu, 17 Apr 2025 16:49:03 +0530
-Message-ID: <20250417111907.258723-1-gautam@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u5NOf-0001Jd-5Q
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:27:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744889226;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=nAYNIhnLHSpyV95FsSHirP9NS7+HCHVtCQEikZ7wWJM=;
+ b=JLtw8QDtvvkrvqXW/319qh/euUjC2Up91iic6g9777wbIGwp4ByylSYRCtSLevxMml+fKF
+ MR0yNzzpJBgPsqz9hVUiIANBH0FOAXQ2SCpp6qXgBMH4tC1iCX9l8Gv8tRB8+aLjAIZDGP
+ KlTFXZnq9r2mb8jE8OcYatQiVjZVB6Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-XWtIU-LrOqyLuhRPYhg6XA-1; Thu,
+ 17 Apr 2025 07:27:05 -0400
+X-MC-Unique: XWtIU-LrOqyLuhRPYhg6XA-1
+X-Mimecast-MFC-AGG-ID: XWtIU-LrOqyLuhRPYhg6XA_1744889224
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C02771955D86; Thu, 17 Apr 2025 11:27:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.151])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9C3A1800D9F; Thu, 17 Apr 2025 11:27:01 +0000 (UTC)
+Date: Thu, 17 Apr 2025 12:26:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 2/2] tests/functional: add memlock tests
+Message-ID: <aADlgWm8Z6yHiO0H@redhat.com>
+References: <20250417111321.167008-1-dtalexundeer@yandex-team.ru>
+ <20250417111321.167008-3-dtalexundeer@yandex-team.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=KJVaDEFo c=1 sm=1 tr=0 ts=6800e3c0 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=XR8D0OoHHMoA:10 a=voM4FWlXAAAA:8 a=VnNF1IyMAAAA:8 a=3kwgc6Q8V27WDnC-VUoA:9
- a=IC2XNlieTeVoXbcui8wp:22
-X-Proofpoint-GUID: aCjsieM87y1ErwI5XJvhlo31VVZnHbM-
-X-Proofpoint-ORIG-GUID: Nm001CVr7WdtHJBJMHYoUivQB8_iZ-C9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-17_03,2025-04-15_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 lowpriorityscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
- phishscore=0 classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504170082
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=gautam@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250417111321.167008-3-dtalexundeer@yandex-team.ru>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,114 +84,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, on a P10 KVM guest, the mitigations seen in the output of
-"lscpu" command are different from the host. The reason for this
-behaviour is that when the KVM guest makes the "h_get_cpu_characteristics"
-hcall, QEMU does not consider the data it received from the host via the
-KVM_PPC_GET_CPU_CHAR ioctl, and just uses the values present in
-spapr->eff.caps[], which in turn just contain the default values set in
-spapr_machine_class_init().
+On Thu, Apr 17, 2025 at 04:13:21PM +0500, Alexandr Moshkov wrote:
+> Add new tests to check the correctness of the `-overcommit memlock`
+> option (possible values: off, on, on-fault) by using
+> `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
+> anonymous segments:
+> 
+> * if `memlock=off`, then Locked = 0 on every anonymous smaps;
+> * if `memlock=on`, then Size, Rss and Locked values must be equal for
+> every anon smaps where Rss is not 0;
+> * if `memlock=on-fault`, then Rss and Locked must be equal on every anon
+> smaps and anonymous segment with Rss < Size must exists.
+> 
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>  tests/functional/meson.build     |   1 +
+>  tests/functional/test_memlock.py | 102 +++++++++++++++++++++++++++++++
+>  2 files changed, 103 insertions(+)
+>  create mode 100755 tests/functional/test_memlock.py
+> 
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 0f8be30fe2..339af7835f 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -61,6 +61,7 @@ tests_generic_system = [
+>    'empty_cpu_model',
+>    'info_usernet',
+>    'version',
+> +  'memlock',
+>  ]
+>  
+>  tests_generic_linuxuser = [
+> diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
+> new file mode 100755
+> index 0000000000..b62f12a715
+> --- /dev/null
+> +++ b/tests/functional/test_memlock.py
+> @@ -0,0 +1,102 @@
 
-Fix this behaviour by making sure that h_get_cpu_characteristics()
-returns the data received from the KVM ioctl for a KVM guest.
+Forgot to say last time this also needs
 
-Perf impact:
-With null syscall benchmark[1], ~45% improvement is observed.
+  #!/usr/bin/env python3
 
-1. Vanilla QEMU
-$ ./null_syscall
-132.19 ns     456.54 cycles
+> +# Functional test that check overcommit memlock options
+> +#
+> +# Copyright (c) Yandex Technologies LLC, 2025
+> +#
+> +# Author:
+> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> +#
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +import re
+> +
+> +from typing import List, Dict
+> +
+> +from qemu_test import QemuSystemTest
+> +from qemu_test import skipLockedMemoryTest
+> +
+> +
+> +SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
+> +SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
+> +
+> +
+> +@skipLockedMemoryTest(2_097_152)  # 2GB
+> +class MemlockTest(QemuSystemTest):
+> +    """
+> +    Boots a Linux system with memlock options.
+> +    Then verify, that this options is working correctly
+> +    by checking the smaps of the QEMU proccess.
+> +    """
+> +
+> +    def common_vm_setup_with_memlock(self, memlock):
+> +        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
+> +        self.vm.launch()
+> +
+> +    def get_anon_smaps_by_pid(self, pid):
+> +        smaps_raw = self._get_raw_smaps_by_pid(pid)
+> +        return self._parse_anonymous_smaps(smaps_raw)
+> +
+> +    def test_memlock_off(self):
+> +        self.common_vm_setup_with_memlock('off')
+> +
+> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
+> +
+> +        # locked = 0 on every smap
+> +        for smap in anon_smaps:
+> +            self.assertEqual(smap['Locked'], 0)
+> +
+> +    def test_memlock_on(self):
+> +        self.common_vm_setup_with_memlock('on')
+> +
+> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
+> +
+> +        # size = rss = locked on every smap where rss not 0
+> +        for smap in anon_smaps:
+> +            if smap['Rss'] == 0:
+> +                continue
+> +            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
+> +
+> +    def test_memlock_onfault(self):
+> +        self.common_vm_setup_with_memlock('on-fault')
+> +
+> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
+> +
+> +        # rss = locked on every smap and segment with rss < size exists
+> +        exists = False
+> +        for smap in anon_smaps:
+> +            self.assertTrue(smap['Rss'] == smap['Locked'])
+> +            if smap['Rss'] < smap['Size']:
+> +                exists = True
+> +        self.assertTrue(exists)
+> +
+> +    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
+> +        result_segments = []
+> +        current_segment = {}
+> +        is_anonymous = False
+> +
+> +        for line in smaps_raw.split('\n'):
+> +            if SMAPS_HEADER_PATTERN.match(line):
+> +                if current_segment and is_anonymous:
+> +                    result_segments.append(current_segment)
+> +                current_segment = {}
+> +                # anonymous segment header looks like this:
+> +                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
+> +                # and non anonymous header looks like this:
+> +                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
+> +                is_anonymous = len(line.split()) == 5
+> +            elif m := SMAPS_VALUE_PATTERN.match(line):
+> +                current_segment[m.group(1)] = int(m.group(2))
+> +
+> +        if current_segment and is_anonymous:
+> +            result_segments.append(current_segment)
+> +
+> +        return result_segments
+> +
+> +    def _get_raw_smaps_by_pid(self, pid: int) -> str:
+> +        with open(f'/proc/{pid}/smaps', 'r') as f:
+> +            return f.read()
+> +
+> +
+> +if __name__ == '__main__':
+> +    MemlockTest.main()
+> -- 
+> 2.34.1
+> 
 
-2. With this patch
-$ ./null_syscall
-91.18 ns     314.57 cycles
-
-[1]: https://ozlabs.org/~anton/junkcode/null_syscall.c
-
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
----
-v1 -> v2:
-Handle the case where KVM_PPC_GET_CPU_CHAR ioctl fails
-
- hw/ppc/spapr_hcall.c   |  6 ++++++
- include/hw/ppc/spapr.h |  1 +
- target/ppc/kvm.c       | 13 ++++++++++---
- 3 files changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 5e1d020e3d..d6db1bdab8 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -1402,6 +1402,12 @@ static target_ulong h_get_cpu_characteristics(PowerPCCPU *cpu,
-     uint8_t count_cache_flush_assist = spapr_get_cap(spapr,
-                                                      SPAPR_CAP_CCF_ASSIST);
- 
-+    if (kvm_enabled() && spapr->chars.character) {
-+        args[0] = spapr->chars.character;
-+        args[1] = spapr->chars.behaviour;
-+        return H_SUCCESS;
-+    }
-+
-     switch (safe_cache) {
-     case SPAPR_CAP_WORKAROUND:
-         characteristics |= H_CPU_CHAR_L1D_FLUSH_ORI30;
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index af4aa1cb0f..c41da8cb82 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -280,6 +280,7 @@ struct SpaprMachineState {
-     Error *fwnmi_migration_blocker;
- 
-     SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
-+    struct kvm_ppc_cpu_char chars;
- };
- 
- #define H_SUCCESS         0
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 3efc28f18b..fec7bcc347 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2499,7 +2499,8 @@ bool kvmppc_has_cap_xive(void)
- 
- static void kvmppc_get_cpu_characteristics(KVMState *s)
- {
--    struct kvm_ppc_cpu_char c;
-+    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
-+    struct kvm_ppc_cpu_char c = {0};
-     int ret;
- 
-     /* Assume broken */
-@@ -2509,18 +2510,24 @@ static void kvmppc_get_cpu_characteristics(KVMState *s)
- 
-     ret = kvm_vm_check_extension(s, KVM_CAP_PPC_GET_CPU_CHAR);
-     if (!ret) {
--        return;
-+        goto err;
-     }
-     ret = kvm_vm_ioctl(s, KVM_PPC_GET_CPU_CHAR, &c);
-     if (ret < 0) {
--        return;
-+        goto err;
-     }
- 
-+    spapr->chars = c;
-     cap_ppc_safe_cache = parse_cap_ppc_safe_cache(c);
-     cap_ppc_safe_bounds_check = parse_cap_ppc_safe_bounds_check(c);
-     cap_ppc_safe_indirect_branch = parse_cap_ppc_safe_indirect_branch(c);
-     cap_ppc_count_cache_flush_assist =
-         parse_cap_ppc_count_cache_flush_assist(c);
-+
-+    return;
-+
-+err:
-+    memset(&(spapr->chars), 0, sizeof(struct kvm_ppc_cpu_char));
- }
- 
- int kvmppc_get_cap_safe_cache(void)
+With regards,
+Daniel
 -- 
-2.49.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
