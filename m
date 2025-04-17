@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357DCC369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE35C369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Lcw-00011H-Ik; Thu, 17 Apr 2025 05:33:46 -0400
+	id 1u5Lef-0003KY-IL; Thu, 17 Apr 2025 05:35:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u5Lce-0000pk-BC; Thu, 17 Apr 2025 05:33:32 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1u5Lea-0003Jp-B3; Thu, 17 Apr 2025 05:35:28 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u5Lcc-0006Iz-GN; Thu, 17 Apr 2025 05:33:27 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-301a4d5156aso516105a91.1; 
- Thu, 17 Apr 2025 02:33:24 -0700 (PDT)
+ id 1u5LeX-0006iK-N1; Thu, 17 Apr 2025 05:35:27 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-b041afe0ee1so490275a12.1; 
+ Thu, 17 Apr 2025 02:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744882404; x=1745487204; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744882523; x=1745487323; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+WYqzNVMLotLX9cRFxRZE2qJnsZT4jC37pquHkVtjqA=;
- b=KvkcH3WJyGq0Byv3w3x897urWNSJ8LDxmU1odIzEiEWw6ew5dDGBkFl/pU4oyhV6Ng
- nOwXq7VF+CEJ9I6wUnKigqrL9dTZD24lXGBy1fkU7R5PHXIuQs3+3ENO6eb9CNTVWlPj
- r+NzSgCaF4WhsWsYgTef1gprKQNsokj9GEX+JHGVH2Y3nW89TO830bkp/ZEAPP0s2VdW
- pj5JFjGU5NwJZ40+FZ40pzq2SxkxKvkg0TWUjHKefFZLtv0b5Xka1+oZ6AUJR+DUE5Wp
- j7ecP1yTOwM5WD/4+6ysNOBn/BdAsxJIBAtUXmoB6IXsqlC63wcP9QH7o269T00DEAOb
- rJ2g==
+ bh=xO5EtXdo5R5SORB6VhGJS2vroOZK0eGIlzXzvwsNqpU=;
+ b=gKR6adsF2LvVei7PuZoUha0/mzanikF6WLz3pzdNIgzjwNdPCuhTCn8OxT437tj/PC
+ ThldzqkrqwIYYuOVqv3Fk4egcFIWoffsyf5WqA7YxjBfwZbCjecVlbRkCLY/M6X4wlGR
+ LQ2M0yDUCGtMQRMbC3rWdFefXpMUiL2lPr//RSR5VP/cLHxr6Ldf/1sdy/M076HM7uq3
+ NY0TtP9EyCA4Nk1UwcJlqsPt0Wr8V/03P8qpQlr53/yHjJd6fmEJzphUcmViYfJL/GKs
+ i2IrLXTVQAYPpTotxjWshOmQln+xscaJ/sQAFDrOIChlxha7mPOXzZRSjlDFIBey4U+s
+ puoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744882404; x=1745487204;
+ d=1e100.net; s=20230601; t=1744882523; x=1745487323;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+WYqzNVMLotLX9cRFxRZE2qJnsZT4jC37pquHkVtjqA=;
- b=Wyrjf41jC7lAVbkwZgXFnmgTDPpDarryZ/VotlfiN8a7vgR1W7njSerIG3oi8tjp2N
- VrmdwQwu4IJhhAwI2y3gwDsjc/uurv/lqYIT6F7Gw9ViITAfEFpUSBqZGIl/8TrXu9KP
- 5f1DPZwcAbWU1npN/Jak5Ph2gdNszgErNVkV5yyC+HvNERXZOrVQYOVThvapMRGt24KP
- NbUmnpLVsEz73hYKonzJx17ZebGdD3MD7xpEd2hAFbF7jZq4qMxz3w14/oQhEbb3o7o6
- hmBvh5ANxvlu7GaPqMTa5LfIbgJG87KCqIu7i6XIjycHYLNNZIuyNLSQ5r32l3AnRavI
- jy9g==
+ bh=xO5EtXdo5R5SORB6VhGJS2vroOZK0eGIlzXzvwsNqpU=;
+ b=FxFQzoxPPSrWtw0p9U7BxHeCZgzdkf+nK0mYsp5CovlrXsy13LtcB5UY4aVF1n252c
+ tm/tHk+RcDeScmhJwNOG1vXxWYW8wuY+M5UL1Rg1UlJuc4fQNYd3vL+MktaORg+y0o7N
+ 4YefCiEQYK2b04O9wcoO7IXYwkHwvMpnv8PffHuV3oa4oMH89nrlo0Ng1U9U4w4eeuiQ
+ DHw6k1BBjVjqMiSKbm8NVmyTJchZDYNpeJoABvfIyZJBCVsJFDyCozrJWWIh4XEs5c5z
+ 47hLHOtk+fW0rx/EWpc3XR94QLuCA1roso8Y3n/P9yV2RO3iAvbxpARQ0tK+yR7A7HPf
+ t8FQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtwzvNYg3l3CQRNhXMlyKgDysutQnQOKOO/Aq15OvMlC76gSyPUP1gNoGLQOz93Gt8X1sKqpMQMes=@nongnu.org,
- AJvYcCVbJXHIib462BO7f0wHAPFxKIlgmtMlvOxcrHx+/4TTgWNOS7CsJw5zSfwxQQvqMh+b5nETwRTu4A==@nongnu.org,
- AJvYcCVcGAvtA19JU6p09NPt7i0euxY8pGVWL5RpTWSVI23+5YA8EvRL9XIYyoGR3zbc0Sb22fYrx/OTIF0qOQ==@nongnu.org,
- AJvYcCXABJ5rkvtAI/bO0p/Vh+iH+y1vkeA3NaI2OvxfbqIELYncYlNcI4TWBnVbp9F5ngopKFtNYNecUHMulg==@nongnu.org,
- AJvYcCXVv3CbyKNCHQi1T0m4AySUyZgLxTxpYkYONTf8i/g3oc7fKfgFHEepL8DL5xOsc8oL/YVuruflf4hHCA==@nongnu.org
-X-Gm-Message-State: AOJu0YyHvK1YSYngC4+RPh/kMZtPWl7B8cCeL/w28+JNO+FskxCotXi5
- c0R0IQAq461asuDQclK9k0+4CFKM28k2rcps03LLxvqqzJG9VeSY57QXJZMJvFaLB22jqqARnXy
- xs66XbOThl+gZJRKfEHOHyUuR7aM=
-X-Gm-Gg: ASbGncsDeNJE9+TbVtCb4aETsIARjOVtcRqqAXFMEMBOYgYCpajBEAPiNcjH2pmhuDt
- bIoTyxDXykInDkdSplqqqAEpVCXuLEN+4eG6P7U6ZLdIFFt9pNXD7WX4NKQJKIy0NMp6w5OIegb
- 4IpBivyvNqaCA4kJQDrMB9P2i5prc0IHcjToLPxQRHmFnbBVK/cYBv
-X-Google-Smtp-Source: AGHT+IHNSWCxX47tiqfKqiS2sIxUAHE7DSXrly5hav+Iq0jvcClyO+qIcG5Xdnru5UXOvEB+NY0ZRbAO8V22CojlBAE=
-X-Received: by 2002:a17:90b:5410:b0:2fe:b735:87da with SMTP id
- 98e67ed59e1d1-30863c503c8mr9628237a91.0.1744882403663; Thu, 17 Apr 2025
- 02:33:23 -0700 (PDT)
+ AJvYcCUN+UFJRCqod0LGtw3WhpOYk+Ax2ymBk2FJChVXqmeOk9q4VHZpb4q/5g98/KyAz80C3uChTYAgawc=@nongnu.org,
+ AJvYcCWXDFBiDz8EvjHaJCuFZfwbsSrlkOuuZveNzbEWEgqXDr95TNCmVDigNarU4wXbZFhfVdVIFcVyJ6PNUw==@nongnu.org,
+ AJvYcCWsQMV1P5m+u78xbCGypUZojVEOLp364qe4P/7Wj0zb6X3GIA0VbQ/1pM2g/AICCTio58ZVSG47Nw==@nongnu.org,
+ AJvYcCXIocQOnd/CDtTU0lxJAezou/cxHkAqWPOxzEXULi74PTwyOoq+7jZxl7an4DMN+IDh1KsDduqKAOm/Pw==@nongnu.org,
+ AJvYcCXdecSW7Si2ArriDi6l/ntVkcvxl5RVVnUPM82HPw60UEXhppLA/2K8d9X5UfP9DQelGW1RG4YLfXjuqA==@nongnu.org
+X-Gm-Message-State: AOJu0YxlKvMRDfuTUq17k2QPdBK5VdiHa1RRFHJi3XPZClpqQgiN2o22
+ rpupP3OiuvE5sFMncargUwVpAzu8vNVfkQN85ec1B1bsBDnblVW0QOqOiimJZzeQv4owdbKly+U
+ CoUJm9sqif5cqA3Gs1qwjN1WvOdA=
+X-Gm-Gg: ASbGncuRmMo0376yWsJ1GXuRGiLoMnmr6f7vVZytvMpVQ1MHJdfBdzPTCZSjvEhnM9H
+ Zr/45Vj3R/geLOA0I6yaWXqW/qMhaP1a2Q2nfJmAFXi6tF3pM004PNS0pVF7L53K9m1os8NRbKG
+ P052W8W3ZYJ+J9mkqJwul6lZUcJGStgKAWkYcyBRqKRMqgyrtMsx26
+X-Google-Smtp-Source: AGHT+IEVLXnHZPcnnQ0+XGzkds0VJ6GfOiqMQh1ZBRq3Q9zGrdJIlmfDtyJzayKxEXYlV17znANc3AGZNGGP1of6Ik8=
+X-Received: by 2002:a17:90a:dfc5:b0:2fe:8c22:48b0 with SMTP id
+ 98e67ed59e1d1-30863f2e193mr8333339a91.15.1744882523014; Thu, 17 Apr 2025
+ 02:35:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
- <c2e3a58825c39678fcde361b685d1bd69d2fb1dd.1744787186.git.ktokunaga.mail@gmail.com>
- <e10f052d-b098-487e-a667-a0a19630d082@linaro.org>
-In-Reply-To: <e10f052d-b098-487e-a667-a0a19630d082@linaro.org>
+ <7ef485c860a0c26d2ddcf6a96430f5443deb5aee.1744787186.git.ktokunaga.mail@gmail.com>
+ <a92737eb-786d-4ebc-87df-a5518417195c@linaro.org>
+In-Reply-To: <a92737eb-786d-4ebc-87df-a5518417195c@linaro.org>
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Thu, 17 Apr 2025 18:33:11 +0900
-X-Gm-Features: ATxdqUEuQG4VGOWT0iulbDeHqVr0sWZL9x5AQG50DesObBgdxTbSldSIx1e34BE
-Message-ID: <CAEDrbUa9AF1uZfdwTy2WL1Er8FZOh2SbQxw8zPmxbOrw5zURMw@mail.gmail.com>
-Subject: Re: [PATCH 14/19] Disable options unsupported on Emscripten
+Date: Thu, 17 Apr 2025 18:35:11 +0900
+X-Gm-Features: ATxdqUGQDeC-L_eWjOnDqk1i2h_NYl6uI6kQaJuEdutsEAhD4spiaw4v131Labg
+Message-ID: <CAEDrbUaZYYxvW_D8ZS=qxOai06PiQQnN4mO2fjupPkwiNqqQjA@mail.gmail.com>
+Subject: Re: [PATCH 15/19] util/mmap-alloc: Add qemu_ram_mmap implementation
+ for emscripten
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  qemu-devel@nongnu.org
 Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
@@ -91,9 +92,9 @@ Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, 
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000d863ee0632f61752"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1036.google.com
+Content-Type: multipart/alternative; boundary="000000000000f58c390632f61e38"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,30 +117,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d863ee0632f61752
+--000000000000f58c390632f61e38
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Philippe,
 
-> >   #ifndef _WIN32
-> > +#ifndef EMSCRIPTEN
->
-> #if !defined(_WIN32) && !defined(EMSCRIPTEN)
->
-> ?
+> Can we keep this code generic? I.e. with something in the lines
+> of (only build-tested):
 
-Thank you for the sueggestion. I'll apply this in the next version of the
-series.
+Thank you for the suggestion. I'll try this approach.
 
---000000000000d863ee0632f61752
+--000000000000f58c390632f61e38
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Philippe,<br><br>&gt; &gt; =C2=A0 #ifn=
-def _WIN32<br>&gt; &gt; +#ifndef EMSCRIPTEN<br>&gt; <br>&gt; #if !defined(_=
-WIN32) &amp;&amp; !defined(EMSCRIPTEN)<br>&gt; <br>&gt; ?<br><br>Thank you =
-for the sueggestion. I&#39;ll apply this in the next version of the series.=
-<br><br></div></div>
+<div dir="ltr"><div dir="ltr">Hi Philippe,<br><br>&gt; Can we keep this code generic? I.e. with something in the lines<br>&gt; of (only build-tested):<br><br>Thank you for the suggestion. I&#39;ll try this approach.</div><br></div>
 
---000000000000d863ee0632f61752--
+--000000000000f58c390632f61e38--
 
