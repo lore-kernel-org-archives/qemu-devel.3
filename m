@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E848C369C9
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 17:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B45BDC369C9
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 17:35:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5T7R-000426-HA; Thu, 17 Apr 2025 13:33:46 -0400
+	id 1u5T8e-0005BQ-KX; Thu, 17 Apr 2025 13:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u5T7A-0003pd-At
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:33:28 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1u5T8c-0005Ar-Gk
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:34:59 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1u5T77-0001fX-U8
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:33:27 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-224341bbc1dso12777505ad.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 10:33:25 -0700 (PDT)
+ id 1u5T8a-0001rk-3R
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 13:34:57 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-736b0c68092so983555b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 10:34:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744911204; x=1745516004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744911294; x=1745516094; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3vhTtryGap1K2o5wTnxygMkEHjmeO5iibyeH1cqudL4=;
- b=y2NUYrhJwVmSCUKFJjyi0X5sR5EP5h6OPX44oRAHsp2mcuDRAVPlLWppCkEOxR4QwQ
- korqbkeAxO+8VY9B+UQVvguS5/GtjVBPKFDqWSOAcNET7ARsmHBP/xagUYFXWqbxtTe1
- QxZMVVEx0YoE8nlsm2wcJ9byEkJz5psxYfnUcLT6gGLoZr1i07Ywh/NWrzjX/hGQczuA
- bqk7sqfZZfsB75vkmXPeCX/Rgrke1YR6OOFKhBdnfEjDpZmtze/ITq6GvFGH3syPO72y
- aEaMcrKjUgeICYVyf2hWZKmZ70oX/R1QACtafEt6XACNH/TZuFpvR0rVP4nB/hd6INO/
- idWg==
+ bh=T1fDvpTylWdirzN7nHsilveuWE9fad1LOo8gfH1QjAw=;
+ b=iEMiqn+ZTg7OCKKCF0d1Y91JpYdwr9rOO+d6ld0vAB9YsKiyQxUvxjUpYlN3VpWhEK
+ l8ljBow2+3X2/FRtsjbkuoIOA1xSIL1h5Gf3Er+AR2bNf/qjL35T/JmqiklzmQ73h9pQ
+ LnC2TEtoaRiT05R1hurtuwQU7y2nPSB2arXtC553JyupN3DQRbGi+vUH4meyBPaF3x70
+ SN1h7RN/XNPK+DnETst0Jp3H3IYixQJTeWgf08pxkX4V3anvWTgZnA8DZWB19oz/VkKa
+ J7j9uS7hzYWvV1wiP7tS6fV4CLgW6z0Hr3MAk3cMgZ2IPXNSJcX0iWAxh0ZINvpaEUAc
+ 0YgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744911204; x=1745516004;
+ d=1e100.net; s=20230601; t=1744911294; x=1745516094;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3vhTtryGap1K2o5wTnxygMkEHjmeO5iibyeH1cqudL4=;
- b=SgFp6A+fx4cto7NqQjUTQEjlu1pGexUdnruIdvJHsmafqfPlGTLzaB/H9Tqe/Dh9yE
- 81XVkgw1tvoYYPeq43EQFgZw7TaxtItVtcuyo4Xz1o2ItadCg/IigZVNORo3eByio1jE
- HHZfb9hPuTbTk8xYiaiW8zjNnHcK0Pg3kPZxV/GvZhAQP1sSJW3viHWpZrQHz/ZeJdNo
- dZLpjqsxZwyuM5mfPeoDNuKO7GRrzwh/AQ4WV9b0ZsflvhmzVXOyepMOx1VcKGgStXK2
- QSEMcmklLrPAkvouTrNS8DcB23nJukUz9I6ecfvvg62G1VruNdU/r2WKJVQ7hXjjASbR
- a+uA==
+ bh=T1fDvpTylWdirzN7nHsilveuWE9fad1LOo8gfH1QjAw=;
+ b=JKtkcljnjPmScY5lLNUyc6t54QzGjo7ueJS5tqMMi0aqG+IQyNvo5eloi1cqB49hFI
+ TprdTDRjJoWcetuJY5jq2HkWu7guW/MuWWTA6KZkfXNuHrtmizikejuOsl4iaEwoBD7A
+ cEgO4KZNF3uzwtDQed1D19ToGjiHDUVXoqyd93r+b13g+uSSVs/xkUgBmAxTLePM0FyC
+ SXfnAy1n2ZyDOd2s1vRIufMrM74Gb/fZN2xMb6mPQZEfILG/SpQyDQ0q1rt+ANIX1ktk
+ rJPSMj0iIlMDAJCfY+Z1tWET/ZNk3DONencaMDC/ae0v65afCECn/s0as2MKMngtnX0H
+ G3Nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUSNuzHoM8XQ1Pko5NdgfbeaKIqERIu9iI2VTk68S/pZvR0spz83QKAVy8Do69BZC+/JW2uwmPUvme@nongnu.org
-X-Gm-Message-State: AOJu0YxvvFRT+aW6fytH/p2ICXmU0dtl8y4NCklCUb2PefSXiIYOYLW4
- 8uJZ9vIjuULGGJYUNSlJi1Ui3iXztqf5OX9yaU8Wr04o7bJU3k/lXFcROsXkCts=
-X-Gm-Gg: ASbGnctgqJQNXybiGZUdzJHN1M+RqIomxBixGuO8YNSkGqujr72zcFY9+4Dy2ZEDftY
- nyCHsbcG4/I0P6IXiGo4vabZ20Rr9hn4DkuzAdc60Xy9kiXGfFcRR+ktalsCxo5HHelUc5a145g
- f8BN2j1NhOsOz6LnTiyhK8jUTsb78r+JXAXGL5EsHMfTJxcCnaWuodx01tI6ZrXJZnRiYoO7Ym5
- pDT9HGNf1dVrzXRQeT3yDZQsAJEREcWcBLfVGA0fuLLv078Pp+yWMco+bgL4U12QkvIAQv+DqOG
- Ei9GUMNWXpuZRztbBs2kuyXlP+vCuMD5deUvVypxQk8q6HUBbuKyQaoC5JxLDAg=
-X-Google-Smtp-Source: AGHT+IErzYcq1H20P6yOvoE6LLyZ9yoWqY3pshdd4b5VDmRnHt4/raM11+ONVOqCV9Kychsng2eX5Q==
-X-Received: by 2002:a17:902:cec1:b0:224:1c1:4aba with SMTP id
- d9443c01a7336-22c35985601mr86086165ad.50.1744911204405; 
- Thu, 17 Apr 2025 10:33:24 -0700 (PDT)
+ AJvYcCWF2XSvPYGAKb5ZLG/m7SZ6YIw3JKFbswaee7BhrpI1m8PllF5Xwh/EDxLA7ZMffy1TYXRhEEqagmTQ@nongnu.org
+X-Gm-Message-State: AOJu0YwBmAh0Bami4nB8uoKIbp8WmeBVu91Wt+GQERtrTWb0og27q3OA
+ QY9B5eEXRwM1qRu5vfpudeyud8V7l/VlqvRlun8aXXMi7Gsnfo/8YM4rHktcXYE=
+X-Gm-Gg: ASbGncuz3J+kSl1Qjj2zw9pPy+dF+KnqjZwg7lVecXGoQ+vKZs8zMcCthxwH3hdbigD
+ eWtKpvactTvlW/1o4QesOGgIl83n/A8++yaDVPA5nr3ZbPgrwH9lx6EwGc9fRiK9+38BiNQB3b9
+ 64eDoHQ2SrK+woBvAWQ9i/jOZZVhyrHsRyKkbwZXYg+9zER0fTiVQJbGfZrcXoxKtq9FXQAVjux
+ KY6yNJ9mIoLgfZ22uDV0kdCMywqd5pvskNB9K/UjFOPQ5qJJuwM9toS4SE6V8kLA2EA2fi1IBN9
+ a4m12zhPOp06MGXn88MTQi3y+NG8Y0sIVT79D0DxXKO5uV9/ToLj
+X-Google-Smtp-Source: AGHT+IFBSZ6UvDSLA2d8auhSjHg506FswL8CFLozKdLN/XNPe0UKr0Kum811W3eDDlqH3KPIZ7FRUA==
+X-Received: by 2002:a05:6a00:4399:b0:736:33fd:f57d with SMTP id
+ d2e1a72fcca58-73dbfbc7aabmr353309b3a.17.1744911294317; 
+ Thu, 17 Apr 2025 10:34:54 -0700 (PDT)
 Received: from [192.168.0.102] ([186.215.52.65])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdb21asm2848835ad.5.2025.04.17.10.33.19
+ d2e1a72fcca58-73dbfaeb59dsm110709b3a.177.2025.04.17.10.34.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 17 Apr 2025 10:33:23 -0700 (PDT)
-Message-ID: <045c7cc0-f67d-4511-a695-95bee96de087@linaro.org>
-Date: Thu, 17 Apr 2025 14:33:18 -0300
+ Thu, 17 Apr 2025 10:34:53 -0700 (PDT)
+Message-ID: <986226f4-e6ce-491c-a9bb-d1c2bcfd1e43@linaro.org>
+Date: Thu, 17 Apr 2025 14:34:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V3 PATCH 06/13] test/acpi: allow DSDT table changes for
- microvm
+Subject: Re: [RFC V3 PATCH 07/13] microvm: support control method sleep button
 To: annie.li@oracle.com, qemu-devel@nongnu.org
 Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com,
  anisinha@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
@@ -78,14 +77,14 @@ Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com,
  pbonzini@redhat.com, richard.henderson@linaro.org, slp@redhat.com,
  eblake@redhat.com, armbru@redhat.com, miguel.luis@oracle.com
 References: <20250411201912.2872-1-annie.li@oracle.com>
- <20250411204204.2966-1-annie.li@oracle.com>
+ <20250411204236.2977-1-annie.li@oracle.com>
 Content-Language: en-US
 From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250411204204.2966-1-annie.li@oracle.com>
+In-Reply-To: <20250411204236.2977-1-annie.li@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,34 +107,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Annie,
+Hi Annie,
 
 On 4/11/25 17:42, Annie Li wrote:
-> list changed files in tests/qtest/bios-tables-test-allowed-diff.h
+> Add the support of control method sleep button and System
+> S3 Sleeping State for microvm.
 
-nit: List
+I would say "... of ACPI Control Method Sleeping Button ...¨,
+the important part being "ACPI" to make clear what's the
+context of the support. Because such a device requires
+also some plumbing in QEMU code to really be "supported".
+
+For the title, maybe smth like: "microvm: Add ACPI sleeping button device"
 
 
 > Signed-off-by: Annie Li <annie.li@oracle.com>
 > ---
->   tests/qtest/bios-tables-test-allowed-diff.h | 5 +++++
->   1 file changed, 5 insertions(+)
+>   hw/i386/acpi-microvm.c                 | 11 +++++++++++
+>   include/hw/acpi/generic_event_device.h |  1 +
+>   2 files changed, 12 insertions(+)
 > 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8b..bb028db137 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,6 @@
->   /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/x86/microvm/DSDT",
-> +"tests/data/acpi/x86/microvm/DSDT.ioapic2",
-> +"tests/data/acpi/x86/microvm/DSDT.pcie",
-> +"tests/data/acpi/x86/microvm/DSDT.rtc",
-> +"tests/data/acpi/x86/microvm/DSDT.usb",
+> diff --git a/hw/i386/acpi-microvm.c b/hw/i386/acpi-microvm.c
+> index 279da6b4aa..57c45ea327 100644
+> --- a/hw/i386/acpi-microvm.c
+> +++ b/hw/i386/acpi-microvm.c
+> @@ -32,6 +32,7 @@
+>   #include "hw/acpi/generic_event_device.h"
+>   #include "hw/acpi/utils.h"
+>   #include "hw/acpi/erst.h"
+> +#include "hw/acpi/control_method_device.h"
+>   #include "hw/i386/fw_cfg.h"
+>   #include "hw/i386/microvm.h"
+>   #include "hw/pci/pci.h"
+> @@ -123,12 +124,22 @@ build_dsdt_microvm(GArray *table_data, BIOSLinker *linker,
+>       build_ged_aml(sb_scope, GED_DEVICE, x86ms->acpi_dev,
+>                     GED_MMIO_IRQ, AML_SYSTEM_MEMORY, GED_MMIO_BASE);
+>       acpi_dsdt_add_power_button(sb_scope);
+> +    acpi_dsdt_add_sleep_button(sb_scope);
+>       acpi_dsdt_add_virtio(sb_scope, mms);
+>       acpi_dsdt_add_xhci(sb_scope, mms);
+>       acpi_dsdt_add_pci(sb_scope, mms);
+>       aml_append(dsdt, sb_scope);
+>   
+>       /* ACPI 5.0: Table 7-209 System State Package */
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Should this be "Table 7-205"? Or even, why not:
+
+"ACPI 6.5, Table 7.11: System State Package" ?
 
 
 Cheers,
 Gustavo
+
+> +    scope = aml_scope("\\");
+> +    pkg = aml_package(4);
+> +    aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S3));
+> +    aml_append(pkg, aml_int(0)); /* ignored */
+> +    aml_append(pkg, aml_int(0)); /* reserved */
+> +    aml_append(pkg, aml_int(0)); /* reserved */
+> +    aml_append(scope, aml_name_decl("_S3", pkg));
+> +    aml_append(dsdt, scope);
+> +
+>       scope = aml_scope("\\");
+>       pkg = aml_package(4);
+>       aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S5));
+> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+> index d2dac87b4a..28c5785863 100644
+> --- a/include/hw/acpi/generic_event_device.h
+> +++ b/include/hw/acpi/generic_event_device.h
+> @@ -85,6 +85,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+>   #define ACPI_GED_SLP_TYP_POS       0x2   /* SLP_TYPx Bit Offset */
+>   #define ACPI_GED_SLP_TYP_MASK      0x07  /* SLP_TYPx 3-bit mask */
+>   #define ACPI_GED_SLP_TYP_S5        0x05  /* System _S5 State (Soft Off) */
+> +#define ACPI_GED_SLP_TYP_S3        0x03  /* System _S3 State (Sleeping State) */
+>   #define ACPI_GED_SLP_EN            0x20  /* SLP_EN write-only bit */
+>   
+>   #define GED_DEVICE      "GED"
+
 
