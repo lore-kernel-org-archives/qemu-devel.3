@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F7BC369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 23:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1B3C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 23:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Z7x-0006ui-RW; Thu, 17 Apr 2025 19:58:41 -0400
+	id 1u5Z8a-0007TC-4u; Thu, 17 Apr 2025 19:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z7t-0006rq-Dc
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:58:37 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z8V-0007Me-BA
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:59:15 -0400
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z7r-0003qK-Dx
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:58:37 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Z8T-00042o-2V
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 19:59:14 -0400
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cec5cd73bso10022445e9.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 16:58:34 -0700 (PDT)
+ 5b1f17b1804b1-43cf05f0c3eso10390545e9.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 16:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744934313; x=1745539113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744934351; x=1745539151; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SRLDxPi9DU57mRVzZF+y7gziW65NUViWJDX+QKf250M=;
- b=cA0XvlqF5DHk+8lbH2dqSM5tpqY862Rw+tr2NYeP9JbA726mmLm7rltZBlz78oWORc
- FtmR/2QkKaEHsV6k+EBSUWbpEwFcRaB/VZPfAMgAH0f9iLHO0zXNVBU486SOXgYVztAc
- ZF1xPwM+8cf9/G0MDuA/wOdahSB7ADrimOmTnW43KK9iIV9ta65fB/uP60imdlIUdgXd
- 8ItY3/xItVnsKd17sUcAuDwe0Xchy5bOR30tcKlzzqCH1KI/8CB7UVxGIUVCKxNYonyU
- fVFKrh2KG78lVrTlBgawRH3rGOtSCgj6x4uD4DK3esjC/uF7FZWrPiOexfmj+W12UHGM
- HZ1w==
+ bh=6spRcSY1vluyMm8JkI6J8jm+JdzV06eHRFB0YKd4AUg=;
+ b=d33UQDQU0v1l+Saya3wMYH1Mlf6YsXqvVdHFI6Ls3w6OGSM1c+JA4nckl0r7vx/jn4
+ Df0kAQg7oQKop89NoYXVGY50XQEIoQnKHWzW1ap7E4LPhqAeWTRhOrgQrX0m7xFX4ZFO
+ hf1tKrltAX/Nk8Kd8eS39HBRBvXeBv7ADXjEyDfCKFvPIa1apUiUlNAA3d9cNicwVlyT
+ qY+3sXakWOEvZtS4rYnJxfbdKQt3lPfxCbILcrEX7MYNyV2IaKXvOu+RtOxrUgIBf5gM
+ k1oboIZjsRWaN/8ZyXprW5gBHIoDoBzMTKSvpyYLbUhP9ZhtzDiU8+NAgGnAAxwAMPzk
+ joVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744934313; x=1745539113;
+ d=1e100.net; s=20230601; t=1744934351; x=1745539151;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SRLDxPi9DU57mRVzZF+y7gziW65NUViWJDX+QKf250M=;
- b=lld1NQ1ujW6Vt5Ip+bBDWS+Hsyq8jG8wN5tJCn0nVqPktkQdRlOCdRU4QrVrD+VVzm
- oTvi1KZwBJxD3Re6IQpo3u+DgqxU+At+3mXBzfvj/GsoQFtWQSW5v5f/3ncdeT++MEqy
- rY6KCha2pFM5ly5w3tmBgiJYGe4P++SBi9+cOrTV+3CxUU/G590GarB6n2W2MAsf6A5v
- D5toJqRG5qkBXSSTLpoO/SgBZm4Kr78Sme6g77CTB0VARGVHm/cDP9/pt7xENCctzgM5
- sT+qLd+l0eN6XFohSsXSXElX5EOfewyssmA97fb6+oznHcEmyIuy/CDEeFLh6y1Ukw4R
- Di2w==
-X-Gm-Message-State: AOJu0Yz+Xd2JOPTE03Ftz2Z70tkglV8+b+8nM18U+ORf9/N/N5PONUHO
- vtl6Y9ayz3toOB+364zj9n6ZdZ+DNFaThb8oduNgIMBB3wvdyAdWkUXWXEbKaNaUie6tBNBSP+h
- u
-X-Gm-Gg: ASbGncu7eADGJ8pGVVwrxNkIs7HRoU6Jt9pXx2I9uqJEdT45xWyQtfufA6Sjw+rl52S
- ebaRc6UXOIqQ5rZn7qkNIfl/EGSF+CFa1DtWBGSxRNMTZaPZFk434avhmj3QFqr+V9Uh+TW3/v3
- ubkbcCI5l052whjLJRvTMZRQ8P4EJzYnzyHHJzhVofzekB5UzV1oEh+Ch9/ewTUUhYi32kJslGT
- w5VKVQQ9i7q5I8nOsd05Gc9HjXlkzHVS09V+JELFsg+Snn8iSPrM3Bvep+oFU9CMjYUtyCPwn8m
- d9dHCOhX2tOUpIvZdDYh6FvF9MIhJkRgxPQFvMa6B7ZfMytADD2wocjmb/Irci2JYgK2skciWqb
- TGqQaNbzmJrCWXXYSPbqM
-X-Google-Smtp-Source: AGHT+IGKKy2SIDRzP04WyjOh3BhWjPpFSAcSXuJtLrFbpknZaGFDNC/3TDv4wMfnGWCKngZhmbLAaw==
-X-Received: by 2002:a05:600c:5107:b0:43d:fa58:700d with SMTP id
- 5b1f17b1804b1-4406ac2179dmr4288955e9.32.1744934313162; 
- Thu, 17 Apr 2025 16:58:33 -0700 (PDT)
+ bh=6spRcSY1vluyMm8JkI6J8jm+JdzV06eHRFB0YKd4AUg=;
+ b=cW2WCDNioZq7lDW61jVhdZrbr1NQlZV9ed+6dkauHExMzoyKNxMZrMRr4vIVubfaqd
+ Ch+mn4qo0pRCchu+6/7ECOBA0WEyZydzxMXkin2qW5+kFEguYauhjmXF9hNFpIHdZcUA
+ hrpqA/jLYGfgJdx4ult98wEEanACiiWDHJ/nHdtCKvpbhE8XPikGH/rdlrUxmGJp0hVk
+ Fs1upuqiy62xFg1aJSGe1/j4LKGR1UpJVb4ZnEu8jYAwkC2pL5CvC5AyA0uqYrT6R0Wj
+ hThT3MVEMq49jHxdFw2/O3AUCCv9Q5cNuHZxLFMDuS8Abk9yncJaJ7jlKknvFve8wSm+
+ XCqg==
+X-Gm-Message-State: AOJu0YzDiUCkIIO2JnCKlzZGCIZtitPH5VsWi8TrPpuXtQfg3KiQnWo2
+ ADFRE76lZCTtfOXFT/pn4aIQ8lQLkGIjORy+SXerIB+WuFYK7qxyNBj4Dbf9b5lx2J7R9SJzk6f
+ 2
+X-Gm-Gg: ASbGnctHL/UYgZNYLyw3PE5/DBgbHQYr7Uk7scyGrPMHQ8hDj8YvGhyVrB5dBzLZJ4U
+ 5zo36bD1oM1SyvDbSQlLmANKcQ5TKzNwr8cr7e265/YpozMSToHVN1Vn4aWCtY+MGtML+o/TW+T
+ l1bhjFqw5lWSpzR8r48H/ydvR2LyamWr2/HNJX80JSVcP9uSITl2RsfhMETf6zzfWpv7Ka4U77a
+ 7i/yTRGE+xbH9+E4JPj2mpGCqoVUo5qPJbZiAo6Q08NF0JtA6Fyvqmn+OKZi0UxE2nSHnWKe5yj
+ PSf/WdX5Pn1YD3BZdfP5crpyqW0xu0Ns/yxZwJfjcfbGnPkz3eHpjQDmzKz7jfMvhY+l2zgv++f
+ QdQ6ffcd/11NiRpivzTIG
+X-Google-Smtp-Source: AGHT+IGJeRSpkTsSNEDUftBbkBg4fMh73cBtzlZDtJDGc8SWPjwMCT5TM8xa4tl4Jz3a4gv0QwhstA==
+X-Received: by 2002:a05:600c:4688:b0:434:fa55:eb56 with SMTP id
+ 5b1f17b1804b1-4406ab7fa86mr4705495e9.7.1744934351390; 
+ Thu, 17 Apr 2025 16:59:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5d712esm907335e9.36.2025.04.17.16.58.31
+ ffacd0b85a97d-39efa493145sm1047120f8f.71.2025.04.17.16.59.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 17 Apr 2025 16:58:32 -0700 (PDT)
+ Thu, 17 Apr 2025 16:59:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Andrey Smirnov <andrew.smirnov@gmail.com>,
@@ -81,9 +81,9 @@ Cc: Andrey Smirnov <andrew.smirnov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH 03/11] hw/arm/cubieboard: Define machine as generic QOM type
-Date: Fri, 18 Apr 2025 01:58:06 +0200
-Message-ID: <20250417235814.98677-4-philmd@linaro.org>
+Subject: [PATCH 10/11] hw/arm/orangepi: Define machine as generic QOM type
+Date: Fri, 18 Apr 2025 01:58:13 +0200
+Message-ID: <20250417235814.98677-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250417235814.98677-1-philmd@linaro.org>
 References: <20250417235814.98677-1-philmd@linaro.org>
@@ -121,42 +121,42 @@ register interfaces.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/cubieboard.c | 13 +++++++++++--
+ hw/arm/orangepi.c | 13 +++++++++++--
  1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
-index d665d4edd97..36062ac7037 100644
---- a/hw/arm/cubieboard.c
-+++ b/hw/arm/cubieboard.c
-@@ -106,12 +106,13 @@ static void cubieboard_init(MachineState *machine)
-     arm_load_kernel(&a10->cpu, machine, &cubieboard_binfo);
+diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
+index e0956880d11..6821033bfd7 100644
+--- a/hw/arm/orangepi.c
++++ b/hw/arm/orangepi.c
+@@ -103,12 +103,13 @@ static void orangepi_init(MachineState *machine)
+     arm_load_kernel(&h3->cpus[0], machine, &orangepi_binfo);
  }
  
--static void cubieboard_machine_init(MachineClass *mc)
-+static void cubieboard_machine_class_init(ObjectClass *oc, void *data)
+-static void orangepi_machine_init(MachineClass *mc)
++static void orangepi_machine_class_init(ObjectClass *oc, void *data)
  {
      static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a8"),
+         ARM_CPU_TYPE_NAME("cortex-a7"),
          NULL
      };
 +    MachineClass *mc = MACHINE_CLASS(oc);
  
-     mc->desc = "cubietech cubieboard (Cortex-A8)";
-     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a8");
-@@ -125,4 +126,12 @@ static void cubieboard_machine_init(MachineClass *mc)
+     mc->desc = "Orange Pi PC (Cortex-A7)";
+     mc->init = orangepi_init;
+@@ -124,4 +125,12 @@ static void orangepi_machine_init(MachineClass *mc)
      mc->auto_create_sdcard = true;
  }
  
--DEFINE_MACHINE("cubieboard", cubieboard_machine_init)
-+static const TypeInfo cubieboard_machine_types[] = {
+-DEFINE_MACHINE("orangepi-pc", orangepi_machine_init)
++static const TypeInfo orangepi_machine_types[] = {
 +    {
-+        .name           = MACHINE_TYPE_NAME("cubieboard"),
++        .name           = MACHINE_TYPE_NAME("orangepi-pc"),
 +        .parent         = TYPE_MACHINE,
-+        .class_init     = cubieboard_machine_class_init,
++        .class_init     = orangepi_machine_class_init,
 +    },
 +};
 +
-+DEFINE_TYPES(cubieboard_machine_types)
++DEFINE_TYPES(orangepi_machine_types)
 -- 
 2.47.1
 
