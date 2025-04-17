@@ -4,74 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B006BC369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5014FC369B2
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 11:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5NOq-0000PI-U1; Thu, 17 Apr 2025 07:27:20 -0400
+	id 1u5NPA-0000Z8-6Q; Thu, 17 Apr 2025 07:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u5NOi-0000Ni-RG
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:27:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u5NOf-0001Jd-5Q
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:27:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744889226;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=nAYNIhnLHSpyV95FsSHirP9NS7+HCHVtCQEikZ7wWJM=;
- b=JLtw8QDtvvkrvqXW/319qh/euUjC2Up91iic6g9777wbIGwp4ByylSYRCtSLevxMml+fKF
- MR0yNzzpJBgPsqz9hVUiIANBH0FOAXQ2SCpp6qXgBMH4tC1iCX9l8Gv8tRB8+aLjAIZDGP
- KlTFXZnq9r2mb8jE8OcYatQiVjZVB6Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-XWtIU-LrOqyLuhRPYhg6XA-1; Thu,
- 17 Apr 2025 07:27:05 -0400
-X-MC-Unique: XWtIU-LrOqyLuhRPYhg6XA-1
-X-Mimecast-MFC-AGG-ID: XWtIU-LrOqyLuhRPYhg6XA_1744889224
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <lma@suse.de>) id 1u5NP3-0000Xo-KY
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:27:33 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lma@suse.de>) id 1u5NP1-0001MN-Ey
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 07:27:33 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C02771955D86; Thu, 17 Apr 2025 11:27:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.151])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A9C3A1800D9F; Thu, 17 Apr 2025 11:27:01 +0000 (UTC)
-Date: Thu, 17 Apr 2025 12:26:57 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v5 2/2] tests/functional: add memlock tests
-Message-ID: <aADlgWm8Z6yHiO0H@redhat.com>
-References: <20250417111321.167008-1-dtalexundeer@yandex-team.ru>
- <20250417111321.167008-3-dtalexundeer@yandex-team.ru>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4DDFB210EF;
+ Thu, 17 Apr 2025 11:27:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744889246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7/bERUS4SNR3lEwxdvbVcVGq7EGLXbYsrobVjHcbBmc=;
+ b=BzhfJURWyYFL8aChP4b/qQTbwzmmFaYTZz1h/SfKJGkMQWO6LNkPuTJem8Gfpj9dAktb6O
+ c1QsQrjJ3Cm23o5DtLArOmNeob+WsYCXafH0j2g/cki782Jss7E6XCUl3qB5MmJ0KaXXTp
+ xgxF3Zb5xd3HQZy9LO5aDGaTi0bI1L4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744889246;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7/bERUS4SNR3lEwxdvbVcVGq7EGLXbYsrobVjHcbBmc=;
+ b=8//JY3uhWT2HmYmz+bD1gv+Z03j7iXQ/dtHo5Ef0xRym5uvAApDJEcbyG+0sdI+KbI9r6g
+ G3aQSs75wnOiD/Cg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BzhfJURW;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="8//JY3uh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1744889246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7/bERUS4SNR3lEwxdvbVcVGq7EGLXbYsrobVjHcbBmc=;
+ b=BzhfJURWyYFL8aChP4b/qQTbwzmmFaYTZz1h/SfKJGkMQWO6LNkPuTJem8Gfpj9dAktb6O
+ c1QsQrjJ3Cm23o5DtLArOmNeob+WsYCXafH0j2g/cki782Jss7E6XCUl3qB5MmJ0KaXXTp
+ xgxF3Zb5xd3HQZy9LO5aDGaTi0bI1L4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1744889246;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7/bERUS4SNR3lEwxdvbVcVGq7EGLXbYsrobVjHcbBmc=;
+ b=8//JY3uhWT2HmYmz+bD1gv+Z03j7iXQ/dtHo5Ef0xRym5uvAApDJEcbyG+0sdI+KbI9r6g
+ G3aQSs75wnOiD/Cg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4700C1388F;
+ Thu, 17 Apr 2025 11:27:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 7rE+EZ7lAGg4HAAAD6G6ig
+ (envelope-from <lma@suse.de>); Thu, 17 Apr 2025 11:27:26 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250417111321.167008-3-dtalexundeer@yandex-team.ru>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Thu, 17 Apr 2025 19:27:26 +0800
+From: lma <lma@suse.de>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, stefanha@redhat.com
+Subject: A question about how to calculate the "Maximum transfer length" in
+ case of its absence in the Block Limits VPD device response from the hardware
+User-Agent: Roundcube Webmail
+Message-ID: <20db3af2ece22f598b54a47ec350b466@suse.de>
+X-Sender: lma@suse.de
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4DDFB210EF
+X-Spamd-Result: default: False [-4.49 / 50.00]; BAYES_HAM(-2.99)[99.95%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; XM_UA_NO_VERSION(0.01)[];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ ARC_NA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_NONE(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=lma@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,163 +123,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 17, 2025 at 04:13:21PM +0500, Alexandr Moshkov wrote:
-> Add new tests to check the correctness of the `-overcommit memlock`
-> option (possible values: off, on, on-fault) by using
-> `/proc/{qemu_pid}/smaps` file to check in Size, Rss and Locked fields of
-> anonymous segments:
-> 
-> * if `memlock=off`, then Locked = 0 on every anonymous smaps;
-> * if `memlock=on`, then Size, Rss and Locked values must be equal for
-> every anon smaps where Rss is not 0;
-> * if `memlock=on-fault`, then Rss and Locked must be equal on every anon
-> smaps and anonymous segment with Rss < Size must exists.
-> 
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> ---
->  tests/functional/meson.build     |   1 +
->  tests/functional/test_memlock.py | 102 +++++++++++++++++++++++++++++++
->  2 files changed, 103 insertions(+)
->  create mode 100755 tests/functional/test_memlock.py
-> 
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 0f8be30fe2..339af7835f 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -61,6 +61,7 @@ tests_generic_system = [
->    'empty_cpu_model',
->    'info_usernet',
->    'version',
-> +  'memlock',
->  ]
->  
->  tests_generic_linuxuser = [
-> diff --git a/tests/functional/test_memlock.py b/tests/functional/test_memlock.py
-> new file mode 100755
-> index 0000000000..b62f12a715
-> --- /dev/null
-> +++ b/tests/functional/test_memlock.py
-> @@ -0,0 +1,102 @@
+Hi all,
 
-Forgot to say last time this also needs
+In case of SCSI passthrough, If the Block Limits VPD device response is 
+absent from hardware, QEMU handles it.
 
-  #!/usr/bin/env python3
+There are several variables involved in this process as follows:
+* The bl.max_transfer
+* The bl.max_iov that is associated with IOV_MAX.
+* The bl.max_hw_iov that is associated with the max_segments sysfs 
+setting for the relevant block device on the host.
+* The bl.max_hw_transfer that is associated with the BLKSECTGET ioctl, 
+in other words related to the current max_sectors_kb sysfs setting of 
+the relevant block device on the host.
 
-> +# Functional test that check overcommit memlock options
-> +#
-> +# Copyright (c) Yandex Technologies LLC, 2025
-> +#
-> +# Author:
-> +#  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> +#
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-> +
-> +import re
-> +
-> +from typing import List, Dict
-> +
-> +from qemu_test import QemuSystemTest
-> +from qemu_test import skipLockedMemoryTest
-> +
-> +
-> +SMAPS_HEADER_PATTERN = re.compile(r'^\w+-\w+', re.MULTILINE)
-> +SMAPS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
-> +
-> +
-> +@skipLockedMemoryTest(2_097_152)  # 2GB
-> +class MemlockTest(QemuSystemTest):
-> +    """
-> +    Boots a Linux system with memlock options.
-> +    Then verify, that this options is working correctly
-> +    by checking the smaps of the QEMU proccess.
-> +    """
-> +
-> +    def common_vm_setup_with_memlock(self, memlock):
-> +        self.vm.add_args('-overcommit', f'mem-lock={memlock}')
-> +        self.vm.launch()
-> +
-> +    def get_anon_smaps_by_pid(self, pid):
-> +        smaps_raw = self._get_raw_smaps_by_pid(pid)
-> +        return self._parse_anonymous_smaps(smaps_raw)
-> +
-> +    def test_memlock_off(self):
-> +        self.common_vm_setup_with_memlock('off')
-> +
-> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-> +
-> +        # locked = 0 on every smap
-> +        for smap in anon_smaps:
-> +            self.assertEqual(smap['Locked'], 0)
-> +
-> +    def test_memlock_on(self):
-> +        self.common_vm_setup_with_memlock('on')
-> +
-> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-> +
-> +        # size = rss = locked on every smap where rss not 0
-> +        for smap in anon_smaps:
-> +            if smap['Rss'] == 0:
-> +                continue
-> +            self.assertTrue(smap['Size'] == smap['Rss'] == smap['Locked'])
-> +
-> +    def test_memlock_onfault(self):
-> +        self.common_vm_setup_with_memlock('on-fault')
-> +
-> +        anon_smaps = self.get_anon_smaps_by_pid(self.vm.get_pid())
-> +
-> +        # rss = locked on every smap and segment with rss < size exists
-> +        exists = False
-> +        for smap in anon_smaps:
-> +            self.assertTrue(smap['Rss'] == smap['Locked'])
-> +            if smap['Rss'] < smap['Size']:
-> +                exists = True
-> +        self.assertTrue(exists)
-> +
-> +    def _parse_anonymous_smaps(self, smaps_raw: str) -> List[Dict[str, int]]:
-> +        result_segments = []
-> +        current_segment = {}
-> +        is_anonymous = False
-> +
-> +        for line in smaps_raw.split('\n'):
-> +            if SMAPS_HEADER_PATTERN.match(line):
-> +                if current_segment and is_anonymous:
-> +                    result_segments.append(current_segment)
-> +                current_segment = {}
-> +                # anonymous segment header looks like this:
-> +                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052
-> +                # and non anonymous header looks like this:
-> +                # 7f3b8d3f0000-7f3b8d3f3000 rw-s 00000000 00:0f 1052   [stack]
-> +                is_anonymous = len(line.split()) == 5
-> +            elif m := SMAPS_VALUE_PATTERN.match(line):
-> +                current_segment[m.group(1)] = int(m.group(2))
-> +
-> +        if current_segment and is_anonymous:
-> +            result_segments.append(current_segment)
-> +
-> +        return result_segments
-> +
-> +    def _get_raw_smaps_by_pid(self, pid: int) -> str:
-> +        with open(f'/proc/{pid}/smaps', 'r') as f:
-> +            return f.read()
-> +
-> +
-> +if __name__ == '__main__':
-> +    MemlockTest.main()
-> -- 
-> 2.34.1
-> 
+Then take the smallest value and return it as the result of "Maximum 
+transfer length" after relevant calculation, See:
+static uint64_t calculate_max_transfer(SCSIDevice *s)
+{
+     uint64_t max_transfer = blk_get_max_hw_transfer(s->conf.blk);
+     uint32_t max_iov = blk_get_max_hw_iov(s->conf.blk);
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+     assert(max_transfer);
+     max_transfer = MIN_NON_ZERO(max_transfer,
+                                 max_iov * qemu_real_host_page_size());
 
+     return max_transfer / s->blocksize;
+}
+
+
+However, due to the limitation of IOV_MAX, no matter how powerful the 
+host scsi hardware is, the "Maximum transfer length" that qemu emulates 
+in bl vpd page is capped at 8192 sectors in case of 4kb page size and 
+512 bytes logical block size.
+For example：
+host:~ # sg_vpd -p bl /dev/sda
+Block limits VPD page (SBC)
+   ......
+   Maximum transfer length: 0 blocks [not reported]
+   ......
+
+
+host:~ # cat /sys/class/block/sda/queue/max_sectors_kb
+16384
+
+host:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
+32767
+
+host:~ # cat /sys/class/block/sda/queue/max_segments
+4096
+
+
+Expected:
+guest:~ # sg_vpd -p bl /dev/sda
+Block limits VPD page (SBC)
+   ......
+   Maximum transfer length: 0x8000
+   ......
+
+guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
+16384
+
+guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
+32767
+
+
+Actual:
+guest:~ # sg_vpd -p bl /dev/sda
+Block limits VPD page (SBC)
+   ......
+   Maximum transfer length: 0x2000
+   ......
+
+guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
+4096
+
+guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
+32767
+
+
+It seems the current design logic is not able to fully utilize the 
+performance of the scsi hardware. I have two questions:
+1. I'm curious that is it reasonable to drop the logic about IOV_MAX 
+limitation, directly use the return value of BLKSECTGET as the maximum 
+transfer length when QEMU emulates the block limit page of scsi vpd?
+    If we doing so, we will have maximum transfer length in the guest 
+that is consistent with the capabilities of the host hardware。
+
+2. Besides, Assume I set a value(eg: 8192 in kb) to max_sectors_kb in 
+guest which doesn't exceed the capabilities of the host hardware(eg: 
+16384 in kb) but exceeds the limit(eg: 4096 in kb) caused by IOV_MAX,
+    Any risks in readv()/writev() of raw-posix?
+
+Lin
 
