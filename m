@@ -4,65 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF68FC369B2
-	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFECBC369C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 17 Apr 2025 09:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5LGw-0003SL-KT; Thu, 17 Apr 2025 05:11:02 -0400
+	id 1u5LO2-0004nE-40; Thu, 17 Apr 2025 05:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1u5LGu-0003Rx-HE
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:11:00 -0400
-Received: from smtp.eurecom.fr ([193.55.113.210])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
- id 1u5LGs-0002NC-8L
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 05:11:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
- t=1744881058; x=1776417058;
- h=from:in-reply-to:references:date:cc:to:mime-version:
- message-id:subject:content-transfer-encoding;
- bh=Pbbsn3Z4DnHy/E/r/MQqrn7EsNpRyoqOCAb9iFq3mHs=;
- b=PIYjhQaIA1OkxZVb/rJfloiXPfRcO2/euL6TEAzZga0Pnw8vQLxsD96U
- QZAcUY+6WXACB8mr98i04fDAYFkHO5mW1qp7LDkKH10x4i+mqknysKrTD
- c1E/0ob5EjzBgl4UaRBcJITDJkwa7TY3bWA9kE3XXgMB4vitM0DA0VPKy w=;
-X-CSE-ConnectionGUID: dGqiBrh6SQW0IUsFtpnILw==
-X-CSE-MsgGUID: 3v08MM1ZSe+90IbdQOhldQ==
-X-IronPort-AV: E=Sophos;i="6.15,218,1739833200"; 
-   d="scan'208";a="894647"
-Received: from quovadis.eurecom.fr ([10.3.2.233])
- by drago1i.eurecom.fr with ESMTP; 17 Apr 2025 11:10:53 +0200
-From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
-In-Reply-To: <87plhdfs9o.fsf@suse.de>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 193.55.114.5
-References: <20250327141451.163744-3-Marco.Cavenati@eurecom.fr>
- <87jz7rhjzq.fsf@suse.de> <4caa0-67f8d780-a89-60718600@156698708>
- <87ecxyhon3.fsf@suse.de> <7cd3c-67fe3180-3d9-10622a60@195384178>
- <87plhdfs9o.fsf@suse.de>
-Date: Thu, 17 Apr 2025 11:10:53 +0200
-Cc: "Peter Xu" <peterx@redhat.com>, qemu-devel@nongnu.org,
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "Prasad Pandit" <ppandit@redhat.com>
-To: "Fabiano Rosas" <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u5LO0-0004mj-1l; Thu, 17 Apr 2025 05:18:20 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u5LNy-0003RS-0z; Thu, 17 Apr 2025 05:18:19 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b0b2ce7cc81so434991a12.3; 
+ Thu, 17 Apr 2025 02:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1744881495; x=1745486295; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1WLBjPWfsO4BXL0OvQ1i5sHakJ1+UaHlRH3KudpiBG4=;
+ b=kcT+zhCyaS91vmnac6UbHZuuzvu5zufaMhD0KG/NthFu9WMuqDEVwtAgnZwKcwhFnt
+ LtzYEAtxhyFhcjTbuVi1njfuhcFixZckLYwundq3zIXCCPHgZ+ImA30gOtvAU55U61eH
+ iJNnX8GUbZHrJGDkD1My35ooZc9UoEGl0S5kfdld3CCxs9CE16PiRv//pbf0AumYh9FW
+ T6irEpDEos0DSOK0UDBSKrAI9sP8JjmHTHDUj3yl5XlLil4012sFdSeaQQtqLAHrcp4p
+ 2/BLwD0FtF6AUlLUo+66BNl5WH1YRRyOi3B1m7bxQJH2eypIleJl7q1tL9rSTjK4EeLz
+ 4CDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1744881495; x=1745486295;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1WLBjPWfsO4BXL0OvQ1i5sHakJ1+UaHlRH3KudpiBG4=;
+ b=eoZ1Wk6B3yI2ZABY9ieOraLXuS3ogWtoaawaneaaCI0EC/U9x2QPstBASHItUXmYn4
+ X37UPJO+BpkCWmz/j8IJ7Cqgy4MWgkOSGt8RiBFxemf+0VFEU3qZnu+JDmdswv7erEOw
+ Gz1bn34Vn7vEMnHBtxeoUWOMYRVhW1vsBRQtpL/6z0sOLi947lMscVPn3Enf+j4XqxHn
+ P2qZRBWf5lW0AR3/be1vFf2oYiiYqeVQ8o+lzoZGtR+h9KQ8rG+RhTN1ihfeO9vBFOcX
+ B0b5grcLzpIovYlSuLr24d4MAvOvZNBVZqX5LxXh+0Gy0Dv94Wk0mDJIpPSPtMXwxtSX
+ 8r9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPN8sv37u/lmmTSI/u/2HPSEs3PBAV7LJb+DHvM8wkrRSvKSRaWiAmLRkdpm7/mwv31FucWOVivQ==@nongnu.org,
+ AJvYcCUSMtLGPf2GOkfckbX454b2HXtC1RDW/G9P6xUApjWsoIrT2V/xuYYmghaJKauvlpG/5A/lLs03sHtx6Q==@nongnu.org,
+ AJvYcCVVF/yBKfY0RkqEjEIy1C1/rD3hYZV2/cea0nrASycO+wg8klBv9yLe+tLlsimYfbYlG8cd5LKuo2O/5A==@nongnu.org,
+ AJvYcCX/lBZJmDbPuvuHsaavAy66yyvFGrxvMJc0fAsx3RZHMUi9z/1WgQ3Uuaa/IRbmDvheTLzjDXwLo7g=@nongnu.org,
+ AJvYcCXrT+hCq5XQox2AadmNcjyEd2stifOa/HqzbSXJgsnlZbRZWw55xWOQgHOXLD96A+0hmyqfGqVLvl5sHw==@nongnu.org
+X-Gm-Message-State: AOJu0YwZDZ4gtlp/kRhZZddGiMS7NlpoQiQXqSVVRgTVqjV158lG7aNm
+ t8hUCeuYj5yYU6okQpfmB+16c+Gi2f39zRQBkfVQbeK0wvmy/JXqw2U1wRcmMMQd71r8NwME4iu
+ vaOWR7KvVMUUcpCLeZxBrmEWHqEo=
+X-Gm-Gg: ASbGncvURTWPcOZlKRki9NRMXyudjPxk03sB/O9TlV/UKuo4ncCHSY9c7HHA7WI0ib9
+ 82CwO36BWgvVkYcUJEqsCp5+fZeH05ECZjdPlrdizJQrvNivQTcsTjXVMT42q2rVWGPYecOTCxb
+ GAKlD+oyuWu2sBk/I45hz151f9QgPSSoQba+7HaTs2dzkd/8Rbmmqc
+X-Google-Smtp-Source: AGHT+IF4Rj1T9/KMNZqxohi5RwAbiBoQGmz+hSuqGgEUXQj0HsnRboEYQra1EsTT3emQLFpOZXah8k1AtyHzy5DAlg8=
+X-Received: by 2002:a17:90a:e70b:b0:2fc:3264:3657 with SMTP id
+ 98e67ed59e1d1-30863c54ae3mr8816800a91.0.1744881494943; Thu, 17 Apr 2025
+ 02:18:14 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <7cd3c-6800c580-4b5-10622a60@195456151>
-Subject: =?utf-8?q?Re=3A?= [PATCH] =?utf-8?q?migration=3A?= add 
- =?utf-8?q?FEATURE=5FSEEKABLE?= to QIOChannelBlock
-User-Agent: SOGoMail 5.12.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=193.55.113.210;
- envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
+References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
+ <44e9ef95ea6e8aa33560ca8580db0033623f0e91.1744787186.git.ktokunaga.mail@gmail.com>
+ <Z_9qIQhjsI5zOwXA@redhat.com>
+ <CABgObfaj0ycyc2jVSJEVvQJ1m+uLf=_HYiOafn2MECgU36aspw@mail.gmail.com>
+ <Z_90aqNE74sonn8O@redhat.com>
+ <CABgObfaNAEsRQrr8O8fpuGGoQHq14Q_niBnQf1Yj4iD33a0LVA@mail.gmail.com>
+In-Reply-To: <CABgObfaNAEsRQrr8O8fpuGGoQHq14Q_niBnQf1Yj4iD33a0LVA@mail.gmail.com>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Thu, 17 Apr 2025 18:18:03 +0900
+X-Gm-Features: ATxdqUHgp2h8Pj8TyRxXfyhh8WPCb-zjOPqcUlZcrXo0tsUUQI1ADOBE82KIVwY
+Message-ID: <CAEDrbUb0G=12Gt50sV+mM3gw_MbXpKwy-F0pXs1rAzdUoU3qKg@mail.gmail.com>
+Subject: Re: [PATCH 01/19] hw/core/loader.c: Fix type conflict of GLib
+ function pointers
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>, 
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Hildenbrand <david@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>, 
+ qemu-arm <qemu-arm@nongnu.org>, 
+ "zmta06.collab.prod.int.phx2.redhat.com, list@suse.de" <qemu-ppc@nongnu.org>,
+ qemu-s390x <qemu-s390x@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000ae74880632f5e1d2"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,90 +123,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, April 15, 2025 15:50 CEST, Fabiano Rosas <farosas@suse.de> =
-wrote:
+--000000000000ae74880632f5e1d2
+Content-Type: text/plain; charset="UTF-8"
 
-> > So, I see your point on performance, but I'm not fully comfortable
-> > with the difference in zero page handling between mapped-ram on
-> > and mapped-ram off. In the former case zero pages are skipped, whil=
-e
-> > in the latter they are explicitly zeroed.
-> > Enabling mapped-ram has the implicit effect to also skip zero-pages=
-.
-> > I think it is an optimization not really bound to mapped-ram and it
-> > could be better to have this feature external to mapped-ram, enable=
-d
-> > when the destination ram is known to be already zeroed (also for
-> > mapped-ram off ideally).
->=20
-> From a design perspective that makes sense. The only use case current=
-ly
-> would be mapped-ram =5Fmigration=5F (as opposed to snapshot) because
-> non-mapped-ram migration is usually done live. The stream of pages wi=
-ll
-> potentially have several versions of the same page, therefore we need=
- to
-> clear it when it's a zero page.
+Hi Daniel, Paolo and Thomas,
 
-It might be a niche use case (and maybe I'm the only one still using
-plain old QEMU snapshots) but, also the cli option `-loadvm file` might
-benefit from skipping 0 pages: snapshots are taken with the VM stopped
-and the `-loadvm file` acts on a clean ram.
+> > > I suggested this solution to Kohei because it's easy to check that
+we're
+> > > converting all users and not introducing new ones in the future (see
+> > > poisoning in patch 10).
+> >
+> > It is easy to check this /one/ example, but this pattern of bad casts
+> > is typical in glib with likely many more examples, so avoidance in this
+> > way does not feel like a sustainable long term strategy to me.
+>
+> If you refer to the general case of function casting then yes, I agree
+that there could be other problems in the future but that would have to be
+solved in glib.
+>
+> However QEMU's use of glib is overall relatively limited and for now this
+seems to be the only case we hit. What this patch is doing is both
+effective at solving the immediate issue, and future proof.
 
-> We'd benefit from a separate "don't load zero pages" option only when
-> the VM is guaranteed to be stopped and more importantly, not allowed =
-to
-> be unstopped. This is the tricky part. We have experimented with and
-> dropped the idea of detecting a stopped-vm-migration for mapped-ram (=
-the
-> idea back then was not to do better zero page handling, but skip dirt=
-y
-> tracking altogether).
->=20
-> Since we're dealing with snapshots here, which are asynchronous, I'm
-> wondering wheter it would make sense to extend the zero-page-detectio=
-n
-> option to the destination. Then we could bind the loadvm process to
-> zero-page-detection=3Dnone because I don't think we can safely ignore=
- them
-> anyway.
+The current patch addresses the cases we've encountered so far, and the
+poisoning will help catch the usage of them in future development.
 
-> > My overall goal is a hot-loadvm feature that currently lives in a f=
-ork
-> > downstream and has a long way before getting in a mergeable state :=
-)
->=20
-> Cool. Don't hesitate to send stuff our way, the sooner and more often=
- we
-> discuss this, the better the chances of getting it merged upstream.
->=20
-> Do you use libvirt at all? Mapped-ram support has been added to it in
-> the latest version. The original use-case for mapped-ram was quick
-> snapshot saving and loading after all. Libvirt does it in a way that
-> does not use savevm, which might be helpful.
+That said, it's worth continuing to explore a more robust solution. I've
+submitted an issue to the GLib repository to investigate a long-term fix[1].
 
-No, I don't use libvirt. Thanks for the hint, but in that case I guess
-libvirt would spawn a new "QEMU -incoming"  for each restore, and
-that would be too expensive.
+[1] https://gitlab.gnome.org/GNOME/glib/-/issues/3670
 
-> > In a nutshell, I'm using dirty page tracking to load from the snaps=
-hot
-> > only the pages that have been dirtied between two loadvm;
-> > mapped-ram is required to seek and read only the dirtied pages.
->=20
-> But then you'd have a bitmap of pages you could correlate with the
-> file=5Fbmap and force-load whatever pages you need. It doesn't seem l=
-ike
-> zero page handling would affect you too much in that case.
+--000000000000ae74880632f5e1d2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Perhaps I'm missing your point; if a page was zero in the snapshot
-and then gets dirtied, I need to zero it out. But yeah, the code will b=
-e
-different and for my specific use case I don't absolutely need
-mapped-ram snapshots restore to fully work.
+<div dir=3D"ltr">Hi Daniel, Paolo and Thomas,<br><br>&gt; &gt; &gt; I sugge=
+sted this solution to Kohei because it&#39;s easy to check that we&#39;re<b=
+r>&gt; &gt; &gt; converting all users and not introducing new ones in the f=
+uture (see<br>&gt; &gt; &gt; poisoning in patch 10).<br>&gt; &gt; <br>&gt; =
+&gt; It is easy to check this /one/ example, but this pattern of bad casts<=
+br>&gt; &gt; is typical in glib with likely many more examples, so avoidanc=
+e in this<br>&gt; &gt; way does not feel like a sustainable long term strat=
+egy to me.<br>&gt; <br>&gt; If you refer to the general case of function ca=
+sting then yes, I agree that there could be other problems in the future bu=
+t that would have to be solved in glib.<br>&gt; <br>&gt; However QEMU&#39;s=
+ use of glib is overall relatively limited and for now this seems to be the=
+ only case we hit. What this patch is doing is both effective at solving th=
+e immediate issue, and future proof.<br><br>The current patch addresses the=
+ cases we&#39;ve encountered so far, and the<br>poisoning will help catch t=
+he usage of them in future development.<br><br>That said, it&#39;s worth co=
+ntinuing to explore a more robust solution. I&#39;ve<br>submitted an issue =
+to the GLib repository to investigate a long-term fix[1].<br><br>[1] <a hre=
+f=3D"https://gitlab.gnome.org/GNOME/glib/-/issues/3670">https://gitlab.gnom=
+e.org/GNOME/glib/-/issues/3670</a><br><br><br></div>
 
-Thank you.
-Best,
-Marco
-
+--000000000000ae74880632f5e1d2--
 
