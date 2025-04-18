@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C39CC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB5DC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5jvc-0005ZB-BS; Fri, 18 Apr 2025 07:30:40 -0400
+	id 1u5jvK-0005Q9-U5; Fri, 18 Apr 2025 07:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u5jvT-0005WN-Sz
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:32 -0400
+ id 1u5jvI-0005N1-O4
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:20 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u5jvL-0005oZ-VP
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:31 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u5jv5-0005mh-Ri
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:20 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 3BD761C168C; Fri, 18 Apr 2025 13:29:58 +0200 (CEST)
+ id 3368F1C167C; Fri, 18 Apr 2025 13:29:58 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v3 9/9] h264: register shutdown notifiers,
- stop pipeline in destroy_encoder_context
-Date: Fri, 18 Apr 2025 13:29:53 +0200
-Message-Id: <20250418112953.1744442-10-dietmar@proxmox.com>
+Subject: [PATCH v3 3/9] vnc: h264: send additional frames after the display is
+ clean
+Date: Fri, 18 Apr 2025 13:29:47 +0200
+Message-Id: <20250418112953.1744442-4-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250418112953.1744442-1-dietmar@proxmox.com>
 References: <20250418112953.1744442-1-dietmar@proxmox.com>
@@ -59,125 +59,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some encoders can hang indefinetly (i.e. nvh264enc) if
-the pipeline is not stopped before it is destroyed
-(Observed on Debian bookworm).
+The H264 implementation only sends frames when it detects changes in
+the server's framebuffer. This leads to artifacts when there are no
+further changes, as the internal H264 encoder may still contain data.
+
+This patch modifies the code to send a few additional frames in such
+situations to flush the H264 encoder data.
 
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- ui/vnc-enc-h264.c | 50 ++++++++++++++++++++++++++++++++++++++---------
- ui/vnc.h          |  1 +
- 2 files changed, 42 insertions(+), 9 deletions(-)
+ ui/vnc.c | 25 ++++++++++++++++++++++++-
+ ui/vnc.h |  3 +++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-index 840674dbdb..9dbfba3a16 100644
---- a/ui/vnc-enc-h264.c
-+++ b/ui/vnc-enc-h264.c
-@@ -23,6 +23,8 @@
-  */
+diff --git a/ui/vnc.c b/ui/vnc.c
+index aed25b0183..badc7912c0 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3239,7 +3239,30 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     vnc_unlock_display(vd);
  
- #include "qemu/osdep.h"
-+#include "system/runstate.h"
-+
- #include "vnc.h"
- 
- #include <gst/gst.h>
-@@ -114,13 +116,33 @@ static GstElement *create_encoder(const char *encoder_name)
-     return encoder;
- }
- 
--static void destroy_encoder_context(VncState *vs)
-+static void destroy_encoder_context(VncH264 *h264)
- {
--    gst_clear_object(&vs->h264->source);
--    gst_clear_object(&vs->h264->convert);
--    gst_clear_object(&vs->h264->gst_encoder);
--    gst_clear_object(&vs->h264->sink);
--    gst_clear_object(&vs->h264->pipeline);
-+    GstStateChangeReturn state_change_ret;
-+
-+    g_assert(h264 != NULL);
-+
-+    VNC_DEBUG("Destroy h264 context.\n");
-+
-+    /*
-+     * Some encoders can hang indefinetly (i.e. nvh264enc) if
-+     * the pipeline is not stopped before it is destroyed
-+     * (Observed on Debian bookworm).
-+     */
-+    if (h264->pipeline != NULL) {
-+        state_change_ret = gst_element_set_state(
-+            h264->pipeline, GST_STATE_NULL);
-+
-+        if (state_change_ret == GST_STATE_CHANGE_FAILURE) {
-+            VNC_DEBUG("Unable to stop the GST pipeline\n");
+     QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
+-        rects += vnc_update_client(vs, has_dirty);
++        int client_dirty = has_dirty;
++        if (vs->h264) {
++            if (client_dirty) {
++                vs->h264->keep_dirty = VNC_H264_KEEP_DIRTY;
++            } else {
++                if (vs->h264->keep_dirty > 0) {
++                    client_dirty = 1;
++                    vs->h264->keep_dirty--;
++                }
++            }
 +        }
-+    }
 +
-+    gst_clear_object(&h264->source);
-+    gst_clear_object(&h264->convert);
-+    gst_clear_object(&h264->gst_encoder);
-+    gst_clear_object(&h264->sink);
-+    gst_clear_object(&h264->pipeline);
- }
- 
- static bool create_encoder_context(VncState *vs, int w, int h)
-@@ -132,7 +154,7 @@ static bool create_encoder_context(VncState *vs, int w, int h)
- 
-     if (vs->h264->sink) {
-         if (w != vs->h264->width || h != vs->h264->height) {
--            destroy_encoder_context(vs);
-+            destroy_encoder_context(vs->h264);
-         }
++        int count = vnc_update_client(vs, client_dirty);
++        rects += count;
++
++        if (vs->h264 && !count && vs->h264->keep_dirty) {
++            VncJob *job = vnc_job_new(vs);
++            int height = pixman_image_get_height(vd->server);
++            int width = pixman_image_get_width(vd->server);
++            vs->job_update = vs->update;
++            vs->update = VNC_STATE_UPDATE_NONE;
++            vnc_job_add_rect(job, 0, 0, width, height);
++            vnc_job_push(job);
++        }
+         /* vs might be free()ed here */
      }
  
-@@ -239,10 +261,16 @@ static bool create_encoder_context(VncState *vs, int w, int h)
-     return TRUE;
- 
-  error:
--    destroy_encoder_context(vs);
-+    destroy_encoder_context(vs->h264);
-     return FALSE;
- }
- 
-+static void shutdown_h264(Notifier *n, void *opaque)
-+{
-+    VncH264 *h264 =  container_of(n, VncH264, shutdown_notifier);
-+    destroy_encoder_context(h264);
-+}
-+
- bool vnc_h264_encoder_init(VncState *vs)
- {
-     char *encoder_name;
-@@ -259,6 +287,8 @@ bool vnc_h264_encoder_init(VncState *vs)
- 
-     vs->h264 = g_new0(VncH264, 1);
-     vs->h264->encoder_name = encoder_name;
-+    vs->h264->shutdown_notifier.notify = shutdown_h264;
-+    qemu_register_shutdown_notifier(&vs->h264->shutdown_notifier);
- 
-     VNC_DEBUG("Allow H264 using encoder '%s`\n", encoder_name);
- 
-@@ -362,7 +392,9 @@ void vnc_h264_clear(VncState *vs)
-         return;
-     }
- 
--    destroy_encoder_context(vs);
-+    notifier_remove(&vs->h264->shutdown_notifier);
-+
-+    destroy_encoder_context(vs->h264);
-     g_free(vs->h264->encoder_name);
- 
-     g_clear_pointer(&vs->h264, g_free);
 diff --git a/ui/vnc.h b/ui/vnc.h
-index 789b18806b..ea52085b19 100644
+index a0d336738d..a5ea134de8 100644
 --- a/ui/vnc.h
 +++ b/ui/vnc.h
-@@ -248,6 +248,7 @@ typedef struct VncH264 {
+@@ -236,10 +236,13 @@ typedef struct VncZywrle {
+ } VncZywrle;
+ 
+ #ifdef CONFIG_GSTREAMER
++/* Number of frames we send after the display is clean. */
++#define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
      size_t width;
      size_t height;
-     guint keep_dirty;
-+    Notifier shutdown_notifier;
++    guint keep_dirty;
  } VncH264;
  #endif
  
