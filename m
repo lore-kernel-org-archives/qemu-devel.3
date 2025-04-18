@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CB2C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED995C369CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:31:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5jvb-0005Y9-Gg; Fri, 18 Apr 2025 07:30:39 -0400
+	id 1u5jvT-0005Vg-Iq; Fri, 18 Apr 2025 07:30:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u5jvT-0005Vq-FI
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:31 -0400
+ id 1u5jvM-0005SB-12
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:28 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u5jvE-0005nc-Kb
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:29 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u5jv5-0005cv-7C
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:23 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 382811C1685; Fri, 18 Apr 2025 13:29:58 +0200 (CEST)
+ id 34DAF1C167F; Fri, 18 Apr 2025 13:29:58 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v3 6/9] h264: add hardware encoders
-Date: Fri, 18 Apr 2025 13:29:50 +0200
-Message-Id: <20250418112953.1744442-7-dietmar@proxmox.com>
+Subject: [PATCH v3 4/9] h264: search for available h264 encoder
+Date: Fri, 18 Apr 2025 13:29:48 +0200
+Message-Id: <20250418112953.1744442-5-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250418112953.1744442-1-dietmar@proxmox.com>
 References: <20250418112953.1744442-1-dietmar@proxmox.com>
@@ -58,57 +58,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The search list is currently hardcoded to: ["x264enc", "openh264enc"]
+
+x264enc: is probably the best available software encoder
+openh264enc: lower quality, but available on more systems.
+
+We restrict encoders to a known list because each encoder requires
+fine tuning to get reasonable/usable results.
+
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- ui/vnc-enc-h264.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ ui/vnc-enc-h264.c | 89 +++++++++++++++++++++++++++++++++++++++--------
+ ui/vnc.h          |  1 +
+ 2 files changed, 75 insertions(+), 15 deletions(-)
 
 diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-index 0f89cafbf6..840674dbdb 100644
+index 3abe6a1528..047f4a3128 100644
 --- a/ui/vnc-enc-h264.c
 +++ b/ui/vnc-enc-h264.c
-@@ -29,15 +29,17 @@
+@@ -27,6 +27,68 @@
  
- static char *get_available_encoder(const char *encoder_list)
- {
-+    char *ret = NULL;
-+    char **encoder_array = NULL;
+ #include <gst/gst.h>
+ 
++const char *encoder_list[] = { "x264enc", "openh264enc", NULL };
 +
-     g_assert(encoder_list != NULL);
- 
-     if (!strcmp(encoder_list, "")) {
-         /* use default list */
--        encoder_list = "x264enc openh264enc";
-+        encoder_list = "nvh264enc vaapih264enc x264enc openh264enc";
-     }
- 
--    char *ret = NULL;
--    char **encoder_array = g_strsplit(encoder_list, " ", -1);
-+    encoder_array = g_strsplit(encoder_list, " ", -1);
- 
-     int i = 0;
-     do {
-@@ -69,7 +71,19 @@ static GstElement *create_encoder(const char *encoder_name)
-         return NULL;
-     }
- 
--    if (!strcmp(encoder_name, "x264enc")) {
-+    if (!strcmp(encoder_name, "nvh264enc")) {
++static const char *get_available_encoder(void)
++{
++    int i = 0;
++    do {
++        const char *encoder_name = encoder_list[i];
++        if (encoder_name == NULL) {
++            break;
++        }
++        GstElement *element = gst_element_factory_make(
++            encoder_name, "video-encoder");
++        if (element != NULL) {
++            gst_object_unref(element);
++            return encoder_name;
++        }
++        i = i + 1;
++    } while (true);
++
++    return NULL;
++}
++
++static GstElement *create_encoder(const char *encoder_name)
++{
++    GstElement *encoder = gst_element_factory_make(
++        encoder_name, "video-encoder");
++    if (!encoder) {
++        VNC_DEBUG("Could not create gst '%s' video encoder\n", encoder_name);
++        return NULL;
++    }
++
++    if (!strcmp(encoder_name, "x264enc")) {
 +        g_object_set(
 +            encoder,
-+            "preset", 8,         /* p1 - fastest */
-+            "multi-pass", 1,     /* multipass disabled */
-+            "tune", 2,           /* low latency */
-+            "zerolatency", true, /* low latency */
++            "tune", 4, /* zerolatency */
++            /*
++             * fix for zerolatency with novnc (without,
++             * noVNC displays green stripes)
++             */
++            "threads", 1,
++            "pass", 5, /* Constant Quality */
++            "quantizer", 26,
 +            /* avoid access unit delimiters (Nal Unit Type 9) - not required */
 +            "aud", false,
 +            NULL);
-+    } else if (!strcmp(encoder_name, "vaapih264enc")) {
-+        g_object_set(encoder, "tune", 1, NULL); /* high compression */
-+    } else if (!strcmp(encoder_name, "x264enc")) {
-         g_object_set(
-             encoder,
-             "tune", 4, /* zerolatency */
++    } else if (!strcmp(encoder_name, "openh264enc")) {
++        g_object_set(
++            encoder,
++            "usage-type", 1, /* screen content */
++            "complexity", 0, /* low, high speed */
++            "rate-control", 0, /* quality mode */
++            "qp-min", 20,
++            "qp-max", 27,
++            NULL);
++    } else {
++        VNC_DEBUG("Unknown H264 encoder name '%s' - not setting any properties",
++            encoder_name);
++    }
++
++    return encoder;
++}
++
+ static void destroy_encoder_context(VncState *vs)
+ {
+     gst_clear_object(&vs->h264->source);
+@@ -68,26 +130,12 @@ static bool create_encoder_context(VncState *vs, int w, int h)
+         goto error;
+     }
+ 
+-    vs->h264->gst_encoder = gst_element_factory_make("x264enc", "gst-encoder");
++    vs->h264->gst_encoder = create_encoder(vs->h264->encoder_name);
+     if (!vs->h264->gst_encoder) {
+         VNC_DEBUG("Could not create gst x264 encoder\n");
+         goto error;
+     }
+ 
+-    g_object_set(
+-        vs->h264->gst_encoder,
+-        "tune", 4, /* zerolatency */
+-        /*
+-         * fix for zerolatency with novnc (without, noVNC displays
+-         * green stripes)
+-         */
+-        "threads", 1,
+-        "pass", 5, /* Constant Quality */
+-        "quantizer", 26,
+-        /* avoid access unit delimiters (Nal Unit Type 9) - not required */
+-        "aud", false,
+-        NULL);
+-
+     vs->h264->sink = gst_element_factory_make("appsink", "sink");
+     if (!vs->h264->sink) {
+         VNC_DEBUG("Could not create gst sink\n");
+@@ -172,9 +220,20 @@ static bool create_encoder_context(VncState *vs, int w, int h)
+ 
+ bool vnc_h264_encoder_init(VncState *vs)
+ {
++    const char *encoder_name;
++
+     g_assert(vs->h264 == NULL);
+ 
++    encoder_name = get_available_encoder();
++    if (encoder_name == NULL) {
++        VNC_DEBUG("No H264 encoder available.\n");
++        return -1;
++    }
++
+     vs->h264 = g_new0(VncH264, 1);
++    vs->h264->encoder_name = encoder_name;
++
++    VNC_DEBUG("Allow H264 using encoder '%s`\n", encoder_name);
+ 
+     return true;
+ }
+diff --git a/ui/vnc.h b/ui/vnc.h
+index a5ea134de8..e97276349e 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -239,6 +239,7 @@ typedef struct VncZywrle {
+ /* Number of frames we send after the display is clean. */
+ #define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
++    const char *encoder_name;
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+     size_t width;
+     size_t height;
 -- 
 2.39.5
 
