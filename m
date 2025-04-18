@@ -4,63 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B9FC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 08:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0650EC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 08:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5hTS-0004SL-EQ; Fri, 18 Apr 2025 04:53:26 -0400
+	id 1u5hWH-0005NC-Ii; Fri, 18 Apr 2025 04:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u5hTP-0004RJ-GZ; Fri, 18 Apr 2025 04:53:23 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u5hWF-0005Md-3B
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 04:56:19 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u5hTN-0001NZ-22; Fri, 18 Apr 2025 04:53:23 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6C8FA55D21A;
- Fri, 18 Apr 2025 10:53:15 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id kjrGb1OLwGkb; Fri, 18 Apr 2025 10:53:13 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 745DA55C592; Fri, 18 Apr 2025 10:53:13 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7185F745682;
- Fri, 18 Apr 2025 10:53:13 +0200 (CEST)
-Date: Fri, 18 Apr 2025 10:53:13 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>, 
- Antony Pavlov <antonynpavlov@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Beniamino Galvani <b.galvani@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, 
- Felipe Balbi <balbi@kernel.org>, Bernhard Beschow <shentey@gmail.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
- Jan Kiszka <jan.kiszka@web.de>, Alistair Francis <alistair@alistair23.me>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
- Alexandre Iooss <erdnaxe@crans.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH 00/11] hw/arm: Define machines as generic QOM types
-In-Reply-To: <20250417235814.98677-1-philmd@linaro.org>
-Message-ID: <a302fb91-e2d8-ef36-ac53-5e460476c2d0@eik.bme.hu>
-References: <20250417235814.98677-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u5hWC-000215-4y
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 04:56:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1744966576; x=1776502576;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=XehJxbPdg0skVSErLYE1GcCJ+KIFga/7FMCMnsnkByA=;
+ b=MSA7USAv6dl6S/aoMSUYBFmzfARHl2jVqSUs2/FImqiWwsOACEa3G63H
+ aPP0TEUzxbiyG8vaEEwKzOaOdevmpin4wqcISxZazmOiaoKfq1UdwfK9R
+ dEw2iMUSDT+qMvQrN3Y9w9Gnu+lbj7yWum+3/yeiHYU2iixdqYeExmrSL
+ 5jK6Z8VGgMHZiIs2PtYFarIAN14ghrqSyGBzB3mwOiWBAp7rbWZMd+gu6
+ vI3EdkbxjMsRLzrnpJCvlaTuRe9bYMq3ucwPJciczuJ/WtB+NzE2P2Xgb
+ /YX0XlJ+2DzA5pQU1zhMiTpyKikTX6fI7Jmd8AqPz2BzVrwLRyFWmhZtR Q==;
+X-CSE-ConnectionGUID: tHPY5qLFRRmaUeWiWGfExw==
+X-CSE-MsgGUID: n9dmqmtXSR2SnlUcW0lZOA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11406"; a="46713229"
+X-IronPort-AV: E=Sophos;i="6.15,221,1739865600"; d="scan'208";a="46713229"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Apr 2025 01:56:11 -0700
+X-CSE-ConnectionGUID: rNRRvyG5QbGeec+fIuXHWQ==
+X-CSE-MsgGUID: PK0zP6YUTJeWQ2gGEEAcMA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,221,1739865600"; d="scan'208";a="131371536"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa008.fm.intel.com with ESMTP; 18 Apr 2025 01:56:09 -0700
+Date: Fri, 18 Apr 2025 17:17:02 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 02/55] i386: Introduce tdx-guest object
+Message-ID: <aAIYjpetyP9LKW6L@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-3-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-674896605-1744966393=:81771"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401130205.2198253-3-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,59 +90,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+>  configs/devices/i386-softmmu/default.mak |  1 +
+>  hw/i386/Kconfig                          |  5 +++
+>  qapi/qom.json                            | 15 +++++++++
+>  target/i386/kvm/meson.build              |  2 ++
+>  target/i386/kvm/tdx.c                    | 43 ++++++++++++++++++++++++
+>  target/i386/kvm/tdx.h                    | 21 ++++++++++++
 
---3866299591-674896605-1744966393=:81771
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+SEV.* and confidential-guest.* are all placed in target/i386/.
+It's best if all of these can be in the same place.
 
-On Fri, 18 Apr 2025, Philippe Mathieu-Daudé wrote:
-> While DEFINE_MACHINE() is a succinct macro, it doesn't
-> allow registering QOM interfaces to the defined machine.
-> Convert to the generic DEFINE_TYPES() in preparation to
-> register interfaces.
->
-> Philippe Mathieu-Daudé (11):
->  hw/core/null-machine: Define machine as generic QOM type
->  hw/arm/bananapi: Define machine as generic QOM type
->  hw/arm/cubieboard: Define machine as generic QOM type
->  hw/arm/digic: Define machine as generic QOM type
->  hw/arm/imx: Define machines as generic QOM types
->  hw/arm/integratorcp: Define machine as generic QOM type
->  hw/arm/kzm: Define machine as generic QOM type
->  hw/arm/msf2: Define machine as generic QOM type
->  hw/arm/musicpal: Define machine as generic QOM type
->  hw/arm/orangepi: Define machine as generic QOM type
->  hw/arm/stm32: Define machines as generic QOM types
->
-> hw/arm/bananapi_m2u.c      | 13 +++++++++++--
-> hw/arm/cubieboard.c        | 13 +++++++++++--
-> hw/arm/digic_boards.c      | 14 ++++++++++++--
-> hw/arm/imx25_pdk.c         | 14 ++++++++++++--
-> hw/arm/imx8mp-evk.c        | 15 +++++++++++++--
-> hw/arm/integratorcp.c      | 16 +++++++++++++---
-> hw/arm/kzm.c               | 14 ++++++++++++--
-> hw/arm/mcimx6ul-evk.c      | 15 +++++++++++++--
-> hw/arm/mcimx7d-sabre.c     | 15 +++++++++++++--
-> hw/arm/msf2-som.c          | 13 +++++++++++--
-> hw/arm/musicpal.c          | 16 +++++++++++++---
-> hw/arm/netduino2.c         | 13 +++++++++++--
-> hw/arm/netduinoplus2.c     | 13 +++++++++++--
-> hw/arm/olimex-stm32-h405.c | 13 +++++++++++--
-> hw/arm/orangepi.c          | 13 +++++++++++--
-> hw/arm/sabrelite.c         | 14 ++++++++++++--
-> hw/arm/stm32vldiscovery.c  | 13 +++++++++++--
-> hw/core/null-machine.c     | 14 ++++++++++++--
-> 18 files changed, 213 insertions(+), 38 deletions(-)
+>  6 files changed, 87 insertions(+)
+>  create mode 100644 target/i386/kvm/tdx.c
+>  create mode 100644 target/i386/kvm/tdx.h
 
-This is much longer and exposing boiler plate code. Is it possible instead 
-to change DEFINE_MACHINE or add another similar macro that allows 
-specifying more details such as class state type and interfaces like we 
-already have for OBJECT_DEFINE macros to keep the boiler plate code hidden 
-and not bring it back?
+...
 
-Regards,
-BALATON Zoltan
---3866299591-674896605-1744966393=:81771--
+> diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+> new file mode 100644
+> index 000000000000..f3b725336161
+> --- /dev/null
+> +++ b/target/i386/kvm/tdx.h
+> @@ -0,0 +1,21 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#ifndef QEMU_I386_TDX_H
+> +#define QEMU_I386_TDX_H
+
+I386_TDX_H is enough... the QEMU prefix is rarely seen in the whole
+project.
+
+Others look good,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
