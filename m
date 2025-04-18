@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0625C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 14:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C08C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 14:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5mV5-0004LX-N2; Fri, 18 Apr 2025 10:15:27 -0400
+	id 1u5meN-00077Q-Du; Fri, 18 Apr 2025 10:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5mV2-0004LK-6v
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 10:15:24 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u5meF-00075w-QP
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 10:24:59 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5mUp-0006fc-0m
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 10:15:23 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-39149bccb69so1935841f8f.2
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 07:15:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u5me3-0007lh-CQ
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 10:24:55 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb94so19757005e9.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 07:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744985682; x=1745590482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xzyt7lJ/ARbR+vqCuL1F4Sy7x4BC5zzVf755pnPqWRc=;
- b=f67bnXNcL3SzuhRkU7iiChk/ru6RJO8MkcSdZDA0kA3ErNoS4w6g4xJuydbzAMVwGm
- UySzyrsAVC4YEAcsnued2N+Ns92dXZ2T2joTyWYLFRU0RGjrd3Aa5FW4TS8Y6ZposoeB
- KsJ0YIqLDKHCcwda/pbLjZ6d+Jk7n10pFJfrowshMwMtYV/xELz/cHJ/ZF2iydo5/Hgj
- j8AWkQ0vwXN5rFcHiKQ3ermKYDtaeqwfn3ZXS208mMArpW7eUaBbbwrNyc7XFIHx5TDv
- +Aa04i2XGSwLBoOTrCi6U63b98gyhfTPQvXv4He8c/q2/UZ8c4GeaMI9YiPF4fxOb2Gc
- +69Q==
+ d=gmail.com; s=20230601; t=1744986279; x=1745591079; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CNauYxS5i3NejXWpcBocb0KmTjWnM/MNGrSaA8KpXcQ=;
+ b=UjGQmECxiV8Lv8BU20BVSPLJ0CK8lP/n1hRtocMISQvRBlRrZVUT0JDkZhgV669UPK
+ Q97L4KqtBisQM7JwQ94JVPgD2nNtH0900QI8LNqy6xUfn3GAT0avz+xfhr1i6usCKmPl
+ ndv454gEDdxu/V2K3b8gm81Mh1iJbuREfm/Mmh4C3BaBpEc6sk7tsvsFdS+kiGO8ZA2d
+ Opt12jvkucIr4mq/0EKJZoBwGz2vHraNV3nV/xDIcU2TlnYVHVtWxB9QwurzwTtDABzR
+ /DFigWFFId1dcmcLbutkyrXmKtLb9ebu1Qp/KLw/lmZhCsoT1IoGScIWZMfFZMbHIYk2
+ gjzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744985682; x=1745590482;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xzyt7lJ/ARbR+vqCuL1F4Sy7x4BC5zzVf755pnPqWRc=;
- b=XQyEuUoNArFenqTP8GK8Vdi7oKMd/kIoIAVsXApqp0YT0jJJFqB1jfEQKyjXPiCAV9
- Ammf/LVYUyL5sPUVDfWMAg5DckSjfuvSnTaxGQa5uUZ+tVkp5Vh0rudzM/8NjJrasgaB
- 7c9UR9gTNE0kEFItBViZR/jLJq96P/j0/vz/i0BZR9c01DovjMm09DnYWeGgA+S6AR5h
- YWnwoqMG4fWTZppII4nvDMbmy1z50rJ5EaTJJX9ejaZ5p9DyMxRaaEXfsix3DtNjgGrF
- 31dVLrl7VkcE+UdtDFGQNyfkfB+csOtFNl4tZKtYF21yYZ0TyZEOlGQWNsRnEwUHhH5H
- 2TMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3cYdQ4pMlqAdFV6fVwMsAEoUZyi37Om/U6mEL6bBw1Bh3eD5S95OiOcEJK0rNFCyck+h1UhwqkC+0@nongnu.org
-X-Gm-Message-State: AOJu0YwXIftj7zT5eJaMzvxFAoMRxl66x3wDMrPNW0fJC9wMw7cTNhMk
- uJQn+fu/llTaVCW+bWGNv/NBiVlMShOwAW5OvrJ+MFnizrbCJNVBfErEuwIw/sOLJhmAiwaqRn/
- +
-X-Gm-Gg: ASbGncs1lx9b6DARnJ15xyTwgi1/x43egOaFOHQy5K4b2Uav++pkXcqsCjJDZhsTRIl
- ZPOi3vSthRbINiA6xspUxNjo1ZxWJDGWdiNRrxYzt3gX8BcipKLS5t69++pElhJwgQ8JloP/5rh
- au/2c4y5npd77yaHSbc5teVwjTdyUnRcshFs8G01hGZybKYGau/mYsI9UzskYqZ16e9VklsW5sI
- UObb40I1ZGDkUPZmTqhYFqEk5wCG7xGwgbBzIXnC5VW8VoRqHnTZCGnqAqjxWYsfT0OPgLlsm3G
- lvHlPi8d3NFTSRI4QrgyqnBl0DP7kbTrus8NIDJyGH6rYQK4LHmP9UayhKWV+9ohdhHpXkCe9BN
- /T2ykpk8e
-X-Google-Smtp-Source: AGHT+IHRPLfJWbUsXK1ZV1gpKAk+qI4TQTU1ca1m2x3ppGyRmjtiFZParkScEFJLZ7OY3FnVVeLgqA==
-X-Received: by 2002:a05:6000:1acf:b0:39d:724f:a8f0 with SMTP id
- ffacd0b85a97d-39efbace61bmr2065540f8f.42.1744985681864; 
- Fri, 18 Apr 2025 07:14:41 -0700 (PDT)
-Received: from [192.168.69.175] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4a4e9esm2908343f8f.96.2025.04.18.07.14.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 07:14:41 -0700 (PDT)
-Message-ID: <33deb076-968d-498e-8f25-6dcc51acf1f6@linaro.org>
-Date: Fri, 18 Apr 2025 16:14:40 +0200
+ d=1e100.net; s=20230601; t=1744986279; x=1745591079;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CNauYxS5i3NejXWpcBocb0KmTjWnM/MNGrSaA8KpXcQ=;
+ b=udQV0DqyAl3Vg5GYWnHalLdSRK5KrGoEhPXEaMmo+6uBhVkWVLEd8qvdKwkGlDUrwg
+ GQHh5cruohlh+DIkLLFuUjYXQLNc84nbHgFEd8H89E9og6N2SHvzRPMCrCVpjnphJLS/
+ UESF+oHhZ5GKBKWKqO57kmqQP6rvmwN3YZagdUCSv2MaX+zT0f1w6mCGnKp3VMeSpjWY
+ uF9c6hj7emczG1Ar4K1KKLrs9bhAeD+cgirDsBo4b5YpYCzMRjao3H+OEEpwRC6qgr1H
+ ouJzNkad4dc1qXw3oxnZhcGvbzhLTCVDrgp6RegZYTLEbeegisIZvZm5F+SGl99zbbDK
+ lgjA==
+X-Gm-Message-State: AOJu0YwkW/WVm+0piipgnr4e4wGtHRVvJXU9ZmqWgW3UnJ0dUSlr6U2Z
+ DcESZG013JABK21UaQA6iC1VpUPBWiTjak9Ecx9PFhs+/MHXRwSklbjAtw==
+X-Gm-Gg: ASbGncu01pj49i53/3g6WxX4n0H2K5nEpg2Etngb3AwsUSJFEM+7o82vRB5R28REEj+
+ 0J2uI8fi9fAwLscSCrKtDFfn15m1D3kmub1ilTxKI91EPuB4fnI+KdpqX4i/nkuStMPnyFlZHYx
+ cSVD7QA4rFqOI62iYMTpGR/++RDFm/WcHfyf9FM+F4bKkulQGFqeT9L6j8HiVR7t6FFtsoGPDxL
+ 2XTDupmtbDDn1fwtroLcKP3MjwMBx7BW9tNtezlW4Zjq63RpZq7WtYe8sI7RpkxcQLeHLTcFIzY
+ awQkXaolmDycGoRZMsgcDUyOQPa3zWaxNj2VeYH9zJyHsfbDGVNdMC4lysLbo0z8APaMUowTA1E
+ BDTBxfSxqiuLngh9j7FtnmKA=
+X-Google-Smtp-Source: AGHT+IEyglDjCUY7Sfk6OxoWMmE6q0s4jUpggol1Z9L3+C3NJkixDNnSAN07AbahT/Y1S9YXBRGYMw==
+X-Received: by 2002:a05:6000:144a:b0:39a:c8a8:4fdc with SMTP id
+ ffacd0b85a97d-39efba3ffcamr2236359f8f.16.1744986279158; 
+ Fri, 18 Apr 2025 07:24:39 -0700 (PDT)
+Received: from localhost.localdomain (89-138-169-5.bb.netvision.net.il.
+ [89.138.169.5]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa43315esm2870430f8f.26.2025.04.18.07.24.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 18 Apr 2025 07:24:38 -0700 (PDT)
+From: Nir Soffer <nirsof@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Richard Jones" <rjones@redhat.com>, "Eric Blake" <eblake@redhat.com>,
+ Nir Soffer <nirsof@gmail.com>
+Subject: [PATCH] io: Set unix socket buffers on macOS
+Date: Fri, 18 Apr 2025 17:24:36 +0300
+Message-Id: <20250418142436.6121-1-nirsof@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 03/11] system/vl: Filter machine list available for
- a particular target binary
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250418005059.4436-1-philmd@linaro.org>
- <20250418005059.4436-4-philmd@linaro.org>
- <fc3312bf-2a79-405a-bed9-72078cd7e5f2@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <fc3312bf-2a79-405a-bed9-72078cd7e5f2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=nirsof@gmail.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,139 +97,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/4/25 05:06, Pierrick Bouvier wrote:
-> On 4/17/25 17:50, Philippe Mathieu-Daudé wrote:
->> Binaries can register a QOM type to filter their machines
->> by filling their TargetInfo::machine_typename field.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/qemu/target_info-impl.h |  3 +++
->>   include/qemu/target_info.h      |  8 ++++++++
->>   system/vl.c                     | 14 ++++++++++++++
->>   target_info.c                   |  5 +++++
->>   4 files changed, 30 insertions(+)
->>
->> diff --git a/include/qemu/target_info-impl.h b/include/qemu/ 
->> target_info-impl.h
->> index d5c94ed5296..990fb067d20 100644
->> --- a/include/qemu/target_info-impl.h
->> +++ b/include/qemu/target_info-impl.h
->> @@ -16,6 +16,9 @@ typedef struct TargetInfo {
->>       /* runtime equivalent of TARGET_NAME definition */
->>       const char *const name;
->> +    /* QOM typename machines for this binary must implement */
->> +    const char *const machine_typename;
->> +
->>   } TargetInfo;
->>   const TargetInfo *target_info(void);
->> diff --git a/include/qemu/target_info.h b/include/qemu/target_info.h
->> index 3f6cbbbd300..e9fd2fdd7b0 100644
->> --- a/include/qemu/target_info.h
->> +++ b/include/qemu/target_info.h
->> @@ -16,4 +16,12 @@
->>    */
->>   const char *target_name(void);
->> +/**
->> + * target_machine_interface_typename:
->> + *
->> + * Returns: Name of the QOM interface implemented by machines
->> + *          usable on this target binary.
->> + */
->> +const char *target_machine_interface_typename(void);
->> +
->>   #endif
->> diff --git a/system/vl.c b/system/vl.c
->> index d8a0fe713c9..4e43e55afe7 100644
->> --- a/system/vl.c
->> +++ b/system/vl.c
->> @@ -27,6 +27,7 @@
->>   #include "qemu/datadir.h"
->>   #include "qemu/units.h"
->>   #include "qemu/module.h"
->> +#include "qemu/target_info.h"
->>   #include "exec/cpu-common.h"
->>   #include "exec/page-vary.h"
->>   #include "hw/qdev-properties.h"
->> @@ -836,11 +837,17 @@ static bool usb_parse(const char *cmdline, Error 
->> **errp)
->>   static MachineClass *find_machine(const char *name, GSList *machines)
->>   {
->>       GSList *el;
->> +    const char *qom_typename_filter = 
->> target_machine_interface_typename();
->>       for (el = machines; el; el = el->next) {
->>           MachineClass *mc = el->data;
->>           if (!strcmp(mc->name, name) || !g_strcmp0(mc->alias, name)) {
->> +            if (qom_typename_filter
->> +                && !object_class_dynamic_cast(el->data, 
->> qom_typename_filter)) {
->> +                /* Machine is not for this binary: fail */
->> +                return NULL;
->> +            }
->>               return mc;
->>           }
->>       }
->> @@ -1563,6 +1570,7 @@ static void machine_help_func(const QDict *qdict)
->>       g_autoptr(GSList) machines = NULL;
->>       GSList *el;
->>       const char *type = qdict_get_try_str(qdict, "type");
->> +    const char *qom_typename_filter = 
->> target_machine_interface_typename();
->>       machines = object_class_get_list(TYPE_MACHINE, false);
-> 
-> We can replace change to system/vl.c with:
-> 
-> const char *machine_type = target_machine_interface_typename();
-> machines = object_class_get_list(machine_type, false);
+Testing with qemu-nbd shows that computing a hash of an image via
+qemu-nbd is 5-7 times faster with this change.
 
-Clever!
+Tested with 2 qemu-nbd processes:
 
-> 
->>       if (type) {
->> @@ -1577,6 +1585,12 @@ static void machine_help_func(const QDict *qdict)
->>       machines = g_slist_sort(machines, machine_class_cmp);
->>       for (el = machines; el; el = el->next) {
->>           MachineClass *mc = el->data;
->> +
->> +        if (qom_typename_filter
->> +            && !object_class_dynamic_cast(el->data, 
->> qom_typename_filter)) {
->> +            /* Machine is not for this binary: skip */
->> +            continue;
->> +        }
->>           if (mc->alias) {
->>               printf("%-20s %s (alias of %s)\n", mc->alias, mc->desc, 
->> mc->name);
->>           }
->> diff --git a/target_info.c b/target_info.c
->> index 877a6a15014..226eed1fd7d 100644
->> --- a/target_info.c
->> +++ b/target_info.c
->> @@ -14,3 +14,8 @@ const char *target_name(void)
->>   {
->>       return target_info()->name;
->>   }
->> +
->> +const char *target_machine_interface_typename(void)
->> +{
->> +    return target_info()->machine_typename;
-> 
-> And here:
-> 
-> const char *machine_type = target_info()->machine_typename;
-> if (!machine_type) {
->      machine_type = TYPE_MACHINE;
-> }
-> return machine_type;
-> 
->> +}
-> 
-> This way, there is no special case to handle anywhere, and we can safely 
-> replace occurrences of TYPE_MACHINE queries with 
-> target_machine_interface_typename().
-> 
-> As well, just a nit, but it's not important to know it's an interface, I 
-> would prefer a simpler name: target_machine_type();
+    $ ./qemu-nbd-after -r -t -e 0 -f raw -k /tmp/after.sock /var/tmp/bench/data-10g.img &
+    $ ./qemu-nbd-before -r -t -e 0 -f raw -k /tmp/before.sock /var/tmp/bench/data-10g.img &
+
+With nbdcopy, using 4 NBD connections:
+
+    $ hyperfine -w 3 "./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/before.sock' null:"
+                     "./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/after.sock' null:"
+    Benchmark 1: ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/before.sock' null:
+      Time (mean ± σ):      8.670 s ±  0.025 s    [User: 5.670 s, System: 7.113 s]
+      Range (min … max):    8.620 s …  8.703 s    10 runs
+
+    Benchmark 2: ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/after.sock' null:
+      Time (mean ± σ):      1.839 s ±  0.008 s    [User: 4.651 s, System: 1.882 s]
+      Range (min … max):    1.830 s …  1.853 s    10 runs
+
+    Summary
+      ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/after.sock' null: ran
+        4.72 ± 0.02 times faster than ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/before.sock' null:
+
+With blksum, using one NBD connection:
+
+    $ hyperfine -w 3 "blksum 'nbd+unix:///?socket=/tmp/before.sock'" \
+                     "blksum 'nbd+unix:///?socket=/tmp/after.sock'"
+    Benchmark 1: blksum 'nbd+unix:///?socket=/tmp/before.sock'
+      Time (mean ± σ):     13.606 s ±  0.081 s    [User: 5.799 s, System: 6.231 s]
+      Range (min … max):   13.516 s … 13.785 s    10 runs
+
+    Benchmark 2: blksum 'nbd+unix:///?socket=/tmp/after.sock'
+      Time (mean ± σ):      1.946 s ±  0.017 s    [User: 4.541 s, System: 1.481 s]
+      Range (min … max):    1.912 s …  1.979 s    10 runs
+
+    Summary
+      blksum 'nbd+unix:///?socket=/tmp/after.sock' ran
+        6.99 ± 0.07 times faster than blksum 'nbd+unix:///?socket=/tmp/before.sock'
+
+This will improve other usage of unix domain sockets on macOS, I tested
+only qemu-nbd.
+
+Signed-off-by: Nir Soffer <nirsof@gmail.com>
+---
+ io/channel-socket.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 608bcf066e..b858659764 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -410,6 +410,19 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
+     }
+ #endif /* WIN32 */
+ 
++#if __APPLE__
++    /* On macOS we need to tune unix domain socket buffer for best performance.
++     * Apple recommends sizing the receive buffer at 4 times the size of the
++     * send buffer.
++     */
++    if (cioc->localAddr.ss_family == AF_UNIX) {
++        const int sndbuf_size = 1024 * 1024;
++        const int rcvbuf_size = 4 * sndbuf_size;
++        setsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &sndbuf_size, sizeof(sndbuf_size));
++        setsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf_size, sizeof(rcvbuf_size));
++    }
++#endif /* __APPLE__ */
++
+     qio_channel_set_feature(QIO_CHANNEL(cioc),
+                             QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
+ 
+-- 
+2.39.5 (Apple Git-154)
 
 
