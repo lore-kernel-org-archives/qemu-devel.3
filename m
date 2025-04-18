@@ -4,31 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20BAAC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CB2C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5jvJ-0005O1-Oa; Fri, 18 Apr 2025 07:30:21 -0400
+	id 1u5jvb-0005Y9-Gg; Fri, 18 Apr 2025 07:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u5jvH-0005Mk-Tr
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:19 -0400
+ id 1u5jvT-0005Vq-FI
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:31 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u5jv3-0005fU-TT
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:19 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u5jvE-0005nc-Kb
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:30:29 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 2F35C1C160C; Fri, 18 Apr 2025 13:29:58 +0200 (CEST)
+ id 382811C1685; Fri, 18 Apr 2025 13:29:58 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v3 0/9] Add VNC Open H.264 Encoding
-Date: Fri, 18 Apr 2025 13:29:44 +0200
-Message-Id: <20250418112953.1744442-1-dietmar@proxmox.com>
+Subject: [PATCH v3 6/9] h264: add hardware encoders
+Date: Fri, 18 Apr 2025 13:29:50 +0200
+Message-Id: <20250418112953.1744442-7-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250418112953.1744442-1-dietmar@proxmox.com>
+References: <20250418112953.1744442-1-dietmar@proxmox.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 94.136.29.99 (failed)
@@ -56,73 +58,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As defined by:
+Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+---
+ ui/vnc-enc-h264.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst#open-h-264-encoding
-
-The noVNC HTML application recently added support for this encoding. There is
-also an open pull request to add audio support to noVNC:
-
-https://github.com/novnc/noVNC/pull/1952
-
-With that in place, the web based VNC console is good enough to display
-a VM showing a video with reasonable bandwidth.
-
-Possible improvements:
-
-- Dynamic switching to/from H264 mode at high change rates
-- do not compute all rects in vnc_update_client to reduce CPU load
-
-We may also extend the RFB Audio protocol with "opus" encoding, because uncompressed
-audio need too much bandwidth.
-
-Changes in v3:
-
-- add license header
-- sqash patch to remove libavcodec prefix
-- use gst_clear_object and goto error
-- use single g_object_set
-- g_autoptr/g_new0
-- document vnc_h264_send_framebuffer_update returnm value
-- avoid mixed declarations
-- use loop to retrieve samples
-- initialize gst during argument processing
-- add hardware encoders
-
-
-Changes in v2:
-
-- cleanup: h264: remove wrong libavcodec_ prefix from function names
-- search for available h264 encoder, and only enable h264 if a
-  encoder is available
-- new vnc option to configure h264 at server side
-
-
-Dietmar Maurer (9):
-  new configure option to enable gstreamer
-  add vnc h264 encoder
-  vnc: h264: send additional frames after the display is clean
-  h264: search for available h264 encoder
-  h264: new vnc option to configure h264 at server side
-  h264: add hardware encoders
-  h264: do not reduce vnc update speed while we have an active h264
-    stream
-  vnc: initialize gst during argument processing
-  h264: register shutdown notifiers, stop pipeline in
-    destroy_encoder_context
-
- meson.build                   |  10 +
- meson_options.txt             |   2 +
- scripts/meson-buildoptions.sh |   5 +-
- system/vl.c                   |   8 +
- ui/meson.build                |   1 +
- ui/vnc-enc-h264.c             | 401 ++++++++++++++++++++++++++++++++++
- ui/vnc-jobs.c                 |  49 +++--
- ui/vnc.c                      |  63 +++++-
- ui/vnc.h                      |  30 +++
- 9 files changed, 551 insertions(+), 18 deletions(-)
- create mode 100644 ui/vnc-enc-h264.c
-
+diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+index 0f89cafbf6..840674dbdb 100644
+--- a/ui/vnc-enc-h264.c
++++ b/ui/vnc-enc-h264.c
+@@ -29,15 +29,17 @@
+ 
+ static char *get_available_encoder(const char *encoder_list)
+ {
++    char *ret = NULL;
++    char **encoder_array = NULL;
++
+     g_assert(encoder_list != NULL);
+ 
+     if (!strcmp(encoder_list, "")) {
+         /* use default list */
+-        encoder_list = "x264enc openh264enc";
++        encoder_list = "nvh264enc vaapih264enc x264enc openh264enc";
+     }
+ 
+-    char *ret = NULL;
+-    char **encoder_array = g_strsplit(encoder_list, " ", -1);
++    encoder_array = g_strsplit(encoder_list, " ", -1);
+ 
+     int i = 0;
+     do {
+@@ -69,7 +71,19 @@ static GstElement *create_encoder(const char *encoder_name)
+         return NULL;
+     }
+ 
+-    if (!strcmp(encoder_name, "x264enc")) {
++    if (!strcmp(encoder_name, "nvh264enc")) {
++        g_object_set(
++            encoder,
++            "preset", 8,         /* p1 - fastest */
++            "multi-pass", 1,     /* multipass disabled */
++            "tune", 2,           /* low latency */
++            "zerolatency", true, /* low latency */
++            /* avoid access unit delimiters (Nal Unit Type 9) - not required */
++            "aud", false,
++            NULL);
++    } else if (!strcmp(encoder_name, "vaapih264enc")) {
++        g_object_set(encoder, "tune", 1, NULL); /* high compression */
++    } else if (!strcmp(encoder_name, "x264enc")) {
+         g_object_set(
+             encoder,
+             "tune", 4, /* zerolatency */
 -- 
 2.39.5
 
