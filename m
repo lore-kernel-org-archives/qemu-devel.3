@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2B1C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 14:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D51C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 15:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5n3n-00066L-T2; Fri, 18 Apr 2025 10:51:19 -0400
+	id 1u5nls-0004M2-M6; Fri, 18 Apr 2025 11:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5n3k-00065D-VP
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 10:51:17 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5n3W-0002PJ-Px
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 10:51:16 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso16956715e9.0
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 07:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744987852; x=1745592652; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/lqzil4Y8RXkEgnQIabhU/geqAiy8/bLIvMU3z8LKlM=;
- b=L8jcZg8gXr68w0Rjkedcuae7sIUObz1a42Hb7umPb8YJ6o5oYqNN4B3hx8qWp9O3Jf
- yJ9rVT1ktc6NYKndgpR9l4QBxg/rKOZ2FWRQqqIbCtRYSfpwr7vuZfDP9Vj45IdzPGDW
- 7loWZaPo/oaI6WU5/Q5F1hq5bk9fVb+ylx6cVpmSK+MpNCCmY/OBk/+LAJKWgJlLJmgE
- f5jrn/JK1BlKpq+DbV21DIvk4p46fSCP7Gp/lE1dWFZkqwWDAMWPNVQSWsVH5jZ24OIZ
- 9MNm5WXswvuDRZ+toyPdNmL8RpiD5uOr7PRE4MhbePP7SKZKIIkHPFub/QxpvS4pGa+h
- ReZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744987852; x=1745592652;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/lqzil4Y8RXkEgnQIabhU/geqAiy8/bLIvMU3z8LKlM=;
- b=qBE6EhtQaSvNn83+LVSnj0tolC0C9FWXgw+oWlU/flY4FGw4cQEn5XN1g8Y/GxOMgE
- MOZqMq0Xul2wKraZgv/Utu0QoQLr3KvgGGdyRFbWnqV+L/hCaTz67u5Eg8fLZmmzSf+O
- 89TNZBWS6GqL+CwlSc7EPxDQLh6m6FrHT5IZKfsRhUsWy+eC3wy5v2wEW+w6+8R66llz
- w2RFMBoajeeFLbwBSh6it0QlHY5bxgSx65cknv0biTe+7V2+p7hIm5Nyhgju8PMUhfs8
- zWaLQ9cHcDvVzkizhrYjnHDQ6Zk2//cSNJ9lN/faBhvmYGxdC8kHmE7P1+VQKyfz6XeT
- KliA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWu3LLIVTQ+l8HPH8r0JeTQo/Ym94N1Zv0LtFzWymQ1p/rdROitTK6HKGKrdw1KEnNJ6ecyX6wVV85Z@nongnu.org
-X-Gm-Message-State: AOJu0YxPvEscW7xmU9umP+sqCsQKbRUU9ML6FqFdNCVEbos7OdEr1lQU
- vwxcjBBiV3fBv8/IXbGqFi/j27AjDLzfGAXOUTTNfqoKBdS1fFeJTVofih2LZvU=
-X-Gm-Gg: ASbGncsAV/KVKee6kVFjOUlatvSdGc+L6XAG8M3TE0A4d3iJ3F6qjfuHzez+GWTYERV
- 9I2NAW1o3jDd25PCfPZ39jQLBMlzEwVRipnXiZXZIhz6tg1UhbpwIa09kbMZfyAug8o1S2m/2Fw
- C7RTWbCuGcJhIHaDCESrGfgcXxwC0OabdgbfHi30pW1emj6ZIsuSSOjNWG8g8vSQXfIKa2fVD/w
- e/pyki44/GbpFwK4EgOSjDCqVvh2EqZaV4ErtmxzWf94jfjRFnu6M9kN0LUF5tBH01AoZoixFeQ
- H7QsA79CcaCDDzz0uXEsydqOKRY0QM3gaCrqfjJKeXgiC4+HQVpwIobpG35BLSC2LUKqVgSI94+
- tREKc9QaK
-X-Google-Smtp-Source: AGHT+IFSSNUz+77pLFm39KcjmqOjRddD73t5iN8GR2onFFwFKTd9Ek37FeK0HwJAvETKQakiWzSlpQ==
-X-Received: by 2002:a05:600c:548e:b0:440:6a5f:c31f with SMTP id
- 5b1f17b1804b1-4406ab93420mr24753555e9.11.1744987851826; 
- Fri, 18 Apr 2025 07:50:51 -0700 (PDT)
-Received: from [192.168.69.175] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5acca9sm24844765e9.12.2025.04.18.07.50.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 07:50:51 -0700 (PDT)
-Message-ID: <918f450d-a5fe-4e3d-9320-950485352b86@linaro.org>
-Date: Fri, 18 Apr 2025 16:50:50 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u5nlr-0004LP-Kd
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 11:36:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u5nlY-0000OP-9B
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 11:36:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1744990591;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nJJvajBp4bJagqvJ5Ki8oSVwgmYBNFr3f8ktNekkasY=;
+ b=WZbUHuJ5H49eRoHM+MpPp+r1Xp1bFTH4ywMzQgueHJnREqnxiJEyf3J5yUol/aRJ0tejI3
+ VdkpMFDowL3+5eBUNli6W99G6E/y13287W8Yzmr32rQxr+u8tSj2ZYz2xedGJNRW9P3Xoy
+ B5YAxloLAidPfpYMxeccnsY7oJwz7tE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-ZCux15SbNUun18C0UNUaLw-1; Fri,
+ 18 Apr 2025 11:35:01 -0400
+X-MC-Unique: ZCux15SbNUun18C0UNUaLw-1
+X-Mimecast-MFC-AGG-ID: ZCux15SbNUun18C0UNUaLw_1744990500
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1FC12197701B; Fri, 18 Apr 2025 15:34:58 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.183])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 840611956095; Fri, 18 Apr 2025 15:34:57 +0000 (UTC)
+Date: Fri, 18 Apr 2025 11:34:56 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: lma <lma@suse.de>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-block@nongnu.org
+Subject: Re: A question about how to calculate the "Maximum transfer length"
+ in case of its absence in the Block Limits VPD device response from the
+ hardware
+Message-ID: <20250418153456.GA128796@fedora>
+References: <20db3af2ece22f598b54a47ec350b466@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] io: Set unix socket buffers on macOS
-To: Nir Soffer <nirsof@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Jones <rjones@redhat.com>, Eric Blake <eblake@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250418142436.6121-1-nirsof@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250418142436.6121-1-nirsof@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Rqqd6H6I9CEZswqe"
+Content-Disposition: inline
+In-Reply-To: <20db3af2ece22f598b54a47ec350b466@suse.de>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,86 +86,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nir,
 
-On 18/4/25 16:24, Nir Soffer wrote:
-> Testing with qemu-nbd shows that computing a hash of an image via
-> qemu-nbd is 5-7 times faster with this change.
-> 
-> Tested with 2 qemu-nbd processes:
-> 
->      $ ./qemu-nbd-after -r -t -e 0 -f raw -k /tmp/after.sock /var/tmp/bench/data-10g.img &
->      $ ./qemu-nbd-before -r -t -e 0 -f raw -k /tmp/before.sock /var/tmp/bench/data-10g.img &
-> 
-> With nbdcopy, using 4 NBD connections:
-> 
->      $ hyperfine -w 3 "./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/before.sock' null:"
->                       "./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/after.sock' null:"
->      Benchmark 1: ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/before.sock' null:
->        Time (mean ± σ):      8.670 s ±  0.025 s    [User: 5.670 s, System: 7.113 s]
->        Range (min … max):    8.620 s …  8.703 s    10 runs
-> 
->      Benchmark 2: ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/after.sock' null:
->        Time (mean ± σ):      1.839 s ±  0.008 s    [User: 4.651 s, System: 1.882 s]
->        Range (min … max):    1.830 s …  1.853 s    10 runs
-> 
->      Summary
->        ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/after.sock' null: ran
->          4.72 ± 0.02 times faster than ./nbdcopy --blkhash 'nbd+unix:///?socket=/tmp/before.sock' null:
-> 
-> With blksum, using one NBD connection:
-> 
->      $ hyperfine -w 3 "blksum 'nbd+unix:///?socket=/tmp/before.sock'" \
->                       "blksum 'nbd+unix:///?socket=/tmp/after.sock'"
->      Benchmark 1: blksum 'nbd+unix:///?socket=/tmp/before.sock'
->        Time (mean ± σ):     13.606 s ±  0.081 s    [User: 5.799 s, System: 6.231 s]
->        Range (min … max):   13.516 s … 13.785 s    10 runs
-> 
->      Benchmark 2: blksum 'nbd+unix:///?socket=/tmp/after.sock'
->        Time (mean ± σ):      1.946 s ±  0.017 s    [User: 4.541 s, System: 1.481 s]
->        Range (min … max):    1.912 s …  1.979 s    10 runs
-> 
->      Summary
->        blksum 'nbd+unix:///?socket=/tmp/after.sock' ran
->          6.99 ± 0.07 times faster than blksum 'nbd+unix:///?socket=/tmp/before.sock'
-> 
-> This will improve other usage of unix domain sockets on macOS, I tested
-> only qemu-nbd.
-> 
-> Signed-off-by: Nir Soffer <nirsof@gmail.com>
-> ---
->   io/channel-socket.c | 13 +++++++++++++
->   1 file changed, 13 insertions(+)
-> 
-> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> index 608bcf066e..b858659764 100644
-> --- a/io/channel-socket.c
-> +++ b/io/channel-socket.c
-> @@ -410,6 +410,19 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
->       }
->   #endif /* WIN32 */
->   
-> +#if __APPLE__
-> +    /* On macOS we need to tune unix domain socket buffer for best performance.
-> +     * Apple recommends sizing the receive buffer at 4 times the size of the
-> +     * send buffer.
-> +     */
-> +    if (cioc->localAddr.ss_family == AF_UNIX) {
-> +        const int sndbuf_size = 1024 * 1024;
+--Rqqd6H6I9CEZswqe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Please add a definition instead of magic value, i.e.:
+On Thu, Apr 17, 2025 at 07:27:26PM +0800, lma wrote:
+> Hi all,
+>=20
+> In case of SCSI passthrough, If the Block Limits VPD device response is
+> absent from hardware, QEMU handles it.
+>=20
+> There are several variables involved in this process as follows:
+> * The bl.max_transfer
+> * The bl.max_iov that is associated with IOV_MAX.
+> * The bl.max_hw_iov that is associated with the max_segments sysfs setting
+> for the relevant block device on the host.
+> * The bl.max_hw_transfer that is associated with the BLKSECTGET ioctl, in
+> other words related to the current max_sectors_kb sysfs setting of the
+> relevant block device on the host.
+>=20
+> Then take the smallest value and return it as the result of "Maximum
+> transfer length" after relevant calculation, See:
+> static uint64_t calculate_max_transfer(SCSIDevice *s)
+> {
+>     uint64_t max_transfer =3D blk_get_max_hw_transfer(s->conf.blk);
+>     uint32_t max_iov =3D blk_get_max_hw_iov(s->conf.blk);
+>=20
+>     assert(max_transfer);
+>     max_transfer =3D MIN_NON_ZERO(max_transfer,
+>                                 max_iov * qemu_real_host_page_size());
+>=20
+>     return max_transfer / s->blocksize;
+> }
+>=20
+>=20
+> However, due to the limitation of IOV_MAX, no matter how powerful the host
+> scsi hardware is, the "Maximum transfer length" that qemu emulates in bl =
+vpd
+> page is capped at 8192 sectors in case of 4kb page size and 512 bytes
+> logical block size.
+> For example=EF=BC=9A
+> host:~ # sg_vpd -p bl /dev/sda
+> Block limits VPD page (SBC)
+>   ......
+>   Maximum transfer length: 0 blocks [not reported]
+>   ......
+>=20
+>=20
+> host:~ # cat /sys/class/block/sda/queue/max_sectors_kb
+> 16384
+>=20
+> host:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
+> 32767
+>=20
+> host:~ # cat /sys/class/block/sda/queue/max_segments
+> 4096
+>=20
+>=20
+> Expected:
+> guest:~ # sg_vpd -p bl /dev/sda
+> Block limits VPD page (SBC)
+>   ......
+>   Maximum transfer length: 0x8000
+>   ......
+>=20
+> guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
+> 16384
+>=20
+> guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
+> 32767
+>=20
+>=20
+> Actual:
+> guest:~ # sg_vpd -p bl /dev/sda
+> Block limits VPD page (SBC)
+>   ......
+>   Maximum transfer length: 0x2000
+>   ......
+>=20
+> guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
+> 4096
+>=20
+> guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
+> 32767
+>=20
+>=20
+> It seems the current design logic is not able to fully utilize the
+> performance of the scsi hardware. I have two questions:
+> 1. I'm curious that is it reasonable to drop the logic about IOV_MAX
+> limitation, directly use the return value of BLKSECTGET as the maximum
+> transfer length when QEMU emulates the block limit page of scsi vpd?
+>    If we doing so, we will have maximum transfer length in the guest that=
+ is
+> consistent with the capabilities of the host hardware=E3=80=82
+>=20
+> 2. Besides, Assume I set a value(eg: 8192 in kb) to max_sectors_kb in gue=
+st
+> which doesn't exceed the capabilities of the host hardware(eg: 16384 in k=
+b)
+> but exceeds the limit(eg: 4096 in kb) caused by IOV_MAX,
+>    Any risks in readv()/writev() of raw-posix?
 
-   #define SOCKET_SEND_BUFSIZE  (1 * MiB)
+Not a definitive answer, but just something to encourage discussion:
 
-BTW in test_io_channel_set_socket_bufs() we use 64 KiB, why 1 MiB?
+In theory IOV_MAX should not be factored into the Block Limits VPD page
+Maximum Transfer Length field because there is already a HBA limit on
+the maximum number of segments. For example, virtio-scsi has a seg_max
+Configuration Space field that guest drivers honor independently of
+Maximum Transfer Length.
 
-> +        const int rcvbuf_size = 4 * sndbuf_size;
-> +        setsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &sndbuf_size, sizeof(sndbuf_size));
-> +        setsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf_size, sizeof(rcvbuf_size));
-> +    }
-> +#endif /* __APPLE__ */
+However, I can imagine why MAX_IOV needs to be factored in:
 
-Thanks,
+1. The maximum number of segments might be hardcoded in guest drivers
+   for some SCSI HBAs and QEMU has no way of exposing MAX_IOV to the
+   guest in that case.
 
-Phil.
+2. Guest physical RAM addresses translate to host virtual memory. That
+   means 1 segment as seen by the guest might actually require multiple
+   physical DMA segments on the host. A conservative calculation that
+   assumes the worst-case 1 iovec per 4 KB memory page prevents the
+   host maximum segments limit (note this is not the Maximum Transfer
+   Length limit!) from being exceeded.
+
+So there seem to be at least two problems here. If you relax the
+calculation there will be corner cases that break because the guest can
+send too many segments.
+
+Stefan
+
+--Rqqd6H6I9CEZswqe
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgCcSAACgkQnKSrs4Gr
+c8ivMwf9FdoO+zLXdYYwI4lqB951OrcIswP/E5VOdFGh9OWC9L7V10VxaeSc6ptA
+YUCwyCvasIP6tC9HVS7OVnli8Hc7Du+kZTgLM7ta99xCAAYhfB2ofzSpnH1nUaW8
+SjlVor44v9nsspHWaKKiDTLM7IYWnDcbjK5kdE44yetlAx7am2GSYX6/HideH2OK
+8Ab4vyAiNN42pkJBjw4CiAwjwtinZ8M6oCFMLb3MR+tZnZyAl/UeoZU2NQsyebcX
+si7lHngtfWfypHdcKNPM4/HeCb2RKKwAqdIN+794xuhHmxaDNq8qngCY16XeaBp8
+8iXjz0NZv3OXxD5j3JYAK3IDPaRPkw==
+=ulgG
+-----END PGP SIGNATURE-----
+
+--Rqqd6H6I9CEZswqe--
+
 
