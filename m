@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74FAEC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B442C369CA
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5pWq-0002Eo-NA; Fri, 18 Apr 2025 13:29:28 -0400
+	id 1u5pYG-0003xA-KU; Fri, 18 Apr 2025 13:30:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pWp-0002EJ-RI
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:29:27 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pXW-0002nA-UD
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:30:16 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pWo-0008JH-1q
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:29:27 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-39c0dfba946so1314230f8f.3
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:29:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pXV-000090-00
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:30:10 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3913d129c1aso1421988f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744997364; x=1745602164; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744997407; x=1745602207; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HUv7xYWDzHHzMK/N8rDgT8hWryoWJfomJANZY/+TOFQ=;
- b=IwAonEaD/RQzgdTLFLRlvNPNbfViqS0trmWKlCHiUqIzO8mJ2PLmzeU8f1eWibb35X
- 7XkrbrGt9qE23tTA4GfM7OT5qUQXTcAJH+2aZUmcDnnHqzeOywzcyv944ahhToahcAay
- wZmO+11YeDnE2csH9iv7ORvS2yZeEEgS1MpUCZZquteQl6c/9zSoRGp/dlOENnPaTK4q
- mZ0o8ELBKHr6gU0+69c9H6sz67iRirkefZUZH79ghiAOjwtb8r8iF4xo7N4dTiMSla6X
- tVToAKDgl0HzSTxx9YVwV0AYvcqSb+2YjIltmDdQXnpTZ+XLhep596Qxt6EpyvspHBgx
- k9Tg==
+ bh=fLlTlwFK7dyLEOdkaOnpCuG5I1s9eWFIuaNy+YiBC94=;
+ b=nH8uJ5O8H0FkGQK9dMhq7m4TaIMWRERpxoQHWVIIDehYoQZKf/S+dboEt4EbLaVJ+C
+ VEtQFisBm5ku6+B+710FnYwXRFo2xIxOzrWR1TR4KeOYXHHrAbz5OCRLnBsrM6TKrTY7
+ rAGCRC3hcOFLiHE7NfEplIKiDQlca0reKFa3KvfxDxkVzfHbs1s9jXGh9RHQouJqqgmT
+ nJ003m3ahi1yOr/NQ3o6iD0hqIWlbuGfEZ9rBQq0DtzhNHuP0j08ZruPALBwVKwmBBBe
+ MsyKP4/V0yXd9lOkan7mZpnY/Qzubyf/HkEDS52hZ7RqL457y8pJ5Z05I2VMN91PZIbp
+ dAmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744997364; x=1745602164;
+ d=1e100.net; s=20230601; t=1744997407; x=1745602207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HUv7xYWDzHHzMK/N8rDgT8hWryoWJfomJANZY/+TOFQ=;
- b=gp333s0wZZrp8Iw73ywsVTCkSIIcszQIXTkqARp2YElHa0qdIzne2TMac59ANBGiGS
- 3XeErCpy0RtaEgrzP73fknlEhMoI0y2c35sa62w1Yz+xr8lLY8qe8hSs2fNLXNlarUiQ
- dxmxRCGVefV+ZqQ7N5FxruFVsNLrmLbN00OQZfD/lvTTDCUk0/2xDqsqIAPjMMta6TXh
- XYNgfWGPD9CaoXp6bDirkhU8qpqq2GM6gX3jJyPXTUiyTCGvnOLEEJq0doOe95itfe3Y
- OvMVBAlFHo7woYQ4fe7HNiJ4kA+VOSYFisQ79vsGzlGycU6zEB19QhljSC6pTmCWaJi9
- 900Q==
-X-Gm-Message-State: AOJu0YxcUePdgUR3lTJ5BUKK2hi4x6JaWEN3QBfnr/C9oJSjLcBCPzQg
- 5h/bLwjD9aWWtdwp38Uwzc6aPNVEiiOILCEy5RlEqgxAmcWCV9TXS2uidhgrvdjqVpZKqpjtZ4w
- D
-X-Gm-Gg: ASbGnctXqZcIFHswGotpYaPwlMHyOdg+QsJ5Svcxx/lckWAA2SRQ8riW5ptL+XDbJt1
- 5BiXiKGNiiHLm2R0LM4Jp7SVzpw+jgxgxxRSusu69Mgzp+lYb4uL+UuR+bUa79pXXOnYdgZviki
- rBvJN0IWD+azl2f0d8hm0S0CpBAQPwPJ08+K6F7Hq4D/Jv9XzKKzF74Vf8m2S8wSOOyhF1609My
- g5V1pzXt6Uqc0YczDiUeI4r42hVpP0IAs0gx+3BnQSKR22v3FLVINRi6rwjB5E9D8pYUyC4hUd4
- rNp+K2LX3wJ2S+hql5NM6Tau7shWDKP9GPdhVN1Pn8+UBs3SqyTESPG7pgVqluVMqvh49vO5nM/
- cDiA2osyFBoL0OBE=
-X-Google-Smtp-Source: AGHT+IGldGwn1GCDW4yVVSOvjg0PJ6K4CW+dwUxBKiKTRc6wnymhLmXz4FgDTf2uuMERYG3bJDZgpg==
-X-Received: by 2002:a5d:648b:0:b0:39c:1257:c96f with SMTP id
- ffacd0b85a97d-39efbb1afafmr2695077f8f.59.1744997364004; 
- Fri, 18 Apr 2025 10:29:24 -0700 (PDT)
+ bh=fLlTlwFK7dyLEOdkaOnpCuG5I1s9eWFIuaNy+YiBC94=;
+ b=Aj/PE660gypVDV0ehFBAuG1egV5dp/3Mq4qmW7mfM5QJHXP0EgULo9EuDeEwSrrXZu
+ Krwl+acBwHeElDqu2+zhBohe+VIXjiyh1xv8PQ9NRzRccmPM1Q6BBl3WjKje03T3I25t
+ YKatCJVPKH/kJBAJ4/iHJ1Qtl0oPeS0X5LtlDZ1wCpE2uymt05tsNIcUtApAyIO1Qgaz
+ SaSZtihaZUQEehZaLig0zKBoRqZQgk9UH2uw26MVXxcrQ/0AYNtynydinFflfMjZE3Om
+ oFjy+8u4ZhSYVIKdQvl0jfbETKuhGFV0xK4neRoYzSpEdgqJ/xuG300Uco78h0yTbI5s
+ kv3w==
+X-Gm-Message-State: AOJu0Yz6wLDwQi3PIPKMjEp0pf9qHTCl1VJ+/7zHs0wbubb3flKsva8H
+ XbB0lZx11wf6CENuZK+dHstVYrdr1175MzR+as0upNSSnM+pdMfazpCurFu9V3I/0FTcUDsIMiI
+ k
+X-Gm-Gg: ASbGnctlJYpjNaoRC+X3Uh4D2Q4qVSrINxcG1ukyOB9CJk5ejoDQlzRlHgQmyW69AnU
+ E883VmBH3ABYVCyoFQ2To5XHTl4nd4eLNVe7fB0ywNMrhb7Cx+8BMEunSmdbAmbx5huqcg+EWwS
+ XKpO0syRDfQ8aR+k10Cx1x84/iLFXshnhUq9FSc/aKwQKjC4NKZCgBnmEeEmuDzV4oV2lYRwh49
+ Ir7SejDKHsXf7twZGyLFubNpKacmnyaZ0JPyKeTWGcJQspYtK9JJynzBSWG3dtJOPPwlz//qZJL
+ I6fbgPVc+gRtC8aVjSQS0fiMB8zWS8lu3kZb2xxmSWLgCy+nwyC6Xn0GvzZ3zZUPiSJE1RML9Bw
+ VJ20DmiXihwrnyS8=
+X-Google-Smtp-Source: AGHT+IHte/Pl3MHRvWgKC2vfpRiNOQVFdRy/pTeHWXFLHgcbeVHrcz5oDfS7G5gc7vWYyBhrTze1Hg==
+X-Received: by 2002:a5d:64a9:0:b0:390:f0ff:2c10 with SMTP id
+ ffacd0b85a97d-39ef909193dmr3633095f8f.19.1744997407046; 
+ Fri, 18 Apr 2025 10:30:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4a4d67sm3338940f8f.94.2025.04.18.10.29.23
+ ffacd0b85a97d-39efa433429sm3341407f8f.37.2025.04.18.10.30.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 18 Apr 2025 10:29:23 -0700 (PDT)
+ Fri, 18 Apr 2025 10:30:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH v3 03/14] system/vl: Filter machine list available for a
- particular target binary
-Date: Fri, 18 Apr 2025 19:28:57 +0200
-Message-ID: <20250418172908.25147-4-philmd@linaro.org>
+Subject: [RFC PATCH v3 12/14] hw/arm/virt: Register valid CPU types dynamically
+Date: Fri, 18 Apr 2025 19:29:06 +0200
+Message-ID: <20250418172908.25147-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250418172908.25147-1-philmd@linaro.org>
 References: <20250418172908.25147-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,138 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Binaries can register a QOM type to filter their machines
-by filling their TargetInfo::machine_typename field.
-
-This can be used by example by main() -> machine_help_func()
-to filter the machines list.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- meson.build                     |  1 +
- include/qemu/target_info-impl.h |  3 +++
- include/qemu/target_info.h      |  8 ++++++++
- system/vl.c                     |  3 ++-
- target_info-qom.c               | 15 +++++++++++++++
- target_info-stub.c              |  2 ++
- target_info.c                   |  5 +++++
- 7 files changed, 36 insertions(+), 1 deletion(-)
- create mode 100644 target_info-qom.c
+ hw/arm/virt.c | 35 ++++++++++++++++-------------------
+ 1 file changed, 16 insertions(+), 19 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 49a050a28a3..168b07b5887 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3808,6 +3808,7 @@ common_ss.add(pagevary)
- specific_ss.add(files('page-target.c', 'page-vary-target.c'))
- 
- common_ss.add(files('target_info.c'))
-+system_ss.add(files('target_info-qom.c'))
- specific_ss.add(files('target_info-stub.c'))
- 
- subdir('backends')
-diff --git a/include/qemu/target_info-impl.h b/include/qemu/target_info-impl.h
-index 11b92796b28..e3344278a92 100644
---- a/include/qemu/target_info-impl.h
-+++ b/include/qemu/target_info-impl.h
-@@ -16,6 +16,9 @@ typedef struct TargetInfo {
-     /* runtime equivalent of TARGET_NAME definition */
-     const char *const target_name;
- 
-+    /* QOM typename machines for this binary must implement */
-+    const char *const machine_typename;
-+
- } TargetInfo;
- 
- const TargetInfo *target_info(void);
-diff --git a/include/qemu/target_info.h b/include/qemu/target_info.h
-index 3f6cbbbd300..c67b97d66f3 100644
---- a/include/qemu/target_info.h
-+++ b/include/qemu/target_info.h
-@@ -16,4 +16,12 @@
-  */
- const char *target_name(void);
- 
-+/**
-+ * target_machine_typename:
-+ *
-+ * Returns: Name of the QOM interface implemented by machines
-+ *          usable on this target binary.
-+ */
-+const char *target_machine_typename(void);
-+
- #endif
-diff --git a/system/vl.c b/system/vl.c
-index d8a0fe713c9..8fb18f82e20 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -27,6 +27,7 @@
- #include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "qemu/module.h"
-+#include "qemu/target_info.h"
- #include "exec/cpu-common.h"
- #include "exec/page-vary.h"
- #include "hw/qdev-properties.h"
-@@ -1564,7 +1565,7 @@ static void machine_help_func(const QDict *qdict)
-     GSList *el;
-     const char *type = qdict_get_try_str(qdict, "type");
- 
--    machines = object_class_get_list(TYPE_MACHINE, false);
-+    machines = object_class_get_list(target_machine_typename(), false);
-     if (type) {
-         ObjectClass *machine_class = OBJECT_CLASS(find_machine(type, machines));
-         if (machine_class) {
-diff --git a/target_info-qom.c b/target_info-qom.c
-new file mode 100644
-index 00000000000..a6fd8f1d5a3
---- /dev/null
-+++ b/target_info-qom.c
-@@ -0,0 +1,15 @@
-+/*
-+ * QEMU binary/target API (QOM types)
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qom/object.h"
-+
-+static const TypeInfo target_info_types[] = {
-+};
-+
-+DEFINE_TYPES(target_info_types)
-diff --git a/target_info-stub.c b/target_info-stub.c
-index f15972c5b22..14e6d5e68d2 100644
---- a/target_info-stub.c
-+++ b/target_info-stub.c
-@@ -8,9 +8,11 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/target_info-impl.h"
-+#include "hw/boards.h"
- 
- static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
-+    .machine_typename = TYPE_MACHINE,
- };
- 
- const TargetInfo *target_info(void)
-diff --git a/target_info.c b/target_info.c
-index 48c4a413326..1de4334ecc5 100644
---- a/target_info.c
-+++ b/target_info.c
-@@ -14,3 +14,8 @@ const char *target_name(void)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index a3c9ffe29eb..48a0c3588ce 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3134,32 +3134,30 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
  {
-     return target_info()->target_name;
- }
+     MachineClass *mc = MACHINE_CLASS(oc);
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
+-    static const char * const valid_cpu_types[] = {
 +
-+const char *target_machine_typename(void)
-+{
-+    return target_info()->machine_typename;
-+}
+ #ifdef CONFIG_TCG
+-        ARM_CPU_TYPE_NAME("cortex-a7"),
+-        ARM_CPU_TYPE_NAME("cortex-a15"),
++    machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a7"));
++    machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a15"));
+ #ifdef TARGET_AARCH64
+-        ARM_CPU_TYPE_NAME("cortex-a35"),
+-        ARM_CPU_TYPE_NAME("cortex-a55"),
+-        ARM_CPU_TYPE_NAME("cortex-a72"),
+-        ARM_CPU_TYPE_NAME("cortex-a76"),
+-        ARM_CPU_TYPE_NAME("cortex-a710"),
+-        ARM_CPU_TYPE_NAME("a64fx"),
+-        ARM_CPU_TYPE_NAME("neoverse-n1"),
+-        ARM_CPU_TYPE_NAME("neoverse-v1"),
+-        ARM_CPU_TYPE_NAME("neoverse-n2"),
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a35"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a55"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a72"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a76"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a710"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("a64fx"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("neoverse-n1"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("neoverse-v1"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("neoverse-n2"));
+ #endif /* TARGET_AARCH64 */
+ #endif /* CONFIG_TCG */
+ #ifdef TARGET_AARCH64
+-        ARM_CPU_TYPE_NAME("cortex-a53"),
+-        ARM_CPU_TYPE_NAME("cortex-a57"),
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a53"));
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("cortex-a57"));
+ #if defined(CONFIG_KVM) || defined(CONFIG_HVF)
+-        ARM_CPU_TYPE_NAME("host"),
++        machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("host"));
+ #endif /* CONFIG_KVM || CONFIG_HVF */
+ #endif /* TARGET_AARCH64 */
+-        ARM_CPU_TYPE_NAME("max"),
+-        NULL
+-    };
++    machine_class_add_valid_cpu_type(mc, ARM_CPU_TYPE_NAME("max"));
+ 
+     mc->init = machvirt_init;
+     /* Start with max_cpus set to 512, which is the maximum supported by KVM.
+@@ -3187,7 +3185,6 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+ #else
+     mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
+ #endif
+-    mc->valid_cpu_types = valid_cpu_types;
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
+     mc->hvf_get_physical_address_range = virt_hvf_get_physical_address_range;
 -- 
 2.47.1
 
