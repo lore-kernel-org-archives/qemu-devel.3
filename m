@@ -4,93 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 411D6C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 22:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47905C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 23:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5tpO-0007PC-VJ; Fri, 18 Apr 2025 18:04:55 -0400
+	id 1u5vIm-0002vf-Ty; Fri, 18 Apr 2025 19:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5tpL-0007Og-Of
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 18:04:52 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5tpK-00051U-22
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 18:04:51 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-223fb0f619dso26914295ad.1
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 15:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745013888; x=1745618688; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Tp4Zvd8l8nlmF/KU4FpsLvofGXwguJWFSscxZJbkJsw=;
- b=XSniFa588q76aZ5ti11oIab4OnTg9VOoP5uIm0FGAdVR8zkP3fqIMzax2ePdKoMF6u
- LXZlR7DpEceUwFOER+S/qOnMlXsAH76yz9o8u53WFQZPDvdvVzm1MBlOC+xHhhnb4Eio
- htAOPHT9iKZg9oAlN4lEHPsgLD9yJnkXxVfLJH+qR6K+RIm9/HsO1xQ2EyCuJH4WkL71
- yymYvTGQhTzBX+r6rzqxpxAAiydOvd75SkmLDoov3lZZRHoSKdF2qKAF8ob/IgP6SVBq
- 9KDjC3uMFFFJI7wN7hRvNuG00G+lzXfiToIIVDqa6Ukm64N58e3p55ytYutHATvoXyp6
- 9VvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745013888; x=1745618688;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tp4Zvd8l8nlmF/KU4FpsLvofGXwguJWFSscxZJbkJsw=;
- b=KeVdPc8jEpjcKDH/goLB1s9mLsymldWvY8wPstngT4dGFeEtPaAJlOu0+rS2L2SgDj
- Y+9luRMQlFJ6YtlKHwdv5TThz2d5H8dWR79IBy7kaQ1CdSxL5yNtBJp2ebGPTWwSeX7y
- 3Jk6ZsLaPNHPnMWFyF1+9ZmjSo1oWI6B7E0duNyO/EF4nzr4YCViKH93e4ou8sxNVCwQ
- 3N2wkQ604GsALjwGRKry86gcDibNZpev4tLIFo0R7G7Tm6Tz+hlOo5o9Tv22XGIfoRWN
- EHWD07RWE0wPDzlSaHxDDuw7VuljhBCuRRwSxqp7ZtEDYUIlKzd1HUPbJGaLNvnodHGc
- Js3A==
-X-Gm-Message-State: AOJu0Yzc5U7tdgk/wNSygD12sXjD5M9ivBXnyxMd1OdAMlG72+3fWl5G
- 5btLW2HT7WZrxTEE56Ktg91WyCXV2mhJ5m9ikVVzSDrv+YbkogH0Fko+oVLNfoI=
-X-Gm-Gg: ASbGncuHEFb1mC1wK9yok3GFPUjl7Q2G5iGy5pQq0XNY/cWzg/6e2MGHaZlsu7uVJhb
- eakp7OWamQp8cl2SSYyUi4lpeYyuy873UrSsB9pGG4NI2GHDUuDDk+C1njkRJ4BbF3qxY4elVaS
- zefIQAcVhR8KcHN0Hv7rv/tuo4V5yekURfrVCf3wxOEQDtMJO6ELcdSJXlWcFiEnTVKis5NaDqD
- 5/iH0XR67iVEHh041d6MEyvG6J7Uyfnkd1pGMJhblbvk1T7WdvWBD+kOIlPXoPZY4h8P9ZoSgMF
- YgiCBqlOL7CxO9wPAs+Ijr5vQu5D2J4pN09+ti2MgeSL5gg4zxJI2tKycSHurX1deZ6wHWxBpKl
- j759DYuU=
-X-Google-Smtp-Source: AGHT+IEHq3fmJbs7penfZaPywOxdHivFxSI3Aw2VqqagZmg+NLmBrQIq977FioNyGiF03Khk+1RZBw==
-X-Received: by 2002:a17:902:ce88:b0:223:5e6a:57ab with SMTP id
- d9443c01a7336-22c5360bdedmr56005955ad.39.1745013888081; 
- Fri, 18 Apr 2025 15:04:48 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda5csm21798615ad.44.2025.04.18.15.04.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 15:04:47 -0700 (PDT)
-Message-ID: <24331d39-c856-445c-8f17-9fb990d400bb@linaro.org>
-Date: Fri, 18 Apr 2025 15:04:46 -0700
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1u5vIk-0002vV-U2
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 19:39:19 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1u5vIi-0000aW-7M
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 19:39:18 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id AB47443645;
+ Fri, 18 Apr 2025 23:39:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE05C4CEE2;
+ Fri, 18 Apr 2025 23:39:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1745019545;
+ bh=5wGAQWpQTIZX2l3pQvcOxx8yBagYYlMioXmaNEknYxQ=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=aCnWgkFbB2SgGMNSuJjwP+IBukVUZqyMytHVi2C9kqoIoh5KiPd0dT85Otn3Rsbp7
+ 3T+MsOEtHCCrlRJOhpMg0ifDIijRYC83RHxezxbkJrMhvQF9+12C4vWROS+CKhm2iH
+ WPS8+7j06z0qkJ4iih84musFRUk1tR1uMDTBfz0GYYwVTWtE1DvuPxS3zgk4dGOIfl
+ M9hLdNBLUahUFBl6jQUQX0KoVbXQ+VUtCXAJjYuBepHOv9YQRFYmbybitUe19FaJcc
+ qkbgPfA0kGUXkIi7HDEyjzhwocffj3C7AJAXWdIAC5g/5k3kI0ESlDvpIz5AjvgBib
+ be0i8ocGOk/Vg==
+Date: Fri, 18 Apr 2025 16:39:04 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: Aleksandr Partanen <alex.pentagrid@gmail.com>
+cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ xen-devel@lists.xenproject.org, Paul Durrant <paul@xen.org>, 
+ Anthony PERARD <anthony@xenproject.org>
+Subject: Re: [PATCH] xen: mapcache: Fix finding matching entry
+In-Reply-To: <20250410144604.214977-1-alex.pentagrid@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2504181638300.785180@ubuntu-linux-20-04-desktop>
+References: <20250410144604.214977-1-alex.pentagrid@gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] common-user/host/riscv: use tail pseudoinstruction for
- calling tail
-To: Icenowy Zheng <uwu@icenowy.me>, Riku Voipio <riku.voipio@iki.fi>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-References: <20250417072206.364008-1-uwu@icenowy.me>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250417072206.364008-1-uwu@icenowy.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=sstabellini@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,49 +73,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/25 00:22, Icenowy Zheng wrote:
-> The j pseudoinstruction maps to a JAL instruction, which can only handle
-> a jump to somewhere with a signed 20-bit destination. In case of static
-> linking and LTO'ing this easily leads to "relocation truncated to fit"
-> error.
+On Thu, 10 Apr 2025, Aleksandr Partanen wrote:
+> If we have request without lock and hit unlocked or invalid
+> entry during the search, we remap it immediately,
+> even if we have matching entry in next entries in bucket.
+> This leads to duplication of mappings of the same size,
+> and to possibility of selecting the wrong element
+> during invalidation and underflow it's entry->lock counter
 > 
-> Switch to use tail pseudoinstruction, which is the standard way to
-> tail-call a function in medium code model (emits AUIPC+JALR).
-> 
-> Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+> Signed-off-by: Aleksandr Partanen <alex.pentagrid@gmail.com>
+
+Hi Aleksandr, thanks for the patch, it looks correct to me.
+
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+
+
+Edgar, would you be able to give it a look as well to make sure?
+
+
 > ---
-> P.S.
-> It seems that moving it to common-user/ makes the file out of the
-> MAINTAINERS section of "RISC-V TCG CPUS". I Manually added the
-> maintainers there, but the MAINTAINERS file seems to need a change on
-> this.
+>  hw/xen/xen-mapcache.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
->   common-user/host/riscv/safe-syscall.inc.S | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
-
+> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+> index 698b5c53ed..2c8f861fdb 100644
+> --- a/hw/xen/xen-mapcache.c
+> +++ b/hw/xen/xen-mapcache.c
+> @@ -376,12 +376,12 @@ tryagain:
+>  
+>      entry = &mc->entry[address_index % mc->nr_buckets];
+>  
+> -    while (entry && (lock || entry->lock) && entry->vaddr_base &&
+> -            (entry->paddr_index != address_index || entry->size != cache_size ||
+> +    while (entry && (!entry->vaddr_base ||
+> +            entry->paddr_index != address_index || entry->size != cache_size ||
+>               !test_bits(address_offset >> XC_PAGE_SHIFT,
+>                   test_bit_size >> XC_PAGE_SHIFT,
+>                   entry->valid_mapping))) {
+> -        if (!free_entry && !entry->lock) {
+> +        if (!free_entry && (!entry->lock || !entry->vaddr_base)) {
+>              free_entry = entry;
+>              free_pentry = pentry;
+>          }
+> -- 
+> 2.39.5
 > 
-> diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host/riscv/safe-syscall.inc.S
-> index dfe83c300e..c8b81e33d0 100644
-> --- a/common-user/host/riscv/safe-syscall.inc.S
-> +++ b/common-user/host/riscv/safe-syscall.inc.S
-> @@ -69,11 +69,11 @@ safe_syscall_end:
->   
->           /* code path setting errno */
->   0:      neg     a0, a0
-> -        j       safe_syscall_set_errno_tail
-> +        tail    safe_syscall_set_errno_tail
->   
->           /* code path when we didn't execute the syscall */
->   2:      li      a0, QEMU_ERESTARTSYS
-> -        j       safe_syscall_set_errno_tail
-> +        tail    safe_syscall_set_errno_tail
->   
->           .cfi_endproc
->           .size   safe_syscall_base, .-safe_syscall_base
-
 
