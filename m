@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0650EC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 08:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095DBC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 09:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5hWH-0005NC-Ii; Fri, 18 Apr 2025 04:56:21 -0400
+	id 1u5hcX-0001ph-Ax; Fri, 18 Apr 2025 05:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u5hWF-0005Md-3B
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 04:56:19 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1u5hcT-0001pL-TH
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:02:45 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u5hWC-000215-4y
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 04:56:18 -0400
+ id 1u5hcQ-00031l-N8
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:02:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1744966576; x=1776502576;
+ t=1744966963; x=1776502963;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=XehJxbPdg0skVSErLYE1GcCJ+KIFga/7FMCMnsnkByA=;
- b=MSA7USAv6dl6S/aoMSUYBFmzfARHl2jVqSUs2/FImqiWwsOACEa3G63H
- aPP0TEUzxbiyG8vaEEwKzOaOdevmpin4wqcISxZazmOiaoKfq1UdwfK9R
- dEw2iMUSDT+qMvQrN3Y9w9Gnu+lbj7yWum+3/yeiHYU2iixdqYeExmrSL
- 5jK6Z8VGgMHZiIs2PtYFarIAN14ghrqSyGBzB3mwOiWBAp7rbWZMd+gu6
- vI3EdkbxjMsRLzrnpJCvlaTuRe9bYMq3ucwPJciczuJ/WtB+NzE2P2Xgb
- /YX0XlJ+2DzA5pQU1zhMiTpyKikTX6fI7Jmd8AqPz2BzVrwLRyFWmhZtR Q==;
-X-CSE-ConnectionGUID: tHPY5qLFRRmaUeWiWGfExw==
-X-CSE-MsgGUID: n9dmqmtXSR2SnlUcW0lZOA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11406"; a="46713229"
-X-IronPort-AV: E=Sophos;i="6.15,221,1739865600"; d="scan'208";a="46713229"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Apr 2025 01:56:11 -0700
-X-CSE-ConnectionGUID: rNRRvyG5QbGeec+fIuXHWQ==
-X-CSE-MsgGUID: PK0zP6YUTJeWQ2gGEEAcMA==
+ bh=LTvbBX6z+k5xUwIyYfW5C1C3FI5SxUIhTKF2ln3y1hA=;
+ b=Kc6ABMgp+Y2wuUWfl5IzF/O7le2vFESkj7aH0yvtUa00Ti9JHr4TECXF
+ tY4FR36DihZtPjrQ4LHxfXoIRyV4JLSew04ZjKLKIbVvUut9VM62Ct3K0
+ haoxA2Oo31VGkd9A/bs+UK2IAcIG3AVICpJGfqjyOTD8NsJFI1rQq6f+x
+ 1Sr4GfsuWaCaw0bdcXpavHD9CSWxVHwhYvPbFMeHW01AMD5JycoJWw8Ee
+ B4O3NZWc01xlvHX6HKUQn9YhsRcVgg/eEULfG6JjLJguCKe2tjFNYCyU4
+ RJA+rDLap3x55omZh5mShW3q/Ntox1fC0fo2rIB4MdCm3Ehe90x8Wybr1 A==;
+X-CSE-ConnectionGUID: 8+cyXjXVTgOF/Aj53CDWWA==
+X-CSE-MsgGUID: 5s1AR4LFT6GtLXFyJPUYPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11406"; a="69087986"
+X-IronPort-AV: E=Sophos;i="6.15,221,1739865600"; d="scan'208";a="69087986"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Apr 2025 02:02:41 -0700
+X-CSE-ConnectionGUID: MJeqn92BT9GbiEP2dCBvJA==
+X-CSE-MsgGUID: j/ctejokQ4Cu1P4RCX6SjA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,221,1739865600"; d="scan'208";a="131371536"
+X-IronPort-AV: E=Sophos;i="6.15,221,1739865600"; d="scan'208";a="131021578"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 18 Apr 2025 01:56:09 -0700
-Date: Fri, 18 Apr 2025 17:17:02 +0800
+ by orviesa010.jf.intel.com with ESMTP; 18 Apr 2025 02:02:38 -0700
+Date: Fri, 18 Apr 2025 17:23:31 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,15 +57,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 02/55] i386: Introduce tdx-guest object
-Message-ID: <aAIYjpetyP9LKW6L@intel.com>
+Subject: Re: [PATCH v8 03/55] i386/tdx: Implement tdx_kvm_type() for TDX
+Message-ID: <aAIaE7RAW3bgPaHY@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-3-xiaoyao.li@intel.com>
+ <20250401130205.2198253-4-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-3-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250401130205.2198253-4-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -90,37 +90,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->  configs/devices/i386-softmmu/default.mak |  1 +
->  hw/i386/Kconfig                          |  5 +++
->  qapi/qom.json                            | 15 +++++++++
->  target/i386/kvm/meson.build              |  2 ++
->  target/i386/kvm/tdx.c                    | 43 ++++++++++++++++++++++++
->  target/i386/kvm/tdx.h                    | 21 ++++++++++++
-
-SEV.* and confidential-guest.* are all placed in target/i386/.
-It's best if all of these can be in the same place.
-
->  6 files changed, 87 insertions(+)
->  create mode 100644 target/i386/kvm/tdx.c
->  create mode 100644 target/i386/kvm/tdx.h
-
-...
-
-> diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-> new file mode 100644
-> index 000000000000..f3b725336161
-> --- /dev/null
-> +++ b/target/i386/kvm/tdx.h
-> @@ -0,0 +1,21 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +#ifndef QEMU_I386_TDX_H
-> +#define QEMU_I386_TDX_H
-
-I386_TDX_H is enough... the QEMU prefix is rarely seen in the whole
-project.
-
-Others look good,
+On Tue, Apr 01, 2025 at 09:01:13AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:13 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v8 03/55] i386/tdx: Implement tdx_kvm_type() for TDX
+> X-Mailer: git-send-email 2.34.1
+> 
+> TDX VM requires VM type to be KVM_X86_TDX_VM. Implement tdx_kvm_type()
+> as X86ConfidentialGuestClass->kvm_type.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+> Changes in v6:
+>  - new added patch;
+> ---
+>  target/i386/kvm/kvm.c |  1 +
+>  target/i386/kvm/tdx.c | 12 ++++++++++++
+>  2 files changed, 13 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
