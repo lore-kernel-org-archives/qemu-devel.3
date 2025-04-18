@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B80C369CA
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 16:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 985DAC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:00:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5of8-00048W-9b; Fri, 18 Apr 2025 12:34:01 -0400
+	id 1u5p48-00049D-A1; Fri, 18 Apr 2025 12:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u5oew-00044w-7J
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 12:33:46 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5p46-00048O-0n
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 12:59:46 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u5oeu-00014j-6e
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 12:33:45 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-227d6b530d8so22028505ad.3
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 09:33:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5p43-0004Ha-C8
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 12:59:45 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39c1ef4ae3aso1317344f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 09:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744994023; x=1745598823; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1744995581; x=1745600381; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MLZ88TFvJP6hHR9nA0RAmGHI0YhcTQXCuQM3vJSY5FA=;
- b=zWT8vbwGMTiph+z73oKPTkodOpcmVxrStpMXU4GQVrveEdIVbR0ek2ln7+nT+ol5qs
- +rzyJtADldTnHFsYaSmCeAcbH6Lzv4TS+aoAuTSJS6XG7Zq/77bNvK3pCALU7WIoZHjF
- IPK537qqDgq0PxluiP9HgqV91EdcK7bVQ00HpMZAib1a1VaZysw+WpsDPnlizzhoRyaK
- 5BmN/zrdbX67xcfOBviHF0eBcz0Z1mivrRNyX1JKb8NWynnL/YYHtlkFT2YoEgvf5ykv
- cKTBTbDLrp3DV5WrzKgzw2LL5fHNYJjtZkkpJ8Hlza+VUcS1SGiM4xW7pD8JuKLNPWFH
- NfOA==
+ bh=6c7AkqTlQOlOV9iHN9LCbSUaTJnfsYNhSEPhHBD4h/w=;
+ b=oxsSO/jvq8EE1hy9flWRYJjCYx6RGgQVCFMPdAt8qDMUfhIP6j8L4cXL0jtjX6HxEW
+ EQrty97FlgcOu4nnbOkpKyMCy0TXqfLNJZlB8buNaNBQaMtP3dLGbvZaYu+WhgbYqD2U
+ EzwqwUD6Fs+dJFjrKS1MWeCRlVQUntv1y4NdGRQsGkJIiNchyXLXvRpNji4GdXssHTV3
+ at/RjWVYhIBdQSJDDdzWcag1/F9YhfeshxnlpEz+mIwuRFLtMzCblZsVSZJDDVDLIOtO
+ OQII9YJcw8yKrhkQb9ZCgULgnerp1/1gdE5NqUZsjthDZ8RvTiLUGQldEsBw+e9ixgT3
+ ILfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744994023; x=1745598823;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1744995581; x=1745600381;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MLZ88TFvJP6hHR9nA0RAmGHI0YhcTQXCuQM3vJSY5FA=;
- b=dfklxCMyNWnKFGc2Ob2lTHSUZpz3tGdoc4YwAyaX2KbbLe2OKkWmNAI4FpsnUsAA/J
- lTcbMtWRJqc59zsE3TBXlqjegC6Lvrea5uiSSZ1GHRg7XsW5RPF6rG8rfUkjkhD4IZvo
- QO3eVAuOkjRjugOACXYL267XEIKMu+7iiEVgoYR53IJ7vgVJyDLUhVAUJ8aRQHXgA8iF
- XhOg6yAgHFDGvHogqewCYZF7twD6E8G2ZjuIAvJ5TKeN3AKe1qEiFFvUgds2iRT0JYqn
- 7AXDDhuSU6qSawwf+g1OX8w4F6P58a6t5i2D0N6dDdPZ0FWLuzGmwH2mI4GsPfOOh4O0
- jxCw==
-X-Gm-Message-State: AOJu0YxB7IYi2cDH0ayVJp3k5RjkQcAVIT/FwHArT8qPLtZWHULnZMAE
- OYgGdujZrLkml8QacNTJIX78NrsiOKz+licDLFqXJm0JGstLnLsE5qgzeVWMX5Q=
-X-Gm-Gg: ASbGncs4XfWxJy+6E8KcfYGculv6LtGfA6chOrSCYvcgdDIvfRC1CnHRfOrB2ycZwwd
- zLFj+5n+6d5nZNwntFr23JsHTAa4C58+egW9d1omaGLn0GwoXrjTZCh9GFS249knV/Z3K55uuyG
- H+v3OgALWjtPAtZJulmlr1oSJZO2fCFVF7QQJY+eZSNGeBMdvW0My+oVy9j+wrrz9dGTtFn9Lsy
- TLR9IXw2maH2cBXYhU2Yeyz0Y4ysCOj6CM/asF29bRodGzOyiXqPjeeRwe/5dYPo5k+xUtdKSUY
- GQhOaXr7B6O3nuFi5HNQ5kfT4Cx8dqvZZtwmmLJjMs7opvGUunF1bpd0GmWomWeq
-X-Google-Smtp-Source: AGHT+IGdzPGfbCkGaZ1tzQRbWrXP2XPRZtMMzKtDyXnEJOrfmDjJVb/LfBnOAQATQE3+IYKFUvjuGw==
-X-Received: by 2002:a17:903:19e3:b0:224:1af1:87f4 with SMTP id
- d9443c01a7336-22c5358625amr56820875ad.22.1744994022752; 
- Fri, 18 Apr 2025 09:33:42 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbfa58355sm1871011b3a.90.2025.04.18.09.33.41
+ bh=6c7AkqTlQOlOV9iHN9LCbSUaTJnfsYNhSEPhHBD4h/w=;
+ b=rggBChcKZ9DNlfexWLxpKd1dLFh4jkQXlPZF7r8t8kWJcw6ZdclNwP+591laDXNtxZ
+ ZqojZl579rW1VjpJLlQVZW0JScPmFskuOlrMeP9/vOyzuFo1pR2Fj5I2E6wcIW0QEOyq
+ bCgybREGunJCl1mUrz/TguY53g3/8SyuUn71tOPJ6dwcYFIMi5+nVioFOuqX+G9GOj+x
+ JCFwHnXnQsAXt7vwFz/OgYSG2fNMdZFcUrkNoYr4/UwR0qCLgIFzZRBPd/HWOj0Zdhwd
+ EIZG2DMX+8E9pcLMLFjvKxJ00H0JmTDFRn6/7kBIjafd+Argq3oL4ckbJd2dyPWzH4Qt
+ c10Q==
+X-Gm-Message-State: AOJu0Yy9FtLKxkUDe6N1Crw+nFXler+xtowd7HEdTwimgD7wEmH04ylI
+ 7qm3C6PtGOAsJlKoH84v9UTwDtsSTLzYGLxzMfSWVF/u3/PqqkixiUMDRHv+7ZE=
+X-Gm-Gg: ASbGncsDVswKyjEMlnPxmNBxdLwa2F0pXl0xgjBgFdsKOj8hiHaW6RrKLB6EIGm8PmU
+ tqx1lMzNrXWfJoM0r28xOBpiayTJ0CDtQ+GAw0EqkHxiYc2xm9COQ+m7XBv29pYu2h+FYa8ncO5
+ GgInZnELM+2nWXErT+h7RXwbxfE7klLSVNiFm0+Fd8oPRW5wIXQ6FIXRzGk17T8I/VDm5QeHjkE
+ hISdH7vwtMFEYyVLmxDtj7WaFNbGeWz2B4raZroO+VBDL7xX3TkMjMZ+bXuIacTwvVv2oY8I2Pr
+ ISqgbOCDMcgCBZu6YmpAxXDqm91tNcWbUOX5UZsGbxmMVSTU8gRWYLAVKIi4n4+PW7iFWpUZaCd
+ elUbWjmEheMlTYgOlIR4=
+X-Google-Smtp-Source: AGHT+IGuJ/FczpahEL+f4A1mB18NwXK16rmFOXDAkgC1BWUdgVZU0xjjhSpobBSMrenYp0iIIe8KnA==
+X-Received: by 2002:a05:6000:2481:b0:390:e535:8750 with SMTP id
+ ffacd0b85a97d-39efbd60d22mr2946285f8f.9.1744995580691; 
+ Fri, 18 Apr 2025 09:59:40 -0700 (PDT)
+Received: from [192.168.69.175] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa4330bfsm3250187f8f.23.2025.04.18.09.59.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 09:33:42 -0700 (PDT)
-Message-ID: <25a82a76-cd63-4a42-bb68-5dcf826bd948@linaro.org>
-Date: Fri, 18 Apr 2025 09:33:41 -0700
+ Fri, 18 Apr 2025 09:59:40 -0700 (PDT)
+Message-ID: <26c2b844-dc96-448e-8978-e536ed1e61f6@linaro.org>
+Date: Fri, 18 Apr 2025 18:59:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 00/11] hw/arm: Define machines as generic QOM types
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>,
  Antony Pavlov <antonynpavlov@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
  Beniamino Galvani <b.galvani@gmail.com>,
@@ -86,19 +84,21 @@ Cc: qemu-devel@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>
 References: <20250417235814.98677-1-philmd@linaro.org>
  <a302fb91-e2d8-ef36-ac53-5e460476c2d0@eik.bme.hu>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <a302fb91-e2d8-ef36-ac53-5e460476c2d0@eik.bme.hu>
+ <25a82a76-cd63-4a42-bb68-5dcf826bd948@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <25a82a76-cd63-4a42-bb68-5dcf826bd948@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,55 +114,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8xOC8yNSAwMTo1MywgQkFMQVRPTiBab2x0YW4gd3JvdGU6DQo+IE9uIEZyaSwgMTgg
-QXByIDIwMjUsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4gV2hpbGUgREVG
-SU5FX01BQ0hJTkUoKSBpcyBhIHN1Y2NpbmN0IG1hY3JvLCBpdCBkb2Vzbid0DQo+PiBhbGxv
-dyByZWdpc3RlcmluZyBRT00gaW50ZXJmYWNlcyB0byB0aGUgZGVmaW5lZCBtYWNoaW5lLg0K
-Pj4gQ29udmVydCB0byB0aGUgZ2VuZXJpYyBERUZJTkVfVFlQRVMoKSBpbiBwcmVwYXJhdGlv
-biB0bw0KPj4gcmVnaXN0ZXIgaW50ZXJmYWNlcy4NCj4+DQo+PiBQaGlsaXBwZSBNYXRoaWV1
-LURhdWTDqSAoMTEpOg0KPj4gICBody9jb3JlL251bGwtbWFjaGluZTogRGVmaW5lIG1hY2hp
-bmUgYXMgZ2VuZXJpYyBRT00gdHlwZQ0KPj4gICBody9hcm0vYmFuYW5hcGk6IERlZmluZSBt
-YWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4+ICAgaHcvYXJtL2N1YmllYm9hcmQ6IERl
-ZmluZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4+ICAgaHcvYXJtL2RpZ2ljOiBE
-ZWZpbmUgbWFjaGluZSBhcyBnZW5lcmljIFFPTSB0eXBlDQo+PiAgIGh3L2FybS9pbXg6IERl
-ZmluZSBtYWNoaW5lcyBhcyBnZW5lcmljIFFPTSB0eXBlcw0KPj4gICBody9hcm0vaW50ZWdy
-YXRvcmNwOiBEZWZpbmUgbWFjaGluZSBhcyBnZW5lcmljIFFPTSB0eXBlDQo+PiAgIGh3L2Fy
-bS9rem06IERlZmluZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4+ICAgaHcvYXJt
-L21zZjI6IERlZmluZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4+ICAgaHcvYXJt
-L211c2ljcGFsOiBEZWZpbmUgbWFjaGluZSBhcyBnZW5lcmljIFFPTSB0eXBlDQo+PiAgIGh3
-L2FybS9vcmFuZ2VwaTogRGVmaW5lIG1hY2hpbmUgYXMgZ2VuZXJpYyBRT00gdHlwZQ0KPj4g
-ICBody9hcm0vc3RtMzI6IERlZmluZSBtYWNoaW5lcyBhcyBnZW5lcmljIFFPTSB0eXBlcw0K
-Pj4NCj4+IGh3L2FybS9iYW5hbmFwaV9tMnUuYyAgICAgIHwgMTMgKysrKysrKysrKystLQ0K
-Pj4gaHcvYXJtL2N1YmllYm9hcmQuYyAgICAgICAgfCAxMyArKysrKysrKysrKy0tDQo+PiBo
-dy9hcm0vZGlnaWNfYm9hcmRzLmMgICAgICB8IDE0ICsrKysrKysrKysrKy0tDQo+PiBody9h
-cm0vaW14MjVfcGRrLmMgICAgICAgICB8IDE0ICsrKysrKysrKysrKy0tDQo+PiBody9hcm0v
-aW14OG1wLWV2ay5jICAgICAgICB8IDE1ICsrKysrKysrKysrKystLQ0KPj4gaHcvYXJtL2lu
-dGVncmF0b3JjcC5jICAgICAgfCAxNiArKysrKysrKysrKysrLS0tDQo+PiBody9hcm0va3pt
-LmMgICAgICAgICAgICAgICB8IDE0ICsrKysrKysrKysrKy0tDQo+PiBody9hcm0vbWNpbXg2
-dWwtZXZrLmMgICAgICB8IDE1ICsrKysrKysrKysrKystLQ0KPj4gaHcvYXJtL21jaW14N2Qt
-c2FicmUuYyAgICAgfCAxNSArKysrKysrKysrKysrLS0NCj4+IGh3L2FybS9tc2YyLXNvbS5j
-ICAgICAgICAgIHwgMTMgKysrKysrKysrKystLQ0KPj4gaHcvYXJtL211c2ljcGFsLmMgICAg
-ICAgICAgfCAxNiArKysrKysrKysrKysrLS0tDQo+PiBody9hcm0vbmV0ZHVpbm8yLmMgICAg
-ICAgICB8IDEzICsrKysrKysrKysrLS0NCj4+IGh3L2FybS9uZXRkdWlub3BsdXMyLmMgICAg
-IHwgMTMgKysrKysrKysrKystLQ0KPj4gaHcvYXJtL29saW1leC1zdG0zMi1oNDA1LmMgfCAx
-MyArKysrKysrKysrKy0tDQo+PiBody9hcm0vb3JhbmdlcGkuYyAgICAgICAgICB8IDEzICsr
-KysrKysrKysrLS0NCj4+IGh3L2FybS9zYWJyZWxpdGUuYyAgICAgICAgIHwgMTQgKysrKysr
-KysrKysrLS0NCj4+IGh3L2FybS9zdG0zMnZsZGlzY292ZXJ5LmMgIHwgMTMgKysrKysrKysr
-KystLQ0KPj4gaHcvY29yZS9udWxsLW1hY2hpbmUuYyAgICAgfCAxNCArKysrKysrKysrKyst
-LQ0KPj4gMTggZmlsZXMgY2hhbmdlZCwgMjEzIGluc2VydGlvbnMoKyksIDM4IGRlbGV0aW9u
-cygtKQ0KPiANCj4gVGhpcyBpcyBtdWNoIGxvbmdlciBhbmQgZXhwb3NpbmcgYm9pbGVyIHBs
-YXRlIGNvZGUuIElzIGl0IHBvc3NpYmxlIGluc3RlYWQNCj4gdG8gY2hhbmdlIERFRklORV9N
-QUNISU5FIG9yIGFkZCBhbm90aGVyIHNpbWlsYXIgbWFjcm8gdGhhdCBhbGxvd3MNCj4gc3Bl
-Y2lmeWluZyBtb3JlIGRldGFpbHMgc3VjaCBhcyBjbGFzcyBzdGF0ZSB0eXBlIGFuZCBpbnRl
-cmZhY2VzIGxpa2Ugd2UNCj4gYWxyZWFkeSBoYXZlIGZvciBPQkpFQ1RfREVGSU5FIG1hY3Jv
-cyB0byBrZWVwIHRoZSBib2lsZXIgcGxhdGUgY29kZSBoaWRkZW4NCj4gYW5kIG5vdCBicmlu
-ZyBpdCBiYWNrPw0KPiANCg0KV2UgY2FuIGV2ZW50dWFsbHkgbW9kaWZ5IERFRklORV9NQUNI
-SU5FUywgdG8gdGFrZSBhbiBhZGRpdGlvbmFsIA0KaW50ZXJmYWNlcyBwYXJhbWV0ZXIsIGFu
-ZCByZXBsYWNlIGFsbCBjYWxsIHNpdGVzLCB3aXRoIGFuIGVtcHR5IGxpc3QgZm9yIA0KYWxs
-IGJvYXJkcyBvdXQgb2YgaHcvYXJtLg0KDQpBcyBsb25nIGFzIHdlIGF2b2lkIHNvbWV0aGlu
-ZyBsaWtlOg0KREVGSU5FX01BQ0hJTkVTX1dJVEhfSU5URVJGQUNFXzEoLi4uKQ0KREVGSU5F
-X01BQ0hJTkVTX1dJVEhfSU5URVJGQUNFXzIoLi4uKQ0KREVGSU5FX01BQ0hJTkVTX1dJVEhf
-SU5URVJGQUNFXzMoLi4uKQ0KSSdtIG9rIHdpdGgga2VlcGluZyB0aGUgbWFjcm8uDQoNCldv
-dWxkIHRoYXQgd29yayBmb3IgeW91IGZvbGtzPw0KDQo+IFJlZ2FyZHMsDQo+IEJBTEFUT04g
-Wm9sdGFuDQoNCg==
+On 18/4/25 18:33, Pierrick Bouvier wrote:
+> On 4/18/25 01:53, BALATON Zoltan wrote:
+>> On Fri, 18 Apr 2025, Philippe Mathieu-Daudé wrote:
+>>> While DEFINE_MACHINE() is a succinct macro, it doesn't
+>>> allow registering QOM interfaces to the defined machine.
+>>> Convert to the generic DEFINE_TYPES() in preparation to
+>>> register interfaces.
+>>>
+>>> Philippe Mathieu-Daudé (11):
+>>>   hw/core/null-machine: Define machine as generic QOM type
+>>>   hw/arm/bananapi: Define machine as generic QOM type
+>>>   hw/arm/cubieboard: Define machine as generic QOM type
+>>>   hw/arm/digic: Define machine as generic QOM type
+>>>   hw/arm/imx: Define machines as generic QOM types
+>>>   hw/arm/integratorcp: Define machine as generic QOM type
+>>>   hw/arm/kzm: Define machine as generic QOM type
+>>>   hw/arm/msf2: Define machine as generic QOM type
+>>>   hw/arm/musicpal: Define machine as generic QOM type
+>>>   hw/arm/orangepi: Define machine as generic QOM type
+>>>   hw/arm/stm32: Define machines as generic QOM types
+>>>
+>>> hw/arm/bananapi_m2u.c      | 13 +++++++++++--
+>>> hw/arm/cubieboard.c        | 13 +++++++++++--
+>>> hw/arm/digic_boards.c      | 14 ++++++++++++--
+>>> hw/arm/imx25_pdk.c         | 14 ++++++++++++--
+>>> hw/arm/imx8mp-evk.c        | 15 +++++++++++++--
+>>> hw/arm/integratorcp.c      | 16 +++++++++++++---
+>>> hw/arm/kzm.c               | 14 ++++++++++++--
+>>> hw/arm/mcimx6ul-evk.c      | 15 +++++++++++++--
+>>> hw/arm/mcimx7d-sabre.c     | 15 +++++++++++++--
+>>> hw/arm/msf2-som.c          | 13 +++++++++++--
+>>> hw/arm/musicpal.c          | 16 +++++++++++++---
+>>> hw/arm/netduino2.c         | 13 +++++++++++--
+>>> hw/arm/netduinoplus2.c     | 13 +++++++++++--
+>>> hw/arm/olimex-stm32-h405.c | 13 +++++++++++--
+>>> hw/arm/orangepi.c          | 13 +++++++++++--
+>>> hw/arm/sabrelite.c         | 14 ++++++++++++--
+>>> hw/arm/stm32vldiscovery.c  | 13 +++++++++++--
+>>> hw/core/null-machine.c     | 14 ++++++++++++--
+>>> 18 files changed, 213 insertions(+), 38 deletions(-)
+>>
+>> This is much longer and exposing boiler plate code. Is it possible 
+>> instead
+>> to change DEFINE_MACHINE or add another similar macro that allows
+>> specifying more details such as class state type and interfaces like we
+>> already have for OBJECT_DEFINE macros to keep the boiler plate code 
+>> hidden
+>> and not bring it back?
+>>
+> 
+> We can eventually modify DEFINE_MACHINES, to take an additional 
+> interfaces parameter, and replace all call sites, with an empty list for 
+> all boards out of hw/arm.
+> 
+> As long as we avoid something like:
+> DEFINE_MACHINES_WITH_INTERFACE_1(...)
+> DEFINE_MACHINES_WITH_INTERFACE_2(...)
+> DEFINE_MACHINES_WITH_INTERFACE_3(...)
+> I'm ok with keeping the macro.
+> 
+> Would that work for you folks?
+
+But then we'll want DEFINE_PPC32_MACHINE() -> 
+DEFINE_MACHINES_WITH_INTERFACE_1() etc...
+
+We want to eventually use declarative file to structure most of the
+machine boiler plate code. Maybe being momentarily verbose is
+acceptable...
 
