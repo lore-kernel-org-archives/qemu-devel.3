@@ -4,88 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B30C369C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 20:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C67DC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 20:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5sLD-00042y-8u; Fri, 18 Apr 2025 16:29:39 -0400
+	id 1u5sQb-0006Os-SR; Fri, 18 Apr 2025 16:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u5sL8-00042L-By
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 16:29:35 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u5sL4-0006At-BB
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 16:29:32 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-39c266c2dd5so2319944f8f.3
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 13:29:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745008167; x=1745612967; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ubwsCtkPYLKDsGlXUwhhogNwcOVwa5QICejAAh9J/Q4=;
- b=A6/EwhHUlRxij/FSzAPPoTsPGcCJg49OR7OPs4UP5Bgyck5PHKtRKrWEr7j7ezVmDF
- i/WAoZOlEmqFF5/6k8H8hLFjEVEz2bOUZkfZ+6dyhSszN0HhFg/G3sfTvfG38IJRbgXi
- vDWnfgog27feJ3t74x3Yc0pMsXXLSLucEXP9SVn/fG9J0YLDmv54aUusISd0jOMDqMz7
- 8+mnhu3xFBwq242/CQtZKwgN8EsiyKZaFVH+b0SaqfoVuDp6lt5B0QkfLkRmBDbQpH67
- tDWRs1EGyq1C/iKSIXEFZgq+31tzkmrhf6EoP9i8rvQIL7D2t1Osw8UYHVKsgZMq7RRA
- K29g==
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1u5sQZ-0006NI-5Z
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 16:35:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1u5sQW-0006sZ-6G
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 16:35:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745008507;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RJnY3gqdMxXaWcJ+S7r4EWTj/9mQDOVVIQ05PmRBz0U=;
+ b=SIpwDavWkkmVPJkmT0I6CkaAqczpvcdWD237Ux4tcgAQNhTTGJIjISImGmzYmE79BmepBA
+ R/ZYH9HxunyWyR7RDMpwiivRmCKjEm05iIEY7Mbim7i8NOeSOVC4zx73rlTQFyG2cX3XxG
+ PRKgx7wkciQFBtQbs7JqYSMVgMAM9EU=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-401-GLyQAL-QOHG_oqmw82b_dA-1; Fri, 18 Apr 2025 16:35:04 -0400
+X-MC-Unique: GLyQAL-QOHG_oqmw82b_dA-1
+X-Mimecast-MFC-AGG-ID: GLyQAL-QOHG_oqmw82b_dA_1745008503
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-476623ba226so36338551cf.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 13:35:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745008167; x=1745612967;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ubwsCtkPYLKDsGlXUwhhogNwcOVwa5QICejAAh9J/Q4=;
- b=Pi7DBNWjfaX4+hp9JWiy/giuXcrMYNn31HtiS1IL2aNv8I6OruKp/CEwCxqLPyHQfC
- yn0Sv1tSl3wMMQQsNGdr1ehxadUjqEqcDjT3rTbN2+3L/kZxYYH72AJBAADoWwUnUZ2h
- Hi9ICKTX686BXuw032DQ9PK6GBYuT3wuRVBvO8QcCljCv5OubeTx/WzvHCFPwXj/xE0R
- v982QTux5AzCnVPo7RLUzrEKgamvSetTUsFgjTUjddYEGfFZtihfXsgMv+P73/+iLWoo
- k0/GggLHYGmGrlas4RfJAodlFcvw7ctlOYMiiUDzRfdTlYIfaGF3XM+iBrVRhUWpJPZe
- 4B9w==
-X-Gm-Message-State: AOJu0Yyywhn5INxOVP0U1ECsrP+9DRE9oday4ZzJh80e5YPBu0Isd+DZ
- jELZt/1elrs/egJUoe0F+pq2wQFq6wUMFkaK4Alrh0zm6Nvx8k75
-X-Gm-Gg: ASbGncu674+3t7z/ycrnmfg95RDVUMimzX/PD5r8y3GhtWMkji0tZFioV6GoGdNnWRw
- jNeWksbCCP0/AHEloiwSn2infU2K9eIfmxpkjW3/L82DN84uBS9RXvK8u8ms0Xzlk2YA5WlCG2N
- kL068Uph1VcuK26TX5pBZb26BXl0TKa9veglnW6pb2w66Q1yef1LSu6mprI5iBpEQjsY6TJR6NG
- 67p0ld/MSlNjPWlWfLm92yTpaWQar+3lZfRO7VCZTpbr2ag8Znaq9dHEZk+gebY6jaSEIwofUo9
- 5AIzLKb6zxqPJmTtTpTFCghwZAmIfXvNobfhQNksw0Ypy6H6bvBdk0c28rFfDzaHqOtA7HWCa8t
- n5dcPXgphjPZOEva7
-X-Google-Smtp-Source: AGHT+IHdSByFWr6UhyAdIqjIlWvcPoY6ZCogpGogqZbrjdK6f5KhDGCjDb1iPNT9SvJIWrWaVyaG6w==
-X-Received: by 2002:a05:6000:4021:b0:390:f9f9:3e9c with SMTP id
- ffacd0b85a97d-39efba5dd7emr3027102f8f.25.1745008166758; 
- Fri, 18 Apr 2025 13:29:26 -0700 (PDT)
-Received: from smtpclient.apple (89-138-169-5.bb.netvision.net.il.
- [89.138.169.5]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa421c79sm3664604f8f.1.2025.04.18.13.29.25
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 18 Apr 2025 13:29:26 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH] io: Set unix socket buffers on macOS
-From: Nir Soffer <nirsof@gmail.com>
-In-Reply-To: <6g5oovn3afxsczxmejpr4bsiwvwkwvh7jntmiydtbxn3wizt7y@6ulr3j3s7h6s>
-Date: Fri, 18 Apr 2025 23:29:14 +0300
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Daniel Berrange <berrange@redhat.com>, Richard Jones <rjones@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E94D4B29-1DD8-4C66-9F7C-807BA0BBE789@gmail.com>
-References: <20250418142436.6121-1-nirsof@gmail.com>
- <6g5oovn3afxsczxmejpr4bsiwvwkwvh7jntmiydtbxn3wizt7y@6ulr3j3s7h6s>
-To: Eric Blake <eblake@redhat.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=nirsof@gmail.com; helo=mail-wr1-x42c.google.com
+ d=1e100.net; s=20230601; t=1745008503; x=1745613303;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RJnY3gqdMxXaWcJ+S7r4EWTj/9mQDOVVIQ05PmRBz0U=;
+ b=EkQ5o9iqPszqhdCPhJEqGiKhJ3XIIYh6NE84YifbulHToCmWu0q+8mCUWydPOtt+l4
+ 8HO8LKNipxk0fpDLGWnOJ7apF7+SFz6oJrskP4Ni6WbQJIh4U6Mb57yM715OFkeJPW6n
+ EdSv/anhc7cpBYfE8euGh9V+YSYn3NVDgn2YeanG24HyY5DUins9vFvPurI9SUFIH2Um
+ 22bFQuW8gWl4D4YdfeZsnl5Fa8Ddlq6jhv98Jmxt+OLmNJdh5hdZIuyBo8Zt3fY+VvUV
+ zzJddGqILvNRsfyomwFLo4zAtyLCJ5GUE3+FTByWSrvxREmTnu4GLjrayp6eTtPYrraE
+ br7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3TTD3Wbi6a73CreGTvCFG4hyHryOKDbZ3Qt22GiiF1qpKergdcHCrYplZcCPxlAKpUVvVaH0C5ONp@nongnu.org
+X-Gm-Message-State: AOJu0Yy7oECyePOBiqqifPLNcUJKybeTrUkxUpYcC5bCkdjrTHVadfaJ
+ hoEKzmGub/YNZ5NF7UDxeaXA8zhCEMK6LGWmmPv+WNBN34n4LuJhJRP4w3Jw+0h8KQNjdHSbgHE
+ hmpzo9MT9SNV25EP8aupZ1FT2QjBcyVVgN0xHMdJ4UHILMNLzDAXL
+X-Gm-Gg: ASbGncs6ikE/8tebAq478hzqPFi5U5k1KjsduskiYkLrKYbHB+Kc8Xdewe6WKlGpc6a
+ LrpKdh58iwUUNlqLBd5KAYyQcvpqdTMHCpNZ0el66gMTKBqRmQOYvLlY7o3V6Fjdu9lelSA4/3W
+ jgr+C3cAUQWT0F5MjMO2/yVqik05x+c8GM7VHHDf8py/QAXTiyezDsXd5FDHzwWw6tKlC95fX3j
+ qYbsjcO/dDLPGeqNZQRzLXjCe4n61O1TdifcjZPu35LzoBFgDH6IduldhpvN7VXnEoIjScjN9A7
+ BbsNvW67ZXlR
+X-Received: by 2002:a05:622a:13d0:b0:47a:e803:d7f with SMTP id
+ d75a77b69052e-47aec35b765mr70018121cf.4.1745008503673; 
+ Fri, 18 Apr 2025 13:35:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGp4HU759glOD+FcS0DtXb5ju+pImrN/puHMR9IdJhz4fTz4APjrcR3qYzsfOWFMWgyRQVviA==
+X-Received: by 2002:a05:622a:13d0:b0:47a:e803:d7f with SMTP id
+ d75a77b69052e-47aec35b765mr70017841cf.4.1745008503352; 
+ Fri, 18 Apr 2025 13:35:03 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-47ae9c188a8sm14007101cf.8.2025.04.18.13.35.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Apr 2025 13:35:02 -0700 (PDT)
+Message-ID: <317515f1-6cc2-4768-9a5e-8dd5dece9079@redhat.com>
+Date: Fri, 18 Apr 2025 16:34:26 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] hw/arm/virt-acpi-build: Update IORT for multiple
+ smmuv3 devices
+Content-Language: en-US
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>,
+ jiangkunkun <jiangkunkun@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+References: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+ <20250415081104.71708-3-shameerali.kolothum.thodi@huawei.com>
+ <Z/8vzf/q24sZOdBG@Asurada-Nvidia>
+ <8a76f317aa3048bfb7262b670629f43b@huawei.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <8a76f317aa3048bfb7262b670629f43b@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,106 +128,202 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-> On 18 Apr 2025, at 21:55, Eric Blake <eblake@redhat.com> wrote:
->=20
-> On Fri, Apr 18, 2025 at 05:24:36PM +0300, Nir Soffer wrote:
->> Testing with qemu-nbd shows that computing a hash of an image via
->> qemu-nbd is 5-7 times faster with this change.
->>=20
->=20
->> +++ b/io/channel-socket.c
->> @@ -410,6 +410,19 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
->>     }
->> #endif /* WIN32 */
->>=20
->> +#if __APPLE__
->> +    /* On macOS we need to tune unix domain socket buffer for best =
-performance.
->> +     * Apple recommends sizing the receive buffer at 4 times the =
-size of the
->> +     * send buffer.
->> +     */
->> +    if (cioc->localAddr.ss_family =3D=3D AF_UNIX) {
->> +        const int sndbuf_size =3D 1024 * 1024;
->> +        const int rcvbuf_size =3D 4 * sndbuf_size;
->> +        setsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &sndbuf_size, =
-sizeof(sndbuf_size));
->> +        setsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf_size, =
-sizeof(rcvbuf_size));
->> +    }
->> +#endif /* __APPLE__ */
->=20
-> Why does this have to be limited?  On linux, 'man 7 unix' documents
-> that SO_SNDBUF is honored (SO_RCVBUF is silently ignored but accepted
-> for compatibility).  On the other hand, 'man 7 socket' states that it
-> defaults to the value in /proc/sys/net/core/wmem_default (212992 on my
-> machine) and cannot exceed the value in /proc/sys/net/core/wmem_max
-> without CAP_NET_ADMIN privileges (also 212992 on my machine).
->=20
-> Of course, Linux and MacOS are different kernels, so your effort to
-> set it to 1M may actually be working on Apple rather than being
-> silently cut back to the enforced maximum.
 
-Testing shows values up to 2m send buffer, 8m receive buffer shows the =
-values changes the performance, so they are not silently clipped.
+On 4/16/25 1:38 AM, Shameerali Kolothum Thodi wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Nicolin Chen <nicolinc@nvidia.com>
+>> Sent: Wednesday, April 16, 2025 5:19 AM
+>> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+>> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+>> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+>> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
+>> mochs@nvidia.com; smostafa@google.com; Linuxarm
+>> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+>> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+>> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+>> Subject: Re: [PATCH 2/5] hw/arm/virt-acpi-build: Update IORT for multiple
+>> smmuv3 devices
+>>
+>> On Tue, Apr 15, 2025 at 09:11:01AM +0100, Shameer Kolothum wrote:
+>>> +static int get_smmuv3_device(Object *obj, void *opaque)
+>>> +{
+>>> +    GArray *sdev_blob = opaque;
+>>> +    int min_bus, max_bus;
+>>> +    VirtMachineState *vms;
+>>> +    PlatformBusDevice *pbus;
+>>> +    SysBusDevice *sbdev;
+>>> +    SMMUv3Device sdev;
+>>> +    hwaddr base;
+>>> +    int irq;
+>>> +    PCIBus *bus;
+>>
+>> In a reverse christmas tree order? Or we could at least group
+>> those similar types together.
+> 
+> Yeah. Reverse will look better I guess.
+>>
+>>> +    vms = VIRT_MACHINE(qdev_get_machine());
+>>> +    pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+>>> +    sbdev = SYS_BUS_DEVICE(obj);
+>>> +    base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+>>> +    irq = platform_bus_get_irqn(pbus, sbdev, 0);
+>>> +
+>>> +    base += vms->memmap[VIRT_PLATFORM_BUS].base;
+>>> +    irq += vms->irqmap[VIRT_PLATFORM_BUS];
+>>> +
+>>> +    pci_bus_range(bus, &min_bus, &max_bus);
+>>> +    sdev.smmu_idmap.input_base = min_bus << 8;
+>>> +    sdev.smmu_idmap.id_count = (max_bus - min_bus + 1) << 8;
+>>> +    sdev.base = base;
+>>> +    sdev.irq = irq + ARM_SPI_BASE;
+>>
+>> Hmm, these base/irq local variables don't look necessary.
+>>
+>>> +    g_array_append_val(sdev_blob, sdev);
+>>> +    return 0;
+>>> +}
+>>> +
+>>>   /*
+>>>    * Input Output Remapping Table (IORT)
+>>>    * Conforms to "IO Remapping Table System Software on ARM
+>> Platforms",
+>>> @@ -275,25 +330,42 @@ static void
+>>>   build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState
+>> *vms)
+>>>   {
+>>>       int i, nb_nodes, rc_mapping_count;
+>>> -    size_t node_size, smmu_offset = 0;
+>>> +    size_t node_size, *smmu_offset = NULL;
+>>>       AcpiIortIdMapping *idmap;
+>>> +    int num_smmus = 0;
+>>>       uint32_t id = 0;
+>>>       GArray *smmu_idmaps = g_array_new(false, true,
+>> sizeof(AcpiIortIdMapping));
+>>>       GArray *its_idmaps = g_array_new(false, true,
+>> sizeof(AcpiIortIdMapping));
+>>> +    GArray *smmuv3_devices = g_array_new(false, true,
+>> sizeof(SMMUv3Device));
+>>>
+>>>       AcpiTable table = { .sig = "IORT", .rev = 3, .oem_id = vms->oem_id,
+>>>                           .oem_table_id = vms->oem_table_id };
+>>>       /* Table 2 The IORT */
+>>>       acpi_table_begin(&table, table_data);
+>>>
+>>> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+>>> -        AcpiIortIdMapping next_range = {0};
+>>> -
+>>> +    nb_nodes = 2; /* RC, ITS */
+>>> +    if (vms->iommu == VIRT_IOMMU_SMMUV3_DEV) {
+>>> +        object_child_foreach_recursive(object_get_root(),
+>>> +                                       get_smmuv3_device, smmuv3_devices);
+>>> +         /* Sort the smmuv3-devices by smmu idmap input_base */
+>>> +        g_array_sort(smmuv3_devices, smmuv3_dev_idmap_compare);
+>>> +        /*  Fill smmu idmap from sorted smmuv3 devices array */
+>>> +        for (i = 0; i < smmuv3_devices->len; i++) {
+>>> +            SMMUv3Device *s = &g_array_index(smmuv3_devices,
+>> SMMUv3Device, i);
+>>> +            g_array_append_val(smmu_idmaps, s->smmu_idmap);
+>>> +        }
+>>> +        num_smmus = smmuv3_devices->len;
+>>> +    } else if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+>>>           object_child_foreach_recursive(object_get_root(),
+>>>                                          iort_host_bridges, smmu_idmaps);
+>>>
+>>>           /* Sort the smmu idmap by input_base */
+>>>           g_array_sort(smmu_idmaps, iort_idmap_compare);
+>>
+>> VIRT_IOMMU_SMMUV3 seems to fit the struct SMMUv3Device very well,
+>> given that it has base, irq, and smmu_idmaps too?
+> 
+> One difference though is the legacy VIRT_IOMMU_SMMUV3 one is a global
+> Machine wide one nad can be associated with multiple PCIe root complexes
+> which will result in smmu_idmaps array. See the iort_host_bridges() fn.
+> 
+Didn't quite follow this logic; shouldn't the iort be built for devices
+tagged for a virt-iommu or dependent on a pcie rp (bus num/bus-num range of an RP)?
+Thus, it's just an IORT with one or more IORT nodes?
+I could see how the current iort_host_bridge() may need a revision to work with -device arm-smmu configs.
 
-> And the fact that raising
-> it at all makes a difference merely says that unlike Linux (where the
-> default appears to already be as large as possible), Apple is set up
-> to default to a smaller buffer (more fragmentation requires more
-> time), and bumping to the larger value improves performance.  But can
-> you use getsockopt() prior to your setsockopt() to see what value
-> Apple was defaulting to, and then again afterwards to see whether it
-> actually got as large as you suggested?
+Which would bring me back to my earlier question, and it's likely tied to this IORT construction:
+  -- can you have both types defined in a machine model?
 
-Sure, tested with:
 
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index b858659764..9600a076be 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -418,8 +418,21 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
-     if (cioc->localAddr.ss_family =3D=3D AF_UNIX) {
-         const int sndbuf_size =3D 1024 * 1024;
-         const int rcvbuf_size =3D 4 * sndbuf_size;
-+        int value;
-+        socklen_t value_size =3D sizeof(value);
-+
-+        getsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &value, =
-&value_size);
-+        fprintf(stderr, "before: send buffer size: %d\n", value);
-+        getsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &value, =
-&value_size);
-+        fprintf(stderr, "before: recv buffer size: %d\n", value);
-+
-         setsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &sndbuf_size, =
-sizeof(sndbuf_size));
-         setsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf_size, =
-sizeof(rcvbuf_size));
-+
-+        getsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &value, =
-&value_size);
-+        fprintf(stderr, "after: send buffer size: %d\n", value);
-+        getsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &value, =
-&value_size);
-+        fprintf(stderr, "after: recv buffer size: %d\n", value);
-     }
- #endif /* __APPLE__ */
-=20
-With 1m send buffer:
+>>
+>> Maybe we could generalize the struct SMMUv3Device to store both
+>> cases. Perhaps just SMMUv3AcpiInfo? And then ..
+> 
+I didn't follow 'SMMUv3AcpiInfo' since I don't see that in current qemu tree;
+or is the statement trying to say its a 'mere matter of the proper acpi info generation'?
 
-% ./qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock ~/bench/data-10g.img
-before: send buffer size: 8192
-before: recv buffer size: 8192
-after: send buffer size: 1048576
-after: recv buffer size: 4194304
+> Could do. But then you have to have  a smmu_idmaps array and then check
+> the length of it to cover legacy SMMUv3 case I guess.
+> 
+Aren't they going to be different idmaps for different IORT nodes?
 
-With 2m send buffer:
-
-% ./qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock ~/bench/data-10g.img
-before: send buffer size: 8192
-before: recv buffer size: 8192
-after: send buffer size: 2097152
-after: recv buffer size: 8388608
+>   > > @@ -341,10 +413,20 @@ build_iort(GArray *table_data, BIOSLinker
+>> *linker, VirtMachineState *vms)
+>>>       /* GIC ITS Identifier Array */
+>>>       build_append_int_noprefix(table_data, 0 /* MADT translation_id */,
+>> 4);
+>>>
+>>> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+>>> -        int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
+>>> +    for (i = 0; i < num_smmus; i++) {
+>>> +        hwaddr base;
+>>> +        int irq;
+>>> +
+>>> +        if (vms->iommu == VIRT_IOMMU_SMMUV3_DEV) {
+>>> +            SMMUv3Device *s = &g_array_index(smmuv3_devices,
+>> SMMUv3Device, i);
+>>> +            base = s->base;
+>>> +            irq = s->irq;
+>>> +        } else {
+>>> +            base = vms->memmap[VIRT_SMMU].base;
+>>> +            irq = vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
+>>> +        }
+>>
+>> .. we wouldn't need two paths here.
+>>
+>>> @@ -404,15 +486,26 @@ build_iort(GArray *table_data, BIOSLinker
+>> *linker, VirtMachineState *vms)
+>>>       build_append_int_noprefix(table_data, 0, 3); /* Reserved */
+>>>
+>>>       /* Output Reference */
+>>> -    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
+>>> +    if (num_smmus) {
+>>>           AcpiIortIdMapping *range;
+>>>
+>>>           /* translated RIDs connect to SMMUv3 node: RC -> SMMUv3 -> ITS
+>> */
+>>>           for (i = 0; i < smmu_idmaps->len; i++) {
+>>> +            size_t offset;
+>>> +            if (vms->iommu == VIRT_IOMMU_SMMUV3_DEV) {
+>>> +                offset = smmu_offset[i];
+>>> +            } else {
+>>> +                /*
+>>> +                 * For legacy VIRT_IOMMU_SMMUV3 case, one machine wide
+>>> +                 * smmuv3 may have multiple smmu_idmaps.
+>>> +                 */
+>>> +                offset = smmu_offset[0];
+>>> +            }
+>>
+>> And I think we can eliminate this too if we stuff an smmu_offset
+>> in struct AcpiIortIdMapping ..
+>>
+>>>               range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+>>>               /* output IORT node is the smmuv3 node */
+>>>               build_iort_id_mapping(table_data, range->input_base,
+>>> -                                  range->id_count, smmu_offset);
+>>> +                                  range->id_count, offset);
+>>
+>> ... and here it would be range->offset.
+> 
+> I will give it a try and if that simplifies things will include it in next respin.
+> 
+> Thanks,
+> Shameer
+> 
 
 
