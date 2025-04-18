@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CF5C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 18:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9D3C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 18:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5qsI-0005eO-3C; Fri, 18 Apr 2025 14:55:42 -0400
+	id 1u5qt0-0005sO-Db; Fri, 18 Apr 2025 14:56:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u5qsF-0005e1-Vf
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 14:55:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u5qsu-0005la-5O; Fri, 18 Apr 2025 14:56:20 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u5qsD-00032L-5h
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 14:55:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745002533;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ay6qJwb9iZ4PtwxVfNtKAxqMkVunyejBGFMY9Qvf22A=;
- b=YLA5ZPOJTS3L3dt2LojN2CRBq6sdEihYlBf4iY2iHG2PygPnnzc2bmjYs77TVkoTeRsSV2
- enWe84unCEWpgslpzQ7yClft35UHuvnMSOIKvjOkDSJSlZLH8lusMcJqFsJ0M9e5VouPrz
- HIeJba9i8BAildtiLMxfeaoxpxtHy5c=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468--0_WL_MWOVuiauWzFHx2ig-1; Fri,
- 18 Apr 2025 14:55:30 -0400
-X-MC-Unique: -0_WL_MWOVuiauWzFHx2ig-1
-X-Mimecast-MFC-AGG-ID: -0_WL_MWOVuiauWzFHx2ig_1745002529
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 112CF1956094; Fri, 18 Apr 2025 18:55:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.121])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E16C1800965; Fri, 18 Apr 2025 18:55:27 +0000 (UTC)
-Date: Fri, 18 Apr 2025 13:55:24 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Nir Soffer <nirsof@gmail.com>
-Cc: qemu-devel@nongnu.org, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Richard Jones <rjones@redhat.com>
-Subject: Re: [PATCH] io: Set unix socket buffers on macOS
-Message-ID: <6g5oovn3afxsczxmejpr4bsiwvwkwvh7jntmiydtbxn3wizt7y@6ulr3j3s7h6s>
-References: <20250418142436.6121-1-nirsof@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u5qsr-00033r-62; Fri, 18 Apr 2025 14:56:19 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 97FD555D22E;
+ Fri, 18 Apr 2025 20:56:12 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id nLX93XCT2cb1; Fri, 18 Apr 2025 20:56:10 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 97C9855C592; Fri, 18 Apr 2025 20:56:10 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 95875745682;
+ Fri, 18 Apr 2025 20:56:10 +0200 (CEST)
+Date: Fri, 18 Apr 2025 20:56:10 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Beniamino Galvani <b.galvani@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ Felipe Balbi <balbi@kernel.org>, Bernhard Beschow <shentey@gmail.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ Jan Kiszka <jan.kiszka@web.de>, Alistair Francis <alistair@alistair23.me>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [PATCH 00/11] hw/arm: Define machines as generic QOM types
+In-Reply-To: <a0d9ed9a-7b97-43a5-a380-0bb607163661@linaro.org>
+Message-ID: <3339645a-136d-0e4d-4709-0ab269b78925@eik.bme.hu>
+References: <20250417235814.98677-1-philmd@linaro.org>
+ <a302fb91-e2d8-ef36-ac53-5e460476c2d0@eik.bme.hu>
+ <25a82a76-cd63-4a42-bb68-5dcf826bd948@linaro.org>
+ <26c2b844-dc96-448e-8978-e536ed1e61f6@linaro.org>
+ <35ae8633-4195-446b-9a22-0c131b9cab88@linaro.org>
+ <ee3c9b11-4c4e-41c7-8029-7e5c153215d7@linaro.org>
+ <a0d9ed9a-7b97-43a5-a380-0bb607163661@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250418142436.6121-1-nirsof@gmail.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-2086445380-1745002570=:55441"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,50 +83,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 18, 2025 at 05:24:36PM +0300, Nir Soffer wrote:
-> Testing with qemu-nbd shows that computing a hash of an image via
-> qemu-nbd is 5-7 times faster with this change.
-> 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> +++ b/io/channel-socket.c
-> @@ -410,6 +410,19 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
->      }
->  #endif /* WIN32 */
->  
-> +#if __APPLE__
-> +    /* On macOS we need to tune unix domain socket buffer for best performance.
-> +     * Apple recommends sizing the receive buffer at 4 times the size of the
-> +     * send buffer.
-> +     */
-> +    if (cioc->localAddr.ss_family == AF_UNIX) {
-> +        const int sndbuf_size = 1024 * 1024;
-> +        const int rcvbuf_size = 4 * sndbuf_size;
-> +        setsockopt(cioc->fd, SOL_SOCKET, SO_SNDBUF, &sndbuf_size, sizeof(sndbuf_size));
-> +        setsockopt(cioc->fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf_size, sizeof(rcvbuf_size));
-> +    }
-> +#endif /* __APPLE__ */
+--3866299591-2086445380-1745002570=:55441
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Why does this have to be limited?  On linux, 'man 7 unix' documents
-that SO_SNDBUF is honored (SO_RCVBUF is silently ignored but accepted
-for compatibility).  On the other hand, 'man 7 socket' states that it
-defaults to the value in /proc/sys/net/core/wmem_default (212992 on my
-machine) and cannot exceed the value in /proc/sys/net/core/wmem_max
-without CAP_NET_ADMIN privileges (also 212992 on my machine).
+On Fri, 18 Apr 2025, Pierrick Bouvier wrote:
+> On 4/18/25 10:07, Philippe Mathieu-Daudé wrote:
+>> On 18/4/25 19:03, Pierrick Bouvier wrote:
+>>> On 4/18/25 09:59, Philippe Mathieu-Daudé wrote:
+>>>> On 18/4/25 18:33, Pierrick Bouvier wrote:
+>>>>> On 4/18/25 01:53, BALATON Zoltan wrote:
+>>>>>> On Fri, 18 Apr 2025, Philippe Mathieu-Daudé wrote:
+>>>>>>> While DEFINE_MACHINE() is a succinct macro, it doesn't
+>>>>>>> allow registering QOM interfaces to the defined machine.
+>>>>>>> Convert to the generic DEFINE_TYPES() in preparation to
+>>>>>>> register interfaces.
+>>>>>>> 
+>>>>>>> Philippe Mathieu-Daudé (11):
+>>>>>>>     hw/core/null-machine: Define machine as generic QOM type
+>>>>>>>     hw/arm/bananapi: Define machine as generic QOM type
+>>>>>>>     hw/arm/cubieboard: Define machine as generic QOM type
+>>>>>>>     hw/arm/digic: Define machine as generic QOM type
+>>>>>>>     hw/arm/imx: Define machines as generic QOM types
+>>>>>>>     hw/arm/integratorcp: Define machine as generic QOM type
+>>>>>>>     hw/arm/kzm: Define machine as generic QOM type
+>>>>>>>     hw/arm/msf2: Define machine as generic QOM type
+>>>>>>>     hw/arm/musicpal: Define machine as generic QOM type
+>>>>>>>     hw/arm/orangepi: Define machine as generic QOM type
+>>>>>>>     hw/arm/stm32: Define machines as generic QOM types
+>>>>>>> 
+>>>>>>> hw/arm/bananapi_m2u.c      | 13 +++++++++++--
+>>>>>>> hw/arm/cubieboard.c        | 13 +++++++++++--
+>>>>>>> hw/arm/digic_boards.c      | 14 ++++++++++++--
+>>>>>>> hw/arm/imx25_pdk.c         | 14 ++++++++++++--
+>>>>>>> hw/arm/imx8mp-evk.c        | 15 +++++++++++++--
+>>>>>>> hw/arm/integratorcp.c      | 16 +++++++++++++---
+>>>>>>> hw/arm/kzm.c               | 14 ++++++++++++--
+>>>>>>> hw/arm/mcimx6ul-evk.c      | 15 +++++++++++++--
+>>>>>>> hw/arm/mcimx7d-sabre.c     | 15 +++++++++++++--
+>>>>>>> hw/arm/msf2-som.c          | 13 +++++++++++--
+>>>>>>> hw/arm/musicpal.c          | 16 +++++++++++++---
+>>>>>>> hw/arm/netduino2.c         | 13 +++++++++++--
+>>>>>>> hw/arm/netduinoplus2.c     | 13 +++++++++++--
+>>>>>>> hw/arm/olimex-stm32-h405.c | 13 +++++++++++--
+>>>>>>> hw/arm/orangepi.c          | 13 +++++++++++--
+>>>>>>> hw/arm/sabrelite.c         | 14 ++++++++++++--
+>>>>>>> hw/arm/stm32vldiscovery.c  | 13 +++++++++++--
+>>>>>>> hw/core/null-machine.c     | 14 ++++++++++++--
+>>>>>>> 18 files changed, 213 insertions(+), 38 deletions(-)
+>>>>>> 
+>>>>>> This is much longer and exposing boiler plate code. Is it possible
+>>>>>> instead
+>>>>>> to change DEFINE_MACHINE or add another similar macro that allows
+>>>>>> specifying more details such as class state type and interfaces like we
+>>>>>> already have for OBJECT_DEFINE macros to keep the boiler plate code
+>>>>>> hidden
+>>>>>> and not bring it back?
+>>>>>> 
+>>>>> 
+>>>>> We can eventually modify DEFINE_MACHINES, to take an additional
+>>>>> interfaces parameter, and replace all call sites, with an empty list for
+>>>>> all boards out of hw/arm.
+>>>>> 
+>>>>> As long as we avoid something like:
+>>>>> DEFINE_MACHINES_WITH_INTERFACE_1(...)
+>>>>> DEFINE_MACHINES_WITH_INTERFACE_2(...)
+>>>>> DEFINE_MACHINES_WITH_INTERFACE_3(...)
+>>>>> I'm ok with keeping the macro.
+>>>>> 
+>>>>> Would that work for you folks?
+>>>> 
+>>>> But then we'll want DEFINE_PPC32_MACHINE() ->
+>>>> DEFINE_MACHINES_WITH_INTERFACE_1() etc...
+>>>> 
+>>> 
+>>> We can see that later when touching other targets. For now,
+>>> DEFINE_MACHINE is not used in a lot of places, so replacing call sites
+>>> should be easy, and it will cover hw/arm, which is our point of interest
+>>> now.
+>> 
+>> I concur and share the same goal, but here Zoltan is concerned about
+>> converting DEFINE_MACHINE to DEFINE_TYPES adds 12 lines of boilerplate
+>> code.
+>
+> If I understand correctly, Zoltan issue is that we remove usage of 
+> DEFINE_MACHINE, and put boilerplate for type definition instead.
+> So hiding boilerplate behind the macro would be ok, thus my proposal.
+>
+> Zoltan, could you please confirm in which way you were qualifying this as 
+> boilerplate?
 
-Of course, Linux and MacOS are different kernels, so your effort to
-set it to 1M may actually be working on Apple rather than being
-silently cut back to the enforced maximum.  And the fact that raising
-it at all makes a difference merely says that unlike Linux (where the
-default appears to already be as large as possible), Apple is set up
-to default to a smaller buffer (more fragmentation requires more
-time), and bumping to the larger value improves performance.  But can
-you use getsockopt() prior to your setsockopt() to see what value
-Apple was defaulting to, and then again afterwards to see whether it
-actually got as large as you suggested?
+See commit f84203a8c22 and if I remember correctly there was some 
+discussion around that on the list where this came from which was partly 
+started by me being annoyed to have half of a device model consiting of 
+just boiler plate. I would not like that to come back if can be avoided as 
+having these macros make the models much more comprehensive for new people 
+not having to go through all the QOM boiler plate to see the actual 
+functionality.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+Regards,
+BALATON Zoltan
+--3866299591-2086445380-1745002570=:55441--
 
