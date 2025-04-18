@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D06C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B24C5C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5pWz-0002JC-Kz; Fri, 18 Apr 2025 13:29:37 -0400
+	id 1u5pc3-0008T1-Dh; Fri, 18 Apr 2025 13:34:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pWy-0002J2-Rz
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:29:36 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pb9-0007tp-7g
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:34:02 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pWx-0008KM-Ap
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:29:36 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb94so21459325e9.1
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:29:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pb4-0000l9-HX
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:33:53 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cf034d4abso13943945e9.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:33:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744997373; x=1745602173; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0t/uXKNyhujXRRINXuzOy18EBWQDT1SxjDNFS8yAx2w=;
- b=No4NEv1IYGmCWTDI93Ch9elMXVXT42MVbExqkTbY0FJCcjYkuRjdtb1q1FtyhSWPc6
- YmQpNb1IHzRcf0fmoWwBkroLIMsA8cTjtHu4y9X0vhCiXEpNEaZNAm171TI8TI7fWYLk
- W4wIf50J1XerBAKtpPzBokFPxDtioeRNrBuBmNL2YUWSJtn3eoJR6kocWjy2tC/aA/Dp
- 4ip2kf36gd877WwIc94O1NfJv8aZALP3tUzXPCbZzXul/FxOeBckMuSlPiB82Kv3Tq2J
- dbK2QJx8a7V1ge6jUo85A8YJyhB8kPSDrasaAvqt3ETKRRgSWpjHao7Z3mSc3acrc081
- dOeg==
+ d=linaro.org; s=google; t=1744997627; x=1745602427; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=h8DSwifdvjPYS0Ns0o9vim61Cd+Sb418wEGt8AAMb6M=;
+ b=XLfFkoYVtkU5e56JcR/CyRmRHTp2qazTdTufUHtHITHydX6kKo9LMTz08FC9ntjYqO
+ ymdQBAVyHN2zoRTZkpEKWDIX6608bdSvjUGhqaWIjF7SpUVrMIRiJuA8tltvfc5VkELB
+ sqTHZjs282+fn13J7DJeUfEtlVDNnqdEcCYV85GyvhPC5zuo01TQtFFVknChURUUMQK6
+ i9QZYsbMXkJWx/CYp3dCfHVAOCK/5Yj4xEV4o9aN0kqaLQnghnOz8+77uVyAV0T2RIkW
+ iMnue94dVuIl2o1QLxlJupJJnLnm0DMUvg0/PjJe10QFFDHe2t1xVIYqaMUVapIg3lKq
+ cQ5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744997373; x=1745602173;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0t/uXKNyhujXRRINXuzOy18EBWQDT1SxjDNFS8yAx2w=;
- b=N++5mToVjuuoIdLlBCtXS2NSVwEhYR2XDaQbFjNZlV04ZpwTpc58ArCkwmuQONodyb
- EZI2J24D79Zofi8Uhnde2aapGFDo3/rRz24CEo6ImhnscVO+BBwgZKZLyuLTQA71hYFZ
- LNq34OIRiKV7G+W1y0VxGVg+L60Xt2PHdS49uHQlrgdKo/tA7o2JtL7LXYUXECQ3OUVc
- X7AnPGXtO4iqf+mN1YwX22imFvu6FyuNDaaB0Rro5ggOvKhZPTtRz3XkCJZDBIfxNgSS
- hKB2XoNMb6yr6pQuN1O1MQRxG48Jlltv/YsXlVo2rYWX+H6sFbHC+kOmA3CwHUAGwE/9
- kFKw==
-X-Gm-Message-State: AOJu0YyRRNPcAA6zIgaHuGrc9a28a9Sg8etdblwFvjP791+nmuXIBtkV
- UYycCPZyDZHbHuaLWBOhMV6aA4nquuAFumshCSqq/TN57bVyg0U6haqb605asxi0gi94HDqcH2L
- O
-X-Gm-Gg: ASbGncuHMe6jpAv/34obhMtGZ7WX2dZOVqslpgQroikJWYpwun2yECGgovlZcMUiIwq
- SVNuQJq1pRwjGOegn3WagpciNYPfY0OYBQWPy6Sqs9wp7OBVKws3wiNrNoUTE6jZq0rEDr+VOlr
- oP8RedleUF1muNzE32QqwZgDMEnR2P0KHkFp/Qq2xG/01qer23Hlw9DVxxW6NhOV7l2eE/PPpoa
- dmIb/MCW8L0RWYtWaQ0T11097+jNsvpFOhQZVnyT+svwBtTcY+B0l13zjjS5VEqKNnfTf3wSRtm
- buysnJ6jOAAjsPxjfHEFtH7EbcNZnEgOfbCT9LeYW0kuAMs9GiYywNw8zSpNUrNe41cfhQFgVMg
- jPlvgyIQSjmR45a63+/ydh+blVQ==
-X-Google-Smtp-Source: AGHT+IGl2ZlX5GCsg9EqsY4iweCsxxKoiEdqbC+Uy5E14j1h4szwDYCIUYoDvR8vVHpYVzjUqYcxMg==
-X-Received: by 2002:a05:600c:1e0a:b0:43c:eeee:b713 with SMTP id
- 5b1f17b1804b1-4406abfba46mr29267525e9.20.1744997373322; 
- Fri, 18 Apr 2025 10:29:33 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1744997627; x=1745602427;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h8DSwifdvjPYS0Ns0o9vim61Cd+Sb418wEGt8AAMb6M=;
+ b=h6uhKI2EWHAnaaS5akCxoM4ahFj9HGLTBZdIJQjzFlt2Ab3J6SkZBLZCWec8V3UdV3
+ pHZV/EylhwSONHP15RV7+5UsSAPmb90+fPAsNavOSbjo0YX3fH+zvKlDgRSBeL332BTN
+ TefDw+hWgpccEmDuE/K6LE8cfwvD0jGBuXAsiKKhR6UhQbdKFOmUBLxJllBhqTK+XVGL
+ xnlqJLeX7EWATzQd7nJmZxjM/tVfaqR1t98hcMX0Q5HmjrYgIX1nQ/Q4vytojLy2hOcp
+ iEo9PR/pvATdIvAPBZ71xkfYy1vf+aexDxKhUjCUxwdaJ1dChQLHKIH8SvhZ3Wr0kgYs
+ B7mA==
+X-Gm-Message-State: AOJu0YzZLPoJAnxRe0vDqePwqIVMK9rMyVl1KkB0J027OGYZ6zg65lL5
+ 7+A6fLNbWWhd9bDN1HB8Aa9SPHLSSSxQkA+I8DaKWedcMrsdHQZ09PjNbWeKFaCseiVhmECxGDL
+ b
+X-Gm-Gg: ASbGnctwFsguIScPsX26Nh5BOabWoTv2LlG0iuTM3CkHuTK0lL2aNwkEgFxd7dNdWnK
+ x8bmZHXfBmazIMBeSQhJXz5t9yeqVoYRqqwfdOu4nrrg2CNeuSo2+HybxllR6KGtVgY1ORbdEN3
+ Ke/q6zN8wKfcwuRR9MGCvARIZerhQWuDeTubzFpwd+veZeRQAPpKw0Ki+cKcCL+p4yiSlULa326
+ ltpuJD/zuXbsh9mqRp/gPjV2xV2SafPP+gW1VHGKbwZTeg3a+B9hxZDW8mcP2agV4uCizuGwWFO
+ RrSth3b8heRhob1Ao0hNIQ0txPtVYJSBlYklz6Fe2Tjp+Oyc5AB0k9HBk/nqS9/aYg755lrwCZX
+ LyVFgR+5/
+X-Google-Smtp-Source: AGHT+IG63xtKJ7Znm3umcQX3M/si0y4JD1JwAcKSWStP7Vw6Av07RDfU3la6cLwC2phCpJuXD1Q/dg==
+X-Received: by 2002:a05:600c:8716:b0:43d:745a:5a50 with SMTP id
+ 5b1f17b1804b1-4406abb420dmr33148625e9.19.1744997627044; 
+ Fri, 18 Apr 2025 10:33:47 -0700 (PDT)
+Received: from [192.168.69.175] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5aced5sm29098395e9.16.2025.04.18.10.29.32
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 18 Apr 2025 10:29:32 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH v3 05/14] hw/core: Allow ARM/Aarch64 binaries to use the
- 'none' machine
-Date: Fri, 18 Apr 2025 19:28:59 +0200
-Message-ID: <20250418172908.25147-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250418172908.25147-1-philmd@linaro.org>
-References: <20250418172908.25147-1-philmd@linaro.org>
+ 5b1f17b1804b1-4406d5bbcb6sm29198775e9.18.2025.04.18.10.33.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Apr 2025 10:33:46 -0700 (PDT)
+Message-ID: <73415609-5a88-4c85-b16b-0adca4794e92@linaro.org>
+Date: Fri, 18 Apr 2025 19:33:45 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 01/14] qapi: Rename TargetInfo structure as
+ BinaryTargetInfo
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-2-philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250418172908.25147-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,41 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we'll start to use target_machine_typename() to filter
-machines for the ARM/Aarch64 binaries, the 'none' machine
-will be filtered out. Register the proper interfaces to keep
-it available.
++Daniel/Markus on this single one.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/core/null-machine.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
-index 1ccaf652eb4..dd56d7cb7e5 100644
---- a/hw/core/null-machine.c
-+++ b/hw/core/null-machine.c
-@@ -16,6 +16,7 @@
- #include "hw/boards.h"
- #include "system/address-spaces.h"
- #include "hw/core/cpu.h"
-+#include "hw/arm/machines-qom.h"
- 
- static void machine_none_init(MachineState *mch)
- {
-@@ -62,6 +63,11 @@ static const TypeInfo null_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("none"),
-         .parent         = TYPE_MACHINE,
-         .class_init     = null_machine_class_init,
-+        .interfaces     = (InterfaceInfo[]) {
-+            { TYPE_TARGET_ARM_MACHINE },
-+            { TYPE_TARGET_AARCH64_MACHINE },
-+            { },
-+        },
-     },
- };
- 
--- 
-2.47.1
+On 18/4/25 19:28, Philippe Mathieu-Daudé wrote:
+> The QAPI-generated 'TargetInfo' structure name is only used
+> in a single file. We want to heavily use another structure
+> similarly named. Rename the QAPI one, since structure names
+> are not part of the public API.
+> 
+> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   qapi/machine.json          | 12 ++++++------
+>   hw/core/machine-qmp-cmds.c |  4 ++--
+>   2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index a6b8795b09e..3246212f048 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -275,15 +275,15 @@
+>   { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams' }
+>   
+>   ##
+> -# @TargetInfo:
+> +# @BinaryTargetInfo:
+>   #
+> -# Information describing the QEMU target.
+> +# Information describing the QEMU binary target.
+>   #
+> -# @arch: the target architecture
+> +# @arch: the binary target architecture
+>   #
+>   # Since: 1.2
+>   ##
+> -{ 'struct': 'TargetInfo',
+> +{ 'struct': 'BinaryTargetInfo',
+>     'data': { 'arch': 'SysEmuTarget' } }
+>   
+>   ##
+> @@ -291,11 +291,11 @@
+>   #
+>   # Return information about the target for this QEMU
+>   #
+> -# Returns: TargetInfo
+> +# Returns: BinaryTargetInfo
+>   #
+>   # Since: 1.2
+>   ##
+> -{ 'command': 'query-target', 'returns': 'TargetInfo' }
+> +{ 'command': 'query-target', 'returns': 'BinaryTargetInfo' }
+>   
+>   ##
+>   # @UuidInfo:
+> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> index 3130c5cd456..408994b67d7 100644
+> --- a/hw/core/machine-qmp-cmds.c
+> +++ b/hw/core/machine-qmp-cmds.c
+> @@ -132,9 +132,9 @@ CurrentMachineParams *qmp_query_current_machine(Error **errp)
+>       return params;
+>   }
+>   
+> -TargetInfo *qmp_query_target(Error **errp)
+> +BinaryTargetInfo *qmp_query_target(Error **errp)
+>   {
+> -    TargetInfo *info = g_malloc0(sizeof(*info));
+> +    BinaryTargetInfo *info = g_malloc0(sizeof(*info));
+>   
+>       info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+>                                    &error_abort);
 
 
