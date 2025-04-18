@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291E1C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 09:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6246CC369C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 09:56:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5iQY-0001xJ-2A; Fri, 18 Apr 2025 05:54:30 -0400
+	id 1u5iSA-0003HG-SC; Fri, 18 Apr 2025 05:56:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iQT-0001wl-Ha
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:54:25 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iS8-0003FX-TK
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:56:09 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iQR-0004yp-UT
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:54:25 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39ee5a5bb66so1056295f8f.3
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 02:54:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iS7-0005Lk-7e
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:56:08 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb46so12267005e9.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 02:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744970062; x=1745574862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744970165; x=1745574965; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5Fed5CCqVC1uchETrSglEjAsY710qHYDpL/0FpAk3OY=;
- b=MtcUGig/+OPp0Jw6+dE0UtAa5NkkKl0iKXZ+aog6IokF9Q47WMEbdkGo++LP0Dwp8y
- iDyP3fEZUNDLW1mitg2xSxx9dh6mKuK2VmH+EUrl8sVBsQp1QaRo8/5OpEd4vu0rH5qi
- HUupTQ8LchNrrpY/dg562ckEcfOTWaYd54Vd8yYnJgOh9k4YIbOwfsvrgWRo65ZC2Un6
- nHyHmrMBab4D/8Rb8HyPvahjRzUtBbKP/AO+UU6dLmRRjx+liao2WrUZZou0HqKUHeja
- WQxDFRrdqaklfINiJ3qg1a4QC2fjMb2r1t3Enoe9LVWXcjwdRizC5qlIOsf2QNTg7F/9
- +www==
+ bh=lPgVqdcMJRMloJUAreVlS7QsL8G7B4bUuECnpwsmztU=;
+ b=ufk/hL9LuOZIPtdKY++7GXqbg/m/OZ7um5eu1h604IIvH4z87AStWYwEaI5EZV/d64
+ ZowXcrgYgsPwV7BtQlsEoQvZ6j/1l6AYQ+N7n0JREj+SFlfLeu4S5C+KQL8tQRZj9ceR
+ Xv54UM1QN7Aga6K2y0Uan8fWF5ZFPT09Y2DLdhwp7mkMaxJ6Jkv5Nl8qbIIJ5I6NpF7Z
+ 13SriLnbAywK43fOCr6cn4krb3sZVDBJbX1gPfDkz4v7vSuqpbI6cRmaj412pbzH16EZ
+ NQf77JACjo6SQVZHibiLJBzAY3k/dDkttP06JoIUzRDHBJtgu455m0r6rifT8twhixrl
+ /VFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744970062; x=1745574862;
+ d=1e100.net; s=20230601; t=1744970165; x=1745574965;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5Fed5CCqVC1uchETrSglEjAsY710qHYDpL/0FpAk3OY=;
- b=oxYYHwcbRw9RT3EplTuFAIUJ6kDtRptFlHqp4D/AKuGIUFyoWz6xJkGvY9ei4qnp3O
- vEyb9HrEFB5k8cFX8NEL1gLkgKQW6zbxJwvv5EMoYZY7OfYhr4p0qEOdnFSiwwVnyXkE
- HMrMXyixDEud5nrRn2y7ii2J/ZhHl1n0gFvWCeDIR9228abafBx6rUDdjUj3Luti/OV7
- xkPkS+T1oqx02D5nJ0g+rlFmm7epJzjqMLeAHkGWbqBZFPZ0oPVRzGBb5/ZB44GjwAAP
- 3S5mWI3pqa8IN34ZNzVbJgV7VVSyQgClK/hI9gYmjqXurS2j8VETCtjD2MHCTlFWvxd2
- Dfjw==
-X-Gm-Message-State: AOJu0YzwDuJGDo0WdxuAalxjei1zlnJrC8u5SrcF056MIOIUUrR8dePy
- vFqYPylyL8wYkYk4FVcKfy1WwUYjGjIhcXkrlRkgzRClDGdL3zvDqOYBvqrplBM=
-X-Gm-Gg: ASbGnct9jOwALfydMfbMZkMZ/GeWuUSjOZH/Hm1t1eeq1ktaT3Y3uRfGSEMf9HmiYPn
- VzGP4RWVnqeKkZsGhQ65whElgZxUc/DzWmsJ4B/Qa4w+vuBwA2Q9Q4vwUvv+deEagyxz5xAKG/S
- JKRuueE6GKHp9dxhVxk7ooWhPtT09rNEfeVOhVUkMRe1hdlD2FqMvDh/yGdR3tVtt9kvInf+BlD
- xcxxfPic4YjIfdPBvYfb1v82hcNEn1P/8RVcrTg99Ba+7ttQIsuittJhKS9OqK5lla76kqLL9v6
- XsvqNagAjXtScOAGQs+1yrvkmcNMs3ToazhcXgqtQR/tJCwcNyl6LlC6/icddngAv9fJckp43HT
- 4fx/KQFKTKpS3SX6+XE8=
-X-Google-Smtp-Source: AGHT+IEx5nOZSpmYtfWuc3dv83tBBmnvEcrXWY7Lwob10430tnM8nvFUlhfQhA5lcDsGd235cosI8g==
-X-Received: by 2002:a05:6000:459e:b0:39c:1258:2dc7 with SMTP id
- ffacd0b85a97d-39efbaf1ed8mr1146204f8f.56.1744970062562; 
- Fri, 18 Apr 2025 02:54:22 -0700 (PDT)
+ bh=lPgVqdcMJRMloJUAreVlS7QsL8G7B4bUuECnpwsmztU=;
+ b=D5fuSTgP2pchT8J2W/VbtvyVA+s7BOvb7mOMPe1YCjLXKeco5rYZnRuFS+dOiOzJ+W
+ 185sqJ/wBVjDd4P0lAE9lNJoggUiUDtj1Mbb1c9DDV09IdlCLkFLk3xWPBkiUU4eEfDs
+ RG6MXUlQHR7S0ZIKsB2v0Hj2QJcomRN3Wa2xWwNjWtpk2JpnH+3aCy0Stv+Ov6XZmC/y
+ ouDdrPJ3RwsolmcyWqIfvLVrBHNCUlU0sLu37AAkiE7U5IfZQdo81k3PyJHGghCdxAUH
+ dlw9OzRSbZZLxFhEerLUKFCfas3M8VJBOY5od5iuwLesjvLfNihhdbGgtx0TcEn56Cl/
+ MJTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjF+ZmRmRLLOvHrgvy32iZsES8OSUPc635zapjOIxrjTbEuWRh+Dy8//sO/V1y1xI/xCPxpINwQBML@nongnu.org
+X-Gm-Message-State: AOJu0YxXyp+amIeKEjWi081+AhOGCqK4XuiMA/Et6XzXqy6KVIE1werS
+ kuJ5ZoU6fyBwuiEay1i6htCki+NyCrV1P/xIWPiZa4vDAtixmWWsJ9NbvVT++gU=
+X-Gm-Gg: ASbGnctM77bCNeiINlFCbbEnPJfr3cX1S/RNjHWdJxx3vxNUzUdL2DaIWbGEB5q7z6C
+ hX3nIYu+llNYwiM4FVWi1ZVwr98bE21K+DqK0WIRjdaBfD0sij7vuUnHZvwssd/x4jBw7ho+DVh
+ xgSQvLSeIYq98Vj58c8dar/5Cq5gUNbvMSuQRF3i2xYarwxqffkA/wbk4EjZz6KLVq3eDVKPrAS
+ 2SSLZOZ6D03fWXnsfcH1Q/31xHp7Pc53JlwcL2DIptPRtMYcoRluhRcXpBetMsUxr11oN+W3tBG
+ 6B+Z0EeJHLcFoVyRIrwjLK0RYyoR/PMAxvJSEY2Lqff6YC+P4Dc6jMTG0gUABeBE3sOEDPhe0hY
+ px5uQuCreYwC54Wquc44=
+X-Google-Smtp-Source: AGHT+IFYT2kEbEGknynAwWQx4iAXKIZMKHAJ+26pvK76nlBXYMd7/N5QzwchykSjzDnvjdFhz4ih2Q==
+X-Received: by 2002:a05:600c:3c9d:b0:43c:f8fc:f69a with SMTP id
+ 5b1f17b1804b1-4406ab676fdmr16943715e9.4.1744970164774; 
+ Fri, 18 Apr 2025 02:56:04 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d6e0183sm15736545e9.37.2025.04.18.02.54.21
+ 5b1f17b1804b1-4406d5d7aaasm15675235e9.39.2025.04.18.02.56.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 02:54:22 -0700 (PDT)
-Message-ID: <602dee62-1b01-4f17-9a61-158aacf1cf38@linaro.org>
-Date: Fri, 18 Apr 2025 11:54:21 +0200
+ Fri, 18 Apr 2025 02:56:04 -0700 (PDT)
+Message-ID: <f2fb020f-bff4-41d1-8f31-fde1ecb52529@linaro.org>
+Date: Fri, 18 Apr 2025 11:56:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] target/loongarch: Add CRC feature flag and use it
- to gate CRC instructions
-To: WANG Rui <wangrui@loongson.cn>, Gao Song <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, bibo mao <maobibo@loongson.cn>, qemu@hev.cc
-References: <20250418082103.447780-1-wangrui@loongson.cn>
- <20250418082103.447780-2-wangrui@loongson.cn>
+Subject: Re: [PATCH] hw/usb/hcd-xhci: Unmap canceled packet
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, devel@daynix.com
+References: <20250418-xhc-v1-1-bb32dab6a67e@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250418082103.447780-2-wangrui@loongson.cn>
+In-Reply-To: <20250418-xhc-v1-1-bb32dab6a67e@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -101,29 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/4/25 10:21, WANG Rui wrote:
-> This patch replaces the obsolete IOCSR_BRD bit with CRC in cpucfg1[25],
-> in both LA464 and LA132 CPU initialization functions. The corresponding
-> field macro in `cpu.h` is updated to reflect this change.
+On 18/4/25 07:51, Akihiko Odaki wrote:
+> When the Stop Endpoint Command is received, packets running
+> asynchronously are canceled and then all packets are cleaned up. Packets
+> running asynchronously hold the DMA mapping so cleaning the packets leak
+> the mapping. Remove the mapping after canceling packets to fix the leak.
 > 
-> Additionally, the availability macro `avail_CRC()` is introduced in
-> `translate.h` to check the CRC feature flag.
-> 
-> All CRC-related instruction translations are updated to be gated by
-> the new CRC feature flag instead of hardcoded CPU features.
-> 
-> This ensures correctness and configurability when enabling CRC
-> instructions based on hardware capabilities.
-> 
-> Signed-off-by: WANG Rui <wangrui@loongson.cn>
-> ---
->   target/loongarch/cpu.c                           |  4 ++--
->   target/loongarch/cpu.h                           |  2 +-
->   .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 16 ++++++++--------
->   target/loongarch/translate.h                     |  1 +
->   4 files changed, 12 insertions(+), 11 deletions(-)
 
-Nice.
+Cc: qemu-stable@nongnu.org
+
+> Fixes: 62c6ae04cf43 ("xhci: Initial xHCI implementation")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   hw/usb/hcd-xhci.c | 13 +++++++------
+>   1 file changed, 7 insertions(+), 6 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
