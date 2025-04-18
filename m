@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA84EC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 09:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291E1C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 09:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5iPp-0001NK-SR; Fri, 18 Apr 2025 05:53:45 -0400
+	id 1u5iQY-0001xJ-2A; Fri, 18 Apr 2025 05:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iPk-0001L6-5A
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:53:40 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iQT-0001wl-Ha
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:54:25 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iPi-0004tZ-Am
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:53:39 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cf06eabdaso16560205e9.2
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 02:53:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5iQR-0004yp-UT
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 05:54:25 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-39ee5a5bb66so1056295f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 02:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744970016; x=1745574816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744970062; x=1745574862; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=n3rJfOV/p/szPo4n3ALk6woIiQhlMYlsJJRmRBSMfjY=;
- b=mNWQD3MRJtT2h/aA9xEKbbg+S/u2FllnXSO7TgklFNWCBreb3/HwD7hPc1ORWuU+xN
- o6MbrHFVpLyrm8bGjDQqSEW6AFjl6Aw/n4n3V1+MqFpb1kI61Jcovo9ohsiknt7WJT20
- xnqHmuJTDZ8ErMvTgeaiOH+dbo5lVsOtKg21xjV+YqwM9z3s4y0oMb9uAsmREJWdYEYP
- M9TqYOCPQfj+C0XSO5mASmyfCaGLNQWtRBVEuyLF8Ob3aDv/2Mk0fKK+SFffHcTb51wz
- zMgzeFDyblfLOOXwQPL2y3tskfAvebylJmVIENe3fdMtDBvOzP9rzTyU1Q0kmlqizvFZ
- 93pw==
+ bh=5Fed5CCqVC1uchETrSglEjAsY710qHYDpL/0FpAk3OY=;
+ b=MtcUGig/+OPp0Jw6+dE0UtAa5NkkKl0iKXZ+aog6IokF9Q47WMEbdkGo++LP0Dwp8y
+ iDyP3fEZUNDLW1mitg2xSxx9dh6mKuK2VmH+EUrl8sVBsQp1QaRo8/5OpEd4vu0rH5qi
+ HUupTQ8LchNrrpY/dg562ckEcfOTWaYd54Vd8yYnJgOh9k4YIbOwfsvrgWRo65ZC2Un6
+ nHyHmrMBab4D/8Rb8HyPvahjRzUtBbKP/AO+UU6dLmRRjx+liao2WrUZZou0HqKUHeja
+ WQxDFRrdqaklfINiJ3qg1a4QC2fjMb2r1t3Enoe9LVWXcjwdRizC5qlIOsf2QNTg7F/9
+ +www==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744970016; x=1745574816;
+ d=1e100.net; s=20230601; t=1744970062; x=1745574862;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n3rJfOV/p/szPo4n3ALk6woIiQhlMYlsJJRmRBSMfjY=;
- b=q5QtLmN9Csm2CgPlhWPZF9aQen6Fo1yp63OPBNKsxA4WFeF+l9eo6TmvS9x+VkswhC
- 0LKgcDOkhIB1mx+NiFryM1bmWZCxnvk9ulpnLI1bLnPdkm998ggNysIxfisKFBHS9o6L
- EWMM3ZTeoIJ0VqNb7B4MMG67lL+8CiWZ/ldbueOgqMDemWz/ly1Ti2PWERNy0t2ncM/9
- WJPqOQFZ7UtYjhZjcQWHftjS/dkjbD3kAUhu3lOIP3zNGkLpkemP1vTQy8MB6IqCrG/G
- 2LDOrqNk4/8r5mz4o/xXVurGcCTdmf98OkSyIP5qiNaYoR1VFPqo3yjx2DOwKM/jQecq
- //vg==
-X-Gm-Message-State: AOJu0YzJUNkbu6Y6JmwacNgMur9i4AETkV34zSSVDTmz1flVaGJ1q0Nh
- pZqYeXsHzrtArbUvhXuElQNxWMjGyAsrtJ8czrnLX+N8+Kqgxj4scf2e3taM6L3lqpjkSg+H63+
- A
-X-Gm-Gg: ASbGncvqES0h2Avzw3So9ImL9SKBkOSGYmV4RReM2fAzf6KxNE61+nJE+bQpowWY+JK
- 5iU3YhNCLiCSWMmqSM2MxV/gsNcJKmKWa5zL0mHwi8BEBZnuZugTLwLLTb7BoBc30a5oNJs2Q8h
- tm4uMw0dt4htv/ta1FeaHsMUHQp42IOYlY+dPuk3wAW++8aqJTrsTCfLKupEqvgYHCYVmr27urt
- xd2QGVEOULyRsJhoCo3JVd7GBJ8sSJt1iETYKSkRVkgXuqHRglHFiWXurson2OKWQ8qE4tnM3sX
- lp+cPGEPzO0ZNXBypBq2ZIBNnTiX8PwkF8gOtlxVM6fLBEKkWfNRyE0UMJkpiJIhYbzFCUOWuM/
- RYSzPrxWd
-X-Google-Smtp-Source: AGHT+IG4BY8/RKORtDDzz8NKOSQ9HTTABpIEOPBAFzQrB//F9tr4YOkkcU0BD8SJ3Eb3V7dnu1jszA==
-X-Received: by 2002:a05:600c:4ecc:b0:43c:f969:13c0 with SMTP id
- 5b1f17b1804b1-4406ac17729mr15437275e9.29.1744970016603; 
- Fri, 18 Apr 2025 02:53:36 -0700 (PDT)
+ bh=5Fed5CCqVC1uchETrSglEjAsY710qHYDpL/0FpAk3OY=;
+ b=oxYYHwcbRw9RT3EplTuFAIUJ6kDtRptFlHqp4D/AKuGIUFyoWz6xJkGvY9ei4qnp3O
+ vEyb9HrEFB5k8cFX8NEL1gLkgKQW6zbxJwvv5EMoYZY7OfYhr4p0qEOdnFSiwwVnyXkE
+ HMrMXyixDEud5nrRn2y7ii2J/ZhHl1n0gFvWCeDIR9228abafBx6rUDdjUj3Luti/OV7
+ xkPkS+T1oqx02D5nJ0g+rlFmm7epJzjqMLeAHkGWbqBZFPZ0oPVRzGBb5/ZB44GjwAAP
+ 3S5mWI3pqa8IN34ZNzVbJgV7VVSyQgClK/hI9gYmjqXurS2j8VETCtjD2MHCTlFWvxd2
+ Dfjw==
+X-Gm-Message-State: AOJu0YzwDuJGDo0WdxuAalxjei1zlnJrC8u5SrcF056MIOIUUrR8dePy
+ vFqYPylyL8wYkYk4FVcKfy1WwUYjGjIhcXkrlRkgzRClDGdL3zvDqOYBvqrplBM=
+X-Gm-Gg: ASbGnct9jOwALfydMfbMZkMZ/GeWuUSjOZH/Hm1t1eeq1ktaT3Y3uRfGSEMf9HmiYPn
+ VzGP4RWVnqeKkZsGhQ65whElgZxUc/DzWmsJ4B/Qa4w+vuBwA2Q9Q4vwUvv+deEagyxz5xAKG/S
+ JKRuueE6GKHp9dxhVxk7ooWhPtT09rNEfeVOhVUkMRe1hdlD2FqMvDh/yGdR3tVtt9kvInf+BlD
+ xcxxfPic4YjIfdPBvYfb1v82hcNEn1P/8RVcrTg99Ba+7ttQIsuittJhKS9OqK5lla76kqLL9v6
+ XsvqNagAjXtScOAGQs+1yrvkmcNMs3ToazhcXgqtQR/tJCwcNyl6LlC6/icddngAv9fJckp43HT
+ 4fx/KQFKTKpS3SX6+XE8=
+X-Google-Smtp-Source: AGHT+IEx5nOZSpmYtfWuc3dv83tBBmnvEcrXWY7Lwob10430tnM8nvFUlhfQhA5lcDsGd235cosI8g==
+X-Received: by 2002:a05:6000:459e:b0:39c:1258:2dc7 with SMTP id
+ ffacd0b85a97d-39efbaf1ed8mr1146204f8f.56.1744970062562; 
+ Fri, 18 Apr 2025 02:54:22 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4330d8sm2328445f8f.33.2025.04.18.02.53.35
+ 5b1f17b1804b1-4406d6e0183sm15736545e9.37.2025.04.18.02.54.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 02:53:36 -0700 (PDT)
-Message-ID: <2f743d6c-b1fe-4abe-9779-8ca60d26e424@linaro.org>
-Date: Fri, 18 Apr 2025 11:53:35 +0200
+ Fri, 18 Apr 2025 02:54:22 -0700 (PDT)
+Message-ID: <602dee62-1b01-4f17-9a61-158aacf1cf38@linaro.org>
+Date: Fri, 18 Apr 2025 11:54:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] target/loongarch: Guard 64-bit-only insn
- translation with TRANS64 macro
+Subject: Re: [PATCH v4 1/3] target/loongarch: Add CRC feature flag and use it
+ to gate CRC instructions
 To: WANG Rui <wangrui@loongson.cn>, Gao Song <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org, bibo mao <maobibo@loongson.cn>, qemu@hev.cc
 References: <20250418082103.447780-1-wangrui@loongson.cn>
- <20250418082103.447780-4-wangrui@loongson.cn>
+ <20250418082103.447780-2-wangrui@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250418082103.447780-4-wangrui@loongson.cn>
+In-Reply-To: <20250418082103.447780-2-wangrui@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -103,21 +102,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/4/25 10:21, WANG Rui wrote:
-> This patch replaces uses of the generic TRANS macro with TRANS64 for
-> instructions that are only valid when 64-bit support is available.
+> This patch replaces the obsolete IOCSR_BRD bit with CRC in cpucfg1[25],
+> in both LA464 and LA132 CPU initialization functions. The corresponding
+> field macro in `cpu.h` is updated to reflect this change.
 > 
-> This improves correctness and avoids potential assertion failures or
-> undefined behavior during translation on 32-bit-only configurations.
+> Additionally, the availability macro `avail_CRC()` is introduced in
+> `translate.h` to check the CRC feature flag.
+> 
+> All CRC-related instruction translations are updated to be gated by
+> the new CRC feature flag instead of hardcoded CPU features.
+> 
+> This ensures correctness and configurability when enabling CRC
+> instructions based on hardware capabilities.
 > 
 > Signed-off-by: WANG Rui <wangrui@loongson.cn>
 > ---
->   .../tcg/insn_trans/trans_atomic.c.inc         | 36 +++++++++----------
->   .../tcg/insn_trans/trans_extra.c.inc          |  8 +++--
->   .../tcg/insn_trans/trans_privileged.c.inc     |  4 +--
->   .../tcg/insn_trans/trans_shift.c.inc          |  4 +--
->   .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++++-----
->   target/loongarch/translate.h                  |  4 +++
->   6 files changed, 40 insertions(+), 32 deletions(-)
+>   target/loongarch/cpu.c                           |  4 ++--
+>   target/loongarch/cpu.h                           |  2 +-
+>   .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 16 ++++++++--------
+>   target/loongarch/translate.h                     |  1 +
+>   4 files changed, 12 insertions(+), 11 deletions(-)
+
+Nice.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
