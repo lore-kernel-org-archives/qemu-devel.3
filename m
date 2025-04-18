@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E3CC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 00:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C18C369CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 00:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5Zwl-0001hp-Vm; Thu, 17 Apr 2025 20:51:12 -0400
+	id 1u5Zxs-0002j2-FV; Thu, 17 Apr 2025 20:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Zwk-0001hF-BJ
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 20:51:10 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5ZxV-0002II-1L
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 20:51:59 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5Zwi-0005mU-Lr
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 20:51:10 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39ee651e419so808518f8f.3
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 17:51:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5ZxT-000688-5l
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 20:51:56 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-39c0dfad22aso925287f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 17:51:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744937467; x=1745542267; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744937513; x=1745542313; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e+EWdOmeXtjoMOdMj9vCcTmXULED5K7o4s48YuBpbO8=;
- b=QJr2qU7YGz58hkgOcIuq4w77dREfTZGV4XCa2U26dpkg6nE3FuqsHrHsJQAVquqYVF
- M8+usJGIxTWYh2lh3RKKsunjmMaaUB2fMhzzFEc3jjTem9l6k0NyHZMqom0PfOb5t7BM
- hmxSBkh1QNhr3qjcIQInMVv73I/aDY1HU/JTCBE6U/wMc852QgOPX+uF7A6CRRVUHAPG
- sk82weUtKQZMK4JLP/716kZYEPBGGNx/oaLYUY4dnrBZv2mn7vI/bqy5W5EoQEbRHW0/
- MNrZZkHARyI0AbATVXgeat23ottyTpKodN2fsIHXLGIcajCCWtfi//GxKTWZZcGhQorL
- x5Tw==
+ bh=QUftrT9mw1sdbt1Cgea3mziIB2FdIW29aFiLhpIfymM=;
+ b=r2gyQ5xLQO1UCl446GZLr/c+UooTdmoGo967hSSQqFTG2EtOIwYLvpOJh7qlGTuxze
+ 8c3aG+SnWCrjy++qbuDryIVf4r22ct+EaVD0kS8amBqCRuiyMWYfdHE72JIGvJHR37jf
+ BZBaUL9Px/wkZZyofbbfsiHT7xxxYxFUPBqF+exhUnVcMGWUYCJM3kP1pPtiriZAU4Uq
+ X6Pms+rO6Ttl/lPaEXDWEp45kqhLPWgWhhhYyLWa/njrca75jIgcNLhUQAZNyYdM2B2j
+ qPxZyBPgZfUu5DLPCcsdnC4Bc0I4hh+/BFcRbSKCttZXjBJZD1Gm4J9C5uRKwFNswC4d
+ iLPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744937467; x=1745542267;
+ d=1e100.net; s=20230601; t=1744937513; x=1745542313;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e+EWdOmeXtjoMOdMj9vCcTmXULED5K7o4s48YuBpbO8=;
- b=LYoi4C+sK7RWPinzGwthouFEGdgV2ZHG4QcOfTcFL+deGtuAsXqDQw6/dT9z/z7Pd0
- WyyObFpad9RhqDYQOhteH9MmhbSFsFkbVPVbEEvjeg+VM7WRKzJvvnpJzKEQzrfVqyjv
- m8GrSYUNhrJ8J5PnRsVnwrudON2Se3kvKfYZvJ0uZDKqjw4d/v/xDCduvxnHVBtn4l9t
- PPyj131jI4uxd58xC4/xBcOU54d7ZBjGk+SzuKPoQWPu4oyF0yL0RDYecWg7rKdmoVVn
- YtSYAOwZR9oKfhXkL8LqXWGCSbMe5j3GYrd/dv5jQOmFnCPZjlSNLcdAD8wsiyIPoSQ7
- WbMw==
+ bh=QUftrT9mw1sdbt1Cgea3mziIB2FdIW29aFiLhpIfymM=;
+ b=qGQSOCZxBwBejF4KRMJ61QsrBS5+XCO6VV5q/dvWn6zq1ymfRvgKlOGrPu4nHlH/OZ
+ fspNnF77eC6o3kKKGQup4rBv4Yn0CEECPuC0bzbTI+eSqf4JiV9p08p4+n4pQWYJFho1
+ aA0z32M3lWs7eIv2PN4SBD5HJDFXIvfpnPgXxCliI9uBIGBSb/Shm4YKFvE2IcYtMeor
+ 534XnGrEuIdZB7YhAPtvF1Nmdb9id6Zzc9aZbtg3wDT/nAXAoIDCUREAcxREhm/26/yo
+ /rALEiJlLswdqvFs/dlV4CCD6AAhLF/nXGzy9JOKQNg8TlzqAIecsk1t9qjbEmhkbn4q
+ y01Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAfMhr/Wjmct6S2wZ5/O7M4LelN1BqXtnaMkxKE9O2ANE3RjTYwGvDF8STd6KQAQl5br6nn5HlHFR6@nongnu.org
-X-Gm-Message-State: AOJu0YzlXbUXn6bHZ0573uL5bhLlXQ+yHoZaWQTAkKCXQZdfkV/RVgTR
- y4cyK5GbLpDDnrCUVpPbTfXUp644Cs8qkqbwpBDwFKZW4SKCO4Vfflm5EOMJfuE=
-X-Gm-Gg: ASbGncvL1rZBwK+mYpP054E69UyTVTlndU4jZFRLBn/X9/A+6sTQO9v2tkfJBFTKf8Q
- RihQT9uS8l3YgDgaycF3NAY400kPpBldaPK6dCCcTNsoq6UC85SjPdCG1pooLM4nw3LPh2M5GcZ
- E9Wci8PU8oBd5ExufzhGHLPV6IhqG0VvDUWDlrvgBLIFxl6vq6ROBJEnV15Wd9d2vCpSBNdrg8s
- rJkrRttSKZ7txpPvZiz+yK7O0AFsiRzzAbL5yGvD9zMe/eWli6MsRXXIOq+n8Wqf57mwGXTt2im
- wORqmmfJhZy5RMUcM+CIvyg21r1sFxdaVLRaKXHQ+yAac1EScL//AD3Ja/qOHRaJJMEkZZ8frDI
- K0WsTacYi3r8kjdezyZL9
-X-Google-Smtp-Source: AGHT+IHMG2PQBagcsTEyTLIoYbqpdV5Wx2qAwSaizor9gVAHVM5XpX+Cc0KkEz30rg7eyutvVJAsyg==
-X-Received: by 2002:a05:6000:2503:b0:38d:cf33:31d6 with SMTP id
- ffacd0b85a97d-39efba2f341mr590610f8f.3.1744937467118; 
- Thu, 17 Apr 2025 17:51:07 -0700 (PDT)
+ AJvYcCVh/3bPXX7T3aPIS3uqJVB2rGJkzi1gXyI2AOePdtNmD/zs0J7NAs20nrWMsKzpbmHfEw65FYnm4AYd@nongnu.org
+X-Gm-Message-State: AOJu0YyaDCxljqwmHebYjc2iGtje2dKDACsqU+SNFWLjkmiAGekGPyUQ
+ gpFW+Lf/H8Qh2rtkGS7NBmDwmclsLjTHowB4FcTtgradODFhpbyPAexDcDqBc3w=
+X-Gm-Gg: ASbGncsu/UJsBmN8OFbeMlovSU/0ZSvA/ly6unxKEAs41gZfxsM1hWwPldV2t6TY+Mu
+ /ZqukjzizC/rSOw1TQ3s0o8YSOGoQMSYKvAXW3DD9oT20+p04hZZDbwmkMxU5aYicMb70R0mVxc
+ DufLCw7PTn0STA+OG9DJVwS6rUBgKiZaCuMJG6I6A2nLGmIPaisDT5TGFMiWNgYcYZ/6wzWbhTY
+ X2xInnkiAzj33THV8i24SW9kBhaG75KKucrZtPta9eLDUfeRY82sqzlY/BDUYLk8fhE4V4SjtWI
+ xsKPRIG+AVGWHX1QnhKcRQk4jXoud9BuQbjoZ6vb5RdWo/th/wDHovr+yZcov3239yyedEJAweb
+ VPdYcfcN/G8l7OQEXUGrm
+X-Google-Smtp-Source: AGHT+IGymwmjgGz/Oothgof8/UtKJpBKKJxQ0Ep9UmNCVkvR4uwKpbGwfVwYWLOACFL1tWfuDt7Qmg==
+X-Received: by 2002:a5d:588c:0:b0:38f:2b77:a9f3 with SMTP id
+ ffacd0b85a97d-39efbae064fmr531643f8f.43.1744937513590; 
+ Thu, 17 Apr 2025 17:51:53 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5d7a3dsm2052675e9.38.2025.04.17.17.51.06
+ ffacd0b85a97d-39efa4a4c8fsm1109311f8f.89.2025.04.17.17.51.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 17 Apr 2025 17:51:06 -0700 (PDT)
+ Thu, 17 Apr 2025 17:51:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC PATCH v2 01/11] qapi: Rename TargetInfo structure as
- BinaryTargetInfo
-Date: Fri, 18 Apr 2025 02:50:49 +0200
-Message-ID: <20250418005059.4436-2-philmd@linaro.org>
+Subject: [RFC PATCH v2 10/11] hw/arm/aspeed: Build objects once
+Date: Fri, 18 Apr 2025 02:50:58 +0200
+Message-ID: <20250418005059.4436-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250418005059.4436-1-philmd@linaro.org>
 References: <20250418005059.4436-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -103,72 +102,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QAPI-generated 'TargetInfo' structure name is only used
-in a single file. We want to heavily use another structure
-similarly named. Rename the QAPI one, since structure names
-are not part of the public API.
+Now than Aspeed machines can be filtered when running a
+qemu-system-arm or qemu-system-aarch64 binary, we can
+remove the TARGET_AARCH64 #ifdef'ry and compile the
+aspeed.c file once, moving it from arm_ss[] source set
+to arm_common_ss[].
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qapi/machine.json          | 12 ++++++------
- hw/core/machine-qmp-cmds.c |  4 ++--
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ hw/arm/aspeed.c    | 6 ------
+ hw/arm/meson.build | 4 ++--
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a6b8795b09e..3246212f048 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -275,15 +275,15 @@
- { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams' }
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index d54ee2d4b53..363be2daf60 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -179,13 +179,11 @@ struct AspeedMachineState {
+ #define AST2600_EVB_HW_STRAP1 0x000000C0
+ #define AST2600_EVB_HW_STRAP2 0x00000003
  
- ##
--# @TargetInfo:
-+# @BinaryTargetInfo:
- #
--# Information describing the QEMU target.
-+# Information describing the QEMU binary target.
- #
--# @arch: the target architecture
-+# @arch: the binary target architecture
- #
- # Since: 1.2
- ##
--{ 'struct': 'TargetInfo',
-+{ 'struct': 'BinaryTargetInfo',
-   'data': { 'arch': 'SysEmuTarget' } }
+-#ifdef TARGET_AARCH64
+ /* AST2700 evb hardware value */
+ /* SCU HW Strap1 */
+ #define AST2700_EVB_HW_STRAP1 0x00000800
+ /* SCUIO HW Strap1 */
+ #define AST2700_EVB_HW_STRAP2 0x00000700
+-#endif
  
- ##
-@@ -291,11 +291,11 @@
- #
- # Return information about the target for this QEMU
- #
--# Returns: TargetInfo
-+# Returns: BinaryTargetInfo
- #
- # Since: 1.2
- ##
--{ 'command': 'query-target', 'returns': 'TargetInfo' }
-+{ 'command': 'query-target', 'returns': 'BinaryTargetInfo' }
- 
- ##
- # @UuidInfo:
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3130c5cd456..408994b67d7 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -132,9 +132,9 @@ CurrentMachineParams *qmp_query_current_machine(Error **errp)
-     return params;
+ /* Rainier hardware value: (QEMU prototype) */
+ #define RAINIER_BMC_HW_STRAP1 (0x00422016 | SCU_AST2600_HW_STRAP_BOOT_SRC_EMMC)
+@@ -1663,7 +1661,6 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+     aspeed_machine_class_init_cpus_defaults(mc);
  }
  
--TargetInfo *qmp_query_target(Error **errp)
-+BinaryTargetInfo *qmp_query_target(Error **errp)
+-#ifdef TARGET_AARCH64
+ static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
  {
--    TargetInfo *info = g_malloc0(sizeof(*info));
-+    BinaryTargetInfo *info = g_malloc0(sizeof(*info));
+     AspeedSoCState *soc = bmc->soc;
+@@ -1713,7 +1710,6 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
+-#endif
  
-     info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
-                                  &error_abort);
+ static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+                                                      void *data)
+@@ -1936,7 +1932,6 @@ static const TypeInfo aspeed_machine_types[] = {
+             { TYPE_TARGET_AARCH64_MACHINE },
+             { },
+         },
+-#ifdef TARGET_AARCH64
+     }, {
+         .name          = MACHINE_TYPE_NAME("ast2700a0-evb"),
+         .parent        = TYPE_ASPEED_MACHINE,
+@@ -1953,7 +1948,6 @@ static const TypeInfo aspeed_machine_types[] = {
+             { TYPE_TARGET_AARCH64_MACHINE },
+             { },
+         },
+-#endif
+     }, {
+         .name          = TYPE_ASPEED_MACHINE,
+         .parent        = TYPE_MACHINE,
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 09b1cfe5b57..f76e7fb229f 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -39,15 +39,15 @@ arm_common_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal.c', 'x
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX25', if_true: files('fsl-imx25.c', 'imx25_pdk.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
+-arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
++arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed.c',
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
+   'aspeed_ast2600.c',
+   'aspeed_ast10x0.c',
++  'aspeed_ast27x0.c',
+   'aspeed_eeprom.c',
+   'fby35.c'))
+-arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files('aspeed_ast27x0.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
+ arm_common_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
 -- 
 2.47.1
 
