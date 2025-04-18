@@ -4,91 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB74AC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 18:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65C6C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 18:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5q1z-0006ft-Jy; Fri, 18 Apr 2025 14:01:42 -0400
+	id 1u5qlf-0003u5-AG; Fri, 18 Apr 2025 14:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5q1k-0006aK-Nj
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 14:01:29 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5q1i-0004GY-IK
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 14:01:23 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-736ad42dfd6so1840783b3a.3
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 11:01:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744999279; x=1745604079; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=M4zY/Ds5LfB7OiX/gC1AZ7I3FvReIcgKuD6RX9w7QxI=;
- b=NnY2YT953pBAYz3LdUS9gVlBYB9yfokuglqVLpGu8etz6Fuu6i8rkyQLb3tdYTfyRP
- 0xvftAY7BNmcVAbUc1x5XhPUEeDLpZClSld2wkwPIRB9rc4z2MDOVd+/HSwgPfUPtknM
- CtyW65eqzr8HBySyj4eLZG534Iu89GjXH+Ceii4bF6N301thXPu/lQ7oDBiZwe4vvzPM
- eUL1Nk0d6cQUYVTYKtImxQI7uaTIH5VGoTOs+m4uV+wtFPbm5ryYbTQaofkzynoRHuoc
- E6QYYLrCbkkaV1/sZfSLT8Unx2hfVENWs4e7gtenn3tHSi/qAB7nx+fcUhy2Q3ulXVIB
- rmyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744999279; x=1745604079;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M4zY/Ds5LfB7OiX/gC1AZ7I3FvReIcgKuD6RX9w7QxI=;
- b=ULmhyA4UcFZD+dukcpN6NiboTk0MCrqnoFlA26QzSnfPJ42UdGFcamm6e/YlTOR8ro
- PvEpEaC+zmR41JWs8IubxUBW4VCx2Tpa3o9vd+EKTDJilVpU3mGhzZLMrxyIdBYyHtR/
- b9zWQ1+q37YtyxtlZuvKhtWKu60h8xp/uhIKgpvU4QmdIpVXwiA9RIUehntpfFvmAYdS
- f4pZ6+SeQifj2KOpHPc52y0+rCzUDU94VHimYXof+12GzGVT7YBpszGe/PDFNRaZ2rya
- LsMz2oG1HgylnDa/nzwjJtrvv4B6eZe+5PpFZh3Gexbxk4B6Oq0h79wpTv4BKmnH6CxD
- RBnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyX4m3/+gtedCB5VOl+GIvng4SM6Ygop7BwwtSzT2LzQD091fc0UZk4liK7EzUEqWpiYWIXjaC1V4v@nongnu.org
-X-Gm-Message-State: AOJu0YySLEuc/xIS4zEnrienvr3ulYm9yYIH4haP4aP5H6z3+o/PhjZo
- d3kk9x6JoxeATtlAKkb2EcygyOcsBvAdPdTkIwztLOk6Bn0Pusiw3PFzA0jZ0ZY=
-X-Gm-Gg: ASbGncuuWSCkwMKc1iM8bO7z5pqmOD7707d/a+8AXtrjFtuXzQGIWl4GvkHePsH6Z9w
- 9Aineo6fIkq5JakTLtx7S9q0R+yjcZJtM6j/5HuMwmFxihKt5bPOgvQNkdmm60q+TM2ms3IAWhW
- NJY0u9w7txKFs7HsWGbad5xxwNo9CK7mSj1vfhhMffdkgWx/y0mSrdnFp+2Ctx7boY1rnRQWUFx
- zY1Wh1tKHnPMAatjPdej5uRPmBUdcszUikTtKJYAYYXN1NDlPvF9mHGiZhxEgAVKGbdUX63skOC
- nM16PGGEzYlf/+HWt7jnQbFGTyun48jDd/M1+JMQ8+kqkLlz/ck2UXb7NfJszh8DfukUM4eAN1O
- 3Y1ulG14=
-X-Google-Smtp-Source: AGHT+IEhXP5NhLDU3JpUQPgCqbyvr3kR++u6PwlhtVfRqrIXpYbcSbcZpsijRe2+xPeuj/VUJO2OqQ==
-X-Received: by 2002:a05:6a21:318c:b0:1f3:194b:30b0 with SMTP id
- adf61e73a8af0-203cbc252femr5237381637.5.1744999279436; 
- Fri, 18 Apr 2025 11:01:19 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b0db148137esm1638471a12.65.2025.04.18.11.01.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 11:01:18 -0700 (PDT)
-Message-ID: <3cb8d51b-ed9c-4faf-8cb1-05125c8a025b@linaro.org>
-Date: Fri, 18 Apr 2025 11:01:17 -0700
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u5qlW-0003rX-9O; Fri, 18 Apr 2025 14:48:43 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u5qlT-0001mw-Se; Fri, 18 Apr 2025 14:48:42 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id AC99755D22A;
+ Fri, 18 Apr 2025 20:48:32 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id m-6VrXyoGHbY; Fri, 18 Apr 2025 20:48:30 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A326F55C592; Fri, 18 Apr 2025 20:48:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9EF40745682;
+ Fri, 18 Apr 2025 20:48:30 +0200 (CEST)
+Date: Fri, 18 Apr 2025 20:48:30 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ Andrey Smirnov <andrew.smirnov@gmail.com>, 
+ Antony Pavlov <antonynpavlov@gmail.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Beniamino Galvani <b.galvani@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ Felipe Balbi <balbi@kernel.org>, Bernhard Beschow <shentey@gmail.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ Jan Kiszka <jan.kiszka@web.de>, Alistair Francis <alistair@alistair23.me>, 
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [PATCH 00/11] hw/arm: Define machines as generic QOM types
+In-Reply-To: <26c2b844-dc96-448e-8978-e536ed1e61f6@linaro.org>
+Message-ID: <401c58d2-adda-81ec-eeec-0ddbcf3e4926@eik.bme.hu>
+References: <20250417235814.98677-1-philmd@linaro.org>
+ <a302fb91-e2d8-ef36-ac53-5e460476c2d0@eik.bme.hu>
+ <25a82a76-cd63-4a42-bb68-5dcf826bd948@linaro.org>
+ <26c2b844-dc96-448e-8978-e536ed1e61f6@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] gdbstub/helpers: Evaluate TARGET_BIG_ENDIAN at
- compile time
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250417131004.47205-1-philmd@linaro.org>
- <20250417131004.47205-9-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250417131004.47205-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1779484340-1745002110=:55441"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,55 +80,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/25 06:10, Philippe Mathieu-Daudé wrote:
-> Rather than evaluating TARGET_BIG_ENDIAN at preprocessing
-> time via #ifdef'ry, do it in C at compile time
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/gdbstub/helpers.h | 11 ++---------
->   1 file changed, 2 insertions(+), 9 deletions(-)
-> 
-> diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
-> index 6f7cc48adcb..c33d5dfca3e 100644
-> --- a/include/gdbstub/helpers.h
-> +++ b/include/gdbstub/helpers.h
-> @@ -56,17 +56,10 @@ static inline int gdb_get_reg128(GByteArray *buf, uint64_t val_hi,
->                                    uint64_t val_lo)
->   {
->       uint64_t to_quad;
-> -#if TARGET_BIG_ENDIAN
-> -    to_quad = tswap64(val_hi);
-> +    to_quad = tswap64(TARGET_BIG_ENDIAN ? val_hi : val_lo);
->       g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
-> -    to_quad = tswap64(val_lo);
-> +    to_quad = tswap64(TARGET_BIG_ENDIAN ? val_lo : val_hi);
->       g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
-> -#else
-> -    to_quad = tswap64(val_lo);
-> -    g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
-> -    to_quad = tswap64(val_hi);
-> -    g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
-> -#endif
->       return 16;
->   }
->   
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I'm not keen on using both TARGET_BIG_ENDIAN and tswap.
-I think this ought to be
+--3866299591-1779484340-1745002110=:55441
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-     uint64_t v0, v1;
+On Fri, 18 Apr 2025, Philippe Mathieu-Daudé wrote:
+> On 18/4/25 18:33, Pierrick Bouvier wrote:
+>> On 4/18/25 01:53, BALATON Zoltan wrote:
+>>> On Fri, 18 Apr 2025, Philippe Mathieu-Daudé wrote:
+>>>> While DEFINE_MACHINE() is a succinct macro, it doesn't
+>>>> allow registering QOM interfaces to the defined machine.
+>>>> Convert to the generic DEFINE_TYPES() in preparation to
+>>>> register interfaces.
+>>>> 
+>>>> Philippe Mathieu-Daudé (11):
+>>>>   hw/core/null-machine: Define machine as generic QOM type
+>>>>   hw/arm/bananapi: Define machine as generic QOM type
+>>>>   hw/arm/cubieboard: Define machine as generic QOM type
+>>>>   hw/arm/digic: Define machine as generic QOM type
+>>>>   hw/arm/imx: Define machines as generic QOM types
+>>>>   hw/arm/integratorcp: Define machine as generic QOM type
+>>>>   hw/arm/kzm: Define machine as generic QOM type
+>>>>   hw/arm/msf2: Define machine as generic QOM type
+>>>>   hw/arm/musicpal: Define machine as generic QOM type
+>>>>   hw/arm/orangepi: Define machine as generic QOM type
+>>>>   hw/arm/stm32: Define machines as generic QOM types
+>>>> 
+>>>> hw/arm/bananapi_m2u.c      | 13 +++++++++++--
+>>>> hw/arm/cubieboard.c        | 13 +++++++++++--
+>>>> hw/arm/digic_boards.c      | 14 ++++++++++++--
+>>>> hw/arm/imx25_pdk.c         | 14 ++++++++++++--
+>>>> hw/arm/imx8mp-evk.c        | 15 +++++++++++++--
+>>>> hw/arm/integratorcp.c      | 16 +++++++++++++---
+>>>> hw/arm/kzm.c               | 14 ++++++++++++--
+>>>> hw/arm/mcimx6ul-evk.c      | 15 +++++++++++++--
+>>>> hw/arm/mcimx7d-sabre.c     | 15 +++++++++++++--
+>>>> hw/arm/msf2-som.c          | 13 +++++++++++--
+>>>> hw/arm/musicpal.c          | 16 +++++++++++++---
+>>>> hw/arm/netduino2.c         | 13 +++++++++++--
+>>>> hw/arm/netduinoplus2.c     | 13 +++++++++++--
+>>>> hw/arm/olimex-stm32-h405.c | 13 +++++++++++--
+>>>> hw/arm/orangepi.c          | 13 +++++++++++--
+>>>> hw/arm/sabrelite.c         | 14 ++++++++++++--
+>>>> hw/arm/stm32vldiscovery.c  | 13 +++++++++++--
+>>>> hw/core/null-machine.c     | 14 ++++++++++++--
+>>>> 18 files changed, 213 insertions(+), 38 deletions(-)
+>>> 
+>>> This is much longer and exposing boiler plate code. Is it possible instead
+>>> to change DEFINE_MACHINE or add another similar macro that allows
+>>> specifying more details such as class state type and interfaces like we
+>>> already have for OBJECT_DEFINE macros to keep the boiler plate code hidden
+>>> and not bring it back?
+>>> 
+>> 
+>> We can eventually modify DEFINE_MACHINES, to take an additional interfaces 
+>> parameter, and replace all call sites, with an empty list for all boards 
+>> out of hw/arm.
+>> 
+>> As long as we avoid something like:
+>> DEFINE_MACHINES_WITH_INTERFACE_1(...)
+>> DEFINE_MACHINES_WITH_INTERFACE_2(...)
+>> DEFINE_MACHINES_WITH_INTERFACE_3(...)
+>> I'm ok with keeping the macro.
+>> 
+>> Would that work for you folks?
+>
+> But then we'll want DEFINE_PPC32_MACHINE() -> 
+> DEFINE_MACHINES_WITH_INTERFACE_1() etc...
+>
+> We want to eventually use declarative file to structure most of the
+> machine boiler plate code. Maybe being momentarily verbose is
+> acceptable...
 
-     if (TARGET_BIG_ENDIAN) {
-         v0 = cpu_to_be64(val_hi);
-         v1 = cpu_to_be64(val_lo);
-     } else {
-         v0 = cpu_to_le64(val_lo);
-         v1 = cpu_to_le64(val_hi);
-     }
-     g_byte_array_append(buf, (uint8_t *)&v0, 8);
-     g_byte_array_append(buf, (uint8_t *)&v1, 8);
+Moments in QEMU can last years... I was thinking about similar to 
+OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES. Would something like that be 
+possible for DEFINE_MACHINE too?
 
-
-r~
+Regards,
+BALATON Zoltan
+--3866299591-1779484340-1745002110=:55441--
 
