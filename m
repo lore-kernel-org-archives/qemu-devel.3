@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B4FC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25426C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5ptv-0000p0-At; Fri, 18 Apr 2025 13:53:19 -0400
+	id 1u5px0-0001ie-6A; Fri, 18 Apr 2025 13:56:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5pts-0000oN-Nk
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:53:16 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1u5pwy-0001iP-M5
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:56:28 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5ptq-0003EN-Iq
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:53:16 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-227cf12df27so18315595ad.0
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:53:14 -0700 (PDT)
+ id 1u5pwx-0003b7-4Q
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:56:28 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2243803b776so33355545ad.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744998793; x=1745603593; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744998985; x=1745603785; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Zr5+g9i/Iwf8EnVA7O8wtxFge6VGZ5V9601A9tWSdA4=;
- b=lasW14cOmVRu+qoJI1VAxjPHj5GYBok4KYg/GZ9BXZyCW4hhfArfSklnVAITXNY4AS
- jqnBmnd9hTszthigJUowXXFn8Yjq1tZxHsao5yRumTk4KkpoMgKsD2XSAyeYMV2gkl7J
- ETehfcr1lbCl9HUzTC5/QO4VK8Jn1HtskabWcF9nfKl4GY0Jd1pBJGdw/oHP/dbDQh28
- 8l9mNMHYwOC78dTP15MosK7kHGI/DnjPuk+D87+10VbFoN9y4SF4cAY9np+cM0borwoB
- mGt8R06ghyI2FLJaLjJM3fgTMRsd+sF3qqLyRwJMojlSWh35txY5TVRUPAUmAavzTwrK
- Enyg==
+ bh=wdo8MuvmTbBAQg/6PRMWyDjc6MpBdISCGbeToyuJN4Y=;
+ b=ueBR19YXnOv09dQmPJVnVfvlUUXexY9A9ZcdHkOJEf9cgw3Sh435gAmveKZag2wXfr
+ W90Fhx5p9NGuRPtZ/REis2MbjeEZsa4yuR/J+HHBc/ysL96udbGOtL80DlmrGSef6TL4
+ QjA0HBrET4zuO6GVbr+laM7bYPApaLf20nSg7gHM+IA1iIcLQCyrL5NC2AI1eOXT9VFY
+ 9gk69VXsceDpj9hGvMZY8S0Wa05ZUoBS0FHME5u10a3eGRhN4hgOk/1uHfxMZ4MU/qhK
+ 0XCzeQrnnjutPjmFLFWuirvMP0unPjDNduHl/cXGKE7rI6qHduaxq59jMOltpceOH4Ge
+ uxtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744998793; x=1745603593;
+ d=1e100.net; s=20230601; t=1744998985; x=1745603785;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zr5+g9i/Iwf8EnVA7O8wtxFge6VGZ5V9601A9tWSdA4=;
- b=S/TsuaBdJLZ8X6wZNlYPxL3OY6YvZL6pf19FCFkNjzkHZNEoMThRTTIeYgIanDO+YZ
- RSkn5yfVk5wfBVIIEZynlW7+6ypGztfq4KhhIrt8Cy+daw4/EubnPXfsDTCwzDvWaYtw
- wlhL5qFnDHblh2zWvg7Dilpnu17M75qGlT+YcG9C5omsdVZohPgX0jMsYc/rQueEDgsj
- 6fki7vnjiaL/Lq3LWcdU3JLv26HPnNIjCT34z5mK026t8T16OK7cmM0og31UHkoPAJRx
- irFGMtAh/PhQyAy+BV1fRbQGfi/icPf3+9cc4BiX8ZicdkXhDESoRiIAz4LCrZHGqyAn
- rlnQ==
+ bh=wdo8MuvmTbBAQg/6PRMWyDjc6MpBdISCGbeToyuJN4Y=;
+ b=fluC4mUZuv2RIpUFWKLFr85BdKyhkmJTWcWanDwIKpHMuU1oXbv9sw2qFIt7QWNaKX
+ F8MFfYQxwL1/c2XflgmLi9E+UPwyoNM9/RgWH9YL2+X/Ist3gwv7JGbQ0AURd+Fqi7UF
+ C5uD+oe9rfeF2Y1WOmmxKoJlTbpWRfYEnuGodQjz7Q+wTbqOh7CxaayZhEEEUzCSfiBB
+ q31ybaJZpIWLSCx1b5pyq3gEhALbGrp6Db0kB9bTa1Ouwx9TOoew0Epng7wGfyTMeJBu
+ giwGJylTuV9B8tw9FziBoW6hjaHjrA9J3jeqBxaA68pI0nbqtSSoLEs9gYW5Ozr/yNcW
+ hfqw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCxWIfBvOVjbJ8PZeM2vq2BKCcQqxDVVtK/BxCYFyhOd+P8nfb/nXrHEU1iYlr4Vl9xZ6ZgxLRPa4Y@nongnu.org
-X-Gm-Message-State: AOJu0Yyrher8SPD4n4XytpjZUXSyPAbSxch8aKn4cm4PWIbycYIprPNv
- sE11OIulq71TQ/aa9KWJfrMC4Gs7bSjaAhyv1T4vSQXxxbUEAnLX3fo3KQ+JsVs=
-X-Gm-Gg: ASbGncuQXSvjz3tKKrmguZPB/ZuS/coFPHFsOBCsw+Gk6H/s1e62JE6U98Dt2kYbENP
- OuX9pSqgVRbRuyzbWa+QSTn3b+cTUcjtv22F1GpSh8UKB32mYugxp5wWulNal9KHMQZeowbiz98
- rySNuD9HFc5SOhIR5j70Io3x2Uma4B9x1yal2/oJCclXWnyIaExpqRSAJKfxnSXaKbTa8R+3Ngd
- DpC0G1ZLbqb4QJhLfhzs7od//R5RvWCxavXoVN2soyoeMoAbHwyxrI2wOrbYrjwkB4x7uLX3E4S
- 7kTPL4f+zWoTtcPNrr1Rx9HmI/okVASgnH5DBFw0V/v1Lvu8Qi25BjoQizRwAUz1XGR2ytL1EC5
- 2QxOvenA=
-X-Google-Smtp-Source: AGHT+IF50IvaousqvlC7S0vDhZCNUdovdttc2xYBXtCWMvLZK8EjM2fXM74BRNnHjP9WukNxUFsIhQ==
-X-Received: by 2002:a17:903:3d0c:b0:220:ff82:1c60 with SMTP id
- d9443c01a7336-22c50cfa84fmr69251445ad.14.1744998793039; 
- Fri, 18 Apr 2025 10:53:13 -0700 (PDT)
+ AJvYcCXTLCLkhQxtOhY/IzxYEd2KIAC74QMXocIh1qC2hvujF98HKUeJ99+bdOEwVboAGLlsPgONvqeEaVVr@nongnu.org
+X-Gm-Message-State: AOJu0YzDsYsqrhTcE4lEkKGyUDntQKoGbGNut5qSUpbaLEKNRgJcVUz0
+ LU9V8pXRCULJvlw2Cwg1vKqACIVQvsXAbRvCTU20OpXmFEX6ahQcprM7XPzA77w=
+X-Gm-Gg: ASbGncucfN9cx9zoo1rc3W0/dfOn/uPEccByVL5HWMqkiveX9Zta4AFCHjqgThSfx+h
+ jMMTlyHAXK3QjlvbjVQm3U0knaeAgicBeI8A6ERFzvIOLfAN4rptupOKQ5JfWF5/DCqNa259Weu
+ +zETqFxaqsL/Ky4+9WSEf9GkygOIkmSXuTzvYOHMiyDJ4pBwOxMrl3jHSwk9UyrmMNh24dFdULj
+ clj3u78fbAA1TS7Xb3COOPs5K3MmbJ88JNdhhfbvLFO7npbJIJoErXd8ZkDdRn/ho8ILVQhQOK5
+ mvH6m1tMIl9QIQNjuQXKvfRUP3GRyz1npxIdAhXLLZ6QTYnoIBJpL2jXh5YmhQiRvU6qrfh6Xwf
+ R95wJua0y/LAxBF+DGQ==
+X-Google-Smtp-Source: AGHT+IGLOxSQDAtwXm3tAR9yMgBGdnZbQCqEH9pIuMpOZ8Kqu+PVWmf93QSz+j0isj5dvJ02r+S6pA==
+X-Received: by 2002:a17:902:ce82:b0:223:6455:8752 with SMTP id
+ d9443c01a7336-22c536420c6mr46332475ad.43.1744998985636; 
+ Fri, 18 Apr 2025 10:56:25 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50ed1d63sm19501805ad.198.2025.04.18.10.53.12
+ d9443c01a7336-22c50eb4b9asm19621995ad.156.2025.04.18.10.56.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 10:53:12 -0700 (PDT)
-Message-ID: <a9c73480-6ade-4704-8211-1c6f2a9e7c8f@linaro.org>
-Date: Fri, 18 Apr 2025 10:53:11 -0700
+ Fri, 18 Apr 2025 10:56:25 -0700 (PDT)
+Message-ID: <5f8246a0-5120-444b-be34-047b77660a36@linaro.org>
+Date: Fri, 18 Apr 2025 10:56:23 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] target/mips: Check CPU endianness at runtime using
- env_is_bigendian()
+Subject: Re: [PATCH 4/8] target/ppc: Evaluate TARGET_BIG_ENDIAN at compile time
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250417131004.47205-1-philmd@linaro.org>
- <20250417131004.47205-4-philmd@linaro.org>
+ <20250417131004.47205-5-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250417131004.47205-4-philmd@linaro.org>
+In-Reply-To: <20250417131004.47205-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/25 06:09, Philippe Mathieu-Daudé wrote:
-> Since CPU endianness can be toggled at runtime before resetting,
-> checking the endianness at build time preprocessing the
-> TARGET_BIG_ENDIAN definition isn't correct. We have to call
-> mips_env_is_bigendian() to get the CPU endianness at runtime.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/mips/tcg/msa_helper.c | 34 ++++++++++++++++------------------
->   1 file changed, 16 insertions(+), 18 deletions(-)
+On 4/17/25 06:10, Philippe Mathieu-Daudé wrote:
+>   static inline bool needs_byteswap(const CPUPPCState *env)
+>   {
+> -#if TARGET_BIG_ENDIAN
+> -  return FIELD_EX64(env->msr, MSR, LE);
+> -#else
+> -  return !FIELD_EX64(env->msr, MSR, LE);
+> -#endif
+> +  return TARGET_BIG_ENDIAN ^ FIELD_EX64(env->msr, MSR, LE);
+>   }
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is wrong.  You wanted
+
+    !TARGET_BIG_ENDIAN ^ ...
+
+Likewise in the other instance in translate.c.
+
 
 r~
 
