@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4ACCC369D0
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CDBDC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:43:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5pYH-00041k-5r; Fri, 18 Apr 2025 13:30:58 -0400
+	id 1u5pjb-0005rB-T5; Fri, 18 Apr 2025 13:42:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pXS-0002jP-8l
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:30:09 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u5pjS-0005pa-6V
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:42:31 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5pXQ-0008Tj-GO
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:30:06 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-440685d6afcso16277005e9.0
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:30:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u5pjQ-0001qq-Ec
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:42:29 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-af548cb1f83so2014745a12.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:42:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744997402; x=1745602202; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3vxONwu0xD0Va4pDNJvXwramrjvwjwlqxzQJDi5JhcI=;
- b=iKJt9lQAverj9rHpq2cNF71Q9MyjOjQuBM5eiEtW8ZHD2ZqNpldgNpczO2gXNstnHX
- UsR8sz/EbusDmmC9W/WDznMMAUEpb7GdRMKHr3EbIuTdNMKG3lHLWAZRugMad2Odbmvl
- FtJyhzAvp3TOYCb2aLLdrFgPtpRYVtcvdN9XuIaK2rzFY25nFZWf47gtnb3unp6uskyw
- 5GdgyS+4B538xrjkEBblfxXgiI/heJyfc+jk5+IfYja7jIrc3hzOcQdoxU3v4/Va33AA
- FdtqB68qYZ7E66eWEylK6RzX/stKW0r66oP58c+Pe+e1fuJKGdKEBep4FsNom806hYO1
- 8PdQ==
+ d=linaro.org; s=google; t=1744998145; x=1745602945; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=54GVeFf+1YhOup6gVBZLiAxlghlprRIZsMI9ENYu9y4=;
+ b=WbHv7HmXeJDaZ+xkZ4sJL7r04Bz3oiAQU8RkQEJuzNuNEP72JSZG0bjUmO4AOPvCYs
+ PYlaZtVtG2Z97ifNdbCLhjSxM2V2CvFhoKEXYu2H48rTR55TbJKg7iuCe/PpeXxPoCaM
+ LvNJ0ZxlfYWRqhfio51ZO+m88wf5LFgiywuu9JVsTX/bEPTMWPpfYn38qa93A065M5gA
+ Hx+cOvRaChERTZpT/eWC9cRBRvBfCtbHE22RJQK8du2zzBrg6x53Jj+uTVBxbCdWR24k
+ 1gmu/kApyjvLU1sMIqMapNIxKT9WxsXYWvtIeYhsS8EM7MRqPdQYTiiyosEXNdNiB1Zy
+ O0ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744997402; x=1745602202;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3vxONwu0xD0Va4pDNJvXwramrjvwjwlqxzQJDi5JhcI=;
- b=TmXyfTuO+Ho3RrxBV+Z/45JtQNaH3Po72BNqzii54GriwDxsjf7UQxXmjlKvIpxZAb
- fsk8bmZzX5FyfzRa14qetpvokoPrWkI1qtTEdyNf7UeAPI2fjm0QD1b65p2t4+aavJfY
- oWhE8hh7XqoLxudXq9XOr1botjKWkpSJjpA3vpjf64elBUT8ap0Fnyj92J7uvrxZX8Bi
- jnfqenfKdq8fpl/Y7BVrZja267X83VNmsu1z2F8Ch0AhuDv8sXnCYluYjMOYf6mFa1I9
- l9o8O9ktXQH0ZDu8FBUYcVvVDZVwChGVfeefMGUFAZc48BzrT/kJTq91/ohrDYj3aW7I
- tMzw==
-X-Gm-Message-State: AOJu0Yx+922eGhC6CA8MK9TWtMqa2oOPqaiYJBqreaxi/sYlJOG9iEGt
- 0IrAcS0VckDQVNDjA5gxTQgqrNrtqyimLXFuLjaBti1RjBkRiyuqG5Req24Y1HiOuLYBcMQpr2/
- A
-X-Gm-Gg: ASbGncskXuO7G6NajBSRAcczsz4SsMR1CQzd+299L8tDeXrpzWnlVRolGvlbKRNXL7h
- /Zjyzozj1WdfrB9xc/KBQhGDqA2jsTbkuIr1qcGvc0XUNjj6gsxhsnxt9DJ/j2MSsfJnNhxzC1g
- iLZhcS7xyogWsCg4FRU2Nsti01cUXgDlsoDvZQ6KwzJ8QeZB9K52eu5o3nQu4Pd+GvZuxjiY6do
- uO8dCpE4EYDR2CX7gA8OwVEIvhryfQWsOqw8A+IoCYs5qO3ULnFE6JItPo0NcEKVqiFmCY9qxMg
- vUBQ8JbUCi14pzhLCGMSmP1BH8F1jP4mK9lxwypnKllcWhs2MvoGpjpMfdTDREhlISyOSQeUTd9
- +drzLXIyhDQy0oPw=
-X-Google-Smtp-Source: AGHT+IFaP9Y7bXngc9Lqme9Tw8x9r7WUXGDax6vlxEPNmb065OS1VNIAd/hK/9K7Uyj3DbVdgUyMtA==
-X-Received: by 2002:a05:600c:4f94:b0:43c:f3e4:d6f7 with SMTP id
- 5b1f17b1804b1-4406ac1fd21mr31063485e9.31.1744997402450; 
- Fri, 18 Apr 2025 10:30:02 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d6e0183sm29554895e9.37.2025.04.18.10.30.01
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 18 Apr 2025 10:30:01 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH v3 11/14] hw/core/machine: Allow dynamic registration of
- valid CPU types
-Date: Fri, 18 Apr 2025 19:29:05 +0200
-Message-ID: <20250418172908.25147-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250418172908.25147-1-philmd@linaro.org>
-References: <20250418172908.25147-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1744998145; x=1745602945;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=54GVeFf+1YhOup6gVBZLiAxlghlprRIZsMI9ENYu9y4=;
+ b=VJ8Pyksby7LgocULZzIrM8bSr8L0uWuG9GyXfMfrguP1WBBBHujRr8FXVneam2TZK0
+ /bB6VIIdTDpdl6FKSemVp0KC9OGox8ptM7R7/wRL6/hoo7ibZkuNjtbIE2EopObDnjZ2
+ lo3bg/5xmNhDxYbqJsWZtZOoBHga5UyRN+0jFeaJTGN3znNfnEPtHmD7fWlZdoWLbbj3
+ LojhndCQ+X26C+lraVbQ9jion5jlEen+gQ+S7W1sWtYM/ZurdcBELo7ma3wrIuXEqcYF
+ Wp3SZcW9pW8UI9XLbwb0QNPs2mJJL/zOxz40BzLzEEzEGHjXtI5WqqPTszhLO9j0tP0T
+ 2SEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWudWSI0BqXDFXspVRvQN+/izZ87gQSChnDbICdQC2Z2fCZ9aFX0AAw0fELFzNifCO1ofzc+UeSLty@nongnu.org
+X-Gm-Message-State: AOJu0YzZBElegTw6EjSUugkgIrqRRm1SoHny+o0P9m6LAmlDQVgwkDEa
+ 1buG2lz38J9mFaM121jS/QlqJeooHIqwVTB8Du4jhl6LFDFYcJknWNNc2LYoRqA=
+X-Gm-Gg: ASbGncshAu2ULkm4xtF85sjk+KDVMgHaT4vDhJ7FLKRqF5rNN5UhYeZdS3dqUMFEozi
+ fb1r7IljcgdA3VBhO25pyEYLtb6AWDZKzzncfO6m40vwTYbFUUWWoYlYmju7XWjRdCV5iSk1cFY
+ h9B3BA8zKsvKjDy/n/P3NkQyxOnzHsL7NVvn9FewX9kNSpHJb2eKuL9xiHdGrYTKCr6wdtiu3Cy
+ tq7xs8FLBTUtCuuuO8+CG16zr6LPay3wZF/4CDUfNFpa5dkx3U6JvLCIHyohxroqWITsg/02ld6
+ qut/bNWZuiMw+RjXOy0Bi5wM4FTBVS552Dugdq7KyPvE1x2nRMzUiFHIaAN2eQmKEKHarHJSNXy
+ fgaX9+18=
+X-Google-Smtp-Source: AGHT+IE1zSu1h7LuEPQeCDZVVEkqDQ8xD6OZpf//zRiOjiXzw6hqAU3EVu+UH+60qqWD277F41tWGQ==
+X-Received: by 2002:a05:6a20:4392:b0:1f5:769a:a4c3 with SMTP id
+ adf61e73a8af0-203cbd0aed4mr5431584637.27.1744998144976; 
+ Fri, 18 Apr 2025 10:42:24 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b0db13cb3b5sm1635901a12.38.2025.04.18.10.42.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Apr 2025 10:42:24 -0700 (PDT)
+Message-ID: <cf2c9dda-f0b9-4b41-a650-bb3d401ad5ec@linaro.org>
+Date: Fri, 18 Apr 2025 10:42:23 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] cpus: Replace CPU_RESOLVING_TYPE -> target_cpu_type()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+References: <20250417165430.58213-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250417165430.58213-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,92 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add MachineClass::valid_cpu_types_list, a dynamic list of strings.
+On 4/17/25 09:54, Philippe Mathieu-Daudé wrote:
+> Philippe Mathieu-Daudé (7):
+>    qemu: Introduce target_cpu_type()
+>    cpus: Replace CPU_RESOLVING_TYPE -> target_cpu_type()
+>    cpus: Move target-agnostic methods out of cpu-target.c
+>    accel: Implement accel_init_ops_interfaces() for both system/user mode
+>    accel: Include missing 'qemu/accel.h' header in accel-internal.h
+>    accel: Make AccelCPUClass structure target-agnostic
+>    accel: Move target-agnostic code from accel-target.c -> accel-common.c
 
-CPU types can be registered with machine_class_add_valid_cpu_type().
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/boards.h |  8 ++++++++
- hw/core/machine.c   | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
-
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 02f43ac5d4d..647a29ff04d 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -56,6 +56,13 @@ void machine_set_cache_topo_level(MachineState *ms, CacheLevelAndType cache,
- bool machine_check_smp_cache(const MachineState *ms, Error **errp);
- void machine_memory_devices_init(MachineState *ms, hwaddr base, uint64_t size);
- 
-+/**
-+ * machine_class_add_valid_cpu_type: Add type to list of valid CPUs
-+ * @mc: Machine class
-+ * @type: CPU type to allow (should be a subtype of TYPE_CPU)
-+ */
-+void machine_class_add_valid_cpu_type(MachineClass *mc, const char *type);
-+
- /**
-  * machine_class_allow_dynamic_sysbus_dev: Add type to list of valid devices
-  * @mc: Machine class
-@@ -306,6 +313,7 @@ struct MachineClass {
-     bool ignore_memory_transaction_failures;
-     int numa_mem_align_shift;
-     const char * const *valid_cpu_types;
-+    GList *valid_cpu_types_list;
-     strList *allowed_dynamic_sysbus_devices;
-     bool auto_enable_numa_with_memhp;
-     bool auto_enable_numa_with_memdev;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index f52a4f2273b..ff27d533b5c 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1538,6 +1538,12 @@ const char *machine_class_default_cpu_type(MachineClass *mc)
-     return mc->default_cpu_type;
- }
- 
-+void machine_class_add_valid_cpu_type(MachineClass *mc, const char *type)
-+{
-+    mc->valid_cpu_types_list = g_list_prepend(mc->valid_cpu_types_list,
-+                                              g_strdup(type));
-+}
-+
- static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-@@ -1581,6 +1587,30 @@ static bool is_cpu_type_supported(const MachineState *machine, Error **errp)
-             return false;
-         }
-     }
-+    if (mc->valid_cpu_types_list) {
-+        bool valid = false;
-+        unsigned count = 0;
-+        GList *l;
-+
-+        for (l = mc->valid_cpu_types_list; !valid && l != NULL; l = l->next) {
-+            valid |= !!object_class_dynamic_cast(oc, l->data);
-+            count++;
-+        }
-+
-+        if (!valid) {
-+            g_autofree char *requested = cpu_model_from_type(machine->cpu_type);
-+            mc->valid_cpu_types_list = g_list_reverse(mc->valid_cpu_types_list);
-+            error_setg(errp, "Invalid CPU model: %s", requested);
-+            error_append_hint(errp, "The valid models are: ");
-+            for (l = mc->valid_cpu_types_list; l != NULL; l = l->next) {
-+                g_autofree char *model = cpu_model_from_type(l->data);
-+                error_append_hint(errp, "%s%s", model, --count ? ", " : "");
-+            }
-+            error_append_hint(errp, "\n");
-+
-+            return false;
-+        }
-+    }
- 
-     /* Check if CPU type is deprecated and warn if so */
-     cc = CPU_CLASS(oc);
--- 
-2.47.1
-
+r~
 
