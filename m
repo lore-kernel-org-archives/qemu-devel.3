@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7836C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 17:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB74AC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 18:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5pz2-0003tr-Ix; Fri, 18 Apr 2025 13:58:37 -0400
+	id 1u5q1z-0006ft-Jy; Fri, 18 Apr 2025 14:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5pyf-0003fP-76
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:58:13 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1u5q1k-0006aK-Nj
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 14:01:29 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u5pyc-0003jo-Kk
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 13:58:12 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-73bf1cef6ceso1935822b3a.0
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 10:58:09 -0700 (PDT)
+ id 1u5q1i-0004GY-IK
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 14:01:23 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-736ad42dfd6so1840783b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 11:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1744999088; x=1745603888; darn=nongnu.org;
+ d=linaro.org; s=google; t=1744999279; x=1745604079; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e8RD3N4hnZT2MTJBn+tY+u8entBUePp5nIC5K+qsDLI=;
- b=QtYYwdXcI/nNdb3fl0qB+38O7M7lHFsI1CTy8oWOUsaUJxZe/1mfPC4imt5JHBONgM
- ffXFJ1onEKDlWEfT1ty6lcgp64Xf+filXC68+7yKjW2R7PnBmkMB0yNXbrqUPnzzomkA
- qh1a3krSwVcSeYmtf+8C8FTRdyiZZCKPf/iPi3KEc1OAwh3lW4ggtZbLMUvh2HnxPtKV
- uwR6rYDWRyMXm/WZI852YIvZGhbIsMpsrV0rvorYGwthOrHQwpcfLWV6MjeRTRaseSIq
- AYHPDYkRVkYkgYWFYpVwX9qZS/4Fi+Hf0OOgXotDUiZQTuDslqPAMrqN0TxtIhvEBZ4P
- DZBQ==
+ bh=M4zY/Ds5LfB7OiX/gC1AZ7I3FvReIcgKuD6RX9w7QxI=;
+ b=NnY2YT953pBAYz3LdUS9gVlBYB9yfokuglqVLpGu8etz6Fuu6i8rkyQLb3tdYTfyRP
+ 0xvftAY7BNmcVAbUc1x5XhPUEeDLpZClSld2wkwPIRB9rc4z2MDOVd+/HSwgPfUPtknM
+ CtyW65eqzr8HBySyj4eLZG534Iu89GjXH+Ceii4bF6N301thXPu/lQ7oDBiZwe4vvzPM
+ eUL1Nk0d6cQUYVTYKtImxQI7uaTIH5VGoTOs+m4uV+wtFPbm5ryYbTQaofkzynoRHuoc
+ E6QYYLrCbkkaV1/sZfSLT8Unx2hfVENWs4e7gtenn3tHSi/qAB7nx+fcUhy2Q3ulXVIB
+ rmyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744999088; x=1745603888;
+ d=1e100.net; s=20230601; t=1744999279; x=1745604079;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e8RD3N4hnZT2MTJBn+tY+u8entBUePp5nIC5K+qsDLI=;
- b=CLpuhY3Hii3UmxKR2hzLzh9GVcgBZHPnQ0mDUPpSvMTR4gBcLlky4llBZ8SvgARoLS
- +CXpMnvJlZvl39ofKy/8z+SU4A7kjdKQ+n6dYeo0BEaKlC9+P/UMYsUCBJjG2IcHZOyk
- d6q78dVG66YUTJbQc/n6GhhVcLR3l1PS8QHBuDjb0Yades9wtkcN7EmZ4vZeXzNiotCw
- vwAssRdhoncG/5s6rpbIvDTcjJ6SFB2YyMhXz/4TQIFXWIa+JDy69sjFBzEFPwkrlePK
- kkmeHq2+lkzeyVdUccyvhDOOqc13o3KROIRI0xvw2RK39U9dXhC8aDwceS5l1aeP2erq
- 7pdQ==
+ bh=M4zY/Ds5LfB7OiX/gC1AZ7I3FvReIcgKuD6RX9w7QxI=;
+ b=ULmhyA4UcFZD+dukcpN6NiboTk0MCrqnoFlA26QzSnfPJ42UdGFcamm6e/YlTOR8ro
+ PvEpEaC+zmR41JWs8IubxUBW4VCx2Tpa3o9vd+EKTDJilVpU3mGhzZLMrxyIdBYyHtR/
+ b9zWQ1+q37YtyxtlZuvKhtWKu60h8xp/uhIKgpvU4QmdIpVXwiA9RIUehntpfFvmAYdS
+ f4pZ6+SeQifj2KOpHPc52y0+rCzUDU94VHimYXof+12GzGVT7YBpszGe/PDFNRaZ2rya
+ LsMz2oG1HgylnDa/nzwjJtrvv4B6eZe+5PpFZh3Gexbxk4B6Oq0h79wpTv4BKmnH6CxD
+ RBnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg7ObT/vMR0O7ta9JCnBMLjxD1viD2MKxKHrK6B2XHRotmF8qHePk8+fFBhqc18vEtOnzsnuTihJhO@nongnu.org
-X-Gm-Message-State: AOJu0YwTy4UAJJMItth9MSVLg1BCMimRRZgOTGm9YII1GNMs2cD1t1st
- TRWlUJN7wpPmSv8YoUbyslSdHLqtQHfyfVEpswtxGjhd7DosX+MPot/OHGBRD3M=
-X-Gm-Gg: ASbGncvYkRbMqy79S0an3UyNH8qURYkN+OG+2l3f/vPrinFezKSo5NWeX62YCdtR1kp
- C8pM7FAs9Vqk2TL9CkZqiW41ia3AZwrHTx4cSMcshGaKTVmeFGjXe8mk+dvdfIZrm73Ry3d42wq
- VBYqFd8UInLRXv0s4AMPVTDjsD6b3XssDkqgD0uw3X6F3AU9lGEwMIshrHa8DC52i47r+6JQ7cK
- 2iWvl2xm6UgdB32CzW8CCj1I5gauSqKWHkTyUchMbp23wr2+uwE31GyRXOwbZ17zM3fNpb2Jxnv
- rdTmb0gln+2yYPJMF+7GPfl2LuZJC+23w8EGDCjwtEj5HSWftlb20gFEMRHqB5+37Jy6Hr1Idqa
- bz1FfOkM=
-X-Google-Smtp-Source: AGHT+IGko/n7ki1kTBVykxovzc4S+S6IHqKZxusY+B/Xr3rNGuCVj0Q3Wy/ELz2lEsS6zbbTmg6UUg==
-X-Received: by 2002:a05:6a00:279f:b0:736:8c0f:7758 with SMTP id
- d2e1a72fcca58-73dc1497ebbmr4099849b3a.10.1744999088537; 
- Fri, 18 Apr 2025 10:58:08 -0700 (PDT)
+ AJvYcCWyX4m3/+gtedCB5VOl+GIvng4SM6Ygop7BwwtSzT2LzQD091fc0UZk4liK7EzUEqWpiYWIXjaC1V4v@nongnu.org
+X-Gm-Message-State: AOJu0YySLEuc/xIS4zEnrienvr3ulYm9yYIH4haP4aP5H6z3+o/PhjZo
+ d3kk9x6JoxeATtlAKkb2EcygyOcsBvAdPdTkIwztLOk6Bn0Pusiw3PFzA0jZ0ZY=
+X-Gm-Gg: ASbGncuuWSCkwMKc1iM8bO7z5pqmOD7707d/a+8AXtrjFtuXzQGIWl4GvkHePsH6Z9w
+ 9Aineo6fIkq5JakTLtx7S9q0R+yjcZJtM6j/5HuMwmFxihKt5bPOgvQNkdmm60q+TM2ms3IAWhW
+ NJY0u9w7txKFs7HsWGbad5xxwNo9CK7mSj1vfhhMffdkgWx/y0mSrdnFp+2Ctx7boY1rnRQWUFx
+ zY1Wh1tKHnPMAatjPdej5uRPmBUdcszUikTtKJYAYYXN1NDlPvF9mHGiZhxEgAVKGbdUX63skOC
+ nM16PGGEzYlf/+HWt7jnQbFGTyun48jDd/M1+JMQ8+kqkLlz/ck2UXb7NfJszh8DfukUM4eAN1O
+ 3Y1ulG14=
+X-Google-Smtp-Source: AGHT+IEhXP5NhLDU3JpUQPgCqbyvr3kR++u6PwlhtVfRqrIXpYbcSbcZpsijRe2+xPeuj/VUJO2OqQ==
+X-Received: by 2002:a05:6a21:318c:b0:1f3:194b:30b0 with SMTP id
+ adf61e73a8af0-203cbc252femr5237381637.5.1744999279436; 
+ Fri, 18 Apr 2025 11:01:19 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbf8bf802sm1947768b3a.13.2025.04.18.10.58.08
+ 41be03b00d2f7-b0db148137esm1638471a12.65.2025.04.18.11.01.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 10:58:08 -0700 (PDT)
-Message-ID: <8a33a8b0-68e9-4df5-958e-96b184ffcd75@linaro.org>
-Date: Fri, 18 Apr 2025 10:58:06 -0700
+ Fri, 18 Apr 2025 11:01:18 -0700 (PDT)
+Message-ID: <3cb8d51b-ed9c-4faf-8cb1-05125c8a025b@linaro.org>
+Date: Fri, 18 Apr 2025 11:01:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] hw/microblaze: Evaluate TARGET_BIG_ENDIAN at compile
- time
+Subject: Re: [PATCH 8/8] gdbstub/helpers: Evaluate TARGET_BIG_ENDIAN at
+ compile time
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20250417131004.47205-1-philmd@linaro.org>
- <20250417131004.47205-8-philmd@linaro.org>
+ <20250417131004.47205-9-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250417131004.47205-8-philmd@linaro.org>
+In-Reply-To: <20250417131004.47205-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,13 +109,51 @@ On 4/17/25 06:10, Philippe Mathieu-Daudé wrote:
 > Rather than evaluating TARGET_BIG_ENDIAN at preprocessing
 > time via #ifdef'ry, do it in C at compile time
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/microblaze/petalogix_ml605_mmu.c | 12 ++++++------
->   hw/microblaze/xlnx-zynqmp-pmu.c     | 12 ++++++------
->   2 files changed, 12 insertions(+), 12 deletions(-)
+>   include/gdbstub/helpers.h | 11 ++---------
+>   1 file changed, 2 insertions(+), 9 deletions(-)
+> 
+> diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
+> index 6f7cc48adcb..c33d5dfca3e 100644
+> --- a/include/gdbstub/helpers.h
+> +++ b/include/gdbstub/helpers.h
+> @@ -56,17 +56,10 @@ static inline int gdb_get_reg128(GByteArray *buf, uint64_t val_hi,
+>                                    uint64_t val_lo)
+>   {
+>       uint64_t to_quad;
+> -#if TARGET_BIG_ENDIAN
+> -    to_quad = tswap64(val_hi);
+> +    to_quad = tswap64(TARGET_BIG_ENDIAN ? val_hi : val_lo);
+>       g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -    to_quad = tswap64(val_lo);
+> +    to_quad = tswap64(TARGET_BIG_ENDIAN ? val_lo : val_hi);
+>       g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -#else
+> -    to_quad = tswap64(val_lo);
+> -    g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -    to_quad = tswap64(val_hi);
+> -    g_byte_array_append(buf, (uint8_t *) &to_quad, 8);
+> -#endif
+>       return 16;
+>   }
+>   
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I'm not keen on using both TARGET_BIG_ENDIAN and tswap.
+I think this ought to be
+
+     uint64_t v0, v1;
+
+     if (TARGET_BIG_ENDIAN) {
+         v0 = cpu_to_be64(val_hi);
+         v1 = cpu_to_be64(val_lo);
+     } else {
+         v0 = cpu_to_le64(val_lo);
+         v1 = cpu_to_le64(val_hi);
+     }
+     g_byte_array_append(buf, (uint8_t *)&v0, 8);
+     g_byte_array_append(buf, (uint8_t *)&v1, 8);
+
 
 r~
 
