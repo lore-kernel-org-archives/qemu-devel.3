@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14862C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 02:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB4CC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 02:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5bPJ-0007aw-Lc; Thu, 17 Apr 2025 22:24:45 -0400
+	id 1u5br5-0007A6-O5; Thu, 17 Apr 2025 22:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1u5bPH-0007ae-JW
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 22:24:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1u5bPF-00031f-Mo
- for qemu-devel@nongnu.org; Thu, 17 Apr 2025 22:24:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1744943077;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Us/yCe+81fX4Hye8bzeb4M6/0RizDVqyKIAjZe1L68E=;
- b=Dri0icKqY1J0xixEVDXRlv8r4ObAsnd7Rzogg3Mvx30zJnFE1f7gqSAmHrG5uzzvMy7ZBI
- +Vg2vkPujZByMr+VZuZSkKSi7uHWPuN/Z8R9EPB7isQR4AzyG2qcx2FiifQTNVpRzM6Qet
- 4D87FFnnoQDhtKLBey8Q8OvLd8VYYcI=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-udOOe_urO0Wokhf-pEr6cQ-1; Thu, 17 Apr 2025 22:24:34 -0400
-X-MC-Unique: udOOe_urO0Wokhf-pEr6cQ-1
-X-Mimecast-MFC-AGG-ID: udOOe_urO0Wokhf-pEr6cQ_1744943073
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5e5c808e777so1226723a12.0
- for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 19:24:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5br3-00079X-Jr
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 22:53:25 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u5br1-000849-D1
+ for qemu-devel@nongnu.org; Thu, 17 Apr 2025 22:53:25 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-739b3fe7ce8so1351396b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 17 Apr 2025 19:53:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1744944801; x=1745549601; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CmN8ODSf2l/vao7gZkwOIQrPU/Wqb0fF8TtdpzfR1Xw=;
+ b=COzLqhoQNZiYyO3U9MOlIrksxt0q5VgXcuo0t1T8kwGi1eEM54+PaBCCOFAAwAavwg
+ yTAxdWGzCyH+9upRSWg33sVo2h3egoEp++ykIjq/q9f47plCkXOd4oV45spT2jhwRF2u
+ g0fm2a+5dlIJE40ub/f1RvgXoWa+qllebycVvuiBh01nmH1fV098nr8Xo47yaj4G1JDr
+ 0LUUXUv5xqb3LGy40z5ehOWGUsmGw7ly/od/0QIH5xikkNFa+NTbPTxRFupEwfRJgg8E
+ NIwMmjgGeDCMZAVAq6WxcoyDY0AmlArGLPhVmpZOwgT/dVtWGmM13jjRgUv1j+SmlcP4
+ D3TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744943073; x=1745547873;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Us/yCe+81fX4Hye8bzeb4M6/0RizDVqyKIAjZe1L68E=;
- b=BO72vYxJGJ+H9u5PIyzr3uVuIZik7amHgWfNSLdpWEKgWGhftOFdZlYMlOQ6iZU4qW
- TsMjhZlsmXAAerCd2x6YyFayVSbQpsRlFiQWuk5I/TkcKzCsI1C8aBjTuIyoX3Nk9KlU
- 7ixL9P8O0KVALYhgYP5z1N3fQ+oKOtWCrd9k5xLmLXOaLSYSROI2Az5w1cn4jBJEyANu
- DN8oSNYiuNX/wJX1L8ghe3fky0bD7TdlGaNCgeDX/2EeJmUStW+k43+Ke1/wp17gYoHi
- AUn2OU5aQiyWrlHx2xg7XUkVyucaZgH0pteuUwfnRyusWpfIsMSfOqa/2UsCUeUhod65
- FsJA==
+ d=1e100.net; s=20230601; t=1744944801; x=1745549601;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CmN8ODSf2l/vao7gZkwOIQrPU/Wqb0fF8TtdpzfR1Xw=;
+ b=qeggJ2uZWDvIgZS1P1FtfoToNjNgigqtdiNbLqVZL+P42LNAwsxN/RrDVDtErbiY2d
+ GqZrZMXChh2uu0uFROFmVAQf38JnquuuD7wReSnkSE761NdlEsewfLvumuSZRdTLgI40
+ OMFnO737z8VYIjMoZRyfRquQjESwpuvBwUutPcBZTWkjYiniWOR4ZEajE5/i0PK1VycP
+ /lgbJ4M4XJ5W7anHfquhIcFcjHQM43qrYDUFQQavDjCZzymFFNKwwNZedp+7yUpFu8Vl
+ g5D2seEA5P821AssHFMFmN9lGavz9iguBEYNHr5aJbYOvupFtbETHZFxrRb59KvLpp7h
+ NuXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUl+AQnUyJyGH50PsP4r6lZCMmqGL7UDRDMqtUDl4tX7z+f3KaZ0j5c9iwTE9r1JNWlxWhMolIzd6ml@nongnu.org
-X-Gm-Message-State: AOJu0Yw2H0NYuPyT7XfQcr55R1EJyP+gUd6bUDiDtwwER8fCE+pXM04G
- cTz6etZhcjzmM19P5vUIhTiddEa197PDqKHp6B1fIUKoT0yM7QiFequGHt/EziTKBVfCYXQmW0U
- giDMUppTeYYMGgARY2/rtylZWlzLkb+uvZryvrJmXlCtqlV3yk06YouMCMKUx1Z+OIJJr1o6NdN
- xZMjkSB/JG12uDWSwUmL/xcuRHHjg=
-X-Gm-Gg: ASbGnct8k5RH1RHgokgZWNNatj1OGsjk76oIKxHNz2SIpjupYKabBmb1sI6DfsUpING
- IAw9Q1fFtMDqsjfeN1DmcQa5mML+KazKsbH9qMQVEOkiHDh0Ga5ejTk1kE210TcXEvdB8WQ==
-X-Received: by 2002:a05:6402:354a:b0:5f4:d605:7f5c with SMTP id
- 4fb4d7f45d1cf-5f6285e88ecmr881377a12.22.1744943072844; 
- Thu, 17 Apr 2025 19:24:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1CpsIg7LrRiAA9nzFBazqKT0BVVCl6a7edJf7jwhFu8f/ugdLwhLO3vAFl8rO3pCp2UP7lCX0N0MTE69G9f4=
-X-Received: by 2002:a05:6402:354a:b0:5f4:d605:7f5c with SMTP id
- 4fb4d7f45d1cf-5f6285e88ecmr881363a12.22.1744943072426; Thu, 17 Apr 2025
- 19:24:32 -0700 (PDT)
+ AJvYcCXbxTV0vTTjBbzCj4CyFIxfaJ1CoURX0YAYihwJA1ZrNHTyDtg+61IE6OwXIUKS93b/4LslVTN5J3mb@nongnu.org
+X-Gm-Message-State: AOJu0YzsE0lhQdaJ/zUTEaZsI9NsPbpUMfZn/1O43pJweETYuhWiOr6Q
+ T9a63JZZEXY7/5Zw+8yPPG4ztOQTUe6QKZ+FUEh9Ms0d5L2nGk2u5JPoq2jFCDo=
+X-Gm-Gg: ASbGncsFGOgiTLMoXLxQfh4J2aFMFdUPmI3d/5TbhrensEJTHcSmon/BGF5EaP6J2No
+ vja0lmGrUyreFqhLc02e0oXAj0ISpBo5QWDUeeLA78hbOjrYIMelxnD4Jbv7yS7YBKfCzSS68Yu
+ pEJlGB0s7hEYAPqAwRUBE68WZAjrVyyWoMkSqqV7Qd1CTAyXdUEpqru7Asg1NIKFrpDkTB2WdqZ
+ uI5WM4Q3GMhW1bBb4xnVMH5PGGZ7ektOsEhCII0V4jVoQOfZ32bbxB7BDm2VsvxJXqP6WjwG929
+ n8Bbum2xvjPbkz0jnwiYxxiDeFhMO9PS4pHXwU/kM6KEixh9hUUuQJIDIhyS/Snd
+X-Google-Smtp-Source: AGHT+IHCECl7/GVf8a7AZ2QthylopVXuy6YN0mNjjAxS13Bg8XEj8yUiw+nCFWlQa5Cksq0YS2VHUg==
+X-Received: by 2002:a05:6a00:21c4:b0:736:ab48:5b0 with SMTP id
+ d2e1a72fcca58-73dc147c2a5mr1457508b3a.2.1744944801182; 
+ Thu, 17 Apr 2025 19:53:21 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73dbfae9e77sm623362b3a.160.2025.04.17.19.53.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 17 Apr 2025 19:53:20 -0700 (PDT)
+Message-ID: <29beabe0-15ed-4af3-87f3-c3a32bf44dc1@linaro.org>
+Date: Thu, 17 Apr 2025 19:53:19 -0700
 MIME-Version: 1.0
-References: <20250417102522.4125379-1-lulu@redhat.com>
- <20250417102522.4125379-2-lulu@redhat.com>
-In-Reply-To: <20250417102522.4125379-2-lulu@redhat.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Fri, 18 Apr 2025 10:23:55 +0800
-X-Gm-Features: ATxdqUHcm1yWStJc_oFdZQg9C3NrwHFALQuSce0__djCGrQmIvtfYgdcyBgrIzI
-Message-ID: <CAPpAL=wN5Kjk4=FzyucWjrK4QZHdEy4NUVyvZY_kqkybBzgccw@mail.gmail.com>
-Subject: Re: [PATCH v7 1/4] vhost_vdpa : Add a new parameter to enable check
- mac address
-To: Cindy Lu <lulu@redhat.com>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/11] hw/arm: Define machines as generic QOM types
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Antony Pavlov <antonynpavlov@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, qemu-arm@nongnu.org,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, Felipe Balbi
+ <balbi@kernel.org>, Bernhard Beschow <shentey@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Alistair Francis <alistair@alistair23.me>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20250417235814.98677-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250417235814.98677-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,94 +115,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I tested this series of patches v7 with virtio-net regression tests,
-everything works fine.
-
-Tested-by: Lei Yang <leiyang@redhat.com>
-
-On Thu, Apr 17, 2025 at 6:26=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
->
-> When using a VDPA device, it's important to ensure that the MAC
-> address is correctly set.
-> This patch adds a new QEMU command line parameter to enable MAC
-> address verification,  which is enabled by default.
->
-> Usage example:
-> ....
-> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0,c=
-heck-mac=3Dtrue\
-> -device virtio-net-pci,netdev=3Dvhost-vdpa0\
-> ....
-> To disable this check:
-> ....
-> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0,c=
-heck-mac=3Dfalse\
-> -device virtio-net-pci,netdev=3Dvhost-vdpa0\
-> ....
->
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
-> ---
->  include/net/net.h | 1 +
->  net/vhost-vdpa.c  | 5 +++++
->  qapi/net.json     | 5 +++++
->  3 files changed, 11 insertions(+)
->
-> diff --git a/include/net/net.h b/include/net/net.h
-> index cdd5b109b0..fac1951b6e 100644
-> --- a/include/net/net.h
-> +++ b/include/net/net.h
-> @@ -112,6 +112,7 @@ struct NetClientState {
->      bool is_netdev;
->      bool do_not_pad; /* do not pad to the minimum ethernet frame length =
-*/
->      bool is_datapath;
-> +    bool check_mac;
->      QTAILQ_HEAD(, NetFilterState) filters;
->  };
->
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 7ca8b46eee..7dbe6cf65c 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -1871,6 +1871,11 @@ int net_init_vhost_vdpa(const Netdev *netdev, cons=
-t char *name,
->          if (!ncs[i])
->              goto err;
->      }
-> +    /* Enable the mac check by default */
-> +    if (opts->has_check_mac)
-> +        ncs[0]->check_mac =3D opts->check_mac;
-> +    else
-> +        ncs[0]->check_mac =3D true;
->
->      if (has_cvq) {
->          VhostVDPAState *s0 =3D DO_UPCAST(VhostVDPAState, nc, ncs[0]);
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 310cc4fd19..0607c83833 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -510,6 +510,10 @@
->  # @queues: number of queues to be created for multiqueue vhost-vdpa
->  #     (default: 1)
->  #
-> +# @check-mac: Enable the check for whether the device's MAC address
-> +#     and the MAC in QEMU command line are acceptable for booting.
-> +#     (default: true)
-> +#
->  # @x-svq: Start device with (experimental) shadow virtqueue.  (Since
->  #     7.1) (default: false)
->  #
-> @@ -524,6 +528,7 @@
->      '*vhostdev':     'str',
->      '*vhostfd':      'str',
->      '*queues':       'int',
-> +    '*check-mac':    'bool',
->      '*x-svq':        {'type': 'bool', 'features' : [ 'unstable'] } } }
->
->  ##
-> --
-> 2.45.0
->
->
-
+T24gNC8xNy8yNSAxNjo1OCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IFdo
+aWxlIERFRklORV9NQUNISU5FKCkgaXMgYSBzdWNjaW5jdCBtYWNybywgaXQgZG9lc24ndA0K
+PiBhbGxvdyByZWdpc3RlcmluZyBRT00gaW50ZXJmYWNlcyB0byB0aGUgZGVmaW5lZCBtYWNo
+aW5lLg0KPiBDb252ZXJ0IHRvIHRoZSBnZW5lcmljIERFRklORV9UWVBFUygpIGluIHByZXBh
+cmF0aW9uIHRvDQo+IHJlZ2lzdGVyIGludGVyZmFjZXMuDQo+IA0KPiBQaGlsaXBwZSBNYXRo
+aWV1LURhdWTDqSAoMTEpOg0KPiAgICBody9jb3JlL251bGwtbWFjaGluZTogRGVmaW5lIG1h
+Y2hpbmUgYXMgZ2VuZXJpYyBRT00gdHlwZQ0KPiAgICBody9hcm0vYmFuYW5hcGk6IERlZmlu
+ZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4gICAgaHcvYXJtL2N1YmllYm9hcmQ6
+IERlZmluZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4gICAgaHcvYXJtL2RpZ2lj
+OiBEZWZpbmUgbWFjaGluZSBhcyBnZW5lcmljIFFPTSB0eXBlDQo+ICAgIGh3L2FybS9pbXg6
+IERlZmluZSBtYWNoaW5lcyBhcyBnZW5lcmljIFFPTSB0eXBlcw0KPiAgICBody9hcm0vaW50
+ZWdyYXRvcmNwOiBEZWZpbmUgbWFjaGluZSBhcyBnZW5lcmljIFFPTSB0eXBlDQo+ICAgIGh3
+L2FybS9rem06IERlZmluZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4gICAgaHcv
+YXJtL21zZjI6IERlZmluZSBtYWNoaW5lIGFzIGdlbmVyaWMgUU9NIHR5cGUNCj4gICAgaHcv
+YXJtL211c2ljcGFsOiBEZWZpbmUgbWFjaGluZSBhcyBnZW5lcmljIFFPTSB0eXBlDQo+ICAg
+IGh3L2FybS9vcmFuZ2VwaTogRGVmaW5lIG1hY2hpbmUgYXMgZ2VuZXJpYyBRT00gdHlwZQ0K
+PiAgICBody9hcm0vc3RtMzI6IERlZmluZSBtYWNoaW5lcyBhcyBnZW5lcmljIFFPTSB0eXBl
+cw0KPiANCj4gICBody9hcm0vYmFuYW5hcGlfbTJ1LmMgICAgICB8IDEzICsrKysrKysrKysr
+LS0NCj4gICBody9hcm0vY3ViaWVib2FyZC5jICAgICAgICB8IDEzICsrKysrKysrKysrLS0N
+Cj4gICBody9hcm0vZGlnaWNfYm9hcmRzLmMgICAgICB8IDE0ICsrKysrKysrKysrKy0tDQo+
+ICAgaHcvYXJtL2lteDI1X3Bkay5jICAgICAgICAgfCAxNCArKysrKysrKysrKystLQ0KPiAg
+IGh3L2FybS9pbXg4bXAtZXZrLmMgICAgICAgIHwgMTUgKysrKysrKysrKysrKy0tDQo+ICAg
+aHcvYXJtL2ludGVncmF0b3JjcC5jICAgICAgfCAxNiArKysrKysrKysrKysrLS0tDQo+ICAg
+aHcvYXJtL2t6bS5jICAgICAgICAgICAgICAgfCAxNCArKysrKysrKysrKystLQ0KPiAgIGh3
+L2FybS9tY2lteDZ1bC1ldmsuYyAgICAgIHwgMTUgKysrKysrKysrKysrKy0tDQo+ICAgaHcv
+YXJtL21jaW14N2Qtc2FicmUuYyAgICAgfCAxNSArKysrKysrKysrKysrLS0NCj4gICBody9h
+cm0vbXNmMi1zb20uYyAgICAgICAgICB8IDEzICsrKysrKysrKysrLS0NCj4gICBody9hcm0v
+bXVzaWNwYWwuYyAgICAgICAgICB8IDE2ICsrKysrKysrKysrKystLS0NCj4gICBody9hcm0v
+bmV0ZHVpbm8yLmMgICAgICAgICB8IDEzICsrKysrKysrKysrLS0NCj4gICBody9hcm0vbmV0
+ZHVpbm9wbHVzMi5jICAgICB8IDEzICsrKysrKysrKysrLS0NCj4gICBody9hcm0vb2xpbWV4
+LXN0bTMyLWg0MDUuYyB8IDEzICsrKysrKysrKysrLS0NCj4gICBody9hcm0vb3JhbmdlcGku
+YyAgICAgICAgICB8IDEzICsrKysrKysrKysrLS0NCj4gICBody9hcm0vc2FicmVsaXRlLmMg
+ICAgICAgICB8IDE0ICsrKysrKysrKysrKy0tDQo+ICAgaHcvYXJtL3N0bTMydmxkaXNjb3Zl
+cnkuYyAgfCAxMyArKysrKysrKysrKy0tDQo+ICAgaHcvY29yZS9udWxsLW1hY2hpbmUuYyAg
+ICAgfCAxNCArKysrKysrKysrKystLQ0KPiAgIDE4IGZpbGVzIGNoYW5nZWQsIDIxMyBpbnNl
+cnRpb25zKCspLCAzOCBkZWxldGlvbnMoLSkNCj4gDQoNClNvdW5kcyBnb29kLCBmb3IgdGhl
+IHdob2xlIHNlcmllczoNClJldmlld2VkLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmlj
+ay5ib3V2aWVyQGxpbmFyby5vcmc+DQoNCg==
 
