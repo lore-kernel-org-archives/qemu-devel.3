@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF97C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 10:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7DEBC369CF
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 11:23:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5jFS-00017k-2r; Fri, 18 Apr 2025 06:47:06 -0400
+	id 1u5jmQ-0001Vh-HN; Fri, 18 Apr 2025 07:21:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u5jFQ-00017X-2O
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 06:47:04 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5jmN-0001Uu-U3
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:21:08 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1u5jFO-0006Po-Ii
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 06:47:03 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2295d78b45cso28931395ad.0
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 03:47:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u5jmJ-0004Gx-R0
+ for qemu-devel@nongnu.org; Fri, 18 Apr 2025 07:21:07 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-39c1ef4acf2so1111825f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 04:21:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744973220; x=1745578020; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jPYs8SUhDDwuuvv2w0Us8LWBm85suq02AsNoBCgYyIo=;
- b=NfQ4kyaY9iqnekb7ovc7zE3XAdil2DD+wiD9xGS6KA+hzV2mnCyb/+NHykjD8SgyHj
- j/3rvNuH8gqHLz6roN/OoHRU56+xbqSxt5Sg7WRJdNsM/pU/6RtZwaBceoGu6lNhvI+g
- IutVDd3HI4J2I0naDT0pbSb+hlAxbhJalEtYgKrMYMmrx4o4Ku395dxks+X/zoxZ96CS
- 5zYEKUk/Y7dp8oyoekkoRwyIhk26p5GQwZcKfBaJ0W3HC7B9eTKFlSirtLpWOMv6pPiA
- KnmGz1O76aYTGUlerRKUCpU98wSCatGl0BpRGzIY42nvTlOh4gMF+mYVYW3sy0fykaC4
- qAJQ==
+ d=linaro.org; s=google; t=1744975259; x=1745580059; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L0fyHi4MxlMblE1+LGOB6BAVM0lFHznNuqWxWOGClhA=;
+ b=GHP63cpbVElLchaAvmUXOy80tZVLKgNmo1GKwtFDfQXHea1wAYj5PZ0C9BCWY9pP7L
+ S8UeJIeDnJunumzrGgI8T2fUic3Gq8J+8CxeLpgi0oIoQ2u/2ZxOlSNGZHtTN604phOn
+ W8yY1pDoCAkQtB2oxB5siONXkovz6xUWXvMi78P9kND/o4McPPWWlogC0rpdu9QJUDwQ
+ jKpw6GrrS1rGW1MX+ZpffKhbv7jl0BJH+7E3KGTRKKVsiJaDuasrEMBCbuOx54cco1fu
+ jtajAAKFftBT+EMnRSW7UMS3ucweVV6x0vF3fCJ0Hyk3f9uOSjGodETiKNasqRbEisq2
+ nj9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744973220; x=1745578020;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jPYs8SUhDDwuuvv2w0Us8LWBm85suq02AsNoBCgYyIo=;
- b=pAahy4Q2ameoXi23uD5VBhUuum13ZMJKheVLhN9oU8BMeL3VDJ8R+BpqgFQnlfyU+2
- ut/MaVPgG/lg5/n8YhFISmw+N/bovo4VEHqbSbdCs+do6jjAmbCK46mdkLUF6QYcw6hr
- 9XzPD3xvXMlKux+yOsoCMb5jH/7UlAER3jGS2kYG8jEzYYC8Zf+ULjC2yERVNXZiTqPF
- 1Qc+supKU82EeLu687YdVLM/Wk7Ko5xM4e0/A1v6Smqu5nB265cgLFyne99q6QKkBiGv
- BOD1H6hg/++wPoC0zrZ1hil0+D1fkHfqhbKsRZrPI1Cyrq1OffqlKypgr1HoS6KTWBOl
- th8g==
+ d=1e100.net; s=20230601; t=1744975259; x=1745580059;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=L0fyHi4MxlMblE1+LGOB6BAVM0lFHznNuqWxWOGClhA=;
+ b=XNQvi6z8VeFonbTJQmcUmZV8Xco0S00undsHBwAcT4N98J4qvwVJN8AnblczftMr/u
+ 646Aj83F0MjQPBThBPpU9gbvNGGY0FSEQVrNbwZNw2Tdgozrf7vMr1Fd90N5573P7euC
+ 2MLUkxTCDb4ZLtetDL+CmlxlnBILVdLKUUaFTMt6KjTs3w/xK3Qf5dfEFLQOsStlbMlc
+ sR6CSo4j4YDmudPir63VKzWB4QfRDfloJaaJFYw+EcLiq28z0+cVoRl+9ZqOIzahQmVc
+ qoW10peVdMZCy9G1pCV2yUE02Wx8COUKbIiKagMRXKfdt09eBZvX3Na1lXWzKNrgtOPx
+ TI5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXb3ZoeT4bzazEl5hPjU9Dkwz62ySA+mi5JVO6hCJXk/6301CYxemSGzQctETMfBtJx14qGmVhld90f@nongnu.org
-X-Gm-Message-State: AOJu0Ywmgth+CP6G0DYDHYH8WWKdz8YAMvREZX1WDRwjcQagIFgaHthf
- ebsJ0vrDA4Og60M0PrFn27un6wo0LMD48Qh6/e+HIw6zwNjcA9cF
-X-Gm-Gg: ASbGnct2GHD217kCpp8o718gq4DssiyJkDYb5dNV/COfjqsJttrVa9zQ4xU814F+qqk
- HtrXlMQ7pH5PZyAcLD8BIXHLjvDaLU0RKdL59iJk2qjr+em+ZwhYAgcnhuy4hS4CjeTWTKQYkHL
- 4W/ExsN44LD5xJf2E0d/E/bW4eS+oTbLufStS2wlHfpjfcJx+TCbQijdPe9OaA6X1sA8IC/fASt
- /x6asemHSwc8uQOQSqGziOJg59wcaSffxLYf5v+ddzSUOYWNGTWTFLYnjToL9m+3Era54qTXwXt
- CX/UwqFEs0YCxcWvU9zIoGsyWmavhnVN5R9tdRqNQTfx2xapE3maw1dmZeJpcmwmNg==
-X-Google-Smtp-Source: AGHT+IHIlltKy8pK1Iw8zABbC8QZW7fdpKWqwDNvBe/l2GUaG0pugmi48ZbyvPbQzUss3z449xrgVQ==
-X-Received: by 2002:a17:902:d4c4:b0:224:5a8:ba29 with SMTP id
- d9443c01a7336-22c5361b3afmr32910135ad.43.1744973220518; 
- Fri, 18 Apr 2025 03:47:00 -0700 (PDT)
-Received: from localhost (219-90-164-138.ip.adam.com.au. [219.90.164.138])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50eb4816sm13945315ad.131.2025.04.18.03.46.58
+ AJvYcCU58763gEo0sQNnw+v85RVwcIy3QysHECJB9Xn/l06INpHOc5PLGEwleCCyVHJb4EirNKZHpQ+qycFt@nongnu.org
+X-Gm-Message-State: AOJu0YyQk5qqAoprPSZPD22QDONn69kMtBp+lc3tT97p2HedcQkAje8F
+ 1HX2+CY+O+bg0VTsrC4uUuqxKGXdSisvo3dj3zzBQnocJGVFXOVuUhe2X7lABSU=
+X-Gm-Gg: ASbGnctAnrIP6k4uItNWB9MUdHKniUE0SsszRyAuEMyURWMHXZcFNPoV1/Cz2E5qols
+ qtdb3Ub25CE3ZSM3J7x/x3f4H20LMiZn3RR+zuPXf96OJ0JL09BCfZHPe5PnsU1qqM2z9ApiAVn
+ ytlEsNalu0VBc7saNot3CQDxzQS7BlN5d06KcqvLvAb7PMFKEaRrLk/8t4sNKyLzTOCWwJ2TJIR
+ s5nAYFeZ4N7rmaTEnm2rAqrr7kXtcA5YCZVnaY3ozUuFO0cug4oVycZy3VHSQaeaaTt86cIAUsa
+ 3/gemI3spg4zy52XpYnlE+pdK6dYuA4cEyqwphjGofbcQHWRdt01jhBX83CFXNDI/1F4Incx+Nn
+ fKr2Y1b3C
+X-Google-Smtp-Source: AGHT+IEXcl6JieJ7CpKZ6MYN9I5XLxbZG+UcMXvt8DlXf/cDyoAlPng0vLpJSFY8O34V6cXrF0nB6Q==
+X-Received: by 2002:a05:6000:178d:b0:39c:c64e:cf58 with SMTP id
+ ffacd0b85a97d-39efbaf20ccmr1721061f8f.55.1744975259110; 
+ Fri, 18 Apr 2025 04:20:59 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa4a4cd0sm2515462f8f.90.2025.04.18.04.20.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 03:46:59 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 18 Apr 2025 20:46:55 +1000
-Message-Id: <D99PDOQBOJL0.2MX82UOFOJ9FK@gmail.com>
-Subject: Re: [PATCH v4 153/163] tcg: Assign TCGOP_TYPE in liveness_pass_2
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-154-richard.henderson@linaro.org>
-In-Reply-To: <20250415192515.232910-154-richard.henderson@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+ Fri, 18 Apr 2025 04:20:58 -0700 (PDT)
+Message-ID: <cb64ac38-4ead-4dac-b885-bf107cafa606@linaro.org>
+Date: Fri, 18 Apr 2025 13:20:57 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 08/11] config/target: Implement per-binary
+ TargetInfo structure (ARM)
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250418005059.4436-1-philmd@linaro.org>
+ <20250418005059.4436-9-philmd@linaro.org>
+ <7bcc10f7-43b5-48f4-8546-3169e2be4fcd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7bcc10f7-43b5-48f4-8546-3169e2be4fcd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,55 +105,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Apr 16, 2025 at 5:25 AM AEST, Richard Henderson wrote:
-> Here we cannot rely on the default copied from
-> tcg_op_insert_{after,before}, because the relevant
-> op could be typeless, such as INDEX_op_call.
->
-> Fixes: ...
-
-Missing ^
-
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 18/4/25 06:02, Pierrick Bouvier wrote:
+> On 4/17/25 17:50, Philippe Mathieu-Daudé wrote:
+>> If a file defining the binary TargetInfo structure is available,
+>> link with it. Otherwise keep using the stub. Implement such
+>> structure for arm-softmmu.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   meson.build                   |  7 ++++++-
+>>   configs/targets/arm-softmmu.c | 22 ++++++++++++++++++++++
+>>   2 files changed, 28 insertions(+), 1 deletion(-)
+>>   create mode 100644 configs/targets/arm-softmmu.c
+>>
+>> diff --git a/meson.build b/meson.build
+>> index 168b07b5887..da24cc2ba41 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -3809,7 +3809,6 @@ specific_ss.add(files('page-target.c', 'page- 
+>> vary-target.c'))
+>>   common_ss.add(files('target_info.c'))
+>>   system_ss.add(files('target_info-qom.c'))
+>> -specific_ss.add(files('target_info-stub.c'))
+>>   subdir('backends')
+>>   subdir('disas')
+>> @@ -4272,6 +4271,12 @@ foreach target : target_dirs
+>>       arch_srcs += gdbstub_xml
+>>     endif
+>> +  target_info_c = meson.project_source_root() / 'configs' / 
+>> 'targets' / target + '.c'
+>> +  if not fs.exists(target_info_c)
+>> +    target_info_c = meson.project_source_root() / 'target_info-stub.c'
+>> +  endif
+>> +  arch_srcs += target_info_c
+>> +
+>>     t = target_arch[target_base_arch].apply(config_target, strict: false)
+>>     arch_srcs += t.sources()
+>>     arch_deps += t.dependencies()
+> 
+> While this works, it would be better with a dictionary, so it follows 
+> the style of existing meson.build.
+> 
+> As well, two advantages:
+> - we can move configs somewhere else in case we decide to split them in 
+> every folder later
+> - We avoid calling fs.exists for every target, but it should not really 
+> change anything to configure step time.
+> 
 > ---
->  tcg/tcg.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 05604d122a..3c80ad086c 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -4408,6 +4408,7 @@ liveness_pass_2(TCGContext *s)
->                                    : INDEX_op_ld_i64);
->                  TCGOp *lop =3D tcg_op_insert_before(s, op, lopc, 3);
-> =20
-> +                TCGOP_TYPE(lop) =3D arg_ts->type;
+> 
+> diff --git a/meson.build b/meson.build
+> index 81afa63853e..7fca3c5c4dc 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3228,6 +3228,7 @@ config_devices_mak_list = []
+>   config_devices_h = {}
+>   config_target_h = {}
+>   config_target_mak = {}
+> +target_info = {}
+> 
+>   disassemblers = {
+>     'alpha' : ['CONFIG_ALPHA_DIS'],
+> @@ -3823,9 +3824,9 @@ specific_ss.add(files('page-target.c', 'page-vary- 
+> target.c'))
+> 
+>   common_ss.add(files('target_info.c'))
+>   system_ss.add(files('target_info-qom.c'))
+> -specific_ss.add(files('target_info-stub.c'))
+> 
+>   subdir('backends')
+> +subdir('configs/targets')
+>   subdir('disas')
+>   subdir('migration')
+>   subdir('monitor')
+> @@ -4286,6 +4287,12 @@ foreach target : target_dirs
+>       arch_srcs += gdbstub_xml
+>     endif
+> 
+> +  if target in target_info
+> +    arch_srcs += target_info[target]
+> +  else
+> +    arch_srcs += files('target_info-stub.c')
+> +  endif
+> +
+>     t = target_arch[target_base_arch].apply(config_target, strict: false)
+>     arch_srcs += t.sources()
+>     arch_deps += t.dependencies()
+> 
+> diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+> new file mode 100644
+> index 00000000000..140386e932c
+> --- /dev/null
+> +++ b/configs/targets/meson.build
+> @@ -0,0 +1,3 @@
+> +foreach target : ['arm-softmmu', 'aarch64-softmmu']
+> +  target_info += {target : files(target + '.c')}
+> +endforeach
+> 
 
-tcg_op_insert_before/after I think are only called in these 3 places?
-So after this patch, the type assignment in those functions looks
-redundant. Maybe you could pass in the type as an argument.
-
-Thanks,
-Nick
-
->                  lop->args[0] =3D temp_arg(dir_ts);
->                  lop->args[1] =3D temp_arg(arg_ts->mem_base);
->                  lop->args[2] =3D arg_ts->mem_offset;
-> @@ -4480,6 +4481,7 @@ liveness_pass_2(TCGContext *s)
->                          arg_ts->state =3D TS_MEM;
->                      }
-> =20
-> +                    TCGOP_TYPE(sop) =3D arg_ts->type;
->                      sop->args[0] =3D temp_arg(out_ts);
->                      sop->args[1] =3D temp_arg(arg_ts->mem_base);
->                      sop->args[2] =3D arg_ts->mem_offset;
-> @@ -4507,6 +4509,7 @@ liveness_pass_2(TCGContext *s)
->                                        : INDEX_op_st_i64);
->                      TCGOp *sop =3D tcg_op_insert_after(s, op, sopc, 3);
-> =20
-> +                    TCGOP_TYPE(sop) =3D arg_ts->type;
->                      sop->args[0] =3D temp_arg(dir_ts);
->                      sop->args[1] =3D temp_arg(arg_ts->mem_base);
->                      sop->args[2] =3D arg_ts->mem_offset;
-
+Thanks for showing the dictionary variant!
 
