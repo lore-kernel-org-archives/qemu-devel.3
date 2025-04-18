@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872FAC369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 06:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E26C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 18 Apr 2025 06:55:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5fc0-0002iO-9r; Fri, 18 Apr 2025 02:54:08 -0400
+	id 1u5fdU-0003UR-8D; Fri, 18 Apr 2025 02:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u5fby-0002hV-L9; Fri, 18 Apr 2025 02:54:06 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1u5fdB-0003P2-6k; Fri, 18 Apr 2025 02:55:21 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u5fbw-0003yG-P4; Fri, 18 Apr 2025 02:54:06 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-af19b9f4c8cso998312a12.2; 
- Thu, 17 Apr 2025 23:54:02 -0700 (PDT)
+ id 1u5fd7-0004PJ-15; Fri, 18 Apr 2025 02:55:18 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-3018e2d042bso1138485a91.2; 
+ Thu, 17 Apr 2025 23:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1744959242; x=1745564042; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1744959313; x=1745564113; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YLEkyMApbPIGGQquRcY2VmYQsJL8RB3s9s0I1o7NgYw=;
- b=Vig4OyzyRSk3HsI6g1lvLq9jVCQNO/6YAtRox1EWzRJiMPbozgNWtESH9Ck9Mbyq7Q
- Qx4idLp7k7Z83YfTAxHybYPrm/03US/ZZ7ShgDkTUZMcdCMHG9GYsAKfxG4f5lbe2AFY
- JSPEyqwqG8vleJhk66LD3HPWv3Am4bMBKYQ5Myh543JZDy8FNnkzLSYeRcG83bLLVg0I
- zu+jZuSbjAjoPyfAk7j3Sdbbo1rsN4E04L3uwhPcXtB0RicgyVeVJJD7sBPTSkqCJKtk
- W+J2IO5OllZrMsfS8+4s3h5/6NTuGwN4G5dNcqSbCC5+hcGwvG+IOUEInk5rePkevA9Q
- JtdA==
+ bh=zE3VYyJM4u91oaT272fs/Lb82dU6BoeKgOTBkGAnBu0=;
+ b=QiX/rFvWrdmATHqKFkUufpCivgyyi8e5oE/gOAHEDDnDG32gxf7iPkf0z2loNvWMIa
+ wKOWHg9gJNlusSeq1UaIXwgoqyeMDq0+4Bvd5rrdLEhtHreYoiKbvC6Z03Owy27of2Vc
+ nPaNhdY+bqfwe5r4lHgflC4vr2fugUn4rbx5WIw9pdJGVzn5lybZAWpxlfeVQqT3tsTQ
+ lEymO+fC7yeZV5Zuh0IXmg7X5zloRhtZ/PmXLCDnGbjsp5SgGR4oYXxMCHHk3BTRn5PG
+ djzJEGPFteXgffo0GQYcYCzdsulEJ/n2O2S0s/XDzjWg6JY9DvqklDkfTw02CxgLwQPw
+ wZcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1744959242; x=1745564042;
+ d=1e100.net; s=20230601; t=1744959313; x=1745564113;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YLEkyMApbPIGGQquRcY2VmYQsJL8RB3s9s0I1o7NgYw=;
- b=X9NWC3RONFf7LjnqiK1KXcHZEBEQoKsAE/NfcTF3z0QocwiEjA2ORfhM1bG4G1B1nT
- PM+A9m2JAV32BALMfWYyY/e6wRBdn+I1Tkhvh9aeASfRYrsWy6sSO9MNgvcaKNamaQi/
- 5BNXsH0+6Ddv0UjKB+AYUA2EQ6dCoxn/M5p8VKqvgG9rrjlxonE4pz/HL1NW/x72J6Fb
- dJ+UVWgSfn9WWe/7QGvw2Lrtkue9AA3OVDUC62YtU1/h2WncqfZH0UdEwyMKGrn5j2LX
- G9YmZReF2zrpAUSdRAwZ0R0cpRYvXi2Q3IAkz+39Kqcg7d7jjk4VK6qcLaDkjxzUh4GH
- iYCw==
+ bh=zE3VYyJM4u91oaT272fs/Lb82dU6BoeKgOTBkGAnBu0=;
+ b=p9/gBWMYoLC26B7ImciXjLGWaAbyucJHMB3dKl6YThUpit2sXU1HK5GLeCsOQkCzT7
+ xPQRKguMtlZMjy/myyFPavebnN4CzRKAorpiAUwrUD+LDDgkxz74U6zB1ZXh8A7Grq8w
+ BMecrk/HsRdAAoeexDCi6KW1QLWUuiNHwW7uzBj6su0RgAn01WChdMiLw7PZ8t7pLbzK
+ cEfRy3lhpGqD8wT+qAGznfTnwk+GZZNaXKMb9UQ1no9w64ihna+mgR5UVQrhKloouYrK
+ clG94B5+hxsntrXxO5FpI2YEURtIrqrhozc5E1SXWWW5lz0DX9QK2mwUdoeRR15q4+HR
+ UDkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkXX4jNTskreFl5YxEGyPPsxk5Ptsnd0maxHolTsFDY2+u7dFlmYmtkb3t+F3WIT9zTAMLu6tj2NO0Nw==@nongnu.org,
- AJvYcCVwgMMezCQ9Rozfk73pr7iSawu5Wy5i+Hn3L0DAcKS677BEA88UE55qTu04TOJoF+olXP2/+cGZC5E=@nongnu.org,
- AJvYcCWY2E8TnBC4pnEROr+esE+Mh8pY/rGTPjdPtpqHw1c6YFEA78unasoghGQ1WMR5zpeYCBEB+3uDjXXEjQ==@nongnu.org,
- AJvYcCXDx5yp+B0eyXNPWTHyowZp8Xii42jqKtldFrhHkLpsisIyQ9VCi3mOjIeefkZY7JoLnpjLteev0w==@nongnu.org,
- AJvYcCXJb+ca7iQecSEZvGvKdXiMyE3J3B9tmy5zYR+E0/bzHFBB7DsJ/f/5ELoY6d9WVQ37E/M8QNfQzamvTw==@nongnu.org
-X-Gm-Message-State: AOJu0YyvwZq5ScAEpEJJWXUuN4Anb+cjrjkhe5p28xhTYq9Bn9T1eVVu
- d9s+T1Lv2Qi6AFmPuvoLOO0JTKVWIWredDuQwyxF4qlBXK2ojjMB+YFDidrZwSMf77M7RLMW1iF
- exIMW9d7oVwbkSV7I1O8nBoG96Rk=
-X-Gm-Gg: ASbGncsTsyFzsvvhIOlfLy22T5C5fzCgw2ke1DImBP3yecjiMlLdbVpFYwxsfE8y5aU
- 4ZYFdqBjrqG1x/qTlgRFYiWugPsCT9tIioYZXaRxumUf4Z78pSkEHyfZpDCbdmDqbKWotj1gkjH
- fvor2gywDHb57Y4afxXt20uA==
-X-Google-Smtp-Source: AGHT+IHkpfY5hHAFvYvTGFKYPidYXM/IL+jZhfak47UIbJcmuSAYn2S1dkxNea3orbH0GfDyxASc5nkUisjZICCumP4=
-X-Received: by 2002:a17:90b:3b50:b0:305:5f28:2d5c with SMTP id
- 98e67ed59e1d1-3087bb679c2mr2267154a91.15.1744959241732; Thu, 17 Apr 2025
- 23:54:01 -0700 (PDT)
+ AJvYcCUf9HwcS9EbsMW+Y+kbn/0IOYsHwPY9dq/LP38SWj8IeuMMll/9LXaFSb0MeaajEGI+9BNvgwKu8CKmgg==@nongnu.org,
+ AJvYcCVsLjPbfCVP+jp2NZA0lqXiQnI2xBDYlOT8Z48zCnsW952rzylB/X+r6lNPrXLDy4TMyILR9b8dFkHhKA==@nongnu.org,
+ AJvYcCVtfHjPkV+pdEw0cBpGx1OTXhjPee7zOw2qqtBhCehBiOLKXdfPrfnXrz/oNEkhHc/5O1pWzFUpFw==@nongnu.org,
+ AJvYcCWaf9avp1PpDRX2o8EyjYFd+XG/zC8WA1MOA701NvoGcNu5ojDXHn+vWANWUfZGB1NYNS/7u0ii0LA=@nongnu.org,
+ AJvYcCXbDNy9loKHgUJNnFYgAW3Z5YO3d1ioDatpRJi6j9Olentn0v7xVeahHYdLFLncxz93rxSQge9QhPNjog==@nongnu.org
+X-Gm-Message-State: AOJu0Yz+KpU0kfgR1faeJadMQPfIH+XKXkrpzPQP983H+u4a4D4G9A1t
+ uUnLnxYz+nE4tiv+2ofbXn+lGed29OIMr06CZDXVQesyOy+vziNiR+tGRh7ZGlK70HNDOnwc9KU
+ x18RGW5ey9NclVdmtnwXMdJSHQUU=
+X-Gm-Gg: ASbGncvlTbf0hgAXoECevtwgsogbUgU+uzzvt6gqPED9NZWWwe4ErFsi6qEL95AtE8T
+ HK43G7OFTu2KEXil/MB7YM/SVWwI71YXCeRSPzWenbJWuFHKA0jVyutRgiXbbHhwnBelUDhyshz
+ 8WNZW0e7SMx85WfpUzx/aMRQ==
+X-Google-Smtp-Source: AGHT+IEkswcbCVI7/mUhn3wxHieDdDPozlUfys+cT2bFQ15bD/nf3bmeEmrpvKBq7tfaRK8O2YCPo2tfq0I+FHdD86Y=
+X-Received: by 2002:a17:90a:fc4f:b0:305:2d27:7ba5 with SMTP id
+ 98e67ed59e1d1-3087bb2cbabmr2357908a91.6.1744959313243; Thu, 17 Apr 2025
+ 23:55:13 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1744787186.git.ktokunaga.mail@gmail.com>
- <9da41d784991f77e2c1f38d0781cd047b593e053.1744787186.git.ktokunaga.mail@gmail.com>
- <afe0abf1-2c33-47d8-bde6-8abc722eb212@linaro.org>
- <2d232dbc-4613-4352-8ede-3fd5dcefc32c@linaro.org>
- <CAEDrbUbQ2h1wj-KJqjYjcGPb4Pyp0te8ycy2DoJGENvT2+Mxcg@mail.gmail.com>
- <e7f66ec8-ee38-453d-a6de-4ed8d5a54268@linaro.org>
-In-Reply-To: <e7f66ec8-ee38-453d-a6de-4ed8d5a54268@linaro.org>
+ <58863961cf88a72b76a90279da09ea332943924d.1744787186.git.ktokunaga.mail@gmail.com>
+ <1e658b6e-02ed-47d1-9c19-d5753cc6e6c8@linaro.org>
+In-Reply-To: <1e658b6e-02ed-47d1-9c19-d5753cc6e6c8@linaro.org>
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Fri, 18 Apr 2025 15:53:49 +0900
-X-Gm-Features: ATxdqUELYxpc16CMfbZ7wEabwr_03yB3vJtXle1t0CMdpVlr73kuh4qY3JKExuU
-Message-ID: <CAEDrbUYw2mp-UrYGXtEDSuwRP+8oC3nHq5s9VppGj=7f7_Gq_w@mail.gmail.com>
-Subject: Re: [PATCH 12/19] block: Update block to compile with Emscripten
+Date: Fri, 18 Apr 2025 15:55:01 +0900
+X-Gm-Features: ATxdqUGu39lF6lPk8TSLhKph8MX3trqBTUhhySRtvszhNLQrTN5JRUPtO00LlLU
+Message-ID: <CAEDrbUYfR6KxTf1fkasMBin5kB83iKebmuAC9ToJnF_2A-T8jw@mail.gmail.com>
+Subject: Re: [PATCH 13/19] include/qemu/osdep.h: Add Emscripten-specific OS
+ dependencies
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+ qemu-devel@nongnu.org
 Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, 
@@ -90,12 +88,13 @@ Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>, 
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Hildenbrand <david@redhat.com>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-block@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000c04c5b063307fb33"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52b.google.com
+Content-Type: multipart/alternative; boundary="000000000000038bc70633080041"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,75 +117,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c04c5b063307fb33
+--000000000000038bc70633080041
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Philippe,
 
-> If meson fails to link, it won't define HAVE_COPY_FILE_RANGE,
+> You shouldn't have to modify this file, likely a rebase typo.
 
-Yes, meson correctly detects the link failure when checking for
-copy_file_range, as shown in meson-log.txt:
+Thank you for pointing this out. I'll fix this in the next version of the
+series.
 
-> wasm-ld: error: /tmp/emscripten_temp_oqvz296m/testfile_0.o: undefined
-symbol: copy_file_range
-
-and reflects this in the configure output:
-
-> Checking for function "copy_file_range" : NO
-
-> so you
-> shouldn't get "static declaration of 'copy_file_range' follows
-> non-static declaration" right?
-
-To fix this error, I needed to update the stub implementation in
-file-posix.c to exactly match the declaration in Emscripten's
-headers. Specifically, I changed the return type from off_t to ssize_t and
-removed the "static" qualifier. With this change, file-posix.c builds
-correctly under Emscripten, and there is no need to add a new stub in
-stubs/emscripten.c
-
-The following is the patch updates file-posix.c to solve this error:
-
- #ifndef HAVE_COPY_FILE_RANGE
--static off_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
--                             off_t *out_off, size_t len, unsigned int
-flags)
-+ssize_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
-+                               off_t *out_off, size_t len, unsigned int
-flags)
- {
- #ifdef __NR_copy_file_range
-     return syscall(__NR_copy_file_range, in_fd, in_off, out_fd,
-
---000000000000c04c5b063307fb33
+--000000000000038bc70633080041
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Philippe,</div><br>&gt; If meson fails=
- to link, it won&#39;t define HAVE_COPY_FILE_RANGE,<br><br>Yes, meson corre=
-ctly detects the link failure when checking for<br>copy_file_range, as show=
-n in meson-log.txt:<br><br>&gt; wasm-ld: error: /tmp/emscripten_temp_oqvz29=
-6m/testfile_0.o: undefined symbol: copy_file_range<br><br>and reflects this=
- in the configure output:<br><br>&gt; Checking for function &quot;copy_file=
-_range&quot; : NO<br><br>&gt; so you<br>&gt; shouldn&#39;t get &quot;static=
- declaration of &#39;copy_file_range&#39; follows<br>&gt; non-static declar=
-ation&quot; right?<br><br>To fix this error, I needed to update the stub im=
-plementation in<br>file-posix.c to exactly match the declaration in Emscrip=
-ten&#39;s<br>headers. Specifically, I changed the return type from off_t to=
- ssize_t and<br>removed the &quot;static&quot; qualifier. With this change,=
- file-posix.c builds<br>correctly under Emscripten, and there is no need to=
- add a new stub in<br><div>stubs/emscripten.c</div><br>The following is the=
- patch updates file-posix.c to solve this error:<br><br>=C2=A0#ifndef HAVE_=
-COPY_FILE_RANGE<br>-static off_t copy_file_range(int in_fd, off_t *in_off, =
-int out_fd,<br>- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 off_t *out_off, size_t len, unsig=
-ned int flags)<br>+ssize_t copy_file_range(int in_fd, off_t *in_off, int ou=
-t_fd,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 off_t *out_off, size_t len, unsig=
-ned int flags)<br>=C2=A0{<br>=C2=A0#ifdef __NR_copy_file_range<br>=C2=A0 =
-=C2=A0 =C2=A0return syscall(__NR_copy_file_range, in_fd, in_off, out_fd,<br=
-><br></div>
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Philippe,<br><br>&gt; You shouldn&#39;=
+t have to modify this file, likely a rebase typo.</div><div dir=3D"ltr"><br=
+></div><div dir=3D"ltr">Thank you for pointing this out. I&#39;ll fix this =
+in the next version of the<br>series.<br><br></div></div>
 
---000000000000c04c5b063307fb33--
+--000000000000038bc70633080041--
 
