@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A81A6C369BD
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 05:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31870C369BD
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 06:37:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u60jD-0003lh-5u; Sat, 19 Apr 2025 01:26:59 -0400
+	id 1u61oS-0007EV-Bg; Sat, 19 Apr 2025 02:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u60j7-0003lI-LR
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 01:26:53 -0400
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1u61oQ-0007EB-DT
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 02:36:26 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u60j6-0000LW-1n
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 01:26:53 -0400
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-47686580529so26853311cf.2
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 22:26:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1u61oO-00049A-2l
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 02:36:26 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso29881415ad.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 23:36:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745040411; x=1745645211; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jyuR80U7GxF7aTu858BPNKhHlA3/sJumM+aw94CdUDc=;
- b=dTIthN9LXU9E09FsDWujX3ZYMPOVmWlD1QeUkp7y2UgjKkNXyuKMCUMeeQt/JSujmN
- CY3Q79f+ekDDeEqm91na3h96t9gdL/b3OB2JHGku2hIGgoa4haEkRMYREzwXtHu6wa2h
- AcUreaBJJFF5tV2nk9NbBfEjwTOKp+u0rltjQtyYm+ej4wtrpmhz2hkS1OxbM7AcpVzP
- XoPcxxZKVQB9Nliv3/I3a5oq0eOCZacIj3RbL95JSN1JulJE4X48hXdNtkx6LOLIWTkc
- XmaGW3YB7Zq6HgpGLQrqnVQBtJOc3rGuQCYZcNoYOApzwZ1vFNGtvnNPUioKlf+/cB4v
- x7Bw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745044582; x=1745649382;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=l7pLlRPYl9IZ9VK/DyOgMPx8meh7il9zCjTpYyrFrdE=;
+ b=FhbiSzKCLyHlGd8BuhvErGMV5CEg6zU+jzb1gE4daZj97xpIqfjWrPhCsrhEQDodiy
+ /W32QEvDJZ7mssQy1RayD9bQ1/D8QolKXErV/5eVeq1OHPAptw3m9nxFF3WiHWZyZIwB
+ vvmo23YVmCQCS8t/wstnQeIxX46dXsE/PttRI9XS1JeneqGz4C4Y8IHzHgqg7k8Ax/s3
+ AgwQehnYZgwAv57cp9TJCN5zmxGyq2spCnUgCK05B6DAAVglrCH4Zc4/6L9TusQ46nHi
+ /6UrHeY/4KNDO70X5ReQk43zSPL+fx1zsVzGvnuwzNvyxBYsaicN8myw8mknBeFuPS4d
+ I5Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745040411; x=1745645211;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jyuR80U7GxF7aTu858BPNKhHlA3/sJumM+aw94CdUDc=;
- b=VaCeYrwEGk0vw+7YVFYVCuoCXH43Bo+oZqG3/ndPX6U9euNRy8BIQYF6jpQbGv0CEv
- ogkxPc00vbv3qGZr63l9uqU41pmzzOi/m+58KhJnTG4jGvs5MzuylGBM9/wE30zIGw1O
- SLVTGAGfgg2cc5twgW5nYBFj7J9xUtu9T6IRBoE3YB3En9w4kSfC7tBoUNlG0HBr34JF
- cGzhk768wJkgi/+3NUemKasVB902uTNzAnTH0WBGC3HfJvFj1PhMFYLvKwf6kYqRa66N
- 8tt/Ek5Ihd80i6ZX1iBtSTVPHhN4IUtiPeW5RIPusur3YYjLYK4BnshguYBjFSbMpBvE
- q88A==
-X-Gm-Message-State: AOJu0YzrsgNBtjvQzJ2EC7XOOrorAY6IBzFeXw2tOPVDE85vtbFIcoMV
- Lj5WrsHD69NHRSHeEqguEeEz1kQn/vx7cgZrzoLNUB5uQIQxNUQB5TM9f65X6z0tVRvPCKJKaHT
- gi5zr5sgFiz2PmWAnuco4iEl3fJaVK/OL9oXQiw==
-X-Gm-Gg: ASbGnct6M4Gv2UwZpKD8Yi86ql0jSMU2unV5bezqFW0e3oUvmHkuCUrl0GiIVOlqndl
- eiq9NVrg3L21hTfMfg63/NyJQNoBNEPEw6rrY0RbbNLgIYdgwusyxu3Nppz/z753/27tpTMWFO7
- synS5uCCPKBN8fSp3gJIdWveDOS9LP2iMu4w==
-X-Google-Smtp-Source: AGHT+IH8X5PKCXFcp40WxkPVmdCsI4HdROYkmk3lkIOx1Tu9ZLxchFhTGor406NLQiacqdVgJSYLe9mIYQnhwkLuXdY=
-X-Received: by 2002:ac8:5d04:0:b0:476:ac97:b970 with SMTP id
- d75a77b69052e-47aec4bdf0cmr74778131cf.52.1745040410910; Fri, 18 Apr 2025
- 22:26:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745044582; x=1745649382;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l7pLlRPYl9IZ9VK/DyOgMPx8meh7il9zCjTpYyrFrdE=;
+ b=eJj6ew4Z4gn6wB7Nl405fBHKnl8MUPPcQ8n3M/ZYXXG1py6EhIODmc+e4BdBVDtoHp
+ dtiUAXYOHVgUeG0/FUb6Ch3kRBWNLhGpN6UOJ0u/1TCBD8/eYPwdECDhK+2WgWl8yiNO
+ Ef6rmREShauDKvHcEDz9+D8yzoFQMJ+fIKp/TgTWkfoTdg+8swOM0hlyCBa4+i3AFDAp
+ zgmCnsqDDPh2X/G2CoZ50fcWqtVFG2IfRPMNonRZpaby/cr+vSvTMPZoO5keAM1GLQ8u
+ lDaqmR6h2P5xA7w2aYAmskwQ+vZWBKjatGesIuJsThofOKW2wbVeN+5RhxByv0wCiw2A
+ UTXg==
+X-Gm-Message-State: AOJu0YxW9og9eaUmAiHboO26lI/YdL/O3Jx3aI/qB9aoCbgJ9yMFKDiq
+ 5hwqt957UVmvzwZEG5u9BdB+ixPQmWdRJo0YE9gycowGHuD04pBSSZwZIP9VxoFxaUkqGen2UYC
+ 62QE=
+X-Gm-Gg: ASbGncvSXT2YuQ6HGTyAYfOaLGhKQfo82ScT9loZXSOP2+nR0/DZ4GHqzAt9x12knxn
+ RxL2p1U7MUw2m3uoIIvprBv4b9W1Gh4phujNMLrF23pue+nPR9qnZ5gH1Y4qmdvZ5ePhx9AqKXq
+ VhszwC+ID5YojYMm+2cq8YjAq8WMkewgwXIHPdn2ryZG3vBRIHzGP/46bimzgAMtilcj4j8vvMS
+ YbYEjjLKBZ7L2a4FwO0AZL4yLRMnvgEiwFr0XqvkwKvfvei+J8PPl2CS4ZBBgeEev6a0PDGnGA+
+ lki13RYUXZbVYZwjRmiZJysaeKu/+78kFJfYXqkzzAttLTdCmSQskPncHPYH/nKqCIZKeXTMyIp
+ gYeLLTP5FhTMYs1p0qwk=
+X-Google-Smtp-Source: AGHT+IE+GcQShiNHg7UqPMGPQvE2ekrFZa4TzG3SRSTJQHASjtHYL3s9r2tRE+AS8OqV8mrQtHwZEg==
+X-Received: by 2002:a17:902:d489:b0:224:e33:8896 with SMTP id
+ d9443c01a7336-22c53285bbbmr70613555ad.11.1745044581847; 
+ Fri, 18 Apr 2025 23:36:21 -0700 (PDT)
+Received: from ?IPV6:2400:4050:b783:b00:9e36:5f4c:928c:4ec2?
+ ([2400:4050:b783:b00:9e36:5f4c:928c:4ec2])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50eb64fbsm27063875ad.158.2025.04.18.23.36.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 18 Apr 2025 23:36:21 -0700 (PDT)
+Message-ID: <87b634f1-b3fb-4911-bf97-0f941d07a2f0@daynix.com>
+Date: Sat, 19 Apr 2025 15:36:18 +0900
 MIME-Version: 1.0
-References: <20250418112953.1744442-1-dietmar@proxmox.com>
- <20250418112953.1744442-4-dietmar@proxmox.com>
-In-Reply-To: <20250418112953.1744442-4-dietmar@proxmox.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Sat, 19 Apr 2025 09:26:37 +0400
-X-Gm-Features: ATxdqUFL4BOt9WVDBACwPE385w6PeNb7vO0Kj8u5jfsFQOIhGjPeNqb3O2H-F3s
-Message-ID: <CAJ+F1CLZjQ-BtjF_kjBD6iv3pRf3W1gd9TzBdG-VGypM=Ezfpg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/9] vnc: h264: send additional frames after the
- display is clean
-To: Dietmar Maurer <dietmar@proxmox.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio: Call set_features during reset
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ devel@daynix.com, qemu-stable@nongnu.org
+References: <20250410-reset-v1-1-751cd0064395@daynix.com>
+ <CACGkMEv5JfUFkwQzE5iHuxnKsVm6u1d89Ek5n4Gw2a2D2DEvVw@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CACGkMEv5JfUFkwQzE5iHuxnKsVm6u1d89Ek5n4Gw2a2D2DEvVw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,87 +105,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 18, 2025 at 3:54=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.com=
-> wrote:
->
-> The H264 implementation only sends frames when it detects changes in
-> the server's framebuffer. This leads to artifacts when there are no
-> further changes, as the internal H264 encoder may still contain data.
->
-> This patch modifies the code to send a few additional frames in such
-> situations to flush the H264 encoder data.
->
-> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+On 2025/04/16 14:46, Jason Wang wrote:
+> On Thu, Apr 10, 2025 at 3:42 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> virtio-net expects set_features() will be called when the feature set
+>> used by the guest changes to update the number of virtqueues. Call it
+>> during reset as reset clears all features and the queues added for
+>> VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS will need to be removed.
+> 
+> It's not clear to me what kind of problem we want to fix here. For
+> example, what happens if we don't do this.
 
-(from v1)
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Without this change, if the device gets reset after VIRTIO_NET_F_MQ or 
+VIRTIO_NET_F_RSS is configured:
+- the guest will see too many virtqueues
+- migration results in segfault due to the mismatch with the number of 
+virtqueues and feature set
 
-> ---
->  ui/vnc.c | 25 ++++++++++++++++++++++++-
->  ui/vnc.h |  3 +++
->  2 files changed, 27 insertions(+), 1 deletion(-)
->
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index aed25b0183..badc7912c0 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -3239,7 +3239,30 @@ static void vnc_refresh(DisplayChangeListener *dcl=
-)
->      vnc_unlock_display(vd);
->
->      QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
-> -        rects +=3D vnc_update_client(vs, has_dirty);
-> +        int client_dirty =3D has_dirty;
-> +        if (vs->h264) {
-> +            if (client_dirty) {
-> +                vs->h264->keep_dirty =3D VNC_H264_KEEP_DIRTY;
-> +            } else {
-> +                if (vs->h264->keep_dirty > 0) {
-> +                    client_dirty =3D 1;
-> +                    vs->h264->keep_dirty--;
-> +                }
-> +            }
-> +        }
-> +
-> +        int count =3D vnc_update_client(vs, client_dirty);
-> +        rects +=3D count;
-> +
-> +        if (vs->h264 && !count && vs->h264->keep_dirty) {
-> +            VncJob *job =3D vnc_job_new(vs);
-> +            int height =3D pixman_image_get_height(vd->server);
-> +            int width =3D pixman_image_get_width(vd->server);
-> +            vs->job_update =3D vs->update;
-> +            vs->update =3D VNC_STATE_UPDATE_NONE;
-> +            vnc_job_add_rect(job, 0, 0, width, height);
-> +            vnc_job_push(job);
-> +        }
->          /* vs might be free()ed here */
->      }
->
-> diff --git a/ui/vnc.h b/ui/vnc.h
-> index a0d336738d..a5ea134de8 100644
-> --- a/ui/vnc.h
-> +++ b/ui/vnc.h
-> @@ -236,10 +236,13 @@ typedef struct VncZywrle {
->  } VncZywrle;
->
->  #ifdef CONFIG_GSTREAMER
-> +/* Number of frames we send after the display is clean. */
-> +#define VNC_H264_KEEP_DIRTY 10
->  typedef struct VncH264 {
->      GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
->      size_t width;
->      size_t height;
-> +    guint keep_dirty;
->  } VncH264;
->  #endif
->
-> --
-> 2.39.5
->
->
+I'll add the description to the patch message with the next version.
 
+> 
+>>
+>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
+>> Buglink: https://issues.redhat.com/browse/RHEL-73842
+>> Cc: qemu-stable@nongnu.org
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/virtio/virtio.c | 86 +++++++++++++++++++++++++++---------------------------
+>>   1 file changed, 43 insertions(+), 43 deletions(-)
+>>
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index 85110bce3744..033e87cdd3b9 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -2316,49 +2316,6 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
+>>       }
+>>   }
+>>
+>> -void virtio_reset(void *opaque)
+>> -{
+>> -    VirtIODevice *vdev = opaque;
+>> -    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+>> -    int i;
+>> -
+>> -    virtio_set_status(vdev, 0);
+>> -    if (current_cpu) {
+>> -        /* Guest initiated reset */
+>> -        vdev->device_endian = virtio_current_cpu_endian();
+>> -    } else {
+>> -        /* System reset */
+>> -        vdev->device_endian = virtio_default_endian();
+>> -    }
+>> -
+>> -    if (k->get_vhost) {
+>> -        struct vhost_dev *hdev = k->get_vhost(vdev);
+>> -        /* Only reset when vhost back-end is connected */
+>> -        if (hdev && hdev->vhost_ops) {
+>> -            vhost_reset_device(hdev);
+>> -        }
+>> -    }
+>> -
+>> -    if (k->reset) {
+>> -        k->reset(vdev);
+>> -    }
+>> -
+>> -    vdev->start_on_kick = false;
+>> -    vdev->started = false;
+>> -    vdev->broken = false;
+>> -    vdev->guest_features = 0;
+>> -    vdev->queue_sel = 0;
+>> -    vdev->status = 0;
+>> -    vdev->disabled = false;
+>> -    qatomic_set(&vdev->isr, 0);
+>> -    vdev->config_vector = VIRTIO_NO_VECTOR;
+>> -    virtio_notify_vector(vdev, vdev->config_vector);
+>> -
+>> -    for(i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+>> -        __virtio_queue_reset(vdev, i);
+>> -    }
+>> -}
+>> -
+>>   void virtio_queue_set_addr(VirtIODevice *vdev, int n, hwaddr addr)
+>>   {
+>>       if (!vdev->vq[n].vring.num) {
+>> @@ -3169,6 +3126,49 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+>>       return ret;
+>>   }
+>>
+>> +void virtio_reset(void *opaque)
+>> +{
+>> +    VirtIODevice *vdev = opaque;
+>> +    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+>> +    int i;
+>> +
+>> +    virtio_set_status(vdev, 0);
+>> +    if (current_cpu) {
+>> +        /* Guest initiated reset */
+>> +        vdev->device_endian = virtio_current_cpu_endian();
+>> +    } else {
+>> +        /* System reset */
+>> +        vdev->device_endian = virtio_default_endian();
+>> +    }
+>> +
+>> +    if (k->get_vhost) {
+>> +        struct vhost_dev *hdev = k->get_vhost(vdev);
+>> +        /* Only reset when vhost back-end is connected */
+>> +        if (hdev && hdev->vhost_ops) {
+>> +            vhost_reset_device(hdev);
+>> +        }
+>> +    }
+>> +
+>> +    if (k->reset) {
+>> +        k->reset(vdev);
+>> +    }
+>> +
+>> +    vdev->start_on_kick = false;
+>> +    vdev->started = false;
+>> +    vdev->broken = false;
+>> +    virtio_set_features_nocheck(vdev, 0);
+> 
+> I would just add a forward declaration instead for a smaller changset
+> to ease the review and backport.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Moving virtio_reset() indeed requires a bigger change, but I still want 
+to move it to the latter part of this file. I occasionally saw that 
+functions that affect the whole device state like this calls a number of 
+static functions. Moving virtio_reset() requires more lines to change 
+now, but I hope it will minimize the possibility to require forward 
+declarations or code movement in the future.
+
+Regards,
+Akihiko Odaki
+
+> 
+>> +    vdev->queue_sel = 0;
+>> +    vdev->status = 0;
+>> +    vdev->disabled = false;
+>> +    qatomic_set(&vdev->isr, 0);
+>> +    vdev->config_vector = VIRTIO_NO_VECTOR;
+>> +    virtio_notify_vector(vdev, vdev->config_vector);
+>> +
+>> +    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+>> +        __virtio_queue_reset(vdev, i);
+>> +    }
+>> +}
+>> +
+>>   static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
+>>                                                              Error **errp)
+>>   {
+>>
+>> ---
+>> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+>> change-id: 20250406-reset-5ed5248ee3c1
+>>
+>> Best regards,
+>> --
+>> Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
+> Thanks
+> 
+>>
+>>
+> 
+
 
