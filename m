@@ -4,93 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AB8C369BD
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 15:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF8EC369C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 23:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6AUE-0004QI-8V; Sat, 19 Apr 2025 11:52:10 -0400
+	id 1u6HML-00074l-Ke; Sat, 19 Apr 2025 19:12:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u6AUB-0004OY-KV
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 11:52:08 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u6HMI-00074O-RH
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 19:12:26 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u6AU9-00008A-Dt
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 11:52:07 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7390d21bb1cso2473809b3a.2
- for <qemu-devel@nongnu.org>; Sat, 19 Apr 2025 08:52:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u6HMG-0003vO-A4
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 19:12:26 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43cfebc343dso23789755e9.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Apr 2025 16:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745077923; x=1745682723; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FY4fuh+5Ex3PKn4HTEheh2MncBh+J1V80qxzHfe/lNc=;
- b=lXygeToB/S+1q86iHBAqPKREjgn+XkvD/mQx7bjX6UUVsTXPec8W1WsQlpONz4/S39
- gmDfjtm6Fv6xZA8H9yqaVlIU29pLNRmYy+LP/QnA8j6IdoJaF+FHhFa0R4TEMT6aGXQt
- beKxl6J8E7FhcjUwoOUi7yVhsbBKHsl9aXtIb9M6CrEMxMIAxQ8eu0VJKSvoUa+JjAdq
- 71V6yvJFwPvPHRVd481rsfyzNGYV8jfOBQxh0/C30h7c7VqeSPjD71zPBdP/eJhawZ40
- d0RqOMjCkdUr76NCrI4SQsMkaKV5Am7yVEV13OOUn8EKeMGiY+AyOm0jHihEmt8AeGMp
- qj4A==
+ d=gmail.com; s=20230601; t=1745104342; x=1745709142; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=za4K10VjV5EWFEVGoCsoJYm8xHK3+v476jnALxEm0mM=;
+ b=YP/55+UVGxeSLQSZdL1lCe0qe8wulb0smIlPwFc7bsZvJnjgEnYvPBzSPs/TsQzW5i
+ X7sX9e+QUI77IqVAJhZDDpvhcoL2kaYIGpNiNSrXtM4nZAiL4nsTL43qJ8NPuA9NOO/Y
+ hkc7BDSgCMkrngs2zZGoNsaDM/JAS7U9n6v2A0qqe0ixay5dxVfhbRPizZPl1Xsp++Ep
+ KpRCJEXdo0QS0J7hsZnAwU7lZESqP53THzwAk6ymWaoHS1bZnRlnb/p0kejjqKYO5YHh
+ SbboVZJIcplhoqnkXuRMdV0CiAbGc2CbGgjVr0qxho9gINRm4ALXVoPStU/1FQzknKeO
+ g/ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745077923; x=1745682723;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FY4fuh+5Ex3PKn4HTEheh2MncBh+J1V80qxzHfe/lNc=;
- b=MR8wGcAEArA6ouCVKwXS7zTSi0VS3059cJ7YAIvwHAUnjOUXFCH6UG8pDS+ZJ1eAlf
- Z6sE9mDwjnNYob+MH+ZrJvW1Y2CgY6Zj3KQ1rEJY2U1q9OKW2bl8FeoqHDC7E8ardhB5
- vwppYnCDqZiJrZt51I8vM4QPdUoB8/Dfn9XxnEsPHBODgTG/hPqbtwBhUaOWP0NK8YGK
- 1O+3OQQ6ww+Moi/zGkt7JlJH4GClgWI/WJeiigQdS8c1GN7nJ1/qSirVCH8RM8546nVw
- 6f1xhqxELa4jQZ5miQQp0pZGsY7vyoQ0tQhWEWMxDSLpt39vsGKG3lMFqOFndvvFhDdt
- vzhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrM6bFpTeoTe4XefWp1ZRiZ4vldQee9yp2YPniuY8/SfCsA5RzXJN4ERTicyOU4Vv8WuS/8mW2yEdr@nongnu.org
-X-Gm-Message-State: AOJu0YwSMn+f5w2qzDI/w8z93MhBEkV91MRuTVnvx2Qxr0597XWwvnRf
- RBXtlHhsorjycGN5kvjQOeBnwKLfTFsqpTDcPY8VAfKNQfH7KVge68s4VKRyWpA=
-X-Gm-Gg: ASbGnct0PKHlo/cuA9FxicUwOwsBwAQfGImROpOfdxQRGUfynRRtCrauu+4fsj4BfMG
- dLKTjOwWGUF8UXlpdJiRViSRGM/qNkQ+Z8ofC8aSLYZ6sT85cyuX8rdugdJNiRdVyN6bhb+f+78
- +qUK53up+C3mXMHDIp0hDcKGDQ3bHTztBsoMAGWJSW+2rgTFcwypFlmRVJBhetVgJYh4i6MMuQf
- Eo0ziXvYj2Ecc9ZtXe8zuJdUb9RNWOAyZRemdKVuZvuGZ7F2WymNIjiqwZj7bw5rU92DqgCrYsT
- xrVYjQruZD3hmI8ngPmwoWrjsv5+PFcghVHLvM+Hivoa29GJ5+bFZQ==
-X-Google-Smtp-Source: AGHT+IFGl4kp8Uax8MF7ZwX3G0MxVHSwQRUoFihMzqev/99HKSSmn27XjllLDzUe5P1c8l+Huu1wug==
-X-Received: by 2002:a05:6a00:b4e:b0:736:5504:e8b4 with SMTP id
- d2e1a72fcca58-73dc156b0c4mr9103519b3a.19.1745077923468; 
- Sat, 19 Apr 2025 08:52:03 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbfa58866sm3563727b3a.109.2025.04.19.08.52.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 19 Apr 2025 08:52:03 -0700 (PDT)
-Message-ID: <3242cee6-7485-4958-a198-38d0fc68e8cd@linaro.org>
-Date: Sat, 19 Apr 2025 08:52:02 -0700
+ d=1e100.net; s=20230601; t=1745104342; x=1745709142;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=za4K10VjV5EWFEVGoCsoJYm8xHK3+v476jnALxEm0mM=;
+ b=NXKFds9eYdDG3Ex1n/R4coUJ6OyArFJ0VgrhN+XKpnfNm/Wu7TT9vvOxZ7ckoV7wVE
+ Nq+/YcZc+1KgWlAFg95RVs4MBjvdHo04fBQMBUuMeSKlxGNErI2iOVY98wNDd4eQ0EoC
+ nRMpJDmm/NGEGe1ztSOJsEgvovKiGc5ldZe3zdISFb5B2FiTzL8s9yT9EbbcRhmwOlbV
+ IFetXPAr1IT7YTp66bOV+YypnkWJQx2sepIDYcT69ZqWZgcrg/0dzdBxMITdPf3L6ick
+ OB/Vsi3+HG0F3qgBgdWnLO3K6WgXQLWJauPk6pic7Bmd8XgUZahj4HvHG1F94HcErOEI
+ cuMg==
+X-Gm-Message-State: AOJu0YwBY+8Glt4mmeVfmyInOHIkVZ6gP6SWJ7ROglVLiQxKHb3N8DW+
+ CX4O0qHPMSo+T8QXaAt0LTYSuNRubCiQa26NMCVf8ZIUcDasKw5sOBcc2Q==
+X-Gm-Gg: ASbGncuOFCx45Sn+JWTDT/Olvt9MhZxNICn8kN56zBP7mGKFhCHqMKOMvPZEIypztNt
+ VJJTaUydfDOxleDtSZmpQxtClljrBphtNmZHI19/+FvSkl9nivaPdmg7kDk9+p89K/H8I5ZBvXU
+ 49PtoDMhGJ7122Iyn2my+X/GuzdXZI1BUdeT+p3RXCseU/LJ8TUN2YBIrIvuGyB37x5jNN4xwSM
+ aZUacRGqBWKgfOzvGKep+9cnzwMtoZudPPQ5aWyFOFteiIcaS8pPoXKVoooUZ+mXLTMKjNjtLlV
+ UsAbeIoCZU776FJ6o5rSxTr6k90Mp6mxiKTRRiJeN7cAQswtUBfjZ91Quc4DBOM9W1V8ptty2u+
+ wBpJCFX7cRFGwIQRwsHpe/pthGhrT
+X-Google-Smtp-Source: AGHT+IEjbm+QsQlyncUfuuZfVirRwcoKdaaanf9grX9glQ1dg9aqZZoybymNx8Zw1MxN/p+h/3fTtA==
+X-Received: by 2002:a05:600c:34c1:b0:43d:fa58:81d3 with SMTP id
+ 5b1f17b1804b1-4406ac227fbmr58154085e9.32.1745104341469; 
+ Sat, 19 Apr 2025 16:12:21 -0700 (PDT)
+Received: from localhost.localdomain (46-116-102-127.bb.netvision.net.il.
+ [46.116.102.127]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4406d6db1b3sm78264305e9.29.2025.04.19.16.12.20
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 19 Apr 2025 16:12:20 -0700 (PDT)
+From: Nir Soffer <nirsof@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Richard Jones" <rjones@redhat.com>, "Eric Blake" <eblake@redhat.com>,
+ Nir Soffer <nirsof@gmail.com>
+Subject: [PATCH v2] io: Increase unix socket buffers size on macOS
+Date: Sun, 20 Apr 2025 02:12:18 +0300
+Message-Id: <20250419231218.67636-1-nirsof@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 13/14] qemu/target_info: Add target_aarch64() helper
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20250418172908.25147-1-philmd@linaro.org>
- <20250418172908.25147-14-philmd@linaro.org>
- <41c9061f-ffd8-47a8-b2e8-7c4b2a2c2fcf@linaro.org>
- <ff7cdc09-f11c-43ae-b1e4-668c39db3efe@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ff7cdc09-f11c-43ae-b1e4-668c39db3efe@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=nirsof@gmail.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,145 +97,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8xOS8yNSAwNTo1NCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+PiBJ
-IGRvbid0IHRoaW5rIGRvaW5nIHN0cmNtcCBpcyBhIGdvb2QgbW92ZSBoZXJlLCBldmVuIHRl
-bXBvcmFyaWx5Lg0KPj4NCj4+IEEgc2hvcnQgdGVybSBzb2x1dGlvbiBpcyBtYWtpbmcgdGFy
-Z2V0X2luZm8uYyB0YXJnZXQgc3BlY2lmaWMsIGFuZCB1c2U6DQo+PiByZXR1cm4gVEFSR0VU
-X0FBUkNINjQ7DQo+IA0KPiBJSVVDIGFzDQo+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3Fl
-bXUtZGV2ZWwvMjAyMzExMjIxODMwNDguMTcxNTAtMy1waGlsbWRAbGluYXJvLm9yZy8/DQo+
-IA0KDQpZZXMsIGJ1dCBzaW1wbHkgbmFtZWQgdGFyZ2V0X2FhcmNoNjQoKSBpbnN0ZWFkIG9m
-IA0KdGFyZ2V0X2FhcmNoNjRfYXZhaWxhYmxlKCksIHRvIG1pbWljIHRoZSBleGlzdGluZyBU
-QVJHRVRfQUFSQ0g2NC4NCg0KPj4gVGhlIGxvbmcgdGVybSBzb2x1dGlvbiwgaXMgdG8gaGF2
-ZSBhIGNyZWF0ZSB0YXJnZXRfY3VycmVudCgpIHRoYXQNCj4+IHJldHVybnMgYW4gZW51bSwg
-YW5kIHRhcmdldF9hYXJjaDY0KCkgd291bGQgYmVjb21lOg0KPj4gcmV0dXJuIHRhcmdldF9j
-dXJyZW50KCkgPT0ge0VOVU19X0FBUkNINjQuIFdlIGp1c3QgbmVlZCB0byBmaW5kIGEgZ29v
-ZA0KPj4gbmFtZSBmb3Ige2VudW19IHdoaWNoIGlzIG5vdCBUYXJnZXQsIHNpbmNlIGl0J3Mg
-YSBwb2lzb25lZCBpZGVudGlmaWVyLg0KPj4NCj4+IFRoaXMgd2F5LCB3ZSBjYW4gZWFzaWx5
-IGNvbnZlcnQgdGhlIHNpbXBsZQ0KPj4gI2lmZGVmIFRBUkdFVF9BQVJDSDY0IGJ5IGlmIHRh
-cmdldF9hYXJjaDY0KCksDQo+PiBhbmQgbW9yZSBjb21wbGljYXRlZCBjb21iaW5hdGlvbnMg
-YnkgYSBzd2l0Y2ggb24gdGFyZ2V0X2N1cnJlbnQoKS4NCj4gDQo+IFRoaXMgd2FzDQo+IGh0
-dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNTA0MDMyMzQ5MTQuOTE1NC00
-LXBoaWxtZEBsaW5hcm8ub3JnLywNCj4gd2hpY2ggd2FzIHVzZWZ1bCBmb3IgdGhlIHZpcnRp
-by1tZW0gcGF0Y2g6DQo+IA0KPiAtLSA+OCAtLQ0KPiBkaWZmIC0tZ2l0IGEvaHcvdmlydGlv
-L3ZpcnRpby1tZW0uYyBiL2h3L3ZpcnRpby92aXJ0aW8tbWVtLmMNCj4gaW5kZXggYzc5Njhl
-ZTBjNjEuLmI1ZDYyNDExYjNlIDEwMDY0NA0KPiAtLS0gYS9ody92aXJ0aW8vdmlydGlvLW1l
-bS5jDQo+ICsrKyBiL2h3L3ZpcnRpby92aXJ0aW8tbWVtLmMNCj4gQEAgLTE3LDIgKzE3LDMg
-QEANCj4gICAgI2luY2x1ZGUgInFlbXUvdW5pdHMuaCINCj4gKyNpbmNsdWRlICJxZW11L3Rh
-cmdldF9pbmZvLmgiDQo+ICAgICNpbmNsdWRlICJzeXN0ZW0vbnVtYS5oIg0KPiBAQCAtMzUs
-OSArMzYsMTcgQEAgc3RhdGljIGNvbnN0IFZNU3RhdGVEZXNjcmlwdGlvbg0KPiB2bXN0YXRl
-X3ZpcnRpb19tZW1fZGV2aWNlX2Vhcmx5Ow0KPiANCj4gLS8qDQo+IC0gKiBXZSBvbmx5IGhh
-ZCBsZWdhY3kgeDg2IGd1ZXN0cyB0aGF0IGRpZCBub3Qgc3VwcG9ydA0KPiAtICogVklSVElP
-X01FTV9GX1VOUExVR0dFRF9JTkFDQ0VTU0lCTEUuIE90aGVyIHRhcmdldHMgZG9uJ3QgaGF2
-ZSBsZWdhY3kNCj4gZ3Vlc3RzLg0KPiAtICovDQo+IC0jaWYgZGVmaW5lZChUQVJHRVRfWDg2
-XzY0KSB8fCBkZWZpbmVkKFRBUkdFVF9JMzg2KQ0KPiAtI2RlZmluZSBWSVJUSU9fTUVNX0hB
-U19MRUdBQ1lfR1VFU1RTDQo+IC0jZW5kaWYNCj4gK3N0YXRpYyBib29sIHZpcnRpb19tZW1f
-aGFzX2xlZ2FjeV9ndWVzdHModm9pZCkNCj4gK3sNCj4gKyAgICAvKg0KPiArICAgICAqIFdl
-IG9ubHkgaGFkIGxlZ2FjeSB4ODYgZ3Vlc3RzIHRoYXQgZGlkIG5vdCBzdXBwb3J0DQo+ICsg
-ICAgICogVklSVElPX01FTV9GX1VOUExVR0dFRF9JTkFDQ0VTU0lCTEUuIE90aGVyIHRhcmdl
-dHMgZG9uJ3QgaGF2ZQ0KPiArICAgICAqIGxlZ2FjeSBndWVzdHMuDQo+ICsgICAgICovDQo+
-ICsgICAgc3dpdGNoICh0YXJnZXRfc3lzdGVtX2FyY2goKSkgew0KPiArICAgIGNhc2UgU1lT
-X0VNVV9UQVJHRVRfSTM4NjoNCj4gKyAgICBjYXNlIFNZU19FTVVfVEFSR0VUX1g4Nl82NDoN
-Cj4gKyAgICAgICAgcmV0dXJuIHRydWU7DQo+ICsgICAgZGVmYXVsdDoNCj4gKyAgICAgICAg
-cmV0dXJuIGZhbHNlOw0KPiArICAgIH0NCj4gK30NCj4gDQo+IEBAIC0xNDUsMyArMTU0LDIg
-QEAgc3RhdGljIHVpbnQ2NF90DQo+IHZpcnRpb19tZW1fZGVmYXVsdF9ibG9ja19zaXplKFJB
-TUJsb2NrICpyYikNCj4gDQo+IC0jaWYgZGVmaW5lZChWSVJUSU9fTUVNX0hBU19MRUdBQ1lf
-R1VFU1RTKQ0KPiAgICBzdGF0aWMgYm9vbCB2aXJ0aW9fbWVtX2hhc19zaGFyZWRfemVyb3Bh
-Z2UoUkFNQmxvY2sgKnJiKQ0KPiBAQCAtMTU2LDMgKzE2NCwyIEBAIHN0YXRpYyBib29sIHZp
-cnRpb19tZW1faGFzX3NoYXJlZF96ZXJvcGFnZShSQU1CbG9jayAqcmIpDQo+ICAgIH0NCj4g
-LSNlbmRpZiAvKiBWSVJUSU9fTUVNX0hBU19MRUdBQ1lfR1VFU1RTICovDQo+IA0KPiBAQCAt
-OTk5LDI0ICsxMDA2LDI2IEBAIHN0YXRpYyB2b2lkIHZpcnRpb19tZW1fZGV2aWNlX3JlYWxp
-emUoRGV2aWNlU3RhdGUNCj4gKmRldiwgRXJyb3IgKiplcnJwKQ0KPiANCj4gLSNpZiBkZWZp
-bmVkKFZJUlRJT19NRU1fSEFTX0xFR0FDWV9HVUVTVFMpDQo+IC0gICAgc3dpdGNoICh2bWVt
-LT51bnBsdWdnZWRfaW5hY2Nlc3NpYmxlKSB7DQo+IC0gICAgY2FzZSBPTl9PRkZfQVVUT19B
-VVRPOg0KPiAtICAgICAgICBpZiAodmlydGlvX21lbV9oYXNfc2hhcmVkX3plcm9wYWdlKHJi
-KSkgew0KPiAtICAgICAgICAgICAgdm1lbS0+dW5wbHVnZ2VkX2luYWNjZXNzaWJsZSA9IE9O
-X09GRl9BVVRPX09GRjsNCj4gLSAgICAgICAgfSBlbHNlIHsNCj4gLSAgICAgICAgICAgIHZt
-ZW0tPnVucGx1Z2dlZF9pbmFjY2Vzc2libGUgPSBPTl9PRkZfQVVUT19PTjsNCj4gKyAgICBp
-ZiAodmlydGlvX21lbV9oYXNfbGVnYWN5X2d1ZXN0cygpKSB7DQo+ICsgICAgICAgIHN3aXRj
-aCAodm1lbS0+dW5wbHVnZ2VkX2luYWNjZXNzaWJsZSkgew0KPiArICAgICAgICBjYXNlIE9O
-X09GRl9BVVRPX0FVVE86DQo+ICsgICAgICAgICAgICBpZiAodmlydGlvX21lbV9oYXNfc2hh
-cmVkX3plcm9wYWdlKHJiKSkgew0KPiArICAgICAgICAgICAgICAgIHZtZW0tPnVucGx1Z2dl
-ZF9pbmFjY2Vzc2libGUgPSBPTl9PRkZfQVVUT19PRkY7DQo+ICsgICAgICAgICAgICB9IGVs
-c2Ugew0KPiArICAgICAgICAgICAgICAgIHZtZW0tPnVucGx1Z2dlZF9pbmFjY2Vzc2libGUg
-PSBPTl9PRkZfQVVUT19PTjsNCj4gKyAgICAgICAgICAgIH0NCj4gKyAgICAgICAgICAgIGJy
-ZWFrOw0KPiArICAgICAgICBjYXNlIE9OX09GRl9BVVRPX09GRjoNCj4gKyAgICAgICAgICAg
-IGlmICghdmlydGlvX21lbV9oYXNfc2hhcmVkX3plcm9wYWdlKHJiKSkgew0KPiArICAgICAg
-ICAgICAgICAgIHdhcm5fcmVwb3J0KCInJXMnIHByb3BlcnR5IHNldCB0byAnb2ZmJyB3aXRo
-IGEgbWVtZGV2DQo+IHRoYXQgZG9lcyINCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAiIG5vdCBzdXBwb3J0IHRoZSBzaGFyZWQgemVyb3BhZ2UuIiwNCj4gKyAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBWSVJUSU9fTUVNX1VOUExVR0dFRF9JTkFDQ0VTU0lCTEVfUFJP
-UCk7DQo+ICsgICAgICAgICAgICB9DQo+ICsgICAgICAgICAgICBicmVhazsNCj4gKyAgICAg
-ICAgZGVmYXVsdDoNCj4gKyAgICAgICAgICAgIGJyZWFrOw0KPiAgICAgICAgICAgIH0NCj4g
-LSAgICAgICAgYnJlYWs7DQo+IC0gICAgY2FzZSBPTl9PRkZfQVVUT19PRkY6DQo+IC0gICAg
-ICAgIGlmICghdmlydGlvX21lbV9oYXNfc2hhcmVkX3plcm9wYWdlKHJiKSkgew0KPiAtICAg
-ICAgICAgICAgd2Fybl9yZXBvcnQoIiclcycgcHJvcGVydHkgc2V0IHRvICdvZmYnIHdpdGgg
-YSBtZW1kZXYgdGhhdA0KPiBkb2VzIg0KPiAtICAgICAgICAgICAgICAgICAgICAgICAgIiBu
-b3Qgc3VwcG9ydCB0aGUgc2hhcmVkIHplcm9wYWdlLiIsDQo+IC0gICAgICAgICAgICAgICAg
-ICAgICAgICBWSVJUSU9fTUVNX1VOUExVR0dFRF9JTkFDQ0VTU0lCTEVfUFJPUCk7DQo+IC0g
-ICAgICAgIH0NCj4gLSAgICAgICAgYnJlYWs7DQo+IC0gICAgZGVmYXVsdDoNCj4gLSAgICAg
-ICAgYnJlYWs7DQo+ICsgICAgfSBlbHNlIGlmICh2bWVtLT51bnBsdWdnZWRfaW5hY2Nlc3Np
-YmxlICE9IE9OX09GRl9BVVRPX09OKSB7DQo+ICsgICAgICAgIGVycm9yX3NldGcoZXJycCwg
-Imd1ZXN0IHJlcXVpcmVzIHByb3BlcnR5ICclcycgdG8gYmUgJ29uJyIsDQo+ICsgICAgICAg
-ICAgICAgICAgICAgVklSVElPX01FTV9VTlBMVUdHRURfSU5BQ0NFU1NJQkxFX1BST1ApOw0K
-PiArICAgICAgICByZXR1cm47DQo+ICAgICAgICB9DQo+IC0jZWxzZSAvKiBWSVJUSU9fTUVN
-X0hBU19MRUdBQ1lfR1VFU1RTICovDQo+IC0gICAgdm1lbS0+dW5wbHVnZ2VkX2luYWNjZXNz
-aWJsZSA9IE9OX09GRl9BVVRPX09OOw0KPiAtI2VuZGlmIC8qIFZJUlRJT19NRU1fSEFTX0xF
-R0FDWV9HVUVTVFMgKi8NCj4gDQo+IEBAIC0xNzEzLDYgKzE3MjIsNCBAQCBzdGF0aWMgY29u
-c3QgUHJvcGVydHkgdmlydGlvX21lbV9wcm9wZXJ0aWVzW10gPSB7DQo+ICAgICAgICAgICAg
-ICAgICAgICAgICAgIFRZUEVfTUVNT1JZX0JBQ0tFTkQsIEhvc3RNZW1vcnlCYWNrZW5kICop
-LA0KPiAtI2lmIGRlZmluZWQoVklSVElPX01FTV9IQVNfTEVHQUNZX0dVRVNUUykNCj4gICAg
-ICAgIERFRklORV9QUk9QX09OX09GRl9BVVRPKFZJUlRJT19NRU1fVU5QTFVHR0VEX0lOQUND
-RVNTSUJMRV9QUk9QLA0KPiBWaXJ0SU9NRU0sDQo+ICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICB1bnBsdWdnZWRfaW5hY2Nlc3NpYmxlLCBPTl9PRkZfQVVUT19PTiksDQo+IC0j
-ZW5kaWYNCj4gICAgICAgIERFRklORV9QUk9QX0JPT0woVklSVElPX01FTV9FQVJMWV9NSUdS
-QVRJT05fUFJPUCwgVmlydElPTUVNLA0KPiAtLS0NCj4gDQo+IGJ1dCBJIHRob3VnaHQgZWl0
-aGVyIHlvdSBkaWRuJ3QgbGlrZSB0aGUgYXBwcm9hY2ggb3IgaXQgd2FzIHRvbyBlYXJseQ0K
-PiB0byBwcm9wb3NlIGZvciB0aGUgQVBJLCBzbyBJIHdlbnQgYmFjayB0byBzdHJjbXAuDQo+
-IA0KDQpBdCB0aGlzIHBvaW50LCBJIHdvdWxkIGxpa2UgdG8gZm9jdXMgb24gaGF2aW5nIGEg
-Zmlyc3QgdmVyc2lvbiBvZiANClRhcmdldEluZm8gQVBJLCBhbmQgbm90IHJldmlld2luZyBh
-bnkgb3RoZXIgY2hhbmdlcywgYXMgdGhpbmdzIG1heSBiZSANCm1vZGlmaWVkLCBhbmQgdGhl
-eSB3b3VsZCBuZWVkIHRvIGJlIHJldmlld2VkIGFnYWluLiBJdCdzIGhhcmQgdG8gZm9sbG93
-IA0KdGhlIHNhbWUgYWJzdHJhY3Rpb24gZG9uZSBtdWx0aXBsZSB0aW1lcyBpbiBtdWx0aXBs
-ZSBzZXJpZXMuDQoNClJlZ2FyZGluZyB5b3VyIHByb3Bvc2FsIGZvciB0YXJnZXRfc3lzdGVt
-X2FyY2goKSwgSSB1bmRlcnN0YW5kIHRoYXQgeW91IA0KdHJpZWQgdG8gcmV1c2UgdGhlIGV4
-aXN0aW5nIFN5c0VtdVRhcmdldCwgd2hpY2ggd2FzIGEgZ29vZCBpbnRlbnRpb24uDQpIb3dl
-dmVyLCBJIGRvbid0IHRoaW5rIHdlIHNob3VsZCB1c2UgYW55IHN0cmluZyBjb21wYXJlIGZv
-ciB0aGlzICh3aGljaCANCnFlbXVfYXBpX3BhcnNlIGRvZXMpLiBJdCBoYXMgc2V2ZXJhbCBm
-bGF3czoNCi0gVGhlIG1vc3QgaW1wb3J0YW50IG9uZTogaXQgY2FuIGZhaWwgKHdoYXQgaWYg
-LTEgaXMgcmV0dXJuZWQ/KS4gRW51bXMgDQpjYW4gYmUgZ3VhcmFudGVlZCBhbmQgZXhoYXVz
-dGl2ZSBhdCBjb21waWxlIHRpbWUuDQotIEl0J3Mgc2xvd2VyIHRoYW4gaGF2aW5nIHRoZSBj
-dXJyZW50IGFyY2ggZGlyZWN0bHkga25vd24gYXQgY29tcGlsZSB0aW1lLg0KQXMgd2VsbCwg
-c2luY2UgU3lzRW11VGFyZ2V0IGlzIGEgZ2VuZXJhdGVkIGVudW0sIGl0IG1ha2VzIGl0IG11
-Y2ggaGFyZGVyIA0KdG8gZm9sbG93IGNvZGUgSU1ITy4NClFBUEkgcmVxdWlyZXMgdGhvc2Ug
-dGhpbmdzIHRvIGJlIGRlZmluZWQgZnJvbSBhIGpzb24gZmlsZSBmb3IgZXh0ZXJuYWwgDQp1
-c2FnZSwgYnV0IGl0J3Mgbm90IGEgZ29vZCByZWFzb24gZm9yIGJlaW5nIGZvcmNlZCB0byB1
-c2UgaXQgaW4gYWxsIHRoZSANCmNvZGViYXNlIGFzIHRoZSBvbmx5IHBvc3NpYmxlIGFic3Ry
-YWN0aW9uLg0KDQpUbyBoYXZlIHNvbWV0aGluZyBmYXN0IGFuZCBpbmZhbGxpYmxlLCB3ZSBj
-YW4gYWRvcHQgdGhpcyBzb2x1dGlvbjoNCg0KSW4gdGFyZ2V0X2luZm8uaDoNCg0KLyogTmFt
-ZWQgVGFyZ2V0QXJjaCB0byBub3QgY2xhc2ggd2l0aCBwb2lzb25lZCBUQVJHRVRfWCAqLw0K
-dHlwZWRlZiBlbnVtIFRhcmdldEFyY2ggew0KICAgICBUQVJHRVRfQVJDSF9BQVJDSDY0LA0K
-ICAgICBUQVJHRVRfQVJDSF9BTFBIQSwNCiAgICAgVEFSR0VUX0FSQ0hfQVJNLA0KICAgICBU
-QVJHRVRfQVJDSF9BVlIsDQogICAgIFRBUkdFVF9BUkNIX0hQUEEsDQogICAgIFRBUkdFVF9B
-UkNIX0kzODYsDQogICAgIFRBUkdFVF9BUkNIX0xPT05HQVJDSDY0LA0KICAgICBUQVJHRVRf
-QVJDSF9NNjhLLA0KICAgICBUQVJHRVRfQVJDSF9NSUNST0JMQVpFLA0KICAgICBUQVJHRVRf
-QVJDSF9NSUNST0JMQVpFRUwsDQogICAgIFRBUkdFVF9BUkNIX01JUFMsDQogICAgIFRBUkdF
-VF9BUkNIX01JUFM2NCwNCiAgICAgVEFSR0VUX0FSQ0hfTUlQUzY0RUwsDQogICAgIFRBUkdF
-VF9BUkNIX01JUFNFTCwNCiAgICAgVEFSR0VUX0FSQ0hfT1IxSywNCiAgICAgVEFSR0VUX0FS
-Q0hfUFBDLA0KICAgICBUQVJHRVRfQVJDSF9QUEM2NCwNCiAgICAgVEFSR0VUX0FSQ0hfUklT
-Q1YzMiwNCiAgICAgVEFSR0VUX0FSQ0hfUklTQ1Y2NCwNCiAgICAgVEFSR0VUX0FSQ0hfUlgs
-DQogICAgIFRBUkdFVF9BUkNIX1MzOTBYLA0KICAgICBUQVJHRVRfQVJDSF9TSDQsDQogICAg
-IFRBUkdFVF9BUkNIX1NINEVCLA0KICAgICBUQVJHRVRfQVJDSF9TUEFSQywNCiAgICAgVEFS
-R0VUX0FSQ0hfU1BBUkM2NCwNCiAgICAgVEFSR0VUX0FSQ0hfVFJJQ09SRSwNCiAgICAgVEFS
-R0VUX0FSQ0hfWDg2XzY0LA0KICAgICBUQVJHRVRfQVJDSF9YVEVOU0EsDQogICAgIFRBUkdF
-VF9BUkNIX1hURU5TQUVCLA0KfSBUYXJnZXRBcmNoOw0KDQp0eXBlZGVmIHN0cnVjdCBUYXJn
-ZXRJbmZvIHsNCi4uLg0KCVRhcmdldEFyY2ggdGFyZ2V0X2FyY2g7DQouLi4NCn0NCg0Kc3Rh
-dGljIGlubGluZSB0YXJnZXRfYXJjaCgpIHsNCglyZXR1cm4gdGFyZ2V0X2luZm8oKS0+dGFy
-Z2V0X2FyY2g7DQp9DQoNCnN0YXRpYyBpbmxpbmUgdGFyZ2V0X2FhcmNoNjQoKSB7DQoJcmV0
-dXJuIHRhcmdldF9hcmNoKCkgPT0gVEFSR0VUX0FSQ0hfQUFSQ0g2NDsNCn0NCg0KDQpJbiB0
-YXJnZXRfaW5mby1zdHViLmM6DQoNCiNpZmRlZiBUQVJHRVRfQUFSQ0g2NA0KIyBkZWZpbmUg
-VEFSR0VUX0FSQ0ggVEFSR0VUX0FSQ0hfQUFSQ0g2NA0KI2VsaWYgVEFSR0VUX0FSQ0hfQUxQ
-SEENCiMgZGVmaW5lIFRBUkdFVF9BUkNIIFRBUkdFVF9BUkNIX0FMUEhBDQouLi4NCiNlbmRp
-Zg0KDQpzdGF0aWMgY29uc3QgVGFyZ2V0SW5mbyB0YXJnZXRfaW5mb19zdHViID0gew0KICAg
-ICAuLi4NCiAgICAgLnRhcmdldF9hcmNoID0gVEFSR0VUX0FSQ0g7DQogICAgIC4uLg0KfQ0K
+On macOS we need to increase unix socket buffers size on the client and
+server to get good performance. We set the socket buffers on macOS after
+connecting or accepting a client connection.
+
+Testing with qemu-nbd shows that reading an image with qemu-img convert
+from qemu-nbd is *11.4 times faster* and qemu-img cpu usage is *8.3 times
+lower*.
+
+| qemu-img | qemu-nbd | time   | user   | system |
+|----------|----------|--------|--------|--------|
+| before   | before   | 12.957 |  2.643 |  5.777 |
+| after    | before   | 12.803 |  2.632 |  5.742 |
+| before   | after    |  1.139 |  0.074 |  0.905 |
+| after    | after    |  1.179 |  0.077 |  0.931 |
+
+For testing buffers size I built qemu-nbd and qemu-img with send buffer
+size from 64k to 2m. In this test 256k send buffer and 1m receive buffer
+are optimal.
+
+| send buffer | recv buffer | time   | user   | system |
+|-------------|-------------|--------|--------|--------|
+|         64k |        256k |  2.233 |  0.290 |  1.408 |
+|        128k |        512k |  1.189 |  0.103 |  0.841 |
+|        256k |       1024k |  1.121 |  0.085 |  0.813 |
+|        512k |       2048k |  1.172 |  0.081 |  0.953 |
+|       1024k |       4096k |  1.160 |  0.072 |  0.907 |
+|       2048k |       8192k |  1.309 |  0.056 |  0.960 |
+
+Using null-co driver is useful to focus on the read part, but in the
+real world we do something with the read data. I tested real world usage
+with nbdcopy and blksum.
+
+I tested computing a hash of the image using nbdcopy, using 4 NBD
+connections and 256k request size. In this test 1m send buffer size and
+4m receive buffer size are optimal.
+
+| send buffer | recv buffer | time   | user   | system |
+|-------------|-------------|--------|--------|--------|
+|         64k |        256k |  2.832 |  4.866 |  2.550 |
+|        128k |        512k |  2.429 |  4.762 |  2.037 |
+|        256k |       1024k |  2.158 |  4.724 |  1.813 |
+|        512k |       2048k |  1.777 |  4.632 |  1.790 |
+|       1024k |       4096k |  1.657 |  4.466 |  1.812 |
+|       2048k |       8192k |  1.782 |  4.570 |  1.912 |
+
+I tested creating a hash of the image with blksum, using one NBD
+connection and 256k read size. In this test 2m send buffer and 8m
+receive buffer are optimal.
+
+| send buffer | recv buffer | time   | user   | system |
+|-------------|-------------|--------|--------|--------|
+|         64k |        256k |  4.233 |  5.242 |  2.632 |
+|        128k |        512k |  3.329 |  4.915 |  2.015 |
+|        256k |       1024k |  2.071 |  4.647 |  1.474 |
+|        512k |       2048k |  1.980 |  4.554 |  1.432 |
+|       1024k |       4096k |  2.058 |  4.553 |  1.497 |
+|       2048k |       8192k |  1.972 |  4.539 |  1.497 |
+
+In the real world tests larger buffers are optimal, so I picked send
+buffer of 1m and receive buffer of 4m.
+
+This will improve other usage of unix domain sockets on macOS. I tested
+only reading from qemu-nbd.
+
+The same change for libnbd:
+https://gitlab.com/nbdkit/libnbd/-/merge_requests/21
+
+Signed-off-by: Nir Soffer <nirsof@gmail.com>
+---
+ io/channel-socket.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+Changes since v1:
+- Add UNIX_SOCKET_*_BUFFER_SIZE macros (Philippe)
+- Handle both server and client sockets
+- Add qio_channel_socket_set_buffers() helper to cleaner code
+- Add tests results for qemu-img convert
+- Add tests results for different buffer sizes
+- Link to same change in libnbd
+
+v1 was here:
+https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg03081.html
+
+diff --git a/io/channel-socket.c b/io/channel-socket.c
+index 608bcf066e..635c5c973d 100644
+--- a/io/channel-socket.c
++++ b/io/channel-socket.c
+@@ -21,6 +21,7 @@
+ #include "qapi/error.h"
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qemu/module.h"
++#include "qemu/units.h"
+ #include "io/channel-socket.h"
+ #include "io/channel-util.h"
+ #include "io/channel-watch.h"
+@@ -37,6 +38,33 @@
+ 
+ #define SOCKET_MAX_FDS 16
+ 
++/*
++ * Apple recommends sizing the receive buffer at 4 times the size of the send
++ * buffer. Testing shows that 1m send buffer and 4 MiB receive buffer gives
++ * best throuput and lowest cpu usage.
++ */
++#ifdef __APPLE__
++#define UNIX_SOCKET_SEND_BUFFER_SIZE (1 * MiB)
++#define UNIX_SOCKET_RECV_BUFFER_SIZE (4 * UNIX_SOCKET_SEND_BUFFER_SIZE)
++#endif /* __APPLE__ */
++
++static void qio_channel_socket_set_buffers(QIOChannelSocket *ioc)
++{
++#ifdef __APPLE__
++    if (ioc->localAddr.ss_family == AF_UNIX) {
++        int value;
++
++        /* This is a performance optimization; don't fail on errors. */
++
++        value = UNIX_SOCKET_SEND_BUFFER_SIZE;
++        setsockopt(ioc->fd, SOL_SOCKET, SO_SNDBUF, &value, sizeof(value));
++
++        value = UNIX_SOCKET_RECV_BUFFER_SIZE;
++        setsockopt(ioc->fd, SOL_SOCKET, SO_RCVBUF, &value, sizeof(value));
++    }
++#endif /* __APPLE__ */
++}
++
+ SocketAddress *
+ qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
+                                      Error **errp)
+@@ -174,6 +202,8 @@ int qio_channel_socket_connect_sync(QIOChannelSocket *ioc,
+     }
+ #endif
+ 
++    qio_channel_socket_set_buffers(ioc);
++
+     qio_channel_set_feature(QIO_CHANNEL(ioc),
+                             QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
+ 
+@@ -410,6 +440,8 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
+     }
+ #endif /* WIN32 */
+ 
++    qio_channel_socket_set_buffers(cioc);
++
+     qio_channel_set_feature(QIO_CHANNEL(cioc),
+                             QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
+ 
+-- 
+2.39.5 (Apple Git-154)
 
 
