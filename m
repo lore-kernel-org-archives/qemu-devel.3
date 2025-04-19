@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3270C369BD
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 07:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38818C369BD
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 07:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u62QU-00028Z-HT; Sat, 19 Apr 2025 03:15:47 -0400
+	id 1u62X7-0003RS-4q; Sat, 19 Apr 2025 03:22:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1u62QR-00028N-4x
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:15:43 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1u62X4-0003RD-MO
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:22:34 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1u62QO-0003BE-M7
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:15:42 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-303a66af07eso1943444a91.2
- for <qemu-devel@nongnu.org>; Sat, 19 Apr 2025 00:15:40 -0700 (PDT)
+ id 1u62X3-00044p-2I
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:22:34 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-736c277331eso3248655b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 19 Apr 2025 00:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745046939; x=1745651739;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745047351; x=1745652151;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=y0Orie7HTNvmntMaEh4zzmJdAjAJy7b6qRhW8Wvk8zg=;
- b=LanAmJuUbJVUBu7EBikRyt9tWdY4/ouRDZ/cDzd+VlnpDGk0SKw4HhawoK9x7DAKId
- 2CV1laVOHEUx6qzhytvPk8RF1UDDvajlrKUI0yhMiXQnO9gCqHU5l9oB5vEjXlXrvHw1
- ZnX/YXVjMw/2HyVoYc34BGaE+oWXziSymCA+RtcKCKZnw6w+5O5N/bl26a7O+DeadQP5
- E/L6rH7SwhCjB6UR52a4imzobXri6ncmDaBZFcJYhtl6xlEJRUiv+tYFdpBslvJhRliu
- 5AOP11dHHtZ/hmXdkq0L+pMdZYrkuD07f7a2gnXXeeza/Jj9gA/TZQ3iypequQ63/wrE
- Xc3A==
+ bh=wa2FMKXZ6RAoAgzfBBEH2pYxaYnj8x5HJHMn1T64v5g=;
+ b=JOanb6kBoP16jTVPQX/myIXEIhx9aaLVdOc3RfEMbV10kEThQXjUGNWbf5J81+WOGF
+ hECQ61Jpwjqe53wbFVtFwQU4edK+4ia5TcuVd0SFlkeX1CtRNs/jERm5upiIaiNuTEWt
+ e0OoJHS8TayKSxPiw8U1Dcj2zT+sB0e54lmyRxvjVSFlIYP3gXodlOq+2UqzkupgDh+I
+ cvYUfml/7yJR0Y7+NIxuoCAPsHv/jSNXlpfpa6c8i42np9lN2OtsU1OnQc5K2LJpDwhD
+ OAMGhEchEFSI9Xo5z9janvIxmSimQV2vvYg4D0SMP+0zI1lMG++vdX08fqO8VPLBtYP3
+ +Lmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745046939; x=1745651739;
+ d=1e100.net; s=20230601; t=1745047351; x=1745652151;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y0Orie7HTNvmntMaEh4zzmJdAjAJy7b6qRhW8Wvk8zg=;
- b=M6k+8+jX5ehrPZbfxDtR0IkrrVSrmARnK/jslCc4A87IOIu4T1/7xFjp7XZPYNE+R1
- B2ZEyRFYiPkGeVQYSKpYFgK/S3GgDvXb130SGXZwEIT3GN9Isxh7t4k/5AuZ8qS+Xzc+
- jWpJYZjr4raoWUdK87sdo9LRGp4iJ9IQ4tJjZKj5nqsZK/dQyfVVvnC7qWB63/WXhsgk
- A3FDBIDTY0uPtNFdG+i1DX/aJp2hD+/Tn688ax5ZtMw6ER5wx3JTkantEK4anqEq70Dg
- /5XZEQnGr2OEuGBxaZFE2at5RdDSRv2OUlij0yrkWhxRucQxmjU7qJGaWwUXM+bY9XRc
- DUBw==
-X-Gm-Message-State: AOJu0YxST8tpd08pe7QvBkVJOItkIij+gjnjz0IhVVIH5H8bnrkGQR7N
- M/8xzAVcHX4k2jEatZBYeAvq1/yczbc8gCjOibwmXQKb2nDIEgw62an+28lQFK4=
-X-Gm-Gg: ASbGncsTutUmblnG7qjrkjQbGSe6NBiVar5eWrA+aIN+Ga0YVuoRWvcCDiIKaX11PdL
- kFt9w8rF9/1W1l/d4VCW6aq2JAItKXwU5sQZ/qfYDRFhUmtVWF0JQo+pHkoo7SX6WX1l5kDFOdD
- iZ4sapqGKtWnOp/16D/1jOT/RWYLXyb1DCfXnbkLpKPObuEtYQ+TOCXZDdP0RNXfq8QX92G2vVE
- myc+tWkR/iws84TE2U5VX8DIgIGRYZmypPllsFB3XtJ76z2m/XJ4m8zUJmx1nOIjuSEnH7Vot0/
- 3BERyFB2bUTCl0Md079lJJumA3MCKRSr6UfpnGu321lXevPOZB6KVznItXzTxN7W1FJFYRRmynE
- aS4M0A2Rj6ODI+NP96S7XJAnhxkVNpQ==
-X-Google-Smtp-Source: AGHT+IEZJ8kQDOZo5f7fCeSosMbVQsqHReT5pYRRzGT/OgbwcFofN/cBGbDpEHJKZaHWjU56zHxn+g==
-X-Received: by 2002:a17:90b:2801:b0:2fe:99cf:f566 with SMTP id
- 98e67ed59e1d1-3087bb573d8mr7448566a91.13.1745046938785; 
- Sat, 19 Apr 2025 00:15:38 -0700 (PDT)
+ bh=wa2FMKXZ6RAoAgzfBBEH2pYxaYnj8x5HJHMn1T64v5g=;
+ b=o8n2qcW3cT3bAtjANb13o/A058pUJ/lOdRc+910WCmtR3ehpRFwkQIqb5i+0ZfFC4O
+ s+3GhPxKPVxDbAzA6sVPBGV9RW6ab132webMRqQ1p+rIbPvqeY6BhRpKi/qEnA2YdYDy
+ LSm/UsNSx9YECuCrxfPUSn9ttM52EA91K8waNYmzhdVWC7E1EAcA/8v0cNolzB4WzwUT
+ N0ebjWGyzDIf6mTC3qVvd/GBZYyrD38QM8FwNdNa2+/KQqSuzzYVEGCavGQN+QWpA/uE
+ hluBaE0WNSH7HgMdvOee37ZsjPPy7nHw6pzpSQhZ+siLvEfikI1Aik8mTON3bS1qrRmU
+ hAhg==
+X-Gm-Message-State: AOJu0Yw7s3iixjmnQQ5aGR+FUJuWMD2Xr769Vi7CDsIqUnCOjGdKX5Hs
+ EOAjCUzcu2PgLvWWWRuuYUQu/LN8zY6IfNw+1MI5i4FsfE2sdmLNZzEywXBZBkY=
+X-Gm-Gg: ASbGncsdV2qqHTX2VqS7KoZpHFJhdhZ7+T9Jslkpq+KKMxfu/nAjQuDj+5XmGHth4rl
+ XdlA7j+QdSDPDJx/ieRzOQ29Cw8g/acfPzAM2qeK1/bZcRi1qt7HUDASJJx7mgbDj5sF9Ti0qyq
+ /vh6VtPuPfCqJwUzZNDamICaoK2LwVgKZ1gGg9avjUbhhilKg+pQBaCD4delAf2qE57xjjOKIme
+ tN+BAW4Vgd8HpkxzSRl/HMWe6DEWa+GeFPa10uNeiMBWtbOsBJaWRs9Ic/P6IQYk+a36g9lUSMo
+ G1OGDgCeeTzwviK55npyN8bQERDcZ9MEzUxHjSlKYqxzisK4rqWlfq5Y1ZvznHct5g7hGtcSQhK
+ 3VK/irHB5CySHNAP+noo=
+X-Google-Smtp-Source: AGHT+IEzbPn2rcLJKGHFAE4yGRLPz98HXeZJXDs3Nlv5SX/I6oRi8YTnmM5LiDOIFjqsTEnRPe60bg==
+X-Received: by 2002:a05:6a20:158e:b0:1f0:e2d0:fb65 with SMTP id
+ adf61e73a8af0-203cc5a86d8mr7304476637.2.1745047350736; 
+ Sat, 19 Apr 2025 00:22:30 -0700 (PDT)
 Received: from ?IPV6:2400:4050:b783:b00:9e36:5f4c:928c:4ec2?
  ([2400:4050:b783:b00:9e36:5f4c:928c:4ec2])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3087dee88d4sm2435263a91.1.2025.04.19.00.15.36
+ d2e1a72fcca58-73dbfa58871sm2836154b3a.102.2025.04.19.00.22.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 19 Apr 2025 00:15:38 -0700 (PDT)
-Message-ID: <f433b729-c9ab-4d06-9220-708c8158f3a3@daynix.com>
-Date: Sat, 19 Apr 2025 16:15:35 +0900
+ Sat, 19 Apr 2025 00:22:30 -0700 (PDT)
+Message-ID: <6ed925fc-ee81-4342-bc40-5ef15eaa0e08@daynix.com>
+Date: Sat, 19 Apr 2025 16:22:27 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] net/e1000e: Permit disabling interrupt throttling
+Subject: Re: [PATCH v2 5/8] net/igb: Fix interrupt throttling interval
+ calculation
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Jason Wang <jasowang@redhat.com>,
@@ -78,14 +79,14 @@ Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250411043128.201289-1-npiggin@gmail.com>
- <20250411043128.201289-3-npiggin@gmail.com>
+ <20250411043128.201289-6-npiggin@gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250411043128.201289-3-npiggin@gmail.com>
+In-Reply-To: <20250411043128.201289-6-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,87 +109,57 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/04/11 13:31, Nicholas Piggin wrote:
-> The spec explicitly permits xITR register interval field to have a value
-> of zero to disable throttling. The e1000e model already allows for this
-> in the throttling logic, so remove the minimum value for the register.
+> IGB throttling granularity is 1us, and interval field is in bits 2..14
+> of the EITRx registers.
 > 
-> The spec appears to say there is a maximum observable interrupt rate
-> when throttling is enabled, regardless of ITR value, so throttle timer
-> calculation is clamped to that minimum value.
-> 
-> EITR registers default to 0, as specified in spec 7.4.4.
-> 
+> Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   hw/net/e1000e_core.c | 25 +++++++++++++++++--------
->   1 file changed, 17 insertions(+), 8 deletions(-)
+>   hw/net/igb_regs.h | 3 +++
+>   hw/net/igb_core.c | 7 ++++---
+>   2 files changed, 7 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index 24138587905..96f74f1ea14 100644
-> --- a/hw/net/e1000e_core.c
-> +++ b/hw/net/e1000e_core.c
-> @@ -51,8 +51,17 @@
+> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+> index 4dc4c31da27..1ed5ee5039a 100644
+> --- a/hw/net/igb_regs.h
+> +++ b/hw/net/igb_regs.h
+> @@ -146,6 +146,9 @@ union e1000_adv_rx_desc {
+>   #define IGB_82576_VF_DEV_ID        0x10CA
+>   #define IGB_I350_VF_DEV_ID         0x1520
 >   
->   #include "trace.h"
->   
-> -/* No more then 7813 interrupts per second according to spec 10.2.4.2 */
-> -#define E1000E_MIN_XITR     (500)
-> +/*
-> + * A suggested range for ITR is 651-5580, according to spec 10.2.4.2, but
-> + * QEMU has traditionally set 500 here.
-> + */
-> +#define E1000E_DEFAULT_ITR (500)
+> +/* Delay increments in nanoseconds for interrupt throttling registers */
+> +#define IGB_INTR_THROTTLING_NS_RES (1000)
+
+Let's use the SCALE_US definition.
+
 > +
-> +/*
-> + * spec 7.4.4 ITR rules says the maximum observable interrupt rate from the
-> + * adapter should not exceed 7813/s (corresponding to 500).
-> + */
-> +#define E1000E_EFFECTIVE_MIN_XITR (500)
->   
->   #define E1000E_MAX_TX_FRAGS (64)
->   
-> @@ -105,8 +114,9 @@ e1000e_lower_legacy_irq(E1000ECore *core)
+>   /* VLAN info */
+>   #define IGB_TX_FLAGS_VLAN_MASK     0xffff0000
+>   #define IGB_TX_FLAGS_VLAN_SHIFT    16
+> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+> index 5d169c059d9..8fcc872a7c0 100644
+> --- a/hw/net/igb_core.c
+> +++ b/hw/net/igb_core.c
+> @@ -142,8 +142,9 @@ static void igb_msix_notify(IGBCore *core, unsigned int cause)
 >   static inline void
->   e1000e_intrmgr_rearm_timer(E1000IntrDelayTimer *timer)
+>   igb_intrmgr_rearm_timer(IGBIntrDelayTimer *timer)
 >   {
 > -    int64_t delay_ns = (int64_t) timer->core->mac[timer->delay_reg] *
 > -                                 timer->delay_resolution_ns;
-> +    uint32_t delay = MAX(timer->core->mac[timer->delay_reg],
-> +                         E1000E_EFFECTIVE_MIN_XITR);
-> +    int64_t delay_ns = (int64_t)delay * timer->delay_resolution_ns;
+> +    int64_t delay_ns =
+> +            (int64_t)((timer->core->mac[timer->delay_reg] & 0x7FFC) >> 2) *
+> +                     timer->delay_resolution_ns;
 >   
 >       trace_e1000e_irq_rearm_timer(timer->delay_reg << 2, delay_ns);
 >   
-> @@ -2783,7 +2793,7 @@ e1000e_set_itr(E1000ECore *core, int index, uint32_t val)
->       trace_e1000e_irq_itr_set(val);
+> @@ -180,7 +181,7 @@ igb_intrmgr_initialize_all_timers(IGBCore *core, bool create)
+>       for (i = 0; i < IGB_INTR_NUM; i++) {
+>           core->eitr[i].core = core;
+>           core->eitr[i].delay_reg = EITR0 + i;
+> -        core->eitr[i].delay_resolution_ns = E1000_INTR_DELAY_NS_RES;
+> +        core->eitr[i].delay_resolution_ns = IGB_INTR_THROTTLING_NS_RES;
+>       }
 >   
->       core->itr_guest_value = interval;
-> -    core->mac[index] = MAX(interval, E1000E_MIN_XITR);
-> +    core->mac[index] = interval;
->   }
->   
->   static void
-> @@ -2795,7 +2805,7 @@ e1000e_set_eitr(E1000ECore *core, int index, uint32_t val)
->       trace_e1000e_irq_eitr_set(eitr_num, val);
->   
->       core->eitr_guest_value[eitr_num] = interval;
-> -    core->mac[index] = MAX(interval, E1000E_MIN_XITR);
-> +    core->mac[index] = interval;
->   }
->   
->   static void
-> @@ -3444,8 +3454,7 @@ static const uint32_t e1000e_mac_reg_init[] = {
->       [FACTPS]        = E1000_FACTPS_LAN0_ON | 0x20000000,
->       [SWSM]          = 1,
->       [RXCSUM]        = E1000_RXCSUM_IPOFLD | E1000_RXCSUM_TUOFLD,
-> -    [ITR]           = E1000E_MIN_XITR,
-> -    [EITR...EITR + E1000E_MSIX_VEC_NUM - 1] = E1000E_MIN_XITR,
-> +    [ITR]           = E1000E_DEFAULT_ITR,
-
-I think you can change the initial ITR value as you do for EITR.
-
->   };
->   
->   static void e1000e_reset(E1000ECore *core, bool sw)
+>       if (!create) {
 
 
