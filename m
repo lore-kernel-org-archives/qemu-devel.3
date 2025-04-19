@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AA4C369AB
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 01:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36212C369BD
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 05:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u5xKy-00068x-M1; Fri, 18 Apr 2025 21:49:44 -0400
+	id 1u60UM-0001iS-HQ; Sat, 19 Apr 2025 01:11:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u5xKu-00068Y-14
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 21:49:40 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u60UJ-0001i9-Kw
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 01:11:35 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u5xKr-0007xo-NB
- for qemu-devel@nongnu.org; Fri, 18 Apr 2025 21:49:39 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2254e0b4b79so35013755ad.2
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 18:49:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u60UD-0006Sk-Cy
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 01:11:34 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-4766631a6a4so25928221cf.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 22:11:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745027376; x=1745632176; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+o1tPUdTIGtDeYAUAt7BjKQQ6qd4IhqSv/4zP8fHrhI=;
- b=nUX2F9Z8wv6D/pzwAg0DGIMSGusAhhy/Lu0SzHDrwhXawfu7vAKTFPpGkudnOh3Kkq
- 5CxCDaTkg4RT4Q5Hg/CZZxifl6LF6XMJU82ji2bGr5IX2FJ3b0KTHhR6SeVepvr98r6h
- RbldYuGYYiNC4QwpFpP0zxgmqw59DR93IH6OfsVzuGnhe1uDXT48yFZlvCOUHvHTK9xw
- Z1peu1TJMd2aWPB8n1Iv3CgVaePCFfbphGy6mkjYr4sd7+AREYWuDqsTdC0Dc3Yztkn9
- gMugmjeG5K1QNg/d4M2nKVCc2DaZnU+eghZDbqLtCmxUZkWqnqCOB3Y6celTHYvHoxNB
- SA/g==
+ d=gmail.com; s=20230601; t=1745039485; x=1745644285; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=teBy3OEPFdM4Vxh47FcYUjz5MyJuzLv+23/zL6OE3MM=;
+ b=LqDA2vhCrEkKgAzuEtSXCoZazRpZTQPd1qjofpK1tDz1zTcdlzacNx+LuA9Hz0lLb0
+ /XiaI+lmNuBFPiM79RNb4Wx0NtxugaTiRIRPWaMF41RbBixqfNm+soKgGrMu2c0ZeO69
+ 5fQ4gIvsazOEod3q37/zQLk3NdZMTd2fPN5lVnfqSUNNfRlsIeenC7RtmMfAj+RRXBtG
+ xo7oG2aAzY+76eMFKQqJfT9ioG0+baA1XWp+7fndlgAMJxeWY3gRqvEZzzGm0QX7pvW+
+ LIu60oxX0SG1JF87oCoVNlc5ScbalWnBo2PZq01878oPOSTvEu5UCQ28el6XtsC0WCfn
+ 3e2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745027376; x=1745632176;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+o1tPUdTIGtDeYAUAt7BjKQQ6qd4IhqSv/4zP8fHrhI=;
- b=O2+QF/M00rfUsEiNrvUqOwkGC1UgaS18zlG1N/VjHdOkK5ccDBHSmFVSyz/AdfgGcK
- 4oWWfK6+sCYrWm27nwEP6jpKuDCGUXqzwlvVtwOufbCEmqzObnAO8LS50ccwyOY9hBYR
- zMtIZRT3Hf56KoH8zbkpzuI+qldI2Wjcar2O4pXRyHnzCt1mN/ffMdIte9yQeyyrFSQ6
- 051MX7NVBxNb9pfm80ihZi6SLKDUtfugltx8fHixefYS/XwUMPRmqRg6WkcsP3ereShn
- B7t+yWJME53quh31ujkyefsRcoTlXJjJr89JLNFdY9LbdT8BkWmem43JI5UpD6BI01ee
- B8Kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVB+9qwKi0l0mVB5lhO3gf9MehthjJWD+jn0FBkjZEifk2M5jzDQNiwU57eDUC6YSdTyq8jxEJQfbyo@nongnu.org
-X-Gm-Message-State: AOJu0YxKmXjdVzizc1smV7+4PMcBdwXG5iTyjWldecqNEx2iDn8IG8Eo
- 3J9slW+WBXEj/GjTejh2KjviL+6L/m/FC8ezE+XebA9SeEKXKvWq0cPAcfu1m94=
-X-Gm-Gg: ASbGncsNngJu9M7wkT7C29a70/yiL6gxuGzYUjSuV6vbTodTB4V1Gkl8PbQeVFS9pew
- XOC59buhtN12RDr3L2CBGUhp0IawwpB1PH+h+BiUu6KLuRVLPGFssRv0wpMVeI0SpMp2F9EN4NE
- DPcDniDkDUpSWDQ9tz2Fk2wXpNSJHTqACONcFwQu2PogXHgeZwr73mcvBnaKi5CzQ+WErm0sKIQ
- pQI8c4J3/I9ySHxDhrL3na4NnLnpxYYAaKg+oyg6vquDSXSCTLqhD6uN+yW//G0ILkfGqKJQ9bL
- R3/GaaeyGhuMMGALhuhY+QQ4Y84NIGvJnicTWZYmxKZRQrPYWT/nYycLyL9ZAZBz
-X-Google-Smtp-Source: AGHT+IGmf5o5AxciNi6DQWeXXIDX1h8GY4y/qZdbr/JZKLct2v4kgV8VtjPAa7QL5ypjBe/omgR9zw==
-X-Received: by 2002:a17:902:e808:b0:223:8256:533d with SMTP id
- d9443c01a7336-22c536207d3mr66887605ad.46.1745027375967; 
- Fri, 18 Apr 2025 18:49:35 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50eb4affsm23469035ad.119.2025.04.18.18.49.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 18:49:35 -0700 (PDT)
-Message-ID: <3cee186d-d56a-4f79-bf8a-fa6d485784c5@linaro.org>
-Date: Fri, 18 Apr 2025 18:49:34 -0700
+ d=1e100.net; s=20230601; t=1745039486; x=1745644286;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=teBy3OEPFdM4Vxh47FcYUjz5MyJuzLv+23/zL6OE3MM=;
+ b=ezxhW7coh5KbFQs5x/3iOjJkRIjVPUNT4Fn7xuyTzSUCzm+s4l1hqM43A3UJWrcoAn
+ OY+sxuV3GxFE82+XhDG5gJ27/Ud93Ea8diOFxnOTL5Q4xvy7HyMIJhC+OMdqVsm6UJav
+ suFnPLAZQqC+sY2d5csSdOW4TObDTO3oKQYljLX8fnPt82noiRZHOkOlxW9dUhZErUJS
+ GCVUFAHhbi7OlWEYisJ3gkFgI9vZzj9AqHrPMTPBUKF6h3VWjEX6Tcl3A5tizzckXCMT
+ KSTbpaBxDoMvMOiggow5JUL+TCI+c4UK8C7cy+onkPSYz9/oG4+hXsHCBaz24RWU+Q7w
+ Ty5Q==
+X-Gm-Message-State: AOJu0YzWaec/C4pwJZx7pywUAxvijeeWlwcjIHzwCV8mNg7fSjQn2IFt
+ Y8Si7gyO+P71xpSp7f13/yBl/K15qogvMMd+CDzy4bw3eijkuTEcbV5vd2eX7yflCfq0PYjsTsr
+ ypddB+0tuqIxgozGzpGupLIomFDRaACtSLsQDNQ==
+X-Gm-Gg: ASbGncuj5kITSzt/oa+Z4z4XsOCOVYf2EH+vaoW1VEngAr+L7LzG+v0SGMqwmNcX4iB
+ G08AISx1ePQYlnM4p6A351++WpBFbCrTC2DziWCTeCmwemESOI0+Pvn7BXGo4NHwR+7Y/5t/yQk
+ Mfe476T+sWLNxU2BKlddOZaWaziWqhrCZo6w==
+X-Google-Smtp-Source: AGHT+IGHLTEjdr6AMuDCr+hfU5hkNEqjE75Z/fUio6tqLRr/s1QW1xjCOV2Ww4GghkGavqaHV0xvqsqHUXQ40GaaOew=
+X-Received: by 2002:a05:622a:1a97:b0:476:5fd5:4de7 with SMTP id
+ d75a77b69052e-47aec4b7606mr96602701cf.41.1745039485429; Fri, 18 Apr 2025
+ 22:11:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 11/14] hw/core/machine: Allow dynamic registration
- of valid CPU types
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20250418172908.25147-1-philmd@linaro.org>
- <20250418172908.25147-12-philmd@linaro.org>
- <24588f0b-9661-409c-9883-b12266c95597@linaro.org>
-In-Reply-To: <24588f0b-9661-409c-9883-b12266c95597@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+References: <20250418112953.1744442-1-dietmar@proxmox.com>
+ <20250418112953.1744442-2-dietmar@proxmox.com>
+In-Reply-To: <20250418112953.1744442-2-dietmar@proxmox.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Sat, 19 Apr 2025 09:11:13 +0400
+X-Gm-Features: ATxdqUEpwDLA9lxDddjRyvgPT54KEL3TA0tnL-kfR98_hyt9XCUdbBRtKcHAFTQ
+Message-ID: <CAJ+F1CKpR-Z2+bs3T8Dzco3j7-cMcEDO2qKXCO8PNcc5nXk_bg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/9] new configure option to enable gstreamer
+To: Dietmar Maurer <dietmar@proxmox.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x829.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,108 +94,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8xOC8yNSAxODoxNiwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4gT24gNC8xOC8y
-NSAxMDoyOSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+PiBBZGQgTWFjaGlu
-ZUNsYXNzOjp2YWxpZF9jcHVfdHlwZXNfbGlzdCwgYSBkeW5hbWljIGxpc3Qgb2Ygc3RyaW5n
-cy4NCj4+DQo+PiBDUFUgdHlwZXMgY2FuIGJlIHJlZ2lzdGVyZWQgd2l0aCBtYWNoaW5lX2Ns
-YXNzX2FkZF92YWxpZF9jcHVfdHlwZSgpLg0KPj4NCj4+IFN1Z2dlc3RlZC1ieTogUGllcnJp
-Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4gU2lnbmVkLW9m
-Zi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPj4g
-LS0tDQo+PiAgICBpbmNsdWRlL2h3L2JvYXJkcy5oIHwgIDggKysrKysrKysNCj4+ICAgIGh3
-L2NvcmUvbWFjaGluZS5jICAgfCAzMCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysN
-Cj4+ICAgIDIgZmlsZXMgY2hhbmdlZCwgMzggaW5zZXJ0aW9ucygrKQ0KPj4NCj4+IGRpZmYg
-LS1naXQgYS9pbmNsdWRlL2h3L2JvYXJkcy5oIGIvaW5jbHVkZS9ody9ib2FyZHMuaA0KPj4g
-aW5kZXggMDJmNDNhYzVkNGQuLjY0N2EyOWZmMDRkIDEwMDY0NA0KPj4gLS0tIGEvaW5jbHVk
-ZS9ody9ib2FyZHMuaA0KPj4gKysrIGIvaW5jbHVkZS9ody9ib2FyZHMuaA0KPj4gQEAgLTU2
-LDYgKzU2LDEzIEBAIHZvaWQgbWFjaGluZV9zZXRfY2FjaGVfdG9wb19sZXZlbChNYWNoaW5l
-U3RhdGUgKm1zLCBDYWNoZUxldmVsQW5kVHlwZSBjYWNoZSwNCj4+ICAgIGJvb2wgbWFjaGlu
-ZV9jaGVja19zbXBfY2FjaGUoY29uc3QgTWFjaGluZVN0YXRlICptcywgRXJyb3IgKiplcnJw
-KTsNCj4+ICAgIHZvaWQgbWFjaGluZV9tZW1vcnlfZGV2aWNlc19pbml0KE1hY2hpbmVTdGF0
-ZSAqbXMsIGh3YWRkciBiYXNlLCB1aW50NjRfdCBzaXplKTsNCj4+ICAgIA0KPj4gKy8qKg0K
-Pj4gKyAqIG1hY2hpbmVfY2xhc3NfYWRkX3ZhbGlkX2NwdV90eXBlOiBBZGQgdHlwZSB0byBs
-aXN0IG9mIHZhbGlkIENQVXMNCj4+ICsgKiBAbWM6IE1hY2hpbmUgY2xhc3MNCj4+ICsgKiBA
-dHlwZTogQ1BVIHR5cGUgdG8gYWxsb3cgKHNob3VsZCBiZSBhIHN1YnR5cGUgb2YgVFlQRV9D
-UFUpDQo+PiArICovDQo+PiArdm9pZCBtYWNoaW5lX2NsYXNzX2FkZF92YWxpZF9jcHVfdHlw
-ZShNYWNoaW5lQ2xhc3MgKm1jLCBjb25zdCBjaGFyICp0eXBlKTsNCj4+ICsNCj4+ICAgIC8q
-Kg0KPj4gICAgICogbWFjaGluZV9jbGFzc19hbGxvd19keW5hbWljX3N5c2J1c19kZXY6IEFk
-ZCB0eXBlIHRvIGxpc3Qgb2YgdmFsaWQgZGV2aWNlcw0KPj4gICAgICogQG1jOiBNYWNoaW5l
-IGNsYXNzDQo+PiBAQCAtMzA2LDYgKzMxMyw3IEBAIHN0cnVjdCBNYWNoaW5lQ2xhc3Mgew0K
-Pj4gICAgICAgIGJvb2wgaWdub3JlX21lbW9yeV90cmFuc2FjdGlvbl9mYWlsdXJlczsNCj4+
-ICAgICAgICBpbnQgbnVtYV9tZW1fYWxpZ25fc2hpZnQ7DQo+PiAgICAgICAgY29uc3QgY2hh
-ciAqIGNvbnN0ICp2YWxpZF9jcHVfdHlwZXM7DQo+PiArICAgIEdMaXN0ICp2YWxpZF9jcHVf
-dHlwZXNfbGlzdDsNCj4+ICAgICAgICBzdHJMaXN0ICphbGxvd2VkX2R5bmFtaWNfc3lzYnVz
-X2RldmljZXM7DQo+PiAgICAgICAgYm9vbCBhdXRvX2VuYWJsZV9udW1hX3dpdGhfbWVtaHA7
-DQo+PiAgICAgICAgYm9vbCBhdXRvX2VuYWJsZV9udW1hX3dpdGhfbWVtZGV2Ow0KPj4gZGlm
-ZiAtLWdpdCBhL2h3L2NvcmUvbWFjaGluZS5jIGIvaHcvY29yZS9tYWNoaW5lLmMNCj4+IGlu
-ZGV4IGY1MmE0ZjIyNzNiLi5mZjI3ZDUzM2I1YyAxMDA2NDQNCj4+IC0tLSBhL2h3L2NvcmUv
-bWFjaGluZS5jDQo+PiArKysgYi9ody9jb3JlL21hY2hpbmUuYw0KPj4gQEAgLTE1MzgsNiAr
-MTUzOCwxMiBAQCBjb25zdCBjaGFyICptYWNoaW5lX2NsYXNzX2RlZmF1bHRfY3B1X3R5cGUo
-TWFjaGluZUNsYXNzICptYykNCj4+ICAgICAgICByZXR1cm4gbWMtPmRlZmF1bHRfY3B1X3R5
-cGU7DQo+PiAgICB9DQo+PiAgICANCj4+ICt2b2lkIG1hY2hpbmVfY2xhc3NfYWRkX3ZhbGlk
-X2NwdV90eXBlKE1hY2hpbmVDbGFzcyAqbWMsIGNvbnN0IGNoYXIgKnR5cGUpDQo+PiArew0K
-Pj4gKyAgICBtYy0+dmFsaWRfY3B1X3R5cGVzX2xpc3QgPSBnX2xpc3RfcHJlcGVuZChtYy0+
-dmFsaWRfY3B1X3R5cGVzX2xpc3QsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIGdfc3RyZHVwKHR5cGUpKTsNCj4+ICt9DQo+PiArDQo+PiAg
-ICBzdGF0aWMgYm9vbCBpc19jcHVfdHlwZV9zdXBwb3J0ZWQoY29uc3QgTWFjaGluZVN0YXRl
-ICptYWNoaW5lLCBFcnJvciAqKmVycnApDQo+PiAgICB7DQo+PiAgICAgICAgTWFjaGluZUNs
-YXNzICptYyA9IE1BQ0hJTkVfR0VUX0NMQVNTKG1hY2hpbmUpOw0KPj4gQEAgLTE1ODEsNiAr
-MTU4NywzMCBAQCBzdGF0aWMgYm9vbCBpc19jcHVfdHlwZV9zdXBwb3J0ZWQoY29uc3QgTWFj
-aGluZVN0YXRlICptYWNoaW5lLCBFcnJvciAqKmVycnApDQo+PiAgICAgICAgICAgICAgICBy
-ZXR1cm4gZmFsc2U7DQo+PiAgICAgICAgICAgIH0NCj4+ICAgICAgICB9DQo+PiArICAgIGlm
-IChtYy0+dmFsaWRfY3B1X3R5cGVzX2xpc3QpIHsNCj4+ICsgICAgICAgIGJvb2wgdmFsaWQg
-PSBmYWxzZTsNCj4+ICsgICAgICAgIHVuc2lnbmVkIGNvdW50ID0gMDsNCj4+ICsgICAgICAg
-IEdMaXN0ICpsOw0KPj4gKw0KPj4gKyAgICAgICAgZm9yIChsID0gbWMtPnZhbGlkX2NwdV90
-eXBlc19saXN0OyAhdmFsaWQgJiYgbCAhPSBOVUxMOyBsID0gbC0+bmV4dCkgew0KPj4gKyAg
-ICAgICAgICAgIHZhbGlkIHw9ICEhb2JqZWN0X2NsYXNzX2R5bmFtaWNfY2FzdChvYywgbC0+
-ZGF0YSk7DQo+PiArICAgICAgICAgICAgY291bnQrKzsNCj4+ICsgICAgICAgIH0NCj4+ICsN
-Cj4+ICsgICAgICAgIGlmICghdmFsaWQpIHsNCj4+ICsgICAgICAgICAgICBnX2F1dG9mcmVl
-IGNoYXIgKnJlcXVlc3RlZCA9IGNwdV9tb2RlbF9mcm9tX3R5cGUobWFjaGluZS0+Y3B1X3R5
-cGUpOw0KPj4gKyAgICAgICAgICAgIG1jLT52YWxpZF9jcHVfdHlwZXNfbGlzdCA9IGdfbGlz
-dF9yZXZlcnNlKG1jLT52YWxpZF9jcHVfdHlwZXNfbGlzdCk7DQo+PiArICAgICAgICAgICAg
-ZXJyb3Jfc2V0ZyhlcnJwLCAiSW52YWxpZCBDUFUgbW9kZWw6ICVzIiwgcmVxdWVzdGVkKTsN
-Cj4+ICsgICAgICAgICAgICBlcnJvcl9hcHBlbmRfaGludChlcnJwLCAiVGhlIHZhbGlkIG1v
-ZGVscyBhcmU6ICIpOw0KPj4gKyAgICAgICAgICAgIGZvciAobCA9IG1jLT52YWxpZF9jcHVf
-dHlwZXNfbGlzdDsgbCAhPSBOVUxMOyBsID0gbC0+bmV4dCkgew0KPj4gKyAgICAgICAgICAg
-ICAgICBnX2F1dG9mcmVlIGNoYXIgKm1vZGVsID0gY3B1X21vZGVsX2Zyb21fdHlwZShsLT5k
-YXRhKTsNCj4+ICsgICAgICAgICAgICAgICAgZXJyb3JfYXBwZW5kX2hpbnQoZXJycCwgIiVz
-JXMiLCBtb2RlbCwgLS1jb3VudCA/ICIsICIgOiAiIik7DQo+PiArICAgICAgICAgICAgfQ0K
-Pj4gKyAgICAgICAgICAgIGVycm9yX2FwcGVuZF9oaW50KGVycnAsICJcbiIpOw0KPj4gKw0K
-Pj4gKyAgICAgICAgICAgIHJldHVybiBmYWxzZTsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAg
-fQ0KPj4gICAgDQo+PiAgICAgICAgLyogQ2hlY2sgaWYgQ1BVIHR5cGUgaXMgZGVwcmVjYXRl
-ZCBhbmQgd2FybiBpZiBzbyAqLw0KPj4gICAgICAgIGNjID0gQ1BVX0NMQVNTKG9jKTsNCj4g
-DQo+IEhvdyBhYm91dCBzaW1wbHkgY2hhbmdpbmcgdmFsaWRfY3B1X3R5cGVzIHRvIGJlY29t
-ZSBhIGZ1bmN0aW9uIGluc3RlYWQNCj4gb2YgYSBzdGF0aWMgbGlzdD8NCj4gDQo+IFRoaXMg
-d2F5LCBpdCdzIHNpbXBsZSB0byBnZXQgbGlzdCBvZiBjcHVzLCBhbmQgdGhpcyBjaGFuZ2Ug
-aXMgbm90DQo+IG5lZWRlZC4gVGhlIGFjdHVhbCBsaXN0IHdpbGwgYmUgZGVjaWRlZCBhdCBy
-dW50aW1lLCBpbnN0ZWFkIG9mDQo+IHN0YXRpY2FsbHksIHdoaWNoIHNvbHZlcyB0aGUgb3Jp
-Z2luYWwgcHJvYmxlbS4NCj4gQXMgd2VsbCwgd2UnbGwgbmVlZCBpdCB0byBiZSBhYmxlIHRv
-IGhhbmRsZSBhY2NlbGVyYXRvciBzcGVjaWZpYyBjcHVzLA0KPiBzbyBpdCB3aWxsIGJlIGNo
-YW5nZWQgZXZlbnR1YWxseS4NCg0KVGhpcyB3b3VsZCBnaXZlIHNvbWV0aGluZyBsaWtlIHRo
-aXMgcGF0Y2guDQpXZSBjYW4gdGhlbiByZXBsYWNlIGFsbCB2YWxpZF9jcHVfdHlwZXMgd2l0
-aCB0aGlzLCBhbmQgcmVtb3ZlIA0KdmFsaWRfY3B1X3R5cGVzIGZpZWxkLCBub3cgaXQncyBy
-ZXBsYWNlZCBieSBnZXRfdmFsaWRfY3B1X3R5cGVzLg0KDQpUaGlzIHdheSwgd2Ugc3RpbGwg
-aGF2ZSBzdGF0aWMgbGlzdHMgd2hlcmUgcG9zc2libGUsIGFuZCB3ZSBjYW4gDQpjb252ZW5p
-ZW50bHkgYnVpbGQgYSBkeW5hbWljIGxpc3QgaWYgbmVlZGVkIGZvciBjb25jZXJuZWQgYm9h
-cmRzLCB3aGljaCANCndpbGwgYmUgZXZhbHVhdGVkICphZnRlciogbWFjaGluZSBpcyBpbnN0
-YW50aWF0ZWQsIHNvIHdlIGNhbiBwb2tlIGFueSANCmFjY2VsZXJhdG9yIG9yIHRhcmdldCBz
-ZXR0aW5nIGRlZmluZWQgb25seSBhdCBydW50aW1lLg0KDQpkaWZmIC0tZ2l0IGEvaHcvYXJt
-L25wY204eHhfYm9hcmRzLmMgYi9ody9hcm0vbnBjbTh4eF9ib2FyZHMuYw0KaW5kZXggM2Zi
-ODQ3OGU3MmUuLjc1ZjkyZGNmZTUwIDEwMDY0NA0KLS0tIGEvaHcvYXJtL25wY204eHhfYm9h
-cmRzLmMNCisrKyBiL2h3L2FybS9ucGNtOHh4X2JvYXJkcy5jDQpAQCAtMjA5LDE5ICsyMDks
-MjIgQEAgc3RhdGljIHZvaWQgDQpucGNtOHh4X3NldF9zb2NfdHlwZShOUENNOHh4TWFjaGlu
-ZUNsYXNzICpubWMsIGNvbnN0IGNoYXIgKnR5cGUpDQogICAgICBtYy0+ZGVmYXVsdF9jcHVz
-ID0gbWMtPm1pbl9jcHVzID0gbWMtPm1heF9jcHVzID0gc2MtPm51bV9jcHVzOw0KICB9DQoN
-Ci1zdGF0aWMgdm9pZCBucGNtOHh4X21hY2hpbmVfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAq
-b2MsIHZvaWQgKmRhdGEpDQotew0KLSAgICBNYWNoaW5lQ2xhc3MgKm1jID0gTUFDSElORV9D
-TEFTUyhvYyk7DQotICAgIHN0YXRpYyBjb25zdCBjaGFyICogY29uc3QgdmFsaWRfY3B1X3R5
-cGVzW10gPSB7DQorc3RhdGljIGNvbnN0IGNoYXIgKiBjb25zdCAqZ2V0X3ZhbGlkX2NwdV90
-eXBlcyh2b2lkKSB7DQorICAgIHN0YXRpYyBjb25zdCBjaGFyICpjcHVzW10gPSB7DQogICAg
-ICAgICAgQVJNX0NQVV9UWVBFX05BTUUoImNvcnRleC1hOSIpLA0KICAgICAgICAgIE5VTEwN
-CiAgICAgIH07DQorICAgIHJldHVybiBjcHVzOw0KK30NCg0KK3N0YXRpYyB2b2lkIG5wY204
-eHhfbWFjaGluZV9jbGFzc19pbml0KE9iamVjdENsYXNzICpvYywgdm9pZCAqZGF0YSkNCit7
-DQorICAgIE1hY2hpbmVDbGFzcyAqbWMgPSBNQUNISU5FX0NMQVNTKG9jKTsNCiAgICAgIG1j
-LT5ub19mbG9wcHkgPSAxOw0KICAgICAgbWMtPm5vX2Nkcm9tID0gMTsNCiAgICAgIG1jLT5u
-b19wYXJhbGxlbCA9IDE7DQogICAgICBtYy0+ZGVmYXVsdF9yYW1faWQgPSAicmFtIjsNCi0g
-ICAgbWMtPnZhbGlkX2NwdV90eXBlcyA9IHZhbGlkX2NwdV90eXBlczsNCisgICAgbWMtPmdl
-dF92YWxpZF9jcHVfdHlwZXMgPSBnZXRfdmFsaWRfY3B1X3R5cGVzOw0KICB9DQoNCg==
+On Fri, Apr 18, 2025 at 3:51=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.com=
+> wrote:
+>
+> GStreamer is required to implement H264 encoding for VNC. Please note
+> that QEMU already depends on this library when you enable Spice.
+>
+> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+> ---
+>  meson.build                   | 10 ++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  5 ++++-
+>  3 files changed, 16 insertions(+), 1 deletion(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 41f68d3806..28ca37855a 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1348,6 +1348,14 @@ if not get_option('zstd').auto() or have_block
+>                      required: get_option('zstd'),
+>                      method: 'pkg-config')
+>  endif
+> +
+> +gstreamer =3D not_found
+> +if not get_option('gstreamer').auto() or have_block
+
+(from v2 review)
+
+rather "or have_system"
+
+otherwise,
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+
+
+> +  gstreamer =3D dependency('gstreamer-1.0 gstreamer-base-1.0', version: =
+'>=3D1.22.0',
+> +                          required: get_option('gstreamer'),
+> +                          method: 'pkg-config')
+> +endif
+> +
+>  qpl =3D not_found
+>  if not get_option('qpl').auto() or have_system
+>    qpl =3D dependency('qpl', version: '>=3D1.5.0',
+> @@ -2563,6 +2571,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_mall=
+oc_trim)
+>  config_host_data.set('CONFIG_STATX', has_statx)
+>  config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+>  config_host_data.set('CONFIG_ZSTD', zstd.found())
+> +config_host_data.set('CONFIG_GSTREAMER', gstreamer.found())
+>  config_host_data.set('CONFIG_QPL', qpl.found())
+>  config_host_data.set('CONFIG_UADK', uadk.found())
+>  config_host_data.set('CONFIG_QATZIP', qatzip.found())
+> @@ -4836,6 +4845,7 @@ summary_info +=3D {'snappy support':    snappy}
+>  summary_info +=3D {'bzip2 support':     libbzip2}
+>  summary_info +=3D {'lzfse support':     liblzfse}
+>  summary_info +=3D {'zstd support':      zstd}
+> +summary_info +=3D {'gstreamer support': gstreamer}
+>  summary_info +=3D {'Query Processing Library support': qpl}
+>  summary_info +=3D {'UADK Library support': uadk}
+>  summary_info +=3D {'qatzip support':    qatzip}
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 59d973bca0..11cd132be5 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -254,6 +254,8 @@ option('vnc_sasl', type : 'feature', value : 'auto',
+>         description: 'SASL authentication for VNC server')
+>  option('vte', type : 'feature', value : 'auto',
+>         description: 'vte support for the gtk UI')
+> +option('gstreamer', type : 'feature', value : 'auto',
+> +       description: 'for VNC H.264 encoding with gstreamer')
+>
+>  # GTK Clipboard implementation is disabled by default, since it may caus=
+e hangs
+>  # of the guest VCPUs. See gitlab issue 1150:
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
+h
+> index 3e8e00852b..b0c273d61e 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -229,6 +229,7 @@ meson_options_help() {
+>    printf "%s\n" '                  Xen PCI passthrough support'
+>    printf "%s\n" '  xkbcommon       xkbcommon support'
+>    printf "%s\n" '  zstd            zstd compression support'
+> +  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
+>  }
+>  _meson_option_parse() {
+>    case $1 in
+> @@ -581,6 +582,8 @@ _meson_option_parse() {
+>      --disable-xkbcommon) printf "%s" -Dxkbcommon=3Ddisabled ;;
+>      --enable-zstd) printf "%s" -Dzstd=3Denabled ;;
+>      --disable-zstd) printf "%s" -Dzstd=3Ddisabled ;;
+> -    *) return 1 ;;
+> +    --enable-gstreamer) printf "%s" -Dgstreamer=3Denabled ;;
+> +    --disable-gstreamer) printf "%s" -Dgstreamer=3Ddisabled ;;
+> +   *) return 1 ;;
+>    esac
+>  }
+> --
+> 2.39.5
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
