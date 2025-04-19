@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB0FC369BD
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 07:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3270C369BD
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 07:16:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u62NW-0001Fw-Tq; Sat, 19 Apr 2025 03:12:44 -0400
+	id 1u62QU-00028Z-HT; Sat, 19 Apr 2025 03:15:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1u62NL-0001FG-3Y
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:12:32 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1u62QR-00028N-4x
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:15:43 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1u62NE-0002Zm-PE
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:12:27 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-aee79a0f192so1589550a12.3
- for <qemu-devel@nongnu.org>; Sat, 19 Apr 2025 00:12:24 -0700 (PDT)
+ id 1u62QO-0003BE-M7
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 03:15:42 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-303a66af07eso1943444a91.2
+ for <qemu-devel@nongnu.org>; Sat, 19 Apr 2025 00:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745046742; x=1745651542;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745046939; x=1745651739;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PzisTexGoHkAntn097QKQcRs/R7FHxa172jmGFen9Jg=;
- b=ODkbwIS3u6Kv18A0i91uUOongDY8yPfBElvXe+vKDlc6fY5Z+amycV7POhuk2cS31G
- 1HZ+gr2WtXqrOHCi7crW/iYy7Qf+GlHU6NvT1MmhnhuXn+XgSohIxioL14/enJ+78zEu
- oJORxnVyBRLp1KoddV9d9hqqW98Zqmq7Z617L0mPnAQuPEsdO6lzMM+V/ii4nCV3F2ol
- 0jebv9jIqhnemctlsyNvKLKqoxgbBk92NxzunFGFfaKqmX68Ea+GpGREW/vNk5j+Sk8L
- gEroXhj9AVd9NGylMxsFaDOWJiCo4ObBMwm+VfU3lG6xOXQ66tRpkhVgbPfVtPPD3nYd
- puIA==
+ bh=y0Orie7HTNvmntMaEh4zzmJdAjAJy7b6qRhW8Wvk8zg=;
+ b=LanAmJuUbJVUBu7EBikRyt9tWdY4/ouRDZ/cDzd+VlnpDGk0SKw4HhawoK9x7DAKId
+ 2CV1laVOHEUx6qzhytvPk8RF1UDDvajlrKUI0yhMiXQnO9gCqHU5l9oB5vEjXlXrvHw1
+ ZnX/YXVjMw/2HyVoYc34BGaE+oWXziSymCA+RtcKCKZnw6w+5O5N/bl26a7O+DeadQP5
+ E/L6rH7SwhCjB6UR52a4imzobXri6ncmDaBZFcJYhtl6xlEJRUiv+tYFdpBslvJhRliu
+ 5AOP11dHHtZ/hmXdkq0L+pMdZYrkuD07f7a2gnXXeeza/Jj9gA/TZQ3iypequQ63/wrE
+ Xc3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745046742; x=1745651542;
+ d=1e100.net; s=20230601; t=1745046939; x=1745651739;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PzisTexGoHkAntn097QKQcRs/R7FHxa172jmGFen9Jg=;
- b=EEWNeXRdRPhyEZLCmYV79iPnxsHxKDZls+Z4TTRtl+sH5sel5eLssG/f/ULyRv04tt
- 8uKA3RzAt9/cXFbK3Yr+eSgyujVYX3kKueq6vrWHg3F1Y85v2ElOwnx02lVxFOHg0Y0N
- u+nXuKwLBI1bDxHWInvDm5LUWAgIIeaSVpJ9vIQAOdYAYWT4fAAzTPfBw2YdtW90wEhy
- QAqRu/CSLoGYBloAr8oot/g9VDayjw66vx85AWa8wEzy9iscFqM9nWI5Akgs+hJBekFE
- 1ouNa8nE4Qkyx6gOxQ7gk/VTeEPdHKgMxHa5xfsNhM217JFZwbrg1tpqLs8xa47YTe+6
- 9B3Q==
-X-Gm-Message-State: AOJu0YzdZNAJz/BaAIHsu/lPSDOXYpZiqJRUmuEPNGQwiTktKWUxllL9
- IZZRqbxhbt/TGzOpE2rSTGQtOhSuwnxNYC18icUGCcSGXnWs1AM3DSaCAWAfeQ0=
-X-Gm-Gg: ASbGncvOisbgn7MiklLhaKyx4wE2TWk42QQEs/wJf3KWP0M26Zu/J9xleSUKlwuGOV9
- vqHbjrEXv6ktbmuLzS5lctnFci3ZaGASi7nfDbXrcW3SbRGMZUHzkdhPyF1wdVeKi4hm3JUVDGO
- aiZ1fg8y5mILLRxCqxtltZuOrTAeyuXOWbRp26Tg8httr2J0niiCrzRm+J9IDxuQ3pTsJMgOhVQ
- mHXcazlVQ2U+osiCOn+9OevWTKltJE+0SORNh24DAwjQxK8RamrHN1oBk6LRj0el3m1ai2wo6kE
- 76/91PlzlzHjuqiNvKuooZdzsOiiCpYu5NmpnvKNpi34UrO+JCgjk48JuGEmAONLHQmKr/+cWji
- FUt8KzH/Et02G7wgd/dXikuQJnoZtng==
-X-Google-Smtp-Source: AGHT+IEVjYYRvGP2rz7elK2rr9FhWP2fq4Ed8A0JVPqHqt5NjUzqqzq71a4H8jhk8l+V1/3OB/l65g==
-X-Received: by 2002:a17:90b:5748:b0:2ff:7ad4:77af with SMTP id
- 98e67ed59e1d1-3087bb6e9dbmr7638355a91.20.1745046742448; 
- Sat, 19 Apr 2025 00:12:22 -0700 (PDT)
+ bh=y0Orie7HTNvmntMaEh4zzmJdAjAJy7b6qRhW8Wvk8zg=;
+ b=M6k+8+jX5ehrPZbfxDtR0IkrrVSrmARnK/jslCc4A87IOIu4T1/7xFjp7XZPYNE+R1
+ B2ZEyRFYiPkGeVQYSKpYFgK/S3GgDvXb130SGXZwEIT3GN9Isxh7t4k/5AuZ8qS+Xzc+
+ jWpJYZjr4raoWUdK87sdo9LRGp4iJ9IQ4tJjZKj5nqsZK/dQyfVVvnC7qWB63/WXhsgk
+ A3FDBIDTY0uPtNFdG+i1DX/aJp2hD+/Tn688ax5ZtMw6ER5wx3JTkantEK4anqEq70Dg
+ /5XZEQnGr2OEuGBxaZFE2at5RdDSRv2OUlij0yrkWhxRucQxmjU7qJGaWwUXM+bY9XRc
+ DUBw==
+X-Gm-Message-State: AOJu0YxST8tpd08pe7QvBkVJOItkIij+gjnjz0IhVVIH5H8bnrkGQR7N
+ M/8xzAVcHX4k2jEatZBYeAvq1/yczbc8gCjOibwmXQKb2nDIEgw62an+28lQFK4=
+X-Gm-Gg: ASbGncsTutUmblnG7qjrkjQbGSe6NBiVar5eWrA+aIN+Ga0YVuoRWvcCDiIKaX11PdL
+ kFt9w8rF9/1W1l/d4VCW6aq2JAItKXwU5sQZ/qfYDRFhUmtVWF0JQo+pHkoo7SX6WX1l5kDFOdD
+ iZ4sapqGKtWnOp/16D/1jOT/RWYLXyb1DCfXnbkLpKPObuEtYQ+TOCXZDdP0RNXfq8QX92G2vVE
+ myc+tWkR/iws84TE2U5VX8DIgIGRYZmypPllsFB3XtJ76z2m/XJ4m8zUJmx1nOIjuSEnH7Vot0/
+ 3BERyFB2bUTCl0Md079lJJumA3MCKRSr6UfpnGu321lXevPOZB6KVznItXzTxN7W1FJFYRRmynE
+ aS4M0A2Rj6ODI+NP96S7XJAnhxkVNpQ==
+X-Google-Smtp-Source: AGHT+IEZJ8kQDOZo5f7fCeSosMbVQsqHReT5pYRRzGT/OgbwcFofN/cBGbDpEHJKZaHWjU56zHxn+g==
+X-Received: by 2002:a17:90b:2801:b0:2fe:99cf:f566 with SMTP id
+ 98e67ed59e1d1-3087bb573d8mr7448566a91.13.1745046938785; 
+ Sat, 19 Apr 2025 00:15:38 -0700 (PDT)
 Received: from ?IPV6:2400:4050:b783:b00:9e36:5f4c:928c:4ec2?
  ([2400:4050:b783:b00:9e36:5f4c:928c:4ec2])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3087e116e0dsm2387457a91.46.2025.04.19.00.12.20
+ 98e67ed59e1d1-3087dee88d4sm2435263a91.1.2025.04.19.00.15.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 19 Apr 2025 00:12:22 -0700 (PDT)
-Message-ID: <a766c04a-992a-49e7-aacc-cc51360d662d@daynix.com>
-Date: Sat, 19 Apr 2025 16:12:19 +0900
+ Sat, 19 Apr 2025 00:15:38 -0700 (PDT)
+Message-ID: <f433b729-c9ab-4d06-9220-708c8158f3a3@daynix.com>
+Date: Sat, 19 Apr 2025 16:15:35 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] hw/net/e1000e|igb: Remove xitr_guest_value logic
+Subject: Re: [PATCH v2 2/8] net/e1000e: Permit disabling interrupt throttling
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Jason Wang <jasowang@redhat.com>,
@@ -78,14 +78,14 @@ Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250411043128.201289-1-npiggin@gmail.com>
- <20250411043128.201289-4-npiggin@gmail.com>
+ <20250411043128.201289-3-npiggin@gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250411043128.201289-4-npiggin@gmail.com>
+In-Reply-To: <20250411043128.201289-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,155 +108,87 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/04/11 13:31, Nicholas Piggin wrote:
-> The guest value xITR logic is not required now that the write functions
-> store necessary data to be read back, and internal users mask and shift
-> fields they need as they go.
+> The spec explicitly permits xITR register interval field to have a value
+> of zero to disable throttling. The e1000e model already allows for this
+> in the throttling logic, so remove the minimum value for the register.
+> 
+> The spec appears to say there is a maximum observable interrupt rate
+> when throttling is enabled, regardless of ITR value, so throttle timer
+> calculation is clamped to that minimum value.
+> 
+> EITR registers default to 0, as specified in spec 7.4.4.
 > 
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   hw/net/e1000e_core.c | 31 +++++++++++++++----------------
->   hw/net/igb_core.c    | 14 ++++++++++++--
->   2 files changed, 27 insertions(+), 18 deletions(-)
+>   hw/net/e1000e_core.c | 25 +++++++++++++++++--------
+>   1 file changed, 17 insertions(+), 8 deletions(-)
 > 
 > diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index 96f74f1ea14..f8e6522f810 100644
+> index 24138587905..96f74f1ea14 100644
 > --- a/hw/net/e1000e_core.c
 > +++ b/hw/net/e1000e_core.c
-> @@ -2563,18 +2563,6 @@ e1000e_mac_swsm_read(E1000ECore *core, int index)
->       return val;
->   }
+> @@ -51,8 +51,17 @@
 >   
-> -static uint32_t
-> -e1000e_mac_itr_read(E1000ECore *core, int index)
-> -{
-> -    return core->itr_guest_value;
-> -}
-> -
-> -static uint32_t
-> -e1000e_mac_eitr_read(E1000ECore *core, int index)
-> -{
-> -    return core->eitr_guest_value[index - EITR];
-> -}
-> -
->   static uint32_t
->   e1000e_mac_icr_read(E1000ECore *core, int index)
+>   #include "trace.h"
+>   
+> -/* No more then 7813 interrupts per second according to spec 10.2.4.2 */
+> -#define E1000E_MIN_XITR     (500)
+> +/*
+> + * A suggested range for ITR is 651-5580, according to spec 10.2.4.2, but
+> + * QEMU has traditionally set 500 here.
+> + */
+> +#define E1000E_DEFAULT_ITR (500)
+> +
+> +/*
+> + * spec 7.4.4 ITR rules says the maximum observable interrupt rate from the
+> + * adapter should not exceed 7813/s (corresponding to 500).
+> + */
+> +#define E1000E_EFFECTIVE_MIN_XITR (500)
+>   
+>   #define E1000E_MAX_TX_FRAGS (64)
+>   
+> @@ -105,8 +114,9 @@ e1000e_lower_legacy_irq(E1000ECore *core)
+>   static inline void
+>   e1000e_intrmgr_rearm_timer(E1000IntrDelayTimer *timer)
 >   {
-> @@ -2792,7 +2780,6 @@ e1000e_set_itr(E1000ECore *core, int index, uint32_t val)
+> -    int64_t delay_ns = (int64_t) timer->core->mac[timer->delay_reg] *
+> -                                 timer->delay_resolution_ns;
+> +    uint32_t delay = MAX(timer->core->mac[timer->delay_reg],
+> +                         E1000E_EFFECTIVE_MIN_XITR);
+> +    int64_t delay_ns = (int64_t)delay * timer->delay_resolution_ns;
 >   
+>       trace_e1000e_irq_rearm_timer(timer->delay_reg << 2, delay_ns);
+>   
+> @@ -2783,7 +2793,7 @@ e1000e_set_itr(E1000ECore *core, int index, uint32_t val)
 >       trace_e1000e_irq_itr_set(val);
 >   
-> -    core->itr_guest_value = interval;
->       core->mac[index] = interval;
+>       core->itr_guest_value = interval;
+> -    core->mac[index] = MAX(interval, E1000E_MIN_XITR);
+> +    core->mac[index] = interval;
 >   }
 >   
-> @@ -2804,7 +2791,6 @@ e1000e_set_eitr(E1000ECore *core, int index, uint32_t val)
->   
+>   static void
+> @@ -2795,7 +2805,7 @@ e1000e_set_eitr(E1000ECore *core, int index, uint32_t val)
 >       trace_e1000e_irq_eitr_set(eitr_num, val);
 >   
-> -    core->eitr_guest_value[eitr_num] = interval;
->       core->mac[index] = interval;
+>       core->eitr_guest_value[eitr_num] = interval;
+> -    core->mac[index] = MAX(interval, E1000E_MIN_XITR);
+> +    core->mac[index] = interval;
 >   }
 >   
-> @@ -3029,6 +3015,7 @@ static const readops e1000e_macreg_readops[] = {
->       e1000e_getreg(GSCN_1),
->       e1000e_getreg(FCAL),
->       e1000e_getreg(FLSWCNT),
-> +    e1000e_getreg(ITR),
->   
->       [TOTH]    = e1000e_mac_read_clr8,
->       [GOTCH]   = e1000e_mac_read_clr8,
-> @@ -3062,7 +3049,6 @@ static const readops e1000e_macreg_readops[] = {
->       [MPRC]    = e1000e_mac_read_clr4,
->       [BPTC]    = e1000e_mac_read_clr4,
->       [TSCTC]   = e1000e_mac_read_clr4,
-> -    [ITR]     = e1000e_mac_itr_read,
->       [CTRL]    = e1000e_get_ctrl,
->       [TARC1]   = e1000e_get_tarc,
->       [SWSM]    = e1000e_mac_swsm_read,
-> @@ -3087,7 +3073,7 @@ static const readops e1000e_macreg_readops[] = {
->       [RETA ... RETA + 31]   = e1000e_mac_readreg,
->       [RSSRK ... RSSRK + 31] = e1000e_mac_readreg,
->       [MAVTV0 ... MAVTV3]    = e1000e_mac_readreg,
-> -    [EITR...EITR + E1000E_MSIX_VEC_NUM - 1] = e1000e_mac_eitr_read
-> +    [EITR...EITR + E1000E_MSIX_VEC_NUM - 1] = e1000e_mac_readreg,
+>   static void
+> @@ -3444,8 +3454,7 @@ static const uint32_t e1000e_mac_reg_init[] = {
+>       [FACTPS]        = E1000_FACTPS_LAN0_ON | 0x20000000,
+>       [SWSM]          = 1,
+>       [RXCSUM]        = E1000_RXCSUM_IPOFLD | E1000_RXCSUM_TUOFLD,
+> -    [ITR]           = E1000E_MIN_XITR,
+> -    [EITR...EITR + E1000E_MSIX_VEC_NUM - 1] = E1000E_MIN_XITR,
+> +    [ITR]           = E1000E_DEFAULT_ITR,
+
+I think you can change the initial ITR value as you do for EITR.
+
 >   };
->   enum { E1000E_NREADOPS = ARRAY_SIZE(e1000e_macreg_readops) };
 >   
-> @@ -3517,13 +3503,26 @@ void e1000e_core_pre_save(E1000ECore *core)
->               core->tx[i].skip_cp = true;
->           }
->       }
-> +
-> +    /* back compat, QEMU moves xITR in itr_guest_value state */
-> +    core->itr_guest_value = core->mac[ITR];
-> +    for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
-> +        core->eitr_guest_value[i] = core->mac[EITR + i];
-> +    }
->   }
->   
->   int
->   e1000e_core_post_load(E1000ECore *core)
->   {
-> +    int i;
->       NetClientState *nc = qemu_get_queue(core->owner_nic);
->   
-> +    /* back compat */
-> +    core->mac[ITR] = core->itr_guest_value;
-> +    for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
-> +        core->mac[EITR + i] = core->eitr_guest_value[i];
-> +    }
-> +
->       /*
->        * nc.link_down can't be migrated, so infer link_down according
->        * to link status bit in core.mac[STATUS].
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 39e3ce1c8fe..5d169c059d9 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -2880,7 +2880,7 @@ igb_mac_swsm_read(IGBCore *core, int index)
->   static uint32_t
->   igb_mac_eitr_read(IGBCore *core, int index)
->   {
-> -    return core->eitr_guest_value[index - EITR0];
-> +    return core->mac[index - EITR0];
->   }
->   
->   static uint32_t igb_mac_vfmailbox_read(IGBCore *core, int index)
-> @@ -3046,7 +3046,6 @@ igb_set_eitr(IGBCore *core, int index, uint32_t val)
->   
->       trace_igb_irq_eitr_set(eitr_num, val);
->   
-> -    core->eitr_guest_value[eitr_num] = val & ~E1000_EITR_CNT_IGNR;
->       core->mac[index] = val & 0x7FFE;
-
-EITR has writable bits not covered with 0x7FFE and they should be preserved.
-
->   }
->   
-> @@ -4527,13 +4526,24 @@ void igb_core_pre_save(IGBCore *core)
->               core->tx[i].skip_cp = true;
->           }
->       }
-> +
-> +    /* back compat, QEMU moves EITR in eitr_guest_value state */
-> +    for (i = 0; i < IGB_INTR_NUM; i++) {
-> +        core->eitr_guest_value[i] = core->mac[EITR0 + i];
-> +    }
->   }
->   
->   int
->   igb_core_post_load(IGBCore *core)
->   {
-> +    int i;
->       NetClientState *nc = qemu_get_queue(core->owner_nic);
->   
-> +    /* back compat */
-> +    for (i = 0; i < IGB_INTR_NUM; i++) {
-> +        core->mac[EITR0 + i] = core->eitr_guest_value[i];
-> +    }
-> +
->       /*
->        * nc.link_down can't be migrated, so infer link_down according
->        * to link status bit in core.mac[STATUS].
+>   static void e1000e_reset(E1000ECore *core, bool sw)
 
 
