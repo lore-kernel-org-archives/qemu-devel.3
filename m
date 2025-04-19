@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31870C369BD
-	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 06:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB799C369BD
+	for <qemu-devel@archiver.kernel.org>; Sat, 19 Apr 2025 06:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u61oS-0007EV-Bg; Sat, 19 Apr 2025 02:36:28 -0400
+	id 1u6286-0003rc-ND; Sat, 19 Apr 2025 02:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1u61oQ-0007EB-DT
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 02:36:26 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1u6283-0003ly-Lv
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 02:56:43 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1u61oO-00049A-2l
- for qemu-devel@nongnu.org; Sat, 19 Apr 2025 02:36:26 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-224100e9a5cso29881415ad.2
- for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 23:36:23 -0700 (PDT)
+ id 1u6280-0008Ga-5X
+ for qemu-devel@nongnu.org; Sat, 19 Apr 2025 02:56:43 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22c33677183so29515275ad.2
+ for <qemu-devel@nongnu.org>; Fri, 18 Apr 2025 23:56:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745044582; x=1745649382;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745045798; x=1745650598;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=l7pLlRPYl9IZ9VK/DyOgMPx8meh7il9zCjTpYyrFrdE=;
- b=FhbiSzKCLyHlGd8BuhvErGMV5CEg6zU+jzb1gE4daZj97xpIqfjWrPhCsrhEQDodiy
- /W32QEvDJZ7mssQy1RayD9bQ1/D8QolKXErV/5eVeq1OHPAptw3m9nxFF3WiHWZyZIwB
- vvmo23YVmCQCS8t/wstnQeIxX46dXsE/PttRI9XS1JeneqGz4C4Y8IHzHgqg7k8Ax/s3
- AgwQehnYZgwAv57cp9TJCN5zmxGyq2spCnUgCK05B6DAAVglrCH4Zc4/6L9TusQ46nHi
- /6UrHeY/4KNDO70X5ReQk43zSPL+fx1zsVzGvnuwzNvyxBYsaicN8myw8mknBeFuPS4d
- I5Iw==
+ bh=gYgOc/1GkS+rgUKH6Y0bpgzgkVtAbzeGiDwI5Vjz/ak=;
+ b=JbS42H/dAv1qksw7Bx3D7XIYwOTaZvrQkK/Wt4TURzw/AzotE3NwYy2boxj5NkdLSZ
+ v1zHo07UCT5pTDtV20MduYWW1q8EuLsMSm5nNACvgkxETU4ps17EZSv6YdzwnDYYJVAB
+ dB5oRyp684T6VE2BGTOwCfFCT5irVtY/ho2KAMPjbOPOadvbxtj789qNWndg2JuK4/iy
+ Fb8j1sforHKQLo2ocfH6YdvlIf3UTpFkr9rmSzeGIxMxZzM575BXmsl03/78MZGSWLv/
+ 7iEi10EkIX5iROOHoVLGSQg4RQHtYzvugpmi4Gs/ctQpApMFiuCmaRPV0Y18ujIPqlA+
+ UzSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745044582; x=1745649382;
+ d=1e100.net; s=20230601; t=1745045798; x=1745650598;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l7pLlRPYl9IZ9VK/DyOgMPx8meh7il9zCjTpYyrFrdE=;
- b=eJj6ew4Z4gn6wB7Nl405fBHKnl8MUPPcQ8n3M/ZYXXG1py6EhIODmc+e4BdBVDtoHp
- dtiUAXYOHVgUeG0/FUb6Ch3kRBWNLhGpN6UOJ0u/1TCBD8/eYPwdECDhK+2WgWl8yiNO
- Ef6rmREShauDKvHcEDz9+D8yzoFQMJ+fIKp/TgTWkfoTdg+8swOM0hlyCBa4+i3AFDAp
- zgmCnsqDDPh2X/G2CoZ50fcWqtVFG2IfRPMNonRZpaby/cr+vSvTMPZoO5keAM1GLQ8u
- lDaqmR6h2P5xA7w2aYAmskwQ+vZWBKjatGesIuJsThofOKW2wbVeN+5RhxByv0wCiw2A
- UTXg==
-X-Gm-Message-State: AOJu0YxW9og9eaUmAiHboO26lI/YdL/O3Jx3aI/qB9aoCbgJ9yMFKDiq
- 5hwqt957UVmvzwZEG5u9BdB+ixPQmWdRJo0YE9gycowGHuD04pBSSZwZIP9VxoFxaUkqGen2UYC
- 62QE=
-X-Gm-Gg: ASbGncvSXT2YuQ6HGTyAYfOaLGhKQfo82ScT9loZXSOP2+nR0/DZ4GHqzAt9x12knxn
- RxL2p1U7MUw2m3uoIIvprBv4b9W1Gh4phujNMLrF23pue+nPR9qnZ5gH1Y4qmdvZ5ePhx9AqKXq
- VhszwC+ID5YojYMm+2cq8YjAq8WMkewgwXIHPdn2ryZG3vBRIHzGP/46bimzgAMtilcj4j8vvMS
- YbYEjjLKBZ7L2a4FwO0AZL4yLRMnvgEiwFr0XqvkwKvfvei+J8PPl2CS4ZBBgeEev6a0PDGnGA+
- lki13RYUXZbVYZwjRmiZJysaeKu/+78kFJfYXqkzzAttLTdCmSQskPncHPYH/nKqCIZKeXTMyIp
- gYeLLTP5FhTMYs1p0qwk=
-X-Google-Smtp-Source: AGHT+IE+GcQShiNHg7UqPMGPQvE2ekrFZa4TzG3SRSTJQHASjtHYL3s9r2tRE+AS8OqV8mrQtHwZEg==
-X-Received: by 2002:a17:902:d489:b0:224:e33:8896 with SMTP id
- d9443c01a7336-22c53285bbbmr70613555ad.11.1745044581847; 
- Fri, 18 Apr 2025 23:36:21 -0700 (PDT)
+ bh=gYgOc/1GkS+rgUKH6Y0bpgzgkVtAbzeGiDwI5Vjz/ak=;
+ b=CkQ6u7374rs28nYVrcRxQJIWAddCPWWmzWlz9pc8FR5OmTV3HZyYrh3TlzsJzd8w3T
+ v360RZYkDEi5NJzoHW9vNplBVsKHbLhr0WTn7m/AoRdGgaJ4GBuf1fXlOmLrxWVuF4fc
+ hORjUZ75r5nb/wSfmV2S1ZlRuZGbYqM3oMKq8aKX8yBRgI0fIq4MJkyTKSckCHHc65Ko
+ Rv+A6boXBFQETS6bUp4PfKArjoG2c0w33NtBgAU2O0z/xWc2+acGR3Q4NXE85NU/1IsN
+ MFddFW0Gm5uSZiQSPYaS6J1YXtmqcrOg+BycU+2O1FBuns+aWbhBjjLK8oPasfVLVLKA
+ bpiA==
+X-Gm-Message-State: AOJu0Yzl4t8yCmX3evYW6J6MzaLMmifbHm7di2AoxStroCHGK/zPL8hs
+ E1te987llnUKoHkDr7EU2cOE57HRwMhNwdPj1uojYIGzpaP7WxcofG2B2SmDWU4=
+X-Gm-Gg: ASbGncvW4rxXHrLz2gJsKqQ7rN7kQCbt2t5F8M5xS3mVZLY9K8GXw2uKP6Fd6JzlIRD
+ i4n/XiT7uxLHiZyn5BX3Vu/dIEYNqjsidQ5Y4ZOcGhtgOfTJ159jsQUkTDbsWouHMun1Nm2L5na
+ wZWu3aKtmbwJ8C2EWYJ9aILUxbfGwoKNc1uNePnEsKZ/zqSpBzQjT5LRr2go+g/yQdZo8ddmt5J
+ na73PcqCUDscNEmU5FqW7VcbVUzqVlMoansYm0ietuWb3xzCtSOQC6owPlMKkPIBhd0LUIC6w2I
+ ag6SMPnxpB/CiD/RW3o1Z+EmEIDb5wYznRyRDIqmkIQB4FJRhMUroctAN7HPh1gjAsRhxW1IAU6
+ R2iN/IarybxOcbV9P0o8=
+X-Google-Smtp-Source: AGHT+IGtSI3rPWPte0OzQUeVj1Y1nfSLRmWDpxJRQV/aJUXBJs5HyRtyJrq7znGr5o78SYG8gPWe0w==
+X-Received: by 2002:a17:902:e80e:b0:224:e0f:4b5 with SMTP id
+ d9443c01a7336-22c53573cd7mr66123745ad.7.1745045797931; 
+ Fri, 18 Apr 2025 23:56:37 -0700 (PDT)
 Received: from ?IPV6:2400:4050:b783:b00:9e36:5f4c:928c:4ec2?
  ([2400:4050:b783:b00:9e36:5f4c:928c:4ec2])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50eb64fbsm27063875ad.158.2025.04.18.23.36.20
+ d9443c01a7336-22c50eb48ebsm27265045ad.122.2025.04.18.23.56.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 18 Apr 2025 23:36:21 -0700 (PDT)
-Message-ID: <87b634f1-b3fb-4911-bf97-0f941d07a2f0@daynix.com>
-Date: Sat, 19 Apr 2025 15:36:18 +0900
+ Fri, 18 Apr 2025 23:56:37 -0700 (PDT)
+Message-ID: <f67a4bd1-9d81-4e81-84a8-8f7e519926b9@daynix.com>
+Date: Sat, 19 Apr 2025 15:56:35 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio: Call set_features during reset
-To: Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH] virtio-net: Copy all for dhclient workaround
+To: Antoine Damhet <adamhet@scaleway.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- devel@daynix.com, qemu-stable@nongnu.org
-References: <20250410-reset-v1-1-751cd0064395@daynix.com>
- <CACGkMEv5JfUFkwQzE5iHuxnKsVm6u1d89Ek5n4Gw2a2D2DEvVw@mail.gmail.com>
+ Jason Wang <jasowang@redhat.com>, devel@daynix.com, qemu-stable@nongnu.org
+References: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
+ <su2au5bn77cjz64dgsd4by5atjlbun54467c2srdcmgoyeefpw@xym6ucphqa2d>
+ <0a2611ae-93b0-48d6-ae89-02ab50339946@daynix.com>
+ <pssex66ivae3kkxo7rwxo2mnroit7zpnirxis6eu56b2scaj3h@2flhgmzcxvy6>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEv5JfUFkwQzE5iHuxnKsVm6u1d89Ek5n4Gw2a2D2DEvVw@mail.gmail.com>
+In-Reply-To: <pssex66ivae3kkxo7rwxo2mnroit7zpnirxis6eu56b2scaj3h@2flhgmzcxvy6>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,167 +106,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/04/16 14:46, Jason Wang wrote:
-> On Thu, Apr 10, 2025 at 3:42 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On 2025/04/11 22:20, Antoine Damhet wrote:
+> On Fri, Apr 11, 2025 at 05:01:01PM +0900, Akihiko Odaki wrote:
+>> On 2025/04/07 17:29, Antoine Damhet wrote:
+>>> On Sat, Apr 05, 2025 at 05:04:28PM +0900, Akihiko Odaki wrote:
+>>>> The goal of commit 7987d2be5a8b ("virtio-net: Copy received header to
+>>>> buffer") was to remove the need to patch the (const) input buffer with a
+>>>> recomputed UDP checksum by copying headers to a RW region and inject the
+>>>> checksum there. The patch computed the checksum only from the header
+>>>> fields (missing the rest of the payload) producing an invalid one
+>>>> and making guests fail to acquire a DHCP lease.
+>>>>
+>>>> Fix the issue by copying the entire packet instead of only copying the
+>>>> headers.
+>>>>
+>>>> Fixes: 7987d2be5a8b ("virtio-net: Copy received header to buffer")
+>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
+>>>> Cc: qemu-stable@nongnu.org
+>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>
+>>> Tested-By: Antoine Damhet <adamhet@scaleway.com>
+>>>
+>>>> ---
+>>>> This patch aims to resolves the issue the following one also does:
+>>>> https://lore.kernel.org/qemu-devel/20250404151835.328368-1-adamhet@scaleway.com
+>>>>
+>>>> The difference from the mentioned patch is that this patch also
+>>>> preserves that the original intent of regressing change, which is to
+>>>> remove the need to patch the (const) input buffer with a recomputed UDP
+>>>> checksum.
+>>>>
+>>>> To Antoine Damhet:
+>>>> I confirmed that DHCP is currently not working and this patch fixes the
+>>>> issue, but I would appreciate if you also confirm the fix as I already
+>>>> have done testing badly for the regressing patch.
+>>>
+>>> Thanks for the swift response, ideally I'd like a non-regression test in
+>>> the testsuite but a quick test showed me that I couldn't easily
+>>> reproduce with user networking so unless someone has a great idea it
+>>> would be a pain.
+>>>
+>>>> ---
+>>>>    hw/net/virtio-net.c | 35 ++++++++++++++++-------------------
+>>>>    1 file changed, 16 insertions(+), 19 deletions(-)
+>>>>
+>>>> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+>>>> index de87cfadffe1..a920358a89c5 100644
+>>>> --- a/hw/net/virtio-net.c
+>>>> +++ b/hw/net/virtio-net.c
+>>>> @@ -1687,6 +1687,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+>>>>        virtio_tswap16s(vdev, &hdr->csum_offset);
+>>>>    }
+>>>> +typedef struct Header {
+>>>> +    struct virtio_net_hdr_v1_hash virtio_net;
+>>>> +    uint8_t payload[1500];
+>>>> +} Header;
+>>>> +
+>>>>    /* dhclient uses AF_PACKET but doesn't pass auxdata to the kernel so
+>>>>     * it never finds out that the packets don't have valid checksums.  This
+>>>>     * causes dhclient to get upset.  Fedora's carried a patch for ages to
+>>>> @@ -1701,7 +1706,7 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+>>>>     * we should provide a mechanism to disable it to avoid polluting the host
+>>>>     * cache.
+>>>>     */
+>>>> -static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+>>>> +static void work_around_broken_dhclient(struct Header *hdr,
+>>>>                                            size_t *hdr_len, const uint8_t *buf,
+>>>>                                            size_t buf_size, size_t *buf_offset)
+>>>>    {
+>>>> @@ -1711,20 +1716,20 @@ static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+>>>>        buf += *buf_offset;
+>>>>        buf_size -= *buf_offset;
+>>>> -    if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+>>>> -        (buf_size >= csum_size && buf_size < 1500) && /* normal sized MTU */
+>>>> +    if ((hdr->virtio_net.hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+>>>> +        (buf_size >= csum_size && buf_size < sizeof(hdr->payload)) && /* normal sized MTU */
+>>>>            (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
+>>>>            (buf[23] == 17) && /* ip.protocol == UDP */
+>>>>            (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
+>>>> -        memcpy((uint8_t *)hdr + *hdr_len, buf, csum_size);
+>>>> -        net_checksum_calculate((uint8_t *)hdr + *hdr_len, csum_size, CSUM_UDP);
+>>>> -        hdr->flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
+>>>> -        *hdr_len += csum_size;
+>>>> -        *buf_offset += csum_size;
+>>>> +        memcpy((uint8_t *)hdr + *hdr_len, buf, buf_size);
+>>>> +        net_checksum_calculate((uint8_t *)hdr + *hdr_len, buf_size, CSUM_UDP);
+>>>> +        hdr->virtio_net.hdr.flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
+>>>> +        *hdr_len += buf_size;
+>>>> +        *buf_offset += buf_size;
+>>>>        }
+>>>>    }
+>>>> -static size_t receive_header(VirtIONet *n, struct virtio_net_hdr *hdr,
+>>>> +static size_t receive_header(VirtIONet *n, Header *hdr,
+>>>>                                 const void *buf, size_t buf_size,
+>>>>                                 size_t *buf_offset)
+>>>
+>>> `receive_header` can now "receive" the whole packet that's kinda
+>>> misleading. I though another approach would be to only do the
+>>> detection/flag patching from receive_header and recompute the checksum
+>>> directly in the final `iov`, this would also eliminate the extra payload
+>>> copy.
 >>
->> virtio-net expects set_features() will be called when the feature set
->> used by the guest changes to update the number of virtqueues. Call it
->> during reset as reset clears all features and the queues added for
->> VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS will need to be removed.
+>> It is possible to avoid copying but I chose not to do that because this is
+>> not a hot path and the code complexity required for that does not look
+>> worthwhile for me.
 > 
-> It's not clear to me what kind of problem we want to fix here. For
-> example, what happens if we don't do this.
-
-Without this change, if the device gets reset after VIRTIO_NET_F_MQ or 
-VIRTIO_NET_F_RSS is configured:
-- the guest will see too many virtqueues
-- migration results in segfault due to the mismatch with the number of 
-virtqueues and feature set
-
-I'll add the description to the patch message with the next version.
-
+> Understood and OK.
 > 
 >>
->> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
->> Buglink: https://issues.redhat.com/browse/RHEL-73842
->> Cc: qemu-stable@nongnu.org
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/virtio/virtio.c | 86 +++++++++++++++++++++++++++---------------------------
->>   1 file changed, 43 insertions(+), 43 deletions(-)
->>
->> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
->> index 85110bce3744..033e87cdd3b9 100644
->> --- a/hw/virtio/virtio.c
->> +++ b/hw/virtio/virtio.c
->> @@ -2316,49 +2316,6 @@ void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index)
->>       }
->>   }
->>
->> -void virtio_reset(void *opaque)
->> -{
->> -    VirtIODevice *vdev = opaque;
->> -    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
->> -    int i;
->> -
->> -    virtio_set_status(vdev, 0);
->> -    if (current_cpu) {
->> -        /* Guest initiated reset */
->> -        vdev->device_endian = virtio_current_cpu_endian();
->> -    } else {
->> -        /* System reset */
->> -        vdev->device_endian = virtio_default_endian();
->> -    }
->> -
->> -    if (k->get_vhost) {
->> -        struct vhost_dev *hdev = k->get_vhost(vdev);
->> -        /* Only reset when vhost back-end is connected */
->> -        if (hdev && hdev->vhost_ops) {
->> -            vhost_reset_device(hdev);
->> -        }
->> -    }
->> -
->> -    if (k->reset) {
->> -        k->reset(vdev);
->> -    }
->> -
->> -    vdev->start_on_kick = false;
->> -    vdev->started = false;
->> -    vdev->broken = false;
->> -    vdev->guest_features = 0;
->> -    vdev->queue_sel = 0;
->> -    vdev->status = 0;
->> -    vdev->disabled = false;
->> -    qatomic_set(&vdev->isr, 0);
->> -    vdev->config_vector = VIRTIO_NO_VECTOR;
->> -    virtio_notify_vector(vdev, vdev->config_vector);
->> -
->> -    for(i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->> -        __virtio_queue_reset(vdev, i);
->> -    }
->> -}
->> -
->>   void virtio_queue_set_addr(VirtIODevice *vdev, int n, hwaddr addr)
->>   {
->>       if (!vdev->vq[n].vring.num) {
->> @@ -3169,6 +3126,49 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
->>       return ret;
->>   }
->>
->> +void virtio_reset(void *opaque)
->> +{
->> +    VirtIODevice *vdev = opaque;
->> +    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
->> +    int i;
->> +
->> +    virtio_set_status(vdev, 0);
->> +    if (current_cpu) {
->> +        /* Guest initiated reset */
->> +        vdev->device_endian = virtio_current_cpu_endian();
->> +    } else {
->> +        /* System reset */
->> +        vdev->device_endian = virtio_default_endian();
->> +    }
->> +
->> +    if (k->get_vhost) {
->> +        struct vhost_dev *hdev = k->get_vhost(vdev);
->> +        /* Only reset when vhost back-end is connected */
->> +        if (hdev && hdev->vhost_ops) {
->> +            vhost_reset_device(hdev);
->> +        }
->> +    }
->> +
->> +    if (k->reset) {
->> +        k->reset(vdev);
->> +    }
->> +
->> +    vdev->start_on_kick = false;
->> +    vdev->started = false;
->> +    vdev->broken = false;
->> +    virtio_set_features_nocheck(vdev, 0);
+>> But I agree that the names of receive_header() and Header structure are
+>> misleading. The reasoning I used to convince myself is that the "Header" is
+>> at the head of the packet at least. I'd like to hear if you have an idea of
+>> better naming; otherwise I would rather leave it as is.
 > 
-> I would just add a forward declaration instead for a smaller changset
-> to ease the review and backport.
+> Maybe we can sidestep this entirely, do we need to do the workaround
+> _inside_ `receive_header` ? WDYT of the following pseudocode:
+> 
+> ```
+> guest_offset = receive_header(&header);
+> iov_from_buf(&header);
+> work_around_broken_dhclient(&header, &payload);
+> iov_from_buf(&payload);
+> ```
 
-Moving virtio_reset() indeed requires a bigger change, but I still want 
-to move it to the latter part of this file. I occasionally saw that 
-functions that affect the whole device state like this calls a number of 
-static functions. Moving virtio_reset() requires more lines to change 
-now, but I hope it will minimize the possibility to require forward 
-declarations or code movement in the future.
+net_checksum_calculate() currently needs a contiguous buffer so it needs 
+to be changed and it also requires one additional iov_from_buf() call. 
+It's a bit too complicated to workaround the naming problem I think.
+
+> 
+> If not maybe something along the line of "PacketPrefix" or
+> "PacketStart".
+
+Now I'm inclined for "PacketPrefix". In a normal context, "prefix" and 
+"start" are no different from "header", but in the networking context, 
+"header" is frequently used to describe the metadata and implies it 
+doesn't contain data. Usually I don't like to choose wordings according 
+to such an implied nuance, but avoiding the word "header" here has a 
+practical value.
+
+I'll probably choose "prefix" instead of "start" since it sounds more 
+specific than "start".
 
 Regards,
 Akihiko Odaki
 
 > 
->> +    vdev->queue_sel = 0;
->> +    vdev->status = 0;
->> +    vdev->disabled = false;
->> +    qatomic_set(&vdev->isr, 0);
->> +    vdev->config_vector = VIRTIO_NO_VECTOR;
->> +    virtio_notify_vector(vdev, vdev->config_vector);
->> +
->> +    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
->> +        __virtio_queue_reset(vdev, i);
->> +    }
->> +}
->> +
->>   static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
->>                                                              Error **errp)
->>   {
->>
->> ---
->> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
->> change-id: 20250406-reset-5ed5248ee3c1
->>
->> Best regards,
->> --
->> Akihiko Odaki <akihiko.odaki@daynix.com>
-> 
-> Thanks
-> 
->>
->>
+> Regards,
 > 
 
 
