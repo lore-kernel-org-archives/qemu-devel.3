@@ -4,98 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5F9C369C2
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Apr 2025 16:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B079C369C2
+	for <qemu-devel@archiver.kernel.org>; Sun, 20 Apr 2025 17:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6Xjf-0001uM-Oc; Sun, 20 Apr 2025 12:41:39 -0400
+	id 1u6YId-0005QP-4n; Sun, 20 Apr 2025 13:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1u6Xjd-0001tz-5w; Sun, 20 Apr 2025 12:41:37 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1u6Xjb-0003lw-Ei; Sun, 20 Apr 2025 12:41:36 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso27341185e9.2; 
- Sun, 20 Apr 2025 09:41:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745167293; x=1745772093; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oQj5HjpcJ6IzdE7RabUVtlOGf7vSB/W87Z0qo4NpnGU=;
- b=XbbpblwIOi9hVU7cOMyMKSszlnv8/dkw1uHQDZ4qluYEtPvKXNpZnpAej3yELD6Vl3
- cENJb6kpAHxDT+aUwTYJIVYU8rshRpIXpR8uIIrlvzlbiw4b4NnJZ0Q4AzQYG2TYRLgR
- DmquD2naX2R2xnHueL3TOmqM+s2mhIQTjeHvzFI48lUYuxl57P9xpew6cvI0mIi+33Zf
- DTDZsLpJazBlxsA+/N5l+p2MgL18bEmkfQxEOrr3RRG4AmxdhmsDSOk4ZUsH+p9TLsp8
- 0aXw20JaGK51IAKJKW1raQ4lqrb3z06TIGXCB00gG+5r+Nv/lzPXqRzIgwOfHC+3222C
- 5V3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745167293; x=1745772093;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oQj5HjpcJ6IzdE7RabUVtlOGf7vSB/W87Z0qo4NpnGU=;
- b=jOf9VjwnsWLgdab04v1rX7Nu9tPKHgqAJJowdnJtZ3tW+SXgSLiaqMoWesQ55HsPvN
- uz0txSHDReXukMThKDKlOovsPlVLIN2msNtEJUzk0MxrmoIdxG+78tc/V/0v5mJFNzbm
- 8gYLPhMXqnkUrWN2EBIxvDp8zvVJlhwNtqvXMvKLrIu9uTUR6Vqjcl2KG41zeI0ks/+Y
- E6djAumzpLrkUz+G91dMJQhpZ2Aq8JnLQF1goONXq4ND2iI/XLNzDvqgMMzqf78qUTUJ
- kulLdTPGcFmBj18t47ZzREn8IsCyeN61BMoWT+Uip28YaaXTPB/5nhOekz3nbAlKob24
- Apsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeuYB7TuhbTvdC1UObxrOklea+1jgUq4H0P5UWCjw3FmYaDjJr7ONW4NeVIm2yKg6mbAd9UB4HCAM=@nongnu.org,
- AJvYcCUhDVEVX5Jx1DwJC97eY0N72YfMBNm/1ckLy2dLXa8qZRdGD8a8nARVRC+CNv3i5LFkPptoveltSv9i@nongnu.org,
- AJvYcCXmbd/kvMh55CPpQ52yKeLLDLt49RlEzQMaREpppIQZweQP7bJTC3XHsdB7KlQn/mcgEzEOMUqkInTwFg==@nongnu.org
-X-Gm-Message-State: AOJu0YxHwhBg23x8OGk/i6xhIP3Ts/V4ndT+8Lj/v2pjKlBbAapucKRl
- cPzlIvpbBb2M/OZyOpAI9E2fzgSC/sG9T6MeA4Tmeqoa52L5gAHu
-X-Gm-Gg: ASbGncvgZFr5fLTOT8kgYEMZfjiKbHw15Davy5GsmEH22OPXS8Mi8SkgnHqo9mi4OXV
- tHmVQrN+ezO/K3zPAnMq8BnpP6PlGe/KT5Td3CmgqC38MOZuAUaTLKD6Hxj78+I0PK/hCfJLFqK
- h072xh1MI6ELoBFZ6YtQOYrNJ2aR9wYHfCzp5kpfb7oJoM7LPux9axpKTS8fZ0qpoCAmVG5aCoc
- ElKvri+ii4qC8x+pj1pEqSxwEugdzHSb+YqjRnsEc361+CZ8xtMi2t+fc4Ool6UzwrPdDldWPYM
- K03eeWiJCJbE67fFxeVGm1SJOnOU5LNHDLmvNZ4rA1bJMs4rVnWgah4TqUUF8oaxPixcxPm+sri
- HyjJKj3wFC/y+20JOFv5tpZ7/
-X-Google-Smtp-Source: AGHT+IGSMJInWGBopWW+4D4+ChqGf/KSW6qxRZ3fhd3t+adPTKMopRl+d7JpOsYifsQ0+AvRO0korw==
-X-Received: by 2002:a05:600c:3d08:b0:43b:cc3c:60bc with SMTP id
- 5b1f17b1804b1-4406aba7ecdmr98226025e9.15.1745167292383; 
- Sun, 20 Apr 2025 09:41:32 -0700 (PDT)
-Received: from ?IPv6:::1?
- (p200300faaf05a000316ff64cee01ecde.dip0.t-ipconnect.de.
- [2003:fa:af05:a000:316f:f64c:ee01:ecde])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d6e0364sm101610945e9.38.2025.04.20.09.41.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 20 Apr 2025 09:41:31 -0700 (PDT)
-Date: Sun, 20 Apr 2025 11:45:59 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>, Thomas Huth <thuth@redhat.com>
-CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Bin Meng <bin.meng@windriver.com>, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v6 3/3] hw/ppc/e500: Add Freescale eSDHC to e500plat
-In-Reply-To: <d74736e8-6132-2b7e-0037-c1262ce8e388@eik.bme.hu>
-References: <20221101222934.52444-1-philmd@linaro.org>
- <20221101222934.52444-4-philmd@linaro.org>
- <325d3f62-b94b-4391-bdf1-2063da5e3b99@redhat.com>
- <d74736e8-6132-2b7e-0037-c1262ce8e388@eik.bme.hu>
-Message-ID: <18F96FA7-BD1F-406C-BFF0-D784D477F4CC@gmail.com>
+ (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
+ id 1u6XVm-0007Rk-Lh; Sun, 20 Apr 2025 12:27:19 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.48])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
+ id 1u6XVh-0002IW-9F; Sun, 20 Apr 2025 12:27:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1745166414; bh=VI5REOPFWhvVlFkH2UY7J84EUU6wlp/5+XoSFMJOk/s=;
+ h=From:To:Cc:Subject:Date;
+ b=VuRWAiFkEAPyrnmF+rkXLLG+dcQQArGQFca0zmmrCmAs1XI//uQ95yWXgVmLoxKLZ
+ AXDBtG/gGr+VcaGbDpmtKxGTiAWAfjUw6qwohhPzSu5MaeryeyrkuhsY8vu7LVu5+q
+ 0QGsa9ES82bT+ikYe6mizG95BWIrHa1ifK4qIi3o=
+Received: from 192.168.182.133 ([117.147.34.50])
+ by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
+ id 4D09FAB9; Mon, 21 Apr 2025 00:19:16 +0800
+X-QQ-mid: xmsmtpt1745165956tu3vc3sd6
+Message-ID: <tencent_8649D99B33E6E6665A0EFA05B97592D70106@qq.com>
+X-QQ-XMAILINFO: MB5+LsFw85NoxEPmMs9FyeH1tgvtXUGo19ZHzbkt4qx2Imeoox7HJD4Zdgn0lw
+ NbCMBS3BfGDlvV5CMfFwuEQl9apmxVt5DOM5N/hDN0BLDku76ojnRVfLpptz9sgNvJUaLxi5lQoE
+ ceGno9eN/D2slObzLrQb0tl1CsJckSsJWxDxQH/C7EJunAqhQFiVmiPiSSFRPO8F5Bf3VqwyXHKt
+ vO7QnRZGxr3wEISuIeChIyK4O1VlzlgxrtzWr7aqTRW72vaKm7TMpT7SIJXCetWOiYqskFjubY1T
+ eb6J4E6V0PQGS3LiR+HFPzPTWIebwfH0tlSY330TXkqrIyiP8TvuIH4wRLQRz8hIdQ0AMeHCdOCD
+ VPzZEbiJjhX/HXvxhl5cg7UcKahqKp0wJkpuDtHFcmRwpjYtdw8cDvAUK+rjootczndEak6FJLNR
+ OF8LfsjnD7TzVRHZLzMW5Qtf0JFxfihQz3DodqGPC+rDfElyWaEZMR4JATXbBdcIKqTxFHuK3VX2
+ pn+IlczamYZbmu53lA5YqtB7yGK2xDyBq53BUtqgZnT4SmZGwqsMiv3oopxeJCf1aZwL/66iKObz
+ 7gTqLVY/WDA60l7voA12oPR0/HMlzehGaahy5oAvCclmMthH8suIKKDxvxLd17PEVUZYYqLdHqkB
+ RoI4qHKQ2A8lsK2laaxTQL590i/BrtLRc6oLb5R1jEJilh0E66NWwdjRmaAh+lmHweUHrg2/W7bF
+ yDeBorLR6YPzBGL2GhbabHPOgQNOT4p6dOy57fuKltmYAaU6MDF/VfmDytqe4tvQxxbj8dJsNR4h
+ GSQ4GGN4samU5Vh5BV+3yMBrIAGzRURrtJUCsApQTcHBk7b0PHLAeL9w/OLgcymifnIamrc2zWSL
+ gIGjJ/tzyz7zioalr/lzKt/rvVKMcZuGRXZz2YbwMdZIoIbAXQPZnlAIVPNEFQRg==
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+From: Sunny Zhu <sunnyzhyy@qq.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ Sunny Zhu <sunnyzhyy@qq.com>
+Subject: [PATCH] =?UTF-8?q?block=EF=BC=9A=20change=20type=20of=20bytes=20f?=
+ =?UTF-8?q?rom=20int=20to=20int64=5Ft=20for=20*bdrv=5Faio=5Fpdiscard?=
+Date: Mon, 21 Apr 2025 00:19:14 +0800
+X-OQ-MSGID: <20250420161914.25148-1-sunnyzhyy@qq.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=43.163.128.48; envelope-from=sunnyzhyy@qq.com;
+ helo=xmbghk7.mail.qq.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_PBL=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 20 Apr 2025 13:17:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,56 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Keep it consistent with *bdrv_co_pdiscard.
 
+Currently, there is no BlockDriver implemented the bdrv_aio_pdiscard() function,
+so we don’t need to make any adaptations either.
 
-Am 17=2E April 2025 21:40:44 UTC schrieb BALATON Zoltan <balaton@eik=2Ebme=
-=2Ehu>:
->On Thu, 17 Apr 2025, Thomas Huth wrote:
->> On 01/11/2022 23=2E29, Philippe Mathieu-Daud=C3=A9 wrote:
->>> Adds missing functionality to e500plat machine which increases the
->>> chance of given "real" firmware images to access SD cards=2E
->>>=20
->>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->>> Message-Id: <20221018210146=2E193159-8-shentey@gmail=2Ecom>
->>> [PMD: Simplify using create_unimplemented_device("esdhc")]
->>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->>> ---
->>=20
->> Hi!
->>=20
->> I recently noticed that the QEMU advent calendar 2018 day 19 image (htt=
-ps://www=2Eqemu-advent-calendar=2Eorg/2018/download/day19=2Etar=2Exz) is fl=
-ooding the console with "mmc0: Internal clock never stabilised" messages wh=
-en it's started like this:
->>=20
->> /qemu-system-ppc64 -vga none -nographic -monitor none -M ppce500 -cpu e=
-5500 -kernel =2E=2E/day19/uImage
->>=20
->> This was not the case when I assembled the image in 2018=2E I bisected =
-the problem and apparently this patch here is causing the problem=2E Do you=
- know whether there is a way to fix this again?
->
->That patch added the MMC/SD controller so no wonder it did not appear bef=
-ore=2E The error seems to be in Linux esdhci driver where it checks for:
->
->sdhci_readl(host, ESDHC_PRSSTAT) & ESDHC_CLOCK_STABLE
->
->So I think that bit should be set somewhere=2E Berhard had some patches f=
-or e500 so maybe there's already a fix for this somewhere=2E
+Signed-off-by: Sunny Zhu <sunnyzhyy@qq.com>
+---
+ include/block/block_int-common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This logic is already implemented in the USDHC device model=2E Given that =
-the e500 and the i=2Emx machines need the same modifications to make u-boot=
- work, and given that the imx25 machine also uses the USDHC model even thou=
-gh the original has an ESDHC, the USDHC might be a better fit here=2E AFAIC=
-S only the interrupt bits specific to the ESDHC need special treatment here=
- -- which could be achieved e=2Eg=2E by subclassing=2E
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index ebb4e56a50..4bf422d733 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -507,7 +507,7 @@ struct BlockDriver {
+         BlockDriverState *bs, BlockCompletionFunc *cb, void *opaque);
+ 
+     BlockAIOCB * GRAPH_RDLOCK_PTR (*bdrv_aio_pdiscard)(
+-        BlockDriverState *bs, int64_t offset, int bytes,
++        BlockDriverState *bs, int64_t offset, int64_t bytes,
+         BlockCompletionFunc *cb, void *opaque);
+ 
+     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_readv)(BlockDriverState *bs,
+-- 
+2.43.0
 
-I could send a patch for that=2E Volunteers ahead for a timely solution=2E
-
-Best regards,
-Bernhard
-
->
->Regards,
->BALATON Zoltan
 
