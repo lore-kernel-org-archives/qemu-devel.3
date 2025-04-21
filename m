@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF61CC369AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 16:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB25BC369AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 16:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6u0R-0005vg-3w; Mon, 21 Apr 2025 12:28:27 -0400
+	id 1u6u47-0007xH-Lf; Mon, 21 Apr 2025 12:32:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u6u0P-0005vH-4G
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 12:28:25 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1u6u42-0007rS-By
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 12:32:10 -0400
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u6u0N-0002hk-65
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 12:28:24 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-b061a775ac3so3736210a12.0
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 09:28:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1u6u40-0003HQ-HG
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 12:32:10 -0400
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-227b828de00so42870385ad.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 09:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745252901; x=1745857701; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=d73NQ5qgH+EYWH6oChRJBaXBQPB3TuMOIVeA4r9fsQ8=;
- b=mWE967lDmtsHQxwncVngcYL8XC3aVru4niEGJkruLQYnF5hKcUukSEj5npz+TXXtVT
- Hgb0VjMD9RMHJE1YIkIt53bGbNUIQt6iC3JKBhz8f6Izg3ujut2DMFWKDWrcEkMY/Mbj
- WkS8tafEyry/9siGhswDszl9G2iuni7LojG5NU7maZ0JI1Tm2AJ8gza1i15aTx/HoZr+
- MXwbLfkhEC1R2cX9T5zJwEiR4oIKM57dJIqOCs2nfUI+HR+tJNDMmLUni6UFqGwTa0up
- b7OzKiKrl/NZtSNKrYkUC2ZGuKDk0rkxfT5FEkSIRsx58IOrhovsPBc1fR2iImRnCLk3
- 5LvQ==
+ d=gmail.com; s=20230601; t=1745253127; x=1745857927; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jvtzbswQ9vJhzuX+aoZ5HpUPq7ZF3b4Ei7MsH336AFY=;
+ b=aGDIzpzq7HdOQ1L44n8RWXRWTfBkYV+m11MVufZhUNI7k1CN42qhdFDZ/lXZ9JibiF
+ mzqf57x8MWtGZ0FFosyfdweIJXBqF0mHRzFPLGuS25WUR0mXYUjyQtgqprs9yO/aFK2H
+ 5n4EAMpM7/KQyExNRYEP6etPTrY8gPrn2vSPmAfAEsX+t8Ez5KMhDEkbfSslf4iSmdL9
+ nw4zIRBYeFvZq4ak8MDFr2spy+m6THdW0j2GI2UjpNpjTf4Q0BFFKWrMD47XHwWGt+lm
+ w7bwBXk7KSmZBCX6YARsbzbxVhMX3mdgsHhDhFAKkUROArGI3xaolz93EK5lAmpD9Scg
+ 3c6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745252901; x=1745857701;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d73NQ5qgH+EYWH6oChRJBaXBQPB3TuMOIVeA4r9fsQ8=;
- b=LcFWvWJmMmrH5Qu2EZ80QwRRk+JEQXI9fBJ5QRN2dkXeiVCLpPt/E4X+U4thS+FnIh
- Gcqe4K1Sp5M941Le3dDablFUTiuWOids5+xTo4OmZ+/tGQ7J1xA98T1eW4HfanEBAyHk
- +xG8v4GoSSwkvUvwpQqkDqV+wdSo0Ik/7rxM0FSHK4OJISYur9MMyc+KvSaiMD6iHicP
- sGdoPvEXrud7SvfzJLlAwJA+EYYS+7wUZ82VaDLTOFQ8z0Wo3XaCR5+NoKwtwyvQwdmP
- 5R7uA0Z4cTG458TXyijmzOhl4DRah9nXT7U6u8jaRaj3ky5SfxwED3PMyBSqkY3flc/t
- rz/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjyFwRCDUnbaAfTUpkiQIZPSe6bMNcvrogJ2estsLNd+AduGkyuPmqtH5Kbp1gFC6gPPKzS6y4KooC@nongnu.org
-X-Gm-Message-State: AOJu0YzrxDqEnNvr26Ea4wImpmraXSdKmflJK8nil2EDvyZlkAR1k1E/
- IiZP7WsvSCfHiQG/Szab2vmJHtbhypv/Ei/NXuLOfnAJHayh61UwPPRN1wLTZ1M=
-X-Gm-Gg: ASbGnctFJ0F98FJutPhOzFxToByG//eSf8EMuCozPtMvqvn9RpyniRybNrv2vqZqgkU
- qvcLR73XRIoyc3Qk6i3lxH+VjD0IWO0ihyhSMTCcRPM0vCGOvITpVU4QG1s1BxBBTxee23KyggF
- /5FyBM7B9lMAJ56q90E3/ZOehj7UkL0MwfWSp3KJqiYVu3OCQcqEHLR+0J5WJAxAmfEEH1zV2kM
- ObOBNzQtuiDw9XTjkgVuWbZgQf4gttTz6JPb4eVW29kAf+mYwjjH2NC7U63+U6h49zlKMnPAoq8
- xQysHl5SkpbLdIBpbWfr2Hd2IJ0WTWSs+iEHlH4BJ+t7GLaBBJ37HRijp1KJ0p539bmV7WRMDuy
- HSYB9M3g=
-X-Google-Smtp-Source: AGHT+IGe4e7W3i4/cBt0q2EqqKuPCW/9KZc475adHsiZA42O8OBBLcTRonW1+SAv7mRWX9A2KQU5iA==
-X-Received: by 2002:a17:90a:c2d0:b0:2ee:b8ac:73b0 with SMTP id
- 98e67ed59e1d1-3087bb3f2cemr18351532a91.2.1745252901371; 
- Mon, 21 Apr 2025 09:28:21 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ d=1e100.net; s=20230601; t=1745253127; x=1745857927;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jvtzbswQ9vJhzuX+aoZ5HpUPq7ZF3b4Ei7MsH336AFY=;
+ b=K7wlmUvyURVOZUwuYMX5RxWRg8ZNzyS7LYrPVH9dsxec/DJxdXm+hH79CZzmKYhJmj
+ ZJZQOmn2siyeYPKikAIMVC5dWUaDU9xPxZlUOtVBtMcEK3/1S06yIWBP6pwQu4I+Hnkv
+ IssYkr49HYKTLJUgYnIUwhySyzsoAV2hZTrveFQXHnU5B00nenRJHtYvElzFQExqiwUr
+ lBBDFTR7OlZlkxwaqM0LmONIUbguZqWIgOYuhgcm3lzRJKivaPY2FrOFCaFE9mFdaeJk
+ hc+PRa1ZAiazNcYuyuijqh0jv7gZZHdxet0w2z0IzfS8FZEbdrj2s3F0YlOCFMJlzl3l
+ D5FA==
+X-Gm-Message-State: AOJu0YwSHwIedJUOSwgCPnRXqMLWi7UXddJoq2Yv2dAiRetvyfaMqS0q
+ DinyMhXmjB1nSuedMcgI1BJiJ/oppfxtsDJo1CkL0+wsr8CE7fs=
+X-Gm-Gg: ASbGncsYi99TyEw4GCQdGTYtE3rjBJAGIh4bLGh5h7o+DsZKzwEDyYwnlSf/xS6wRF6
+ 2FdS77kQnKF/etYqWh5bAUcXyvGeNgoYhx7XSTp0RbxmnV/BhKa4l1YiyjmoSBnxtU0+uCU9MLf
+ VgC/9Fe3/xr9akl5a0PUWgxFV85BWZ9xdcrxpc9n0372xusq1+dTKZUI9c3gLN0yvnus9+BJK2O
+ 2azTm8S+1C9+mtuHZ7AnpQFN3rDeLYL2MPjWyWbe89HMe3KcdfMpXR2HVQgMFX4/0fU07IE0HCs
+ IavAPGcMiOxnaqe/1WTI7c4/c0+6HvkIsVbdtosCnFsgDw/ibdChYg==
+X-Google-Smtp-Source: AGHT+IGfkjOm0yu2R+ftV+RM65XsM/COimANJtspwxcQQlgYjRwTD4+6/RuL96LQRefj7XiBqBA+6Q==
+X-Received: by 2002:a17:903:3c6f:b0:223:f408:c3cf with SMTP id
+ d9443c01a7336-22c535831e2mr188050085ad.21.1745253126973; 
+ Mon, 21 Apr 2025 09:32:06 -0700 (PDT)
+Received: from localhost.localdomain ([139.227.17.39])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3087e8b6236sm5821232a91.1.2025.04.21.09.28.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Apr 2025 09:28:20 -0700 (PDT)
-Message-ID: <ba6d0343-98bb-4464-b805-8b74a85a5552@linaro.org>
-Date: Mon, 21 Apr 2025 09:28:19 -0700
+ d9443c01a7336-22c50ed1997sm67778725ad.201.2025.04.21.09.32.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Apr 2025 09:32:06 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
+Subject: [PATCH 02/11] vfio/igd: Always emulate ASLS (OpRegion) register
+Date: Tue, 22 Apr 2025 00:31:02 +0800
+Message-ID: <20250421163112.21316-3-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250421163112.21316-1-tomitamoeko@gmail.com>
+References: <20250421163112.21316-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 153/163] tcg: Assign TCGOP_TYPE in liveness_pass_2
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-154-richard.henderson@linaro.org>
- <D99PDOQBOJL0.2MX82UOFOJ9FK@gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <D99PDOQBOJL0.2MX82UOFOJ9FK@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x641.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,37 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/18/25 03:46, Nicholas Piggin wrote:
-> On Wed Apr 16, 2025 at 5:25 AM AEST, Richard Henderson wrote:
->> Here we cannot rely on the default copied from
->> tcg_op_insert_{after,before}, because the relevant
->> op could be typeless, such as INDEX_op_call.
->>
->> Fixes: ...
-> 
-> Missing ^
+ASLS register represents the base address of OpRegion, and it is
+programmed with HPA. In IGD passthrough scenario, it needs to be
+reprogrammed with GPA by guest firmware. To prevent guest accessing
+wrong memory range, ASLS should always be emulated and cleared.
 
-Yeah, I filled in that blank just recently:
-Fixes: fb744ece3a78 ("tcg: Copy TCGOP_TYPE in tcg_op_insert_{after,before}")
+In GVT-g scenario, emulating ASLS is unnecessary as access is handled
+by kvmgt backend [1].
 
->> @@ -4408,6 +4408,7 @@ liveness_pass_2(TCGContext *s)
->>                                     : INDEX_op_ld_i64);
->>                   TCGOp *lop = tcg_op_insert_before(s, op, lopc, 3);
->>   
->> +                TCGOP_TYPE(lop) = arg_ts->type;
-> 
-> tcg_op_insert_before/after I think are only called in these 3 places?
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/i915/gvt/cfg_space.c?h=v6.14#n295
 
-No, it's used quite a bit more in tcg/optimize.c.
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-> So after this patch, the type assignment in those functions looks
-> redundant. Maybe you could pass in the type as an argument.
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 01826acf10..36316e50ea 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -182,10 +182,6 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+ 
+     trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
+ 
+-    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+-    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+-    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
+-
+     return true;
+ }
+ 
+@@ -583,7 +579,15 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+     if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_LPC) &&
+         !vfio_pci_igd_setup_lpc_bridge(vdev, errp)) {
+         goto error;
+-     }
++    }
++
++    /*
++     * ASLS (OpRegion address) is read-only, emulated
++     * It contains HPA, guest firmware need to reprogram it with GPA.
++     */
++    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
++    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
++    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
+ 
+     /*
+      * Allow user to override dsm size using x-igd-gms option, in multiples of
+-- 
+2.47.2
 
-During development I had that, but it turned out to be unwieldy.  But perhaps that could 
-be fixed with a local wrapper within optimize.c, taking the type from OptContext.
-
-I'll experiment and get back to you.
-
-
-r~
 
