@@ -4,67 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469E7C369AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 14:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6763C369AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 14:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6sL1-0001l6-Oq; Mon, 21 Apr 2025 10:41:35 -0400
+	id 1u6sas-0006Cf-7V; Mon, 21 Apr 2025 10:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sKz-0001iX-NV
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 10:41:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sar-0006CT-3H
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 10:57:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sKx-0007NY-Na
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 10:41:33 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sap-0000e5-80
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 10:57:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745246489;
+ s=mimecast20190719; t=1745247473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+tTROjBPBy211St87/q1znq0HazY1bBX5C7ngApAGXY=;
- b=aS8yGwrU08p7ue+BkGnDoAfIg68fYi+wsK3rSqUsdx5fDq2oFaEbqO1kAkacjMbJSnKHFx
- ybqTgTV+9S/MEloPTWW60Y54wlBkmL8IdWlWHgaigaKBNf53Yt7ze62l8Yk6Tp69HcKth8
- N2Ny22IJRU7ElpLC6/OSAsLjgZ5Ru8A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YkPpGuz/koz83DK5bYjYztqVZuhpnVx5S1ZmO+JZhxw=;
+ b=P0deyrR6oZc2Ozbc86Cyl4CiXtHcNGtS238etilJEkhHEVAHTaO8Cskum93YATUVDVPMrf
+ h/CpFuUIKMIofke2ideIDGLtOQzMlRzCezC/m39EPN4FR94/GTuwlCkzVE4Uuc4YfRu/GP
+ 8RXjxF6rBZUTX/4LvC+nymT2byWtRDE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-wTZ0ILIBPNessvbkJgtp7w-1; Mon,
- 21 Apr 2025 10:41:27 -0400
-X-MC-Unique: wTZ0ILIBPNessvbkJgtp7w-1
-X-Mimecast-MFC-AGG-ID: wTZ0ILIBPNessvbkJgtp7w_1745246486
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-DBOiaLVNM72Oy7MIUD8M0w-1; Mon,
+ 21 Apr 2025 10:57:50 -0400
+X-MC-Unique: DBOiaLVNM72Oy7MIUD8M0w-1
+X-Mimecast-MFC-AGG-ID: DBOiaLVNM72Oy7MIUD8M0w_1745247469
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 335121956088; Mon, 21 Apr 2025 14:41:25 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26E451955DC6; Mon, 21 Apr 2025 14:57:48 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.59])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C1F8F19560AB; Mon, 21 Apr 2025 14:41:22 +0000 (UTC)
-Date: Mon, 21 Apr 2025 09:41:19 -0500
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 272F919560A3; Mon, 21 Apr 2025 14:57:44 +0000 (UTC)
+Date: Mon, 21 Apr 2025 09:57:42 -0500
 From: Eric Blake <eblake@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- "open list:Block Jobs" <qemu-block@nongnu.org>
-Subject: Re: [PATCH 3/6] mirror: Skip writing zeroes when target is already
- zero
-Message-ID: <mbwvegjh4hywvewvbxwnhrgnafeh4my3jrozuslyupikaznr6u@7n2k4tke35pp>
-References: <20250411010732.358817-8-eblake@redhat.com>
- <20250411010732.358817-11-eblake@redhat.com>
- <c3044546-b921-4cbc-959d-4f23e0e3c49e@yandex-team.ru>
- <k2owyvfkfsj6kkbd2bkgk5jjepxf2gexllc7pfednxrzezlgc6@lh4ebgd7kl3a>
- <d6bbeeed-2733-4211-a3a8-3e467289b4f7@yandex-team.ru>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Christoph Hellwig <hch@lst.de>
+Subject: Re: [PATCH] block/file-posix: allow BLKZEROOUT with -t writeback
+Message-ID: <waelzl7a6py3fd47mr2w57hh5a6ucfesiuucpe2g3ht57dys2i@y2pqeq6m2dmd>
+References: <20250417211053.98700-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d6bbeeed-2733-4211-a3a8-3e467289b4f7@yandex-team.ru>
+In-Reply-To: <20250417211053.98700-1-stefanha@redhat.com>
 User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -89,29 +84,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 21, 2025 at 09:15:33AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 17.04.25 00:51, Eric Blake wrote:
-> > (a write zeroes that fails AND causes the disk to no longer read as
-> > zero should not happen)
+On Thu, Apr 17, 2025 at 05:10:53PM -0400, Stefan Hajnoczi wrote:
+> The Linux BLKZEROOUT ioctl is only invoked when BDRV_O_NOCACHE is set
+> because old kernels did not invalidate the page cache. In that case
+> mixing BLKZEROOUT with buffered I/O could lead to corruption.
 > 
-> I don't know, is there such a contract? write-zeroes may fallback to write(), which only state that:
+> However, Linux 4.9 commit 22dd6d356628 ("block: invalidate the page
+> cache when issuing BLKZEROOUT") made BLKZEROOUT coherent with the page
+> cache.
 > 
->        An error return value while performing write() using direct I/O
->        does not mean the entire write has failed.  Partial data may be
->        written and the data at the file offset on which the write() was
->        attempted should be considered inconsistent.
+> I have checked that Linux 4.9+ kernels are shipped at least as far back
+> as Debian 10 (buster), openSUSE Leap 15.2, and RHEL/CentOS 8.
 > 
-> So, I used to think that on failed write nothing is guaranteed.
+> Use BLKZEROOUT with buffered I/O, mostly so `qemu-img ... -t
+> writeback` can offload write zeroes.
 > 
-> What do we lose if we just unset the bitmap before write-zeroes, and set it again in case of success?
->
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Christoph Hellwig <hch@lst.de>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  block/file-posix.c | 11 -----------
+>  1 file changed, 11 deletions(-)
 
-I still don't see the point.  Either the cluster was already non-zero
-before the failed write-zero (so there's no bit to pre-clear); or the
-cluster was already zero before the failed write-zero, and any failure
-that corrupts the disk by actually turning zeroes into non-zero is not
-worth worrying about, so pre-clearing the bit is not going to make
-things any better.
+Reviewed-by: Eric Blake <eblake@redhat.com>
 
 -- 
 Eric Blake, Principal Software Engineer
