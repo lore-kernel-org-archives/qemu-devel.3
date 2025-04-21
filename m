@@ -4,87 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B34EC369AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 16:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D34C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 16:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6u3y-0007ph-Ao; Mon, 21 Apr 2025 12:32:06 -0400
+	id 1u6u42-0007rw-Sl; Mon, 21 Apr 2025 12:32:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1u6u3v-0007p8-Hz
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 12:32:03 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1u6u3t-0003GH-DI
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 12:32:03 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2255003f4c6so46922235ad.0
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 09:32:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745253119; x=1745857919; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qnlmOE4B78MGjrUjFe3AZSg2QY5RPesYv4t6F2DHU/w=;
- b=nszlT05752fSffZgUlrlFYzYEcV/oh6t8pYODyZ1CWqje67ZB7wCds77qH/PHEM7dw
- Zg9hg2sP0xQYJ0mi9ZNMX5IINXsWnoRQNVY3/jHFTXHewRF70V4S8TnDtmdvWflSq23x
- TdvaiClLyBTKtHx6oUO8y0gJxyGktpg2xuvL+65CS1x2oaEPNZXBSNS5G3rOXv+W6Tw9
- JDGEAc0wTv5AXXLYdDmuR6lnytfNTdGUZuL4BECkfWdreJdb3dPiYJudqKd2H3QxMLAd
- Y5fHz+lmIP8ZCHVwmyqbq2UoeJT8hESdvGWG2BRs67h0/O59gPj3aj3wvSjBR0vizrWj
- 0AqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745253119; x=1745857919;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qnlmOE4B78MGjrUjFe3AZSg2QY5RPesYv4t6F2DHU/w=;
- b=k4NE/rNP/E/Vq+vnLr4VNPntAS756memjq/uaFX2gFmvN2c+Bxqa4XsBE34GbQgeTW
- Z7pLmgj4+e5vsisZ1kI6AmemWXkBCW/oSQQTTaG+0K6TN40VuXcfBFY5joC93654iWnE
- 376vu2xAQlwzcIqtErml4HSGUy2Xk4ltV10fVwiMqcVmhI1zni1p9eoYytmFqaPEl8M4
- 7nyGAP+sBRlDoTry0TK+lsCD7/VZCcbeYNuSptjA4dnZ0AZWbdexh6NPNa4mzsfuj17A
- CK6/1qIcgFwntb5JZ3sVE0/fBhZ2B78JbtwihnJoVw0/qrPTro/1xsJHKy5dKRAu0XyK
- sCUQ==
-X-Gm-Message-State: AOJu0YyywgVdHUF5e+NDhe69BjgNdQsZJ+w0TaKHq6ZBpRcJNZ0M/RXL
- n2eoKdERBG9CM4KDdrnjZ2eHqyR0h+hW3ScW2MmxdI0HTCiEnjs=
-X-Gm-Gg: ASbGncu2gEXKeuUFJM1S3Y+HEnFez0cJxk/x1mftsIMDvG/XC2D8kNKuHq45NYj7GUE
- OH5aWHjwO/6vDi2l8s/DPUJ7gpRN+HuxdY68e257Qn+HYOo6XBoAWLxmSSttYHJlO884ff3qD+V
- 0Vc/ShxFHTv9/p6DWvtFoWUVPjXb0lla9rlTffhcpsOwPhGKjKPquKfmZWPvpee42/pRYPBZqlZ
- OG5qL3jIN6MKk1XLTYOvQOfh49WqmWXKR/jVO4xk95EIsItyLImBjxupfu5L9zDjgsgp4klBCVa
- 4VkyJlL9eaY/d64EEXyJ752mljhDdaBT34+/oYnyQ4KHu+wUAJPnQA==
-X-Google-Smtp-Source: AGHT+IHztwTX8pOlY/L2S4CQvJhB1AiAQfxvWj7WNQSGG++8YdKTELj4peactvV/GaHHxv08cWt9TA==
-X-Received: by 2002:a17:902:ec90:b0:229:1717:8826 with SMTP id
- d9443c01a7336-22c535b4a1cmr183429215ad.28.1745253119429; 
- Mon, 21 Apr 2025 09:31:59 -0700 (PDT)
-Received: from localhost.localdomain ([139.227.17.39])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50ed1997sm67778725ad.201.2025.04.21.09.31.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Apr 2025 09:31:59 -0700 (PDT)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH 00/11] vfio/igd: Detect IGD by OpRegion and enable OpRegion
- automatically
-Date: Tue, 22 Apr 2025 00:31:00 +0800
-Message-ID: <20250421163112.21316-1-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.47.2
+ (Exim 4.90_1) (envelope-from <SRS0=X3PK=XH=kaod.org=clg@ozlabs.org>)
+ id 1u6u40-0007q7-MV; Mon, 21 Apr 2025 12:32:08 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=X3PK=XH=kaod.org=clg@ozlabs.org>)
+ id 1u6u3x-0003GQ-Nu; Mon, 21 Apr 2025 12:32:08 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zh9r03fkNz4wcx;
+ Tue, 22 Apr 2025 02:32:00 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zh9qw6ZP2z4wcQ;
+ Tue, 22 Apr 2025 02:31:56 +1000 (AEST)
+Message-ID: <5d3ec373-7c4b-4189-b845-87b61eac1561@kaod.org>
+Date: Mon, 21 Apr 2025 18:31:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/10] pc-bios: Add AST27x0 vBootrom
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20250410023856.500258-1-jamin_lin@aspeedtech.com>
+ <20250410023856.500258-9-jamin_lin@aspeedtech.com>
+ <e002b471-4250-4803-a038-17ffe63e0cca@kaod.org>
+ <SI2PR06MB504106612EBE333154EDB953FCB32@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI2PR06MB504106612EBE333154EDB953FCB32@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=X3PK=XH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,50 +115,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As proposed in a previous discussion [1], detect IGD devices based on
-whether it has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION exposed by kernel
-and enables OpRegion access by default. This enables out-of-the-box
-display output support for IGD passthrough without having to manually
-set x-igd-opregion=on, which probably saves effort for libvirt users.
+Jamin,
 
-This patchset also limits legacy mode to Gen6-9 devices, as Intel no
-longer provides CSM support and VBIOS on newer IGD, and Seabios does not
-support setting up the 64 bit BDSM register on Gen 11+ devices. Exposing
-VGA ranges to guests by default on platforms without VGA mode support is
-undesirable.
+On 4/14/25 08:50, Jamin Lin wrote:
+> Hi Cedric and all,
+> 
+>> Subject: Re: [PATCH v2 08/10] pc-bios: Add AST27x0 vBootrom
+>>
+>> On 4/10/25 04:38, Jamin Lin wrote:
+>>> The boot ROM is a minimal implementation designed to load an AST27x0
+>> boot image.
+>>> Its source code is available at:
+>>> https://github.com/google/vbootrom
+>>
+>> See commit d1cb5eda67a0 ("roms: Add virtual Boot ROM for NPCM7xx SoCs")
+>> for an example adding a ROM file.
+>>
+>> Also, we need to be able to rebuild from source the provided vbootrom blob,
+>> which means we need access to the code. I don't see any support for Aspeed
+>> under https://github.com/google/vbootrom. Is that expected ?
+>>
+> 
+> I have a question regarding the maintenance of the vbootrom submodule. According to the commit log, it was initially added from "google/vbootrom", but the latest version appears to be hosted at https://gitlab.com/qemu-project/vbootrom.git.
+> https://github.com/qemu/qemu/blob/master/.gitmodules#L40
+> I'm currently upstreaming changes from google/vbootrom, which is maintained by Google.
+> https://github.com/google/vbootrom/pull/5
+> Should I upstream to the qemu-project/vbootrom repository on GitLab or is it acceptable to continue updating the submodule from google/vbootrom?
 
-Additionally, as we enables OpRegion on IGD devices by default, and
-Intel removes the BDSM register from Meteor Lake [2]. There seems to be
-no extra register quirks rather than OpRegion required on newer devices.
-To support them (and probably future devices), the generation limit is
-removed, with BDSM quirk only applied to known Gen 6-12 devices. 
 
-Note: I have not been able to test this on Meteor Lake or newer
-platforms due to lack of hardware.
+https://gitlab.com/qemu-project/vbootrom.git is a mirror.
 
 
-[1] https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com/T/
-[2] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
+Please upstreamto google/vbootrom and qemu-project/vbootrom should
+be quickly be updated.
 
-Tomita Moeko (11):
-  vfio/igd: Restrict legacy mode to Gen6-9 devices
-  vfio/igd: Always emulate ASLS (OpRegion) register
-  vfio/igd: Detect IGD device by OpRegion
-  vfio/igd: Remove vfio_pci_igd_setup_opregion
-  vfio/igd: Check vendor and device ID on GVT-g mdev
-  vfio/igd: Enable OpRegion by default
-  vfio/igd: Allow hotplugging with OpRegion enabled
-  vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
-  vfio/igd: Only emulate GGC register when x-igd-gms is set
-  vfio/igd: Remove generation limitation for IGD passthrough
-  vfio/igd: Update IGD passthrough documentation
+Thanks,
 
- docs/igd-assign.txt |  11 +-
- hw/vfio/igd.c       | 257 ++++++++++++++++++++++++--------------------
- hw/vfio/pci.c       |   2 +-
- 3 files changed, 153 insertions(+), 117 deletions(-)
+C.
 
--- 
-2.47.2
 
 
