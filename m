@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC89C369C2
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 10:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1A9C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 10:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6o5m-0004hg-2f; Mon, 21 Apr 2025 06:09:34 -0400
+	id 1u6oAf-0006vl-G6; Mon, 21 Apr 2025 06:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1u6o5e-0004h8-Bs
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 06:09:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1u6oAa-0006vM-IT
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 06:14:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1u6o5c-0003NU-L5
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 06:09:26 -0400
+ id 1u6oAY-0004Fz-0N
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 06:14:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745230163;
+ s=mimecast20190719; t=1745230467;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=34j4x9/QBppr8tsmdXP00LpKtjOlVQKZeg4V5DhuP9I=;
- b=WUtEWjp58VN1bskytQp0PjUvnfzl+AUKiFF4DD6z/qsaXjKDA9qQjnyfk4u3bntU5HECmR
- pOB+MT0P04dStvMtZ6LUczRHu+01zpEDXDM6sDew6iJ6fYvCPq0AsApS56xt2QzjeaJeEs
- fEtmlMsHtJQZqe6AfrTZ7ML39/8Lwe4=
+ bh=FjqvYCtu+Xy48/NkIFYKGBjNU8uDUZ6hh5wOnaTI26k=;
+ b=UtL4Ewaw9tri3DVrPBCCV60KulWwSWyvaN6q2V5gKXHDbwdwRUqjl7U4oimQeKOFOZT71C
+ FZHP4uM1VPA1F3KOhFDsEwGpQ77SsiyLO8J6Qn79YhudQPZc0mst/pw6wIPHt2SwK6tKd1
+ cSSh8Z2KIfPPini51YxaItnvpPjjWQI=
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
  [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-l-c57tt3Pw64FIGn1F8aYQ-1; Mon, 21 Apr 2025 06:09:21 -0400
-X-MC-Unique: l-c57tt3Pw64FIGn1F8aYQ-1
-X-Mimecast-MFC-AGG-ID: l-c57tt3Pw64FIGn1F8aYQ_1745230160
+ us-mta-474-d4MkDba0ORuGOeTy5TiRFA-1; Mon, 21 Apr 2025 06:14:25 -0400
+X-MC-Unique: d4MkDba0ORuGOeTy5TiRFA-1
+X-Mimecast-MFC-AGG-ID: d4MkDba0ORuGOeTy5TiRFA_1745230464
 Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-476b2179079so78950161cf.1
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 03:09:21 -0700 (PDT)
+ d75a77b69052e-47689968650so42566141cf.2
+ for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 03:14:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745230160; x=1745834960;
+ d=1e100.net; s=20230601; t=1745230464; x=1745835264;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=34j4x9/QBppr8tsmdXP00LpKtjOlVQKZeg4V5DhuP9I=;
- b=smyIjphZDTHy6vkJ1EBnEEYMJyzZ9RRIS7TxXQO8wPhNwLKc9IoKo1NM7VDQZPUTsu
- M7vc5BjuWibkazsOmzcFTAw+7FGS29yoJ+8bT+lQugJaBPwka5Q+xh8FagMXxa6KgkSt
- DT/d/mws6HqkhBcoL3e6825FnvdXitgzupgFTXD/s9gBKCse0k6sCLf0/5Pt39DXgEHp
- 38uCvcuJ/B0YEgHbi20NG+L1Z3mmpBMpZ7Lkem9Nqix4099AebO0t3vOOzh4rOmjZCXA
- kcFaMnZrsJi33LjVWFQJmSwwS7Asj9S3jxpLhmuEE5zcXshym15xHqHEDw86mY8ifap1
- jfWw==
-X-Gm-Message-State: AOJu0Yw8zjJj6UCa3tN6iKYPSszcoX7SmUzlGVtrE5wkrczR7yXS1Gq0
- 8zClOUzhj73ASyqLrDqj8StPyIv24i+3OWnxEiNd3fAx94fmBQgYJqsmUZq4DXulxvzngfWAuh0
- XuUeSOpgq19k4OHn9mRmc7u7o3jUqN6ONtV5qiKN5//ujOHLwPsyZvdw1qJ08ZDmRFvhkRH/8Nf
- O5JEX9AbDhT4QkakXbkWxX6TK+mYvt3Qt6Vhk=
-X-Gm-Gg: ASbGncvRCkP8yadQsSQ4HNjgx2viDB7MQXXrtJ5Ll25JtBYI2X5kVZlVaXXIcYek93S
- O7o2N07AE9H81paWPGjmGdhuC85HQ/3MzstB/ttFxyIIs9W+etWr0V307X40IBoqBnbT42g==
-X-Received: by 2002:a05:622a:1a17:b0:476:9474:9b73 with SMTP id
- d75a77b69052e-47aec4c3d9cmr195165021cf.42.1745230160545; 
- Mon, 21 Apr 2025 03:09:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGDxf3Zm3rLEAFpsnm5yill2GixtD7027U9xTWujcLKPOEOvWWEquTbbV5yQ81YRjld5VCHEH2QDAvJdkqm8c=
-X-Received: by 2002:a05:622a:1a17:b0:476:9474:9b73 with SMTP id
- d75a77b69052e-47aec4c3d9cmr195164811cf.42.1745230160313; Mon, 21 Apr 2025
- 03:09:20 -0700 (PDT)
+ bh=FjqvYCtu+Xy48/NkIFYKGBjNU8uDUZ6hh5wOnaTI26k=;
+ b=P1XZ1fF4sgCoe3dXX4H/lm8+oNQhrx5+tXoJL1RhnOSItS5Xh4fYK0JruYbWNu0m4f
+ Ujama/JDaDxBREyD1T9uuTRIA9BX5I7rjmHRCkITE/Ptl18CI9nLk/8wr23Xjxg+n4K3
+ yGnKxFa7hHXotKL0AB+9BbMK2XJLJP7hNcPmw09CUg6WwR3pZgeEAXDUGp+dpZsofhyk
+ Khu+/Ea2LGTIdU3CDo5s6Wt8P9Cim4C47KayEiNlJDNv1vtx+ZqqXIMrQcOIH9MdySQU
+ uJ2wRVjVc9zjU7nd5CprDYQeV2F9g/8VRUYdweXGODehxv3VoGMkhqZiMbA6I0A6WshT
+ 0DCg==
+X-Gm-Message-State: AOJu0YyacqOeGK8s+4hxJqu35YWYGRno0OvJMgjoSZnBMwLdcoScqvj9
+ rnyteatTuwrg3uRfXnJ0hlGEH+pCpJAj3MZ+LTClJlWKJacg7cHic/X6vd4Ng3KflrXjnLaYEsy
+ ULRWBKaK/wMipJl6BCPktFVvRBEy9yO5z/X1VhCgEHyPRtxtHqTXSdzQ28LQ710aSxPE84KXOxa
+ lal3h31fcBlVDKkRgGWqJfvjGBNFQ=
+X-Gm-Gg: ASbGncuOyI4GQevcLQtS6nT9m9Or8NwjXBEtQtAzsgmTCVp9rxTIA16tn/OnDToNjp9
+ 5SUult6c/kvoDCOYgrSYfGGCKgFM0NX+HcPiAGycfrCoLk8bciI891qTK95TuZNdKTvd1Bw==
+X-Received: by 2002:a05:622a:607:b0:476:8a83:960f with SMTP id
+ d75a77b69052e-47aec3cbe61mr175842991cf.17.1745230464473; 
+ Mon, 21 Apr 2025 03:14:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGH1H5W/SMo4GIQSgBcBaxPAFe3GOsXweXjde4GuUVI3XGAuWMRVX3D7Ss2dm0UzyCpQJ6xNml5xTVqKN/uyV4=
+X-Received: by 2002:a05:622a:607:b0:476:8a83:960f with SMTP id
+ d75a77b69052e-47aec3cbe61mr175842761cf.17.1745230464157; Mon, 21 Apr 2025
+ 03:14:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250418112953.1744442-1-dietmar@proxmox.com>
- <20250418112953.1744442-9-dietmar@proxmox.com>
-In-Reply-To: <20250418112953.1744442-9-dietmar@proxmox.com>
+ <20250418112953.1744442-10-dietmar@proxmox.com>
+In-Reply-To: <20250418112953.1744442-10-dietmar@proxmox.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 21 Apr 2025 14:09:08 +0400
-X-Gm-Features: ATxdqUFkiFelsSUQ7w7_hDZw4k3_0duQZaPsUzJI9Rq-8CfB8crU_h4GBIZ327o
-Message-ID: <CAMxuvaxUnRY-gBgAVc39mpDJr2_0yA6X6XXm2xbxa5szA-2wtw@mail.gmail.com>
-Subject: Re: [PATCH v3 8/9] vnc: initialize gst during argument processing
+Date: Mon, 21 Apr 2025 14:14:11 +0400
+X-Gm-Features: ATxdqUGANhD6hQMryyBCWVcJUOUyFGdY9gEyTSwCV2WEUwAuoWfiUP1kIg1gH1k
+Message-ID: <CAMxuvaxniAvsag=UT9xWjU5f17ec6ua9hFBDB72iTnh4jiH4vg@mail.gmail.com>
+Subject: Re: [PATCH v3 9/9] h264: register shutdown notifiers, stop pipeline
+ in destroy_encoder_context
 To: Dietmar Maurer <dietmar@proxmox.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
@@ -107,60 +108,137 @@ Hi
 On Fri, Apr 18, 2025 at 3:30=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.com=
 > wrote:
 >
-> So that we can set --gst- options on the qemu command line.
+> Some encoders can hang indefinetly (i.e. nvh264enc) if
+
+indefinitely
+
+> the pipeline is not stopped before it is destroyed
+> (Observed on Debian bookworm).
+
+but why do you need the extra shutdown notifier?
+
 >
 > Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-
-Nice, could you move that up in the patch series? As a second patch
-after linking gst seems fitting.
-
 > ---
->  system/vl.c | 8 ++++++++
->  ui/vnc.c    | 4 ----
->  2 files changed, 8 insertions(+), 4 deletions(-)
+>  ui/vnc-enc-h264.c | 50 ++++++++++++++++++++++++++++++++++++++---------
+>  ui/vnc.h          |  1 +
+>  2 files changed, 42 insertions(+), 9 deletions(-)
 >
-> diff --git a/system/vl.c b/system/vl.c
-> index ec93988a03..c7fff02da2 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -140,6 +140,10 @@
->  #include "qemu/guest-random.h"
->  #include "qemu/keyval.h"
+> diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+> index 840674dbdb..9dbfba3a16 100644
+> --- a/ui/vnc-enc-h264.c
+> +++ b/ui/vnc-enc-h264.c
+> @@ -23,6 +23,8 @@
+>   */
 >
-> +#ifdef CONFIG_GSTREAMER
-> +#include <gst/gst.h>
-> +#endif
+>  #include "qemu/osdep.h"
+> +#include "system/runstate.h"
 > +
->  #define MAX_VIRTIO_CONSOLES 1
+>  #include "vnc.h"
 >
->  typedef struct BlockdevOptionsQueueEntry {
-> @@ -2848,6 +2852,10 @@ void qemu_init(int argc, char **argv)
->      bool userconfig =3D true;
->      FILE *vmstate_dump_file =3D NULL;
+>  #include <gst/gst.h>
+> @@ -114,13 +116,33 @@ static GstElement *create_encoder(const char *encod=
+er_name)
+>      return encoder;
+>  }
 >
-> +#ifdef CONFIG_GSTREAMER
-> +    gst_init(&argc, &argv);
-> +#endif
+> -static void destroy_encoder_context(VncState *vs)
+> +static void destroy_encoder_context(VncH264 *h264)
+>  {
+> -    gst_clear_object(&vs->h264->source);
+> -    gst_clear_object(&vs->h264->convert);
+> -    gst_clear_object(&vs->h264->gst_encoder);
+> -    gst_clear_object(&vs->h264->sink);
+> -    gst_clear_object(&vs->h264->pipeline);
+> +    GstStateChangeReturn state_change_ret;
 > +
->      qemu_add_opts(&qemu_drive_opts);
->      qemu_add_drive_opts(&qemu_legacy_drive_opts);
->      qemu_add_drive_opts(&qemu_common_drive_opts);
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 6db03a1550..8f6287e2e6 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -4350,10 +4350,6 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Er=
-ror **errp)
->      Error *local_err =3D NULL;
->      char *id =3D (char *)qemu_opts_id(opts);
+> +    g_assert(h264 !=3D NULL);
+> +
+> +    VNC_DEBUG("Destroy h264 context.\n");
+> +
+> +    /*
+> +     * Some encoders can hang indefinetly (i.e. nvh264enc) if
+> +     * the pipeline is not stopped before it is destroyed
+> +     * (Observed on Debian bookworm).
+> +     */
+> +    if (h264->pipeline !=3D NULL) {
+> +        state_change_ret =3D gst_element_set_state(
+> +            h264->pipeline, GST_STATE_NULL);
+> +
+> +        if (state_change_ret =3D=3D GST_STATE_CHANGE_FAILURE) {
+> +            VNC_DEBUG("Unable to stop the GST pipeline\n");
+> +        }
+> +    }
+> +
+> +    gst_clear_object(&h264->source);
+> +    gst_clear_object(&h264->convert);
+> +    gst_clear_object(&h264->gst_encoder);
+> +    gst_clear_object(&h264->sink);
+> +    gst_clear_object(&h264->pipeline);
+>  }
 >
-> -#ifdef CONFIG_GSTREAMER
-> -    gst_init(NULL, NULL);
-> -#endif
-> -
->      assert(id);
->      vnc_display_init(id, &local_err);
->      if (local_err) {
+>  static bool create_encoder_context(VncState *vs, int w, int h)
+> @@ -132,7 +154,7 @@ static bool create_encoder_context(VncState *vs, int =
+w, int h)
+>
+>      if (vs->h264->sink) {
+>          if (w !=3D vs->h264->width || h !=3D vs->h264->height) {
+> -            destroy_encoder_context(vs);
+> +            destroy_encoder_context(vs->h264);
+>          }
+>      }
+>
+> @@ -239,10 +261,16 @@ static bool create_encoder_context(VncState *vs, in=
+t w, int h)
+>      return TRUE;
+>
+>   error:
+> -    destroy_encoder_context(vs);
+> +    destroy_encoder_context(vs->h264);
+>      return FALSE;
+>  }
+>
+> +static void shutdown_h264(Notifier *n, void *opaque)
+> +{
+> +    VncH264 *h264 =3D  container_of(n, VncH264, shutdown_notifier);
+> +    destroy_encoder_context(h264);
+> +}
+> +
+>  bool vnc_h264_encoder_init(VncState *vs)
+>  {
+>      char *encoder_name;
+> @@ -259,6 +287,8 @@ bool vnc_h264_encoder_init(VncState *vs)
+>
+>      vs->h264 =3D g_new0(VncH264, 1);
+>      vs->h264->encoder_name =3D encoder_name;
+> +    vs->h264->shutdown_notifier.notify =3D shutdown_h264;
+> +    qemu_register_shutdown_notifier(&vs->h264->shutdown_notifier);
+>
+>      VNC_DEBUG("Allow H264 using encoder '%s`\n", encoder_name);
+>
+> @@ -362,7 +392,9 @@ void vnc_h264_clear(VncState *vs)
+>          return;
+>      }
+>
+> -    destroy_encoder_context(vs);
+> +    notifier_remove(&vs->h264->shutdown_notifier);
+> +
+> +    destroy_encoder_context(vs->h264);
+>      g_free(vs->h264->encoder_name);
+>
+>      g_clear_pointer(&vs->h264, g_free);
+> diff --git a/ui/vnc.h b/ui/vnc.h
+> index 789b18806b..ea52085b19 100644
+> --- a/ui/vnc.h
+> +++ b/ui/vnc.h
+> @@ -248,6 +248,7 @@ typedef struct VncH264 {
+>      size_t width;
+>      size_t height;
+>      guint keep_dirty;
+> +    Notifier shutdown_notifier;
+>  } VncH264;
+>  #endif
+>
 > --
 > 2.39.5
 >
