@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6763C369AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 14:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9DDC369AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 15:04:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6sas-0006Cf-7V; Mon, 21 Apr 2025 10:57:58 -0400
+	id 1u6sg8-0000gC-Rh; Mon, 21 Apr 2025 11:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sar-0006CT-3H
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 10:57:57 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sg6-0000fh-F8
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 11:03:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sap-0000e5-80
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 10:57:56 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u6sg4-0001Ix-Go
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 11:03:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745247473;
+ s=mimecast20190719; t=1745247797;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YkPpGuz/koz83DK5bYjYztqVZuhpnVx5S1ZmO+JZhxw=;
- b=P0deyrR6oZc2Ozbc86Cyl4CiXtHcNGtS238etilJEkhHEVAHTaO8Cskum93YATUVDVPMrf
- h/CpFuUIKMIofke2ideIDGLtOQzMlRzCezC/m39EPN4FR94/GTuwlCkzVE4Uuc4YfRu/GP
- 8RXjxF6rBZUTX/4LvC+nymT2byWtRDE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ly3Mm+tnjygBZzcZWH1yRadMam6qz5grfXxneq7fb+4=;
+ b=Od3rA48TOUc+5d0YkLAy/Mr9qiv4u7A4gk6rfIy6Q8kLZFG1vDjXDzWkf8I6B4kNoKtP7f
+ rzCegnCAZ+hnu4Mj0e7GGmACMC04fXBPL4fGW3x+fVb8N4O8MgCv2IAxpShWZHo51+xbbn
+ EeDD/IIzXHqdw6POJS66G2+lqRR1M4s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-DBOiaLVNM72Oy7MIUD8M0w-1; Mon,
- 21 Apr 2025 10:57:50 -0400
-X-MC-Unique: DBOiaLVNM72Oy7MIUD8M0w-1
-X-Mimecast-MFC-AGG-ID: DBOiaLVNM72Oy7MIUD8M0w_1745247469
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-rdApaweMO4CTZXs8R5V_5g-1; Mon,
+ 21 Apr 2025 11:03:13 -0400
+X-MC-Unique: rdApaweMO4CTZXs8R5V_5g-1
+X-Mimecast-MFC-AGG-ID: rdApaweMO4CTZXs8R5V_5g_1745247793
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26E451955DC6; Mon, 21 Apr 2025 14:57:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD4DB1800264; Mon, 21 Apr 2025 15:03:12 +0000 (UTC)
 Received: from redhat.com (unknown [10.2.16.59])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 272F919560A3; Mon, 21 Apr 2025 14:57:44 +0000 (UTC)
-Date: Mon, 21 Apr 2025 09:57:42 -0500
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 036AD180087B; Mon, 21 Apr 2025 15:03:10 +0000 (UTC)
+Date: Mon, 21 Apr 2025 10:03:08 -0500
 From: Eric Blake <eblake@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Christoph Hellwig <hch@lst.de>
-Subject: Re: [PATCH] block/file-posix: allow BLKZEROOUT with -t writeback
-Message-ID: <waelzl7a6py3fd47mr2w57hh5a6ucfesiuucpe2g3ht57dys2i@y2pqeq6m2dmd>
-References: <20250417211053.98700-1-stefanha@redhat.com>
+To: Sunny Zhu <sunnyzhyy@qq.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com, 
+ hreitz@redhat.com
+Subject: Re: [PATCH] =?utf-8?Q?block=EF=BC=9A_chang?= =?utf-8?Q?e?= type of
+ bytes from int to int64_t for *bdrv_aio_pdiscard
+Message-ID: <cxsasg7qiopbpwu24a6f2hponb2lv6ut5ylhcpeyagi6g6k2m5@w2c6mwuqi5ik>
+References: <tencent_8649D99B33E6E6665A0EFA05B97592D70106@qq.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250417211053.98700-1-stefanha@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <tencent_8649D99B33E6E6665A0EFA05B97592D70106@qq.com>
 User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -84,29 +86,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 17, 2025 at 05:10:53PM -0400, Stefan Hajnoczi wrote:
-> The Linux BLKZEROOUT ioctl is only invoked when BDRV_O_NOCACHE is set
-> because old kernels did not invalidate the page cache. In that case
-> mixing BLKZEROOUT with buffered I/O could lead to corruption.
+On Mon, Apr 21, 2025 at 12:19:14AM +0800, Sunny Zhu wrote:
+> Keep it consistent with *bdrv_co_pdiscard.
 > 
-> However, Linux 4.9 commit 22dd6d356628 ("block: invalidate the page
-> cache when issuing BLKZEROOUT") made BLKZEROOUT coherent with the page
-> cache.
-> 
-> I have checked that Linux 4.9+ kernels are shipped at least as far back
-> as Debian 10 (buster), openSUSE Leap 15.2, and RHEL/CentOS 8.
-> 
-> Use BLKZEROOUT with buffered I/O, mostly so `qemu-img ... -t
-> writeback` can offload write zeroes.
-> 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Christoph Hellwig <hch@lst.de>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  block/file-posix.c | 11 -----------
->  1 file changed, 11 deletions(-)
+> Currently, there is no BlockDriver implemented the bdrv_aio_pdiscard() function,
+> so we don’t need to make any adaptations either.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+If there are no drivers implementing the callback, then why have it?
+I think we have been moving towards more coroutine-based callbacks and
+away from the aio callbacks; if so, should we instead be deleting this
+callback as stale code?
+
+> 
+> Signed-off-by: Sunny Zhu <sunnyzhyy@qq.com>
+> ---
+>  include/block/block_int-common.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+> index ebb4e56a50..4bf422d733 100644
+> --- a/include/block/block_int-common.h
+> +++ b/include/block/block_int-common.h
+> @@ -507,7 +507,7 @@ struct BlockDriver {
+>          BlockDriverState *bs, BlockCompletionFunc *cb, void *opaque);
+>  
+>      BlockAIOCB * GRAPH_RDLOCK_PTR (*bdrv_aio_pdiscard)(
+> -        BlockDriverState *bs, int64_t offset, int bytes,
+> +        BlockDriverState *bs, int64_t offset, int64_t bytes,
+>          BlockCompletionFunc *cb, void *opaque);
+>  
+>      int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_readv)(BlockDriverState *bs,
+> -- 
+> 2.43.0
+> 
+> 
 
 -- 
 Eric Blake, Principal Software Engineer
