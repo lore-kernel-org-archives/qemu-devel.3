@@ -4,89 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1A9C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 10:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFCCC369AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 10:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6oAf-0006vl-G6; Mon, 21 Apr 2025 06:14:39 -0400
+	id 1u6okn-0006Rg-8k; Mon, 21 Apr 2025 06:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1u6oAa-0006vM-IT
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 06:14:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1u6okQ-0006Ob-RN; Mon, 21 Apr 2025 06:51:36 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1u6oAY-0004Fz-0N
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 06:14:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745230467;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FjqvYCtu+Xy48/NkIFYKGBjNU8uDUZ6hh5wOnaTI26k=;
- b=UtL4Ewaw9tri3DVrPBCCV60KulWwSWyvaN6q2V5gKXHDbwdwRUqjl7U4oimQeKOFOZT71C
- FZHP4uM1VPA1F3KOhFDsEwGpQ77SsiyLO8J6Qn79YhudQPZc0mst/pw6wIPHt2SwK6tKd1
- cSSh8Z2KIfPPini51YxaItnvpPjjWQI=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-d4MkDba0ORuGOeTy5TiRFA-1; Mon, 21 Apr 2025 06:14:25 -0400
-X-MC-Unique: d4MkDba0ORuGOeTy5TiRFA-1
-X-Mimecast-MFC-AGG-ID: d4MkDba0ORuGOeTy5TiRFA_1745230464
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-47689968650so42566141cf.2
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 03:14:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745230464; x=1745835264;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FjqvYCtu+Xy48/NkIFYKGBjNU8uDUZ6hh5wOnaTI26k=;
- b=P1XZ1fF4sgCoe3dXX4H/lm8+oNQhrx5+tXoJL1RhnOSItS5Xh4fYK0JruYbWNu0m4f
- Ujama/JDaDxBREyD1T9uuTRIA9BX5I7rjmHRCkITE/Ptl18CI9nLk/8wr23Xjxg+n4K3
- yGnKxFa7hHXotKL0AB+9BbMK2XJLJP7hNcPmw09CUg6WwR3pZgeEAXDUGp+dpZsofhyk
- Khu+/Ea2LGTIdU3CDo5s6Wt8P9Cim4C47KayEiNlJDNv1vtx+ZqqXIMrQcOIH9MdySQU
- uJ2wRVjVc9zjU7nd5CprDYQeV2F9g/8VRUYdweXGODehxv3VoGMkhqZiMbA6I0A6WshT
- 0DCg==
-X-Gm-Message-State: AOJu0YyacqOeGK8s+4hxJqu35YWYGRno0OvJMgjoSZnBMwLdcoScqvj9
- rnyteatTuwrg3uRfXnJ0hlGEH+pCpJAj3MZ+LTClJlWKJacg7cHic/X6vd4Ng3KflrXjnLaYEsy
- ULRWBKaK/wMipJl6BCPktFVvRBEy9yO5z/X1VhCgEHyPRtxtHqTXSdzQ28LQ710aSxPE84KXOxa
- lal3h31fcBlVDKkRgGWqJfvjGBNFQ=
-X-Gm-Gg: ASbGncuOyI4GQevcLQtS6nT9m9Or8NwjXBEtQtAzsgmTCVp9rxTIA16tn/OnDToNjp9
- 5SUult6c/kvoDCOYgrSYfGGCKgFM0NX+HcPiAGycfrCoLk8bciI891qTK95TuZNdKTvd1Bw==
-X-Received: by 2002:a05:622a:607:b0:476:8a83:960f with SMTP id
- d75a77b69052e-47aec3cbe61mr175842991cf.17.1745230464473; 
- Mon, 21 Apr 2025 03:14:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGH1H5W/SMo4GIQSgBcBaxPAFe3GOsXweXjde4GuUVI3XGAuWMRVX3D7Ss2dm0UzyCpQJ6xNml5xTVqKN/uyV4=
-X-Received: by 2002:a05:622a:607:b0:476:8a83:960f with SMTP id
- d75a77b69052e-47aec3cbe61mr175842761cf.17.1745230464157; Mon, 21 Apr 2025
- 03:14:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1u6okN-0001AF-SB; Mon, 21 Apr 2025 06:51:34 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LA52ZY009249;
+ Mon, 21 Apr 2025 10:51:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Q6a6y8
+ cf3mmb8uNlU3Pv1w3v2JwdvMsq81L29Doxylc=; b=Bt5qnFG28bf1QT5jkpFWyX
+ NAR8oO1zNqh0Fob6W8J4HAOLHKSVn6iMvLZAEZqNALKY1kpioAP4ep22eCNf+UZV
+ jhZNXkuLaq/G4XS1ZwUwZSm4hWJntMk+O9BHzKqeM31yKjXazmHWfOLXcZPi2082
+ TIWOPUEAEbIm/zPIXO/P9ocRLBS6wJoN9qMGvNLbO9LhPQiJsDh7n/Obgx7azoMz
+ T9WqlAfY0fjWA7of/B+Uv1mvCwyxFeSMvTOzm1klyZBp3hCHWFfUOFQvXWqjZTSg
+ IP3tmXBYvfIph6P29Q2uQoG312i+STFxXIG31KWxaT6Ie3VMNi4EBjf6easJCHyw
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465kxj84ay-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Apr 2025 10:51:27 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53LApQOU003867;
+ Mon, 21 Apr 2025 10:51:26 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465kxj84ax-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Apr 2025 10:51:26 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53LA6GbC012521;
+ Mon, 21 Apr 2025 10:51:26 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 464p5sx5xs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Apr 2025 10:51:25 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53LApOlD9110230
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Apr 2025 10:51:25 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4AA05804B;
+ Mon, 21 Apr 2025 10:51:24 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 79DFC58055;
+ Mon, 21 Apr 2025 10:51:21 +0000 (GMT)
+Received: from [9.124.214.157] (unknown [9.124.214.157])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Apr 2025 10:51:21 +0000 (GMT)
+Message-ID: <040afb75-6434-4f66-a241-b522ed7724dd@linux.ibm.com>
+Date: Mon, 21 Apr 2025 16:21:19 +0530
 MIME-Version: 1.0
-References: <20250418112953.1744442-1-dietmar@proxmox.com>
- <20250418112953.1744442-10-dietmar@proxmox.com>
-In-Reply-To: <20250418112953.1744442-10-dietmar@proxmox.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 21 Apr 2025 14:14:11 +0400
-X-Gm-Features: ATxdqUGANhD6hQMryyBCWVcJUOUyFGdY9gEyTSwCV2WEUwAuoWfiUP1kIg1gH1k
-Message-ID: <CAMxuvaxniAvsag=UT9xWjU5f17ec6ua9hFBDB72iTnh4jiH4vg@mail.gmail.com>
-Subject: Re: [PATCH v3 9/9] h264: register shutdown notifiers, stop pipeline
- in destroy_encoder_context
-To: Dietmar Maurer <dietmar@proxmox.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.69,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/8] hw/ppc: Implement skeleton code for fadump in
+ PSeries
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-2-adityag@linux.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20250323174007.221116-2-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: t6xA8Vmp_WAfyEtjhRGNX6TmkStBZfAf
+X-Proofpoint-ORIG-GUID: n7dIhp0SIqR6an8am27Iymm3r2uKy89w
+X-Authority-Analysis: v=2.4 cv=HLDDFptv c=1 sm=1 tr=0 ts=6806232f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=f7IdgyKtn90A:10 a=VnNF1IyMAAAA:8
+ a=JrGBiQdHIYLFa6dEqwkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-21_04,2025-04-21_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ mlxlogscore=999 mlxscore=0 lowpriorityscore=0 clxscore=1015
+ impostorscore=0 adultscore=0 spamscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504210081
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,144 +126,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Fri, Apr 18, 2025 at 3:30=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.com=
-> wrote:
->
-> Some encoders can hang indefinetly (i.e. nvh264enc) if
 
-indefinitely
-
-> the pipeline is not stopped before it is destroyed
-> (Observed on Debian bookworm).
-
-but why do you need the extra shutdown notifier?
-
->
-> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+On 3/23/25 23:10, Aditya Gupta wrote:
+> Add skeleton for handle "ibm,configure-kernel-dump" rtas call in QEMU.
+> 
+> Verify basic details mandated by the PAPR, such as number of
+> inputs/output, and add handling for the three fadump commands:
+> regiser/unregister/invalidate.
+> 
+> Currently fadump register will always return HARDWARE ERROR, since it's
+> not implemented yet. So if the kernel's attempt to register fadump will
+> itself fail as the support is not there yet in QEMU.
+> 
+> The checks are based on the table in following requirement in PAPR v2.13:
+>      "R1–7.3.30–1. For the Configure Platform Assisted Kernel Dump option ..."
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->  ui/vnc-enc-h264.c | 50 ++++++++++++++++++++++++++++++++++++++---------
->  ui/vnc.h          |  1 +
->  2 files changed, 42 insertions(+), 9 deletions(-)
->
-> diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-> index 840674dbdb..9dbfba3a16 100644
-> --- a/ui/vnc-enc-h264.c
-> +++ b/ui/vnc-enc-h264.c
-> @@ -23,6 +23,8 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "system/runstate.h"
+>   hw/ppc/meson.build            |  1 +
+>   hw/ppc/spapr_fadump.c         | 22 +++++++++++
+>   hw/ppc/spapr_rtas.c           | 66 +++++++++++++++++++++++++++++++++
+>   include/hw/ppc/spapr.h        | 11 +++++-
+>   include/hw/ppc/spapr_fadump.h | 69 +++++++++++++++++++++++++++++++++++
+>   5 files changed, 168 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/ppc/spapr_fadump.c
+>   create mode 100644 include/hw/ppc/spapr_fadump.h
+> 
+> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+> index 9893f8adebb0..863972741b15 100644
+> --- a/hw/ppc/meson.build
+> +++ b/hw/ppc/meson.build
+> @@ -26,6 +26,7 @@ ppc_ss.add(when: 'CONFIG_PSERIES', if_true: files(
+>     'spapr_nvdimm.c',
+>     'spapr_rtas_ddw.c',
+>     'spapr_numa.c',
+> +  'spapr_fadump.c',
+>     'pef.c',
+>   ))
+>   ppc_ss.add(when: ['CONFIG_PSERIES', 'CONFIG_TCG'], if_true: files(
+> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+> new file mode 100644
+> index 000000000000..20b7b804c485
+> --- /dev/null
+> +++ b/hw/ppc/spapr_fadump.c
+> @@ -0,0 +1,22 @@
+> +/*
+> + * Firmware Assisted Dump in PSeries
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
->  #include "vnc.h"
->
->  #include <gst/gst.h>
-> @@ -114,13 +116,33 @@ static GstElement *create_encoder(const char *encod=
-er_name)
->      return encoder;
->  }
->
-> -static void destroy_encoder_context(VncState *vs)
-> +static void destroy_encoder_context(VncH264 *h264)
->  {
-> -    gst_clear_object(&vs->h264->source);
-> -    gst_clear_object(&vs->h264->convert);
-> -    gst_clear_object(&vs->h264->gst_encoder);
-> -    gst_clear_object(&vs->h264->sink);
-> -    gst_clear_object(&vs->h264->pipeline);
-> +    GstStateChangeReturn state_change_ret;
+> +#include "qemu/osdep.h"
+> +#include "hw/ppc/spapr.h"
 > +
-> +    g_assert(h264 !=3D NULL);
+> +/*
+> + * Handle the "FADUMP_CMD_REGISTER" command in 'ibm,configure-kernel-dump'
+> + *
+> + * Returns:
+> + *  * RTAS_OUT_HW_ERROR: Not implemented/Misc issue such as memory access
+> + *                       failures
+> + */
+> +uint32_t do_fadump_register(void)
+> +{
+> +    /* WIP: FADUMP_CMD_REGISTER implemented in future patch */
 > +
-> +    VNC_DEBUG("Destroy h264 context.\n");
+> +    return RTAS_OUT_HW_ERROR;
+> +}
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index 503d441b48e4..b8bfa9c33fb5 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -341,6 +341,68 @@ static void rtas_ibm_set_system_parameter(PowerPCCPU *cpu,
+>       rtas_st(rets, 0, ret);
+>   }
+>   
+> +/* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
+> +static void rtas_configure_kernel_dump(PowerPCCPU *cpu,
+> +                                   SpaprMachineState *spapr,
+> +                                   uint32_t token, uint32_t nargs,
+> +                                   target_ulong args,
+> +                                   uint32_t nret, target_ulong rets)
+> +{
+> +    target_ulong cmd = rtas_ld(args, 0);
+> +    uint32_t ret_val;
 > +
-> +    /*
-> +     * Some encoders can hang indefinetly (i.e. nvh264enc) if
-> +     * the pipeline is not stopped before it is destroyed
-> +     * (Observed on Debian bookworm).
-> +     */
-> +    if (h264->pipeline !=3D NULL) {
-> +        state_change_ret =3D gst_element_set_state(
-> +            h264->pipeline, GST_STATE_NULL);
-> +
-> +        if (state_change_ret =3D=3D GST_STATE_CHANGE_FAILURE) {
-> +            VNC_DEBUG("Unable to stop the GST pipeline\n");
-> +        }
+> +    /* Number of outputs has to be 1 */
+> +    if (nret != 1) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                "FADump: ibm,configure-kernel-dump RTAS called with nret != 1.\n");
+> +        return;
 > +    }
 > +
-> +    gst_clear_object(&h264->source);
-> +    gst_clear_object(&h264->convert);
-> +    gst_clear_object(&h264->gst_encoder);
-> +    gst_clear_object(&h264->sink);
-> +    gst_clear_object(&h264->pipeline);
->  }
->
->  static bool create_encoder_context(VncState *vs, int w, int h)
-> @@ -132,7 +154,7 @@ static bool create_encoder_context(VncState *vs, int =
-w, int h)
->
->      if (vs->h264->sink) {
->          if (w !=3D vs->h264->width || h !=3D vs->h264->height) {
-> -            destroy_encoder_context(vs);
-> +            destroy_encoder_context(vs->h264);
->          }
->      }
->
-> @@ -239,10 +261,16 @@ static bool create_encoder_context(VncState *vs, in=
-t w, int h)
->      return TRUE;
->
->   error:
-> -    destroy_encoder_context(vs);
-> +    destroy_encoder_context(vs->h264);
->      return FALSE;
->  }
->
-> +static void shutdown_h264(Notifier *n, void *opaque)
-> +{
-> +    VncH264 *h264 =3D  container_of(n, VncH264, shutdown_notifier);
-> +    destroy_encoder_context(h264);
+> +    /* Number of inputs has to be 3 */
+> +    if (nargs != 3) {
+> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+> +        return;
+> +    }
+> +
+> +    switch (cmd) {
+> +    case FADUMP_CMD_REGISTER:
+> +        ret_val = do_fadump_register();
+> +        if (ret_val != RTAS_OUT_SUCCESS) {
+> +            rtas_st(rets, 0, ret_val);
+> +            return;
+> +        }
+> +        break;
+
+I would suggest to keep the first patch as implementing the logic for 
+FADUMP_CMD_REGISTER (and _UNREGISTER) handling.
+
+> +    case FADUMP_CMD_UNREGISTER:
+> +        if (spapr->fadump_dump_active == 1) {
+> +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
+> +            return;
+> +        }
+> +
+> +        spapr->fadump_registered = false;
+> +        spapr->fadump_dump_active = false;
+> +        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
+> +        break;
+> +    case FADUMP_CMD_INVALIDATE:
+> +        if (spapr->fadump_dump_active) {
+> +            spapr->fadump_registered = false;
+> +            spapr->fadump_dump_active = false;
+> +            memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                "FADump: Nothing to invalidate, no dump active\n");
+> +        }
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                "FADump: Unknown command: %lu\n", cmd);
+> +
+> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
+> +        return;
+> +    }
+> +
+> +    rtas_st(rets, 0, RTAS_OUT_SUCCESS);
 > +}
 > +
->  bool vnc_h264_encoder_init(VncState *vs)
->  {
->      char *encoder_name;
-> @@ -259,6 +287,8 @@ bool vnc_h264_encoder_init(VncState *vs)
->
->      vs->h264 =3D g_new0(VncH264, 1);
->      vs->h264->encoder_name =3D encoder_name;
-> +    vs->h264->shutdown_notifier.notify =3D shutdown_h264;
-> +    qemu_register_shutdown_notifier(&vs->h264->shutdown_notifier);
->
->      VNC_DEBUG("Allow H264 using encoder '%s`\n", encoder_name);
->
-> @@ -362,7 +392,9 @@ void vnc_h264_clear(VncState *vs)
->          return;
->      }
->
-> -    destroy_encoder_context(vs);
-> +    notifier_remove(&vs->h264->shutdown_notifier);
+>   static void rtas_ibm_os_term(PowerPCCPU *cpu,
+>                               SpaprMachineState *spapr,
+>                               uint32_t token, uint32_t nargs,
+> @@ -656,6 +718,10 @@ static void core_rtas_register_types(void)
+>       spapr_rtas_register(RTAS_IBM_NMI_INTERLOCK, "ibm,nmi-interlock",
+>                           rtas_ibm_nmi_interlock);
+>   
+> +    /* Register fadump rtas call */
+> +    spapr_rtas_register(RTAS_CONFIGURE_KERNEL_DUMP, "ibm,configure-kernel-dump",
+> +                        rtas_configure_kernel_dump);
 > +
-> +    destroy_encoder_context(vs->h264);
->      g_free(vs->h264->encoder_name);
->
->      g_clear_pointer(&vs->h264, g_free);
-> diff --git a/ui/vnc.h b/ui/vnc.h
-> index 789b18806b..ea52085b19 100644
-> --- a/ui/vnc.h
-> +++ b/ui/vnc.h
-> @@ -248,6 +248,7 @@ typedef struct VncH264 {
->      size_t width;
->      size_t height;
->      guint keep_dirty;
-> +    Notifier shutdown_notifier;
->  } VncH264;
->  #endif
->
-> --
-> 2.39.5
->
+>       qtest_set_command_cb(spapr_qtest_callback);
+>   }
+>   
+> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+> index 39bd5bd5ed31..4c1636497e30 100644
+> --- a/include/hw/ppc/spapr.h
+> +++ b/include/hw/ppc/spapr.h
+> @@ -13,6 +13,7 @@
+>   #include "hw/ppc/xics.h"        /* For ICSState */
+>   #include "hw/ppc/spapr_tpm_proxy.h"
+>   #include "hw/ppc/spapr_nested.h" /* For SpaprMachineStateNested */
+> +#include "hw/ppc/spapr_fadump.h" /* For FadumpMemStruct */
+>   
+>   struct SpaprVioBus;
+>   struct SpaprPhbState;
+> @@ -283,6 +284,11 @@ struct SpaprMachineState {
+>       Error *fwnmi_migration_blocker;
+>   
+>       SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
+> +
+> +    /* Fadump State */
+> +    bool fadump_registered;
+> +    bool fadump_dump_active;
+> +    FadumpMemStruct registered_fdm;
+>   };
+>   
+>   #define H_SUCCESS         0
+> @@ -708,6 +714,8 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+>   #define RTAS_OUT_PARAM_ERROR                    -3
+>   #define RTAS_OUT_NOT_SUPPORTED                  -3
+>   #define RTAS_OUT_NO_SUCH_INDICATOR              -3
+> +#define RTAS_OUT_DUMP_ALREADY_REGISTERED        -9
+> +#define RTAS_OUT_DUMP_ACTIVE                    -10
+>   #define RTAS_OUT_NOT_AUTHORIZED                 -9002
+>   #define RTAS_OUT_SYSPARM_PARAM_ERROR            -9999
+>   
+> @@ -770,8 +778,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+>   #define RTAS_IBM_SUSPEND_ME                     (RTAS_TOKEN_BASE + 0x2A)
+>   #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
+>   #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
+> +#define RTAS_CONFIGURE_KERNEL_DUMP              (RTAS_TOKEN_BASE + 0x2D)
+>   
+> -#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2D)
+> +#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
+>   
+>   /* RTAS ibm,get-system-parameter token values */
+>   #define RTAS_SYSPARM_SPLPAR_CHARACTERISTICS      20
+> diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
+> new file mode 100644
+> index 000000000000..45109fd9e137
+> --- /dev/null
+> +++ b/include/hw/ppc/spapr_fadump.h
+> @@ -0,0 +1,69 @@
+> +/*
+> + * Firmware Assisted Dump in PSeries
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef PPC_SPAPR_FADUMP_H
+> +#define PPC_SPAPR_FADUMP_H
+> +
+> +#include "qemu/osdep.h"
+> +#include "cpu.h"
+> +
+> +/* Fadump commands */
+> +#define FADUMP_CMD_REGISTER            1
+> +#define FADUMP_CMD_UNREGISTER          2
+> +#define FADUMP_CMD_INVALIDATE          3
+> +
+> +#define FADUMP_VERSION                 1
+> +
+> +/*
+> + * The Firmware Assisted Dump Memory structure supports a maximum of 10 sections
+> + * in the dump memory structure. Presently, three sections are used for
+> + * CPU state data, HPTE & Parameters area, while the remaining seven sections
+> + * can be used for boot memory regions.
+> + */
+> +#define FADUMP_MAX_SECTIONS            10
+> +#define RTAS_FADUMP_MAX_BOOT_MEM_REGS  7
+> +
+> +typedef struct FadumpSection FadumpSection;
+> +typedef struct FadumpSectionHeader FadumpSectionHeader;
+> +typedef struct FadumpMemStruct FadumpMemStruct;
+> +
+> +struct SpaprMachineState;
+> +
+> +/* Kernel Dump section info */
+> +struct FadumpSection {
+> +    __be32    request_flag;
+> +    __be16    source_data_type;
+> +    __be16    error_flags;
+> +    __be64    source_address;
+> +    __be64    source_len;
+> +    __be64    bytes_dumped;
+> +    __be64    destination_address;
+> +};
+> +
+> +/* ibm,configure-kernel-dump header. */
+> +struct FadumpSectionHeader {
+> +    __be32    dump_format_version;
+> +    __be16    dump_num_sections;
+> +    __be16    dump_status_flag;
+> +    __be32    offset_first_dump_section;
+> +
+> +    /* Fields for disk dump option. */
+> +    __be32    dd_block_size;
+> +    __be64    dd_block_offset;
+> +    __be64    dd_num_blocks;
+> +    __be32    dd_offset_disk_path;
+> +
+> +    /* Maximum time allowed to prevent an automatic dump-reboot. */
+> +    __be32    max_time_auto;
+> +};
 
+Also, you may introduce struct members in the patches as they are 
+used/accessed. No need to have entire struct introduced in the first 
+patch unless the members are being used/accessed.
+
+regards,
+Harsh
+
+> +
+> +/* Note: All the data in these structures is in big-endian */
+> +struct FadumpMemStruct {
+> +    FadumpSectionHeader header;
+> +    FadumpSection       rgn[FADUMP_MAX_SECTIONS];
+> +};
+> +
+> +uint32_t do_fadump_register(void);
+> +#endif /* PPC_SPAPR_FADUMP_H */
 
