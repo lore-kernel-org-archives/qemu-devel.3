@@ -4,113 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFCCC369AB
-	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 10:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC88C369AB
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 12:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6okn-0006Rg-8k; Mon, 21 Apr 2025 06:51:57 -0400
+	id 1u6pzM-0001kx-6I; Mon, 21 Apr 2025 08:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1u6okQ-0006Ob-RN; Mon, 21 Apr 2025 06:51:36 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1u6okN-0001AF-SB; Mon, 21 Apr 2025 06:51:34 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LA52ZY009249;
- Mon, 21 Apr 2025 10:51:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Q6a6y8
- cf3mmb8uNlU3Pv1w3v2JwdvMsq81L29Doxylc=; b=Bt5qnFG28bf1QT5jkpFWyX
- NAR8oO1zNqh0Fob6W8J4HAOLHKSVn6iMvLZAEZqNALKY1kpioAP4ep22eCNf+UZV
- jhZNXkuLaq/G4XS1ZwUwZSm4hWJntMk+O9BHzKqeM31yKjXazmHWfOLXcZPi2082
- TIWOPUEAEbIm/zPIXO/P9ocRLBS6wJoN9qMGvNLbO9LhPQiJsDh7n/Obgx7azoMz
- T9WqlAfY0fjWA7of/B+Uv1mvCwyxFeSMvTOzm1klyZBp3hCHWFfUOFQvXWqjZTSg
- IP3tmXBYvfIph6P29Q2uQoG312i+STFxXIG31KWxaT6Ie3VMNi4EBjf6easJCHyw
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465kxj84ay-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Apr 2025 10:51:27 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53LApQOU003867;
- Mon, 21 Apr 2025 10:51:26 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465kxj84ax-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Apr 2025 10:51:26 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53LA6GbC012521;
- Mon, 21 Apr 2025 10:51:26 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 464p5sx5xs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 21 Apr 2025 10:51:25 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53LApOlD9110230
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 21 Apr 2025 10:51:25 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B4AA05804B;
- Mon, 21 Apr 2025 10:51:24 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79DFC58055;
- Mon, 21 Apr 2025 10:51:21 +0000 (GMT)
-Received: from [9.124.214.157] (unknown [9.124.214.157])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 21 Apr 2025 10:51:21 +0000 (GMT)
-Message-ID: <040afb75-6434-4f66-a241-b522ed7724dd@linux.ibm.com>
-Date: Mon, 21 Apr 2025 16:21:19 +0530
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1u6pzE-0001kI-5O
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 08:10:57 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1u6pzA-0001aY-1B
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 08:10:55 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso35743405ad.3
+ for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 05:10:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745237448; x=1745842248;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t2HwSkoHqEXvdI303QQu1Rr2Y+7K99N5lGQBF8icgfY=;
+ b=evFP1RBIXjiE10IH3acaMciJ902AwQGvsHHoLVQdLW4qarg3/qYnRGMMf2KceoAmEi
+ N/QNZc8NaUtOgvTI+mvZuFJ+RfxTp+2u4g9BQ96VA0H6/k+1jAyQhlm+myrnL9U7ot0z
+ RlQIZ/9FSmq5be9Dt1kijSvRF/lCYfWngjw2Pn2nYL+coFgNvsVBZdixS/yMPnPetNiT
+ 4hT0YK14x3Zp0I/WA+pIfALtclpBaAw47JSgDMmv68wOXd7eOi5nXAaWqL4KgvEBUb1w
+ 17U8NSAsLpZLGqetEtkLMO2VVbkeFTSmq3SBy+Q4hV+3b1EDz7uuJyiWt8CbSZGO34xL
+ uzYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745237448; x=1745842248;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=t2HwSkoHqEXvdI303QQu1Rr2Y+7K99N5lGQBF8icgfY=;
+ b=rlhyLZLzXwRvYLYTFt9AqVOeo0Vl97HgSsMh7hxkzQW6BWbFklRMVRidDRk5ElLYpl
+ nUALRVuXsXa8a7ZYA/M9m7hyrQv2VpHp/FwVi83NXU55dHwZ1ev0NfE9TiAwPNIG0yfT
+ r0vLms1JzqNwNHu2uIOXznZNc0fDqs91w4WjWnPFnTunFURAHhBrVQCmOJedubccsMM7
+ lS7mDsMeLodnYdfncLLBd+pILhEidOhphieMrVKTohMosP00CxY77F8x3dtBl7y3V5rp
+ z5cXHT3U2DzpWagdQkchJXQBScKFRbTGmryQwxZn0D8dCJFJToKMnLDns9sHiL8CUknN
+ im6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXjUYyR5urt33nWM64wtBun19Mt7RbFjmTjZNds05VrpLLejN3Cfv1TnGhg0+zAljUYidyxWZcD1877@nongnu.org
+X-Gm-Message-State: AOJu0YwC35bHyjixY6mObDuUwHmd0D4SfIGsia5zcyK2HKUA7ZdJX1+L
+ e2qzG6auuAMUX9ygIOzDkZ43tFFBgsO4k8Y/LYcMGYZucbkX5QX1p3RkYGBN9Lo=
+X-Gm-Gg: ASbGnctG5J7vUBAu+KQlRkyVNgFXdmLW8Nw92eEiIuI7mDfDo/li/wTbzA1IBgOQAAa
+ 2y6FVCHb/9AuzZqU8yLdX4K8BcOIXFEDTRIBcZds4GHJh6LiANxIoxVlpLejpZ+NMnp8jRLFyWX
+ nOWhDnftE45VegsVzzW46xnj6900mwADAykc/lVa22nONk0CJHPxhYznCftnzMri3mk+f/EOX7f
+ kv5xeO/9MOhwHzVG2hrXQ6LlPVgaCTd9v7Dg0pNModXE2RVn3r/4irxqwIOYFKd7YW0RPPM/YhK
+ /QyLPTEBbx7xx82Om71FiWZPeciVMhK4sCdgF4XVYtdoHhH0bNIT1YLvT+ef1a52dhBZK+gxkdA
+ OT4OyPTBOUN2suCT72bM=
+X-Google-Smtp-Source: AGHT+IFW0Yt0JMusjqEQJxjEQqm9g1x9UKOCo0WYh4YCxmetiarYIhZWWsGcTCOMYoLTcCOsnSkIUQ==
+X-Received: by 2002:a17:903:250:b0:224:1ec0:8a0c with SMTP id
+ d9443c01a7336-22c535acd5cmr175862765ad.29.1745237448481; 
+ Mon, 21 Apr 2025 05:10:48 -0700 (PDT)
+Received: from ?IPV6:2400:4050:b783:b00:9e36:5f4c:928c:4ec2?
+ ([2400:4050:b783:b00:9e36:5f4c:928c:4ec2])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50fdb9f5sm64008565ad.218.2025.04.21.05.10.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Apr 2025 05:10:48 -0700 (PDT)
+Message-ID: <be0997e0-b9c9-4fc8-a926-a5f9f38dab81@daynix.com>
+Date: Mon, 21 Apr 2025 21:10:45 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] hw/ppc: Implement skeleton code for fadump in
- PSeries
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-References: <20250323174007.221116-1-adityag@linux.ibm.com>
- <20250323174007.221116-2-adityag@linux.ibm.com>
+Subject: Re: [PATCH] virtio: Call set_features during reset
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, devel@daynix.com,
+ qemu-stable@nongnu.org
+References: <20250410-reset-v1-1-751cd0064395@daynix.com>
+ <59239d14-e50a-4a39-81dd-03580b025dc9@linaro.org>
 Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20250323174007.221116-2-adityag@linux.ibm.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <59239d14-e50a-4a39-81dd-03580b025dc9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: t6xA8Vmp_WAfyEtjhRGNX6TmkStBZfAf
-X-Proofpoint-ORIG-GUID: n7dIhp0SIqR6an8am27Iymm3r2uKy89w
-X-Authority-Analysis: v=2.4 cv=HLDDFptv c=1 sm=1 tr=0 ts=6806232f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=f7IdgyKtn90A:10 a=VnNF1IyMAAAA:8
- a=JrGBiQdHIYLFa6dEqwkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-21_04,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- mlxlogscore=999 mlxscore=0 lowpriorityscore=0 clxscore=1015
- impostorscore=0 adultscore=0 spamscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504210081
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,286 +107,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/23/25 23:10, Aditya Gupta wrote:
-> Add skeleton for handle "ibm,configure-kernel-dump" rtas call in QEMU.
+On 2025/04/10 18:32, Philippe Mathieu-Daudé wrote:
+> Hi Akihiko,
 > 
-> Verify basic details mandated by the PAPR, such as number of
-> inputs/output, and add handling for the three fadump commands:
-> regiser/unregister/invalidate.
+> On 10/4/25 09:42, Akihiko Odaki wrote:
+>> virtio-net expects set_features() will be called when the feature set
+>> used by the guest changes to update the number of virtqueues. Call it
+>> during reset as reset clears all features and the queues added for
+>> VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS will need to be removed.
+>>
+>> Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest 
+>> doesn't support multiqueue")
+>> Buglink: https://issues.redhat.com/browse/RHEL-73842
+>> Cc: qemu-stable@nongnu.org
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/virtio/virtio.c | 86 ++++++++++++++++++++++++++ 
+>> +---------------------------
+>>   1 file changed, 43 insertions(+), 43 deletions(-)
+>>
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index 85110bce3744..033e87cdd3b9 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -2316,49 +2316,6 @@ void virtio_queue_enable(VirtIODevice *vdev, 
+>> uint32_t queue_index)
+>>       }
+>>   }
+>> -void virtio_reset(void *opaque)
+>> -{
+>> -    VirtIODevice *vdev = opaque;
+>> -    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+>> -    int i;
+>> -
+>> -    virtio_set_status(vdev, 0);
+>> -    if (current_cpu) {
+>> -        /* Guest initiated reset */
+>> -        vdev->device_endian = virtio_current_cpu_endian();
+>> -    } else {
+>> -        /* System reset */
+>> -        vdev->device_endian = virtio_default_endian();
+>> -    }
+>> -
+>> -    if (k->get_vhost) {
+>> -        struct vhost_dev *hdev = k->get_vhost(vdev);
+>> -        /* Only reset when vhost back-end is connected */
+>> -        if (hdev && hdev->vhost_ops) {
+>> -            vhost_reset_device(hdev);
+>> -        }
+>> -    }
+>> -
+>> -    if (k->reset) {
+>> -        k->reset(vdev);
+>> -    }
+>> -
+>> -    vdev->start_on_kick = false;
+>> -    vdev->started = false;
+>> -    vdev->broken = false;
+>> -    vdev->guest_features = 0;
+>> -    vdev->queue_sel = 0;
+>> -    vdev->status = 0;
+>> -    vdev->disabled = false;
+>> -    qatomic_set(&vdev->isr, 0);
+>> -    vdev->config_vector = VIRTIO_NO_VECTOR;
+>> -    virtio_notify_vector(vdev, vdev->config_vector);
+>> -
+>> -    for(i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+>> -        __virtio_queue_reset(vdev, i);
+>> -    }
+>> -}
+>> -
+>>   void virtio_queue_set_addr(VirtIODevice *vdev, int n, hwaddr addr)
+>>   {
+>>       if (!vdev->vq[n].vring.num) {
+>> @@ -3169,6 +3126,49 @@ int virtio_set_features(VirtIODevice *vdev, 
+>> uint64_t val)
+>>       return ret;
+>>   }
+>> +void virtio_reset(void *opaque)
+>> +{
+>> +    VirtIODevice *vdev = opaque;
+>> +    VirtioDeviceClass *k = VIRTIO_DEVICE_GET_CLASS(vdev);
+>> +    int i;
+>> +
+>> +    virtio_set_status(vdev, 0);
+>> +    if (current_cpu) {
+>> +        /* Guest initiated reset */
+>> +        vdev->device_endian = virtio_current_cpu_endian();
+>> +    } else {
+>> +        /* System reset */
+>> +        vdev->device_endian = virtio_default_endian();
+>> +    }
+>> +
+>> +    if (k->get_vhost) {
+>> +        struct vhost_dev *hdev = k->get_vhost(vdev);
+>> +        /* Only reset when vhost back-end is connected */
+>> +        if (hdev && hdev->vhost_ops) {
+>> +            vhost_reset_device(hdev);
+>> +        }
+>> +    }
+>> +
+>> +    if (k->reset) {
+>> +        k->reset(vdev);
+>> +    }
+>> +
+>> +    vdev->start_on_kick = false;
+>> +    vdev->started = false;
+>> +    vdev->broken = false;
+>> +    virtio_set_features_nocheck(vdev, 0);
 > 
-> Currently fadump register will always return HARDWARE ERROR, since it's
-> not implemented yet. So if the kernel's attempt to register fadump will
-> itself fail as the support is not there yet in QEMU.
+> It would be simpler to review having a first patch doing code
+> movement, then a second one with the addition.
+
+I'm thinking of splitting in the reversed order: add this function call 
+with a forward declaration in a first patch and move virtio_reset() in a 
+second one. Hopefully it will also make backporting easier.
+
 > 
-> The checks are based on the table in following requirement in PAPR v2.13:
->      "R1–7.3.30–1. For the Configure Platform Assisted Kernel Dump option ..."
+> For my own education, are feature sets modifiable at runtime?
+
+Looking at the code and spec, yes, I think so. The feature set cannot be 
+modified if VIRTIO_CONFIG_S_FEATURES_OK is set as part of the "status", 
+but the flag can be cleared anytime.
+
 > 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   hw/ppc/meson.build            |  1 +
->   hw/ppc/spapr_fadump.c         | 22 +++++++++++
->   hw/ppc/spapr_rtas.c           | 66 +++++++++++++++++++++++++++++++++
->   include/hw/ppc/spapr.h        | 11 +++++-
->   include/hw/ppc/spapr_fadump.h | 69 +++++++++++++++++++++++++++++++++++
->   5 files changed, 168 insertions(+), 1 deletion(-)
->   create mode 100644 hw/ppc/spapr_fadump.c
->   create mode 100644 include/hw/ppc/spapr_fadump.h
+>> +    vdev->queue_sel = 0;
+>> +    vdev->status = 0;
+>> +    vdev->disabled = false;
+>> +    qatomic_set(&vdev->isr, 0);
+>> +    vdev->config_vector = VIRTIO_NO_VECTOR;
+>> +    virtio_notify_vector(vdev, vdev->config_vector);
+>> +
+>> +    for (i = 0; i < VIRTIO_QUEUE_MAX; i++) {
+>> +        __virtio_queue_reset(vdev, i);
+>> +    }
+>> +}
+>> +
+>>   static void 
+>> virtio_device_check_notification_compatibility(VirtIODevice *vdev,
+>>                                                              Error 
+>> **errp)
+>>   {
+>>
+>> ---
+>> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
+>> change-id: 20250406-reset-5ed5248ee3c1
+>>
+>> Best regards,
 > 
-> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-> index 9893f8adebb0..863972741b15 100644
-> --- a/hw/ppc/meson.build
-> +++ b/hw/ppc/meson.build
-> @@ -26,6 +26,7 @@ ppc_ss.add(when: 'CONFIG_PSERIES', if_true: files(
->     'spapr_nvdimm.c',
->     'spapr_rtas_ddw.c',
->     'spapr_numa.c',
-> +  'spapr_fadump.c',
->     'pef.c',
->   ))
->   ppc_ss.add(when: ['CONFIG_PSERIES', 'CONFIG_TCG'], if_true: files(
-> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-> new file mode 100644
-> index 000000000000..20b7b804c485
-> --- /dev/null
-> +++ b/hw/ppc/spapr_fadump.c
-> @@ -0,0 +1,22 @@
-> +/*
-> + * Firmware Assisted Dump in PSeries
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/ppc/spapr.h"
-> +
-> +/*
-> + * Handle the "FADUMP_CMD_REGISTER" command in 'ibm,configure-kernel-dump'
-> + *
-> + * Returns:
-> + *  * RTAS_OUT_HW_ERROR: Not implemented/Misc issue such as memory access
-> + *                       failures
-> + */
-> +uint32_t do_fadump_register(void)
-> +{
-> +    /* WIP: FADUMP_CMD_REGISTER implemented in future patch */
-> +
-> +    return RTAS_OUT_HW_ERROR;
-> +}
-> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-> index 503d441b48e4..b8bfa9c33fb5 100644
-> --- a/hw/ppc/spapr_rtas.c
-> +++ b/hw/ppc/spapr_rtas.c
-> @@ -341,6 +341,68 @@ static void rtas_ibm_set_system_parameter(PowerPCCPU *cpu,
->       rtas_st(rets, 0, ret);
->   }
->   
-> +/* Papr Section 7.4.9 ibm,configure-kernel-dump RTAS call */
-> +static void rtas_configure_kernel_dump(PowerPCCPU *cpu,
-> +                                   SpaprMachineState *spapr,
-> +                                   uint32_t token, uint32_t nargs,
-> +                                   target_ulong args,
-> +                                   uint32_t nret, target_ulong rets)
-> +{
-> +    target_ulong cmd = rtas_ld(args, 0);
-> +    uint32_t ret_val;
-> +
-> +    /* Number of outputs has to be 1 */
-> +    if (nret != 1) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                "FADump: ibm,configure-kernel-dump RTAS called with nret != 1.\n");
-> +        return;
-> +    }
-> +
-> +    /* Number of inputs has to be 3 */
-> +    if (nargs != 3) {
-> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
-> +        return;
-> +    }
-> +
-> +    switch (cmd) {
-> +    case FADUMP_CMD_REGISTER:
-> +        ret_val = do_fadump_register();
-> +        if (ret_val != RTAS_OUT_SUCCESS) {
-> +            rtas_st(rets, 0, ret_val);
-> +            return;
-> +        }
-> +        break;
 
-I would suggest to keep the first patch as implementing the logic for 
-FADUMP_CMD_REGISTER (and _UNREGISTER) handling.
-
-> +    case FADUMP_CMD_UNREGISTER:
-> +        if (spapr->fadump_dump_active == 1) {
-> +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
-> +            return;
-> +        }
-> +
-> +        spapr->fadump_registered = false;
-> +        spapr->fadump_dump_active = false;
-> +        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
-> +        break;
-> +    case FADUMP_CMD_INVALIDATE:
-> +        if (spapr->fadump_dump_active) {
-> +            spapr->fadump_registered = false;
-> +            spapr->fadump_dump_active = false;
-> +            memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
-> +        } else {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                "FADump: Nothing to invalidate, no dump active\n");
-> +        }
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                "FADump: Unknown command: %lu\n", cmd);
-> +
-> +        rtas_st(rets, 0, RTAS_OUT_PARAM_ERROR);
-> +        return;
-> +    }
-> +
-> +    rtas_st(rets, 0, RTAS_OUT_SUCCESS);
-> +}
-> +
->   static void rtas_ibm_os_term(PowerPCCPU *cpu,
->                               SpaprMachineState *spapr,
->                               uint32_t token, uint32_t nargs,
-> @@ -656,6 +718,10 @@ static void core_rtas_register_types(void)
->       spapr_rtas_register(RTAS_IBM_NMI_INTERLOCK, "ibm,nmi-interlock",
->                           rtas_ibm_nmi_interlock);
->   
-> +    /* Register fadump rtas call */
-> +    spapr_rtas_register(RTAS_CONFIGURE_KERNEL_DUMP, "ibm,configure-kernel-dump",
-> +                        rtas_configure_kernel_dump);
-> +
->       qtest_set_command_cb(spapr_qtest_callback);
->   }
->   
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index 39bd5bd5ed31..4c1636497e30 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -13,6 +13,7 @@
->   #include "hw/ppc/xics.h"        /* For ICSState */
->   #include "hw/ppc/spapr_tpm_proxy.h"
->   #include "hw/ppc/spapr_nested.h" /* For SpaprMachineStateNested */
-> +#include "hw/ppc/spapr_fadump.h" /* For FadumpMemStruct */
->   
->   struct SpaprVioBus;
->   struct SpaprPhbState;
-> @@ -283,6 +284,11 @@ struct SpaprMachineState {
->       Error *fwnmi_migration_blocker;
->   
->       SpaprWatchdog wds[WDT_MAX_WATCHDOGS];
-> +
-> +    /* Fadump State */
-> +    bool fadump_registered;
-> +    bool fadump_dump_active;
-> +    FadumpMemStruct registered_fdm;
->   };
->   
->   #define H_SUCCESS         0
-> @@ -708,6 +714,8 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
->   #define RTAS_OUT_PARAM_ERROR                    -3
->   #define RTAS_OUT_NOT_SUPPORTED                  -3
->   #define RTAS_OUT_NO_SUCH_INDICATOR              -3
-> +#define RTAS_OUT_DUMP_ALREADY_REGISTERED        -9
-> +#define RTAS_OUT_DUMP_ACTIVE                    -10
->   #define RTAS_OUT_NOT_AUTHORIZED                 -9002
->   #define RTAS_OUT_SYSPARM_PARAM_ERROR            -9999
->   
-> @@ -770,8 +778,9 @@ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
->   #define RTAS_IBM_SUSPEND_ME                     (RTAS_TOKEN_BASE + 0x2A)
->   #define RTAS_IBM_NMI_REGISTER                   (RTAS_TOKEN_BASE + 0x2B)
->   #define RTAS_IBM_NMI_INTERLOCK                  (RTAS_TOKEN_BASE + 0x2C)
-> +#define RTAS_CONFIGURE_KERNEL_DUMP              (RTAS_TOKEN_BASE + 0x2D)
->   
-> -#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2D)
-> +#define RTAS_TOKEN_MAX                          (RTAS_TOKEN_BASE + 0x2E)
->   
->   /* RTAS ibm,get-system-parameter token values */
->   #define RTAS_SYSPARM_SPLPAR_CHARACTERISTICS      20
-> diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
-> new file mode 100644
-> index 000000000000..45109fd9e137
-> --- /dev/null
-> +++ b/include/hw/ppc/spapr_fadump.h
-> @@ -0,0 +1,69 @@
-> +/*
-> + * Firmware Assisted Dump in PSeries
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef PPC_SPAPR_FADUMP_H
-> +#define PPC_SPAPR_FADUMP_H
-> +
-> +#include "qemu/osdep.h"
-> +#include "cpu.h"
-> +
-> +/* Fadump commands */
-> +#define FADUMP_CMD_REGISTER            1
-> +#define FADUMP_CMD_UNREGISTER          2
-> +#define FADUMP_CMD_INVALIDATE          3
-> +
-> +#define FADUMP_VERSION                 1
-> +
-> +/*
-> + * The Firmware Assisted Dump Memory structure supports a maximum of 10 sections
-> + * in the dump memory structure. Presently, three sections are used for
-> + * CPU state data, HPTE & Parameters area, while the remaining seven sections
-> + * can be used for boot memory regions.
-> + */
-> +#define FADUMP_MAX_SECTIONS            10
-> +#define RTAS_FADUMP_MAX_BOOT_MEM_REGS  7
-> +
-> +typedef struct FadumpSection FadumpSection;
-> +typedef struct FadumpSectionHeader FadumpSectionHeader;
-> +typedef struct FadumpMemStruct FadumpMemStruct;
-> +
-> +struct SpaprMachineState;
-> +
-> +/* Kernel Dump section info */
-> +struct FadumpSection {
-> +    __be32    request_flag;
-> +    __be16    source_data_type;
-> +    __be16    error_flags;
-> +    __be64    source_address;
-> +    __be64    source_len;
-> +    __be64    bytes_dumped;
-> +    __be64    destination_address;
-> +};
-> +
-> +/* ibm,configure-kernel-dump header. */
-> +struct FadumpSectionHeader {
-> +    __be32    dump_format_version;
-> +    __be16    dump_num_sections;
-> +    __be16    dump_status_flag;
-> +    __be32    offset_first_dump_section;
-> +
-> +    /* Fields for disk dump option. */
-> +    __be32    dd_block_size;
-> +    __be64    dd_block_offset;
-> +    __be64    dd_num_blocks;
-> +    __be32    dd_offset_disk_path;
-> +
-> +    /* Maximum time allowed to prevent an automatic dump-reboot. */
-> +    __be32    max_time_auto;
-> +};
-
-Also, you may introduce struct members in the patches as they are 
-used/accessed. No need to have entire struct introduced in the first 
-patch unless the members are being used/accessed.
-
-regards,
-Harsh
-
-> +
-> +/* Note: All the data in these structures is in big-endian */
-> +struct FadumpMemStruct {
-> +    FadumpSectionHeader header;
-> +    FadumpSection       rgn[FADUMP_MAX_SECTIONS];
-> +};
-> +
-> +uint32_t do_fadump_register(void);
-> +#endif /* PPC_SPAPR_FADUMP_H */
 
