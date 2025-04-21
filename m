@@ -4,69 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B079C369C2
-	for <qemu-devel@archiver.kernel.org>; Sun, 20 Apr 2025 17:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F73C369C2
+	for <qemu-devel@archiver.kernel.org>; Mon, 21 Apr 2025 03:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u6YId-0005QP-4n; Sun, 20 Apr 2025 13:17:47 -0400
+	id 1u6hcl-0006jg-Gd; Sun, 20 Apr 2025 23:15:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
- id 1u6XVm-0007Rk-Lh; Sun, 20 Apr 2025 12:27:19 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.48])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1u6hcj-0006hk-1E
+ for qemu-devel@nongnu.org; Sun, 20 Apr 2025 23:15:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
- id 1u6XVh-0002IW-9F; Sun, 20 Apr 2025 12:27:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1745166414; bh=VI5REOPFWhvVlFkH2UY7J84EUU6wlp/5+XoSFMJOk/s=;
- h=From:To:Cc:Subject:Date;
- b=VuRWAiFkEAPyrnmF+rkXLLG+dcQQArGQFca0zmmrCmAs1XI//uQ95yWXgVmLoxKLZ
- AXDBtG/gGr+VcaGbDpmtKxGTiAWAfjUw6qwohhPzSu5MaeryeyrkuhsY8vu7LVu5+q
- 0QGsa9ES82bT+ikYe6mizG95BWIrHa1ifK4qIi3o=
-Received: from 192.168.182.133 ([117.147.34.50])
- by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
- id 4D09FAB9; Mon, 21 Apr 2025 00:19:16 +0800
-X-QQ-mid: xmsmtpt1745165956tu3vc3sd6
-Message-ID: <tencent_8649D99B33E6E6665A0EFA05B97592D70106@qq.com>
-X-QQ-XMAILINFO: MB5+LsFw85NoxEPmMs9FyeH1tgvtXUGo19ZHzbkt4qx2Imeoox7HJD4Zdgn0lw
- NbCMBS3BfGDlvV5CMfFwuEQl9apmxVt5DOM5N/hDN0BLDku76ojnRVfLpptz9sgNvJUaLxi5lQoE
- ceGno9eN/D2slObzLrQb0tl1CsJckSsJWxDxQH/C7EJunAqhQFiVmiPiSSFRPO8F5Bf3VqwyXHKt
- vO7QnRZGxr3wEISuIeChIyK4O1VlzlgxrtzWr7aqTRW72vaKm7TMpT7SIJXCetWOiYqskFjubY1T
- eb6J4E6V0PQGS3LiR+HFPzPTWIebwfH0tlSY330TXkqrIyiP8TvuIH4wRLQRz8hIdQ0AMeHCdOCD
- VPzZEbiJjhX/HXvxhl5cg7UcKahqKp0wJkpuDtHFcmRwpjYtdw8cDvAUK+rjootczndEak6FJLNR
- OF8LfsjnD7TzVRHZLzMW5Qtf0JFxfihQz3DodqGPC+rDfElyWaEZMR4JATXbBdcIKqTxFHuK3VX2
- pn+IlczamYZbmu53lA5YqtB7yGK2xDyBq53BUtqgZnT4SmZGwqsMiv3oopxeJCf1aZwL/66iKObz
- 7gTqLVY/WDA60l7voA12oPR0/HMlzehGaahy5oAvCclmMthH8suIKKDxvxLd17PEVUZYYqLdHqkB
- RoI4qHKQ2A8lsK2laaxTQL590i/BrtLRc6oLb5R1jEJilh0E66NWwdjRmaAh+lmHweUHrg2/W7bF
- yDeBorLR6YPzBGL2GhbabHPOgQNOT4p6dOy57fuKltmYAaU6MDF/VfmDytqe4tvQxxbj8dJsNR4h
- GSQ4GGN4samU5Vh5BV+3yMBrIAGzRURrtJUCsApQTcHBk7b0PHLAeL9w/OLgcymifnIamrc2zWSL
- gIGjJ/tzyz7zioalr/lzKt/rvVKMcZuGRXZz2YbwMdZIoIbAXQPZnlAIVPNEFQRg==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-From: Sunny Zhu <sunnyzhyy@qq.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- Sunny Zhu <sunnyzhyy@qq.com>
-Subject: [PATCH] =?UTF-8?q?block=EF=BC=9A=20change=20type=20of=20bytes=20f?=
- =?UTF-8?q?rom=20int=20to=20int64=5Ft=20for=20*bdrv=5Faio=5Fpdiscard?=
-Date: Mon, 21 Apr 2025 00:19:14 +0800
-X-OQ-MSGID: <20250420161914.25148-1-sunnyzhyy@qq.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1u6hcg-0001W2-Pq
+ for qemu-devel@nongnu.org; Sun, 20 Apr 2025 23:15:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745205302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uHQmqt9gC3t71DwtGenMr+UddEKoD7rBR56oWz+i72Y=;
+ b=ih6qHbhikQKe0QUn0lZUCrl34pVSCFCOolIFr3keO0d0au8YSsMXpZwkLgiRW6R/HKEtAI
+ ww+A1c+vt5QzgbdQwUQ7yKrMa4g8y4hiG2RM1UeKDzo4TVTbE4lsCrWvkfmqiLC/rYF7G0
+ u/nb3BxIH/eNURPGpm6eELW/PUbdyKk=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-228-TbhXmxkCOdaHHO6GIFucTw-1; Sun, 20 Apr 2025 23:14:56 -0400
+X-MC-Unique: TbhXmxkCOdaHHO6GIFucTw-1
+X-Mimecast-MFC-AGG-ID: TbhXmxkCOdaHHO6GIFucTw_1745205295
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2ff6af1e264so4975986a91.3
+ for <qemu-devel@nongnu.org>; Sun, 20 Apr 2025 20:14:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745205295; x=1745810095;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uHQmqt9gC3t71DwtGenMr+UddEKoD7rBR56oWz+i72Y=;
+ b=b3JRFjkMnMjIWP+qY67m5roh7W9WcdApDdw1VXos4/9XEeWNMUJIjc1VM1gYr4Xe/g
+ HqMIGSnmm4rQIKAJcIKp1MufaF2ICJHrNi3r4SBARe6ibFs0i6KIM0AP2qvOghrj2hWF
+ PGc2emg/hao+B6BWDb8ChjyLk9i/ARqAaeVFHEcHarE2CP2SBsxWZZ5b4mB1TLK4e4vr
+ rmeFFPH/MvZz1/iJ3caccDMGIFgfv8JSoIV693os+XzbBbXTTWUP+/n+ty3eqyOaoKJd
+ +JC/PamKb8xgxKTgZwG0jFQ5JyzMbNIddCv9yP+qa29a+rffpsva6eJbAQSEFZJjbbEY
+ r82g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWktg8l9gWInJ6ff3pmmRB0IdPag/CVG1YVOB17FHT3ZkDyET0PCm6andZvUMhx8uDujHaN74fxiMTq@nongnu.org
+X-Gm-Message-State: AOJu0Yxtp2hjLMKv4SB/yZ2XTxt9WIqkkubdKAX7z7tf8A8Plc0qqH6X
+ EDdVQNS4dRctvn7HuktznUCM5zZyuTrdEZxb+msK2CASNjTlqvO40LyoViPV76w8bBT6Y3vLiaN
+ rm/QNAFn9AivxkhkNp2saTj/Ra6/cRAEkFPLk9gW+BVhIqvI4NllmizxdR58ACa7CySfp8X2C/T
+ efrZVvtXMvNkwobS9pGBdkauxPdjo=
+X-Gm-Gg: ASbGncv3LQNDNphp+MKmKhVKYW9Umtp7Yd63EH/AQooFUkKicFj+PAhplWrQXiEg/Nz
+ /nnoWUzHp0tUEEsQwXTTgxZAwd5703sN0qmAR8cYvkfqZ94zmZ4CQ3QUOpT/UmjseRt1pog==
+X-Received: by 2002:a17:90b:2d0d:b0:2ee:8427:4b02 with SMTP id
+ 98e67ed59e1d1-3087bbbddc7mr14664546a91.28.1745205295129; 
+ Sun, 20 Apr 2025 20:14:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFh5onAf7F3EZL7jbO4trE3Cnpdg4pi4dyeLevFpz0F8JOpDqYi9GNIBoXD2OpAJ2w5nPfsI9AgyDU64YRJ5g=
+X-Received: by 2002:a17:90b:2d0d:b0:2ee:8427:4b02 with SMTP id
+ 98e67ed59e1d1-3087bbbddc7mr14664525a91.28.1745205294693; Sun, 20 Apr 2025
+ 20:14:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.48; envelope-from=sunnyzhyy@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_PBL=3.335,
+References: <20250417102522.4125379-1-lulu@redhat.com>
+ <20250417102522.4125379-2-lulu@redhat.com>
+In-Reply-To: <20250417102522.4125379-2-lulu@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 21 Apr 2025 11:14:41 +0800
+X-Gm-Features: ATxdqUHa4bMjkzY-nx7IU_kb6bw2U1EbXVAGIi0_-Y_riKwj8VKeHRe-ZWKxA4o
+Message-ID: <CACGkMEvrX0FouHnrog_GV7Rjtwao+ZU50U-2BpuaceSMz_hmNw@mail.gmail.com>
+Subject: Re: [PATCH v7 1/4] vhost_vdpa : Add a new parameter to enable check
+ mac address
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.69,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 20 Apr 2025 13:17:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,30 +105,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep it consistent with *bdrv_co_pdiscard.
+On Thu, Apr 17, 2025 at 6:25=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+>
+> When using a VDPA device, it's important to ensure that the MAC
+> address is correctly set.
+> This patch adds a new QEMU command line parameter to enable MAC
+> address verification,  which is enabled by default.
+>
+> Usage example:
+> ....
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0,c=
+heck-mac=3Dtrue\
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0\
+> ....
+> To disable this check:
+> ....
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0,c=
+heck-mac=3Dfalse\
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0\
+> ....
+>
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
 
-Currently, there is no BlockDriver implemented the bdrv_aio_pdiscard() function,
-so we don’t need to make any adaptations either.
+This patch needs to be squashed to the patch that implements the real
+logic of the checking.
 
-Signed-off-by: Sunny Zhu <sunnyzhyy@qq.com>
----
- include/block/block_int-common.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> ---
+>  include/net/net.h | 1 +
+>  net/vhost-vdpa.c  | 5 +++++
+>  qapi/net.json     | 5 +++++
+>  3 files changed, 11 insertions(+)
+>
+> diff --git a/include/net/net.h b/include/net/net.h
+> index cdd5b109b0..fac1951b6e 100644
+> --- a/include/net/net.h
+> +++ b/include/net/net.h
+> @@ -112,6 +112,7 @@ struct NetClientState {
+>      bool is_netdev;
+>      bool do_not_pad; /* do not pad to the minimum ethernet frame length =
+*/
+>      bool is_datapath;
+> +    bool check_mac;
+>      QTAILQ_HEAD(, NetFilterState) filters;
+>  };
+>
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 7ca8b46eee..7dbe6cf65c 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -1871,6 +1871,11 @@ int net_init_vhost_vdpa(const Netdev *netdev, cons=
+t char *name,
+>          if (!ncs[i])
+>              goto err;
+>      }
+> +    /* Enable the mac check by default */
+> +    if (opts->has_check_mac)
+> +        ncs[0]->check_mac =3D opts->check_mac;
+> +    else
+> +        ncs[0]->check_mac =3D true;
 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index ebb4e56a50..4bf422d733 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -507,7 +507,7 @@ struct BlockDriver {
-         BlockDriverState *bs, BlockCompletionFunc *cb, void *opaque);
- 
-     BlockAIOCB * GRAPH_RDLOCK_PTR (*bdrv_aio_pdiscard)(
--        BlockDriverState *bs, int64_t offset, int bytes,
-+        BlockDriverState *bs, int64_t offset, int64_t bytes,
-         BlockCompletionFunc *cb, void *opaque);
- 
-     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_readv)(BlockDriverState *bs,
--- 
-2.43.0
+How could we maintain the migration compatibility here?
+
+>
+>      if (has_cvq) {
+>          VhostVDPAState *s0 =3D DO_UPCAST(VhostVDPAState, nc, ncs[0]);
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 310cc4fd19..0607c83833 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -510,6 +510,10 @@
+>  # @queues: number of queues to be created for multiqueue vhost-vdpa
+>  #     (default: 1)
+>  #
+> +# @check-mac: Enable the check for whether the device's MAC address
+> +#     and the MAC in QEMU command line are acceptable for booting.
+> +#     (default: true)
+> +#
+>  # @x-svq: Start device with (experimental) shadow virtqueue.  (Since
+>  #     7.1) (default: false)
+>  #
+> @@ -524,6 +528,7 @@
+>      '*vhostdev':     'str',
+>      '*vhostfd':      'str',
+>      '*queues':       'int',
+> +    '*check-mac':    'bool',
+>      '*x-svq':        {'type': 'bool', 'features' : [ 'unstable'] } } }
+>
+>  ##
+> --
+> 2.45.0
+>
+
+Thanks
 
 
