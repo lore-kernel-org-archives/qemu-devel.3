@@ -4,89 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EED0C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 12:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99508C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 12:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7D1a-00055y-Pz; Tue, 22 Apr 2025 08:46:56 -0400
+	id 1u7D3y-0005v2-Nq; Tue, 22 Apr 2025 08:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u7D1P-00053t-Qh
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 08:46:44 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u7D1N-0006nH-F7
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 08:46:43 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso37627345e9.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 05:46:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745325996; x=1745930796; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5iQTGN+TteLuOp/1D7V3HaTlGv65WEvjjkUwwWo/he4=;
- b=jIB25pumejEFUN/3QZMiKWfXTAUn/yxNDVchjtxYRvAKvcqBndDeRs2SrZwiig4lUS
- rM1IZE0onlVIKYPZ9b/sbFx12AMOOLakOeDwwVH6pFcHH5Txfh+1wSJgPWjMezqFEycl
- 5+pjS5AWsMg56P855p+8Af+M4RkfYGhskHCAhUto3a9NlmUbQa5HP/GX5lkrJE4pnEEV
- 5X8W8sifmrCbm4Edw8TGO6VuaDfrjx7oOVzTa9Fl8HErZX/BTlfMLU2zrrOHlTydw2+Z
- dNk56tldysM3t1ioeMkzP/385ppSH02rH7SDj++yZr9Iky7DBX1dveV3MpTJrYklGciU
- QFGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745325996; x=1745930796;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5iQTGN+TteLuOp/1D7V3HaTlGv65WEvjjkUwwWo/he4=;
- b=jYcmt28V3TZ57F7KeMyGDqo6F7cNiuqOfYQJm4ZdkqF84p3FpMVSEYeSeZXng3bOPS
- ltJBGugTNVac7WDF1jQgPt9DjxJMz6mqncMLxpZnMiGA3Wlh43mLwfMTq8nAr1JDhcmY
- CqwQ23haJ1u5XGkaukWcjSm9rZM+NRqzO8R9PfhS7qz06eF+JrhURx/syDCFpzyTB4c8
- +lBhX/KqSsf1SvECW3GXpuohKZ9jZnW9YIwHettVl7AWkpVnxlCEnZsuotdVgz/j0jqF
- yrDeQ7hTngycObW2DcqAF4EEFiyQwPhWqSzt7IYe0QJAqaGnkzLif+9swDL00C81eFXV
- CDfg==
-X-Gm-Message-State: AOJu0YwjHVsH4yPRJxq3GJhBaquWqFSs2gVetWa2Rrt/W1Bgkqv6Ikua
- gKyj/FIdsE4/Zp9v4mNS5dPlD6kU4aXB3V2I8oULFsG4dIMtpLlCbRYtGQ==
-X-Gm-Gg: ASbGnctNq/Yfbgv2fHzEnk0vynSNMNTGCx9JV6FtOSW6IztzIJhbbQiTyKnleACAlaQ
- /Sf05Sng1s2w692lb7ApECbeISXjRwhk/qBWEux9hxPj7uUsG79oaH+/Y6pAe8SYc/Cwv2zcEN8
- YWMep2UY/C9YvOccFxrCAwlCB/9VHUBKCJPcfFJxHjp5yR9q24WXozvYb0BE3iiq1Su41f4FtI2
- sKZtC7aq+5wy6Y2Gq/Cxdy9ln4UtKfqQyA2X93E0MGoJJLUMmXk55GpoIOCYdt/kW+PrLLFtO0w
- zAgC9OSNSQ4xIfsmeoZtlsO1ktp940a1khEjZsqt8RbQJxO+vrrjhTBCov9RqfAS4uIvH2Xa9Ml
- +LkwPcMirf4YN+aGOilgTE2WwXGg=
-X-Google-Smtp-Source: AGHT+IFfBVHX/WOCLOxRadNbCWEp2PNKN8lpAgtznb/kSOuwc+G1uZ+8UPiUq/Gx3LE/uhqFftu8aQ==
-X-Received: by 2002:a05:600c:3154:b0:43d:36c:f24 with SMTP id
- 5b1f17b1804b1-4406ab97d6amr128094885e9.13.1745325995620; 
- Tue, 22 Apr 2025 05:46:35 -0700 (PDT)
-Received: from smtpclient.apple (46-116-102-127.bb.netvision.net.il.
- [46.116.102.127]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5accddsm171424685e9.9.2025.04.22.05.46.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 22 Apr 2025 05:46:35 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH v2] io: Increase unix socket buffers size on macOS
-From: Nir Soffer <nirsof@gmail.com>
-In-Reply-To: <aAdylVf7RZVaTee3@redhat.com>
-Date: Tue, 22 Apr 2025 15:46:22 +0300
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Jones <rjones@redhat.com>, Eric Blake <eblake@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <FFA461B8-2D2A-4B73-B2C5-535083A50124@gmail.com>
-References: <20250419231218.67636-1-nirsof@gmail.com>
- <aAdylVf7RZVaTee3@redhat.com>
-To: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=nirsof@gmail.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1u7D3v-0005uU-28
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 08:49:19 -0400
+Received: from mail-bn7nam10on20609.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::609]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1u7D3q-0006rb-VX
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 08:49:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=irvqIA7sTo7nH0/zM2nkeVqkEJlO0/p5PVCHzEIPlVFyr/VBOrjgGwdJy0pAk4/cg+UqmG3ob2rCHzMBXNcwYFZSkGASLI7VtnJl2CrVrTquTUTy3a19zQNAAQyZqG415diuvi0s7FgbYLBTcCgzE0M+zJPHt9HW9OmlMEVnjbOJ62/a29pb0qrKIzTOwCk5cphSvHOQJIwPXeW0N+00V/2ZKXXbmVXL7eZ0nj54Yq2CumUtRmNFpjNJJgeTnQwQj1t2xrxa1MrOdaqBotXsPMEoQH64wbXX97CgWkXmfXGXxjBCMujOtYww2cb9J9Trb99NWRDPUYP4etjRKncisg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BQYl8o/8ermjk4F1Bnt4V6fCeW2lkZ98t9ojDHPIkFs=;
+ b=PBWfF1h/cX89wiCH3wRZkZzDgeuNd1nzKX24Zxl8pehTJQoCcdYxeQZmDY08zug5Ci4C7B3u6NndsfrDnJPARVf2S0A68Oq8bl3jba/4XgjUJrNquqNZqMRt7SfF7xxv+p8/Z6X8q/l4lb6dazU6j6ifGsNeQzKKO6tL7XnuliSdVstYolL5noNR3cBOTXc7Bb5wKeK7CTq/EO2rDOcf1/4Xz1lzTazODoAlp8CjHiw8j8CK5j81L1+MOp2D0AYT9YtN34vLRMNNiIiN3aP5ykRk/u5lbwW/ZT7wxxvMqgVFKLSAvd259FUuwunz+T5GaPHj5n9u4xirHmNsXgJmWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BQYl8o/8ermjk4F1Bnt4V6fCeW2lkZ98t9ojDHPIkFs=;
+ b=16EwodDPogJLQK9Q2mVhVQTszbW07Ub/xO3u09Sd+tKZtUZ2zFZ/a24Y5TO7Hkpv8Ll3jHfFYdO2wzEmYaLLiUZfJ1Q5xNdl4BfdAZFJlvrPql7YClU2pazXDITd0atUQ44h58gsfsvMCIGVtMmWG8fzzyw+Qr00OcYwyrZPcl0=
+Received: from CH2PR18CA0003.namprd18.prod.outlook.com (2603:10b6:610:4f::13)
+ by PH7PR12MB6737.namprd12.prod.outlook.com (2603:10b6:510:1a8::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8655.26; Tue, 22 Apr
+ 2025 12:49:06 +0000
+Received: from CH2PEPF0000013C.namprd02.prod.outlook.com
+ (2603:10b6:610:4f:cafe::9f) by CH2PR18CA0003.outlook.office365.com
+ (2603:10b6:610:4f::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.35 via Frontend Transport; Tue,
+ 22 Apr 2025 12:49:05 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CH2PEPF0000013C.mail.protection.outlook.com (10.167.244.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8655.12 via Frontend Transport; Tue, 22 Apr 2025 12:49:05 +0000
+Received: from [10.136.47.77] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 22 Apr
+ 2025 07:49:00 -0500
+Message-ID: <ead40e48-868a-4ee6-a23e-ee11e1047880@amd.com>
+Date: Tue, 22 Apr 2025 18:18:57 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/18] amd_iommu: Toggle address translation on device
+ table entry invalidation
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
+CC: <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
+ <eduardo@habkost.net>, <peterx@redhat.com>, <david@redhat.com>,
+ <philmd@linaro.org>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
+ <alex.williamson@redhat.com>, <vasant.hegde@amd.com>,
+ <suravee.suthikulpanit@amd.com>, <santosh.shukla@amd.com>,
+ <Wei.Huang2@amd.com>, <joao.m.martins@oracle.com>,
+ <boris.ostrovsky@oracle.com>
+References: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
+ <20250414020253.443831-15-alejandro.j.jimenez@oracle.com>
+Content-Language: en-US
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <20250414020253.443831-15-alejandro.j.jimenez@oracle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000013C:EE_|PH7PR12MB6737:EE_
+X-MS-Office365-Filtering-Correlation-Id: 695eebfb-ed96-474d-f9bb-08dd819c10f9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|82310400026|36860700013|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZEdIWGFhSHk1TFUrMFBCWFNlSkV6eG8rNTNiUlI0ZjZydUUyeXZQdlR0clJs?=
+ =?utf-8?B?ckRHRWJpbVROdmZNM044NmRLQ2VmMmp6aTBlZTVPclRYTU5LVTlmcmRFM2Vm?=
+ =?utf-8?B?OW52WDNSdXhPbkM5cGViNlFWbWVldklqemEzbnNJZWRpUEJ3V3BBaGNOWGV5?=
+ =?utf-8?B?dUZoWWRaYkpPN28yQVhaVW40TmpyS3dzc09RT0RkbjkxblVoRFlhRzVUOFdH?=
+ =?utf-8?B?UGlpNHhOWnZ6ZXRCTE9DbkpvWU5LaTRPL1JzM3hNcFl6c25VYWszR3lKQU02?=
+ =?utf-8?B?QVMzYVcxOWNIWFNrK0NwR3B6OGlOVWx3aEJOUmVCSXVMaWhSWHZ6YUszN3Rv?=
+ =?utf-8?B?OWhMNDFDa01RYlNpTkNRZWNCRDE1YmN5Yjh0bUdQOFB3ZmxSb1RVYVlyZ2xy?=
+ =?utf-8?B?V2RtT24zMk5taE1Ha1JXYUdwRTRrcndieXdkNDhQYUpCdksyOHBRU1dETXhh?=
+ =?utf-8?B?bXZtSm9BMkxBWTludjFFSGtZQm5Scm5xdW1wdUx3VE9VaWdzMEdld2RoN25W?=
+ =?utf-8?B?YUFiY1RNRlJ4WVFvaE16c3k5MHl6YmdxMWt6cEFGbUIvN1VhOC96alVhd2Nj?=
+ =?utf-8?B?b1dSaGtHdHp1Z0tzRFpickY0NHBUR2dYd3pkdHdaYXdONkU2WlRNZ3RmY2Zn?=
+ =?utf-8?B?R0hvQ1cyRGNqdCtUUi9sKzVZbzNSNlVWZ2w3S0FRNGNIa0tSbHpOZzNRd2ZQ?=
+ =?utf-8?B?WDgzc1hMdGtha0hBaGczUGd1K2w5ZzhTVEd1VHh6enhSRjFUMnZKVVlwMko0?=
+ =?utf-8?B?Z1R3WGtsUm5OdGZrNGo1Vmk0UHYxSjhlUUx5Z2UzUWtjVW5qVjdhT1ZSMHpE?=
+ =?utf-8?B?OUgvbnQzdnVqMEc0ZWw1c0JNUzlyWkhNcWp2STkxNVh3L2RzUGpPVm1OQkY4?=
+ =?utf-8?B?WVVpUlhSRnU1VVY1NmNyZGpWY3pLZ3dsNGhRcEFGOVcwcE5PclpxOUl1ZVFV?=
+ =?utf-8?B?T1F4UlhPdC92RllSeXBZZzlDeVRWSzB2WnBCcVFOeVJ1RW02M0lZOVE3Wmta?=
+ =?utf-8?B?b2ZLd1ZLV0J5M2x6d21jVk41UTNPbXFRdXNxQm82WmRIdk1wMjExMU84dFBo?=
+ =?utf-8?B?NnJsMUhsTGwxRkRwYXU4OTkrbHBBUCtzY293L05hSUxPYXY3UEtzVjA1M0ZW?=
+ =?utf-8?B?blRHRTYzUzVzTS9BTUdMdGJJempIWElha3g2YitDdHB0b1ZDNFFUQ1Y4OGkx?=
+ =?utf-8?B?ZnF0Q0tSN1A4MXlTQVpxU25tTWJ3UjdtTmQ1Zlo1VHQyckR3UXdjTzRld0lZ?=
+ =?utf-8?B?R3F2aXg2ZE8zdlNCMGsrWGhJWkZuVGE1SGxjRUlPY3JZUHVZc0J1UExYNXNx?=
+ =?utf-8?B?bnpKdjIrSm5kOWlCdzRFdUk2Ulc2UTk4ZDg0azZaQzhKOWVrcGFPR0ZmejA3?=
+ =?utf-8?B?Rkl4Tk9oWk1tdTl1Tmphc1FqNXBIa3MrcWdwVm41NW1Vbi85WjN1K1NJTlps?=
+ =?utf-8?B?VUExMU5sekxHbmdYQ2Z6aElxeTNCdzlvVDBFcGM5YzIwU3N1c09IWDJaWkkw?=
+ =?utf-8?B?S3ZsK3ZjaVVjUFFWWVBmMy9DNk1HS0dXVVJrSldoT0FYeWVtci93TW14b0FJ?=
+ =?utf-8?B?eDZaUkI0dDZ0UUViTEdMQ0dNU1Z2SE5aY1laQmJBKzI3b2NZd2ZkV2hTV0lJ?=
+ =?utf-8?B?TUJhVUpjQkRiT2lVU2djMkROeVBPb1oyS2FVOHgvdFJGNnJoYWx5ZC9OeVp3?=
+ =?utf-8?B?c3cxRkNaRkg3cVc0cGt6ck5lV1hpZVJ0aFdnem9iZUtMcjNwbUJycVppNXdF?=
+ =?utf-8?B?RS9KUi9IdnpQcEhSNFVaTFhFcGRFWjBUWGt2T2hOeU1qeDdiUzg3RlZia0Fn?=
+ =?utf-8?B?UDFDS3Z2YU9vSmRYWnkxSlB1TjNFZjFsdEZvbSsxOUJ1c0N2VWJNaXE0RDdM?=
+ =?utf-8?B?SWUwT0xsK01OYzQybEpreEd3NDhSeGhwZkNwRmxabnZNSTNKY2hDMGpNL2sw?=
+ =?utf-8?B?OHZMSFRjK25uVTlLNWdZemtPZnYzS3pFeVd0RzdwcWhMVE0zZUk5MmlmR0RZ?=
+ =?utf-8?B?QVhkUUJiaURJZkJEVnI3VVh6K0JHb2NCL0pOUWZDdzBUdzRyY0RuWlBMaFZm?=
+ =?utf-8?Q?efGgYN?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(36860700013)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2025 12:49:05.5527 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 695eebfb-ed96-474d-f9bb-08dd819c10f9
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000013C.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6737
+Received-SPF: permerror client-ip=2a01:111:f403:2009::609;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,148 +167,124 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-> On 22 Apr 2025, at 13:42, Daniel P. Berrang=C3=A9 =
-<berrange@redhat.com> wrote:
->=20
-> On Sun, Apr 20, 2025 at 02:12:18AM +0300, Nir Soffer wrote:
->> On macOS we need to increase unix socket buffers size on the client =
-and
->> server to get good performance. We set the socket buffers on macOS =
-after
->> connecting or accepting a client connection.
->>=20
->> Testing with qemu-nbd shows that reading an image with qemu-img =
-convert
->> from qemu-nbd is *11.4 times faster* and qemu-img cpu usage is *8.3 =
-times
->> lower*.
->>=20
->> | qemu-img | qemu-nbd | time   | user   | system |
->> |----------|----------|--------|--------|--------|
->> | before   | before   | 12.957 |  2.643 |  5.777 |
->> | after    | before   | 12.803 |  2.632 |  5.742 |
->> | before   | after    |  1.139 |  0.074 |  0.905 |
->> | after    | after    |  1.179 |  0.077 |  0.931 |
->>=20
->> For testing buffers size I built qemu-nbd and qemu-img with send =
-buffer
->> size from 64k to 2m. In this test 256k send buffer and 1m receive =
-buffer
->> are optimal.
->>=20
->> | send buffer | recv buffer | time   | user   | system |
->> |-------------|-------------|--------|--------|--------|
->> |         64k |        256k |  2.233 |  0.290 |  1.408 |
->> |        128k |        512k |  1.189 |  0.103 |  0.841 |
->> |        256k |       1024k |  1.121 |  0.085 |  0.813 |
->> |        512k |       2048k |  1.172 |  0.081 |  0.953 |
->> |       1024k |       4096k |  1.160 |  0.072 |  0.907 |
->> |       2048k |       8192k |  1.309 |  0.056 |  0.960 |
->>=20
->> Using null-co driver is useful to focus on the read part, but in the
->> real world we do something with the read data. I tested real world =
-usage
->> with nbdcopy and blksum.
->>=20
->> I tested computing a hash of the image using nbdcopy, using 4 NBD
->> connections and 256k request size. In this test 1m send buffer size =
-and
->> 4m receive buffer size are optimal.
->>=20
->> | send buffer | recv buffer | time   | user   | system |
->> |-------------|-------------|--------|--------|--------|
->> |         64k |        256k |  2.832 |  4.866 |  2.550 |
->> |        128k |        512k |  2.429 |  4.762 |  2.037 |
->> |        256k |       1024k |  2.158 |  4.724 |  1.813 |
->> |        512k |       2048k |  1.777 |  4.632 |  1.790 |
->> |       1024k |       4096k |  1.657 |  4.466 |  1.812 |
->> |       2048k |       8192k |  1.782 |  4.570 |  1.912 |
->>=20
->> I tested creating a hash of the image with blksum, using one NBD
->> connection and 256k read size. In this test 2m send buffer and 8m
->> receive buffer are optimal.
->>=20
->> | send buffer | recv buffer | time   | user   | system |
->> |-------------|-------------|--------|--------|--------|
->> |         64k |        256k |  4.233 |  5.242 |  2.632 |
->> |        128k |        512k |  3.329 |  4.915 |  2.015 |
->> |        256k |       1024k |  2.071 |  4.647 |  1.474 |
->> |        512k |       2048k |  1.980 |  4.554 |  1.432 |
->> |       1024k |       4096k |  2.058 |  4.553 |  1.497 |
->> |       2048k |       8192k |  1.972 |  4.539 |  1.497 |
->>=20
->> In the real world tests larger buffers are optimal, so I picked send
->> buffer of 1m and receive buffer of 4m.
->=20
-> IIUC all your test scenarios have recv buffer x4 size of send buffer.
->=20
-> Do you have any link / reference for the idea that we should be using
-> this x4 size multiplier ? This feels rather peculiar as a rule.
 
-The x4 factor came from this:
-=
-https://developer.apple.com/documentation/virtualization/vzfilehandlenetwo=
-rkdeviceattachment/maximumtransmissionunit?language=3Dobjc
+On 4/14/2025 7:32 AM, Alejandro Jimenez wrote:
+> A guest must issue an INVALIDATE_DEVTAB_ENTRY command after changing a
+> Device Table entry (DTE) e.g. after attaching a device and setting up
+> its DTE. When intercepting this event, determine if the DTE has been
+> configured for paging or not, and toggle the appropriate memory regions
+> to allow DMA address translation for the address space if needed.
+> 
+> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> ---
+>   hw/i386/amd_iommu.c | 68 ++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 67 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 3bfa08419ffe..abdd67f6b12c 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -101,6 +101,8 @@ static void amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as,
+>                                                  uint64_t *dte, hwaddr addr,
+>                                                  uint64_t size, bool send_unmap);
+>   static void amdvi_address_space_unmap(AMDVIAddressSpace *as, IOMMUNotifier *n);
+> +static void amdvi_address_space_sync(AMDVIAddressSpace *as);
+> +static void amdvi_switch_address_space(AMDVIAddressSpace *amdvi_as);
+>   
+>   uint64_t amdvi_extended_feature_register(AMDVIState *s)
+>   {
+> @@ -432,7 +434,15 @@ static void amdvi_completion_wait(AMDVIState *s, uint64_t *cmd)
+>       trace_amdvi_completion_wait(addr, data);
+>   }
+>   
+> -/* log error without aborting since linux seems to be using reserved bits */
+> +/*
+> + * A guest driver must issue the INVALIDATE_DEVTAB_ENTRY command to the IOMMU
+> + * after changing a Device Table entry. We can use this fact to detect when a
+> + * Device Table entry is created for a device attached to a paging domain and
+> + * and enable the corresponding IOMMU memory region to allow for DMA
+> + * translation if appropriate.
+> + *
+> + * log error without aborting since linux seems to be using reserved bits
+> + */
+>   static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
+>   {
+>       uint16_t devid = cpu_to_le16((uint16_t)extract64(cmd[0], 0, 16));
+> @@ -442,6 +452,62 @@ static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
+>           amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
+>                                      s->cmdbuf + s->cmdbuf_head);
+>       }
+> +
+> +    /*
+> +     * Convert the devid encoded in the command to a bus and devfn in
+> +     * order to retrieve the corresponding address space.
+> +     */
+> +    uint8_t bus_num, devfn, dte_mode;
+> +    AMDVIAddressSpace *as;
+> +    uint64_t dte[4] = { 0 };
+> +    IOMMUNotifier *n;
+> +    int ret;
+> +
+> +    bus_num = PCI_BUS_NUM(devid);
+> +    devfn = devid & 0xff;
+> +
+> +    /*
+> +     * The main buffer of size (AMDVIAddressSpace *) * (PCI_BUS_MAX) has already
+> +     * been allocated within AMDVIState, but must be careful to not access
+> +     * unallocated devfn.
+> +     */
+> +    if (!s->address_spaces[bus_num] || !s->address_spaces[bus_num][devfn]) {
+> +        return;
+> +    }
+> +    as = s->address_spaces[bus_num][devfn];
+> +
+> +    ret = amdvi_as_to_dte(as, dte);
+> +
+> +    if (!ret) {
+> +        dte_mode = (dte[0] >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
+> +    }
+> +
+> +    if ((ret < 0) || (!ret && !dte_mode)) {
+> +        /*
+> +         * The DTE could not be retrieved, it is not valid, or it is not setup
+> +         * for paging. In either case, ensure that if paging was previously in
+> +         * use then switch to use the no_dma memory region, and invalidate all
+> +         * existing mappings.
+> +         */
+> +        if (as->addr_translation) {
+> +            as->addr_translation = false;
+> +
+> +            amdvi_switch_address_space(as);
+> +
+> +            IOMMU_NOTIFIER_FOREACH(n, &as->iommu) {
+> +                amdvi_address_space_unmap(as, n);
+> +            }
 
-> The client side of the associated datagram socket must be properly =
-configured
-> with the appropriate values for SO_SNDBUF, and SO_RCVBUF. Set these =
-using the
-> setsockopt(_:_:_:_:_:) system call. The system expects the value of =
-SO_RCVBUF
-> to be at least double the value of SO_SNDBUF, and for optimal =
-performance, the
-> recommended value of SO_RCVBUF is four times the value of SO_SNDBUF.
+Hi,
+I think amdvi_switch_address_space() should come after
+amdvi_address_space_unmap(). amdvi_switch_address_space() unregister the
+VFIO notifier, hence mr->iommu_notify list is empty and we do not unmap
+the shadow page table.
 
-This advice is wrong since with unix datagram socket the send buffer is =
-not used
-for buffering. It only determines the maximum datagram that can be sent. =
-This is
-not documented in macOS, but documented in FreeBSD manual. I tested this =
-for=20
-Vmnet-helper, using 65k send buffer (largest packet size when using =
-offloading)
-and 4m receive buffer.
+Code works fine because eventually vfio_iommu_map_notify maps
+entire the address space, but we should keep the right ordering.
 
-This configuration (1m send buffer, 4m receive buffer) is used in many =
-projects
-using the virtiaulization framework (lima, vfkit, softnet). This is why =
-I started
-with this configuration. But these projects use it for unix datagram =
-socket and=20
-the advice may not be relevant to unix stream socket.=20
+Regards
+Sairaj Kodilkar
 
-This is what we have in macOS manuals about the values:
-
-getsockopt(2)
-
-     SO_SNDBUF and SO_RCVBUF are options to adjust the normal buffer =
-sizes
-     allocated for output and input buffers, respectively.  The buffer =
-size
-     may be increased for high-volume connections, or may be decreased =
-to
-     limit the possible backlog of incoming data.  The system places an
-     absolute limit on these values.
-
->=20
-> Can you show test result grid matrix for the incrementing these
-> send/recv buffers independently ?
->=20
-
-Sure, I think testing with the same value and with default value for =
-receive buffer
-will show if this make a difference for read.
-
-Note that I tested only read - in this case the client send small nbd =
-read command
-(~32 bytes) and receives nbd structured reply with 2m of payload (2m + =
-~32 bytes).
-Changing the client send and receive buffer shows very little change, so =
-it is likly
-that only the send buffer on the server side matter in this case. We =
-need to test
-also write to nbd. =20
-
+> +        }
+> +    } else if (!as->addr_translation) {
+> +        /*
+> +         * Installing a DTE that enables translation where it wasn't previously
+> +         * active. Activate the DMA memory region.
+> +         */
+> +        as->addr_translation = true;
+> +        amdvi_switch_address_space(as);
+> +        amdvi_address_space_sync(as);
+> +    }
+> +
+>       trace_amdvi_devtab_inval(PCI_BUS_NUM(devid), PCI_SLOT(devid),
+>                                PCI_FUNC(devid));
+>   }
 
 
