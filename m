@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0FCC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 21:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32045C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 21:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7KuF-0001NT-AK; Tue, 22 Apr 2025 17:11:51 -0400
+	id 1u7KuA-0001Cu-Jj; Tue, 22 Apr 2025 17:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Ku5-00013D-4L
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:41 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1u7Ktv-0000zr-OO
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:34 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Ktx-0000QC-4C
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:34 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2260c91576aso49569305ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 14:11:31 -0700 (PDT)
+ id 1u7Kts-0000PJ-Cn
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:31 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7396f13b750so6157363b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 14:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745356290; x=1745961090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745356286; x=1745961086; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DUF+4Y4/PqO50T2IhlnvWA6B/DIxYokH9Y5du5vjVAo=;
- b=Kg19Xh/D1KY5PbcsnTi3QdbSAjma+/YQOdvfHLwc167i1A15NsJ+kD/rgIJs8qEFQQ
- Tm4ibXAddMLIUZ12i2/r7Y1kN7p+H0IyWuhY6wU2oxrIYUNQ9qneKzzeduZpM5VV/hJA
- XjOm7SAFQUhGGDD+2UyrSkIuz6Mw4+Lhs3HEBrmoMB5DIkthKyEi3WWwaMXDDGBGPYgs
- VtX5tqeK+bcr8E3ChYR0LE4abxzRb5PSXa3apcmmuEAadHtLZGGi/XqrN4KOw6wrjunk
- ndZp59OJ/0gel9z6B8eTO1+LFaSygAY2dvxLobvTQ5+Q/1Dhmqas36jBo28rtVE9vdgh
- sAKQ==
+ bh=BEoa5+P2s+dvjQMF6oUGcAe5STudghf85RD71OkQiHw=;
+ b=Xv9+55YKv+AuK92hJXPNdVqnAd0rZdHvsIzoKjl+wFX9FHssTIZyyeank8gH+RchYB
+ ehwkHbt9QVF2ciS8P/e5N5nM1JoGiOeKRYTt9v5JjSDDDe5B+Dr2s7CuQkuBhntnfi2R
+ ULNDwMx/PklfuHL2JcJ9TDMBDGFeUbwn7oU8fyPPu55duKIDNOA98mSplWrD1NR9Gwp8
+ 6dpOscMEW8lr/b5okWBx3KVltEQ2jarcI94reDE1Nunw7e9q2JypAeIYjMXcgPT4knGA
+ hQ/aZY+//YssRiiIrWjiNn3DPOwTOAYe/gNxJDYOe67j3/TxPUn2obrMNkVxrBN9167l
+ ypvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745356290; x=1745961090;
+ d=1e100.net; s=20230601; t=1745356286; x=1745961086;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DUF+4Y4/PqO50T2IhlnvWA6B/DIxYokH9Y5du5vjVAo=;
- b=uwxWqlCvKi0AZayV/Hx3mixvy/unNAVC2AiSbXsGMDIcfhitUuP6XWr28WRu3f1sZ/
- 1/UR1eZG96emnMb/IS0667grAj4NCiohzMV+aZ2vYWrBTVwxekQViHY+yt41se0VZJJl
- jnRzySBYKDBBnaMoQPtHuK/6WZNsChztdEsacvMODtyemPQ5QBP+OKBlKdN012fpXm+9
- YAD728idTGGHYJbrdhZdZVHbNcIXpXD+A3w7RKGqPUFJjFQEP86DVU583k8ZxWJsQNn+
- CqTHAdDk1jpaEtolDB99BE9ZWQd0ytTSRjbZeeSUm26BmP/JxlxpiC/7/epwqKvSGZ33
- kcbw==
-X-Gm-Message-State: AOJu0Yw2FwPMgrMGVB8JTUXvefVSsvZV+ZrgCTV16qn0JTQYQhwojjP/
- inivN/Q7xI8sjxqP18C5ls+1lisxBJIcshkFzwcFuju+6wuDySBffCiL9QQf8dj3YdsZpB0cFo2
- C
-X-Gm-Gg: ASbGncuxyuQdRlpQh0cbc16nMOjoUDzb49856wsUJ/koFCyMXKCSH02MeKFmzJ1xL7y
- iX52rvfksB31g0eu8Bntpcfh++Ibg3iDv5z+ZD41xZPa0ggtAKC2XMt0KjbUDA77vXiKiCG5686
- 0oGbFJVdEBxGnoWm5u+qTdOTINwtjppxsXBAJd/5m5TIIvzp0HgTeVx/E2wzrBw42v+VFsksZpx
- fJmiIF0XH5RsFqIfPLbW5tIfab1l86ZEFLHyInkeAC5zTIlT3CNUoL0ddqsqVE4DiB4zmcgln7Y
- 70geWCtgHGyvd+gRDl5K2bIzmZ4/PPV/f+q6i7cBKV2/OTe8tJ901O6/XjwpVVC1v5E3eS7cxdY
+ bh=BEoa5+P2s+dvjQMF6oUGcAe5STudghf85RD71OkQiHw=;
+ b=ixw+JJD4SgsmRAHj+PyAowQd4Zg5+lvstWVw5n3BgCiBNLULcQs1GKEtyx+254XFUJ
+ OasDEQdENafRjwfTPq1e5DqQnm23kR3Nkrk4rjewKzNFZAm4gQtQqko246jiOWbkJm/U
+ 3BDo2Mpmsfs0YDMR2tYMCeKwaFQnzxfIO3Mo1YDOOWB9ofXqrAyqfm7wiredsyOy56Cp
+ soRHDBaKNl3zw+tu6QNYfiaZ0Byc5cmVI3XBpany+Kw0LqgJVtRMvEd++j3ZfS+7ytrp
+ Yf2QyujQR6683ciEEEaGM6gppCgIieg7jJwKurDh6J84iBayIwpoQEjMZBBHEETunedB
+ HBcQ==
+X-Gm-Message-State: AOJu0Yy5wvpTUHPbPP46WkrKJC6A9H6MIXoq9XWzYVEhWq0M117Hb+HC
+ i+VZVOQAYe7c6wx9d4o1vfFn1jOFyjkKY84NhNJ3IUX8VxhJXMu8uK/1HiU9gKtccNSGotuvSgx
+ u
+X-Gm-Gg: ASbGncua8onEBToQHPLXarC8E0WEQqNYv3g0RuzuEjHtZ8m9hkaO1j0XMwmwWTqR2UK
+ x2tGu9UGIM8TullWNIMtHscp9We/r6XNTzvglx8izpgG0+FGANmivixYBGdHBvG3qXamUckcYwx
+ w+PPJAYveqLghB9sB7y1e4ZcTnZP0qMqUX6BB2d/w7r8dtsI+TGKdBp2jgOg6FTdghcN0+eSorT
+ JrsiIEdfiYxyUmwkfeV120CTHIgG1aNKHZRmZDRAYmMZiZ/P5THaY6xZNMN/kKMi0lloH7/dh5u
+ fZ/Ijgixy4LVDSocla+muwlJsQA3CJdwxodZ8Rvuj4lXMoK7MdD0Quf0Ajab+CyCPActlmMAfC8
  =
-X-Google-Smtp-Source: AGHT+IFwofosnLaGa5ctNpth/ix1ATYCi4YSKHCWu1cajFapC19ohtwvKdNz9P9PfVezq4NFpkDKXw==
-X-Received: by 2002:a17:902:f684:b0:224:194c:694c with SMTP id
- d9443c01a7336-22c535c03a1mr263373495ad.28.1745356290191; 
- Tue, 22 Apr 2025 14:11:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH85Xbb6fHERhvGrN7qw1qb234RqITajeWO4p5kIJQXuT523MIGes66o7BG7UfwabqrYNQgRQ==
+X-Received: by 2002:a05:6a00:884:b0:730:97a6:f04 with SMTP id
+ d2e1a72fcca58-73dc1494019mr24972876b3a.7.1745356286115; 
+ Tue, 22 Apr 2025 14:11:26 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbf8e4932sm9448160b3a.55.2025.04.22.14.11.29
+ d2e1a72fcca58-73dbf8e4932sm9448160b3a.55.2025.04.22.14.11.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 14:11:29 -0700 (PDT)
+ Tue, 22 Apr 2025 14:11:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 7/9] target/avr: Use do_stb in avr_cpu_do_interrupt
-Date: Tue, 22 Apr 2025 14:11:22 -0700
-Message-ID: <20250422211124.305724-8-richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 1/9] target/avr: Improve decode of LDS, STS
+Date: Tue, 22 Apr 2025 14:11:16 -0700
+Message-ID: <20250422211124.305724-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422211124.305724-1-richard.henderson@linaro.org>
 References: <20250422211124.305724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,38 +101,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The comment about not being able to define a field with
+zero bits is out of date since 94597b6146f3
+("decodetree: Allow !function with no input bits").
+
+This fixes the missing load of imm in the disassembler.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 9d8caa67a24 ("target/avr: Add support for disassembling via option '-d in_asm'")
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/avr/helper.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/avr/translate.c | 2 --
+ target/avr/insn.decode | 7 ++-----
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 7d6954ec26..f23fa3e8ba 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -88,14 +88,14 @@ void avr_cpu_do_interrupt(CPUState *cs)
-     }
+diff --git a/target/avr/translate.c b/target/avr/translate.c
+index 4ab71d8138..e7f8ced9b3 100644
+--- a/target/avr/translate.c
++++ b/target/avr/translate.c
+@@ -1578,7 +1578,6 @@ static bool trans_LDS(DisasContext *ctx, arg_LDS *a)
+     TCGv Rd = cpu_r[a->rd];
+     TCGv addr = tcg_temp_new_i32();
+     TCGv H = cpu_rampD;
+-    a->imm = next_word(ctx);
  
-     if (avr_feature(env, AVR_FEATURE_3_BYTE_PC)) {
--        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
--        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
--        cpu_stb_data(env, env->sp--, (ret & 0xff0000) >> 16);
-+        do_stb(env, env->sp--, ret, 0);
-+        do_stb(env, env->sp--, ret >> 8, 0);
-+        do_stb(env, env->sp--, ret >> 16, 0);
-     } else if (avr_feature(env, AVR_FEATURE_2_BYTE_PC)) {
--        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
--        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
-+        do_stb(env, env->sp--, ret, 0);
-+        do_stb(env, env->sp--, ret >> 8, 0);
-     } else {
--        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
-+        do_stb(env, env->sp--, ret, 0);
-     }
+     tcg_gen_mov_tl(addr, H); /* addr = H:M:L */
+     tcg_gen_shli_tl(addr, addr, 16);
+@@ -1783,7 +1782,6 @@ static bool trans_STS(DisasContext *ctx, arg_STS *a)
+     TCGv Rd = cpu_r[a->rd];
+     TCGv addr = tcg_temp_new_i32();
+     TCGv H = cpu_rampD;
+-    a->imm = next_word(ctx);
  
-     env->pc_w = base + vector * size;
+     tcg_gen_mov_tl(addr, H); /* addr = H:M:L */
+     tcg_gen_shli_tl(addr, addr, 16);
+diff --git a/target/avr/insn.decode b/target/avr/insn.decode
+index 482c23ad0c..cc302249db 100644
+--- a/target/avr/insn.decode
++++ b/target/avr/insn.decode
+@@ -118,11 +118,8 @@ BRBC            1111 01 ....... ...         @op_bit_imm
+ @io_rd_imm      .... . .. ..... ....        &rd_imm     rd=%rd imm=%io_imm
+ @ldst_d         .. . . .. . rd:5  . ...     &rd_imm     imm=%ldst_d_imm
+ 
+-# The 16-bit immediate is completely in the next word.
+-# Fields cannot be defined with no bits, so we cannot play
+-# the same trick and append to a zero-bit value.
+-# Defer reading the immediate until trans_{LDS,STS}.
+-@ldst_s         .... ... rd:5 ....          imm=0
++%ldst_imm       !function=next_word
++@ldst_s         .... ... rd:5 ....          imm=%ldst_imm
+ 
+ MOV             0010 11 . ..... ....        @op_rd_rr
+ MOVW            0000 0001 .... ....         &rd_rr      rd=%rd_d rr=%rr_d
 -- 
 2.43.0
 
