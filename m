@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2639CC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46F5DC369D8
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JO0-0003Dl-Q9; Tue, 22 Apr 2025 15:34:29 -0400
+	id 1u7JTD-0006hm-5D; Tue, 22 Apr 2025 15:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLo-0000sR-0i
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:12 -0400
+ id 1u7JSJ-0004Df-P7
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:38:57 -0400
 Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLj-0006f6-Uv
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:10 -0400
+ id 1u7JSH-0007Mi-7z
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:38:54 -0400
 Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-225df540edcso2861915ad.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:32:07 -0700 (PDT)
+ d9443c01a7336-22c33e4fdb8so59303145ad.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350326; x=1745955126; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350731; x=1745955531; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZSAf1+HedmWB7UB003Jb743ifjZ0UvEme3TNs+0ZvNA=;
- b=SOy5jfIydsv5bnXRjxMaCR/GwPFG9lH46AniRisHWJOgbSHGwx4GgZgnPv32Oa0KZo
- kb0Af9aUmE+n2p904Jhj78U/imsNHY+j7+2Wz3SRrjx5ZRbYAqU+VYV1FS2MxDF7QIKT
- tqSyzndpd8xFDJw1Hc865h/YyUgUY37tVL6qmslcqzoWgU3uLkIjmglC9YqXmBgWPCsK
- tUNKB7V8Vsn6O8jLyosbAeKZuXtrSXgnWsUJoKvhD5uFZytQwlQchvXsZ5h9IpbMpEwF
- 7sCdppfEKHOgZuWrqBVqh2zCaxfRysldRuONdLohDiYfTsYkhu9aJcxPeE5K01QsgKOq
- gD0A==
+ bh=NFR9lsWoMXNYRBlDfEvBXzbnQL4knAWePayfKJdKcZo=;
+ b=P1WNj+bwGmp8ugxK1jKvHw0yQRI1PsMmNOIHzLfSrHQxPrVKLFMJHnJ9xlW8NR9xBo
+ 9HFi8WQFDbB3g/NpbEkNknbRUWOzQ0T7rbLl+cSrfGwjR9eQ3Q22ykqKa8ockFtDAsdF
+ yqvLpsq+XvRw8gjjYh34OYSsyUkWhKzmk4LQp5ZHEUVj3pEcvkD4yeu1WSc4Z19hXZAt
+ SurUNqa+/3L5NmHmjpUFlrAPKaFiXUd19Z9d4N5jZdMjWkJCzqOfIF70zY3KWnkeiwRE
+ DAGzXtW8bMBYY8e00NONB9oNxtchtcoaNeZ/dv8lsh6tKnkEAJTfK09pV6XmQFxZbGhY
+ WSIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350326; x=1745955126;
+ d=1e100.net; s=20230601; t=1745350731; x=1745955531;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZSAf1+HedmWB7UB003Jb743ifjZ0UvEme3TNs+0ZvNA=;
- b=PlB/TaGIxjpQNqPpSxxFqVxwVxcQ+QLxy00PaGPBCahhTsQ4XGVMXtZwrZMDpeM29A
- BkKdZ5J93gWxlknfiAvGoa7/iJFKlwuYrIVjuHdwTvvTCA2ZnyuT4PGwEMT8RswxNYoE
- hjOhVkEde0PzJo5D7t32Qnzr3O0FMJDipibza1l2eA7uwbsM9cudx2vC5Y5XpJE7RtaD
- iw55lR56QzV+iStsEeWfDtubYW65auLkC80EwgZCnQWetj2Q1bxA/ZJqmfRwS2tZj/t6
- M6FHI1lwwDsch/pBv+VU0WbV2OPVUelaEds2JAXUAoJ3sBL1KSOxVLa0SOZgOEqGm4Tk
- yCCw==
-X-Gm-Message-State: AOJu0YwzFKjkNiO1wiE1Ygo3YcQ6OP5W5Ipk1yu3nF/kRmCg5G/nssX1
- MSGgctG3wH0HMCGV8VqCFVQM9vBAZ3iv1JsZJzppIKw3wA5m3Qum0HrjJfH3kjhTm5m/uLMZNqb
- w
-X-Gm-Gg: ASbGnct/op5KcH3kjS/qwv1UGeTC9U8S+aWIsZOdbU7FoLsRGhEa1tEM4kWqWp3rdQh
- s2n9vYO7oubTVXY3rVoiRq7zBdH3Rk2m2pEr13Qn5h6iLzQDqmZNKxZ/O+Hae9A+9OP3taM3Xuj
- WbaHN4whaPyBrmS7N4dDq+rNjbMMQ650KbSEk2rpObvxeJ3NvSgr3j+Dv3OEaItTNrBZw0hWmSv
- 8TTz9t3ioR9SoB/dz/or0bMgrhqe0ZP8rt7JEvtidUZYr0uV5GwCTx2St8EeaHpLzCo2+FeSwW+
- 7QIB0/2djmU+voL2t2fCaKbgCM+VHY5gA5gpG+JKcLKi91A0rdPbmvFK+uqR/fzobadiuCw/X4s
+ bh=NFR9lsWoMXNYRBlDfEvBXzbnQL4knAWePayfKJdKcZo=;
+ b=lCscyYEnk9aw4lWncIttcLOiQEjjr1urAUFBZM/KcV1dVV8PPIxUvL8/Q4tMCTlSj7
+ nAk5SVw8+6u3Scl87bCrION5mE3LFGifN/no/EOzdjl/uuvJ5nJA1P0ekU8zb+a5W/zX
+ PbkRCFVbGs/+xM/MtxiupVPFTnHLom8zoynXqo+E7TMoZMWp3xUQyzoB82tZ7ZsqJWOR
+ KL1e6zY2VoFl9rBFsuk6tMoaLjLeqSZUebkf20OvoRGeo6eiEpjqMhDVuQbQHjnO2Cfn
+ F+djx4OurtRqnMwe7KkQxq6nd3DK2X5sodJ4o9L4SvWUXnSh8wAndAMToCAiWpk+WuD7
+ FE5Q==
+X-Gm-Message-State: AOJu0Yzx7n1LifGggWP2lv3L5l1Ypr3LkXtXjitd15RmgAoJvZGfaPjF
+ 6anZ50rGLVlMoAN1rM5rPf/gLSwFxjqB6AwEgfvHkoZndkVN86HAvVL9Ef5fZ0z8bzxD2Cdf7Zo
+ b
+X-Gm-Gg: ASbGnctSYx7yBktnszcOR0OZEF0ByFr3A1RIL5x39TDYLxWvZDwKTYTtYOFyHOQ0tkj
+ PWzyOtbNj7JNRAb1N5HRMQ6MwcTQyl+yKaO+rvAXWkoQ/4jwDOyvLPwKv1Sjyjl/hFdGo9AYrj+
+ HLjner1zjMN7+RHaZ9cIfTwMMR2gNKl+Qb5cRN7roMC8huhL0xeRb9uDnGFIDGU7SxbJYyWY7rN
+ BbD1ExPWA4F21gpn+DmBq1ydX09MehwV02MKfagmgQ09A9XlaAuh6gqaznRaE9xtr1rO8hH0UCw
+ VfHIE/P+Lf4DBtr7Kn6/+Fx9goZDjxrsKm2hb+60r6hAKJjVc37CoyoHsri633ZDzoknUCJdWDA
  =
-X-Google-Smtp-Source: AGHT+IH2Z2pF4fOoUkVEctNzQnT8DhdXcokGsj4N5z6LOy0X3ZhTNUmQ++7Ke0NI/AySXFHznrRb+g==
-X-Received: by 2002:a17:903:904:b0:216:271d:e06c with SMTP id
- d9443c01a7336-22da3183acdmr2420475ad.4.1745350326552; 
- Tue, 22 Apr 2025 12:32:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGKhPtN38jryYnImHi6oAruAJqqx6NzT3JhvY/HSUk2qIyahtf81egAcj939wy31z44SHFrzw==
+X-Received: by 2002:a17:902:e544:b0:216:2bd7:1c2f with SMTP id
+ d9443c01a7336-22c5359c356mr202602155ad.18.1745350731528; 
+ Tue, 22 Apr 2025 12:38:51 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.32.06
+ d9443c01a7336-22c50eb484dsm88951765ad.148.2025.04.22.12.38.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:32:06 -0700 (PDT)
+ Tue, 22 Apr 2025 12:38:51 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 070/147] accel/tcg: Remove cpu-all.h,
- exec-all.h from tb-internal.h
-Date: Tue, 22 Apr 2025 12:26:59 -0700
-Message-ID: <20250422192819.302784-71-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 137/147] tcg: Have tcg_req_mo() use
+ TCGCPUOps::guest_default_memory_order
+Date: Tue, 22 Apr 2025 12:28:06 -0700
+Message-ID: <20250422192819.302784-138-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
  envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
@@ -101,41 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Not used by tb-internal.h, but add an include for
-target_page.h in tb-maint.c.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In order to use TCG with multiple targets, replace the
+compile time use of TCG_GUEST_DEFAULT_MO by a runtime access
+to TCGCPUOps::guest_default_memory_order via CPUState.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tb-internal.h | 2 --
- accel/tcg/tb-maint.c    | 1 +
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ accel/tcg/internal-target.h | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
-index f7c2073e29..f9a06bcbab 100644
---- a/accel/tcg/tb-internal.h
-+++ b/accel/tcg/tb-internal.h
-@@ -9,8 +9,6 @@
- #ifndef ACCEL_TCG_TB_INTERNAL_TARGET_H
- #define ACCEL_TCG_TB_INTERNAL_TARGET_H
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 23aac39b57..f5a3fd7e40 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -46,16 +46,15 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
  
--#include "exec/cpu-all.h"
--#include "exec/exec-all.h"
- #include "exec/translation-block.h"
+ /**
+  * tcg_req_mo:
++ * @guest_mo: Guest default memory order
+  * @type: TCGBar
+  *
+  * Filter @type to the barrier that is required for the guest
+  * memory ordering vs the host memory ordering.  A non-zero
+  * result indicates that some barrier is required.
+- *
+- * This is a macro so that it's constant even without optimization.
+  */
+-#define tcg_req_mo(type) \
+-    ((type) & TCG_GUEST_DEFAULT_MO & ~TCG_TARGET_DEFAULT_MO)
++#define tcg_req_mo(guest_mo, type) \
++    ((type) & guest_mo & ~TCG_TARGET_DEFAULT_MO)
  
- /*
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index d5899ad047..df3438e190 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -26,6 +26,7 @@
- #include "exec/page-protection.h"
- #include "exec/mmap-lock.h"
- #include "exec/tb-flush.h"
-+#include "exec/target_page.h"
- #include "tb-internal.h"
- #include "system/tcg.h"
- #include "tcg/tcg.h"
+ /**
+  * cpu_req_mo:
+@@ -67,7 +66,7 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+  */
+ #define cpu_req_mo(cpu, type)     \
+     do {                          \
+-        if (tcg_req_mo(type)) {   \
++        if (tcg_req_mo(cpu->cc->tcg_ops->guest_default_memory_order, type)) { \
+             smp_mb();             \
+         }                         \
+     } while (0)
 -- 
 2.43.0
 
