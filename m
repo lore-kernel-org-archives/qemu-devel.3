@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A5D2C369D1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427E9C369D1
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JIe-0002aw-PU; Tue, 22 Apr 2025 15:28:56 -0400
+	id 1u7JPR-0006ND-Ti; Tue, 22 Apr 2025 15:35:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JIT-0002Vg-6n
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:45 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1u7JLk-0000lu-1l
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:09 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JIP-0006Cd-5D
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:44 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-308702998fbso5010904a91.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:28:35 -0700 (PDT)
+ id 1u7JLf-0006e6-JW
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:05 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-224171d6826so79613015ad.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350114; x=1745954914; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350322; x=1745955122; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lVaQ8uivr0ZSIFp6lnsLbuP1aUnA44gVuobbLqVlt/s=;
- b=SPZlSHPiFamSHNBsL2ksaFIsvWyj1SnRypY2hG02lpArYy0VfGwOXV8MmAPxyMky40
- naol++jgbj7wJAfADNC53vfywseLURvnG5KMXxilb8QJm9EOHiiLzBRI2NMsA35MsP1Y
- hTLDukRajS4jMXgsCycOmrothu5C0vWXNdBYIzTnL6SJlNpRrrD8oIS4nknGCTfi8CDI
- dJVpZezCzNjZw6HTnbsz8Spf/YY5Q4FpGlhqlTrKvdVukSHoCsQYGYRZquvc7XdUSeHm
- uBM+aF+rf/1H76TAq/vj+kLvU7/BM7915/ZQ70lNjt8M/cAvDBACHECiCLDY9WRqDNOB
- mJwg==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=xgU73YOfMEflbLqLNoDMX+RVctfg0fSpdUj7bFm7Lqc=;
+ b=gYrU+NJjTwRm+rPXDBwaEjSQbuEpz5jAhRjaEfZMjgHa9e9x7D6XGTACI3r1UFTAIU
+ ti0cm6Zi1nVR/COE0egnSlHtDiiIKmBumiOHBkN1Ba7IvrfnSz9/uhyzJQImb1viuir7
+ cN8jnN+8vV1XOpZUP/pPyQuvyvM9R/H1ZJAeFE1+2BXJt0KcCCokxnNElsbYSzKUs9IR
+ m8dlnFFGx/yH+8dMV6uC7oij6Ve8D+m+G8XBvugzU8sS0iXKVO4Bk0Wsa9fuDNEX2GoN
+ EEfaNfe2+ZQjdoDcso+LsM7wgVS/KrR4vYWI7V3SkUkAvPeKZ8I3kmZteTpOBBAn9Mjc
+ 9hWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350114; x=1745954914;
+ d=1e100.net; s=20230601; t=1745350322; x=1745955122;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lVaQ8uivr0ZSIFp6lnsLbuP1aUnA44gVuobbLqVlt/s=;
- b=jMNS6gwfflGUf60Vlzr1VG8tAxF4yPj4CZl0LvJ+7YvbuXis8LSBheXPKJeLKhzCv5
- kvI6tw1ASlc2R+Zto6Y5ebREAgowL4fKBht6gEwkfWtithnv2IbIiBzTsu95ARY6lWHO
- 8GQgoyfnxmcE5uMiTQDCL7f2TBr7cDPRJ/JpNblnBCT1yjNQ9COMOaBgSiI064OYopw3
- xFjCaM/RtgGPxQO3sysmCiBWOPLH/2gjc8GAK7lVBWFKBdhX5nY3uPtwfLYSt61P2R88
- lAHrpJKsAszp8eipFrVBEwGxdGdgnOQ0itVP7N7aSMEPI5LhyNduweEYSTnoj2hzuxM1
- ZZJQ==
-X-Gm-Message-State: AOJu0YxiSIL6LFvoMSrvqD34gGuTMPw6MkWuH+GFqt4viktir7j273YA
- bOcahr9D6NZiPzLuCFYRRsAjT7MCwNt6WQ/1zmThfjEsapM2LhwG1w6YlqCSrUS3eE/ahkwNjna
- U
-X-Gm-Gg: ASbGnctfG70GsM4hkrNEzgRlhrpcr0RrFANyOx1NI1atL/SRc1SpK4qmO9HS8mh7MBA
- /TTUP+EjjxlS0gkSHySg/DwOlJxIfGzRhs/oYYdHrHWK+CowB25Yag2kN3K+Qu3H8fKYRTYbkYS
- eFmQ2zgxtkrhsOVZuqIVTJ739wcaoOqTR/WKPUN7drVMDXk4p9hE0hVIxR+IKFy2rDqLGNEn6cR
- SuSTU6GwhZvPRzU2Chc50hVNX3Nmqs+ZwJJ5oNjWwc/E6rkTFTSRqt5rf/8obkWy1TfMQdmascr
- c1GssL2FQCEtypX9DjOHqGJKyTS10l0N+JPjy/THIvbt8pwwlveAGaRQYYYQVf9Ul/WB6VaAvps
+ bh=xgU73YOfMEflbLqLNoDMX+RVctfg0fSpdUj7bFm7Lqc=;
+ b=mhXmfL3gxBIfj1bzLUZiu5zRKr9McLKecTQCXdyJ20EW+XRKbs/wrvPqMQfwaTB9Zh
+ SzvisuxZ4Z/4x6pXfPpygZYlE2KOBRhpdG+Sf5X7uhQom2gL/jrloiHAUL5mHSvZNhwq
+ uSoRtaj/U1QouSDJDPLtqmqjdpYOl0mvqCyQEn8pmIlK+ypsJBkQFdRXIbuGXwm5+u1G
+ 2UYMoeZcXhuz0g3md17us7dq4SY+xwOydevLZKNvC/JkVjMfC3KkrM/dL4Su6LF0WMQi
+ xJPJ2/kz7meq+tWwHcDKwkzVzSzRCD/BSzr4NmIk+46Vj+8vmtAXzsZW1BqBhLt/AcQf
+ ve6A==
+X-Gm-Message-State: AOJu0YytsCLJw3yHEiu5ubfPIfYyZYir9NJcHe6qqgg/eEivsz78P134
+ S817djPPncLqEu+ncyN6sPmz4Th2hQGdOhHaSggHIkaiPy67wWUnBnSl71Lnlu7MYsBDi7sPPD6
+ B
+X-Gm-Gg: ASbGnct5+41RW812gEyWVlvKQtOVJQBP1EaoTKQIHMhYTzv3/4U+4JWahaJi4MVpiUG
+ Otn4apEPhhPtuwvHYFQnbg/7ZNIpuI8Jyc04dIKoIL/08hiDLhYZsZLOsIXYLhxtLb26XpU/ihc
+ n2MHTrcvMb4x+bvSvtvZgBGuDVfKYRB/1b4Xw5dvJQceJ837ARlFUWLROpsTVdN0TotX1sC9afC
+ 7RvLUDTbUvIhU7U/DYwqAzwxQ0NgKJetomylSge5Cu4hEPHqEkVAi6VLjRbVmEMFX0kTdqdECa0
+ 2Dv/mMxQYlHBfFNQa6qmWkmmX1VDFz/ePWYxb46MNWwGu+HZ46FA8XVoKr1zboEKfKIXiXeIXpA
  =
-X-Google-Smtp-Source: AGHT+IHeIN9/7OF7X0azbbbfAD73V7MTV5FfetqOkT+DBbiHv1+pdnmDjoQtREkvSnfDTwUmkUGGZA==
-X-Received: by 2002:a17:90b:4ecf:b0:2ee:693e:ed7a with SMTP id
- 98e67ed59e1d1-3087bccc3a5mr23409251a91.35.1745350114420; 
- Tue, 22 Apr 2025 12:28:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGu1VapgOEfYgynacBU0pOJ6+VaXmA1lGetjRfxNFbim34rQHlmJ2Q9oOyLzhUkRgE4+kxV0w==
+X-Received: by 2002:a17:903:2983:b0:224:1781:a947 with SMTP id
+ d9443c01a7336-22c53580c35mr263978735ad.21.1745350322148; 
+ Tue, 22 Apr 2025 12:32:02 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3087df21278sm9146865a91.29.2025.04.22.12.28.33
+ d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.32.01
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:28:34 -0700 (PDT)
+ Tue, 22 Apr 2025 12:32:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 021/147] accel/tcg: Fix cpu_ld*_code_mmu for user mode
-Date: Tue, 22 Apr 2025 12:26:10 -0700
-Message-ID: <20250422192819.302784-22-richard.henderson@linaro.org>
+Subject: [PATCH 063/147] accel/tcg: Fix argument types of tlb_reset_dirty
+Date: Tue, 22 Apr 2025 12:26:52 -0700
+Message-ID: <20250422192819.302784-64-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,90 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These routines are buggy in multiple ways:
-  - Use of target-endian loads, then a bswap that
-    depends on the host endiannness.
-  - A non-unwinding code load must set_helper_retaddr 1,
-    which is magic within adjust_signal_pc.
-  - cpu_ldq_code_mmu used MMU_DATA_LOAD
+The arguments to tlb_reset_dirty are host pointers.
+The conversion from ram_addr_t was done in the sole
+caller, tlb_reset_dirty_range_all.
 
-The bugs are hidden because all current uses of cpu_ld*_code_mmu
-are from system mode.
-
-Fixes: 2899062614a ("accel/tcg: Add cpu_ld*_code_mmu")
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Fixes: e554861766d ("exec: prepare for splitting")
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/user-exec.c | 41 ++++-------------------------------------
- 1 file changed, 4 insertions(+), 37 deletions(-)
+ include/exec/cputlb.h | 2 +-
+ accel/tcg/cputlb.c    | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 2322181b15..629a1c9ce6 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -1257,58 +1257,25 @@ uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr ptr)
- uint8_t cpu_ldb_code_mmu(CPUArchState *env, abi_ptr addr,
-                          MemOpIdx oi, uintptr_t ra)
- {
--    void *haddr;
--    uint8_t ret;
--
--    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_INST_FETCH);
--    ret = ldub_p(haddr);
--    clear_helper_retaddr();
--    return ret;
-+    return do_ld1_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
- }
+diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+index 8125f6809c..03ed7e2165 100644
+--- a/include/exec/cputlb.h
++++ b/include/exec/cputlb.h
+@@ -31,7 +31,7 @@ void tlb_unprotect_code(ram_addr_t ram_addr);
+ #endif
  
- uint16_t cpu_ldw_code_mmu(CPUArchState *env, abi_ptr addr,
-                           MemOpIdx oi, uintptr_t ra)
- {
--    void *haddr;
--    uint16_t ret;
--
--    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_INST_FETCH);
--    ret = lduw_p(haddr);
--    clear_helper_retaddr();
--    if (get_memop(oi) & MO_BSWAP) {
--        ret = bswap16(ret);
--    }
--    return ret;
-+    return do_ld2_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
- }
+ #ifndef CONFIG_USER_ONLY
+-void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
++void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length);
+ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+ #endif
  
- uint32_t cpu_ldl_code_mmu(CPUArchState *env, abi_ptr addr,
-                           MemOpIdx oi, uintptr_t ra)
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b2db49e305..10090067f7 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -912,7 +912,7 @@ static inline void copy_tlb_helper_locked(CPUTLBEntry *d, const CPUTLBEntry *s)
+  * We must take tlb_c.lock to avoid racing with another vCPU update. The only
+  * thing actually updated is the target TLB entry ->addr_write flags.
+  */
+-void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length)
++void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
  {
--    void *haddr;
--    uint32_t ret;
--
--    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_INST_FETCH);
--    ret = ldl_p(haddr);
--    clear_helper_retaddr();
--    if (get_memop(oi) & MO_BSWAP) {
--        ret = bswap32(ret);
--    }
--    return ret;
-+    return do_ld4_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
- }
+     int mmu_idx;
  
- uint64_t cpu_ldq_code_mmu(CPUArchState *env, abi_ptr addr,
-                           MemOpIdx oi, uintptr_t ra)
- {
--    void *haddr;
--    uint64_t ret;
--
--    haddr = cpu_mmu_lookup(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
--    ret = ldq_p(haddr);
--    clear_helper_retaddr();
--    if (get_memop(oi) & MO_BSWAP) {
--        ret = bswap64(ret);
--    }
--    return ret;
-+    return do_ld8_mmu(env_cpu(env), addr, oi, ra ? ra : 1, MMU_INST_FETCH);
- }
+@@ -923,12 +923,12 @@ void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length)
  
- #include "ldst_common.c.inc"
+         for (i = 0; i < n; i++) {
+             tlb_reset_dirty_range_locked(&cpu->neg.tlb.f[mmu_idx].table[i],
+-                                         start1, length);
++                                         start, length);
+         }
+ 
+         for (i = 0; i < CPU_VTLB_SIZE; i++) {
+             tlb_reset_dirty_range_locked(&cpu->neg.tlb.d[mmu_idx].vtable[i],
+-                                         start1, length);
++                                         start, length);
+         }
+     }
+     qemu_spin_unlock(&cpu->neg.tlb.c.lock);
 -- 
 2.43.0
 
