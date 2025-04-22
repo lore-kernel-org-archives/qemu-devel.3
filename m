@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B58C369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:10:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E753FC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7GAF-0004bd-JW; Tue, 22 Apr 2025 12:08:06 -0400
+	id 1u7G7P-0001lR-UU; Tue, 22 Apr 2025 12:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6N-0008Qd-K2
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6G-0007s9-0K
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6L-00059K-G8
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G67-00056e-5c
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745337840;
+ s=mimecast20190719; t=1745337825;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qHdONrKVBhonIWQs3WP2A/7n7fosRUhbWc1hKpQJX5k=;
- b=CZOTNmi5MRYdg7wCyqKPjZ8IW1m0UJnH8RfdzfseRGAQHfOkE4NyF9Y0ZJW/XaWZsN1Ex7
- 9Z04U28PvcbPoCxz0Ka/wvUfDRs5LYheRd8h+fpiyub3ER2MnyNQt1nXnNOlFNfJPc/aE4
- bAm3coi3zJAQMLYcoNduoZiIwuTtNpI=
+ bh=KWLrfj2Sr0c2cXJpryu5d55eREAwJEqRWO9MeGrYVo0=;
+ b=i+/FZvz0+ldpF4WcrVi56X+10lS5rfQzfc3CY+F1jukvwrh8mZNYxe3VBglEQk8rCGmvXe
+ 0pfsBaC+z+hlgs2z2ZH9U2x1bg0yK9dwqCkRtryZF2W4uMXuN0B7emak2MgLI35dXSjvmx
+ Klo5d/l5UifIEJ1u4n3IOs62jhjbVm0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-Y8b-jWg2MfWUJ_AZayqATg-1; Tue,
- 22 Apr 2025 12:03:55 -0400
-X-MC-Unique: Y8b-jWg2MfWUJ_AZayqATg-1
-X-Mimecast-MFC-AGG-ID: Y8b-jWg2MfWUJ_AZayqATg_1745337834
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-G2YQDwwTOO2SfeBK6Z8IzQ-1; Tue,
+ 22 Apr 2025 12:03:39 -0400
+X-MC-Unique: G2YQDwwTOO2SfeBK6Z8IzQ-1
+X-Mimecast-MFC-AGG-ID: G2YQDwwTOO2SfeBK6Z8IzQ_1745337817
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DF601955E87; Tue, 22 Apr 2025 16:03:54 +0000 (UTC)
+ id 534121955E8C; Tue, 22 Apr 2025 16:03:37 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.105])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C8E5F180010A; Tue, 22 Apr 2025 16:03:51 +0000 (UTC)
+ id 451F718001DD; Tue, 22 Apr 2025 16:03:34 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
@@ -53,16 +53,16 @@ Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  John Levon <john.levon@nutanix.com>,
  Joao Martins <joao.m.martins@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 24/37] vfio: Move vfio_de/attach_device() into device.c
-Date: Tue, 22 Apr 2025 18:02:11 +0200
-Message-ID: <20250422160224.199714-25-clg@redhat.com>
+Subject: [PATCH v3 19/37] vfio: Move vfio_get_device_info() to helpers.c
+Date: Tue, 22 Apr 2025 18:02:06 +0200
+Message-ID: <20250422160224.199714-20-clg@redhat.com>
 In-Reply-To: <20250422160224.199714-1-clg@redhat.com>
 References: <20250422160224.199714-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -87,109 +87,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These routines are VFIODevice related. Move their definitions into
-"device.c".
+vfio_get_device_info() is a low level routine. Move it with the other
+helpers.
 
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-24-clg@redhat.com
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-25-clg@redhat.com
+Reviewed-by: John Levon <john.levon@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-19-clg@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-20-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/common.c | 37 -------------------------------------
- hw/vfio/device.c | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 37 deletions(-)
+ hw/vfio/vfio-helpers.h        |  1 +
+ include/hw/vfio/vfio-common.h |  1 -
+ hw/vfio/common.c              | 24 ------------------------
+ hw/vfio/helpers.c             | 24 ++++++++++++++++++++++++
+ 4 files changed, 25 insertions(+), 25 deletions(-)
 
+diff --git a/hw/vfio/vfio-helpers.h b/hw/vfio/vfio-helpers.h
+index 5d91e33d27be1bdd8eb9b3ce74c39a4ac1991adc..dbcb68bbb0e12607f5ccf15f114530966c2cbcb2 100644
+--- a/hw/vfio/vfio-helpers.h
++++ b/hw/vfio/vfio-helpers.h
+@@ -25,6 +25,7 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
+ #endif
+ 
+ int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
++struct vfio_device_info *vfio_get_device_info(int fd);
+ 
+ int vfio_kvm_device_add_fd(int fd, Error **errp);
+ int vfio_kvm_device_del_fd(int fd, Error **errp);
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 5cf7ae617371a2f8a09e52b1b438fa23703c6dd8..75c48ebf5c21ea93aa8ac4c3aecc63172b633f0e 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -122,7 +122,6 @@ bool vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
+                             int action, int fd, Error **errp);
+ 
+ void vfio_reset_handler(void *opaque);
+-struct vfio_device_info *vfio_get_device_info(int fd);
+ bool vfio_device_is_mdev(VFIODevice *vbasedev);
+ bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
+ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index f16d679e71244e225b831b2cc39c49ee2b1cd940..a4052526ece5fdee0e690ad133416d1dc4eb1815 100644
+index cbe69fb3225f7d30fbded348acea597b26f98651..2dcf70c66e81dddffb35a152da5a18d27a05c6f1 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -1319,40 +1319,3 @@ void vfio_reset_handler(void *opaque)
-         }
+@@ -1334,30 +1334,6 @@ void vfio_reset_handler(void *opaque)
      }
  }
--
--bool vfio_attach_device(char *name, VFIODevice *vbasedev,
--                        AddressSpace *as, Error **errp)
+ 
+-struct vfio_device_info *vfio_get_device_info(int fd)
 -{
--    const VFIOIOMMUClass *ops =
--        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
--    HostIOMMUDevice *hiod = NULL;
+-    struct vfio_device_info *info;
+-    uint32_t argsz = sizeof(*info);
 -
--    if (vbasedev->iommufd) {
--        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+-    info = g_malloc0(argsz);
+-
+-retry:
+-    info->argsz = argsz;
+-
+-    if (ioctl(fd, VFIO_DEVICE_GET_INFO, info)) {
+-        g_free(info);
+-        return NULL;
 -    }
 -
--    assert(ops);
--
--
--    if (!vbasedev->mdev) {
--        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
--        vbasedev->hiod = hiod;
+-    if (info->argsz > argsz) {
+-        argsz = info->argsz;
+-        info = g_realloc(info, argsz);
+-        goto retry;
 -    }
 -
--    if (!ops->attach_device(name, vbasedev, as, errp)) {
--        object_unref(hiod);
--        vbasedev->hiod = NULL;
--        return false;
--    }
--
--    return true;
+-    return info;
 -}
 -
--void vfio_detach_device(VFIODevice *vbasedev)
--{
--    if (!vbasedev->bcontainer) {
--        return;
--    }
--    object_unref(vbasedev->hiod);
--    VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
--}
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 25fdba10a882e35392f26a107509f80e4b1c880a..179c9fb8decc42dcd8d1b4fe10e7acaa2a6f2c7c 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -331,3 +331,40 @@ VFIODevice *vfio_get_vfio_device(Object *obj)
-         return NULL;
-     }
+ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+                         AddressSpace *as, Error **errp)
+ {
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index e6b75baa805241b4df28769338b15a6fe9b99501..b7f75b47af3a5d066eb518903831214df6c3755a 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -312,6 +312,30 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+     return 0;
  }
-+
-+bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-+                        AddressSpace *as, Error **errp)
+ 
++struct vfio_device_info *vfio_get_device_info(int fd)
 +{
-+    const VFIOIOMMUClass *ops =
-+        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
-+    HostIOMMUDevice *hiod = NULL;
++    struct vfio_device_info *info;
++    uint32_t argsz = sizeof(*info);
 +
-+    if (vbasedev->iommufd) {
-+        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
++    info = g_malloc0(argsz);
++
++retry:
++    info->argsz = argsz;
++
++    if (ioctl(fd, VFIO_DEVICE_GET_INFO, info)) {
++        g_free(info);
++        return NULL;
 +    }
 +
-+    assert(ops);
-+
-+
-+    if (!vbasedev->mdev) {
-+        hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
-+        vbasedev->hiod = hiod;
++    if (info->argsz > argsz) {
++        argsz = info->argsz;
++        info = g_realloc(info, argsz);
++        goto retry;
 +    }
 +
-+    if (!ops->attach_device(name, vbasedev, as, errp)) {
-+        object_unref(hiod);
-+        vbasedev->hiod = NULL;
-+        return false;
-+    }
-+
-+    return true;
++    return info;
 +}
 +
-+void vfio_detach_device(VFIODevice *vbasedev)
-+{
-+    if (!vbasedev->bcontainer) {
-+        return;
-+    }
-+    object_unref(vbasedev->hiod);
-+    VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
-+}
+ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
+                              uint32_t subtype, struct vfio_region_info **info)
+ {
 -- 
 2.49.0
 
