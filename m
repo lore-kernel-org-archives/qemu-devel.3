@@ -4,73 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E141FC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 10:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D561DC369D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 11:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7B5S-0002Lt-SW; Tue, 22 Apr 2025 06:42:46 -0400
+	id 1u7BfB-00026h-1Q; Tue, 22 Apr 2025 07:19:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u7B5Q-0002LL-Sk
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 06:42:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7Bf8-00025y-DV
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 07:19:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u7B5M-00020O-NM
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 06:42:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7Bf5-0005i3-Aa
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 07:19:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745318559;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=8HmyEUkva3SA6YY14SC0fhvTGRIrLQvLkkZHXsO3Iy0=;
- b=XXU8BT8/BQDvjKI70LBEzNPSVEMJafa0FJi65xurxfqlJtBGj0B8V1TSpmsR/GvfcnXcNk
- X5SjJ4DO1wSE1/MUM57O04mdIEVCD20O8NCWW6xO83V6low5ROBJMLt+qG11nq6qdVe1UY
- nwMwsCLJSxhIArO5esbu8TN/EI0UQ3E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-sYu34K-dP7Ca0taI30bHhw-1; Tue,
- 22 Apr 2025 06:42:36 -0400
-X-MC-Unique: sYu34K-dP7Ca0taI30bHhw-1
-X-Mimecast-MFC-AGG-ID: sYu34K-dP7Ca0taI30bHhw_1745318555
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9EC819560AF; Tue, 22 Apr 2025 10:42:34 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.105])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5A201800378; Tue, 22 Apr 2025 10:42:32 +0000 (UTC)
-Date: Tue, 22 Apr 2025 11:42:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Nir Soffer <nirsof@gmail.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Jones <rjones@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2] io: Increase unix socket buffers size on macOS
-Message-ID: <aAdylVf7RZVaTee3@redhat.com>
-References: <20250419231218.67636-1-nirsof@gmail.com>
+ s=mimecast20190719; t=1745320770;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lsdmIFtX99VQcGuR1LBZf7rR8W5MrQzqwjTqq52/G6A=;
+ b=epDWcMYRkc/bE0XOJ5b8+IyhzbgjWXnE/brx+yWpfZhpZEM7sQsT0gI4TZErf0108jlYzw
+ tpzpFsoTcxhH5i79dx6QULUKzoK5anq0MQU82lY5fBzjHKvl6NiiQqnvCUKi7BWpzwY/1m
+ vaB/kIHScR+gHjxBuy7D/FtLElOH8zQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-IsLeB_cjMSaBn5pAL-gsNA-1; Tue, 22 Apr 2025 07:19:29 -0400
+X-MC-Unique: IsLeB_cjMSaBn5pAL-gsNA-1
+X-Mimecast-MFC-AGG-ID: IsLeB_cjMSaBn5pAL-gsNA_1745320768
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf172ffe1so28957735e9.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 04:19:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745320768; x=1745925568;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lsdmIFtX99VQcGuR1LBZf7rR8W5MrQzqwjTqq52/G6A=;
+ b=Cyu7kntmODpeC23b6YQOpGCp6/gxiKAOy3ptEmfcrRg/l9RGIzviRFEHNizti9GVCi
+ 3cx7Xt+PpO0C4yiiuZG56TEMXNGYLaot9MDFFu9DsGgDViHlgWc2CYrLSVGDGsu5SdZM
+ uJd7eegyI3kWuBDeoer+izvgbRrZ7uWgYhQtMp3edDOYupaProbHgxt3ATk5Fbykt2CI
+ umTdtB7UIR5vdgIizb5c+MOg9M637w/iCUQYzsXxvf/RJvtfk07Uwn4Icz2zu3TDQ15m
+ Xos4wG4hQu/3LaDd4mPNy949KfBOI1YbaYj6WgT4h1hrAz5Z+mhtH00wLWbliPliivqu
+ sV0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmsHu8q0xVg0ngUFfPEzT6kj9b5pInrGxi+PNbK3J6MMY7jqKPsOBy6Ip3ZRgmh6hrTxARS5tvow/K@nongnu.org
+X-Gm-Message-State: AOJu0YynclXrwJogswXVf5B/p6tnQrNThY5XemW7ld1bISQlXhR9141m
+ z43PDRDGWewYwHPSV7AqlwDCvXGI/aI07Q5xugw7Rqy5Z/0JNx2lmxeSdhTjVTX+GgmSpaiDjSJ
+ eAtcChns5xqUiVcuswQwaxClumy/2jFz1mg4FXAzGHbPkG8TFrJF9
+X-Gm-Gg: ASbGncvkCvr4rv3coAU0BWQrvGpzMCNPtYgm3qm0oo8igACirbA1yZeMy643Oe2QeKX
+ JfiaB3neiti2foEopBkO46elbDJpv35Ekhkd5o5WtE5QInLrqROs1LGc9oYxQkv/bQaHI3M2RTR
+ 2sIDK2TQX/OcOw/9Nslhc3uc/Ak4Nb5IzofVcE3JtnFIQbx3n685JIhGLpIMZJx+arSZrXKVKw1
+ 7zlclVCu2SoPFt7Lko/aieaTfmCia6KCtS9aAs3qasqK3DB6IP+/+D7P9uXHR+7m5bWMh53naBV
+ yBCNOw==
+X-Received: by 2002:a05:600c:444e:b0:43c:fe9f:ab90 with SMTP id
+ 5b1f17b1804b1-4406ac17342mr101370515e9.28.1745320767759; 
+ Tue, 22 Apr 2025 04:19:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEgLC3SWsjAkWbXnn2rnb/1Pc98w1aii9oSgY/gpPlfphDfYQCqRSzXBou6osTCJQNwJ1DNgg==
+X-Received: by 2002:a05:600c:444e:b0:43c:fe9f:ab90 with SMTP id
+ 5b1f17b1804b1-4406ac17342mr101370305e9.28.1745320767397; 
+ Tue, 22 Apr 2025 04:19:27 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4406d6db230sm171907035e9.31.2025.04.22.04.19.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Apr 2025 04:19:26 -0700 (PDT)
+Date: Tue, 22 Apr 2025 07:19:23 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Li Chen <me@linux.beauty>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?iso-8859-1?Q?=22Philippe_Mathieu-Daud=E9=22?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH] acpi: Add machine option to disable SPCR table
+Message-ID: <20250422071902-mutt-send-email-mst@kernel.org>
+References: <87a588wsc9.wl-me@linux.beauty>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250419231218.67636-1-nirsof@gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <87a588wsc9.wl-me@linux.beauty>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.692,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,176 +115,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 20, 2025 at 02:12:18AM +0300, Nir Soffer wrote:
-> On macOS we need to increase unix socket buffers size on the client and
-> server to get good performance. We set the socket buffers on macOS after
-> connecting or accepting a client connection.
+On Tue, Apr 22, 2025 at 03:47:18PM +0800, Li Chen wrote:
+> From: Li Chen <chenl311@chinatelecom.cn>
 > 
-> Testing with qemu-nbd shows that reading an image with qemu-img convert
-> from qemu-nbd is *11.4 times faster* and qemu-img cpu usage is *8.3 times
-> lower*.
+> The ACPI SPCR (Serial Port Console Redirection) table allows firmware
+> to specify a preferred serial console device to the operating system.
+> On ARM64 systems, Linux by default respects this table: even if the
+> kernel command line does not include a hardware serial console (e.g.,
+> "console=ttyAMA0"), the kernel still register the serial device
+> referenced by SPCR as a printk console.
 > 
-> | qemu-img | qemu-nbd | time   | user   | system |
-> |----------|----------|--------|--------|--------|
-> | before   | before   | 12.957 |  2.643 |  5.777 |
-> | after    | before   | 12.803 |  2.632 |  5.742 |
-> | before   | after    |  1.139 |  0.074 |  0.905 |
-> | after    | after    |  1.179 |  0.077 |  0.931 |
+> While this behavior is standard-compliant, it can lead to situations
+> where guest console behavior is influenced by platform firmware rather
+> than user-specified configuration. To make guest console behavior more
+> predictable and under user control, this patch introduces a machine
+> option to explicitly disable SPCR table exposure:
 > 
-> For testing buffers size I built qemu-nbd and qemu-img with send buffer
-> size from 64k to 2m. In this test 256k send buffer and 1m receive buffer
-> are optimal.
+>     -machine spcr=off
 > 
-> | send buffer | recv buffer | time   | user   | system |
-> |-------------|-------------|--------|--------|--------|
-> |         64k |        256k |  2.233 |  0.290 |  1.408 |
-> |        128k |        512k |  1.189 |  0.103 |  0.841 |
-> |        256k |       1024k |  1.121 |  0.085 |  0.813 |
-> |        512k |       2048k |  1.172 |  0.081 |  0.953 |
-> |       1024k |       4096k |  1.160 |  0.072 |  0.907 |
-> |       2048k |       8192k |  1.309 |  0.056 |  0.960 |
+> By default, the option is enabled (spcr=on), preserving existing
+> behavior. When disabled, QEMU will omit the SPCR table from the guest's
+> ACPI namespace, ensuring that only consoles explicitly declared in the
+> kernel command line are registered.
 > 
-> Using null-co driver is useful to focus on the read part, but in the
-> real world we do something with the read data. I tested real world usage
-> with nbdcopy and blksum.
-> 
-> I tested computing a hash of the image using nbdcopy, using 4 NBD
-> connections and 256k request size. In this test 1m send buffer size and
-> 4m receive buffer size are optimal.
-> 
-> | send buffer | recv buffer | time   | user   | system |
-> |-------------|-------------|--------|--------|--------|
-> |         64k |        256k |  2.832 |  4.866 |  2.550 |
-> |        128k |        512k |  2.429 |  4.762 |  2.037 |
-> |        256k |       1024k |  2.158 |  4.724 |  1.813 |
-> |        512k |       2048k |  1.777 |  4.632 |  1.790 |
-> |       1024k |       4096k |  1.657 |  4.466 |  1.812 |
-> |       2048k |       8192k |  1.782 |  4.570 |  1.912 |
-> 
-> I tested creating a hash of the image with blksum, using one NBD
-> connection and 256k read size. In this test 2m send buffer and 8m
-> receive buffer are optimal.
-> 
-> | send buffer | recv buffer | time   | user   | system |
-> |-------------|-------------|--------|--------|--------|
-> |         64k |        256k |  4.233 |  5.242 |  2.632 |
-> |        128k |        512k |  3.329 |  4.915 |  2.015 |
-> |        256k |       1024k |  2.071 |  4.647 |  1.474 |
-> |        512k |       2048k |  1.980 |  4.554 |  1.432 |
-> |       1024k |       4096k |  2.058 |  4.553 |  1.497 |
-> |       2048k |       8192k |  1.972 |  4.539 |  1.497 |
-> 
-> In the real world tests larger buffers are optimal, so I picked send
-> buffer of 1m and receive buffer of 4m.
+> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
 
-IIUC all your test scenarios have recv buffer x4 size of send buffer.
 
-Do you have any link / reference for the idea that we should be using
-this x4 size multiplier ? This feels rather peculiar as a rule.
+The patches look ok to me
 
-Can you show test result grid matrix for the incrementing these
-send/recv buffers independently ?
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 
-> 
-> This will improve other usage of unix domain sockets on macOS. I tested
-> only reading from qemu-nbd.
-> 
-> The same change for libnbd:
-> https://gitlab.com/nbdkit/libnbd/-/merge_requests/21
-> 
-> Signed-off-by: Nir Soffer <nirsof@gmail.com>
+
 > ---
->  io/channel-socket.c | 32 ++++++++++++++++++++++++++++++++
->  1 file changed, 32 insertions(+)
+>  hw/arm/virt-acpi-build.c       |  5 ++++-
+>  hw/core/machine.c              | 22 ++++++++++++++++++++++
+>  hw/loongarch/virt-acpi-build.c |  4 +++-
+>  hw/riscv/virt-acpi-build.c     |  5 ++++-
+>  include/hw/boards.h            |  1 +
+>  qemu-options.hx                |  5 +++++
+>  6 files changed, 39 insertions(+), 3 deletions(-)
 > 
-> Changes since v1:
-> - Add UNIX_SOCKET_*_BUFFER_SIZE macros (Philippe)
-> - Handle both server and client sockets
-> - Add qio_channel_socket_set_buffers() helper to cleaner code
-> - Add tests results for qemu-img convert
-> - Add tests results for different buffer sizes
-> - Link to same change in libnbd
-> 
-> v1 was here:
-> https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg03081.html
-> 
-> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> index 608bcf066e..635c5c973d 100644
-> --- a/io/channel-socket.c
-> +++ b/io/channel-socket.c
-> @@ -21,6 +21,7 @@
->  #include "qapi/error.h"
->  #include "qapi/qapi-visit-sockets.h"
->  #include "qemu/module.h"
-> +#include "qemu/units.h"
->  #include "io/channel-socket.h"
->  #include "io/channel-util.h"
->  #include "io/channel-watch.h"
-> @@ -37,6 +38,33 @@
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 3ac8f8e178..f25c3b26ce 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -940,7 +940,10 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
+>      }
 >  
->  #define SOCKET_MAX_FDS 16
->  
-> +/*
-> + * Apple recommends sizing the receive buffer at 4 times the size of the send
-> + * buffer. Testing shows that 1m send buffer and 4 MiB receive buffer gives
-> + * best throuput and lowest cpu usage.
-> + */
-> +#ifdef __APPLE__
-> +#define UNIX_SOCKET_SEND_BUFFER_SIZE (1 * MiB)
-> +#define UNIX_SOCKET_RECV_BUFFER_SIZE (4 * UNIX_SOCKET_SEND_BUFFER_SIZE)
-> +#endif /* __APPLE__ */
+>      acpi_add_table(table_offsets, tables_blob);
+> -    spcr_setup(tables_blob, tables->linker, vms);
 > +
-> +static void qio_channel_socket_set_buffers(QIOChannelSocket *ioc)
-> +{
-> +#ifdef __APPLE__
-> +    if (ioc->localAddr.ss_family == AF_UNIX) {
-> +        int value;
-> +
-> +        /* This is a performance optimization; don't fail on errors. */
-> +
-> +        value = UNIX_SOCKET_SEND_BUFFER_SIZE;
-> +        setsockopt(ioc->fd, SOL_SOCKET, SO_SNDBUF, &value, sizeof(value));
-> +
-> +        value = UNIX_SOCKET_RECV_BUFFER_SIZE;
-> +        setsockopt(ioc->fd, SOL_SOCKET, SO_RCVBUF, &value, sizeof(value));
+> +    if (ms->enable_spcr) {
+> +        spcr_setup(tables_blob, tables->linker, vms);
 > +    }
-> +#endif /* __APPLE__ */
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+>      build_dbg2(tables_blob, tables->linker, vms);
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 63c6ef93d2..d56f44f4e8 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -590,6 +590,20 @@ static void machine_set_nvdimm(Object *obj, bool value, Error **errp)
+>      ms->nvdimms_state->is_enabled = value;
+>  }
+>  
+> +static bool machine_get_spcr(Object *obj, Error **errp)
+> +{
+> +    MachineState *ms = MACHINE(obj);
+> +
+> +    return ms->enable_spcr;
 > +}
 > +
->  SocketAddress *
->  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
->                                       Error **errp)
-> @@ -174,6 +202,8 @@ int qio_channel_socket_connect_sync(QIOChannelSocket *ioc,
+> +static void machine_set_spcr(Object *obj, bool value, Error **errp)
+> +{
+> +    MachineState *ms = MACHINE(obj);
+> +
+> +    ms->enable_spcr = value;
+> +}
+> +
+>  static bool machine_get_hmat(Object *obj, Error **errp)
+>  {
+>      MachineState *ms = MACHINE(obj);
+> @@ -1294,6 +1308,14 @@ static void machine_initfn(Object *obj)
+>                                          "Table (HMAT)");
 >      }
+>  
+> +    /* SPCR */
+> +    ms->enable_spcr = true;
+> +    object_property_add_bool(obj, "spcr", machine_get_spcr, machine_set_spcr);
+> +    object_property_set_description(obj, "spcr",
+> +                                   "Set on/off to enable/disable "
+> +                                   "ACPI Serial Port Console Redirection "
+> +                                   "Table (spcr)");
+> +
+>      /* default to mc->default_cpus */
+>      ms->smp.cpus = mc->default_cpus;
+>      ms->smp.max_cpus = mc->default_cpus;
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index fced6c445a..0e437bcf25 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -557,7 +557,9 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+>      acpi_add_table(table_offsets, tables_blob);
+>      build_srat(tables_blob, tables->linker, machine);
+>      acpi_add_table(table_offsets, tables_blob);
+> -    spcr_setup(tables_blob, tables->linker, machine);
+> +
+> +    if (machine->enable_spcr)
+> +        spcr_setup(tables_blob, tables->linker, machine);
+>  
+>      if (machine->numa_state->num_nodes) {
+>          if (machine->numa_state->have_numa_distance) {
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 1ad6800508..7f6d221c63 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -680,7 +680,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+>      build_rhct(tables_blob, tables->linker, s);
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+> -    spcr_setup(tables_blob, tables->linker, s);
+> +
+> +    if (ms->enable_spcr) {
+> +        spcr_setup(tables_blob, tables->linker, s);
+> +    }
+>  
+>      acpi_add_table(table_offsets, tables_blob);
+>      {
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index f22b2e7fc7..cdf2791a50 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -444,6 +444,7 @@ struct MachineState {
+>      SmpCache smp_cache;
+>      struct NVDIMMState *nvdimms_state;
+>      struct NumaState *numa_state;
+> +    bool enable_spcr;
+>  };
+>  
+>  /*
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index dc694a99a3..953680595f 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+>      "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+>      "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+>      "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+> +    "                spcr=on|off controls ACPI SPCR support (default=on)\n"
+>  #ifdef CONFIG_POSIX
+>      "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
 >  #endif
+> @@ -105,6 +106,10 @@ SRST
+>          Enables or disables ACPI Heterogeneous Memory Attribute Table
+>          (HMAT) support. The default is off.
 >  
-> +    qio_channel_socket_set_buffers(ioc);
+> +    ``spcr=on|off``
+> +        Enables or disables ACPI Serial Port Console Redirection Table
+> +        (SPCR) support. The default is on.
 > +
->      qio_channel_set_feature(QIO_CHANNEL(ioc),
->                              QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
->  
-> @@ -410,6 +440,8 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
->      }
->  #endif /* WIN32 */
->  
-> +    qio_channel_socket_set_buffers(cioc);
-> +
->      qio_channel_set_feature(QIO_CHANNEL(cioc),
->                              QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
->  
+>      ``aux-ram-share=on|off``
+>          Allocate auxiliary guest RAM as an anonymous file that is
+>          shareable with an external process.  This option applies to
 > -- 
-> 2.39.5 (Apple Git-154)
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 2.49.0
 
 
