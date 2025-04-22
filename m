@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977DFC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B415C369D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7EFQ-0002tt-Qn; Tue, 22 Apr 2025 10:05:16 -0400
+	id 1u7ELD-00050u-To; Tue, 22 Apr 2025 10:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7EFJ-0002p7-H2
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:05:09 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ id 1u7EL8-0004zl-Ql
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:11:11 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7EFG-0007M4-6O
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:05:09 -0400
+ id 1u7EL3-0008Db-R8
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:11:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745330706; x=1776866706;
+ t=1745331066; x=1776867066;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=eD3/9iW0ld81eZPY/Axle2N7wEZSpRcFe9aQKrt1bj0=;
- b=Z6G184j6I5EEPXofmwA6itGIXz64rIi9tUOh9GkaRGdp3moaGBGHFLvm
- wP7VDZpUElvOcnC71Gb6McNLK9DNsMTG55MQkJoBsDFuEZQt3j2+Cm5EQ
- khYPzLbsBNxjqyqSBEX89wAhmnOim17AIGw7AqzCcP4dJPBy6o6uQ+pZS
- YNEU9jsb3evOwI1/lVrhCZB0fEkn9tUansTABQs01pRMdT33E2yq7IesF
- 1aaxGlKQt1IUdu2qSKGjtSd6Fc6GcL++mrqfctJj2Wv9wZtmJ0KoCClaJ
- cltYjXIq+0e8skqouMTuu50gIrrWr5mV7uD39iti1hLeD4cTi/rN7Dxv+ Q==;
-X-CSE-ConnectionGUID: bY0Weo1eSA+VNkw5S4bPwQ==
-X-CSE-MsgGUID: bGXD8WzSRS2PYPt14+TeIQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50719801"
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="50719801"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2025 07:05:02 -0700
-X-CSE-ConnectionGUID: m3xQIYq/T5S5o/blpmfaAQ==
-X-CSE-MsgGUID: mbixgD6VSnSBpriUInJfxA==
+ bh=Z9I8Tb6EoTQe5Dpwqkac3DXSUJWOdRq+ia/FgGC6D3k=;
+ b=hqdW3DaPdJ/LU02/unKZACYLSR1joyffaD7KKEo8VKI7GiRnqAfp+Fyo
+ +xS6/2xPqgRrp7uRPMFPOryiJTtHYpMqb8nj39XQfjQQSyKyedSlZ2FQv
+ 6Oc3WwD1LKma7bWSdfYsPx1PUo7s32OEqAf089XS/Rtk30LKphtypAT6U
+ 068+kZiYyx/tVAvWr9KEn+4EPvWlfUkUXYbgWi22E4Zg2gb6i/OKKTmzP
+ IsbvulHULxdT+IRxyJGdahu4a8yV246ZjouTgYRUKdkWf9xfQ6rlw8+E0
+ iCtt4SRrbabAZTzxVfq1yV7ylhwd/VxE+g3P3XawOt/scLjTF++k70+ps g==;
+X-CSE-ConnectionGUID: Mqh00Mo1TGm5H7hOE+tMaA==
+X-CSE-MsgGUID: lGOS09sGSa+eagmOtqASJA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46126506"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="46126506"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2025 07:11:03 -0700
+X-CSE-ConnectionGUID: m1uAtiXeRYK9V5sfb54oOQ==
+X-CSE-MsgGUID: cI8+0JS4Q1K9pds6/PZuyQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="132976086"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="136105556"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 22 Apr 2025 07:05:00 -0700
-Date: Tue, 22 Apr 2025 22:25:54 +0800
+ by fmviesa003.fm.intel.com with ESMTP; 22 Apr 2025 07:11:01 -0700
+Date: Tue, 22 Apr 2025 22:31:55 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Francesco Lavra <francescolavra.fl@gmail.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 02/55] i386: Introduce tdx-guest object
-Message-ID: <aAem8k1hY3P8Nchg@intel.com>
+Subject: Re: [PATCH v8 07/55] kvm: Introduce kvm_arch_pre_create_vcpu()
+Message-ID: <aAeoW9/sAGcr8ygN@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-3-xiaoyao.li@intel.com>
- <aAIYjpetyP9LKW6L@intel.com> <aAdSMExEAy45NIeB@redhat.com>
+ <20250401130205.2198253-8-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aAdSMExEAy45NIeB@redhat.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250401130205.2198253-8-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
@@ -90,22 +90,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > index 000000000000..f3b725336161
-> > > --- /dev/null
-> > > +++ b/target/i386/kvm/tdx.h
-> > > @@ -0,0 +1,21 @@
-> > > +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> > > +
-> > > +#ifndef QEMU_I386_TDX_H
-> > > +#define QEMU_I386_TDX_H
-> > 
-> > I386_TDX_H is enough... the QEMU prefix is rarely seen in the whole
-> > project.
+On Tue, Apr 01, 2025 at 09:01:17AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:17 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v8 07/55] kvm: Introduce kvm_arch_pre_create_vcpu()
+> X-Mailer: git-send-email 2.34.1
 > 
-> IMHO having a QEMU_ prefix here is "best practice", so don't remove it.
+> Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
+> work prior to create any vcpu. This is for i386 TDX because it needs
+> call TDX_INIT_VM before creating any vcpu.
 > 
-> That lots of other QEMU code doesn't follow best practice is unfortunate.
+> The specific implemnet of i386 will be added in the future patch.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+> Changes in v7:
+> - Implement stub for all the ARCHes instead of defining it with weak
+>   attribute; (Philippe)
+> 
+> Changes in v3:
+> - pass @errp to kvm_arch_pre_create_vcpu(); (Per Daniel)
+> ---
+>  accel/kvm/kvm-all.c        | 5 +++++
+>  include/system/kvm.h       | 1 +
+>  target/arm/kvm.c           | 5 +++++
+>  target/i386/kvm/kvm.c      | 5 +++++
+>  target/loongarch/kvm/kvm.c | 4 ++++
+>  target/mips/kvm.c          | 5 +++++
+>  target/ppc/kvm.c           | 5 +++++
+>  target/riscv/kvm/kvm-cpu.c | 5 +++++
+>  target/s390x/kvm/kvm.c     | 5 +++++
+>  9 files changed, 40 insertions(+)
 
-Thanks, now I see!
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
