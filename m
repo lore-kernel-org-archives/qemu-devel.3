@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822E7C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF49C369D8
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u76GT-0000Ti-EV; Tue, 22 Apr 2025 01:33:49 -0400
+	id 1u76Gf-0001IC-2e; Tue, 22 Apr 2025 01:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u76Cz-0002qR-Kt; Tue, 22 Apr 2025 01:30:14 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1u76DK-0003O1-1i; Tue, 22 Apr 2025 01:30:35 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u76Cv-00089l-GJ; Tue, 22 Apr 2025 01:30:12 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22d95f0dda4so9447145ad.2; 
- Mon, 21 Apr 2025 22:30:06 -0700 (PDT)
+ id 1u76DH-0008D4-Qq; Tue, 22 Apr 2025 01:30:33 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso76093815ad.0; 
+ Mon, 21 Apr 2025 22:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745299806; x=1745904606; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745299829; x=1745904629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2FkVN9PsSNE2Egb+LipsDkf/RHaq4OxguwsmDIo9jqs=;
- b=ErTJnUOhry5sw20L4i2bwkB3aZGj1SJBeiFM6ABpNn6VpcGT5CKCfBeXgV57DUl52i
- MxASKBV6irnef120skj+gP8kT//h+aiV/5oVdHg9pzTa5BxKmuMN75r98iCliPAJCLGL
- xX8nfaYqEqxZQeQdtrNoOQLzk+DovGJOG0lCIRmXC/TkO58bDLs9Q7aAhTtaibk18CCp
- F+OWHmGilLkIUnj8h3GrAHeam7Ohg50KQ4Hpb7Aimdj54PfDw1WhAvIZPsUbrp1/SiMy
- EpQgOfFRWFdmzdNXqlUJIQpFizHOoF+DMMUYlj9v7aZZcUFTyKa81RrffFNJOgzq941h
- 2J8A==
+ bh=EyswPERNVPUmMfuIfE21udR+zks7HJrFsl2VmGBeB2w=;
+ b=mqIYYFO1nEMVbMPYxFLnPYMeMTiGMiy7HLjGj4vv4YnOuYUUfEIhhZ6tlHEmbcukca
+ zW0vNlPfX1d2ZktAYY78W9z7ZvKEKpkkp17aUkhDoH3SQw53G4PKq9Hvm8kFU3UGczcP
+ /l+97Yjkq3uUZJ+IvqDQiiV0LHe4l6TnmXLoX8aMnhD+l+29uNiu0RVRmFc+TQPONwf3
+ P8wAvSvJs033m+75J31VT4HFdZANOzR/XkEvWi8lEe3+qYKObgU/jUcbS7JDg2U+/GM1
+ uvMiTeLZZh4lbeBUMMiwmnm3iS878RJ6DFjC8Ky8SPHe3RwL4oclPbI0ES8ag87yL6i9
+ t5cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745299806; x=1745904606;
+ d=1e100.net; s=20230601; t=1745299829; x=1745904629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2FkVN9PsSNE2Egb+LipsDkf/RHaq4OxguwsmDIo9jqs=;
- b=AeEMB25rAC0dUsLS20ZW3HXwarRS/uZVg8t8EC4stHuR14cGtiqYP7U1DuwL93tYX3
- KvVqW0D2d0fFA+lUtsXY0lTnPXvSY1EGGr2nfkGEVaNgsZQyel2XQyRUlQj5Gqn31G2t
- JvGPnC0oslx5YHSnliCa6MK3erPS7YzJMbD/QZWGIa3e5fDFLRGJbIW9P2mp6Qm6V1cQ
- HduTi8DwFVFKe6ISVsGZyiCZb3SZBp+f1MxFWsB7/jT73jo4lO6aCtKgFX/nOncIMWSj
- BI65sQ3viDHZT6Jyh+DOuu3/fbJ9DdJ9paq2ankZKTkVPyKuOgu/NRJtZS7DkgFo7DYI
- 5GCg==
+ bh=EyswPERNVPUmMfuIfE21udR+zks7HJrFsl2VmGBeB2w=;
+ b=Zi/vTXrUW0jw8VDQarXPe0BDiWPQBZih3jHTZNgzxsUBBPTMQ4gtZXlh3CPnf1eC2m
+ 0Hgz/fw8tqRHZLJOkRqWhiJkDD6VLfAAKLdZVX6gxBH0rzN1cn87VADahqstybGw+kAs
+ kZVau60qZutr79OXJ0utJszkDLz6thRxE6E3MF1BDC32q/3C5/cda94UQmrgR2o7vlPt
+ 10j572Ako8mDoqG35IhRjYTJJMYqFFT3oHUkfWi+BbgZpCXlD5rFokqLhfaSVsMPJLlC
+ d064YyFeErZvM7zY4iwSvnxs5wicxFlcNAP/ka+6SJOIoQf4o3i7GSDKms9dnXfr1Snb
+ 2jag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUf2d5GI0QGdN3ZonYxxhJYx/5YADAzxx5yhxBj49aIgLy9e6nyMsguImoRFScTM4hwW6cTzjDXgVJhIg==@nongnu.org,
- AJvYcCWit7vh3MAHa02+cMJpYU1xZUI4TVXH3jqyig5Wa5aWL8QOjf/2HswMQs/XgttwKFPlfZm+vw3ecpGdzw==@nongnu.org,
- AJvYcCWpeR8jO2ro6i/DQybnUPDDoW9Ynp+bLfQlbRUDLjXeTsZU72kDEZCBwcSO0rr64Ejge6KOkkSVfw==@nongnu.org,
- AJvYcCXkebFYe2UEb52oRmQhd2ZxD+ElaXmOSC+vimrgfISuEwg+clBV/1a+6kBS8N6yXzN2AGcjm/JqU5s=@nongnu.org
-X-Gm-Message-State: AOJu0Yz2xrw9iXgW55ZjxvJbxTMrXdp8jwGdcg+q68K3yQSFTTI+zxY3
- vkd7KdrIXQp06Gm6Nb6gI36GZhFqRxizx89rl8siYhX38wM8gfOhGRk1NHZ2
-X-Gm-Gg: ASbGncvokVctYFP7lmhpm+c735qVB9jvIsjUPWZit1QMcxUxW7qKleHNdfOcjYS3fbA
- FEm3cIDUY55j9PCKn4UT4Gper40SAX28M9ZbuAWyITxFxN+kSEg34kzTBTiHWk4KKIRP50FH0xL
- gh4rxCKe9icmzyOwOQmQVvGv/MRsYOs7g5keRHYdbdlyr9HLvdhPlreUQJjBOySu7oNmpiAnILt
- xnCLYuAVs/bIlFtranz66KWIgRk1LjJz1Sxup7yL7h2u8hJ6wnbChtF9jAk7olKOGz2p3a5UyhP
- iV3mKmvmA5F7zOTWkxXEEumcc6Z6GqvVioAknc7onMZGzGbACufzwtpyqPY=
-X-Google-Smtp-Source: AGHT+IF7xwbiS5Pbd8i6m0BJ3l2AbPC1Rmn0ASj1QQA1F9dYuT3aDzSVpRYV+spAOV/dyXoUuJ6ZZw==
-X-Received: by 2002:a17:903:41c7:b0:220:faa2:c911 with SMTP id
- d9443c01a7336-22c535a4b39mr194143805ad.14.1745299805766; 
- Mon, 21 Apr 2025 22:30:05 -0700 (PDT)
+ AJvYcCVDKgDAooc4yp4sZNj9soREzXbQPc+7j50cddob42E7+FH9Qm7bRa2fqIrE8sIgxGs85zHs7I1em4j3tw==@nongnu.org,
+ AJvYcCVeFK9HtStEqkDMItB6dqROQQaIGGKj6rQKzXIpMPFFdjr07lrLYEE+7+HsnimiLTB635dJRpbaf9qYAA==@nongnu.org,
+ AJvYcCWL/aigH2FHpjGhexBRBQ8Z+zD/cpnnh1aJw3NgJn+ANJm3L/Bq1V53ZZmVkZczxcCOxu8WivebCA==@nongnu.org,
+ AJvYcCXs2bVI8sDsWJfZqYZmYMeH9RDTcb9FZZXRotk827kTdPm2O7w8yZEU4IgVSCxlCgnCOdPpBoG0N4c=@nongnu.org
+X-Gm-Message-State: AOJu0YxZOpgTDJ4hu+mO0RDt+EyffBZpbCibqf/l9r57rjCcoKAHTOOE
+ ewvkTGrIPzEbS8xJZmh/WyfQliX+FQnJpPibjJty3xAlDASDpm0YWvu9VtmF
+X-Gm-Gg: ASbGnct9/Dwzxc/1fsHNreXfDqTNZbm0MOxyr1YV5UXHUl008fqLwfHDOn6kPqOUMTg
+ Kb5I2dKXox11VavjUZmshjZy+sr0Vs3zbwfY3G35BLLOF0QLzmu3UZfMYrYZoH+SAGNeWf7UR/m
+ AWW2/T1Qvp6os5BmAorKmz938tMBsmk+GgbgZmeIjGhJhws9WyOG0J7lN++LXDA0S20b5g5ZVhi
+ w4yyz7flMEdbS8SwMp7eL3+Qf6OPctxgIr2JI7L/C368jF67WPCJrv+lmNtDqfrMN2BeAORirtM
+ Ao3QDScTRE53KRJfOmWF64vQ25oG5Tib2/9S+OfwreZIgOY3A/5ROTJajlg=
+X-Google-Smtp-Source: AGHT+IF866eeRMlWTJ5okWrqXs+r8BGchJhPURBo/iH1ZtCGUA/9C/H97nfcbV0T9/pDqgYGWsEh/w==
+X-Received: by 2002:a17:902:f54c:b0:224:1074:63a2 with SMTP id
+ d9443c01a7336-22c5361c436mr224374235ad.43.1745299829232; 
+ Mon, 21 Apr 2025 22:30:29 -0700 (PDT)
 Received: from localhost.localdomain ([240d:1a:3b6:8b00:e142:4a4f:1ebb:3ca4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50eb4483sm75692085ad.118.2025.04.21.22.29.58
+ d9443c01a7336-22c50eb4483sm75692085ad.118.2025.04.21.22.30.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Apr 2025 22:30:05 -0700 (PDT)
+ Mon, 21 Apr 2025 22:30:28 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -90,17 +90,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH v2 16/20] util: exclude mmap-alloc.c from compilation target
- on Emscripten
-Date: Tue, 22 Apr 2025 14:27:20 +0900
-Message-Id: <d20971cd7d9736aa3777721765606c244253cdb0.1745295397.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v2 19/20] tests: Add Dockerfile containing dependencies for
+ Emscripten build
+Date: Tue, 22 Apr 2025 14:27:23 +0900
+Message-Id: <2c76c1bdc27786d54a267b52a861debb64f067f8.1745295397.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1745295397.git.ktokunaga.mail@gmail.com>
 References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,183 +123,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten does not support partial unmapping of mmapped memory
-regions[1]. This limitation prevents correct implementation of qemu_ram_mmap
-and qemu_ram_munmap, which rely on partial unmap behavior.
-
-As a workaround, this commit excludes mmap-alloc.c from the Emscripten
-build. Instead, for Emscripten build, this modifies qemu_anon_ram_alloc to
-use qemu_memalign in place of qemu_ram_mmap, and disable memory backends
-that rely on mmap, such as memory-backend-file and memory-backend-shm.
-
-[1] https://github.com/emscripten-core/emscripten/blob/d4a74336f23214bf3304d9eb0d03966786b30a36/system/lib/libc/emscripten_mmap.c#L61
+The added Dockerfile is based on the emsdk image, which includes the
+Emscripten toolchain. It also cross-compiles the necessary dependencies
+(glib, libffi, pixman, and zlib) for the Emscripten target environment.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- backends/meson.build |  6 ++++--
- system/memory.c      |  2 +-
- system/physmem.c     |  9 +++++----
- util/meson.build     |  4 +++-
- util/oslib-posix.c   | 28 ++++++++++++++++++++++++++++
- 5 files changed, 41 insertions(+), 8 deletions(-)
+ MAINTAINERS                                   |   1 +
+ .../dockerfiles/emsdk-wasm32-cross.docker     | 145 ++++++++++++++++++
+ 2 files changed, 146 insertions(+)
+ create mode 100644 tests/docker/dockerfiles/emsdk-wasm32-cross.docker
 
 V2:
-- Instead of porting mmap-alloc.c to Emscripten, this version excludes the
-  file entirely. The rationale is described in the commit message.
+- Split the Dockerfile addition from the previous 18th patch into a separate
+  commit.
+- Split the MAINTAINERS file change that adds emsdk-wasm32-cross.docker from
+  the previous 19th patch into this commit.
 
-diff --git a/backends/meson.build b/backends/meson.build
-index da714b93d1..9b88d22685 100644
---- a/backends/meson.build
-+++ b/backends/meson.build
-@@ -12,8 +12,10 @@ system_ss.add([files(
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0fb7fd79b6..58e4bdedba 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -626,6 +626,7 @@ F: include/system/os-wasm.h
+ F: os-wasm.c
+ F: util/coroutine-wasm.c
+ F: configs/meson/emscripten.txt
++F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
  
- if host_os != 'windows'
-   system_ss.add(files('rng-random.c'))
--  system_ss.add(files('hostmem-file.c'))
--  system_ss.add([files('hostmem-shm.c'), rt])
-+  if host_os != 'emscripten'
-+    system_ss.add(files('hostmem-file.c'))
-+    system_ss.add([files('hostmem-shm.c'), rt])
-+  endif
- endif
- if host_os == 'linux'
-   system_ss.add(files('hostmem-memfd.c'))
-diff --git a/system/memory.c b/system/memory.c
-index 4c829793a0..f5fcbfa799 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1636,7 +1636,7 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
-     return true;
- }
- 
--#ifdef CONFIG_POSIX
-+#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
- bool memory_region_init_ram_from_file(MemoryRegion *mr,
-                                       Object *owner,
-                                       const char *name,
-diff --git a/system/physmem.c b/system/physmem.c
-index 333a5eb94d..76c65edb62 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1242,7 +1242,7 @@ long qemu_maxrampagesize(void)
-     return pagesize;
- }
- 
--#ifdef CONFIG_POSIX
-+#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
- static int64_t get_file_size(int fd)
- {
-     int64_t size;
-@@ -1977,7 +1977,7 @@ out_free:
-     }
- }
- 
--#ifdef CONFIG_POSIX
-+#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
- RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-                                  qemu_ram_resize_cb resized, MemoryRegion *mr,
-                                  uint32_t ram_flags, int fd, off_t offset,
-@@ -2157,7 +2157,8 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-     assert(!host ^ (ram_flags & RAM_PREALLOC));
-     assert(max_size >= size);
- 
--#ifdef CONFIG_POSIX         /* ignore RAM_SHARED for Windows */
-+    /* ignore RAM_SHARED for Windows and emscripten*/
-+#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
-     if (!host) {
-         if (!share_flags && current_machine->aux_ram_share) {
-             ram_flags |= RAM_SHARED;
-@@ -2254,7 +2255,7 @@ static void reclaim_ramblock(RAMBlock *block)
-         ;
-     } else if (xen_enabled()) {
-         xen_invalidate_map_cache_entry(block->host);
--#ifndef _WIN32
-+#if !defined(_WIN32) && !defined(EMSCRIPTEN)
-     } else if (block->fd >= 0) {
-         qemu_ram_munmap(block->fd, block->host, block->max_length);
-         close(block->fd);
-diff --git a/util/meson.build b/util/meson.build
-index 780b5977a8..e5cd327e27 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -11,7 +11,9 @@ if host_os != 'windows'
-   endif
-   util_ss.add(files('compatfd.c'))
-   util_ss.add(files('event_notifier-posix.c'))
--  util_ss.add(files('mmap-alloc.c'))
-+  if host_os != 'emscripten'
-+    util_ss.add(files('mmap-alloc.c'))
-+  endif
-   freebsd_dep = []
-   if host_os == 'freebsd'
-     freebsd_dep = util
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index a697c602c6..4ff577e5de 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -58,6 +58,7 @@
- #include <lwp.h>
- #endif
- 
-+#include "qemu/memalign.h"
- #include "qemu/mmap-alloc.h"
- 
- #define MAX_MEM_PREALLOC_THREAD_COUNT 16
-@@ -210,11 +211,21 @@ void *qemu_anon_ram_alloc(size_t size, uint64_t *alignment, bool shared,
-     const uint32_t qemu_map_flags = (shared ? QEMU_MAP_SHARED : 0) |
-                                     (noreserve ? QEMU_MAP_NORESERVE : 0);
-     size_t align = QEMU_VMALLOC_ALIGN;
-+#ifndef EMSCRIPTEN
-     void *ptr = qemu_ram_mmap(-1, size, align, qemu_map_flags, 0);
- 
-     if (ptr == MAP_FAILED) {
-         return NULL;
-     }
-+#else
-+    /*
-+     * qemu_ram_mmap is not implemented for Emscripten. Use qemu_memalign
-+     * for the anonymous allocation. noreserve is ignored as there is no swap
-+     * space on Emscripten, and shared is ignored as there is no other
-+     * processes on Emscripten.
-+     */
-+    void *ptr = qemu_memalign(align, size);
-+#endif
- 
-     if (alignment) {
-         *alignment = align;
-@@ -227,7 +238,16 @@ void *qemu_anon_ram_alloc(size_t size, uint64_t *alignment, bool shared,
- void qemu_anon_ram_free(void *ptr, size_t size)
- {
-     trace_qemu_anon_ram_free(ptr, size);
-+#ifndef EMSCRIPTEN
-     qemu_ram_munmap(-1, ptr, size);
-+#else
-+    /*
-+     * qemu_ram_munmap is not implemented for Emscripten and qemu_memalign
-+     * was used for the allocation. Use the corresponding freeing function
-+     * here.
-+     */
-+    qemu_vfree(ptr);
-+#endif
- }
- 
- void qemu_socket_set_block(int fd)
-@@ -588,7 +608,15 @@ bool qemu_prealloc_mem(int fd, char *area, size_t sz, int max_threads,
- {
-     static gsize initialized;
-     int ret;
-+#ifndef EMSCRIPTEN
-     size_t hpagesize = qemu_fd_getpagesize(fd);
-+#else
-+    /*
-+     * mmap-alloc.c is excluded from Emscripten build, so qemu_fd_getpagesize
-+     * is unavailable. Fallback to the lower level implementation.
-+     */
-+    size_t hpagesize = qemu_real_host_page_size();
-+#endif
-     size_t numpages = DIV_ROUND_UP(sz, hpagesize);
-     bool use_madv_populate_write;
-     struct sigaction act;
+ Alpha Machines
+ --------------
+diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+new file mode 100644
+index 0000000000..60a7d02f56
+--- /dev/null
++++ b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+@@ -0,0 +1,145 @@
++# syntax = docker/dockerfile:1.5
++
++ARG EMSDK_VERSION_QEMU=3.1.50
++ARG ZLIB_VERSION=1.3.1
++ARG GLIB_MINOR_VERSION=2.84
++ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
++ARG PIXMAN_VERSION=0.44.2
++ARG FFI_VERSION=v3.4.7
++ARG MESON_VERSION=1.5.0
++
++FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
++ARG MESON_VERSION
++ENV TARGET=/builddeps/target
++ENV CPATH="$TARGET/include"
++ENV PKG_CONFIG_PATH="$TARGET/lib/pkgconfig"
++ENV EM_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
++ENV CFLAGS="-O3 -pthread -DWASM_BIGINT"
++ENV CXXFLAGS="$CFLAGS"
++ENV LDFLAGS="-sWASM_BIGINT -sASYNCIFY=1 -L$TARGET/lib"
++RUN apt-get update && apt-get install -y \
++    autoconf \
++    build-essential \
++    libglib2.0-dev \
++    libtool \
++    pkgconf \
++    ninja-build \
++    python3-pip
++RUN pip3 install meson==${MESON_VERSION} tomli
++RUN mkdir /build
++WORKDIR /build
++RUN mkdir -p $TARGET
++RUN <<EOF
++cat <<EOT > /cross.meson
++[host_machine]
++system = 'emscripten'
++cpu_family = 'wasm32'
++cpu = 'wasm32'
++endian = 'little'
++
++[binaries]
++c = 'emcc'
++cpp = 'em++'
++ar = 'emar'
++ranlib = 'emranlib'
++pkgconfig = ['pkg-config', '--static']
++EOT
++EOF
++
++FROM build-base AS zlib-dev
++ARG ZLIB_VERSION
++RUN mkdir -p /zlib
++RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz | \
++    tar xJC /zlib --strip-components=1
++WORKDIR /zlib
++RUN emconfigure ./configure --prefix=$TARGET --static
++RUN emmake make install -j$(nproc)
++
++FROM build-base AS libffi-dev
++ARG FFI_VERSION
++RUN mkdir -p /libffi
++RUN git clone https://github.com/libffi/libffi /libffi
++WORKDIR /libffi
++RUN git checkout $FFI_VERSION
++RUN autoreconf -fiv
++RUN emconfigure ./configure --host=wasm32-unknown-linux \
++    --prefix=$TARGET --enable-static \
++    --disable-shared --disable-dependency-tracking \
++    --disable-builddir --disable-multi-os-directory \
++    --disable-raw-api --disable-docs
++RUN emmake make install SUBDIRS='include' -j$(nproc)
++
++FROM build-base AS pixman-dev
++ARG PIXMAN_VERSION
++RUN mkdir /pixman/
++RUN git clone  https://gitlab.freedesktop.org/pixman/pixman /pixman/
++WORKDIR /pixman
++RUN git checkout pixman-$PIXMAN_VERSION
++RUN <<EOF
++cat <<EOT >> /cross.meson
++[built-in options]
++c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
++cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
++objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
++c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
++cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
++EOT
++EOF
++RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
++    --default-library=static \
++    --buildtype=release -Dtests=disabled -Ddemos=disabled
++RUN meson install -C _build
++
++FROM build-base AS glib-dev
++ARG GLIB_VERSION
++ARG GLIB_MINOR_VERSION
++RUN mkdir -p /stub
++WORKDIR /stub
++RUN <<EOF
++cat <<'EOT' > res_query.c
++#include <netdb.h>
++int res_query(const char *name, int class,
++              int type, unsigned char *dest, int len)
++{
++    h_errno = HOST_NOT_FOUND;
++    return -1;
++}
++EOT
++EOF
++RUN emcc ${CFLAGS} -c res_query.c -fPIC -o libresolv.o
++RUN ar rcs libresolv.a libresolv.o
++RUN mkdir -p $TARGET/lib/
++RUN cp libresolv.a $TARGET/lib/
++
++RUN mkdir -p /glib
++RUN curl -Lks https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz | \
++    tar xJC /glib --strip-components=1
++
++COPY --link --from=zlib-dev /builddeps/ /builddeps/
++COPY --link --from=libffi-dev /builddeps/ /builddeps/
++
++WORKDIR /glib
++RUN <<EOF
++CFLAGS="$CFLAGS -Wno-incompatible-function-pointer-types" ;
++cat <<EOT >> /cross.meson
++[built-in options]
++c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
++cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
++objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
++c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
++cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
++EOT
++EOF
++RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
++    --default-library=static --buildtype=release --force-fallback-for=pcre2 \
++    -Dselinux=disabled -Dxattr=false -Dlibmount=disabled -Dnls=disabled \
++    -Dtests=false -Dglib_debug=disabled -Dglib_assert=false -Dglib_checks=false
++# FIXME: emscripten doesn't provide some pthread functions in the final link,
++#        which isn't detected during meson setup.
++RUN sed -i -E "/#define HAVE_POSIX_SPAWN 1/d" ./_build/config.h
++RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" ./_build/config.h
++RUN meson install -C _build
++
++FROM build-base
++COPY --link --from=glib-dev /builddeps/ /builddeps/
++COPY --link --from=pixman-dev /builddeps/ /builddeps/
 -- 
 2.25.1
 
