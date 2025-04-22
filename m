@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91354C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 02:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4889C369AB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 02:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u73gC-0008QT-Ki; Mon, 21 Apr 2025 22:48:12 -0400
+	id 1u73h3-0000Jv-Vs; Mon, 21 Apr 2025 22:49:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u73g8-0008PY-B5; Mon, 21 Apr 2025 22:48:08 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1u73gm-0000CS-GN; Mon, 21 Apr 2025 22:48:54 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u73g6-0000Xk-30; Mon, 21 Apr 2025 22:48:07 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-73bf1cef6ceso3965872b3a.0; 
- Mon, 21 Apr 2025 19:48:04 -0700 (PDT)
+ id 1u73gj-0000Zg-AC; Mon, 21 Apr 2025 22:48:46 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-5259331b31eso2029941e0c.0; 
+ Mon, 21 Apr 2025 19:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745290083; x=1745894883; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Vzl0dw5uyUGkAFVL9sbZNFQL5TZWh8CfZO659Fc76pQ=;
- b=JxOkkXmQW2AMqjjPavG2ikS7WfSlSauflQGiF6lwJxNSA0MCwTRkh30XVOfhoBnP9T
- zuunJ6H+Gj0EU/ppXFiGBtmwc7MN1LVALjyzIJW8Uaxu+ZvAIb/rSZbv8y9L5seI9CXD
- w6lGPYYy8ZVOJn8hDqOR73fsUM/jW4v5zLbRo29jsEcBK3+sqYqPPsC7I0k3Zxegwre8
- 80WTMDb7pUiuQgH+ZvldFqZXZ4ztexm+zqqXtBbp9kkHfmk90/LCeD1Sz2+Gef1F+HAR
- qH8viuLLvVsGyuC7hw1zS6BNvYVxjx2ZhpdRi3tunK+h8ujSnifuefSPBPj1WHt6FmB2
- o86w==
+ d=gmail.com; s=20230601; t=1745290123; x=1745894923; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8DecP5VoIJKYQG1Aebro80pfPsNAz8hbO54IgzeGN8Q=;
+ b=bQjmYM958HQrC90jdiDIWxv7GUHz6U1zVN/OW7OmDjn48G9CB1F5RaS9URm6kYLP1r
+ zUsK1YMIU5lQt0opRLr+9oVjFW5+15hj2gOGO/O1Ci5YtyC8u2au8CfyC77rd/rhjyK+
+ 4GNGeZMhTLdsBo487Q3da29PnIrQwdeQKkEhGrqFs2yUXIJs2UCyWtBsqoKK5R9Mlemc
+ Ipc7b1aUOomltW+R4j3xZHn8eJ0Ic1SbzRABlPICPlprVYr2/cs5qt6DHZwUqz72Fz85
+ GslWTGxwZWIAVoMK6GHj9aDnZJArvqh5lFa2EQZiLc3C2z6Hqtrn0DhFB+OpJJBC0ZES
+ ygtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745290083; x=1745894883;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Vzl0dw5uyUGkAFVL9sbZNFQL5TZWh8CfZO659Fc76pQ=;
- b=H+9Hgo+LVklDgMAt8paCh3N8BHTemxJyDY2kd7lprXnT5zqhoMVbz3iaJftbsuZh7B
- mx2jNk3QdvsGVtFm/xbwinyJQBFQtaiOuTSpuBFU9ZkJCUZ2ZQafxSzPvwYl9NbD4KxI
- yXT35gUCDFPhHCVbkNDcYuyos+mQ2+ETLUf/946f0wZ0mq1UW0+b3rSE4sZsf+bVu/UO
- HoNiURC9z07DrDcAJAOvbKwzCnH5nZm3DNUJLtR9LLPelPK03+lYQbg8Lhy1uMkBTGx6
- GO1Wd44OyZMlnUDDC/8ibt8whPlMFX4k9WtpocIMRZGhEZBkFysNTV8ZR+KlghE2+QzF
- sfFg==
+ d=1e100.net; s=20230601; t=1745290123; x=1745894923;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8DecP5VoIJKYQG1Aebro80pfPsNAz8hbO54IgzeGN8Q=;
+ b=MKFAno16twC4d5mPNfqQt+PHcEXKfaIimWwY9j4QYnazAoghzohhd3D7KCgOJQ6BmC
+ Iut3dynMdP7N/BsaKPn2Mupsi9+Bu01YeZ4Wb65Gy5LOeHMEpJY/0cc7FbmHmzCxQAbr
+ oIa0gJohnqkCAbp3Olpw0uL2z6ccgHK/INYoCP//xGlNwfxzoFS5B0SZhYwR6aIGZ32q
+ QWEsn3ygz4eOoCdY6W4F/ElKhyCjHc50p480Gs2J3hzsDENuW0pDg20NNRr1kKMPdkQu
+ 8VOuYCJi0HxPFspRbNhfvGMLk0ymGE00gOoTD+uf1a3ZzfuXuu1xOqbvjqauT/x/lYy3
+ 8Ijw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWesELQEH3BGzPeo2qLqmZ5nDYWmQ9tfp6b9tcJvnK79FYAvogu7U682yjH8MI29SwclthKUTIdjdNn@nongnu.org
-X-Gm-Message-State: AOJu0YzBdgz1Sm8LDS8QHxGRjWibCYIZOi4VcyBJan+/0nzugAOk+Ka+
- SzXxkMRqxPS+SIPzl82J3bgEMEwzH2Afjimt67IoR7trgmkL5bQl
-X-Gm-Gg: ASbGncvf147/x7koFedEfan+OoaZqrKJV+zAJyZWYPSxWqyfoImgCxmKqPf2n/pY1Rf
- nQHDdpPa6do65oS74wqC+u4DbZOBiqYBTTaoLArthcWaQXcNr0d3dgjLwmMBzm4c/uY82RrSQQ3
- ht0h7JE1hQs2XdYjasAFCaPJunzlkPs8gw9ClzL6xpk0Hj0bgPoI+hjbx/+CrofikP/4Sw1kLi/
- 3XWWYnQbQYr+Av747Lw+GGQBJity8eDB5dx7hmAMGcbuWZdj+pNEJ7FhrbF8mjGStZbJeljDI4H
- uMLZX3h2FPirnQ0gG6ad/GX8KZ9W25340tphaPPv0m4n+tmdwJ/FM6AkWhgR8b8Dptn6I0kXv0h
- crpdYNZWJ2OKQqHisBp+m/dSNLkVo9LkSJlZTEsfKsMmCV8SXOJBbxB24
-X-Google-Smtp-Source: AGHT+IEFvwegkdKbwBg1yjexbOSuOJxWuw0yVXHUoEzED37OBkDdKDbVQ/C+QnMpfYsEvHPvS0b4aA==
-X-Received: by 2002:a05:6a00:1306:b0:736:7960:981f with SMTP id
- d2e1a72fcca58-73dc1494032mr20287812b3a.8.1745290083494; 
- Mon, 21 Apr 2025 19:48:03 -0700 (PDT)
-Received: from toolbx.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbfa574fasm7639408b3a.99.2025.04.21.19.47.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Apr 2025 19:48:02 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: palmer@dabbelt.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, uwu@icenowy.me
-Cc: qemu-devel@nongnu.org,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH] MAINTAINERS: Add common-user/host/riscv to RISC-V section
-Date: Tue, 22 Apr 2025 12:47:52 +1000
-Message-ID: <20250422024752.2060289-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.49.0
+ AJvYcCVAh33v0ns0WfeA2O0vnY7eX1IspV7s/NWkibU0IUPwQZ+O/pBxRByWzlcu3Ys1OEJ9womLCzzaOOtDxQ==@nongnu.org,
+ AJvYcCXVMZIOWg6ylSAnesJC47kR7BAucXWHh6qbEb2mCxd0ovAQwaHl9kfL+gqpXyKshoX8Wr+LP3kAVzDY@nongnu.org
+X-Gm-Message-State: AOJu0YyTmO/qmM5mu0c/P8a9jyGFnzjGPzej31y6LfFAR0CCjXT5e9WO
+ 0QDyYrK7pFZ6DZH14zdNfK4zXsoPl9bA6FSqorBbOSiNG4SLjoX0py4vcdAghSkwKsTruIN+jbA
+ bfuv/dwVo3yzGco/VyeDOcksDqk0=
+X-Gm-Gg: ASbGnctDzg6h7ftOrzSV1DsTj/cTftavYRernyZchfoiyizEd6eTpYNCAFoKLEtZP2K
+ iTD+NTju5+b5tb1xIH7wyBnzrQ3V7bUbAeaWhhKkVEHp/HoeENZWKPq0mjN2IoLD0KEHcgblV+s
+ iNAV66OCKXWP2llreMOkRe6loyhwLT2P1kKhz87gYe92HGkzX0kVam
+X-Google-Smtp-Source: AGHT+IHvuR+PSz4TsD8EAHWWTIT+KmALHYMJsNZymRCNbUHULZYslxT09FfV46BbEquzJORaf5CBmVlQv/QqzAJOyeg=
+X-Received: by 2002:a05:6102:5617:b0:4af:c519:4e7f with SMTP id
+ ada2fe7eead31-4cb801f61bamr8033685137.18.1745290123516; Mon, 21 Apr 2025
+ 19:48:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
+References: <20250417072206.364008-1-uwu@icenowy.me>
+In-Reply-To: <20250417072206.364008-1-uwu@icenowy.me>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 22 Apr 2025 12:48:17 +1000
+X-Gm-Features: ATxdqUHG4cq2MeU08EMxo4-4e4bOjd2M30GBb0ZJI_-KaYMAr9bsnpIHIjJMJzs
+Message-ID: <CAKmqyKP8gSY7J0ArKjnKWzcv7UOUjZ57UApW+6EVRM+P_5gfKg@mail.gmail.com>
+Subject: Re: [PATCH] common-user/host/riscv: use tail pseudoinstruction for
+ calling tail
+To: Icenowy Zheng <uwu@icenowy.me>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,24 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+On Thu, Apr 17, 2025 at 5:24=E2=80=AFPM Icenowy Zheng <uwu@icenowy.me> wrot=
+e:
+>
+> The j pseudoinstruction maps to a JAL instruction, which can only handle
+> a jump to somewhere with a signed 20-bit destination. In case of static
+> linking and LTO'ing this easily leads to "relocation truncated to fit"
+> error.
+>
+> Switch to use tail pseudoinstruction, which is the standard way to
+> tail-call a function in medium code model (emits AUIPC+JALR).
+>
+> Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d54b5578f8..d1551d9cc6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -328,6 +328,7 @@ F: include/hw/char/riscv_htif.h
- F: include/hw/riscv/
- F: linux-user/host/riscv32/
- F: linux-user/host/riscv64/
-+F: common-user/host/riscv*
- F: tests/functional/test_riscv*
- F: tests/tcg/riscv64/
- 
--- 
-2.49.0
+Thanks!
 
+Applied to riscv-to-apply.next
+
+Alistair
+
+> ---
+> P.S.
+> It seems that moving it to common-user/ makes the file out of the
+> MAINTAINERS section of "RISC-V TCG CPUS". I Manually added the
+> maintainers there, but the MAINTAINERS file seems to need a change on
+> this.
+>
+>  common-user/host/riscv/safe-syscall.inc.S | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host=
+/riscv/safe-syscall.inc.S
+> index dfe83c300e..c8b81e33d0 100644
+> --- a/common-user/host/riscv/safe-syscall.inc.S
+> +++ b/common-user/host/riscv/safe-syscall.inc.S
+> @@ -69,11 +69,11 @@ safe_syscall_end:
+>
+>          /* code path setting errno */
+>  0:      neg     a0, a0
+> -        j       safe_syscall_set_errno_tail
+> +        tail    safe_syscall_set_errno_tail
+>
+>          /* code path when we didn't execute the syscall */
+>  2:      li      a0, QEMU_ERESTARTSYS
+> -        j       safe_syscall_set_errno_tail
+> +        tail    safe_syscall_set_errno_tail
+>
+>          .cfi_endproc
+>          .size   safe_syscall_base, .-safe_syscall_base
+> --
+> 2.49.0
+>
+>
 
