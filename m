@@ -4,80 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EECC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A7F3C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Zo1-0004W1-3m; Wed, 23 Apr 2025 09:06:27 -0400
+	id 1u7Zo3-0004Wd-8P; Wed, 23 Apr 2025 09:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u7Znf-0004Kw-H1
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:06:03 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1u7UwW-0007bv-Id; Wed, 23 Apr 2025 03:54:52 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u7Znc-0007sb-F5
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:06:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745413561; x=1776949561;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=Tl+0+y185DgIHpX7ae3+z9ruYdWnjo2wg62la9Udigo=;
- b=Wmss7KISVwGiRBOBpqKYC4//suxPxLfdmg649St5H9EUK3j3IX1sNSXP
- NK+xIFsDrvidtUX6WmZBOJx7K7yAqhijFqJ8YWx4ujwhyaqMQEX+6nKvE
- LXPopA5XyUFGj/fZch1xJAOmlkDMBSE6abVk+gLQhQInMesIiB3WLiTGQ
- e9tzBukN6ePFVQSUvSU4vg2YgyRVNXCpCS5nXGk1aH3JDBshH0yJnlpcT
- 3IxrCS0oDLUewsqs6Wmtl7tu42QoSKo/Dgb3fJA1RG1+NKgwj0EicUvAo
- An50CpXNlhFYTdoA/LMecax5g8YRRAv2fjdQXBGuW/gz84dZo8XPjjMIA Q==;
-X-CSE-ConnectionGUID: WC9ofMfYTs2629F8KLjxXA==
-X-CSE-MsgGUID: n8TWVb+GT5yqTfq/+cPLNg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="46914905"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="46914905"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 06:05:51 -0700
-X-CSE-ConnectionGUID: uXSIB91ITSG/dEQvO9r4RQ==
-X-CSE-MsgGUID: HzAHN9adTmaDywAH/ernmA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="132061302"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 06:05:46 -0700
-Message-ID: <596c7a44-797b-4a16-bd7e-0f0dc5c2e593@intel.com>
-Date: Wed, 23 Apr 2025 21:05:36 +0800
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
+ id 1u7UwR-0004yE-SZ; Wed, 23 Apr 2025 03:54:52 -0400
+DKIM-Signature: a=rsa-sha256; bh=JK3oAK8L/MMlxU8luzMFG3Munc7mTZPKsq7E4Di/6Lk=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1745394883; v=1;
+ b=E6/Igbz/UKitnx6UoL0zG0UgoIXAEcmtAvxR0TJ1QQgfUqhqOQ/B4Bcl8XHfzBL7Pc1tXYmP
+ PX/1WAVgoBXXkqT/t3ebZ6mC10dxJ2axcg2s0iin8MFKFeZFMOjg9nAOr4wa7bciDI8fy/VQV/X
+ CiSykSPCDkxKy7J4FQEzfTilIvz51+3MdJGW5hv3Wob6nCGC5HBJBSsFNPtTlHC0pmRdqDGZqcD
+ jpkJgEgWwgGf7bBVWbcxSjmNgb8U9J8SJsJnh9leutmCZo3/5l0/f9hnUK/fsZZ38Jdbb0YrJ+w
+ 1vZnhQu87XGX6lrtOMSKoq64ln9q3q2KNXWVbRjIOchIA==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 1AC0F21391;
+ Wed, 23 Apr 2025 07:54:43 +0000 (UTC)
+From: ~liushuyu <liushuyu@git.sr.ht>
+Date: Tue, 22 Apr 2025 10:35:00 +0800
+Subject: [PATCH qemu] linux-user/syscall.c: add translation logic for
+ epoll_pwait2 syscall
+Message-ID: <174539488306.23673.10433396305045773139-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, liushuyu@aosc.io
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 01/10] i386/cpu: Mark CPUID[0x80000005] as reserved for Intel
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Cc: Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Tejus GK <tejus.gk@nutanix.com>, Jason Zeng <jason.zeng@intel.com>,
- Manish Mishra <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20250423114702.1529340-1-zhao1.liu@intel.com>
- <20250423114702.1529340-2-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250423114702.1529340-2-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 20
+X-Spam_score: 2.0
+X-Spam_bar: ++
+X-Spam_report: (2.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
+ FREEMAIL_REPLYTO_END_DIGIT=0.25, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 23 Apr 2025 09:06:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,86 +64,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~liushuyu <liushuyu011@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/2025 7:46 PM, Zhao Liu wrote:
-> Per SDM, 0x80000005 leaf is reserved for Intel CPU, and its current
-> "assert" check blocks adding new cache model for non-AMD CPUs.
-> 
-> Therefore, check the vendor and encode this leaf as all-0 for Intel
-> CPU. And since Zhaoxin mostly follows Intel behavior, apply the vendor
-> check for Zhaoxin as well.
-> 
-> Note, for !vendor_cpuid_only case, non-AMD CPU would get the wrong
-> information, i.e., get AMD's cache model for Intel or Zhaoxin CPUs.
-> For this case, there is no need to tweak for non-AMD CPUs, because
-> vendor_cpuid_only has been turned on by default since PC machine v6.1.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   target/i386/cpu.c | 16 ++++++++++++++--
->   1 file changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 1b64ceaaba46..8fdafa8aedaf 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7248,11 +7248,23 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->           *edx = env->cpuid_model[(index - 0x80000002) * 4 + 3];
->           break;
->       case 0x80000005:
-> -        /* cache info (L1 cache) */
-> -        if (cpu->cache_info_passthrough) {
-> +        /*
-> +         * cache info (L1 cache)
-> +         *
-> +         * For !vendor_cpuid_only case, non-AMD CPU would get the wrong
-> +         * information, i.e., get AMD's cache model. It doesn't matter,
-> +         * vendor_cpuid_only has been turned on by default since
-> +         * PC machine v6.1.
-> +         */
+From: Zixing Liu <liushuyu@aosc.io>
 
-We need to define a new compat property for it other than 
-vendor_cpuid_only, for 10.1.
+Signed-off-by: Zixing Liu <liushuyu@aosc.io>
+---
+ linux-user/syscall.c | 36 ++++++++++++++++++++++++++++++++----
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
-I proposed some change to leaf FEAT_8000_0001_EDX[1], and I was told by 
-Paolo (privately) that vendor_cpuid_only doesn't suffice.
-
-  On Fri, Oct 11, 2024 at 6:22 PM Xiaoyao Li <xiaoyao.li@intel.com> wrote:
-  >
-  > On 10/11/2024 11:30 PM, Paolo Bonzini wrote:
-  > > On Fri, Oct 11, 2024 at 4:55 PM Xiaoyao Li <xiaoyao.li@intel.com> 
-wrote:
-  > >>
-  > >> I think patch 8 is also a general issue> Without it, the
-  > >> CPUID_EXT2_AMD_ALIASES bits are exposed to Intel VMs which are
-  > >> reserved bits for Intel.
-  > >
-  > > Yes but you'd have to add compat properties for these. If you can do
-  > > it for TDX only, that's easier.
-  >
-  > Does vendor_cpuid_only suffice?
-
-  Unfortunately not, because it is turned off only for <=6.0 machine
-  types. Here you'd have to turn it off for <=9.1 machine types.
-
-
-[1] 
-https://lore.kernel.org/qemu-devel/20240814075431.339209-9-xiaoyao.li@intel.com/
-
-
-> +        if (cpu->vendor_cpuid_only &&
-> +            (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
-> +            *eax = *ebx = *ecx = *edx = 0;
-> +            break;
-> +        } else if (cpu->cache_info_passthrough) {
->               x86_cpu_get_cache_cpuid(index, 0, eax, ebx, ecx, edx);
->               break;
->           }
-> +
->           *eax = (L1_DTLB_2M_ASSOC << 24) | (L1_DTLB_2M_ENTRIES << 16) |
->                  (L1_ITLB_2M_ASSOC <<  8) | (L1_ITLB_2M_ENTRIES);
->           *ebx = (L1_DTLB_4K_ASSOC << 24) | (L1_DTLB_4K_ENTRIES << 16) |
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 8bfe4912e1..6906e7ba38 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -711,6 +711,11 @@ safe_syscall5(int, ppoll, struct pollfd *, ufds, unsigne=
+d int, nfds,
+ safe_syscall6(int, epoll_pwait, int, epfd, struct epoll_event *, events,
+               int, maxevents, int, timeout, const sigset_t *, sigmask,
+               size_t, sigsetsize)
++#if defined(__NR_epoll_pwait2)
++safe_syscall6(int, epoll_pwait2, int, epfd, struct epoll_event *, events,
++              int, maxevents, struct timespec *, timeout, const sigset_t *, =
+sigmask,
++              size_t, sigsetsize)
++#endif
+ #if defined(__NR_futex)
+ safe_syscall6(int,futex,int *,uaddr,int,op,int,val, \
+               const struct timespec *,timeout,int *,uaddr2,int,val3)
+@@ -13363,19 +13368,22 @@ static abi_long do_syscall1(CPUArchState *cpu_env, =
+int num, abi_long arg1,
+     }
+ #endif
+=20
+-#if defined(TARGET_NR_epoll_wait) || defined(TARGET_NR_epoll_pwait)
++#if defined(TARGET_NR_epoll_wait) || defined(TARGET_NR_epoll_pwait) || defin=
+ed(TARGET_NR_epoll_pwait2)
+ #if defined(TARGET_NR_epoll_wait)
+     case TARGET_NR_epoll_wait:
+ #endif
+ #if defined(TARGET_NR_epoll_pwait)
+     case TARGET_NR_epoll_pwait:
++#endif
++#if defined(TARGET_NR_epoll_pwait2)
++    case TARGET_NR_epoll_pwait2:
+ #endif
+     {
+         struct target_epoll_event *target_ep;
+         struct epoll_event *ep;
+         int epfd =3D arg1;
+         int maxevents =3D arg3;
+-        int timeout =3D arg4;
++        abi_long timeout =3D arg4;
+=20
+         if (maxevents <=3D 0 || maxevents > TARGET_EP_MAX_EVENTS) {
+             return -TARGET_EINVAL;
+@@ -13396,6 +13404,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, in=
+t num, abi_long arg1,
+         switch (num) {
+ #if defined(TARGET_NR_epoll_pwait)
+         case TARGET_NR_epoll_pwait:
++#if defined(TARGET_NR_epoll_pwait2)
++        case TARGET_NR_epoll_pwait2:
++#endif
+         {
+             sigset_t *set =3D NULL;
+=20
+@@ -13406,8 +13417,25 @@ static abi_long do_syscall1(CPUArchState *cpu_env, i=
+nt num, abi_long arg1,
+                 }
+             }
+=20
+-            ret =3D get_errno(safe_epoll_pwait(epfd, ep, maxevents, timeout,
+-                                             set, SIGSET_T_SIZE));
++            if (num =3D=3D TARGET_NR_epoll_pwait) {
++                ret =3D get_errno(safe_epoll_pwait(epfd, ep, maxevents, (int=
+)timeout,
++                                                 set, SIGSET_T_SIZE));
++            } else {
++#if defined(TARGET_NR_epoll_pwait2)
++                struct timespec hspec;
++                struct timespec *ts_arg =3D NULL;
++                if (timeout) {
++                    if (target_to_host_timespec(&hspec, (abi_ulong)timeout))=
+ {
++                        return -TARGET_EFAULT;
++                    }
++                    ts_arg =3D &hspec;
++                }
++                ret =3D get_errno(safe_epoll_pwait2(epfd, ep, maxevents, ts_=
+arg,
++                                              set, SIGSET_T_SIZE));
++#else
++                return -TARGET_ENOSYS;
++#endif
++            }
+=20
+             if (set) {
+                 finish_sigsuspend_mask(ret);
+--=20
+2.45.3
 
