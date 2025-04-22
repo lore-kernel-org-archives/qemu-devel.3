@@ -4,94 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E63BCC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 977DFC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7EDH-0000Rm-Sg; Tue, 22 Apr 2025 10:03:04 -0400
+	id 1u7EFQ-0002tt-Qn; Tue, 22 Apr 2025 10:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7ED4-0000Bv-DH
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:02:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7EFJ-0002p7-H2
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:05:09 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7ECy-0006q0-9Z
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:02:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745330562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gPFJrHA5M71c3UwbrJYytVj0SGR0ASd/LIoDZp8msTA=;
- b=ND2B2hqnYzW6dXBBCdjXBjjCTG8lqXxqS3ByjQquz0swjE+YnqMREUeSWc+BjuXLV+nif9
- ufHo6k3rMmmoaJquYHmFHezthQA2nMywwoE8Q7MgOvfNBxJl7C823BrM8CzGLgX4PU+ah3
- z0jou0+yoZwAn68/bYZw+lyfyivFnVs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-PnD7k094PV-TO6F3HJ0EnQ-1; Tue,
- 22 Apr 2025 10:02:36 -0400
-X-MC-Unique: PnD7k094PV-TO6F3HJ0EnQ-1
-X-Mimecast-MFC-AGG-ID: PnD7k094PV-TO6F3HJ0EnQ_1745330553
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D93D1800374; Tue, 22 Apr 2025 14:02:33 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.110])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7D55719560A3; Tue, 22 Apr 2025 14:02:31 +0000 (UTC)
-Date: Tue, 22 Apr 2025 10:02:30 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7EFG-0007M4-6O
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:05:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745330706; x=1776866706;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=eD3/9iW0ld81eZPY/Axle2N7wEZSpRcFe9aQKrt1bj0=;
+ b=Z6G184j6I5EEPXofmwA6itGIXz64rIi9tUOh9GkaRGdp3moaGBGHFLvm
+ wP7VDZpUElvOcnC71Gb6McNLK9DNsMTG55MQkJoBsDFuEZQt3j2+Cm5EQ
+ khYPzLbsBNxjqyqSBEX89wAhmnOim17AIGw7AqzCcP4dJPBy6o6uQ+pZS
+ YNEU9jsb3evOwI1/lVrhCZB0fEkn9tUansTABQs01pRMdT33E2yq7IesF
+ 1aaxGlKQt1IUdu2qSKGjtSd6Fc6GcL++mrqfctJj2Wv9wZtmJ0KoCClaJ
+ cltYjXIq+0e8skqouMTuu50gIrrWr5mV7uD39iti1hLeD4cTi/rN7Dxv+ Q==;
+X-CSE-ConnectionGUID: bY0Weo1eSA+VNkw5S4bPwQ==
+X-CSE-MsgGUID: bGXD8WzSRS2PYPt14+TeIQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50719801"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="50719801"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2025 07:05:02 -0700
+X-CSE-ConnectionGUID: m3xQIYq/T5S5o/blpmfaAQ==
+X-CSE-MsgGUID: mbixgD6VSnSBpriUInJfxA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="132976086"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa008.jf.intel.com with ESMTP; 22 Apr 2025 07:05:00 -0700
+Date: Tue, 22 Apr 2025 22:25:54 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Pavel Pisa <pisa@cmp.felk.cvut.cz>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Jason Wang <jasowang@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: Re: [PATCH v2 12/20] block: Add including of ioctl header for
- Emscripten build
-Message-ID: <20250422140230.GD301197@fedora>
-References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
- <1821e79d3977c3645aa79128b823748aa9a63800.1745295397.git.ktokunaga.mail@gmail.com>
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 02/55] i386: Introduce tdx-guest object
+Message-ID: <aAem8k1hY3P8Nchg@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-3-xiaoyao.li@intel.com>
+ <aAIYjpetyP9LKW6L@intel.com> <aAdSMExEAy45NIeB@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="SuP7/mi/IM/vqmX4"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1821e79d3977c3645aa79128b823748aa9a63800.1745295397.git.ktokunaga.mail@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+In-Reply-To: <aAdSMExEAy45NIeB@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +90,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> > > index 000000000000..f3b725336161
+> > > --- /dev/null
+> > > +++ b/target/i386/kvm/tdx.h
+> > > @@ -0,0 +1,21 @@
+> > > +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> > > +
+> > > +#ifndef QEMU_I386_TDX_H
+> > > +#define QEMU_I386_TDX_H
+> > 
+> > I386_TDX_H is enough... the QEMU prefix is rarely seen in the whole
+> > project.
+> 
+> IMHO having a QEMU_ prefix here is "best practice", so don't remove it.
+> 
+> That lots of other QEMU code doesn't follow best practice is unfortunate.
 
---SuP7/mi/IM/vqmX4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Apr 22, 2025 at 02:27:16PM +0900, Kohei Tokunaga wrote:
-> Including <sys/ioctl.h> is still required on Emscripten, just like on oth=
-er
-> platforms, to make the ioctl function available.
->=20
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->  block/file-posix.c | 4 ++++
->  1 file changed, 4 insertions(+)
->=20
-> V2:
-> - Split this from the previous 12th patch into a separate commit and revi=
-sed
->   the commit message to clarify the purpose of the patch.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---SuP7/mi/IM/vqmX4
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgHoXYACgkQnKSrs4Gr
-c8jEwwf/QxCf3lBV75G1Urd1WZ73yQqS/fQw1TJRMOhrHiUelhmP7ssm8qVM+zja
-ZOBVP2gGae3Ae0WZ0Hn/PFxSJ8xmI8A5Vfq40NiMrFQbD/NHdVOMl/INK91MtTeV
-Y4sE/HXDjv9q70Uynr5bbRWbW+nTP+lvBJauwsk2hhzTrsvPijxAZ8JHXum2C+yG
-R6W5ca1qn89W8e/jY7FJFsLCe664vctz5TsC7IiUvvts/hLWwaX8hSaTb074rtx5
-PrxEdW8QfNjFRR9UIKIiEg1bk7Er30T/XRLhBfBYAhinMmWGuGr0uEwCOhWiox4N
-+Gl4btWj8imzhMbbwyJaawXlMdgGrg==
-=CklY
------END PGP SIGNATURE-----
-
---SuP7/mi/IM/vqmX4--
+Thanks, now I see!
 
 
