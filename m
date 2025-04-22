@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D044CC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE44FC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u77MW-0004C4-5o; Tue, 22 Apr 2025 02:44:09 -0400
+	id 1u77R5-0006JW-RR; Tue, 22 Apr 2025 02:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77MR-00046z-Am
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:44:04 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77Qw-0006IV-PR
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:48:44 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77MO-0007yq-Gy
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:44:02 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-39c30d9085aso3462317f8f.1
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 23:43:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77Qt-0008Pd-UE
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:48:42 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-39c13fa05ebso3355141f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 23:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745304237; x=1745909037; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745304517; x=1745909317; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+9UB07EjzDEhXxVE2VMd7KxrceRog099DGJ5fspr6Kg=;
- b=xvnhPhHa7xhbQ+1q+EsyYhcfLOhdMDV3YWXFcwcaILG6P7w2Yga3WYUqu1L/Zhuofd
- 9X0hBZvmLilwHhDKjG+FZa3tNWGJYK0NtMVuflPu1ENO0uJjYRYXJxXzN8Z2quvVOxV6
- iXyvqb3mL8yWQXA6mU5Z0N8MoidGSO8lXkR55G36tci9xqHM1EoFBIKc5YMfZC2JqUQS
- Yh2FFEfoMQe+s5MeMBJ2QjBsmNTGC1YzJ+uSDYwj3cf7oSnxNdJTeeIIDABgUa4iPY2m
- 6q4P4gssJR/fceYAD+Y3iSDnHF9lQUStp973asMIkRfSU89rVNnC2m7sx7YF/tOMofLR
- rGaQ==
+ bh=DnXZYZpCsMlxjMJ0yI/E0kE04njeYYS2BakI6UaObjE=;
+ b=zEvhTst2TZCs4iERzpKwWdQpitUp539B7XiJqDP1gN7CaZemQw9EVrEl8FpEO86g1Z
+ OK5YfY5G/Mg/VuhRJLik/YCeHHkh+fFA/F4UWxs/ylIy7J4r+t7RsPX97e7UCaQ/kQsl
+ KrKRxK/WdH3P/RalznRY9N0DyIXuSOQy2r/qWvb3p9JibBAqSciCjlIvtH4/ofJ8wRqX
+ qJzSp4MMEQKJ5oKpzyaosL9oxAftU74HbzsQP6zPVGVb2nOD7b+OiQjjwJXhVq4lJ3dR
+ 9nzH72wIKu6lisuauCi2gA4Gq257Ajy4nrKYFlzHJK1fdd4ms1uCXOqnTQDSsLVbIJfU
+ sFAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745304237; x=1745909037;
+ d=1e100.net; s=20230601; t=1745304517; x=1745909317;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+9UB07EjzDEhXxVE2VMd7KxrceRog099DGJ5fspr6Kg=;
- b=Xf3GAtaPtfMzsOkC+QUjVbNJo8qMN8tKyD1OVVRpvssdJL751IqeWEkOCMvhbkDKd2
- xGQyOfkETpt2SXpQhgxQfh8VmDrJMyX9ttbcdglOQ6gW6EnAvuBGujfqm/h15bGawFmK
- Yk5IsL2l64j/m9gU0H2Jsht1lqoZSs5iWgHh4GjJDtldR500aau9o8RsL7ULd7Yw3nuA
- nLqTIBbkhvqiPkgl/87Qqq6Sn/ABfAp8aIhKInGK110mV1B2WGRJEycf4BaLOfnXAtgS
- BW4R8FH5nJUl070edCUbGwGpE+5R1j5/AgX+u380J4yof6M1MyLQZwJjmpdMGx6JB3UB
- 3UNQ==
+ bh=DnXZYZpCsMlxjMJ0yI/E0kE04njeYYS2BakI6UaObjE=;
+ b=rVW3xfYqUwyImAYyb/4aTtxDRmqNl871JBK8jcqWV0szAnfZWckqYJv6HzSBR+Ew22
+ wxCVPr8qywUiDbk4NBNgAqGfX1JIKeHJNd4WVgsOXWwzMkvjm5ciZV6sUpQm6Q6bvyj3
+ LxgOTVXpHJQDTWJZZv13XeWES4FWwWxq2ZVWelrg6NH8cVcllu+vgnG/PmIrUul+iF1i
+ Cps8uTgy+FqlX7/dEdogfGadhP+JAlPyHJBYrhvdDTTUni07ug5fc9pX8D+JsCrpCJP4
+ iaJCOl7iFBRWn4BnzJDBtLMU5l3kqxbnrlb/5/7dLfm9i7p4BaDt4g9WP/ALZv1u2C1C
+ GBpw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWES5joFk0XT9D5PNA3fNROEDYpRPqq6o+u3I05rT5suESkBw08zj1DjW9vgJdig76kNl+RDkl6sRvx@nongnu.org
-X-Gm-Message-State: AOJu0Yw0DzyXKSeHpvbbYep9oiY0vaVyvZJptSSgGaTmTHfTZpt2Q/wI
- GO6YwnYWFqTdz0udAbeEN2P038571Tm8/bjYC2k7B02T8qMtKrnsIn49QKYVgXY=
-X-Gm-Gg: ASbGncuwiTtraBWloln5AbvpEPvFHD4OphnXGvpNbe96SONfDEfCkmZaiv5DST69+7G
- QHAnmFtoz2G+y/Q7XnKqHHvEsWoPCYP1Q+s157JjGyTbUunJUYFPptaDZzLKMu4NZjIA1S0RO7P
- 2TtUuZl+jcBXOxOFx9cC0fApqMoJm11Jn8dod9eRHpO+SzDRS8Y3heXXAL3x7M16EbsYkoDKHwo
- yObzMrz1n1Cx7v0L6rNCoUf2s5RbfzZQQ81j8PPKBohphfz+XhIslZlh/NRJ31qF4EFE3/DK+HQ
- lLY91ALDyTIG35u2pkEdvyt4Sp02B+avFGGCQPY0ctW5D0HgValuYvGl+g5WfdIlZDN0GqBKwru
- nhD6gU/sCtRXZXD0osZg=
-X-Google-Smtp-Source: AGHT+IGicNEOGGWG9Ql2/GtKu2hXalYv3ESAo9JoC/qmXK6F5zqhCTj6Dxi2AfDm2j2sZt9xm6esSQ==
-X-Received: by 2002:a5d:47cb:0:b0:39e:f89b:85dc with SMTP id
- ffacd0b85a97d-39efba52f5cmr10905880f8f.17.1745304237341; 
- Mon, 21 Apr 2025 23:43:57 -0700 (PDT)
+ AJvYcCWSRn+rXhMRJKPpdbP7hUOlBR1v156Odqgyxqv7UZ0ewaSxRibS+ySo4l56xSZ+DOrVvaUdJ9TPZPK+@nongnu.org
+X-Gm-Message-State: AOJu0YwJeL9OI1XF5wAC2KgoaS2X++yMNxePVRS7ik5bJh4jsrkOS007
+ Nm1z5s75cElJ+acM5j0PeQV2UfJnT+MPUfhi/H1ItRouh87HgMGmDBEo82I1oXk=
+X-Gm-Gg: ASbGncuA/M4XOAD6GCDEX3FB9ryKpQJyk9amERBYDZriZp/E4ZlpN0NFISSiQb3XAl5
+ H5L8KmlhQfa2VWKPDsUPtvwYfmmZeHed4Qk7+62MIDepRz083XN+kSbhuucKWyrfz3bZRJfvI5l
+ TtZHYXZ8UexktapVDur/quR86x6BveJdhN7IxRcK6G9aRdYr6e2iAdCbkC5FALEk20sUFQ3dHHm
+ QPqn68thmnlHww6ctWciHAdN4GuAlaP7YsQwl7vFwbu0M1SqkUJdsC/cio7HhYyifRUSix54rZE
+ b4F/JACklQdwAny0G6/NFKFyBZeZ6pg7B1AmHA4wnvOfHOjUePx218bBMQIv/5gF1YKu+rBnAc4
+ 9Y7GxjUdJ
+X-Google-Smtp-Source: AGHT+IHMpt6hktBQcp63unlBelOTUarNTXCE5b0mE/3wPmn6HjNsKZhrJ6P4Ob4YbC3B5cCFDHXW/w==
+X-Received: by 2002:a05:6000:2913:b0:39e:f641:c43 with SMTP id
+ ffacd0b85a97d-39efbaf689bmr10720478f8f.53.1745304516970; 
+ Mon, 21 Apr 2025 23:48:36 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa43be53sm13882739f8f.41.2025.04.21.23.43.55
+ ffacd0b85a97d-39efa420683sm14169010f8f.20.2025.04.21.23.48.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Apr 2025 23:43:56 -0700 (PDT)
-Message-ID: <214e3bef-09cd-426b-aa7a-65ee540f7cab@linaro.org>
-Date: Tue, 22 Apr 2025 08:43:55 +0200
+ Mon, 21 Apr 2025 23:48:36 -0700 (PDT)
+Message-ID: <e163300b-307f-46d9-9bf3-10f17c998e78@linaro.org>
+Date: Tue, 22 Apr 2025 08:48:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/20] block: Fix type confict of the copy_file_range
- stub
+Subject: Re: [PATCH v2 11/20] util/cacheflush.c: Update cache flushing
+ mechanism for Emscripten
 To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -92,21 +92,21 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
  qemu-s390x@nongnu.org
 References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
- <ce34a721a5283fce854f417baf7b1c8f5c48c028.1745295397.git.ktokunaga.mail@gmail.com>
+ <73301cc216217d5c3e0d7acdd32482e36f4f045c.1745295397.git.ktokunaga.mail@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ce34a721a5283fce854f417baf7b1c8f5c48c028.1745295397.git.ktokunaga.mail@gmail.com>
+In-Reply-To: <73301cc216217d5c3e0d7acdd32482e36f4f045c.1745295397.git.ktokunaga.mail@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,21 +123,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/4/25 07:27, Kohei Tokunaga wrote:
-> Emscripten doesn't provide copy_file_range implementation but it declares
-> this function in its headers. Meson correctly detects the missing
-> implementation and unsets HAVE_COPY_FILE_RANGE. However, the stub defined in
-> file-posix.c causes a type conflict with the declaration from Emscripten
-> during compilation.
+> Although __builtin___clear_cache is used to flush the instruction cache for
+> a specified memory region[1], this operation doesn't apply to wasm, as its
+> memory isn't executable. Moreover, Emscripten does not support this builtin
+> and fails to compile it with the following error.
 > 
-> To fix this error, this commit updates the stub implementation in
-> file-posix.c to exactly match the declaration in Emscripten's headers. The
-> manpage also aligns with this signature.
+>> fatal error: error in backend: llvm.clear_cache is not supported on wasm
+
+Note, you mix LLVM error ...
+
+> 
+> To resolve this, this commit removes the call to __builtin___clear_cache for
+> Emscripten build.
+> 
+> [1] https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005f_005f_005fclear_005fcache
+
+... with this GCC documentation:
+
+   If the target does not require instruction cache flushes,
+   __builtin___clear_cache has no effect.
+
+I'd expect __builtin___clear_cache() to be OK, having no effect on a GCC
+WASM implementation.
+
 > 
 > Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 > ---
->   block/file-posix.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   include/qemu/cacheflush.h | 7 +++++++
+>   util/cacheflush.c         | 4 ++++
+>   2 files changed, 11 insertions(+)
 
 
