@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7372C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 17:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50258C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 17:51:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7HjG-0006BZ-UC; Tue, 22 Apr 2025 13:48:19 -0400
+	id 1u7Hlp-0000Ok-WE; Tue, 22 Apr 2025 13:50:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Hih-0005z4-Uh
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:47:44 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u7Hll-0000Ns-Sg
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:50:54 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Hif-0001IF-4H
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:47:42 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-736b98acaadso5240563b3a.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 10:47:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u7Hli-0001je-PS
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:50:53 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-73972a54919so5532954b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 10:50:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745344057; x=1745948857; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1745344249; x=1745949049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/wcsraWq3/AJDnU6Bji9fHtIWW61dpCSbuM5Af+ngsI=;
- b=Fs+Pf4TZyCbPIU+ZYZ1LJxiwgxEF0cwFI8uL26IhvpudZygMsPMtrnnTDMPxohLHIR
- mugIUvTOKCH9MyO9B+kCxsbKOcjlbYtTViLyRnsF9/kOiuCR6gUyULg+nOo96k16bjI4
- tajmWyKVIRgMUfu37RWi0kOxB3Gzlmm3ao605qYcY+jn/0PYSj2lyemcexAb4zEmwwKy
- 6BFbPoB40UYc4BmmnzG3Lv3pleIxJ5Al4jcoyoaIAqQLdVeyo3JBTzmXBncSqFRQ2jGl
- hGTg2EPeNX0TWjqhFjNXB1L7C7y8v/4RliVHKJpk6Io9kkqKjRSpRIhaJ8yVqHcvZfPM
- LfVw==
+ bh=5xBjYlTuGsJ7I5J4Q7OylMFs3Nemw9WARDFIwFdP9Gk=;
+ b=qf9MnVWcX4xbN+/PniohpQ/S8Sibm0w46DxslZ9LR8dXWpaLZXVqeGhRudUpSflk0V
+ Kf2NGtoHqupQEv864MUAA27aYnleVX/SNhAVI4i+XNsoblpARXvUHjSW1XMMmI8l8gs2
+ ygRqkUXJlnkoYwXCoTCVkXdrofOu/5GJ82ypd/kuy1bnMJVqIIFFz4N7hFlmWOcXmGji
+ ENNIlVoPQUzn6T19emzB7niGu+9HJqi1P442hqca6ycIdSrl5YyOqHZrNFKnPPOR2E46
+ rUg3pHLyX7OuFxHTmzVucgw63Vogx/LcnLZqvLXEKzphdMQKK6UWN6bNQTDVTfJf82Z5
+ 3TqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745344057; x=1745948857;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1745344249; x=1745949049;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/wcsraWq3/AJDnU6Bji9fHtIWW61dpCSbuM5Af+ngsI=;
- b=hwD8hhrFir9HsHunArxJe9NVvh9qtwHY0v37kn3ZEXFaQJXq15L8s8hQMKIEHLZjxR
- CLx8b6rvbYf93CySTyL7bDcsfkHhifLRklb0m7/gKDmV3y3FNh6/HpM2wu8TqBhXoisg
- ZJelbzAW40oIPu+h8o78vu7sRUYvTxKkWC3UDTLfJ9Mj9uPcHJ3juVRTAEADaD7VdqXy
- P7H7LI7Eru/Iongc2PvgKHIK7RGkLQqDbt/AwVWpsIC7m/pe4YKhIsAV0dJn/QnVc7Sd
- d+Ss2lW+iQVMjvujPA1rnkdUnF+yT7K7IXG3DjY+ixZhsL7ie/wECTfj+vrYqQro7uZ8
- U2tg==
+ bh=5xBjYlTuGsJ7I5J4Q7OylMFs3Nemw9WARDFIwFdP9Gk=;
+ b=rrAgO0Ryo2+ytiStpwRN47fdq8Gt9ui6KM9RKo/FYnhQyOWq9be9RnCYACYD0quuMG
+ a0wAiZJ1fWToypAVyZyYDys6UC0ymQB3RL8nY0dQY3DIgwGlcnJ/k0xL3a9PJ22plnSt
+ ONZ525yFeG+318n9wwCSsoXMCiczMfWIkEPpuNhxU5+YgLo+laM/09a2PNCEqaKc2buA
+ bVEcINt3avMr/JTDFI78f7oPIX4s/jigO/Q29mDRU2mFVQsuB8K1II/Ra/pprnWy81kx
+ Que0hyT7wIwmVxzm1zgsbcGrIUtiS6VIDz4x7GG/QCXwg6FHcbcsBDahiLJl0OWElTVM
+ whmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnejmldS+/P1J2+9XEs62Xv2d6swK6zcxmzgjIhiC/gLxB/saeWxMKIEaJGXaKwZSvu62KRyNg/25d@nongnu.org
-X-Gm-Message-State: AOJu0Yx1MZSG18A6BWBKUK+9EpcWbnUOX6KzbTXTeEapJGu8CxhC6x0k
- qZ27nxq6v9OmWl9AUfEP1XYftCIlQeTOFOpJKK0QEBCRDFjJEF70YmvhI1FiFtI=
-X-Gm-Gg: ASbGncud6pQOP9r2zGoTKyj2CVhm5oP3oTUQ54RN170moL+tGuOFNe4UuWMnRFPJoG9
- e6d2tqXAA6PMKJJx/6PXBb9c3FGsqpJ6nAwquCp5uPMV8Qbt8lK3T9ilv79oH+Rh4P5VaHP1jPZ
- Q6Ot3eVxFpnOrrhmJQQySN3pEdEXd1aUcdqPoymqzjOZM+WENavmBuNChJwvpMjXf1T/Vb/XWcW
- 52TNjmKZ2I2lS0U+86rR1owLl0qo8ykqprTJdEE67vSoVzPyz4Ai9uIJgPearlZXXh9KrD7kXCG
- 2yC4JooZFL+/FzEkLm2EtXWRxE6W6ToqN76aibYZAOJYm3Alt4obv4tb8fAScqrxzGeft9H9wEe
- +fsX8r8s=
-X-Google-Smtp-Source: AGHT+IFiMHCA20whzO2uR+8iQRdh2mUy/6YIHI5FxG5lSlQdcIe6V8d/KO56GcYyvmFCKX8gHue9KA==
-X-Received: by 2002:a05:6a20:c6cb:b0:1f3:388b:3b4b with SMTP id
- adf61e73a8af0-203cbc524f1mr24015829637.15.1745344057689; 
- Tue, 22 Apr 2025 10:47:37 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ AJvYcCXPnHXAKQCNb307CeLTItT4aEpbZZxS75/EhPyBOqUfkQ8k2gXSaFSiFI/uLI0O3/Q6iwBB0aQVAIWf@nongnu.org
+X-Gm-Message-State: AOJu0YwCT0AJ5/CHknYnk3yX0bNVMvqOukL+cKVf4vYgJWYOCUE3LfbH
+ EcIyJJJR6TZ/B54Uuh81KYRYQgtnNRnqyuoCq2tVcKqkSdv20xO/9yHn6DhT0FY=
+X-Gm-Gg: ASbGncubG+VuQ9QX3Oq7+JqzdUvYYBqBU6Usftc1UkvXbsNO40ZfzpiW6qzyyf7/V/v
+ dd/P9xI8fZG0eAFWQL+dxuYlHNPwuzdv3ziW8nT8z3y2cvinAO3gG/ePurikfqBmI07FjMuyCES
+ HilyEa9mg9Kb/HmZJaTCQYUaEo58h3vnWa5oStBuU/cwSfunPyVMFtD50DvEYhAq7T7F9Ok3z1F
+ XRFLu3uIQ44NZFXroUkZraHmQ/p/7DWZc+vZcfiYpUCdv7GxB1e4Lyvzqi1zyI1lencS+d3Bj83
+ bvNHPKqeENSH17CAubFaHzUS1xL+bAs+CVq53R49LMhnsY/OIj2LIA==
+X-Google-Smtp-Source: AGHT+IHzfmf39X0ibsH+rq7G/IK42CQ2aIaE7miLyfaeHLNnOAD8aCN6+ZSwLi1+/Zpp+BJHw9cN6A==
+X-Received: by 2002:a05:6a00:e8b:b0:736:41ec:aaad with SMTP id
+ d2e1a72fcca58-73dc14b3b4cmr20848937b3a.14.1745344248729; 
+ Tue, 22 Apr 2025 10:50:48 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b0db13c623bsm7543853a12.43.2025.04.22.10.47.37
+ 41be03b00d2f7-b0db13a57a1sm7643787a12.27.2025.04.22.10.50.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 10:47:37 -0700 (PDT)
-Message-ID: <386cd2c5-7ef4-4f4d-b868-109ba48a597a@linaro.org>
-Date: Tue, 22 Apr 2025 10:47:35 -0700
+ Tue, 22 Apr 2025 10:50:48 -0700 (PDT)
+Message-ID: <f5e7f82e-4a97-47e1-bcf5-67a9c72d9572@linaro.org>
+Date: Tue, 22 Apr 2025 10:50:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 16/19] hw/arm/virt: Replace TARGET_AARCH64 ->
- target_aarch64()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Anton Johansson <anjo@rev.ng>
-References: <20250422145502.70770-1-philmd@linaro.org>
- <20250422145502.70770-17-philmd@linaro.org>
+Subject: Re: [RFC PATCH v3 13/14] qemu/target_info: Add target_aarch64() helper
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250422145502.70770-17-philmd@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-14-philmd@linaro.org>
+ <41c9061f-ffd8-47a8-b2e8-7c4b2a2c2fcf@linaro.org>
+ <ff7cdc09-f11c-43ae-b1e4-668c39db3efe@linaro.org>
+ <3242cee6-7485-4958-a198-38d0fc68e8cd@linaro.org>
+ <87tt6g91fq.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87tt6g91fq.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +110,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/25 07:54, Philippe Mathieu-Daudé wrote:
-> Replace the target-specific TARGET_AARCH64 definition
-> by a call to the generic target_aarch64() helper.
+On 4/21/25 23:04, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
-> This removes the last TARGET_AARCH64 in hw/arm/.
-> ---
->   hw/arm/virt.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
+> [...]
+> 
+>> At this point, I would like to focus on having a first version of TargetInfo API, and not reviewing any other changes, as things may be modified, and they would need to be reviewed again. It's hard to follow the same abstraction done multiple times in multiple series.
+>>
+>> Regarding your proposal for target_system_arch(), I understand that you tried to reuse the existing SysEmuTarget, which was a good intention.
+>> However, I don't think we should use any string compare for this (which qemu_api_parse does). It has several flaws:
+> 
+> qemu_api_parse()?  Do you mean qapi_enum_parse()?
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yes, sorry for the typo.
 
-r~
+>> - The most important one: it can fail (what if -1 is returned?). Enums can be guaranteed and exhaustive at compile time.
+>> - It's slower than having the current arch directly known at compile time.
+>> As well, since SysEmuTarget is a generated enum, it makes it much harder to follow code IMHO.
+>> QAPI requires those things to be defined from a json file for external usage, but it's not a good reason for being forced to use it in all the codebase as the only possible abstraction.
+>>
+>> To have something fast and infallible, we can adopt this solution:
+>>
+>> In target_info.h:
+>>
+>> /* Named TargetArch to not clash with poisoned TARGET_X */
+>> typedef enum TargetArch {
+>>      TARGET_ARCH_AARCH64,
+>>      TARGET_ARCH_ALPHA,
+>>      TARGET_ARCH_ARM,
+>>      TARGET_ARCH_AVR,
+>>      TARGET_ARCH_HPPA,
+>>      TARGET_ARCH_I386,
+>>      TARGET_ARCH_LOONGARCH64,
+>>      TARGET_ARCH_M68K,
+>>      TARGET_ARCH_MICROBLAZE,
+>>      TARGET_ARCH_MICROBLAZEEL,
+>>      TARGET_ARCH_MIPS,
+>>      TARGET_ARCH_MIPS64,
+>>      TARGET_ARCH_MIPS64EL,
+>>      TARGET_ARCH_MIPSEL,
+>>      TARGET_ARCH_OR1K,
+>>      TARGET_ARCH_PPC,
+>>      TARGET_ARCH_PPC64,
+>>      TARGET_ARCH_RISCV32,
+>>      TARGET_ARCH_RISCV64,
+>>      TARGET_ARCH_RX,
+>>      TARGET_ARCH_S390X,
+>>      TARGET_ARCH_SH4,
+>>      TARGET_ARCH_SH4EB,
+>>      TARGET_ARCH_SPARC,
+>>      TARGET_ARCH_SPARC64,
+>>      TARGET_ARCH_TRICORE,
+>>      TARGET_ARCH_X86_64,
+>>      TARGET_ARCH_XTENSA,
+>>      TARGET_ARCH_XTENSAEB,
+>> } TargetArch;
+> 
+> Effectively duplicates generated enum SysEmuTarget.  Can you explain why
+> that's useful?
+> 
+
+In terms of code, it doesn't change anything. we could reuse SysEmuTarget.
+I just think it's more clear to have the enum defined next to the 
+structure using it, compared to have this buried in generated code that 
+can't be grepped easily.
+(git grep SYS_EMU returns nothing, so people have to remember it's 
+converted from a Json, and that naming is different).
+IMHO, DRY principle should not always be followed blindly when it hurts 
+code readability.
+
+That said, my editor is able to find the generated definition as well, 
+so I don't really mind reusing SysEmuTarget if we think the code 
+readability is not worth the duplication.
+
+However, I think it's a problem to compare strings to find this, when it 
+can be set at compile time, in a file that will have to stay target 
+specific anyway.
+
+>>
+>> typedef struct TargetInfo {
+>> ...
+>> 	TargetArch target_arch;
+>> ...
+>> }
+>>
+>> static inline target_arch() {
+>> 	return target_info()->target_arch;
+>> }
+>>
+>> static inline target_aarch64() {
+>> 	return target_arch() == TARGET_ARCH_AARCH64;
+>> }
+>>
+>>
+>> In target_info-stub.c:
+>>
+>> #ifdef TARGET_AARCH64
+>> # define TARGET_ARCH TARGET_ARCH_AARCH64
+>> #elif TARGET_ARCH_ALPHA
+>> # define TARGET_ARCH TARGET_ARCH_ALPHA
+>> ...
+>> #endif
+>>
+>> static const TargetInfo target_info_stub = {
+>>      ...
+>>      .target_arch = TARGET_ARCH;
+>>      ...
+>> }
+> 
+
 
