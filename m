@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A211BC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D3EC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Eh5-0004N9-5H; Tue, 22 Apr 2025 10:33:51 -0400
+	id 1u7EjE-0005Qq-9s; Tue, 22 Apr 2025 10:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7Eh3-0004Mv-K5
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:33:49 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1u7Eiy-0005OC-Rd
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:35:49 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7Eh0-0002NT-Pl
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:33:49 -0400
+ id 1u7Eiw-0002k9-VY
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:35:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745332426; x=1776868426;
+ t=1745332548; x=1776868548;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=p7s1My4NKygGrdOUrBRFtw5eXLITEiMGyiUbmIhV8Gk=;
- b=SUwVrrUoFOR8i1WhvNAcWyJGj73HoB/ATv3m95ABRQlUYozcpy/AglS8
- 6j1S8r5d7YkK7svoJgioGzWVgjt341cr6sqOIUhorcbPHjE5jIX3Tnfte
- KfStmhC/ilWQRVLq/ggzulaGhGnlzI3iAhuXSqaNUIhj8o6GhHZ/Qt99l
- OQ5XAmgh+sWVDkhlMPQVTUkH/EWOnisWCQXcxGU8GoPUG/63sObAvSjAv
- njFsgr9fyD9iAzpBTQv7kNuCLB4QAoPFj2/SA14QmALRfmKD5dcY66hMx
- W/LyV4p93A0heIyL1P8ayiDhsM+SVzeMNTMpNNHBYVlRwx4NjiOxSnRQT w==;
-X-CSE-ConnectionGUID: /ozmmTNJRGC6Yn1hQDj3cQ==
-X-CSE-MsgGUID: QSq5uY4vQYSxWy44akugBQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="57083890"
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="57083890"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2025 07:33:43 -0700
-X-CSE-ConnectionGUID: P0yWJhoASN+PklBJIKvyDA==
-X-CSE-MsgGUID: xfSBkJY9TeaKK9Ngwj4qVA==
+ bh=rockSBm6e8LPWsjb0m0J68AhC1lgm0+HhnaCQDNSUAc=;
+ b=A5Q/U2fTIZlTGhe8tZx3REvlCtoCFYbcQ1yLAX4U/zzFTnejJVq+64AU
+ w7lN5tK7vUBxCgk0AvfTVnRE71rOGvGkZdopDxiKASS91WlaleF0pIg4n
+ rqcKIp896P5kGBIFXM1aKl75rlzycnTQURBGd+eUoOkyLqLX5bgi2XfkB
+ WfLew35MCW0iRWK4rc+2SWZbFBvTkeOvsuHwbfju2PrY4Shz2fBBmtvpv
+ /Z/Bf8M87O/PuROszGmRG3HODsdvQqwK0aWTD/I5VLx4Nzlbmgx9q8pPd
+ 6suW5VaOyOmx+zjIzfbmGyK8hqLZmZG8jjVZo2rDrrHVrLZaJZtbcm6uf w==;
+X-CSE-ConnectionGUID: HzfiSn4TSdavs7rwKc6H/w==
+X-CSE-MsgGUID: wQt+TV4USRmuSjGYVS4teQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46598558"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="46598558"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2025 07:35:46 -0700
+X-CSE-ConnectionGUID: DOTabLMJQVSkxy9bsX47Hw==
+X-CSE-MsgGUID: V8YMdCIIQ3m8v9BrYnlrog==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="131873962"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="131981827"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 22 Apr 2025 07:33:40 -0700
-Date: Tue, 22 Apr 2025 22:54:35 +0800
+ by orviesa006.jf.intel.com with ESMTP; 22 Apr 2025 07:35:42 -0700
+Date: Tue, 22 Apr 2025 22:56:37 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,15 +57,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 08/55] i386/tdx: Initialize TDX before creating TD vcpus
-Message-ID: <aAetq2ZgqaRHmdPm@intel.com>
+Subject: Re: [PATCH v8 09/55] i386/tdx: Add property sept-ve-disable for
+ tdx-guest object
+Message-ID: <aAeuJeCuEQO3mv27@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-9-xiaoyao.li@intel.com>
+ <20250401130205.2198253-10-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-9-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250401130205.2198253-10-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
@@ -90,53 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:18AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:18 -0400
+On Tue, Apr 01, 2025 at 09:01:19AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:19 -0400
 > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 08/55] i386/tdx: Initialize TDX before creating TD vcpus
+> Subject: [PATCH v8 09/55] i386/tdx: Add property sept-ve-disable for
+>  tdx-guest object
 > X-Mailer: git-send-email 2.34.1
 > 
-> Invoke KVM_TDX_INIT_VM in kvm_arch_pre_create_vcpu() that
-> KVM_TDX_INIT_VM configures global TD configurations, e.g. the canonical
-> CPUID config, and must be executed prior to creating vCPUs.
+> Bit 28 of TD attribute, named SEPT_VE_DISABLE. When set to 1, it disables
+> EPT violation conversion to #VE on guest TD access of PENDING pages.
 > 
-> Use kvm_x86_arch_cpuid() to setup the CPUID settings for TDX VM.
+> Some guest OS (e.g., Linux TD guest) may require this bit as 1.
+> Otherwise refuse to boot.
 > 
-> Note, this doesn't address the fact that QEMU may change the CPUID
-> configuration when creating vCPUs, i.e. punts on refactoring QEMU to
-> provide a stable CPUID config prior to kvm_arch_init().
+> Add sept-ve-disable property for tdx-guest object, for user to configure
+> this bit.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 > Acked-by: Markus Armbruster <armbru@redhat.com>
 > ---
-> Changes in v8:
-> - Drop the code that initializes cpu->kvm_state before
->   kvm_arch_pre_create_vcpu() because it's not needed anymore.
-> 
-> Changes in v7:
-> - Add comments to explain why KVM_TDX_INIT_VM should retry on -EAGAIN;
-> - Add retry limit of 10000 times for -EAGAIN on KVM_TDX_INIT_VM;
-> 
-> Changes in v6:
-> - setup xfam explicitly to fit with new uapi;
-> - use tdx_caps->cpuid to filter the input of cpuids because now KVM only
->   allows the leafs that reported via KVM_TDX_GET_CAPABILITIES;
-> 
 > Changes in v4:
-> - mark init_vm with g_autofree() and use QEMU_LOCK_GUARD() to eliminate
->   the goto labels; (Daniel)
+> - collect Acked-by from Markus
+> 
 > Changes in v3:
-> - Pass @errp in tdx_pre_create_vcpu() and pass error info to it. (Daniel)
+> - update the comment of property @sept-ve-disable to make it more
+>   descriptive and use new format. (Daniel and Markus)
 > ---
->  target/i386/kvm/kvm.c       |  16 +++---
->  target/i386/kvm/kvm_i386.h  |   5 ++
->  target/i386/kvm/meson.build |   2 +-
->  target/i386/kvm/tdx-stub.c  |  10 ++++
->  target/i386/kvm/tdx.c       | 105 ++++++++++++++++++++++++++++++++++++
->  target/i386/kvm/tdx.h       |   6 +++
->  6 files changed, 137 insertions(+), 7 deletions(-)
->  create mode 100644 target/i386/kvm/tdx-stub.c
+>  qapi/qom.json         |  8 +++++++-
+>  target/i386/kvm/tdx.c | 23 +++++++++++++++++++++++
+>  2 files changed, 30 insertions(+), 1 deletion(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
