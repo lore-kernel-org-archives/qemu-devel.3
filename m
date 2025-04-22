@@ -4,145 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17DE9C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 13:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F45AC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 13:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7DVa-0006Bo-D1; Tue, 22 Apr 2025 09:17:54 -0400
+	id 1u7DWf-0006xj-Rb; Tue, 22 Apr 2025 09:19:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1u7DVX-0006Aa-P0; Tue, 22 Apr 2025 09:17:51 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1u7DVV-00028v-Qb; Tue, 22 Apr 2025 09:17:51 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53MBbQpE016912;
- Tue, 22 Apr 2025 13:17:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=32fqx5
- IrbfD5O6GnlX6+kVZT/zBeDaXyDr/+EOZVKVA=; b=qD7YBkfhic+WxpvLkN5Leh
- +JrtI/x+trOLo68dEPgAjIXRJ0ZhpNiFMK0tmP8Og+JEqxbg4axTWUfvTarBbP0Z
- 4GI3E4AAuqeCNhcnUGYGTzxpuGwW3MY15fPRUh27eT/PrYmHrwDAN7kMKZpXdoqy
- us/FkQngg8L1VQwWwkTDHNQEPxFuHM7kxMCekzuyp1zKYlcOvepmvdInbx6eWMjR
- NjYS1dHSgjFaXezxkWz7EnCjzvHLbFEDcGsYqZ+1V1oRonXgUwCXnI6D4/CWc2ea
- NHcUVLU93035Egthcdxlo6rSUWHOL0OZsm1JI2wWhHKv8G/TsxvQuhQlfLyPTuFw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 466ad3rfrr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 13:17:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53MAcj6r012501;
- Tue, 22 Apr 2025 13:17:46 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 464p5t36q0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 13:17:46 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53MDHgSV47645154
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Apr 2025 13:17:42 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD4EA2004F;
- Tue, 22 Apr 2025 13:17:42 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 354F120043;
- Tue, 22 Apr 2025 13:17:42 +0000 (GMT)
-Received: from [9.111.37.215] (unknown [9.111.37.215])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Apr 2025 13:17:42 +0000 (GMT)
-Message-ID: <7d812276-9f93-4fbd-90d4-b5d1cdd8c63b@linux.ibm.com>
-Date: Tue, 22 Apr 2025 15:17:41 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7DWY-0006pg-JL
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:18:56 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7DWV-0002Ep-2x
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:18:53 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39c0dfad22aso3660263f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 06:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745327929; x=1745932729; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=77yyRGOmizuCBU9T40JZpDpZACJ9np8VqGyH6gRCUB4=;
+ b=QFOohJpFyLwK+dgWjvjHD/xMrVi1xg/tlL2Nna51t6OYiNfX5eyLo5wdq2LK8aWSem
+ QNCC1smf7NnDa4DZUQjZzbrM3cimDuCdRYftAgOu8++YtHm/UiXZO1MYBpKITudZX0k2
+ VwAHCXX6M5TyAX74mm/FNauK+gJM01U5O1OtpksPbHPAd0NOk4XJD5rdxslSpVoWrqhD
+ Jndn4dAollepPzhwiBMspV4Hlr9I7h0b7Dg3eX4Tag22Uq4ct19JmvIFz2D0rKey0DFv
+ UeMS9RtcFi8hV81t9Brn5z3tE9AfkJjzWK35kPNGpP96DRkqYqZNphBZEy9lgU9kt74f
+ 1lEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745327929; x=1745932729;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=77yyRGOmizuCBU9T40JZpDpZACJ9np8VqGyH6gRCUB4=;
+ b=nKlJg1Y9L4vkkl60e2pNGyMAuva6v1ijNmTV+MG0bQ58GziZKRkEDmgxWorv0j9Hm3
+ iG8n/q7y6X+bRa7pQZLGc+bskGk8pq6ARuWYL/CwVcv7Qt28DcChHlAcr3kuHEmidbGo
+ LknGycqZ0uxQf7Ow2cPDwA6Jt/LJGTrhe1Z5YEA4bvTSXmAKDph56s/W7mqsofiTjWTQ
+ IU02qKfdTNia6y8lx2CrrzgXuLQOHSSIKDv1LGQtPR2DaydP0JkAkc00x8+H/mB8KCDw
+ aGhdMRzbaXWgJf0MmU2fcaloUf4zT6i4g25P1afIE/t8R58aRKe9mnrF+2EdNClt/9ds
+ 2tTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjL0L64cp+mRTucRRWOPibtxfL1Iyvz5ZIU1vtm5M9jCebdMbBPvrbgY07lapXLF2Bb/V/HYLATqf3@nongnu.org
+X-Gm-Message-State: AOJu0Yy6+DHVMer5NYRWFf8fClD3UGpNqL/yUq8vakE0T/4A026QcGQi
+ rdIzJr0tOjZ0y1ew2+oX5EFWDhsVEh1iLv4jZXVbj3Rp9x6C/iTbg4v3KhSDXv4=
+X-Gm-Gg: ASbGnctn71IkFoqsdC6rJYDvGbD8JK+YxDGzuGE1kpT1Go02B07AN+eoUvdr00qwmGA
+ qJrkV4DLuFvi5zSRwnKC54/Qa3/ZGUK4OnirdHNsmzxRgHQ+nQ6ypKQJrxnfN3HnNrUmy/ff39u
+ WfR1faVu9t8X/p/lAZejDu52a+2UIs1uG+ZKOwPUq77i1LqnSZgNAM0QNMlO9IofO2B85UcEwYG
+ l14W+kg8f8QDZbMGgoOC5QcoNCajvz2aY26N9Cuw/iiGozj3W31v7OqMHSOrVbpVUpp45cZYs9y
+ 6Y522/gk+FcIKv9C8Eb7ML8sjYgpkj9lhSSULj+Ef1LSohMe1lX9LIfTEJllEFVGlbqqephjp4T
+ IoKlMhEQC
+X-Google-Smtp-Source: AGHT+IEL8+8yNAzYoFl7rHop8v29EoyfHs3G1wMeezbwtgfEJzcFJTcarL8ri1g8Alw1DWNqtTwoFQ==
+X-Received: by 2002:a5d:4345:0:b0:39f:f0e:8328 with SMTP id
+ ffacd0b85a97d-39f0f0e83aamr3307811f8f.35.1745327928757; 
+ Tue, 22 Apr 2025 06:18:48 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa4207basm15053641f8f.5.2025.04.22.06.18.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Apr 2025 06:18:48 -0700 (PDT)
+Message-ID: <c67391b9-297f-478b-aea5-c27b0dba6cfd@linaro.org>
+Date: Tue, 22 Apr 2025 15:18:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] target/s390x: Return UVC cmd code, RC and RRC
- value when DIAG 308 Subcode 10 fails to enter secure mode
-To: Gautam Gala <ggala@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Steffen Eiden <seiden@linux.ibm.com>
-References: <20250417123756.729132-1-ggala@linux.ibm.com>
- <20250417123756.729132-4-ggala@linux.ibm.com>
+Subject: Re: [PATCH V2 1/3] acpi: Add machine option to disable SPCR table
+To: Li Chen <me@linux.beauty>, Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
+References: <1965d621e25.fafa759e911037.825810937022699867@linux.beauty>
+ <1965d6357a1.dfa9d35b911644.778874035603636753@linux.beauty>
 Content-Language: en-US
-From: Janosch Frank <frankja@linux.ibm.com>
-Autocrypt: addr=frankja@linux.ibm.com; keydata=
- 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
-In-Reply-To: <20250417123756.729132-4-ggala@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1965d6357a1.dfa9d35b911644.778874035603636753@linux.beauty>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: kHaaf1blObWzrXgbz7mMz3nRwC22wBRa
-X-Proofpoint-ORIG-GUID: kHaaf1blObWzrXgbz7mMz3nRwC22wBRa
-X-Authority-Analysis: v=2.4 cv=eKcTjGp1 c=1 sm=1 tr=0 ts=680796fb cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=Nt8G2CVOPFEF3fTWlb8A:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_06,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0
- mlxscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
- suspectscore=0 impostorscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220098
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=frankja@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,44 +111,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/25 2:37 PM, Gautam Gala wrote:
-> Extend DIAG308 subcode 10 to return the UVC RC, RRC and command code
-> in bit positions 32-47, 16-31, and 0-15 of register R1 + 1 if the
-> function does not complete successfully (in addition to the
-> previously returned diag response code in bit position 47-63).
+Hi,
+
+On 22/4/25 14:05, Li Chen wrote:
+> From: Li Chen <chenl311@chinatelecom.cn>
 > 
-> Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
+> The ACPI SPCR (Serial Port Console Redirection) table allows firmware
+> to specify a preferred serial console device to the operating system.
+> On ARM64 systems, Linux by default respects this table: even if the
+> kernel command line does not include a hardware serial console (e.g.,
+> "console=ttyAMA0"), the kernel still register the serial device
+> referenced by SPCR as a printk console.
+> 
+> While this behavior is standard-compliant, it can lead to situations
+> where guest console behavior is influenced by platform firmware rather
+> than user-specified configuration. To make guest console behavior more
+> predictable and under user control, this patch introduces a machine
+> option to explicitly disable SPCR table exposure:
+> 
+>      -machine spcr=off
+> 
+> By default, the option is enabled (spcr=on), preserving existing
+> behavior. When disabled, QEMU will omit the SPCR table from the guest's
+> ACPI namespace, ensuring that only consoles explicitly declared in the
+> kernel command line are registered.
+> 
+> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
 > ---
+> 
+> Changes since V1: add Reviewed-by and Acked-by
+> 
+>   hw/arm/virt-acpi-build.c       |  5 ++++-
+>   hw/core/machine.c              | 22 ++++++++++++++++++++++
+>   hw/loongarch/virt-acpi-build.c |  4 +++-
+>   hw/riscv/virt-acpi-build.c     |  5 ++++-
+>   include/hw/boards.h            |  1 +
+>   qemu-options.hx                |  5 +++++
+>   6 files changed, 39 insertions(+), 3 deletions(-)
 
-[...]
 
-> +void s390_pv_inject_reset_error(CPUState *cs,
-> +                                struct S390PVResponse pv_resp)
->   {
->       int r1 = (cs->kvm_run->s390_sieic.ipa & 0x00f0) >> 4;
->       CPUS390XState *env = &S390_CPU(cs)->env;
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index f22b2e7fc7..cdf2791a50 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -444,6 +444,7 @@ struct MachineState {
+>       SmpCache smp_cache;
+>       struct NVDIMMState *nvdimms_state;
+>       struct NumaState *numa_state;
+> +    bool enable_spcr;
+
+I'm a bit reluctant to add a field used by 3 virt machines as
+generic in MachineState. Shouldn't it be for each machine state?
+
+Also I'm surprised we announce the SPCR table regardless a virt
+serial exists. Shouldn't we have a disabled default and only
+enable on virt machines, preferably checking the serial port
+availability?
+
+>   };
 >   
-> +    union {
-> +        struct {
-> +            uint16_t pv_cmd;
-> +            uint16_t pv_rrc;
-> +            uint16_t pv_rc;
-> +            uint16_t diag_rc;
-> +        };
-> +        uint64_t regs;
-> +    } resp = {.pv_cmd = pv_resp.cmd,
-> +              .pv_rrc = pv_resp.rrc,
-> +              .pv_rc = pv_resp.rc,
-> +              .diag_rc = DIAG_308_RC_INVAL_FOR_PV};
-> +
-
-@Thomas: Is the formatting of the assignments correct or should there be 
-no assignment on lines containing "{}"?
-
-Checkpatch is happy, though personally I find it hard to read.
-
-Once that's clear or fixed:
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-
-
+>   /*
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index dc694a99a3..953680595f 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+>       "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+>       "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+>       "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+> +    "                spcr=on|off controls ACPI SPCR support (default=on)\n"
+>   #ifdef CONFIG_POSIX
+>       "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
+>   #endif
+> @@ -105,6 +106,10 @@ SRST
+>           Enables or disables ACPI Heterogeneous Memory Attribute Table
+>           (HMAT) support. The default is off.
+>   
+> +    ``spcr=on|off``
+> +        Enables or disables ACPI Serial Port Console Redirection Table
+> +        (SPCR) support. The default is on.
 
