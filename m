@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B60C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 09:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A3EC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 09:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u79cV-0004rK-BA; Tue, 22 Apr 2025 05:08:47 -0400
+	id 1u79dz-0005bf-3V; Tue, 22 Apr 2025 05:10:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u79cP-0004qg-58; Tue, 22 Apr 2025 05:08:41 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u79dx-0005b4-HJ
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 05:10:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u79cK-0006Th-7d; Tue, 22 Apr 2025 05:08:40 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:2b89:0:640:9815:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1F3856125F;
- Tue, 22 Apr 2025 12:08:27 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:1204::1:33] (unknown
- [2a02:6b8:b081:1204::1:33])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Q8KZJ20FUa60-Q6YujX9G; Tue, 22 Apr 2025 12:08:26 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1745312906;
- bh=AIs8HIq2DzcnTzye7dff1vrbPH9QCiMn6PjpZ0Ik7jE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=uKSWuqHk7xk3U4xu02y+Qgriph+Eu3sMHW6P1lEjIyG42bm0At5ssW1q4ddxURU8l
- MDZuCJJ05bpTlp8HvTkS6sQZ6hTXDUqMyMXS0dc5d8bp5dc9DMj3EmXPTp4bOCoXwc
- kO94CMCy2RWA7hZha4kUkQTr8ukHyTqtHnFadQGQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <1620ee03-cebd-4b69-8dda-7397bcd4109f@yandex-team.ru>
-Date: Tue, 22 Apr 2025 12:08:26 +0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u79du-0006lN-TL
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 05:10:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745313013;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=V+gz5HlxFSSaFG/+oTwV2Zx/1gzahZKo5aSuM23ge28=;
+ b=HhrGDRw+ovgj+OaRopj1NjGdGWmOoedUFcm9J5Wj1rLeqoldH+zbBSvtpx/9JyifW6EMMI
+ sAbumoMTkCxiCN83h+V1XJdjUly1PxkO3eFmiWuVtsYyR2IWf5kt1RYM1WkHUFCiqoTbTf
+ s1lORe3inyJeZCaYSlJ8TTSdLFf0sVo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-gWphw8-LMfyzbzRJ1qj-iA-1; Tue,
+ 22 Apr 2025 05:10:08 -0400
+X-MC-Unique: gWphw8-LMfyzbzRJ1qj-iA-1
+X-Mimecast-MFC-AGG-ID: gWphw8-LMfyzbzRJ1qj-iA_1745313006
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71D1B1800373; Tue, 22 Apr 2025 09:10:06 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.5])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 968751955BCB; Tue, 22 Apr 2025 09:10:05 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 058BA21E66C2; Tue, 22 Apr 2025 11:10:03 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Anton Johansson
+ <anjo@rev.ng>
+Subject: Re: [RFC PATCH v3 01/14] qapi: Rename TargetInfo structure as
+ BinaryTargetInfo
+In-Reply-To: <b846a12d-bbe3-4a88-aecd-b62cd57d297d@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 22 Apr 2025 09:35:39
+ +0200")
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-2-philmd@linaro.org>
+ <878qnsagfo.fsf@pond.sub.org>
+ <b846a12d-bbe3-4a88-aecd-b62cd57d297d@linaro.org>
+Date: Tue, 22 Apr 2025 11:10:02 +0200
+Message-ID: <877c3c7ead.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] mirror: Skip writing zeroes when target is already
- zero
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:Block Jobs" <qemu-block@nongnu.org>
-References: <20250411010732.358817-8-eblake@redhat.com>
- <20250411010732.358817-11-eblake@redhat.com>
- <c3044546-b921-4cbc-959d-4f23e0e3c49e@yandex-team.ru>
- <k2owyvfkfsj6kkbd2bkgk5jjepxf2gexllc7pfednxrzezlgc6@lh4ebgd7kl3a>
- <d6bbeeed-2733-4211-a3a8-3e467289b4f7@yandex-team.ru>
- <mbwvegjh4hywvewvbxwnhrgnafeh4my3jrozuslyupikaznr6u@7n2k4tke35pp>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <mbwvegjh4hywvewvbxwnhrgnafeh4my3jrozuslyupikaznr6u@7n2k4tke35pp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.692,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,53 +93,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.04.25 17:41, Eric Blake wrote:
-> On Mon, Apr 21, 2025 at 09:15:33AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 17.04.25 00:51, Eric Blake wrote:
->>> (a write zeroes that fails AND causes the disk to no longer read as
->>> zero should not happen)
->>
->> I don't know, is there such a contract? write-zeroes may fallback to write(), which only state that:
->>
->>         An error return value while performing write() using direct I/O
->>         does not mean the entire write has failed.  Partial data may be
->>         written and the data at the file offset on which the write() was
->>         attempted should be considered inconsistent.
->>
->> So, I used to think that on failed write nothing is guaranteed.
->>
->> What do we lose if we just unset the bitmap before write-zeroes, and set it again in case of success?
->>
-> 
-> I still don't see the point.  Either the cluster was already non-zero
-> before the failed write-zero (so there's no bit to pre-clear);
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-[..]
+> On 22/4/25 07:55, Markus Armbruster wrote:
+>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>=20
+>>> The QAPI-generated 'TargetInfo' structure name is only used
+>>> in a single file. We want to heavily use another structure
+>>> similarly named. Rename the QAPI one, since structure names
+>>> are not part of the public API.
+>>>
+>>> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>   qapi/machine.json          | 12 ++++++------
+>>>   hw/core/machine-qmp-cmds.c |  4 ++--
+>>>   2 files changed, 8 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/qapi/machine.json b/qapi/machine.json
+>>> index a6b8795b09e..3246212f048 100644
+>>> --- a/qapi/machine.json
+>>> +++ b/qapi/machine.json
+>>> @@ -275,15 +275,15 @@
+>>>  { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams=
+' }
+>>>=20=20=20
+>>>  ##
+>>> -# @TargetInfo:
+>>> +# @BinaryTargetInfo:
+>>>  #
+>>> -# Information describing the QEMU target.
+>>> +# Information describing the QEMU binary target.
+>>=20
+>> What's "the QEMU binary target"?  The QEMU binary's target?
+>
+> For me 'qemu-system-aarch64' is a QEMU binary,
 
-> cluster was already zero before the failed write-zero, and any failure
-> that corrupts the disk by actually turning zeroes into non-zero
+Makes sense to me.
 
-Yes, I mean this case
+>                                                but for Pierrick and
+> Richard it is the QEMU target,
 
-> is not
-> worth worrying about
+Make about as much sense to me as calling my /usr/bin/gcc "the GNU C
+compiler target", i.e. none.  It's the GNU C compiler targeting x86_64.
 
-And I don't follow why we should not care.
+>                                so I merged both names =C2=AF\_(=E3=83=84)=
+_/=C2=AF
 
-Usually we have no assumptions about data at offset, if write(offset, ..) failed. We just retry write.
+If it gets your patch merged...
 
-Here we do this assumption "if there were zeroes, they will not be broken by writing zeroes even on failure scenarios", for any kind of block-driver and underlying file system.
+> This structure describes the static target configuration built into
+> a binary, i.e. TARGET_NAME=3Daarch64, TARGET_BIG_ENDIAN=3Dfalse.
+>
+> For the forthcoming single/heterogeneous binary, we don't have a
+> particular restricted configuration in the binary.
+>
+> What about "Information describing the QEMU target configuration
+> built in a binary."?
 
-You say "corrupts the disk". Of course, if disk is corrupted - everything is broken, and we should not care. The result of the mirror would be incorrect anyway. But we don't consider any EIO as disk corruption. We do retry the write and continue mirror operation.
+That's better.  Here's my try: "Information on the target configuration
+built into the QEMU binary."
 
-Moreover, if EIO is returned due to some broken sector, we may hope that retrying the write will fix it, probably some other sector will be allocated by FS (I hope I'm not talking nonsense). But relying on the data still read as zero without rewriting would be wrong.
+>>  From the QMP user's point of view, perhaps "the QEMU process's target"
+>> would make more sense.
+>
+> So maybe ProcessTargetInfo is a better structure name.
 
->, so pre-clearing the bit is not going to make
-> things any better.
-> 
+QemuTargetInfo would sidestep binary vs. process.
 
--- 
-Best regards,
-Vladimir
+> For heterogeneous target I suppose we'll return SYS_EMU_TARGET_HETERO
+> and we'll provide new QMP commands, possibly returning array of
+> ProcessTargetInfo.
+
+[...]
 
 
