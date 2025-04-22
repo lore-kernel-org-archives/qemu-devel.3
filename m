@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226D5C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 08:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7617C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 08:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u79GX-00077X-SQ; Tue, 22 Apr 2025 04:46:05 -0400
+	id 1u79Rh-00010n-Dc; Tue, 22 Apr 2025 04:57:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u79GW-00077N-HR
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 04:46:04 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u79GR-0003qB-UX
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 04:46:02 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-39ac56756f6so4794075f8f.2
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 01:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745311558; x=1745916358; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=On9jBfn9+K7zDy6uG6kSk4s19H9nOmiVgF5/4Dcte8c=;
- b=aO81+43hX+Us0GuRBxjoiCIKAys7qNH6IshrZIyz67q8DK6YlUcnUKTzfdH0N3kTX9
- eNstM5L4JZYooPQBv+U/vM4Usi6ie9T/xbfTm23+nFPfYaSZY+3tE1VPlOFYyzHGsu2F
- E/AY2EgWqIirg3/r86r/hKX2zAGa9tvMImVNxL50F0o/XMXUMoYTerQz+l+n50O4UMrV
- ImHm2mRY+WwiO5yjMr6URAVNxp++exV34eCEOgzzrQRelKzQtYiXMAll84zSGzhwoi6+
- NqlvUUXovwR+Lt6JHc5G5SQBOpWpRUMBFDMaIpiKRaxnL3gac14i4vZtDYcYwUa3OQjG
- 6L/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745311558; x=1745916358;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=On9jBfn9+K7zDy6uG6kSk4s19H9nOmiVgF5/4Dcte8c=;
- b=kzC4bK/QPdbkVvLZsKIbqRKNexZGbBddpTp30qAdq44XU0T1pE8X89Viz6rRgmcs3o
- sBWtYkkg5vlB68UcAfObPI9a30UBJXX0JY2+U6Qreen8ewRb1HP+6WAWQOcWFgzWy7hG
- 9RS/dy1Q1J4yk1GS7wnCx3cAadzJVnekC+jVIPiTq8GXj++8wmbH5vCqsGgvMQE2PRwx
- vMItShir0+oHGHpiqYNFxweXyk2y9VZskJ5+9aSfUrkv+W1hch2cJC4ipIbeXHsuuVHY
- jZLeT3dt8Nm96LSpBc2nWwhxeGXtgNGbrwbd/sgaAEz4zoRecEY/y1hW9OhOQPHtq0IL
- Fk1w==
-X-Gm-Message-State: AOJu0Yz9dOsNdZIMXQ0qbvwDTvh3QCLpg09EKhN/ZqCISlA3XKdnYyAt
- PS3G1Olc4flbwUi6DajgYzzBJwxv5AenbGxeqj0JLCH/o54J5dW3QjSQc+DHgto=
-X-Gm-Gg: ASbGnctLeDV9JJyiW/ZxwTyBLXojAksZLCmjjNLLL6zA1K6H2ldLyMQpgM4DUOTDN2e
- QFXFFYANy9v00ie+awgNXW2bkKnXybQ9FhGE+HwlVghlImrWq1Sc8qjn/lhYXBstKEsVZm5/itL
- cgmd7X6Cn4CbgVVapmy6wsem5Bhy1oxjXOLP0plfC2iRpxeaB4VtgQfx8fuizHnEgYYyWNwRejJ
- 7Gq6DA2f1BgMeQXqPXIs3itzilLrP+A2C1Tsls5fS0tRwjsu707R0jEN5IoMjo+TA+t1ZrDjU2a
- DIUeXOUzBSstm+SI3EoJkxJq1PN0DovHgQ1i2qB0qrmNPeiQ3wsGbqDCBEK+rPq06G2DZel5WoR
- y5fjLKNwK
-X-Google-Smtp-Source: AGHT+IGTZOi9zfzGV2QhzQ0rn97GqAuhCFy4vp2N7zZW4llfJ2BGIt94eaTiyjg6/+kzL/rcmUyVog==
-X-Received: by 2002:a5d:64c7:0:b0:390:fc5a:91c8 with SMTP id
- ffacd0b85a97d-39efbb020ffmr11577777f8f.53.1745311558114; 
- Tue, 22 Apr 2025 01:45:58 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4931dcsm14669320f8f.63.2025.04.22.01.45.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 01:45:57 -0700 (PDT)
-Message-ID: <33dea247-aee7-4d0c-811f-e2734361cb33@linaro.org>
-Date: Tue, 22 Apr 2025 10:45:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] target/loongarch: Define function
- loongarch_get_addr_from_tlb() non-static
-To: bibo mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250422025742.2693096-1-maobibo@loongson.cn>
- <20250422025742.2693096-7-maobibo@loongson.cn>
- <e86b1efe-514c-4757-9a7d-477c27803c95@linaro.org>
- <b73e6439-2435-f064-2f07-24b10b9dd2a1@loongson.cn>
- <7cf5d9df-2b09-4ec6-88f5-abf219fa8a80@linaro.org>
- <c82abd30-72db-ba38-30eb-4a44950393ff@loongson.cn>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u79Rc-0000xj-Nu; Tue, 22 Apr 2025 04:57:34 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1u79RY-00058t-3T; Tue, 22 Apr 2025 04:57:31 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Zhbbk1sS1z6K9P8;
+ Tue, 22 Apr 2025 16:52:50 +0800 (CST)
+Received: from frapeml100008.china.huawei.com (unknown [7.182.85.131])
+ by mail.maildlp.com (Postfix) with ESMTPS id 12AF41402EA;
+ Tue, 22 Apr 2025 16:57:21 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml100008.china.huawei.com (7.182.85.131) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 22 Apr 2025 10:57:20 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Tue, 22 Apr 2025 10:57:20 +0200
+To: Donald Dutile <ddutile@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
+ "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH 0/5] Add support for user creatable SMMUv3 device
+Thread-Topic: [PATCH 0/5] Add support for user creatable SMMUv3 device
+Thread-Index: AQHbrd5Z6XfidS8N/U6PO20X8QxpSbOpxUQAgAWkbCA=
+Date: Tue, 22 Apr 2025 08:57:20 +0000
+Message-ID: <8f7cc59e3745407bb7ae3d875cf97ae0@huawei.com>
+References: <20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com>
+ <84870c74-f078-48c5-bead-96db1d582987@redhat.com>
+In-Reply-To: <84870c74-f078-48c5-bead-96db1d582987@redhat.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c82abd30-72db-ba38-30eb-4a44950393ff@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,98 +80,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 09:57, bibo mao wrote:
-> 
-> 
-> On 2025/4/22 下午3:46, Philippe Mathieu-Daudé wrote:
->> On 22/4/25 09:39, bibo mao wrote:
->>>
->>>
->>> On 2025/4/22 下午3:18, Philippe Mathieu-Daudé wrote:
->>>> On 22/4/25 04:57, Bibo Mao wrote:
->>>>> Define function loongarch_get_addr_from_tlb() non-static, and add its
->>>>> definition in header file tcg/tcg_loongarch.h
->>>>>
->>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>>> ---
->>>>>   target/loongarch/cpu_helper.c        | 10 ++--------
->>>>>   target/loongarch/tcg/tcg_loongarch.h | 16 ++++++++++++++++
->>>>>   2 files changed, 18 insertions(+), 8 deletions(-)
-
-
->>>>> diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/ 
->>>>> loongarch/ tcg/tcg_loongarch.h
->>>>> index da2539e995..69a93bfc3e 100644
->>>>> --- a/target/loongarch/tcg/tcg_loongarch.h
->>>>> +++ b/target/loongarch/tcg/tcg_loongarch.h
->>>>> @@ -6,7 +6,23 @@
->>>>>    */
->>>>>   #ifndef TARGET_LOONGARCH_TCG_LOONGARCH_H
->>>>>   #define TARGET_LOONGARCH_TCG_LOONGARCH_H
->>>>> +#include "cpu.h"
->>>>>   void loongarch_csr_translate_init(void);
->>>>> +#ifdef CONFIG_TCG
->>>>> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
->>>>> *physical,
->>>>> +                                int *prot, target_ulong address,
->>>>> +                                MMUAccessType access_type, int 
->>>>> mmu_idx);
->>>>> +#else
->>>>> +static inline int loongarch_get_addr_from_tlb(CPULoongArchState *env,
->>>>> +                                              hwaddr *physical,
->>>>> +                                              int *prot, 
->>>>> target_ulong address,
->>>>> +                                              MMUAccessType 
->>>>> access_type,
->>>>> +                                              int mmu_idx)
->>>>> +{
->>>>> +    return TLBRET_NOMATCH;
->>>>
->>>> CONFIG_TCG should always be defined when including tcg/tcg_loongarch.h.
->>>
->>> If so, there will be no stub function declaration with 
->>> loongarch_get_addr_from_tlb(). *#ifdef CONFIG_TCG* needs be added in 
->>> c files such as:
->>>
->>> static int loongarch_map_address(CPULoongArchState *env, hwaddr 
->>> *physical,
->>>                                   int *prot, target_ulong address,
->>>                                   MMUAccessType access_type, int 
->>> mmu_idx,
->>>                                   int is_debug)
->>> {
->>>      int ret;
->>>
->>> *#ifdef CONFIG_TCG*
->>>      if (!kvm_enabled()) {
->>
->> Maybe what we want here is:
->>
->>        if (tcg_enabled()) {
-> yeap, it works with --enable-debug --disable-tcg option.
-> 
-> I had thought that loongarch_get_addr_from_tlb should be defined if this 
-> file is compiled with -O0 option. It is skipped even with -O0 option.
->      if  (0) {
-
-'if (0)' skips at *compile* time, while 'if (tcg_enabled())' would
-skip at *link* time, so we still need to prototype declaration to
-compile the source file, but not the stub.
-
->          ret = loongarch_get_addr_from_tlb(env, physical, prot, address,
->                                            access_type, mmu_idx);
->      }
-> 
-> And thanks for your guidance.
-
-You are welcome! The cleanups you are doing are not super interesting
-(lot of code churn) but make the code easier to follow and maintain IMO.
-
-> 
-> Regards
-> Bibo Mao
-
+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IERvbmFsZCBEdXRpbGUgPGRk
+dXRpbGVAcmVkaGF0LmNvbT4NCj4gU2VudDogRnJpZGF5LCBBcHJpbCAxOCwgMjAyNSA5OjM0IFBN
+DQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFtZWVyYWxpLmtvbG90aHVt
+LnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiBxZW11LWRldmVsQG5v
+bmdudS5vcmcNCj4gQ2M6IGVyaWMuYXVnZXJAcmVkaGF0LmNvbTsgcGV0ZXIubWF5ZGVsbEBsaW5h
+cm8ub3JnOyBqZ2dAbnZpZGlhLmNvbTsNCj4gbmljb2xpbmNAbnZpZGlhLmNvbTsgYmVycmFuZ2VA
+cmVkaGF0LmNvbTsgbmF0aGFuY0BudmlkaWEuY29tOw0KPiBtb2Noc0BudmlkaWEuY29tOyBzbW9z
+dGFmYUBnb29nbGUuY29tOyBMaW51eGFybQ0KPiA8bGludXhhcm1AaHVhd2VpLmNvbT47IFdhbmd6
+aG91IChCKSA8d2FuZ3pob3UxQGhpc2lsaWNvbi5jb20+Ow0KPiBqaWFuZ2t1bmt1biA8amlhbmdr
+dW5rdW5AaHVhd2VpLmNvbT47IEpvbmF0aGFuIENhbWVyb24NCj4gPGpvbmF0aGFuLmNhbWVyb25A
+aHVhd2VpLmNvbT47IHpoYW5nZmVpLmdhb0BsaW5hcm8ub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFU
+Q0ggMC81XSBBZGQgc3VwcG9ydCBmb3IgdXNlciBjcmVhdGFibGUgU01NVXYzIGRldmljZQ0KPiAN
+Cj4gU2hhbWVlciwNCj4gSGkhDQo+IA0KPiBGaXJzdCBvZmYsIGxpa2UgdGhlIHBhcnRpdGlvbmlu
+ZyBvZiB0aGVzZSBwaWVjZXMuDQo+IA0KPiBPbiA0LzE1LzI1IDQ6MTAgQU0sIFNoYW1lZXIgS29s
+b3RodW0gd3JvdGU6DQo+ID4gSGkgQWxsLA0KPiA+DQo+ID4gVGhpcyBwYXRjaCBzZXJpZXMgaW50
+cm9kdWNlcyBzdXBwb3J0IGZvciBhIHVzZXItY3JlYXRhYmxlIFNNTVV2MyBkZXZpY2UNCj4gPiAo
+LWRldmljZSBhcm0tc21tdXYzLWRldikgaW4gUUVNVS4NCj4gPg0KPiBDYW4gd2UgZHJvcCB0aGUg
+Jy1kZXYnLCBhcyAnYXJtLXNtbXUnIGlzIHN1ZmZpY2llbnQsIGFzIGlzICctZGV2aWNlJz8NCj4g
+DQo+IEkga25vdywgaW50ZXJuYWwgdG8gUUVNVSwgdGhlcmUncyBhbHJlYWR5IGFuIEFSTV9TTU1V
+LCBidXQgYXMgc3VnZ2VzdGVkDQo+IGxhdGVyLA0KPiBpZiBpdCB1c2VzIHRoZSBzYW1lIHN0cnVj
+dCwgdGhlIHFlbXUgY21kbGluZSBzeW50YXggaXMgYSBiaXQgbGVzcyByZWR1bmRhbnQuDQoNClRy
+dXN0IG1lIEkgdHJpZWQgdGhhdPCfmIouIFRoZSBwcm9ibGVtIGlzIHRoYXQsIHRoZSBsZWdhY3kg
+b25lIGRvZXNuJ3QgaGF2ZSBhIGJ1cw0KYXNzb2NpYXRlZCB3aXRoIGl0IGFuZCB0aGUgbW9tZW50
+IHdlIGNoYW5nZSB0aGF0IGFuZCBoYXZlIGJ1cyBzcGVjaWZpZWQgZm9yIHRoZQ0KICItZGV2aWNl
+IGFybS1zbW11djMsIGJ1cz1wY2llLjAiIHRoZSBsZWdhY3kgc21tdXYzIGNyZWF0aW9uIGluIHZp
+cnQsDQoNCmNyZWF0ZV9zbW11KCkgLS0+IHFkZXZfbmV3KFRZUEVfQVJNX1NNTVVWMykNCg0Kd2ls
+bCBmYWlscyBhcyBpdCBleHBlY3RzIHRoZSBidXMgdHlwZSB0byBiZSBzcGVjaWZpZWQgZm9yIGl0
+LiBJIGNvdWxkbid0IGZpbmQgYSB3YXkNCnRvIHNvbHZlIHRoYXQuDQoNCj4gDQo+ID4gVGhlIGlt
+cGxlbWVudGF0aW9uIGlzIGJhc2VkIG9uIGZlZWRiYWNrIHJlY2VpdmVkIGZyb20gdGhlIFJGQ3Yy
+WzBdOg0KPiA+ICJody9hcm0vdmlydDogQWRkIHN1cHBvcnQgZm9yIHVzZXItY3JlYXRhYmxlIGFj
+Y2VsZXJhdGVkIFNNTVV2MyINCj4gPg0KPiA+IEN1cnJlbnRseSwgUUVNVSdzIFNNTVV2MyBlbXVs
+YXRpb24gKGlvbW11PXNtbXV2MykgaXMgdGllZCB0byB0aGUNCj4gbWFjaGluZQ0KPiA+IGFuZCBk
+b2VzIG5vdCBzdXBwb3J0IGluc3RhbnRpYXRpbmcgbXVsdGlwbGUgU01NVXYzIGRldmljZXPigJRl
+YWNoDQo+IGFzc29jaWF0ZWQNCj4gPiB3aXRoIGEgc2VwYXJhdGUgUENJZSByb290IGNvbXBsZXgu
+IEluIGNvbnRyYXN0LCByZWFsLXdvcmxkIEFSTSBzeXN0ZW1zDQo+ID4gb2Z0ZW4gaW5jbHVkZSBt
+dWx0aXBsZSBTTU1VdjMgaW5zdGFuY2VzLCBlYWNoIGJvdW5kIHRvIGEgZGlmZmVyZW50IFBDSWUN
+Cj4gPiByb290IGNvbXBsZXguDQo+ID4NCj4gPiBUaGlzIGFsc28gbGF5cyB0aGUgZ3JvdW5kd29y
+ayBmb3Igc3VwcG9ydGluZyBhY2NlbGVyYXRlZCBTTU1VdjMsIGFzDQo+ID4gcHJvcG9zZWQgaW4g
+dGhlIGFmb3JlbWVudGlvbmVkIFJGQy4gUGxlYXNlIG5vdGUsIHRoZQ0KPiBhY2NlbGVyYXRlZMKg
+U01NVXYzDQo+ID4gc3VwcG9ydCBpcyBub3QgcGFydCBvZiB0aGlzIHNlcmllcyBhbmQgd2lsbCBi
+ZSBzZW50IG91dCBhcyBhIHNlcGFyYXRlDQo+ID4gc2VyaWVzIGxhdGVyIG9uIHRvcCBvZiB0aGlz
+IG9uZS4NCj4gPg0KPiA+IFN1bW1hcnkgb2YgY2hhbmdlczoNCj4gPg0KPiA+ICDCoC1JbnRyb2R1
+Y2VzIHN1cHBvcnQgZm9yIG11bHRpcGxlIC1kZXZpY2UgYXJtLXNtbXV2My1kZXYsYnVzPXBjaWUu
+eA0KPiA+ICDCoCBpbnN0YW5jZXMuDQo+ID4NCj4gPiAgwqAgRXhhbXBsZSB1c2FnZToNCj4gPg0K
+PiA+ICDCoCAtZGV2aWNlIGFybS1zbW11djMtZGV2LGJ1cz1wY2llLjANCj4gPiAgwqAgLWRldmlj
+ZSB2aXJ0aW8tbmV0LXBjaSxidXM9cGNpZS4wDQo+ID4gIMKgIC1kZXZpY2UgcHhiLXBjaWUsaWQ9
+cGNpZS4xLGJ1c19ucj0yDQo+ID4gIMKgIC1kZXZpY2UgYXJtLXNtbXV2My1kZXYsYnVzPXBjaWUu
+MQ0KPiA+ICDCoCAtZGV2aWNlIHBjaWUtcm9vdC1wb3J0LGlkPXBjaWUucG9ydDEsYnVzPXBjaWUu
+MQ0KPiA+ICDCoCAtZGV2aWNlIHZpcnRpby1uZXQtcGNpLGJ1cz1wY2llLnBvcnQxDQo+ID4NCj4g
+PiAgwqAgLVN1cHBvcnRzIGVpdGhlciB0aGUgbGVnYWN5IGlvbW11PXNtbXV2MyBvcHRpb24gb3Ig
+dGhlIG5ldw0KPiA+ICDCoCAiLWRldmljZSBhcm0tc21tdXYzLWRldiIgbW9kZWwuDQo+ID4NCj4g
+bmljZSEgOikNCj4gQ2FuIGl0IHN1cHBvcnQgYm90aD8gaS5lLiwgc29tZSBkZXZpY2VzIHVzaW5n
+IGEgc3lzdGVtLXdpZGUsIGxlZ2FjeQ0KPiBzbW11djMsDQo+IGFuZCBzb21lIHBjaWUgZGV2aWNl
+cyB1c2luZyB0aGUgLWRldmljZSBhcm0tc21tdXYzID8NCg0KUGxlYXNlIHNlZSBteSByZXBseSB0
+byBwYXRjaCAjMi4gSW4gc2hvcnQgTm8sIGl0IGRvZXNuJ3Qgc3VwcG9ydCBib3RoLg0KDQpBbHNv
+IEkgdGhpbmsgd2Ugc2hvdWxkIHNsb3dseSBkZXByZWNhdGUgdGhlIHVzZSBvZiBsZWdhY3kgU01N
+VXYzIGdvaW5nIA0KZm9yd2FyZCB1bmxlc3MgdGhlcmUgaXMgYSBzdHJvbmcgdXNlIGNhc2UvcmVh
+c29uIHRvIHN1cHBvcnQgaXQuDQoNCj4gSWYgbm90LCB0aGVuIGFkZCBhIGNoZWNrIHRvIG1pbi13
+YXJuIG9yIG1heC1mYWlsLCB0aGF0IGNvbmZpZy4NCj4gSSBjYW4gc2VlIG9sZCBtYWNoaW5lcyBi
+ZWluZyBjb252ZXJ0ZWQvdXBncmFkZWQgdG8gbmV3IG1hY2hpbmVzLA0KPiBhbmQgdGhleSB3aWxs
+IHdhbnQgdG8gc3dpdGNoIGZyb20gbGVnYWN5LT5kZXZpY2Ugc21tdXYzLCBhbmQgY2F0Y2hpbmcN
+Cj4gYW4gZWRpdC91cGRhdGUgdG8gYSBtYWNoaW5lIGNoYW5nZSAob3IgZW5hYmxpbmcgYXV0b21h
+dGVkIGNvbnZlcnNpb24pDQo+IHdvdWxkIGJlIGhlbHBmdWwuDQoNClBsZWFzZSBzZWUgUGF0Y2gg
+IzQuIEl0IGFscmVhZHkgY2hlY2tzIGFuZCBwcmV2ZW50cyBpZiBpbmNvbXBhdGlibGUgU01NVXYz
+DQp0eXBlcyBhcmUgc3BlY2lmaWVkLiBPciBpcyB0aGUgc3VnZ2VzdGlvbiBoZXJlIGlzIHRvIGFk
+ZCBzb21ldGhpbmcgZXh0cmE/DQpQbGVhc2UgbGV0IG1lIGtub3cuDQoNClRoYW5rcywNClNoYW1l
+ZXINCg0K
 
