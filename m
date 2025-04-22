@@ -4,74 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58422C369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33F4C369D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7GBX-0006BF-R8; Tue, 22 Apr 2025 12:09:26 -0400
+	id 1u7GHh-0006HM-B8; Tue, 22 Apr 2025 12:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6s-0000ud-Hu
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6o-0005Aq-U7
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745337861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0Z5T83DrZc8B6PEJTc7EM83nKhdmbq32cWCLUdAqdI8=;
- b=J33Iaa5SulAvPcTK7bigvt7yOOJEih1B6ECkUqzCrrUnOA3d7FhSchDy9mw3Gt8b/pTBoN
- 04xQlsQnVeFaVchvKX02JZD3bdo9b0m2m+mH90QnfvLsEhIsXxUKiwjbVeTCD8ypLwRvMQ
- TL2P3fZQ8SeTegurLJzRcDNs+kW/OzQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-CI4dzbwAN0aWzsPThObs8g-1; Tue,
- 22 Apr 2025 12:04:17 -0400
-X-MC-Unique: CI4dzbwAN0aWzsPThObs8g-1
-X-Mimecast-MFC-AGG-ID: CI4dzbwAN0aWzsPThObs8g_1745337855
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C15DC180087A; Tue, 22 Apr 2025 16:04:15 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.105])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85746180087C; Tue, 22 Apr 2025 16:04:12 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	Alex Williamson <alex.williamson@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 30/37] vfio: Rename vfio_devices_all_device_dirty_tracking()
-Date: Tue, 22 Apr 2025 18:02:17 +0200
-Message-ID: <20250422160224.199714-31-clg@redhat.com>
-In-Reply-To: <20250422160224.199714-1-clg@redhat.com>
-References: <20250422160224.199714-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7GHW-0006A7-T4
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:15:39 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7GHT-0006UM-Q2
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:15:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cf628cb14so71705e9.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 09:15:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745338527; x=1745943327; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wwQ2pU1yHtXZW0k861UiUgQi1z7mpZW7oqvBaDy6lTI=;
+ b=Ioe7b3LpdMfikcluw13cFepw9z0gEbnf8Qs+vlkVqFVosV6Hy4qkeELC8K/2dzk+2v
+ WEmrosNGwMCg7mq9Rp5xfXgNlPrx1vqNGPSGP0RnKmTRRejR3vihY0DFeRLyNKhkUz4h
+ Qw8AZ/u58WleSETNC/BRTneEX9dYCEN17O00TQVjP5hF3ckBfppceL4qBQs4QBjlIqlK
+ BvdJas/CLjqdDBIvEdiz3Uut9nxoQruDcGnaD3PlDLaW31oPhbjsdKTje4yLniweKT+N
+ 6KwRmSv6gcDBCXj+ahBXRabUc5JSi7FIkD2QVKNtaTTGwbB05fCL2r4c1IR7qDUZwCJ0
+ NKAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745338527; x=1745943327;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wwQ2pU1yHtXZW0k861UiUgQi1z7mpZW7oqvBaDy6lTI=;
+ b=H9u+cl7e6ZxB7LiKpQHUKA+PznebFS/P2iFJJ9OX4rtWcXye97HbYmLOHOUo1JzTRw
+ LiYx9dyT6775dl9rz49DyQ01FG2YGMVkG5Qzy/Ir4JmeeB+AwHsgic8MAope69Nx/CAT
+ CxKN9NSERqSs926iKRmDxUTSSocQikJbrDlA1kTfDG/hiZ8Rcov3xRFEmuLYqh3QdBPd
+ eg2hwwIQbUc7KJ+jeCAwwxa9UBGyAwov/+1qBKumxGEf4kky9sySW6q7Ieb2DveivuEx
+ oPvkesDsa5cqAWmxIxLmqQha5aNksxVhED79rdKpgC3DpEal1XqT1FqRxQpDlWYjJNR6
+ tmEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXg69NJWC6y6mNdJZyw4/yv7qtq+bA69kPZZqsarA4kXK7yiLMBS4CRE/R7ueUlk2zm2VYVEGa/Ks4u@nongnu.org
+X-Gm-Message-State: AOJu0YzMvHRBQkimpcSjB8GMO7AcP6GeFAAbxnzui9v6m7XFIvbggtir
+ TjuwFV8A4Yp4znZlpF/CgxyO3FOFnqTWXWeO0iGCwhYic0DJZ3lzTxuaOroeOZSoNihsm38AEib
+ z
+X-Gm-Gg: ASbGncujOrwl/AlCyOe68W78V+izbBVbGKRvVCtjmnUGvS72D1DYGBfNzEX2gtN/PzU
+ K5NyRK4pZcDRMz1GJcEDl2xNKnXpxkooa4LSdDfo+gxZHyPhvd6HiF8KHAyD7uKXSo2S95YIqPw
+ 3vv64znk+noZD9DPNY4xjEhZV5IUU4L23Vgf3xNokn0Xkkfre8iMUJNcuOxyIJQHIeQQHM4+2SV
+ nkhyC7X45YOlLcMLSdNpVFihHf7V0q0hCs1SUhc7iH4NCVp+zEt/5gkq0zwVJcvpepLpqVj0uKe
+ 79a04Rdcxe6pyEqNULaZiddsbOD20AFG9Olz7rZTJdP3luZSX37vdjH/gKWevC7z56oTHTmK8N3
+ 11I4BzpUz
+X-Google-Smtp-Source: AGHT+IElTLScD4Ff9IKMqIx6eu517f1jCB/vsWHlyYcm6wa982l3AeDKggv3HBKgGYJjyQTmRztnFw==
+X-Received: by 2002:a05:6000:43cc:20b0:39f:c05:c220 with SMTP id
+ ffacd0b85a97d-39f0c05c2camr4274298f8f.22.1745338527628; 
+ Tue, 22 Apr 2025 09:15:27 -0700 (PDT)
+Received: from [192.168.69.175] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa42082csm15616522f8f.3.2025.04.22.09.15.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Apr 2025 09:15:24 -0700 (PDT)
+Message-ID: <1c7729f1-a9b5-4918-af45-95ff178edd2d@linaro.org>
+Date: Tue, 22 Apr 2025 18:15:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 124/163] target/arm: Use tcg_gen_addcio_* for ADCS
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250415192515.232910-1-richard.henderson@linaro.org>
+ <20250415192515.232910-125-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250415192515.232910-125-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,93 +102,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the prefix 'vfio_container_devices_' to reflect the routine simply
-loops over the container's device list.
+On 15/4/25 21:24, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/translate-a64.c |  8 ++------
+>   target/arm/tcg/translate.c     | 17 +++--------------
+>   2 files changed, 5 insertions(+), 20 deletions(-)
 
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-31-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-container-base.h | 3 ++-
- hw/vfio/common.c                      | 4 ++--
- hw/vfio/container-base.c              | 5 +++--
- hw/vfio/container.c                   | 2 +-
- 4 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index d00db365991aabf7fdee0c9306197920d9524ed8..163d9b3c30b3093d2f40bb3d3ffc0314519ac285 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -91,7 +91,8 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-                                            bool start, Error **errp);
- bool vfio_container_dirty_tracking_is_started(
-     const VFIOContainerBase *bcontainer);
--bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
-+bool vfio_container_devices_dirty_tracking_is_supported(
-+    const VFIOContainerBase *bcontainer);
- int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-                           uint64_t size, ram_addr_t ram_addr, Error **errp);
- 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index fae8756ade1f85c29a8567adef87135ee111baba..d063ea03c1cb4f475d421e626c703875fecd97a8 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -936,7 +936,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
-                                                  listener);
-     bool ret;
- 
--    if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-+    if (vfio_container_devices_dirty_tracking_is_supported(bcontainer)) {
-         ret = vfio_devices_dma_logging_start(bcontainer, errp);
-     } else {
-         ret = vfio_container_set_dirty_page_tracking(bcontainer, true, errp) == 0;
-@@ -955,7 +955,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
-     Error *local_err = NULL;
-     int ret = 0;
- 
--    if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-+    if (vfio_container_devices_dirty_tracking_is_supported(bcontainer)) {
-         vfio_devices_dma_logging_stop(bcontainer);
-     } else {
-         ret = vfio_container_set_dirty_page_tracking(bcontainer, false,
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index d0b100d1294a3874139b9dc0df949ab00737408a..a094872fe44e90f345328f65795b0b64a090c1b1 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -162,7 +162,8 @@ bool vfio_container_dirty_tracking_is_started(
-            bcontainer->dirty_pages_started;
- }
- 
--bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
-+bool vfio_container_devices_dirty_tracking_is_supported(
-+    const VFIOContainerBase *bcontainer)
- {
-     VFIODevice *vbasedev;
- 
-@@ -240,7 +241,7 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-                           uint64_t size, ram_addr_t ram_addr, Error **errp)
- {
-     bool all_device_dirty_tracking =
--        vfio_devices_all_device_dirty_tracking(bcontainer);
-+        vfio_container_devices_dirty_tracking_is_supported(bcontainer);
-     uint64_t dirty_pages;
-     VFIOBitmap vbmap;
-     int ret;
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index e827ae9167b780ec9776ab98974245defb57590d..9ea03ed618f6aefe35f966c644cbbc127ce7bf06 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -138,7 +138,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
-     Error *local_err = NULL;
- 
-     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
--        if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
-+        if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
-             bcontainer->dirty_pages_supported) {
-             return vfio_dma_unmap_bitmap(container, iova, size, iotlb);
-         }
--- 
-2.49.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
