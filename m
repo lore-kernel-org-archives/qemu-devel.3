@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D3EC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F01C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:38:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7EjE-0005Qq-9s; Tue, 22 Apr 2025 10:36:04 -0400
+	id 1u7El1-0006b8-S3; Tue, 22 Apr 2025 10:37:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7Eiy-0005OC-Rd
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:35:49 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7Eiw-0002k9-VY
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:35:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745332548; x=1776868548;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=rockSBm6e8LPWsjb0m0J68AhC1lgm0+HhnaCQDNSUAc=;
- b=A5Q/U2fTIZlTGhe8tZx3REvlCtoCFYbcQ1yLAX4U/zzFTnejJVq+64AU
- w7lN5tK7vUBxCgk0AvfTVnRE71rOGvGkZdopDxiKASS91WlaleF0pIg4n
- rqcKIp896P5kGBIFXM1aKl75rlzycnTQURBGd+eUoOkyLqLX5bgi2XfkB
- WfLew35MCW0iRWK4rc+2SWZbFBvTkeOvsuHwbfju2PrY4Shz2fBBmtvpv
- /Z/Bf8M87O/PuROszGmRG3HODsdvQqwK0aWTD/I5VLx4Nzlbmgx9q8pPd
- 6suW5VaOyOmx+zjIzfbmGyK8hqLZmZG8jjVZo2rDrrHVrLZaJZtbcm6uf w==;
-X-CSE-ConnectionGUID: HzfiSn4TSdavs7rwKc6H/w==
-X-CSE-MsgGUID: wQt+TV4USRmuSjGYVS4teQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46598558"
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="46598558"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2025 07:35:46 -0700
-X-CSE-ConnectionGUID: DOTabLMJQVSkxy9bsX47Hw==
-X-CSE-MsgGUID: V8YMdCIIQ3m8v9BrYnlrog==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="131981827"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 22 Apr 2025 07:35:42 -0700
-Date: Tue, 22 Apr 2025 22:56:37 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 09/55] i386/tdx: Add property sept-ve-disable for
- tdx-guest object
-Message-ID: <aAeuJeCuEQO3mv27@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-10-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7Ekx-0006ad-Ll
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:37:51 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7Ekv-0002t9-Sv
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:37:51 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-736c1138ae5so4667664b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 07:37:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745332668; x=1745937468; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5ZLqEuLOyPJkfzxxlGd5ZkTBFMW6eWnAQTYrokcO5Eo=;
+ b=C8E4g5gJ4zq11wH42ZJH/ILcKVvJ6uGE3FXsMd+tcVxYO8ttCF1EkvArokriuxzmq8
+ DCDOo2uhwouIPWa7F4QgsDT1j6DdeySjm/2Ug5hW1BgHad7OAITIVMfrvqxB+Ayjgeak
+ NAhz4g3zsOfB7rvl1L+fte+7icDhRGQUBtMaoR2G6Cy/zpHCEfR6LtqId8xXLMgkjwg5
+ wZMWiJ/LsX8Z9GTt0u1gkxry3iyyXiiOI6nt6+taZRVaur4EcFGOX1CGIW+whzEm/wIK
+ agjis2bzcWs5PGkmvBuH3YUZ9nJ2ikkyLqLbcXEosf9I+rSqg51dPBlPbIM1ogEt/2c1
+ HkDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745332668; x=1745937468;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5ZLqEuLOyPJkfzxxlGd5ZkTBFMW6eWnAQTYrokcO5Eo=;
+ b=LSs4fPDNBozi/vCyCzB73jyj5Wohrc9pHZCki5mHaiPBtP8Srcjr5l8T/+4MmX+csM
+ kChrjIYfjn9sKAJ60Il5oujs4tYAqHsQvBOSR3nemQJ4Ati9d7sQpzTro9x9Convsb7R
+ cQc8jIQ/VtlbiHQoXopjJEjcFcc33fcXxyRcrEaerSIJe487RnDEPi4++cAzfgUYj30B
+ RMwvcUw9b7Ong/z1ipWPXcuHsOoJDfrmBvrTEi0GGHcXMmyb9Qh/aYNme0+hD0QlD6lz
+ UFlAoSIDUesAJJLP7Ol2RxMP/yT2ZUBWb7k9gmQK1krTplebRQIG40827eqDPHHv8Jtm
+ 7aqg==
+X-Gm-Message-State: AOJu0YzpnDY+xvNDdw4EJI/Jm22ItbbwTHkuTVzUJjscVc3V6/gpjqIx
+ tAyRn4REXWtegoyNjzXb3D0tAlM9p8b6MDhbio4NpoiI1RlTfHtgqjkWp8yUHrhBGvPW7yyaVZq
+ m
+X-Gm-Gg: ASbGnctsGuX1EJx2F9Jl5f8imY6tZ6MGGW5feSoNWojX/l0br52dJEmC2CrpeVYD1oV
+ DkpCqXjzZJAb7i6ii+diKeuzWCb7HMA5SgygWrESdcMSCeZpCVk694d5TeFUanGRRduqqnc8IC0
+ EfkKulN91g/Qnd4jaZqCOJETkpPQ5dKErdAhtuu4TikQncwXpFGvmbEDAqXX1MAfnXAgLohpWe9
+ 14bDDMcDcbidDyPWI+X0w8uoM9BL859/8QrRxwUj+qCfZ2FuQsFVPGK6Y47NYbDMxkSDQYxiftt
+ DZulqMjIs0DW0Lij4uQvSDADT4+KM7WZ+qqOBTJTdwrw710I5I41ftsc0QgSBnyYffG17ZHqHtt
+ V21xrQFFXlA==
+X-Google-Smtp-Source: AGHT+IH0uw8gPJfGiCa8WUeh+Y1LVdU5StkGjpIeRE1lVc+xrvfZB/HR0b+N7khBbhNz8UPWNoOAdw==
+X-Received: by 2002:a05:6a21:4603:b0:1f5:874c:c987 with SMTP id
+ adf61e73a8af0-203cbc4d57fmr22723333637.15.1745332667994; 
+ Tue, 22 Apr 2025 07:37:47 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b0db157bb7dsm7375952a12.69.2025.04.22.07.37.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 22 Apr 2025 07:37:47 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: npiggin@gmail.com
+Subject: [PATCH v4.5 0/2] tcg: Fix TCGOP_TYPE in liveness_pass_2
+Date: Tue, 22 Apr 2025 07:37:44 -0700
+Message-ID: <20250422143746.261776-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-10-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,37 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:19AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:19 -0400
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 09/55] i386/tdx: Add property sept-ve-disable for
->  tdx-guest object
-> X-Mailer: git-send-email 2.34.1
-> 
-> Bit 28 of TD attribute, named SEPT_VE_DISABLE. When set to 1, it disables
-> EPT violation conversion to #VE on guest TD access of PENDING pages.
-> 
-> Some guest OS (e.g., Linux TD guest) may require this bit as 1.
-> Otherwise refuse to boot.
-> 
-> Add sept-ve-disable property for tdx-guest object, for user to configure
-> this bit.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> ---
-> Changes in v4:
-> - collect Acked-by from Markus
-> 
-> Changes in v3:
-> - update the comment of property @sept-ve-disable to make it more
->   descriptive and use new format. (Daniel and Markus)
-> ---
->  qapi/qom.json         |  8 +++++++-
->  target/i386/kvm/tdx.c | 23 +++++++++++++++++++++++
->  2 files changed, 30 insertions(+), 1 deletion(-)
+This is a refresh of
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+  20250415192515.232910-154-richard.henderson@linaro.org
+  [PATCH v4 153/163] tcg: Assign TCGOP_TYPE in liveness_pass_2
+
+without re-posting the other 162 patches.  :-)
+Adjusted as suggested by Nicholas.
+
+
+r~
+
+
+Richard Henderson (2):
+  tcg/optimize: Introduce opt_insert_{before,after}
+  tcg: Add TCGType to tcg_op_insert_{after,before}
+
+ tcg/tcg-internal.h |  4 ++--
+ tcg/optimize.c     | 30 +++++++++++++++++++++---------
+ tcg/tcg.c          | 17 ++++++++++-------
+ 3 files changed, 33 insertions(+), 18 deletions(-)
+
+-- 
+2.43.0
 
 
