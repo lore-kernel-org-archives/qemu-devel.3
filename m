@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64293C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93A0C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u77tw-0006vd-8E; Tue, 22 Apr 2025 03:18:40 -0400
+	id 1u784K-0001BS-QC; Tue, 22 Apr 2025 03:29:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77tu-0006rw-K8
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:18:38 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77ts-0003JK-3N
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:18:38 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3914aba1ce4so3122328f8f.2
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745306312; x=1745911112; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JuhzA3ztdNwB/VjgDRci3zkAprZzi2gFFN7mG/c3z00=;
- b=meKRl6kroNHfSL1alDCf9LX6gqra9adPGHdEC/TBogbF3BgApq1mx+eBEVgpBUaC9Y
- W86ZNNC0UkcOwveq10EHKFmbhM0+ZF4ll0H1/JEp+JwHtMYgC7H2x/xH3yy663YNQUAl
- vEFym16KmKSsezTTg92izWQp4mpJlXYA3l7pj9p4fR8hZuZ+4h3OTB0FVpB6cvPnc8Dn
- E0j75jbwFGfrrSFBBHqfy2bN5r3DWvsJ5X+30ZQ9ZCIGYwCp0WI2gjtEYh7OhY+MDOdt
- 8CGAMDfuEXHkFzmqCmbxzs4Jrjn4gnZiz4sK+Ryo509NM4VMfR5GsFBwEPH0HqjJ0BDI
- I0Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745306312; x=1745911112;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JuhzA3ztdNwB/VjgDRci3zkAprZzi2gFFN7mG/c3z00=;
- b=ZnAhhc3guqMpY3lvilcvWoJ/fIU+uOfcgPsK6fZRnWmTLPGmmz5zorywmKh8pS5L+I
- 49acfz4Lkd8g74m3uU5y0tEYFzl8Bd5frvzwH2o4dE1KekHQxSkdxzQLM5ta9rHgQAQG
- hfxqTV8XcnCy1ijiqMZGI85zQpyMlYA1jbKqypZYFIBRY9eL5O/jp+0FvtgJNusKJT6H
- kU19NKX061jyXwnsDVZMm8tXF8EJudpT8INFAxoYSz2RzJaGsnfGvUJwCqjeXkHXBWGI
- x9FvaL0tPwwkYNbLNBmcZHjmwIuOk4u3XXg4sySVchZ44pkdToXjKQ/tpueLaN0xW74d
- j8qA==
-X-Gm-Message-State: AOJu0YyBr3Q2vCsWE7xTCgMZ2xaBXbOLqPR8AkEJM7QytFJNr1ntaBzI
- v2DuXEJmK0KaEG7L0+gtIBdQY6JyRPx+D+VMgqz0VaclNS2c9E5qQA0PZend63A=
-X-Gm-Gg: ASbGncu6bbMrvxK2mPTlV1gaMsW9ZOF5+SKKBfngZ92yLfTo5feVL3AGfNpTANJdlLP
- QiGdyU5xsiRBIdNHo4YYqtguBxsDDM3763Vani8sDP5XYcr4FIIyXgGZSqVc0h8qdpYdz0bCG3/
- spLPCfArjOV0szg0OJkgx54i1ImVLXo33pf6AiUeWVORTBFIFwZAOKxki2A+RdO2Ndmi0tgr0R8
- 6k72uhe4X5bcZZjvqFb98IlzB0LnDDecby875GkKcCk6O86uiVSVH+vspSLLyTmbgLWA8zkDSYq
- 9LN+MsE/6bmWDrwm64se+is8Us6O0qFMrSKlluZL1ChZjF/+03PRjPVLTGyfK2v10irDtkxJE04
- YKGfV4ZR+oXzfddm/c+w=
-X-Google-Smtp-Source: AGHT+IEspqcrWal3soYLJiEH4MloyyVfOrmYHQVBJHh+eT+exj3OCJZVFerIzKrVs3bIM1l0+Wqb8w==
-X-Received: by 2002:a05:6000:2287:b0:391:466f:314e with SMTP id
- ffacd0b85a97d-39efba461c4mr11351055f8f.16.1745306312323; 
- Tue, 22 Apr 2025 00:18:32 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa493105sm14229535f8f.76.2025.04.22.00.18.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 00:18:31 -0700 (PDT)
-Message-ID: <e86b1efe-514c-4757-9a7d-477c27803c95@linaro.org>
-Date: Tue, 22 Apr 2025 09:18:31 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
+ id 1u784G-00019P-LH; Tue, 22 Apr 2025 03:29:20 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
+ id 1u784C-0004Es-3U; Tue, 22 Apr 2025 03:29:20 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhYlB1fDCz4x1w;
+ Tue, 22 Apr 2025 17:29:10 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhYl65FRfz4x04;
+ Tue, 22 Apr 2025 17:29:06 +1000 (AEST)
+Message-ID: <cf409986-18bd-4e33-8871-b68ab4eba1e5@kaod.org>
+Date: Tue, 22 Apr 2025 09:29:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] target/loongarch: Define function
- loongarch_get_addr_from_tlb() non-static
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250422025742.2693096-1-maobibo@loongson.cn>
- <20250422025742.2693096-7-maobibo@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422025742.2693096-7-maobibo@loongson.cn>
+Subject: Re: [PATCH v4 10/10] docs/system/arm/aspeed: Support vbootrom for
+ AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com, nabihestefan@google.com
+References: <20250417031209.2647703-1-jamin_lin@aspeedtech.com>
+ <20250417031209.2647703-11-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250417031209.2647703-11-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=h5bN=XI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,81 +112,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 04:57, Bibo Mao wrote:
-> Define function loongarch_get_addr_from_tlb() non-static, and add its
-> definition in header file tcg/tcg_loongarch.h
+Jamin,
+
+On 4/17/25 05:12, Jamin Lin wrote:
+> Using the vbootrom image support and the boot ROM binary is
+> now passed via the -bios option, using the image located in
+> pc-bios/ast27x0_bootrom.bin.
 > 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 > ---
->   target/loongarch/cpu_helper.c        | 10 ++--------
->   target/loongarch/tcg/tcg_loongarch.h | 16 ++++++++++++++++
->   2 files changed, 18 insertions(+), 8 deletions(-)
+>   docs/system/arm/aspeed.rst | 29 ++++++++++++++++++++++++++++-
+>   1 file changed, 28 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-> index 5db64a45cc..7636b2c265 100644
-> --- a/target/loongarch/cpu_helper.c
-> +++ b/target/loongarch/cpu_helper.c
-> @@ -11,6 +11,7 @@
->   #include "cpu.h"
->   #include "internals.h"
->   #include "cpu-csr.h"
-> +#include "tcg/tcg_loongarch.h"
->   
->   #ifdef CONFIG_TCG
->   static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
-> @@ -142,7 +143,7 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
->       return false;
->   }
->   
-> -static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
-> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
->                                          int *prot, target_ulong address,
->                                          MMUAccessType access_type, int mmu_idx)
->   {
-> @@ -156,13 +157,6 @@ static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
->   
->       return TLBRET_NOMATCH;
->   }
-> -#else
-> -static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
-> -                                       int *prot, target_ulong address,
-> -                                       MMUAccessType access_type, int mmu_idx)
-> -{
-> -    return TLBRET_NOMATCH;
-> -}
->   #endif
->   
->   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-> diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
-> index da2539e995..69a93bfc3e 100644
-> --- a/target/loongarch/tcg/tcg_loongarch.h
-> +++ b/target/loongarch/tcg/tcg_loongarch.h
-> @@ -6,7 +6,23 @@
->    */
->   #ifndef TARGET_LOONGARCH_TCG_LOONGARCH_H
->   #define TARGET_LOONGARCH_TCG_LOONGARCH_H
-> +#include "cpu.h"
->   
->   void loongarch_csr_translate_init(void);
->   
-> +#ifdef CONFIG_TCG
-> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
-> +                                int *prot, target_ulong address,
-> +                                MMUAccessType access_type, int mmu_idx);
-> +#else
-> +static inline int loongarch_get_addr_from_tlb(CPULoongArchState *env,
-> +                                              hwaddr *physical,
-> +                                              int *prot, target_ulong address,
-> +                                              MMUAccessType access_type,
-> +                                              int mmu_idx)
-> +{
-> +    return TLBRET_NOMATCH;
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index 97fd6a0e7f..c87a2cf796 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -250,7 +250,14 @@ under Linux), use :
+>   Booting the ast2700-evb machine
+>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-CONFIG_TCG should always be defined when including tcg/tcg_loongarch.h.
 
-> +}
-> +#endif
+Currently, we have 2 sections for the Aspeed boards :
+
+1. Aspeed family boards (ast2500-evb, ast2600-evb, ast2700-evb, ast2700fc, bletchley-bmc, fuji-bmc, fby35-bmc, fp5280g2-bmc, g220a-bmc, palmetto-bmc, qcom-dc-scm-v1-bmc, qcom-firework-bmc, quanta-q71l-bmc, rainier-bmc, romulus-bmc, sonorapass-bmc, supermicrox11-bmc, supermicrox11spi-bmc, tiogapass-bmc, witherspoon-bmc, yosemitev2-bmc)
+2. Aspeed minibmc family boards (ast1030-evb)
+
+The first is quite big and relatively consistent for the AST2400, AST2500
+and AST2600 SoCs. Since the AST2700 SoC boards boot differently, I think
+it is time to introduce a new section for the ast2700 machines.
+
+
+Thanks,
+
+C.
+
+
+
+> -Boot the AST2700 machine from the flash image, use an MTD drive :
+> +Boot the AST2700 machine from the flash image.
 > +
->   #endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
+> +There are two supported methods for booting the AST2700 machine with a flash image:
+> +
+> +Manual boot using ``-device loader``:
+> +
+> +It causes all 4 CPU cores to start execution from address ``0x430000000``, which
+> +corresponds to the BL31 image load address.
+>   
+>   .. code-block:: bash
+>   
+> @@ -270,6 +277,26 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
+>          -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
+>          -nographic
+>   
+> +Boot using a virtual boot ROM (``-bios``):
+> +
+> +If users do not specify the ``-bios option``, QEMU will attempt to load the
+> +default vbootrom image ``ast27x0_bootrom.bin`` from either the current working
+> +directory or the ``pc-bios`` directory within the QEMU source tree.
+> +
+> +.. code-block:: bash
+> +
+> +  $ qemu-system-aarch64 -M ast2700-evb \
+> +      -drive file=image-bmc,format=raw,if=mtd \
+> +      -nographic
+> +
+> +The ``-bios`` option allows users to specify a custom path for the vbootrom
+> +image to be loaded during boot. This will load the vbootrom image from the
+> +specified path in the ${HOME} directory.
+> +
+> +.. code-block:: bash
+> +
+> +  -bios ${HOME}/ast27x0_bootrom.bin
+> +
+>   Aspeed minibmc family boards (``ast1030-evb``)
+>   ==================================================================
+>   
 
 
