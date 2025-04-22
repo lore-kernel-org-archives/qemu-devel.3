@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F01C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C34C369D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7El1-0006b8-S3; Tue, 22 Apr 2025 10:37:56 -0400
+	id 1u7ElO-0006eC-Sd; Tue, 22 Apr 2025 10:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Ekx-0006ad-Ll
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:37:51 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1u7El0-0006b6-0N
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:37:55 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Ekv-0002t9-Sv
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:37:51 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-736c1138ae5so4667664b3a.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 07:37:49 -0700 (PDT)
+ id 1u7Ekw-0002tH-MU
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:37:53 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-739be717eddso3969486b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 07:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745332668; x=1745937468; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5ZLqEuLOyPJkfzxxlGd5ZkTBFMW6eWnAQTYrokcO5Eo=;
- b=C8E4g5gJ4zq11wH42ZJH/ILcKVvJ6uGE3FXsMd+tcVxYO8ttCF1EkvArokriuxzmq8
- DCDOo2uhwouIPWa7F4QgsDT1j6DdeySjm/2Ug5hW1BgHad7OAITIVMfrvqxB+Ayjgeak
- NAhz4g3zsOfB7rvl1L+fte+7icDhRGQUBtMaoR2G6Cy/zpHCEfR6LtqId8xXLMgkjwg5
- wZMWiJ/LsX8Z9GTt0u1gkxry3iyyXiiOI6nt6+taZRVaur4EcFGOX1CGIW+whzEm/wIK
- agjis2bzcWs5PGkmvBuH3YUZ9nJ2ikkyLqLbcXEosf9I+rSqg51dPBlPbIM1ogEt/2c1
- HkDA==
+ d=linaro.org; s=google; t=1745332669; x=1745937469; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gvnVMMpqOyOlOcWxcxsXb+3KSms4sfQsygRKMFEzBjs=;
+ b=BvnF/gtbHX7LnAYXseee6hOJMORhibAZd29FMlw+CKQcUFzOzbcL4CPo5zqiptJos9
+ Ii91d9c8eJEIltHtCPtc/A6h4s8u+bM2ZBnKMyoCjiD0zqwZoWgwo6FI9CQX//0XdJwy
+ WSyDO4EFqPR7SUEIQSirCkAagsV9P0esEF5BERwCsjLO2QYenh/UwOXs0Xp52K7Sdkne
+ refL87JeGjb3sgqguRoxXzpLGyQUBmqVsNAp47KUAuapx6foWompiA4T0/s6DDxXZDsW
+ rV7CcJKOm6LxTYz3iSMsI0h8wb9tiltDlnZyRXnTkZPdslahe/L2kIdnyK5pPmp4TtuT
+ gg7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745332668; x=1745937468;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5ZLqEuLOyPJkfzxxlGd5ZkTBFMW6eWnAQTYrokcO5Eo=;
- b=LSs4fPDNBozi/vCyCzB73jyj5Wohrc9pHZCki5mHaiPBtP8Srcjr5l8T/+4MmX+csM
- kChrjIYfjn9sKAJ60Il5oujs4tYAqHsQvBOSR3nemQJ4Ati9d7sQpzTro9x9Convsb7R
- cQc8jIQ/VtlbiHQoXopjJEjcFcc33fcXxyRcrEaerSIJe487RnDEPi4++cAzfgUYj30B
- RMwvcUw9b7Ong/z1ipWPXcuHsOoJDfrmBvrTEi0GGHcXMmyb9Qh/aYNme0+hD0QlD6lz
- UFlAoSIDUesAJJLP7Ol2RxMP/yT2ZUBWb7k9gmQK1krTplebRQIG40827eqDPHHv8Jtm
- 7aqg==
-X-Gm-Message-State: AOJu0YzpnDY+xvNDdw4EJI/Jm22ItbbwTHkuTVzUJjscVc3V6/gpjqIx
- tAyRn4REXWtegoyNjzXb3D0tAlM9p8b6MDhbio4NpoiI1RlTfHtgqjkWp8yUHrhBGvPW7yyaVZq
- m
-X-Gm-Gg: ASbGnctsGuX1EJx2F9Jl5f8imY6tZ6MGGW5feSoNWojX/l0br52dJEmC2CrpeVYD1oV
- DkpCqXjzZJAb7i6ii+diKeuzWCb7HMA5SgygWrESdcMSCeZpCVk694d5TeFUanGRRduqqnc8IC0
- EfkKulN91g/Qnd4jaZqCOJETkpPQ5dKErdAhtuu4TikQncwXpFGvmbEDAqXX1MAfnXAgLohpWe9
- 14bDDMcDcbidDyPWI+X0w8uoM9BL859/8QrRxwUj+qCfZ2FuQsFVPGK6Y47NYbDMxkSDQYxiftt
- DZulqMjIs0DW0Lij4uQvSDADT4+KM7WZ+qqOBTJTdwrw710I5I41ftsc0QgSBnyYffG17ZHqHtt
- V21xrQFFXlA==
-X-Google-Smtp-Source: AGHT+IH0uw8gPJfGiCa8WUeh+Y1LVdU5StkGjpIeRE1lVc+xrvfZB/HR0b+N7khBbhNz8UPWNoOAdw==
-X-Received: by 2002:a05:6a21:4603:b0:1f5:874c:c987 with SMTP id
- adf61e73a8af0-203cbc4d57fmr22723333637.15.1745332667994; 
- Tue, 22 Apr 2025 07:37:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745332669; x=1745937469;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gvnVMMpqOyOlOcWxcxsXb+3KSms4sfQsygRKMFEzBjs=;
+ b=ljC3ag8Snmj4BHrVQcbLKftQISElS0ZVCA+BpHWYv+vbtxdWTPFHTHAGuVLFOrYHPE
+ 2YaZDx1xixTbAOTTKV5r/1H/NRe5Po6ODYTxVxaEXQovPUcHQThdisQaM95NgDYH5G+t
+ jS5oCLLD8sbHyeWrBFb6ozdbtFU3n643aBEiUw/O+fg069CppCH8AifZTVXJ9qB7rnR8
+ KxsAwJ3Gqd0tXHZY1LMowpqzoD60trsytUreI8MihXnCjErnucYOxOZoXNXsuNdkwT0Y
+ 5CdAAryYMbbBw8176mMWguR0qF2Td+pVDlXunPVxJoO8oBjUjBWg4X6Z6yQMpjnKQlvQ
+ uApA==
+X-Gm-Message-State: AOJu0YydXG0aF3hFcA0btuiKxIFnhT/6gbeXpz3BJOpII6ldTp/Hj09R
+ V2ZtFdXxM5Kw4Zr7ga1VElvnkqQOJwP3CyMwDOPIKdkpR+hBQLGoyzRfi8JK/XAwy+/T8ogeFHz
+ x
+X-Gm-Gg: ASbGncuaMODeyVj4a0iFLnuuK/DOUepYg3qsRVl8KeEImuUavA2bu7Jb7ZauXmfogOc
+ GjSi7sB3SAecFMU5GlwCk0Q7tbugCFntzjiWYfRyhHzlY1Q2PxHaaM/ddWwmWd30EjMzLet7kf7
+ 3KXO6LMG9do5Wuvvq74e9mVLDz+KDxmMIu3edftqX/Up2FRxvSV5GfYW1db5DyJKEd/o60wIA/J
+ RfqzejJuQqXDJP0uyzxZwMBvbUqVjRXPrS0qo9X6tF5p5/u1u1CbNhgjBe4Nz84mQ+0k3xdLbeu
+ fkCNZrYbbXw/pm1lme0jv5IqUH3InQKbUI7jMJ62qM++n7hWOV6ROiIMruufbSPoOFXTs9t4Z+U
+ =
+X-Google-Smtp-Source: AGHT+IHxzem8MOQtFAP4nPPWpD+zNWuVEg1nLOTwK8iOvY/2YIfJK3AGUlks35ORo+KxFDj1fKMRYg==
+X-Received: by 2002:a05:6a20:cf8f:b0:1f5:75a9:5257 with SMTP id
+ adf61e73a8af0-203cbc5342fmr25761264637.13.1745332669270; 
+ Tue, 22 Apr 2025 07:37:49 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b0db157bb7dsm7375952a12.69.2025.04.22.07.37.47
+ 41be03b00d2f7-b0db157bb7dsm7375952a12.69.2025.04.22.07.37.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 07:37:47 -0700 (PDT)
+ Tue, 22 Apr 2025 07:37:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: npiggin@gmail.com
-Subject: [PATCH v4.5 0/2] tcg: Fix TCGOP_TYPE in liveness_pass_2
-Date: Tue, 22 Apr 2025 07:37:44 -0700
-Message-ID: <20250422143746.261776-1-richard.henderson@linaro.org>
+Subject: [PATCH 2/2] tcg: Add TCGType to tcg_op_insert_{after,before}
+Date: Tue, 22 Apr 2025 07:37:46 -0700
+Message-ID: <20250422143746.261776-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250422143746.261776-1-richard.henderson@linaro.org>
+References: <20250422143746.261776-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,27 +100,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a refresh of
+We cannot rely on the value copied from TCGOP_TYPE(op), because
+the relevant op could be typeless, such as INDEX_op_call.
 
-  20250415192515.232910-154-richard.henderson@linaro.org
-  [PATCH v4 153/163] tcg: Assign TCGOP_TYPE in liveness_pass_2
-
-without re-posting the other 162 patches.  :-)
-Adjusted as suggested by Nicholas.
-
-
-r~
-
-
-Richard Henderson (2):
-  tcg/optimize: Introduce opt_insert_{before,after}
-  tcg: Add TCGType to tcg_op_insert_{after,before}
-
+Fixes: fb744ece3a78 ("tcg: Copy TCGOP_TYPE in tcg_op_insert_{after,before}")
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
  tcg/tcg-internal.h |  4 ++--
- tcg/optimize.c     | 30 +++++++++++++++++++++---------
+ tcg/optimize.c     |  4 ++--
  tcg/tcg.c          | 17 ++++++++++-------
- 3 files changed, 33 insertions(+), 18 deletions(-)
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
+diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
+index a648ee7a0e..56c90fdb7a 100644
+--- a/tcg/tcg-internal.h
++++ b/tcg/tcg-internal.h
+@@ -107,8 +107,8 @@ void vec_gen_6(TCGOpcode opc, TCGType type, unsigned vece, TCGArg r,
+                TCGArg a, TCGArg b, TCGArg c, TCGArg d, TCGArg e);
+ 
+ TCGOp *tcg_op_insert_before(TCGContext *s, TCGOp *op,
+-                            TCGOpcode opc, unsigned nargs);
++                            TCGOpcode, TCGType, unsigned nargs);
+ TCGOp *tcg_op_insert_after(TCGContext *s, TCGOp *op,
+-                           TCGOpcode opc, unsigned nargs);
++                           TCGOpcode, TCGType, unsigned nargs);
+ 
+ #endif /* TCG_INTERNAL_H */
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index a4d4ad3005..3bd4ee4d58 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -347,13 +347,13 @@ static TCGArg arg_new_temp(OptContext *ctx)
+ static TCGOp *opt_insert_after(OptContext *ctx, TCGOp *op,
+                                TCGOpcode opc, unsigned narg)
+ {
+-    return tcg_op_insert_after(ctx->tcg, op, opc, narg);
++    return tcg_op_insert_after(ctx->tcg, op, opc, ctx->type, narg);
+ }
+ 
+ static TCGOp *opt_insert_before(OptContext *ctx, TCGOp *op,
+                                 TCGOpcode opc, unsigned narg)
+ {
+-    return tcg_op_insert_before(ctx->tcg, op, opc, narg);
++    return tcg_op_insert_before(ctx->tcg, op, opc, ctx->type, narg);
+ }
+ 
+ static bool tcg_opt_gen_mov(OptContext *ctx, TCGOp *op, TCGArg dst, TCGArg src)
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index dfd48b8264..3d2f924881 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -3449,21 +3449,21 @@ TCGOp *tcg_emit_op(TCGOpcode opc, unsigned nargs)
+ }
+ 
+ TCGOp *tcg_op_insert_before(TCGContext *s, TCGOp *old_op,
+-                            TCGOpcode opc, unsigned nargs)
++                            TCGOpcode opc, TCGType type, unsigned nargs)
+ {
+     TCGOp *new_op = tcg_op_alloc(opc, nargs);
+ 
+-    TCGOP_TYPE(new_op) = TCGOP_TYPE(old_op);
++    TCGOP_TYPE(new_op) = type;
+     QTAILQ_INSERT_BEFORE(old_op, new_op, link);
+     return new_op;
+ }
+ 
+ TCGOp *tcg_op_insert_after(TCGContext *s, TCGOp *old_op,
+-                           TCGOpcode opc, unsigned nargs)
++                           TCGOpcode opc, TCGType type, unsigned nargs)
+ {
+     TCGOp *new_op = tcg_op_alloc(opc, nargs);
+ 
+-    TCGOP_TYPE(new_op) = TCGOP_TYPE(old_op);
++    TCGOP_TYPE(new_op) = type;
+     QTAILQ_INSERT_AFTER(&s->ops, old_op, new_op, link);
+     return new_op;
+ }
+@@ -4214,7 +4214,8 @@ liveness_pass_2(TCGContext *s)
+                 TCGOpcode lopc = (arg_ts->type == TCG_TYPE_I32
+                                   ? INDEX_op_ld_i32
+                                   : INDEX_op_ld_i64);
+-                TCGOp *lop = tcg_op_insert_before(s, op, lopc, 3);
++                TCGOp *lop = tcg_op_insert_before(s, op, lopc,
++                                                  arg_ts->type, 3);
+ 
+                 lop->args[0] = temp_arg(dir_ts);
+                 lop->args[1] = temp_arg(arg_ts->mem_base);
+@@ -4277,7 +4278,8 @@ liveness_pass_2(TCGContext *s)
+                     TCGOpcode sopc = (arg_ts->type == TCG_TYPE_I32
+                                       ? INDEX_op_st_i32
+                                       : INDEX_op_st_i64);
+-                    TCGOp *sop = tcg_op_insert_after(s, op, sopc, 3);
++                    TCGOp *sop = tcg_op_insert_after(s, op, sopc,
++                                                     arg_ts->type, 3);
+                     TCGTemp *out_ts = dir_ts;
+ 
+                     if (IS_DEAD_ARG(0)) {
+@@ -4313,7 +4315,8 @@ liveness_pass_2(TCGContext *s)
+                     TCGOpcode sopc = (arg_ts->type == TCG_TYPE_I32
+                                       ? INDEX_op_st_i32
+                                       : INDEX_op_st_i64);
+-                    TCGOp *sop = tcg_op_insert_after(s, op, sopc, 3);
++                    TCGOp *sop = tcg_op_insert_after(s, op, sopc,
++                                                     arg_ts->type, 3);
+ 
+                     sop->args[0] = temp_arg(dir_ts);
+                     sop->args[1] = temp_arg(arg_ts->mem_base);
 -- 
 2.43.0
 
