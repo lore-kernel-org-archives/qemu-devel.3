@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807CAC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4035AC369D7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JID-0002NW-0v; Tue, 22 Apr 2025 15:28:29 -0400
+	id 1u7JIa-0002Yj-UT; Tue, 22 Apr 2025 15:28:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JIA-0002MU-OU
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:27 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1u7JIW-0002WM-UZ
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:49 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JI8-000698-DW
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:26 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2ff85fec403so219927a91.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:28:23 -0700 (PDT)
+ id 1u7JIR-0006Dq-7l
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:48 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2ff6cf448b8so7499115a91.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350102; x=1745954902; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350121; x=1745954921; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a3Pmx2FLEZ9kjbt+cSL6Q/1nXndHvzQCpATDx6amJMg=;
- b=s7ZfK3hwLZl+LA55jW4RO4i8KWsGOnotfmEWADQovEvXcj1hiV7utepQGjsl7Ue01o
- FPMSMVXD8PgvKvc3hlnhTRmzizscK2g+X988WuL2kqniwYRU/rwoHFVgAFJfdyHOjHF4
- vccCWKo971b9IafxmAzHnxb3X33mItfKtNj5SnOxUcN5+S42obo5qbnJhtUnrwfwL5p6
- ST3nf2j5F2v3hbR8HXQo5mCl+iWHWCt5njWRz5/UrwvDqY1T7pp286GtkhfYpBDD3Qen
- aA8Os7pS840i4pF94nIAblmutO56wGuwvO/nO75IGahgtMlHLfcj4MMEbbqL4Hp2Lnum
- r6oQ==
+ bh=6RZv4stV/SvG8IKjkEcJ2d9gwvNpfIIefKf42fhrHvc=;
+ b=FpeiSF9Ij8bCgDyiHyQNeUdRY2pEORXgaEc+rNLNnkrxv7ZJqQgrrn5cr+JKjAtYsP
+ 4MevcwMoPhvNVMiSeaH46w+XxwoOvQCMUbEUneh3AxG2qUYwZBjF8XKCibN4viqi10zH
+ 24npOtMT1voxpngwaHadyKvFZ1lxI31p3f61XH0XzGTi5/Lahwp2YFtWBZVz9f9PEvRt
+ 7JNM/m0nHiKMkelV/7V+CnWCUlg9v7CXLm2tGz1C0jzQ7kDi05EzUPHMU5ZKagMfJtQv
+ Z34gVxRCmONmZ3e8fVKBnQKreIwfuxMB8/afYFUQbpIO32V3uXpivG8PHsMnTBXr6gj5
+ suoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350102; x=1745954902;
+ d=1e100.net; s=20230601; t=1745350121; x=1745954921;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a3Pmx2FLEZ9kjbt+cSL6Q/1nXndHvzQCpATDx6amJMg=;
- b=vNetFSFXcc+CFS3q0y5O8D+qhXGZG8grje757S01ZGTUuQKwOW3VCRaka6nge6pvcP
- aRoS2Kl50L40J1HDOq8Dgl0Ag8aMHvrM5mCMLgOw1QGBHnd/cZMTgUMxWV80CUpip2Bx
- cTlZpR2RoH0ziUwG//SAsRcxbB7iEopBouEQwUXjg9B/DrtzTNfVEn3tTpesdEj0BaFT
- nKNn4gkcSjHWtz4tnJFwQ1LFQbRGlyyt5dCGDXrcoYsWPz5/AdLFSN17HUE4wtJb6yrG
- h3BJz2bsLINrb4pMSWsYTeCMrAEqqzLS2gDLHxG+PdhN/C4On4TfKAkY6s+2ng4dLFO0
- 9KnA==
-X-Gm-Message-State: AOJu0YzWi4RZe5PNDabECKlfLTpkW1u6w9sqUnxyP/E22GqH6KsjHNL7
- 88zS8FsDYFp2uFe/wOWAyTpWFijq6LfjXhgOM8DIy/p6elJxkgyfHKWtYHZGyjGjGv8uyAL8kbx
- o
-X-Gm-Gg: ASbGncspKEEqgcg+bn2DsEKgYM5Yj9DEL0yFuXzEaWuC/qi48s469alf4NI9s5JLVL2
- JuCuoCVbHXnOXGS3WTi46xU2NeBetQX+y9ZgxTBzMWe2YtMmr0P9PkwgbjMz7K+fcfsV25/crb0
- 2Lu628Oja33IgMPOShlipZb83kUPpliQWCjaF0TV02BMJKqWzW2iaNP3dmQIgaVtcfUeMdhO8/n
- NYmb0HstTSOU6qFKMPo+R/Et2MRX5Q83gXNBEm2Nrxv9OclFcl3jSXsYRW5pTXI3MUBgylbvzDk
- PGtCB5TMFd0FFTI7y8bT/4IKATjF/jiJWX0UPQJiA2WzHdVFMz/6SiPuqm5eUto2E7Bp2X4pc08
+ bh=6RZv4stV/SvG8IKjkEcJ2d9gwvNpfIIefKf42fhrHvc=;
+ b=D0lU1x6nxosrWdbHbBn+ZujurTNIoqBqZfUbEcyp+nat2tNFEwEGXXGG0lVihbEIci
+ LTPFavxz0neLIy8cdVz8J/uo1W/jcCRAW2Ippzmz9+7bz039XL2IaJurU+tpI0BxzE+v
+ tNLl5T5ZuKSQZb+mznfIGqSnj/4oKHBXA0BA7iUj9D+awn+pTqQTIWmnD5bj9YMmGGJ/
+ dENJDko6IbA4WaBy4cZiiMYG3YB0PR2AbpdwP3NVPoi38mYEEp6Yyy+1RhL10UGKnUcZ
+ umCV7Bj5bXPkm/u7yYHWFM65hKYZLV65xJgJUyOsGZGPSdC/pOHJYiQKDjdqbOGdNK3U
+ dfIg==
+X-Gm-Message-State: AOJu0YyJjYBA+bVaABPAuz30mE/VA2N+baG41VWzDjf2dtWSSBHU+vGz
+ GBCX1bJ2NYlYlWW/pV6kAhzC6Fw9Y0az5k5lGUl8gLk5udo2dqaM0/BUlYE6PvSLyanEcAzvHjG
+ 6
+X-Gm-Gg: ASbGnctNx+Ti/dgwARmluGdY60GZw8btbHuI3g0NtdVDEMGTqmc7s7Z4JKQOTBnAA7I
+ oJ3EhYs02F5tGYV/8yfBYzAHQwiUktK/OGTZJl+fLhiRn2sVOyHqcLyifLAP45bkPAtH6MsCBRF
+ Lts81hH/WD4K1rztnukOtlHHHTyCweuniSFG/XnDIIj+U/HjCfbPuSMSvXpsPAFX/uz2o0wITz7
+ AqVn7a2vHPMCVsDR6qNr458AVD2xOI8POYoHmhadXr5iAzGPjXPNbD5J4lMjn31pzazL3fFnt1+
+ J4uUakLYqXTUOtHVCof/36ZqThByV02QT2DzKeqQcLnweorKmvXldwssZPzlqnYA/miM45bl/D8
  =
-X-Google-Smtp-Source: AGHT+IHyiBOi3NRLf4QBAXSg4pfZlKe1+JGNmVfHG6XvMzJGDIYOKIBKWl64Z+qaWVw8z+0NF8NV6A==
-X-Received: by 2002:a17:90b:3a44:b0:2fa:1c09:3cee with SMTP id
- 98e67ed59e1d1-309df0f2f8fmr255863a91.9.1745350102502; 
- Tue, 22 Apr 2025 12:28:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWk7L3ccoCC5sgJ9kxTNjMsWtg9MSvxa0w0caogTbuZI4rSRxifq2fifQPHEma9CNg3xbweg==
+X-Received: by 2002:a17:90b:37c3:b0:305:5f33:980f with SMTP id
+ 98e67ed59e1d1-3087bcc3a75mr22991045a91.27.1745350120963; 
+ Tue, 22 Apr 2025 12:28:40 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3087df21278sm9146865a91.29.2025.04.22.12.28.22
+ 98e67ed59e1d1-3087df21278sm9146865a91.29.2025.04.22.12.28.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:28:22 -0700 (PDT)
+ Tue, 22 Apr 2025 12:28:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 003/147] exec/memory_ldst: extract memory_ldst declarations
- from cpu-all.h
-Date: Tue, 22 Apr 2025 12:25:52 -0700
-Message-ID: <20250422192819.302784-4-richard.henderson@linaro.org>
+Subject: [PATCH 031/147] accel/tcg: Implement translator_ld*_end
+Date: Tue, 22 Apr 2025 12:26:20 -0700
+Message-ID: <20250422192819.302784-32-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,73 +100,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Add a new family of translator load functions which take
+an absolute endianness value in the form of MO_BE/MO_LE.
+Expand the other translator_ld* functions on top of this.
+Remove exec/tswap.h from translator.c.
 
-They are now accessible through exec/memory.h instead, and we make sure
-all variants are available for common or target dependent code.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250317183417.285700-4-pierrick.bouvier@linaro.org>
 ---
- include/exec/cpu-all.h         | 12 ------------
- include/exec/memory_ldst.h.inc |  4 ----
- 2 files changed, 16 deletions(-)
+ include/exec/translator.h | 49 ++++++++++++++++++++++++---------------
+ accel/tcg/translator.c    | 26 +++++++++++++++------
+ 2 files changed, 49 insertions(+), 26 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index d000fe4871..7e8d66de31 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -32,18 +32,6 @@
- 
- #include "exec/hwaddr.h"
- 
--#define SUFFIX
--#define ARG1         as
--#define ARG1_DECL    AddressSpace *as
--#define TARGET_ENDIANNESS
--#include "exec/memory_ldst.h.inc"
--
--#define SUFFIX       _cached_slow
--#define ARG1         cache
--#define ARG1_DECL    MemoryRegionCache *cache
--#define TARGET_ENDIANNESS
--#include "exec/memory_ldst.h.inc"
--
- static inline void stl_phys_notdirty(AddressSpace *as, hwaddr addr, uint32_t val)
- {
-     address_space_stl_notdirty(as, addr, val,
-diff --git a/include/exec/memory_ldst.h.inc b/include/exec/memory_ldst.h.inc
-index 92ad74e956..7270235c60 100644
---- a/include/exec/memory_ldst.h.inc
-+++ b/include/exec/memory_ldst.h.inc
-@@ -19,7 +19,6 @@
-  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+diff --git a/include/exec/translator.h b/include/exec/translator.h
+index 205dd85bba..3c32655569 100644
+--- a/include/exec/translator.h
++++ b/include/exec/translator.h
+@@ -18,7 +18,7 @@
+  * member in your target-specific DisasContext.
   */
  
--#ifdef TARGET_ENDIANNESS
- uint16_t glue(address_space_lduw, SUFFIX)(ARG1_DECL,
-     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
- uint32_t glue(address_space_ldl, SUFFIX)(ARG1_DECL,
-@@ -34,7 +33,6 @@ void glue(address_space_stl, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result);
- void glue(address_space_stq, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result);
--#else
- uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
-     hwaddr addr, MemTxAttrs attrs, MemTxResult *result);
- uint16_t glue(address_space_lduw_le, SUFFIX)(ARG1_DECL,
-@@ -63,9 +61,7 @@ void glue(address_space_stq_le, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result);
- void glue(address_space_stq_be, SUFFIX)(ARG1_DECL,
-     hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result);
--#endif
+-#include "qemu/bswap.h"
++#include "exec/memop.h"
+ #include "exec/vaddr.h"
  
- #undef ARG1_DECL
- #undef ARG1
- #undef SUFFIX
--#undef TARGET_ENDIANNESS
+ /**
+@@ -181,42 +181,53 @@ bool translator_io_start(DisasContextBase *db);
+  */
+ 
+ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc);
+-uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc);
+-uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc);
+-uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc);
++uint16_t translator_lduw_end(CPUArchState *env, DisasContextBase *db,
++                             vaddr pc, MemOp endian);
++uint32_t translator_ldl_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian);
++uint64_t translator_ldq_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian);
++
++#ifdef COMPILING_PER_TARGET
++static inline uint16_t
++translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
++{
++    return translator_lduw_end(env, db, pc, MO_TE);
++}
++
++static inline uint32_t
++translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
++{
++    return translator_ldl_end(env, db, pc, MO_TE);
++}
++
++static inline uint64_t
++translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
++{
++    return translator_ldq_end(env, db, pc, MO_TE);
++}
+ 
+ static inline uint16_t
+ translator_lduw_swap(CPUArchState *env, DisasContextBase *db,
+                      vaddr pc, bool do_swap)
+ {
+-    uint16_t ret = translator_lduw(env, db, pc);
+-    if (do_swap) {
+-        ret = bswap16(ret);
+-    }
+-    return ret;
++    return translator_lduw_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
+ }
+ 
+ static inline uint32_t
+ translator_ldl_swap(CPUArchState *env, DisasContextBase *db,
+                     vaddr pc, bool do_swap)
+ {
+-    uint32_t ret = translator_ldl(env, db, pc);
+-    if (do_swap) {
+-        ret = bswap32(ret);
+-    }
+-    return ret;
++    return translator_ldl_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
+ }
+ 
+ static inline uint64_t
+ translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
+                     vaddr pc, bool do_swap)
+ {
+-    uint64_t ret = translator_ldq(env, db, pc);
+-    if (do_swap) {
+-        ret = bswap64(ret);
+-    }
+-    return ret;
++    return translator_ldq_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
+ }
++#endif /* COMPILING_PER_TARGET */
+ 
+ /**
+  * translator_fake_ld - fake instruction load
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index 4c320ab9c3..2ab081b95f 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+ #include "exec/exec-all.h"
+@@ -15,7 +16,6 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "exec/translator.h"
+ #include "exec/plugin-gen.h"
+-#include "exec/tswap.h"
+ #include "tcg/tcg-op-common.h"
+ #include "internal-target.h"
+ #include "disas/disas.h"
+@@ -468,7 +468,8 @@ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc)
+     return val;
+ }
+ 
+-uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
++uint16_t translator_lduw_end(CPUArchState *env, DisasContextBase *db,
++                             vaddr pc, MemOp endian)
+ {
+     uint16_t val;
+ 
+@@ -477,10 +478,14 @@ uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
+         val = cpu_ldw_code_mmu(env, pc, oi, 0);
+         record_save(db, pc, &val, sizeof(val));
+     }
+-    return tswap16(val);
++    if (endian & MO_BSWAP) {
++        val = bswap16(val);
++    }
++    return val;
+ }
+ 
+-uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
++uint32_t translator_ldl_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian)
+ {
+     uint32_t val;
+ 
+@@ -489,10 +494,14 @@ uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
+         val = cpu_ldl_code_mmu(env, pc, oi, 0);
+         record_save(db, pc, &val, sizeof(val));
+     }
+-    return tswap32(val);
++    if (endian & MO_BSWAP) {
++        val = bswap32(val);
++    }
++    return val;
+ }
+ 
+-uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
++uint64_t translator_ldq_end(CPUArchState *env, DisasContextBase *db,
++                            vaddr pc, MemOp endian)
+ {
+     uint64_t val;
+ 
+@@ -501,7 +510,10 @@ uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
+         val = cpu_ldq_code_mmu(env, pc, oi, 0);
+         record_save(db, pc, &val, sizeof(val));
+     }
+-    return tswap64(val);
++    if (endian & MO_BSWAP) {
++        val = bswap64(val);
++    }
++    return val;
+ }
+ 
+ void translator_fake_ld(DisasContextBase *db, const void *data, size_t len)
 -- 
 2.43.0
 
