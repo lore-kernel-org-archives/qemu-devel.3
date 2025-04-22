@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B912DC369D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BC0C369D8
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7GB4-0005wj-JK; Tue, 22 Apr 2025 12:08:56 -0400
+	id 1u7G8d-0003Hn-CL; Tue, 22 Apr 2025 12:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G5r-0007R4-2K
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6I-00081L-4r
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G5o-000537-K0
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6F-00057f-PB
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745337807;
+ s=mimecast20190719; t=1745337833;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4bKe87yw3UalntCEf1VLjS4RuQPmi2EvxYa5Q8J0ASY=;
- b=frEV84Lht92Ta7wsEcZu7y+zwxFj4gojJZeOW0PuqWLR+hPl9VMAaI9H2EsOhr5HgY3A7q
- 5/Zf39HoCoFyMlCP7v3J7tDyvAzGrv8atWbpbmFLHnZnHaYjNtN1+QLfvlR+r79JR2HFA0
- DhBTrE0K/4cfE3eodEpDuzOH0mH52g8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3qPYaGp5ZD7avtho/DADfoj0gcqQuJgY9fijc4chdvA=;
+ b=T73sQ6T+TVU1YQlz3qtMyn94wd2SUJfYo3a+4eEf7Fohm+OYjQMKxlPgJzznju+bwR8k8j
+ LUIYVuIMFbl65dyvndaBfSJ3iTTkm6TzmE87j/GItn5oR1FdNiEgJcQYgdbDNG9+MTopWD
+ qwOutFH3e7SlRkxuvSm3jBmLgJA1CMg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-J-3Y6nrZMF2fdcwwksMk5g-1; Tue,
- 22 Apr 2025 12:03:26 -0400
-X-MC-Unique: J-3Y6nrZMF2fdcwwksMk5g-1
-X-Mimecast-MFC-AGG-ID: J-3Y6nrZMF2fdcwwksMk5g_1745337804
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-xdt4nT-JMRyBA-rNFQYrSQ-1; Tue,
+ 22 Apr 2025 12:03:49 -0400
+X-MC-Unique: xdt4nT-JMRyBA-rNFQYrSQ-1
+X-Mimecast-MFC-AGG-ID: xdt4nT-JMRyBA-rNFQYrSQ_1745337828
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 577EC195609D; Tue, 22 Apr 2025 16:03:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01446180087A; Tue, 22 Apr 2025 16:03:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.105])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F264118001DA; Tue, 22 Apr 2025 16:03:20 +0000 (UTC)
+ id 582B9180097D; Tue, 22 Apr 2025 16:03:45 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
@@ -53,17 +53,16 @@ Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  John Levon <john.levon@nutanix.com>,
  Joao Martins <joao.m.martins@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 15/37] vfio: Move Host IOMMU type declarations into their
- respective files
-Date: Tue, 22 Apr 2025 18:02:02 +0200
-Message-ID: <20250422160224.199714-16-clg@redhat.com>
+Subject: [PATCH v3 22/37] vfio: Move vfio_kvm_device_fd() into helpers.c
+Date: Tue, 22 Apr 2025 18:02:09 +0200
+Message-ID: <20250422160224.199714-23-clg@redhat.com>
 In-Reply-To: <20250422160224.199714-1-clg@redhat.com>
 References: <20250422160224.199714-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -88,64 +87,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These definitions don't have any use outside of their respective
-submodules. There is no need to expose them externally. Keep them
-private.
+The vfio_kvm_device_add/del_fd() routines opening the VFIO pseudo
+device are defined in "helpers.c". Move 'vfio_kvm_device_fd'
+definition there and its declaration into "vfio-helpers.h" to reduce
+exposure of VFIO internals in "hw/vfio/vfio-common.h".
 
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-15-clg@redhat.com
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-16-clg@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-22-clg@redhat.com
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-23-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h | 5 -----
- hw/vfio/container.c           | 2 ++
- hw/vfio/iommufd.c             | 3 +++
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ hw/vfio/vfio-helpers.h        |  2 ++
+ include/hw/vfio/vfio-common.h |  1 -
+ hw/vfio/common.c              | 11 -----------
+ hw/vfio/helpers.c             | 11 +++++++++++
+ hw/vfio/spapr.c               |  2 +-
+ 5 files changed, 14 insertions(+), 13 deletions(-)
 
+diff --git a/hw/vfio/vfio-helpers.h b/hw/vfio/vfio-helpers.h
+index dbcb68bbb0e12607f5ccf15f114530966c2cbcb2..54a327ffbc04a2df364fdd78bd97fe7e2065b38c 100644
+--- a/hw/vfio/vfio-helpers.h
++++ b/hw/vfio/vfio-helpers.h
+@@ -12,6 +12,8 @@
+ #ifdef CONFIG_LINUX
+ #include <linux/vfio.h>
+ 
++extern int vfio_kvm_device_fd;
++
+ struct vfio_info_cap_header *
+ vfio_get_cap(void *ptr, uint32_t cap_offset, uint16_t id);
+ struct vfio_info_cap_header *
 diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b2d4ff68650b205dca42ef00c7dfc7f2505b7e51..072b2c028f36234807c71b451a4e3c7caefa7f14 100644
+index c587ed08feabd0c4845d824960dd0799e9ace69b..8b300e7768fb61af881f6a8b7eeb75dc84c98ac3 100644
 --- a/include/hw/vfio/vfio-common.h
 +++ b/include/hw/vfio/vfio-common.h
-@@ -115,11 +115,6 @@ struct VFIODeviceOps {
-     int (*vfio_load_config)(VFIODevice *vdev, QEMUFile *f);
- };
+@@ -132,7 +132,6 @@ VFIODevice *vfio_get_vfio_device(Object *obj);
+ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
+ extern VFIODeviceList vfio_device_list;
+ extern const MemoryListener vfio_memory_listener;
+-extern int vfio_kvm_device_fd;
  
+ #ifdef CONFIG_LINUX
+ int vfio_get_region_info(VFIODevice *vbasedev, int index,
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 2dcf70c66e81dddffb35a152da5a18d27a05c6f1..91ffc5e1a37a3ba7ab50cb5f14cbe5d56f78949d 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -50,17 +50,6 @@
+ VFIODeviceList vfio_device_list =
+     QLIST_HEAD_INITIALIZER(vfio_device_list);
+ 
+-#ifdef CONFIG_KVM
+-/*
+- * We have a single VFIO pseudo device per KVM VM.  Once created it lives
+- * for the life of the VM.  Closing the file descriptor only drops our
+- * reference to it and the device's reference to kvm.  Therefore once
+- * initialized, this file descriptor is only released on QEMU exit and
+- * we'll re-use it should another vfio device be attached before then.
+- */
+-int vfio_kvm_device_fd = -1;
+-#endif
 -
--#define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
--#define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO \
--            TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
--
- void vfio_disable_irqindex(VFIODevice *vbasedev, int index);
- void vfio_unmask_single_irqindex(VFIODevice *vbasedev, int index);
- void vfio_mask_single_irqindex(VFIODevice *vbasedev, int index);
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 9b86e24a4072e579bcdc2c060ce42608ee44ee2e..9aa9f6931f591211e46f57029df2ca194f9c3eaf 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -34,6 +34,8 @@
- #include "pci.h"
- #include "hw/vfio/vfio-container.h"
+ /*
+  * Device state interfaces
+  */
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 7ddc9797ef7659035d927e40a3b99a8f74dca2de..48bd61d5280967dffa509dcbaeeee7a1ba01335a 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -106,6 +106,17 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
+     return true;
+ }
  
-+#define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
++#ifdef CONFIG_KVM
++/*
++ * We have a single VFIO pseudo device per KVM VM.  Once created it lives
++ * for the life of the VM.  Closing the file descriptor only drops our
++ * reference to it and the device's reference to kvm.  Therefore once
++ * initialized, this file descriptor is only released on QEMU exit and
++ * we'll re-use it should another vfio device be attached before then.
++ */
++int vfio_kvm_device_fd = -1;
++#endif
 +
- typedef QLIST_HEAD(VFIOGroupList, VFIOGroup) VFIOGroupList;
- static VFIOGroupList vfio_group_list =
-     QLIST_HEAD_INITIALIZER(vfio_group_list);
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index a520d40afc00d79ae8617fd3c40433e228583b5a..2ec15bc2692e2eb90299e5a1c09ab6b738c69cf0 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -27,6 +27,9 @@
- #include "pci.h"
- #include "vfio-iommufd.h"
- 
-+#define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO             \
-+            TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
-+
- static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
-                             ram_addr_t size, void *vaddr, bool readonly)
+ int vfio_kvm_device_add_fd(int fd, Error **errp)
  {
+ #ifdef CONFIG_KVM
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 522314fec7fb6e0a5951472031be840daf2af8d1..8ac11c39a83b3c54378b747ebdabc4c95d03b7c2 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -15,13 +15,13 @@
+ #include "system/hostmem.h"
+ #include "exec/address-spaces.h"
+ 
+-#include "hw/vfio/vfio-common.h"
+ #include "hw/vfio/vfio-container.h"
+ #include "hw/hw.h"
+ #include "exec/ram_addr.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "trace.h"
++#include "vfio-helpers.h"
+ 
+ typedef struct VFIOHostDMAWindow {
+     hwaddr min_iova;
 -- 
 2.49.0
 
