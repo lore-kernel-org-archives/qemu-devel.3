@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A124C369D9
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 13:08:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2DBCC369D7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 13:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7DLi-0004Cx-3z; Tue, 22 Apr 2025 09:07:42 -0400
+	id 1u7DLk-0004FG-IO; Tue, 22 Apr 2025 09:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1u79UQ-0002qX-G8; Tue, 22 Apr 2025 05:00:27 -0400
+ id 1u7CPi-0000SK-7f; Tue, 22 Apr 2025 08:07:46 -0400
 Received: from sender4-op-o12.zoho.com ([136.143.188.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1u79UN-0005dJ-0B; Tue, 22 Apr 2025 05:00:25 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1745312267; cv=none; 
+ id 1u7CPe-0002sD-1m; Tue, 22 Apr 2025 08:07:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1745323641; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=fmB0EH6Ie4DQb7aEGAD2biy7XYeS79oFpoYzAh+5R8lgGgH8M9A8LuIfwpW9kTtnGMxIFYRwJH+UFQuCA+UghtvZBV4aKdE/0fEAk3Byla+ExL45rS0ggEP3CTjmBKdJ7QklnO9OXgNYE9MdFg1MaD3dnsTnqDs0hXULUHrFfwQ=
+ b=fmFbhfJyfECqQmrJkiLYGUNQb0nQlMks/6J04uHDP3zA32Xs1un+ZH7kh9sFwZng6Joj06shogwSh9S4lYnWFR0OCeSzEljnuqpAMP4QxPMg1yrC8ImmQy4RqYGXb47UqNAA4ZSd6lurblvRx46F1vzMHcZtjP7cCc1ZJGTCXl8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1745312267;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Xp3gpPv0RpjdEgFzNDAYCQ5MuMspPbiN8K/GlNJBqmo=; 
- b=FdmgMr+Cpm6GIK/Eqf50U0gdGu6yKo9UYuDkgfLjGqRx0VaM3Wm59Erxaf375bfwUzMoW87+RAow/uhFePPhF7FEzG7cV2i0uTEc3tKpIca+3e4mjpUqGpxeTbiZ/RoZ/CUP6xEmhmYSMWYilep0C9KBTA3Y3jUHts1lLOLoRRA=
+ s=zohoarc; t=1745323641;
+ h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc;
+ bh=/stvQ7CKfZG2qrLmD8V83vEdkR/vmhNKv8wtTQoJZjI=; 
+ b=j1PSDk2B9mOBMgTROQTmcR0vOzLXUnSjHhq6fXBNycUdbPfjOy0LvNz3nTgdV+DGEAoUWmTGD4wE22BRPMYwcVgKozYYoGtpHDbVuXVLtMFN1KO8KCKcDrCGy0c+dY9eElLfAgTBvwrjrThpX4hNi5DpN1DiXbvhA12BQ3mOM8Y=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=linux.beauty;
  spf=pass  smtp.mailfrom=me@linux.beauty;
  dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745312267; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745323641; 
  s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=Xp3gpPv0RpjdEgFzNDAYCQ5MuMspPbiN8K/GlNJBqmo=;
- b=bxcuZl0MK/CZer10quLVjld7+oJQE1FyD/AQR0iohyBJ9cc3fv+HF03IM+chyfKr
- doBLDVg5XQQ1rIIPot3uKVHlaJOthzFyYSBZUkCCfyiur6qQvFM1a1ooD/SZ3J3TIeb
- rDp7g+h5b3FUtI2+06NPT6N4TPRdhnl9BSZ5gTL8=
+ h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
+ bh=/stvQ7CKfZG2qrLmD8V83vEdkR/vmhNKv8wtTQoJZjI=;
+ b=VR0VB6fDB+WPlN3KrTa9j/E/a4iZBWcyyJmFkjYhZTx7qqriqOxYgYT8BISpFf4C
+ XWnDqmR0QThRym3BUNuTniFzZoftxW9eId6Ju0tgv0mOpKAFMD/TJfmRSuf2PjG+Hfa
+ vVjMMCaAnIlXr05rC3hEOnnUqigDZaEOBWEhXA4g=
 Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1745312264824897.1584688943897;
- Tue, 22 Apr 2025 01:57:44 -0700 (PDT)
-Date: Tue, 22 Apr 2025 16:57:44 +0800
+ with SMTP id 1745323639301266.73560620235014;
+ Tue, 22 Apr 2025 05:07:19 -0700 (PDT)
+Date: Tue, 22 Apr 2025 20:07:19 +0800
 From: Li Chen <me@linux.beauty>
-To: =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>,
+To: "Peter Maydell" <peter.maydell@linaro.org>,
  "Shannon Zhao" <shannon.zhaosl@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
  "Eduardo Habkost" <eduardo@habkost.net>,
  "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
  "Yanan Wang" <wangyanan55@huawei.com>,
  "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
- "Bibo Mao" <maobibo@loongson.cn>, "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
  "Sunil V L" <sunilvl@ventanamicro.com>,
  "Palmer Dabbelt" <palmer@dabbelt.com>,
  "Alistair Francis" <alistair.francis@wdc.com>,
  "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
  "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
-Message-ID: <1965cb7b258.11d7ab5af837942.6319847926409671146@linux.beauty>
-In-Reply-To: <2b3ca5a6-a2fb-414b-bbcf-f2ec9ce2df28@linaro.org>
-References: <87a588wsc9.wl-me@linux.beauty>
- <2b3ca5a6-a2fb-414b-bbcf-f2ec9ce2df28@linaro.org>
-Subject: Re: [PATCH] acpi: Add machine option to disable SPCR table
+Message-ID: <1965d6541ea.102a06ad4912575.3151797857612362065@linux.beauty>
+In-Reply-To: <1965d621e25.fafa759e911037.825810937022699867@linux.beauty>
+References: <1965d621e25.fafa759e911037.825810937022699867@linux.beauty>
+Subject: [PATCH V2 3/3] tests/qtest/bios-tables-test: Add test for disabling
+ SPCR on RISC-V
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Importance: Medium
 User-Agent: Zoho Mail
 X-Mailer: Zoho Mail
@@ -75,8 +75,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 22 Apr 2025 09:07:38 -0400
@@ -94,36 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+From: Li Chen <chenl311@chinatelecom.cn>
 
-Thanks for your review!
+Add ACPI SPCR table test case for RISC-V when SPCR was off.
 
- ---- On Tue, 22 Apr 2025 16:00:19 +0800  Philippe Mathieu-Daud=C3=A9 <phil=
-md@linaro.org> wrote ---=20
- > Hi,
- >=20
- > On 22/4/25 09:47, Li Chen wrote:
- > > From: Li Chen <chenl311@chinatelecom.cn>
- > >=20
- > > The ACPI SPCR (Serial Port Console Redirection) table allows firmware
- > > to specify a preferred serial console device to the operating system.
- > > On ARM64 systems, Linux by default respects this table: even if the
- > > kernel command line does not include a hardware serial console (e.g.,
- > > "console=3DttyAMA0"), the kernel still register the serial device
- > > referenced by SPCR as a printk console.
- > >=20
- > > While this behavior is standard-compliant, it can lead to situations
- > > where guest console behavior is influenced by platform firmware rather
- > > than user-specified configuration. To make guest console behavior more
- > > predictable and under user control, this patch introduces a machine
- > > option to explicitly disable SPCR table exposure:
- > >=20
- > >      -machine spcr=3Doff
- >=20
- > Please add some tests in tests/qtest/bios-tables-test.c.
-=20
-I'll add test machines for all affected architectures in v2. Thanks again.
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+---
+ tests/qtest/bios-tables-test.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-Regards,
-Li
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index d2a1aa7fb3..44de152a36 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1807,6 +1807,26 @@ static void test_acpi_aarch64_virt_tcg_acpi_spcr(void)
+                   " -machine spcr=off", &data);
+     free_test_data(&data);
+ }
++
++static void test_acpi_riscv_virt_tcg_acpi_spcr(void)
++{
++    test_data data = {
++        .machine = "virt",
++        .arch = "riscv64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
++        .cd = "tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2",
++        .ram_start = 0x80000000ULL,
++        .scan_len = 128ULL * 1024 * 1024,
++        .variant = ".acpispcr",
++    };
++
++    test_acpi_one("-cpu rva22s64 "
++                  "-machine spcr=off", &data);
++    free_test_data(&data);
++}
++
+ static void test_acpi_tcg_acpi_hmat(const char *machine, const char *arch)
+ {
+     test_data data = {};
+@@ -2612,6 +2632,8 @@ int main(int argc, char *argv[])
+             qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
+             qtest_add_func("acpi/virt/numamem",
+                            test_acpi_riscv64_virt_tcg_numamem);
++            qtest_add_func("acpi/virt/acpispcr",
++                           test_acpi_riscv_virt_tcg_acpi_spcr);
+         }
+     }
+     ret = g_test_run();
+-- 
+2.49.0
+
+
 
