@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0623AC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D329C369D7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JNe-0002UF-W4; Tue, 22 Apr 2025 15:34:07 -0400
+	id 1u7JML-0001p4-9I; Tue, 22 Apr 2025 15:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLs-00016n-7o
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:16 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1u7JLY-0000Hq-WD
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:57 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLq-0006gn-7l
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2279915e06eso58612715ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:32:13 -0700 (PDT)
+ id 1u7JLW-0006bO-BN
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:56 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-224191d92e4so55743625ad.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350332; x=1745955132; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350313; x=1745955113; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XHzIFD1toGdj6HYrHyt+UU2Mbk/NX+AyaF0biHg+m+k=;
- b=fXB0kVn/aVd24jiOX+rs4Ly8P0Pl2bcvxN+uLwtzJTI5kLLSlXZAr9tGqmUPm7bDwf
- qhx/1DPeXgk+/WT3fbUU6jYzQgk/MjMsi4enw0j0Xrn1SapwhPmWAw9KgE3A572k2ebE
- bYHwp3EK/qJcnqlxekGKWTPphQR9c22dWlfE6d9zbcEzhJy5EEp0MwJkq4jgmZYJUqZo
- trGIVSIIrHeUnLFFc7g9JBtGFcq1MOSJB4eE2bFYffXN5vK1nLVuqfFy7/rZEGvErxeH
- 2Q4bPhNYJWsT+N2UhcIiKJd3SaP8IlpuJjd1rIxYyorARqynTc9B6QShcKYCcyK7RwQQ
- yFbw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=rzfkd84AU4JxIk+n9aK5OlCLgNFIPk0/g2EPPFZ4xP8=;
+ b=loungcGEI/fdCLUZ27oYzqRvZkD+nct9qD23EkI6XM4qpUyjIlf9DJfTWz291zJL5z
+ oAnfPEC3mO+YVYOj4LbKB/nZKxEWpSon9j6yVLdQXFgx549PC380UM8f6QPNnnwYwMj7
+ O2VQcnOB4FrCWs/+tnjfu84Lxmbn6ZvuT5fYhFIAOETDkgc3i+tUXLVxxqrOu28kdKnH
+ jRracRdyRLdmk2qwsLPIVoGIJsEbNI1FgDsJD8sc5Yo91dr1BghO9CAadUqgZqIUUnnv
+ xbq/H6FM7FA11IO+TS2z0wx4HEC82v4t6B7vOkJnCCmML/m4B9ODfzGMK08iQq2dy5d0
+ AWxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350332; x=1745955132;
+ d=1e100.net; s=20230601; t=1745350313; x=1745955113;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XHzIFD1toGdj6HYrHyt+UU2Mbk/NX+AyaF0biHg+m+k=;
- b=m9Zu3h3DBAEg54X5hY+59F+wB8loI5vcmJ7+CqXQbCWpORhQNTG+7Tg0jCRBuF1tLN
- E/rG2H9Nyid4OL7rGnVtS2z9XMftHe1Y541rrDkAt6xpWJANWXDJyWB7BHUKwaQ6+So+
- yoRyw168iopIidgIWuxocb4kbmvzfGCYf9MRxNcqEAL8dKTNtkm9Ir9pT3qK/idhl0CB
- bHLq0Hnboh+/08NQ8/0m0Yg2soNL0Kqcq761yFBH9tMrXGPmuQ7+0et504WYfbxRAoma
- FIZFHhmHwAue5UcsP8shM8z1jetIxfGYQJ448FByDSWIleXXWorey4bNydagqebGBd17
- JzDw==
-X-Gm-Message-State: AOJu0Yxlvige+TffcRtaWrn2PD/YnjDRAKKoNhka7mnOSGNEI2EIfidk
- uJO39baQ17cd8WSPBT0y3RezbVP+PqrIvcqyHoGUWKCxlpc9mSZE6zTF9nvD9l41axjGdVpE+1v
- m
-X-Gm-Gg: ASbGncvqpcQvhUwQe+9qMuOu0Hb8qVHCHQRZ0vGrFXEsJxdr5pewkY56dd6/Hdtqxi2
- uhuoXDWDhGjg54yUlZXEqIAmEKzl+2AlZejMtqCpwBwHKKER81hw1f6QjUYuSEJMXyuUPxOmWPu
- xA+GmSxExZFEnoPG4Xy96YUIzAzL5esTfl/tQWIHHb5uG/ROq1l4SjnhWE8IcXevCtSkaxRIUCp
- W2QsRVFnFJTI9qEDznDJTdcYmgvGNUon4dVGqqN88Jm8kT18lP1glJLlIkqpr1CzbHG0XinmV8V
- 49geyZW/ehvUKwGPPnRV1EDQZqn2QGJU25FUHCPXsrjcrX5zsrkOnER6UY7lJGjUpeGkIm3lqlU
+ bh=rzfkd84AU4JxIk+n9aK5OlCLgNFIPk0/g2EPPFZ4xP8=;
+ b=e0Ee2pXqyURbSYNZdm8p/HPnWKnyWUmgkXb3iwIkWjxhzgzaooLJI0GkI39Rg75DsK
+ B7dA6L7qAS8NFdMLfJXkPYDhyYUUNpGFuRsZqBHnkJbtaUWRO66HiMMFpRct6v+srbTZ
+ fX3aEe0bNk1NqCS+Jn6iEjZ4AKimxy8FGeMBHamPnvGUrWxTr76xLjc4UYEwm5yNWYgr
+ R+KQmqiqCRpxqMSpQiWpvO2ilX5Epi8dZ4xKnuz4Fp3ygcT3nbzXu6IOtJbdw7JIac7F
+ qzHpTqebArcho8/jyLP+CXA3Li40oEOVcEmocP86KAECzp2U8wzwk07QHgGPCsGgetkj
+ kWwA==
+X-Gm-Message-State: AOJu0YwOrLUaxrz+Bkfr/tR8TgvhA8ofab/AIE/QX1IHFWwigKq1XZNp
+ ju7iId/bZTpxLG3zBNkEANoBUWEBCL9p/ueYQs23peb57MqGZZRhsCmrjVFMBr7WavtsMvs2Ohi
+ G
+X-Gm-Gg: ASbGnctElsh+asUwjHZq2E9SFgyWgefFS88S6p/sQ1IiMfwZUtETyjzrzf4zwDmj8wo
+ LmyV0xE9/ZbDtTUp+A8rgAG+3jaqbJVulk6apa0YGpBmR3Tny26UB3XExCT2GiIo7KwO5KreEuF
+ TfPd6IhQmbdnpu23M/+sEV7aeiSpiJSoz14pzA0qoLZfMXBbb4/tta4EVpaIAWWZu5W5ls3vF2e
+ P/SZV87ZaJfOJp5V8/DdRmZ0uRx07M3OCyLyyscNelaf8yZPngolggmqHL2ZgBerjep+svVX4dQ
+ ACawy4OmLd7U2xqVCP7pda2/+QkxJ3bcMiLrALVU6ysXQa87lLHLX9gzj0l/BHkzSFroN9ltOJs
  =
-X-Google-Smtp-Source: AGHT+IG1jfX66ZydW0eiqvrfGJTshjrTNE4+dTZTUx285nMH2wIIaYZcnI4EMBxQeZAgZSCsa83NnQ==
-X-Received: by 2002:a17:902:f60a:b0:223:60ce:2451 with SMTP id
- d9443c01a7336-22c5359c344mr234896925ad.15.1745350332479; 
- Tue, 22 Apr 2025 12:32:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMAkz9iEWA7wGPXaE/uq3sWtqofxt0sZVDADOLB4wJJDYzZ9/A96JhgZefmhOxQQFUBw3McA==
+X-Received: by 2002:a17:902:e88f:b0:220:f151:b668 with SMTP id
+ d9443c01a7336-22c535815admr193370365ad.20.1745350312649; 
+ Tue, 22 Apr 2025 12:31:52 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.32.12
+ d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.31.52
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:32:12 -0700 (PDT)
+ Tue, 22 Apr 2025 12:31:52 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 079/147] target/i386: Restrict cpu_mmu_index_kernel() to TCG
-Date: Tue, 22 Apr 2025 12:27:08 -0700
-Message-ID: <20250422192819.302784-80-richard.henderson@linaro.org>
+Subject: [PATCH 048/147] include/exec: Split out watchpoint.h
+Date: Tue, 22 Apr 2025 12:26:37 -0700
+Message-ID: <20250422192819.302784-49-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,109 +99,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Relatively few objects in qemu care about watchpoints, so split
+out to a new header.  Removes an instance of CONFIG_USER_ONLY
+from hw/core/cpu.h.
 
-Move cpu_mmu_index_kernel() to seg_helper.c.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250401080938.32278-9-philmd@linaro.org>
 ---
- target/i386/cpu.h            |  1 -
- target/i386/tcg/seg_helper.h |  4 ++++
- target/i386/cpu.c            | 16 ----------------
- target/i386/tcg/seg_helper.c | 16 ++++++++++++++++
- 4 files changed, 20 insertions(+), 17 deletions(-)
+ include/exec/watchpoint.h           | 41 +++++++++++++++++++++++++++++
+ include/hw/core/cpu.h               | 30 ---------------------
+ accel/tcg/tcg-accel-ops.c           |  1 +
+ system/watchpoint.c                 |  1 +
+ target/arm/debug_helper.c           |  1 +
+ target/i386/cpu.c                   |  1 +
+ target/i386/machine.c               |  2 +-
+ target/i386/tcg/system/bpt_helper.c |  1 +
+ target/ppc/cpu.c                    |  1 +
+ target/ppc/cpu_init.c               |  2 +-
+ target/riscv/debug.c                |  1 +
+ target/s390x/helper.c               |  1 +
+ target/s390x/tcg/excp_helper.c      |  1 +
+ target/xtensa/dbg_helper.c          |  1 +
+ 14 files changed, 53 insertions(+), 32 deletions(-)
+ create mode 100644 include/exec/watchpoint.h
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 76f24446a5..db9f01a11b 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2598,7 +2598,6 @@ static inline bool is_mmu_index_32(int mmu_index)
+diff --git a/include/exec/watchpoint.h b/include/exec/watchpoint.h
+new file mode 100644
+index 0000000000..4b6668826c
+--- /dev/null
++++ b/include/exec/watchpoint.h
+@@ -0,0 +1,41 @@
++/*
++ * CPU watchpoints
++ *
++ * Copyright (c) 2012 SUSE LINUX Products GmbH
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#ifndef EXEC_WATCHPOINT_H
++#define EXEC_WATCHPOINT_H
++
++#if defined(CONFIG_USER_ONLY)
++static inline int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
++                                        int flags, CPUWatchpoint **watchpoint)
++{
++    return -ENOSYS;
++}
++
++static inline int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
++                                        vaddr len, int flags)
++{
++    return -ENOSYS;
++}
++
++static inline void cpu_watchpoint_remove_by_ref(CPUState *cpu,
++                                                CPUWatchpoint *wp)
++{
++}
++
++static inline void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
++{
++}
++#else
++int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
++                          int flags, CPUWatchpoint **watchpoint);
++int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
++                          vaddr len, int flags);
++void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
++void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
++#endif
++
++#endif /* EXEC_WATCHPOINT_H */
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index abd8764e83..37cb7d1531 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -1109,36 +1109,6 @@ static inline bool cpu_breakpoint_test(CPUState *cpu, vaddr pc, int mask)
+     return false;
  }
  
- int x86_mmu_index_pl(CPUX86State *env, unsigned pl);
--int cpu_mmu_index_kernel(CPUX86State *env);
+-#if defined(CONFIG_USER_ONLY)
+-static inline int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+-                                        int flags, CPUWatchpoint **watchpoint)
+-{
+-    return -ENOSYS;
+-}
+-
+-static inline int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
+-                                        vaddr len, int flags)
+-{
+-    return -ENOSYS;
+-}
+-
+-static inline void cpu_watchpoint_remove_by_ref(CPUState *cpu,
+-                                                CPUWatchpoint *wp)
+-{
+-}
+-
+-static inline void cpu_watchpoint_remove_all(CPUState *cpu, int mask)
+-{
+-}
+-#else
+-int cpu_watchpoint_insert(CPUState *cpu, vaddr addr, vaddr len,
+-                          int flags, CPUWatchpoint **watchpoint);
+-int cpu_watchpoint_remove(CPUState *cpu, vaddr addr,
+-                          vaddr len, int flags);
+-void cpu_watchpoint_remove_by_ref(CPUState *cpu, CPUWatchpoint *watchpoint);
+-void cpu_watchpoint_remove_all(CPUState *cpu, int mask);
+-#endif
+-
+ /**
+  * cpu_get_address_space:
+  * @cpu: CPU to get address space from
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index d9b662efe3..5c88056157 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -37,6 +37,7 @@
+ #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
+ #include "exec/translation-block.h"
++#include "exec/watchpoint.h"
+ #include "gdbstub/enums.h"
  
- #define CC_DST  (env->cc_dst)
- #define CC_SRC  (env->cc_src)
-diff --git a/target/i386/tcg/seg_helper.h b/target/i386/tcg/seg_helper.h
-index 6b8606cd6d..ea98e1a98e 100644
---- a/target/i386/tcg/seg_helper.h
-+++ b/target/i386/tcg/seg_helper.h
-@@ -20,6 +20,8 @@
- #ifndef SEG_HELPER_H
- #define SEG_HELPER_H
+ #include "hw/core/cpu.h"
+diff --git a/system/watchpoint.c b/system/watchpoint.c
+index 08dbd8483d..21d0bb36ca 100644
+--- a/system/watchpoint.c
++++ b/system/watchpoint.c
+@@ -21,6 +21,7 @@
+ #include "qemu/error-report.h"
+ #include "exec/cputlb.h"
+ #include "exec/target_page.h"
++#include "exec/watchpoint.h"
+ #include "hw/core/cpu.h"
  
-+#include "cpu.h"
-+
- //#define DEBUG_PCALL
+ /* Add a watchpoint.  */
+diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
+index a9a619ba6b..473ee2af38 100644
+--- a/target/arm/debug_helper.c
++++ b/target/arm/debug_helper.c
+@@ -13,6 +13,7 @@
+ #include "cpregs.h"
+ #include "exec/exec-all.h"
+ #include "exec/helper-proto.h"
++#include "exec/watchpoint.h"
+ #include "system/tcg.h"
  
- #ifdef DEBUG_PCALL
-@@ -31,6 +33,8 @@
- # define LOG_PCALL_STATE(cpu) do { } while (0)
- #endif
- 
-+int cpu_mmu_index_kernel(CPUX86State *env);
-+
- /*
-  * TODO: Convert callers to compute cpu_mmu_index_kernel once
-  * and use *_mmuidx_ra directly.
+ #ifdef CONFIG_TCG
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index af46c7a392..0b74b9a375 100644
+index dba1b3ffef..af46c7a392 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -8669,22 +8669,6 @@ static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
-     return x86_mmu_index_pl(env, env->hflags & HF_CPL_MASK);
- }
+@@ -35,6 +35,7 @@
+ #include "standard-headers/asm-x86/kvm_para.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/i386/topology.h"
++#include "exec/watchpoint.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "system/reset.h"
+ #include "qapi/qapi-commands-machine-target.h"
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 70f632a36f..6cb561c632 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -7,7 +7,7 @@
+ #include "hw/i386/x86.h"
+ #include "kvm/kvm_i386.h"
+ #include "hw/xen/xen.h"
+-
++#include "exec/watchpoint.h"
+ #include "system/kvm.h"
+ #include "system/kvm_xen.h"
+ #include "system/tcg.h"
+diff --git a/target/i386/tcg/system/bpt_helper.c b/target/i386/tcg/system/bpt_helper.c
+index be232c1ca9..08ccd3f5e6 100644
+--- a/target/i386/tcg/system/bpt_helper.c
++++ b/target/i386/tcg/system/bpt_helper.c
+@@ -21,6 +21,7 @@
+ #include "cpu.h"
+ #include "exec/exec-all.h"
+ #include "exec/helper-proto.h"
++#include "exec/watchpoint.h"
+ #include "tcg/helper-tcg.h"
  
--static int x86_mmu_index_kernel_pl(CPUX86State *env, unsigned pl)
--{
--    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
--    int mmu_index_base =
--        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
--        (pl < 3 && (env->eflags & AC_MASK)
--         ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX);
+ 
+diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+index bfcc695de7..4d8faaddee 100644
+--- a/target/ppc/cpu.c
++++ b/target/ppc/cpu.c
+@@ -22,6 +22,7 @@
+ #include "cpu-models.h"
+ #include "cpu-qom.h"
+ #include "exec/log.h"
++#include "exec/watchpoint.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "mmu-hash64.h"
+ #include "helper_regs.h"
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index f81cb680fc..17f0f3d3ff 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -40,7 +40,7 @@
+ #include "qemu/cutils.h"
+ #include "disas/capstone.h"
+ #include "fpu/softfloat.h"
 -
--    return mmu_index_base + mmu_index_32;
--}
--
--int cpu_mmu_index_kernel(CPUX86State *env)
--{
--    return x86_mmu_index_kernel_pl(env, env->hflags & HF_CPL_MASK);
--}
--
- static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
++#include "exec/watchpoint.h"
+ #include "helper_regs.h"
+ #include "internal.h"
+ #include "spr_common.h"
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index 9db4048523..fea989afe9 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -30,6 +30,7 @@
+ #include "trace.h"
+ #include "exec/exec-all.h"
+ #include "exec/helper-proto.h"
++#include "exec/watchpoint.h"
+ #include "system/cpu-timers.h"
+ 
+ /*
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index c689e11b46..e660c69f60 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -27,6 +27,7 @@
+ #include "target/s390x/kvm/pv.h"
+ #include "system/hw_accel.h"
+ #include "system/runstate.h"
++#include "exec/watchpoint.h"
+ 
+ void s390x_tod_timer(void *opaque)
  {
-     X86CPU *cpu = X86_CPU(cs);
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 71962113fb..f4370202fe 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -128,6 +128,22 @@ int get_pg_mode(CPUX86State *env)
-     return pg_mode;
- }
+diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
+index ac733f407f..1d51043e88 100644
+--- a/target/s390x/tcg/excp_helper.c
++++ b/target/s390x/tcg/excp_helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/cputlb.h"
+ #include "exec/exec-all.h"
++#include "exec/watchpoint.h"
+ #include "s390x-internal.h"
+ #include "tcg_s390x.h"
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/xtensa/dbg_helper.c b/target/xtensa/dbg_helper.c
+index 163a1ffc7b..c4f4298a50 100644
+--- a/target/xtensa/dbg_helper.c
++++ b/target/xtensa/dbg_helper.c
+@@ -31,6 +31,7 @@
+ #include "exec/helper-proto.h"
+ #include "qemu/host-utils.h"
+ #include "exec/exec-all.h"
++#include "exec/watchpoint.h"
+ #include "system/address-spaces.h"
  
-+static int x86_mmu_index_kernel_pl(CPUX86State *env, unsigned pl)
-+{
-+    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
-+    int mmu_index_base =
-+        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-+        (pl < 3 && (env->eflags & AC_MASK)
-+         ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX);
-+
-+    return mmu_index_base + mmu_index_32;
-+}
-+
-+int cpu_mmu_index_kernel(CPUX86State *env)
-+{
-+    return x86_mmu_index_kernel_pl(env, env->hflags & HF_CPL_MASK);
-+}
-+
- /* return non zero if error */
- static inline int load_segment_ra(CPUX86State *env, uint32_t *e1_ptr,
-                                uint32_t *e2_ptr, int selector,
+ void HELPER(wsr_ibreakenable)(CPUXtensaState *env, uint32_t v)
 -- 
 2.43.0
 
