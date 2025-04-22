@@ -4,88 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9CCC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 15:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6598C369D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 15:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7F3J-0000a8-Li; Tue, 22 Apr 2025 10:56:50 -0400
+	id 1u7FGE-0005bR-FH; Tue, 22 Apr 2025 11:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7F36-0008EZ-0v
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:56:36 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7F34-0005I2-1r
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:56:35 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43ea40a6e98so48016455e9.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 07:56:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745333792; x=1745938592; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oZGQgvHwQWyT1UXG05e/L40v1r7rbpXm4CP7YDA65nc=;
- b=IGIH7LQtc+HVAqEBnbPS9VOyPF17gKel2VLFAZwhjnsroT5EQq4+COzuq42bc1EjYv
- 40DmQf3FkIAxIot5BIfTcmBnfOeeHxt7LWeNzRavMQ5hNXCRmg145flnPv4b2ofLBkij
- ipk4LayLN8HiEGEQWv9M4rWlh4ua0CpEGbFQPrNi8+cl/5val2x2EZI2abR8lOVHy7UE
- BzaoAmEgqp+Ba5wnKOGLqSAfwdq/VpscFxaqMnrLDXCoLh8X3IRgVRYmI7+kJvMChLRF
- VFNfFftp45rOqRuQ41SXUvhU6t4//Pzh6pLNBEAO9RrctpMGApoA5YXVj3P6ycAvNsaH
- lrkw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7FGC-0005Zo-NW
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 11:10:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7FG9-0007Ir-Gt
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 11:10:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745334603;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=/nbIa040A8xza9H3Pnbs8b0YdIX8O/u3eKJFV6DWU9s=;
+ b=geTYoSFhz7tGumwTQ8Grc7iqEy57lz6o846ycPOTwAU3MiqSQOyxe3BnERwxOX1//IsrKo
+ pBtJxaMdUHeAVLIe8LvbVcsohZudkoLzkMa5WL/m3LlLTFa1Ca8++mwBchs+8rouX3v31y
+ ScT5u9yhngGIptwu5Dbuwnb4jMmmlhM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-629-F73MoE83PrGrcvxSDPNj2Q-1; Tue, 22 Apr 2025 11:10:02 -0400
+X-MC-Unique: F73MoE83PrGrcvxSDPNj2Q-1
+X-Mimecast-MFC-AGG-ID: F73MoE83PrGrcvxSDPNj2Q_1745334601
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39131851046so1540496f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 08:10:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745333792; x=1745938592;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oZGQgvHwQWyT1UXG05e/L40v1r7rbpXm4CP7YDA65nc=;
- b=idhfmSY3hOUJnx0K0mi6ZVLFVgrI8XtGPhmyGxk/mAJAy/5T8VL6/dSgC2HOXYtSQj
- zujKRfoXtdg+7U3gVGA6Hl17OKWeuSZyXPaPped6UkrfybPTZoNor1qOPCdS5Lp/PTwm
- nQrzXJieIVOJ6q7CvlViyLwb5MqUKtLGXSOC5MGnVz5beSUWn4cVSA6Q0kSPRrZ58w2p
- jCeyd/iSmCJtwEjLb5CFX2lXYB2wgMafIEkA9sGkO8uGz5sNPkCJtN0HtG0I0tm4cNTe
- fEHMjuMR8XJUNR91N2BiRqXGoL+4x8cIjdOUDod7K4KmFo+3ndhkK5Otow0KWKtIS57n
- C0fw==
-X-Gm-Message-State: AOJu0YwoA8Am3ISZGJRgeF2I02ahPJ6pPKL+tjPy1soLIGxkCKoiswuZ
- uiEdybgS8lOiMIEZ2nXWht5Ci4hDpTKjunpc+w/UKSqtNW+pfh6bSOre6klgtiohbfkEGyETWZS
- y
-X-Gm-Gg: ASbGnctysRJnXuLMuMzGxJuenXtIqQFXQoTNYjyY9sMLv2xPPMfkokBGAxeMwi5N5A7
- EgJMqaYvNCwo1Ro8wa2Zhsp28jLKij6n20uKguwqB2BDuX+wIThPqqCYNd64KJsh74cSbs6ecYq
- 3wNeGv78wQzRabQ7xpFWspFe1RZNv4A65ImHI0zZG/j04hW20KJJfinww/c1buqU8Z7b53TcAfK
- FyvT4/IqQC9rQD1SqPKdHcVRwHDavC7+q59ym/tZmK2FnBgfLxJF4ZJIbx/hVGGQAzIQHKxyKtt
- ba8jM502rLlPUItxldKSmeZkraadFxSVvjmJZQDHkDAss/PPuvMGnfhFDdjEuNXhfcgRW1P5Mc0
- bd8m2gB6SZ4VsWhY=
-X-Google-Smtp-Source: AGHT+IHlKhq7bTV/w/YkvEK+/CC8LEH+1P+r2wRxaxdVIz2qU2NX/p4+eMr8El0rldtuRRVviGG5hw==
-X-Received: by 2002:a05:600c:4e4c:b0:43c:f470:7605 with SMTP id
- 5b1f17b1804b1-4406ab99615mr151313955e9.12.1745333791869; 
- Tue, 22 Apr 2025 07:56:31 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5ace47sm175128875e9.15.2025.04.22.07.56.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 22 Apr 2025 07:56:31 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH v4 19/19] hw/arm/virt: Get default CPU type at runtime
-Date: Tue, 22 Apr 2025 16:55:01 +0200
-Message-ID: <20250422145502.70770-20-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250422145502.70770-1-philmd@linaro.org>
-References: <20250422145502.70770-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1745334601; x=1745939401;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/nbIa040A8xza9H3Pnbs8b0YdIX8O/u3eKJFV6DWU9s=;
+ b=sniwYg+IiTkwCufeaPb6tHXLq2sAkw5+DKz7WQl1aDGKvFLj6j1zYoqG2cQ1MA8LRx
+ a0pUG+XdJaHhV4kaRYeCwrNztdBU6SJGL1z2gzKuHLSwq00eHRU0KVxcK61HjxiP2if4
+ p0heNgk4qNVFUFXB1ZsB9sd4wPP+8O/ByedzpOHXUake38U/kqlgc0vyV9XqN4tXyj4u
+ X0p8s1RQOgug/BKj0aBrSLa8cbdYhXfh13Uajdz0yDThZG7QkfHu3M2TO2GFE8EPfcQS
+ CSaQPDn2t/fl7ouueMQyxCsbc15V4GT2RY6kbWcpH6gME0KPkNKeKAWal4La+f8VKC8R
+ T2eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWicBxroCf3TOIgAVG+jWZAcqKs1tPzdoj2g1U5aOFoM970xr5cQxr7NDmjNqe7sSnyyRYyq0FWpE+O@nongnu.org
+X-Gm-Message-State: AOJu0YwG7E92bYGy+le6vKTQbhcdqFm7jm0YmLJ7JNt5OzStYdOv2YCx
+ CUT7KKlTPFji8B3hx4Y5PZ6cqEsyDNP1bk70qVHD8qhlqYsv9/0caham1v7LvMgYNnp9qimzB1q
+ HhfUamRwDTysjBELoUWrj5lnKkwE+uXmiSYJfGOSYusS7VDgDYaFF
+X-Gm-Gg: ASbGncsR9cnvlU3wppiZtjmooLvpAntAnq2icYVm8mzGDvrEBZ1NYfp3pJNaNfEgWk/
+ 6pIMe7qETx/DgBMNMA2PJggtYy3PwWhAPOOB4GPt1Jk8MYwDolYbgcFMsvwyo9G0cztSb9aX6mg
+ HMtyZZOnn1R38A8UtFKNOLSYz8VnE5kawEMb+xU2R4U1Ir7M1Grcn4mDVWYfcwcAOigOMBadzDQ
+ VVssh2x2LO7YV36n0fMzAxwASj9cnJqjhuvYIiO4Opw3yUJp2XgHQ22VO7u8qMJvbrrC9NXH0S+
+ 0obWt48VL0kA3dTIIBu0kuzmSSyrd0ixMv5+xLb8r+216A==
+X-Received: by 2002:a5d:59ab:0:b0:391:2ab1:d4c2 with SMTP id
+ ffacd0b85a97d-39efbacdb68mr11492789f8f.37.1745334600885; 
+ Tue, 22 Apr 2025 08:10:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYzoB44/wkgg6eXkwvpiAH/WnzIbL/Iu1GnN3GA5lnm6z75aGFlS9zlDp6kjwwBMTsuAOaVw==
+X-Received: by 2002:a5d:59ab:0:b0:391:2ab1:d4c2 with SMTP id
+ ffacd0b85a97d-39efbacdb68mr11492755f8f.37.1745334600475; 
+ Tue, 22 Apr 2025 08:10:00 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
+ [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa4330bfsm15511894f8f.23.2025.04.22.08.09.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Apr 2025 08:10:00 -0700 (PDT)
+Message-ID: <5a526ecf-d62d-46c8-9881-fdec381693e3@redhat.com>
+Date: Tue, 22 Apr 2025 17:09:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/3] target/s390x: Return UVC cmd code, RC and RRC
+ value when DIAG 308 Subcode 10 fails to enter secure mode
+To: Janosch Frank <frankja@linux.ibm.com>, Gautam Gala <ggala@linux.ibm.com>, 
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Steffen Eiden <seiden@linux.ibm.com>
+References: <20250417123756.729132-1-ggala@linux.ibm.com>
+ <20250417123756.729132-4-ggala@linux.ibm.com>
+ <7d812276-9f93-4fbd-90d4-b5d1cdd8c63b@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <7d812276-9f93-4fbd-90d4-b5d1cdd8c63b@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,49 +157,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer MachineClass::get_default_cpu_type() over
-MachineClass::default_cpu_type to get CPU type,
-evaluating TCG availability at runtime calling
-tcg_enabled().
+On 22/04/2025 15.17, Janosch Frank wrote:
+> On 4/17/25 2:37 PM, Gautam Gala wrote:
+>> Extend DIAG308 subcode 10 to return the UVC RC, RRC and command code
+>> in bit positions 32-47, 16-31, and 0-15 of register R1 + 1 if the
+>> function does not complete successfully (in addition to the
+>> previously returned diag response code in bit position 47-63).
+>>
+>> Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
+>> ---
+> 
+> [...]
+> 
+>> +void s390_pv_inject_reset_error(CPUState *cs,
+>> +                                struct S390PVResponse pv_resp)
+>>   {
+>>       int r1 = (cs->kvm_run->s390_sieic.ipa & 0x00f0) >> 4;
+>>       CPUS390XState *env = &S390_CPU(cs)->env;
+>> +    union {
+>> +        struct {
+>> +            uint16_t pv_cmd;
+>> +            uint16_t pv_rrc;
+>> +            uint16_t pv_rc;
+>> +            uint16_t diag_rc;
+>> +        };
+>> +        uint64_t regs;
+>> +    } resp = {.pv_cmd = pv_resp.cmd,
+>> +              .pv_rrc = pv_resp.rrc,
+>> +              .pv_rc = pv_resp.rc,
+>> +              .diag_rc = DIAG_308_RC_INVAL_FOR_PV};
+>> +
+> 
+> @Thomas: Is the formatting of the assignments correct or should there be no 
+> assignment on lines containing "{}"?
+> 
+> Checkpatch is happy, though personally I find it hard to read.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-This removes the last use of CONFIG_TCG in hw/arm/.
----
- hw/arm/virt.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+I think I'd rather have the ".pv_cmd = ..." start on the next line.
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4e11272a3ac..df8dda812cc 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3131,6 +3131,12 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
-     return requested_ipa_size;
- }
- 
-+static const char *virt_get_default_cpu_type(const MachineState *ms)
-+{
-+    return tcg_enabled() ? ARM_CPU_TYPE_NAME("cortex-a15")
-+                         : ARM_CPU_TYPE_NAME("max");
-+}
-+
- static GSList *virt_get_valid_cpu_types(const MachineState *ms)
- {
-     GSList *vct = NULL;
-@@ -3188,11 +3194,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-     mc->minimum_page_bits = 12;
-     mc->possible_cpu_arch_ids = virt_possible_cpu_arch_ids;
-     mc->cpu_index_to_instance_props = virt_cpu_index_to_props;
--#ifdef CONFIG_TCG
--    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
--#else
--    mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
--#endif
-+    mc->get_default_cpu_type = virt_get_default_cpu_type;
-     mc->get_valid_cpu_types = virt_get_valid_cpu_types;
-     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
-     mc->kvm_type = virt_kvm_type;
--- 
-2.47.1
+  Thanks
+   Thomas
+
 
 
