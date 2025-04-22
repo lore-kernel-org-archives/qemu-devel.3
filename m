@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C641FC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11248C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JLo-0000pq-8d; Tue, 22 Apr 2025 15:32:13 -0400
+	id 1u7JIY-0002XN-Vm; Tue, 22 Apr 2025 15:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLU-0008RK-7l
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:52 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1u7JII-0002St-QE
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:34 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLR-0006aX-As
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:51 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-22438c356c8so59088945ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:31:48 -0700 (PDT)
+ id 1u7JIG-0006BU-O1
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:34 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-af28bc68846so4772653a12.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350307; x=1745955107; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350111; x=1745954911; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D18VcATJhF8EFEqTXXDGcua3PJA4kTwRczbppkM1bEY=;
- b=PNMp0MPNJsnzvWgo21PNpCubqA6bxV4oTfzHnlnuSEwetVgDKIaaBCbrXPCdoAJKxT
- KS+MnKKj2Cy43XbR49KOvY1nStkV8y+0jYJkCSFgPfbw1Tf9Kf1qnHAeXhalLCQlaxnV
- D3eJxuiSr66NjKAy6DkcV/8l4Frl1zQFRYu0h2ekQRWDUeLDWrU9m1hlsYqQocLl4UGB
- avtqbceLScQPy0j6BFVfopeZgYavaN/ZYUKx64eLD0verB6pc+FFRmwsXWecXtYbKEXA
- tYBJT0gl6S7a9EO8ZtTOIzy3fXCV6sG/sh7ofyBfIs8ZzVOCREwb76KZ532HpeoFt1Cl
- fuIA==
+ bh=I6MDZmD8wHi337leE/VPRqxkP9hRcv8+ycuZ+hH6Uq0=;
+ b=NrD1VnDp844ED4uF21HdG7bwQY3sQqHBsHeeNt1RgbjwJ5cuYFwv6lXnS5DHtHoPmL
+ nFePIGgTLBt7VhAJ4uBEPeLHwhO3xk4PI/XM08At4r/VTw3D3WcCKE2hNQZD7vXYNd25
+ Urw9s2HTOdi4cihwDk00PQzsXowuqVd2jVyFabaJt1zTLamhRJQu5bEcKjHabcN+ZYND
+ 4mxIsF6AVcEUskhYCOVWcf02gG9/8RNNjkjIO89kW3m3mQgbeU7Cxc8OoIeVYoLN9J0K
+ 2VaC7Xm8tRN1hTEA/9Nl3rY2E1o+Vtu6Vx0ofQzcbw/fNzzqYkxqkv1bbnYY0JEt1/Lo
+ wnyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350307; x=1745955107;
+ d=1e100.net; s=20230601; t=1745350111; x=1745954911;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D18VcATJhF8EFEqTXXDGcua3PJA4kTwRczbppkM1bEY=;
- b=cTtLCCOPYMsWk6Tt/pdWubuTnxNsPQdGyq9sDM6kzdC54g7deznjAMz12PXaryQWfw
- ZKVFIk04wgIRKYLmntXaz4V+vufRx0Kd02JbGkzOlP/lmFRzmEc8MNERcTFS8ilFC8Gd
- wloR4R5l96ujGanx351VTc/nE2HlPG/owmV+mujhJqBP3nHN/z/SZzA3KZ2uoXC1TfYZ
- u2mej97qJ/rWQfZWrj08dZCcgyK0K73C8RlhZuNTlY5ctYo4lY6E8wSloDR7ntBt3WOk
- 2UYRtkU1WHJaJbRvrFwfgsjX0JX5ku575UmqJN9pIHi9jjTbF8VonSMFZDu6HCGL9kP7
- vYFg==
-X-Gm-Message-State: AOJu0YwdzDiLTV4ugAgNOtbzI3T5mx7XQ/2PlwNS1W60R3IQshsufWmq
- 6Dg9CKq5N14xISewo6Iz6eD8ABpJprgfEYkzQVCfIQ0tZ5NwIDmq5p9HQbFN2UMlA4JXsy7uP+T
- Y
-X-Gm-Gg: ASbGncuXmNiogWjqBJo+RjRsqQHExBVEHtwgKHgfsEcG7kBZqOAGps+jAgKFS/hkrae
- 6h5utzWWgiAw6i7bqpc2l2a6ziAwaqAg8N7s0ZoAYKolUpfmsAuvUu7uGqu2tigRKr95oHr5lMD
- KWFNUzdKIajzkQf97fdF61VYwnTSQHKwQglx8IOmMATpIc766gSJD/tkDGMnk56ZRmBXAvQ6+db
- GDqoC3MkHYUVljxRaAflFh6dCcU6nt58d5alpnRAFL+NVr8fAV+aCZ6xK9H3xliPRsZe2Y+lZiE
- D09V9ntG0CJakH9mRFjlrlgiBaTQKBA+lGxl+jYJGZvCzIX2gh2zqt0zxhmNfnzhfo+ZMUinlX8
+ bh=I6MDZmD8wHi337leE/VPRqxkP9hRcv8+ycuZ+hH6Uq0=;
+ b=sELbvNVrdBFypm8pJ9X0I3IdorrH2VznETiy1wlNJH82/ortNMFlTwdZ0EYDr2A/To
+ t2OEPXMQDf6qG5FTsizfgvsME+tkHlYlUCjayA7dE8SwhLCCOf5IxCJow+05NTWY1Rug
+ 7GSTlFO+7MjUPQsqWu+TBWndfqaVQwBRpF/NEHYbnyk3aBFQGk4d4/lKEHmSu0Wy0BHt
+ LMMYw/A83WNIk9aq0ws5DSuI/JgDTZZ3fZwj9GVS/iDdJxLeGRZWtLc4fEnPWj+OC2Ae
+ F/moH7D7RQshZBmBsknOhXtSjAb+Sbz+QwYwbCDFsi0qYMd9zL97Qjn0+vuCEIJC/v9U
+ dQ7g==
+X-Gm-Message-State: AOJu0Yz0GvlRJu8Hn+RpHFiCKIyW9m0McXTWYX8i72VtlC6k0TsR+s/o
+ 3rWyp2uzeCtbcDCkelizFDe5A24+LgJBnGGKuPoUpiI2C59lSfNd1Ib7BxMcpQfgzdDrK5/Iy/Y
+ l
+X-Gm-Gg: ASbGncs5pp0I/qMYlnPCFlu3wj0EI4qMyRdj/Mn34BJ21wyPeD3H8HnhAJs9+FBbY1Z
+ jb5Knf7d/ULtbGFgQ8TeJuowAEbr0mg2gPVsI1x+SIkHa29rhKLSppGHwN3VdkTmU+eFpYyWFZe
+ Y+x2tKYYsSb/YX6yScx6zGUTzSKA9sNhg9U0CpYJs4oh7am6ZmGDtDV6ZuGaMs/2cXc3C9lYJMW
+ OrSEUgdSahNTU9ZthGkL7uxIkEB26+gYbnXHDage8uPnvQmWOIVkFwzZPOAhPrzktI4MZjkmfsF
+ 7yeRjlgA/zlYeA9a2i/abhC8GIAkA9QSA5hWGPmAk5tiFfnwMNhjxbYu+YCKgTAoDSaah43U2QE
  =
-X-Google-Smtp-Source: AGHT+IFi2gOqrZWXIZ2s3xc4AD/2pNQDdy4Sfmt/zXrxwzlOuT5NRtXB9ivtXdWU20g5oHSjoZhPFw==
-X-Received: by 2002:a17:903:11c6:b0:215:b75f:a1cb with SMTP id
- d9443c01a7336-22c53573db0mr239222625ad.9.1745350307616; 
- Tue, 22 Apr 2025 12:31:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGi0E0YpGEHYfPPMJp1dAZFtZuE8xAbdOe0QMG8BuUgiTtDzyogLI5eVo8/N7+/V6z6ouVjGg==
+X-Received: by 2002:a17:90b:4ecf:b0:2ff:62f3:5b31 with SMTP id
+ 98e67ed59e1d1-3087bcc8b16mr22972171a91.29.1745350111082; 
+ Tue, 22 Apr 2025 12:28:31 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.31.47
+ 98e67ed59e1d1-3087df21278sm9146865a91.29.2025.04.22.12.28.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:31:47 -0700 (PDT)
+ Tue, 22 Apr 2025 12:28:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH 040/147] exec: Restrict memory-internal.h to system/
-Date: Tue, 22 Apr 2025 12:26:29 -0700
-Message-ID: <20250422192819.302784-41-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 016/147] include/exec/memory: move devend functions to
+ memory-internal.h
+Date: Tue, 22 Apr 2025 12:26:05 -0700
+Message-ID: <20250422192819.302784-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,103 +103,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Only file units within the system/ directory need access to
-"memory-internal.h". Restrict its scope by moving it there.
+Only system/physmem.c and system/memory.c use those functions, so we can
+move then to internal header.
 
-The comment from commit 9d70618c684 ("memory-internal.h:
-Remove obsolete claim that header is obsolete") is now obsolete,
-remove it.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250317161329.40300-3-philmd@linaro.org>
+Message-ID: <20250317183417.285700-17-pierrick.bouvier@linaro.org>
 ---
- {include/exec => system}/memory-internal.h | 6 ------
- system/memory.c                            | 4 ++--
- system/physmem.c                           | 3 ++-
- MAINTAINERS                                | 2 +-
- 4 files changed, 5 insertions(+), 10 deletions(-)
- rename {include/exec => system}/memory-internal.h (88%)
+ include/exec/memory-internal.h | 19 +++++++++++++++++++
+ include/exec/memory.h          | 18 ------------------
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/include/exec/memory-internal.h b/system/memory-internal.h
-similarity index 88%
-rename from include/exec/memory-internal.h
-rename to system/memory-internal.h
-index c75178a3d6..085e81a9fe 100644
+diff --git a/include/exec/memory-internal.h b/include/exec/memory-internal.h
+index b729f3b25a..c75178a3d6 100644
 --- a/include/exec/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -11,12 +11,6 @@
-  *
-  */
++++ b/include/exec/memory-internal.h
+@@ -43,5 +43,24 @@ void address_space_dispatch_free(AddressSpaceDispatch *d);
  
--/*
-- * This header is for use by exec.c, memory.c and accel/tcg/cputlb.c ONLY,
-- * for declarations which are shared between the memory subsystem's
-- * internals and the TCG TLB code. Do not include it from elsewhere.
-- */
--
- #ifndef MEMORY_INTERNAL_H
- #define MEMORY_INTERNAL_H
- 
-diff --git a/system/memory.c b/system/memory.c
-index 6a5d853071..7e2f16f4e9 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -24,8 +24,6 @@
- #include "qemu/qemu-print.h"
- #include "qom/object.h"
- #include "trace.h"
--
--#include "exec/memory-internal.h"
- #include "system/ram_addr.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
-@@ -35,6 +33,8 @@
- #include "migration/vmstate.h"
- #include "system/address-spaces.h"
- 
-+#include "memory-internal.h"
+ void mtree_print_dispatch(struct AddressSpaceDispatch *d,
+                           MemoryRegion *root);
 +
- //#define DEBUG_UNASSIGNED
- 
- static unsigned memory_region_transaction_depth;
-diff --git a/system/physmem.c b/system/physmem.c
-index 307d0764b6..16cf557d1a 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -66,7 +66,6 @@
- #include "qemu/main-loop.h"
- #include "system/replay.h"
- 
--#include "exec/memory-internal.h"
- #include "system/ram_addr.h"
- 
- #include "qemu/pmem.h"
-@@ -88,6 +87,8 @@
- #include <daxctl/libdaxctl.h>
++/* returns true if end is big endian. */
++static inline bool devend_big_endian(enum device_endian end)
++{
++    QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
++                      DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
++
++    if (end == DEVICE_NATIVE_ENDIAN) {
++        return target_words_bigendian();
++    }
++    return end == DEVICE_BIG_ENDIAN;
++}
++
++/* enum device_endian to MemOp.  */
++static inline MemOp devend_memop(enum device_endian end)
++{
++    return devend_big_endian(end) ? MO_BE : MO_LE;
++}
++
  #endif
+ #endif
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index fc07f69916..2f84a7cfed 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3138,24 +3138,6 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
+ MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
+                               uint8_t c, hwaddr len, MemTxAttrs attrs);
  
-+#include "memory-internal.h"
-+
- //#define DEBUG_SUBPAGE
- 
- /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e0dc64aa3e..c7083ab1d9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3116,7 +3116,7 @@ F: system/ioport.c
- F: system/memory.c
- F: system/memory_mapping.c
- F: system/physmem.c
--F: include/exec/memory-internal.h
-+F: system/memory-internal.h
- F: scripts/coccinelle/memory-region-housekeeping.cocci
- 
- Memory devices
+-/* returns true if end is big endian. */
+-static inline bool devend_big_endian(enum device_endian end)
+-{
+-    QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
+-                      DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
+-
+-    if (end == DEVICE_NATIVE_ENDIAN) {
+-        return target_words_bigendian();
+-    }
+-    return end == DEVICE_BIG_ENDIAN;
+-}
+-
+-/* enum device_endian to MemOp.  */
+-static inline MemOp devend_memop(enum device_endian end)
+-{
+-    return devend_big_endian(end) ? MO_BE : MO_LE;
+-}
+-
+ /*
+  * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
+  * to manage the actual amount of memory consumed by the VM (then, the memory
 -- 
 2.43.0
 
