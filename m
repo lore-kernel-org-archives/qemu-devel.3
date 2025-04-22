@@ -4,92 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87801C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 09:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E141FC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 10:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u79lv-0000kp-MI; Tue, 22 Apr 2025 05:18:31 -0400
+	id 1u7B5S-0002Lt-SW; Tue, 22 Apr 2025 06:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u79lk-0000eJ-7Y
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 05:18:22 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u79lg-0007ML-Hv
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 05:18:18 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-39c0e0bc733so3901489f8f.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 02:18:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745313494; x=1745918294; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WLncodT6X0UfEqGRRKm0DfTeBUkchSS2NhccuBqFXcM=;
- b=EdWBcfjWeTSwzK3t5CX7P+8KMNpD2eNwBPA/AIKsbHvx5dv3biFUlzaz94TgGak4ap
- sjYTQJBP/giV30bDYCONU15LGgWLdO0D+iTHMK4xPP0SNjwX7FBbW77s/9Gq7jXEfo3b
- XWYPwnCPOqFwcBF6xEpURPU7++IRMQoGMPdgcdSPFNOxD0cctGuFBfAENk/6PashPDyV
- 5xts6HQepQNVxMk9Qim7dIF03dH1Sahj/ewEy5oBmNIMMfFo1EzYWezgGTAf99uh4v0e
- 49z8VrXl5PDJlAwf7u5gUaMgTVuaL3JLcPLSuTa/1u0Q3/UzEedSEcByOfB56E/G4uQh
- 3vmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745313494; x=1745918294;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WLncodT6X0UfEqGRRKm0DfTeBUkchSS2NhccuBqFXcM=;
- b=f+I1hwZoGrA07z7bgrQabYidyZ4h92UwCb9DxZuseEMiBDMOVFUzHhTSY7Y3QtUZTL
- IU6967dUbYTFxiVQMjBThw92zBpH1XADIFohmozZ8sKKylW7xbn2tajXmhW8Nvi0XezH
- DqiJVoSeEOXRSu5vwcTbdZ9NUg23uqpoRHFJOmg9cFEU7VTDpGAXYDdDIvACtEuST7VU
- uCJXqA2OcmKQc2cxSOhH3PaT2O8mPl4YjgtSVMXVwiCU0QN1T9rH/viNTnV+XRRYII3M
- wv3SSPLCtc6gpWqDCT6+bXpvKebTubLfiVReEk0R6SP2ZBN/jfAKpG6k6Wne4cBwRDrd
- 25/A==
-X-Gm-Message-State: AOJu0Yz11P4f+jr7CBH43Sb+KxGObo72oqwPL22rUJzZDDuITBhD8RDj
- lGUudlvaXjtN9CxTO82vF6q2CLS2kP3OQgTqMg/1tujkkM9Ulz+qPv+rF2FE+K0=
-X-Gm-Gg: ASbGncufDYyz+Ah8dVZlo3F393ugukssF43d84vrVD5NErhUUJ9T0uILcoa/6Zy7k4R
- Xs3ZkaKsGvCNlv2Vl4LdGH94Kr+D0Kzx4rgBuNKAju9OdgXGdoE0x6g21QawhhtSQbqenHiUW4z
- phMGMVDEp9eX9i4skTgNXmS8rO2a74246da48TPPsgHLYbuEkvDjOcYBc/OIe5eQtjruQHjISU4
- 2vEOSv9PYy/cPg28qnYk+jcAfUbgOpe98q7M/p+jaKTJYgMOgGXUjJY0FA0qLL0CxWPZUKcChu5
- KK/3alIjOV/i8Mi8JKc/EoG81pIvvACJwaXBRfNDWflKZRxg8dzkewunZaQNDtIk4IOC1rbmJ/h
- NQRO+0O4V
-X-Google-Smtp-Source: AGHT+IF/OJVLU7n+jeZDxNEONNyw84wOV6rnWGuQqZjTcRl+sxuYRRavkZd+c0hukhMtQF3POTvWxg==
-X-Received: by 2002:a05:6000:250f:b0:39c:266c:400a with SMTP id
- ffacd0b85a97d-39efbb021eamr11519777f8f.50.1745313494542; 
- Tue, 22 Apr 2025 02:18:14 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa433191sm14764504f8f.31.2025.04.22.02.18.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 02:18:14 -0700 (PDT)
-Message-ID: <a84a1393-9ff7-45e9-b365-63075ca25e81@linaro.org>
-Date: Tue, 22 Apr 2025 11:18:13 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u7B5Q-0002LL-Sk
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 06:42:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u7B5M-00020O-NM
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 06:42:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745318559;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=8HmyEUkva3SA6YY14SC0fhvTGRIrLQvLkkZHXsO3Iy0=;
+ b=XXU8BT8/BQDvjKI70LBEzNPSVEMJafa0FJi65xurxfqlJtBGj0B8V1TSpmsR/GvfcnXcNk
+ X5SjJ4DO1wSE1/MUM57O04mdIEVCD20O8NCWW6xO83V6low5ROBJMLt+qG11nq6qdVe1UY
+ nwMwsCLJSxhIArO5esbu8TN/EI0UQ3E=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-sYu34K-dP7Ca0taI30bHhw-1; Tue,
+ 22 Apr 2025 06:42:36 -0400
+X-MC-Unique: sYu34K-dP7Ca0taI30bHhw-1
+X-Mimecast-MFC-AGG-ID: sYu34K-dP7Ca0taI30bHhw_1745318555
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9EC819560AF; Tue, 22 Apr 2025 10:42:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.105])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5A201800378; Tue, 22 Apr 2025 10:42:32 +0000 (UTC)
+Date: Tue, 22 Apr 2025 11:42:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Nir Soffer <nirsof@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Jones <rjones@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v2] io: Increase unix socket buffers size on macOS
+Message-ID: <aAdylVf7RZVaTee3@redhat.com>
+References: <20250419231218.67636-1-nirsof@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 01/14] qapi: Rename TargetInfo structure as
- BinaryTargetInfo
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20250418172908.25147-1-philmd@linaro.org>
- <20250418172908.25147-2-philmd@linaro.org> <878qnsagfo.fsf@pond.sub.org>
- <b846a12d-bbe3-4a88-aecd-b62cd57d297d@linaro.org>
- <877c3c7ead.fsf@pond.sub.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <877c3c7ead.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250419231218.67636-1-nirsof@gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.692,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,85 +83,176 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 11:10, Markus Armbruster wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+On Sun, Apr 20, 2025 at 02:12:18AM +0300, Nir Soffer wrote:
+> On macOS we need to increase unix socket buffers size on the client and
+> server to get good performance. We set the socket buffers on macOS after
+> connecting or accepting a client connection.
 > 
->> On 22/4/25 07:55, Markus Armbruster wrote:
->>> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>>
->>>> The QAPI-generated 'TargetInfo' structure name is only used
->>>> in a single file. We want to heavily use another structure
->>>> similarly named. Rename the QAPI one, since structure names
->>>> are not part of the public API.
->>>>
->>>> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> ---
->>>>    qapi/machine.json          | 12 ++++++------
->>>>    hw/core/machine-qmp-cmds.c |  4 ++--
->>>>    2 files changed, 8 insertions(+), 8 deletions(-)
->>>>
->>>> diff --git a/qapi/machine.json b/qapi/machine.json
->>>> index a6b8795b09e..3246212f048 100644
->>>> --- a/qapi/machine.json
->>>> +++ b/qapi/machine.json
->>>> @@ -275,15 +275,15 @@
->>>>   { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams' }
->>>>    
->>>>   ##
->>>> -# @TargetInfo:
->>>> +# @BinaryTargetInfo:
->>>>   #
->>>> -# Information describing the QEMU target.
->>>> +# Information describing the QEMU binary target.
->>>
->>> What's "the QEMU binary target"?  The QEMU binary's target?
->>
->> For me 'qemu-system-aarch64' is a QEMU binary,
+> Testing with qemu-nbd shows that reading an image with qemu-img convert
+> from qemu-nbd is *11.4 times faster* and qemu-img cpu usage is *8.3 times
+> lower*.
 > 
-> Makes sense to me.
+> | qemu-img | qemu-nbd | time   | user   | system |
+> |----------|----------|--------|--------|--------|
+> | before   | before   | 12.957 |  2.643 |  5.777 |
+> | after    | before   | 12.803 |  2.632 |  5.742 |
+> | before   | after    |  1.139 |  0.074 |  0.905 |
+> | after    | after    |  1.179 |  0.077 |  0.931 |
 > 
->>                                                 but for Pierrick and
->> Richard it is the QEMU target,
+> For testing buffers size I built qemu-nbd and qemu-img with send buffer
+> size from 64k to 2m. In this test 256k send buffer and 1m receive buffer
+> are optimal.
 > 
-> Make about as much sense to me as calling my /usr/bin/gcc "the GNU C
-> compiler target", i.e. none.  It's the GNU C compiler targeting x86_64.
+> | send buffer | recv buffer | time   | user   | system |
+> |-------------|-------------|--------|--------|--------|
+> |         64k |        256k |  2.233 |  0.290 |  1.408 |
+> |        128k |        512k |  1.189 |  0.103 |  0.841 |
+> |        256k |       1024k |  1.121 |  0.085 |  0.813 |
+> |        512k |       2048k |  1.172 |  0.081 |  0.953 |
+> |       1024k |       4096k |  1.160 |  0.072 |  0.907 |
+> |       2048k |       8192k |  1.309 |  0.056 |  0.960 |
 > 
->>                                 so I merged both names ¯\_(ツ)_/¯
+> Using null-co driver is useful to focus on the read part, but in the
+> real world we do something with the read data. I tested real world usage
+> with nbdcopy and blksum.
 > 
-> If it gets your patch merged...
+> I tested computing a hash of the image using nbdcopy, using 4 NBD
+> connections and 256k request size. In this test 1m send buffer size and
+> 4m receive buffer size are optimal.
 > 
->> This structure describes the static target configuration built into
->> a binary, i.e. TARGET_NAME=aarch64, TARGET_BIG_ENDIAN=false.
->>
->> For the forthcoming single/heterogeneous binary, we don't have a
->> particular restricted configuration in the binary.
->>
->> What about "Information describing the QEMU target configuration
->> built in a binary."?
+> | send buffer | recv buffer | time   | user   | system |
+> |-------------|-------------|--------|--------|--------|
+> |         64k |        256k |  2.832 |  4.866 |  2.550 |
+> |        128k |        512k |  2.429 |  4.762 |  2.037 |
+> |        256k |       1024k |  2.158 |  4.724 |  1.813 |
+> |        512k |       2048k |  1.777 |  4.632 |  1.790 |
+> |       1024k |       4096k |  1.657 |  4.466 |  1.812 |
+> |       2048k |       8192k |  1.782 |  4.570 |  1.912 |
 > 
-> That's better.  Here's my try: "Information on the target configuration
-> built into the QEMU binary."
+> I tested creating a hash of the image with blksum, using one NBD
+> connection and 256k read size. In this test 2m send buffer and 8m
+> receive buffer are optimal.
 > 
->>>   From the QMP user's point of view, perhaps "the QEMU process's target"
->>> would make more sense.
->>
->> So maybe ProcessTargetInfo is a better structure name.
+> | send buffer | recv buffer | time   | user   | system |
+> |-------------|-------------|--------|--------|--------|
+> |         64k |        256k |  4.233 |  5.242 |  2.632 |
+> |        128k |        512k |  3.329 |  4.915 |  2.015 |
+> |        256k |       1024k |  2.071 |  4.647 |  1.474 |
+> |        512k |       2048k |  1.980 |  4.554 |  1.432 |
+> |       1024k |       4096k |  2.058 |  4.553 |  1.497 |
+> |       2048k |       8192k |  1.972 |  4.539 |  1.497 |
 > 
-> QemuTargetInfo would sidestep binary vs. process.
+> In the real world tests larger buffers are optimal, so I picked send
+> buffer of 1m and receive buffer of 4m.
 
-Thank you!
+IIUC all your test scenarios have recv buffer x4 size of send buffer.
+
+Do you have any link / reference for the idea that we should be using
+this x4 size multiplier ? This feels rather peculiar as a rule.
+
+Can you show test result grid matrix for the incrementing these
+send/recv buffers independently ?
 
 > 
->> For heterogeneous target I suppose we'll return SYS_EMU_TARGET_HETERO
->> and we'll provide new QMP commands, possibly returning array of
->> ProcessTargetInfo.
+> This will improve other usage of unix domain sockets on macOS. I tested
+> only reading from qemu-nbd.
 > 
-> [...]
+> The same change for libnbd:
+> https://gitlab.com/nbdkit/libnbd/-/merge_requests/21
 > 
+> Signed-off-by: Nir Soffer <nirsof@gmail.com>
+> ---
+>  io/channel-socket.c | 32 ++++++++++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+> 
+> Changes since v1:
+> - Add UNIX_SOCKET_*_BUFFER_SIZE macros (Philippe)
+> - Handle both server and client sockets
+> - Add qio_channel_socket_set_buffers() helper to cleaner code
+> - Add tests results for qemu-img convert
+> - Add tests results for different buffer sizes
+> - Link to same change in libnbd
+> 
+> v1 was here:
+> https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg03081.html
+> 
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 608bcf066e..635c5c973d 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -21,6 +21,7 @@
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-visit-sockets.h"
+>  #include "qemu/module.h"
+> +#include "qemu/units.h"
+>  #include "io/channel-socket.h"
+>  #include "io/channel-util.h"
+>  #include "io/channel-watch.h"
+> @@ -37,6 +38,33 @@
+>  
+>  #define SOCKET_MAX_FDS 16
+>  
+> +/*
+> + * Apple recommends sizing the receive buffer at 4 times the size of the send
+> + * buffer. Testing shows that 1m send buffer and 4 MiB receive buffer gives
+> + * best throuput and lowest cpu usage.
+> + */
+> +#ifdef __APPLE__
+> +#define UNIX_SOCKET_SEND_BUFFER_SIZE (1 * MiB)
+> +#define UNIX_SOCKET_RECV_BUFFER_SIZE (4 * UNIX_SOCKET_SEND_BUFFER_SIZE)
+> +#endif /* __APPLE__ */
+> +
+> +static void qio_channel_socket_set_buffers(QIOChannelSocket *ioc)
+> +{
+> +#ifdef __APPLE__
+> +    if (ioc->localAddr.ss_family == AF_UNIX) {
+> +        int value;
+> +
+> +        /* This is a performance optimization; don't fail on errors. */
+> +
+> +        value = UNIX_SOCKET_SEND_BUFFER_SIZE;
+> +        setsockopt(ioc->fd, SOL_SOCKET, SO_SNDBUF, &value, sizeof(value));
+> +
+> +        value = UNIX_SOCKET_RECV_BUFFER_SIZE;
+> +        setsockopt(ioc->fd, SOL_SOCKET, SO_RCVBUF, &value, sizeof(value));
+> +    }
+> +#endif /* __APPLE__ */
+> +}
+> +
+>  SocketAddress *
+>  qio_channel_socket_get_local_address(QIOChannelSocket *ioc,
+>                                       Error **errp)
+> @@ -174,6 +202,8 @@ int qio_channel_socket_connect_sync(QIOChannelSocket *ioc,
+>      }
+>  #endif
+>  
+> +    qio_channel_socket_set_buffers(ioc);
+> +
+>      qio_channel_set_feature(QIO_CHANNEL(ioc),
+>                              QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
+>  
+> @@ -410,6 +440,8 @@ qio_channel_socket_accept(QIOChannelSocket *ioc,
+>      }
+>  #endif /* WIN32 */
+>  
+> +    qio_channel_socket_set_buffers(cioc);
+> +
+>      qio_channel_set_feature(QIO_CHANNEL(cioc),
+>                              QIO_CHANNEL_FEATURE_READ_MSG_PEEK);
+>  
+> -- 
+> 2.39.5 (Apple Git-154)
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
