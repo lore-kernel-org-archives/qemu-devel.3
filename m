@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FC2C369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FF9C369D3
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 12:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7CHM-00046T-73; Tue, 22 Apr 2025 07:59:08 -0400
+	id 1u7CHM-00046S-FT; Tue, 22 Apr 2025 07:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u7CHH-00045E-SW; Tue, 22 Apr 2025 07:59:03 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1u7CHH-00045C-PB; Tue, 22 Apr 2025 07:59:03 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u7CHF-0001jV-14; Tue, 22 Apr 2025 07:59:03 -0400
+ id 1u7CHF-0001jW-5V; Tue, 22 Apr 2025 07:59:03 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhgkM72Qmz4x04;
- Tue, 22 Apr 2025 21:58:51 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhgkT1Lb8z4x5g;
+ Tue, 22 Apr 2025 21:58:57 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhgkJ42jGz4wcD;
- Tue, 22 Apr 2025 21:58:45 +1000 (AEST)
-Message-ID: <96075887-ed11-4a58-a57c-899646d9ce3f@kaod.org>
-Date: Tue, 22 Apr 2025 13:58:42 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhgkQ1yZMz4wcy;
+ Tue, 22 Apr 2025 21:58:53 +1000 (AEST)
+Message-ID: <12563552-8d82-4691-9371-6d224f503561@kaod.org>
+Date: Tue, 22 Apr 2025 13:58:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] tests/functional/aspeed: Update test ASPEED SDK
- v03.00 for AST1030
+Subject: Re: [PATCH v1 1/3] tests/functional/aspeed: Update test ASPEED SDK
+ v09.06 for AST2500
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +41,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250422091504.3666464-1-jamin_lin@aspeedtech.com>
- <20250422091504.3666464-4-jamin_lin@aspeedtech.com>
+ <20250422091504.3666464-2-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +86,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250422091504.3666464-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250422091504.3666464-2-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=h5bN=XI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,92 +114,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/22/25 11:15, Jamin Lin wrote:
-> Updated test to target SDK version v03.00.
-> Removed redundant test case to simplify validation.
-> Cleaned up unsupported shell commands.
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Were some commands removed from SDK v03.00 ? Testing different
-zephyr versions might be interesting in that case, like it would
-be for Linux too.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-
-
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   tests/functional/test_arm_aspeed_ast1030.py | 40 ++++-----------------
->   1 file changed, 7 insertions(+), 33 deletions(-)
+>   tests/functional/test_arm_aspeed_ast2500.py | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/tests/functional/test_arm_aspeed_ast1030.py b/tests/functional/test_arm_aspeed_ast1030.py
-> index d45d9f7c1c..dafa1d24cb 100755
-> --- a/tests/functional/test_arm_aspeed_ast1030.py
-> +++ b/tests/functional/test_arm_aspeed_ast1030.py
-> @@ -12,36 +12,17 @@
+> diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/test_arm_aspeed_ast2500.py
+> index 1ffba6c995..90f3940e2a 100755
+> --- a/tests/functional/test_arm_aspeed_ast2500.py
+> +++ b/tests/functional/test_arm_aspeed_ast2500.py
+> @@ -38,14 +38,14 @@ def test_arm_ast2500_evb_buildroot(self):
 >   
->   class AST1030Machine(LinuxKernelTest):
+>           self.do_test_arm_aspeed_buildroot_poweroff()
 >   
-> -    ASSET_ZEPHYR_1_04 = Asset(
-> +    ASSET_ZEPHYR_3_00 = Asset(
->           ('https://github.com/AspeedTech-BMC'
-> -         '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip'),
-> -        '4ac6210adcbc61294927918707c6762483fd844dde5e07f3ba834ad1f91434d3')
-> +         '/zephyr/releases/download/v00.03.00/ast1030-evb-demo.zip'),
-> +        '37fe3ecd4a1b9d620971a15b96492a81093435396eeac69b6f3e384262ff555f')
+> -    ASSET_SDK_V806_AST2500 = Asset(
+> -        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v08.06/ast2500-default-obmc.tar.gz',
+> -        'e1755f3cadff69190438c688d52dd0f0d399b70a1e14b1d3d5540fc4851d38ca')
+> +    ASSET_SDK_V906_AST2500 = Asset(
+> +        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2500-default-obmc.tar.gz',
+> +        '542db84645b4efd8aed50385d7f4dd1caff379a987032311cfa7b563a3addb2a')
 >   
-> -    def test_ast1030_zephyros_1_04(self):
-> -        self.set_machine('ast1030-evb')
-> -
-> -        kernel_name = "ast1030-evb-demo/zephyr.elf"
-> -        kernel_file = self.archive_extract(
-> -            self.ASSET_ZEPHYR_1_04, member=kernel_name)
-> -
-> -        self.vm.set_console()
-> -        self.vm.add_args('-kernel', kernel_file, '-nographic')
-> -        self.vm.launch()
-> -        self.wait_for_console_pattern("Booting Zephyr OS")
-> -        exec_command_and_wait_for_pattern(self, "help",
-> -                                          "Available commands")
-> -
-> -    ASSET_ZEPHYR_1_07 = Asset(
-> -        ('https://github.com/AspeedTech-BMC'
-> -         '/zephyr/releases/download/v00.01.07/ast1030-evb-demo.zip'),
-> -        'ad52e27959746988afaed8429bf4e12ab988c05c4d07c9d90e13ec6f7be4574c')
-> -
-> -    def test_ast1030_zephyros_1_07(self):
-> +    def test_ast1030_zephyros_3_00(self):
->           self.set_machine('ast1030-evb')
+>       def test_arm_ast2500_evb_sdk(self):
+>           self.set_machine('ast2500-evb')
 >   
->           kernel_name = "ast1030-evb-demo/zephyr.bin"
->           kernel_file = self.archive_extract(
-> -            self.ASSET_ZEPHYR_1_07, member=kernel_name)
-> +            self.ASSET_ZEPHYR_3_00, member=kernel_name)
+> -        self.archive_extract(self.ASSET_SDK_V806_AST2500)
+> +        self.archive_extract(self.ASSET_SDK_V906_AST2500)
 >   
->           self.vm.set_console()
->           self.vm.add_args('-kernel', kernel_file, '-nographic')
-> @@ -49,17 +30,10 @@ def test_ast1030_zephyros_1_07(self):
->           self.wait_for_console_pattern("Booting Zephyr OS")
->           for shell_cmd in [
->                   'kernel stacks',
-> -                'otp info conf',
-> -                'otp info scu',
->                   'hwinfo devid',
->                   'crypto aes256_cbc_vault',
-> -                'random get',
-> -                'jtag JTAG1 sw_xfer high TMS',
-> -                'adc ADC0 resolution 12',
-> -                'adc ADC0 read 42',
-> -                'adc ADC1 read 69',
-> -                'i2c scan I2C_0',
-> -                'i3c attach I3C_0',
-> +                'jtag jtag@7e6e4100 sw_xfer high TMS',
-> +                'iic scan i2c@7e7b0080',
->                   'hash test',
->                   'kernel uptime',
->                   'kernel reboot warm',
+>           self.do_test_arm_aspeed_sdk_start(
+>               self.scratch_file("ast2500-default", "image-bmc"))
 
 
