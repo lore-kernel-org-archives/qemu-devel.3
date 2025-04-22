@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93A0C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74775C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:36:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u784K-0001BS-QC; Tue, 22 Apr 2025 03:29:24 -0400
+	id 1u78AW-0003pQ-Pe; Tue, 22 Apr 2025 03:35:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u784G-00019P-LH; Tue, 22 Apr 2025 03:29:20 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u784C-0004Es-3U; Tue, 22 Apr 2025 03:29:20 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhYlB1fDCz4x1w;
- Tue, 22 Apr 2025 17:29:10 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhYl65FRfz4x04;
- Tue, 22 Apr 2025 17:29:06 +1000 (AEST)
-Message-ID: <cf409986-18bd-4e33-8871-b68ab4eba1e5@kaod.org>
-Date: Tue, 22 Apr 2025 09:29:04 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u78AV-0003pA-9e
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:35:47 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u78AS-00050J-Cb
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:35:46 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so4721341f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:35:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745307341; x=1745912141; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ijv2G7uTCUHI7oqoBvIAD04vCinJu9ODrXMDZBTurxI=;
+ b=r6EmJtIHgfvFl0bKNjc6P53Ux5PoyJ+f5GTHCfDZOMFgBVl41nTuhsU0WMNCXn5llk
+ ZBL0+bhZFvCOeWUO+ldqiOpiKgmUSdCui34p4VvVJNlEninWfLytz0KJLkK78jMzIQ1r
+ zFex7qN9Tn3QOEWEXs1AtOxRzxx395tblmI3FJvdGU16jGEsaVaBdYMHkqBZbeckzQ22
+ e2TXlfembki8UKopPmI9n5kfb3ZjyCxjbzXF2RvoaexluLami0EzERBVedNWFK3ruK5T
+ MxRfguQWdIjCWpnAQ5yUEVnYwOaU+WqTAqvtR3KliRhaW39/SCEDPDAjxVD3kyZw/E9s
+ SYHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745307341; x=1745912141;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ijv2G7uTCUHI7oqoBvIAD04vCinJu9ODrXMDZBTurxI=;
+ b=l7Y9O/XN+LbpuSxwMcnNTbHyWYhKbE5Vm7Gakcnux0xVFMvPcOnAHd60dmzgylxIcE
+ 9BjrnO8uOKM+s9teTHfk5VpM3s0BX5A2VcFb7uhXufYNIAeUg6i3oas13Mz/6GGOx6b7
+ Ve3J+6M6VP7vEOYUzQNh1GOgkKrB9grEFhY+dMgwVrW/eb7rdtToRMRmXG3GnitEjkUB
+ TcGb5838Ujg/+JH6VJkGM5L9b3Gmdze9x1h6hN97eBQIIfVqjC/E5wElBwXyMZZrz7vi
+ aLKgZk+1pjxKGW0pijyOeu0qV40c9XAnkkzQOxsfu4rSL22nWpWOuaJT0kfWC+iG3CKL
+ /p1Q==
+X-Gm-Message-State: AOJu0Yxc5z9BIVmCmk/bMfLZsnvzaM10WLizI9F/l757wGyC/MBIIRiw
+ ngTio2kD59whf27XGj3jPwXti2sHwTo+wkvkwTZA6+9/erlsYtrsThxAn4ZQm1o=
+X-Gm-Gg: ASbGncsPePfzrq4NPJlskma6FnuhYr0aEmfGXJOFYHy5sZDErm+mc91GMvWSs/K09rG
+ FL7QSwZ9uBqrP5D8K3pVOpDrSY5uI5mPDXnxm+N0cEJHAy6Vc8+7UPT7ryhK9gSjm+4n9Lbw122
+ VWQa/zBlRDBKz9Db45q4kmpeC26eSQguLXRRcow8g6wIz0wc5VYPq2JKz6EkpdHldbAxh7tEct9
+ kChfIQ4iQhTYixL0kqyss10Z4M/KayR1S/YJrQrJc1sex2CsjxruTAXDho4E0wz8DByZq3Wow95
+ 2BBPlxjXzLzcHOGwYa6hoIdoqGaHpu1bw4qWJHAraXzrvseLtUqrbCY7dHeN0w1fJsCbWTKUREG
+ 4jNcygKfl
+X-Google-Smtp-Source: AGHT+IHaAkQ1bVG5FOyplMfXW8ZjkQTZtngm2Fj3WkOo2NCBC5PBogMntufAPl/Yt666C1z30acnoQ==
+X-Received: by 2002:a05:6000:4812:b0:39e:db6a:4744 with SMTP id
+ ffacd0b85a97d-39efba87299mr10314865f8f.32.1745307340633; 
+ Tue, 22 Apr 2025 00:35:40 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa4235dasm14060952f8f.9.2025.04.22.00.35.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Apr 2025 00:35:40 -0700 (PDT)
+Message-ID: <b846a12d-bbe3-4a88-aecd-b62cd57d297d@linaro.org>
+Date: Tue, 22 Apr 2025 09:35:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/10] docs/system/arm/aspeed: Support vbootrom for
- AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: troy_lee@aspeedtech.com, nabihestefan@google.com
-References: <20250417031209.2647703-1-jamin_lin@aspeedtech.com>
- <20250417031209.2647703-11-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250417031209.2647703-11-jamin_lin@aspeedtech.com>
+Subject: Re: [RFC PATCH v3 01/14] qapi: Rename TargetInfo structure as
+ BinaryTargetInfo
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-2-philmd@linaro.org> <878qnsagfo.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <878qnsagfo.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=h5bN=XI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,82 +103,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
-
-On 4/17/25 05:12, Jamin Lin wrote:
-> Using the vbootrom image support and the boot ROM binary is
-> now passed via the -bios option, using the image located in
-> pc-bios/ast27x0_bootrom.bin.
+On 22/4/25 07:55, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: Nabih Estefan <nabihestefan@google.com>
-> ---
->   docs/system/arm/aspeed.rst | 29 ++++++++++++++++++++++++++++-
->   1 file changed, 28 insertions(+), 1 deletion(-)
+>> The QAPI-generated 'TargetInfo' structure name is only used
+>> in a single file. We want to heavily use another structure
+>> similarly named. Rename the QAPI one, since structure names
+>> are not part of the public API.
+>>
+>> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   qapi/machine.json          | 12 ++++++------
+>>   hw/core/machine-qmp-cmds.c |  4 ++--
+>>   2 files changed, 8 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/qapi/machine.json b/qapi/machine.json
+>> index a6b8795b09e..3246212f048 100644
+>> --- a/qapi/machine.json
+>> +++ b/qapi/machine.json
+>> @@ -275,15 +275,15 @@
+>>   { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams' }
+>>   
+>>   ##
+>> -# @TargetInfo:
+>> +# @BinaryTargetInfo:
+>>   #
+>> -# Information describing the QEMU target.
+>> +# Information describing the QEMU binary target.
 > 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 97fd6a0e7f..c87a2cf796 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -250,7 +250,14 @@ under Linux), use :
->   Booting the ast2700-evb machine
->   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> What's "the QEMU binary target"?  The QEMU binary's target?
 
+For me 'qemu-system-aarch64' is a QEMU binary, but for Pierrick and
+Richard it is the QEMU target, so I merged both names ¯\_(ツ)_/¯
 
-Currently, we have 2 sections for the Aspeed boards :
+This structure describes the static target configuration built into
+a binary, i.e. TARGET_NAME=aarch64, TARGET_BIG_ENDIAN=false.
 
-1. Aspeed family boards (ast2500-evb, ast2600-evb, ast2700-evb, ast2700fc, bletchley-bmc, fuji-bmc, fby35-bmc, fp5280g2-bmc, g220a-bmc, palmetto-bmc, qcom-dc-scm-v1-bmc, qcom-firework-bmc, quanta-q71l-bmc, rainier-bmc, romulus-bmc, sonorapass-bmc, supermicrox11-bmc, supermicrox11spi-bmc, tiogapass-bmc, witherspoon-bmc, yosemitev2-bmc)
-2. Aspeed minibmc family boards (ast1030-evb)
+For the forthcoming single/heterogeneous binary, we don't have a
+particular restricted configuration in the binary.
 
-The first is quite big and relatively consistent for the AST2400, AST2500
-and AST2600 SoCs. Since the AST2700 SoC boards boot differently, I think
-it is time to introduce a new section for the ast2700 machines.
+What about "Information describing the QEMU target configuration
+built in a binary."?
 
+> 
+>  From the QMP user's point of view, perhaps "the QEMU process's target"
+> would make more sense.
 
-Thanks,
+So maybe ProcessTargetInfo is a better structure name.
 
-C.
+For heterogeneous target I suppose we'll return SYS_EMU_TARGET_HETERO
+and we'll provide new QMP commands, possibly returning array of
+ProcessTargetInfo.
 
+> 
+>>   #
+>> -# @arch: the target architecture
+>> +# @arch: the binary target architecture
+> 
+> Are there non-binary target architectures?
 
+:) I won't update this line.
 
-> -Boot the AST2700 machine from the flash image, use an MTD drive :
-> +Boot the AST2700 machine from the flash image.
-> +
-> +There are two supported methods for booting the AST2700 machine with a flash image:
-> +
-> +Manual boot using ``-device loader``:
-> +
-> +It causes all 4 CPU cores to start execution from address ``0x430000000``, which
-> +corresponds to the BL31 image load address.
->   
->   .. code-block:: bash
->   
-> @@ -270,6 +277,26 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
->          -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
->          -nographic
->   
-> +Boot using a virtual boot ROM (``-bios``):
-> +
-> +If users do not specify the ``-bios option``, QEMU will attempt to load the
-> +default vbootrom image ``ast27x0_bootrom.bin`` from either the current working
-> +directory or the ``pc-bios`` directory within the QEMU source tree.
-> +
-> +.. code-block:: bash
-> +
-> +  $ qemu-system-aarch64 -M ast2700-evb \
-> +      -drive file=image-bmc,format=raw,if=mtd \
-> +      -nographic
-> +
-> +The ``-bios`` option allows users to specify a custom path for the vbootrom
-> +image to be loaded during boot. This will load the vbootrom image from the
-> +specified path in the ${HOME} directory.
-> +
-> +.. code-block:: bash
-> +
-> +  -bios ${HOME}/ast27x0_bootrom.bin
-> +
->   Aspeed minibmc family boards (``ast1030-evb``)
->   ==================================================================
->   
+> 
+>>   #
+>>   # Since: 1.2
+>>   ##
+>> -{ 'struct': 'TargetInfo',
+>> +{ 'struct': 'BinaryTargetInfo',
+>>     'data': { 'arch': 'SysEmuTarget' } }
+>>   
+>>   ##
+>> @@ -291,11 +291,11 @@
+>>   #
+>>   # Return information about the target for this QEMU
+>>   #
+>> -# Returns: TargetInfo
+>> +# Returns: BinaryTargetInfo
+>>   #
+>>   # Since: 1.2
+>>   ##
+>> -{ 'command': 'query-target', 'returns': 'TargetInfo' }
+>> +{ 'command': 'query-target', 'returns': 'BinaryTargetInfo' }
+>>   
+>>   ##
+>>   # @UuidInfo:
+>> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+>> index 3130c5cd456..408994b67d7 100644
+>> --- a/hw/core/machine-qmp-cmds.c
+>> +++ b/hw/core/machine-qmp-cmds.c
+>> @@ -132,9 +132,9 @@ CurrentMachineParams *qmp_query_current_machine(Error **errp)
+>>       return params;
+>>   }
+>>   
+>> -TargetInfo *qmp_query_target(Error **errp)
+>> +BinaryTargetInfo *qmp_query_target(Error **errp)
+>>   {
+>> -    TargetInfo *info = g_malloc0(sizeof(*info));
+>> +    BinaryTargetInfo *info = g_malloc0(sizeof(*info));
+>>   
+>>       info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
+>>                                    &error_abort);
+> 
 
 
