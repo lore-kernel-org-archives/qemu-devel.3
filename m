@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A5F4C369D3
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A162AC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:13:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7GD1-0001kE-E5; Tue, 22 Apr 2025 12:10:55 -0400
+	id 1u7GAv-0005cI-1O; Tue, 22 Apr 2025 12:08:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G5R-0006z8-CK
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6t-0000xI-7v
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G5P-00050y-By
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6p-0005Ax-Mc
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745337782;
+ s=mimecast20190719; t=1745337864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rHNZCsw1uWGMR28+HDC6qbgFG58F9c6HDCdZdBAGlfY=;
- b=JbUwTMdMxteL6ulinJA7xLPOAKAXIjAAEkCbK1zqJlko9/Ta9Dg7YPd/0pguVfqRZNJEVm
- V1lWEPE4x9II6C9F/xSTwlzXbRMreG1ikAkKhVNLWnYnYVuAL6LsRxUW4qS5NtpKlbj5+1
- aHlNVvIdIF3vp2N3PU1OPm+o+XiGb+k=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2Lz6eAxAIRUx4pWmhwnEBF3UCRDTtOpuJujqppHSUi0=;
+ b=LMmp6S6GLpKIxMwHhYbf6+q3v5hqSPDKJNYz+kCzjnsy9gBzqBRjBoGAXHIuD5MiwC4TlS
+ JnG4ZaPlCWolcz8biMb/CXfYexff28wf8caXtCXGZ/YbdW0aPZYRU6lFrN7Kl1LfufTUbw
+ hdCRrUINl2CFDigSgkwzNje9W+GZTOQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-UclP9_52M_uSnwhmOr4khw-1; Tue,
- 22 Apr 2025 12:03:01 -0400
-X-MC-Unique: UclP9_52M_uSnwhmOr4khw-1
-X-Mimecast-MFC-AGG-ID: UclP9_52M_uSnwhmOr4khw_1745337780
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-inl1zmUiMb2RfS9cuRVnmw-1; Tue,
+ 22 Apr 2025 12:04:20 -0400
+X-MC-Unique: inl1zmUiMb2RfS9cuRVnmw-1
+X-Mimecast-MFC-AGG-ID: inl1zmUiMb2RfS9cuRVnmw_1745337859
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E45D0195608C; Tue, 22 Apr 2025 16:02:59 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DED3C180056F; Tue, 22 Apr 2025 16:04:18 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.105])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 20A6118001DA; Tue, 22 Apr 2025 16:02:56 +0000 (UTC)
+ id 4875018001DA; Tue, 22 Apr 2025 16:04:16 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
@@ -53,17 +53,16 @@ Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  John Levon <john.levon@nutanix.com>,
  Joao Martins <joao.m.martins@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 08/37] vfio: Introduce a new header file for VFIOdisplay
- declarations
-Date: Tue, 22 Apr 2025 18:01:55 +0200
-Message-ID: <20250422160224.199714-9-clg@redhat.com>
+Subject: [PATCH v3 31/37] vfio: Rename vfio_get_dirty_bitmap()
+Date: Tue, 22 Apr 2025 18:02:18 +0200
+Message-ID: <20250422160224.199714-32-clg@redhat.com>
 In-Reply-To: <20250422160224.199714-1-clg@redhat.com>
 References: <20250422160224.199714-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -88,142 +87,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gather all VFIOdisplay related declarations into "vfio-display.h" to
-reduce exposure of VFIO internals in "hw/vfio/vfio-common.h".
+Rename to vfio_container_query_dirty_bitmap() to be consistent with
+the VFIO container routine naming scheme.
 
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
 Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-8-clg@redhat.com
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-9-clg@redhat.com
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-32-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.h                 |  1 +
- hw/vfio/vfio-display.h        | 41 +++++++++++++++++++++++++++++++++++
- include/hw/vfio/vfio-common.h | 28 ------------------------
- hw/vfio/display.c             |  2 +-
- 4 files changed, 43 insertions(+), 29 deletions(-)
- create mode 100644 hw/vfio/vfio-display.h
+ include/hw/vfio/vfio-container-base.h | 4 ++--
+ hw/vfio/common.c                      | 6 +++---
+ hw/vfio/container-base.c              | 5 +++--
+ hw/vfio/container.c                   | 2 +-
+ hw/vfio/trace-events                  | 2 +-
+ 5 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index d94ecaba689c4681687c0a6796ffbcda522ae179..2071b725ea5236a971964750fde81485eb8b10a9 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -20,6 +20,7 @@
- #include "qemu/timer.h"
- #include "qom/object.h"
- #include "system/kvm.h"
-+#include "vfio-display.h"
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 163d9b3c30b3093d2f40bb3d3ffc0314519ac285..a441932be779e5c6740da78f005ed2c8320e7cb2 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -93,8 +93,8 @@ bool vfio_container_dirty_tracking_is_started(
+     const VFIOContainerBase *bcontainer);
+ bool vfio_container_devices_dirty_tracking_is_supported(
+     const VFIOContainerBase *bcontainer);
+-int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+-                          uint64_t size, ram_addr_t ram_addr, Error **errp);
++int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
++    uint64_t iova, uint64_t size, ram_addr_t ram_addr, Error **errp);
  
- #define PCI_ANY_ID (~0)
+ GList *vfio_container_get_iova_ranges(const VFIOContainerBase *bcontainer);
  
-diff --git a/hw/vfio/vfio-display.h b/hw/vfio/vfio-display.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..99b8cb67ef7558d3eefe3105a831e3fcb30afc4d
---- /dev/null
-+++ b/hw/vfio/vfio-display.h
-@@ -0,0 +1,41 @@
-+/*
-+ * VFIO display
-+ *
-+ * Copyright Red Hat, Inc. 2025
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_VFIO_VFIO_DISPLAY_H
-+#define HW_VFIO_VFIO_DISPLAY_H
-+
-+#include "ui/console.h"
-+#include "hw/display/ramfb.h"
-+
-+typedef struct VFIODMABuf {
-+    QemuDmaBuf *buf;
-+    uint32_t pos_x, pos_y, pos_updates;
-+    uint32_t hot_x, hot_y, hot_updates;
-+    int dmabuf_id;
-+    QTAILQ_ENTRY(VFIODMABuf) next;
-+} VFIODMABuf;
-+
-+typedef struct VFIODisplay {
-+    QemuConsole *con;
-+    RAMFBState *ramfb;
-+    struct vfio_region_info *edid_info;
-+    struct vfio_region_gfx_edid *edid_regs;
-+    uint8_t *edid_blob;
-+    QEMUTimer *edid_link_timer;
-+    struct {
-+        VFIORegion buffer;
-+        DisplaySurface *surface;
-+    } region;
-+    struct {
-+        QTAILQ_HEAD(, VFIODMABuf) bufs;
-+        VFIODMABuf *primary;
-+        VFIODMABuf *cursor;
-+    } dmabuf;
-+} VFIODisplay;
-+
-+#endif /* HW_VFIO_VFIO_DISPLAY_H */
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 799e12d43747addbf444c15052f629b65978322f..288c2fb3d0e792427c0e7655002248829b4d189a 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -23,8 +23,6 @@
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index d063ea03c1cb4f475d421e626c703875fecd97a8..26ced6d4fb04b0dedf399686db40acaca5d85552 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1003,7 +1003,7 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+         goto out_unlock;
+     }
  
- #include "exec/memory.h"
- #include "qemu/queue.h"
--#include "ui/console.h"
--#include "hw/display/ramfb.h"
- #ifdef CONFIG_LINUX
- #include <linux/vfio.h>
- #endif
-@@ -182,32 +180,6 @@ typedef struct VFIOGroup {
- #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO \
-             TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
+-    ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
++    ret = vfio_container_query_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+                                 translated_addr, &local_err);
+     if (ret) {
+         error_prepend(&local_err,
+@@ -1040,7 +1040,7 @@ static int vfio_ram_discard_get_dirty_bitmap(MemoryRegionSection *section,
+      * Sync the whole mapped region (spanning multiple individual mappings)
+      * in one go.
+      */
+-    ret = vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr,
++    ret = vfio_container_query_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr,
+                                 &local_err);
+     if (ret) {
+         error_report_err(local_err);
+@@ -1134,7 +1134,7 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
+     ram_addr = memory_region_get_ram_addr(section->mr) +
+                section->offset_within_region;
  
--typedef struct VFIODMABuf {
--    QemuDmaBuf *buf;
--    uint32_t pos_x, pos_y, pos_updates;
--    uint32_t hot_x, hot_y, hot_updates;
--    int dmabuf_id;
--    QTAILQ_ENTRY(VFIODMABuf) next;
--} VFIODMABuf;
--
--typedef struct VFIODisplay {
--    QemuConsole *con;
--    RAMFBState *ramfb;
--    struct vfio_region_info *edid_info;
--    struct vfio_region_gfx_edid *edid_regs;
--    uint8_t *edid_blob;
--    QEMUTimer *edid_link_timer;
--    struct {
--        VFIORegion buffer;
--        DisplaySurface *surface;
--    } region;
--    struct {
--        QTAILQ_HEAD(, VFIODMABuf) bufs;
--        VFIODMABuf *primary;
--        VFIODMABuf *cursor;
--    } dmabuf;
--} VFIODisplay;
--
- VFIOAddressSpace *vfio_get_address_space(AddressSpace *as);
- void vfio_put_address_space(VFIOAddressSpace *space);
- void vfio_address_space_insert(VFIOAddressSpace *space,
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index ea87830fe0d5fc66f3f27a16bde5d75b7b6280c0..8317917203d5e2713fff551ff4a122befba55cc2 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -16,9 +16,9 @@
+-    return vfio_get_dirty_bitmap(bcontainer,
++    return vfio_container_query_dirty_bitmap(bcontainer,
+                    REAL_HOST_PAGE_ALIGN(section->offset_within_address_space),
+                                  int128_get64(section->size), ram_addr, errp);
+ }
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index a094872fe44e90f345328f65795b0b64a090c1b1..4c39b6645464445255bd27342f2e2c2b8c16a6ce 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -237,7 +237,7 @@ static int vfio_container_devices_query_dirty_bitmap(const VFIOContainerBase *bc
+     return 0;
+ }
  
- #include "qemu/error-report.h"
- #include "hw/display/edid.h"
--#include "ui/console.h"
- #include "qapi/error.h"
- #include "pci.h"
-+#include "vfio-display.h"
- #include "trace.h"
+-int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
++int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+                           uint64_t size, ram_addr_t ram_addr, Error **errp)
+ {
+     bool all_device_dirty_tracking =
+@@ -275,7 +275,8 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+     dirty_pages = cpu_physical_memory_set_dirty_lebitmap(vbmap.bitmap, ram_addr,
+                                                          vbmap.pages);
  
- #ifndef DRM_PLANE_TYPE_PRIMARY
+-    trace_vfio_get_dirty_bitmap(iova, size, vbmap.size, ram_addr, dirty_pages);
++    trace_vfio_container_query_dirty_bitmap(iova, size, vbmap.size, ram_addr,
++                                            dirty_pages);
+ out:
+     g_free(vbmap.bitmap);
+ 
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 9ea03ed618f6aefe35f966c644cbbc127ce7bf06..c74e08e531a501313cab27c57728a8c940d975be 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -169,7 +169,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     }
+ 
+     if (need_dirty_sync) {
+-        ret = vfio_get_dirty_bitmap(bcontainer, iova, size,
++        ret = vfio_container_query_dirty_bitmap(bcontainer, iova, size,
+                                     iotlb->translated_addr, &local_err);
+         if (ret) {
+             error_report_err(local_err);
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index d4cd09cb0f93485fe06984346f6ac927603c5745..aa0ba695fa38f7767bf506ec604046101186e7d4 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -109,7 +109,7 @@ vfio_legacy_dma_unmap_overflow_workaround(void) ""
+ vfio_iommu_map_dirty_notify(uint64_t iova_start, uint64_t iova_end) "iommu dirty @ 0x%"PRIx64" - 0x%"PRIx64
+ 
+ # container-base.c
+-vfio_get_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t bitmap_size, uint64_t start, uint64_t dirty_pages) "iova=0x%"PRIx64" size= 0x%"PRIx64" bitmap_size=0x%"PRIx64" start=0x%"PRIx64" dirty_pages=%"PRIu64
++vfio_container_query_dirty_bitmap(uint64_t iova, uint64_t size, uint64_t bitmap_size, uint64_t start, uint64_t dirty_pages) "iova=0x%"PRIx64" size= 0x%"PRIx64" bitmap_size=0x%"PRIx64" start=0x%"PRIx64" dirty_pages=%"PRIu64
+ 
+ # region.c
+ vfio_region_write(const char *name, int index, uint64_t addr, uint64_t data, unsigned size) " (%s:region%d+0x%"PRIx64", 0x%"PRIx64 ", %d)"
 -- 
 2.49.0
 
