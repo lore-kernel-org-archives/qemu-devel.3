@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B415C369D3
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36743C369D7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7ELD-00050u-To; Tue, 22 Apr 2025 10:11:15 -0400
+	id 1u7Eb1-0001vO-Je; Tue, 22 Apr 2025 10:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7EL8-0004zl-Ql
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:11:11 -0400
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u7Eaz-0001ut-St
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:27:33 -0400
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7EL3-0008Db-R8
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:11:09 -0400
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u7Eaw-0001gb-TS
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745331066; x=1776867066;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Z9I8Tb6EoTQe5Dpwqkac3DXSUJWOdRq+ia/FgGC6D3k=;
- b=hqdW3DaPdJ/LU02/unKZACYLSR1joyffaD7KKEo8VKI7GiRnqAfp+Fyo
- +xS6/2xPqgRrp7uRPMFPOryiJTtHYpMqb8nj39XQfjQQSyKyedSlZ2FQv
- 6Oc3WwD1LKma7bWSdfYsPx1PUo7s32OEqAf089XS/Rtk30LKphtypAT6U
- 068+kZiYyx/tVAvWr9KEn+4EPvWlfUkUXYbgWi22E4Zg2gb6i/OKKTmzP
- IsbvulHULxdT+IRxyJGdahu4a8yV246ZjouTgYRUKdkWf9xfQ6rlw8+E0
- iCtt4SRrbabAZTzxVfq1yV7ylhwd/VxE+g3P3XawOt/scLjTF++k70+ps g==;
-X-CSE-ConnectionGUID: Mqh00Mo1TGm5H7hOE+tMaA==
-X-CSE-MsgGUID: lGOS09sGSa+eagmOtqASJA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46126506"
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="46126506"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ t=1745332051; x=1776868051;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=LiqVpjwC0ESH5Rvz3dOIRZTYTRSBe0WCOoAuiJLG0F8=;
+ b=glCuhQnlbR8MZdGND1E+jhvv+58JgC9PDBeYRUUAZEc35wcHr6N/0Q2M
+ TL2EJHL8NQOcbY/2fV6pQNpgWji9LaIRnn7NcvijqPpTa85M2IKSC+2qY
+ qq6AZ4QSTBJkKAl67XLC6y80OYOjhBvQqsKrI4YKSM+jJzQm++N7WY8KU
+ LhDbiPsgsT5kLChZh1GlREVLT5R7CE11Q1OOmUoR4FN93DQ5ZOtfDw9tF
+ kKTrdGu0705vKgjxSdLhSp2aBsr2EwvouZWbbx8NPJTo+DVco/xH5N+va
+ QrCBnp5llvcqAMB+V949cXU4tTPt1rzspOxCaoGGxyxkU4bJUfT88Y6O0 w==;
+X-CSE-ConnectionGUID: lrJzTMaeR+mm9HKsRH6zPA==
+X-CSE-MsgGUID: K5esqfgwSjKSGV4ulXok2Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46131600"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="46131600"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2025 07:11:03 -0700
-X-CSE-ConnectionGUID: m1uAtiXeRYK9V5sfb54oOQ==
-X-CSE-MsgGUID: cI8+0JS4Q1K9pds6/PZuyQ==
+ 22 Apr 2025 07:27:28 -0700
+X-CSE-ConnectionGUID: W+edb3leSSy+UmoKkknyFw==
+X-CSE-MsgGUID: A+pJfsxjSGOnF3J0xwRHEg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="136105556"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 22 Apr 2025 07:11:01 -0700
-Date: Tue, 22 Apr 2025 22:31:55 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 07/55] kvm: Introduce kvm_arch_pre_create_vcpu()
-Message-ID: <aAeoW9/sAGcr8ygN@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-8-xiaoyao.li@intel.com>
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="132573423"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2025 07:27:24 -0700
+Message-ID: <7db8dd10-229a-4fc9-afe0-54b023ce88ac@intel.com>
+Date: Tue, 22 Apr 2025 22:27:19 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-8-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 06/55] i386/tdx: Introduce is_tdx_vm() helper and cache
+ tdx_guest object
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-7-xiaoyao.li@intel.com> <aAIfL0jS0lWSpvZE@intel.com>
+ <12ec4e5c-33af-47a0-817f-b1fd0420f8f5@intel.com> <aAelqKOePQ9gplDm@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aAelqKOePQ9gplDm@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,39 +94,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:17AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:17 -0400
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 07/55] kvm: Introduce kvm_arch_pre_create_vcpu()
-> X-Mailer: git-send-email 2.34.1
+On 4/22/2025 10:20 PM, Zhao Liu wrote:
+>>>> +#ifdef CONFIG_TDX
+>>>> +bool is_tdx_vm(void);
+>>>> +#else
+>>>> +#define is_tdx_vm() 0
+>>>> +#endif /* CONFIG_TDX */
+>>>> +
+>>> a little nit: could we rename it as "tdx_enabled"?
+>>>
+>>> Then the cases like these would be neater?
+>>
+>> When sev support was added, it was seen as a feature for the VMs that are
+>> created on AMD platform. I think that's why it got called sev_enabled().
+>>
+>> But for TDX, it is introduced as a different type of VM in contrast to the
+>> legacy/normal VMX VMs. We need to pass specific TDX vm type to
+>> KVM_CREATE_VM. Based on this, is_tdx_vm() was chosen.
 > 
-> Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-> work prior to create any vcpu. This is for i386 TDX because it needs
-> call TDX_INIT_VM before creating any vcpu.
-> 
-> The specific implemnet of i386 will be added in the future patch.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
-> Changes in v7:
-> - Implement stub for all the ARCHes instead of defining it with weak
->   attribute; (Philippe)
-> 
-> Changes in v3:
-> - pass @errp to kvm_arch_pre_create_vcpu(); (Per Daniel)
-> ---
->  accel/kvm/kvm-all.c        | 5 +++++
->  include/system/kvm.h       | 1 +
->  target/arm/kvm.c           | 5 +++++
->  target/i386/kvm/kvm.c      | 5 +++++
->  target/loongarch/kvm/kvm.c | 4 ++++
->  target/mips/kvm.c          | 5 +++++
->  target/ppc/kvm.c           | 5 +++++
->  target/riscv/kvm/kvm-cpu.c | 5 +++++
->  target/s390x/kvm/kvm.c     | 5 +++++
->  9 files changed, 40 insertions(+)
+> But isn't AMD's SEV also defined as the VM type?
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+The initial SEV support that introduced sev_eanbled(), didn't introduce 
+the VM type.
+
+The specific type for SEV* was added later.
+
+> static const char *vm_type_name[] = {
+>      [KVM_X86_DEFAULT_VM] = "default",
+>      [KVM_X86_SEV_VM] = "SEV",
+>      [KVM_X86_SEV_ES_VM] = "SEV-ES",
+>      [KVM_X86_SNP_VM] = "SEV-SNP",
+>      [KVM_X86_TDX_VM] = "TDX",
+> };
+> 
+> Functionally, they are part of the coco functionality provided by
+> different vendors, so it's better thatt both could be in the same place
+> as much as possible, including file location, naming style. Of course,
+> it's not a big deal, and it can be cleaned up after merge if needed.
+
+yes, cleanup can be a separate work if Paolo doesn't dislike.
+
+>> I don't think the different name is a big issue, as nobody mentions it from
+>> the initial RFC to current v8 until you.
+> 
+> The Chinese saying: There are a thousand Hamlets in a thousand people's
+> eyes :-).
+> 
 
 
