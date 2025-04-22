@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32CC7C369AB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 02:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94764C369D6
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 02:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u73ps-0003uz-OV; Mon, 21 Apr 2025 22:58:12 -0400
+	id 1u73pi-0003sq-HB; Mon, 21 Apr 2025 22:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1u73pe-0003qe-4z
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 22:57:58 -0400
+ id 1u73pc-0003qJ-RK
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 22:57:57 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1u73pb-0001Yo-7v
- for qemu-devel@nongnu.org; Mon, 21 Apr 2025 22:57:57 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1u73pZ-0001YO-VS
+ for qemu-devel@nongnu.org; Mon, 21 Apr 2025 22:57:56 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxeXGuBQdopMPDAA--.61138S3;
- Tue, 22 Apr 2025 10:57:50 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxYa+nBQdomcPDAA--.21151S3;
+ Tue, 22 Apr 2025 10:57:43 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMAxzMSmBQdo7VWPAA--.29039S7;
- Tue, 22 Apr 2025 10:57:48 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxzMSmBQdo7VWPAA--.29039S2;
+ Tue, 22 Apr 2025 10:57:43 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH v3 5/9] target/loongarch: Set function loongarch_map_address()
- with common code
-Date: Tue, 22 Apr 2025 10:57:38 +0800
-Message-Id: <20250422025742.2693096-6-maobibo@loongson.cn>
+Subject: [PATCH v3 0/9] target/loongarch: Code cleanup with function
+ loongarch_map_address
+Date: Tue, 22 Apr 2025 10:57:33 +0800
+Message-Id: <20250422025742.2693096-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250422025742.2693096-1-maobibo@loongson.cn>
-References: <20250422025742.2693096-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxzMSmBQdo7VWPAA--.29039S7
+X-CM-TRANSID: qMiowMAxzMSmBQdo7VWPAA--.29039S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,48 +65,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Function loongarch_map_address is to get physical address from virtual
-address, it is used by qmp commands to dump memory from virtual
-address.
+Get physical address from virtual address is important for qmp command to
+dump memory content. In TCG mode, it searches TLB tables firstly and
+then do page table walker. In KVM mode, there are no TLB tables and page
+table walker is used directly.
 
-It is used by kvm mode also, here move function loongarch_map_address()
-out of macro CONFIG_TCG. And it is common code, the similar with
-function loongarch_page_table_walker().
+Here TLB tables searching is moved to directory tcg, and code about page
+table walker is put in the common part so that it can be used in KVM mode
+also.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/loongarch/cpu_helper.c | 10 ----------
- 1 file changed, 10 deletions(-)
+v2 ... v3:
+  1. Split patch 6 into two three small patches
+  2. Define tcg specified function from header file internals.h to
+     tcg/tcg_loongarch.h
 
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index 111a57314f..5db64a45cc 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -165,7 +165,6 @@ static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
- }
- #endif
- 
--#ifdef CONFIG_TCG
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, target_ulong level)
- {
-@@ -295,15 +294,6 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
- 
-     return TLBRET_NOMATCH;
- }
--#else
--static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
--                                 int *prot, target_ulong address,
--                                 MMUAccessType access_type, int mmu_idx,
--                                 int is_debug)
--{
--    return TLBRET_NOMATCH;
--}
--#endif
- 
- static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
-                         target_ulong dmw)
+v1 ... v2:
+  1. Remove CONFIG_TCG macro with file helper.h in patch 1
+  2. Refresh spelling issues in patch 5
+  3. Split original patch 4 into existing patch 4 and patch 5
+  4. Add !kvm_enabled() in function loongarch_map_address(), tlb entries
+     will not be searched in kvm mode
+---
+Bibo Mao (9):
+  target/loongarch: Move header file helper.h to directory tcg
+  target/loongarch: Add function loongarch_get_addr_from_tlb
+  target/loongarch: Move function get_dir_base_width to common directory
+  target/loongarch: Add stub function loongarch_get_addr_from_tlb
+  target/loongarch: Set function loongarch_map_address() with common
+    code
+  target/loongarch: Define function loongarch_get_addr_from_tlb()
+    non-static
+  target/loongarch: Move function loongarch_tlb_search to directory tcg
+  target/loongarch: Add static definition with function
+    loongarch_tlb_search()
+  target/loongarch: Move definition of TCG specified function to tcg
+    directory
+
+ target/loongarch/cpu.c               |   1 +
+ target/loongarch/cpu_helper.c        | 177 ++-----
+ target/loongarch/helper.h            | 720 +-------------------------
+ target/loongarch/internals.h         |   7 -
+ target/loongarch/tcg/helper.h        | 722 +++++++++++++++++++++++++++
+ target/loongarch/tcg/tcg_loongarch.h |  20 +
+ target/loongarch/tcg/tlb_helper.c    | 173 +++++--
+ 7 files changed, 926 insertions(+), 894 deletions(-)
+ create mode 100644 target/loongarch/tcg/helper.h
+
+
+base-commit: a9cd5bc6399a80fcf233ed0fffe6067b731227d8
 -- 
 2.39.3
 
