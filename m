@@ -4,99 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C4DC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB16C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u76jK-0005Ja-0c; Tue, 22 Apr 2025 02:03:38 -0400
+	id 1u76kd-0006ZS-8S; Tue, 22 Apr 2025 02:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u76jI-0005I3-FV; Tue, 22 Apr 2025 02:03:36 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u76ka-0006Yz-0m
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:04:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u76jF-0003O5-UL; Tue, 22 Apr 2025 02:03:36 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhWrL13nbz4x5g;
- Tue, 22 Apr 2025 16:03:30 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u76kX-0003gL-67
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:04:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745301891;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=22otT0+cXgGzT18NfqTerVSI5gF7Nxw/3mOCZyHpees=;
+ b=iiEuH4CIWxcDYBUmtiGL2PqVXKVtARXemvDYrjabKRYoJaixG4v+kwC31xKCQZsTFsqmBM
+ 1rThNLAamw/IYdxqHIykUkbVVERoQZfqHrZprhRDbLtqGTExm0Iny+u6Sc8FRXA6P213Ck
+ unzwfmmmHcP2F6ipWRl1Q7G/Rb2Ko0Q=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-YBDsDdlmOcC5mpU7-assHQ-1; Tue,
+ 22 Apr 2025 02:04:46 -0400
+X-MC-Unique: YBDsDdlmOcC5mpU7-assHQ-1
+X-Mimecast-MFC-AGG-ID: YBDsDdlmOcC5mpU7-assHQ_1745301885
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhWrH21mtz4w2J;
- Tue, 22 Apr 2025 16:03:26 +1000 (AEST)
-Message-ID: <92e9337a-a50a-45c8-9e1a-7edad08b85ee@kaod.org>
-Date: Tue, 22 Apr 2025 08:03:25 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D81FD180036D; Tue, 22 Apr 2025 06:04:44 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F39F930001A2; Tue, 22 Apr 2025 06:04:43 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8F78121E6766; Tue, 22 Apr 2025 08:04:41 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,  Anton Johansson
+ <anjo@rev.ng>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH v3 13/14] qemu/target_info: Add target_aarch64() helper
+In-Reply-To: <3242cee6-7485-4958-a198-38d0fc68e8cd@linaro.org> (Pierrick
+ Bouvier's message of "Sat, 19 Apr 2025 08:52:02 -0700")
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-14-philmd@linaro.org>
+ <41c9061f-ffd8-47a8-b2e8-7c4b2a2c2fcf@linaro.org>
+ <ff7cdc09-f11c-43ae-b1e4-668c39db3efe@linaro.org>
+ <3242cee6-7485-4958-a198-38d0fc68e8cd@linaro.org>
+Date: Tue, 22 Apr 2025 08:04:41 +0200
+Message-ID: <87tt6g91fq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] target/ppc: Deprecate Power8E and Power8NVL
-To: Aditya Gupta <adityag@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20250422060050.76094-1-adityag@linux.ibm.com>
- <20250422060050.76094-3-adityag@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250422060050.76094-3-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=h5bN=XI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.692,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,74 +91,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/25 08:00, Aditya Gupta wrote:
-> Power8E and Power8NVL variants are not of much use in QEMU now, and not
-> being maintained either.
-> 
-> Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
-> to be exact:
-> 
->      commit c5424f683ee3 ("Remove support for POWER8 DD1")
-> 
-> Deprecate the 8E and 8NVL variants.
-> 
-> Suggested-by: Cédric Le Goater <clg@kaod.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
+[...]
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> At this point, I would like to focus on having a first version of TargetInfo API, and not reviewing any other changes, as things may be modified, and they would need to be reviewed again. It's hard to follow the same abstraction done multiple times in multiple series.
+>
+> Regarding your proposal for target_system_arch(), I understand that you tried to reuse the existing SysEmuTarget, which was a good intention.
+> However, I don't think we should use any string compare for this (which qemu_api_parse does). It has several flaws:
 
-Thanks,
+qemu_api_parse()?  Do you mean qapi_enum_parse()?
 
-C.
+> - The most important one: it can fail (what if -1 is returned?). Enums can be guaranteed and exhaustive at compile time.
+> - It's slower than having the current arch directly known at compile time.
+> As well, since SysEmuTarget is a generated enum, it makes it much harder to follow code IMHO.
+> QAPI requires those things to be defined from a json file for external usage, but it's not a good reason for being forced to use it in all the codebase as the only possible abstraction.
+>
+> To have something fast and infallible, we can adopt this solution:
+>
+> In target_info.h:
+>
+> /* Named TargetArch to not clash with poisoned TARGET_X */
+> typedef enum TargetArch {
+>     TARGET_ARCH_AARCH64,
+>     TARGET_ARCH_ALPHA,
+>     TARGET_ARCH_ARM,
+>     TARGET_ARCH_AVR,
+>     TARGET_ARCH_HPPA,
+>     TARGET_ARCH_I386,
+>     TARGET_ARCH_LOONGARCH64,
+>     TARGET_ARCH_M68K,
+>     TARGET_ARCH_MICROBLAZE,
+>     TARGET_ARCH_MICROBLAZEEL,
+>     TARGET_ARCH_MIPS,
+>     TARGET_ARCH_MIPS64,
+>     TARGET_ARCH_MIPS64EL,
+>     TARGET_ARCH_MIPSEL,
+>     TARGET_ARCH_OR1K,
+>     TARGET_ARCH_PPC,
+>     TARGET_ARCH_PPC64,
+>     TARGET_ARCH_RISCV32,
+>     TARGET_ARCH_RISCV64,
+>     TARGET_ARCH_RX,
+>     TARGET_ARCH_S390X,
+>     TARGET_ARCH_SH4,
+>     TARGET_ARCH_SH4EB,
+>     TARGET_ARCH_SPARC,
+>     TARGET_ARCH_SPARC64,
+>     TARGET_ARCH_TRICORE,
+>     TARGET_ARCH_X86_64,
+>     TARGET_ARCH_XTENSA,
+>     TARGET_ARCH_XTENSAEB,
+> } TargetArch;
 
+Effectively duplicates generated enum SysEmuTarget.  Can you explain why
+that's useful?
 
-> ---
->   docs/about/deprecated.rst | 9 +++++++++
->   target/ppc/cpu-models.c   | 8 ++++----
->   2 files changed, 13 insertions(+), 4 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 05381441a9ff..966f2e634028 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -275,6 +275,15 @@ embedded 405 for power management (OCC) and other internal tasks, it
->   is theoretically possible to use QEMU to model them. Let's keep the
->   CPU implementation for a while before removing all support.
->   
-> +Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
-> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +The Power8E and Power8NVL variants of Power8 are not really useful anymore
-> +in qemu, and are old and unmaintained now.
-> +
-> +The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
-> +be considered deprecated.
-> +
->   System emulator machines
->   ------------------------
->   
-> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> index 78ef23b4c4b8..cc79a6373d63 100644
-> --- a/target/ppc/cpu-models.c
-> +++ b/target/ppc/cpu-models.c
-> @@ -732,12 +732,12 @@
->                   "POWER7 v2.3")
->       POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
->                   "POWER7+ v2.1")
-> -    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
-> -                "POWER8E v2.1")
-> +    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
-> +                "POWER8E v2.1", "CPU is unmaintained.")
->       POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
->                   "POWER8 v2.0")
-> -    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
-> -                "POWER8NVL v1.0")
-> +    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
-> +                "POWER8NVL v1.0", "CPU is unmaintained.")
->       POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
->                   "POWER9 v2.0")
->       POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
+>
+> typedef struct TargetInfo {
+> ...
+> 	TargetArch target_arch;
+> ...
+> }
+>
+> static inline target_arch() {
+> 	return target_info()->target_arch;
+> }
+>
+> static inline target_aarch64() {
+> 	return target_arch() == TARGET_ARCH_AARCH64;
+> }
+>
+>
+> In target_info-stub.c:
+>
+> #ifdef TARGET_AARCH64
+> # define TARGET_ARCH TARGET_ARCH_AARCH64
+> #elif TARGET_ARCH_ALPHA
+> # define TARGET_ARCH TARGET_ARCH_ALPHA
+> ...
+> #endif
+>
+> static const TargetInfo target_info_stub = {
+>     ...
+>     .target_arch = TARGET_ARCH;
+>     ...
+> }
 
 
