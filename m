@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE87C369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACF5C369D1
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 20:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JQ9-0008QF-Lh; Tue, 22 Apr 2025 15:36:48 -0400
+	id 1u7JRI-0001eW-No; Tue, 22 Apr 2025 15:37:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JOu-00056a-4m
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:29 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1u7JPD-0005kG-7k
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:45 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JOq-00071a-BY
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:22 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-224191d92e4so55774285ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:18 -0700 (PDT)
+ id 1u7JPB-00078U-6B
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:42 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22d95f0dda4so23679335ad.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350517; x=1745955317; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350538; x=1745955338; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wTTbJUYSutthRAHWERBfaY61+pWxicGlAYRiaD9+MBo=;
- b=JGp1UPR5fuVG0BgFgXe8uCm5cwUZgggBydyYsfxu/W4y03k7ZAAMwUkwpDnl1dknIN
- X2vDn0tt3oi7fchVWrSNi8/tE2v4sauzz/kna1yFU4x962UFmhvXVokd+Khil5SJ6VGf
- evwX5iQ6r2ae3rDZq2BuLz8cqBpIasDsC1ZQFDRzr/OPoDAYbi39WaTNl3l2oEtHidYP
- tHR6cr10kxZQwhNVCKiyoOmpTTaR8Izm4T0rkRMZBH6flMFNPdii2ZubO9JdfaLrfWJ7
- XQGteDn29gZSvzO5mU1y8mzCH9FCC9cp5BOkSJRzGFSGnoucKlrf4/6k/XFuuEX8vWVe
- V49A==
+ bh=34NdhhU3f0ctFhHISwM+Va89Ek8XPnoY2t73ZYMcmeo=;
+ b=rxrtKf9j2yaXah8abqhxm0F/aNnUFq/AOmUTiePySU+VBsySWGfyZqH0e9GnKoVr06
+ PLbsqQRFTNN3j8V1/9YJ6scIeqkOH2b9YdGv7q/Vdf7ZiOM/DKVc0va+EOe9zgqsbAcV
+ MzvcjFpeUJ/BX7xqSnaULK+nRBZL2oEXFEKFtq9zxb2/PDn3Ggvj/8gJv0B7a5+/Jv9Z
+ pyyTy+DDPj6cMyvNHoJMG9LM3BOB8zNBRmwWP5BT+Y7KCID6SSdrXrHsSM1J4jdbqTzv
+ t1oen8GWh+P5gx32H4DeC7a9HYxUtEAyboGI9xC4uFDh/8ZgaSTZbxU5BkL4qFpbwtZu
+ eNvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350517; x=1745955317;
+ d=1e100.net; s=20230601; t=1745350538; x=1745955338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wTTbJUYSutthRAHWERBfaY61+pWxicGlAYRiaD9+MBo=;
- b=bmMlsPFgb8feTJy28XBfPcaXnZ1mR6yEc4RKU29D4XNBCb7iHzR/ytfVt0eHhZ13VH
- wPe2zBX9fJYf7mDp8BZYEaMFfexVrhoxp3jf1ux9y1BNSsugZT5Cn/VKkldRFS7Vc1Pz
- 2pYMfJTXGF/ECerfHn+Wmux3ebQGnloUbjWVuEyvu8RuB4vHsNvgY3Rh2ryrWZW2yLA5
- YMWsq6R0E7CxOX3dyu7aRB8ZD7bvvpqKYgDoP19BFXPLD0PsFHWrO4mHJeUfD5sNQuDg
- OYPCy+9nfvvO++Ao27bQHr4JtDPWqZeXzx18uz48ouCLpHKEpj3q1B/sWBUdb30fDrxT
- 9niw==
-X-Gm-Message-State: AOJu0Yx3JfwpaOeEjNvtiwkgJeerf10kDChgsNVVgPW5Amo7vfYq9MU3
- GMiPFBLQAzeW1UucJoS/GOdkC+d89IwyaXaUyEVvTqRYtnvurC35nR4qoUb9yUwxz4Lb/O9pYN7
- l
-X-Gm-Gg: ASbGncuS2zpRtMHtvf+Uk2+XBJHQSVlmJ0FU+neOtcMpG0rEM2tM1KTYj1WRazs/DJi
- m5Fo341CVZj94dWRxROgMtcmqYZ190VbBcB4H9xRohfu6F3Y5HYdM6gMBYPq9L0WZaaDj3urDfG
- jwCGEU0NjX1dgqsuJj/TmMbXAIes0TNt7n0Wckg/C6fDawE7fF9/8JaMaCVYQFpc3DN3ZQajJ1S
- r3pe9T5e0/S67tlVhKWNnqPPamGoPXldw6YsqsfivAQ/0ECSx8urxo4EOTol4zTkdWp924DloC+
- SWIglZB471gf0PRYhJnabcRgX/5DbNGcIpjFwfDsEq6YnqPxeE6usFPLCPzr+dsqOrw49BHwEc4
- =
-X-Google-Smtp-Source: AGHT+IEN79ZnpXd2WZW7/CzCrQkflbbXtTzueXTzCs/wdF0KezWejwERUMQ0tNOjK7obHYuugMgF4A==
-X-Received: by 2002:a17:902:ce01:b0:223:569d:9a8b with SMTP id
- d9443c01a7336-22c53580d1dmr207953245ad.18.1745350517215; 
- Tue, 22 Apr 2025 12:35:17 -0700 (PDT)
+ bh=34NdhhU3f0ctFhHISwM+Va89Ek8XPnoY2t73ZYMcmeo=;
+ b=SO+yAB6NZsgG9E820Gb3SLFD7k8N40YOQlGmbXqRoDgVtZ5n3Zu+e0CKsi5jSHx8by
+ AMYG+DDawVyjZ6OubzDX8mMVe79/yaH9wzqrGhZShtkJLWN0svWoNR8brPA/uKYq8mBY
+ r8Stmjr0rUpAuBiq1mVlIS/Orz7VJVR5q18FovXrexIUk/UARJxIKRLtB6lYHTSBo/oV
+ NCbY6LcrRTzkrNn9nN1tK227U8DUTENVFHJy5LIXvhJteAUcLFrwswiHBJmreF757FsI
+ 619ZmqC7QuXdd3EOuRC2bWEzSAJJeJD7bi36bX4foDNsv0z2Us/LQwRwSB9qzHGJzxG6
+ pEjQ==
+X-Gm-Message-State: AOJu0YzO/1NZiAnkACzv9ZEoIxgA8bogRQn0GdcAtn6cbRlUxx44IOeD
+ 7GxKv3v4pAi7ItZlLBwGZnErA/abn9NawPs4YkkH+FeIsO3TJsZS/8DWTHjdnhsNTdcIWEmy+dt
+ R
+X-Gm-Gg: ASbGncu9GVg1CgZxcmTUn+hok7p9aVzYN3XA9YT/cHmC2qabvPBXVoqCK4lHq0dQ6yj
+ WiZf43KZucxtbuUxglndZJKrZhqag3jAxIqGrG6IaDVLc7f1LephYnIIMWot1piI9j75ejrwt/p
+ /+ni/NFEPVaW6jBSc4+UKOltiV/aHpvekPZnbfCd07eSEDXUhfYzWN3TvOplek+wMyNRRoSREI6
+ 40YRDNU8JIGUqefYta4Z47k+8EfFnWWaMM6gafy4GB5ro+BUXDPv6rwyZbTR0WStaKmdPMI+0Wm
+ j72gQMQwQ51kJhmPWKRPMZClYt+fFzt9giy7jqkbjEArraqFhTFToOLq0yfywFVaAFxgdLsWujL
+ 8PK5+HfKXtQ==
+X-Google-Smtp-Source: AGHT+IF2f5rPLkTHWt89GTslgR1eP7b98JgYrmBPjn//sv1hKsMuYH7fPwWMTQDtuxDXwrmvbp3irw==
+X-Received: by 2002:a17:903:41c7:b0:220:faa2:c911 with SMTP id
+ d9443c01a7336-22c535a4b39mr226659575ad.14.1745350538534; 
+ Tue, 22 Apr 2025 12:35:38 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.16
+ d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:35:16 -0700 (PDT)
+ Tue, 22 Apr 2025 12:35:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 086/147] target/ppc: Restrict SoftMMU mmu_index() to TCG
-Date: Tue, 22 Apr 2025 12:27:15 -0700
-Message-ID: <20250422192819.302784-87-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 119/147] meson: add common hw files
+Date: Tue, 22 Apr 2025 12:27:48 -0700
+Message-ID: <20250422192819.302784-120-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,63 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Convert CPUClass::mmu_index() to TCGCPUOps::mmu_index(),
-restricting ppc_cpu_mmu_index() to TCG #ifdef.
+Those files will be compiled once per base architecture ("arm" in this
+case), instead of being compiled for every variant/bitness of
+architecture.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We make sure to not include target cpu definitions (exec/cpu-defs.h) by
+defining header guard directly. This way, a given compilation unit can
+access a specific cpu definition, but not access to compile time defines
+associated.
+
+Previous commits took care to clean up some headers to not rely on
+cpu-defs.h content.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250401080938.32278-16-philmd@linaro.org>
+Message-ID: <20250325045915.994760-24-pierrick.bouvier@linaro.org>
 ---
- target/ppc/cpu_init.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ meson.build | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 17f0f3d3ff..fd8c42069e 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7216,6 +7216,11 @@ static void ppc_restore_state_to_opc(CPUState *cs,
+diff --git a/meson.build b/meson.build
+index 657949326b..bcb9d39a38 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3682,6 +3682,7 @@ hw_arch = {}
+ target_arch = {}
+ target_system_arch = {}
+ target_user_arch = {}
++hw_common_arch = {}
  
-     cpu->env.nip = data[0];
- }
+ # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
+ # that is filled in by qapi/.
+@@ -4079,6 +4080,34 @@ common_all = static_library('common',
+                             implicit_include_directories: false,
+                             dependencies: common_ss.all_dependencies())
+ 
++# construct common libraries per base architecture
++hw_common_arch_libs = {}
++foreach target : target_dirs
++  config_target = config_target_mak[target]
++  target_base_arch = config_target['TARGET_BASE_ARCH']
 +
-+static int ppc_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    return ppc_env_mmu_index(cpu_env(cs), ifetch);
-+}
- #endif /* CONFIG_TCG */
++  # check if already generated
++  if target_base_arch in hw_common_arch_libs
++    continue
++  endif
++
++  if target_base_arch in hw_common_arch
++    target_inc = [include_directories('target' / target_base_arch)]
++    src = hw_common_arch[target_base_arch]
++    lib = static_library(
++      'hw_' + target_base_arch,
++      build_by_default: false,
++      sources: src.all_sources() + genh,
++      include_directories: common_user_inc + target_inc,
++      implicit_include_directories: false,
++      # prevent common code to access cpu compile time
++      # definition, but still allow access to cpu.h
++      c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU'],
++      dependencies: src.all_dependencies())
++    hw_common_arch_libs += {target_base_arch: lib}
++  endif
++endforeach
++
+ if have_rust
+   # We would like to use --generate-cstr, but it is only available
+   # starting with bindgen 0.66.0.  The oldest supported versions
+@@ -4244,8 +4273,14 @@ foreach target : target_dirs
+   arch_deps += t.dependencies()
  
- #ifndef CONFIG_USER_ONLY
-@@ -7225,11 +7230,6 @@ static bool ppc_cpu_has_work(CPUState *cs)
- }
- #endif /* !CONFIG_USER_ONLY */
+   target_common = common_ss.apply(config_target, strict: false)
+-  objects = common_all.extract_objects(target_common.sources())
++  objects = [common_all.extract_objects(target_common.sources())]
+   arch_deps += target_common.dependencies()
++  if target_type == 'system' and target_base_arch in hw_common_arch_libs
++    src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
++    lib = hw_common_arch_libs[target_base_arch]
++    objects += lib.extract_objects(src.sources())
++    arch_deps += src.dependencies()
++  endif
  
--static int ppc_cpu_mmu_index(CPUState *cs, bool ifetch)
--{
--    return ppc_env_mmu_index(cpu_env(cs), ifetch);
--}
--
- static void ppc_cpu_reset_hold(Object *obj, ResetType type)
- {
-     CPUState *cs = CPU(obj);
-@@ -7482,6 +7482,7 @@ static const TCGCPUOps ppc_tcg_ops = {
-   .initialize = ppc_translate_init,
-   .translate_code = ppc_translate_code,
-   .restore_state_to_opc = ppc_restore_state_to_opc,
-+  .mmu_index = ppc_cpu_mmu_index,
- 
- #ifdef CONFIG_USER_ONLY
-   .record_sigsegv = ppc_cpu_record_sigsegv,
-@@ -7518,7 +7519,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
-                                        &pcc->parent_phases);
- 
-     cc->class_by_name = ppc_cpu_class_by_name;
--    cc->mmu_index = ppc_cpu_mmu_index;
-     cc->dump_state = ppc_cpu_dump_state;
-     cc->set_pc = ppc_cpu_set_pc;
-     cc->get_pc = ppc_cpu_get_pc;
+   target_specific = specific_ss.apply(config_target, strict: false)
+   arch_srcs += target_specific.sources()
 -- 
 2.43.0
 
