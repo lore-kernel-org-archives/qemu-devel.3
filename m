@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF0FC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90BEC369D7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u76YH-0006Rj-QK; Tue, 22 Apr 2025 01:52:13 -0400
+	id 1u76ZL-0007Mf-Ih; Tue, 22 Apr 2025 01:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u76YF-0006Nt-Fr; Tue, 22 Apr 2025 01:52:11 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1u76ZK-0007MO-6n; Tue, 22 Apr 2025 01:53:18 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=h5bN=XI=kaod.org=clg@ozlabs.org>)
- id 1u76YC-0002FZ-1V; Tue, 22 Apr 2025 01:52:10 -0400
+ id 1u76ZI-0002K8-4F; Tue, 22 Apr 2025 01:53:17 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhWb72GT9z4x1w;
- Tue, 22 Apr 2025 15:52:03 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZhWcS5b61z4x1w;
+ Tue, 22 Apr 2025 15:53:12 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhWb43Bqwz4w2J;
- Tue, 22 Apr 2025 15:52:00 +1000 (AEST)
-Message-ID: <5e9fb0a7-a796-4a42-bd74-3643e6e7177b@kaod.org>
-Date: Tue, 22 Apr 2025 07:51:58 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZhWcQ17mlz4w2J;
+ Tue, 22 Apr 2025 15:53:09 +1000 (AEST)
+Message-ID: <e608e2dc-3d93-4daa-aa1e-39a3fe5205b8@kaod.org>
+Date: Tue, 22 Apr 2025 07:53:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] target/ppc: Introduce macro for deprecating
- PowerPC CPUs
+Subject: Re: [PATCH v5 2/2] target/ppc: Deprecate Power8E and Power8NVL
 To: Aditya Gupta <adityag@linux.ibm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>,
@@ -41,7 +40,7 @@ Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 References: <20250422044156.26554-1-adityag@linux.ibm.com>
- <20250422044156.26554-2-adityag@linux.ibm.com>
+ <20250422044156.26554-3-adityag@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,16 +85,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250422044156.26554-2-adityag@linux.ibm.com>
+In-Reply-To: <20250422044156.26554-3-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=h5bN=XI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,113 +113,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/22/25 06:41, Aditya Gupta wrote:
-> QEMU has a way to deprecate CPUs by setting the 'deprecation_note' in
-> CPUClass.
+> Power8E and Power8NVL variants are not of much use in QEMU now, and not
+> being maintained either.
 > 
-> Currently PowerPC CPUs don't use this deprecation process.
+> Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
+> to be exact:
 > 
-> Introduce 'POWERPC_DEPRECATED_CPU' macro to deprecate particular PowerPC
-> CPUs in future.
+>      commit c5424f683ee3 ("Remove support for POWER8 DD1")
 > 
-> With the change, QEMU will print a warning like below when the
-> deprecated CPU/Chips are used (example output if power8nvl is deprecated):
-> 
->      $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
->      qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
->      ...
-> 
-> Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
-> --cpu ?' (example output if power8nvl is deprecated):
-> 
->      $ ./build/qemu-system-ppc64 --cpu help
->        ...
->        power8e          (alias for power8e_v2.1)
->        power8nvl_v1.0   PVR 004c0100 (deprecated)
->        power8nvl        (alias for power8nvl_v1.0)
->        power8_v2.0      PVR 004d0200
->        ...
+> Deprecate the 8E and 8NVL variants.
 > 
 > Suggested-by: Cédric Le Goater <clg@kaod.org>
 > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   docs/about/deprecated.rst | 9 +++++++++
+>   target/ppc/cpu-models.c   | 8 ++++----
+>   2 files changed, 13 insertions(+), 4 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 05381441a9ff..527f2613dcb5 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -275,6 +275,15 @@ embedded 405 for power management (OCC) and other internal tasks, it
+>   is theoretically possible to use QEMU to model them. Let's keep the
+>   CPU implementation for a while before removing all support.
+>   
+> +Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.0)
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+You should adjust the QEMU version to 10.1 now.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> ---
->   target/ppc/cpu-models.c | 12 +++++++++++-
->   target/ppc/cpu_init.c   |  7 ++++++-
->   2 files changed, 17 insertions(+), 2 deletions(-)
-> 
+
+> +
+> +The Power8E and Power8NVL variants of Power8 are not really useful anymore
+> +in qemu, and are old and unmaintained now.
+> +
+> +The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
+> +be considered deprecated.
+> +
+>   System emulator machines
+>   ------------------------
+>   
 > diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> index ece348178188..78ef23b4c4b8 100644
+> index 78ef23b4c4b8..cc79a6373d63 100644
 > --- a/target/ppc/cpu-models.c
 > +++ b/target/ppc/cpu-models.c
-> @@ -32,17 +32,20 @@
->   /* PowerPC CPU definitions                                                 */
->   #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
->       glue(glue(glue(glue(pvr, _), svr), _), type)
-> -#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-> +#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _deprecation_note) \
->       static void                                                             \
->       glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
->       (ObjectClass *oc, void *data)                                           \
->       {                                                                       \
->           DeviceClass *dc = DEVICE_CLASS(oc);                                 \
-> +        CPUClass *cc    = CPU_CLASS(oc);                                    \
->           PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
->                                                                               \
->           pcc->pvr          = _pvr;                                           \
->           pcc->svr          = _svr;                                           \
->           dc->desc          = _desc;                                          \
-> +                                                                            \
-> +        cc->deprecation_note = _deprecation_note;                           \
->       }                                                                       \
->                                                                               \
->       static const TypeInfo                                                   \
-> @@ -63,6 +66,13 @@
->       type_init(                                                              \
->           glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
->   
-> +#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
-> +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, NULL)
-> +
-> +#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc, _deprecation_note)\
-> +    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type,       \
-> +            _deprecation_note)
-> +
->   #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
->       POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
->   
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index f81cb680fc38..78a25637ad4f 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -7144,6 +7144,7 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
->   {
->       ObjectClass *oc = data;
->       PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
-> +    CPUClass *cc = CPU_CLASS(oc);
->       DeviceClass *family = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
->       const char *typename = object_class_get_name(oc);
->       char *name;
-> @@ -7154,7 +7155,11 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
->       }
->   
->       name = cpu_model_from_type(typename);
-> -    qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
-> +    if (cc->deprecation_note) {
-> +        qemu_printf("  %-16s PVR %08x (deprecated)\n", name, pcc->pvr);
-> +    } else {
-> +        qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
-> +    }
->       for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
->           PowerPCCPUAlias *alias = &ppc_cpu_aliases[i];
->           ObjectClass *alias_oc = ppc_cpu_class_by_name(alias->model);
+> @@ -732,12 +732,12 @@
+>                   "POWER7 v2.3")
+>       POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
+>                   "POWER7+ v2.1")
+> -    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
+> -                "POWER8E v2.1")
+> +    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
+> +                "POWER8E v2.1", "CPU is unmaintained.")
+>       POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
+>                   "POWER8 v2.0")
+> -    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
+> -                "POWER8NVL v1.0")
+> +    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
+> +                "POWER8NVL v1.0", "CPU is unmaintained.")
+>       POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+>                   "POWER9 v2.0")
+>       POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
 
 
