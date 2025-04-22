@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D35C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D044CC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u77M2-0003df-Cb; Tue, 22 Apr 2025 02:43:38 -0400
+	id 1u77MW-0004C4-5o; Tue, 22 Apr 2025 02:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77Lh-0003ZJ-RP
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:43:20 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77MR-00046z-Am
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:44:04 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77Ld-0007vo-C0
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:43:16 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39c1ee0fd43so4299416f8f.0
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 23:43:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77MO-0007yq-Gy
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 02:44:02 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-39c30d9085aso3462317f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 23:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745304192; x=1745908992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745304237; x=1745909037; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=AX7kKboruwAu8J9cxBWEtuts3z3qq+WSvcjIXuA4QTY=;
- b=rKr9IiGKXbSTTDxUQzeuVZomxCbPDmQWHkgVOJo3iDadSfkqWz5BtQOCqIDtL2VFsA
- jr6vSVgpqz7nar6y9f4dHJ40Ds60acACsO+axMjxOFxl7jqVnNaghsrJbJPyH9dl0U0L
- VdjIFGK/Sd+QtZHIZKIU+NqIpXZVLLCZZqDiHY4Bmma0TkXlRdL9VTPelRbKUufsEvJ0
- PFTcK7bkukeIkaK5iN9q+nviN7B90MC2oLaquR8vPaSbMKFDMQa9FbAkrihzlgX1NSoN
- TEnMaO/P/m4KmAgMsV+gPFymDi9wFBQIntVrP9mNzf9ySVx77LUtLvbaHStaz8Vizguj
- adPg==
+ bh=+9UB07EjzDEhXxVE2VMd7KxrceRog099DGJ5fspr6Kg=;
+ b=xvnhPhHa7xhbQ+1q+EsyYhcfLOhdMDV3YWXFcwcaILG6P7w2Yga3WYUqu1L/Zhuofd
+ 9X0hBZvmLilwHhDKjG+FZa3tNWGJYK0NtMVuflPu1ENO0uJjYRYXJxXzN8Z2quvVOxV6
+ iXyvqb3mL8yWQXA6mU5Z0N8MoidGSO8lXkR55G36tci9xqHM1EoFBIKc5YMfZC2JqUQS
+ Yh2FFEfoMQe+s5MeMBJ2QjBsmNTGC1YzJ+uSDYwj3cf7oSnxNdJTeeIIDABgUa4iPY2m
+ 6q4P4gssJR/fceYAD+Y3iSDnHF9lQUStp973asMIkRfSU89rVNnC2m7sx7YF/tOMofLR
+ rGaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745304192; x=1745908992;
+ d=1e100.net; s=20230601; t=1745304237; x=1745909037;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AX7kKboruwAu8J9cxBWEtuts3z3qq+WSvcjIXuA4QTY=;
- b=cSKGoy5vqEA2pwwEol2/L1Y8l13S8Vaciada1QLgq6szGT4sKoCtpzjXm84vRjQjva
- N9NGLdLTz5cpMN15ee1mn0GHzqdy7m8lruKX7LtHooYQWtr59AIOFuT/1h3WXwOpcFfu
- w/qOOdHruTeVp+3COc6wjAXvI7EloBU4bWrt7Vzgf78xQeEANM71Ku0BTFtGpWq2UMOf
- 5j79/xsWqypL5Toruu7IZBzl/vk3m7c20VdQE1s8K0UfmDrk+8YB8H76jPd3Z/brNVtZ
- LTMkPzQNdkNltRoo8eUxwq5ErxKNXhKeDkbKsnPoX3r0sA8eOenhyK+UGijx2IObr9LQ
- Xk+w==
+ bh=+9UB07EjzDEhXxVE2VMd7KxrceRog099DGJ5fspr6Kg=;
+ b=Xf3GAtaPtfMzsOkC+QUjVbNJo8qMN8tKyD1OVVRpvssdJL751IqeWEkOCMvhbkDKd2
+ xGQyOfkETpt2SXpQhgxQfh8VmDrJMyX9ttbcdglOQ6gW6EnAvuBGujfqm/h15bGawFmK
+ Yk5IsL2l64j/m9gU0H2Jsht1lqoZSs5iWgHh4GjJDtldR500aau9o8RsL7ULd7Yw3nuA
+ nLqTIBbkhvqiPkgl/87Qqq6Sn/ABfAp8aIhKInGK110mV1B2WGRJEycf4BaLOfnXAtgS
+ BW4R8FH5nJUl070edCUbGwGpE+5R1j5/AgX+u380J4yof6M1MyLQZwJjmpdMGx6JB3UB
+ 3UNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnNTVjBPjcFtB5XRllC1ujCzaZHcgm0r4uTPeiajg28S0tKCOSlViMIXY4c3uzBSVao58kFZK9JhQE@nongnu.org
-X-Gm-Message-State: AOJu0YwqMfNy/qVd7+UaIR5Vg12euaj41XMPayW0b8elRKNJxJWIkl3Y
- NUTHHhzCGkSqd13kjHknc0B+L063fOS6cVnHXLjaXcP9paP2jRqS1ibp6SSYdolWcBexud2SlEg
- w
-X-Gm-Gg: ASbGncu65lPl9+APWJGsM7ZCPJijhPy6Zr7PxlPo7/Lsv9JDHL/JcQJkmnYEjgjlkWa
- bw+fgkjVvZwRlJHN4OYPSy/sW2wqsJtyhmW4cXiWJDk4F4mYcrr7iQsvrp2INdxddEnkTcLLwi3
- sbMpdclJHPNFxKogkERL2Ytrss54WugWr3VYsNm9CXkocIUXpC/FgUTrnbv+Rm6BfPLnCoKsKME
- /8HEWEQ1AE8BRS7/2TyNEdgAFvIUPK9y0OgVveUz8gzP9C5d0SZIeYy2ZuZXqWXy2jCU2vPRe2x
- +XYOn/mlM0Vy+Th2XpVaTBRiL3bVtP48qPg1nIxzzQVISp+OqWdUdIRg1OGkU4px7zjy4FFkK+r
- UGeolsiTN
-X-Google-Smtp-Source: AGHT+IEepHdK7IYO8HBEjYBhodRfYRb2HZU7yu/DSYXhUmsEh2yoLRvCtz06id9IG8c95DaH3egeUQ==
-X-Received: by 2002:a05:6000:40dc:b0:39c:30cd:352c with SMTP id
- ffacd0b85a97d-39efba383bbmr9963080f8f.8.1745304191777; 
- Mon, 21 Apr 2025 23:43:11 -0700 (PDT)
+ AJvYcCWES5joFk0XT9D5PNA3fNROEDYpRPqq6o+u3I05rT5suESkBw08zj1DjW9vgJdig76kNl+RDkl6sRvx@nongnu.org
+X-Gm-Message-State: AOJu0Yw0DzyXKSeHpvbbYep9oiY0vaVyvZJptSSgGaTmTHfTZpt2Q/wI
+ GO6YwnYWFqTdz0udAbeEN2P038571Tm8/bjYC2k7B02T8qMtKrnsIn49QKYVgXY=
+X-Gm-Gg: ASbGncuwiTtraBWloln5AbvpEPvFHD4OphnXGvpNbe96SONfDEfCkmZaiv5DST69+7G
+ QHAnmFtoz2G+y/Q7XnKqHHvEsWoPCYP1Q+s157JjGyTbUunJUYFPptaDZzLKMu4NZjIA1S0RO7P
+ 2TtUuZl+jcBXOxOFx9cC0fApqMoJm11Jn8dod9eRHpO+SzDRS8Y3heXXAL3x7M16EbsYkoDKHwo
+ yObzMrz1n1Cx7v0L6rNCoUf2s5RbfzZQQ81j8PPKBohphfz+XhIslZlh/NRJ31qF4EFE3/DK+HQ
+ lLY91ALDyTIG35u2pkEdvyt4Sp02B+avFGGCQPY0ctW5D0HgValuYvGl+g5WfdIlZDN0GqBKwru
+ nhD6gU/sCtRXZXD0osZg=
+X-Google-Smtp-Source: AGHT+IGicNEOGGWG9Ql2/GtKu2hXalYv3ESAo9JoC/qmXK6F5zqhCTj6Dxi2AfDm2j2sZt9xm6esSQ==
+X-Received: by 2002:a5d:47cb:0:b0:39e:f89b:85dc with SMTP id
+ ffacd0b85a97d-39efba52f5cmr10905880f8f.17.1745304237341; 
+ Mon, 21 Apr 2025 23:43:57 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4406d5a9e38sm164703545e9.2.2025.04.21.23.43.10
+ ffacd0b85a97d-39efa43be53sm13882739f8f.41.2025.04.21.23.43.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Apr 2025 23:43:11 -0700 (PDT)
-Message-ID: <a0579d5c-8a96-42e7-ac4c-37cd65b4148f@linaro.org>
-Date: Tue, 22 Apr 2025 08:43:09 +0200
+ Mon, 21 Apr 2025 23:43:56 -0700 (PDT)
+Message-ID: <214e3bef-09cd-426b-aa7a-65ee540f7cab@linaro.org>
+Date: Tue, 22 Apr 2025 08:43:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/20] util/cacheflush.c: Update cache flushing
- mechanism for Emscripten
+Subject: Re: [PATCH v2 13/20] block: Fix type confict of the copy_file_range
+ stub
 To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -93,21 +92,21 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
  qemu-s390x@nongnu.org
 References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
- <73301cc216217d5c3e0d7acdd32482e36f4f045c.1745295397.git.ktokunaga.mail@gmail.com>
+ <ce34a721a5283fce854f417baf7b1c8f5c48c028.1745295397.git.ktokunaga.mail@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <73301cc216217d5c3e0d7acdd32482e36f4f045c.1745295397.git.ktokunaga.mail@gmail.com>
+In-Reply-To: <ce34a721a5283fce854f417baf7b1c8f5c48c028.1745295397.git.ktokunaga.mail@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,23 +123,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/4/25 07:27, Kohei Tokunaga wrote:
-> Although __builtin___clear_cache is used to flush the instruction cache for
-> a specified memory region[1], this operation doesn't apply to wasm, as its
-> memory isn't executable. Moreover, Emscripten does not support this builtin
-> and fails to compile it with the following error.
+> Emscripten doesn't provide copy_file_range implementation but it declares
+> this function in its headers. Meson correctly detects the missing
+> implementation and unsets HAVE_COPY_FILE_RANGE. However, the stub defined in
+> file-posix.c causes a type conflict with the declaration from Emscripten
+> during compilation.
 > 
->> fatal error: error in backend: llvm.clear_cache is not supported on wasm
-> 
-> To resolve this, this commit removes the call to __builtin___clear_cache for
-> Emscripten build.
-> 
-> [1] https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005f_005f_005fclear_005fcache
+> To fix this error, this commit updates the stub implementation in
+> file-posix.c to exactly match the declaration in Emscripten's headers. The
+> manpage also aligns with this signature.
 > 
 > Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 > ---
->   include/qemu/cacheflush.h | 7 +++++++
->   util/cacheflush.c         | 4 ++++
->   2 files changed, 11 insertions(+)
+>   block/file-posix.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
