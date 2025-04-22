@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A263C369D1
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03E7C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JP7-0005MI-HA; Tue, 22 Apr 2025 15:35:39 -0400
+	id 1u7JOS-0003v9-P3; Tue, 22 Apr 2025 15:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLo-0000vk-KQ
+ id 1u7JLp-00010i-8r
  for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:13 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLj-0006el-QN
+ id 1u7JLm-0006fZ-3f
  for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:12 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2260c91576aso48793155ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:32:05 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-227914acd20so1911595ad.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:32:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350325; x=1745955125; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350328; x=1745955128; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tlaPgaqu+RlzrqR3gxsyz4cZtfxx2Xq8XD/b6ALmxlQ=;
- b=So8RjdNCEuhDHGV0jbz9Xe2lVdTC7ANH7d20hpebGNL5lH8j9HL004xeFK/H+weJQB
- nAIe7vsBvJTvLLmffz17KEMfNo8FYTe7RhJxkpMUsA90QgcSlwtvIOD7VdjEVNOybYlR
- QdsXyiUX1K+55fb2kRDET+j10AxnjJhVZPlAKgi+VBEtQ0+ecbvnHWdYztGEzC8wq/67
- ES3NLJEX3OHm9VHWzo+SNzaKxwIGZvWMpaZnVYw0V1pq+eFRljCL3sO3jgylhKIipGfm
- ckfMgV2zNL1nz7NiTHQ0hqY1ThkGQdWAOLGAbRXiQZm23ssFmb08pbKICEcza6a2X/xs
- azbg==
+ bh=eY3tVR1Ho6nb9UcI2ivFSVueJvDpQEAHEetuLect7PU=;
+ b=CaOs1zQrLP3GO7sYjr9yaBEghwWrb/Bj14b9xeMF/2vWBcpP85AZtbMF5AZybMkhj4
+ edSgyARnkLMaG7hyJe3W2vYk4H0tc2PYSvewPc4o0IjSWnRxJZIdMWEc4mctJFlrP93g
+ /NZFC5b2OCSzdviRojvcHLA2i3Z3negpNO8JTx3nESX8ve8iFi+zTmQMr2ATZZYUgiuZ
+ 3oi0GoZkEhE6pyUYTU+sNicGopWByIoXfr0CJIxqiOYoBCjFg20uive67Nh93K77pZaA
+ k0nyh+q27Ss7hxyYIDYkF+AudEkBfUJYz7ZL/BGiwi9IP5moqHsrGPaqSUSo49EAClj7
+ P3Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350325; x=1745955125;
+ d=1e100.net; s=20230601; t=1745350328; x=1745955128;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tlaPgaqu+RlzrqR3gxsyz4cZtfxx2Xq8XD/b6ALmxlQ=;
- b=QF9hsso117gerLquWdR5H9oQaQ73iinE0wc2tnFmTtxmcPSw89VmqQzWVH0EU0D02m
- 3qYoPiQKdfMUMPIsDCWHBCwediMlokoN1JjSIQM16k91rrE4lIf1RmVxgKSwNz7GJMLI
- 7ubj7d0a+gZ13AmYGyKCxccxBIo+FbzWOQcmeGQ0khzl03EZ6vFxrRstWt5vA53YMGXZ
- 5nKO7h5BIBUQbj0c1qag18o+LftDcPDZ/FEQJUgtuNkon9awAm7KHwExbY5JJeNtZnXM
- 9WYGP9EkbuauAGg49CrHJasAnswZuMTuaVuGPrYG0NCvE+Cg5mDowqYeMvSZ3b7gZU11
- SzgQ==
-X-Gm-Message-State: AOJu0YwjYhfNjzKR+2EWF6AwvEnfctGt88e42UO+RGw2iqmqYNXW7QvM
- 0HgHUMhDhE4sphXpCnyovgfL6qdQUDVCa/weOmJkSYg5AIGgU7P3o9K/x3VtkdZyAnrVle9PqsL
- j
-X-Gm-Gg: ASbGncupy2opdbGXniWOuVuNlpodBnhcEB05+QoZzQOBhlwNMhPrj+/yYmLuwKWZpql
- 9wpf708PyxCOxYlaoAl/Ce53sCHcKMBIuKnL/DS0YKL5ljv5SZP8c6FwxTfqqwyzTbRQCnKN/9D
- GuuWXroqw+yzbTGdMZOdc6LTaXvLa4q1gpjYp0vQJ8WCgsCT9T6c4bareUh386bM3mvOJijpzpw
- iE/8ewGbeJJzcS/pvxuzBiIpw6sJrVsXaGIu1VMo7ik42GeD1iGkFthbKuLejECm9voyRBuzgHc
- 2fAQGwFLRMBjamfsqEp7pSg0XIx4WPu6+aBVEabPX34TbrSK23/x6Xosh4LfsEzIBrP+OGZ3HXE
+ bh=eY3tVR1Ho6nb9UcI2ivFSVueJvDpQEAHEetuLect7PU=;
+ b=w5b3vriDcfJ2OM1p/dOc2O5Mv8eK1t7jTS9nDlYfR22c+9wGqFO282aE47TJmQSdCK
+ vFW4vL88EeAOuwmQ03moC7wYZjHVEGC1pmO1qPYSvVt/z388ci36WnbVGFhuxgvorbVL
+ v4B+ukLiHHgmRpCcTTpsu4lYkJcb+MGt/t2/KlIIz0r5WdZGHQAhyXujWpFdWRN8NZq9
+ BottDw+UCARrm4nIEALZpUWHDE/+P5LgihOfR9OSC4GJ6U1O2T5vDMyLCu4opmsA8xtG
+ gXUtIoXYKK1WITG81jA0pOHTNChFIg7Jug9uqVZ10dMDgzY6TrVRUuk99Z3qmkV/19ju
+ Elgg==
+X-Gm-Message-State: AOJu0YwN9fmPG3i4EB49ELbRp/b0+CYVcZ679K+wR0AZJGavN4V2YH3l
+ WxMF0BRpWI2mP1wfE0aehXJQfmfBwcJ66nOdRWRmtFigb0XaaB/V0E2rJRIUXkqLJjirPVLhzes
+ t
+X-Gm-Gg: ASbGnctxY13//Eym23aCZyjL0V6Vrbh8hjMYTlqVrAmHlP5LZDisFXSEy+Z/lVVJ9yS
+ H4HnRxmdkl1LJqY/tvIjLGmt3F4uJeUrncEhMSrA4GD92zVuR87Cad87+UuqygDeNfewkD+FGT+
+ J73ZETH4l4iiFlR09yeAj69i/lYumstY+jyDdWVoQcVFuMf8PXh6R0w9LMSDZc9HYSHr/kIgpgt
+ dy9mNlyoACJ2mSzdmpfNK9JL4MBFdzOqn4GkBF2H3QG2B2mOvEW06hD1ODisPM9S+w0DNIasEJm
+ MGta0i8al0HqiMtnYOuHYm4CD2bkPOUBl42PwzDHFuhoMO+YqtCOYGXlS0+QhqXAkgkBmBckvsY
  =
-X-Google-Smtp-Source: AGHT+IE4EXj8VIYNumDC8LF3F/EdCzynvTTR5LbiwZlRM+e8P/bKy1FV2/YFZfAGh5NXfwufIR1Orw==
-X-Received: by 2002:a17:903:98c:b0:224:1780:c1ec with SMTP id
- d9443c01a7336-22c5360dc12mr294007565ad.35.1745350324702; 
- Tue, 22 Apr 2025 12:32:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1XuUKH/7K74RZSmdZPTIXr5pf8eKtb+uwN4z92vtHO05QFOG7gvQy0q/tgjGsfrqyJB1HZg==
+X-Received: by 2002:a17:902:fc4b:b0:21f:7078:4074 with SMTP id
+ d9443c01a7336-22da31974c3mr2742595ad.7.1745350328569; 
+ Tue, 22 Apr 2025 12:32:08 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.32.04
+ d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.32.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:32:04 -0700 (PDT)
+ Tue, 22 Apr 2025 12:32:08 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 067/147] include/exec: Move tb_{,
- set_}page_addr[01] to translation-block.h
-Date: Tue, 22 Apr 2025 12:26:56 -0700
-Message-ID: <20250422192819.302784-68-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 073/147] accel/tcg: Introduce TCGCPUOps::mmu_index() callback
+Date: Tue, 22 Apr 2025 12:27:02 -0700
+Message-ID: <20250422192819.302784-74-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,142 +101,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the accessor functions for TranslationBlock
-into the header related to the structure.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+We'll move CPUClass::mmu_index() to TCGCPUOps::mmu_index().
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250401080938.32278-3-philmd@linaro.org>
 ---
- include/exec/exec-all.h          | 49 -------------------------------
- include/exec/translation-block.h | 50 ++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 49 deletions(-)
+ include/accel/tcg/cpu-mmu-index.h | 5 ++++-
+ include/accel/tcg/cpu-ops.h       | 3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 19b0eda44a..fcad3446fe 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -123,55 +123,6 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
- #endif /* !CONFIG_USER_ONLY */
- #endif /* CONFIG_TCG */
+diff --git a/include/accel/tcg/cpu-mmu-index.h b/include/accel/tcg/cpu-mmu-index.h
+index 8d1cb53bfa..f1ca385d3c 100644
+--- a/include/accel/tcg/cpu-mmu-index.h
++++ b/include/accel/tcg/cpu-mmu-index.h
+@@ -10,6 +10,7 @@
+ #define ACCEL_TCG_CPU_MMU_INDEX_H
  
--static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
--{
--#ifdef CONFIG_USER_ONLY
--    return tb->itree.start;
--#else
--    return tb->page_addr[0];
--#endif
--}
--
--static inline tb_page_addr_t tb_page_addr1(const TranslationBlock *tb)
--{
--#ifdef CONFIG_USER_ONLY
--    tb_page_addr_t next = tb->itree.last & TARGET_PAGE_MASK;
--    return next == (tb->itree.start & TARGET_PAGE_MASK) ? -1 : next;
--#else
--    return tb->page_addr[1];
--#endif
--}
--
--static inline void tb_set_page_addr0(TranslationBlock *tb,
--                                     tb_page_addr_t addr)
--{
--#ifdef CONFIG_USER_ONLY
--    tb->itree.start = addr;
--    /*
--     * To begin, we record an interval of one byte.  When the translation
--     * loop encounters a second page, the interval will be extended to
--     * include the first byte of the second page, which is sufficient to
--     * allow tb_page_addr1() above to work properly.  The final corrected
--     * interval will be set by tb_page_add() from tb->size before the
--     * node is added to the interval tree.
--     */
--    tb->itree.last = addr;
--#else
--    tb->page_addr[0] = addr;
--#endif
--}
--
--static inline void tb_set_page_addr1(TranslationBlock *tb,
--                                     tb_page_addr_t addr)
--{
--#ifdef CONFIG_USER_ONLY
--    /* Extend the interval to the first byte of the second page.  See above. */
--    tb->itree.last = addr;
--#else
--    tb->page_addr[1] = addr;
--#endif
--}
--
- /* TranslationBlock invalidate API */
- void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
- void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last);
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index 3c69bc71a9..8b8e730561 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -13,6 +13,7 @@
- #include "exec/vaddr.h"
- #ifdef CONFIG_USER_ONLY
- #include "qemu/interval-tree.h"
-+#include "exec/target_page.h"
+ #include "hw/core/cpu.h"
++#include "accel/tcg/cpu-ops.h"
+ #include "tcg/debug-assert.h"
+ #ifdef COMPILING_PER_TARGET
+ # ifdef CONFIG_USER_ONLY
+@@ -33,7 +34,9 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
+ # endif
  #endif
  
- /*
-@@ -157,4 +158,53 @@ static inline uint32_t tb_cflags(const TranslationBlock *tb)
- bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
- void tcg_cflags_set(CPUState *cpu, uint32_t flags);
+-    int ret = cs->cc->mmu_index(cs, ifetch);
++    const TCGCPUOps *tcg_ops = cs->cc->tcg_ops;
++    int ret = tcg_ops->mmu_index ? tcg_ops->mmu_index(cs, ifetch)
++                                 : cs->cc->mmu_index(cs, ifetch);
+     tcg_debug_assert(ret >= 0 && ret < NB_MMU_MODES);
+     return ret;
+ }
+diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+index f60e5303f2..106a0688da 100644
+--- a/include/accel/tcg/cpu-ops.h
++++ b/include/accel/tcg/cpu-ops.h
+@@ -67,6 +67,9 @@ struct TCGCPUOps {
+     /** @debug_excp_handler: Callback for handling debug exceptions */
+     void (*debug_excp_handler)(CPUState *cpu);
  
-+static inline tb_page_addr_t tb_page_addr0(const TranslationBlock *tb)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    return tb->itree.start;
-+#else
-+    return tb->page_addr[0];
-+#endif
-+}
++    /** @mmu_index: Callback for choosing softmmu mmu index */
++    int (*mmu_index)(CPUState *cpu, bool ifetch);
 +
-+static inline tb_page_addr_t tb_page_addr1(const TranslationBlock *tb)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    tb_page_addr_t next = tb->itree.last & TARGET_PAGE_MASK;
-+    return next == (tb->itree.start & TARGET_PAGE_MASK) ? -1 : next;
-+#else
-+    return tb->page_addr[1];
-+#endif
-+}
-+
-+static inline void tb_set_page_addr0(TranslationBlock *tb,
-+                                     tb_page_addr_t addr)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    tb->itree.start = addr;
-+    /*
-+     * To begin, we record an interval of one byte.  When the translation
-+     * loop encounters a second page, the interval will be extended to
-+     * include the first byte of the second page, which is sufficient to
-+     * allow tb_page_addr1() above to work properly.  The final corrected
-+     * interval will be set by tb_page_add() from tb->size before the
-+     * node is added to the interval tree.
-+     */
-+    tb->itree.last = addr;
-+#else
-+    tb->page_addr[0] = addr;
-+#endif
-+}
-+
-+static inline void tb_set_page_addr1(TranslationBlock *tb,
-+                                     tb_page_addr_t addr)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    /* Extend the interval to the first byte of the second page.  See above. */
-+    tb->itree.last = addr;
-+#else
-+    tb->page_addr[1] = addr;
-+#endif
-+}
-+
- #endif /* EXEC_TRANSLATION_BLOCK_H */
+ #ifdef CONFIG_USER_ONLY
+     /**
+      * @fake_user_interrupt: Callback for 'fake exception' handling.
 -- 
 2.43.0
 
