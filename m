@@ -4,76 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC86C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8B9C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 06:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u76bc-0008F7-6f; Tue, 22 Apr 2025 01:55:40 -0400
+	id 1u76h3-0002bv-Kw; Tue, 22 Apr 2025 02:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u76bb-0008Ex-1m
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 01:55:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1u76h1-0002Yp-JH; Tue, 22 Apr 2025 02:01:15 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u76bY-0002cL-BE
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 01:55:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745301333;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cTafbxJg7gX2PgTxz4B6WM7mGAortUBwjXGoLWqwtC0=;
- b=BUTuxfQQGizdS9XUvd50puPm7obb2c6AsBJFjTvIVeCr5DcmMsGrIXbb3whnUcyuEglYW0
- UKwWlchQ+NwOn2uD4IWT/LQWQQRQRmrBbRhRd0tc5euSOn7W6l52RJtIN8fjG/qELk3smN
- qdUgQtaA1iQl16PFNkpEPkfxJLtm4tc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-1h_CNd8xOcCHPFJt2gHcJg-1; Tue,
- 22 Apr 2025 01:55:29 -0400
-X-MC-Unique: 1h_CNd8xOcCHPFJt2gHcJg-1
-X-Mimecast-MFC-AGG-ID: 1h_CNd8xOcCHPFJt2gHcJg_1745301328
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56D131800264; Tue, 22 Apr 2025 05:55:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8D331800947; Tue, 22 Apr 2025 05:55:25 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 743B021E6768; Tue, 22 Apr 2025 07:55:23 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,  Anton Johansson
- <anjo@rev.ng>
-Subject: Re: [RFC PATCH v3 01/14] qapi: Rename TargetInfo structure as
- BinaryTargetInfo
-In-Reply-To: <20250418172908.25147-2-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 18 Apr 2025 19:28:55
- +0200")
-References: <20250418172908.25147-1-philmd@linaro.org>
- <20250418172908.25147-2-philmd@linaro.org>
-Date: Tue, 22 Apr 2025 07:55:23 +0200
-Message-ID: <878qnsagfo.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1u76gx-0003Gs-UD; Tue, 22 Apr 2025 02:01:15 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LNMr1b031030;
+ Tue, 22 Apr 2025 06:01:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=pr4UnlwCYm16Z6IP9GNoZbtYxdpI
+ Oe39GxjMvvQi2zg=; b=W16/evCDWytKsQFmgreAf8eHZtfFxpohvNPZwHAr0xh0
+ C+f+OB3gK4wECgBg8go1fhTBrAluh5j0hUo2LB6oCh6tgGa7nbSWvE6aLKp4LjvZ
+ BjzPPa3wp6FwAf4i1cQVvFuPWm5/W6Yy/a0yil5VYU7KkJD1/m9cFLAw7EOUW9bm
+ FDFlZ/Bujj51Sd/eMvei3RgNTxZee5iFFQapD1QuZR3dlnFNFMl6f57MYQzB1fyN
+ zDxaUaZR3MCaavG5PxaRXJka3zp/vaDj2kbwjZsIddRkV0SQTI3e63S0vTcbD6KH
+ 2SjnUn/34xSW6DlHUMgRojyB3XjnR2IZWk52nX4JyQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465x5vsdv2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Apr 2025 06:01:07 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53M5vd1r000451;
+ Tue, 22 Apr 2025 06:01:07 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465x5vsduu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Apr 2025 06:01:07 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53M3Yg03001563;
+ Tue, 22 Apr 2025 06:01:00 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 464rck1943-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Apr 2025 06:00:59 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53M60uBC31457790
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Apr 2025 06:00:56 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D92D2004D;
+ Tue, 22 Apr 2025 06:00:56 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 245D12004B;
+ Tue, 22 Apr 2025 06:00:53 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.124.215.117])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Apr 2025 06:00:52 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Subject: [PATCH v6 0/2] Deprecate Power8E and Power8NVL
+Date: Tue, 22 Apr 2025 11:30:48 +0530
+Message-ID: <20250422060050.76094-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: OM7Xlt7NDbB7KW69BDQESY1sBiAasv20
+X-Proofpoint-ORIG-GUID: fb-0vk5bGAN3qML0t0Ni_J9-JUyeAhir
+X-Authority-Analysis: v=2.4 cv=CuO/cm4D c=1 sm=1 tr=0 ts=680730a3 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=31Clpgyuveq3k6-D5LcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-22_03,2025-04-21_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 phishscore=0 mlxlogscore=999
+ mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
+ definitions=main-2504220045
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.692,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,85 +121,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Power8E and Power8NVL are not maintained, and not useful to qemu, and
+upstream skiboot also has removed support till Power8 DD1.
+Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
+to be exact:
 
-> The QAPI-generated 'TargetInfo' structure name is only used
-> in a single file. We want to heavily use another structure
-> similarly named. Rename the QAPI one, since structure names
-> are not part of the public API.
->
-> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  qapi/machine.json          | 12 ++++++------
->  hw/core/machine-qmp-cmds.c |  4 ++--
->  2 files changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index a6b8795b09e..3246212f048 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -275,15 +275,15 @@
->  { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams' }
->=20=20
->  ##
-> -# @TargetInfo:
-> +# @BinaryTargetInfo:
->  #
-> -# Information describing the QEMU target.
-> +# Information describing the QEMU binary target.
+    commit c5424f683ee3 ("Remove support for POWER8 DD1")
 
-What's "the QEMU binary target"?  The QEMU binary's target?
+No direct way to deprecate the pnv chips, a field like deprecation_note
+could be added, but felt not needed as the chip will only get used if
+the user requests corresponding 8E / 8NVL CPU, which will print
+deprecation warning.
 
-From the QMP user's point of view, perhaps "the QEMU process's target"
-would make more sense.
+Also, no separate pnv machine for 8E and 8NVL, user has to pass --cpu,
+which will throw the deprecation warning. So just deprecating CPUs should
+be enough.
 
->  #
-> -# @arch: the target architecture
-> +# @arch: the binary target architecture
+Changelog
+=========
+v6:
+  + change qemu version from 10.0 to 10.1 in doc
+v5 (https://lore.kernel.org/qemu-devel/20250422043843.26115-1-adityag@linux.ibm.com/):
+  + split into 2 patches, defining macro, and deprecating 8e & 8nvl
+v4 (https://lore.kernel.org/qemu-devel/20250330211012.2932258-1-adityag@linux.ibm.com/):
+  + remove unnecessary 'if'
+v3:
+  + add 'deprecation_note' argument to the POWERPC_DEPRECATED_CPU macro
+v2:
+  + add mention to docs/about/deprecated.rst
+  + add '(deprecated)' in output of qemu-system-ppc64 --cpu help
 
-Are there non-binary target architectures?
+Base Commit: a9cd5bc6399a80fcf233ed0fffe6067b731227d8
 
->  #
->  # Since: 1.2
->  ##
-> -{ 'struct': 'TargetInfo',
-> +{ 'struct': 'BinaryTargetInfo',
->    'data': { 'arch': 'SysEmuTarget' } }
->=20=20
->  ##
-> @@ -291,11 +291,11 @@
->  #
->  # Return information about the target for this QEMU
->  #
-> -# Returns: TargetInfo
-> +# Returns: BinaryTargetInfo
->  #
->  # Since: 1.2
->  ##
-> -{ 'command': 'query-target', 'returns': 'TargetInfo' }
-> +{ 'command': 'query-target', 'returns': 'BinaryTargetInfo' }
->=20=20
->  ##
->  # @UuidInfo:
-> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-> index 3130c5cd456..408994b67d7 100644
-> --- a/hw/core/machine-qmp-cmds.c
-> +++ b/hw/core/machine-qmp-cmds.c
-> @@ -132,9 +132,9 @@ CurrentMachineParams *qmp_query_current_machine(Error=
- **errp)
->      return params;
->  }
->=20=20
-> -TargetInfo *qmp_query_target(Error **errp)
-> +BinaryTargetInfo *qmp_query_target(Error **errp)
->  {
-> -    TargetInfo *info =3D g_malloc0(sizeof(*info));
-> +    BinaryTargetInfo *info =3D g_malloc0(sizeof(*info));
->=20=20
->      info->arch =3D qapi_enum_parse(&SysEmuTarget_lookup, target_name(), =
--1,
->                                   &error_abort);
+Aditya Gupta (2):
+  target/ppc: Introduce macro for deprecating PowerPC CPUs
+  target/ppc: Deprecate Power8E and Power8NVL
+
+ docs/about/deprecated.rst |  9 +++++++++
+ target/ppc/cpu-models.c   | 20 +++++++++++++++-----
+ target/ppc/cpu_init.c     |  7 ++++++-
+ 3 files changed, 30 insertions(+), 6 deletions(-)
+
+-- 
+2.49.0
 
 
