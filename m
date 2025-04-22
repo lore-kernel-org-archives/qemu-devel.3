@@ -4,112 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0942DC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 04:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7F8C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u75Yy-00028T-Nx; Tue, 22 Apr 2025 00:48:52 -0400
+	id 1u76BF-0001Ii-Et; Tue, 22 Apr 2025 01:28:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1u75Yx-000287-Kz; Tue, 22 Apr 2025 00:48:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1u75Yv-0003gD-Rz; Tue, 22 Apr 2025 00:48:51 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4bJVc028145;
- Tue, 22 Apr 2025 04:48:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=PG9IMgmhu+JP9PBqdMuMxX1P9zkoFA
- DHZAygrIS2l8c=; b=dqMGTDwqQOOafuE21VqqF41q5hlvyXZOLAVke/qaoT5v5x
- zceMdiNdL8WkYx0U9yd3lrisUJjvQ3dkDXAHtTy0lSGrSCEHltNP55M2LPIGsofO
- HE/pHbtt+lr13xdJUioIKAiljuQ5f7t2K/Nmb1GczjaVrOOE/6S7zp7/zGzwXhPr
- /tKT88VPkXk5n7fiREqjBU1k0JI3LAHriWkHm/CSIA/9O3gOTD3tnOU79tcEU7LA
- TfiMfZQFCtkBLsj/3JcYzFsuiTdhV8rXq65O9ovOp+TSk9IQFAY6YR/ODzuZYQ2d
- NXqJZExLYiZTRKmlKwklr9E+lt63EhJhlW9XpSww==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4664878140-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 04:48:47 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53M4mi6E019489;
- Tue, 22 Apr 2025 04:48:47 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 466487813t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 04:48:46 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53M218cu002904;
- Tue, 22 Apr 2025 04:48:45 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 464q5nha85-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 04:48:45 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53M4mfiJ15270198
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Apr 2025 04:48:41 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CAFD22004D;
- Tue, 22 Apr 2025 04:48:41 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 89C8620043;
- Tue, 22 Apr 2025 04:48:38 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.215.117])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 22 Apr 2025 04:48:38 +0000 (GMT)
-Date: Tue, 22 Apr 2025 10:18:35 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u76BD-0001IK-Oj; Tue, 22 Apr 2025 01:28:23 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u76BB-0007o3-RU; Tue, 22 Apr 2025 01:28:23 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-aee79a0f192so2950956a12.3; 
+ Mon, 21 Apr 2025 22:28:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745299699; x=1745904499; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=c9YjZLFky15fQ25eN+PsZB2kxxrFQ2yvjf7JgWdhp2A=;
+ b=IRy/TvwRS3/jMLUElwUY4X8zgo/cBp6iStbIEyaIot5CFfS7Sa4e2qf6k0UwXrpD4h
+ AdUxagGCMtDlxKt2MI3ibOhdehSciL3v9GJv3A2sfgzf+SXD1Q0YUsfCY3pjDek3y7Yp
+ Mmxg/TTlWtVWpcTUqR+esq5XriewL6ic4YJxISJj/Noj1nqXxDQlJA2LJ1ndeS/Ri40N
+ dkrGN6WI/GjdClkoQzh+V51ZB4cTBOfE/a1rRSZtOQYhAOlwI0UvYHqd0eWscmZqfh5H
+ y1l9McH0NBxee/6IHQn7M5FeIy85JTLfHxkaNyKx2lyisj4oiqEGdEwLsoj4pnYOhL8U
+ kbsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745299699; x=1745904499;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=c9YjZLFky15fQ25eN+PsZB2kxxrFQ2yvjf7JgWdhp2A=;
+ b=MExIBJkQBgRmcLBaXSpE6Yg8dL3afaGeb9zpEXlPS8aBTCCvANJxMXA6tyECDxhYlL
+ gijCJangA8NoQs9XURNFyHmQEB4jmanIr/QndwAgvWZXGNgUgaWD2Js/SP9wyQgTGcQp
+ au7lNvLO93GzZoa1jOiKSDQSuA/s6h1SCWzZfhM8xmUo/gnydX9W/La3nX+3kNnbzhKw
+ mt1p+A+ZQ/1+51ftE1kpMizju9wIzz7xEbFF2MqHggdAjoUnIojQqkOmv4NgEhhT79mf
+ vCmxRbKdTowe36kTAz4Ka8F81nHOU3BIEvQiJ4ZFJ4/aYoWz2WjBdPkewIYHepP5/AAu
+ uc2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcwbzzQoagV7RDxYlOMI9hI8cHFEIFg3e6haQCpJt08u4//GF+R6XmqTV9a52uDrzFk0f2LoGgwtaU+Q==@nongnu.org,
+ AJvYcCVS54wOXYveWgDdX7vTyCroR9mq7l8QfEHJ6JZArH8Cvk4ieV8POOUP8pavlKC89mQqkWhptPTtHCA=@nongnu.org,
+ AJvYcCWDxEH3qvD4upRuejp4DJc1JF/xP9vtNIX5Zbjem6vazPGwrXjqdfuc7sbY5fCftiwyvbccxG/4zw==@nongnu.org,
+ AJvYcCWv7tP2JJyMEt3IhL2X0G6QQIsEZ2+Rlj73fs378LbsVzefob4/LxUwyfD/EvqeQwEcKXNI/nvcn//V3w==@nongnu.org
+X-Gm-Message-State: AOJu0YxjGAipEsN83P8q+LPXDxAOGiq9Mp3XLZ84kJU0WYJ5VoRGnY/M
+ g8FfUg4Fba0/aSGKpycLvAg7C1g53mPZWgr0VTEmNonlLyS8hpOXJx4C6qXV
+X-Gm-Gg: ASbGncuqtnNfYLua2i1L/keUmoxK7gVkLxB9XeF2EsEmZLsWF5OcMvuMuC7CGqFADJy
+ 8lE9K2EcgRycmlqilzTdqauCeTSQszx3sA2cTlDMZ6JOXcHd7rlpjFMiohdoEs+nItrdAUWJBm7
+ WQJRxQ7SZmbFLzg8/6q2Lj3r6BKBjc+d+cuQQf4IffPoi+IMiMH+zFJ0YJYqTSTub8mot3YeGAP
+ lUwd7Oxe3XvAtXI08YstHeoPpaf/bPzU4fRGDRVQSTQttS8UELqEEb3Llfc/ghc9TYAY29zQqT0
+ T/cJdoFzUNXwwnK3VF4f6rdSsR5NtjPl9k5KHCtOnCAutaC1YvbfRVh8iSw=
+X-Google-Smtp-Source: AGHT+IEclO4OoJigEUfTejjyH3NIpSNJXpyhl1ePgWwzpOp+ffb6EGFjIA5uyx5Tw2/HzCaV2+Jtpw==
+X-Received: by 2002:a17:90b:2e48:b0:2ff:698d:ef7c with SMTP id
+ 98e67ed59e1d1-3087bbc9349mr19070468a91.29.1745299698887; 
+ Mon, 21 Apr 2025 22:28:18 -0700 (PDT)
+Received: from localhost.localdomain ([240d:1a:3b6:8b00:e142:4a4f:1ebb:3ca4])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50eb4483sm75692085ad.118.2025.04.21.22.28.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Apr 2025 22:28:18 -0700 (PDT)
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>
-Subject: Re: [PATCH v4 1/8] hw/ppc: Implement skeleton code for fadump in
- PSeries
-Message-ID: <heczlspvfxlt3z7jbzm3dfgli45s5ceqh3y2glmrgqj6f6wkqb@kziihqae6od7>
-References: <20250323174007.221116-1-adityag@linux.ibm.com>
- <20250323174007.221116-2-adityag@linux.ibm.com>
- <040afb75-6434-4f66-a241-b522ed7724dd@linux.ibm.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+Subject: [PATCH v2 02/20] qom/object.c: Fix type conflict of GLib function
+ pointers
+Date: Tue, 22 Apr 2025 14:27:06 +0900
+Message-Id: <8ca13f4e2b9eba9d1f6030b0afb442a24330e463.1745295397.git.ktokunaga.mail@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <cover.1745295397.git.ktokunaga.mail@gmail.com>
+References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <040afb75-6434-4f66-a241-b522ed7724dd@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: uuUDkW9mdnfdK5QDRHdr-nd4EtSh4dna
-X-Authority-Analysis: v=2.4 cv=LMFmQIW9 c=1 sm=1 tr=0 ts=68071faf cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=aM-W4C0H6x_Zq6nrnuEA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: PMwr-50Z0u3vDbq0eDfQQ44ud4g4ASNC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-04-22_02,2025-04-21_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
- lowpriorityscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2502280000 definitions=main-2504220033
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,93 +123,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Harsh,
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
 
-Thanks for reviewing.
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+---
+ qom/object.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-On 25/04/21 04:21PM, Harsh Prateek Bora wrote:
-> 
-> 
-> On 3/23/25 23:10, Aditya Gupta wrote:
-> > <...snip...>
-> >
-> > +    switch (cmd) {
-> > +    case FADUMP_CMD_REGISTER:
-> > +        ret_val = do_fadump_register();
-> > +        if (ret_val != RTAS_OUT_SUCCESS) {
-> > +            rtas_st(rets, 0, ret_val);
-> > +            return;
-> > +        }
-> > +        break;
-> 
-> I would suggest to keep the first patch as implementing the logic for
-> FADUMP_CMD_REGISTER (and _UNREGISTER) handling.
+V2:
+- Updated the commit message to explicitly explain that function pointer
+  casts are performed internally by GLib.
 
-Tried that, but that is either introducing an unused function or would
-mean squashing this patch and the subsequent patch implementing register
-command.
+diff --git a/qom/object.c b/qom/object.c
+index 01618d06bd..87f84bac41 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1191,7 +1191,7 @@ GSList *object_class_get_list(const char *implements_type,
+     return list;
+ }
+ 
+-static gint object_class_cmp(gconstpointer a, gconstpointer b)
++static gint object_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
+ {
+     return strcasecmp(object_class_get_name((ObjectClass *)a),
+                       object_class_get_name((ObjectClass *)b));
+@@ -1200,8 +1200,9 @@ static gint object_class_cmp(gconstpointer a, gconstpointer b)
+ GSList *object_class_get_list_sorted(const char *implements_type,
+                                      bool include_abstract)
+ {
+-    return g_slist_sort(object_class_get_list(implements_type, include_abstract),
+-                        object_class_cmp);
++    return g_slist_sort_with_data(
++        object_class_get_list(implements_type, include_abstract),
++        object_class_cmp, NULL);
+ }
+ 
+ Object *object_ref(void *objptr)
+-- 
+2.25.1
 
-I am preferring to keep current patch split.
-
-What do you think ?
-
-> 
-> > +    case FADUMP_CMD_UNREGISTER:
-> > +        if (spapr->fadump_dump_active == 1) {
-> > +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
-> > +            return;
-> > +        }
-> > +
-> > +        spapr->fadump_registered = false;
-> > +        spapr->fadump_dump_active = false;
-> > +        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
-> > +        break;
-> >
-> > <...snip...>
-> >
-> > +/* ibm,configure-kernel-dump header. */
-> > +struct FadumpSectionHeader {
-> > +    __be32    dump_format_version;
-> > +    __be16    dump_num_sections;
-> > +    __be16    dump_status_flag;
-> > +    __be32    offset_first_dump_section;
-> > +
-> > +    /* Fields for disk dump option. */
-> > +    __be32    dd_block_size;
-> > +    __be64    dd_block_offset;
-> > +    __be64    dd_num_blocks;
-> > +    __be32    dd_offset_disk_path;
-> > +
-> > +    /* Maximum time allowed to prevent an automatic dump-reboot. */
-> > +    __be32    max_time_auto;
-> > +};
-> 
-> Also, you may introduce struct members in the patches as they are
-> used/accessed. No need to have entire struct introduced in the first patch
-> unless the members are being used/accessed.
-
-Did that. The FadumpMemStruct gets used in SpaprMachineState and by
-unregister command.
-
-Agree with you about introducing fields as they are used, but kept the
-complete structure with all fields to be compliant with PAPR, as having
-the complete structure ensures the fields are at correct offsets as per
-PAPR.
-
-Thanks,
-- Aditya G
-
-> 
-> regards,
-> Harsh
-> 
-> > +
-> > +/* Note: All the data in these structures is in big-endian */
-> > +struct FadumpMemStruct {
-> > +    FadumpSectionHeader header;
-> > +    FadumpSection       rgn[FADUMP_MAX_SECTIONS];
-> > +};
-> > +
-> > +uint32_t do_fadump_register(void);
-> > +#endif /* PPC_SPAPR_FADUMP_H */
 
