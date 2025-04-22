@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D894C369D8
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9208CC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 16:11:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7GBq-00076J-Gc; Tue, 22 Apr 2025 12:09:46 -0400
+	id 1u7GD7-00028q-AA; Tue, 22 Apr 2025 12:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6u-0000xW-Lj
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G5Y-00074a-7o
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G6p-0005BU-P8
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:04:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7G5U-00051P-Ak
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 12:03:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745337870;
+ s=mimecast20190719; t=1745337787;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v1NS+GtpGv2Fgtrnw94QME5Cxi13W3XzptE7Q3YIzDw=;
- b=S6aNJrDkzi5XRIb3zn0BelLFtIC7z95DaQRzqWtSshWc+BfiKvRvGYZaRU6Rz6CDNjyia8
- Mm8A8NXb+Y4TcI3oDZZFBUEHVrdKW2nZSy+QcrGFephYXiPaejIvU+v2uNPDehzsmhYj0T
- 4lVeD2vqD2U76EcvhfTQ+MuWaPulVTM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lSKfQQKDdAY9CCgAZ1YXoNG2YTwFpnhc+ONamcKPMDw=;
+ b=cPgTF8qrPDmEJtHC0MsOFs3j/UBGtuYxy3hcyYxDDO9Qf6dLKwNKDGpmg0SN47ruRSOS0j
+ pmJiCTffK/+WGjjJaBvOKoqSksAJb8ia3NGP8NTOBboIe3XMqFQ1ij2rHbjlx7bqQ1GPpj
+ EHjtimNQg7hnq9KucB4+MKFyqY2GgTI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-FZy6D_mGOHSivaXsuzGwOQ-1; Tue,
- 22 Apr 2025 12:04:26 -0400
-X-MC-Unique: FZy6D_mGOHSivaXsuzGwOQ-1
-X-Mimecast-MFC-AGG-ID: FZy6D_mGOHSivaXsuzGwOQ_1745337865
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-fh0nK0y0P4mwh0ZHBC_qtQ-1; Tue,
+ 22 Apr 2025 12:03:04 -0400
+X-MC-Unique: fh0nK0y0P4mwh0ZHBC_qtQ-1
+X-Mimecast-MFC-AGG-ID: fh0nK0y0P4mwh0ZHBC_qtQ_1745337783
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39B531800876; Tue, 22 Apr 2025 16:04:25 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50C461801A24; Tue, 22 Apr 2025 16:03:03 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.105])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8683218001DA; Tue, 22 Apr 2025 16:04:22 +0000 (UTC)
+ id 6A14918001DA; Tue, 22 Apr 2025 16:03:00 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	Alex Williamson <alex.williamson@redhat.com>
@@ -53,16 +53,16 @@ Cc: Avihai Horon <avihaih@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
  John Levon <john.levon@nutanix.com>,
  Joao Martins <joao.m.martins@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 33/37] vfio: Rename RAM discard related services
-Date: Tue, 22 Apr 2025 18:02:20 +0200
-Message-ID: <20250422160224.199714-34-clg@redhat.com>
+Subject: [PATCH v3 09/37] vfio: Move VFIOHostDMAWindow definition into spapr.c
+Date: Tue, 22 Apr 2025 18:01:56 +0200
+Message-ID: <20250422160224.199714-10-clg@redhat.com>
 In-Reply-To: <20250422160224.199714-1-clg@redhat.com>
 References: <20250422160224.199714-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -87,73 +87,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename some routines to better reflect the namespace they belong to.
+VFIOHostDMAWindow is only used in file "spapr.c". Move it there.
 
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-34-clg@redhat.com
+Reviewed-by: John Levon <john.levon@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-9-clg@redhat.com
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-10-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/listener.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/hw/vfio/vfio-common.h | 7 -------
+ hw/vfio/spapr.c               | 7 +++++++
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 26ced6d4fb04b0dedf399686db40acaca5d85552..8abcf8c14d7a9c386665660804c0e19eb93b6846 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -243,7 +243,7 @@ static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
-     return 0;
- }
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 288c2fb3d0e792427c0e7655002248829b4d189a..3355c2d4e57569d7bb01b4d9378fb49a807335e8 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -69,13 +69,6 @@ typedef struct VFIOContainer {
  
--static void vfio_register_ram_discard_listener(VFIOContainerBase *bcontainer,
-+static void vfio_ram_discard_register_listener(VFIOContainerBase *bcontainer,
-                                                MemoryRegionSection *section)
- {
-     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(section->mr);
-@@ -318,7 +318,7 @@ static void vfio_register_ram_discard_listener(VFIOContainerBase *bcontainer,
-     }
- }
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
  
--static void vfio_unregister_ram_discard_listener(VFIOContainerBase *bcontainer,
-+static void vfio_ram_discard_unregister_listener(VFIOContainerBase *bcontainer,
-                                                  MemoryRegionSection *section)
- {
-     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(section->mr);
-@@ -505,7 +505,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
-      * about changes.
-      */
-     if (memory_region_has_ram_discard_manager(section->mr)) {
--        vfio_register_ram_discard_listener(bcontainer, section);
-+        vfio_ram_discard_register_listener(bcontainer, section);
-         return;
-     }
+-typedef struct VFIOHostDMAWindow {
+-    hwaddr min_iova;
+-    hwaddr max_iova;
+-    uint64_t iova_pgsizes;
+-    QLIST_ENTRY(VFIOHostDMAWindow) hostwin_next;
+-} VFIOHostDMAWindow;
+-
+ typedef struct IOMMUFDBackend IOMMUFDBackend;
  
-@@ -628,7 +628,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
-         pgmask = (1ULL << ctz64(bcontainer->pgsizes)) - 1;
-         try_unmap = !((iova & pgmask) || (int128_get64(llsize) & pgmask));
-     } else if (memory_region_has_ram_discard_manager(section->mr)) {
--        vfio_unregister_ram_discard_listener(bcontainer, section);
-+        vfio_ram_discard_unregister_listener(bcontainer, section);
-         /* Unregistering will trigger an unmap. */
-         try_unmap = false;
-     }
-@@ -1025,7 +1025,7 @@ out:
-     }
- }
+ typedef struct VFIOIOASHwpt {
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index 32611096fa29aa5c4679ee589edbe4b53395e582..3ca8ecd81ff3cc8e0f6c458dc292973b2356132e 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -22,6 +22,13 @@
+ #include "qapi/error.h"
+ #include "trace.h"
  
--static int vfio_ram_discard_get_dirty_bitmap(MemoryRegionSection *section,
-+static int vfio_ram_discard_query_dirty_bitmap(MemoryRegionSection *section,
-                                              void *opaque)
- {
-     const hwaddr size = int128_get64(section->size);
-@@ -1072,7 +1072,7 @@ vfio_sync_ram_discard_listener_dirty_bitmap(VFIOContainerBase *bcontainer,
-      * which correspond to populated parts. Replay all populated parts.
-      */
-     return ram_discard_manager_replay_populated(rdm, section,
--                                              vfio_ram_discard_get_dirty_bitmap,
-+                                                vfio_ram_discard_query_dirty_bitmap,
-                                                 &vrdl);
- }
- 
++typedef struct VFIOHostDMAWindow {
++    hwaddr min_iova;
++    hwaddr max_iova;
++    uint64_t iova_pgsizes;
++    QLIST_ENTRY(VFIOHostDMAWindow) hostwin_next;
++} VFIOHostDMAWindow;
++
+ typedef struct VFIOSpaprContainer {
+     VFIOContainer container;
+     MemoryListener prereg_listener;
 -- 
 2.49.0
 
