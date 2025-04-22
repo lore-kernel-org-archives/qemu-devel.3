@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A94FC369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822E7C369CB
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 05:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u76F4-0005ig-PA; Tue, 22 Apr 2025 01:32:23 -0400
+	id 1u76GT-0000Ti-EV; Tue, 22 Apr 2025 01:33:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u76Cb-0002Ls-SK; Tue, 22 Apr 2025 01:29:52 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1u76Cz-0002qR-Kt; Tue, 22 Apr 2025 01:30:14 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u76CZ-0007vD-B4; Tue, 22 Apr 2025 01:29:48 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-223f4c06e9fso39869785ad.1; 
- Mon, 21 Apr 2025 22:29:44 -0700 (PDT)
+ id 1u76Cv-00089l-GJ; Tue, 22 Apr 2025 01:30:12 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-22d95f0dda4so9447145ad.2; 
+ Mon, 21 Apr 2025 22:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745299783; x=1745904583; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745299806; x=1745904606; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pZ7bO6pXxeYaOHh3umuOVAnE+OOJlkmKTF0VXeHFfUg=;
- b=enpJ2nlyJUiCG3vT0suLkTsFoSWOtFpTVFfY76f2SPS8erv+CLSG0bx4ZnZyEgKk5P
- Czg1l5dpiS5UVC3rQ98bVN2m+smi/MlbK/sv2w0j80V+yya8smI7kFajWXjayzBHKBr7
- wrh6l7br7odmVan4+k6IRKINn33D6jzUMM+RS4Kcte5JHIcHJC1mOJl2H1/kRK1VlGmK
- Ra9SdfaKp9zHnyiWEwLz4MQvPNBs/P/wTLJ529Ec6h/ZW/a51SJff23tOeVCSJhf/Xk4
- wmDQR6xOJupPn6/ACpR6OZ+N9zRSMGfhmit9cFcOKyR2LKExxL+xH2HAsn0yYDcFmygm
- UPoQ==
+ bh=2FkVN9PsSNE2Egb+LipsDkf/RHaq4OxguwsmDIo9jqs=;
+ b=ErTJnUOhry5sw20L4i2bwkB3aZGj1SJBeiFM6ABpNn6VpcGT5CKCfBeXgV57DUl52i
+ MxASKBV6irnef120skj+gP8kT//h+aiV/5oVdHg9pzTa5BxKmuMN75r98iCliPAJCLGL
+ xX8nfaYqEqxZQeQdtrNoOQLzk+DovGJOG0lCIRmXC/TkO58bDLs9Q7aAhTtaibk18CCp
+ F+OWHmGilLkIUnj8h3GrAHeam7Ohg50KQ4Hpb7Aimdj54PfDw1WhAvIZPsUbrp1/SiMy
+ EpQgOfFRWFdmzdNXqlUJIQpFizHOoF+DMMUYlj9v7aZZcUFTyKa81RrffFNJOgzq941h
+ 2J8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745299783; x=1745904583;
+ d=1e100.net; s=20230601; t=1745299806; x=1745904606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pZ7bO6pXxeYaOHh3umuOVAnE+OOJlkmKTF0VXeHFfUg=;
- b=iOc4rFxxCn6W8fhIwqEb3ASBvGRgQEO3XFE5aJTTW6uikn4FGAVCSmgafCm08aNcGn
- DLVxSYmMiC/SU7oUBWTREyv/HRd3opQe+yGaorNeFZTlVpot9I75kxDnj7ySnTSh3TyE
- 0VMa4FQDF88g6m6nWEECptMluuz6/usKL5LYW8Bh41rT+UZWv4nYK2+5EoOiw4PmEf0a
- PdtBmyK5ICNje2cRLOIw3dsc2f4SnEMkGSf24EPlK+Hh8Ssv4iLKu8DqMWLSe6hxYzVZ
- 2In6tSanoMeVWyXhnVi2AcocWlZeAJQGAEzTi6dZkwW5arLB0PVTXP14dFDvC48I0h/F
- r+MA==
+ bh=2FkVN9PsSNE2Egb+LipsDkf/RHaq4OxguwsmDIo9jqs=;
+ b=AeEMB25rAC0dUsLS20ZW3HXwarRS/uZVg8t8EC4stHuR14cGtiqYP7U1DuwL93tYX3
+ KvVqW0D2d0fFA+lUtsXY0lTnPXvSY1EGGr2nfkGEVaNgsZQyel2XQyRUlQj5Gqn31G2t
+ JvGPnC0oslx5YHSnliCa6MK3erPS7YzJMbD/QZWGIa3e5fDFLRGJbIW9P2mp6Qm6V1cQ
+ HduTi8DwFVFKe6ISVsGZyiCZb3SZBp+f1MxFWsB7/jT73jo4lO6aCtKgFX/nOncIMWSj
+ BI65sQ3viDHZT6Jyh+DOuu3/fbJ9DdJ9paq2ankZKTkVPyKuOgu/NRJtZS7DkgFo7DYI
+ 5GCg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlYrsArKbSybZQkpTQIf3mlxW0xDnMkwV1K0VQ9m0DyHgiBe2PthnYucSJc2NyuKmSGOOaq8BYB4w=@nongnu.org,
- AJvYcCW2e27ra4YjP+gYVLkesAG5jp7GE7a8QN3ZoYfcel/zwzkOB+un7gpcGmvfrKCTBZzoz/4F9vLcRQ==@nongnu.org,
- AJvYcCWAzJoCev+5Xv+lso3J81f+xWf7Kuo+sB8SaTyf/C5RRyBLl83NUNDqbyDihF6wHPFAGYmCOeeYephiig==@nongnu.org,
- AJvYcCXzNZQUxned8ndnSOLmFehiV0Jkn8VBL/4Xt/+YUIoCnvGU2w81aFdVP4+4FNVFaOX2YPadOTrMhnAktg==@nongnu.org
-X-Gm-Message-State: AOJu0YwuP3gF2J8Gabt2mSJ2+90JiLRX8C7R99IXl5Kx66ml8Dh5Che0
- hiaKzoEqGrtP1D9BAFB2gc9ShMTrFM3jubOGkH31qXlmznuhkKNxbT86WPHM
-X-Gm-Gg: ASbGncsUQTE9W6RaHwaWsjKU81lh9QU3aa84M21m4HDnx6/sg1J0kEFAyPLhFXwtJjS
- 0iUNm3bXxE+8caVcYGP4e9lxmBNvrLc/WEC4mug2AnucRYUCMW6LNXLcgWsEvOj1DLEgT9lgFy3
- y42EvtOCyyPIAFlEGII2C/XEqmbQ/UvtWrNFQa/0Wrm0DRh16K4lAiftXs3dEwUy9MLc0wkS8DN
- 3YtZPW72og6YghvAQED3zUH5n2AH4DrRfLMATf8qXbi95aCtg3oX/pTlhxGzPmVDDeiPRFifDxN
- BAYaQe/O0naRzLemRltMZF81xwyxam11wZXlP80NUlzsdEOe4Ns7RFoLJfKXBjg+6wHtkQ==
-X-Google-Smtp-Source: AGHT+IEZF5/R+WzWuaEUpNlwBrdt21FqufDMrrlmvN07ViDg/j4NoEnHz6mNB7gGUv8QbgO9db2OMw==
-X-Received: by 2002:a17:903:3d0c:b0:220:ff82:1c60 with SMTP id
- d9443c01a7336-22c50cfa84fmr239090505ad.14.1745299782951; 
- Mon, 21 Apr 2025 22:29:42 -0700 (PDT)
+ AJvYcCUf2d5GI0QGdN3ZonYxxhJYx/5YADAzxx5yhxBj49aIgLy9e6nyMsguImoRFScTM4hwW6cTzjDXgVJhIg==@nongnu.org,
+ AJvYcCWit7vh3MAHa02+cMJpYU1xZUI4TVXH3jqyig5Wa5aWL8QOjf/2HswMQs/XgttwKFPlfZm+vw3ecpGdzw==@nongnu.org,
+ AJvYcCWpeR8jO2ro6i/DQybnUPDDoW9Ynp+bLfQlbRUDLjXeTsZU72kDEZCBwcSO0rr64Ejge6KOkkSVfw==@nongnu.org,
+ AJvYcCXkebFYe2UEb52oRmQhd2ZxD+ElaXmOSC+vimrgfISuEwg+clBV/1a+6kBS8N6yXzN2AGcjm/JqU5s=@nongnu.org
+X-Gm-Message-State: AOJu0Yz2xrw9iXgW55ZjxvJbxTMrXdp8jwGdcg+q68K3yQSFTTI+zxY3
+ vkd7KdrIXQp06Gm6Nb6gI36GZhFqRxizx89rl8siYhX38wM8gfOhGRk1NHZ2
+X-Gm-Gg: ASbGncvokVctYFP7lmhpm+c735qVB9jvIsjUPWZit1QMcxUxW7qKleHNdfOcjYS3fbA
+ FEm3cIDUY55j9PCKn4UT4Gper40SAX28M9ZbuAWyITxFxN+kSEg34kzTBTiHWk4KKIRP50FH0xL
+ gh4rxCKe9icmzyOwOQmQVvGv/MRsYOs7g5keRHYdbdlyr9HLvdhPlreUQJjBOySu7oNmpiAnILt
+ xnCLYuAVs/bIlFtranz66KWIgRk1LjJz1Sxup7yL7h2u8hJ6wnbChtF9jAk7olKOGz2p3a5UyhP
+ iV3mKmvmA5F7zOTWkxXEEumcc6Z6GqvVioAknc7onMZGzGbACufzwtpyqPY=
+X-Google-Smtp-Source: AGHT+IF7xwbiS5Pbd8i6m0BJ3l2AbPC1Rmn0ASj1QQA1F9dYuT3aDzSVpRYV+spAOV/dyXoUuJ6ZZw==
+X-Received: by 2002:a17:903:41c7:b0:220:faa2:c911 with SMTP id
+ d9443c01a7336-22c535a4b39mr194143805ad.14.1745299805766; 
+ Mon, 21 Apr 2025 22:30:05 -0700 (PDT)
 Received: from localhost.localdomain ([240d:1a:3b6:8b00:e142:4a4f:1ebb:3ca4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50eb4483sm75692085ad.118.2025.04.21.22.29.35
+ d9443c01a7336-22c50eb4483sm75692085ad.118.2025.04.21.22.29.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Apr 2025 22:29:42 -0700 (PDT)
+ Mon, 21 Apr 2025 22:30:05 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -90,16 +90,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH v2 13/20] block: Fix type confict of the copy_file_range stub
-Date: Tue, 22 Apr 2025 14:27:17 +0900
-Message-Id: <ce34a721a5283fce854f417baf7b1c8f5c48c028.1745295397.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v2 16/20] util: exclude mmap-alloc.c from compilation target
+ on Emscripten
+Date: Tue, 22 Apr 2025 14:27:20 +0900
+Message-Id: <d20971cd7d9736aa3777721765606c244253cdb0.1745295397.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1745295397.git.ktokunaga.mail@gmail.com>
 References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,42 +123,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten doesn't provide copy_file_range implementation but it declares
-this function in its headers. Meson correctly detects the missing
-implementation and unsets HAVE_COPY_FILE_RANGE. However, the stub defined in
-file-posix.c causes a type conflict with the declaration from Emscripten
-during compilation.
+Emscripten does not support partial unmapping of mmapped memory
+regions[1]. This limitation prevents correct implementation of qemu_ram_mmap
+and qemu_ram_munmap, which rely on partial unmap behavior.
 
-To fix this error, this commit updates the stub implementation in
-file-posix.c to exactly match the declaration in Emscripten's headers. The
-manpage also aligns with this signature.
+As a workaround, this commit excludes mmap-alloc.c from the Emscripten
+build. Instead, for Emscripten build, this modifies qemu_anon_ram_alloc to
+use qemu_memalign in place of qemu_ram_mmap, and disable memory backends
+that rely on mmap, such as memory-backend-file and memory-backend-shm.
+
+[1] https://github.com/emscripten-core/emscripten/blob/d4a74336f23214bf3304d9eb0d03966786b30a36/system/lib/libc/emscripten_mmap.c#L61
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- block/file-posix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ backends/meson.build |  6 ++++--
+ system/memory.c      |  2 +-
+ system/physmem.c     |  9 +++++----
+ util/meson.build     |  4 +++-
+ util/oslib-posix.c   | 28 ++++++++++++++++++++++++++++
+ 5 files changed, 41 insertions(+), 8 deletions(-)
 
 V2:
-- Removed the Emscripten-specific stub of copy_file_range in
-  stubs/emscripten.c. Instead, updated the type of the existing
-  copy_file_range stub in block/file-posix.c to match the declaration in the
-  Emscripten headers and avoid a compilation error.
+- Instead of porting mmap-alloc.c to Emscripten, this version excludes the
+  file entirely. The rationale is described in the commit message.
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 69257c0891..2758f31844 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2015,8 +2015,8 @@ static int handle_aiocb_write_zeroes_unmap(void *opaque)
+diff --git a/backends/meson.build b/backends/meson.build
+index da714b93d1..9b88d22685 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -12,8 +12,10 @@ system_ss.add([files(
+ 
+ if host_os != 'windows'
+   system_ss.add(files('rng-random.c'))
+-  system_ss.add(files('hostmem-file.c'))
+-  system_ss.add([files('hostmem-shm.c'), rt])
++  if host_os != 'emscripten'
++    system_ss.add(files('hostmem-file.c'))
++    system_ss.add([files('hostmem-shm.c'), rt])
++  endif
+ endif
+ if host_os == 'linux'
+   system_ss.add(files('hostmem-memfd.c'))
+diff --git a/system/memory.c b/system/memory.c
+index 4c829793a0..f5fcbfa799 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1636,7 +1636,7 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+     return true;
  }
  
- #ifndef HAVE_COPY_FILE_RANGE
--static off_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
--                             off_t *out_off, size_t len, unsigned int flags)
-+ssize_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
-+                        off_t *out_off, size_t len, unsigned int flags)
+-#ifdef CONFIG_POSIX
++#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
+ bool memory_region_init_ram_from_file(MemoryRegion *mr,
+                                       Object *owner,
+                                       const char *name,
+diff --git a/system/physmem.c b/system/physmem.c
+index 333a5eb94d..76c65edb62 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1242,7 +1242,7 @@ long qemu_maxrampagesize(void)
+     return pagesize;
+ }
+ 
+-#ifdef CONFIG_POSIX
++#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
+ static int64_t get_file_size(int fd)
  {
- #ifdef __NR_copy_file_range
-     return syscall(__NR_copy_file_range, in_fd, in_off, out_fd,
+     int64_t size;
+@@ -1977,7 +1977,7 @@ out_free:
+     }
+ }
+ 
+-#ifdef CONFIG_POSIX
++#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
+ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
+                                  qemu_ram_resize_cb resized, MemoryRegion *mr,
+                                  uint32_t ram_flags, int fd, off_t offset,
+@@ -2157,7 +2157,8 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+     assert(!host ^ (ram_flags & RAM_PREALLOC));
+     assert(max_size >= size);
+ 
+-#ifdef CONFIG_POSIX         /* ignore RAM_SHARED for Windows */
++    /* ignore RAM_SHARED for Windows and emscripten*/
++#if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
+     if (!host) {
+         if (!share_flags && current_machine->aux_ram_share) {
+             ram_flags |= RAM_SHARED;
+@@ -2254,7 +2255,7 @@ static void reclaim_ramblock(RAMBlock *block)
+         ;
+     } else if (xen_enabled()) {
+         xen_invalidate_map_cache_entry(block->host);
+-#ifndef _WIN32
++#if !defined(_WIN32) && !defined(EMSCRIPTEN)
+     } else if (block->fd >= 0) {
+         qemu_ram_munmap(block->fd, block->host, block->max_length);
+         close(block->fd);
+diff --git a/util/meson.build b/util/meson.build
+index 780b5977a8..e5cd327e27 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -11,7 +11,9 @@ if host_os != 'windows'
+   endif
+   util_ss.add(files('compatfd.c'))
+   util_ss.add(files('event_notifier-posix.c'))
+-  util_ss.add(files('mmap-alloc.c'))
++  if host_os != 'emscripten'
++    util_ss.add(files('mmap-alloc.c'))
++  endif
+   freebsd_dep = []
+   if host_os == 'freebsd'
+     freebsd_dep = util
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index a697c602c6..4ff577e5de 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -58,6 +58,7 @@
+ #include <lwp.h>
+ #endif
+ 
++#include "qemu/memalign.h"
+ #include "qemu/mmap-alloc.h"
+ 
+ #define MAX_MEM_PREALLOC_THREAD_COUNT 16
+@@ -210,11 +211,21 @@ void *qemu_anon_ram_alloc(size_t size, uint64_t *alignment, bool shared,
+     const uint32_t qemu_map_flags = (shared ? QEMU_MAP_SHARED : 0) |
+                                     (noreserve ? QEMU_MAP_NORESERVE : 0);
+     size_t align = QEMU_VMALLOC_ALIGN;
++#ifndef EMSCRIPTEN
+     void *ptr = qemu_ram_mmap(-1, size, align, qemu_map_flags, 0);
+ 
+     if (ptr == MAP_FAILED) {
+         return NULL;
+     }
++#else
++    /*
++     * qemu_ram_mmap is not implemented for Emscripten. Use qemu_memalign
++     * for the anonymous allocation. noreserve is ignored as there is no swap
++     * space on Emscripten, and shared is ignored as there is no other
++     * processes on Emscripten.
++     */
++    void *ptr = qemu_memalign(align, size);
++#endif
+ 
+     if (alignment) {
+         *alignment = align;
+@@ -227,7 +238,16 @@ void *qemu_anon_ram_alloc(size_t size, uint64_t *alignment, bool shared,
+ void qemu_anon_ram_free(void *ptr, size_t size)
+ {
+     trace_qemu_anon_ram_free(ptr, size);
++#ifndef EMSCRIPTEN
+     qemu_ram_munmap(-1, ptr, size);
++#else
++    /*
++     * qemu_ram_munmap is not implemented for Emscripten and qemu_memalign
++     * was used for the allocation. Use the corresponding freeing function
++     * here.
++     */
++    qemu_vfree(ptr);
++#endif
+ }
+ 
+ void qemu_socket_set_block(int fd)
+@@ -588,7 +608,15 @@ bool qemu_prealloc_mem(int fd, char *area, size_t sz, int max_threads,
+ {
+     static gsize initialized;
+     int ret;
++#ifndef EMSCRIPTEN
+     size_t hpagesize = qemu_fd_getpagesize(fd);
++#else
++    /*
++     * mmap-alloc.c is excluded from Emscripten build, so qemu_fd_getpagesize
++     * is unavailable. Fallback to the lower level implementation.
++     */
++    size_t hpagesize = qemu_real_host_page_size();
++#endif
+     size_t numpages = DIV_ROUND_UP(sz, hpagesize);
+     bool use_madv_populate_write;
+     struct sigaction act;
 -- 
 2.25.1
 
