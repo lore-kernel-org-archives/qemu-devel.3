@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27791C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E746C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u77nT-0002oc-5C; Tue, 22 Apr 2025 03:11:59 -0400
+	id 1u77oO-0003Tf-Le; Tue, 22 Apr 2025 03:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77nQ-0002n0-Rj
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:11:56 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77oM-0003Sy-4v
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:12:54 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77nO-0002fO-O2
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:11:56 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39ee57c0b8cso4617588f8f.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:11:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77oK-0002hK-8c
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:12:53 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so38105765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745305913; x=1745910713; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745305970; x=1745910770; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PSA5XtzE5Vo4AjYxD3tmJ7zuCoqKYGo/S8l/u/ake1A=;
- b=urBSrNv8xnJ9PRP9K0EVrWBPnmy/ZXlUk0ma5hcM+l4ejNK7mqpn+58STbrDlIGMdq
- dHrq4mpuMtjQ85gwbgaFKLFJo4qqn6U44h2g49PozjuTsB1xSOBZEKsXvtHn4edxaaaF
- 2NNvL5rcG+l/yZ6y0mMyG6qb7qhf4YzrbNS9RRzndaDb6O+OXusrrmg0FvKodhFSfGAq
- qlgn2Vjr7fhkH0Nik0OCToWMuNEoo7EE8IhWf/X+KL7U37bF8mh1dtScCIRFyVLTPk1g
- v1PVCTcWePPbpQqwwoFBwEstnlVK6E+CsQYJ9lpdyh3bWnp6ICsQ+/6X5lVqfptHI6bg
- U04g==
+ bh=Docl5Hj1KGZuFaVssYnNvSeAQHUBkOQcmY8C4dhJquM=;
+ b=phe074qiSMLkSw+cHxAkL8NpCL2/YqdfpZr+kB8x2pAR+qHd3Fe2x2Nttc5DGPNPcu
+ hv7nutTWrsO/JQ3fdJ6KcGqG2RObN4a/LmUXBEVp1xo5nwhhESsua9p7UQH3/XkQhyUH
+ aEBCs4zRjbpPG/BxJUeaIyKaGJVAE12pwfZKruIovGTYDVPzPU6X7DfDOLQsJOxJKuSX
+ Yx0qxypUCEbPwJW2fZypeAY7swSHkC4xHCr1giBKssMlYGh91OqTsc9OPuUWKgQdaJQK
+ ohPJ3nVu5MlGEs8f56jwZtksUuVv2DJlHmxOSm/9cEyK63mBSweNZt6D6+iZZ755WHmq
+ R7Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745305913; x=1745910713;
+ d=1e100.net; s=20230601; t=1745305970; x=1745910770;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PSA5XtzE5Vo4AjYxD3tmJ7zuCoqKYGo/S8l/u/ake1A=;
- b=FYug7gFBAgEP4NulTyLz3ROXc/c7wKjZS1N8WeFHs9++SS5yx6jxLTDAmWo7DxOOmu
- ai+AfPFJSiyuPIgMzSBWrP0mfpXmYdAoFNH1BgvCppxhMzhLHMRIxJI3rOSPsWs65gI7
- Itnw7VehUmv0fGYRSUPegnD/RRQi1TVVlQZcCzlMz3dYyLReqpjNfMF1M3VgPrmqueAH
- K02GaTjlzlg4FOlOKgEWovwGFB2qQflPAUl0Mn6YL4lesgnA0nWm/h+Z5MftflML2diL
- 5V3wzcQnjp4uqk2YoVa/Tb8CVx7Cq3uj1zR5cXAYmKIthUlX2w2IkvExg6fPMHUrBUkp
- yPMA==
-X-Gm-Message-State: AOJu0YxqDNDURfyFprogUfd1UYXZb1f2XgCV6tNhErAcSNXbW48cn/pJ
- 5//VtCuNpS93gEOMDdGB1STCIQESljCpRgbzSgDEHKFz8NAjSA6KGA+4Pi0fCsI=
-X-Gm-Gg: ASbGnctWsdT4tGj/SenMJFNLfbymp1km63ouCX2D/vdfsJs20R+HxD25Z1kdouivan2
- ODAjUAxj+HckiRCM05FZ2IIiikxIhDuomn5/4hpfTkBj++UyNS6r834189zG0cngIDXIgFO9JNh
- 38qovRuGHjKWwr/hONK1SQW3WwkzpZABNOfjOGnm/9kaOm1g7mP8TGSIts+recqcMKxAHVcOsBB
- u/0I9CRL065JVmOM+v/uZCoxGCHl7mtMozv08dHsIzc8/TM+GvcA5urxMKPGezew3kh1+TsCprH
- XuNpnkybHkdRiFmlynrzvT/ykpFkRH85D/1LrLPoL2CWz506Ou+IA75IhhI7ZBfbkHW8L1FwpTi
- xRDGMBhGk
-X-Google-Smtp-Source: AGHT+IFJOk7rY1bJUjyw62HSrUxqR4ySE4LN5IFqKtpWi87L0WMvO7clZlPGhqlh1y3XQHB0YWzv2A==
-X-Received: by 2002:a5d:6d88:0:b0:399:737f:4e02 with SMTP id
- ffacd0b85a97d-39efbad2f10mr11585897f8f.39.1745305912826; 
- Tue, 22 Apr 2025 00:11:52 -0700 (PDT)
+ bh=Docl5Hj1KGZuFaVssYnNvSeAQHUBkOQcmY8C4dhJquM=;
+ b=xRBb8ZtYV5vtRKbyfV+MPUTkBPQSZZhJXhNuZ4DSKhjlOon2SN/Jfl/6ectALcf/mc
+ 4BWFk1jPafNKD+w8lRoPkISUOMksARTGsMVMLvCmimZbn9jAHnWUjUVyykaY9Jnb27G7
+ tm68gknxTCSHKm9dNO/0N36mM5XqVRtepUVfbP0jMdVwtD65DYvJ8ai3ejVOr/Y7o+YY
+ gAhV2L7Q8pmuIEEErx+PEGMeqvZ5PlKIqc6D5D2BuS3cbx8BOQAFDNKbysSyWH7hR0g3
+ Ac+nhzAm6vC5h/c/aON2g1+by06DxUq7HMvx3XEZkWnq44l/4v0+hJvDYYUrg1oEZKDM
+ hUIA==
+X-Gm-Message-State: AOJu0Ywd+KeGhgwA5w/zd6HrmC9NfnHSheu+eE8ymORv/IOrtL3Hrd70
+ R2BgvdAxrqIfNhioZ6n5JJgNpN40Xwig7gnrPDBWHhEf0poepdcgxXUZHiObEZg=
+X-Gm-Gg: ASbGncs22F3eEZiLkkDmeq+iPJLz61eq6cEuJ10aSz2h0z3Azy7L6JDLl5X46/CyCnV
+ NhzQi4FuMWScDNDwmoTbfIc/fF6BIi19NpT+Kak+03lQLOl5MgZ3p19rdUnFGS6KKV4yASBktgJ
+ CG4cMZEbcvrVRVXZC+wjUiqBGnSxt56tdFbcyURkb85kUWqWMmLekeGWryHCAl+Qdx2m+o5Sppt
+ i5rsaQmDHcMpVBm6SpI2Hd+RVFDPnSETdQ028naorpdVTMEx3KDir4kC7W6ERwSglGWab/DVZJD
+ NJHvyYNgG8CoWEF0zikR6o58vyfpC0Pe57cXfIDZp6NCiQ0q8/sGP7j9KQQa/F0abyegouq6neK
+ IIiQU8wNI
+X-Google-Smtp-Source: AGHT+IElL/tFb1ynYyULmMOE8McfBaRUjjkA+SXaPmkXPnaeuUoq8ct1nQZM8d0rnWA/qctYNwbJpQ==
+X-Received: by 2002:a05:600c:3555:b0:43c:fa3f:8e5d with SMTP id
+ 5b1f17b1804b1-4406ab7efd0mr134064745e9.2.1745305970025; 
+ Tue, 22 Apr 2025 00:12:50 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4a498csm13961184f8f.85.2025.04.22.00.11.52
+ 5b1f17b1804b1-4406d5cf2easm161743415e9.31.2025.04.22.00.12.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 00:11:52 -0700 (PDT)
-Message-ID: <292632c9-4492-4071-9100-a7b165af3e97@linaro.org>
-Date: Tue, 22 Apr 2025 09:11:51 +0200
+ Tue, 22 Apr 2025 00:12:48 -0700 (PDT)
+Message-ID: <a2f973a8-e0c4-4eb5-9f4c-bc0f0d1ce123@linaro.org>
+Date: Tue, 22 Apr 2025 09:12:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH=5D_block=EF=BC=9A_change_type_of_bytes_fro?=
- =?UTF-8?Q?m_int_to_int64=5Ft_for_*bdrv=5Faio=5Fpdiscard?=
-To: Eric Blake <eblake@redhat.com>, Sunny Zhu <sunnyzhyy@qq.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com
-References: <tencent_8649D99B33E6E6665A0EFA05B97592D70106@qq.com>
- <cxsasg7qiopbpwu24a6f2hponb2lv6ut5ylhcpeyagi6g6k2m5@w2c6mwuqi5ik>
+Subject: Re: [PATCH] MAINTAINERS: Add common-user/host/riscv to RISC-V section
+To: Alistair Francis <alistair23@gmail.com>, palmer@dabbelt.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, uwu@icenowy.me
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+References: <20250422024752.2060289-1-alistair.francis@wdc.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cxsasg7qiopbpwu24a6f2hponb2lv6ut5ylhcpeyagi6g6k2m5@w2c6mwuqi5ik>
+In-Reply-To: <20250422024752.2060289-1-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +101,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 22/4/25 04:47, Alistair Francis wrote:
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
 
-On 21/4/25 17:03, Eric Blake wrote:
-> On Mon, Apr 21, 2025 at 12:19:14AM +0800, Sunny Zhu wrote:
->> Keep it consistent with *bdrv_co_pdiscard.
->>
->> Currently, there is no BlockDriver implemented the bdrv_aio_pdiscard() function,
->> so we don’t need to make any adaptations either.
-> 
-> If there are no drivers implementing the callback, then why have it?
-> I think we have been moving towards more coroutine-based callbacks and
-> away from the aio callbacks; if so, should we instead be deleting this
-> callback as stale code?
-
-Could we add a comment in BlockDriver prototypes about prefering co over
-aio implementations, possibly mentioning them as legacy?
-
-> 
->>
->> Signed-off-by: Sunny Zhu <sunnyzhyy@qq.com>
->> ---
->>   include/block/block_int-common.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
->> index ebb4e56a50..4bf422d733 100644
->> --- a/include/block/block_int-common.h
->> +++ b/include/block/block_int-common.h
->> @@ -507,7 +507,7 @@ struct BlockDriver {
->>           BlockDriverState *bs, BlockCompletionFunc *cb, void *opaque);
->>   
->>       BlockAIOCB * GRAPH_RDLOCK_PTR (*bdrv_aio_pdiscard)(
->> -        BlockDriverState *bs, int64_t offset, int bytes,
->> +        BlockDriverState *bs, int64_t offset, int64_t bytes,
->>           BlockCompletionFunc *cb, void *opaque);
->>   
->>       int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_readv)(BlockDriverState *bs,
->> -- 
->> 2.43.0
->>
->>
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
