@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790BEC369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B231EC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Eqs-0002Bc-5W; Tue, 22 Apr 2025 10:43:58 -0400
+	id 1u7EsL-0003hl-4c; Tue, 22 Apr 2025 10:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7Eqn-000273-EK
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:43:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7EsA-0003eX-CL
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:45:21 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7Eql-0003kE-IF
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:43:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745333029;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oh5jbjH5Jt0GcKZEJHaCdlSW5ODr9EKLxabyMzr99Lw=;
- b=cZzmmUaIKsSLEt4UInyjzL33r671gwTFNbBxmeqZpzWMR93oB8FvBJKMSSBBxs+83zkFv1
- gW4N2pN4tK1XY7CZqKgTaCZQPOsCOmab3ZqkM4klCubD5mKFycaDsRGJJHq3ChRrOKNGHH
- L5wlaa3VhZ3fogX6L+wOMApv8irZpUw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-0dFZqxr9OSmELEq6EMQRaA-1; Tue,
- 22 Apr 2025 10:43:43 -0400
-X-MC-Unique: 0dFZqxr9OSmELEq6EMQRaA-1
-X-Mimecast-MFC-AGG-ID: 0dFZqxr9OSmELEq6EMQRaA_1745333022
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85C9F1955D84; Tue, 22 Apr 2025 14:43:41 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.110])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EC546195608D; Tue, 22 Apr 2025 14:43:40 +0000 (UTC)
-Date: Tue, 22 Apr 2025 10:43:39 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:GLUSTER" <integration@gluster.org>
-Subject: Re: [PATCH v2.5 02/11] file-posix, gluster: Handle zero block status
- hint better
-Message-ID: <20250422144339.GF301197@fedora>
-References: <20250417184133.105746-13-eblake@redhat.com>
- <20250418215412.404558-3-eblake@redhat.com>
- <20250418215412.404558-4-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7Es7-0003yx-H8
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:45:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745333115; x=1776869115;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Fo4yXmneWa2F5Bc3abyMLQRGNTP7MT1K77ozM3ipEm8=;
+ b=Be03HxWwEywgYCNUxYgkiauyrX4mX7LQs3LHl/faddDHDbNg66GN1hCe
+ CX2M3YhRyVg70hrpI77fVl5yvJ/ud0eU6FSg3UHkYzx4a4QA9Z/OaJEXa
+ KM121zMdwckzrpHGgah0vOT+pX9E09tQdNHn0zASux9zFd9n5D1tZ8kkY
+ pcVbsoT77vW4muGqGxY1cPszpijAyI/3gV0UTJKFV8mUGV2GI5TFR1w2w
+ 94ol3AGsZG3sUgvpzWFkpZsIfWHBjPu6c9ZBIKkesJe3qp94zDu78ZSFd
+ eYHrqPkpyNhF1P6QlLK96TDTlIWHU6AIovxhFjP6HZdfzfzlhDEPyGA1b g==;
+X-CSE-ConnectionGUID: U2RFCH4eT2ebwUJpZS9G+Q==
+X-CSE-MsgGUID: YqFUdIwlThamZH7dW/VuuA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46599654"
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="46599654"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2025 07:45:13 -0700
+X-CSE-ConnectionGUID: dF5Ii7DXSfe3iGIMFEvE2A==
+X-CSE-MsgGUID: Fu7/GjOBSEWfPW3ueD5GDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="131877097"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 22 Apr 2025 07:45:11 -0700
+Date: Tue, 22 Apr 2025 23:06:05 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 11/55] i386/tdx: Wire CPU features up with attributes
+ of TD guest
+Message-ID: <aAewXWH9o8ShaCP/@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-12-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="TVMKjij3SHcCTd96"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250418215412.404558-4-eblake@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+In-Reply-To: <20250401130205.2198253-12-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,48 +91,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---TVMKjij3SHcCTd96
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Apr 18, 2025 at 04:52:47PM -0500, Eric Blake wrote:
-> Although the previous patch to change 'bool want_zero' into a bitmask
-> made no semantic change, it is now time to differentiate.  When the
-> caller specifically wants to know what parts of the file read as zero,
-> we need to use lseek and actually reporting holes, rather than
-> short-circuiting and advertising full allocation.
->=20
-> This change will be utilized in later patches to let mirroring
-> optimize for the case when the destination already reads as zeroes.
->=20
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+On Tue, Apr 01, 2025 at 09:01:21AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:21 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v8 11/55] i386/tdx: Wire CPU features up with attributes of
+>  TD guest
+> X-Mailer: git-send-email 2.34.1
+> 
+> For QEMU VMs,
+>   - PKS is configured via CPUID_7_0_ECX_PKS, e.g., -cpu xxx,+pks  and
+>   - PMU is configured by x86cpu->enable_pmu, e.g., -cpu xxx,pmu=on
+> 
+> While the bit 30 (PKS) and bit 63 (PERFMON) of TD's attributes are also
+> used to configure the PKS and PERFMON/PMU of TD, reuse the existing
+> configuration interfaces of 'cpu' for TD's attributes.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->=20
-> Compared to v2, also adjust the gluster driver which copies file-posix.
->=20
->  block/file-posix.c | 3 ++-
->  block/gluster.c    | 2 +-
->  2 files changed, 3 insertions(+), 2 deletions(-)
+>  target/i386/kvm/tdx.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---TVMKjij3SHcCTd96
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgHqxsACgkQnKSrs4Gr
-c8hZ/QgAiJxwx7RphWA31BSLqp41hmtaNe7xhVAVcGQB9vxpZpzPf8uzjkMXkm0c
-q4yzie4aeHwX6U7bmUCLWaioOgG3aHnKEYgTXNjB7CDBLVuWULZzASRp2RJxlyNh
-MdnEjcDHKxQ7kEceQDjSlHffqIOF6rppyKNaP0i0airMTFxVYrIxlygJMd2T9ciP
-EwwckR+/qeMNUEg4x/RmpOtrCdz0868MwGm5VdvwRyPLbeEWAVtb5CMMdutAXrn8
-icsF1pHw/msYMVjfZhumBLfV7QqsOomAcNUtMBDOe1FllECiKyEdKSjgpIe8Ekkm
-vjwhm76NOmIZSshI8EBfv+TNHa5kKw==
-=ySCZ
------END PGP SIGNATURE-----
-
---TVMKjij3SHcCTd96--
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
