@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC39C369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 13:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17679C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 13:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7DXz-00089Z-8Q; Tue, 22 Apr 2025 09:20:23 -0400
+	id 1u7Da0-0001Lz-OG; Tue, 22 Apr 2025 09:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7DXo-00083V-6n
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:20:14 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u7DZz-0001Lh-6Q
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:22:27 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7DXm-0002aK-84
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:20:11 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4394a0c65fcso56556985e9.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 06:20:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u7DZw-0002nS-VK
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:22:26 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5f63ac6ef0fso5269303a12.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 06:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745328008; x=1745932808; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HcBU7cPdXrzzIYlWGZmrxt68iF6kiNY+7kM6Z0tpie8=;
- b=vgZQT2RXLYdWpGLWEzk9jJLueX2n2+LTnb5q8Vm9PtYA8RgGh6Kyc2UkHWaEOOanEH
- 2vT98A+gOT8p9QVoANQXDc6r8sq+t7m0/5Bpuc8phTpFaS+dBZnLJXbLcycMMwMgtfXw
- flbCcFh/p/Fb9ns1mlTMnC76DPGCMDO3bjileKU8STGKx4Ggm+J7Tq5CV2V5w5TSsqhb
- lwBEdB6dTHp2JG8TR14xFaUW9Qey5QfgLuJua8JKIhwPNo6fX8l6komqQ7sxE0n5Xw7O
- Kq5OUyWNu5rY+QWV7SoyWyx9QshIUWgT85t/0HnIFzUUM3vTkMZ2PDLEHAeI8jqWtBAJ
- dAYQ==
+ d=gmail.com; s=20230601; t=1745328143; x=1745932943; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/YC2zh+7fsMo+S2wOj6mFWADhXqSooycnVG+gh2Genk=;
+ b=CGKKtKXIBXqxBG9+zMVIdGd2Ek64jnstcF2UOsyaDYKXRAL5a4Lz7HoRAYiUXP/4Va
+ h41r1FIQiyxNuHYjudWEd3AuI4Xg35d9jBcgkbU6maUe+RZ+4vWjFUkwrHa/Rxv+1tOH
+ jgEQL98MI5Vo+7L6itn2xZm5iKbSA7ysVKMs8kWRLgOusPGhahBBW2p2q3dn6lx+4XdB
+ jgHBEI9ztgGrsQZAc6KQQ12ZFN10i/IclOWN5c94AxnqWskIqAogULL2nJVYsExBUZpC
+ qvKfZ2FQgb75WZ18OZC/02+SeMJ+MRv0K8YGHuuF8WpJTXAxvPquvU/5HBLUCb0sR4g2
+ G6uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745328008; x=1745932808;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HcBU7cPdXrzzIYlWGZmrxt68iF6kiNY+7kM6Z0tpie8=;
- b=NLyETgB0ihncw34fEyMixgcNBPJQPG7NdLSnJpqRgUBZ7LqQRgc0wH6rCxnmSEy9aT
- SOTw6RQVWg05MOa9rURWaHP86mT3nhTb9haVkY1xXTflbEGK9jGWgRCuwStVDweOnOjF
- 2TJhfCxL5Pk8HYw5c8y/6a/F9sKAY/V++GLOcbnHlmwp9Mf1IbecKYUKI4Qd8VuBWPlt
- EfJQjs6k/fm4R5fTb1iSTF8Au+Sl3tfuzmMRRPHxiRHjWy3Aeys8/IgTOgIxtyBGz/3D
- kqywlI75zgjLQet1nSJQsB1c7m6DDTsPz+BUnaTLj249THBdLUmwGFu53bDUyGe1n1du
- h9vQ==
+ d=1e100.net; s=20230601; t=1745328143; x=1745932943;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/YC2zh+7fsMo+S2wOj6mFWADhXqSooycnVG+gh2Genk=;
+ b=Zst67US0xyFQqW+zGX1LhAkhobZO3wyIDeqgH/8cDZQB28+to+dTgdKzjLXjv/2R3s
+ 4/aAhoterw/jLHw5EDGbJQ47J4qh/B/3f+IHspd6zaMoAB7HYFtcJiAwlra5gBwOLWhN
+ V14MGnpf+MHKwA647QncmabpYyAyWuVX2IKO8JXg0Mxq5oXCjqFbXkQEYnUxFxFVFVd8
+ 3GWDsoTpZbifRA8WtdObX65RtZv+ljSIXQWh2HXd4QobXyWcLo+UTBsbEzx6arzaJKVF
+ cA1CzInkoQiiH12t73AnlJGxugv9d+dtDRA2Gg6VfYfDkyjLkn7bsDNCQ41kxpR7RAwy
+ 7ufA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5e4boLP5KjG6z4ComGDaF8RA/aCDRoPooP7biD7FfNunzLQZJtKoMbalg2ovHIsD6ZEHha7OIu+pP@nongnu.org
-X-Gm-Message-State: AOJu0YyJrc2rk78yNWWuDwTOCvMgvxP64WpFPG3D+NNqk9y+5JSv/QEY
- v3DEHNtPBSGVka4bOErdws29s/slrQ/2TPpTAtUmPCTXEf5FfzObYNVVuRKKs2U=
-X-Gm-Gg: ASbGnctwRDtYAIxpp3Re5tOhZ6IsOaIktZzRSZKQfm08oKfV0WTif/BC4Wb9Qvuf6EQ
- uzMracqzf+4JA7jKBBn2Yc9or1o8fq6jZ/AU8kX5LuNeWCC+HNay6JP9+trEOqZETsMOzkKneft
- Px5AXzw96eoeWx/F5Y6UuEes9VC3vpXHlHterrsNBrmP1lc8XyHpjOPaUNrBlX9fgIfJ5SJi03b
- Dq1l9odl5a/lnqBniRODllW+JsCyIWIYWjPWj4yzTjy5uykgg2yOnLz+DMYqmWDkCGMXQUHK9PJ
- qpyyNpdCjePI9ltHf63+UKRVpENnsILKpeIq0UNTU+/4XUjkZGemMyvXZgILSdX40VQzQOwhsMu
- 5z5tylFRppHxsFE9JmN4=
-X-Google-Smtp-Source: AGHT+IFgSL7rgeEArhin88r9qe34SNp2P+nWo8iSnspRRdhoWmt/z8RV9lmC7H3OkOatGCW8YIEV1A==
-X-Received: by 2002:a5d:5985:0:b0:39d:8d54:5eac with SMTP id
- ffacd0b85a97d-39efba38477mr12701948f8f.11.1745328007699; 
- Tue, 22 Apr 2025 06:20:07 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa43bf20sm15013285f8f.48.2025.04.22.06.20.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 06:20:07 -0700 (PDT)
-Message-ID: <0645c51e-fb07-49ff-8a58-49b29ab59a33@linaro.org>
-Date: Tue, 22 Apr 2025 15:20:06 +0200
+ AJvYcCVuBRpq8vvrjXIbJq1auSBDF4wHYc0RyAnccIj4eAJhByxhS3NLHqeqFonDHJ5zDTZHz5URwVbbMvrI@nongnu.org
+X-Gm-Message-State: AOJu0Yzp/p2A5vFKbVziB7hilSs86c5fmGg1k7tvUAFRpcwiCsYXe4B8
+ INjMzIV/394oaQb9ERIJ7Ro+hIHkZK/CELWaYMtfdoy+z7IUzRKFqKoCDG/1YhppJqSYIIuFGYw
+ zUwiOJdmYmBFHFSNaw3o/FMMikt8=
+X-Gm-Gg: ASbGnctopWIdrfYNBgGixzPu4big4G22B7dZaVKZXAQCjiB/ihVIYj+LKzztjnpFHoq
+ n9d4alaxxWjmHAp6xIIuCLP9vYSmg6eecLJdGYRNjvka57x0hveyiWBCI/Eu/8eX/6+/aJddYzh
+ AuRCN0BzYh9KaEql3B91U3
+X-Google-Smtp-Source: AGHT+IHmKCoXLHxixXSdwAgHkIOlh27FQs7qxzBSXHwe1P+mZucD+4QEXpPVYgkRS1kdIJNxjLWQ73liOCbpMaElDlI=
+X-Received: by 2002:a05:6402:5253:b0:5e5:ba77:6f42 with SMTP id
+ 4fb4d7f45d1cf-5f6239b986amr13215277a12.4.1745328142743; Tue, 22 Apr 2025
+ 06:22:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest: Pass down do_connect param in
- qtest_init_with_env()
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Steve Sistare <steven.sistare@oracle.com>
-References: <20250422120420.3068159-1-xiaoyao.li@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422120420.3068159-1-xiaoyao.li@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20250422125626.72907-1-thuth@redhat.com>
+ <aAeUx41_yHq8QA1s@redhat.com>
+In-Reply-To: <aAeUx41_yHq8QA1s@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 22 Apr 2025 09:22:10 -0400
+X-Gm-Features: ATxdqUGDlck16kjXn87onRJBYslBx2SMpQpE6UGKIu6_B7k_-gGM998QjpIk3pA
+Message-ID: <CAJSP0QUAUss1aGSYbcyprzuxQv4bEQGc_Owv557hK-Te0PKSaA@mail.gmail.com>
+Subject: Re: [PATCH] tests/docker/dockerfiles: Use Fedora 41 for the python
+ container file
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ John Snow <jsnow@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,17 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 14:04, Xiaoyao Li wrote:
-> The @do_connect parameter of qtest_init_with_env() is not used. Fix it
-> by passing it down to qtest_init_with_env_and_capabilities() instead of
-> hard coding a true.
-> 
-> Fixes: 5357ef823a1f ("tests/qtest: defer connection")
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
->   tests/qtest/libqtest.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Apr 22, 2025 at 9:09=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Tue, Apr 22, 2025 at 02:56:26PM +0200, Thomas Huth wrote:
+> > From: Thomas Huth <thuth@redhat.com>
+> >
+> > Using "fedora:latest" now fails with Fedora 42:
+> >
+> >   Failed to resolve the transaction:
+> >   No match for argument: python3.8
+> >
+> > Switch back to Fedora 41 for the time being, to be able to still
+> > test with Python 3.8.
+>
+> This page details why it is was removed:
+>
+>   https://fedoraproject.org/wiki/Changes/RetirePython3.8
+>
+> Based on the explanation there, it seems doubtful that any of our
+> targetted build platforms have python 3.8. Thus I'd question whether
+> we should test 3.8 at all.
+>
+> IOW, rather than pin to fedora:41, it seems better to drop
+> python3.8 from the dockerfile.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I'm in favor of pinning so that the test is reproducible. A test that
+passed on a given git commit should pass again when it is re-run.
 
+It's very inconvenient when tests fail arbitrarily due to unpinned
+dependencies. Often the person who has to debug a non-reproducible
+test failure is not knowledgeable about the test setup. They shouldn't
+have to debug failures unrelated to their patch series.
+
+Stefan
+
+>
+> >
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >  tests/docker/dockerfiles/python.docker | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dock=
+erfiles/python.docker
+> > index 8f0af9ef25f..1245523320d 100644
+> > --- a/tests/docker/dockerfiles/python.docker
+> > +++ b/tests/docker/dockerfiles/python.docker
+> > @@ -1,6 +1,6 @@
+> >  # Python library testing environment
+> >
+> > -FROM fedora:latest
+> > +FROM fedora:41
+> >  MAINTAINER John Snow <jsnow@redhat.com>
+> >
+> >  # Please keep this list sorted alphabetically
+> > --
+> > 2.49.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+>
 
