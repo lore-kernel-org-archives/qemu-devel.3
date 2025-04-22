@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26978C369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C964C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7I0n-0000VZ-2A; Tue, 22 Apr 2025 14:06:25 -0400
+	id 1u7I56-0003NV-6H; Tue, 22 Apr 2025 14:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7I0k-0000Qu-6g
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:06:22 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u7I54-0003NH-Gb
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:10:50 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7I0i-0003JS-E8
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:06:21 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7369ce5d323so4244808b3a.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:06:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u7I52-0003sV-Ae
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:10:50 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-30549dacd53so137428a91.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745345179; x=1745949979; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1745345445; x=1745950245; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=msxJBNSDT23ekAzt8EZWHEs3wL0VguO3+u9ivFbpSb0=;
- b=Ia/D7XV4QSweo7R2N6ajspSxQRucwZqmcHgpK6c7BveP06xcy4NFndnlzGgAYYYF2A
- i4MeU41T/voMveqfgWwulzJA2xNDtyVeekgtwseEsd4Phs1FnbKoxbSFe4dbgRyR9EpT
- mEkHkISub6BYsjYUwrQ+qaBkM29PMKyxBFe/D+yYTPtEWTE3yH/IiSfNI12qxRSkvBW4
- kdCqn8v4cSbv9irCMGoLK22hyVKC6c6ndzBsEyjxR1XwL72BkoMr79j+RCPbwzhPkAfA
- 8Rd+ZoY7zWSQbf30k6EOfwn1nYUC5dxzP5KxFl/SgnvNh9DX1CwmBP2HaunRfTArik82
- 19Jw==
+ bh=TAHPiwH2hONHJBtJ2hLOxCWTMsvIShhnu3A5qRbWzQ8=;
+ b=DHkWOfBdaR+e4ZUSRLFRsqZD4twxEMnC9Bg2FpMRiRYiBpZUQd5khfVfWI5edJ+dsg
+ TPKo0SIw5tvGVD1h3/l/GE8Xu86aTe1X+dZXKQcUzTmAU2wOCGGFa5bdPysr76f8v8rk
+ hUmvMDymAh9qDFSRmuDA9tnat0Y28cmub5xmaZKf85jmZ69+CRwpmZPZ/0yycEBCvlBP
+ u677OY4fKq4/TuvE4vjPYZsdLzFXH2wMFZIKXmL51oac/0oniwdeEdPeyxmArGXaTzdL
+ rJir6lHiy/EM93qus81iW/3M3tALNqhCW/DX8EaBDrjaqkgkx4X8hVRKelMLm67h/ruq
+ 8kNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745345179; x=1745949979;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1745345445; x=1745950245;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=msxJBNSDT23ekAzt8EZWHEs3wL0VguO3+u9ivFbpSb0=;
- b=PDGAqdVwCFE4JTx99Bqc4D0GxvQiVE2aRRvn/EyKNXzaZNuZzI08FBNqJRzv1LJYPr
- V9hYdtEruSUe0/bk7CamTGS3x8KVJKCREUi9OIiy4Al7Hgja6+AHunrlMsKwk7GMPxvp
- 9CSY8NH2PGNYMtpJYzhkZgh6hb7lylY3JnVt7UlF5DMf8XF5pjsrRn8Hvu+RAzyyRZ6H
- jbqOX5nst0HeqNhUqSh4TVfhHrri2H0/kNGmYN9S4n/3HQlwIlz+233gxRTmht98rrq3
- BwECwur2TkNbwTO2+SzsK+wJt7xZDBvTn8nFV7fo8vZ+fX9/Tuc6o16I4DQvXvGjh4nD
- GKcA==
+ bh=TAHPiwH2hONHJBtJ2hLOxCWTMsvIShhnu3A5qRbWzQ8=;
+ b=kCaUpKg1upZCYc/Enp6s69bEHinwQn5IgmxLVqIRmO9tuIXn+zitz/xeNf4C0tpYl1
+ r6lMr5KwWJswiJi4qLgUjvdqfBv/LazaNVgPtXWoXk/cdQPkYFqnyzz8JXYgBPKfQ89k
+ SuYbSd4/BkcbB6xmI3LgZVLFEdTaSvLSJrh4ZPZgEPHqhOQVqPbxNsy/Z2y9EV0V7Zaq
+ r24sq/mYZCGhw6GDWFFBWWv/eE0xGN1E+v0RQZ/rJuSValQkRvlRShwJRG1fvvOGvFqm
+ GbBWd1tk2oK1NFC9JvH0ldOXkUdVLfmcY6bkNs/hhT/a0MmE0ETibFIYDRq13Qqk8Siw
+ sJzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDPS/POrT53qOVx3fPO+1IcFEIItM2voF6RyUrOHN6lvauLzpMN9gQbQDDdNsg28y0EiAUg8YyrQh4@nongnu.org
-X-Gm-Message-State: AOJu0YzuU3UJQNU8LBqksdTQz+PvfuMy+ayXdOfsYxHqLOu4KKh9wCM9
- 7wDbhSYsGcL0migF+7IPXx7tQly8nk5pBmeb1kiv36ZR1nrv81VM+1EkUUQmreE=
-X-Gm-Gg: ASbGncsZ/jDi8vgZ7StoraEuSNQ2BTepxp9f+3T7rYpMzQaq443uQvnqrYpRcksFMtT
- GH+YrpGUiroGQQi8MBdnyZk/HSa4y/wFVqRVyHKvdKjgFJ9sEso+rp8lvqkSjZNzIrNY/+HVEmL
- rKJA8Dtx4645cDZQOSdTDdE449OeB7ejlAVQ1xH38xEuOt0iVf1nLuuuKSWFCaA3uJ66tY/hSqo
- L8dM9fLdSbGpZtARn4duhPkEbZnXcYAPnbsqBNrSv38bzpKqktRlBDJTX7TIqBLnrUKJgFTVgnZ
- VEYEgVQB1HuLx0BkWgjGc1mVS86wZDlWMr0tbS6nEdDvyeCpuZs6VnpeePmEtoXcxSuoALtqbqf
- jElTtGqI=
-X-Google-Smtp-Source: AGHT+IFRA14FIsa5cGpFI8ujsiWwVlPMZ1YMsGS2dNYqJtf8A77c8kABtEq7qm66mm1Cb7frg7Qu2g==
-X-Received: by 2002:a05:6a20:158f:b0:1f5:80a3:b003 with SMTP id
- adf61e73a8af0-203cbd505a0mr27624010637.37.1745345178727; 
- Tue, 22 Apr 2025 11:06:18 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ AJvYcCVPfejKiiT3AqPFVcPedJXge/VAmx9jDAxNey71GDVC3+P+Gtc6CP5n93Eux/3tN+R5+JCV1KhikEFx@nongnu.org
+X-Gm-Message-State: AOJu0YzjMSrPkalYKqa+QdiVj87hxl5+mXv/AgV6Xm7MnVyIsWxqAblP
+ OHUei6ZRm0J8gccIazGK8E4i4Y/S12d67JV0FUoz+xbMIuc7+92JbomCo6xxasg=
+X-Gm-Gg: ASbGnct/XkLlyzRZVz2Ibx5eUP/hlSKbdVAVgVPULAxk8J+3AFlhAxqQ8Xzf+dWZDxP
+ j40U2XXV7Yie9MupHCHf69IBzJG61rpsIus2uBjv4nqZS4cuB3mEVAdIAy0B/jbt7JfXB/mLOG+
+ 4dJK2ukVC+lTAuf62nh22wX+e2WDEWp9drW+pM1snLxiRvLcIxsjm9aoZ/Zqpfr5ciSWvkR7Tfm
+ IoOKS6XwACSEecikJ6XZJ+F8ZmRrclR3MGJTFGeq8ZQdDEM7jqvyWkChdg5LsV1LNHk5NyN7NhA
+ MUIgwuAmSVyqsUi41rzaEuiWvdmrNbnxHWJvvF4AIoDPtafZjiDhZw==
+X-Google-Smtp-Source: AGHT+IHCs5hV8zN3s58xt58zRgJgLnPH9EISCokYJBfAFbglee3hNDQPECNC94YA9A2WDzzu0048/Q==
+X-Received: by 2002:a17:90a:1546:b0:309:d208:ef1a with SMTP id
+ 98e67ed59e1d1-309d208ef5cmr3802611a91.5.1745345445624; 
+ Tue, 22 Apr 2025 11:10:45 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b0db1447a11sm7547897a12.51.2025.04.22.11.06.18
+ 98e67ed59e1d1-3087e05b25csm9012409a91.41.2025.04.22.11.10.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 11:06:18 -0700 (PDT)
-Message-ID: <b883f0ef-6131-4335-b273-90fd3d8cc5e4@linaro.org>
-Date: Tue, 22 Apr 2025 11:06:16 -0700
+ Tue, 22 Apr 2025 11:10:45 -0700 (PDT)
+Message-ID: <ef4dbcef-5c1d-4113-8c60-550c90baf378@linaro.org>
+Date: Tue, 22 Apr 2025 11:10:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 19/19] hw/arm/virt: Get default CPU type at runtime
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v4 12/19] hw/arm/virt: Register valid CPU types
+ dynamically
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>
 References: <20250422145502.70770-1-philmd@linaro.org>
- <20250422145502.70770-20-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250422145502.70770-20-philmd@linaro.org>
+ <20250422145502.70770-13-philmd@linaro.org>
+ <62c23632-b498-4fe9-b337-294b0fe4cec4@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <62c23632-b498-4fe9-b337-294b0fe4cec4@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,63 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/25 07:55, Philippe Mathieu-Daudé wrote:
-> Prefer MachineClass::get_default_cpu_type() over
-> MachineClass::default_cpu_type to get CPU type,
-> evaluating TCG availability at runtime calling
-> tcg_enabled().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> This removes the last use of CONFIG_TCG in hw/arm/.
-> ---
->   hw/arm/virt.c | 12 +++++++-----
->   1 file changed, 7 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 4e11272a3ac..df8dda812cc 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3131,6 +3131,12 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
->       return requested_ipa_size;
->   }
->   
-> +static const char *virt_get_default_cpu_type(const MachineState *ms)
-> +{
-> +    return tcg_enabled() ? ARM_CPU_TYPE_NAME("cortex-a15")
-> +                         : ARM_CPU_TYPE_NAME("max");
-> +}
-> +
->   static GSList *virt_get_valid_cpu_types(const MachineState *ms)
->   {
->       GSList *vct = NULL;
-> @@ -3188,11 +3194,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
->       mc->minimum_page_bits = 12;
->       mc->possible_cpu_arch_ids = virt_possible_cpu_arch_ids;
->       mc->cpu_index_to_instance_props = virt_cpu_index_to_props;
-> -#ifdef CONFIG_TCG
-> -    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
-> -#else
-> -    mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
-> -#endif
-> +    mc->get_default_cpu_type = virt_get_default_cpu_type;
-
-It's worth noting that this is a behavior change.
-Previously only
-
-   ./configure --disable-tcg --enable-kvm
-   ./qemu-system-aarch64 -M virt -accel kvm
-
-would default to 'max' and
-
-   ./configure --enable-tcg --enable-kvm
-   ./qemu-system-aarch64 -M virt -accel kvm
-
-would default to 'cortex-a15'.
-Afterward, -accel kvm will always default to 'max'.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+T24gNC8yMi8yNSAxMDo1NiwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDQvMjIv
+MjUgMDc6NTQsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4gKyNpZmRlZiBD
+T05GSUdfVENHDQo+PiArICAgICAgICB2Y3QgPSBnX3NsaXN0X3ByZXBlbmQodmN0LCBnX3N0
+cmR1cChBUk1fQ1BVX1RZUEVfTkFNRSgiY29ydGV4LWE3IikpKTsNCj4+ICsgICAgICAgIHZj
+dCA9IGdfc2xpc3RfcHJlcGVuZCh2Y3QsIGdfc3RyZHVwKEFSTV9DUFVfVFlQRV9OQU1FKCJj
+b3J0ZXgtYTE1IikpKTsNCj4+ICsjaWZkZWYgVEFSR0VUX0FBUkNINjQNCj4+ICsgICAgICAg
+IHZjdCA9IGdfc2xpc3RfcHJlcGVuZCh2Y3QsIGdfc3RyZHVwKEFSTV9DUFVfVFlQRV9OQU1F
+KCJjb3J0ZXgtYTM1IikpKTsNCj4+ICsgICAgICAgIHZjdCA9IGdfc2xpc3RfcHJlcGVuZCh2
+Y3QsIGdfc3RyZHVwKEFSTV9DUFVfVFlQRV9OQU1FKCJjb3J0ZXgtYTU1IikpKTsNCj4+ICsg
+ICAgICAgIHZjdCA9IGdfc2xpc3RfcHJlcGVuZCh2Y3QsIGdfc3RyZHVwKEFSTV9DUFVfVFlQ
+RV9OQU1FKCJjb3J0ZXgtYTcyIikpKTsNCj4+ICsgICAgICAgIHZjdCA9IGdfc2xpc3RfcHJl
+cGVuZCh2Y3QsIGdfc3RyZHVwKEFSTV9DUFVfVFlQRV9OQU1FKCJjb3J0ZXgtYTc2IikpKTsN
+Cj4+ICsgICAgICAgIHZjdCA9IGdfc2xpc3RfcHJlcGVuZCh2Y3QsIGdfc3RyZHVwKEFSTV9D
+UFVfVFlQRV9OQU1FKCJjb3J0ZXgtYTcxMCIpKSk7DQo+PiArICAgICAgICB2Y3QgPSBnX3Ns
+aXN0X3ByZXBlbmQodmN0LCBnX3N0cmR1cChBUk1fQ1BVX1RZUEVfTkFNRSgiYTY0ZngiKSkp
+Ow0KPj4gKyAgICAgICAgdmN0ID0gZ19zbGlzdF9wcmVwZW5kKHZjdCwgZ19zdHJkdXAoQVJN
+X0NQVV9UWVBFX05BTUUoIm5lb3ZlcnNlLW4xIikpKTsNCj4+ICsgICAgICAgIHZjdCA9IGdf
+c2xpc3RfcHJlcGVuZCh2Y3QsIGdfc3RyZHVwKEFSTV9DUFVfVFlQRV9OQU1FKCJuZW92ZXJz
+ZS12MSIpKSk7DQo+PiArICAgICAgICB2Y3QgPSBnX3NsaXN0X3ByZXBlbmQodmN0LCBnX3N0
+cmR1cChBUk1fQ1BVX1RZUEVfTkFNRSgibmVvdmVyc2UtbjIiKSkpOw0KPj4gKyNlbmRpZiAv
+KiBUQVJHRVRfQUFSQ0g2NCAqLw0KPiANCj4gV2h5IGRvIHRoZXNlIG5lZWQgdG8gYmUgc3Ry
+ZHVwJ2VkPw0KPiANCj4gRG8geW91IGFudGljaXBhdGUgb3RoZXIgaW5zdGFuY2VzIHdoZXJl
+IHRoZXNlIG5hbWVzIGNhbm5vdCBiZSBjb25zdHJ1Y3RlZCBhdCBjb21waWxlLXRpbWU/DQo+
+IA0KDQpJdCBzZWVtcyBpdCB3b3VsZCBiZSBtb3JlIGVhc3kgaWYgZ2V0X3ZhbGlkX2NwdV90
+eXBlcyBzaW1wbHkgcmV0dXJuIGEgDQpjb25zdCogY2hhciogY29uc3QgKHNhbWUgYXMgZXhp
+c3RpbmcgdmFsaWRfY3B1X3R5cGVzKSwgYW5kIGNhbGxlciBkb2VzIA0Kbm90IGhhdmUgdGhl
+IHJlc3BvbnNpYmlsaXR5IHRvIGZyZWUgaXQuDQoNClRoaXMgd2F5LCB0aGUgbGlzdCBjYW4g
+YmUgYnVpbHQgZWl0aGVyIHdpdGggYSBzdGF0aWMgYXJyYXkgaW5pdGlhbGl6ZXIsIA0Kb3Ig
+d2l0aCBhIGR5bmFtaWMgR1B0ckFycmF5LCB0aGF0IHdlIGtlZXAgdW5kZXIgYSBsb2NhbCBz
+dGF0aWMgdmFyaWFibGUsIA0Kc28gaXQgaGFzIHRvIGJlIGJ1aWx0IG9ubHkgb25jZS4gV2Ug
+Y2FuIGRlYmF0ZSB0aGUgbGVhayBpbnRyb2R1Y2VkIGJ1dCBJIA0KZG9uJ3QgdGhpbmsgaXQn
+cyByZWFsbHkgYSBwcm9ibGVtLg0KDQo+IA0KPiByfg0KDQo=
 
