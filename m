@@ -4,94 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93002C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBC2C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7IHb-0001gs-GY; Tue, 22 Apr 2025 14:23:48 -0400
+	id 1u7IIO-0002AA-5Z; Tue, 22 Apr 2025 14:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7IHZ-0001gF-1u
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:23:45 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7IHX-0000if-7N
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:23:44 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-227d6b530d8so57396325ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745346221; x=1745951021; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uIyYniR+YYgUeEOA2UYynHwf9nbIqJwMJC1pVJ2+B+4=;
- b=AnCXP1FPCDuw3TI9HTg2P+EVF0sucvj2KZ63k31oCfSnJ3shh9lranuBzgFYXwtaP8
- 3Y15N0JnL1giQm8/tpXHq+7gAnu1MOG35m70Gya/uNnvh057goMO1lVgh9ZDyU+EurDT
- 0QxoEo4FehGwc7pTGe9ExA0wrQllrLIWou7iBd0TcqG/0ddkM1eLD3w1j5oYfSHDRZ89
- Pk6P2OnAZHBWYUaOxnvYlWcWAgbAk6nyfN/avcc1tau7wD79nUSLQkPqtiz9VR7wlQjh
- pPOLhVL+iAPrInFR92ID3NCFhXFvwyUOqp85KpmmdF2JrebtD/hyjDJ09V4JeeaZH39H
- ZRbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745346221; x=1745951021;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uIyYniR+YYgUeEOA2UYynHwf9nbIqJwMJC1pVJ2+B+4=;
- b=C9W3pRM1gueHdXKwOwjNUa41NkUaGb61yzk2exzRHmTvOzoFtGEnf459PR7LlmEqQ+
- bcmGF846i9zewd2scGj2OD6KGMKJvg6R2Ud1URONQBHO4JMOLTY2ZyGNmMa176aX/OXq
- BO4Vk70X4/ZNUTXfRILrVVoiMwDuVQX6xNTbFHAm6dm5zs43UUXjFHe/UeXU6vgbM1YA
- IAUMeWtoIHYSh8IEiS8x+WePZRkGR0L4PWUs/szqB43f7ABVDbWfJU70p6i2XqfuTp/+
- 21P46Sk4Oh+B+zMngEg9zR9jM8MCaCdEMdpblMYwKsytlu6UABsqsyE+/DcTqGoYHleu
- zWDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmNh3BRByNC5giNKEFOvoJZWXzGcwoiT9xvOERP6IntMOzq2NXKjWrTw89zBqvCi9rEnFSZpujDO1a@nongnu.org
-X-Gm-Message-State: AOJu0YyHqEjgg1iMOQ5RFvym8zJlXfioRfQJz9ZN1kIzfIS9F3g/uJLv
- 2F6nhOk5QNIKUK7nVjhj1NPT6kRNuGDRh2HvoOIy9PXGskb59+S28zWwdkKn8LrcvOOYWaYAswg
- n
-X-Gm-Gg: ASbGncs10SLDpaqL7l6lfBjZ5ddTGt4Sg57TN9d0Gt+0+RT5lCkTqeZHriMNZDrIRmR
- WL6ZSRM6/FRNPmdeyHM8VuZFE/Tx0IDU3q+XrwY7wlW46psE89GI7WJE8wZ1hAW3M16z6IBZ9jY
- VXy6tpPibv6SLU5KX5vLBtV/3Ak2GWAXUHit4w5FNU3YdfNvpQe9bwJVku6HmH5X6VU0NGQn3Cp
- H4BR4S2CBced6M4i03q6ecqQNpp+8ywpDdYVnOdjlkWtQ768bmI4ffXuIh9aH6e6ya312qouR8i
- qeNRGYUca5FeCLY5AduQPFcb12PLQyr6YkO1p6l9AHy01/tnZKaD6A==
-X-Google-Smtp-Source: AGHT+IHqWogPQqoOif0eZz2//SqMZZCiGYA5sjn4qwv8LRlQ2wOtO2NGthSvAPyLT72pUzHlEC1hnw==
-X-Received: by 2002:a17:903:947:b0:223:517c:bfa1 with SMTP id
- d9443c01a7336-22c5360c7admr273800155ad.38.1745346221606; 
- Tue, 22 Apr 2025 11:23:41 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22d78db8b04sm65626945ad.238.2025.04.22.11.23.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 11:23:41 -0700 (PDT)
-Message-ID: <b4c1839b-93ae-4c06-94c2-f22dc00f8b44@linaro.org>
-Date: Tue, 22 Apr 2025 11:23:40 -0700
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u7IIA-00027U-JA
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:24:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u7II8-0000zT-09
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:24:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745346257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XiP4Z59uglifvspSfEjDHmaS7BcIG+SSHUyv+yx0ZU4=;
+ b=VO6F2IY98hvSScLZgR+tdTU2KH7+0/KPE6VuZsXlshZEtAzy5mmc+aaqKZjtuvpC9mb/2t
+ hA1oXLm9ieVH7rzWC1yArtLK0IAc2RxvYCTomiIhGYJeB07zJxvGrOx9UvBm7MksJC+snu
+ U5z+BC6rZk3GVLcc1hDc84gshrkO/rM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-IWVtEktrM8mpeM3tP6cffg-1; Tue,
+ 22 Apr 2025 14:24:11 -0400
+X-MC-Unique: IWVtEktrM8mpeM3tP6cffg-1
+X-Mimecast-MFC-AGG-ID: IWVtEktrM8mpeM3tP6cffg_1745346250
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1962018001D5; Tue, 22 Apr 2025 18:24:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.5])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8ECAA180045C; Tue, 22 Apr 2025 18:24:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0034E21E66C2; Tue, 22 Apr 2025 20:24:06 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,  Anton Johansson
+ <anjo@rev.ng>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [RFC PATCH v3 13/14] qemu/target_info: Add target_aarch64() helper
+In-Reply-To: <f5e7f82e-4a97-47e1-bcf5-67a9c72d9572@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 22 Apr 2025 10:50:47 -0700")
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-14-philmd@linaro.org>
+ <41c9061f-ffd8-47a8-b2e8-7c4b2a2c2fcf@linaro.org>
+ <ff7cdc09-f11c-43ae-b1e4-668c39db3efe@linaro.org>
+ <3242cee6-7485-4958-a198-38d0fc68e8cd@linaro.org>
+ <87tt6g91fq.fsf@pond.sub.org>
+ <f5e7f82e-4a97-47e1-bcf5-67a9c72d9572@linaro.org>
+Date: Tue, 22 Apr 2025 20:24:06 +0200
+Message-ID: <87y0vsxdfd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 17/19] hw/core: Get default_cpu_type calling
- machine_class_default_cpu_type()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20250422145502.70770-1-philmd@linaro.org>
- <20250422145502.70770-18-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250422145502.70770-18-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +93,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8yMi8yNSAwNzo1NCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IFNp
-bmNlIGNvbW1pdCA2MmI0YTIyN2EzMyB0aGUgZGVmYXVsdCBjcHUgdHlwZSBjYW4gY29tZSBm
-cm9tIHRoZQ0KPiB2YWxpZF9jcHVfdHlwZXNbXSBhcnJheS4gQ2FsbCB0aGUgbWFjaGluZV9j
-bGFzc19kZWZhdWx0X2NwdV90eXBlKCkNCj4gaW5zdGVhZCBvZiBhY2Nlc3NpbmcgTWFjaGlu
-ZUNsYXNzOjpkZWZhdWx0X2NwdV90eXBlIGZpZWxkLg0KPiANCj4gQ2M6IHFlbXUtc3RhYmxl
-QG5vbmdudS5vcmcNCj4gRml4ZXM6IDYyYjRhMjI3YTMzICgiaHcvY29yZTogQWRkIG1hY2hp
-bmVfY2xhc3NfZGVmYXVsdF9jcHVfdHlwZSgpIikNCj4gU2lnbmVkLW9mZi1ieTogUGhpbGlw
-cGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiAtLS0NCj4gQ2M6IEdh
-dmluIFNoYW4gPGdzaGFuQHJlZGhhdC5jb20+DQo+IC0tLQ0KPiAgIGh3L2NvcmUvbWFjaGlu
-ZS1xbXAtY21kcy5jIHwgNSArKystLQ0KPiAgIHRhcmdldC9wcGMvY3B1X2luaXQuYyAgICAg
-IHwgMiArLQ0KPiAgIDIgZmlsZXMgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCAzIGRlbGV0
-aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2h3L2NvcmUvbWFjaGluZS1xbXAtY21kcy5j
-IGIvaHcvY29yZS9tYWNoaW5lLXFtcC1jbWRzLmMNCj4gaW5kZXggNTI5Y2U4ZGQ5YTAuLmE4
-ZjhmOGM4MTM4IDEwMDY0NA0KPiAtLS0gYS9ody9jb3JlL21hY2hpbmUtcW1wLWNtZHMuYw0K
-PiArKysgYi9ody9jb3JlL21hY2hpbmUtcW1wLWNtZHMuYw0KPiBAQCAtNzMsNiArNzMsNyBA
-QCBNYWNoaW5lSW5mb0xpc3QgKnFtcF9xdWVyeV9tYWNoaW5lcyhib29sIGhhc19jb21wYXRf
-cHJvcHMsIGJvb2wgY29tcGF0X3Byb3BzLA0KPiAgIA0KPiAgICAgICBmb3IgKGVsID0gbWFj
-aGluZXM7IGVsOyBlbCA9IGVsLT5uZXh0KSB7DQo+ICAgICAgICAgICBNYWNoaW5lQ2xhc3Mg
-Km1jID0gZWwtPmRhdGE7DQo+ICsgICAgICAgIGNvbnN0IGNoYXIgKmRlZmF1bHRfY3B1X3R5
-cGUgPSBtYWNoaW5lX2NsYXNzX2RlZmF1bHRfY3B1X3R5cGUobWMpOw0KPiAgICAgICAgICAg
-TWFjaGluZUluZm8gKmluZm87DQo+ICAgDQo+ICAgICAgICAgICBpbmZvID0gZ19tYWxsb2Mw
-KHNpemVvZigqaW5mbykpOw0KPiBAQCAtOTEsOCArOTIsOCBAQCBNYWNoaW5lSW5mb0xpc3Qg
-KnFtcF9xdWVyeV9tYWNoaW5lcyhib29sIGhhc19jb21wYXRfcHJvcHMsIGJvb2wgY29tcGF0
-X3Byb3BzLA0KPiAgICAgICAgICAgaW5mby0+bnVtYV9tZW1fc3VwcG9ydGVkID0gbWMtPm51
-bWFfbWVtX3N1cHBvcnRlZDsNCj4gICAgICAgICAgIGluZm8tPmRlcHJlY2F0ZWQgPSAhIW1j
-LT5kZXByZWNhdGlvbl9yZWFzb247DQo+ICAgICAgICAgICBpbmZvLT5hY3BpID0gISFvYmpl
-Y3RfY2xhc3NfcHJvcGVydHlfZmluZChPQkpFQ1RfQ0xBU1MobWMpLCAiYWNwaSIpOw0KPiAt
-ICAgICAgICBpZiAobWMtPmRlZmF1bHRfY3B1X3R5cGUpIHsNCj4gLSAgICAgICAgICAgIGlu
-Zm8tPmRlZmF1bHRfY3B1X3R5cGUgPSBnX3N0cmR1cChtYy0+ZGVmYXVsdF9jcHVfdHlwZSk7
-DQo+ICsgICAgICAgIGlmIChkZWZhdWx0X2NwdV90eXBlKSB7DQo+ICsgICAgICAgICAgICBp
-bmZvLT5kZWZhdWx0X2NwdV90eXBlID0gZ19zdHJkdXAoZGVmYXVsdF9jcHVfdHlwZSk7DQo+
-ICAgICAgICAgICB9DQo+ICAgICAgICAgICBpZiAobWMtPmRlZmF1bHRfcmFtX2lkKSB7DQo+
-ICAgICAgICAgICAgICAgaW5mby0+ZGVmYXVsdF9yYW1faWQgPSBnX3N0cmR1cChtYy0+ZGVm
-YXVsdF9yYW1faWQpOw0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L3BwYy9jcHVfaW5pdC5jIGIv
-dGFyZ2V0L3BwYy9jcHVfaW5pdC5jDQo+IGluZGV4IGEzZGZmMDgxNGQxLi4yYzBkYjJhMDVh
-OSAxMDA2NDQNCj4gLS0tIGEvdGFyZ2V0L3BwYy9jcHVfaW5pdC5jDQo+ICsrKyBiL3Rhcmdl
-dC9wcGMvY3B1X2luaXQuYw0KPiBAQCAtNzA4MSw3ICs3MDgxLDcgQEAgT2JqZWN0Q2xhc3Mg
-KnBwY19jcHVfY2xhc3NfYnlfbmFtZShjb25zdCBjaGFyICpuYW1lKQ0KPiAgICAgICBpZiAo
-c3RyY21wKG5hbWUsICJtYXgiKSA9PSAwKSB7DQo+ICAgICAgICAgICBNYWNoaW5lQ2xhc3Mg
-Km1jID0gTUFDSElORV9HRVRfQ0xBU1MocWRldl9nZXRfbWFjaGluZSgpKTsNCj4gICAgICAg
-ICAgIGlmIChtYykgew0KPiAtICAgICAgICAgICAgcmV0dXJuIG9iamVjdF9jbGFzc19ieV9u
-YW1lKG1jLT5kZWZhdWx0X2NwdV90eXBlKTsNCj4gKyAgICAgICAgICAgIHJldHVybiBvYmpl
-Y3RfY2xhc3NfYnlfbmFtZShtYWNoaW5lX2NsYXNzX2RlZmF1bHRfY3B1X3R5cGUobWMpKTsN
-Cj4gICAgICAgICAgIH0NCj4gICAgICAgfQ0KPiAgICNlbmRpZg0KDQpSZXZpZXdlZC1ieTog
-UGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KDQo=
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> On 4/21/25 23:04, Markus Armbruster wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>> [...]
+>> 
+>>> At this point, I would like to focus on having a first version of TargetInfo API, and not reviewing any other changes, as things may be modified, and they would need to be reviewed again. It's hard to follow the same abstraction done multiple times in multiple series.
+>>>
+>>> Regarding your proposal for target_system_arch(), I understand that you tried to reuse the existing SysEmuTarget, which was a good intention.
+>>> However, I don't think we should use any string compare for this (which qemu_api_parse does). It has several flaws:
+>> 
+>> qemu_api_parse()?  Do you mean qapi_enum_parse()?
+>
+> Yes, sorry for the typo.
+>
+>>> - The most important one: it can fail (what if -1 is returned?). Enums can be guaranteed and exhaustive at compile time.
+>>> - It's slower than having the current arch directly known at compile time.
+>>> As well, since SysEmuTarget is a generated enum, it makes it much harder to follow code IMHO.
+>>> QAPI requires those things to be defined from a json file for external usage, but it's not a good reason for being forced to use it in all the codebase as the only possible abstraction.
+>>>
+>>> To have something fast and infallible, we can adopt this solution:
+>>>
+>>> In target_info.h:
+>>>
+>>> /* Named TargetArch to not clash with poisoned TARGET_X */
+>>> typedef enum TargetArch {
+>>>      TARGET_ARCH_AARCH64,
+>>>      TARGET_ARCH_ALPHA,
+>>>      TARGET_ARCH_ARM,
+>>>      TARGET_ARCH_AVR,
+>>>      TARGET_ARCH_HPPA,
+>>>      TARGET_ARCH_I386,
+>>>      TARGET_ARCH_LOONGARCH64,
+>>>      TARGET_ARCH_M68K,
+>>>      TARGET_ARCH_MICROBLAZE,
+>>>      TARGET_ARCH_MICROBLAZEEL,
+>>>      TARGET_ARCH_MIPS,
+>>>      TARGET_ARCH_MIPS64,
+>>>      TARGET_ARCH_MIPS64EL,
+>>>      TARGET_ARCH_MIPSEL,
+>>>      TARGET_ARCH_OR1K,
+>>>      TARGET_ARCH_PPC,
+>>>      TARGET_ARCH_PPC64,
+>>>      TARGET_ARCH_RISCV32,
+>>>      TARGET_ARCH_RISCV64,
+>>>      TARGET_ARCH_RX,
+>>>      TARGET_ARCH_S390X,
+>>>      TARGET_ARCH_SH4,
+>>>      TARGET_ARCH_SH4EB,
+>>>      TARGET_ARCH_SPARC,
+>>>      TARGET_ARCH_SPARC64,
+>>>      TARGET_ARCH_TRICORE,
+>>>      TARGET_ARCH_X86_64,
+>>>      TARGET_ARCH_XTENSA,
+>>>      TARGET_ARCH_XTENSAEB,
+>>> } TargetArch;
+>> 
+>> Effectively duplicates generated enum SysEmuTarget.  Can you explain why
+>> that's useful?
+>
+> In terms of code, it doesn't change anything. we could reuse SysEmuTarget.
+> I just think it's more clear to have the enum defined next to the structure using it, compared to have this buried in generated code that can't be grepped easily.
+> (git grep SYS_EMU returns nothing, so people have to remember it's converted from a Json, and that naming is different).
+
+Yes, that's unfortunate, but we don't duplicate other QAPI enums because
+of it.
+
+> IMHO, DRY principle should not always be followed blindly when it hurts code readability.
+
+Treating DRY as dogma would be foolish.
+
+> That said, my editor is able to find the generated definition as well, so I don't really mind reusing SysEmuTarget if we think the code readability is not worth the duplication.
+
+It's not just the duplication, it's also the conversion between the two
+enums.
+
+> However, I think it's a problem to compare strings to find this, when it can be set at compile time, in a file that will have to stay target specific anyway.
+
+Converting from string to enum at first practical opportunity makes the
+code simpler more often than not.
+
+
+[...]
+
 
