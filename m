@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3528C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E9CC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7EA1-0005VQ-16; Tue, 22 Apr 2025 09:59:41 -0400
+	id 1u7EAY-0005nP-Ni; Tue, 22 Apr 2025 10:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7E9z-0005Uy-6I
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:59:39 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u7EAL-0005er-8b
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:00:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7E9v-0006Hl-P3
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 09:59:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745330376; x=1776866376;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=WtmWnebD8AB2nDZRGnvV5l5+j1oRf8uBgW1ZPekGEXo=;
- b=dF4775DNiSUZnh/RsTA9+YO2jXvljhuoBpkwSyzt4eKNsQow/M0HNUij
- MXNMUirZNZGvCt1pLfOYhGlL6nuV6X7BG0NCdEOG6JWhjx5NDCGAXISav
- WqFrXR7CtWSC8d2I1fIJhLfHb33kT/m9OYDYfjZVk2n+D9f5iJlDIfyF/
- ZQ2AgF3BmNz6l/LiyhLtCxAy8Txs9tO6gsNg+Iqdts3ssA/aFSVQqGq5V
- wIXFCQA3WU7h0PxvY7gj6QTlUD06P5p8hiq87K6CMS3ECwtJugpYS0g/d
- 2//aw8/aB/NKsk5U4/gbspp5rQ2O0OtynO0u7M03D10R0RC7AG18oci0s Q==;
-X-CSE-ConnectionGUID: 1Cdgf0FeRnSAZxqzU71y0w==
-X-CSE-MsgGUID: eQjam/4LQZehH+fiVvDHYA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="49552378"
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="49552378"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2025 06:59:32 -0700
-X-CSE-ConnectionGUID: xmYhynjBRjStBhdh6T/T0Q==
-X-CSE-MsgGUID: pTo0aIktSrOhNbt448+5ZA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,231,1739865600"; d="scan'208";a="131869035"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 22 Apr 2025 06:59:29 -0700
-Date: Tue, 22 Apr 2025 22:20:24 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1u7EAG-0006JU-5B
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:00:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745330393;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OMtwXvaheTlkiqC0k82+nnlb5B0oIlbejhg9K2ePGgM=;
+ b=b1+fQID91lyi3n0CD0nUOLk+di6Yo7PXe+0E9CZXhu18JN8wKHS/ZsXs5B2EUgHl10V2pc
+ ixOe7EUUz45Am6WRj9RWk73GytsibpW0hKrkIBVJibWtK4sz12VFuydzC0t6VPaAtpGCMl
+ 6NwR/MeP4OdSEtB+/Qvdpp2UaI703Lk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-X05eMDwIPniIGH4XwKwm2g-1; Tue,
+ 22 Apr 2025 09:59:49 -0400
+X-MC-Unique: X05eMDwIPniIGH4XwKwm2g-1
+X-Mimecast-MFC-AGG-ID: X05eMDwIPniIGH4XwKwm2g_1745330386
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C709E19560A5; Tue, 22 Apr 2025 13:59:43 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.110])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 39459180010A; Tue, 22 Apr 2025 13:59:39 +0000 (UTC)
+Date: Tue, 22 Apr 2025 09:59:38 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 06/55] i386/tdx: Introduce is_tdx_vm() helper and
- cache tdx_guest object
-Message-ID: <aAelqKOePQ9gplDm@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-7-xiaoyao.li@intel.com>
- <aAIfL0jS0lWSpvZE@intel.com>
- <12ec4e5c-33af-47a0-817f-b1fd0420f8f5@intel.com>
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+Subject: Re: [PATCH v2 17/20] util: Add coroutine backend for emscripten
+Message-ID: <20250422135938.GB301197@fedora>
+References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
+ <82afa4d287a16f89fa59f08cba14fb06e017ea83.1745295397.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="DltiIdaNA3nWqmR9"
 Content-Disposition: inline
-In-Reply-To: <12ec4e5c-33af-47a0-817f-b1fd0420f8f5@intel.com>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+In-Reply-To: <82afa4d287a16f89fa59f08cba14fb06e017ea83.1745295397.git.ktokunaga.mail@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,42 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > +#ifdef CONFIG_TDX
-> > > +bool is_tdx_vm(void);
-> > > +#else
-> > > +#define is_tdx_vm() 0
-> > > +#endif /* CONFIG_TDX */
-> > > +
-> > a little nit: could we rename it as "tdx_enabled"?
-> > 
-> > Then the cases like these would be neater?
-> 
-> When sev support was added, it was seen as a feature for the VMs that are
-> created on AMD platform. I think that's why it got called sev_enabled().
-> 
-> But for TDX, it is introduced as a different type of VM in contrast to the
-> legacy/normal VMX VMs. We need to pass specific TDX vm type to
-> KVM_CREATE_VM. Based on this, is_tdx_vm() was chosen.
 
-But isn't AMD's SEV also defined as the VM type?
+--DltiIdaNA3nWqmR9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-static const char *vm_type_name[] = {
-    [KVM_X86_DEFAULT_VM] = "default",
-    [KVM_X86_SEV_VM] = "SEV",
-    [KVM_X86_SEV_ES_VM] = "SEV-ES",
-    [KVM_X86_SNP_VM] = "SEV-SNP",
-    [KVM_X86_TDX_VM] = "TDX",
-};
+On Tue, Apr 22, 2025 at 02:27:21PM +0900, Kohei Tokunaga wrote:
+> Emscripten does not support couroutine methods currently used by QEMU but
+> provides a coroutine implementation called "fiber". This commit introduce=
+s a
+> coroutine backend using fiber. Note that fiber does not support submitting
+> coroutines to other threads.
+>=20
+> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> ---
+>  MAINTAINERS           |   1 +
+>  util/coroutine-wasm.c | 127 ++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 128 insertions(+)
+>  create mode 100644 util/coroutine-wasm.c
+>=20
+> V2:
+> - Split the MAINTAINERS file change that adds coroutine-wasm.c from the
+>   previous 19th patch into this commit.
 
-Functionally, they are part of the coco functionality provided by
-different vendors, so it's better thatt both could be in the same place
-as much as possible, including file location, naming style. Of course,
-it's not a big deal, and it can be cleaned up after merge if needed.
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-> I don't think the different name is a big issue, as nobody mentions it from
-> the initial RFC to current v8 until you.
+--DltiIdaNA3nWqmR9
+Content-Type: application/pgp-signature; name=signature.asc
 
-The Chinese saying: There are a thousand Hamlets in a thousand people's
-eyes :-).
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgHoMoACgkQnKSrs4Gr
+c8gBeQgAkKJs5uspGEuKmK1DsHRilGp+8iPwo09eOxS9265IAygkr6XEk0f6JQbQ
+ATJgJFl7qVMhPDalRx+jsRrIbfrvQ/RzTbqszy1pCLXuBOLkWYEgXXClGHtBTZtn
+dAKpesc0EaoV/3r70TgNHVDsRGZeeALaJ8oksWtC3dj3lX2CRJUdf6wDFxL8R39x
++at+I4lXSmXKVS5lSDYl0D/+RjWncJzwv9X8WK1gCXGWzSdjm6ZvC3d5rqWV2jfL
+m0PMcwq99AX3ohiE1f6F8Cxn3roPqeM5vmvF7586JAe7/X4U0dvtS0B6hhyfWB8C
+SGDpKDSpoos4LUj2MQ0otrEBfH+EgA==
+=1x7V
+-----END PGP SIGNATURE-----
+
+--DltiIdaNA3nWqmR9--
 
 
