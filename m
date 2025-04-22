@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B309C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 21:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0FCC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 21:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Ku5-00012S-CA; Tue, 22 Apr 2025 17:11:42 -0400
+	id 1u7KuF-0001NT-AK; Tue, 22 Apr 2025 17:11:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Ktu-0000zK-4z
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:31 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1u7Ku5-00013D-4L
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:41 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7Ktr-0000PE-FZ
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:29 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-223fb0f619dso65671565ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 14:11:26 -0700 (PDT)
+ id 1u7Ktx-0000QC-4C
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 17:11:34 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2260c91576aso49569305ad.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 14:11:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745356285; x=1745961085; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=RKX6f7o7iwkxpMpurnfc+cvXo1EkE6Wi16DBwDav3qw=;
- b=WKMHvnQOLjKw2bw6tR6aC8FHgfjD8FremBPDk8fibvyfT6Q8XRRnqX/UMCSJZosjtX
- s88PqYkqH/kG2LZaosLR0iCx5Q+A3kGdGP0vBwAJCyy9vnsXE1Xo6Rr+OeW23lx+Es64
- R2cVEAQNlSP1qHhZZgHaje6B65xZK+Wp5dnNet1VmkpqiAmxjJ2AYk6iUB+J3+pqAz0q
- rtodXCf2A5pdVSwCjiX3Ila5AvEO+SWj1h1sRQAygU68Uf43cxXN2VnxsaYRv2xIjFrp
- bvbL2DNWSpU//qx08F1qej2GshNwSzKvwGo/boLhM9ZbdXwum9VlryTu0U+xNSBREIxI
- PXXg==
+ d=linaro.org; s=google; t=1745356290; x=1745961090; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DUF+4Y4/PqO50T2IhlnvWA6B/DIxYokH9Y5du5vjVAo=;
+ b=Kg19Xh/D1KY5PbcsnTi3QdbSAjma+/YQOdvfHLwc167i1A15NsJ+kD/rgIJs8qEFQQ
+ Tm4ibXAddMLIUZ12i2/r7Y1kN7p+H0IyWuhY6wU2oxrIYUNQ9qneKzzeduZpM5VV/hJA
+ XjOm7SAFQUhGGDD+2UyrSkIuz6Mw4+Lhs3HEBrmoMB5DIkthKyEi3WWwaMXDDGBGPYgs
+ VtX5tqeK+bcr8E3ChYR0LE4abxzRb5PSXa3apcmmuEAadHtLZGGi/XqrN4KOw6wrjunk
+ ndZp59OJ/0gel9z6B8eTO1+LFaSygAY2dvxLobvTQ5+Q/1Dhmqas36jBo28rtVE9vdgh
+ sAKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745356285; x=1745961085;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RKX6f7o7iwkxpMpurnfc+cvXo1EkE6Wi16DBwDav3qw=;
- b=R0MF96uZZJ+1OKKwhekmgGRy2u0y8xqKiNLBDW28xMvvCuXPBnY+U9YXRdfOf5xPOE
- TMQe4wxaC1pXpHTs93mM4jyYh8r5iJEFHSMk3YDKtnmeO1SaBBCXH/hWQq/Ad7Z4XJaG
- OrGJv4ngiBUuX8zrNCflQBwsqhmd2opRf+EyalY2ib/fShEubim5i2/g91JlfYD5IuM/
- t3wsoXDBs1qXjxL1oJ8rewnRgh2TJWzxgoVcTjBiOGw9VkcIcSBzd5tvx2P73mvj4eLx
- 0BXmPARkoQ1G39ZEJyJ89EstKKued/Z/K4cJJvq8ntjJ09dh69jc6pk2Hh/DFnkchS3f
- ottg==
-X-Gm-Message-State: AOJu0Yz0Zelkep/T5kcUqcqIb9egbiQu46xlGujT4nTM/+sm9ZysGsKM
- 1y+c57JvhXAjgPbakIgCNNmNor72k65tPKQQW2C4EsLKbbAB4wDn+tSS6ZIi3+XbO1g0lEbc8ss
- k
-X-Gm-Gg: ASbGncuhwg4oFrSWxdF50skpVO+Stoa6qSP4fvQ9qhXtcvNfPtl7A4ml8qrmtAqdcSh
- tT0eWsfzdl20p9k/u5ure1p4BN7xc1S5K8rjTesq7tO2sWxt0kWJl6Bh6RRtVzr/U1TB2eRS+PM
- qWcv2lnE37WiPNUB4UoLBALdwXqGy6gjKNGDyOH5dovKa3sboo796OmAcZytB8PZbSnzXLX/CGd
- k2fw11Icdq0lOInW8YXWUuBzoEWzJi93wjSWVY6/iIsZ/mdQ5wwWHlTIUW/sY3TGjJEzYM/SYGV
- KY4+cQki9RYVGRUWfpcTZ6Ed9wIzR1ZAg0EhYaO0zGrX7X04CKOkBO7kqKHTz/Mr+gHKFxUPrkU
+ d=1e100.net; s=20230601; t=1745356290; x=1745961090;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DUF+4Y4/PqO50T2IhlnvWA6B/DIxYokH9Y5du5vjVAo=;
+ b=uwxWqlCvKi0AZayV/Hx3mixvy/unNAVC2AiSbXsGMDIcfhitUuP6XWr28WRu3f1sZ/
+ 1/UR1eZG96emnMb/IS0667grAj4NCiohzMV+aZ2vYWrBTVwxekQViHY+yt41se0VZJJl
+ jnRzySBYKDBBnaMoQPtHuK/6WZNsChztdEsacvMODtyemPQ5QBP+OKBlKdN012fpXm+9
+ YAD728idTGGHYJbrdhZdZVHbNcIXpXD+A3w7RKGqPUFJjFQEP86DVU583k8ZxWJsQNn+
+ CqTHAdDk1jpaEtolDB99BE9ZWQd0ytTSRjbZeeSUm26BmP/JxlxpiC/7/epwqKvSGZ33
+ kcbw==
+X-Gm-Message-State: AOJu0Yw2FwPMgrMGVB8JTUXvefVSsvZV+ZrgCTV16qn0JTQYQhwojjP/
+ inivN/Q7xI8sjxqP18C5ls+1lisxBJIcshkFzwcFuju+6wuDySBffCiL9QQf8dj3YdsZpB0cFo2
+ C
+X-Gm-Gg: ASbGncuxyuQdRlpQh0cbc16nMOjoUDzb49856wsUJ/koFCyMXKCSH02MeKFmzJ1xL7y
+ iX52rvfksB31g0eu8Bntpcfh++Ibg3iDv5z+ZD41xZPa0ggtAKC2XMt0KjbUDA77vXiKiCG5686
+ 0oGbFJVdEBxGnoWm5u+qTdOTINwtjppxsXBAJd/5m5TIIvzp0HgTeVx/E2wzrBw42v+VFsksZpx
+ fJmiIF0XH5RsFqIfPLbW5tIfab1l86ZEFLHyInkeAC5zTIlT3CNUoL0ddqsqVE4DiB4zmcgln7Y
+ 70geWCtgHGyvd+gRDl5K2bIzmZ4/PPV/f+q6i7cBKV2/OTe8tJ901O6/XjwpVVC1v5E3eS7cxdY
  =
-X-Google-Smtp-Source: AGHT+IFVE/0kAyglYb+fPrdUSq76qIHT3tzVKJT6fBNf7CuWVLKhxKc57d2E9X8VNj0zNJBRKuSJBQ==
-X-Received: by 2002:a17:902:f70b:b0:21f:136a:a374 with SMTP id
- d9443c01a7336-22c53625f2bmr260565435ad.43.1745356285408; 
- Tue, 22 Apr 2025 14:11:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwofosnLaGa5ctNpth/ix1ATYCi4YSKHCWu1cajFapC19ohtwvKdNz9P9PfVezq4NFpkDKXw==
+X-Received: by 2002:a17:902:f684:b0:224:194c:694c with SMTP id
+ d9443c01a7336-22c535c03a1mr263373495ad.28.1745356290191; 
+ Tue, 22 Apr 2025 14:11:30 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbf8e4932sm9448160b3a.55.2025.04.22.14.11.24
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-73dbf8e4932sm9448160b3a.55.2025.04.22.14.11.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 14:11:25 -0700 (PDT)
+ Tue, 22 Apr 2025 14:11:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/9] target/avr: Increase TARGET_PAGE_BITS to 10
-Date: Tue, 22 Apr 2025 14:11:15 -0700
-Message-ID: <20250422211124.305724-1-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 7/9] target/avr: Use do_stb in avr_cpu_do_interrupt
+Date: Tue, 22 Apr 2025 14:11:22 -0700
+Message-ID: <20250422211124.305724-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250422211124.305724-1-richard.henderson@linaro.org>
+References: <20250422211124.305724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,44 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 1da8f3a3c53b604edfe0d55e475102640490549e:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/avr/helper.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-  Open 10.1 development tree (2025-04-22 15:09:23 -0400)
+diff --git a/target/avr/helper.c b/target/avr/helper.c
+index 7d6954ec26..f23fa3e8ba 100644
+--- a/target/avr/helper.c
++++ b/target/avr/helper.c
+@@ -88,14 +88,14 @@ void avr_cpu_do_interrupt(CPUState *cs)
+     }
+ 
+     if (avr_feature(env, AVR_FEATURE_3_BYTE_PC)) {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
+-        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
+-        cpu_stb_data(env, env->sp--, (ret & 0xff0000) >> 16);
++        do_stb(env, env->sp--, ret, 0);
++        do_stb(env, env->sp--, ret >> 8, 0);
++        do_stb(env, env->sp--, ret >> 16, 0);
+     } else if (avr_feature(env, AVR_FEATURE_2_BYTE_PC)) {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
+-        cpu_stb_data(env, env->sp--, (ret & 0x00ff00) >> 8);
++        do_stb(env, env->sp--, ret, 0);
++        do_stb(env, env->sp--, ret >> 8, 0);
+     } else {
+-        cpu_stb_data(env, env->sp--, (ret & 0x0000ff));
++        do_stb(env, env->sp--, ret, 0);
+     }
+ 
+     env->pc_w = base + vector * size;
+-- 
+2.43.0
 
-are available in the Git repository at:
-
-  https://gitlab.com/rth7680/qemu.git tags/pull-avr-20250422
-
-for you to fetch changes up to eba24b60a72115e21e850977b3019aaf037c66c9:
-
-  target/avr: Increase TARGET_PAGE_BITS to 10 (2025-04-22 14:07:12 -0700)
-
-----------------------------------------------------------------
-target/avr: Fix buffer read in avr_print_insn
-target/avr: Improve decode of LDS, STS
-target/avr: Move cpu register accesses into system memory
-target/avr: Increase TARGET_PAGE_BITS to 10
-
-----------------------------------------------------------------
-Richard Henderson (9):
-      target/avr: Improve decode of LDS, STS
-      target/avr: Remove OFFSET_CPU_REGISTERS
-      target/avr: Add defines for i/o port registers
-      target/avr: Move cpu register accesses into system memory
-      target/avr: Remove NUMBER_OF_IO_REGISTERS
-      target/avr: Use cpu_stb_mmuidx_ra in helper_fullwr
-      target/avr: Use do_stb in avr_cpu_do_interrupt
-      hw/avr: Prepare for TARGET_PAGE_SIZE > 256
-      target/avr: Increase TARGET_PAGE_BITS to 10
-
- hw/avr/atmega.h        |   1 +
- target/avr/cpu-param.h |   8 +-
- target/avr/cpu.h       |  21 +++-
- target/avr/helper.h    |   3 -
- hw/avr/atmega.c        |  39 ++++++--
- target/avr/cpu.c       |  16 +++
- target/avr/helper.c    | 262 +++++++++++++++++++++----------------------------
- target/avr/translate.c |  44 +++++----
- target/avr/insn.decode |   7 +-
- 9 files changed, 205 insertions(+), 196 deletions(-)
 
