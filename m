@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E940C369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26978C369D7
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:06:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7I0f-0000DE-5Y; Tue, 22 Apr 2025 14:06:17 -0400
+	id 1u7I0n-0000VZ-2A; Tue, 22 Apr 2025 14:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7I0c-0000BQ-3D
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:06:14 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7I0k-0000Qu-6g
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:06:22 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7I0Z-0003IN-0B
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:06:13 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7398d65476eso117756b3a.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:06:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7I0i-0003JS-E8
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:06:21 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7369ce5d323so4244808b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745345168; x=1745949968; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1745345179; x=1745949979; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ixSj+UuLviJEDYh3IhoMOUSRfUguUg5zQSP4nWuMqLU=;
- b=fjOtIl7COCzm4vrPCJawwVQkQV+bT1jMwy+QSQULFGPL1WTNnWpiNNlke9CXHxP7eb
- 7Q3QeZN3QwR+9YvwRj9BfeCxdFFwf8gXEtsdhIBN9gLig9PAUO23jUK9aoA63wmChQqK
- EbUToJRfXYRJTVquKoz3pMc5rRpaOT2yTrICtmA1V2Jk7ADt6arSyqaeuPH39FyPSOUW
- dhzVbQHFNyccMrEt9q65trY6+qNRbks0HG0wj2NnMush9T4TfPbf+V2BbAJoDMgh6p1m
- bvb3jAGEtGhNELGh23jJR6GlQ1Z/PMbFoB0kdaNaskJkS6/DNxLy3lHTRRVDYdk4ih9L
- cyYg==
+ bh=msxJBNSDT23ekAzt8EZWHEs3wL0VguO3+u9ivFbpSb0=;
+ b=Ia/D7XV4QSweo7R2N6ajspSxQRucwZqmcHgpK6c7BveP06xcy4NFndnlzGgAYYYF2A
+ i4MeU41T/voMveqfgWwulzJA2xNDtyVeekgtwseEsd4Phs1FnbKoxbSFe4dbgRyR9EpT
+ mEkHkISub6BYsjYUwrQ+qaBkM29PMKyxBFe/D+yYTPtEWTE3yH/IiSfNI12qxRSkvBW4
+ kdCqn8v4cSbv9irCMGoLK22hyVKC6c6ndzBsEyjxR1XwL72BkoMr79j+RCPbwzhPkAfA
+ 8Rd+ZoY7zWSQbf30k6EOfwn1nYUC5dxzP5KxFl/SgnvNh9DX1CwmBP2HaunRfTArik82
+ 19Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745345168; x=1745949968;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1745345179; x=1745949979;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ixSj+UuLviJEDYh3IhoMOUSRfUguUg5zQSP4nWuMqLU=;
- b=WC/dg845hIwfl545sUi0cgWrkGu8dNidvz/nAXlILk6ixWfz7Sir7dMoLXQUbviRuU
- wLwo4TWKhihj+BsnR5m6hLXeqZ233j6KQ/1nwSEtmrvzPnbxiMXZTBoRxf4E3Mn+UVlt
- itVDlLbY1oLOPcsDLdbqeDlXa9y2Xgjn/lHiVT8aAQH4p7s9JyhKACeO0J8zv0JEefOe
- 4fo3Y86Z04run3FHQkTZ7mPpW8XWRcKNpyyec5fFMxbwCaDjV178jEFw5JIX6Jy4JOom
- LiRUpv72eXMFIUVbUHpGhGS2bSgX18ex0zUM9fv2vGtGlBpiZaBVt8D/ind98P5FZv1/
- nZ0w==
+ bh=msxJBNSDT23ekAzt8EZWHEs3wL0VguO3+u9ivFbpSb0=;
+ b=PDGAqdVwCFE4JTx99Bqc4D0GxvQiVE2aRRvn/EyKNXzaZNuZzI08FBNqJRzv1LJYPr
+ V9hYdtEruSUe0/bk7CamTGS3x8KVJKCREUi9OIiy4Al7Hgja6+AHunrlMsKwk7GMPxvp
+ 9CSY8NH2PGNYMtpJYzhkZgh6hb7lylY3JnVt7UlF5DMf8XF5pjsrRn8Hvu+RAzyyRZ6H
+ jbqOX5nst0HeqNhUqSh4TVfhHrri2H0/kNGmYN9S4n/3HQlwIlz+233gxRTmht98rrq3
+ BwECwur2TkNbwTO2+SzsK+wJt7xZDBvTn8nFV7fo8vZ+fX9/Tuc6o16I4DQvXvGjh4nD
+ GKcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyrw5wraBmkD4jkioLrElEmw5mrCjq4Gs0UsWIdr7uDjVJ+56cHTyCBrni9uwbi1r/EwhmxJKd/zb/@nongnu.org
-X-Gm-Message-State: AOJu0YxAyCbM087/6qqNIgiv/Sc/Xm7cvIGK4kuObM+cZ4jMSK/TXCU2
- r4pACBjkvZCZ9AWTPZjyxyde05pGQEJZd/lBghr8VPcyYTleH8fawU2di9n6FbU0z2MvN2MBQlC
- i
-X-Gm-Gg: ASbGncvZ5sC49ulU7TxThZ+4yDIFu2LmG1U1N2DAPPIr83Ue5pDhiFKXtj6TXY1iWMh
- o9u7delbAJi0BhxWUGjKyvJGZr1y4cvnU/HqXjCJUIVsBc7Jn8zsPR+ESgqbuy9z2/XcZsPZN86
- iJWzeTenkzu/mSLXIISB5Tvo01M5Mp4XIsfJ6FfP9qOcUBAh0dDdOfsRee+F3dAxZg74SxdEs+n
- paVK6rnrBgWBvvIq8dqJgx+ccWdILxiHjpom5FKczR08xZOf5AAx0GIiANw6bV5AVT0IfLLE0s7
- kOVWAYS/mkZpcrJzulFXZ8k78os5iCsreqqEnFkySDWY3yvcDkwiJA==
-X-Google-Smtp-Source: AGHT+IGXex13jgk+OTFJXPlVbpbZjtnOii2gMt2Gkve4+Ks28QrG79hbRJfeqHXyAVioZA/a2N+tkg==
-X-Received: by 2002:a05:6a00:148e:b0:732:5875:eb95 with SMTP id
- d2e1a72fcca58-73dbe5201ddmr27080763b3a.4.1745345168640; 
- Tue, 22 Apr 2025 11:06:08 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXDPS/POrT53qOVx3fPO+1IcFEIItM2voF6RyUrOHN6lvauLzpMN9gQbQDDdNsg28y0EiAUg8YyrQh4@nongnu.org
+X-Gm-Message-State: AOJu0YzuU3UJQNU8LBqksdTQz+PvfuMy+ayXdOfsYxHqLOu4KKh9wCM9
+ 7wDbhSYsGcL0migF+7IPXx7tQly8nk5pBmeb1kiv36ZR1nrv81VM+1EkUUQmreE=
+X-Gm-Gg: ASbGncsZ/jDi8vgZ7StoraEuSNQ2BTepxp9f+3T7rYpMzQaq443uQvnqrYpRcksFMtT
+ GH+YrpGUiroGQQi8MBdnyZk/HSa4y/wFVqRVyHKvdKjgFJ9sEso+rp8lvqkSjZNzIrNY/+HVEmL
+ rKJA8Dtx4645cDZQOSdTDdE449OeB7ejlAVQ1xH38xEuOt0iVf1nLuuuKSWFCaA3uJ66tY/hSqo
+ L8dM9fLdSbGpZtARn4duhPkEbZnXcYAPnbsqBNrSv38bzpKqktRlBDJTX7TIqBLnrUKJgFTVgnZ
+ VEYEgVQB1HuLx0BkWgjGc1mVS86wZDlWMr0tbS6nEdDvyeCpuZs6VnpeePmEtoXcxSuoALtqbqf
+ jElTtGqI=
+X-Google-Smtp-Source: AGHT+IFRA14FIsa5cGpFI8ujsiWwVlPMZ1YMsGS2dNYqJtf8A77c8kABtEq7qm66mm1Cb7frg7Qu2g==
+X-Received: by 2002:a05:6a20:158f:b0:1f5:80a3:b003 with SMTP id
+ adf61e73a8af0-203cbd505a0mr27624010637.37.1745345178727; 
+ Tue, 22 Apr 2025 11:06:18 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbf8c04afsm8918057b3a.23.2025.04.22.11.06.07
+ 41be03b00d2f7-b0db1447a11sm7547897a12.51.2025.04.22.11.06.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 11:06:08 -0700 (PDT)
-Message-ID: <1f00ced1-429f-476f-bb39-6e0db0e0c0cc@linaro.org>
-Date: Tue, 22 Apr 2025 11:06:07 -0700
+ Tue, 22 Apr 2025 11:06:18 -0700 (PDT)
+Message-ID: <b883f0ef-6131-4335-b273-90fd3d8cc5e4@linaro.org>
+Date: Tue, 22 Apr 2025 11:06:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 11/19] hw/core/machine: Allow dynamic registration
- of valid CPU types
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH v4 19/19] hw/arm/virt: Get default CPU type at runtime
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: Anton Johansson <anjo@rev.ng>
 References: <20250422145502.70770-1-philmd@linaro.org>
- <20250422145502.70770-12-philmd@linaro.org>
- <0ca405b8-77f8-452e-ba09-0ba820f64d6f@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <0ca405b8-77f8-452e-ba09-0ba820f64d6f@linaro.org>
+ <20250422145502.70770-20-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250422145502.70770-20-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,38 +105,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8yMi8yNSAxMDo1NCwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDQvMjIv
-MjUgMDc6NTQsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4gaW5kZXggZjUy
-YTRmMjI3M2IuLjhiNDA3MzVlZjk4IDEwMDY0NA0KPj4gLS0tIGEvaHcvY29yZS9tYWNoaW5l
-LmMNCj4+ICsrKyBiL2h3L2NvcmUvbWFjaGluZS5jDQo+PiBAQCAtMTU4MSw2ICsxNTgxLDMz
-IEBAIHN0YXRpYyBib29sIGlzX2NwdV90eXBlX3N1cHBvcnRlZChjb25zdCBNYWNoaW5lU3Rh
-dGUgKm1hY2hpbmUsIEVycm9yICoqZXJycCkNCj4+ICAgICAgICAgICAgICAgIHJldHVybiBm
-YWxzZTsNCj4+ICAgICAgICAgICAgfQ0KPj4gICAgICAgIH0NCj4+ICsgICAgaWYgKG1jLT5n
-ZXRfdmFsaWRfY3B1X3R5cGVzKSB7DQo+PiArICAgICAgICBHU0xpc3QgKnZjdCA9IG1jLT5n
-ZXRfdmFsaWRfY3B1X3R5cGVzKG1hY2hpbmUpOw0KPj4gKyAgICAgICAgYm9vbCB2YWxpZCA9
-IGZhbHNlOw0KPj4gKyAgICAgICAgdW5zaWduZWQgY291bnQgPSAwOw0KPj4gKyAgICAgICAg
-R1NMaXN0ICpsOw0KPj4gKw0KPj4gKyAgICAgICAgZm9yIChsID0gdmN0OyAhdmFsaWQgJiYg
-bCAhPSBOVUxMOyBsID0gbC0+bmV4dCkgew0KPj4gKyAgICAgICAgICAgIHZhbGlkIHw9ICEh
-b2JqZWN0X2NsYXNzX2R5bmFtaWNfY2FzdChvYywgbC0+ZGF0YSk7DQo+PiArICAgICAgICAg
-ICAgY291bnQrKzsNCj4+ICsgICAgICAgIH0NCj4+ICsNCj4+ICsgICAgICAgIGlmICghdmFs
-aWQpIHsNCj4+ICsgICAgICAgICAgICBnX2F1dG9mcmVlIGNoYXIgKnJlcXVlc3RlZCA9IGNw
-dV9tb2RlbF9mcm9tX3R5cGUobWFjaGluZS0+Y3B1X3R5cGUpOw0KPj4gKyAgICAgICAgICAg
-IHZjdCA9IGdfc2xpc3RfcmV2ZXJzZSh2Y3QpOw0KPj4gKyAgICAgICAgICAgIGVycm9yX3Nl
-dGcoZXJycCwgIkludmFsaWQgQ1BVIG1vZGVsOiAlcyIsIHJlcXVlc3RlZCk7DQo+PiArICAg
-ICAgICAgICAgZXJyb3JfYXBwZW5kX2hpbnQoZXJycCwgIlRoZSB2YWxpZCBtb2RlbHMgYXJl
-OiAiKTsNCj4+ICsgICAgICAgICAgICBmb3IgKGwgPSB2Y3Q7IGwgIT0gTlVMTDsgbCA9IGwt
-Pm5leHQpIHsNCj4+ICsgICAgICAgICAgICAgICAgZ19hdXRvZnJlZSBjaGFyICptb2RlbCA9
-IGNwdV9tb2RlbF9mcm9tX3R5cGUobC0+ZGF0YSk7DQo+PiArICAgICAgICAgICAgICAgIGVy
-cm9yX2FwcGVuZF9oaW50KGVycnAsICIlcyVzIiwgbW9kZWwsIC0tY291bnQgPyAiLCAiIDog
-IiIpOw0KPj4gKyAgICAgICAgICAgIH0NCj4+ICsgICAgICAgICAgICBlcnJvcl9hcHBlbmRf
-aGludChlcnJwLCAiXG4iKTsNCj4+ICsgICAgICAgIH0NCj4+ICsgICAgICAgIGdfc2xpc3Rf
-ZnJlZV9mdWxsKHZjdCwgZ19mcmVlKTsNCj4+ICsgICAgICAgIGlmICghdmFsaWQpIHsNCj4+
-ICsgICAgICAgICAgICByZXR1cm4gZmFsc2U7DQo+PiArICAgICAgICB9DQo+PiArICAgIH0N
-Cj4gDQo+IFdoeSB1c2UgR1NMaXN0IGluc3RlYWQgb2YgR1B0ckFycmF5Pw0KPiBUaGF0IHdv
-dWxkIHByb3ZpZGUgeW91IHRoZSBjb3VudCB3aXRob3V0IG1hbnVhbGx5IGNvbXB1dGluZyBp
-dCwNCj4gYW5kIGl0IHdvdWxkIGF2b2lkIHRoZSBuZWVkIGZvciBhbnkgc29ydCBvZiByZXZl
-cnNlLg0KPiBJIHRoaW5rIGl0IHdvdWxkIGFsc28gYWxsb3cgeW91IHRvIGF1dG8tZnJlZSB0
-aGUgc2V0Lg0KPiANCg0KU2FtZSByZW1hcmsgdGhhbiBSaWNoYXJkLCBpdCB3b3VsZCByZW1v
-dmUgYWxsIHRoZSBjaGVja3MgbmVlZGVkLCBhcyB3ZSANCmNhbiBzaW1wbHkgdXNlIHRoaXMg
-YXJyYXkgImJsaW5kbHkiLg0KDQo+IA0KPiByfg0KDQo=
+On 4/22/25 07:55, Philippe Mathieu-Daudé wrote:
+> Prefer MachineClass::get_default_cpu_type() over
+> MachineClass::default_cpu_type to get CPU type,
+> evaluating TCG availability at runtime calling
+> tcg_enabled().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> This removes the last use of CONFIG_TCG in hw/arm/.
+> ---
+>   hw/arm/virt.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 4e11272a3ac..df8dda812cc 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -3131,6 +3131,12 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
+>       return requested_ipa_size;
+>   }
+>   
+> +static const char *virt_get_default_cpu_type(const MachineState *ms)
+> +{
+> +    return tcg_enabled() ? ARM_CPU_TYPE_NAME("cortex-a15")
+> +                         : ARM_CPU_TYPE_NAME("max");
+> +}
+> +
+>   static GSList *virt_get_valid_cpu_types(const MachineState *ms)
+>   {
+>       GSList *vct = NULL;
+> @@ -3188,11 +3194,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+>       mc->minimum_page_bits = 12;
+>       mc->possible_cpu_arch_ids = virt_possible_cpu_arch_ids;
+>       mc->cpu_index_to_instance_props = virt_cpu_index_to_props;
+> -#ifdef CONFIG_TCG
+> -    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
+> -#else
+> -    mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
+> -#endif
+> +    mc->get_default_cpu_type = virt_get_default_cpu_type;
+
+It's worth noting that this is a behavior change.
+Previously only
+
+   ./configure --disable-tcg --enable-kvm
+   ./qemu-system-aarch64 -M virt -accel kvm
+
+would default to 'max' and
+
+   ./configure --enable-tcg --enable-kvm
+   ./qemu-system-aarch64 -M virt -accel kvm
+
+would default to 'cortex-a15'.
+Afterward, -accel kvm will always default to 'max'.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
