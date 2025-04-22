@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B86FC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EE2C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 18:50:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7IU5-00086o-Of; Tue, 22 Apr 2025 14:36:41 -0400
+	id 1u7IgI-0002R2-Q8; Tue, 22 Apr 2025 14:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7IU3-00086H-Tc
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:36:39 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1u7IgH-0002Qg-1h
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:49:17 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7IU1-00047W-IC
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:36:39 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-227d6b530d8so57602595ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:36:36 -0700 (PDT)
+ id 1u7IgF-0007bw-2M
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 14:49:16 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22409077c06so77358245ad.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 11:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745346995; x=1745951795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745347753; x=1745952553; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oOYHUsbWD42mXPw1XZgIgezW5dIqJZVs5bzYLBbcpiw=;
- b=nIxhXuqIoZzAHThOVhnq62Poi4Bk04qQ05CF11hmotu3arTEIvrZeUI3Yyher0riQi
- Kn07py9olQR4Xk0aAcUrSVu+Lt2sxqoX4hOl1i7aEPQYUKGV85YTAKqdkoxs65tbTLmu
- 8zemVrBLaP51cMfemcbp+CNsY91PdIKbDNJJuBP9m1Gdaq1aAkUES/zdRJZ/NAMkhokH
- 87gbZuJ2ryMDRQOiVWxvohRbQ294mX2AiVHuBjjI0K//gM7tTPRZML3zJhzfyf3K/e2w
- lMVUH7ps5pL3zQr8+zB99PJidZldJzQXaNpuk7xAzL596OuSWdBWX0PxuZNJFbnNvyII
- QH8Q==
+ bh=MZY1GrGlyQMWy0DvALMVJra6yRbTMA+o6Fn/TJiylTE=;
+ b=kKnP5CyJ/nFuxX+l3vMFjXEwflpHyL7YHKNRHYapU/TOmQFuth8kAqBON0nYm8anm4
+ P/sLb/UKfueBGZd2YNFB6IMm8f+LMnnJTyuVtqykGJ3X2H0zAph0XtnflofHR6PUhrdg
+ IbDPgC9Fjy0FJBUuBoNjXktg8YLwyEx4dTPVAdNugAkFk4i+G0nJXg8Webp4s6+zqqCv
+ QbkRWvfIfTBKWnBhIitdWeM3b7kEV2WgQYhWgKex/OLrLA6I1idkXCu54NgCCufKvrjY
+ grQV3XFEk4kvGHZPUjZ3bs7cX/cjIJ8sIPeZ4J1Oig0ICNl1+2997xEwD6GHHNwQn048
+ lvvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745346995; x=1745951795;
+ d=1e100.net; s=20230601; t=1745347753; x=1745952553;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oOYHUsbWD42mXPw1XZgIgezW5dIqJZVs5bzYLBbcpiw=;
- b=BVVQJuLmdIqGRYVeMOfcHDrYPKbRiYDC8IEEShH9osCMBZQZrAn88VFCT997hpSqvU
- cKxJ7i8o9Ga7lI3y3DBqz2Zqe27CXd/CMJgMCyGf5RDn9lECO8nXwNEIpsxBUqWDsgCY
- I7EV0q5tiSJYUqt83O9ZByZegUap08PbVTAm8VJ+YHrPCk0/DriJXhiMZVkjaC0KMDz+
- WpvR1IotXnQB+dyDtUzdIcf8/vJK1kh8KxZOtuFBVvO4LkDojRqYWpwcZAWSzGXQedja
- ZbeJ93o1vDczdAP+/d4GsCU472wpKowhra0wF8BX1QZMYlDK9Mc9QdeHdFoUIIfdJ68n
- O20g==
+ bh=MZY1GrGlyQMWy0DvALMVJra6yRbTMA+o6Fn/TJiylTE=;
+ b=xEH9PAonnOATAFeAZDJj/9FnKOcYx5qwUqmy1lXws9JW679STDDUUgSd9u/MSsu5SM
+ aNcKs3yYX+gjHjwhHQCqPpjZoeSwkluPOSrqJi8cpGzy3tnID3NP5Rjxsivyb2JaAPAX
+ u7ub5Wi+J2sN4Zw8D83UIP1/8QLi7y5JKecygdYabIWVVtiKk4M2WiXHpqekyn4voMS4
+ N0ng/JmjZhjVZtrkOiYOAH+WS4D/qzgiYhv/1LLrmvXzbA5xR4/YMHrPff7gq2Ll8ffH
+ DjygVRzevsMMrBEmwB5ayKhPPWXpGs/RDDg+yBSHxYk3Wo//SRjezhefBqevgpkLaiMT
+ oGzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU76Szzar6o7dMxdrNKn12gSGM82u6NUpSE2IdrEog80lyhpWrK2eikAxAWr84vuHw3JnMM16TKCe2Q@nongnu.org
-X-Gm-Message-State: AOJu0Yw7NjaK2X0PNpvtZTNJGag0GrMJ9idkAl0IOOmWAFBzA5+bQt/5
- miWsTUvUIg02GrEio2ZF5ThJJnbGgf1DB60+64KDCgdkr02/e2ZS1QJwBPtZlMM=
-X-Gm-Gg: ASbGncv5M0mZfOOLlfch4T7rLS0zJRIIqkXpFei7hHicaH8jkBMDz7hN69Hu1VZxNzo
- a9Th5Bof8YYZ9yEVuZDaRAkJPbuLNx6IFUISUKY15HTvLqvJPWQKGT+4IfzrpEg5BheyVuAsnJg
- y6fX97wRdeeDHksGUM3q7F+K4z/jMczhD7o+zw/TJMSrtprbhzLQApC2dz62VxWSQfg/O/R86nP
- quaomoaWBtrZNpsRE7DxC6xBE/uskYHXyl7bcHmHYQPP0o0waUgqXE0P7psSpjtWZeA9YzYWVBo
- 6HXp7R28YIj2ozG6bbyQfAV2qEChT2u+OMQ7OhzmF3BJt19nCj+lgnI5Ixov8Qnu
-X-Google-Smtp-Source: AGHT+IF4uz+DeJY/nYR/Ec/VhBXK6cu0UPrc1fkRucNdPvNpEMiIOSDU3spXUWZrK41Qy+/jYDKkvg==
-X-Received: by 2002:a17:902:e88f:b0:225:abd2:5e4b with SMTP id
- d9443c01a7336-22c53583dd1mr220689105ad.16.1745346995442; 
- Tue, 22 Apr 2025 11:36:35 -0700 (PDT)
+ AJvYcCVHWt3QET+wv7CrRxDMVXBe9+4F8Qd2Tjfz64Scbl+S9hcW4b62jW11LwHeNP+95G8F2+J6QsOmE0W4@nongnu.org
+X-Gm-Message-State: AOJu0YyPp9ZPofN8Ukc6Iemc6/uMBI0zKMEcr9XARysUn+Mo1aPo5RYU
+ lt/HSYNT5QYMlFSw1fLAerGwCT3ErJ4X2aiGqBFIA1a0UTo7hLHjWt4pdqOq7SU=
+X-Gm-Gg: ASbGnctVlcdOyhk8U/1Libo5UPNCoLB9gA0sbBBlB7vRM5Iw9mEjFYqtur0T8y1GFnx
+ QP2zCowy/UXdKUTXDWT2VbUR/c9QYndzbZjkqv56sxYA7cWPqVaUkcK0jUQyFhXs0x+uyAdWrdZ
+ YUypcgj1ISyoFHoi+sVXf4yd4/oaPYAHBnomA4P+Q8KW/lcmNJjm8DXZ0dui+2VPJGgl9QYOXG3
+ HQn2R5gLKUJlKAya9RFVC6u64TsklbTO3aWxJ5TmUJkhGO0JOSNzbuS1CzVkzV/i3OtEBSCfoSO
+ FWSJC3AbOcD52KbbRU3xvG5HsXefV8aI9TSiHluuYqARymuDA7I3Ig==
+X-Google-Smtp-Source: AGHT+IHCApRgLfIxL/Sct1kVzpXNY85PrYBBLDk3jSxMyis45if9iIUCxlNmqXlETP95qyDs2sCtfg==
+X-Received: by 2002:a17:902:e742:b0:224:a96:e39 with SMTP id
+ d9443c01a7336-22c53568406mr252066745ad.9.1745347753432; 
+ Tue, 22 Apr 2025 11:49:13 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50ecf33bsm88616085ad.191.2025.04.22.11.36.34
+ d9443c01a7336-22c50eb5354sm88286375ad.154.2025.04.22.11.49.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 11:36:35 -0700 (PDT)
-Message-ID: <7de6ad37-d62f-4e66-b660-034b69fb5938@linaro.org>
-Date: Tue, 22 Apr 2025 11:36:34 -0700
+ Tue, 22 Apr 2025 11:49:13 -0700 (PDT)
+Message-ID: <9d81cb7e-8d20-4c16-8409-231498ac86a3@linaro.org>
+Date: Tue, 22 Apr 2025 11:49:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] buildsys: Disable 'unguarded-availability-new'
- warnings
+Subject: Re: [RFC PATCH v3 13/14] qemu/target_info: Add target_aarch64() helper
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20250422171955.11791-1-philmd@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-14-philmd@linaro.org>
+ <41c9061f-ffd8-47a8-b2e8-7c4b2a2c2fcf@linaro.org>
+ <ff7cdc09-f11c-43ae-b1e4-668c39db3efe@linaro.org>
+ <3242cee6-7485-4958-a198-38d0fc68e8cd@linaro.org>
+ <87tt6g91fq.fsf@pond.sub.org>
+ <f5e7f82e-4a97-47e1-bcf5-67a9c72d9572@linaro.org>
+ <87y0vsxdfd.fsf@pond.sub.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250422171955.11791-1-philmd@linaro.org>
+In-Reply-To: <87y0vsxdfd.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,44 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8yMi8yNSAxMDoxOSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IFdo
-ZW4gdXNpbmcgVmlzdWFsIFN0dWRpbyBDb2RlICh2MS45OS4zKSBhbmQgQXBwbGUgY2xhbmdk
-IHYxNy4wLjANCj4gSSBnZXQ6DQo+IA0KPiAgICBJbiBmaWxlIGluY2x1ZGVkIGZyb20gLi4v
-Li4vcWFwaS9zdHJpbmctb3V0cHV0LXZpc2l0b3IuYzoxNDoNCj4gICAgcWVtdS9pbmNsdWRl
-L3FlbXUvY3V0aWxzLmg6MTQ0OjEyOiBlcnJvcjogJ3N0cmNocm51bCcgaXMgb25seSBhdmFp
-bGFibGUgb24gbWFjT1MgMTUuNCBvciBuZXdlciBbLVdlcnJvciwtV3VuZ3VhcmRlZC1hdmFp
-bGFiaWxpdHktbmV3XQ0KPiAgICAgIDE0NCB8ICAgICByZXR1cm4gc3RyY2hybnVsKHMsIGMp
-Ow0KPiAgICAgICAgICB8ICAgICAgICAgICAgXn5+fn5+fn5+DQo+ICAgIC9MaWJyYXJ5L0Rl
-dmVsb3Blci9Db21tYW5kTGluZVRvb2xzL1NES3MvTWFjT1NYLnNkay91c3IvaW5jbHVkZS9f
-c3RyaW5nLmg6MTk4Ojk6IG5vdGU6ICdzdHJjaHJudWwnIGhhcyBiZWVuIG1hcmtlZCBhcyBi
-ZWluZyBpbnRyb2R1Y2VkIGluIG1hY09TIDE1LjQgaGVyZSwgYnV0IHRoZSBkZXBsb3ltZW50
-IHRhcmdldCBpcyBtYWNPUyAxNS4wLjANCj4gICAgICAxOTggfCAgICAgICAgIHN0cmNocm51
-bChjb25zdCBjaGFyICpfX3MsIGludCBfX2MpOw0KPiAgICAgICAgICB8ICAgICAgICAgXg0K
-PiAgICBxZW11L2luY2x1ZGUvcWVtdS9jdXRpbHMuaDoxNDQ6MTI6IG5vdGU6IGVuY2xvc2Ug
-J3N0cmNocm51bCcgaW4gYSBfX2J1aWx0aW5fYXZhaWxhYmxlIGNoZWNrIHRvIHNpbGVuY2Ug
-dGhpcyB3YXJuaW5nDQo+ICAgICAgMTQ0IHwgICAgIHJldHVybiBzdHJjaHJudWwocywgYyk7
-DQo+ICAgICAgICAgIHwgICAgICAgICAgICBefn5+fn5+fn4NCj4gICAgMSBlcnJvciBnZW5l
-cmF0ZWQuDQo+IA0KPiBEaXNhYmxlIHRoaXMgLVd1bmd1YXJkZWQtYXZhaWxhYmlsaXR5LW5l
-dyB3YXJuaW5nIGFzIGENCj4gc2hvcnQgdGVybSBiYW5kLWFpZCBmaXguDQo+IA0KPiBTaWdu
-ZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+
-DQo+IC0tLQ0KPiAgIG1lc29uLmJ1aWxkIHwgMiArKw0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAy
-IGluc2VydGlvbnMoKykNCj4gDQo+IGRpZmYgLS1naXQgYS9tZXNvbi5idWlsZCBiL21lc29u
-LmJ1aWxkDQo+IGluZGV4IDQxZjY4ZDM4MDY5Li41MzkzNjhmODJiMSAxMDA2NDQNCj4gLS0t
-IGEvbWVzb24uYnVpbGQNCj4gKysrIGIvbWVzb24uYnVpbGQNCj4gQEAgLTczNSw2ICs3MzUs
-NyBAQCB3YXJuX2ZsYWdzID0gWw0KPiAgICAgJy1Xc3RyaWN0LXByb3RvdHlwZXMnLA0KPiAg
-ICAgJy1XdHlwZS1saW1pdHMnLA0KPiAgICAgJy1XdW5kZWYnLA0KPiArICAnLVd1bmd1YXJk
-ZWQtYXZhaWxhYmlsaXR5JywNCj4gICAgICctV3ZsYScsDQo+ICAgICAnLVd3cml0ZS1zdHJp
-bmdzJywNCj4gICANCj4gQEAgLTc0Nyw2ICs3NDgsNyBAQCB3YXJuX2ZsYWdzID0gWw0KPiAg
-ICAgJy1Xbm8tc3RyaW5nLXBsdXMtaW50JywNCj4gICAgICctV25vLXRhdXRvbG9naWNhbC10
-eXBlLWxpbWl0LWNvbXBhcmUnLA0KPiAgICAgJy1Xbm8tdHlwZWRlZi1yZWRlZmluaXRpb24n
-LA0KPiArICAnLVduby11bmd1YXJkZWQtYXZhaWxhYmlsaXR5LW5ldycsDQo+ICAgXQ0KPiAg
-IA0KPiAgIGlmIGhvc3Rfb3MgIT0gJ2RhcndpbicNCg0KSSBzb2x2ZWQgaXQgdGhlIHNhbWUg
-d2F5IGxvY2FsbHksIGJ1dCBkaWRuJ3Qgc2VuZCBhIHBhdGNoIGJlY2F1c2UgSSdtIA0Kbm90
-IHN1cmUgd2hhdCBoYXBwZW5zIGlmIHRoZSBjb2RlIHJ1bnMgb24gTWFjT1MgPCAxNS40LCBh
-bmQgSSBkb24ndCBoYXZlIA0Kc3VjaCBhIG1hY2hpbmUgYXZhaWxhYmxlLg0KDQpJcyB0aGUg
-c3ltYm9sIGFscmVhZHkgdGhlcmU/DQpEb2VzIGl0IGNyYXNoPw0KSSBndWVzcyB0aGUgd2Fy
-bmluZyBpcyBoZXJlIGZvciBhIGdvb2QgcmVhc29uLg0KDQpZb3UgY2FuIGZpbmQgYSBsb3Qg
-b2YgaXNzdWVzIG9wZW4gaW4gdmFyaW91cyBvcGVuIHNvdXJjZSBwcm9qZWN0cyB3aXRoIA0K
-dGhpcyB3YXJuaW5nICh3aXRoIHZhcmlvdXMgZml4ZXMpIHNpbmNlIHRoaXMgdXBkYXRlIHdh
-cyByZWxlYXNlZC4NCg==
+On 4/22/25 11:24, Markus Armbruster wrote:
+>>> Effectively duplicates generated enum SysEmuTarget.  Can you explain why
+>>> that's useful?
+>>
+>> In terms of code, it doesn't change anything. we could reuse SysEmuTarget.
+>> I just think it's more clear to have the enum defined next to the structure using it, compared to have this buried in generated code that can't be grepped easily.
+>> (git grep SYS_EMU returns nothing, so people have to remember it's converted from a Json, and that naming is different).
+> 
+> Yes, that's unfortunate, but we don't duplicate other QAPI enums because
+> of it.
+> 
+
+Fine for me if it's the consensus we already have in QEMU, no one 
+mentioned it until your answer.
+
+>> IMHO, DRY principle should not always be followed blindly when it hurts code readability.
+> 
+> Treating DRY as dogma would be foolish.
+> 
+
+I agree, alas, it tends to be treated as such, even unintentionally, 
+when people spend too much time on the same code/file.
+
+>> That said, my editor is able to find the generated definition as well, so I don't really mind reusing SysEmuTarget if we think the code readability is not worth the duplication.
+> 
+> It's not just the duplication, it's also the conversion between the two
+> enums.
+> 
+>> However, I think it's a problem to compare strings to find this, when it can be set at compile time, in a file that will have to stay target specific anyway.
+> 
+> Converting from string to enum at first practical opportunity makes the
+> code simpler more often than not.
+> 
+
+Sure, it's not what is done in the v4 anymore, so it's fine.
+
+> 
+> [...]
+> 
+
 
