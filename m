@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D90C369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48633C369D7
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 20:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JPZ-0006eB-BD; Tue, 22 Apr 2025 15:36:05 -0400
+	id 1u7JQx-00013B-Kc; Tue, 22 Apr 2025 15:37:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JOy-0005AQ-Oa
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:31 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1u7JLW-0000BL-K0
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:55 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JOw-00074O-MZ
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:28 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-22438c356c8so59119215ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:26 -0700 (PDT)
+ id 1u7JLU-0006as-At
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:54 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22c3407a87aso84188125ad.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:31:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350525; x=1745955325; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350310; x=1745955110; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2WoakTEoTh5W+Edqv/m7cqa7TN4j7HTie5YrJRYbIMU=;
- b=CX+RGNphhqJ8AHWCwBqGlOhZ1suuubvGlDYDLZu5NjwfdOWDownPUc2JScikSfCn/K
- Ezbi8TKR/PZnrS2fDpX3XZjHD1YFnurBXzqJQsS8QARYJHIZYmKH/ymy8DBbw+CaoOD2
- OGdySFlv4+WmTAVgVxPhvjsmNljYrk25EuYc1rKQjcY7CqTczqd71I4ePQleLlfCLiIT
- KtLWtBMbubLvoEiA7O7Bkdp4IT97olrB/RRLAYGco5qfZoXmluFJuH9+67r7YR0U2Wdz
- AvP8ilCcPcgOxJ3FsfiRI+YWuuMOrLuNm+/QBQIQNtxgJZw7dsX2WQpeQb8RjKs65xrb
- l34Q==
+ bh=qcw0j/NlWHHUFrSWrBThXyu3TLmFkd4CNoNN4KpSa40=;
+ b=tRvwom6xp9qKY4ahcO1/L3Ry2UUWyv+xm8rP9Y/RXbp8yy+69llJ2ICrcRbQwa5SSQ
+ TBSIU4hDHUEGWcJMan/hBPHXxCmi7P1ruuy/sGhjoFcSr5sJWm7K5MJFMCUcicPpKxkD
+ ZkY/TWWqRV/+zSRm2u3nPSDiVkBXAN5gR4bCNB9r3H4/z238O1KhWqClKkt1hqlp91Lt
+ e9Tv8qQNb1rGx+ePIIa5ZrPmoSy3hOECcsad89vQuZy8xqF/EtaQ2jt/WmzHMAIbvOKL
+ SKrRh2+5YUK1rhOGNNOI/t+xGA1c+MuoM3DdMxKvlvSjN2LxJiA5XGERMuvjal9SSc73
+ 5lPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350525; x=1745955325;
+ d=1e100.net; s=20230601; t=1745350310; x=1745955110;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2WoakTEoTh5W+Edqv/m7cqa7TN4j7HTie5YrJRYbIMU=;
- b=sa1nJHCU8fZlp11/dIzFtbHsHMruvbLoIZ855e9E8V80dusHzIJHuzjcltOLtxujCu
- Ucg2/rPCp/H92mgyzY9f3MBbZSGxtoaAI0wUsCtLpSOayKyO/I2LM7yxSK4DPoQgu2RG
- fHR7blkx4CBEpRhSVwAvMPHXt512bhp1Qdx6NuFqj6b0/ACFPxNfG0j41s+XKRZAv8Se
- MqUzZFfmTF2XY26zC8bxWbbXME/t/b9XSQgMK3jfGkBQJBMTD1vvWEQyqYsXrj7ShWvp
- rex71XLfIHGYH3Xl8jXJFhLxmIUYQO0+ZtJRrqrnkknG64qspZAgYMTVqLdms30NNMuG
- 1tew==
-X-Gm-Message-State: AOJu0YwExeeN17RP0CSAiWkubW+PfYB/uX4YsUMRAtOYbZHcR3Sb/r97
- 67n6fBAIdpCsAxr+oXCzCICySlde4NIyA8Szh1aNXQ7WHS1p1B2Ywoi/XFD7JodBDkUhTdfboiN
- C
-X-Gm-Gg: ASbGnctNvsiQy70DJCt9OLLelCyCB6qvE/4a6Qzjl9yU6mxEKUXooXBfh/mvmBQvrQY
- q0e2ZaKGKpj8UAzg8f5dXxO+5L+9R1OfwhXmhhhKdlofqxV91dVvJsW6RR1NUdTlVOr2fSJBbfF
- FP0ccoODwm1l/jd8uhE+rXQARulcPVBQ1GW/DLOGjeo2wHXS/iByYg7hS0yIW38OGPrjHseDsnw
- 0gWywyjcB53VrKhOg7slMym7NQl/MeCwfHL7q4oAlb1kLkAoHFHhtklpNmGRWE2PB1MNZtga8Z6
- 9UNQpo5/Fc/Qb+OK5O+S3ePbr+OHQIHoXCjn/7P0PmpLM+u8wtPmuIRJF2cTs+gUxjKtXyV9Ie0
+ bh=qcw0j/NlWHHUFrSWrBThXyu3TLmFkd4CNoNN4KpSa40=;
+ b=ApqHQsrmC358OhdcS+D+FW09vCfexfK7V2eK/9QC5VUS6IRcMEbjmZ2LWZg/LghlFV
+ 7z4lr/bJoshLIRDVNb6txxvVeIKMKt1S5pT0tc9iUyvKSHOmYhaxei59X+QrDIbPWpO3
+ mBT4aEUuhpc4O6hLRpa2JsvVTLiqytKuz1hbE4GxdTCZgB++NwtjQLVqgVh3Xi755rMH
+ L9tKx7+W4VK2RP7HiDMCI/AyGha0KSfrotwlQzBWBQoCtW0xw8vnOX2ckhWiYXgUHYiI
+ wJ1OLYwky10LmYWaxd2hk9vGTRHk1Dxw5WnA0ngXOeUyux1DnXTLVwu9w3jiLQ5R0W19
+ IpYA==
+X-Gm-Message-State: AOJu0Yy8TNLtj6Gi6p7EX/M/Dv/V0n4ZX3FA1AltFemja1wCWi8Xwj0f
+ 26zEqmzH9RDOZfD8GaiMSkE72X2zCPI8faFilKsxjPCY0Cq/nikPbJL7DDL09UJ2uDS1hX0ZZj5
+ d
+X-Gm-Gg: ASbGnctIaJ7jNR/8VCY6BFpU5LILc5uK8D4QfU6D+stdz/EZouOUgGCU5xlniCPKU8e
+ ZavN+/hY/RVvJVqA/SzKgOGmygRA1LpVnb4z5mc2yFRxYZ54RQyYwH9WuS1wi2qRWnRRmOb5tVK
+ SjpshKF21MD+EZYDt3zy0Iu8WK7Z4xCCkQFlfDi95RyMl9gJrtmgPRf/YqUkaQw6H/51qP6VrE3
+ 8u/Y+uriCnpkYB45VOIpnBYFsGZD+3bzwURug4e+vD0hsAOGxY6eGIqnMpKwb/XOWuj1am/ysxY
+ 6fHtktVswzxv0DWrReunFGB8saWbG/70A9AktldI12QZxTJ+Smc7Ti9DYKAbF/w3YSF0RNI1ch8
  =
-X-Google-Smtp-Source: AGHT+IHiq5c+Jgc1MaQGq2iVWsxlcznD0hNaGcc9YATWMePpBp6h5ERo/3Ie8NGm4tvoEE+RCzaYuA==
-X-Received: by 2002:a17:902:dac5:b0:224:826:279e with SMTP id
- d9443c01a7336-22c53630377mr225992365ad.50.1745350525406; 
- Tue, 22 Apr 2025 12:35:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDSorXWqj3xQPieB+lzrq2kREsklsVBoJeuSkit6cCLpo7Q6OgYjJh7bvT9yTYsCKaRwPl1Q==
+X-Received: by 2002:a17:903:3bad:b0:220:f59b:6e6 with SMTP id
+ d9443c01a7336-22c5356798amr208685535ad.8.1745350310640; 
+ Tue, 22 Apr 2025 12:31:50 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.24
+ d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.31.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:35:25 -0700 (PDT)
+ Tue, 22 Apr 2025 12:31:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 099/147] page-vary: Move and rename qemu_target_page_bits_min
-Date: Tue, 22 Apr 2025 12:27:28 -0700
-Message-ID: <20250422192819.302784-100-richard.henderson@linaro.org>
+Subject: [PATCH 045/147] target/xtensa: Restrict semihosting tests to system
+ mode
+Date: Tue, 22 Apr 2025 12:26:34 -0700
+Message-ID: <20250422192819.302784-46-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,118 +101,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename to migration_legacy_page_bits, to make it clear that
-we cannot change the value without causing a migration break.
-Move to page-vary.h and page-vary-target.c.
-Define via TARGET_PAGE_BITS if not TARGET_PAGE_BITS_VARY.
+We do not set CONFIG_SEMIHOSTING in
+configs/targets/xtensa*-linux-user.mak.
+
+Do not raise SIGILL for user-only unconditionally.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/page-vary.h   | 9 +++++++++
- include/exec/target_page.h | 1 -
- migration/savevm.c         | 6 +++---
- page-target.c              | 5 -----
- page-vary-target.c         | 9 +++++++++
- 5 files changed, 21 insertions(+), 9 deletions(-)
+ target/xtensa/translate.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/include/exec/page-vary.h b/include/exec/page-vary.h
-index 54ddde308a..101c25911c 100644
---- a/include/exec/page-vary.h
-+++ b/include/exec/page-vary.h
-@@ -49,4 +49,13 @@ bool set_preferred_target_page_bits(int bits);
-  */
- void finalize_target_page_bits(void);
- 
-+/**
-+ * migration_legacy_page_bits
-+ *
-+ * For migration compatibility with qemu v2.9, prior to the introduction
-+ * of the configuration/target-page-bits section, return the value of
-+ * TARGET_PAGE_BITS that the target had then.
-+ */
-+int migration_legacy_page_bits(void);
-+
- #endif /* EXEC_PAGE_VARY_H */
-diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-index 8e89e5cbe6..e4bd7f7767 100644
---- a/include/exec/target_page.h
-+++ b/include/exec/target_page.h
-@@ -63,7 +63,6 @@ static inline int qemu_target_page_bits(void)
-     return TARGET_PAGE_BITS;
- }
- 
--int qemu_target_page_bits_min(void);
- size_t qemu_target_pages_to_MiB(size_t pages);
- 
- #endif
-diff --git a/migration/savevm.c b/migration/savevm.c
-index c33200a33f..0c12e373b4 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -50,6 +50,7 @@
- #include "system/cpus.h"
- #include "system/memory.h"
- #include "exec/target_page.h"
-+#include "exec/page-vary.h"
- #include "trace.h"
- #include "qemu/iov.h"
- #include "qemu/job.h"
-@@ -339,7 +340,7 @@ static int configuration_pre_load(void *opaque)
-      * predates the variable-target-page-bits support and is using the
-      * minimum possible value for this CPU.
-      */
--    state->target_page_bits = qemu_target_page_bits_min();
-+    state->target_page_bits = migration_legacy_page_bits();
-     return 0;
- }
- 
-@@ -462,8 +463,7 @@ static const VMStateInfo vmstate_info_capability = {
-  */
- static bool vmstate_target_page_bits_needed(void *opaque)
- {
--    return qemu_target_page_bits()
--        > qemu_target_page_bits_min();
-+    return qemu_target_page_bits() > migration_legacy_page_bits();
- }
- 
- static const VMStateDescription vmstate_target_page_bits = {
-diff --git a/page-target.c b/page-target.c
-index 321e43d06f..8fcd5443b5 100644
---- a/page-target.c
-+++ b/page-target.c
-@@ -9,11 +9,6 @@
- #include "qemu/osdep.h"
- #include "exec/target_page.h"
- 
--int qemu_target_page_bits_min(void)
--{
--    return TARGET_PAGE_BITS_MIN;
--}
+diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
+index 4f02cefde3..cb817b3119 100644
+--- a/target/xtensa/translate.c
++++ b/target/xtensa/translate.c
+@@ -35,14 +35,14 @@
+ #include "tcg/tcg-op.h"
+ #include "qemu/log.h"
+ #include "qemu/qemu-print.h"
+-#include "semihosting/semihost.h"
+ #include "exec/translator.h"
+ #include "exec/translation-block.h"
 -
- /* Convert target pages to MiB (2**20). */
- size_t qemu_target_pages_to_MiB(size_t pages)
- {
-diff --git a/page-vary-target.c b/page-vary-target.c
-index 84ddeb7c26..6251d948cf 100644
---- a/page-vary-target.c
-+++ b/page-vary-target.c
-@@ -23,6 +23,15 @@
- #include "exec/page-vary.h"
- #include "exec/target_page.h"
- 
-+int migration_legacy_page_bits(void)
-+{
-+#ifdef TARGET_PAGE_BITS_VARY
-+    return TARGET_PAGE_BITS_MIN;
-+#else
-+    return TARGET_PAGE_BITS;
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
+-
+ #include "exec/log.h"
++#ifndef CONFIG_USER_ONLY
++#include "semihosting/semihost.h"
 +#endif
-+}
-+
- bool set_preferred_target_page_bits(int bits)
+ 
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+@@ -2241,17 +2241,15 @@ static uint32_t test_exceptions_simcall(DisasContext *dc,
+                                         const OpcodeArg arg[],
+                                         const uint32_t par[])
  {
- #ifdef TARGET_PAGE_BITS_VARY
+-    bool is_semi = semihosting_enabled(dc->cring != 0);
+-#ifdef CONFIG_USER_ONLY
+-    bool ill = true;
+-#else
+-    /* Between RE.2 and RE.3 simcall opcode's become nop for the hardware. */
+-    bool ill = dc->config->hw_version <= 250002 && !is_semi;
+-#endif
+-    if (ill || !is_semi) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "SIMCALL but semihosting is disabled\n");
++#ifndef CONFIG_USER_ONLY
++    if (semihosting_enabled(dc->cring != 0)) {
++        return 0;
+     }
+-    return ill ? XTENSA_OP_ILL : 0;
++#endif
++    qemu_log_mask(LOG_GUEST_ERROR, "SIMCALL but semihosting is disabled\n");
++
++    /* Between RE.2 and RE.3 simcall opcode's become nop for the hardware. */
++    return dc->config->hw_version <= 250002 ? XTENSA_OP_ILL : 0;
+ }
+ 
+ static void translate_simcall(DisasContext *dc, const OpcodeArg arg[],
 -- 
 2.43.0
 
