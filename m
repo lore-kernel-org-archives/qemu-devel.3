@@ -4,82 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AF0C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 04:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0942DC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 04:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u75Xw-0001VP-So; Tue, 22 Apr 2025 00:47:48 -0400
+	id 1u75Yy-00028T-Nx; Tue, 22 Apr 2025 00:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u75Xt-0001V1-8L
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 00:47:46 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u75Xr-0003bx-C4
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 00:47:45 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-523f670ca99so1635516e0c.1
- for <qemu-devel@nongnu.org>; Mon, 21 Apr 2025 21:47:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745297262; x=1745902062; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c7xibW3IHT5q+doaRkpEeD+DURwEpf18Z0jUqqkKPxw=;
- b=TCvzAfDztun0MeM3VdsIICfccAFge7LpvfsGN2SAqbozBGXfEhEwYs7LPNgKPp5MEO
- UEAphceM7LoH8pziRg0H7f6f9XG3yqDQnshshR7G7LmrG9LRVbRjQuKGBVF01gkCWX1U
- wfx3b7CmrarFWl8IjrmivJ06q4uweD29WP1Q5Fp1vnOWtma1cTlu0IeLVEeCHoft1Nxa
- z2fwsGX16nX3q3b5tlNKFMO4dD+nj3AOnxPixzAsv1mIhUlrABb4sYYBeUtMFXB39yms
- 6j1mMnlsgEsLDWPkIAJ7g+qgRJXnxg/FQEt9QC0cAyug3QqFzNyjxqfYFjDA/VImHAo+
- ag/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745297262; x=1745902062;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c7xibW3IHT5q+doaRkpEeD+DURwEpf18Z0jUqqkKPxw=;
- b=wq+yl+WM6+n4gghdxoKaGclV7BCUPVECABmYiFXm2o0XAIQemNPDxvmpU4MlqcROkc
- JPcLhRdkGY+y714sqvZsQtjcMGqpQMyaGEet+zTAh+5llpSrBk6inadBcWivsuikuoo/
- EbcC79ptOS4YAYtcVTorTfKzLN8B/FOMWBAuRB1o0pHDx0C/PFOgP7PV0uHGe/0paSnz
- zTn77BWLU3JLnp2DbS2C0kpskf05pw7gDX5inLbQXPnEo6x31DDYt21rK4pOkTzdbfu8
- caT/EGk1qZ8VsQoG+FSIsoacp7LNd9O9ljXyRczsZDx75zxrszK2qXGdO/pJSLU0R0j0
- tNYA==
-X-Gm-Message-State: AOJu0YxYYBoefoCjT5oI2LBkuKaAdx8rJ5San8BoUbFxAHKzi2yDlQpI
- KzDZR2l+SI7WxJFOpIkGXNOdOGuONHqTCYhtHQ8LKOyG5jfdh+Sw8ClidRaYp5ZCOnZCh6dOqaq
- fOgKEH5fx22a1225hcLK2xPjfrJQ=
-X-Gm-Gg: ASbGncsBxZdt2tqRRqjbbdDy/mKZLyf1Li5uqLLJAnx0LKXGvROULilAG9qMj3+hXvJ
- OktVYlWlHVe6jAK2mGpvBGAKZpg+CYPZlCafu583QUO+8sqvQC2rWVMCJq/zMio87K8nYc2qjqv
- Xa1k3BODJlid9GUyURpWso5pj5tyzFpAVr4WPS8Y5GGyjIjx/9BkWR
-X-Google-Smtp-Source: AGHT+IFtRGpHkfpMITlaw0hR4aAO2wl2/ATHzoUTg2kBgYW4aC+/0kAZPbA9KAB/fa9yO65jwuWHCiHcJ/epLS7t4fE=
-X-Received: by 2002:a05:6102:664:b0:4c4:e3fe:4af9 with SMTP id
- ada2fe7eead31-4cb80142668mr8598892137.12.1745297261791; Mon, 21 Apr 2025
- 21:47:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1u75Yx-000287-Kz; Tue, 22 Apr 2025 00:48:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1u75Yv-0003gD-Rz; Tue, 22 Apr 2025 00:48:51 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M4bJVc028145;
+ Tue, 22 Apr 2025 04:48:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=PG9IMgmhu+JP9PBqdMuMxX1P9zkoFA
+ DHZAygrIS2l8c=; b=dqMGTDwqQOOafuE21VqqF41q5hlvyXZOLAVke/qaoT5v5x
+ zceMdiNdL8WkYx0U9yd3lrisUJjvQ3dkDXAHtTy0lSGrSCEHltNP55M2LPIGsofO
+ HE/pHbtt+lr13xdJUioIKAiljuQ5f7t2K/Nmb1GczjaVrOOE/6S7zp7/zGzwXhPr
+ /tKT88VPkXk5n7fiREqjBU1k0JI3LAHriWkHm/CSIA/9O3gOTD3tnOU79tcEU7LA
+ TfiMfZQFCtkBLsj/3JcYzFsuiTdhV8rXq65O9ovOp+TSk9IQFAY6YR/ODzuZYQ2d
+ NXqJZExLYiZTRKmlKwklr9E+lt63EhJhlW9XpSww==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4664878140-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Apr 2025 04:48:47 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53M4mi6E019489;
+ Tue, 22 Apr 2025 04:48:47 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 466487813t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Apr 2025 04:48:46 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53M218cu002904;
+ Tue, 22 Apr 2025 04:48:45 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 464q5nha85-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 22 Apr 2025 04:48:45 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53M4mfiJ15270198
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 22 Apr 2025 04:48:41 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CAFD22004D;
+ Tue, 22 Apr 2025 04:48:41 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 89C8620043;
+ Tue, 22 Apr 2025 04:48:38 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.215.117])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 22 Apr 2025 04:48:38 +0000 (GMT)
+Date: Tue, 22 Apr 2025 10:18:35 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>
+Subject: Re: [PATCH v4 1/8] hw/ppc: Implement skeleton code for fadump in
+ PSeries
+Message-ID: <heczlspvfxlt3z7jbzm3dfgli45s5ceqh3y2glmrgqj6f6wkqb@kziihqae6od7>
+References: <20250323174007.221116-1-adityag@linux.ibm.com>
+ <20250323174007.221116-2-adityag@linux.ibm.com>
+ <040afb75-6434-4f66-a241-b522ed7724dd@linux.ibm.com>
 MIME-Version: 1.0
-References: <20250406070254.274797-1-pbonzini@redhat.com>
- <20250406070254.274797-14-pbonzini@redhat.com>
-In-Reply-To: <20250406070254.274797-14-pbonzini@redhat.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 22 Apr 2025 14:47:15 +1000
-X-Gm-Features: ATxdqUEK4pcnWjPfqlUs3OEpxdWzqoSngQ0uPZOE2Y0mAMJwZUBRabE--S0SxMg
-Message-ID: <CAKmqyKPoFuBbm904quti0bt2Rg+96+GHzGRcC7rv+pEEc_0Cqg@mail.gmail.com>
-Subject: Re: [PATCH 13/27] target/riscv: add more RISCVCPUDef fields
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <040afb75-6434-4f66-a241-b522ed7724dd@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: uuUDkW9mdnfdK5QDRHdr-nd4EtSh4dna
+X-Authority-Analysis: v=2.4 cv=LMFmQIW9 c=1 sm=1 tr=0 ts=68071faf cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=aM-W4C0H6x_Zq6nrnuEA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: PMwr-50Z0u3vDbq0eDfQQ44ud4g4ASNC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-04-22_02,2025-04-21_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 phishscore=0 mlxlogscore=999 malwarescore=0
+ lowpriorityscore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504220033
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,175 +125,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 6, 2025 at 5:03=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
-> Allow using RISCVCPUDef to replicate all the logic of custom .instance_in=
-it
-> functions.  To simulate inheritance, merge the child's RISCVCPUDef with
-> the parent and then finally move it to the CPUState at the end of
-> TYPE_RISCV_CPU's own instance_init function.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Hi Harsh,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks for reviewing.
 
-Alistair
+On 25/04/21 04:21PM, Harsh Prateek Bora wrote:
+> 
+> 
+> On 3/23/25 23:10, Aditya Gupta wrote:
+> > <...snip...>
+> >
+> > +    switch (cmd) {
+> > +    case FADUMP_CMD_REGISTER:
+> > +        ret_val = do_fadump_register();
+> > +        if (ret_val != RTAS_OUT_SUCCESS) {
+> > +            rtas_st(rets, 0, ret_val);
+> > +            return;
+> > +        }
+> > +        break;
+> 
+> I would suggest to keep the first patch as implementing the logic for
+> FADUMP_CMD_REGISTER (and _UNREGISTER) handling.
 
-> ---
->  target/riscv/cpu.h         |  4 ++++
->  target/riscv/cpu.c         | 42 +++++++++++++++++++++++++++++++++++++-
->  target/riscv/kvm/kvm-cpu.c |  6 ++++++
->  3 files changed, 51 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 9bbfdcf6758..acaa49b979c 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -543,6 +543,10 @@ struct ArchCPU {
->
->  typedef struct RISCVCPUDef {
->      RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
-> +    uint32_t misa_ext;
-> +    int priv_spec;
-> +    int32_t vext_spec;
-> +    RISCVCPUConfig cfg;
->  } RISCVCPUDef;
->
->  /**
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 2c2a6a4b44a..620641fbed6 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -74,6 +74,13 @@ bool riscv_cpu_option_set(const char *optname)
->      return g_hash_table_contains(general_user_opts, optname);
->  }
->
-> +static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, const RISCVCPUConf=
-ig *src)
-> +{
-> +#define BOOL_FIELD(x) dest->x |=3D src->x;
-> +#define TYPED_FIELD(type, x, default_) if (src->x !=3D default_) dest->x=
- =3D src->x;
-> +#include "cpu_cfg_fields.h.inc"
-> +}
-> +
->  #define ISA_EXT_DATA_ENTRY(_name, _min_ver, _prop) \
->      {#_name, _min_ver, CPU_CFG_OFFSET(_prop)}
->
-> @@ -435,7 +442,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_=
-32_bit)
->  }
->
->  static void set_satp_mode_max_supported(RISCVCPU *cpu,
-> -                                        uint8_t satp_mode)
-> +                                        int satp_mode)
->  {
->      bool rv32 =3D riscv_cpu_mxl(&cpu->env) =3D=3D MXL_RV32;
->      const bool *valid_vm =3D rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
-> @@ -1487,6 +1494,16 @@ static void riscv_cpu_init(Object *obj)
->      cpu->cfg.cboz_blocksize =3D 64;
->      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
->      cpu->cfg.max_satp_mode =3D -1;
-> +
-> +    env->misa_ext_mask =3D env->misa_ext =3D mcc->def->misa_ext;
-> +    riscv_cpu_cfg_merge(&cpu->cfg, &mcc->def->cfg);
-> +
-> +    if (mcc->def->priv_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +        cpu->env.priv_ver =3D mcc->def->priv_spec;
-> +    }
-> +    if (mcc->def->vext_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +        cpu->env.vext_ver =3D mcc->def->vext_spec;
-> +    }
->  }
->
->  static void riscv_bare_cpu_init(Object *obj)
-> @@ -3093,6 +3110,17 @@ static void riscv_cpu_class_base_init(ObjectClass =
-*c, void *data)
->              assert(def->misa_mxl_max <=3D MXL_RV128);
->              mcc->def->misa_mxl_max =3D def->misa_mxl_max;
->          }
-> +        if (def->priv_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +            assert(def->priv_spec <=3D PRIV_VERSION_LATEST);
-> +            mcc->def->priv_spec =3D def->priv_spec;
-> +        }
-> +        if (def->vext_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
-> +            assert(def->vext_spec !=3D 0);
-> +            mcc->def->vext_spec =3D def->vext_spec;
-> +        }
-> +        mcc->def->misa_ext |=3D def->misa_ext;
-> +
-> +        riscv_cpu_cfg_merge(&mcc->def->cfg, &def->cfg);
->      }
->
->      if (!object_class_is_abstract(c)) {
-> @@ -3199,6 +3227,9 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, =
-char *nodename)
->          .instance_init =3D (initfn),                          \
->          .class_data =3D (void*) &((const RISCVCPUDef) {       \
->               .misa_mxl_max =3D (misa_mxl_max_),               \
-> +             .priv_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .vext_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .cfg.max_satp_mode =3D -1,                       \
->          }),                                                 \
->      }
->
-> @@ -3209,6 +3240,9 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, =
-char *nodename)
->          .instance_init =3D (initfn),                          \
->          .class_data =3D (void*) &((const RISCVCPUDef) {       \
->               .misa_mxl_max =3D (misa_mxl_max_),               \
-> +             .priv_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .vext_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .cfg.max_satp_mode =3D -1,                       \
->          }),                                                 \
->      }
->
-> @@ -3219,6 +3253,9 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, =
-char *nodename)
->          .instance_init =3D (initfn),                          \
->          .class_data =3D (void*) &((const RISCVCPUDef) {       \
->               .misa_mxl_max =3D (misa_mxl_max_),               \
-> +             .priv_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .vext_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .cfg.max_satp_mode =3D -1,                       \
->          }),                                                 \
->      }
->
-> @@ -3229,6 +3266,9 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, =
-char *nodename)
->          .instance_init =3D (initfn),                          \
->          .class_data =3D (void*) &((const RISCVCPUDef) {       \
->               .misa_mxl_max =3D (misa_mxl_max_),               \
-> +             .priv_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .vext_spec =3D RISCV_PROFILE_ATTR_UNUSED,        \
-> +             .cfg.max_satp_mode =3D -1,                       \
->          }),                                                 \
->      }
->
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index d7e6970a670..02bcb72cbb3 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -2004,10 +2004,16 @@ static const TypeInfo riscv_kvm_cpu_type_infos[] =
-=3D {
->  #if defined(TARGET_RISCV32)
->          .class_data =3D &((const RISCVCPUDef) {
->              .misa_mxl_max =3D MXL_RV32,
-> +            .priv_spec =3D RISCV_PROFILE_ATTR_UNUSED,
-> +            .vext_spec =3D RISCV_PROFILE_ATTR_UNUSED,
-> +            .cfg.max_satp_mode =3D -1,
->          },
->  #elif defined(TARGET_RISCV64)
->          .class_data =3D &((const RISCVCPUDef) {
->              .misa_mxl_max =3D MXL_RV64,
-> +            .priv_spec =3D RISCV_PROFILE_ATTR_UNUSED,
-> +            .vext_spec =3D RISCV_PROFILE_ATTR_UNUSED,
-> +            .cfg.max_satp_mode =3D -1,
->          },
->  #endif
->      }
-> --
-> 2.49.0
->
+Tried that, but that is either introducing an unused function or would
+mean squashing this patch and the subsequent patch implementing register
+command.
+
+I am preferring to keep current patch split.
+
+What do you think ?
+
+> 
+> > +    case FADUMP_CMD_UNREGISTER:
+> > +        if (spapr->fadump_dump_active == 1) {
+> > +            rtas_st(rets, 0, RTAS_OUT_DUMP_ACTIVE);
+> > +            return;
+> > +        }
+> > +
+> > +        spapr->fadump_registered = false;
+> > +        spapr->fadump_dump_active = false;
+> > +        memset(&spapr->registered_fdm, 0, sizeof(spapr->registered_fdm));
+> > +        break;
+> >
+> > <...snip...>
+> >
+> > +/* ibm,configure-kernel-dump header. */
+> > +struct FadumpSectionHeader {
+> > +    __be32    dump_format_version;
+> > +    __be16    dump_num_sections;
+> > +    __be16    dump_status_flag;
+> > +    __be32    offset_first_dump_section;
+> > +
+> > +    /* Fields for disk dump option. */
+> > +    __be32    dd_block_size;
+> > +    __be64    dd_block_offset;
+> > +    __be64    dd_num_blocks;
+> > +    __be32    dd_offset_disk_path;
+> > +
+> > +    /* Maximum time allowed to prevent an automatic dump-reboot. */
+> > +    __be32    max_time_auto;
+> > +};
+> 
+> Also, you may introduce struct members in the patches as they are
+> used/accessed. No need to have entire struct introduced in the first patch
+> unless the members are being used/accessed.
+
+Did that. The FadumpMemStruct gets used in SpaprMachineState and by
+unregister command.
+
+Agree with you about introducing fields as they are used, but kept the
+complete structure with all fields to be compliant with PAPR, as having
+the complete structure ensures the fields are at correct offsets as per
+PAPR.
+
+Thanks,
+- Aditya G
+
+> 
+> regards,
+> Harsh
+> 
+> > +
+> > +/* Note: All the data in these structures is in big-endian */
+> > +struct FadumpMemStruct {
+> > +    FadumpSectionHeader header;
+> > +    FadumpSection       rgn[FADUMP_MAX_SECTIONS];
+> > +};
+> > +
+> > +uint32_t do_fadump_register(void);
+> > +#endif /* PPC_SPAPR_FADUMP_H */
 
