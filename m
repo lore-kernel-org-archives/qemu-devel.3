@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CF0C369D9
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F12C369D7
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JRC-0001X3-OF; Tue, 22 Apr 2025 15:37:46 -0400
+	id 1u7JIe-0002as-Fb; Tue, 22 Apr 2025 15:28:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JOv-0005AF-Rh
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:30 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1u7JIW-0002WG-RP
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:48 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JOt-00073B-U4
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:25 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-227914acd20so1933745ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:23 -0700 (PDT)
+ id 1u7JIR-0006DG-8N
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:48 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2ff64550991so4197950a91.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350522; x=1745955322; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350120; x=1745954920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N1UQyMwl8FkxNsbxCkJPrCVn5egihsCexcKX6axRuSQ=;
- b=w/Rd9550GuDf1Vy53JUa71n7Q29FlJ53TVw5cLaLt6l+5DvSbEltJaiAH1jjafVlHC
- IjHlzGqaccYCZ3TtNamHrw7izhR+fyvVFMkt8jfthkQ5DW/ZLyzMVIOZ07wzpegxbhEW
- +TMgK2lymKDlmR1sqGNMKywx3oLsoFMo5FS2d25f6NyERDMOPmVdS5r9cA55kD87M52t
- tH+Gb4p2vio/aQKE+Msbp3fJ01DEinbqhaC0UFwkippZ7xwcXGk0uzXKXrvm9QMg5P78
- u1ma02U3elZOnzon+j2WwpBK5ltSpXfeaA5Ye2D108Smp74HTVmuhfwh85g1XaQlYWC3
- By/g==
+ bh=oR/Buc0tAK+dwpT4/jUuGVtANFEG+DcYq0rCH3hrxCg=;
+ b=rc1yAO/FT/sL39Ru2U3JutPt3ep7xC3LeJZRwW/p+FsdigYfLsw+RMH4jQnctPuxTv
+ IZiGIYe2yt1MtoAIoFWUIyAzZEmA+ItwwxaTiletgoCq2WeojkWTvxaRzvXCTlUqM64B
+ beS/FEaclyuZeFGqlMcMBomNWd7HrJBP7NUylYe/7GJ/yL1cHCoonnvPs41c0y8RXQoj
+ 8dfPDHf6diue0HA1hXE4xLGmWcCYj/HFqgAtfhXE1fPDYOq5QWY5WwouLYIEb12O0B1J
+ uPv6hiu6B4LXWVR1m8Oi4IeffmbLuHkzVjir9mu4in5cXcrTJkrR9ruh4kyxpk1sfAX6
+ BwNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350522; x=1745955322;
+ d=1e100.net; s=20230601; t=1745350120; x=1745954920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N1UQyMwl8FkxNsbxCkJPrCVn5egihsCexcKX6axRuSQ=;
- b=kcC8V33oix6p5yWui0dkjgGErtJqf7RMyJ+07nyZhlp92yzIffttHZkRVNQ7VMFQEQ
- qPx3IUkmVRRfhc2KYdUnYoBD5vOADlsuhgjn9uT0GC+VgaqAIf8thfMZ4Ak87Wmq4+hb
- AhnWVEMO5o1P6Tig1/OGnWevog3FG90uEi5WqojzHqwYau/kRJ9h1a3dMFriTBmDV6K7
- wlGzwBLrZeSgnVGohfqPrWT3BxjJLpJ9dplvjPi6j2RneP5Oq4PxKG2jiBk0vHn8x113
- 74wJuI/3K1ul1mGroGSpVqFzncglHJee1gpvohX7G/bZa86J8K7er2C4VDHwdD7Pr/RV
- RsZg==
-X-Gm-Message-State: AOJu0YxxQQeoloVrhoQYDVy6c3rC/UKXJfeuro8tktBM7Cq8o7pgqabf
- oLP+kuPcMChEIMlztXFSl0+6+pNVz/G+K+XjPMn7uGvKXtNocbWIsemIOuduTTZtlZwaajUvQcl
- O
-X-Gm-Gg: ASbGncs4DsjTwyAESeVNdiq8AaLaJITfxV5FBa20uvt35mv1Lub4LRO3Jh/XrMEbQIe
- aIC6wkzGyPuiqBVw/Tee9iSmrqT9oklaph7yLPYW1epJc7+rpIg63bBwzE4SNDlttJ07ujfNkgG
- 3AU9pytGAwbsXTQ+rG2pn80mkBk+4HeujvKGcyD4dqLn3ius56OxmYltLjz3ImYmsgR3FRDYKjP
- R7af2nhZvG3OU7d98xYGvyStCCZ4D/Bs22RDQmYr8jET7PpOH6DkmqszR2QLQSOt/7NPoERMUR0
- 3zA0cvfuu6Hp6tS2MLtHZRpNdeh7A+bHVbh1iC4dTsAJvyTs0FfTfFd9EIVp8MJGJ2JO9IWdlL4
+ bh=oR/Buc0tAK+dwpT4/jUuGVtANFEG+DcYq0rCH3hrxCg=;
+ b=W8IY3uLOlafhi1fWssu0Ln/u5H2j1jouh4txPyhjOQQp4Bh7Rkkwjgz5if65KVtilM
+ kT0bT7RRrVpQXwQIhX1jx6HH9M3jmkDndQNIuv6Qi0TH0TwO5pjoI2XhMS3Q3pkmP8ZL
+ liWeDJQUbUQ9qR5kD6mP6uMCyT+T0OJl9IokRd4Pds7mMmhjuU02KAqQWJPw8rW5dDeo
+ oXxjj9nP8W1v49I24sTXfrUK+HvkYJf1mwT7UBxAHTpGhOspq9+adHRLPDhU4cPpAexH
+ IIVY1lc2lSzlpg2zQ43F08bnqOdFqBORV1HoIcCOTQx/VnlVKovOcyG56aDHdkJ7wwcz
+ VVGw==
+X-Gm-Message-State: AOJu0YwK7z01iUXXxGPkn1L1Jrix8EbnFCwmLM02esr9scNyVru49wX1
+ hkD4SGuu7nOTWh+6Mn0nIlhrsTOEkJV1JrH2KF3ujYY2npwKoynzNlHjweVQ/y9g0P1opMYUiUO
+ g
+X-Gm-Gg: ASbGncu3nm/YOU4PeUHFbySXTgHYoeNNIKFJg7NDowAid8UWMmrlQhWi3WHazAFLUFx
+ jYjjdd2/KViwjDIwe0L0h1pTwH5cJeRgPHuwOBLP/UOoRiKM18JZdAatreJ1dnnXj6GvLpdRXLh
+ ara8Y5z4gnk6heBZNNV+TAsPRp0/UHB/DPBcDvL5ckstxh/drJhP6MBC65+J3Y1LlUCFe88l9qz
+ VR4cnb8OCgZp/EJygM+xNiUIdtiuuhwY17Sv9nzM3G4zMuzRyH3Svq1Rkr1xfkHfBSutnpIeNX/
+ 6p4dYy619HfGmqqeaV4b3hv5sUk2zAkjWuukJk49iELUApXdMOBamjivOGbzTfanYgx1oMh2U9E
  =
-X-Google-Smtp-Source: AGHT+IGGxPcWKl9L+xU5eTuU7M5qZ+c+b6ToAsTd10A/BiAnYeBINB5Bf/KWVhemRYJkTx4cAjs2HQ==
-X-Received: by 2002:a17:902:dac7:b0:21f:98fc:8414 with SMTP id
- d9443c01a7336-22da3387b8dmr2623995ad.26.1745350522225; 
- Tue, 22 Apr 2025 12:35:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZrCzU6UJBCk/bM/WFbETYZWgd52yv1ydrjphKnTWBTQVI0h8AUgZx3MkJElGl87elnOB+4w==
+X-Received: by 2002:a17:90b:1f90:b0:2fe:b937:2a51 with SMTP id
+ 98e67ed59e1d1-3087bccb23fmr25611431a91.33.1745350119559; 
+ Tue, 22 Apr 2025 12:28:39 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.21
+ 98e67ed59e1d1-3087df21278sm9146865a91.29.2025.04.22.12.28.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:35:21 -0700 (PDT)
+ Tue, 22 Apr 2025 12:28:39 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH 094/147] target/hexagon: Implement TCGCPUOps.mmu_index
-Date: Tue, 22 Apr 2025 12:27:23 -0700
-Message-ID: <20250422192819.302784-95-richard.henderson@linaro.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 029/147] accel/tcg: Perform aligned atomic reads in
+ translator_ld
+Date: Tue, 22 Apr 2025 12:26:18 -0700
+Message-ID: <20250422192819.302784-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,40 +102,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This hook is about to become mandatory.  Since hexagon
-is still user-only, the implementation is trivial.
+Perform aligned atomic reads in translator_ld, if possible.
+According to
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+https://lore.kernel.org/qemu-devel/20240607101403.1109-1-jim.shu@sifive.com/
+
+this is required for RISC-V Ziccif.
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hexagon/cpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ accel/tcg/translator.c | 42 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 38 insertions(+), 4 deletions(-)
 
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 766b678651..ad1f303fbc 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -313,6 +313,11 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
-     mcc->parent_realize(dev, errp);
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index ef1538b4fc..157be33bf6 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -265,12 +265,14 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
+ 
+     if (likely(((base ^ last) & TARGET_PAGE_MASK) == 0)) {
+         /* Entire read is from the first page. */
+-        memcpy(dest, host + (pc - base), len);
+-        return true;
++        goto do_read;
+     }
+ 
+     if (unlikely(((base ^ pc) & TARGET_PAGE_MASK) == 0)) {
+-        /* Read begins on the first page and extends to the second. */
++        /*
++         * Read begins on the first page and extends to the second.
++         * The unaligned read is never atomic.
++         */
+         size_t len0 = -(pc | TARGET_PAGE_MASK);
+         memcpy(dest, host + (pc - base), len0);
+         pc += len0;
+@@ -329,7 +331,39 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
+         host = db->host_addr[1];
+     }
+ 
+-    memcpy(dest, host + (pc - base), len);
++ do_read:
++    /*
++     * Assume aligned reads should be atomic, if possible.
++     * We're not in a position to jump out with EXCP_ATOMIC.
++     */
++    host += pc - base;
++    switch (len) {
++    case 2:
++        if (QEMU_IS_ALIGNED(pc, 2)) {
++            uint16_t t = qatomic_read((uint16_t *)host);
++            stw_he_p(dest, t);
++            return true;
++        }
++        break;
++    case 4:
++        if (QEMU_IS_ALIGNED(pc, 4)) {
++            uint32_t t = qatomic_read((uint32_t *)host);
++            stl_he_p(dest, t);
++            return true;
++        }
++        break;
++#ifdef CONFIG_ATOMIC64
++    case 8:
++        if (QEMU_IS_ALIGNED(pc, 8)) {
++            uint64_t t = qatomic_read__nocheck((uint64_t *)host);
++            stq_he_p(dest, t);
++            return true;
++        }
++        break;
++#endif
++    }
++    /* Unaligned or partial read from the second page is not atomic. */
++    memcpy(dest, host, len);
+     return true;
  }
  
-+static int hexagon_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    return MMU_USER_IDX;
-+}
-+
- static void hexagon_cpu_init(Object *obj)
- {
- }
-@@ -324,6 +329,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
-     .translate_code = hexagon_translate_code,
-     .synchronize_from_tb = hexagon_cpu_synchronize_from_tb,
-     .restore_state_to_opc = hexagon_restore_state_to_opc,
-+    .mmu_index = hexagon_cpu_mmu_index,
- };
- 
- static void hexagon_cpu_class_init(ObjectClass *c, void *data)
 -- 
 2.43.0
 
