@@ -4,73 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BC5C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81BADC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u78Ey-00062a-Rl; Tue, 22 Apr 2025 03:40:25 -0400
+	id 1u78J7-0007Mk-SY; Tue, 22 Apr 2025 03:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1u78Ev-00062G-AS
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:40:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1u78Er-0005aD-PT
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:40:20 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxYa_aRwdoi9_DAA--.21352S3;
- Tue, 22 Apr 2025 15:40:10 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCx7MTWRwdomJ6PAA--.29257S3;
- Tue, 22 Apr 2025 15:40:08 +0800 (CST)
-Subject: Re: [PATCH v3 6/9] target/loongarch: Define function
- loongarch_get_addr_from_tlb() non-static
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20250422025742.2693096-1-maobibo@loongson.cn>
- <20250422025742.2693096-7-maobibo@loongson.cn>
- <e86b1efe-514c-4757-9a7d-477c27803c95@linaro.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <b73e6439-2435-f064-2f07-24b10b9dd2a1@loongson.cn>
-Date: Tue, 22 Apr 2025 15:39:03 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u78J6-0007MY-0F
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:44:40 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u78Iz-0005yl-S5
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:44:39 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39ac9aea656so6040634f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:44:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745307872; x=1745912672; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=K04r0aAzJy61hzj4PuKUHeFKZvtRz9YSQBWWnNX3bbI=;
+ b=UGdJlp1mZaMB9lmRptd+0cYK9kB07pfMYUOMFOV/aD4gwwkzoWfOHMR5z5LaIdb4p0
+ ysjWIj4bUHsBQbiMRmLZ+ZDmgmqSX8R3ZKYcHz1QOY93wETNxNUW+ZWbxFcOTPkvov5l
+ sDjXTEjBxbZiEcpvhJUYJh1ext6GNFd/EoAcpHwEnxRdeuh/dpmhCthhDVSu2DpfwF6X
+ GkkvgGbXRmUaJdRhFWCWyO0904vPatYSt4OXQKEZzkc57eDQkKag99AIdwyTeupqoABA
+ LfAXAwYYNTqsOSy98YGrUIYewX+4s8Bg+4NCyX9f8rOOxO8iPMMeL63g3mQwJCUzlJbO
+ DjhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745307872; x=1745912672;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K04r0aAzJy61hzj4PuKUHeFKZvtRz9YSQBWWnNX3bbI=;
+ b=FwLmoTPSS60spvBRBU0z2kdc5gnkaIesnU1p7nAMMFDpA7DeS6uE6GYPHkxGS6xJvl
+ +6Qfv2zXyYqJbjKtY2zLPcci5PTX5b7vXvRhBtp4i8TO4XMao4GiScb/E5Mp0tnPkseN
+ sUTTqRN/xW2Epxd9v0HmN4f5A/K5LMKE4t5YtuUxCcuYrstdgWZIlhjUqk4187reYNwd
+ cdYC61BWRPFHZyufVAE5Ga06h5rJ6jRQW6WtZU8/KTYShAlZVVonx5Ebq9LJBFR53SQD
+ QRqb3MGzd+nXzKTXwtJj+6T48cBDgdqfEq808QmEVqW67eZsR3S7UK3wKE+2Orok2vwp
+ 376g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRHZcvbWgwobmBFtCST7awVrbwi60DVimtAHvp1t3DVCbC52ih4QB2Dwv2dw11acp9wr7uwE7UAN2k@nongnu.org
+X-Gm-Message-State: AOJu0YxL2a8Q6sOXisxHryfgZG8hr4Yv6+uRSm07gil/DdkiW3Sq0A4W
+ qz9W8+mp8dQIfTgvPSJTn/W89b1Gsj3tI9vSfhA9h7M3ku0zzh/iggB3jeBjvqo=
+X-Gm-Gg: ASbGnctFn4oMHyRgC9jw59C0nh6gcFcVT/HGzJOstg75PcCkfN5NjfM0pUdZVFIyPt+
+ /xicS7Zmchf+UMx1044nDiJdWSiug8XTs6cpvaHX0TkvBppjwGPs+6o8cSVdoNgMaba7c+wwtzT
+ wURsqbF9QXlrhNssssMbiimV+SVL6a3wkwDhL38TS7rNgSDbFAJ8mnvjnVkD6vWJMEGy6A38ZPZ
+ tVxKWNlF9JWLVj3tAo7UIzORno9SGS1mbr5Kh5uM4WDee1q9zUL4+VzLytQVz09XW+ye48lOYVi
+ twhDOlq2nvXIeDKP+jfl0n6seJoer4BkzrVs7wPvLMu7wSWzwHamCr77jiqsGgVPowGCXxamHyv
+ OMhWlW0ov
+X-Google-Smtp-Source: AGHT+IG6dWFsnZkUL0b2L/yE2Be8+rQuaHB7RW3WRlSYukYZqwMsksYh6nbXRGZSt78uPLEeaCHW/Q==
+X-Received: by 2002:a05:6000:18a5:b0:38f:2766:759f with SMTP id
+ ffacd0b85a97d-39efbad2c1cmr10504891f8f.41.1745307872196; 
+ Tue, 22 Apr 2025 00:44:32 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa43d03csm14520478f8f.59.2025.04.22.00.44.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 22 Apr 2025 00:44:31 -0700 (PDT)
+Message-ID: <885016b7-cf36-42c2-ba0a-239cef23eea7@linaro.org>
+Date: Tue, 22 Apr 2025 09:44:30 +0200
 MIME-Version: 1.0
-In-Reply-To: <e86b1efe-514c-4757-9a7d-477c27803c95@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 02/14] qemu: Convert target_name() to TargetInfo API
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250418172908.25147-1-philmd@linaro.org>
+ <20250418172908.25147-3-philmd@linaro.org>
+ <ea5efda4-01bf-430d-afb1-06c82b7bec3f@linaro.org>
 Content-Language: en-US
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ea5efda4-01bf-430d-afb1-06c82b7bec3f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx7MTWRwdomJ6PAA--.29257S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZry7Wr15Ar1kJrWxZF43urX_yoWruFyUpr
- y8AryUtryUJr95JF1UX345XFyDJr47Jw1UXF1UJFy0kr4UJr1jqF18Xr1qgF1UJw48Jw1j
- qr18JF1UuF1UXrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU92b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAF
- wI0_Jrv_JF1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
- AF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
- IxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
- CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVF
- xhVjvjDU0xZFpf9x07UWHqcUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.981,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,119 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/4/22 下午3:18, Philippe Mathieu-Daudé wrote:
-> On 22/4/25 04:57, Bibo Mao wrote:
->> Define function loongarch_get_addr_from_tlb() non-static, and add its
->> definition in header file tcg/tcg_loongarch.h
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   target/loongarch/cpu_helper.c        | 10 ++--------
->>   target/loongarch/tcg/tcg_loongarch.h | 16 ++++++++++++++++
->>   2 files changed, 18 insertions(+), 8 deletions(-)
->>
->> diff --git a/target/loongarch/cpu_helper.c 
->> b/target/loongarch/cpu_helper.c
->> index 5db64a45cc..7636b2c265 100644
->> --- a/target/loongarch/cpu_helper.c
->> +++ b/target/loongarch/cpu_helper.c
->> @@ -11,6 +11,7 @@
->>   #include "cpu.h"
->>   #include "internals.h"
->>   #include "cpu-csr.h"
->> +#include "tcg/tcg_loongarch.h"
->>   #ifdef CONFIG_TCG
->>   static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr 
->> *physical,
->> @@ -142,7 +143,7 @@ bool loongarch_tlb_search(CPULoongArchState *env, 
->> target_ulong vaddr,
->>       return false;
->>   }
->> -static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
->> *physical,
->> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
->> *physical,
->>                                          int *prot, target_ulong address,
->>                                          MMUAccessType access_type, 
->> int mmu_idx)
->>   {
->> @@ -156,13 +157,6 @@ static int 
->> loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
->>       return TLBRET_NOMATCH;
->>   }
->> -#else
->> -static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
->> *physical,
->> -                                       int *prot, target_ulong address,
->> -                                       MMUAccessType access_type, int 
->> mmu_idx)
->> -{
->> -    return TLBRET_NOMATCH;
->> -}
->>   #endif
->>   void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
->> diff --git a/target/loongarch/tcg/tcg_loongarch.h 
->> b/target/loongarch/tcg/tcg_loongarch.h
->> index da2539e995..69a93bfc3e 100644
->> --- a/target/loongarch/tcg/tcg_loongarch.h
->> +++ b/target/loongarch/tcg/tcg_loongarch.h
->> @@ -6,7 +6,23 @@
->>    */
->>   #ifndef TARGET_LOONGARCH_TCG_LOONGARCH_H
->>   #define TARGET_LOONGARCH_TCG_LOONGARCH_H
->> +#include "cpu.h"
->>   void loongarch_csr_translate_init(void);
->> +#ifdef CONFIG_TCG
->> +int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr 
->> *physical,
->> +                                int *prot, target_ulong address,
->> +                                MMUAccessType access_type, int mmu_idx);
->> +#else
->> +static inline int loongarch_get_addr_from_tlb(CPULoongArchState *env,
->> +                                              hwaddr *physical,
->> +                                              int *prot, target_ulong 
->> address,
->> +                                              MMUAccessType access_type,
->> +                                              int mmu_idx)
->> +{
->> +    return TLBRET_NOMATCH;
+On 21/4/25 17:56, Richard Henderson wrote:
+> On 4/18/25 10:28, Philippe Mathieu-Daudé wrote:
+>>   include/hw/core/cpu.h           |  2 --
+>>   include/qemu/target_info-impl.h | 23 +++++++++++++++++++++++
+>>   include/qemu/target_info.h      | 19 +++++++++++++++++++
+>>   cpu-target.c                    |  5 -----
+>>   hw/core/machine-qmp-cmds.c      |  1 +
+>>   plugins/loader.c                |  2 +-
+>>   system/vl.c                     |  2 +-
+>>   target_info-stub.c              | 19 +++++++++++++++++++
+>>   target_info.c                   | 16 ++++++++++++++++
 > 
-> CONFIG_TCG should always be defined when including tcg/tcg_loongarch.h.
+> Can we not mix and match _ and - in file names?
+> It's weird.
 
-If so, there will be no stub function declaration with 
-loongarch_get_addr_from_tlb(). *#ifdef CONFIG_TCG* needs be added in c 
-files such as:
+Eh style is a matter of taste :)
 
-static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
-                                  int *prot, target_ulong address,
-                                  MMUAccessType access_type, int mmu_idx,
-                                  int is_debug)
-{
-     int ret;
+Since meson converts '/' -> '_', maybe use '-'?
 
-*#ifdef CONFIG_TCG*
-     if (!kvm_enabled()) {
-         ret = loongarch_get_addr_from_tlb(env, physical, prot, address,
-                                           access_type, mmu_idx);
-         if (ret != TLBRET_NOMATCH) {
-             return ret;
-         }
-     }
-*#endif*
-
-My original thought is to add stub function and remove *#ifdef 
-CONFIG_TCG* in c file.
-
-Regards
-Bibo Mao
-
-> 
->> +}
->> +#endif
->> +
->>   #endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
-> 
-
+If so, we mention our preference in docs/devel/style.rst.
 
