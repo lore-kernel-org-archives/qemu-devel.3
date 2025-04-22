@@ -4,104 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2ACC369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 04:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BBDC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 04:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u75SY-0006EU-IE; Tue, 22 Apr 2025 00:42:14 -0400
+	id 1u75Sk-0006KH-US; Tue, 22 Apr 2025 00:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1u75SQ-0006Dm-QT; Tue, 22 Apr 2025 00:42:08 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1u75Si-0006IV-5I; Tue, 22 Apr 2025 00:42:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1u75SP-00033d-C6; Tue, 22 Apr 2025 00:42:06 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53LLgEp8028909;
- Tue, 22 Apr 2025 04:41:55 GMT
+ id 1u75Sg-00034w-1h; Tue, 22 Apr 2025 00:42:23 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53M47JFR016273;
+ Tue, 22 Apr 2025 04:42:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=RENls+
- 3slpPKJHYtBfFjw5OTlU/QYIfryMJUWvCM7+Q=; b=HgUaZcSdIWEyvJpK6bceNW
- x0/EoClMB65AvuoE46RnQyuWpBYu0i0NF98w3RrkyynbnAiUb/8df0cRWYH0UW2C
- 5+RTtb9iZwWbcatARBnYxKNahDFDNV/4znXXm2EuQZEWIcbI6uYqvWMvo6aaIQT0
- /ouL3BorAhf/29zGh3ad1fsDnD/9Kc5LB0wJdmIeR0L3XpGg87qjNbugwCap/dRs
- qV76Vjx+JIeQ/40FG3DWRcP86JwHPh7MH542YD1FUVhRR2D2uFtapK5McwQ9NGh5
- 3JHVLKj+/EsKy821+YMqci3JljPXNrhdUgTHV0CU8pItz9zBp6N2jVPFlxjEqjJg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=aszUtU
+ foK+qNb05vJ3hO+Zk0s4GGyDYl/aCm1ampHHg=; b=DrWBXfXNqjHNAkBssGI/i+
+ wHCyviflMsDuBL3ntU37ZH0waJq1ltgWJo9d3upHRHqrXzngY+YyysbEL3bCg2Ci
+ GGBCaUb3xWaiuW2ZhLwZllGDboYKqLQ63VcUKdzf2GELESOM7WKdnnmk/HLqFgi4
+ ab+4juUix1QRIMeiRWpEfObqldYyX0TwHREECgfvuVJnpToTtDUfxTaTMo2867GY
+ d4pdruh4s3VBAm9QvXGn3fXMT/5NB7hPYnwk18HpxK7fD4X98Erwd+9lhvWs6VCS
+ DumMUuLiSWYRI6gn6TYRFbP/BbehnKlRUouebeVRm6wMk73qhFV1XFWgvH5U2vkQ
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465x5vs6b3-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4663t6049c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 04:41:54 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53M4fspe008252;
- Tue, 22 Apr 2025 04:41:54 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 465x5vs6b1-1
+ Tue, 22 Apr 2025 04:42:12 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53M4gBvc023782;
+ Tue, 22 Apr 2025 04:42:11 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4663t6049b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 04:41:54 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53M1Qhwg002939;
- Tue, 22 Apr 2025 04:41:53 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 464q5nh9pk-1
+ Tue, 22 Apr 2025 04:42:11 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53M0Aqhm012490;
+ Tue, 22 Apr 2025 04:42:10 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 464p5t1gu2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 22 Apr 2025 04:41:53 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53M4fnBt60358942
+ Tue, 22 Apr 2025 04:42:10 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53M4g7EI50069876
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 22 Apr 2025 04:41:50 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D822A20043;
- Tue, 22 Apr 2025 04:41:49 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE2F320040;
- Tue, 22 Apr 2025 04:41:45 +0000 (GMT)
-Received: from [9.124.215.117] (unknown [9.124.215.117])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 22 Apr 2025 04:41:45 +0000 (GMT)
-Message-ID: <dc2e8b4b-8543-42b0-ae33-2558f7ec5737@linux.ibm.com>
-Date: Tue, 22 Apr 2025 10:11:44 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/2] Deprecate Power8E and Power8NVL
+ Tue, 22 Apr 2025 04:42:07 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F266F20043;
+ Tue, 22 Apr 2025 04:42:06 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0093720040;
+ Tue, 22 Apr 2025 04:42:04 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.124.215.117])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 22 Apr 2025 04:42:03 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>
 Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20250422043843.26115-1-adityag@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20250422043843.26115-1-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ Madhavan Srinivasan <maddy@linux.ibm.com>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Subject: [PATCH v5 1/2] target/ppc: Introduce macro for deprecating PowerPC
+ CPUs
+Date: Tue, 22 Apr 2025 10:11:55 +0530
+Message-ID: <20250422044156.26554-2-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250422044156.26554-1-adityag@linux.ibm.com>
+References: <20250422044156.26554-1-adityag@linux.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: axNYlquqIaxMNATgzxl_stFFBPoq0MjG
-X-Proofpoint-ORIG-GUID: knvHr-X9d8JxH62DoTIshYD2TOwBWnJ7
-X-Authority-Analysis: v=2.4 cv=CuO/cm4D c=1 sm=1 tr=0 ts=68071e12 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=YSZVx4PgvsBB8yYpSS8A:9
- a=QEXdDO2ut3YA:10 a=QYH75iMubAgA:10
+X-Proofpoint-ORIG-GUID: -qpBDYByPj1N_ofvNTJRNLYoVMpkK3o2
+X-Proofpoint-GUID: G3AwTspoJJd2rIzI_zi1_175gXvS_N2X
+X-Authority-Analysis: v=2.4 cv=GsRC+l1C c=1 sm=1 tr=0 ts=68071e24 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=aow-egSQAAAA:8 a=KKAkSRfTAAAA:8
+ a=VnNF1IyMAAAA:8 a=tI4a-1GSuBuAjZxPa6cA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1095,Hydra:6.0.680,FMLib:17.12.68.34
  definitions=2025-04-22_02,2025-04-21_02,2024-11-22_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0
- adultscore=0 impostorscore=0 malwarescore=0 phishscore=0 mlxlogscore=467
- mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2502280000
- definitions=main-2504220033
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ spamscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 bulkscore=0 adultscore=0
+ phishscore=0 impostorscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2502280000 definitions=main-2504220033
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -124,14 +127,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Please ignore this mail (only cover letter got sent). Resent another v5.
+QEMU has a way to deprecate CPUs by setting the 'deprecation_note' in
+CPUClass.
 
-Sorry for posting this so late, had gone on a vacation.
+Currently PowerPC CPUs don't use this deprecation process.
 
+Introduce 'POWERPC_DEPRECATED_CPU' macro to deprecate particular PowerPC
+CPUs in future.
 
-Thanks,
+With the change, QEMU will print a warning like below when the
+deprecated CPU/Chips are used (example output if power8nvl is deprecated):
 
-- Aditya G
+    $ ./build/qemu-system-ppc64 -M powernv8 --cpu power8nvl -nographic
+    qemu-system-ppc64: warning: CPU model power8nvl_v1.0-powerpc64-cpu is deprecated -- CPU is unmaintained.
+    ...
 
+Also, print '(deprecated)' for deprecated CPUs in 'qemu-system-ppc64
+--cpu ?' (example output if power8nvl is deprecated):
+
+    $ ./build/qemu-system-ppc64 --cpu help
+      ...
+      power8e          (alias for power8e_v2.1)
+      power8nvl_v1.0   PVR 004c0100 (deprecated)
+      power8nvl        (alias for power8nvl_v1.0)
+      power8_v2.0      PVR 004d0200
+      ...
+
+Suggested-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ target/ppc/cpu-models.c | 12 +++++++++++-
+ target/ppc/cpu_init.c   |  7 ++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+index ece348178188..78ef23b4c4b8 100644
+--- a/target/ppc/cpu-models.c
++++ b/target/ppc/cpu-models.c
+@@ -32,17 +32,20 @@
+ /* PowerPC CPU definitions                                                 */
+ #define POWERPC_DEF_PREFIX(pvr, svr, type)                                  \
+     glue(glue(glue(glue(pvr, _), svr), _), type)
+-#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
++#define POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, _deprecation_note) \
+     static void                                                             \
+     glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_class_init)            \
+     (ObjectClass *oc, void *data)                                           \
+     {                                                                       \
+         DeviceClass *dc = DEVICE_CLASS(oc);                                 \
++        CPUClass *cc    = CPU_CLASS(oc);                                    \
+         PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);                       \
+                                                                             \
+         pcc->pvr          = _pvr;                                           \
+         pcc->svr          = _svr;                                           \
+         dc->desc          = _desc;                                          \
++                                                                            \
++        cc->deprecation_note = _deprecation_note;                           \
+     }                                                                       \
+                                                                             \
+     static const TypeInfo                                                   \
+@@ -63,6 +66,13 @@
+     type_init(                                                              \
+         glue(POWERPC_DEF_PREFIX(_pvr, _svr, _type), _cpu_register_types))
+ 
++#define POWERPC_DEF_SVR(_name, _desc, _pvr, _svr, _type)                    \
++    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, _svr, _type, NULL)
++
++#define POWERPC_DEPRECATED_CPU(_name, _pvr, _type, _desc, _deprecation_note)\
++    POWERPC_DEF_SVR_DEPR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type,       \
++            _deprecation_note)
++
+ #define POWERPC_DEF(_name, _pvr, _type, _desc)                              \
+     POWERPC_DEF_SVR(_name, _desc, _pvr, POWERPC_SVR_NONE, _type)
+ 
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index f81cb680fc38..78a25637ad4f 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7144,6 +7144,7 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+ {
+     ObjectClass *oc = data;
+     PowerPCCPUClass *pcc = POWERPC_CPU_CLASS(oc);
++    CPUClass *cc = CPU_CLASS(oc);
+     DeviceClass *family = DEVICE_CLASS(ppc_cpu_get_family_class(pcc));
+     const char *typename = object_class_get_name(oc);
+     char *name;
+@@ -7154,7 +7155,11 @@ static void ppc_cpu_list_entry(gpointer data, gpointer user_data)
+     }
+ 
+     name = cpu_model_from_type(typename);
+-    qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
++    if (cc->deprecation_note) {
++        qemu_printf("  %-16s PVR %08x (deprecated)\n", name, pcc->pvr);
++    } else {
++        qemu_printf("  %-16s PVR %08x\n", name, pcc->pvr);
++    }
+     for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
+         PowerPCCPUAlias *alias = &ppc_cpu_aliases[i];
+         ObjectClass *alias_oc = ppc_cpu_class_by_name(alias->model);
+-- 
+2.49.0
 
 
