@@ -4,40 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B4AC369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 09:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C009FC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 09:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u79j4-0006iV-8R; Tue, 22 Apr 2025 05:15:34 -0400
+	id 1u79j3-0006hw-Qk; Tue, 22 Apr 2025 05:15:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u79ip-0006fk-JN; Tue, 22 Apr 2025 05:15:24 -0400
+ id 1u79ij-0006f2-8h; Tue, 22 Apr 2025 05:15:17 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u79in-0006zm-Jr; Tue, 22 Apr 2025 05:15:19 -0400
+ id 1u79ig-0006zm-Fu; Tue, 22 Apr 2025 05:15:12 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 22 Apr
- 2025 17:15:05 +0800
+ 2025 17:15:04 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 22 Apr 2025 17:15:05 +0800
+ Transport; Tue, 22 Apr 2025 17:15:04 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 2/3] tests/functional/aspeed: Update test ASPEED SDK v09.06
- for AST2500
-Date: Tue, 22 Apr 2025 17:15:02 +0800
-Message-ID: <20250422091504.3666464-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 0/3] Update to test new ASPEED SDK version
+Date: Tue, 22 Apr 2025 17:15:00 +0800
+Message-ID: <20250422091504.3666464-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250422091504.3666464-1-jamin_lin@aspeedtech.com>
-References: <20250422091504.3666464-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -66,52 +63,19 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update test for AST2600 production revision A3.
+v1:
+  Update to test new ASPEED SDK version for AST2600, AST2500 ,and AST1030.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- tests/functional/test_arm_aspeed_ast2600.py | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+Jamin Lin (3):
+  tests/functional/aspeed: Update test ASPEED SDK v09.06 for AST2500
+  tests/functional/aspeed: Update test ASPEED SDK v09.06 for AST2500
+  tests/functional/aspeed: Update test ASPEED SDK v03.00 for AST1030
 
-diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
-index 6ae4ed636a..c30397f60d 100755
---- a/tests/functional/test_arm_aspeed_ast2600.py
-+++ b/tests/functional/test_arm_aspeed_ast2600.py
-@@ -97,26 +97,27 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
- 
-         self.do_test_arm_aspeed_buildroot_poweroff()
- 
--    ASSET_SDK_V806_AST2600_A2 = Asset(
--        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v08.06/ast2600-a2-obmc.tar.gz',
--        '9083506135f622d5e7351fcf7d4e1c7125cee5ba16141220c0ba88931f3681a4')
-+    ASSET_SDK_V906_AST2600 = Asset(
-+        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2600-default-obmc.tar.gz',
-+        '768d76e247896ad78c154b9cff4f766da2ce65f217d620b286a4a03a8a4f68f5')
- 
-     def test_arm_ast2600_evb_sdk(self):
-         self.set_machine('ast2600-evb')
- 
--        self.archive_extract(self.ASSET_SDK_V806_AST2600_A2)
-+        self.archive_extract(self.ASSET_SDK_V906_AST2600)
- 
-         self.vm.add_args('-device',
-             'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
-         self.vm.add_args('-device',
-             'ds1338,bus=aspeed.i2c.bus.5,address=0x32');
-         self.do_test_arm_aspeed_sdk_start(
--            self.scratch_file("ast2600-a2", "image-bmc"))
-+            self.scratch_file("ast2600-default", "image-bmc"))
- 
--        self.wait_for_console_pattern('ast2600-a2 login:')
-+        self.wait_for_console_pattern('ast2600-default login:')
- 
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
--        exec_command_and_wait_for_pattern(self, '0penBmc', 'root@ast2600-a2:~#')
-+        exec_command_and_wait_for_pattern(self, '0penBmc',
-+                                          'root@ast2600-default:~#')
- 
-         exec_command_and_wait_for_pattern(self,
-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device',
+ tests/functional/test_arm_aspeed_ast1030.py | 40 ++++-----------------
+ tests/functional/test_arm_aspeed_ast2500.py |  8 ++---
+ tests/functional/test_arm_aspeed_ast2600.py | 15 ++++----
+ 3 files changed, 19 insertions(+), 44 deletions(-)
+
 -- 
 2.43.0
 
