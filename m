@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F12C369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47008C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JIe-0002as-Fb; Tue, 22 Apr 2025 15:28:56 -0400
+	id 1u7JQv-00010H-2q; Tue, 22 Apr 2025 15:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JIW-0002WG-RP
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:48 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1u7JP7-0005Y1-Uq
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:39 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JIR-0006DG-8N
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:28:48 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2ff64550991so4197950a91.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:28:40 -0700 (PDT)
+ id 1u7JP3-00075z-1I
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:37 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2279915e06eso58647115ad.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350120; x=1745954920; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350531; x=1745955331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oR/Buc0tAK+dwpT4/jUuGVtANFEG+DcYq0rCH3hrxCg=;
- b=rc1yAO/FT/sL39Ru2U3JutPt3ep7xC3LeJZRwW/p+FsdigYfLsw+RMH4jQnctPuxTv
- IZiGIYe2yt1MtoAIoFWUIyAzZEmA+ItwwxaTiletgoCq2WeojkWTvxaRzvXCTlUqM64B
- beS/FEaclyuZeFGqlMcMBomNWd7HrJBP7NUylYe/7GJ/yL1cHCoonnvPs41c0y8RXQoj
- 8dfPDHf6diue0HA1hXE4xLGmWcCYj/HFqgAtfhXE1fPDYOq5QWY5WwouLYIEb12O0B1J
- uPv6hiu6B4LXWVR1m8Oi4IeffmbLuHkzVjir9mu4in5cXcrTJkrR9ruh4kyxpk1sfAX6
- BwNg==
+ bh=dQfBujJU7UIXTPefdL2D/GAfXKoyN3ifbh/HgiWO374=;
+ b=vnX7xBXomAvBD32dYBG7hjFtKejVZqt+OFOSQyjwXzYmvyY9PGEmhgGvF00DTRxPdX
+ EPCGn1rC7jJqDZN7kCcyhoHsbgm4zWaEXT5BdbIqKWVSkNt2FrC0jdqJfZtuOt+FPJZQ
+ VcE/nxH/RjPmtfyDPzXfF5U1D5YQvHxajtzlOBVB9S1pWqza978Wx4mkpQydyQSidDbD
+ It26B+Pgfu8JDYpIW+Z5/zXCqrWAc9Pj5Ph1SvCh/H5yZy8FZAYpUbjVu1I6rbblYeSJ
+ WDJBUb/xZLzpgrE32FWpSACdrazGfKSKI/Ougbv5IxwpPq0GJcgrWY4K+8u5SiJJwg4F
+ SiWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350120; x=1745954920;
+ d=1e100.net; s=20230601; t=1745350531; x=1745955331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oR/Buc0tAK+dwpT4/jUuGVtANFEG+DcYq0rCH3hrxCg=;
- b=W8IY3uLOlafhi1fWssu0Ln/u5H2j1jouh4txPyhjOQQp4Bh7Rkkwjgz5if65KVtilM
- kT0bT7RRrVpQXwQIhX1jx6HH9M3jmkDndQNIuv6Qi0TH0TwO5pjoI2XhMS3Q3pkmP8ZL
- liWeDJQUbUQ9qR5kD6mP6uMCyT+T0OJl9IokRd4Pds7mMmhjuU02KAqQWJPw8rW5dDeo
- oXxjj9nP8W1v49I24sTXfrUK+HvkYJf1mwT7UBxAHTpGhOspq9+adHRLPDhU4cPpAexH
- IIVY1lc2lSzlpg2zQ43F08bnqOdFqBORV1HoIcCOTQx/VnlVKovOcyG56aDHdkJ7wwcz
- VVGw==
-X-Gm-Message-State: AOJu0YwK7z01iUXXxGPkn1L1Jrix8EbnFCwmLM02esr9scNyVru49wX1
- hkD4SGuu7nOTWh+6Mn0nIlhrsTOEkJV1JrH2KF3ujYY2npwKoynzNlHjweVQ/y9g0P1opMYUiUO
- g
-X-Gm-Gg: ASbGncu3nm/YOU4PeUHFbySXTgHYoeNNIKFJg7NDowAid8UWMmrlQhWi3WHazAFLUFx
- jYjjdd2/KViwjDIwe0L0h1pTwH5cJeRgPHuwOBLP/UOoRiKM18JZdAatreJ1dnnXj6GvLpdRXLh
- ara8Y5z4gnk6heBZNNV+TAsPRp0/UHB/DPBcDvL5ckstxh/drJhP6MBC65+J3Y1LlUCFe88l9qz
- VR4cnb8OCgZp/EJygM+xNiUIdtiuuhwY17Sv9nzM3G4zMuzRyH3Svq1Rkr1xfkHfBSutnpIeNX/
- 6p4dYy619HfGmqqeaV4b3hv5sUk2zAkjWuukJk49iELUApXdMOBamjivOGbzTfanYgx1oMh2U9E
- =
-X-Google-Smtp-Source: AGHT+IEZrCzU6UJBCk/bM/WFbETYZWgd52yv1ydrjphKnTWBTQVI0h8AUgZx3MkJElGl87elnOB+4w==
-X-Received: by 2002:a17:90b:1f90:b0:2fe:b937:2a51 with SMTP id
- 98e67ed59e1d1-3087bccb23fmr25611431a91.33.1745350119559; 
- Tue, 22 Apr 2025 12:28:39 -0700 (PDT)
+ bh=dQfBujJU7UIXTPefdL2D/GAfXKoyN3ifbh/HgiWO374=;
+ b=neGuJkNcMiuqAxHpU17xoBxCOMTRvTDFJ33VHQdILBuxFpJnMNGLVIZgLDXK9V3KOQ
+ 9upyaFNPmbkJqOAjoO6sp9jTlL5VrLpROQAX5t6Gurd1SQKF+7+BeYiXA/2m96Duys+7
+ 94x5ehRGpl8AeRPZgbDaspwmLW40TV9aWNlR4ACK3MAjKSgqq8rr2DmNc1UWV330rhhq
+ k+zQI0yLEAvXwuL0K1MGT2bfx9SxGBCwsy7mr/+SNfr9+e6a22CYFTAdy23urhwH2E1+
+ SR97L8dttpenoHywOrcm8zRiu+betmn8pF8weofs+EgavKRjCeM1QDeFKtezx67S/DQ0
+ NWTw==
+X-Gm-Message-State: AOJu0Yyccb7frJu/9b4Dve1bb5MupxnRGynYSnthPhYgOF0wQ7FeDmhv
+ ppoj9e81KUjtiLQlrNhLtwKMhC0Fzg2lmd3FlZ6xHfu8M7awsiYUaHDVbYxRrXsL1azn1c6/AR3
+ W
+X-Gm-Gg: ASbGnctDJEg56EIewDdp2J1AZg35hIO09uZsd70h0OY3m+fVJ46oho/gMLypkNIup6C
+ ke923WidU49yW9v1aUD+ZS+EH6vuYDQCnnXGb/nyCAFVZockmsL5qtHdo9KDGm9Ga65WNHBfUL0
+ sCNDRbtSY+Mbl6qvMYu662Qw2LqfUwKgmQFPa2d9oqbKjjhN3Q/hC00qThli7HrubSYi+LUTnVk
+ iLIl1uDoTCnpqcgp/JfSEAid8sE8q/zISGMY8SleuQfns5v27+DAy/ShgUguSAGkx/QtGAlaFYM
+ 6NuI7bXD1x5+ic49dwWrsyo9gwZBZkdx8Se+5HFYJWqCQHBmfTbJADOTaCzzNUyAX8tzUBGsa2m
+ 21ZM+Uged8g==
+X-Google-Smtp-Source: AGHT+IH9nPSwdBzxMxOKD90+lF63nPKnSla0U9Ubs+SfmndVEhoYzwcIsJt0cUUXjGYMF1D4jjK+bQ==
+X-Received: by 2002:a17:902:d4cc:b0:224:1074:6393 with SMTP id
+ d9443c01a7336-22c5362753dmr245579615ad.43.1745350531535; 
+ Tue, 22 Apr 2025 12:35:31 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3087df21278sm9146865a91.29.2025.04.22.12.28.39
+ d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:28:39 -0700 (PDT)
+ Tue, 22 Apr 2025 12:35:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 029/147] accel/tcg: Perform aligned atomic reads in
- translator_ld
-Date: Tue, 22 Apr 2025 12:26:18 -0700
-Message-ID: <20250422192819.302784-30-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 108/147] accel/tcg: fix missing includes for
+ TARGET_HAS_PRECISE_SMC
+Date: Tue, 22 Apr 2025 12:27:37 -0700
+Message-ID: <20250422192819.302784-109-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Perform aligned atomic reads in translator_ld, if possible.
-According to
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-https://lore.kernel.org/qemu-devel/20240607101403.1109-1-jim.shu@sifive.com/
+We prepare to remove cpu.h from cpu-all.h, which will transitively
+remove it from accel/tcg/tb-internal.h, and thus from most of tcg
+compilation units.
 
-this is required for RISC-V Ziccif.
+Note: this was caught by a test regression for s390x-softmmu.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250325045915.994760-13-pierrick.bouvier@linaro.org>
 ---
- accel/tcg/translator.c | 42 ++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 38 insertions(+), 4 deletions(-)
+ include/exec/poison.h | 1 +
+ accel/tcg/tb-maint.c  | 1 +
+ accel/tcg/user-exec.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index ef1538b4fc..157be33bf6 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -265,12 +265,14 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
+diff --git a/include/exec/poison.h b/include/exec/poison.h
+index 8ec02b40e8..f267da6083 100644
+--- a/include/exec/poison.h
++++ b/include/exec/poison.h
+@@ -38,6 +38,7 @@
+ #pragma GCC poison TARGET_SUPPORTS_MTTCG
+ #pragma GCC poison TARGET_BIG_ENDIAN
+ #pragma GCC poison TCG_GUEST_DEFAULT_MO
++#pragma GCC poison TARGET_HAS_PRECISE_SMC
  
-     if (likely(((base ^ last) & TARGET_PAGE_MASK) == 0)) {
-         /* Entire read is from the first page. */
--        memcpy(dest, host + (pc - base), len);
--        return true;
-+        goto do_read;
-     }
- 
-     if (unlikely(((base ^ pc) & TARGET_PAGE_MASK) == 0)) {
--        /* Read begins on the first page and extends to the second. */
-+        /*
-+         * Read begins on the first page and extends to the second.
-+         * The unaligned read is never atomic.
-+         */
-         size_t len0 = -(pc | TARGET_PAGE_MASK);
-         memcpy(dest, host + (pc - base), len0);
-         pc += len0;
-@@ -329,7 +331,39 @@ static bool translator_ld(CPUArchState *env, DisasContextBase *db,
-         host = db->host_addr[1];
-     }
- 
--    memcpy(dest, host + (pc - base), len);
-+ do_read:
-+    /*
-+     * Assume aligned reads should be atomic, if possible.
-+     * We're not in a position to jump out with EXCP_ATOMIC.
-+     */
-+    host += pc - base;
-+    switch (len) {
-+    case 2:
-+        if (QEMU_IS_ALIGNED(pc, 2)) {
-+            uint16_t t = qatomic_read((uint16_t *)host);
-+            stw_he_p(dest, t);
-+            return true;
-+        }
-+        break;
-+    case 4:
-+        if (QEMU_IS_ALIGNED(pc, 4)) {
-+            uint32_t t = qatomic_read((uint32_t *)host);
-+            stl_he_p(dest, t);
-+            return true;
-+        }
-+        break;
-+#ifdef CONFIG_ATOMIC64
-+    case 8:
-+        if (QEMU_IS_ALIGNED(pc, 8)) {
-+            uint64_t t = qatomic_read__nocheck((uint64_t *)host);
-+            stq_he_p(dest, t);
-+            return true;
-+        }
-+        break;
-+#endif
-+    }
-+    /* Unaligned or partial read from the second page is not atomic. */
-+    memcpy(dest, host, len);
-     return true;
- }
- 
+ #pragma GCC poison TARGET_LONG_BITS
+ #pragma GCC poison TARGET_FMT_lx
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index df3438e190..d479f53ae0 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/interval-tree.h"
+ #include "qemu/qtree.h"
++#include "cpu.h"
+ #include "exec/cputlb.h"
+ #include "exec/log.h"
+ #include "exec/exec-all.h"
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 72a9809c2d..7f57d8f1af 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "disas/disas.h"
++#include "cpu.h"
+ #include "exec/vaddr.h"
+ #include "exec/exec-all.h"
+ #include "exec/tlb-flags.h"
 -- 
 2.43.0
 
