@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F03C369D7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1223C369C2
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 20:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JPa-0006fs-DD; Tue, 22 Apr 2025 15:36:06 -0400
+	id 1u7JSg-0004zr-2n; Tue, 22 Apr 2025 15:39:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLm-0000px-37
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:11 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1u7JSI-0004BX-9u
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:38:55 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLh-0006eb-9l
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:09 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-225477548e1so56981595ad.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:32:04 -0700 (PDT)
+ id 1u7JSF-0007MP-Po
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:38:53 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22c33e5013aso64932285ad.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350324; x=1745955124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350730; x=1745955530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Qcu//0jyv2Qr1qgAsqv3VCUMABiA/lbrLzTg9MZVJM8=;
- b=J9jIEFZLGUE05wOPugN/O+RcLybABgTewAFHojtpbze+lBOaGBcAni7jGV/Im5Q9Ea
- 0f68hPyOm+Bfy4rFL2ljUgG6mfjMAtoJJuvrmx/1jqBB+ms2faWZ5sTFb+MYW/piPw/a
- 6TNcj5jfltU0kQvF/AUM95Dll4VHaw7e4MyyQK9X33ctB2PXF27gV5ty5Idrq2yjTF5q
- uXUhtnW/k0PGJ2kras8R1QqDAWwrvqIqJ/cAK9M/KPCdxta7KVbQuPcAd2TDhWJYlL2h
- nJdYgrLZSVJl7saWjZ42sXZdlC0S5esVzB3Zp5xcesIQk7o7yawAdGYtirMGBUBR4q8r
- 1wFA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8LpPYWP0OXO9mhIHJpVptIpUQyJvCDi5tzk8x0yv51A=;
+ b=mjeM/Ze6QgoZJfG75IlyA7Tu8+u4H2MNN07WTB2ZfTOIfjABCGgIiRwgj30XZW1acB
+ UnxVDTBB/ZIKu3h5tCVuo1y1PMIV6JhD4KdEchPSqMNaseWH/eVvkHMRsDiaEyZj3gsy
+ 6MN22xkScFE0rdHt6WxNDpQxY1c+3Q5VWmCP8FJWHUt4S++nA+bwYXxbKZXqB5UzUth0
+ lRMGk1ERx/IHyAK13mHyBbihU0wWpmAULTJFDOx9cML2FbhtBvz8lYR2SpqxNsYeyAJS
+ JKE2Qrm9GRYL24MVXkDGxMvTyKbeCUC2Oxn+hBzbmV33pTmbtZASG4lVtXdZh6dc9y7P
+ rKow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350324; x=1745955124;
+ d=1e100.net; s=20230601; t=1745350730; x=1745955530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qcu//0jyv2Qr1qgAsqv3VCUMABiA/lbrLzTg9MZVJM8=;
- b=XEPtux623av8x5V32N0DeXfX8X0yrefoxrgQUy86Q7zfkmJyIMN5Dk6loUk+NUOa+O
- /ZunV8hfA1Pn41uKJ7mdFDLdlq12CFkPbaQJG775a2IB8Dn3yjB+NjwUzD9BFNuQ9zje
- JyHqRGUHVKWJS8zCbz2WGX8WVI/AbCPEPOtTIbTx+1atmO4XHYiDu1ZcmEIroUCXnOFm
- ZGPEsB37dvVhApD9iejPPZ31ci17eeHxZG/6q1SKwhitzmHN9DK0mkCz+dNfdJnNI4sk
- hK7mFHhCueBOUfGpLNMF+1Ekkd8zZOughqrjeMInn33WYWCiKd+MtEiLe/IXDZKOr4tT
- 27BQ==
-X-Gm-Message-State: AOJu0Yw4VTh7EVj1nwf8E0aFc5nXHD82oMNNSek5aOxteutQEHT0MhdA
- hQzvHpfqf0cz0wWfTZDDFq7tusAGtkw5dX4O8WANS/cF7+k6ixlWuWqahaHkCLVv5Gv0dgQBqt7
- z
-X-Gm-Gg: ASbGncuj6l9oVdpIthwR5yvVsNEsQt2ESqEbmh03rLr1Xgcr2BDmk401ZzUj1sonQyM
- 2OWsetLBCsA4rr+uVUtbOEgSnmhigb+M1u29cdrGRJ3on0RSu0a8bOhmbTCwdX+P+vmTcJCbocN
- ZuqaNURiSLSihXGHx4yZMaaBCjWz2lXhFrCpyAgoZFmNKchp9fsGm7ypvWp9Zzs+YFT+ScULppJ
- gyGdJKeq9A4Ri+3IS9oWpl2qDVt/hVUqPbrFT7MybC2Id/dNaF9c8knDskHcvfEIQXMEgescmd8
- Ez3RR1LssRIF+iNJjJ6nbS/xYwjD7P9XgzhNN8ji6p5wzyT4x1EW0LXpKKItYT/5ljrHtIAFSyY
+ bh=8LpPYWP0OXO9mhIHJpVptIpUQyJvCDi5tzk8x0yv51A=;
+ b=CpwPe2xYhEbXnyxLBErPZUv0L1L/34PLU083LJaByO3aK/PBXusKpE3FzduoAr0JTa
+ VNKqDfeInC1pFnNSl59DIITOlEHgOtCzyd0USgD7Q6nDdqeKBCtC0VCj6GmqozKrHjfk
+ De5VUQT3fG885ZPom5JeLtMnKNZwMU6NhqJmhJZHgworrAZno38FHEEinkpKX7niCCZl
+ KZ8sfo3emhydJlgMrkOj5bnsdjN2tHh/QPsFzu+aG4SsK7a6q9ufhQ0dpMww+XASTnmn
+ M3SC/ZJDa4cDiWfDlguTwX8VNzSn5Q5SctqOsmjM71VcALYSBidEVpAy7QNOMfM9Qc/6
+ T6hQ==
+X-Gm-Message-State: AOJu0YyarxOIOdvkk7eV/jcgiQfKru7PNd4bbteHE3eJ17iIlCmfYR2+
+ EpTcyp421fLSLgwCgrxn13qp7OtbEUdQFOA7trqHejiDJDAul7D2Ma876vo/65XgFxc93CFARtt
+ 3
+X-Gm-Gg: ASbGncuEMkTnPt8XEj08OybkzP+ZCSu4JeMx8A6hEvWKklv2HUUzT+kES+qQYLW77xr
+ 5NPlTpdakgWUDv2VUewxFwYpPRBuRL+FrHlZCSniTZPZ55z2at5JH34np0zrNtxECjSRrsKWGmJ
+ bwrD+f/8kudBX/qqbA4smf3aJrVIegq30AK6RNIcBZP6n0EFJyvySqidXev2hpBopzBbAQ9dfcq
+ V/xjLJkp9gudw5yUsyUsuavqmVVrA79ZF6JA7HLNIO//vVN89Y9nPAbOWhfLm/zkixp8x6Lhoyw
+ Bv43d7Op7OLA5csHwiBh6DoK2699zmXGR95mgTiRu4m0HxS/QW/3O5dhKGgyidP8U27rOODGLQo
  =
-X-Google-Smtp-Source: AGHT+IHlH0OsaiT6N+otkf5NVhKPfosNhoHWqhsvLNMUobIIfYLUrWUi7DO2HvmZ+aoNCObZI7r66Q==
-X-Received: by 2002:a17:902:d58e:b0:223:2aab:462c with SMTP id
- d9443c01a7336-22c53580c26mr251616435ad.15.1745350323972; 
- Tue, 22 Apr 2025 12:32:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERtPUt19GuUOJU/foN4O88aJ+QXrXgEGn59dFcl9N8fGpBpUtYtHHuwUWh5ieD/GJz3DtXPg==
+X-Received: by 2002:a17:902:e74f:b0:21b:d2b6:ca7f with SMTP id
+ d9443c01a7336-22c5360de0amr266686055ad.32.1745350730228; 
+ Tue, 22 Apr 2025 12:38:50 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.32.03
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-22c50eb484dsm88951765ad.148.2025.04.22.12.38.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:32:03 -0700 (PDT)
+ Tue, 22 Apr 2025 12:38:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 066/147] include/exec: Move TLB_MMIO,
- TLB_DISCARD_WRITE to slow flags
-Date: Tue, 22 Apr 2025 12:26:55 -0700
-Message-ID: <20250422192819.302784-67-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 135/147] tcg: Remove use of TCG_GUEST_DEFAULT_MO in
+ tb_gen_code()
+Date: Tue, 22 Apr 2025 12:28:04 -0700
+Message-ID: <20250422192819.302784-136-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,56 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recover two bits from the inline flags.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Use TCGCPUOps::guest_default_memory_order to set TCGContext::guest_mo.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/tlb-flags.h | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ accel/tcg/translate-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
-index a0e51a4b37..54a6bae768 100644
---- a/include/exec/tlb-flags.h
-+++ b/include/exec/tlb-flags.h
-@@ -53,20 +53,15 @@
-  * contain the page physical address.
-  */
- #define TLB_NOTDIRTY        (1 << (TARGET_PAGE_BITS_MIN - 2))
--/* Set if TLB entry is an IO callback.  */
--#define TLB_MMIO            (1 << (TARGET_PAGE_BITS_MIN - 3))
--/* Set if TLB entry writes ignored.  */
--#define TLB_DISCARD_WRITE   (1 << (TARGET_PAGE_BITS_MIN - 4))
- /* Set if the slow path must be used; more flags in CPUTLBEntryFull. */
--#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 5))
-+#define TLB_FORCE_SLOW      (1 << (TARGET_PAGE_BITS_MIN - 3))
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 7467255f6e..c007b9a190 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -353,7 +353,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
+     tcg_ctx->tlb_dyn_max_bits = CPU_TLB_DYN_MAX_BITS;
+ #endif
+     tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
+-    tcg_ctx->guest_mo = TCG_GUEST_DEFAULT_MO;
++    tcg_ctx->guest_mo = cpu->cc->tcg_ops->guest_default_memory_order;
  
- /*
-  * Use this mask to check interception with an alignment mask
-  * in a TCG backend.
-  */
- #define TLB_FLAGS_MASK \
--    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_MMIO \
--    | TLB_FORCE_SLOW | TLB_DISCARD_WRITE)
-+    (TLB_INVALID_MASK | TLB_NOTDIRTY | TLB_FORCE_SLOW)
- 
- /*
-  * Flags stored in CPUTLBEntryFull.slow_flags[x].
-@@ -78,8 +73,14 @@
- #define TLB_WATCHPOINT       (1 << 1)
- /* Set if TLB entry requires aligned accesses.  */
- #define TLB_CHECK_ALIGNED    (1 << 2)
-+/* Set if TLB entry writes ignored.  */
-+#define TLB_DISCARD_WRITE    (1 << 3)
-+/* Set if TLB entry is an IO callback.  */
-+#define TLB_MMIO             (1 << 4)
- 
--#define TLB_SLOW_FLAGS_MASK  (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED)
-+#define TLB_SLOW_FLAGS_MASK \
-+    (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED | \
-+     TLB_DISCARD_WRITE | TLB_MMIO)
- 
- /* The two sets of flags must not overlap. */
- QEMU_BUILD_BUG_ON(TLB_FLAGS_MASK & TLB_SLOW_FLAGS_MASK);
+  restart_translate:
+     trace_translate_block(tb, pc, tb->tc.ptr);
 -- 
 2.43.0
 
