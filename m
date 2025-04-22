@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BFC7C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 17:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA30C369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 17:20:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7H8N-0004Mn-3z; Tue, 22 Apr 2025 13:10:11 -0400
+	id 1u7HHx-00082F-5e; Tue, 22 Apr 2025 13:20:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7H8K-0004L9-VP
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:10:09 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7HHu-00081P-3U
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:20:02 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7H8I-0004SM-OK
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:10:08 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-227c7e57da2so47808415ad.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 10:10:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7HHr-0005cN-Th
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 13:20:01 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39ee5ac4321so5850793f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 10:19:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745341805; x=1745946605; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=v2QlFdpqV/cwkuN9lzK2uY7RhQgPJ3iWuZb1rcjImDI=;
- b=A4QAxTOtjyWttVBCCTKCZMeD26/29BP+rMrs0kZtDTkcibtB0xFfMeKVpNIVt+M6bw
- 1E1C5lQBmFokFb3Kpz2HbWUeOGH0HnH2e7Cq7LSfxe7hqzPNfKHYXBZvnLDTzZr1XuGg
- 4dgBYWv5Y0PR4DkCaOBQRY/Rf0Lz0xMsgQj9x/Lxhfpux8pbRyf4HBzXCibAldOYN9IM
- FZoglnsFEmla/dtUpy2OvupVYte+X6IfgFm614q0I+66Xa3jYaVIIE7l5m3hqalTHSce
- VQcUwomIrmNEgrZsmpt6PlqC3/AvxMJS5o1DOkEWPus9MNz6iPtr3xz55WNGbtDVDLyB
- U87w==
+ d=linaro.org; s=google; t=1745342397; x=1745947197; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xNKLj4D/gE4uh7HIOOJVJs77DuL5s6j/qlx9j1pTj+s=;
+ b=P6R0fzFLubvs3q2WF/Q+mbhT4vdrUrzhQYpEOYnR0NgqIcK5xPxwWohKPp6nIWDPz+
+ x6GdUfsneNXmHTykfcej1oy1wLYoCTRdGCHFFO7xUWubME4dGQk3LGRgAd2Vr/tVyXhK
+ zYNprKWe7rhZWeghxBPs50bE2Ack/pX/kJ5IQ5S7hqpxfYsQqeZ0TrO8cOzSUfNecafG
+ 9AJ96znc63CzM1hUpIzMo2ch4Ek7EVCUr47PO+UKO29HHvJY7oW6Q4cOLVRUhimsbV6n
+ MrbIxUr0vqycjzlfRt8Efpg/X3g7Dv/yLlwec7vwe8o31KDZqtUFZdTi840gsQrofSyV
+ HDIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745341805; x=1745946605;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v2QlFdpqV/cwkuN9lzK2uY7RhQgPJ3iWuZb1rcjImDI=;
- b=Fg2yRGUh+IcMXoh6rbUmaj1YWwZMvH5p6ccO2vbPl+TmtSUmu8mX5QGXyPCl0sbmjA
- b1zy0VWJevErTO4eFZIND/StGEbyiy6t+SuF0KLvHQd792pl10q10XsGzFwX5hBRvit/
- DOlD4nyiMMyb213DJky1JIkw/55kKg9zZwwylBy4v7oMbxWfCsA3KIi6VYOI0xk1fKVB
- iEluKkpAEy0clV670sUhBlyU/Yq0sKlQfO9YdQqL0xRMJhqoPSoKSNoSLBnNpfIyIbXy
- jTVVQshd1Fb8g31lFeFsOTv7CoGUeTMYM7wdryc86xFV3aRqA43O9dWGRVArnfHsdzYK
- GtNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvwfCKuJN5WVQVzQT9xSH26MTBCZpFX6IyfpSt6xwVIAQDR3EgiJkbbXxsIDdeisbeY2aUko7tgF/e@nongnu.org
-X-Gm-Message-State: AOJu0Yynd9EUoBYyRO61nW4G2TtLbKceqyzIZcLkGt5EaIp/5ixW6fBa
- 44V/LFRjgoiVQ7nXZpIxe5EdJ1ifjK24Kb9Z06O18D3tc7VYE16E7gH3k2eOytY=
-X-Gm-Gg: ASbGnctnhqMifQS3FgzzOnlTIqEp2R/2Yt0pIBJKYm4ChNOo/FiVz20sGrGTmxR8PMe
- mlFhuWxIGKYMkhkPU0Wy9e3Qh2CJDyMFvgW0rabrByI9QczVNuZMN6+iNjpRXj4ZPNrrkx7FTvQ
- 9LphIoQ44gs1MD6hLOT25stlt98RNoPuHV4DvnIkjxAJJvCV6Y1jn9/PRiBwIwcglhHdMPF+TcA
- jNU3dqN61ITdgkzIkv73KOUjXAFL7bhQNZg1WRiE/HobpwKuIwUEsqYBabFJrdcjJOlPNLjBcBs
- iofPzJpBpWHdtR3A8PTsQ5vuTlB3oGtOPf4k76gaQnKWuisEfMj3AiujF85Xzckany/SVzJgd1E
- rn/6Mx5Q=
-X-Google-Smtp-Source: AGHT+IEkx90NNAPoJDGV7TE9sq9n3oG/rPYuDBebQUegEek7ZXXpnQGokm2oMrNVCBK1d1J7AUw6uQ==
-X-Received: by 2002:a17:902:ea07:b0:223:88af:2c30 with SMTP id
- d9443c01a7336-22c5357f3b2mr211427365ad.16.1745341804719; 
- Tue, 22 Apr 2025 10:10:04 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bde120sm87749055ad.42.2025.04.22.10.10.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 10:10:04 -0700 (PDT)
-Message-ID: <c99098ba-bd49-48e7-ae61-289c86d9068f@linaro.org>
-Date: Tue, 22 Apr 2025 10:10:02 -0700
+ d=1e100.net; s=20230601; t=1745342397; x=1745947197;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xNKLj4D/gE4uh7HIOOJVJs77DuL5s6j/qlx9j1pTj+s=;
+ b=abVydH1LFnQ2TI6ISdTZ/f7hOFXssmFB9UG2Of0LLF16XGhEBrVh37MIgt/srANbke
+ U1dRt2YUk76RRtK2LgwdvtgpYbUY7iL70eLGC+Rbtudl3oZf3ZvLowiQakR0bjbhIGEG
+ F/nCiYxfVEUOusosKWsE8x/1LkAzSslyvT0oljbIQfcL7uUjE3VNQ81y1ukIojVEFruU
+ iJU7wN+j8GW+QAKZsEbD3er/QtIl9YZDa9dDjCrJyYxq8VpHIncpzM+LXo4lh5/ETqVI
+ n2//RgUN5lnp6oY5akVoj8BgnI9crhxbZW9K+rm8vy37PNIKowjsr21QCU9kC8Jy3cqG
+ xGqg==
+X-Gm-Message-State: AOJu0YyPaJOXxhFUlLnV3M9FqDsXcldiS4n9/JnYFF875CNmJ0VThCot
+ j5awUOWIuG7qWmQ9r58IgmMQY4PVrVTW4+87cbTvjaJq3Mo35Sr3czKB4Qs9FoqOLcbmDBXbhOL
+ 8
+X-Gm-Gg: ASbGnctc6Ok85XnjZ6aF5Mc5Hkk54gt6SGAU1l2dSPSjQsNRrlfpYBnCfMgt1XELfCW
+ IN+3MURD5AvejDqZAU/2wcdpi980g3U3CAWAMwiFFC1KhiUUEDmWM+t0F+zmHhwbIbgybeF0C5p
+ 4PfUbhyfA4R2HLz1gtsGyzgBRLSY4pU5BalIpnjBMteuAsZ7QrJYAt7TGPAeG8z5QkWFYB6xm2v
+ Ig9UKsQZhGU2GWfO2r7GenTVyxNU0bnyk847GzlVC7A/mr0sWZJ2T85r4EHYi6bKhtctHSIAB0L
+ 2okvQWDnKQHzd8Uxr0O3Pvza2Ax8xfiNGTief1oP+jLQmWYlMuHE5CpPzDyLpppoSpcYfslxuC/
+ dFbG5cDw7AX0zT4E=
+X-Google-Smtp-Source: AGHT+IFuOHwjLyD1O62W/6sDhxunTt23ThlwfHs351PkMU+xQ1O0GrvkfmXvRyUd+O1HM9u6Mubelg==
+X-Received: by 2002:a05:6000:2483:b0:391:241d:a13e with SMTP id
+ ffacd0b85a97d-39efbaf6c45mr12230559f8f.48.1745342397379; 
+ Tue, 22 Apr 2025 10:19:57 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa493207sm15940721f8f.79.2025.04.22.10.19.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 22 Apr 2025 10:19:56 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] buildsys: Disable 'unguarded-availability-new' warnings
+Date: Tue, 22 Apr 2025 19:19:55 +0200
+Message-ID: <20250422171955.11791-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 149/163] tcg: Remove add2/sub2 opcodes
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20250415192515.232910-1-richard.henderson@linaro.org>
- <20250415192515.232910-150-richard.henderson@linaro.org>
- <1d6adf81-15fe-43c5-87a4-45974e6a8a68@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <1d6adf81-15fe-43c5-87a4-45974e6a8a68@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,33 +102,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/25 09:42, Philippe Mathieu-Daudé wrote:
-> On 15/4/25 21:25, Richard Henderson wrote:
->> All uses have been replaced by add/sub carry opcodes.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   include/tcg/tcg-opc.h            |  5 --
->>   tcg/aarch64/tcg-target-has.h     |  5 --
->>   tcg/arm/tcg-target-has.h         |  4 --
->>   tcg/i386/tcg-target-has.h        |  5 --
->>   tcg/loongarch64/tcg-target-has.h |  4 --
->>   tcg/mips/tcg-target-has.h        |  5 --
->>   tcg/ppc/tcg-target-has.h         |  4 --
->>   tcg/riscv/tcg-target-has.h       |  5 --
->>   tcg/s390x/tcg-target-has.h       |  7 ---
->>   tcg/sparc64/tcg-target-has.h     |  7 ---
->>   tcg/tcg-has.h                    |  2 -
->>   tcg/tci/tcg-target-has.h         |  4 --
->>   tcg/optimize.c                   | 87 --------------------------------
->>   tcg/tcg-op.c                     | 26 ----------
->>   tcg/tcg.c                        | 36 -------------
->>   15 files changed, 206 deletions(-)
-> 
-> Missing doc removal:
+When using Visual Studio Code (v1.99.3) and Apple clangd v17.0.0
+I get:
 
-Good catch, thanks.
+  In file included from ../../qapi/string-output-visitor.c:14:
+  qemu/include/qemu/cutils.h:144:12: error: 'strchrnul' is only available on macOS 15.4 or newer [-Werror,-Wunguarded-availability-new]
+    144 |     return strchrnul(s, c);
+        |            ^~~~~~~~~
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_string.h:198:9: note: 'strchrnul' has been marked as being introduced in macOS 15.4 here, but the deployment target is macOS 15.0.0
+    198 |         strchrnul(const char *__s, int __c);
+        |         ^
+  qemu/include/qemu/cutils.h:144:12: note: enclose 'strchrnul' in a __builtin_available check to silence this warning
+    144 |     return strchrnul(s, c);
+        |            ^~~~~~~~~
+  1 error generated.
 
+Disable this -Wunguarded-availability-new warning as a
+short term band-aid fix.
 
-r~
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index 41f68d38069..539368f82b1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -735,6 +735,7 @@ warn_flags = [
+   '-Wstrict-prototypes',
+   '-Wtype-limits',
+   '-Wundef',
++  '-Wunguarded-availability',
+   '-Wvla',
+   '-Wwrite-strings',
+ 
+@@ -747,6 +748,7 @@ warn_flags = [
+   '-Wno-string-plus-int',
+   '-Wno-tautological-type-limit-compare',
+   '-Wno-typedef-redefinition',
++  '-Wno-unguarded-availability-new',
+ ]
+ 
+ if host_os != 'darwin'
+-- 
+2.47.1
+
 
