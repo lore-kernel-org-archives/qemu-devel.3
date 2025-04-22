@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48633C369D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 20:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8EAC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 20:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JQx-00013B-Kc; Tue, 22 Apr 2025 15:37:31 -0400
+	id 1u7JQK-0008SC-MW; Tue, 22 Apr 2025 15:36:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLW-0000BL-K0
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:55 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1u7JLd-0000am-NH
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:02 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JLU-0006as-At
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:31:54 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22c3407a87aso84188125ad.3
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:31:51 -0700 (PDT)
+ id 1u7JLb-0006d3-ND
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:32:01 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-223f4c06e9fso2415295ad.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350310; x=1745955110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350318; x=1745955118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qcw0j/NlWHHUFrSWrBThXyu3TLmFkd4CNoNN4KpSa40=;
- b=tRvwom6xp9qKY4ahcO1/L3Ry2UUWyv+xm8rP9Y/RXbp8yy+69llJ2ICrcRbQwa5SSQ
- TBSIU4hDHUEGWcJMan/hBPHXxCmi7P1ruuy/sGhjoFcSr5sJWm7K5MJFMCUcicPpKxkD
- ZkY/TWWqRV/+zSRm2u3nPSDiVkBXAN5gR4bCNB9r3H4/z238O1KhWqClKkt1hqlp91Lt
- e9Tv8qQNb1rGx+ePIIa5ZrPmoSy3hOECcsad89vQuZy8xqF/EtaQ2jt/WmzHMAIbvOKL
- SKrRh2+5YUK1rhOGNNOI/t+xGA1c+MuoM3DdMxKvlvSjN2LxJiA5XGERMuvjal9SSc73
- 5lPw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=/uK/6e74nn8Fot5LvCS7tmplWHujswrlAKxdO1vG4SM=;
+ b=pqMS3LgFjVnlb7oJ4Zg71pITDQq+FrAzFiY2kUAWZLFcWeMTcb+oIwn6LBw2X+Pofn
+ OGh5/8ZGIY67yTxcL3RQNzmM0kk82VD7AiaKbhSp6Tx1TUvXa6LxTpCdmnSaBRDmydID
+ fYtFg2lzcBd7aJtBP6TXb+Qi0gvtWBG3VnIO8FdpV4dIejjZLzWmPJC6J3bcdW24m4fw
+ F2Gxrt9M16vJiLOy+ToixW9VnVm9E5Vn8ETwEbHkEDf97BwN2bTAU/UCH2xyXk/gavC9
+ 7DENKwUNHCjrnPb1Gzsef2AsPCtxmBV88dZm+lCLmllEw6T//4VrcLPHbWpy1KQO3uPE
+ DduQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350310; x=1745955110;
+ d=1e100.net; s=20230601; t=1745350318; x=1745955118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qcw0j/NlWHHUFrSWrBThXyu3TLmFkd4CNoNN4KpSa40=;
- b=ApqHQsrmC358OhdcS+D+FW09vCfexfK7V2eK/9QC5VUS6IRcMEbjmZ2LWZg/LghlFV
- 7z4lr/bJoshLIRDVNb6txxvVeIKMKt1S5pT0tc9iUyvKSHOmYhaxei59X+QrDIbPWpO3
- mBT4aEUuhpc4O6hLRpa2JsvVTLiqytKuz1hbE4GxdTCZgB++NwtjQLVqgVh3Xi755rMH
- L9tKx7+W4VK2RP7HiDMCI/AyGha0KSfrotwlQzBWBQoCtW0xw8vnOX2ckhWiYXgUHYiI
- wJ1OLYwky10LmYWaxd2hk9vGTRHk1Dxw5WnA0ngXOeUyux1DnXTLVwu9w3jiLQ5R0W19
- IpYA==
-X-Gm-Message-State: AOJu0Yy8TNLtj6Gi6p7EX/M/Dv/V0n4ZX3FA1AltFemja1wCWi8Xwj0f
- 26zEqmzH9RDOZfD8GaiMSkE72X2zCPI8faFilKsxjPCY0Cq/nikPbJL7DDL09UJ2uDS1hX0ZZj5
- d
-X-Gm-Gg: ASbGnctIaJ7jNR/8VCY6BFpU5LILc5uK8D4QfU6D+stdz/EZouOUgGCU5xlniCPKU8e
- ZavN+/hY/RVvJVqA/SzKgOGmygRA1LpVnb4z5mc2yFRxYZ54RQyYwH9WuS1wi2qRWnRRmOb5tVK
- SjpshKF21MD+EZYDt3zy0Iu8WK7Z4xCCkQFlfDi95RyMl9gJrtmgPRf/YqUkaQw6H/51qP6VrE3
- 8u/Y+uriCnpkYB45VOIpnBYFsGZD+3bzwURug4e+vD0hsAOGxY6eGIqnMpKwb/XOWuj1am/ysxY
- 6fHtktVswzxv0DWrReunFGB8saWbG/70A9AktldI12QZxTJ+Smc7Ti9DYKAbF/w3YSF0RNI1ch8
+ bh=/uK/6e74nn8Fot5LvCS7tmplWHujswrlAKxdO1vG4SM=;
+ b=H1CRzSg//IGHaD+959axekFfn6V/HhynzvtrFC1WGApnimF3x9nMq5XVbv/qW4JTmJ
+ W2qQ3fui0VjhXkwjJ2ouI3uWaohk7cSMD0QotIOC3c4Fi1TeSs2XwSAfHW1iESvtitwF
+ dEwddYLG06drXy88pjve1H0ptosZqKHR2Dhoh1LdsieZAGb4iu9HWq17OEB6BSjYBXkF
+ kb9pLRyLbdK+5foD4fFTi0lh3bLsEeOjac8cHytKZWrkF5Ca1TX0oREGFc5DH5lrJqES
+ 6v9PWGFJizEQ5LizWwJzYQO2llpmc9y/g61nNzD5K7X6vt+GJSs97mD1Sgf9jnNKdOQh
+ 2LVQ==
+X-Gm-Message-State: AOJu0YyZxwmcLVtGrSmk2tP8BUUKPUSSQkugqJWl9o+fF1Vp1TPlMbVG
+ tk0q53XqzTT8tNXkypPLNCde2NImvMvO86Eq6kBPEmjXGPQQ6zUMB0ouML7H0YloMTqJKTAjQQs
+ G
+X-Gm-Gg: ASbGncuiRTK2AnD77yLVMAdMBECT28cuAPesBoKXcbHJ56tIYKlgGhhkTE8ig8MLQb9
+ s6ldaYmOM8ExquUVD59GO4I/agRzNcPV85l8qOsYVRCofypUJqFXBdZtH6TfhcRee1lWu/FMMsV
+ Yw+285GaTg8E8JmaSrlMfNUM+mnsBQ9UEE59UIenep/pauEc2c+HYjN4y00twuSUI+fXj6TnjzL
+ /DakB+DJ3GidCuXHCtZYlY6EipZSgYwLCx5ma4pYDLsVRS96OrRcPkUAvz/wbUMAiKdiymjOdA6
+ edckC2nuqqEWYOUDua1RwkDmxrazU50f8jb1NIjrNHsOWf4YM+ZCsAaK3KdTeZkeXbaFCcZSkMY
  =
-X-Google-Smtp-Source: AGHT+IHDSorXWqj3xQPieB+lzrq2kREsklsVBoJeuSkit6cCLpo7Q6OgYjJh7bvT9yTYsCKaRwPl1Q==
-X-Received: by 2002:a17:903:3bad:b0:220:f59b:6e6 with SMTP id
- d9443c01a7336-22c5356798amr208685535ad.8.1745350310640; 
- Tue, 22 Apr 2025 12:31:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyMAnr3n8Qri4/q7uvsoq2AvNHasCCWieoVTPkN6YKfgR7EJBb6G1AuHRET8f1DiXyyS0HJA==
+X-Received: by 2002:a17:903:1aa8:b0:223:607c:1d99 with SMTP id
+ d9443c01a7336-22da304bff3mr3947885ad.0.1745350318305; 
+ Tue, 22 Apr 2025 12:31:58 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.31.50
+ d9443c01a7336-22c50bdda3bsm89312635ad.27.2025.04.22.12.31.57
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:31:50 -0700 (PDT)
+ Tue, 22 Apr 2025 12:31:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 045/147] target/xtensa: Restrict semihosting tests to system
- mode
-Date: Tue, 22 Apr 2025 12:26:34 -0700
-Message-ID: <20250422192819.302784-46-richard.henderson@linaro.org>
+Subject: [PATCH 057/147] include/exec: Protect icount_enabled from poisoned
+ symbols
+Date: Tue, 22 Apr 2025 12:26:46 -0700
+Message-ID: <20250422192819.302784-58-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,65 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do not set CONFIG_SEMIHOSTING in
-configs/targets/xtensa*-linux-user.mak.
-
-Do not raise SIGILL for user-only unconditionally.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/xtensa/translate.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ include/exec/icount.h | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/target/xtensa/translate.c b/target/xtensa/translate.c
-index 4f02cefde3..cb817b3119 100644
---- a/target/xtensa/translate.c
-+++ b/target/xtensa/translate.c
-@@ -35,14 +35,14 @@
- #include "tcg/tcg-op.h"
- #include "qemu/log.h"
- #include "qemu/qemu-print.h"
--#include "semihosting/semihost.h"
- #include "exec/translator.h"
- #include "exec/translation-block.h"
--
- #include "exec/helper-proto.h"
- #include "exec/helper-gen.h"
--
- #include "exec/log.h"
-+#ifndef CONFIG_USER_ONLY
-+#include "semihosting/semihost.h"
-+#endif
+diff --git a/include/exec/icount.h b/include/exec/icount.h
+index 4964987ae4..7a26b40084 100644
+--- a/include/exec/icount.h
++++ b/include/exec/icount.h
+@@ -22,13 +22,21 @@ typedef enum {
+     ICOUNT_ADAPTATIVE,
+ } ICountMode;
  
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
-@@ -2241,17 +2241,15 @@ static uint32_t test_exceptions_simcall(DisasContext *dc,
-                                         const OpcodeArg arg[],
-                                         const uint32_t par[])
- {
--    bool is_semi = semihosting_enabled(dc->cring != 0);
--#ifdef CONFIG_USER_ONLY
--    bool ill = true;
--#else
--    /* Between RE.2 and RE.3 simcall opcode's become nop for the hardware. */
--    bool ill = dc->config->hw_version <= 250002 && !is_semi;
--#endif
--    if (ill || !is_semi) {
--        qemu_log_mask(LOG_GUEST_ERROR, "SIMCALL but semihosting is disabled\n");
-+#ifndef CONFIG_USER_ONLY
-+    if (semihosting_enabled(dc->cring != 0)) {
-+        return 0;
-     }
--    return ill ? XTENSA_OP_ILL : 0;
+-#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
++#ifdef CONFIG_TCG
+ extern ICountMode use_icount;
+ #define icount_enabled() (use_icount)
+ #else
+ #define icount_enabled() ICOUNT_DISABLED
+ #endif
+ 
++/* Protect the CONFIG_USER_ONLY test vs poisoning. */
++#if defined(COMPILING_PER_TARGET) || defined(COMPILING_SYSTEM_VS_USER)
++# ifdef CONFIG_USER_ONLY
++#  undef  icount_enabled
++#  define icount_enabled() ICOUNT_DISABLED
++# endif
 +#endif
-+    qemu_log_mask(LOG_GUEST_ERROR, "SIMCALL but semihosting is disabled\n");
 +
-+    /* Between RE.2 and RE.3 simcall opcode's become nop for the hardware. */
-+    return dc->config->hw_version <= 250002 ? XTENSA_OP_ILL : 0;
- }
- 
- static void translate_simcall(DisasContext *dc, const OpcodeArg arg[],
+ /*
+  * Update the icount with the executed instructions. Called by
+  * cpus-tcg vCPU thread so the main-loop can see time has moved forward.
 -- 
 2.43.0
 
