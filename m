@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E3CC369D7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A069C369D1
 	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 19:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7JRE-0001Yy-Rk; Tue, 22 Apr 2025 15:37:48 -0400
+	id 1u7JR0-000199-Dl; Tue, 22 Apr 2025 15:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JPB-0005iP-FK
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:43 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1u7JP2-0005Fx-W0
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:33 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7JP8-000787-Lh
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:40 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22401f4d35aso62185215ad.2
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:38 -0700 (PDT)
+ id 1u7JOz-00074w-Df
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 15:35:32 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-22c33677183so65835555ad.2
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 12:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745350537; x=1745955337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745350528; x=1745955328; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=msXtfBhGOXcEDb7wOAfBlBKK4V40wttZa0c5PZCnz/Y=;
- b=vpoSbFEPG55rxWwIYe8EdNQgj/nvc8QY+PEJS+4X5HMc6X58+hYAz3/SV96Jf3FcKl
- 56KBoh6PcTJ+fpPf6qKTX47AZXOxPnCKo5rwCTS9zNoUlLzJYk+imxfXtEzMc3HFcJcl
- VKpx3HsIW2PcctS8hXMdcC7/XSEYuImHTKWrs7Yw+yNK8QcUAwztVC3lM7szi10H0pbg
- sQXg2G7nSvKyjo5ZFeKXj9KnMVVa2JhjSQI5Vlr8qavkYlauswKLQei3mQf6nF+duOg/
- AheqJfVygmYM4nq3S/RE/Z0+WsgFl8rN5kfdB6QFw+E6nOVvmRGmEYuqxGVFW0yNog04
- CLPg==
+ bh=8T6SSkzl50WhsbjJZrJG+Tz8POekX/LfDFLVgUTy6m8=;
+ b=AQa3o2ypZhWaGBp/XRYfpQevaO8Ugm6uNExU0K25ZmA03HmvApvPS9EujxV1XkTTyT
+ Uashl2Ntg0J1RGIaVhza9j22cgXCCbLJiEh0PCauKh0NH65CYjcrd8hD2r4IB/odsPZb
+ mKKYuGA6EnOssBWlPDnEOBT6uEoPAAQ0WBJvePuJ+W+zis6U3kPzTHIpUTen/sgSB/iN
+ 8jwuEdHRNlfijF6eDKeCFwqjhg5p4GnoK0gIY5dMzMw1bw6lstVp3vkF9lXIDfcOZWfU
+ Fmxt1dFeRCrOC/OUgt272n71K7mBPocJQYpCXxhhVvURPQ5sT59+gikAfEwBsPjwrkAB
+ oTLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745350537; x=1745955337;
+ d=1e100.net; s=20230601; t=1745350528; x=1745955328;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=msXtfBhGOXcEDb7wOAfBlBKK4V40wttZa0c5PZCnz/Y=;
- b=FJzEetTDGi03n8Q4anEZo9faFr7t7G1gNmp5lh5oEt0XuG4GZnJE3ZiEAfBM5gz+mj
- b0wIHNQ1uNL5DL+V4yaJyiArKJ5JkMU6VJ+MGFXYOq3OoSc3adVmMsxNyW8/YQpks/aa
- 8Rgw39d66oDKcpYJU/cT7kEFlpRzk4TlJFHt5N9L2wO071GUSPQ5eWQaJtljtK1KnUb+
- rRLfxkmFa1Q8C9QHssOXp/HUpWNnVkVbk9L15nsXDb3wS3HyukCcIwGCI4oQjUed4ECa
- 9DmcXHzPBqtPbg+PnlCcl2TA2YJsELavNDdf+8ySPJcx3PGwe+25zBbrNFUeZz5GrGJ9
- FxFg==
-X-Gm-Message-State: AOJu0Yx9GS83Xy0zVJ4vuSm3gz9tFlCI+BgI+K6Ey+e12B3RIrXFX/Ui
- qIcRzruyHhW9Zr8pEnqJnHvUhw6VuCxs7pR0EncuGJC5bp6/qcAAfL+As2TlfzFjeGNxnrWB82R
- j
-X-Gm-Gg: ASbGnctPi7a+p7a3RTSR+NR5zJqpqIm9QRQxPFkWoNlM0t36ruJJ49jgsc1OlqyKPu9
- y0UEYf12ijFmppfrBOH+J+D+a9r07W3zFx9dOLLaE4XNo9jofp3e4a0Z2CRGzhdgUFU2npref9O
- aWuTAjVemApiFimcQ4Z2N+i0ZxDLXEkVPvRtkj31UYCRd+iK/pdJ66226aKX9b5ZHjfmPozpvBt
- Ua4J+LaXgbC/USgiDayTG8LH+gWtUzL5DWMagzY0zCfpf2SNCPiNWMOLjy4k0ro/1hSdme0B/KK
- C87LbEfG0N3pEuJvYFOAhMmzr3VKJuUo1mukWZuZY3pB8TMdBYs1Wt0Elpp9g99sWKZXXFKZ6fN
- zl2o52doW1A==
-X-Google-Smtp-Source: AGHT+IHXE9Pe1KyHz7cYQ/Ez4M/DZxZF4rJkNUgdz2Hv872uK4WTvoI2G9BcwhZnRF70DKP/Q27seQ==
-X-Received: by 2002:a17:902:ecc7:b0:224:1c1:4aba with SMTP id
- d9443c01a7336-22c53620d32mr232597175ad.50.1745350537291; 
- Tue, 22 Apr 2025 12:35:37 -0700 (PDT)
+ bh=8T6SSkzl50WhsbjJZrJG+Tz8POekX/LfDFLVgUTy6m8=;
+ b=d8a6GY9MCDX4zqpueczPiKoE6uMutBLsFaOqt3bSsC7h4Py8IaYpd8dCn6vhOYzzz9
+ W2OJgpv4tHJ6VNZemk/FbOzpW3V4La+liBY1g4GtQ+R/Yzl81aMwdibKrV8Yw2XKeAMX
+ kp0ZbnYYKiYIODfuKnfzZRVDpdLoBPaot7juDa9VZSKoP79qs+0Ppc3pCnfTFTucYNga
+ wFuJx4mP6z/6H4r+YbYYc67TFoU2U4SD0MadPuRP05uQxkPfMjxm4pGI6WGD3ncuyj/P
+ 5aC4favyc+cY7t0BYrf79N4kpJJTnVlGmoQkqoYtFfSpiLeYEraB24ekxCMfd3HlHa8H
+ W5HQ==
+X-Gm-Message-State: AOJu0Yw9EQXCNyLW3JOOZZgBksUkpbflueqNMlZVhjqzj0FdHvle4ftg
+ lMsUQDiLmnifeuC0re+TZFwjR2vabo2Kw+RzTxAEuxVXevvmSnbF2VfvKYbFOymKHP0GUSh++zD
+ w
+X-Gm-Gg: ASbGncviI4WaC4rnkmYs/3KV5whkB1cTb82GI8C7yVq730oP8AN6IG4vBaUUYWk7Klp
+ gXVOq0tM/qG4boFp1vWYhGLkmbJ+JZOMMcg4v9a0Vwud7LYL4+rDzk5B0Z7P7D89YJq6tZmDnec
+ 2kZ697lJKWlfIB6TFJ+MQfoDZTXYOFO71KAK8LnraIhZW8J/wDvIzVyFEQWj2IXPJiG8MtgaIAI
+ 21a8buKoXIdE7iPDpzj8fe4dKNAw40vSigxBKakJeEUV6Od7de181pf3sGVQM0baxq0Gh2mkoek
+ wUGt+St0IdDVh//IpcXGCfn/5RtngJf2Ek2iNsp6QJTmtHQNFdaOV7SV75AeRemi6P3CaHpCjXY
+ =
+X-Google-Smtp-Source: AGHT+IEOvo9HSvY2BBcorJBcoMoB3nxXKtPiu4e5OVp0RDms2NGFVVBJhCwQIqqDYYvvmnjNa8TJGw==
+X-Received: by 2002:a17:902:db03:b0:223:4c09:20b8 with SMTP id
+ d9443c01a7336-22c5360dc1emr211132195ad.37.1745350527925; 
+ Tue, 22 Apr 2025 12:35:27 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.36
+ d9443c01a7336-22c50fdf1f1sm88996795ad.237.2025.04.22.12.35.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 12:35:36 -0700 (PDT)
+ Tue, 22 Apr 2025 12:35:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 117/147] target/arm/cpu: define same set of registers for
- aarch32 and aarch64
-Date: Tue, 22 Apr 2025 12:27:46 -0700
-Message-ID: <20250422192819.302784-118-richard.henderson@linaro.org>
+Subject: [PATCH 103/147] exec/cpu-all: remove system/memory include
+Date: Tue, 22 Apr 2025 12:27:32 -0700
+Message-ID: <20250422192819.302784-104-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250422192819.302784-1-richard.henderson@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,99 +102,321 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-To eliminate TARGET_AARCH64, we need to make various definitions common
-between 32 and 64 bit Arm targets.
-Added registers are used only by aarch64 code, and the only impact is on
-the size of CPUARMState, and added zarray
-(ARMVectorReg zarray[ARM_MAX_VQ * 16]) member (+64KB)
-
-It could be eventually possible to allocate this array only for aarch64
-emulation, but I'm not sure it's worth the hassle to save a few KB per
-vcpu. Running qemu-system takes already several hundreds of MB of
-(resident) memory, and qemu-user takes dozens of MB of (resident) memory
-anyway.
-
-As part of this, we define ARM_MAX_VQ once for aarch32 and aarch64,
-which will affect zregs field for aarch32.
-This field is used for MVE and SVE implementations. MVE implementation
-is clipping index value to 0 or 1 for zregs[*].d[],
-so we should not touch the rest of data in this case anyway.
-
-This change is safe regarding migration, because aarch64 registers still
-have the same size, and for aarch32, only zregs is modified.
-Migration code explicitly specify a size of 2 for env.vfp.zregs[0].d,
-VMSTATE_UINT64_SUB_ARRAY(env.vfp.zregs[0].d, ARMCPU, 0, 2). So extending
-the storage size has no impact.
+We include this header where needed. When includes set already have
+ifdef CONFIG_USER_ONLY, we add it here, else, we don't condition the
+include.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250325045915.994760-22-pierrick.bouvier@linaro.org>
+Message-ID: <20250325045915.994760-5-pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.h | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ hw/s390x/ipl.h                       | 1 +
+ include/exec/cpu-all.h               | 5 -----
+ target/arm/internals.h               | 1 +
+ target/hppa/cpu.h                    | 1 +
+ target/i386/hvf/vmx.h                | 1 +
+ target/ppc/mmu-hash32.h              | 2 ++
+ hw/ppc/spapr_ovec.c                  | 1 +
+ target/alpha/helper.c                | 1 +
+ target/arm/hvf/hvf.c                 | 1 +
+ target/i386/arch_memory_mapping.c    | 1 +
+ target/i386/helper.c                 | 1 +
+ target/i386/tcg/system/misc_helper.c | 1 +
+ target/i386/tcg/system/tcg-cpu.c     | 1 +
+ target/m68k/helper.c                 | 1 +
+ target/ppc/excp_helper.c             | 1 +
+ target/ppc/mmu-book3s-v3.c           | 1 +
+ target/ppc/mmu-hash64.c              | 1 +
+ target/ppc/mmu-radix64.c             | 1 +
+ target/riscv/cpu_helper.c            | 1 +
+ target/sparc/ldst_helper.c           | 1 +
+ target/sparc/mmu_helper.c            | 1 +
+ target/xtensa/mmu_helper.c           | 1 +
+ target/xtensa/op_helper.c            | 1 +
+ 23 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index cc975175c6..b1c3e46326 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -169,17 +169,12 @@ typedef struct ARMGenericTimer {
-  * Align the data for use with TCG host vector operations.
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index c6ecb3433c..6557ac3be5 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -15,6 +15,7 @@
+ 
+ #include "cpu.h"
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ #include "hw/qdev-core.h"
+ #include "hw/s390x/ipl/qipl.h"
+ #include "qom/object.h"
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index be462c4410..399fcbb9d1 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -26,11 +26,6 @@
+ #include "hw/core/cpu.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/target_page.h"
+-#ifndef CONFIG_USER_ONLY
+-#include "system/memory.h"
+-#endif
+-
+-
+ #include "cpu.h"
+ 
+ #endif /* CPU_ALL_H */
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 8756c24c08..01408e40a3 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -28,6 +28,7 @@
+ #include "exec/breakpoint.h"
+ #include "hw/registerfields.h"
+ #include "tcg/tcg-gvec-desc.h"
++#include "system/memory.h"
+ #include "syndrome.h"
+ #include "cpu-features.h"
+ 
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 8b36642b59..f6bf068776 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -22,6 +22,7 @@
+ 
+ #include "cpu-qom.h"
+ #include "exec/cpu-defs.h"
++#include "system/memory.h"
+ #include "qemu/cpu-float.h"
+ #include "qemu/interval-tree.h"
+ #include "hw/registerfields.h"
+diff --git a/target/i386/hvf/vmx.h b/target/i386/hvf/vmx.h
+index 87a478f7fd..3ddf7982ff 100644
+--- a/target/i386/hvf/vmx.h
++++ b/target/i386/hvf/vmx.h
+@@ -34,6 +34,7 @@
+ #include "system/hvf_int.h"
+ 
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ 
+ static inline uint64_t rreg(hv_vcpuid_t vcpu, hv_x86_reg_t reg)
+ {
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index 2838de031c..04c23ea75e 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -3,6 +3,8 @@
+ 
+ #ifndef CONFIG_USER_ONLY
+ 
++#include "system/memory.h"
++
+ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+                       hwaddr *raddrp, int *psizep, int *protp, int mmu_idx,
+                       bool guest_visible);
+diff --git a/hw/ppc/spapr_ovec.c b/hw/ppc/spapr_ovec.c
+index 6d6eaf67cb..75ab4fe262 100644
+--- a/hw/ppc/spapr_ovec.c
++++ b/hw/ppc/spapr_ovec.c
+@@ -16,6 +16,7 @@
+ #include "migration/vmstate.h"
+ #include "qemu/bitmap.h"
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ #include "qemu/error-report.h"
+ #include "trace.h"
+ #include <libfdt.h>
+diff --git a/target/alpha/helper.c b/target/alpha/helper.c
+index 57cefcba14..f6261a3a53 100644
+--- a/target/alpha/helper.c
++++ b/target/alpha/helper.c
+@@ -25,6 +25,7 @@
+ #include "fpu/softfloat-types.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/qemu-print.h"
++#include "system/memory.h"
+ 
+ 
+ #define CONVERT_BIT(X, SRC, DST) \
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 93a3f9b53d..34ca36fab5 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -23,6 +23,7 @@
+ #include <mach/mach_time.h>
+ 
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ #include "hw/boards.h"
+ #include "hw/irq.h"
+ #include "qemu/main-loop.h"
+diff --git a/target/i386/arch_memory_mapping.c b/target/i386/arch_memory_mapping.c
+index ced199862d..a2398c2173 100644
+--- a/target/i386/arch_memory_mapping.c
++++ b/target/i386/arch_memory_mapping.c
+@@ -14,6 +14,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "system/memory_mapping.h"
++#include "system/memory.h"
+ 
+ /* PAE Paging or IA-32e Paging */
+ static void walk_pte(MemoryMappingList *list, AddressSpace *as,
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index c07b1b16ea..64d9e8ab9c 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -25,6 +25,7 @@
+ #include "system/runstate.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "system/hw_accel.h"
++#include "system/memory.h"
+ #include "monitor/monitor.h"
+ #include "kvm/kvm_i386.h"
+ #endif
+diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
+index 0555cf2604..67896c8c87 100644
+--- a/target/i386/tcg/system/misc_helper.c
++++ b/target/i386/tcg/system/misc_helper.c
+@@ -23,6 +23,7 @@
+ #include "exec/helper-proto.h"
+ #include "exec/cpu_ldst.h"
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ #include "exec/cputlb.h"
+ #include "tcg/helper-tcg.h"
+ #include "hw/i386/apic.h"
+diff --git a/target/i386/tcg/system/tcg-cpu.c b/target/i386/tcg/system/tcg-cpu.c
+index ab1f3c7c59..0538a4fd51 100644
+--- a/target/i386/tcg/system/tcg-cpu.c
++++ b/target/i386/tcg/system/tcg-cpu.c
+@@ -24,6 +24,7 @@
+ #include "system/system.h"
+ #include "qemu/units.h"
+ #include "system/address-spaces.h"
++#include "system/memory.h"
+ 
+ #include "tcg/tcg-cpu.h"
+ 
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 0bf574830f..8251272219 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -25,6 +25,7 @@
+ #include "exec/page-protection.h"
+ #include "exec/gdbstub.h"
+ #include "exec/helper-proto.h"
++#include "system/memory.h"
+ #include "gdbstub/helpers.h"
+ #include "fpu/softfloat.h"
+ #include "qemu/qemu-print.h"
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index c941c89806..da8b525a41 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/log.h"
++#include "system/memory.h"
+ #include "system/tcg.h"
+ #include "system/system.h"
+ #include "system/runstate.h"
+diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
+index a812cb5113..3865556310 100644
+--- a/target/ppc/mmu-book3s-v3.c
++++ b/target/ppc/mmu-book3s-v3.c
+@@ -18,6 +18,7 @@
   */
  
--#ifdef TARGET_AARCH64
--# define ARM_MAX_VQ    16
--#else
--# define ARM_MAX_VQ    1
--#endif
-+#define ARM_MAX_VQ    16
+ #include "qemu/osdep.h"
++#include "system/memory.h"
+ #include "cpu.h"
+ #include "mmu-hash64.h"
+ #include "mmu-book3s-v3.h"
+diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+index 5ca4faee2a..3ba4810497 100644
+--- a/target/ppc/mmu-hash64.c
++++ b/target/ppc/mmu-hash64.c
+@@ -25,6 +25,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/qemu-print.h"
+ #include "system/hw_accel.h"
++#include "system/memory.h"
+ #include "kvm_ppc.h"
+ #include "mmu-hash64.h"
+ #include "exec/log.h"
+diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+index 461eda4a3d..4ab5f3bb92 100644
+--- a/target/ppc/mmu-radix64.c
++++ b/target/ppc/mmu-radix64.c
+@@ -23,6 +23,7 @@
+ #include "exec/page-protection.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
++#include "system/memory.h"
+ #include "kvm_ppc.h"
+ #include "exec/log.h"
+ #include "internal.h"
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 0dd8645994..ca58094fb5 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -26,6 +26,7 @@
+ #include "exec/cputlb.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
++#include "system/memory.h"
+ #include "instmap.h"
+ #include "tcg/tcg-op.h"
+ #include "accel/tcg/cpu-ops.h"
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 45882e25db..8890d2b119 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -27,6 +27,7 @@
+ #include "exec/cputlb.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
++#include "system/memory.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "user/page-protection.h"
+ #endif
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 249b1f6c4c..c5d82a0854 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -24,6 +24,7 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "exec/page-protection.h"
+ #include "exec/tlb-flags.h"
++#include "system/memory.h"
+ #include "qemu/qemu-print.h"
+ #include "trace.h"
  
- typedef struct ARMVectorReg {
-     uint64_t d[2 * ARM_MAX_VQ] QEMU_ALIGNED(16);
- } ARMVectorReg;
+diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
+index 40b02f0a2c..1ce125794d 100644
+--- a/target/xtensa/mmu_helper.c
++++ b/target/xtensa/mmu_helper.c
+@@ -36,6 +36,7 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
++#include "system/memory.h"
  
--#ifdef TARGET_AARCH64
- /* In AArch32 mode, predicate registers do not exist at all.  */
- typedef struct ARMPredicateReg {
-     uint64_t p[DIV_ROUND_UP(2 * ARM_MAX_VQ, 8)] QEMU_ALIGNED(16);
-@@ -189,7 +184,6 @@ typedef struct ARMPredicateReg {
- typedef struct ARMPACKey {
-     uint64_t lo, hi;
- } ARMPACKey;
--#endif
+ #define XTENSA_MPU_SEGMENT_MASK 0x0000001f
+ #define XTENSA_MPU_ACC_RIGHTS_MASK 0x00000f00
+diff --git a/target/xtensa/op_helper.c b/target/xtensa/op_helper.c
+index 028d4e0a1c..c125fa4946 100644
+--- a/target/xtensa/op_helper.c
++++ b/target/xtensa/op_helper.c
+@@ -31,6 +31,7 @@
+ #include "exec/page-protection.h"
+ #include "qemu/host-utils.h"
+ #include "exec/exec-all.h"
++#include "system/memory.h"
+ #include "qemu/atomic.h"
+ #include "qemu/timer.h"
  
- /* See the commentary above the TBFLAG field definitions.  */
- typedef struct CPUARMTBFlags {
-@@ -660,13 +654,11 @@ typedef struct CPUArchState {
-     struct {
-         ARMVectorReg zregs[32];
- 
--#ifdef TARGET_AARCH64
-         /* Store FFR as pregs[16] to make it easier to treat as any other.  */
- #define FFR_PRED_NUM 16
-         ARMPredicateReg pregs[17];
-         /* Scratch space for aa64 sve predicate temporary.  */
-         ARMPredicateReg preg_tmp;
--#endif
- 
-         /* We store these fpcsr fields separately for convenience.  */
-         uint32_t qc[4] QEMU_ALIGNED(16);
-@@ -711,7 +703,6 @@ typedef struct CPUArchState {
-         uint32_t cregs[16];
-     } iwmmxt;
- 
--#ifdef TARGET_AARCH64
-     struct {
-         ARMPACKey apia;
-         ARMPACKey apib;
-@@ -743,7 +734,6 @@ typedef struct CPUArchState {
-      * to keep the offsets into the rest of the structure smaller.
-      */
-     ARMVectorReg zarray[ARM_MAX_VQ * 16];
--#endif
- 
-     struct CPUBreakpoint *cpu_breakpoint[16];
-     struct CPUWatchpoint *cpu_watchpoint[16];
 -- 
 2.43.0
 
