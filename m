@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB54CC369D3
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785D1C369D3
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 14:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7F2B-0006sY-Hf; Tue, 22 Apr 2025 10:55:39 -0400
+	id 1u7F2E-0006tF-Ub; Tue, 22 Apr 2025 10:55:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7F29-0006re-K9
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:55:37 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7F2C-0006sp-MU
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:55:40 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7F27-0005By-Pk
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:55:37 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-39c1efc457bso3289522f8f.2
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 07:55:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7F2A-0005CX-Sl
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 10:55:40 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39c1efbefc6so3269314f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 07:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745333727; x=1745938527; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745333737; x=1745938537; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1cjOcSs5mbhxyNi9CGbhSoHxduGzG92ImG84oID1+1U=;
- b=Mp/7mUk/8cT+MM5JtSSIFW1uzEclwkJltvbhWK/Eq0qU5ncjnN/oM+oesAVLMfVVhp
- aVSFLObG9QzdpHPh+PQkcQbaZ/TkNCjZno9+5k8efbN7cPVgr0JtMn/MG4XgDRmNWoJC
- vMQZf/8eG7yc5cSPKlkzkovVfLZrHnNLnLX52ddWVM/4Odk/1DCHnwhqVL93+3eSevKr
- 7ZiTVQ6NntNZgeAPAHTtlYV2fD6O7budtVcMnS6ged/aonvKvXr+a87u+X4rFQC61dzZ
- ++/ZFTJEvuKUrd+ArEWmReoSNKIW+A0vH3c08EN1pic2SsUlUxh3Bq5xKQiRlmA/JiXH
- /zlw==
+ bh=UpcspgIhlgKyCaOz9UHnXAYe0CmwdQHUivc3mJB7oNw=;
+ b=mpWZMLXhX9QnjQKEI8nvB91lOnqmkLmwEmBmAtxoKaBzWC/V9/iE49fEanJBhtl3nc
+ 0wrB7B9tKLWXoy9WoIzX77SIbGjXoBsmWNG4Dq8gJCrsjvEQIPc1rTpa9OL/sCResLQ1
+ X6hdE17ShwswE9jZ/e1GQOfNM4btC2EadxUS6zBU7Vwap3zVi7pXguNm8wnhtuuEntfC
+ I69G15yW5fuPmr5Ef+2P/cTjttBzOhJIAugpV5/Vo+mDfN6K6++pCOV7KOYoEc2dWxzN
+ gIm7lBviFf+HDcoSv+3aydMu9HLIAONQziGq87F48GyGFppnBVnUsa1d7PXQYXhUiT6k
+ nABg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745333727; x=1745938527;
+ d=1e100.net; s=20230601; t=1745333737; x=1745938537;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1cjOcSs5mbhxyNi9CGbhSoHxduGzG92ImG84oID1+1U=;
- b=KsdiUgsQXLyBgQB+GgoAOCQW/IKcfbwOGFeKuFP2nADE818MrHFK1lW6LW1o6HT+kr
- aX1A48nYMJq3zskLjumq4YlTk11MwooodhfMTRkNyLWh7swqt1755u9PWmcEwwb7hVkl
- 24NNmCXspz8/28di2qG6qyH2HWNU0QINxvDpCWwWwwgrtA56lIU6oc64Kcvx1cTyQf/C
- BQwnEv068TJK8fL9WEQ+pZf8Er8HIEZvC9V6jkPNBJDnYNX/TW6urVt3jPAz+SbFpsNC
- lCFfpbj01+pem2of+9xZFYYcGp2vGdt5QXMO0CulVgm+7rYbPnjuK3zoUikc5tzZURQe
- Xbwg==
-X-Gm-Message-State: AOJu0YzS5mYZiRD6/CJwTfv7NHMqFpCNFypQREX/bl6PQv6INl31+Hv6
- IdpE0eYb9+x1wDxryzQLnBa4m1Bm5MLvnwiif337+qAglRsfecdLiJqM3kXi+etcKJNxW9ZPoXj
- H
-X-Gm-Gg: ASbGncsvbH4/bEi8zBE5S7KaiKIOTME+eeYbngNqfysiq6RECiaBdlboZqvAyVzcqwF
- oxyVOQmee67nzr4f54m8F9E4DxQtuMSrEKgBKtHbq2mIF9VRwdEIF8cnqJMbpedbypiCapRBYd9
- DAbDx8NNgMYq4hNAX9vwHcSY8PPnljYezOewnFY3laFWr1wPuUzeAucakwn+jC07PMJR2vZYl1W
- tC5JysNqqyT+72T2TtrybwJevua/PuDoHleko4WxfQ4b+MxsXyfbIEcudPraG264viV44jNhdVW
- wkkb3qrKANiwnSo8b2ln+cmiAKmrxWQZEupROUIKoM5CsGdX3iu1yYO784YHv+PBQ/gCfzceMyG
- rnScpoCrNYIqnClc=
-X-Google-Smtp-Source: AGHT+IGqJNMJjehh3t4bgxyUR8vVPk/s4wkcezgNfgXbkKdt+uoKgxy4tcS3z8+UpUpX96Yho3iAeA==
-X-Received: by 2002:a05:6000:381:b0:391:4ca:490 with SMTP id
- ffacd0b85a97d-39efba5f84cmr13052423f8f.29.1745333727621; 
- Tue, 22 Apr 2025 07:55:27 -0700 (PDT)
+ bh=UpcspgIhlgKyCaOz9UHnXAYe0CmwdQHUivc3mJB7oNw=;
+ b=LtQMjoC9MWT2BK1S2C2kmkb1vkbNIXZF4+ImW0MGpk6J7CvWRXjoloIKr0CkkBuL6r
+ /84ypDZr5ZALmiX53Vk+02NcsisZqea/sVs0b3I6JQkoXCDM1a+R/yB3BWmy7j9tBkKp
+ zn0FQzCkjADo1rQ7ahBdVpsKkKcSijJhUnjnnYfmIRWrDVPozfeJhJ17GR9EjITbeV3O
+ EozJS+qNEpFp/hG9x/DCviLyrfQRJVOXi4FDLJ2GpArWojh22oPlZkofl0aatoNd2qwh
+ ZV2ir0dRJ3imwW3c4HlfEJLEx1yAJPHcTDZ9qxsoM7p9kwaHDBXqxTPHJtsQ1GF42RVr
+ XYzA==
+X-Gm-Message-State: AOJu0YwrMmWKkfkuoC6rEAWF47aRf0xivyfXFck2O9jVS+enw5sngU9s
+ DUNXnR8MwwxpjTSQ9NZUdjqgsjoSeT5u3rsUImKixBPaiv0nbxOkQy0BEtAz740HOD98K2+vHpv
+ 5
+X-Gm-Gg: ASbGnctN8JMl937Jz0PbPKQzJsRllinA3W8UR8rl3r8h0kCB6B23BdJgDHpmoDSBWuk
+ 4dsx+Mbu9EavaR40R6vNb4FS2+6wC5GvqqOFDaePiJji1ZSiqyNkvPwONodup9jUwbuAkbfY1Nz
+ B1nm+Rv9WPgTJbrTzG/5jqnkaWIjvaU8AiLKwzTeLRAYhtTQW/x6ZU/ux5C/pH6H8GTBoPunw8w
+ tAmgv6L3NQERZhV8vl+XY705ZhJR9rq04SyOEDbApYZXRHSgiAFzcvxrllbZVXkH4Dt5rdp/GNz
+ sxxHOIZdw9QJ32TKVa/usSPTdSmWHORxKAZGzRNtsCDrdpfIXA4RhSUQFQQeZR9+Ls6C0nM6jHS
+ j6KsKs9T//tEN2HVP1TWVh7nn2A==
+X-Google-Smtp-Source: AGHT+IG3BCL0gA5UfElBNf9nAlZcZKz7l1TI2iX1KmWz58tJNKAMU8k7ZaVgTdeeuN4BYKgmxNBDQg==
+X-Received: by 2002:a05:6000:40cd:b0:39a:d32c:fb5e with SMTP id
+ ffacd0b85a97d-39efba3cbe4mr12789933f8f.21.1745333737063; 
+ Tue, 22 Apr 2025 07:55:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4a49b5sm15482164f8f.86.2025.04.22.07.55.26
+ ffacd0b85a97d-39efa5a2300sm15291826f8f.101.2025.04.22.07.55.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 22 Apr 2025 07:55:27 -0700 (PDT)
+ Tue, 22 Apr 2025 07:55:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [RFC PATCH v4 05/19] hw/core: Allow ARM/Aarch64 binaries to use the
- 'none' machine
-Date: Tue, 22 Apr 2025 16:54:47 +0200
-Message-ID: <20250422145502.70770-6-philmd@linaro.org>
+Subject: [RFC PATCH v4 07/19] meson: Prepare to accept per-binary TargetInfo
+ structure implementation
+Date: Tue, 22 Apr 2025 16:54:49 +0200
+Message-ID: <20250422145502.70770-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250422145502.70770-1-philmd@linaro.org>
 References: <20250422145502.70770-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,41 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we'll start to use target_machine_typename() to filter
-machines for the ARM/Aarch64 binaries, the 'none' machine
-will be filtered out. Register the proper interfaces to keep
-it available.
+If a file defining the binary TargetInfo structure is available,
+link with it. Otherwise keep using the stub.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/core/null-machine.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ meson.build                 | 9 ++++++++-
+ configs/targets/meson.build | 3 +++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+ create mode 100644 configs/targets/meson.build
 
-diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
-index 1ccaf652eb4..dd56d7cb7e5 100644
---- a/hw/core/null-machine.c
-+++ b/hw/core/null-machine.c
-@@ -16,6 +16,7 @@
- #include "hw/boards.h"
- #include "system/address-spaces.h"
- #include "hw/core/cpu.h"
-+#include "hw/arm/machines-qom.h"
+diff --git a/meson.build b/meson.build
+index a1109b6db3f..69f60755377 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3216,6 +3216,7 @@ config_devices_mak_list = []
+ config_devices_h = {}
+ config_target_h = {}
+ config_target_mak = {}
++config_target_info = {}
  
- static void machine_none_init(MachineState *mch)
- {
-@@ -62,6 +63,11 @@ static const TypeInfo null_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("none"),
-         .parent         = TYPE_MACHINE,
-         .class_init     = null_machine_class_init,
-+        .interfaces     = (InterfaceInfo[]) {
-+            { TYPE_TARGET_ARM_MACHINE },
-+            { TYPE_TARGET_AARCH64_MACHINE },
-+            { },
-+        },
-     },
- };
+ disassemblers = {
+   'alpha' : ['CONFIG_ALPHA_DIS'],
+@@ -3809,9 +3810,9 @@ specific_ss.add(files('page-target.c', 'page-vary-target.c'))
  
+ common_ss.add(files('target-info.c'))
+ system_ss.add(files('target-info-qom.c'))
+-specific_ss.add(files('target-info-stub.c'))
+ 
+ subdir('backends')
++subdir('configs/targets')
+ subdir('disas')
+ subdir('migration')
+ subdir('monitor')
+@@ -4272,6 +4273,12 @@ foreach target : target_dirs
+     arch_srcs += gdbstub_xml
+   endif
+ 
++  if target in config_target_info
++    arch_srcs += config_target_info[target]
++  else
++    arch_srcs += files('target-info-stub.c')
++  endif
++
+   t = target_arch[target_base_arch].apply(config_target, strict: false)
+   arch_srcs += t.sources()
+   arch_deps += t.dependencies()
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+new file mode 100644
+index 00000000000..e9a5f7b078e
+--- /dev/null
++++ b/configs/targets/meson.build
+@@ -0,0 +1,3 @@
++foreach target : ['arm-softmmu', 'aarch64-softmmu']
++  config_target_info += {target : files(target + '.c')}
++endforeach
 -- 
 2.47.1
 
