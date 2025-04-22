@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE864C369C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2762BC369C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Apr 2025 07:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u77qN-0004N7-G5; Tue, 22 Apr 2025 03:14:59 -0400
+	id 1u77rx-0005so-UP; Tue, 22 Apr 2025 03:16:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77qK-0004Jx-DN
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:14:56 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77rt-0005q8-LM
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:16:33 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77qH-0002mV-4w
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:14:55 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3914bc3e01aso2878917f8f.2
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:14:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u77rr-00037d-LR
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 03:16:33 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb46so35449265e9.0
+ for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 00:16:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745306091; x=1745910891; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745306189; x=1745910989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oTlziAf8UWda67nFyaJv/S82eWUs5po12clwDYv7Qss=;
- b=MhLPBG8HvIYPERzZhYddlRVRS7LmHGdGiTc4eQPv7RpDH7HkhX/DylvUDdIViB01md
- UQVkaQ0nqkPQHIgTmklmjbfvM90BUJcS9xo/b78MDqwzZ4WnGb+D8BJIy1yxIb7cqQLl
- fvjaFz8WntdvDJpE5GtDmNMCigSaeP+JzQ5D9EP+jjr44V7aE1kVR+EhOhCtynGTcQBE
- fk3jSjGEHj2ed0YgimKcmZ0/TGZFI9cuSLOwg/o1Ub5R0Z0sdS9dnH0sI0JGti2b9+pm
- WA3zTJvmRLDK05OJ2pkLf5PPm22kdVggHu0XrvdkJZ3b9W8zdR1+0lGC3HfVboGdL5YE
- MnRA==
+ bh=f7fJE9WXdoE++wCNoz+1UHA/jxXA+ZBx0oz2MHOXCxk=;
+ b=vbIcik8HUDB9evs3WAG4zaWK4oElX/CHVVRI/xPYQseo5Z36Gs8yegNmJ/IqVnXDka
+ KyzhC6yiDRHIy6yolCzJWrUNmbFd9YTgWVNm+EAHf6ebXRKbu7uWeAlYPIhyyZrm/Flt
+ Oz9YtSk5/ieLpbuRYwRT52kRXeojl/D2YW8I6XtXVdeVOMLiWypB78kEfrr8Qdsh9/Q7
+ mAPKcbQuJlLqZiOGJ8eBkrSOlFl8JHo81HcmSahOYdctNnrrzVrhwOlGz255nJfBgXSV
+ 8mZz5cceI5/xph6Mnm3gly0YST7mq7abl31JeUv2TEcKAVmns8gC8wVyqoUuGiumat65
+ wOMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745306091; x=1745910891;
+ d=1e100.net; s=20230601; t=1745306189; x=1745910989;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oTlziAf8UWda67nFyaJv/S82eWUs5po12clwDYv7Qss=;
- b=p1Tp6DBgkme4wmjCjF8nqrxU04VyuYJsQfvehKkJHSSG722j7KqHTik8JtPgcfmPSO
- TSOQ5d0jR9lyygDAer3sVUOhpnjthjizfijDhUDbEpCdmpRFzgxadjFK0baYQNamQZB+
- l/+hXXkfPxFOOILOwXgdki8/2vDLAVxe1n0UVp7bdna07Qr5LaZej03bq55NdLSWgGSp
- la41l8bunFUh+ovrtch6RMXukGsCgRxQGWd5Vq1RKxQgM4MZq1TJrCqyPuo4hIw5EsAa
- pgxUl6DgTYCvbBkWAeaI6cwKx60Gir5dPB2PTA2FFiXRKuHkPhmGyvzghUHztk881Wb6
- r+uw==
-X-Gm-Message-State: AOJu0YxKSa7tHZK6hQH15++XdWO6cN1QOkEPfiCeaeL8z2oFRLsvTFKa
- QTiQV2BXIiSSeT4FU05tvo/DO7PUYevoZfu2nyWMKhuzebqf0GaGjh1JVQN2Wjo=
-X-Gm-Gg: ASbGncuMYkkRlp7LmpWRAjDfzbOYLikfOZnAr6yl8VkT2IwVwIjyjphvvWcJZ0HA76Q
- LvHhUtU9Lhtg0Gag2XnaTzhEnaiPt6RWrp73cpVI1eAp3knplOBd2wLkRM1W0HFbtasw3fdYPyc
- ZCJh5rwboh8iYpmoAQaSt5lCJjxL2euIDMVlJxZWjeu0xETMEVoBI67s+6H1sI0/hqmtA2/Id6i
- mhd1A573wiT6gTR4fJYQ0QjDtp1TFkM3yPIisSIb3+PZA3tNZqBWsMBfX7tADLbfjpJhiZ+FixZ
- QKPzl8xyxCS+5nxkDsF8jTL+P1pc/aTMONzK4q1UAw5pj01nKrw4tKFVCQP0V0ErI7tEFsksbYc
- HkQ6sdWO3
-X-Google-Smtp-Source: AGHT+IHY7dOoyY0QArJKyoUQWTJxESnXHXaHeRHfN9quwRUA3nq9hTECOuNYy7KmKH2nJWonUdkC5Q==
-X-Received: by 2002:a5d:59ab:0:b0:391:2ab1:d4c2 with SMTP id
- ffacd0b85a97d-39efbacdb68mr10057395f8f.37.1745306090963; 
- Tue, 22 Apr 2025 00:14:50 -0700 (PDT)
+ bh=f7fJE9WXdoE++wCNoz+1UHA/jxXA+ZBx0oz2MHOXCxk=;
+ b=F880iKSPL2Twte0roIVyzgoUqc1palHlqO3e8TQnYWppVrZ2aNmTgd7UmWAgRlc1Be
+ L8jbLUUOcdRmC/hs9ZJpxh07LPOu/962nZpK7UDtVhSGCqAPok9F7Z6yGBKfmyGCoth9
+ UNV9OdF+7ZGmyFPmTcY2kmgheMbeUKLIESfcK97O2S6KG3C8hqSF32EQzIqRSszbkp4A
+ LNWrzaOlzPnyJR3DPMtd//1oXzyhLqCYkCNWzGwdJCCiqyr2DNGWZ17WaVnoPCOUw7en
+ u/aqhq1KEim4oPZInJ1xnToZPowmj47AwqhhbcwWKKJwLB6z3NQH7OixbFxmys0O2j2T
+ pbDg==
+X-Gm-Message-State: AOJu0YyFk30z6WmXZFb7YvMXPR3nf7OfGeM+sMyXUKrcEOYcBitW2aML
+ tyhpAqFuKyMFIhcoyCno/Lp6A+5aCYDGL6QK4kW4NcKYUQlJCSkX9pcfvMsC93pj70KVzXJgI7a
+ Z
+X-Gm-Gg: ASbGncvTe20FiGb+1eaNYnadPfSLz5vAg5dDD13aYTo4mRmQkkyfa8FAgLfFd8ffFLT
+ r4KY88OTOQNpP0Lum/aTokka0TUEkFmFQbg/M1NAtE0s7O6ZWj9avb3hjUWDDGSMgvSnZmU4z5E
+ 2Io03Vz2W0rvkzu/wEj3JNHF3euBQY5wE0rHtS6XFQdQGP+9uK9zR7cBQOZio/16uyadTHW3m/j
+ d77ZfjCXwVCu1Q8brOTO/MZORNuYwW8/ysYVuIeqw8FfOlECwSsPY4ZWfqY0cNmQwdXRqvEzg2F
+ 9dKqf1EX173lwdQkSkiwoz6L0TWN+jM+Pa9r6/eNkRiiolSS1jKFth2f0zPwnK7+mwfQPUpB5J1
+ BQypp0yPkWO2aQ+luLoE=
+X-Google-Smtp-Source: AGHT+IFTi0scrU4ITPehuDI8mnt7ID+O1122tS1ICoJfslOYqglbK5V90QZKi7e1r/7mie88mcD8ag==
+X-Received: by 2002:a05:600c:46c6:b0:43d:b3:f95 with SMTP id
+ 5b1f17b1804b1-4406ac0fb4amr78652425e9.28.1745306189501; 
+ Tue, 22 Apr 2025 00:16:29 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4a4f2dsm14319951f8f.95.2025.04.22.00.14.50
+ 5b1f17b1804b1-4406d5cf2dfsm164623785e9.29.2025.04.22.00.16.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 00:14:50 -0700 (PDT)
-Message-ID: <0deebb7e-6962-4d94-b095-53a00c9398e9@linaro.org>
-Date: Tue, 22 Apr 2025 09:14:49 +0200
+ Tue, 22 Apr 2025 00:16:28 -0700 (PDT)
+Message-ID: <2e774ee1-552e-41d8-abb2-bb8ae3552798@linaro.org>
+Date: Tue, 22 Apr 2025 09:16:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/9] target/loongarch: Add static definition with
- function loongarch_tlb_search()
+Subject: Re: [PATCH v3 9/9] target/loongarch: Move definition of TCG specified
+ function to tcg directory
 To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20250422025742.2693096-1-maobibo@loongson.cn>
- <20250422025742.2693096-9-maobibo@loongson.cn>
+ <20250422025742.2693096-10-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422025742.2693096-9-maobibo@loongson.cn>
+In-Reply-To: <20250422025742.2693096-10-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +104,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/4/25 04:57, Bibo Mao wrote:
-> Function loongarch_tlb_search() is only referenced in file tcg/tlb_helper.c,
-> define this function with static attribution.
+> Function loongarch_cpu_tlb_fill() only works in TCG mode, move its
+> definition from header file internals.h to file tcg/tcg_loongarch.h
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   target/loongarch/internals.h      | 2 --
->   target/loongarch/tcg/tlb_helper.c | 4 ++--
->   2 files changed, 2 insertions(+), 4 deletions(-)
+>   target/loongarch/cpu.c               | 1 +
+>   target/loongarch/internals.h         | 5 -----
+>   target/loongarch/tcg/tcg_loongarch.h | 4 ++++
+>   3 files changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index ea1665e270..f9e35f2693 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -31,6 +31,7 @@
+>   #ifdef CONFIG_TCG
+>   #include "exec/cpu_ldst.h"
+>   #include "tcg/tcg.h"
+> +#include "tcg/tcg_loongarch.h"
+>   #endif
+>   
+>   const char * const regnames[32] = {
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index 3a079feb1d..a7384b0d31 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -61,11 +61,6 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+>                                  uint64_t *dir_width, target_ulong level);
+>   hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+>   
+> -#ifdef CONFIG_TCG
+> -bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> -                            MMUAccessType access_type, int mmu_idx,
+> -                            bool probe, uintptr_t retaddr);
+> -#endif
+>   #endif /* !CONFIG_USER_ONLY */
+>   
+>   uint64_t read_fcc(CPULoongArchState *env);
+> diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+> index 69a93bfc3e..3796c85f6e 100644
+> --- a/target/loongarch/tcg/tcg_loongarch.h
+> +++ b/target/loongarch/tcg/tcg_loongarch.h
+> @@ -11,6 +11,10 @@
+>   void loongarch_csr_translate_init(void);
+>   
+>   #ifdef CONFIG_TCG
+> +bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> +                            MMUAccessType access_type, int mmu_idx,
+> +                            bool probe, uintptr_t retaddr);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Out of the #ifdef.
+
+>   int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
+>                                   int *prot, target_ulong address,
+>                                   MMUAccessType access_type, int mmu_idx);
 
 
