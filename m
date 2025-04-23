@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E69CC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C151C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:33:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WTd-0004X3-5I; Wed, 23 Apr 2025 05:33:09 -0400
+	id 1u7WUF-0005la-F9; Wed, 23 Apr 2025 05:33:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WTb-0004S9-Ir
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:33:07 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WUA-0005im-Ej
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:33:42 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WTZ-0007RP-HR
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:33:07 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-39141ffa9fcso3605028f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:33:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WU4-0007TP-7J
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:33:41 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43edb40f357so45713325e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745400783; x=1746005583; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745400814; x=1746005614; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VQ/1W89ukXJD3s+bae/D4pE58Zk4HqS/ETHOTRBiYpI=;
- b=BXg9GcNjd4fIYRRls/3QJ6ZhnVXQgCoUzodW0qKiG1WmmqVQ8H9Zb1YzR3w+slUAqX
- Kp9zJjpV3p2Vvu+8d6KNe9tMLt7w/WMEQoky5xPJKORCuZO7BMdjrq7yFR8Db7G6uvLi
- ndevrbBmp4wNvFnaFxDjJFIdwEjhMmXzoPxnZoD/Ef7WIPGVrTSGwWiF5jlTvjszpVof
- 9cf1rHaorbmd5XpQ9K5zipSDL/kXU9/u8t0tqwcW9YgHntF3iQsF5PwHgoJ7EWA3sjWa
- pikL3ih0nS4jZy5kS35c17oY5lbLiafYjYGUONoIHKga2FeZV/dKqqdMwgvwA181Rh0F
- FdzA==
+ bh=DZZs0y1TaJQNYxvZjM/6Yfy4bnaLAls0Q3Ge8QySUkk=;
+ b=VTWcQcMrBQBbwicA85yYi8eRwpGo8W8NjrkDHM3ou8cfEDnzGhC7NJ0ykVGIXr5Qgc
+ Id3ZiKi4zfdr024XdqZiea7/oKHNrdiqCQwbYc2NpRL6Aj8ZW41k4lQ+uWDsbQwjz3t+
+ +19cg6cRJ960WCvbB8GixOs6nLusFBUIeDsf6+VdO0oa8i7CqF72xLwTG+O/kHXsGrPL
+ Od90B3K5Z1HjZ5Hjj7DAuBcLPYNqnOGBKkfqSGLb1nsEgniRsdr5Ndb/6rwuynN2XDt/
+ krbYjCy4e/0PhkKeJpj2eqOXUnUFgJhBKcrX7Sx845C7v77yO8ozhB22bdcqk2s9VCD+
+ SKlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745400783; x=1746005583;
+ d=1e100.net; s=20230601; t=1745400814; x=1746005614;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VQ/1W89ukXJD3s+bae/D4pE58Zk4HqS/ETHOTRBiYpI=;
- b=VjO6kEQcKtuCh5ccVlCcN92KPvzSIEXc2AMQwzRmLkcblIaNpFHFoxVFnWK7n8gweL
- n6DFhrC4EZxZzV52kpHDjkrroNpDhgZ87a0v5Vsv0pJJ77P1doTy0T52WLPim522SRFf
- 4XNki/wfTLJqR1DW1MRHVuBMd+1iONbKB716d+6LCfXiA9ZAjW3sm5Jfnh/K6eeEXNve
- HayYlxcQd3unV4G0N/QamGs+VcnGdKh7WPhh++5PdDzwQiUQK5KA2gsPuiwr643AH2AN
- 0w8uH8esp02aMff8O3ZyldAIU4KltbxXu8m3T3QD27/0BWPNMctddzLvEd9to+wa90UD
- VUBg==
+ bh=DZZs0y1TaJQNYxvZjM/6Yfy4bnaLAls0Q3Ge8QySUkk=;
+ b=iTUElXjyhR15Kk+kOmWz6fpJBLXpM82j9sN6R4nvl4rypILI6ul5VvBI/teyXLOyqA
+ miOa3v8X7l52qE+x+8bXAAb3g0as7fWZNQE+D5DuVStJFL0bQjG1UNM7VIxp5dh1qrfH
+ fFKUpXcwncuaAznlzN4GsFf2YyK8YopAUqOATZ1mOdLvhanCj8li7RyW423JnCUE1Qvp
+ jwd4XfD9dWZXz/gUbjXtDZSX9DukFBIHLbXyWo63i+7rJ5paU73D4Nr2rDiPuOsFt6c/
+ wUcNJvsjiiRX0cbOJNm0F1coEOn6KWBv78a1z65q84fKa8inKcMT68mCN+VcX+9izl2N
+ Pj6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdeji7g7Z4OFiTYGTfGW+/pbDerJ6ndgWYsFlGJi37WrPWqiHWTz6kxWf6sd6F/5Jcf12kr80Jbw9g@nongnu.org
-X-Gm-Message-State: AOJu0Ywpt5XlF0jcAPTYfwz+SKtpGyo7DcW2ocZn7Upjk86eAjpsmCRN
- kNwCudtMRlGTSm1QBr6T0SqiFRfRms1q0XA1JZAd0X9f+C5rsBmeRjfmVDweMzZ+FBSE+V9gRaH
- j
-X-Gm-Gg: ASbGncuCHLSrWdLYPU/+IBCDq2VPah578MLqoVmdZToQP/Hes2vk+HO1uILXoi+gHsO
- dPa9UPxQhy0Yg4ahfdtbe0TmLgdtzrVEFwbdb+lwae+HTXdq0DOD0oxJEny9qqvckf/89bqwZ/E
- +Kg4C47yfd6Aj+VVFb+ce7hP8Lr5uAXRvpHMyssJPpqk6jtn8EKi69XROQ/CBYx67Y1O7nwbV+l
- GSrbEjuI1rlBw77TQsFd0vVeJgqg4pl2Q4YRFVgL7iYy4Zm1oIAIYxaPZ6PjAwZ5eBCCs2isrru
- /wJPb0rIQEwts3K+NH79eCPQuTNe3Nx7ihQJJyU8w8G/pvWJEos4eV2/sHuZTtjc8FnkHpSGLR6
- ExxX3RHBh
-X-Google-Smtp-Source: AGHT+IEWmwu78Yjz2+NnG6Un5QfG3mZaFGxgf0N5Z9OI5+y7YiZtVMLGEGzmewlt1w33S5vsEK7ytA==
-X-Received: by 2002:a05:6000:2209:b0:39c:2c38:4599 with SMTP id
- ffacd0b85a97d-39efbaee552mr14464134f8f.48.1745400783279; 
- Wed, 23 Apr 2025 02:33:03 -0700 (PDT)
+ AJvYcCWe9DaGDoj17K14+ivS2chS4zag3oLRDguw1N35+UWZAHjjN5IPeM1q38/KrNnjbwr3ycKAi5sVzdsy@nongnu.org
+X-Gm-Message-State: AOJu0YyRL6P5bqDRVYPhg6LeZz97lDMwpWxN+boLkBqNfr/CX8iyhFkz
+ kwkv5oK3v7UW+m3eYX+bxdW11pP8pIUHmcMt8eVkdlhQxoVFuru14qItUb62gjU=
+X-Gm-Gg: ASbGncszgsiXWCU1CK7OIJxC3pKgr41D2WfhWpU7Mt4UEvJej/tFH0ZpdWhYzMP9lCI
+ KFGZ5CdXjcUtMHVdr9je8GmStgNnNU0fYYDOkwhr6TFwQmmg+k9JV561L2E7e4bWsggpO6sI+Cm
+ ZMaut1aUh5LfD979l0jnDeNZTU7Uab68FwahkaNNDyAAk9xgvcehyj6ddsUNYKr8eV3ZFMVk2i3
+ WhJYKmw65IF48hemq/7ofSzfNDPfswUxworeAR8Yc+lxwp4iPYcdl7XDar9wxJuP2lj5ZIirKyA
+ 1l9kwNHj3vtBF3GFB9nRZgAPBNVjK1+YoGB98jMLCCgv4ylfVmJ2zO9Y34IuIGUGfkNb46deb3L
+ 4vy1YP7kk
+X-Google-Smtp-Source: AGHT+IGETeHRFR3lHySaPxq4y7ZZUbF4QcsrfS+S9oIp9EPCWQgG7YKguwyPzOAf/wWRkGLbIlxRkA==
+X-Received: by 2002:a05:6000:184c:b0:39e:cbd2:986e with SMTP id
+ ffacd0b85a97d-39efba26215mr18485141f8f.5.1745400813748; 
+ Wed, 23 Apr 2025 02:33:33 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa43d07csm18462886f8f.58.2025.04.23.02.33.02
+ 5b1f17b1804b1-44092d2f2e1sm19096445e9.22.2025.04.23.02.33.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 02:33:02 -0700 (PDT)
-Message-ID: <6e534445-521c-4807-b591-928375d343e4@linaro.org>
-Date: Wed, 23 Apr 2025 11:33:02 +0200
+ Wed, 23 Apr 2025 02:33:32 -0700 (PDT)
+Message-ID: <ae3db814-271d-424e-b9d6-869d7e05989a@linaro.org>
+Date: Wed, 23 Apr 2025 11:33:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 037/147] include/system: Move exec/ram_addr.h to
- system/ram_addr.h
+Subject: Re: [PATCH 038/147] include/system: Move exec/ramblock.h to
+ system/ramblock.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-38-richard.henderson@linaro.org>
+ <20250422192819.302784-39-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-38-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-39-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,43 +109,26 @@ On 22/4/25 21:26, Richard Henderson wrote:
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/{exec => system}/ram_addr.h | 7 +++----
->   accel/kvm/kvm-all.c                 | 2 +-
->   accel/tcg/cputlb.c                  | 2 +-
->   accel/tcg/translate-all.c           | 2 +-
->   hw/ppc/spapr.c                      | 2 +-
->   hw/ppc/spapr_caps.c                 | 2 +-
->   hw/ppc/spapr_pci.c                  | 2 +-
->   hw/remote/memory.c                  | 2 +-
->   hw/remote/proxy-memory-listener.c   | 2 +-
->   hw/s390x/s390-stattrib-kvm.c        | 2 +-
->   hw/s390x/s390-stattrib.c            | 2 +-
->   hw/s390x/s390-virtio-ccw.c          | 2 +-
->   hw/vfio/common.c                    | 3 +--
->   hw/vfio/container.c                 | 2 +-
->   hw/vfio/spapr.c                     | 2 +-
->   hw/virtio/virtio-mem.c              | 2 +-
->   migration/ram.c                     | 2 +-
->   system/memory.c                     | 2 +-
->   system/physmem.c                    | 2 +-
->   target/arm/tcg/mte_helper.c         | 2 +-
->   target/ppc/kvm.c                    | 2 +-
->   target/s390x/kvm/kvm.c              | 2 +-
+>   include/system/ram_addr.h           | 2 +-
+>   include/{exec => system}/ramblock.h | 9 ++++-----
+>   hw/display/virtio-gpu-udmabuf.c     | 2 +-
+>   hw/hyperv/hv-balloon.c              | 2 +-
+>   hw/virtio/vhost-user.c              | 2 +-
+>   migration/dirtyrate.c               | 2 +-
+>   migration/file.c                    | 2 +-
+>   migration/multifd-nocomp.c          | 2 +-
+>   migration/multifd-qatzip.c          | 2 +-
+>   migration/multifd-qpl.c             | 2 +-
+>   migration/multifd-uadk.c            | 2 +-
+>   migration/multifd-zero-page.c       | 2 +-
+>   migration/multifd-zlib.c            | 2 +-
+>   migration/multifd-zstd.c            | 2 +-
+>   migration/multifd.c                 | 2 +-
+>   migration/postcopy-ram.c            | 2 +-
+>   tests/qtest/fuzz/generic_fuzz.c     | 2 +-
 >   MAINTAINERS                         | 2 +-
->   23 files changed, 25 insertions(+), 27 deletions(-)
->   rename include/{exec => system}/ram_addr.h (99%)
-> 
-> diff --git a/include/exec/ram_addr.h b/include/system/ram_addr.h
-> similarity index 99%
-> rename from include/exec/ram_addr.h
-> rename to include/system/ram_addr.h
-> index 8677761af5..3b81c3091f 100644
-> --- a/include/exec/ram_addr.h
-> +++ b/include/system/ram_addr.h
-> @@ -16,10 +16,9 @@
->    * The functions declared here will be removed soon.
-
-=)
+>   18 files changed, 21 insertions(+), 22 deletions(-)
+>   rename include/{exec => system}/ramblock.h (96%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
