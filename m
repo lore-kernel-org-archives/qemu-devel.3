@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E3AC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F13C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Xdd-0002Qp-9J; Wed, 23 Apr 2025 06:47:33 -0400
+	id 1u7XeJ-0003h2-PX; Wed, 23 Apr 2025 06:48:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Xdb-0002PF-W0
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:47:32 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XeH-0003fx-9w
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:48:13 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Xda-00073D-5j
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:47:31 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3913d129c1aso605029f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:47:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XeE-00075A-OB
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:48:13 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb94so64433885e9.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745405248; x=1746010048; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745405289; x=1746010089; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=d35VazuwwTo6rIIsoHBG8IeRdQGisd6oQW+QHgCIWgg=;
- b=Imzem50wduKFpioTven/l3vVFbQj0veqcsh54yMvsS5fz3LgtxLm4mbbAZzOu0gvjg
- HTd07KmIs2hF9a5RFW5C846bKEGUqh+l4+ciN3ZFtBG7HmfUI5vCElp9DPsTuf3HyfGG
- I/Sn/vHKgRr6iNpPs541qCmeuLHEZodJMl1wQaxzEAhOZBaAl6ccDfnyLgy5yWEh7Fvg
- 4VCN3FW7P5IfIhhzodmTeq9Ms5Q+jnbP2vqJKryWiAZGtUyvZS8bMaxacsx7c+adNbS5
- U/MN2pbWaGnfEQkz3X4YLlihg87LtGd0MdxLyGWqgljvtaMgpNbrQ9MjpJ3341lhNl4R
- uFyg==
+ bh=G0BzvGT4zSMk1PWLJfL1TIGAbt/PN57ZB8d6UY8VRWo=;
+ b=W71/rgLk0dFqMb3xYq/S3WwqyoI58cP++SLgoOqBlkm82wKUXFQTit1bQ2ADHzI8dN
+ 0X8ZdgK6slVqyspr5C3g0Msm3pnbbF+GmBlVxWhEIXVUlx358KRTK5uU5xLKYhxAU8ql
+ CnY0+sfW2H+xSIgo30hEOzIprOuwpoIAFgwBWqsG9yiAqPzZ6nD/cOH5D3CnbdFk4gG9
+ uJOjm8Ks04STqN+4s9UXNvHR6Ubb0O1n8suvAFxiTXC3sQHO+GY5hfuQXepB+0XpUfoz
+ IJfp3X7lL/eku9+Q0QJpqeXePh1wljLaCtMu0PKqm0Z4upMU3apK5OkTDN3zzPSHQTBl
+ WzWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745405248; x=1746010048;
+ d=1e100.net; s=20230601; t=1745405289; x=1746010089;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d35VazuwwTo6rIIsoHBG8IeRdQGisd6oQW+QHgCIWgg=;
- b=XND+03h537/s/4JSW0s2WNEeOwVcg6EQqa8US4iVIegi4AZm9udpP54VIwM3Xk20UK
- VHP9v0YVztH8Gfsk26O8+vrIJZkCT5l/Qib9TAT4gKW+kUhStYQYYDQ+uxe8GVu1TuXf
- ipeuVFvh3nmkJjz4RCdMgj3tODz9UyjjGGLzcfHWzQKNeaoyeMeTuGG3XUQGxnHwyxQ+
- DRf5uldoiNb3yhJaeVra2nq6zTpdscmHkIzCVXLViiJ3jyVyz1viBibqeJjie8k7zHo8
- 7cb4sL8JrFZOPUg4f9P2EwrNu9K9/xY13REUGx2vYpavyCKNnZvunreJ+/iNABwQcwSn
- KAsw==
+ bh=G0BzvGT4zSMk1PWLJfL1TIGAbt/PN57ZB8d6UY8VRWo=;
+ b=R4H/0FfN0pgr6LMcsPOOKcq7p36RXLw4Ynf2wAYIf5hAhJnoIb7BnyD+AvBViJ2q7B
+ bIUI6f0dO+7DgsdjQvt39cf1Wz4JyaCneZylknrJJQhESKImt5P+UeeTyJhNzx2UTJCY
+ xLWf6HnkOpKlOrnMODdBjkZSDY1sguYK+BPYgsF/LTvlWe1ZlypJogJ5ICrFCrbZeAIW
+ MQ8kvCijbxtK6rsTeuqXG2E05iXH+v4cu7FkYzH0J52WlGBB+v6H+MtDwzZgNToIWhBX
+ IOorJD4ctFXXS5kcMKPXrOv65JirjHE3KSnSu1mrmNrrJkj4C0/bC24B+dC0uQPL9+bp
+ 6xqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWunTwwbZqKjvq8cv6DFW1hXVdSuVN7Zqi7jcLZ4mgUnfXJSXaWbECBZzXNJuxtDO+Ceg8xVKTTtlSa@nongnu.org
-X-Gm-Message-State: AOJu0Yx3snq7y9whyS5fxMex2qkyffuZjW0N1dDaF6JB9roKhldmXlN4
- 4s9eKEjoePajQ7dDiqrdiKcVx90Ibwy6rPRfp//KhZSDX38pqws6vJcWNoKKp9p/+DGiEv6pXq/
- p
-X-Gm-Gg: ASbGncsBQQblnik2GA5++nmTiAUsIxoPGYNasDhXCpYcETyaWiK+H90YClvbtWS81fb
- Rx22skon5pOnya2cRae/hGhiz3WtzpI5zaxELSmwPMyXIlyml+ABEOKFI/1HrpIQKoi+5nJhByD
- l7qiwHslDgjxIBycxR0upJQuL/837Vogssk+cpL3zx0qW7JkmuOqKb0gXrC8/As+qSR5CcLjw++
- O2SgI2yGziE3hcRPmm+pgnjQF1Pc+ezpjcFgi+bVOCJJWE72WbXl0yr420RcVuX5JTnsx6u4T+F
- Uh3DCyr/WuSOjXn6soOLUAB+rGdg8kwuCUU4rWImGH1MYzDflMM01SlDQ0mxlF4Ac9G4+snQzyo
- u95r3G4ggHTxdnnrHCto=
-X-Google-Smtp-Source: AGHT+IFFwxw8u6RIaPLoGcWA8IzJiU0YNHkd75HWk3XVr6CnrLijFSRpaWIO2fxDHv2jt17N7cllwQ==
-X-Received: by 2002:a05:6000:22c4:b0:39f:cfc:d520 with SMTP id
- ffacd0b85a97d-3a067243ce4mr1858274f8f.15.1745405248488; 
- Wed, 23 Apr 2025 03:47:28 -0700 (PDT)
+ AJvYcCVlVSQKLCelO00fSyWPr+Nlz5FbFq9rqgew7XikHJT+F0SVH/kaUdvoHJn1kzkSuHveAEMJh9UiRLk2@nongnu.org
+X-Gm-Message-State: AOJu0YyXEkQgEVi+jWz0r2H3rzrDYxV8NMmEiaHGkKCHio+obUSzoR/0
+ AQZttHp9Fi6qgADHqdl4785up81ABrmn1Db0USwV1yg5AGPXNQ7bE2pr+iA9x8+8ThBA6jT8zN8
+ 2
+X-Gm-Gg: ASbGncuxX08fQE9xuznAAp0lLRlu/zHJ4S15a66jygf8nfYT5WlxT8FBQ05RkNEgrE+
+ PUwwaISS3GmVk7NuQB8J4k25PZfAcKVWvqru/BlBieuwwZ0XzzldqUaLSmrRvqeVYXEfqcUZx5s
+ 90tQ/mVhKae4nDv6Aa3+JGyAfzfENhehrumsfs63v35BOrQQWANLXOxGn8HrHZ20hd/n+CPFGz5
+ e9pKp7fip3wTO1mIXOUdv6OYfVWhlzE4yuc2xprMgwACRY3beKiMpISK3KXmcsW6Wc3gwqTF+EI
+ PKMXBCtWvsG3Kka5oGLXlGCPVJR97+D+wTVUVSqhXdHiao+VOm44zq8CQBfsD6rCXlUmyMfXu+x
+ MYY7CJZsK
+X-Google-Smtp-Source: AGHT+IEnXolclQo4PXI5E1aRyALqfXtDpetOBU5yvheYj9TmZ2PxpGP70lBjgTHfcf7WVHF7FkAL+g==
+X-Received: by 2002:a05:600c:1ca7:b0:43d:1b95:6d0e with SMTP id
+ 5b1f17b1804b1-4406abfac0fmr147404495e9.23.1745405289101; 
+ Wed, 23 Apr 2025 03:48:09 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa420683sm18426740f8f.20.2025.04.23.03.47.27
+ ffacd0b85a97d-39efa4207afsm18557711f8f.12.2025.04.23.03.48.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 03:47:27 -0700 (PDT)
-Message-ID: <5a5f0fde-3881-41a0-82d9-ec8e9987f97a@linaro.org>
-Date: Wed, 23 Apr 2025 12:47:27 +0200
+ Wed, 23 Apr 2025 03:48:08 -0700 (PDT)
+Message-ID: <7c6f26e8-ea76-465b-8292-d5a2b29451ae@linaro.org>
+Date: Wed, 23 Apr 2025 12:48:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 147/147] tcg: Convert TARGET_SUPPORTS_MTTCG to
- TCGCPUOps::mttcg_supported field
+Subject: Re: [PATCH 001/147] exec/tswap: target code can use TARGET_BIG_ENDIAN
+ instead of target_words_bigendian()
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-148-richard.henderson@linaro.org>
+ <20250422192819.302784-2-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-148-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,79 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 21:28, Richard Henderson wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 22/4/25 21:25, Richard Henderson wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Instead of having a compile-time TARGET_SUPPORTS_MTTCG definition,
-> have each target set the 'mttcg_supported' field in the TCGCPUOps
-> structure.
-> 
-
-This part -->
-
-> Since so far we only emulate one target architecture at a time,
-> tcg_init_machine() gets whether MTTCG is supported via the
-> current CPU class (CPU_RESOLVING_TYPE).
-> 
-> Since TARGET_SUPPORTS_MTTCG isn't available anymore,
-> instead of emiting a warning when the 'thread' property
-> is set in tcg_set_thread(), emit it in tcg_init_machine()
-> where it is consumed.
-
-<-- is now implemented by patch #144 "accel/tcg: Move mttcg warning
-to tcg_init_machine" so can be removed.
-
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20250405161320.76854-17-philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-ID: <20250317183417.285700-2-pierrick.bouvier@linaro.org>
 > ---
->   include/accel/tcg/cpu-ops.h              |  8 ++++++++
->   include/exec/poison.h                    |  1 -
->   accel/tcg/tcg-all.c                      | 11 +++++------
->   target/alpha/cpu.c                       |  1 +
->   target/arm/cpu.c                         |  1 +
->   target/arm/tcg/cpu-v7m.c                 |  1 +
->   target/avr/cpu.c                         |  1 +
->   target/hexagon/cpu.c                     |  1 +
->   target/hppa/cpu.c                        |  1 +
->   target/i386/tcg/tcg-cpu.c                |  1 +
->   target/loongarch/cpu.c                   |  1 +
->   target/m68k/cpu.c                        |  1 +
->   target/microblaze/cpu.c                  |  1 +
->   target/mips/cpu.c                        |  1 +
->   target/openrisc/cpu.c                    |  1 +
->   target/ppc/cpu_init.c                    |  1 +
->   target/riscv/tcg/tcg-cpu.c               |  1 +
->   target/rx/cpu.c                          |  1 +
->   target/s390x/cpu.c                       |  1 +
->   target/sh4/cpu.c                         |  1 +
->   target/sparc/cpu.c                       |  1 +
->   target/tricore/cpu.c                     |  1 +
->   target/xtensa/cpu.c                      |  1 +
->   configs/targets/aarch64-softmmu.mak      |  1 -
->   configs/targets/alpha-softmmu.mak        |  1 -
->   configs/targets/arm-softmmu.mak          |  1 -
->   configs/targets/hppa-softmmu.mak         |  1 -
->   configs/targets/i386-softmmu.mak         |  1 -
->   configs/targets/loongarch64-softmmu.mak  |  1 -
->   configs/targets/microblaze-softmmu.mak   |  1 -
->   configs/targets/microblazeel-softmmu.mak |  1 -
->   configs/targets/mips-softmmu.mak         |  1 -
->   configs/targets/mipsel-softmmu.mak       |  1 -
->   configs/targets/or1k-softmmu.mak         |  1 -
->   configs/targets/ppc64-softmmu.mak        |  1 -
->   configs/targets/riscv32-softmmu.mak      |  1 -
->   configs/targets/riscv64-softmmu.mak      |  1 -
->   configs/targets/s390x-softmmu.mak        |  1 -
->   configs/targets/sparc-softmmu.mak        |  1 -
->   configs/targets/sparc64-softmmu.mak      |  1 -
->   configs/targets/x86_64-softmmu.mak       |  1 -
->   configs/targets/xtensa-softmmu.mak       |  1 -
->   configs/targets/xtensaeb-softmmu.mak     |  1 -
->   docs/devel/multi-thread-tcg.rst          |  2 +-
->   44 files changed, 34 insertions(+), 28 deletions(-)
+>   include/exec/tswap.h | 11 ++++++-----
+>   cpu-target.c         |  1 +
+>   2 files changed, 7 insertions(+), 5 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
