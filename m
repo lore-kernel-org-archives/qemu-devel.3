@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0335C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFA0C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7YVn-0000KP-6n; Wed, 23 Apr 2025 07:43:31 -0400
+	id 1u7YW0-0000pR-A6; Wed, 23 Apr 2025 07:43:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1u7YVX-00006O-Q9
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:43:19 -0400
+ id 1u7YVy-0000nz-TS
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:43:42 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1u7YVT-0004jq-Jt
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:43:14 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZjHDy20MSz6M4h7;
- Wed, 23 Apr 2025 19:38:58 +0800 (CST)
+ id 1u7YVw-0004mJ-RQ
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:43:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZjHFY6XQJz6M4hj;
+ Wed, 23 Apr 2025 19:39:29 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id A3B881402ED;
- Wed, 23 Apr 2025 19:43:07 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 489BC14020A;
+ Wed, 23 Apr 2025 19:43:39 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.28.126) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 23 Apr 2025 13:43:06 +0200
+ 15.1.2507.39; Wed, 23 Apr 2025 13:43:38 +0200
 To: <qemu-devel@nongnu.org>
 CC: <anisinha@redhat.com>, <imammedo@redhat.com>,
  <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>, <mst@redhat.com>,
  <peter.maydell@linaro.org>, <prime.zeng@hisilicon.com>,
  <shameerali.kolothum.thodi@huawei.com>, <wangyanan55@huawei.com>,
  <yangyicong@hisilicon.com>
-Subject: [PATCH v3 3/5] hw/acpi/aml-build: Build a root node in the PPTT table
-Date: Wed, 23 Apr 2025 12:41:28 +0100
-Message-ID: <20250423114130.902-4-alireza.sanaee@huawei.com>
+Subject: [PATCH v3 4/5] hw/acpi/aml-build: Update the revision of PPTT table
+Date: Wed, 23 Apr 2025 12:41:29 +0100
+Message-ID: <20250423114130.902-5-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250423114130.902-1-alireza.sanaee@huawei.com>
 References: <20250423114130.902-1-alireza.sanaee@huawei.com>
@@ -76,59 +76,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yicong Yang <yangyicong@hisilicon.com>
 
-Currently we build the PPTT starting from the socket node and each
-socket will be a separate tree. For a multi-socket system it'll
-be hard for the OS to know the whole system is homogeneous or not
-(actually we're in the current implementation) since no parent node
-to telling the identical implementation informentation. Add a
-root node for indicating this.
+The lastest ACPI spec 6.5 support PPTT revision 3. Update it
+by handy. This is compatible with previous revision.
 
 Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 ---
- hw/acpi/aml-build.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ hw/acpi/aml-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 560cee12a24b..3010325ca423 100644
+index 3010325ca423..e5401dfdb1a8 100644
 --- a/hw/acpi/aml-build.c
 +++ b/hw/acpi/aml-build.c
-@@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-     int64_t socket_id = -1, cluster_id = -1, core_id = -1;
-     uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
+@@ -2155,7 +2155,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
      uint32_t pptt_start = table_data->len;
-+    uint32_t root_offset;
+     uint32_t root_offset;
      int n;
-     AcpiTable table = { .sig = "PPTT", .rev = 2,
+-    AcpiTable table = { .sig = "PPTT", .rev = 2,
++    AcpiTable table = { .sig = "PPTT", .rev = 3,
                          .oem_id = oem_id, .oem_table_id = oem_table_id };
  
      acpi_table_begin(&table, table_data);
- 
-+    /*
-+     * Build a root node for all the processor nodes. Otherwise when
-+     * building a multi-socket system each socket tree are separated
-+     * and will be hard for the OS like Linux to know whether the
-+     * system is homogeneous.
-+     */
-+    root_offset = table_data->len - pptt_start;
-+    build_processor_hierarchy_node(table_data,
-+        (1 << 0) | /* Physical package */
-+        (1 << 4), /* Identical Implementation */
-+        0, 0, NULL, 0);
-+
-     /*
-      * This works with the assumption that cpus[n].props.*_id has been
-      * sorted from top to down levels in mc->possible_cpu_arch_ids().
-@@ -2175,7 +2188,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-             build_processor_hierarchy_node(table_data,
-                 (1 << 0) | /* Physical package */
-                 (1 << 4), /* Identical Implementation */
--                0, socket_id, NULL, 0);
-+                root_offset, socket_id, NULL, 0);
-         }
- 
-         if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
 -- 
 2.34.1
 
