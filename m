@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDED1C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D51FC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:24:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7XEK-00020p-Rh; Wed, 23 Apr 2025 06:21:24 -0400
+	id 1u7XGs-0002vr-Bo; Wed, 23 Apr 2025 06:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XEH-00020B-Uo
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:21:21 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XGo-0002vV-5m
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:23:58 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XED-00049i-QC
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:21:19 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-39efc1365e4so2298625f8f.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:21:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XGm-0004Ib-CJ
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:23:57 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cf05f0c3eso46287675e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:23:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745403676; x=1746008476; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745403833; x=1746008633; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cqcB40nTcXBQkh2PkxB+C2WqDdk2PaXTMOdvhK30HZI=;
- b=zSyIK9aya42MvLvUY35Q4CtG1Bcp6Kn8JbxYXxq2qwJ+p1CTq4I0MrOYhBtSuJQy7f
- 6tbnlQo196KMl58jP5M3gDrJNyNLdte1xHb+FB6Q7cxl1q7cde2AwW+Sks6KWL5DIBt6
- fwfJInX2BAgY3xdMQ6uPtxUR2ssQF8CmpXGGcFQpGH+DHSPHxsTc1dHPGhHgKjt3afIo
- NnGauaoiTEk9Vleze758EHCC2Xc72TiYbTQkxZfMYAztjGHND2d5IIhti4HdLnv67KMC
- Pkb3nRqNEz0M+SKRQ+2u8UPxODzzCvQXiSYmig7SPvd0KY63vBdUwI5zpUYutn23mgfk
- lnbQ==
+ bh=Nl50mRTpPNOc5qeu9DrruLOwy6Pw3Av3kopr9qWIMm8=;
+ b=wlunIbgRjm2MiT0SBGdYKh09HtSpRzwVmNdVsLPY3QcQKwp3amfQfbuo7xckSQVPuX
+ +GzOJiXmNMt1RKzSy2j8PTv2keoOIpV1tneYThPlB4w3Qm+XrLk/eHZrdtvW3IjjFBgW
+ cOZvSl7U+IwbrLMmWNz/yvR3OrTt6tjLlNj5NqgO1FrG8AaRKvl8F4GiMiAKvWMKj99j
+ AxEDoKrJOSRhf0VgsnWJYOX+PyBefqeowQ3wo6nPrRHllIIgcF+7kEcQJ0JvV2bK0oZT
+ IplD8womzWAMJGRVcjN+bUVpDGyWCIBJw8VYnCB6x+pKp0QXOJZjMhpCGJhLaWCnJsdE
+ 0n3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745403676; x=1746008476;
+ d=1e100.net; s=20230601; t=1745403833; x=1746008633;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cqcB40nTcXBQkh2PkxB+C2WqDdk2PaXTMOdvhK30HZI=;
- b=LKc+9jGi37FQCd8/2qszsgQLuoK7lnZ016UghCj6t4jt9plG3N0li2aHCQL9h/xm5r
- laqwm8f7QVMRuivNHF8eSkFt/lp9uOpj/pEiG3pEak3E6H3sBANasicQVEXGEq8fVT8U
- trXHbi/fPlS6h9eCLFMxkzP8fBdr3wXdifcsur8KhPqKZAd+Ays42pwwl92SesqxeNlK
- Q1Ns7M9kWoFlbmXIx4h3d8cbkTHahkm3d9h3swYL+Cg3eUP0p+o1wRkSEiaOKD4BzgAM
- dnduTKuoQNYuG1aJDFKxxmLtFDz+Ujr7H7rAQno6E1Pr5zQ66E3nhPsgnNzp7OzQDCoa
- vKwg==
+ bh=Nl50mRTpPNOc5qeu9DrruLOwy6Pw3Av3kopr9qWIMm8=;
+ b=f1xTnC9NhsDp4rMWNFOHn4HstyyEGrhJrLn8f+cR62Op5/iDp0leXWdcmKzFsku6JB
+ RQUg4rdiSad5PCFillFj+nNnEEtz362qcr6jieY7guB/Qmi2ohNe1GoRXcRnwEsAzPZN
+ KJb/a8YaS3Nu/sc0yMMd5yq1YKr463OHiR2SExDBrBq3fFlhiJL9KWhzbFxdJEzU4X3E
+ N/5N9QWaFQbBo7L2SAMW6hW+wvHpJdwLQk6S7/nLkWUucudR/loJRNL4N4VsWP2Bral/
+ Lq5g8t9w5hNS1inyXIToaTLoES6obzFHM1Lh8COYJ7O3ORSkKTI+LWb1Mp5gCS/HyYPz
+ jpWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQLhjDH3EbiYhAzBYXedEDZXTVDFUX7JurVsV315S9nskwJgElKH56P4GctHsywItm1T1uHiiUYxmP@nongnu.org
-X-Gm-Message-State: AOJu0YwsV0IWqJVM59xzCta6onPss3pEhfmajd1DMeSi6YWqug4Jd5PY
- fg/0zxvVhGHUK/nFQpzOqM06Ag1HT8mk6HuOwYv/hDy1emmp8UOh3TtiNIx0lw31V7T1Vy6ILXL
- z
-X-Gm-Gg: ASbGncvJgnkzLJ3vlOamQv/maswFz0z/cqWZ752riobGiHGm6u3GLkudMgiDVMnY9QM
- bOLHY6iyGueBBYLq8Hc+06cjgMSz+3sNCpmquGQTdf6lIO7ijwxEL9zOLyARdYshuH3IJFOy1/x
- eYDf543Xtt/rzRhMBjRz40apm86ALDh57m7v0ujNQQN5lTt2jck1WRrxg/B88S5Iwh60ua60JEz
- G7HipFqErNZPzXtd9RZbfG0c2VyhChjRHHpGc7JcHz0E6/+yabEXx1K4KCUaRmzfQcyR2u9Khrl
- srzTfvIhHEiCMeCr72wi+xtcyRrbExI3RLicPzeIIy8ztOHy57IeH1gjRyP7KFPOTxvuXDNzFCg
- nlvBvZhVp
-X-Google-Smtp-Source: AGHT+IHMYhXle55maStFp32+ecPvwurqcdHUDdgp47cIuBoWhDm1i4l46EZYbfqdcGC6Wj/2Mjyw1A==
-X-Received: by 2002:a05:6000:22c2:b0:391:4873:7940 with SMTP id
- ffacd0b85a97d-39efbb05cfdmr14241454f8f.54.1745403675933; 
- Wed, 23 Apr 2025 03:21:15 -0700 (PDT)
+ AJvYcCVPnn0pOVmktI1f63h83UUI5UHNTIJgWwT0sxguK7WMe42LODr6GC6aLnFDDjVC+YkzZcbCo08Wrtkv@nongnu.org
+X-Gm-Message-State: AOJu0YxHZ/bzQwZMN8GDTUiGrIs/V9WrME0zA6w6RHR9xSyEFoBoRZYa
+ LPhPCg6fHIJrW4VSJ8+GFTjLVHsGgjrWQ2cJtjgcu/orzHWlPIo/QIdPRQ8mhkM=
+X-Gm-Gg: ASbGncuw90/Ps65ukmzhFTQK7+LJinOyzqQz3J06f7e6B0TZ6L8PVaIe62JiqYnYT8a
+ zZlsLDAslsUQ6cwq57br8EakMIsDAy5vXbIP+O9vjhkO6oQRB+IdeZIEJkDUYV5p1S0fKSg0gro
+ fMb+CTDHZR3/ZJe1G1FAadVE9zi3skHzOlslrfgAgM/1uPFt7Z9TQpw5bfyU9goObt7/DCSHoKp
+ 3QHsEYNW9oyIX3ss8uqHzdU6smPfGucWZA1fMlPeldoj5e9uaRxVF05oFDd3EER5T70sI+/o/W1
+ E8L4B7GZ3syIz+mrxZ3mqAQn8Vszrnl+ASMlLVTF3DkpSNu/Jv8vDcKSTEblKSH9PNMVuG3gV1L
+ GmCEn/jhE
+X-Google-Smtp-Source: AGHT+IFCi4JX56J/75UfKmMLl5TvgasNI0psDxm6VQzLV9YtGsGK+gfqw+ouRusyMImJNzjjaW/56g==
+X-Received: by 2002:a05:600c:1383:b0:43d:585f:ebf5 with SMTP id
+ 5b1f17b1804b1-4406ab7a7dfmr160413085e9.1.1745403833215; 
+ Wed, 23 Apr 2025 03:23:53 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4332b2sm18578950f8f.30.2025.04.23.03.21.14
+ 5b1f17b1804b1-44092d16ca2sm21043585e9.8.2025.04.23.03.23.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 03:21:15 -0700 (PDT)
-Message-ID: <9111e4f4-5e91-406a-9e57-f58c2bfa3b12@linaro.org>
-Date: Wed, 23 Apr 2025 12:21:14 +0200
+ Wed, 23 Apr 2025 03:23:52 -0700 (PDT)
+Message-ID: <df8ac9ee-be76-407b-ad36-e66a6280402d@linaro.org>
+Date: Wed, 23 Apr 2025 12:23:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 099/147] page-vary: Move and rename
- qemu_target_page_bits_min
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-s390x <qemu-s390x@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH 101/147] exec/cpu-all: move cpu_copy to linux-user/qemu.h
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-100-richard.henderson@linaro.org>
+ <20250422192819.302784-102-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-100-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-102-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,134 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Widening Cc list.
-
 On 22/4/25 21:27, Richard Henderson wrote:
-> Rename to migration_legacy_page_bits, to make it clear that
-> we cannot change the value without causing a migration break.
-> Move to page-vary.h and page-vary-target.c.
-> Define via TARGET_PAGE_BITS if not TARGET_PAGE_BITS_VARY.
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-ID: <20250325045915.994760-3-pierrick.bouvier@linaro.org>
 > ---
->   include/exec/page-vary.h   | 9 +++++++++
->   include/exec/target_page.h | 1 -
->   migration/savevm.c         | 6 +++---
->   page-target.c              | 5 -----
->   page-vary-target.c         | 9 +++++++++
->   5 files changed, 21 insertions(+), 9 deletions(-)
+>   include/exec/cpu-all.h | 2 --
+>   linux-user/qemu.h      | 3 +++
+>   2 files changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/include/exec/page-vary.h b/include/exec/page-vary.h
-> index 54ddde308a..101c25911c 100644
-> --- a/include/exec/page-vary.h
-> +++ b/include/exec/page-vary.h
-> @@ -49,4 +49,13 @@ bool set_preferred_target_page_bits(int bits);
->    */
->   void finalize_target_page_bits(void);
->   
-> +/**
-> + * migration_legacy_page_bits
-> + *
-> + * For migration compatibility with qemu v2.9, prior to the introduction
-> + * of the configuration/target-page-bits section, return the value of
-> + * TARGET_PAGE_BITS that the target had then.
-
-FYI X86 pc-2.9, pc-i440fx-2.9 [1] and ARM virt-2.9 [2] were waiting
-the v10.0 release to get removed. The s390-ccw-virtio-2.9 machine
-got removed few minutes ago [3]. The remaining one is pc-q35-2.9
-which was deprecated and should be OK for removal, IIUC it is just
-a matter of someone posting patches.
-
-[1] 
-https://lore.kernel.org/qemu-devel/20250117102738.59714-3-thuth@redhat.com/
-[2] 
-https://lore.kernel.org/qemu-devel/20250116145944.38028-9-philmd@linaro.org/
-[3] 
-https://lore.kernel.org/qemu-devel/20250423073610.271585-2-thuth@redhat.com/
-
-> + */
-> +int migration_legacy_page_bits(void);
-> +
->   #endif /* EXEC_PAGE_VARY_H */
-> diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-> index 8e89e5cbe6..e4bd7f7767 100644
-> --- a/include/exec/target_page.h
-> +++ b/include/exec/target_page.h
-> @@ -63,7 +63,6 @@ static inline int qemu_target_page_bits(void)
->       return TARGET_PAGE_BITS;
->   }
->   
-> -int qemu_target_page_bits_min(void);
->   size_t qemu_target_pages_to_MiB(size_t pages);
->   
+> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+> index 5c4379f0d0..2aaaf0548d 100644
+> --- a/include/exec/cpu-all.h
+> +++ b/include/exec/cpu-all.h
+> @@ -31,8 +31,6 @@
 >   #endif
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index c33200a33f..0c12e373b4 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -50,6 +50,7 @@
->   #include "system/cpus.h"
->   #include "system/memory.h"
->   #include "exec/target_page.h"
-> +#include "exec/page-vary.h"
->   #include "trace.h"
->   #include "qemu/iov.h"
->   #include "qemu/job.h"
-> @@ -339,7 +340,7 @@ static int configuration_pre_load(void *opaque)
->        * predates the variable-target-page-bits support and is using the
->        * minimum possible value for this CPU.
->        */
-> -    state->target_page_bits = qemu_target_page_bits_min();
-> +    state->target_page_bits = migration_legacy_page_bits();
->       return 0;
->   }
 >   
-> @@ -462,8 +463,7 @@ static const VMStateInfo vmstate_info_capability = {
->    */
->   static bool vmstate_target_page_bits_needed(void *opaque)
->   {
-> -    return qemu_target_page_bits()
-> -        > qemu_target_page_bits_min();
-> +    return qemu_target_page_bits() > migration_legacy_page_bits();
->   }
 >   
->   static const VMStateDescription vmstate_target_page_bits = {
-> diff --git a/page-target.c b/page-target.c
-> index 321e43d06f..8fcd5443b5 100644
-> --- a/page-target.c
-> +++ b/page-target.c
-> @@ -9,11 +9,6 @@
->   #include "qemu/osdep.h"
->   #include "exec/target_page.h"
->   
-> -int qemu_target_page_bits_min(void)
-> -{
-> -    return TARGET_PAGE_BITS_MIN;
-> -}
+> -CPUArchState *cpu_copy(CPUArchState *env);
 > -
->   /* Convert target pages to MiB (2**20). */
->   size_t qemu_target_pages_to_MiB(size_t pages)
->   {
-> diff --git a/page-vary-target.c b/page-vary-target.c
-> index 84ddeb7c26..6251d948cf 100644
-> --- a/page-vary-target.c
-> +++ b/page-vary-target.c
-> @@ -23,6 +23,15 @@
->   #include "exec/page-vary.h"
->   #include "exec/target_page.h"
+>   #include "cpu.h"
 >   
-> +int migration_legacy_page_bits(void)
-> +{
-> +#ifdef TARGET_PAGE_BITS_VARY
-> +    return TARGET_PAGE_BITS_MIN;
-> +#else
-> +    return TARGET_PAGE_BITS;
-> +#endif
-> +}
+>   /* Validate correct placement of CPUArchState. */
+> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+> index 5f00750151..948de8431a 100644
+> --- a/linux-user/qemu.h
+> +++ b/linux-user/qemu.h
+> @@ -362,4 +362,7 @@ void *lock_user_string(abi_ulong guest_addr);
+>   #define unlock_user_struct(host_ptr, guest_addr, copy)		\
+>       unlock_user(host_ptr, guest_addr, (copy) ? sizeof(*host_ptr) : 0)
+>   
+> +/* Clone cpu state */
+> +CPUArchState *cpu_copy(CPUArchState *env);
 > +
->   bool set_preferred_target_page_bits(int bits)
->   {
->   #ifdef TARGET_PAGE_BITS_VARY
+>   #endif /* QEMU_H */
+
+I don't see any OS-specific code in cpu_copy() (and don't expect
+to see any). Maybe "user/cpu_loop.h" is a better fit, as it also
+declares target_cpu_copy_regs()?
 
 
