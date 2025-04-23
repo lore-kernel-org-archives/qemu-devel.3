@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB64CC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813BCC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UfW-0003Yf-US; Wed, 23 Apr 2025 03:37:18 -0400
+	id 1u7UfY-0003ZN-Vs; Wed, 23 Apr 2025 03:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfT-0003VZ-Ue
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfW-0003Yg-TQ
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfP-0003K8-Em
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfU-0003Ki-2s
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745393830;
+ s=mimecast20190719; t=1745393835;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x0emzPW6NvZSJLz3dV5t6+/JjM51H7IL5Y1yOyWnVSc=;
- b=ay4rRjqsYnWBgsT01DV3VUgGcMZeCZb6TGxr69WenRr50S5PRjSyd+AURcYBQgsnzJ1/CB
- DrQJc97BJA1ZcsN1qR1YqXXQ8IxlCaMB6/708/lSF5ry5HpfVv2R3gn0BR74ZvYsvkBYvR
- A/+MicdO/mCbzjnysvEigaEWMGuMTkM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=eHVxBU6A3l6WehY/7nFa84fD2Mw+v4/XWApzCpErQIo=;
+ b=ioIEriZGl8mTk1pjG/Dg0zl/L+S23HSfLOoLVt6eHFO/krTCQ8RprW4c7mISmuuMOljcMy
+ s9P9C7DauOfgsvcYM5mTT/WnzZyPUiyQttM7wQzFwKL0E9GavGRg9danSOkocOUq6lq4dx
+ tH8Ud+s3A4w4IIrwfiG57VwjUY1dmjw=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-qLVdGVw0P2i9-d10Pq7dmg-1; Wed,
- 23 Apr 2025 03:37:07 -0400
-X-MC-Unique: qLVdGVw0P2i9-d10Pq7dmg-1
-X-Mimecast-MFC-AGG-ID: qLVdGVw0P2i9-d10Pq7dmg_1745393826
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-mJ6JU6woNY-0DWUH9KmfAQ-1; Wed,
+ 23 Apr 2025 03:37:11 -0400
+X-MC-Unique: mJ6JU6woNY-0DWUH9KmfAQ-1
+X-Mimecast-MFC-AGG-ID: mJ6JU6woNY-0DWUH9KmfAQ_1745393830
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17848180087A; Wed, 23 Apr 2025 07:37:06 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1644419560AB; Wed, 23 Apr 2025 07:37:10 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 43AE519560A3; Wed, 23 Apr 2025 07:37:04 +0000 (UTC)
+ id 80B6C19560A3; Wed, 23 Apr 2025 07:37:08 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 23/29] tests/functional: Convert the SMMU test to the
- functional framework
-Date: Wed, 23 Apr 2025 09:36:03 +0200
-Message-ID: <20250423073610.271585-24-thuth@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 25/29] docs/devel/testing: Dissolve the ci-definitions.rst.inc
+ file
+Date: Wed, 23 Apr 2025 09:36:05 +0200
+Message-ID: <20250423073610.271585-26-thuth@redhat.com>
 In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 References: <20250423073610.271585-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -88,426 +88,305 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-This test was using cloudinit and a "dnf install" command in the guest
-to exercise the NIC with SMMU enabled. Since we don't have the cloudinit
-stuff in the functional framework and we should not rely on having access
-to external networks (once our ASSETs have been cached), we rather boot
-into the initrd first, manually mount the root disk and then use the
-check_http_download() function from the functional framework here instead
-for testing whether the network works as expected.
+This file was meant for defining the vocabulary for our testing
+efforts, but it did not age well: First, the definitions are not
+only about the CI part, but also about testing in general, so most
+of the information should rather reside in main.rst instead.
+Second, some vocabulary has never been really adopted by the QEMU
+project, for example we never really use the word "system testing"
+since "system" rather means the system emulator binaries in the
+QEMU project (and we also don't do any testing with other components
+like libvirt and virt-managers here). It also defines that the qtests
+are the "functional" tests in QEMU, which is not really up to date
+anymore after the "tests/functional" framework has been introduced
+a couple of months ago (FWIW, the qtests could rather be seen as a
+mix between unit testing and functional testing).
 
-Unfortunately, there seems to be a small race when using the files
-from Fedora 33: To enter the initrd shell, we have to send a "return"
-once. But it does not seem to work if we send it too early. Using a
-sleep(0.2) makes it work reliably for me, but to make it even more
-unlikely to trigger this situation, let's better limit the Fedora 33
-tests to only run with KVM.
+To solve this problem, move the useful parts of this file into
+main.rst and directly into ci.rst, and drop the ones (like "system
+testing") that we don't really need anymore.
 
-Finally, while we're at it, we also add some lines for testing writes
-to the hard disk, as we already do it in the test_intel_iommu test.
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-ID: <20250414113031.151105-14-thuth@redhat.com>
+Message-ID: <20250314085959.1585568-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                           |   2 +-
- tests/avocado/smmu.py                 | 139 -----------------
- tests/functional/meson.build          |   2 +
- tests/functional/test_aarch64_smmu.py | 205 ++++++++++++++++++++++++++
- 4 files changed, 208 insertions(+), 140 deletions(-)
- delete mode 100644 tests/avocado/smmu.py
- create mode 100755 tests/functional/test_aarch64_smmu.py
+ docs/devel/testing/ci-definitions.rst.inc | 121 ----------------------
+ docs/devel/testing/ci.rst                 |  28 ++++-
+ docs/devel/testing/main.rst               |  65 ++++++++++--
+ 3 files changed, 81 insertions(+), 133 deletions(-)
+ delete mode 100644 docs/devel/testing/ci-definitions.rst.inc
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e29910cbd77..07f77c048e2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -211,7 +211,7 @@ L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/arm/smmu*
- F: include/hw/arm/smmu*
--F: tests/avocado/smmu.py
-+F: tests/functional/test_aarch64_smmu.py
- 
- AVR TCG CPUs
- M: Michael Rolnik <mrolnik@gmail.com>
-diff --git a/tests/avocado/smmu.py b/tests/avocado/smmu.py
+diff --git a/docs/devel/testing/ci-definitions.rst.inc b/docs/devel/testing/ci-definitions.rst.inc
 deleted file mode 100644
-index 83fd79e922e..00000000000
---- a/tests/avocado/smmu.py
+index 6d5c6fd9f20..00000000000
+--- a/docs/devel/testing/ci-definitions.rst.inc
 +++ /dev/null
-@@ -1,139 +0,0 @@
--# SMMUv3 Functional tests
--#
--# Copyright (c) 2021 Red Hat, Inc.
--#
--# Author:
--#  Eric Auger <eric.auger@redhat.com>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--import os
+@@ -1,121 +0,0 @@
+-Definition of terms
+-===================
 -
--from avocado import skipUnless
--from avocado_qemu import BUILD_DIR
--from avocado_qemu.linuxtest import LinuxTest
+-This section defines the terms used in this document and correlates them with
+-what is currently used on QEMU.
 -
--@skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--class SMMU(LinuxTest):
--    """
--    :avocado: tags=accel:kvm
--    :avocado: tags=cpu:host
--    :avocado: tags=arch:aarch64
--    :avocado: tags=machine:virt
--    :avocado: tags=distro:fedora
--    :avocado: tags=smmu
--    :avocado: tags=flaky
--    """
+-Automated tests
+----------------
 -
--    IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
--    kernel_path = None
--    initrd_path = None
--    kernel_params = None
+-An automated test is written on a test framework using its generic test
+-functions/classes. The test framework can run the tests and report their
+-success or failure [1]_.
 -
--    def set_up_boot(self):
--        path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
--                         'drive=drv0,id=virtio-disk0,bootindex=1,'
--                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
--        self.vm.add_args('-drive',
--                         'file=%s,if=none,cache=writethrough,id=drv0' % path)
+-An automated test has essentially three parts:
 -
--    def setUp(self):
--        super(SMMU, self).setUp(None, 'virtio-net-pci' + self.IOMMU_ADDON)
+-1. The test initialization of the parameters, where the expected parameters,
+-   like inputs and expected results, are set up;
+-2. The call to the code that should be tested;
+-3. An assertion, comparing the result from the previous call with the expected
+-   result set during the initialization of the parameters. If the result
+-   matches the expected result, the test has been successful; otherwise, it has
+-   failed.
 -
--    def common_vm_setup(self, custom_kernel=False):
--        self.require_accelerator("kvm")
--        self.vm.add_args("-accel", "kvm")
--        self.vm.add_args("-cpu", "host")
--        self.vm.add_args("-machine", "iommu=smmuv3")
--        self.vm.add_args("-d", "guest_errors")
--        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
--                         'edk2-aarch64-code.fd'))
--        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
--        self.vm.add_args('-object',
--                         'rng-random,id=rng0,filename=/dev/urandom')
+-Unit testing
+-------------
 -
--        if custom_kernel is False:
--            return
+-A unit test is responsible for exercising individual software components as a
+-unit, like interfaces, data structures, and functionality, uncovering errors
+-within the boundaries of a component. The verification effort is in the
+-smallest software unit and focuses on the internal processing logic and data
+-structures. A test case of unit tests should be designed to uncover errors due
+-to erroneous computations, incorrect comparisons, or improper control flow [2]_.
 -
--        kernel_url = self.distro.pxeboot_url + 'vmlinuz'
--        initrd_url = self.distro.pxeboot_url + 'initrd.img'
--        self.kernel_path = self.fetch_asset(kernel_url)
--        self.initrd_path = self.fetch_asset(initrd_url)
+-On QEMU, unit testing is represented by the 'check-unit' target from 'make'.
 -
--    def run_and_check(self):
--        if self.kernel_path:
--            self.vm.add_args('-kernel', self.kernel_path,
--                             '-append', self.kernel_params,
--                             '-initrd', self.initrd_path)
--        self.launch_and_wait()
--        self.ssh_command('cat /proc/cmdline')
--        self.ssh_command('dnf -y install numactl-devel')
+-Functional testing
+-------------------
 -
+-A functional test focuses on the functional requirement of the software.
+-Deriving sets of input conditions, the functional tests should fully exercise
+-all the functional requirements for a program. Functional testing is
+-complementary to other testing techniques, attempting to find errors like
+-incorrect or missing functions, interface errors, behavior errors, and
+-initialization and termination errors [3]_.
 -
--    # 5.3 kernel without RIL #
+-On QEMU, functional testing is represented by the 'check-qtest' target from
+-'make'.
 -
--    def test_smmu_noril(self):
--        """
--        :avocado: tags=smmu_noril
--        :avocado: tags=smmu_noril_tests
--        :avocado: tags=distro_version:31
--        """
--        self.common_vm_setup()
--        self.run_and_check()
+-System testing
+---------------
 -
--    def test_smmu_noril_passthrough(self):
--        """
--        :avocado: tags=smmu_noril_passthrough
--        :avocado: tags=smmu_noril_tests
--        :avocado: tags=distro_version:31
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.passthrough=on')
--        self.run_and_check()
+-System tests ensure all application elements mesh properly while the overall
+-functionality and performance are achieved [4]_. Some or all system components
+-are integrated to create a complete system to be tested as a whole. System
+-testing ensures that components are compatible, interact correctly, and
+-transfer the right data at the right time across their interfaces. As system
+-testing focuses on interactions, use case-based testing is a practical approach
+-to system testing [5]_. Note that, in some cases, system testing may require
+-interaction with third-party software, like operating system images, databases,
+-networks, and so on.
 -
--    def test_smmu_noril_nostrict(self):
--        """
--        :avocado: tags=smmu_noril_nostrict
--        :avocado: tags=smmu_noril_tests
--        :avocado: tags=distro_version:31
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.strict=0')
--        self.run_and_check()
+-On QEMU, system testing is represented by the 'check-avocado' target from
+-'make'.
 -
--    # 5.8 kernel featuring range invalidation
--    # >= v5.7 kernel
+-Flaky tests
+------------
 -
--    def test_smmu_ril(self):
--        """
--        :avocado: tags=smmu_ril
--        :avocado: tags=smmu_ril_tests
--        :avocado: tags=distro_version:33
--        """
--        self.common_vm_setup()
--        self.run_and_check()
+-A flaky test is defined as a test that exhibits both a passing and a failing
+-result with the same code on different runs. Some usual reasons for an
+-intermittent/flaky test are async wait, concurrency, and test order dependency
+-[6]_.
 -
--    def test_smmu_ril_passthrough(self):
--        """
--        :avocado: tags=smmu_ril_passthrough
--        :avocado: tags=smmu_ril_tests
--        :avocado: tags=distro_version:33
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.passthrough=on')
--        self.run_and_check()
+-Gating
+-------
 -
--    def test_smmu_ril_nostrict(self):
--        """
--        :avocado: tags=smmu_ril_nostrict
--        :avocado: tags=smmu_ril_tests
--        :avocado: tags=distro_version:33
--        """
--        self.common_vm_setup(True)
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' iommu.strict=0')
--        self.run_and_check()
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 985ac5c27fe..b317ad42c5a 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -18,6 +18,7 @@ test_timeouts = {
-   'aarch64_rme_sbsaref' : 1200,
-   'aarch64_sbsaref_alpine' : 1200,
-   'aarch64_sbsaref_freebsd' : 720,
-+  'aarch64_smmu' : 720,
-   'aarch64_tuxrun' : 240,
-   'aarch64_virt' : 360,
-   'aarch64_virt_gpu' : 480,
-@@ -88,6 +89,7 @@ tests_aarch64_system_thorough = [
-   'aarch64_sbsaref',
-   'aarch64_sbsaref_alpine',
-   'aarch64_sbsaref_freebsd',
-+  'aarch64_smmu',
-   'aarch64_tcg_plugins',
-   'aarch64_tuxrun',
-   'aarch64_virt',
-diff --git a/tests/functional/test_aarch64_smmu.py b/tests/functional/test_aarch64_smmu.py
-new file mode 100755
-index 00000000000..c65d0f28178
---- /dev/null
-+++ b/tests/functional/test_aarch64_smmu.py
-@@ -0,0 +1,205 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# SMMUv3 Functional tests
-+#
-+# Copyright (c) 2021 Red Hat, Inc.
-+#
-+# Author:
-+#  Eric Auger <eric.auger@redhat.com>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
+-A gate restricts the move of code from one stage to another on a
+-test/deployment pipeline. The step move is granted with approval. The approval
+-can be a manual intervention or a set of tests succeeding [7]_.
+-
+-On QEMU, the gating process happens during the pull request. The approval is
+-done by the project leader running its own set of tests. The pull request gets
+-merged when the tests succeed.
+-
+-Continuous Integration (CI)
+----------------------------
+-
+-Continuous integration (CI) requires the builds of the entire application and
+-the execution of a comprehensive set of automated tests every time there is a
+-need to commit any set of changes [8]_. The automated tests can be composed of
+-the unit, functional, system, and other tests.
+-
+-Keynotes about continuous integration (CI) [9]_:
+-
+-1. System tests may depend on external software (operating system images,
+-   firmware, database, network).
+-2. It may take a long time to build and test. It may be impractical to build
+-   the system being developed several times per day.
+-3. If the development platform is different from the target platform, it may
+-   not be possible to run system tests in the developer’s private workspace.
+-   There may be differences in hardware, operating system, or installed
+-   software. Therefore, more time is required for testing the system.
+-
+-References
+-----------
+-
+-.. [1] Sommerville, Ian (2016). Software Engineering. p. 233.
+-.. [2] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
+-       A Practitioner’s Approach. p. 48, 376, 378, 381.
+-.. [3] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
+-       A Practitioner’s Approach. p. 388.
+-.. [4] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
+-       A Practitioner’s Approach. Software Engineering, p. 377.
+-.. [5] Sommerville, Ian (2016). Software Engineering. p. 59, 232, 240.
+-.. [6] Luo, Qingzhou, et al. An empirical analysis of flaky tests.
+-       Proceedings of the 22nd ACM SIGSOFT International Symposium on
+-       Foundations of Software Engineering. 2014.
+-.. [7] Humble, Jez & Farley, David (2010). Continuous Delivery:
+-       Reliable Software Releases Through Build, Test, and Deployment, p. 122.
+-.. [8] Humble, Jez & Farley, David (2010). Continuous Delivery:
+-       Reliable Software Releases Through Build, Test, and Deployment, p. 55.
+-.. [9] Sommerville, Ian (2016). Software Engineering. p. 743.
+diff --git a/docs/devel/testing/ci.rst b/docs/devel/testing/ci.rst
+index ed88a2010be..e21d39db57a 100644
+--- a/docs/devel/testing/ci.rst
++++ b/docs/devel/testing/ci.rst
+@@ -1,14 +1,34 @@
+ .. _ci:
+ 
+-==
+-CI
+-==
++Continuous Integration (CI)
++===========================
 +
-+import os
-+import time
++Continuous integration (CI) requires the builds of the entire application and
++the execution of a comprehensive set of automated tests every time there is a
++need to commit any set of changes [1]_. The automated tests are composed
++of unit, functional and other tests.
+ 
+ Most of QEMU's CI is run on GitLab's infrastructure although a number
+ of other CI services are used for specialised purposes. The most up to
+ date information about them and their status can be found on the
+ `project wiki testing page <https://wiki.qemu.org/Testing/CI>`_.
+ 
+-.. include:: ci-definitions.rst.inc
++These tests are also used as gating tests before merging pull requests.
++A gating test restricts the move of code from one stage to another on a
++test/deployment pipeline. The step move is granted with approval. The approval
++can be a manual intervention or a set of tests succeeding [2]_.
 +
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import BUILD_DIR
-+from qemu.utils import kvm_available
++On QEMU, the gating process happens during the pull request. The approval is
++done by the project leader running its own set of tests. The pull request gets
++merged when the tests succeed.
 +
+ .. include:: ci-jobs.rst.inc
+ .. include:: ci-runners.rst.inc
 +
-+class SMMU(LinuxKernelTest):
++References
++----------
 +
-+    default_kernel_params = ('earlyprintk=pl011,0x9000000 no_timer_check '
-+                             'printk.time=1 rd_NO_PLYMOUTH net.ifnames=0 '
-+                             'console=ttyAMA0 rd.rescue')
-+    IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
-+    kernel_path = None
-+    initrd_path = None
-+    kernel_params = None
++.. [1] Humble, Jez & Farley, David (2010). Continuous Delivery:
++       Reliable Software Releases Through Build, Test, and Deployment, p. 55.
++.. [2] Humble, Jez & Farley, David (2010). Continuous Delivery:
++       Reliable Software Releases Through Build, Test, and Deployment, p. 122.
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index 9869bcf0341..e56da22edf6 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -5,19 +5,32 @@ Testing in QEMU
+ 
+ QEMU's testing infrastructure is fairly complex as it covers
+ everything from unit testing and exercising specific sub-systems all
+-the way to full blown acceptance tests. To get an overview of the
++the way to full blown functional tests. To get an overview of the
+ tests you can run ``make check-help`` from either the source or build
+ tree.
+ 
+-Most (but not all) tests are also integrated into the meson build
+-system so can be run directly from the build tree, for example:
+-
+-.. code::
++Most (but not all) tests are also integrated as an automated test into
++the meson build system so can be run directly from the build tree,
++for example::
+ 
+   [./pyvenv/bin/]meson test --suite qemu:softfloat
+ 
+ will run just the softfloat tests.
+ 
++An automated test is written with one of the test frameworks using its
++generic test functions/classes. The test framework can run the tests and
++report their success or failure [1]_.
 +
-+    GUEST_PORT = 8080
++An automated test has essentially three parts:
 +
-+    def set_up_boot(self, path):
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-+                         'drive=drv0,id=virtio-disk0,bootindex=1,'
-+                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
-+        self.vm.add_args('-drive',
-+                f'file={path},if=none,cache=writethrough,id=drv0,snapshot=on')
++1. The test initialization of the parameters, where the expected parameters,
++   like inputs and expected results, are set up;
++2. The call to the code that should be tested;
++3. An assertion, comparing the result from the previous call with the expected
++   result set during the initialization of the parameters. If the result
++   matches the expected result, the test has been successful; otherwise, it has
++   failed.
 +
-+        self.vm.add_args('-netdev',
-+                         'user,id=n1,hostfwd=tcp:127.0.0.1:0-:%d' %
-+                         self.GUEST_PORT)
-+        self.vm.add_args('-device', 'virtio-net,netdev=n1' + self.IOMMU_ADDON)
+ The rest of this document will cover the details for specific test
+ groups.
+ 
+@@ -44,9 +57,17 @@ cannot find them.
+ Unit tests
+ ~~~~~~~~~~
+ 
+-Unit tests, which can be invoked with ``make check-unit``, are simple C tests
+-that typically link to individual QEMU object files and exercise them by
+-calling exported functions.
++A unit test is responsible for exercising individual software components as a
++unit, like interfaces, data structures, and functionality, uncovering errors
++within the boundaries of a component. The verification effort is in the
++smallest software unit and focuses on the internal processing logic and data
++structures. A test case of unit tests should be designed to uncover errors
++due to erroneous computations, incorrect comparisons, or improper control
++flow [2]_.
 +
-+    def common_vm_setup(self, kernel, initrd, disk):
-+        self.require_accelerator("kvm")
-+        self.require_netdev('user')
-+        self.set_machine("virt")
-+        self.vm.add_args('-m', '1G')
-+        self.vm.add_args("-accel", "kvm")
-+        self.vm.add_args("-cpu", "host")
-+        self.vm.add_args("-machine", "iommu=smmuv3")
-+        self.vm.add_args("-d", "guest_errors")
-+        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
-+                         'edk2-aarch64-code.fd'))
-+        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
-+        self.vm.add_args('-object',
-+                         'rng-random,id=rng0,filename=/dev/urandom')
++In QEMU, unit tests can be invoked with ``make check-unit``. They are
++simple C tests that typically link to individual QEMU object files and
++exercise them by calling exported functions.
+ 
+ If you are writing new code in QEMU, consider adding a unit test, especially
+ for utility modules that are relatively stateless or have few dependencies. To
+@@ -885,6 +906,10 @@ changing the ``-c`` option.
+ Functional tests using Python
+ -----------------------------
+ 
++A functional test focuses on the functional requirement of the software,
++attempting to find errors like incorrect functions, interface errors,
++behavior errors, and initialization and termination errors [3]_.
 +
-+        self.kernel_path = kernel.fetch()
-+        self.initrd_path = initrd.fetch()
-+        self.set_up_boot(disk.fetch())
+ The ``tests/functional`` directory hosts functional tests written in
+ Python. You can run the functional tests simply by executing:
+ 
+@@ -1023,3 +1048,27 @@ coverage-html`` which will create
+ Further analysis can be conducted by running the ``gcov`` command
+ directly on the various .gcda output files. Please read the ``gcov``
+ documentation for more information.
 +
-+    def run_and_check(self, filename, hashsum):
-+        self.vm.add_args('-initrd', self.initrd_path)
-+        self.vm.add_args('-append', self.kernel_params)
-+        self.launch_kernel(self.kernel_path, initrd=self.initrd_path,
-+                           wait_for='attach it to a bug report.')
-+        prompt = '# '
-+        # Fedora 33 requires 'return' to be pressed to enter the shell.
-+        # There seems to be a small race between detecting the previous ':'
-+        # and sending the newline, so we need to add a small delay here.
-+        self.wait_for_console_pattern(':')
-+        time.sleep(0.2)
-+        exec_command_and_wait_for_pattern(self, '\n', prompt)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/cmdline',
-+                                          self.kernel_params)
++Flaky tests
++-----------
 +
-+        # Checking for SMMU enablement:
-+        self.log.info("Checking whether SMMU has been enabled...")
-+        exec_command_and_wait_for_pattern(self, 'dmesg | grep smmu',
-+                                          'arm-smmu-v3')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                                    'find /sys/kernel/iommu_groups/ -type l',
-+                                    'devices/0000:00:')
-+        self.wait_for_console_pattern(prompt)
++A flaky test is defined as a test that exhibits both a passing and a failing
++result with the same code on different runs. Some usual reasons for an
++intermittent/flaky test are async wait, concurrency, and test order dependency
++[4]_.
 +
-+        # Copy a file (checked later), umount afterwards to drop disk cache:
-+        self.log.info("Checking hard disk...")
-+        exec_command_and_wait_for_pattern(self,
-+                        "while ! (dmesg -c | grep vda:) ; do sleep 1 ; done",
-+                        "vda2")
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/vda2 /sysroot',
-+                                          'mounted filesystem')
-+        exec_command_and_wait_for_pattern(self, 'cp /bin/vi /sysroot/root/vi',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self, 'umount /sysroot', prompt)
-+        # Switch from initrd to the cloud image filesystem:
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/vda2 /sysroot',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                ('for d in dev proc sys run ; do '
-+                 'mount -o bind /$d /sysroot/$d ; done'), prompt)
-+        exec_command_and_wait_for_pattern(self, 'chroot /sysroot', prompt)
-+        # Check files on the hard disk:
-+        exec_command_and_wait_for_pattern(self,
-+            ('if diff -q /root/vi /usr/bin/vi ; then echo "file" "ok" ; '
-+             'else echo "files differ"; fi'), 'file ok')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self, f'sha256sum {filename}',
-+                                          hashsum)
++In QEMU, tests that are identified to be flaky are normally disabled by
++default. Set the QEMU_TEST_FLAKY_TESTS environment variable before running
++the tests to enable them.
 +
-+        # Check virtio-net via HTTP:
-+        exec_command_and_wait_for_pattern(self, 'dhclient eth0', prompt)
-+        self.check_http_download(filename, hashsum, self.GUEST_PORT)
++References
++----------
 +
-+
-+    # 5.3 kernel without RIL #
-+
-+    ASSET_KERNEL_F31 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/31/Server/aarch64/os/images/pxeboot/vmlinuz'),
-+        '3ae07fcafbfc8e4abeb693035a74fe10698faae15e9ccd48882a9167800c1527')
-+
-+    ASSET_INITRD_F31 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/31/Server/aarch64/os/images/pxeboot/initrd.img'),
-+        '9f3146b28bc531c689f3c5f114cb74e4bd7bd548e0ba19fa77921d8bd256755a')
-+
-+    ASSET_DISK_F31 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Cloud/aarch64/images/Fedora-Cloud-Base-31-1.9.aarch64.qcow2'),
-+        '1e18d9c0cf734940c4b5d5ec592facaed2af0ad0329383d5639c997fdf16fe49')
-+
-+    F31_FILENAME = '/boot/initramfs-5.3.7-301.fc31.aarch64.img'
-+    F31_HSUM = '1a4beec6607d94df73d9dd1b4985c9c23dd0fdcf4e6ca1351d477f190df7bef9'
-+
-+    def test_smmu_noril(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
-+                             self.ASSET_DISK_F31)
-+        self.kernel_params = self.default_kernel_params
-+        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
-+
-+    def test_smmu_noril_passthrough(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
-+                             self.ASSET_DISK_F31)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.passthrough=on')
-+        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
-+
-+    def test_smmu_noril_nostrict(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F31, self.ASSET_INITRD_F31,
-+                             self.ASSET_DISK_F31)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.strict=0')
-+        self.run_and_check(self.F31_FILENAME, self.F31_HSUM)
-+
-+
-+    # 5.8 kernel featuring range invalidation
-+    # >= v5.7 kernel
-+
-+    ASSET_KERNEL_F33 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/33/Server/aarch64/os/images/pxeboot/vmlinuz'),
-+        'd8b1e6f7241f339d8e7609c456cf0461ffa4583ed07e0b55c7d1d8a0c154aa89')
-+
-+    ASSET_INITRD_F33 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/33/Server/aarch64/os/images/pxeboot/initrd.img'),
-+        '92513f55295c2c16a777f7b6c35ccd70a438e9e1e40b6ba39e0e60900615b3df')
-+
-+    ASSET_DISK_F33 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/33/Cloud/aarch64/images/Fedora-Cloud-Base-33-1.2.aarch64.qcow2'),
-+        'e7f75cdfd523fe5ac2ca9eeece68edc1a81f386a17f969c1d1c7c87031008a6b')
-+
-+    F33_FILENAME = '/boot/initramfs-5.8.15-301.fc33.aarch64.img'
-+    F33_HSUM = '079cfad0caa82e84c8ca1fb0897a4999dd769f262216099f518619e807a550d9'
-+
-+    def test_smmu_ril(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
-+                             self.ASSET_DISK_F33)
-+        self.kernel_params = self.default_kernel_params
-+        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
-+
-+    def test_smmu_ril_passthrough(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
-+                             self.ASSET_DISK_F33)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.passthrough=on')
-+        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
-+
-+    def test_smmu_ril_nostrict(self):
-+        self.common_vm_setup(self.ASSET_KERNEL_F33, self.ASSET_INITRD_F33,
-+                             self.ASSET_DISK_F33)
-+        self.kernel_params = (self.default_kernel_params +
-+                              ' iommu.strict=0')
-+        self.run_and_check(self.F33_FILENAME, self.F33_HSUM)
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
++.. [1] Sommerville, Ian (2016). Software Engineering. p. 233.
++.. [2] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
++       A Practitioner’s Approach. p. 48, 376, 378, 381.
++.. [3] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
++       A Practitioner’s Approach. p. 388.
++.. [4] Luo, Qingzhou, et al. An empirical analysis of flaky tests.
++       Proceedings of the 22nd ACM SIGSOFT International Symposium on
++       Foundations of Software Engineering. 2014.
 -- 
 2.49.0
 
