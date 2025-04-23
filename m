@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76984C369D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAC5C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UTM-0002ky-TM; Wed, 23 Apr 2025 03:24:44 -0400
+	id 1u7USm-0002as-2u; Wed, 23 Apr 2025 03:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7UTH-0002ge-SL; Wed, 23 Apr 2025 03:24:40 -0400
+ id 1u7USj-0002a9-JT; Wed, 23 Apr 2025 03:24:05 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7UTF-0001IR-WC; Wed, 23 Apr 2025 03:24:39 -0400
+ id 1u7USh-0001IR-Sm; Wed, 23 Apr 2025 03:24:05 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 23 Apr
- 2025 15:23:53 +0800
+ 2025 15:23:51 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 23 Apr 2025 15:23:53 +0800
+ Transport; Wed, 23 Apr 2025 15:23:51 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -33,10 +33,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@redhat.com>
-Subject: [PATCH v5 07/11] tests/functional/aspeed: Move I2C test into shared
- helper for AST2700 reuse
-Date: Wed, 23 Apr 2025 15:23:43 +0800
-Message-ID: <20250423072350.541742-8-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 01/11] hw/arm/aspeed_ast27x0: Rename variable sram_name to
+ name in ast2700 realize
+Date: Wed, 23 Apr 2025 15:23:37 +0800
+Message-ID: <20250423072350.541742-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
 References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
@@ -68,88 +68,43 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the I2C test case into a common helper function (do_ast2700_i2c_test) so it
-can be reused across multiple AST2700-based test cases. This reduces duplication
-and improves maintainability.
+The variable "sram_name" was only used for naming the SRAM memory region.
+Rename it to "name" for consistency with similar code and avoid unnecessary
+new local variable declarations.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Tested-by: Nabih Estefan <nabihestefan@google.com>
 ---
- tests/functional/test_aarch64_aspeed.py | 28 +++++++++++++------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ hw/arm/aspeed_ast27x0.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index c25c966278..441f7f3919 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -18,6 +18,8 @@ class AST2x00MachineSDK(QemuSystemTest):
-     def do_test_aarch64_aspeed_sdk_start(self, image):
-         self.require_netdev('user')
-         self.vm.set_console()
-+        self.vm.add_args('-device',
-+                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-         self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-                          '-net', 'nic', '-net', 'user', '-snapshot')
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index dce7255a2c..b05ed75ff4 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -577,7 +577,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+     AspeedINTCClass *ic = ASPEED_INTC_GET_CLASS(&a->intc[0]);
+     AspeedINTCClass *icio = ASPEED_INTC_GET_CLASS(&a->intc[1]);
+-    g_autofree char *sram_name = NULL;
++    g_autofree char *name = NULL;
+     qemu_irq irq;
  
-@@ -35,6 +37,17 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
-             'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
+     /* Default boot region (SPI memory or ROMs) */
+@@ -649,9 +649,9 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     }
  
-+    def do_ast2700_i2c_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
-+            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
-+        exec_command_and_wait_for_pattern(self,
-+            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
-+        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-+                    property='temperature', value=18000)
-+        exec_command_and_wait_for_pattern(self,
-+            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
-+
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -73,8 +86,6 @@ def start_ast2700_test(self, name):
-                              f'loader,addr=0x430000000,cpu-num={i}')
- 
-         self.vm.add_args('-smp', str(num_cpu))
--        self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-         self.do_test_aarch64_aspeed_sdk_start(
-             self.scratch_file(name, 'image-bmc'))
- 
-@@ -83,28 +94,19 @@ def start_ast2700_test(self, name):
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
- 
--        exec_command_and_wait_for_pattern(self,
--            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
--            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
--        exec_command_and_wait_for_pattern(self,
--            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
--        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000)
--        exec_command_and_wait_for_pattern(self,
--            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
--
-     def test_aarch64_ast2700_evb_sdk_v09_05(self):
-         self.set_machine('ast2700-evb')
- 
-         self.archive_extract(self.ASSET_SDK_V905_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
-+        self.do_ast2700_i2c_test()
- 
-     def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-         self.set_machine('ast2700a1-evb')
- 
-         self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-         self.start_ast2700_test('ast2700-default')
--
-+        self.do_ast2700_i2c_test()
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
+     /* SRAM */
+-    sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
+-    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
+-                                 errp)) {
++    name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
++    if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
++                                errp)) {
+         return;
+     }
+     memory_region_add_subregion(s->memory,
 -- 
 2.43.0
 
