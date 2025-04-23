@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D343C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFA8C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WcL-0005s7-W7; Wed, 23 Apr 2025 05:42:11 -0400
+	id 1u7Wby-0004sf-7G; Wed, 23 Apr 2025 05:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wc2-00052L-3B
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1u7Wbo-0004Th-8d
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wbz-0008N9-7y
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:48 -0400
+ id 1u7Wbm-0008Ly-Le
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401306;
+ s=mimecast20190719; t=1745401293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4sWFJAsd6uDegNVb1OR0ba7NgY+ZHMqGRsB8GOL/kKE=;
- b=bK/7ot64OxrhlzFcF51Wl7HESjJjCfIJWd0t4H+Cc9d87DP/95+AUzRlWXs1ND2sTK0tVr
- NBOPlVOZNF8nXpyjpxeMA7GbLNoe3I1sfcTcLActC2I0FHB6MF3YqJmsw3yJVi/pLZw/PT
- 246WI0KX7W4bZOQ12XgQc0y9HHGXb2U=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=siEIdR86r67NqyI+Emn18SHDbW2jkuR6TNv9+/vLGVE=;
+ b=UjxszNP/S0fSwmwO9amAUyiGMBVwSxW1xwB9hYC6S20Nyk7uiQgYTh8ww8URq6x5AfAlyN
+ PpWXBbb6s7OqhMZO8dN21114hufuv2n8c10UWXMfds9u6/ijhCNA5B1YgcsJ9vzGR3GpnI
+ donff0LeCA0y0xKRi4sce9ezESi+lRQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-lxMOG7WPM8O0FUAhUhgOrQ-1; Wed, 23 Apr 2025 05:41:32 -0400
-X-MC-Unique: lxMOG7WPM8O0FUAhUhgOrQ-1
-X-Mimecast-MFC-AGG-ID: lxMOG7WPM8O0FUAhUhgOrQ_1745401288
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5f4d2b91f1eso6279402a12.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:32 -0700 (PDT)
+ us-mta-287-3ysJbgZUMy-wGnGaoiye-Q-1; Wed, 23 Apr 2025 05:41:31 -0400
+X-MC-Unique: 3ysJbgZUMy-wGnGaoiye-Q-1
+X-Mimecast-MFC-AGG-ID: 3ysJbgZUMy-wGnGaoiye-Q_1745401290
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-acb90bccc16so123991966b.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401288; x=1746006088;
+ d=1e100.net; s=20230601; t=1745401290; x=1746006090;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4sWFJAsd6uDegNVb1OR0ba7NgY+ZHMqGRsB8GOL/kKE=;
- b=sIpDUo4RNdIwhXSzkH+2T4lvwdsMs0z4UBxloJVPQGAew9O7vbJTPE3GsiYXoOKMQi
- yC6JE533iFwgqr4c0pAZil6xMFif5qxy7lst8VytNGejmhfbhfljlRwMgg1k0K5L0lCh
- AU/Jts1qDWWxmIqQy335oGlI/4t1T3uMQgLIBOZrshk00kXQTLSz+jkURz9CTiKiQdEo
- ikvBcfc8v5d2Rb/XgLLp/0G/OC5+bdrrUSA+nu9ANmDPJn3coh/AgmEsfsgjvhEYwaok
- Jd0QSwjsCu5RD2AZ7QqZ3IcLVSjaRma8fZwFEzsPJDD9QD3ksLDtaGwEDREAiYHcfvfD
- eJnw==
-X-Gm-Message-State: AOJu0Yy6ACBOD6afOj+LoBJr+NjwbA5IPbU/cIBJchc0UvO1WJ12afqs
- F9DOg4hHJ1lNsV++QurWZ/Q+gOSSp97Vl6JfEptj2bEnQ+iLOORqUO1S07vdJRjNsV9qQ+Vt7+S
- aERbRemUbUkFNBn83BmB+6Z9ozwJfvOc8QbQEZp/OoUibFVQOy8j2qVLmWtODMOXfg+CRa7FGH0
- sH21Rqa+tjq+v6mUfMcFYDlFeTn6DqrpR4la2/
-X-Gm-Gg: ASbGncv8mg0E8UzsprINhL8S35XeeFPBWuQknmfrMFoQzbiRa0ru4D98B6cJSIZGfZW
- b1EJdiT5dY8y4JTuScpKz3UZIbSBzCwwgpm/r14G5nUUIAHgsyLZedko9T8luxo58Ayx2fUBEjZ
- v741N1Y6NBuqp5TxKaCA0EeWiLzQNgZKsji6c8LTOLIbKF2j/wITkJCb5v/Ggc6pMQIsCGXsTYy
- bOALmZW+xKHhoPBNuluSxGH1NwFsu7FUk9Xs28bhSqIULsO1UWG9bGjCg2xdxvhTStPMoj0Uf31
- nmM8wWGT0qIrb9AO
-X-Received: by 2002:a05:6402:34d0:b0:5f6:d2ac:be44 with SMTP id
- 4fb4d7f45d1cf-5f6d2acc018mr1084753a12.8.1745401287906; 
- Wed, 23 Apr 2025 02:41:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHg6CAUO2yLvCkBXi1cr/iz1i94ErO7ocpSDd6NN8FrGrHB+XwvsphFRJDuqjc/YNfuXZyTig==
-X-Received: by 2002:a05:6402:34d0:b0:5f6:d2ac:be44 with SMTP id
- 4fb4d7f45d1cf-5f6d2acc018mr1084729a12.8.1745401287477; 
- Wed, 23 Apr 2025 02:41:27 -0700 (PDT)
+ bh=siEIdR86r67NqyI+Emn18SHDbW2jkuR6TNv9+/vLGVE=;
+ b=oWKmmyfXwvbADPu+Q3Qk/v/KE+PaF5048mTgvJ1CrIE9EVeG8x8h+zZY01dVDGto5d
+ qU1SDQRjA9VXGl1hxoZvP6v+9ExACpa6aiGUD6RqMcrsKVoQ8/9V45J5/F60pWmCvXxu
+ Bki7HYEdDX3tPLw6ahE7726Wi+rICfud6RX5cBoY5tPeoCU+25drIBO+c5xoKTCbhgh9
+ 5NDptbFeXpmIrDI86mNtY1q79vAztFGD9e7QD0nlwDhH+KInuPhCsAr7fR3Fr2ek2jel
+ bUNpRird8J+VqroTT2FPPt0H/TS+aDbQi55hi9V/dPfQWa6Y3k1jh3BEQQmQX4v4qmdd
+ nlHw==
+X-Gm-Message-State: AOJu0YxTzKwcNu/Re4ONhKNt5OoVzxZzyuOgal1UCikcJw4TPn1u0oI4
+ Qmb/UGD4sKyRSJ+6ps4pMGhntjkBnoaSCGMGno9SQJMjwNHjS27dUeUEd+YYcygEWggsSOilzPy
+ HdKuKIDL30xbPDjTYT5O++rYQb9sOFWUX5C6Z1gzbrue69gdcg6VNR4DYpVtA6WxT2OJjpzmMYT
+ zjvgelL7RNYSlA9vEEzXUWARopq3gv2Darv5WO
+X-Gm-Gg: ASbGncvEQ0uY02wIDd0QR+C+RZhwv4OpDmzGFwHAhx17H9z7J0S0m+QnfAFADHgphUF
+ jycAGgQANuouYCFJ7U1+rl2cpdZupYQcsTEeU20IHSDEudnwnsWbIPtUVNHkZ5U4IJPpIE2fepG
+ sOo6wL8EFjmuLBmo3GPuP6AkyiZ2pQa36YnyvCTXq1hYUMzW7wImgiJvKXWhhlrWmR7lJ6y81yE
+ 6kf5XGTJXnP1u1WfTVd+W1zOcTOopaG59zGSqUsXPuCRN/Vsvs0WsBnn0wWE07PGjnF/KHQFaNU
+ 5q8AYGynyVzQJ2BU
+X-Received: by 2002:a17:907:9703:b0:ac3:3f11:b49d with SMTP id
+ a640c23a62f3a-acb74761593mr1733266766b.0.1745401289631; 
+ Wed, 23 Apr 2025 02:41:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3yIWCo72T6O2rnWThf9MLobCN92qheksq2dvSRMomAxuo5kXTdnzaY2ixxcoV6eYTf1S5Kw==
+X-Received: by 2002:a17:907:9703:b0:ac3:3f11:b49d with SMTP id
+ a640c23a62f3a-acb74761593mr1733264666b.0.1745401289121; 
+ Wed, 23 Apr 2025 02:41:29 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f625549cc7sm7496534a12.3.2025.04.23.02.41.26
+ a640c23a62f3a-acb6efadd0asm799182766b.175.2025.04.23.02.41.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:41:26 -0700 (PDT)
+ Wed, 23 Apr 2025 02:41:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/34] target/i386: tcg: simplify computation of AF after
- INC/DEC
-Date: Wed, 23 Apr 2025 11:40:40 +0200
-Message-ID: <20250423094105.40692-11-pbonzini@redhat.com>
+Subject: [PULL 11/34] target/i386: emulate: microoptimize and explain
+ ADD_COUT_VEC/SUB_COUT_VEC
+Date: Wed, 23 Apr 2025 11:40:41 +0200
+Message-ID: <20250423094105.40692-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -109,49 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No difference in generated code, but the XOR-based formula is
-easily understood on its own.  This will make more sense once
-ADD/SUB stop using dst^src1^src2 to compute AF.
+The logic is the same, but the majority(NOT a, b, c) is brought out
+to a separate macro and implemented without NOT operations.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/cc_helper_template.h.inc | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ target/i386/hvf/x86_flags.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/tcg/cc_helper_template.h.inc b/target/i386/tcg/cc_helper_template.h.inc
-index 9aff16b8801..b821e5bca3b 100644
---- a/target/i386/tcg/cc_helper_template.h.inc
-+++ b/target/i386/tcg/cc_helper_template.h.inc
-@@ -175,13 +175,10 @@ static uint32_t glue(compute_all_logic, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
- static uint32_t glue(compute_all_inc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
- {
-     uint32_t cf, pf, af, zf, sf, of;
--    DATA_TYPE src2;
+diff --git a/target/i386/hvf/x86_flags.c b/target/i386/hvf/x86_flags.c
+index fedc70a1b80..60ab4f01a20 100644
+--- a/target/i386/hvf/x86_flags.c
++++ b/target/i386/hvf/x86_flags.c
+@@ -45,14 +45,30 @@
+ #define LF_MASK_CF     (0x01 << LF_BIT_CF)
+ #define LF_MASK_PO     (0x01 << LF_BIT_PO)
  
-     cf = src1;
--    src1 = dst - 1;
--    src2 = 1;
-     pf = compute_pf(dst);
--    af = (dst ^ src1 ^ src2) & CC_A;
-+    af = (dst ^ (dst - 1)) & CC_A; /* bits 0..3 are all clear */
-     zf = (dst == 0) * CC_Z;
-     sf = lshift(dst, 8 - DATA_BITS) & CC_S;
-     of = (dst == SIGN_MASK) * CC_O;
-@@ -191,13 +188,10 @@ static uint32_t glue(compute_all_inc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
- static uint32_t glue(compute_all_dec, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
- {
-     uint32_t cf, pf, af, zf, sf, of;
--    DATA_TYPE src2;
++/* majority(NOT a, b, c) = (a ^ b) ? b : c */
++#define MAJ_INV1(a, b, c)  ((((a) ^ (b)) & ((b) ^ (c))) ^ (c))
++
++/*
++ * ADD_COUT_VEC(x, y) = majority((x + y) ^ x ^ y, x, y)
++ *
++ * If two corresponding bits in x and y are the same, that's the carry
++ * independent of the value (x+y)^x^y.  Hence x^y can be replaced with
++ * 1 in (x+y)^x^y, resulting in majority(NOT (x+y), x, y)
++ */
+ #define ADD_COUT_VEC(op1, op2, result) \
+-   (((op1) & (op2)) | (((op1) | (op2)) & (~(result))))
++   MAJ_INV1(result, op1, op2)
  
-     cf = src1;
--    src1 = dst + 1;
--    src2 = 1;
-     pf = compute_pf(dst);
--    af = (dst ^ src1 ^ src2) & CC_A;
-+    af = (dst ^ (dst + 1)) & CC_A; /* bits 0..3 are all set */
-     zf = (dst == 0) * CC_Z;
-     sf = lshift(dst, 8 - DATA_BITS) & CC_S;
-     of = (dst == SIGN_MASK - 1) * CC_O;
++/*
++ * SUB_COUT_VEC(x, y) = NOT majority(x, NOT y, (x - y) ^ x ^ NOT y)
++ *                    = majority(NOT x, y, (x - y) ^ x ^ y)
++ *
++ * Note that the carry out is actually a borrow, i.e. it is inverted.
++ * If two corresponding bits in x and y are different, the value of the
++ * bit in (x-y)^x^y likewise does not matter.  Hence, x^y can be replaced
++ * with 0 in (x-y)^x^y, resulting in majority(NOT x, y, x-y)
++ */
+ #define SUB_COUT_VEC(op1, op2, result) \
+-   (((~(op1)) & (op2)) | (((~(op1)) ^ (op2)) & (result)))
+-
+-#define GET_ADD_OVERFLOW(op1, op2, result, mask) \
+-   ((((op1) ^ (result)) & ((op2) ^ (result))) & (mask))
++   MAJ_INV1(op1, op2, result)
+ 
+ /* ******************* */
+ /* OSZAPC */
 -- 
 2.49.0
 
