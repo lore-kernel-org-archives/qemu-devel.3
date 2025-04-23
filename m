@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE2BDC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 18:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC97DC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 19:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7f7C-0005p9-Eu; Wed, 23 Apr 2025 14:46:34 -0400
+	id 1u7fWQ-0004ZR-Gw; Wed, 23 Apr 2025 15:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u7f73-0005nK-Fz
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 14:46:28 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7fWF-0004Wg-Gq
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 15:12:28 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u7f71-0001sb-AH
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 14:46:25 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-73972a54919so111610b3a.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 11:46:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7fWA-0005PF-MC
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 15:12:25 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-224171d6826so2426005ad.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 12:12:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745433981; x=1746038781; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745435537; x=1746040337; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EhM7kuTkAUfVbtlveFdfxT0dzrHfQWObt9U9pD9Jguk=;
- b=j/lenxz+uUAdy0zEhYUVyyc8fd322463xUtaOGRNoX7fN5jFUhfK54HDvoPw5D/KO9
- l275Sj3T8SZQUTAiYs8RWU1ea2W9CJlVj9ueylY69Q+CBv0OMt1NwmboIoeIDon0lzE0
- D7ElomK4mEbz2l2hR6XTr/2Q6hDBWF+qZnhUpUz5Vhgs9eHiHp0vBdECuaGp+1jYFMsm
- Y/qFGkzizaBvxMPnM+WqQ3siM2v8UxINUXzTWDrgBOw9ykxCMdHtbpVQJEgPM43wIh1+
- iRmDroL2igANXFlyxQomO1y2makGlcQ17Zy3LsFoGaGaRGYqfmqmOJJaD1MJlL4waroM
- WStA==
+ bh=WSpaOewUGDfsmJ/JH2DEOD3bJQ8vU8Qu1u0PpJ4lyC4=;
+ b=ys4ZXlt5O31pZTWNKGUpzZElLe0fTIJZo7F4zVmefrAsv1XBcYgJCYDzYLQJS6aMZZ
+ NCb6KkPmloblyyBwqu3V29F59mOge9jfZ6YNZ6h9fGVN4GYhmV1CpWhQzx47Xzns9BtQ
+ gemmrkc/FLKmu4H7FF/XyUIZD8dnbCfODBkRfZ50oHlvmvtsiwu43v6rk+T84mvP8NwY
+ zd8kY9LtC2f/M4Uu/2ByLHn58H92/I0XfCmTvgcZ2APcOVOEcEJlE2cmUmee2W9c8wnQ
+ GtCA9VpAabP9LMbT2OGPkXnJ3F3500y5N+u4BURXE+eDE8byiTePiXFrUuarGoncwMSH
+ UTOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745433981; x=1746038781;
+ d=1e100.net; s=20230601; t=1745435537; x=1746040337;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EhM7kuTkAUfVbtlveFdfxT0dzrHfQWObt9U9pD9Jguk=;
- b=YM/ZrINMlxMoVK4g6gNpUi6U1D2+Zg2riqiN9dR1vo2QqvVVeS3gDLADJMt83lSvdX
- mD9DoGU84k9t1Qs8Gv5WVUtfiR3uvFmVdkyYPvOOAAjT+AnYvDqDMsOCXszK9iZH908a
- Cov+11s6Pcs+cyeIkPL6WquaUX//zBD4cMjFNYiGCf+ZB64Rkj//auKSlVawghnFG4qi
- iv/RWkpz+GMzdLCLBygNkCHXbIVc5RLr/x43SMuW2H0xr0pQ+i+R6Mac4CIElX1qSv8T
- s6uzwPjiQ4fTssXe9yiAXAsraFcPFgj7bxezy663zQkTV6bFPIEfLBRKBINBpvGu7obM
- G34w==
-X-Gm-Message-State: AOJu0YzFGRIFCz3HTGexmzO5XnmQVYvdP0abSsuR6k5UYl3n3i3R0jvS
- qlI+osNlcARb+ndm3bqMqF2oZCKZGsZiY0R6qVI7jIBG9fcItg0X07sVj7a+pNg=
-X-Gm-Gg: ASbGnctz41T1yo7O6xp8Miuht/+mBS5rLr1FLzLyUslTjgDcsEeW/yui5ocV0DEklqV
- B+qXV19NSgQPLI1/nuSyRLZK1ZRNFu/vbN7c78cNCSzw5cOyg5SpqkGZAgTvMtWHVtDxomozRTW
- xkLfbl103BwjznaV93NVAt4PprPOmkSBJQrD6VVXPj/YNWG2U17Hw+RfWxMV2/WJkukefmDpbnu
- v6HjCwXN1EpnaI43AGACObfAh30Lglb4dCziWG5UmtdTM+nSVWURsd4egDiHFZUj76B/uwp6q6q
- es3oXAJ19LG/NMmVSl/z2PAziT63VIaf3hYm7PLUSCYoLAyV5bQe/OE=
-X-Google-Smtp-Source: AGHT+IEj1m8U60UnIV0Rrh17ZSBGRWD9iuiRQ6KR9jGPsGhF3n3S4RJettFeuBbYi1hdHahGXawWKQ==
-X-Received: by 2002:a05:6a00:1495:b0:736:6279:ca25 with SMTP id
- d2e1a72fcca58-73dc15cf685mr30405480b3a.24.1745433981212; 
- Wed, 23 Apr 2025 11:46:21 -0700 (PDT)
-Received: from [192.168.68.110] ([152.234.125.33])
+ bh=WSpaOewUGDfsmJ/JH2DEOD3bJQ8vU8Qu1u0PpJ4lyC4=;
+ b=Yh9ZuRLgqHQlIuiUoU+mv2ZR53g1GLjOnoiKEkpqF/CIuYI8ECz9tM4a+AqCI12nvL
+ /z6wZmMG5YSSC+x7x9pAjHmBjDCrPy4mp+dgZ6BxRa90VKM+2CaHRBT6WkjqUNuaWBZq
+ Y7mWhh2RH76BOpfnGJhK1Lg1A3ViVJ11QOWFsdGGwbnG7AU+eXKuGo5S7qKp22pHolMa
+ LJGqKAZDmaG7gdzgqLpdj4ENsFDv2F3dDjZmdWxvKzsiYLzsd6pVIItSSO8hnLBVwLDS
+ tzU6HzZDoMT8I6zewtPlnkbLnfoPD9x+dKANUFCMqXN8td96aB809TwezvP0H1zMsYK0
+ ZxMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhmhkM0ZuO8+Ohrc2QaovnEiHdy76VMtaxeQpOS4bwx5SzkP0/2UBZzFZotFjGpZ7DjWKXy3tnSEFX@nongnu.org
+X-Gm-Message-State: AOJu0YxqpXlNfPWKoRJrRbgm+Evrep1zrOa4AE7BGfkcSAWcg/WYydH5
+ daF7qcDIQd5GU+0f03LWBc6wCLBwb6cL6cDz/Pwjxhi1SRGTbbVovOU7v9Is8rI=
+X-Gm-Gg: ASbGncuOGHmwRtCjXKW6gyDrQk5rHiDC0KYjq29TkVZGzADRyYUrARyX4IkanzUHuc2
+ W+CB3xKHFMOTBTC42QXw+uCuFgwwLS0WA2/eSafOPXnSyBIDOVjY2QavB4/a6Onubec7MptIY9R
+ HKLU3wspD60c5lU1e6LWsO1fJeWZ+aZEhDo5hnQ8fR4qYNzZxX4l4gjjiqlwelmNcNHI37nij+W
+ LZQr09CLo2iiHOC5RiL+LerSBi+uK/e+Ss/Tbt9oMl/xP4VOcZ9CpZrykSP4stkNYCZOmZgyJOT
+ /lqzeCYmHfyiwANP6S5n+VuvOHuhKwqCKqOQwLWJ2uu/8MWnovesq+a5+xTYW2VQpAZIX4pVJHN
+ nPK1xds4=
+X-Google-Smtp-Source: AGHT+IEnz1RJKHW8WQXzrLS23bdzAWEV6xOQ50rmhimfSNvQXASPIAGA4H15CN2Dt8C6F7lCoC/+Cw==
+X-Received: by 2002:a17:902:f14c:b0:220:e1e6:4472 with SMTP id
+ d9443c01a7336-22c5357f2f4mr229752595ad.13.1745435532627; 
+ Wed, 23 Apr 2025 12:12:12 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73dbf8e46e3sm11358415b3a.59.2025.04.23.11.46.18
+ d9443c01a7336-22c50eceb74sm107895415ad.166.2025.04.23.12.12.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 11:46:20 -0700 (PDT)
-Message-ID: <4ae09d20-ed68-477e-92eb-b9dd31a919bc@ventanamicro.com>
-Date: Wed, 23 Apr 2025 15:46:16 -0300
+ Wed, 23 Apr 2025 12:12:12 -0700 (PDT)
+Message-ID: <6f2805ef-2fcd-4525-a7fd-cad59c64f38c@linaro.org>
+Date: Wed, 23 Apr 2025 12:12:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] target/riscv/kvm: reset 'scounteren' with host val
-To: Andrea Bolognani <abologna@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20250417124839.1870494-1-dbarboza@ventanamicro.com>
- <20250417124839.1870494-8-dbarboza@ventanamicro.com>
- <20250423-7d7e348ed0ec6cadb1efe399@orel>
- <CABJz62NKOzO=aE-fz9Ad2gxLnSNvU41xnfhOS0EKLim0SnYOtA@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 06/19] hw/arm: Filter machine types for
+ qemu-system-arm/aarch64 binaries
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
+References: <20250422145502.70770-1-philmd@linaro.org>
+ <20250422145502.70770-7-philmd@linaro.org>
+ <a4a65446-07b7-4048-993a-6d0d7848b163@linaro.org>
+ <0d3d3209-4513-4366-a105-6b71aa9caa88@linaro.org>
+ <1937ddb0-a87d-4a87-ac73-3be72ded0c55@linaro.org>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CABJz62NKOzO=aE-fz9Ad2gxLnSNvU41xnfhOS0EKLim0SnYOtA@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <1937ddb0-a87d-4a87-ac73-3be72ded0c55@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,30 +110,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/23/25 3:06 PM, Andrea Bolognani wrote:
-> On Wed, Apr 23, 2025 at 05:46:16PM +0200, Andrew Jones wrote:
->> I would just drop this patch and make the default 'virt' cpu type 'max',
->> then nobody will hit the issue.
+On 4/23/25 10:43, Pierrick Bouvier wrote:
+>>>> +        .interfaces     = (InterfaceInfo[]) {
+>>>> +            { TYPE_TARGET_ARM_MACHINE },
+>>>> +            { TYPE_TARGET_AARCH64_MACHINE },
+>>>> +            { },
+>>>> +        },
+>>>
+>>> Don't replicate these anonymous arrays.
+>>> You want common
+>>>
+>>> extern InterfaceInfo arm_aarch64_machine_interfaces[];
+>>> extern InterfaceInfo aarch64_machine_interfaces[];
+>>>
+>>> to be shared by all.
+>>
 > 
-> FWIW virt-manager has recently started doing just that:
-> 
->    https://github.com/virt-manager/virt-manager/pull/784
-> 
+> @Richard:
+> Is it a concern regarding code maintenance, or potential impact on .data?
 
-We have a patch in the QEMU ML that does that:
-
-"[PATCH 2/2] hw/riscv/virt.c: change default CPU to 'max'"
-
-https://lore.kernel.org/qemu-riscv/20250404152750.332791-3-dbarboza@ventanamicro.com/
+I was thinking of impact on .data, especially with so many.
 
 
-Any updates in that patch is appreciated, in particular if it comes from
-the tooling side.
-
-
-Thanks,
-
-Daniel
+r~
 
