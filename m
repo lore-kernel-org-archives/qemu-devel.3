@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A1FC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E69CC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WSx-0003Y5-VE; Wed, 23 Apr 2025 05:32:28 -0400
+	id 1u7WTd-0004X3-5I; Wed, 23 Apr 2025 05:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WSv-0003TS-S6
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:32:26 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WTb-0004S9-Ir
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:33:07 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WSt-0007Oo-Lp
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:32:25 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cf848528aso45797235e9.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:32:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WTZ-0007RP-HR
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:33:07 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39141ffa9fcso3605028f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745400741; x=1746005541; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745400783; x=1746005583; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dtueDHNQMsK568mC/rymypiKgkzlWQD0c0Rtg3Qc328=;
- b=dHHD1siGGS02BsUYH44RZ7lMn1GhfeTo5904h6T/kuGa6d3QaiuIiY20agdVw/ucR8
- VLHNLucubU0FWOcH2rS+HtGZheq0D7sqksc9CpafmqOJKY+v7z1gYUY4DeR6UxvUQM6P
- 7Hs17hUtlsqTaKucRkKFH5DDZhi59Vt4XwVahM9eMvSY/hYsGszXEn6mKSbSuVtgcc7p
- jRiHdjMMm7m+QGDmfBi/U3PrcwCw1uyshx7+xPk9sfCobS6tdryLDMpcnyBPH1xdMvKY
- ZDbJ59WNpvEeLQR89xtme4ZHaQVc6z0GHk27cRtofRnM7t/sJK+FD0Z/rvOiEd9fowbj
- Pr4g==
+ bh=VQ/1W89ukXJD3s+bae/D4pE58Zk4HqS/ETHOTRBiYpI=;
+ b=BXg9GcNjd4fIYRRls/3QJ6ZhnVXQgCoUzodW0qKiG1WmmqVQ8H9Zb1YzR3w+slUAqX
+ Kp9zJjpV3p2Vvu+8d6KNe9tMLt7w/WMEQoky5xPJKORCuZO7BMdjrq7yFR8Db7G6uvLi
+ ndevrbBmp4wNvFnaFxDjJFIdwEjhMmXzoPxnZoD/Ef7WIPGVrTSGwWiF5jlTvjszpVof
+ 9cf1rHaorbmd5XpQ9K5zipSDL/kXU9/u8t0tqwcW9YgHntF3iQsF5PwHgoJ7EWA3sjWa
+ pikL3ih0nS4jZy5kS35c17oY5lbLiafYjYGUONoIHKga2FeZV/dKqqdMwgvwA181Rh0F
+ FdzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745400741; x=1746005541;
+ d=1e100.net; s=20230601; t=1745400783; x=1746005583;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dtueDHNQMsK568mC/rymypiKgkzlWQD0c0Rtg3Qc328=;
- b=veczvD+EkqDSXaU2FJUlGod2hGKDnXXGeRxhlWw9rpSNyfTpGVjSRbqS5H899husek
- eZLTBzwnrs8b6xTJ4FjUcRD5zQR6RQQNA6Z2eZ+PtHxKx420nRL1z1Cb/uMa0Gcs9IDX
- DEmHBJ5EBVXbb03IFofyGvPLF4T/EJC8m/qDis8AN1rMcD9A3zWK8SvTLle9VcC0yVYS
- +Hjf/zMjlJVS8NrnCT85XzuQRGzgDYmKfdXb2xb96OFL0wJ4EXvc4Nnmd5x7LjA61mjc
- 0yQxY/x0JSThJUXK3SdjB11Lx0IknjtPGsPJP/35y9V+jnKhJwrIVW+bUZX7FsenZkLP
- pI+g==
+ bh=VQ/1W89ukXJD3s+bae/D4pE58Zk4HqS/ETHOTRBiYpI=;
+ b=VjO6kEQcKtuCh5ccVlCcN92KPvzSIEXc2AMQwzRmLkcblIaNpFHFoxVFnWK7n8gweL
+ n6DFhrC4EZxZzV52kpHDjkrroNpDhgZ87a0v5Vsv0pJJ77P1doTy0T52WLPim522SRFf
+ 4XNki/wfTLJqR1DW1MRHVuBMd+1iONbKB716d+6LCfXiA9ZAjW3sm5Jfnh/K6eeEXNve
+ HayYlxcQd3unV4G0N/QamGs+VcnGdKh7WPhh++5PdDzwQiUQK5KA2gsPuiwr643AH2AN
+ 0w8uH8esp02aMff8O3ZyldAIU4KltbxXu8m3T3QD27/0BWPNMctddzLvEd9to+wa90UD
+ VUBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKQtZfmaBhboe4w2WgFoqXsu2T+PbysllvvFFuMdVUMEjoNGmsUkoLubqx2j7UNv+TcFBDyQ/Cz7yS@nongnu.org
-X-Gm-Message-State: AOJu0Yw/aTHoCdgylvIPwe0YwVjKySeM1lbnSs7VeLMRk/fvqzmV2FQf
- cqGPzck3q1G/CqcScqiJyIooJE9XyfQwNXxC1wWeRiEI16GjBSII8gOSk0DnQ1Q=
-X-Gm-Gg: ASbGncv7uG1+b9TRfZItrSM3zsZcn4k6RMSmQ5PjqFY5NN83LcjlZuRS7B7YUny0CJF
- vX+Etygg07M8CmueTEOS1NBrbDSTG0lb4JfbjbZ+uhAwr4ouwKPyM7/F6eYIXPa8GSCpOU1xbuT
- IfVq8tlktI6BhRkFK2tB9afPNzziuWgy0Mk6smvB6UQa7Ji4jKyO0raRWgJVK1zupf7QKVEncV0
- R1lempScVV4to4+ukjyoXHvhT08v6Obwh2cLT85vantEzLsc/V6VtAEpJ1Vpnk/Z5EjUtNsFtjl
- ZazUm5radEMqMtUGT1AEOKBB/oUb4UPkD5OgCFDj70OqEmAwULZZolUyWRKvga4UqvgBs6SkNqW
- dkCeDl4/R
-X-Google-Smtp-Source: AGHT+IG2c3LwUMUa9iRLKmwcuc1TVx4QIzGildiX3BmjvvJ6GmcBZCzIWR1cVfzq5flWdYgx9ktyNw==
-X-Received: by 2002:a05:600c:1554:b0:43c:e305:6d50 with SMTP id
- 5b1f17b1804b1-4406ac1a731mr136058115e9.24.1745400741418; 
- Wed, 23 Apr 2025 02:32:21 -0700 (PDT)
+ AJvYcCUdeji7g7Z4OFiTYGTfGW+/pbDerJ6ndgWYsFlGJi37WrPWqiHWTz6kxWf6sd6F/5Jcf12kr80Jbw9g@nongnu.org
+X-Gm-Message-State: AOJu0Ywpt5XlF0jcAPTYfwz+SKtpGyo7DcW2ocZn7Upjk86eAjpsmCRN
+ kNwCudtMRlGTSm1QBr6T0SqiFRfRms1q0XA1JZAd0X9f+C5rsBmeRjfmVDweMzZ+FBSE+V9gRaH
+ j
+X-Gm-Gg: ASbGncuCHLSrWdLYPU/+IBCDq2VPah578MLqoVmdZToQP/Hes2vk+HO1uILXoi+gHsO
+ dPa9UPxQhy0Yg4ahfdtbe0TmLgdtzrVEFwbdb+lwae+HTXdq0DOD0oxJEny9qqvckf/89bqwZ/E
+ +Kg4C47yfd6Aj+VVFb+ce7hP8Lr5uAXRvpHMyssJPpqk6jtn8EKi69XROQ/CBYx67Y1O7nwbV+l
+ GSrbEjuI1rlBw77TQsFd0vVeJgqg4pl2Q4YRFVgL7iYy4Zm1oIAIYxaPZ6PjAwZ5eBCCs2isrru
+ /wJPb0rIQEwts3K+NH79eCPQuTNe3Nx7ihQJJyU8w8G/pvWJEos4eV2/sHuZTtjc8FnkHpSGLR6
+ ExxX3RHBh
+X-Google-Smtp-Source: AGHT+IEWmwu78Yjz2+NnG6Un5QfG3mZaFGxgf0N5Z9OI5+y7YiZtVMLGEGzmewlt1w33S5vsEK7ytA==
+X-Received: by 2002:a05:6000:2209:b0:39c:2c38:4599 with SMTP id
+ ffacd0b85a97d-39efbaee552mr14464134f8f.48.1745400783279; 
+ Wed, 23 Apr 2025 02:33:03 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d17a36sm19321455e9.3.2025.04.23.02.32.20
+ ffacd0b85a97d-39efa43d07csm18462886f8f.58.2025.04.23.02.33.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 02:32:20 -0700 (PDT)
-Message-ID: <8b21e5d9-04ee-4e44-9804-0af6f02f0305@linaro.org>
-Date: Wed, 23 Apr 2025 11:32:20 +0200
+ Wed, 23 Apr 2025 02:33:02 -0700 (PDT)
+Message-ID: <6e534445-521c-4807-b591-928375d343e4@linaro.org>
+Date: Wed, 23 Apr 2025 11:33:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 036/147] include/system: Move exec/ioport.h to
- system/ioport.h
+Subject: Re: [PATCH 037/147] include/system: Move exec/ram_addr.h to
+ system/ram_addr.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-37-richard.henderson@linaro.org>
+ <20250422192819.302784-38-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-37-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-38-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,23 +110,43 @@ On 22/4/25 21:26, Richard Henderson wrote:
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/display/vga_int.h              | 2 +-
->   include/hw/char/parallel-isa.h    | 2 +-
->   include/hw/dma/i8257.h            | 2 +-
->   include/hw/ide/ide-bus.h          | 2 +-
->   include/hw/isa/isa.h              | 2 +-
->   include/{exec => system}/ioport.h | 6 ++----
->   hw/block/fdc-isa.c                | 2 +-
->   monitor/hmp-cmds.c                | 2 +-
->   system/ioport.c                   | 2 +-
->   system/physmem.c                  | 2 +-
->   system/qtest.c                    | 2 +-
->   target/i386/nvmm/nvmm-all.c       | 2 +-
->   target/i386/whpx/whpx-all.c       | 2 +-
->   tests/qtest/fuzz/qtest_wrappers.c | 2 +-
->   MAINTAINERS                       | 2 +-
->   15 files changed, 16 insertions(+), 18 deletions(-)
->   rename include/{exec => system}/ioport.h (97%)
+>   include/{exec => system}/ram_addr.h | 7 +++----
+>   accel/kvm/kvm-all.c                 | 2 +-
+>   accel/tcg/cputlb.c                  | 2 +-
+>   accel/tcg/translate-all.c           | 2 +-
+>   hw/ppc/spapr.c                      | 2 +-
+>   hw/ppc/spapr_caps.c                 | 2 +-
+>   hw/ppc/spapr_pci.c                  | 2 +-
+>   hw/remote/memory.c                  | 2 +-
+>   hw/remote/proxy-memory-listener.c   | 2 +-
+>   hw/s390x/s390-stattrib-kvm.c        | 2 +-
+>   hw/s390x/s390-stattrib.c            | 2 +-
+>   hw/s390x/s390-virtio-ccw.c          | 2 +-
+>   hw/vfio/common.c                    | 3 +--
+>   hw/vfio/container.c                 | 2 +-
+>   hw/vfio/spapr.c                     | 2 +-
+>   hw/virtio/virtio-mem.c              | 2 +-
+>   migration/ram.c                     | 2 +-
+>   system/memory.c                     | 2 +-
+>   system/physmem.c                    | 2 +-
+>   target/arm/tcg/mte_helper.c         | 2 +-
+>   target/ppc/kvm.c                    | 2 +-
+>   target/s390x/kvm/kvm.c              | 2 +-
+>   MAINTAINERS                         | 2 +-
+>   23 files changed, 25 insertions(+), 27 deletions(-)
+>   rename include/{exec => system}/ram_addr.h (99%)
+> 
+> diff --git a/include/exec/ram_addr.h b/include/system/ram_addr.h
+> similarity index 99%
+> rename from include/exec/ram_addr.h
+> rename to include/system/ram_addr.h
+> index 8677761af5..3b81c3091f 100644
+> --- a/include/exec/ram_addr.h
+> +++ b/include/system/ram_addr.h
+> @@ -16,10 +16,9 @@
+>    * The functions declared here will be removed soon.
+
+=)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
