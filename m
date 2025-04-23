@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08592C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2923C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:03:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Ww2-0007Fl-B6; Wed, 23 Apr 2025 06:02:30 -0400
+	id 1u7Ww2-0007Fq-Qi; Wed, 23 Apr 2025 06:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u7Wvz-0007F5-A5
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:02:27 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1u7Ww1-0007FN-0Z
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:02:29 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u7Wvw-0002Az-Lf
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:02:27 -0400
+ id 1u7Wvx-0002B5-W3
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:02:28 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D0EAF55D23D;
- Wed, 23 Apr 2025 12:02:22 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 07F6F55D238;
+ Wed, 23 Apr 2025 12:02:24 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Odw9OpO8ld9q; Wed, 23 Apr 2025 12:02:20 +0200 (CEST)
+ with ESMTP id VlBrZ1H9VqFS; Wed, 23 Apr 2025 12:02:21 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D646F55D238; Wed, 23 Apr 2025 12:02:20 +0200 (CEST)
-Message-ID: <ae793d1f81e3577605759c43871722324a1ef2cb.1745402140.git.balaton@eik.bme.hu>
+ id E86B255D23C; Wed, 23 Apr 2025 12:02:21 +0200 (CEST)
+Message-ID: <57f179bd3904c1f2ca062ca4d4ff9592bb4f4daa.1745402140.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1745402140.git.balaton@eik.bme.hu>
 References: <cover.1745402140.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 1/2] system/datadir: Add new type constant for DTB files
+Subject: [PATCH v2 2/2] pc-bios: Move device tree files in their own subdir
 To: qemu-devel@nongnu.org
 Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
  philmd@linaro.org
-Date: Wed, 23 Apr 2025 12:02:20 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Wed, 23 Apr 2025 12:02:21 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,124 +61,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently DTB files are mixed with ROMs under BIOS type. Separate them
-under a new type constant and turn defines into an enum while at it.
+We have several device tree files already and may have more in the
+future so add a new dtb subdirectory and move device tree files there
+so they are not mixed with ROM binaries.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/microblaze/boot.c   |  2 +-
- hw/ppc/ppc440_bamboo.c |  2 +-
- hw/ppc/sam460ex.c      |  2 +-
- hw/ppc/virtex_ml507.c  |  2 +-
- include/qemu/datadir.h | 11 ++++++++---
- system/datadir.c       |  3 ++-
- 6 files changed, 14 insertions(+), 8 deletions(-)
+ MAINTAINERS                                |   2 +-
+ pc-bios/{ => dtb}/bamboo.dtb               | Bin
+ pc-bios/{ => dtb}/bamboo.dts               |   0
+ pc-bios/{ => dtb}/canyonlands.dtb          | Bin
+ pc-bios/{ => dtb}/canyonlands.dts          |   0
+ pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
+ pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
+ pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
+ pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
+ pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
+ pc-bios/meson.build                        |  23 +--------------------
+ qemu.nsi                                   |   2 +-
+ system/datadir.c                           |   4 +++-
+ 13 files changed, 29 insertions(+), 25 deletions(-)
+ rename pc-bios/{ => dtb}/bamboo.dtb (100%)
+ rename pc-bios/{ => dtb}/bamboo.dts (100%)
+ rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
+ rename pc-bios/{ => dtb}/canyonlands.dts (100%)
+ create mode 100644 pc-bios/dtb/meson.build
+ rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
+ rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
+ rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
+ rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
 
-diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
-index 60b4ef0abe..4a9c9df318 100644
---- a/hw/microblaze/boot.c
-+++ b/hw/microblaze/boot.c
-@@ -130,7 +130,7 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
-     dtb_arg = current_machine->dtb;
-     /* default to pcbios dtb as passed by machine_init */
-     if (!dtb_arg && dtb_filename) {
--        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, dtb_filename);
-+        filename = qemu_find_file(QEMU_FILE_TYPE_DTB, dtb_filename);
-     }
- 
-     boot_info.machine_cpu_reset = machine_cpu_reset;
-diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-index 099fda3909..6fff0d8afb 100644
---- a/hw/ppc/ppc440_bamboo.c
-+++ b/hw/ppc/ppc440_bamboo.c
-@@ -64,7 +64,7 @@ static int bamboo_load_device_tree(MachineState *machine,
-     uint32_t tb_freq = 400000000;
-     uint32_t clock_freq = 400000000;
- 
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, BINARY_DEVICE_TREE_FILE);
-+    filename = qemu_find_file(QEMU_FILE_TYPE_DTB, BINARY_DEVICE_TREE_FILE);
-     if (!filename) {
-         return -1;
-     }
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index 7dc3b309c8..327fac440f 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -142,7 +142,7 @@ static int sam460ex_load_device_tree(MachineState *machine,
-     uint32_t clock_freq = CPU_FREQ;
-     int offset;
- 
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, BINARY_DEVICE_TREE_FILE);
-+    filename = qemu_find_file(QEMU_FILE_TYPE_DTB, BINARY_DEVICE_TREE_FILE);
-     if (!filename) {
-         error_report("Couldn't find dtb file `%s'", BINARY_DEVICE_TREE_FILE);
-         exit(1);
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 17115be74d..c9969ae48a 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -146,7 +146,7 @@ static int xilinx_load_device_tree(MachineState *machine,
-         /* Try the local "ppc.dtb" override.  */
-         fdt = load_device_tree("ppc.dtb", &fdt_size);
-         if (!fdt) {
--            path = qemu_find_file(QEMU_FILE_TYPE_BIOS, BINARY_DEVICE_TREE_FILE);
-+            path = qemu_find_file(QEMU_FILE_TYPE_DTB, BINARY_DEVICE_TREE_FILE);
-             if (path) {
-                 fdt = load_device_tree(path, &fdt_size);
-                 g_free(path);
-diff --git a/include/qemu/datadir.h b/include/qemu/datadir.h
-index 21f9097f58..cca32af300 100644
---- a/include/qemu/datadir.h
-+++ b/include/qemu/datadir.h
-@@ -1,11 +1,16 @@
- #ifndef QEMU_DATADIR_H
- #define QEMU_DATADIR_H
- 
--#define QEMU_FILE_TYPE_BIOS   0
--#define QEMU_FILE_TYPE_KEYMAP 1
-+typedef enum {
-+    QEMU_FILE_TYPE_BIOS,
-+    QEMU_FILE_TYPE_DTB,
-+    QEMU_FILE_TYPE_KEYMAP,
-+} QemuFileType;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d54b5578f8..9349950527 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1569,7 +1569,7 @@ F: hw/pci-host/ppc440_pcix.c
+ F: hw/display/sm501*
+ F: hw/ide/sii3112.c
+ F: hw/rtc/m41t80.c
+-F: pc-bios/canyonlands.dt[sb]
++F: pc-bios/dtb/canyonlands.dt[sb]
+ F: pc-bios/u-boot-sam460ex-20100605.bin
+ F: roms/u-boot-sam460ex
+ F: docs/system/ppc/amigang.rst
+diff --git a/pc-bios/bamboo.dtb b/pc-bios/dtb/bamboo.dtb
+similarity index 100%
+rename from pc-bios/bamboo.dtb
+rename to pc-bios/dtb/bamboo.dtb
+diff --git a/pc-bios/bamboo.dts b/pc-bios/dtb/bamboo.dts
+similarity index 100%
+rename from pc-bios/bamboo.dts
+rename to pc-bios/dtb/bamboo.dts
+diff --git a/pc-bios/canyonlands.dtb b/pc-bios/dtb/canyonlands.dtb
+similarity index 100%
+rename from pc-bios/canyonlands.dtb
+rename to pc-bios/dtb/canyonlands.dtb
+diff --git a/pc-bios/canyonlands.dts b/pc-bios/dtb/canyonlands.dts
+similarity index 100%
+rename from pc-bios/canyonlands.dts
+rename to pc-bios/dtb/canyonlands.dts
+diff --git a/pc-bios/dtb/meson.build b/pc-bios/dtb/meson.build
+new file mode 100644
+index 0000000000..7a71835bca
+--- /dev/null
++++ b/pc-bios/dtb/meson.build
+@@ -0,0 +1,23 @@
++dtbs = [
++  'bamboo.dtb',
++  'canyonlands.dtb',
++  'petalogix-ml605.dtb',
++  'petalogix-s3adsp1800.dtb',
++]
 +
- /**
-  * qemu_find_file:
-  * @type: QEMU_FILE_TYPE_BIOS (for BIOS, VGA BIOS)
-+ *        QEMU_FILE_TYPE_DTB (for device tree blobs)
-  *        or QEMU_FILE_TYPE_KEYMAP (for keymaps).
-  * @name: Relative or absolute file name
-  *
-@@ -20,7 +25,7 @@
-  *
-  * Returns: a path that can access @name, or NULL if no matching file exists.
-  */
--char *qemu_find_file(int type, const char *name);
-+char *qemu_find_file(QemuFileType type, const char *name);
- void qemu_add_default_firmwarepath(void);
- void qemu_add_data_dir(char *path);
- void qemu_list_data_dirs(void);
++dtc = find_program('dtc', required: false)
++if dtc.found()
++  foreach out : dtbs
++    f = fs.replace_suffix(out, '.dts')
++    custom_target(f,
++        build_by_default: have_system,
++        input: files(f),
++        output: out,
++        install: get_option('install_blobs'),
++        install_dir: qemu_datadir / 'dtb',
++        command: [ dtc, '-q', '-I', 'dts', '-O', 'dtb',
++                        '-o', '@OUTPUT@', '@INPUT0@' ])
++  endforeach
++else
++    install_data(dtbs, install_dir: qemu_datadir / 'dtb')
++endif
+diff --git a/pc-bios/petalogix-ml605.dtb b/pc-bios/dtb/petalogix-ml605.dtb
+similarity index 100%
+rename from pc-bios/petalogix-ml605.dtb
+rename to pc-bios/dtb/petalogix-ml605.dtb
+diff --git a/pc-bios/petalogix-ml605.dts b/pc-bios/dtb/petalogix-ml605.dts
+similarity index 100%
+rename from pc-bios/petalogix-ml605.dts
+rename to pc-bios/dtb/petalogix-ml605.dts
+diff --git a/pc-bios/petalogix-s3adsp1800.dtb b/pc-bios/dtb/petalogix-s3adsp1800.dtb
+similarity index 100%
+rename from pc-bios/petalogix-s3adsp1800.dtb
+rename to pc-bios/dtb/petalogix-s3adsp1800.dtb
+diff --git a/pc-bios/petalogix-s3adsp1800.dts b/pc-bios/dtb/petalogix-s3adsp1800.dts
+similarity index 100%
+rename from pc-bios/petalogix-s3adsp1800.dts
+rename to pc-bios/dtb/petalogix-s3adsp1800.dts
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index 34d6616c32..34d8cc4f33 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -86,31 +86,10 @@ blobs = [
+   'vof-nvram.bin',
+ ]
+ 
+-dtc = find_program('dtc', required: false)
+-foreach f : [
+-  'bamboo.dts',
+-  'canyonlands.dts',
+-  'petalogix-s3adsp1800.dts',
+-  'petalogix-ml605.dts',
+-]
+-  out = fs.replace_suffix(f, '.dtb')
+-  if dtc.found()
+-    custom_target(f,
+-        build_by_default: have_system,
+-        input: files(f),
+-        output: out,
+-        install: get_option('install_blobs'),
+-        install_dir: qemu_datadir,
+-        command: [ dtc, '-q', '-I', 'dts', '-O', 'dtb',
+-                        '-o', '@OUTPUT@', '@INPUT0@' ])
+-  else
+-    blobs += out
+-  endif
+-endforeach
+-
+ if get_option('install_blobs')
+   install_data(blobs, install_dir: qemu_datadir)
+ endif
+ 
+ subdir('descriptors')
++subdir('dtb')
+ subdir('keymaps')
+diff --git a/qemu.nsi b/qemu.nsi
+index b186f223e1..d419986ca0 100644
+--- a/qemu.nsi
++++ b/qemu.nsi
+@@ -204,7 +204,6 @@ Section "Uninstall"
+     Delete "$INSTDIR\*.bmp"
+     Delete "$INSTDIR\*.bin"
+     Delete "$INSTDIR\*.dll"
+-    Delete "$INSTDIR\*.dtb"
+     Delete "$INSTDIR\*.fd"
+     Delete "$INSTDIR\*.img"
+     Delete "$INSTDIR\*.lid"
+@@ -215,6 +214,7 @@ Section "Uninstall"
+     Delete "$INSTDIR\qemu-io.exe"
+     Delete "$INSTDIR\qemu.exe"
+     Delete "$INSTDIR\qemu-system-*.exe"
++    RMDir /r "$INSTDIR\dtb"
+     RMDir /r "$INSTDIR\doc"
+     RMDir /r "$INSTDIR\share"
+     ; Remove generated files
 diff --git a/system/datadir.c b/system/datadir.c
-index c9237cb5d4..e450b84ce9 100644
+index e450b84ce9..f96f8fc264 100644
 --- a/system/datadir.c
 +++ b/system/datadir.c
-@@ -30,7 +30,7 @@
- static const char *data_dir[16];
- static int data_dir_idx;
- 
--char *qemu_find_file(int type, const char *name)
-+char *qemu_find_file(QemuFileType type, const char *name)
- {
-     int i;
-     const char *subdir;
-@@ -44,6 +44,7 @@ char *qemu_find_file(int type, const char *name)
+@@ -44,9 +44,11 @@ char *qemu_find_file(QemuFileType type, const char *name)
  
      switch (type) {
      case QEMU_FILE_TYPE_BIOS:
-+    case QEMU_FILE_TYPE_DTB:
+-    case QEMU_FILE_TYPE_DTB:
          subdir = "";
          break;
++    case QEMU_FILE_TYPE_DTB:
++        subdir = "dtb/";
++        break;
      case QEMU_FILE_TYPE_KEYMAP:
+         subdir = "keymaps/";
+         break;
 -- 
 2.41.3
 
