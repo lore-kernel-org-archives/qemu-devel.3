@@ -4,66 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32533C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFEFC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7a5Q-0007ih-Tz; Wed, 23 Apr 2025 09:24:26 -0400
+	id 1u7a7F-00007e-N9; Wed, 23 Apr 2025 09:26:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7a5I-0007h9-MX
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:24:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7a75-000054-4V
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:26:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7a5G-0002GL-NH
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:24:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7a72-0002YH-6z
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:26:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745414654;
+ s=mimecast20190719; t=1745414761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JR1NRBtqwtJVMzKOvzNW7qjrT8aSgPCqBJTftQAMzDU=;
- b=ZvRCYOik4k193n+YDX7Ga2ChTsEh8t+hAkeNpcwJsLf42nhgIaJ33y0sUhF2aV9tD4E1eP
- wy1/70EqDGCyPaa7s3SRhM+VHL0l+nBST3G3hOtyGV6K/zKw537wL7ZfR+fR1DPcDKLhgo
- ndtbP67K/WEFuBRdLtxvvbvGxB49ezc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-Sbxpyb8DPxmbKtrEFH5YGQ-1; Wed,
- 23 Apr 2025 09:24:08 -0400
-X-MC-Unique: Sbxpyb8DPxmbKtrEFH5YGQ-1
-X-Mimecast-MFC-AGG-ID: Sbxpyb8DPxmbKtrEFH5YGQ_1745414647
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0624B1956087; Wed, 23 Apr 2025 13:24:07 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.102])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 727BB180045C; Wed, 23 Apr 2025 13:24:06 +0000 (UTC)
-Date: Wed, 23 Apr 2025 09:24:05 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: lma <lma@suse.de>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-block@nongnu.org
-Subject: Re: A question about how to calculate the "Maximum transfer length"
- in case of its absence in the Block Limits VPD device response from the
- hardware
-Message-ID: <20250423132405.GA333580@fedora>
-References: <20db3af2ece22f598b54a47ec350b466@suse.de>
- <20250418153456.GA128796@fedora>
- <81accb5693785748c476bf34eb18a0ba@suse.de>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=as9hkC6LzA4mqqBBNiSN9FyX1bB+48xTFifFHwppifA=;
+ b=XOc40dhZFdlss4Hl8Bo77tP8mN+cnu30RhTGfOFA644uctk2Tx6Kq2hl5q3H69pnDuftOi
+ U8p+ru6XcbY8Tz/RYZHa6/XE2xHvOP4B21OSTEu/29G/4N026+A5gkjzfmm3NIfKxR20LO
+ vFRCbNTqxChkayKQrPdWfbmwFInPlu4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-38-mpyIGg8UOwCQGlt70W5U5Q-1; Wed, 23 Apr 2025 09:26:00 -0400
+X-MC-Unique: mpyIGg8UOwCQGlt70W5U5Q-1
+X-Mimecast-MFC-AGG-ID: mpyIGg8UOwCQGlt70W5U5Q_1745414758
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3912d5f6689so3484436f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 06:25:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745414758; x=1746019558;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=as9hkC6LzA4mqqBBNiSN9FyX1bB+48xTFifFHwppifA=;
+ b=GupK/Nh6DQ5GFB6HhKc2aaEL7LHrjWbZBbjuy4aSrHIBheAmba63pvlrtYbi0amqns
+ cD/UrBX9+s6nFjTFsaiPhz4+5lAFiyq95vPCsOnJekibkkDfkOpI6qDExdDu5ty7ij8p
+ DUsko2XkPbSBupgvOCVpOgczGxiutmL0MVvPWgCckVlpPxf7607loxgpzJsXoUHEVDUv
+ SgQIgOsDOvbVesXvvMkw6r85nsI2HSqVYiaVOr7tEllqQsPVv/MSfyU4j1VMDXB75n/V
+ bMvkYpeRxNPIbhmjjeDF5Pt3apf3pLTw0USL7iS3+FDGaoVjbC0dL5WJQa5hfAmU5VIE
+ nbZg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfDSYlf8PhvtlqG5pWS6gpSavL//v4ljktA0EW4zZBP2GEl865WaTHQOgIIZQu8ftCyKLEMR++zJFR@nongnu.org
+X-Gm-Message-State: AOJu0Yw4hbd8rMqZTRv1mYOMWZEhU9NFBPc5WnZAOlj2z0wp5wzR6AtM
+ wSzC0yQjEZgVO6bRdQSKiF4LYqDwdfM3/GlFDZYlvSrDUQFnvvM+nvSx5Nnakt/fLV9/qQdGWX9
+ xfh9BM0r9GWhkNrWR7Qidbdn+uoYHcA+RuhxoWjO7VZiLkzS1sR07
+X-Gm-Gg: ASbGncv8z/kMLWxVUuDcrTkmf2DSQYY8eaw0PEr0OGsV2ZXI+InniJnBcNB96FNF7P7
+ JPYWH6FS3IC2uddpgav+YYkbFq8opjSZdU4fjUEgtOxS0YOSrtiCuKNQRTgAx8Ibwq7gSX4HUtZ
+ tN5ChcnYI39dRIJMredVLIXeD6uu61dTvM7bU1P1VlbAR91cSGGRuYJ2/ciSHGoQGQ7ghlOYhoz
+ jzjHyEfaBUbivoTSfLx+8HHPd4ZhrBk37LEe8rHcClo60bOWEUFtZRzAk+iR5s3gbHEEagTbqcO
+ 0zscYIwmxzwYkQtuAeBh+iuS4yIa6JX9fJTLicvGuSb7EGk=
+X-Received: by 2002:a5d:64ef:0:b0:39c:266c:12a5 with SMTP id
+ ffacd0b85a97d-39efba3cadfmr16060071f8f.13.1745414758500; 
+ Wed, 23 Apr 2025 06:25:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGCTWnvrcFyZX1LUAOAKT26eE6OVtWKF5o3upYFqtnby66OhAaskkz8upQ5B5VJoJR/Mg8jng==
+X-Received: by 2002:a5d:64ef:0:b0:39c:266c:12a5 with SMTP id
+ ffacd0b85a97d-39efba3cadfmr16060044f8f.13.1745414758017; 
+ Wed, 23 Apr 2025 06:25:58 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
+ ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-39efa4931c3sm18685860f8f.77.2025.04.23.06.25.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Apr 2025 06:25:57 -0700 (PDT)
+Message-ID: <8b8e1335-e168-4d43-946a-2bcc12ca535c@redhat.com>
+Date: Wed, 23 Apr 2025 15:25:55 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="hxB+5ydJFForuphd"
-Content-Disposition: inline
-In-Reply-To: <81accb5693785748c476bf34eb18a0ba@suse.de>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/14] vfio: add vfio_attach_device_by_iommu_type()
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
+References: <20250409134814.478903-1-john.levon@nutanix.com>
+ <20250409134814.478903-5-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250409134814.478903-5-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -72,7 +147,7 @@ X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,203 +163,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Same typo in Subject
 
---hxB+5ydJFForuphd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4/9/25 15:48, John Levon wrote:
+> Allow attachment by explicitly passing a TYPE_VFIO_IOMMU_* string;
+> vfio-user will use this later.
+> 
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio/device.c              | 24 ++++++++++++++++--------
+>   include/hw/vfio/vfio-device.h |  3 +++
+>   2 files changed, 19 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 4d940ddb3a..f74b9c25ea 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -367,20 +367,17 @@ VFIODevice *vfio_get_vfio_device(Object *obj)
+>       }
+>   }
+>   
+> -bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+> -                        AddressSpace *as, Error **errp)
+> +bool vfio_device_attach_by_iommu_type(const char *iommu_type, char *name,
+> +                                      VFIODevice *vbasedev, AddressSpace *as,
+> +                                      Error **errp)
+>   {
+> -    const VFIOIOMMUClass *ops =
+> -        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+>       HostIOMMUDevice *hiod = NULL;
+>   
+> -    if (vbasedev->iommufd) {
+> -        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+> -    }
+> +    const VFIOIOMMUClass *ops =
+> +        VFIO_IOMMU_CLASS(object_class_by_name(iommu_type));
 
-On Wed, Apr 23, 2025 at 05:47:44PM +0800, lma wrote:
-> =E5=9C=A8 2025-04-18 23:34=EF=BC=8CStefan Hajnoczi =E5=86=99=E9=81=93=EF=
-=BC=9A
-> > On Thu, Apr 17, 2025 at 07:27:26PM +0800, lma wrote:
-> > > Hi all,
-> > >=20
-> > > In case of SCSI passthrough, If the Block Limits VPD device response
-> > > is
-> > > absent from hardware, QEMU handles it.
-> > >=20
-> > > There are several variables involved in this process as follows:
-> > > * The bl.max_transfer
-> > > * The bl.max_iov that is associated with IOV_MAX.
-> > > * The bl.max_hw_iov that is associated with the max_segments sysfs
-> > > setting
-> > > for the relevant block device on the host.
-> > > * The bl.max_hw_transfer that is associated with the BLKSECTGET
-> > > ioctl, in
-> > > other words related to the current max_sectors_kb sysfs setting of the
-> > > relevant block device on the host.
-> > >=20
-> > > Then take the smallest value and return it as the result of "Maximum
-> > > transfer length" after relevant calculation, See:
-> > > static uint64_t calculate_max_transfer(SCSIDevice *s)
-> > > {
-> > >     uint64_t max_transfer =3D blk_get_max_hw_transfer(s->conf.blk);
-> > >     uint32_t max_iov =3D blk_get_max_hw_iov(s->conf.blk);
-> > >=20
-> > >     assert(max_transfer);
-> > >     max_transfer =3D MIN_NON_ZERO(max_transfer,
-> > >                                 max_iov * qemu_real_host_page_size());
-> > >=20
-> > >     return max_transfer / s->blocksize;
-> > > }
-> > >=20
-> > >=20
-> > > However, due to the limitation of IOV_MAX, no matter how powerful
-> > > the host
-> > > scsi hardware is, the "Maximum transfer length" that qemu emulates
-> > > in bl vpd
-> > > page is capped at 8192 sectors in case of 4kb page size and 512 bytes
-> > > logical block size.
-> > > For example=EF=BC=9A
-> > > host:~ # sg_vpd -p bl /dev/sda
-> > > Block limits VPD page (SBC)
-> > >   ......
-> > >   Maximum transfer length: 0 blocks [not reported]
-> > >   ......
-> > >=20
-> > >=20
-> > > host:~ # cat /sys/class/block/sda/queue/max_sectors_kb
-> > > 16384
-> > >=20
-> > > host:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
-> > > 32767
-> > >=20
-> > > host:~ # cat /sys/class/block/sda/queue/max_segments
-> > > 4096
-> > >=20
-> > >=20
-> > > Expected:
-> > > guest:~ # sg_vpd -p bl /dev/sda
-> > > Block limits VPD page (SBC)
-> > >   ......
-> > >   Maximum transfer length: 0x8000
-> > >   ......
-> > >=20
-> > > guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
-> > > 16384
-> > >=20
-> > > guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
-> > > 32767
-> > >=20
-> > >=20
-> > > Actual:
-> > > guest:~ # sg_vpd -p bl /dev/sda
-> > > Block limits VPD page (SBC)
-> > >   ......
-> > >   Maximum transfer length: 0x2000
-> > >   ......
-> > >=20
-> > > guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
-> > > 4096
-> > >=20
-> > > guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
-> > > 32767
-> > >=20
-> > >=20
-> > > It seems the current design logic is not able to fully utilize the
-> > > performance of the scsi hardware. I have two questions:
-> > > 1. I'm curious that is it reasonable to drop the logic about IOV_MAX
-> > > limitation, directly use the return value of BLKSECTGET as the maximum
-> > > transfer length when QEMU emulates the block limit page of scsi vpd?
-> > >    If we doing so, we will have maximum transfer length in the guest
-> > > that is
-> > > consistent with the capabilities of the host hardware=E3=80=82
-> > >=20
-> > > 2. Besides, Assume I set a value(eg: 8192 in kb) to max_sectors_kb
-> > > in guest
-> > > which doesn't exceed the capabilities of the host hardware(eg: 16384
-> > > in kb)
-> > > but exceeds the limit(eg: 4096 in kb) caused by IOV_MAX,
-> > >    Any risks in readv()/writev() of raw-posix?
-> >=20
-> > Not a definitive answer, but just something to encourage discussion:
-> >=20
-> > In theory IOV_MAX should not be factored into the Block Limits VPD page
-> > Maximum Transfer Length field because there is already a HBA limit on
-> > the maximum number of segments. For example, virtio-scsi has a seg_max
-> > Configuration Space field that guest drivers honor independently of
-> > Maximum Transfer Length.
-> >=20
-> > However, I can imagine why MAX_IOV needs to be factored in:
-> >=20
-> > 1. The maximum number of segments might be hardcoded in guest drivers
-> >    for some SCSI HBAs and QEMU has no way of exposing MAX_IOV to the
-> >    guest in that case.
-> >=20
-> > 2. Guest physical RAM addresses translate to host virtual memory. That
-> >    means 1 segment as seen by the guest might actually require multiple
-> >    physical DMA segments on the host. A conservative calculation that
-> >    assumes the worst-case 1 iovec per 4 KB memory page prevents the
-> >    host maximum segments limit (note this is not the Maximum Transfer
-> >    Length limit!) from being exceeded.
-> >=20
-> > So there seem to be at least two problems here. If you relax the
-> > calculation there will be corner cases that break because the guest can
-> > send too many segments.
-> >=20
-> > Stefan
->=20
-> The maximum allowed value for
-> /sys/class/block/<GUEST_DEV>/queue/max_sectors_kb in guest os depends
-> on the smaller of below two items in guest os:
-> the "maximum transfer length of block limits VPD page"
-> and
-> the "/sys/class/block/<GUEST_DEV>/queue/max_hw_sectors_kb".
->=20
->=20
-> The "seg_max Configuration Space field" in hw/scsi/virtio-scsi.c:
-> static const Property virtio_scsi_properties[] =3D {
->     ...
->     DEFINE_PROP_UINT32("max_sectors", VirtIOSCSI,
-> parent_obj.conf.max_sectors,
->                                                   0xFFFF),
->     ...
-> };
->=20
-> This field determines the value of max_hw_sectors_kb in sysfs in guest
-> os, Eg: In case of Logical block size 512 bytes, 0xFFFF sectors means:
-> max_hw_sectors_kb =3D 0xFFFF/2 =3D 32767, I believe many users will keep
-> this default value when using virtio-scsi, rather than customizing it.
->=20
-> But by the current design and affected by IOV_MAX, the upper limit of
-> /sys/class/block/<GUEST_DEV>/queue/max_sectors_kb is 4096 for SCSI
-> passthrough scenario in case of 4kb page size and 512 bytes logical
-> block size. Therefore, the gap between the upper limit of max_sectors_kb
-> and the max_hw_sectors_kb is very large.
->=20
-> I think this design logic is a bit strange.
 
-Unless you can think of a different correct way to report block limits
-for scsi-generic devices, then I think we're stuck with the sub-optimal
-conservative value.
+There are minor conflicts with Zhenzhong's series :
 
-By the way, scsi-disk.c's scsi-block and scsi-hd devices are less
-restrictive because the host is able to split requests. Splitting is not
-possible for SCSI passthrough requests since they could be
-vendor-specific requests and the host does not have enough information
-to split them.
+   https://lore.kernel.org/qemu-devel/20250423072824.3647952-1-zhenzhong.duan@intel.com/
 
-Can you use -device scsi-block instead of -device scsi-generic? That
-would solve this problem.
+which can be fixed easily.
 
-Stefan
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
---hxB+5ydJFForuphd
-Content-Type: application/pgp-signature; name=signature.asc
+Thanks,
 
------BEGIN PGP SIGNATURE-----
+C.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgI6fUACgkQnKSrs4Gr
-c8iFBwf/Qw7cCdMH2O9ikJsbYi3WmYMNmGyQ++unr8eOBm+i6AlhSi+K9CCjCHYN
-k9p9w3MMtO/G7p7zkb/wLnRRaNifz8+pqeuTuWal0kOddpsI/08IlDEgjL78gEx0
-zOrMoicon/WMu8d/I++wvuJmZWg2YKK1YCJlEf9YOrBVXxLrQ4MBju1NQRmMyrQi
-e/nfUVjgDHdopWK9XRWTfy8bRmyEfuN7tZmhcRuEhOTlcIXf9XzY3VnwxqmkGDFJ
-8kiqJHdmQEkWYVSJ2MxTLIk1Guqjd2leL8OI0o7TN6EcVEZ+dHQp7K5R1XtCV11K
-GIeoPe3TDwPV/EQwnB79PKdFvenEYQ==
-=3JoO
------END PGP SIGNATURE-----
-
---hxB+5ydJFForuphd--
+>       assert(ops);
+>   
+> -
+>       if (!vbasedev->mdev) {
+>           hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+>           vbasedev->hiod = hiod;
+> @@ -395,6 +392,17 @@ bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+>       return true;
+>   }
+>   
+> +bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+> +                        AddressSpace *as, Error **errp)
+> +{
+> +    const char *iommu_type = vbasedev->iommufd ?
+> +                             TYPE_VFIO_IOMMU_IOMMUFD :
+> +                             TYPE_VFIO_IOMMU_LEGACY;
+> +
+> +    return vfio_device_attach_by_iommu_type(iommu_type, name, vbasedev,
+> +                                            as, errp);
+> +}
+> +
+>   void vfio_device_detach(VFIODevice *vbasedev)
+>   {
+>       if (!vbasedev->bcontainer) {
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 1a2fe378d0..3563a82ede 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -126,6 +126,9 @@ bool vfio_device_is_mdev(VFIODevice *vbasedev);
+>   bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
+>   bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+>                           AddressSpace *as, Error **errp);
+> +bool vfio_device_attach_by_iommu_type(const char *iommu_type, char *name,
+> +                                      VFIODevice *vbasedev, AddressSpace *as,
+> +                                      Error **errp);
+>   void vfio_device_detach(VFIODevice *vbasedev);
+>   VFIODevice *vfio_get_vfio_device(Object *obj);
+>   
 
 
