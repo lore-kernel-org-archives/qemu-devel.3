@@ -4,58 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8C5C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AABCCC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Zcr-0004i5-Gf; Wed, 23 Apr 2025 08:54:54 -0400
+	id 1u7Zff-0006i4-OA; Wed, 23 Apr 2025 08:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u7Zcc-0004gh-1B
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:54:39 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u7ZfN-0006Wt-Ky
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:57:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u7ZcZ-0006BE-IS
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:54:37 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7A6B055D21A;
- Wed, 23 Apr 2025 14:54:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id pobS7GJzfhDc; Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6E2A455C592; Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6BE53745683;
- Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
-Date: Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org, 
- "Edgar E.Iglesias" <edgar.iglesias@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2 0/2] Move device tree files in a subdir in pc-bios
-In-Reply-To: <aAjTT6qRwp139RII@redhat.com>
-Message-ID: <fe7faa77-6480-b6cb-fb7e-b0ae17735646@eik.bme.hu>
-References: <cover.1745402140.git.balaton@eik.bme.hu>
- <f3501944-f278-45a8-91a7-0dab5a5416e0@nutanix.com>
- <dc690610-8484-4da0-9233-74d711f263cf@linaro.org>
- <aAjTT6qRwp139RII@redhat.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u7ZfJ-0006XW-TH
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:57:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745413043;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=OF7d6Xj9XeVKZb/X7Vn4mHNZGIZLJSHTFs0DzB/li8s=;
+ b=Q71xoH0QHYvvJ2QLS7GQUGywOj2RdOl2I3ZdI/IhUt1bFVPeHAZkEFSl/qGRJGX59bRhP2
+ lo+Fa6mVrr/lTfziGKbSrRNskyI42HFBSAJvvJzcgWN5aEvvbYruKvTbPernYsNYYYM3/0
+ sB418lNdEhVq0knZ7n1taqIy3JvjYA0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-7zxjq_HePMWAv5i4PnTM8w-1; Wed,
+ 23 Apr 2025 08:57:21 -0400
+X-MC-Unique: 7zxjq_HePMWAv5i4PnTM8w-1
+X-Mimecast-MFC-AGG-ID: 7zxjq_HePMWAv5i4PnTM8w_1745413041
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F308719560B1; Wed, 23 Apr 2025 12:57:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.34])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6950B19560A3; Wed, 23 Apr 2025 12:57:18 +0000 (UTC)
+Date: Wed, 23 Apr 2025 13:57:15 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dietmar Maurer <dietmar@proxmox.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 9/9] h264: register shutdown notifiers, stop pipeline
+ in destroy_encoder_context
+Message-ID: <aAjjq1wJcVfHhDVm@redhat.com>
+References: <20250418112953.1744442-1-dietmar@proxmox.com>
+ <20250418112953.1744442-10-dietmar@proxmox.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1178454567-1745412866=:5513"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250418112953.1744442-10-dietmar@proxmox.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,134 +83,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Apr 18, 2025 at 01:29:53PM +0200, Dietmar Maurer wrote:
+> Some encoders can hang indefinetly (i.e. nvh264enc) if
+> the pipeline is not stopped before it is destroyed
+> (Observed on Debian bookworm).
+> 
+> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+> ---
+>  ui/vnc-enc-h264.c | 50 ++++++++++++++++++++++++++++++++++++++---------
+>  ui/vnc.h          |  1 +
+>  2 files changed, 42 insertions(+), 9 deletions(-)
+> 
+> diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+> index 840674dbdb..9dbfba3a16 100644
+> --- a/ui/vnc-enc-h264.c
+> +++ b/ui/vnc-enc-h264.c
+> @@ -23,6 +23,8 @@
+>   */
+>  
+>  #include "qemu/osdep.h"
+> +#include "system/runstate.h"
+> +
+>  #include "vnc.h"
+>  
+>  #include <gst/gst.h>
+> @@ -114,13 +116,33 @@ static GstElement *create_encoder(const char *encoder_name)
+>      return encoder;
+>  }
+>  
+> -static void destroy_encoder_context(VncState *vs)
+> +static void destroy_encoder_context(VncH264 *h264)
+>  {
+> -    gst_clear_object(&vs->h264->source);
+> -    gst_clear_object(&vs->h264->convert);
+> -    gst_clear_object(&vs->h264->gst_encoder);
+> -    gst_clear_object(&vs->h264->sink);
+> -    gst_clear_object(&vs->h264->pipeline);
+> +    GstStateChangeReturn state_change_ret;
+> +
+> +    g_assert(h264 != NULL);
+> +
+> +    VNC_DEBUG("Destroy h264 context.\n");
+> +
+> +    /*
+> +     * Some encoders can hang indefinetly (i.e. nvh264enc) if
+> +     * the pipeline is not stopped before it is destroyed
+> +     * (Observed on Debian bookworm).
+> +     */
+> +    if (h264->pipeline != NULL) {
+> +        state_change_ret = gst_element_set_state(
+> +            h264->pipeline, GST_STATE_NULL);
+> +
+> +        if (state_change_ret == GST_STATE_CHANGE_FAILURE) {
+> +            VNC_DEBUG("Unable to stop the GST pipeline\n");
+> +        }
+> +    }
+> +
+> +    gst_clear_object(&h264->source);
+> +    gst_clear_object(&h264->convert);
+> +    gst_clear_object(&h264->gst_encoder);
+> +    gst_clear_object(&h264->sink);
+> +    gst_clear_object(&h264->pipeline);
+>  }
+>  
+>  static bool create_encoder_context(VncState *vs, int w, int h)
+> @@ -132,7 +154,7 @@ static bool create_encoder_context(VncState *vs, int w, int h)
+>  
+>      if (vs->h264->sink) {
+>          if (w != vs->h264->width || h != vs->h264->height) {
+> -            destroy_encoder_context(vs);
+> +            destroy_encoder_context(vs->h264);
+>          }
+>      }
+>  
+> @@ -239,10 +261,16 @@ static bool create_encoder_context(VncState *vs, int w, int h)
+>      return TRUE;
+>  
+>   error:
+> -    destroy_encoder_context(vs);
+> +    destroy_encoder_context(vs->h264);
+>      return FALSE;
+>  }
+>  
+> +static void shutdown_h264(Notifier *n, void *opaque)
+> +{
+> +    VncH264 *h264 =  container_of(n, VncH264, shutdown_notifier);
+> +    destroy_encoder_context(h264);
+> +}
+> +
+>  bool vnc_h264_encoder_init(VncState *vs)
+>  {
+>      char *encoder_name;
+> @@ -259,6 +287,8 @@ bool vnc_h264_encoder_init(VncState *vs)
+>  
+>      vs->h264 = g_new0(VncH264, 1);
+>      vs->h264->encoder_name = encoder_name;
+> +    vs->h264->shutdown_notifier.notify = shutdown_h264;
+> +    qemu_register_shutdown_notifier(&vs->h264->shutdown_notifier);
 
---3866299591-1178454567-1745412866=:5513
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+This is broken - in some configurations, when a guest shutdown is
+actioned, QEMU will merely pause guest CPU execution. The mgmt
+app can then reset the machine and resume CPU execution. IOW you
+can't assume QEMU is about to exit from a shutdown notifier.
 
-On Wed, 23 Apr 2025, Daniel P. Berrangé wrote:
-> On Wed, Apr 23, 2025 at 01:23:28PM +0200, Philippe Mathieu-Daudé wrote:
->> Hi Mark,
->>
->> On 23/4/25 12:18, Mark Cave-Ayland wrote:
->>> On 23/04/2025 11:02, BALATON Zoltan wrote:
->>>
->>>> Simple series doing what the subject says.
->>>>
->>>> v2:
->>>> - Added changes to qemu.nsi (Philippe)
->>>> - Changed order of enum to keep it sorted. This changes value of
->>>> existing define but the value is not relevant, always used by name.
->>>>
->>>> BALATON Zoltan (2):
->>>>    system/datadir: Add new type constant for DTB files
->>>>    pc-bios: Move device tree files in their own subdir
->>>>
->>>>   MAINTAINERS                                |   2 +-
->>>>   hw/microblaze/boot.c                       |   2 +-
->>>>   hw/ppc/ppc440_bamboo.c                     |   2 +-
->>>>   hw/ppc/sam460ex.c                          |   2 +-
->>>>   hw/ppc/virtex_ml507.c                      |   2 +-
->>>>   include/qemu/datadir.h                     |  11 +++++++---
->>>>   pc-bios/{ => dtb}/bamboo.dtb               | Bin
->>>>   pc-bios/{ => dtb}/bamboo.dts               |   0
->>>>   pc-bios/{ => dtb}/canyonlands.dtb          | Bin
->>>>   pc-bios/{ => dtb}/canyonlands.dts          |   0
->>>>   pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
->>>>   pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
->>>>   pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
->>>>   pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
->>>>   pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
->>>>   pc-bios/meson.build                        |  23 +--------------------
->>>>   qemu.nsi                                   |   2 +-
->>>>   system/datadir.c                           |   5 ++++-
->>>>   18 files changed, 42 insertions(+), 32 deletions(-)
->>>>   rename pc-bios/{ => dtb}/bamboo.dtb (100%)
->>>>   rename pc-bios/{ => dtb}/bamboo.dts (100%)
->>>>   rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
->>>>   rename pc-bios/{ => dtb}/canyonlands.dts (100%)
->>>>   create mode 100644 pc-bios/dtb/meson.build
->>>>   rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
->>>>   rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
->>>>   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
->>>>   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
->>>
->>> In previous discussions we've had around what to do with pc-bios, wasn't
->>> the consensus that we should aim towards dividing up the directory on a
->>> per-target basis? I'm wondering if this is going in right direction, as
->>> I can certainly see that a per-target split would be more useful to
->>> packagers.
 
-One problem is that pc-bios doesn't only contain machine firmware but also 
-card ROMs which would belong to more targets (or archs) as e.g. PCI cards 
-work on multiple archs. So it's not trivial to split by target, you'd 
-still have a lot of files not easily assigned to any target.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-This series is in preparation for another that will add a dtb for pegasos2 
-and I did not want to increase the mess and took the opportunity to try to 
-tidy it a bit. I don't intend to do any major refactoring of the pc-bios 
-dir, that's out of scope of these patches.
-
->> pc-bios/ is already a mess, packagers usually take it as a whole. This
->> series isn't making the current situation worse.
->>
->> I don't recall a per-target split discussion, but one moving firmware
->> blobs out of tree in a more adapted storage like git-lfs.
->
-> Talking about the pc-bios dir in general is a bit of a can of worms
-> and we never make concrete progress historically :-(
->
-> Probably best to split up the problem to some extent.
->
-> The device tree files are conceptually quite different from the
-> 3rd party pre-built firmware images, which are diffferent from
-> the keymaps.
->
-> IIUC, device tree files are tied to specific machine types, so
-> I wonder if they should not simply live alongside their machine
-> type .c impl file, completely outside of pc-bios ?
->
-> eg
->
->  petalogix-ml605.{dts,dtb} live alongside hw/microblaze/petalogix_ml605_mmu.c
->  babmboo.{dts,dtb} live alongside ./hw/ppc/ppc440_bamboo.c
-
-You need the dtbs at run time and the dir where we can look files up is 
-the pc-bios. So these need to be installed there at the end. We could 
-scatter them around in the source to put them next their machines but that 
-would make installation of them more difficult than having it in one dir.
-
-> For the keymaps it feels like an probable easy win to move them to a
-> ui/keymaps/ directory instead.
-
-Currently you can run a git build directly from build dir and it will find 
-the roms/dtbs/keymaps. You can also run a binary copied elsewhere if you 
-pass -L path/to/pc-bios. Moving things out of it would break this and may 
-cause more problems than it would solve.
-
-> ie in general try to get 'pc-bios' to contain only 3rd party pre-built
-> binaries, as a first goal. A second goal might be merging pc-bios/
-> into roms/, and a final goal could be spinning off pre-built ROMs into
-> a separate release tarball, and/or separate git repos.
-
-Maybe a less ambitious way could be just to tag files in pc-bios in some 
-way so it's known which machines or devices need them then you could make 
-a script or something to pick only the files that you need for the 
-installed machines or config. That seems less work then moving everything 
-off from pc-bios which I don't see how would work with the runtime search 
-path which would still expect all of these to be at one place. Maybe this 
-could be done in Kconfig?
-
-But all that is beyond this series which just wanted to put the dtb files 
-separate from roms like was already done for keymaps just to make it 
-easier to edit them in the source at one place.
-
-Regards,
-BALATON Zoltan
---3866299591-1178454567-1745412866=:5513--
 
