@@ -4,137 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE7CC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A0EC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UvD-0006bk-Da; Wed, 23 Apr 2025 03:53:31 -0400
+	id 1u7UwJ-0007Zd-Gv; Wed, 23 Apr 2025 03:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7UvA-0006bG-VT
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:53:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UwH-0007YL-Qi
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:54:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7Uv8-0004tP-EN
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:53:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UwF-0004xa-TJ
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:54:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745394805;
+ s=mimecast20190719; t=1745394875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fyWO8wny/2wNzYI8ZYoKndaAxDZ4SfxelS8/ugQ/Odw=;
- b=fXZ+WnOoSSH4HxHSziE6hsZfzYMh+uI6hww3bWPe8ypSM67lxaY0S0w6/sD9O4CD6fL8Am
- sqkQdAx4LYSknkQUPstn72lqIkZZcpkdSN+0wCYeOfZDwt0vETeH8buGF0e4w7apfOv5rK
- g1EnhXIo29t2J3R5E4cqMGBOrd48IyU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pE4vSNqmYzk8zkoouREDk9pbLmBvoAyDVmwPKJOQQdQ=;
+ b=ExpZR6k3ZhNLc2mPAIMfC9iRHX5UbU1btPKJEw++yvkJJDlnd1jc12cC9a9LydKvpKOwro
+ mxd/u5Nd7y5YDxXA+srOrIllMGaOmjZI6UElyX/uBLBQl/7fZPNIaI94GCZD4wymhQuWIZ
+ JbJab/35peg6CjxCYZLC6QPXxdi4jKQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-e9YIBOigNmqrTtrLBA1pPQ-1; Wed, 23 Apr 2025 03:53:23 -0400
-X-MC-Unique: e9YIBOigNmqrTtrLBA1pPQ-1
-X-Mimecast-MFC-AGG-ID: e9YIBOigNmqrTtrLBA1pPQ_1745394802
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d00017e9dso33122675e9.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 00:53:22 -0700 (PDT)
+ us-mta-482-eOSwV-CYPi6QhBTonFK_KQ-1; Wed, 23 Apr 2025 03:54:32 -0400
+X-MC-Unique: eOSwV-CYPi6QhBTonFK_KQ-1
+X-Mimecast-MFC-AGG-ID: eOSwV-CYPi6QhBTonFK_KQ_1745394871
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39ac9b0cb6aso3222995f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 00:54:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745394802; x=1745999602;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fyWO8wny/2wNzYI8ZYoKndaAxDZ4SfxelS8/ugQ/Odw=;
- b=IrsmmRLopL2r6a/n2TFgCe4BfIYcRmGXntvMg5U+N+p+AuAJXa/rc6P2oN4qWVcWXq
- qB8t5FGV5W/sW9KrZjfqFLT9TGTSNRX+KN1LzESepQCk6uqjadpi5tpdszvlMCykuxlk
- 1WHPAE5NFwFOPNGEunOaoBpocgjMrmm2M3OHALaDzMeEnP540bIq/r5AYQSynONj1xcd
- Z2ssmpzyKXuuX0zTSiDehgUp4yBuakQGn3ih6yMGerozXeLiZAPj4GAfzUQSv9w2GG15
- asEZebSiR6uSVoadVXUV1Ra0ELYcm58jOlbxDyh5xtU+kbEaiAWnjLc4oB+6QkzrmiSu
- BdrQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1Exoc0UiVZLve+ShVsmsf2nH0nUefU1cE4ggHPNaJIfukeA/BTf3krpzDBSH2U5s1HLG5SV2dvDF8@nongnu.org
-X-Gm-Message-State: AOJu0YzAQ1+iuJhqfbKXVFTwJ13uwTrwoChAmteEI9Uc5mFSdygZT/5x
- fvarBKp4DjgOa/7sG/eEZcNOCW+3ce9nYwcQi3iasluPDBm2oVKMKrt/93q8qxeIDr8F9Hu+Lrh
- 8BYmIYMcdxx9Ss4WyNOD7V9/GPJLDxn17VdITJXo3V2nlBtn11uMj
-X-Gm-Gg: ASbGncvU6IuIRLkH1jJAhDpt5f/Vn/l9v+bnnC6NkLCwCOK8iiOS+zjQlNSfn/b5/cX
- 5Ai1SZRwOzdE6IK/Zvo0IWS2we9/LSBZPyCPOki0gpglDbe+EQO7GVHMas7a53XWFVaRcOrNwS1
- rCzVh+y4TJI7XD1rE4Dd4sKSYXiZp6JTPk9jKOY3lL+1s6CtTDun3tidD3ILlZ/dUNb06kmSf0W
- D/CaWuVK2ED1MvNOs0tn94eKFzLt7rIas8s1yncVt4X4H0iK6IstLAw4qTSmVdhLWfrElYf9U4o
- TpNtt1zh6UZc6RG1dqLMaiQ7Ykb/gMcIidOwXPtecOU1Ny4=
-X-Received: by 2002:a05:600c:1914:b0:43c:f0ae:da7 with SMTP id
- 5b1f17b1804b1-4406ab6cb1dmr146500545e9.7.1745394801937; 
- Wed, 23 Apr 2025 00:53:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHG4AhRU30NaDup4do78yA2vExAyk0gIx/9bl3RdEuhOEO316s5ZTXwZbhxPU8ygszizGoi8g==
-X-Received: by 2002:a05:600c:1914:b0:43c:f0ae:da7 with SMTP id
- 5b1f17b1804b1-4406ab6cb1dmr146500315e9.7.1745394801515; 
- Wed, 23 Apr 2025 00:53:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
- ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
+ d=1e100.net; s=20230601; t=1745394871; x=1745999671;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pE4vSNqmYzk8zkoouREDk9pbLmBvoAyDVmwPKJOQQdQ=;
+ b=AozoV+Ogt1GkJMoQok0KZgtjE2jw9IEBVSV5T7dTCTbVEo7lz6eUfvIm8ebBnnojrg
+ Kn3ZmgRIvLZZ/t/pHWNQfTsRL0yfxfeX9JPlhfAgFJqQav0tRibxB5yfJXU+bxuP1Jhd
+ CJxMOmbK3tvvn7nefVHpWc0WLa2QXGuQwz9OxMLYSIUadTowfR5NZoCPKS8Dg5yEKEVW
+ SnEevuup4jfktwctcV7VkG7E/yJ0WcIem8PID+VNMMuhzsL+ynaUOtTZWhcWd0nqzUBz
+ Tc69N1WF4uxpeGFA6RrEDdqxYU+7Tb2szfeJpqJGPW3MXyYaCQA7MKGxV4YI0ICzRrHl
+ OvRA==
+X-Gm-Message-State: AOJu0YxcdLivHc0N3hkabzOhherguoTxF7YpsRLz7ZvfGGKnfPpWxsKF
+ DtwwI1a7BQB2WS6IQPmHxRUbZfAV1bBKWEwTgCW4Um6d+jibvC2dgRC7SFdOwdJW3aTOdB2SvpQ
+ WPP5FxQAb5KYbNN4sJlDZ6IWy1Viy+0av3+oItSXMAUEwAA97QRqn
+X-Gm-Gg: ASbGncsQBx/JiXu1be9CaJA8MXf1RES83S8wEdjaAFcV1sug1YJp1Tv8xI34y4v8fUN
+ KBca5toyQgHioQTAYhmmoegAdso1rWbJs3t0tO7k0CKSlqIgdKPIGJpiEY3mkklpPAgtwuGtnGG
+ tMqI4azOYsxi133MWW9fU6+h8WiTmquRNjU5MDXuQaZl7UkqjRBc6KE9OEBQghTBA9oRmYpaqI1
+ asXC1wPVEud2kpHjz6UI5Ue7A/DlurW2aXRDWh+qltEQGL/QRs1a1zzP3ksUno56GuS08JsBzhh
+ yCtau7eyJv7v/ttvfRed+8TUIFlZyQSEqI3L
+X-Received: by 2002:a05:6000:43cc:20b0:39f:fd4:aec7 with SMTP id
+ ffacd0b85a97d-39f0fd4aed9mr3634699f8f.7.1745394871085; 
+ Wed, 23 Apr 2025 00:54:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAsEKVdTVemx9M/YhyoWjCdddzHWAFiIMTW1YeR4HsDBcUS1NRHRMAIL8hipDPv0IpidsufA==
+X-Received: by 2002:a05:6000:43cc:20b0:39f:fd4:aec7 with SMTP id
+ ffacd0b85a97d-39f0fd4aed9mr3634681f8f.7.1745394870703; 
+ Wed, 23 Apr 2025 00:54:30 -0700 (PDT)
+Received: from [10.33.192.219] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d18433sm16197655e9.1.2025.04.23.00.53.20
+ 5b1f17b1804b1-4408d0a7802sm27193065e9.1.2025.04.23.00.54.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 00:53:21 -0700 (PDT)
-Message-ID: <e3454df1-4360-41c5-aae2-5df610914554@redhat.com>
-Date: Wed, 23 Apr 2025 09:53:19 +0200
+ Wed, 23 Apr 2025 00:54:29 -0700 (PDT)
+Message-ID: <18bb133c-629b-4ba8-96d3-159ffe2a380f@redhat.com>
+Date: Wed, 23 Apr 2025 09:54:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 1/5] linux-headers: NOTFORMERGE - placeholder uapi
- updates for AP config change
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
-References: <20250415140506.1516-1-rreyes@linux.ibm.com>
- <20250415140506.1516-2-rreyes@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250415140506.1516-2-rreyes@linux.ibm.com>
+Subject: Re: [PATCH 7/8] target/s390x/gen-features: Remove the v2.11 qemu CPU
+ model
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250115073819.15452-1-thuth@redhat.com>
+ <20250115073819.15452-8-thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250115073819.15452-8-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -143,7 +140,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,50 +156,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Rorie,
-
-(It's not an RFC anymore)
-
-On 4/15/25 16:05, Rorie Reyes wrote:
-> This patch adds enumeration constant VFIO_AP_CFG_CHG_IRQ_INDEX to specify
-> an IRQ index for signaling that a change has been made to the guest's AP
-> configuration. This is a placeholder for QEMU patches that use this value
-> since it is a linux-headers update which includes changes that aren't
-> merged into the kernel. Linux-headers patches should be generated using
-> scripts/update-linux-headers.sh.
+On 15/01/2025 08.38, Thomas Huth wrote:
+> Now that the v2.11 machine is gone, we don't need the v2.11 CPU
+> feature set anymore.
 > 
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   linux-headers/linux/vfio.h | 1 +
->   1 file changed, 1 insertion(+)
+>   target/s390x/gen-features.c | 7 -------
+>   1 file changed, 7 deletions(-)
 > 
-> diff --git a/linux-headers/linux/vfio.h b/linux-headers/linux/vfio.h
-> index 1b5e254d6a..d0426b5ec0 100644
-> --- a/linux-headers/linux/vfio.h
-> +++ b/linux-headers/linux/vfio.h
-> @@ -671,6 +671,7 @@ enum {
->    */
->   enum {
->   	VFIO_AP_REQ_IRQ_INDEX,
-> +	VFIO_AP_CFG_CHG_IRQ_INDEX,
-
-
->   	VFIO_AP_NUM_IRQS
->   };
+> diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+> index 41840677ce..150e4d1843 100644
+> --- a/target/s390x/gen-features.c
+> +++ b/target/s390x/gen-features.c
+> @@ -844,12 +844,6 @@ static uint16_t default_GEN17_GA1[] = {
 >   
+>   /* QEMU (CPU model) features */
+>   
+> -static uint16_t qemu_V2_11[] = {
+> -    S390_FEAT_GROUP_PLO,
+> -    S390_FEAT_ESAN3,
+> -    S390_FEAT_ZARCH,
+> -};
+> -
+>   static uint16_t qemu_V3_1[] = {
+>       S390_FEAT_DAT_ENH,
+>       S390_FEAT_IDTE_SEGMENT,
+> @@ -1053,7 +1047,6 @@ static FeatGroupDefSpec FeatGroupDef[] = {
+>    * QEMU (CPU model) features
+>    *******************************/
+>   static FeatGroupDefSpec QemuFeatDef[] = {
+> -    QEMU_FEAT_INITIALIZER(V2_11),
 
-This definition was introduced in Linux v6.15-rc1 with commit 07d89045bffe
-("s390/vfio-ap: Signal eventfd when guest AP configuration is changed").
-Since we just entered a new QEMU cycle (10.1), could you please send
-a linux-headers/ update ?
+Removing this from QemuFeatDef caused some trouble during testing, so this 
+patch seems to be wrong. I'll try to fix it and send a v2 later...
 
-You should use ./scripts/update-linux-headers.sh. See commit 421ee1ec6f0d
-("linux-headers: Update to Linux v6.14-rc3") for an example.
-
-Thanks,
-
-C.
-
-
+  Thomas
 
 
