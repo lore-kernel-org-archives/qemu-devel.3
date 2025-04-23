@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA3FC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7946C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7XOm-0007yD-9V; Wed, 23 Apr 2025 06:32:12 -0400
+	id 1u7XQq-0000np-UQ; Wed, 23 Apr 2025 06:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XOf-0007xb-Cn
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:32:06 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XQO-0000Y1-39
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:33:53 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XOc-0005Vj-6t
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:32:03 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39ee682e0ddso3613440f8f.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:32:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XQJ-0005k1-RV
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:33:51 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-440685d6afcso58608155e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:33:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745404320; x=1746009120; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745404426; x=1746009226; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oLKUt24uVFCHqBc2OY3g97vDK8b31Tak4nBbu7+kMK8=;
- b=b/1wIBye18zPte4m+UeMBoE1FdAA8QRpCqzBHOd3gFRfgiTrRiH6mZX73Vk2HSPWxU
- 7PdMh9a1gIVVdWd1d6MdPk+PMcLMlBVYixo+02VgCymKokWTcmSw7um17ysg1gczlMi1
- 32UG550cET4rr+kvQZLFR6ImZx+LtFtUg6EODaam8LMuL7RqyWShCaVyH6TPxgGG6fr+
- dD9uiJRa70ohwSDPF5HdO5WTbtcp8S0V0OISp69EGaGIxcJlBiraEudIXSM5FZNhLNxD
- 1MvSKPU25M235rR7qnXsSlUF/ZNTNd7dfI1SHDqCPzWwJ/epMjKYVtpU8UIbQ/MclwQ8
- 1DbQ==
+ bh=ni4t7A9p2OYy2IhnomWUDf9O+D9TkDqPtjvUBzPzFx8=;
+ b=PwDUBnQMp4Qym1rITQah299qBTd1KkFayG2Va1xTIuktrWpumnRigM5WzwgcAdfU94
+ cjVH+5XPRKxAiKnYDczgIffZpR7HIimztza4dmSV6r/phCsVzWGkCRD1Jy0tyix/FWC7
+ /Km8J5NE0LFuQf9QZSiy1nhxLlvLbbZ9pUUxudT+ystWTxfPDkNKI5hfeh2lbl+6IlE5
+ IaZgncI6Xh53saQBpTTup4iSino8GlbDnTNUKxNcLoxwn6JxAb2m6GK4C0Ssikt3tf29
+ xflQQP3aMex5omOpVqc2vE69pHQNnDBn/VzmU7dv37MBu5aT/H3PiCUiV91un0E00WDj
+ NdHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745404320; x=1746009120;
+ d=1e100.net; s=20230601; t=1745404426; x=1746009226;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oLKUt24uVFCHqBc2OY3g97vDK8b31Tak4nBbu7+kMK8=;
- b=SU9MSHd4lNx0Hcgimq3kE17bsqgmcVIE5FvLXsRL0YEJFtAXoiRefuWQ4V8ppRVLWa
- ZNjuAtRxWRnKPYWmC6hh012dIFpYed6XwfB1MnpJ3wWodVBytutP9u/jL83xdYmuK8AH
- VQFL+4NfAjLpnYWqXGNpi9Eq7bTytgLmGUfatF5sxT9f5ErVd9Jv+hCQDD9FTcxA2mLk
- WdG3AQXuCYtb19UJhf/k1hLzEIcyDkkvRTWakMFmf1dGt3GUDqcl2ubLPyobnWHpbsze
- zc1YAhMhGY06XX4zjEO2X8mLp2wKyvsjtOMphnsTZCwVwA/JYg/2/juIXnCLZEAjJ568
- araA==
+ bh=ni4t7A9p2OYy2IhnomWUDf9O+D9TkDqPtjvUBzPzFx8=;
+ b=opgkcUh7KkH85dcgfv2kwx2QennzSVxEuLOnSV/m2OqMoT+CS4zua/aiC1uu85+tWM
+ 7Z1fQrXZnMDQL3pmi/6ozluHAawuaNZ0Auz+0R5E+QKAS+0+Ww3sPVwEBx+xwJNYBjjV
+ LkxDhyR/lg/PLdXETnuj7cPUqTvzKfZITH5mEu+vU2TIMJrC2teVLcLxGpPTANbcowsS
+ yFg7Sfr/lwPSmnnXsXR5UPQ4bphmKcP5G5nonPb50ssLcQtYbKm16LDppf5nSHATFt07
+ fJwK+R2amQW6KGzNQ2Jf1hoOPrRuqmRxi7giqnVZL4GkkAvdsvWowspo3sfEDh9BVKcT
+ 4xNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLqSVwRNQ2jvN5klC5b3ANcHidJjMT0opzBf52J8ZVoXxwxV8dnxkARgbdlMYex3n+ruCAEz/me21n@nongnu.org
-X-Gm-Message-State: AOJu0YzECdayzfKoXxV8N6Aq5qqWFGU0VPJKiBIykX0upDQW6MAfqUhl
- /kN3/U+fXi3FggK5YClbz0s5E+/8XWrF2b73ssGsX4svjD3PrZaLDB2HuW77hIdf2XbdQ4SHwvF
- i
-X-Gm-Gg: ASbGnct5rxJ57FMH9evPHt3pqnUAg5gtdHt688m9MyIzHPAXGyV99m0Mbh1v3wbo395
- hVfZzUM6u+Q7HQdJbm1XKXE+Rqx5hFSLbHW6iKkrGEnTKi7tRCSoRS+wq+YniHOGzchpiAYIFBl
- yRcn1UMHg3tJdeVdVsflviOh9h8GSqN9b1EuuOVuJ/TbpcahtVaCWaKqvPWai6cRadtrgqi+vJZ
- 16Xp6ZjlyWWtdf2vA1SSUZ5CAeIlyhP3NtAbSmdXpk5nh/edPq2OHc1cJYW9FERpD16McYOAqll
- 4isedwGN48xIHTFCnPRAqAeQCQmVwEsPy6yU1DrEDqK4Oy3CYHmQJfomfDkflXMWmJLMSuADBov
- 4n+0+Pq9Sc2e3L00jh/U=
-X-Google-Smtp-Source: AGHT+IEQ+AaNL/4rRILa4L1UecyY2n4QiDPR57y9wbE6FwvXoNp6GklM1MPJmSovJjg9OS5/Kebtww==
-X-Received: by 2002:a05:6000:2203:b0:391:40bd:6222 with SMTP id
- ffacd0b85a97d-39efba470e8mr13037193f8f.22.1745404319915; 
- Wed, 23 Apr 2025 03:31:59 -0700 (PDT)
+ AJvYcCWbdZnYxGKPbHrykUx0/cgI+IFutRBAIM8nVQiP41Y1xEBn5g5Dcsflj+BtsDb8C8owJ9v8lA9eID9d@nongnu.org
+X-Gm-Message-State: AOJu0YzDYGc1jscIAYofvqSkjIePJUoJWmP2VY+GlMEzPpxv8k40q3g9
+ thMbAWyCRjgT/mdYonCkmnxiNGv1ezAw8qho7/6bF7yrsbQBQH3HzQTU21g3iOo=
+X-Gm-Gg: ASbGncsfkP58N6u463LJibxmioI/QPpJQprpY86N+Ol5GXBSnsJboe7cq6hG98fAIKO
+ Z96WMjyU6GMJ5ymdhVtFJIvbjTMewM5oDQKivB6PymW8mCk4vHggnI2b6GGgfBmaBygsmW4ZNLK
+ zpDx9+HcW/fm/F6kaH9Xs72CsPubPLEiFdBVdRbUau+PCa7uthFb9b0jowrODLqS1N24Ma+n93M
+ RTQqlSX56fJO/y2LC4TANaPL3lll5IfXD3LXf+7QSTz6uAw8nJbq/IS2XUUvs1EPOSdWcjyveCN
+ UDoRSdzvgRRW5Zb8+r+UeGIGy1Si6uONo/jwK9rwRU8R1+OrVMlm4tf3729WJ0GOC1SODEMOESh
+ GBjcS14vU
+X-Google-Smtp-Source: AGHT+IHnXTpkVuGkk6xRHhEhqmI/GYrkq7e18Ob1FXHtXuF5i8uoRu5SkhcnhDgcNkQnJBFj7JfOCg==
+X-Received: by 2002:a05:600c:4ecc:b0:43c:f969:13c0 with SMTP id
+ 5b1f17b1804b1-4406ac17729mr153026635e9.29.1745404426131; 
+ Wed, 23 Apr 2025 03:33:46 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4931dcsm18609347f8f.63.2025.04.23.03.31.58
+ ffacd0b85a97d-39efa433141sm18465508f8f.35.2025.04.23.03.33.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 03:31:59 -0700 (PDT)
-Message-ID: <a4f358c6-2762-49d5-92bb-aa526c4d8f73@linaro.org>
-Date: Wed, 23 Apr 2025 12:31:58 +0200
+ Wed, 23 Apr 2025 03:33:45 -0700 (PDT)
+Message-ID: <e37833c6-042a-40af-be15-5fee3c755f4a@linaro.org>
+Date: Wed, 23 Apr 2025 12:33:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 102/147] include/exec/cpu-all: move compile time check for
- CPUArchState to cpu-target.c
+Subject: Re: [PATCH 116/147] target/arm/cpu: flags2 is always uint64_t
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-103-richard.henderson@linaro.org>
+ <20250422192819.302784-117-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-103-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-117-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,68 +105,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 22/4/25 21:27, Richard Henderson wrote:
 > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Do not rely on target dependent type, but use a fixed type instead.
+> Since the original type is unsigned, it should be safe to extend its
+
+s/should be/is/ ?
+
+> size without any side effect.
+> 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20250325045915.994760-4-pierrick.bouvier@linaro.org>
+> Message-ID: <20250325045915.994760-21-pierrick.bouvier@linaro.org>
 > ---
->   include/exec/cpu-all.h | 4 ----
->   cpu-target.c           | 5 +++++
->   2 files changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-> index 2aaaf0548d..be462c4410 100644
-> --- a/include/exec/cpu-all.h
-> +++ b/include/exec/cpu-all.h
-> @@ -33,8 +33,4 @@
->   
->   #include "cpu.h"
->   
-> -/* Validate correct placement of CPUArchState. */
-> -QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
-> -QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
-> -
->   #endif /* CPU_ALL_H */
-> diff --git a/cpu-target.c b/cpu-target.c
-> index 519b0f8900..7f3b244ed1 100644
-> --- a/cpu-target.c
-> +++ b/cpu-target.c
-> @@ -18,6 +18,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> +#include "cpu.h"
->   #include "qapi/error.h"
->   #include "qemu/error-report.h"
->   #include "qemu/qemu-print.h"
-> @@ -29,6 +30,10 @@
->   #include "accel/accel-cpu-target.h"
->   #include "trace/trace-root.h"
->   
-> +/* Validate correct placement of CPUArchState. */
-> +QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
-> +QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
-> +
->   char *cpu_model_from_type(const char *typename)
->   {
->       const char *suffix = "-" CPU_RESOLVING_TYPE;
+>   target/arm/cpu.h        | 10 ++++------
+>   target/arm/tcg/hflags.c |  4 ++--
+>   2 files changed, 6 insertions(+), 8 deletions(-)
 
-To squash:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- >8 --
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 28bd27b8ed..10b6b25b34 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -579,7 +579,7 @@ QEMU_BUILD_BUG_ON(offsetof(CPUState, neg) !=
-
-  static inline CPUArchState *cpu_env(CPUState *cpu)
-  {
--    /* We validate that CPUArchState follows CPUState in cpu-all.h. */
-+    /* We validate that CPUArchState follows CPUState in cpu-target.c */
-      return (CPUArchState *)(cpu + 1);
-  }
----
 
