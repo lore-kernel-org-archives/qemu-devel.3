@@ -4,64 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC05C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C95C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7aW2-0002P0-43; Wed, 23 Apr 2025 09:51:54 -0400
+	id 1u7aZg-00044N-1b; Wed, 23 Apr 2025 09:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yangyicong@huawei.com>)
- id 1u7aVz-0002MV-7F
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:51:51 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255])
+ (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
+ id 1u7aZd-000447-VE; Wed, 23 Apr 2025 09:55:37 -0400
+Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yangyicong@huawei.com>)
- id 1u7aVw-0005ff-EC
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:51:50 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.105])
- by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4ZjL8m5Pqzz1d0lZ;
- Wed, 23 Apr 2025 21:50:32 +0800 (CST)
-Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
- by mail.maildlp.com (Postfix) with ESMTPS id CA7F6140292;
- Wed, 23 Apr 2025 21:51:31 +0800 (CST)
-Received: from [10.67.121.177] (10.67.121.177) by
- kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Wed, 23 Apr 2025 21:51:31 +0800
-CC: <yangyicong@hisilicon.com>, <qemu-devel@nongnu.org>,
- <anisinha@redhat.com>, <imammedo@redhat.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <peter.maydell@linaro.org>,
- <prime.zeng@hisilicon.com>, <shameerali.kolothum.thodi@huawei.com>,
- <wangyanan55@huawei.com>
-Subject: Re: [PATCH v3 3/5] hw/acpi/aml-build: Build a root node in the PPTT
- table
-To: "Michael S. Tsirkin" <mst@redhat.com>, Alireza Sanaee
- <alireza.sanaee@huawei.com>
-References: <20250423114130.902-1-alireza.sanaee@huawei.com>
- <20250423114130.902-4-alireza.sanaee@huawei.com>
- <20250423084013-mutt-send-email-mst@kernel.org>
-Message-ID: <295deb78-d530-d6cc-dffc-51b4cfad17b9@huawei.com>
-Date: Wed, 23 Apr 2025 21:51:30 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+ (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
+ id 1u7aZb-0006G6-FD; Wed, 23 Apr 2025 09:55:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
+ Content-Type:In-Reply-To:From:References:To:Subject:MIME-Version:Date:
+ Message-ID:Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From
+ :Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=mJWfKt3Nzg2uxMFT7GSfrs8BrAsmmHaSQ9gT2O7SMdo=; b=RsAZE77hMl6fZJmeIwZWtxrwag
+ dasREMyEIYQJiMVvdj5X+A8KlPbrLQRgS0WY3Ac++5EHFusHlS3JRBfomFkaBwK+RtjKJY3loPSEK
+ lgdWkB0iT/CfTPd74rSwqTH90VG1IOI7Kgu2OnB3moV3jVIlqq198QgbJWe6uHlTh8GrqTXbd168t
+ 9igKs9nlaQTuar3TUQx8Eu+whXP8BeHEAQxQlbYfyvQJ6tEm8Jl71bw3ZUTOncfkBx/tmuUeIxVXy
+ kdM2WSkrrrT3t2vY6jiqpv8KtbQlnlEZxBEqLyawd5+vD+Zqy/axYpn9ikjJxAZNXiUZNnC4g33Io
+ ck+Le3pQ==;
+Received: from [167.98.27.226] (helo=[10.35.6.194])
+ by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1u7aYl-001JoX-0L; Wed, 23 Apr 2025 14:54:43 +0100
+Message-ID: <ee7e6775-9dd7-48b4-a5f3-9189b1386deb@codethink.co.uk>
+Date: Wed, 23 Apr 2025 14:54:41 +0100
 MIME-Version: 1.0
-In-Reply-To: <20250423084013-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.67.121.177]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemd200014.china.huawei.com (7.221.188.8)
-Received-SPF: pass client-ip=45.249.212.255;
- envelope-from=yangyicong@huawei.com; helo=szxga08-in.huawei.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.765,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] tcg: allow tb_flags to be larger than 32bit
+To: Paolo Bonzini <pbonzini@redhat.com>, richard.henderson@linaro.org,
+ peter.maydell@linaro.org, mrolnik@gmail.com, brian.cain@oss.qualcomm.com,
+ deller@gmx.de, zhao1.liu@intel.com, gaosong@loongson.cn, laurent@vivier.eu,
+ edgar.iglesias@gmail.com, philmd@linaro.org, aurelien@aurel32.net,
+ jiaxun.yang@flygoat.com, arikalo@gmail.com, shorne@gmail.com,
+ npiggin@gmail.com, danielhb413@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ ysato@users.sourceforge.jp, david@redhat.com, iii@linux.ibm.com,
+ thuth@redhat.com, mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com,
+ kbastian@mail.uni-paderborn.de, jcmvbkbc@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org
+References: <20250423100949.2047161-1-ben.dooks@codethink.co.uk>
+ <275dd8a6-c4f7-47de-ac45-64612e14b8a7@redhat.com>
+Content-Language: en-GB
+From: Ben Dooks <ben.dooks@codethink.co.uk>
+Organization: Codethink Limited.
+In-Reply-To: <275dd8a6-c4f7-47de-ac45-64612e14b8a7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=188.40.203.114;
+ envelope-from=ben.dooks@codethink.co.uk; helo=imap4.hz.codethink.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,95 +79,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yicong Yang <yangyicong@huawei.com>
-From:  Yicong Yang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/4/23 20:41, Michael S. Tsirkin wrote:
-> On Wed, Apr 23, 2025 at 12:41:28PM +0100, Alireza Sanaee wrote:
->> From: Yicong Yang <yangyicong@hisilicon.com>
+On 23/04/2025 14:08, Paolo Bonzini wrote:
+> On 4/23/25 12:09, Ben Dooks wrote:
+>> In adding a new feature to the riscv target, it turns out the
+>> tb_flags had already got to the 32-bit limit. Everyone other target
+>> has been fine with uint32_t (except perhaps arm which does somethng
+>> strange to extend tb_flags, I think).
 >>
->> Currently we build the PPTT starting from the socket node and each
->> socket will be a separate tree. For a multi-socket system it'll
->> be hard for the OS to know the whole system is homogeneous or not
->> (actually we're in the current implementation) since no parent node
->> to telling the identical implementation informentation. Add a
->> root node for indicating this.
+>> To allow extending of tb_flags to be bigger, change the uint32_t to a 
+>> tb_flags_t which a target can define to be bigger (and do this for 
+>> riscv as having tb_flags_t be uint64_t somewhere is necessary to
+>> pick out bugs in this translation).
 >>
->> Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
->> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+>> This method of extension also stops having to go through each arch 
+>> fixing field usage and anything else that may arise, and given this is 
+>> currently only affecting the tcg, it can be done per target arch.
+>>
+>> Note, target/riscv does not currently use any of the other flag bits 
+>> yet. The work is done as we would like to try the big-endian riscv 
+>> again and someone has already taken the last bit we where using at 
+>> (target/riscv/cpu.h#L666 adding PM_SIGNEXTEND where we had BE_DATA)
 > 
-> so how does the topology look before and after this change?
+> Leaving aside your patch I think you can improve the density of the 
+> tbflags a bit too:
 > 
+> - PM_MASK_ENABLED, PM_BASE_ENABLED and AXL are unused, which gives you 
+> back 4 bits.
 
-for a 2 socket system, the PPTT processor hierarchy tree before this change will be like:
-[Socket 0]          [Socket 1]
-   ^                    ^
-   |-----------\        |-----------\
-[CPU 0] ... [CPU 1]  [CPU 0] ... [CPU 1]
-
-after this change there will be a root node in the tree:
-[Root Node]
-    ^
-    |-------------------\
-[Socket 0]          [Socket 1]
-   ^                    ^
-   |-----------\        |-----------\
-[CPU 0] ... [CPU 1]  [CPU 0] ... [CPU 1]
+Hmm, the PM_MASK_ENABLED, PM_BASE_ENABLED are also used by VMA and VTA
+which i've not checked if they're actually used from the ctx.
 
 > 
->> ---
->>  hw/acpi/aml-build.c | 15 ++++++++++++++-
->>  1 file changed, 14 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
->> index 560cee12a24b..3010325ca423 100644
->> --- a/hw/acpi/aml-build.c
->> +++ b/hw/acpi/aml-build.c
->> @@ -2153,12 +2153,25 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->>      int64_t socket_id = -1, cluster_id = -1, core_id = -1;
->>      uint32_t socket_offset = 0, cluster_offset = 0, core_offset = 0;
->>      uint32_t pptt_start = table_data->len;
->> +    uint32_t root_offset;
->>      int n;
->>      AcpiTable table = { .sig = "PPTT", .rev = 2,
->>                          .oem_id = oem_id, .oem_table_id = oem_table_id };
->>  
->>      acpi_table_begin(&table, table_data);
->>  
->> +    /*
->> +     * Build a root node for all the processor nodes. Otherwise when
->> +     * building a multi-socket system each socket tree are separated
+> - VLMUL == 4 is invalid, and you can use that to get rid of VILL
 > 
-> is separated?
+> - SEW reserves 3 bits, but TCG only supports 8/16/32/64; that could be 
+> one more bit if you can live with the limitation
 > 
->> +     * and will be hard for the OS like Linux to know whether the
->> +     * system is homogeneous.
->> +     */
->> +    root_offset = table_data->len - pptt_start;
->> +    build_processor_hierarchy_node(table_data,
->> +        (1 << 0) | /* Physical package */
->> +        (1 << 4), /* Identical Implementation */
->> +        0, 0, NULL, 0);
->> +
->>      /*
->>       * This works with the assumption that cpus[n].props.*_id has been
->>       * sorted from top to down levels in mc->possible_cpu_arch_ids().
->> @@ -2175,7 +2188,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->>              build_processor_hierarchy_node(table_data,
->>                  (1 << 0) | /* Physical package */
->>                  (1 << 4), /* Identical Implementation */
->> -                0, socket_id, NULL, 0);
->> +                root_offset, socket_id, NULL, 0);
->>          }
->>  
->>          if (mc->smp_props.clusters_supported && mc->smp_props.has_clusters) {
->> -- 
->> 2.34.1
+> This is already 6 bits, but for FS and VS it may be efficient enough to 
+> have just one bit (dirty vs. everything else): for all cases other than 
+> dirty, REQUIRE_FPU and require_rv* can call a helper to look at the 
+> actual MSTATUS and generate the exception if the extension is disabled; 
+> then the caller always proceeds with translation into TCG ops(*).  The 
+> overhead for the DISABLED/INITIAL/CLEAN cases is minimal and it gives 
+> back 2 more bits.
+> 
+> Finally, in many cases it makes sense to do a full TB flush when CSRs
+> change.  However I am not sure if this could be done for RISC-V, maybe 
+> for the CFI enabled bits?
+
+I'll have a look at those, but for now I'm going back to 9.1
+
+
+> Thanks,
+> 
+> Paolo
+> 
+> (*) that is:
+> 
+> static bool require_rvv(DisasContext *s)
+> {
+>      REQUIRE_EXT(s, RVV);
+>      if (!s->mstatus_vs_dirty) {
+>          gen_helper_require_rvv(tcg_env);
+>      }
+>      return true;
+> }
+> 
+> static bool require_rvf(DisasContext *s)
+> {
+>      switch (s->sew) {
+>      case MO_16:
+>          if (!s->cfg_ptr->ext_zvfh) {
+>              return false;
+>          }
+>          break;
+>      case MO_32:
+>          if (s->cfg_ptr->ext_zve32f) {
+>              return false;
+>          }
+>          break;
+>      case MO_64:
+>          if (s->cfg_ptr->ext_zve64d) {
+>              return false;
+>          }
+>          break;
+>      default:
+>          return false;
+>      }
+> 
+>      if (!s->mstatus_fs_dirty) {
+>          gen_helper_require_rvf(tcg_env);
+>      }
+>      return true;
+> }
 > 
 > 
-> .
-> 
+
+
+-- 
+Ben Dooks				http://www.codethink.co.uk/
+Senior Engineer				Codethink - Providing Genius
+
+https://www.codethink.co.uk/privacy.html
 
