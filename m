@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9C0EC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D8BC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:08:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Xrp-0008Qe-FP; Wed, 23 Apr 2025 07:02:13 -0400
+	id 1u7XwZ-0004Sv-87; Wed, 23 Apr 2025 07:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Xrm-0008PO-Am
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:02:10 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u7XwO-0004Np-Dq
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:06:58 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Xrk-0008JH-4w
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:02:10 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so71005495e9.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:02:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u7XwM-0000Lm-Fw
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:06:56 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2260c91576aso53863605ad.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745406124; x=1746010924; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oX4XNxoeJ1fXZF688vfyDjm4beCGYePdnTaDiHhBDIo=;
- b=cpkKDWXQ88oTaOqf7w9Z19T1bKHmD02AM2CiMOmJTY9cOaniM9iYcmjx+7uwFj/msm
- PNF7s7dymdAUYTGupZZnQ5qlVkICFcfagfmOnWe6xWtAqCzZaxFTso8KjbJNZyBUisH5
- OibIqv4XLc28dnlSm4Tv9WScXIfeGAEAn4zQiuPHNIC3davvCAtg6MfLAamtkmk1ZsoA
- 1TGIQAt8DtEJZgP6x7PbiLkLhuZtnn1AAR4ftTcfB1EiqexJBCaQ75P8lWprF6tNcvrH
- pqe9kpEbYJPdL6iPfUym0/CuguME1t3x1llvqbJX0u1x3tY5/9sDVavfrlErP3QVrZOf
- 7DUw==
+ d=ventanamicro.com; s=google; t=1745406411; x=1746011211; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bYCFXEMOiDwtpCz9IBOk6xfq5jbJwwkBz5cOXQbM8AA=;
+ b=oPtYDOTONj/l0Oxf8jbH7jsvVl6+WaNvSESWTgKj1QQrIQ5C1Q2xgMUIb8fkVQdq4Z
+ 0nrMRTw5LaeipRc/7FECfQX+xkarSHAbeBW0ugoXeNY3MFGvSZwy3JTdLzoDNZpxMeo5
+ w9QdGMQ0Xq5WLR4zxFMES3pXX5uYlqi8LY62W1FvC1YbClXFfk7XbDnolDHR8qexrFiJ
+ r+DE+Iot0VJnr87TnHgLg91F6SyvZBCV8+oq8vODaXredsdDcE+iE1dDZErAoWBG2ajg
+ mM8ZoaNDWGudpfaZ/ae/hv10XRLRpuDW+R1ur7K0M2Ts2QqDamfQ78BLL9mYMP7ETPbx
+ P2uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745406124; x=1746010924;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oX4XNxoeJ1fXZF688vfyDjm4beCGYePdnTaDiHhBDIo=;
- b=VbbP44kYEbyBZ3FP/wIwQRrlmqyzsH/gvB7n4IHJrbtMVD7J9QhAEO7zdUlg/COH5t
- U1eeTYiQzOE5tafmcSZAODbhMY7jDGjm7Oa/Z9aaZBpvIkcIVZz5Wxcg0uaW+ZKbF+GT
- TpYiqelP1pkA83ioXqhy3RvmbHX3JJ33TOWhhbY/VXej323nvZQJSAnwgqEiTVCOhYU0
- o4IWzKPCNj/qlqQuIyfVUfLIPm7/011OdEnS3AUWzPWQ+WraAlkpvUhZr21QeK9KkhVF
- L4UsGgsB/uU1gQkTQIvbv28xwgcB8XO+Ukq2+ob2vL5Z8UNJCOijRTyCtsdnuRQCM6qo
- JIeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWszGJLxADS2YWzB4XitRzPbWeMDU7txoTvAS1NJMJpv7cnTSkl73Zwi8HySBz5AyjBU7+tMKciuEiW@nongnu.org
-X-Gm-Message-State: AOJu0YxG2LXw36GLGd8JqWDLPHYFMlabEK7UVFUL8HM8NslYnLqqUD4X
- 9Uwst8U5b6afSmKAsbIjZswFexS68cwg0GJ9WC45bIJVkP/VVB8OZvGpBO0a73s9gyBzn/XkFNX
- m
-X-Gm-Gg: ASbGncvXRDk8lzj/s2zsrhStx6pXmdvkSwOZvrYRSi8mr1d4nOK5eKzkfQ6d46W7z9v
- qQdPT8ys8Dkzr43qNPdtVbTXVtE/UitVSu0fp0wJAHJYFMkBYBpMEJ0s9uJgg2OGksfnq7C3KIu
- ubxokVDV8pPpAFoAyeyPZXtoKW4YcuoqXro3NsaKPaDkAI/33PXkl2CKE33A2QkI9bMYjyeT8iJ
- EDrHjo3F9pQsIvZI/DKQhblG13fZOE1H+N+AElaSczROFyYvrrmmjaf3HlyGmjb8a0/V1Ar95yo
- 2VxUqlMaZO7rsPmTID0xGhw4acE16LdkmsyANcWNng0vGu8hkkk1oYWbDtW6hyOeutTt5QpA8rC
- kjoyfTQl4
-X-Google-Smtp-Source: AGHT+IGAGSnDsOxfpnJ6VzDm8ygV1kypft0WUkxBMqjl+XpZGasEidmmquVWTLzgBvV5QjGrUKc7oA==
-X-Received: by 2002:a05:600c:190d:b0:43c:ee3f:2c3 with SMTP id
- 5b1f17b1804b1-4406ab67e15mr170279065e9.7.1745406124591; 
- Wed, 23 Apr 2025 04:02:04 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d40392sm22026205e9.36.2025.04.23.04.02.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 04:02:03 -0700 (PDT)
-Message-ID: <53f9e6dc-8bcf-414d-8491-6c1c3d972962@linaro.org>
-Date: Wed, 23 Apr 2025 13:02:02 +0200
+ d=1e100.net; s=20230601; t=1745406411; x=1746011211;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bYCFXEMOiDwtpCz9IBOk6xfq5jbJwwkBz5cOXQbM8AA=;
+ b=REG2ezwpA0Dz4wTJ4nFSMVJwafYRUlmCy//Ew3gpjdi/qomAeTcdpmgM+tbEOtvSit
+ TPX7yigWF8OFZbOxmXcEuGecW7fZtFfnWVyqqu7d23TmIwYLqznHLTD/eyyIDrLOKyjF
+ Nb6vcc8do/+liRWO3xLXK8InbRFw1QcHUWLnJnvK3Nu2MPGRLgu6jFXBZtO2kvtz1kLX
+ vT0xoENa0XLdcVUrSuP/gn+h7smXsQ6FypcBePwyr7nzarjIYXd1YlAXRKZpMnr02ZdR
+ NwFmH4gdD39U6tjNRECyVokp35w4PCUfDrjxrwJPfz5dOW007Zl7/1UrRNFNZQO+ykqh
+ EeIA==
+X-Gm-Message-State: AOJu0Yyn8lM9mXugJ22XAVmsgrw9lYvCbxCmAyAHv3J/MW1q7bq5QWX2
+ spO6H8nM0c860cVbq1yxxqYuvQsqTPzpJMCzTd7qmGLKW0vrulJbMK1yVsRZ8kAmW4Z3HU3w/Qz
+ 2
+X-Gm-Gg: ASbGncuMXPgI0wWY4cKAhTJS0rJ+x9FrVHBAfBELy/6m1An/jg3tGdaD8jAyNlKBaX7
+ Q2oqfoeUwUC1UaqirdPqWfeGJiUAeVlwVczldtlGembkzO7vPG7+zpZQ0HcNJcuVTidfZqQaqC/
+ 32GIgQrGSr6UTMiwWZ1dk7I+EVk6HuUmHr6ByO373E6e6jwkNjQvohF8Nk6Uj11a8//Qbvyu35P
+ RJiRDSBNFTy4X1f12vOByv3lT4MbT7nrTr559YefC8g5KNEwWGVB63bHa177exNWhUkgm0qoLSW
+ Vs2VIENCdp0tIO7A7zN53fKkn6UiOmGZ6mfvbVA9lOdjrUsVlzHCJx2yxABTyzM=
+X-Google-Smtp-Source: AGHT+IHh3twLKgbjwZedKi9BrZQqbESwav1b3IoIC2S5u8ee7MTQAbGBTtovpkoYOSZBiWt0GmI8xQ==
+X-Received: by 2002:a17:903:11c5:b0:221:85:f384 with SMTP id
+ d9443c01a7336-22c5359c36cmr260513425ad.16.1745406411477; 
+ Wed, 23 Apr 2025 04:06:51 -0700 (PDT)
+Received: from localhost.localdomain ([2804:7f0:bcc0:89f4:3b90:a265:963d:8357])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50fdf3b1sm101509895ad.248.2025.04.23.04.06.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Apr 2025 04:06:51 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH 4/9] hw/riscv/virt.c: add 'base' arg in create_fw_cfg()
+Date: Wed, 23 Apr 2025 08:06:25 -0300
+Message-ID: <20250423110630.2249904-5-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
+References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 112/147] exec/cpu-all: remove this header
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-113-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-113-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,60 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 21:27, Richard Henderson wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20250325045915.994760-16-pierrick.bouvier@linaro.org>
-> ---
->   include/exec/cpu-all.h  | 25 -------------------------
->   include/hw/core/cpu.h   |  2 +-
->   include/qemu/bswap.h    |  2 +-
->   target/alpha/cpu.h      |  2 --
->   target/arm/cpu.h        |  2 --
->   target/avr/cpu.h        |  2 --
->   target/hexagon/cpu.h    |  2 --
->   target/hppa/cpu.h       |  2 --
->   target/i386/cpu.h       |  1 -
->   target/loongarch/cpu.h  |  2 --
->   target/m68k/cpu.h       |  2 --
->   target/microblaze/cpu.h |  2 --
->   target/mips/cpu.h       |  2 --
->   target/openrisc/cpu.h   |  2 --
->   target/ppc/cpu.h        |  2 --
->   target/riscv/cpu.h      |  2 --
->   target/rx/cpu.h         |  2 --
->   target/s390x/cpu.h      |  2 --
->   target/sh4/cpu.h        |  2 --
->   target/sparc/cpu.h      |  2 --
->   target/tricore/cpu.h    |  2 --
->   target/xtensa/cpu.h     |  2 --
->   accel/tcg/cpu-exec.c    |  1 -
->   hw/hyperv/hyperv.c      |  1 -
->   semihosting/uaccess.c   |  1 -
->   tcg/tcg-op-ldst.c       |  2 +-
->   26 files changed, 3 insertions(+), 68 deletions(-)
->   delete mode 100644 include/exec/cpu-all.h
+The function can receive the value via s->memmap[VIRT_FW_CFG].base from
+the caller, avoiding the use of virt_memmap.
 
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ hw/riscv/virt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-> index b915835bea..8782056ae4 100644
-> --- a/include/qemu/bswap.h
-> +++ b/include/qemu/bswap.h
-> @@ -206,7 +206,7 @@ CPU_CONVERT(le, 64, uint64_t)
->    * (except for byte accesses, which have no endian infix).
->    *
->    * The target endian accessors are obviously only available to source
-> - * files which are built per-target; they are defined in cpu-all.h.
-> + * files which are built per-target; they are defined in system/memory.h.
-
-IIUC in patch #2 "exec/tswap: implement {ld,st}.*_p as functions instead
-of macros" you moved them to "exec/tswap.h", not "system/memory.h".
-
-Otherwise,
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 473416bcf3..77ebb517f2 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1262,9 +1262,8 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+     return dev;
+ }
+ 
+-static FWCfgState *create_fw_cfg(const MachineState *ms)
++static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ {
+-    hwaddr base = virt_memmap[VIRT_FW_CFG].base;
+     FWCfgState *fw_cfg;
+ 
+     fw_cfg = fw_cfg_init_mem_wide(base + 8, base, 8, base + 16,
+@@ -1682,7 +1681,7 @@ static void virt_machine_init(MachineState *machine)
+      * Init fw_cfg. Must be done before riscv_load_fdt, otherwise the
+      * device tree cannot be altered and we get FDT_ERR_NOSPACE.
+      */
+-    s->fw_cfg = create_fw_cfg(machine);
++    s->fw_cfg = create_fw_cfg(machine, s->memmap[VIRT_FW_CFG].base);
+     rom_set_fw(s->fw_cfg);
+ 
+     /* SiFive Test MMIO device */
+-- 
+2.49.0
 
 
