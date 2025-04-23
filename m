@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BDDC369CB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B8AC369D3
 	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WcI-0005cv-5X; Wed, 23 Apr 2025 05:42:06 -0400
+	id 1u7WcK-0005nQ-UZ; Wed, 23 Apr 2025 05:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wbs-0004gL-TZ
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:41 -0400
+ id 1u7Wbi-0004No-Ej
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wbq-0008MD-QM
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:40 -0400
+ id 1u7Wbg-0008LW-J4
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401297;
+ s=mimecast20190719; t=1745401287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+MNa0JBZJFB5f+SaIpMmEEmSw19wZGPP2kb0KycL6UA=;
- b=LKmzIyfH/M5UeHr5PVQ+nnefymo3nxuggb6dzgrtErHCyIcqf06+GraPJrbU8A2oBDq/5y
- dQ5Y/XorYhKFFenzpLJLyuNrI8ukc8P489J/bz9he1nCxf/FP/OR9k26/s6/FPmmJpP4xf
- wgq7jY2YVy5vJZ0hit1QUwQi75P/tn0=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7WV/33915Cp1lyg6FaM5mC8S9fs4ugxpdjv4iZnTm4I=;
+ b=TIqCaixo+TE1CFGMdsEmphCSqASA3uooEgorH4QUPvJ80x5C+Aly1C/vMTQW12V0YnooI4
+ r5b1wbysa7rOVMMSsr41cg2g7WzgvIkftoCJN8VU+FVCtpRK/YSrrTbbr/ga/5xYPbePXs
+ XhDaOyWOCJm7edVM6KyVOEA5cxlW0qc=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-P97nW155P12cGvVfvF2hBQ-1; Wed, 23 Apr 2025 05:41:34 -0400
-X-MC-Unique: P97nW155P12cGvVfvF2hBQ-1
-X-Mimecast-MFC-AGG-ID: P97nW155P12cGvVfvF2hBQ_1745401294
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5f62cbc6d5cso4816555a12.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:34 -0700 (PDT)
+ us-mta-627-jcqsGevAN12g7XDnooyOHw-1; Wed, 23 Apr 2025 05:41:25 -0400
+X-MC-Unique: jcqsGevAN12g7XDnooyOHw-1
+X-Mimecast-MFC-AGG-ID: jcqsGevAN12g7XDnooyOHw_1745401285
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ac297c7a0c2so391396066b.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401293; x=1746006093;
+ d=1e100.net; s=20230601; t=1745401284; x=1746006084;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+MNa0JBZJFB5f+SaIpMmEEmSw19wZGPP2kb0KycL6UA=;
- b=cOCbYHAQYwIT/AQMUwK829XINm4+SPDFNX7tN7dK3bqRPs6jxCQ+QZhdPnmi9eLiw3
- kJA4nq3PgtRqVo1iiaRpY/OsybOhrYiKZKTFz5Q31cFAyHQ2Tk3MrnoO+eihGT9l9p8k
- R517kslH0ok84OW/m15Ggyv6POSwIPZzaBttwOca7j6Kg/6FABl8lIx9G8KZkFli2dpc
- 3Mg3B3HKBKk4HACLA0z8pGiLddziwQ/SS3+XvSiF+nMLj526Uwn0DPkDwdvJhI48JFXm
- xp+SQmcUNJHvJheRvSpToNXeC2nj+K3EE3gc7RkoIS72yZy+7SG1EeWxxnfs4QCgvG1R
- Lavw==
-X-Gm-Message-State: AOJu0YycrlgJoUoUfkLKVyLXGSmskQaN85uYuz8961gsnW8wZozYFVkK
- a3noA/VS1mlPjK9+qQftVUn6/6CNNpFuwiXW6lk9I4ShTPlNNqaH2QsUMs4Ew2azRqtQTvrNkOx
- pE1YflBEO0mw5Q435ks+WocaxeZA17PSJkIuAwq8KMekSz67HJf45qevXMjpB+713oXzOhEmL0R
- 3GHa5azLJrTqJJmfTW5pgWdqVE+GdQnhwc2Uen
-X-Gm-Gg: ASbGncv1Mam7U/Z00BYWzvIGpgyYGIT/fVOU4yB1NzLfoQ1NBQ+Jqls4wtyTgq7xiLQ
- RJW+IbzpvBIfwS6/YNZiSq0/b0Orc1r4fpp6oZUx+6Cpe5CTayS1B8Zt5cd6/3e+3D8hcikTUVy
- L3J1IEHCDQix9baOxW1h1kPqmgAki2Tff64cJSD+1DDz3NpihnOWxA9AYNNYWI1lweTN2jNi2vH
- IEbAhBG6l54TzpNNQU4SNIb/AfB57Iycf4OpRr9zOb2WSPJteONy8lnkfwGfMq9Adc6JDH5OaNo
- CgP7+w+0z8ZLXYSg
-X-Received: by 2002:a05:6402:2803:b0:5e7:b02b:381f with SMTP id
- 4fb4d7f45d1cf-5f6285f43f8mr15152593a12.30.1745401292904; 
- Wed, 23 Apr 2025 02:41:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEN4SxggOAzSMVJ84hhhC5oPJPpTkR8NCheMS3WQMooHJOJMRZVnhLJKtV3fGqUP+4mA8Nryw==
-X-Received: by 2002:a05:6402:2803:b0:5e7:b02b:381f with SMTP id
- 4fb4d7f45d1cf-5f6285f43f8mr15152575a12.30.1745401292452; 
- Wed, 23 Apr 2025 02:41:32 -0700 (PDT)
+ bh=7WV/33915Cp1lyg6FaM5mC8S9fs4ugxpdjv4iZnTm4I=;
+ b=UfkZ/GxrUMx0C17yfT41NjRXZ162GidGeyLcya6pKYsBqRCejZFHNZORn2Us/RrCEV
+ GlfIAakgm+knHnxUqh2ToNDjekyyZomHEd1bmuVWDZlKZJRHSGHoywP6EDSGMWxX5hEk
+ UZrV8JCL4+p9STMkaIPsGV+05Y0+eN9fv97CWDSKa30VywENCypL2DQ3aIuuPCQaKMqj
+ PG5gSBZIoYqc9PzHH8//pShahGeWJcIsFwgW12gJ9AYrXQjBwdsK4EcUMh1yW8eLqbnf
+ 3WJIZSNvQZCeZ6UTZIWiN6xuVeBLVw7HxMhmUw74xN8mCafc60iY2CGRrKK0ch0z3KRo
+ x/oQ==
+X-Gm-Message-State: AOJu0YxpIF8badBXwuueUa+TUKptG1piYFmWgdSVwV7ufGhwqTaUXpXI
+ M0/vmrqNYcUxX94za5d8uW2RxPQPdGXkgYJkt+ET1KokB8YBJkGKBr9ASQ24b93mSNcH3Qgl7dO
+ dZ9qNldstuaH+9AvFAkqw9fyMjtZYU6ErvMPryqS3Mtt6TdI7kIVNj41olLVI6fgi3h2AAAjxys
+ la1H/20f5JT2RzS9dv21wjSkEdOkH4i8vsh6nN
+X-Gm-Gg: ASbGncv1vJV9k3wXPAQeyiZq/RyjSKHfoTcupCk0gmGpGgS0Jgjng77cOgmdWuBNj06
+ mYPOm3ebv9SNOlaCdAXpE60Cs+OkSLDxz+Ae/gB9GfoRpNhOpAFndkd08C88Y5oDE10iwym29Sj
+ SNssT50Whl4DQax62bpveUn8sGP6l9oYvxGNMsOTP/CN5QtUTflFZdORr6Cu5BrwR7V+m2GD1iy
+ W6JU8it0GkRpwdtWeoqDwCEm5UxpLS0nmTE/30fByPD3rPE5Qzz9Vowxz84qTOMg7gubzEOBrw9
+ RQXc/ZK1L5rFzErf
+X-Received: by 2002:a17:906:c10f:b0:aca:a3a8:5560 with SMTP id
+ a640c23a62f3a-acb74e0ed71mr1351301166b.53.1745401284152; 
+ Wed, 23 Apr 2025 02:41:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAancXXHi3BLmLaPGDNeFfwglnZZKm6QvcvbqYR1nf8TYGUP2VY1roHa8u61j2PwAgCxFFOw==
+X-Received: by 2002:a17:906:c10f:b0:aca:a3a8:5560 with SMTP id
+ a640c23a62f3a-acb74e0ed71mr1351298666b.53.1745401283633; 
+ Wed, 23 Apr 2025 02:41:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f6258545d9sm7222316a12.67.2025.04.23.02.41.31
+ a640c23a62f3a-acb6eefcf76sm789606266b.100.2025.04.23.02.41.21
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:41:31 -0700 (PDT)
+ Wed, 23 Apr 2025 02:41:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PULL 13/34] target/i386/hvf: introduce x86_emul_ops
-Date: Wed, 23 Apr 2025 11:40:43 +0200
-Message-ID: <20250423094105.40692-14-pbonzini@redhat.com>
+Subject: [PULL 08/34] target/i386: tcg: remove tmp0
+Date: Wed, 23 Apr 2025 11:40:38 +0200
+Message-ID: <20250423094105.40692-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
@@ -108,106 +108,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wei Liu <liuwe@linux.microsoft.com>
-
-This will be used to remove HVF specific code from the instruction emulator.
-
-For now we only introduce two hooks for x86_decode.c. More hooks will be added
-when the code is refactored.
-
-The emulator initialization function now takes in a pointer to the ops structure.
-
-Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1741377325-28175-2-git-send-email-liuwe@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/x86_emu.h | 10 +++++++++-
- target/i386/hvf/hvf.c     | 20 +++++++++++++++++++-
- target/i386/hvf/x86_emu.c |  5 ++++-
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ target/i386/tcg/translate.c | 27 +++++++++++++++------------
+ target/i386/tcg/emit.c.inc  | 20 ++++++++++----------
+ 2 files changed, 25 insertions(+), 22 deletions(-)
 
-diff --git a/target/i386/hvf/x86_emu.h b/target/i386/hvf/x86_emu.h
-index bc0fc72c761..1422d06ea18 100644
---- a/target/i386/hvf/x86_emu.h
-+++ b/target/i386/hvf/x86_emu.h
-@@ -23,7 +23,15 @@
- #include "x86_decode.h"
- #include "cpu.h"
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 822dbb2e9ae..5d433f8522e 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -134,7 +134,6 @@ typedef struct DisasContext {
+     TCGv T1;
  
--void init_emu(void);
-+struct x86_emul_ops {
-+    void (*read_mem)(CPUState *cpu, void *data, target_ulong addr, int bytes);
-+    void (*read_segment_descriptor)(CPUState *cpu, struct x86_segment_descriptor *desc,
-+                                    enum X86Seg seg);
-+};
-+
-+extern const struct x86_emul_ops *emul_ops;
-+
-+void init_emu(const struct x86_emul_ops *ops);
- bool exec_instruction(CPUX86State *env, struct x86_decode *ins);
- void x86_emul_raise_exception(CPUX86State *env, int exception_index, int error_code);
+     /* TCG local register indexes (only used inside old micro ops) */
+-    TCGv tmp0;
+     TCGv_i32 tmp2_i32;
+     TCGv_i32 tmp3_i32;
+     TCGv_i64 tmp1_i64;
+@@ -2175,14 +2174,17 @@ static void gen_enter(DisasContext *s, int esp_addend, int level)
+     level &= 31;
+     if (level != 0) {
+         int i;
++        if (level > 1) {
++            TCGv fp = tcg_temp_new();
  
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 9ba0e04ac75..03456ffbc70 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -229,6 +229,24 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
-     return hv_vm_create(HV_VM_DEFAULT);
+-        /* Copy level-1 pointers from the previous frame.  */
+-        for (i = 1; i < level; ++i) {
+-            gen_lea_ss_ofs(s, s->A0, cpu_regs[R_EBP], -size * i);
+-            gen_op_ld_v(s, d_ot, s->tmp0, s->A0);
++            /* Copy level-1 pointers from the previous frame.  */
++            for (i = 1; i < level; ++i) {
++                gen_lea_ss_ofs(s, s->A0, cpu_regs[R_EBP], -size * i);
++                gen_op_ld_v(s, d_ot, fp, s->A0);
+ 
+-            gen_lea_ss_ofs(s, s->A0, s->T1, -size * i);
+-            gen_op_st_v(s, d_ot, s->tmp0, s->A0);
++                gen_lea_ss_ofs(s, s->A0, s->T1, -size * i);
++                gen_op_st_v(s, d_ot, fp, s->A0);
++            }
+         }
+ 
+         /* Push the current FrameTemp as the last level.  */
+@@ -2405,10 +2407,11 @@ static void gen_ldy_env_A0(DisasContext *s, int offset, bool align)
+     int mem_index = s->mem_index;
+     TCGv_i128 t0 = tcg_temp_new_i128();
+     TCGv_i128 t1 = tcg_temp_new_i128();
++    TCGv a0_hi = tcg_temp_new();
+ 
+     tcg_gen_qemu_ld_i128(t0, s->A0, mem_index, mop | (align ? MO_ALIGN_32 : 0));
+-    tcg_gen_addi_tl(s->tmp0, s->A0, 16);
+-    tcg_gen_qemu_ld_i128(t1, s->tmp0, mem_index, mop);
++    tcg_gen_addi_tl(a0_hi, s->A0, 16);
++    tcg_gen_qemu_ld_i128(t1, a0_hi, mem_index, mop);
+ 
+     tcg_gen_st_i128(t0, tcg_env, offset + offsetof(YMMReg, YMM_X(0)));
+     tcg_gen_st_i128(t1, tcg_env, offset + offsetof(YMMReg, YMM_X(1)));
+@@ -2419,12 +2422,13 @@ static void gen_sty_env_A0(DisasContext *s, int offset, bool align)
+     MemOp mop = MO_128 | MO_LE | MO_ATOM_IFALIGN_PAIR;
+     int mem_index = s->mem_index;
+     TCGv_i128 t = tcg_temp_new_i128();
++    TCGv a0_hi = tcg_temp_new();
+ 
+     tcg_gen_ld_i128(t, tcg_env, offset + offsetof(YMMReg, YMM_X(0)));
+     tcg_gen_qemu_st_i128(t, s->A0, mem_index, mop | (align ? MO_ALIGN_32 : 0));
+-    tcg_gen_addi_tl(s->tmp0, s->A0, 16);
++    tcg_gen_addi_tl(a0_hi, s->A0, 16);
+     tcg_gen_ld_i128(t, tcg_env, offset + offsetof(YMMReg, YMM_X(1)));
+-    tcg_gen_qemu_st_i128(t, s->tmp0, mem_index, mop);
++    tcg_gen_qemu_st_i128(t, a0_hi, mem_index, mop);
  }
  
-+static void hvf_read_segment_descriptor(CPUState *s, struct x86_segment_descriptor *desc,
-+                                        X86Seg seg)
-+{
-+    struct vmx_segment vmx_segment;
-+    vmx_read_segment_descriptor(s, &vmx_segment, seg);
-+    vmx_segment_to_x86_descriptor(s, &vmx_segment, desc);
-+}
-+
-+static void hvf_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
-+{
-+    vmx_read_mem(cpu, data, gva, bytes);
-+}
-+
-+static const struct x86_emul_ops hvf_x86_emul_ops = {
-+    .read_mem = hvf_read_mem,
-+    .read_segment_descriptor = hvf_read_segment_descriptor,
-+};
-+
- int hvf_arch_init_vcpu(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-@@ -237,7 +255,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     int r;
-     uint64_t reqCap;
+ #include "emit.c.inc"
+@@ -3771,7 +3775,6 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
+     dc->T1 = tcg_temp_new();
+     dc->A0 = tcg_temp_new();
  
--    init_emu();
-+    init_emu(&hvf_x86_emul_ops);
-     init_decoder();
+-    dc->tmp0 = tcg_temp_new();
+     dc->tmp1_i64 = tcg_temp_new_i64();
+     dc->tmp2_i32 = tcg_temp_new_i32();
+     dc->tmp3_i32 = tcg_temp_new_i32();
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index a41afb7fe46..bd24438230d 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1710,22 +1710,22 @@ static void gen_CMPccXADD(DisasContext *s, X86DecodedInsn *decode)
+     switch (jcc_op) {
+     case JCC_O:
+         /* (src1 ^ src2) & (src1 ^ dst). newv is only used here for a moment */
++        cmp_lhs = tcg_temp_new(), cmp_rhs = tcg_constant_tl(0);
+         tcg_gen_xor_tl(newv, s->cc_srcT, s->T0);
+-        tcg_gen_xor_tl(s->tmp0, s->cc_srcT, cmpv);
+-        tcg_gen_and_tl(s->tmp0, s->tmp0, newv);
+-        tcg_gen_sextract_tl(s->tmp0, s->tmp0, 0, 8 << ot);
+-        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(0);
++        tcg_gen_xor_tl(cmp_lhs, s->cc_srcT, cmpv);
++        tcg_gen_and_tl(cmp_lhs, cmp_lhs, newv);
++        tcg_gen_sextract_tl(cmp_lhs, cmp_lhs, 0, 8 << ot);
+         break;
  
-     if (hvf_state->hvf_caps == NULL) {
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index ebba80a36b5..c15b5a7ca85 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -1231,6 +1231,8 @@ static struct cmd_handler {
+     case JCC_P:
+-        tcg_gen_ext8u_tl(s->tmp0, s->T0);
+-        tcg_gen_ctpop_tl(s->tmp0, s->tmp0);
+-        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(1);
++        cmp_lhs = tcg_temp_new(), cmp_rhs = tcg_constant_tl(1);
++        tcg_gen_ext8u_tl(cmp_lhs, s->T0);
++        tcg_gen_ctpop_tl(cmp_lhs, cmp_lhs);
+         break;
  
- static struct cmd_handler _cmd_handler[X86_DECODE_CMD_LAST];
+     case JCC_S:
+-        tcg_gen_sextract_tl(s->tmp0, s->T0, 0, 8 << ot);
+-        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(0);
++        cmp_lhs = tcg_temp_new(), cmp_rhs = tcg_constant_tl(0);
++        tcg_gen_sextract_tl(cmp_lhs, s->T0, 0, 8 << ot);
+         break;
  
-+const struct x86_emul_ops *emul_ops;
-+
- static void init_cmd_handler(void)
- {
-     int i;
-@@ -1253,7 +1255,8 @@ bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
-     return true;
- }
+     default:
+@@ -1876,7 +1876,7 @@ static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
+                                       s->mem_index, MO_TEUQ);
+     }
  
--void init_emu(void)
-+void init_emu(const struct x86_emul_ops *o)
- {
-+    emul_ops = o;
-     init_cmd_handler();
- }
+-    /* Set tmp0 to match the required value of Z. */
++    /* Compute the required value of Z. */
+     tcg_gen_setcond_i64(TCG_COND_EQ, cmp, old, cmp);
+     Z = tcg_temp_new();
+     tcg_gen_trunc_i64_tl(Z, cmp);
 -- 
 2.49.0
 
