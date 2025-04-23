@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7D6CC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599A8C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Uf9-0003Ca-Ei; Wed, 23 Apr 2025 03:37:00 -0400
+	id 1u7UfS-0003UB-QC; Wed, 23 Apr 2025 03:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7Uez-00039S-L1
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:36:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfL-0003Hz-Ev
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7Uex-0003Du-D8
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:36:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfJ-0003Iz-47
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745393801;
+ s=mimecast20190719; t=1745393824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cl21NGghQLqZCX6woUJ4ZBCPtjaIbo7EPrRB3h/znF4=;
- b=K8qOH6eBevfCVLS2Aj4fpLUsXR2nu7q5agvCoWaqX1NF5/o1WMcCko7N2NZffkB6ZM7G4b
- fddRv1nUqUOxZl8Tn/qL837pmXXkAVng55n3hDcyP3J/34QqatSXl9GYdje1dMj+48drpd
- ySBgkEjxGvV3X5M6y3iArNhD/uASiuk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ndVevxmNoCk6PIZvrZxaU44cyfspBv9N9IemV+gQ5F8=;
+ b=DPOWbpOSMU0IRrQYlUVtVytDDkefpGwETOxrOxdGUwGLofE3feI3h0RC27xoODYLbSb+R5
+ Q6TlZ5ZL5zfhd4gF+jH4Vctz8VD/GcTLHvOCZK3FRGg2Muk7mxDbQE8oNhXP+wKlM6rvm3
+ IOP59G2n/vQ/AhsEgPrRMH3fCYAp8Dk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-Ins2K6-2OWuL0x6uhnhQZQ-1; Wed,
- 23 Apr 2025 03:36:37 -0400
-X-MC-Unique: Ins2K6-2OWuL0x6uhnhQZQ-1
-X-Mimecast-MFC-AGG-ID: Ins2K6-2OWuL0x6uhnhQZQ_1745393796
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-2vr_8M25N2O-EyQg99oDaA-1; Wed,
+ 23 Apr 2025 03:36:58 -0400
+X-MC-Unique: 2vr_8M25N2O-EyQg99oDaA-1
+X-Mimecast-MFC-AGG-ID: 2vr_8M25N2O-EyQg99oDaA_1745393817
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 64BD51800263; Wed, 23 Apr 2025 07:36:36 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 893511955DC6; Wed, 23 Apr 2025 07:36:57 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EEB0D19560A3; Wed, 23 Apr 2025 07:36:33 +0000 (UTC)
+ id F125519560A3; Wed, 23 Apr 2025 07:36:55 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 09/29] hw: add compat machines for 10.1
-Date: Wed, 23 Apr 2025 09:35:49 +0200
-Message-ID: <20250423073610.271585-10-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 19/29] tests/functional: Convert the 64-bit big endian Wheezy
+ mips test
+Date: Wed, 23 Apr 2025 09:35:59 +0200
+Message-ID: <20250423073610.271585-20-thuth@redhat.com>
 In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 References: <20250423073610.271585-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -86,252 +87,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Add 10.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+Reuse the test function from the 32-bit big endian test to easily
+convert the 64-bit big endian Wheezy mips test.
 
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250414094543.221241-1-cohuck@redhat.com>
+Since this was the last test in tests/avocado/linux_ssh_mips_malta.py,
+we can remove this avocado file now, too.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250414113031.151105-10-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/boards.h        |  3 +++
- include/hw/i386/pc.h       |  3 +++
- hw/arm/virt.c              |  9 ++++++++-
- hw/core/machine.c          |  3 +++
- hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 13 +++++++++++--
- hw/i386/pc_q35.c           | 13 +++++++++++--
- hw/m68k/virt.c             |  9 ++++++++-
- hw/ppc/spapr.c             | 15 +++++++++++++--
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
- 10 files changed, 76 insertions(+), 9 deletions(-)
+ MAINTAINERS                           |   1 -
+ tests/avocado/linux_ssh_mips_malta.py | 181 --------------------------
+ tests/functional/meson.build          |   2 +
+ tests/functional/test_mips64_malta.py |  35 +++++
+ 4 files changed, 37 insertions(+), 182 deletions(-)
+ delete mode 100644 tests/avocado/linux_ssh_mips_malta.py
+ create mode 100755 tests/functional/test_mips64_malta.py
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index f22b2e7fc75..bfe8643a27a 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -761,6 +761,9 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 42348df9d68..72f6b208f5a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1355,7 +1355,6 @@ F: hw/acpi/piix4.c
+ F: hw/mips/malta.c
+ F: hw/pci-host/gt64120.c
+ F: include/hw/southbridge/piix.h
+-F: tests/avocado/linux_ssh_mips_malta.py
+ F: tests/functional/test_mips*_malta.py
+ F: tests/functional/test_mips*_tuxrun.py
  
-+extern GlobalProperty hw_compat_10_0[];
-+extern const size_t hw_compat_10_0_len;
+diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
+deleted file mode 100644
+index 2fa5cf9a6c1..00000000000
+--- a/tests/avocado/linux_ssh_mips_malta.py
++++ /dev/null
+@@ -1,181 +0,0 @@
+-# Functional test that boots a VM and run commands via a SSH session
+-#
+-# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-import os
+-import re
+-import base64
+-import logging
+-import time
+-
+-from avocado import skipUnless
+-from avocado_qemu import LinuxSSHMixIn
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-from avocado.utils import process
+-from avocado.utils import archive
+-from avocado.utils import ssh
+-
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-@skipUnless(ssh.SSH_CLIENT_BINARY, 'No SSH client available')
+-class LinuxSSH(QemuSystemTest, LinuxSSHMixIn):
+-    """
+-    :avocado: tags=accel:tcg
+-    """
+-
+-    timeout = 150 # Not for 'configure --enable-debug --enable-debug-tcg'
+-
+-    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+-    VM_IP = '127.0.0.1'
+-
+-    BASE_URL = 'https://people.debian.org/~aurel32/qemu/'
+-    IMAGE_INFO = {
+-        'be': {'base_url': 'mips',
+-               'image_name': 'debian_wheezy_mips_standard.qcow2',
+-               'image_hash': '8987a63270df67345b2135a6b7a4885a35e392d5',
+-               'kernel_hash': {
+-                   32: '592e384a4edc16dade52a6cd5c785c637bcbc9ad',
+-                   64: 'db6eea7de35d36c77d8c165b6bcb222e16eb91db'}
+-              },
+-        'le': {'base_url': 'mipsel',
+-               'image_name': 'debian_wheezy_mipsel_standard.qcow2',
+-               'image_hash': '7866764d9de3ef536ffca24c9fb9f04ffdb45802',
+-               'kernel_hash': {
+-                   32: 'a66bea5a8adaa2cb3d36a1d4e0ccdb01be8f6c2a',
+-                   64: '6a7f77245acf231415a0e8b725d91ed2f3487794'}
+-              }
+-        }
+-    CPU_INFO = {
+-        32: {'cpu': 'MIPS 24Kc', 'kernel_release': '3.2.0-4-4kc-malta'},
+-        64: {'cpu': 'MIPS 20Kc', 'kernel_release': '3.2.0-4-5kc-malta'}
+-        }
+-
+-    def get_url(self, endianess, path=''):
+-        qkey = {'le': 'el', 'be': ''}
+-        return '%s/mips%s/%s' % (self.BASE_URL, qkey[endianess], path)
+-
+-    def get_image_info(self, endianess):
+-        dinfo = self.IMAGE_INFO[endianess]
+-        image_url = self.get_url(endianess, dinfo['image_name'])
+-        image_hash = dinfo['image_hash']
+-        return (image_url, image_hash)
+-
+-    def get_kernel_info(self, endianess, wordsize):
+-        minfo = self.CPU_INFO[wordsize]
+-        kernel_url = self.get_url(endianess,
+-                                  'vmlinux-%s' % minfo['kernel_release'])
+-        kernel_hash = self.IMAGE_INFO[endianess]['kernel_hash'][wordsize]
+-        return kernel_url, kernel_hash
+-
+-    def ssh_disconnect_vm(self):
+-        self.ssh_session.quit()
+-
+-    def boot_debian_wheezy_image_and_ssh_login(self, endianess, kernel_path):
+-        image_url, image_hash = self.get_image_info(endianess)
+-        image_path = self.fetch_asset(image_url, asset_hash=image_hash)
+-
+-        self.vm.set_console()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
+-                               + 'console=ttyS0 root=/dev/sda1')
+-        self.vm.add_args('-no-reboot',
+-                         '-kernel', kernel_path,
+-                         '-append', kernel_command_line,
+-                         '-drive', 'file=%s,snapshot=on' % image_path,
+-                         '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
+-                         '-device', 'pcnet,netdev=vnet')
+-        self.vm.launch()
+-
+-        self.log.info('VM launched, waiting for sshd')
+-        console_pattern = 'Starting OpenBSD Secure Shell server: sshd'
+-        wait_for_console_pattern(self, console_pattern, 'Oops')
+-        self.log.info('sshd ready')
+-
+-        self.ssh_connect('root', 'root', False)
+-
+-    def shutdown_via_ssh(self):
+-        self.ssh_command('poweroff')
+-        self.ssh_disconnect_vm()
+-        wait_for_console_pattern(self, 'Power down', 'Oops')
+-
+-    def run_common_commands(self, wordsize):
+-        self.ssh_command_output_contains(
+-            'cat /proc/cpuinfo',
+-            self.CPU_INFO[wordsize]['cpu'])
+-        self.ssh_command_output_contains(
+-            'uname -m',
+-            'mips')
+-        self.ssh_command_output_contains(
+-            'uname -r',
+-            self.CPU_INFO[wordsize]['kernel_release'])
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  timer')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  i8042')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  serial')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  ata_piix')
+-        self.ssh_command_output_contains(
+-            'cat /proc/interrupts',
+-            'XT-PIC  eth0')
+-        self.ssh_command_output_contains(
+-            'cat /proc/devices',
+-            'input')
+-        self.ssh_command_output_contains(
+-            'cat /proc/devices',
+-            'usb')
+-        self.ssh_command_output_contains(
+-            'cat /proc/devices',
+-            'fb')
+-        self.ssh_command_output_contains(
+-            'cat /proc/ioports',
+-            ' : serial')
+-        self.ssh_command_output_contains(
+-            'cat /proc/ioports',
+-            ' : ata_piix')
+-        self.ssh_command_output_contains(
+-            'cat /proc/ioports',
+-            ' : piix4_smbus')
+-        self.ssh_command_output_contains(
+-            'lspci -d 11ab:4620',
+-            'GT-64120')
+-        self.ssh_command_output_contains(
+-            'cat /sys/bus/i2c/devices/i2c-0/name',
+-            'SMBus PIIX4 adapter')
+-        self.ssh_command_output_contains(
+-            'cat /proc/mtd',
+-            'YAMON')
+-        # Empty 'Board Config' (64KB)
+-        self.ssh_command_output_contains(
+-            'md5sum /dev/mtd2ro',
+-            '0dfbe8aa4c20b52e1b8bf3cb6cbdf193')
+-
+-    def check_mips_malta(self, uname_m, endianess):
+-        wordsize = 64 if '64' in uname_m else 32
+-        kernel_url, kernel_hash = self.get_kernel_info(endianess, wordsize)
+-        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
+-        self.boot_debian_wheezy_image_and_ssh_login(endianess, kernel_path)
+-
+-        stdout, _ = self.ssh_command('uname -a')
+-        self.assertIn(True, [uname_m + " GNU/Linux" in line for line in stdout])
+-
+-        self.run_common_commands(wordsize)
+-        self.shutdown_via_ssh()
+-        # Wait for VM to shut down gracefully
+-        self.vm.wait()
+-
+-    def test_mips_malta64eb_kernel3_2_0(self):
+-        """
+-        :avocado: tags=arch:mips64
+-        :avocado: tags=endian:big
+-        :avocado: tags=device:pcnet32
+-        """
+-        self.check_mips_malta('mips64', 'be')
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index a4a317115b3..985ac5c27fe 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -42,6 +42,7 @@ test_timeouts = {
+   'mips_malta' : 480,
+   'mipsel_malta' : 420,
+   'mipsel_replay' : 480,
++  'mips64_malta' : 240,
+   'mips64el_malta' : 420,
+   'mips64el_replay' : 180,
+   'netdev_ethtool' : 180,
+@@ -191,6 +192,7 @@ tests_mipsel_system_thorough = [
+ ]
+ 
+ tests_mips64_system_thorough = [
++  'mips64_malta',
+   'mips64_tuxrun',
+ ]
+ 
+diff --git a/tests/functional/test_mips64_malta.py b/tests/functional/test_mips64_malta.py
+new file mode 100755
+index 00000000000..53c3e0c1221
+--- /dev/null
++++ b/tests/functional/test_mips64_malta.py
+@@ -0,0 +1,35 @@
++#!/usr/bin/env python3
++#
++# Functional tests for the big-endian 64-bit MIPS Malta board
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
- extern GlobalProperty hw_compat_9_2[];
- extern const size_t hw_compat_9_2_len;
- 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 103b54301f8..8677dc8950b 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -215,6 +215,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
- /* sgx.c */
- void pc_machine_init_sgx_epc(PCMachineState *pcms);
- 
-+extern GlobalProperty pc_compat_10_0[];
-+extern const size_t pc_compat_10_0_len;
++from qemu_test import LinuxKernelTest, Asset
++from test_mips_malta import mips_check_wheezy
 +
- extern GlobalProperty pc_compat_9_2[];
- extern const size_t pc_compat_9_2_len;
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a96452f17a4..3e72adaa918 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3408,10 +3408,17 @@ static void machvirt_machine_init(void)
- }
- type_init(machvirt_machine_init);
- 
-+static void virt_machine_10_1_options(MachineClass *mc)
-+{
-+}
-+DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
 +
- static void virt_machine_10_0_options(MachineClass *mc)
- {
-+    virt_machine_10_1_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(10, 0)
-+DEFINE_VIRT_MACHINE(10, 0)
- 
- static void virt_machine_9_2_options(MachineClass *mc)
- {
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 63c6ef93d29..abfcedd4a5f 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -37,6 +37,9 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
- 
-+GlobalProperty hw_compat_10_0[] = {};
-+const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
++class MaltaMachineConsole(LinuxKernelTest):
 +
- GlobalProperty hw_compat_9_2[] = {
-     {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
-     { "virtio-balloon-pci", "vectors", "0" },
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 01d0581f62a..1b5d55e96d5 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -79,6 +79,9 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
-+GlobalProperty pc_compat_10_0[] = {};
-+const size_t pc_compat_10_0_len = G_N_ELEMENTS(pc_compat_10_0);
++    ASSET_WHEEZY_KERNEL = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mips/'
++         'vmlinux-3.2.0-4-5kc-malta'),
++        '3e4ec154db080b3f1839f04dde83120654a33e5e1716863de576c47cb94f68f6')
 +
- GlobalProperty pc_compat_9_2[] = {};
- const size_t pc_compat_9_2_len = G_N_ELEMENTS(pc_compat_9_2);
- 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 6c91e2d2929..dbb59df64f7 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -479,12 +479,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
-                                      "Use a different south bridge than PIIX3");
- }
- 
--static void pc_i440fx_machine_10_0_options(MachineClass *m)
-+static void pc_i440fx_machine_10_1_options(MachineClass *m)
- {
-     pc_i440fx_machine_options(m);
- }
- 
--DEFINE_I440FX_MACHINE_AS_LATEST(10, 0);
-+DEFINE_I440FX_MACHINE_AS_LATEST(10, 1);
++    ASSET_WHEEZY_DISK = Asset(
++        ('https://people.debian.org/~aurel32/qemu/mips/'
++         'debian_wheezy_mips_standard.qcow2'),
++        'de03599285b8382ad309309a6c4869f6c6c42a5cfc983342bab9ec0dfa7849a2')
 +
-+static void pc_i440fx_machine_10_0_options(MachineClass *m)
-+{
-+    pc_i440fx_machine_10_1_options(m);
-+    compat_props_add(m->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-+    compat_props_add(m->compat_props, pc_compat_10_0, pc_compat_10_0_len);
-+}
++    def test_wheezy(self):
++        kernel_path = self.ASSET_WHEEZY_KERNEL.fetch()
++        image_path = self.ASSET_WHEEZY_DISK.fetch()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
++                               + 'console=ttyS0 root=/dev/sda1')
++        mips_check_wheezy(self,
++            kernel_path, image_path, kernel_command_line, cpuinfo='MIPS 20Kc',
++            dl_file='/boot/initrd.img-3.2.0-4-5kc-malta',
++            hsum='d98b953bb4a41c0fc0fd8d19bbc691c08989ac52568c1d3054d92dfd890d3f06')
 +
-+DEFINE_I440FX_MACHINE(10, 0);
- 
- static void pc_i440fx_machine_9_2_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index fd96d0345c7..c538b3d05b4 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -361,12 +361,21 @@ static void pc_q35_machine_options(MachineClass *m)
-                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
- }
- 
--static void pc_q35_machine_10_0_options(MachineClass *m)
-+static void pc_q35_machine_10_1_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
- }
- 
--DEFINE_Q35_MACHINE_AS_LATEST(10, 0);
-+DEFINE_Q35_MACHINE_AS_LATEST(10, 1);
 +
-+static void pc_q35_machine_10_0_options(MachineClass *m)
-+{
-+    pc_q35_machine_10_1_options(m);
-+    compat_props_add(m->compat_props, hw_compat_10_0, hw_compat_10_0_len);
-+    compat_props_add(m->compat_props, pc_compat_10_0, pc_compat_10_0_len);
-+}
-+
-+DEFINE_Q35_MACHINE(10, 0);
- 
- static void pc_q35_machine_9_2_options(MachineClass *m)
- {
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index d967bdd7438..295a614e161 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -366,10 +366,17 @@ type_init(virt_machine_register_types)
- #define DEFINE_VIRT_MACHINE(major, minor) \
-     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
- 
-+static void virt_machine_10_1_options(MachineClass *mc)
-+{
-+}
-+DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
-+
- static void virt_machine_10_0_options(MachineClass *mc)
- {
-+    virt_machine_10_1_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(10, 0)
-+DEFINE_VIRT_MACHINE(10, 0)
- 
- static void virt_machine_9_2_options(MachineClass *mc)
- {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index b0a0f8c6895..6fef1d167ae 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4766,15 +4766,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
- #define DEFINE_SPAPR_MACHINE(major, minor) \
-     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
- 
-+/*
-+ * pseries-10.1
-+ */
-+static void spapr_machine_10_1_class_options(MachineClass *mc)
-+{
-+    /* Defaults for the latest behaviour inherited from the base class */
-+}
-+
-+DEFINE_SPAPR_MACHINE_AS_LATEST(10, 1);
-+
- /*
-  * pseries-10.0
-  */
- static void spapr_machine_10_0_class_options(MachineClass *mc)
- {
--    /* Defaults for the latest behaviour inherited from the base class */
-+    spapr_machine_10_1_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
- }
- 
--DEFINE_SPAPR_MACHINE_AS_LATEST(10, 0);
-+DEFINE_SPAPR_MACHINE(10, 0);
- 
- /*
-  * pseries-9.2
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 910dab08319..5af3c4f547a 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -924,14 +924,26 @@ static const TypeInfo ccw_machine_info = {
-     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
- 
- 
-+static void ccw_machine_10_1_instance_options(MachineState *machine)
-+{
-+}
-+
-+static void ccw_machine_10_1_class_options(MachineClass *mc)
-+{
-+}
-+DEFINE_CCW_MACHINE_AS_LATEST(10, 1);
-+
- static void ccw_machine_10_0_instance_options(MachineState *machine)
- {
-+    ccw_machine_10_1_instance_options(machine);
- }
- 
- static void ccw_machine_10_0_class_options(MachineClass *mc)
- {
-+    ccw_machine_10_1_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
- }
--DEFINE_CCW_MACHINE_AS_LATEST(10, 0);
-+DEFINE_CCW_MACHINE(10, 0);
- 
- static void ccw_machine_9_2_instance_options(MachineState *machine)
- {
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.49.0
 
