@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C14C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 18:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE2BDC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 18:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7eyh-00031R-Gs; Wed, 23 Apr 2025 14:37:47 -0400
+	id 1u7f7C-0005p9-Eu; Wed, 23 Apr 2025 14:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3bDMJaAwKCj8obcjiftufgbohpphmf.dpnrfnv-efwfmopohov.psh@flex--nabihestefan.bounces.google.com>)
- id 1u7eyW-0002xW-Dn
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 14:37:38 -0400
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u7f73-0005nK-Fz
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 14:46:28 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3bDMJaAwKCj8obcjiftufgbohpphmf.dpnrfnv-efwfmopohov.psh@flex--nabihestefan.bounces.google.com>)
- id 1u7eyU-0000g7-Jy
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 14:37:36 -0400
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-227a8cdd272so905145ad.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 11:37:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u7f71-0001sb-AH
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 14:46:25 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-73972a54919so111610b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 11:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1745433453; x=1746038253; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=nY1a3kHuX2lbkjX+z4gIYyiMc7As84sOZpTaaoTLSGA=;
- b=E+kXi8t+m5wPOhqkpbuaDlATCNVQuQgukU1Wn3/TADIexmpx9Bhu4rBflxvJLWOCaP
- 6akacFrjRK2UP0zUa5dQbkLKucyXMDe4Hd/DEI0sawfqGHI3cAepsDtEmnzDy/kSetxi
- 6mvNyKbiRWzoBanYPXiBmuAmeAoJO7OjNLCfSjECjUFyLP+5AFMP3w3zklLpdprpK8hu
- bjoMY1zmxN042ki57hQIiBg/NQs3QVJwOMBQs78B9ZRJLrSwzKjoSG1you5TgaJZWBV4
- PhFrcoQOhJG3kwpSiFhfm4m1YNwFmNvlr79BQkJRrj3rXuNbCn5JPyS10oS0vvlbx/ud
- tPyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745433453; x=1746038253;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=ventanamicro.com; s=google; t=1745433981; x=1746038781; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nY1a3kHuX2lbkjX+z4gIYyiMc7As84sOZpTaaoTLSGA=;
- b=PpqzHorhbOTQe8sy5vSHrIGJxPxhp+/cChx0oOupNkA0Sqfc78IWOksyVMKqx7oL7G
- EO2MELj7v9tp5Ce0P0Ic/S3vfFWZR2MmhYdJz6U5dECKo33zYe76dnX0XLpXa96bHCtF
- SQaT1Q/GYXemqmaddjVV9dYRGYXGS+sAN0QkzU1FdNN8Q3Iptg6LYI5ZhqWNoRDf5FqX
- ZNRjCs1CIuMf0igdJb7y9I2YK459bvVoPNA+1KHcJS5Ns1yC762u0SEvsFiCNEiXo4sl
- wELuLFHpEYzdR/tt19LGm/jH7BJVjIbNkB6kIzCkhZ8ETD4OfR1/3jCk2/xnS35A2TSb
- +8hw==
-X-Gm-Message-State: AOJu0YwTWZSPSqX8tEKxhr1x06o8z3G4rukp8+osF4fuLEZm3nphmC2t
- CusQd0V+Zv9xV22u9n0gLW5oziBccp1t2pdk7Hc0pvFGegE0BHyCJJAm1z2ab+7zRt6vSSWVk42
- Z2CSd0yGmekaZVD5NcfAiVu7uTaDQYBq4NVqxXcyQOPzaxF7O5/w0mtNdipLmWqWE0OT89lReW4
- PN/iNmkZpQ1G06thOUNih/AtaETbRKBL4LGmdL6ogjcnnpf7t0IaTdIKTeq4WBM9M=
-X-Google-Smtp-Source: AGHT+IESBL6Ft8dkObtuVCZvyVQf10sDkqAj7azX903oUBxUS06u3rNNyzEgUTRN24uyJ+feO+pUKJiMHbvnEhTyP0M=
-X-Received: from pgct21.prod.google.com ([2002:a05:6a02:5295:b0:b11:dd2:e84f])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:19ed:b0:223:54e5:bf4b with SMTP id
- d9443c01a7336-22c535bfe32mr332222985ad.25.1745433452608; 
- Wed, 23 Apr 2025 11:37:32 -0700 (PDT)
-Date: Wed, 23 Apr 2025 18:37:27 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.49.0.805.g082f7c87e0-goog
-Message-ID: <20250423183728.3860325-1-nabihestefan@google.com>
-Subject: [PATCH] scripts: Add exception to license check
-From: Nabih Estefan <nabihestefan@google.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, philmd@linaro.org, mjt@tls.msk.ru, 
- berrange@redhat.com, thuth@redhat.com, alex.bennee@linaro.org, 
- peter.maydell@linaro.org, Nabih Estefan <nabihestefan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3bDMJaAwKCj8obcjiftufgbohpphmf.dpnrfnv-efwfmopohov.psh@flex--nabihestefan.bounces.google.com;
- helo=mail-pl1-x649.google.com
-X-Spam_score_int: -100
-X-Spam_score: -10.1
-X-Spam_bar: ----------
-X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ bh=EhM7kuTkAUfVbtlveFdfxT0dzrHfQWObt9U9pD9Jguk=;
+ b=j/lenxz+uUAdy0zEhYUVyyc8fd322463xUtaOGRNoX7fN5jFUhfK54HDvoPw5D/KO9
+ l275Sj3T8SZQUTAiYs8RWU1ea2W9CJlVj9ueylY69Q+CBv0OMt1NwmboIoeIDon0lzE0
+ D7ElomK4mEbz2l2hR6XTr/2Q6hDBWF+qZnhUpUz5Vhgs9eHiHp0vBdECuaGp+1jYFMsm
+ Y/qFGkzizaBvxMPnM+WqQ3siM2v8UxINUXzTWDrgBOw9ykxCMdHtbpVQJEgPM43wIh1+
+ iRmDroL2igANXFlyxQomO1y2makGlcQ17Zy3LsFoGaGaRGYqfmqmOJJaD1MJlL4waroM
+ WStA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745433981; x=1746038781;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EhM7kuTkAUfVbtlveFdfxT0dzrHfQWObt9U9pD9Jguk=;
+ b=YM/ZrINMlxMoVK4g6gNpUi6U1D2+Zg2riqiN9dR1vo2QqvVVeS3gDLADJMt83lSvdX
+ mD9DoGU84k9t1Qs8Gv5WVUtfiR3uvFmVdkyYPvOOAAjT+AnYvDqDMsOCXszK9iZH908a
+ Cov+11s6Pcs+cyeIkPL6WquaUX//zBD4cMjFNYiGCf+ZB64Rkj//auKSlVawghnFG4qi
+ iv/RWkpz+GMzdLCLBygNkCHXbIVc5RLr/x43SMuW2H0xr0pQ+i+R6Mac4CIElX1qSv8T
+ s6uzwPjiQ4fTssXe9yiAXAsraFcPFgj7bxezy663zQkTV6bFPIEfLBRKBINBpvGu7obM
+ G34w==
+X-Gm-Message-State: AOJu0YzFGRIFCz3HTGexmzO5XnmQVYvdP0abSsuR6k5UYl3n3i3R0jvS
+ qlI+osNlcARb+ndm3bqMqF2oZCKZGsZiY0R6qVI7jIBG9fcItg0X07sVj7a+pNg=
+X-Gm-Gg: ASbGnctz41T1yo7O6xp8Miuht/+mBS5rLr1FLzLyUslTjgDcsEeW/yui5ocV0DEklqV
+ B+qXV19NSgQPLI1/nuSyRLZK1ZRNFu/vbN7c78cNCSzw5cOyg5SpqkGZAgTvMtWHVtDxomozRTW
+ xkLfbl103BwjznaV93NVAt4PprPOmkSBJQrD6VVXPj/YNWG2U17Hw+RfWxMV2/WJkukefmDpbnu
+ v6HjCwXN1EpnaI43AGACObfAh30Lglb4dCziWG5UmtdTM+nSVWURsd4egDiHFZUj76B/uwp6q6q
+ es3oXAJ19LG/NMmVSl/z2PAziT63VIaf3hYm7PLUSCYoLAyV5bQe/OE=
+X-Google-Smtp-Source: AGHT+IEj1m8U60UnIV0Rrh17ZSBGRWD9iuiRQ6KR9jGPsGhF3n3S4RJettFeuBbYi1hdHahGXawWKQ==
+X-Received: by 2002:a05:6a00:1495:b0:736:6279:ca25 with SMTP id
+ d2e1a72fcca58-73dc15cf685mr30405480b3a.24.1745433981212; 
+ Wed, 23 Apr 2025 11:46:21 -0700 (PDT)
+Received: from [192.168.68.110] ([152.234.125.33])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73dbf8e46e3sm11358415b3a.59.2025.04.23.11.46.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Apr 2025 11:46:20 -0700 (PDT)
+Message-ID: <4ae09d20-ed68-477e-92eb-b9dd31a919bc@ventanamicro.com>
+Date: Wed, 23 Apr 2025 15:46:16 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] target/riscv/kvm: reset 'scounteren' with host val
+To: Andrea Bolognani <abologna@redhat.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20250417124839.1870494-1-dbarboza@ventanamicro.com>
+ <20250417124839.1870494-8-dbarboza@ventanamicro.com>
+ <20250423-7d7e348ed0ec6cadb1efe399@orel>
+ <CABJz62NKOzO=aE-fz9Ad2gxLnSNvU41xnfhOS0EKLim0SnYOtA@mail.gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CABJz62NKOzO=aE-fz9Ad2gxLnSNvU41xnfhOS0EKLim0SnYOtA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,36 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation for trace events says that every subdirectory which
-has trace events should have a trace.h header, whose only content is
-an include of the trace/trace-<subdir>.h file.
 
-Due to that, we should skip it in the checkpatch license check.
-I'm adding it as an exception to the check instead of its own if so it
-still throws the warning on all new files instead of ignoring it.
 
-Change-Id: Ic2dae14f8cded0dd02d5b231588bd38d8a00e40d
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- scripts/checkpatch.pl | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On 4/23/25 3:06 PM, Andrea Bolognani wrote:
+> On Wed, Apr 23, 2025 at 05:46:16PM +0200, Andrew Jones wrote:
+>> I would just drop this patch and make the default 'virt' cpu type 'max',
+>> then nobody will hit the issue.
+> 
+> FWIW virt-manager has recently started doing just that:
+> 
+>    https://github.com/virt-manager/virt-manager/pull/784
+> 
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 365892de04..b2c6ac2477 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1685,7 +1685,9 @@ sub process {
- 		if ($line =~ /^new file mode\s*\d+\s*$/) {
- 		    if ($expect_spdx) {
- 			if ($expect_spdx_file =~
--			    /\.(c|h|py|pl|sh|json|inc|Makefile)$/) {
-+			    /\.(c|h|py|pl|sh|json|inc|Makefile)$/
-+				and not $expect_spdx_file =~ /(trace\.h)$/) {
-+				# Files to include auto-generated files don't require a license
- 			    # source code files MUST have SPDX license declared
- 			    ERROR("New file '$expect_spdx_file' requires " .
- 				  "'SPDX-License-Identifier'");
--- 
-2.49.0.805.g082f7c87e0-goog
+We have a patch in the QEMU ML that does that:
 
+"[PATCH 2/2] hw/riscv/virt.c: change default CPU to 'max'"
+
+https://lore.kernel.org/qemu-riscv/20250404152750.332791-3-dbarboza@ventanamicro.com/
+
+
+Any updates in that patch is appreciated, in particular if it comes from
+the tooling side.
+
+
+Thanks,
+
+Daniel
 
