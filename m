@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D25A7C369D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB86DC369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7YwU-0002pi-AQ; Wed, 23 Apr 2025 08:11:06 -0400
+	id 1u7Yzg-0007s2-FK; Wed, 23 Apr 2025 08:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u7Yvt-0001zP-4M
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:10:29 -0400
+ id 1u7YzZ-0007rE-Cc
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:14:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u7Yvq-000163-Ra
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:10:28 -0400
+ id 1u7YzX-0001Qz-HO
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:14:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745410224;
+ s=mimecast20190719; t=1745410453;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=KmXF58PxFm45emSrX0DwYBDcQat+1dUc5oebcO2OeLo=;
- b=K8o9yal3gcomDG7VJkz7zAJy3jecG3orRMijs0QuQMn0EbNca1WRNVSB5evExM+tM//hEW
- 6VpkOh/D6gPeIJfz4pEmVpEfFns2+XFPNXH9QIG+GKr/plwbFeCia6/01qrwc91FkTZhU3
- ZHSJdo6vaf72J1foVeptNox1fO+A98c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=mwmOtEohNS47ANpUkUzuIv3skDJ44yoDQByEMqwaVtM=;
+ b=drvXJ29zC1yF8UF9RrT7YJmAzoEgYbmoehvxq4h7OxZGn2w7GzI2eTik4PEwVKL5rtIajt
+ HZZACDz8tzLnnjfNcRJ6P0M/4UVPHqRruZExnwqvHBOAROmrYJDEMqp/o/ztf0a+P0nfl5
+ wq7hk0CKw6kLf1EeO+I9crE82fQapfE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-260-R8AuKwB4Nc-5OV6Cwvf0aQ-1; Wed,
- 23 Apr 2025 08:10:21 -0400
-X-MC-Unique: R8AuKwB4Nc-5OV6Cwvf0aQ-1
-X-Mimecast-MFC-AGG-ID: R8AuKwB4Nc-5OV6Cwvf0aQ_1745410220
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-31EkkG9-OPyH2CUcMRFNwA-1; Wed,
+ 23 Apr 2025 08:14:11 -0400
+X-MC-Unique: 31EkkG9-OPyH2CUcMRFNwA-1
+X-Mimecast-MFC-AGG-ID: 31EkkG9-OPyH2CUcMRFNwA_1745410450
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 599431956094; Wed, 23 Apr 2025 12:10:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2FF151800877; Wed, 23 Apr 2025 12:14:10 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.34])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DDA461800352; Wed, 23 Apr 2025 12:10:17 +0000 (UTC)
-Date: Wed, 23 Apr 2025 13:10:14 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 977E619560A3; Wed, 23 Apr 2025 12:14:04 +0000 (UTC)
+Date: Wed, 23 Apr 2025 13:14:00 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Dietmar Maurer <dietmar@proxmox.com>
 Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 2/9] add vnc h264 encoder
-Message-ID: <aAjYpqobbq1fS-E1@redhat.com>
+Subject: Re: [PATCH v3 1/9] new configure option to enable gstreamer
+Message-ID: <aAjZiO8o2Ijhl_25@redhat.com>
 References: <20250418112953.1744442-1-dietmar@proxmox.com>
- <20250418112953.1744442-3-dietmar@proxmox.com>
+ <20250418112953.1744442-2-dietmar@proxmox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250418112953.1744442-3-dietmar@proxmox.com>
+In-Reply-To: <20250418112953.1744442-2-dietmar@proxmox.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -86,81 +86,40 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 18, 2025 at 01:29:46PM +0200, Dietmar Maurer wrote:
-> This patch implements H264 support for VNC. The RFB protocol
-> extension is defined in:
-> 
-> https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst#open-h-264-encoding
-> 
-> Currently the Gstreamer x264enc plugin (software encoder) is used
-> to encode the video stream.
-> 
-> The gstreamer pipe is:
-> 
-> appsrc -> videoconvert -> x264enc -> appsink
-> 
-> Note: videoconvert is required for RGBx to YUV420 conversion.
-> 
-> The code still use the VNC server framebuffer change detection,
-> and only encodes and sends video frames if there are changes.
+On Fri, Apr 18, 2025 at 01:29:45PM +0200, Dietmar Maurer wrote:
+> GStreamer is required to implement H264 encoding for VNC. Please note
+> that QEMU already depends on this library when you enable Spice.
 > 
 > Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 > ---
->  ui/meson.build    |   1 +
->  ui/vnc-enc-h264.c | 282 ++++++++++++++++++++++++++++++++++++++++++++++
->  ui/vnc-jobs.c     |  49 +++++---
->  ui/vnc.c          |  21 ++++
->  ui/vnc.h          |  21 ++++
->  5 files changed, 359 insertions(+), 15 deletions(-)
->  create mode 100644 ui/vnc-enc-h264.c
-> 
-> diff --git a/ui/meson.build b/ui/meson.build
-> index 35fb04cadf..34f1f33699 100644
-> --- a/ui/meson.build
-> +++ b/ui/meson.build
-> @@ -46,6 +46,7 @@ vnc_ss.add(files(
->  ))
->  vnc_ss.add(zlib, jpeg)
->  vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
-> +vnc_ss.add(when: gstreamer, if_true: files('vnc-enc-h264.c'))
->  system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
->  system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
->  
-> diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-> new file mode 100644
-> index 0000000000..3abe6a1528
-> --- /dev/null
-> +++ b/ui/vnc-enc-h264.c
-> @@ -0,0 +1,282 @@
-> +/*
-> + * QEMU VNC display driver: hextile encoding
-> + *
-> + * Copyright (C) 2025 Proxmox Server Solutions GmbH
-> + *
-> + * Permission is hereby granted, free of charge, to any person obtaining a copy
-> + * of this software and associated documentation files (the "Software"), to deal
-> + * in the Software without restriction, including without limitation the rights
-> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-> + * copies of the Software, and to permit persons to whom the Software is
-> + * furnished to do so, subject to the following conditions:
-> + *
-> + * The above copyright notice and this permission notice shall be included in
-> + * all copies or substantial portions of the Software.
-> + *
-> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-> + * THE SOFTWARE.
-> + */
+>  meson.build                   | 10 ++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  5 ++++-
+>  3 files changed, 16 insertions(+), 1 deletion(-)
 
-New code is expected to use SPDX-License-Identifier, without this
-boilerplate text. We'd also expect it to be GPL-2.0-or-later, and
-if this is not possible for some reason (eg derived from pre-existing
-code), it should be justified in the commit message.
 
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index 3e8e00852b..b0c273d61e 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -229,6 +229,7 @@ meson_options_help() {
+>    printf "%s\n" '                  Xen PCI passthrough support'
+>    printf "%s\n" '  xkbcommon       xkbcommon support'
+>    printf "%s\n" '  zstd            zstd compression support'
+> +  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
+>  }
+>  _meson_option_parse() {
+>    case $1 in
+> @@ -581,6 +582,8 @@ _meson_option_parse() {
+>      --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
+>      --enable-zstd) printf "%s" -Dzstd=enabled ;;
+>      --disable-zstd) printf "%s" -Dzstd=disabled ;;
+> -    *) return 1 ;;
+> +    --enable-gstreamer) printf "%s" -Dgstreamer=enabled ;;
+> +    --disable-gstreamer) printf "%s" -Dgstreamer=disabled ;;
+> +   *) return 1 ;;
+
+This has broken the indent of the existing code.
 
 With regards,
 Daniel
