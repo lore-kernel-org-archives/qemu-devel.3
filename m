@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB82DC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4333C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Y5h-00069c-Eg; Wed, 23 Apr 2025 07:16:33 -0400
+	id 1u7Y6g-0006k2-LL; Wed, 23 Apr 2025 07:17:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Y5f-00069Q-M1
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:16:32 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Y6a-0006dO-57
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:17:28 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Y5d-0001om-R0
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:16:31 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cf848528aso46645305e9.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:16:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Y6Y-0001t8-9l
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:17:27 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39bf44be22fso4327587f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745406987; x=1746011787; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=b+awRrfnLaus72pFDpCOZkkckWGefdIiXx1C6YaLfqw=;
- b=tHjoUhYuzLWBMejFDK+n7c/zt4xOysKvtyWbZARy5yXU56eWWpTAG18ZPKeF+DAbA2
- jAGeF2XYWbOSPs6dSjXc3JSj6+ddLleE0IQR8BS8V3SXGqVBeBsf5yMN5p7ms6bccicn
- dF3jOcbR/nPQQUWI1mHTztrNckH7rrFayapUx+niCE+a3MP4l//m+B7mCC/RWtztFyk8
- 7XB5le7GufUGJxvOzpjdfE8t6VD68txt4NdXvLko3pIgTANwQF27FfV5GAtg5dTDEfT1
- /hgG7fsE5uktg7folX2kF8BNz0esa4ZDXMEP3y2OAP6bH+POBvthOJBiZkH009OwQSkb
- 8prg==
+ d=linaro.org; s=google; t=1745407043; x=1746011843; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=j3dF8XsoLGRcZL9i4eMNjIcEEBRNDL3P/zQ+KH091kg=;
+ b=LGgfqeM7b7juBzojFb/S3Jk1wwBqbslngcM8QyZYyoTQfRr9wEpg1GJjTux7hGOEzt
+ 6S3BtLAXArKcciYfPh4vqXsY7UpALgUXViF+Pg638s3vhJbNf82mJBbzD9z7FgixfVdU
+ CH3bESe14mOqqWVOQygjfNt4wD6bGhob7ZgMPHip3tb9aG6J993cPqz3srS0lceZh4oJ
+ j/DQyG0e64sGFWsKjegXfBIB2xjeY5bsSCcV+NXq+oXHJbmLoMZA1auUofWSrXrcuAjR
+ 7i8gG9HxcqFM9pW3AG8J+T9Plr35u/2BhJGf7+9iMJ+A6HfVMzBSqvLKL53rXz0v7I0L
+ ci8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745406987; x=1746011787;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=b+awRrfnLaus72pFDpCOZkkckWGefdIiXx1C6YaLfqw=;
- b=LlUn4tE6Bsgfc+9S0ChNz7rySCjDz8uyXTlQ3PBTxxUnDxiPOo8YFW/LCtt4vir6uj
- 19CmA2d5bt3ZdZ14QsJAnLZhGnfby4OCDaeC6PQrI4D5DNAAewSjHahpsnTq1lmJY9Ui
- 6q9qBBciRo1T3svN2+OraVn9XNjSsCn67KwnyPNlPd/5IMnLhXW4P8rvIh9jX63uvYzR
- qAg8MyZ5Z9x6F/qnImyQzGQfwPtaLh0e9Gq/Jrurkr/2yqWO3zReb0XxT70lcQ0v0EJr
- eVUP+KL4TnrnqQUKgcIx5EPCXX5eAHBUR0ARsmSLcaKKUZfpQlq8X5HG8HlEhrnnnVxi
- X2rw==
-X-Gm-Message-State: AOJu0YzPpeyV+pju/lPVxzg6jt/jC/BGFKnGw3oHrwwpkaac8xgMIMSp
- 2SvNWDU27aZvQIu0lC/kWFlaHlcRRoMNaeZvBmYXu6t4K+YB8sOrDDVZl5VxhObAd1a0lSlekfr
- I
-X-Gm-Gg: ASbGncuPE6TAgd2S/n+1Qb7mAHr2A9iy3ZjnxH0qYjuKMIQytAc+ltgHpLQUN6dpSL8
- UdU2vOQlnisrlEmhFHLk9zMciGYXb9Ez3PrDBcZis1qE4bKWRCSLdWRVbbUPYGeiS5/CXTcr2yp
- OKRbF7K56EvzGsyIcE0wMzyRvmDchq9RsAvsL4tt6yTRPanjzlyrFQ1DYvylDTj5ocKf2udpxAc
- n753PWbr25ucrPxPlxNsdFQ7zQ4lTeIWrOPDp3215hIlf10hi7zuRF9wb8tf0XNEsVczE2GqsN7
- S9VH8MnT1NADWKju5Y/G3ZeA/gK6rrI0rkKst7X4ogtlQWO+7TqJfflYo7Jw0Q6ErN3PaGHKhMH
- QC9dnc/MrQ0gnF8rD5CEwedP8ig==
-X-Google-Smtp-Source: AGHT+IGHYaSYjORejDdHJiqEhdXylm+WxPJ22WjNvYuoeIoRJKEYe/AQDgUVZTJfaG9Px1vaV4czQg==
-X-Received: by 2002:a05:600c:a06:b0:43c:fc04:6d35 with SMTP id
- 5b1f17b1804b1-44091fba640mr20495405e9.4.1745406987301; 
- Wed, 23 Apr 2025 04:16:27 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1745407043; x=1746011843;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=j3dF8XsoLGRcZL9i4eMNjIcEEBRNDL3P/zQ+KH091kg=;
+ b=T0ecvyxql2ImSB0sf2/4EBBftC1GLNGWZIYPGEHY8E6QClpj1XKaxBb63vwZ/EnjyE
+ 80ZL4CrrLrKl7BMrVmnQ3xpKlSf0IE1lgTbFKms8bl+tDIvYrrFQtgU/qbUr5N995mgJ
+ ilfmCke/bkgzqVQOfarm57FSjACihUJDANsL7iLm86Bo5r3EJ/aL54Sq5J503IbPN3xS
+ 7vcQ6TCmtKtS500h8SqiVYcPdWIHr9aM6bHZTUYmdm7/FKLyI+TkQIXE+CmJedTv6ICu
+ kKvmmj3CCfZt2tlWsEdLzVPUQur8xm9kFyPEjTRrCZCDA3bP3uj3diLovFdSXch2Udev
+ owGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqD8ccn94KGCM+6IjFrwQTZBIN/UirGMeyid4IJMkVgQNlyJJ11W8qMrQpA6uko912Oman2+dmM1Ev@nongnu.org
+X-Gm-Message-State: AOJu0YzX4B/9l/JN9xrJsDLTGsR0AX+Hgquvun6nNuJahl6xXbLqja7B
+ nncPPe4H22MZ9OZEXJQwWbxElLUEcvIwj72P9fw9zW01IkUpuakyS4Hu760OUAKQkImfWs4YumH
+ 4
+X-Gm-Gg: ASbGncu0fwVTLqJUWcO6TJNnkBgiGuI1WNZHxw1fG8VqS6QDw6DoRhyla0MY+Obxx65
+ w/+7XrwgbWbKOcex+//dzUoWbn11BldsovBrGo5GSznlMFrtPLUAdB4/bNt+4S8+avV/GKrRPsD
+ hm3XBVuOz6kYFFXpeUmQLf2Y1XhSeYU44oYb0rC9g9ZNT7UrJ1WPDpg+x4fDRNby5J9Mjo89nh0
+ zSSmq4pQ1orih2iypjeqXeb1d0Ah2Co6fp7Whb8U+xQg8VTp2LzXc53DMebrsyiA3oGjbZcRro7
+ Y6Zv/MP7Bp0GqDQp6+j+Q+zWj0uWtbuQE7JnIHdD/d29cPo4xBybBW1cgzc1ygZCxdNGLXzZCa5
+ 9PSB0Q/Pn
+X-Google-Smtp-Source: AGHT+IEvVwh/VQ70BdSL8QgdtRDKO4sWiTXUso9bOL8qOYX5UoySIFKYPqrWGH2eHHdVRo5YNZ+/Dg==
+X-Received: by 2002:a5d:64e4:0:b0:38f:37f3:5ca9 with SMTP id
+ ffacd0b85a97d-39efbaf1126mr15081984f8f.50.1745407043214; 
+ Wed, 23 Apr 2025 04:17:23 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d17846sm22293275e9.2.2025.04.23.04.16.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 23 Apr 2025 04:16:26 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] system/memory: Remove DEVICE_HOST_ENDIAN definition
-Date: Wed, 23 Apr 2025 13:16:25 +0200
-Message-ID: <20250423111625.10424-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ ffacd0b85a97d-39efa4a4b9csm18073196f8f.84.2025.04.23.04.17.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Apr 2025 04:17:22 -0700 (PDT)
+Message-ID: <fc3846bc-8443-435e-afa6-11fde4d3cf97@linaro.org>
+Date: Wed, 23 Apr 2025 13:17:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/i8259: Remove unused DEBUG_PIC define
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250423101125.B243A55C592@zero.eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250423101125.B243A55C592@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,65 +103,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the previous commit ("exec/memory.h: make devend_memop
-"target defines" agnostic") there is a single use of the
-DEVICE_HOST_ENDIAN definition in ram_device_mem_ops: inline
-it and remove its definition altogether.
+On 23/4/25 12:11, BALATON Zoltan wrote:
+> The debug printfs were converted to traces so this define is now unused.
+> 
+> Fixes: 0880a87300 (i8259: convert DPRINTFs into trace)
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/intc/i8259.c | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Based-on: <20250422192819.302784-1-richard.henderson@linaro.org>
----
- include/exec/cpu-common.h | 6 ------
- system/memory-internal.h  | 3 ---
- system/memory.c           | 2 +-
- 3 files changed, 1 insertion(+), 10 deletions(-)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 9b83fd7ac88..dab1e7e5809 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -44,12 +44,6 @@ enum device_endian {
-     DEVICE_LITTLE_ENDIAN,
- };
- 
--#if HOST_BIG_ENDIAN
--#define DEVICE_HOST_ENDIAN DEVICE_BIG_ENDIAN
--#else
--#define DEVICE_HOST_ENDIAN DEVICE_LITTLE_ENDIAN
--#endif
--
- /* address in the RAM (different from a physical address) */
- #if defined(CONFIG_XEN_BACKEND)
- typedef uint64_t ram_addr_t;
-diff --git a/system/memory-internal.h b/system/memory-internal.h
-index 085e81a9fe4..ed5d75de24b 100644
---- a/system/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -41,9 +41,6 @@ void mtree_print_dispatch(struct AddressSpaceDispatch *d,
- /* returns true if end is big endian. */
- static inline bool devend_big_endian(enum device_endian end)
- {
--    QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
--                      DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
--
-     if (end == DEVICE_NATIVE_ENDIAN) {
-         return target_words_bigendian();
-     }
-diff --git a/system/memory.c b/system/memory.c
-index 7e2f16f4e95..b398f656c2f 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1382,7 +1382,7 @@ static void memory_region_ram_device_write(void *opaque, hwaddr addr,
- static const MemoryRegionOps ram_device_mem_ops = {
-     .read = memory_region_ram_device_read,
-     .write = memory_region_ram_device_write,
--    .endianness = DEVICE_HOST_ENDIAN,
-+    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-         .max_access_size = 8,
--- 
-2.47.1
-
+and queued, thanks!
 
