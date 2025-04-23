@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DBDC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453BAC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UTO-0002nW-PR; Wed, 23 Apr 2025 03:24:46 -0400
+	id 1u7UTZ-0002u5-R7; Wed, 23 Apr 2025 03:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7UTK-0002jZ-Fh; Wed, 23 Apr 2025 03:24:43 -0400
+ id 1u7UTV-0002si-HX; Wed, 23 Apr 2025 03:24:53 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7UTI-0001IR-NK; Wed, 23 Apr 2025 03:24:42 -0400
+ id 1u7UTS-0001Ov-HW; Wed, 23 Apr 2025 03:24:52 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 23 Apr
- 2025 15:23:53 +0800
+ 2025 15:23:54 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 23 Apr 2025 15:23:53 +0800
+ Transport; Wed, 23 Apr 2025 15:23:54 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v5 08/11] tests/functional/aspeed: Update test ASPEED SDK
- v09.06
-Date: Wed, 23 Apr 2025 15:23:44 +0800
-Message-ID: <20250423072350.541742-9-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>
+Subject: [PATCH v5 11/11] docs/system/arm/aspeed: Support vbootrom for AST2700
+Date: Wed, 23 Apr 2025 15:23:47 +0800
+Message-ID: <20250423072350.541742-12-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
 References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,57 +66,143 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- tests/functional/test_aarch64_aspeed.py | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Using the vbootrom image support and the boot ROM binary is
+now passed via the -bios option, using the image located in
+pc-bios/ast27x0_bootrom.bin.
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index 441f7f3919..337d701917 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -29,13 +29,13 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
-         wait_for_console_pattern(self, 'Starting kernel ...')
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+---
+ docs/system/arm/aspeed.rst | 96 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 90 insertions(+), 6 deletions(-)
+
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 97fd6a0e7f..e15e276a48 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,4 +1,4 @@
+-Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+ ==================================================================================================================================================================================================================================================================================================================================================================================================================
  
--    ASSET_SDK_V905_AST2700 = Asset(
--            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
--            'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
-+    ASSET_SDK_V906_AST2700 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-a0-default-obmc.tar.gz',
-+            '7247b6f19dbfb700686f8d9f723ac23f3eb229226c0589cb9b06b80d1b61f3cb')
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+@@ -39,10 +39,6 @@ AST2600 SoC based machines :
+ - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+ - ``qcom-firework-bmc``    Qualcomm Firework BMC
  
--    ASSET_SDK_V905_AST2700A1 = Asset(
--            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
--            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
-+    ASSET_SDK_V906_AST2700A1 = Asset(
-+            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
-+            'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
+-AST2700 SoC based machines :
+-
+-- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
+-
+ Supported devices
+ -----------------
  
-     def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-@@ -94,17 +94,17 @@ def start_ast2700_test(self, name):
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+@@ -247,10 +243,78 @@ under Linux), use :
  
--    def test_aarch64_ast2700_evb_sdk_v09_05(self):
-+    def test_aarch64_ast2700_evb_sdk_v09_06(self):
-         self.set_machine('ast2700-evb')
+   -M ast2500-evb,bmc-console=uart3
  
--        self.archive_extract(self.ASSET_SDK_V905_AST2700)
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
-         self.do_ast2700_i2c_test()
++Aspeed 2700 family boards (``ast2700-evb``)
++==================================================================
++
++The QEMU Aspeed machines model BMCs of Aspeed evaluation boards.
++They are based on different releases of the Aspeed SoC :
++the AST2700 with quad cores ARM Cortex-A35 64 bits CPUs (1.6GHz)
++
++The SoC comes with RAM, Gigabit ethernet, USB, SD/MMC, USB, SPI, I2C,
++etc.
++
++AST2700 SoC based machines :
++
++- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
++
++Supported devices
++-----------------
++ * Interrupt Controller
++ * Timer Controller
++ * RTC Controller
++ * I2C Controller
++ * System Control Unit (SCU)
++ * SRAM mapping
++ * X-DMA Controller (basic interface)
++ * Static Memory Controller (SMC or FMC) - Only SPI Flash support
++ * SPI Memory Controller
++ * USB 2.0 Controller
++ * SD/MMC storage controllers
++ * SDRAM controller (dummy interface for basic settings and training)
++ * Watchdog Controller
++ * GPIO Controller (Master only)
++ * UART
++ * Ethernet controllers
++ * Front LEDs (PCA9552 on I2C bus)
++ * LPC Peripheral Controller (a subset of subdevices are supported)
++ * Hash/Crypto Engine (HACE) - Hash support only. TODO: Crypto
++ * ADC
++ * eMMC Boot Controller (dummy)
++ * PECI Controller (minimal)
++ * I3C Controller
++ * Internal Bridge Controller (SLI dummy)
++
++Missing devices
++---------------
++ * Coprocessor support
++ * PWM and Fan Controller
++ * Slave GPIO Controller
++ * Super I/O Controller
++ * PCI-Express 1 Controller
++ * Graphic Display Controller
++ * MCTP Controller
++ * Mailbox Controller
++ * Virtual UART
++ * eSPI Controller
++
++Boot options
++------------
++
++Images can be downloaded from the ASPEED Forked OpenBMC GitHub release repository :
++
++   https://github.com/AspeedTech-BMC/openbmc/releases
++
+ Booting the ast2700-evb machine
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
--    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-+    def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-         self.set_machine('ast2700a1-evb')
+-Boot the AST2700 machine from the flash image, use an MTD drive :
++Boot the AST2700 machine from the flash image.
++
++There are two supported methods for booting the AST2700 machine with a flash image:
++
++Manual boot using ``-device loader``:
++
++It causes all 4 CPU cores to start execution from address ``0x430000000``, which
++corresponds to the BL31 image load address.
  
--        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-         self.start_ast2700_test('ast2700-default')
-         self.do_ast2700_i2c_test()
+ .. code-block:: bash
+ 
+@@ -270,6 +334,26 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
+        -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
+        -nographic
+ 
++Boot using a virtual boot ROM (``-bios``):
++
++If users do not specify the ``-bios option``, QEMU will attempt to load the
++default vbootrom image ``ast27x0_bootrom.bin`` from either the current working
++directory or the ``pc-bios`` directory within the QEMU source tree.
++
++.. code-block:: bash
++
++  $ qemu-system-aarch64 -M ast2700-evb \
++      -drive file=image-bmc,format=raw,if=mtd \
++      -nographic
++
++The ``-bios`` option allows users to specify a custom path for the vbootrom
++image to be loaded during boot. This will load the vbootrom image from the
++specified path in the ${HOME} directory.
++
++.. code-block:: bash
++
++  -bios ${HOME}/ast27x0_bootrom.bin
++
+ Aspeed minibmc family boards (``ast1030-evb``)
+ ==================================================================
  
 -- 
 2.43.0
