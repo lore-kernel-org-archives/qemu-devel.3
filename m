@@ -4,149 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C940DC369D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B602DC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Ybc-00051S-8c; Wed, 23 Apr 2025 07:49:32 -0400
+	id 1u7YjG-0000Pt-1V; Wed, 23 Apr 2025 07:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u7YbU-0004tQ-Pd
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:49:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u7Yah-0005fu-Ab
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:49:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745408912;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=khXWl6B86EFh/TlgxGYc/PyZsDXAO1W4jUzSwpmpsAA=;
- b=KKMFO8Z/Hz7lKQdVPiKsyJ/rLkPZiJ7lhpEkMeCYWv4RRgjCcKiPdrwLhn/2j3dBj63VCt
- 1ez9wUhwG0StQN5DS64EaJR88r1FeoUsTTaryxEX1YyCE7cOERqaIHEr6mPfYjBxM8mLpZ
- UoeQIB07MZQ6jEgG4i+U14x4kx6JhMM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-cU0TuztYNpmRj0f-wBuPMQ-1; Wed, 23 Apr 2025 07:48:30 -0400
-X-MC-Unique: cU0TuztYNpmRj0f-wBuPMQ-1
-X-Mimecast-MFC-AGG-ID: cU0TuztYNpmRj0f-wBuPMQ_1745408909
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43efa869b0aso40118785e9.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:48:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u7YjA-0000PE-Fd
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:57:20 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u7Yj7-0007Hw-A6
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:57:20 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-477296dce8dso60681021cf.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745409435; x=1746014235; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B8mjHDU0XnE1pNXQCVoet6kGxfG/AL8h8fpd+pns9GM=;
+ b=TUhvELdNB63rv35iakxGN0Mu+lo06CzumRYfUQNxeXF5ApLWeJcILR+VnWfJkVwR3N
+ rSYcM+A64hWxZWGF8afje5GcmvuehWzc96xGtSD9DfiIEtThJkampyL2vwyU36h+NASW
+ sMu8I2cupGjnvGyYFh8jREBTR68X9VNUt0I4EB65Yttz+JoHoeQLDW9nMpcUZpMDp+1q
+ Y4TKvkhZMUYUyf3hAfaRnvNLsr6fgQDOfgzCQkfnO1D4SjE6l4vqxcJSZEh5y/+8Vz8k
+ sMV7zEXJ3P34ZUUco0nfpwSj8xEof/m6kjOzeDjIyIP9ENsZ6077hwRzBOcco1sA5RWX
+ VErw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745408909; x=1746013709;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=khXWl6B86EFh/TlgxGYc/PyZsDXAO1W4jUzSwpmpsAA=;
- b=Q/SQggPYfSI9D7Wo38ljtCinYy6xsxXtw9F5MBq8Ku/OYkhGWspMG8rZhF/c5DrwfC
- rGQQtIjpORb+7ugJkx2cMabzu7z1pULAuu2tI9me/MttRDUE97rsgyhie0UvnzaGYRO8
- O+kx1WwiLT1fuJpzVrIs2XjuHS2U+1ec/zRRj38R5A3lDsZpLY0eCJoMZYs1o0il+hcd
- CA82BOoP7UmjXGTMPnb+yDyClkTKUcdHbFvRjZBSQ+S/DbQFE9GOsrOwUVv0M6Zo/wAm
- h8ch1ohJBztdo67yyOYIaIQhp6CSd4mDkn23alrkIgQAL3WFdo4WO+/SxHCpg6PteLjI
- kEUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkoSlwxbuaRfLk+tlRUvldWIo4NsOhBpObINpxQZh06q4frBcxHqRpiIpVL46u7qwdIOWwdcSGWlYI@nongnu.org
-X-Gm-Message-State: AOJu0YwJ5VdF0Nq0HCRQXo5I5OWUv/UGX0zqn/zr8K4li2E5/cLHU371
- Ws8nvj+N1veFJ9JxAx+kqm4sCOwggAMmC9+jQsnSIgF/81OPFTXQi7/6w40kT8RvZNddMrhyH4o
- MndB45F6btMBasVEDlvrTuPdflwD/13bYau8Qf24a3Zgx6ORgq+WD
-X-Gm-Gg: ASbGncsbpJzKxcJdNuMjEsjPcWTy+lBZituOKWl7O7QNql/aecuYjN01wm6bTILhyZz
- /nNFFUO8BIGMa8F9uvBP46AtvXCX+NcDgfOPGwnRFp9r2AlMOhRyGHWckqBpdWMxDOIsSDipNqw
- wyGD+GANpZlHE1RYbLg2dF5MR66jNp4ZCYymSgPCz9rU6mOPAkYfazjvdQf1mvLwXEFMqBv+gm0
- 9nuWRtCNpJAc00tbVW6uYYF9N3oKIFeDkCNReRVCD8Y6Gzs8lgQTCqe5olc6TsqOsg775aSSsjK
- 3HWAIz8qK1q7774z9UaZkRSUYxZWD0OcErK1R20x+ks5Yesefd50TOu6CVAm0B89qvIe1zVHWeK
- jeia/PfK5Rx/cWAVW5kSAZ5x1Hj7bQ7VUumXPrbY=
-X-Received: by 2002:a05:600c:c0f:b0:43d:7588:6688 with SMTP id
- 5b1f17b1804b1-4406ab93badmr169202055e9.12.1745408909009; 
- Wed, 23 Apr 2025 04:48:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdhc/f9dPX98i6Hk8VXyf0TCbwVwFTu6FwvjfQ9/Hqa+yhqsgfx6VSZcG6zueR2XMtp8ZY4w==
-X-Received: by 2002:a05:600c:c0f:b0:43d:7588:6688 with SMTP id
- 5b1f17b1804b1-4406ab93badmr169201875e9.12.1745408908613; 
- Wed, 23 Apr 2025 04:48:28 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c740:2c00:d977:12ba:dad2:a87f?
- (p200300cbc7402c00d97712badad2a87f.dip0.t-ipconnect.de.
- [2003:cb:c740:2c00:d977:12ba:dad2:a87f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d40392sm23452585e9.36.2025.04.23.04.48.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 04:48:28 -0700 (PDT)
-Message-ID: <19530452-035e-4c3f-9678-51d2200a3ed2@redhat.com>
-Date: Wed, 23 Apr 2025 13:48:26 +0200
+ d=1e100.net; s=20230601; t=1745409435; x=1746014235;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B8mjHDU0XnE1pNXQCVoet6kGxfG/AL8h8fpd+pns9GM=;
+ b=EOLuvGL0+nik1mgH4WtaFz9VdWgsbKcgTMqJaQHzzWzT7DIhMlw0bXHxs/Ne0yNc8s
+ YoztMo0Pd31anPgXcjXVy14QyrH+RGDvY81mH+CTICxcfQjy8o4+Tc1tLxrJGIdlwqSF
+ VwCnwPyCkZOFRVBwLlT6EQbPoLE2ubQGiuYW7u41zzxDLQM+ChHndEQasJvY5YoT54Ic
+ ytIOJWTECXGsFzmwc7+nP9HyYsPnm9o3gtVJ1jlVK3qyQb73BxxEGYbHWG1h/UllCl75
+ UaQpf7tbcaUn0YE1J0OCToct/xnSHBB5fsaghs3OjtcYNdgAqu2t6Z4FJr7p2JAR+CWJ
+ nh5w==
+X-Gm-Message-State: AOJu0YyrMvKWAsD5UdHfkssWOstJN2d29jjQx8xOiDqmkcNE7NhjQfPm
+ i31BVQNtnN4NJXm2Pczj85Pji+b0ck+IaHlVwlEG+FUgrrUk4HNhjr4uZapfPMGmmSrCHypexbk
+ 6oc5ukyEces9hhv7C2i4yI3uPGcltiOqHkjKU3g==
+X-Gm-Gg: ASbGnct5Yko46qibe4ZgpUhoMkZBk5agFUScbMQCVAFnHWzO4l/9SY65j/Ny2ga8LNp
+ D3TR0mAJ+yagV7gmLmMH03gvgBmUlLkZpOZ5hN12Eh1V6zpHC2jKvFA7GwNYonxTiLpKUXpvwSU
+ S8EM+Jq//CtE7IdQNNvS3NlSk=
+X-Google-Smtp-Source: AGHT+IEHiUOlWWgsBZ1JHQ9NvZrT9VLQkkEljMSqa/raHDQvpONLrfiuLVjA4R4jjhjUzclyt3rdLUqOW4giSvb4h40=
+X-Received: by 2002:ac8:5947:0:b0:477:c04:b511 with SMTP id
+ d75a77b69052e-47aec3cbf5cmr321022601cf.31.1745409434979; Wed, 23 Apr 2025
+ 04:57:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/memory: Remove DEVICE_HOST_ENDIAN definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250423111625.10424-1-philmd@linaro.org>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250423111625.10424-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20250418112953.1744442-1-dietmar@proxmox.com>
+ <20250418112953.1744442-3-dietmar@proxmox.com>
+ <CAJ+F1CLHF0VQHg0JYmaooVRJSZbDkQa01D__iX-5umUcQjJd1Q@mail.gmail.com>
+ <1186263082.4663.1745408772058@webmail.proxmox.com>
+In-Reply-To: <1186263082.4663.1745408772058@webmail.proxmox.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 23 Apr 2025 15:57:03 +0400
+X-Gm-Features: ATxdqUGIkRhLaBguuw4GOI2fm_jsG5zj4XrpCnvfsiRey-0kzrJ8KdczxAYCrio
+Message-ID: <CAJ+F1C+n-yVHA-u7=MvChwn17bHLY8_XVBiQJOtFAX5pxdbj-w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/9] add vnc h264 encoder
+To: Dietmar Maurer <dietmar@proxmox.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,20 +96,662 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.04.25 13:16, Philippe Mathieu-Daudé wrote:
-> Since the previous commit ("exec/memory.h: make devend_memop
-> "target defines" agnostic") there is a single use of the
-> DEVICE_HOST_ENDIAN definition in ram_device_mem_ops: inline
-> it and remove its definition altogether.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
+Hi
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+On Wed, Apr 23, 2025 at 3:46=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.com=
+> wrote:
+>
+> > On 19.4.2025 07:24 CEST Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.=
+com> wrote:
+> >
+> >
+> > Hi
+> >
+> > On Fri, Apr 18, 2025 at 3:41=E2=80=AFPM Dietmar Maurer <dietmar@proxmox=
+.com> wrote:
+> > >
+> > > This patch implements H264 support for VNC. The RFB protocol
+> > > extension is defined in:
+> > >
+> > > https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst#open-h-=
+264-encoding
+> > >
+> > > Currently the Gstreamer x264enc plugin (software encoder) is used
+> > > to encode the video stream.
+> > >
+> > > The gstreamer pipe is:
+> > >
+> > > appsrc -> videoconvert -> x264enc -> appsink
+> > >
+> > > Note: videoconvert is required for RGBx to YUV420 conversion.
+> > >
+> > > The code still use the VNC server framebuffer change detection,
+> > > and only encodes and sends video frames if there are changes.
+> > >
+> > > Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+> > > ---
+> > >  ui/meson.build    |   1 +
+> > >  ui/vnc-enc-h264.c | 282 ++++++++++++++++++++++++++++++++++++++++++++=
+++
+> > >  ui/vnc-jobs.c     |  49 +++++---
+> > >  ui/vnc.c          |  21 ++++
+> > >  ui/vnc.h          |  21 ++++
+> > >  5 files changed, 359 insertions(+), 15 deletions(-)
+> > >  create mode 100644 ui/vnc-enc-h264.c
+> > >
+> > > diff --git a/ui/meson.build b/ui/meson.build
+> > > index 35fb04cadf..34f1f33699 100644
+> > > --- a/ui/meson.build
+> > > +++ b/ui/meson.build
+> > > @@ -46,6 +46,7 @@ vnc_ss.add(files(
+> > >  ))
+> > >  vnc_ss.add(zlib, jpeg)
+> > >  vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
+> > > +vnc_ss.add(when: gstreamer, if_true: files('vnc-enc-h264.c'))
+> > >  system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
+> > >  system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
+> > >
+> > > diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+> > > new file mode 100644
+> > > index 0000000000..3abe6a1528
+> > > --- /dev/null
+> > > +++ b/ui/vnc-enc-h264.c
+> > > @@ -0,0 +1,282 @@
+> > > +/*
+> > > + * QEMU VNC display driver: hextile encoding
+> > > + *
+> > > + * Copyright (C) 2025 Proxmox Server Solutions GmbH
+> > > + *
+> > > + * Permission is hereby granted, free of charge, to any person obtai=
+ning a copy
+> > > + * of this software and associated documentation files (the "Softwar=
+e"), to deal
+> > > + * in the Software without restriction, including without limitation=
+ the rights
+> > > + * to use, copy, modify, merge, publish, distribute, sublicense, and=
+/or sell
+> > > + * copies of the Software, and to permit persons to whom the Softwar=
+e is
+> > > + * furnished to do so, subject to the following conditions:
+> > > + *
+> > > + * The above copyright notice and this permission notice shall be in=
+cluded in
+> > > + * all copies or substantial portions of the Software.
+> > > + *
+> > > + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, E=
+XPRESS OR
+> > > + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTA=
+BILITY,
+> > > + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT=
+ SHALL
+> > > + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES=
+ OR OTHER
+> > > + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, A=
+RISING FROM,
+> > > + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEA=
+LINGS IN
+> > > + * THE SOFTWARE.
+> > > + */
+> > > +
+> > > +#include "qemu/osdep.h"
+> > > +#include "vnc.h"
+> > > +
+> > > +#include <gst/gst.h>
+> > > +
+> > > +static void destroy_encoder_context(VncState *vs)
+> > > +{
+> > > +    gst_clear_object(&vs->h264->source);
+> > > +    gst_clear_object(&vs->h264->convert);
+> > > +    gst_clear_object(&vs->h264->gst_encoder);
+> > > +    gst_clear_object(&vs->h264->sink);
+> > > +    gst_clear_object(&vs->h264->pipeline);
+> > > +}
+> > > +
+> > > +static bool create_encoder_context(VncState *vs, int w, int h)
+> > > +{
+> > > +    g_autoptr(GstCaps) source_caps =3D NULL;
+> > > +    GstStateChangeReturn state_change_ret;
+> > > +
+> > > +    g_assert(vs->h264 !=3D NULL);
+> > > +
+> > > +    if (vs->h264->sink) {
+> > > +        if (w !=3D vs->h264->width || h !=3D vs->h264->height) {
+> > > +            destroy_encoder_context(vs);
+> > > +        }
+> > > +    }
+> > > +
+> > > +    if (vs->h264->sink) {
+> > > +        return TRUE;
+> > > +    }
+> >
+> > I suggest to move that condition in the previous block (.. else {
+> > return TRUE; }) for readibility
+>
+> Sorry, but this would change the semantics totally.
+> Please note that destroy_encoder_context() can set
+> sink to NULL.
 
--- 
-Cheers,
+It's not very readable, ..
 
-David / dhildenb
+if (vs->h264->sink) {
+  if (w !=3D vs->h264->width || h !=3D vs->h264->height) {
+    destroy_encoder_context(vs);
+  } else {
+    return TRUE;
+  }
+}
 
+or even better:
+
+if (vs->h264->sink && w =3D=3D vs->h264->width && h =3D=3D vs->h264->height=
+) {
+  return TRUE;
+}
+
+destroy_encoder_context(vs);
+...
+
+>
+> >
+> > > +
+> > > +    vs->h264->width =3D w;
+> > > +    vs->h264->height =3D h;
+> > > +
+> > > +    vs->h264->source =3D gst_element_factory_make("appsrc", "source"=
+);
+> > > +    if (!vs->h264->source) {
+> > > +        VNC_DEBUG("Could not create gst source\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    vs->h264->convert =3D gst_element_factory_make("videoconvert", "=
+convert");
+> > > +    if (!vs->h264->convert) {
+> > > +        VNC_DEBUG("Could not create gst convert element\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    vs->h264->gst_encoder =3D gst_element_factory_make("x264enc", "g=
+st-encoder");
+> > > +    if (!vs->h264->gst_encoder) {
+> > > +        VNC_DEBUG("Could not create gst x264 encoder\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    g_object_set(
+> > > +        vs->h264->gst_encoder,
+> > > +        "tune", 4, /* zerolatency */
+> > > +        /*
+> > > +         * fix for zerolatency with novnc (without, noVNC displays
+> > > +         * green stripes)
+> > > +         */
+> > > +        "threads", 1,
+> > > +        "pass", 5, /* Constant Quality */
+> > > +        "quantizer", 26,
+> > > +        /* avoid access unit delimiters (Nal Unit Type 9) - not requ=
+ired */
+> > > +        "aud", false,
+> > > +        NULL);
+> > > +
+> > > +    vs->h264->sink =3D gst_element_factory_make("appsink", "sink");
+> > > +    if (!vs->h264->sink) {
+> > > +        VNC_DEBUG("Could not create gst sink\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    vs->h264->pipeline =3D gst_pipeline_new("vnc-h264-pipeline");
+> > > +    if (!vs->h264->pipeline) {
+> > > +        VNC_DEBUG("Could not create gst pipeline\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    gst_object_ref(vs->h264->source);
+> > > +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->source))=
+ {
+> > > +        gst_object_unref(vs->h264->source);
+> >
+> > I think it's a bit unnecessary to ref/unref each element, this is not
+> > typically what the gst API recommends. See for ex
+> > https://gstreamer.freedesktop.org/documentation/tutorials/basic/dynamic=
+-pipelines.html?gi-language=3Dc.
+> > They rely on weak pointers.
+>
+> I cant see whats better there, or whats exactly the problem with correct =
+reference counting?
+
+It's about readability, simplicity and perhaps correctness. It's
+better to use gstreamer API the way it is intended to.
+
+>
+> > > +        VNC_DEBUG("Could not add source to gst pipeline\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    gst_object_ref(vs->h264->convert);
+> > > +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->convert)=
+) {
+> >
+> > Can you use gst_bin_add_many() ?
+>
+> will try to use that.
+
+thanks
+
+>
+> >
+> > > +        gst_object_unref(vs->h264->convert);
+> > > +        VNC_DEBUG("Could not add convert to gst pipeline\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    gst_object_ref(vs->h264->gst_encoder);
+> > > +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->gst_enco=
+der)) {
+> > > +        gst_object_unref(vs->h264->gst_encoder);
+> > > +        VNC_DEBUG("Could not add encoder to gst pipeline\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    gst_object_ref(vs->h264->sink);
+> > > +    if (!gst_bin_add(GST_BIN(vs->h264->pipeline), vs->h264->sink)) {
+> > > +        gst_object_unref(vs->h264->sink);
+> > > +        VNC_DEBUG("Could not add sink to gst pipeline\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    source_caps =3D gst_caps_new_simple(
+> > > +        "video/x-raw",
+> > > +        "format", G_TYPE_STRING, "BGRx",
+> > > +        "framerate", GST_TYPE_FRACTION, 33, 1,
+> > > +        "width", G_TYPE_INT, w,
+> > > +        "height", G_TYPE_INT, h,
+> > > +        NULL);
+> > > +
+> > > +    if (!source_caps) {
+> > > +        VNC_DEBUG("Could not create source caps filter\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    g_object_set(vs->h264->source, "caps", source_caps, NULL);
+> > > +
+> > > +    if (gst_element_link_many(
+> > > +            vs->h264->source,
+> > > +            vs->h264->convert,
+> > > +            vs->h264->gst_encoder,
+> > > +            vs->h264->sink,
+> > > +            NULL
+> > > +        ) !=3D TRUE) {
+> > > +        VNC_DEBUG("Elements could not be linked.\n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    /* Start playing */
+> > > +    state_change_ret =3D gst_element_set_state(
+> > > +        vs->h264->pipeline, GST_STATE_PLAYING);
+> > > +
+> > > +    if (state_change_ret =3D=3D GST_STATE_CHANGE_FAILURE) {
+> > > +        VNC_DEBUG("Unable to set the pipeline to the playing state.\=
+n");
+> > > +        goto error;
+> > > +    }
+> > > +
+> > > +    return TRUE;
+> > > +
+> > > + error:
+> > > +    destroy_encoder_context(vs);
+> > > +    return FALSE;
+> > > +}
+> > > +
+> > > +bool vnc_h264_encoder_init(VncState *vs)
+> > > +{
+> > > +    g_assert(vs->h264 =3D=3D NULL);
+> > > +
+> > > +    vs->h264 =3D g_new0(VncH264, 1);
+> > > +
+> > > +    return true;
+> > > +}
+> > > +
+> > > +/*
+> > > + * Returns the number of generated framebuffer updates,
+> > > + * or -1 in case of errors
+> > > + */
+> > > +int vnc_h264_send_framebuffer_update(
+> > > +    VncState *vs,
+> > > +    int _x,
+> > > +    int _y,
+> > > +    int _w,
+> > > +    int _h
+> > > +) {
+> > > +    int n =3D 0;
+> > > +    int rdb_h264_flags =3D 0;
+> > > +    int width, height;
+> > > +    uint8_t *src_data_ptr =3D NULL;
+> > > +    size_t src_data_size;
+> > > +    GstFlowReturn flow_ret =3D GST_FLOW_ERROR;
+> > > +    GstBuffer *src_buffer =3D NULL;
+> > > +
+> > > +    g_assert(vs->h264 !=3D NULL);
+> > > +    g_assert(vs->vd !=3D NULL);
+> > > +    g_assert(vs->vd->server !=3D NULL);
+> > > +
+> > > +    width =3D pixman_image_get_width(vs->vd->server);
+> > > +    height =3D pixman_image_get_height(vs->vd->server);
+> > > +
+> > > +    g_assert(width =3D=3D vs->client_width);
+> > > +    g_assert(height =3D=3D vs->client_height);
+> > > +
+> > > +    if (vs->h264->sink) {
+> > > +        if (width !=3D vs->h264->width || height !=3D vs->h264->heig=
+ht) {
+> > > +            rdb_h264_flags =3D 2;
+> > > +        }
+> > > +    } else {
+> > > +        rdb_h264_flags =3D 2;
+> > > +    }
+> > > +
+> > > +    if (!create_encoder_context(vs, width, height)) {
+> > > +        VNC_DEBUG("Create encoder context failed\n");
+> > > +        return -1;
+> > > +    }
+> > > +
+> > > +    g_assert(vs->h264->sink !=3D NULL);
+> > > +
+> > > +    src_data_ptr =3D vnc_server_fb_ptr(vs->vd, 0, 0);
+> > > +    src_data_size =3D width * height * VNC_SERVER_FB_BYTES;
+> > > +
+> > > +    src_buffer =3D gst_buffer_new_wrapped_full(
+> > > +        0, src_data_ptr, src_data_size, 0, src_data_size, NULL, NULL=
+);
+> > > +
+> > > +    g_signal_emit_by_name(
+> > > +        vs->h264->source, "push-buffer", src_buffer, &flow_ret);
+> > > +
+> > > +    if (flow_ret !=3D GST_FLOW_OK) {
+> > > +        VNC_DEBUG("gst appsrc push buffer failed\n");
+> > > +        return -1;
+> > > +    }
+> > > +
+> > > +    do {
+> > > +        GstSample *sample =3D NULL;
+> > > +        GstMapInfo map;
+> > > +        GstBuffer *out_buffer;
+> > > +
+> > > +        /* Retrieve the buffer */
+> > > +        g_signal_emit_by_name(vs->h264->sink, "try-pull-sample", 0, =
+&sample);
+> > > +        if (!sample) {
+> > > +            break;
+> > > +        }
+> > > +        out_buffer =3D gst_sample_get_buffer(sample);
+> > > +        if (gst_buffer_map(out_buffer, &map, 0)) {
+> > > +            vnc_framebuffer_update(vs, 0, 0, width, height, VNC_ENCO=
+DING_H264);
+> > > +            vnc_write_s32(vs, map.size); /* write data length */
+> > > +            vnc_write_s32(vs, rdb_h264_flags); /* write flags */
+> > > +            rdb_h264_flags =3D 0;
+> > > +
+> > > +            VNC_DEBUG("GST vnc_h264_update send %ld\n", map.size);
+> > > +
+> > > +            vnc_write(vs, map.data, map.size);
+> > > +
+> > > +            gst_buffer_unmap(out_buffer, &map);
+> > > +
+> > > +            n +=3D 1;
+> > > +        } else {
+> > > +            VNC_DEBUG("unable to map sample\n");
+> > > +        }
+> > > +        gst_sample_unref(sample);
+> > > +    } while (true);
+> > > +
+> > > +    return n;
+> > > +}
+> > > +
+> > > +void vnc_h264_clear(VncState *vs)
+> > > +{
+> > > +    if (!vs->h264) {
+> > > +        return;
+> > > +    }
+> >
+> > unnecessary
+>
+> This is required. For example if you disable h264, vs->h264 is
+> always NULL, and we unconditionally call vnc_h264_clear().
+>
+> Why do you think this is unnecessary?
+
+and there are already checks for NULL, no need to do it twice, do it
+where it is actually necessary.
+
+>
+> >
+> > > +
+> > > +    destroy_encoder_context(vs);
+> > > +
+> > > +    g_clear_pointer(&vs->h264, g_free);
+> > > +}
+> > > diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
+> > > index fcca7ec632..853a547d9a 100644
+> > > --- a/ui/vnc-jobs.c
+> > > +++ b/ui/vnc-jobs.c
+> > > @@ -193,6 +193,7 @@ static void vnc_async_encoding_start(VncState *or=
+ig, VncState *local)
+> > >      local->zlib =3D orig->zlib;
+> > >      local->hextile =3D orig->hextile;
+> > >      local->zrle =3D orig->zrle;
+> > > +    local->h264 =3D orig->h264;
+> > >      local->client_width =3D orig->client_width;
+> > >      local->client_height =3D orig->client_height;
+> > >  }
+> > > @@ -204,6 +205,7 @@ static void vnc_async_encoding_end(VncState *orig=
+, VncState *local)
+> > >      orig->zlib =3D local->zlib;
+> > >      orig->hextile =3D local->hextile;
+> > >      orig->zrle =3D local->zrle;
+> > > +    orig->h264 =3D local->h264;
+> > >      orig->lossy_rect =3D local->lossy_rect;
+> > >  }
+> > >
+> > > @@ -284,25 +286,42 @@ static int vnc_worker_thread_loop(VncJobQueue *=
+queue)
+> > >      vnc_write_u16(&vs, 0);
+> > >
+> > >      vnc_lock_display(job->vs->vd);
+> > > -    QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
+> > > -        int n;
+> > > -
+> > > -        if (job->vs->ioc =3D=3D NULL) {
+> > > -            vnc_unlock_display(job->vs->vd);
+> > > -            /* Copy persistent encoding data */
+> > > -            vnc_async_encoding_end(job->vs, &vs);
+> > > -            goto disconnected;
+> > > -        }
+> > >
+> > > -        if (vnc_worker_clamp_rect(&vs, job, &entry->rect)) {
+> > > -            n =3D vnc_send_framebuffer_update(&vs, entry->rect.x, en=
+try->rect.y,
+> > > -                                            entry->rect.w, entry->re=
+ct.h);
+> > > +    if (vs.vnc_encoding =3D=3D VNC_ENCODING_H264) {
+> > > +        int width =3D pixman_image_get_width(vs.vd->server);
+> > > +        int height =3D pixman_image_get_height(vs.vd->server);
+> > > +           int n =3D vnc_send_framebuffer_update(&vs, 0, 0, width, h=
+eight);
+> > > +        if (n >=3D 0) {
+> > > +            n_rectangles +=3D n;
+> > > +        }
+> > > +        QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
+> > > +            g_free(entry);
+> > > +        }
+> > > +    } else {
+> > > +        QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
+> > > +            int n;
+> > > +
+> > > +            if (job->vs->ioc =3D=3D NULL) {
+> > > +                vnc_unlock_display(job->vs->vd);
+> > > +                /* Copy persistent encoding data */
+> > > +                vnc_async_encoding_end(job->vs, &vs);
+> > > +                goto disconnected;
+> > > +            }
+> > >
+> > > -            if (n >=3D 0) {
+> > > -                n_rectangles +=3D n;
+> > > +            if (vnc_worker_clamp_rect(&vs, job, &entry->rect)) {
+> > > +                n =3D vnc_send_framebuffer_update(
+> > > +                    &vs,
+> > > +                    entry->rect.x,
+> > > +                    entry->rect.y,
+> > > +                    entry->rect.w,
+> > > +                    entry->rect.h);
+> > > +
+> > > +                if (n >=3D 0) {
+> > > +                    n_rectangles +=3D n;
+> > > +                }
+> > >              }
+> > > +            g_free(entry);
+> > >          }
+> > > -        g_free(entry);
+> > >      }
+> > >      trace_vnc_job_nrects(&vs, job, n_rectangles);
+> > >      vnc_unlock_display(job->vs->vd);
+> > > diff --git a/ui/vnc.c b/ui/vnc.c
+> > > index 9241caaad9..aed25b0183 100644
+> > > --- a/ui/vnc.c
+> > > +++ b/ui/vnc.c
+> > > @@ -972,6 +972,9 @@ int vnc_send_framebuffer_update(VncState *vs, int=
+ x, int y, int w, int h)
+> > >          case VNC_ENCODING_ZYWRLE:
+> > >              n =3D vnc_zywrle_send_framebuffer_update(vs, x, y, w, h)=
+;
+> > >              break;
+> > > +        case VNC_ENCODING_H264:
+> > > +            n =3D vnc_h264_send_framebuffer_update(vs, x, y, w, h);
+> > > +            break;
+> > >          default:
+> > >              vnc_framebuffer_update(vs, x, y, w, h, VNC_ENCODING_RAW)=
+;
+> > >              n =3D vnc_raw_send_framebuffer_update(vs, x, y, w, h);
+> > > @@ -1326,6 +1329,10 @@ void vnc_disconnect_finish(VncState *vs)
+> > >      vnc_tight_clear(vs);
+> > >      vnc_zrle_clear(vs);
+> > >
+> > > +#ifdef CONFIG_GSTREAMER
+> > > +    vnc_h264_clear(vs);
+> > > +#endif
+> > > +
+> > >  #ifdef CONFIG_VNC_SASL
+> > >      vnc_sasl_client_cleanup(vs);
+> > >  #endif /* CONFIG_VNC_SASL */
+> > > @@ -2181,6 +2188,16 @@ static void set_encodings(VncState *vs, int32_=
+t *encodings, size_t n_encodings)
+> > >              vnc_set_feature(vs, VNC_FEATURE_ZYWRLE);
+> > >              vs->vnc_encoding =3D enc;
+> > >              break;
+> > > +#ifdef CONFIG_GSTREAMER
+> > > +        case VNC_ENCODING_H264:
+> > > +            if (vnc_h264_encoder_init(vs)) {
+> > > +                vnc_set_feature(vs, VNC_FEATURE_H264);
+> > > +                vs->vnc_encoding =3D enc;
+> > > +            } else {
+> > > +                VNC_DEBUG("vnc_h264_encoder_init failed\n");
+> > > +            }
+> > > +            break;
+> > > +#endif
+> > >          case VNC_ENCODING_DESKTOPRESIZE:
+> > >              vnc_set_feature(vs, VNC_FEATURE_RESIZE);
+> > >              break;
+> > > @@ -4291,6 +4308,10 @@ int vnc_init_func(void *opaque, QemuOpts *opts=
+, Error **errp)
+> > >      Error *local_err =3D NULL;
+> > >      char *id =3D (char *)qemu_opts_id(opts);
+> > >
+> > > +#ifdef CONFIG_GSTREAMER
+> > > +    gst_init(NULL, NULL);
+> > > +#endif
+> > > +
+> > >      assert(id);
+> > >      vnc_display_init(id, &local_err);
+> > >      if (local_err) {
+> > > diff --git a/ui/vnc.h b/ui/vnc.h
+> > > index acc53a2cc1..a0d336738d 100644
+> > > --- a/ui/vnc.h
+> > > +++ b/ui/vnc.h
+> > > @@ -46,6 +46,10 @@
+> > >  #include "vnc-enc-zrle.h"
+> > >  #include "ui/kbd-state.h"
+> > >
+> > > +#ifdef CONFIG_GSTREAMER
+> > > +#include <gst/gst.h>
+> > > +#endif
+> > > +
+> > >  // #define _VNC_DEBUG 1
+> > >
+> > >  #ifdef _VNC_DEBUG
+> > > @@ -231,6 +235,14 @@ typedef struct VncZywrle {
+> > >      int buf[VNC_ZRLE_TILE_WIDTH * VNC_ZRLE_TILE_HEIGHT];
+> > >  } VncZywrle;
+> > >
+> > > +#ifdef CONFIG_GSTREAMER
+> > > +typedef struct VncH264 {
+> > > +    GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+> > > +    size_t width;
+> > > +    size_t height;
+> > > +} VncH264;
+> > > +#endif
+> > > +
+> > >  struct VncRect
+> > >  {
+> > >      int x;
+> > > @@ -344,6 +356,9 @@ struct VncState
+> > >      VncHextile hextile;
+> > >      VncZrle *zrle;
+> > >      VncZywrle zywrle;
+> > > +#ifdef CONFIG_GSTREAMER
+> > > +    VncH264 *h264;
+> > > +#endif
+> > >
+> > >      Notifier mouse_mode_notifier;
+> > >
+> > > @@ -404,6 +419,7 @@ enum {
+> > >  #define VNC_ENCODING_TRLE                 0x0000000f
+> > >  #define VNC_ENCODING_ZRLE                 0x00000010
+> > >  #define VNC_ENCODING_ZYWRLE               0x00000011
+> > > +#define VNC_ENCODING_H264                 0x00000032 /* 50   */
+> > >  #define VNC_ENCODING_COMPRESSLEVEL0       0xFFFFFF00 /* -256 */
+> > >  #define VNC_ENCODING_QUALITYLEVEL0        0xFFFFFFE0 /* -32  */
+> > >  #define VNC_ENCODING_XCURSOR              0xFFFFFF10 /* -240 */
+> > > @@ -464,6 +480,7 @@ enum VncFeatures {
+> > >      VNC_FEATURE_XVP,
+> > >      VNC_FEATURE_CLIPBOARD_EXT,
+> > >      VNC_FEATURE_AUDIO,
+> > > +    VNC_FEATURE_H264,
+> > >  };
+> > >
+> > >
+> > > @@ -625,6 +642,10 @@ int vnc_zrle_send_framebuffer_update(VncState *v=
+s, int x, int y, int w, int h);
+> > >  int vnc_zywrle_send_framebuffer_update(VncState *vs, int x, int y, i=
+nt w, int h);
+> > >  void vnc_zrle_clear(VncState *vs);
+> > >
+> > > +bool vnc_h264_encoder_init(VncState *vs);
+> > > +int vnc_h264_send_framebuffer_update(VncState *vs, int x, int y, int=
+ w, int h);
+> > > +void vnc_h264_clear(VncState *vs);
+> > > +
+> > >  /* vnc-clipboard.c */
+> > >  void vnc_server_cut_text_caps(VncState *vs);
+> > >  void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+> > > --
+> > > 2.39.5
+> > >
+> > >
+> >
+> >
+> > --
+> > Marc-Andr=C3=A9 Lureau
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
