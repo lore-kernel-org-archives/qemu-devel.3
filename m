@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C255CC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DBDC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7USs-0002cB-4i; Wed, 23 Apr 2025 03:24:14 -0400
+	id 1u7UTO-0002nW-PR; Wed, 23 Apr 2025 03:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7USq-0002by-3v; Wed, 23 Apr 2025 03:24:12 -0400
+ id 1u7UTK-0002jZ-Fh; Wed, 23 Apr 2025 03:24:43 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7USn-0001IR-Fi; Wed, 23 Apr 2025 03:24:11 -0400
+ id 1u7UTI-0001IR-NK; Wed, 23 Apr 2025 03:24:42 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 23 Apr
- 2025 15:23:51 +0800
+ 2025 15:23:53 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Wed, 23 Apr 2025 15:23:51 +0800
+ Transport; Wed, 23 Apr 2025 15:23:53 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>
-Subject: [PATCH v5 03/11] hw/arm/aspeed: Add vbootrom support on AST2700 EVB
- machines
-Date: Wed, 23 Apr 2025 15:23:39 +0800
-Message-ID: <20250423072350.541742-4-jamin_lin@aspeedtech.com>
+ <nabihestefan@google.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v5 08/11] tests/functional/aspeed: Update test ASPEED SDK
+ v09.06
+Date: Wed, 23 Apr 2025 15:23:44 +0800
+Message-ID: <20250423072350.541742-9-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
 References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,52 +68,58 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new "vbootrom" field in the AspeedMachineClass to indicate whether
-a machine supports the virtual boot ROM region.
-
-Set this field to true by default for the AST2700-A0 and AST2700-A1 EVB
-machines.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
-Tested-by: Nabih Estefan <nabihestefan@google.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/arm/aspeed.h | 1 +
- hw/arm/aspeed.c         | 2 ++
- 2 files changed, 3 insertions(+)
+ tests/functional/test_aarch64_aspeed.py | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index 9cae45a1c9..973277bea6 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -40,6 +40,7 @@ struct AspeedMachineClass {
-     void (*i2c_init)(AspeedMachineState *bmc);
-     uint32_t uart_default;
-     bool sdhci_wp_inverted;
-+    bool vbootrom;
- };
+diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
+index 441f7f3919..337d701917 100755
+--- a/tests/functional/test_aarch64_aspeed.py
++++ b/tests/functional/test_aarch64_aspeed.py
+@@ -29,13 +29,13 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+         wait_for_console_pattern(self, 'Starting kernel ...')
  
+-    ASSET_SDK_V905_AST2700 = Asset(
+-            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-a0-default-obmc.tar.gz',
+-            'cfbbd1cce72f2a3b73b9080c41eecdadebb7077fba4f7806d72ac99f3e84b74a')
++    ASSET_SDK_V906_AST2700 = Asset(
++            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-a0-default-obmc.tar.gz',
++            '7247b6f19dbfb700686f8d9f723ac23f3eb229226c0589cb9b06b80d1b61f3cb')
  
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 82f42582fa..e852bbc4cb 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -1689,6 +1689,7 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-+    amc->vbootrom = true;
-     mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-@@ -1709,6 +1710,7 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-+    amc->vbootrom = true;
-     mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
+-    ASSET_SDK_V905_AST2700A1 = Asset(
+-            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
+-            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
++    ASSET_SDK_V906_AST2700A1 = Asset(
++            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-default-obmc.tar.gz',
++            'f1d53e0be8a404ecce3e105f72bc50fa4e090ad13160ffa91b10a6e0233a9dc6')
+ 
+     def do_ast2700_i2c_test(self):
+         exec_command_and_wait_for_pattern(self,
+@@ -94,17 +94,17 @@ def start_ast2700_test(self, name):
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+ 
+-    def test_aarch64_ast2700_evb_sdk_v09_05(self):
++    def test_aarch64_ast2700_evb_sdk_v09_06(self):
+         self.set_machine('ast2700-evb')
+ 
+-        self.archive_extract(self.ASSET_SDK_V905_AST2700)
++        self.archive_extract(self.ASSET_SDK_V906_AST2700)
+         self.start_ast2700_test('ast2700-a0-default')
+         self.do_ast2700_i2c_test()
+ 
+-    def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
++    def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
+         self.set_machine('ast2700a1-evb')
+ 
+-        self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
++        self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
+         self.start_ast2700_test('ast2700-default')
+         self.do_ast2700_i2c_test()
+ 
 -- 
 2.43.0
 
