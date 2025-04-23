@@ -4,89 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E658C369D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08592C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Wsu-00061l-Mp; Wed, 23 Apr 2025 05:59:16 -0400
+	id 1u7Ww2-0007Fl-B6; Wed, 23 Apr 2025 06:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Wst-00061P-0Q
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:59:15 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Wsr-0001mb-1v
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:59:14 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43d0618746bso47079605e9.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745402351; x=1746007151; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=b4RnAiJadDYdQbmNtoEN0s03apMluTLDVrhBOuuHr3E=;
- b=FduAT1l43zAZqKQoi7H39ZV+AE/QXhJaB5GzStpg9oeEbUs76kX4q58VPMO9VRu9po
- 4drAVMKidOIFpDBDQ5sgBjOvg0LDxjZ9qG1N+hIkv6reM//nDgbpWC1KbVAIPJIf1xw9
- gros6iEIRNWtqWxHDJEgSCmYKlUccWd+AFns88cVStzasYEVigwecjWoPgZxxKVi6em5
- iCNq0q0bJf1pQ7fno1+hnnrjy6/bY2pHsheKlSptfbiPAf6HGEbcfSUoOJegO1Ahx1rJ
- OXumESMRsGD6T7s66d8ZfU79KTn38HStWSFOWIm48d78HRlNCOok7YBTpxAFECis9sIl
- 0zxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745402351; x=1746007151;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b4RnAiJadDYdQbmNtoEN0s03apMluTLDVrhBOuuHr3E=;
- b=f9Pw8DawiiXWK3v3jTw4oa4iMh1nmpv45hmfARy3xrlPRHc6sDWeDxDNOFINudsS79
- 1IZcmuA0uH2KJKzJMRWbSQvDD7S6Jh7UYbJVbZdU2rMjtAoqoX2RLi6vO94W5irIZfWX
- gtGRniJ+mzqqI645IV27GkUvBQkI8gjnAynf46V6YuR3Lk4XLcME3ksKH+wAlLjqUkoL
- UCxCKBusewVkjI7TNCqZ/cXaTnpzuNyxMfwhTl2IP0NmDZ0AtOPHlPHGEhGL4mWFlm8h
- Nq2FW8hRnY+AbK4ib/kbhmy5BEdNMfiAp/HvQssKZT/lzapgT0giksq0PTCyTWDePTcB
- r7gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIYGmHIjj2H5DEivCVM+TxgnbgZR6M9ybEaGsoQQy28C7628eVuOfi7QmFTNCIdSWO6U+z6qqR5phJ@nongnu.org
-X-Gm-Message-State: AOJu0YxbaB10vj4mHsxy47xMdk5E++OhK6pokZi6Z7XKNoLGDbmYSGN0
- BYTSEsDzepH8MWtRpGMDpMcvbvaQNMMRg7FtKdUOv2dEP9wmtEek6+N0gOqFtDle8xsp0rCDrRQ
- l
-X-Gm-Gg: ASbGncuN9zW6XYoZmiMujQ0n8KhWt7+YugzwmXO3qAxblVLmZHvftmNhEHB60YUP2cr
- 5peIdTn+xniSbibmJdHC++ChTMYq2TkMxaocmy1MiAalRIM5B+rdpTc/dM8r7cedkF6v8PyYZTe
- s73JxZnre0VphqnSA2ncQ4AWQIFmoNN/3jd6VtntWO7XhlkXJy88CPccYvswY8waM2IjLggrgTq
- iFfL98klv9i2aJMEFae/C08LjsDudk1oRJp/8qBt/lCWRlDzAKNkt2NQy7Nheg/MQDIJuqP1oJj
- hFNIU+UAj7Za+g5YWF6NpNAYWTPnPQhI9hEnA7XrJby/OD56ouNnWyoTW29afUtKInGU8QiaDJk
- j3yoUnunczPBdP6fLpFk=
-X-Google-Smtp-Source: AGHT+IFapo4EaJ8ctnLR/6vimf/4rQJaN1dEVBINc7anCyMPX5MMw7brZDlDFEJnigCGF0gq9EpXUg==
-X-Received: by 2002:a05:600c:4688:b0:43c:eea9:f45d with SMTP id
- 5b1f17b1804b1-4406abb2cd0mr175385315e9.18.1745402351426; 
- Wed, 23 Apr 2025 02:59:11 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa4a4cd0sm18667668f8f.90.2025.04.23.02.59.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 02:59:10 -0700 (PDT)
-Message-ID: <bec12bbc-2a73-4486-852d-b0c89b59e1d9@linaro.org>
-Date: Wed, 23 Apr 2025 11:59:10 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 063/147] accel/tcg: Fix argument types of tlb_reset_dirty
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-64-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-64-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u7Wvz-0007F5-A5
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:02:27 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u7Wvw-0002Az-Lf
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:02:27 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D0EAF55D23D;
+ Wed, 23 Apr 2025 12:02:22 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id Odw9OpO8ld9q; Wed, 23 Apr 2025 12:02:20 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D646F55D238; Wed, 23 Apr 2025 12:02:20 +0200 (CEST)
+Message-ID: <ae793d1f81e3577605759c43871722324a1ef2cb.1745402140.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1745402140.git.balaton@eik.bme.hu>
+References: <cover.1745402140.git.balaton@eik.bme.hu>
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v2 1/2] system/datadir: Add new type constant for DTB files
+To: qemu-devel@nongnu.org
+Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ philmd@linaro.org
+Date: Wed, 23 Apr 2025 12:02:20 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,18 +62,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/4/25 21:26, Richard Henderson wrote:
-> The arguments to tlb_reset_dirty are host pointers.
-> The conversion from ram_addr_t was done in the sole
-> caller, tlb_reset_dirty_range_all.
-> 
-> Fixes: e554861766d ("exec: prepare for splitting")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/exec/cputlb.h | 2 +-
->   accel/tcg/cputlb.c    | 6 +++---
->   2 files changed, 4 insertions(+), 4 deletions(-)
+Currently DTB files are mixed with ROMs under BIOS type. Separate them
+under a new type constant and turn defines into an enum while at it.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/microblaze/boot.c   |  2 +-
+ hw/ppc/ppc440_bamboo.c |  2 +-
+ hw/ppc/sam460ex.c      |  2 +-
+ hw/ppc/virtex_ml507.c  |  2 +-
+ include/qemu/datadir.h | 11 ++++++++---
+ system/datadir.c       |  3 ++-
+ 6 files changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+index 60b4ef0abe..4a9c9df318 100644
+--- a/hw/microblaze/boot.c
++++ b/hw/microblaze/boot.c
+@@ -130,7 +130,7 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
+     dtb_arg = current_machine->dtb;
+     /* default to pcbios dtb as passed by machine_init */
+     if (!dtb_arg && dtb_filename) {
+-        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, dtb_filename);
++        filename = qemu_find_file(QEMU_FILE_TYPE_DTB, dtb_filename);
+     }
+ 
+     boot_info.machine_cpu_reset = machine_cpu_reset;
+diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+index 099fda3909..6fff0d8afb 100644
+--- a/hw/ppc/ppc440_bamboo.c
++++ b/hw/ppc/ppc440_bamboo.c
+@@ -64,7 +64,7 @@ static int bamboo_load_device_tree(MachineState *machine,
+     uint32_t tb_freq = 400000000;
+     uint32_t clock_freq = 400000000;
+ 
+-    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, BINARY_DEVICE_TREE_FILE);
++    filename = qemu_find_file(QEMU_FILE_TYPE_DTB, BINARY_DEVICE_TREE_FILE);
+     if (!filename) {
+         return -1;
+     }
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 7dc3b309c8..327fac440f 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -142,7 +142,7 @@ static int sam460ex_load_device_tree(MachineState *machine,
+     uint32_t clock_freq = CPU_FREQ;
+     int offset;
+ 
+-    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, BINARY_DEVICE_TREE_FILE);
++    filename = qemu_find_file(QEMU_FILE_TYPE_DTB, BINARY_DEVICE_TREE_FILE);
+     if (!filename) {
+         error_report("Couldn't find dtb file `%s'", BINARY_DEVICE_TREE_FILE);
+         exit(1);
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index 17115be74d..c9969ae48a 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -146,7 +146,7 @@ static int xilinx_load_device_tree(MachineState *machine,
+         /* Try the local "ppc.dtb" override.  */
+         fdt = load_device_tree("ppc.dtb", &fdt_size);
+         if (!fdt) {
+-            path = qemu_find_file(QEMU_FILE_TYPE_BIOS, BINARY_DEVICE_TREE_FILE);
++            path = qemu_find_file(QEMU_FILE_TYPE_DTB, BINARY_DEVICE_TREE_FILE);
+             if (path) {
+                 fdt = load_device_tree(path, &fdt_size);
+                 g_free(path);
+diff --git a/include/qemu/datadir.h b/include/qemu/datadir.h
+index 21f9097f58..cca32af300 100644
+--- a/include/qemu/datadir.h
++++ b/include/qemu/datadir.h
+@@ -1,11 +1,16 @@
+ #ifndef QEMU_DATADIR_H
+ #define QEMU_DATADIR_H
+ 
+-#define QEMU_FILE_TYPE_BIOS   0
+-#define QEMU_FILE_TYPE_KEYMAP 1
++typedef enum {
++    QEMU_FILE_TYPE_BIOS,
++    QEMU_FILE_TYPE_DTB,
++    QEMU_FILE_TYPE_KEYMAP,
++} QemuFileType;
++
+ /**
+  * qemu_find_file:
+  * @type: QEMU_FILE_TYPE_BIOS (for BIOS, VGA BIOS)
++ *        QEMU_FILE_TYPE_DTB (for device tree blobs)
+  *        or QEMU_FILE_TYPE_KEYMAP (for keymaps).
+  * @name: Relative or absolute file name
+  *
+@@ -20,7 +25,7 @@
+  *
+  * Returns: a path that can access @name, or NULL if no matching file exists.
+  */
+-char *qemu_find_file(int type, const char *name);
++char *qemu_find_file(QemuFileType type, const char *name);
+ void qemu_add_default_firmwarepath(void);
+ void qemu_add_data_dir(char *path);
+ void qemu_list_data_dirs(void);
+diff --git a/system/datadir.c b/system/datadir.c
+index c9237cb5d4..e450b84ce9 100644
+--- a/system/datadir.c
++++ b/system/datadir.c
+@@ -30,7 +30,7 @@
+ static const char *data_dir[16];
+ static int data_dir_idx;
+ 
+-char *qemu_find_file(int type, const char *name)
++char *qemu_find_file(QemuFileType type, const char *name)
+ {
+     int i;
+     const char *subdir;
+@@ -44,6 +44,7 @@ char *qemu_find_file(int type, const char *name)
+ 
+     switch (type) {
+     case QEMU_FILE_TYPE_BIOS:
++    case QEMU_FILE_TYPE_DTB:
+         subdir = "";
+         break;
+     case QEMU_FILE_TYPE_KEYMAP:
+-- 
+2.41.3
 
 
