@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C549EC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 475AEC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7TxZ-0001Mf-P8; Wed, 23 Apr 2025 02:51:53 -0400
+	id 1u7U2u-0003Fe-1F; Wed, 23 Apr 2025 02:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
- id 1u7TxX-0001MS-Nk; Wed, 23 Apr 2025 02:51:51 -0400
+ id 1u7U2q-0003Em-3A; Wed, 23 Apr 2025 02:57:20 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
- id 1u7TxR-0005ic-NQ; Wed, 23 Apr 2025 02:51:50 -0400
+ id 1u7U2o-0006Nh-0F; Wed, 23 Apr 2025 02:57:19 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zj8sN08yDz4xMG;
- Wed, 23 Apr 2025 16:51:36 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zj8zv3P1Rz4xMG;
+ Wed, 23 Apr 2025 16:57:15 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zj8sK0Yrcz4wbf;
- Wed, 23 Apr 2025 16:51:31 +1000 (AEST)
-Message-ID: <1d81f251-d52a-47a2-92d1-38d6d8957a06@kaod.org>
-Date: Wed, 23 Apr 2025 08:51:28 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zj8zr32j5z4xM3;
+ Wed, 23 Apr 2025 16:57:12 +1000 (AEST)
+Message-ID: <36776a1b-6a09-4d08-8a97-d528c593e4db@kaod.org>
+Date: Wed, 23 Apr 2025 08:57:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/functional/aspeed: Update test ASPEED SDK
- v03.00 for AST1030
+Subject: Re: [PATCH v2 0/3] Update to test new ASPEED SDK version
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -41,7 +40,6 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com
 References: <20250423014008.147542-1-jamin_lin@aspeedtech.com>
- <20250423014008.147542-4-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,9 +84,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250423014008.147542-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20250423014008.147542-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -114,46 +112,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/23/25 03:40, Jamin Lin wrote:
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> v1:
+>    Update to test new ASPEED SDK version for AST2600, AST2500 ,and AST1030.
+> v2:
+>    Fix review issue for AST1030.
+> 
+> Jamin Lin (3):
+>    tests/functional/aspeed: Update test ASPEED SDK v09.06 for AST2500
+>    tests/functional/aspeed: Update test ASPEED SDK v09.06 for AST2600
+>    tests/functional/aspeed: Update test ASPEED SDK v03.00 for AST1030
+> 
+>   tests/functional/test_arm_aspeed_ast1030.py | 10 +++++-----
+>   tests/functional/test_arm_aspeed_ast2500.py |  8 ++++----
+>   tests/functional/test_arm_aspeed_ast2600.py | 15 ++++++++-------
+>   3 files changed, 17 insertions(+), 16 deletions(-)
+> 
 
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Applied to aspeed-next.
 
 Thanks,
 
 C.
 
-
-> ---
->   tests/functional/test_arm_aspeed_ast1030.py | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/tests/functional/test_arm_aspeed_ast1030.py b/tests/functional/test_arm_aspeed_ast1030.py
-> index d45d9f7c1c..77037f0179 100755
-> --- a/tests/functional/test_arm_aspeed_ast1030.py
-> +++ b/tests/functional/test_arm_aspeed_ast1030.py
-> @@ -12,17 +12,17 @@
->   
->   class AST1030Machine(LinuxKernelTest):
->   
-> -    ASSET_ZEPHYR_1_04 = Asset(
-> +    ASSET_ZEPHYR_3_00 = Asset(
->           ('https://github.com/AspeedTech-BMC'
-> -         '/zephyr/releases/download/v00.01.04/ast1030-evb-demo.zip'),
-> -        '4ac6210adcbc61294927918707c6762483fd844dde5e07f3ba834ad1f91434d3')
-> +         '/zephyr/releases/download/v00.03.00/ast1030-evb-demo.zip'),
-> +        '37fe3ecd4a1b9d620971a15b96492a81093435396eeac69b6f3e384262ff555f')
->   
-> -    def test_ast1030_zephyros_1_04(self):
-> +    def test_ast1030_zephyros_3_00(self):
->           self.set_machine('ast1030-evb')
->   
->           kernel_name = "ast1030-evb-demo/zephyr.elf"
->           kernel_file = self.archive_extract(
-> -            self.ASSET_ZEPHYR_1_04, member=kernel_name)
-> +            self.ASSET_ZEPHYR_3_00, member=kernel_name)
->   
->           self.vm.set_console()
->           self.vm.add_args('-kernel', kernel_file, '-nographic')
 
 
