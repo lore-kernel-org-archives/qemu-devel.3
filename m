@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379DFC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 21:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E2F2C369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 21:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7hEf-00077K-9e; Wed, 23 Apr 2025 17:02:25 -0400
+	id 1u7hJe-0000jV-Qc; Wed, 23 Apr 2025 17:07:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7hEd-00076T-6k
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 17:02:23 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1u7hJa-0000ij-2y
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 17:07:30 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7hEb-0005aZ-H5
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 17:02:22 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2295d78b433so3252585ad.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 14:02:20 -0700 (PDT)
+ id 1u7hJY-0006NX-Cm
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 17:07:29 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-af589091049so158343a12.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 14:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745442139; x=1746046939; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745442446; x=1746047246; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=U+rfqX26zcDFA6/KX9P6XT0eCbgwi0Ty7MFIiDORJ/o=;
- b=KxfuOK80VCIHt8k0c52euFa4V1tNsKKklawczrhpxJtuZZx16y6D716ScAlK+TOIA3
- DT5D2iCgDZWi0aH8BxtKjoYshl5LXjjlcwHCyYcI99INsMxN5kFJ3lbx9vRhoqM28Bqx
- BUzwpzmXnW+YABz+oIWUMcTrApdIObkEL5U7ZJMq7b27OOh6BgGWH3TBTL+PPZ9//W6/
- BWPsev5zialDUDf9IrtO/7d6q+Mg6P7WWwnYUg62Rgxq99iLoYFl9cWDchz6ejCxLbKv
- /EOxFI2/2thlcAITwSA7tkED6QD9NRyrCWC6Cj4O6qSIBpMW0pW4xLvRzg+n23Ccf6sD
- uRWg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XX8UNeUYoHrGWL2VB9+ZdXc8oDz80p2+4IzWArGzMhQ=;
+ b=w6WlcNQOUUnpd/UINw/iR7lBRp+QeaU+ET7sERbpmNfvRTu97pK84Lf4eVdF3JegSA
+ 4AiNIG0/tuERz82YjeGX2erERH3fkAYdy6tLi7iiICS8yiE8JeTawBEONJbyRebjsE6L
+ CoAI2pkKZk7bKSYp1UD2F68rXNFNTTRYqbrfw8DrdnP7EjsGVUO89+xytWGUp53DVdUM
+ EnvxeLiW8FU1ADScAX+5tzFnQiGf4s4teKja2Z7/eSSjuls2cyeU/+MVc3mEWT8PSQru
+ fFJntXNiDqsgNvf5KAFrF1SWLbeoDYpwZpyhv3sAPSmJ0flgkOTcBygsMcr6a1pQtGCq
+ JZ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745442139; x=1746046939;
+ d=1e100.net; s=20230601; t=1745442446; x=1746047246;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U+rfqX26zcDFA6/KX9P6XT0eCbgwi0Ty7MFIiDORJ/o=;
- b=IyA0d+OMVRkp5/OgAKuFmmxsMeMiC/nLpz+PUvp7876ZWAUx69eJoZbd5TgUnK9syD
- tBRNtEds042SUgkMA9//CjtzleHiqLnSGGhZSb3a3++z7IwAz8mUqHElzPTo721pvxhe
- SbUvipNX2Q3nIi1LZy4UZWAMH3jE/BwEdJtL687J+2kfyngmVS9EuO39UWJuZUCpHhn/
- i/hMkheHgT0saw9HK5Oo3ZspCxd6mbHiAoW5pCRD2uaHfYHW74WP86LEBVk97qNMsYyA
- Zd5HA4hJtEG8CrJsshYTOo0P01Y2S2nMBNW0N1PN4ll0wAOgy+HxotjljmXQbHl9ILaj
- 7oNw==
+ bh=XX8UNeUYoHrGWL2VB9+ZdXc8oDz80p2+4IzWArGzMhQ=;
+ b=dCVEE54qgJdc7h30ZkGjiDUwH/XcprEaobXDJ7CX+A4bzjI9zFEdHash48zJdcuxZ8
+ BLrdXwxC3IJCGduZnRqEdRyowYcHHDTyBKyFmOgL6sQA+7uQAOkxEMAUPqnJsCKJMWZP
+ YZ4Fzw97hQ22TEsL4XMZdJjf1EWXQ46lDm+MmHY3hPIhLWd0EJZOUsaUUy83mAxuRrQs
+ u5eaVlWiDaDJhjDrdSXBbYmEpo6+5pNi8mhTypdCEgiV90pO2wEqMDDvaI2tw18RMpUQ
+ y1VbBEiK4C6jhhF3wQjT6OCx+6g+eQ2lATtXFGE60Hxo9fudDpdDkzVypYg/tCUI0+9f
+ t/eQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjbd0Oun9HmyUVozg4mAZTbGgIzLm2q+cWEX49GDu7Q/oBDwCtGtRxt8O7CdJ0llEC4tKOce67ooh3@nongnu.org
-X-Gm-Message-State: AOJu0YxLDOiErMecBGGFFQ8yMEp7YzHkSdxmd+iWCLnBFuctJrFJwOUW
- ZR4p9G5Vn6zA/vAOZKoyDSX0k4k1b37sVy888R6kj2yMAJ0b/Tv6RGLHC4eDj/o=
-X-Gm-Gg: ASbGncsFUQOCMSRoa3etfGUdbur4LI97ws7q7DeJWGYUC80IV3wc1YdS4jB+Im0jQh3
- YNsM+lcKC05rn+phV4L15jwRjX6LZqs3oQH3sL9BgtTu1IazsgIOyzmo0ro9yMpEbamkDp24oTD
- ulXlVK92hfMlMXwwSehLn5lmwEONzqwsby6HM1tx6q/sM20fol6jfSIuIy52GOr87i3OHcEBYtP
- b0K4qwEJb1giEXlPOPhcwtl+tJ0no1zVxACes3O1pR4HLxHAouueA21otkMoUUSadiwmhUKkWoX
- 77Bs0gLSTlzZtWhj6rDct+6B+zT9NtOgheYDAQBpI90vff2oTBgw+HphwkdmoP7ZJGXdyZ+k3Mt
- uRoQC4O1zX4fRU0gSAA==
-X-Google-Smtp-Source: AGHT+IG1HEqtgbxAChtVPTuocI9tjFuJDD7xGP1xAsuGcYY7Kxtff7HxdWp/DmnapnMU4QNzD3LPRg==
-X-Received: by 2002:a17:903:1b66:b0:216:6901:d588 with SMTP id
- d9443c01a7336-22db3bde914mr192125ad.15.1745442139630; 
- Wed, 23 Apr 2025 14:02:19 -0700 (PDT)
+ AJvYcCXAEqDxiFRBxZBxak9NACVG3HlyS/joOEbg6SFpeszHcbndosMxZ36QyfmB//3C2ICCoBVZuKEZoj+d@nongnu.org
+X-Gm-Message-State: AOJu0Yy/TxbMHzcOC2YL3SotxRN4sK4C0cuFefFoZrdEDWFaRaRA9GIc
+ rBK/IhpysqATCJv/3cQUrZjr/NsA9/tfNKpJ4b3uy9ld4VKf2rquq7zS/Aeczt0=
+X-Gm-Gg: ASbGnct4ojfeKdqNUcax4RcjdBO+W+Ke1ynz+X06JsBCABs6At4VvjmNvsRgM5vy9ej
+ J1rZYnCFH3nR40RZOEdWws80YGJsPw88ys3/jh6iQLJOawtPg29kLdujoSEYrtnGGwfBtyeOqXP
+ wMuswN0eVFC7aHZrkiJ9C2/xWuwVxgzftIIQhi7/Kajel2DkV4ZcQL/AYHyY3I0IKQV6v90eaRT
+ +hr98KXEOpuFt7eCCfXOh+H2uUoSqz+225s0iu9bGXMyUmyHYQQ2HjnnBr2SZcec03878u1VUjU
+ xE6w26Y0RmlXzaq5RYha4u0h9gKzKRwWSv8fjhVcxyOsF0hIlAUGGSvDzGSFUW9VIlLDAjpJ1sR
+ FPE62Vi4=
+X-Google-Smtp-Source: AGHT+IFx3objwjuz0SJr7OOjvPDM/gIcxStMH7VDr/2Xwmv+xYvUD+XXtoLvG5kLRnFpx7irMUBDtA==
+X-Received: by 2002:a05:6a20:d706:b0:1f5:77bd:ecbc with SMTP id
+ adf61e73a8af0-20444e9b3a8mr79931637.16.1745442446503; 
+ Wed, 23 Apr 2025 14:07:26 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50ed0eaasm109240675ad.177.2025.04.23.14.02.18
+ d2e1a72fcca58-73e25941bddsm27687b3a.69.2025.04.23.14.07.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 14:02:19 -0700 (PDT)
-Message-ID: <c53f3082-b1dd-4bef-a66d-eb61f61c9285@linaro.org>
-Date: Wed, 23 Apr 2025 14:02:17 -0700
+ Wed, 23 Apr 2025 14:07:26 -0700 (PDT)
+Message-ID: <a1463f24-83f3-4226-8862-607618005ce3@linaro.org>
+Date: Wed, 23 Apr 2025 14:07:24 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 020/147] accel/tcg: Build plugin-gen.c once
+Subject: Re: [PATCH 064/147] accel/tcg: Pass CPUTLBEntryFull to
+ tlb_reset_dirty_range_locked
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-21-richard.henderson@linaro.org>
- <08aa6eac-7b43-4916-993a-b7b9555c967e@linaro.org>
+ <20250422192819.302784-65-richard.henderson@linaro.org>
+ <071a47a7-bc91-4f1b-8901-fc523444ca14@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <08aa6eac-7b43-4916-993a-b7b9555c967e@linaro.org>
+In-Reply-To: <071a47a7-bc91-4f1b-8901-fc523444ca14@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,22 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/25 02:26, Philippe Mathieu-Daudé wrote:
->> diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
->> index 14bf797fda..185830d0f5 100644
->> --- a/accel/tcg/meson.build
->> +++ b/accel/tcg/meson.build
->> @@ -3,6 +3,10 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
->>     'tcg-runtime.c',
->>     'tcg-runtime-gvec.c',
->>   ))
->> +if get_option('plugins')
->> +  common_ss.add(when: 'CONFIG_TCG', if_true: files('plugin-gen.c'))
+On 4/23/25 03:03, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
-> So far plugins imply TCG; is this in preparation of supporting plugins
-> with other accelerators?
+> On 22/4/25 21:26, Richard Henderson wrote:
+>> While we're renaming things, don't modify addr; save it for
+>> reuse in the qatomic_set.  Compute the host address into a
+>> new local variable.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   accel/tcg/cputlb.c | 20 ++++++++++----------
+>>   1 file changed, 10 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>> index 10090067f7..5df98d93d0 100644
+>> --- a/accel/tcg/cputlb.c
+>> +++ b/accel/tcg/cputlb.c
+>> @@ -882,18 +882,16 @@ void tlb_unprotect_code(ram_addr_t ram_addr)
+>>    *
+>>    * Called with tlb_c.lock held.
+>>    */
+>> -static void tlb_reset_dirty_range_locked(CPUTLBEntry *tlb_entry,
+>> +static void tlb_reset_dirty_range_locked(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+>>                                            uintptr_t start, uintptr_t length)
+>>   {
+>> -    uintptr_t addr = tlb_entry->addr_write;
+>> +    const uintptr_t addr = ent->addr_write;
+> 
+> Can we introduce 'int flags' here, and add the CPUTLBEntryFull
+> argument in the following patch?
 
-No, all items in accel/tcg/meson.build are tagged CONFIG_TCG.
+What 'int flags'?
 
 
 r~
