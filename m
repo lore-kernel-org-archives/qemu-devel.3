@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B8AC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA743C369D8
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WcK-0005nQ-UZ; Wed, 23 Apr 2025 05:42:09 -0400
+	id 1u7Wcw-0007cS-0C; Wed, 23 Apr 2025 05:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wbi-0004No-Ej
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1u7Wc4-00059O-Ld
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wbg-0008LW-J4
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:30 -0400
+ id 1u7Wc2-0008NU-7i
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401287;
+ s=mimecast20190719; t=1745401309;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7WV/33915Cp1lyg6FaM5mC8S9fs4ugxpdjv4iZnTm4I=;
- b=TIqCaixo+TE1CFGMdsEmphCSqASA3uooEgorH4QUPvJ80x5C+Aly1C/vMTQW12V0YnooI4
- r5b1wbysa7rOVMMSsr41cg2g7WzgvIkftoCJN8VU+FVCtpRK/YSrrTbbr/ga/5xYPbePXs
- XhDaOyWOCJm7edVM6KyVOEA5cxlW0qc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k7XJMWWDWvSIPa+InJi/0rN9MTb+EzXLKE4LaJ3YTJw=;
+ b=DlLwZfjcFLR1FZY5Kev9WW2Z+wJEsd0LhN7BClSj51JTWNssmlZmdoQHb3lmsRVjaA8f5u
+ 9CCHeP9VkqtTODAc30ZNVbfniTEC6GQMHMgU/GTOR/rMMV8HVqGbHBhp5AKBjfx+/JKHUX
+ 9ZwLXXO4qCiyWBrcriA0ShniAgdamAM=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-jcqsGevAN12g7XDnooyOHw-1; Wed, 23 Apr 2025 05:41:25 -0400
-X-MC-Unique: jcqsGevAN12g7XDnooyOHw-1
-X-Mimecast-MFC-AGG-ID: jcqsGevAN12g7XDnooyOHw_1745401285
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ac297c7a0c2so391396066b.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:25 -0700 (PDT)
+ us-mta-350-W8QfvMI_NxK5nru9ZqDPTg-1; Wed, 23 Apr 2025 05:41:37 -0400
+X-MC-Unique: W8QfvMI_NxK5nru9ZqDPTg-1
+X-Mimecast-MFC-AGG-ID: W8QfvMI_NxK5nru9ZqDPTg_1745401293
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5f501ed492bso5599244a12.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401284; x=1746006084;
+ d=1e100.net; s=20230601; t=1745401292; x=1746006092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7WV/33915Cp1lyg6FaM5mC8S9fs4ugxpdjv4iZnTm4I=;
- b=UfkZ/GxrUMx0C17yfT41NjRXZ162GidGeyLcya6pKYsBqRCejZFHNZORn2Us/RrCEV
- GlfIAakgm+knHnxUqh2ToNDjekyyZomHEd1bmuVWDZlKZJRHSGHoywP6EDSGMWxX5hEk
- UZrV8JCL4+p9STMkaIPsGV+05Y0+eN9fv97CWDSKa30VywENCypL2DQ3aIuuPCQaKMqj
- PG5gSBZIoYqc9PzHH8//pShahGeWJcIsFwgW12gJ9AYrXQjBwdsK4EcUMh1yW8eLqbnf
- 3WJIZSNvQZCeZ6UTZIWiN6xuVeBLVw7HxMhmUw74xN8mCafc60iY2CGRrKK0ch0z3KRo
- x/oQ==
-X-Gm-Message-State: AOJu0YxpIF8badBXwuueUa+TUKptG1piYFmWgdSVwV7ufGhwqTaUXpXI
- M0/vmrqNYcUxX94za5d8uW2RxPQPdGXkgYJkt+ET1KokB8YBJkGKBr9ASQ24b93mSNcH3Qgl7dO
- dZ9qNldstuaH+9AvFAkqw9fyMjtZYU6ErvMPryqS3Mtt6TdI7kIVNj41olLVI6fgi3h2AAAjxys
- la1H/20f5JT2RzS9dv21wjSkEdOkH4i8vsh6nN
-X-Gm-Gg: ASbGncv1vJV9k3wXPAQeyiZq/RyjSKHfoTcupCk0gmGpGgS0Jgjng77cOgmdWuBNj06
- mYPOm3ebv9SNOlaCdAXpE60Cs+OkSLDxz+Ae/gB9GfoRpNhOpAFndkd08C88Y5oDE10iwym29Sj
- SNssT50Whl4DQax62bpveUn8sGP6l9oYvxGNMsOTP/CN5QtUTflFZdORr6Cu5BrwR7V+m2GD1iy
- W6JU8it0GkRpwdtWeoqDwCEm5UxpLS0nmTE/30fByPD3rPE5Qzz9Vowxz84qTOMg7gubzEOBrw9
- RQXc/ZK1L5rFzErf
-X-Received: by 2002:a17:906:c10f:b0:aca:a3a8:5560 with SMTP id
- a640c23a62f3a-acb74e0ed71mr1351301166b.53.1745401284152; 
- Wed, 23 Apr 2025 02:41:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAancXXHi3BLmLaPGDNeFfwglnZZKm6QvcvbqYR1nf8TYGUP2VY1roHa8u61j2PwAgCxFFOw==
-X-Received: by 2002:a17:906:c10f:b0:aca:a3a8:5560 with SMTP id
- a640c23a62f3a-acb74e0ed71mr1351298666b.53.1745401283633; 
- Wed, 23 Apr 2025 02:41:23 -0700 (PDT)
+ bh=k7XJMWWDWvSIPa+InJi/0rN9MTb+EzXLKE4LaJ3YTJw=;
+ b=HvYBjWwPSJeeuM9+uREuGf90cAYx7N9wsNzqt1/Zaci75ApV5loQ8Go0/ekp1KH/72
+ DnUag0Gch4FlHzusZETgRSOZwmQD5RvCVf8EFEKTAODGvK2RgiU3XoSp3yXVFbULpIWk
+ 1Lnq9aEjDLKPXYahwuKGQQ7imQ+fXV9FngcaWtkUi274xVA1N34d5S4B0+byQy9j4rnB
+ ax9XVkCT9ZjxS7REslUALVzEXzt4G1LYpH6l1SFvzFyEM13FXfSM1Ju80ujFNIGS2DTe
+ bBsPvN//LbNA6OjdosUIKK6uMDzkCmyCiNx9wWWpbinDDkZQPKE9Km/hk6EROc915zMQ
+ /mzw==
+X-Gm-Message-State: AOJu0YyXcU6AqsU0xcVOZMhlarb2ZalrGc1QULz51rjfzhv9w/RUjtT1
+ ryTWcgFjUpDs2UGPQfhp5dUrUejZ+rQubBNjiX2iETChOXglhn3JtvhevMG4JxU6zXc1Yoc4Q/y
+ jWk53VcsTYnFCn83KRJuFNYK/7hO88O5INeY4kOnjfinzo148bnj7dezn1450fRQlOsZFFis1ew
+ o9pqtrVVEaRJ7uYZcnPD38Mmx0zoj8zJ+e0oaM
+X-Gm-Gg: ASbGncthyNAOdWNRc2MAhe+L0IMFJ3oxsdZQajcX0g3X8PiTV5v9n/fmU62uWFIZp7m
+ P0CBW0OKY5Cj8IA13pI+TOL+uvvp8kT9idaICFjoZSTQf0NECnt/mvS8ifsBf7yM0QpEYmwSk1e
+ PhclrWX+x8yt2YdXXCkx8+JCgnGRkmqJ8s/rtQOpGE5Wuy+mIKh2kOfWAJpZbb8KIRiF3c5F7Iy
+ nkH2dtV9M4giuj59oChkoMtIS8hqF+fAN7UZPJETRDsf/y1EaDPRvW0VD+C5d8QV28DjuhBb8K5
+ KUr0zq/4DhxTTEVG
+X-Received: by 2002:a05:6402:4404:b0:5f3:f04b:b5d7 with SMTP id
+ 4fb4d7f45d1cf-5f628578024mr17215096a12.18.1745401291698; 
+ Wed, 23 Apr 2025 02:41:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7wUQBug12RPOhQ13aFEqqlFeSNGi/4y7rgvBPMbClGG1r2+1wqCcvOmaHRnymNSTpBxnyyA==
+X-Received: by 2002:a05:6402:4404:b0:5f3:f04b:b5d7 with SMTP id
+ 4fb4d7f45d1cf-5f628578024mr17215062a12.18.1745401291019; 
+ Wed, 23 Apr 2025 02:41:31 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acb6eefcf76sm789606266b.100.2025.04.23.02.41.21
+ 4fb4d7f45d1cf-5f625a40344sm7153671a12.77.2025.04.23.02.41.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:41:21 -0700 (PDT)
+ Wed, 23 Apr 2025 02:41:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/34] target/i386: tcg: remove tmp0
-Date: Wed, 23 Apr 2025 11:40:38 +0200
-Message-ID: <20250423094105.40692-9-pbonzini@redhat.com>
+Subject: [PULL 12/34] target/i386: tcg: use cout to commonize add/adc/sub/sbb
+ cases
+Date: Wed, 23 Apr 2025 11:40:42 +0200
+Message-ID: <20250423094105.40692-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -108,131 +109,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use the carry-out vector as the basis to compute AF, CF and OF.  The cost
+is pretty much the same, because the carry-out is just four boolean
+operations, and the code is much smaller because add/adc/sub/sbb now
+share most of it.
+
+A similar algorithm to what is used in target/i386/emulate can also be
+used for APX, in order to build the result of CCMP/CTEST with a new CC_OP_*.
+CCMP needs to place into the flags from either a subtraction or a constant
+value; CTEST likewise place into the flags either an AND or a constant
+value.  The new CC_OP for CCMP and CTEST would store for a successful
+predcate:
+
+- in DST and SRC2, the result of the operation;
+
+- in SRC, a carry-out vector for CCMP or zero for CTEST;
+
+If the default flag value is used, DST/SRC/SRC2 can be filled with
+constants:
+
+- in DST the negated ZF;
+
+- in SRC's top 2 bits, a value that results in the desired OF and CF;
+
+- in SRC2 a suitable value (any of 0/1/~0/~1) that can be used
+  instead of DST to compute the desired SF and PF.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 27 +++++++++++++++------------
- target/i386/tcg/emit.c.inc  | 20 ++++++++++----------
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ target/i386/cpu.h                        | 25 ++++++++
+ target/i386/tcg/cc_helper_template.h.inc | 80 ++++++++----------------
+ target/i386/hvf/x86_flags.c              | 25 --------
+ 3 files changed, 52 insertions(+), 78 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 822dbb2e9ae..5d433f8522e 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -134,7 +134,6 @@ typedef struct DisasContext {
-     TCGv T1;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 76f24446a55..7a8d695bdb1 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2843,4 +2843,29 @@ static inline bool ctl_has_irq(CPUX86State *env)
+ # define TARGET_VSYSCALL_PAGE  (UINT64_C(-10) << 20)
+ #endif
  
-     /* TCG local register indexes (only used inside old micro ops) */
--    TCGv tmp0;
-     TCGv_i32 tmp2_i32;
-     TCGv_i32 tmp3_i32;
-     TCGv_i64 tmp1_i64;
-@@ -2175,14 +2174,17 @@ static void gen_enter(DisasContext *s, int esp_addend, int level)
-     level &= 31;
-     if (level != 0) {
-         int i;
-+        if (level > 1) {
-+            TCGv fp = tcg_temp_new();
++/* majority(NOT a, b, c) = (a ^ b) ? b : c */
++#define MAJ_INV1(a, b, c)  ((((a) ^ (b)) & ((b) ^ (c))) ^ (c))
++
++/*
++ * ADD_COUT_VEC(x, y) = majority((x + y) ^ x ^ y, x, y)
++ *
++ * If two corresponding bits in x and y are the same, that's the carry
++ * independent of the value (x+y)^x^y.  Hence x^y can be replaced with
++ * 1 in (x+y)^x^y, resulting in majority(NOT (x+y), x, y)
++ */
++#define ADD_COUT_VEC(op1, op2, result) \
++   MAJ_INV1(result, op1, op2)
++
++/*
++ * SUB_COUT_VEC(x, y) = NOT majority(x, NOT y, (x - y) ^ x ^ NOT y)
++ *                    = majority(NOT x, y, (x - y) ^ x ^ y)
++ *
++ * Note that the carry out is actually a borrow, i.e. it is inverted.
++ * If two corresponding bits in x and y are different, the value of the
++ * bit in (x-y)^x^y likewise does not matter.  Hence, x^y can be replaced
++ * with 0 in (x-y)^x^y, resulting in majority(NOT x, y, x-y)
++ */
++#define SUB_COUT_VEC(op1, op2, result) \
++   MAJ_INV1(op1, op2, result)
++
+ #endif /* I386_CPU_H */
+diff --git a/target/i386/tcg/cc_helper_template.h.inc b/target/i386/tcg/cc_helper_template.h.inc
+index b821e5bca3b..d8fd976ca15 100644
+--- a/target/i386/tcg/cc_helper_template.h.inc
++++ b/target/i386/tcg/cc_helper_template.h.inc
+@@ -44,18 +44,32 @@
  
--        /* Copy level-1 pointers from the previous frame.  */
--        for (i = 1; i < level; ++i) {
--            gen_lea_ss_ofs(s, s->A0, cpu_regs[R_EBP], -size * i);
--            gen_op_ld_v(s, d_ot, s->tmp0, s->A0);
-+            /* Copy level-1 pointers from the previous frame.  */
-+            for (i = 1; i < level; ++i) {
-+                gen_lea_ss_ofs(s, s->A0, cpu_regs[R_EBP], -size * i);
-+                gen_op_ld_v(s, d_ot, fp, s->A0);
+ /* dynamic flags computation */
  
--            gen_lea_ss_ofs(s, s->A0, s->T1, -size * i);
--            gen_op_st_v(s, d_ot, s->tmp0, s->A0);
-+                gen_lea_ss_ofs(s, s->A0, s->T1, -size * i);
-+                gen_op_st_v(s, d_ot, fp, s->A0);
-+            }
-         }
+-static uint32_t glue(compute_all_add, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
++static uint32_t glue(compute_all_cout, SUFFIX)(DATA_TYPE dst, DATA_TYPE carries)
+ {
+-    uint32_t cf, pf, af, zf, sf, of;
+-    DATA_TYPE src2 = dst - src1;
++    uint32_t af_cf, pf, zf, sf, of;
  
-         /* Push the current FrameTemp as the last level.  */
-@@ -2405,10 +2407,11 @@ static void gen_ldy_env_A0(DisasContext *s, int offset, bool align)
-     int mem_index = s->mem_index;
-     TCGv_i128 t0 = tcg_temp_new_i128();
-     TCGv_i128 t1 = tcg_temp_new_i128();
-+    TCGv a0_hi = tcg_temp_new();
- 
-     tcg_gen_qemu_ld_i128(t0, s->A0, mem_index, mop | (align ? MO_ALIGN_32 : 0));
--    tcg_gen_addi_tl(s->tmp0, s->A0, 16);
--    tcg_gen_qemu_ld_i128(t1, s->tmp0, mem_index, mop);
-+    tcg_gen_addi_tl(a0_hi, s->A0, 16);
-+    tcg_gen_qemu_ld_i128(t1, a0_hi, mem_index, mop);
- 
-     tcg_gen_st_i128(t0, tcg_env, offset + offsetof(YMMReg, YMM_X(0)));
-     tcg_gen_st_i128(t1, tcg_env, offset + offsetof(YMMReg, YMM_X(1)));
-@@ -2419,12 +2422,13 @@ static void gen_sty_env_A0(DisasContext *s, int offset, bool align)
-     MemOp mop = MO_128 | MO_LE | MO_ATOM_IFALIGN_PAIR;
-     int mem_index = s->mem_index;
-     TCGv_i128 t = tcg_temp_new_i128();
-+    TCGv a0_hi = tcg_temp_new();
- 
-     tcg_gen_ld_i128(t, tcg_env, offset + offsetof(YMMReg, YMM_X(0)));
-     tcg_gen_qemu_st_i128(t, s->A0, mem_index, mop | (align ? MO_ALIGN_32 : 0));
--    tcg_gen_addi_tl(s->tmp0, s->A0, 16);
-+    tcg_gen_addi_tl(a0_hi, s->A0, 16);
-     tcg_gen_ld_i128(t, tcg_env, offset + offsetof(YMMReg, YMM_X(1)));
--    tcg_gen_qemu_st_i128(t, s->tmp0, mem_index, mop);
-+    tcg_gen_qemu_st_i128(t, a0_hi, mem_index, mop);
+-    cf = dst < src1;
++    /* PF, ZF, SF computed from result.  */
+     pf = compute_pf(dst);
+-    af = (dst ^ src1 ^ src2) & CC_A;
+     zf = (dst == 0) * CC_Z;
+     sf = lshift(dst, 8 - DATA_BITS) & CC_S;
+-    of = lshift((src1 ^ src2 ^ -1) & (src1 ^ dst), 12 - DATA_BITS) & CC_O;
+-    return cf + pf + af + zf + sf + of;
++
++    /*
++     * AF, CF, OF computed from carry out vector.  To compute AF and CF, rotate it
++     * left by one so cout(DATA_BITS - 1) is in bit 0 and cout(3) in bit 4.
++     *
++     * To compute OF, place the highest two carry bits into OF and the bit
++     * immediately to the right of it; then, adding CC_O / 2 XORs them.
++     */
++    af_cf = ((carries << 1) | (carries >> (DATA_BITS - 1))) & (CC_A | CC_C);
++    of = (lshift(carries, 12 - DATA_BITS) + CC_O / 2) & CC_O;
++    return pf + zf + sf + af_cf + of;
++}
++
++static uint32_t glue(compute_all_add, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
++{
++    DATA_TYPE src2 = dst - src1;
++    DATA_TYPE carries = ADD_COUT_VEC(src1, src2, dst);
++    return glue(compute_all_cout, SUFFIX)(dst, carries);
  }
  
- #include "emit.c.inc"
-@@ -3771,7 +3775,6 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-     dc->T1 = tcg_temp_new();
-     dc->A0 = tcg_temp_new();
+ static int glue(compute_c_add, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+@@ -66,25 +80,9 @@ static int glue(compute_c_add, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+ static uint32_t glue(compute_all_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
+                                          DATA_TYPE src3)
+ {
+-    uint32_t cf, pf, af, zf, sf, of;
+-
+-#ifdef WIDER_TYPE
+-    WIDER_TYPE src13 = (WIDER_TYPE) src1 + (WIDER_TYPE) src3;
+-    DATA_TYPE src2 = dst - src13;
+-
+-    cf = dst < src13;
+-#else
+     DATA_TYPE src2 = dst - src1 - src3;
+-
+-    cf = (src3 ? dst <= src1 : dst < src1);
+-#endif
+-
+-    pf = compute_pf(dst);
+-    af = (dst ^ src1 ^ src2) & 0x10;
+-    zf = (dst == 0) << 6;
+-    sf = lshift(dst, 8 - DATA_BITS) & 0x80;
+-    of = lshift((src1 ^ src2 ^ -1) & (src1 ^ dst), 12 - DATA_BITS) & CC_O;
+-    return cf + pf + af + zf + sf + of;
++    DATA_TYPE carries = ADD_COUT_VEC(src1, src2, dst);
++    return glue(compute_all_cout, SUFFIX)(dst, carries);
+ }
  
--    dc->tmp0 = tcg_temp_new();
-     dc->tmp1_i64 = tcg_temp_new_i64();
-     dc->tmp2_i32 = tcg_temp_new_i32();
-     dc->tmp3_i32 = tcg_temp_new_i32();
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index a41afb7fe46..bd24438230d 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1710,22 +1710,22 @@ static void gen_CMPccXADD(DisasContext *s, X86DecodedInsn *decode)
-     switch (jcc_op) {
-     case JCC_O:
-         /* (src1 ^ src2) & (src1 ^ dst). newv is only used here for a moment */
-+        cmp_lhs = tcg_temp_new(), cmp_rhs = tcg_constant_tl(0);
-         tcg_gen_xor_tl(newv, s->cc_srcT, s->T0);
--        tcg_gen_xor_tl(s->tmp0, s->cc_srcT, cmpv);
--        tcg_gen_and_tl(s->tmp0, s->tmp0, newv);
--        tcg_gen_sextract_tl(s->tmp0, s->tmp0, 0, 8 << ot);
--        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(0);
-+        tcg_gen_xor_tl(cmp_lhs, s->cc_srcT, cmpv);
-+        tcg_gen_and_tl(cmp_lhs, cmp_lhs, newv);
-+        tcg_gen_sextract_tl(cmp_lhs, cmp_lhs, 0, 8 << ot);
-         break;
+ static int glue(compute_c_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
+@@ -101,16 +99,9 @@ static int glue(compute_c_adc, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1,
  
-     case JCC_P:
--        tcg_gen_ext8u_tl(s->tmp0, s->T0);
--        tcg_gen_ctpop_tl(s->tmp0, s->tmp0);
--        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(1);
-+        cmp_lhs = tcg_temp_new(), cmp_rhs = tcg_constant_tl(1);
-+        tcg_gen_ext8u_tl(cmp_lhs, s->T0);
-+        tcg_gen_ctpop_tl(cmp_lhs, cmp_lhs);
-         break;
+ static uint32_t glue(compute_all_sub, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2)
+ {
+-    uint32_t cf, pf, af, zf, sf, of;
+     DATA_TYPE src1 = dst + src2;
+-
+-    cf = src1 < src2;
+-    pf = compute_pf(dst);
+-    af = (dst ^ src1 ^ src2) & CC_A;
+-    zf = (dst == 0) * CC_Z;
+-    sf = lshift(dst, 8 - DATA_BITS) & CC_S;
+-    of = lshift((src1 ^ src2) & (src1 ^ dst), 12 - DATA_BITS) & CC_O;
+-    return cf + pf + af + zf + sf + of;
++    DATA_TYPE carries = SUB_COUT_VEC(src1, src2, dst);
++    return glue(compute_all_cout, SUFFIX)(dst, carries);
+ }
  
-     case JCC_S:
--        tcg_gen_sextract_tl(s->tmp0, s->T0, 0, 8 << ot);
--        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(0);
-+        cmp_lhs = tcg_temp_new(), cmp_rhs = tcg_constant_tl(0);
-+        tcg_gen_sextract_tl(cmp_lhs, s->T0, 0, 8 << ot);
-         break;
+ static int glue(compute_c_sub, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2)
+@@ -123,25 +114,9 @@ static int glue(compute_c_sub, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2)
+ static uint32_t glue(compute_all_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
+                                          DATA_TYPE src3)
+ {
+-    uint32_t cf, pf, af, zf, sf, of;
+-
+-#ifdef WIDER_TYPE
+-    WIDER_TYPE src23 = (WIDER_TYPE) src2 + (WIDER_TYPE) src3;
+-    DATA_TYPE src1 = dst + src23;
+-
+-    cf = src1 < src23;
+-#else
+     DATA_TYPE src1 = dst + src2 + src3;
+-
+-    cf = (src3 ? src1 <= src2 : src1 < src2);
+-#endif
+-
+-    pf = compute_pf(dst);
+-    af = (dst ^ src1 ^ src2) & 0x10;
+-    zf = (dst == 0) << 6;
+-    sf = lshift(dst, 8 - DATA_BITS) & 0x80;
+-    of = lshift((src1 ^ src2) & (src1 ^ dst), 12 - DATA_BITS) & CC_O;
+-    return cf + pf + af + zf + sf + of;
++    DATA_TYPE carries = SUB_COUT_VEC(src1, src2, dst);
++    return glue(compute_all_cout, SUFFIX)(dst, carries);
+ }
  
-     default:
-@@ -1876,7 +1876,7 @@ static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
-                                       s->mem_index, MO_TEUQ);
-     }
+ static int glue(compute_c_sbb, SUFFIX)(DATA_TYPE dst, DATA_TYPE src2,
+@@ -286,6 +261,5 @@ static int glue(compute_c_blsi, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+ #undef DATA_BITS
+ #undef SIGN_MASK
+ #undef DATA_TYPE
+-#undef DATA_MASK
+ #undef SUFFIX
+ #undef WIDER_TYPE
+diff --git a/target/i386/hvf/x86_flags.c b/target/i386/hvf/x86_flags.c
+index 60ab4f01a20..0c75e0419c3 100644
+--- a/target/i386/hvf/x86_flags.c
++++ b/target/i386/hvf/x86_flags.c
+@@ -45,31 +45,6 @@
+ #define LF_MASK_CF     (0x01 << LF_BIT_CF)
+ #define LF_MASK_PO     (0x01 << LF_BIT_PO)
  
--    /* Set tmp0 to match the required value of Z. */
-+    /* Compute the required value of Z. */
-     tcg_gen_setcond_i64(TCG_COND_EQ, cmp, old, cmp);
-     Z = tcg_temp_new();
-     tcg_gen_trunc_i64_tl(Z, cmp);
+-/* majority(NOT a, b, c) = (a ^ b) ? b : c */
+-#define MAJ_INV1(a, b, c)  ((((a) ^ (b)) & ((b) ^ (c))) ^ (c))
+-
+-/*
+- * ADD_COUT_VEC(x, y) = majority((x + y) ^ x ^ y, x, y)
+- *
+- * If two corresponding bits in x and y are the same, that's the carry
+- * independent of the value (x+y)^x^y.  Hence x^y can be replaced with
+- * 1 in (x+y)^x^y, resulting in majority(NOT (x+y), x, y)
+- */
+-#define ADD_COUT_VEC(op1, op2, result) \
+-   MAJ_INV1(result, op1, op2)
+-
+-/*
+- * SUB_COUT_VEC(x, y) = NOT majority(x, NOT y, (x - y) ^ x ^ NOT y)
+- *                    = majority(NOT x, y, (x - y) ^ x ^ y)
+- *
+- * Note that the carry out is actually a borrow, i.e. it is inverted.
+- * If two corresponding bits in x and y are different, the value of the
+- * bit in (x-y)^x^y likewise does not matter.  Hence, x^y can be replaced
+- * with 0 in (x-y)^x^y, resulting in majority(NOT x, y, x-y)
+- */
+-#define SUB_COUT_VEC(op1, op2, result) \
+-   MAJ_INV1(op1, op2, result)
+-
+ /* ******************* */
+ /* OSZAPC */
+ /* ******************* */
 -- 
 2.49.0
 
