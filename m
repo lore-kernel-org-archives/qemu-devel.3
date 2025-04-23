@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05461C369D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 20:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379DFC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 21:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7h3H-0003bq-Kr; Wed, 23 Apr 2025 16:50:39 -0400
+	id 1u7hEf-00077K-9e; Wed, 23 Apr 2025 17:02:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7h3F-0003bb-CV
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 16:50:37 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1u7hEd-00076T-6k
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 17:02:23 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7h3D-0004bg-PP
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 16:50:37 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22c33e5013aso3718795ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 13:50:35 -0700 (PDT)
+ id 1u7hEb-0005aZ-H5
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 17:02:22 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2295d78b433so3252585ad.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 14:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745441434; x=1746046234; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745442139; x=1746046939; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wIy15xrOE+YZn7Txu/ZnurLRmzccmN9v2f0qlSRFlBc=;
- b=qrtbkBCeGvX2+2CTAcctCDOG1pReNxHxNS+VLDYRq4QGkHzdctz0yt05rTr2VNf7hd
- EK23fYzmRRrTQ4vpJtBkdgYkH2VCOUCEjud02gF9XMQu6PHR93Jb66f20IVhHQmf+G8H
- +Mw2lio/AUWlnp/Z+4INrwWpiJIJiI/gfBGKEluIzSp21xStjU8ZfLMycpnKd/mcfbQR
- 6aKdQ7kBrqIlDYaFBDOX80PaFi7vcrHTrv+g7VVrYOCBvjYhdcU0ItVJFg4MHkW8fBwT
- WdV7bH2j99KWqBpprHFGcedUQM2Z8AEHMihpZkxT/avGUGf2UjJyXJ3b9J8RZhpNwcdv
- 7muA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U+rfqX26zcDFA6/KX9P6XT0eCbgwi0Ty7MFIiDORJ/o=;
+ b=KxfuOK80VCIHt8k0c52euFa4V1tNsKKklawczrhpxJtuZZx16y6D716ScAlK+TOIA3
+ DT5D2iCgDZWi0aH8BxtKjoYshl5LXjjlcwHCyYcI99INsMxN5kFJ3lbx9vRhoqM28Bqx
+ BUzwpzmXnW+YABz+oIWUMcTrApdIObkEL5U7ZJMq7b27OOh6BgGWH3TBTL+PPZ9//W6/
+ BWPsev5zialDUDf9IrtO/7d6q+Mg6P7WWwnYUg62Rgxq99iLoYFl9cWDchz6ejCxLbKv
+ /EOxFI2/2thlcAITwSA7tkED6QD9NRyrCWC6Cj4O6qSIBpMW0pW4xLvRzg+n23Ccf6sD
+ uRWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745441434; x=1746046234;
+ d=1e100.net; s=20230601; t=1745442139; x=1746046939;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wIy15xrOE+YZn7Txu/ZnurLRmzccmN9v2f0qlSRFlBc=;
- b=LiaquCHYuvxT6gFwzy8xte+wTRDSViTFsoSTWXPT8PqTuu0vX6mS3Q1og0c2wowlzF
- QcLTPjg3L+A+9+ABIdJBZHXfy/39ryqoBSXPcC9UF8OEIlW2N0SCDC3LE2udyd94vBH7
- HIqgQiLl6KUNoNaMAWS1N8D1vPo6sGCFhwoMa5ZwGDUjLVZyRagw7Vgqc5TzFNNngdLs
- G29R7yA/zMwe1u/glnt2OjJTeDUKrTdPQGquGotrMPCYPU2GbNYH/Pq08+A01ly1tnfB
- 52dUANHMmODUbb6Fb10skuS6tafVi3bE2AN+gVBIm4RUDD5DIgT/ipWZocFcfS9JBvEj
- gu5w==
+ bh=U+rfqX26zcDFA6/KX9P6XT0eCbgwi0Ty7MFIiDORJ/o=;
+ b=IyA0d+OMVRkp5/OgAKuFmmxsMeMiC/nLpz+PUvp7876ZWAUx69eJoZbd5TgUnK9syD
+ tBRNtEds042SUgkMA9//CjtzleHiqLnSGGhZSb3a3++z7IwAz8mUqHElzPTo721pvxhe
+ SbUvipNX2Q3nIi1LZy4UZWAMH3jE/BwEdJtL687J+2kfyngmVS9EuO39UWJuZUCpHhn/
+ i/hMkheHgT0saw9HK5Oo3ZspCxd6mbHiAoW5pCRD2uaHfYHW74WP86LEBVk97qNMsYyA
+ Zd5HA4hJtEG8CrJsshYTOo0P01Y2S2nMBNW0N1PN4ll0wAOgy+HxotjljmXQbHl9ILaj
+ 7oNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8jA9Ak0vg4YERrz8an0l2PtL+n4RbK2XX13MpUKRQTGMGW9BsPeR0sYejR4pQkz9D8e7hJ/6X3AhV@nongnu.org
-X-Gm-Message-State: AOJu0YxaGZXD7ZXj1b/gTKxQMQ7Yo9E79TNi9LI1oLuCQKk2kT8Gae+Q
- hpSKqJbhfqn4oC/Yl+VKw3yr8mjABDfyAMwcONvvaES0bRkUQIlEpqVJi7wysLs=
-X-Gm-Gg: ASbGncsJ5onyfh2zvgh0FlQIQaA4uKXwvmhpYHzwD063AEcPeJhCXRcMsQSAJpobgzh
- Mwl/bRbYCNcoxoI04UeM4iWkBLyC+vx04cEfkMqja3w1dye7QtNQEU5N7heKvkv/T1K5vGjPpRe
- fj6rFt5DDPVZ65qTu2wfVmYGnUZaA0RXcrz1DlJHOk6EDKkOEk0v3G20NXJ2Ex8voarJ7qovzy4
- frsFbQ2Q56qMifuJvdwKiDT87JsqSMQv28uBo3AfAWlWWH6y5T3Ek1Ss+HR4OS5xXUD2ouAQSLw
- tvAOY9Ny9PHyBJ/1lzWC0wPI4sJmawdDcjJcUnegF5TPcjcW1Y0UvTwhUIVFFVE49cqUkH4zQIE
- ICrRck4Q=
-X-Google-Smtp-Source: AGHT+IG81tVoRqHefnfqtgLP2CQQBXr+QUXWs0001ik7yY2MHhxTL8O+bl1rctL18dfB3760lF2LiA==
-X-Received: by 2002:a17:902:e80d:b0:223:53fb:e1dd with SMTP id
- d9443c01a7336-22c535747d6mr255096055ad.9.1745441433925; 
- Wed, 23 Apr 2025 13:50:33 -0700 (PDT)
+ AJvYcCUjbd0Oun9HmyUVozg4mAZTbGgIzLm2q+cWEX49GDu7Q/oBDwCtGtRxt8O7CdJ0llEC4tKOce67ooh3@nongnu.org
+X-Gm-Message-State: AOJu0YxLDOiErMecBGGFFQ8yMEp7YzHkSdxmd+iWCLnBFuctJrFJwOUW
+ ZR4p9G5Vn6zA/vAOZKoyDSX0k4k1b37sVy888R6kj2yMAJ0b/Tv6RGLHC4eDj/o=
+X-Gm-Gg: ASbGncsFUQOCMSRoa3etfGUdbur4LI97ws7q7DeJWGYUC80IV3wc1YdS4jB+Im0jQh3
+ YNsM+lcKC05rn+phV4L15jwRjX6LZqs3oQH3sL9BgtTu1IazsgIOyzmo0ro9yMpEbamkDp24oTD
+ ulXlVK92hfMlMXwwSehLn5lmwEONzqwsby6HM1tx6q/sM20fol6jfSIuIy52GOr87i3OHcEBYtP
+ b0K4qwEJb1giEXlPOPhcwtl+tJ0no1zVxACes3O1pR4HLxHAouueA21otkMoUUSadiwmhUKkWoX
+ 77Bs0gLSTlzZtWhj6rDct+6B+zT9NtOgheYDAQBpI90vff2oTBgw+HphwkdmoP7ZJGXdyZ+k3Mt
+ uRoQC4O1zX4fRU0gSAA==
+X-Google-Smtp-Source: AGHT+IG1HEqtgbxAChtVPTuocI9tjFuJDD7xGP1xAsuGcYY7Kxtff7HxdWp/DmnapnMU4QNzD3LPRg==
+X-Received: by 2002:a17:903:1b66:b0:216:6901:d588 with SMTP id
+ d9443c01a7336-22db3bde914mr192125ad.15.1745442139630; 
+ Wed, 23 Apr 2025 14:02:19 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50bf5398sm109635205ad.90.2025.04.23.13.50.33
+ d9443c01a7336-22c50ed0eaasm109240675ad.177.2025.04.23.14.02.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 13:50:33 -0700 (PDT)
-Message-ID: <823947da-cc09-45cc-993a-7dc728e7e88a@linaro.org>
-Date: Wed, 23 Apr 2025 13:50:31 -0700
+ Wed, 23 Apr 2025 14:02:19 -0700 (PDT)
+Message-ID: <c53f3082-b1dd-4bef-a66d-eb61f61c9285@linaro.org>
+Date: Wed, 23 Apr 2025 14:02:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 013/147] system/xen: remove inline stubs
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 020/147] accel/tcg: Build plugin-gen.c once
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-14-richard.henderson@linaro.org>
- <dfcf9c43-4585-46e0-8d7c-0855d348c38a@linaro.org>
- <f54bd881-f75f-4a89-a293-7d49f82748bb@linaro.org>
+ <20250422192819.302784-21-richard.henderson@linaro.org>
+ <08aa6eac-7b43-4916-993a-b7b9555c967e@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <f54bd881-f75f-4a89-a293-7d49f82748bb@linaro.org>
+In-Reply-To: <08aa6eac-7b43-4916-993a-b7b9555c967e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,55 +107,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/25 08:58, Pierrick Bouvier wrote:
-> On 4/23/25 02:22, Philippe Mathieu-Daudé wrote:
->> Hi Pierrick,
->>
->> On 22/4/25 21:26, Richard Henderson wrote:
->>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> Message-ID: <20250317183417.285700-14-pierrick.bouvier@linaro.org>
->>> ---
->>>    include/system/xen-mapcache.h | 41 -----------------------------------
->>>    include/system/xen.h          | 21 +++---------------
->>>    2 files changed, 3 insertions(+), 59 deletions(-)
->>
->>
->>> diff --git a/include/system/xen.h b/include/system/xen.h
->>> index 990c19a8ef..5f41915732 100644
->>> --- a/include/system/xen.h
->>> +++ b/include/system/xen.h
->>> @@ -25,30 +25,15 @@
->>>    #endif /* COMPILING_PER_TARGET */
->>>    #ifdef CONFIG_XEN_IS_POSSIBLE
->>> -
->>>    extern bool xen_allowed;
->>> -
->>>    #define xen_enabled()           (xen_allowed)
->>> +#else /* !CONFIG_XEN_IS_POSSIBLE */
->>> +#define xen_enabled() 0
->>> +#endif /* CONFIG_XEN_IS_POSSIBLE */
->>
->> Just to be sure, you said we should remove CONFIG_XEN_IS_POSSIBLE?
+On 4/23/25 02:26, Philippe Mathieu-Daudé wrote:
+>> diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+>> index 14bf797fda..185830d0f5 100644
+>> --- a/accel/tcg/meson.build
+>> +++ b/accel/tcg/meson.build
+>> @@ -3,6 +3,10 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
+>>     'tcg-runtime.c',
+>>     'tcg-runtime-gvec.c',
+>>   ))
+>> +if get_option('plugins')
+>> +  common_ss.add(when: 'CONFIG_TCG', if_true: files('plugin-gen.c'))
 > 
-> More "Ideally, it should not have been introduced", and {accel}_enabled should be a proper 
-> function, and needed stubs should be added for other functions.
-> CONFIG_{ACCEL}_IS_POSSIBLE is just "yet another way" to stub some accelerator functions, 
-> while we could have proper stubs instead.
-> As long as it's not blocking our work, I don't think we should do this cleanup.
-> 
-> For your case, concerning hvf, I said it would be preferable to simply implement 
-> hvf_enabled() as normal function, instead of mimicking the CONFIG_{ACCEL}_IS_POSSIBLE 
-> pattern, since it has not yet been introduced for this accelerator.
-> It it's more simple to simply replicate this, no worries, go ahead, it just concerns one 
-> header.
+> So far plugins imply TCG; is this in preparation of supporting plugins
+> with other accelerators?
 
-It's obvious why it's done though -- expanding accel_enabled() to 0 lets the compiler do 
-more dead code elimination at compile-time.
+No, all items in accel/tcg/meson.build are tagged CONFIG_TCG.
 
 
 r~
