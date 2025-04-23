@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDC4EC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8D9C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Uao-0006lf-BK; Wed, 23 Apr 2025 03:32:26 -0400
+	id 1u7Uat-0006xu-LR; Wed, 23 Apr 2025 03:32:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u7Uae-0006hL-Qn
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:18 -0400
+ id 1u7Uag-0006iT-G1
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:19 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u7Uaa-0002ZR-SX
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:16 -0400
+ id 1u7Uae-0002Yx-Iu
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745393533; x=1776929533;
+ t=1745393537; x=1776929537;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=u+2cGN1zU/fzkVglkVzbTSwTA1wbMtXgxYloe7qprfY=;
- b=eyj9D9OmHN7BkuKMu07kBoslBLrQGmGE9dujsK8eJMjiqbhR/3Qu9/m3
- sadFhB4uX6KskXQtDKaOu/5z6dMqwRADNXdu0w2I6Kbzt9fYWx3dSAOdH
- 0ty4rDxna1VwoAXblNAj5cBsHaokfe94aXp8Y5aclCv6VFTwOmRtFFrMK
- e92RE7uptVpgr/1UYwBYpsjSVjX4mFE+ZSec+SfCW6oVkAwOxb7KFZSGg
- Pbk87wv+fKHFsQLT0+HiIj71DOtS2PQmH5C44Qs6VAGkfyrUySxG89mCS
- YVnG8ylqx983MZBmAqvYylwgz6cWBzfbPWLg+r+8Qv68CrRmmWmRAevJH A==;
-X-CSE-ConnectionGUID: 3VzTu2smRdiyaMKJQ1Wy6w==
-X-CSE-MsgGUID: sFM+s9fxQy20Ck3vzdqGJA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="57959256"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="57959256"
+ bh=NlpEfLjZRJq34lAeg6e2Aev6egagW09MJafNDS8LbUI=;
+ b=jwOcLvKcYvaqgEj9iNQTRyKbwqMBAp88ak8hIdB2FoEViH5qREV17FcH
+ 0hvRtixmau3YYjsmu8B3T/yo9yix0msYIHsRTz+bO2Y4/Jwq/W5dV7OaB
+ Q/OX4MVoTUFNQkwdlXq2bCOoxsA3lfpCP8WF9tblILCNcVvYGC+Tgc41f
+ 6iV7g/vwGPPYycrmZd2y8NylWylykyhRiG3GRzaZ+IC/4zuUgstrbFzG1
+ wzx9M1JKT0a99IEApPLBuS6eilWe60uT/qFencWCEcGIixk2899Az7VGY
+ 5lQdR2gUcT54KbbMGqSXrGbLQaxbIia+yz5hLNJgBP4HmDqZbP6Z77CV9 w==;
+X-CSE-ConnectionGUID: vij/yuK0RoWP+yiGlH2/9A==
+X-CSE-MsgGUID: it7/7SGPR+SJZv1zN8TL7g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="57959264"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="57959264"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 00:32:10 -0700
-X-CSE-ConnectionGUID: WynLjN95Q/6Vq5lpW53SKw==
-X-CSE-MsgGUID: SZZSqiYVTWSzUiJABjxiWw==
+ 23 Apr 2025 00:32:16 -0700
+X-CSE-ConnectionGUID: HY/oIUeIRyW9eDi7hseZTQ==
+X-CSE-MsgGUID: z16Ttga6RKS/TjrN9qsyxg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137025341"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137025376"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 00:32:08 -0700
+ 23 Apr 2025 00:32:13 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 1/5] vfio/iommufd: Make a separate call to get IOMMU
- capabilities
-Date: Wed, 23 Apr 2025 15:28:20 +0800
-Message-Id: <20250423072824.3647952-2-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Donald Dutile <ddutile@redhat.com>
+Subject: [PATCH v2 3/5] vfio/container: Move realize() after attachment
+Date: Wed, 23 Apr 2025 15:28:22 +0800
+Message-Id: <20250423072824.3647952-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250423072824.3647952-1-zhenzhong.duan@intel.com>
 References: <20250423072824.3647952-1-zhenzhong.duan@intel.com>
@@ -86,46 +86,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we depend on .realize() calling iommufd_backend_get_device_info()
-to get IOMMU capabilities and check for dirty page tracking support.
-
-By make a extra separate call, this dependency is removed. This happens
-only during device attach, it's not a hot path.
+To match the change for IOMMUFD backend, move realize() after attachment
+for legacy backend too.
 
 Suggested-by: Cédric Le Goater <clg@redhat.com>
+Suggested-by: Donald Dutile <ddutile@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/iommufd.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ hw/vfio/container.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 48db105422..2253778b3a 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -287,7 +287,8 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
- {
-     ERRP_GUARD();
-     IOMMUFDBackend *iommufd = vbasedev->iommufd;
--    uint32_t flags = 0;
-+    uint32_t type, flags = 0;
-+    uint64_t hw_caps;
-     VFIOIOASHwpt *hwpt;
-     uint32_t hwpt_id;
-     int ret;
-@@ -324,7 +325,12 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-      * vfio_migration_realize() may decide to use VF dirty tracking
-      * instead.
-      */
--    if (vbasedev->hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
-+    if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
-+                                         &type, NULL, 0, &hw_caps, errp)) {
-+        return false;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 23a3373470..1bb8e2de6c 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -883,10 +883,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+ 
+     trace_vfio_device_attach(vbasedev->name, groupid);
+ 
+-    if (!vfio_device_hiod_realize(vbasedev, errp)) {
+-        return false;
+-    }
+-
+     group = vfio_group_get(groupid, as, errp);
+     if (!group) {
+         return false;
+@@ -895,13 +891,15 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+     QLIST_FOREACH(vbasedev_iter, &group->device_list, next) {
+         if (strcmp(vbasedev_iter->name, vbasedev->name) == 0) {
+             error_setg(errp, "device is already attached");
+-            vfio_group_put(group);
+-            return false;
++            goto group_put_exit;
+         }
+     }
+     if (!vfio_device_get(group, name, vbasedev, errp)) {
+-        vfio_group_put(group);
+-        return false;
++        goto group_put_exit;
 +    }
 +
-+    if (hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
-         flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
++    if (!vfio_device_hiod_realize(vbasedev, errp)) {
++        goto device_put_exit;
      }
  
+     bcontainer = &group->container->bcontainer;
+@@ -910,6 +908,12 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+     QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+ 
+     return true;
++
++device_put_exit:
++    vfio_device_put(vbasedev);
++group_put_exit:
++    vfio_group_put(group);
++    return false;
+ }
+ 
+ static void vfio_legacy_detach_device(VFIODevice *vbasedev)
 -- 
 2.34.1
 
