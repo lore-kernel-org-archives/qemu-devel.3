@@ -4,107 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FB9FC369C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 00:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91A07C369C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 01:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Njs-0000K5-PM; Tue, 22 Apr 2025 20:13:20 -0400
+	id 1u7Oq2-0001aX-Pk; Tue, 22 Apr 2025 21:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1u7Njj-0000IH-Fg
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 20:13:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1u7Opu-0001Xo-Oy; Tue, 22 Apr 2025 21:23:38 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1u7Njd-0004St-5h
- for qemu-devel@nongnu.org; Tue, 22 Apr 2025 20:13:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745367181;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=q6+mB4NhHWZ7wEs28ll5p9trBzfFuFxRj3V7gEMakDE=;
- b=Vc3Gg6biMPdcz1evCzg9boqhrxmQ4hJO5AhMR0lCwkCdxVpE3VtjSB4Fvjd/Jc5SCLWdjw
- orkY482tYE0udcB1HbwjyJtUkNe782valSyHHOFAWm01NPyOQ/bteBFlbbsyAdCdKYGdk4
- 1tVGAcGtAYB5UcM/XtAK8Q9PsvryI9I=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-219-qIsp29fzPvertPLAk_QRYw-1; Tue, 22 Apr 2025 20:11:36 -0400
-X-MC-Unique: qIsp29fzPvertPLAk_QRYw-1
-X-Mimecast-MFC-AGG-ID: qIsp29fzPvertPLAk_QRYw_1745367095
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-7395095a505so4097788b3a.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 17:11:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745367095; x=1745971895;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q6+mB4NhHWZ7wEs28ll5p9trBzfFuFxRj3V7gEMakDE=;
- b=XRprkbHJBNAR0IykQJNTODKejrPuX4qfHfVWr6TVz18lF9TBHLIpM0p7JbhjzVi0iJ
- nbZToIBt3G312WEfZW4C0+pTC/HT214nNz71vEshJ4u3oAnkih1xoOYkGuQwAI7DJtKm
- X0OBQ5aq+FDp2DQIju3Lte4br59YEFfseSxrz1xfZ2TCDS4HmYgx+ldcmSzuO3Hpmn/o
- WX/ajly82IiWPIiZIalH36SPy4eHvaD6Ub7l9OG0FGK4LWDT1HedCcKoQTJ0xM86DZ4B
- rDb3akA+21+t6qj9T91N32D0g+kaKfoQN24VOQTnGB+EYIwwsWGalO+LLOYKH7GrYeuY
- YqLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLN5AUruZQS0BzwY0Ha699Kk+FgZmZPvh5X3TjV+BzCGIMW1rUBsKbSztqmW1HxHyGtBnD6TZ3SiLy@nongnu.org
-X-Gm-Message-State: AOJu0Yx20C85kG6TYsBWD7DLzpLk0/Ddvb4GIBV1Vlgjh4FDLdIV9flk
- 1YoohvauIk3O9nUPkUZnJEbZ/hEbNUKvsI7sNplDvnVgeU71wBPSN45hFcI76H3WTsKWK4x6/qT
- NhHLAX6u4KwmxxqLOhAZqckBAxSGE9gHomcmsB746ET3j86W3RFIf
-X-Gm-Gg: ASbGncscTcn/O57GSA9+Dd/gwjTmIQqLpHBnbBNG87uzpUfPMqVJJHkt3oOG+NbQVCl
- IvRLQzEzIFklOEP3NYwlltYyYkod7nlm9vkxOfeFerRkI9c+atiifNtcatOT9xMr+vMCmjGA6vW
- FFUJCsZRW8wvt23uUz5Bz99Wm0dlEBAIC85W0evzn/A57VXqQ8yuv6MgPzovdODbRSE5RPbexu+
- QmFP6qVimYdyZNJFPdGFl5HMyGKTWPsWEQA+HZzPLYDqGXaF3jjncnyzdcV1fWKUMH2YYn5dG0z
- UPOyR/KWLNm8
-X-Received: by 2002:a05:6a20:c892:b0:1f5:8479:dfe2 with SMTP id
- adf61e73a8af0-203cbc25ecfmr26254157637.6.1745367094884; 
- Tue, 22 Apr 2025 17:11:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHtOHL0yGv3OwqyoNx75CP5SbkeSzxVPMwTl1NUeRIfq2MM/COn6hYUkCbhJ6iJZp5DS06kDA==
-X-Received: by 2002:a05:6a20:c892:b0:1f5:8479:dfe2 with SMTP id
- adf61e73a8af0-203cbc25ecfmr26254129637.6.1745367094523; 
- Tue, 22 Apr 2025 17:11:34 -0700 (PDT)
-Received: from [192.168.68.55] ([180.233.125.65])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b0db157c783sm8062057a12.77.2025.04.22.17.11.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 17:11:33 -0700 (PDT)
-Message-ID: <2bbfd5d1-be8a-41aa-822f-4c38449b79a7@redhat.com>
-Date: Wed, 23 Apr 2025 10:11:24 +1000
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1u7Opo-0002aR-Hk; Tue, 22 Apr 2025 21:23:38 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u6/A2cP2tGljpz0NwwJbO4kULV0CJ8IflOdYNJWqab77wJomo1hnxcCZ2wzrvs/WDSab3oE0W/b3DcZN6ZKZK9NZwXIxINft5Nh05cXtg0J67weZefyKPMaycMOkwcg+oSCCwFEBCHMzvBrnFOkh5Ink5JDlStwG3VhW7Iy8eu8aZe0q+hbPfizlOmAwHUSi6Zup835sNcgkXQjqR1nySl4qUkGQ3BNc9VcQVtOEf0dfHjtt8pTmZypXhwuDF1S/gY76pmCDkraXi+fzkofyWQa9QLYX9DzHbC7WmDU8nXTuK0I3wYgUdE6WQS0bJTDlofaFNXYy7o/aN349UwmqJA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5nyKVyOlZV9lg41ryJcGLKHMiIDBDSrAwId+EM9ou/s=;
+ b=EIB5JIYWnDeD39oNoQGDpYJFFoAlIVm3ViPPnFJvVRpTDWu0P9CHHF5aC0Kv0/VLryOSyJ0rOShhfFzKsu4KUJSO7nLyXQRCwp9GJPgd+38VLZPXiwSzC26m1UMmaeDN3qIpsK1p6yaX0SHu2idhz11wGG5bp8YMEi60MyaTHR+eFD8qhnlaV48RDu5+SLN40DqCrKT43M8Ln1GJelPxI+gD60RStLwqPrMM6KAXFizyG9L8oRkrXl2mODTS2YkiesEhWNfhK4aO26kbz62Mklgx4wkoPAP+aD/BAsOvgi6bmSFIGUQA5pcq+aYK0iVywwohdVqqS8TWI+f+38jMvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5nyKVyOlZV9lg41ryJcGLKHMiIDBDSrAwId+EM9ou/s=;
+ b=cg0aXi+PEihroK2odihKJAbx0YCMnyznJtAxlWQV5UU4Chb39rfvsG4v4hZ8TDaNvKfAAV/rGym+tQvvmEBbAvLzNeLhKhUsFZ3c2DGeGmxcOVmIm+AaoYB83VUjxfd6W76G/blr3ZH6ByXdPBH2Pyq8qBazRLdAMU2Amx1mnYc7EVPDraijsUiMCTvyFDRJI972+dZGPtmUefdiwgBDNLkESXVmTvMPnyZ42JMMdlfPgrmZ35Pgu15FUnsDdOqvtCkZsuFetRbwckiatHveS7hnPl5nUD+lRZC1XyVu0Kt0HU+n1tQke3HAlhllG1n03KzJn68jU3v7Mx+jHRtlng==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ SEZPR06MB5392.apcprd06.prod.outlook.com (2603:1096:101:67::13) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8632.36; Wed, 23 Apr 2025 01:23:18 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::705a:352a:7564:8e56%4]) with mapi id 15.20.8655.033; Wed, 23 Apr 2025
+ 01:23:18 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>
+Subject: RE: [PATCH v1 3/3] tests/functional/aspeed: Update test ASPEED SDK
+ v03.00 for AST1030
+Thread-Topic: [PATCH v1 3/3] tests/functional/aspeed: Update test ASPEED SDK
+ v03.00 for AST1030
+Thread-Index: AQHbs2cxXEyhnwElTEaB9ImYcAIeCLOvlPoAgADfTDA=
+Date: Wed, 23 Apr 2025 01:23:18 +0000
+Message-ID: <SI2PR06MB5041C15FA2F41BC534CC57EBFCBA2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20250422091504.3666464-1-jamin_lin@aspeedtech.com>
+ <20250422091504.3666464-4-jamin_lin@aspeedtech.com>
+ <96075887-ed11-4a58-a57c-899646d9ce3f@kaod.org>
+In-Reply-To: <96075887-ed11-4a58-a57c-899646d9ce3f@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SEZPR06MB5392:EE_
+x-ms-office365-filtering-correlation-id: 5131fc34-cd6a-402a-b655-08dd82056dce
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|13003099007|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?ZEdxMmVYdGVWN21ZVWNjVitaWXJ5TVBvVmcwVXhXVXZYUGhBbHJqUWkycWRj?=
+ =?utf-8?B?TG9WdHcycEhzbmJvcFVlUm94MUhoYjc2RFcxMkhheGdrK3pOL2dJa0RkblNo?=
+ =?utf-8?B?QTZiejljVlEvRDhtMXY5ZUMrdERBc2wyUVNHaGJLcXZpdEVKU29aRXpzT3VM?=
+ =?utf-8?B?eUtiZFpHalFjR2RNSWxBODNydDVrOXVHYk1pTlh5UzhCbXpLVWRZZkR2aXNu?=
+ =?utf-8?B?Mk90N1pxYXl3MlBaUXdNQnQya1RpYjdqdTJVM2FRWkNOaFYwbGNzM2NYeEFt?=
+ =?utf-8?B?NWtDTmhlMk56V3J2NElsNlNlNGRRRmxWTjFGRDZuKzliTlh5TFdQeGVtSzcz?=
+ =?utf-8?B?K1BJWldtM2xtVnduNFBUNWNIZm95ZG5BQ29ndEFiN3BwS3ZXREhwTXZxRi93?=
+ =?utf-8?B?TDFKa1JPQjQ4TG9iN1NMTFIzSXkyZk9qazVkKzNVbFVwbDVqanFtdFBWSXZW?=
+ =?utf-8?B?Z2hVeTNxdTBDejFIR3ZuTzZGVENuakZOQ0N1OXpiWWszbkRsaGVOSElvQXUv?=
+ =?utf-8?B?WVloUmJvVVQyYWJhbTF4Vk53RXZOdzlXSkVjdjlUSlJXdVQ2V2hRQnZYZU1P?=
+ =?utf-8?B?WVFFcTBFZE9wRWFtemQ1VUowTGlaSktFb3BOa0gyL2FLTlZvaVBNT09WOG1n?=
+ =?utf-8?B?Mm11OHdNWmc5SmRDQk5paDU1Q1grS1BUVk44TlNFRXJ2L0MzeDg3VlViR01S?=
+ =?utf-8?B?YmM3VDR4QmdwYXdvYldtWUptcFFmSjE3b1B0cDhpd3kycWVmUmlhVjVKYU5B?=
+ =?utf-8?B?T3poL3dWeW1JWUQyNGJyWUZOZUlLSFJzVkRJQVBpY3d4bjZBUDFlSk5iWm5V?=
+ =?utf-8?B?VXR4Ui9FNGZrenRWcDIwV3Bwbm5MNTNwbkpLRVh1cDRDVVp1TXhHSjUzT2Nk?=
+ =?utf-8?B?YS82N3lsQU1GOGtveFNVaWlJVHNqbkZETEZTQlh1b3hQQlFteDlBejVzc2lk?=
+ =?utf-8?B?RzRrMlhVRWNtTXV0TnE1OW5QOEZjQS9rRloyNDl3WUo5OGdnWG5pKzM4dVRI?=
+ =?utf-8?B?Z0JrRnFkUzRVekNNOXMzY0VxeEtXZnk2S2pxcGllWFc1TURkcWZ4L3NaOWh4?=
+ =?utf-8?B?QWFGc0x4SllZZWpDRUhsZnhUQ1JJQXNicjBPVzhwVFMrMVZQeEFtVytDUUht?=
+ =?utf-8?B?eVBNVG9oUnZoVE1WdmhUdmk0N2VlSktVczRVRkl1TnJ6c1dPbHhEZk9OajZ1?=
+ =?utf-8?B?ZnVKTHhmemZXY1BTaWU3MzdpYnpiN3hKL0p6WTVVcGdXaVBGUTI0M1NIUFNs?=
+ =?utf-8?B?bkxGcTZ3MW1CQ0o1SFFJcGZGbnRwZlY3Y3VUZGdRYTF5ejdQZDNnWC9ESDVY?=
+ =?utf-8?B?c1J3dlhhcFVvRXMxeURTbnBhUDdlUUhjUXJKM2FlcG10VUFsTSt0dmlSTWVy?=
+ =?utf-8?B?MTZyYkIvYmZ1YUdzRHpjMnRuNnBNKzJyUDBkanpDak9FR2FSK041UnhFbXFC?=
+ =?utf-8?B?MmNEMlZUWUhtSnhPMWdJSk1DcW82d1QwQkNZZC9QUVFTbGVoSWlFaVUzaytT?=
+ =?utf-8?B?Y2FjSXBYVENuQUQ2eDJJREJnMFJ0WUtEYUhYZkdDSGhZaHprUWRWNkxtM1RP?=
+ =?utf-8?B?MklkVWlXcDhYMFl1dlRTL1RTMWJBSGUzVE8zUWFqTUsxamFZTmt4UUIzek9t?=
+ =?utf-8?B?ZXRjUmpoeFRubFg5RTd3Z1FRc2h4RDhpWFJZU3VoZUt1TjQvbHpLOWs4WEEr?=
+ =?utf-8?B?V3R3SnJ5ZUxwME1ic0k5N2dZRXlIZHFGblNFK0lpaU5ia3U5QjZ4Vmpxd0xv?=
+ =?utf-8?B?WTdMck9uTjBMeFBCbE55UTNiYXl1MFpLa0IxN0U5RGFJc2pwSThJQzEvL28z?=
+ =?utf-8?B?OGVjYk96RlA4T0F4eUp1Z2Y3SUdDeWZqR0RmeXBqZGNvUVk3SnlxaEd2b0JO?=
+ =?utf-8?B?cWpDTEVSYlNPb2xSSzNJcktYNys5cnlVSFNEdlJGd1duZjlHWXpUOGlvN0RK?=
+ =?utf-8?B?K01GMXBSZktEUFExQXRCdXE4Sm5SdUc4eE1wWkl1dWNqL0VzTGNvZ1BEaStt?=
+ =?utf-8?Q?vz0dC189pWuMLAm+Cof9Xnzp2UIRUY=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(376014)(1800799024)(366016)(13003099007)(38070700018);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NW9sV0NDTTNaazhxamk2azhtVE82aEkveGJoV2YvMEZlWmR1ckVsV1FZODFN?=
+ =?utf-8?B?YWZNN29XMGxPclkvak54VXZ4ZzdhWHEwYmN4Z1FPMWNtV1lubmszRWZOdE96?=
+ =?utf-8?B?bmIxR1Fzd3lJT2Q0QTgvTVE3YldwWlI1YTNNL1A0SVZwZWovWEl3WGVvdjRm?=
+ =?utf-8?B?T1JDY2pVd29hK0J2Mk9IcU5mM3BVQmd5T0JoWnQ2ZURhNzhveDlnV1ZabXVB?=
+ =?utf-8?B?Qk04OXpoVnd1VkZWL3lBdVEwTVBEdHhSL0tVMXIvUThXYXQ5TW1iUC8zUk5D?=
+ =?utf-8?B?KzhLZWFqMmxFVmpKZmRSY2s5Q252Y0lncHNsUEl2K1NCTk5LN0RvQXVzVXds?=
+ =?utf-8?B?dUgzSXdIalV2elVxQ3B2WEFYcElVNXZvb0h4Zm45K2luRjNIT28ybyt3SFhw?=
+ =?utf-8?B?Y2NTVFhvV1lxcm5qbFJoOGsyK1g1aENveVNoR28rYnVmbTRTdDlDMjgvK3JI?=
+ =?utf-8?B?QXAraFAwclJFc2J5RnFmUHJBV0pDSkxvYnVaRFhadXhVRTE4NHZVclIvZHAv?=
+ =?utf-8?B?a3YzcE82WTMybk4wdmFFcEMxSklaUWViOUZXeUwrZ3pFUVFudnBUT1Z4cHlt?=
+ =?utf-8?B?UmV1Y2NqNXBzUGlzcTlWY2I2NTlrUVhRdHJ6blBCQS9waElwQlhKWUtFdzFS?=
+ =?utf-8?B?dEEwbWZHWnV4eG5lZitmQVUwbWgzR2V3MStGZkptcCs5Y2tkK2IyMGk5YTdZ?=
+ =?utf-8?B?MVhvTTc5a054aC91Vld0Mm1UaHE5M3BuODE2VGJPMWhkd1Z6Z2ZSVk9sMG02?=
+ =?utf-8?B?ejJ0bmdkVjRCSkxPYXBHOVRZWFdLTkRvNit0UXFlYnVwUmo2a255US8rbkVH?=
+ =?utf-8?B?L3M4QTJPQnJFUzFmdEFVRkhIeDVBZ0J1V28rbndCVktScDEzOHE2dGRtTFdS?=
+ =?utf-8?B?NlhvVStqYndJMmU0VnkrdEVkb20rUlRDTlhQZzVET3FZRUNZV3dmNlZEUnJ1?=
+ =?utf-8?B?VWd5V1dlUXJnTi9OZGN4L3hyYUQ1cjdRam1GMDZRYnZVU1U5ZEpPRUM4YWcv?=
+ =?utf-8?B?bmF2WHRIaFNOdmVlZzZHbkZySUQzN1VscDNRSkEzTCt0b3E5RTFna2tqZFFM?=
+ =?utf-8?B?TjBTSXVsemFTR1o3VWVzUHdBb01vQjdoQjF0UndjWHkxRW95Zzk4bVlrb0gr?=
+ =?utf-8?B?M05kcy9xYzVzaTVCVE41bXhESGpFMS9YWXMvUE8yUGpBM0lZY2g0bWlhbm5t?=
+ =?utf-8?B?cEJOR3dFZTRUNGluQWdtZnVwV2RlUWdpMnNwanJoRWRGRjdVRkVDejF1bHBR?=
+ =?utf-8?B?VzhKSHFuY2JhQ211eEkrb3I2cFlZYlptMkVlMW8wM1VDUWxuazVsUWlVcWQr?=
+ =?utf-8?B?Ky9jdFFJN05XMTZlaDNxb0JTeCtueW91bmhOclkvOEhndXBxcmRZbUoveU1M?=
+ =?utf-8?B?cGpNSmU0RkxyUzdkMVRpWVlZd1pJUXI2WWVGZkxDeXpLY0syclE3NjdVT01M?=
+ =?utf-8?B?NGVvU1poZlVESTg2bTMwdklsUDJWZTFDMGd2Tmc3MUdkakpvTFNzdVEzTTA2?=
+ =?utf-8?B?TDBKb0x5THlrUG10UW9JdG05MEl2ZW9BL0tRdWRncDF5UW12QVpTSVAzOEZj?=
+ =?utf-8?B?OENQY1VmM0tpN21POFNWUkxXMGNsTEV4ajVIMlFlR2lPZHkzS3VOeVRXQk5K?=
+ =?utf-8?B?MXhrTFRGOTYzYTFqU2QwZG14TmI5Y2dBNFVvbmR3ajdXbytPOEtxSzZETWls?=
+ =?utf-8?B?N3FKZGVSdHV3ZzZ6cVFtcUtCT2NpZndWQWJFYXVORVQrU0FocXZSOTdoVGw4?=
+ =?utf-8?B?VXl6bW8wdzNMWmhXcGR3UmNCZnF5MjMwOWxPc2tDWWVra0YyOThzRTRhTVli?=
+ =?utf-8?B?TURwZW0zeUowZkhjR2tEYmFMS0pyRDA3UGN1cVhta29OUTdZT0JTQjhhNnhM?=
+ =?utf-8?B?RnM2UmFPWE5xa3pHaGdiS1ZXcmt2SExGMzA3VTVuTEFUYXhnZ0RPSk5pUFRP?=
+ =?utf-8?B?YmxKSXgxdEl3aUlOa1BkSU5vVnordGZxaC9hNklYU3VNTnpVME9xOFBCaWxo?=
+ =?utf-8?B?U3E5eVNPUTRyR3RDNWFJWDRtTVFLYnlubEh1YTV4c0REcEU1R21QcEZwNllG?=
+ =?utf-8?B?QUtMaTFqUU8vVzlyTTNhT3NObWxvU3ozK051dnJtbXlMMG9wTWxzTWRzRVVr?=
+ =?utf-8?Q?BTy9mjmhbyVRHteceekrftpo5?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] acpi: Add machine option to disable SPCR table
-To: Li Chen <me@linux.beauty>, Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
-References: <1965d621e25.fafa759e911037.825810937022699867@linux.beauty>
- <1965d6357a1.dfa9d35b911644.778874035603636753@linux.beauty>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <1965d6357a1.dfa9d35b911644.778874035603636753@linux.beauty>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5131fc34-cd6a-402a-b655-08dd82056dce
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2025 01:23:18.4648 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: jHADTcxGLBelDSFkvEPLMf+k6M8uBYlOTScoj5GpqZUiwlEit82J1mxFD+g67WGD2ZvOnN44umkVmbNC5RBg1QkTkOzl9fC1DO2ERa62310=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5392
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,178 +187,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/25 10:05 PM, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
-> 
-> The ACPI SPCR (Serial Port Console Redirection) table allows firmware
-> to specify a preferred serial console device to the operating system.
-> On ARM64 systems, Linux by default respects this table: even if the
-> kernel command line does not include a hardware serial console (e.g.,
-> "console=ttyAMA0"), the kernel still register the serial device
-> referenced by SPCR as a printk console.
-> 
-> While this behavior is standard-compliant, it can lead to situations
-> where guest console behavior is influenced by platform firmware rather
-> than user-specified configuration. To make guest console behavior more
-> predictable and under user control, this patch introduces a machine
-> option to explicitly disable SPCR table exposure:
-> 
->      -machine spcr=off
-> 
-> By default, the option is enabled (spcr=on), preserving existing
-> behavior. When disabled, QEMU will omit the SPCR table from the guest's
-> ACPI namespace, ensuring that only consoles explicitly declared in the
-> kernel command line are registered.
-> 
-> Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
-> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
-> 
-> Changes since V1: add Reviewed-by and Acked-by
-> 
->   hw/arm/virt-acpi-build.c       |  5 ++++-
->   hw/core/machine.c              | 22 ++++++++++++++++++++++
->   hw/loongarch/virt-acpi-build.c |  4 +++-
->   hw/riscv/virt-acpi-build.c     |  5 ++++-
->   include/hw/boards.h            |  1 +
->   qemu-options.hx                |  5 +++++
->   6 files changed, 39 insertions(+), 3 deletions(-)
-> 
-
-One coding style issue below. With it fixed:
-
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 3ac8f8e178..f25c3b26ce 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -940,7 +940,10 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->       }
->   
->       acpi_add_table(table_offsets, tables_blob);
-> -    spcr_setup(tables_blob, tables->linker, vms);
-> +
-> +    if (ms->enable_spcr) {
-> +        spcr_setup(tables_blob, tables->linker, vms);
-> +    }
->   
->       acpi_add_table(table_offsets, tables_blob);
->       build_dbg2(tables_blob, tables->linker, vms);
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 63c6ef93d2..d56f44f4e8 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -590,6 +590,20 @@ static void machine_set_nvdimm(Object *obj, bool value, Error **errp)
->       ms->nvdimms_state->is_enabled = value;
->   }
->   
-> +static bool machine_get_spcr(Object *obj, Error **errp)
-> +{
-> +    MachineState *ms = MACHINE(obj);
-> +
-> +    return ms->enable_spcr;
-> +}
-> +
-> +static void machine_set_spcr(Object *obj, bool value, Error **errp)
-> +{
-> +    MachineState *ms = MACHINE(obj);
-> +
-> +    ms->enable_spcr = value;
-> +}
-> +
->   static bool machine_get_hmat(Object *obj, Error **errp)
->   {
->       MachineState *ms = MACHINE(obj);
-> @@ -1294,6 +1308,14 @@ static void machine_initfn(Object *obj)
->                                           "Table (HMAT)");
->       }
->   
-> +    /* SPCR */
-> +    ms->enable_spcr = true;
-> +    object_property_add_bool(obj, "spcr", machine_get_spcr, machine_set_spcr);
-> +    object_property_set_description(obj, "spcr",
-> +                                   "Set on/off to enable/disable "
-> +                                   "ACPI Serial Port Console Redirection "
-> +                                   "Table (spcr)");
-> +
->       /* default to mc->default_cpus */
->       ms->smp.cpus = mc->default_cpus;
->       ms->smp.max_cpus = mc->default_cpus;
-> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-> index fced6c445a..0e437bcf25 100644
-> --- a/hw/loongarch/virt-acpi-build.c
-> +++ b/hw/loongarch/virt-acpi-build.c
-> @@ -557,7 +557,9 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
->       acpi_add_table(table_offsets, tables_blob);
->       build_srat(tables_blob, tables->linker, machine);
->       acpi_add_table(table_offsets, tables_blob);
-> -    spcr_setup(tables_blob, tables->linker, machine);
-> +
-> +    if (machine->enable_spcr)
-> +        spcr_setup(tables_blob, tables->linker, machine);
->   
-
-	if (machine->enable_spcr) {
-	    spcr_setup(tables_blob, tables->linker, machine);
-	}
-
->       if (machine->numa_state->num_nodes) {
->           if (machine->numa_state->have_numa_distance) {
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 1ad6800508..7f6d221c63 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -680,7 +680,10 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
->       build_rhct(tables_blob, tables->linker, s);
->   
->       acpi_add_table(table_offsets, tables_blob);
-> -    spcr_setup(tables_blob, tables->linker, s);
-> +
-> +    if (ms->enable_spcr) {
-> +        spcr_setup(tables_blob, tables->linker, s);
-> +    }
->   
->       acpi_add_table(table_offsets, tables_blob);
->       {
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index f22b2e7fc7..cdf2791a50 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -444,6 +444,7 @@ struct MachineState {
->       SmpCache smp_cache;
->       struct NVDIMMState *nvdimms_state;
->       struct NumaState *numa_state;
-> +    bool enable_spcr;
->   };
->   
->   /*
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index dc694a99a3..953680595f 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -38,6 +38,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->       "                nvdimm=on|off controls NVDIMM support (default=off)\n"
->       "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
->       "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-> +    "                spcr=on|off controls ACPI SPCR support (default=on)\n"
->   #ifdef CONFIG_POSIX
->       "                aux-ram-share=on|off allocate auxiliary guest RAM as shared (default: off)\n"
->   #endif
-> @@ -105,6 +106,10 @@ SRST
->           Enables or disables ACPI Heterogeneous Memory Attribute Table
->           (HMAT) support. The default is off.
->   
-> +    ``spcr=on|off``
-> +        Enables or disables ACPI Serial Port Console Redirection Table
-> +        (SPCR) support. The default is on.
-> +
->       ``aux-ram-share=on|off``
->           Allocate auxiliary guest RAM as an anonymous file that is
->           shareable with an external process.  This option applies to
-
-Thanks,
-Gavin
-
+SGkgUGhpbGlwLCBDZWRyaWMsIA0KDQo+IA0KPiBPbiA0LzIyLzI1IDExOjE1LCBKYW1pbiBMaW4g
+d3JvdGU6DQo+ID4gVXBkYXRlZCB0ZXN0IHRvIHRhcmdldCBTREsgdmVyc2lvbiB2MDMuMDAuDQo+
+ID4gUmVtb3ZlZCByZWR1bmRhbnQgdGVzdCBjYXNlIHRvIHNpbXBsaWZ5IHZhbGlkYXRpb24uDQo+
+ID4gQ2xlYW5lZCB1cCB1bnN1cHBvcnRlZCBzaGVsbCBjb21tYW5kcy4NCj4gDQo+IFdlcmUgc29t
+ZSBjb21tYW5kcyByZW1vdmVkIGZyb20gU0RLIHYwMy4wMCA/IFRlc3RpbmcgZGlmZmVyZW50IHpl
+cGh5cg0KDQpUaGFua3MgZm9yIHJldmlldyBhbmQgc3VnZ2VzdGlvbi4NClllcywgc29tZSBjb21t
+YW5kcyBoYXZlIGJlZW4gcmVtb3ZlZCBpbiB0aGUgcHJlLWJ1aWx0IGltYWdlIG9mIFNESyB2MDMu
+MDAuDQpUaGUgY2hhbmdlcyBpbiB2MSByZWR1Y2UgdGhlIG92ZXJhbGwgdGVzdCBjb3ZlcmFnZS4N
+Ckkgd2lsbCBzZW5kIGEgdjIgcGF0Y2ggdG8gcmV0YWluIHRoZSB0ZXN0X2FzdDEwMzBfemVwaHly
+b3NfMV8wNyB0ZXN0IGNhc2UgYW5kIA0KdXBkYXRlIHRlc3RfYXN0MTAzMF96ZXBoeXJvc18xXzA0
+IHRvIHVzZSBTREsgdjAzLjAwLg0KDQpUaGFua3MtSmFtaW4NCg0KPiB2ZXJzaW9ucyBtaWdodCBi
+ZSBpbnRlcmVzdGluZyBpbiB0aGF0IGNhc2UsIGxpa2UgaXQgd291bGQgYmUgZm9yIExpbnV4IHRv
+by4NCj4gDQo+IFRoYW5rcywNCj4gDQo+IEMuDQo+IA0KPiANCj4gDQo+IA0KPiA+DQo+ID4gU2ln
+bmVkLW9mZi1ieTogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+ID4gLS0t
+DQo+ID4gICB0ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYXJtX2FzcGVlZF9hc3QxMDMwLnB5IHwgNDAg
+KysrKy0tLS0tLS0tLS0tLS0tLS0tDQo+ID4gICAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRpb25z
+KCspLCAzMyBkZWxldGlvbnMoLSkNCj4gPg0KPiA+IGRpZmYgLS1naXQgYS90ZXN0cy9mdW5jdGlv
+bmFsL3Rlc3RfYXJtX2FzcGVlZF9hc3QxMDMwLnB5DQo+ID4gYi90ZXN0cy9mdW5jdGlvbmFsL3Rl
+c3RfYXJtX2FzcGVlZF9hc3QxMDMwLnB5DQo+ID4gaW5kZXggZDQ1ZDlmN2MxYy4uZGFmYTFkMjRj
+YiAxMDA3NTUNCj4gPiAtLS0gYS90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYXJtX2FzcGVlZF9hc3Qx
+MDMwLnB5DQo+ID4gKysrIGIvdGVzdHMvZnVuY3Rpb25hbC90ZXN0X2FybV9hc3BlZWRfYXN0MTAz
+MC5weQ0KPiA+IEBAIC0xMiwzNiArMTIsMTcgQEANCj4gPg0KPiA+ICAgY2xhc3MgQVNUMTAzME1h
+Y2hpbmUoTGludXhLZXJuZWxUZXN0KToNCj4gPg0KPiA+IC0gICAgQVNTRVRfWkVQSFlSXzFfMDQg
+PSBBc3NldCgNCj4gPiArICAgIEFTU0VUX1pFUEhZUl8zXzAwID0gQXNzZXQoDQo+ID4gICAgICAg
+ICAgICgnaHR0cHM6Ly9naXRodWIuY29tL0FzcGVlZFRlY2gtQk1DJw0KPiA+IC0gICAgICAgICAn
+L3plcGh5ci9yZWxlYXNlcy9kb3dubG9hZC92MDAuMDEuMDQvYXN0MTAzMC1ldmItZGVtby56aXAn
+KSwNCj4gPiAtDQo+ICc0YWM2MjEwYWRjYmM2MTI5NDkyNzkxODcwN2M2NzYyNDgzZmQ4NDRkZGU1
+ZTA3ZjNiYTgzNGFkMWY5MTQzNGQzJykNCj4gPiArICAgICAgICAgJy96ZXBoeXIvcmVsZWFzZXMv
+ZG93bmxvYWQvdjAwLjAzLjAwL2FzdDEwMzAtZXZiLWRlbW8uemlwJyksDQo+ID4gKw0KPiA+ICsN
+Cj4gJzM3ZmUzZWNkNGExYjlkNjIwOTcxYTE1Yjk2NDkyYTgxMDkzNDM1Mzk2ZWVhYzY5YjZmM2Uz
+ODQyNjJmZjU1NWYnKQ0KPiA+DQo+ID4gLSAgICBkZWYgdGVzdF9hc3QxMDMwX3plcGh5cm9zXzFf
+MDQoc2VsZik6DQo+ID4gLSAgICAgICAgc2VsZi5zZXRfbWFjaGluZSgnYXN0MTAzMC1ldmInKQ0K
+PiA+IC0NCj4gPiAtICAgICAgICBrZXJuZWxfbmFtZSA9ICJhc3QxMDMwLWV2Yi1kZW1vL3plcGh5
+ci5lbGYiDQo+ID4gLSAgICAgICAga2VybmVsX2ZpbGUgPSBzZWxmLmFyY2hpdmVfZXh0cmFjdCgN
+Cj4gPiAtICAgICAgICAgICAgc2VsZi5BU1NFVF9aRVBIWVJfMV8wNCwgbWVtYmVyPWtlcm5lbF9u
+YW1lKQ0KPiA+IC0NCj4gPiAtICAgICAgICBzZWxmLnZtLnNldF9jb25zb2xlKCkNCj4gPiAtICAg
+ICAgICBzZWxmLnZtLmFkZF9hcmdzKCcta2VybmVsJywga2VybmVsX2ZpbGUsICctbm9ncmFwaGlj
+JykNCj4gPiAtICAgICAgICBzZWxmLnZtLmxhdW5jaCgpDQo+ID4gLSAgICAgICAgc2VsZi53YWl0
+X2Zvcl9jb25zb2xlX3BhdHRlcm4oIkJvb3RpbmcgWmVwaHlyIE9TIikNCj4gPiAtICAgICAgICBl
+eGVjX2NvbW1hbmRfYW5kX3dhaXRfZm9yX3BhdHRlcm4oc2VsZiwgImhlbHAiLA0KPiA+IC0gICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiQXZhaWxhYmxlIGNvbW1hbmRz
+IikNCj4gPiAtDQo+ID4gLSAgICBBU1NFVF9aRVBIWVJfMV8wNyA9IEFzc2V0KA0KPiA+IC0gICAg
+ICAgICgnaHR0cHM6Ly9naXRodWIuY29tL0FzcGVlZFRlY2gtQk1DJw0KPiA+IC0gICAgICAgICAn
+L3plcGh5ci9yZWxlYXNlcy9kb3dubG9hZC92MDAuMDEuMDcvYXN0MTAzMC1ldmItZGVtby56aXAn
+KSwNCj4gPiAtDQo+ICdhZDUyZTI3OTU5NzQ2OTg4YWZhZWQ4NDI5YmY0ZTEyYWI5ODhjMDVjNGQw
+N2M5ZDkwZTEzZWM2ZjdiZTQ1NzRjJykNCj4gPiAtDQo+ID4gLSAgICBkZWYgdGVzdF9hc3QxMDMw
+X3plcGh5cm9zXzFfMDcoc2VsZik6DQo+ID4gKyAgICBkZWYgdGVzdF9hc3QxMDMwX3plcGh5cm9z
+XzNfMDAoc2VsZik6DQo+ID4gICAgICAgICAgIHNlbGYuc2V0X21hY2hpbmUoJ2FzdDEwMzAtZXZi
+JykNCj4gPg0KPiA+ICAgICAgICAgICBrZXJuZWxfbmFtZSA9ICJhc3QxMDMwLWV2Yi1kZW1vL3pl
+cGh5ci5iaW4iDQo+ID4gICAgICAgICAgIGtlcm5lbF9maWxlID0gc2VsZi5hcmNoaXZlX2V4dHJh
+Y3QoDQo+ID4gLSAgICAgICAgICAgIHNlbGYuQVNTRVRfWkVQSFlSXzFfMDcsIG1lbWJlcj1rZXJu
+ZWxfbmFtZSkNCj4gPiArICAgICAgICAgICAgc2VsZi5BU1NFVF9aRVBIWVJfM18wMCwgbWVtYmVy
+PWtlcm5lbF9uYW1lKQ0KPiA+DQo+ID4gICAgICAgICAgIHNlbGYudm0uc2V0X2NvbnNvbGUoKQ0K
+PiA+ICAgICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCcta2VybmVsJywga2VybmVsX2ZpbGUsICct
+bm9ncmFwaGljJykgQEANCj4gPiAtNDksMTcgKzMwLDEwIEBAIGRlZiB0ZXN0X2FzdDEwMzBfemVw
+aHlyb3NfMV8wNyhzZWxmKToNCj4gPiAgICAgICAgICAgc2VsZi53YWl0X2Zvcl9jb25zb2xlX3Bh
+dHRlcm4oIkJvb3RpbmcgWmVwaHlyIE9TIikNCj4gPiAgICAgICAgICAgZm9yIHNoZWxsX2NtZCBp
+biBbDQo+ID4gICAgICAgICAgICAgICAgICAgJ2tlcm5lbCBzdGFja3MnLA0KPiA+IC0gICAgICAg
+ICAgICAgICAgJ290cCBpbmZvIGNvbmYnLA0KPiA+IC0gICAgICAgICAgICAgICAgJ290cCBpbmZv
+IHNjdScsDQo+ID4gICAgICAgICAgICAgICAgICAgJ2h3aW5mbyBkZXZpZCcsDQo+ID4gICAgICAg
+ICAgICAgICAgICAgJ2NyeXB0byBhZXMyNTZfY2JjX3ZhdWx0JywNCj4gPiAtICAgICAgICAgICAg
+ICAgICdyYW5kb20gZ2V0JywNCj4gPiAtICAgICAgICAgICAgICAgICdqdGFnIEpUQUcxIHN3X3hm
+ZXIgaGlnaCBUTVMnLA0KPiA+IC0gICAgICAgICAgICAgICAgJ2FkYyBBREMwIHJlc29sdXRpb24g
+MTInLA0KPiA+IC0gICAgICAgICAgICAgICAgJ2FkYyBBREMwIHJlYWQgNDInLA0KPiA+IC0gICAg
+ICAgICAgICAgICAgJ2FkYyBBREMxIHJlYWQgNjknLA0KPiA+IC0gICAgICAgICAgICAgICAgJ2ky
+YyBzY2FuIEkyQ18wJywNCj4gPiAtICAgICAgICAgICAgICAgICdpM2MgYXR0YWNoIEkzQ18wJywN
+Cj4gPiArICAgICAgICAgICAgICAgICdqdGFnIGp0YWdAN2U2ZTQxMDAgc3dfeGZlciBoaWdoIFRN
+UycsDQo+ID4gKyAgICAgICAgICAgICAgICAnaWljIHNjYW4gaTJjQDdlN2IwMDgwJywNCj4gPiAg
+ICAgICAgICAgICAgICAgICAnaGFzaCB0ZXN0JywNCj4gPiAgICAgICAgICAgICAgICAgICAna2Vy
+bmVsIHVwdGltZScsDQo+ID4gICAgICAgICAgICAgICAgICAgJ2tlcm5lbCByZWJvb3Qgd2FybScs
+DQoNCg==
 
