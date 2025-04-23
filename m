@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43014C369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1425C369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Uam-0006lZ-EO; Wed, 23 Apr 2025 03:32:26 -0400
+	id 1u7Uam-0006jW-7p; Wed, 23 Apr 2025 03:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u7Uag-0006iP-6s
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:18 -0400
+ id 1u7Uad-0006gn-FT
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:16 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u7Uad-0002Zo-2V
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:17 -0400
+ id 1u7Uaa-0002Yx-Hv
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:32:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745393535; x=1776929535;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=vlFuPxsR6uS+fFiMpn/jKofj1bN5I++7yqnDWf8SOZY=;
- b=ktLazdBxvuneTY68dpMajfq03QNeR+wx60J4O4igbTX5GF8FBF3C7VG7
- /Dtnokn1LN3mJshTCOJ+aRKYKUMsLWg4/i4Yo1Oo0WtdyzHYB8xAt7Odf
- NF9stxkPUJDFrllfemKDMxoMpsFrXUnSPW8sT0wT5m2aMTJkL87moAZ+a
- ZHB4JBBMZh7XyJ3q4WAGyrFPYRB7BA+MhbjO7OCZYTu6LUgjSREaqxcYh
- TAzkmJN8CEezMEbUkZ0gKVDDY5yuOWXav/fVqhhBvqwwVNxDxPIiEFtQ5
- M1m2kVg5C2xVcNGA8rYf9NkyOSCl9kTTeazRp7k7P0BuhD4ivr4cZGPlM w==;
-X-CSE-ConnectionGUID: tRSnw8O3QaWl6py5/YjtWQ==
-X-CSE-MsgGUID: yZHA9dJzRYeqXglPY5F+QA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="57959260"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="57959260"
+ t=1745393533; x=1776929533;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=XjYbvMBGW5zkX0IbKDJWhi42I1hI/WeNS8xrLVjdVpY=;
+ b=irDh+qxknyzY48GArgLUKMojEzjaCcZW/Keq5pYwhhbxj0d004s9ds8B
+ FZ1WZ1HzhKUMiqxgM0tsGdrAusSynAKMbf2H+KjOpCPQtDpWhICAiIK45
+ EEGJJk8CtfOy2oqWJagGziEBs1s+6LRLHvY8vqkIMZ0mmLIu+Dm77cmhD
+ /8hJKd2mxb48z9AH3jzvfVf7PlNNTWP5dRgb1NYCCdCLEuHvc7ECAafxy
+ dif0Dtbdeo3qF4cpcDL5AI2zlVmUAOOrU71tPO/O5Vr5CTqRA3GcZG+me
+ ScrMD/ArJV7ySNzxSUACwB0jbEv0BQGDEUTuMiMvflQPOIUq88DgUcDHO A==;
+X-CSE-ConnectionGUID: Odx6BNkiTJ6WqIAvvUTbLQ==
+X-CSE-MsgGUID: Ecs9DQYPRimLa8tUGDyFEQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="57959251"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="57959251"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 00:32:13 -0700
-X-CSE-ConnectionGUID: f0EasS5qQTWMvzhA1zutwg==
-X-CSE-MsgGUID: OVXgAzh3TuiVnZvzQL2BfA==
+ 23 Apr 2025 00:32:08 -0700
+X-CSE-ConnectionGUID: NfVwH7AFSiuMvLiNqVa4vg==
+X-CSE-MsgGUID: G2Squ+1kS2aq6I6y6erh7w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137025358"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137025331"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 00:32:10 -0700
+ 23 Apr 2025 00:32:05 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Donald Dutile <ddutile@redhat.com>
-Subject: [PATCH v2 2/5] vfio/iommufd: Move realize() after attachment
-Date: Wed, 23 Apr 2025 15:28:21 +0800
-Message-Id: <20250423072824.3647952-3-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 0/5] vfio: Move realize after attach_dev
+Date: Wed, 23 Apr 2025 15:28:19 +0800
+Message-Id: <20250423072824.3647952-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250423072824.3647952-1-zhenzhong.duan@intel.com>
-References: <20250423072824.3647952-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,63 +83,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously device attaching depends on realize() getting host IOMMU
-capabilities to check dirty tracking support.
+Hi,
 
-Now we have a separate call to ioctl(IOMMU_GET_HW_INFO) to get host
-IOMMU capabilities and check that for dirty tracking support, there
-is no dependency any more, move realize() call after attachment
-succeed.
+This series addresses Cédric's suggestion[1] and Donald's suggestion[2] to
+move realize() call after attach_device().
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Suggested-by: Donald Dutile <ddutile@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/vfio/iommufd.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+This way avoid the need to introduce realize_late() to further complex the
+interface in nesting series.
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 2253778b3a..f273dc8712 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -500,17 +500,6 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
- 
-     space = vfio_address_space_get(as);
- 
--    /*
--     * The HostIOMMUDevice data from legacy backend is static and doesn't need
--     * any information from the (type1-iommu) backend to be initialized. In
--     * contrast however, the IOMMUFD HostIOMMUDevice data requires the iommufd
--     * FD to be connected and having a devid to be able to successfully call
--     * iommufd_backend_get_device_info().
--     */
--    if (!vfio_device_hiod_realize(vbasedev, errp)) {
--        goto err_alloc_ioas;
--    }
--
-     /* try to attach to an existing container in this space */
-     QLIST_FOREACH(bcontainer, &space->containers, next) {
-         container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
-@@ -585,6 +574,10 @@ found_container:
-         goto err_listener_register;
-     }
- 
-+    if (!vfio_device_hiod_realize(vbasedev, errp)) {
-+        goto err_hiod_realize;
-+    }
-+
-     /*
-      * TODO: examine RAM_BLOCK_DISCARD stuff, should we do group level
-      * for discarding incompatibility check as well?
-@@ -606,6 +599,8 @@ found_container:
-                                    vbasedev->num_regions, vbasedev->flags);
-     return true;
- 
-+err_hiod_realize:
-+    vfio_cpr_unregister_container(bcontainer);
- err_listener_register:
-     iommufd_cdev_ram_block_discard_disable(false);
- err_discard_disable:
+[1] https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg01211.html
+[2] https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00898.html
+
+Test:
+net card passthrough and ping test
+hotplug/unplug
+
+Based on vfio-next(856f36c005).
+
+Thanks
+Zhenzhong
+
+Changelog:
+v2:
+- drop the idea to save host iommu capabilities in VFIODevice.caps
+- introduce a new function to create and realize hiod
+- remove hiod_typename property
+
+Zhenzhong Duan (5):
+  vfio/iommufd: Make a separate call to get IOMMU capabilities
+  vfio/iommufd: Move realize() after attachment
+  vfio/container: Move realize() after attachment
+  vfio: Cleanup host IOMMU device creation
+  vfio: Remove hiod_typename property
+
+ include/hw/vfio/vfio-container-base.h |  3 ---
+ include/hw/vfio/vfio-device.h         |  3 ++-
+ hw/vfio/container.c                   | 25 ++++++++++++--------
+ hw/vfio/device.c                      | 33 ++++++++++++---------------
+ hw/vfio/iommufd.c                     | 31 +++++++++++++------------
+ 5 files changed, 47 insertions(+), 48 deletions(-)
+
 -- 
 2.34.1
 
