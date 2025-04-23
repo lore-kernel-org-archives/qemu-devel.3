@@ -4,51 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8487C369C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 02:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2B9C369C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 03:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7QIa-0007GN-PD; Tue, 22 Apr 2025 22:57:20 -0400
+	id 1u7QPg-0002YR-7R; Tue, 22 Apr 2025 23:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1u7QIO-0007Bk-J7; Tue, 22 Apr 2025 22:57:11 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7QPe-0002YF-Lc
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 23:04:38 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1u7QIM-00043I-Cm; Tue, 22 Apr 2025 22:57:08 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 23 Apr
- 2025 10:56:52 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 23 Apr 2025 10:56:52 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 1/3] hw/misc/aspeed_otp: Add Aspeed OTP memory device model
-Date: Wed, 23 Apr 2025 10:56:49 +0800
-Message-ID: <20250423025651.189702-2-kane_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250423025651.189702-1-kane_chen@aspeedtech.com>
-References: <20250423025651.189702-1-kane_chen@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7QPb-0004p4-Bk
+ for qemu-devel@nongnu.org; Tue, 22 Apr 2025 23:04:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745377475; x=1776913475;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=WTQm2u4iP01bF9Q0+aqoUjJjydCuXyRZ6MzXC/f9H9k=;
+ b=KCXjqnRX0ckQFkStEhDBvjlPzH61xm4wxvGIIBn4c+gkx2CXpcwtMXyS
+ wN2BXEltZcN+CiOfDLQUxLmgqklCZ2BesohBcYW5eqorJgh01k4ObdQf9
+ K+KopwArxtmN/YI1kUryFd92AhUt4wD01buY8MRDJKmRuKbH0BhOA+gjG
+ JaqFhmXpPSxgpSceDLqV4o4xhwaZpz9M9JBg7zM0kgZzzXUqA9g8QpMsc
+ uB0qnmGDgYgzijivWDQrV89fkOHFePD3khNAuFHF4ynXnNspneOj48c0s
+ zWA74slZ2llY7g8eavfqIL9oIspnf7hqTqu9Pt5/F0+AsKRbGzeXu79du w==;
+X-CSE-ConnectionGUID: xanQyDsOS9evgyiovB7ypw==
+X-CSE-MsgGUID: ipF7CrQXQZSXD+3ltr2q7A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="64367658"
+X-IronPort-AV: E=Sophos;i="6.15,232,1739865600"; d="scan'208";a="64367658"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2025 20:04:32 -0700
+X-CSE-ConnectionGUID: NarXM0pITRmgBVABl2lQcw==
+X-CSE-MsgGUID: 1yby85Y+QdGLC+kUHAdMfg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,232,1739865600"; d="scan'208";a="132720793"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 22 Apr 2025 20:04:30 -0700
+Date: Wed, 23 Apr 2025 11:25:24 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 15/55] i386/tdx: Implement user specified tsc frequency
+Message-ID: <aAhdpCwCx93NbKrk@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-16-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401130205.2198253-16-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,312 +87,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
-From:  Kane Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+On Tue, Apr 01, 2025 at 09:01:25AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:25 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v8 15/55] i386/tdx: Implement user specified tsc frequency
+> X-Mailer: git-send-email 2.34.1
+> 
+> Reuse "-cpu,tsc-frequency=" to get user wanted tsc frequency and call VM
+> scope VM_SET_TSC_KHZ to set the tsc frequency of TD before KVM_TDX_INIT_VM.
+> 
+> Besides, sanity check the tsc frequency to be in the legal range and
+> legal granularity (required by TDX module).
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+> Changes in v3:
+> - use @errp to report error info; (Daniel)
+> 
+> Changes in v1:
+> - Use VM scope VM_SET_TSC_KHZ to set the TSC frequency of TD since KVM
+>   side drop the @tsc_khz field in struct kvm_tdx_init_vm
+> ---
+>  target/i386/kvm/kvm.c |  9 +++++++++
+>  target/i386/kvm/tdx.c | 25 +++++++++++++++++++++++++
+>  2 files changed, 34 insertions(+)
 
-This introduces a new model for the ASPEED OTP (One-Time Programmable)
-memory. The device is implemented as a `SysBusDevice` and provides an
-abstracted interface for OTP read, write (program), and default value
-initialization.
-
-OTP content is backed by a block device and supports QEMU’s drive
-infrastructure via the "drive" property.
-
-Features:
-- Enforces irreversible bit programming logic (0->1 or 1->0)
-- Provides interface for SoC/secure controller integration
-- Validates bounds and bit-level constraints
-- Uses QEMU error handling conventions and logging
-
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
----
- hw/misc/aspeed_otpmem.c         | 211 ++++++++++++++++++++++++++++++++
- hw/misc/meson.build             |   1 +
- include/hw/misc/aspeed_otpmem.h |  40 ++++++
- 3 files changed, 252 insertions(+)
- create mode 100644 hw/misc/aspeed_otpmem.c
- create mode 100644 include/hw/misc/aspeed_otpmem.h
-
-diff --git a/hw/misc/aspeed_otpmem.c b/hw/misc/aspeed_otpmem.c
-new file mode 100644
-index 0000000000..4f8f2827f7
---- /dev/null
-+++ b/hw/misc/aspeed_otpmem.c
-@@ -0,0 +1,211 @@
-+/*
-+ *  ASPEED OTP (One-Time Programmable) memory
-+ *
-+ *  Copyright (C) 2025 Aspeed
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/block/block.h"
-+#include "hw/block/flash.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "system/block-backend.h"
-+#include "qemu/log.h"
-+#include "qemu/option.h"
-+#include "hw/sysbus.h"
-+#include "qemu/error-report.h"
-+#include "hw/misc/aspeed_otpmem.h"
-+
-+static const Property aspeed_otpmem_properties[] = {
-+    DEFINE_PROP_DRIVE("drive", AspeedOTPMemState, blk),
-+};
-+
-+static void aspeed_otpmem_read(void *opaque, uint32_t addr,
-+                               uint32_t *out, Error **errp)
-+{
-+    AspeedOTPMemState *otp = ASPEED_OTPMEM(opaque);
-+
-+    assert(otp->blk);
-+
-+    if (out == NULL) {
-+        error_setg(errp, "out is NULL");
-+        return;
-+    }
-+
-+    if (addr > (otp->max_size - 4)) {
-+        error_setg(errp, "OTP memory 0x%x is exceeded", addr);
-+        return;
-+    }
-+
-+    if (blk_pread(otp->blk, (int64_t)addr, sizeof(uint32_t), out, 0) < 0) {
-+        error_setg(errp, "Failed to read data 0x%x", addr);
-+        return;
-+    }
-+    return;
-+}
-+
-+static bool valid_program_data(uint32_t otp_addr,
-+                                 uint32_t value, uint32_t prog_bit)
-+{
-+    uint32_t programmed_bits, has_programmable_bits;
-+    bool is_odd = otp_addr & 1;
-+
-+    /*
-+     * prog_bit uses 0s to indicate target bits to program:
-+     *   - if OTP word is even-indexed, programmed bits flip 0->1
-+     *   - if odd, bits flip 1->0
-+     * Bit programming is one-way only and irreversible.
-+     */
-+    if (is_odd) {
-+        programmed_bits = ~value & prog_bit;
-+    } else {
-+        programmed_bits = value & (~prog_bit);
-+    }
-+
-+    /* If there is some bit can be programed, to accept the request */
-+    has_programmable_bits = value ^ (~prog_bit);
-+
-+    if (programmed_bits) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Found programmed bits in addr %x\n",
-+                      __func__, otp_addr);
-+        for (int i = 0; i < 32; ++i) {
-+            if (programmed_bits & (1U << i)) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "  Programmed bit %d\n",
-+                              i);
-+            }
-+        }
-+    }
-+
-+    return has_programmable_bits != 0;
-+}
-+
-+static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
-+                             uint32_t prog_bit, uint32_t *value)
-+{
-+    AspeedOTPMemState *s = ASPEED_OTPMEM(opaque);
-+    bool is_odd = otp_addr & 1;
-+    uint32_t otp_offset = otp_addr << 2;
-+
-+    if (blk_pread(s->blk, (int64_t)otp_offset,
-+                  sizeof(uint32_t), value, 0) < 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Failed to read data 0x%x\n",
-+                      __func__, otp_offset);
-+        return false;
-+    }
-+
-+    if (!valid_program_data(otp_addr, *value, prog_bit)) {
-+        return false;
-+    }
-+
-+    if (is_odd) {
-+        *value &= ~prog_bit;
-+    } else {
-+        *value |= ~prog_bit;
-+    }
-+
-+    return true;
-+}
-+
-+static void aspeed_otpmem_prog(void *s, uint32_t otp_addr,
-+                               uint32_t data, Error **errp)
-+{
-+    AspeedOTPMemState *otp = ASPEED_OTPMEM(s);
-+    uint32_t otp_offset, value;
-+
-+    assert(otp->blk);
-+
-+    if (otp_addr > (otp->max_size >> 2)) {
-+        error_setg(errp, "OTP memory 0x%x is exceeded", otp_addr);
-+        return;
-+    }
-+
-+    otp_offset = otp_addr << 2;
-+    if (!program_otpmem_data(s, otp_addr, data, &value)) {
-+        error_setg(errp, "Failed to program data");
-+        return;
-+    }
-+
-+    if (blk_pwrite(otp->blk, (int64_t)otp_offset,
-+                   sizeof(value), &value, 0) < 0) {
-+        error_setg(errp, "Failed to write data");
-+    }
-+
-+    return;
-+}
-+
-+static void aspeed_otpmem_set_default(void *s, uint32_t otp_offset,
-+                                      uint32_t data, Error **errp)
-+{
-+    AspeedOTPMemState *otp = ASPEED_OTPMEM(s);
-+
-+    if ((otp_offset + 4) > otp->max_size) {
-+        error_setg(errp, "OTP memory 0x%x is exceeded", otp_offset);
-+        return;
-+    }
-+
-+    if (blk_pwrite(otp->blk, (int64_t)otp_offset,
-+                   sizeof(data), &data, 0) < 0) {
-+        error_setg(errp, "Failed to write data");
-+    }
-+    return;
-+}
-+
-+static AspeedOTPMemOps aspeed_otpmem_ops = {
-+    .read = aspeed_otpmem_read,
-+    .prog = aspeed_otpmem_prog,
-+    .set_default_value = aspeed_otpmem_set_default
-+};
-+
-+static void aspeed_otpmem_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedOTPMemState *s = ASPEED_OTPMEM(dev);
-+
-+    if (!s->blk) {
-+        error_setg(&error_fatal, "OTP memory is not initialized");
-+        return;
-+    }
-+
-+    s->max_size = blk_getlength(s->blk);
-+    if (s->max_size < 0 || (s->max_size % 4)) {
-+        error_setg(&error_fatal,
-+                   "Unexpected OTP memory size: %" PRId64 "",
-+                   s->max_size);
-+        return;
-+    }
-+
-+    s->ops = &aspeed_otpmem_ops;
-+
-+    return;
-+}
-+
-+static void aspeed_otpmem_system_reset(DeviceState *dev)
-+{
-+    return;
-+}
-+
-+static void aspeed_otpmem_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_legacy_reset(dc, aspeed_otpmem_system_reset);
-+    dc->realize = aspeed_otpmem_realize;
-+    device_class_set_props(dc, aspeed_otpmem_properties);
-+
-+}
-+
-+static const TypeInfo aspeed_otpmem_types[] = {
-+    {
-+        .name           = TYPE_ASPEED_OTPMEM,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(AspeedOTPMemState),
-+        .class_init     = aspeed_otpmem_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(aspeed_otpmem_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 6d47de482c..ed1eaaa2ad 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_sbc.c',
-   'aspeed_sdmc.c',
-   'aspeed_xdma.c',
-+  'aspeed_otpmem.c',
-   'aspeed_peci.c',
-   'aspeed_sli.c'))
- 
-diff --git a/include/hw/misc/aspeed_otpmem.h b/include/hw/misc/aspeed_otpmem.h
-new file mode 100644
-index 0000000000..11e2de70b6
---- /dev/null
-+++ b/include/hw/misc/aspeed_otpmem.h
-@@ -0,0 +1,40 @@
-+/*
-+ *  ASPEED OTP (One-Time Programmable) memory
-+ *
-+ *  Copyright (C) 2025 Aspeed
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef ASPEED_OTPMMEM_H
-+#define ASPEED_OTPMMEM_H
-+
-+#include "hw/sysbus.h"
-+#include "qapi/error.h"
-+
-+#define TYPE_ASPEED_OTPMEM "aspeed.otpmem"
-+#define ASPEED_OTPMEM_DRIVE "otpmem"
-+
-+#define ASPEED_OTPMEM(obj) OBJECT_CHECK(AspeedOTPMemState, (obj), \
-+                                        TYPE_ASPEED_OTPMEM)
-+
-+typedef struct AspeedOTPMemOps {
-+    void (*read)(void *s, uint32_t addr, uint32_t *out, Error **errp);
-+    void (*prog)(void *s, uint32_t addr, uint32_t data, Error **errp);
-+    void (*set_default_value)(void *s, uint32_t otp_offset,
-+                              uint32_t data, Error **errp);
-+} AspeedOTPMemOps;
-+
-+typedef struct AspeedOTPMemState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    BlockBackend *blk;
-+    int64_t max_size;
-+
-+    AspeedOTPMemOps *ops;
-+} AspeedOTPMemState;
-+
-+#endif /* ASPEED_OTPMMEM_H */
-+
--- 
-2.43.0
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
