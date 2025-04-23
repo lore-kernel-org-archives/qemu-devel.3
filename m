@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8E1C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C6FC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Wct-0007Ku-1E; Wed, 23 Apr 2025 05:42:43 -0400
+	id 1u7Wcz-0007wO-A3; Wed, 23 Apr 2025 05:42:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcT-00062v-Bq
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1u7WcL-0005tT-NB
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcO-0008QA-U2
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:17 -0400
+ id 1u7WcJ-0008PX-B1
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401331;
+ s=mimecast20190719; t=1745401326;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=omtpMSrcFUNApdJIcLMA5ydL/eOeQkYZ7qJDn4mlFrM=;
- b=dZl30xMBs0yY57ZvEeceMI5Ok1D+sW7is0d6V1YqF08+UUDvbWhTQbDnyenl3OmyDK+awt
- uVHGDDDbZDppMXEImMSTgQIk7VDNUzPsIR3ga8BbtZg8Ka/igKrhpfG13YSA+MrR6avNY2
- 6lKl2Y4B1CQwmdYVQft4FYwRzJMnWXE=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g5ZZDK1xtBvzs1i5YSsys1Z/LypJHoXPwiGBorvIHkE=;
+ b=MNTEH/I4t2rT7wBOjfeJdjIwqxHsSvcbeveJNmfXPOhwy4V9p9lPHikjRq/qC7TCs5cKC/
+ g3ajOdqHfHT2LhXVrRBdtyJM9U95ZeeeeeTf0l7i5l0PEhgwGXvaZ55utCaycCVUXl1iWJ
+ BAgJKyGXMFjFfogN8yDe/hEXqCgaQTY=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-lFA0D_r_MHa7cUbrTZNDuw-1; Wed, 23 Apr 2025 05:42:10 -0400
-X-MC-Unique: lFA0D_r_MHa7cUbrTZNDuw-1
-X-Mimecast-MFC-AGG-ID: lFA0D_r_MHa7cUbrTZNDuw_1745401329
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-acb61452b27so561428266b.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:09 -0700 (PDT)
+ us-mta-456-h-vwT6C3PVGZiL9IkVbHoQ-1; Wed, 23 Apr 2025 05:42:03 -0400
+X-MC-Unique: h-vwT6C3PVGZiL9IkVbHoQ-1
+X-Mimecast-MFC-AGG-ID: h-vwT6C3PVGZiL9IkVbHoQ_1745401322
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5f62d10edbcso5294194a12.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401328; x=1746006128;
+ d=1e100.net; s=20230601; t=1745401321; x=1746006121;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=omtpMSrcFUNApdJIcLMA5ydL/eOeQkYZ7qJDn4mlFrM=;
- b=fbfxhZ5fHut/E4SLPLMC1NVmBZINEfPZJHuZvcogAbTYwF2ovRvZAZENYy+bu+dEnB
- WdLKE1A3pYd2haurVO/ECqZsgx4NH4OPLaybEHTQcH0iXFzm2GBNbUbSIQk7SsLexZvY
- IafYEuiT6RS9xfZFIYjZDW7eZ63YH66suy62zD8Lt98ZZ3jl6naTNj5rvb/Unn0wjni5
- EEhQMHKij1iVzLxYBWY1iCkf64/odOOvqzwkC8fLtA5PCnkRzfOBJKLA+KaE3EbecBiM
- cwW9a1z6euMK2B8XSRzxo7nZa59VWP5zuDK8Y/mmx3vjIzatc6y4F6+4Gtr+vkz3XeRz
- EjmA==
-X-Gm-Message-State: AOJu0YzI/pKT0F/R7oe/fQ5f4MtYR0/y5omO6aIHdK9WpnogLZLfeQIu
- 7bzRpozZ66xCDNJnTIU+6CYfNJWIC4JfvtdvKvId9lLKLsb8hcRQ6SWjLrYTG/0YM1PrJqiwuh+
- CAcZTtz+6YRNgFrDjo/aagpf26bWIE1kq+k9Sgvst7utC2NAwgt8HjpF5pCQpd430G5ns3EvCIM
- p61RXAyhKEUDsTbnGFDl4S2GjoDve7ccwHWJui
-X-Gm-Gg: ASbGncu36UNDvoQgitSb8Bb5IdZdFCWqyFZzVpt2l3h4M0nrXfpnTfL0lTM1TrU2PBM
- HveIP7bnVj3YwhQn8BHKNQkPE2HflfAQ+p3VkRktApCnvtVvU3UzZ4NimEtw2wDIRG4blI0lJe/
- 3oyONYXbbwFiYSS7NFDK1zRM03HYifpno26CsEq5DxdT1++2xSiM/fofgak/AgNFaI0xokjMhNH
- fYezYPTqQzjuk/oUPhPhs49/YuKQ4pVz0DKcy2FJqwbiITmDbKVRX+MDsRv4BJoxfPOwIHpdUFG
- mG+/FeGSi64WmQKb
-X-Received: by 2002:a17:906:79ca:b0:acb:b0f4:bc77 with SMTP id
- a640c23a62f3a-acbb0f4c0f9mr746086566b.57.1745401327518; 
- Wed, 23 Apr 2025 02:42:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFh8LLkih5SO1MvNxvDAAMie+Z1HJlG8tdthAB+MHULS8txk4v5DqBXDXyTv+zHYJ4SugpAIA==
-X-Received: by 2002:a17:906:79ca:b0:acb:b0f4:bc77 with SMTP id
- a640c23a62f3a-acbb0f4c0f9mr746082066b.57.1745401326591; 
- Wed, 23 Apr 2025 02:42:06 -0700 (PDT)
+ bh=g5ZZDK1xtBvzs1i5YSsys1Z/LypJHoXPwiGBorvIHkE=;
+ b=iFMpaS83hQSSLiKiGFz8POZaR0/gqUHfgvSwo42Aiqh2vF3qCVVc8/WVQ32y/Mmqxk
+ RD09mG/1Oeaz5cgYn9hWmeKeGu1Ju4doc38j5wA3Asjclrhpi/WyqCJLCFd7ZPTgS1bB
+ +joYk37v/NfHGVUiIN7qFriIyOk0Iv5toCW9gZtv7RaDZ/blnuhfRfmhGMleVxtRoW4C
+ SXM52PhF/kBG0NUJSY0zAOEbqbN4Ybiqz0Ei12dIxM7T+RWKM4OSsmdavSWDRhw5lIRJ
+ MwJwKq93wLgLhkuTp5+JAZgRU1rTg/pRlJc+UNyEeX9hOwgiQZ4qAmG2cU1+sxis6wpI
+ oquw==
+X-Gm-Message-State: AOJu0YyiE8Jv79JlVZ0Duwt6fKplvFqIYtP7jUNg7SnMNe+Rnx1bnva8
+ NOqfK2IbwJGQ/v8mN8EtO/kg0EGSYZuA99moPe4dcjl025Wjkg12zwkg+mHcWvbETolqcgMGbi5
+ ECSjvC1GhHQCtn8q9WWNmRVttsY2AUWIcImWzUa4xhErwkfDe3Db09ae4UOdmfQ8bGaYIMrCrvA
+ 3E63Sd13P5ZGog14wKAQxxoIYMRttqTzHJTJ/n
+X-Gm-Gg: ASbGncuXKN2+YOquNKT0TiKWx78udiojJVkTPoszIQW3vPEHfrh3qEUv6TMhRf5Tc0z
+ qhjiEKjjGCUcAfz7FM9g4Z+fPvvFl7ZS1Hvf1W6vbmRUW8ahoCJa6WYolCe43VvenE/ZJM+ndHf
+ U+9VJF44sdFoHapGQahDyBBhUQPQpj7hhAngZgk01pTVYAdSyko9eYdZEpoP9ibLbeCw+cztv7z
+ jPEJvmVqk77wJqmAtt1520CebvYaxFp9Uh7+swS9/g2OCesoxYFoxAKlmrBDcpl1ZTKwLp6iRrO
+ T/nMuB7kD/wiqrzj
+X-Received: by 2002:a05:6402:210c:b0:5ed:c09c:10f with SMTP id
+ 4fb4d7f45d1cf-5f62854b063mr16708271a12.15.1745401321542; 
+ Wed, 23 Apr 2025 02:42:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHH7h4U2LWta3MMkiRBJEe3xr4vsq8vA8Hi5wsArE6TTO3Zt/JL1/YqnIf0WvJ3knjyqVE92Q==
+X-Received: by 2002:a05:6402:210c:b0:5ed:c09c:10f with SMTP id
+ 4fb4d7f45d1cf-5f62854b063mr16708247a12.15.1745401321100; 
+ Wed, 23 Apr 2025 02:42:01 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acb6ec91f18sm772262866b.83.2025.04.23.02.42.04
+ 4fb4d7f45d1cf-5f62557a151sm7224747a12.32.2025.04.23.02.41.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:42:04 -0700 (PDT)
+ Wed, 23 Apr 2025 02:41:59 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 27/34] target/i386/emulate: remove flags_mask
-Date: Wed, 23 Apr 2025 11:40:57 +0200
-Message-ID: <20250423094105.40692-28-pbonzini@redhat.com>
+Cc: Wei Liu <liuwe@linux.microsoft.com>
+Subject: [PULL 25/34] target/i386: move x86 instruction emulator out of hvf
+Date: Wed, 23 Apr 2025 11:40:55 +0200
+Message-ID: <20250423094105.40692-26-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -93,8 +92,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,1441 +108,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field is written but never read.
+From: Wei Liu <liuwe@linux.microsoft.com>
 
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Move x86_decode, x86_emu, x86_flags and some headers to the new location.
+Fix up all the inclusion sites in hvf.
+
+Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
+Link: https://lore.kernel.org/r/1741377325-28175-14-git-send-email-liuwe@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/emulate/x86_decode.h |   2 -
- target/i386/emulate/x86_decode.c | 864 +++++++++++++++----------------
- 2 files changed, 424 insertions(+), 442 deletions(-)
+ target/i386/{hvf => emulate}/x86.h        | 0
+ target/i386/{hvf => emulate}/x86_decode.h | 0
+ target/i386/{hvf => emulate}/x86_emu.h    | 0
+ target/i386/{hvf => emulate}/x86_flags.h  | 0
+ target/i386/hvf/vmx.h                     | 2 +-
+ target/i386/hvf/x86_descr.h               | 2 +-
+ target/i386/{hvf => emulate}/x86_decode.c | 0
+ target/i386/{hvf => emulate}/x86_emu.c    | 0
+ target/i386/{hvf => emulate}/x86_flags.c  | 0
+ target/i386/hvf/hvf.c                     | 8 ++++----
+ target/i386/hvf/x86.c                     | 4 ++--
+ target/i386/hvf/x86_cpuid.c               | 2 +-
+ target/i386/hvf/x86_mmu.c                 | 2 +-
+ target/i386/hvf/x86_task.c                | 6 +++---
+ target/i386/hvf/x86hvf.c                  | 2 +-
+ target/i386/emulate/meson.build           | 5 +++++
+ target/i386/hvf/meson.build               | 3 ---
+ 17 files changed, 19 insertions(+), 17 deletions(-)
+ rename target/i386/{hvf => emulate}/x86.h (100%)
+ rename target/i386/{hvf => emulate}/x86_decode.h (100%)
+ rename target/i386/{hvf => emulate}/x86_emu.h (100%)
+ rename target/i386/{hvf => emulate}/x86_flags.h (100%)
+ rename target/i386/{hvf => emulate}/x86_decode.c (100%)
+ rename target/i386/{hvf => emulate}/x86_emu.c (100%)
+ rename target/i386/{hvf => emulate}/x86_flags.c (100%)
 
-diff --git a/target/i386/emulate/x86_decode.h b/target/i386/emulate/x86_decode.h
-index 930d965164a..87cc728598d 100644
---- a/target/i386/emulate/x86_decode.h
-+++ b/target/i386/emulate/x86_decode.h
-@@ -295,8 +295,6 @@ typedef struct x86_decode {
-     struct x86_modrm modrm;
-     struct x86_decode_op op[4];
-     bool is_fpu;
--    uint32_t flags_mask;
--
- } x86_decode;
- 
- uint64_t sign(uint64_t val, int size);
-diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-index ddd7b60bcfe..7fee2196878 100644
---- a/target/i386/emulate/x86_decode.c
-+++ b/target/i386/emulate/x86_decode.c
-@@ -429,7 +429,6 @@ struct decode_tbl {
-     void (*decode_op4)(CPUX86State *env, struct x86_decode *decode,
-                        struct x86_decode_op *op4);
-     void (*decode_postfix)(CPUX86State *env, struct x86_decode *decode);
--    uint32_t flags_mask;
- };
- 
- struct decode_x87_tbl {
-@@ -445,7 +444,6 @@ struct decode_x87_tbl {
-     void (*decode_op2)(CPUX86State *env, struct x86_decode *decode,
-                        struct x86_decode_op *op2);
-     void (*decode_postfix)(CPUX86State *env, struct x86_decode *decode);
--    uint32_t flags_mask;
- };
- 
- struct decode_tbl invl_inst = {0x0, 0, 0, false, NULL, NULL, NULL, NULL,
-@@ -470,7 +468,6 @@ static void decode_x87_ins(CPUX86State *env, struct x86_decode *decode)
-     if (decoder->operand_size) {
-         decode->operand_size = decoder->operand_size;
-     }
--    decode->flags_mask = decoder->flags_mask;
-     decode->fpop_stack = decoder->pop;
-     decode->frev = decoder->rev;
-     
-@@ -503,9 +500,6 @@ static void decode_ffgroup(CPUX86State *env, struct x86_decode *decode)
-         X86_DECODE_CMD_INVL
-     };
-     decode->cmd = group[decode->modrm.reg];
--    if (decode->modrm.reg > 2) {
--        decode->flags_mask = 0;
--    }
- }
- 
- static void decode_sldtgroup(CPUX86State *env, struct x86_decode *decode)
-@@ -693,733 +687,724 @@ static void decode_db_4(CPUX86State *env, struct x86_decode *decode)
- }
- 
- 
--#define RFLAGS_MASK_NONE    0
--#define RFLAGS_MASK_OSZAPC  (CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C)
--#define RFLAGS_MASK_LAHF    (CC_S | CC_Z | CC_A | CC_P | CC_C)
--#define RFLAGS_MASK_CF      (CC_C)
--#define RFLAGS_MASK_IF      (IF_MASK)
--#define RFLAGS_MASK_TF      (TF_MASK)
--#define RFLAGS_MASK_DF      (DF_MASK)
--#define RFLAGS_MASK_ZF      (CC_Z)
--
- struct decode_tbl _1op_inst[] = {
-     {0x0, X86_DECODE_CMD_ADD, 1, true, decode_modrm_rm, decode_modrm_reg, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0x1, X86_DECODE_CMD_ADD, 0, true, decode_modrm_rm, decode_modrm_reg, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0x2, X86_DECODE_CMD_ADD, 1, true, decode_modrm_reg, decode_modrm_rm, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0x3, X86_DECODE_CMD_ADD, 0, true, decode_modrm_reg, decode_modrm_rm, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0x4, X86_DECODE_CMD_ADD, 1, false, decode_rax, decode_imm8, NULL, NULL,
--     NULL, RFLAGS_MASK_OSZAPC},
-+     NULL},
-     {0x5, X86_DECODE_CMD_ADD, 0, false, decode_rax, decode_imm, NULL, NULL,
--     NULL, RFLAGS_MASK_OSZAPC},
-+     NULL},
-     {0x6, X86_DECODE_CMD_PUSH_SEG, 0, false, false, NULL, NULL, NULL,
--     decode_pushseg, RFLAGS_MASK_NONE},
-+     decode_pushseg},
-     {0x7, X86_DECODE_CMD_POP_SEG, 0, false, false, NULL, NULL, NULL,
--     decode_popseg, RFLAGS_MASK_NONE},
-+     decode_popseg},
-     {0x8, X86_DECODE_CMD_OR, 1, true, decode_modrm_rm, decode_modrm_reg, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0x9, X86_DECODE_CMD_OR, 0, true, decode_modrm_rm, decode_modrm_reg, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0xa, X86_DECODE_CMD_OR, 1, true, decode_modrm_reg, decode_modrm_rm, NULL,
--     NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL},
-     {0xb, X86_DECODE_CMD_OR, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xc, X86_DECODE_CMD_OR, 1, false, decode_rax, decode_imm8,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xd, X86_DECODE_CMD_OR, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0xe, X86_DECODE_CMD_PUSH_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_pushseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_pushseg},
-     {0xf, X86_DECODE_CMD_POP_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_popseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_popseg},
- 
-     {0x10, X86_DECODE_CMD_ADC, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x11, X86_DECODE_CMD_ADC, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x12, X86_DECODE_CMD_ADC, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x13, X86_DECODE_CMD_ADC, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x14, X86_DECODE_CMD_ADC, 1, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x15, X86_DECODE_CMD_ADC, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0x16, X86_DECODE_CMD_PUSH_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_pushseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_pushseg},
-     {0x17, X86_DECODE_CMD_POP_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_popseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_popseg},
- 
-     {0x18, X86_DECODE_CMD_SBB, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x19, X86_DECODE_CMD_SBB, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x1a, X86_DECODE_CMD_SBB, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x1b, X86_DECODE_CMD_SBB, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x1c, X86_DECODE_CMD_SBB, 1, false, decode_rax, decode_imm8,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x1d, X86_DECODE_CMD_SBB, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0x1e, X86_DECODE_CMD_PUSH_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_pushseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_pushseg},
-     {0x1f, X86_DECODE_CMD_POP_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_popseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_popseg},
- 
-     {0x20, X86_DECODE_CMD_AND, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x21, X86_DECODE_CMD_AND, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x22, X86_DECODE_CMD_AND, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x23, X86_DECODE_CMD_AND, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x24, X86_DECODE_CMD_AND, 1, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x25, X86_DECODE_CMD_AND, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x28, X86_DECODE_CMD_SUB, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x29, X86_DECODE_CMD_SUB, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x2a, X86_DECODE_CMD_SUB, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x2b, X86_DECODE_CMD_SUB, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x2c, X86_DECODE_CMD_SUB, 1, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x2d, X86_DECODE_CMD_SUB, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x2f, X86_DECODE_CMD_DAS, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x30, X86_DECODE_CMD_XOR, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x31, X86_DECODE_CMD_XOR, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x32, X86_DECODE_CMD_XOR, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x33, X86_DECODE_CMD_XOR, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x34, X86_DECODE_CMD_XOR, 1, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x35, X86_DECODE_CMD_XOR, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0x38, X86_DECODE_CMD_CMP, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x39, X86_DECODE_CMD_CMP, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x3a, X86_DECODE_CMD_CMP, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x3b, X86_DECODE_CMD_CMP, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x3c, X86_DECODE_CMD_CMP, 1, false, decode_rax, decode_imm8,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x3d, X86_DECODE_CMD_CMP, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0x3f, X86_DECODE_CMD_AAS, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0x40, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x41, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x42, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x43, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x44, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x45, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x46, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
-     {0x47, X86_DECODE_CMD_INC, 0, false,
--     NULL, NULL, NULL, NULL, decode_incgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_incgroup},
- 
-     {0x48, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x49, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x4a, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x4b, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x4c, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x4d, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x4e, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
-     {0x4f, X86_DECODE_CMD_DEC, 0, false,
--     NULL, NULL, NULL, NULL, decode_decgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_decgroup},
- 
-     {0x50, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x51, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x52, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x53, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x54, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x55, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x56, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
-     {0x57, X86_DECODE_CMD_PUSH, 0, false,
--     NULL, NULL, NULL, NULL, decode_pushgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_pushgroup},
- 
-     {0x58, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x59, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x5a, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x5b, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x5c, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x5d, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x5e, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
-     {0x5f, X86_DECODE_CMD_POP, 0, false,
--     NULL, NULL, NULL, NULL, decode_popgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_popgroup},
- 
-     {0x60, X86_DECODE_CMD_PUSHA, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x61, X86_DECODE_CMD_POPA, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0x68, X86_DECODE_CMD_PUSH, 0, false, decode_imm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x6a, X86_DECODE_CMD_PUSH, 0, false, decode_imm8_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x69, X86_DECODE_CMD_IMUL_3, 0, true, decode_modrm_reg,
--     decode_modrm_rm, decode_imm, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     decode_modrm_rm, decode_imm, NULL, NULL},
-     {0x6b, X86_DECODE_CMD_IMUL_3, 0, true, decode_modrm_reg, decode_modrm_rm,
--     decode_imm8_signed, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     decode_imm8_signed, NULL, NULL},
- 
-     {0x6c, X86_DECODE_CMD_INS, 1, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x6d, X86_DECODE_CMD_INS, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x6e, X86_DECODE_CMD_OUTS, 1, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x6f, X86_DECODE_CMD_OUTS, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0x70, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x71, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x72, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x73, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x74, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x75, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x76, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x77, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x78, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x79, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x7a, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x7b, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x7c, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x7d, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x7e, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x7f, X86_DECODE_CMD_JXX, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
- 
-     {0x80, X86_DECODE_CMD_INVL, 1, true, decode_modrm_rm, decode_imm8,
--     NULL, NULL, decode_addgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_addgroup},
-     {0x81, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm, decode_imm,
--     NULL, NULL, decode_addgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_addgroup},
-     {0x82, X86_DECODE_CMD_INVL, 1, true, decode_modrm_rm, decode_imm8,
--     NULL, NULL, decode_addgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_addgroup},
-     {0x83, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm, decode_imm8_signed,
--     NULL, NULL, decode_addgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_addgroup},
-     {0x84, X86_DECODE_CMD_TST, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x85, X86_DECODE_CMD_TST, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0x86, X86_DECODE_CMD_XCHG, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x87, X86_DECODE_CMD_XCHG, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x88, X86_DECODE_CMD_MOV, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x89, X86_DECODE_CMD_MOV, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x8a, X86_DECODE_CMD_MOV, 1, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x8b, X86_DECODE_CMD_MOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x8c, X86_DECODE_CMD_MOV_FROM_SEG, 0, true, decode_modrm_rm,
--     decode_modrm_reg, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_modrm_reg, NULL, NULL, NULL},
-     {0x8d, X86_DECODE_CMD_LEA, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x8e, X86_DECODE_CMD_MOV_TO_SEG, 0, true, decode_modrm_reg,
--     decode_modrm_rm, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_modrm_rm, NULL, NULL, NULL},
-     {0x8f, X86_DECODE_CMD_POP, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
- 
-     {0x90, X86_DECODE_CMD_NOP, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x91, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
-     {0x92, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
-     {0x93, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
-     {0x94, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
-     {0x95, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
-     {0x96, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
-     {0x97, X86_DECODE_CMD_XCHG, 0, false, NULL, decode_rax,
--     NULL, NULL, decode_xchgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, decode_xchgroup},
- 
-     {0x98, X86_DECODE_CMD_CBW, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x99, X86_DECODE_CMD_CWD, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
- 
-     {0x9a, X86_DECODE_CMD_CALL_FAR, 0, false, NULL,
--     NULL, NULL, NULL, decode_farjmp, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_farjmp},
- 
-     {0x9c, X86_DECODE_CMD_PUSHF, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     /*{0x9d, X86_DECODE_CMD_POPF, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_POPF},*/
-+     NULL, NULL, NULL},*/
-     {0x9e, X86_DECODE_CMD_SAHF, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x9f, X86_DECODE_CMD_LAHF, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_LAHF},
-+     NULL, NULL, NULL},
- 
-     {0xa0, X86_DECODE_CMD_MOV, 1, false, decode_rax, fetch_moffs,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xa1, X86_DECODE_CMD_MOV, 0, false, decode_rax, fetch_moffs,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xa2, X86_DECODE_CMD_MOV, 1, false, fetch_moffs, decode_rax,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xa3, X86_DECODE_CMD_MOV, 0, false, fetch_moffs, decode_rax,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
- 
-     {0xa4, X86_DECODE_CMD_MOVS, 1, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xa5, X86_DECODE_CMD_MOVS, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xa6, X86_DECODE_CMD_CMPS, 1, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xa7, X86_DECODE_CMD_CMPS, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xaa, X86_DECODE_CMD_STOS, 1, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xab, X86_DECODE_CMD_STOS, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xac, X86_DECODE_CMD_LODS, 1, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xad, X86_DECODE_CMD_LODS, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xae, X86_DECODE_CMD_SCAS, 1, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xaf, X86_DECODE_CMD_SCAS, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0xa8, X86_DECODE_CMD_TST, 1, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xa9, X86_DECODE_CMD_TST, 0, false, decode_rax, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0xb0, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb1, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb2, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb3, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb4, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb5, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb6, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
-     {0xb7, X86_DECODE_CMD_MOV, 1, false, NULL,
--     NULL, NULL, NULL, decode_movgroup8, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup8},
- 
-     {0xb8, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xb9, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xba, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xbb, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xbc, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xbd, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xbe, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
-     {0xbf, X86_DECODE_CMD_MOV, 0, false, NULL,
--     NULL, NULL, NULL, decode_movgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_movgroup},
- 
-     {0xc0, X86_DECODE_CMD_INVL, 1, true, decode_modrm_rm, decode_imm8,
--     NULL, NULL, decode_rotgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_rotgroup},
-     {0xc1, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm, decode_imm8,
--     NULL, NULL, decode_rotgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_rotgroup},
- 
-     {0xc2, X86_DECODE_RET_NEAR, 0, false, decode_imm16,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xc3, X86_DECODE_RET_NEAR, 0, false, NULL,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
- 
-     {0xc4, X86_DECODE_CMD_LES, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xc5, X86_DECODE_CMD_LDS, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
- 
-     {0xc6, X86_DECODE_CMD_MOV, 1, true, decode_modrm_rm, decode_imm8,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xc7, X86_DECODE_CMD_MOV, 0, true, decode_modrm_rm, decode_imm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
- 
-     {0xc8, X86_DECODE_CMD_ENTER, 0, false, decode_imm16, decode_imm8,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xc9, X86_DECODE_CMD_LEAVE, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xca, X86_DECODE_RET_FAR, 0, false, decode_imm16, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xcb, X86_DECODE_RET_FAR, 0, false, decode_imm_0, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xcd, X86_DECODE_CMD_INT, 0, false, decode_imm8, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     /*{0xcf, X86_DECODE_CMD_IRET, 0, false, NULL, NULL,
--     NULL, NULL, NULL, RFLAGS_MASK_IRET},*/
-+     NULL, NULL, NULL},*/
- 
-     {0xd0, X86_DECODE_CMD_INVL, 1, true, decode_modrm_rm, decode_imm_1,
--     NULL, NULL, decode_rotgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_rotgroup},
-     {0xd1, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm, decode_imm_1,
--     NULL, NULL, decode_rotgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_rotgroup},
-     {0xd2, X86_DECODE_CMD_INVL, 1, true, decode_modrm_rm, decode_rcx,
--     NULL, NULL, decode_rotgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_rotgroup},
-     {0xd3, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm, decode_rcx,
--     NULL, NULL, decode_rotgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_rotgroup},
- 
-     {0xd4, X86_DECODE_CMD_AAM, 0, false, decode_imm8,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL},
-     {0xd5, X86_DECODE_CMD_AAD, 0, false, decode_imm8,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL},
- 
-     {0xd7, X86_DECODE_CMD_XLAT, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0xd8, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xd9, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xda, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xdb, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xdc, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xdd, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xde, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
-     {0xdf, X86_DECODE_CMD_INVL, 0, true, NULL,
--     NULL, NULL, NULL, decode_x87_ins, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_x87_ins},
- 
-     {0xe0, X86_DECODE_CMD_LOOP, 0, false, decode_imm8_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe1, X86_DECODE_CMD_LOOP, 0, false, decode_imm8_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe2, X86_DECODE_CMD_LOOP, 0, false, decode_imm8_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
- 
-     {0xe3, X86_DECODE_CMD_JCXZ, 1, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
- 
-     {0xe4, X86_DECODE_CMD_IN, 1, false, decode_imm8,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe5, X86_DECODE_CMD_IN, 0, false, decode_imm8,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe6, X86_DECODE_CMD_OUT, 1, false, decode_imm8,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe7, X86_DECODE_CMD_OUT, 0, false, decode_imm8,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe8, X86_DECODE_CMD_CALL_NEAR, 0, false, decode_imm_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xe9, X86_DECODE_CMD_JMP_NEAR, 0, false, decode_imm_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xea, X86_DECODE_CMD_JMP_FAR, 0, false,
--     NULL, NULL, NULL, NULL, decode_farjmp, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_farjmp},
-     {0xeb, X86_DECODE_CMD_JMP_NEAR, 1, false, decode_imm8_signed,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0xec, X86_DECODE_CMD_IN, 1, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xed, X86_DECODE_CMD_IN, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xee, X86_DECODE_CMD_OUT, 1, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xef, X86_DECODE_CMD_OUT, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0xf4, X86_DECODE_CMD_HLT, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0xf5, X86_DECODE_CMD_CMC, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_CF},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0xf6, X86_DECODE_CMD_INVL, 1, true,
--     NULL, NULL, NULL, NULL, decode_f7group, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_f7group},
-     {0xf7, X86_DECODE_CMD_INVL, 0, true,
--     NULL, NULL, NULL, NULL, decode_f7group, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, NULL, decode_f7group},
- 
-     {0xf8, X86_DECODE_CMD_CLC, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_CF},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xf9, X86_DECODE_CMD_STC, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_CF},
-+     NULL, NULL, NULL, NULL, NULL},
- 
-     {0xfa, X86_DECODE_CMD_CLI, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_IF},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xfb, X86_DECODE_CMD_STI, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_IF},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xfc, X86_DECODE_CMD_CLD, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_DF},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xfd, X86_DECODE_CMD_STD, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_DF},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xfe, X86_DECODE_CMD_INVL, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, decode_incgroup2, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, decode_incgroup2},
-     {0xff, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, decode_ffgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL, decode_ffgroup},
- };
- 
- struct decode_tbl _2op_inst[] = {
-     {0x0, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, decode_sldtgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_sldtgroup},
-     {0x1, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, decode_lidtgroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_lidtgroup},
-     {0x6, X86_DECODE_CMD_CLTS, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_TF},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x9, X86_DECODE_CMD_WBINVD, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x18, X86_DECODE_CMD_PREFETCH, 0, true,
--     NULL, NULL, NULL, NULL, decode_x87_general, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_x87_general},
-     {0x1f, X86_DECODE_CMD_NOP, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x20, X86_DECODE_CMD_MOV_FROM_CR, 0, true, decode_modrm_rm,
--     decode_modrm_reg, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_modrm_reg, NULL, NULL, NULL},
-     {0x21, X86_DECODE_CMD_MOV_FROM_DR, 0, true, decode_modrm_rm,
--     decode_modrm_reg, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_modrm_reg, NULL, NULL, NULL},
-     {0x22, X86_DECODE_CMD_MOV_TO_CR, 0, true, decode_modrm_reg,
--     decode_modrm_rm, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_modrm_rm, NULL, NULL, NULL},
-     {0x23, X86_DECODE_CMD_MOV_TO_DR, 0, true, decode_modrm_reg,
--     decode_modrm_rm, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_modrm_rm, NULL, NULL, NULL},
-     {0x30, X86_DECODE_CMD_WRMSR, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x31, X86_DECODE_CMD_RDTSC, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x32, X86_DECODE_CMD_RDMSR, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0x40, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x41, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x42, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x43, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x44, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x45, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x46, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x47, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x48, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x49, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x4a, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x4b, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x4c, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x4d, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x4e, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x4f, X86_DECODE_CMD_CMOV, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0x77, X86_DECODE_CMD_EMMS, 0, false,
--     NULL, NULL, NULL, NULL, decode_x87_general, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_x87_general},
-     {0x82, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x83, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x84, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x85, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x86, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x87, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x88, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x89, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x8a, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x8b, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x8c, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x8d, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x8e, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x8f, X86_DECODE_CMD_JXX, 0, false,
--     NULL, NULL, NULL, NULL, decode_jxx, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_jxx},
-     {0x90, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x91, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x92, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x93, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x94, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x95, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x96, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x97, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x98, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x99, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x9a, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x9b, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x9c, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x9d, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x9e, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
-     {0x9f, X86_DECODE_CMD_SETXX, 1, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL},
- 
-     {0xb0, X86_DECODE_CMD_CMPXCHG, 1, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xb1, X86_DECODE_CMD_CMPXCHG, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
- 
-     {0xb6, X86_DECODE_CMD_MOVZX, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xb7, X86_DECODE_CMD_MOVZX, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xb8, X86_DECODE_CMD_POPCNT, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xbe, X86_DECODE_CMD_MOVSX, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xbf, X86_DECODE_CMD_MOVSX, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xa0, X86_DECODE_CMD_PUSH_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_pushseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_pushseg},
-     {0xa1, X86_DECODE_CMD_POP_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_popseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_popseg},
-     {0xa2, X86_DECODE_CMD_CPUID, 0, false,
--     NULL, NULL, NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, NULL},
-     {0xa3, X86_DECODE_CMD_BT, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_CF},
-+     NULL, NULL, NULL},
-     {0xa4, X86_DECODE_CMD_SHLD, 0, true, decode_modrm_rm, decode_modrm_reg,
--     decode_imm8, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     decode_imm8, NULL, NULL},
-     {0xa5, X86_DECODE_CMD_SHLD, 0, true, decode_modrm_rm, decode_modrm_reg,
--     decode_rcx, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     decode_rcx, NULL, NULL},
-     {0xa8, X86_DECODE_CMD_PUSH_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_pushseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_pushseg},
-     {0xa9, X86_DECODE_CMD_POP_SEG, 0, false, false,
--     NULL, NULL, NULL, decode_popseg, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_popseg},
-     {0xab, X86_DECODE_CMD_BTS, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_CF},
-+     NULL, NULL, NULL},
-     {0xac, X86_DECODE_CMD_SHRD, 0, true, decode_modrm_rm, decode_modrm_reg,
--     decode_imm8, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     decode_imm8, NULL, NULL},
-     {0xad, X86_DECODE_CMD_SHRD, 0, true, decode_modrm_rm, decode_modrm_reg,
--     decode_rcx, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     decode_rcx, NULL, NULL},
- 
-     {0xae, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, decode_aegroup, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, decode_aegroup},
- 
-     {0xaf, X86_DECODE_CMD_IMUL_2, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xb2, X86_DECODE_CMD_LSS, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL},
-     {0xb3, X86_DECODE_CMD_BTR, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xba, X86_DECODE_CMD_INVL, 0, true, decode_modrm_rm, decode_imm8,
--     NULL, NULL, decode_btgroup, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, decode_btgroup},
-     {0xbb, X86_DECODE_CMD_BTC, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xbc, X86_DECODE_CMD_BSF, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
-     {0xbd, X86_DECODE_CMD_BSR, 0, true, decode_modrm_reg, decode_modrm_rm,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0xc1, X86_DECODE_CMD_XADD, 0, true, decode_modrm_rm, decode_modrm_reg,
--     NULL, NULL, NULL, RFLAGS_MASK_OSZAPC},
-+     NULL, NULL, NULL},
- 
-     {0xc7, X86_DECODE_CMD_CMPXCHG8B, 0, true, decode_modrm_rm,
--     NULL, NULL, NULL, NULL, RFLAGS_MASK_ZF},
-+     NULL, NULL, NULL, NULL},
- 
-     {0xc8, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xc9, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xca, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xcb, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xcc, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xcd, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xce, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
-     {0xcf, X86_DECODE_CMD_BSWAP, 0, false,
--     NULL, NULL, NULL, NULL, decode_bswap, RFLAGS_MASK_NONE},
-+     NULL, NULL, NULL, NULL, decode_bswap},
- };
- 
- struct decode_x87_tbl invl_inst_x87 = {0x0, 0, 0, 0, 0, false, false, NULL,
-@@ -1427,207 +1412,207 @@ struct decode_x87_tbl invl_inst_x87 = {0x0, 0, 0, 0, 0, false, false, NULL,
- 
- struct decode_x87_tbl _x87_inst[] = {
-     {0xd8, 0, 3, X86_DECODE_CMD_FADD, 10, false, false,
--     decode_x87_modrm_st0, decode_decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_decode_x87_modrm_st0, NULL},
-     {0xd8, 0, 0, X86_DECODE_CMD_FADD, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL},
-     {0xd8, 1, 3, X86_DECODE_CMD_FMUL, 10, false, false, decode_x87_modrm_st0,
--     decode_decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_decode_x87_modrm_st0, NULL},
-     {0xd8, 1, 0, X86_DECODE_CMD_FMUL, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL},
-     {0xd8, 4, 3, X86_DECODE_CMD_FSUB, 10, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xd8, 4, 0, X86_DECODE_CMD_FSUB, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL},
-     {0xd8, 5, 3, X86_DECODE_CMD_FSUB, 10, true, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xd8, 5, 0, X86_DECODE_CMD_FSUB, 4, true, false, decode_x87_modrm_st0,
--     decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL},
-     {0xd8, 6, 3, X86_DECODE_CMD_FDIV, 10, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xd8, 6, 0, X86_DECODE_CMD_FDIV, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL},
-     {0xd8, 7, 3, X86_DECODE_CMD_FDIV, 10, true, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xd8, 7, 0, X86_DECODE_CMD_FDIV, 4, true, false, decode_x87_modrm_st0,
--     decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL},
- 
-     {0xd9, 0, 3, X86_DECODE_CMD_FLD, 10, false, false,
--     decode_x87_modrm_st0, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, NULL},
-     {0xd9, 0, 0, X86_DECODE_CMD_FLD, 4, false, false,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xd9, 1, 3, X86_DECODE_CMD_FXCH, 10, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xd9, 1, 0, X86_DECODE_CMD_INVL, 10, false, false,
--     decode_x87_modrm_st0, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, NULL},
-     {0xd9, 2, 3, X86_DECODE_CMD_INVL, 10, false, false,
--     decode_x87_modrm_st0, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, NULL},
-     {0xd9, 2, 0, X86_DECODE_CMD_FST, 4, false, false,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xd9, 3, 3, X86_DECODE_CMD_INVL, 10, false, false,
--     decode_x87_modrm_st0, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, NULL},
-     {0xd9, 3, 0, X86_DECODE_CMD_FST, 4, false, true,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xd9, 4, 3, X86_DECODE_CMD_INVL, 10, false, false,
--     decode_x87_modrm_st0, NULL, decode_d9_4, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, decode_d9_4},
-     {0xd9, 4, 0, X86_DECODE_CMD_INVL, 4, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
-     {0xd9, 5, 3, X86_DECODE_CMD_FLDxx, 10, false, false, NULL, NULL, NULL,
-      RFLAGS_MASK_NONE},
-     {0xd9, 5, 0, X86_DECODE_CMD_FLDCW, 2, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
- 
-     {0xd9, 7, 3, X86_DECODE_CMD_FNSTCW, 2, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
-     {0xd9, 7, 0, X86_DECODE_CMD_FNSTCW, 2, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
- 
-     {0xda, 0, 3, X86_DECODE_CMD_FCMOV, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xda, 0, 0, X86_DECODE_CMD_FADD, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL},
-     {0xda, 1, 3, X86_DECODE_CMD_FCMOV, 10, false, false, decode_x87_modrm_st0,
--     decode_decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_decode_x87_modrm_st0, NULL},
-     {0xda, 1, 0, X86_DECODE_CMD_FMUL, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL},
-     {0xda, 2, 3, X86_DECODE_CMD_FCMOV, 10, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xda, 3, 3, X86_DECODE_CMD_FCMOV, 10, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xda, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-      RFLAGS_MASK_NONE},
-     {0xda, 4, 0, X86_DECODE_CMD_FSUB, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL},
-     {0xda, 5, 3, X86_DECODE_CMD_FUCOM, 10, false, true, decode_x87_modrm_st0,
--     decode_decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_decode_x87_modrm_st0, NULL},
-     {0xda, 5, 0, X86_DECODE_CMD_FSUB, 4, true, false, decode_x87_modrm_st0,
--     decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL},
-     {0xda, 6, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-      RFLAGS_MASK_NONE},
-     {0xda, 6, 0, X86_DECODE_CMD_FDIV, 4, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL},
-     {0xda, 7, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-      RFLAGS_MASK_NONE},
-     {0xda, 7, 0, X86_DECODE_CMD_FDIV, 4, true, false, decode_x87_modrm_st0,
--     decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL},
- 
-     {0xdb, 0, 3, X86_DECODE_CMD_FCMOV, 10, false, false, decode_x87_modrm_st0,
--     decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL},
-     {0xdb, 0, 0, X86_DECODE_CMD_FLD, 4, false, false,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdb, 1, 3, X86_DECODE_CMD_FCMOV, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdb, 2, 3, X86_DECODE_CMD_FCMOV, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdb, 2, 0, X86_DECODE_CMD_FST, 4, false, false,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdb, 3, 3, X86_DECODE_CMD_FCMOV, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdb, 3, 0, X86_DECODE_CMD_FST, 4, false, true,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdb, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
--     decode_db_4, RFLAGS_MASK_NONE},
-+     decode_db_4},
-     {0xdb, 4, 0, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-      RFLAGS_MASK_NONE},
-     {0xdb, 5, 3, X86_DECODE_CMD_FUCOMI, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdb, 5, 0, X86_DECODE_CMD_FLD, 10, false, false,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xdb, 7, 0, X86_DECODE_CMD_FST, 10, false, true,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
- 
-     {0xdc, 0, 3, X86_DECODE_CMD_FADD, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdc, 0, 0, X86_DECODE_CMD_FADD, 8, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL},
-     {0xdc, 1, 3, X86_DECODE_CMD_FMUL, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdc, 1, 0, X86_DECODE_CMD_FMUL, 8, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL},
-     {0xdc, 4, 3, X86_DECODE_CMD_FSUB, 10, true, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdc, 4, 0, X86_DECODE_CMD_FSUB, 8, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL},
-     {0xdc, 5, 3, X86_DECODE_CMD_FSUB, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdc, 5, 0, X86_DECODE_CMD_FSUB, 8, true, false,
--     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL},
-     {0xdc, 6, 3, X86_DECODE_CMD_FDIV, 10, true, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdc, 6, 0, X86_DECODE_CMD_FDIV, 8, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL},
-     {0xdc, 7, 3, X86_DECODE_CMD_FDIV, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdc, 7, 0, X86_DECODE_CMD_FDIV, 8, true, false,
--     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_floatp, NULL},
- 
-     {0xdd, 0, 0, X86_DECODE_CMD_FLD, 8, false, false,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xdd, 1, 3, X86_DECODE_CMD_FXCH, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdd, 2, 3, X86_DECODE_CMD_FST, 10, false, false,
--     decode_x87_modrm_st0, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, NULL},
-     {0xdd, 2, 0, X86_DECODE_CMD_FST, 8, false, false,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xdd, 3, 3, X86_DECODE_CMD_FST, 10, false, true,
--     decode_x87_modrm_st0, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, NULL, NULL},
-     {0xdd, 3, 0, X86_DECODE_CMD_FST, 8, false, true,
--     decode_x87_modrm_floatp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_floatp, NULL, NULL},
-     {0xdd, 4, 3, X86_DECODE_CMD_FUCOM, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdd, 4, 0, X86_DECODE_CMD_FRSTOR, 8, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
-     {0xdd, 5, 3, X86_DECODE_CMD_FUCOM, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdd, 7, 0, X86_DECODE_CMD_FNSTSW, 0, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
-     {0xdd, 7, 3, X86_DECODE_CMD_FNSTSW, 0, false, false,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
- 
-     {0xde, 0, 3, X86_DECODE_CMD_FADD, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xde, 0, 0, X86_DECODE_CMD_FADD, 2, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL},
-     {0xde, 1, 3, X86_DECODE_CMD_FMUL, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xde, 1, 0, X86_DECODE_CMD_FMUL, 2, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL},
-     {0xde, 4, 3, X86_DECODE_CMD_FSUB, 10, true, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xde, 4, 0, X86_DECODE_CMD_FSUB, 2, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL},
-     {0xde, 5, 3, X86_DECODE_CMD_FSUB, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xde, 5, 0, X86_DECODE_CMD_FSUB, 2, true, false,
--     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL},
-     {0xde, 6, 3, X86_DECODE_CMD_FDIV, 10, true, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xde, 6, 0, X86_DECODE_CMD_FDIV, 2, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL},
-     {0xde, 7, 3, X86_DECODE_CMD_FDIV, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xde, 7, 0, X86_DECODE_CMD_FDIV, 2, true, false,
--     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_intp, NULL},
- 
-     {0xdf, 0, 0, X86_DECODE_CMD_FLD, 2, false, false,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdf, 1, 3, X86_DECODE_CMD_FXCH, 10, false, false,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdf, 2, 3, X86_DECODE_CMD_FST, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdf, 2, 0, X86_DECODE_CMD_FST, 2, false, false,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdf, 3, 3, X86_DECODE_CMD_FST, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdf, 3, 0, X86_DECODE_CMD_FST, 2, false, true,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdf, 4, 3, X86_DECODE_CMD_FNSTSW, 2, false, true,
--     decode_x87_modrm_bytep, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_bytep, NULL, NULL},
-     {0xdf, 5, 3, X86_DECODE_CMD_FUCOMI, 10, false, true,
--     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
-     {0xdf, 5, 0, X86_DECODE_CMD_FLD, 8, false, false,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
-     {0xdf, 7, 0, X86_DECODE_CMD_FST, 8, false, true,
--     decode_x87_modrm_intp, NULL, NULL, RFLAGS_MASK_NONE},
-+     decode_x87_modrm_intp, NULL, NULL},
- };
- 
- void calc_modrm_operand16(CPUX86State *env, struct x86_decode *decode,
-@@ -2045,7 +2030,6 @@ static inline void decode_opcode_general(CPUX86State *env,
-     if (inst_decoder->operand_size) {
-         decode->operand_size = inst_decoder->operand_size;
-     }
--    decode->flags_mask = inst_decoder->flags_mask;
- 
-     if (inst_decoder->is_modrm) {
-         decode_modrm(env, decode);
+diff --git a/target/i386/hvf/x86.h b/target/i386/emulate/x86.h
+similarity index 100%
+rename from target/i386/hvf/x86.h
+rename to target/i386/emulate/x86.h
+diff --git a/target/i386/hvf/x86_decode.h b/target/i386/emulate/x86_decode.h
+similarity index 100%
+rename from target/i386/hvf/x86_decode.h
+rename to target/i386/emulate/x86_decode.h
+diff --git a/target/i386/hvf/x86_emu.h b/target/i386/emulate/x86_emu.h
+similarity index 100%
+rename from target/i386/hvf/x86_emu.h
+rename to target/i386/emulate/x86_emu.h
+diff --git a/target/i386/hvf/x86_flags.h b/target/i386/emulate/x86_flags.h
+similarity index 100%
+rename from target/i386/hvf/x86_flags.h
+rename to target/i386/emulate/x86_flags.h
+diff --git a/target/i386/hvf/vmx.h b/target/i386/hvf/vmx.h
+index 80ce26279bf..3c56afc9d3a 100644
+--- a/target/i386/hvf/vmx.h
++++ b/target/i386/hvf/vmx.h
+@@ -29,7 +29,7 @@
+ #include <Hypervisor/hv_vmx.h>
+ #include "vmcs.h"
+ #include "cpu.h"
+-#include "x86.h"
++#include "emulate/x86.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+ 
+diff --git a/target/i386/hvf/x86_descr.h b/target/i386/hvf/x86_descr.h
+index ce5de983497..24af4946cd4 100644
+--- a/target/i386/hvf/x86_descr.h
++++ b/target/i386/hvf/x86_descr.h
+@@ -19,7 +19,7 @@
+ #ifndef HVF_X86_DESCR_H
+ #define HVF_X86_DESCR_H
+ 
+-#include "x86.h"
++#include "emulate/x86.h"
+ 
+ typedef struct vmx_segment {
+     uint16_t sel;
+diff --git a/target/i386/hvf/x86_decode.c b/target/i386/emulate/x86_decode.c
+similarity index 100%
+rename from target/i386/hvf/x86_decode.c
+rename to target/i386/emulate/x86_decode.c
+diff --git a/target/i386/hvf/x86_emu.c b/target/i386/emulate/x86_emu.c
+similarity index 100%
+rename from target/i386/hvf/x86_emu.c
+rename to target/i386/emulate/x86_emu.c
+diff --git a/target/i386/hvf/x86_flags.c b/target/i386/emulate/x86_flags.c
+similarity index 100%
+rename from target/i386/hvf/x86_flags.c
+rename to target/i386/emulate/x86_flags.c
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 8c31d2e0cf7..23ebf2550ac 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -59,12 +59,12 @@
+ #include "hvf-i386.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+-#include "x86.h"
++#include "emulate/x86.h"
+ #include "x86_descr.h"
+-#include "x86_flags.h"
++#include "emulate/x86_flags.h"
+ #include "x86_mmu.h"
+-#include "x86_decode.h"
+-#include "x86_emu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
+ #include "x86_task.h"
+ #include "x86hvf.h"
+ 
+diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
+index a0ede138865..5c75ec9a007 100644
+--- a/target/i386/hvf/x86.c
++++ b/target/i386/hvf/x86.c
+@@ -19,8 +19,8 @@
+ #include "qemu/osdep.h"
+ 
+ #include "cpu.h"
+-#include "x86_decode.h"
+-#include "x86_emu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+ #include "x86_mmu.h"
+diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
+index ae836f65cc9..fa131b18c6d 100644
+--- a/target/i386/hvf/x86_cpuid.c
++++ b/target/i386/hvf/x86_cpuid.c
+@@ -24,7 +24,7 @@
+ #include "qemu/cpuid.h"
+ #include "host/cpuinfo.h"
+ #include "cpu.h"
+-#include "x86.h"
++#include "emulate/x86.h"
+ #include "vmx.h"
+ #include "system/hvf.h"
+ #include "hvf-i386.h"
+diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
+index 579d0c3a4cc..afc5c17d5d5 100644
+--- a/target/i386/hvf/x86_mmu.c
++++ b/target/i386/hvf/x86_mmu.c
+@@ -19,7 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "panic.h"
+ #include "cpu.h"
+-#include "x86.h"
++#include "emulate/x86.h"
+ #include "x86_mmu.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+diff --git a/target/i386/hvf/x86_task.c b/target/i386/hvf/x86_task.c
+index 161217991fc..bdf8b51ae67 100644
+--- a/target/i386/hvf/x86_task.c
++++ b/target/i386/hvf/x86_task.c
+@@ -14,11 +14,11 @@
+ #include "hvf-i386.h"
+ #include "vmcs.h"
+ #include "vmx.h"
+-#include "x86.h"
++#include "emulate/x86.h"
+ #include "x86_descr.h"
+ #include "x86_mmu.h"
+-#include "x86_decode.h"
+-#include "x86_emu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
+ #include "x86_task.h"
+ #include "x86hvf.h"
+ 
+diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+index 531a340b37c..2057314892a 100644
+--- a/target/i386/hvf/x86hvf.c
++++ b/target/i386/hvf/x86hvf.c
+@@ -24,7 +24,7 @@
+ #include "vmcs.h"
+ #include "cpu.h"
+ #include "x86_descr.h"
+-#include "x86_decode.h"
++#include "emulate/x86_decode.h"
+ #include "system/hw_accel.h"
+ 
+ #include "hw/i386/apic_internal.h"
+diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
+index e69de29bb2d..4edd4f462fc 100644
+--- a/target/i386/emulate/meson.build
++++ b/target/i386/emulate/meson.build
+@@ -0,0 +1,5 @@
++i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
++  'x86_decode.c',
++  'x86_emu.c',
++  'x86_flags.c',
++))
+diff --git a/target/i386/hvf/meson.build b/target/i386/hvf/meson.build
+index 05c3c8cf18b..519d190f0e6 100644
+--- a/target/i386/hvf/meson.build
++++ b/target/i386/hvf/meson.build
+@@ -2,10 +2,7 @@ i386_system_ss.add(when: [hvf, 'CONFIG_HVF'], if_true: files(
+   'hvf.c',
+   'x86.c',
+   'x86_cpuid.c',
+-  'x86_decode.c',
+   'x86_descr.c',
+-  'x86_emu.c',
+-  'x86_flags.c',
+   'x86_mmu.c',
+   'x86_task.c',
+   'x86hvf.c',
 -- 
 2.49.0
 
