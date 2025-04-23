@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E69C369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C93DAC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WdN-0000YK-2b; Wed, 23 Apr 2025 05:43:13 -0400
+	id 1u7Wd7-0008Vc-9w; Wed, 23 Apr 2025 05:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcM-0005um-SR
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1u7Wcd-0006Jd-EK
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcK-0008Pg-GX
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:09 -0400
+ id 1u7Wcb-0008RP-C9
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401327;
+ s=mimecast20190719; t=1745401344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vglQePu3gYLlbuxWFnUrsIa3jiYsaXtTUjZ4wu5eNmc=;
- b=IToHASen9GiIxqokM30A2LFs9wZIV9JtzJRhGjdTpF1ilhjfmuMf+IBeSScemmSBkaQNhw
- /Z4i1t9QS8IhMTX/d2a+584cFUty1PGyJBDN1+gAOVz+k/11LaNOzB7JjQNIqgiq5aeO4r
- I0eIgmD019cfYlCNLi2bf81mt+vD4ro=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+glD85tLMU4Zh0YpUWT/RyU8gRb7iUdvIPG8JxMkRCI=;
+ b=J2uTnU8W1/Y3TpU+vOcQE9MgrbZFg2ZE0bYRC3fTYizB9LEm/if28qRj9MijaPMD3zRsQT
+ W624pdpVpxvM0oL9KRjPjqy4lF35NTGw+OPGoQOxIkqWwGXaDIkoR3Br5diDOWwmbEn1nM
+ fVMn7RvCp8c0TaVUihPEupCWZme7+2g=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-Ce7qWpORPzGw62O1v-CcvA-1; Wed, 23 Apr 2025 05:42:06 -0400
-X-MC-Unique: Ce7qWpORPzGw62O1v-CcvA-1
-X-Mimecast-MFC-AGG-ID: Ce7qWpORPzGw62O1v-CcvA_1745401325
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5e5d9682f6eso5664641a12.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:05 -0700 (PDT)
+ us-mta-576-R7yGQqZLNSiSNPQbIegP1Q-1; Wed, 23 Apr 2025 05:42:22 -0400
+X-MC-Unique: R7yGQqZLNSiSNPQbIegP1Q-1
+X-Mimecast-MFC-AGG-ID: R7yGQqZLNSiSNPQbIegP1Q_1745401342
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac6b047c0dcso461335666b.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401324; x=1746006124;
+ d=1e100.net; s=20230601; t=1745401341; x=1746006141;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vglQePu3gYLlbuxWFnUrsIa3jiYsaXtTUjZ4wu5eNmc=;
- b=HtubxmSYcPgHQHyzsaQI6rDKjhh9j7lvTmRUHWKX8DxDqRV/4D1MV+Y88vkcI6WR4w
- 0Uotusy9oUzn2iqd29XVwZLX0z+0AgTBAxndDXtIIHhPHvPT7MQ2WUe0P2lP4JqHxbfP
- hZUowXlR8NAKdJyA55nsh+geMNzORDqU3DdlkXlNTH33AH/J40HrMCw/utT56WrPMot5
- NGsaIzQfsH49Iz24ZU4jWsXtx1T0I69PAZm2Iw/Z0IdLnGZZuIURcDfOM9OBca15Ae+h
- CVm6zAJxbfG6rrLQ7Mv6OKD16TM5vgoAP/lJKBCLgm3zlB+XVmaYMiDpNkeZVcGrCQZu
- XMzw==
-X-Gm-Message-State: AOJu0YyO3cfbRgpMYIxz25ZXV22B8Bfq6gzdnPISBErG5S4ZgMdEZSQ/
- KeLQyGztnDdzggPH/U7xvrEneERDwaPVGaegswbuS4Sse5yKSW7Mo6hStPuRRbzUSI8FW9TdOey
- t6Np5O1wQ3mANeG+rbMzV3s/iBOMsn0cmiUn+oH5jZJfMciSXKYO67u7Em0UwrZUBW0Hlc5a8a5
- agl2J3DQxuV9Wh5xgxTOO0qu9Y/Gp55jxgzlf5
-X-Gm-Gg: ASbGncuZMyTjc3D+BtE5EBx29PvDy83NvArzv5WzZ2brRqXoT+i53oXKfJLXwVW7rvj
- fo3HwGDXwMLilaDG22hUH3XeHOhFM8lu9dP3QOOQVJQTMnFN69xHDgBPE7wF+kbNPFMWUOsAn/G
- bUFldPSnUp+eEOzQ+PCRk1e2wt1CDQ5jzQgKekHV47+Pl2khQohGYRToFJvt0AHzYyno5MUcfXb
- TqolFfIVZDWs9ZNI6Jd+tfTuNlIdsqjox2JVGy22b3vhg96C48w9bQQ+XzHhTqxCf1dEj3peJoi
- t+8FuEUuGxMx1gLJ
-X-Received: by 2002:a05:6402:40cd:b0:5ed:3228:d005 with SMTP id
- 4fb4d7f45d1cf-5f628501cadmr17013165a12.6.1745401323996; 
- Wed, 23 Apr 2025 02:42:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQQb5wiaHPtfP2GrbPxnV0pLKZMa52O/eoCpxtg+mPw5OSa1r7JGqES7+PdQvqP6hLXl/16A==
-X-Received: by 2002:a05:6402:40cd:b0:5ed:3228:d005 with SMTP id
- 4fb4d7f45d1cf-5f628501cadmr17013138a12.6.1745401323471; 
- Wed, 23 Apr 2025 02:42:03 -0700 (PDT)
+ bh=+glD85tLMU4Zh0YpUWT/RyU8gRb7iUdvIPG8JxMkRCI=;
+ b=iJ+qQ3FL7oYwM0hk0vU78NXyQL/Oqt0emjO1L6Af44YCQHyHG8Fr/GVWR1FM9lwkeV
+ jVM4kCtSLzMMmLqz74IL6NZQ0A2niRkF+1181Del8VkeijWgrQP3R5vbMOCuJGKPc/CK
+ BTAoSiNOye0Cj00He4CkrvIQ3aXy1q19TzliEjJIkwVRS/aWg/8K8RhfqGLh/BBY7MY8
+ 6TalmreCgB44H163+9GkZXi0J+wJzb1A6fxp489XLBrGxpC9AkOGmKL5hFpLFY32U/eF
+ x8kalBxACkuOYqd5XNwPTazZbFglYsjvEmHe7hP51wrOUB8Z6W6hg0y3oe7LYLRV2OpJ
+ Ur2g==
+X-Gm-Message-State: AOJu0Yyg256jsl5F8kNz4dCkc/B9K7QIJ1Bf5OjCgIKmKQ9S01t7nwNd
+ fY8fTglHtbtU1rsyJXSQN2oPd09aRGOdSWAT1Lr9/QLmytq7Pb7KqD3Ybl/fAI98AGf/Hi8wimi
+ MshRO/htUjORFT8bpl0F1JVEiGwkSr7QlyVJTqC/Vdd0jIZHUQoTDuPxpQWVsxXkDz4UfHfmiVZ
+ RYzkBVa1Odz434I0E2S7Th42h0Vb73tMV0NifM
+X-Gm-Gg: ASbGncshXohVZ+q0rSCyJkuEiDqlk6hz63Mhsk5/JKF5h3c+Eb487Ow2yqxqkJO9vmP
+ GV/vlDdTQVr61iRP6zFkvzYQX3dFzOkWs0DszobE+Q8pOvtvmkqqNnGvKo8Pt7lxoJGz2RyPG/6
+ F71fxy/1J6ViexC/GRN6iFvM0lYrQD8IjnLhu6AaoI5nVzJYGB0TVq8dkHypP0FmhzHpO0B0B4A
+ bEpm6hpkf9CQUvsviPl1sFgBi+8QqxSN71w3l1vaGjwsHXNtsvZ6J7/GWQ/9kP54sRjRMjYkntk
+ 28eHndILHRc952GM
+X-Received: by 2002:a05:6402:35d0:b0:5ec:9e6e:c48f with SMTP id
+ 4fb4d7f45d1cf-5f62860dc21mr13830249a12.29.1745401340805; 
+ Wed, 23 Apr 2025 02:42:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEm0S3AUronm7c5jd0bqMm3chWH327AmKAhciuk4oM1SmeCfpU9Ws9MgTP2WsIeXtim8Ytn7Q==
+X-Received: by 2002:a05:6402:35d0:b0:5ec:9e6e:c48f with SMTP id
+ 4fb4d7f45d1cf-5f62860dc21mr13830233a12.29.1745401340406; 
+ Wed, 23 Apr 2025 02:42:20 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f625853af3sm7092238a12.69.2025.04.23.02.42.01
+ 4fb4d7f45d1cf-5f6255778b3sm7199046a12.19.2025.04.23.02.42.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:42:01 -0700 (PDT)
+ Wed, 23 Apr 2025 02:42:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PULL 26/34] MAINTAINERS: add an entry for the x86 instruction
- emulator
-Date: Wed, 23 Apr 2025 11:40:56 +0200
-Message-ID: <20250423094105.40692-27-pbonzini@redhat.com>
+Cc: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Subject: [PULL 33/34] rust/hw/char/pl011: Extract extract DR read logic into
+ separate function
+Date: Wed, 23 Apr 2025 11:41:03 +0200
+Message-ID: <20250423094105.40692-34-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -109,36 +109,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wei Liu <liuwe@linux.microsoft.com>
+From: Rakesh Jeyasingh <rakeshjb010@gmail.com>
 
-Add myself as a reviewer.
+- Split `read()` DR case into `read_data_register()`
 
-Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1741377325-28175-15-git-send-email-liuwe@linux.microsoft.com
+Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Link: https://lore.kernel.org/r/20250407181327.171563-2-rakeshjb010@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ rust/hw/char/pl011/src/device.rs | 39 ++++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d54b5578f88..67228401f06 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -534,6 +534,14 @@ S: Supported
- F: target/i386/whpx/
- F: include/system/whpx.h
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index bf88e0b00a0..87153cdae13 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -190,25 +190,7 @@ pub(self) fn read(&mut self, offset: RegisterOffset) -> (bool, u32) {
  
-+X86 Instruction Emulator
-+M: Cameron Esfahani <dirty@apple.com>
-+M: Roman Bolshakov <rbolshakov@ddn.com>
-+R: Phil Dennis-Jordan <phil@philjordan.eu>
-+R: Wei Liu <wei.liu@kernel.org>
-+S: Maintained
-+F: target/i386/emulate/
+         let mut update = false;
+         let result = match offset {
+-            DR => {
+-                self.flags.set_receive_fifo_full(false);
+-                let c = self.read_fifo[self.read_pos];
+-                if self.read_count > 0 {
+-                    self.read_count -= 1;
+-                    self.read_pos = (self.read_pos + 1) & (self.fifo_depth() - 1);
+-                }
+-                if self.read_count == 0 {
+-                    self.flags.set_receive_fifo_empty(true);
+-                }
+-                if self.read_count + 1 == self.read_trigger {
+-                    self.int_level &= !Interrupt::RX.0;
+-                }
+-                // Update error bits.
+-                self.receive_status_error_clear.set_from_data(c);
+-                // Must call qemu_chr_fe_accept_input
+-                update = true;
+-                u32::from(c)
+-            }
++            DR => self.read_data_register(&mut update),
+             RSR => u32::from(self.receive_status_error_clear),
+             FR => u32::from(self.flags),
+             FBRD => self.fbrd,
+@@ -306,6 +288,25 @@ pub(self) fn write(
+         false
+     }
+ 
++    fn read_data_register(&mut self, update: &mut bool) -> u32 {
++        self.flags.set_receive_fifo_full(false);
++        let c = self.read_fifo[self.read_pos];
 +
- Guest CPU Cores (Xen)
- ---------------------
- X86 Xen CPUs
++        if self.read_count > 0 {
++            self.read_count -= 1;
++            self.read_pos = (self.read_pos + 1) & (self.fifo_depth() - 1);
++        }
++        if self.read_count == 0 {
++            self.flags.set_receive_fifo_empty(true);
++        }
++        if self.read_count + 1 == self.read_trigger {
++            self.int_level &= !Interrupt::RX.0;
++        }
++        self.receive_status_error_clear.set_from_data(c);
++        *update = true;
++        u32::from(c)
++    }
++
+     #[inline]
+     #[must_use]
+     fn loopback_tx(&mut self, value: registers::Data) -> bool {
 -- 
 2.49.0
 
