@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB76C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 02:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7421BC369C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 02:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7QIb-0007HC-QR; Tue, 22 Apr 2025 22:57:21 -0400
+	id 1u7QIX-0007Db-Cb; Tue, 22 Apr 2025 22:57:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1u7QIV-0007Dd-CT; Tue, 22 Apr 2025 22:57:15 -0400
+ id 1u7QIL-0007Ax-9c; Tue, 22 Apr 2025 22:57:05 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1u7QIT-00043I-9V; Tue, 22 Apr 2025 22:57:15 -0400
+ id 1u7QIH-00043I-Vl; Tue, 22 Apr 2025 22:57:05 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 23 Apr
- 2025 10:56:52 +0800
+ 2025 10:56:51 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 23 Apr 2025 10:56:52 +0800
+ Transport; Wed, 23 Apr 2025 10:56:51 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,16 +32,14 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 3/3] hw/arm: Integrate Aspeed OTP memory into AST10x0 and
- AST2600 SoCs
-Date: Wed, 23 Apr 2025 10:56:51 +0800
-Message-ID: <20250423025651.189702-4-kane_chen@aspeedtech.com>
+Subject: [PATCH v3 0/3] hw/misc/aspeed_otp: Introduce OTP memory and integrate
+ with SBC
+Date: Wed, 23 Apr 2025 10:56:48 +0800
+Message-ID: <20250423025651.189702-1-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250423025651.189702-1-kane_chen@aspeedtech.com>
-References: <20250423025651.189702-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,158 +67,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-This patch wires up the OTP memory device (`aspeed.otpmem`) into the
-AST1030 and AST2600 SoC models. The device is initialized, attached
-to a backing block drive (`-drive id=otpmem`) and linked to the SBC
-controller via a QOM link.
+Dear reviewers,
 
-The default OTP memory image can be generated using the following
-command.
-```bash
-for i in $(seq 1 2048); do
-  printf '\x00\x00\x00\x00\xff\xff\xff\xff'
-done > otpmem.img
-```
+This patch series introduces a new model for the ASPEED OTP (One-Time
+Programmable) memory and integrates it with the ASPEED Secure Boot
+Controller (SBC) and SoC models such as AST1030 and AST2600.
 
-To load the OTP memory image into the guest, use:
-```bash
-./qemu-system-arm \
-  -drive id=otpmem,file=otpmem.img,if=none,format=raw \
-  ...
-```
+The OTP memory is implemented as a QEMU device (`aspeed.otpmem`) and is
+designed to simulate fuse-like behavior using a block backend. Programming
+is restricted by irreversible bit-flip rules (e.g., 0->1 or 1->0 depending
+on address parity). The memory content is persistent and can be passed via
+`-drive id=otpmem`.
 
-Note: Do not use the -snapshot option, or OTP data writes will not
-persist to the image file.
+The SBC device (`aspeed.sbc`) accesses the OTP device through a QOM link
+property. This decouples OTP handling from the SBC logic and allows
+future extensibility such as secure configuration or key provisioning.
 
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+The SoC integration connects the OTP memory to the SBC and provides
+device-tree-style infrastructure for future firmware use.
+
+Any feedback or suggestions are appreciated!
+
+Thanks,  
+Kane
+
 ---
- hw/arm/aspeed_ast10x0.c     | 19 +++++++++++++++++++
- hw/arm/aspeed_ast2600.c     | 19 +++++++++++++++++++
- include/hw/arm/aspeed_soc.h |  2 ++
- 3 files changed, 40 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index ec329f4991..eaa70feb9f 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -15,6 +15,7 @@
- #include "system/system.h"
- #include "hw/qdev-clock.h"
- #include "hw/misc/unimp.h"
-+#include "system/block-backend-global-state.h"
- #include "hw/arm/aspeed_soc.h"
- 
- #define ASPEED_SOC_IOMEM_SIZE 0x00200000
-@@ -156,6 +157,8 @@ static void aspeed_soc_ast1030_init(Object *obj)
- 
-     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
- 
-+    object_initialize_child(obj, "otpmem", &s->otpmem, TYPE_ASPEED_OTPMEM);
-+
-     for (i = 0; i < sc->wdts_num; i++) {
-         snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
-         object_initialize_child(obj, "wdt[*]", &s->wdt[i], typename);
-@@ -194,6 +197,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-     Error *err = NULL;
-     int i;
-     g_autofree char *sram_name = NULL;
-+    BlockBackend *blk;
- 
-     if (!clock_has_source(s->sysclk)) {
-         error_setg(errp, "sysclk clock must be wired up by the board code");
-@@ -359,6 +363,21 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
-                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
-     }
- 
-+    /* OTP memory */
-+    blk = blk_by_name(ASPEED_OTPMEM_DRIVE);
-+    if (blk) {
-+        blk_set_perm(blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
-+                     0, &error_fatal);
-+        qdev_prop_set_drive(DEVICE(&s->otpmem), "drive", blk);
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->otpmem), errp)) {
-+            return;
-+        }
-+        /* Assign OTP memory to SBC */
-+        object_property_set_link(OBJECT(&s->sbc), "otpmem",
-+                                 OBJECT(&s->otpmem), &error_abort);
-+    }
-+
-     /* Secure Boot Controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
-         return;
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 1f994ba26c..9fe3eeeb0e 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/misc/unimp.h"
-+#include "system/block-backend-global-state.h"
- #include "hw/arm/aspeed_soc.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
-@@ -263,6 +264,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
- 
-     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
- 
-+    object_initialize_child(obj, "otpmem", &s->otpmem, TYPE_ASPEED_OTPMEM);
-+
-     object_initialize_child(obj, "iomem", &s->iomem, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "video", &s->video, TYPE_UNIMPLEMENTED_DEVICE);
-     object_initialize_child(obj, "dpmcu", &s->dpmcu, TYPE_UNIMPLEMENTED_DEVICE);
-@@ -293,6 +296,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-     qemu_irq irq;
-     g_autofree char *sram_name = NULL;
-+    BlockBackend *blk;
- 
-     /* Default boot region (SPI memory or ROMs) */
-     memory_region_init(&s->spi_boot_container, OBJECT(s),
-@@ -628,6 +632,21 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i3c.devices[i]), 0, irq);
-     }
- 
-+    /* OTP memory */
-+    blk = blk_by_name(ASPEED_OTPMEM_DRIVE);
-+    if (blk) {
-+        blk_set_perm(blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
-+                     0, &error_fatal);
-+        qdev_prop_set_drive(DEVICE(&s->otpmem), "drive", blk);
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->otpmem), errp)) {
-+            return;
-+        }
-+        /* Assign OTP memory to SBC */
-+        object_property_set_link(OBJECT(&s->sbc), "otpmem",
-+                                 OBJECT(&s->otpmem), &error_abort);
-+    }
-+
-     /* Secure Boot Controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sbc), errp)) {
-         return;
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index f069d17d16..2d15c6047a 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -36,6 +36,7 @@
- #include "hw/usb/hcd-ehci.h"
- #include "qom/object.h"
- #include "hw/misc/aspeed_lpc.h"
-+#include "hw/misc/aspeed_otpmem.h"
- #include "hw/misc/unimp.h"
- #include "hw/misc/aspeed_peci.h"
- #include "hw/fsi/aspeed_apb2opb.h"
-@@ -73,6 +74,7 @@ struct AspeedSoCState {
-     AspeedSMCState spi[ASPEED_SPIS_NUM];
-     EHCISysBusState ehci[ASPEED_EHCIS_NUM];
-     AspeedSBCState sbc;
-+    AspeedOTPMemState otpmem;
-     AspeedSLIState sli;
-     AspeedSLIState sliio;
-     MemoryRegion secsram;
+ChangeLog
+---------
+v3:
+- Minor fixes and refinements on top of v2 content
+
+v2:
+- Separated the OTP memory into a standalone QEMU device (`aspeed.otpmem`)
+- Replaced ad-hoc file handling with standard `-drive` backend integration
+- Linked OTP to SBC via QOM property for cleaner abstraction
+- Improved memory bounds checking and irreversible programming logic
+
+v1:
+- Embedded OTP logic in the SBC model and created the backing file internally.
+
+---
+
+Kane-Chen-AS (3):
+  hw/misc/aspeed_otp: Add Aspeed OTP memory device model
+  hw/misc/aspeed_sbc: Connect Aspeed OTP memory device to SBC controller
+  hw/arm: Integrate Aspeed OTP memory into AST10x0 and AST2600 SoCs
+
+ hw/arm/aspeed_ast10x0.c         |  19 +++
+ hw/arm/aspeed_ast2600.c         |  19 +++
+ hw/misc/aspeed_otpmem.c         | 211 ++++++++++++++++++++++++++++++++
+ hw/misc/aspeed_sbc.c            | 146 ++++++++++++++++++++++
+ hw/misc/meson.build             |   1 +
+ include/hw/arm/aspeed_soc.h     |   2 +
+ include/hw/misc/aspeed_otpmem.h |  40 ++++++
+ include/hw/misc/aspeed_sbc.h    |  15 +++
+ 8 files changed, 453 insertions(+)
+ create mode 100644 hw/misc/aspeed_otpmem.c
+ create mode 100644 include/hw/misc/aspeed_otpmem.h
+
 -- 
 2.43.0
 
