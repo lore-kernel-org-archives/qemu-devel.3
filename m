@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2183C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 15:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D55FC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 16:10:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7cUV-0007v8-Te; Wed, 23 Apr 2025 11:58:27 -0400
+	id 1u7cfS-0007Mn-FN; Wed, 23 Apr 2025 12:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7cUT-0007tn-Ux
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 11:58:26 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1u7cfQ-0007MZ-Fg
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 12:09:44 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7cUR-0007B0-P7
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 11:58:25 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22da3b26532so129205ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 08:58:22 -0700 (PDT)
+ id 1u7cfO-0000ZO-HP
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 12:09:44 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-736aa9d0f2aso8287369b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 09:09:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745423902; x=1746028702; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2nUE3mex3D/jitPRu1rnZ3zvB4izf7uzkRN4YSnQwAY=;
- b=nJlaIpWw78p8EfVAwN9lxjkA3UgV1OEj96ba17bIIXjTRD9Bihc+Yt49uXEf+09HQE
- i/qsxdaD+ZaZ4RLRxWG/hlREru0LKzZhaetCj4njduS6KqObH7nD5gJW09/VqGVC/R75
- OGku1u4SHmfadG8speRJoZIP26F8MPMrqazYQjMsGGeZ3BDrky45tJdzTnEz2KTlX8in
- z98Euk24d2n2xpMlHOOgtclyZHv+ZIcAjKm2ssU26jZiKOhAv/Gk4yKgKTDL1AeRoirv
- h6vNxlPwNYGSpmL1L8Cz/3HwMwL45eTzc/zsyP9a+jLov+XwBCpBE9LehY9gDJ85BUqW
- 5tZg==
+ d=linaro.org; s=google; t=1745424580; x=1746029380; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3FvwZcXatJm3X5qO04axWJ7Kvcw5ht7/qVoQmgqNZw4=;
+ b=bVJb8nyAI6nNjw/C+c5wp9vVcHKF1GgU0llJeh7VsKMV37aLhSuYdqU42RSALZLpk8
+ i0iopx9Wik346imodzre5SM35/is6y0P9UBcHbeU85GNI7FN9LE1CHrfgYsl0agwAir6
+ mO+oUkuv14o7YdrKqbKoYPUMg1Ss7F6dzuKuHtnnUS0cO2RqEeskjVz6HRQMjPKJl4cG
+ qI/SPoWsAkFM2l4j495TxieE9N1JQkD8OdZgTU8w+loXA79mkfEGEKF39sV2L56smFi2
+ t59vFDZmngODQFl9iXzB1tLY42Z7YGHcbj6e0ZnkNVaXiYgiwf4H7/LdvLxmet+kurs2
+ PaiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745423902; x=1746028702;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1745424580; x=1746029380;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2nUE3mex3D/jitPRu1rnZ3zvB4izf7uzkRN4YSnQwAY=;
- b=mY/4YMYcKECgz4ftwMosRXfvEvMMASyoZunJxyIzeAKkRIC3pcEXR+6KRP7ZpRJ3oy
- u4xA7QTaQCNQCnTCljaCIL3XcfRFz71GHb+S07bqrNGN6Z8Hw9Ud7cOpzKnT01fRnNjL
- MfYk4SJpP4JND7NhcfEtQLsItx7+1HAFKGcw8/m0cG5aqSBMAjknCRZ+lV1yheQ9HQVw
- rBDj3ImnSRktgC0ll/3nNtH0aYyy379qb8b9yvei83rpDwP2x9IC1NyVj9CzuHnCcwGU
- cVT0WMSdAK/x7X7CYIJI4hrboO5SH+fRRmTDift+Sx1to00MCFjEM1pTMwNsOJXF0zAE
- v+AQ==
+ bh=3FvwZcXatJm3X5qO04axWJ7Kvcw5ht7/qVoQmgqNZw4=;
+ b=P+llgketFng9qmIPQwdzjR1gCWpQzlYlqhOTSAc7HwsCUzjeQingXEcHhsHhWhflKX
+ Apz4zoMlSsnMO01mt/ldiz1PK1i/Ze327i9x08QGT5I985nTBF2O9Vfc8myQTEgz9pFM
+ MH6Kunt+bZQyfcAyE2FLIHmATYeXXCIstNkj7yIdpwIUdA5tXf7q0pE0cKyxvhRH/kku
+ 81ZF2hKWKpsTfsuY0RKuS2uG0B2yPbKnvFHuwmd781q6/XicCxk9ppobV5rI+/NvgeK5
+ MLZ26GeT5LiLm4wVgWyz5ojvpoVM8Mci6GkvH/Lv9Sx7esIxhCpp3fN6mfWXYdyLz2mp
+ kiHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWg2uTxHcLlN+Beh4K5cWHb4d85TwXZWmQmjfn3DhNSnKRhVM2XRvUu2PYDVmBxI0X0lrF+p5Lo5tRI@nongnu.org
-X-Gm-Message-State: AOJu0Yw0CfSUJPLd17l5M0Id3Uw068Bke8fP9Yx//L611wyxxJDWYSqO
- mvUmW4GDsrEVyDSaxwRIuR+a9GB/D+2Cphfl9iSxIzsSC/wN0RFviKoE5nCs1t1DW1oytizNuXM
- S
-X-Gm-Gg: ASbGncu2ZLWN2Ao/AXkRix7krXgecZ17Xov1PC5SDA66t4IRjcp3fXFH+w5CsFGYpN8
- 6huW8GO4V0xbEeidm98SaskAwA3rs5bfHBQ1et3GyO4QoJ/79iqzPLRK0SzuxwmSQUm9/HfqlIJ
- 7rs4b6cT6l5eQJQuiA+Ywj8+Yh4lmzTcM0iUgIYe63LPd/+/NAHDPKWQn8ZbJZ1PVzFNxa9eOQf
- W9vtGU8VUViG2vny06T98sHND9C5MtG6XpJuUc/asku5K8NG98gorsz13IBc9cMDjbTeJfUYFOh
- 4OQj+ZqVW71xv+qukD9l9jk+2CthQcZ+I7l8r884H6wyUt9jclKjlw==
-X-Google-Smtp-Source: AGHT+IHt2q+a3PC3LcHrbOB2hCRduXQ0LMLEos3DVCJigDKkk0w2NyjnbJum0S9rfOUr3jVI9hRoqQ==
-X-Received: by 2002:a17:902:ef08:b0:216:393b:23d4 with SMTP id
- d9443c01a7336-22c5356713dmr310920185ad.11.1745423901721; 
- Wed, 23 Apr 2025 08:58:21 -0700 (PDT)
+ AJvYcCVonM9OXVZqFkkmoPHMIqez0MxhbxYiBSD+XeQBnHqGKDHkybl60Id3jR5zXAZe1pUPz3Iifb6lNcn/@nongnu.org
+X-Gm-Message-State: AOJu0Yz8inEyGqyNk81bIlreejuYZtKL6qiPeLv8mXxZELdV9/idgAgJ
+ R3o26AQJs3RytbGSn5SFvIFaLbuj1WpmKkttiAK2N1TYGq1zigHIvjbezH5jmWc=
+X-Gm-Gg: ASbGncsMoPdtg0LZHFSpp6ziwGvxKej/Fy948ol5xaZpru9tEBMgBqvsVeqB45fX01h
+ dh0s+Od6+MB57InlifXF/zDroTUE7ZL69+Kphera52NelZW2SDqHXkualoG1iSxJ+gXrvMjVoZR
+ dxCZhFaXEl7p3ytyArxL8JMGBROM/QZMBq5vj+OH06nEMMLvctkzBfUOvNTum7Yx0rC+GqakU77
+ RJQGysmLy/1WT3hBT4zI94npHcLLeL1ZioFEpmUJVSb6vL9jg8h+vViuZE0BYohxAJqlWCVxpg+
+ yGA4152gPynMOmkDGIkr2iJlLTqkNuE7jxr5bhIpxTSFTIwZrVHyFA==
+X-Google-Smtp-Source: AGHT+IFKIGEKAI7qcb0XZS0cq/w+b+B1xJudNJI1tlN3oPHtYNhXnjG7UmwNFm0wovYPry42HEJ/BA==
+X-Received: by 2002:a05:6a00:3a22:b0:736:5822:74b4 with SMTP id
+ d2e1a72fcca58-73e21ca977amr36037b3a.21.1745424579635; 
+ Wed, 23 Apr 2025 09:09:39 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fded99sm106646215ad.223.2025.04.23.08.58.21
+ d2e1a72fcca58-73dbf8c0228sm10622105b3a.25.2025.04.23.09.09.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 08:58:21 -0700 (PDT)
-Message-ID: <f54bd881-f75f-4a89-a293-7d49f82748bb@linaro.org>
-Date: Wed, 23 Apr 2025 08:58:20 -0700
+ Wed, 23 Apr 2025 09:09:39 -0700 (PDT)
+Message-ID: <f3ce25db-36dd-41fb-be98-45db9716634d@linaro.org>
+Date: Wed, 23 Apr 2025 09:09:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 013/147] system/xen: remove inline stubs
+Subject: Re: [PATCH 105/147] exec/cpu-all: remove tswap include
+Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-14-richard.henderson@linaro.org>
- <dfcf9c43-4585-46e0-8d7c-0855d348c38a@linaro.org>
-Content-Language: en-US
+ <20250422192819.302784-106-richard.henderson@linaro.org>
+ <86ba7919-db11-45cd-8bdd-ede8f25f92d2@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <dfcf9c43-4585-46e0-8d7c-0855d348c38a@linaro.org>
+In-Reply-To: <86ba7919-db11-45cd-8bdd-ede8f25f92d2@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,59 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/25 02:22, Philippe Mathieu-Daudé wrote:
-> Hi Pierrick,
-> 
-> On 22/4/25 21:26, Richard Henderson wrote:
+On 4/23/25 03:27, Philippe Mathieu-Daudé wrote:
+> On 22/4/25 21:27, Richard Henderson wrote:
 >> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> Message-ID: <20250317183417.285700-14-pierrick.bouvier@linaro.org>
+>> Message-ID: <20250325045915.994760-7-pierrick.bouvier@linaro.org>
 >> ---
->>    include/system/xen-mapcache.h | 41 -----------------------------------
->>    include/system/xen.h          | 21 +++---------------
->>    2 files changed, 3 insertions(+), 59 deletions(-)
-> 
-> 
->> diff --git a/include/system/xen.h b/include/system/xen.h
->> index 990c19a8ef..5f41915732 100644
->> --- a/include/system/xen.h
->> +++ b/include/system/xen.h
->> @@ -25,30 +25,15 @@
->>    #endif /* COMPILING_PER_TARGET */
+>>    include/exec/cpu-all.h               | 1 -
+>>    target/ppc/mmu-hash64.h              | 2 ++
+>>    target/i386/tcg/system/excp_helper.c | 1 +
+>>    target/i386/xsave_helper.c           | 1 +
+>>    target/riscv/vector_helper.c         | 1 +
+>>    5 files changed, 5 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+>> index 957c86886e..bfa039ab76 100644
+>> --- a/include/exec/cpu-all.h
+>> +++ b/include/exec/cpu-all.h
+>> @@ -21,7 +21,6 @@
 >>    
->>    #ifdef CONFIG_XEN_IS_POSSIBLE
->> -
->>    extern bool xen_allowed;
->> -
->>    #define xen_enabled()           (xen_allowed)
->> +#else /* !CONFIG_XEN_IS_POSSIBLE */
->> +#define xen_enabled() 0
->> +#endif /* CONFIG_XEN_IS_POSSIBLE */
+>>    #include "exec/cpu-common.h"
+>>    #include "exec/cpu-interrupt.h"
+>> -#include "exec/tswap.h"
+>>    #include "hw/core/cpu.h"
+>>    #include "exec/cpu-defs.h"
+>>    #include "exec/target_page.h"
+>> diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
+>> index ae8d4b37ae..b8fb12a970 100644
+>> --- a/target/ppc/mmu-hash64.h
+>> +++ b/target/ppc/mmu-hash64.h
+>> @@ -1,6 +1,8 @@
+>>    #ifndef MMU_HASH64_H
+>>    #define MMU_HASH64_H
+>>    
+>> +#include "exec/tswap.h"
 > 
-> Just to be sure, you said we should remove CONFIG_XEN_IS_POSSIBLE?
+> This header doesn't use "exec/tswap.h". Maybe you want this
+> reviewed patch instead:
+> 
+> https://lore.kernel.org/qemu-devel/20241211230357.97036-6-philmd@linaro.org/
+> 
+>> +
+>>    #ifndef CONFIG_USER_ONLY
+>>    
+>>    #ifdef TARGET_PPC64
+> 
 
-More "Ideally, it should not have been introduced", and {accel}_enabled 
-should be a proper function, and needed stubs should be added for other 
-functions.
-CONFIG_{ACCEL}_IS_POSSIBLE is just "yet another way" to stub some 
-accelerator functions, while we could have proper stubs instead.
-As long as it's not blocking our work, I don't think we should do this 
-cleanup.
+See: [PATCH 002/147] exec/tswap: implement {ld,st}.*_p as functions 
+instead of macros.
+It removes macro definitions from cpu-all.h, and implement those as 
+proper functions in exec/tswap.h.
 
-For your case, concerning hvf, I said it would be preferable to simply 
-implement hvf_enabled() as normal function, instead of mimicking the 
-CONFIG_{ACCEL}_IS_POSSIBLE pattern, since it has not yet been introduced 
-for this accelerator.
-It it's more simple to simply replicate this, no worries, go ahead, it 
-just concerns one header.
-
-When we'll want to link the single binary for the first time, we'll have 
-to deal with that anyway, as it won't be possible to have two different 
-definition of a single function/symbol (i.e. unify stubs and 
-implementations). But we are not yet there, and it's better to focus our 
-energy on removing compilation units duplication at the moment.
+ppc/mmu-hash64.h uses ld*_p, which are defined in exec/tswap.h, so it's 
+the correct place for this include.
 
