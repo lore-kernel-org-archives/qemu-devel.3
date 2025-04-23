@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB4C8C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C424C369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Wcj-0006bn-Cw; Wed, 23 Apr 2025 05:42:33 -0400
+	id 1u7Wdb-0002D1-Ao; Wed, 23 Apr 2025 05:43:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wc4-000574-7D
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:52 -0400
+ id 1u7Wce-0006OE-Hn
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wc2-0008NR-38
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:51 -0400
+ id 1u7Wcc-0008Ri-T6
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401309;
+ s=mimecast20190719; t=1745401346;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OT4XQr3P98GwFzQI0F4wcCbYrMCD1ziXjFmYKeB1AUc=;
- b=TWa0zkxcMyJ+XPQ+bYEjcf6Ohlf4KgXC88vIxAhwRVd3Bbwt9glRpxv0exssvRMvQ6oc6A
- GptXZXYrgTPiYljkKUuZRAJHmrU6yaIDIooAKWZ1RQ1YokPOSHPDyQ2pnmLc7tPdsfloPe
- CP7GBZjLfAK+vHEkRqHLq73FhAVH0wI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qRpUhngwpi2vur6uGX0YLMr4zg93ENMqYIQoB01ZNgk=;
+ b=OZz8xpba8huDmOdBv0QMygFyNFYiHSXn6TYR+fhuMiGTKz0F+bi0g6qBsrUtmSTkFhS9Dx
+ 7WctMsjyGYDifTKP05EmsH080lo19bLS0LUQRcgR32XXgAJngvizWPr9T6lIue7xbGgKTF
+ iQiqOAu9dl+zOSyZ0yBQPQnXRTwUEQk=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-PhkYex-MNxKb8eVhch9MHQ-1; Wed, 23 Apr 2025 05:41:47 -0400
-X-MC-Unique: PhkYex-MNxKb8eVhch9MHQ-1
-X-Mimecast-MFC-AGG-ID: PhkYex-MNxKb8eVhch9MHQ_1745401306
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-acb8f9f58ebso290113266b.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:46 -0700 (PDT)
+ us-mta-43-TbnUk8l0MxuChIS3dP0ghg-1; Wed, 23 Apr 2025 05:42:25 -0400
+X-MC-Unique: TbnUk8l0MxuChIS3dP0ghg-1
+X-Mimecast-MFC-AGG-ID: TbnUk8l0MxuChIS3dP0ghg_1745401344
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac3c219371bso513691066b.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401305; x=1746006105;
+ d=1e100.net; s=20230601; t=1745401343; x=1746006143;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OT4XQr3P98GwFzQI0F4wcCbYrMCD1ziXjFmYKeB1AUc=;
- b=nZh2r5rBeSykAwf34ouWm6jV5Km6whyEp0ardd3JmDiRiLh6dIj4f9q/cDhZZMGifT
- 2SPJnNkWeNxkhTGGpi/wocr7XslgKlg4Li/kWOrYUsYaxMkkfGpmKwJZZn6BK3pLz3KE
- GefnTw/BVoa+9I/KEzCx1ihApC6gxo+4iI8IqcOOskga5Akd0JLbtXCvsdsYc6liJ2mc
- CWC8mY1XvWRtIUvoDYok1YwgcN1iYaClWyC6MG3OAp6Fq6OuLWgp8iEe+hJZEUHXC4bY
- 3wd5pzkOJxMFnm6EcaMO88+TjSbkDxq1L5xzT2CpcXS5hLLlAwxS/6yNSdMm/XpQOkBE
- Qebg==
-X-Gm-Message-State: AOJu0Yx91J1eC2z6za7KhHJy/W8R6gbCIl0aRtFy5cHuKqEaeCZzEa4T
- AAsJJj4kUXfMceJqp5LGpI6MXhJWnqm28yRFDePW31kwS16O1ak6k7AikalFTLNyiMRpr7AnVZv
- K0Zb/KD7m2gFcRw5DD2k0QKbINhMYeJ+1aMTIy4tXAoWtkUeFYLwYPgLtlB2UBZUy7ch0kQaKXb
- B70pV/sVvKthknMVX7BWxZhGb/SQ+41j03Ks6t
-X-Gm-Gg: ASbGncvcx84EzXRpe7Mvfp2W4tatkM8VpTLOx01Wy7mLAKhbwEMwJc99uAMn0Z4SSeT
- hb37hIMRa/p0wGUpZoqBZwarBrq+EXiz3GzT52C7eKZBYojDYYO5wuZHXVFdmZ7c0QhBd5R/Mdv
- mLl35Q95meDel3e8fxeMJMNISQDSBWGhc6rswUnCu+o6MEGft31ZsSS9VrH8mw2MwA5SnC+EPJW
- lbHw79dQI8jWflE8xcbAm0WrJcSwHBKPnxRWfCFov7myE38bRySszfQH2/JF13gIh78R9+h7HE7
- nioZnl6qb78jsTBB
-X-Received: by 2002:a17:907:9801:b0:ac3:48e4:f8bb with SMTP id
- a640c23a62f3a-acb74d655d9mr1913821666b.41.1745401305363; 
- Wed, 23 Apr 2025 02:41:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSRrsLlXLPQgaCjy1C1tCFn4YRshcCSrTO+ceHqCcnb4S9oa5iV93Alnm5Klc0Zi9yo/IeMQ==
-X-Received: by 2002:a17:907:9801:b0:ac3:48e4:f8bb with SMTP id
- a640c23a62f3a-acb74d655d9mr1913819966b.41.1745401304895; 
- Wed, 23 Apr 2025 02:41:44 -0700 (PDT)
+ bh=qRpUhngwpi2vur6uGX0YLMr4zg93ENMqYIQoB01ZNgk=;
+ b=n20Z5tnh1lGrU76296B1uTnmyGcIe7f0KrndJctCaGBy+1a/l46kNeY+PyACqztGpa
+ q8hWbtX4u6+okgrNAjtTL+JWR2OtQQvkZg4SL5Y63mwRZbhb22CNm3Mnqb+4K52DL3nO
+ goXaCsO8bC6FPeoEu7zEsAdB+fgkqa2hPdUUXSiF8o0xKJgxHY0TuFqywP8u91lGymM0
+ +k4yP/NrYxjxVUO1F9j1Ic+XOzfZfOamPl6T3fCLWxC3uiauPnuA/nq1sRmtM37pgMA4
+ 07zLPyNQ64BSyM6YbjTqV7HvC+YqlMIptuWhrYM36VlXuAOiggIiAX1sthr5MjnKD0kj
+ fmqw==
+X-Gm-Message-State: AOJu0YyHQxTavTB16brJTrz+S6nqDTJgE5ZxSjtdut6nougildN19ZUT
+ CVZfk0jPPBpSgr7lG9nccgQp9jJnAWtcaB58IH5o24qI4FSRbuxlrvM1ke5sSIKaRD7QWJhINxm
+ yint7ZUHFuqOO/l5AZtpZqmmrSC0ZLEWqqnkKS339UuAwjZfvxuPOvHn2RA/hq9HdtqBuWebvCZ
+ 14JM24K8T0WR5EdkoM9KcNmG/PW+3g9d3pXkYh
+X-Gm-Gg: ASbGncsjcKL3uKcPaRwDSvKvXQQik1x/8PJ007BjqJWiVf9EqIfw7Sz+o1rtcNf1l5P
+ zoAKTNOjpmfOnm9mU3Yw/9t34QahefifIdXyGL3vcaZoSztYVrVDdNAg5d5vpF6jnHSd7Uw7QJh
+ SOAcIGg3HfZjdA3KHov3qdkfxmznh1S1WUeER3u0uxUeuSGxAU3sHFRNbJsnF+n4WN+qvJPxNFL
+ VrbuJSBRVNj8oPqE57nJPXmM7KFcYXMxpS682UfAzEtaPUZzEAPy6G8Gtpc+S6HrhFx9Uv4bbd1
+ ndhNHnx+nPrhQWVw
+X-Received: by 2002:a17:906:79d8:b0:acb:b0d7:15d8 with SMTP id
+ a640c23a62f3a-acbb0d719c8mr693505466b.51.1745401342931; 
+ Wed, 23 Apr 2025 02:42:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFq9LEFbFME1fTQE8Winf5FmuCeYOl5swd8Kmw+5wkR4opkXwEWPUMyP58Iet352MTWoiWCzQ==
+X-Received: by 2002:a17:906:79d8:b0:acb:b0d7:15d8 with SMTP id
+ a640c23a62f3a-acbb0d719c8mr693503466b.51.1745401342477; 
+ Wed, 23 Apr 2025 02:42:22 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acb6eefd8a2sm794056066b.90.2025.04.23.02.41.42
+ a640c23a62f3a-acb6ec0c068sm791793966b.11.2025.04.23.02.42.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:41:42 -0700 (PDT)
+ Wed, 23 Apr 2025 02:42:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PULL 18/34] target/i386/hvf: provide and use write_mem in emul_ops
-Date: Wed, 23 Apr 2025 11:40:48 +0200
-Message-ID: <20250423094105.40692-19-pbonzini@redhat.com>
+Cc: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Subject: [PULL 34/34] rust/hw/char/pl011: Extract DR write logic into separate
+ function
+Date: Wed, 23 Apr 2025 11:41:04 +0200
+Message-ID: <20250423094105.40692-35-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
@@ -108,81 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wei Liu <liuwe@linux.microsoft.com>
+From: Rakesh Jeyasingh <rakeshjb010@gmail.com>
 
-Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1741377325-28175-7-git-send-email-liuwe@linux.microsoft.com
+- Split `write()` DR case into `write_data_register()`
+
+Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+Link: https://lore.kernel.org/r/20250407181327.171563-3-rakeshjb010@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/x86_emu.h | 1 +
- target/i386/hvf/hvf.c     | 6 ++++++
- target/i386/hvf/x86_emu.c | 8 ++++----
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/hvf/x86_emu.h b/target/i386/hvf/x86_emu.h
-index 40cc786694e..107c1f1ac86 100644
---- a/target/i386/hvf/x86_emu.h
-+++ b/target/i386/hvf/x86_emu.h
-@@ -25,6 +25,7 @@
- 
- struct x86_emul_ops {
-     void (*read_mem)(CPUState *cpu, void *data, target_ulong addr, int bytes);
-+    void (*write_mem)(CPUState *cpu, void *data, target_ulong addr, int bytes);
-     void (*read_segment_descriptor)(CPUState *cpu, struct x86_segment_descriptor *desc,
-                                     enum X86Seg seg);
-     void (*handle_io)(CPUState *cpu, uint16_t port, void *data, int direction,
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 1cecb765952..e4f48a79fb7 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -242,8 +242,14 @@ static void hvf_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
-     vmx_read_mem(cpu, data, gva, bytes);
- }
- 
-+static void hvf_write_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
-+{
-+    vmx_write_mem(cpu, gva, data, bytes);
-+}
-+
- static const struct x86_emul_ops hvf_x86_emul_ops = {
-     .read_mem = hvf_read_mem,
-+    .write_mem = hvf_write_mem,
-     .read_segment_descriptor = hvf_read_segment_descriptor,
-     .handle_io = hvf_handle_io,
- };
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-index 7b816b5a1da..3ff41c35d89 100644
---- a/target/i386/hvf/x86_emu.c
-+++ b/target/i386/hvf/x86_emu.c
-@@ -179,7 +179,7 @@ void write_val_ext(CPUX86State *env, target_ulong ptr, target_ulong val, int siz
-         write_val_to_reg(ptr, val, size);
-         return;
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 87153cdae13..bb2a0f207a5 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -221,12 +221,7 @@ pub(self) fn write(
+         // eprintln!("write offset {offset} value {value}");
+         use RegisterOffset::*;
+         match offset {
+-            DR => {
+-                // interrupts always checked
+-                let _ = self.loopback_tx(value.into());
+-                self.int_level |= Interrupt::TX.0;
+-                return true;
+-            }
++            DR => return self.write_data_register(value),
+             RSR => {
+                 self.receive_status_error_clear = 0.into();
+             }
+@@ -307,6 +302,13 @@ fn read_data_register(&mut self, update: &mut bool) -> u32 {
+         u32::from(c)
      }
--    vmx_write_mem(env_cpu(env), ptr, &val, size);
-+    emul_ops->write_mem(env_cpu(env), &val, ptr, size);
- }
  
- uint8_t *read_mmio(CPUX86State *env, target_ulong ptr, int bytes)
-@@ -489,8 +489,8 @@ static void exec_ins_single(CPUX86State *env, struct x86_decode *decode)
- 
-     emul_ops->handle_io(env_cpu(env), DX(env), env->emu_mmio_buf, 0,
-                         decode->operand_size, 1);
--    vmx_write_mem(env_cpu(env), addr, env->emu_mmio_buf,
--                  decode->operand_size);
-+    emul_ops->write_mem(env_cpu(env), env->emu_mmio_buf, addr,
-+                        decode->operand_size);
- 
-     string_increment_reg(env, R_EDI, decode);
- }
-@@ -596,7 +596,7 @@ static void exec_stos_single(CPUX86State *env, struct x86_decode *decode)
-     addr = linear_addr_size(env_cpu(env), RDI(env),
-                             decode->addressing_size, R_ES);
-     val = read_reg(env, R_EAX, decode->operand_size);
--    vmx_write_mem(env_cpu(env), addr, &val, decode->operand_size);
-+    emul_ops->write_mem(env_cpu(env), &val, addr, decode->operand_size);
- 
-     string_increment_reg(env, R_EDI, decode);
- }
++    fn write_data_register(&mut self, value: u32) -> bool {
++        // interrupts always checked
++        let _ = self.loopback_tx(value.into());
++        self.int_level |= Interrupt::TX.0;
++        true
++    }
++
+     #[inline]
+     #[must_use]
+     fn loopback_tx(&mut self, value: registers::Data) -> bool {
 -- 
 2.49.0
 
