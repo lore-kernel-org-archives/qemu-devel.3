@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1BCC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3DE3C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Y02-0001bL-BU; Wed, 23 Apr 2025 07:10:44 -0400
+	id 1u7Y0e-0002yO-Hn; Wed, 23 Apr 2025 07:11:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Xzb-0001KH-Dk
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:10:16 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Y0a-0002hk-FL
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:11:16 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XzW-0000oR-SN
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:10:13 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3913b539aabso3837920f8f.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:10:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Y0O-0000x6-OS
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:11:08 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43edb40f357so46497475e9.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745406608; x=1746011408; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745406661; x=1746011461; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LWz9gy6BGt+Il4OdXmpOZtOL72RyKjZFu5Xkxs4NXlQ=;
- b=Cjp/com4DnqgnrYTF93hwoBXoGvomrg00GbrojYUV1lCnWTlnt3wsKQm9VdW96mKEW
- Byurto0c5JHj17WqYYuqRTd/LNnRg0UIKOWSBmRQembPgt/6pyxnw5kGyLzRumGFgUQv
- +YNQ+pk41kdXL4vXTLL8yg5pCVxOaB4uwnGv62MhxKTTlk4Qq77oA5kPm50IkwFVLNIg
- NpIMeVOmbWFvyQQkUtVfNV310re5B8u3QuwqVcQ7OW9vaDGveLb49xEMlc+Kg3B1CoHy
- yifFTk7GLzexgLxMaALvcaxbmgT3aK/tiF0V+C3MLpywATa0I2ka9rIrj911dikVgaZR
- 3sjw==
+ bh=60cd6x9b9k9k/Jy4gocYWg6RgC6gv5FjhH+nRo7l1ZA=;
+ b=A+p+k2opCyn/7Ei+DEXQuZ8QXuGLDYFmRvNpyZb1TLRgeUG15h7iDc10TB1JxfRQU4
+ YYKpLici+aWrhpTspbyFuqIjhJkaciA2xdMxPzOg/Cby/FO/tuppsBUhpCUdsN6+CcaJ
+ +8+cPFYWpsSv6uFBL7xqp1NoA5vh0241SOiU1DoXXzzLFTnHljPhv4yJ35LX1Dm9NUbD
+ Z5V5VOsGhKReruRjirK5BgibwsvTOl3yzm7KaVyPdFwu3h9fvD+xO3cYfI7fXraVu0N7
+ EQxOjBodm7x8ema7D2QYmd92lEOV++oL7BsQM0gSrmhIQ2k2joAnQhsZtLjEht8mZdRN
+ lHgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745406608; x=1746011408;
+ d=1e100.net; s=20230601; t=1745406661; x=1746011461;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LWz9gy6BGt+Il4OdXmpOZtOL72RyKjZFu5Xkxs4NXlQ=;
- b=t+FsoHFMBay0j46f5gtgnYjXpcR6IAOHAhDZOyHFhsOUDJwDyunrg52cWNhWIF/Z4L
- UzLJhljizxfX1gUEjON7n8XPv/By/zqxB4D+A0CT9YTAO/xtwuPQioHitqNQekCzW5TR
- KUgLXzw8MNB3+t9H5FdtcR9VKA64vIZhDEWWSKWsK+T5ZuhL1onYZcDf0n8lhr29ZVdR
- hGf8oqzbDra1k2XlKjiRnh0NcxZqvgTdqRC4rnN3PM4GE9CVqOdw7RC2IrTp0S+YASFr
- Vr+1YKoGfoSYGTxqOko+lZTvcyXAZIpJhgGuid28ynt/zZCorjIk4919pf3bz0Lws/25
- n0OQ==
+ bh=60cd6x9b9k9k/Jy4gocYWg6RgC6gv5FjhH+nRo7l1ZA=;
+ b=BBFULJl6oOgpYHI0Ck4ytrx/NI8pQzqdzhQJofAgteVXO71BcALnp+VGiBozJEs/cO
+ L+1KnKw962mPFXwm3Zv/SXj3RqE43HVj34cd20ihWMUlLddlji4Rf64fBH7UODemToJi
+ ZfVjLL99NPrmwOeMbmitU9J0lEdmnvO4GvQViay/Im0q2n2jlSr8nauD5OuSgszHdUne
+ WIqIhBee2RX/0itPaeeKC7LjWjU+ri5ukk4JmeKAfwlCvneBlrWSlcgh/yRMYu7RKEQf
+ yNM74GI3aSzdBugo104ULrVdl4qlCO09u7ByBNAtBKDF0PERqa4Q/yE35Ye0mQwx0w6q
+ En+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVi7bwnm1ep8X1gjQb49WQIykDBje942w+SnCpwjhxXIIhw9oqQOi263oypoaTwESJFG/bNdTQSpSc@nongnu.org
-X-Gm-Message-State: AOJu0YzQM33zAFDg9rckMNbKcKiFZOeMB99NFLmXkeYFrO0Jr6KEuzOS
- 1xQih9TyQkuFV5WRZVorgOBdWi4V1EVSp/iXYf/X4WqI9OdgzDYUvqXBpqw/erc=
-X-Gm-Gg: ASbGncsEbrW6oxdGT0VFhV9a51m507MWPMOIheztHGkYGrBIpNRdYS3pv1RU7EGiNwG
- x0bjbuLS68mVC45p8aiMvIPCyyyJRBSjV9jKe+5VUC/hY/5UaoPKAIXgok0Tkf76+prGBwECS6y
- 3SAWnhgsoFD8lc8it5eY/JyQ41pWImfLe/Ra8IGeYsgIvavqXvBydyqWzk3/dz5cs0wkBIVdaMA
- IcHZpnfxp9zOvGOuxVL1vydu02XhLIFV3Tpc03Fr2ofZGqyZ3mFQjEUVcuA0S0H86TFwGVFxX0K
- 5DNbSL6JllgOMxZeGWFnhEUNJqAjvjFU3DjCGJB8P7AYMEiI2tJAXaaepEoqYU78aFqac7kRyIk
- RUJvExyu5
-X-Google-Smtp-Source: AGHT+IGtZ1UoPjts/76ebqsFQnGvcwZxYXSahLeORTTnSZr2aqbOTXea71J8vl6aRGS+Nu9T9bWjIw==
-X-Received: by 2002:a5d:584e:0:b0:39c:140c:25e with SMTP id
- ffacd0b85a97d-39efba560b1mr14962145f8f.24.1745406608017; 
- Wed, 23 Apr 2025 04:10:08 -0700 (PDT)
+ AJvYcCVDTl9v2fGtka9Gr5bCzWpEUFv29uFZPElAg1s8LKv8mYMxi4Gadl0Mtl8qqMM2njOyVh9uCmeRAA26@nongnu.org
+X-Gm-Message-State: AOJu0Yw8pYdb6pO76dxjYfsRKAJo4vCKU6RoXYV1YFwfzjUmy3Iiog90
+ EslGHYkMpvmunKtu6/7C9tDD9iQZoohUAV1SCrJh09WksH2k0toIKfb4As2u7rs=
+X-Gm-Gg: ASbGnctIqjG/fc1O4RUbJt103WOGsxPehzonIQe9KLrv18+XDEjrT7CHCDK772VpjrV
+ PT0dv96a70kb06MV7nrHnh8kbZXmDU93L7r4CB8ZfmykC51mXPzsB5WR1hioZs2pp5qIpW8SrGL
+ DK1k/uC9JyMQziv/wMcAY/eYT/HuhYrzQcm0R942HUkzXoLB5k5G/dbK1AZkQ/oIl0ZeiDreAhN
+ 7qc5Z3yRVsoaVjQcoONSEZ9E8EUkXtjREQab8M/3ZCitUcnF0shXoKPqBh/3bHSkyDZvJvGUkHv
+ sHbf2inquMgJSGOsjuwVAS+uRoRx/R8bj0Bn27GFz4nYlsdwmaVcV20T0FOSia1dh7Dnmb6C9kc
+ pEZ7m+ihY
+X-Google-Smtp-Source: AGHT+IEpc50hJuTfPrFGvFNVlv87MzohxFd6AkusgFay/JiovvS9+VjJPi0a5uKqjoRIk5bzl/7GRA==
+X-Received: by 2002:a05:600c:350a:b0:440:66c5:26f4 with SMTP id
+ 5b1f17b1804b1-4406ab703b8mr168120115e9.1.1745406661494; 
+ Wed, 23 Apr 2025 04:11:01 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d35ba5sm21822375e9.26.2025.04.23.04.10.07
+ 5b1f17b1804b1-44092b0a52asm22625105e9.0.2025.04.23.04.11.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 04:10:07 -0700 (PDT)
-Message-ID: <c843aeff-cbf5-4ee0-ab8e-0508ab601b93@linaro.org>
-Date: Wed, 23 Apr 2025 13:10:06 +0200
+ Wed, 23 Apr 2025 04:11:00 -0700 (PDT)
+Message-ID: <cc3f6150-4877-410c-814a-981070b4d49b@linaro.org>
+Date: Wed, 23 Apr 2025 13:11:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 005/147] exec/memory.h: make devend_memop "target defines"
- agnostic
+Subject: Re: [PATCH 009/147] exec/ram_addr: remove dependency on cpu.h
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-6-richard.henderson@linaro.org>
+ <20250422192819.302784-10-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-6-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,54 +105,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 22/4/25 21:25, Richard Henderson wrote:
 > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Will allow to make system/memory.c common later.
+> Needed so compilation units including it can be common.
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20250317183417.285700-6-pierrick.bouvier@linaro.org>
+> Message-ID: <20250317183417.285700-10-pierrick.bouvier@linaro.org>
 > ---
->   include/exec/memory.h | 16 ++++------------
->   1 file changed, 4 insertions(+), 12 deletions(-)
-> 
-> diff --git a/include/exec/memory.h b/include/exec/memory.h
-> index cc5915033c..577f473446 100644
-> --- a/include/exec/memory.h
-> +++ b/include/exec/memory.h
-> @@ -3138,25 +3138,17 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
->   MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
->                                 uint8_t c, hwaddr len, MemTxAttrs attrs);
->   
-> -#ifdef COMPILING_PER_TARGET
->   /* enum device_endian to MemOp.  */
->   static inline MemOp devend_memop(enum device_endian end)
->   {
->       QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
->                         DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
->   
-> -#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
-> -    /* Swap if non-host endianness or native (target) endianness */
-> -    return (end == DEVICE_HOST_ENDIAN) ? 0 : MO_BSWAP;
-> -#else
-> -    const int non_host_endianness =
-> -        DEVICE_LITTLE_ENDIAN ^ DEVICE_BIG_ENDIAN ^ DEVICE_HOST_ENDIAN;
-> -
-> -    /* In this case, native (target) endianness needs no swap.  */
-> -    return (end == non_host_endianness) ? MO_BSWAP : 0;
-> -#endif
-> +    bool big_endian = (end == DEVICE_NATIVE_ENDIAN
-> +                       ? target_words_bigendian()
-> +                       : end == DEVICE_BIG_ENDIAN);
-> +    return big_endian ? MO_BE : MO_LE;
->   }
-> -#endif /* COMPILING_PER_TARGET */
-
-Nice!
+>   include/exec/ram_addr.h | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->   
->   /*
->    * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
 
 
