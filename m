@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2677C369D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3DFC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Wcq-00078A-Jb; Wed, 23 Apr 2025 05:42:40 -0400
+	id 1u7WcA-0005Hd-1D; Wed, 23 Apr 2025 05:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcK-0005pB-CH
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:08 -0400
+ id 1u7Wbi-0004Nn-6e
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcI-0008P1-I0
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:08 -0400
+ id 1u7Wbg-0008Lc-MY
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401321;
+ s=mimecast20190719; t=1745401288;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HeLjFralCRqvF3RDhEB7JJDGeYLNNIolLYPhUDMNm1U=;
- b=acmNFlhRiIHX46o213BakHtYdSUsT756NejW61/wnfWP52xgihbxmkqwpebcymKvpDFFd2
- odSA0y7I6zBgzZ5Q7qztYqbfYwExB3kYA6hFHtqrU5puvFNKhc1M3+f10tRK4z4+KG0sXr
- IGv58o1OZwGeN4V7fRqt5flOCQfXbg4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bBSmWHtRLE+5d4wSOyJC5GTKnwxPIKfO6ljx7dHaimI=;
+ b=F2sG6lSFym4ed/jO8UKiYIpluBsX9NpfN588mWWr0azWJuaVyfxHg+llEPdoTa4hq/0At7
+ HZehadMhWoGPqyDD3ysyAwnuXwp4gVMnngchAiZZuT7T0f8Gn3NoVtEXDFA+PMnCKrBo2C
+ 653VCWTupm68mFYgHyYtxvtL7ROgAmA=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-kIZeN829OUKMbCqr8bWsKA-1; Wed, 23 Apr 2025 05:41:59 -0400
-X-MC-Unique: kIZeN829OUKMbCqr8bWsKA-1
-X-Mimecast-MFC-AGG-ID: kIZeN829OUKMbCqr8bWsKA_1745401317
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ac293748694so458206666b.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:58 -0700 (PDT)
+ us-mta-653-AI6yq_G5Ot-9h8M1vxEC6Q-1; Wed, 23 Apr 2025 05:41:23 -0400
+X-MC-Unique: AI6yq_G5Ot-9h8M1vxEC6Q-1
+X-Mimecast-MFC-AGG-ID: AI6yq_G5Ot-9h8M1vxEC6Q_1745401282
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ac79e4764e5so329262066b.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401316; x=1746006116;
+ d=1e100.net; s=20230601; t=1745401281; x=1746006081;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HeLjFralCRqvF3RDhEB7JJDGeYLNNIolLYPhUDMNm1U=;
- b=C7IZqEsQ9w2T65vq/RQXW4jfBxCER/XGYVgDkoJMfSWS6H95a3PlD7whtZtRZkPpve
- rernMDdflvtNobYlZmpjbQF/GxjC95raDYHaaefGpaJKPZGSBC7W/tSN7U6G7OjhOR8F
- tm7x5B6gQOa0YcGqUKuGZ/z5pBH3Y3Nc6n9iHer4Mf1W5cytMegtL+QLg7FlEWJ31NB5
- BjslipCy4+OCM9kY3umkd+nfGNAI9tG+X8eUjzX1Gt3DnXSapvmhLYP43TxIHsx8hLHN
- EOpxOb+JUbpBJGBJaeP414d0aj/TXHedt+FH7b43c2LrHpbI/wbSofI7hueShZghOP4c
- /d0w==
-X-Gm-Message-State: AOJu0Yw4x2K0yFfqz3xEQF8AcV/L2ilVB6nJb9bncsgqUazZ8Rwn6Jps
- mtKcREp2+WOx+jfeeBqpO0kABJkTEYCEiv3a/v3H/00dHg88zSSqW1ugh4vJLgVXuExqq0IwAKE
- qUB/kV45yy8cgjOhSQePHAqJxyb25J0hR0nZDx0qoahiMQQ4WA1EtUQF4gUO/HMO7Z03TZur9ki
- /2IIK2UhMeGGR6hAnHjHVL7bmQYC2xkSx30m7V
-X-Gm-Gg: ASbGncsrYQj1twRCwLHAu6dH0rRDa8NhNUstNn1oZkymLLm+p0YOqqkd41ZUd8W/Kqk
- 0ldF+UfUnSB++SUSL/Yh+1YssXUNaXpgA1sVg3NXlzjGo5JNoHIm51HKaLTCxg+kWziUUCicCc1
- z3Sh8O5/B98hFjH7+mQwgFt+Bhy08UrLseaY+LbaSQplXaDmr1WkN7llVl2rKaiyUz1ZJb12YI6
- lXmRXofbU36peu9vd03i+gVGq3xfaB/0A/EMdEeO3AatvSMvEEl1uBjhBY7Iy+FtABK6nM8g6Ae
- dIhRSkZAtRrYhEw/
-X-Received: by 2002:a17:906:6a1e:b0:aca:c924:c14 with SMTP id
- a640c23a62f3a-acb74b34dbemr1628868866b.17.1745401316284; 
- Wed, 23 Apr 2025 02:41:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFVV5nMiYUnI3kjfAF7H6+OhvyIhIAO4OAALMFZmrBQ/oEdymLT+aUTVOIMG5gC9WYvz3/0A==
-X-Received: by 2002:a17:906:6a1e:b0:aca:c924:c14 with SMTP id
- a640c23a62f3a-acb74b34dbemr1628866866b.17.1745401315846; 
- Wed, 23 Apr 2025 02:41:55 -0700 (PDT)
+ bh=bBSmWHtRLE+5d4wSOyJC5GTKnwxPIKfO6ljx7dHaimI=;
+ b=YAsTD18JqHh/12gB6vwilT77QpE4QfAagroVhoyRzyOAcKKudXGGw6hugNaqJYOpFx
+ QS0YzO5kSPBhXYn04JFOi9B8bnIFiayBzTW+xS139hlJvv/D25IZtf9DvcM04XUgpZom
+ LyEsETKzIK/qUPH37641aBF4ni0kTbqaNZWBEchJK+8DnalqnYpwjhAN2LSadjtUOYr/
+ sbK1/XePIHK2z1mK2KCMgnxH0aWUs30aw38ahYHT38PW2oHkisGa7/lBAeV6F6EUqFXN
+ kEsfnJfic1EdBazERrwxEPkUL0VPhGWFZXJhLhrEGa+5Ulq4D4q0O0UYOzfuHvfcUN3/
+ 6X7w==
+X-Gm-Message-State: AOJu0YykOA0qTwsmwFORDacueKze+KL83JDVCBJ9o1SpK5tK6rNy9ump
+ CWvSJZMDGlV6WXLKA/bG2OZRMjf5vQoi6uunF+SeeYrz+oak2VsQrrT6SqSn3UxDvovBuHA03vJ
+ rGbHeviFR2xUxVPwhn87b9bCe7zFWyrHyawWLLTA47OKPatVufsxLYRTOqvks7Un/K690BNXXSe
+ 1xAxF4jv+lq/3jJt5UMB1e9CcwtW+5cw9Q0ABD
+X-Gm-Gg: ASbGnctSd2afNNCbdJ402EYZMZoSgDqijEfi0WPwvScuWNXYouL6ol/LIa1DG5peTh6
+ efsaSDht9kBMWnBzHoCv4bVIq9+sVVDeBOg2t9ivyXKgkVOvUQgqPO7Tp+DGOjbwAj2cAVtiXzd
+ RyBKQJFtoyg1al3EUrLPr6UMt/dw0Gc3Z4m7L/VS19yoafP5DZ2AWDji2xKTKytgUj4Vnqqtjl+
+ qmNOxQOYqTLDkakbXiBRjzS/iwOm6n3Ws7p6TBEiMvh4+lF4TuJB6EQkSKQfkht9/fY4rphwDmH
+ 9vwsVKt1EFnxEkEY
+X-Received: by 2002:a17:907:3e9c:b0:ac3:49f0:4d10 with SMTP id
+ a640c23a62f3a-acb74d65b57mr1764243066b.38.1745401281001; 
+ Wed, 23 Apr 2025 02:41:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjc5MyRPCXic4HwK1xmfPdsifCCkihTC1YAzo8LOifCfS2IWWjLhopvFV72AoZGNBd47LMGg==
+X-Received: by 2002:a17:907:3e9c:b0:ac3:49f0:4d10 with SMTP id
+ a640c23a62f3a-acb74d65b57mr1764241466b.38.1745401280521; 
+ Wed, 23 Apr 2025 02:41:20 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acbb83ca49asm300705266b.84.2025.04.23.02.41.54
+ a640c23a62f3a-acb6ec42adfsm764159066b.42.2025.04.23.02.41.19
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:41:54 -0700 (PDT)
+ Wed, 23 Apr 2025 02:41:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Wei Liu <liuwe@linux.microsoft.com>
-Subject: [PULL 23/34] target/i386: add a directory for x86 instruction emulator
-Date: Wed, 23 Apr 2025 11:40:53 +0200
-Message-ID: <20250423094105.40692-24-pbonzini@redhat.com>
+Subject: [PULL 07/34] target/i386: tcg: remove subf from SHLD/SHRD expansion
+Date: Wed, 23 Apr 2025 11:40:37 +0200
+Message-ID: <20250423094105.40692-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
@@ -108,32 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wei Liu <liuwe@linux.microsoft.com>
+It is computing 33-count but 32-count had just been used, so just shift
+further by one.
 
-Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1741377325-28175-12-git-send-email-liuwe@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/emulate/meson.build | 0
- target/i386/meson.build         | 1 +
- 2 files changed, 1 insertion(+)
- create mode 100644 target/i386/emulate/meson.build
+ target/i386/tcg/translate.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/target/i386/emulate/meson.build b/target/i386/emulate/meson.build
-new file mode 100644
-index 00000000000..e69de29bb2d
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 2e9c472f49d..c1aacea6135 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -31,6 +31,7 @@ subdir('whpx')
- subdir('nvmm')
- subdir('hvf')
- subdir('tcg')
-+subdir('emulate')
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 5529327680d..822dbb2e9ae 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -1633,17 +1633,16 @@ static TCGv gen_shiftd_rm_T1(DisasContext *s, MemOp ot,
+         } else {
+             tcg_gen_shl_tl(cc_src, s->T0, tmp);
  
- target_arch += {'i386': i386_ss}
- target_system_arch += {'i386': i386_system_ss}
+-            if (ot == MO_16) {
+-                /* Only needed if count > 16, for Intel behaviour.  */
+-                tcg_gen_subfi_tl(tmp, 33, count);
+-                tcg_gen_shr_tl(tmp, s->T1, tmp);
+-                tcg_gen_or_tl(cc_src, cc_src, tmp);
+-            }
+-
+             /* mask + 1 - count = mask - tmp = mask ^ tmp */
+             tcg_gen_xori_tl(hishift, tmp, mask);
+             tcg_gen_shl_tl(s->T0, s->T0, count);
+             tcg_gen_shr_tl(s->T1, s->T1, hishift);
++
++            if (ot == MO_16) {
++                /* Only needed if count > 16, for Intel behaviour.  */
++                tcg_gen_shri_tl(tmp, s->T1, 1);
++                tcg_gen_or_tl(cc_src, cc_src, tmp);
++            }
+         }
+         tcg_gen_movcond_tl(TCG_COND_EQ, s->T1,
+                            count, tcg_constant_tl(0),
 -- 
 2.49.0
 
