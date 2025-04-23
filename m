@@ -4,78 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65579C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 08:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDEDEC369D7
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 08:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7V2C-0000v9-Nd; Wed, 23 Apr 2025 04:00:44 -0400
+	id 1u7V5x-00028Z-E1; Wed, 23 Apr 2025 04:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u7V2A-0000u8-9a
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 04:00:42 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u7V27-0005e1-3M
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 04:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745395239; x=1776931239;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=DIVsRo5Vp1MPCiO30FsW3DWSH0sxANFdHXeL/mukb38=;
- b=IMCP5AZtFECx7GzPjosRDYUUEa3Eu6Q+VjkMmPibKSRMxmgSbwnwwEfe
- ce83BaPqX2dnizxKws8v5GQgaFXlRBKNFRBXI1e+4x+wD7++U8BlYLrhy
- uvDn/p0N2NQdqz+wcmaUkdvYUyIdyA5poCAGqpa2ozAESj7esbh/HlM8k
- IFGSzwMM8hqk50HhLgwojtgQJYk4nvhFkTPTs/5o7Tf1TugDwi3CSEp7W
- XmVw7LKIGUOP+dbirDuzydEZ0hd92NkFYbuvdfxRAf8Fh9UFNlk9MmYDV
- pqFlJDuGVMKPda7XDfvagHEG/EAz3YCPUAWisUP3JihzHB64F2U8e4PbK w==;
-X-CSE-ConnectionGUID: cwUsbLGCTzyaUlK71dh2pA==
-X-CSE-MsgGUID: 6CqAYHVxQMCtkfkJW4r2/A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50806278"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="50806278"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 01:00:36 -0700
-X-CSE-ConnectionGUID: YRsH/AXiQ/6A1+iy/cqUbQ==
-X-CSE-MsgGUID: 9l0+wQbaQ1e3igJMjgpeww==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137111565"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 01:00:33 -0700
-Message-ID: <dd516742-ceae-44a4-8f80-23f7c73e596f@intel.com>
-Date: Wed, 23 Apr 2025 16:00:29 +0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1u7V5t-00026i-5V
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 04:04:34 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1u7V5q-00063k-BR
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 04:04:32 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8DxfWsLnwhoU4TEAA--.63596S3;
+ Wed, 23 Apr 2025 16:04:27 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBxn8UCnwhofGaRAA--.35702S6;
+ Wed, 23 Apr 2025 16:04:25 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v4 4/9] target/loongarch: Add stub function
+ loongarch_get_addr_from_tlb
+Date: Wed, 23 Apr 2025 16:04:12 +0800
+Message-Id: <20250423080417.3739809-5-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250423080417.3739809-1-maobibo@loongson.cn>
+References: <20250423080417.3739809-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 08/55] i386/tdx: Initialize TDX before creating TD vcpus
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-9-xiaoyao.li@intel.com> <Z-0iV-xIeu0hoaaC@redhat.com>
- <54c19255-0b05-4f50-83a5-256567724df4@intel.com> <aAe27bMcwIwpDB6m@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aAe27bMcwIwpDB6m@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxn8UCnwhofGaRAA--.35702S6
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,72 +68,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/2025 11:34 PM, Zhao Liu wrote:
->>>> +int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
->>>> +{
->>>> +    X86CPU *x86cpu = X86_CPU(cpu);
->>>> +    CPUX86State *env = &x86cpu->env;
->>>> +    g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
->>>> +    Error *local_err = NULL;
->>>> +    int retry = 10000;
->>>> +    int r = 0;
->>>> +
->>>> +    QEMU_LOCK_GUARD(&tdx_guest->lock);
->>>> +    if (tdx_guest->initialized) {
->>>> +        return r;
->>>> +    }
->>>> +
->>>> +    init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
->>>> +                        sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
->>>> +
->>>> +    r = setup_td_xfam(x86cpu, errp);
->>>> +    if (r) {
->>>> +        return r;
->>>> +    }
->>>> +
->>>> +    init_vm->cpuid.nent = kvm_x86_build_cpuid(env, init_vm->cpuid.entries, 0);
->>>> +    tdx_filter_cpuid(&init_vm->cpuid);
->>>> +
->>>> +    init_vm->attributes = tdx_guest->attributes;
->>>> +    init_vm->xfam = tdx_guest->xfam;
->>>> +
->>>> +    /*
->>>> +     * KVM_TDX_INIT_VM gets -EAGAIN when KVM side SEAMCALL(TDH_MNG_CREATE)
->>>> +     * gets TDX_RND_NO_ENTROPY due to Random number generation (e.g., RDRAND or
->>>> +     * RDSEED) is busy.
->>>> +     *
->>>> +     * Retry for the case.
->>>> +     */
->>>> +    do {
->>>> +        error_free(local_err);
->>>> +        local_err = NULL;
->>>> +        r = tdx_vm_ioctl(KVM_TDX_INIT_VM, 0, init_vm, &local_err);
->>>> +    } while (r == -EAGAIN && --retry);
->>>> +
->>>> +    if (r < 0) {
->>>> +        if (!retry) {
->>>> +            error_report("Hardware RNG (Random Number Generator) is busy "
->>>> +                         "occupied by someone (via RDRAND/RDSEED) maliciously, "
->>>> +                         "which leads to KVM_TDX_INIT_VM keeping failure "
->>>> +                         "due to lack of entropy.");
->>>
->>> This needs to be
->>>
->>>        error_append_hint(local_err, ....);
->>>
->>> so that this message gets associated with the error object that
->>> is propagated, and the top level will print it all at once.
->>
->> Good suggestion! Will change to it in the next version.
-> 
-> A little suggestion:
-> 
-> With error_append_hint(local_err, ...), you can add "ERRP_GUARD()" at
-> the beginning of tdx_pre_create_vcpu(), just like the commit 95e9053a34ca.
+Stub function loongarch_get_addr_from_tlb() is added if option
+CONFIG_TCG is not enabled, so this function can be called in KVM
+only mode.
 
-I don't think ERRP_GUARD() is needed.
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/loongarch/cpu_helper.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-ERRP_GUARD() is used to guard @errp, while here error_append_hint() is 
-used on @local_err.
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 8ae9a448b4..71180bc345 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -156,7 +156,16 @@ static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
+ 
+     return TLBRET_NOMATCH;
+ }
++#else
++static int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
++                                       int *prot, target_ulong address,
++                                       MMUAccessType access_type, int mmu_idx)
++{
++    return TLBRET_NOMATCH;
++}
++#endif
+ 
++#ifdef CONFIG_TCG
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+                         uint64_t *dir_width, target_ulong level)
+ {
+-- 
+2.39.3
 
 
