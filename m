@@ -4,67 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97C95C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB4BC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 14:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7aZg-00044N-1b; Wed, 23 Apr 2025 09:55:40 -0400
+	id 1u7aeQ-0006zN-5H; Wed, 23 Apr 2025 10:00:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1u7aZd-000447-VE; Wed, 23 Apr 2025 09:55:37 -0400
-Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
+ (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
+ id 1u7aeJ-0006uw-4U; Wed, 23 Apr 2025 10:00:27 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
- id 1u7aZb-0006G6-FD; Wed, 23 Apr 2025 09:55:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- Content-Type:In-Reply-To:From:References:To:Subject:MIME-Version:Date:
- Message-ID:Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From
- :Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=mJWfKt3Nzg2uxMFT7GSfrs8BrAsmmHaSQ9gT2O7SMdo=; b=RsAZE77hMl6fZJmeIwZWtxrwag
- dasREMyEIYQJiMVvdj5X+A8KlPbrLQRgS0WY3Ac++5EHFusHlS3JRBfomFkaBwK+RtjKJY3loPSEK
- lgdWkB0iT/CfTPd74rSwqTH90VG1IOI7Kgu2OnB3moV3jVIlqq198QgbJWe6uHlTh8GrqTXbd168t
- 9igKs9nlaQTuar3TUQx8Eu+whXP8BeHEAQxQlbYfyvQJ6tEm8Jl71bw3ZUTOncfkBx/tmuUeIxVXy
- kdM2WSkrrrT3t2vY6jiqpv8KtbQlnlEZxBEqLyawd5+vD+Zqy/axYpn9ikjJxAZNXiUZNnC4g33Io
- ck+Le3pQ==;
-Received: from [167.98.27.226] (helo=[10.35.6.194])
- by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1u7aYl-001JoX-0L; Wed, 23 Apr 2025 14:54:43 +0100
-Message-ID: <ee7e6775-9dd7-48b4-a5f3-9189b1386deb@codethink.co.uk>
-Date: Wed, 23 Apr 2025 14:54:41 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
+ id 1u7aeG-0006p7-TJ; Wed, 23 Apr 2025 10:00:26 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZjLN459Lzz4xG0;
+ Thu, 24 Apr 2025 00:00:20 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZjLN133Vfz4wbY;
+ Thu, 24 Apr 2025 00:00:17 +1000 (AEST)
+Message-ID: <1e513f30-a7ed-41e8-8415-7b623ba05587@kaod.org>
+Date: Wed, 23 Apr 2025 16:00:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tcg: allow tb_flags to be larger than 32bit
-To: Paolo Bonzini <pbonzini@redhat.com>, richard.henderson@linaro.org,
- peter.maydell@linaro.org, mrolnik@gmail.com, brian.cain@oss.qualcomm.com,
- deller@gmx.de, zhao1.liu@intel.com, gaosong@loongson.cn, laurent@vivier.eu,
- edgar.iglesias@gmail.com, philmd@linaro.org, aurelien@aurel32.net,
- jiaxun.yang@flygoat.com, arikalo@gmail.com, shorne@gmail.com,
- npiggin@gmail.com, danielhb413@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- ysato@users.sourceforge.jp, david@redhat.com, iii@linux.ibm.com,
- thuth@redhat.com, mark.cave-ayland@ilande.co.uk, atar4qemu@gmail.com,
- kbastian@mail.uni-paderborn.de, jcmvbkbc@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org
-References: <20250423100949.2047161-1-ben.dooks@codethink.co.uk>
- <275dd8a6-c4f7-47de-ac45-64612e14b8a7@redhat.com>
-Content-Language: en-GB
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-Organization: Codethink Limited.
-In-Reply-To: <275dd8a6-c4f7-47de-ac45-64612e14b8a7@redhat.com>
+Subject: Re: [RFC PATCH] hw/i2c/aspeed_i2c: Make AspeedI2CClass::gap an plain
+ unsigned type
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>
+References: <20250423120555.21318-1-philmd@linaro.org>
+ <5f97c30e-9b34-4da0-a2dc-3a6c07601ccb@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <5f97c30e-9b34-4da0-a2dc-3a6c07601ccb@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.40.203.114;
- envelope-from=ben.dooks@codethink.co.uk; helo=imap4.hz.codethink.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,106 +112,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/04/2025 14:08, Paolo Bonzini wrote:
-> On 4/23/25 12:09, Ben Dooks wrote:
->> In adding a new feature to the riscv target, it turns out the
->> tb_flags had already got to the 32-bit limit. Everyone other target
->> has been fine with uint32_t (except perhaps arm which does somethng
->> strange to extend tb_flags, I think).
+On 4/23/25 15:33, Cédric Le Goater wrote:
+> On 4/23/25 14:05, Philippe Mathieu-Daudé wrote:
+>> Convert AspeedI2CClass::gap to plain unsigned, using '0'
+>> as "no gap" to avoid the followin UBSan warnings:
 >>
->> To allow extending of tb_flags to be bigger, change the uint32_t to a 
->> tb_flags_t which a target can define to be bigger (and do this for 
->> riscv as having tb_flags_t be uint64_t somewhere is necessary to
->> pick out bugs in this translation).
+>>    SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/i2c/aspeed_i2c.c:1559:16
+>>    SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/i2c/aspeed_i2c.c:1583:16
+>>    SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/i2c/aspeed_i2c.c:1608:16
+>>    hw/i2c/aspeed_i2c.c:1608:16: runtime error: implicit conversion from type 'int' of value
+>>                                 -1 (32-bit, signed) to type 'uint8_t' (aka 'unsigned char')
+>>                                 changed the value to 255 (8-bit, unsigned)
 >>
->> This method of extension also stops having to go through each arch 
->> fixing field usage and anything else that may arise, and given this is 
->> currently only affecting the tcg, it can be done per target arch.
->>
->> Note, target/riscv does not currently use any of the other flag bits 
->> yet. The work is done as we would like to try the big-endian riscv 
->> again and someone has already taken the last bit we where using at 
->> (target/riscv/cpu.h#L666 adding PM_SIGNEXTEND where we had BE_DATA)
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> Leaving aside your patch I think you can improve the density of the 
-> tbflags a bit too:
-> 
-> - PM_MASK_ENABLED, PM_BASE_ENABLED and AXL are unused, which gives you 
-> back 4 bits.
+> Looks fine.
 
-Hmm, the PM_MASK_ENABLED, PM_BASE_ENABLED are also used by VMA and VTA
-which i've not checked if they're actually used from the ctx.
-
-> 
-> - VLMUL == 4 is invalid, and you can use that to get rid of VILL
-> 
-> - SEW reserves 3 bits, but TCG only supports 8/16/32/64; that could be 
-> one more bit if you can live with the limitation
-> 
-> This is already 6 bits, but for FS and VS it may be efficient enough to 
-> have just one bit (dirty vs. everything else): for all cases other than 
-> dirty, REQUIRE_FPU and require_rv* can call a helper to look at the 
-> actual MSTATUS and generate the exception if the extension is disabled; 
-> then the caller always proceeds with translation into TCG ops(*).  The 
-> overhead for the DISABLED/INITIAL/CLEAN cases is minimal and it gives 
-> back 2 more bits.
-> 
-> Finally, in many cases it makes sense to do a full TB flush when CSRs
-> change.  However I am not sure if this could be done for RISC-V, maybe 
-> for the CFI enabled bits?
-
-I'll have a look at those, but for now I'm going back to 9.1
+nope. It's breaking make check :
 
 
-> Thanks,
-> 
-> Paolo
-> 
-> (*) that is:
-> 
-> static bool require_rvv(DisasContext *s)
-> {
->      REQUIRE_EXT(s, RVV);
->      if (!s->mstatus_vs_dirty) {
->          gen_helper_require_rvv(tcg_env);
->      }
->      return true;
-> }
-> 
-> static bool require_rvf(DisasContext *s)
-> {
->      switch (s->sew) {
->      case MO_16:
->          if (!s->cfg_ptr->ext_zvfh) {
->              return false;
->          }
->          break;
->      case MO_32:
->          if (s->cfg_ptr->ext_zve32f) {
->              return false;
->          }
->          break;
->      case MO_64:
->          if (s->cfg_ptr->ext_zve64d) {
->              return false;
->          }
->          break;
->      default:
->          return false;
->      }
-> 
->      if (!s->mstatus_fs_dirty) {
->          gen_helper_require_rvf(tcg_env);
->      }
->      return true;
-> }
-> 
-> 
+  ERROR:../tests/qtest/tpm-tis-i2c-test.c:104:tpm_tis_i2c_test_basic: assertion failed (access == TPM_TIS_ACCESS_TPM_REG_VALID_STS | TPM_TIS_ACCESS_TPM_ESTABLISHMENT): (255 == 129)
+Unexpected error in qio_channel_socket_writev() at ../io/channel-socket.c:622:
+/home/legoater/work/qemu/qemu-aspeed.git/build/tests/qtest/tpm-tis-i2c-test: Unable to write to socket: Bad file descriptorqemu-system-aarch64:
+  tpm-emulator: Could not cleanly shutdown the TPM: Interrupted system call
 
 
--- 
-Ben Dooks				http://www.codethink.co.uk/
-Senior Engineer				Codethink - Providing Genius
-
-https://www.codethink.co.uk/privacy.html
+C.
 
