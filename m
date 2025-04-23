@@ -4,97 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E8CC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A938C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:02:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7T9v-0007wX-Dg; Wed, 23 Apr 2025 02:00:35 -0400
+	id 1u7TB9-0008WT-Ip; Wed, 23 Apr 2025 02:01:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7T9t-0007w1-Dm
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 02:00:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7T9p-0008Uq-Vp
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 02:00:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745388027;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uTeRDoAyjzRy0zTc2c/mxCCdaA336u5TDKVMvQ/j+Lk=;
- b=FF7xBK+3NJrphll+x4h1yETULitijLt5cRZz8FSldSwSX/FXXGF4SV6P6jLsKN0AxSRG7v
- Wv0sKKbq5GYZTcl/TDsLG+a5EdRjVWUv9ndhP12bTYXwhaCEg6Sv39EuyJ16hVLGKREQF5
- dNFMdLoyaCwgMuH9fPFekrkDHiGgkm0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-336--a_0ra3lNvKO_G0hB7pqXQ-1; Wed, 23 Apr 2025 02:00:24 -0400
-X-MC-Unique: -a_0ra3lNvKO_G0hB7pqXQ-1
-X-Mimecast-MFC-AGG-ID: -a_0ra3lNvKO_G0hB7pqXQ_1745388023
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso32797855e9.0
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 23:00:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u7TB8-0008W8-Lc; Wed, 23 Apr 2025 02:01:50 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1u7TB6-00007q-PW; Wed, 23 Apr 2025 02:01:50 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-af5139ad9a2so3828277a12.1; 
+ Tue, 22 Apr 2025 23:01:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745388103; x=1745992903; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=75V2zUF4G37A+7ojkne1bi0Ew25Suvv6XvzMaaSL0es=;
+ b=l9G/iqThpDF+t+cpVh3vCKgTSWM+SOiF84wQRveGGrUgux8Ytpp4Y7R5b/nPYRWPCJ
+ N+8OsOv9Ppnp6+x3f7H3nJc+4u63b6Hm+t2vtzx0yQUx1XIYUXruEBNZ/GghdxxMMpBy
+ APyQRw6/5KQ4JMi2Nlu+csgU5uhPlqRatnSpzg7/oruRH5EVZJAoU6/kz7qF0M3xymli
+ AKzulKv+Ve96EFapRT62TXc13RMID/dzhPiQlR9HAB1nu2VmgjRvu+JivU2uYm6eRyNs
+ NWAxC5y2+CdIYHuXSIDxToycpyt1NKpVbWCipXzXWeydCprORAwQsW0BS+CAs2Di/9SO
+ PMtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745388023; x=1745992823;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uTeRDoAyjzRy0zTc2c/mxCCdaA336u5TDKVMvQ/j+Lk=;
- b=gfU5uB7OyEyy1dYn7tiHd0rhwK41nTyy0NRt2SIHFOsoqCZvy8omRoZgqRlR/f0U9u
- M+p9EJJ+iZLT1q9B7pdbQvkH6aPWyhwZWHJNH+im7695gDjau0Ca/ofVd+tQX+VGGP23
- 7MH2ibmjMMBuHSQCFm7sRQOe23kvkx1O4S4lgvBJFc0qLLZ7c3E+3ooE2rLkfnCyZ1yV
- bHCE6ZaE4sC5UbSnH8/FRqLjGMOaevNn4e+VMYrKds7N1S8KvuJ8LiGOe/TC3HlXOhKT
- 0ofIJMHseHhMkUv4ErmX+InqnM/i1Hm8QQf7WU7qqSs3wIL6X27+8VzDPKaru6fSnh4P
- Afug==
-X-Gm-Message-State: AOJu0Ywhgsj3wRjJVT4leZgir5LCvblBFy6X0c5n2ZdeCrSffeDplBnQ
- yc+0Sy23edP//dbUsHT0VL3XvGidCnSU0VrhD6edeBjSF5rvfbxhum6CxS5R3S12kwqHE4zg5eU
- Ok/0HFLJGdgtq1Pflr4joqNZzbGbWMFFBchqWmM6JhS3xqnuaKYox
-X-Gm-Gg: ASbGncuODL7njosAem1hiZHgWT9Qxb88mtQjGQzLxOfcgcPfDJDJAEGMZbRmn8QSlII
- AodeYn7A9FisdAeWibb9P9GJ7ae1jddUhVXaepHmfPJXPX7ThG0xZlrkCBAyqCAc2+MY9zmt74R
- G/xWyjD7lssdQ9rZghGVdO0KcDcgZWlJEPcKh9ihrcuSl7MTeNGaxA+raz07znrBXklJRp72sAQ
- 9g687r5xkMk4XiXmM3tZ7sjW8FfdIvdVE7ij1SYNIF7E3dF4kU/edShBZI1/saflRybJSh1sRXt
- +HLa9g==
-X-Received: by 2002:a05:600c:a403:b0:43d:2313:7b49 with SMTP id
- 5b1f17b1804b1-4408a0f27d8mr57695545e9.12.1745388023005; 
- Tue, 22 Apr 2025 23:00:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMnS5aOeaWe6BPNJ2e0sH88WhIPtAzCdNBcwmIIWODgPAF7pyeMs/bH6SWjM3MX7HFpNKIFA==
-X-Received: by 2002:a05:600c:a403:b0:43d:2313:7b49 with SMTP id
- 5b1f17b1804b1-4408a0f27d8mr57695245e9.12.1745388022622; 
- Tue, 22 Apr 2025 23:00:22 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d29b73sm12763025e9.17.2025.04.22.23.00.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Apr 2025 23:00:21 -0700 (PDT)
-Date: Wed, 23 Apr 2025 02:00:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "peterx@redhat.com" <peterx@redhat.com>
-Subject: Re: [PATCH v3 1/2] intel_iommu: Take the bql before registering a
- new address space
-Message-ID: <20250423015815-mutt-send-email-mst@kernel.org>
-References: <20250423053742.65401-1-clement.mathieu--drif@eviden.com>
+ d=1e100.net; s=20230601; t=1745388103; x=1745992903;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=75V2zUF4G37A+7ojkne1bi0Ew25Suvv6XvzMaaSL0es=;
+ b=No1OhMZNx4rGHGLti9Oknfumnq3GdCqvJF4UsBaE3Pybe6q+UCuh/SYOHb5pjzFyXl
+ AMDCFepOw8EAKq+1XP62zotoQI+3QDQ2Gk+ZjJYWzDEIAA2KRwZsXatpXgg7V4cSg5RU
+ M7XzH/FsIRa2tNv4yPBhheYR7LgHZUfhjymNF4TDGCkC+utEAqrDlAHGrICfkCNe7hcy
+ Q5YNBxAI0KHE3DF7lcKFOa0XqWS990nA/GeglRm26mStfCQ9Sc9DO2aCO1nAY1C+/YfL
+ sNYq0vnTL8LiT+F+G5n/yylPCP3F2sbKVjWm58FwKylVqkZ9pobF+lJgLc8evOPqQosN
+ 0Ebw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUZfAQNZQ6uMLweNCnir5uWGs2Fo7whkfJdjoPqpW+hJxk7NPye01bISWoBh/VrOv4O4WLgMKhcASI=@nongnu.org,
+ AJvYcCVDxKF91Qc2gSGVtjFcX9JEhu03EgfyXJfa05F8rGImW6fw5CovopmTL6veXqMzI20vaR6KsXArHUHGoQ==@nongnu.org,
+ AJvYcCVPoqjwegFEzg3yG1g/bn64Y6i8YVI0KbwlwRPTVIL2rfJGP3cPC0T068TFhvRPOZdB1kqw/F6B0iyyQw==@nongnu.org,
+ AJvYcCWU2RzX2BGoo0msrRXHfHwAvKTRbEGWjgwJlXEsXJ8alGAQGVGOQ0wW1ngAaWXYQKcYwsOfPoQq+fY7Aw==@nongnu.org,
+ AJvYcCWgtV6iE91xzS1vay673SOza70R/zyrClEbODc6IZc+k+2ElEGgjaAIZ+No0t899AuDsF8pHdEACA==@nongnu.org
+X-Gm-Message-State: AOJu0YzXwZu/D8mej2i4xz7OtPXQT24TMzhZUc046OCbeR+x+CjZij5A
+ pwyPYiZG5735nMhhLAIcbQ6mim3qLTlPjRnGLutj+vPc6A+O7USb8lzWnI6K7k3i/nS9F6ao+pc
+ nmCFllFbCA1iNGEAOGR/58OQSIuQ=
+X-Gm-Gg: ASbGncurjJ9cb27SpMpVqZZxGXqU3LQVaO9xOao4//moaMmBw9ZcX3MsrhI2H6VL74E
+ ngMvesnZI5PkTN+9sAocaa+4NBaoc0aTHkmrYNSI2fIUhH7WATW9bMsmYRO9s9jlKBwJroBjvhF
+ 2LTrZCptH40DhCWNoIhZjwel2sYK5eAhqXKK+xeEm10EgiGQ8x3B4XtK1+10cpW/g=
+X-Google-Smtp-Source: AGHT+IF64z5wKPzTJg/n9OD0eLWYp+yiZBMBwrvB+l+qjOffdfHgzpWEL7Jo3pzSu4UBC4S2i0z4JhIyxFME2Cwj1Qw=
+X-Received: by 2002:a17:90b:254d:b0:2ff:62f8:9a12 with SMTP id
+ 98e67ed59e1d1-3087bbc2a72mr23062304a91.23.1745388103371; Tue, 22 Apr 2025
+ 23:01:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250423053742.65401-1-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
+ <73301cc216217d5c3e0d7acdd32482e36f4f045c.1745295397.git.ktokunaga.mail@gmail.com>
+ <e163300b-307f-46d9-9bf3-10f17c998e78@linaro.org>
+In-Reply-To: <e163300b-307f-46d9-9bf3-10f17c998e78@linaro.org>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Wed, 23 Apr 2025 15:01:30 +0900
+X-Gm-Features: ATxdqUEgMiBMXQqp1DS_p2pUXzotO2Zb8dScDj2LI8F234aM8mnRYFR9cYzrLXk
+Message-ID: <CAEDrbUZkh6P8y8gSf9jcJSYwBDGVYY-dd9EYhcFtEHFUVqV0UA@mail.gmail.com>
+Subject: Re: [PATCH v2 11/20] util/cacheflush.c: Update cache flushing
+ mechanism for Emscripten
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Francisco Iglesias <francisco.iglesias@amd.com>, 
+ Vikram Garhwal <vikram.garhwal@bytedance.com>, Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-block@nongnu.org, 
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000e5a29306336bd5c4"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,41 +117,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 23, 2025 at 05:38:20AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> Address space creation might end up being called without holding the
-> bql as it is exposed through the IOMMU ops.
-> 
-> Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> ---
->  hw/i386/intel_iommu.c | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index dffd7ee885..cc8c9857e1 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -4238,6 +4238,12 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->          vtd_dev_as->context_cache_entry.context_cache_gen = 0;
->          vtd_dev_as->iova_tree = iova_tree_new();
->  
-> +        /*
-> +         * memory_region_add_subregion_overlap requires the bql,
-> +         * make sure we own it.
-> +         */
-> +        BQL_LOCK_GUARD();
-> +
->          memory_region_init(&vtd_dev_as->root, OBJECT(s), name, UINT64_MAX);
->          address_space_init(&vtd_dev_as->as, &vtd_dev_as->root, "vtd-root");
+--000000000000e5a29306336bd5c4
+Content-Type: text/plain; charset="UTF-8"
 
-Does not look like this addresses all races here:
-https://lore.kernel.org/all/8062d868-469f-4c1d-a071-099b8e18857c@redhat.com
+Hi Philippe,
 
+>On 22/4/25 07:27, Kohei Tokunaga wrote:
+>> Although __builtin___clear_cache is used to flush the instruction cache
+for
+>> a specified memory region[1], this operation doesn't apply to wasm, as
+its
+>> memory isn't executable. Moreover, Emscripten does not support this
+builtin
+>> and fails to compile it with the following error.
+>>
+>>> fatal error: error in backend: llvm.clear_cache is not supported on wasm
+>
+>Note, you mix LLVM error ...
+>
+>>
+>> To resolve this, this commit removes the call to __builtin___clear_cache
+for
+>> Emscripten build.
+>>
+>> [1]
+https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005f_005f_005fclear_005fcache
+>
+>... with this GCC documentation:
+>
+>   If the target does not require instruction cache flushes,
+>   __builtin___clear_cache has no effect.
+>
+>I'd expect __builtin___clear_cache() to be OK, having no effect on a GCC
+>WASM implementation.
 
-while this can be a separate patch on top, I'd rather we just
-address everything in a single patchset.
+Thank you for the feedback.
+Although Emscripten supports built-in functions using GCC-compatible syntax,
+the corner-case behavior looks different from what's described in the GCC
+documentation, as shown in this patch. To avoid the confusion, I'll remove
+that link in the next version of the patch series.
 
+--000000000000e5a29306336bd5c4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> -- 
-> 2.49.0
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Philippe,</div><div dir=3D"ltr"><br></=
+div><div dir=3D"ltr">&gt;On 22/4/25 07:27, Kohei Tokunaga wrote:<br>&gt;&gt=
+; Although __builtin___clear_cache is used to flush the instruction cache f=
+or<br>&gt;&gt; a specified memory region[1], this operation doesn&#39;t app=
+ly to wasm, as its<br>&gt;&gt; memory isn&#39;t executable. Moreover, Emscr=
+ipten does not support this builtin<br>&gt;&gt; and fails to compile it wit=
+h the following error.<br>&gt;&gt; <br>&gt;&gt;&gt; fatal error: error in b=
+ackend: llvm.clear_cache is not supported on wasm<br>&gt;<br>&gt;Note, you =
+mix LLVM error ...<br>&gt;<br>&gt;&gt; <br>&gt;&gt; To resolve this, this c=
+ommit removes the call to __builtin___clear_cache for<br>&gt;&gt; Emscripte=
+n build.<br>&gt;&gt; <br>&gt;&gt; [1] <a href=3D"https://gcc.gnu.org/online=
+docs/gcc-14.2.0/gcc/Other-Builtins.html#index-_005f_005fbuiltin_005f_005f_0=
+05fclear_005fcache">https://gcc.gnu.org/onlinedocs/gcc-14.2.0/gcc/Other-Bui=
+ltins.html#index-_005f_005fbuiltin_005f_005f_005fclear_005fcache</a><br>&gt=
+;<br>&gt;... with this GCC documentation:<br>&gt;<br>&gt; =C2=A0 If the tar=
+get does not require instruction cache flushes,<br>&gt; =C2=A0 __builtin___=
+clear_cache has no effect.<br>&gt;<br>&gt;I&#39;d expect __builtin___clear_=
+cache() to be OK, having no effect on a GCC<br>&gt;WASM implementation.<br>=
+<br>Thank you for the feedback.<br>Although Emscripten supports built-in fu=
+nctions using GCC-compatible syntax,<br>the corner-case behavior looks diff=
+erent from what&#39;s described in the GCC<br>documentation, as shown in th=
+is patch. To avoid the confusion, I&#39;ll remove<br>that link in the next =
+version of the patch series.<br><br></div></div>
 
+--000000000000e5a29306336bd5c4--
 
