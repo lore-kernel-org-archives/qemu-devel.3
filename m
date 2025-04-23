@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B68C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AC9C369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7YFs-0004BY-GW; Wed, 23 Apr 2025 07:27:04 -0400
+	id 1u7YG2-0004Qv-57; Wed, 23 Apr 2025 07:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7YFY-000423-Ko
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:48 -0400
+ id 1u7YFf-000438-U5
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:53 -0400
 Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7YFW-0002wd-AH
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:44 -0400
+ id 1u7YFd-0002wd-TY
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745407602; x=1776943602;
+ t=1745407610; x=1776943610;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=4q6Or/+6p9mp+08bZ9Ij5ZWPX5A6SM+UoEM54szMPr4=;
- b=MWIMvZpHuNKGw8ax/i7jIDGyaDSdiJ8fZ6+GDo5cz2aKFw0tw2Sb56FO
- iVohAtjEh74DppFeXBnU5JtaGJhkc8asRZibP7eAXS3mL8C586QHVf86k
- Qr4kDJ1gDNAzuLaZKF55qfU5ifR7/bnsWebDUP5gu5jDs4kR9tBYnBGr+
- +A1Q8PkKHcamBs3+J2RGM6UFcXCegCSFYHL4OKbk2co5GVGlqSM4zXNdM
- Y4Sgwzie5Dc208Q8qdJ1CXgs14RkxfbkxlV7Iqgqw8KD0SDmaNSrAHFm/
- MEs2jfLpSylI/N16PrvyxIPETcT+yFm1AMf0QyhJ1EEmFedWIOYJdNDHo w==;
-X-CSE-ConnectionGUID: pIepYYMMRtK2jIe/22f/jg==
-X-CSE-MsgGUID: AhrETjlEQ7KDx9WLEnaJNA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50825314"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="50825314"
+ bh=dpAgjvFZpHGJGhZZSq1pgwGCVmFSsMCmYasOajOmwzE=;
+ b=l1AhIlYutXweH1Aqw2eI7iOyvkz8bjZEzukqLSI03y/zRxgtzc/inD4f
+ 7HFYmJI8tWkAs53lfv5TmdWxL6HcaYvXNI4JqQ/h1RpPTMeMGZ5o3mqZu
+ AEGTX1pb56UnJJnBWZ8kEOhhCXH3MCz+ZtiVWC/FhlwIfTPTsQfebHwno
+ DVELj5mVHMacgJxIbec3ezwaI2SiqW/894cTr4aVk0ldOoKfYFc+3Q55k
+ xrvr5XTxyIGCwMqPBdZ/d5Canrsl6FE5Vt3qCypOtrOu9Z7KI/Rx6xUCU
+ a2WH5eLlvH4Tir7xGqSB8DHXT+FfxUtj48px91kiAMSPQCvt95FJU2dsJ A==;
+X-CSE-ConnectionGUID: E/J/rI/4T5SpfKU/wCfQ+w==
+X-CSE-MsgGUID: 4NcVgJ1oQ2eNs8jwI7Ao+g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50825334"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="50825334"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 04:26:41 -0700
-X-CSE-ConnectionGUID: LydGAKfyTp+US07j7VmH9A==
-X-CSE-MsgGUID: MQJmjqnKRnGYG4bE3LBY/A==
+ 23 Apr 2025 04:26:49 -0700
+X-CSE-ConnectionGUID: ja6nxVJHQhOL5H5ugAyeqw==
+X-CSE-MsgGUID: +liuPxK7SUe9OSjxja4HXQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137150812"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137150833"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 23 Apr 2025 04:26:38 -0700
+ by orviesa003.jf.intel.com with ESMTP; 23 Apr 2025 04:26:45 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -54,9 +54,9 @@ Cc: Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
  Jason Zeng <jason.zeng@intel.com>,
  Manish Mishra <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 08/10] i386/cpu: Enable 0x1f leaf for SierraForest by default
-Date: Wed, 23 Apr 2025 19:47:00 +0800
-Message-Id: <20250423114702.1529340-9-zhao1.liu@intel.com>
+Subject: [RFC 10/10] i386/cpu: Enable 0x1f leaf for SapphireRapids by default
+Date: Wed, 23 Apr 2025 19:47:02 +0800
+Message-Id: <20250423114702.1529340-11-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250423114702.1529340-1-zhao1.liu@intel.com>
 References: <20250423114702.1529340-1-zhao1.liu@intel.com>
@@ -87,7 +87,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Host SierraForest CPU has 0x1f leaf by default, so that enable it for
+Host SapphireRapids CPU has 0x1f leaf by default, so that enable it for
 Guest CPU by default as well.
 
 Suggested-by: Igor Mammedov <imammedo@redhat.com>
@@ -97,22 +97,22 @@ Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 26dc5b6a6a8c..2a518b68e67a 100644
+index 38b330aaed4f..5573a9fd6c61 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -4856,8 +4856,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+@@ -4548,8 +4548,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
              },
              {
-                 .version = 3,
--                .note = "with srf-sp cache model",
-+                .note = "with srf-sp cache model and 0x1f leaf",
-                 .cache_info = &xeon_srf_cache_info,
+                 .version = 4,
+-                .note = "with spr-sp cache model",
++                .note = "with spr-sp cache model and 0x1f leaf",
+                 .cache_info = &xeon_spr_cache_info,
 +                .props = (PropValue[]) {
 +                    { "cpuid-0x1f", "on" },
 +                }
              },
-             { /* end of list */ },
-         },
+             { /* end of list */ }
+         }
 -- 
 2.34.1
 
