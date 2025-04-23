@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBA8C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D15C369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Yvv-000247-Ab; Wed, 23 Apr 2025 08:10:31 -0400
+	id 1u7Ywg-0003Yc-7Y; Wed, 23 Apr 2025 08:11:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Yv9-0000v7-G0
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:09:44 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Yv7-0000no-9f
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:09:42 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cf034d4abso58305545e9.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 05:09:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745410179; x=1746014979; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FZgMkeN579lrvloaKRasUpMTcORD0XAWHQyNz1vd4U8=;
- b=VWq1UPzfkVbNIgJNmUDW1hjrXevLVlahFVjoir0qzKulBseEUT7nPLANnDiR8h1Su3
- UUi7/ALRT3fGNXLgV+EKENBuRZ2wxbpTiVI6X9exJqW0dEl8sCpdednsdpfwB9j329JF
- UJmLmoDXesR6jplOlAo4Se0oZZnoBBK6v066Mk7t1oD9cMFr1JEd9Lyse78SDrNu+zrp
- AmcL6U+eAabAmLjChSRsQTtKminWh+ohVeXOsd+c8l7+ijakpkaj+pslvRFnWkL0TwGi
- mZTxz8JUZTBv4SKMglbQj6cdzv2ltn/tTnfbB0iCC6y+PoGGgV3Nj1eKQ/v7dpmdnhVz
- ZVrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745410179; x=1746014979;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FZgMkeN579lrvloaKRasUpMTcORD0XAWHQyNz1vd4U8=;
- b=uhW9wqBcjW8WSJlYUNYudPj6O1aGQITal6B6j7HarmekDAqt+aM1GUDNUc1kgxoU+J
- ZZDgY0C5PTiSNVOaT0eZi/Q3DarMYMPMwuFTdYqHNowxeGXM3PzsA7+/IZXkOokJ2YMt
- zcn6Nftl3IUFk9/aA+bOd6MPUuPWkUe8lRjDpGHYtx0GuTD1WSxTCTXxclSKEWlS5NXg
- xvVhLmtFD3pqr3abGh/Xs+BTebEh5YoO0lzOkmhf+rRj7ESSn9j+oUFFgZSueaenFKXy
- Cg1RenCTbxo4LfyRsBhVRLoeAg5cEC+Nl/Ty7vo7Hga/NoftOZ/vLPZWCvo9l0zEY+YC
- fA8Q==
-X-Gm-Message-State: AOJu0YwN37GEo5nUDreWozu1/ESdcISz5Kils91sfKOmM5pNULDPMvmv
- d0tUO7zF0Tr4/GgFYBv15+9SgojHOetuXuM5n72jNBeSrpqmIztJSRSKWuZNXvbtvorhDvGHA2t
- U
-X-Gm-Gg: ASbGncvdVG+JQzaDTLI2qV9or8MFfHqPigbNmcNTycEhhcKlORY/boKYKsvgcSMcrcg
- cZHX0FIJYZfJEUf6xjrtwA1NoxH3H4olRawPp0im68BjEDBGYge78YSPrdh3isYwQdeOSS+z9dm
- KDUrbyGqVerbK0hn6pUpq4ZGlva3N5f8MALQ5nQAGXibltZbZOXzPCjmfJUYyPycU2cWYVESLS6
- 20sPFPSm5R0Hx/XPefnQ91WBs7QHNFbnUSkGHA6MQ6MP/6ZHFqJxbZ3B1PpD8OxM9DX3Af/baLe
- CcKWy3I7yNzk3b03K0QgiCLazM24ok5rlFTBSHgWExufEh6JowpHGB7Et/iTZ6/qNufOc8H7lVf
- WN4gBa8nOT/uuLlA=
-X-Google-Smtp-Source: AGHT+IFqst3Hohv3VYjwsvdZTBQwQI0BcP6qbNDCB7OnRaxNqJosHjd9RI8nopf1tlEK4kN3NrvdTQ==
-X-Received: by 2002:a05:600c:3583:b0:43c:ed61:2c26 with SMTP id
- 5b1f17b1804b1-4406abb2407mr163305915e9.17.1745410179144; 
- Wed, 23 Apr 2025 05:09:39 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d2d558sm24277415e9.17.2025.04.23.05.09.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 23 Apr 2025 05:09:38 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/gpio/pl061: Declare pullups/pulldowns as 8-bit types
-Date: Wed, 23 Apr 2025 14:09:37 +0200
-Message-ID: <20250423120937.21490-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7YwG-0002jt-M2
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:10:54 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7YwE-00018I-9t
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:10:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745410250; x=1776946250;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=SzjxN7YvnN7dkwK7ta6fQOvuFNswKInEEuv+HCw1lrU=;
+ b=Q+DdjMpD3F66sPolzfJRyOwF08S3G6sNgcPmvEbjXYKhp9hBWZr+QF+q
+ iUUO6lfRoT5YhvHZB/QyT4hjpkR6agyzhnCcw9xNQwKyDqNChi1Sv90lK
+ tF+DID04+TyYPpIHV6dFDR++qWyD48hEd26Xog4cfc+apl1QSyXrSp0wr
+ MOm1JOLv31c6r+L1zoscc98qUYD3mKv+HZbZP/83FzY6AptFfDPUYNyN9
+ cTOikc8XianaTdPoWdw4/bgim8j8v6QvDvdU/8jEPa8Ass/MAxdQuBqad
+ ZSK3cKUFPLffH1mQsg/p+ofXS4YK7CvbCPKBa+PxNbmeEAtFLz7YVeUUX A==;
+X-CSE-ConnectionGUID: CpdH5Z7FTRyB9eT8juwZgw==
+X-CSE-MsgGUID: llirutb2RMq5fYFajxTSfQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="46878450"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="46878450"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 05:10:47 -0700
+X-CSE-ConnectionGUID: X8YOOGGSREuyB7PKmtzNEw==
+X-CSE-MsgGUID: aQjXp2F+RXuUPibew2CEaw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="136375272"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 23 Apr 2025 05:10:43 -0700
+Date: Wed, 23 Apr 2025 20:31:38 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 13/55] i386/tdx: Support user configurable
+ mrconfigid/mrowner/mrownerconfig
+Message-ID: <aAjdqiTY/KNB+KtQ@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-14-xiaoyao.li@intel.com>
+ <aAe49odpsz108aZb@intel.com>
+ <e67699a5-8b62-45a0-8cf1-586440ec85ee@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e67699a5-8b62-45a0-8cf1-586440ec85ee@intel.com>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,58 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-uint8_t is good enough to hold a property "between 0 and 0xff".
+On Wed, Apr 23, 2025 at 04:11:25PM +0800, Xiaoyao Li wrote:
+> Date: Wed, 23 Apr 2025 16:11:25 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v8 13/55] i386/tdx: Support user configurable
+>  mrconfigid/mrowner/mrownerconfig
+> 
+> On 4/22/2025 11:42 PM, Zhao Liu wrote:
+> > > diff --git a/qapi/qom.json b/qapi/qom.json
+> > > index f229bb07aaec..a8379bac1719 100644
+> > > --- a/qapi/qom.json
+> > > +++ b/qapi/qom.json
+> > > @@ -1060,11 +1060,25 @@
+> > >   #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
+> > >   #     be set, otherwise they refuse to boot.
+> > >   #
+> > > +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
+> > > +#     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
+> > > +#     Defaults to all zeros.
+> > 
+> > Maybe a typo? s/Defaults/Default/
+> 
+> (It) defaults to all zeros.
+> 
+> If you grep the "defaults to", you can get a lot of it.
 
-Define pullups/pulldowns properties using DEFINE_PROP_UINT8()
-macro, remove unnecessary range checks in pl061_realize().
+The comment can be relaxed, but please try to be precise with the doc.
+You can add the omitted "It".
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/gpio/pl061.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
-
-diff --git a/hw/gpio/pl061.c b/hw/gpio/pl061.c
-index 60ce4a7f628..25b7ae3eccc 100644
---- a/hw/gpio/pl061.c
-+++ b/hw/gpio/pl061.c
-@@ -79,8 +79,8 @@ struct PL061State {
-     qemu_irq out[N_GPIOS];
-     const unsigned char *id;
-     /* Properties, for non-Luminary PL061 */
--    uint32_t pullups;
--    uint32_t pulldowns;
-+    uint8_t pullups;
-+    uint8_t pulldowns;
- };
- 
- static const VMStateDescription vmstate_pl061 = {
-@@ -548,14 +548,6 @@ static void pl061_realize(DeviceState *dev, Error **errp)
- {
-     PL061State *s = PL061(dev);
- 
--    if (s->pullups > 0xff) {
--        error_setg(errp, "pullups property must be between 0 and 0xff");
--        return;
--    }
--    if (s->pulldowns > 0xff) {
--        error_setg(errp, "pulldowns property must be between 0 and 0xff");
--        return;
--    }
-     if (s->pullups & s->pulldowns) {
-         error_setg(errp, "no bit may be set both in pullups and pulldowns");
-         return;
-@@ -563,8 +555,8 @@ static void pl061_realize(DeviceState *dev, Error **errp)
- }
- 
- static const Property pl061_props[] = {
--    DEFINE_PROP_UINT32("pullups", PL061State, pullups, 0xff),
--    DEFINE_PROP_UINT32("pulldowns", PL061State, pulldowns, 0x0),
-+    DEFINE_PROP_UINT8("pullups", PL061State, pullups, 0xff),
-+    DEFINE_PROP_UINT8("pulldowns", PL061State, pulldowns, 0x0),
- };
- 
- static void pl061_class_init(ObjectClass *klass, void *data)
--- 
-2.47.1
 
 
