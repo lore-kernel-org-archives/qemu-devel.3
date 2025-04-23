@@ -4,109 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387CFC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A790CC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Whv-0000GH-74; Wed, 23 Apr 2025 05:47:55 -0400
+	id 1u7WjW-0001bm-NH; Wed, 23 Apr 2025 05:49:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lma@suse.de>) id 1u7Whq-00007G-W1
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:47:51 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lma@suse.de>) id 1u7Who-0000YN-L9
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:47:50 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
+ id 1u7WjL-0001aD-Py; Wed, 23 Apr 2025 05:49:24 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
+ id 1u7WjI-0000jA-8a; Wed, 23 Apr 2025 05:49:23 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZjDpM0rNYz4xN6;
+ Wed, 23 Apr 2025 19:49:15 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F3F8221174;
- Wed, 23 Apr 2025 09:47:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1745401665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mXLbIUVp8qDxw3neFcb8/AT3D+ctnPrZ/n0cqL6NuSQ=;
- b=xzyJ8ELlWBv0JFnB5JzBSaKVKUcp1FlJKE2DASqrjjnhiXuvcWJCdefGSb9mjT3QF0SgAI
- KaIqWWCJxPuIApWkiLXYEYlIr4gDYJREedkAIEzITmTEHsFCwuSTqV/Sfh0ZM9MStuE6zN
- hRkRCexO7I/D4nfxCrNCzF0bmxtB9tc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1745401665;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mXLbIUVp8qDxw3neFcb8/AT3D+ctnPrZ/n0cqL6NuSQ=;
- b=R41HZ3t/nqdEGMvMmi1oJZPAsyfJ/Oqqi30XOPmDW5mHIMb5OLCUowrKUc2cJhtvMS63KU
- cB8bkhxv5h0JibBA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1745401665; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mXLbIUVp8qDxw3neFcb8/AT3D+ctnPrZ/n0cqL6NuSQ=;
- b=xzyJ8ELlWBv0JFnB5JzBSaKVKUcp1FlJKE2DASqrjjnhiXuvcWJCdefGSb9mjT3QF0SgAI
- KaIqWWCJxPuIApWkiLXYEYlIr4gDYJREedkAIEzITmTEHsFCwuSTqV/Sfh0ZM9MStuE6zN
- hRkRCexO7I/D4nfxCrNCzF0bmxtB9tc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1745401665;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mXLbIUVp8qDxw3neFcb8/AT3D+ctnPrZ/n0cqL6NuSQ=;
- b=R41HZ3t/nqdEGMvMmi1oJZPAsyfJ/Oqqi30XOPmDW5mHIMb5OLCUowrKUc2cJhtvMS63KU
- cB8bkhxv5h0JibBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E0B6313691;
- Wed, 23 Apr 2025 09:47:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id HgvANkC3CGizEwAAD6G6ig
- (envelope-from <lma@suse.de>); Wed, 23 Apr 2025 09:47:44 +0000
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZjDpH4Yrvz4xFt;
+ Wed, 23 Apr 2025 19:49:11 +1000 (AEST)
+Message-ID: <15ab5c1d-5e2a-48d6-884c-22d6dd8e004d@kaod.org>
+Date: Wed, 23 Apr 2025 11:49:09 +0200
 MIME-Version: 1.0
-Date: Wed, 23 Apr 2025 17:47:44 +0800
-From: lma <lma@suse.de>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-block@nongnu.org
-Subject: Re: A question about how to calculate the "Maximum transfer length"
- in case of its absence in the Block Limits VPD device response from the
- hardware
-In-Reply-To: <20250418153456.GA128796@fedora>
-References: <20db3af2ece22f598b54a47ec350b466@suse.de>
- <20250418153456.GA128796@fedora>
-User-Agent: Roundcube Webmail
-Message-ID: <81accb5693785748c476bf34eb18a0ba@suse.de>
-X-Sender: lma@suse.de
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 11/11] docs/system/arm/aspeed: Support vbootrom for
+ AST2700
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com, nabihestefan@google.com
+References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
+ <20250423072350.541742-12-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250423072350.541742-12-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- XM_UA_NO_VERSION(0.01)[]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- MIME_TRACE(0.00)[0:+]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- TO_DN_SOME(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=lma@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,165 +113,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025-04-18 23:34，Stefan Hajnoczi 写道：
-> On Thu, Apr 17, 2025 at 07:27:26PM +0800, lma wrote:
->> Hi all,
->> 
->> In case of SCSI passthrough, If the Block Limits VPD device response 
->> is
->> absent from hardware, QEMU handles it.
->> 
->> There are several variables involved in this process as follows:
->> * The bl.max_transfer
->> * The bl.max_iov that is associated with IOV_MAX.
->> * The bl.max_hw_iov that is associated with the max_segments sysfs 
->> setting
->> for the relevant block device on the host.
->> * The bl.max_hw_transfer that is associated with the BLKSECTGET ioctl, 
->> in
->> other words related to the current max_sectors_kb sysfs setting of the
->> relevant block device on the host.
->> 
->> Then take the smallest value and return it as the result of "Maximum
->> transfer length" after relevant calculation, See:
->> static uint64_t calculate_max_transfer(SCSIDevice *s)
->> {
->>     uint64_t max_transfer = blk_get_max_hw_transfer(s->conf.blk);
->>     uint32_t max_iov = blk_get_max_hw_iov(s->conf.blk);
->> 
->>     assert(max_transfer);
->>     max_transfer = MIN_NON_ZERO(max_transfer,
->>                                 max_iov * qemu_real_host_page_size());
->> 
->>     return max_transfer / s->blocksize;
->> }
->> 
->> 
->> However, due to the limitation of IOV_MAX, no matter how powerful the 
->> host
->> scsi hardware is, the "Maximum transfer length" that qemu emulates in 
->> bl vpd
->> page is capped at 8192 sectors in case of 4kb page size and 512 bytes
->> logical block size.
->> For example：
->> host:~ # sg_vpd -p bl /dev/sda
->> Block limits VPD page (SBC)
->>   ......
->>   Maximum transfer length: 0 blocks [not reported]
->>   ......
->> 
->> 
->> host:~ # cat /sys/class/block/sda/queue/max_sectors_kb
->> 16384
->> 
->> host:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
->> 32767
->> 
->> host:~ # cat /sys/class/block/sda/queue/max_segments
->> 4096
->> 
->> 
->> Expected:
->> guest:~ # sg_vpd -p bl /dev/sda
->> Block limits VPD page (SBC)
->>   ......
->>   Maximum transfer length: 0x8000
->>   ......
->> 
->> guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
->> 16384
->> 
->> guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
->> 32767
->> 
->> 
->> Actual:
->> guest:~ # sg_vpd -p bl /dev/sda
->> Block limits VPD page (SBC)
->>   ......
->>   Maximum transfer length: 0x2000
->>   ......
->> 
->> guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
->> 4096
->> 
->> guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
->> 32767
->> 
->> 
->> It seems the current design logic is not able to fully utilize the
->> performance of the scsi hardware. I have two questions:
->> 1. I'm curious that is it reasonable to drop the logic about IOV_MAX
->> limitation, directly use the return value of BLKSECTGET as the maximum
->> transfer length when QEMU emulates the block limit page of scsi vpd?
->>    If we doing so, we will have maximum transfer length in the guest 
->> that is
->> consistent with the capabilities of the host hardware。
->> 
->> 2. Besides, Assume I set a value(eg: 8192 in kb) to max_sectors_kb in 
->> guest
->> which doesn't exceed the capabilities of the host hardware(eg: 16384 
->> in kb)
->> but exceeds the limit(eg: 4096 in kb) caused by IOV_MAX,
->>    Any risks in readv()/writev() of raw-posix?
+On 4/23/25 09:23, Jamin Lin wrote:
+> Using the vbootrom image support and the boot ROM binary is
+> now passed via the -bios option, using the image located in
+> pc-bios/ast27x0_bootrom.bin.
 > 
-> Not a definitive answer, but just something to encourage discussion:
-> 
-> In theory IOV_MAX should not be factored into the Block Limits VPD page
-> Maximum Transfer Length field because there is already a HBA limit on
-> the maximum number of segments. For example, virtio-scsi has a seg_max
-> Configuration Space field that guest drivers honor independently of
-> Maximum Transfer Length.
-> 
-> However, I can imagine why MAX_IOV needs to be factored in:
-> 
-> 1. The maximum number of segments might be hardcoded in guest drivers
->    for some SCSI HBAs and QEMU has no way of exposing MAX_IOV to the
->    guest in that case.
-> 
-> 2. Guest physical RAM addresses translate to host virtual memory. That
->    means 1 segment as seen by the guest might actually require multiple
->    physical DMA segments on the host. A conservative calculation that
->    assumes the worst-case 1 iovec per 4 KB memory page prevents the
->    host maximum segments limit (note this is not the Maximum Transfer
->    Length limit!) from being exceeded.
-> 
-> So there seem to be at least two problems here. If you relax the
-> calculation there will be corner cases that break because the guest can
-> send too many segments.
-> 
-> Stefan
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 
-The maximum allowed value for
-/sys/class/block/<GUEST_DEV>/queue/max_sectors_kb in guest os depends
-on the smaller of below two items in guest os:
-the "maximum transfer length of block limits VPD page"
-and
-the "/sys/class/block/<GUEST_DEV>/queue/max_hw_sectors_kb".
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Some comments below,
 
 
-The "seg_max Configuration Space field" in hw/scsi/virtio-scsi.c:
-static const Property virtio_scsi_properties[] = {
-     ...
-     DEFINE_PROP_UINT32("max_sectors", VirtIOSCSI, 
-parent_obj.conf.max_sectors,
-                                                   0xFFFF),
-     ...
-};
+> ---
+>   docs/system/arm/aspeed.rst | 96 +++++++++++++++++++++++++++++++++++---
+>   1 file changed, 90 insertions(+), 6 deletions(-)
+> 
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index 97fd6a0e7f..e15e276a48 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -1,4 +1,4 @@
+> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+>   ==================================================================================================================================================================================================================================================================================================================================================================================================================
+>   
+>   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+> @@ -39,10 +39,6 @@ AST2600 SoC based machines :
+>   - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+>   - ``qcom-firework-bmc``    Qualcomm Firework BMC
+>   
+> -AST2700 SoC based machines :
+> -
+> -- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
+> -
 
-This field determines the value of max_hw_sectors_kb in sysfs in guest
-os, Eg: In case of Logical block size 512 bytes, 0xFFFF sectors means:
-max_hw_sectors_kb = 0xFFFF/2 = 32767, I believe many users will keep
-this default value when using virtio-scsi, rather than customizing it.
+This will conflict with Steven's series adding the ast2700fc machine.
+To ease upstreaming of both, it might be good idea to separate the
+change adding the "Aspeed 2700 family boards" section from the change
+adding the "Boot using a virtual boot ROM" subsection.
 
-But by the current design and affected by IOV_MAX, the upper limit of
-/sys/class/block/<GUEST_DEV>/queue/max_sectors_kb is 4096 for SCSI
-passthrough scenario in case of 4kb page size and 512 bytes logical
-block size. Therefore, the gap between the upper limit of max_sectors_kb
-and the max_hw_sectors_kb is very large.
 
-I think this design logic is a bit strange.
+Thanks,
 
-Anyway, Thanks for the detailed answer,
-Lin
+C.
+
+
+
+>   Supported devices
+>   -----------------
+>   
+> @@ -247,10 +243,78 @@ under Linux), use :
+>   
+>     -M ast2500-evb,bmc-console=uart3
+>   
+> +Aspeed 2700 family boards (``ast2700-evb``)
+> +==================================================================
+> +
+> +The QEMU Aspeed machines model BMCs of Aspeed evaluation boards.
+> +They are based on different releases of the Aspeed SoC :
+> +the AST2700 with quad cores ARM Cortex-A35 64 bits CPUs (1.6GHz)
+> +
+> +The SoC comes with RAM, Gigabit ethernet, USB, SD/MMC, USB, SPI, I2C,
+> +etc.
+> +
+> +AST2700 SoC based machines :
+> +
+> +- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
+> +
+> +Supported devices
+> +-----------------
+> + * Interrupt Controller
+> + * Timer Controller
+> + * RTC Controller
+> + * I2C Controller
+> + * System Control Unit (SCU)
+> + * SRAM mapping
+> + * X-DMA Controller (basic interface)
+> + * Static Memory Controller (SMC or FMC) - Only SPI Flash support
+> + * SPI Memory Controller
+> + * USB 2.0 Controller
+> + * SD/MMC storage controllers
+> + * SDRAM controller (dummy interface for basic settings and training)
+> + * Watchdog Controller
+> + * GPIO Controller (Master only)
+> + * UART
+> + * Ethernet controllers
+> + * Front LEDs (PCA9552 on I2C bus)
+> + * LPC Peripheral Controller (a subset of subdevices are supported)
+> + * Hash/Crypto Engine (HACE) - Hash support only. TODO: Crypto
+> + * ADC
+> + * eMMC Boot Controller (dummy)
+> + * PECI Controller (minimal)
+> + * I3C Controller
+> + * Internal Bridge Controller (SLI dummy)
+> +
+> +Missing devices
+> +---------------
+> + * Coprocessor support
+> + * PWM and Fan Controller
+> + * Slave GPIO Controller
+> + * Super I/O Controller
+> + * PCI-Express 1 Controller
+> + * Graphic Display Controller
+> + * MCTP Controller
+> + * Mailbox Controller
+> + * Virtual UART
+> + * eSPI Controller
+> +
+> +Boot options
+> +------------
+> +
+> +Images can be downloaded from the ASPEED Forked OpenBMC GitHub release repository :
+> +
+> +   https://github.com/AspeedTech-BMC/openbmc/releases
+> +
+>   Booting the ast2700-evb machine
+>   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>   
+> -Boot the AST2700 machine from the flash image, use an MTD drive :
+> +Boot the AST2700 machine from the flash image.
+> +
+> +There are two supported methods for booting the AST2700 machine with a flash image:
+> +
+> +Manual boot using ``-device loader``:
+> +
+> +It causes all 4 CPU cores to start execution from address ``0x430000000``, which
+> +corresponds to the BL31 image load address.
+>   
+>   .. code-block:: bash
+>   
+> @@ -270,6 +334,26 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
+>          -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
+>          -nographic
+>   
+> +Boot using a virtual boot ROM (``-bios``):
+> +
+> +If users do not specify the ``-bios option``, QEMU will attempt to load the
+> +default vbootrom image ``ast27x0_bootrom.bin`` from either the current working
+> +directory or the ``pc-bios`` directory within the QEMU source tree.
+> +
+> +.. code-block:: bash
+> +
+> +  $ qemu-system-aarch64 -M ast2700-evb \
+> +      -drive file=image-bmc,format=raw,if=mtd \
+> +      -nographic
+> +
+> +The ``-bios`` option allows users to specify a custom path for the vbootrom
+> +image to be loaded during boot. This will load the vbootrom image from the
+> +specified path in the ${HOME} directory.
+> +
+> +.. code-block:: bash
+> +
+> +  -bios ${HOME}/ast27x0_bootrom.bin
+> +
+>   Aspeed minibmc family boards (``ast1030-evb``)
+>   ==================================================================
+>   
+
 
