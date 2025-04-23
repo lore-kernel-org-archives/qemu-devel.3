@@ -4,98 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A49C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD7CC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Tae-0002HH-8c; Wed, 23 Apr 2025 02:28:12 -0400
+	id 1u7Tbb-0002io-6u; Wed, 23 Apr 2025 02:29:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7Tab-0002Gz-Jg
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 02:28:09 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u7TaX-0003H9-4o
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 02:28:07 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2241053582dso84261365ad.1
- for <qemu-devel@nongnu.org>; Tue, 22 Apr 2025 23:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745389683; x=1745994483; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rUHrpIwxYsrTJ4Wsfcc7umTzEJ/d26DyNx3Z1UTWhJM=;
- b=yMvOLVtfCfIZuCfziKQeJ8i4a8VDLgXinW64iDv88l2wikww0LpoP/6ZCX42ZaXIa5
- 6wf2iqS9tAMqQ1RMHQCqoa2Jrh49ohL0ZZC7N4hWNpXCRZieqDYcOadXayQWh7vaYTL9
- cV8nzmzcj771WCZWBpkqeWhv2JJXMsdi4/D3QMsKgYLTiBe2QRR+vOFQLkQR9t7kOR5B
- D/pIEE4fBgKGS/7EVXqG0I1AYVcaAI3iIJC0o/h9CVBLRXZOaL4IqJmzckyTX7xODLbG
- FOrk262xr8HjtMKiGOXzc6gN/RRIYmvaMdXNxvc8RxpCt1XmblL6MquC12ev1jWH4Re/
- gwVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745389683; x=1745994483;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rUHrpIwxYsrTJ4Wsfcc7umTzEJ/d26DyNx3Z1UTWhJM=;
- b=L6guodyz+zTZoDBGhET3OWetMOMCBMp+hEKgQ5q4vZYCrvJlwxUpEiKsKeOBl3sPP/
- kNuKPh83o2xYrfJ1pV+I96wjF0vMGJmWctJyBshh+yzdix1YtDxioYOnyAYvIHUSzSst
- cjcWYQBQ/T7t+1TkL25L9gsPVy3TEj9BWPruX10nHop57Ji0R+Xxmh8z7JfL6vCSCCzI
- zOIxkiffk2d1VeD4gfmOYWHHZ4/Dfd+aR7F1SWYQCCME+d9gxI1GeRIpzPd09uKWp+t9
- HZ8io/nDCT7ysbdBPgJRbiNaDw+vGjqJD0RzdMLNzrgxUrHbOqGtGEK6JsfJw1c2PEY1
- cLVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV7i00rs9aTg+rzBCM2Llwp0AYxu+kTJq50VtqpANnjv/cfpXRgn76yJW6FTFUROKUTA2pvNvLqjPBa@nongnu.org
-X-Gm-Message-State: AOJu0Yw29tfJP5yeaSOfoANj/lIPsVxAAEnt4nZZKcrY4Ypu+dwONT7N
- D46wnEDopxA7Nk66HyRgWYTOiA1mmcVHgYzDK3fILUdi0OBwfJfA6wT5st7qk2M=
-X-Gm-Gg: ASbGncuL4PzdQBdwZNX2qQ2WO8umvDoXjBtm3s1e0Ow0McOafsvtijrG4CzqIgMEETG
- qPg1bxgjHB/ABeZje2Q1ttu8e3cTjrDNeb8LVJ+Xf4Gr96Neb3LvqVd6C39THX2nCYYBcz4Z7Ou
- gQiiBA/QD1/j+KFd6Rs/R8/ifqd4sQMPCywyCAOoDfwaIBOz4awPAhS5W58hOyGXggs73+OwWqU
- 94btXXVJ+pMgM9S8KSm4RpKql/Ym7X/+/TmwxipObuLlE6X7x6imNFELS6/7eNQ/g78XW55FRWw
- tic2CG91pFUVeFT38RbgvbtO0u7suHf6eyJ/bBProilTMVpr955Wyg==
-X-Google-Smtp-Source: AGHT+IGxAbR4r3Hj/JBdhVBInrRKmNcgqZGClzzDufMvfCCDVoKXPorI+W0zNwHK6PnuiNPMW92Wew==
-X-Received: by 2002:a17:902:ce01:b0:21f:7082:1137 with SMTP id
- d9443c01a7336-22c5357d158mr319415975ad.22.1745389683449; 
- Tue, 22 Apr 2025 23:28:03 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309dfa29411sm753923a91.30.2025.04.22.23.28.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Apr 2025 23:28:03 -0700 (PDT)
-Message-ID: <07fac8ed-cd24-46e0-b933-36fa278fd749@linaro.org>
-Date: Tue, 22 Apr 2025 23:28:02 -0700
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1u7TbR-0002ZU-LN
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 02:29:02 -0400
+Received: from mail-dm6nam10on2060f.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::60f]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1u7TbN-0003Jt-1c
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 02:29:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sbkaEJlcLCdfKSBMF6p6B/N9oF//3Upb6tzZwCdV6fPPd2CdckioGjfDYsAB3STbBQjZnUltyTsOdMaKkJOfWuTTMFuf3sGq5g61RON7fksYGzZdkIVXR2nXnyCwWzvCddvh0FE7vcqIR1nsffBEFJgFJ+Hf0NXhoLxdTWYzvIh8LQNyc0DJCINHEG5NHbjUZRbic5+aVcaXB6wG4F+mbaCUrgw65UKuHKeSKDOCF+bpTRG92Y9E7tkv/GQ69b0XfhPCiQ17i70vSJEcMNQvbCdyF6Op3n7zAfqwk9S55J8VKRZt1+49vTJ52cBfqOsHckyqMTguBrpO21nkBRZQkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=E7g28WOcp9BzXmdwnFTlbTtoAg3k4qco95Gu6JWWGdQ=;
+ b=CsaOeccYNhMJsGZd312G0awoc3df6NxeoiPeT2cn2x37PvgFDBJT8BIyEbO31EHbTGHGrEBor+DuQT5BOfBgVbXM3lQrh8s1b94cspivFFGM4KP/E+ez6+oBHAdJeALDvLmP3920XqP/Nzc/ox3OJ6wgDtW3+qt7PcfP8BPiVMc+7Axve09Sq0evXEry2IzWLxkIH8EgwUDm3fywPoapfQiGOQGauPe+4CyZjPhgrOuDklpF7r482coQbtbBnHyNVX2Oh3a762zrjkZ0UO+NNmgvWkBzSVjrt2+uyLl6I36IabpH7HujiwcP/6fcSDEbxPkZjEyNwFnaJy89lop+sw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=eviden.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=E7g28WOcp9BzXmdwnFTlbTtoAg3k4qco95Gu6JWWGdQ=;
+ b=WCxwv9evoibQxYL1iQdPN+h/1XApAygVE8vrD7uHU2UluSOPDb2V025nfy64o5TYibbkDuwBkyoWdZyzGVngdiIYAvTgXN7D/XhqEE+NCkD6h+dWGAywoPKj6qpf2NZ0QjQp5zvE/MUXpnzGD0CDmA+XzS+KUcYRqZLNr/bhwlc=
+Received: from MN2PR08CA0021.namprd08.prod.outlook.com (2603:10b6:208:239::26)
+ by CH3PR12MB9193.namprd12.prod.outlook.com (2603:10b6:610:195::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8655.36; Wed, 23 Apr
+ 2025 06:28:46 +0000
+Received: from BL6PEPF0001AB58.namprd02.prod.outlook.com
+ (2603:10b6:208:239:cafe::da) by MN2PR08CA0021.outlook.office365.com
+ (2603:10b6:208:239::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.37 via Frontend Transport; Wed,
+ 23 Apr 2025 06:28:46 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL6PEPF0001AB58.mail.protection.outlook.com (10.167.241.10) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8655.12 via Frontend Transport; Wed, 23 Apr 2025 06:28:46 +0000
+Received: from [10.85.41.53] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 23 Apr
+ 2025 01:28:40 -0500
+Message-ID: <c8e4d4b3-7546-4dd4-b76f-6a9ea04f2257@amd.com>
+Date: Wed, 23 Apr 2025 11:58:37 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 14/19] qemu/target_info: Add %target_arch field to
- TargetInfo
+Subject: Re: [PATCH 09/18] amd_iommu: Add helpers to walk AMD v1 Page Table
+ format
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>, "Alejandro
+ Jimenez" <alejandro.j.jimenez@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "peterx@redhat.com"
+ <peterx@redhat.com>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "vasant.hegde@amd.com" <vasant.hegde@amd.com>,
+ "suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
+ "santosh.shukla@amd.com" <santosh.shukla@amd.com>, "Wei.Huang2@amd.com"
+ <Wei.Huang2@amd.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "boris.ostrovsky@oracle.com"
+ <boris.ostrovsky@oracle.com>
+References: <20250414020253.443831-1-alejandro.j.jimenez@oracle.com>
+ <20250414020253.443831-10-alejandro.j.jimenez@oracle.com>
+ <32609749-864c-4fe2-8c00-8dd8e0ab2efc@eviden.com>
+ <4162f7d1-a4e3-47b7-8288-d8e320ed18b3@oracle.com>
+ <b1dbf15a-b2a1-43e0-bfc8-6b4ca3d18e66@eviden.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20250422145502.70770-1-philmd@linaro.org>
- <20250422145502.70770-15-philmd@linaro.org>
- <cc5114fe-c17d-4e02-96f2-135ee1c7fa09@linaro.org>
- <a8a701b4-9da5-45d1-88e2-6a708b425146@linaro.org>
- <5c3cebf7-665d-4c07-97d8-cf913e78c3f0@linaro.org>
- <65ae1a3d-0376-4b66-8354-227303d8b90c@linaro.org>
- <7c1d7d7b-f58d-40f6-9a1b-c80231681b89@linaro.org>
-In-Reply-To: <7c1d7d7b-f58d-40f6-9a1b-c80231681b89@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <b1dbf15a-b2a1-43e0-bfc8-6b4ca3d18e66@eviden.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB58:EE_|CH3PR12MB9193:EE_
+X-MS-Office365-Filtering-Correlation-Id: df15eca7-24b0-43be-3902-08dd82301a03
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|1800799024|7416014|376014|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eG5yYllPZEltOE9CRDJ2dEhMelZxSU1nYWptZXEzWGo3WlZjTzlKbHR6UnZZ?=
+ =?utf-8?B?RGxmbmNGS0diZ0VwWVZRcXA0bFE1ekFvS0lMTnRPaUtEQk9Td3ptMWY2UTJR?=
+ =?utf-8?B?cnQxdUUzaHZneitSdWtBRml6SmxwRVVKbGxrVXlTbWpTbWU5MmluN0tQZkR5?=
+ =?utf-8?B?TjZGV1U3Zzd0aEIwUitQVExsbWlFUnRsVVY2V2hxMGNEbjUzRjFRbVpFMVlQ?=
+ =?utf-8?B?SkMxdzlTNGFWTjhPK0NoakJYTkhPUFkvcnlCVWlNYUVsNU85Q1drKzBtMVFO?=
+ =?utf-8?B?b1g4N05TOWZaSXZ3TXd1VmkzM2thYVV2ZTRvaDFSMlYzbW1UVDh5cWJkWDNz?=
+ =?utf-8?B?MGZHczZXQTExTW5TemxYMWhzZ0FmNTZyVjE4TWR0Q2hNRmZDNTNUODNLdDdQ?=
+ =?utf-8?B?dDlpbjdoMnFpV21NREQvUXI3ckJzZ3pOMHpTQ1hCaFpGWCt3L2ZzSXR3M1BS?=
+ =?utf-8?B?MEdOZkdmYUFHUHZuYmRML2dmL0xpL2VSLzRrYm5yMno4VCthVDZoV1E0Ujgv?=
+ =?utf-8?B?cjFzZ1c0UVU4eTVpT1lDYnM4Wm1aRmNpSk16b0Q1RFdaelo4YTJLQXBZUUgw?=
+ =?utf-8?B?M0xMY09lZ3d6ZWJBbnNuZ1V6RW1QUTRXNTBpTnhoUjhCcnlZOFVwdU5KUmxC?=
+ =?utf-8?B?TjZPM1Y5aXlXbnNrSzN5YlVxYkI5d2wzVm95S29IT29CbVZFMXczeTZuUExM?=
+ =?utf-8?B?QWxOZllOYytVWUdwWiswR3llaVQzc0dXSFRWVUJjK0hCa2l3bzlKSkdFUHRq?=
+ =?utf-8?B?WDBsamNPU1g1ckEvZml0c0ZKc1NkdWNMVDU5M2N3MUVQK0ZRS0pxR0w1Um1z?=
+ =?utf-8?B?N2kzYjM3bUlhbnM4MXlMcVdWb25SZUVtaDlXOEZpL3A4K2FVekJuM0RPZkpx?=
+ =?utf-8?B?K1FYa29CZnlDbmJhdXZLVFgxS0VacUF5c2crbUNUTHN0M0hTN0xWanErczEv?=
+ =?utf-8?B?UmNqRG81dHhaSXNtMnJGN2hZSlkzTkttN1N1YlFEVTlQSW5VZGxaWjBvK3Bi?=
+ =?utf-8?B?RmlPeUkzZ3VtNjN1dmFXcUpEUGtNbHB2UTBsSDUzYVNXSmtXZi8zVDhnZElm?=
+ =?utf-8?B?OUg1c2ZkcmpNV2kzWGtuZThobTRmQzVCQmxaYjc3MW9qVTBaSXJ2SkZHb2JS?=
+ =?utf-8?B?MmtPVWhPUitpOExSNmV2REFYcGlubUlxejdpbnV3NUF1ZFNUcnY1RHJ4ckNy?=
+ =?utf-8?B?aG5UR0RuQnpnMk5MZGJkM3VIOG9CUWhxOHdTNENqdVAzMWVtZ21tWUhnZC8y?=
+ =?utf-8?B?TzBZWjlicTh1bmEvT2lhWEZ6WUxuODdpUkEyRjJPeSs4bDNNQUgwRkRQOFJD?=
+ =?utf-8?B?T3NHYlVncmlWSVVVSnAzd1ZxNUY1bXhOY1B3TDZPd1A4SERMRmtpMGsveDdq?=
+ =?utf-8?B?bHVkd2NjOURKWDlQdlBWRXlZc000OXlpc2dJdkxsenRmWVpYTWJDelpLamcv?=
+ =?utf-8?B?cXc3VlhPdW5xdGQ4all6UEJxeTY5U0g5ZnBXM1RWU0grTmpxckp5OXJQRXRn?=
+ =?utf-8?B?cFdDaHZzSGE1dUNCK291Y2NUK0hvdzRBL2lxL1ZYTmZ2Z21tUUNxeGVqeDZO?=
+ =?utf-8?B?NUsvS3pYRnRZZGd1TCsycmd4cWJVQTAwMEZDTTNBYkU0Smt5T09XVlpOa29Q?=
+ =?utf-8?B?N1FUS255T3owTmgyZjFIMEppT3FvTGtrZll6Z2daMlhmMWVYdEdXY3pLbVdk?=
+ =?utf-8?B?TXpLWXMwNmIzMDZPVE1DK2NFMFNGZTJqQm5tYmlMenBTemdQSUFTeEZxM3hS?=
+ =?utf-8?B?YVN6N1Ryemt3YzltVXA0Rnladml4SGNrcDVhYXk2Q04vTFY0Zis5WXlzNDMz?=
+ =?utf-8?B?N0pDZlV0TVVzekdhWm1PRzVpRTRlNnNvWG9wR0dweHRyN3NKbjFUaHQyVEJq?=
+ =?utf-8?B?Skt2dU9pYW1BN0VBbVRqSEtOa3d4Nk40THZuK0lSMUJ5blBFRkhPbmhEWHRI?=
+ =?utf-8?B?MjRTSWdQd1loaFJVYVltQ1ViVi8wNEt3cHZ0N3gwaDYrdEU4MUVCVjhzc2x2?=
+ =?utf-8?B?Ym9lcEg1OFE2b0ROeVh5R3ZVUzFaZmtuaEwxczhTbER6NkM5QUttOXBPTWc3?=
+ =?utf-8?Q?NdUH9A?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(7416014)(376014)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2025 06:28:46.2482 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: df15eca7-24b0-43be-3902-08dd82301a03
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB58.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9193
+Received-SPF: permerror client-ip=2a01:111:f403:2413::60f;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,98 +177,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNC8yMi8yNSAyMzoyNCwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4gT24gNC8yMi8y
-NSAyMjozNCwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+PiBPbiAyMi80LzI1
-IDIwOjMwLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4+IE9uIDQvMjIvMjUgMTE6MjQs
-IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4+PiBPbiAyMi80LzI1IDIwOjIw
-LCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4+Pj4gT24gNC8yMi8yNSAwNzo1NCwgUGhp
-bGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+Pj4+Pj4gU2lnbmVkLW9mZi1ieTogUGhp
-bGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPj4+Pj4+IC0tLQ0K
-Pj4+Pj4+ICAgwqDCoCBpbmNsdWRlL3FlbXUvdGFyZ2V0LWluZm8taW1wbC5owqDCoCB8IDQg
-KysrKw0KPj4+Pj4+ICAgwqDCoCBjb25maWdzL3RhcmdldHMvYWFyY2g2NC1zb2Z0bW11LmMg
-fCAxICsNCj4+Pj4+PiAgIMKgwqAgY29uZmlncy90YXJnZXRzL2FybS1zb2Z0bW11LmPCoMKg
-wqDCoCB8IDEgKw0KPj4+Pj4+ICAgwqDCoCB0YXJnZXQtaW5mby1zdHViLmPCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAxICsNCj4+Pj4+PiAgIMKgwqAgNCBmaWxlcyBjaGFu
-Z2VkLCA3IGluc2VydGlvbnMoKykNCj4+Pj4+Pg0KPj4+Pj4+IGRpZmYgLS1naXQgYS9pbmNs
-dWRlL3FlbXUvdGFyZ2V0LWluZm8taW1wbC5oIGIvaW5jbHVkZS9xZW11L3RhcmdldC0NCj4+
-Pj4+PiBpbmZvLWltcGwuaA0KPj4+Pj4+IGluZGV4IDRlZjU0YzUxMzZhLi5lNWNkMTY5YjQ5
-YSAxMDA2NDQNCj4+Pj4+PiAtLS0gYS9pbmNsdWRlL3FlbXUvdGFyZ2V0LWluZm8taW1wbC5o
-DQo+Pj4+Pj4gKysrIGIvaW5jbHVkZS9xZW11L3RhcmdldC1pbmZvLWltcGwuaA0KPj4+Pj4+
-IEBAIC0xMCwxMiArMTAsMTYgQEANCj4+Pj4+PiAgIMKgwqAgI2RlZmluZSBRRU1VX1RBUkdF
-VF9JTkZPX0lNUExfSA0KPj4+Pj4+ICAgwqDCoCAjaW5jbHVkZSAicWVtdS90YXJnZXQtaW5m
-by5oIg0KPj4+Pj4+ICsjaW5jbHVkZSAicWFwaS9xYXBpLXR5cGVzLW1hY2hpbmUuaCINCj4+
-Pj4+PiAgIMKgwqAgdHlwZWRlZiBzdHJ1Y3QgVGFyZ2V0SW5mbyB7DQo+Pj4+Pj4gICDCoMKg
-wqDCoMKgwqAgLyogcnVudGltZSBlcXVpdmFsZW50IG9mIFRBUkdFVF9OQU1FIGRlZmluaXRp
-b24gKi8NCj4+Pj4+PiAgIMKgwqDCoMKgwqDCoCBjb25zdCBjaGFyICpjb25zdCB0YXJnZXRf
-bmFtZTsNCj4+Pj4+PiArwqDCoMKgIC8qIHJlbGF0ZWQgdG8gVEFSR0VUX0FSQ0ggZGVmaW5p
-dGlvbiAqLw0KPj4+Pj4+ICvCoMKgwqAgU3lzRW11VGFyZ2V0IHRhcmdldF9hcmNoOw0KPj4+
-Pj4+ICsNCj4+Pj4+PiAgIMKgwqDCoMKgwqDCoCAvKiBRT00gdHlwZW5hbWUgbWFjaGluZXMg
-Zm9yIHRoaXMgYmluYXJ5IG11c3QgaW1wbGVtZW50ICovDQo+Pj4+Pj4gICDCoMKgwqDCoMKg
-wqAgY29uc3QgY2hhciAqY29uc3QgbWFjaGluZV90eXBlbmFtZTsNCj4+Pj4+PiBkaWZmIC0t
-Z2l0IGEvY29uZmlncy90YXJnZXRzL2FhcmNoNjQtc29mdG1tdS5jIGIvY29uZmlncy90YXJn
-ZXRzLw0KPj4+Pj4+IGFhcmNoNjQtc29mdG1tdS5jDQo+Pj4+Pj4gaW5kZXggMzc1ZTZmYTBi
-N2IuLmZmODk0MDFlYTM0IDEwMDY0NA0KPj4+Pj4+IC0tLSBhL2NvbmZpZ3MvdGFyZ2V0cy9h
-YXJjaDY0LXNvZnRtbXUuYw0KPj4+Pj4+ICsrKyBiL2NvbmZpZ3MvdGFyZ2V0cy9hYXJjaDY0
-LXNvZnRtbXUuYw0KPj4+Pj4+IEBAIC0xMyw2ICsxMyw3IEBADQo+Pj4+Pj4gICDCoMKgIHN0
-YXRpYyBjb25zdCBUYXJnZXRJbmZvIHRhcmdldF9pbmZvX2FhcmNoNjRfc3lzdGVtID0gew0K
-Pj4+Pj4+ICAgwqDCoMKgwqDCoMKgIC50YXJnZXRfbmFtZSA9ICJhYXJjaDY0IiwNCj4+Pj4+
-PiArwqDCoMKgIC50YXJnZXRfYXJjaCA9IFNZU19FTVVfVEFSR0VUX0FBUkNINjQsDQo+Pj4+
-Pj4gICDCoMKgwqDCoMKgwqAgLm1hY2hpbmVfdHlwZW5hbWUgPSBUWVBFX1RBUkdFVF9BQVJD
-SDY0X01BQ0hJTkUsDQo+Pj4+Pj4gICDCoMKgIH07DQo+Pj4+Pj4gZGlmZiAtLWdpdCBhL2Nv
-bmZpZ3MvdGFyZ2V0cy9hcm0tc29mdG1tdS5jIGIvY29uZmlncy90YXJnZXRzL2FybS0NCj4+
-Pj4+PiBzb2Z0bW11LmMNCj4+Pj4+PiBpbmRleCBkNGFjZGFlNjRmMy4uMjJlYzllNGZhYTMg
-MTAwNjQ0DQo+Pj4+Pj4gLS0tIGEvY29uZmlncy90YXJnZXRzL2FybS1zb2Z0bW11LmMNCj4+
-Pj4+PiArKysgYi9jb25maWdzL3RhcmdldHMvYXJtLXNvZnRtbXUuYw0KPj4+Pj4+IEBAIC0x
-Myw2ICsxMyw3IEBADQo+Pj4+Pj4gICDCoMKgIHN0YXRpYyBjb25zdCBUYXJnZXRJbmZvIHRh
-cmdldF9pbmZvX2FybV9zeXN0ZW0gPSB7DQo+Pj4+Pj4gICDCoMKgwqDCoMKgwqAgLnRhcmdl
-dF9uYW1lID0gImFybSIsDQo+Pj4+Pj4gK8KgwqDCoCAudGFyZ2V0X2FyY2ggPSBTWVNfRU1V
-X1RBUkdFVF9BUk0sDQo+Pj4+Pj4gICDCoMKgwqDCoMKgwqAgLm1hY2hpbmVfdHlwZW5hbWUg
-PSBUWVBFX1RBUkdFVF9BUk1fTUFDSElORSwNCj4+Pj4+PiAgIMKgwqAgfTsNCj4+Pj4+PiBk
-aWZmIC0tZ2l0IGEvdGFyZ2V0LWluZm8tc3R1Yi5jIGIvdGFyZ2V0LWluZm8tc3R1Yi5jDQo+
-Pj4+Pj4gaW5kZXggMjE4ZTU4OThlN2YuLmU1NzNmNWMxOTc1IDEwMDY0NA0KPj4+Pj4+IC0t
-LSBhL3RhcmdldC1pbmZvLXN0dWIuYw0KPj4+Pj4+ICsrKyBiL3RhcmdldC1pbmZvLXN0dWIu
-Yw0KPj4+Pj4+IEBAIC0xMiw2ICsxMiw3IEBADQo+Pj4+Pj4gICDCoMKgIHN0YXRpYyBjb25z
-dCBUYXJnZXRJbmZvIHRhcmdldF9pbmZvX3N0dWIgPSB7DQo+Pj4+Pj4gICDCoMKgwqDCoMKg
-wqAgLnRhcmdldF9uYW1lID0gVEFSR0VUX05BTUUsDQo+Pj4+Pj4gK8KgwqDCoCAudGFyZ2V0
-X2FyY2ggPSAtMSwNCj4+Pj4+DQo+Pj4+PiBJIHRoaW5rIHdlIHNob3VsZCBoYXZlIGEgZnVs
-bCBpZmRlZiBsYWRkZXIgaGVyZSwgdG8gaGFuZGxlIGFsbA0KPj4+Pj4gYXJjaGl0ZWN0dXJl
-cy4gU2V0dGluZyAtMSBpcyBub3QgYSBzYWZlIGRlZmF1bHQuDQo+Pj4+DQo+Pj4+IFRhcmdl
-dEluZm8gZGVmaW5pdGlvbiBpcyBpbnRlcm5hbCB0byAicWVtdS90YXJnZXQtaW5mby1pbXBs
-LmgiLA0KPj4+PiBvdGhlcndpc2UgaXRzIHR5cGUgaXMgZm9yd2FyZC1kZWNsYXJlZCBhcyBv
-cGFxdWUuDQo+Pj4+DQo+Pj4NCj4+PiBGaW5lLCBidXQgd2UgbmVlZCB0byBiZSBhYmxlIHRv
-IGFjY2VzcyB0byB0YXJnZXRfYXJjaCgpLCB3aGljaCByZXR1cm5zDQo+Pj4gdGhlIGVudW0g
-dmFsdWUsIHdpdGhvdXQgaGF2aW5nIHRvIGRlYWwgd2l0aCAtMSBzaXR1YXRpb24sIHdoaWNo
-IGlzIG5vdCBhDQo+Pj4gcHJvcGVyIGVudW0gdmFsdWUuDQo+Pj4NCj4+PiBzd2l0Y2ggKHRh
-cmdldF9hcmNoKCkpIHsNCj4+PiBjYXNlIFNZU19FTVVfVEFSR0VUX0FSTToNCj4+PiBjYXNl
-IFNZU19FTVVfVEFSR0VUX0FBUkNINjQ6DQo+Pj4gLi4uDQo+Pj4gZGVmYXVsdDoNCj4+PiAg
-ICDCoMKgwqDCoGJyZWFrOw0KPj4+IH0NCj4+DQo+PiBJIGRpZG4ndCBtZW50aW9uZWQgdGhh
-dCBiZWNhdXNlIGluDQo+PiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzMy
-NDJjZWU2LTc0ODUtNDk1OC1hMTk4LTM4ZDBmYzY4ZThjZEBsaW5hcm8ub3JnLw0KPj4geW91
-IHNhaWQ6DQo+Pg0KPj4gICAgICBBdCB0aGlzIHBvaW50LCBJIHdvdWxkIGxpa2UgdG8gZm9j
-dXMgb24gaGF2aW5nIGEgZmlyc3QgdmVyc2lvbiBvZg0KPj4gICAgICBUYXJnZXRJbmZvIEFQ
-SSwgYW5kIG5vdCByZXZpZXdpbmcgYW55IG90aGVyIGNoYW5nZXMsIGFzIHRoaW5ncyBtYXkN
-Cj4+ICAgICAgYmUgbW9kaWZpZWQsIGFuZCB0aGV5IHdvdWxkIG5lZWQgdG8gYmUgcmV2aWV3
-ZWQgYWdhaW4uIEl0J3MgaGFyZA0KPj4gICAgICB0byBmb2xsb3cgdGhlIHNhbWUgYWJzdHJh
-Y3Rpb24gZG9uZSBtdWx0aXBsZSB0aW1lcyBpbiBtdWx0aXBsZSBzZXJpZXMuDQo+Pg0KPj4g
-V2hhdCBpcyB5b3VyICJmdWxsIGlmZGVmIGxhZGRlciIgc3VnZ2VzdGlvbiB0byBhdm9pZCAt
-MT8NCj4gDQo+ICNpZmRlZiBUQVJHRVRfQUFSQ0g2NA0KPiAjIGRlZmluZSBUQVJHRVRfQVJD
-SCBTWVNfRU1VX1RBUkdFVF9BQVJDSDY0DQo+ICNlbGlmIFRBUkdFVF9BUkNIX0FMUEhBDQo+
-ICMgZGVmaW5lIFRBUkdFVF9BUkNIIFNZU19FTVVfVEFSR0VUX0FMUEhBDQo+IC4uLg0KPiAj
-ZWxzZQ0KPiAjZXJyb3IgVGFyZ2V0IGFyY2hpdGVjdHVyZSBjYW4ndCBiZSBkZXRlY3RlZA0K
-PiAjZW5kaWYNCj4gDQo+IHN0YXRpYyBjb25zdCBUYXJnZXRJbmZvIHRhcmdldF9pbmZvX3N0
-dWIgPSB7DQo+ICAgICAgICAuLi4NCj4gICAgICAgIC50YXJnZXRfYXJjaCA9IFRBUkdFVF9B
-UkNIOw0KPiAgICAgICAgLi4uDQo+IH0NCj4NCg0KVG8gYmUgY29tcGxldGUsIHdlIHNob3Vs
-ZCBhbHNvIGFkZDoNCg0Kc3RhdGljIGlubGluZSBTeXNFbXVUYXJnZXQgdGFyZ2V0X2FyY2go
-dm9pZCkgew0KCXJldHVybiB0YXJnZXRfaW5mbygpLT50YXJnZXRfYXJjaDsNCn0NCg0Kc28g
-aXQgY2FuIGJlIHVzZWQgYnkgY29kZSBsYXRlciAoUUFQSSBnZW5lcmF0ZWQgZmlsZXMgd2ls
-bCBuZWVkIHRoYXQsIA0KYW5kIHZpcnRpbyBkZXZpY2VzIGFzIHlvdSBub3RpY2VkKS4NClRv
-IG1ha2UgaXQgdXNlZCB0aHJvdWdoIHRoZSBzZXJpZXMsIHRhcmdldF9hYXJjaDY0KCkgY2Fu
-IGJlIHJld3JpdHRlbjoNCg0Kc3RhdGljIGlubGluZSBib29sIHRhcmdldF9hYXJjaDY0KHZv
-aWQpIHsNCglyZXR1cm4gdGFyZ2V0X2FyY2goKSA9PSBTWVNfRU1VX1RBUkdFVF9BQVJDSDY0
-Ow0KfQ0KDQo+IE9uZSBpbXBvcnRhbnQgc3R1ZmYgaXMgdG8gbWFrZSBzdXJlIHdlIHRyZWF0
-IGNvcnJlY3RseSBiaXRuZXNzIHZhcmlhbnRzDQo+IG9mIGEgZ2l2ZW4gYXJjaDogVEFSR0VU
-X0FBUkNINjQgc2hvdWxkIGJlIHRlc3RlZCAqYmVmb3JlKiBUQVJHRVRfQVJNLA0KPiBhbmQg
-c2FtZSBmb3Igb3RoZXIgYmFzZSBhcmNoaXRlY3R1cmVzLg0KPiBCZXNpZGVzIHRoYXQsIGl0
-J3Mgc3RyYWlnaHRmb3J3YXJkLCBhbmQgd2UgY2FuIGVhc2lseSBpbnRlZ3JhdGUgdGhhdCBp
-bg0KPiB0aGlzIHNlcmllcy4NCg0K
+
+
+On 4/18/2025 11:00 AM, CLEMENT MATHIEU--DRIF wrote:
+> 
+> 
+> On 17/04/2025 5:27 pm, Alejandro Jimenez wrote:
+>> Caution: External email. Do not open attachments or click links, unless
+>> this email comes from a known sender and you know the content is safe.
+>>
+>>
+>> On 4/17/25 8:40 AM, CLEMENT MATHIEU--DRIF wrote:
+>>>
+>>>
+>>> On 14/04/2025 4:02 am, Alejandro Jimenez wrote:
+>>>> Caution: External email. Do not open attachments or click links,
+>>>> unless this email comes from a known sender and you know the content
+>>>> is safe.
+>>>>
+>>>>
+>>>> The current amdvi_page_walk() is designed to be called by the replay()
+>>>> method. Rather than drastically altering it, introduce helpers to fetch
+>>>> guest PTEs that will be used by a page walker implementation.
+>>>>
+>>>> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+>>>> ---
+>>>>     hw/i386/amd_iommu.c | 125 ++++++++++++++++++++++++++++++++++++++++
+>>>> ++++
+>>>>     hw/i386/amd_iommu.h |  42 +++++++++++++++
+>>>>     2 files changed, 167 insertions(+)
+>>>>
+>>>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+>>>> index 0af873b66a31..d089fdc28ef1 100644
+>>>> --- a/hw/i386/amd_iommu.c
+>>>> +++ b/hw/i386/amd_iommu.c
+>>>> @@ -1563,6 +1563,131 @@ static const MemoryRegionOps amdvi_ir_ops = {
+>>>>         }
+>>>>     };
+>>>>
+>>>> +/*
+>>>> + * For a PTE encoding a large page, return the page size it encodes
+>>>> as described
+>>>> + * by the AMD IOMMU Specification Table 14: Example Page Size
+>>>> Encodings.
+>>>> + * No need to adjust the value of the PTE to point to the first PTE
+>>>> in the large
+>>>> + * page since the encoding guarantees all "base" PTEs in the large
+>>>> page are the
+>>>> + * same.
+>>>> + */
+>>>> +static uint64_t large_pte_page_size(uint64_t pte)
+>>>> +{
+>>>> +    assert(PTE_NEXT_LEVEL(pte) == 7);
+>>>> +
+>>>> +    /* Determine size of the large/contiguous page encoded in the
+>>>> PTE */
+>>>> +    return PTE_LARGE_PAGE_SIZE(pte);
+>>>> +}
+>>>> +
+>>>> +/*
+>>>> + * Helper function to fetch a PTE using AMD v1 pgtable format.
+>>>> + * Returns:
+>>>> + * -2:  The Page Table Root could not be read from DTE, or IOVA is
+>>>> larger than
+>>>> + *      supported by current page table level encodedin DTE[Mode].
+>>>> + * -1:  PTE could not be read from guest memory during a page table
+>>>> walk.
+>>>> + *      This means that the DTE has valid data, and one of the lower
+>>>> level
+>>>> + *      entries in the Page Table could not be read.
+>>>> + *  0:  PTE is marked not present, or entry is 0.
+>>>> + * >0:  Leaf PTE value resolved from walking Guest IO Page Table.
+>>>> + */
+>>>
+>>> This seems to be a bit error prone as any statement like "if (pte < 0)"
+>>> might be completely removed by the compiler during optimization phases.
+>>
+>> Yes, caller(s) of fetch_pte() must cast to uint64_t in any comparison to
+>> check for error values. Like it is the case in many of the patches, I am
+>> following the examples from the VTD implementations where they do the
+>> same thing in vtd_iova_to_slpte() to validate the return of vtd_get_pte().
+> 
+> Yes, I know :)
+> 
+> Note that VT-d only has 1 potential error code (-1) which seems easier
+> to handle at call site.
+> 
+>>
+>> When using fetch_pte() again in patch [17/18] I considered adding a
+>> helper to check if fetch_pte() returned a valid PTE, but seemed
+>> unnecessary given that there are only two errors to be checked.
+>>
+>> Another choice was to make fetch_pte() return an int so the error check
+>> could be done simply via (pte < 0), since bit 63 is either Reserved
+>> (DTE) or Ignored (PDE/PTE), but that seemed more prone to confusion
+>> since you'd expect a PTE to be a 64-bit long value. Though I am aware
+>> the way error return/checking is implemented essentially relies on that
+>> behavior.
+>>
+>>> If you want to reuse such "high" values, defines could help.
+>>
+>> Sorry, I don't follow. Do you mean using defines as in still returning a
+>> uint64_t but giving -1 and -2 special definitions? That might make the
+>> code a somewhat more readable when checking the error values, but still
+>> requires casting to uint64_t on the check, and doesn't solve the problem
+>> of a careless caller using (pte < 0) to check for errors...
+> 
+> Yes, I think that it would be more readable.
+> When using defines, the caller no longer needs to be aware of the fact
+> that the value has been casted from a negative number, which reduces the
+> risk of writing things like (pte < 0).
+> 
+> I prefer the out parameter solution but let's see what other reviews say.
+> 
+
+I think having pte as out parameter is the better solution here.
+less error prone and readable !
+
+Regards
+Sairaj Kodilkar
+
+> Thanks for this patch set :)
+> 
+>>
+>>> Otherwise, pte could be an out parameter.
+>>
+>> In general, I think we have to accept the caveat that callers of
+>> fetch_pte() must have some implementation specific knowledge to know
+>> they cannot check for errors using (pte < 0). Maybe with the aid of a
+>> strongly worded warning on the function header comment...
+>>
+>> But if that argument doesn't convince you, and none of the alternatives
+>> above seem better, then I am leaning towards using the out parameter
+>> approach.
+>>
+>> Thank you for the feedback.
+>> Alejandro
+>>
+>>>
+>>>> +static uint64_t __attribute__((unused))
+>>>> +fetch_pte(AMDVIAddressSpace *as, const hwaddr address, uint64_t dte,
+>>>> +          hwaddr *page_size)
+>>>> +{
+>>>> +    IOMMUAccessFlags perms = amdvi_get_perms(dte);
+>>>> +
+>>>> +    uint8_t level, mode;
+>>>> +    uint64_t pte = dte, pte_addr;
+>>>> +
+>>>> +    *page_size = 0;
+>>>> +
+>>>> +    if (perms == IOMMU_NONE) {
+>>>> +        return (uint64_t)-2;
+>>>> +    }
+>>>> +
+>>>> +    /*
+>>>> +     * The Linux kernel driver initializes the default mode to 3,
+>>>> corresponding
+>>>> +     * to a 39-bit GPA space, where each entry in the pagetable
+>>>> translates to a
+>>>> +     * 1GB (2^30) page size.
+>>>> +     */
+>>>> +    level = mode = get_pte_translation_mode(dte);
+>>>> +    assert(mode > 0 && mode < 7);
+>>>> +
+>>>> +    /*
+>>>> +     * If IOVA is larger than the max supported by the current
+>>>> pgtable level,
+>>>> +     * there is nothing to do. This signals that the pagetable level
+>>>> should be
+>>>> +     * increased, or is an address meant to have special behavior like
+>>>> +     * invalidating the entire cache.
+>>>> +     */
+>>>> +    if (address > PT_LEVEL_MAX_ADDR(mode - 1)) {
+>>>> +        /* IOVA too large for the current DTE */
+>>>> +        return (uint64_t)-2;
+>>>> +    }
+>>>> +
+>>>> +    do {
+>>>> +        level -= 1;
+>>>> +
+>>>> +        /* Update the page_size */
+>>>> +        *page_size = PTE_LEVEL_PAGE_SIZE(level);
+>>>> +
+>>>> +        /* Permission bits are ANDed at every level, including the
+>>>> DTE */
+>>>> +        perms &= amdvi_get_perms(pte);
+>>>> +        if (perms == IOMMU_NONE) {
+>>>> +            return pte;
+>>>> +        }
+>>>> +
+>>>> +        /* Not Present */
+>>>> +        if (!IOMMU_PTE_PRESENT(pte)) {
+>>>> +            return 0;
+>>>> +        }
+>>>> +
+>>>> +        /* Large or Leaf PTE found */
+>>>> +        if (PTE_NEXT_LEVEL(pte) == 7 || PTE_NEXT_LEVEL(pte) == 0) {
+>>>> +            /* Leaf PTE found */
+>>>> +            break;
+>>>> +        }
+>>>> +
+>>>> +        /*
+>>>> +         * Index the pgtable using the IOVA bits corresponding to
+>>>> current level
+>>>> +         * and walk down to the lower level.
+>>>> +         */
+>>>> +        pte_addr = NEXT_PTE_ADDR(pte, level, address);
+>>>> +        pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as-
+>>>>> devfn);
+>>>> +
+>>>> +        if (pte == (uint64_t)-1) {
+>>>> +            /*
+>>>> +             * A returned PTE of -1 indicates a failure to read the
+>>>> page table
+>>>> +             * entry from guest memory.
+>>>> +             */
+>>>> +            if (level == mode - 1) {
+>>>> +                /* Failure to retrieve the Page Table from Root
+>>>> Pointer */
+>>>> +                *page_size = 0;
+>>>> +                return (uint64_t)-2;
+>>>> +            } else {
+>>>> +                /* Failure to read PTE. Page walk skips a page_size
+>>>> chunk */
+>>>> +                return pte;
+>>>> +            }
+>>>> +        }
+>>>> +    } while (level > 0);
+>>>> +
+>>>> +    /*
+>>>> +     * Page walk ends when Next Level field on PTE shows that either
+>>>> a leaf PTE
+>>>> +     * or a series of large PTEs have been reached. In the latter
+>>>> case, return
+>>>> +     * the pointer to the first PTE of the series.
+>>>> +     */
+>>>> +    assert(level == 0 || PTE_NEXT_LEVEL(pte) == 0 ||
+>>>> PTE_NEXT_LEVEL(pte) == 7);
+>>>> +
+>>>> +    /*
+>>>> +     * In case the range starts in the middle of a contiguous page,
+>>>> need to
+>>>> +     * return the first PTE
+>>>> +     */
+>>>> +    if (PTE_NEXT_LEVEL(pte) == 7) {
+>>>> +        /* Update page_size with the large PTE page size */
+>>>> +        *page_size = large_pte_page_size(pte);
+>>>> +    }
+>>>> +
+>>>> +    return pte;
+>>>> +}
+>>>> +
+>>>>     /*
+>>>>      * Toggle between address translation and passthrough modes by
+>>>> enabling the
+>>>>      * corresponding memory regions.
+>>>> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+>>>> index c89e7dc9947d..fc4d2f7a4575 100644
+>>>> --- a/hw/i386/amd_iommu.h
+>>>> +++ b/hw/i386/amd_iommu.h
+>>>> @@ -25,6 +25,8 @@
+>>>>     #include "hw/i386/x86-iommu.h"
+>>>>     #include "qom/object.h"
+>>>>
+>>>> +#define GENMASK64(h, l)  (((~0ULL) >> (63 - (h) + (l))) << (l))
+>>>> +
+>>>>     /* Capability registers */
+>>>>     #define AMDVI_CAPAB_BAR_LOW           0x04
+>>>>     #define AMDVI_CAPAB_BAR_HIGH          0x08
+>>>> @@ -174,6 +176,46 @@
+>>>>     #define AMDVI_GATS_MODE                 (2ULL <<  12)
+>>>>     #define AMDVI_HATS_MODE                 (2ULL <<  10)
+>>>>
+>>>> +/* Page Table format */
+>>>> +
+>>>> +#define AMDVI_PTE_PR                    (1ULL << 0)
+>>>> +#define AMDVI_PTE_NEXT_LEVEL_MASK       GENMASK64(11, 9)
+>>>> +
+>>>> +#define IOMMU_PTE_PRESENT(pte)          ((pte) & AMDVI_PTE_PR)
+>>>> +
+>>>> +/* Using level=0 for leaf PTE at 4K page size */
+>>>> +#define PT_LEVEL_SHIFT(level)           (12 + ((level) * 9))
+>>>> +
+>>>> +/* Return IOVA bit group used to index the Page Table at specific
+>>>> level */
+>>>> +#define PT_LEVEL_INDEX(level, iova)     (((iova) >>
+>>>> PT_LEVEL_SHIFT(level)) & \
+>>>> +                                        GENMASK64(8, 0))
+>>>> +
+>>>> +/* Return the max address for a specified level i.e. max_oaddr */
+>>>> +#define PT_LEVEL_MAX_ADDR(x)    (((x) < 5) ? \
+>>>> +                                ((1ULL << PT_LEVEL_SHIFT((x + 1))) -
+>>>> 1) : \
+>>>> +                                (~(0ULL)))
+>>>> +
+>>>> +/* Extract the NextLevel field from PTE/PDE */
+>>>> +#define PTE_NEXT_LEVEL(pte)     (((pte) & AMDVI_PTE_NEXT_LEVEL_MASK)
+>>>>>> 9)
+>>>> +
+>>>> +/* Take page table level and return default pagetable size for level */
+>>>> +#define PTE_LEVEL_PAGE_SIZE(level)      (1ULL <<
+>>>> (PT_LEVEL_SHIFT(level)))
+>>>> +
+>>>> +/*
+>>>> + * Return address of lower level page table encoded in PTE and
+>>>> specified by
+>>>> + * current level and corresponding IOVA bit group at such level.
+>>>> + */
+>>>> +#define NEXT_PTE_ADDR(pte, level, iova) (((pte) &
+>>>> AMDVI_DEV_PT_ROOT_MASK) + \
+>>>> +                                        (PT_LEVEL_INDEX(level, iova)
+>>>> * 8))
+>>>> +
+>>>> +/*
+>>>> + * Take a PTE value with mode=0x07 and return the page size it encodes.
+>>>> + */
+>>>> +#define PTE_LARGE_PAGE_SIZE(pte)    (1ULL << (1 + cto64(((pte) |
+>>>> 0xfffULL))))
+>>>> +
+>>>> +/* Return number of PTEs to use for a given page size (expected
+>>>> power of 2) */
+>>>> +#define PAGE_SIZE_PTE_COUNT(pgsz)       (1ULL << ((ctz64(pgsz) - 12)
+>>>> % 9))
+>>>> +
+>>>>     /* IOTLB */
+>>>>     #define AMDVI_IOTLB_MAX_SIZE 1024
+>>>>     #define AMDVI_DEVID_SHIFT    36
+>>>> -- 
+>>>> 2.43.5
+>>>>
+>>>>
+>>
+
 
