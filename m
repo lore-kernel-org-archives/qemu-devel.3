@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C424C369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F57C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Wdb-0002D1-Ao; Wed, 23 Apr 2025 05:43:27 -0400
+	id 1u7WdX-0001gh-7V; Wed, 23 Apr 2025 05:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wce-0006OE-Hn
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:28 -0400
+ id 1u7Wca-0006BX-Sj
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7Wcc-0008Ri-T6
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:28 -0400
+ id 1u7WcY-0008R3-J9
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401346;
+ s=mimecast20190719; t=1745401342;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qRpUhngwpi2vur6uGX0YLMr4zg93ENMqYIQoB01ZNgk=;
- b=OZz8xpba8huDmOdBv0QMygFyNFYiHSXn6TYR+fhuMiGTKz0F+bi0g6qBsrUtmSTkFhS9Dx
- 7WctMsjyGYDifTKP05EmsH080lo19bLS0LUQRcgR32XXgAJngvizWPr9T6lIue7xbGgKTF
- iQiqOAu9dl+zOSyZ0yBQPQnXRTwUEQk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bqeKYtmD/3cS14SfmlP9amKWqLAFVBdD07WL7so9K3w=;
+ b=YX0hSRrXAfKyx+kuRwV0DoqbkmrF7sYNhs5YfTZnOzNj+8TJ1UlktqMw/pL6RMuXsWX+za
+ gs2B/cwJMngNpLHVXLkOOLaWMlQMfKelEc8JZvoV9q0Ua2dWPea3UNVI2HZBkf3LZ8YMD0
+ 5iKL7UnigCInAK2yp3b0CxMeZU/a5qY=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-43-TbnUk8l0MxuChIS3dP0ghg-1; Wed, 23 Apr 2025 05:42:25 -0400
-X-MC-Unique: TbnUk8l0MxuChIS3dP0ghg-1
-X-Mimecast-MFC-AGG-ID: TbnUk8l0MxuChIS3dP0ghg_1745401344
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ac3c219371bso513691066b.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:24 -0700 (PDT)
+ us-mta-47-nLUaF0mmP123m4l4E4eOew-1; Wed, 23 Apr 2025 05:42:20 -0400
+X-MC-Unique: nLUaF0mmP123m4l4E4eOew-1
+X-Mimecast-MFC-AGG-ID: nLUaF0mmP123m4l4E4eOew_1745401339
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5d9682f6eso5664825a12.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401343; x=1746006143;
+ d=1e100.net; s=20230601; t=1745401338; x=1746006138;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qRpUhngwpi2vur6uGX0YLMr4zg93ENMqYIQoB01ZNgk=;
- b=n20Z5tnh1lGrU76296B1uTnmyGcIe7f0KrndJctCaGBy+1a/l46kNeY+PyACqztGpa
- q8hWbtX4u6+okgrNAjtTL+JWR2OtQQvkZg4SL5Y63mwRZbhb22CNm3Mnqb+4K52DL3nO
- goXaCsO8bC6FPeoEu7zEsAdB+fgkqa2hPdUUXSiF8o0xKJgxHY0TuFqywP8u91lGymM0
- +k4yP/NrYxjxVUO1F9j1Ic+XOzfZfOamPl6T3fCLWxC3uiauPnuA/nq1sRmtM37pgMA4
- 07zLPyNQ64BSyM6YbjTqV7HvC+YqlMIptuWhrYM36VlXuAOiggIiAX1sthr5MjnKD0kj
- fmqw==
-X-Gm-Message-State: AOJu0YyHQxTavTB16brJTrz+S6nqDTJgE5ZxSjtdut6nougildN19ZUT
- CVZfk0jPPBpSgr7lG9nccgQp9jJnAWtcaB58IH5o24qI4FSRbuxlrvM1ke5sSIKaRD7QWJhINxm
- yint7ZUHFuqOO/l5AZtpZqmmrSC0ZLEWqqnkKS339UuAwjZfvxuPOvHn2RA/hq9HdtqBuWebvCZ
- 14JM24K8T0WR5EdkoM9KcNmG/PW+3g9d3pXkYh
-X-Gm-Gg: ASbGncsjcKL3uKcPaRwDSvKvXQQik1x/8PJ007BjqJWiVf9EqIfw7Sz+o1rtcNf1l5P
- zoAKTNOjpmfOnm9mU3Yw/9t34QahefifIdXyGL3vcaZoSztYVrVDdNAg5d5vpF6jnHSd7Uw7QJh
- SOAcIGg3HfZjdA3KHov3qdkfxmznh1S1WUeER3u0uxUeuSGxAU3sHFRNbJsnF+n4WN+qvJPxNFL
- VrbuJSBRVNj8oPqE57nJPXmM7KFcYXMxpS682UfAzEtaPUZzEAPy6G8Gtpc+S6HrhFx9Uv4bbd1
- ndhNHnx+nPrhQWVw
-X-Received: by 2002:a17:906:79d8:b0:acb:b0d7:15d8 with SMTP id
- a640c23a62f3a-acbb0d719c8mr693505466b.51.1745401342931; 
- Wed, 23 Apr 2025 02:42:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFq9LEFbFME1fTQE8Winf5FmuCeYOl5swd8Kmw+5wkR4opkXwEWPUMyP58Iet352MTWoiWCzQ==
-X-Received: by 2002:a17:906:79d8:b0:acb:b0d7:15d8 with SMTP id
- a640c23a62f3a-acbb0d719c8mr693503466b.51.1745401342477; 
- Wed, 23 Apr 2025 02:42:22 -0700 (PDT)
+ bh=bqeKYtmD/3cS14SfmlP9amKWqLAFVBdD07WL7so9K3w=;
+ b=BPbjLPgFBpORfdJp1jdd5FkfApL4kP61P2+HwgKq8UErzumjSXt2tO87/ZEYfd8/bN
+ rWgF85uSGHEt6Jcov1DQimNx7OcBc82W3XSMzvfCwmd8VxXnfXfgGDJBj1t+XnJx91VP
+ vTkheoNDCTRZXbo79kX3ecL9TUbZ8so1Ta0B7wSExov4IghZ2MxByX+YSpMpvz9OaVlP
+ K3pUanZj2YMe2HbG19KA8LuO4aUi1JvRGS04juqaB3qBcQkk9v7opiImNYCvn3R7+qSL
+ of+dTlPhWAWe9d/RmmjL1EdUSv7a9io6B7NUbs/VGeBgACXQOLUfZRS7Glq5vB8s5By9
+ t2fQ==
+X-Gm-Message-State: AOJu0YxzA1g24KSo5FVJ1+ZJd1iZbr5Qr6GD+0bKgMLFctqXa+anFVag
+ wMVAuq7B7l+JS9vYcwidneg0R59WWCIYdz4VM/JMAEqTyvf9+NWwfYWFq7twfkoZEflER8x0Gn6
+ ii3FUpnRemwOSMBPMDz1f6XajPrLeMDjD9z2cox0jBbqaHgNOCtS8qYRxHY0db2+oi8BFd632TJ
+ Gm3orhSmsdQNwrlMpPHGCnASuxqKusbOZPGzGm
+X-Gm-Gg: ASbGncvzvto+dBCYe7N8bLeJ9TPg7F1CudvlExoz+Q6DW9lTAymOsq8kNjLrf9BfFsH
+ EqV677anfnQGrrhpVEC9SXTHHTtusf5ulNasxh8f9G6DXnPg631IjlMo2VJbENzvLJCpOIddR/o
+ ERA8M4f7pyjecdQGhqd9yCvh8qHybvZCCi01T+SsGvrbv/3Fkp+YV55O/ZUgXFnY2R1F61MoKqP
+ dIdKGK+kUrfXFuAok3r8sScsFfe1s1y54aNmzyDj9IMm4LrcGkRp9noz/3nMfAGNndFwzG3O8f9
+ 7agWFie01E3zdSeu
+X-Received: by 2002:a05:6402:4402:b0:5ed:5554:7c3b with SMTP id
+ 4fb4d7f45d1cf-5f6285eca1amr16149996a12.32.1745401337929; 
+ Wed, 23 Apr 2025 02:42:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGeySuAmObRK2EFser6E5KhuY1QofSvAa2LMR5gzE93aNUvKEymdXQA8Yu8v803qZIxP4U/Jg==
+X-Received: by 2002:a05:6402:4402:b0:5ed:5554:7c3b with SMTP id
+ 4fb4d7f45d1cf-5f6285eca1amr16149973a12.32.1745401337481; 
+ Wed, 23 Apr 2025 02:42:17 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acb6ec0c068sm791793966b.11.2025.04.23.02.42.21
+ 4fb4d7f45d1cf-5f625833a6esm7224199a12.53.2025.04.23.02.42.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:42:21 -0700 (PDT)
+ Wed, 23 Apr 2025 02:42:16 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Rakesh Jeyasingh <rakeshjb010@gmail.com>
-Subject: [PULL 34/34] rust/hw/char/pl011: Extract DR write logic into separate
- function
-Date: Wed, 23 Apr 2025 11:41:04 +0200
-Message-ID: <20250423094105.40692-35-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 32/34] rust/vmstate_test: Fix typo in
+ test_vmstate_macro_array_of_pointer_wrapped()
+Date: Wed, 23 Apr 2025 11:41:02 +0200
+Message-ID: <20250423094105.40692-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
@@ -109,49 +109,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rakesh Jeyasingh <rakeshjb010@gmail.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-- Split `write()` DR case into `write_data_register()`
+test_vmstate_macro_array_of_pointer_wrapped() tests the 3rd element, so
+fix the index.
 
-Signed-off-by: Rakesh Jeyasingh <rakeshjb010@gmail.com>
-Link: https://lore.kernel.org/r/20250407181327.171563-3-rakeshjb010@gmail.com
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250414144943.1112885-5-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ rust/qemu-api/tests/vmstate_tests.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 87153cdae13..bb2a0f207a5 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -221,12 +221,7 @@ pub(self) fn write(
-         // eprintln!("write offset {offset} value {value}");
-         use RegisterOffset::*;
-         match offset {
--            DR => {
--                // interrupts always checked
--                let _ = self.loopback_tx(value.into());
--                self.int_level |= Interrupt::TX.0;
--                return true;
--            }
-+            DR => return self.write_data_register(value),
-             RSR => {
-                 self.receive_status_error_clear = 0.into();
-             }
-@@ -307,6 +302,13 @@ fn read_data_register(&mut self, update: &mut bool) -> u32 {
-         u32::from(c)
-     }
- 
-+    fn write_data_register(&mut self, value: u32) -> bool {
-+        // interrupts always checked
-+        let _ = self.loopback_tx(value.into());
-+        self.int_level |= Interrupt::TX.0;
-+        true
-+    }
-+
-     #[inline]
-     #[must_use]
-     fn loopback_tx(&mut self, value: registers::Data) -> bool {
+diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
+index b8d8b45b19d..8b93492a689 100644
+--- a/rust/qemu-api/tests/vmstate_tests.rs
++++ b/rust/qemu-api/tests/vmstate_tests.rs
+@@ -383,12 +383,12 @@ fn test_vmstate_macro_array_of_pointer_wrapped() {
+     );
+     assert_eq!(foo_fields[3].offset, (FOO_ARRAY_MAX + 2) * PTR_SIZE);
+     assert_eq!(foo_fields[3].num_offset, 0);
+-    assert_eq!(foo_fields[2].info, unsafe { &vmstate_info_uint8 });
++    assert_eq!(foo_fields[3].info, unsafe { &vmstate_info_uint8 });
+     assert_eq!(foo_fields[3].version_id, 0);
+     assert_eq!(foo_fields[3].size, PTR_SIZE);
+     assert_eq!(foo_fields[3].num, FOO_ARRAY_MAX as i32);
+     assert_eq!(
+-        foo_fields[2].flags.0,
++        foo_fields[3].flags.0,
+         VMStateFlags::VMS_ARRAY.0 | VMStateFlags::VMS_ARRAY_OF_POINTER.0
+     );
+     assert!(foo_fields[3].vmsd.is_null());
 -- 
 2.49.0
 
