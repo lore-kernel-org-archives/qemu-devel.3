@@ -4,74 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A32C5C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 19:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2855DC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 19:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7fWi-0004cV-Pq; Wed, 23 Apr 2025 15:12:56 -0400
+	id 1u7fqu-0002jw-JG; Wed, 23 Apr 2025 15:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u7fWg-0004c5-Qp
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 15:12:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u7fWf-0005RR-8E
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 15:12:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745435570;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/2+7Asp4/SBmVileS5uzhEy8VuHtQw0wv36dAHna1ZY=;
- b=DlJ0QehsYMsRT3nqiWmL4ibqErzc/WnoaaapZE7g1BXJaY5O5Jx/UuJm2RUK5kCVhORpQM
- PBZYnqXaDAMSW2bqxuiYC06PreGwnxSEVhlwihKASaKN4l3h8u2AUxtHfb34xmAIokMYag
- QfVlhR0czpfl7rQGEFQKkLP75mMmyI8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-241-VXxA0eoxMxG1uMWTh4X9mQ-1; Wed,
- 23 Apr 2025 15:12:46 -0400
-X-MC-Unique: VXxA0eoxMxG1uMWTh4X9mQ-1
-X-Mimecast-MFC-AGG-ID: VXxA0eoxMxG1uMWTh4X9mQ_1745435563
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 03F2F1800876; Wed, 23 Apr 2025 19:12:43 +0000 (UTC)
-Received: from redhat.com (dhcp-2-16-59.telco5g.eng.rdu2.redhat.com
- [10.2.16.59])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1ED651800378; Wed, 23 Apr 2025 19:12:38 +0000 (UTC)
-Date: Wed, 23 Apr 2025 14:12:36 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Sunny Zhu <sunnyzhyy@qq.com>
-Cc: hreitz@redhat.com, jsnow@redhat.com, kwolf@redhat.com, 
- qemu-block@nongnu.org, qemu-devel@nongnu.org, vsementsov@yandex-team.ru, 
- stefanha@redhat.com
-Subject: Re: [PATCH v2 08/11] mirror: Skip writing zeroes when target is
- already zero
-Message-ID: <2pmotnqkhinhqulzoemjnlrfpve23pssy33jox4rcbi4742n2f@swiytlqan3pp>
-References: <20250417184133.105746-21-eblake@redhat.com>
- <tencent_85E0A24CC61971732FCD04DD85BC3689E205@qq.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u7fqq-0002jC-IL
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 15:33:44 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u7fqo-0007nB-S2
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 15:33:44 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2255003f4c6so2669865ad.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 12:33:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745436821; x=1746041621; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RSlMGzGf5vQp7otOFOXifnH7VCc6/loIDHgwRerBfio=;
+ b=WW3KZoey0UX9RzFcsE1wl9TiW5jMbrYzlYmwur2wk/yW3WjesS/BT0fjl3IaO5gKbV
+ 7guz0KFe6EQPFxq6icYVENix1MgUqGMf8NqjYq7ypP/4Ytk0UhzVwUmjJc1P1QqSgHPs
+ zuGi63mXDZyQWaOyWLQcUpeMm40b+i5rC9qOmyZoGuwVHJHPqON7H2LRWdz/oBu8bxV5
+ 48g4I2iP5b3H3UtIV4X7O/V4R4R1SnMJvQDWxvhg3MB3dTOLwbuMjKaXoBRnr7Z8D+mD
+ DvWvM9BOc21ek9kBtIjgQcV3VsDYayO1ky1X60jx3WxbF6YfsOjSdk7rd9dSjYAynkVO
+ 6fVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745436821; x=1746041621;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RSlMGzGf5vQp7otOFOXifnH7VCc6/loIDHgwRerBfio=;
+ b=tX/J2/0K7JLYYifm68PBqmKgseVSFSB+RCcHfZmzOXsKUbilsJErqG2rYl1O3KuN1m
+ mM39Mxq2DHX7B5/GLyi61Elple1YSNC1AiQ/D2G6G3cR+5ZP2781F9kVk5Z0Gy09OxJM
+ Z9sO5R/sYSWlUjqxyhM0k9La216wSprjP1ze+JKP//Y3rn2rjc0kLEWfLECh7HiodeS8
+ Q5sNCkR1Yd7c6jtjOqZuQNZv0+Xjo3nsLyc1X4/JZfnZAK1dHByKeNhbqeRuuFnQpKZa
+ uZYfDOjY1yhgxcHpjxUppBQiVnxErDxZaV1w+66N+gshXxjwehJ+Ry2hxQ2g5dOFsiQ3
+ BOcg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbJiJYp6bzsJBN71wplK5hJbuuBn9Z9uO6GfoaylaC0YofNdD5caGyjoTMs0Cn9k4m9uF5uJehxxaF@nongnu.org
+X-Gm-Message-State: AOJu0Ywft/jh2BRgP5sFXCRzoUJxGjQgAPRamEVf0jz+3Q5GMQGom8wz
+ NtvTibpDyfiBiZMFNDayOvc0ghv/5rZjVHAwcFKeQOEnsvKv4TkTV6feAKDFHfxV/UtCFLzvpvL
+ 7
+X-Gm-Gg: ASbGncvAK5vjh0I6eEziNv5Cv8ham/FZt6SD5cYY3I2XW0SXaDFweA7SK8S2XaG+IH7
+ VxGpnJFh0onmm0gWFHJ5o8XyWZl3HTX+tulmtGQ+NDrBjTpba2VbHTK4P01g18WBvyipy9IHeRG
+ w6uvBWV0/5Yah/RYpqV3AEzLZpgufexZkq0BOrgI8tS1TpKBqeFK9S97iPbg+dMkb78iyAgCZ28
+ KElGD0d6Ft9GYj8mYotEbe7kUtCMj7zfqcgzho+ClXs8kHoTjRbRnfTeMPuY3Km22ysyMqPMpCE
+ 2S0cKT2RdZ3FTE2Ho4arAZkjIvdIJ8uOa7b8ObQ/y+2LfgDTQiZciQ==
+X-Google-Smtp-Source: AGHT+IFAw5hnncdtrKp8j81+AzenyXknUxz7hW4136XFjjH4KkoM8/O6x+asTTVZ8F25zS8L+lH3bw==
+X-Received: by 2002:a17:902:e748:b0:224:255b:c934 with SMTP id
+ d9443c01a7336-22db1b40236mr7359505ad.51.1745436820734; 
+ Wed, 23 Apr 2025 12:33:40 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50eb490esm108339915ad.114.2025.04.23.12.33.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Apr 2025 12:33:40 -0700 (PDT)
+Message-ID: <213ba7a9-6c86-48cd-b595-38954d938665@linaro.org>
+Date: Wed, 23 Apr 2025 12:33:39 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <tencent_85E0A24CC61971732FCD04DD85BC3689E205@qq.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 06/19] hw/arm: Filter machine types for
+ qemu-system-arm/aarch64 binaries
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>
+References: <20250422145502.70770-1-philmd@linaro.org>
+ <20250422145502.70770-7-philmd@linaro.org>
+ <a4a65446-07b7-4048-993a-6d0d7848b163@linaro.org>
+ <0d3d3209-4513-4366-a105-6b71aa9caa88@linaro.org>
+ <1937ddb0-a87d-4a87-ac73-3be72ded0c55@linaro.org>
+ <6f2805ef-2fcd-4525-a7fd-cad59c64f38c@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <6f2805ef-2fcd-4525-a7fd-cad59c64f38c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,65 +111,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 24, 2025 at 12:42:45AM +0800, Sunny Zhu wrote:
-> on Thu, 17 Apr 2025 13:39:13 -0500, Eric Blake wrote:
-> > When mirroring, the goal is to ensure that the destination reads the
-> > same as the source; this goal is met whether the destination is sparse
-> > or fully-allocated.  However, if the destination cannot efficiently
-> > write zeroes, then any time the mirror operation wants to copy zeroes
-> > from the source to the destination (either during the background over
-> > sparse regions when doing a full mirror, or in the foreground when the
-> > guest actively writes zeroes), we were causing the destination to
-> > fully allocate that portion of the disk, even if it already read as
-> > zeroes.
-> > 
-> > @@ -452,12 +474,21 @@ static unsigned mirror_perform(MirrorBlockJob *s, int64_t offset,
-> > 
-> >      switch (mirror_method) {
-> >      case MIRROR_METHOD_COPY:
-> > +        if (s->zero_bitmap) {
-> > +            bitmap_clear(s->zero_bitmap, offset / s->granularity,
-> > +                         DIV_ROUND_UP(bytes, s->granularity));
-> > +        }
-> >          co = qemu_coroutine_create(mirror_co_read, op);
-> >          break;
-> >      case MIRROR_METHOD_ZERO:
-> > +        /* s->zero_bitmap handled in mirror_co_zero */
-> >          co = qemu_coroutine_create(mirror_co_zero, op);
-> >          break;
-> >      case MIRROR_METHOD_DISCARD:
-> > +        if (s->zero_bitmap) {
-> > +            bitmap_clear(s->zero_bitmap, offset / s->granularity,
-> > +                         DIV_ROUND_UP(bytes, s->granularity));
-> > +        }
-> >          co = qemu_coroutine_create(mirror_co_discard, op);
-> >          break;
-> >      default:
-> > 
+On 4/23/25 12:12, Richard Henderson wrote:
+>> @Richard:
+>> Is it a concern regarding code maintenance, or potential impact on .data?
 > 
-> If we have performed the skip-zero operation, it should not be constrained
-> by mirror job bandwidth limits. Therefore, it is preferable to exclude it
-> from rate limiting.
-
-Indeed, that makes sense.  And it may impact the iotests: test 194
-should have a smaller amount of bytes transferred, due to skipping
-zeroes, so I may need to hoist the filtering that I added in the later
-patch for iotest mirror-sparse into common code.
-
->   
->   bool skip_write_zero = false;
+> I was thinking of impact on .data, especially with so many.
 > 
->   io_bytes = mirror_perform(s, offset, io_bytes, mirror_method, &skip_write_zero);
->   if (skip_write_zero || (mirror_method != MIRROR_METHOD_COPY && write_zeroes_ok)) {
->       io_bytes_acct = 0;
->   } ..
->
 
-Thanks; that's helpful.  I'll incorporate it into v3.
+du qemu-system-aarch64 optimized and stripped (in kB):
+31880	upstream
+31896	upstream + this series
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+So we have +16kB which is a size increase of +0.0005%.
+Even if we project something similar on other architectures (let's say 
+x10), the final impact on binary size should be < 0.005%.
 
+Maybe it's a reasonable impact considering the trade off on coherency 
+and readability through the codebase?
+Else, in case we make this array const, can we expect the linker to 
+deduplicate it? I'm not familiar with how final .data section is assembled.
 
