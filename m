@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EB4C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7B0C369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7YFz-0004K5-OJ; Wed, 23 Apr 2025 07:27:12 -0400
+	id 1u7YFu-0004EE-Kz; Wed, 23 Apr 2025 07:27:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7YFV-000416-1e
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:42 -0400
+ id 1u7YFJ-0003xD-PJ
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:32 -0400
 Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7YFS-0002wd-OD
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:40 -0400
+ id 1u7YFH-0002wd-81
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745407599; x=1776943599;
+ t=1745407587; x=1776943587;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ro6LZDTZ2hjHpKbMDlTvllYkUuuqO9mI3PXZKl+8Ub8=;
- b=PLSn5EgC5jaL5dDbPCnGMLtf8c8VZ8oKLmoZ5eogHIlWz2NwLkTpEv47
- 6Ov1/ExQx9YkTHvrgfHzVnY1YMqiuyhWXwpJ81WFHR9vZ3dPS2AxnOnkT
- gEQ02dHfINnYxt7QwXa7Ng1dW5+igUCJ4mMyawEOB432jJl8cc5iuSLuZ
- 3Lbn0Uu2+38RdSOe0nRMiDWMNluB3ZME+jt4ggIbZbEtQmNo2KMiHZTSa
- pP6cb7WPPjcR+fty6acsjhPRzVRu1hnuR/PkCu0yaK7pg8Yrr8nyNw95N
- toIcWT0UDNRWm6qtmiqDqumvSpgbx/UWSpDTiUUEWp2VRRaFW7QCFAUoS Q==;
-X-CSE-ConnectionGUID: 6LNRi2mgRGWcVGoxNj7XOQ==
-X-CSE-MsgGUID: 3cDEb3PYQgK9pCXuzjqeIQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50825307"
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="50825307"
+ bh=ZACIexM/oE4FNN0LXsaQvogct46TsXFr8hAXTBqvlCM=;
+ b=BqRhQiSL61tV5GoiQ3CxkUfIDPLy/v4hO1mCeH4A4datoPfwGbXVaS87
+ TU2PAabSpQSOZmenEX+nXsR/7sDIq1S8utIgpHninjsJ03tlkk+eGRE40
+ 6+/M7p3ejqZmhBAeiyWZABAjxgXocheAVvAe0YNIbS96ON5JqL8+Deedz
+ UcFO9DAoUdEkDF0BvFfm1JqF+MD14ZdCEyuqql7ykmn4kTdh7tcpe7Ute
+ lwj3SeDRnIhuzding3fmGil2104whUJOmQqFD62NxkX5p3jpaShlNvFNw
+ 43d5t0Ogto5Rk66V0oiSRniVcA4WOsF4GVoPgTnet1gRcHtYsjJPuC/FD w==;
+X-CSE-ConnectionGUID: MVQI8b3RQk6tl/eyRG8OYw==
+X-CSE-MsgGUID: jn7bHW8bQTu0tAIRPR8DWA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50825276"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="50825276"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 04:26:38 -0700
-X-CSE-ConnectionGUID: 9A6bHYTjSUiobgHkXuiizw==
-X-CSE-MsgGUID: bL+hEagfSoWySz+YUSAf0A==
+ 23 Apr 2025 04:26:26 -0700
+X-CSE-ConnectionGUID: gSa9HZhSRsyXUQ8/6Q7mhA==
+X-CSE-MsgGUID: AOj9NinMQG+cUDI4+oh1HA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137150786"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137150748"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 23 Apr 2025 04:26:34 -0700
+ by orviesa003.jf.intel.com with ESMTP; 23 Apr 2025 04:26:23 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -54,13 +54,14 @@ Cc: Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
  Jason Zeng <jason.zeng@intel.com>,
  Manish Mishra <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
  qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 07/10] i386/cpu: Add a "cpuid-0x1f" property
-Date: Wed, 23 Apr 2025 19:46:59 +0800
-Message-Id: <20250423114702.1529340-8-zhao1.liu@intel.com>
+Subject: [RFC 04/10] i386/cpu: Introduce cache model for GraniteRapids
+Date: Wed, 23 Apr 2025 19:46:56 +0800
+Message-Id: <20250423114702.1529340-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250423114702.1529340-1-zhao1.liu@intel.com>
 References: <20250423114702.1529340-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -87,54 +88,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manish Mishra <manish.mishra@nutanix.com>
+Add the cache model to GraniteRapids (v3) to better emulate its
+environment.
 
-Add a "cpuid-0x1f" property so that CPU models can enable it and have
-0x1f CPUID leaf natually as the Host CPU.
+The cache model is based on GraniteRapids-SP (Scalable Performance):
 
-The advantage is that when the CPU model's cache model is already
-consistent with the Host CPU, for example, SRF defaults to l2 per
-module & l3 per package, 0x1f can better help users identify the
-topology in the VM.
+      --- cache 0 ---
+      cache type                         = data cache (1)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0xc (12)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 49152 (48 KB)
+      --- cache 1 ---
+      cache type                         = instruction cache (2)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 65536 (64 KB)
+      --- cache 2 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x2 (2)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x1 (1)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x800 (2048)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 2048
+      (size synth)                       = 2097152 (2 MB)
+      --- cache 3 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x3 (3)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0xff (255)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x48000 (294912)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = true
+      number of sets (s)                 = 294912
+      (size synth)                       = 301989888 (288 MB)
+      --- cache 4 ---
+      cache type                         = no more caches (0)
 
-Adding 0x1f for specific CPU models should not cause any trouble in
-principle. This property is only enabled for CPU models that already
-have 0x1f leaf on the Host, so software that originally runs normally on
-the Host won't encounter issues in the Guest with corresponding CPU
-model. Conversely, some software that relies on checking 0x1f might
-experience problems in the Guest due to the lack of 0x1f [*]. In
-summary, adding 0x1f is also intended to further emulate the Host CPU
-environment. Therefore, the "x-" prefix is not added to this property.
-
-[*]: https://lore.kernel.org/qemu-devel/PH0PR02MB738410511BF51B12DB09BE6CF6AC2@PH0PR02MB7384.namprd02.prod.outlook.com/
-
-Co-authored-by: Xiaoyao Li <xiaoyao.li@intel.com>
-(Missing signed-off from Manish & Xiaoyao)
+Suggested-by: Tejus GK <tejus.gk@nutanix.com>
+Suggested-by: Jason Zeng <jason.zeng@intel.com>
+Suggested-by: "Daniel P . Berrangé" <berrange@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Note:
-  This patch integrates the idea from 2 previous posted patches (ordered
-by post time)[1] [2]. Although the target cases are not exactly the same
-as this patch, add the authorship of previous authors.
-
-[1]: From Manish: https://lore.kernel.org/qemu-devel/20240722101859.47408-1-manish.mishra@nutanix.com/
-[2]: From Xiaoyao: https://lore.kernel.org/qemu-devel/20240813033145.279307-1-xiaoyao.li@intel.com/
----
- target/i386/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/cpu.c | 96 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index e0716dbe5934..26dc5b6a6a8c 100644
+index 4f7ab6246e39..00e4a8372c28 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -9195,6 +9195,7 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
-                      true),
-     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
-+    DEFINE_PROP_BOOL("cpuid-0x1f", X86CPU, enable_cpuid_0x1f, false),
+@@ -2453,6 +2453,97 @@ static const CPUCaches epyc_genoa_cache_info = {
+     },
  };
  
- #ifndef CONFIG_USER_ONLY
++static const CPUCaches xeon_gnr_cache_info = {
++    .l1d_cache = &(CPUCacheInfo) {
++        // CPUID 0x4.0x0.EAX
++        .type = DATA_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        // CPUID 0x4.0x0.EBX
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 12,
++
++        // CPUID 0x4.0x0.ECX
++        .sets = 64,
++
++        // CPUID 0x4.0x0.EDX
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 48 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l1i_cache = &(CPUCacheInfo) {
++        // CPUID 0x4.0x1.EAX
++        .type = INSTRUCTION_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        // CPUID 0x4.0x1.EBX
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        // CPUID 0x4.0x1.ECX
++        .sets = 64,
++
++        // CPUID 0x4.0x1.EDX
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 64 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l2_cache = &(CPUCacheInfo) {
++        // CPUID 0x4.0x2.EAX
++        .type = UNIFIED_CACHE,
++        .level = 2,
++        .self_init = true,
++
++        // CPUID 0x4.0x2.EBX
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        // CPUID 0x4.0x2.ECX
++        .sets = 2048,
++
++        // CPUID 0x4.0x2.EDX
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 2 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l3_cache = &(CPUCacheInfo) {
++        // CPUID 0x4.0x3.EAX
++        .type = UNIFIED_CACHE,
++        .level = 3,
++        .self_init = true,
++
++        // CPUID 0x4.0x3.EBX
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        // CPUID 0x4.0x3.ECX
++        .sets = 294912,
++
++        // CPUID 0x4.0x3.EDX
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = true,
++
++        .size = 288 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
++    },
++};
++
+ static const CPUCaches xeon_srf_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         // CPUID 0x4.0x0.EAX
+@@ -4517,6 +4608,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                     { /* end of list */ }
+                 }
+             },
++            {
++                .version = 3,
++                .note = "with gnr-sp cache model",
++                .cache_info = &xeon_gnr_cache_info,
++            },
+             { /* end of list */ },
+         },
+     },
 -- 
 2.34.1
 
