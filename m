@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B5BC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5770C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UfN-0003Je-Ve; Wed, 23 Apr 2025 03:37:10 -0400
+	id 1u7UfN-0003JO-Fu; Wed, 23 Apr 2025 03:37:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfE-0003EN-PR
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7Uez-00039C-Gq
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:36:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfC-0003Hj-7L
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:36:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7Uex-0003Dq-CG
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:36:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745393817;
+ s=mimecast20190719; t=1745393800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QhCSieJStkW8vwRHHDq/VDpvXLt+CNcCBA2kBqyGeWw=;
- b=S/RMPdZtpPnTPJNi4NNQBF8GuYrZY8q5VfnithnFYIcZwaawOZ181aZ+d3mS+16203rfu1
- hKRlRdOxq48zTBYuDW7fJ3kDwXnWDvAKTtnEwNO1KEexhlj275xY1ftQqaoanoJN5SQGgD
- cyrSKJO3IQwtB65zU68bFnegzGfIA78=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Ubksxwnn3dIlQGpMZRKeufkjtSTvTnQ8+cVCN30GioI=;
+ b=KWtlGEjOybUpjr9ZycAp5sFG99+vym6mm+XCybs5JASBPWDiPN5WnyIr5MX0I+ITbYHEJV
+ mNZ7/KJ9uIWIfgZ6sbMEg6iFRM43dYdInJOb5EPQbTA2BIF2lE0qgjhapq5g1l2a3u6jTt
+ n+Y0u5mCmczX+3DpdkF7EEWthgEaWjo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-RJbj00fUPtmYmVfwPHoKjg-1; Wed,
- 23 Apr 2025 03:36:50 -0400
-X-MC-Unique: RJbj00fUPtmYmVfwPHoKjg-1
-X-Mimecast-MFC-AGG-ID: RJbj00fUPtmYmVfwPHoKjg_1745393809
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-9ssyua85NtyWGIIb4xbZzA-1; Wed,
+ 23 Apr 2025 03:36:34 -0400
+X-MC-Unique: 9ssyua85NtyWGIIb4xbZzA-1
+X-Mimecast-MFC-AGG-ID: 9ssyua85NtyWGIIb4xbZzA_1745393793
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82787180087B; Wed, 23 Apr 2025 07:36:49 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85C941956048; Wed, 23 Apr 2025 07:36:33 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA05319560A3; Wed, 23 Apr 2025 07:36:47 +0000 (UTC)
+ id EC4F71955BCB; Wed, 23 Apr 2025 07:36:31 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 15/29] tests/avocado: Remove the LinuxKernelTest class
-Date: Wed, 23 Apr 2025 09:35:55 +0200
-Message-ID: <20250423073610.271585-16-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/29] qapi/machine: Make @dump-skeys command generic
+Date: Wed, 23 Apr 2025 09:35:48 +0200
+Message-ID: <20250423073610.271585-9-thuth@redhat.com>
 In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 References: <20250423073610.271585-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -86,87 +86,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-All tests that used this class have been converted to the functional
-framework, so we can remove the boot_linux_console.py file now.
+Reduce misc-target.json by one target specific command.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250414113031.151105-6-thuth@redhat.com>
+Error message is returned for machines not implementing
+TYPE_DUMP_SKEYS_INTERFACE:
+
+  $ qemu-system-aarch64 -M virt -S -qmp stdio
+  {"QMP": {"version": {"qemu": {"micro": 50, "major": 9}}, "capabilities": ["oob"]}}
+  { "execute": "qmp_capabilities" }
+  {"return": {}}
+  { "execute": "dump-skeys", "arguments": { "filename": "/tmp/foo" }  }
+  {"error": {"class": "GenericError", "desc": "Storage keys information not available for this architecture"}}
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250310151414.11550-5-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/boot_linux_console.py | 62 -----------------------------
- 1 file changed, 62 deletions(-)
- delete mode 100644 tests/avocado/boot_linux_console.py
+ qapi/machine.json          | 18 ++++++++++++++++++
+ qapi/misc-target.json      | 19 -------------------
+ hw/core/machine-qmp-cmds.c | 14 ++++++++++++++
+ hw/s390x/s390-skeys.c      |  6 +-----
+ 4 files changed, 33 insertions(+), 24 deletions(-)
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-deleted file mode 100644
-index cbb1e2fb506..00000000000
---- a/tests/avocado/boot_linux_console.py
-+++ /dev/null
-@@ -1,62 +0,0 @@
--# Functional test that boots a Linux kernel and checks the console
+diff --git a/qapi/machine.json b/qapi/machine.json
+index a6b8795b09e..a9ff8076317 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1898,3 +1898,21 @@
+ { 'command': 'x-query-interrupt-controllers',
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ]}
++
++##
++# @dump-skeys:
++#
++# Dump the storage keys for an s390x guest
++#
++# @filename: the path to the file to dump to
++#
++# Since: 2.5
++#
++# .. qmp-example::
++#
++#     -> { "execute": "dump-skeys",
++#          "arguments": { "filename": "/tmp/skeys" } }
++#     <- { "return": {} }
++##
++{ 'command': 'dump-skeys',
++  'data': { 'filename': 'str' } }
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 8d70bd24d8c..42e4a7417dc 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -274,25 +274,6 @@
+   'returns': 'SevAttestationReport',
+   'if': 'TARGET_I386' }
+ 
+-##
+-# @dump-skeys:
 -#
--# Copyright (c) 2018 Red Hat, Inc.
+-# Dump guest's storage keys
 -#
--# Author:
--#  Cleber Rosa <crosa@redhat.com>
+-# @filename: the path to the file to dump to
 -#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
+-# Since: 2.5
+-#
+-# .. qmp-example::
+-#
+-#     -> { "execute": "dump-skeys",
+-#          "arguments": { "filename": "/tmp/skeys" } }
+-#     <- { "return": {} }
+-##
+-{ 'command': 'dump-skeys',
+-  'data': { 'filename': 'str' },
+-  'if': 'TARGET_S390X' }
 -
--import os
--import shutil
+ ##
+ # @GICCapability:
+ #
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 3130c5cd456..fd8b4e0b44c 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -25,6 +25,7 @@
+ #include "system/numa.h"
+ #include "system/runstate.h"
+ #include "system/system.h"
++#include "hw/s390x/storage-keys.h"
+ 
+ /*
+  * fast means: we NEVER interrupt vCPU threads to retrieve
+@@ -406,3 +407,16 @@ GuidInfo *qmp_query_vm_generation_id(Error **errp)
+     info->guid = qemu_uuid_unparse_strdup(&vms->guid);
+     return info;
+ }
++
++void qmp_dump_skeys(const char *filename, Error **errp)
++{
++    ObjectClass *mc = object_get_class(qdev_get_machine());
++    ObjectClass *oc = object_class_dynamic_cast(mc, TYPE_DUMP_SKEYS_INTERFACE);
++
++    if (!oc) {
++        error_setg(errp, "Storage keys information not available"
++                         " for this architecture");
++        return;
++    }
++    DUMP_SKEYS_INTERFACE_CLASS(oc)->qmp_dump_skeys(filename, errp);
++}
+diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
+index fd1123b0f35..067ea037268 100644
+--- a/hw/s390x/s390-skeys.c
++++ b/hw/s390x/s390-skeys.c
+@@ -15,6 +15,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/s390x/storage-keys.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-commands-machine.h"
+ #include "qapi/qapi-commands-misc-target.h"
+ #include "qobject/qdict.h"
+ #include "qemu/error-report.h"
+@@ -219,11 +220,6 @@ out:
+     fclose(f);
+ }
+ 
+-void qmp_dump_skeys(const char *filename, Error **errp)
+-{
+-    s390_qmp_dump_skeys(filename, errp);
+-}
 -
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import process
--from avocado.utils import archive
--
--class LinuxKernelTest(QemuSystemTest):
--    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
--
--    def wait_for_console_pattern(self, success_message, vm=None):
--        wait_for_console_pattern(self, success_message,
--                                 failure_message='Kernel panic - not syncing',
--                                 vm=vm)
--
--    def extract_from_deb(self, deb, path):
--        """
--        Extracts a file from a deb package into the test workdir
--
--        :param deb: path to the deb archive
--        :param path: path within the deb archive of the file to be extracted
--        :returns: path of the extracted file
--        """
--        cwd = os.getcwd()
--        os.chdir(self.workdir)
--        file_path = process.run("ar t %s" % deb).stdout_text.split()[2]
--        process.run("ar x %s %s" % (deb, file_path))
--        archive.extract(file_path, self.workdir)
--        os.chdir(cwd)
--        # Return complete path to extracted file.  Because callers to
--        # extract_from_deb() specify 'path' with a leading slash, it is
--        # necessary to use os.path.relpath() as otherwise os.path.join()
--        # interprets it as an absolute path and drops the self.workdir part.
--        return os.path.normpath(os.path.join(self.workdir,
--                                             os.path.relpath(path, '/')))
--
--    def extract_from_rpm(self, rpm, path):
--        """
--        Extracts a file from an RPM package into the test workdir.
--
--        :param rpm: path to the rpm archive
--        :param path: path within the rpm archive of the file to be extracted
--                     needs to be a relative path (starting with './') because
--                     cpio(1), which is used to extract the file, expects that.
--        :returns: path of the extracted file
--        """
--        cwd = os.getcwd()
--        os.chdir(self.workdir)
--        process.run("rpm2cpio %s | cpio -id %s" % (rpm, path), shell=True)
--        os.chdir(cwd)
--        return os.path.normpath(os.path.join(self.workdir, path))
+ static bool qemu_s390_skeys_are_enabled(S390SKeysState *ss)
+ {
+     QEMUS390SKeysState *skeys = QEMU_S390_SKEYS(ss);
 -- 
 2.49.0
 
