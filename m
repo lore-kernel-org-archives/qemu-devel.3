@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F178C369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC89FC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WdR-0001CP-Ss; Wed, 23 Apr 2025 05:43:18 -0400
+	id 1u7Wbz-0004tX-BL; Wed, 23 Apr 2025 05:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcW-00065l-OT
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1u7Wbu-0004hk-AM
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u7WcV-0008Qg-1l
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:42:20 -0400
+ id 1u7Wbs-0008MJ-Ao
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:41:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745401337;
+ s=mimecast20190719; t=1745401299;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQ80bs6fUiw4Xf8E7Rq7/mDk9FxrtXt7TWMkZhTJWIA=;
- b=N/GwWLjKWQPS+n0GVrKyhGat1jY3mYj4HFzHS74TayVF63fe7HfrHvlAS7fCf934xXLu7+
- tyayDKn/4E7GRgfXMnIVLrrRao1vUdGdLwDoyLWEAD8+wm0KGA7tvXUp4U5vV85aAAw2p2
- 0cO6litDRlKUflYF6dMNetarV/kvZ7Y=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7294wfdbH35oeJE1OLJ47GmvFn6r1Eevzfswj+cP3Bk=;
+ b=BzQigN8dUjEdBYWovIAMB8f2pz74djR6syFFngJRJmRIcXAHzlO7IG3OoCowxeK6tXQC8h
+ mRuaPfPYIbwVLBge7SbZD95tLHUPn5FEUei3Re9UiDifrpR/+Ja4rSgL5HVfqdPlVi0MV7
+ ulABOPVnIMOJWUQy/lHNLQFqOkUCQG0=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-494-4rJntOMsOk66no1QPQo8pg-1; Wed, 23 Apr 2025 05:42:16 -0400
-X-MC-Unique: 4rJntOMsOk66no1QPQo8pg-1
-X-Mimecast-MFC-AGG-ID: 4rJntOMsOk66no1QPQo8pg_1745401335
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-acb8d1231ffso227099466b.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:42:16 -0700 (PDT)
+ us-mta-155-MwFbic_dN3GbuxAI91wXUA-1; Wed, 23 Apr 2025 05:41:37 -0400
+X-MC-Unique: MwFbic_dN3GbuxAI91wXUA-1
+X-Mimecast-MFC-AGG-ID: MwFbic_dN3GbuxAI91wXUA_1745401295
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-acb61452b27so561367366b.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:41:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745401334; x=1746006134;
+ d=1e100.net; s=20230601; t=1745401295; x=1746006095;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TQ80bs6fUiw4Xf8E7Rq7/mDk9FxrtXt7TWMkZhTJWIA=;
- b=tyCRP4RDYjvtARKiC70RGLSj+GSabvtoaouydbs4hogQUOTj6SVbFs+NIMESf4VD7/
- eQm4q/IKBFoiHD4iHVnflOvZjZFcX7zY8CBdpX+ejS5zWOsgwgUcR4R+iFrrW0xwBb36
- kWuvonvpv5lJD3fCB0fUMR5Cn+YH2zv899ta8/Zj+z3suV8m+cFYazrmAWB3F0UAh+V4
- r1XII8xduIKc8uNIByGq9Nw91Ok1XNfer4MTJTpWYkmEjuC4FtFbp5k0/ROTNJX4rz4S
- UdOVF1Y7LG1t/BfQ2c4hFqXeR9s0l4hR9cuCPmmen7ludUvvRngPaM9t7q0yZx+CaAw+
- b46g==
-X-Gm-Message-State: AOJu0Yw0kYaznWVwSPZb163jM+WiwlakzzVXpi97LUpyDyR8emyoV/m4
- rzDpfWezm54tnNZ23boB/HGNiLDh1iBEYJ3+rzbugvVFGh6Es0GXMh66zpeuEgLsRkZtCOVvQir
- IL/m93ob3pziblj1qwB5GKF79QSCS99E8NGnWOYk04LHYXWEHGdIxIOIjdPn0m5oBIlO4spzvzg
- yCrn3GXXKJaHyMnef/5jxY6ZSlDs+6vs0/zDOn
-X-Gm-Gg: ASbGncsy0SKAA43q3bjyD98k4rU/1/0LikYT6LJNQJ08CUCjgNFTtQHILZJAbgH5bUU
- ca4tQO6CJy7ATT8HSiQjOU3lR69ZA9EMAGdi+OreOnmGfS05sPKRK2pWC6lo2HyQfT2d4QiB9Kb
- K7TmEdwlBME4kDkM67okwPMRqhulV91098ir6Pl5t4uxCQhMqqc3Pct+toha6a3XVhJ4EJgLnh0
- WVw6hKn5hkhk5C2dd3tiJhBL8/JBA+P4IkvYJP5rEyjPhna3dfhgAMwJf8h1XpkvPDnllYRSOWE
- Jwsjc3LvqAWB5VqJ
-X-Received: by 2002:a17:907:9712:b0:aca:a687:a409 with SMTP id
- a640c23a62f3a-acb74b0593fmr1482537866b.17.1745401334652; 
- Wed, 23 Apr 2025 02:42:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnKtqenSL8MaGycmXWEFRwQDLU/tWzCJETCZ/nF9y7XA30LVgzeZ2IV3n+GKuCPs2iNH+2sQ==
-X-Received: by 2002:a17:907:9712:b0:aca:a687:a409 with SMTP id
- a640c23a62f3a-acb74b0593fmr1482536166b.17.1745401334181; 
- Wed, 23 Apr 2025 02:42:14 -0700 (PDT)
+ bh=7294wfdbH35oeJE1OLJ47GmvFn6r1Eevzfswj+cP3Bk=;
+ b=cSouJboWa/hox7xfyb6I3OnUmwnu84oRdIg8pvtTjzUOTD2LsLlse/io4vhEdOPpU2
+ rVGuATd/coRUWKMQg0IkaoP9DJdsgbJrv+o0OFNxaUAkX6qBWsx8qHMwHu3gZbbMPeZS
+ oA3HhIVpu22RZSKo66+NqR3R43NSAN9Bzd02J/QAkgfqK/whFLMweqYyo6CuvihScSPA
+ UR0OaG4UnUpTzHK92j9OSByjFodvwDBuAnSgMqrdBE0kDl8REIqPZAW7zBCxsPh3tfrA
+ D3t84gVl+jgXFs5jNNRAzMP5jAQ95ixxqUdf942aC2GpgwLMfG+g1gkHS5SXV0+ar4J8
+ vj1Q==
+X-Gm-Message-State: AOJu0YzmoA40KvegulPPz7eAvmEoKzxw2+RcC6iIE6sax1uw2zif+B4E
+ x6bifLW7UOfB4rWNAiMvNUlx9N3odA64o0RvkWIFELqgyDrfUJtwhbl6R6cHIDElBd5getzihLz
+ NjGNKsEPIdcWOySjG6XdZ4SftKYilf/rOl17KzHg3t2EwyvZ6dgHckIRjJcoZ+tLetClmCmdZJR
+ Ak1qphrSTgvA5bR/wWpY70u/j4r4ZB1CrD8MiR
+X-Gm-Gg: ASbGnctDNW5erETr3T5EQySzD0cwSMfCzapehXrg1ECESQbaGpjV0crZ3dpWHbV5uUj
+ Km+J3OIiy9nHqEQ0eDpzNQiWmbzDzuCsrlk47DSBNvuBsZ70p/PqYcdhBOyZmAEYjcOv+0af4mx
+ 8ydqHIgeBuTpSfdEiVs8cOwzYTZ9KsN76QqANDV4201NhOEzk7hgPIdkOWOuup5VxtlM78sVXbN
+ xztJiXRjeufuCMD1okkghlt/uUpVnpGY/yQmFMkWm1JN50KT53DGKHwoixuu+/CQMAxu1n8I3qK
+ U9WgjNjtCDshShGf
+X-Received: by 2002:a17:907:2d0d:b0:acb:4f46:9d18 with SMTP id
+ a640c23a62f3a-acb74af251dmr1671160966b.3.1745401294907; 
+ Wed, 23 Apr 2025 02:41:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEONFVJQ7jIqqH43pCDKg0/syZ5gXCNiTTbG3S/sS+v3eMZOPj0Dsq230kyAPauTmumsosYcA==
+X-Received: by 2002:a17:907:2d0d:b0:acb:4f46:9d18 with SMTP id
+ a640c23a62f3a-acb74af251dmr1671159066b.3.1745401294397; 
+ Wed, 23 Apr 2025 02:41:34 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.233.241])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f62594985bsm7231725a12.74.2025.04.23.02.42.12
+ a640c23a62f3a-acb6eefcf37sm784093266b.97.2025.04.23.02.41.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 02:42:12 -0700 (PDT)
+ Wed, 23 Apr 2025 02:41:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 30/34] rust/hpet: convert HPETTimer index to u8 type
-Date: Wed, 23 Apr 2025 11:41:00 +0200
-Message-ID: <20250423094105.40692-31-pbonzini@redhat.com>
+Cc: Wei Liu <liuwe@linux.microsoft.com>
+Subject: [PULL 14/34] target/i386/hvf: remove HVF specific calls from
+ x86_decode.c
+Date: Wed, 23 Apr 2025 11:40:44 +0200
+Message-ID: <20250423094105.40692-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250423094105.40692-1-pbonzini@redhat.com>
 References: <20250423094105.40692-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -108,71 +109,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Wei Liu <liuwe@linux.microsoft.com>
 
-The C version of HPET uses the uint8_t type for timer index ("tn"), and
-usize type in Rust version will break migration between the C and Rust
-versions.
+Use the newly defined emul_ops. This allows the module to be reused
+by other accelerator in the future.
 
-So convert HPETTimer index' type to u8 (consistent with the C version of
-HPET) to make it friendly for vmstate support.
+No functional change intended.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250414144943.1112885-8-zhao1.liu@intel.com
+Signed-off-by: Wei Liu <liuwe@linux.microsoft.com>
+Link: https://lore.kernel.org/r/1741377325-28175-3-git-send-email-liuwe@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/hpet.rs | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ target/i386/hvf/x86_decode.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 1afa891362f..dc8a23f29d9 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -184,7 +184,7 @@ fn timer_handler(timer_cell: &BqlRefCell<HPETTimer>) {
- pub struct HPETTimer {
-     /// timer N index within the timer block (`HPETState`)
-     #[doc(alias = "tn")]
--    index: usize,
-+    index: u8,
-     qemu_timer: Timer,
-     /// timer block abstraction containing this timer
-     state: NonNull<HPETState>,
-@@ -210,7 +210,7 @@ pub struct HPETTimer {
+diff --git a/target/i386/hvf/x86_decode.c b/target/i386/hvf/x86_decode.c
+index 5fea2dd3cc0..728e1596381 100644
+--- a/target/i386/hvf/x86_decode.c
++++ b/target/i386/hvf/x86_decode.c
+@@ -21,6 +21,7 @@
+ #include "panic.h"
+ #include "x86_decode.h"
+ #include "vmx.h"
++#include "x86_emu.h"
+ #include "x86_mmu.h"
+ #include "x86_descr.h"
+ 
+@@ -74,7 +75,7 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
+         break;
+     }
+     target_ulong va  = linear_rip(env_cpu(env), env->eip) + decode->len;
+-    vmx_read_mem(env_cpu(env), &val, va, size);
++    emul_ops->read_mem(env_cpu(env), &val, va, size);
+     decode->len += size;
+     
+     return val;
+@@ -1893,16 +1894,6 @@ static void decode_prefix(CPUX86State *env, struct x86_decode *decode)
+     }
  }
  
- impl HPETTimer {
--    fn init(&mut self, index: usize, state: &HPETState) {
-+    fn init(&mut self, index: u8, state: &HPETState) {
-         *self = HPETTimer {
-             index,
-             // SAFETY: the HPETTimer will only be used after the timer
-@@ -235,7 +235,7 @@ fn init(&mut self, index: usize, state: &HPETState) {
-             Timer::NS,
-             0,
-             timer_handler,
--            &state.timers[self.index],
-+            &state.timers[self.index as usize],
-         )
-     }
- 
-@@ -246,7 +246,7 @@ fn get_state(&self) -> &HPETState {
-     }
- 
-     fn is_int_active(&self) -> bool {
--        self.get_state().is_timer_int_active(self.index)
-+        self.get_state().is_timer_int_active(self.index.into())
-     }
- 
-     const fn is_fsb_route_enabled(&self) -> bool {
-@@ -611,7 +611,7 @@ fn handle_legacy_irq(&self, irq: u32, level: u32) {
- 
-     fn init_timer(&self) {
-         for (index, timer) in self.timers.iter().enumerate() {
--            timer.borrow_mut().init(index, self);
-+            timer.borrow_mut().init(index.try_into().unwrap(), self);
+-static struct x86_segment_descriptor get_cs_descriptor(CPUState *s)
+-{
+-    struct vmx_segment vmx_cs;
+-    x86_segment_descriptor cs;
+-    vmx_read_segment_descriptor(s, &vmx_cs, R_CS);
+-    vmx_segment_to_x86_descriptor(s, &vmx_cs, &cs);
+-
+-    return cs;
+-}
+-
+ void set_addressing_size(CPUX86State *env, struct x86_decode *decode)
+ {
+     decode->addressing_size = -1;
+@@ -1914,7 +1905,8 @@ void set_addressing_size(CPUX86State *env, struct x86_decode *decode)
          }
-     }
- 
+     } else if (!x86_is_long_mode(env_cpu(env))) {
+         /* protected */
+-        x86_segment_descriptor cs = get_cs_descriptor(env_cpu(env));
++        x86_segment_descriptor cs;
++        emul_ops->read_segment_descriptor(env_cpu(env), &cs, R_CS);
+         /* check db */
+         if (cs.db) {
+             if (decode->addr_size_override) {
+@@ -1950,7 +1942,8 @@ void set_operand_size(CPUX86State *env, struct x86_decode *decode)
+         }
+     } else if (!x86_is_long_mode(env_cpu(env))) {
+         /* protected */
+-        x86_segment_descriptor cs = get_cs_descriptor(env_cpu(env));
++        x86_segment_descriptor cs;
++        emul_ops->read_segment_descriptor(env_cpu(env), &cs, R_CS);
+         /* check db */
+         if (cs.db) {
+             if (decode->op_size_override) {
 -- 
 2.49.0
 
