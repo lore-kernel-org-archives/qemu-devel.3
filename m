@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3187C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC83C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Uff-0003uT-M6; Wed, 23 Apr 2025 03:37:27 -0400
+	id 1u7UfW-0003YC-DI; Wed, 23 Apr 2025 03:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7Ufd-0003os-UB
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfR-0003PP-ED
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7Ufb-0003LY-NH
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfO-0003Jy-SG
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745393843;
+ s=mimecast20190719; t=1745393829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PVP+7fwcqYMkX9Lc6XcDOxujdeQNAYy5MB2fObPPJvc=;
- b=I6Yz/NxMcJboUtMPKdwxcQpID1xF00AwnMllnHTT0AytCaxhx3k9wZ4JE3sW9b7TvgwGZJ
- T2FXsVlN1Z/KqDioN+DEDY7/ye1uo1vmTN1j0UM/yt1VEV0wqqYfV4sGzdPuGf33onp2sJ
- hcmalX0N9mARt27Grwwj/7Wy9qUzMzg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dOrapOjNaXGC/Tgiz9AARYOrIS72b4Wqa59eO2DLEkQ=;
+ b=exycmVQBlbR7MulRnvKUpi39O4nWRK3uVKZr9+hreQsxDMctjPe/RGYuyWapdJhkga/8fc
+ pHH62/s3Acj2b1Ky+032i8+zdTk3yqGo5Ro0YNQYEDK7kmUsnsl8zf72aG5Wwa4vGgtdJr
+ UlZA22/1UZ9tsMGQBSpzk2gQywrKxpI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-fwxpdfgkPVOsvt7tcAKaHQ-1; Wed,
- 23 Apr 2025 03:37:20 -0400
-X-MC-Unique: fwxpdfgkPVOsvt7tcAKaHQ-1
-X-Mimecast-MFC-AGG-ID: fwxpdfgkPVOsvt7tcAKaHQ_1745393839
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-LuXgSc_tPG-ifZ0MXfpizg-1; Wed,
+ 23 Apr 2025 03:37:04 -0400
+X-MC-Unique: LuXgSc_tPG-ifZ0MXfpizg-1
+X-Mimecast-MFC-AGG-ID: LuXgSc_tPG-ifZ0MXfpizg_1745393823
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44DAD19560A1; Wed, 23 Apr 2025 07:37:19 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF4A2195609D; Wed, 23 Apr 2025 07:37:03 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AA10019560A3; Wed, 23 Apr 2025 07:37:17 +0000 (UTC)
+ id 05C0819560A3; Wed, 23 Apr 2025 07:37:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 29/29] MAINTAINERS: Add functional tests that are not covered
- yet
-Date: Wed, 23 Apr 2025 09:36:09 +0200
-Message-ID: <20250423073610.271585-30-thuth@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 22/29] tests/functional: Use the tuxrun kernel for the aarch64
+ replay test
+Date: Wed, 23 Apr 2025 09:36:02 +0200
+Message-ID: <20250423073610.271585-23-thuth@redhat.com>
 In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 References: <20250423073610.271585-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -89,107 +89,261 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Some functional tests are currently not covered by the entries
-in MAINTAINERS yet, so scripts/get_maintainers.pl fails to suggest
-the right people who should be CC:-ed for related patches.
-Add the uncovered tests to the right sections to close this gap.
+This way we can do a full boot in record-replay mode and
+should get a similar test coverage compared to the old
+replay test from tests/avocado/replay_linux.py.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250414121520.213665-1-thuth@redhat.com>
+Since the aarch64 test was the last avocado test in the
+tests/avocado/replay_linux.py file, we can remove this
+file now completely.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250414113031.151105-13-thuth@redhat.com>
 ---
- MAINTAINERS | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ MAINTAINERS                             |   1 -
+ tests/avocado/replay_linux.py           | 160 ------------------------
+ tests/functional/test_aarch64_replay.py |  37 ++++--
+ 3 files changed, 29 insertions(+), 169 deletions(-)
+ delete mode 100644 tests/avocado/replay_linux.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 5fd757c5ddb..c6d9b022f9d 100644
+index 72f6b208f5a..e29910cbd77 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -475,6 +475,7 @@ F: docs/system/i386/sgx.rst
- F: target/i386/kvm/
- F: target/i386/sev*
- F: scripts/kvm/vmxcap
-+F: tests/functional/test_x86_64_hotplug_cpu.py
+@@ -3668,7 +3668,6 @@ F: include/system/replay.h
+ F: docs/devel/replay.rst
+ F: docs/system/replay.rst
+ F: stubs/replay.c
+-F: tests/avocado/replay_linux.py
+ F: tests/functional/*reverse_debug*.py
+ F: tests/functional/*replay*.py
+ F: qapi/replay.json
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+deleted file mode 100644
+index 6ba283d3bf6..00000000000
+--- a/tests/avocado/replay_linux.py
++++ /dev/null
+@@ -1,160 +0,0 @@
+-# Record/replay test that boots a complete Linux system via a cloud image
+-#
+-# Copyright (c) 2020 ISP RAS
+-#
+-# Author:
+-#  Pavel Dovgalyuk <Pavel.Dovgaluk@ispras.ru>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-import os
+-import logging
+-import time
+-
+-from avocado import skipUnless
+-from avocado_qemu import BUILD_DIR
+-from avocado.utils import cloudinit
+-from avocado.utils import network
+-from avocado.utils import vmimage
+-from avocado.utils import datadrainer
+-from avocado.utils.path import find_command
+-from avocado_qemu.linuxtest import LinuxTest
+-
+-class ReplayLinux(LinuxTest):
+-    """
+-    Boots a Linux system, checking for a successful initialization
+-    """
+-
+-    timeout = 1800
+-    chksum = None
+-    hdd = 'ide-hd'
+-    cd = 'ide-cd'
+-    bus = 'ide'
+-
+-    def setUp(self):
+-        # LinuxTest does many replay-incompatible things, but includes
+-        # useful methods. Do not setup LinuxTest here and just
+-        # call some functions.
+-        super(LinuxTest, self).setUp()
+-        self._set_distro()
+-        self.boot_path = self.download_boot()
+-        self.phone_server = cloudinit.PhoneHomeServer(('0.0.0.0', 0),
+-                                                      self.name)
+-        ssh_pubkey, self.ssh_key = self.set_up_existing_ssh_keys()
+-        self.cloudinit_path = self.prepare_cloudinit(ssh_pubkey)
+-
+-    def vm_add_disk(self, vm, path, id, device):
+-        bus_string = ''
+-        if self.bus:
+-            bus_string = ',bus=%s.%d' % (self.bus, id,)
+-        vm.add_args('-drive', 'file=%s,snapshot=on,id=disk%s,if=none' % (path, id))
+-        vm.add_args('-drive',
+-            'driver=blkreplay,id=disk%s-rr,if=none,image=disk%s' % (id, id))
+-        vm.add_args('-device',
+-            '%s,drive=disk%s-rr%s' % (device, id, bus_string))
+-
+-    def vm_add_cdrom(self, vm, path, id, device):
+-        vm.add_args('-drive', 'file=%s,id=disk%s,if=none,media=cdrom' % (path, id))
+-
+-    def launch_and_wait(self, record, args, shift):
+-        self.require_netdev('user')
+-        vm = self.get_vm()
+-        vm.add_args('-smp', '1')
+-        vm.add_args('-m', '1024')
+-        vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
+-                    '-device', 'virtio-net,netdev=vnet')
+-        vm.add_args('-object', 'filter-replay,id=replay,netdev=vnet')
+-        if args:
+-            vm.add_args(*args)
+-        self.vm_add_disk(vm, self.boot_path, 0, self.hdd)
+-        self.vm_add_cdrom(vm, self.cloudinit_path, 1, self.cd)
+-        logger = logging.getLogger('replay')
+-        if record:
+-            logger.info('recording the execution...')
+-            mode = 'record'
+-        else:
+-            logger.info('replaying the execution...')
+-            mode = 'replay'
+-        replay_path = os.path.join(self.workdir, 'replay.bin')
+-        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s' %
+-                    (shift, mode, replay_path))
+-
+-        start_time = time.time()
+-
+-        vm.set_console()
+-        vm.launch()
+-        console_drainer = datadrainer.LineLogger(vm.console_socket.fileno(),
+-                                    logger=self.log.getChild('console'),
+-                                    stop_check=(lambda : not vm.is_running()))
+-        console_drainer.start()
+-        if record:
+-            while not self.phone_server.instance_phoned_back:
+-                self.phone_server.handle_request()
+-            vm.shutdown()
+-            logger.info('finished the recording with log size %s bytes'
+-                % os.path.getsize(replay_path))
+-            self.run_replay_dump(replay_path)
+-            logger.info('successfully tested replay-dump.py')
+-        else:
+-            vm.event_wait('SHUTDOWN', self.timeout)
+-            vm.wait()
+-            logger.info('successfully finished the replay')
+-        elapsed = time.time() - start_time
+-        logger.info('elapsed time %.2f sec' % elapsed)
+-        return elapsed
+-
+-    def run_rr(self, args=None, shift=7):
+-        t1 = self.launch_and_wait(True, args, shift)
+-        t2 = self.launch_and_wait(False, args, shift)
+-        logger = logging.getLogger('replay')
+-        logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
+-
+-    def run_replay_dump(self, replay_path):
+-        try:
+-            subprocess.check_call(["./scripts/replay-dump.py",
+-                                   "-f", replay_path],
+-                                  stdout=subprocess.DEVNULL)
+-        except subprocess.CalledProcessError:
+-            self.fail('replay-dump.py failed')
+-
+-
+-@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+-class ReplayLinuxAarch64(ReplayLinux):
+-    """
+-    :avocado: tags=accel:tcg
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:virt
+-    :avocado: tags=cpu:max
+-    """
+-
+-    chksum = '1e18d9c0cf734940c4b5d5ec592facaed2af0ad0329383d5639c997fdf16fe49'
+-
+-    hdd = 'virtio-blk-device'
+-    cd = 'virtio-blk-device'
+-    bus = None
+-
+-    def get_common_args(self):
+-        return ('-bios',
+-                os.path.join(BUILD_DIR, 'pc-bios', 'edk2-aarch64-code.fd'),
+-                "-cpu", "max,lpa2=off",
+-                '-device', 'virtio-rng-pci,rng=rng0',
+-                '-object', 'rng-builtin,id=rng0')
+-
+-    def test_virt_gicv2(self):
+-        """
+-        :avocado: tags=machine:gic-version=2
+-        """
+-
+-        self.run_rr(shift=3,
+-                    args=(*self.get_common_args(),
+-                          "-machine", "virt,gic-version=2"))
+-
+-    def test_virt_gicv3(self):
+-        """
+-        :avocado: tags=machine:gic-version=3
+-        """
+-
+-        self.run_rr(shift=3,
+-                    args=(*self.get_common_args(),
+-                          "-machine", "virt,gic-version=3"))
+diff --git a/tests/functional/test_aarch64_replay.py b/tests/functional/test_aarch64_replay.py
+index bd6609d9149..db12e76603f 100755
+--- a/tests/functional/test_aarch64_replay.py
++++ b/tests/functional/test_aarch64_replay.py
+@@ -5,25 +5,46 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- Xen emulation on X86 KVM CPUs
- M: David Woodhouse <dwmw2@infradead.org>
-@@ -626,6 +627,7 @@ S: Maintained
- F: hw/alpha/
- F: hw/isa/smc37c669-superio.c
- F: tests/tcg/alpha/system/
-+F: tests/functional/test_alpha_clipper.py
+-from qemu_test import Asset, skipIfOperatingSystem
++from subprocess import check_call, DEVNULL
++
++from qemu_test import Asset, skipIfOperatingSystem, get_qemu_img
+ from replay_kernel import ReplayKernelBase
  
- ARM Machines
- ------------
-@@ -950,7 +952,7 @@ F: hw/misc/sbsa_ec.c
- F: hw/watchdog/sbsa_gwdt.c
- F: include/hw/watchdog/sbsa_gwdt.h
- F: docs/system/arm/sbsa.rst
--F: tests/functional/test_aarch64_sbsaref*.py
-+F: tests/functional/test_aarch64_*sbsaref*.py
  
- Sharp SL-5500 (Collie) PDA
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -1019,9 +1021,10 @@ S: Maintained
- F: hw/arm/virt*
- F: include/hw/arm/virt.h
- F: docs/system/arm/virt.rst
--F: tests/functional/test_aarch64_virt*.py
-+F: tests/functional/test_aarch64_*virt*.py
- F: tests/functional/test_aarch64_tuxrun.py
- F: tests/functional/test_arm_tuxrun.py
-+F: tests/functional/test_arm_virt.py
+ class Aarch64Replay(ReplayKernelBase):
  
- Xilinx Zynq
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-@@ -1262,6 +1265,7 @@ F: hw/m68k/mcf_intc.c
- F: hw/char/mcf_uart.c
- F: hw/net/mcf_fec.c
- F: include/hw/m68k/mcf*.h
-+F: tests/functional/test_m68k_mcf5208evb.py
+     ASSET_KERNEL = Asset(
+-        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
+-         'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+-        '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
++        'https://storage.tuxboot.com/buildroot/20241119/arm64/Image',
++        'b74743c5e89e1cea0f73368d24ae0ae85c5204ff84be3b5e9610417417d2f235')
++
++    ASSET_ROOTFS = Asset(
++        'https://storage.tuxboot.com/buildroot/20241119/arm64/rootfs.ext4.zst',
++        'a1acaaae2068df4648d04ff75f532aaa8c5edcd6b936122b6f0db4848a07b465')
  
- NeXTcube
- M: Thomas Huth <huth@tuxfamily.org>
-@@ -1406,6 +1410,7 @@ S: Maintained
- F: docs/system/openrisc/or1k-sim.rst
- F: hw/intc/ompic.c
- F: hw/openrisc/openrisc_sim.c
-+F: tests/functional/test_or1k_sim.py
+     def test_aarch64_virt(self):
++        self.require_netdev('user')
+         self.set_machine('virt')
+-        self.cpu = 'cortex-a53'
++        self.cpu = 'cortex-a57'
+         kernel_path = self.ASSET_KERNEL.fetch()
++
++        raw_disk = self.uncompress(self.ASSET_ROOTFS)
++        disk = self.scratch_file('scratch.qcow2')
++        qemu_img = get_qemu_img(self)
++        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', raw_disk,
++                    '-F', 'raw', disk], stdout=DEVNULL, stderr=DEVNULL)
++
++        args = ('-drive', 'file=%s,snapshot=on,id=hd0,if=none' % disk,
++                '-drive', 'driver=blkreplay,id=hd0-rr,if=none,image=hd0',
++                '-device', 'virtio-blk-device,drive=hd0-rr',
++                '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
++                '-device', 'virtio-net,netdev=vnet',
++                '-object', 'filter-replay,id=replay,netdev=vnet')
++
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+-                               'console=ttyAMA0')
+-        console_pattern = 'VFS: Cannot open root device'
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern)
++                               'console=ttyAMA0 root=/dev/vda')
++        console_pattern = 'Welcome to TuxTest'
++        self.run_rr(kernel_path, kernel_command_line, console_pattern,
++                    args=args)
  
- PowerPC Machines
- ----------------
-@@ -1827,6 +1832,7 @@ F: include/hw/isa/apm.h
- F: tests/unit/test-x86-topo.c
- F: tests/qtest/test-x86-cpuid-compat.c
- F: tests/functional/test_i386_tuxrun.py
-+F: tests/functional/test_linux_initrd.py
- F: tests/functional/test_mem_addr_space.py
- F: tests/functional/test_pc_cpu_hotplug_props.py
- F: tests/functional/test_x86_64_tuxrun.py
-@@ -3150,6 +3156,7 @@ F: include/ui/
- F: qapi/ui.json
- F: util/drm.c
- F: docs/devel/ui.rst
-+F: tests/functional/test_vnc.py
  
- Cocoa graphics
- M: Peter Maydell <peter.maydell@linaro.org>
-@@ -3815,6 +3822,7 @@ F: configs/targets/*linux-user.mak
- F: scripts/qemu-binfmt-conf.sh
- F: scripts/update-syscalltbl.sh
- F: scripts/update-mips-syscall-args.sh
-+F: tests/functional/test_arm_bflt.py
- 
- Tiny Code Generator (TCG)
- -------------------------
-@@ -4187,6 +4195,7 @@ F: hw/remote/vfio-user-obj.c
- F: include/hw/remote/vfio-user-obj.h
- F: hw/remote/iommu.c
- F: include/hw/remote/iommu.h
-+F: tests/functional/test_multiprocess.py
- 
- EBPF:
- M: Jason Wang <jasowang@redhat.com>
+ if __name__ == '__main__':
 -- 
 2.49.0
 
