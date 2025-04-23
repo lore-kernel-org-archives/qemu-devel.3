@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA852C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29977C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7aGT-0004cC-KD; Wed, 23 Apr 2025 09:35:49 -0400
+	id 1u7aPk-0007mb-Ow; Wed, 23 Apr 2025 09:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7aGI-0004Zs-BM
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:35:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7aPh-0007jR-Co
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:45:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7aGG-0003ol-7d
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:35:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7aPd-00053z-H2
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:45:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745415334;
+ s=mimecast20190719; t=1745415915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=a3n6hJaVlfAPYKpvTZwjyzrTnFaALHegIglT/ZC35/k=;
- b=A1GVsrqIGxafhTHfGuxClbDVip9Moo+AVR+ocLD8pybNDsbBlGwI5kmXNKi4LEPk8s4Biw
- p/z/vQ1jukFZSSr5pJHp8po6xVoKu1VSRmt9rBPFsTfsdodpERIzzH8J/8W+ENZHdH+usN
- Mbv0f5FWAY1DgPEQGh3nHqlhQMQlB2U=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=a0ldmO296WI9vbVPtueDfaNzO+ZlPS1+gAkV98M01DI=;
+ b=I3FqdFkXDX6ZIiRatwTB+ce+ifFwiqnlXuixqvv7y9a/eL4eKoKkbOg7BWOUZt+GYtdkN+
+ 1sFwtMamT19wGMCxApXD7fMOcDsfYh3GBJuN+GG/elvUheZS9TBThpLamPKFSVQqb58o4J
+ A+Bxkv8WHnBO9dCf52yY1kaRDhVJr3M=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-qv83WoeoPoaeEpfdvBdC1w-1; Wed, 23 Apr 2025 09:35:31 -0400
-X-MC-Unique: qv83WoeoPoaeEpfdvBdC1w-1
-X-Mimecast-MFC-AGG-ID: qv83WoeoPoaeEpfdvBdC1w_1745415331
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39126c3469fso2316059f8f.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 06:35:31 -0700 (PDT)
+ us-mta-437-WaBvVOsXPe6VE-1wijCtPw-1; Wed, 23 Apr 2025 09:45:14 -0400
+X-MC-Unique: WaBvVOsXPe6VE-1wijCtPw-1
+X-Mimecast-MFC-AGG-ID: WaBvVOsXPe6VE-1wijCtPw_1745415913
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d3b211d0eso4447775e9.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 06:45:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745415331; x=1746020131;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=a3n6hJaVlfAPYKpvTZwjyzrTnFaALHegIglT/ZC35/k=;
- b=CfUBW1BhgR/DdGmQ1towxey0J2baA/qvm9bN3puprquBXZZBYe1aUc395jOgGdcxD7
- MiZWr6XvrenATcvqJ+4pxpZnsVvVzji1/92sL/Ml0wpjd9+qGO8UKk9tyRDmqN2bNb13
- +AHN1RbLlnWDrwldkod/hLMhp36yUFV2ixqpCfnkwClmeYp7b7Kx+rKbxgNNeEI9DhT3
- CYnguhWCMOjKFRLa3UEVYFJMxaEFxv9CEkpXB+LzwVnPVC/cZqstj17QeLJRcC6850ED
- s2eZPgp4aMvzyCUgcQIgSWjMtHlweFf6+izkRKgmNOI7nXld7eSnn0W11f2ftMc7xIpQ
- 3z9g==
+ d=1e100.net; s=20230601; t=1745415913; x=1746020713;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a0ldmO296WI9vbVPtueDfaNzO+ZlPS1+gAkV98M01DI=;
+ b=egrAYyEZU0wM+BfwF/+wwEuwnE1CSL4N5Aza2fOc32S0ZdBb1W1dQCXnBH0evuSPNb
+ f6NAf5zNjYXyalcH8kXsDiKbjkZZWd1UwgtBH3Hwn8AmuLm+d4MjrNIbWmxDCUyAhXqF
+ F7r/pJxP5lwQ4xzGfTYDe+dTkLJ6Yo9cmd5KAd8ZWLt5zwgUhuwYMzivguIII1Gi9GyQ
+ 3k6IBNBunx36wL1/LCn1gNj6HnoYazeB3sVIkiBx/JF2GVSOLdyAnWq0x1ab+xmXkPjZ
+ P8Xs/j6SylaAX77pdVGDAvcQSe5Cdx3e+rFa9NGoFukvXKMDMUbXPsMEx1b12fMIulKK
+ 7VYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQSSgGUUhQFEMuRM8gQr8lIjulW6PRpJ5I5L1bpJJC03qwXLbXyCMjVLcSWS+OkJl/l1+xxiRGKr2N@nongnu.org
-X-Gm-Message-State: AOJu0Ywgj7+gpNGMygAMIWt14fi4fsFK3gr+bR3L89vBLQQapzYT6mzM
- 5eGAUEINqmS/7Z0ZYm9kJe2Azq2do6JNbihI6dLv0xvjaLM/tC1pvl9x9pi/h/1JbbVGeeM4RKp
- gtYkdTXzU9B+2GvcpGNq4dJdEXywFYZKuJfoNAbOnH5KMSbpnozcO
-X-Gm-Gg: ASbGnctgoFyfSg+mG3RrcL9Xt3WfsEqZCz65Cm9bM1hUAs23rCIUxHGmY33zTb9N7jZ
- MzZwO0DuZanuEtRCr9dRIqNfostv8OmkVSmyKcA7BybSDEO3gyuBe4qb+EOkUZljEN9F9r78EvK
- Cuwfxnz7088gi7AUkEuKRndJYxJ7zmfo/3FP34pILM6joEEl88ntl17SAJIUZf6AFgLaSZEBajx
- dPSntY6K0YNAjHpdPJHwrc9N6YY5aIh47TAcUAnqk53IIn4VjsoxXVTOYR3APx/bhM5MGw5M4MF
- iuJX9gVfCY+jnYiJ52BwMKzGn+fIDxLX9GNCmpeNq29Zyzg=
-X-Received: by 2002:a05:6000:1889:b0:394:d0c3:da5e with SMTP id
- ffacd0b85a97d-39efbb054b2mr15415063f8f.47.1745415330732; 
- Wed, 23 Apr 2025 06:35:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPSJ9cMDgX/zMuOuzVJH934QVBwZHuVYsya0emVX4W7ADHrp6ywsPT6Srqq8gt8zwA4fLReg==
-X-Received: by 2002:a05:6000:1889:b0:394:d0c3:da5e with SMTP id
- ffacd0b85a97d-39efbb054b2mr15415038f8f.47.1745415330337; 
- Wed, 23 Apr 2025 06:35:30 -0700 (PDT)
+ AJvYcCWdCD+sbdPfjtg7NDBiHlKoSA3YaGeMtT8VzNLpM5iC6d+7SdUrMI9eF/bEHoCdCo7ZKBUrHZpaMtwy@nongnu.org
+X-Gm-Message-State: AOJu0YzmamRou0xb9YPDX/qFcl5Rj1yg0/UWl57V3Z0IBt7a/yEJl6p1
+ YaT5LOLc/vNNgAMdMJoVCYbYktLvF0qTpv+0GqiBP462LUn2vDTZIUDyRunj+CfpR4mL4tQ8/hI
+ 5Qvwj4y7BHlI6tFFLYIzy86WGRQ2FErWSfETukQK6oLxoUi4ebAUh
+X-Gm-Gg: ASbGncv1YDkE10vGG6whNR60Lvp7nkXFs3b2T9DMF8Dj0cwUrqhc5DA7W+eDLcgrHL7
+ eyFGCVXeiY8AaJmJL6PN3JfZZQHxYk+3xlzqL1AJBgyhoQmJBI8EbFGgnWo3XYNZTiZg9m+xy3X
+ hk47iE1/QmOfvWraS/nDmWYxAmag8WhoW/lSt3/5CgOBSMEI4RPGLI6bo0tJ39By1lnLPmRKTR8
+ yh9OqUwMrB/26moMosmSCrcUh8u+zOQ1P5Ju+mWw3dt/OSqEr5PX2pUfsNco9X1DpG9Em9oppV6
+ iGgmTeL/dD7fnPQDfeaco4DkcRE9q0jl/N7GVo2YepCfqkE=
+X-Received: by 2002:a05:600c:5808:b0:43d:fa5f:7d04 with SMTP id
+ 5b1f17b1804b1-44092022deemr22834505e9.16.1745415912915; 
+ Wed, 23 Apr 2025 06:45:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExdSblzlpdg1aAH0Z1Uugvm47t+4VQgQfXkcsJimYCH1kl+ZONNCRk3oAZ5cAWp1gNHkQgMA==
+X-Received: by 2002:a05:600c:5808:b0:43d:fa5f:7d04 with SMTP id
+ 5b1f17b1804b1-44092022deemr22834265e9.16.1745415912471; 
+ Wed, 23 Apr 2025 06:45:12 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
  ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-39efa433104sm18861006f8f.29.2025.04.23.06.35.29
+ ffacd0b85a97d-39efa43c079sm19176147f8f.50.2025.04.23.06.45.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 06:35:29 -0700 (PDT)
-Message-ID: <bfa00057-3e92-4042-b1e1-cf1e3dfc48da@redhat.com>
-Date: Wed, 23 Apr 2025 15:35:28 +0200
+ Wed, 23 Apr 2025 06:45:11 -0700 (PDT)
+Message-ID: <5d87f16c-6e67-42f3-864c-e4e134816d70@redhat.com>
+Date: Wed, 23 Apr 2025 15:45:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] vfio: Move realize after attach_dev
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20250423072824.3647952-1-zhenzhong.duan@intel.com>
- <ec9f9453-bd15-450b-b602-91fdfcc340b1@redhat.com>
+Subject: Re: [PATCH 05/14] vfio/container: pass listener_begin/commit callbacks
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
+References: <20250409134814.478903-1-john.levon@nutanix.com>
+ <20250409134814.478903-6-john.levon@nutanix.com>
 Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
@@ -128,9 +135,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <ec9f9453-bd15-450b-b602-91fdfcc340b1@redhat.com>
+In-Reply-To: <20250409134814.478903-6-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -156,56 +163,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/25 15:21, Cédric Le Goater wrote:
-> On 4/23/25 09:28, Zhenzhong Duan wrote:
->> Hi,
->>
->> This series addresses Cédric's suggestion[1] and Donald's suggestion[2] to
->> move realize() call after attach_device().
->>
->> This way avoid the need to introduce realize_late() to further complex the
->> interface in nesting series.
->>
->> [1] https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg01211.html
->> [2] https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00898.html
->>
->> Test:
->> net card passthrough and ping test
->> hotplug/unplug
->>
->> Based on vfio-next(856f36c005).
->>
->> Thanks
->> Zhenzhong
->>
->> Changelog:
->> v2:
->> - drop the idea to save host iommu capabilities in VFIODevice.caps
->> - introduce a new function to create and realize hiod
->> - remove hiod_typename property
->>
->> Zhenzhong Duan (5):
->>    vfio/iommufd: Make a separate call to get IOMMU capabilities
->>    vfio/iommufd: Move realize() after attachment
->>    vfio/container: Move realize() after attachment
->>    vfio: Cleanup host IOMMU device creation
->>    vfio: Remove hiod_typename property
->>
->>   include/hw/vfio/vfio-container-base.h |  3 ---
->>   include/hw/vfio/vfio-device.h         |  3 ++-
->>   hw/vfio/container.c                   | 25 ++++++++++++--------
->>   hw/vfio/device.c                      | 33 ++++++++++++---------------
->>   hw/vfio/iommufd.c                     | 31 +++++++++++++------------
->>   5 files changed, 47 insertions(+), 48 deletions(-)
->>
+On 4/9/25 15:48, John Levon wrote:
+> The vfio-user container will later need to hook into these callbacks;
+> set up vfio to use them, and optionally pass them through to the
+> container.
 > 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio/listener.c                    | 28 +++++++++++++++++++++++++++
+>   include/hw/vfio/vfio-container-base.h |  2 ++
+>   2 files changed, 30 insertions(+)
+> 
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 285ca97a8c..9ffc2deb2d 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -412,6 +412,32 @@ static bool vfio_get_section_iova_range(VFIOContainerBase *bcontainer,
+>       return true;
+>   }
+>   
+> +static void vfio_listener_begin(MemoryListener *listener)
+> +{
+> +    VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+> +                                                 listener);
+> +    void (*listener_begin)(VFIOContainerBase *bcontainer);
+> +
+> +    listener_begin = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
+> +
+> +    if (listener_begin) {
+> +        listener_begin(bcontainer);
+> +    }
+> +}
+> +
+> +static void vfio_listener_commit(MemoryListener *listener)
+> +{
+> +    VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+> +                                                 listener);
+> +    void (*listener_commit)(VFIOContainerBase *bcontainer);
+> +
+> +    listener_commit = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
+> +
+> +    if (listener_commit) {
+> +        listener_commit(bcontainer);
+> +    }
+> +}
+> +
+>   static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
+>   {
+>       /*
+> @@ -1166,6 +1192,8 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+>   
+>   static const MemoryListener vfio_memory_listener = {
+>       .name = "vfio",
+> +    .begin = vfio_listener_begin,
+> +    .commit = vfio_listener_commit,
+>       .region_add = vfio_listener_region_add,
+>       .region_del = vfio_listener_region_del,
+>       .log_global_start = vfio_listener_log_global_start,
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index a441932be7..67373e8db0 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -120,6 +120,8 @@ struct VFIOIOMMUClass {
+>   
+>       /* basic feature */
+>       bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
+> +    void (*listener_begin)(VFIOContainerBase *bcontainer);
+> +    void (*listener_commit)(VFIOContainerBase *bcontainer);
 
-Applied to vfio-next.
+Please add documentation for the new callbacks.
 
 Thanks,
 
 C.
 
+
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+>                      void *vaddr, bool readonly);
 
 
