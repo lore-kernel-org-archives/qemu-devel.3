@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F30CC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF01C369D7
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 13:08:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Zo7-0004ZW-GI; Wed, 23 Apr 2025 09:06:31 -0400
+	id 1u7ZqK-0007Vi-T0; Wed, 23 Apr 2025 09:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liushuyu@aosc.io>) id 1u7UQt-0002AW-Bc
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:22:11 -0400
-Received: from relay2.mymailcheap.com ([151.80.165.199])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u7Zq8-0007LE-00
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:08:41 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liushuyu@aosc.io>) id 1u7UQr-00016K-Eu
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:22:11 -0400
-Received: from nf1.mymailcheap.com (nf1.mymailcheap.com [51.75.14.91])
- by relay2.mymailcheap.com (Postfix) with ESMTPS id 737F23E886;
- Wed, 23 Apr 2025 07:22:07 +0000 (UTC)
-Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
- by nf1.mymailcheap.com (Postfix) with ESMTPSA id 09F5C40047;
- Wed, 23 Apr 2025 07:22:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
- t=1745392926; bh=j005wxvP8OX0uA6XORtBUYt9Cjj8Ztzc715TLsKGkjk=;
- h=Date:From:To:Cc:Subject:From;
- b=QdjEYcqeDmhaQCaka1zOVCCJvqNEAWb1VS+Olu9jpEkogdHpdy6Fap/5CzfNWmuJe
- xf1MMk6iSX7ryf8Eub4ziTlHcVS4+7QVG3MAn7IGhzA6dm8263JtTxa8Js9fxwQ37u
- TjPlb9I9oy1yhIcJng2IgN3YTrZ66DS5AUu4FzS8=
-Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mail20.mymailcheap.com (Postfix) with ESMTPSA id 0F8DA4036E;
- Wed, 23 Apr 2025 07:22:06 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u7Zq1-0008GX-Hu
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 09:08:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745413710; x=1776949710;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=3VqGwj3+sY0uLWw4JqTBQNg6+lFNIaFJqTbg3MNeBZw=;
+ b=VvfJ3AE4YRzctLb2X0x1N0c8PzhC9GlV0bdbyIQO6EDizNLML9pl4M93
+ 0vvLwrdEJX0SsfklPN/efz2Rsahj0kNb7Sln8L70Kexgn+uq0zoKRiWAS
+ AWuBVBSwmcgovZP/QUXfEYqjUJAIiCCJPpBAP3sSZC2kyIaxSvFnUqWkU
+ tCEaZkU9KnrvWEHZGyrRkxAZ0TkIv6TrtbkqzOcKV7PD6yEaDplSekDHC
+ 1N16vhscDXJQl/Jd+HsJ9d/qtTSHGJEjRM+x9MlLs1oAAk0SbNPYYf+2f
+ iV5UsBwo9Cy9q+d4fxMuRnhbhCGiKGY/oTxr6tkaV6Zm1c0p7ir1adovp Q==;
+X-CSE-ConnectionGUID: jqp/sqqyQMyBEGlVOnIv3A==
+X-CSE-MsgGUID: E2HQumV8Rmi/spGC/FFZHg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="64532035"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="64532035"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 06:08:27 -0700
+X-CSE-ConnectionGUID: ABK32sNeQxW7E6ftS5OXvg==
+X-CSE-MsgGUID: Hk4J5wkESpCOZchnIzJ/hQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="163283416"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 06:08:24 -0700
+Message-ID: <bb453ec7-deec-42aa-b9b1-ac0f4bf2f967@intel.com>
+Date: Wed, 23 Apr 2025 21:08:18 +0800
 MIME-Version: 1.0
-Date: Wed, 23 Apr 2025 15:22:05 +0800
-From: liushuyu@aosc.io
-To: qemu-devel@nongnu.org
-Cc: liushuyu011@gmail.com
-Subject: [PATCH] linux-user/syscall.c: add translation logic for epoll_pwait2
- syscall
-Message-ID: <b4d01956e77d801af6e3d229332a2265@aosc.io>
-X-Sender: liushuyu@aosc.io
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 13/55] i386/tdx: Support user configurable
+ mrconfigid/mrowner/mrownerconfig
+To: Zhao Liu <zhao1.liu@intel.com>, Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-14-xiaoyao.li@intel.com> <aAe49odpsz108aZb@intel.com>
+ <e67699a5-8b62-45a0-8cf1-586440ec85ee@intel.com> <aAjdqiTY/KNB+KtQ@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aAjdqiTY/KNB+KtQ@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [0.00 / 10.00]; MIME_GOOD(-0.10)[text/plain];
- SUBJECT_RANDOM_CHARS_1(0.10)[]; RCVD_TLS_ALL(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- ASN(0.00)[asn:16276, ipnet:51.83.0.0/16, country:FR];
- ARC_NA(0.00)[]; FROM_NO_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_COUNT_ONE(0.00)[1];
- SPFBL_URIBL_EMAIL_FAIL(0.00)[liushuyu.aosc.io:server fail];
- RCPT_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; MID_RHS_MATCH_FROM(0.00)[];
- FREEMAIL_CC(0.00)[gmail.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_NONE(0.00)[]; MISSING_XM_UA(0.00)[]
-X-Rspamd-Server: nf1.mymailcheap.com
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 09F5C40047
-Received-SPF: pass client-ip=151.80.165.199; envelope-from=liushuyu@aosc.io;
- helo=relay2.mymailcheap.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
+X-Spam_bar: ---
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 23 Apr 2025 09:06:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,103 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Zixing Liu <liushuyu@aosc.io>
----
-  linux-user/syscall.c | 36 ++++++++++++++++++++++++++++++++----
-  1 file changed, 32 insertions(+), 4 deletions(-)
+On 4/23/2025 8:31 PM, Zhao Liu wrote:
+> On Wed, Apr 23, 2025 at 04:11:25PM +0800, Xiaoyao Li wrote:
+>> Date: Wed, 23 Apr 2025 16:11:25 +0800
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: Re: [PATCH v8 13/55] i386/tdx: Support user configurable
+>>   mrconfigid/mrowner/mrownerconfig
+>>
+>> On 4/22/2025 11:42 PM, Zhao Liu wrote:
+>>>> diff --git a/qapi/qom.json b/qapi/qom.json
+>>>> index f229bb07aaec..a8379bac1719 100644
+>>>> --- a/qapi/qom.json
+>>>> +++ b/qapi/qom.json
+>>>> @@ -1060,11 +1060,25 @@
+>>>>    #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
+>>>>    #     be set, otherwise they refuse to boot.
+>>>>    #
+>>>> +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
+>>>> +#     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
+>>>> +#     Defaults to all zeros.
+>>>
+>>> Maybe a typo? s/Defaults/Default/
+>>
+>> (It) defaults to all zeros.
+>>
+>> If you grep the "defaults to", you can get a lot of it.
+> 
+> The comment can be relaxed, but please try to be precise with the doc.
+> You can add the omitted "It".
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 8bfe491..6906e7b 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -711,6 +711,11 @@ safe_syscall5(int, ppoll, struct pollfd *, ufds, 
-unsigned int, nfds,
-  safe_syscall6(int, epoll_pwait, int, epfd, struct epoll_event *, 
-events,
-                int, maxevents, int, timeout, const sigset_t *, sigmask,
-                size_t, sigsetsize)
-+#if defined(__NR_epoll_pwait2)
-+safe_syscall6(int, epoll_pwait2, int, epfd, struct epoll_event *, 
-events,
-+              int, maxevents, struct timespec *, timeout, const 
-sigset_t *, sigmask,
-+              size_t, sigsetsize)
-+#endif
-  #if defined(__NR_futex)
-  safe_syscall6(int,futex,int *,uaddr,int,op,int,val, \
-                const struct timespec *,timeout,int *,uaddr2,int,val3)
-@@ -13363,19 +13368,22 @@ static abi_long do_syscall1(CPUArchState 
-*cpu_env, int num, abi_long arg1,
-      }
-  #endif
+Actually, it came from Markus[*], the QAPI maintainer.
 
--#if defined(TARGET_NR_epoll_wait) || defined(TARGET_NR_epoll_pwait)
-+#if defined(TARGET_NR_epoll_wait) || defined(TARGET_NR_epoll_pwait) || 
-defined(TARGET_NR_epoll_pwait2)
-  #if defined(TARGET_NR_epoll_wait)
-      case TARGET_NR_epoll_wait:
-  #endif
-  #if defined(TARGET_NR_epoll_pwait)
-      case TARGET_NR_epoll_pwait:
-+#endif
-+#if defined(TARGET_NR_epoll_pwait2)
-+    case TARGET_NR_epoll_pwait2:
-  #endif
-      {
-          struct target_epoll_event *target_ep;
-          struct epoll_event *ep;
-          int epfd = arg1;
-          int maxevents = arg3;
--        int timeout = arg4;
-+        abi_long timeout = arg4;
+So I would leave it to him to make the decision.
 
-          if (maxevents <= 0 || maxevents > TARGET_EP_MAX_EVENTS) {
-              return -TARGET_EINVAL;
-@@ -13396,6 +13404,9 @@ static abi_long do_syscall1(CPUArchState 
-*cpu_env, int num, abi_long arg1,
-          switch (num) {
-  #if defined(TARGET_NR_epoll_pwait)
-          case TARGET_NR_epoll_pwait:
-+#if defined(TARGET_NR_epoll_pwait2)
-+        case TARGET_NR_epoll_pwait2:
-+#endif
-          {
-              sigset_t *set = NULL;
-
-@@ -13406,8 +13417,25 @@ static abi_long do_syscall1(CPUArchState 
-*cpu_env, int num, abi_long arg1,
-                  }
-              }
-
--            ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, 
-timeout,
--                                             set, SIGSET_T_SIZE));
-+            if (num == TARGET_NR_epoll_pwait) {
-+                ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, 
-(int)timeout,
-+                                                 set, SIGSET_T_SIZE));
-+            } else {
-+#if defined(TARGET_NR_epoll_pwait2)
-+                struct timespec hspec;
-+                struct timespec *ts_arg = NULL;
-+                if (timeout) {
-+                    if (target_to_host_timespec(&hspec, 
-(abi_ulong)timeout)) {
-+                        return -TARGET_EFAULT;
-+                    }
-+                    ts_arg = &hspec;
-+                }
-+                ret = get_errno(safe_epoll_pwait2(epfd, ep, maxevents, 
-ts_arg,
-+                                              set, SIGSET_T_SIZE));
-+#else
-+                return -TARGET_ENOSYS;
-+#endif
-+            }
-
-              if (set) {
-                  finish_sigsuspend_mask(ret);
--- 
-2.49.0
-
+[*] https://lore.kernel.org/qemu-devel/87ttli87sw.fsf@pond.sub.org/
 
