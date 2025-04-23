@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0754FC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5C8C369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 10:30:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7XKe-0004oi-9W; Wed, 23 Apr 2025 06:27:56 -0400
+	id 1u7XMD-00063t-AO; Wed, 23 Apr 2025 06:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XKV-0004mZ-MM
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:27:47 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XMC-00063M-2v
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:29:32 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XKT-0004zA-S9
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:27:47 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43d2d952eb1so45514095e9.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:27:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XM8-00058x-TE
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 06:29:31 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cfdc2c8c9so34859795e9.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 03:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745404064; x=1746008864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745404167; x=1746008967; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pgAt+cSAYch6ElQ1CZ8H9YoheeGU03w95Z6dzIQD20M=;
- b=pmdfevh1+iOpgZkMFCVn0BGhAGVZpQlvHoWEW9VH9QNu79RLqAAdevkR6HI0k1S7i2
- 7hTtf9nDZP1b7WSRVy97cjiDeae/5rrelhKKAH/dAX2c1+7UzPn3SZW7Sp1i9OcuG5UK
- sitKKOYz5Uvz2q9JX7RemaOzy/h6f1r7AezJbcupvFK+ke9XACJoPohOZf1aTzW6/0kO
- 33UdACr2iCvULim6o70svKrvNMmuW74S+sFJA68XupsYvlAlJVYmLqVI5/TasVpdIHZ6
- 2xYkJRJRlNEtuFZD2/aXFK9EGDEYllp6EWj/memaJkx0ysundG39VlUEMmKSXG2jIyZb
- ADUw==
+ bh=LIShbPLKG2KH3yHaCm1OWvCI9B08GHEGFkg8ARjb2sc=;
+ b=huVpqwnsUQiFT+27hfVSCcIRIQb5T0vNYUdacqIHmQQJu+QiMwFzTal9CA5CGs2EFw
+ HipfzXIyCodn893mR32ktbnTP30o7vcWLWrkp2a83Pj4MOY9U6slBmL2AiLwkP9tXZNo
+ yr0lWVaysiXjCjRJM+X1eJ7DweuaCSZW+WFj1PsEU5wqjeyTN0iYjSxh+osX+5XuIV68
+ q91H6T+JX2PvhEv++CAW8VOw+k3cVaJuE96J0BoT/Opf0wRt/JZh/KXgz68yLV6yN51f
+ C3auBgxwp8wUlbS7ibfr+HQYZo324KoR28noBRUrwNUY2KAP4nIMP2csBWdAn02lYtb/
+ +v7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745404064; x=1746008864;
+ d=1e100.net; s=20230601; t=1745404167; x=1746008967;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pgAt+cSAYch6ElQ1CZ8H9YoheeGU03w95Z6dzIQD20M=;
- b=sRZYsmEN8RU3TLYAFedd0NZxEBqOak37Y6HssrSD4HSI4sjfl91VJ3Pt9IMxAXRVbo
- n9kFrG6TgXxCAo08WjL9M8XHqXrUrkP5j9W8h26R2Kuo+A2DxhEBc66hWklXkuWLpNma
- +UhVIHs0Itx47CCCL+3HshVy0NFy+TlR8VXr03hlGzvzr1wfsYuof7aBS8Wbm0bk+DNi
- msbNBYDW0fiqSgXr3ugXAI9Cy0oSH61a1I+ewcX49vNIMqmQ0RDfh1rrRMhUheC5X1Qh
- GPT2vw8YvcEp80E4GQyYsKIQ6mmRTpTJE6ZhVh8tWtf94ZTZqumkWDQrHmTlQp11tuMY
- AG/A==
+ bh=LIShbPLKG2KH3yHaCm1OWvCI9B08GHEGFkg8ARjb2sc=;
+ b=Ldx7bTZ05CnAWeL12/GuLxi7XFdkA5XkV3LqV3Pex44w8E9dMHSMAK+FlTMImsOMR/
+ wtsz5rPAjAMDHNvyG5SsspPLbUykHdS7V/A05mMoygd+DDmKz7AQXQg+zz+IVazMRJ/M
+ ejSirwxxsMQe8+UB0jWx4q/KX4/uXryItR+wXf2ND1gZPUMCMIaAB2879VVq8mXmnOQr
+ LQuoNsS7hytXCr7eggBOe2XiKB5TCJXZ/V/MesjP5blEhRstzf10CAIPlhmnuL5JnIt9
+ Zs3DZsJRf2dMXidyeoR/2uU9UGEIGqRFu2sCKu1Jy9n7U7eo0yaeHr44UnPnne1xwaL9
+ chkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVt18vTTRNU+z4op7lhbMfsmRHbdOImuTpBxb87cmHmLAIk40ap63zgV6S1ie8HIqd5bNw0eOjycqIo@nongnu.org
-X-Gm-Message-State: AOJu0Yw6ZcnGPsWzRaw6kCjl+zxWSTCKgZpC774agNIQdri7iQZLQhFq
- bBADPDgdL1Lyscx9/nBuSf6ykwvwJxrgUChCpQKxFiR84QbjIjeW0e1yix34OV8=
-X-Gm-Gg: ASbGncsuyQ6neWhJEq3pYMYOyC03dH9ClPPONnATx7hhGyBuL/kqb5Wlea/kQj8kisB
- xO/Hsev/D0JyV7nYewgFg6Pxt0Ldq3DBbL41VlBQMwXivtgpu4N9vVcWnbYTePeiXvlGZMPgDki
- Q0dEIPko4ChwgZrmqnPOpDOiMook+F2OXMgS99nWUsQpmQajvIK8qUWIGjUpV9kq0oURxTFVPli
- xHFFFRCEb7TEt7lU8llyssgypGxnzV5H2IIgrFt2ikdJdDCPtzvtRvIBHrWiy7uGWIvzEvY07gs
- Xq5aLG2USnMUTR8twOaB/+wLRI/YZxNGBwZ4zDP/rwvwjDlsudjgEU60QrXT3tO8tMvDsiPtEh8
- OuMSxe9bR
-X-Google-Smtp-Source: AGHT+IG99NKR2wXFj/kXhUBKhh45J03IyVqyjegkIfUqi+44MHYwk8jKNrOGuwMRvCXOjoKqI5TZpw==
-X-Received: by 2002:a05:600c:3d19:b0:440:68db:a045 with SMTP id
- 5b1f17b1804b1-4406abff89emr154615165e9.26.1745404063907; 
- Wed, 23 Apr 2025 03:27:43 -0700 (PDT)
+ AJvYcCUjunYHIgRoN6xdCrx9SJZZH5ghvA0OuMuT4zs8IUBJuoBDcBsRIIrxjGyLS2MmTxY7xM/wSxg/StTf@nongnu.org
+X-Gm-Message-State: AOJu0YzV9OTWwJLXbd04n4HIEVrslUKNCl1iGhzl+cE67YqSxub4+/50
+ AIObpzaOetR+w/WlzkEoCBU78yout6vYFIFwWDvSHgi414MXSNjZzqA3hVibfdu8MA9YIIlQiFm
+ n
+X-Gm-Gg: ASbGncsHxIcPwAvGf/EHpQUUcqnc01s8IKFA7aROP8Mq5/e5zQCv+/TKCfEH6vEN9cv
+ M4YzAi1iwwy1EgT4cEaQok5IctJhBU9e5wnd230MCmTks9lLwlZlDwAjuJUKL/0pJodoQVYqhqj
+ 4Mu8rvQ2LN6lu8/4V0DmiAWBwdk8iZk6ITTtSscSA3aEp3ypFVY/3NOYvg0VJlF3y4FbR3ekWQE
+ /BA7dS6hhIJotBLi9lPcmTx/RgFvYa+r4sfOYj+NQ4bzIrAGo0f+OeMMV5O7BTVCdfF/Gi53lmg
+ rt/tPpH8B/pvWn2RX6rjINEga9K53dX92O5V+qYVwKh2mVQoEk1g34PRjQMLbcgt+Abvp9/cF4G
+ FNlqQgyE6
+X-Google-Smtp-Source: AGHT+IGE7A8s99yH9iE3glNThdxI7556tvTgsrWSNU8Zb2eMrDj8s8fJVp8rLjNXjk6dl6LajdC0Lw==
+X-Received: by 2002:a05:600c:54ed:b0:43c:fceb:91a with SMTP id
+ 5b1f17b1804b1-4406def1692mr125451315e9.11.1745404166704; 
+ Wed, 23 Apr 2025 03:29:26 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d4158esm20487665e9.38.2025.04.23.03.27.42
+ 5b1f17b1804b1-44092d38118sm20570805e9.31.2025.04.23.03.29.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 03:27:43 -0700 (PDT)
-Message-ID: <86ba7919-db11-45cd-8bdd-ede8f25f92d2@linaro.org>
-Date: Wed, 23 Apr 2025 12:27:42 +0200
+ Wed, 23 Apr 2025 03:29:26 -0700 (PDT)
+Message-ID: <47a769d3-7686-40a8-9a7b-a01dcb0d9351@linaro.org>
+Date: Wed, 23 Apr 2025 12:29:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 105/147] exec/cpu-all: remove tswap include
+Subject: Re: [PATCH 111/147] exec/cpu-all: transfer exec/cpu-common include to
+ cpu.h headers
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-106-richard.henderson@linaro.org>
+ <20250422192819.302784-112-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-106-richard.henderson@linaro.org>
+In-Reply-To: <20250422192819.302784-112-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,45 +110,34 @@ On 22/4/25 21:27, Richard Henderson wrote:
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20250325045915.994760-7-pierrick.bouvier@linaro.org>
+> Message-ID: <20250325045915.994760-15-pierrick.bouvier@linaro.org>
 > ---
->   include/exec/cpu-all.h               | 1 -
->   target/ppc/mmu-hash64.h              | 2 ++
->   target/i386/tcg/system/excp_helper.c | 1 +
->   target/i386/xsave_helper.c           | 1 +
->   target/riscv/vector_helper.c         | 1 +
->   5 files changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-> index 957c86886e..bfa039ab76 100644
-> --- a/include/exec/cpu-all.h
-> +++ b/include/exec/cpu-all.h
-> @@ -21,7 +21,6 @@
->   
->   #include "exec/cpu-common.h"
->   #include "exec/cpu-interrupt.h"
-> -#include "exec/tswap.h"
->   #include "hw/core/cpu.h"
->   #include "exec/cpu-defs.h"
->   #include "exec/target_page.h"
-> diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
-> index ae8d4b37ae..b8fb12a970 100644
-> --- a/target/ppc/mmu-hash64.h
-> +++ b/target/ppc/mmu-hash64.h
-> @@ -1,6 +1,8 @@
->   #ifndef MMU_HASH64_H
->   #define MMU_HASH64_H
->   
-> +#include "exec/tswap.h"
+>   include/exec/cpu-all.h  | 1 -
+>   include/exec/cpu_ldst.h | 1 +
+>   target/alpha/cpu.h      | 1 +
+>   target/arm/cpu.h        | 1 +
+>   target/avr/cpu.h        | 1 +
+>   target/hexagon/cpu.h    | 1 +
+>   target/hppa/cpu.h       | 1 +
+>   target/i386/cpu.h       | 1 +
+>   target/loongarch/cpu.h  | 1 +
+>   target/m68k/cpu.h       | 1 +
+>   target/microblaze/cpu.h | 1 +
+>   target/mips/cpu.h       | 1 +
+>   target/openrisc/cpu.h   | 1 +
+>   target/ppc/cpu.h        | 1 +
+>   target/riscv/cpu.h      | 1 +
+>   target/rx/cpu.h         | 1 +
+>   target/s390x/cpu.h      | 1 +
+>   target/sh4/cpu.h        | 1 +
+>   target/sparc/cpu.h      | 1 +
+>   target/tricore/cpu.h    | 1 +
+>   target/xtensa/cpu.h     | 1 +
+>   cpu-target.c            | 1 +
+>   22 files changed, 21 insertions(+), 1 deletion(-)
 
-This header doesn't use "exec/tswap.h". Maybe you want this
-reviewed patch instead:
+Good.
 
-https://lore.kernel.org/qemu-devel/20241211230357.97036-6-philmd@linaro.org/
-
-> +
->   #ifndef CONFIG_USER_ONLY
->   
->   #ifdef TARGET_PPC64
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
