@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599A8C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F6AC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UfS-0003UB-QC; Wed, 23 Apr 2025 03:37:14 -0400
+	id 1u7UfP-0003Jn-Ch; Wed, 23 Apr 2025 03:37:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfL-0003Hz-Ev
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:08 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfD-0003E3-Ae
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfJ-0003Iz-47
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfB-0003HZ-4w
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:36:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745393824;
+ s=mimecast20190719; t=1745393816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ndVevxmNoCk6PIZvrZxaU44cyfspBv9N9IemV+gQ5F8=;
- b=DPOWbpOSMU0IRrQYlUVtVytDDkefpGwETOxrOxdGUwGLofE3feI3h0RC27xoODYLbSb+R5
- Q6TlZ5ZL5zfhd4gF+jH4Vctz8VD/GcTLHvOCZK3FRGg2Muk7mxDbQE8oNhXP+wKlM6rvm3
- IOP59G2n/vQ/AhsEgPrRMH3fCYAp8Dk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=plvBLF7mTLWHAYWXx23lev+25NrL2jS9j5moMJaLRNw=;
+ b=PtHNE9dCZPstFzeO65SHRQCObOtLI6wpzeslfNarBwcAffLqqoSGKFUOMao9m526aRSL8D
+ iQphVlxqRZoUOUEHQ5Y7yGdxkL8OB+WDkseuZ8DOL8/xiD+DjwphaPuY7jxAJr2N3ZbzEh
+ Dz0iP4UCEyRI1apDyGnNbsXqNKpFylI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-2vr_8M25N2O-EyQg99oDaA-1; Wed,
- 23 Apr 2025 03:36:58 -0400
-X-MC-Unique: 2vr_8M25N2O-EyQg99oDaA-1
-X-Mimecast-MFC-AGG-ID: 2vr_8M25N2O-EyQg99oDaA_1745393817
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-zrEUYxBwN3qmN1GGn1BiIQ-1; Wed,
+ 23 Apr 2025 03:36:52 -0400
+X-MC-Unique: zrEUYxBwN3qmN1GGn1BiIQ-1
+X-Mimecast-MFC-AGG-ID: zrEUYxBwN3qmN1GGn1BiIQ_1745393811
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 893511955DC6; Wed, 23 Apr 2025 07:36:57 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 839A7180048E; Wed, 23 Apr 2025 07:36:51 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F125519560A3; Wed, 23 Apr 2025 07:36:55 +0000 (UTC)
+ id EB27419560A3; Wed, 23 Apr 2025 07:36:49 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 19/29] tests/functional: Convert the 64-bit big endian Wheezy
+Subject: [PULL 16/29] tests/functional: Convert the 32-bit big endian Wheezy
  mips test
-Date: Wed, 23 Apr 2025 09:35:59 +0200
-Message-ID: <20250423073610.271585-20-thuth@redhat.com>
+Date: Wed, 23 Apr 2025 09:35:56 +0200
+Message-ID: <20250423073610.271585-17-thuth@redhat.com>
 In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 References: <20250423073610.271585-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -89,265 +89,176 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Reuse the test function from the 32-bit big endian test to easily
-convert the 64-bit big endian Wheezy mips test.
+The test checks some entries in /proc and the output of some commands ...
+we put these checks into exportable functions now so that they can
+be reused more easily.
 
-Since this was the last test in tests/avocado/linux_ssh_mips_malta.py,
-we can remove this avocado file now, too.
+Additionally the linux_ssh_mips_malta.py uses SSH to test the networking
+of the guest. Since we don't have a SSH module in the functional
+framework yet, let's use the check_http_download() function here instead.
+
+And while we're at it, also switch the NIC to e1000 now to get some more
+test coverage, since the "pcnet" device is already tested in the test
+test_mips_malta_cpio.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250414113031.151105-10-thuth@redhat.com>
+Message-ID: <20250414113031.151105-7-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                           |   1 -
- tests/avocado/linux_ssh_mips_malta.py | 181 --------------------------
- tests/functional/meson.build          |   2 +
- tests/functional/test_mips64_malta.py |  35 +++++
- 4 files changed, 37 insertions(+), 182 deletions(-)
- delete mode 100644 tests/avocado/linux_ssh_mips_malta.py
- create mode 100755 tests/functional/test_mips64_malta.py
+ tests/avocado/linux_ssh_mips_malta.py |   8 --
+ tests/functional/meson.build          |   2 +-
+ tests/functional/test_mips_malta.py   | 108 +++++++++++++++++++++++++-
+ 3 files changed, 107 insertions(+), 11 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 42348df9d68..72f6b208f5a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1355,7 +1355,6 @@ F: hw/acpi/piix4.c
- F: hw/mips/malta.c
- F: hw/pci-host/gt64120.c
- F: include/hw/southbridge/piix.h
--F: tests/avocado/linux_ssh_mips_malta.py
- F: tests/functional/test_mips*_malta.py
- F: tests/functional/test_mips*_tuxrun.py
- 
 diff --git a/tests/avocado/linux_ssh_mips_malta.py b/tests/avocado/linux_ssh_mips_malta.py
-deleted file mode 100644
-index 2fa5cf9a6c1..00000000000
+index d9bb525ad9c..73d294ad5cf 100644
 --- a/tests/avocado/linux_ssh_mips_malta.py
-+++ /dev/null
-@@ -1,181 +0,0 @@
--# Functional test that boots a VM and run commands via a SSH session
--#
--# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--import os
--import re
--import base64
--import logging
--import time
--
--from avocado import skipUnless
--from avocado_qemu import LinuxSSHMixIn
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import process
--from avocado.utils import archive
--from avocado.utils import ssh
--
--
--@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
--@skipUnless(ssh.SSH_CLIENT_BINARY, 'No SSH client available')
--class LinuxSSH(QemuSystemTest, LinuxSSHMixIn):
--    """
--    :avocado: tags=accel:tcg
--    """
--
--    timeout = 150 # Not for 'configure --enable-debug --enable-debug-tcg'
--
--    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
--    VM_IP = '127.0.0.1'
--
--    BASE_URL = 'https://people.debian.org/~aurel32/qemu/'
--    IMAGE_INFO = {
--        'be': {'base_url': 'mips',
--               'image_name': 'debian_wheezy_mips_standard.qcow2',
--               'image_hash': '8987a63270df67345b2135a6b7a4885a35e392d5',
--               'kernel_hash': {
--                   32: '592e384a4edc16dade52a6cd5c785c637bcbc9ad',
--                   64: 'db6eea7de35d36c77d8c165b6bcb222e16eb91db'}
--              },
--        'le': {'base_url': 'mipsel',
--               'image_name': 'debian_wheezy_mipsel_standard.qcow2',
--               'image_hash': '7866764d9de3ef536ffca24c9fb9f04ffdb45802',
--               'kernel_hash': {
--                   32: 'a66bea5a8adaa2cb3d36a1d4e0ccdb01be8f6c2a',
--                   64: '6a7f77245acf231415a0e8b725d91ed2f3487794'}
--              }
--        }
--    CPU_INFO = {
--        32: {'cpu': 'MIPS 24Kc', 'kernel_release': '3.2.0-4-4kc-malta'},
--        64: {'cpu': 'MIPS 20Kc', 'kernel_release': '3.2.0-4-5kc-malta'}
--        }
--
--    def get_url(self, endianess, path=''):
--        qkey = {'le': 'el', 'be': ''}
--        return '%s/mips%s/%s' % (self.BASE_URL, qkey[endianess], path)
--
--    def get_image_info(self, endianess):
--        dinfo = self.IMAGE_INFO[endianess]
--        image_url = self.get_url(endianess, dinfo['image_name'])
--        image_hash = dinfo['image_hash']
--        return (image_url, image_hash)
--
--    def get_kernel_info(self, endianess, wordsize):
--        minfo = self.CPU_INFO[wordsize]
--        kernel_url = self.get_url(endianess,
--                                  'vmlinux-%s' % minfo['kernel_release'])
--        kernel_hash = self.IMAGE_INFO[endianess]['kernel_hash'][wordsize]
--        return kernel_url, kernel_hash
--
--    def ssh_disconnect_vm(self):
--        self.ssh_session.quit()
--
--    def boot_debian_wheezy_image_and_ssh_login(self, endianess, kernel_path):
--        image_url, image_hash = self.get_image_info(endianess)
--        image_path = self.fetch_asset(image_url, asset_hash=image_hash)
--
--        self.vm.set_console()
--        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
--                               + 'console=ttyS0 root=/dev/sda1')
--        self.vm.add_args('-no-reboot',
--                         '-kernel', kernel_path,
--                         '-append', kernel_command_line,
--                         '-drive', 'file=%s,snapshot=on' % image_path,
--                         '-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
--                         '-device', 'pcnet,netdev=vnet')
--        self.vm.launch()
--
--        self.log.info('VM launched, waiting for sshd')
--        console_pattern = 'Starting OpenBSD Secure Shell server: sshd'
--        wait_for_console_pattern(self, console_pattern, 'Oops')
--        self.log.info('sshd ready')
--
--        self.ssh_connect('root', 'root', False)
--
--    def shutdown_via_ssh(self):
--        self.ssh_command('poweroff')
--        self.ssh_disconnect_vm()
--        wait_for_console_pattern(self, 'Power down', 'Oops')
--
--    def run_common_commands(self, wordsize):
--        self.ssh_command_output_contains(
--            'cat /proc/cpuinfo',
--            self.CPU_INFO[wordsize]['cpu'])
--        self.ssh_command_output_contains(
--            'uname -m',
--            'mips')
--        self.ssh_command_output_contains(
--            'uname -r',
--            self.CPU_INFO[wordsize]['kernel_release'])
--        self.ssh_command_output_contains(
--            'cat /proc/interrupts',
--            'XT-PIC  timer')
--        self.ssh_command_output_contains(
--            'cat /proc/interrupts',
--            'XT-PIC  i8042')
--        self.ssh_command_output_contains(
--            'cat /proc/interrupts',
--            'XT-PIC  serial')
--        self.ssh_command_output_contains(
--            'cat /proc/interrupts',
--            'XT-PIC  ata_piix')
--        self.ssh_command_output_contains(
--            'cat /proc/interrupts',
--            'XT-PIC  eth0')
--        self.ssh_command_output_contains(
--            'cat /proc/devices',
--            'input')
--        self.ssh_command_output_contains(
--            'cat /proc/devices',
--            'usb')
--        self.ssh_command_output_contains(
--            'cat /proc/devices',
--            'fb')
--        self.ssh_command_output_contains(
--            'cat /proc/ioports',
--            ' : serial')
--        self.ssh_command_output_contains(
--            'cat /proc/ioports',
--            ' : ata_piix')
--        self.ssh_command_output_contains(
--            'cat /proc/ioports',
--            ' : piix4_smbus')
--        self.ssh_command_output_contains(
--            'lspci -d 11ab:4620',
--            'GT-64120')
--        self.ssh_command_output_contains(
--            'cat /sys/bus/i2c/devices/i2c-0/name',
--            'SMBus PIIX4 adapter')
--        self.ssh_command_output_contains(
--            'cat /proc/mtd',
--            'YAMON')
--        # Empty 'Board Config' (64KB)
--        self.ssh_command_output_contains(
--            'md5sum /dev/mtd2ro',
--            '0dfbe8aa4c20b52e1b8bf3cb6cbdf193')
--
--    def check_mips_malta(self, uname_m, endianess):
--        wordsize = 64 if '64' in uname_m else 32
--        kernel_url, kernel_hash = self.get_kernel_info(endianess, wordsize)
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        self.boot_debian_wheezy_image_and_ssh_login(endianess, kernel_path)
--
--        stdout, _ = self.ssh_command('uname -a')
--        self.assertIn(True, [uname_m + " GNU/Linux" in line for line in stdout])
--
--        self.run_common_commands(wordsize)
--        self.shutdown_via_ssh()
--        # Wait for VM to shut down gracefully
--        self.vm.wait()
--
--    def test_mips_malta64eb_kernel3_2_0(self):
++++ b/tests/avocado/linux_ssh_mips_malta.py
+@@ -172,14 +172,6 @@ def check_mips_malta(self, uname_m, endianess):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
+ 
+-    def test_mips_malta32eb_kernel3_2_0(self):
 -        """
--        :avocado: tags=arch:mips64
+-        :avocado: tags=arch:mips
 -        :avocado: tags=endian:big
 -        :avocado: tags=device:pcnet32
 -        """
--        self.check_mips_malta('mips64', 'be')
+-        self.check_mips_malta('mips', 'be')
+-
+     def test_mips_malta32el_kernel3_2_0(self):
+         """
+         :avocado: tags=arch:mipsel
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index a4a317115b3..985ac5c27fe 100644
+index 4113b221de7..4dedfc7b9f7 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -42,6 +42,7 @@ test_timeouts = {
-   'mips_malta' : 480,
-   'mipsel_malta' : 420,
+@@ -39,7 +39,7 @@ test_timeouts = {
+   'arm_tuxrun' : 240,
+   'arm_sx1' : 360,
+   'intel_iommu': 300,
+-  'mips_malta' : 120,
++  'mips_malta' : 480,
    'mipsel_replay' : 480,
-+  'mips64_malta' : 240,
-   'mips64el_malta' : 420,
    'mips64el_replay' : 180,
    'netdev_ethtool' : 180,
-@@ -191,6 +192,7 @@ tests_mipsel_system_thorough = [
- ]
+diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
+index 9697c7d63f8..89b9556f30d 100755
+--- a/tests/functional/test_mips_malta.py
++++ b/tests/functional/test_mips_malta.py
+@@ -6,10 +6,93 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
- tests_mips64_system_thorough = [
-+  'mips64_malta',
-   'mips64_tuxrun',
- ]
+-from qemu_test import LinuxKernelTest, Asset
++import os
++
++from qemu_test import LinuxKernelTest, Asset, wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
  
-diff --git a/tests/functional/test_mips64_malta.py b/tests/functional/test_mips64_malta.py
-new file mode 100755
-index 00000000000..53c3e0c1221
---- /dev/null
-+++ b/tests/functional/test_mips64_malta.py
-@@ -0,0 +1,35 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for the big-endian 64-bit MIPS Malta board
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+ 
++def mips_run_common_commands(test, prompt='#'):
++    exec_command_and_wait_for_pattern(test,
++        'uname -m',
++        'mips')
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'timer')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'serial')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'ata_piix')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'grep XT-PIC /proc/interrupts',
++        'rtc')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/devices',
++        'input')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/devices',
++        'fb')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/ioports',
++        ' : serial')
++    wait_for_console_pattern(test, prompt)
++    exec_command_and_wait_for_pattern(test,
++        'cat /proc/ioports',
++        ' : ata_piix')
++    wait_for_console_pattern(test, prompt)
 +
-+from qemu_test import LinuxKernelTest, Asset
-+from test_mips_malta import mips_check_wheezy
++def mips_check_wheezy(test, kernel_path, image_path, kernel_command_line,
++                      dl_file, hsum, nic='pcnet', cpuinfo='MIPS 24Kc'):
++    test.require_netdev('user')
++    test.require_device(nic)
++    test.set_machine('malta')
++
++    port=8080
++    test.vm.add_args('-kernel', kernel_path,
++                     '-append', kernel_command_line,
++                     '-drive', 'file=%s,snapshot=on' % image_path,
++                     '-netdev', 'user,id=n1' +
++                                ',tftp=' + os.path.basename(kernel_path) +
++                                ',hostfwd=tcp:127.0.0.1:0-:%d' % port,
++                     '-device', f'{nic},netdev=n1',
++                     '-no-reboot')
++    test.vm.set_console()
++    test.vm.launch()
++
++    wait_for_console_pattern(test, 'login: ', 'Oops')
++    exec_command_and_wait_for_pattern(test, 'root', 'Password:')
++    exec_command_and_wait_for_pattern(test, 'root', ':~# ')
++    mips_run_common_commands(test)
++
++    exec_command_and_wait_for_pattern(test, 'cd /', '# ')
++    test.check_http_download(dl_file, hsum, port,
++                             pythoncmd='python -m SimpleHTTPServer')
++
++    exec_command_and_wait_for_pattern(test, 'cat /proc/cpuinfo', cpuinfo)
++    exec_command_and_wait_for_pattern(test, 'cat /proc/devices', 'usb')
++    exec_command_and_wait_for_pattern(test, 'cat /proc/ioports',
++                                      ' : piix4_smbus')
++    # lspci for the host bridge does not work on big endian targets:
++    # https://gitlab.com/qemu-project/qemu/-/issues/2826
++    # exec_command_and_wait_for_pattern(test, 'lspci -d 11ab:4620',
++    #                                   'GT-64120')
++    exec_command_and_wait_for_pattern(test,
++                                      'cat /sys/bus/i2c/devices/i2c-0/name',
++                                      'SMBus PIIX4 adapter')
++    exec_command_and_wait_for_pattern(test, 'cat /proc/mtd', 'YAMON')
++    # Empty 'Board Config' (64KB)
++    exec_command_and_wait_for_pattern(test, 'md5sum /dev/mtd2ro',
++                                      '0dfbe8aa4c20b52e1b8bf3cb6cbdf193')
 +
 +
-+class MaltaMachineConsole(LinuxKernelTest):
-+
+ class MaltaMachineConsole(LinuxKernelTest):
+ 
+     ASSET_KERNEL_2_63_2 = Asset(
+@@ -70,7 +153,8 @@ def test_mips_malta_cpio(self):
+         exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
+                                                 'BogoMIPS')
+         exec_command_and_wait_for_pattern(self, 'uname -a',
+-                                                'Debian')
++                                                '4.5.0-2-4kc-malta #1 Debian')
++        mips_run_common_commands(self)
+ 
+         exec_command_and_wait_for_pattern(self, 'ip link set eth0 up',
+                                           'eth0: link up')
+@@ -89,6 +173,26 @@ def test_mips_malta_cpio(self):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
+ 
 +    ASSET_WHEEZY_KERNEL = Asset(
 +        ('https://people.debian.org/~aurel32/qemu/mips/'
-+         'vmlinux-3.2.0-4-5kc-malta'),
-+        '3e4ec154db080b3f1839f04dde83120654a33e5e1716863de576c47cb94f68f6')
++         'vmlinux-3.2.0-4-4kc-malta'),
++        '0377fcda31299213c10b8e5babe7260ef99188b3ae1aca6f56594abb71e7f67e')
 +
 +    ASSET_WHEEZY_DISK = Asset(
 +        ('https://people.debian.org/~aurel32/qemu/mips/'
@@ -360,13 +271,13 @@ index 00000000000..53c3e0c1221
 +        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE
 +                               + 'console=ttyS0 root=/dev/sda1')
 +        mips_check_wheezy(self,
-+            kernel_path, image_path, kernel_command_line, cpuinfo='MIPS 20Kc',
-+            dl_file='/boot/initrd.img-3.2.0-4-5kc-malta',
-+            hsum='d98b953bb4a41c0fc0fd8d19bbc691c08989ac52568c1d3054d92dfd890d3f06')
++            kernel_path, image_path, kernel_command_line, nic='e1000',
++            dl_file='/boot/initrd.img-3.2.0-4-4kc-malta',
++            hsum='ff0c0369143d9bbb9a6e6bc79322a2be535619df639e84103237f406e87493dc')
 +
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ 
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
 -- 
 2.49.0
 
