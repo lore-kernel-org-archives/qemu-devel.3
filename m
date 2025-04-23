@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D283C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9618EC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 09:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7WJu-0003aK-G8; Wed, 23 Apr 2025 05:23:06 -0400
+	id 1u7WKR-0003sv-3r; Wed, 23 Apr 2025 05:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WJs-0003Ze-BW
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:23:04 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7WJq-0006P9-Jq
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 05:23:04 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3913d129c1aso537360f8f.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 02:23:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745400181; x=1746004981; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zV4KrXQ0bSuAprew4M/lzU92ZSlDJ8w0OUwPsjrNJD4=;
- b=OLrZylPbkcuAPslLTVjHK1Vn3OnKJBDh+d/TNmpSmMyASgTZwZ6mDiTWWKXYD/igpo
- oG4pVGMaPN13R+NsE2TNDEdWy1KqQz6Tim4eRyxVKRkNCY6nmqG4WfwKaR4s9z1nxV82
- 8gRsbY9/NxMiW6W4pljdoySvlWryVLYKXvnsKYc81dbZ82uZP2uzFTXreoc5oBvJodif
- OXxT3Tw/wSObgCV0nIjUQtVUAC42O1JkgHpcCfbsz1vvE1JCDX4NVw0+KU0sD0KwldEQ
- uwm9m9iUv/o9JBXGK9HFQMrppFp6uZ7b4CIEogJvb1k4Ybqq3T0+NjcMWC2sNsPDjJ3C
- mEsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745400181; x=1746004981;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zV4KrXQ0bSuAprew4M/lzU92ZSlDJ8w0OUwPsjrNJD4=;
- b=aRN0xeNx44ktyMqp85Ge2SW2phi2Hzjz2wEN4KGm1sU3AP/QJwLQsnicqb59buYkew
- hslHO+9dOrzpIs70/jh8LijyU3UoWuusVYSCwdl6ONZEFJBBxBuD8PE2IJJlGbmsw6MM
- zTHGPWlEVlfA+CeVyYeQfzeO10q5dCSJwtnUZTLtL+ZqxKtGBq/vsgmi1tMyQGqAXlqv
- KfrmjWx2qRZf6eob0qLzt5dvFUtZ2htGvhEH4sULeKIs/V2YOLKK7nfnmnpXQeMEMIZd
- D1ThvjqI5JUC08CVsrUC8v/Hqn9cwzwvT5GLzMNNwu5mK0lLtqP2Ml47AGHcPFzJ89VM
- hJRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkIY+ZFC0lvg7K7v+hZXmA0jT9NXquC5rq1ES/wUOsUNNL7+SciFjgNnwhvBplonxk8dkFr58Jfi2X@nongnu.org
-X-Gm-Message-State: AOJu0YyCh4b92A4DaJrTUHzTDSVcF4ZDM+wRS4bP7xx7IgwN+LG70eJP
- Xg0tAdhKGco1p8zRX6fjz5DzAAAT9XnjF0+0NDHSOKrcZ/O7zhHTL3XQurfquZY=
-X-Gm-Gg: ASbGncv+4ebBjjlquH2Cg+aBw9nWOHlLHGnOQzPBrItFNq0kbo3E3n3Hp63X7XKJs9Q
- aWC1zVUtb8q3lNqgZCTqh6Zj24vJED4TSFXzxwYg41rlprtLbuOH9poJc5W3CtMhSUIY6l05X8a
- aE1mFjtvfV238WI5aBlOGnQq5egwm4VuAstTsjMrccUYj6JzoFw0NtgBhzIwuzjgyCPL6IXOpi2
- 3RpB4P9sbMsTuY6UCOXqa4dU94FgX6mnvjI14KQF50T2j9RSrglbJE4xWxE8rKZ5m3SIrO3YlGm
- 8IlD3ID27SID1K5+VKThywPTesNcA4KsPWByl767airnz2m8Ltv1NX03RETr24unbIKlgt9ajWQ
- W/f3p8jRv
-X-Google-Smtp-Source: AGHT+IFoQMIOHVv7zxIpdi8v+esbCpR6K4jmhnm9FgLgJSNHrLIQX5YcRgWBbgUz9smZ+l0dyUTTWw==
-X-Received: by 2002:a05:6000:420f:b0:39c:30f7:a599 with SMTP id
- ffacd0b85a97d-3a067285addmr1547425f8f.18.1745400180090; 
- Wed, 23 Apr 2025 02:23:00 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-44092d37332sm19101625e9.30.2025.04.23.02.22.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 02:22:59 -0700 (PDT)
-Message-ID: <dfcf9c43-4585-46e0-8d7c-0855d348c38a@linaro.org>
-Date: Wed, 23 Apr 2025 11:22:58 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
+ id 1u7WKP-0003l9-2g; Wed, 23 Apr 2025 05:23:37 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
+ id 1u7WKM-0006QW-Rv; Wed, 23 Apr 2025 05:23:36 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZjDDd63ftz4xPG;
+ Wed, 23 Apr 2025 19:23:29 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZjDDZ2S4hz4xN2;
+ Wed, 23 Apr 2025 19:23:25 +1000 (AEST)
+Message-ID: <5503c8b7-1b42-4a36-a768-33bdd61b8bfc@kaod.org>
+Date: Wed, 23 Apr 2025 11:23:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 013/147] system/xen: remove inline stubs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-14-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250422192819.302784-14-richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 06/11] hw/arm/aspeed: Add support for loading vbootrom
+ image via "-bios"
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: troy_lee@aspeedtech.com, nabihestefan@google.com
+References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
+ <20250423072350.541742-7-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
+ BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
+ M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
+ 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
+ jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
+ TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
+ neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
+ VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
+ QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
+ ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
+ WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
+ wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
+ SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
+ cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
+ S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
+ 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
+ hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
+ tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
+ t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
+ OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
+ KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
+ o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
+ ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
+ IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
+ d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
+ +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
+ HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
+ l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
+ 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
+ ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
+ KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250423072350.541742-7-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +112,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
-
-On 22/4/25 21:26, Richard Henderson wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 4/23/25 09:23, Jamin Lin wrote:
+> Introduce "aspeed_load_vbootrom()" to support loading a virtual boot ROM image
+> into the vbootrom memory region, using the "-bios" command-line option.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-ID: <20250317183417.285700-14-pierrick.bouvier@linaro.org>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+> Tested-by: Nabih Estefan <nabihestefan@google.com>
 > ---
->   include/system/xen-mapcache.h | 41 -----------------------------------
->   include/system/xen.h          | 21 +++---------------
->   2 files changed, 3 insertions(+), 59 deletions(-)
-
-
-> diff --git a/include/system/xen.h b/include/system/xen.h
-> index 990c19a8ef..5f41915732 100644
-> --- a/include/system/xen.h
-> +++ b/include/system/xen.h
-> @@ -25,30 +25,15 @@
->   #endif /* COMPILING_PER_TARGET */
+>   hw/arm/aspeed.c | 35 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 35 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index b70a120e62..b5831ef4c1 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -27,6 +27,7 @@
+>   #include "system/reset.h"
+>   #include "hw/loader.h"
+>   #include "qemu/error-report.h"
+> +#include "qemu/datadir.h"
+>   #include "qemu/units.h"
+>   #include "hw/qdev-clock.h"
+>   #include "system/system.h"
+> @@ -305,6 +306,35 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+>                      rom_size, &error_abort);
+>   }
 >   
->   #ifdef CONFIG_XEN_IS_POSSIBLE
-> -
->   extern bool xen_allowed;
-> -
->   #define xen_enabled()           (xen_allowed)
-> +#else /* !CONFIG_XEN_IS_POSSIBLE */
-> +#define xen_enabled() 0
-> +#endif /* CONFIG_XEN_IS_POSSIBLE */
+> +#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+> +
+> +/*
+> + * This function locates the vbootrom image file specified via the command line
+> + * using the -bios option. It loads the specified image into the vbootrom
+> + * memory region and handles errors if the file cannot be found or loaded.
+> + */
+> +static void aspeed_load_vbootrom(MachineState *machine, uint64_t rom_size,
 
-Just to be sure, you said we should remove CONFIG_XEN_IS_POSSIBLE?
+rom_size is unused.
+
+> +                                 Error **errp)
+> +{
+> +    AspeedMachineState *bmc = ASPEED_MACHINE(machine);
+> +    const char *bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
+
+I would change the prototype of aspeed_load_vbootrom to:
+
+void aspeed_load_vbootrom(AspeedMachineState *bmc, const char *bios_name,
+                           Error **errp)
+
+
+Thanks,
+
+C.
+
+
+
+
+> +    g_autofree char *filename = NULL;
+> +    AspeedSoCState *soc = bmc->soc;
+> +    int ret;
+> +
+> +    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
+> +    if (!filename) {
+> +        error_setg(errp, "Could not find vbootrom image '%s'", bios_name);
+> +        return;
+> +    }
+> +
+> +    ret = load_image_mr(filename, &soc->vbootrom);
+> +    if (ret < 0) {
+> +        error_setg(errp, "Failed to load vbootrom image '%s'", bios_name);
+> +        return;
+> +    }
+> +}
+> +
+>   void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+>                                         unsigned int count, int unit0)
+>   {
+> @@ -483,6 +513,11 @@ static void aspeed_machine_init(MachineState *machine)
+>           }
+>       }
+>   
+> +    if (amc->vbootrom) {
+> +        rom_size = memory_region_size(&bmc->soc->vbootrom);
+> +        aspeed_load_vbootrom(machine, rom_size, &error_abort);
+> +    }
+> +
+>       arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
+>   }
+>   
+
 
