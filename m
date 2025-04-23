@@ -4,39 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D1DAC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B6ABC369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 06:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7U3Q-0003Qh-Gx; Wed, 23 Apr 2025 02:57:56 -0400
+	id 1u7U48-0004eb-R8; Wed, 23 Apr 2025 02:58:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
- id 1u7U3E-0003NE-Do; Wed, 23 Apr 2025 02:57:44 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1u7U46-0004eB-Q0; Wed, 23 Apr 2025 02:58:38 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org>)
- id 1u7U3C-0006P1-HC; Wed, 23 Apr 2025 02:57:44 -0400
+ id 1u7U44-0006Qq-K0; Wed, 23 Apr 2025 02:58:38 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zj90L0PGpz4xMv;
- Wed, 23 Apr 2025 16:57:38 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zj91Q27Jbz4xN1;
+ Wed, 23 Apr 2025 16:58:34 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zj90F73kdz4xM1;
- Wed, 23 Apr 2025 16:57:33 +1000 (AEST)
-Message-ID: <ea20211a-795c-4d4b-adbb-938f01ea26a3@kaod.org>
-Date: Wed, 23 Apr 2025 08:57:31 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zj91M0w6Wz4xM3;
+ Wed, 23 Apr 2025 16:58:30 +1000 (AEST)
+Message-ID: <588a7ef1-22ba-4235-a848-537c4b564624@kaod.org>
+Date: Wed, 23 Apr 2025 08:58:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ssi/aspeed_smc: Allow 64-bit wide flash accesses
-To: Joe Komlodi <komlodi@google.com>, qemu-devel@nongnu.org
-Cc: venture@google.com, alistair@alistair23.me, peter.maydell@linaro.org,
- steven_lee@aspeedtech.com, leetroy@gmail.com, jamin_lin@aspeedtech.com,
- joel@jms.id.au, andrew@codeconstruct.com.au, qemu-arm@nongnu.org
-References: <20250422002747.2593465-1-komlodi@google.com>
+Subject: Re: [PATCH 2/2] hw/arm: ast27x0: Wire up EHCI controllers
+To: Troy Lee <troy_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: yunlin.tang@aspeedtech.com
+References: <20250317065938.1902272-1-troy_lee@aspeedtech.com>
+ <20250317065938.1902272-2-troy_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -81,16 +86,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250422002747.2593465-1-komlodi@google.com>
+In-Reply-To: <20250317065938.1902272-2-troy_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=wlG+=XJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,16 +113,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/22/25 02:27, Joe Komlodi wrote:
-> cde3247651dc998da5dc1005148302a90d72f21f fixed atomicity for LDRD, which
-> ends up making accesses 64-bits wide. However, the AST2600 bootloader
-> can sometimes compile with LDRD instructions, which causes the acceses
-> to fail when accessing the memory-mapped SPI flash.
+On 3/17/25 07:59, Troy Lee wrote:
+> AST27x0 has 4 EHCI controllers, where each CPU and I/O die has 2
+> instances. This patch use existing TYPE_PLATFORM_EHCI. After wiring up
+> the EHCI controller, the ast2700a1-evb can find up to 4 USB EHCI
+> interfaces.
 > 
-> To fix this, increase the MMIO region valid access size to allow for
-> 64-bit accesses.
+> ehci-platform 12061000.usb: EHCI Host Controller
+> ehci-platform 12061000.usb: new USB bus registered, assigned bus number 2
+> ehci-platform 12063000.usb: EHCI Host Controller
+> ehci-platform 12063000.usb: new USB bus registered, assigned bus number 3
+> ehci-platform 12061000.usb: irq 88, io mem 0x12061000
+> ehci-platform 12063000.usb: irq 90, io mem 0x12063000
+> ehci-platform 14121000.usb: EHCI Host Controller
+> ehci-platform 14123000.usb: EHCI Host Controller
+> ehci-platform 12061000.usb: USB 2.0 started, EHCI 1.00
+> ehci-platform 14121000.usb: new USB bus registered, assigned bus number 5
+> ehci-platform 14123000.usb: new USB bus registered, assigned bus number 6
+> ehci-platform 14121000.usb: irq 91, io mem 0x14121000
+> ehci-platform 14123000.usb: irq 92, io mem 0x14123000
+> ehci-platform 12063000.usb: USB 2.0 started, EHCI 1.00
+> usb usb2: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
+> usb usb3: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
+> ehci-platform 14121000.usb: USB 2.0 started, EHCI 1.00
+> usb usb5: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
+> ehci-platform 14123000.usb: USB 2.0 started, EHCI 1.00
+> usb usb6: Manufacturer: Linux 6.6.78-dirty-bafd2830c17c-gbafd2830c17c-dirty ehci_hcd
 > 
-> Signed-off-by: Joe Komlodi <komlodi@google.com>
+> Note that, AST27x0A0 only has 2 EHCI controllers due to hw issue.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+
 
 
 Applied to aspeed-next.
@@ -124,5 +151,6 @@ Applied to aspeed-next.
 Thanks,
 
 C.
+
 
 
