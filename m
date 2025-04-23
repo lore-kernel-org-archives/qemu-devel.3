@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA79C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1BCC369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7XwZ-0004T2-Ld; Wed, 23 Apr 2025 07:07:07 -0400
+	id 1u7Y02-0001bL-BU; Wed, 23 Apr 2025 07:10:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u7XwW-0004R3-AP
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:07:04 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7Xzb-0001KH-Dk
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:10:16 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u7XwU-0000N3-FY
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:07:04 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-227cf12df27so7963915ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:07:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7XzW-0000oR-SN
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:10:13 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso3837920f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745406420; x=1746011220; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0P8ybX618Aj294TOjuqQa2ncsAqYRpABgmWLKho6DjQ=;
- b=Cqn5G49Cekv213eiRfan1DpthDc4at1fnR7mOxu8AQ8j1z5SOuFTtB31akmH68iH9d
- zYzQtgbgrKY/CP6oKjV7xWSoz4Od9OUi6gwtCQysYSjF+g+i9kU/EExMlQ6C4t4toQpq
- BIWfKonx70YKKubt7ACVD/XteQNfJ6/cqY2aSYl0PSdfbhWig+Wli97z9UKz3cqNpUw2
- VP8Dm36ZeofNjlt/2/8EDGbMlgJCiK0Thy7+pqFrP9CHWZsnULQ4XhBXIvVK2RR7aqKo
- AdCm4hX6WKTxdm95MLBxxAL+baVuHY5BBzKqQPMZNktUzQBGOW3N90r9luBBjnERoMjt
- UQRg==
+ d=linaro.org; s=google; t=1745406608; x=1746011408; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LWz9gy6BGt+Il4OdXmpOZtOL72RyKjZFu5Xkxs4NXlQ=;
+ b=Cjp/com4DnqgnrYTF93hwoBXoGvomrg00GbrojYUV1lCnWTlnt3wsKQm9VdW96mKEW
+ Byurto0c5JHj17WqYYuqRTd/LNnRg0UIKOWSBmRQembPgt/6pyxnw5kGyLzRumGFgUQv
+ +YNQ+pk41kdXL4vXTLL8yg5pCVxOaB4uwnGv62MhxKTTlk4Qq77oA5kPm50IkwFVLNIg
+ NpIMeVOmbWFvyQQkUtVfNV310re5B8u3QuwqVcQ7OW9vaDGveLb49xEMlc+Kg3B1CoHy
+ yifFTk7GLzexgLxMaALvcaxbmgT3aK/tiF0V+C3MLpywATa0I2ka9rIrj911dikVgaZR
+ 3sjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745406420; x=1746011220;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0P8ybX618Aj294TOjuqQa2ncsAqYRpABgmWLKho6DjQ=;
- b=lB83x1xwsvxT2S50dPYK30gzz8tsGRf60EBn6Fb2mv/6EcC40xjBuuha65y1Zaxy9k
- IveU91gTkPclRQXplTfxSNDONisIXmz0frQfXjdUircjlnFMNRkKJG8Zh8+qOEpbieBz
- Sh1S4xYyTaDBptlSMD5VSnD/A+Q7jpR2LIyfsmhgR8s6jy3bfpXG0KV6cpmdltc6DOF6
- PEE07pUSmjddmN3yce23lGPiCjXpCJO/lxPgKuIuLLA62ZZ7xCIOMUxJ/+ZTkPoKiPpV
- xvXeul9W2xvqyh0UoaiD7t5aiMMs9rfqmkm+N92ABkATPekh0cJTbSRO/s8jJxmu+cxf
- BbfQ==
-X-Gm-Message-State: AOJu0YwYWcdoapfIi1K82iLVrWzF4zehZVe+hb/SE1zSaplUM5cFXYgn
- 4x0CNjpx1gYfIeLY5fpF9MuUKVZTakparycklEjIdJIadlGa+MD1YXEhROZGvyDVTGLRVnl+wLh
- l
-X-Gm-Gg: ASbGncunERCNl9+ck/RDT2+UQXK9ZbP2B/CrQv1SFlgQiUwRCerCDQEZlCieVVNixuv
- 03pdMy/rVB5/JS/hBzGppmBTBSQGbDa1b8gLc/nNQPVyEwK9f4idpetSgEikQpnNh/d7fn7rPXQ
- ZR+X0RoTymXpg+YLawOO5G3tKMRJY965H3D9n6V4GJpuH4kSTIQHW0lMs8PidVC+XYv+GC2eJJx
- m4gRnl9ZS00jY4hYDY25Gf5y+w1MPr2CEIGTOe78Fkc3ob9RdHVtfDZahXrR+ENJGVvK3OpPAyA
- 4U3Ng2L21zfO0cqDOgLGuI/QqRDjqh2I3MFsi7WZJtekGmHsKQ24ddAuyhxWvcw=
-X-Google-Smtp-Source: AGHT+IHt16bJywDUQ3OqWoWUohgNB3ccS8NxyHjbCbW7Iic13h+LgpyveCx5lGirX0qS+JfBKONaHQ==
-X-Received: by 2002:a17:902:d585:b0:221:751f:cfbe with SMTP id
- d9443c01a7336-22da331ac37mr40139855ad.19.1745406420175; 
- Wed, 23 Apr 2025 04:07:00 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f0:bcc0:89f4:3b90:a265:963d:8357])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22c50fdf3b1sm101509895ad.248.2025.04.23.04.06.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 04:06:59 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 7/9] hw/riscv/virt.c: use s->memmap in create_fdt_virtio()
-Date: Wed, 23 Apr 2025 08:06:28 -0300
-Message-ID: <20250423110630.2249904-8-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
-References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1745406608; x=1746011408;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LWz9gy6BGt+Il4OdXmpOZtOL72RyKjZFu5Xkxs4NXlQ=;
+ b=t+FsoHFMBay0j46f5gtgnYjXpcR6IAOHAhDZOyHFhsOUDJwDyunrg52cWNhWIF/Z4L
+ UzLJhljizxfX1gUEjON7n8XPv/By/zqxB4D+A0CT9YTAO/xtwuPQioHitqNQekCzW5TR
+ KUgLXzw8MNB3+t9H5FdtcR9VKA64vIZhDEWWSKWsK+T5ZuhL1onYZcDf0n8lhr29ZVdR
+ hGf8oqzbDra1k2XlKjiRnh0NcxZqvgTdqRC4rnN3PM4GE9CVqOdw7RC2IrTp0S+YASFr
+ Vr+1YKoGfoSYGTxqOko+lZTvcyXAZIpJhgGuid28ynt/zZCorjIk4919pf3bz0Lws/25
+ n0OQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVi7bwnm1ep8X1gjQb49WQIykDBje942w+SnCpwjhxXIIhw9oqQOi263oypoaTwESJFG/bNdTQSpSc@nongnu.org
+X-Gm-Message-State: AOJu0YzQM33zAFDg9rckMNbKcKiFZOeMB99NFLmXkeYFrO0Jr6KEuzOS
+ 1xQih9TyQkuFV5WRZVorgOBdWi4V1EVSp/iXYf/X4WqI9OdgzDYUvqXBpqw/erc=
+X-Gm-Gg: ASbGncsEbrW6oxdGT0VFhV9a51m507MWPMOIheztHGkYGrBIpNRdYS3pv1RU7EGiNwG
+ x0bjbuLS68mVC45p8aiMvIPCyyyJRBSjV9jKe+5VUC/hY/5UaoPKAIXgok0Tkf76+prGBwECS6y
+ 3SAWnhgsoFD8lc8it5eY/JyQ41pWImfLe/Ra8IGeYsgIvavqXvBydyqWzk3/dz5cs0wkBIVdaMA
+ IcHZpnfxp9zOvGOuxVL1vydu02XhLIFV3Tpc03Fr2ofZGqyZ3mFQjEUVcuA0S0H86TFwGVFxX0K
+ 5DNbSL6JllgOMxZeGWFnhEUNJqAjvjFU3DjCGJB8P7AYMEiI2tJAXaaepEoqYU78aFqac7kRyIk
+ RUJvExyu5
+X-Google-Smtp-Source: AGHT+IGtZ1UoPjts/76ebqsFQnGvcwZxYXSahLeORTTnSZr2aqbOTXea71J8vl6aRGS+Nu9T9bWjIw==
+X-Received: by 2002:a5d:584e:0:b0:39c:140c:25e with SMTP id
+ ffacd0b85a97d-39efba560b1mr14962145f8f.24.1745406608017; 
+ Wed, 23 Apr 2025 04:10:08 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-44092d35ba5sm21822375e9.26.2025.04.23.04.10.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Apr 2025 04:10:07 -0700 (PDT)
+Message-ID: <c843aeff-cbf5-4ee0-ab8e-0508ab601b93@linaro.org>
+Date: Wed, 23 Apr 2025 13:10:06 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 005/147] exec/memory.h: make devend_memop "target defines"
+ agnostic
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250422192819.302784-1-richard.henderson@linaro.org>
+ <20250422192819.302784-6-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250422192819.302784-6-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,68 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-create_fdt_virtio() can use s->memmap instead of having an extra
-argument for it.
+On 22/4/25 21:25, Richard Henderson wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Will allow to make system/memory.c common later.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-ID: <20250317183417.285700-6-pierrick.bouvier@linaro.org>
+> ---
+>   include/exec/memory.h | 16 ++++------------
+>   1 file changed, 4 insertions(+), 12 deletions(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index cc5915033c..577f473446 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -3138,25 +3138,17 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
+>   MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
+>                                 uint8_t c, hwaddr len, MemTxAttrs attrs);
+>   
+> -#ifdef COMPILING_PER_TARGET
+>   /* enum device_endian to MemOp.  */
+>   static inline MemOp devend_memop(enum device_endian end)
+>   {
+>       QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
+>                         DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
+>   
+> -#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
+> -    /* Swap if non-host endianness or native (target) endianness */
+> -    return (end == DEVICE_HOST_ENDIAN) ? 0 : MO_BSWAP;
+> -#else
+> -    const int non_host_endianness =
+> -        DEVICE_LITTLE_ENDIAN ^ DEVICE_BIG_ENDIAN ^ DEVICE_HOST_ENDIAN;
+> -
+> -    /* In this case, native (target) endianness needs no swap.  */
+> -    return (end == non_host_endianness) ? MO_BSWAP : 0;
+> -#endif
+> +    bool big_endian = (end == DEVICE_NATIVE_ENDIAN
+> +                       ? target_words_bigendian()
+> +                       : end == DEVICE_BIG_ENDIAN);
+> +    return big_endian ? MO_BE : MO_LE;
+>   }
+> -#endif /* COMPILING_PER_TARGET */
 
-While we're at it rewrite it a little bit to avoid the clunky line in
-'name' and code repetition:
+Nice!
 
-- declare 'virtio_base' out of the loop since it never changes;
-- declare a 'size' variable. Use it to calculate the address of the
-  virtio device in an 'addr' variable;
-- use 'addr' in the 'name' g_strdup_printf();
-- use 'addr' and 'size' when creating the 'reg' property.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/riscv/virt.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index dcaf28d1a4..07ee8e144f 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -842,21 +842,24 @@ static void create_fdt_sockets(RISCVVirtState *s,
-     riscv_socket_fdt_write_distance_matrix(ms);
- }
- 
--static void create_fdt_virtio(RISCVVirtState *s, const MemMapEntry *memmap,
--                              uint32_t irq_virtio_phandle)
-+static void create_fdt_virtio(RISCVVirtState *s, uint32_t irq_virtio_phandle)
- {
-     int i;
-     MachineState *ms = MACHINE(s);
-+    hwaddr virtio_base = s->memmap[VIRT_VIRTIO].base;
- 
-     for (i = 0; i < VIRTIO_COUNT; i++) {
--        g_autofree char *name =  g_strdup_printf("/soc/virtio_mmio@%lx",
--            (long)(memmap[VIRT_VIRTIO].base + i * memmap[VIRT_VIRTIO].size));
-+        g_autofree char *name = NULL;
-+        uint64_t size = s->memmap[VIRT_VIRTIO].size;
-+        hwaddr addr = virtio_base + i * size;
-+
-+        name = g_strdup_printf("/soc/virtio_mmio@%"HWADDR_PRIx, addr);
- 
-         qemu_fdt_add_subnode(ms->fdt, name);
-         qemu_fdt_setprop_string(ms->fdt, name, "compatible", "virtio,mmio");
-         qemu_fdt_setprop_cells(ms->fdt, name, "reg",
--            0x0, memmap[VIRT_VIRTIO].base + i * memmap[VIRT_VIRTIO].size,
--            0x0, memmap[VIRT_VIRTIO].size);
-+                               0x0, addr,
-+                               0x0, size);
-         qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent",
-             irq_virtio_phandle);
-         if (s->aia_type == VIRT_AIA_TYPE_NONE) {
-@@ -1135,7 +1138,7 @@ static void finalize_fdt(RISCVVirtState *s)
-                        &irq_pcie_phandle, &irq_virtio_phandle,
-                        &msi_pcie_phandle);
- 
--    create_fdt_virtio(s, s->memmap, irq_virtio_phandle);
-+    create_fdt_virtio(s, irq_virtio_phandle);
- 
-     if (virt_is_iommu_sys_enabled(s)) {
-         create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
--- 
-2.49.0
+>   
+>   /*
+>    * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
 
 
