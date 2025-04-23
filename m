@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813BCC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE643C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 07:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7UfY-0003ZN-Vs; Wed, 23 Apr 2025 03:37:21 -0400
+	id 1u7UfQ-0003Kb-OM; Wed, 23 Apr 2025 03:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfW-0003Yg-TQ
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfN-0003JD-8C
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfU-0003Ki-2s
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:18 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7UfK-0003JV-VK
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 03:37:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745393835;
+ s=mimecast20190719; t=1745393826;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eHVxBU6A3l6WehY/7nFa84fD2Mw+v4/XWApzCpErQIo=;
- b=ioIEriZGl8mTk1pjG/Dg0zl/L+S23HSfLOoLVt6eHFO/krTCQ8RprW4c7mISmuuMOljcMy
- s9P9C7DauOfgsvcYM5mTT/WnzZyPUiyQttM7wQzFwKL0E9GavGRg9danSOkocOUq6lq4dx
- tH8Ud+s3A4w4IIrwfiG57VwjUY1dmjw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=kZRqi4JdQILCcaeMQSCdPvw0mRP3kSVf+QSe3K1vKOo=;
+ b=fvAWDpnZxhtzTYc7NxlqFPxSQIuh7SCFKFmUzncaGe4/cKi9AJVlGvsDWLAP2DVERqKYUP
+ YKZ/VAxukl6nzc6ILyDv9Jq+661g8kLxlvcryt1IMn445R9Cf6ViMaMt5GzKmuUIXv9qgL
+ oDe1pyl7LAwAnucQWtJFqPG1OwP0RMY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-mJ6JU6woNY-0DWUH9KmfAQ-1; Wed,
- 23 Apr 2025 03:37:11 -0400
-X-MC-Unique: mJ6JU6woNY-0DWUH9KmfAQ-1
-X-Mimecast-MFC-AGG-ID: mJ6JU6woNY-0DWUH9KmfAQ_1745393830
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-rn5nguKmMwCuRKU3XiZ_pQ-1; Wed,
+ 23 Apr 2025 03:37:00 -0400
+X-MC-Unique: rn5nguKmMwCuRKU3XiZ_pQ-1
+X-Mimecast-MFC-AGG-ID: rn5nguKmMwCuRKU3XiZ_pQ_1745393819
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1644419560AB; Wed, 23 Apr 2025 07:37:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8ACD11800263; Wed, 23 Apr 2025 07:36:59 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-219.str.redhat.com
  [10.33.192.219])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 80B6C19560A3; Wed, 23 Apr 2025 07:37:08 +0000 (UTC)
+ id F27E619560A3; Wed, 23 Apr 2025 07:36:57 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 25/29] docs/devel/testing: Dissolve the ci-definitions.rst.inc
- file
-Date: Wed, 23 Apr 2025 09:36:05 +0200
-Message-ID: <20250423073610.271585-26-thuth@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 20/29] tests/avocado: Remove the boot_linux.py tests
+Date: Wed, 23 Apr 2025 09:36:00 +0200
+Message-ID: <20250423073610.271585-21-thuth@redhat.com>
 In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 References: <20250423073610.271585-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -88,305 +88,162 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-This file was meant for defining the vocabulary for our testing
-efforts, but it did not age well: First, the definitions are not
-only about the CI part, but also about testing in general, so most
-of the information should rather reside in main.rst instead.
-Second, some vocabulary has never been really adopted by the QEMU
-project, for example we never really use the word "system testing"
-since "system" rather means the system emulator binaries in the
-QEMU project (and we also don't do any testing with other components
-like libvirt and virt-managers here). It also defines that the qtests
-are the "functional" tests in QEMU, which is not really up to date
-anymore after the "tests/functional" framework has been introduced
-a couple of months ago (FWIW, the qtests could rather be seen as a
-mix between unit testing and functional testing).
+These tests are based on the cloudinit functions from Avocado.
+The cloudinit is very, very slow compared to our other tests,
+so most of these Avocado tests have either been disabled by default
+with a decorator, or have been marked to only run with KVM.
 
-To solve this problem, move the useful parts of this file into
-main.rst and directly into ci.rst, and drop the ones (like "system
-testing") that we don't really need anymore.
+We won't include this sluggish cloudinit stuff in the functional
+framework, and we've already got plenty of other tests there that
+check pretty much the same things, so let's simply get rid of these
+old tests now.
 
-Message-ID: <20250314085959.1585568-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250414113031.151105-11-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/testing/ci-definitions.rst.inc | 121 ----------------------
- docs/devel/testing/ci.rst                 |  28 ++++-
- docs/devel/testing/main.rst               |  65 ++++++++++--
- 3 files changed, 81 insertions(+), 133 deletions(-)
- delete mode 100644 docs/devel/testing/ci-definitions.rst.inc
+ tests/avocado/boot_linux.py | 132 ------------------------------------
+ 1 file changed, 132 deletions(-)
+ delete mode 100644 tests/avocado/boot_linux.py
 
-diff --git a/docs/devel/testing/ci-definitions.rst.inc b/docs/devel/testing/ci-definitions.rst.inc
+diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
 deleted file mode 100644
-index 6d5c6fd9f20..00000000000
---- a/docs/devel/testing/ci-definitions.rst.inc
+index a029ef4ad1e..00000000000
+--- a/tests/avocado/boot_linux.py
 +++ /dev/null
-@@ -1,121 +0,0 @@
--Definition of terms
--===================
+@@ -1,132 +0,0 @@
+-# Functional test that boots a complete Linux system via a cloud image
+-#
+-# Copyright (c) 2018-2020 Red Hat, Inc.
+-#
+-# Author:
+-#  Cleber Rosa <crosa@redhat.com>
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
 -
--This section defines the terms used in this document and correlates them with
--what is currently used on QEMU.
+-import os
 -
--Automated tests
-----------------
+-from avocado_qemu.linuxtest import LinuxTest
+-from avocado_qemu import BUILD_DIR
 -
--An automated test is written on a test framework using its generic test
--functions/classes. The test framework can run the tests and report their
--success or failure [1]_.
+-from avocado import skipUnless
 -
--An automated test has essentially three parts:
 -
--1. The test initialization of the parameters, where the expected parameters,
--   like inputs and expected results, are set up;
--2. The call to the code that should be tested;
--3. An assertion, comparing the result from the previous call with the expected
--   result set during the initialization of the parameters. If the result
--   matches the expected result, the test has been successful; otherwise, it has
--   failed.
+-class BootLinuxX8664(LinuxTest):
+-    """
+-    :avocado: tags=arch:x86_64
+-    """
+-    timeout = 480
 -
--Unit testing
--------------
+-    def test_pc_i440fx_tcg(self):
+-        """
+-        :avocado: tags=machine:pc
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--A unit test is responsible for exercising individual software components as a
--unit, like interfaces, data structures, and functionality, uncovering errors
--within the boundaries of a component. The verification effort is in the
--smallest software unit and focuses on the internal processing logic and data
--structures. A test case of unit tests should be designed to uncover errors due
--to erroneous computations, incorrect comparisons, or improper control flow [2]_.
+-    def test_pc_i440fx_kvm(self):
+-        """
+-        :avocado: tags=machine:pc
+-        :avocado: tags=accel:kvm
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--On QEMU, unit testing is represented by the 'check-unit' target from 'make'.
+-    def test_pc_q35_tcg(self):
+-        """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--Functional testing
--------------------
+-    def test_pc_q35_kvm(self):
+-        """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=accel:kvm
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--A functional test focuses on the functional requirement of the software.
--Deriving sets of input conditions, the functional tests should fully exercise
--all the functional requirements for a program. Functional testing is
--complementary to other testing techniques, attempting to find errors like
--incorrect or missing functions, interface errors, behavior errors, and
--initialization and termination errors [3]_.
 -
--On QEMU, functional testing is represented by the 'check-qtest' target from
--'make'.
+-# For Aarch64 we only boot KVM tests in CI as booting the current
+-# Fedora OS in TCG tests is very heavyweight. There are lighter weight
+-# distros which we use in the machine_aarch64_virt.py tests.
+-class BootLinuxAarch64(LinuxTest):
+-    """
+-    :avocado: tags=arch:aarch64
+-    :avocado: tags=machine:virt
+-    """
+-    timeout = 720
 -
--System testing
----------------
+-    def test_virt_kvm(self):
+-        """
+-        :avocado: tags=accel:kvm
+-        :avocado: tags=cpu:host
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.vm.add_args("-machine", "virt,gic-version=host")
+-        self.vm.add_args('-bios',
+-                         os.path.join(BUILD_DIR, 'pc-bios',
+-                                      'edk2-aarch64-code.fd'))
+-        self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
+-        self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--System tests ensure all application elements mesh properly while the overall
--functionality and performance are achieved [4]_. Some or all system components
--are integrated to create a complete system to be tested as a whole. System
--testing ensures that components are compatible, interact correctly, and
--transfer the right data at the right time across their interfaces. As system
--testing focuses on interactions, use case-based testing is a practical approach
--to system testing [5]_. Note that, in some cases, system testing may require
--interaction with third-party software, like operating system images, databases,
--networks, and so on.
 -
--On QEMU, system testing is represented by the 'check-avocado' target from
--'make'.
+-# See the tux_baseline.py tests for almost the same coverage in a lot
+-# less time.
+-class BootLinuxPPC64(LinuxTest):
+-    """
+-    :avocado: tags=arch:ppc64
+-    """
 -
--Flaky tests
-------------
+-    timeout = 360
 -
--A flaky test is defined as a test that exhibits both a passing and a failing
--result with the same code on different runs. Some usual reasons for an
--intermittent/flaky test are async wait, concurrency, and test order dependency
--[6]_.
+-    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
+-    def test_pseries_tcg(self):
+-        """
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--Gating
--------
+-    def test_pseries_kvm(self):
+-        """
+-        :avocado: tags=machine:pseries
+-        :avocado: tags=accel:kvm
+-        """
+-        self.require_accelerator("kvm")
+-        self.vm.add_args("-accel", "kvm")
+-        self.vm.add_args("-machine", "cap-ccf-assist=off")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -
--A gate restricts the move of code from one stage to another on a
--test/deployment pipeline. The step move is granted with approval. The approval
--can be a manual intervention or a set of tests succeeding [7]_.
+-class BootLinuxS390X(LinuxTest):
+-    """
+-    :avocado: tags=arch:s390x
+-    """
 -
--On QEMU, the gating process happens during the pull request. The approval is
--done by the project leader running its own set of tests. The pull request gets
--merged when the tests succeed.
+-    timeout = 240
 -
--Continuous Integration (CI)
-----------------------------
--
--Continuous integration (CI) requires the builds of the entire application and
--the execution of a comprehensive set of automated tests every time there is a
--need to commit any set of changes [8]_. The automated tests can be composed of
--the unit, functional, system, and other tests.
--
--Keynotes about continuous integration (CI) [9]_:
--
--1. System tests may depend on external software (operating system images,
--   firmware, database, network).
--2. It may take a long time to build and test. It may be impractical to build
--   the system being developed several times per day.
--3. If the development platform is different from the target platform, it may
--   not be possible to run system tests in the developer’s private workspace.
--   There may be differences in hardware, operating system, or installed
--   software. Therefore, more time is required for testing the system.
--
--References
------------
--
--.. [1] Sommerville, Ian (2016). Software Engineering. p. 233.
--.. [2] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
--       A Practitioner’s Approach. p. 48, 376, 378, 381.
--.. [3] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
--       A Practitioner’s Approach. p. 388.
--.. [4] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
--       A Practitioner’s Approach. Software Engineering, p. 377.
--.. [5] Sommerville, Ian (2016). Software Engineering. p. 59, 232, 240.
--.. [6] Luo, Qingzhou, et al. An empirical analysis of flaky tests.
--       Proceedings of the 22nd ACM SIGSOFT International Symposium on
--       Foundations of Software Engineering. 2014.
--.. [7] Humble, Jez & Farley, David (2010). Continuous Delivery:
--       Reliable Software Releases Through Build, Test, and Deployment, p. 122.
--.. [8] Humble, Jez & Farley, David (2010). Continuous Delivery:
--       Reliable Software Releases Through Build, Test, and Deployment, p. 55.
--.. [9] Sommerville, Ian (2016). Software Engineering. p. 743.
-diff --git a/docs/devel/testing/ci.rst b/docs/devel/testing/ci.rst
-index ed88a2010be..e21d39db57a 100644
---- a/docs/devel/testing/ci.rst
-+++ b/docs/devel/testing/ci.rst
-@@ -1,14 +1,34 @@
- .. _ci:
- 
--==
--CI
--==
-+Continuous Integration (CI)
-+===========================
-+
-+Continuous integration (CI) requires the builds of the entire application and
-+the execution of a comprehensive set of automated tests every time there is a
-+need to commit any set of changes [1]_. The automated tests are composed
-+of unit, functional and other tests.
- 
- Most of QEMU's CI is run on GitLab's infrastructure although a number
- of other CI services are used for specialised purposes. The most up to
- date information about them and their status can be found on the
- `project wiki testing page <https://wiki.qemu.org/Testing/CI>`_.
- 
--.. include:: ci-definitions.rst.inc
-+These tests are also used as gating tests before merging pull requests.
-+A gating test restricts the move of code from one stage to another on a
-+test/deployment pipeline. The step move is granted with approval. The approval
-+can be a manual intervention or a set of tests succeeding [2]_.
-+
-+On QEMU, the gating process happens during the pull request. The approval is
-+done by the project leader running its own set of tests. The pull request gets
-+merged when the tests succeed.
-+
- .. include:: ci-jobs.rst.inc
- .. include:: ci-runners.rst.inc
-+
-+References
-+----------
-+
-+.. [1] Humble, Jez & Farley, David (2010). Continuous Delivery:
-+       Reliable Software Releases Through Build, Test, and Deployment, p. 55.
-+.. [2] Humble, Jez & Farley, David (2010). Continuous Delivery:
-+       Reliable Software Releases Through Build, Test, and Deployment, p. 122.
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index 9869bcf0341..e56da22edf6 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -5,19 +5,32 @@ Testing in QEMU
- 
- QEMU's testing infrastructure is fairly complex as it covers
- everything from unit testing and exercising specific sub-systems all
--the way to full blown acceptance tests. To get an overview of the
-+the way to full blown functional tests. To get an overview of the
- tests you can run ``make check-help`` from either the source or build
- tree.
- 
--Most (but not all) tests are also integrated into the meson build
--system so can be run directly from the build tree, for example:
--
--.. code::
-+Most (but not all) tests are also integrated as an automated test into
-+the meson build system so can be run directly from the build tree,
-+for example::
- 
-   [./pyvenv/bin/]meson test --suite qemu:softfloat
- 
- will run just the softfloat tests.
- 
-+An automated test is written with one of the test frameworks using its
-+generic test functions/classes. The test framework can run the tests and
-+report their success or failure [1]_.
-+
-+An automated test has essentially three parts:
-+
-+1. The test initialization of the parameters, where the expected parameters,
-+   like inputs and expected results, are set up;
-+2. The call to the code that should be tested;
-+3. An assertion, comparing the result from the previous call with the expected
-+   result set during the initialization of the parameters. If the result
-+   matches the expected result, the test has been successful; otherwise, it has
-+   failed.
-+
- The rest of this document will cover the details for specific test
- groups.
- 
-@@ -44,9 +57,17 @@ cannot find them.
- Unit tests
- ~~~~~~~~~~
- 
--Unit tests, which can be invoked with ``make check-unit``, are simple C tests
--that typically link to individual QEMU object files and exercise them by
--calling exported functions.
-+A unit test is responsible for exercising individual software components as a
-+unit, like interfaces, data structures, and functionality, uncovering errors
-+within the boundaries of a component. The verification effort is in the
-+smallest software unit and focuses on the internal processing logic and data
-+structures. A test case of unit tests should be designed to uncover errors
-+due to erroneous computations, incorrect comparisons, or improper control
-+flow [2]_.
-+
-+In QEMU, unit tests can be invoked with ``make check-unit``. They are
-+simple C tests that typically link to individual QEMU object files and
-+exercise them by calling exported functions.
- 
- If you are writing new code in QEMU, consider adding a unit test, especially
- for utility modules that are relatively stateless or have few dependencies. To
-@@ -885,6 +906,10 @@ changing the ``-c`` option.
- Functional tests using Python
- -----------------------------
- 
-+A functional test focuses on the functional requirement of the software,
-+attempting to find errors like incorrect functions, interface errors,
-+behavior errors, and initialization and termination errors [3]_.
-+
- The ``tests/functional`` directory hosts functional tests written in
- Python. You can run the functional tests simply by executing:
- 
-@@ -1023,3 +1048,27 @@ coverage-html`` which will create
- Further analysis can be conducted by running the ``gcov`` command
- directly on the various .gcda output files. Please read the ``gcov``
- documentation for more information.
-+
-+Flaky tests
-+-----------
-+
-+A flaky test is defined as a test that exhibits both a passing and a failing
-+result with the same code on different runs. Some usual reasons for an
-+intermittent/flaky test are async wait, concurrency, and test order dependency
-+[4]_.
-+
-+In QEMU, tests that are identified to be flaky are normally disabled by
-+default. Set the QEMU_TEST_FLAKY_TESTS environment variable before running
-+the tests to enable them.
-+
-+References
-+----------
-+
-+.. [1] Sommerville, Ian (2016). Software Engineering. p. 233.
-+.. [2] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
-+       A Practitioner’s Approach. p. 48, 376, 378, 381.
-+.. [3] Pressman, Roger S. & Maxim, Bruce R. (2020). Software Engineering,
-+       A Practitioner’s Approach. p. 388.
-+.. [4] Luo, Qingzhou, et al. An empirical analysis of flaky tests.
-+       Proceedings of the 22nd ACM SIGSOFT International Symposium on
-+       Foundations of Software Engineering. 2014.
+-    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
+-    def test_s390_ccw_virtio_tcg(self):
+-        """
+-        :avocado: tags=machine:s390-ccw-virtio
+-        :avocado: tags=accel:tcg
+-        """
+-        self.require_accelerator("tcg")
+-        self.vm.add_args("-accel", "tcg")
+-        self.launch_and_wait(set_up_ssh_connection=False)
 -- 
 2.49.0
 
