@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B32C369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 15:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5854C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 15:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7c1W-0000ro-Um; Wed, 23 Apr 2025 11:28:30 -0400
+	id 1u7c8m-0004hV-L3; Wed, 23 Apr 2025 11:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u7c1V-0000rA-4g
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 11:28:29 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u7c1S-0001fF-TK
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 11:28:28 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5f4ca707e31so9930200a12.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 08:28:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745422105; x=1746026905; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cCLtZH3yIAfLfv91Tw9IjFXviCCLe4P5y5XxLIxfQkI=;
- b=lfnysI7fFGzwg2Pz6Kcyl2eBOiaHs3H1c/6lBWDIl5+3133QSDjQQpAtLINlYb3LY1
- ltWVEL1dl4Ukrlnuf2pxdl+NCHXs8/soTLp/NyTpfQm6hcwB4QgoZ/j/8m5jjJTdFJB7
- ouHr7ffZDx7K4CcRK79o6k+oN8OP/71hb30PG9uSqRVkNYne7tW5GMCVJ5uOm9uy0iPk
- rfKhTHAFvELPbwdNn44RWnhJ181SY6/aVdxFikqIjE9T+E04kyCflhh2WwHh3JCnrzQN
- sR29Pnf0JaY+B/rN7icDYIvV4yInzlWO6jQG7Vkp+bTe+KKknOVUapg/qFnx1VHnjwaH
- RrDA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7c8l-0004hK-4J
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 11:35:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7c8j-0003vY-Cg
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 11:35:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745422553;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jQNvuHCScjFaZqJ/QfkLgsR4mPSgirHD/vypW1G2NWA=;
+ b=V8cKOU3XjO5bTTiC2GWiqjhvoom0pzZ5TzD7Mt5B4ogYQ39TSKujPujPGAChLNKpsmE/lZ
+ cqKX4M/t0PrPtqtvSe58HXc9g8A/xZ11wiiMAiX/4eyvvIdVHy9HZx6SD2+Qwi4tvDJ2lv
+ /0PzSeBRho+sLvHqsqFwW/LIp20o+HQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-615-O77d_oY1Pr2DBtY__6cKWw-1; Wed, 23 Apr 2025 11:35:52 -0400
+X-MC-Unique: O77d_oY1Pr2DBtY__6cKWw-1
+X-Mimecast-MFC-AGG-ID: O77d_oY1Pr2DBtY__6cKWw_1745422551
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-391315098b2so2013837f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 08:35:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745422105; x=1746026905;
+ d=1e100.net; s=20230601; t=1745422551; x=1746027351;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cCLtZH3yIAfLfv91Tw9IjFXviCCLe4P5y5XxLIxfQkI=;
- b=XUkOPjIz520D6fgThJbp0W+wzAClvc+qGCxCauydEwh9l0v/rF9M1YAiOkr9Tuql3F
- XzULdiXW/rgPIC09mhzDkbcSnX5l8Wy2EwS8VLRvpcKiu1wJFIDYZvei6JdeihYs3Mr/
- Wwt19VRde3OeyRkn2nM79Z2vBG0vTY5h9O7zjfL2LOB3EgjpkyfGNMxmOXUevfkLHs2F
- uh+qoFGU2m6z3H9DVKFMb9qvzP92egvNc3gcZXCAUduI5/jsYjFq/12uxPcVRB9jWQV1
- GD7iZV7yCtqSExF+I7HOnX4aj7ccWOCAp9Ykcd18kLdgTFIrOgK34CpIvqfxM/rFiom0
- 11fA==
-X-Gm-Message-State: AOJu0Yy3xvWtN+W3RGIB8icAw15JyjwWXdsQFHt9krTvu0nsvR2AKJvi
- 5YRWsYirqZhJdtZ7j0nHEX5bOiiqBAi9qZo8xsSlVOPEBfDwAGCXmOGfKnivpUY=
-X-Gm-Gg: ASbGncuEBCPmfeaJYu+t3d/PNE46fAci1E5NOLl762T/juDk02od+zz4mmkCGx1u01D
- N8HcENFUhzExHznAUTccAH8tiy3VH8UtniyB/bowQKGO19bFhXBUHxdPp1Y8H/EO5UcW3PXkMg3
- 4e/rGDIlAtr/s1IIu0KiF7qqnpLy9QN4cH8mROywCsKH/zFQcjq4nLYRCTiYmnAfrXlr5N23otK
- cV3mYpBDMsOfZb7dQGKK4dcEsqZS4pWPwSGcXgMhk90DTk1beXin7bXOn8TAbwMjhAaYruOEcYM
- d06ns6/mQYf5ivLm1gBV/Keo1CKyrAkh62iCszw=
-X-Google-Smtp-Source: AGHT+IGIwFfGhorM4HBPVRXwlnI/z+Yj9X/ZhPqpsEK4noaxXRtCYCDG3YR9fygStol4b4Xpe9brOA==
-X-Received: by 2002:a05:6402:5110:b0:5dc:74fd:abf1 with SMTP id
- 4fb4d7f45d1cf-5f62854878bmr17576465a12.15.1745422105191; 
- Wed, 23 Apr 2025 08:28:25 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::f716])
+ bh=jQNvuHCScjFaZqJ/QfkLgsR4mPSgirHD/vypW1G2NWA=;
+ b=tvwI3/GSBP5mEgHz+F4BI2An3Z263p8cmd2pkf5jTQQDftPai+SOfQ1ygJrBEpAV0g
+ 0HED/bs2XM7CmSqyWcde+mZAalr69iOxQaKVkXV0CnllKQg131tbhVhg9cm0g3Ql3i5l
+ 8yJliauhuZr5cH25+jP4Y56oogzuO3kkBGT0p9fkOuCv+Lj/v9HjZN12HJ/rKtrNG+l5
+ XDLxsQHFvjAoS/EIkq1OuLR4bjs3INOfcO2ljYcLzmxsGejv6HhPAPun5XzFYFLo7eLz
+ vzQDLGEoCmDEbvv0knwwx+AEV4HA5k5DIKqo8fpxuujyjlSN9KxDPo2yMRtCO3rKJV6s
+ brbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW97Yq+vQBu3ETgjOlhY6tfWNylh2r3o7VS5NwjU3EHDxbf6rt0l8WdyIVA8GsAaH0Ts+XuM6VmV2hb@nongnu.org
+X-Gm-Message-State: AOJu0Yz2JE7Qz4hLw9vhMzRAsSP6HPVojDf041H7+3EIkDtA7r7eLi0x
+ lhDLh+B00SgxcTwzENs04n9fR1omiQuoPcYjmNRy0189TzAacpzjMj0GLG3nDOQMvAZCUks1YRO
+ UNE2cY6sP3oFWeHw33vQqMQe/TtgG6q0pn7sFxokusYLzN8BwzOkZ
+X-Gm-Gg: ASbGncsqCi/pUpELSSmzsM7saGXTpWilSrSPsq4/p5W8d1ok7TBfbIp1rpI8a/x0dAH
+ +C3J4TimwQ+stWeUdqiD5xaMyIL7/GIKOjx3CmDH6W4zC8LTuj7O94Thw8K1PJy6lMapkxf1PKw
+ EylDsdn3I2HrIGBC3424Cl9RDC/0EZW7rjhTE2q4v9Ecdhpy+KhGSsuRmIu+j9qwgUh/FK4JRxs
+ PZZW9CgDmFHUzlZ+0JH0BxuVeuzc9pbBsiOgSGDotrZ7/gCe+r8HckN0fvVSZrWimu41wkTpqtt
+ zdZeBA==
+X-Received: by 2002:a5d:64a5:0:b0:391:253b:4046 with SMTP id
+ ffacd0b85a97d-39efba45fedmr15233287f8f.16.1745422550996; 
+ Wed, 23 Apr 2025 08:35:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbGtniVEZls4OvAnRwRhE9SRTBoDcSY+dE4gRzcFTp9HpJojtfPVOiSUMny5JZmF62KT9Ucg==
+X-Received: by 2002:a5d:64a5:0:b0:391:253b:4046 with SMTP id
+ ffacd0b85a97d-39efba45fedmr15233260f8f.16.1745422550612; 
+ Wed, 23 Apr 2025 08:35:50 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f632be9742sm7148212a12.52.2025.04.23.08.28.24
+ ffacd0b85a97d-39efa4930e4sm19210895f8f.73.2025.04.23.08.35.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 08:28:24 -0700 (PDT)
-Date: Wed, 23 Apr 2025 17:28:24 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
- abologna@redhat.com
-Subject: Re: [PATCH 6/7] target/riscv/kvm: add missing KVM CSRs
-Message-ID: <20250423-d3ca1926d6eb9b1d273b1367@orel>
-References: <20250417124839.1870494-1-dbarboza@ventanamicro.com>
- <20250417124839.1870494-7-dbarboza@ventanamicro.com>
+ Wed, 23 Apr 2025 08:35:49 -0700 (PDT)
+Date: Wed, 23 Apr 2025 11:35:46 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Yicong Yang <yangyicong@huawei.com>
+Cc: Alireza Sanaee <alireza.sanaee@huawei.com>, yangyicong@hisilicon.com,
+ qemu-devel@nongnu.org, anisinha@redhat.com, imammedo@redhat.com,
+ jonathan.cameron@huawei.com, linuxarm@huawei.com,
+ peter.maydell@linaro.org, prime.zeng@hisilicon.com,
+ shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com
+Subject: Re: [PATCH v3 4/5] hw/acpi/aml-build: Update the revision of PPTT
+ table
+Message-ID: <20250423113447-mutt-send-email-mst@kernel.org>
+References: <20250423114130.902-1-alireza.sanaee@huawei.com>
+ <20250423114130.902-5-alireza.sanaee@huawei.com>
+ <20250423083909-mutt-send-email-mst@kernel.org>
+ <6b783651-e952-ffe9-6c49-7ee9459741c8@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250417124839.1870494-7-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <6b783651-e952-ffe9-6c49-7ee9459741c8@huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,54 +114,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 17, 2025 at 09:48:38AM -0300, Daniel Henrique Barboza wrote:
-> We're missing scounteren and senvcfg CSRs, both already present in the
-> KVM UAPI.
+On Wed, Apr 23, 2025 at 10:15:42PM +0800, Yicong Yang wrote:
+> On 2025/4/23 20:39, Michael S. Tsirkin wrote:
+> > On Wed, Apr 23, 2025 at 12:41:29PM +0100, Alireza Sanaee wrote:
+> >> From: Yicong Yang <yangyicong@hisilicon.com>
+> >>
+> >> The lastest ACPI spec 6.5 support PPTT revision 3. Update it
+> >> by handy. This is compatible with previous revision.
+> >>
+> >> Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+> >> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> > 
+> > 
+> > I don't get it. Why are you updating it? Which features
+> > from the new one are you using?
+> > 
 > 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> no new features for this patchset. considered updating it to the latest ACPI
+> spec since we're going to touch the PPTT table and tested data.
 
-The patch changed enough that it's not an r-b anymore, but it probably
-should have been a reported-by in the first place anyway.
+it's best to wait until there are actual features you need.
+don't make changes for the sake of changes, there's always
+some risk.
 
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index ec74520872..a91a87b175 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -251,6 +251,11 @@ static KVMCPUConfig kvm_csr_cfgs[] = {
->      KVM_CSR_CFG("stval", stval, sizeof(target_ulong), RISCV_CSR_REG(stval)),
->      KVM_CSR_CFG("sip", mip, sizeof(uint64_t), RISCV_CSR_REG(sip)),
->      KVM_CSR_CFG("satp", satp, sizeof(target_ulong), RISCV_CSR_REG(satp)),
-> +    KVM_CSR_CFG("scounteren", scounteren, sizeof(uint32_t),
-> +                RISCV_CSR_REG(scounteren)),
-> +    KVM_CSR_CFG("senvcfg", senvcfg, sizeof(target_ulong),
-> +                RISCV_CSR_REG(senvcfg)),
-> +
+> >> ---
+> >>  hw/acpi/aml-build.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> >> index 3010325ca423..e5401dfdb1a8 100644
+> >> --- a/hw/acpi/aml-build.c
+> >> +++ b/hw/acpi/aml-build.c
+> >> @@ -2155,7 +2155,7 @@ void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
+> >>      uint32_t pptt_start = table_data->len;
+> >>      uint32_t root_offset;
+> >>      int n;
+> >> -    AcpiTable table = { .sig = "PPTT", .rev = 2,
+> >> +    AcpiTable table = { .sig = "PPTT", .rev = 3,
+> >>                          .oem_id = oem_id, .oem_table_id = oem_table_id };
+> >>  
+> >>      acpi_table_begin(&table, table_data);
+> >> -- 
+> >> 2.34.1
+> > 
+> > 
+> > .
+> > 
 
-Extra blank here and the sizeof() stuff should go away.
-
->  };
->  
->  static void *kvmconfig_get_env_addr(RISCVCPU *cpu, KVMCPUConfig *csr_cfg)
-> @@ -696,6 +701,8 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
->      env->stval = 0;
->      env->mip = 0;
->      env->satp = 0;
-> +    env->scounteren = 0;
-> +    env->senvcfg = 0;
->  }
->  
->  static int kvm_riscv_get_regs_fp(CPUState *cs)
-> -- 
-> 2.49.0
->
-
-Thanks,
-drew
 
