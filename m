@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 756DFC369D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 224B9C369D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 11:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7YCp-000297-DZ; Wed, 23 Apr 2025 07:23:55 -0400
+	id 1u7YFR-0003xY-Ny; Wed, 23 Apr 2025 07:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7YCU-00024r-Ef
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:23:37 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7YCS-0002YF-Bg
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:23:34 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso46739965e9.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 04:23:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745407410; x=1746012210; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CFtAs9bHBO+puoarQmb5VFdBHM3gJ7FvC45474FFlxw=;
- b=ec0IaRt8hE+qPFD2LdKkom5wV7SZz9c9VPsGcqAUSiudrLNtMT74Y/jCDFQDmSHiSO
- HqB7QpFMXuNM6+6/df3aIjMeLLc4mxrexUn9BIW7FVFoZciF6t7hci4gD5+3HNXv/C04
- XPsfUt+P4kNprGl2dFBglQ0gfzYuPh3W6rIbvuzunek1GLtiqHmuqOiJhnsjhdj+Z4Jf
- pV0IoI9XY7stPuOh/jhL/MEdreGTEs+vdNz5/YWF1UIkFGRDo7DHuvBtY2kvdcet6PNw
- 5LYIj0CwKDgjhs1WmUdcjHBziIZrXK/nF1JGdSLeRDU8A1Tla/uO1CtSlmGRVu5xBPe1
- Y4MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745407410; x=1746012210;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CFtAs9bHBO+puoarQmb5VFdBHM3gJ7FvC45474FFlxw=;
- b=WT9I2pDBn9S4REP3H9Ar68Np9PK67f6PyG23jPMo0UT3M0lJsy2teyzBt1mQWyYP6z
- e913a3a8OzpLq+y2EH6suRlCWO0WvuA+W7+eDqKlH8qDhGGudD2wy+P5Mrg1V7XKATgD
- +F836T9EZay87F8MHAwHkp5ph9qE6JFHXHLtv6+HBBqBYhUDc7Ur9IaPhMzjUAhMZHDu
- 3V3xjl3GtrR1nXPZ8YUDizXVjirHdw4MlXseGQ4wm2i8cFGfoLF8fEoL45Zb4AY4eBLZ
- bRnEUxxjAndXUgveBlFE958dtvdeheCHk9bemkG+b/8Hnh6o/eeVYDf1B/lR9Qn8dLrJ
- xIxA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyXh9Zg0/5al7EKPVNL1IvORw1UmQtBsw/aDW8iabXowNearY2d3mLEeJmoGA9PjKAF9T91DKQjtTr@nongnu.org
-X-Gm-Message-State: AOJu0YxKQVQNLPt4EaPbibJiWSwqc6tAaJFYY9e/2VByEJW7gqhqzrsR
- 4UPRKGtyoFbvI03v2PQQB4C2SlUiWcDjQdiYG7SlFqVexwcjmnvLI4PBKDLsClt0aDx9qFelLZB
- l
-X-Gm-Gg: ASbGncskxWPTTiMXtZvVeCxLunorARtZ4r2Dn6urLTRo9r3i20MaT3XFfY9ViRBTgSm
- Mu9CT7iJfqYBBkt3kANvf/MUpkb70Y89/s881np3STR0WVr92ulHx8oN8MT8j4LEuxorMUOYW+B
- exMwku5kucpsq9RtH3HH+/kKUhPODMaSAGTYgVps1s2m8pNNHxoSoti4yQxja0oJzUo62QcnVTt
- aoTmb2M7yUKkL76roYVq+RYayBduPt1iPsLH6xK72Y5GUj1Lb/a1fjzbf1bWrXJr4nnWoeTz9ha
- Qkh3WZPvoNTvKZXsnsr2bywK6CexZP083Lre6Ts/6w2pkCltV70c2tWTqP5YTtrPu7/MCnch6b2
- 6fTMb3qvE
-X-Google-Smtp-Source: AGHT+IGc6fUvsPdyb8hcOx67exhfP/McQu09fXy/eafueZSXyITYdtGZ7rVxMVKYWpQO9D8oB63dgQ==
-X-Received: by 2002:a05:600c:54c2:b0:43d:77c5:9c1a with SMTP id
- 5b1f17b1804b1-4406b928b57mr135637505e9.4.1745407410608; 
- Wed, 23 Apr 2025 04:23:30 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4408d8d191bsm34617975e9.1.2025.04.23.04.23.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 04:23:30 -0700 (PDT)
-Message-ID: <dc690610-8484-4da0-9233-74d711f263cf@linaro.org>
-Date: Wed, 23 Apr 2025 13:23:28 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7YF9-0003uh-Fg
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:22 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7YF7-0002vw-47
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 07:26:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745407577; x=1776943577;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=hFmCDh1g6jFUGO8m7NQhmZ+M7gV0kLnTguTu4AQJhYA=;
+ b=ILm2u1j2aUjNZkAGGbAGYxnkVZuTrF2q8+d/8BzGLSNdp0DblD59N/m8
+ rI0RWsNCuda8YNYH8QyrrXk0Q9QcTgiPItaY0HToPFjW6qqitTAjZ8cuF
+ b5AEG32qWcRswWwPmid2yI9lvhxYQBdRB5LJK5umM1z5Xc9N02qvX26tL
+ UBphuCfbQaywn0ES3kuZUGKaLTmCh4V1dcCmvJZVw5w6Ux0lSCfhJUnw4
+ 85k1BL2CulrN6omdJAVRViJUnAfG2oN1sDnEfzZ+kjTSD/KSEgx9nbx2c
+ fLzVPE3htJQGusLs/HErcH4ybTpkjhmeZ6wjzz8E7gQYpiU8rJ53YeGCF g==;
+X-CSE-ConnectionGUID: 0tqkhLdeR6WSPtR5xXim4Q==
+X-CSE-MsgGUID: lIcY+OS6TmGZQLTEoie26w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11411"; a="50825254"
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="50825254"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 04:26:14 -0700
+X-CSE-ConnectionGUID: tsvDa8cqR0qLIgIGbl3vlA==
+X-CSE-MsgGUID: FVISKOKWSki5mLfx20fGug==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,233,1739865600"; d="scan'208";a="137150725"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 23 Apr 2025 04:26:11 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tejus GK <tejus.gk@nutanix.com>,
+ Jason Zeng <jason.zeng@intel.com>,
+ Manish Mishra <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [RFC 01/10] i386/cpu: Mark CPUID[0x80000005] as reserved for Intel
+Date: Wed, 23 Apr 2025 19:46:53 +0800
+Message-Id: <20250423114702.1529340-2-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250423114702.1529340-1-zhao1.liu@intel.com>
+References: <20250423114702.1529340-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Move device tree files in a subdir in pc-bios
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: "Edgar E.Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <cover.1745402140.git.balaton@eik.bme.hu>
- <f3501944-f278-45a8-91a7-0dab5a5416e0@nutanix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f3501944-f278-45a8-91a7-0dab5a5416e0@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,66 +87,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mark,
+Per SDM, 0x80000005 leaf is reserved for Intel CPU, and its current
+"assert" check blocks adding new cache model for non-AMD CPUs.
 
-On 23/4/25 12:18, Mark Cave-Ayland wrote:
-> On 23/04/2025 11:02, BALATON Zoltan wrote:
-> 
->> Simple series doing what the subject says.
->>
->> v2:
->> - Added changes to qemu.nsi (Philippe)
->> - Changed order of enum to keep it sorted. This changes value of
->> existing define but the value is not relevant, always used by name.
->>
->> BALATON Zoltan (2):
->>    system/datadir: Add new type constant for DTB files
->>    pc-bios: Move device tree files in their own subdir
->>
->>   MAINTAINERS                                |   2 +-
->>   hw/microblaze/boot.c                       |   2 +-
->>   hw/ppc/ppc440_bamboo.c                     |   2 +-
->>   hw/ppc/sam460ex.c                          |   2 +-
->>   hw/ppc/virtex_ml507.c                      |   2 +-
->>   include/qemu/datadir.h                     |  11 +++++++---
->>   pc-bios/{ => dtb}/bamboo.dtb               | Bin
->>   pc-bios/{ => dtb}/bamboo.dts               |   0
->>   pc-bios/{ => dtb}/canyonlands.dtb          | Bin
->>   pc-bios/{ => dtb}/canyonlands.dts          |   0
->>   pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
->>   pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
->>   pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
->>   pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
->>   pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
->>   pc-bios/meson.build                        |  23 +--------------------
->>   qemu.nsi                                   |   2 +-
->>   system/datadir.c                           |   5 ++++-
->>   18 files changed, 42 insertions(+), 32 deletions(-)
->>   rename pc-bios/{ => dtb}/bamboo.dtb (100%)
->>   rename pc-bios/{ => dtb}/bamboo.dts (100%)
->>   rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
->>   rename pc-bios/{ => dtb}/canyonlands.dts (100%)
->>   create mode 100644 pc-bios/dtb/meson.build
->>   rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
->>   rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
->>   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
->>   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
-> 
-> In previous discussions we've had around what to do with pc-bios, wasn't 
-> the consensus that we should aim towards dividing up the directory on a 
-> per-target basis? I'm wondering if this is going in right direction, as 
-> I can certainly see that a per-target split would be more useful to 
-> packagers.
+Therefore, check the vendor and encode this leaf as all-0 for Intel
+CPU. And since Zhaoxin mostly follows Intel behavior, apply the vendor
+check for Zhaoxin as well.
 
-pc-bios/ is already a mess, packagers usually take it as a whole. This
-series isn't making the current situation worse.
+Note, for !vendor_cpuid_only case, non-AMD CPU would get the wrong
+information, i.e., get AMD's cache model for Intel or Zhaoxin CPUs.
+For this case, there is no need to tweak for non-AMD CPUs, because
+vendor_cpuid_only has been turned on by default since PC machine v6.1.
 
-I don't recall a per-target split discussion, but one moving firmware
-blobs out of tree in a more adapted storage like git-lfs.
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-My 2 cents...
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1b64ceaaba46..8fdafa8aedaf 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7248,11 +7248,23 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         *edx = env->cpuid_model[(index - 0x80000002) * 4 + 3];
+         break;
+     case 0x80000005:
+-        /* cache info (L1 cache) */
+-        if (cpu->cache_info_passthrough) {
++        /*
++         * cache info (L1 cache)
++         *
++         * For !vendor_cpuid_only case, non-AMD CPU would get the wrong
++         * information, i.e., get AMD's cache model. It doesn't matter,
++         * vendor_cpuid_only has been turned on by default since
++         * PC machine v6.1.
++         */
++        if (cpu->vendor_cpuid_only &&
++            (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
++            *eax = *ebx = *ecx = *edx = 0;
++            break;
++        } else if (cpu->cache_info_passthrough) {
+             x86_cpu_get_cache_cpuid(index, 0, eax, ebx, ecx, edx);
+             break;
+         }
++
+         *eax = (L1_DTLB_2M_ASSOC << 24) | (L1_DTLB_2M_ENTRIES << 16) |
+                (L1_ITLB_2M_ASSOC <<  8) | (L1_ITLB_2M_ENTRIES);
+         *ebx = (L1_DTLB_4K_ASSOC << 24) | (L1_DTLB_4K_ENTRIES << 16) |
+-- 
+2.34.1
 
-Regards,
-
-Phil.
 
