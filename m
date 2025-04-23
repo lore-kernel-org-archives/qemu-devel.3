@@ -4,70 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AFBC369CB
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8C5C369CB
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 12:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7Zap-00040b-CQ; Wed, 23 Apr 2025 08:52:47 -0400
+	id 1u7Zcr-0004i5-Gf; Wed, 23 Apr 2025 08:54:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u7Zan-000409-Li
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:52:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u7Zcc-0004gh-1B
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:54:39 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1u7Zal-00066i-5c
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:52:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745412760;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=uM9YKiHGsm/d60SWaEm/jEGa3bibpel2zwiDQc91p5M=;
- b=IDzWRsV+VVXAyVQI1qmJX71OnVugy1mOOLe464pdkcLzd2GPUT6t4oF9NUdxiC3xwU5Fx6
- I1s1GdWDMw/TQZoMhzDmBmUN7PSSByfvtUvGeVW9ti25ikHpzpsuqA6GtcLNBOdAr6WiMn
- +uer5o9FnQz1eEyMzsaG17T8fnChXpg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-acFEklAuPNOIFGQ-j2nMsw-1; Wed,
- 23 Apr 2025 08:52:38 -0400
-X-MC-Unique: acFEklAuPNOIFGQ-j2nMsw-1
-X-Mimecast-MFC-AGG-ID: acFEklAuPNOIFGQ-j2nMsw_1745412757
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2F631800878; Wed, 23 Apr 2025 12:52:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.34])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA3281800378; Wed, 23 Apr 2025 12:52:35 +0000 (UTC)
-Date: Wed, 23 Apr 2025 13:52:32 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Dietmar Maurer <dietmar@proxmox.com>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH v3 8/9] vnc: initialize gst during argument processing
-Message-ID: <aAjikKmtZCqBL07A@redhat.com>
-References: <20250418112953.1744442-1-dietmar@proxmox.com>
- <20250418112953.1744442-9-dietmar@proxmox.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u7ZcZ-0006BE-IS
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 08:54:37 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7A6B055D21A;
+ Wed, 23 Apr 2025 14:54:28 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id pobS7GJzfhDc; Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6E2A455C592; Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6BE53745683;
+ Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
+Date: Wed, 23 Apr 2025 14:54:26 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org, 
+ "Edgar E.Iglesias" <edgar.iglesias@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
+ Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 0/2] Move device tree files in a subdir in pc-bios
+In-Reply-To: <aAjTT6qRwp139RII@redhat.com>
+Message-ID: <fe7faa77-6480-b6cb-fb7e-b0ae17735646@eik.bme.hu>
+References: <cover.1745402140.git.balaton@eik.bme.hu>
+ <f3501944-f278-45a8-91a7-0dab5a5416e0@nutanix.com>
+ <dc690610-8484-4da0-9233-74d711f263cf@linaro.org>
+ <aAjTT6qRwp139RII@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250418112953.1744442-9-dietmar@proxmox.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1178454567-1745412866=:5513"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,79 +70,134 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 18, 2025 at 01:29:52PM +0200, Dietmar Maurer wrote:
-> So that we can set --gst- options on the qemu command line.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I don't think this is desirable. It exposes a bunch of arbitrary
-command line arguments that QEMU has no visibility or control
-over. This will complicate our long term work / goal of moving all
-QEMU configuration to QMP.
+--3866299591-1178454567-1745412866=:5513
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-CC Markus for a 2nd opinion as our command line modelling / QMP
-expert.
+On Wed, 23 Apr 2025, Daniel P. Berrangé wrote:
+> On Wed, Apr 23, 2025 at 01:23:28PM +0200, Philippe Mathieu-Daudé wrote:
+>> Hi Mark,
+>>
+>> On 23/4/25 12:18, Mark Cave-Ayland wrote:
+>>> On 23/04/2025 11:02, BALATON Zoltan wrote:
+>>>
+>>>> Simple series doing what the subject says.
+>>>>
+>>>> v2:
+>>>> - Added changes to qemu.nsi (Philippe)
+>>>> - Changed order of enum to keep it sorted. This changes value of
+>>>> existing define but the value is not relevant, always used by name.
+>>>>
+>>>> BALATON Zoltan (2):
+>>>>    system/datadir: Add new type constant for DTB files
+>>>>    pc-bios: Move device tree files in their own subdir
+>>>>
+>>>>   MAINTAINERS                                |   2 +-
+>>>>   hw/microblaze/boot.c                       |   2 +-
+>>>>   hw/ppc/ppc440_bamboo.c                     |   2 +-
+>>>>   hw/ppc/sam460ex.c                          |   2 +-
+>>>>   hw/ppc/virtex_ml507.c                      |   2 +-
+>>>>   include/qemu/datadir.h                     |  11 +++++++---
+>>>>   pc-bios/{ => dtb}/bamboo.dtb               | Bin
+>>>>   pc-bios/{ => dtb}/bamboo.dts               |   0
+>>>>   pc-bios/{ => dtb}/canyonlands.dtb          | Bin
+>>>>   pc-bios/{ => dtb}/canyonlands.dts          |   0
+>>>>   pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
+>>>>   pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
+>>>>   pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
+>>>>   pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
+>>>>   pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
+>>>>   pc-bios/meson.build                        |  23 +--------------------
+>>>>   qemu.nsi                                   |   2 +-
+>>>>   system/datadir.c                           |   5 ++++-
+>>>>   18 files changed, 42 insertions(+), 32 deletions(-)
+>>>>   rename pc-bios/{ => dtb}/bamboo.dtb (100%)
+>>>>   rename pc-bios/{ => dtb}/bamboo.dts (100%)
+>>>>   rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
+>>>>   rename pc-bios/{ => dtb}/canyonlands.dts (100%)
+>>>>   create mode 100644 pc-bios/dtb/meson.build
+>>>>   rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
+>>>>   rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
+>>>>   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
+>>>>   rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
+>>>
+>>> In previous discussions we've had around what to do with pc-bios, wasn't
+>>> the consensus that we should aim towards dividing up the directory on a
+>>> per-target basis? I'm wondering if this is going in right direction, as
+>>> I can certainly see that a per-target split would be more useful to
+>>> packagers.
 
-> 
-> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-> ---
->  system/vl.c | 8 ++++++++
->  ui/vnc.c    | 4 ----
->  2 files changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/system/vl.c b/system/vl.c
-> index ec93988a03..c7fff02da2 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -140,6 +140,10 @@
->  #include "qemu/guest-random.h"
->  #include "qemu/keyval.h"
->  
-> +#ifdef CONFIG_GSTREAMER
-> +#include <gst/gst.h>
-> +#endif
-> +
->  #define MAX_VIRTIO_CONSOLES 1
->  
->  typedef struct BlockdevOptionsQueueEntry {
-> @@ -2848,6 +2852,10 @@ void qemu_init(int argc, char **argv)
->      bool userconfig = true;
->      FILE *vmstate_dump_file = NULL;
->  
-> +#ifdef CONFIG_GSTREAMER
-> +    gst_init(&argc, &argv);
-> +#endif
-> +
->      qemu_add_opts(&qemu_drive_opts);
->      qemu_add_drive_opts(&qemu_legacy_drive_opts);
->      qemu_add_drive_opts(&qemu_common_drive_opts);
-> diff --git a/ui/vnc.c b/ui/vnc.c
-> index 6db03a1550..8f6287e2e6 100644
-> --- a/ui/vnc.c
-> +++ b/ui/vnc.c
-> @@ -4350,10 +4350,6 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
->      Error *local_err = NULL;
->      char *id = (char *)qemu_opts_id(opts);
->  
-> -#ifdef CONFIG_GSTREAMER
-> -    gst_init(NULL, NULL);
-> -#endif
-> -
->      assert(id);
->      vnc_display_init(id, &local_err);
->      if (local_err) {
-> -- 
-> 2.39.5
-> 
-> 
+One problem is that pc-bios doesn't only contain machine firmware but also 
+card ROMs which would belong to more targets (or archs) as e.g. PCI cards 
+work on multiple archs. So it's not trivial to split by target, you'd 
+still have a lot of files not easily assigned to any target.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+This series is in preparation for another that will add a dtb for pegasos2 
+and I did not want to increase the mess and took the opportunity to try to 
+tidy it a bit. I don't intend to do any major refactoring of the pc-bios 
+dir, that's out of scope of these patches.
 
+>> pc-bios/ is already a mess, packagers usually take it as a whole. This
+>> series isn't making the current situation worse.
+>>
+>> I don't recall a per-target split discussion, but one moving firmware
+>> blobs out of tree in a more adapted storage like git-lfs.
+>
+> Talking about the pc-bios dir in general is a bit of a can of worms
+> and we never make concrete progress historically :-(
+>
+> Probably best to split up the problem to some extent.
+>
+> The device tree files are conceptually quite different from the
+> 3rd party pre-built firmware images, which are diffferent from
+> the keymaps.
+>
+> IIUC, device tree files are tied to specific machine types, so
+> I wonder if they should not simply live alongside their machine
+> type .c impl file, completely outside of pc-bios ?
+>
+> eg
+>
+>  petalogix-ml605.{dts,dtb} live alongside hw/microblaze/petalogix_ml605_mmu.c
+>  babmboo.{dts,dtb} live alongside ./hw/ppc/ppc440_bamboo.c
+
+You need the dtbs at run time and the dir where we can look files up is 
+the pc-bios. So these need to be installed there at the end. We could 
+scatter them around in the source to put them next their machines but that 
+would make installation of them more difficult than having it in one dir.
+
+> For the keymaps it feels like an probable easy win to move them to a
+> ui/keymaps/ directory instead.
+
+Currently you can run a git build directly from build dir and it will find 
+the roms/dtbs/keymaps. You can also run a binary copied elsewhere if you 
+pass -L path/to/pc-bios. Moving things out of it would break this and may 
+cause more problems than it would solve.
+
+> ie in general try to get 'pc-bios' to contain only 3rd party pre-built
+> binaries, as a first goal. A second goal might be merging pc-bios/
+> into roms/, and a final goal could be spinning off pre-built ROMs into
+> a separate release tarball, and/or separate git repos.
+
+Maybe a less ambitious way could be just to tag files in pc-bios in some 
+way so it's known which machines or devices need them then you could make 
+a script or something to pick only the files that you need for the 
+installed machines or config. That seems less work then moving everything 
+off from pc-bios which I don't see how would work with the runtime search 
+path which would still expect all of these to be at one place. Maybe this 
+could be done in Kconfig?
+
+But all that is beyond this series which just wanted to put the dtb files 
+separate from roms like was already done for keymaps just to make it 
+easier to edit them in the source at one place.
+
+Regards,
+BALATON Zoltan
+--3866299591-1178454567-1745412866=:5513--
 
