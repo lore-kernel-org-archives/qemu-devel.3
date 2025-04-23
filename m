@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EE2C369D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 20:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05461C369D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 23 Apr 2025 20:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7giy-000747-Hz; Wed, 23 Apr 2025 16:29:40 -0400
+	id 1u7h3H-0003bq-Kr; Wed, 23 Apr 2025 16:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1u7gix-00073y-Kf
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 16:29:39 -0400
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7h3F-0003bb-CV
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 16:50:37 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1u7giq-0001yL-C9
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 16:29:39 -0400
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-47666573242so111531cf.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 13:29:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u7h3D-0004bg-PP
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 16:50:37 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22c33e5013aso3718795ad.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 13:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1745440170; x=1746044970; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ER7TLi/94zfPnW2Dvdt9tHnEU/UQNEdkQG+M6j7PKug=;
- b=c1mqyMfy3TiCfV7Nuw54MCScCBWsjOAwwI6kiahIyTaWauaA4meg18uPZSMUxO7nbt
- l7DdngQrIrDbC7RLJdOfOA6occihH7JrpwVQsvu9NG0AHIgTVwixP9y6z8pvgbwwwliq
- vbGfNa047KZyVhVASXmKNLQd2+c4JHRZiIiLriyDU+8ejOe6S3OfegiNsO9ypkdGdECp
- Vku6GNq/m5Jea61cwog9BlBzNCzr5Y/R4/YIC4+gapmjjCDRvUw/zkSwpokfx9ulWzPz
- evKPrMJ2+uEFVp7HW+rueNxbDE2gyzzum5mr7F8NHo2JvsJPZ2wtOyCdVPbdRr1Q3QZT
- ws+A==
+ d=linaro.org; s=google; t=1745441434; x=1746046234; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wIy15xrOE+YZn7Txu/ZnurLRmzccmN9v2f0qlSRFlBc=;
+ b=qrtbkBCeGvX2+2CTAcctCDOG1pReNxHxNS+VLDYRq4QGkHzdctz0yt05rTr2VNf7hd
+ EK23fYzmRRrTQ4vpJtBkdgYkH2VCOUCEjud02gF9XMQu6PHR93Jb66f20IVhHQmf+G8H
+ +Mw2lio/AUWlnp/Z+4INrwWpiJIJiI/gfBGKEluIzSp21xStjU8ZfLMycpnKd/mcfbQR
+ 6aKdQ7kBrqIlDYaFBDOX80PaFi7vcrHTrv+g7VVrYOCBvjYhdcU0ItVJFg4MHkW8fBwT
+ WdV7bH2j99KWqBpprHFGcedUQM2Z8AEHMihpZkxT/avGUGf2UjJyXJ3b9J8RZhpNwcdv
+ 7muA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745440170; x=1746044970;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ER7TLi/94zfPnW2Dvdt9tHnEU/UQNEdkQG+M6j7PKug=;
- b=MpUgNZ22UY9kA6nZD2Abmx3t188Wc6pEAFuggp2m/6cSG8ooQcHGVVB+Z9viU2078B
- 79rqGNcvGsXa5SbClq2YJ8rHRytz+U6qFXD9lakFmSMm4NPQvnZfKSBR4b45iRURdXOE
- nqt4Er1VtjCRwg+KSniXdTT5XTpX4jZuLzRCzJMZABFnxcar0Z+Q8vplnmGrKeRCZ96h
- oCvZ3Du3L/Z4TqpcqSSqJ8eqhgQimNG925yfYUPIzISaGaEEYbSRbZNk1Os3nA69IxfD
- auzZ2ZLvpt18SKXZ23g7iT+APftov0xF/pA2XUDUoavOjKKLcRBzsYUq0snpAFpq6WE+
- 0sJw==
+ d=1e100.net; s=20230601; t=1745441434; x=1746046234;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wIy15xrOE+YZn7Txu/ZnurLRmzccmN9v2f0qlSRFlBc=;
+ b=LiaquCHYuvxT6gFwzy8xte+wTRDSViTFsoSTWXPT8PqTuu0vX6mS3Q1og0c2wowlzF
+ QcLTPjg3L+A+9+ABIdJBZHXfy/39ryqoBSXPcC9UF8OEIlW2N0SCDC3LE2udyd94vBH7
+ HIqgQiLl6KUNoNaMAWS1N8D1vPo6sGCFhwoMa5ZwGDUjLVZyRagw7Vgqc5TzFNNngdLs
+ G29R7yA/zMwe1u/glnt2OjJTeDUKrTdPQGquGotrMPCYPU2GbNYH/Pq08+A01ly1tnfB
+ 52dUANHMmODUbb6Fb10skuS6tafVi3bE2AN+gVBIm4RUDD5DIgT/ipWZocFcfS9JBvEj
+ gu5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdEAf9s1rAFUosrUR7v9nuOQPyUzTyKdzqw/tAAlARt2v4o1EdeJ6vFuri1624GOY/tcw/vCgz3ZwM@nongnu.org
-X-Gm-Message-State: AOJu0YxYm2j/ygoFMWTueLNaZzLKjbzBP/o8H9igwv+4bd0ULpIEBDjI
- vNDJbrqn93TvlLaASiCv3qS4fHoC+tEC6L13xS5gWkoTrpRHrpJEuI6cHx/TtgkeWPHOtyiSSyE
- TsqreGz1aqQtRvIphHRVLYQdv67/qolJBlZRz
-X-Gm-Gg: ASbGncsRijiWn3I/ES14WWNpnRbkzeh0NnM92EWbK66E/ZKU2BsLLSm2NfPrGsscJ3/
- V+lgkN997knxeE04f+4ZT3hOjtksWtETMqPl7KSF7zT3esTPLJusiRu08/pU0TDu8Uh40jyYwQ5
- uCCxI5mvq2A1+/5rc4gBEaY7NosQ1Skneal1l/8eB2aOVlSxAgi1g=
-X-Google-Smtp-Source: AGHT+IGPUdtazUUKczKphd68mtn/H/PTv5PufYt23EgYw1FCGF0uhw/bHkxqIndfmAVBJmpmHoAmZq6LZWY/MJBgzhs=
-X-Received: by 2002:a05:622a:5a85:b0:477:2c12:9253 with SMTP id
- d75a77b69052e-47e7a58d361mr940031cf.16.1745440170149; Wed, 23 Apr 2025
- 13:29:30 -0700 (PDT)
+ AJvYcCV8jA9Ak0vg4YERrz8an0l2PtL+n4RbK2XX13MpUKRQTGMGW9BsPeR0sYejR4pQkz9D8e7hJ/6X3AhV@nongnu.org
+X-Gm-Message-State: AOJu0YxaGZXD7ZXj1b/gTKxQMQ7Yo9E79TNi9LI1oLuCQKk2kT8Gae+Q
+ hpSKqJbhfqn4oC/Yl+VKw3yr8mjABDfyAMwcONvvaES0bRkUQIlEpqVJi7wysLs=
+X-Gm-Gg: ASbGncsJ5onyfh2zvgh0FlQIQaA4uKXwvmhpYHzwD063AEcPeJhCXRcMsQSAJpobgzh
+ Mwl/bRbYCNcoxoI04UeM4iWkBLyC+vx04cEfkMqja3w1dye7QtNQEU5N7heKvkv/T1K5vGjPpRe
+ fj6rFt5DDPVZ65qTu2wfVmYGnUZaA0RXcrz1DlJHOk6EDKkOEk0v3G20NXJ2Ex8voarJ7qovzy4
+ frsFbQ2Q56qMifuJvdwKiDT87JsqSMQv28uBo3AfAWlWWH6y5T3Ek1Ss+HR4OS5xXUD2ouAQSLw
+ tvAOY9Ny9PHyBJ/1lzWC0wPI4sJmawdDcjJcUnegF5TPcjcW1Y0UvTwhUIVFFVE49cqUkH4zQIE
+ ICrRck4Q=
+X-Google-Smtp-Source: AGHT+IG81tVoRqHefnfqtgLP2CQQBXr+QUXWs0001ik7yY2MHhxTL8O+bl1rctL18dfB3760lF2LiA==
+X-Received: by 2002:a17:902:e80d:b0:223:53fb:e1dd with SMTP id
+ d9443c01a7336-22c535747d6mr255096055ad.9.1745441433925; 
+ Wed, 23 Apr 2025 13:50:33 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22c50bf5398sm109635205ad.90.2025.04.23.13.50.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 23 Apr 2025 13:50:33 -0700 (PDT)
+Message-ID: <823947da-cc09-45cc-993a-7dc728e7e88a@linaro.org>
+Date: Wed, 23 Apr 2025 13:50:31 -0700
 MIME-Version: 1.0
-References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
- <20250423072350.541742-6-jamin_lin@aspeedtech.com>
- <fdd1e0dd-d207-4ca8-8a07-abe92d937c40@kaod.org>
-In-Reply-To: <fdd1e0dd-d207-4ca8-8a07-abe92d937c40@kaod.org>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Wed, 23 Apr 2025 13:29:18 -0700
-X-Gm-Features: ATxdqUEeE26y04QV049sbiQ0vq369Y8SQRDYNWSdxherSAQg7UUP77iBp5uQQME
-Message-ID: <CA+QoejXSrPy2SWCtWpw4WXCx6W5vTOZpYBCE=PzSfnQTnWqekg@mail.gmail.com>
-Subject: Re: [PATCH v5 05/11] pc-bios: Add AST27x0 vBootrom
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, troy_lee@aspeedtech.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=nabihestefan@google.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -180
-X-Spam_score: -18.1
-X-Spam_bar: ------------------
-X-Spam_report: (-18.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 013/147] system/xen: remove inline stubs
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20250422192819.302784-1-richard.henderson@linaro.org>
+ <20250422192819.302784-14-richard.henderson@linaro.org>
+ <dfcf9c43-4585-46e0-8d7c-0855d348c38a@linaro.org>
+ <f54bd881-f75f-4a89-a293-7d49f82748bb@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <f54bd881-f75f-4a89-a293-7d49f82748bb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,259 +107,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just got merged into https://github.com/google/vbootrom
+On 4/23/25 08:58, Pierrick Bouvier wrote:
+> On 4/23/25 02:22, Philippe Mathieu-Daudé wrote:
+>> Hi Pierrick,
+>>
+>> On 22/4/25 21:26, Richard Henderson wrote:
+>>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>> Message-ID: <20250317183417.285700-14-pierrick.bouvier@linaro.org>
+>>> ---
+>>>    include/system/xen-mapcache.h | 41 -----------------------------------
+>>>    include/system/xen.h          | 21 +++---------------
+>>>    2 files changed, 3 insertions(+), 59 deletions(-)
+>>
+>>
+>>> diff --git a/include/system/xen.h b/include/system/xen.h
+>>> index 990c19a8ef..5f41915732 100644
+>>> --- a/include/system/xen.h
+>>> +++ b/include/system/xen.h
+>>> @@ -25,30 +25,15 @@
+>>>    #endif /* COMPILING_PER_TARGET */
+>>>    #ifdef CONFIG_XEN_IS_POSSIBLE
+>>> -
+>>>    extern bool xen_allowed;
+>>> -
+>>>    #define xen_enabled()           (xen_allowed)
+>>> +#else /* !CONFIG_XEN_IS_POSSIBLE */
+>>> +#define xen_enabled() 0
+>>> +#endif /* CONFIG_XEN_IS_POSSIBLE */
+>>
+>> Just to be sure, you said we should remove CONFIG_XEN_IS_POSSIBLE?
+> 
+> More "Ideally, it should not have been introduced", and {accel}_enabled should be a proper 
+> function, and needed stubs should be added for other functions.
+> CONFIG_{ACCEL}_IS_POSSIBLE is just "yet another way" to stub some accelerator functions, 
+> while we could have proper stubs instead.
+> As long as it's not blocking our work, I don't think we should do this cleanup.
+> 
+> For your case, concerning hvf, I said it would be preferable to simply implement 
+> hvf_enabled() as normal function, instead of mimicking the CONFIG_{ACCEL}_IS_POSSIBLE 
+> pattern, since it has not yet been introduced for this accelerator.
+> It it's more simple to simply replicate this, no worries, go ahead, it just concerns one 
+> header.
 
-Commit id: 82bed5ca62295228ea7bcdc721b63db178f686e8
+It's obvious why it's done though -- expanding accel_enabled() to 0 lets the compiler do 
+more dead code elimination at compile-time.
 
-Thanks,
 
-Nabih
-
-On Wed, Apr 23, 2025 at 2:28=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod.org=
-> wrote:
->
-> On 4/23/25 09:23, Jamin Lin wrote:
-> > The boot ROM is a minimal implementation designed to load an AST27x0 bo=
-ot image.
-> > Its source code is available at:
-> > https://github.com/google/vbootrom
->
-> It is not merged yet. Please resend when done and mention the commit id.
->
-> Thanks,
->
-> C.
->
->
->
->
-> >
-> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> > Reviewed-by: Nabih Estefan <nabihestefan@google.com>
-> > Tested-by: Nabih Estefan <nabihestefan@google.com>
-> > ---
-> >   MAINTAINERS                 |   1 +
-> >   pc-bios/README              |   6 ++++++
-> >   pc-bios/ast27x0_bootrom.bin | Bin 0 -> 15424 bytes
-> >   pc-bios/meson.build         |   1 +
-> >   4 files changed, 8 insertions(+)
-> >   create mode 100644 pc-bios/ast27x0_bootrom.bin
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index d54b5578f8..70ab0d0afa 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1163,6 +1163,7 @@ F: docs/system/arm/fby35.rst
-> >   F: tests/*/*aspeed*
-> >   F: tests/*/*ast2700*
-> >   F: hw/arm/fby35.c
-> > +F: pc-bios/ast27x0_bootrom.bin
-> >
-> >   NRF51
-> >   M: Joel Stanley <joel@jms.id.au>
-> > diff --git a/pc-bios/README b/pc-bios/README
-> > index f0f13e15f2..d009c37895 100644
-> > --- a/pc-bios/README
-> > +++ b/pc-bios/README
-> > @@ -89,6 +89,12 @@
-> >     more features over time as needed. The source code is available at:
-> >     https://github.com/google/vbootrom
-> >
-> > +- ast27x0_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for
-> > +  ASPEED AST27x0 BMC SOC. It currently implements the bare minimum to
-> > +  load, parse, initialize and run boot images stored in SPI flash, but=
- may grow
-> > +  more features over time as needed. The source code is available at:
-> > +  https://github.com/google/vbootrom
-> > +
-> >   - hppa-firmware.img (32-bit) and hppa-firmware64.img (64-bit) are fir=
-mware
-> >     files for the HP-PARISC (hppa) architecture.
-> >     They are built form the SeaBIOS-hppa sources, which is a fork of Se=
-aBIOS
-> > diff --git a/pc-bios/ast27x0_bootrom.bin b/pc-bios/ast27x0_bootrom.bin
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..d46403b023c00f989b6facb=
-397d57bea7e5c583a
-> > GIT binary patch
-> > literal 15424
-> > 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
-z
-> > zXqzBt?Enw3W1~p>e!>f22U1|EJIHVf{p_L^;K<k=3D`^o3G<MH`~Cr$J(ks{2m1T9nK
-> > zILE1P_N<(zyawc*imOFD^~_tOu?jQ-;#um_p}f^%^v6(xG9cqrT<C=3Drd@bP5g1(vu
-> > zzF@8pmx!kD`{0k1k@{x8&2{_0*PHN#H`tfKChW;;z$f^fe-^&L_2?7-j((Xu)Of5#
-> > z)YW#K{ZD433-%4f<A({mop`D*%8W3lYzG`|-Y&A}tjf2~JVsha(YLzvIL=3D<*UF#B_
-> > zZQCAIxtBc+zxOHpqn&5LFZ2D6K)(mHV4qgT_0U$*_9)uq)1~3UzXAL=3DA>#qS5{GiV
-> > z4m}2-r-RVZGs@4Vl#m8#kw?<e>TKV*=3D;&()<bhpIBHzJYt4pTgsuoW_Xjbinye+VW
-> > zg%}A)hSE88?fSGK+Hv|PXwbGN>EHC}L(m`BqAfkndbA;9jlND^U3>AFbEQ~sI8JI@
-> > z(1%rBbm9VYi2tj7-}M3X-Cerqt;C~^R_9vqE8G9ca}9GB*5;bTN%%Z+9b&ZDD_Vjl
-> > zfgZ>U;#=3D)Oh~wIWc;pMaE5=3DY;b(Zy>hI+>S{?R|RS3au!Y$Nvw@Y6Q081*&Km4*HR
-> > zdzCiy0*#%J+X@JK^fqs~G~SANQwxqCjk-}*6s#<}^23e9Ll018?UK;zfD59pi{0<N
-> > z9x+@Wli+xBS8!sgjV(Pmp86HgA>UEJxbe+3M}n3&3-Qmph5eN$cuF#G1-Gkw5Hy0P
-> > zXk)=3DR>A12A_@=3DDC1P|_d%-z(V7jpMxNtFxh>g6DGa1c893FU+S(eEhv{}bO4t3IWJ
-> > z5w;Fc@01Rv<9iEa>&ry{2;IdnPQSOH<90k#x9yhM|2+8bKuxtQ2_Yx9Q6D=3D@YfBc!
-> > zTOgNZO6VN)`%uc<Z!t%meH!{@eMT(TlMi#3wWSO`K^=3Dbw<M4s&j-h5Of$qPJyER8b
-> > z!C~;fLSJA7CA7tX_v1U^Nnhr)Uu6^ejcXIym^N|s#k{5b2t2O=3DJ;>`rp1baih3ykH
-> > z$oK~0IYad8P-m(F(8E1|ISSs{V+;J4eMX=3D{LU&=3DDHhl}@MSw42>_Vnx7_SEWW00i~
-> > zHG8TxwH0}|)wQD=3D2j`$~m#1FHL7sF?y8i<H-on0r2jU-ncAKe77vrH6a%h<U>^K>x
-> > z1v)CTvFD|ogNT9ZYozf3=3Dvy;8DmfPAvt>UAbgA;8FXQ?#Binb>%}+sRUf~_AWS;6V
-> > zGJQo@H)f28JSY07r?~!=3DIM-ifqMjU+kxP4wkv`5pjyVf^spm$^xaXQbGd`2NJ2W^?
-> > z{vRd&<#?9?{uxKBz;lgcURN~7+EVucYCrV&S@cXEz<C!-V;1b%GFcjbi@xAjVk~We
-> > zuLtn_**P+<Ct*XoZ}0I+_d)Ev1JqqgP40#6sy)_wrLaeDlZ4Q7sQ7;d_K10{Zpvxv
-> > z{r^U1H|dPVdB}&*`J3ZYaq#pu><YdXz6AIfzW39=3D^nr!_SeyLBjBBtL8s%#tJ>-TC
-> > z=3D--Pz*@B%Iqon^J_Ub_mInX2Hg3xOW@ToFB4!v*3Jo<oT+cA$bj0L3sK4jzlIP}s|
-> > zD053e3;WY|>&La<&3<nbbj7oqRQbsh`Tjlm1>ZfuUjjbRv)rA!CVXGzIv4lvj?5<g
-> > z1^BjXV<JBX9p()Su|$1)(f|AnF+$mTs5{svm97T5>}71azewzxiV-{EV^fZ!7d*-S
-> > zELU<{?Q=3D0b@^#F$=3D(+vOuRNcz_eH2tYA^PyL=3DEo6-jwGrtY2R2rBSoz2k!lPN$^U=
-%
-> > zn0-HW!kl^t_OaJb_6bgJ;|l<fvILO}?#8nhb-E7gBJcWo3=3De2$MhY+v{iql_>cp1?
-> > zxftube_~BTUS&;F`ElLkJ8O{>S?igH(c`EbwG(HVH75#NEzw%rt!e#Yw(n2PDOf+H
-> > zh9vdK^MmuydGAw#eRd9FH#ZWa9Ps5B>~elKYy|%+#Ck0{{1ADj>B-<kcfUKdHK|W8
-> > z&IqH3QRrOdR2dz8Rpna5HSfc1NV{D?JY39?!TGQmawK)Rpo;#jOSiIJj@nyaWxGI;
-> > zgqVLi{AOzt&NWUW4+U`U_Xfs@%ieGJdTOndv(tBn;%&53EOTIC$Mtqi%aQz1)sj=3D+
-> > ziJDg~IZJtVdeEtzZJ_PP7;|V1_P=3D|v|LmxgPzdA9_4K!n9TNICe1Ba>4MgrWB!4OU
-> > z?v=3DZCPJGHg59cpAIDZLN9>Ln!V|O(}R>9dCdHyIrEk*xPs`?MCi#2dovh=3D6W6W7|v
-> > zwZYF6jJM<d7V=3D>cbO}8a?0~H<p!cR8dG@#xc3~gU>-gLbtjRq$eOw0&dhQR^*?IJB
-> > zsb|iQf_K(?@Bx3xi&TLJ#B>C?3bI&(JMbOy44NKmka;YCXZT+w<Bu|?`b@y#g*>pf
-> > z(PlhbAKGg7>8v@d7oP*2C}epP@OG`rOw=3DmDI<=3DTbf86yPa^m@qki(ThP}`>hegX6Z
-> > zA5=3D1|hfG22b6uJ4W6a|Fi?G>KdQL0t+%#T7`M_f>dLFSsTlQcN9KNi2!LA(ir(xKW
-> > z<KO4l$Jmr{)a=3D-XdlSNPPj36{&l7o$@#*HZ_YK3x^C0Z8edux8$h!$UoHq)5XRxP^
-> > zFGVd_YISRp<12-KFt;`xYQNj@tCVx0Ung>)%Dbp7z4LfBY{x%)#7kJ$L~qe^ht>VM
-> > zuGPN)|FX~N@*<}pn}t2_C7hEi#F-Gs=3D?7XC&e*^g^625Xt~FZlMbhk5=3DUTau#n35v
-> > zekCF2@H}Ln<1-&zgp9XfonGjYd5>qF7ga9EP0IyIpLNdboPEg<_)zsq**ATEa`Z~P
-> > zVEA6$)_XdQD<4DS#~(@KXUcYbkFf>*HHiG?zO&&u|3$+Sv28dpGGJsxPD0nzNf0$T
-> > zFGCLF-0xIAddObr)3!%`<Vom_e!zSoS?m+E(2p?2I?D6a=3DkTm-Rc&=3Dc@Ac0pTTKN1
-> > zrz2|}TOGlB1KSU5{kiAZLtCFq_=3D3CMFTm3uVWS*Fx*1Em;j4eZ{VDk9nS||*b|!jd
-> > z^l25~LG@@@8)p$+?5i!Dw=3Dz~)dyYDF&yHPtuf7dBwDo?p^G(R7`fkv=3DF@@G@hgR?-
-> > zX=3DO$-9Qqvz-af*wkoyrsuz}|L$p@^P`O3HGW6Hnm^V2l{O3G`~d;@jzyyIg#p(p0O
-> > zDDqwa`QcLz-{+u%*z91p%#jfHV*z|eF6{n1=3Dh44%Pf&=3DOP9NlXTWUTm1P=3DRwtMh>=
-7
-> > zV;-=3D5$cS8;B!idWTfLCS2fE||eiXT%`vLk0;<*Upu8&ZsG2~(Jav1Lwx?+gy4%m~n
-> > zar5$}Nj$$w=3D7uO_dKEE1yWRpB!pMK^+17h8@E<^}&35GB-Y4Lf(BHv#;CczYo#6kI
-> > z?Qq9GX$R~#6SYYfdBVT^Mzsg-qdo9Wl(JudU3*~@_)1p~`j#c=3DN2q%RZ`~Loto!~8
-> > zc5O4EGZ*d|$Ur@aSnyf9r#Ur*JfX%|kCJ_kZJSitG?k-i8}>eVs9$a@v94Z03^K-%
-> > zs}~^O&g}qCsW~~7wrj6ngFn1Gt3O;6oXDQssTGy%Yxbno3WpEnlUk$)GE%lEdi5B4
-> > zw=3D9`!VZ9fTlVR&hJMSfB5!A~7=3D&=3DtFoL3Aa^!#*64bspf3f~*;D%^Zy$j;BYZw1a=
-h
-> > zP4vd(`RsWK^&v;|y)WzEJn(>ZyLy(u4o;7+;k>-?o$8Y9=3D(9EK8J9ebeiC|5_#pCo
-> > z>icI~&q+Ser@FP!XZt_iTf%>k8<{^BLSKzD=3D%=3DuOlk4o7r~EqkUORyI6NgYQy;y(K
-> > zvH7in_Zh6?<hv5|P&ePrAG>EiY#2GFvj;42_bm|<dn<lFkK8dC@^kGLJ+FTUYTf&Q
-> > z_aJw_jJ?BAJ-<JOJ#3WkR<KS0`^`go{&9Pq{78wjPL5h9*SAW~U&{RmX~z+Bq>KIY
-> > zg8zm+_%6sjuN>Oy)F}8oYXWt`9P-V7FxGRB4_Fi28fl+J<IL2Foe#%d|1r4VOyH*b
-> > zd%_<cPWl7=3DE};5C@zEDpuU&s&9Pw<^^>x%QH?~d@&K*zg6F!{RvX9~Q<pi(Y3ExfT
-> > zOx>xwnr{Gol=3D_`PQ%2`IpvTyx|9D48<2v}yoeBT3-|4xv@`I+E(7Ptz`F3OPiFmK1
-> > zeJ0`h2Ye`AFWuZH1rFV{<prLb)gu=3DhlYArL7u(@;$WeSBa&k(2O-T#<f@iVV!!Gk<
-> > zukIDSz8`yFO(xYBo@k%A)zC(H@m$0H4DXNKoN_Dtqqo7r`&Wqs5ZCzqgYPtCUxA<g
-> > zv>OxZ|B9IEI9A-cb%cxy<MN{q`7Y%A+3yyYwCDx(rI3+)k#+>{)!Q?%*L$UXBHj-#
-> > zr94M}S6mVWJ+9aLDBnruM}7}~rJjC^@fN(V!HbEimhm$8nfK#WccRv_4{L(np2Yp?
-> > z+NJyK9#-?Q{<^V?LZ@g3p!;IvMy&0`t)us0^@x24_fGLUMCBB-<I7ukc7XGUx!;41
-> > zkniV`mw97%Ph>4(jq^%webe~u6PHL{J#+k5P#dDicN~u(X8QogTFJNzLq_H@?v*IZ
-> > zpAxeClE1&HWPj4vB%$Zw=3Di9Lk`)ji!IFV-}GIl%88I$jRY#k(hnDN5;gxZL@Gq6yH
-> > zz1>>G*x>oQi~j`H<(T_D8539U3*P7c+3@(-Qx1UsCFu8aj$TE@;slisSci_l|Gw(j
-> > zF$elitwHwt;$-dbgHG)85qnQC8ns@S&!JQ5@*s3+?*|GZCkC+}#6H0G&)f*tDs|T3
-> > z`?}%v((UgN2g{a>mbufhmu4=3Dz#^E~#e;^Im8t)8pBeNV@7++xT0c`(B%^B|6`27a*
-> > zcV2xIal|pw;W^Gzp!IHom$aJV_$J@OBS$!W)wPf*7qt;J-4}-5TJ-$-dm%Gx=3Ds4A%
-> > z^S4zzJ1U6m0&D>90#*V}?SlXlrA}}rp-J9xoFy%5(zT^|*dNj_P0Z82)W6+xC2Lb^
-> > z&Fe!=3DReJ~Qhj6Ax{U5%7dg|<hRBcPGmlu}=3DyXj|nlGn<d#JY3{dN`=3D(9A|BN3_P*=
-k
-> > zHytxuIaddH_%4;_f~Vone@*Bo>1THSG$Ql|`q=3Dlthe<x*2Wd4{{oWwyKjedX<COvY
-> > zZt0F-H(oZ6+oUJ?!nuAGcpOjLxcuSWwBm0w_|uWIyhdI>`%bSED1YN`L?}lw;BanS
-> > zOy199@5z3X{J)mqKWX0!h9~04;G;h82LG_tVf0g7G3YXgT!6eY?2IsJk5rvfXWypI
-> > z)S0*KPcHAvz>@|UdzMId&9TB(#7O_Y0=3D5|aLKM6)4)&t&!QNS&ZJot;^a;yYzms~m
-> > zYpm*NRX?XAmSmUz#EqdD;5&+3&z^30562#sdzf31TbPq#1?>}grZ7D2oPGgynfq%!
-> > zG8a6@RF1G?oUw9eO72MRL31Ol?d)CaAye>5d_L@;{BL;emgHwF9~W<0U%$TL{`H@i
-> > zbqzJE<*U=3D0?lGq|-C%Cm*s!5?WAiu6^$pGDnubm5S7#?D*RKD1&APR#&2_cwzt&u5
-> > zPM@~gT=3D|XW+NK$1?dA=3D&tD0+9o5g0sMziGFY%!}%e5%#QzNh{jKCb47;6B&@?q3_V
-> > z8YJzJ>}}>Y)0~a}Fm|o_yTbXaVA4iRbK7hJ^TWT}6k7Fc8xjOo%qHd81hWwpdFKm;
-> > zKIFgZl(B96qWHp{jIAI|g$4Eq$Y=3D2D5+ZpH&$g+g{#78=3DGfYKN!6+<;I&S7R{J{k0
-> > z@IRl4L%DF{OtylsF~A8R?7#LbAhuO+vquyz{}7pXNTLwb7yFSD_<viqjgp=3DHmD-I>
-> > zYa7<zFn89RS#z?pWm=3DQmOgAxY*SPuCDs%09HD9YWYnshDo2RYYY))@lyQTI9e%Wlh
-> > z3%uh?4OhV{XEWEXH#gR-2fB?rGeM)dc7vj^ZZptlt0kI9#(9LluC8?*cGJp+hGyGs
-> > z>uQ=3DXWzxybn$@c});2X2Iv$-m=3D8(>o)iupEX_y>H!>EO<4y6Q^3Liq=3DV7f73T4uw=
-V
-> > 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
-> > TJDH<UkE#+fTtE*0xX=3DFr0X;+;
-> >
-> > literal 0
-> > HcmV?d00001
-> >
-> > diff --git a/pc-bios/meson.build b/pc-bios/meson.build
-> > index 34d6616c32..83998f6071 100644
-> > --- a/pc-bios/meson.build
-> > +++ b/pc-bios/meson.build
-> > @@ -84,6 +84,7 @@ blobs =3D [
-> >     'npcm8xx_bootrom.bin',
-> >     'vof.bin',
-> >     'vof-nvram.bin',
-> > +  'ast27x0_bootrom.bin',
-> >   ]
-> >
-> >   dtc =3D find_program('dtc', required: false)
->
+r~
 
