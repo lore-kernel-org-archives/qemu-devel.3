@@ -4,141 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58459C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 16:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D789C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 16:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7zYC-0007Dm-96; Thu, 24 Apr 2025 12:35:48 -0400
+	id 1u7zbu-0000bw-PG; Thu, 24 Apr 2025 12:39:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7zY7-0007Bi-Bd
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:35:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u7zbt-0000bk-3g
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:39:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7zY1-0002U2-7O
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:35:42 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u7zbn-0002nr-Qp
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:39:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745512536;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Pjo4QnwDbOA8A0VpTtluxFN5ybIo3f82wx2ejwa9IUw=;
- b=UEk6h3PIwnXlwUgQFLBquVTUXSTzfBNdUS6UuEN7atFU9M2Qc4qKBpd9FoCqaBj8Nj4DxJ
- FMzvJD6l8nteWc6CwydCecIdvQ2PDEMwBM+TFG9Hp25SJLuOWI6B3RLD6dxnPB8JLNb7lo
- OVF4n3O9hh4hg9O8VI/YJ9OQ1AT2d6A=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-377-XXKSZSqCMIGQEP62NXoBTg-1; Thu, 24 Apr 2025 12:35:34 -0400
-X-MC-Unique: XXKSZSqCMIGQEP62NXoBTg-1
-X-Mimecast-MFC-AGG-ID: XXKSZSqCMIGQEP62NXoBTg_1745512534
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39d8e5ca9c2so789624f8f.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 09:35:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745512534; x=1746117334;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Pjo4QnwDbOA8A0VpTtluxFN5ybIo3f82wx2ejwa9IUw=;
- b=O7pAYRlVySh+xC8e5zFZuDEMsgegk0j5ZBAsa4HNDBVaKP/80zyGxuQwErK2N8Pl97
- brlt9w2J3JzPQubzVEpYteiH7UpIhmdSWxfGcrXj8qHShQjdQNmj0thOQo6+/Chbf0J4
- JgYTDjUlI9Al+rnig9F7VNHxpozS7GpX9PDJBqaJGD1mjzz4gnV8RBQC984NFEhdC9Go
- ncBcBSAoiNbjC+Qf9E00Mliykwdqku2gLxB4S3RqnyTyeLLYoimip0B18v3ll8tFXbkn
- 9r9266HWHotcM48Wtzu6Xw3uRfoP6Z8kWTeJuBjiFuXxcFYyPB+0cMGFQZZx45uPSm0f
- ijiA==
-X-Gm-Message-State: AOJu0Yz32WAmesGd9WaWNa6fbgPpcRYajYk3fK0cYfnDZgWL+S74ZWmm
- T9F2clKskwB+5pDJ2EghSVr/vccKLI+vIN7rfB8bCIp9ucfHUdIFeVbLWD1AD6KDwLrPds03Toj
- N4VJyS6ZSPQnSBZHtMh92PQGjkcagnMnhmIh7lwW6H6MV4EgStTBV
-X-Gm-Gg: ASbGncvcNZM5FwCEPq4F6D3Bly+UtsPyWa+2JIZ9PsL3JKp9CLtcFDo/8UGt2C79o68
- SwI2q2ZS3BS4ECTylewUypRy5rxqMr8KmKORl1UKkM0rg8Cu+J9nCgbESXVZdrNZ0wLwmu2yvTl
- gJt5p/MthmpaliHr3rEuHxWovpDlMnAG2ZcTLv7L/Uw6SgeNP5AkRjauj3l9en0ntXbDq2f6HCs
- QhF82I2F/wnVMgbX828aOh2XWUxqOHULJRw0rHDlvYmIHZBUoh5y/UPjMYBz0zLO+saME3IYQnq
- rN4mE6Z6kLqEteoJh9SGw9+o//R/LUQULyEJZg+DyH8AvfQ=
-X-Received: by 2002:a05:6000:1f12:b0:39e:cbd2:9129 with SMTP id
- ffacd0b85a97d-3a072a6dd97mr32336f8f.10.1745512533732; 
- Thu, 24 Apr 2025 09:35:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIMZsvIVNt2DIl7XK9bFWmBTfthvKNQJV6XZwhXtB9b00LCOKBP0FdvUijCjcTWV/1+Y/DrQ==
-X-Received: by 2002:a05:6000:1f12:b0:39e:cbd2:9129 with SMTP id
- ffacd0b85a97d-3a072a6dd97mr32310f8f.10.1745512533367; 
- Thu, 24 Apr 2025 09:35:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
- ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a06d54c087sm2561823f8f.81.2025.04.24.09.35.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 09:35:32 -0700 (PDT)
-Message-ID: <afa7dc80-76da-41ba-97e2-4c948419a821@redhat.com>
-Date: Thu, 24 Apr 2025 18:35:31 +0200
+ s=mimecast20190719; t=1745512769;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=zucJViY7xAKd2Thj8ZQykV0ybGntvqBjB1FOcf05IlY=;
+ b=JWp8KFYRJ0r7ZmsKN391w5Ye1EJD3oDOC5EcwB4j9duQcl3BNqScrLhmGS8uxdSFd5BxXJ
+ 6Og3YQbJUulcDbW4fjomucxLjpgwdEaxSrp2l6fa+qbdnv1WtlIshslzTzxpnXYKEzh2u4
+ g8wusx/km4wYD2HjKUwyS2WpF5qhqp8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-jH-FLF3gN9ydL2uRzHDOug-1; Thu,
+ 24 Apr 2025 12:39:26 -0400
+X-MC-Unique: jH-FLF3gN9ydL2uRzHDOug-1
+X-Mimecast-MFC-AGG-ID: jH-FLF3gN9ydL2uRzHDOug_1745512765
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E93721956094; Thu, 24 Apr 2025 16:39:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.118])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B89C19560A3; Thu, 24 Apr 2025 16:39:23 +0000 (UTC)
+Date: Thu, 24 Apr 2025 17:39:20 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dietmar Maurer <dietmar@proxmox.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 2/9] add vnc h264 encoder
+Message-ID: <aAppOBppJI0PPXnw@redhat.com>
+References: <20250418112953.1744442-1-dietmar@proxmox.com>
+ <20250418112953.1744442-3-dietmar@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] vfio/container: pass listener_begin/commit callbacks
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
-References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-6-john.levon@nutanix.com>
- <5d87f16c-6e67-42f3-864c-e4e134816d70@redhat.com>
- <e58eb220-f371-423c-a3e3-c905be6752f8@redhat.com> <aApmoIOn8yixVEpB@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aApmoIOn8yixVEpB@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250418112953.1744442-3-dietmar@proxmox.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -147,7 +69,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,36 +82,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 18:28, John Levon wrote:
-> On Thu, Apr 24, 2025 at 06:24:23PM +0200, Cédric Le Goater wrote:
+On Fri, Apr 18, 2025 at 01:29:46PM +0200, Dietmar Maurer wrote:
+> This patch implements H264 support for VNC. The RFB protocol
+> extension is defined in:
 > 
->>> On 4/9/25 15:48, John Levon wrote:
->>>> The vfio-user container will later need to hook into these callbacks;
->>>> set up vfio to use them, and optionally pass them through to the
->>>> container.
->>>> +    void (*listener_begin)(VFIOContainerBase *bcontainer);
->>>> +    void (*listener_commit)(VFIOContainerBase *bcontainer);
->>>
->>> Please add documentation for the new callbacks.
->> and it is not used in this series yet. So we can keep it for later.
+> https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst#open-h-264-encoding
 > 
-> Will do, I thought you wanted the general vfio stuff separated out, 
+> Currently the Gstreamer x264enc plugin (software encoder) is used
+> to encode the video stream.
+> 
+> The gstreamer pipe is:
+> 
+> appsrc -> videoconvert -> x264enc -> appsink
+> 
+> Note: videoconvert is required for RGBx to YUV420 conversion.
+> 
+> The code still use the VNC server framebuffer change detection,
+> and only encodes and sends video frames if there are changes.
+> 
+> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+> ---
+>  ui/meson.build    |   1 +
+>  ui/vnc-enc-h264.c | 282 ++++++++++++++++++++++++++++++++++++++++++++++
+>  ui/vnc-jobs.c     |  49 +++++---
+>  ui/vnc.c          |  21 ++++
+>  ui/vnc.h          |  21 ++++
+>  5 files changed, 359 insertions(+), 15 deletions(-)
+>  create mode 100644 ui/vnc-enc-h264.c
+> 
+> diff --git a/ui/meson.build b/ui/meson.build
+> index 35fb04cadf..34f1f33699 100644
+> --- a/ui/meson.build
+> +++ b/ui/meson.build
+> @@ -46,6 +46,7 @@ vnc_ss.add(files(
+>  ))
+>  vnc_ss.add(zlib, jpeg)
+>  vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
+> +vnc_ss.add(when: gstreamer, if_true: files('vnc-enc-h264.c'))
+>  system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
+>  system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
+>  
+> diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+> new file mode 100644
+> index 0000000000..3abe6a1528
+> --- /dev/null
+> +++ b/ui/vnc-enc-h264.c
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index 9241caaad9..aed25b0183 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -972,6 +972,9 @@ int vnc_send_framebuffer_update(VncState *vs, int x, int y, int w, int h)
+>          case VNC_ENCODING_ZYWRLE:
+>              n = vnc_zywrle_send_framebuffer_update(vs, x, y, w, h);
+>              break;
+> +        case VNC_ENCODING_H264:
+> +            n = vnc_h264_send_framebuffer_update(vs, x, y, w, h);
+> +            break;
 
-yes. It is best to start with the invasive part.
+Needs protecting with #ifdef CONFIG_GSTREAMER otherwise I'd
+expect a linker error
 
-> but can move to the vfio-user specific queue.
-This is a simple addition which shouldn't conflict with the rest of
-the changes. So it can come when needed.
+>          default:
+>              vnc_framebuffer_update(vs, x, y, w, h, VNC_ENCODING_RAW);
+>              n = vnc_raw_send_framebuffer_update(vs, x, y, w, h);
+> @@ -1326,6 +1329,10 @@ void vnc_disconnect_finish(VncState *vs)
+>      vnc_tight_clear(vs);
+>      vnc_zrle_clear(vs);
+>  
+> +#ifdef CONFIG_GSTREAMER
+> +    vnc_h264_clear(vs);
+> +#endif
+> +
+>  #ifdef CONFIG_VNC_SASL
+>      vnc_sasl_client_cleanup(vs);
+>  #endif /* CONFIG_VNC_SASL */
+> @@ -2181,6 +2188,16 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
+>              vnc_set_feature(vs, VNC_FEATURE_ZYWRLE);
+>              vs->vnc_encoding = enc;
+>              break;
+> +#ifdef CONFIG_GSTREAMER
+> +        case VNC_ENCODING_H264:
+> +            if (vnc_h264_encoder_init(vs)) {
+> +                vnc_set_feature(vs, VNC_FEATURE_H264);
+> +                vs->vnc_encoding = enc;
+> +            } else {
+> +                VNC_DEBUG("vnc_h264_encoder_init failed\n");
+> +            }
+> +            break;
+> +#endif
+>          case VNC_ENCODING_DESKTOPRESIZE:
+>              vnc_set_feature(vs, VNC_FEATURE_RESIZE);
+>              break;
+> @@ -4291,6 +4308,10 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
+>      Error *local_err = NULL;
+>      char *id = (char *)qemu_opts_id(opts);
+>  
+> +#ifdef CONFIG_GSTREAMER
+> +    gst_init(NULL, NULL);
+> +#endif
+> +
+>      assert(id);
+>      vnc_display_init(id, &local_err);
+>      if (local_err) {
+> diff --git a/ui/vnc.h b/ui/vnc.h
+> index acc53a2cc1..a0d336738d 100644
+> --- a/ui/vnc.h
+> +++ b/ui/vnc.h
+> @@ -46,6 +46,10 @@
+>  #include "vnc-enc-zrle.h"
+>  #include "ui/kbd-state.h"
+>  
+> +#ifdef CONFIG_GSTREAMER
+> +#include <gst/gst.h>
+> +#endif
+> +
+>  // #define _VNC_DEBUG 1
+>  
+>  #ifdef _VNC_DEBUG
+> @@ -231,6 +235,14 @@ typedef struct VncZywrle {
+>      int buf[VNC_ZRLE_TILE_WIDTH * VNC_ZRLE_TILE_HEIGHT];
+>  } VncZywrle;
+>  
+> +#ifdef CONFIG_GSTREAMER
+> +typedef struct VncH264 {
+> +    GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+> +    size_t width;
+> +    size_t height;
+> +} VncH264;
+> +#endif
+> +
+>  struct VncRect
+>  {
+>      int x;
+> @@ -344,6 +356,9 @@ struct VncState
+>      VncHextile hextile;
+>      VncZrle *zrle;
+>      VncZywrle zywrle;
+> +#ifdef CONFIG_GSTREAMER
+> +    VncH264 *h264;
+> +#endif
+>  
+>      Notifier mouse_mode_notifier;
+>  
+> @@ -404,6 +419,7 @@ enum {
+>  #define VNC_ENCODING_TRLE                 0x0000000f
+>  #define VNC_ENCODING_ZRLE                 0x00000010
+>  #define VNC_ENCODING_ZYWRLE               0x00000011
+> +#define VNC_ENCODING_H264                 0x00000032 /* 50   */
+>  #define VNC_ENCODING_COMPRESSLEVEL0       0xFFFFFF00 /* -256 */
+>  #define VNC_ENCODING_QUALITYLEVEL0        0xFFFFFFE0 /* -32  */
+>  #define VNC_ENCODING_XCURSOR              0xFFFFFF10 /* -240 */
+> @@ -464,6 +480,7 @@ enum VncFeatures {
+>      VNC_FEATURE_XVP,
+>      VNC_FEATURE_CLIPBOARD_EXT,
+>      VNC_FEATURE_AUDIO,
+> +    VNC_FEATURE_H264,
+>  };
+>  
+>  
+> @@ -625,6 +642,10 @@ int vnc_zrle_send_framebuffer_update(VncState *vs, int x, int y, int w, int h);
+>  int vnc_zywrle_send_framebuffer_update(VncState *vs, int x, int y, int w, int h);
+>  void vnc_zrle_clear(VncState *vs);
+>  
+> +bool vnc_h264_encoder_init(VncState *vs);
+> +int vnc_h264_send_framebuffer_update(VncState *vs, int x, int y, int w, int h);
+> +void vnc_h264_clear(VncState *vs);
+> +
+>  /* vnc-clipboard.c */
+>  void vnc_server_cut_text_caps(VncState *vs);
+>  void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+> -- 
+> 2.39.5
+> 
+> 
 
-
-Thanks,
-
-C.
-
-
-
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
