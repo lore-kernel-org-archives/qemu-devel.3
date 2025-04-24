@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 723A3C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56515C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u82Zi-0003In-E0; Thu, 24 Apr 2025 15:49:34 -0400
+	id 1u82Zi-0003Il-9N; Thu, 24 Apr 2025 15:49:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82ZU-0003GA-ND
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:23 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82ZS-0003Fu-4j
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:19 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82ZS-0001PI-U6
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:20 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso9910925e9.2
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:49:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82ZP-0001Oy-JA
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:17 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39ee682e0ddso981290f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:49:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745524157; x=1746128957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745524152; x=1746128952; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gAInPnbXVwc6+e5dH8946wooc5VHdtYj4fpx4QEz7pc=;
- b=wKMdzNDipCnyKvjQmBkItOIIZ7jlQJxTRCDLOCoN34YLDv8HT4Sqru88C1hko301nU
- fyT8o55vDFvaO2IZB4s+jdn5H1QiV97XqBT1rGzbfnwM0+3eN9oY6rMw0G4Ig4DkluH7
- qlqJf5mGmLMIdMDYQ4eUH8Y0XRAnLBc+2asdZoboery0Sx1tgjOaZcErmmRWb2unZL9G
- B7fk3ckSdI/PxaTNuJcCpThVG+vBGtw597bgsbmQy1CPKcHTn97foL+SvSgilcQ5Q9g5
- mUuOAoAlTKj+xggHnz0eIbs3yVW1eBoV40DtEAotsCoKffAGalFyFW1Lzo8odkLyWyc9
- SnHg==
+ bh=zUd7Mrc/+E/RovgnI7dK3dVHrdmGl00mXa1YhnjRtP0=;
+ b=NcWyIHvyn0k1fNVghkECPweJkDyk9+vDxUUhRvleGJkgHDcFXf7HplGnynEWSh/1YM
+ 4DGRGfUSsVVO1EGWmSp0N5HRqgiRATnoiHFrv5p2HkUJElZXnByxa75df9w+XnTgOkFs
+ HjKmA/6seaQ4ZicnfKVo9n2uvLyZxAtsbC6wfTJXtj4Q74gFSYAXtEXr7FOTRJnugP0y
+ oN9m1lS6lH/CAiVLiGx+aq2zRzQFhCoqt34OBL1Mf0jXGsax/wIbfAzLgh4VgRIv//xm
+ gm0hb3aBw1ZsCremt0Sac67Ztr72mHX2NKGRgtxucsGaCWTX2HToUvzzLhv59OxBZkPE
+ AYSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745524157; x=1746128957;
+ d=1e100.net; s=20230601; t=1745524152; x=1746128952;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gAInPnbXVwc6+e5dH8946wooc5VHdtYj4fpx4QEz7pc=;
- b=De6HNjMeu+giHb1ZRgql6SgG1789rW2/+Z+GhqHBlZLmsAafaq4lJDV7jT/Gd3oF/1
- JtFPOoRsmrLHbWLd+Z9zTzJ+hMc/iL+jMFwRwdqLBgkMUq0vKnzugh+Ux5tJR+PMmmmo
- JfZ8Z/C3n5DkH+vWJFq9VM9V+U0yR9X2F7vOC+ZtQh5CeEhHbAkPOvvA4uf5E7VbDxOj
- tMEnjF31Q1P/O0y8vGgwIlBA7jxujCkFJlvkNIuOHjdoBCmYyfbqmL0ZqzIm1Idf8PLT
- OfalWo/HlSO7IUK4/S9BlGel5IJVz2jmWzITuKRb+TN7Be52YviyZrZIF5tr3Ziskl9u
- reYQ==
-X-Gm-Message-State: AOJu0YxfNmbdk0YyE6q+g6FQS+oXW9Cc91xvaadWbTx0Msmd0pCeJDd4
- VI40L+/o0Ub6b9cFwV25VUPmhWu0/DrH43zbS50OZ90L5zFbvhvOQqNUBJfnfqHjo49VexFs1j6
- C
-X-Gm-Gg: ASbGncuNZQQlgvvvZum3KF3C2yn6lsbTyGqZ1uMvs/4+oG/6KB2eKxBWOS4vbrEx/0R
- AtO9ddRng8T1QVSCz03d4/wYWG7JbhYleLYoOYj+GfFL8HHi2NvRja1EbqEgmto8CRitkoaRwJ/
- P5oFHVVPY2aJ19jhaQa6EIjRGRQyn47tGf3X3hM+Z1h+C7miESXfBB5H+aQ9ivr49BsvGgztecs
- yn73waVatCEQMwlf74PqJ4OZZxgR/qcLzC+3fh+gtxFACSQuvxBaESnuIXK77IWXZoyYxDMYtwl
- Iil4Q/AxUlhL3caHnKmHi/sQNPYNkSchBeu6UdZZvX0U0GPhiiqsky/cCG7W8LL9y5rV8MrzLnj
- 1BeDe539jBvkfMjU=
-X-Google-Smtp-Source: AGHT+IEZggntGg0Y2GfDPjGUe3t1IEQTiLf9O7i4rEM7oSms+1vMwz+NlTBFTQQrU4QwCejdH7ZB+g==
-X-Received: by 2002:a05:600c:a47:b0:43d:fa58:81d4 with SMTP id
- 5b1f17b1804b1-4409bd8e123mr35290315e9.33.1745524156869; 
- Thu, 24 Apr 2025 12:49:16 -0700 (PDT)
+ bh=zUd7Mrc/+E/RovgnI7dK3dVHrdmGl00mXa1YhnjRtP0=;
+ b=gzU1Dswb96xfBJMgK7H9UHJQCv3hrAbpg5mu5qDRWy0x2vw6X+UOw9aKYOvN+3Vz5/
+ FrrgZNENvvJBmeERxlJHKSvEQpRhRZ35BY83LrOu6a92+kOVZmj4sob2sSg7McN3ZOSt
+ BcLhIt6NFoN+WMLV6kydIpY81nVmS6JfaG3wLm83awUAPxjWLO004qqqFc5gTAm62hXG
+ eOuSt0+3KbuKjKxzzhk80mQpoURgyN0TgpISdsrSBg0Ah1xsSB1DtAMU6JbujFPivEon
+ /asjRSP4jO2Jfs4tZ1ESFhjSpfwbjx57TBTBQglKKSDVOblW6kMZoA/G9GcVmUhkwMDP
+ hVjA==
+X-Gm-Message-State: AOJu0YzfOOIfOyw3ntlY0ja5DIg5FN4GCsAoIBZAqaWL3lT03Gw5x918
+ L5T1bw3wYKg/hpz7Ngqr2Fql2OhAY9VMjFUDnLfmnhOC9rB7JksFVZK1sIgBPXa1zzFyA8jvSlA
+ g
+X-Gm-Gg: ASbGncuQr1CQTswlGv+DxyjbzgMooKEKwnhey/yBFTKxSQNQJDOHhGQb7GoYvI/ezNt
+ 6HXvJYcfKgN1puaUt+ktaTW35TXoLvleEYp1upCIkocgPmTeAtk25WnuvW9lRRplKFzY5mzFZ4z
+ G3/MIMcaYj2MdlSvQ33F0xXiaKqifk3oUR9DFixyqjUUOzHoTci/dnsEkEBqJMneOow5vn0fLaS
+ PgHqtSWZRxqrV/7Fa3gisT70kD/xV/0VHlFzYSRQrhnqUR1CMHRyTpvPLC8gqucrtY0kDjel6Yv
+ 6r6tvbW+PG91/j2+9x1zpPyw16dfG8SQhik6B2cwRnqh00sG1dH/FP6qLPlqJ48o0/CiO1oriiM
+ cyivdzZdcOcFwk0U=
+X-Google-Smtp-Source: AGHT+IHOoE4sLSqdhiVZjogxJV9oQfLbLPK6smUy//53WGnXLckJQVes4qHnCDKtTdmfkxkj6tK5yw==
+X-Received: by 2002:a5d:64e3:0:b0:39a:c9d9:877b with SMTP id
+ ffacd0b85a97d-3a072aa6a1dmr554002f8f.27.1745524152381; 
+ Thu, 24 Apr 2025 12:49:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2a13bdsm32016265e9.9.2025.04.24.12.49.16
+ ffacd0b85a97d-3a073ca52e5sm227174f8f.36.2025.04.24.12.49.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 12:49:16 -0700 (PDT)
+ Thu, 24 Apr 2025 12:49:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 2/6] qom: Have class_base_init() take a const data argument
-Date: Thu, 24 Apr 2025 21:49:01 +0200
-Message-ID: <20250424194905.82506-3-philmd@linaro.org>
+Subject: [PATCH v4 1/6] hw/misc/edu: Convert type_init() -> DEFINE_TYPES()
+Date: Thu, 24 Apr 2025 21:49:00 +0200
+Message-ID: <20250424194905.82506-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250424194905.82506-1-philmd@linaro.org>
 References: <20250424194905.82506-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,95 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/qom/object.h     | 2 +-
- hw/core/machine.c        | 2 +-
- hw/core/qdev.c           | 2 +-
- hw/pci/pci.c             | 2 +-
- qom/object.c             | 2 +-
- rust/qemu-api/src/qom.rs | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+Prefer DEFINE_TYPES() macro over type_init() to register
+QOM types.
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 9192265db76..7bb14ca7067 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -487,7 +487,7 @@ struct TypeInfo
-     size_t class_size;
- 
-     void (*class_init)(ObjectClass *klass, void *data);
--    void (*class_base_init)(ObjectClass *klass, void *data);
-+    void (*class_base_init)(ObjectClass *klass, const void *data);
-     void *class_data;
- 
-     InterfaceInfo *interfaces;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 63c6ef93d29..32f43f61698 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1240,7 +1240,7 @@ static void machine_class_init(ObjectClass *oc, void *data)
-         "Memory size configuration");
+Initialize the .interfaces struct field as compound literal
+casted to InterfaceInfo type like the rest of our code base.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/misc/edu.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/hw/misc/edu.c b/hw/misc/edu.c
+index 504178b4a22..5723ef0ed13 100644
+--- a/hw/misc/edu.c
++++ b/hw/misc/edu.c
+@@ -429,21 +429,18 @@ static void edu_class_init(ObjectClass *class, void *data)
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
  }
  
--static void machine_class_base_init(ObjectClass *oc, void *data)
-+static void machine_class_base_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     mc->max_cpus = mc->max_cpus ?: 1;
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index 2745b5e0929..1e0f47cc848 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -693,7 +693,7 @@ static void device_finalize(Object *obj)
-     g_free(dev->id);
- }
+-static void pci_edu_register_types(void)
+-{
+-    static InterfaceInfo interfaces[] = {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-        { },
+-    };
+-    static const TypeInfo edu_info = {
++static const TypeInfo edu_types[] = {
++    {
+         .name          = TYPE_PCI_EDU_DEVICE,
+         .parent        = TYPE_PCI_DEVICE,
+         .instance_size = sizeof(EduState),
+         .instance_init = edu_instance_init,
+         .class_init    = edu_class_init,
+-        .interfaces = interfaces,
+-    };
++        .interfaces    = (InterfaceInfo[]) {
++            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++            { },
++        },
++    }
++};
  
--static void device_class_base_init(ObjectClass *class, void *data)
-+static void device_class_base_init(ObjectClass *class, const void *data)
- {
-     DeviceClass *klass = DEVICE_CLASS(class);
- 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 2844ec55560..475b97c649e 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2809,7 +2809,7 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
-         "access to indirect DMA memory");
- }
- 
--static void pci_device_class_base_init(ObjectClass *klass, void *data)
-+static void pci_device_class_base_init(ObjectClass *klass, const void *data)
- {
-     if (!object_class_is_abstract(klass)) {
-         ObjectClass *conventional =
-diff --git a/qom/object.c b/qom/object.c
-index 01618d06bd8..dfd59502d11 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -55,7 +55,7 @@ struct TypeImpl
-     size_t instance_align;
- 
-     void (*class_init)(ObjectClass *klass, void *data);
--    void (*class_base_init)(ObjectClass *klass, void *data);
-+    void (*class_base_init)(ObjectClass *klass, const void *data);
- 
-     void *class_data;
- 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 34d7bc0ef96..03fe6247ff6 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -492,7 +492,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
-     /// the effects of copying the contents of the parent's class struct
-     /// to the descendants.
-     const CLASS_BASE_INIT: Option<
--        unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
-+        unsafe extern "C" fn(klass: *mut ObjectClass, data: *const c_void),
-     > = None;
- 
-     const TYPE_INFO: TypeInfo = TypeInfo {
+-    type_register_static(&edu_info);
+-}
+-type_init(pci_edu_register_types)
++DEFINE_TYPES(edu_types)
 -- 
 2.47.1
 
