@@ -4,58 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECF9C369D5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15783C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u82MW-00083l-Sb; Thu, 24 Apr 2025 15:35:56 -0400
+	id 1u82Zm-0003JZ-Ju; Thu, 24 Apr 2025 15:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1u82MI-00082T-7Q; Thu, 24 Apr 2025 15:35:45 -0400
-Received: from ssh.movementarian.org ([139.162.205.133] helo=movementarian.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <movement@movementarian.org>)
- id 1u82MF-00008J-L6; Thu, 24 Apr 2025 15:35:41 -0400
-Received: from movement by movementarian.org with local (Exim 4.97)
- (envelope-from <movement@movementarian.org>)
- id 1u82M9-00000000l0g-3d89; Thu, 24 Apr 2025 20:35:33 +0100
-Date: Thu, 24 Apr 2025 20:35:33 +0100
-From: John Levon <levon@movementarian.org>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- Tomita Moeko <tomitamoeko@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: Re: [PATCH 07/14] vfio: specify VFIO_DMA_UNMAP_FLAG_ALL to callback
-Message-ID: <aAqShRO9blV0LOny@movementarian.org>
-References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-8-john.levon@nutanix.com>
- <3cc6ed06-7ee4-42f4-a09e-03d8fe922537@redhat.com>
- <aAkgqXP1NjCfwKbG@movementarian.org>
- <a8906e2c-220d-49d5-89c7-b59df9335a4b@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82Zk-0003Iw-Ac
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:36 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82Zi-0001QX-Dm
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:35 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-39ee682e0ddso981396f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745524172; x=1746128972; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=11yASgslBTEDeAvinIeNK9fxBiH+5qVPG7ODqw+CXyg=;
+ b=TkaSBkjV17oqskRyoimUBhOlP2qQOvyEEHhOVt62ODB49l6rDNmMCcXmiG7qklCL6K
+ AjAuNnXRgoC7wwdh8ZOKbjxUwdDDgSuIORyu4YTMl8wODXR2jiuPFu2y/aiLFakH53T4
+ 3Xr3nlNjYHDzEjPuYI+BThdcKQjKjNvxSD91radGJ0WgURx5NIumeyWcDf1EweNJYCF3
+ WKXxJIup8rHExOGgCzaXWqZOWSmr8zHaV7/0oksR3VbCJlapu3MlNocucpvaOIUXH/p4
+ XeOBFPpfy2AYYKe1uRdFHNjO7cN1vn/+LyHuDzPOF1XbtG57IM20d8DGc22Z+yA15J3w
+ JUJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745524172; x=1746128972;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=11yASgslBTEDeAvinIeNK9fxBiH+5qVPG7ODqw+CXyg=;
+ b=THBFVM72KbjYJINDcYK3xJJ55x4rwRtqWoC/OMqKQUeRuo/J0gUrFVFaRmsXgCcOCY
+ vm+7u07j2o3Pz8F6hpsgOhMJ9gYhtuCZfPDM4yolQyiiiP7B57d+Kf8LXUQq31275EdF
+ O41dOfEZkbYEGqh3qLP4ZfqNoM5lsQ3um5RTqb8hcubOvH7x27zQVmKluSg2rAcdmwub
+ S+WqXtu1W2Q9uZnMhUnwaYdc5ifvRQNb57FFpbD1CMxCxV6qvPYoWE+75Q4mPJo8S3Qy
+ VKEbhCghfElxbazSetOz5Mu8MNX5UPTTPGdTD4eSecQktM+KlNahxWqYSR0cdlA1/pz/
+ 23Fw==
+X-Gm-Message-State: AOJu0YyuvcIyjYu1wpqQrv+/WLTe/eqmeYBmpJjbDOLlaxLwOk9v1pBf
+ 7k/1No+djqFbg/AVsgYEGJFkeBk/wy6H3pMbFEIAewT4nXXjaLMphj8ssDs6T9KBzmHkqyr6t7D
+ Q
+X-Gm-Gg: ASbGnctaUxTi898mmmWyk5O8B2xgB7Mqod1aC/nNMdt8awG43sWrvYwrw4iHMgkYq1r
+ lAjUP1/H6YnGItQ+qcl/wySTw3G+4xp2dsvBl2K2zIRuyZsU2bpnf8M+TRVnjA8RsHhr4dCJ5Ca
+ fVBGVPVmz6uU77LDIxP+opI/6Vch53ms9D+ShFsauLky00GXFh8pT2Pmgqkt9rad6YGEuYD13wm
+ WaIbDhYW9CLFk7O9Y3bG3wbzsA3lOxuXxV41ku/4Pzmyy6Y86iWqPoJq0nEvRUf0vtNTlONGcfX
+ mMqqzoCeG+VpEWZCdmRxJEehfACEnTqf07Y8Ng1G5w1cgZKihGeiHU4XAjNCJs7TLx+IpKZaJ76
+ 0Zp/BNVBPu/b8G9GYcIovDswFwQ==
+X-Google-Smtp-Source: AGHT+IHb9nqCvTwuazqYlf7FG6lR7yHv+f7TYjWYC9IxZvd3B260qtAJlT+oJ/K05VvLt4rA09BFFw==
+X-Received: by 2002:a05:6000:4023:b0:391:253b:4046 with SMTP id
+ ffacd0b85a97d-3a072a7d18cmr549762f8f.16.1745524172443; 
+ Thu, 24 Apr 2025 12:49:32 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e5cb16sm166565f8f.84.2025.04.24.12.49.31
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 24 Apr 2025 12:49:31 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v4 5/6] qom: Constify TypeInfo::interfaces
+Date: Thu, 24 Apr 2025 21:49:04 +0200
+Message-ID: <20250424194905.82506-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250424194905.82506-1-philmd@linaro.org>
+References: <20250424194905.82506-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a8906e2c-220d-49d5-89c7-b59df9335a4b@redhat.com>
-X-Url: http://www.movementarian.org/
-Received-SPF: pass client-ip=139.162.205.133;
- envelope-from=movement@movementarian.org; helo=movementarian.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,36 +101,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 24, 2025 at 07:16:52PM +0200, CÈdric Le Goater wrote:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
+---
+ include/hw/virtio/virtio-pci.h | 2 +-
+ include/qom/object.h           | 2 +-
+ hw/scsi/megasas.c              | 2 +-
+ rust/qemu-api/src/qom.rs       | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-> > Having said that I'm OK with going back to just a simple boolean if you'd really
-> > prefer.
-> 
-> yes. VFIO_DMA_UNMAP_FLAG_ALL is a kernel interface and we don't
-> need more than one flag today.
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 567a9b0a9da..31ec144509f 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -256,7 +256,7 @@ typedef struct VirtioPCIDeviceTypeInfo {
+     void (*instance_init)(Object *obj);
+     void (*instance_finalize)(Object *obj);
+     void (*class_init)(ObjectClass *klass, const void *data);
+-    InterfaceInfo *interfaces;
++    const InterfaceInfo *interfaces;
+ } VirtioPCIDeviceTypeInfo;
+ 
+ /* Register virtio-pci type(s).  @t must be static. */
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 42b75d10a43..26a45f638cd 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -490,7 +490,7 @@ struct TypeInfo
+     void (*class_base_init)(ObjectClass *klass, const void *data);
+     const void *class_data;
+ 
+-    InterfaceInfo *interfaces;
++    const InterfaceInfo *interfaces;
+ };
+ 
+ /**
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index 6104d4202aa..ad258c1014a 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -2487,7 +2487,7 @@ typedef struct MegasasInfo {
+     const VMStateDescription *vmsd;
+     const Property *props;
+     size_t props_count;
+-    InterfaceInfo *interfaces;
++    const InterfaceInfo *interfaces;
+ } MegasasInfo;
+ 
+ static struct MegasasInfo megasas_devices[] = {
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index f0a79f96d5e..f1b4022157b 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -514,7 +514,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
+         class_init: Some(rust_class_init::<Self>),
+         class_base_init: Self::CLASS_BASE_INIT,
+         class_data: core::ptr::null(),
+-        interfaces: core::ptr::null_mut(),
++        interfaces: core::ptr::null(),
+     };
+ 
+     // methods on ObjectClass
+-- 
+2.47.1
 
-OK
-
-> > > Why not unmap the halves here instead of in the backends ?
-> > 
-> > The whole point of the change is that right now the generic listener.c code has
-> > a workaround that is specific to one particular backend.
-> 
-> It's due to the ARM IO space size AFAICT.
-> 
-> > vfio-user doesn't have
-> > any need to unmap in halves and in fact *has* to pass an "unmap all" flag.
-> 
-> OK. So this flag is a vfio-user requirement. Why can't we call
-> vfio_container_dma_unmap() twice from vfio_listener_region_del() ?
-
-Are you suggesting that the vfio-user backend - and the protocol - somehow
-accounts for the two unmaps and translates it back into an unmap all? How would
-that work?
-
-Surely it's very ugly indeed to embed a foible of the (old) vfio kernel
-interface into every backend.
-
-regards
-john
 
