@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 566C1C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 22:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445C0C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 22:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u84y7-0007Rs-D1; Thu, 24 Apr 2025 18:22:55 -0400
+	id 1u84xo-0005uX-0I; Thu, 24 Apr 2025 18:22:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u84y6-0007MK-6w
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:22:54 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u84xl-0005mv-0j
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:22:33 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u84y4-00014T-Gq
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:22:53 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43d2d952eb1so11460715e9.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 15:22:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u84xj-000121-35
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:22:32 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39c31e4c3e5so1066573f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 15:22:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745533370; x=1746138170; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745533348; x=1746138148; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TEEsp3WvcS1IZU1517HV/+srKi3TaTLqQjkTs9SQZOc=;
- b=e+Ty8Y+eRSrd54Xyf6gS99pVTg8KONSDqezKHYKofcnUDiJe6+EyEn/zaKzhsruv0J
- yz/0NjPZlcuXBBFMQ9O9EpN1jf5M0oGGqjQJQ+yu/uAo0i4wxeE3RWMeOsdaYqJw5vP4
- A+YNhUnYrY1+uSBu0Xu/kSTZ7m/HVsZZ6Q7dPNHqyWV6Si/5ZdfOw0uUCAyAGkejTk49
- V8mID3zzyOU4Dngm5icRsDhQy3GGn49U21SjxwooDewZHdk3LMGocssk7bMu/pKtVFwI
- Km2tB4Rs0tZGisUV2M8QrcQY04mGPNKE9aUlaNTSk/D9FHrBj/1d4AoOEBG6px90wWf4
- Le4A==
+ bh=X9F/Xu2/QMqJcrb8r8k7kzBHlfm38hQBgPZ/Fp6QYoE=;
+ b=eLirFQiRRoB6eBXtItcrmYKPHFRdqAeKOkZrRovdcHT1KdgvBxYe56vghzFetZcQai
+ ngvHTp/z0LrPTubjNCew/QQz9a2QHZk0GgSMTQA7zJVSzUKNRjY4+UyrvWm6CGTdVNMH
+ KSNllpFBeQl6Vlt6IT7LOqwtm1oneJLEMV43YVluJYdpPkKXEtiyZepCR20s+0hUK5cK
+ AbuUGfaguNu+zQkK8dSGI/dDlRUn2i/0BB8YiOdFJQaQZww/mImDdkPjiKWX1NKIjVxC
+ GYd+s++R4TCe3hjMOct2Bd8KQ0+tDYynamOLFTipQlY56hXsTWtsT3xeaZGSQUaYx0Ka
+ XcWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745533370; x=1746138170;
+ d=1e100.net; s=20230601; t=1745533348; x=1746138148;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TEEsp3WvcS1IZU1517HV/+srKi3TaTLqQjkTs9SQZOc=;
- b=RQwGaYiX6i7BMO8ZdhRzJ3TxN9lvEyrcyQJ0IiAFYjJEUEwb1XbYRaPafzCyoR5GIy
- 9sW2M+yyo3AmYnyG9rOmNTrnJ6zxP6RWZYuNzLC263fMQtezrruYh97rtQNU9V77wpOZ
- tqNhR6WA/lcUK2jvqIoc2Ia9AypViI2eFLelfiI0mvrefSRnLEDmo7gDzZ7z+KJC03Te
- nByGp8gJFskNEAlkZ95h+TalH7wf5mUmgMCyMG6QwllU393++bcEJszJy+Z/R9kaEfH3
- QpluXRTZM8vXC26KMaglHBnu4Ns9AatWqKbNDqP87ARjX7npps3XypiYeHhGFtLRuJ09
- Txeg==
+ bh=X9F/Xu2/QMqJcrb8r8k7kzBHlfm38hQBgPZ/Fp6QYoE=;
+ b=rqIGGvXbIzFfYnthRGlE9qx+leDs20EsqDgNHoBsihTC31eypaRWAD9RQr42aBgAQs
+ gBfZSgL2qzdvwKfFKNerXPPuwtHyvk7l/ZrphwDfADB/p9jYXAo22gc401ySl7s6zzR/
+ sBf3lHQYpkrOBfsAQn8fjHixRZG7piOh6seDm7EoVMI5qwWR7Hg7aAGLTsxFa345mG17
+ swWF4ROrE1XZbwOWQ0lmfKG7RfIwh6asr9YxRPmz6bY96a6tOukhYEBRuvkbakgNlF9n
+ WujZY6VGhF4pdTXNmTaGAiLlp8WkYz/IG2E3PSWqacCbWtCM/3HqYyRqg6YturZnF0FS
+ rYfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJcHVbNWZTlEwmNzhd+Mx7Zf2FQWsWrHGAgKFRxKi8oWpqKdmWLjk2hD1wvgLueG70tKRHpe4uyTy6@nongnu.org
-X-Gm-Message-State: AOJu0Yxk4xCxmbSUheqSOUkVPqbmnC0U63tURTlX/3I35VZbbGO5Vd31
- 8qBcPlAws0ChER7h4PG4S9a6UHslWeJQi6Pq0XQeQ1fi5tvRnlvZ65PhapDTj2M=
-X-Gm-Gg: ASbGncuViRCNBpGlFj+IZjYzLME7Gsv0VILjH5RoAXzfq3RiRA+hOxNZ4/T41lHvFcK
- eYoBRLgML4VvrfOW12Pc+KTp5pbC2IpasJRbtzzWsZZ4Rra9GnWoJi+UUZdHX1+fEvyQ0uiBAl1
- wAjdMt+dW52juySvbhwaudMDb+A+otZpAsnGGNkXyKRBmEeV1LgzHvvQypaT3QBiSE1qICThO8/
- ejkfraPMkemwKXFaujYfzn4k1IUy80BzqDVkDzt1X9DsPArBSSQ3z7IG3GADLZee/9eDaAPPCi9
- 24szL09rzMPt7W+WkK2ci379FjdBzxlsP65RAdkIcSyRBtXooK+D4IFj7u+I4bdruUx0mpJW++z
- A3vhZR5EFJO19fBg=
-X-Google-Smtp-Source: AGHT+IFeZ75vFmqeYSS2c0ETGpO5NMiAjsgmuVlTBDOH3KTBhSffvYrKvh5i9H4800kq0mPSJ1Xrow==
-X-Received: by 2002:a05:6000:4285:b0:391:952:c728 with SMTP id
- ffacd0b85a97d-3a06cf5007amr3425988f8f.4.1745533369890; 
- Thu, 24 Apr 2025 15:22:49 -0700 (PDT)
+ AJvYcCWG1fCHKJi+Rq19K4fYnAJNwHdM1tnrA0/VfN5r8SybjQSIEBodZKZHpfjyKLSPzDqs1ZxWlPJuvKxC@nongnu.org
+X-Gm-Message-State: AOJu0YwnIcqH1X7O5cDvLKGYmJIRWPj3aSkG8eTBSXj5UtDI2HHe96ep
+ QD6RfP17Wm68brFcApRoWTBCCqwP0hypGaPHWXNxZdBN1TJ+S7LS6gsHEkMV9as=
+X-Gm-Gg: ASbGncs9FEbMOUNlWCxE3kJimIqicOynvP9CqvmgOz6/x5hwEtkdtRysufzgb+hs6S7
+ 4RSPAK03FpTRI1SAGqCfN7bt781O4FrBK6I2iNcOc2oOq2M2N6UrIcTnzjrWmqy4FX4bqoaWu4x
+ qU1YtBXjhiy3aSHpqKt3vC3WBbSKHG6Lh3hwnEuBDciOsQNnh5L6rupdNp+mtzKeAupRc16FajG
+ FtJfH8vVoLPwaFmF/BdXg6Ih3aXk3516zviPFQ+utnH7NU98aap6O4J6xoTLvXPNR0MP9s57ApS
+ ewgbh/W3YrSrwKYXPEtFPCl5z3eEyNnH6r2lm/Ce/mKEKXwclgiN0hB887bvPZswHKW7fVXmK06
+ qcjlAr1r3qPLTO1lPGYSqnpCNVA==
+X-Google-Smtp-Source: AGHT+IG/2iBL8fd7z4WoNkt+sQnPOUL7UJxWVjg9s2R2z6Q0s/+AJPRZ10nuN6skUtI4McrWrhT/FQ==
+X-Received: by 2002:a5d:64c3:0:b0:39c:dfb:9e8e with SMTP id
+ ffacd0b85a97d-3a072a59b81mr709198f8f.8.1745533348547; 
+ Thu, 24 Apr 2025 15:22:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8cd7fsm521991f8f.1.2025.04.24.15.22.48
+ ffacd0b85a97d-3a073ca4cbcsm509704f8f.25.2025.04.24.15.22.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 15:22:48 -0700 (PDT)
+ Thu, 24 Apr 2025 15:22:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v5 19/21] hw/arm/virt: Replace TARGET_AARCH64 ->
- target_aarch64()
-Date: Fri, 25 Apr 2025 00:21:10 +0200
-Message-ID: <20250424222112.36194-20-philmd@linaro.org>
+Subject: [RFC PATCH v5 15/21] hw/arm/virt: Register valid CPU types dynamically
+Date: Fri, 25 Apr 2025 00:21:06 +0200
+Message-ID: <20250424222112.36194-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250424222112.36194-1-philmd@linaro.org>
 References: <20250424222112.36194-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,56 +103,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the target-specific TARGET_AARCH64 definition
-by a call to the generic target_aarch64() helper.
+Replace the static array returned as MachineClass::valid_cpu_types[]
+by a runtime one generated by MachineClass::get_valid_cpu_types()
+once the machine is created (its options being processed).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/virt.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ hw/arm/virt.c | 59 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 32 insertions(+), 27 deletions(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 13aa2f34c6c..566afa4c978 100644
+index 6185ac1046f..f29f541ea93 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -32,6 +32,7 @@
- #include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "qemu/option.h"
-+#include "qemu/target-info.h"
- #include "monitor/qdev.h"
- #include "hw/sysbus.h"
- #include "hw/arm/boot.h"
-@@ -3133,7 +3134,8 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-     if (tcg_enabled()) {
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a7")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a15")));
--#ifdef TARGET_AARCH64
-+    }
-+    if (tcg_enabled() && target_aarch64()) {
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a35")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a55")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a72")));
-@@ -3143,15 +3145,14 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n1")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n2")));
--#endif /* TARGET_AARCH64 */
-     }
--#ifdef TARGET_AARCH64
-+    if (target_aarch64()) {
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
-         if (kvm_enabled() || hvf_enabled()) {
-             g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
-         }
--#endif /* TARGET_AARCH64 */
-+    }
-     g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("max")));
+@@ -3126,36 +3126,41 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
+     return requested_ipa_size;
+ }
  
-     return vct;
++static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
++{
++    GPtrArray *vct = g_ptr_array_new_with_free_func(g_free);
++
++#ifdef CONFIG_TCG
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a7")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a15")));
++#ifdef TARGET_AARCH64
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a35")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a55")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a72")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a76")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a710")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("a64fx")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n1")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-n2")));
++#endif /* TARGET_AARCH64 */
++#endif /* CONFIG_TCG */
++#ifdef TARGET_AARCH64
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
++        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
++#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
++            g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
++#endif /* CONFIG_KVM || CONFIG_HVF */
++#endif /* TARGET_AARCH64 */
++    g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("max")));
++
++    return vct;
++}
++
+ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
+-    static const char * const valid_cpu_types[] = {
+-#ifdef CONFIG_TCG
+-        ARM_CPU_TYPE_NAME("cortex-a7"),
+-        ARM_CPU_TYPE_NAME("cortex-a15"),
+-#ifdef TARGET_AARCH64
+-        ARM_CPU_TYPE_NAME("cortex-a35"),
+-        ARM_CPU_TYPE_NAME("cortex-a55"),
+-        ARM_CPU_TYPE_NAME("cortex-a72"),
+-        ARM_CPU_TYPE_NAME("cortex-a76"),
+-        ARM_CPU_TYPE_NAME("cortex-a710"),
+-        ARM_CPU_TYPE_NAME("a64fx"),
+-        ARM_CPU_TYPE_NAME("neoverse-n1"),
+-        ARM_CPU_TYPE_NAME("neoverse-v1"),
+-        ARM_CPU_TYPE_NAME("neoverse-n2"),
+-#endif /* TARGET_AARCH64 */
+-#endif /* CONFIG_TCG */
+-#ifdef TARGET_AARCH64
+-        ARM_CPU_TYPE_NAME("cortex-a53"),
+-        ARM_CPU_TYPE_NAME("cortex-a57"),
+-#if defined(CONFIG_KVM) || defined(CONFIG_HVF)
+-        ARM_CPU_TYPE_NAME("host"),
+-#endif /* CONFIG_KVM || CONFIG_HVF */
+-#endif /* TARGET_AARCH64 */
+-        ARM_CPU_TYPE_NAME("max"),
+-        NULL
+-    };
+ 
+     mc->init = machvirt_init;
+     /* Start with max_cpus set to 512, which is the maximum supported by KVM.
+@@ -3183,7 +3188,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+ #else
+     mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
+ #endif
+-    mc->valid_cpu_types = valid_cpu_types;
++    mc->get_valid_cpu_types = virt_get_valid_cpu_types;
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
+     mc->hvf_get_physical_address_range = virt_hvf_get_physical_address_range;
 -- 
 2.47.1
 
