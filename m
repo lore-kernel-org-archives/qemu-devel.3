@@ -4,78 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1494AC369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 07:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE957C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 07:52:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7rLs-0000dw-0q; Thu, 24 Apr 2025 03:50:32 -0400
+	id 1u7rN5-0001Gm-UD; Thu, 24 Apr 2025 03:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7rLk-0000ck-1B
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 03:50:27 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1u7rN3-0001GP-L7; Thu, 24 Apr 2025 03:51:45 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7rLZ-0006az-US
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 03:50:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745481014; x=1777017014;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=/wJmc8AjbuE6ou/U1a6O64LXmKqy6snLfB0tLkyO/vA=;
- b=hFPEndZLCW4vQ3VfEmriu6MfHJJ6j8o74Jz6oN2hq6CbSJolrIWL4UUg
- BstSkKFUEnXvlO0YahZsWH2sU6NNDL+ZSOTe0MRXSis3wkPF/DUx0VDd3
- 9WW19zMZmhQ5CBr3UMi4jCFFQOE1UzqCquZcoqIc5txAmz9tHJOrpSp1N
- We70HzfClu5QWkmXOH67cJcpKejMUB1/cM73ph30ob2sMWgxuemS76p9+
- 6ZXsDR+vFVDRt+NFQ8ZVD81tu0jfDwMiAN8u3DGpbxGLg3N/9EvAFJsef
- M9YxgZYXIN3qP8nNtCns+KkZGwRiAXSZIoIyogmHrNprrl9pkt7/zX8mA A==;
-X-CSE-ConnectionGUID: x1AZPJjdRxqWzSIih+Eg/w==
-X-CSE-MsgGUID: 0kzYpBF5Tn++0OWPowDiXA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="57748618"
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="57748618"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2025 00:50:10 -0700
-X-CSE-ConnectionGUID: M4+XoCQSS2es3Kui4xiBsA==
-X-CSE-MsgGUID: uK43kwevRpOOP2kLtziJrA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="163517092"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 24 Apr 2025 00:50:08 -0700
-Date: Thu, 24 Apr 2025 16:11:03 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 17/55] i386/tdvf: Introduce function to parse TDVF
- metadata
-Message-ID: <aAnyF40pFLz9vY0y@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-18-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1u7rN1-0006ez-8D; Thu, 24 Apr 2025 03:51:45 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 24 Apr
+ 2025 15:51:36 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Thu, 24 Apr 2025 15:51:36 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <nabihestefan@google.com>
+Subject: [PATCH v6 0/6] Support vbootrom for AST2700
+Date: Thu, 24 Apr 2025 15:51:28 +0800
+Message-ID: <20250424075135.3715128-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-18-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,65 +59,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:27AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:27 -0400
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 17/55] i386/tdvf: Introduce function to parse TDVF
->  metadata
-> X-Mailer: git-send-email 2.34.1
-> 
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
-> 
-> TDX VM needs to boot with its specialized firmware, Trusted Domain
-> Virtual Firmware (TDVF). QEMU needs to parse TDVF and map it in TD
-> guest memory prior to running the TDX VM.
-> 
-> A TDVF Metadata in TDVF image describes the structure of firmware.
-> QEMU refers to it to setup memory for TDVF. Introduce function
-> tdvf_parse_metadata() to parse the metadata from TDVF image and store
-> the info of each TDVF section.
-> 
-> TDX metadata is located by a TDX metadata offset block, which is a
-> GUID-ed structure. The data portion of the GUID structure contains
-> only an 4-byte field that is the offset of TDX metadata to the end
-> of firmware file.
-> 
-> Select X86_FW_OVMF when TDX is enable to leverage existing functions
-> to parse and search OVMF's GUID-ed structures.
-> 
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
-> Changes in v8:
->  - Drop the failure handling of memcpy() since it cannot fail;
-> 
-> Changes in v7:
->  - Update license info to only use SPDX tag;
->  - use g_autofree to avoid manually free;
-> 
-> Changes in v6:
->  - Drop the the data endianness change for metadata->Length;
-> 
-> Changes in v1:
->  - rename tdvf_parse_section_entry() to
->    tdvf_parse_and_check_section_entry()
-> 
-> Changes in RFC v4:
->  - rename TDX_METADATA_GUID to TDX_METADATA_OFFSET_GUID
-> ---
->  hw/i386/Kconfig        |   1 +
->  hw/i386/meson.build    |   1 +
->  hw/i386/tdvf.c         | 183 +++++++++++++++++++++++++++++++++++++++++
->  include/hw/i386/tdvf.h |  38 +++++++++
->  4 files changed, 223 insertions(+)
->  create mode 100644 hw/i386/tdvf.c
->  create mode 100644 include/hw/i386/tdvf.h
+v1:
+  Add initial support for AST27x0
+  The purpose of vbootrom here is to simulate the work of BootMCU SPL (riscv)
+  in AST2700, because QEMU doesn't support heterogenous architecture yet.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+  ast27x0_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for
+  ASPEED AST27x0 BMC SOC. It currently implements the bare minimum to
+  load, parse, initialize and run boot images stored in SPI flash, but may grow
+  more features over time as needed. The source code is available at:
+  https://github.com/google/vbootrom
+
+v2:
+  Add "Introduced ASPEED_DEV_VBOOTROM in the device enumeration" patch to fix
+  build failed.
+
+v3:
+  1. Supports both vbootrom and device loader boot methods, with vbootrom used as
+  the default.
+  2. Fix review and QTEST test failed issues. 
+
+v4: 
+  Adjust the patch order.
+  
+v5:
+  fix review issue and remove unnecessary class attribure.
+  doc: create a new section for AST2700.
+  
+v6:
+  fix review issue.
+  Add google/vbootrom commit id for ast27x0
+  split to patch to update documentataion for ast27x0
+
+Jamin Lin (6):
+  hw/arm/aspeed_ast27x0 Introduce vbootrom memory region
+  pc-bios: Add AST27x0 vBootrom
+  hw/arm/aspeed: Add support for loading vbootrom image via "-bios"
+  tests/functional/aspeed: Add to test vbootrom for AST2700
+  docs/system/arm/aspeed: move AST2700 content to new section
+  docs/system/arm/aspeed: Support vbootrom for AST2700
+
+ MAINTAINERS                             |   1 +
+ docs/system/arm/aspeed.rst              |  99 ++++++++++++++++++++++--
+ include/hw/arm/aspeed.h                 |   1 +
+ include/hw/arm/aspeed_soc.h             |   2 +
+ hw/arm/aspeed.c                         |  36 +++++++++
+ hw/arm/aspeed_ast27x0.c                 |   9 +++
+ pc-bios/README                          |   6 ++
+ pc-bios/ast27x0_bootrom.bin             | Bin 0 -> 15424 bytes
+ pc-bios/meson.build                     |   1 +
+ tests/functional/test_aarch64_aspeed.py |  26 +++++++
+ 10 files changed, 173 insertions(+), 8 deletions(-)
+ create mode 100644 pc-bios/ast27x0_bootrom.bin
+
+-- 
+2.43.0
 
 
