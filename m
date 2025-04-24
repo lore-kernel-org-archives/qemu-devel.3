@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F34C369D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46866C369D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kzo-0001RP-Nx; Wed, 23 Apr 2025 21:03:22 -0400
+	id 1u7lGt-00056r-7G; Wed, 23 Apr 2025 21:21:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kx5-000691-Ma
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:32 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1u7lFT-0002lV-36
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:33 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kx1-0005Z1-Cz
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:31 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2255003f4c6so4872145ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:00:25 -0700 (PDT)
+ id 1u7lFQ-00079v-0G
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:30 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-736c3e7b390so385201b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456424; x=1746061224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745457566; x=1746062366; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U1g4DVjg5c6Ho5GZomYZSoMm8tVjtbkgyt05K/brssM=;
- b=WqKWMdE9V+2+7Iabpf9seMQZGBtPEfpV6B3fxbWWQqn1jNUQdq1jXJdv1sBHKuJ0fi
- Ybrjv9XkVBeOkeEsiaPW6Ne+28O9iAPHaY67eDo9Lps+anEHZZDB4HhBJ7FJto1eBhAm
- f6gm1qsxK0KkKvzqPirFlCdC0p7ajUiP92dHIhab7Venxb7no/kb4PYTNnPI201Oe/Lx
- N7KVb5/yXNzJ2fbEHdYVO46Z2E47rluWPIbKMXQvnV2tXAuSa/gZ2/zD17vinLEdyEwP
- 3msgiuhOhrpZJCqOq8Dlkw6SJUR4MD0ht3rXPe0iRri5qzPvcUVK14aZ/AmQ0/29PrZV
- uO2w==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=jtt7Oh++1fV+Vh2SgiqUZ2mBLC6qZ0dag5VMp1U8aEA=;
+ b=fXv9L5kU5qBcxXFanRDYBVw91WhpnqfwSWMYExouvTP3q712KZv5nEgOhcM6O0eDw/
+ wDUWdV2lqjdmMAQ26hOW89qLiDJV+uk9hT8gnWzzCvDeX0SMyKMw7suDAqDKdDcqIWSH
+ dUSEe88LazlQ3JOB4Sudqr3FsKigrYgjOv6OjlyJwapMwTFVCmYMC56j4deSznOgb9HU
+ EL5/2ddLn8vyWUrR4KwOYw8nIHJ2hWqE1RsLG1Zfb8fqRl8VFcVZcFPEHweOQdb94M5K
+ Yn8mKTDaicDYDOGMyD42BW0lQ9UpGfugF3ZadoaGBp1DZfRGJq7BTKZOSTZMmBJxlLki
+ 7ybQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456424; x=1746061224;
+ d=1e100.net; s=20230601; t=1745457566; x=1746062366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U1g4DVjg5c6Ho5GZomYZSoMm8tVjtbkgyt05K/brssM=;
- b=buC6qXqHaUebA2rfv4t08XLLlKu3zZr0joBhooEcVpxDNGocMHJng+BEoFTpqiWabI
- CfUxGQ0nukn2gdHL+YOZAdcrBghNEqOGmk2wdbWsid4byPwdkL1DPEjMdzXJsZC/yiVe
- pBoa8/leT/clbwLWIIuVz36eb2pMDBBkmvbtOiX9aRMGKO5jznSQwNQmk3a5M/mQaCbr
- rwkZReER7jx4o4OyvOdMnjCO00Ws74oIsTKDrCbL2Tyb4grBGbDtuMG2jGuPcnWYhrvf
- T9DmwnpYbjDiMk62CwKf464JC6aqDGEFt6JPAQ2un6Q8+L36AdHmBmU2fbj+bKNWDQsM
- 2QyA==
-X-Gm-Message-State: AOJu0YyYZFwCJFWrtY9lTac+HnmxzF+auZRbF9VYdfLKku53GONC8fLb
- AOXjt9tuOntLYI0xJWzLZDbFsMP4geohlZJynyma/hb/9aZ6z4Gk2na7nYTAokp5ld/Kcvnd77g
- c
-X-Gm-Gg: ASbGncsRDYgoGXJ57m2Xyi/6FwHmuS/OxTRDjnZkshzFIfY2ax+tQ2CAh7qiu/KHBht
- ZsJ4oMDOQbVDYuJo2UQrvujAMlKROuH8+zxGmABLUCbvQmjEZTDMrjoy9/8hxTGOKac+0EP/Hw6
- B2JdTS5D8uDKOuZlIEvjzwwzr7Zhf6Ia4GzqK8WvXc4JMRHw+BbTsGHz3oxelnM39Qj85ZVUcSh
- wyE3n5PUZx0cXc3xLNEDF/ar3U5+M+FLJzVl1fABlX7ewG2nHqVzUB4/YWsWtelKVhxI8aKJBtu
- wq0FP8SEHnyimm4RPZLA2XQUp8sNQzYHftvP2DDEZev6fNigSy54hTXB0qhDpurGobbke7hpu60
+ bh=jtt7Oh++1fV+Vh2SgiqUZ2mBLC6qZ0dag5VMp1U8aEA=;
+ b=cz3SVYFtYw72AvVoVVu9C7IhybNkz2f8dv51VKrZax0Ne/9by6GPzCJJlIxHfhaqhW
+ /sj+XTgYxFUTgfU8DXC7MBHsfSTiK0mTikq4u0kl/NQ3Kz6hBpG1UR0IXt/NLHGmJCOr
+ CPi7F0g4kGHeZaHbpMAUCYbiay7Hcqwdq/9xZqi4i7LJZFd2Y+ySkWTXmgYT52mnOBqQ
+ a6oZfL678wanQ3TEzgJC2TAcM0bOxxhLurUvs6OIU5dH/L79pbLy0jxGR+RKwlzmXoZS
+ 5bmBWgHRE5nDia3MPPDNH8o/SPUO+L9NlsjNB2zpqEP7TVICgd/SalgY4cfypbxz2Mch
+ kBjQ==
+X-Gm-Message-State: AOJu0YwWwAbN55fRtzXxlIklFSmA5utNq2B9cE1jpcZlCg4mGLHI7qBq
+ x+Y9gZ+vyIW/3KIxVsNPamUHti8FaCltLOZTLxIBgw2j+4drtD2PHlFB5Ihhg8EDaRtOH4xzhxI
+ d
+X-Gm-Gg: ASbGnctOagNgHECspu1ZVk29wsS2z8JpKDmrLcodZ0q4WQEy/xr9JrBQH/fRbHjd5PZ
+ 26PwpkVeFQE/oqmTDc0W4eXbH9hVraNykEgsEQUhRU/jDn3lcjLdW7qpvimVbpolIldDh+pjWWT
+ lY1T1CMxv0Vrm9Eelf/U2YyuDCWERaYMfrGtJNxU4LrAdYMLOBmgw2fjZo/YT9rZkgpHPYAN+GG
+ uw7aIcdQKDs4T00BznBJ1jVv6ZH87IC7t4ZEsXi0oleS7czh+9zAPYXrQqmea7WuxbASGxe1gVd
+ VPdLkz5MrifiLJ7iaROtnhGyHhcLG89xRevKtndG4T37PmvtUxKpxhc7gPPL61XLmE31a/L+gpA
  =
-X-Google-Smtp-Source: AGHT+IF80SX4xME8rDaFSKMY794fhIrmES/htugdkpBlbCosa8ZWlAMzEPG9ZViedGPsCrAL9WcxgQ==
-X-Received: by 2002:a17:903:1103:b0:22c:3609:97ed with SMTP id
- d9443c01a7336-22db3c3a039mr7385185ad.30.1745456424472; 
- Wed, 23 Apr 2025 18:00:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmYAB/pkkO231HW+jR7UBi7MWJXDoJhPRTSm5V2fS7MTPLAhRlZSmMHo4VFpqwMzE/De9Lug==
+X-Received: by 2002:a05:6a00:3a22:b0:736:32d2:aa93 with SMTP id
+ d2e1a72fcca58-73e24cfa09amr1267586b3a.20.1745457565871; 
+ Wed, 23 Apr 2025 18:19:25 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f76f45c7sm129259a12.16.2025.04.23.18.00.23
+ d2e1a72fcca58-73e25912ef0sm244079b3a.10.2025.04.23.18.19.25
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 18:00:24 -0700 (PDT)
+ Wed, 23 Apr 2025 18:19:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 148/148] tcg: Convert TARGET_SUPPORTS_MTTCG to
- TCGCPUOps::mttcg_supported field
-Date: Wed, 23 Apr 2025 17:49:33 -0700
-Message-ID: <20250424004934.598783-149-richard.henderson@linaro.org>
+Subject: [PATCH 10/15] accel/tcg: Merge internal-target.h into
+ internal-common.h
+Date: Wed, 23 Apr 2025 18:19:13 -0700
+Message-ID: <20250424011918.599958-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
-References: <20250424004934.598783-1-richard.henderson@linaro.org>
+In-Reply-To: <20250424011918.599958-1-richard.henderson@linaro.org>
+References: <20250424011918.599958-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,579 +100,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+There's nothing left in internal-target.h that is
+target specific.
 
-Instead of having a compile-time TARGET_SUPPORTS_MTTCG definition,
-have each target set the 'mttcg_supported' field in the TCGCPUOps
-structure.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250405161320.76854-17-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ops.h              |  8 ++++++++
- include/exec/poison.h                    |  1 -
- accel/tcg/tcg-all.c                      | 11 +++++------
- target/alpha/cpu.c                       |  1 +
- target/arm/cpu.c                         |  1 +
- target/arm/tcg/cpu-v7m.c                 |  1 +
- target/avr/cpu.c                         |  1 +
- target/hexagon/cpu.c                     |  1 +
- target/hppa/cpu.c                        |  1 +
- target/i386/tcg/tcg-cpu.c                |  1 +
- target/loongarch/cpu.c                   |  1 +
- target/m68k/cpu.c                        |  1 +
- target/microblaze/cpu.c                  |  1 +
- target/mips/cpu.c                        |  1 +
- target/openrisc/cpu.c                    |  1 +
- target/ppc/cpu_init.c                    |  1 +
- target/riscv/tcg/tcg-cpu.c               |  1 +
- target/rx/cpu.c                          |  1 +
- target/s390x/cpu.c                       |  1 +
- target/sh4/cpu.c                         |  1 +
- target/sparc/cpu.c                       |  1 +
- target/tricore/cpu.c                     |  1 +
- target/xtensa/cpu.c                      |  1 +
- configs/targets/aarch64-softmmu.mak      |  1 -
- configs/targets/alpha-softmmu.mak        |  1 -
- configs/targets/arm-softmmu.mak          |  1 -
- configs/targets/hppa-softmmu.mak         |  1 -
- configs/targets/i386-softmmu.mak         |  1 -
- configs/targets/loongarch64-softmmu.mak  |  1 -
- configs/targets/microblaze-softmmu.mak   |  1 -
- configs/targets/microblazeel-softmmu.mak |  1 -
- configs/targets/mips-softmmu.mak         |  1 -
- configs/targets/mipsel-softmmu.mak       |  1 -
- configs/targets/or1k-softmmu.mak         |  1 -
- configs/targets/ppc64-softmmu.mak        |  1 -
- configs/targets/riscv32-softmmu.mak      |  1 -
- configs/targets/riscv64-softmmu.mak      |  1 -
- configs/targets/s390x-softmmu.mak        |  1 -
- configs/targets/sparc-softmmu.mak        |  1 -
- configs/targets/sparc64-softmmu.mak      |  1 -
- configs/targets/x86_64-softmmu.mak       |  1 -
- configs/targets/xtensa-softmmu.mak       |  1 -
- configs/targets/xtensaeb-softmmu.mak     |  1 -
- docs/devel/multi-thread-tcg.rst          |  2 +-
- 44 files changed, 34 insertions(+), 28 deletions(-)
+ accel/tcg/internal-common.h | 29 +++++++++++++++++++++++
+ accel/tcg/internal-target.h | 46 -------------------------------------
+ accel/tcg/cpu-exec.c        |  1 -
+ accel/tcg/cputlb.c          |  1 -
+ accel/tcg/tb-maint.c        |  1 -
+ accel/tcg/translate-all.c   |  1 -
+ accel/tcg/user-exec.c       |  1 -
+ 7 files changed, 29 insertions(+), 51 deletions(-)
+ delete mode 100644 accel/tcg/internal-target.h
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index a4932fc5d7..0e4352513d 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -19,6 +19,14 @@
- #include "tcg/tcg-mo.h"
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 2f00560d10..573e8438c3 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -11,6 +11,7 @@
  
- struct TCGCPUOps {
-+    /**
-+     * mttcg_supported: multi-threaded TCG is supported
-+     *
-+     * Target (TCG frontend) supports:
-+     *   - atomic instructions
-+     *   - memory ordering primitives (barriers)
-+     */
-+    bool mttcg_supported;
+ #include "exec/cpu-common.h"
+ #include "exec/translation-block.h"
++#include "exec/mmap-lock.h"
  
-     /**
-      * @guest_default_memory_order: default barrier that is required
-diff --git a/include/exec/poison.h b/include/exec/poison.h
-index a09e0c1263..bc422719d8 100644
---- a/include/exec/poison.h
-+++ b/include/exec/poison.h
-@@ -35,7 +35,6 @@
+ extern int64_t max_delay;
+ extern int64_t max_advance;
+@@ -108,4 +109,32 @@ static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
+     return get_page_addr_code_hostp(env, addr, NULL);
+ }
  
- #pragma GCC poison TARGET_HAS_BFLT
- #pragma GCC poison TARGET_NAME
--#pragma GCC poison TARGET_SUPPORTS_MTTCG
- #pragma GCC poison TARGET_BIG_ENDIAN
- #pragma GCC poison TCG_GUEST_DEFAULT_MO
- #pragma GCC poison TARGET_HAS_PRECISE_SMC
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index ecdd48847c..b0d4e3e136 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -41,8 +41,9 @@
- #include "hw/boards.h"
- #include "system/tcg.h"
- #endif
-+#include "accel/tcg/cpu-ops.h"
- #include "internal-common.h"
--#include "cpu-param.h"
-+#include "cpu.h"
- 
- 
- struct TCGState {
-@@ -88,11 +89,9 @@ static int tcg_init_machine(MachineState *ms)
-     unsigned max_threads = 1;
- 
- #ifndef CONFIG_USER_ONLY
--# ifdef TARGET_SUPPORTS_MTTCG
--    bool mttcg_supported = true;
--# else
--    bool mttcg_supported = false;
--# endif
-+    CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
-+    bool mttcg_supported = cc->tcg_ops->mttcg_supported;
++/*
++ * Access to the various translations structures need to be serialised
++ * via locks for consistency.  In user-mode emulation access to the
++ * memory related structures are protected with mmap_lock.
++ * In !user-mode we use per-page locks.
++ */
++#ifdef CONFIG_USER_ONLY
++#define assert_memory_lock() tcg_debug_assert(have_mmap_lock())
++#else
++#define assert_memory_lock()
++#endif
 +
-     switch (s->mttcg_enabled) {
-     case ON_OFF_AUTO_AUTO:
-         /*
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index eeaf3a81c1..35fb145d27 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -237,6 +237,7 @@ static const struct SysemuCPUOps alpha_sysemu_ops = {
- static const TCGCPUOps alpha_tcg_ops = {
-     /* Alpha processors have a weak memory model */
-     .guest_default_memory_order = 0,
-+    .mttcg_supported = true,
++#if defined(CONFIG_SOFTMMU) && defined(CONFIG_DEBUG_TCG)
++void assert_no_pages_locked(void);
++#else
++static inline void assert_no_pages_locked(void) { }
++#endif
++
++#ifdef CONFIG_USER_ONLY
++static inline void page_table_config_init(void) { }
++#else
++void page_table_config_init(void);
++#endif
++
++#ifndef CONFIG_USER_ONLY
++G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
++#endif /* CONFIG_USER_ONLY */
++
+ #endif
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+deleted file mode 100644
+index 9a9cef3140..0000000000
+--- a/accel/tcg/internal-target.h
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/*
+- * Internal execution defines for qemu (target specific)
+- *
+- *  Copyright (c) 2003 Fabrice Bellard
+- *
+- * SPDX-License-Identifier: LGPL-2.1-or-later
+- */
+-
+-#ifndef ACCEL_TCG_INTERNAL_TARGET_H
+-#define ACCEL_TCG_INTERNAL_TARGET_H
+-
+-#include "cpu-param.h"
+-#include "exec/exec-all.h"
+-#include "exec/translation-block.h"
+-#include "tb-internal.h"
+-#include "exec/mmap-lock.h"
+-
+-/*
+- * Access to the various translations structures need to be serialised
+- * via locks for consistency.  In user-mode emulation access to the
+- * memory related structures are protected with mmap_lock.
+- * In !user-mode we use per-page locks.
+- */
+-#ifdef CONFIG_USER_ONLY
+-#define assert_memory_lock() tcg_debug_assert(have_mmap_lock())
+-#else
+-#define assert_memory_lock()
+-#endif
+-
+-#if defined(CONFIG_SOFTMMU) && defined(CONFIG_DEBUG_TCG)
+-void assert_no_pages_locked(void);
+-#else
+-static inline void assert_no_pages_locked(void) { }
+-#endif
+-
+-#ifdef CONFIG_USER_ONLY
+-static inline void page_table_config_init(void) { }
+-#else
+-void page_table_config_init(void);
+-#endif
+-
+-#ifndef CONFIG_USER_ONLY
+-G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+-#endif /* CONFIG_USER_ONLY */
+-
+-#endif /* ACCEL_TCG_INTERNAL_H */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index b00f046b29..4f1955d3d8 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -46,7 +46,6 @@
+ #include "tb-context.h"
+ #include "tb-internal.h"
+ #include "internal-common.h"
+-#include "internal-target.h"
  
-     .initialize = alpha_translate_init,
-     .translate_code = alpha_translate_code,
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 3e9760b551..377791c84d 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2671,6 +2671,7 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+ /* -icount align implementation. */
  
- #ifdef CONFIG_TCG
- static const TCGCPUOps arm_tcg_ops = {
-+    .mttcg_supported = true,
-     /* ARM processors have a weak memory model */
-     .guest_default_memory_order = 0,
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index ed6de1e96e..ca69128232 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -43,7 +43,6 @@
+ #include "tb-internal.h"
+ #include "tlb-bounds.h"
+ #include "internal-common.h"
+-#include "internal-target.h"
+ #ifdef CONFIG_PLUGIN
+ #include "qemu/plugin-memory.h"
+ #endif
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index f43f5342a6..cf12a28eab 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -36,7 +36,6 @@
+ #include "tb-context.h"
+ #include "tb-internal.h"
+ #include "internal-common.h"
+-#include "internal-target.h"
+ #ifdef CONFIG_USER_ONLY
+ #include "user/page-protection.h"
+ #endif
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 9bf8728064..38819a507b 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -66,7 +66,6 @@
+ #include "tb-context.h"
+ #include "tb-internal.h"
+ #include "internal-common.h"
+-#include "internal-target.h"
+ #include "tcg/perf.h"
+ #include "tcg/insn-start-words.h"
+ #include "cpu.h"
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 112292b729..17e3be337f 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -39,7 +39,6 @@
+ #include "tcg/tcg-ldst.h"
+ #include "backend-ldst.h"
+ #include "internal-common.h"
+-#include "internal-target.h"
+ #include "tb-internal.h"
  
-diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-index 89d4e4b4a2..f71560aa43 100644
---- a/target/arm/tcg/cpu-v7m.c
-+++ b/target/arm/tcg/cpu-v7m.c
-@@ -234,6 +234,7 @@ static void cortex_m55_initfn(Object *obj)
- static const TCGCPUOps arm_v7m_tcg_ops = {
-     /* ARM processors have a weak memory model */
-     .guest_default_memory_order = 0,
-+    .mttcg_supported = true,
- 
-     .initialize = arm_translate_init,
-     .translate_code = arm_translate_code,
-diff --git a/target/avr/cpu.c b/target/avr/cpu.c
-index 8f79cf4c08..84f3b839c9 100644
---- a/target/avr/cpu.c
-+++ b/target/avr/cpu.c
-@@ -225,6 +225,7 @@ static const struct SysemuCPUOps avr_sysemu_ops = {
- 
- static const TCGCPUOps avr_tcg_ops = {
-     .guest_default_memory_order = 0,
-+    .mttcg_supported = false,
-     .initialize = avr_cpu_tcg_init,
-     .translate_code = avr_cpu_translate_code,
-     .synchronize_from_tb = avr_cpu_synchronize_from_tb,
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 3d14e5cc6a..3c5191282e 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -327,6 +327,7 @@ static void hexagon_cpu_init(Object *obj)
- static const TCGCPUOps hexagon_tcg_ops = {
-     /* MTTCG not yet supported: require strict ordering */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = false,
-     .initialize = hexagon_translate_init,
-     .translate_code = hexagon_translate_code,
-     .synchronize_from_tb = hexagon_cpu_synchronize_from_tb,
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index dfbd933056..10e18c945e 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -260,6 +260,7 @@ static const TCGCPUOps hppa_tcg_ops = {
-      * basis.  It's probably easier to fall back to a strong memory model.
-      */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = true,
- 
-     .initialize = hppa_translate_init,
-     .translate_code = hppa_translate_code,
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index e13d0f6f86..621502c984 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -125,6 +125,7 @@ static bool x86_debug_check_breakpoint(CPUState *cs)
- #include "accel/tcg/cpu-ops.h"
- 
- const TCGCPUOps x86_tcg_ops = {
-+    .mttcg_supported = true,
-     /*
-      * The x86 has a strong memory model with some store-after-load re-ordering
-      */
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index f5b8ef29ab..fe9462b3b7 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -865,6 +865,7 @@ static void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- 
- static const TCGCPUOps loongarch_tcg_ops = {
-     .guest_default_memory_order = 0,
-+    .mttcg_supported = true,
- 
-     .initialize = loongarch_translate_init,
-     .translate_code = loongarch_translate_code,
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index b2d8c8f1de..99adc5eb91 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -591,6 +591,7 @@ static const struct SysemuCPUOps m68k_sysemu_ops = {
- static const TCGCPUOps m68k_tcg_ops = {
-     /* MTTCG not yet supported: require strict ordering */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = false,
- 
-     .initialize = m68k_tcg_init,
-     .translate_code = m68k_translate_code,
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 4efba0dddb..edfb05758b 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -429,6 +429,7 @@ static const struct SysemuCPUOps mb_sysemu_ops = {
- static const TCGCPUOps mb_tcg_ops = {
-     /* MicroBlaze is always in-order. */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = true,
- 
-     .initialize = mb_tcg_init,
-     .translate_code = mb_translate_code,
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 2ae7ba4407..473cecdebc 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -551,6 +551,7 @@ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
- }
- 
- static const TCGCPUOps mips_tcg_ops = {
-+    .mttcg_supported = TARGET_LONG_BITS == 32,
-     .guest_default_memory_order = 0,
- 
-     .initialize = mips_tcg_init,
-diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
-index 87fe779042..6601e0c066 100644
---- a/target/openrisc/cpu.c
-+++ b/target/openrisc/cpu.c
-@@ -244,6 +244,7 @@ static const struct SysemuCPUOps openrisc_sysemu_ops = {
- 
- static const TCGCPUOps openrisc_tcg_ops = {
-     .guest_default_memory_order = 0,
-+    .mttcg_supported = true,
- 
-     .initialize = openrisc_translate_init,
-     .translate_code = openrisc_translate_code,
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 9ba775971a..fde7d71fc6 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7479,6 +7479,7 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps ppc_tcg_ops = {
-+  .mttcg_supported = TARGET_LONG_BITS == 64,
-   .guest_default_memory_order = 0,
-   .initialize = ppc_translate_init,
-   .translate_code = ppc_translate_code,
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 44fdf6c4cf..426145c3b9 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -141,6 +141,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
- }
- 
- const TCGCPUOps riscv_tcg_ops = {
-+    .mttcg_supported = true,
-     .guest_default_memory_order = 0,
- 
-     .initialize = riscv_translate_init,
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index f073fe8fc9..0a7a2b55b5 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -206,6 +206,7 @@ static const struct SysemuCPUOps rx_sysemu_ops = {
- static const TCGCPUOps rx_tcg_ops = {
-     /* MTTCG not yet supported: require strict ordering */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = false,
- 
-     .initialize = rx_translate_init,
-     .translate_code = rx_translate_code,
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index 1e101b5afe..41cccc1e69 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -345,6 +345,7 @@ void cpu_get_tb_cpu_state(CPUS390XState *env, vaddr *pc,
- }
- 
- static const TCGCPUOps s390_tcg_ops = {
-+    .mttcg_supported = true,
-     /*
-      * The z/Architecture has a strong memory model with some
-      * store-after-load re-ordering.
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index 7a05301c6f..861fdd47f7 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -264,6 +264,7 @@ static const struct SysemuCPUOps sh4_sysemu_ops = {
- static const TCGCPUOps superh_tcg_ops = {
-     /* MTTCG not yet supported: require strict ordering */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = false,
- 
-     .initialize = sh4_translate_init,
-     .translate_code = sh4_translate_code,
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 56d9417ae3..f7d231c6f8 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1023,6 +1023,7 @@ static const TCGCPUOps sparc_tcg_ops = {
-      *   by an implied MEMBAR #StoreStore.
-      */
-     .guest_default_memory_order = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST,
-+    .mttcg_supported = true,
- 
-     .initialize = sparc_tcg_init,
-     .translate_code = sparc_translate_code,
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index c68954b409..a4f93e7d91 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -174,6 +174,7 @@ static const struct SysemuCPUOps tricore_sysemu_ops = {
- static const TCGCPUOps tricore_tcg_ops = {
-     /* MTTCG not yet supported: require strict ordering */
-     .guest_default_memory_order = TCG_MO_ALL,
-+    .mttcg_supported = false,
-     .initialize = tricore_tcg_init,
-     .translate_code = tricore_translate_code,
-     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index 2cbf4e3010..971e67ad97 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -234,6 +234,7 @@ static const struct SysemuCPUOps xtensa_sysemu_ops = {
- static const TCGCPUOps xtensa_tcg_ops = {
-     /* Xtensa processors have a weak memory model */
-     .guest_default_memory_order = 0,
-+    .mttcg_supported = true,
- 
-     .initialize = xtensa_translate_init,
-     .translate_code = xtensa_translate_code,
-diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-index 82cb72cb83..5dfeb35af9 100644
---- a/configs/targets/aarch64-softmmu.mak
-+++ b/configs/targets/aarch64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
--TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml
- # needed by boot.c
-diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
-index 89f3517aca..5275076e50 100644
---- a/configs/targets/alpha-softmmu.mak
-+++ b/configs/targets/alpha-softmmu.mak
-@@ -1,3 +1,2 @@
- TARGET_ARCH=alpha
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/arm-softmmu.mak b/configs/targets/arm-softmmu.mak
-index afc64f5927..6a5a8eda94 100644
---- a/configs/targets/arm-softmmu.mak
-+++ b/configs/targets/arm-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=arm
--TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/hppa-softmmu.mak b/configs/targets/hppa-softmmu.mak
-index 63ca74ed5e..ea331107a0 100644
---- a/configs/targets/hppa-softmmu.mak
-+++ b/configs/targets/hppa-softmmu.mak
-@@ -1,4 +1,3 @@
- TARGET_ARCH=hppa
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
-index 5dd8921756..e9d89e8ab4 100644
---- a/configs/targets/i386-softmmu.mak
-+++ b/configs/targets/i386-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=i386
--TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= gdb-xml/i386-32bit.xml
-diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-index 351341132f..fc44c54233 100644
---- a/configs/targets/loongarch64-softmmu.mak
-+++ b/configs/targets/loongarch64-softmmu.mak
-@@ -1,7 +1,6 @@
- TARGET_ARCH=loongarch64
- TARGET_BASE_ARCH=loongarch
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
- # all boards require libfdt
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/microblaze-softmmu.mak b/configs/targets/microblaze-softmmu.mak
-index 99a33ed44a..23457d0ae6 100644
---- a/configs/targets/microblaze-softmmu.mak
-+++ b/configs/targets/microblaze-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=microblaze
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-diff --git a/configs/targets/microblazeel-softmmu.mak b/configs/targets/microblazeel-softmmu.mak
-index 52cdeae1a2..c82c509623 100644
---- a/configs/targets/microblazeel-softmmu.mak
-+++ b/configs/targets/microblazeel-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=microblaze
--TARGET_SUPPORTS_MTTCG=y
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-diff --git a/configs/targets/mips-softmmu.mak b/configs/targets/mips-softmmu.mak
-index b62a088249..c9588066b8 100644
---- a/configs/targets/mips-softmmu.mak
-+++ b/configs/targets/mips-softmmu.mak
-@@ -1,4 +1,3 @@
- TARGET_ARCH=mips
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/mipsel-softmmu.mak b/configs/targets/mipsel-softmmu.mak
-index 620ec68178..90e09bdc3e 100644
---- a/configs/targets/mipsel-softmmu.mak
-+++ b/configs/targets/mipsel-softmmu.mak
-@@ -1,3 +1,2 @@
- TARGET_ARCH=mips
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
-index adfddb1a8a..0e47d9878b 100644
---- a/configs/targets/or1k-softmmu.mak
-+++ b/configs/targets/or1k-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=openrisc
--TARGET_SUPPORTS_MTTCG=y
- TARGET_BIG_ENDIAN=y
- # needed by boot.c and all boards
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
-index 7cee0e97f4..74572864b3 100644
---- a/configs/targets/ppc64-softmmu.mak
-+++ b/configs/targets/ppc64-softmmu.mak
-@@ -1,7 +1,6 @@
- TARGET_ARCH=ppc64
- TARGET_BASE_ARCH=ppc
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
- # all boards require libfdt
-diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
-index c828066ce6..db55275b86 100644
---- a/configs/targets/riscv32-softmmu.mak
-+++ b/configs/targets/riscv32-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=riscv32
- TARGET_BASE_ARCH=riscv
--TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
-index 09f613d24a..2bdd4a62cd 100644
---- a/configs/targets/riscv64-softmmu.mak
-+++ b/configs/targets/riscv64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=riscv64
- TARGET_BASE_ARCH=riscv
--TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-virtual.xml
- # needed by boot.c
-diff --git a/configs/targets/s390x-softmmu.mak b/configs/targets/s390x-softmmu.mak
-index 5242ebe7c2..76dd5de658 100644
---- a/configs/targets/s390x-softmmu.mak
-+++ b/configs/targets/s390x-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=s390x
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/sparc-softmmu.mak b/configs/targets/sparc-softmmu.mak
-index 78c2e25bd1..57801faf1f 100644
---- a/configs/targets/sparc-softmmu.mak
-+++ b/configs/targets/sparc-softmmu.mak
-@@ -1,4 +1,3 @@
- TARGET_ARCH=sparc
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
-index f7bab97a00..2504e31ae3 100644
---- a/configs/targets/sparc64-softmmu.mak
-+++ b/configs/targets/sparc64-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=sparc64
- TARGET_BASE_ARCH=sparc
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
-index 1ceefde131..5619b2bc68 100644
---- a/configs/targets/x86_64-softmmu.mak
-+++ b/configs/targets/x86_64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
--TARGET_SUPPORTS_MTTCG=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= gdb-xml/i386-64bit.xml
-diff --git a/configs/targets/xtensa-softmmu.mak b/configs/targets/xtensa-softmmu.mak
-index 65845df4ff..2a9797338a 100644
---- a/configs/targets/xtensa-softmmu.mak
-+++ b/configs/targets/xtensa-softmmu.mak
-@@ -1,3 +1,2 @@
- TARGET_ARCH=xtensa
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/xtensaeb-softmmu.mak b/configs/targets/xtensaeb-softmmu.mak
-index f1f789d697..5204729af8 100644
---- a/configs/targets/xtensaeb-softmmu.mak
-+++ b/configs/targets/xtensaeb-softmmu.mak
-@@ -1,4 +1,3 @@
- TARGET_ARCH=xtensa
- TARGET_BIG_ENDIAN=y
--TARGET_SUPPORTS_MTTCG=y
- TARGET_LONG_BITS=32
-diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tcg.rst
-index 14a2a9dc7b..da9a1530c9 100644
---- a/docs/devel/multi-thread-tcg.rst
-+++ b/docs/devel/multi-thread-tcg.rst
-@@ -30,7 +30,7 @@ user-space thread. This is enabled by default for all FE/BE
- combinations where the host memory model is able to accommodate the
- guest (TCGCPUOps::guest_default_memory_order & ~TCG_TARGET_DEFAULT_MO is zero)
- and the guest has had the required work done to support this safely
--(TARGET_SUPPORTS_MTTCG).
-+(TCGCPUOps::mttcg_supported).
- 
- System emulation will fall back to the original round robin approach
- if:
+ __thread uintptr_t helper_retaddr;
 -- 
 2.43.0
 
