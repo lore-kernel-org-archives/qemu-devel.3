@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95FEC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:33:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3D0C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7q8o-0003iX-2Z; Thu, 24 Apr 2025 02:32:58 -0400
+	id 1u7qCZ-0004ot-In; Thu, 24 Apr 2025 02:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7q8m-0003iK-Uv
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:32:56 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ id 1u7qCV-0004nj-6b
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:36:47 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7q8k-0006g8-9t
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:32:56 -0400
+ id 1u7qCR-00078e-R6
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:36:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745476374; x=1777012374;
+ t=1745476604; x=1777012604;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=crVvmvt20948+XIDqkkeo+K2HiFVUVQubWp6Rvxv3ZA=;
- b=NqAXUaVllveflYiUCAgphpr+olNKBsGk4iVoHZs6KEsKcgPARVvFf6hh
- PuLYCCyR94w1cQTYxdau+/AtLoOS7iCI7chzvrVqZOh+Y473JXlVkbFMu
- nhMbm6WPvdG073A2Se5mq4vX22eSUSLxYiI+nOOzA2+j17WCiWigECRsI
- f5+cW326WNRgSjxX8MxS98Aj9iEw8tF8s77UAREtWmjTYtTebnuxb6aad
- 949boFphJMOsJgRdt0jNZyeZDgivyZ5VXLuK9mTHk9NyI+wCENKfaFv61
- QaUQmIhouIfASqh/0JdeRFnJf9Tfq4fXWAvWm+xoCAg2Xy4RC38cuNyqM Q==;
-X-CSE-ConnectionGUID: tPVvqbEtTTeIBFJwExmMGw==
-X-CSE-MsgGUID: kr6cpe/pSo6bBgDl9XJQGg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="47226574"
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="47226574"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 23:32:48 -0700
-X-CSE-ConnectionGUID: giu4a9VBT6uyMnrpiLBAeQ==
-X-CSE-MsgGUID: r0QMmQ+gS0CiIRt5Q/1iRg==
+ bh=N/1BTUctU2lb6VBk1Oib3IvM00J9hBOuNikf/9LtMQ4=;
+ b=F9P5pmnx1GH7xB6tzAEbK6Qqwqs64moY8t4ANVFO4Fn+HhTfMPvVmolO
+ ao/ncN/d4/Ic88HU5li/cH+i6fTik/obAi8IPZUQh3YpCUfRb5EDcJuCX
+ 48J9JdzqTV0gsJy7ZjSidcu+3cmtqyFaZhXLXY3EevXw4AX/lhDDxmEcX
+ cD+UjRJgsnZC5jUB2z4fMnavVNSujtdIc/8fTNDwX6qXDpfhXngwYWeWg
+ gpVxqDl/+7G7wua5cJJPyspOvXfeNy+TUoByQaKC3V1/hlRAdYqyN54oT
+ FSDDO86Rph0k0Y4jAtVZ0jDNQWYEp6uOgtgon21Ff4D8WT7TdISdgSge5 Q==;
+X-CSE-ConnectionGUID: ATgD0X4NQIOOJiDkJAE48Q==
+X-CSE-MsgGUID: NuCzeEMMTDWxZhVoCQxkHg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="46977821"
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="46977821"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 23:36:42 -0700
+X-CSE-ConnectionGUID: XojoAA55T+emk4kqIX2xaA==
+X-CSE-MsgGUID: ZM7pO4HHRjeXITCKypZmig==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="163562658"
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="155756304"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 23 Apr 2025 23:32:45 -0700
-Date: Thu, 24 Apr 2025 14:53:41 +0800
+ by fmviesa002.fm.intel.com with ESMTP; 23 Apr 2025 23:36:38 -0700
+Date: Thu, 24 Apr 2025 14:57:33 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Tejus GK <tejus.gk@nutanix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Jason Zeng <jason.zeng@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Tejus GK <tejus.gk@nutanix.com>,
+ Jason Zeng <jason.zeng@intel.com>,
  Manish Mishra <manish.mishra@nutanix.com>,
  Tao Su <tao1.su@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC 05/10] i386/cpu: Introduce cache model for SapphireRapids
-Message-ID: <aAnf9YvevhAo+HJE@intel.com>
+Subject: Re: [RFC 00/10] i386/cpu: Cache CPUID fixup, Intel cache model &
+ topo CPUID enhencement
+Message-ID: <aAng3b6hSiZw9MzP@intel.com>
 References: <20250423114702.1529340-1-zhao1.liu@intel.com>
- <20250423114702.1529340-6-zhao1.liu@intel.com>
- <315d76f0-d81c-43ed-a13e-ef9b8e6a0e75@nutanix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <315d76f0-d81c-43ed-a13e-ef9b8e6a0e75@nutanix.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250423114702.1529340-1-zhao1.liu@intel.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -90,34 +89,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tejus,
+On Wed, Apr 23, 2025 at 07:46:52PM +0800, Zhao Liu wrote:
+> Date: Wed, 23 Apr 2025 19:46:52 +0800
+> From: Zhao Liu <zhao1.liu@intel.com>
+> Subject: [RFC 00/10] i386/cpu: Cache CPUID fixup, Intel cache model & topo
+>  CPUID enhencement
+> X-Mailer: git-send-email 2.34.1
+> 
+> Hi all,
+> 
+> (Since patches 1 and 2 involve changes to x86 vendors other than Intel,
+> I have also cc'd friends from AMD and Zhaoxin.)
+> 
+> These are the ones I was going to clean up a long time ago:
+>  * Fixup CPUID 0x80000005 & 0x80000006 for Intel (and Zhaoxin now).
+>  * Add cache model for Intel CPUs.
+>  * Enable 0x1f CPUID leaf for specific Intel CPUs, which already have
+>    this leaf on host by default.
+> 
+> Overall, the enhancements to the Intel CPU models are still based on
+> feedback received over time, for a long time...
+> 
+> I'll introduce my changes one by one in the order of importance as I
+> see it. (The doc update is missing in this version.)
+> 
+> 
+> Intel Cache Model
+> =================
+> 
+> AMD has supports cache model for a long time. And this feature strats
+> from the Eduardo's idea [1].
+> 
+> Unfortunately, Intel does not support this, and I have received some
+> feedback (from Tejus on mail list [2] and kvm forum, and from Jason).
 
-> Thank you for this improvement! I see that even within the SPR-SP line of
-> Processors, the cache sizes vary across different models. What happens for
-> an instance when a processor only has 37.5 MiB of L3 per socket, but the CPU
-> Model exposes 60 MiB of L3 to the VM?
+I need to add more background:
 
-AFAIK, the Linux scheduler doesn't take cache size into account, so
-generally speaking, I think there's no impat on Linux.
+the legacy "host-cache-info" is becoming failing... On SRF, we have
+observed that it cannot accurately identify cache topology, so we have
+to use "smp-cache" to set the cache topology.
 
-If user space apps don't care about this info, then there's no problem.
-
-However, I've met some cases where certain customers prefer that the
-named cpu model also become closer to real silicon (e.g. current cache
-size). The advantage of this is that an app that works fine on real
-silicon is more likely to run normally in a Guest environment...
-Because nobody can ensure that no user space app care about cache
-size at all. And it's also unknown if there will be other OSes that
-depend on the cache size (although I think it should be fine, after
-all, current x86 only supports smp machines).
-
-In contrast, the 0x1f example is more typical. By SDM, 0x1f is only
-optional, and if 0x1f is not available, the one should check 0xb.
-However, in Mishra's case, his windows only relies on 0x1f, so making
-the named CPU model and the real silicon alignable is a better way
-of avoiding all sorts of incompatibilities.
-
-Thanks,
-Zhao
+However, once "host-cache-info" is disabled, we lose the cache info
+that matches the real silicon... Therefore, we can only add the cache
+model for the named CPU model.
 
 
