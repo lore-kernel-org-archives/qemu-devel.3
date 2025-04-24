@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D044C369D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53110C369D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kmr-0005JA-Ul; Wed, 23 Apr 2025 20:49:57 -0400
+	id 1u7kve-0002AD-QM; Wed, 23 Apr 2025 20:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmo-0005FI-1n
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:54 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1u7ktU-0005pN-4C
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:52 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmm-0004LP-89
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:53 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7376dd56f60so274099b3a.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:49:51 -0700 (PDT)
+ id 1u7ktQ-00055W-2M
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:47 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so309781b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455791; x=1746060591; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456202; x=1746061002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jprqwHHwWojdGfQ1QgUvwGwX1dYcnH5RZgYMJfPxUv8=;
- b=oFk404LKh6YDydM0dVJz7LgeWO6r9gnTgosAvL+EOzFPErijbNqBR9P2wsTp6djq5r
- 8EC4EJwD1kby6zouICZEBNJ6YLAOJU5Uk5CLt1BVwbHikpzKO6w9oQ99ydfjHp0Z7AKL
- dX8xJTuUxXjzFbm46anmJlASwd9YtmQUeRN9fL6wPutgm380b93+ZAT0WS70RwN8NP4w
- r16XkBy10c6bvHzvRMTBdzkXzjBAcVLb1G2UQGvuzEUshiehpC9vWkdJBXfXoXkipbpq
- RK1iwxlh9IK3ps06bL5LxObJHPpR8ANcDQox1QlQ0xbeHu3Z0Wzs7rg5gfeKsb5mC+MH
- vcTg==
+ bh=yL9Lx/EDFze6tE4WbhZDruyf3oGDShcQ9b5DcTeuWRg=;
+ b=qCJacPgwpJRTjZg5vLwQqLZt/WC9bnkb/gTiPTeObVTIto0H2+u/Ahqh1/ZaM0b5cw
+ Y+qtBoCvokgMJIg3yn2Lx7bsf4blYap9FpCWF8YU9aYXt2tBoYn3wt7XASSJOCz2l5OL
+ t63fbZqWrNelqL9E6BnRvhn3Cp2fvq2EDvFNf0v8TQnKNdehFJrMyZLo3XxOzeIZ9mx2
+ W1ZfY+7XKZs0NX04xZfRGUkqO1CL8c7oGzUVvvik76KBk8drtPqNJBtsacbpCuGzF401
+ OkxLTffLX7coYWt5iqM2eL3nSio7DP+gDOPsssBAW2ve1l+0/DNrMy/+PxrOAcFuegOA
+ Iobg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455791; x=1746060591;
+ d=1e100.net; s=20230601; t=1745456202; x=1746061002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jprqwHHwWojdGfQ1QgUvwGwX1dYcnH5RZgYMJfPxUv8=;
- b=WWYDO8Iy5EN8nKT+GF4lEBklFCv407WpAn8eXkK5AH4YO7hQSqDbIqEtSexJU2pzDk
- aFSJ+NK1a/DpvyU67+wxmyg1pamSwAkHKzEvWldFaktju4eOeS+E/m2nsn3sYuENmc/Q
- C9z8XWewxOsRjEjWWU4Te/cWwM0PY/zJEucA2QlT2UhJhhoTQ5pYrle4/pT6khAPR22M
- Iz70rJheOARU054f+LViK7BYi9IQpRHL5rXV+/xFXmF71rZHC+BWtUf5jNi29W4ztnsy
- 8xDs4Of+PoY3oWZSm68nQxxs1bUVhEoIZgW3JYKhTYebAPuNOFOmWPCB6TNJtQPSuSZU
- a1mA==
-X-Gm-Message-State: AOJu0YznV7YFSZoi31S0+8+zJINoyMrI5TbEam6Z+zhDN9Z4ipS/VSsu
- dB5iF8vTbnOoKJXnDzgY8ByijlWlehLjteqcG8lbuumlOOw992Xb9AY3sbh6rBLkAXg9cl5yrwU
- t
-X-Gm-Gg: ASbGncv2D0bKTpQT8S1n6uWA1FWni/mTBvyvPjIcGnDl438BL7y7kgSrJ93wuyemUip
- SdIf/8RTow9Qm8hd+9WxCsf94MQVyOKxcTEYn4QwbV/iHmYR+rxRN/yGcBJb0B0jQxJpWZhPT3X
- NOh1mWvPyVUWRdaJ2hCJWenbZcx0i2HCe9OLoXSJvwoGrz8jT7Ew9coZ+lhMtRmwz9YpV3NQ/27
- KWVUABA7x1SHKTjzZ7XZTL353MWJH+l3CrDxzzN9ze1GWF7MMkfcgntC5EqVZWjsaiQqqKRmwV5
- eoScmvtMTcIM7J/OFkjMhc2TwLdnb82iHKZzGE5FrBvo6bcP31rQxtEYpDkNeAB+s3Jdfa5mlnk
- =
-X-Google-Smtp-Source: AGHT+IG7Jp4gMJh6YEoy+EXSmKGTe5Vp/wOqHU83CZDg9NjIPK2CsI4zwIiU3jKys4HpffxhpGos/A==
-X-Received: by 2002:a05:6a21:338d:b0:1f3:33bf:6640 with SMTP id
- adf61e73a8af0-20444f0813fmr797340637.18.1745455791008; 
- Wed, 23 Apr 2025 17:49:51 -0700 (PDT)
+ bh=yL9Lx/EDFze6tE4WbhZDruyf3oGDShcQ9b5DcTeuWRg=;
+ b=QZxPRE5nJvP5YiqoXb027UKBhopnsWczYqDIlaIATi4VpI1X3V5SWgEWuhf9zRdVhw
+ iz8GOLwaYs3royxxPc9TfiY2kaalJ2kSfH1gzBzdjv9jEk2RoCFFpV98/CD9y0t/8UTq
+ 6T/eP1OOxBLNgZDCxMG+MGsrO3UtoZsIbJ1DgSMy1HBcvTReat6MCaSP+zobL1PVf5Fc
+ 7s+MLvmaEDzLm6cDdNAq1l06K69i2hR7Zt9gpOCldz/z6YmxeGyZymErELzGQYzgDhkU
+ cpiTO0X4ICJKVmHgHoixPNy59uPZfZR6zMLFGGYwvePTAXYa2b3vdj6g2jCiqUafTC7x
+ YUZQ==
+X-Gm-Message-State: AOJu0Yy0OPZn2E6TIEOO5qzN+VGyPr2Ir/mVMHwSf/Yud38cn8O/yJun
+ oGuWMd/pb1hMKmE3S4yTFv2PeAvmMTQ1GbcQPJFJUiVxVD1EBwU+tea3VinxSYrXh1obAW8VTBz
+ N
+X-Gm-Gg: ASbGnct2KHMk6EV/332q4uHWWXwGwNu1XPpvFDS0a1qeNnlWDr2RNPX7LKJcFUjQPT4
+ wdi+7IU2fsouiR3WvfnukG4+/3wDlXqZMYFDFEQWeiVRki5nVqn3aSAMMiE7sYeaHNNg2UjNmSD
+ cJhgwFG4acQirSyU0pRDqZTZkO2/bP1OV4yzPmeBILdPVsyjvqASdiTONm0pm4oAyMgtvCL5n1p
+ drQVQzk8I/mBq+tQamNEA5xfmUslgQSBMgWRZul6C93Y00pJGtueFPsIZaEQ5ou64mV/ke/fUSt
+ sJ+UbpqgOj82rLingGkedxudj8F72xNlzzpXLG9tTZDhfSdABcqUIfLYUVmGfY1NtMy90VHSoh5
+ OnVputgCazg==
+X-Google-Smtp-Source: AGHT+IHBqNc55yFRRXU5zE5HNIIcYLRiImieexB0nKmN9iQ7B1VVFyA4LMt/jzDinct3+BEEvc6qaQ==
+X-Received: by 2002:a05:6a21:4006:b0:203:bb3b:5f1e with SMTP id
+ adf61e73a8af0-20444e6fab4mr856239637.1.1745456201670; 
+ Wed, 23 Apr 2025 17:56:41 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.49.50
+ 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:49:50 -0700 (PDT)
+ Wed, 23 Apr 2025 17:56:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 020/148] accel/tcg: Build plugin-gen.c once
-Date: Wed, 23 Apr 2025 17:47:25 -0700
-Message-ID: <20250424004934.598783-21-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 091/148] target/sparc: Restrict SoftMMU mmu_index() to TCG
+Date: Wed, 23 Apr 2025 17:48:36 -0700
+Message-ID: <20250424004934.598783-92-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,90 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We assert that env immediately follows CPUState in cpu-all.h.
-Change the offsetof expressions to be based on CPUState instead
-of ArchCPU.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250401080938.32278-21-philmd@linaro.org>
 ---
- accel/tcg/plugin-gen.c | 13 +++++--------
- accel/tcg/meson.build  |  7 ++++---
- 2 files changed, 9 insertions(+), 11 deletions(-)
+ target/sparc/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index 7e5f040bf7..c1da753894 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -22,13 +22,12 @@
- #include "qemu/osdep.h"
- #include "qemu/plugin.h"
- #include "qemu/log.h"
--#include "cpu.h"
- #include "tcg/tcg.h"
- #include "tcg/tcg-temp-internal.h"
--#include "tcg/tcg-op.h"
--#include "exec/exec-all.h"
-+#include "tcg/tcg-op-common.h"
- #include "exec/plugin-gen.h"
- #include "exec/translator.h"
-+#include "exec/translation-block.h"
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 57fbf16ad2..af3cec43e7 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1005,6 +1005,7 @@ static const TCGCPUOps sparc_tcg_ops = {
+     .translate_code = sparc_translate_code,
+     .synchronize_from_tb = sparc_cpu_synchronize_from_tb,
+     .restore_state_to_opc = sparc_restore_state_to_opc,
++    .mmu_index = sparc_cpu_mmu_index,
  
- enum plugin_gen_from {
-     PLUGIN_GEN_FROM_TB,
-@@ -89,15 +88,13 @@ static void gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
-     qemu_plugin_add_dyn_cb_arr(arr);
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = sparc_cpu_tlb_fill,
+@@ -1033,7 +1034,6 @@ static void sparc_cpu_class_init(ObjectClass *oc, void *data)
  
-     tcg_gen_st_ptr(tcg_constant_ptr((intptr_t)arr), tcg_env,
--                   offsetof(CPUState, neg.plugin_mem_cbs) -
--                   offsetof(ArchCPU, env));
-+                   offsetof(CPUState, neg.plugin_mem_cbs) - sizeof(CPUState));
- }
- 
- static void gen_disable_mem_helper(void)
- {
-     tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
--                   offsetof(CPUState, neg.plugin_mem_cbs) -
--                   offsetof(ArchCPU, env));
-+                   offsetof(CPUState, neg.plugin_mem_cbs) - sizeof(CPUState));
- }
- 
- static TCGv_i32 gen_cpu_index(void)
-@@ -113,7 +110,7 @@ static TCGv_i32 gen_cpu_index(void)
-     }
-     TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
-     tcg_gen_ld_i32(cpu_index, tcg_env,
--                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
-+                   offsetof(CPUState, cpu_index) - sizeof(CPUState));
-     return cpu_index;
- }
- 
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 14bf797fda..185830d0f5 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -3,6 +3,10 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'tcg-runtime.c',
-   'tcg-runtime-gvec.c',
- ))
-+if get_option('plugins')
-+  common_ss.add(when: 'CONFIG_TCG', if_true: files('plugin-gen.c'))
-+endif
-+
- tcg_specific_ss = ss.source_set()
- tcg_specific_ss.add(files(
-   'tcg-all.c',
-@@ -12,9 +16,6 @@ tcg_specific_ss.add(files(
-   'translator.c',
- ))
- tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
--if get_option('plugins')
--  tcg_specific_ss.add(files('plugin-gen.c'))
--endif
- specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
- 
- specific_ss.add(when: ['CONFIG_SYSTEM_ONLY', 'CONFIG_TCG'], if_true: files(
+     cc->class_by_name = sparc_cpu_class_by_name;
+     cc->parse_features = sparc_cpu_parse_features;
+-    cc->mmu_index = sparc_cpu_mmu_index;
+     cc->dump_state = sparc_cpu_dump_state;
+ #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
+     cc->memory_rw_debug = sparc_cpu_memory_rw_debug;
 -- 
 2.43.0
 
